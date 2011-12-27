@@ -1,0 +1,14 @@
+TurboGears2 >= 2.1.4
+Genshi
+zope.sqlalchemy >= 0.4
+repoze.tm2 >= 1.0a5
+sqlalchemy
+sqlalchemy-migrate
+repoze.what >= 1.0.8
+repoze.who-friendlyform >= 1.0.4
+repoze.what-pylons >= 1.0
+repoze.who==1.0.19
+tgext.admin >= 0.3.11
+repoze.what-quickstart
+repoze.what.plugins.sql>=1.0.1
+tw.forms

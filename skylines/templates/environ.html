@@ -1,0 +1,32 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+                      "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:py="http://genshi.edgewall.org/"
+      xmlns:xi="http://www.w3.org/2001/XInclude">
+
+  <xi:include href="master.html" />
+
+<head>
+  <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" py:if="False"/>
+  <title>Learning TurboGears 2.1: Information about TG and WSGI</title>
+</head>
+
+<body>
+    <h2>The WSGI nature of the framework</h2>
+    <p>In this page you can see all the WSGI variables your request object has,
+       the ones in capital letters are required by the spec, then a sorted by
+       component list of variables provided by the Components, and at last
+       the "wsgi." namespace with very useful information about your WSGI Server</p>
+    <p>The keys in the environment are:
+    <table>
+        <py:for each="key in sorted(environment)">
+        <tr>
+            <td>${key}</td>
+            <td>${str(environment[key])}</td>
+        </tr>
+        </py:for>
+    </table>
+
+    </p>
+</body>
+</html>
