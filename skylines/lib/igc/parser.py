@@ -153,7 +153,7 @@ class BaseParser:
         latlon = cls.parse_latlon(data[6:23])
         valid = cls.parse_fix_validity(data[23:24])
         baro_altitude = cls.parse_altitude(data[24:29])
-        gps_altitude = cls.parse_altitude(data[29:38])
+        gps_altitude = cls.parse_altitude(data[29:34])
 
         return Fix(time, latlon, valid, baro_altitude, gps_altitude)
 

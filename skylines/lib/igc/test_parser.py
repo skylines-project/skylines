@@ -106,6 +106,13 @@ def test_parse_fix():
     assert_equals(a.baro_altitude, 212)
     assert_equals(a.gps_altitude, 185)
 
+    a = BaseParser.parse_fix("1010395049380N00611410EA00212001850000")
+    assert_equals(a.time, Time(10, 10, 39))
+    assert_equals(a.latlon, LatLon(50 + 49.38 / 60.0, 6 + 11.41 / 60.0))
+    assert_true(a.valid)
+    assert_equals(a.baro_altitude, 212)
+    assert_equals(a.gps_altitude, 185)
+
     assert_raises(ValueError, BaseParser.parse_fix, "")
 
 
