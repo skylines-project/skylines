@@ -37,7 +37,8 @@ class BaseParser:
             line = line.strip()
             self.handle_line(line[0].upper(), line[1:])
 
-    def parse_time(self, data):
+    @classmethod
+    def parse_time(cls, data):
         """
         Parses a time from the data stream
 
@@ -49,7 +50,8 @@ class BaseParser:
         second = int(data[4:6])
         return Time(hour, minute, second)
 
-    def parse_angle(self, data, is_latitude):
+    @classmethod
+    def parse_angle(cls, data, is_latitude):
         """
         Parses a latitude/longitude angle from the data stream
 
@@ -70,18 +72,20 @@ class BaseParser:
         angle = degrees + (minutes + minute_fraction / 1000.0) / 60.0
         return angle if is_positive else -angle
 
-    def parse_latlon(self, data):
+    @classmethod
+    def parse_latlon(cls, data):
         """
         Parses a latitude/longitude couple from the data stream
 
         e.g. 5049380N00611410E
         """
 
-        latitude = self.parse_angle(data, True)
-        longitude = self.parse_angle(data[8:], False)
+        latitude = cls.parse_angle(data, True)
+        longitude = cls.parse_angle(data[8:], False)
         return LatLon(latitude, longitude)
 
-    def parse_fix_validity(self, data):
+    @classmethod
+    def parse_fix_validity(cls, data):
         """
         Parses a fix validity character
 
@@ -90,7 +94,8 @@ class BaseParser:
 
         return data[0] == "A"
 
-    def parse_altitude(self, data):
+    @classmethod
+    def parse_altitude(cls, data):
         """
         Parses a meter-based altitude
 
@@ -99,18 +104,19 @@ class BaseParser:
 
         return int(data[0:5])
 
-    def parse_fix(self, data):
+    @classmethod
+    def parse_fix(cls, data):
         """
         Parses a B record (logger fix)
 
         e.g. 1010395049380N00611410EA0021200185
         """
 
-        time = self.parse_time(data)
-        latlon = self.parse_latlon(data[6:])
-        valid = self.parse_fix_validity(data[23:])
-        baro_altitude = self.parse_altitude(data[24:])
-        gps_altitude = self.parse_altitude(data[29:])
+        time = cls.parse_time(data)
+        latlon = cls.parse_latlon(data[6:])
+        valid = cls.parse_fix_validity(data[23:])
+        baro_altitude = cls.parse_altitude(data[24:])
+        gps_altitude = cls.parse_altitude(data[29:])
 
         return Fix(time, latlon, valid, baro_altitude, gps_altitude)
 
