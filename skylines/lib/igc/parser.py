@@ -45,6 +45,9 @@ class BaseParser:
         e.g. 101039
         """
 
+        if len(data) != 6:
+            raise ValueError("Timestamp must have 6 characters")
+
         hour = int(data[0:2])
         minute = int(data[2:4])
         second = int(data[4:6])
@@ -59,11 +62,17 @@ class BaseParser:
         """
 
         if is_latitude:
+            if len(data) != 8:
+                raise ValueError("Latitude must have 8 characters")
+
             degrees = int(data[0:2])
             minutes = int(data[2:4])
             minute_fraction = int(data[4:7])
             is_positive = (data[7] != "S")
         else:
+            if len(data) != 9:
+                raise ValueError("Longitude must have 9 characters")
+
             degrees = int(data[0:3])
             minutes = int(data[3:5])
             minute_fraction = int(data[5:8])
@@ -80,8 +89,12 @@ class BaseParser:
         e.g. 5049380N00611410E
         """
 
-        latitude = cls.parse_angle(data, True)
-        longitude = cls.parse_angle(data[8:], False)
+        if len(data) != 17:
+            raise ValueError("Latitude/Longitude couple must "
+                             "have 17 characters")
+
+        latitude = cls.parse_angle(data[0:8], True)
+        longitude = cls.parse_angle(data[8:17], False)
         return LatLon(latitude, longitude)
 
     @classmethod
@@ -92,7 +105,10 @@ class BaseParser:
         e.g. A (Valid) or V (Invalid/Void)
         """
 
-        return data[0] == "A"
+        if len(data) != 1:
+            raise ValueError("Fix validity must be 1 character")
+
+        return data == "A"
 
     @classmethod
     def parse_altitude(cls, data):
@@ -102,7 +118,10 @@ class BaseParser:
         e.g. 00212 (= 212m)
         """
 
-        return int(data[0:5])
+        if len(data) != 5:
+            raise ValueError("Altitude must have 5 characters")
+
+        return int(data)
 
     @classmethod
     def parse_fix(cls, data):
@@ -112,11 +131,11 @@ class BaseParser:
         e.g. 1010395049380N00611410EA0021200185
         """
 
-        time = cls.parse_time(data)
-        latlon = cls.parse_latlon(data[6:])
-        valid = cls.parse_fix_validity(data[23:])
-        baro_altitude = cls.parse_altitude(data[24:])
-        gps_altitude = cls.parse_altitude(data[29:])
+        time = cls.parse_time(data[0:6])
+        latlon = cls.parse_latlon(data[6:23])
+        valid = cls.parse_fix_validity(data[23:24])
+        baro_altitude = cls.parse_altitude(data[24:29])
+        gps_altitude = cls.parse_altitude(data[29:38])
 
         return Fix(time, latlon, valid, baro_altitude, gps_altitude)
 
