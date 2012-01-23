@@ -47,3 +47,18 @@ def test_exceptions():
     assert_raises(ValueError, LatLon, 51, 181, True)
     assert_raises(ValueError, LatLon, -91, 7, True)
     assert_raises(ValueError, LatLon, 51, -181, True)
+
+
+def test_strings():
+    """
+    Test string conversion
+    """
+
+    p = LatLon(51, 7)
+    assert_equal(str(p), "+51.00000, +007.00000")
+
+    p = LatLon(-51, -7)
+    assert_equal(str(p), "-51.00000, -007.00000")
+
+    p = LatLon(51.123456, 7.987654)
+    assert_equal(str(p), "+51.12346, +007.98765")
