@@ -1,4 +1,6 @@
-"""Unit tests for the IGCWriter class"""
+"""
+Unit tests for the LatLon class
+"""
 
 from nose.tools import assert_equal, assert_raises
 from latlon import LatLon
