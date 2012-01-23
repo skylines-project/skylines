@@ -180,3 +180,13 @@ class BaseParser:
                 pass
             else:
                 handle_security(data)
+
+
+class SimpleParser(BaseParser):
+    def parse(self, data):
+        self.__fixes = []
+        BaseParser.parse(self, data)
+        return self.__fixes
+
+    def handle_fix(self, fix):
+        self.__fixes.append(fix)
