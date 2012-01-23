@@ -3,3 +3,9 @@
 
 # Database files
 *.db
+
+# Coverage files
+.coverage
+
+# PyDev files
+.settings/*
