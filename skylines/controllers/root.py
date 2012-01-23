@@ -12,6 +12,7 @@ from tgext.admin.controller import AdminController
 
 from skylines.lib.base import BaseController
 from skylines.controllers.error import ErrorController
+from skylines.controllers.test import TestController
 
 __all__ = ['RootController']
 
@@ -34,6 +35,7 @@ class RootController(BaseController):
     admin = AdminController(model, DBSession, config_type = TGAdminConfig)
 
     error = ErrorController()
+    test = TestController()
 
     @expose('skylines.templates.index')
     def index(self):

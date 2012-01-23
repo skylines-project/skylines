@@ -21,6 +21,7 @@
   <ul id="mainmenu">
     <li class="first"><a href="${tg.url('/')}" class="${('', 'active')[defined('page') and page=='index']}">Welcome</a></li>
         <li><a href="${tg.url('/about')}" class="${('', 'active')[defined('page') and page=='about']}">About</a></li>
+        <li><a href="${tg.url('/test')}" class="${('', 'active')[defined('page') and page=='test']}">Test</a></li>
         <li py:if="tg.auth_stack_enabled"><a href="${tg.url('/auth')}" class="${('', 'active')[defined('page') and page=='auth']}">Authentication</a></li>
         <li><a href="${tg.url('/environ')}" class="${('', 'active')[defined('page') and page=='environ']}">WSGI Environment</a></li>
         <li><a href="http://groups.google.com/group/turbogears">Contact</a></li>
