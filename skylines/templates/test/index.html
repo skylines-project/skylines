@@ -12,5 +12,12 @@
 </head>
 
 <body>
+<div id="display_flight_form">
+<form action="${tg.url('/test/display_flight')}" method="post" accept-charset="UTF-8" class="loginfields" enctype="multipart/form-data">
+    <h2><span>Display flight</span></h2>
+    <label for="igc_file">IGC file:</label><input type="file" id="igc_file" name="igc_file" class="file"></input><br/>
+    <input type="submit" id="submit" value="Display" />
+</form>
+</div>
 </body>
 </html>
