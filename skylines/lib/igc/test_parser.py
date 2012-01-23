@@ -124,6 +124,23 @@ class TestFixHandler(BaseParser):
         assert_equals(self.i, 3)
 
 
+class TestSecurityHandler(BaseParser):
+    def handle_security(self, data):
+        assert_equals(data,
+                      "1239225E1FFD566DC81EBD308912576110F1F7825DED657F4FDC9")
+        self.i = self.i + 1
+
+    def test(self):
+        self.i = 0
+        self.parse(["AFIL01460FLIGHT:1",
+                    "B1242215002160N00538980EA0119301199",
+                    "LFILORIGIN1007275049380N00611410E",
+                    "B1242255002150N00539050EA0120201207",
+                    "B1242295002110N00539100EA0120801215",
+                    "G1239225E1FFD566DC81EBD308912576110F1F7825DED657F4FDC9"])
+        assert_equals(self.i, 1)
+
+
 class TestNoHandlers(BaseParser):
     def test(self):
         self.parse(["AFIL01460FLIGHT:1",

@@ -172,3 +172,11 @@ class BaseParser:
                 pass
             else:
                 handle_fix(self.parse_fix(data))
+
+        elif linetype == "G":
+            try:
+                handle_security = getattr(self, "handle_security")
+            except AttributeError:
+                pass
+            else:
+                handle_security(data)
