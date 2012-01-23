@@ -28,3 +28,7 @@ class LatLon:
         """
 
         return "{0:+09.5f}, {1:+010.5f}".format(self.latitude, self.longitude)
+
+    def __eq__(self, other):
+        return (self.latitude == other.latitude and
+                self.longitude == other.longitude)
