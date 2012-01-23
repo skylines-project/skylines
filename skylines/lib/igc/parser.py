@@ -28,9 +28,6 @@ class BaseParser:
     IGC file records.
     """
 
-    def __init__(self):
-        pass
-
     def parse(self, data):
         """
         Parses the contents of the data parameter assuming it is an IGC file.
