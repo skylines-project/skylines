@@ -68,7 +68,14 @@ class BaseParser:
             degrees = int(data[0:2])
             minutes = int(data[2:4])
             minute_fraction = int(data[4:7])
-            is_positive = (data[7] != "S")
+
+            if data[7] == "N":
+                is_positive = True
+            elif data[7] == "S":
+                is_positive = False
+            else:
+                raise ValueError("N or S suffix expected")
+
         else:
             if len(data) != 9:
                 raise ValueError("Longitude must have 9 characters")
@@ -76,7 +83,13 @@ class BaseParser:
             degrees = int(data[0:3])
             minutes = int(data[3:5])
             minute_fraction = int(data[5:8])
-            is_positive = (data[8] != "W")
+
+            if data[8] == "E":
+                is_positive = True
+            elif data[8] == "W":
+                is_positive = False
+            else:
+                raise ValueError("E or W suffix expected")
 
         angle = degrees + (minutes + minute_fraction / 1000.0) / 60.0
         return angle if is_positive else -angle
@@ -108,7 +121,12 @@ class BaseParser:
         if len(data) != 1:
             raise ValueError("Fix validity must be 1 character")
 
-        return data == "A"
+        if data == "A":
+            return True
+        elif data == "V":
+            return False
+        else:
+            raise ValueError("A or V validity expected")
 
     @classmethod
     def parse_altitude(cls, data):
