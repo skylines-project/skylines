@@ -1,6 +1,6 @@
 """Unit tests for the IGCWriter class"""
 
-from nose.tools import assert_equal, raises
+from nose.tools import assert_equal, assert_raises
 from latlon import LatLon
 
 
@@ -36,37 +36,12 @@ def test_invalid():
     assert_equal(p.longitude, 700.0)
 
 
-@raises(ValueError)
-def test_exception():
+def test_exceptions():
     """
-    Test exception 1
-    """
-
-    LatLon(91, 7, True)
-
-
-@raises(ValueError)
-def test_exception2():
-    """
-    Test exception 2
+    Test exceptions
     """
 
-    LatLon(51, 181, True)
-
-
-@raises(ValueError)
-def test_exception3():
-    """
-    Test exception 3
-    """
-
-    LatLon(-91, 7, True)
-
-
-@raises(ValueError)
-def test_exception4():
-    """
-    Test exception 4
-    """
-
-    LatLon(51, -181, True)
+    assert_raises(ValueError, LatLon, 91, 7, True)
+    assert_raises(ValueError, LatLon, 51, 181, True)
+    assert_raises(ValueError, LatLon, -91, 7, True)
+    assert_raises(ValueError, LatLon, 51, -181, True)
