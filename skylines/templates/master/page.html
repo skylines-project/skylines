@@ -1,0 +1,44 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+                      "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:py="http://genshi.edgewall.org/"
+      xmlns:xi="http://www.w3.org/2001/XInclude"
+      py:strip="">
+
+  <xi:include href="master.html" />
+
+<head py:match="head" py:attrs="select('@*')">
+  <meta py:replace="select('*')"/>
+</head>
+
+<body py:match="body" py:attrs="select('@*')">
+
+  <div class="container">
+
+    <div class="content">
+      <py:if test="defined('page')">
+      <div class="page-header">
+        <h1>
+          <span py:replace="page"/>
+          <py:if test="defined('tagline')">
+          <small><span py:replace="tagline"/></small>
+          </py:if>
+        </h1>
+      </div>
+      </py:if>
+
+      <div class="row">
+        <div class="span16">
+          <div py:replace="select('*|text()')"/>
+        </div>
+      </div>
+    </div>
+
+    <footer>
+      <p>&copy; SkyLines 2012</p>
+    </footer>
+
+  </div>
+
+</body>
+</html>

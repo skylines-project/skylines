@@ -4,7 +4,7 @@
       xmlns:py="http://genshi.edgewall.org/"
       xmlns:xi="http://www.w3.org/2001/XInclude">
 
-  <xi:include href="master.html" />
+  <xi:include href="master/page.html" />
 
 <head>
   <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" py:if="False"/>
@@ -12,9 +12,6 @@
 </head>
 
 <body>
-<div class="container">
-<div class="row">
-<div class="span8 offset4">
 <form action="${tg.url('/test/display_flight')}" method="post" accept-charset="UTF-8" enctype="multipart/form-data">
   <fieldset>
     <legend>Display flight</legend>
@@ -29,8 +26,5 @@
     <input type="submit" id="submit" value="Display" class="btn primary" />
   </div>
 </form>
-</div>
-</div>
-</div>
 </body>
 </html>

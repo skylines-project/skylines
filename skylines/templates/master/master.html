@@ -8,39 +8,40 @@
 <head py:match="head" py:attrs="select('@*')">
     <meta content="text/html; charset=UTF-8" http-equiv="Content-Type"
           py:attrs="dict(content='%s; charset=%s' % (response.content_type, response.charset))" />
-    <title py:if="False">Your title goes here</title>
+
+    <title py:if="False">SkyLines</title>
+
     <meta py:replace="select('*')"/>
+
     <link rel="stylesheet" href="http://twitter.github.com/bootstrap/1.4.0/bootstrap.min.css" />
-    <style>
-      BODY {
-          padding-top: 40px;
-      }
-    </style>
+    <link rel="stylesheet" type="text/css" media="screen" href="${tg.url('/css/style.css')}" />
 </head>
 
 <body py:match="body" py:attrs="select('@*')">
-  <div class="topbar" data-scrollspy="scrollspy" >
-    <div class="topbar-inner">
+
+  <div class="topbar">
+    <div class="fill">
       <div class="container">
         <a class="brand" href="#">SkyLines</a>
         <ul class="nav">
-          <li class="first"><a href="${tg.url('/')}" class="${('', 'active')[defined('page') and page=='index']}">Welcome</a></li>
-          <li><a href="${tg.url('/about')}" class="${('', 'active')[defined('page') and page=='about']}">About</a></li>
-          <li><a href="${tg.url('/test')}" class="${('', 'active')[defined('page') and page=='test']}">Test</a></li>
-          <li py:if="tg.auth_stack_enabled"><a href="${tg.url('/auth')}" class="${('', 'active')[defined('page') and page=='auth']}">Authentication</a></li>
-          <li><a href="${tg.url('/environ')}" class="${('', 'active')[defined('page') and page=='environ']}">WSGI Environment</a></li>
-          <li><a href="http://groups.google.com/group/turbogears">Contact</a></li>
-          <py:if test="tg.auth_stack_enabled">
+          <li class="${('', 'active')[defined('page') and page=='index']}"><a href="${tg.url('/')}">Welcome</a></li>
+          <li class="${('', 'active')[defined('page') and page=='about']}"><a href="${tg.url('/about')}">About</a></li>
+          <li class="${('', 'active')[defined('page') and page=='test']}"><a href="${tg.url('/test')}">Test</a></li>
+          <li py:if="tg.auth_stack_enabled" class="${('', 'active')[defined('page') and page=='auth']}"><a href="${tg.url('/auth')}">Authentication</a></li>
+          <li class="${('', 'active')[defined('page') and page=='environ']}"><a href="${tg.url('/environ')}">WSGI Environment</a></li>
+        </ul>
+        <py:if test="tg.auth_stack_enabled">
+        <ul class="pull-right">
           <li py:if="not request.identity" id="login" class="loginlogout"><a href="${tg.url('/login')}">Login</a></li>
           <li py:if="request.identity" id="login" class="loginlogout"><a href="${tg.url('/logout_handler')}">Logout</a></li>
           <li py:if="request.identity" id="admin" class="loginlogout"><a href="${tg.url('/admin')}">Admin</a></li>
-          </py:if>
         </ul>
+        </py:if>
       </div>
     </div>
   </div>
-  <div id="content">
-      <div py:replace="select('*|text()')"/>
-  </div>
+
+  <div py:replace="select('*|text()')"/>
+
 </body>
 </html>
