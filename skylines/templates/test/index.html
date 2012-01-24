@@ -12,19 +12,23 @@
 </head>
 
 <body>
-<form action="${tg.url('/test/display_flight')}" method="post" accept-charset="UTF-8" enctype="multipart/form-data">
-  <fieldset>
-    <legend>Display flight</legend>
-    <div class="clearfix">
-      <label for="igc_file">IGC file:</label>
-      <div class="input">
-        <input type="file" id="igc_file" name="igc_file"></input>
-      </div>
-    </div><!-- /clearfix -->
-  </fieldset>
-  <div class="actions">
-    <input type="submit" id="submit" value="Display" class="btn primary" />
+  <div class="row">
+    <div class="well span8 offset4">
+      <form action="${tg.url('/test/display_flight')}" method="post" accept-charset="UTF-8" enctype="multipart/form-data">
+        <fieldset>
+          <legend>Display flight</legend>
+          <div class="clearfix">
+            <label for="igc_file">IGC file:</label>
+            <div class="input">
+              <input type="file" id="igc_file" name="igc_file"></input>
+            </div>
+          </div><!-- /clearfix -->
+        </fieldset>
+        <div class="actions">
+          <input type="submit" id="submit" value="Display" class="btn primary" />
+        </div>
+      </form>
+    </div>
   </div>
-</form>
 </body>
 </html>
