@@ -14,7 +14,7 @@
           <li class="${('', 'active')[defined('page') and page=='environ']}"><a href="${tg.url('/environ')}">WSGI Environment</a></li>
         </ul>
         <py:if test="tg.auth_stack_enabled">
-        <ul class="pull-right">
+        <ul class="nav secondary-nav">
           <li py:if="not request.identity" id="login" class="loginlogout"><a href="${tg.url('/login')}">Login</a></li>
           <li py:if="request.identity" id="login" class="loginlogout"><a href="${tg.url('/logout_handler')}">Logout</a></li>
           <li py:if="request.identity" id="admin" class="loginlogout"><a href="${tg.url('/admin')}">Admin</a></li>
