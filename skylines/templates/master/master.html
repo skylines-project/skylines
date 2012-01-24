@@ -2,10 +2,11 @@
                       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:py="http://genshi.edgewall.org/"
-      xmlns:xi="http://www.w3.org/2001/XInclude"
-      py:strip="">
+      xmlns:xi="http://www.w3.org/2001/XInclude">
 
-<head py:match="head" py:attrs="select('@*')">
+  <xi:include href="topbar.html" />
+
+<head py:match="head" py:attrs="select('@*')" once="true">
     <meta content="text/html; charset=UTF-8" http-equiv="Content-Type"
           py:attrs="dict(content='%s; charset=%s' % (response.content_type, response.charset))" />
 
@@ -17,31 +18,7 @@
     <link rel="stylesheet" type="text/css" media="screen" href="${tg.url('/css/style.css')}" />
 </head>
 
-<body py:match="body" py:attrs="select('@*')">
-
-  <div class="topbar">
-    <div class="fill">
-      <div class="container">
-        <a class="brand" href="#">SkyLines</a>
-        <ul class="nav">
-          <li class="${('', 'active')[defined('page') and page=='index']}"><a href="${tg.url('/')}">Welcome</a></li>
-          <li class="${('', 'active')[defined('page') and page=='about']}"><a href="${tg.url('/about')}">About</a></li>
-          <li class="${('', 'active')[defined('page') and page=='test']}"><a href="${tg.url('/test')}">Test</a></li>
-          <li py:if="tg.auth_stack_enabled" class="${('', 'active')[defined('page') and page=='auth']}"><a href="${tg.url('/auth')}">Authentication</a></li>
-          <li class="${('', 'active')[defined('page') and page=='environ']}"><a href="${tg.url('/environ')}">WSGI Environment</a></li>
-        </ul>
-        <py:if test="tg.auth_stack_enabled">
-        <ul class="pull-right">
-          <li py:if="not request.identity" id="login" class="loginlogout"><a href="${tg.url('/login')}">Login</a></li>
-          <li py:if="request.identity" id="login" class="loginlogout"><a href="${tg.url('/logout_handler')}">Logout</a></li>
-          <li py:if="request.identity" id="admin" class="loginlogout"><a href="${tg.url('/admin')}">Admin</a></li>
-        </ul>
-        </py:if>
-      </div>
-    </div>
-  </div>
-
+<body py:match="body" py:attrs="select('@*')" once="true">
   <div py:replace="select('*|text()')"/>
-
 </body>
 </html>
