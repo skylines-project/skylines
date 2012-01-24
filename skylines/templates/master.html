@@ -4,9 +4,7 @@
       xmlns:py="http://genshi.edgewall.org/"
       xmlns:xi="http://www.w3.org/2001/XInclude"
       py:strip="">
-    <xi:include href="header.html" />
-    <xi:include href="sidebars.html" />
-    <xi:include href="footer.html" />
+
 <head py:match="head" py:attrs="select('@*')">
     <meta content="text/html; charset=UTF-8" http-equiv="Content-Type"
           py:attrs="dict(content='%s; charset=%s' % (response.content_type, response.charset))" />
