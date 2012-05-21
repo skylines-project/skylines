@@ -10,4 +10,9 @@
 # PyDev files
 .settings/*
 
+*.mo
+*.egg-info
+build
+dist
+
 htdocs
