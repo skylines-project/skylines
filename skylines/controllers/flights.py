@@ -3,6 +3,7 @@
 from tg import expose, request, redirect, config
 from tg.i18n import ugettext as _, lazy_ugettext as l_
 from repoze.what.predicates import has_permission
+from webob.exc import HTTPNotFound
 from skylines.lib.base import BaseController
 from skylines import model, files
 from skylines.lib.igc.parser import SimpleParser
@@ -21,7 +22,11 @@ class FlightController(BaseController):
 class FlightIdController(BaseController):
     @expose()
     def lookup(self, id, *remainder):
-        controller = FlightController(model.DBSession.query(model.Flight).get(int(id)))
+        flight = model.DBSession.query(model.Flight).get(int(id))
+        if flight is None:
+            raise HTTPNotFound
+
+        controller = FlightController(flight)
         return controller, remainder
 
 class FlightsController(BaseController):
