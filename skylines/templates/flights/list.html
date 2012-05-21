@@ -32,7 +32,9 @@
                 500
               </td>
               <td>
-                <span py:content="flight.olc_classic_distance / 1000">500</span> km
+                <span py:if="flight.olc_classic_distance is not None">
+                  <span py:content="flight.olc_classic_distance / 1000">500</span> km
+                </span>
               </td>
               <td>
                 <a href="${files_uri}/${flight.filename}" py:content="flight.filename">FOO.IGC</a>
