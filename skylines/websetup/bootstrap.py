@@ -36,12 +36,28 @@ def bootstrap(command, conf, vars):
         model.DBSession.add(p)
     
         u1 = model.User()
-        u1.user_name = u'editor'
-        u1.display_name = u'Example editor'
-        u1.email_address = u'editor@somedomain.com'
-        u1.password = u'editpass'
-    
+        u1.user_name = u'test'
+        u1.display_name = u'Example user'
+        u1.email_address = u'max+skylines@blarg.de'
+        u1.password = u'test'
+
         model.DBSession.add(u1)
+
+        g1 = model.Group()
+        g1.group_name = u'pilots'
+        g1.display_name = u'Pilots Group'
+
+        g1.users.append(u1)
+
+        model.DBSession.add(g1)
+
+        p1 = model.Permission()
+        p1.permission_name = u'upload'
+        p1.description = u'Allow uploading new flights'
+        p1.groups.append(g1)
+
+        model.DBSession.add(p)
+
         model.DBSession.flush()
         transaction.commit()
     except IntegrityError:
