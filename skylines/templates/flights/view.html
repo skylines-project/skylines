@@ -1,0 +1,62 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+                      "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:py="http://genshi.edgewall.org/"
+      xmlns:xi="http://www.w3.org/2001/XInclude">
+
+  <xi:include href="master/fullscreen.html" />
+
+<head>
+  <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" py:if="False"/>
+
+  <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
+  <script type="text/javascript">
+    function initialize() {
+      var map_options = {
+        center: new google.maps.LatLng(30, 0),
+        zoom: 2,
+        mapTypeId: google.maps.MapTypeId.TERRAIN
+      };
+      var map = new google.maps.Map(document.getElementById("map_canvas"), map_options);
+
+      var points = [];
+      var bounds = new google.maps.LatLngBounds ();
+
+      <py:for each="fix in content">
+      {
+        var lat = ${fix.latlon.latitude};
+        var lon = ${fix.latlon.longitude};
+        var p = new google.maps.LatLng(lat, lon);
+        points.push(p);
+        bounds.extend(p);
+      }
+      </py:for>
+
+      var poly = new google.maps.Polyline({
+        // use your own style here
+        path: points,
+        strokeColor: "#FF00AA",
+        strokeOpacity: .7,
+        strokeWeight: 4
+      });
+
+      poly.setMap(map);
+
+      // fit bounds to track
+      map.fitBounds(bounds);
+    }
+  </script>
+
+  <style>
+    html { height: 100% }
+    body { height: 100%; margin: 0; padding: 0 }
+    #content { height: 100%; }
+  </style>
+
+  <title>SkyLines.testing</title>
+</head>
+
+<body onload="initialize();">
+  <div id="map_canvas" style="width:100%; height:100%;"></div>
+</body>
+</html>

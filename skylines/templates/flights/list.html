@@ -1,0 +1,44 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+                      "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:py="http://genshi.edgewall.org/"
+      xmlns:xi="http://www.w3.org/2001/XInclude">
+
+  <xi:include href="master/page.html" />
+
+  <head>
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" py:if="False"/>
+    <title>Flight list</title>
+  </head>
+
+  <body>
+      <div id="getting_started">
+        <table class="list">
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>File</th>
+              <th>Show</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr py:for="flight in flights">
+              <td py:content="flight.time_created">
+                2012-05-21
+              </td>
+              <td>
+                <a href="${files_uri}/${flight.filename}" py:content="flight.filename">FOO.IGC</a>
+              </td>
+              <td>
+                <a href="/flights/id/${flight.id}">
+                  Show
+                </a>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="clearingdiv" />
+  </body>
+</html>
