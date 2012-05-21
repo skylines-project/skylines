@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from tg import expose, request, redirect, config
+from tg import expose, require, request, redirect, config
 from tg.i18n import ugettext as _, lazy_ugettext as l_
 from repoze.what.predicates import has_permission
 from webob.exc import HTTPNotFound
@@ -26,6 +26,7 @@ class FlightController(BaseController):
         return dict(page='flights', fixes=fixes)
 
     @expose()
+    @require(has_permission('upload'))
     def analysis(self):
         """Hidden method that restarts flight analysis."""
 
@@ -59,5 +60,17 @@ class FlightsController(BaseController):
             flights = flights.filter(model.Flight.owner == request.identity['user'])
         return dict(page='flights', flights=flights,
                     files_uri=config['skylines.files.uri'])
+
+    @expose()
+    @require(has_permission('manage'))
+    def analysis(self):
+        """Hidden method that restarts flight analysis."""
+
+        from skylines.lib.analysis import analyse_flight
+        for flight in model.DBSession.query(model.Flight):
+            analyse_flight(flight)
+            model.DBSession.flush()
+
+        return redirect('/flights/')
 
     id = FlightIdController()
