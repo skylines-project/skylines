@@ -17,3 +17,7 @@ class Flight(DeclarativeBase):
     time_created = Column(DateTime, nullable=False, default=datetime.now)
     time_modified = Column(DateTime, nullable=False, default=datetime.now)
     filename = Column(String(), nullable=False)
+
+    olc_classic_distance = Column(Integer)
+    olc_triangle_distance = Column(Integer)
+    olc_plus_score = Column(Integer)

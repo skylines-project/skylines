@@ -25,6 +25,16 @@ class FlightController(BaseController):
 
         return dict(page='flights', fixes=fixes)
 
+    @expose()
+    def analysis(self):
+        """Hidden method that restarts flight analysis."""
+
+        from skylines.lib.analysis import analyse_flight
+        analyse_flight(self.flight)
+        model.DBSession.flush()
+
+        return redirect('/flights/id/' + str(self.flight.id))
+
 class FlightIdController(BaseController):
     @expose()
     def lookup(self, id, *remainder):

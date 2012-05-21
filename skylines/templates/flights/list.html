@@ -17,6 +17,8 @@
           <thead>
             <tr>
               <th>Date</th>
+              <th>Score</th>
+              <th>Distance</th>
               <th>File</th>
               <th>Show</th>
             </tr>
@@ -25,6 +27,12 @@
             <tr py:for="flight in flights">
               <td py:content="flight.time_created">
                 2012-05-21
+              </td>
+              <td py:content="flight.olc_plus_score">
+                500
+              </td>
+              <td>
+                <span py:content="flight.olc_classic_distance / 1000">500</span> km
               </td>
               <td>
                 <a href="${files_uri}/${flight.filename}" py:content="flight.filename">FOO.IGC</a>

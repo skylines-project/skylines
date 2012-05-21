@@ -3,6 +3,7 @@ from tg.i18n import ugettext as _, lazy_ugettext as l_
 from repoze.what.predicates import has_permission
 from skylines.lib.base import BaseController
 from skylines import model, files
+from skylines.lib.analysis import analyse_flight
 
 class UploadController(BaseController):
     allow_only = has_permission('upload',
@@ -20,6 +21,8 @@ class UploadController(BaseController):
         flight = model.Flight()
         flight.owner = request.identity['user']
         flight.filename = filename
+
+        analyse_flight(flight)
 
         model.DBSession.add(flight)
         model.DBSession.flush()
