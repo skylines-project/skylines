@@ -11,6 +11,7 @@ from tgext.admin.controller import AdminController
 from skylines.lib.base import BaseController
 from skylines.controllers.error import ErrorController
 from skylines.controllers.test import TestController
+from skylines.controllers.users import UsersController
 from skylines.controllers.flights import FlightsController
 from skylines.controllers.upload import UploadController
 
@@ -35,6 +36,7 @@ class RootController(BaseController):
 
     error = ErrorController()
     test = TestController()
+    users = UsersController()
     flights = FlightsController()
     upload = UploadController()
 
