@@ -9,7 +9,7 @@
 <head>
   <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" py:if="False"/>
 
-  <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
+  <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?libraries=geometry&amp;sensor=false"></script>
   <script type="text/javascript">
     function initialize() {
       var map_options = {
@@ -19,22 +19,19 @@
       };
       var map = new google.maps.Map(document.getElementById("map_canvas"), map_options);
 
-      var points = [];
-      var bounds = new google.maps.LatLngBounds ();
+<?python from simplejson import dumps ?>
+      var points = google.maps.geometry.encoding.decodePath(${dumps(fixes.points)});
 
-      <py:for each="fix in content">
-      {
-        var lat = ${fix.latlon.latitude};
-        var lon = ${fix.latlon.longitude};
-        var p = new google.maps.LatLng(lat, lon);
-        points.push(p);
-        bounds.extend(p);
-      }
-      </py:for>
+      var bounds = new google.maps.LatLngBounds ();
+      for (var i = 0; i != points.length; ++i)
+        bounds.extend(points[i]);
 
       var poly = new google.maps.Polyline({
         // use your own style here
         path: points,
+        levels: ${dumps(fixes.levels)},
+        numLevels: ${fixes.numLevels},
+        zoomFactor: ${fixes.zoomFactor},
         strokeColor: "#FF00AA",
         strokeOpacity: .7,
         strokeWeight: 4

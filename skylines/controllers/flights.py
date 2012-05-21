@@ -16,8 +16,14 @@ class FlightController(BaseController):
     def index(self):
         parser = SimpleParser()
         fixes = parser.parse(file(files.filename_to_path(self.flight.filename)))
+        fixes = map(lambda fix: (fix.latlon.longitude, fix.latlon.latitude),
+                    fixes)
 
-        return dict(page='flights', content=fixes)
+        import cgpolyencode
+        encoder = cgpolyencode.GPolyEncoder(num_levels=4)
+        fixes = encoder.encode(fixes)
+
+        return dict(page='flights', fixes=fixes)
 
 class FlightIdController(BaseController):
     @expose()
