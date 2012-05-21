@@ -14,6 +14,7 @@ from skylines.lib.base import BaseController
 from skylines.controllers.error import ErrorController
 from skylines.controllers.test import TestController
 from skylines.controllers.flights import FlightsController
+from skylines.controllers.upload import UploadController
 
 __all__ = ['RootController']
 
@@ -38,6 +39,7 @@ class RootController(BaseController):
     error = ErrorController()
     test = TestController()
     flights = FlightsController()
+    upload = UploadController()
 
     @expose('skylines.templates.index')
     def index(self):
