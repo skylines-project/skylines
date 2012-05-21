@@ -5,6 +5,10 @@
 
 import sys
 
+# stderr doesn't work with FastCGI; the following is a hack to get a
+# log file with diagnostics anyway
+sys.stderr = sys.stdout = file('/var/log/skylines/console', 'a')
+
 prev_sys_path = list(sys.path)
 
 new_sys_path = []
