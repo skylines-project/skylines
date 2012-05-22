@@ -31,7 +31,6 @@
               <th>Distance</th>
               <th>Club</th>
               <th>Time</th>
-              <th>File</th>
               <th>Show</th>
             </tr>
           </thead>
@@ -61,9 +60,6 @@
               </td>
               <td>
                 <span py:replace="flight.takeoff_time.strftime('%H:%M')">10:00</span>-<span py:replace="flight.landing_time.strftime('%H:%M')">15:00</span>
-              </td>
-              <td>
-                <a href="${flight.get_download_uri()}" py:content="flight.filename">FOO.IGC</a>
               </td>
               <td>
                 <a href="/flights/id/${flight.id}/">
