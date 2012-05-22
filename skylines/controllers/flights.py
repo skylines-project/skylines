@@ -100,6 +100,7 @@ class FlightsController(BaseController):
     @expose('skylines.templates.flights.list')
     def index(self):
         flights = DBSession.query(Flight).order_by(desc(Flight.takeoff_time))
+        flights = flights.limit(50)
         return dict(page='flights', flights=flights)
 
     @expose('skylines.templates.flights.list')
@@ -107,6 +108,7 @@ class FlightsController(BaseController):
         flights = DBSession.query(Flight).order_by(desc(Flight.takeoff_time))
         if request.identity is not None:
             flights = flights.filter(Flight.owner == request.identity['user'])
+        flights = flights.limit(50)
         return dict(page='flights', flights=flights)
 
     @expose()
