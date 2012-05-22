@@ -1,13 +1,32 @@
 # -*- coding: utf-8 -*-
 
-from tg import expose, require, request, redirect, config
+from tg import expose, validate, require, request, redirect, config
 from tg.i18n import ugettext as _, lazy_ugettext as l_
 from repoze.what.predicates import has_permission
 from webob.exc import HTTPNotFound
 from sqlalchemy.sql.expression import desc
+from sprox.formbase import EditableForm
+from sprox.widgets import PropertySingleSelectField
 from skylines.lib.base import BaseController
 from skylines import files
-from skylines.model import DBSession, Flight
+from skylines.model import DBSession, User, Flight
+
+class PilotSelectField(PropertySingleSelectField):
+    def _my_update_params(self, d, nullable=False):
+        users = DBSession.query(User).filter(User.club_id == request.identity['user'].club_id)
+        options = [(None, 'None')] + \
+                  [(user.user_id, user) for user in users]
+        d['options'] = options
+        return d
+
+class SelectPilotForm(EditableForm):
+    __model__ = Flight
+    __hide_fields__ = ['id']
+    __limit_fields__ = ['pilot', 'co_pilot']
+    pilot = PilotSelectField
+    co_pilot = PilotSelectField
+
+select_pilot_form = SelectPilotForm(DBSession)
 
 class FlightController(BaseController):
     def __init__(self, flight):
@@ -15,6 +34,8 @@ class FlightController(BaseController):
 
     @expose('skylines.templates.flights.view')
     def index(self):
+        user = request.identity['user']
+
         from skylines.lib.analysis import flight_path
         fixes = flight_path(self.flight)
 
@@ -22,7 +43,9 @@ class FlightController(BaseController):
         encoder = cgpolyencode.GPolyEncoder(num_levels=4)
         fixes = encoder.encode(fixes)
 
-        return dict(page='flights', flight=self.flight, fixes=fixes)
+        return dict(page='flights', flight=self.flight,
+                    writable=self.flight.owner_id==user.user_id,
+                    fixes=fixes)
 
     @expose('skylines.templates.flights.map')
     def map(self):
@@ -34,6 +57,25 @@ class FlightController(BaseController):
         fixes = encoder.encode(fixes)
 
         return dict(page='flights', fixes=fixes)
+
+    @expose('skylines.templates.flights.change_pilot')
+    def change_pilot(self):
+        return dict(page='settings', flight=self.flight,
+                    form=select_pilot_form)
+
+    @expose()
+    @validate(form=select_pilot_form, error_handler=change_pilot)
+    def select_pilot(self, pilot, co_pilot, **kwargs):
+        user = request.identity['user']
+        if self.flight.owner_id == user.user_id:
+            if self.flight.pilot_id != pilot:
+                self.flight.pilot_id = pilot
+                if pilot:
+                    self.flight.club_id = DBSession.query(User).get(pilot).club_id
+            self.flight.co_pilot_id = co_pilot
+            DBSession.flush()
+
+        redirect('.')
 
     @expose()
     @require(has_permission('upload'))

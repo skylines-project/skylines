@@ -91,6 +91,7 @@
                     <span py:if="not flight.pilot and not flight.co_pilot" py:strip="True">
                       [unspecified]
                     </span>
+                    <a py:if="writable" href="change_pilot">[Change]</a>
                   </td>
                 </tr>
                 <tr>
