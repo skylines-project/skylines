@@ -55,3 +55,13 @@ def analyse_flight(flight):
             flight.olc_plus_score = int(float(trace.attrib['score']))
         else:
             flight.olc_plus_score = None
+
+def flight_path(flight):
+    path = files.filename_to_path(flight.filename)
+    f = os.popen('/opt/skylines/bin/FlightPath "' + path + '"')
+
+    path = []
+    for line in f:
+        line = line.split()
+        path.append((float(line[2]), float(line[1])))
+    return path

@@ -8,7 +8,6 @@ from sqlalchemy.sql.expression import desc
 from skylines.lib.base import BaseController
 from skylines import files
 from skylines.model import DBSession, Flight
-from skylines.lib.igc.parser import SimpleParser
 
 class FlightController(BaseController):
     def __init__(self, flight):
@@ -16,10 +15,8 @@ class FlightController(BaseController):
 
     @expose('skylines.templates.flights.view')
     def index(self):
-        parser = SimpleParser()
-        fixes = parser.parse(file(files.filename_to_path(self.flight.filename)))
-        fixes = map(lambda fix: (fix.latlon.longitude, fix.latlon.latitude),
-                    fixes)
+        from skylines.lib.analysis import flight_path
+        fixes = flight_path(self.flight)
 
         import cgpolyencode
         encoder = cgpolyencode.GPolyEncoder(num_levels=4)
