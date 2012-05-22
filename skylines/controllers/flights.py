@@ -4,6 +4,7 @@ from tg import expose, require, request, redirect, config
 from tg.i18n import ugettext as _, lazy_ugettext as l_
 from repoze.what.predicates import has_permission
 from webob.exc import HTTPNotFound
+from sqlalchemy.sql.expression import desc
 from skylines.lib.base import BaseController
 from skylines import files
 from skylines.model import DBSession, Flight
@@ -50,13 +51,13 @@ class FlightIdController(BaseController):
 class FlightsController(BaseController):
     @expose('skylines.templates.flights.list')
     def index(self):
-        flights = DBSession.query(Flight)
+        flights = DBSession.query(Flight).order_by(desc(Flight.takeoff_time))
         return dict(page='flights', flights=flights,
                     files_uri=config['skylines.files.uri'])
 
     @expose('skylines.templates.flights.list')
     def my(self):
-        flights = DBSession.query(Flight)
+        flights = DBSession.query(Flight).order_by(desc(Flight.takeoff_time))
         if request.identity is not None:
             flights = flights.filter(Flight.owner == request.identity['user'])
         return dict(page='flights', flights=flights,
