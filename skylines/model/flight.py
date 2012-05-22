@@ -23,6 +23,8 @@ class Flight(DeclarativeBase):
     co_pilot_id = Column(Integer, ForeignKey('tg_user.user_id'))
     co_pilot = relation('User', primaryjoin=(co_pilot_id==User.user_id))
 
+    club_id = Column(Integer, ForeignKey('clubs.id'))
+
     takeoff_time = Column(DateTime, nullable=False)
     landing_time = Column(DateTime, nullable=False)
 

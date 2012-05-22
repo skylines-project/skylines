@@ -13,6 +13,7 @@ class Club(DeclarativeBase):
     name = Column(Unicode(255), unique=True, nullable=False)
 
     members = relation('User', backref='club')
+    flights = relation('Flight', backref='club')
 
     def __unicode__(self):
         return self.name
