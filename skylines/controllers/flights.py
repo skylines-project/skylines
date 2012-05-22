@@ -4,7 +4,7 @@ from tg import expose, validate, require, request, redirect, config
 from tg.i18n import ugettext as _, lazy_ugettext as l_
 from repoze.what.predicates import has_permission
 from webob.exc import HTTPNotFound
-from sqlalchemy.sql.expression import desc
+from sqlalchemy.sql.expression import desc, or_
 from sprox.formbase import EditableForm
 from sprox.widgets import PropertySingleSelectField
 from skylines.lib.base import BaseController
@@ -107,7 +107,8 @@ class FlightsController(BaseController):
     def my(self):
         flights = DBSession.query(Flight).order_by(desc(Flight.takeoff_time))
         if request.identity is not None:
-            flights = flights.filter(Flight.pilot == request.identity['user'])
+            flights = flights.filter(or_(Flight.pilot == request.identity['user'],
+                                         Flight.co_pilot == request.identity['user']))
         flights = flights.limit(50)
         return dict(page='flights', flights=flights)
 
