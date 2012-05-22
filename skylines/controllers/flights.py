@@ -129,6 +129,21 @@ class FlightsController(BaseController):
         flights = flights.limit(50)
         return dict(page='flights', flights=flights)
 
+    @expose('skylines.templates.flights.list')
+    def pilot(self, id):
+        flights = DBSession.query(Flight).filter(or_(Flight.pilot_id==id,
+                                                     Flight.co_pilot_id==id))
+        flights = flights.order_by(desc(Flight.takeoff_time))
+        flights = flights.limit(50)
+        return dict(page='flights', flights=flights)
+
+    @expose('skylines.templates.flights.list')
+    def club(self, id):
+        flights = DBSession.query(Flight).filter(Flight.club_id==id)
+        flights = flights.order_by(desc(Flight.takeoff_time))
+        flights = flights.limit(50)
+        return dict(page='flights', flights=flights)
+
     @expose()
     @require(has_permission('manage'))
     def analysis(self):

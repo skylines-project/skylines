@@ -43,9 +43,13 @@
                 500
               </td>
               <td>
-                <span py:if="flight.pilot" py:replace="flight.pilot">Foo Bar</span>
+                <a py:if="flight.pilot" py:content="flight.pilot" href="/flights/pilot/${flight.pilot_id}">
+                  Pilot Name
+                </a>
                 <br py:if="flight.pilot and flight.co_pilot"/>
-                <span py:if="flight.co_pilot" py:replace="flight.co_pilot"/>
+                <a py:if="flight.co_pilot" py:content="flight.co_pilot" href="/flights/pilot/${flight.co_pilot_id}">
+                  Co-Pilot Name
+                </a>
                 <span py:if="not flight.pilot and not flight.co_pilot" py:strip="True">
                   [${flight.owner}]
                 </span>
@@ -55,8 +59,10 @@
                   <span py:content="flight.olc_classic_distance / 1000">500</span> km
                 </span>
               </td>
-              <td py:content="flight.club">
-                Club name
+              <td>
+                <a py:if="flight.club" py:content="flight.club" href="/flights/club/${flight.club_id}">
+                  Club Name
+                </a>
               </td>
               <td>
                 <span py:replace="flight.takeoff_time.strftime('%H:%M')">10:00</span>-<span py:replace="flight.landing_time.strftime('%H:%M')">15:00</span>
