@@ -31,5 +31,5 @@ class UploadController(BaseController):
         DBSession.add(flight)
         DBSession.flush()
 
-        return redirect('/flights/my')
+        return redirect('/flights/unassigned')
 
