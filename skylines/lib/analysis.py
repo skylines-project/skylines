@@ -2,6 +2,7 @@
 
 import os
 import datetime
+import hashlib
 from lxml import etree
 from skylines import files
 
@@ -27,6 +28,13 @@ def find_trace(contest, name):
 
 def analyse_flight(flight):
     path = files.filename_to_path(flight.filename)
+
+    md5 = hashlib.md5()
+    with file(path, 'rb') as f:
+        for chunk in iter(lambda: f.read(8192), b''):
+            md5.update(chunk)
+    flight.md5 = md5.hexdigest();
+
     f = os.popen('/opt/skylines/bin/AnalyseFlight "' + path + '"')
     doc = etree.parse(f)
     f.close()

@@ -1,4 +1,4 @@
-from tg import expose, request, redirect
+from tg import expose, request, redirect, flash
 from tg.i18n import ugettext as _, lazy_ugettext as l_
 from repoze.what.predicates import has_permission
 from skylines.lib.base import BaseController
@@ -27,6 +27,11 @@ class UploadController(BaseController):
         flight.club_id = user.club_id
 
         analyse_flight(flight)
+
+        if flight.by_md5(flight.md5):
+            files.delete_file(filename)
+            flash(_('Duplicate flight'), 'warning')
+            return redirect('.')
 
         DBSession.add(flight)
         DBSession.flush()

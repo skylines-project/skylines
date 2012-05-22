@@ -7,7 +7,7 @@ from sqlalchemy.orm import relation
 from sqlalchemy import Table, ForeignKey, Column
 from sqlalchemy.types import Integer, Unicode
 from auth import User
-from skylines.model import DeclarativeBase
+from skylines.model import DeclarativeBase, DBSession
 
 class Flight(DeclarativeBase):
     __tablename__ = 'flights'
@@ -18,6 +18,7 @@ class Flight(DeclarativeBase):
     time_created = Column(DateTime, nullable=False, default=datetime.now)
     time_modified = Column(DateTime, nullable=False, default=datetime.now)
     filename = Column(String(), nullable=False)
+    md5 = Column(String(32), nullable=False, unique=True)
 
     pilot_id = Column(Integer, ForeignKey('tg_user.user_id'))
     pilot = relation('User', primaryjoin=(pilot_id==User.user_id))
@@ -32,6 +33,10 @@ class Flight(DeclarativeBase):
     olc_classic_distance = Column(Integer)
     olc_triangle_distance = Column(Integer)
     olc_plus_score = Column(Integer)
+
+    @classmethod
+    def by_md5(cls, _md5):
+        return DBSession.query(cls).filter_by(md5=_md5).first()
 
     def get_download_uri(self):
         from tg import config

@@ -37,3 +37,10 @@ def add_file(name, f):
     dest.close()
 
     return name
+
+def delete_file(name):
+    path = filename_to_path(name)
+    try:
+        os.unlink(path)
+    except OSError, e:
+        pass
