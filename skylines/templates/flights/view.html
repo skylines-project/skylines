@@ -83,6 +83,17 @@
                   </td>
                 </tr>
                 <tr>
+                  <th>Pilot</th>
+                  <td>
+                    <span py:if="flight.pilot" py:replace="flight.pilot">Foo Bar</span>
+                    <br py:if="flight.pilot and flight.co_pilot"/>
+                    <span py:if="flight.co_pilot" py:replace="flight.co_pilot"/>
+                    <span py:if="not flight.pilot and not flight.co_pilot" py:strip="True">
+                      [unspecified]
+                    </span>
+                  </td>
+                </tr>
+                <tr>
                   <th>Uploaded</th>
                   <td>
                     ${format_datetime(flight.time_created)} by ${flight.owner}

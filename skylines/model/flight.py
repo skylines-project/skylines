@@ -18,6 +18,11 @@ class Flight(DeclarativeBase):
     time_modified = Column(DateTime, nullable=False, default=datetime.now)
     filename = Column(String(), nullable=False)
 
+    pilot_id = Column(Integer, ForeignKey('tg_user.user_id'))
+    pilot = relation('User', primaryjoin=(pilot_id==User.user_id))
+    co_pilot_id = Column(Integer, ForeignKey('tg_user.user_id'))
+    co_pilot = relation('User', primaryjoin=(co_pilot_id==User.user_id))
+
     takeoff_time = Column(DateTime, nullable=False)
     landing_time = Column(DateTime, nullable=False)
 

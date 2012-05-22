@@ -20,6 +20,7 @@
             <tr>
               <th>Date</th>
               <th>Score</th>
+              <th>Pilot</th>
               <th>Distance</th>
               <th>Time</th>
               <th>File</th>
@@ -33,6 +34,14 @@
               </td>
               <td py:content="flight.olc_plus_score">
                 500
+              </td>
+              <td>
+                <span py:if="flight.pilot" py:replace="flight.pilot">Foo Bar</span>
+                <br py:if="flight.pilot and flight.co_pilot"/>
+                <span py:if="flight.co_pilot" py:replace="flight.co_pilot"/>
+                <span py:if="not flight.pilot and not flight.co_pilot" py:strip="True">
+                  [${flight.owner}]
+                </span>
               </td>
               <td>
                 <span py:if="flight.olc_classic_distance is not None">
