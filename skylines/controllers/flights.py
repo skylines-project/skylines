@@ -22,6 +22,17 @@ class FlightController(BaseController):
         encoder = cgpolyencode.GPolyEncoder(num_levels=4)
         fixes = encoder.encode(fixes)
 
+        return dict(page='flights', flight=self.flight, fixes=fixes)
+
+    @expose('skylines.templates.flights.map')
+    def map(self):
+        from skylines.lib.analysis import flight_path
+        fixes = flight_path(self.flight)
+
+        import cgpolyencode
+        encoder = cgpolyencode.GPolyEncoder(num_levels=4)
+        fixes = encoder.encode(fixes)
+
         return dict(page='flights', fixes=fixes)
 
     @expose()

@@ -44,16 +44,69 @@
     }
   </script>
 
-  <style>
-    html { height: 100% }
-    body { height: 100%; margin: 0; padding: 0 }
-    #content { height: 100%; }
-  </style>
-
   <title>SkyLines.testing</title>
 </head>
 
-<body onload="initialize();">
-  <div id="map_canvas" style="width:100%; height:100%;"></div>
-</body>
+  <?python from babel.dates import format_date, format_time, format_datetime ?>
+
+  <body onload="initialize();">
+    <table>
+      <tbody>
+        <tr>
+          <td>
+            <table>
+              <tbody>
+                <tr>
+                  <th>Date</th>
+                  <td py:content="format_date(flight.takeoff_time)">
+                    2012-05-21
+                  </td>
+                </tr>
+                <tr>
+                  <th>Take-off</th>
+                  <td py:content="format_time(flight.takeoff_time)">
+                    10:00
+                  </td>
+                </tr>
+                <tr>
+                  <th>Landing</th>
+                  <td py:content="format_time(flight.landing_time)">
+                    15:00
+                  </td>
+                </tr>
+                <tr>
+                  <th>Score</th>
+                  <td>
+                    ${flight.olc_plus_score} pt
+                    (${flight.olc_classic_distance/1000} km,
+                    triangle ${flight.olc_triangle_distance/1000} km)
+                  </td>
+                </tr>
+                <tr>
+                  <th>Uploaded</th>
+                  <td>
+                    ${format_datetime(flight.time_created)} by ${flight.owner}
+                  </td>
+                </tr>
+                <tr>
+                  <th>Download</th>
+                  <td>
+                    <a href="${flight.get_download_uri()}" py:content="flight.filename">FOO.IGC</a>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+
+            <p>
+              <a href="map">Full-screen map</a>
+            </p>
+          </td>
+
+          <td>
+            <div id="map_canvas" style="width:400pt; height:400pt;"></div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </body>
 </html>
