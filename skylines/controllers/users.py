@@ -19,6 +19,7 @@ class NewUserForm(AddRecordForm):
     __required_fields__ = ['password']
     __limit_fields__ = ['user_name', 'password', 'verify_password', 'email_address', 'display_name']
     __base_validator__ = user_validator
+    user_name = TextField
     email_address = Field(TextField, Email(not_empty=True))
     display_name = TextField
     password = String(min=6)
