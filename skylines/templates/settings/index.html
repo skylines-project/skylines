@@ -1,0 +1,42 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+                      "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:py="http://genshi.edgewall.org/"
+      xmlns:xi="http://www.w3.org/2001/XInclude">
+
+  <xi:include href="master/page.html" />
+
+  <head>
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" py:if="False"/>
+    <title>Settings</title>
+  </head>
+
+  <body>
+    <div class="row">
+      <div class="well span8 offset4">
+        <table>
+          <tr>
+            <th>Login</th>
+            <td py:content="user.user_name">Foo</td>
+          </tr>
+          <tr>
+            <th>EMail</th>
+            <td py:content="user.email_address">Foo</td>
+          </tr>
+          <tr>
+            <th>Full name</th>
+            <td py:content="user.display_name">Foo</td>
+          </tr>
+          <tr>
+            <th>Club</th>
+            <td>
+              <a py:if="user.club" py:content="user.club.name" href="/clubs/id/${user.club.id}/">Foo</a>
+              <span py:if="not user.club" py:strip="True">None</span>
+              (<a href="change_club">Change</a>)
+            </td>
+          </tr>
+        </table>
+      </div>
+    </div>
+  </body>
+</html>

@@ -61,3 +61,4 @@ def init_model(engine):
 # Import your model modules here.
 from skylines.model.auth import User, Group, Permission
 from skylines.model.flight import Flight
+from skylines.model.club import Club

@@ -25,6 +25,7 @@ from sqlalchemy.types import Unicode, Integer, DateTime
 from sqlalchemy.orm import relation, synonym
 
 from skylines.model import DeclarativeBase, metadata, DBSession
+from skylines.model.club import Club
 
 #{ Association tables
 
@@ -114,6 +115,8 @@ class User(DeclarativeBase):
                        info={'rum': {'field':'Password'}})
 
     created = Column(DateTime, default=datetime.now)
+
+    club_id = Column(Integer, ForeignKey('clubs.id'))
 
     #{ Special methods
 
