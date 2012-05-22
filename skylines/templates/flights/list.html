@@ -22,6 +22,7 @@
               <th>Score</th>
               <th>Pilot</th>
               <th>Distance</th>
+              <th>Club</th>
               <th>Time</th>
               <th>File</th>
               <th>Show</th>
@@ -47,6 +48,9 @@
                 <span py:if="flight.olc_classic_distance is not None">
                   <span py:content="flight.olc_classic_distance / 1000">500</span> km
                 </span>
+              </td>
+              <td py:content="(flight.pilot or flight.co_pilot or flight.owner).club">
+                Club name
               </td>
               <td>
                 <span py:replace="flight.takeoff_time.strftime('%H:%M')">10:00</span>-<span py:replace="flight.landing_time.strftime('%H:%M')">15:00</span>
