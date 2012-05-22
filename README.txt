@@ -7,7 +7,7 @@ Installation and Setup
 Install ``SkyLines`` using the setup.py script::
 
     $ cd SkyLines
-    $ python setup.py install
+    $ python setup.py egg_info
 
 Create the project database for any model classes defined::
 
