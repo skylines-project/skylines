@@ -5,7 +5,8 @@ from tg.i18n import ugettext as _, lazy_ugettext as l_
 from repoze.what.predicates import has_permission
 from webob.exc import HTTPNotFound
 from skylines.lib.base import BaseController
-from skylines import model, files
+from skylines import files
+from skylines.model import DBSession, Flight
 from skylines.lib.igc.parser import SimpleParser
 
 class FlightController(BaseController):
@@ -32,14 +33,14 @@ class FlightController(BaseController):
 
         from skylines.lib.analysis import analyse_flight
         analyse_flight(self.flight)
-        model.DBSession.flush()
+        DBSession.flush()
 
         return redirect('/flights/id/' + str(self.flight.id))
 
 class FlightIdController(BaseController):
     @expose()
     def lookup(self, id, *remainder):
-        flight = model.DBSession.query(model.Flight).get(int(id))
+        flight = DBSession.query(Flight).get(int(id))
         if flight is None:
             raise HTTPNotFound
 
@@ -49,15 +50,15 @@ class FlightIdController(BaseController):
 class FlightsController(BaseController):
     @expose('skylines.templates.flights.list')
     def index(self):
-        flights = model.DBSession.query(model.Flight)
+        flights = DBSession.query(Flight)
         return dict(page='flights', flights=flights,
                     files_uri=config['skylines.files.uri'])
 
     @expose('skylines.templates.flights.list')
     def my(self):
-        flights = model.DBSession.query(model.Flight)
+        flights = DBSession.query(Flight)
         if request.identity is not None:
-            flights = flights.filter(model.Flight.owner == request.identity['user'])
+            flights = flights.filter(Flight.owner == request.identity['user'])
         return dict(page='flights', flights=flights,
                     files_uri=config['skylines.files.uri'])
 
@@ -67,9 +68,9 @@ class FlightsController(BaseController):
         """Hidden method that restarts flight analysis."""
 
         from skylines.lib.analysis import analyse_flight
-        for flight in model.DBSession.query(model.Flight):
+        for flight in DBSession.query(Flight):
             analyse_flight(flight)
-            model.DBSession.flush()
+            DBSession.flush()
 
         return redirect('/flights/')
 
