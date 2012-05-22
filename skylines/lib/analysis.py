@@ -1,8 +1,17 @@
 # -*- coding: utf-8 -*-
 
 import os
+import datetime
 from lxml import etree
 from skylines import files
+
+def import_datetime_attribute(node, name):
+    if node is None or not name in node.attrib:
+        return None
+    try:
+        return datetime.datetime.strptime(node.attrib[name], '%Y-%m-%dT%H:%M:%SZ')
+    except ValueError:
+        return None
 
 def find_contest(root, name):
     for contest in root.findall('contest'):
@@ -22,6 +31,10 @@ def analyse_flight(flight):
     doc = etree.parse(f)
     f.close()
     root = doc.getroot()
+
+    times = root.find('times')
+    flight.takeoff_time = import_datetime_attribute(times, "takeoff")
+    flight.landing_time = import_datetime_attribute(times, "landing")
 
     contest = find_contest(root, 'olc_plus')
     if contest is not None:

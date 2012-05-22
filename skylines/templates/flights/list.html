@@ -11,6 +11,8 @@
     <title>Flight list</title>
   </head>
 
+  <?python from babel.dates import format_date ?>
+
   <body>
       <div id="getting_started">
         <table class="list">
@@ -19,13 +21,14 @@
               <th>Date</th>
               <th>Score</th>
               <th>Distance</th>
+              <th>Time</th>
               <th>File</th>
               <th>Show</th>
             </tr>
           </thead>
           <tbody>
             <tr py:for="flight in flights">
-              <td py:content="flight.time_created">
+              <td py:content="format_date(flight.takeoff_time)">
                 2012-05-21
               </td>
               <td py:content="flight.olc_plus_score">
@@ -35,6 +38,9 @@
                 <span py:if="flight.olc_classic_distance is not None">
                   <span py:content="flight.olc_classic_distance / 1000">500</span> km
                 </span>
+              </td>
+              <td>
+                <span py:replace="flight.takeoff_time.strftime('%H:%M')">10:00</span>-<span py:replace="flight.landing_time.strftime('%H:%M')">15:00</span>
               </td>
               <td>
                 <a href="${files_uri}/${flight.filename}" py:content="flight.filename">FOO.IGC</a>
