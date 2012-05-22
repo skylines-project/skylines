@@ -42,10 +42,10 @@ class RootController(BaseController):
     upload = UploadController()
     settings = SettingsController()
 
-    @expose('skylines.templates.index')
+    @expose()
     def index(self):
         """Handle the front-page."""
-        return dict(page = 'index')
+        redirect('/flights/')
 
     @expose('skylines.templates.about')
     def about(self):
