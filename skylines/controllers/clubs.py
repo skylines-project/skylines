@@ -1,11 +1,13 @@
 # -*- coding: utf-8 -*-
 
-from tg import expose, redirect
+from tg import expose, validate, redirect
 from webob.exc import HTTPNotFound
 from sprox.tablebase import TableBase
+from sprox.formbase import AddRecordForm, Field
 from sprox.fillerbase import TableFiller
+from tw.forms import TextField
 from skylines.lib.base import BaseController
-from skylines.model import DBSession, User, Club
+from skylines.model import DBSession, User, Group, Club
 
 class PilotsTable(TableBase):
     __model__ = User
@@ -22,6 +24,14 @@ class PilotsTableFiller(TableFiller):
 pilots_table = PilotsTable(DBSession)
 pilots_filler = PilotsTableFiller(DBSession)
 
+class NewPilotForm(AddRecordForm):
+    __model__ = User
+    __required_fields__ = ['display_name']
+    __limit_fields__ = ['display_name']
+    display_name = TextField
+
+new_pilot_form = NewPilotForm(DBSession)
+
 class ClubController(BaseController):
     def __init__(self, club):
         self.club = club
@@ -33,6 +43,23 @@ class ClubController(BaseController):
     @expose('skylines.templates.clubs.pilots')
     def pilots(self):
         return dict(page='settings', club=self.club, table=pilots_table, value=pilots_filler.get_value(club=self.club))
+
+    @expose('skylines.templates.clubs.new_pilot')
+    def new_pilot(self, **kwargs):
+        return dict(page='settings', form=new_pilot_form)
+
+    @expose()
+    @validate(form=new_pilot_form, error_handler=new_pilot)
+    def create_pilot(self, display_name, **kw):
+        pilot = User(user_name=display_name, display_name=display_name,
+                     club=self.club)
+        DBSession.add(pilot)
+
+        pilots = DBSession.query(Group).filter(Group.group_name=='pilots').first()
+        if pilots:
+            pilots.users.append(pilot)
+
+        redirect('pilots')
 
 class ClubIdController(BaseController):
     @expose()

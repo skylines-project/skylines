@@ -8,14 +8,12 @@
 
   <head>
     <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" py:if="False"/>
-    <title>Club ${club.name}</title>
+    <title>Create Pilot</title>
   </head>
 
   <body>
-    <div py:replace="table(value=value)"/>
+    <h1>Create Pilot</h1>
 
-    <p>
-      <a href="new_pilot">Create Pilot</a>
-    </p>
+    ${form(action='create_pilot')}
   </body>
 </html>
