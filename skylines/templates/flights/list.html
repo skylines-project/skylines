@@ -43,7 +43,7 @@
                 <span py:replace="flight.takeoff_time.strftime('%H:%M')">10:00</span>-<span py:replace="flight.landing_time.strftime('%H:%M')">15:00</span>
               </td>
               <td>
-                <a href="${files_uri}/${flight.filename}" py:content="flight.filename">FOO.IGC</a>
+                <a href="${flight.get_download_uri()}" py:content="flight.filename">FOO.IGC</a>
               </td>
               <td>
                 <a href="/flights/id/${flight.id}">

@@ -49,16 +49,14 @@ class FlightsController(BaseController):
     @expose('skylines.templates.flights.list')
     def index(self):
         flights = DBSession.query(Flight).order_by(desc(Flight.takeoff_time))
-        return dict(page='flights', flights=flights,
-                    files_uri=config['skylines.files.uri'])
+        return dict(page='flights', flights=flights)
 
     @expose('skylines.templates.flights.list')
     def my(self):
         flights = DBSession.query(Flight).order_by(desc(Flight.takeoff_time))
         if request.identity is not None:
             flights = flights.filter(Flight.owner == request.identity['user'])
-        return dict(page='flights', flights=flights,
-                    files_uri=config['skylines.files.uri'])
+        return dict(page='flights', flights=flights)
 
     @expose()
     @require(has_permission('manage'))

@@ -24,3 +24,7 @@ class Flight(DeclarativeBase):
     olc_classic_distance = Column(Integer)
     olc_triangle_distance = Column(Integer)
     olc_plus_score = Column(Integer)
+
+    def get_download_uri(self):
+        from tg import config
+        return config['skylines.files.uri'] + '/' + self.filename
