@@ -37,12 +37,12 @@ class SettingsController(BaseController):
 
     @expose('skylines.templates.settings.index')
     def index(self):
-        user = User.by_user_name(request.identity['repoze.who.userid'])
+        user = request.identity['user']
         return dict(page='settings', user=user)
 
     @expose('skylines.templates.settings.change_club')
     def change_club(self, **kwargs):
-        user = User.by_user_name(request.identity['repoze.who.userid'])
+        user = request.identity['user']
         return dict(page='settings', user=user,
                     select_form=select_club_form,
                     create_form=new_club_form)
@@ -50,7 +50,7 @@ class SettingsController(BaseController):
     @expose()
     @validate(form=select_club_form, error_handler=change_club)
     def select_club(self, club, **kwargs):
-        user = User.by_user_name(request.identity['repoze.who.userid'])
+        user = request.identity['user']
         user.club_id = club
 
         DBSession.flush()
@@ -63,7 +63,7 @@ class SettingsController(BaseController):
         club = Club(name=name)
         DBSession.add(club)
 
-        user = User.by_user_name(request.identity['repoze.who.userid'])
+        user = request.identity['user']
         user.club = club
 
         DBSession.flush()
