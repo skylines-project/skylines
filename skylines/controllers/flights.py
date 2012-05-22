@@ -34,8 +34,6 @@ class FlightController(BaseController):
 
     @expose('skylines.templates.flights.view')
     def index(self):
-        user = request.identity['user']
-
         from skylines.lib.analysis import flight_path
         fixes = flight_path(self.flight)
 
@@ -44,7 +42,7 @@ class FlightController(BaseController):
         fixes = encoder.encode(fixes)
 
         return dict(page='flights', flight=self.flight,
-                    writable=self.flight.owner_id==user.user_id,
+                    writable=self.flight.is_writable(),
                     fixes=fixes)
 
     @expose('skylines.templates.flights.map')

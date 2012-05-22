@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from datetime import datetime
+from tg import request
 from sqlalchemy import *
 from sqlalchemy.orm import relation
 from sqlalchemy import Table, ForeignKey, Column
@@ -35,3 +36,7 @@ class Flight(DeclarativeBase):
     def get_download_uri(self):
         from tg import config
         return config['skylines.files.uri'] + '/' + self.filename
+
+    def is_writable(self):
+        return request.identity and \
+               self.owner_id == request.identity['user'].user_id
