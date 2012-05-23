@@ -45,3 +45,9 @@ While developing you may want the server to reload after changes in package file
     $ paster serve --reload development.ini
 
 Then you are ready to go.
+
+# Authors
+
+ * Tobias Bieniek (<tobias.bieniek@gmx.de>)
+ * Max Kellermann (<max@duempel.org>)
+ * Tobias Lohner (<tobias@lohner-net.de>)
