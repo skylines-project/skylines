@@ -19,8 +19,21 @@ def sanitise_filename(name):
 def filename_to_path(name):
     return os.path.join(config['skylines.files.path'], name)
 
+def next_filename(name):
+    i = name.rfind('.')
+    if i < 0:
+        i = len(name)
+    return name[:i] + '_' + name[i:]
+
 def add_file(name, f):
-    path = filename_to_path(name)
+    while True:
+        path = filename_to_path(name)
+        if not os.access(path, os.F_OK):
+            break
+        name = next_filename(name)
+
     dest = file(path, 'w')
     shutil.copyfileobj(f, dest)
     dest.close()
+
+    return name
