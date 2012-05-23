@@ -104,7 +104,7 @@ class FlightsController(BaseController):
     def index(self):
         flights = DBSession.query(Flight).order_by(desc(Flight.takeoff_time))
         flights = flights.limit(250)
-        return dict(page='flights', flights=flights)
+        return dict(page = 'flights', tab = 'all', flights = flights)
 
     @expose('skylines.templates.flights.list')
     def my(self):
@@ -113,7 +113,7 @@ class FlightsController(BaseController):
             flights = flights.filter(or_(Flight.pilot == request.identity['user'],
                                          Flight.co_pilot == request.identity['user']))
         flights = flights.limit(250)
-        return dict(page='flights', flights=flights)
+        return dict(page = 'flights', tab = 'my', flights = flights)
 
     @expose('skylines.templates.flights.list')
     def my_club(self):
@@ -121,7 +121,7 @@ class FlightsController(BaseController):
         if request.identity is not None and request.identity['user'].club_id:
             flights = flights.filter(Flight.club_id == request.identity['user'].club_id)
         flights = flights.limit(250)
-        return dict(page='flights', flights=flights)
+        return dict(page = 'flights', tab = 'my_club', flights = flights)
 
     @expose('skylines.templates.flights.list')
     def unassigned(self):
@@ -130,7 +130,7 @@ class FlightsController(BaseController):
         if request.identity is not None:
             flights = flights.filter(Flight.owner == request.identity['user'])
         flights = flights.limit(250)
-        return dict(page='flights', flights=flights)
+        return dict(page = 'flights', tab = 'unassigned', flights = flights)
 
     @expose('skylines.templates.flights.list')
     def pilot(self, id):

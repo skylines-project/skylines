@@ -35,12 +35,12 @@
   <?python from babel.dates import format_date ?>
 
   <body>
-    <p>
-      <a href="/flights/">All Flights</a>
-      <a href="/flights/my">My Flights</a>
-      <a href="/flights/my_club">My Club's Flights</a>
-      <a href="/flights/unassigned">Unassigned Flights</a>
-    </p>
+    <ul class="nav nav-tabs">
+      <li class="${('', 'active')[defined('tab') and tab == 'all']}"><a href="/flights/">All Flights</a></li>
+      <li class="${('', 'active')[defined('tab') and tab == 'my']}"><a href="/flights/my">My Flights</a></li>
+      <li class="${('', 'active')[defined('tab') and tab == 'my_club']}"><a href="/flights/my_club">My Club's Flights</a></li>
+      <li class="${('', 'active')[defined('tab') and tab == 'unassigned']}"><a href="/flights/unassigned">Unassigned Flights</a></li>
+    </ul>
 
       <div id="getting_started">
         <table id="flight-table">
@@ -101,7 +101,5 @@
           </tbody>
         </table>
       </div>
-
-      <div class="clearingdiv" />
   </body>
 </html>
