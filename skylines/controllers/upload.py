@@ -42,7 +42,7 @@ class UploadController(BaseController):
             filename = files.add_file(filename, f)
 
             flight = Flight()
-            flight.owner = request.identity['user']
+            flight.owner = user
             flight.filename = filename
             flight.club_id = user.club_id
 
