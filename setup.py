@@ -38,6 +38,7 @@ install_requires=[
     "repoze.what.plugins.sql>=1.0.1",
     "tw.forms",
     "lxml",
+    "cgpolyencode",
     ]
 
 if sys.version_info[:2] == (2,4):
