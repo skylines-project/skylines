@@ -3,11 +3,12 @@
 from tg import expose, validate, request, redirect
 from tg.i18n import ugettext as _, lazy_ugettext as l_
 from repoze.what.predicates import not_anonymous
+from sqlalchemy.sql.expression import and_, or_
 from sprox.formbase import AddRecordForm, EditableForm, Field
 from sprox.widgets import PropertySingleSelectField
 from tw.forms import TextField
 from skylines.lib.base import BaseController
-from skylines.model import DBSession, User, Club
+from skylines.model import DBSession, User, Club, Flight
 
 class ClubSelectField(PropertySingleSelectField):
     def _my_update_params(self, d, nullable=False):
@@ -52,6 +53,14 @@ class SettingsController(BaseController):
     def select_club(self, club, **kwargs):
         user = request.identity['user']
         user.club_id = club
+
+        # assign the user's new club to all of his flights that have
+        # no club yet
+        flights = DBSession.query(Flight)
+        flights = flights.filter(and_(Flight.club_id == None,
+                                      or_(Flight.pilot_id == user.user_id,
+                                          Flight.owner_id == user.user_id)))
+        flights.update({Flight.club_id: club})
 
         DBSession.flush()
 
