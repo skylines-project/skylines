@@ -7,7 +7,16 @@ from skylines.model import DBSession, Flight
 from skylines.lib.analysis import analyse_flight
 
 def IterateFiles(name, f):
-    yield name, f
+    from zipfile import ZipFile
+    try:
+        z = ZipFile(f, 'r')
+    except:
+        f.seek(0)
+        yield name, f
+    else:
+        for info in z.infolist():
+            if info.file_size > 0:
+                yield info.filename, z.open(info.filename, 'r')
 
 class UploadController(BaseController):
     allow_only = has_permission('upload',
