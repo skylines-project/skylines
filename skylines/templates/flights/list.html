@@ -59,7 +59,7 @@
                   2012-05-21
                 </span>
               </td>
-              <td py:content="flight.olc_plus_score">
+              <td class="numeric" py:content="flight.olc_plus_score">
                 500
               </td>
               <td>
@@ -74,7 +74,7 @@
                   [${flight.owner}]
                 </span>
               </td>
-              <td>
+              <td class="numeric">
                 <span py:if="flight.olc_classic_distance is not None">
                   <span py:content="flight.olc_classic_distance / 1000">500</span> km
                 </span>

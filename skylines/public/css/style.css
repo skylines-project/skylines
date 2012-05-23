@@ -61,3 +61,7 @@ footer {
   margin-bottom: 0px;
   padding-bottom: 0px;
 }
+
+.numeric {
+  text-align:right;
+}
