@@ -35,9 +35,9 @@ def analyse_flight(flight):
             md5.update(chunk)
     flight.md5 = md5.hexdigest();
 
-    f = os.popen('/opt/skylines/bin/AnalyseFlight "' + path + '"')
-    doc = etree.parse(f)
-    f.close()
+    with os.popen('/opt/skylines/bin/AnalyseFlight "' + path + '"') as f:
+        doc = etree.parse(f)
+
     root = doc.getroot()
 
     times = root.find('times')
