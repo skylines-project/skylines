@@ -5,6 +5,11 @@ import datetime
 import hashlib
 from lxml import etree
 from skylines import files
+from tg import config
+
+def helper_path(helper):
+    return os.path.join(config['skylines.analysis.path'], helper)
+
 
 def import_datetime_attribute(node, name):
     if node is None or not name in node.attrib:
@@ -35,7 +40,7 @@ def analyse_flight(flight):
             md5.update(chunk)
     flight.md5 = md5.hexdigest();
 
-    with os.popen('/opt/skylines/bin/AnalyseFlight "' + path + '"') as f:
+    with os.popen(helper_path('AnalyseFlight') + ' "' + path + '"') as f:
         try:
             doc = etree.parse(f)
         except etree.Error:
@@ -71,7 +76,7 @@ def analyse_flight(flight):
 
 def flight_path(flight):
     path = files.filename_to_path(flight.filename)
-    f = os.popen('/opt/skylines/bin/FlightPath "' + path + '"')
+    f = os.popen(helper_path('FlightPath') + ' "' + path + '"')
 
     path = []
     for line in f:
