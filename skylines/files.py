@@ -12,6 +12,7 @@ def sanitise_filename(name):
     name = unicodedata.normalize('NFKD', name).encode('ascii', 'ignore')
     name = re.sub(r'[^-_.a-zA-Z0-9]', '_', name)
     name = name.lstrip('.')
+    name = name.lower()
     if name == '':
         name = 'empty'
     return name
