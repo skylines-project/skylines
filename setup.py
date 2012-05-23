@@ -37,6 +37,7 @@ install_requires=[
     "repoze.what-quickstart>=1.0.9",
     "repoze.what.plugins.sql>=1.0.1",
     "tw.forms",
+    "lxml",
     ]
 
 if sys.version_info[:2] == (2,4):

@@ -22,6 +22,8 @@ Install the required libraries to run *SkyLines* using the setup.py script:
 
     $ python setup.py develop
 
+(You might have to install the additional debian packages `libxml2-dev`, `libxslt1-dev` and `python-dev` for the `lxml` dependency)
+
 Create the project database for any model classes defined:
 
     $ paster setup-app development.ini
