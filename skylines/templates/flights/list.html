@@ -21,7 +21,8 @@
           "iDisplayLength": 50,
           "sDom": "rt<'row'<'span8'i><'span8'p>>",
           "aoColumnDefs": [
-            { "bSortable": false, "aTargets": [-1] }
+            { "bSortable": false, "aTargets": [-1] },
+            { "sSortDataType": "dom-text", "sType": "numeric", "aTargets": ["numeric"] },
           ]
         });
       });
@@ -45,9 +46,9 @@
           <thead>
             <tr>
               <th>Date</th>
-              <th>Score</th>
+              <th class="numeric">Score</th>
               <th>Pilot</th>
-              <th>Distance</th>
+              <th class="numeric">Distance</th>
               <th>Club</th>
               <th>Time</th>
               <th>Show</th>
