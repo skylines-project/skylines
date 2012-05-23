@@ -102,7 +102,7 @@ class FlightsController(BaseController):
     @expose('skylines.templates.flights.list')
     def index(self):
         flights = DBSession.query(Flight).order_by(desc(Flight.takeoff_time))
-        flights = flights.limit(50)
+        flights = flights.limit(250)
         return dict(page='flights', flights=flights)
 
     @expose('skylines.templates.flights.list')
@@ -111,7 +111,7 @@ class FlightsController(BaseController):
         if request.identity is not None:
             flights = flights.filter(or_(Flight.pilot == request.identity['user'],
                                          Flight.co_pilot == request.identity['user']))
-        flights = flights.limit(50)
+        flights = flights.limit(250)
         return dict(page='flights', flights=flights)
 
     @expose('skylines.templates.flights.list')
@@ -119,7 +119,7 @@ class FlightsController(BaseController):
         flights = DBSession.query(Flight).order_by(desc(Flight.takeoff_time))
         if request.identity is not None and request.identity['user'].club_id:
             flights = flights.filter(Flight.club_id == request.identity['user'].club_id)
-        flights = flights.limit(50)
+        flights = flights.limit(250)
         return dict(page='flights', flights=flights)
 
     @expose('skylines.templates.flights.list')
@@ -128,7 +128,7 @@ class FlightsController(BaseController):
         flights = flights.filter(Flight.pilot_id == None)
         if request.identity is not None:
             flights = flights.filter(Flight.owner == request.identity['user'])
-        flights = flights.limit(50)
+        flights = flights.limit(250)
         return dict(page='flights', flights=flights)
 
     @expose('skylines.templates.flights.list')
@@ -136,14 +136,14 @@ class FlightsController(BaseController):
         flights = DBSession.query(Flight).filter(or_(Flight.pilot_id==id,
                                                      Flight.co_pilot_id==id))
         flights = flights.order_by(desc(Flight.takeoff_time))
-        flights = flights.limit(50)
+        flights = flights.limit(250)
         return dict(page='flights', flights=flights)
 
     @expose('skylines.templates.flights.list')
     def club(self, id):
         flights = DBSession.query(Flight).filter(Flight.club_id==id)
         flights = flights.order_by(desc(Flight.takeoff_time))
-        flights = flights.limit(50)
+        flights = flights.limit(250)
         return dict(page='flights', flights=flights)
 
     @expose()
