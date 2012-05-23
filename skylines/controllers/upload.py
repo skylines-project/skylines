@@ -26,7 +26,10 @@ class UploadController(BaseController):
         flight.filename = filename
         flight.club_id = user.club_id
 
-        analyse_flight(flight)
+        if not analyse_flight(flight):
+            files.delete_file(filename)
+            flash(_('Failed to parse file'), 'warning')
+            return redirect('.')
 
         if flight.by_md5(flight.md5):
             files.delete_file(filename)

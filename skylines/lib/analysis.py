@@ -36,7 +36,10 @@ def analyse_flight(flight):
     flight.md5 = md5.hexdigest();
 
     with os.popen('/opt/skylines/bin/AnalyseFlight "' + path + '"') as f:
-        doc = etree.parse(f)
+        try:
+            doc = etree.parse(f)
+        except etree.Error:
+            return False
 
     root = doc.getroot()
 
@@ -63,6 +66,8 @@ def analyse_flight(flight):
             flight.olc_plus_score = int(float(trace.attrib['score']))
         else:
             flight.olc_plus_score = None
+
+    return True
 
 def flight_path(flight):
     path = files.filename_to_path(flight.filename)
