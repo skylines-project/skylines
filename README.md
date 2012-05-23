@@ -54,7 +54,7 @@ Then you are ready to go.
 # Contributing
 
 Submit patches to the XCSoar developer mailing list
-(xcsoar-devel@lists.sourceforge.net).
+(<xcsoar-devel@lists.sourceforge.net>).
 
 - patches should be self-contained
 - patches should be self-documenting (add a good description on what
