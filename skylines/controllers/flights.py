@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+from datetime import datetime
 from tg import expose, validate, require, request, redirect, config
 from tg.i18n import ugettext as _, lazy_ugettext as l_
 from repoze.what.predicates import has_permission
@@ -71,6 +72,7 @@ class FlightController(BaseController):
                 if pilot:
                     self.flight.club_id = DBSession.query(User).get(pilot).club_id
             self.flight.co_pilot_id = co_pilot
+            self.flight.time_modified = datetime.now()
             DBSession.flush()
 
         redirect('.')
