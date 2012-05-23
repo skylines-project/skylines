@@ -7,6 +7,15 @@ This project is in an early stage of development.
 *SkyLines* is brought to you by the [XCSoar](http://www.xcsoar.org) project.
 It is free software; the source code is available [here](http://git.xcsoar.org/cgit/mirror/Skylines.git/)
 
+# Getting the source
+
+The *SkyLines* source code is managed with [git](http://www.git-scm.com/).
+It can be downloaded with the following command:
+
+    $ git clone git://git.xcsoar.org/xcsoar/mirror/Skylines.git
+
+For more information, please refer to the [git documentation](http://git-scm.com/documentation).
+
 # Installation and Setup
 
 *SkyLines* is based on the [TurboGears2](http://www.turbogears.org) web framework. For further instructions visit its website. If you don't have it installed yet, install it:
@@ -21,13 +30,9 @@ Install the helper applications from the XCSoar project:
     $ cd /opt/
     $ sudo ln -s <path to xcsoar>/output/UNIX skylines
 
-Clone the *SkyLines* repository to your local drive:
-
-    $ git clone git://git.xcsoar.org/xcsoar/mirror/Skylines.git
-    $ cd Skylines
-
 Install the required libraries to run *SkyLines* using the setup.py script:
 
+    $ cd <path to skylines>
     $ python setup.py develop
 
 *(You might have to install the additional debian packages `libxml2-dev`, `libxslt1-dev` and `python-dev` for the `lxml` dependency)*
@@ -45,6 +50,16 @@ While developing you may want the server to reload after changes in package file
     $ paster serve --reload development.ini
 
 Then you are ready to go.
+
+# Contributing
+
+Submit patches to the XCSoar developer mailing list
+(xcsoar-devel@lists.sourceforge.net).
+
+- patches should be self-contained
+- patches should be self-documenting (add a good description on what
+  is changed, and why you are changing it)
+- write one patch for one change
 
 # License
 
