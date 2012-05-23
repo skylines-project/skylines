@@ -11,9 +11,14 @@ def IterateFiles(name, f):
     try:
         z = ZipFile(f, 'r')
     except:
+        # if f is not a ZipFile
+
+        # reset the pointer to the top of the file
+        # (the ZipFile constructor might have moved it!)
         f.seek(0)
         yield name, f
     else:
+        # if f is a ZipFile
         for info in z.infolist():
             if info.file_size > 0:
                 yield info.filename, z.open(info.filename, 'r')
