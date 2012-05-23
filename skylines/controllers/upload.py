@@ -6,6 +6,9 @@ from skylines import files
 from skylines.model import DBSession, Flight
 from skylines.lib.analysis import analyse_flight
 
+def IterateFiles(name, f):
+    yield name, f
+
 class UploadController(BaseController):
     allow_only = has_permission('upload',
                                 msg=l_("You don't have permission to upload flights."))
@@ -14,30 +17,39 @@ class UploadController(BaseController):
     def index(self):
         return dict(page = 'upload')
 
-    @expose()
+    @expose('skylines.templates.upload.result')
     def do(self, file):
         user = request.identity['user']
 
-        filename = files.sanitise_filename(file.filename)
-        filename = files.add_file(filename, file.file)
+        flights = []
 
-        flight = Flight()
-        flight.owner = request.identity['user']
-        flight.filename = filename
-        flight.club_id = user.club_id
+        for name, f in IterateFiles(file.filename, file.file):
+            filename = files.sanitise_filename(name)
+            filename = files.add_file(filename, f)
 
-        if not analyse_flight(flight):
-            files.delete_file(filename)
-            flash(_('Failed to parse file'), 'warning')
-            return redirect('.')
+            flight = Flight()
+            flight.owner = request.identity['user']
+            flight.filename = filename
+            flight.club_id = user.club_id
 
-        if flight.by_md5(flight.md5):
-            files.delete_file(filename)
-            flash(_('Duplicate flight'), 'warning')
-            return redirect('.')
+            if not analyse_flight(flight):
+                files.delete_file(filename)
+                flights.append((name, None, _('Failed to parse file')))
+                continue
 
-        DBSession.add(flight)
+            other = flight.by_md5(flight.md5)
+            if other:
+                files.delete_file(filename)
+                flights.append((name, other, _('Duplicate file')))
+                continue
+
+            flights.append((name, flight, None))
+            DBSession.add(flight)
+
         DBSession.flush()
 
-        return redirect('/flights/unassigned')
+        return dict(page='upload', flights=flights)
 
+    @expose('skylines.templates.upload.result')
+    def test(self):
+        return dict(page='upload', flights=[('foo.igc', None, None),('bar.igc', None, 'Error!')])
