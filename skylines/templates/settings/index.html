@@ -13,8 +13,8 @@
 
   <body>
     <div class="row">
-      <div class="well span8 offset4">
-        <table>
+      <div class="well span8 offset2">
+        <table class="table">
           <tr>
             <th>Login</th>
             <td py:content="user.user_name">Foo</td>
@@ -32,7 +32,7 @@
             <td>
               <a py:if="user.club" py:content="user.club.name" href="/clubs/id/${user.club.id}/">Foo</a>
               <span py:if="not user.club" py:strip="True">None</span>
-              (<a href="change_club">Change</a>)
+              <a href="change_club" class="btn btn-mini">Change</a>
             </td>
           </tr>
         </table>

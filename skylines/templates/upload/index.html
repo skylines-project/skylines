@@ -13,19 +13,16 @@
 
 <body>
   <div class="row">
-    <div class="well span8 offset4">
+    <div class="well span8 offset2">
       <form action="${tg.url('do')}" method="post" accept-charset="UTF-8" enctype="multipart/form-data">
-        <fieldset>
-          <legend>Upload flight</legend>
-          <div class="clearfix">
-            <label for="file">IGC or ZIP file:</label>
-            <div class="input">
-              <input type="file" id="file" name="file"></input>
-            </div>
+        <div class="control-group">
+          <label class="control-label" for="file">IGC or ZIP file:</label>
+          <div class="controls">
+            <input class="input-file" type="file" id="file" name="file" />
           </div>
-        </fieldset>
+        </div>
         <div class="actions">
-          <input type="submit" id="submit" value="Upload" class="btn primary" />
+          <input type="submit" id="submit" value="Upload" class="btn btn-primary" />
         </div>
       </form>
     </div>

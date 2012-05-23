@@ -65,3 +65,7 @@ footer {
 .numeric {
   text-align:right;
 }
+
+#map_canvas img {
+  max-width: inherit;
+}

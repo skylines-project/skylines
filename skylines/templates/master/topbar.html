@@ -2,8 +2,8 @@
       xmlns:xi="http://www.w3.org/2001/XInclude">
 
 <py:def function="topbar">
-  <div class="topbar">
-    <div class="fill">
+  <div class="navbar navbar-fixed-top">
+    <div class="navbar-inner">
       <div class="container">
         <a class="brand" href="/">SkyLines</a>
         <ul class="nav">
@@ -13,7 +13,7 @@
           <li py:if="request.identity" class="${('', 'active')[defined('page') and page=='settings']}"><a href="${tg.url('/settings/')}">Settings</a></li>
         </ul>
         <py:if test="tg.auth_stack_enabled">
-        <ul class="nav secondary-nav">
+        <ul class="nav pull-right">
           <li py:if="not request.identity" id="login" class="loginlogout"><a href="${tg.url('/login')}">Login</a></li>
           <li py:if="not request.identity" id="register" class="loginlogout"><a href="${tg.url('/users/new')}">Register</a></li>
           <li py:if="request.identity" id="login" class="loginlogout"><a href="${tg.url('/logout_handler')}">Logout</a></li>
