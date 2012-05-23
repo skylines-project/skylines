@@ -8,6 +8,24 @@
 
   <head>
     <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" py:if="False"/>
+    <script src="/js/jquery.js" type="text/javascript" language="javascript" />
+    <script src="/js/jquery.dataTables.js" type="text/javascript" language="javascript" />
+
+    <link href="/css/jquery.dataTables.css" rel="stylesheet" type="text/css" />
+
+    <script type="text/javascript" charset="utf-8">
+    /* <![CDATA[ */
+      $(document).ready(function() {
+        $('#flight-table').dataTable({
+          "bProcessing": true,
+          "sDom": "rt<'row'<'span8'i><'span8'p>>",
+          "aoColumnDefs": [
+            { "bSortable": false, "aTargets": [-1] }
+          ]
+        });
+      });
+    /* ]]> */
+    </script>
     <title>Flight list</title>
   </head>
 
@@ -22,7 +40,7 @@
     </p>
 
       <div id="getting_started">
-        <table class="list">
+        <table id="flight-table">
           <thead>
             <tr>
               <th>Date</th>
