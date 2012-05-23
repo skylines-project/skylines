@@ -13,6 +13,14 @@ It is free software; the source code is available [here](http://git.xcsoar.org/c
 
     $ easy_install -i http://tg.gy/current tg.devtools
 
+Install the helper applications from the XCSoar project:
+
+    $ git clone git://git.xcsoar.org/xcsoar/master/xcsoar.git
+    $ cd xcsoar
+    $ make TARGET=UNIX output/UNIX/bin/AnalyseFlight output/UNIX/bin/FlightPath
+    $ cd /opt/
+    $ sudo ln -s <path to xcsoar>/output/UNIX skylines
+
 Clone the *SkyLines* repository to your local drive:
 
     $ git clone git://git.xcsoar.org/xcsoar/mirror/Skylines.git
