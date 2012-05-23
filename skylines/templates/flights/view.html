@@ -58,20 +58,26 @@
               <tbody>
                 <tr>
                   <th>Date</th>
-                  <td py:content="format_date(flight.takeoff_time)">
-                    2012-05-21
+                  <td>
+                    <span py:if="flight.takeoff_time" py:replace="format_date(flight.takeoff_time)">
+                      2012-05-21
+                    </span>
                   </td>
                 </tr>
                 <tr>
                   <th>Take-off</th>
-                  <td py:content="format_time(flight.takeoff_time)">
-                    10:00
+                  <td>
+                    <span py:if="flight.takeoff_time" py:replace="format_time(flight.takeoff_time)">
+                      10:00
+                    </span>
                   </td>
                 </tr>
                 <tr>
                   <th>Landing</th>
-                  <td py:content="format_time(flight.landing_time)">
-                    15:00
+                  <td>
+                    <span py:if="flight.landing_time" py:replace="format_time(flight.landing_time)">
+                      15:00
+                    </span>
                   </td>
                 </tr>
                 <tr>

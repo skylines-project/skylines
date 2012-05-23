@@ -36,8 +36,10 @@
           </thead>
           <tbody>
             <tr py:for="flight in flights">
-              <td py:content="format_date(flight.takeoff_time)">
-                2012-05-21
+              <td>
+                <span py:if="flight.takeoff_time" py:replace="format_date(flight.takeoff_time)">
+                  2012-05-21
+                </span>
               </td>
               <td py:content="flight.olc_plus_score">
                 500
@@ -65,7 +67,9 @@
                 </a>
               </td>
               <td>
-                <span py:replace="flight.takeoff_time.strftime('%H:%M')">10:00</span>-<span py:replace="flight.landing_time.strftime('%H:%M')">15:00</span>
+                <span py:if="flight.takeoff_time and flight.landing_time" py:strip="True">
+                  <span py:replace="flight.takeoff_time.strftime('%H:%M')">10:00</span>-<span py:replace="flight.landing_time.strftime('%H:%M')">15:00</span>
+                </span>
               </td>
               <td>
                 <a href="/flights/id/${flight.id}/">
