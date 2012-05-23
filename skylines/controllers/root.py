@@ -13,7 +13,6 @@ from skylines.controllers.error import ErrorController
 from skylines.controllers.users import UsersController
 from skylines.controllers.clubs import ClubsController
 from skylines.controllers.flights import FlightsController
-from skylines.controllers.upload import UploadController
 from skylines.controllers.settings import SettingsController
 
 __all__ = ['RootController']
@@ -39,7 +38,6 @@ class RootController(BaseController):
     users = UsersController()
     clubs = ClubsController()
     flights = FlightsController()
-    upload = UploadController()
     settings = SettingsController()
 
     @expose()

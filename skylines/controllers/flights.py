@@ -11,6 +11,7 @@ from sprox.widgets import PropertySingleSelectField
 from skylines.lib.base import BaseController
 from skylines import files
 from skylines.model import DBSession, User, Flight
+from skylines.controllers.upload import UploadController
 
 class PilotSelectField(PropertySingleSelectField):
     def _my_update_params(self, d, nullable=False):
@@ -159,3 +160,4 @@ class FlightsController(BaseController):
         return redirect('/flights/')
 
     id = FlightIdController()
+    upload = UploadController()

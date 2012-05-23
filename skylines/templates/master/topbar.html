@@ -9,7 +9,7 @@
         <ul class="nav">
           <li class="${('', 'active')[defined('page') and page=='about']}"><a href="${tg.url('/about')}">About</a></li>
           <li class="${('', 'active')[defined('page') and page=='flights']}"><a href="${tg.url('/flights/')}">Flights</a></li>
-          <li class="${('', 'active')[defined('page') and page=='upload']}"><a href="${tg.url('/upload/')}">Upload</a></li>
+          <li class="${('', 'active')[defined('page') and page=='upload']}"><a href="${tg.url('/flights/upload/')}">Upload</a></li>
           <li py:if="request.identity" class="${('', 'active')[defined('page') and page=='settings']}"><a href="${tg.url('/settings/')}">Settings</a></li>
         </ul>
         <py:if test="tg.auth_stack_enabled">
