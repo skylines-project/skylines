@@ -42,9 +42,9 @@
   <body>
     <ul class="nav nav-tabs">
       <li class="${('', 'active')[defined('tab') and tab == 'all']}"><a href="/flights/">All Flights</a></li>
-      <li class="${('', 'active')[defined('tab') and tab == 'my']}"><a href="/flights/my">My Flights</a></li>
-      <li class="${('', 'active')[defined('tab') and tab == 'my_club']}"><a href="/flights/my_club">My Club's Flights</a></li>
-      <li class="${('', 'active')[defined('tab') and tab == 'unassigned']}"><a href="/flights/unassigned">Unassigned Flights</a></li>
+      <li py:if="request.identity" class="${('', 'active')[defined('tab') and tab == 'my']}"><a href="/flights/my">My Flights</a></li>
+      <li py:if="request.identity and request.identity['user'].club_id" class="${('', 'active')[defined('tab') and tab == 'my_club']}"><a href="/flights/my_club">My Club's Flights</a></li>
+      <li py:if="request.identity" class="${('', 'active')[defined('tab') and tab == 'unassigned']}"><a href="/flights/unassigned">Unassigned Flights</a></li>
       <li class="${('', 'active')[defined('tab') and tab == 'top']}"><a href="/flights/top">Top Pilots</a></li>
     </ul>
 
