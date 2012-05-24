@@ -2,14 +2,23 @@ from tg import expose, request, redirect, flash
 from tg.i18n import ugettext as _, lazy_ugettext as l_
 from repoze.what.predicates import has_permission
 from tw.forms import TableForm
-from tw.forms.fields import FileField
+from tw.forms.fields import FileField, SingleSelectField
 from skylines.lib.base import BaseController
 from skylines import files
-from skylines.model import DBSession, Flight
+from skylines.model import DBSession, User, Flight
 from skylines.lib.analysis import analyse_flight
+
+class PilotSelectField(SingleSelectField):
+    def update_params(self, d):
+        users = DBSession.query(User).filter(User.club_id == request.identity['user'].club_id)
+        options = [(None, '[unspecified]')] + \
+                  [(user.user_id, user) for user in users]
+        d['options'] = options
+        return SingleSelectField.update_params(self, d)
 
 upload_form = TableForm('upload_form', submit_text="Upload", action='do', children=[
     FileField('file', label_text="IGC or ZIP file"),
+    PilotSelectField('pilot', label_text="Pilot"),
 ])
 
 def IterateFiles(name, f):
@@ -38,7 +47,7 @@ class UploadController(BaseController):
         return dict(page='upload', form=upload_form)
 
     @expose('skylines.templates.upload.result')
-    def do(self, file):
+    def do(self, file, pilot):
         user = request.identity['user']
 
         flights = []
@@ -51,6 +60,7 @@ class UploadController(BaseController):
             flight.owner = user
             flight.filename = filename
             flight.club_id = user.club_id
+            flight.pilot_id = pilot
 
             if not analyse_flight(flight):
                 files.delete_file(filename)
