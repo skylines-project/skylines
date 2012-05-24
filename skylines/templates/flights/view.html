@@ -4,7 +4,7 @@
       xmlns:py="http://genshi.edgewall.org/"
       xmlns:xi="http://www.w3.org/2001/XInclude">
 
-  <xi:include href="master/fullscreen.html" />
+  <xi:include href="master/page.html" />
 
 <head>
   <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" py:if="False"/>
@@ -50,103 +50,92 @@
   <?python from babel.dates import format_date, format_time, format_datetime ?>
 
   <body onload="initialize();">
-    <div class="container">
-      <div class="content">
-        <div class="page-header">
-          <h1>Flights</h1>
-        </div>
-        <div class="row">
-          <div class="span4">
-            <table class="table">
-              <tbody>
-                <tr>
-                  <th>Date</th>
-                  <td>
-                    <span py:if="flight.takeoff_time" py:replace="format_date(flight.takeoff_time)">
-                      2012-05-21
-                    </span>
-                  </td>
-                </tr>
-                <tr>
-                  <th>Take-off</th>
-                  <td>
-                    <span py:if="flight.takeoff_time" py:replace="format_time(flight.takeoff_time)">
-                      10:00
-                    </span>
-                  </td>
-                </tr>
-                <tr>
-                  <th>Landing</th>
-                  <td>
-                    <span py:if="flight.landing_time" py:replace="format_time(flight.landing_time)">
-                      15:00
-                    </span>
-                  </td>
-                </tr>
-                <tr>
-                  <th>Score</th>
-                  <td>
-                    ${flight.olc_plus_score} pt
-                    <span py:if="flight.olc_classic_distance is not None">
-                      (${flight.olc_classic_distance/1000} km,
-                    </span>
-                    <span py:if="flight.olc_triangle_distance is not None">
-                      triangle ${flight.olc_triangle_distance/1000} km
-                    </span>
-                  </td>
-                </tr>
-                <tr>
-                  <th>Pilot</th>
-                  <td>
-                    <a py:if="flight.pilot" py:content="flight.pilot" href="/flights/pilot/${flight.pilot_id}">
-                      Pilot Name
-                    </a>
-                    <br py:if="flight.pilot and flight.co_pilot"/>
-                    <a py:if="flight.co_pilot" py:content="flight.co_pilot" href="/flights/pilot/${flight.co_pilot_id}">
-                      Co-Pilot Name
-                    </a>
-                    <span py:if="not flight.pilot and not flight.co_pilot" py:strip="True">
-                      [unspecified]
-                    </span>
-                    <a py:if="writable" href="change_pilot">[Change]</a>
-                  </td>
-                </tr>
-                <tr>
-                  <th>Club</th>
-                  <td>
-                    <a py:if="flight.club" py:content="flight.club" href="/flights/club/${flight.club_id}">
-                      Club Name
-                    </a>
-                  </td>
-                </tr>
-                <tr>
-                  <th>Uploaded</th>
-                  <td>
-                    ${format_datetime(flight.time_created)} by ${flight.owner}
-                  </td>
-                </tr>
-                <tr>
-                  <th>Download</th>
-                  <td>
-                    <a href="${flight.get_download_uri()}" py:content="flight.filename">FOO.IGC</a>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
+    <div class="row">
+      <div class="span4">
+        <table class="table">
+          <tbody>
+            <tr>
+              <th>Date</th>
+              <td>
+                <span py:if="flight.takeoff_time" py:replace="format_date(flight.takeoff_time)">
+                  2012-05-21
+                </span>
+              </td>
+            </tr>
+            <tr>
+              <th>Take-off</th>
+              <td>
+                <span py:if="flight.takeoff_time" py:replace="format_time(flight.takeoff_time)">
+                  10:00
+                </span>
+              </td>
+            </tr>
+            <tr>
+              <th>Landing</th>
+              <td>
+                <span py:if="flight.landing_time" py:replace="format_time(flight.landing_time)">
+                  15:00
+                </span>
+              </td>
+            </tr>
+            <tr>
+              <th>Score</th>
+              <td>
+                ${flight.olc_plus_score} pt
+                <span py:if="flight.olc_classic_distance is not None">
+                  (${flight.olc_classic_distance/1000} km,
+                </span>
+                <span py:if="flight.olc_triangle_distance is not None">
+                  triangle ${flight.olc_triangle_distance/1000} km
+                </span>
+              </td>
+            </tr>
+            <tr>
+              <th>Pilot</th>
+              <td>
+                <a py:if="flight.pilot" py:content="flight.pilot" href="/flights/pilot/${flight.pilot_id}">
+                  Pilot Name
+                </a>
+                <br py:if="flight.pilot and flight.co_pilot"/>
+                <a py:if="flight.co_pilot" py:content="flight.co_pilot" href="/flights/pilot/${flight.co_pilot_id}">
+                  Co-Pilot Name
+                </a>
+                <span py:if="not flight.pilot and not flight.co_pilot" py:strip="True">
+                  [unspecified]
+                </span>
+                <a py:if="writable" href="change_pilot">[Change]</a>
+              </td>
+            </tr>
+            <tr>
+              <th>Club</th>
+              <td>
+                <a py:if="flight.club" py:content="flight.club" href="/flights/club/${flight.club_id}">
+                  Club Name
+                </a>
+              </td>
+            </tr>
+            <tr>
+              <th>Uploaded</th>
+              <td>
+                ${format_datetime(flight.time_created)} by ${flight.owner}
+              </td>
+            </tr>
+            <tr>
+              <th>Download</th>
+              <td>
+                <a href="${flight.get_download_uri()}" py:content="flight.filename">FOO.IGC</a>
+              </td>
+            </tr>
+          </tbody>
+        </table>
 
-            <p>
-              <a href="map" class="btn">Full-screen map</a>
-            </p>
-          </div>
-          <div class="span8">
-            <div id="map_canvas" style="width:100%; height:400pt;"></div>
-          </div>
-        </div>
+        <p>
+          <a href="map" class="btn">Full-screen map</a>
+        </p>
       </div>
-
-      <footer>
-        <p>&copy; <a href="http://www.xcsoar.org/">The XCSoar Project</a></p>
-      </footer>
+      <div class="span8">
+        <div id="map_canvas" style="width:100%; height:400pt;"></div>
+      </div>
     </div>
   </body>
 </html>
