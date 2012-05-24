@@ -105,10 +105,7 @@ class FlightIdController(BaseController):
         return controller, remainder
 
 class FlightsController(BaseController):
-    @expose('genshi:skylines.templates.flights.list')
-    def index(self, **kw):
-        flights = DBSession.query(Flight)
-
+    def _do_list(self, tab, flights, kw):
         if kw.get("json", "false")  == 'true':
             columns = { 0: 'takeoff_time', 1 : 'olc_plus_score', 2: 'pilot_id', 3: 'olc_classic_distance',
                         4: 'club_id', 5: 'takeoff_time', 6: 'id' }
@@ -125,53 +122,54 @@ class FlightsController(BaseController):
                 limit = int(config.get('skylines.lists.server_side', 250))
 
             flights = flights.order_by(desc(Flight.takeoff_time)).limit(limit)
-            return dict(page = 'flights', tab = 'all', flights = flights, flights_count = flights_count)
+            return dict(page = 'flights', tab = tab, flights = flights, flights_count = flights_count)
+
+    @expose('genshi:skylines.templates.flights.list')
+    def index(self, **kw):
+        flights = DBSession.query(Flight)
+
+        return self._do_list('all', flights, kw)
 
     @expose('skylines.templates.flights.list')
-    def my(self):
+    def my(self, **kw):
         flights = DBSession.query(Flight).order_by(desc(Flight.takeoff_time))
         if request.identity is not None:
             flights = flights.filter(or_(Flight.pilot == request.identity['user'],
                                          Flight.co_pilot == request.identity['user']))
-        flights_count = flights.count()
-        flights = flights.limit(250)
-        return dict(page = 'flights', tab = 'my', flights = flights, flights_count = flights_count)
+
+        return self._do_list('my', flights, kw)
 
     @expose('skylines.templates.flights.list')
-    def my_club(self):
+    def my_club(self, **kw):
         flights = DBSession.query(Flight).order_by(desc(Flight.takeoff_time))
         if request.identity is not None and request.identity['user'].club_id:
             flights = flights.filter(Flight.club_id == request.identity['user'].club_id)
-        flights_count = flights.count()
-        flights = flights.limit(250)
-        return dict(page = 'flights', tab = 'my_club', flights = flights, flights_count = flights_count)
+
+        return self._do_list('my_club', flights, kw)
 
     @expose('skylines.templates.flights.list')
-    def unassigned(self):
+    def unassigned(self, **kw):
         flights = DBSession.query(Flight).order_by(desc(Flight.takeoff_time))
         flights = flights.filter(Flight.pilot_id == None)
         if request.identity is not None:
             flights = flights.filter(Flight.owner == request.identity['user'])
-        flights_count = flights.count()
-        flights = flights.limit(250)
-        return dict(page = 'flights', tab = 'unassigned', flights = flights, flights_count = flights_count)
+
+        return self._do_list('unassigned', flights, kw)
 
     @expose('skylines.templates.flights.list')
-    def pilot(self, id):
+    def pilot(self, id, **kw):
         flights = DBSession.query(Flight).filter(or_(Flight.pilot_id==id,
                                                      Flight.co_pilot_id==id))
         flights = flights.order_by(desc(Flight.takeoff_time))
-        flights_count = flights.count()
-        flights = flights.limit(250)
-        return dict(page='flights', flights=flights, flights_count = flights_count)
+
+        return self._do_list('pilot', flights, kw)
 
     @expose('skylines.templates.flights.list')
-    def club(self, id):
+    def club(self, id, **kw):
         flights = DBSession.query(Flight).filter(Flight.club_id==id)
         flights = flights.order_by(desc(Flight.takeoff_time))
-        flights_count = flights.count()
-        flights = flights.limit(250)
-        return dict(page='flights', flights=flights, flights_count = flights_count)
+
+        return self._do_list('club', flights, kw)
 
     @expose('skylines.templates.flights.top')
     def top(self):
