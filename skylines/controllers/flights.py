@@ -18,7 +18,9 @@ from skylines.lib.datatables import GetDatatableRecords
 
 class PilotSelectField(PropertySingleSelectField):
     def _my_update_params(self, d, nullable=False):
-        users = DBSession.query(User).filter(User.club_id == request.identity['user'].club_id)
+        users = DBSession.query(User) \
+                .filter(User.club_id == request.identity['user'].club_id) \
+                .order_by(User.display_name)
         options = [(None, 'None')] + \
                   [(user.user_id, user) for user in users]
         d['options'] = options

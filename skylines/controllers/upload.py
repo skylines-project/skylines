@@ -11,7 +11,9 @@ from skylines.lib.analysis import analyse_flight
 
 class PilotSelectField(SingleSelectField):
     def update_params(self, d):
-        users = DBSession.query(User).filter(User.club_id == request.identity['user'].club_id)
+        users = DBSession.query(User) \
+                .filter(User.club_id == request.identity['user'].club_id) \
+                .order_by(User.display_name)
         options = [(None, '[unspecified]')] + \
                   [(user.user_id, user) for user in users]
         d['options'] = options
