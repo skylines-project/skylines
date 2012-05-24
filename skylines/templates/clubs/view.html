@@ -6,6 +6,8 @@
 
   <xi:include href="master/page.html" />
 
+  <?python from babel.dates import format_datetime ?>
+
   <head>
     <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" py:if="False"/>
     <title>Club ${club.name}</title>
@@ -18,6 +20,14 @@
           <tr>
             <th>Name</th>
             <td py:content="club.name">Foo</td>
+          </tr>
+
+          <tr>
+            <th>Created</th>
+            <td>
+              ${format_datetime(club.time_created)}
+              <span py:if="club.owner" py:strip="True"> by <a href="/users/id/${club.owner_id}/">${club.owner}</a></span>
+            </td>
           </tr>
         </table>
 

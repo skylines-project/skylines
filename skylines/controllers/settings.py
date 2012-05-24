@@ -61,10 +61,12 @@ class SettingsController(BaseController):
     @expose()
     @validate(form=new_club_form, error_handler=change_club)
     def create_club(self, name, **kw):
+        user = request.identity['user']
+
         club = Club(name=name)
+        club.owner_id = user.user_id
         DBSession.add(club)
 
-        user = request.identity['user']
         user.club = club
 
         DBSession.flush()

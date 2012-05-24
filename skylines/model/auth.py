@@ -25,7 +25,6 @@ from sqlalchemy.types import Unicode, Integer, DateTime
 from sqlalchemy.orm import relation, synonym
 
 from skylines.model import DeclarativeBase, metadata, DBSession
-from skylines.model.club import Club
 
 #{ Association tables
 
