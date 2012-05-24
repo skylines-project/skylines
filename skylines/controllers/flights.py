@@ -111,7 +111,10 @@ class FlightsController(BaseController):
                         4: 'club_id', 5: 'takeoff_time', 6: 'id' }
 
             flights, response_dict = GetDatatableRecords(kw, flights, columns)
-            override_template(self.index, 'mako:skylines.templates.flights.list_m')
+
+            method = tab
+            if method == 'all': method = 'index'
+            override_template(getattr(self, method), 'mako:skylines.templates.flights.list_m')
             return dict(response_dict=response_dict, flights = flights)
 
         else:
