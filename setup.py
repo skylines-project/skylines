@@ -24,6 +24,12 @@ testpkgs=['WebTest >= 1.2.3',
                ]
 install_requires=[
     "TurboGears2 >= 2.1.4",
+
+    # Pylons 1.0.1 breaks, because it depends on "WebOb>=1.1.1", but
+    # TurboGears2 depends on "WebOb==1.0.8"
+    "Pylons >= 0.9.7",
+    "Pylons <= 1.0",
+
     "Genshi",
     "zope.sqlalchemy >= 0.4",
     "repoze.tm2 >= 1.0a5",
