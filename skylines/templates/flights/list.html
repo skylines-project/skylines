@@ -12,15 +12,16 @@
     <script src="/js/jquery.dataTables.js" type="text/javascript" language="javascript" />
     <script src="/js/jquery.dataTables.ext.js" type="text/javascript" language="javascript" />
 
-    <link href="/css/jquery.dataTables.css" rel="stylesheet" type="text/css" />
+    <link href="/css/dataTables.bootstrap.css" rel="stylesheet" type="text/css" />
 
     <script type="text/javascript" charset="utf-8">
     /* <![CDATA[ */
       $(document).ready(function() {
         $('#flight-table').dataTable({
           "bProcessing": true,
+          "sPaginationType": "bootstrap",
           "iDisplayLength": 50,
-          "sDom": "rt<'row'<'span8'i><'span8'p>>",
+          "sDom": "<'row'<'span6'i><'span6'p>>rt<'row'<'span6'i><'span6'p>>",
           "aaSorting": [[ 0, "desc" ]],
           "aoColumnDefs": [
             { "bSortable": false, "aTargets": [-1] },
@@ -44,7 +45,7 @@
     </ul>
 
       <div id="getting_started">
-        <table id="flight-table">
+        <table id="flight-table" class="table table-striped">
           <thead>
             <tr>
               <th>Date</th>
