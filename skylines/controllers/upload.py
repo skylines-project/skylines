@@ -6,6 +6,7 @@ from tw.forms.fields import FileField, SingleSelectField
 from skylines.lib.base import BaseController
 from skylines import files
 from skylines.model import DBSession, User, Flight
+from skylines.lib.md5 import file_md5
 from skylines.lib.analysis import analyse_flight
 
 class PilotSelectField(SingleSelectField):
@@ -56,23 +57,28 @@ class UploadController(BaseController):
 
         for name, f in IterateFiles(file.filename, file.file):
             filename = files.sanitise_filename(name)
+
+            # check if the file already exists
+            md5 = file_md5(f)
+            other = Flight.by_md5(md5)
+            if other:
+                flights.append((name, other, _('Duplicate file')))
+                continue
+
+            f.seek(0)
+
             filename = files.add_file(filename, f)
 
             flight = Flight()
             flight.owner = user
             flight.filename = filename
+            flight.md5 = md5
             flight.club_id = user.club_id
             flight.pilot_id = pilot
 
             if not analyse_flight(flight):
                 files.delete_file(filename)
                 flights.append((name, None, _('Failed to parse file')))
-                continue
-
-            other = flight.by_md5(flight.md5)
-            if other:
-                files.delete_file(filename)
-                flights.append((name, other, _('Duplicate file')))
                 continue
 
             flights.append((name, flight, None))
