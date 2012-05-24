@@ -5,7 +5,7 @@
   "sEcho": ${response_dict['sEcho']},
   "aaData": [
   % for flight in flights:
-    ["${flight.takeoff_time.strftime('%x')}",
+    ["${flight.takeoff_time and flight.takeoff_time.strftime('%x')}",
      ${flight.olc_plus_score},
      "\
        % if flight.pilot:
@@ -20,7 +20,7 @@
      ",
      "${flight.olc_classic_distance and str(flight.olc_classic_distance/1000)} km",
      "${flight.club}",
-     "${flight.takeoff_time.strftime('%H:%M') + "-" + flight.landing_time.strftime('%H:%M')}",
+     "${flight.takeoff_time and flight.landing_time and flight.takeoff_time.strftime('%H:%M') + "-" + flight.landing_time.strftime('%H:%M')}",
      "<a href=\"/flights/id/${flight.id}\">Show</a>"]\
      % if loop.last != True:
      ,
