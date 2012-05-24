@@ -20,7 +20,10 @@
         $('#flight-table').dataTable({
           "bProcessing": true,
           "sPaginationType": "bootstrap",
-          "iDisplayLength": 50,
+          "iDisplayLength": ${repr(int(config.get('skylines.lists.display_length', 50)))},
+          "iDeferLoading": ${flights_count},
+          "bServerSide": (${flights_count} > ${repr(int(config.get('skylines.lists.server_side', 250)))})?true:false,
+          "sAjaxSource": (${flights_count} > ${repr(int(config.get('skylines.lists.server_side', 250)))})?"${request.url}?json=true":null,
           "sDom": "<'row'<'span6'i><'span6'p>>rt<'row'<'span6'i><'span6'p>>",
           "aaSorting": [[ 0, "desc" ]],
           "aoColumnDefs": [
