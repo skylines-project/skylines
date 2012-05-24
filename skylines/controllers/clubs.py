@@ -12,7 +12,7 @@ from skylines.model import DBSession, User, Group, Club
 
 class PilotsTable(TableBase):
     __model__ = User
-    __limit_fields__ = ['display_name', 'email_address']
+    __limit_fields__ = ['display_name']
     __omit_fields__ = ['__actions__']
 
 class PilotsTableFiller(TableFiller):
