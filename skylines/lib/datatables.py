@@ -33,7 +33,7 @@ def GetDatatableRecords(kw, querySet, columnIndexNameMap):
                                 sortedColName = columnIndexNameMap[sortedColID]
                                 sortingDirection = kw.get('sSortDir_' + str(sortedColIndex), 'asc')
                                 if sortingDirection == 'desc':
-                                        sortedColName = '-' + sortedColName
+                                        sortedColName = desc(sortedColName)
                                 asortingCols.append(sortedColName)
 
                 querySet = querySet.order_by(*asortingCols)
