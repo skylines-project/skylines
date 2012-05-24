@@ -10,6 +10,7 @@
     <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" py:if="False"/>
     <script src="/js/jquery.js" type="text/javascript" language="javascript" />
     <script src="/js/jquery.dataTables.js" type="text/javascript" language="javascript" />
+    <script src="/js/jquery.dataTables.ext.js" type="text/javascript" language="javascript" />
 
     <link href="/css/jquery.dataTables.css" rel="stylesheet" type="text/css" />
 
@@ -23,7 +24,7 @@
           "aaSorting": [[ 0, "desc" ]],
           "aoColumnDefs": [
             { "bSortable": false, "aTargets": [-1] },
-            { "sSortDataType": "dom-text", "sType": "numeric", "aTargets": ["numeric"] },
+            { "sType": "numeric-comma-formatted", "aTargets": ["numeric"] },
           ]
         });
       });
