@@ -1,0 +1,44 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+                      "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:py="http://genshi.edgewall.org/"
+      xmlns:xi="http://www.w3.org/2001/XInclude">
+
+  <xi:include href="master/page.html" />
+
+  <head>
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" py:if="False"/>
+    <title>Top 20</title>
+  </head>
+
+  <body>
+    <ul class="nav nav-tabs">
+      <li class="${('', 'active')[defined('tab') and tab == 'all']}"><a href="/flights/">All Flights</a></li>
+      <li class="${('', 'active')[defined('tab') and tab == 'my']}"><a href="/flights/my">My Flights</a></li>
+      <li class="${('', 'active')[defined('tab') and tab == 'my_club']}"><a href="/flights/my_club">My Club's Flights</a></li>
+      <li class="${('', 'active')[defined('tab') and tab == 'unassigned']}"><a href="/flights/unassigned">Unassigned Flights</a></li>
+      <li class="${('', 'active')[defined('tab') and tab == 'top']}"><a href="/flights/top">Top Pilots</a></li>
+    </ul>
+
+    <div id="getting_started">
+      <table id="flight-table" class="table table-striped">
+        <thead>
+          <th>Name</th>
+          <th class="numeric">Flights</th>
+          <th class="numeric">Total Score</th>
+        </thead>
+        <tbody>
+          <tr py:for="pilot,count,total in result">
+            <td>
+              <a py:content="pilot" href="/flights/pilot/${pilot.user_id}">
+                Pilot Name
+              </a>
+            </td>
+            <td class="numeric">${count}</td>
+            <td class="numeric">${total} pt</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </body>
+</html>

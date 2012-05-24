@@ -6,6 +6,7 @@ from tg.i18n import ugettext as _, lazy_ugettext as l_
 from repoze.what.predicates import has_permission
 from webob.exc import HTTPNotFound
 from sqlalchemy.sql.expression import desc, or_
+from sqlalchemy import func
 from sprox.formbase import EditableForm
 from sprox.widgets import PropertySingleSelectField
 from skylines.lib.base import BaseController
@@ -148,6 +149,18 @@ class FlightsController(BaseController):
         flights = flights.order_by(desc(Flight.takeoff_time))
         flights = flights.limit(250)
         return dict(page='flights', flights=flights)
+
+    @expose('skylines.templates.flights.top')
+    def top(self):
+        subq = DBSession.query(Flight.pilot_id,
+                               func.count('*').label('count'),
+                               func.sum(Flight.olc_plus_score).label('total')) \
+               .group_by(Flight.pilot_id).subquery()
+        result = DBSession.query(User, subq.c.count, subq.c.total) \
+                 .join((subq, subq.c.pilot_id == User.user_id))
+        result = result.order_by(desc('total'))
+        result = result.limit(20)
+        return dict(page='flights', tab='top', result=result)
 
     @expose()
     @require(has_permission('manage'))
