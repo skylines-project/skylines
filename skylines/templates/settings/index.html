@@ -35,6 +35,14 @@
               <a href="change_club" class="btn btn-mini">Change</a>
             </td>
           </tr>
+          <tr py:if="request.identity and 'manage' in request.identity['permissions']">
+            <th>Groups</th>
+            <td>
+              <ul>
+                <li py:for="group in user.groups" py:content="group">Group name</li>
+              </ul>
+            </td>
+          </tr>
         </table>
       </div>
     </div>
