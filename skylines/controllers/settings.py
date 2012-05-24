@@ -12,7 +12,7 @@ from skylines.model import DBSession, User, Club, Flight
 
 class ClubSelectField(PropertySingleSelectField):
     def _my_update_params(self, d, nullable=False):
-        clubs = DBSession.query(Club).all()
+        clubs = DBSession.query(Club).order_by(Club.name).all()
         options = [(None, 'None')] + \
                   [(club.id, club.name) for club in clubs]
         d['options'] = options
