@@ -8,6 +8,7 @@
 
 <head py:match="head" py:attrs="select('@*')" once="true">
   <meta py:replace="select('*')"/>
+  <title py:if="defined('title')">${title}</title>
 </head>
 
 <body py:match="body" py:attrs="select('@*')" once="true">
@@ -16,10 +17,10 @@
   <div class="container">
 
     <div class="content">
-      <py:if test="defined('page')">
+      <py:if test="defined('title')">
       <div class="page-header">
         <h1>
-          <span py:replace="page"/>
+          <span py:replace="title"/>
           <py:if test="defined('tagline')">
           <small><span py:replace="tagline"/></small>
           </py:if>
