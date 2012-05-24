@@ -1,10 +1,16 @@
 from tg import expose, request, redirect, flash
 from tg.i18n import ugettext as _, lazy_ugettext as l_
 from repoze.what.predicates import has_permission
+from tw.forms import TableForm
+from tw.forms.fields import FileField
 from skylines.lib.base import BaseController
 from skylines import files
 from skylines.model import DBSession, Flight
 from skylines.lib.analysis import analyse_flight
+
+upload_form = TableForm('upload_form', submit_text="Upload", action='do', children=[
+    FileField('file', label_text="IGC or ZIP file"),
+])
 
 def IterateFiles(name, f):
     from zipfile import ZipFile
@@ -29,7 +35,7 @@ class UploadController(BaseController):
 
     @expose('skylines.templates.upload.index')
     def index(self):
-        return dict(page = 'upload')
+        return dict(page='upload', form=upload_form)
 
     @expose('skylines.templates.upload.result')
     def do(self, file):

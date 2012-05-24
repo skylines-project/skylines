@@ -14,17 +14,7 @@
 <body>
   <div class="row">
     <div class="well span8 offset2">
-      <form action="${tg.url('do')}" method="post" accept-charset="UTF-8" enctype="multipart/form-data">
-        <div class="control-group">
-          <label class="control-label" for="file">IGC or ZIP file:</label>
-          <div class="controls">
-            <input class="input-file" type="file" id="file" name="file" />
-          </div>
-        </div>
-        <div class="actions">
-          <input type="submit" id="submit" value="Upload" class="btn btn-primary" />
-        </div>
-      </form>
+      ${form()}
     </div>
   </div>
 </body>
