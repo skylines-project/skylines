@@ -108,7 +108,6 @@ class FlightsController(BaseController):
     @expose('genshi:skylines.templates.flights.list')
     def index(self, **kw):
         flights = DBSession.query(Flight)
-        flights_count = flights.count()
 
         if kw.get("json", "false")  == 'true':
             columns = { 0: 'takeoff_time', 1 : 'olc_plus_score', 2: 'pilot_id', 3: 'olc_classic_distance',
@@ -119,6 +118,7 @@ class FlightsController(BaseController):
             return dict(response_dict=response_dict, flights = flights)
 
         else:
+            flights_count = flights.count()
             if flights_count > int(config.get('skylines.lists.server_side', 250)):
                 limit = int(config.get('skylines.lists.display_length', 50))
             else:
