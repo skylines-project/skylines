@@ -126,6 +126,12 @@
                 <a href="${flight.get_download_uri()}" py:content="flight.filename">FOO.IGC</a>
               </td>
             </tr>
+            <tr py:if="flight.may_delete()">
+              <th>Actions</th>
+              <td>
+                <a href="delete" class="btn btn-mini">Delete</a>
+              </td>
+            </tr>
           </tbody>
         </table>
 

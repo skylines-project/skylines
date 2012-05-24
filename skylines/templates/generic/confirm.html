@@ -1,0 +1,29 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+                      "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:py="http://genshi.edgewall.org/"
+      xmlns:xi="http://www.w3.org/2001/XInclude">
+
+  <xi:include href="master/page.html" />
+
+  <head>
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" py:if="False"/>
+  </head>
+
+  <body>
+    <div class="row">
+      <div class="well span8 offset2">
+        <p py:content="question">
+          The question?
+        </p>
+
+        <p>
+          <form action="${action}" method="post">
+            <input type="submit" name="yes" value="Yes"/>
+          </form>
+          <a href="${cancel}" class="btn">No</a>
+        </p>
+      </div>
+    </div>
+  </body>
+</html>

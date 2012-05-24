@@ -47,3 +47,7 @@ class Flight(DeclarativeBase):
                (self.owner_id == request.identity['user'].user_id or
                 self.pilot_id == request.identity['user'].user_id or
                 'manage' in request.identity['permissions'])
+
+    def may_delete(self):
+        from tg import request
+        return request.identity and 'manage' in request.identity['permissions']

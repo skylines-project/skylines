@@ -101,6 +101,19 @@ class FlightController(BaseController):
 
         return redirect('/flights/id/' + str(self.flight.id))
 
+    @expose('skylines.templates.generic.confirm')
+    @require(has_permission('manage'))
+    def delete(self, yes=False):
+        if yes:
+            files.delete_file(self.flight.filename)
+            DBSession.delete(self.flight)
+
+            redirect('/flights/')
+        else:
+            return dict(title='Delete Flight',
+                        question='Are you sure you want to delete this flight?',
+                        action='', cancel='.')
+
 class FlightIdController(BaseController):
     @expose()
     def lookup(self, id, *remainder):
