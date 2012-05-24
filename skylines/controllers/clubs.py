@@ -44,9 +44,6 @@ class ClubController(BaseController):
 
     @expose('skylines.templates.clubs.pilots')
     def pilots(self):
-        if not self.club.is_writable():
-            raise HTTPForbidden
-
         return dict(page='settings', club=self.club, table=pilots_table, value=pilots_filler.get_value(club=self.club))
 
     @expose('skylines.templates.generic.form')
