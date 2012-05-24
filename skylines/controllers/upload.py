@@ -81,6 +81,11 @@ class UploadController(BaseController):
                 flights.append((name, None, _('Failed to parse file')))
                 continue
 
+            if not flight.takeoff_time or not flight.landing_time:
+                files.delete_file(filename)
+                flights.append((name, None, _('No flight found in file')))
+                continue
+
             flights.append((name, flight, None))
             DBSession.add(flight)
 
