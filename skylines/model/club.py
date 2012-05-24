@@ -17,3 +17,9 @@ class Club(DeclarativeBase):
 
     def __unicode__(self):
         return self.name
+
+    def is_writable(self):
+        from tg import request
+        return request.identity and \
+               (self.id == request.identity['user'].club_id or
+                'manage' in request.identity['permissions'])

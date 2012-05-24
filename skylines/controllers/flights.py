@@ -5,7 +5,7 @@ from tg import expose, validate, require, request, redirect, config
 from tg.i18n import ugettext as _, lazy_ugettext as l_
 from tg.decorators import override_template
 from repoze.what.predicates import has_permission
-from webob.exc import HTTPNotFound
+from webob.exc import HTTPNotFound, HTTPForbidden
 from sqlalchemy.sql.expression import desc, or_
 from sqlalchemy import func
 from sprox.formbase import EditableForm
@@ -48,7 +48,6 @@ class FlightController(BaseController):
         fixes = encoder.encode(fixes)
 
         return dict(page='flights', flight=self.flight,
-                    writable=self.flight.is_writable(),
                     fixes=fixes)
 
     @expose('skylines.templates.flights.map')
@@ -64,6 +63,9 @@ class FlightController(BaseController):
 
     @expose('skylines.templates.generic.form')
     def change_pilot(self):
+        if not self.flight.is_writable():
+            raise HTTPForbidden
+
         return dict(page='settings', title=_('Select Pilot'),
                     form=select_pilot_form,
                     values=dict(pilot=self.flight.pilot_id, co_pilot=self.flight.co_pilot_id))
@@ -71,6 +73,9 @@ class FlightController(BaseController):
     @expose()
     @validate(form=select_pilot_form, error_handler=change_pilot)
     def select_pilot(self, pilot, co_pilot, **kwargs):
+        if not self.flight.is_writable():
+            raise HTTPForbidden
+
         user = request.identity['user']
         if self.flight.owner_id == user.user_id:
             if self.flight.pilot_id != pilot:

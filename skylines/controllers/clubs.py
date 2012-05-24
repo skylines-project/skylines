@@ -2,7 +2,7 @@
 
 from tg import expose, validate, redirect
 from tg.i18n import ugettext as _, lazy_ugettext as l_
-from webob.exc import HTTPNotFound
+from webob.exc import HTTPNotFound, HTTPForbidden
 from sprox.tablebase import TableBase
 from sprox.formbase import AddRecordForm, Field
 from sprox.fillerbase import TableFiller
@@ -44,16 +44,25 @@ class ClubController(BaseController):
 
     @expose('skylines.templates.clubs.pilots')
     def pilots(self):
+        if not self.club.is_writable():
+            raise HTTPForbidden
+
         return dict(page='settings', club=self.club, table=pilots_table, value=pilots_filler.get_value(club=self.club))
 
     @expose('skylines.templates.generic.form')
     def new_pilot(self, **kwargs):
+        if not self.club.is_writable():
+            raise HTTPForbidden
+
         return dict(page='settings', title=_("Create Pilot"),
                     form=new_pilot_form, values={})
 
     @expose()
     @validate(form=new_pilot_form, error_handler=new_pilot)
     def create_pilot(self, display_name, **kw):
+        if not self.club.is_writable():
+            raise HTTPForbidden
+
         pilot = User(user_name=display_name, display_name=display_name,
                      club=self.club)
         DBSession.add(pilot)

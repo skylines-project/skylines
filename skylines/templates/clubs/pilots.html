@@ -14,7 +14,7 @@
   <body>
     <div py:replace="table(value=value)"/>
 
-    <p>
+    <p py:if="club.is_writable()">
       <a href="new_pilot" class="btn">Create Pilot</a>
     </p>
   </body>

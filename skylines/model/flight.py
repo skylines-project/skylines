@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 
 from datetime import datetime
-from tg import request
 from sqlalchemy import *
 from sqlalchemy.orm import relation
 from sqlalchemy import Table, ForeignKey, Column
@@ -43,5 +42,8 @@ class Flight(DeclarativeBase):
         return config['skylines.files.uri'] + '/' + self.filename
 
     def is_writable(self):
+        from tg import request
         return request.identity and \
-               self.owner_id == request.identity['user'].user_id
+               (self.owner_id == request.identity['user'].user_id or
+                self.pilot_id == request.identity['user'].user_id or
+                'manage' in request.identity['permissions'])

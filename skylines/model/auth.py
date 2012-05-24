@@ -194,6 +194,12 @@ class User(DeclarativeBase):
         hash.update(password + str(self.password[:64]))
         return self.password[64:] == hash.hexdigest()
 
+    def is_writable(self):
+        from tg import request
+        return request.identity and \
+               (self.user_id == request.identity['user'].user_id or
+                (self.password is None and self.club_id == request.identity['user'].club_id) or
+                'manage' in request.identity['permissions'])
 
 class Permission(DeclarativeBase):
     """
