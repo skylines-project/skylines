@@ -8,14 +8,16 @@
 
   <head>
     <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" py:if="False"/>
-    <title>Upload flight</title>
+    <title>${title}</title>
   </head>
 
-<body>
-  <div class="row">
-    <div class="well span8 offset2">
-      ${form()}
+  <body>
+    <h1>${title}</h1>
+
+    <div class="row">
+      <div class="well span8 offset2">
+        ${form(values)}
+      </div>
     </div>
-  </div>
-</body>
+  </body>
 </html>

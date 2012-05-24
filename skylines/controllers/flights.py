@@ -25,6 +25,7 @@ class SelectPilotForm(EditableForm):
     __model__ = Flight
     __hide_fields__ = ['id']
     __limit_fields__ = ['pilot', 'co_pilot']
+    __base_widget_args__ = dict(action='select_pilot')
     pilot = PilotSelectField
     co_pilot = PilotSelectField
 
@@ -58,10 +59,11 @@ class FlightController(BaseController):
 
         return dict(page='flights', fixes=fixes)
 
-    @expose('skylines.templates.flights.change_pilot')
+    @expose('skylines.templates.generic.form')
     def change_pilot(self):
-        return dict(page='settings', flight=self.flight,
-                    form=select_pilot_form)
+        return dict(page='settings', title=_('Select Pilot'),
+                    form=select_pilot_form,
+                    values=dict(pilot=self.flight.pilot_id, co_pilot=self.flight.co_pilot_id))
 
     @expose()
     @validate(form=select_pilot_form, error_handler=change_pilot)
