@@ -59,17 +59,16 @@ class UploadController(BaseController):
 
         for name, f in IterateFiles(file.filename, file.file):
             filename = files.sanitise_filename(name)
+            filename = files.add_file(filename, f)
 
             # check if the file already exists
-            md5 = file_md5(f)
-            other = Flight.by_md5(md5)
-            if other:
-                flights.append((name, other, _('Duplicate file')))
-                continue
-
-            f.seek(0)
-
-            filename = files.add_file(filename, f)
+            with files.open_file(filename) as f:
+                md5 = file_md5(f)
+                other = Flight.by_md5(md5)
+                if other:
+                    files.delete_file(filename)
+                    flights.append((name, other, _('Duplicate file')))
+                    continue
 
             flight = Flight()
             flight.owner = user

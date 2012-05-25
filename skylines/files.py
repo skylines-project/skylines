@@ -21,6 +21,9 @@ def sanitise_filename(name):
 def filename_to_path(name):
     return os.path.join(config['skylines.files.path'], name)
 
+def open_file(name):
+    return file(filename_to_path(name))
+
 def next_filename(name):
     i = name.rfind('.')
     if i < 0:
