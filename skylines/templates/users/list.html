@@ -1,0 +1,41 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+                      "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:py="http://genshi.edgewall.org/"
+      xmlns:xi="http://www.w3.org/2001/XInclude">
+
+  <xi:include href="master/page.html" />
+
+  <head>
+    <title>Users</title>
+  </head>
+
+  <?python from babel.dates import format_date ?>
+
+  <body>
+    <div id="getting_started">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr py:for="user in users">
+            <td>
+              <a href="/flights/pilot/${user.user_id}" py:content="user">
+                Name
+              </a>
+            </td>
+            <td>
+              <a href="/flights/pilot/${user.user_id}" class="btn btn-mini">Flights</a>
+              <a href="id/${user.user_id}/" class="btn btn-mini">Info</a>
+              <a py:if="user.is_writable()" href="id/${user.user_id}/edit" class="btn btn-mini">Edit</a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </body>
+</html>

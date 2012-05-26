@@ -2,7 +2,8 @@
 
 from tg import expose, validate, redirect
 from tg.i18n import ugettext as _, lazy_ugettext as l_
-from sprox.formbase import AddRecordForm, Field
+from webob.exc import HTTPNotFound, HTTPForbidden
+from sprox.formbase import AddRecordForm, EditableForm, Field
 from sprox.widgets import PropertySingleSelectField
 from formencode import Schema
 from formencode.validators import FieldsMatch, Email, String
@@ -37,7 +38,66 @@ class NewUserForm(AddRecordForm):
 
 new_user_form = NewUserForm(DBSession)
 
+class EditUserForm(EditableForm):
+    __model__ = User
+    __hide_fields__ = ['user_id']
+    __limit_fields__ = ['user_name', 'email_address', 'display_name', 'club']
+    __base_widget_args__ = dict(action='save')
+    user_name = TextField
+    email_address = Field(TextField, Email(not_empty=True))
+    display_name = TextField
+    club = ClubSelectField
+
+edit_user_form = EditUserForm(DBSession)
+
+class UserController(BaseController):
+    def __init__(self, user):
+        self.user = user
+
+    @expose('skylines.templates.users.view')
+    def index(self):
+        return dict(page='settings', user=self.user)
+
+    @expose('skylines.templates.generic.form')
+    def edit(self, **kwargs):
+        if not self.user.is_writable():
+            raise HTTPForbidden
+
+        return dict(page='settings', title=_('Edit User'),
+                    form=edit_user_form,
+                    values=self.user)
+
+    @expose()
+    @validate(form=edit_user_form, error_handler=edit)
+    def save(self, user_name, email_address, display_name, club, **kwargs):
+        if not self.user.is_writable():
+            raise HTTPForbidden
+
+        self.user.user_name = user_name
+        self.user.email_address = email_address
+        self.user.display_name = display_name
+        if not club: club = None
+        self.user.club_id = club
+        DBSession.flush()
+
+        redirect('.')
+
+class UserIdController(BaseController):
+    @expose()
+    def lookup(self, id, *remainder):
+        user = DBSession.query(User).get(int(id))
+        if user is None:
+            raise HTTPNotFound
+
+        controller = UserController(user)
+        return controller, remainder
+
 class UsersController(BaseController):
+    @expose('skylines.templates.users.list')
+    def index(self):
+        users = DBSession.query(User).order_by(User.display_name)
+        return dict(page='settings', users=users)
+
     @expose('skylines.templates.users.new')
     def new(self, **kwargs):
         return dict(page='users', form=new_user_form)
@@ -55,3 +115,5 @@ class UsersController(BaseController):
             pilots.users.append(user)
 
         redirect('/')
+
+    id = UserIdController()

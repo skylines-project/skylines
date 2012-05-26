@@ -194,6 +194,10 @@ class User(DeclarativeBase):
         hash.update(password + str(self.password[:64]))
         return self.password[64:] == hash.hexdigest()
 
+    def is_readable(self):
+        """Does the current user have full read access to this object?"""
+        return self.is_writable()
+
     def is_writable(self):
         from tg import request
         return request.identity and \
