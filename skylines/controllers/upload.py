@@ -74,8 +74,16 @@ class UploadController(BaseController):
             flight.owner = user
             flight.filename = filename
             flight.md5 = md5
-            flight.club_id = user.club_id
-            flight.pilot_id = pilot
+
+            if pilot:
+                pilot = DBSession.query(User).get(int(pilot))
+                if pilot:
+                    flight.pilot_id = pilot.user_id
+            if pilot:
+                flight.club_id = pilot.club_id
+            else:
+                # fall back to the uploader's club
+                flight.club_id = user.club_id
 
             if not analyse_flight(flight):
                 files.delete_file(filename)
