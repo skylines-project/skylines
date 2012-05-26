@@ -5,18 +5,10 @@ from tg.i18n import ugettext as _, lazy_ugettext as l_
 from repoze.what.predicates import not_anonymous
 from sqlalchemy.sql.expression import and_, or_
 from sprox.formbase import AddRecordForm, EditableForm, Field
-from sprox.widgets import PropertySingleSelectField
 from tw.forms import TextField
 from skylines.lib.base import BaseController
 from skylines.model import DBSession, User, Club, Flight
-
-class ClubSelectField(PropertySingleSelectField):
-    def _my_update_params(self, d, nullable=False):
-        clubs = DBSession.query(Club).order_by(Club.name).all()
-        options = [(None, 'None')] + \
-                  [(club.id, club.name) for club in clubs]
-        d['options'] = options
-        return d
+from skylines.controllers.users import ClubSelectField
 
 class SelectClubForm(EditableForm):
     __model__ = User
