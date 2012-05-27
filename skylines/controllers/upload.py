@@ -55,6 +55,14 @@ class UploadController(BaseController):
     def do(self, file, pilot):
         user = request.identity['user']
 
+        pilot_id = None
+        club_id = user.club_id
+        if pilot:
+            pilot = DBSession.query(User).get(int(pilot))
+            if pilot:
+                pilot_id = pilot.user_id
+                club_id = pilot.club_id
+
         flights = []
 
         for name, f in IterateFiles(file.filename, file.file):
@@ -74,16 +82,8 @@ class UploadController(BaseController):
             flight.owner = user
             flight.filename = filename
             flight.md5 = md5
-
-            if pilot:
-                pilot = DBSession.query(User).get(int(pilot))
-                if pilot:
-                    flight.pilot_id = pilot.user_id
-            if pilot:
-                flight.club_id = pilot.club_id
-            else:
-                # fall back to the uploader's club
-                flight.club_id = user.club_id
+            flight.pilot_id = pilot_id
+            flight.club_id = club_id
 
             if not analyse_flight(flight):
                 files.delete_file(filename)
