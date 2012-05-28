@@ -3,9 +3,7 @@
 from tg import expose, validate, redirect
 from tg.i18n import ugettext as _, lazy_ugettext as l_
 from webob.exc import HTTPNotFound, HTTPForbidden
-from sprox.tablebase import TableBase
 from sprox.formbase import AddRecordForm, EditableForm, Field
-from sprox.fillerbase import TableFiller
 from formencode import validators
 from tw.forms import TextField
 from skylines.lib.base import BaseController
@@ -20,21 +18,6 @@ class EditClubForm(EditableForm):
     website = Field(TextField, validators.URL())
 
 edit_club_form = EditClubForm(DBSession)
-
-class PilotsTable(TableBase):
-    __model__ = User
-    __limit_fields__ = ['display_name']
-    __omit_fields__ = ['__actions__']
-
-class PilotsTableFiller(TableFiller):
-    __model__ = User
-
-    def _do_get_provider_count_and_objs(self, club, **kw):
-        pilots = club.members
-        return len(pilots), pilots
-
-pilots_table = PilotsTable(DBSession)
-pilots_filler = PilotsTableFiller(DBSession)
 
 class NewPilotForm(AddRecordForm):
     __model__ = User
@@ -74,9 +57,10 @@ class ClubController(BaseController):
 
         redirect('.')
 
-    @expose('skylines.templates.clubs.pilots')
+    @expose('skylines.templates.users.list')
     def pilots(self):
-        return dict(page='settings', club=self.club, table=pilots_table, value=pilots_filler.get_value(club=self.club))
+        users = DBSession.query(User).order_by(User.display_name)
+        return dict(page='settings', club=self.club, users=self.club.members)
 
     @expose('skylines.templates.generic.form')
     def new_pilot(self, **kwargs):

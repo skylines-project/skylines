@@ -7,18 +7,25 @@
   <xi:include href="master/page.html" />
 
   <head>
-    <title>Users</title>
+    <title py:if="defined('club')">
+      Members of club "<a href="/clubs/id/${club.id}/">${club}</a>"
+    </title>
+    <title py:if="not defined('club')">Users</title>
   </head>
 
   <?python from babel.dates import format_date ?>
 
   <body>
+    <h3 py:if="defined('club')">
+      Members of club "<a href="/clubs/id/${club.id}/">${club}</a>"
+    </h3>
+
     <div id="getting_started">
       <table class="table table-striped">
         <thead>
           <tr>
             <th>Name</th>
-            <th>Club</th>
+            <th py:if="not defined('club')">Club</th>
             <th>Actions</th>
           </tr>
         </thead>
@@ -29,19 +36,23 @@
                 Name
               </a>
             </td>
-            <td>
+            <td py:if="not defined('club')">
               <a href="/clubs/id/${user.club_id}/" py:content="user.club">
                 Name
               </a>
             </td>
             <td>
               <a href="/flights/pilot/${user.user_id}" class="btn btn-mini">Flights</a>
-              <a href="id/${user.user_id}/" class="btn btn-mini">Info</a>
-              <a py:if="user.is_writable()" href="id/${user.user_id}/edit" class="btn btn-mini">Edit</a>
+              <a href="/users/id/${user.user_id}/" class="btn btn-mini">Info</a>
+              <a py:if="user.is_writable()" href="/users/id/${user.user_id}/edit" class="btn btn-mini">Edit</a>
             </td>
           </tr>
         </tbody>
       </table>
     </div>
+
+    <p py:if="defined('club') and club.is_writable()">
+      <a href="new_pilot" class="btn">Create Pilot</a>
+    </p>
   </body>
 </html>
