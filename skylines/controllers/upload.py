@@ -1,3 +1,4 @@
+from tempfile import TemporaryFile
 from tg import expose, request, redirect, flash
 from tg.i18n import ugettext as _, lazy_ugettext as l_
 from repoze.what.predicates import has_permission
@@ -42,6 +43,15 @@ def IterateFiles(name, f):
                 yield info.filename, z.open(info.filename, 'r')
 
 def IterateUploadFiles(upload):
+    if isinstance(upload, unicode):
+        # some Android versions send the IGC file as a string, not as
+        # a file
+        with TemporaryFile() as f:
+            f.write(upload.encode('UTF-8'))
+            f.seek(0)
+            yield 'direct.igc', f
+        return
+
     for x in IterateFiles(upload.filename, upload.file):
         yield x
 
