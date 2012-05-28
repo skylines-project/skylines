@@ -20,7 +20,9 @@ class Club(DeclarativeBase):
 
     website = Column(Unicode(255))
 
-    members = relation('User', primaryjoin=(User.club_id==id), backref='club')
+    members = relation('User', primaryjoin=(User.club_id==id),
+                       order_by=(User.display_name),
+                       backref='club')
     flights = relation('Flight', backref='club')
 
     def __unicode__(self):
