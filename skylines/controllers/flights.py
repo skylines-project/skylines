@@ -138,7 +138,10 @@ class FlightsController(BaseController):
         if filter is not None:
             flights = flights.filter(filter)
 
-        flights = flights.order_by(desc(Flight.takeoff_time))
+        if date:
+            flights = flights.order_by(desc(Flight.olc_plus_score))
+        else:
+            flights = flights.order_by(desc(Flight.takeoff_time))
 
         if kw.get("json", "false")  == 'true':
             columns = { 0: 'takeoff_time', 1 : 'olc_plus_score', 2: 'pilot_id', 3: 'olc_classic_distance',
