@@ -32,6 +32,7 @@
         </table>
 
         <p>
+          <a py:if="club.is_writable()" href="edit" class="btn">Edit</a>
           <a href="/flights/club/${club.id}" class="btn">Flights</a>
           <a href="pilots" class="btn">Members</a>
         </p>
