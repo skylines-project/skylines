@@ -1,0 +1,38 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+                      "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:py="http://genshi.edgewall.org/"
+      xmlns:xi="http://www.w3.org/2001/XInclude">
+
+  <xi:include href="master/page.html" />
+
+  <head>
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" py:if="False"/>
+    <title>Top 20</title>
+  </head>
+
+  <body>
+    <xi:include href="nav.html" />
+
+    <div id="getting_started">
+      <table id="flight-table" class="table table-striped">
+        <thead>
+          <th>Name</th>
+          <th class="numeric">Flights</th>
+          <th class="numeric">Total Score</th>
+        </thead>
+        <tbody>
+          <tr py:for="club,count,total in result">
+            <td>
+              <a py:if="club.id" py:content="club" href="/flights/club/${club.id}">
+                Club Name
+              </a>
+            </td>
+            <td class="numeric">${count}</td>
+            <td class="numeric">${total} pt</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </body>
+</html>
