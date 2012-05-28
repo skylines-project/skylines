@@ -41,6 +41,10 @@ def IterateFiles(name, f):
             if info.file_size > 0:
                 yield info.filename, z.open(info.filename, 'r')
 
+def IterateUploadFiles(upload):
+    for x in IterateFiles(upload.filename, upload.file):
+        yield x
+
 class UploadController(BaseController):
     allow_only = has_permission('upload',
                                 msg=l_("You don't have permission to upload flights."))
@@ -65,7 +69,7 @@ class UploadController(BaseController):
 
         flights = []
 
-        for name, f in IterateFiles(file.filename, file.file):
+        for name, f in IterateUploadFiles(file):
             filename = files.sanitise_filename(name)
             filename = files.add_file(filename, f)
 
