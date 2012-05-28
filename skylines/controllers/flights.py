@@ -69,6 +69,8 @@ class FlightController(BaseController):
             raise HTTPForbidden
 
         return dict(page='settings', title=_('Select Pilot'),
+                    user=request.identity['user'],
+                    include_after='flights/after_change_pilot.html',
                     form=select_pilot_form,
                     values=dict(pilot=self.flight.pilot_id, co_pilot=self.flight.co_pilot_id))
 
