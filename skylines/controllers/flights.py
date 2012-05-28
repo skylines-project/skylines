@@ -165,8 +165,12 @@ class FlightsController(BaseController):
                         date=date, pilot=pilot, club=club,
                         flights = flights, flights_count = flights_count)
 
-    @expose('skylines.templates.flights.list')
+    @expose()
     def index(self, **kw):
+        redirect('today')
+
+    @expose('skylines.templates.flights.list')
+    def all(self, **kw):
         return self._do_list('all', kw)
 
     @expose('skylines.templates.flights.list')
