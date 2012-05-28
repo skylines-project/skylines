@@ -24,6 +24,7 @@
       <table id="flight-table" class="table table-striped">
         <thead>
           <th>Name</th>
+          <th>Club</th>
           <th class="numeric">Flights</th>
           <th class="numeric">Total Score</th>
         </thead>
@@ -32,6 +33,11 @@
             <td>
               <a py:content="pilot" href="/flights/pilot/${pilot.user_id}">
                 Pilot Name
+              </a>
+            </td>
+            <td>
+              <a py:if="pilot.club_id" py:content="pilot.club" href="/flights/club/${pilot.club_id}">
+                Club Name
               </a>
             </td>
             <td class="numeric">${count}</td>
