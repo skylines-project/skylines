@@ -206,7 +206,7 @@ class FlightsController(BaseController):
 
         return self._do_list('club', kw, club=club)
 
-    @expose('skylines.templates.flights.top')
+    @expose('skylines.templates.flights.top_pilots')
     def top(self):
         subq = DBSession.query(Flight.pilot_id,
                                func.count('*').label('count'),
