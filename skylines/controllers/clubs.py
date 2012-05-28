@@ -6,6 +6,7 @@ from webob.exc import HTTPNotFound, HTTPForbidden
 from sprox.tablebase import TableBase
 from sprox.formbase import AddRecordForm, EditableForm, Field
 from sprox.fillerbase import TableFiller
+from formencode import validators
 from tw.forms import TextField
 from skylines.lib.base import BaseController
 from skylines.model import DBSession, User, Group, Club
@@ -13,9 +14,10 @@ from skylines.model import DBSession, User, Group, Club
 class EditClubForm(EditableForm):
     __model__ = Club
     __hide_fields__ = ['id']
-    __limit_fields__ = ['name']
+    __limit_fields__ = ['name', 'website']
     __base_widget_args__ = dict(action='save')
     name = TextField
+    website = Field(TextField, validators.URL())
 
 edit_club_form = EditClubForm(DBSession)
 
@@ -62,11 +64,12 @@ class ClubController(BaseController):
 
     @expose()
     @validate(form=edit_club_form, error_handler=edit)
-    def save(self, name, **kwargs):
+    def save(self, name, website, **kwargs):
         if not self.club.is_writable():
             raise HTTPForbidden
 
         self.club.name = name
+        self.club.website = website
         DBSession.flush()
 
         redirect('.')

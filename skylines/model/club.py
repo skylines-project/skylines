@@ -18,6 +18,8 @@ class Club(DeclarativeBase):
     owner = relation('User', primaryjoin=(owner_id==User.user_id))
     time_created = Column(DateTime, nullable=False, default=datetime.now)
 
+    website = Column(Unicode(255))
+
     members = relation('User', primaryjoin=(User.club_id==id), backref='club')
     flights = relation('Flight', backref='club')
 

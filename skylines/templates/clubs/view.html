@@ -22,6 +22,11 @@
             <td py:content="club.name">Foo</td>
           </tr>
 
+          <tr py:if="club.website is not None">
+            <th>Website</th>
+            <td><a target="_blank" href="${club.website}" py:content="club.website"/></td>
+          </tr>
+
           <tr>
             <th>Created</th>
             <td>
