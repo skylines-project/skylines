@@ -6,12 +6,9 @@ import re
 from tg import config
 
 def sanitise_filename(name):
-    import unicodedata
-    if not isinstance(name, unicode):
-        name = unicode(name)
     name = os.path.basename(name)
-    name = unicodedata.normalize('NFKD', name).encode('ascii', 'ignore')
     name = re.sub(r'[^-_.a-zA-Z0-9]', '_', name)
+    name = unicode(name)
     name = name.lstrip('.')
     name = name.lower()
     if name == '':
