@@ -146,7 +146,9 @@ class FlightsController(BaseController):
             method = tab
             if method == 'all': method = 'index'
             override_template(getattr(self, method), 'mako:skylines.templates.flights.list_m')
-            return dict(response_dict=response_dict, flights = flights)
+            return dict(response_dict=response_dict,
+                        pilot=pilot, club=club,
+                        flights = flights)
 
         else:
             flights_count = flights.count()

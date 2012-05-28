@@ -19,7 +19,13 @@
        % endif
      ",
      "${flight.olc_classic_distance and str(flight.olc_classic_distance/1000)} km",
-     "${flight.club}",
+     % if not club and not pilot:
+     "\
+       % if flight.club:
+         <a href=\"/clubs/id/${flight.club_id}/\">${flight.club}</a>\
+       % endif
+     ",
+     % endif
      "${flight.takeoff_time and flight.landing_time and flight.takeoff_time.strftime('%H:%M') + "-" + flight.landing_time.strftime('%H:%M')}",
      "<a href=\"/flights/id/${flight.id}/\">Show</a>"]\
      % if loop.last != True:

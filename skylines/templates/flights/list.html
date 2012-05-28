@@ -67,7 +67,7 @@
               <th class="numeric">Score</th>
               <th>Pilot</th>
               <th class="numeric">Distance</th>
-              <th>Club</th>
+              <th py:if="not club and not pilot">Club</th>
               <th>Time</th>
               <th>Show</th>
             </tr>
@@ -99,7 +99,7 @@
                   <span py:content="flight.olc_classic_distance / 1000">500</span> km
                 </span>
               </td>
-              <td>
+              <td py:if="not club and not pilot">
                 <a py:if="flight.club" py:content="flight.club" href="/flights/club/${flight.club_id}">
                   Club Name
                 </a>
