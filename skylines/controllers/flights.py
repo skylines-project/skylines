@@ -156,7 +156,9 @@ class FlightsController(BaseController):
                 limit = int(config.get('skylines.lists.server_side', 250))
 
             flights = flights.order_by(desc(Flight.takeoff_time)).limit(limit)
-            return dict(page = 'flights', tab = tab, flights = flights, flights_count = flights_count)
+            return dict(page = 'flights', tab = tab,
+                        pilot=pilot, club=club,
+                        flights = flights, flights_count = flights_count)
 
     @expose('skylines.templates.flights.list')
     def index(self, **kw):

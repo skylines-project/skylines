@@ -34,7 +34,10 @@
       });
     /* ]]> */
     </script>
-    <title>Flight list</title>
+
+    <title py:if="pilot">Flights of pilot "${pilot}"</title>
+    <title py:if="club">Flights of club "${club}"</title>"
+    <title py:if="not pilot and not club">Flight list</title>
   </head>
 
   <?python from babel.dates import format_date ?>
@@ -47,6 +50,14 @@
       <li py:if="request.identity" class="${('', 'active')[defined('tab') and tab == 'unassigned']}"><a href="/flights/unassigned">Unassigned Flights</a></li>
       <li class="${('', 'active')[defined('tab') and tab == 'top']}"><a href="/flights/top">Top Pilots</a></li>
     </ul>
+
+    <h3 py:if="pilot">
+      Flights of pilot "${pilot}"
+    </h3>
+
+    <h3 py:if="club">
+      Flights of club "<a href="/clubs/id/${club.id}/">${club}</a>"
+    </h3>
 
       <div id="getting_started">
         <table id="flight-table" class="table table-striped">
