@@ -6,13 +6,13 @@ from tg.i18n import ugettext as _, lazy_ugettext as l_
 from tg.decorators import override_template
 from repoze.what.predicates import has_permission
 from webob.exc import HTTPNotFound, HTTPForbidden
-from sqlalchemy.sql.expression import desc, or_
+from sqlalchemy.sql.expression import desc, or_, and_
 from sqlalchemy import func
 from sprox.formbase import EditableForm
 from sprox.widgets import PropertySingleSelectField
 from skylines.lib.base import BaseController
 from skylines import files
-from skylines.model import DBSession, User, Flight
+from skylines.model import DBSession, User, Club, Flight
 from skylines.controllers.upload import UploadController
 from skylines.lib.datatables import GetDatatableRecords
 
@@ -125,7 +125,18 @@ class FlightIdController(BaseController):
         return controller, remainder
 
 class FlightsController(BaseController):
-    def _do_list(self, tab, flights, kw):
+    def _do_list(self, tab, kw, pilot=None, club=None, filter=None):
+        flights = DBSession.query(Flight)
+        if pilot:
+            flights = flights.filter(or_(Flight.pilot == pilot,
+                                         Flight.co_pilot == pilot))
+        if club:
+            flights = flights.filter(Flight.club == club)
+        if filter is not None:
+            flights = flights.filter(filter)
+
+        flights = flights.order_by(desc(Flight.takeoff_time))
+
         if kw.get("json", "false")  == 'true':
             columns = { 0: 'takeoff_time', 1 : 'olc_plus_score', 2: 'pilot_id', 3: 'olc_classic_distance',
                         4: 'club_id', 5: 'takeoff_time', 6: 'id' }
@@ -147,52 +158,49 @@ class FlightsController(BaseController):
             flights = flights.order_by(desc(Flight.takeoff_time)).limit(limit)
             return dict(page = 'flights', tab = tab, flights = flights, flights_count = flights_count)
 
-    @expose('genshi:skylines.templates.flights.list')
+    @expose('skylines.templates.flights.list')
     def index(self, **kw):
-        flights = DBSession.query(Flight)
-
-        return self._do_list('all', flights, kw)
+        return self._do_list('all', kw)
 
     @expose('skylines.templates.flights.list')
     def my(self, **kw):
-        flights = DBSession.query(Flight).order_by(desc(Flight.takeoff_time))
-        if request.identity is not None:
-            flights = flights.filter(or_(Flight.pilot == request.identity['user'],
-                                         Flight.co_pilot == request.identity['user']))
+        if not request.identity:
+            raise HTTPNotFound
 
-        return self._do_list('my', flights, kw)
+        return self._do_list('my', kw, pilot=request.identity['user'])
 
     @expose('skylines.templates.flights.list')
     def my_club(self, **kw):
-        flights = DBSession.query(Flight).order_by(desc(Flight.takeoff_time))
-        if request.identity is not None and request.identity['user'].club_id:
-            flights = flights.filter(Flight.club_id == request.identity['user'].club_id)
+        if not request.identity:
+            raise HTTPNotFound
 
-        return self._do_list('my_club', flights, kw)
+        return self._do_list('my_club', kw, club=request.identity['user'].club)
 
     @expose('skylines.templates.flights.list')
     def unassigned(self, **kw):
-        flights = DBSession.query(Flight).order_by(desc(Flight.takeoff_time))
-        flights = flights.filter(Flight.pilot_id == None)
-        if request.identity is not None:
-            flights = flights.filter(Flight.owner == request.identity['user'])
+        if not request.identity:
+            raise HTTPNotFound
 
-        return self._do_list('unassigned', flights, kw)
+        f = and_(Flight.pilot_id == None,
+                 Flight.owner == request.identity['user'])
+        print "FILTER=========", repr(f), repr(Flight.pilot_id == None), repr(Flight.owner == request.identity['user'])
+        return self._do_list('unassigned', kw, filter=f)
 
     @expose('skylines.templates.flights.list')
     def pilot(self, id, **kw):
-        flights = DBSession.query(Flight).filter(or_(Flight.pilot_id==id,
-                                                     Flight.co_pilot_id==id))
-        flights = flights.order_by(desc(Flight.takeoff_time))
+        pilot = DBSession.query(User).get(id)
+        if not pilot:
+            raise HTTPNotFound
 
-        return self._do_list('pilot', flights, kw)
+        return self._do_list('pilot', kw, pilot=pilot)
 
     @expose('skylines.templates.flights.list')
     def club(self, id, **kw):
-        flights = DBSession.query(Flight).filter(Flight.club_id==id)
-        flights = flights.order_by(desc(Flight.takeoff_time))
+        club = DBSession.query(Club).get(id)
+        if not club:
+            raise HTTPNotFound
 
-        return self._do_list('club', flights, kw)
+        return self._do_list('club', kw, club=club)
 
     @expose('skylines.templates.flights.top')
     def top(self):
