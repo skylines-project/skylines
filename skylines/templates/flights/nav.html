@@ -3,6 +3,7 @@
 <ul xmlns="http://www.w3.org/1999/xhtml"
     xmlns:py="http://genshi.edgewall.org/"
     class="nav nav-tabs">
+  <li class="${('', 'active')[defined('tab') and tab == 'today']}"><a href="/flights/today">Today</a></li>
   <li class="${('', 'active')[defined('tab') and tab == 'all']}"><a href="/flights/">All Flights</a></li>
   <li py:if="request.identity" class="${('', 'active')[defined('tab') and tab == 'my']}"><a href="/flights/my">My Flights</a></li>
   <li py:if="request.identity and request.identity['user'].club_id" class="${('', 'active')[defined('tab') and tab == 'my_club']}"><a href="/flights/my_club">My Club's Flights</a></li>

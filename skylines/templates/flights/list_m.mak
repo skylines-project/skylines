@@ -5,7 +5,10 @@
   "sEcho": ${response_dict['sEcho']},
   "aaData": [
   % for flight in flights:
-    ["${flight.takeoff_time and flight.takeoff_time.strftime('%x')}",
+    [
+     % if not date:
+     "${flight.takeoff_time and flight.takeoff_time.strftime('%x')}",
+     % endif
      ${flight.olc_plus_score},
      "\
        % if flight.pilot:

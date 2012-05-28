@@ -1,12 +1,12 @@
 # -*- coding: utf-8 -*-
 
-from datetime import datetime
+from datetime import datetime, timedelta
 from tg import expose, validate, require, request, redirect, config
 from tg.i18n import ugettext as _, lazy_ugettext as l_
 from tg.decorators import override_template
 from repoze.what.predicates import has_permission
 from webob.exc import HTTPNotFound, HTTPForbidden
-from sqlalchemy.sql.expression import desc, or_, and_
+from sqlalchemy.sql.expression import desc, or_, and_, between
 from sqlalchemy import func
 from sprox.formbase import EditableForm
 from sprox.widgets import PropertySingleSelectField
@@ -125,8 +125,11 @@ class FlightIdController(BaseController):
         return controller, remainder
 
 class FlightsController(BaseController):
-    def _do_list(self, tab, kw, pilot=None, club=None, filter=None):
+    def _do_list(self, tab, kw, date=None, pilot=None, club=None, filter=None):
         flights = DBSession.query(Flight)
+        if date:
+            flights = flights.filter(between(Flight.takeoff_time,
+                                             date, date + timedelta(days=1)))
         if pilot:
             flights = flights.filter(or_(Flight.pilot == pilot,
                                          Flight.co_pilot == pilot))
@@ -147,7 +150,7 @@ class FlightsController(BaseController):
             if method == 'all': method = 'index'
             override_template(getattr(self, method), 'mako:skylines.templates.flights.list_m')
             return dict(response_dict=response_dict,
-                        pilot=pilot, club=club,
+                        date=date, pilot=pilot, club=club,
                         flights = flights)
 
         else:
@@ -159,12 +162,17 @@ class FlightsController(BaseController):
 
             flights = flights.order_by(desc(Flight.takeoff_time)).limit(limit)
             return dict(page = 'flights', tab = tab,
-                        pilot=pilot, club=club,
+                        date=date, pilot=pilot, club=club,
                         flights = flights, flights_count = flights_count)
 
     @expose('skylines.templates.flights.list')
     def index(self, **kw):
         return self._do_list('all', kw)
+
+    @expose('skylines.templates.flights.list')
+    def today(self, **kw):
+        date = DBSession.query(func.max(Flight.takeoff_time).label('date')).one().date.date()
+        return self._do_list('today', kw, date=date)
 
     @expose('skylines.templates.flights.list')
     def my(self, **kw):

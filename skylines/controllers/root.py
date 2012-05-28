@@ -43,7 +43,7 @@ class RootController(BaseController):
     @expose()
     def index(self):
         """Handle the front-page."""
-        redirect('/flights/')
+        redirect('/flights/today')
 
     @expose('skylines.templates.about')
     def about(self):
