@@ -203,7 +203,6 @@ class FlightsController(BaseController):
 
         f = and_(Flight.pilot_id == None,
                  Flight.owner == request.identity['user'])
-        print "FILTER=========", repr(f), repr(Flight.pilot_id == None), repr(Flight.owner == request.identity['user'])
         return self._do_list('unassigned', kw, filter=f)
 
     @expose('skylines.templates.flights.list')
