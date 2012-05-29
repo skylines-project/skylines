@@ -81,14 +81,13 @@ class FlightController(BaseController):
             raise HTTPForbidden
 
         user = request.identity['user']
-        if self.flight.owner_id == user.user_id:
-            if self.flight.pilot_id != pilot:
-                self.flight.pilot_id = pilot
-                if pilot:
-                    self.flight.club_id = DBSession.query(User).get(pilot).club_id
-            self.flight.co_pilot_id = co_pilot
-            self.flight.time_modified = datetime.now()
-            DBSession.flush()
+        if self.flight.pilot_id != pilot:
+            self.flight.pilot_id = pilot
+            if pilot:
+                self.flight.club_id = DBSession.query(User).get(pilot).club_id
+        self.flight.co_pilot_id = co_pilot
+        self.flight.time_modified = datetime.now()
+        DBSession.flush()
 
         redirect('.')
 
