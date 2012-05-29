@@ -8,4 +8,4 @@ def file_md5(f):
     md5 = hashlib.md5()
     for chunk in iter(lambda: f.read(8192), b''):
         md5.update(chunk)
-    return md5.hexdigest();
+    return md5.hexdigest()
