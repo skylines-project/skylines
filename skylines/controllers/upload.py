@@ -44,6 +44,10 @@ def IterateFiles(name, f):
 
 def IterateUploadFiles(upload):
     if isinstance(upload, unicode):
+        # the Chromium browser sends an empty string if no file is selected
+        if not upload:
+            return
+
         # some Android versions send the IGC file as a string, not as
         # a file
         with TemporaryFile() as f:
