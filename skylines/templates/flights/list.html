@@ -110,6 +110,14 @@ if club:
                 return row;
               }
             }, {
+              "sDefaultContent": "",
+              "aTargets": ["aircraft"],
+              "fnRender": function(obj, row) {
+                if (obj.oSettings.jqXHR && obj.aData.aircraft != null)
+                  row = obj.aData.aircraft;
+                return row;
+              }
+            }, {
               "sType": "numeric-comma-formatted",
               "sDefaultContent": "",
               "aTargets": ["times"],

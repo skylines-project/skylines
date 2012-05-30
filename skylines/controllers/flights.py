@@ -11,11 +11,12 @@ from repoze.what.predicates import has_permission
 from webob.exc import HTTPNotFound, HTTPForbidden, HTTPServerError
 from sqlalchemy.sql.expression import desc, or_, and_, between
 from sqlalchemy import func
+from tw.forms.fields import TextField
 from sprox.formbase import EditableForm
 from sprox.widgets import PropertySingleSelectField
 from skylines.lib.base import BaseController
 from skylines import files
-from skylines.model import DBSession, User, Club, Flight, IGCFile
+from skylines.model import DBSession, User, Club, Flight, IGCFile, Model
 from skylines.controllers.upload import UploadController
 from skylines.lib.datatables import GetDatatableRecords
 from skylines.lib.igc import read_igc_header
@@ -46,6 +47,24 @@ class SelectPilotForm(EditableForm):
 
 select_pilot_form = SelectPilotForm(DBSession)
 
+class ModelSelectField(PropertySingleSelectField):
+    def _my_update_params(self, d, nullable=False):
+        models = DBSession.query(Model) \
+                .order_by(Model.name)
+        options = [(None, '[unspecified]')] + \
+                  [(model.id, model) for model in models]
+        d['options'] = options
+        return d
+
+class SelectAircraftForm(EditableForm):
+    __model__ = Flight
+    __hide_fields__ = ['id']
+    __limit_fields__ = ['model', 'registration']
+    __base_widget_args__ = dict(action='select_aircraft')
+    model = ModelSelectField
+    registration = TextField
+
+select_aircraft_form = SelectAircraftForm(DBSession)
 
 class FlightController(BaseController):
     def __init__(self, flight):
@@ -115,6 +134,35 @@ class FlightController(BaseController):
             if pilot:
                 self.flight.club_id = DBSession.query(User).get(pilot).club_id
         self.flight.co_pilot_id = co_pilot
+        self.flight.time_modified = datetime.now()
+        DBSession.flush()
+
+        redirect('.')
+
+    @expose('skylines.templates.generic.form')
+    def change_aircraft(self):
+        if not self.flight.is_writable():
+            raise HTTPForbidden
+
+        return dict(page='settings', title=_('Change Aircraft'),
+                    user=request.identity['user'],
+                    form=select_aircraft_form,
+                    values=dict(model=self.flight.model_id,
+                                registration=self.flight.registration))
+
+    @expose()
+    @validate(form=select_aircraft_form, error_handler=change_aircraft)
+    def select_aircraft(self, model, registration, **kwargs):
+        if not self.flight.is_writable():
+            raise HTTPForbidden
+
+        if registration is not None:
+            registration = registration.strip()
+            if len(registration) == 0:
+                registration = None
+
+        self.flight.model_id = model
+        self.flight.registration = registration
         self.flight.time_modified = datetime.now()
         DBSession.flush()
 

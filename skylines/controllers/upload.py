@@ -3,11 +3,11 @@ from tg import expose, request, redirect, flash, validate
 from tg.i18n import ugettext as _, lazy_ugettext as l_
 from repoze.what.predicates import has_permission
 from tw.forms import TableForm
-from tw.forms.fields import FileField, SingleSelectField
+from tw.forms.fields import TextField, FileField, SingleSelectField
 from tw.forms.validators import FieldStorageUploadConverter
 from skylines.lib.base import BaseController
 from skylines import files
-from skylines.model import DBSession, User, Flight
+from skylines.model import DBSession, User, Model, Flight
 from skylines.lib.md5 import file_md5
 from skylines.lib.igc import read_igc_header
 from skylines.lib.analysis import analyse_flight
@@ -24,10 +24,21 @@ class PilotSelectField(SingleSelectField):
         d['options'] = options
         return SingleSelectField.update_params(self, d)
 
+class ModelSelectField(SingleSelectField):
+    def update_params(self, d):
+        models = DBSession.query(Model) \
+                .order_by(Model.name)
+        options = [(None, '[unspecified]')] + \
+                  [(model.id, model) for model in models]
+        d['options'] = options
+        return SingleSelectField.update_params(self, d)
+
 upload_form = TableForm('upload_form', submit_text="Upload", action='do', children=[
     FileField('file', label_text="IGC or ZIP file",
         validator=FieldStorageUploadConverter(not_empty=True, messages=dict(empty=_("Please add a IGC or ZIP file"))) ),
     PilotSelectField('pilot', label_text="Pilot"),
+    ModelSelectField('model', label_text="Aircraft model"),
+    TextField('registration', label_text="Aircraft registration"),
 ])
 
 def IterateFiles(name, f):
@@ -75,7 +86,7 @@ class UploadController(BaseController):
 
     @expose('skylines.templates.upload.result')
     @validate(upload_form, error_handler=index)
-    def do(self, file, pilot):
+    def do(self, file, pilot, model, registration):
         user = request.identity['user']
 
         pilot_id = None
@@ -85,6 +96,17 @@ class UploadController(BaseController):
             if pilot:
                 pilot_id = pilot.user_id
                 club_id = pilot.club_id
+
+        model_id = None
+        if model:
+            model = DBSession.query(Model).get(int(model))
+            if model:
+                model_id = model.id
+
+        if registration is not None:
+            registration = registration.strip()
+            if len(registration) == 0:
+                registration = None
 
         flights = []
 
@@ -110,6 +132,8 @@ class UploadController(BaseController):
             flight = Flight()
             flight.pilot_id = pilot_id
             flight.club_id = club_id
+            flight.model_id = model_id
+            flight.registration = registration
             flight.igc_file = igc_file
 
             if not analyse_flight(flight):

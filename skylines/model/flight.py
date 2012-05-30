@@ -3,7 +3,7 @@
 from datetime import datetime
 from sqlalchemy.orm import relation
 from sqlalchemy import ForeignKey, Column, func
-from sqlalchemy.types import Integer, DateTime
+from sqlalchemy.types import Unicode, Integer, DateTime
 from sqlalchemy.ext.hybrid import hybrid_property
 from skylines.model.auth import User
 from skylines.model import DeclarativeBase, DBSession
@@ -12,7 +12,7 @@ from geoalchemy.geometry import GeometryColumn, Point, GeometryDDL
 from geoalchemy.postgis import PGComparator
 from skylines.model.geo import Location
 from skylines.model.igcfile import IGCFile
-
+from skylines.model.model import Model
 
 class Flight(DeclarativeBase):
     __tablename__ = 'flights'
@@ -27,6 +27,10 @@ class Flight(DeclarativeBase):
     co_pilot = relation('User', primaryjoin=(co_pilot_id == User.user_id))
 
     club_id = Column(Integer, ForeignKey('clubs.id'))
+
+    model_id = Column(Integer, ForeignKey('models.id'))
+    model = relation('Model', primaryjoin=(model_id==Model.id))
+    registration = Column(Unicode(32))
 
     takeoff_time = Column(DateTime, nullable=False)
     landing_time = Column(DateTime, nullable=False)

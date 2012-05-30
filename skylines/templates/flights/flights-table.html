@@ -31,6 +31,7 @@ from babel.dates import format_date
         <th py:if="'pilot' not in omitted_columns" class="pilot">Pilot</th>
         <th py:if="'distance' not in omitted_columns" class="numeric distance">Distance</th>
         <th py:if="'club' not in omitted_columns" class="club">Club</th>
+        <th py:if="'aircraft' not in omitted_columns" class="aircraft">Aircraft</th>
         <th py:if="'times' not in omitted_columns" class="times">Time</th>
         <th py:if="'link' not in omitted_columns" class="show"></th>
       </tr>
@@ -66,6 +67,11 @@ from babel.dates import format_date
           <a py:if="flight.club" py:content="flight.club" href="/flights/club/${flight.club_id}">
             Club Name
           </a>
+        </td>
+        <td py:if="'aircraft' not in omitted_columns">
+          <span py:if="flight.model" py:content="flight.model">
+            Aircraft model
+          </span>
         </td>
         <td py:if="'times' not in omitted_columns">
           <py:if test="flight.takeoff_time and flight.landing_time">

@@ -55,6 +55,19 @@ from babel.dates import format_date, format_time, format_datetime
         </td>
       </tr>
       <tr>
+        <th>Aircraft</th>
+        <td>
+          <span py:if="flight.model_id is not None" py:replace="flight.model"/>
+          <py:if test="flight.model_id is None">Unknown</py:if>
+          <py:if test="flight.registration is not None">
+            (${flight.registration})
+          </py:if>
+          <a py:if="flight.is_writable()" href="change_aircraft" class="btn btn-mini">
+            Change
+          </a>
+        </td>
+      </tr>
+      <tr>
         <th>Score</th>
         <td>
           ${flight.olc_plus_score} pt
