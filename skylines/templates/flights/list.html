@@ -30,6 +30,7 @@
           "aaSorting": [[ 0, "desc" ]],
           "aoColumnDefs": [
             { "bSortable": false, "aTargets": [-1] },
+            { "sType": "date-eu", "aTargets": ["date"] },
             { "sType": "numeric-comma-formatted", "aTargets": ["numeric"] },
           ]
         });
@@ -60,7 +61,7 @@
         <table id="flight-table" class="table table-striped">
           <thead>
             <tr>
-              <th py:if="not date">Date</th>
+              <th class="date" py:if="not date">Date</th>
               <th class="numeric">Score</th>
               <th>Pilot</th>
               <th class="numeric">Distance</th>
@@ -71,7 +72,7 @@
           </thead>
           <tbody>
             <tr py:for="flight in flights">
-              <td py:if="not date">
+              <td class="date" py:if="not date">
                 <span py:if="flight.takeoff_time" py:replace="format_date(flight.takeoff_time)">
                   2012-05-21
                 </span>
