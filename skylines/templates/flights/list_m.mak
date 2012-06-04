@@ -1,3 +1,4 @@
+<% from babel.dates import format_date %>\
 {
   "iTotalDisplayRecords": ${response_dict['iTotalDisplayRecords']},
   "iTotalRecords": ${response_dict['iTotalRecords']},
@@ -7,7 +8,7 @@
   % for flight in flights:
     [
      % if not date:
-     "${flight.takeoff_time and flight.takeoff_time.strftime('%x')}",
+     "${flight.takeoff_time and format_date(flight.takeoff_time)}",
      % endif
      ${flight.olc_plus_score},
      "\
