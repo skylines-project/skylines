@@ -144,11 +144,6 @@ class FlightsController(BaseController):
         if filter is not None:
             flights = flights.filter(filter)
 
-        if date:
-            flights = flights.order_by(desc(Flight.olc_plus_score))
-        else:
-            flights = flights.order_by(desc(Flight.takeoff_time))
-
         if kw.get("json", "false")  == 'true':
             columns = { 0: 'takeoff_time', 1 : 'olc_plus_score', 2: 'pilot_id', 3: 'olc_classic_distance',
                         4: 'club_id', 5: 'takeoff_time', 6: 'id' }
@@ -162,6 +157,11 @@ class FlightsController(BaseController):
                         flights = flights)
 
         else:
+            if date:
+                flights = flights.order_by(desc(Flight.olc_plus_score))
+            else:
+                flights = flights.order_by(desc(Flight.takeoff_time))
+
             flights_count = flights.count()
             if flights_count > int(config.get('skylines.lists.server_side', 250)):
                 limit = int(config.get('skylines.lists.display_length', 50))
