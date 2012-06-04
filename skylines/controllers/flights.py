@@ -43,10 +43,11 @@ class FlightController(BaseController):
     @expose('skylines.templates.flights.view')
     def index(self):
         from skylines.lib.analysis import flight_path
-        fixes = flight_path(self.flight)
+        fp = flight_path(self.flight)
 
         import cgpolyencode
         encoder = cgpolyencode.GPolyEncoder(num_levels=4)
+        fixes = map(lambda x: (x[2], x[1]), fp)
         fixes = encoder.encode(fixes)
 
         return dict(page='flights', flight=self.flight,
