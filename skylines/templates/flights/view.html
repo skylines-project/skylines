@@ -10,7 +10,23 @@
   <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" py:if="False"/>
 
   <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?libraries=geometry&amp;sensor=false"></script>
+  <script type="text/javascript" src="/js/g.raphael/raphael-min.js"></script>
+  <script type="text/javascript" src="/js/g.raphael/min/g.raphael-min.js"></script>
+  <script type="text/javascript" src="/js/g.raphael/min/g.line-min.js"></script>
   <script type="text/javascript">
+<?python from simplejson import dumps ?>
+
+    var barograph;
+
+    function render_barograph() {
+      var element = document.getElementById("barograph");
+      barograph.linechart(30, 0,
+                          element.clientWidth - 40, element.clientHeight,
+                          ${dumps(barograph_t)},
+                          [${dumps(barograph_h)}],
+                          { axis: "0 0 0 1" });
+    }
+
     function initialize() {
       var map_options = {
         center: new google.maps.LatLng(30, 0),
@@ -19,7 +35,6 @@
       };
       var map = new google.maps.Map(document.getElementById("map_canvas"), map_options);
 
-<?python from simplejson import dumps ?>
       var points = google.maps.geometry.encoding.decodePath(${dumps(fixes.points)});
 
       var bounds = new google.maps.LatLngBounds ();
@@ -41,6 +56,9 @@
 
       // fit bounds to track
       map.fitBounds(bounds);
+
+      barograph = Raphael("barograph", "100%", "100%");
+      render_barograph();
     }
   </script>
 
@@ -141,6 +159,7 @@
       </div>
       <div class="span8">
         <div id="map_canvas" style="width:100%; height:400pt;"></div>
+        <div id="barograph" style="width:100%; height:120pt;"></div>
       </div>
     </div>
   </body>

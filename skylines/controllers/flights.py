@@ -50,8 +50,11 @@ class FlightController(BaseController):
         fixes = map(lambda x: (x[2], x[1]), fp)
         fixes = encoder.encode(fixes)
 
+        barograph_t = map(lambda x: x[0], fp)
+        barograph_h = map(lambda x: x[3], fp)
+
         return dict(page='flights', flight=self.flight,
-                    fixes=fixes)
+                    fixes=fixes, barograph_t=barograph_t, barograph_h=barograph_h)
 
     @expose('skylines.templates.flights.map')
     def map(self):
