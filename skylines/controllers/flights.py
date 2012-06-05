@@ -46,7 +46,7 @@ class FlightController(BaseController):
         fp = flight_path(self.flight)
 
         import cgpolyencode
-        encoder = cgpolyencode.GPolyEncoder(num_levels=4)
+        encoder = cgpolyencode.GPolyEncoder(num_levels=4, threshold=0.0001, zoom_factor=8)
         fixes = map(lambda x: (x[2], x[1]), fp)
         fixes = encoder.encode(fixes)
 
@@ -62,7 +62,7 @@ class FlightController(BaseController):
         fp = flight_path(self.flight)
 
         import cgpolyencode
-        encoder = cgpolyencode.GPolyEncoder(num_levels=4)
+        encoder = cgpolyencode.GPolyEncoder(num_levels=4, threshold=0.0001, zoom_factor=8)
         fixes = map(lambda x: (x[2], x[1]), fp)
         fixes = encoder.encode(fixes)
 

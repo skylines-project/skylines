@@ -9,43 +9,35 @@
 <head>
   <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" py:if="False"/>
 
-  <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?libraries=geometry&amp;sensor=false"></script>
+  <link href="/css/OpenLayers.css" rel="stylesheet" type="text/css" />
+
+  <script type="text/javascript" src="/js/OpenLayers/OpenLayers.js"></script>
+  <script type="text/javascript" src="/js/OpenLayers/map.js"></script>
+
   <script type="text/javascript">
-    function initialize() {
-      var map_options = {
-        center: new google.maps.LatLng(30, 0),
-        zoom: 2,
-        mapTypeId: google.maps.MapTypeId.TERRAIN
-      };
-      var map = new google.maps.Map(document.getElementById("map_canvas"), map_options);
-
 <?python from simplejson import dumps ?>
-      var points = google.maps.geometry.encoding.decodePath(${dumps(fixes.points)});
+    /* <![CDATA[ */
+    function initialize() {
+      var map = initOpenLayers();
 
-      var bounds = new google.maps.LatLngBounds ();
-      for (var i = 0; i != points.length; ++i)
-        bounds.extend(points[i]);
+      var lonlat = OpenLayers.Util.decodeGooglePolyline(${dumps(fixes.points)});
+      var lod = OpenLayers.Util.decodeGoogleLoD(${dumps(fixes.levels)}, ${fixes.numLevels});
 
-      var poly = new google.maps.Polyline({
-        // use your own style here
-        path: points,
-        levels: ${dumps(fixes.levels)},
-        numLevels: ${fixes.numLevels},
-        zoomFactor: ${fixes.zoomFactor},
-        strokeColor: "#FF00AA",
-        strokeOpacity: .7,
-        strokeWeight: 4
-      });
+      var points = new Array();
+      for (var i = 0, len = lonlat.length; i < len; i++) {
+        points.push(new OpenLayers.Geometry.Point(lonlat[i].lon, lonlat[i].lat).
+          transform(new OpenLayers.Projection("EPSG:4326"), map.getProjectionObject()) );
+      }
 
-      poly.setMap(map);
+      var flight = new OpenLayers.Geometry.ProgressiveLineString(points, lod, [0, 5, 10, 13]);
+      map.getLayersByName("Flight")[0].addFeatures(new OpenLayers.Feature.Vector(flight, { color: '#ff0000' }));
 
-      // fit bounds to track
-      map.fitBounds(bounds);
+      map.zoomToExtent(flight.bounds);
     }
+    /* ]]> */
   </script>
 
   <style>
-    html { height: 100% }
     body { height: 100%; margin: 0; padding: 0 }
     #content { height: 100%; }
   </style>
@@ -54,6 +46,6 @@
 </head>
 
 <body onload="initialize();">
-  <div id="map_canvas" style="width:100%; height:100%;"></div>
+  <div id="map_canvas" style="position: absolute; top: 40px; bottom: 0; width:100%;"></div>
 </body>
 </html>
