@@ -29,7 +29,56 @@
                           element.clientWidth - 40, element.clientHeight,
                           ${dumps(barograph_t)},
                           [${dumps(barograph_h)}],
-                          { axis: "0 0 0 1" });
+                          { axis: "0 0 0 1" }).hoverColumn(function() {
+          this.position = barograph.set();
+
+          var line = barograph.path(
+            "M " + this.x.toString() + " " + this.attrs.height + " " +
+            "l 0 " + (-(this.attrs.height - this.y) + 6).toString() +
+            "M " + this.x.toString() + " 0 " +
+            "l 0 " + (this.y - 6).toString()
+          ).attr({
+            stroke: '#c44',
+            'stroke-width': 2
+          });
+          this.position.push(line.insertBefore(this));
+
+          var vario = null;
+          if (this.next) {
+            vario = (this.next.values[0] - this.values[0]) / (this.next.axis - this.axis);
+          }
+
+          var text = barograph.text(
+            this.x,
+            this.attrs.height - 20,
+            Math.round(this.values[0]) + " m" +
+              ((vario !== null)?"\n" + (Math.round(vario*10)/10) + " m/s":"")
+          );
+
+          var textBBox = text.getBBox();
+
+          this.position.push(barograph.circle(
+            this.x,
+            this.y,
+            6
+          ).insertBefore(this).attr({ stroke: '#c44', 'stroke-width': 2 }));
+
+          this.position.push(barograph.rect(
+            textBBox.x - 2,
+            textBBox.y - 2,
+            textBBox.width + 4,
+            textBBox.height + 4,
+            3
+          ).insertBefore(this).attr({
+            fill: '#fff',
+            opacity: .7,
+            stroke: '#999'
+          }) );
+
+          this.position.push(text.insertBefore(this));
+        }, function() {
+          this.position && this.position.remove();
+      });
     }
 
 
