@@ -34,7 +34,19 @@ function initOpenLayers() {
     styleMap: new OpenLayers.StyleMap({
       'default': new OpenLayers.Style({
         strokeColor: "${color}",
-        strokeWidth: 2
+        strokeWidth: 2,
+        // Set the external graphic and background graphic images.
+        externalGraphic: "/images/OpenLayers/marker.png",
+        // Makes sure the background graphic is placed correctly relative
+        // to the external graphic.
+        graphicXOffset: -(21/2),
+        graphicYOffset: -25,
+        graphicWidth: 21,
+        graphicHeight: 25,
+        // Set the z-indexes of both graphics to make sure the background
+        // graphics stay in the background (shadows on top of markers looks
+        // odd; let's not do that).
+        graphicZIndex: 2000
       })
     })
   });

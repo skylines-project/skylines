@@ -22,15 +22,30 @@
     /* <![CDATA[ */
 
     var barograph;
+    var map;
+
+    var barograph_t = ${dumps(barograph_t)};
+    var barograph_h = ${dumps(barograph_h)};
     var lonlat = OpenLayers.Util.decodeGooglePolyline(${dumps(encoded.points)});
     var lod = OpenLayers.Util.decodeGoogleLoD(${dumps(encoded.levels)}, ${fixes.numLevels});
+
+    //+ Carlos R. L. Rodrigues
+    //@ http://jsfromhell.com/array/nearest-number [rev. #0]
+    function getNearestNumber(a, n){
+      if((l = a.length) < 2)
+        return l - 1;
+      for(var l, p = Math.abs(a[--l] - n); l--;)
+        if(p < (p = Math.abs(a[l] - n)))
+          break;
+      return l + 1;
+    }
 
     function render_barograph() {
       var element = document.getElementById("barograph");
       barograph.linechart(30, 0,
                           element.clientWidth - 40, element.clientHeight,
-                          ${dumps(barograph_t)},
-                          [${dumps(barograph_h)}],
+                          barograph_t,
+                          [barograph_h],
                           { axis: "0 0 0 1" }).hoverColumn(function() {
           this.position = barograph.set();
 
@@ -78,15 +93,30 @@
           }) );
 
           this.position.push(text.insertBefore(this));
+          this.index = getNearestNumber(barograph_t, this.axis);
+          showPlanePosition(this.index);
         }, function() {
+          hidePlanePosition(this.index);
           this.position && this.position.remove();
       });
     }
 
+    function showPlanePosition(id) {
+      this.plane = new OpenLayers.Feature.Vector(
+        new OpenLayers.Geometry.Point(lonlat[id].lon, lonlat[id].lat).
+          transform(new OpenLayers.Projection("EPSG:4326"), map.getProjectionObject()),
+        { color: '#ffffff'}
+      );
+
+      map.getLayersByName("Flight")[0].addFeatures(this.plane);
+    }
+
+    function hidePlanePosition(id) {
+      map.getLayersByName("Flight")[0].removeFeatures(this.plane);
+    }
 
     function initialize() {
-      var map = initOpenLayers();
-
+      map = initOpenLayers();
 
       var points = new Array();
       for (var i = 0, len = lonlat.length; i < len; i++) {
