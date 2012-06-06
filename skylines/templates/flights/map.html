@@ -20,8 +20,8 @@
     function initialize() {
       var map = initOpenLayers();
 
-      var lonlat = OpenLayers.Util.decodeGooglePolyline(${dumps(fixes.points)});
-      var lod = OpenLayers.Util.decodeGoogleLoD(${dumps(fixes.levels)}, ${fixes.numLevels});
+      var lonlat = OpenLayers.Util.decodeGooglePolyline(${dumps(encoded.points)});
+      var lod = OpenLayers.Util.decodeGoogleLoD(${dumps(encoded.levels)}, ${fixes.numLevels});
 
       var points = new Array();
       for (var i = 0, len = lonlat.length; i < len; i++) {
@@ -29,7 +29,7 @@
           transform(new OpenLayers.Projection("EPSG:4326"), map.getProjectionObject()) );
       }
 
-      var flight = new OpenLayers.Geometry.ProgressiveLineString(points, lod, [0, 5, 10, 13]);
+      var flight = new OpenLayers.Geometry.ProgressiveLineString(points, lod, [0, 5, 8, 11]);
       map.getLayersByName("Flight")[0].addFeatures(new OpenLayers.Feature.Vector(flight, { color: '#ff0000' }));
 
       map.zoomToExtent(flight.bounds);

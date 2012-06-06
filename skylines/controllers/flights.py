@@ -45,15 +45,21 @@ class FlightController(BaseController):
         from skylines.lib.analysis import flight_path
         fp = flight_path(self.flight)
 
-        import cgpolyencode
-        encoder = cgpolyencode.GPolyEncoder(num_levels=4, threshold=0.0001, zoom_factor=8)
-        fixes = map(lambda x: (x[2], x[1]), fp)
-        fixes = encoder.encode(fixes)
+        threshold = 0.001
+        max_delta_time = (fp[-1][0] - fp[0][0]) / 500
 
-        barograph_t = map(lambda x: x[0], fp)
-        barograph_h = map(lambda x: x[3], fp)
+        import skylinespolyencode
+        encoder = skylinespolyencode.SkyLinesPolyEncoder(num_levels=4, threshold=threshold, zoom_factor=4)
 
-        return dict(page='flights', flight=self.flight,
+        fixes = map(lambda x: (x[2], x[1], (x[0]/max_delta_time*threshold)), fp)
+        fixes = encoder.classify(fixes, remove=False, type="ppd")
+
+        encoded = encoder.encode(fixes['points'], fixes['levels'])
+
+        barograph_t = [fp[i][0] for i in range(len(fp)) if fixes['levels'][i] != -1]
+        barograph_h = [fp[i][3] for i in range(len(fp)) if fixes['levels'][i] != -1]
+
+        return dict(page='flights', flight=self.flight, encoded=encoded,
                     fixes=fixes, barograph_t=barograph_t, barograph_h=barograph_h)
 
     @expose('skylines.templates.flights.map')
@@ -61,12 +67,13 @@ class FlightController(BaseController):
         from skylines.lib.analysis import flight_path
         fp = flight_path(self.flight)
 
-        import cgpolyencode
-        encoder = cgpolyencode.GPolyEncoder(num_levels=4, threshold=0.0001, zoom_factor=8)
+        import skylinespolyencode
+        encoder = skylinespolyencode.SkyLinesPolyEncoder(num_levels=4, threshold=0.001, zoom_factor=4)
         fixes = map(lambda x: (x[2], x[1]), fp)
-        fixes = encoder.encode(fixes)
+        fixes = encoder.classify(fixes, remove=True)
+        encoded = encoder.encode(fixes['points'], fixes['levels'])
 
-        return dict(page='flights', fixes=fixes)
+        return dict(page='flights', encoded=encoded, fixes=fixes)
 
     @expose('skylines.templates.generic.form')
     def change_pilot(self):
