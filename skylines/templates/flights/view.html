@@ -23,6 +23,7 @@
 
     var barogram;
     var map;
+    var plane;
 
     var barogram_t = OpenLayers.Util.decodeGoogle(${dumps(barogram_t)});
     var barogram_h = OpenLayers.Util.decodeGoogle(${dumps(barogram_h)});
@@ -48,58 +49,76 @@
                           [barogram_h],
                           { axis: "0 0 0 1" });
 
-      linechart.hoverColumn(function() {
-          this.position = barogram.set();
+      var position = barogram.set().hide();
 
-          var line = barogram.path(
+      var hoverLine = barogram.path().attr({
+        stroke: '#c44',
+        'stroke-width': 2
+      });
+
+      var text = barogram.text();
+
+      var textRect = barogram.rect().attr({
+        fill: '#fff',
+        opacity: .7,
+        stroke: '#999'
+      });
+
+      var hoverCircle = barogram.circle().attr({
+        stroke: '#c44',
+        'stroke-width': 2
+      });
+
+      position.push(hoverLine);
+      position.push(hoverCircle);
+      position.push(textRect);
+      position.push(text);
+
+      linechart.hoverColumn(function() {
+          hoverLine.attr({ path:
             "M " + this.x.toString() + " " + this.attrs.height + " " +
             "l 0 " + (-(this.attrs.height - this.y) + 6).toString() +
             "M " + this.x.toString() + " 0 " +
             "l 0 " + (this.y - 6).toString()
-          ).attr({
-            stroke: '#c44',
-            'stroke-width': 2
           });
-          this.position.push(line.insertBefore(this));
 
           var vario = null;
-          if (this.next) {
+          if (this.next && this.next.values) {
             vario = (this.next.values[0] - this.values[0]) / (this.next.axis - this.axis);
           }
 
-          var text = barogram.text(
-            this.x,
-            this.attrs.height - 20,
-            Math.round(this.values[0]) + " m" +
+          text.attr({
+            x: this.x,
+            y: this.attrs.height - 20,
+            text: Math.round(this.values[0]) + " m" +
               ((vario !== null)?"\n" + (Math.round(vario*10)/10) + " m/s":"")
-          );
+          });
 
           var textBBox = text.getBBox();
 
-          this.position.push(barogram.circle(
-            this.x,
-            this.y,
-            6
-          ).insertBefore(this).attr({ stroke: '#c44', 'stroke-width': 2 }));
+          hoverCircle.attr({
+            cx: this.x,
+            cy: this.y,
+            r: 6
+          });
 
-          this.position.push(barogram.rect(
-            textBBox.x - 2,
-            textBBox.y - 2,
-            textBBox.width + 4,
-            textBBox.height + 4,
-            3
-          ).insertBefore(this).attr({
-            fill: '#fff',
-            opacity: .7,
-            stroke: '#999'
-          }) );
+          textRect.attr({
+            x: textBBox.x - 2,
+            y: textBBox.y - 2,
+            width: textBBox.width + 4,
+            height: textBBox.height + 4,
+            r: 3
+          });
 
-          this.position.push(text.insertBefore(this));
+          textRect.toFront();
+          text.toFront();
+          position.show();
+
           this.index = getNearestNumber(barogram_t, this.axis);
           showPlanePosition(this.index);
         }, function() {
           hidePlanePosition(this.index);
-          this.position && this.position.remove();
+          position && position.hide();
       });
     }
 
@@ -110,18 +129,14 @@
       } else if (lonlat[id-1] != 'undefined') {
         rotation = Math.atan2(lonlat[id].lon-lonlat[id-1].lon, lonlat[id].lat-lonlat[id-1].lat) * 180/Math.PI;
       }
-
-      this.plane = new OpenLayers.Feature.Vector(
-        new OpenLayers.Geometry.Point(lonlat[id].lon, lonlat[id].lat).
-          transform(new OpenLayers.Projection("EPSG:4326"), map.getProjectionObject()),
-        { rotation: rotation }
-      );
-
-      map.getLayersByName("Flight")[0].addFeatures(this.plane);
+      plane.attributes.rotation = rotation;
+      plane.geometry = new OpenLayers.Geometry.Point(lonlat[id].lon, lonlat[id].lat).
+          transform(new OpenLayers.Projection("EPSG:4326"), map.getProjectionObject());
+      map.getLayersByName("Flight")[0].drawFeature(plane);
     }
 
     function hidePlanePosition(id) {
-      map.getLayersByName("Flight")[0].removeFeatures(this.plane);
+      map.getLayersByName("Flight")[0].removeFeatures(plane);
     }
 
     function initialize() {
@@ -135,6 +150,12 @@
 
       var flight = new OpenLayers.Geometry.ProgressiveLineString(points, lod, ${dumps(zoom_levels)});
       map.getLayersByName("Flight")[0].addFeatures(new OpenLayers.Feature.Vector(flight, { color: '#ff0000' }));
+
+      plane = new OpenLayers.Feature.Vector(
+        new OpenLayers.Geometry.Point(lonlat[0].lon, lonlat[0].lat).
+          transform(new OpenLayers.Projection("EPSG:4326"), map.getProjectionObject()),
+        { rotation: 0 }
+      );
 
       map.zoomToExtent(flight.bounds);
 
