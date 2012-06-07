@@ -24,8 +24,8 @@
     var barograph;
     var map;
 
-    var barograph_t = ${dumps(barograph_t)};
-    var barograph_h = ${dumps(barograph_h)};
+    var barograph_t = OpenLayers.Util.decodeGoogle(${dumps(barograph_t)});
+    var barograph_h = OpenLayers.Util.decodeGoogle(${dumps(barograph_h)});
     var lonlat = OpenLayers.Util.decodeGooglePolyline(${dumps(encoded.points)});
     var lod = OpenLayers.Util.decodeGoogleLoD(${dumps(encoded.levels)}, ${fixes.numLevels});
 

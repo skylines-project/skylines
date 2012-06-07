@@ -62,8 +62,8 @@ class FlightController(BaseController):
 
         encoded = encoder.encode(fixes['points'], fixes['levels'])
 
-        barograph_t = [fp[i][0] for i in range(len(fp)) if fixes['levels'][i] != -1]
-        barograph_h = [fp[i][3] for i in range(len(fp)) if fixes['levels'][i] != -1]
+        barograph_t = encoder.encodeList([fp[i][0] for i in range(len(fp)) if fixes['levels'][i] != -1])
+        barograph_h = encoder.encodeList([fp[i][3] for i in range(len(fp)) if fixes['levels'][i] != -1])
 
         return dict(page='flights', flight=self.flight, encoded=encoded, zoom_levels = zoom_levels,
                     fixes=fixes, barograph_t=barograph_t, barograph_h=barograph_h)
