@@ -21,11 +21,11 @@
 <?python from simplejson import dumps ?>
     /* <![CDATA[ */
 
-    var barograph;
+    var barogram;
     var map;
 
-    var barograph_t = OpenLayers.Util.decodeGoogle(${dumps(barograph_t)});
-    var barograph_h = OpenLayers.Util.decodeGoogle(${dumps(barograph_h)});
+    var barogram_t = OpenLayers.Util.decodeGoogle(${dumps(barogram_t)});
+    var barogram_h = OpenLayers.Util.decodeGoogle(${dumps(barogram_h)});
     var lonlat = OpenLayers.Util.decodeGooglePolyline(${dumps(encoded.points)});
     var lod = OpenLayers.Util.decodeGoogleLoD(${dumps(encoded.levels)}, ${fixes.numLevels});
 
@@ -40,16 +40,18 @@
       return l + 1;
     }
 
-    function render_barograph() {
-      var element = document.getElementById("barograph");
-      barograph.linechart(30, 0,
+    function render_barogram() {
+      var element = document.getElementById("barogram");
+      var linechart = barogram.linechart(30, 0,
                           element.clientWidth - 40, element.clientHeight,
-                          barograph_t,
-                          [barograph_h],
-                          { axis: "0 0 0 1" }).hoverColumn(function() {
-          this.position = barograph.set();
+                          barogram_t,
+                          [barogram_h],
+                          { axis: "0 0 0 1" });
 
-          var line = barograph.path(
+      linechart.hoverColumn(function() {
+          this.position = barogram.set();
+
+          var line = barogram.path(
             "M " + this.x.toString() + " " + this.attrs.height + " " +
             "l 0 " + (-(this.attrs.height - this.y) + 6).toString() +
             "M " + this.x.toString() + " 0 " +
@@ -65,7 +67,7 @@
             vario = (this.next.values[0] - this.values[0]) / (this.next.axis - this.axis);
           }
 
-          var text = barograph.text(
+          var text = barogram.text(
             this.x,
             this.attrs.height - 20,
             Math.round(this.values[0]) + " m" +
@@ -74,13 +76,13 @@
 
           var textBBox = text.getBBox();
 
-          this.position.push(barograph.circle(
+          this.position.push(barogram.circle(
             this.x,
             this.y,
             6
           ).insertBefore(this).attr({ stroke: '#c44', 'stroke-width': 2 }));
 
-          this.position.push(barograph.rect(
+          this.position.push(barogram.rect(
             textBBox.x - 2,
             textBBox.y - 2,
             textBBox.width + 4,
@@ -93,7 +95,7 @@
           }) );
 
           this.position.push(text.insertBefore(this));
-          this.index = getNearestNumber(barograph_t, this.axis);
+          this.index = getNearestNumber(barogram_t, this.axis);
           showPlanePosition(this.index);
         }, function() {
           hidePlanePosition(this.index);
@@ -136,8 +138,8 @@
 
       map.zoomToExtent(flight.bounds);
 
-      barograph = Raphael("barograph", "100%", "100%");
-      render_barograph();
+      barogram = Raphael("barogram", "100%", "100%");
+      render_barogram();
     }
     /* ]]> */
   </script>
@@ -239,7 +241,7 @@
       </div>
       <div class="span8">
         <div id="map_canvas" style="width:100%; height:400pt;"></div>
-        <div id="barograph" style="width:100%; height:120pt;"></div>
+        <div id="barogram" style="width:100%; height:120pt;"></div>
       </div>
     </div>
   </body>
