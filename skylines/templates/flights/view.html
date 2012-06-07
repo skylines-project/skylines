@@ -124,7 +124,7 @@
           transform(new OpenLayers.Projection("EPSG:4326"), map.getProjectionObject()) );
       }
 
-      var flight = new OpenLayers.Geometry.ProgressiveLineString(points, lod, [0, 5, 8, 11]);
+      var flight = new OpenLayers.Geometry.ProgressiveLineString(points, lod, ${dumps(zoom_levels)});
       map.getLayersByName("Flight")[0].addFeatures(new OpenLayers.Feature.Vector(flight, { color: '#ff0000' }));
 
       map.zoomToExtent(flight.bounds);

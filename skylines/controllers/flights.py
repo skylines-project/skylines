@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from datetime import datetime, timedelta
+from math import log
 from tg import expose, validate, require, request, redirect, config
 from tg.i18n import ugettext as _, lazy_ugettext as l_
 from tg.decorators import override_template
@@ -46,6 +47,11 @@ class FlightController(BaseController):
         fp = flight_path(self.flight)
 
         threshold = 0.001
+        num_levels = 4
+        zoom_factor = 4
+        zoom_levels = [0]
+        zoom_levels.extend([round(-log(32.0/45.0 * (threshold * pow(zoom_factor, num_levels - i - 1)), 2)) for i in range(1, num_levels)])
+
         max_delta_time = (fp[-1][0] - fp[0][0]) / 500
 
         import skylinespolyencode
@@ -59,7 +65,7 @@ class FlightController(BaseController):
         barograph_t = [fp[i][0] for i in range(len(fp)) if fixes['levels'][i] != -1]
         barograph_h = [fp[i][3] for i in range(len(fp)) if fixes['levels'][i] != -1]
 
-        return dict(page='flights', flight=self.flight, encoded=encoded,
+        return dict(page='flights', flight=self.flight, encoded=encoded, zoom_levels = zoom_levels,
                     fixes=fixes, barograph_t=barograph_t, barograph_h=barograph_h)
 
     @expose('skylines.templates.flights.map')
@@ -67,13 +73,19 @@ class FlightController(BaseController):
         from skylines.lib.analysis import flight_path
         fp = flight_path(self.flight)
 
+        threshold = 0.001
+        num_levels = 4
+        zoom_factor = 4
+        zoom_levels = [0]
+        zoom_levels.extend([round(-log(32.0/45.0 * (threshold * pow(zoom_factor, num_levels - i - 1)), 2)) for i in range(1, num_levels)])
+
         import skylinespolyencode
-        encoder = skylinespolyencode.SkyLinesPolyEncoder(num_levels=4, threshold=0.001, zoom_factor=4)
+        encoder = skylinespolyencode.SkyLinesPolyEncoder(num_levels=num_levels, threshold=threshold, zoom_factor=zoom_factor)
         fixes = map(lambda x: (x[2], x[1]), fp)
         fixes = encoder.classify(fixes, remove=True)
         encoded = encoder.encode(fixes['points'], fixes['levels'])
 
-        return dict(page='flights', encoded=encoded, fixes=fixes)
+        return dict(page='flights', encoded=encoded, fixes=fixes, zoom_levels=zoom_levels)
 
     @expose('skylines.templates.generic.form')
     def change_pilot(self):
