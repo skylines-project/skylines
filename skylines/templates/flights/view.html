@@ -102,10 +102,17 @@
     }
 
     function showPlanePosition(id) {
+      var rotation = 0;
+      if (lonlat[id+1] != 'undefined') {
+        rotation = Math.atan2(lonlat[id+1].lon-lonlat[id].lon, lonlat[id+1].lat-lonlat[id].lat) * 180/Math.PI;
+      } else if (lonlat[id-1] != 'undefined') {
+        rotation = Math.atan2(lonlat[id].lon-lonlat[id-1].lon, lonlat[id].lat-lonlat[id-1].lat) * 180/Math.PI;
+      }
+
       this.plane = new OpenLayers.Feature.Vector(
         new OpenLayers.Geometry.Point(lonlat[id].lon, lonlat[id].lat).
           transform(new OpenLayers.Projection("EPSG:4326"), map.getProjectionObject()),
-        { color: '#ffffff'}
+        { rotation: rotation }
       );
 
       map.getLayersByName("Flight")[0].addFeatures(this.plane);

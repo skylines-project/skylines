@@ -36,13 +36,14 @@ function initOpenLayers() {
         strokeColor: "${color}",
         strokeWidth: 2,
         // Set the external graphic and background graphic images.
-        externalGraphic: "/images/OpenLayers/marker.png",
+        externalGraphic: "/images/glider_symbol.png",
         // Makes sure the background graphic is placed correctly relative
         // to the external graphic.
-        graphicXOffset: -(21/2),
-        graphicYOffset: -25,
-        graphicWidth: 21,
-        graphicHeight: 25,
+        graphicXOffset: -(40/2),
+        graphicYOffset: -8,
+        graphicWidth: 40,
+        graphicHeight: 24,
+        rotation: "${rotation}",
         // Set the z-indexes of both graphics to make sure the background
         // graphics stay in the background (shadows on top of markers looks
         // odd; let's not do that).
