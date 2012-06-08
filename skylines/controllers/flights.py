@@ -73,7 +73,7 @@ class FlightController(BaseController):
         from skylines.lib.analysis import flight_path
         fp = flight_path(self.flight)
 
-        threshold = 0.001
+        threshold = 0.0001
         num_levels = 4
         zoom_factor = 4
         zoom_levels = [0]
