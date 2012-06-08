@@ -54,25 +54,25 @@
       var hoverLine = barogram.path().attr({
         stroke: '#c44',
         'stroke-width': 2
-      });
+      }).hide();
 
-      var text = barogram.text();
+      var text = barogram.text().hide();
 
       var textRect = barogram.rect().attr({
         fill: '#fff',
         opacity: .7,
         stroke: '#999'
-      });
+      }).hide();
 
       var hoverCircle = barogram.circle().attr({
         stroke: '#c44',
         'stroke-width': 2
-      });
+      }).hide();
 
       position.push(hoverLine);
       position.push(hoverCircle);
-      position.push(textRect);
-      position.push(text);
+      position.push(textRect.insertAfter(hoverCircle));
+      position.push(text.insertAfter(textRect));
 
       linechart.hoverColumn(function() {
           hoverLine.attr({ path:
@@ -110,8 +110,6 @@
             r: 3
           });
 
-          textRect.toFront();
-          text.toFront();
           position.show();
 
           this.index = getNearestNumber(barogram_t, this.axis);
