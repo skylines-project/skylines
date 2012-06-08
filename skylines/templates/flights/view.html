@@ -61,12 +61,14 @@
       var textRect = barogram.rect().attr({
         fill: '#fff',
         opacity: .7,
-        stroke: '#999'
+        stroke: '#999',
+        r: 3
       }).hide();
 
       var hoverCircle = barogram.circle().attr({
         stroke: '#c44',
-        'stroke-width': 2
+        'stroke-width': 2,
+        r: 6
       }).hide();
 
       position.push(hoverLine);
@@ -94,20 +96,17 @@
               ((vario !== null)?"\n" + (Math.round(vario*10)/10) + " m/s":"")
           });
 
-          var textBBox = text.getBBox();
-
           hoverCircle.attr({
             cx: this.x,
             cy: this.y,
-            r: 6
           });
 
+          var textBBox = text.getBBox();
           textRect.attr({
             x: textBBox.x - 2,
             y: textBBox.y - 2,
             width: textBBox.width + 4,
-            height: textBBox.height + 4,
-            r: 3
+            height: textBBox.height + 4
           });
 
           position.show();
