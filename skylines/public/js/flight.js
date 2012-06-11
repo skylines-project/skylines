@@ -32,9 +32,11 @@ function initOpenLayers() {
 
   var flightPathLayer = new OpenLayers.Layer.Vector("Flight", {
     styleMap: new OpenLayers.StyleMap({
-      'default': new OpenLayers.Style({
+      'default': {
         strokeColor: "${color}",
-        strokeWidth: 2,
+        strokeWidth: 2
+      },
+      'plane': {
         // Set the external graphic and background graphic images.
         externalGraphic: "/images/glider_symbol.png",
         // Makes sure the background graphic is placed correctly relative
@@ -48,7 +50,7 @@ function initOpenLayers() {
         // graphics stay in the background (shadows on top of markers looks
         // odd; let's not do that).
         graphicZIndex: 2000
-      })
+      }
     })
   });
      

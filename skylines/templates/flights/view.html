@@ -50,6 +50,7 @@
           transform(new OpenLayers.Projection("EPSG:4326"), map.getProjectionObject()),
         { rotation: 0 }
       );
+      plane.renderIntent = 'plane';
 
       map.zoomToExtent(flight.bounds.scale(1.1));
 

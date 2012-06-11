@@ -51,6 +51,7 @@
           transform(new OpenLayers.Projection("EPSG:4326"), map.getProjectionObject()),
         { rotation: 0 }
       );
+      plane.renderIntent = 'plane';
 
       var factor = $("#barogram")[0].offsetHeight / map.getSize().h;
       var zoomExtent = flight.bounds.clone().scale(1.1);
