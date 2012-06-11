@@ -132,28 +132,63 @@ function render_barogram(element) {
   position.push(textRect.insertAfter(hoverCircle));
   position.push(text.insertAfter(textRect));
 
-  linechart.hoverColumn(function() {
+  var mouse_container = $("<div></div>");
+  mouse_container.css({
+    width: element.innerWidth(),
+    height: element.innerHeight(),
+    'top': 0,
+    'left': 0,
+    position: 'absolute',
+    opacity: 0
+  });
+  element.append(mouse_container);
+
+  mouse_container.mousemove(function(e) {
+    hidePlanePosition();
+    var prop = linechart.getProperties();
+    var kx_inv = 1 / prop.kx;
+    var rel_x = e.clientX - mouse_container.offset().left;
+    var x = prop.minx + (rel_x - prop.x - prop.gutter) * kx_inv;
+    if (x < prop.minx || x > prop.maxx) return;
+
+    var baro_index = getNearestNumber(barogram_t, x);
+    var rel_y = prop.y - (barogram_h[baro_index] - prop.miny) * prop.ky + prop.height - prop.gutter;
+
+    hoverColumn(baro_index, rel_x, rel_y);
+    showPlanePosition(baro_index);
+  });
+
+  mouse_container.mouseout(function(e) {
+    hidePlanePosition();
+    position && position.hide();
+  });
+
+  hoverColumn = function(index, x, y) {
+    position.toFront();
+    var attrs = linechart.getProperties();
+
     hoverLine.attr({ path:
-      "M " + this.x.toString() + " " + this.attrs.height + " " +
-      "l 0 " + (-(this.attrs.height - this.y) + 6).toString() +
-      "M " + this.x.toString() + " 0 " +
-      "l 0 " + (this.y - 6).toString()
+      "M " + x.toString() + " " + attrs.height + " " +
+      "l 0 " + (-(attrs.height - y) + 6).toString() +
+      "M " + x.toString() + " 0 " +
+      "l 0 " + (y - 6).toString()
     });
+
     var vario = null;
-    if (this.next && this.next.values) {
-      vario = (this.next.values[0] - this.values[0]) / (this.next.axis - this.axis);
+    if (barogram_t[index+1] != undefined) {
+      vario = (barogram_h[index+1] - barogram_h[index]) / (barogram_t[index+1] - barogram_t[index]);
     }
 
     text.attr({
-      x: this.x,
-      y: this.attrs.height - 20,
-      text: Math.round(this.values[0]) + " m" +
+      x: x,
+      y: attrs.height - 20,
+      text: Math.round(barogram_h[index]) + " m" +
             ((vario !== null)?"\n" + (Math.round(vario*10)/10) + " m/s":"")
     });
 
     hoverCircle.attr({
-      cx: this.x,
-      cy: this.y,
+      cx: x,
+      cy: y,
     });
 
     var textBBox = text.getBBox();
@@ -167,11 +202,7 @@ function render_barogram(element) {
     position.show();
 
     this.index = getNearestNumber(barogram_t, this.axis);
-    showPlanePosition(this.index);
-  }, function() {
-    hidePlanePosition(this.index);
-    position && position.hide();
-  });
+  };
 
   return barogram;
 }
