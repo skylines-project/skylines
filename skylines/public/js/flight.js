@@ -220,7 +220,7 @@ function render_barogram(element) {
     this.index = getNearestNumber(barogram_t, this.axis);
   };
 
-  return barogram;
+  return linechart;
 }
 
 function showPlanePosition(id, dx) {
