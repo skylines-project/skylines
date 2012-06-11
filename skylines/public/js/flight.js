@@ -155,7 +155,14 @@ function render_barogram(element) {
     var rel_y = prop.y - (barogram_h[baro_index] - prop.miny) * prop.ky + prop.height - prop.gutter;
 
     hoverColumn(baro_index, rel_x, rel_y);
-    showPlanePosition(baro_index);
+
+    if (x < barogram_t[baro_index]) {
+      var dx = (x - barogram_t[baro_index-1])/(barogram_t[baro_index] - barogram_t[baro_index-1]);
+      showPlanePosition(baro_index - 1, dx);
+    } else {
+      var dx = (x - barogram_t[baro_index])/(barogram_t[baro_index+1] - barogram_t[baro_index]);
+      showPlanePosition(baro_index, dx);
+    }
   });
 
   mouse_container.mouseout(function(e) {
@@ -207,15 +214,19 @@ function render_barogram(element) {
   return barogram;
 }
 
-function showPlanePosition(id) {
+function showPlanePosition(id, dx) {
   var rotation = 0;
   if (lonlat[id+1] != 'undefined') {
     rotation = Math.atan2(lonlat[id+1].lon-lonlat[id].lon, lonlat[id+1].lat-lonlat[id].lat) * 180/Math.PI;
   } else if (lonlat[id-1] != 'undefined') {
     rotation = Math.atan2(lonlat[id].lon-lonlat[id-1].lon, lonlat[id].lat-lonlat[id-1].lat) * 180/Math.PI;
   }
+
+  var lon = lonlat[id].lon + (lonlat[id+1].lon - lonlat[id].lon)*dx;
+  var lat = lonlat[id].lat + (lonlat[id+1].lat - lonlat[id].lat)*dx;
+
   plane.attributes.rotation = rotation;
-  plane.geometry = new OpenLayers.Geometry.Point(lonlat[id].lon, lonlat[id].lat).
+  plane.geometry = new OpenLayers.Geometry.Point(lon, lat).
     transform(new OpenLayers.Projection("EPSG:4326"), map.getProjectionObject());
   map.getLayersByName("Flight")[0].drawFeature(plane);
 }
