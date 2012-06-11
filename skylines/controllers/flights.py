@@ -183,7 +183,15 @@ class FlightsController(BaseController):
 
     @expose('skylines.templates.flights.list')
     def today(self, **kw):
-        date = DBSession.query(func.max(Flight.takeoff_time).label('date')).one().date.date()
+        query = DBSession.query(Flight)
+
+        # Ignore Condor flights for determining the most recent flight
+        # (kludge)
+        query = query.filter(or_(Flight.logger_manufacturer_id == None,
+                                 Flight.logger_manufacturer_id != 'CSS'))
+
+        query = query.from_self(func.max(Flight.takeoff_time).label('date'))
+        date = query.one().date.date()
         return self._do_list('today', kw, date=date)
 
     @expose('skylines.templates.flights.list')
