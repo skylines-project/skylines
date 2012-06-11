@@ -12,6 +12,8 @@
   <link href="/css/OpenLayers.css" rel="stylesheet" type="text/css" />
 
   <script type="text/javascript" src="/js/OpenLayers/OpenLayers.js"></script>
+  <script type="text/javascript" src="/js/jQuery/jquery.js"></script>
+
   <script type="text/javascript" src="/js/flight.js"></script>
 
   <script type="text/javascript" src="/js/g.raphael/raphael-min.js"></script>
@@ -51,7 +53,7 @@
 
       map.zoomToExtent(flight.bounds);
 
-      barogram = render_barogram();
+      barogram = render_barogram($("#barogram"));
     }
     /* ]]> */
   </script>

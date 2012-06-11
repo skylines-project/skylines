@@ -94,12 +94,11 @@ function formatSecondsAsTime(seconds) {
   return pad(h,2) + ":" + pad(m,2) + ":" + pad(s,2); // Format the result into time strings
 }
 
-function render_barogram() {
+function render_barogram(element) {
   var barogram = Raphael("barogram", "100%", "100%");
 
-  var element = document.getElementById("barogram");
   var linechart = barogram.linechart(30, 0,
-                      element.clientWidth - 50, element.clientHeight - 10,
+                      element.innerWidth() - 50, element.innerHeight() - 10,
                       barogram_t,
                       [barogram_h],
                       { axis: "0 0 1 1",
