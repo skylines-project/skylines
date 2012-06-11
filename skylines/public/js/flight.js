@@ -198,7 +198,8 @@ function render_barogram(element) {
       y: attrs.height - 20,
       text: Math.round(barogram_h[index]) + " m" +
             ((vario !== null)?"\n" + (Math.round(vario*10)/10) + " m/s":"") +
-            ((speed !== null)?"\n" + (Math.round(speed*3.6*10)/10) + " km/h":"")
+            ((speed !== null)?"\n" + (Math.round(speed*3.6*10)/10) + " km/h":"") +
+            "\n" + formatSecondsAsTime(barogram_t[index])
     });
 
     hoverCircle.attr({
