@@ -19,6 +19,8 @@ class Flight(DeclarativeBase):
     filename = Column(String(), nullable=False)
     md5 = Column(String(32), nullable=False, unique=True)
 
+    logger_manufacturer_id = Column(String(3))
+
     pilot_id = Column(Integer, ForeignKey('tg_user.user_id'))
     pilot = relation('User', primaryjoin=(pilot_id==User.user_id))
     co_pilot_id = Column(Integer, ForeignKey('tg_user.user_id'))

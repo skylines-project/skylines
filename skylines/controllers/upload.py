@@ -8,6 +8,7 @@ from skylines.lib.base import BaseController
 from skylines import files
 from skylines.model import DBSession, User, Flight
 from skylines.lib.md5 import file_md5
+from skylines.lib.igc import read_igc_header
 from skylines.lib.analysis import analyse_flight
 
 class PilotSelectField(SingleSelectField):
@@ -102,6 +103,8 @@ class UploadController(BaseController):
             flight.md5 = md5
             flight.pilot_id = pilot_id
             flight.club_id = club_id
+
+            read_igc_header(flight)
 
             if not analyse_flight(flight):
                 files.delete_file(filename)

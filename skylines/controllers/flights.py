@@ -261,5 +261,20 @@ class FlightsController(BaseController):
 
         return redirect('/flights/')
 
+    @expose()
+    @require(has_permission('manage'))
+    def igc_headers(self):
+        """Hidden method that parses all missing IGC headers."""
+        from skylines.lib.igc import read_igc_header
+
+        flights = DBSession.query(Flight)
+        flights = flights.filter(Flight.logger_manufacturer_id == None)
+
+        for flight in flights:
+            read_igc_header(flight)
+        DBSession.flush()
+
+        return redirect('/flights/')
+
     id = FlightIdController()
     upload = UploadController()
