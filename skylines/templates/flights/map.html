@@ -14,14 +14,25 @@
   <script type="text/javascript" src="/js/OpenLayers/OpenLayers.js"></script>
   <script type="text/javascript" src="/js/flight.js"></script>
 
+  <script type="text/javascript" src="/js/g.raphael/raphael-min.js"></script>
+  <script type="text/javascript" src="/js/g.raphael/g.raphael-min.js"></script>
+  <script type="text/javascript" src="/js/g.raphael/g.line-min.js"></script>
+
   <script type="text/javascript">
 <?python from simplejson import dumps ?>
     /* <![CDATA[ */
-    function initialize() {
-      var map = initOpenLayers();
 
-      var lonlat = OpenLayers.Util.decodeGooglePolyline(${dumps(encoded.points)});
-      var lod = OpenLayers.Util.decodeGoogleLoD(${dumps(encoded.levels)}, ${fixes.numLevels});
+    var barogram;
+    var map;
+    var plane;
+
+    var barogram_t = OpenLayers.Util.decodeGoogle(${dumps(barogram_t)});
+    var barogram_h = OpenLayers.Util.decodeGoogle(${dumps(barogram_h)});
+    var lonlat = OpenLayers.Util.decodeGooglePolyline(${dumps(encoded.points)});
+    var lod = OpenLayers.Util.decodeGoogleLoD(${dumps(encoded.levels)}, ${fixes.numLevels});
+
+    function initialize() {
+      map = initOpenLayers();
 
       var points = new Array();
       for (var i = 0, len = lonlat.length; i < len; i++) {
@@ -32,7 +43,16 @@
       var flight = new OpenLayers.Geometry.ProgressiveLineString(points, lod, ${dumps(zoom_levels)});
       map.getLayersByName("Flight")[0].addFeatures(new OpenLayers.Feature.Vector(flight, { color: '#ff0000' }));
 
+      plane = new OpenLayers.Feature.Vector(
+        new OpenLayers.Geometry.Point(lonlat[0].lon, lonlat[0].lat).
+          transform(new OpenLayers.Projection("EPSG:4326"), map.getProjectionObject()),
+        { rotation: 0 }
+      );
+
       map.zoomToExtent(flight.bounds);
+
+      barogram = Raphael("barogram", "100%", "100%");
+      render_barogram();
     }
     /* ]]> */
   </script>
@@ -46,6 +66,7 @@
 </head>
 
 <body onload="initialize();">
-  <div id="map_canvas" style="position: absolute; top: 40px; bottom: 0; width:100%;"></div>
+  <div id="map_canvas" style="position: absolute; top: 40px; bottom: 100pt; width:100%;"></div>
+  <div id="barogram" style="position: absolute; bottom: 0; width:100%; height:100pt; background-color: white;"></div>
 </body>
 </html>
