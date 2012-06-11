@@ -53,7 +53,7 @@
       );
 
       var factor = $("#barogram")[0].offsetHeight / map.getSize().h;
-      var zoomExtent = flight.bounds.clone();
+      var zoomExtent = flight.bounds.clone().scale(1.1);
       zoomExtent.bottom -= zoomExtent.getHeight() * factor * 3/2;
 
       map.zoomToExtent(zoomExtent);

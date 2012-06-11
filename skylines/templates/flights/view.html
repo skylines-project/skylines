@@ -51,7 +51,7 @@
         { rotation: 0 }
       );
 
-      map.zoomToExtent(flight.bounds);
+      map.zoomToExtent(flight.bounds.scale(1.1));
 
       barogram = render_barogram($("#barogram"));
       scaleBarogram(barogram, flight, $("#barogram"));
