@@ -244,3 +244,38 @@ function hidePlanePosition(id) {
   map.getLayersByName("Flight")[0].removeFeatures(plane);
 }
 
+function scaleBarogram(linechart, flight, element) {
+
+  var updateBarogram = function(e) {
+    var largest_partition = null;
+    var delta_t = 0;
+    var first = 0;
+    var last = barogram_t.length - 1;
+
+    // only show longest single part of trace in barogram
+    for (part_geo in flight.partitionedGeometries) {
+      var components = flight.partitionedGeometries[part_geo].components;
+      var temp = barogram_t[components[components.length-1].originalIndex] -
+        barogram_t[components[0].originalIndex];
+
+      if (temp > delta_t) {
+        delta_t = temp;
+        largest_partition = part_geo;
+        first = components[0].originalIndex;
+        last = components[components.length-1].originalIndex;
+      }
+    }
+
+/*
+    // show barogram of all trace parts visible
+    var length = flight.partitionedGeometries.length;
+    var comp_length = flight.partitionedGeometries[length-1].components.length;
+    first = flight.partitionedGeometries[0].components[0].originalIndex;
+    last = flight.partitionedGeometries[length-1].components[comp_length-1].originalIndex;
+*/
+    setTimeout(function() { linechart.zoomInto(first, last)}, 0);
+  };
+
+  map.events.register("moveend", this, updateBarogram);
+}
+
