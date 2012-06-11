@@ -61,3 +61,109 @@ function initOpenLayers() {
 
   return map;
 };
+
+//+ Carlos R. L. Rodrigues
+//@ http://jsfromhell.com/array/nearest-number [rev. #0]
+function getNearestNumber(a, n){
+  if((l = a.length) < 2)
+    return l - 1;
+  for(var l, p = Math.abs(a[--l] - n); l--;)
+    if(p < (p = Math.abs(a[l] - n)))
+      break;
+  return l + 1;
+}
+
+function render_barogram() {
+  var element = document.getElementById("barogram");
+  var linechart = barogram.linechart(30, 0,
+                      element.clientWidth - 40, element.clientHeight,
+                      barogram_t,
+                      [barogram_h],
+                      { axis: "0 0 0 1" });
+
+  var position = barogram.set().hide();
+
+  var hoverLine = barogram.path().attr({
+    stroke: '#c44',
+    'stroke-width': 2
+  }).hide();
+
+  var text = barogram.text().hide();
+
+  var textRect = barogram.rect().attr({
+    fill: '#fff',
+    opacity: .7,
+    stroke: '#999',
+    r: 3
+  }).hide();
+
+  var hoverCircle = barogram.circle().attr({
+    stroke: '#c44',
+    'stroke-width': 2,
+    r: 6
+  }).hide();
+
+  position.push(hoverLine);
+  position.push(hoverCircle);
+  position.push(textRect.insertAfter(hoverCircle));
+  position.push(text.insertAfter(textRect));
+
+  linechart.hoverColumn(function() {
+    hoverLine.attr({ path:
+      "M " + this.x.toString() + " " + this.attrs.height + " " +
+      "l 0 " + (-(this.attrs.height - this.y) + 6).toString() +
+      "M " + this.x.toString() + " 0 " +
+      "l 0 " + (this.y - 6).toString()
+    });
+    var vario = null;
+    if (this.next && this.next.values) {
+      vario = (this.next.values[0] - this.values[0]) / (this.next.axis - this.axis);
+    }
+
+    text.attr({
+      x: this.x,
+      y: this.attrs.height - 20,
+      text: Math.round(this.values[0]) + " m" +
+            ((vario !== null)?"\n" + (Math.round(vario*10)/10) + " m/s":"")
+    });
+
+    hoverCircle.attr({
+      cx: this.x,
+      cy: this.y,
+    });
+
+    var textBBox = text.getBBox();
+    textRect.attr({
+      x: textBBox.x - 2,
+      y: textBBox.y - 2,
+      width: textBBox.width + 4,
+      height: textBBox.height + 4
+    });
+
+    position.show();
+
+    this.index = getNearestNumber(barogram_t, this.axis);
+    showPlanePosition(this.index);
+  }, function() {
+    hidePlanePosition(this.index);
+    position && position.hide();
+  });
+}
+
+function showPlanePosition(id) {
+  var rotation = 0;
+  if (lonlat[id+1] != 'undefined') {
+    rotation = Math.atan2(lonlat[id+1].lon-lonlat[id].lon, lonlat[id+1].lat-lonlat[id].lat) * 180/Math.PI;
+  } else if (lonlat[id-1] != 'undefined') {
+    rotation = Math.atan2(lonlat[id].lon-lonlat[id-1].lon, lonlat[id].lat-lonlat[id-1].lat) * 180/Math.PI;
+  }
+  plane.attributes.rotation = rotation;
+  plane.geometry = new OpenLayers.Geometry.Point(lonlat[id].lon, lonlat[id].lat).
+    transform(new OpenLayers.Projection("EPSG:4326"), map.getProjectionObject());
+  map.getLayersByName("Flight")[0].drawFeature(plane);
+}
+
+function hidePlanePosition(id) {
+  map.getLayersByName("Flight")[0].removeFeatures(plane);
+}
+
