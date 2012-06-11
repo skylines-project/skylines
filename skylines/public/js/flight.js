@@ -116,7 +116,7 @@ function render_barogram(element) {
 
   var textRect = barogram.rect().attr({
     fill: '#fff',
-    opacity: .7,
+    opacity: .8,
     stroke: '#999',
     r: 3
   }).hide();
