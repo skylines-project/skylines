@@ -52,7 +52,11 @@
         { rotation: 0 }
       );
 
-      map.zoomToExtent(flight.bounds);
+      var factor = $("#barogram")[0].offsetHeight / map.getSize().h;
+      var zoomExtent = flight.bounds.clone();
+      zoomExtent.bottom -= zoomExtent.getHeight() * factor * 3/2;
+
+      map.zoomToExtent(zoomExtent);
 
       barogram = render_barogram($("#barogram"));
       scaleBarogram(barogram, flight, $("#barogram"));
@@ -69,7 +73,7 @@
 </head>
 
 <body onload="initialize();">
-  <div id="map_canvas" style="position: absolute; top: 40px; bottom: 100pt; width:100%;"></div>
-  <div id="barogram" style="position: absolute; bottom: 0; width:100%; height:100pt; background-color: white;"></div>
+  <div id="map_canvas" style="position: absolute; top: 40px; bottom: 0; width:100%;"></div>
+  <div id="barogram" style="position: absolute; bottom: 0; width:100%; height:100pt; background-color: white; opacity: 0.8;"></div>
 </body>
 </html>
