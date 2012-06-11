@@ -191,8 +191,11 @@ class FlightsController(BaseController):
                                  Flight.logger_manufacturer_id != 'CSS'))
 
         query = query.from_self(func.max(Flight.takeoff_time).label('date'))
-        date = query.one().date.date()
-        return self._do_list('today', kw, date=date)
+        date = query.one().date
+        if not date:
+            raise HTTPNotFound
+
+        return self._do_list('today', kw, date=date.date())
 
     @expose('skylines.templates.flights.list')
     def my(self, **kw):
