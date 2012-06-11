@@ -95,6 +95,8 @@ function formatSecondsAsTime(seconds) {
 }
 
 function render_barogram() {
+  var barogram = Raphael("barogram", "100%", "100%");
+
   var element = document.getElementById("barogram");
   var linechart = barogram.linechart(30, 0,
                       element.clientWidth - 50, element.clientHeight - 10,
@@ -171,6 +173,8 @@ function render_barogram() {
     hidePlanePosition(this.index);
     position && position.hide();
   });
+
+  return barogram;
 }
 
 function showPlanePosition(id) {
