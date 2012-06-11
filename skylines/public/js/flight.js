@@ -73,13 +73,30 @@ function getNearestNumber(a, n){
   return l + 1;
 }
 
+// add leading zeros to a number
+function pad(num, size) {
+  var s = "000000000" + num;
+  return s.substr(s.length-size);
+}
+
+function formatSecondsAsTime(seconds) {
+  seconds %= 86400;
+  var h = Math.floor(seconds/3600);
+  var m = Math.floor((seconds%3600)/60);
+  var s = Math.floor(seconds%3600%60);
+
+  return pad(h,2) + ":" + pad(m,2) + ":" + pad(s,2); // Format the result into time strings
+}
+
 function render_barogram() {
   var element = document.getElementById("barogram");
   var linechart = barogram.linechart(30, 0,
-                      element.clientWidth - 40, element.clientHeight,
+                      element.clientWidth - 50, element.clientHeight - 10,
                       barogram_t,
                       [barogram_h],
-                      { axis: "0 0 0 1" });
+                      { axis: "0 0 1 1",
+                        axisxstep: 8,
+                        axisxfunc: formatSecondsAsTime });
 
   var position = barogram.set().hide();
 
