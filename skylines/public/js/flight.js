@@ -141,7 +141,8 @@ function render_barogram(element) {
     'top': 0,
     'left': 0,
     position: 'absolute',
-    opacity: 0
+    opacity: 0,
+    'background-color': '#fff'
   });
   element.append(mouse_container);
 
