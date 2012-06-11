@@ -53,11 +53,17 @@ function initOpenLayers() {
   });
      
   map.addLayer(flightPathLayer);
-  map.events.register("moveend", flightPathLayer, flightPathLayer.redraw);
+//  map.events.register("moveend", flightPathLayer, flightPathLayer.redraw);
 
   map.setCenter(new OpenLayers.LonLat(30, 0).
     transform(new OpenLayers.Projection("EPSG:4326"),map.getProjectionObject() ),
     9);
+
+  var initRedrawLayer = function(layer) {
+    if (this.timer) return;
+    this.timer = window.setTimeout(function() { this.timer = null; layer.redraw(); }.bind(this), 200);
+  };
+  map.events.register("move", this, function() { initRedrawLayer(flightPathLayer); });
 
   return map;
 };
