@@ -186,11 +186,19 @@ function render_barogram(element) {
       vario = (barogram_h[index+1] - barogram_h[index]) / (barogram_t[index+1] - barogram_t[index]);
     }
 
+    var speed = null;
+    if (barogram_t[index+1] != undefined) {
+      speed = OpenLayers.Util.distVincenty(lonlat[index+1], lonlat[index]);
+      speed *= 1000;
+      speed /= (barogram_t[index+1] - barogram_t[index]);
+    }
+
     text.attr({
       x: x,
       y: attrs.height - 20,
       text: Math.round(barogram_h[index]) + " m" +
-            ((vario !== null)?"\n" + (Math.round(vario*10)/10) + " m/s":"")
+            ((vario !== null)?"\n" + (Math.round(vario*10)/10) + " m/s":"") +
+            ((speed !== null)?"\n" + (Math.round(speed*3.6*10)/10) + " km/h":"")
     });
 
     hoverCircle.attr({
