@@ -42,6 +42,7 @@
       }
 
       var flight = new OpenLayers.Geometry.ProgressiveLineString(points, lod, ${dumps(zoom_levels)});
+      flight.clip = 1.1;
       map.getLayersByName("Flight")[0].addFeatures(new OpenLayers.Feature.Vector(flight, { color: '#ff0000' }));
 
       plane = new OpenLayers.Feature.Vector(
