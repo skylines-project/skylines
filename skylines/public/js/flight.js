@@ -276,7 +276,7 @@ function scaleBarogram(linechart, flight, element) {
   map.events.register("moveend", this, updateBarogram);
 }
 
-function hoverMap(map, flight) {
+function hoverMap(map, flight, linechart) {
   var running = false;
   map.events.register("mousemove", this, function(e) {
     // call this function only every 25ms
@@ -295,7 +295,19 @@ function hoverMap(map, flight) {
     var nearest = searchForPlane(new OpenLayers.Bounds(ll.lon, ll.lat, ur.lon, ur.lat), loc);
 
     hidePlanePosition();
-    if (nearest !== null) showPlanePosition(nearest.from, nearest.along);
+    linechart.hoverColumn.position.hide();
+
+    if (nearest !== null) {
+      showPlanePosition(nearest.from, nearest.along);
+
+      var prop = linechart.getProperties();
+      var x = barogram_t[nearest.from] + (barogram_t[nearest.from+1]-barogram_t[nearest.from])*nearest.along;
+      if (x > prop.minx && x < prop.maxx) {
+        var rel_x = (x - prop.minx) * prop.kx + prop.x + prop.gutter;
+        var rel_y = prop.y - (barogram_h[nearest.from] - prop.miny) * prop.ky + prop.height - prop.gutter;
+        linechart.hoverColumn(nearest.from, rel_x, rel_y);
+      }
+    }
   });
 
   function searchForPlane(within, loc) {
