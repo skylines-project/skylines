@@ -44,7 +44,7 @@ class FlightController(BaseController):
     @expose('skylines.templates.flights.view')
     def index(self):
         from skylines.lib.analysis import flight_path
-        fp = flight_path(self.flight)
+        fp = flight_path(self.flight, max_points = 3000)
 
         threshold = 0.001
         num_levels = 4
@@ -71,7 +71,7 @@ class FlightController(BaseController):
     @expose('skylines.templates.flights.map')
     def map(self):
         from skylines.lib.analysis import flight_path
-        fp = flight_path(self.flight)
+        fp = flight_path(self.flight, max_points = 10000)
 
         threshold = 0.0001
         num_levels = 4

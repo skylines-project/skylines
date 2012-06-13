@@ -67,9 +67,9 @@ def analyse_flight(flight):
 
     return True
 
-def flight_path(flight):
+def flight_path(flight, max_points = 1000):
     path = files.filename_to_path(flight.filename)
-    f = os.popen(helper_path('FlightPath') + ' "' + path + '"')
+    f = os.popen(helper_path('FlightPath') + ' --max-points=' + str(max_points) + ' "' + path + '"')
 
     path = []
     for line in f:
