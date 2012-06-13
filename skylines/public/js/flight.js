@@ -276,3 +276,109 @@ function scaleBarogram(linechart, flight, element) {
   map.events.register("moveend", this, updateBarogram);
 }
 
+function hoverMap(map, flight) {
+  var running = false;
+  map.events.register("mousemove", this, function(e) {
+    // call this function only every 25ms
+    if (running) return;
+    running = true;
+    setTimeout(function() { running = false; }, 25);
+
+    var pixel = e.xy.clone();
+    var hoverTolerance = 15;
+    var llPx = pixel.add(-hoverTolerance/2, hoverTolerance/2);
+    var urPx = pixel.add(hoverTolerance/2, -hoverTolerance/2);
+    var ll = map.getLonLatFromPixel(llPx);
+    var ur = map.getLonLatFromPixel(urPx);
+    var loc = map.getLonLatFromPixel(pixel);
+
+    var nearest = searchForPlane(new OpenLayers.Bounds(ll.lon, ll.lat, ur.lon, ur.lat), loc);
+
+    hidePlanePosition();
+    if (nearest !== null) showPlanePosition(nearest.from, nearest.along);
+  });
+
+  function searchForPlane(within, loc) {
+    var possible_solutions = [];
+
+    for (part_geo in flight.partitionedGeometries) {
+      for (var i = 1, len = flight.partitionedGeometries[part_geo].components.length; i < len; i++) {
+        var vector = new OpenLayers.Bounds();
+        vector.extend(flight.partitionedGeometries[part_geo].components[i-1]);
+        vector.extend(flight.partitionedGeometries[part_geo].components[i]);
+
+        if (within.intersectsBounds(vector))
+          possible_solutions.push({
+            from: flight.partitionedGeometries[part_geo].components[i-1].originalIndex,
+            to: flight.partitionedGeometries[part_geo].components[i].originalIndex
+          });
+      }
+    }
+
+    if (possible_solutions.length == 0) return null;
+
+    var nearest, distance = 99999999999;
+    for (i in possible_solutions) {
+      for (var j = possible_solutions[i].from + 1; j <= possible_solutions[i].to; j++) {
+        var distToSegment = distanceToSegmentSquared({x: loc.lon, y: loc.lat},
+          { x1: flight.components[j-1].x, y1: flight.components[j-1].y,
+            x2: flight.components[j].x, y2: flight.components[j].y });
+
+
+        if (distToSegment.distance < distance) {
+          distance = distToSegment.distance;
+          nearest = { from: j-1, to: j, along: distToSegment.along };
+        }
+      }
+    }
+
+    return nearest;
+  };
+
+}
+
+/**
+ * Function: (OpenLayers.Geometry.)distanceToSegmentSquared
+ * modified to return along, too.
+ *
+ * Parameters:
+ * point - {Object} An object with x and y properties representing the
+ *     point coordinates.
+ * segment - {Object} An object with x1, y1, x2, and y2 properties
+ *     representing endpoint coordinates.
+ *
+ * Returns:
+ * {Object} An object with distance (squared) and along.
+ */
+
+distanceToSegmentSquared = function(point, segment) {
+    var x0 = point.x;
+    var y0 = point.y;
+    var x1 = segment.x1;
+    var y1 = segment.y1;
+    var x2 = segment.x2;
+    var y2 = segment.y2;
+    var dx = x2 - x1;
+    var dy = y2 - y1;
+    var along = ((dx * (x0 - x1)) + (dy * (y0 - y1))) /
+                (Math.pow(dx, 2) + Math.pow(dy, 2));
+    var x, y;
+    if(along <= 0.0) {
+        x = x1;
+        y = y1;
+        along = 0;
+    } else if(along >= 1.0) {
+        x = x2;
+        y = y2;
+        along = 1;
+    } else {
+        x = x1 + along * dx;
+        y = y1 + along * dy;
+    }
+
+    return {
+        distance: Math.pow(x - x0, 2) + Math.pow(y - y0, 2),
+        along: along
+    };
+};
+
