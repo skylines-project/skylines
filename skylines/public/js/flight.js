@@ -207,7 +207,7 @@ function render_barogram(element) {
 
     hoverCircle.attr({
       cx: x,
-      cy: y,
+      cy: y
     });
 
     var textBBox = text.getBBox();
