@@ -167,7 +167,7 @@ function render_barogram(element) {
     position && position.hide();
   });
 
-  hoverColumn = function(index, x, y) {
+  var hoverColumn = function(index, x, y) {
     position.toFront();
     var attrs = linechart.getProperties();
 
@@ -215,6 +215,8 @@ function render_barogram(element) {
     position.show();
   };
 
+  hoverColumn.position = position;
+  linechart.hoverColumn = hoverColumn;
   return linechart;
 }
 
