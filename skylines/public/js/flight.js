@@ -248,7 +248,7 @@ function scaleBarogram(linechart, flight, element) {
     var delta_t = 0;
     var first = 0;
     var last = barogram_t.length - 1;
-
+/*
     // only show longest single part of trace in barogram
     for (part_geo in flight.partitionedGeometries) {
       var components = flight.partitionedGeometries[part_geo].components;
@@ -262,14 +262,14 @@ function scaleBarogram(linechart, flight, element) {
         last = components[components.length-1].originalIndex;
       }
     }
+*/
 
-/*
     // show barogram of all trace parts visible
     var length = flight.partitionedGeometries.length;
     var comp_length = flight.partitionedGeometries[length-1].components.length;
     first = flight.partitionedGeometries[0].components[0].originalIndex;
     last = flight.partitionedGeometries[length-1].components[comp_length-1].originalIndex;
-*/
+
     setTimeout(function() { linechart.zoomInto(first, last)}, 0);
   };
 
