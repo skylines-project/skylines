@@ -237,7 +237,7 @@ function showPlanePosition(id, dx) {
   map.getLayersByName("Flight")[0].drawFeature(plane);
 }
 
-function hidePlanePosition(id) {
+function hidePlanePosition() {
   map.getLayersByName("Flight")[0].removeFeatures(plane);
 }
 
