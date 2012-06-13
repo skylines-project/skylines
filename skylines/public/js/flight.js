@@ -81,12 +81,6 @@ function getNearestNumber(a, n){
   return l + 1;
 }
 
-// add leading zeros to a number
-function pad(num, size) {
-  var s = "000000000" + num;
-  return s.substr(s.length-size);
-}
-
 function formatSecondsAsTime(seconds) {
   seconds %= 86400;
   var h = Math.floor(seconds/3600);
