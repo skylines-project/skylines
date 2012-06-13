@@ -213,8 +213,6 @@ function render_barogram(element) {
     });
 
     position.show();
-
-    this.index = getNearestNumber(barogram_t, this.axis);
   };
 
   return linechart;
