@@ -223,6 +223,19 @@ class FlightsController(BaseController):
         return self._do_list('today', kw, date=date.date())
 
     @expose('skylines.templates.flights.list')
+    def date(self, request_date, **kw):
+        try:
+            date = datetime.strptime(request_date, "%Y-%m-%d")
+        except:
+            raise HTTPNotFound
+
+        query = DBSession.query(Flight).filter(between(Flight.takeoff_time,
+                                             date, date + timedelta(days=1)))
+
+        return self._do_list('today', kw, date=date.date())
+
+
+    @expose('skylines.templates.flights.list')
     def my(self, **kw):
         if not request.identity:
             raise HTTPNotFound

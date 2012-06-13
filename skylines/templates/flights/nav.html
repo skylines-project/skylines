@@ -3,7 +3,17 @@
 <ul xmlns="http://www.w3.org/1999/xhtml"
     xmlns:py="http://genshi.edgewall.org/"
     class="nav nav-tabs">
-  <li class="${('', 'active')[defined('tab') and tab == 'today']}"><a href="/flights/today">Today</a></li>
+  <li class="${('', 'active')[defined('tab') and tab == 'today']}">
+    <?python from datetime import date as sys_date ?>
+    <?python from babel.dates import format_date ?>
+    <a href="/flights/today" id="datepicker">
+      <span class="date"><py:choose>
+        <py:when test="defined('date') and date != None and date != sys_date.today()">${format_date(date)}</py:when>
+        <py:otherwise>Today</py:otherwise>
+      </py:choose></span>
+      &nbsp;<span class="add-on"><i class="icon-th"></i></span>
+    </a>
+  </li>
   <li class="${('', 'active')[defined('tab') and tab == 'all']}"><a href="/flights/all">All Flights</a></li>
   <li py:if="request.identity" class="${('', 'active')[defined('tab') and tab == 'my']}"><a href="/flights/my">My Flights</a></li>
   <li py:if="request.identity and request.identity['user'].club_id" class="${('', 'active')[defined('tab') and tab == 'my_club']}"><a href="/flights/my_club">My Club's Flights</a></li>

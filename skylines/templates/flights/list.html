@@ -13,8 +13,11 @@
     <script src="/js/jQuery/jquery.js" type="text/javascript" language="javascript" />
     <script src="/js/jQuery/jquery.dataTables.js" type="text/javascript" language="javascript" />
     <script src="/js/jQuery/jquery.dataTables.ext.js" type="text/javascript" language="javascript" />
+    <script src="/js/jQuery/bootstrap-datepicker.js" type="text/javascript" language="javascript" />
+    <script src="/js/general.js" type="text/javascript" language="javascript" />
 
     <link href="/css/dataTables.bootstrap.css" rel="stylesheet" type="text/css" />
+    <link href="/css/datepicker.css" rel="stylesheet" type="text/css" />
 
     <script type="text/javascript" charset="utf-8">
     /* <![CDATA[ */
@@ -33,6 +36,16 @@
             { "sType": "date-eu", "aTargets": ["date"] },
             { "sType": "numeric-comma-formatted", "aTargets": ["numeric"] },
           ]
+        });
+
+        var datepicker = $('#datepicker').datepicker({
+          format: 'dd.mm.yyyy',
+          autoclose: true
+        });
+        datepicker.on('changeDate', function(e) {
+          var url = "/flights/date/" + e.date.getFullYear() + "-" +
+            pad(e.date.getMonth()+1, 2) + "-" + pad(e.date.getDate(), 2);
+          window.location.href = url;
         });
       });
     /* ]]> */

@@ -34,7 +34,7 @@
 								mousedown: $.proxy(this.mousedown, this)
 							});
 		this.isInput = this.element.is('input');
-		this.component = this.element.is('.date') ? this.element.find('.add-on') : false;
+		this.component = this.element ? this.element.find('.add-on') : false;
 		if(this.component && this.component.length === 0)
 			this.component = false;
 
@@ -55,8 +55,8 @@
 					keydown: $.proxy(this.keydown, this)
 				});
 
-				this.component.on('click', $.proxy(this.show, this));
-				var element = this.element.find('input');
+				this.component.on('hover', $.proxy(this.show, this));
+				var element = this.element.find('.add-on');
 				element.on({
 					blur: $.proxy(this._hide, this)
 				})
@@ -166,7 +166,8 @@
 			var formated = DPGlobal.formatDate(this.date, this.format, this.language);
 			if (!this.isInput) {
 				if (this.component){
-					this.element.find('input').prop('value', formated);
+					this.element.find('.date').prop('value', formated);
+					this.element.find('.date').text(formated);
 				}
 				this.element.data('date', formated);
 			} else {
