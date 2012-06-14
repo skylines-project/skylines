@@ -229,7 +229,7 @@ class FlightsController(BaseController):
         except:
             raise HTTPNotFound
 
-        return self._do_list('today', kw, date=date.date())
+        return self._do_list('date', kw, date=date.date())
 
 
     @expose('skylines.templates.flights.list')
