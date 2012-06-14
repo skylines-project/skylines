@@ -204,6 +204,13 @@ function render_barogram(element) {
       cy: y
     });
 
+    textRect.attr({
+      x: x - 60/2,
+      y: attrs.height - 20 - 54/2,
+      width: 60,
+      height: 54
+    });
+/*
     var textBBox = text.getBBox();
     textRect.attr({
       x: textBBox.x - 2,
@@ -211,7 +218,7 @@ function render_barogram(element) {
       width: textBBox.width + 4,
       height: textBBox.height + 4
     });
-
+*/
     position.show();
   };
 
