@@ -172,6 +172,10 @@ class FlightController(BaseController):
 
 class FlightIdController(BaseController):
     @expose()
+    def index(self):
+        redirect('/flights/today')
+
+    @expose()
     def lookup(self, id, *remainder):
         try:
             flight = DBSession.query(Flight).get(int(id))
