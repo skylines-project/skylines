@@ -173,7 +173,11 @@ class FlightController(BaseController):
 class FlightIdController(BaseController):
     @expose()
     def lookup(self, id, *remainder):
-        flight = DBSession.query(Flight).get(int(id))
+        try:
+            flight = DBSession.query(Flight).get(int(id))
+        except ValueError:
+            raise HTTPNotFound
+
         if flight is None:
             raise HTTPNotFound
 
