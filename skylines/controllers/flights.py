@@ -229,9 +229,6 @@ class FlightsController(BaseController):
         except:
             raise HTTPNotFound
 
-        query = DBSession.query(Flight).filter(between(Flight.takeoff_time,
-                                             date, date + timedelta(days=1)))
-
         return self._do_list('today', kw, date=date.date())
 
 
