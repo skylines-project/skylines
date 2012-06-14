@@ -96,13 +96,13 @@ function pinButton(element, sfid) {
   element.off("click");
 
   if (!isPinnedFlight(sfid)) {
-    element.html("<i class='icon-star-empty'></i>Click to pin");
+    element.html("<i class='icon-star-empty'></i> Click to pin");
     element.click(function() {
       pinFlight(sfid);
       pinButton($(this), sfid);
     });
   } else {
-    element.html("<i class='icon-star'></i>Flight pinned!");
+    element.html("<i class='icon-star'></i> Flight pinned!");
     element.click(function() {
       unpinFlight(sfid);
       pinButton($(this), sfid);
