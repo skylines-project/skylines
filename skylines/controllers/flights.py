@@ -93,6 +93,31 @@ class FlightController(BaseController):
         return dict(page='flights', encoded=encoded, fixes=fixes, zoom_levels=zoom_levels,
                     barogram_t=barogram_t, barogram_h=barogram_h, sfid=self.flight.id)
 
+    @expose('json')
+    def json(self):
+        from skylines.lib.analysis import flight_path
+        fp = flight_path(self.flight, max_points = 10000)
+
+        threshold = 0.0001
+        num_levels = 4
+        zoom_factor = 4
+        zoom_levels = [0]
+        zoom_levels.extend([round(-log(32.0/45.0 * (threshold * pow(zoom_factor, num_levels - i - 1)), 2)) for i in range(1, num_levels)])
+
+        max_delta_time = max(4, (fp[-1][0] - fp[0][0]) / 500)
+
+        import skylinespolyencode
+        encoder = skylinespolyencode.SkyLinesPolyEncoder(num_levels=num_levels, threshold=threshold, zoom_factor=zoom_factor)
+        fixes = map(lambda x: (x[2], x[1], (x[0]/max_delta_time*threshold)), fp)
+        fixes = encoder.classify(fixes, remove=False, type="ppd")
+        encoded = encoder.encode(fixes['points'], fixes['levels'])
+
+        barogram_t = encoder.encodeList([fp[i][0] for i in range(len(fp)) if fixes['levels'][i] != -1])
+        barogram_h = encoder.encodeList([fp[i][3] for i in range(len(fp)) if fixes['levels'][i] != -1])
+
+        return dict(encoded=encoded, num_levels=num_levels, zoom_levels=zoom_levels,
+                    barogram_t=barogram_t, barogram_h=barogram_h, sfid=self.flight.id)
+
     @expose('skylines.templates.generic.form')
     def change_pilot(self):
         if not self.flight.is_writable():
