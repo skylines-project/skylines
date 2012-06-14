@@ -316,8 +316,14 @@ function hoverMap(map, flight, linechart) {
     for (part_geo in flight.partitionedGeometries) {
       for (var i = 1, len = flight.partitionedGeometries[part_geo].components.length; i < len; i++) {
         var vector = new OpenLayers.Bounds();
-        vector.extend(flight.partitionedGeometries[part_geo].components[i-1]);
-        vector.extend(flight.partitionedGeometries[part_geo].components[i]);
+        vector.bottom = Math.min(flight.partitionedGeometries[part_geo].components[i-1].y,
+                                 flight.partitionedGeometries[part_geo].components[i].y);
+        vector.top =  Math.max(flight.partitionedGeometries[part_geo].components[i-1].y,
+                               flight.partitionedGeometries[part_geo].components[i].y);
+        vector.left = Math.min(flight.partitionedGeometries[part_geo].components[i-1].x,
+                               flight.partitionedGeometries[part_geo].components[i].x);
+        vector.right = Math.max(flight.partitionedGeometries[part_geo].components[i-1].x,
+                                flight.partitionedGeometries[part_geo].components[i].x);
 
         if (within.intersectsBounds(vector))
           possible_solutions.push({
