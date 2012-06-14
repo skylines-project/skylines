@@ -13,6 +13,7 @@
 
   <script type="text/javascript" src="/js/OpenLayers/OpenLayers.js"></script>
   <script type="text/javascript" src="/js/jQuery/jquery.js"></script>
+  <script type="text/javascript" src="/js/jQuery/jquery.cookie.js"></script>
 
   <script type="text/javascript" src="/js/general.js"></script>
   <script type="text/javascript" src="/js/flight.js"></script>
@@ -35,12 +36,19 @@
         ${dumps(zoom_levels)}
       );
 
+      var pinnedFlights = getPinnedFlights();
+      for (i in pinnedFlights) {
+        if (pinnedFlights[i] != ${sfid}) addFlightFromJSON(map, "/flights/id/" + pinnedFlights[i] + "/json");
+      }
+
       map.zoomToExtent(getAllFlightsBounds().scale(1.1));
 
       var barogram = render_barogram($("#barogram"));
       scaleBarogram(map, barogram);
 
       hoverMap(map, barogram);
+
+      pinButton($("#pinned"), ${sfid});
     }
     /* ]]> */
   </script>
@@ -138,6 +146,7 @@
 
         <p>
           <a href="map" class="btn"><i class="icon-fullscreen"></i> Full-screen map</a>
+          <span id="pinned" class="btn"></span>
         </p>
       </div>
       <div class="span8">

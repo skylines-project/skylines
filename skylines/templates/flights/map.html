@@ -13,6 +13,7 @@
 
   <script type="text/javascript" src="/js/OpenLayers/OpenLayers.js"></script>
   <script type="text/javascript" src="/js/jQuery/jquery.js"></script>
+  <script type="text/javascript" src="/js/jQuery/jquery.cookie.js"></script>
 
   <script type="text/javascript" src="/js/general.js"></script>
   <script type="text/javascript" src="/js/flight.js"></script>
@@ -35,6 +36,11 @@
         ${dumps(barogram_h)},
         ${dumps(zoom_levels)}
       );
+
+      var pinnedFlights = getPinnedFlights();
+      for (i in pinnedFlights) {
+        if (pinnedFlights[i] != ${sfid}) addFlightFromJSON(map, "/flights/id/" + pinnedFlights[i] + "/json");
+      }
 
       var factor = $("#barogram")[0].offsetHeight / map.getSize().h;
       var zoomExtent = getAllFlightsBounds().clone().scale(1.1);
