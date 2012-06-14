@@ -1,3 +1,45 @@
+/**
+ * flights
+ *
+ * Array of flight objects. (see addFlight method)
+ */
+var flights = [];
+
+
+/**
+ * top_flight
+ *
+ * Defines which flight should be handled first
+ */
+var top_flight = 0;
+
+
+/**
+ * barogram_t and barogram_h
+ *
+ * {Array(Array(double))} - contains time and height values for the barogram.
+ */
+var barogram_t = [];
+var barogram_h = [];
+
+
+/**
+ * colors
+ *
+ * List of colors for flight path display
+ */
+var colors = ['#bf2fa2', '#2f69bf', '#d63a35', '#d649ff'];
+
+
+/**
+ * Function initOpenLayers
+ *
+ * Initialize the map and add airspace and flight path layers.
+ *
+ * Returns:
+ * {Object} Map
+ */
+
 function initOpenLayers() {
   OpenLayers.ImgPath = "/images/OpenLayers/"
 
@@ -70,6 +112,100 @@ function initOpenLayers() {
   return map;
 };
 
+
+/**
+ * Function: addFlight
+ *
+ * Add a flight to the map and barogram.
+ *
+ * Parameters:
+ * map - {Object} Map to add to. Must contain a vector layer called "Flight"
+ * _lonlat - {String} Google polyencoded string of geolocations (lon + lat, WSG 84)
+ * _levels - {String} Google polyencoded string of levels of detail
+ * _num_levels - {int} Number of levels encoded in _lonlat and _levels
+ * _time - {String} Google polyencoded string of time values
+ * _height - {String} Google polyencoded string of height values
+ * zoom_levels - {Array(double)} Array of zoom levels where to switch between the LoD.
+ *
+ * Note: _lonlat, _levels, _time and _height MUST have the same number of elements when decoded.
+ */
+
+function addFlight(map, _lonlat, _levels, _num_levels, _time, _height, zoom_levels) {
+  var height = OpenLayers.Util.decodeGoogle(_height);
+  var time = OpenLayers.Util.decodeGoogle(_time);
+  var lonlat = OpenLayers.Util.decodeGooglePolyline(_lonlat);
+  var lod = OpenLayers.Util.decodeGoogleLoD(_levels, _num_levels);
+
+  var points = new Array();
+  for (var i = 0, len = lonlat.length; i < len; i++) {
+    points.push(new OpenLayers.Geometry.Point(lonlat[i].lon, lonlat[i].lat).
+      transform(new OpenLayers.Projection("EPSG:4326"), map.getProjectionObject()) );
+  }
+
+  var flight = new OpenLayers.Geometry.ProgressiveLineString(points, lod, zoom_levels);
+  flight.clip = 1;
+
+  var color = colors[flights.length%colors.length];
+  var feature = new OpenLayers.Feature.Vector(flight, { color: color });
+
+  var plane = new OpenLayers.Feature.Vector(
+    new OpenLayers.Geometry.Point(lonlat[0].lon, lonlat[0].lat).
+      transform(new OpenLayers.Projection("EPSG:4326"), map.getProjectionObject()),
+    { rotation: 0 }
+  );
+  plane.renderIntent = 'plane';
+
+  map.getLayersByName("Flight")[0].addFeatures([feature, plane]);
+
+  flights.push({
+    lonlat: lonlat,
+    t: time,
+    h: height,
+    geo: flight,
+    color: color,
+    plane: plane,
+    map: map
+  });
+
+  var i = flights.length - 1;
+
+  barogram_t.push(flights[i].t);
+  barogram_h.push(flights[i].h);
+  top_flight = i;
+};
+
+
+/**
+ * Function: getAllFlightsBounds
+ *
+ * Returns:
+ * {OpenLayers.Bounds} - bounds containing all flights on the map.
+ */
+
+function getAllFlightsBounds() {
+  var bounds = new OpenLayers.Bounds();
+
+  for (fid in flights) {
+    bounds.extend(flights[fid].geo.bounds);
+  }
+
+  return bounds;
+};
+
+
+/**
+ * Function: getNearestNumber
+ *
+ * Searches the closest index to a number in a monotonic array.
+ *
+ * Parameters:
+ * a - {Array} Array
+ * n - {double} Number
+ *
+ * Returns:
+ * {int} Index closest to Number in the Array.
+ */
+
 //+ Carlos R. L. Rodrigues
 //@ http://jsfromhell.com/array/nearest-number [rev. #0]
 function getNearestNumber(a, n){
@@ -81,6 +217,17 @@ function getNearestNumber(a, n){
   return l + 1;
 }
 
+
+/**
+ * Function: formatSecondsAsTime
+ *
+ * Parameters:
+ * seconds - {int} Seconds of day
+ *
+ * Returns:
+ * {String} formatted time "HH:MM:SS"
+ */
+
 function formatSecondsAsTime(seconds) {
   seconds %= 86400;
   var h = Math.floor(seconds/3600);
@@ -90,17 +237,32 @@ function formatSecondsAsTime(seconds) {
   return pad(h,2) + ":" + pad(m,2) + ":" + pad(s,2); // Format the result into time strings
 }
 
-function render_barogram(element) {
-  var barogram = Raphael("barogram", "100%", "100%");
 
+/**
+ * Function: render_barogram
+ *
+ * Initialize Raphael Linechart, handle it's mouseover events.
+ *
+ * Parameters:
+ * element - {Object} jQuery container object for barogram.
+ *
+ * Returns:
+ * {Object} g.raphael linechart
+ */
+
+function render_barogram(element) {
+  // create Raphael instance and draw linechart.
+  var barogram = Raphael("barogram", "100%", "100%");
   var linechart = barogram.linechart(30, 0,
                       element.innerWidth() - 50, element.innerHeight() - 10,
                       barogram_t,
-                      [barogram_h],
+                      barogram_h,
                       { axis: "0 0 1 1",
                         axisxstep: 8,
-                        axisxfunc: formatSecondsAsTime });
+                        axisxfunc: formatSecondsAsTime,
+                        colors: colors });
 
+  // create position marker and it's elements.
   var position = barogram.set().hide();
 
   var hoverLine = barogram.path().attr({
@@ -128,6 +290,8 @@ function render_barogram(element) {
   position.push(textRect.insertAfter(hoverCircle));
   position.push(text.insertAfter(textRect));
 
+  // create mouse_container overlay over linechart. fixes some bugs in browsers
+  // where no mouseout events where fired when the mouse leaves the linechart.
   var mouse_container = $("<div></div>");
   mouse_container.css({
     width: element.innerWidth(),
@@ -140,34 +304,63 @@ function render_barogram(element) {
   });
   element.append(mouse_container);
 
+  // add mousemove function.
   mouse_container.mousemove(function(e) {
     hidePlanePosition();
+
     var prop = linechart.getProperties();
     var kx_inv = 1 / prop.kx;
     var rel_x = e.clientX - mouse_container.offset().left;
     var x = prop.minx + (rel_x - prop.x - prop.gutter) * kx_inv;
     if (x < prop.minx || x > prop.maxx) return;
 
-    var baro_index = getNearestNumber(barogram_t, x);
-    var rel_y = prop.y - (barogram_h[baro_index] - prop.miny) * prop.ky + prop.height - prop.gutter;
+    // find the position indexes of all flight available.
+    var baro_index = [];
+    for (i in flights) {
+      if (x < flights[i].t[0] || x > flights[i].t[flights[i].t.length-1]) {
+        // out of range
+        baro_index.push(-1);
+      } else {
+        baro_index.push(getNearestNumber(flights[i].t, x));
+      }
+    }
 
-    hoverColumn(baro_index, rel_x, rel_y);
+    // we'd like to have an flight within the current range as top_flight.
+    if (baro_index[top_flight] == -1) {
+      // our current top flight is out of range. find first flight in range...
+      for (top_flight in baro_index) if (baro_index[top_flight] != -1) break;
+    }
 
-    if (x < barogram_t[baro_index]) {
-      var dx = (x - barogram_t[baro_index-1])/(barogram_t[baro_index] - barogram_t[baro_index-1]);
-      showPlanePosition(baro_index - 1, dx);
-    } else {
-      var dx = (x - barogram_t[baro_index])/(barogram_t[baro_index+1] - barogram_t[baro_index]);
-      showPlanePosition(baro_index, dx);
+    // no flight found which is in range? return early, draw nothing.
+    if (baro_index[top_flight] == -1) return;
+
+    // calculate y-position of position marker for current top_flight and show marker
+    var rel_y = prop.y - (flights[top_flight].h[baro_index[top_flight]] - prop.miny) * prop.ky + prop.height - prop.gutter;
+    hoverColumn(baro_index[top_flight], rel_x, rel_y, top_flight);
+
+    // draw plane icons on map
+    for (fid in flights) {
+      // do not show plane if out of range.
+      if (baro_index[fid] == -1) continue;
+
+      if (x < flights[fid].t[baro_index[fid]]) {
+        var dx = (x - flights[fid].t[baro_index[fid]-1])/(flights[fid].t[baro_index[fid]] - flights[fid].t[baro_index[fid]-1]);
+        showPlanePosition(baro_index[fid] - 1, dx, fid);
+      } else {
+        var dx = (x - flights[fid].t[baro_index[fid]])/(flights[fid].t[baro_index[fid]+1] - flights[fid].t[baro_index[fid]]);
+        showPlanePosition(baro_index[fid], dx, fid);
+      }
     }
   });
 
+  // hide everything on mouse out
   mouse_container.mouseout(function(e) {
     hidePlanePosition();
     position && position.hide();
   });
 
-  var hoverColumn = function(index, x, y) {
+  // update the position marker at index in flight fid. x and y are relative to the linechart viewport.
+  var hoverColumn = function(index, x, y, fid) {
     position.toFront();
     var attrs = linechart.getProperties();
 
@@ -179,24 +372,24 @@ function render_barogram(element) {
     });
 
     var vario = null;
-    if (barogram_t[index+1] != undefined) {
-      vario = (barogram_h[index+1] - barogram_h[index]) / (barogram_t[index+1] - barogram_t[index]);
+    if (flights[fid].t[index+1] != undefined) {
+      vario = (flights[fid].h[index+1] - flights[fid].h[index]) / (flights[fid].t[index+1] - flights[fid].t[index]);
     }
 
     var speed = null;
-    if (barogram_t[index+1] != undefined) {
-      speed = OpenLayers.Util.distVincenty(lonlat[index+1], lonlat[index]);
+    if (flights[fid].t[index+1] != undefined) {
+      speed = OpenLayers.Util.distVincenty(flights[fid].lonlat[index+1], flights[fid].lonlat[index]);
       speed *= 1000;
-      speed /= (barogram_t[index+1] - barogram_t[index]);
+      speed /= (flights[fid].t[index+1] - flights[fid].t[index]);
     }
 
     text.attr({
       x: x,
       y: attrs.height - 20,
-      text: Math.round(barogram_h[index]) + " m" +
+      text: Math.round(flights[fid].h[index]) + " m" +
             ((vario !== null)?"\n" + (Math.round(vario*10)/10) + " m/s":"") +
             ((speed !== null)?"\n" + (Math.round(speed*3.6*10)/10) + " km/h":"") +
-            "\n" + formatSecondsAsTime(barogram_t[index])
+            "\n" + formatSecondsAsTime(flights[fid].t[index])
     });
 
     hoverCircle.attr({
@@ -227,70 +420,157 @@ function render_barogram(element) {
   return linechart;
 }
 
-function showPlanePosition(id, dx) {
+
+/**
+ * Function: showPlanePosition
+ *
+ * Show a aircraft icon on the map.
+ *
+ * Parameters:
+ * id - {int} index of vector where the aircraft is
+ * dx - {double} delta between id and id+1 to draw aircraft
+ * fid - {int} flight id to use
+ */
+
+function showPlanePosition(id, dx, fid) {
   var rotation = 0;
-  if (lonlat[id+1] != 'undefined') {
-    rotation = Math.atan2(lonlat[id+1].lon-lonlat[id].lon, lonlat[id+1].lat-lonlat[id].lat) * 180/Math.PI;
-  } else if (lonlat[id-1] != 'undefined') {
-    rotation = Math.atan2(lonlat[id].lon-lonlat[id-1].lon, lonlat[id].lat-lonlat[id-1].lat) * 180/Math.PI;
+
+  if (id >= (flights[fid].lonlat.length - 1)) {
+    // we're at the end of flight fid
+    id = flights[fid].lonlat.length - 2;
+    dx = 1;
+  } else if (id < 0) {
+    // this should never happen (but it does! search the real problem and fix it)
+    id = 0;
+    dx = 0;
   }
 
-  var lon = lonlat[id].lon + (lonlat[id+1].lon - lonlat[id].lon)*dx;
-  var lat = lonlat[id].lat + (lonlat[id+1].lat - lonlat[id].lat)*dx;
+  if (flights[fid].lonlat[id+1] != undefined) {
+    rotation = Math.atan2(flights[fid].lonlat[id+1].lon-flights[fid].lonlat[id].lon, flights[fid].lonlat[id+1].lat-flights[fid].lonlat[id].lat) * 180/Math.PI;
+  } else if (flights[fid].lonlat[id-1] != undefined) {
+    rotation = Math.atan2(flights[fid].lonlat[id].lon-flights[fid].lonlat[id-1].lon, flights[fid].lonlat[id].lat-flights[fid].lonlat[id-1].lat) * 180/Math.PI;
+  }
 
-  plane.attributes.rotation = rotation;
-  plane.geometry = new OpenLayers.Geometry.Point(lon, lat).
+  var lon = flights[fid].lonlat[id].lon + (flights[fid].lonlat[id+1].lon - flights[fid].lonlat[id].lon)*dx;
+  var lat = flights[fid].lonlat[id].lat + (flights[fid].lonlat[id+1].lat - flights[fid].lonlat[id].lat)*dx;
+
+  var map = flights[fid].map;
+
+  flights[fid].plane.attributes.rotation = rotation;
+  flights[fid].plane.geometry = new OpenLayers.Geometry.Point(lon, lat).
     transform(new OpenLayers.Projection("EPSG:4326"), map.getProjectionObject());
-  map.getLayersByName("Flight")[0].drawFeature(plane);
+
+  map.getLayersByName("Flight")[0].drawFeature(flights[fid].plane);
 }
+
+
+/**
+ * Function: hidePlanePosition
+ *
+ * Hides all aircrafts drawn on the map
+ */
 
 function hidePlanePosition() {
-  map.getLayersByName("Flight")[0].removeFeatures(plane);
+  for (fid in flights) {
+    flights[fid].map.getLayersByName("Flight")[0].removeFeatures(flights[fid].plane);
+  }
 }
 
-function scaleBarogram(linechart, flight, element) {
+
+/**
+ * Function: scaleBarogram
+ *
+ * Scale the linechart according to the visible flight tracks on the map
+ *
+ * Parameters:
+ * linechart - {Object} g.Raphael instance of linechart
+ */
+
+function scaleBarogram(map, linechart) {
 
   var updateBarogram = function(e) {
     var largest_partition = null;
-    var delta_t = 0;
-    var first = 0;
-    var last = barogram_t.length - 1;
-/*
-    // only show longest single part of trace in barogram
-    for (part_geo in flight.partitionedGeometries) {
-      var components = flight.partitionedGeometries[part_geo].components;
-      var temp = barogram_t[components[components.length-1].originalIndex] -
-        barogram_t[components[0].originalIndex];
+    var total_first = [];
+    var total_last = [];
+    var first_t = 999999;
+    var last_t = 0;
 
-      if (temp > delta_t) {
-        delta_t = temp;
-        largest_partition = part_geo;
-        first = components[0].originalIndex;
-        last = components[components.length-1].originalIndex;
+    // circle throu all flights
+    for (fid in flights) {
+      var flight = flights[fid];
+
+      last = flight.t.length - 1;
+
+      // if flight is not in viewport continue.
+      if (flight.geo.partitionedGeometries.length == 0) continue;
+
+      // show barogram of all trace parts visible
+      var length = flight.geo.partitionedGeometries.length;
+      var comp_length = flight.geo.partitionedGeometries[length-1].components.length;
+      var first = flight.geo.partitionedGeometries[0].components[0].originalIndex;
+      var last = flight.geo.partitionedGeometries[length-1].components[comp_length-1].originalIndex;
+
+      // get first and last time which should be the bounds of the barogram
+      if (flight.t[first] < first_t)
+        first_t = flight.t[first];
+
+      if (flight.t[last] > last_t)
+        last_t = flight.t[last];
+    }
+
+    // is there any flight in our viewport?
+    var none_in_range = true;
+
+    for (fid in flights) {
+      // get indices of flight path between first_t(ime) and last_t(ime)
+      first = getNearestNumber(flights[fid].t, first_t);
+      last = getNearestNumber(flights[fid].t, last_t);
+
+      if (flights[fid].t[first] > last_t || flights[fid].t[last] < first_t) {
+        // current flight is out of range. don't show it in barogram...
+        total_first.push(-1);
+        total_last.push(-1);
+      } else {
+        total_first.push(first);
+        total_last.push(last);
+        none_in_range = false;
       }
     }
-*/
 
-    // show barogram of all trace parts visible
-    var length = flight.partitionedGeometries.length;
-    var comp_length = flight.partitionedGeometries[length-1].components.length;
-    first = flight.partitionedGeometries[0].components[0].originalIndex;
-    last = flight.partitionedGeometries[length-1].components[comp_length-1].originalIndex;
-
-    setTimeout(function() { linechart.zoomInto(first, last)}, 0);
+    if (none_in_range)
+      // reset linechart zoom when no flight is visible in viewport
+      setTimeout(function() { linechart.zoomReset()}, 0);
+    else
+      // zoom linechart
+      setTimeout(function() { linechart.zoomInto(total_first, total_last)}, 0);
   };
 
+  // update barogram linechart whenever the map has been moved.
   map.events.register("moveend", this, updateBarogram);
 }
 
-function hoverMap(map, flight, linechart) {
+
+/**
+ * Function: hoverMap
+ *
+ * Searches for the nearest aircraft position in mouse range
+ *
+ * Parameters:
+ * map - {Object} OpenLayers.Map to work on
+ * linechart - {Object} g.raphael linechart to show the position marker on
+ */
+
+function hoverMap(map, linechart) {
+  // search on every mousemove over the map viewport. Run this function only
+  // every 25ms to save some computing power.
   var running = false;
   map.events.register("mousemove", this, function(e) {
-    // call this function only every 25ms
+    // call this function only every 25ms, else return early
     if (running) return;
     running = true;
     setTimeout(function() { running = false; }, 25);
 
+    // create bounding box in map coordinates around mouse cursor
     var pixel = e.xy.clone();
     var hoverTolerance = 15;
     var llPx = pixel.add(-hoverTolerance/2, hoverTolerance/2);
@@ -299,60 +579,77 @@ function hoverMap(map, flight, linechart) {
     var ur = map.getLonLatFromPixel(urPx);
     var loc = map.getLonLatFromPixel(pixel);
 
+    // search for a aircraft position within the bounding box
     var nearest = searchForPlane(new OpenLayers.Bounds(ll.lon, ll.lat, ur.lon, ur.lat), loc);
 
+    // hide everything
     hidePlanePosition();
     linechart.hoverColumn.position.hide();
 
+    // if there's a aircraft within the bounding box, show the plane icon and draw
+    // a position marker on the linechart.
     if (nearest !== null) {
-      showPlanePosition(nearest.from, nearest.along);
+      // we expect the currently hovered flight is the top flight.
+      top_flight = nearest.fid;
+      showPlanePosition(nearest.from, nearest.along, nearest.fid);
 
       var prop = linechart.getProperties();
-      var x = barogram_t[nearest.from] + (barogram_t[nearest.from+1]-barogram_t[nearest.from])*nearest.along;
+      var x = flights[nearest.fid].t[nearest.from] + (flights[nearest.fid].t[nearest.from+1]-flights[nearest.fid].t[nearest.from])*nearest.along;
       if (x > prop.minx && x < prop.maxx) {
         var rel_x = (x - prop.minx) * prop.kx + prop.x + prop.gutter;
-        var rel_y = prop.y - (barogram_h[nearest.from] - prop.miny) * prop.ky + prop.height - prop.gutter;
-        linechart.hoverColumn(nearest.from, rel_x, rel_y);
+        var rel_y = prop.y - (flights[nearest.fid].h[nearest.from] - prop.miny) * prop.ky + prop.height - prop.gutter;
+        linechart.hoverColumn(nearest.from, rel_x, rel_y, nearest.fid);
       }
     }
   });
 
+  // search for a plane in the bounding box "within" and select the nearest to "loc"
+  // returns the fid, index and dx of the possibly found aircraft location
   function searchForPlane(within, loc) {
     var possible_solutions = [];
 
-    for (part_geo in flight.partitionedGeometries) {
-      for (var i = 1, len = flight.partitionedGeometries[part_geo].components.length; i < len; i++) {
-        var vector = new OpenLayers.Bounds();
-        vector.bottom = Math.min(flight.partitionedGeometries[part_geo].components[i-1].y,
-                                 flight.partitionedGeometries[part_geo].components[i].y);
-        vector.top =  Math.max(flight.partitionedGeometries[part_geo].components[i-1].y,
-                               flight.partitionedGeometries[part_geo].components[i].y);
-        vector.left = Math.min(flight.partitionedGeometries[part_geo].components[i-1].x,
-                               flight.partitionedGeometries[part_geo].components[i].x);
-        vector.right = Math.max(flight.partitionedGeometries[part_geo].components[i-1].x,
-                                flight.partitionedGeometries[part_geo].components[i].x);
+    // circle throu all flights visible in viewport
+    for (fid in flights) {
+      var flight = flights[fid].geo;
 
-        if (within.intersectsBounds(vector))
-          possible_solutions.push({
-            from: flight.partitionedGeometries[part_geo].components[i-1].originalIndex,
-            to: flight.partitionedGeometries[part_geo].components[i].originalIndex
-          });
+      for (part_geo in flight.partitionedGeometries) {
+        for (var i = 1, len = flight.partitionedGeometries[part_geo].components.length; i < len; i++) {
+          // check if the current vector between two points intersects our "within" bounds
+          // if so, process this vector in the next step (possible_solutions)
+          var vector = new OpenLayers.Bounds();
+          vector.bottom = Math.min(flight.partitionedGeometries[part_geo].components[i-1].y,
+                                   flight.partitionedGeometries[part_geo].components[i].y);
+          vector.top =  Math.max(flight.partitionedGeometries[part_geo].components[i-1].y,
+                                 flight.partitionedGeometries[part_geo].components[i].y);
+          vector.left = Math.min(flight.partitionedGeometries[part_geo].components[i-1].x,
+                                 flight.partitionedGeometries[part_geo].components[i].x);
+          vector.right = Math.max(flight.partitionedGeometries[part_geo].components[i-1].x,
+                                  flight.partitionedGeometries[part_geo].components[i].x);
+
+          if (within.intersectsBounds(vector))
+            possible_solutions.push({
+              from: flight.partitionedGeometries[part_geo].components[i-1].originalIndex,
+              to: flight.partitionedGeometries[part_geo].components[i].originalIndex,
+              fid: fid
+            });
+        }
       }
     }
 
+    // no solutions found. return.
     if (possible_solutions.length == 0) return null;
 
+    // find nearest distance between loc and vectors in possible_solutions
     var nearest, distance = 99999999999;
     for (i in possible_solutions) {
       for (var j = possible_solutions[i].from + 1; j <= possible_solutions[i].to; j++) {
         var distToSegment = distanceToSegmentSquared({x: loc.lon, y: loc.lat},
-          { x1: flight.components[j-1].x, y1: flight.components[j-1].y,
-            x2: flight.components[j].x, y2: flight.components[j].y });
-
+          { x1: flights[possible_solutions[i].fid].geo.components[j-1].x, y1: flights[possible_solutions[i].fid].geo.components[j-1].y,
+            x2: flights[possible_solutions[i].fid].geo.components[j].x, y2: flights[possible_solutions[i].fid].geo.components[j].y });
 
         if (distToSegment.distance < distance) {
           distance = distToSegment.distance;
-          nearest = { from: j-1, to: j, along: distToSegment.along };
+          nearest = { from: j-1, to: j, along: distToSegment.along, fid: possible_solutions[i].fid};
         }
       }
     }

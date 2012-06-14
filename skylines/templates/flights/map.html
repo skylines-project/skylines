@@ -24,46 +24,28 @@
   <script type="text/javascript">
 <?python from simplejson import dumps ?>
     /* <![CDATA[ */
-
-    var barogram;
-    var map;
-    var plane;
-
-    var barogram_t = OpenLayers.Util.decodeGoogle(${dumps(barogram_t)});
-    var barogram_h = OpenLayers.Util.decodeGoogle(${dumps(barogram_h)});
-    var lonlat = OpenLayers.Util.decodeGooglePolyline(${dumps(encoded.points)});
-    var lod = OpenLayers.Util.decodeGoogleLoD(${dumps(encoded.levels)}, ${fixes.numLevels});
-
     function initialize() {
-      map = initOpenLayers();
+      var map = initOpenLayers();
 
-      var points = new Array();
-      for (var i = 0, len = lonlat.length; i < len; i++) {
-        points.push(new OpenLayers.Geometry.Point(lonlat[i].lon, lonlat[i].lat).
-          transform(new OpenLayers.Projection("EPSG:4326"), map.getProjectionObject()) );
-      }
-
-      var flight = new OpenLayers.Geometry.ProgressiveLineString(points, lod, ${dumps(zoom_levels)});
-      flight.clip = 1.1;
-      map.getLayersByName("Flight")[0].addFeatures(new OpenLayers.Feature.Vector(flight, { color: '#ff0000' }));
-
-      plane = new OpenLayers.Feature.Vector(
-        new OpenLayers.Geometry.Point(lonlat[0].lon, lonlat[0].lat).
-          transform(new OpenLayers.Projection("EPSG:4326"), map.getProjectionObject()),
-        { rotation: 0 }
+      addFlight(map,
+        ${dumps(encoded.points)},
+        ${dumps(encoded.levels)},
+        ${fixes.numLevels},
+        ${dumps(barogram_t)},
+        ${dumps(barogram_h)},
+        ${dumps(zoom_levels)}
       );
-      plane.renderIntent = 'plane';
 
       var factor = $("#barogram")[0].offsetHeight / map.getSize().h;
-      var zoomExtent = flight.bounds.clone().scale(1.1);
+      var zoomExtent = getAllFlightsBounds().clone().scale(1.1);
       zoomExtent.bottom -= zoomExtent.getHeight() * factor * 3/2;
 
       map.zoomToExtent(zoomExtent);
 
-      barogram = render_barogram($("#barogram"));
-      scaleBarogram(barogram, flight, $("#barogram"));
+      var barogram = render_barogram($("#barogram"));
+      scaleBarogram(map, barogram);
 
-      hoverMap(map, flight, barogram);
+      hoverMap(map, barogram);
     }
     /* ]]> */
   </script>
