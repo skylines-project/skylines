@@ -12,15 +12,17 @@
   </head>
 
   <body>
-      <ul>
-        <li py:for="name,flight,error in flights">
-          <a py:if="flight" py:content="name" href="/flights/id/${flight.id}/">file.igc</a>
-          <b py:if="not flight" py:content="name">file.igc</b>
-          <span py:strip="True">: </span>
-          <span py:if="error" py:replace="error">error</span>
-          <span py:if="not error">OK</span>
-        </li>
-      </ul>
+    <table class="table">
+      <tr py:for="name,flight,error in flights">
+        <td py:content="name">file.igc</td>
+        <td>
+          <span class="label label-success" py:if="not error">Success</span>
+          <span class="label label-warning" py:if="error and flight" py:content="error">Warning</span>
+          <span class="label label-important" py:if="error and not flight" py:content="error">Error</span>
+        </td>
+        <td><a py:if="flight" href="/flights/id/${flight.id}/">Show</a></td>
+      </tr>
+    </table>
 
     <p>
       <a href="." class="btn">Upload another flight</a>
