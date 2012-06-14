@@ -176,6 +176,24 @@ function addFlight(map, sfid, _lonlat, _levels, _num_levels, _time, _height, zoo
   top_flight = i;
 };
 
+/**
+ * Function: addFlightFromJSON
+ *
+ * Parameters:
+ * url - {string} URL to fetch
+ */
+function addFlightFromJSON(map, url) {
+  $.ajax(url,{
+    success: function(data) {
+      addFlight(map, data.sfid, data.encoded.points, data.encoded.levels,
+                data.num_levels, data.barogram_t, data.barogram_h, data.zoom_levels);
+
+      map.events.triggerEvent("move");
+      map.events.triggerEvent("moveend");
+    }
+  });
+};
+
 
 /**
  * Function: getAllFlightsBounds
