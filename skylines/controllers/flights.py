@@ -66,7 +66,7 @@ class FlightController(BaseController):
         barogram_h = encoder.encodeList([fp[i][3] for i in range(len(fp)) if fixes['levels'][i] != -1])
 
         return dict(page='flights', flight=self.flight, encoded=encoded, zoom_levels = zoom_levels,
-                    fixes=fixes, barogram_t=barogram_t, barogram_h=barogram_h)
+                    fixes=fixes, barogram_t=barogram_t, barogram_h=barogram_h, sfid=self.flight.id)
 
     @expose('skylines.templates.flights.map')
     def map(self):
@@ -91,7 +91,7 @@ class FlightController(BaseController):
         barogram_h = encoder.encodeList([fp[i][3] for i in range(len(fp)) if fixes['levels'][i] != -1])
 
         return dict(page='flights', encoded=encoded, fixes=fixes, zoom_levels=zoom_levels,
-                    barogram_t=barogram_t, barogram_h=barogram_h)
+                    barogram_t=barogram_t, barogram_h=barogram_h, sfid=self.flight.id)
 
     @expose('skylines.templates.generic.form')
     def change_pilot(self):
