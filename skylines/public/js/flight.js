@@ -120,6 +120,7 @@ function initOpenLayers() {
  *
  * Parameters:
  * map - {Object} Map to add to. Must contain a vector layer called "Flight"
+ * sfid - {int} SkyLines flight ID
  * _lonlat - {String} Google polyencoded string of geolocations (lon + lat, WSG 84)
  * _levels - {String} Google polyencoded string of levels of detail
  * _num_levels - {int} Number of levels encoded in _lonlat and _levels
@@ -130,7 +131,7 @@ function initOpenLayers() {
  * Note: _lonlat, _levels, _time and _height MUST have the same number of elements when decoded.
  */
 
-function addFlight(map, _lonlat, _levels, _num_levels, _time, _height, zoom_levels) {
+function addFlight(map, sfid, _lonlat, _levels, _num_levels, _time, _height, zoom_levels) {
   var height = OpenLayers.Util.decodeGoogle(_height);
   var time = OpenLayers.Util.decodeGoogle(_time);
   var lonlat = OpenLayers.Util.decodeGooglePolyline(_lonlat);
@@ -164,7 +165,8 @@ function addFlight(map, _lonlat, _levels, _num_levels, _time, _height, zoom_leve
     geo: flight,
     color: color,
     plane: plane,
-    map: map
+    map: map,
+    sfid: sfid
   });
 
   var i = flights.length - 1;
