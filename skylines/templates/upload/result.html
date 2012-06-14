@@ -12,7 +12,6 @@
   </head>
 
   <body>
-    <div class="row">
       <ul>
         <li py:for="name,flight,error in flights">
           <a py:if="flight" py:content="name" href="/flights/id/${flight.id}/">file.igc</a>
@@ -26,6 +25,5 @@
       <p>
         <a href=".">Upload another flight</a>
       </p>
-    </div>
   </body>
 </html>
