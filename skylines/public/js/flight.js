@@ -392,6 +392,11 @@ function render_barogram(element) {
       "l 0 " + (y - 6).toString()
     });
 
+    hoverCircle.attr({
+      cx: x,
+      cy: y
+    });
+
     var vario = null;
     if (flights[fid].t[index+1] != undefined) {
       vario = (flights[fid].h[index+1] - flights[fid].h[index]) / (flights[fid].t[index+1] - flights[fid].t[index]);
@@ -411,11 +416,6 @@ function render_barogram(element) {
             ((vario !== null)?"\n" + (Math.round(vario*10)/10) + " m/s":"") +
             ((speed !== null)?"\n" + (Math.round(speed*3.6*10)/10) + " km/h":"") +
             "\n" + formatSecondsAsTime(flights[fid].t[index])
-    });
-
-    hoverCircle.attr({
-      cx: x,
-      cy: y
     });
 
     textRect.attr({
