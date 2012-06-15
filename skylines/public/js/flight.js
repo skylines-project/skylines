@@ -72,27 +72,31 @@ function initOpenLayers() {
   });
   map.addLayer(airspace);
 
+  var default_style = new OpenLayers.Style({
+    strokeColor: "${color}",
+    strokeWidth: 2
+  });
+
+  var plane_style = new OpenLayers.Style({
+    // Set the external graphic and background graphic images.
+    externalGraphic: "/images/glider_symbol.png",
+    // Makes sure the background graphic is placed correctly relative
+    // to the external graphic.
+    graphicXOffset: -(40/2),
+    graphicYOffset: -8,
+    graphicWidth: 40,
+    graphicHeight: 24,
+    rotation: "${rotation}",
+    // Set the z-indexes of both graphics to make sure the background
+    // graphics stay in the background (shadows on top of markers looks
+    // odd; let's not do that).
+    graphicZIndex: 2000
+  });
+
   var flightPathLayer = new OpenLayers.Layer.Vector("Flight", {
     styleMap: new OpenLayers.StyleMap({
-      'default': {
-        strokeColor: "${color}",
-        strokeWidth: 2
-      },
-      'plane': {
-        // Set the external graphic and background graphic images.
-        externalGraphic: "/images/glider_symbol.png",
-        // Makes sure the background graphic is placed correctly relative
-        // to the external graphic.
-        graphicXOffset: -(40/2),
-        graphicYOffset: -8,
-        graphicWidth: 40,
-        graphicHeight: 24,
-        rotation: "${rotation}",
-        // Set the z-indexes of both graphics to make sure the background
-        // graphics stay in the background (shadows on top of markers looks
-        // odd; let's not do that).
-        graphicZIndex: 2000
-      }
+      'default': default_style,
+      'plane': plane_style
     })
   });
      
