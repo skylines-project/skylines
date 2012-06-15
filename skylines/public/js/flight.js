@@ -287,7 +287,7 @@ function render_barogram(element) {
   var position = barogram.set().hide();
 
   var hoverLine = barogram.path().attr({
-    stroke: '#c44',
+    stroke: '#a22',
     'stroke-width': 2
   }).hide();
 
@@ -301,7 +301,7 @@ function render_barogram(element) {
   }).hide();
 
   var hoverCircle = barogram.circle().attr({
-    stroke: '#c44',
+    stroke: '#a22',
     'stroke-width': 2,
     r: 6
   }).hide();
