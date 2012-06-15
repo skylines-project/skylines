@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="40.000057"
+   height="24"
+   id="svg11519"
+   version="1.1"
+   inkscape:version="0.48.1 r9760"
+   sodipodi:docname="glider_symbol_ghost.svg"
+   inkscape:export-filename="/home/tobs/xcsoar/SkyLines/SkyLines/assets/graphics/glider_symbol_ghost.png"
+   inkscape:export-xdpi="89.849998"
+   inkscape:export-ydpi="89.849998">
+  <defs
+     id="defs11521" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="3.959798"
+     inkscape:cx="-106.48645"
+     inkscape:cy="-3.0148125"
+     inkscape:document-units="px"
+     inkscape:current-layer="g46"
+     showgrid="false"
+     showguides="true"
+     inkscape:guide-bbox="true"
+     inkscape:object-nodes="true"
+     inkscape:snap-smooth-nodes="true"
+     fit-margin-top="0"
+     fit-margin-left="0"
+     fit-margin-right="0"
+     fit-margin-bottom="0"
+     inkscape:window-width="1920"
+     inkscape:window-height="1058"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1">
+    <sodipodi:guide
+       orientation="0,1"
+       position="166.04219,79.23381"
+       id="guide12304" />
+  </sodipodi:namedview>
+  <metadata
+     id="metadata11524">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Ebene 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(-170.78124,-552.81245)">
+    <g
+       transform="matrix(2.7631337,0,0,2.7561761,-708.5362,-38.835606)"
+       id="g46"
+       style="fill:#000000;fill-opacity:1;stroke:none;display:inline;enable-background:new">
+      <path
+         style="fill:none;stroke:#000000;stroke-width:0.36236444;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+         d="m 332.52734,217.89239 c -2.66755,-0.81734 -5.48572,-0.56422 -6.50301,-0.47826 0.004,-0.42986 -0.0207,-0.53737 -0.0402,-0.90389 -0.0195,-0.36651 -0.094,-0.70883 -0.16098,-0.94258 -0.067,-0.23377 -0.22085,-0.43184 -0.35383,-0.43184 -0.13298,0 -0.28685,0.19807 -0.35382,0.43184 -0.067,0.23375 -0.14145,0.57607 -0.16098,0.94258 -0.0195,0.36652 -0.0429,0.47403 -0.0386,0.90389 -1.01728,-0.086 -3.83545,-0.33908 -6.50301,0.47826 l 0.003,0.3498 0.002,0 c 0,0 2.03327,-0.002 3.04693,0.0619 0.87021,0.0548 1.81855,0.19965 2.59919,0.2755 0.16176,0.0434 0.76055,0.0615 0.98266,0.15013 0.10374,0.45638 0.16377,0.6543 0.20793,1.6886 0.0441,1.03432 0.0419,1.24578 0.0419,1.68242 -0.3736,0.0314 -1.6448,0.10901 -1.68864,0.31575 -0.0847,0.39937 -0.009,0.51849 -0.009,0.51849 0.43364,-0.0237 1.10872,-0.0171 1.86974,-0.017 5.9e-4,0 0.001,0 0.002,0 0.76103,-1e-5 1.43612,-0.007 1.86974,0.017 0,0 0.0763,-0.11912 -0.009,-0.51849 -0.0438,-0.20669 -1.31503,-0.28434 -1.68864,-0.31575 0,-0.43664 -0.002,-0.6481 0.0419,-1.68242 0.0441,-1.0343 0.10419,-1.23222 0.20793,-1.6886 0.22211,-0.0886 0.82089,-0.10666 0.98266,-0.15013 0.78063,-0.0758 1.72897,-0.22061 2.5992,-0.2755 1.01364,-0.064 3.04859,-0.0619 3.04859,-0.0619 z"
+         id="swift"
+         inkscape:connector-curvature="0"
+         sodipodi:nodetypes="ccsszscccccsccsccccccccsccscc" />
+    </g>
+  </g>
+</svg>

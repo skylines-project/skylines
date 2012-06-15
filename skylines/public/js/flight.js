@@ -79,7 +79,7 @@ function initOpenLayers() {
 
   var plane_style = new OpenLayers.Style({
     // Set the external graphic and background graphic images.
-    externalGraphic: "/images/glider_symbol.png",
+    externalGraphic: "${getGraphic}",
     // Makes sure the background graphic is placed correctly relative
     // to the external graphic.
     graphicXOffset: -(40/2),
@@ -91,6 +91,12 @@ function initOpenLayers() {
     // graphics stay in the background (shadows on top of markers looks
     // odd; let's not do that).
     graphicZIndex: 2000
+  }, {
+    context: {
+      getGraphic: function(feature) {
+        return feature.attributes["ghost"]?"/images/glider_symbol_ghost.png":"/images/glider_symbol.png";
+      }
+    }
   });
 
   var flightPathLayer = new OpenLayers.Layer.Vector("Flight", {
@@ -390,7 +396,7 @@ function render_barogram(element) {
       // do not show plane if out of range.
       if (flights[fid].index == -1) continue;
 
-      showPlanePosition(flights[fid].index, flights[fid].dx, fid);
+      showPlanePosition(flights[fid].index, flights[fid].dx, fid, (fid!=top_flight));
     }
   });
 
@@ -473,7 +479,7 @@ function render_barogram(element) {
  * fid - {int} flight id to use
  */
 
-function showPlanePosition(id, dx, fid) {
+function showPlanePosition(id, dx, fid, ghost) {
   var rotation = 0;
 
   if (id >= (flights[fid].lonlat.length - 1)) {
@@ -498,6 +504,7 @@ function showPlanePosition(id, dx, fid) {
   var map = flights[fid].map;
 
   flights[fid].plane.attributes.rotation = rotation;
+  flights[fid].plane.attributes.ghost = ghost?true:false;
   flights[fid].plane.geometry = new OpenLayers.Geometry.Point(lon, lat).
     transform(new OpenLayers.Projection("EPSG:4326"), map.getProjectionObject());
 
@@ -638,10 +645,17 @@ function hoverMap(map, linechart) {
 
       var prop = linechart.getProperties();
       var x = flights[nearest.fid].t[nearest.from] + (flights[nearest.fid].t[nearest.from+1]-flights[nearest.fid].t[nearest.from])*nearest.along;
+
       if (x > prop.minx && x < prop.maxx) {
         var rel_x = (x - prop.minx) * prop.kx + prop.x + prop.gutter;
         var rel_y = prop.y - (flights[nearest.fid].h[nearest.from] - prop.miny) * prop.ky + prop.height - prop.gutter;
         linechart.hoverColumn(nearest.from, rel_x, rel_y, nearest.fid);
+      }
+
+      setIndexFromTime(x);
+      for (fid in flights) {
+        if (fid == nearest.fid) continue;
+        showPlanePosition(flights[fid].index, flights[fid].dx, fid, true);
       }
     }
   });
