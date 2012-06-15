@@ -93,20 +93,24 @@ function isPinnedFlight(sfid) {
  * sfid - {int} SkyLines flight ID
  */
 function pinButton(element, sfid) {
-  element.off("click");
+  var onClick = function() {
+    if (!isPinnedFlight(sfid)) {
+      pinFlight(sfid);
+      element.html("<i class='icon-star'></i> Flight pinned!");
+    } else {
+      unpinFlight(sfid);
+      element.html("<i class='icon-star-empty'></i> Click to pin");
+    }
+  };
 
+  // initial setting
   if (!isPinnedFlight(sfid)) {
     element.html("<i class='icon-star-empty'></i> Click to pin");
-    element.click(function() {
-      pinFlight(sfid);
-      pinButton($(this), sfid);
-    });
   } else {
     element.html("<i class='icon-star'></i> Flight pinned!");
-    element.click(function() {
-      unpinFlight(sfid);
-      pinButton($(this), sfid);
-    });
   }
+
+  // add event handler
+  element.click(onClick);
 }
 
