@@ -104,6 +104,7 @@ function pinButton(element, sfid) {
   };
 
   // initial setting
+  element.addClass("btn");
   if (!isPinnedFlight(sfid)) {
     element.html("<i class='icon-star-empty'></i> Click to pin");
   } else {
