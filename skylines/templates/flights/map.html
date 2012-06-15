@@ -37,11 +37,6 @@
         ${dumps(zoom_levels)}
       );
 
-      var pinnedFlights = getPinnedFlights();
-      for (i in pinnedFlights) {
-        if (pinnedFlights[i] != ${sfid}) addFlightFromJSON(map, "/flights/id/" + pinnedFlights[i] + "/json");
-      }
-
       var factor = $("#barogram")[0].offsetHeight / map.getSize().h;
       var zoomExtent = getAllFlightsBounds().clone().scale(1.1);
       zoomExtent.bottom -= zoomExtent.getHeight() * factor * 3/2;
@@ -52,6 +47,12 @@
       scaleBarogram(map, barogram);
 
       hoverMap(map, barogram);
+
+      var pinnedFlights = getPinnedFlights();
+      for (i in pinnedFlights) {
+        if (pinnedFlights[i] != ${sfid}) addFlightFromJSON(map, barogram, "/flights/id/" + pinnedFlights[i] + "/json");
+      }
+
     }
     /* ]]> */
   </script>
