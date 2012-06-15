@@ -23,6 +23,8 @@
     <script type="text/javascript" charset="utf-8">
     /* <![CDATA[ */
       $(document).ready(function() {
+        var pinnedFlights = getPinnedFlights();
+
         $('#flight-table').dataTable({
           "bProcessing": true,
           "sPaginationType": "bootstrap",
@@ -36,7 +38,46 @@
             { "bSortable": false, "aTargets": [-1] },
             { "sType": "date-eu", "aTargets": ["date"] },
             { "sType": "numeric-comma-formatted", "aTargets": ["numeric"] },
-          ]
+          ],
+          "fnCreatedRow": function(nRow, aData, iDataIndex) {
+            $(nRow).find(".pin").each(function() {
+              var sfid = parseInt($(this).text());
+              if ($.inArray(sfid, pinnedFlights) >= 0) {
+                $(this).html("<i class='icon-star'></i>");
+                $(this).css("visibility", "visible");
+                $(this).addClass("pinned");
+              } else {
+                $(this).html("<i class='icon-star-empty'></i>");
+              }
+
+              $(this).find("i").click(function() {
+                if ($(this).parent(".pin").hasClass("pinned")) {
+                  unpinFlight(sfid);
+                  $(this).addClass("icon-star-empty");
+                  $(this).removeClass("icon-star");
+                  $(this).parent(".pin").removeClass("pinned");
+                } else {
+                  pinFlight(sfid);
+                  $(this).addClass("icon-star");
+                  $(this).removeClass("icon-star-empty");
+                  $(this).parent(".pin").addClass("pinned");
+                }
+              });
+            });
+
+            jQuery(nRow).hover(function(e) {
+              if (e.type == "mouseenter") {
+                $(this).find(".pin").each(function() {
+                  $(this).css("visibility", "visible");
+                });
+              } else if (e.type == "mouseleave") {
+                $(this).find(".pin").each(function() {
+                  if (!$(this).hasClass("pinned"))
+                    $(this).css("visibility", "hidden");
+                });
+              }
+            });
+          }
         });
 
         var datepicker = $('#datepicker').datepicker({
@@ -134,6 +175,7 @@
                 <a href="/flights/id/${flight.id}/">
                   Show
                 </a>
+                <span class="pin" style="visibility: hidden;">${flight.id}</span>
               </td>
             </tr>
           </tbody>
