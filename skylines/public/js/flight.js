@@ -670,23 +670,25 @@ function hoverMap(map, linechart) {
       var flight = flights[fid].geo;
 
       for (part_geo in flight.partitionedGeometries) {
-        for (var i = 1, len = flight.partitionedGeometries[part_geo].components.length; i < len; i++) {
+        var components = flight.partitionedGeometries[part_geo].components;
+
+        for (var i = 1, len = components.length; i < len; i++) {
           // check if the current vector between two points intersects our "within" bounds
           // if so, process this vector in the next step (possible_solutions)
           var vector = new OpenLayers.Bounds();
-          vector.bottom = Math.min(flight.partitionedGeometries[part_geo].components[i-1].y,
-                                   flight.partitionedGeometries[part_geo].components[i].y);
-          vector.top =  Math.max(flight.partitionedGeometries[part_geo].components[i-1].y,
-                                 flight.partitionedGeometries[part_geo].components[i].y);
-          vector.left = Math.min(flight.partitionedGeometries[part_geo].components[i-1].x,
-                                 flight.partitionedGeometries[part_geo].components[i].x);
-          vector.right = Math.max(flight.partitionedGeometries[part_geo].components[i-1].x,
-                                  flight.partitionedGeometries[part_geo].components[i].x);
+          vector.bottom = Math.min(components[i-1].y,
+                                   components[i].y);
+          vector.top =  Math.max(components[i-1].y,
+                                 components[i].y);
+          vector.left = Math.min(components[i-1].x,
+                                 components[i].x);
+          vector.right = Math.max(components[i-1].x,
+                                  components[i].x);
 
           if (within.intersectsBounds(vector))
             possible_solutions.push({
-              from: flight.partitionedGeometries[part_geo].components[i-1].originalIndex,
-              to: flight.partitionedGeometries[part_geo].components[i].originalIndex,
+              from: components[i-1].originalIndex,
+              to: components[i].originalIndex,
               fid: fid
             });
         }
