@@ -115,7 +115,7 @@ function initOpenLayers() {
 
   var initRedrawLayer = function(layer) {
     if (this.timer) return;
-    this.timer = window.setTimeout(function() { this.timer = null; layer.redraw(); }, 200);
+    this.timer = window.setTimeout(function() { this.timer = null; layer.redraw(); }, 50);
   };
   map.events.register("move", this, function() { initRedrawLayer(flightPathLayer); });
 
