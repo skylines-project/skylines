@@ -280,7 +280,8 @@ function render_barogram(element) {
                       { axis: "0 0 1 1",
                         axisxstep: 8,
                         axisxfunc: formatSecondsAsTime,
-                        colors: colors });
+                        colors: colors,
+                        width: 1.5 });
 
   // create position marker and it's elements.
   var position = barogram.set().hide();
