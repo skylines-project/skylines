@@ -166,7 +166,9 @@ function addFlight(map, sfid, _lonlat, _levels, _num_levels, _time, _height, zoo
     color: color,
     plane: plane,
     map: map,
-    sfid: sfid
+    sfid: sfid,
+    index: 0,
+    dx: 0
   });
 
   var i = flights.length - 1;
@@ -259,6 +261,34 @@ function formatSecondsAsTime(seconds) {
 
 
 /**
+ * Function: setIndexFromTime
+ *
+ * Set index and dx for the current time in each flight
+ */
+function setIndexFromTime(time) {
+  for (fid in flights) {
+    var flight = flights[fid];
+
+    if (time < flight.t[0] || time > flight.t[flight.t.length-1]) {
+      // out of range
+      flight.dx = 0;
+      flight.index = -1;
+      continue;
+    }
+
+    var index = getNearestNumber(flight.t, time);
+
+    if (time < flight.t[index]) {
+      flight.dx = (time - flight.t[index-1])/(flight.t[index] - flight.t[index-1]);
+      flight.index = index - 1;
+    } else {
+      flight.dx = (time - flight.t[index])/(flight.t[index+1] - flight.t[index]);
+      flight.index = index;
+    }
+  }
+}
+
+/**
  * Function: render_barogram
  *
  * Initialize Raphael Linechart, handle it's mouseover events.
@@ -336,41 +366,27 @@ function render_barogram(element) {
     if (x < prop.minx || x > prop.maxx) return;
 
     // find the position indexes of all flight available.
-    var baro_index = [];
-    for (i in flights) {
-      if (x < flights[i].t[0] || x > flights[i].t[flights[i].t.length-1]) {
-        // out of range
-        baro_index.push(-1);
-      } else {
-        baro_index.push(getNearestNumber(flights[i].t, x));
-      }
-    }
+    setIndexFromTime(x);
 
     // we'd like to have an flight within the current range as top_flight.
-    if (baro_index[top_flight] == -1) {
+    if (flights[top_flight].index == -1) {
       // our current top flight is out of range. find first flight in range...
-      for (top_flight in baro_index) if (baro_index[top_flight] != -1) break;
+      for (top_flight in flights) if (fid[top_flight].index != -1) break;
     }
 
     // no flight found which is in range? return early, draw nothing.
-    if (baro_index[top_flight] == -1) return;
+    if (flights[top_flight].index == -1) return;
 
     // calculate y-position of position marker for current top_flight and show marker
-    var rel_y = prop.y - (flights[top_flight].h[baro_index[top_flight]] - prop.miny) * prop.ky + prop.height - prop.gutter;
-    hoverColumn(baro_index[top_flight], rel_x, rel_y, top_flight);
+    var rel_y = prop.y - (flights[top_flight].h[flights[top_flight].index] - prop.miny) * prop.ky + prop.height - prop.gutter;
+    hoverColumn(flights[top_flight].index, rel_x, rel_y, top_flight);
 
     // draw plane icons on map
     for (fid in flights) {
       // do not show plane if out of range.
-      if (baro_index[fid] == -1) continue;
+      if (flights[fid].index == -1) continue;
 
-      if (x < flights[fid].t[baro_index[fid]]) {
-        var dx = (x - flights[fid].t[baro_index[fid]-1])/(flights[fid].t[baro_index[fid]] - flights[fid].t[baro_index[fid]-1]);
-        showPlanePosition(baro_index[fid] - 1, dx, fid);
-      } else {
-        var dx = (x - flights[fid].t[baro_index[fid]])/(flights[fid].t[baro_index[fid]+1] - flights[fid].t[baro_index[fid]]);
-        showPlanePosition(baro_index[fid], dx, fid);
-      }
+      showPlanePosition(flights[fid].index, flights[fid].dx, fid);
     }
   });
 
