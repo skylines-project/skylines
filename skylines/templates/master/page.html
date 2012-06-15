@@ -7,43 +7,47 @@
 
   <xi:include href="master.html" />
 
-<head py:match="head" py:attrs="select('@*')" once="true">
-  <meta py:replace="select('*')"/>
-  <title py:if="defined('title')">${title}</title>
-</head>
+<py:match path="head" once="true">
+  <head py:attrs="select('@*')">
+    <meta py:replace="select('*')"/>
+    <title py:if="defined('title')">${title}</title>
+  </head>
+</py:match>
 
-<body py:match="body" py:attrs="select('@*')" once="true">
-  ${topbar()}
+<py:match path="body" once="true">
+  <body py:attrs="select('@*')">
+    ${topbar()}
 
-  <div class="container">
+    <div class="container">
 
-    <div class="content">
-      <py:if test="defined('title')">
-      <div class="page-header">
-        <h1>
-          <span py:replace="title"/>
-          <py:if test="defined('tagline')">
-          <small><span py:replace="tagline"/></small>
-          </py:if>
-        </h1>
-      </div>
-      </py:if>
+      <div class="content">
+        <py:if test="defined('title')">
+        <div class="page-header">
+          <h1>
+            <span py:replace="title"/>
+            <py:if test="defined('tagline')">
+            <small><span py:replace="tagline"/></small>
+            </py:if>
+          </h1>
+        </div>
+        </py:if>
 
-      <div class="row">
-        <div class="span12">
-          <div py:replace="select('*|text()')"/>
+        <div class="row">
+          <div class="span12">
+            <div py:replace="select('*|text()')"/>
+          </div>
         </div>
       </div>
-    </div>
 
-    <footer>
-      <p>
-        &copy; <a href="http://www.xcsoar.org/">The XCSoar Project</a> -
-        <a href="${config.get('skylines.imprint_link')}">Imprint</a>
-      </p>
-    </footer>
+      <footer>
+        <p>
+          &copy; <a href="http://www.xcsoar.org/">The XCSoar Project</a> -
+          <a href="${config.get('skylines.imprint_link')}">Imprint</a>
+        </p>
+      </footer>
 
-  </div>
-
-</body>
+   </div>
+ 
+  </body>
+</py:match>
 </html>

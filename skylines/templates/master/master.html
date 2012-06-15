@@ -7,7 +7,8 @@
 
   <xi:include href="topbar.html" />
 
-<head py:match="head" py:attrs="select('@*')" once="true">
+<py:match path="head" once="true">
+  <head py:attrs="select('@*')">
     <meta content="text/html; charset=UTF-8" http-equiv="Content-Type"
           py:attrs="dict(content='%s; charset=%s' % (response.content_type, response.charset))" />
 
@@ -17,9 +18,12 @@
 
     <link rel="stylesheet" href="${tg.url('/css/bootstrap.min.css')}" />
     <link rel="stylesheet" type="text/css" media="screen" href="${tg.url('/css/style.css')}" />
-</head>
+  </head>
+</py:match>
 
-<body py:match="body" py:attrs="select('@*')" once="true">
-  <div py:replace="select('*|text()')"/>
-</body>
+<py:match path="body" once="true">
+  <body py:attrs="select('@*')">
+    <div py:replace="select('*|text()')"/>
+  </body>
+</py:match>
 </html>

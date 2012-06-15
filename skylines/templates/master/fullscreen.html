@@ -7,13 +7,17 @@
 
   <xi:include href="master.html" />
 
-<head py:match="head" py:attrs="select('@*')" once="true">
-  <meta py:replace="select('*')"/>
-</head>
+<py:match path="head" once="true">
+  <head py:attrs="select('@*')">
+    <meta py:replace="select('*')"/>
+  </head>
+</py:match>
 
-<body py:match="body" py:attrs="select('@*')" once="true">
-  ${topbar()}
+<py:match path="body" once="true">
+  <body py:attrs="select('@*')">
+    ${topbar()}
 
-  <div py:replace="select('*|text()')"/>
-</body>
+    <div py:replace="select('*|text()')"/>
+  </body>
+</py:match>
 </html>
