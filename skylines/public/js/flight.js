@@ -381,7 +381,7 @@ function render_barogram(element) {
     // we'd like to have an flight within the current range as top_flight.
     if (flights[top_flight].index == -1) {
       // our current top flight is out of range. find first flight in range...
-      for (top_flight in flights) if (fid[top_flight].index != -1) break;
+      for (top_flight in flights) if (flights[top_flight].index != -1) break;
     }
 
     // no flight found which is in range? return early, draw nothing.
