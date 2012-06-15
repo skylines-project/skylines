@@ -337,7 +337,7 @@
             return this;
         };
 
-        chart.zoomReset = function() {
+        chart.zoomReset = function(reset_y_axis) {
             var from = [];
             var to = [];
 
@@ -345,10 +345,10 @@
                 from.push(0);
                 to.push(valuesy[i].length-1);
             }
-            chart.zoomInto(from, to);
+            chart.zoomInto(from, to, reset_y_axis);
         };
 
-        chart.zoomInto = function(from, to) {
+        chart.zoomInto = function(from, to, reset_y_axis) {
             var max_len = 0;
 
             for (i = 0, ii = valuesy.length; i < ii; i++) {
@@ -373,6 +373,14 @@
             minx = xdim.from;
             maxx = xdim.to;
             kx = (width - gutter * 2) / ((maxx - minx) || 1);
+
+            if (reset_y_axis) {
+              ally = Array.prototype.concat.apply([], valuesy_shrinked),
+              ydim = chartinst.snapEnds(Math.min.apply(Math, ally), Math.max.apply(Math, ally), max_len - 1),
+              miny = ydim.from,
+              maxy = ydim.to,
+              ky = (height - gutter * 2) / ((maxy - miny) || 1);
+            }
 
             var res = createLines();
             lines = res.lines,

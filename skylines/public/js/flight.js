@@ -189,7 +189,7 @@ function addFlightFromJSON(map, linechart, url) {
                 data.num_levels, data.barogram_t, data.barogram_h, data.zoom_levels);
 
       map.events.triggerEvent("move");
-      $.proxy(updateBarogram, { linechart: linechart })();
+      $.proxy(updateBarogram, { linechart: linechart, reset_y_axis: true })();
     }
   });
 };
@@ -513,6 +513,7 @@ function scaleBarogram(map, linechart) {
 
 function updateBarogram(e) {
   var linechart = this.linechart;
+  var reset_y_axis = this.reset_y_axis || false;
 
   var largest_partition = null;
   var total_first = [];
@@ -564,10 +565,10 @@ function updateBarogram(e) {
 
   if (none_in_range)
     // reset linechart zoom when no flight is visible in viewport
-    setTimeout(function() { linechart.zoomReset()}, 0);
+    setTimeout(function() { linechart.zoomReset(reset_y_axis)}, 0);
   else
     // zoom linechart
-    setTimeout(function() { linechart.zoomInto(total_first, total_last)}, 0);
+    setTimeout(function() { linechart.zoomInto(total_first, total_last, reset_y_axis)}, 0);
 };
 
 
