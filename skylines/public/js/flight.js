@@ -464,6 +464,19 @@ function render_barogram(element) {
 
   hoverColumn.position = position;
   linechart.hoverColumn = hoverColumn;
+
+  $(window).resize(function() {
+    var attrs = linechart.getProperties();
+    if (element.innerWidth() - 50 != attrs.width ||
+        element.innerHeight() - 10 != attrs.height) {
+      linechart.resetSize(element.innerWidth() - 50, element.innerHeight() - 10);
+      mouse_container.css({
+        width: element.innerWidth(),
+        height: element.innerHeight(),
+      });
+    }
+  });
+
   return linechart;
 }
 

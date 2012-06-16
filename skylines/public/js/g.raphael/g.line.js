@@ -337,6 +337,27 @@
             return this;
         };
 
+        chart.resetSize = function(_width, _height) {
+            width = _width;
+            height = _height;
+
+            kx = (width - gutter * 2) / ((maxx - minx) || 1);
+            ky = (height - gutter * 2) / ((maxy - miny) || 1);
+
+            var res = createLines();
+            lines = res.lines,
+            symbols = res.symbols;
+
+            chart.lines.remove();
+            chart.lines = lines;
+
+            chart.symbols.remove();
+            chart.symbols = symbols;
+
+            chart.axis.remove();
+            chart.axis = createAxis();
+        };
+
         chart.zoomReset = function(reset_y_axis) {
             var from = [];
             var to = [];
