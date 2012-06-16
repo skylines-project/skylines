@@ -28,8 +28,8 @@ var barogram_h = [];
  *
  * List of colors for flight path display
  */
-var colors = ['#bf2fa2', '#2f69bf', '#d63a35', '#d649ff'];
-
+//var colors = ['#bf2fa2', '#2f69bf', '#d63a35', '#d649ff'];
+var colors = ['#004bbd', '#bf0099', '#cf7c00', '#ff0000', '#00c994'];
 
 /**
  * Function initOpenLayers
