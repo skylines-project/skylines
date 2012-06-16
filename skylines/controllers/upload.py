@@ -1,9 +1,10 @@
 from tempfile import TemporaryFile
-from tg import expose, request, redirect, flash
+from tg import expose, request, redirect, flash, validate
 from tg.i18n import ugettext as _, lazy_ugettext as l_
 from repoze.what.predicates import has_permission
 from tw.forms import TableForm
 from tw.forms.fields import FileField, SingleSelectField
+from tw.forms.validators import FieldStorageUploadConverter
 from skylines.lib.base import BaseController
 from skylines import files
 from skylines.model import DBSession, User, Flight
@@ -22,7 +23,8 @@ class PilotSelectField(SingleSelectField):
         return SingleSelectField.update_params(self, d)
 
 upload_form = TableForm('upload_form', submit_text="Upload", action='do', children=[
-    FileField('file', label_text="IGC or ZIP file"),
+    FileField('file', label_text="IGC or ZIP file",
+        validator=FieldStorageUploadConverter(not_empty=True, messages=dict(empty=_("Please add a IGC or ZIP file"))) ),
     PilotSelectField('pilot', label_text="Pilot"),
 ])
 
@@ -65,12 +67,13 @@ class UploadController(BaseController):
                                 msg=l_("You don't have permission to upload flights."))
 
     @expose('skylines.templates.generic.form')
-    def index(self):
+    def index(self, **kw):
         return dict(page='upload', title=_("Upload Flight"),
                     form=upload_form,
                     values=dict(pilot=request.identity['user'].user_id))
 
     @expose('skylines.templates.upload.result')
+    @validate(upload_form, error_handler=index)
     def do(self, file, pilot):
         user = request.identity['user']
 

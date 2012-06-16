@@ -67,3 +67,8 @@ input[type="file"] {
 #map_canvas img {
   max-width: inherit;
 }
+
+.fielderror {
+  color: red;
+}
+
