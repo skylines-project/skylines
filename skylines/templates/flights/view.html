@@ -133,7 +133,8 @@ from simplejson import dumps
             <tr>
               <th>Uploaded</th>
               <td>
-                <abbr class="timeago" title="${flight.time_created}">${format_datetime(flight.time_created)}</abbr> by ${flight.owner}
+                <abbr class="timeago" title="${flight.time_created}" py:content="format_datetime(flight.time_created)">4 days ago</abbr>
+                by <span py:replace="flight.owner">Turbo</span>
               </td>
             </tr>
             <tr>
