@@ -73,25 +73,25 @@ from simplejson import dumps
             <tr>
               <th>Date</th>
               <td>
-                <span py:if="flight.takeoff_time" py:replace="format_date(flight.takeoff_time)">
+                <abbr py:if="flight.takeoff_time" py:content="format_date(flight.takeoff_time)" title="${flight.takeoff_time}">
                   2012-05-21
-                </span>
+                </abbr>
               </td>
             </tr>
             <tr>
               <th>Take-off</th>
               <td>
-                <span py:if="flight.takeoff_time" py:replace="format_time(flight.takeoff_time)">
+                <abbr py:if="flight.takeoff_time" py:content="format_time(flight.takeoff_time)" title="${flight.takeoff_time}">
                   10:00
-                </span>
+                </abbr>
               </td>
             </tr>
             <tr>
               <th>Landing</th>
               <td>
-                <span py:if="flight.landing_time" py:replace="format_time(flight.landing_time)">
+                <abbr py:if="flight.landing_time" py:content="format_time(flight.landing_time)" title="${flight.landing_time}">
                   15:00
-                </span>
+                </abbr>
               </td>
             </tr>
             <tr>
