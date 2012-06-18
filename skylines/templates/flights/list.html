@@ -1,3 +1,8 @@
+<?python
+from datetime import timedelta
+from babel.dates import format_date
+?>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
                       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
@@ -5,8 +10,6 @@
       xmlns:xi="http://www.w3.org/2001/XInclude">
 
   <xi:include href="master/page.html" />
-
-  <?python from babel.dates import format_date ?>
 
   <head>
     <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" py:if="False"/>
@@ -104,7 +107,6 @@
 
     <h3 py:if="date">
       <noscript>
-        <?python from datetime import timedelta ?>
         <a href="/flights/date/${(date - timedelta(days=1)).strftime('%Y-%m-%d')}"><span class="add-on"><i class="icon-arrow-left"></i></span></a>
       </noscript>
       Flights on ${format_date(date)}

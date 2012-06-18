@@ -1,11 +1,14 @@
+<?python
+from datetime import date as sys_date
+from babel.dates import format_date
+?>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
                       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <ul xmlns="http://www.w3.org/1999/xhtml"
     xmlns:py="http://genshi.edgewall.org/"
     class="nav nav-tabs">
   <li class="${('', 'active')[defined('tab') and tab == 'today' or tab == 'date']}">
-    <?python from datetime import date as sys_date ?>
-    <?python from babel.dates import format_date ?>
     <a href="/flights/today" id="datepicker">
       <span class="date"><py:choose>
         <py:when test="defined('date') and date != None and date != sys_date.today()">${format_date(date)}</py:when>
