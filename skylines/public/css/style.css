@@ -76,3 +76,8 @@ input[type="file"] {
   text-align: center;
   font-size: smaller;
 }
+
+.right th {
+  text-align: right;
+  padding-right: 0.5em;
+}

@@ -9,15 +9,12 @@
   <head>
     <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" py:if="False"/>
     <title>User ${user.user_name}</title>
-    <style>
-      th { text-align: right; padding-right: 0.5em; }
-    </style>
   </head>
 
   <body>
     <div class="row">
       <div class="well span8 offset2">
-        <table>
+        <table class="right">
           <tr py:if="user.is_readable()">
             <th>Login name</th>
             <td py:content="user.user_name">Foo</td>
