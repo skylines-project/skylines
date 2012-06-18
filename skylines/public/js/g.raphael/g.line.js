@@ -396,7 +396,7 @@
             kx = (width - gutter * 2) / ((maxx - minx) || 1);
 
             if (reset_y_axis) {
-              ally = Array.prototype.concat.apply([], valuesy_shrinked),
+              ally = Array.prototype.concat.apply([], valuesy),
               ydim = chartinst.snapEnds(Math.min.apply(Math, ally), Math.max.apply(Math, ally), max_len - 1),
               miny = ydim.from,
               maxy = ydim.to,
