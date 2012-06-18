@@ -122,10 +122,10 @@ from simplejson import dumps
                 <a py:if="flight.is_writable()" href="change_pilot" class="btn btn-mini">Change</a>
               </td>
             </tr>
-            <tr>
+            <tr py:if="flight.club">
               <th>Club</th>
               <td>
-                <a py:if="flight.club" py:content="flight.club" href="/flights/club/${flight.club_id}">
+                <a py:content="flight.club" href="/flights/club/${flight.club_id}">
                   Club Name
                 </a>
               </td>
