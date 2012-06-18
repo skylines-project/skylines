@@ -21,6 +21,8 @@ from simplejson import dumps
   <script type="text/javascript" src="/js/jQuery/jquery.cookie.js"></script>
   <script type="text/javascript" src="/js/jQuery/jquery.timeago.js"></script>
 
+  <script type="text/javascript" src="/js/bootstrap/bootstrap-tooltip.js"></script>
+
   <script type="text/javascript" src="/js/general.js"></script>
   <script type="text/javascript" src="/js/flight.js"></script>
 
@@ -59,6 +61,7 @@ from simplejson import dumps
 
     jQuery(document).ready(function() {
       jQuery("abbr.timeago").timeago();
+      jQuery("[rel=tooltip]").tooltip();
     });
   </script>
 
@@ -133,7 +136,7 @@ from simplejson import dumps
             <tr>
               <th>Uploaded</th>
               <td>
-                <abbr class="timeago" title="${flight.time_created}" py:content="format_datetime(flight.time_created)">4 days ago</abbr>
+                <abbr class="timeago" title="${flight.time_created}" py:content="format_datetime(flight.time_created)" rel="tooltip">4 days ago</abbr>
                 by <span py:replace="flight.owner">Turbo</span>
               </td>
             </tr>
