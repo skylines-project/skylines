@@ -41,12 +41,10 @@ class FlightController(BaseController):
     def __init__(self, flight):
         self.flight = flight
 
-    @expose('skylines.templates.flights.view')
-    def index(self):
+    def _get_flight_path(self, threshold = 0.001, max_points = 3000):
         from skylines.lib.analysis import flight_path
-        fp = flight_path(self.flight, max_points = 3000)
+        fp = flight_path(self.flight, max_points)
 
-        threshold = 0.001
         num_levels = 4
         zoom_factor = 4
         zoom_levels = [0]
@@ -65,58 +63,23 @@ class FlightController(BaseController):
         barogram_t = encoder.encodeList([fp[i][0] for i in range(len(fp)) if fixes['levels'][i] != -1])
         barogram_h = encoder.encodeList([fp[i][3] for i in range(len(fp)) if fixes['levels'][i] != -1])
 
-        return dict(page='flights', flight=self.flight, encoded=encoded, zoom_levels = zoom_levels,
-                    fixes=fixes, barogram_t=barogram_t, barogram_h=barogram_h, sfid=self.flight.id)
+        return dict(page='flights', encoded=encoded, zoom_levels = zoom_levels, fixes = fixes,
+                    barogram_t=barogram_t, barogram_h=barogram_h, sfid=self.flight.id)
+
+    @expose('skylines.templates.flights.view')
+    def index(self):
+        return dict(page='flights', flight=self.flight, trace=self._get_flight_path())
 
     @expose('skylines.templates.flights.map')
     def map(self):
-        from skylines.lib.analysis import flight_path
-        fp = flight_path(self.flight, max_points = 10000)
-
-        threshold = 0.0001
-        num_levels = 4
-        zoom_factor = 4
-        zoom_levels = [0]
-        zoom_levels.extend([round(-log(32.0/45.0 * (threshold * pow(zoom_factor, num_levels - i - 1)), 2)) for i in range(1, num_levels)])
-
-        max_delta_time = max(4, (fp[-1][0] - fp[0][0]) / 500)
-
-        import skylinespolyencode
-        encoder = skylinespolyencode.SkyLinesPolyEncoder(num_levels=num_levels, threshold=threshold, zoom_factor=zoom_factor)
-        fixes = map(lambda x: (x[2], x[1], (x[0]/max_delta_time*threshold)), fp)
-        fixes = encoder.classify(fixes, remove=False, type="ppd")
-        encoded = encoder.encode(fixes['points'], fixes['levels'])
-
-        barogram_t = encoder.encodeList([fp[i][0] for i in range(len(fp)) if fixes['levels'][i] != -1])
-        barogram_h = encoder.encodeList([fp[i][3] for i in range(len(fp)) if fixes['levels'][i] != -1])
-
-        return dict(page='flights', encoded=encoded, fixes=fixes, zoom_levels=zoom_levels,
-                    barogram_t=barogram_t, barogram_h=barogram_h, sfid=self.flight.id)
+        return dict(page='flights', flight=self.flight, trace=self._get_flight_path(threshold=0.0001, max_points=10000))
 
     @expose('json')
     def json(self):
-        from skylines.lib.analysis import flight_path
-        fp = flight_path(self.flight, max_points = 10000)
+        trace = self._get_flight_path(threshold=0.0001, max_points=10000)
+        trace['sfid'] = self.flight.id
 
-        threshold = 0.0001
-        num_levels = 4
-        zoom_factor = 4
-        zoom_levels = [0]
-        zoom_levels.extend([round(-log(32.0/45.0 * (threshold * pow(zoom_factor, num_levels - i - 1)), 2)) for i in range(1, num_levels)])
-
-        max_delta_time = max(4, (fp[-1][0] - fp[0][0]) / 500)
-
-        import skylinespolyencode
-        encoder = skylinespolyencode.SkyLinesPolyEncoder(num_levels=num_levels, threshold=threshold, zoom_factor=zoom_factor)
-        fixes = map(lambda x: (x[2], x[1], (x[0]/max_delta_time*threshold)), fp)
-        fixes = encoder.classify(fixes, remove=False, type="ppd")
-        encoded = encoder.encode(fixes['points'], fixes['levels'])
-
-        barogram_t = encoder.encodeList([fp[i][0] for i in range(len(fp)) if fixes['levels'][i] != -1])
-        barogram_h = encoder.encodeList([fp[i][3] for i in range(len(fp)) if fixes['levels'][i] != -1])
-
-        return dict(encoded=encoded, num_levels=num_levels, zoom_levels=zoom_levels,
-                    barogram_t=barogram_t, barogram_h=barogram_h, sfid=self.flight.id)
+        return trace
 
     @expose('skylines.templates.generic.form')
     def change_pilot(self):

@@ -27,13 +27,13 @@
     function initialize() {
       initOpenLayers();
 
-      addFlight(${sfid},
-        ${dumps(encoded.points)},
-        ${dumps(encoded.levels)},
-        ${fixes.numLevels},
-        ${dumps(barogram_t)},
-        ${dumps(barogram_h)},
-        ${dumps(zoom_levels)}
+      addFlight(${flight.id},
+        ${dumps(trace.encoded.points)},
+        ${dumps(trace.encoded.levels)},
+        ${trace.fixes.numLevels},
+        ${dumps(trace.barogram_t)},
+        ${dumps(trace.barogram_h)},
+        ${dumps(trace.zoom_levels)}
       );
 
       map.zoomToExtent(getAllFlightsBounds().scale(1.1));
@@ -45,10 +45,10 @@
 
       var pinnedFlights = getPinnedFlights();
       for (i in pinnedFlights) {
-        if (pinnedFlights[i] != ${sfid}) addFlightFromJSON("/flights/id/" + pinnedFlights[i] + "/json");
+        if (pinnedFlights[i] != ${flight.id}) addFlightFromJSON("/flights/id/" + pinnedFlights[i] + "/json");
       }
 
-      pinButton($("#pinned"), ${sfid});
+      pinButton($("#pinned"), ${flight.id});
     }
     /* ]]> */
   </script>
