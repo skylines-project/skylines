@@ -118,7 +118,7 @@
 
             for (i = 0, ii = valuesy_shrinked.length; i < ii; i++) {
                 if (opts.shade) {
-                    shades.push(paper.path().attr({ stroke: "none", fill: colors[i], opacity: opts.nostroke ? 1 : .3 }));
+                    shades.push(paper.path().attr({ stroke: "none", fill: colors[i%colors.length], opacity: opts.nostroke ? 1 : .3 }));
                 }
             }
             return shades;
@@ -145,7 +145,7 @@
             for (i = 0, ii = valuesy_shrinked.length; i < ii; i++) {
                 if (!opts.nostroke) {
                     lines.push(line = paper.path().attr({
-                        stroke: colors[i],
+                        stroke: colors[i%colors.length],
                         "stroke-width": opts.width || 2,
                         "stroke-linejoin": "round",
                         "stroke-linecap": "round",
@@ -162,7 +162,7 @@
                     var X = x + gutter + ((valuesx_shrinked[i] || valuesx_shrinked[0])[j] - minx) * kx,
                         Y = y + height - gutter - (valuesy_shrinked[i][j] - miny) * ky;
 
-                    (Raphael.is(sym, "array") ? sym[j] : sym) && symset.push(paper[Raphael.is(sym, "array") ? sym[j] : sym](X, Y, (opts.width || 2) * 3).attr({ fill: colors[i], stroke: "none" }));
+                    (Raphael.is(sym, "array") ? sym[j] : sym) && symset.push(paper[Raphael.is(sym, "array") ? sym[j] : sym](X, Y, (opts.width || 2) * 3).attr({ fill: colors[i%colors.length], stroke: "none" }));
                     if (opts.smooth) {
                         if (j && j != jj - 1) {
                             var X0 = x + gutter + ((valuesx_shrinked[i] || valuesx_shrinked[0])[j - 1] - minx) * kx,
