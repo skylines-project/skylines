@@ -45,9 +45,9 @@
       hoverMap();
 
       var pinnedFlights = getPinnedFlights();
-      for (i in pinnedFlights) {
-        if (pinnedFlights[i] != ${flight.id}) addFlightFromJSON("/flights/id/" + pinnedFlights[i] + "/json");
-      }
+      for (i in pinnedFlights)
+        if (pinnedFlights[i] != ${flight.id})
+          addFlightFromJSON("/flights/id/" + pinnedFlights[i] + "/json");
 
       pinButton($("#pinned"), ${flight.id});
     }
