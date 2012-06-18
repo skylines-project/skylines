@@ -11,6 +11,14 @@
   <head>
     <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" py:if="False"/>
     <title>Club ${club.name}</title>
+
+    <script type="text/javascript" src="/js/jQuery/jquery.js"></script>
+    <script type="text/javascript" src="/js/jQuery/jquery.timeago.js"></script>
+    <script type="text/javascript">
+      jQuery(document).ready(function() {
+        jQuery("abbr.timeago").timeago();
+      });
+    </script>
   </head>
 
   <body>
@@ -30,7 +38,7 @@
           <tr>
             <th>Created</th>
             <td>
-              ${format_datetime(club.time_created)}
+              <abbr class="timeago" title="${club.time_created}">${format_datetime(club.time_created)}</abbr>
               <span py:if="club.owner" py:strip="True"> by <a href="/users/id/${club.owner_id}/">${club.owner}</a></span>
             </td>
           </tr>
