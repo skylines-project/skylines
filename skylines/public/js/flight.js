@@ -23,6 +23,13 @@ var map;
 
 
 /**
+ * barogram
+ *
+ * Holds the Raphael instance
+ */
+var barogram;
+
+/**
  * barogram_t and barogram_h
  *
  * {Array(Array(double))} - contains time and height values for the barogram.
@@ -195,14 +202,14 @@ function addFlight(sfid, _lonlat, _levels, _num_levels, _time, _height, zoom_lev
  * Parameters:
  * url - {string} URL to fetch
  */
-function addFlightFromJSON(linechart, url) {
+function addFlightFromJSON(url) {
   $.ajax(url,{
     success: function(data) {
       addFlight(data.sfid, data.encoded.points, data.encoded.levels,
                 data.num_levels, data.barogram_t, data.barogram_h, data.zoom_levels);
 
       map.events.triggerEvent("move");
-      $.proxy(updateBarogram, { linechart: linechart, reset_y_axis: true })();
+      $.proxy(updateBarogram, { reset_y_axis: true })();
     }
   });
 };
@@ -306,14 +313,11 @@ function setIndexFromTime(time) {
  *
  * Parameters:
  * element - {Object} jQuery container object for barogram.
- *
- * Returns:
- * {Object} g.raphael linechart
  */
 
 function render_barogram(element) {
   // create Raphael instance and draw linechart.
-  var barogram = Raphael("barogram", "100%", "100%");
+  barogram = Raphael("barogram", "100%", "100%");
   var linechart = barogram.linechart(30, 0,
                       element.innerWidth() - 50, element.innerHeight() - 10,
                       barogram_t,
@@ -465,6 +469,7 @@ function render_barogram(element) {
 
   hoverColumn.position = position;
   linechart.hoverColumn = hoverColumn;
+  barogram.linechart = linechart;
 
   $(window).resize(function() {
     var attrs = linechart.getProperties();
@@ -477,8 +482,6 @@ function render_barogram(element) {
       });
     }
   });
-
-  return linechart;
 }
 
 
@@ -541,18 +544,15 @@ function hidePlanePosition() {
  * Function: scaleBarogram
  *
  * Scale the linechart according to the visible flight tracks on the map
- *
- * Parameters:
- * linechart - {Object} g.Raphael instance of linechart
  */
 
-function scaleBarogram(linechart) {
+function scaleBarogram() {
   // update barogram linechart whenever the map has been moved.
-  map.events.register("moveend", { linechart: linechart }, updateBarogram);
+  map.events.register("moveend", this, updateBarogram);
 }
 
 function updateBarogram(e) {
-  var linechart = this.linechart;
+  var linechart = barogram.linechart;
   var reset_y_axis = this.reset_y_axis || false;
 
   var largest_partition = null;
@@ -616,12 +616,11 @@ function updateBarogram(e) {
  * Function: hoverMap
  *
  * Searches for the nearest aircraft position in mouse range
- *
- * Parameters:
- * linechart - {Object} g.raphael linechart to show the position marker on
  */
 
-function hoverMap(linechart) {
+function hoverMap() {
+  var linechart = barogram.linechart;
+
   // search on every mousemove over the map viewport. Run this function only
   // every 25ms to save some computing power.
   var running = false;

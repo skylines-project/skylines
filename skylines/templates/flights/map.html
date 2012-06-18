@@ -43,14 +43,14 @@
 
       map.zoomToExtent(zoomExtent);
 
-      var barogram = render_barogram($("#barogram"));
-      scaleBarogram(barogram);
+      render_barogram($("#barogram"));
+      scaleBarogram();
 
-      hoverMap(barogram);
+      hoverMap();
 
       var pinnedFlights = getPinnedFlights();
       for (i in pinnedFlights) {
-        if (pinnedFlights[i] != ${sfid}) addFlightFromJSON(barogram, "/flights/id/" + pinnedFlights[i] + "/json");
+        if (pinnedFlights[i] != ${sfid}) addFlightFromJSON("/flights/id/" + pinnedFlights[i] + "/json");
       }
 
     }
