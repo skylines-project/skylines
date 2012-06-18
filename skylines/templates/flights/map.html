@@ -26,9 +26,9 @@
 <?python from simplejson import dumps ?>
     /* <![CDATA[ */
     function initialize() {
-      var map = initOpenLayers();
+      initOpenLayers();
 
-      addFlight(map, ${sfid},
+      addFlight(${sfid},
         ${dumps(encoded.points)},
         ${dumps(encoded.levels)},
         ${fixes.numLevels},
@@ -44,13 +44,13 @@
       map.zoomToExtent(zoomExtent);
 
       var barogram = render_barogram($("#barogram"));
-      scaleBarogram(map, barogram);
+      scaleBarogram(barogram);
 
-      hoverMap(map, barogram);
+      hoverMap(barogram);
 
       var pinnedFlights = getPinnedFlights();
       for (i in pinnedFlights) {
-        if (pinnedFlights[i] != ${sfid}) addFlightFromJSON(map, barogram, "/flights/id/" + pinnedFlights[i] + "/json");
+        if (pinnedFlights[i] != ${sfid}) addFlightFromJSON(barogram, "/flights/id/" + pinnedFlights[i] + "/json");
       }
 
     }

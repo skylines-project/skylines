@@ -15,6 +15,14 @@ var top_flight = 0;
 
 
 /**
+ * map
+ *
+ * Holds the OpenLayers map
+ */
+var map;
+
+
+/**
  * barogram_t and barogram_h
  *
  * {Array(Array(double))} - contains time and height values for the barogram.
@@ -35,15 +43,12 @@ var colors = ['#004bbd', '#bf0099', '#cf7c00', '#ff0000', '#00c994'];
  * Function initOpenLayers
  *
  * Initialize the map and add airspace and flight path layers.
- *
- * Returns:
- * {Object} Map
  */
 
 function initOpenLayers() {
   OpenLayers.ImgPath = "/images/OpenLayers/"
 
-  var map = new OpenLayers.Map("map_canvas", {
+  map = new OpenLayers.Map("map_canvas", {
     projection: "EPSG:900913",
     controls: [],
     theme: null
@@ -118,8 +123,6 @@ function initOpenLayers() {
     this.timer = window.setTimeout(function() { this.timer = null; layer.redraw(); }, 50);
   };
   map.events.register("move", this, function() { initRedrawLayer(flightPathLayer); });
-
-  return map;
 };
 
 
@@ -129,7 +132,6 @@ function initOpenLayers() {
  * Add a flight to the map and barogram.
  *
  * Parameters:
- * map - {Object} Map to add to. Must contain a vector layer called "Flight"
  * sfid - {int} SkyLines flight ID
  * _lonlat - {String} Google polyencoded string of geolocations (lon + lat, WSG 84)
  * _levels - {String} Google polyencoded string of levels of detail
@@ -141,7 +143,7 @@ function initOpenLayers() {
  * Note: _lonlat, _levels, _time and _height MUST have the same number of elements when decoded.
  */
 
-function addFlight(map, sfid, _lonlat, _levels, _num_levels, _time, _height, zoom_levels) {
+function addFlight(sfid, _lonlat, _levels, _num_levels, _time, _height, zoom_levels) {
   var height = OpenLayers.Util.decodeGoogle(_height);
   var time = OpenLayers.Util.decodeGoogle(_time);
   var lonlat = OpenLayers.Util.decodeGooglePolyline(_lonlat);
@@ -175,7 +177,6 @@ function addFlight(map, sfid, _lonlat, _levels, _num_levels, _time, _height, zoo
     geo: flight,
     color: color,
     plane: plane,
-    map: map,
     sfid: sfid,
     index: 0,
     dx: 0
@@ -194,10 +195,10 @@ function addFlight(map, sfid, _lonlat, _levels, _num_levels, _time, _height, zoo
  * Parameters:
  * url - {string} URL to fetch
  */
-function addFlightFromJSON(map, linechart, url) {
+function addFlightFromJSON(linechart, url) {
   $.ajax(url,{
     success: function(data) {
-      addFlight(map, data.sfid, data.encoded.points, data.encoded.levels,
+      addFlight(data.sfid, data.encoded.points, data.encoded.levels,
                 data.num_levels, data.barogram_t, data.barogram_h, data.zoom_levels);
 
       map.events.triggerEvent("move");
@@ -514,8 +515,6 @@ function showPlanePosition(id, dx, fid, ghost) {
   var lon = flights[fid].lonlat[id].lon + (flights[fid].lonlat[id+1].lon - flights[fid].lonlat[id].lon)*dx;
   var lat = flights[fid].lonlat[id].lat + (flights[fid].lonlat[id+1].lat - flights[fid].lonlat[id].lat)*dx;
 
-  var map = flights[fid].map;
-
   flights[fid].plane.attributes.rotation = rotation;
   flights[fid].plane.attributes.ghost = ghost?true:false;
   flights[fid].plane.geometry = new OpenLayers.Geometry.Point(lon, lat).
@@ -533,7 +532,7 @@ function showPlanePosition(id, dx, fid, ghost) {
 
 function hidePlanePosition() {
   for (fid in flights) {
-    flights[fid].map.getLayersByName("Flight")[0].removeFeatures(flights[fid].plane);
+    map.getLayersByName("Flight")[0].removeFeatures(flights[fid].plane);
   }
 }
 
@@ -547,7 +546,7 @@ function hidePlanePosition() {
  * linechart - {Object} g.Raphael instance of linechart
  */
 
-function scaleBarogram(map, linechart) {
+function scaleBarogram(linechart) {
   // update barogram linechart whenever the map has been moved.
   map.events.register("moveend", { linechart: linechart }, updateBarogram);
 }
@@ -619,11 +618,10 @@ function updateBarogram(e) {
  * Searches for the nearest aircraft position in mouse range
  *
  * Parameters:
- * map - {Object} OpenLayers.Map to work on
  * linechart - {Object} g.raphael linechart to show the position marker on
  */
 
-function hoverMap(map, linechart) {
+function hoverMap(linechart) {
   // search on every mousemove over the map viewport. Run this function only
   // every 25ms to save some computing power.
   var running = false;
