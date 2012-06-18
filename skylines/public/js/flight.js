@@ -521,7 +521,7 @@ function showPlanePosition(id, dx, fid, ghost) {
   flights[fid].plane.geometry = new OpenLayers.Geometry.Point(lon, lat).
     transform(new OpenLayers.Projection("EPSG:4326"), map.getProjectionObject());
 
-  map.getLayersByName("Flight")[0].drawFeature(flights[fid].plane);
+  map.getLayersByName("Flight")[0].addFeatures(flights[fid].plane);
 }
 
 
