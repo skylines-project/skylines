@@ -72,3 +72,7 @@ input[type="file"] {
   color: red;
 }
 
+.footer {
+  text-align: center;
+  font-size: smaller;
+}
