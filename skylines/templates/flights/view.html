@@ -14,6 +14,7 @@
   <script type="text/javascript" src="/js/OpenLayers/OpenLayers.js"></script>
   <script type="text/javascript" src="/js/jQuery/jquery.js"></script>
   <script type="text/javascript" src="/js/jQuery/jquery.cookie.js"></script>
+  <script type="text/javascript" src="/js/jQuery/jquery.timeago.js"></script>
 
   <script type="text/javascript" src="/js/general.js"></script>
   <script type="text/javascript" src="/js/flight.js"></script>
@@ -51,6 +52,10 @@
       pinButton($("#pinned"), ${flight.id});
     }
     /* ]]> */
+
+    jQuery(document).ready(function() {
+      jQuery("abbr.timeago").timeago();
+    });
   </script>
 
   <title>View Flight</title>
@@ -126,7 +131,7 @@
             <tr>
               <th>Uploaded</th>
               <td>
-                ${format_datetime(flight.time_created)} by ${flight.owner}
+                <abbr class="timeago" title="${flight.time_created}">${format_datetime(flight.time_created)}</abbr> by ${flight.owner}
               </td>
             </tr>
             <tr>
