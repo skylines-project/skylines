@@ -16,7 +16,10 @@ from babel.dates import format_date
     <script src="/js/jQuery/jquery.js" type="text/javascript" language="javascript" />
     <script src="/js/jQuery/jquery.dataTables.js" type="text/javascript" language="javascript" />
     <script src="/js/jQuery/jquery.dataTables.ext.js" type="text/javascript" language="javascript" />
+
     <script src="/js/jQuery/bootstrap-datepicker.js" type="text/javascript" language="javascript" />
+    <script src="/js/bootstrap/bootstrap-tooltip.js" type="text/javascript" language="javascript" />
+
     <script src="/js/jQuery/jquery.cookie.js" type="text/javascript" language="javascript" />
     <script src="/js/general.js" type="text/javascript" language="javascript" />
 
@@ -94,6 +97,10 @@ from babel.dates import format_date
         });
       });
     /* ]]> */
+
+      jQuery(document).ready(function() {
+        jQuery("[rel=tooltip]").tooltip();
+      });
     </script>
 
     <title py:if="date">Flights on ${format_date(date)}</title>
@@ -177,7 +184,7 @@ from babel.dates import format_date
                 <a href="/flights/id/${flight.id}/">
                   Show
                 </a>
-                <span class="pin" style="visibility: hidden;">${flight.id}</span>
+                <span class="pin" style="visibility: hidden;" rel="tooltip" title="Activate this to show the flight on top of other flights on the map">${flight.id}</span>
               </td>
             </tr>
           </tbody>
