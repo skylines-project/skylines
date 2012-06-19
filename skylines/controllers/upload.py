@@ -3,8 +3,8 @@ from tg import expose, request, redirect, flash, validate
 from tg.i18n import ugettext as _, lazy_ugettext as l_
 from repoze.what.predicates import has_permission
 from tw.forms import TableForm
-from tw.forms.fields import FileField, SingleSelectField, CheckBox
-from tw.forms.validators import FieldStorageUploadConverter, NotEmpty
+from tw.forms.fields import FileField, SingleSelectField
+from tw.forms.validators import FieldStorageUploadConverter
 from skylines.lib.base import BaseController
 from skylines import files
 from skylines.model import DBSession, User, Flight
@@ -26,8 +26,6 @@ upload_form = TableForm('upload_form', submit_text="Upload", action='do', childr
     FileField('file', label_text="IGC or ZIP file",
         validator=FieldStorageUploadConverter(not_empty=True, messages=dict(empty=_("Please add a IGC or ZIP file"))) ),
     PilotSelectField('pilot', label_text="Pilot"),
-    CheckBox('policy', help_text="I accept to publish my flights under the Open Database License 1.0", label_text="", default=False,
-        validator=NotEmpty(messages=dict(empty=_("please accept"))) ),
 ])
 
 def IterateFiles(name, f):
@@ -76,7 +74,7 @@ class UploadController(BaseController):
 
     @expose('skylines.templates.upload.result')
     @validate(upload_form, error_handler=index)
-    def do(self, file, pilot, policy=False):
+    def do(self, file, pilot):
         user = request.identity['user']
 
         pilot_id = None
