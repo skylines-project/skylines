@@ -50,7 +50,7 @@ from babel.dates import format_date
               var sfid = parseInt($(this).text());
               if ($.inArray(sfid, pinnedFlights) >= 0) {
                 $(this).html("<i class='icon-star'></i>");
-                $(this).css("visibility", "visible");
+                $(this).show();
                 $(this).addClass("pinned");
               } else {
                 $(this).html("<i class='icon-star-empty'></i>");
@@ -74,12 +74,12 @@ from babel.dates import format_date
             jQuery(nRow).hover(function(e) {
               if (e.type == "mouseenter") {
                 $(this).find(".pin").each(function() {
-                  $(this).css("visibility", "visible");
+                  $(this).show();
                 });
               } else if (e.type == "mouseleave") {
                 $(this).find(".pin").each(function() {
                   if (!$(this).hasClass("pinned"))
-                    $(this).css("visibility", "hidden");
+                    $(this).hide();
                 });
               }
             });
@@ -184,7 +184,7 @@ from babel.dates import format_date
                 <a href="/flights/id/${flight.id}/">
                   Show
                 </a>
-                <span class="pin" style="visibility: hidden;" rel="tooltip" title="Activate this to show the flight on top of other flights on the map">${flight.id}</span>
+                <span class="pin" style="display: none;" rel="tooltip" title="Activate this to show the flight on top of other flights on the map">${flight.id}</span>
               </td>
             </tr>
           </tbody>
