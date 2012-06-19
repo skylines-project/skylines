@@ -16,9 +16,9 @@
       <tr py:for="name,flight,error in flights">
         <td py:content="name">file.igc</td>
         <td>
-          <span class="label label-success" py:if="not error">Success</span>
-          <span class="label label-warning" py:if="error and flight" py:content="error">Warning</span>
-          <span class="label label-important" py:if="error and not flight" py:content="error">Error</span>
+          <span class="label label-success" py:if="not error"><i class="icon-ok"></i> Success</span>
+          <span class="label label-warning" py:if="error and flight"><i class="icon-warning-sign"></i> <span py:replace="error">Warning</span></span>
+          <span class="label label-important" py:if="error and not flight"><i class="icon-warning-sign"></i> <span py:replace="error">Error</span></span>
         </td>
         <td><a py:if="flight" href="/flights/id/${flight.id}/">Show</a></td>
       </tr>
