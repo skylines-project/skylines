@@ -182,7 +182,7 @@ page = 'flights'
                   <span py:replace="flight.takeoff_time.strftime('%H:%M')">10:00</span>-<span py:replace="flight.landing_time.strftime('%H:%M')">15:00</span>
                 </span>
               </td>
-              <td>
+              <td nowrap="nowrap">
                 <a href="/flights/id/${flight.id}/">Show</a>
                 <span class="pin" style="display: none;" rel="tooltip" title="Activate this to show the flight on top of other flights on the map">${flight.id}</span>
               </td>
