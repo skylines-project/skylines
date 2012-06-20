@@ -1,0 +1,8 @@
+/* fixes event handling for Chromium browsers */
+[class^="icon-"], [class*=" icon-"] {
+  display: inline-block;
+}
+
+.icon-large:before {
+  vertical-align: middle;
+}
