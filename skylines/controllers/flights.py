@@ -41,7 +41,7 @@ class FlightController(BaseController):
     def __init__(self, flight):
         self.flight = flight
 
-    def _get_flight_path(self, threshold = 0.001, max_points = 3000):
+    def __get_flight_path(self, threshold = 0.001, max_points = 3000):
         from skylines.lib.analysis import flight_path
         fp = flight_path(self.flight, max_points)
 
@@ -68,15 +68,15 @@ class FlightController(BaseController):
 
     @expose('skylines.templates.flights.view')
     def index(self):
-        return dict(flight=self.flight, trace=self._get_flight_path())
+        return dict(flight=self.flight, trace=self.__get_flight_path())
 
     @expose('skylines.templates.flights.map')
     def map(self):
-        return dict(flight=self.flight, trace=self._get_flight_path(threshold=0.0001, max_points=10000))
+        return dict(flight=self.flight, trace=self.__get_flight_path(threshold=0.0001, max_points=10000))
 
     @expose('json')
     def json(self):
-        trace = self._get_flight_path(threshold=0.0001, max_points=10000)
+        trace = self.__get_flight_path(threshold=0.0001, max_points=10000)
         trace['sfid'] = self.flight.id
 
         return trace
@@ -152,7 +152,7 @@ class FlightIdController(BaseController):
         return controller, remainder
 
 class FlightsController(BaseController):
-    def _do_list(self, tab, kw, date=None, pilot=None, club=None, filter=None):
+    def __do_list(self, tab, kw, date=None, pilot=None, club=None, filter=None):
         flights = DBSession.query(Flight)
         if date:
             flights = flights.filter(between(Flight.takeoff_time,
@@ -199,7 +199,7 @@ class FlightsController(BaseController):
 
     @expose('skylines.templates.flights.list')
     def all(self, **kw):
-        return self._do_list('all', kw)
+        return self.__do_list('all', kw)
 
     @expose('skylines.templates.flights.list')
     def today(self, **kw):
@@ -215,7 +215,7 @@ class FlightsController(BaseController):
         if not date:
             raise HTTPNotFound
 
-        return self._do_list('today', kw, date=date.date())
+        return self.__do_list('today', kw, date=date.date())
 
     @expose('skylines.templates.flights.list')
     def date(self, request_date, **kw):
@@ -224,7 +224,7 @@ class FlightsController(BaseController):
         except:
             raise HTTPNotFound
 
-        return self._do_list('date', kw, date=date.date())
+        return self.__do_list('date', kw, date=date.date())
 
 
     @expose('skylines.templates.flights.list')
@@ -232,14 +232,14 @@ class FlightsController(BaseController):
         if not request.identity:
             raise HTTPNotFound
 
-        return self._do_list('my', kw, pilot=request.identity['user'])
+        return self.__do_list('my', kw, pilot=request.identity['user'])
 
     @expose('skylines.templates.flights.list')
     def my_club(self, **kw):
         if not request.identity:
             raise HTTPNotFound
 
-        return self._do_list('my_club', kw, club=request.identity['user'].club)
+        return self.__do_list('my_club', kw, club=request.identity['user'].club)
 
     @expose('skylines.templates.flights.list')
     def unassigned(self, **kw):
@@ -248,7 +248,7 @@ class FlightsController(BaseController):
 
         f = and_(Flight.pilot_id == None,
                  Flight.owner == request.identity['user'])
-        return self._do_list('unassigned', kw, filter=f)
+        return self.__do_list('unassigned', kw, filter=f)
 
     @expose('skylines.templates.flights.list')
     def pilot(self, id, **kw):
@@ -256,7 +256,7 @@ class FlightsController(BaseController):
         if not pilot:
             raise HTTPNotFound
 
-        return self._do_list('pilot', kw, pilot=pilot)
+        return self.__do_list('pilot', kw, pilot=pilot)
 
     @expose('skylines.templates.flights.list')
     def club(self, id, **kw):
@@ -264,7 +264,7 @@ class FlightsController(BaseController):
         if not club:
             raise HTTPNotFound
 
-        return self._do_list('club', kw, club=club)
+        return self.__do_list('club', kw, club=club)
 
     @expose('skylines.templates.flights.top_pilots')
     def top(self):
