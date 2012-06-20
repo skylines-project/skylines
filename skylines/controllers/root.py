@@ -14,6 +14,7 @@ from skylines.controllers.users import UsersController
 from skylines.controllers.clubs import ClubsController
 from skylines.controllers.flights import FlightsController
 from skylines.controllers.settings import SettingsController
+from skylines.controllers.static import StaticResourceController
 
 __all__ = ['RootController']
 
@@ -39,6 +40,7 @@ class RootController(BaseController):
     clubs = ClubsController()
     flights = FlightsController()
     settings = SettingsController()
+    static = StaticResourceController()
 
     @expose()
     def index(self):
