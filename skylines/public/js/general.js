@@ -96,19 +96,19 @@ function pinButton(element, sfid) {
   var onClick = function() {
     if (!isPinnedFlight(sfid)) {
       pinFlight(sfid);
-      element.html("<i class='icon-star'></i> Flight pinned!");
+      element.html("<i class='icon-star icon-large'></i> Flight pinned!");
     } else {
       unpinFlight(sfid);
-      element.html("<i class='icon-star-empty'></i> Click to pin");
+      element.html("<i class='icon-star-empty icon-large'></i> Click to pin");
     }
   };
 
   // initial setting
   element.addClass("btn");
   if (!isPinnedFlight(sfid)) {
-    element.html("<i class='icon-star-empty'></i> Click to pin");
+    element.html("<i class='icon-star-empty icon-large'></i> Click to pin");
   } else {
-    element.html("<i class='icon-star'></i> Flight pinned!");
+    element.html("<i class='icon-star icon-large'></i> Flight pinned!");
   }
 
   // add event handler
