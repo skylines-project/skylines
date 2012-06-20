@@ -63,16 +63,16 @@ class FlightController(BaseController):
         barogram_t = encoder.encodeList([fp[i][0] for i in range(len(fp)) if fixes['levels'][i] != -1])
         barogram_h = encoder.encodeList([fp[i][3] for i in range(len(fp)) if fixes['levels'][i] != -1])
 
-        return dict(page='flights', encoded=encoded, zoom_levels = zoom_levels, fixes = fixes,
+        return dict(encoded=encoded, zoom_levels = zoom_levels, fixes = fixes,
                     barogram_t=barogram_t, barogram_h=barogram_h, sfid=self.flight.id)
 
     @expose('skylines.templates.flights.view')
     def index(self):
-        return dict(page='flights', flight=self.flight, trace=self._get_flight_path())
+        return dict(flight=self.flight, trace=self._get_flight_path())
 
     @expose('skylines.templates.flights.map')
     def map(self):
-        return dict(page='flights', flight=self.flight, trace=self._get_flight_path(threshold=0.0001, max_points=10000))
+        return dict(flight=self.flight, trace=self._get_flight_path(threshold=0.0001, max_points=10000))
 
     @expose('json')
     def json(self):
@@ -190,8 +190,7 @@ class FlightsController(BaseController):
                 limit = int(config.get('skylines.lists.server_side', 250))
 
             flights = flights.order_by(desc(Flight.takeoff_time)).limit(limit)
-            return dict(page = 'flights', tab = tab,
-                        date=date, pilot=pilot, club=club,
+            return dict(tab = tab, date=date, pilot=pilot, club=club,
                         flights = flights, flights_count = flights_count)
 
     @expose()
@@ -277,7 +276,7 @@ class FlightsController(BaseController):
                  .join((subq, subq.c.pilot_id == User.user_id))
         result = result.order_by(desc('total'))
         result = result.limit(20)
-        return dict(page='flights', tab='top', result=result)
+        return dict(tab='top', result=result)
 
     @expose('skylines.templates.flights.top_clubs')
     def top_clubs(self):
@@ -289,7 +288,7 @@ class FlightsController(BaseController):
                  .join((subq, subq.c.club_id == Club.id))
         result = result.order_by(desc('total'))
         result = result.limit(20)
-        return dict(page='flights', tab='top_clubs', result=result)
+        return dict(tab='top_clubs', result=result)
 
     @expose()
     @require(has_permission('manage'))
