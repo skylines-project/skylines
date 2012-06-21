@@ -173,7 +173,7 @@ class FlightsController(BaseController):
             flights, response_dict = GetDatatableRecords(kw, flights, columns)
 
             method = tab
-            override_template(getattr(self, method), 'mako:skylines.templates.flights.list_m')
+            override_template(getattr(self, method), 'mako:skylines.templates.flights.list_json')
             return dict(response_dict=response_dict,
                         date=date, pilot=pilot, club=club,
                         flights = flights)
