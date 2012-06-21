@@ -106,7 +106,10 @@ function initOpenLayers() {
   }, {
     context: {
       getGraphic: function(feature) {
-        return feature.attributes["ghost"]?"/images/glider_symbol_ghost.png":"/images/glider_symbol.png";
+        var msie_8 = $.browser.msie && (parseInt($.browser.version, 10) < 9);
+        var ghost_glider = msie_8?"/images/glider_symbol_ghost_msie.png":"/images/glider_symbol_ghost.png";
+        var normal_glider = msie_8?"/images/glider_symbol_msie.png":"/images/glider_symbol.png";
+        return feature.attributes["ghost"]?ghost_glider:normal_glider;
       }
     }
   });
