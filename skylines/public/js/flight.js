@@ -459,7 +459,7 @@ function render_barogram(element) {
       text: Math.round(flights[fid].h[index]) + " m" +
             ((vario !== null)?"\n" + (Math.round(vario*10)/10) + " m/s":"") +
             ((speed !== null)?"\n" + (Math.round(speed*3.6*10)/10) + " km/h":"") +
-            "\n" + formatSecondsAsTime(flights[fid].t[index])
+            "\n" + formatSecondsAsTime(flights[fid].t[index + ((flights[fid].dx>=1)?1:0)])
     });
 
     textRect.attr({
