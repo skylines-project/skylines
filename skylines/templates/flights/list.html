@@ -97,12 +97,10 @@ page = 'flights'
             pad(e.date.getMonth()+1, 2) + "-" + pad(e.date.getDate(), 2);
           window.location.href = url;
         });
+
+        $("[rel=tooltip]").tooltip();
       });
     /* ]]> */
-
-      jQuery(document).ready(function() {
-        jQuery("[rel=tooltip]").tooltip();
-      });
     </script>
 
     <title py:if="date">Flights on ${format_date(date)}</title>
