@@ -81,3 +81,7 @@ input[type="file"] {
   text-align: right;
   padding-right: 0.5em;
 }
+
+.pin {
+  cursor: pointer;
+}
