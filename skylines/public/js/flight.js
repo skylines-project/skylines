@@ -395,8 +395,13 @@ function render_barogram(element) {
     // no flight found which is in range? return early, draw nothing.
     if (flights[top_flight].index == -1) return;
 
+    // interpolate current height of top_flight
+    var height = flights[top_flight].h[flights[top_flight].index] +
+      (flights[top_flight].h[flights[top_flight].index+1] - flights[top_flight].h[flights[top_flight].index]) *
+       flights[top_flight].dx;
+
     // calculate y-position of position marker for current top_flight and show marker
-    var rel_y = prop.y - (flights[top_flight].h[flights[top_flight].index] - prop.miny) * prop.ky + prop.height - prop.gutter;
+    var rel_y = prop.y - (height - prop.miny) * prop.ky + prop.height - prop.gutter;
     hoverColumn(flights[top_flight].index, rel_x, rel_y, top_flight);
 
     // draw plane icons on map
@@ -660,8 +665,13 @@ function hoverMap() {
       var x = flights[nearest.fid].t[nearest.from] + (flights[nearest.fid].t[nearest.from+1]-flights[nearest.fid].t[nearest.from])*nearest.along;
 
       if (x > prop.minx && x < prop.maxx) {
+        // interpolate current height of nearest flight
+        var height = flights[nearest.fid].h[nearest.from] +
+          (flights[nearest.fid].h[nearest.to] - flights[nearest.fid].h[nearest.from]) *
+           nearest.along;
+
         var rel_x = (x - prop.minx) * prop.kx + prop.x + prop.gutter;
-        var rel_y = prop.y - (flights[nearest.fid].h[nearest.from] - prop.miny) * prop.ky + prop.height - prop.gutter;
+        var rel_y = prop.y - (height - prop.miny) * prop.ky + prop.height - prop.gutter;
         linechart.hoverColumn(nearest.from, rel_x, rel_y, nearest.fid);
       }
 
