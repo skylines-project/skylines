@@ -306,6 +306,11 @@ function setIndexFromTime(time) {
       flight.dx = (time - flight.t[index])/(flight.t[index+1] - flight.t[index]);
       flight.index = index;
     }
+
+    if (flight.index == flight.t.length - 1) {
+      flight.index--;
+      flight.dx = 1;
+    }
   }
 }
 
@@ -506,16 +511,6 @@ function render_barogram(element) {
 
 function showPlanePosition(id, dx, fid, ghost) {
   var rotation = 0;
-
-  if (id >= (flights[fid].lonlat.length - 1)) {
-    // we're at the end of flight fid
-    id = flights[fid].lonlat.length - 2;
-    dx = 1;
-  } else if (id < 0) {
-    // this should never happen (but it does! search the real problem and fix it)
-    id = 0;
-    dx = 0;
-  }
 
   if (flights[fid].lonlat[id+1] != undefined) {
     rotation = Math.atan2(flights[fid].lonlat[id+1].lon-flights[fid].lonlat[id].lon, flights[fid].lonlat[id+1].lat-flights[fid].lonlat[id].lat) * 180/Math.PI;
