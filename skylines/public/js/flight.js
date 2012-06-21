@@ -135,6 +135,23 @@ function initOpenLayers() {
   map.events.register("move", this, function() { initRedrawLayer(flightPathLayer); });
 };
 
+/**
+ * Function: addGoogleLayer
+ *
+ * Callback when Google Maps API has been loaded.
+ * Add the google physical layer to the map
+ */
+function addGoogleLayer() {
+  // add google maps if google script loaded
+  if (window.google) {
+    var google_physical_layer = new OpenLayers.Layer.Google(
+      "Google Physical",
+      {type: google.maps.MapTypeId.TERRAIN}
+    );
+    map.addLayer(google_physical_layer);
+    map.addControl(new SimpleLayerSwitcher());
+  }
+}
 
 /**
  * Function: addFlight
