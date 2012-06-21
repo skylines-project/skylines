@@ -154,7 +154,7 @@ class FlightIdController(BaseController):
 
 class FlightsController(BaseController):
     def __do_list(self, tab, kw, date=None, pilot=None, club=None, filter=None):
-        flights = DBSession.query(Flight)
+        flights = DBSession.query(Flight).outerjoin(Flight.pilot)
         if date:
             flights = flights.filter(between(Flight.takeoff_time,
                                              date, date + timedelta(days=1)))
@@ -167,8 +167,8 @@ class FlightsController(BaseController):
             flights = flights.filter(filter)
 
         if kw.get("json", "false")  == 'true':
-            columns = { 0: 'takeoff_time', 1 : 'olc_plus_score', 2: 'pilot_id', 3: 'olc_classic_distance',
-                        4: 'club_id', 5: 'takeoff_time', 6: 'id' }
+            columns = { 0: 'takeoff_time', 1 : 'olc_plus_score', 2: 'display_name', 3: 'olc_classic_distance',
+                        4: 'flights.club_id', 5: 'takeoff_time', 6: 'id' }
 
             flights, response_dict = GetDatatableRecords(kw, flights, columns)
 
