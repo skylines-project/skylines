@@ -50,6 +50,7 @@ page = 'flights'
           "fnCreatedRow": function(nRow, aData, iDataIndex) {
             $(nRow).find(".pin").each(function() {
               var sfid = parseInt($(this).text());
+              $(this).tooltip();
               if ($.inArray(sfid, pinnedFlights) >= 0) {
                 $(this).html("<i class='icon-star'></i>");
                 $(this).show();
