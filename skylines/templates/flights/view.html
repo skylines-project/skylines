@@ -58,13 +58,11 @@ page = 'flights'
           addFlightFromJSON("/flights/id/" + pinnedFlights[i] + "/json");
 
       pinButton($("#pinned"), ${flight.id});
+
+      $("abbr.timeago").timeago();
+      $("[rel=tooltip]").tooltip();
     }
     /* ]]> */
-
-    jQuery(document).ready(function() {
-      jQuery("abbr.timeago").timeago();
-      jQuery("[rel=tooltip]").tooltip();
-    });
   </script>
 
   <title>View Flight</title>
