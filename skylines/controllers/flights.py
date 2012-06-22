@@ -153,7 +153,7 @@ class FlightIdController(BaseController):
         return controller, remainder
 
 class FlightsController(BaseController):
-    def __do_list(self, tab, kw, date=None, pilot=None, club=None, filter=None):
+    def __do_list(self, tab, kw, date=None, pilot=None, club=None, filter=None, columns=None):
         flights = DBSession.query(Flight).outerjoin(Flight.pilot)
         if date:
             flights = flights.filter(between(Flight.takeoff_time,
@@ -167,8 +167,9 @@ class FlightsController(BaseController):
             flights = flights.filter(filter)
 
         if kw.get("json", "false")  == 'true':
-            columns = { 0: 'takeoff_time', 1 : 'olc_plus_score', 2: 'display_name', 3: 'olc_classic_distance',
-                        4: 'flights.club_id', 5: 'takeoff_time', 6: 'id' }
+            if not columns:
+                columns = { 0: 'takeoff_time', 1 : 'olc_plus_score', 2: 'display_name', 3: 'olc_classic_distance',
+                            4: 'flights.club_id', 5: 'takeoff_time', 6: 'id' }
 
             flights, response_dict = GetDatatableRecords(kw, flights, columns)
 
@@ -216,7 +217,10 @@ class FlightsController(BaseController):
         if not date:
             raise HTTPNotFound
 
-        return self.__do_list('today', kw, date=date.date())
+        columns = { 0 : 'olc_plus_score', 1: 'display_name', 2: 'olc_classic_distance',
+                    3: 'flights.club_id', 4: 'takeoff_time', 5: 'id' }
+
+        return self.__do_list('today', kw, date=date.date(), columns=columns)
 
     @expose('skylines.templates.flights.list')
     def date(self, request_date, **kw):
@@ -225,7 +229,10 @@ class FlightsController(BaseController):
         except:
             raise HTTPNotFound
 
-        return self.__do_list('date', kw, date=date.date())
+        columns = { 0 : 'olc_plus_score', 1: 'display_name', 2: 'olc_classic_distance',
+                    3: 'flights.club_id', 4: 'takeoff_time', 5: 'id' }
+
+        return self.__do_list('date', kw, date=date.date(), columns=columns)
 
 
     @expose('skylines.templates.flights.list')
@@ -233,14 +240,20 @@ class FlightsController(BaseController):
         if not request.identity:
             raise HTTPNotFound
 
-        return self.__do_list('my', kw, pilot=request.identity['user'])
+        columns = { 0: 'takeoff_time', 1 : 'olc_plus_score', 2: 'display_name', 3: 'olc_classic_distance',
+                    4: 'takeoff_time', 5: 'id' }
+
+        return self.__do_list('my', kw, pilot=request.identity['user'], columns=columns)
 
     @expose('skylines.templates.flights.list')
     def my_club(self, **kw):
         if not request.identity:
             raise HTTPNotFound
 
-        return self.__do_list('my_club', kw, club=request.identity['user'].club)
+        columns = { 0: 'takeoff_time', 1 : 'olc_plus_score', 2: 'display_name', 3: 'olc_classic_distance',
+                    4: 'takeoff_time', 5: 'id' }
+
+        return self.__do_list('my_club', kw, club=request.identity['user'].club, columns=columns)
 
     @expose('skylines.templates.flights.list')
     def unassigned(self, **kw):
@@ -257,7 +270,10 @@ class FlightsController(BaseController):
         if not pilot:
             raise HTTPNotFound
 
-        return self.__do_list('pilot', kw, pilot=pilot)
+        columns = { 0: 'takeoff_time', 1 : 'olc_plus_score', 2: 'display_name', 3: 'olc_classic_distance',
+                    4: 'takeoff_time', 5: 'id' }
+
+        return self.__do_list('pilot', kw, pilot=pilot, columns=columns)
 
     @expose('skylines.templates.flights.list')
     def club(self, id, **kw):
@@ -265,7 +281,10 @@ class FlightsController(BaseController):
         if not club:
             raise HTTPNotFound
 
-        return self.__do_list('club', kw, club=club)
+        columns = { 0: 'takeoff_time', 1 : 'olc_plus_score', 2: 'display_name', 3: 'olc_classic_distance',
+                    4: 'takeoff_time', 5: 'id' }
+
+        return self.__do_list('club', kw, club=club, columns=columns)
 
     @expose('skylines.templates.flights.top_pilots')
     def top(self):
