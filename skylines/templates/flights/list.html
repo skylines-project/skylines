@@ -91,7 +91,8 @@ page = 'flights'
 
         var datepicker = $('#datepicker').datepicker({
           format: 'dd.mm.yyyy',
-          autoclose: true
+          autoclose: true,
+          weekStart: 1
         });
         datepicker.on('changeDate', function(e) {
           var url = "/flights/date/" + e.date.getFullYear() + "-" +
