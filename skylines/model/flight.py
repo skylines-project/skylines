@@ -7,6 +7,7 @@ from sqlalchemy import Table, ForeignKey, Column
 from sqlalchemy.types import Integer, Unicode
 from auth import User
 from skylines.model import DeclarativeBase, DBSession
+from tg import config, request
 
 class Flight(DeclarativeBase):
     __tablename__ = 'flights'
@@ -40,16 +41,13 @@ class Flight(DeclarativeBase):
         return DBSession.query(cls).filter_by(md5=_md5).first()
 
     def get_download_uri(self):
-        from tg import config
         return config['skylines.files.uri'] + '/' + self.filename
 
     def is_writable(self):
-        from tg import request
         return request.identity and \
                (self.owner_id == request.identity['user'].user_id or
                 self.pilot_id == request.identity['user'].user_id or
                 'manage' in request.identity['permissions'])
 
     def may_delete(self):
-        from tg import request
         return request.identity and 'manage' in request.identity['permissions']

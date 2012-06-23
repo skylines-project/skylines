@@ -16,6 +16,8 @@ from skylines import files
 from skylines.model import DBSession, User, Club, Flight
 from skylines.controllers.upload import UploadController
 from skylines.lib.datatables import GetDatatableRecords
+from skylines.lib.igc import read_igc_header
+from skylines.lib.analysis import analyse_flight, flight_path
 from skylinespolyencode import SkyLinesPolyEncoder
 
 class PilotSelectField(PropertySingleSelectField):
@@ -43,7 +45,6 @@ class FlightController(BaseController):
         self.flight = flight
 
     def __get_flight_path(self, threshold = 0.001, max_points = 3000):
-        from skylines.lib.analysis import flight_path
         fp = flight_path(self.flight, max_points)
 
         num_levels = 4
@@ -115,7 +116,6 @@ class FlightController(BaseController):
     def analysis(self):
         """Hidden method that restarts flight analysis."""
 
-        from skylines.lib.analysis import analyse_flight
         analyse_flight(self.flight)
         DBSession.flush()
 
@@ -315,7 +315,6 @@ class FlightsController(BaseController):
     def analysis(self):
         """Hidden method that restarts flight analysis."""
 
-        from skylines.lib.analysis import analyse_flight
         for flight in DBSession.query(Flight):
             analyse_flight(flight)
             DBSession.flush()
@@ -326,8 +325,6 @@ class FlightsController(BaseController):
     @require(has_permission('manage'))
     def igc_headers(self):
         """Hidden method that parses all missing IGC headers."""
-        from skylines.lib.igc import read_igc_header
-
         flights = DBSession.query(Flight)
         flights = flights.filter(Flight.logger_manufacturer_id == None)
 

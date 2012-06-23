@@ -11,6 +11,7 @@ from skylines.model import DBSession, User, Flight
 from skylines.lib.md5 import file_md5
 from skylines.lib.igc import read_igc_header
 from skylines.lib.analysis import analyse_flight
+from zipfile import ZipFile
 
 class PilotSelectField(SingleSelectField):
     def update_params(self, d):
@@ -29,7 +30,6 @@ upload_form = TableForm('upload_form', submit_text="Upload", action='do', childr
 ])
 
 def IterateFiles(name, f):
-    from zipfile import ZipFile
     try:
         z = ZipFile(f, 'r')
     except:

@@ -9,6 +9,7 @@ from skylines.lib.base import BaseController
 from skylines import files
 from skylines.model import DBSession, User, TrackingFix
 from skylinespolyencode import SkyLinesPolyEncoder
+from skylines.lib.analysis import flight_path
 
 class TrackController(BaseController):
     def __init__(self, pilot):
@@ -28,7 +29,6 @@ class TrackController(BaseController):
         return result
 
     def __get_flight_path(self, threshold = 0.001):
-        from skylines.lib.analysis import flight_path
         fp = self.__get_flight_path2()
 
         num_levels = 4

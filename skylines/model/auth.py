@@ -25,6 +25,7 @@ from sqlalchemy.types import Unicode, Integer, BigInteger, DateTime
 from sqlalchemy.orm import relation, synonym
 
 from skylines.model import DeclarativeBase, metadata, DBSession
+from tg import request
 
 #{ Association tables
 
@@ -204,7 +205,6 @@ class User(DeclarativeBase):
         return self.is_writable()
 
     def is_writable(self):
-        from tg import request
         return request.identity and \
                (self.user_id == request.identity['user'].user_id or
                 (self.password is None and self.club_id == request.identity['user'].club_id) or

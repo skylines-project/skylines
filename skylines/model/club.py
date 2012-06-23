@@ -7,6 +7,7 @@ from sqlalchemy import Column
 from sqlalchemy.types import Integer, Unicode
 from auth import User
 from skylines.model import DeclarativeBase
+from tg import request
 
 class Club(DeclarativeBase):
     __tablename__ = 'clubs'
@@ -29,7 +30,6 @@ class Club(DeclarativeBase):
         return self.name
 
     def is_writable(self):
-        from tg import request
         return request.identity and \
                (self.id == request.identity['user'].club_id or
                 'manage' in request.identity['permissions'])
