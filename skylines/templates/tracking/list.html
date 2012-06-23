@@ -1,0 +1,54 @@
+<?python
+from babel.dates import format_datetime
+
+page = 'tracking'
+?>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+                      "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:py="http://genshi.edgewall.org/"
+      xmlns:xi="http://www.w3.org/2001/XInclude">
+
+  <xi:include href="master/page.html" />
+
+  <head>
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" py:if="False"/>
+
+    <title>Live Tracks</title>
+  </head>
+
+  <body>
+    <h3>
+      Live Tracks
+    </h3>
+
+    <div id="getting_started">
+      <table id="flight-table" class="table table-striped">
+        <thead>
+          <tr>
+            <th class="date">Last fix</th>
+            <th>Pilot</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr py:for="track in tracks">
+            <td class="date">
+              <span py:replace="format_datetime(track[0])">
+                2012-05-21
+              </span>
+            </td>
+            <td>
+              <a py:content="track[1]" href="/flights/pilot/${track[1]}">
+                Pilot Name
+              </a>
+            </td>
+            <td nowrap="nowrap">
+              <a href="/tracking/id/${track[1]}/" class="btn btn-mini">Show</a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </body>
+</html>

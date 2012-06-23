@@ -1,0 +1,98 @@
+<?python
+from babel.dates import format_date, format_time, format_datetime
+from simplejson import dumps
+
+page = 'flights'
+?>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+                      "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:py="http://genshi.edgewall.org/"
+      xmlns:xi="http://www.w3.org/2001/XInclude">
+
+  <xi:include href="master/page.html" />
+
+<head>
+  <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" py:if="False"/>
+
+  <link href="/css/OpenLayers.css" rel="stylesheet" type="text/css" />
+  <link href="/css/SimpleLayerSwitcher.css" rel="stylesheet" type="text/css" />
+
+  <script type="text/javascript" src="/js/OpenLayers/OpenLayers.js"></script>
+  <script type="text/javascript" src="/js/OpenLayers/SimpleLayerSwitcher.js"></script>
+  <script type="text/javascript" src="/static/jquery/jquery.js"></script>
+  <script type="text/javascript" src="/static/jquery/jquery.cookie.js"></script>
+  <script type="text/javascript" src="/static/jquery/jquery.timeago.js"></script>
+
+  <script type="text/javascript" src="/static/bootstrap/js/bootstrap-tooltip.js"></script>
+
+  <script type="text/javascript" src="/js/general.js"></script>
+  <script type="text/javascript" src="/js/flight.js"></script>
+
+  <script type="text/javascript" src="/js/g.raphael/raphael-min.js"></script>
+  <script type="text/javascript" src="/js/g.raphael/g.raphael.js"></script>
+  <script type="text/javascript" src="/js/g.raphael/g.line.js"></script>
+  <script type="text/javascript">
+    /* <![CDATA[ */
+    function initialize() {
+      initOpenLayers();
+
+      addFlight(${pilot.user_id},
+        ${dumps(trace.encoded.points)},
+        ${dumps(trace.encoded.levels)},
+        ${trace.fixes.numLevels},
+        ${dumps(trace.barogram_t)},
+        ${dumps(trace.barogram_h)},
+        ${dumps(trace.zoom_levels)}
+      );
+
+      map.zoomToExtent(getAllFlightsBounds().scale(1.1));
+
+      render_barogram($("#barogram"));
+      scaleBarogram();
+
+      hoverMap();
+
+      $("abbr.timeago").timeago();
+      $("[rel=tooltip]").tooltip();
+
+      $.getScript("http://maps.google.com/maps/api/js?v=3.7&sensor=false&callback=addGoogleLayer");
+    }
+    /* ]]> */
+  </script>
+
+  <title>View Track</title>
+</head>
+
+  <body onload="initialize();">
+    <div class="row">
+      <div class="span4">
+        <table class="table">
+          <tbody>
+            <tr>
+              <th>Pilot</th>
+              <td>
+                <a py:if="pilot" py:content="pilot" href="/flights/pilot/${pilot.user_id}">
+                  Pilot Name
+                </a>
+              </td>
+            </tr>
+            <tr py:if="pilot.club">
+              <th>Club</th>
+              <td>
+                <a py:content="pilot.club" href="/flights/club/${pilot.club_id}">
+                  Club Name
+                </a>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="span8">
+        <div id="map_canvas" style="width:100%; height:400pt;"></div>
+        <div id="barogram" style="width:100%; height:120pt;position:relative;"></div>
+      </div>
+    </div>
+  </body>
+</html>
