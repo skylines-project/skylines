@@ -21,7 +21,7 @@ except ImportError:
 __all__ = ['User', 'Group', 'Permission']
 
 from sqlalchemy import Table, ForeignKey, Column
-from sqlalchemy.types import Unicode, Integer, DateTime
+from sqlalchemy.types import Unicode, Integer, BigInteger, DateTime
 from sqlalchemy.orm import relation, synonym
 
 from skylines.model import DeclarativeBase, metadata, DBSession
@@ -117,6 +117,8 @@ class User(DeclarativeBase):
 
     club_id = Column(Integer, ForeignKey('clubs.id'))
 
+    tracking_key = Column(BigInteger)
+
     #{ Special methods
 
     def __repr__(self):
@@ -145,6 +147,10 @@ class User(DeclarativeBase):
     def by_user_name(cls, username):
         """Return the user object whose user name is ``username``."""
         return DBSession.query(cls).filter_by(user_name=username).first()
+
+    @classmethod
+    def by_tracking_key(cls, key):
+        return DBSession.query(cls).filter_by(tracking_key=key).first()
 
     @classmethod
     def _hash_password(cls, password):
