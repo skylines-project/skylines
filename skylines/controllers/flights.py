@@ -16,6 +16,7 @@ from skylines import files
 from skylines.model import DBSession, User, Club, Flight
 from skylines.controllers.upload import UploadController
 from skylines.lib.datatables import GetDatatableRecords
+from skylinespolyencode import SkyLinesPolyEncoder
 
 class PilotSelectField(PropertySingleSelectField):
     def _my_update_params(self, d, nullable=False):
@@ -52,8 +53,7 @@ class FlightController(BaseController):
 
         max_delta_time = max(4, (fp[-1][0] - fp[0][0]) / 500)
 
-        import skylinespolyencode
-        encoder = skylinespolyencode.SkyLinesPolyEncoder(num_levels=4, threshold=threshold, zoom_factor=4)
+        encoder = SkyLinesPolyEncoder(num_levels=4, threshold=threshold, zoom_factor=4)
 
         fixes = map(lambda x: (x[2], x[1], (x[0]/max_delta_time*threshold)), fp)
         fixes = encoder.classify(fixes, remove=False, type="ppd")

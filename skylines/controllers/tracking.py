@@ -8,6 +8,7 @@ from sqlalchemy import func
 from skylines.lib.base import BaseController
 from skylines import files
 from skylines.model import DBSession, User, TrackingFix
+from skylinespolyencode import SkyLinesPolyEncoder
 
 class TrackController(BaseController):
     def __init__(self, pilot):
@@ -37,8 +38,7 @@ class TrackController(BaseController):
 
         max_delta_time = max(4, (fp[-1][0] - fp[0][0]) / 500)
 
-        import skylinespolyencode
-        encoder = skylinespolyencode.SkyLinesPolyEncoder(num_levels=4, threshold=threshold, zoom_factor=4)
+        encoder = SkyLinesPolyEncoder(num_levels=4, threshold=threshold, zoom_factor=4)
 
         fixes = map(lambda x: (x[2], x[1], (x[0]/max_delta_time*threshold)), fp)
         fixes = encoder.classify(fixes, remove=False, type="ppd")
