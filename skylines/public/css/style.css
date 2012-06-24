@@ -86,6 +86,11 @@ input[type="file"] {
   cursor: pointer;
 }
 
+.navbar .logo {
+  float: left;
+  padding: 6px 7px 0px 0px;
+}
+
 .skylines-white {
   color: #ffffff;
 }
