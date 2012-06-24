@@ -16,6 +16,7 @@ from skylines.controllers.flights import FlightsController
 from skylines.controllers.tracking import TrackingController
 from skylines.controllers.settings import SettingsController
 from skylines.controllers.static import StaticResourceController
+from skylines.controllers.statistics import StatisticsController
 
 __all__ = ['RootController']
 
@@ -43,6 +44,7 @@ class RootController(BaseController):
     tracking = TrackingController()
     settings = SettingsController()
     static = StaticResourceController()
+    statistics = StatisticsController()
 
     @expose()
     def index(self):

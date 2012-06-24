@@ -41,6 +41,14 @@ class Flight(DeclarativeBase):
     def duration(self):
         return self.landing_time - self.takeoff_time
 
+    @hybrid_property
+    def year(self):
+        return self.takeoff_time.year
+
+    @year.expression
+    def year(cls):
+        return func.date_part('year', cls.takeoff_time)
+
     @classmethod
     def by_md5(cls, _md5):
         return DBSession.query(cls).filter_by(md5=_md5).first()
