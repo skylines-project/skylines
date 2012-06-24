@@ -5,6 +5,7 @@ from sqlalchemy import *
 from sqlalchemy.orm import relation
 from sqlalchemy import Table, ForeignKey, Column
 from sqlalchemy.types import Integer, Unicode
+from sqlalchemy.ext.hybrid import hybrid_property
 from auth import User
 from skylines.model import DeclarativeBase, DBSession
 from tg import config, request
@@ -35,6 +36,10 @@ class Flight(DeclarativeBase):
     olc_classic_distance = Column(Integer)
     olc_triangle_distance = Column(Integer)
     olc_plus_score = Column(Integer)
+
+    @hybrid_property
+    def duration(self):
+        return self.landing_time - self.takeoff_time
 
     @classmethod
     def by_md5(cls, _md5):

@@ -101,6 +101,14 @@ page = 'flights'
               </td>
             </tr>
             <tr>
+              <th>Duration</th>
+              <td>
+                <abbr py:if="flight.duration" py:content="str(flight.duration) + ' hours'">
+                  01:23:34 hours
+                </abbr>
+              </td>
+            </tr>
+            <tr>
               <th>Score</th>
               <td>
                 ${flight.olc_plus_score} pt
