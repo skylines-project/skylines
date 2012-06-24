@@ -17,8 +17,8 @@
         </ul>
         <py:if test="tg.auth_stack_enabled">
         <ul class="nav pull-right">
-          <li py:if="not request.identity" id="login" class="loginlogout"><a href="${tg.url('/login')}">Login</a></li>
-          <li py:if="not request.identity" id="register" class="loginlogout"><a href="${tg.url('/users/new')}">Register</a></li>
+          <li py:if="not request.identity" id="login"><a href="${tg.url('/login')}">Login</a></li>
+          <li py:if="not request.identity" id="register"><a href="${tg.url('/users/new')}">Register</a></li>
           <li py:if="request.identity" class="${('', 'active')[defined('page') and page=='settings']}"><a href="${tg.url('/settings/')}">Settings</a></li>
           <li py:if="request.identity" id="login" class="loginlogout"><a href="${tg.url('/logout_handler')}">Logout</a></li>
         </ul>
