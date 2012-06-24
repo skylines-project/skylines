@@ -19,8 +19,15 @@
         <ul class="nav pull-right">
           <li py:if="not request.identity" id="login"><a href="${tg.url('/login')}">Login</a></li>
           <li py:if="not request.identity" id="register"><a href="${tg.url('/users/new')}">Register</a></li>
-          <li py:if="request.identity" class="${('', 'active')[defined('page') and page=='settings']}"><a href="${tg.url('/settings/')}">Settings</a></li>
-          <li py:if="request.identity" id="login" class="loginlogout"><a href="${tg.url('/logout_handler')}">Logout</a></li>
+          <li py:if="request.identity" class="${('', 'active')[defined('page') and page=='settings']} dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+              ${request.identity['user'].display_name} <i class="icon-caret-down"></i>
+            </a>
+            <ul class="dropdown-menu">
+              <li><a href="${tg.url('/settings/')}"><i class="icon-user"></i> Settings</a></li>
+              <li><a href="${tg.url('/logout_handler')}"><i class="icon-signout"></i> Logout</a></li>
+            </ul>
+          </li>
         </ul>
         </py:if>
       </div>
