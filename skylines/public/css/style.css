@@ -85,3 +85,15 @@ input[type="file"] {
 .pin {
   cursor: pointer;
 }
+
+.skylines-white {
+  color: #ffffff;
+}
+
+.skylines-blue {
+  color: #008eda;
+}
+
+.skylines-black {
+  color: #000000;
+}
