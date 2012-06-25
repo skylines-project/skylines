@@ -16,13 +16,15 @@ except ImportError:
     use_setuptools()
     from setuptools import setup, find_packages
 
-testpkgs=['WebTest >= 1.2.3',
-               'nose',
-               'coverage',
-               'wsgiref',
-               'repoze.who-testutil >= 1.0.1',
-               ]
-install_requires=[
+testpkgs = [
+    'WebTest >= 1.2.3',
+    'nose',
+    'coverage',
+    'wsgiref',
+    'repoze.who-testutil >= 1.0.1',
+]
+
+install_requires = [
     "TurboGears2 >= 2.1.4",
 
     # Pylons 1.0.1 breaks, because it depends on "WebOb>=1.1.1", but
@@ -46,9 +48,9 @@ install_requires=[
     "lxml",
     "skylinespolyencode",
     "psycopg2",
-    ]
+]
 
-if sys.version_info[:2] == (2,4):
+if sys.version_info[:2] == (2, 4):
     testpkgs.extend(['hashlib', 'pysqlite'])
     install_requires.extend(['hashlib', 'pysqlite'])
 
@@ -69,8 +71,8 @@ setup(
     test_suite='nose.collector',
     tests_require=testpkgs,
     package_data={'skylines': ['i18n/*/LC_MESSAGES/*.mo',
-                                 'templates/*/*',
-                                 'public/*/*']},
+                               'templates/*/*',
+                               'public/*/*']},
     message_extractors={'skylines': [
             ('**.py', 'python', None),
             ('templates/**.html', 'genshi', None),
@@ -89,6 +91,6 @@ setup(
     """,
     dependency_links=[
         "http://www.turbogears.org/2.1/downloads/current/"
-        ],
+    ],
     zip_safe=False
 )
