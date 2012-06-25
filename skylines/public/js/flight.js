@@ -689,7 +689,7 @@ function hoverMap() {
 
       setIndexFromTime(x);
       for (fid in flights) {
-        if (fid == nearest.fid) continue;
+        if (fid == nearest.fid || flights[fid].index == -1) continue;
         showPlanePosition(flights[fid].index, flights[fid].dx, fid, true);
       }
     }
