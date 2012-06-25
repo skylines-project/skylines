@@ -45,6 +45,7 @@ install_requires=[
     "tw.forms",
     "lxml",
     "skylinespolyencode",
+    "psycopg2",
     ]
 
 if sys.version_info[:2] == (2,4):
