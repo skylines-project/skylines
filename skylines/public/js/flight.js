@@ -527,18 +527,14 @@ function render_barogram(element) {
  */
 
 function showPlanePosition(id, dx, fid, ghost) {
-  var rotation = 0;
 
-  if (flights[fid].lonlat[id+1] != undefined) {
-    rotation = Math.atan2(flights[fid].lonlat[id+1].lon-flights[fid].lonlat[id].lon, flights[fid].lonlat[id+1].lat-flights[fid].lonlat[id].lat) * 180/Math.PI;
-  } else if (flights[fid].lonlat[id-1] != undefined) {
-    rotation = Math.atan2(flights[fid].lonlat[id].lon-flights[fid].lonlat[id-1].lon, flights[fid].lonlat[id].lat-flights[fid].lonlat[id-1].lat) * 180/Math.PI;
-  }
+  flights[fid].plane.attributes.rotation = 180/Math.PI *
+    Math.atan2(flights[fid].lonlat[id+1].lon-flights[fid].lonlat[id].lon,
+               flights[fid].lonlat[id+1].lat-flights[fid].lonlat[id].lat);
 
   var lon = flights[fid].lonlat[id].lon + (flights[fid].lonlat[id+1].lon - flights[fid].lonlat[id].lon)*dx;
   var lat = flights[fid].lonlat[id].lat + (flights[fid].lonlat[id+1].lat - flights[fid].lonlat[id].lat)*dx;
 
-  flights[fid].plane.attributes.rotation = rotation;
   flights[fid].plane.attributes.ghost = ghost?true:false;
   flights[fid].plane.geometry = new OpenLayers.Geometry.Point(lon, lat).
     transform(new OpenLayers.Projection("EPSG:4326"), map.getProjectionObject());
