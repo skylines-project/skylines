@@ -44,8 +44,8 @@ Install postgres and postgis. On Debian Linux (testing) this is done by:
 Now create a new database and user for *SkyLines*. On Debian Linux, change to the user postgres to log into the database. Second, install postgis into this new created database:
 
     $ su - postgres
-    $ createuser -P skylines # you don't need to grant any special privileges now
-    $ createdb skylines --o skylines # create skylines database with owner skylines
+    $ createuser <your username> # you don't need to grant any special privileges now
+    $ createdb skylines --o <your username> # create skylines database with owner skylines
     $ createlang plpgsql -d skylines
     $ psql -d skylines -f /usr/share/postgresql/9.1/contrib/postgis-1.5/postgis.sql
     $ psql -d skylines -f /usr/share/postgresql/9.1/contrib/postgis-1.5/spatial_ref_sys.sql
