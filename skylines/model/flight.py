@@ -9,12 +9,13 @@ from auth import User
 from skylines.model import DeclarativeBase, DBSession
 from tg import config, request
 
+
 class Flight(DeclarativeBase):
     __tablename__ = 'flights'
 
     id = Column(Integer, autoincrement=True, primary_key=True)
     owner_id = Column(Integer, ForeignKey('tg_user.user_id'), nullable=False)
-    owner = relation('User', primaryjoin=(owner_id==User.user_id))
+    owner = relation('User', primaryjoin=(owner_id == User.user_id))
     time_created = Column(DateTime, nullable=False, default=datetime.now)
     time_modified = Column(DateTime, nullable=False, default=datetime.now)
     filename = Column(String(), nullable=False)
@@ -23,9 +24,9 @@ class Flight(DeclarativeBase):
     logger_manufacturer_id = Column(String(3))
 
     pilot_id = Column(Integer, ForeignKey('tg_user.user_id'))
-    pilot = relation('User', primaryjoin=(pilot_id==User.user_id))
+    pilot = relation('User', primaryjoin=(pilot_id == User.user_id))
     co_pilot_id = Column(Integer, ForeignKey('tg_user.user_id'))
-    co_pilot = relation('User', primaryjoin=(co_pilot_id==User.user_id))
+    co_pilot = relation('User', primaryjoin=(co_pilot_id == User.user_id))
 
     club_id = Column(Integer, ForeignKey('clubs.id'))
 
