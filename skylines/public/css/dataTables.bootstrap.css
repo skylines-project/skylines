@@ -30,10 +30,6 @@ table.table {
 	margin-bottom: 6px !important;
 }
 
-table.table tbody td {
-	padding: 3px 8px 3px 8px;
-}
-
 table.table thead .sorting,
 table.table thead .sorting_asc,
 table.table thead .sorting_desc,
