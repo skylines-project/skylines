@@ -1,6 +1,12 @@
 <?python
+from babel.numbers import format_number
+
 page = 'statistics'
 title = 'Statistics'
+
+def format_timedelta(timedelta):
+    seconds = timedelta.total_seconds()
+    return '%d:%02d' % (seconds / 3600, seconds % 3600 / 60)
 ?>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
@@ -14,27 +20,106 @@ title = 'Statistics'
   <head>
     <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" py:if="False"/>
     <title>Statistics</title>
+
+    <script type="text/javascript" src="/static/bootstrap/js/bootstrap-tooltip.js"></script>
+    <script type="text/javascript">
+      $(function() {
+        $("[rel=tooltip]").tooltip();
+      });
+    </script>
   </head>
 
   <body>
-    <div py:for="year in years">
-      <h1>${int(year.year)}</h1>
-      ${year.flights} Flights
-      <div class="progress">
-        <div class="bar" style="width: ${year.flights * 100 / max_flights}%;"></div>
-      </div>
-      ${year.distance / 1000} Kilometers
-      <div class="progress progress-success">
-        <div class="bar" style="width: ${year.distance * 100 / max_distance}%;"></div>
-      </div>
-      ${year.duration} Hours
-      <div class="progress progress-warning">
-        <div class="bar" style="width: ${year.duration.total_seconds() * 100 / max_duration}%;"></div>
-      </div>
-      ${year.pilots} Pilots
-      <div class="progress progress-info">
-        <div class="bar" style="width: ${year.pilots * 100 / max_pilots}%;"></div>
-      </div>
-    </div>
+    <h1>Flights</h1>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Year</th>
+          <th colspan="2">Flights</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr py:for="year in years">
+          <td>${int(year.year)}</td>
+          <td>${format_number(year.flights)}</td>
+          <td class="span9">
+            <div class="progress">
+              <div class="bar" style="width: ${year.flights * 100 / max_flights}%;"></div>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h1>Distance</h1>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Year</th>
+          <th colspan="2">Distance</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr py:for="year in years">
+          <td>${int(year.year)}</td>
+          <td>
+            <span rel="tooltip" title="avg. ${format_number((year.distance / 1000) / year.flights)} km per flight">
+              ${format_number(year.distance / 1000)} km
+            </span>
+          </td>
+          <td class="span9">
+            <div class="progress progress-success">
+              <div class="bar" style="width: ${year.distance * 100 / max_distance}%;"></div>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h1>Flight Time</h1>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Year</th>
+          <th colspan="2">Flight Time</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr py:for="year in years">
+          <td>${int(year.year)}</td>
+          <td>
+            <span rel="tooltip" title="avg. ${format_timedelta(year.duration / year.flights)} Hours per flight">
+              ${format_timedelta(year.duration)} Hours
+            </span>
+          </td>
+          <td class="span9">
+            <div class="progress progress-warning">
+              <div class="bar" style="width: ${year.duration.total_seconds() * 100 / max_duration}%;"></div>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h1>Pilots</h1>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Year</th>
+          <th colspan="2">Pilots</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr py:for="year in years">
+          <td>${int(year.year)}</td>
+          <td>${year.pilots}</td>
+          <td class="span9">
+            <div class="progress progress-info">
+              <div class="bar" style="width: ${year.pilots * 100 / max_pilots}%;"></div>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
   </body>
 </html>
