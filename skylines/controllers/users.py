@@ -32,7 +32,7 @@ class NewUserForm(AddRecordForm):
     user_name = TextField
     email_address = Field(TextField, Email(not_empty=True))
     display_name = TextField
-    club_id = ClubSelectField
+    club = ClubSelectField
     password = String(min=6)
     verify_password = PasswordField('verify_password')
 
