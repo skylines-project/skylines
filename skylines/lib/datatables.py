@@ -2,6 +2,7 @@
 
 from sqlalchemy.sql.expression import desc, asc
 
+
 def GetDatatableRecords(kw, querySet, columnIndexNameMap):
     """
     Usage:
@@ -11,25 +12,30 @@ def GetDatatableRecords(kw, querySet, columnIndexNameMap):
 
     """
 
-    cols = int(kw.get('iColumns', 0)) # Get the number of columns
-    iDisplayLength =  min(int(kw.get('iDisplayLength', 50)), 100) #Safety measure.
-    startRecord = int(kw.get('iDisplayStart', 0)) # Where the data starts from (page)
-    endRecord = startRecord + iDisplayLength  # where the data ends (end of page)
+    # Get the number of columns
+    #cols = int(kw.get('iColumns', 0))
+    # Safety measure.
+    iDisplayLength = min(int(kw.get('iDisplayLength', 50)), 100)
+    # Where the data starts from (page)
+    startRecord = int(kw.get('iDisplayStart', 0))
+    # where the data ends (end of page)
+    endRecord = startRecord + iDisplayLength
 
     # Pass sColumns
     keys = columnIndexNameMap.keys()
     keys.sort()
     colitems = [columnIndexNameMap[key] for key in keys]
-    sColumns = ",".join(map(str,colitems))
+    sColumns = ",".join(map(str, colitems))
 
     # Ordering data
-    iSortingCols =  int(kw.get('iSortingCols', 0))
+    iSortingCols = int(kw.get('iSortingCols', 0))
     asortingCols = []
 
     if iSortingCols:
         for sortedColIndex in range(0, iSortingCols):
             sortedColID = int(kw.get('iSortCol_' + str(sortedColIndex), 0))
-            if kw.get('bSortable_{0}'.format(sortedColID), 'false')  == 'true':  # make sure the column is sortable first
+            # make sure the column is sortable first
+            if kw.get('bSortable_{0}'.format(sortedColID), 'false') == 'true':
                 sortedColName = columnIndexNameMap[sortedColID]
                 sortingDirection = kw.get('sSortDir_' + str(sortedColIndex), 'asc')
                 if sortingDirection == 'desc':
@@ -61,9 +67,12 @@ def GetDatatableRecords(kw, querySet, columnIndexNameMap):
 #            outputQ = outputQ & Q(**kwargz) if outputQ else Q(**kwargz)
 #    if outputQ: querySet = querySet.filter(outputQ)
 
-    iTotalRecords = iTotalDisplayRecords = querySet.count() #count how many records match the final criteria
-    querySet = querySet[startRecord:endRecord] #get the slice
-    sEcho = int(kw.get('sEcho',0)) # required echo response
+    # count how many records match the final criteria
+    iTotalRecords = iTotalDisplayRecords = querySet.count()
+    # get the slice
+    querySet = querySet[startRecord:endRecord]
+    # required echo response
+    sEcho = int(kw.get('sEcho', 0))
 
 #    a = querySet.values()
 #    for row in a:
@@ -77,7 +86,8 @@ def GetDatatableRecords(kw, querySet, columnIndexNameMap):
 #        aaData.append(rowlist)
 
     response_dict = {}
-    response_dict.update({'sEcho': sEcho, 'iTotalRecords': iTotalRecords, 'iTotalDisplayRecords':iTotalDisplayRecords, 'sColumns':sColumns})
+    response_dict.update({'sEcho': sEcho, 'iTotalRecords': iTotalRecords,
+                          'iTotalDisplayRecords': iTotalDisplayRecords,
+                          'sColumns': sColumns})
 
     return (querySet, response_dict)
-
