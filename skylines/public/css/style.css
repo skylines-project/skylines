@@ -116,3 +116,11 @@ input[type="file"] {
   padding: 10px 20px;
   margin-bottom: inherit;
 }
+
+.alert-floating {
+  position: relative;
+  top: 50px;
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%;
+}
