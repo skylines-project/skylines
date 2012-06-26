@@ -59,8 +59,14 @@ class RootController(BaseController):
         return dict()
 
     @expose('skylines.templates.login')
-    def login(self, came_from = lurl('/')):
+    def login(self, came_from = None):
         """Start the user login."""
+        if not came_from:
+            if request.referrer:
+                came_from = request.referrer
+            else:
+                came_from = lurl('/')
+
         login_counter = request.environ['repoze.who.logins']
         if login_counter > 0:
             flash(_('Wrong credentials'), 'warning')
@@ -68,12 +74,18 @@ class RootController(BaseController):
                     came_from = came_from)
 
     @expose()
-    def post_login(self, came_from = lurl('/')):
+    def post_login(self, came_from = None):
         """
         Redirect the user to the initially requested page on successful
         authentication or redirect her back to the login page if login failed.
 
         """
+        if not came_from:
+            if request.referrer:
+                came_from = request.referrer
+            else:
+                came_from = lurl('/')
+
         if not request.identity:
             login_counter = request.environ['repoze.who.logins'] + 1
             redirect('/login',
@@ -83,11 +95,17 @@ class RootController(BaseController):
         redirect(came_from)
 
     @expose()
-    def post_logout(self, came_from = lurl('/')):
+    def post_logout(self, came_from = None):
         """
         Redirect the user to the initially requested page on logout and say
         goodbye as well.
 
         """
+        if not came_from:
+            if request.referrer:
+                came_from = request.referrer
+            else:
+                came_from = lurl('/')
+
         flash(_('We hope to see you soon!'))
         redirect(came_from)
