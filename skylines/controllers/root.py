@@ -83,10 +83,10 @@ class RootController(BaseController):
                 came_from = lurl('/')
 
         if not request.identity:
-            flash(_('Wrong credentials'), 'warning')
+            flash(_('Sorry, username or password are wrong. Please try again or register.'), 'warning')
         else:
             userid = request.identity['repoze.who.userid']
-            flash(_('Welcome back, %s!') % userid)
+            flash(_('You are now logged in. Welcome back, %s!') % userid)
 
         redirect(came_from)
 
@@ -103,5 +103,5 @@ class RootController(BaseController):
             else:
                 came_from = lurl('/')
 
-        flash(_('We hope to see you soon!'))
+        flash(_('You are now logged out. We hope to see you back soon!'))
         redirect(came_from)

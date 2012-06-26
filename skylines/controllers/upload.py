@@ -64,7 +64,7 @@ def IterateUploadFiles(upload):
 
 class UploadController(BaseController):
     allow_only = has_permission('upload',
-                                msg=l_("You don't have permission to upload flights."))
+                                msg=l_("You have to login to upload flights."))
 
     @expose('skylines.templates.generic.form')
     def index(self, **kw):
