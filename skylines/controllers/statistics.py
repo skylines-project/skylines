@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
-from tg import expose
+from tg import expose, request
+from webob.exc import HTTPNotFound
 from sqlalchemy.sql.expression import desc, or_, and_, between
 from sqlalchemy import func, distinct
 from skylines.lib.base import BaseController
@@ -9,13 +10,48 @@ from skylines.model import DBSession, User, Club, Flight
 
 class StatisticsController(BaseController):
     @expose('skylines.templates.statistics.years')
-    def index(self, **kw):
+    def _default(self, *args, **kw):
+        club = None
+        pilot = None
+        selected_club = None
+        selected_pilot = None
+
+        if args and len(args) >= 2:
+            if args[0] == 'pilot':
+                try:
+                    selected_pilot = DBSession.query(User).filter(User.user_id == int(args[1])).first()
+                except ValueError:
+                    raise HTTPNotFound
+
+                if selected_pilot is None:
+                    raise HTTPNotFound
+
+            if args[0] == 'club':
+                try:
+                    selected_club = DBSession.query(Club).filter(Club.id == int(args[1])).first()
+                except ValueError:
+                    raise HTTPNotFound
+
+                if selected_club is None:
+                    raise HTTPNotFound
+
+        if request.identity:
+            pilot = request.identity['user']
+            club = request.identity['user'].club
+
         query = DBSession.query(Flight.year.label('year'),
                                 func.count('*').label('flights'),
                                 func.count(distinct(Flight.pilot_id)).label('pilots'),
                                 func.sum(Flight.olc_classic_distance).label('distance'),
-                                func.sum(Flight.duration).label('duration')) \
-                         .group_by(Flight.year).order_by(Flight.year.desc())
+                                func.sum(Flight.duration).label('duration'))
+
+        if selected_pilot:
+            query = query.filter(Flight.pilot_id == selected_pilot.user_id)
+
+        if selected_club:
+            query = query.filter(Flight.club_id == selected_club.id)
+
+        query = query.group_by(Flight.year).order_by(Flight.year.desc())
 
         max_flights = 1
         max_pilots = 1
@@ -35,4 +71,8 @@ class StatisticsController(BaseController):
                     max_flights = max_flights,
                     max_pilots = max_pilots,
                     max_distance = max_distance,
-                    max_duration = max_duration)
+                    max_duration = max_duration,
+                    pilot = pilot,
+                    club = club,
+                    selected_pilot = selected_pilot,
+                    selected_club = selected_club)

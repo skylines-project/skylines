@@ -30,6 +30,14 @@ def format_timedelta(timedelta):
   </head>
 
   <body>
+    <ul py:if="pilot or club or selected_club or selected_pilot" class="nav nav-pills">
+      <li class="${'' if selected_pilot or selected_club else 'active'}"><a href="/statistics/">SkyLines</a></li>
+      <li py:if="selected_club" class="active"><a href="/statistics/club/${selected_club.id}" py:content="selected_club">LV Aachen</a></li>
+      <li py:if="club and (not selected_club or club != selected_club)"><a href="/statistics/club/${club.id}" py:content="club">LV Aachen</a></li>
+      <li py:if="selected_pilot" class="active"><a href="/statistics/pilot/${selected_pilot.user_id}" py:content="selected_pilot">Tobias Bieniek</a></li>
+      <li py:if="pilot and (not selected_pilot or pilot != selected_pilot)"><a href="/statistics/pilot/${pilot.user_id}" py:content="pilot">Tobias Bieniek</a></li>
+    </ul>
+
     <h1>Flights</h1>
     <table class="table table-condensed table-striped">
       <thead>
@@ -101,6 +109,7 @@ def format_timedelta(timedelta):
       </tbody>
     </table>
 
+    <py:if test="not selected_pilot">
     <h1>Pilots</h1>
     <table class="table table-condensed table-striped">
       <thead>
@@ -121,5 +130,6 @@ def format_timedelta(timedelta):
         </tr>
       </tbody>
     </table>
+    </py:if>
   </body>
 </html>
