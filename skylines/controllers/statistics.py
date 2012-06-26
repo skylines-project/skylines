@@ -19,7 +19,7 @@ class StatisticsController(BaseController):
         if args and len(args) >= 2:
             if args[0] == 'pilot':
                 try:
-                    selected_pilot = DBSession.query(User).filter(User.user_id == int(args[1])).first()
+                    selected_pilot = DBSession.query(User).get(int(args[1]))
                 except ValueError:
                     raise HTTPNotFound
 
@@ -28,7 +28,7 @@ class StatisticsController(BaseController):
 
             if args[0] == 'club':
                 try:
-                    selected_club = DBSession.query(Club).filter(Club.id == int(args[1])).first()
+                    selected_club = DBSession.query(Club).get(int(args[1]))
                 except ValueError:
                     raise HTTPNotFound
 
