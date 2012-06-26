@@ -56,7 +56,7 @@ page = 'flights'
       var pinnedFlights = getPinnedFlights();
       for (i in pinnedFlights)
         if (pinnedFlights[i] != ${flight.id})
-          addFlightFromJSON("/flights/id/" + pinnedFlights[i] + "/json");
+          addFlightFromJSON("/flights/" + pinnedFlights[i] + "/json");
 
       pinButton($("#pinned"), ${flight.id});
 

@@ -119,7 +119,7 @@ class FlightController(BaseController):
         analyse_flight(self.flight)
         DBSession.flush()
 
-        return redirect('/flights/id/' + str(self.flight.id))
+        return redirect('/flights/' + str(self.flight.id))
 
     @expose('skylines.templates.generic.confirm')
     @require(has_permission('manage'))
@@ -134,23 +134,6 @@ class FlightController(BaseController):
                         question='Are you sure you want to delete this flight?',
                         action='', cancel='.')
 
-class FlightIdController(BaseController):
-    @expose()
-    def index(self):
-        redirect('/flights/today')
-
-    @expose()
-    def lookup(self, id, *remainder):
-        try:
-            flight = DBSession.query(Flight).get(int(id))
-        except ValueError:
-            raise HTTPNotFound
-
-        if flight is None:
-            raise HTTPNotFound
-
-        controller = FlightController(flight)
-        return controller, remainder
 
 class FlightsController(BaseController):
     def __do_list(self, tab, kw, date=None, pilot=None, club=None, filter=None, columns=None):
@@ -194,6 +177,24 @@ class FlightsController(BaseController):
             flights = flights.order_by(desc(Flight.takeoff_time)).limit(limit)
             return dict(tab = tab, date=date, pilot=pilot, club=club,
                         flights = flights, flights_count = flights_count)
+
+    @expose()
+    def lookup(self, id, *remainder):
+        # Fallback for old URLs
+        if id == 'id' and len(remainder) > 0:
+            id = remainder[0]
+            remainder = remainder[1:]
+
+        try:
+            flight = DBSession.query(Flight).get(int(id))
+        except ValueError:
+            raise HTTPNotFound
+
+        if flight is None:
+            raise HTTPNotFound
+
+        controller = FlightController(flight)
+        return controller, remainder
 
     @expose()
     def index(self, **kw):
@@ -310,5 +311,4 @@ class FlightsController(BaseController):
 
         return redirect('/flights/')
 
-    id = FlightIdController()
     upload = UploadController()

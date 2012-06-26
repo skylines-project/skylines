@@ -57,7 +57,7 @@ page = 'flights'
       var pinnedFlights = getPinnedFlights();
       for (i in pinnedFlights)
         if (pinnedFlights[i] != ${flight.id})
-          addFlightFromJSON("/flights/id/" + pinnedFlights[i] + "/json");
+          addFlightFromJSON("/flights/" + pinnedFlights[i] + "/json");
 
       $.getScript("http://maps.google.com/maps/api/js?v=3.7&sensor=false&callback=addGoogleLayer");
     }
