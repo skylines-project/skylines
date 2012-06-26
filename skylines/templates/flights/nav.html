@@ -1,6 +1,9 @@
 <?python
 from datetime import date as sys_date
 from babel.dates import format_date
+
+my_pilot = request.identity['user'] if request.identity else None
+my_club = request.identity['user'].club if request.identity else None
 ?>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
@@ -18,7 +21,12 @@ from babel.dates import format_date
     </a>
   </li>
   <li class="${('', 'active')[defined('tab') and tab == 'all']}"><a href="/flights/all">All Flights</a></li>
-  <li py:if="request.identity" class="${('', 'active')[defined('tab') and tab == 'my']}"><a href="/flights/my">My Flights</a></li>
-  <li py:if="request.identity and request.identity['user'].club_id" class="${('', 'active')[defined('tab') and tab == 'my_club']}"><a href="/flights/my_club">My Club's Flights</a></li>
+
+  <li py:if="club" class="active"><a href="/flights/club/${club.id}" py:content="club">LV Aachen</a></li>
+  <li py:if="my_club and (not club or my_club != club)"><a href="/flights/club/${my_club.id}" py:content="my_club">LV Aachen</a></li>
+
+  <li py:if="pilot" class="active"><a href="/flights/pilot/${pilot.user_id}" py:content="pilot">Tobias Bieniek</a></li>
+  <li py:if="my_pilot and (not pilot or my_pilot != pilot)"><a href="/flights/pilot/${my_pilot.user_id}" py:content="my_pilot">Tobias Bieniek</a></li>
+
   <li py:if="request.identity" class="${('', 'active')[defined('tab') and tab == 'unassigned']}"><a href="/flights/unassigned">Unassigned Flights</a></li>
 </ul>

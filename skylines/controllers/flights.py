@@ -241,20 +241,14 @@ class FlightsController(BaseController):
         if not request.identity:
             raise HTTPNotFound
 
-        columns = { 0: 'takeoff_time', 1 : 'olc_plus_score', 2: 'display_name', 3: 'olc_classic_distance',
-                    4: 'takeoff_time', 5: 'id' }
-
-        return self.__do_list('my', kw, pilot=request.identity['user'], columns=columns)
+        redirect('/flights/pilot/' + str(request.identity['user'].user_id))
 
     @expose('skylines.templates.flights.list')
     def my_club(self, **kw):
         if not request.identity:
             raise HTTPNotFound
 
-        columns = { 0: 'takeoff_time', 1 : 'olc_plus_score', 2: 'display_name', 3: 'olc_classic_distance',
-                    4: 'takeoff_time', 5: 'id' }
-
-        return self.__do_list('my_club', kw, club=request.identity['user'].club, columns=columns)
+        redirect('/flights/club/' + str(request.identity['user'].club.id))
 
     @expose('skylines.templates.flights.list')
     def unassigned(self, **kw):
