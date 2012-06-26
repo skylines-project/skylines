@@ -286,30 +286,6 @@ class FlightsController(BaseController):
 
         return self.__do_list('club', kw, club=club, columns=columns)
 
-    @expose('skylines.templates.flights.top_pilots')
-    def top(self):
-        subq = DBSession.query(Flight.pilot_id,
-                               func.count('*').label('count'),
-                               func.sum(Flight.olc_plus_score).label('total')) \
-               .group_by(Flight.pilot_id).subquery()
-        result = DBSession.query(User, subq.c.count, subq.c.total) \
-                 .join((subq, subq.c.pilot_id == User.user_id))
-        result = result.order_by(desc('total'))
-        result = result.limit(20)
-        return dict(tab='top', result=result)
-
-    @expose('skylines.templates.flights.top_clubs')
-    def top_clubs(self):
-        subq = DBSession.query(Flight.club_id,
-                               func.count('*').label('count'),
-                               func.sum(Flight.olc_plus_score).label('total')) \
-               .group_by(Flight.club_id).subquery()
-        result = DBSession.query(Club, subq.c.count, subq.c.total) \
-                 .join((subq, subq.c.club_id == Club.id))
-        result = result.order_by(desc('total'))
-        result = result.limit(20)
-        return dict(tab='top_clubs', result=result)
-
     @expose()
     @require(has_permission('manage'))
     def analysis(self):

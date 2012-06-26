@@ -13,6 +13,7 @@ from skylines.controllers.error import ErrorController
 from skylines.controllers.users import UsersController
 from skylines.controllers.clubs import ClubsController
 from skylines.controllers.flights import FlightsController
+from skylines.controllers.ranking import RankingController
 from skylines.controllers.tracking import TrackingController
 from skylines.controllers.settings import SettingsController
 from skylines.controllers.static import StaticResourceController
@@ -41,6 +42,7 @@ class RootController(BaseController):
     users = UsersController()
     clubs = ClubsController()
     flights = FlightsController()
+    ranking = RankingController()
     tracking = TrackingController()
     settings = SettingsController()
     static = StaticResourceController()
