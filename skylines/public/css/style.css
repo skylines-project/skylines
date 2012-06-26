@@ -90,6 +90,11 @@ input[type="file"] {
   margin-bottom: inherit;
 }
 
+.navbar .brand {
+  padding-left: 40px;
+  margin-left: -40px;
+}
+
 .navbar .logo {
   float: left;
   padding: 6px 7px 0px 0px;
