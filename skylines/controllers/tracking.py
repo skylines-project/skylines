@@ -55,15 +55,6 @@ class TrackController(BaseController):
     def index(self):
         return dict(pilot=self.pilot, trace=self.__get_flight_path())
 
-class TrackIdController(BaseController):
-    @expose()
-    def lookup(self, id, *remainder):
-        user = DBSession.query(User).get(int(id))
-        if user is None:
-            raise HTTPNotFound
-
-        controller = TrackController(user)
-        return controller, remainder
 
 class TrackingController(BaseController):
     @expose('skylines.templates.tracking.list')
@@ -74,4 +65,20 @@ class TrackingController(BaseController):
 
         return dict(tracks=query.all())
 
-    id = TrackIdController()
+    @expose()
+    def lookup(self, id, *remainder):
+        # Fallback for old URLs
+        if id == 'id' and len(remainder) > 0:
+            id = remainder[0]
+            remainder = remainder[1:]
+
+        try:
+            user = DBSession.query(User).get(int(id))
+        except ValueError:
+            raise HTTPNotFound
+
+        if user is None:
+            raise HTTPNotFound
+
+        controller = TrackController(user)
+        return controller, remainder
