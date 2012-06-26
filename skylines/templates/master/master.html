@@ -24,6 +24,14 @@
     <script type="text/javascript" src="/static/jquery/jquery.js"></script>
     <script type="text/javascript" src="/static/bootstrap/js/bootstrap-dropdown.js"></script>
     <meta py:replace="select('*')"/>
+
+    <script>
+      $(function() {
+        $('.dropdown-menu').find('form').click(function (e) {
+          e.stopPropagation();
+        });
+      });
+    </script>
   </head>
 </py:match>
 

@@ -111,3 +111,8 @@ input[type="file"] {
 .skylines-black {
   color: #000000;
 }
+
+.dropdown-menu form {
+  padding: 10px 20px;
+  margin-bottom: inherit;
+}

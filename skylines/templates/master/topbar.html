@@ -23,10 +23,32 @@
           <li class="${('', 'active')[defined('page') and page=='upload']}">
             <a href="${tg.url('/flights/upload/')}"><i class="icon-upload-alt"></i> Upload</a>
           </li>
-          <li py:if="not request.identity" id="login">
-            <a href="${tg.url('/login')}"><i class="icon-signin"></i> Login</a>
+
+          <li py:if="not request.identity">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+              <i class="icon-signin"></i> Login <i class="icon-caret-down"></i>
+            </a>
+            <div class="dropdown-menu">
+              <form action="${tg.url('/login_handler', params=dict(came_from=request.url.encode('utf-8')))}" method="post" accept-charset="UTF-8">
+                <div class="control-group">
+                  <label class="control-label" for="username">Username:</label>
+                  <div class="controls">
+                    <input type="text" id="username" name="login" />
+                  </div>
+                </div>
+                <div class="control-group">
+                  <label class="control-label" for="password">Password:</label>
+                  <div class="controls">
+                    <input type="password" id="password" name="password" />
+                  </div>
+                </div>
+                <div class="actions">
+                  <input type="submit" value="Login" class="btn btn-primary" />
+                  <a href="${tg.url('/users/new')}" class="btn">Register</a>
+                </div>
+              </form>
+            </div>
           </li>
-          <li py:if="not request.identity" id="register"><a href="${tg.url('/users/new')}">Register</a></li>
 
           <li py:if="request.identity" class="${('', 'active')[defined('page') and page=='settings']} dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
