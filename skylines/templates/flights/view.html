@@ -12,6 +12,7 @@ page = 'flights'
       xmlns:xi="http://www.w3.org/2001/XInclude">
 
   <xi:include href="master/page.html" />
+  <xi:include href="flights/details-table.html" />
 
 <head>
   <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" py:if="False"/>
@@ -22,9 +23,6 @@ page = 'flights'
   <script type="text/javascript" src="/js/OpenLayers/OpenLayers.js"></script>
   <script type="text/javascript" src="/js/OpenLayers/SimpleLayerSwitcher.js"></script>
   <script type="text/javascript" src="/static/jquery/jquery.cookie.js"></script>
-  <script type="text/javascript" src="/static/jquery/jquery.timeago.js"></script>
-
-  <script type="text/javascript" src="/static/bootstrap/js/bootstrap-tooltip.js"></script>
 
   <script type="text/javascript" src="/js/general.js"></script>
   <script type="text/javascript" src="/js/flight.js"></script>
@@ -60,9 +58,6 @@ page = 'flights'
 
       pinButton($("#pinned"), ${flight.id});
 
-      $("abbr.timeago").timeago();
-      $("[rel=tooltip]").tooltip();
-
       $.getScript("http://maps.google.com/maps/api/js?v=3.7&sensor=false&callback=addGoogleLayer");
     }
     /* ]]> */
@@ -74,97 +69,7 @@ page = 'flights'
   <body onload="initialize();">
     <div class="row">
       <div class="span4">
-        <table class="table">
-          <tbody>
-            <tr>
-              <th>Date</th>
-              <td>
-                <abbr py:if="flight.takeoff_time" py:content="format_date(flight.takeoff_time)" title="${flight.takeoff_time}">
-                  2012-05-21
-                </abbr>
-              </td>
-            </tr>
-            <tr>
-              <th>Take-off</th>
-              <td>
-                <abbr py:if="flight.takeoff_time" py:content="format_time(flight.takeoff_time)" title="${flight.takeoff_time}">
-                  10:00
-                </abbr>
-              </td>
-            </tr>
-            <tr>
-              <th>Landing</th>
-              <td>
-                <abbr py:if="flight.landing_time" py:content="format_time(flight.landing_time)" title="${flight.landing_time}">
-                  15:00
-                </abbr>
-              </td>
-            </tr>
-            <tr>
-              <th>Duration</th>
-              <td>
-                <abbr py:if="flight.duration" py:content="str(flight.duration) + ' hours'">
-                  01:23:34 hours
-                </abbr>
-              </td>
-            </tr>
-            <tr>
-              <th>Score</th>
-              <td>
-                ${flight.olc_plus_score} pt
-                <span py:if="flight.olc_classic_distance is not None">
-                  (${flight.olc_classic_distance/1000} km,
-                </span>
-                <span py:if="flight.olc_triangle_distance is not None">
-                  triangle ${flight.olc_triangle_distance/1000} km)
-                </span>
-              </td>
-            </tr>
-            <tr>
-              <th>Pilot</th>
-              <td>
-                <a py:if="flight.pilot" py:content="flight.pilot" href="/flights/pilot/${flight.pilot_id}">
-                  Pilot Name
-                </a>
-                <br py:if="flight.pilot and flight.co_pilot"/>
-                <a py:if="flight.co_pilot" py:content="flight.co_pilot" href="/flights/pilot/${flight.co_pilot_id}">
-                  Co-Pilot Name
-                </a>
-                <span py:if="not flight.pilot and not flight.co_pilot" py:strip="True">
-                  [unspecified]
-                </span>
-                <a py:if="flight.is_writable()" href="change_pilot" class="btn btn-mini">Change</a>
-              </td>
-            </tr>
-            <tr py:if="flight.club">
-              <th>Club</th>
-              <td>
-                <a py:content="flight.club" href="/flights/club/${flight.club_id}">
-                  Club Name
-                </a>
-              </td>
-            </tr>
-            <tr>
-              <th>Uploaded</th>
-              <td>
-                <abbr class="timeago" title="${flight.time_created}" py:content="format_datetime(flight.time_created)" rel="tooltip">4 days ago</abbr>
-                by <span py:replace="flight.owner">Turbo</span>
-              </td>
-            </tr>
-            <tr>
-              <th>Download</th>
-              <td>
-                <a href="${flight.get_download_uri()}" py:content="flight.filename">FOO.IGC</a>
-              </td>
-            </tr>
-            <tr py:if="flight.may_delete()">
-              <th>Actions</th>
-              <td>
-                <a href="delete" class="btn btn-mini">Delete</a>
-              </td>
-            </tr>
-          </tbody>
-        </table>
+        ${render_details_table(flight)}
 
         <p>
           <a href="map" class="btn"><i class="icon-fullscreen icon-large"></i> Full-screen map</a>
