@@ -1,3 +1,16 @@
+<?python
+from tg.flash import flash as _flash
+
+flash = _flash.pop_payload()
+flash_class = ''
+
+if flash:
+    if flash['status'] == 'ok':
+        flash_class = 'alert-info'
+    elif flash['status'] == 'error':
+        flash_class = 'alert-error'
+?>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
                       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
@@ -11,6 +24,8 @@
   <head py:attrs="select('@*')">
     <meta py:replace="select('*')"/>
     <title py:if="defined('title')">${title}</title>
+
+    <script type="text/javascript" src="/static/bootstrap/js/bootstrap-alert.js"></script>
   </head>
 </py:match>
 
@@ -34,6 +49,13 @@
 
         <div class="row">
           <div class="span12">
+            <div py:if="flash" class="alert ${flash_class}">
+              <button class="close" data-dismiss="alert">×</button>
+              <strong py:if="flash_class == ''">Warning!</strong>
+              <strong py:if="flash_class == 'error'">Error!</strong>
+              ${flash.message}
+            </div>
+
             <div py:replace="select('*|text()')"/>
           </div>
         </div>
