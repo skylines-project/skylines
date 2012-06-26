@@ -1,11 +1,16 @@
 <?python
 from babel.numbers import format_number
+from datetime import timedelta
 
 page = 'statistics'
 title = 'Statistics'
 
-def format_timedelta(timedelta):
-    seconds = timedelta.total_seconds()
+def format_timedelta(delta):
+    if isinstance(delta, timedelta):
+      seconds = delta.total_seconds()
+    else:
+      seconds = delta
+
     return '%d:%02d' % (seconds / 3600, seconds % 3600 / 60)
 ?>
 
@@ -56,6 +61,10 @@ def format_timedelta(timedelta):
             </div>
           </td>
         </tr>
+        <tr>
+          <td><strong>Total</strong></td>
+          <td colspan="2"><strong>${format_number(sum_flights)}</strong></td>
+        </tr>
       </tbody>
     </table>
 
@@ -81,6 +90,10 @@ def format_timedelta(timedelta):
             </div>
           </td>
         </tr>
+        <tr>
+          <td><strong>Total</strong></td>
+          <td colspan="2"><strong>${format_number(sum_distance / 1000)} km</strong></td>
+        </tr>
       </tbody>
     </table>
 
@@ -105,6 +118,10 @@ def format_timedelta(timedelta):
               <div class="bar" style="width: ${year.duration.total_seconds() * 100 / max_duration}%;"></div>
             </div>
           </td>
+        </tr>
+        <tr>
+          <td><strong>Total</strong></td>
+          <td colspan="2"><strong>${format_timedelta(sum_duration)} Hours</strong></td>
         </tr>
       </tbody>
     </table>

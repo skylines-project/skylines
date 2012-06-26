@@ -58,6 +58,10 @@ class StatisticsController(BaseController):
         max_distance = 1
         max_duration = 1
 
+        sum_flights = 0
+        sum_distance = 0
+        sum_duration = 0
+
         list = []
         for row in query:
             list.append(row)
@@ -67,11 +71,18 @@ class StatisticsController(BaseController):
             max_distance = max(max_distance, row.distance)
             max_duration = max(max_duration, row.duration.total_seconds())
 
+            sum_flights = sum_flights + row.flights
+            sum_distance = sum_distance + row.distance
+            sum_duration = sum_duration + row.duration.total_seconds()
+
         return dict(years = list,
                     max_flights = max_flights,
                     max_pilots = max_pilots,
                     max_distance = max_distance,
                     max_duration = max_duration,
+                    sum_flights = sum_flights,
+                    sum_distance = sum_distance,
+                    sum_duration = sum_duration,
                     pilot = pilot,
                     club = club,
                     selected_pilot = selected_pilot,
