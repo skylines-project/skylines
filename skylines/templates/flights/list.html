@@ -4,6 +4,15 @@ from babel.dates import format_date
 
 page = 'flights'
 title = 'Flights'
+
+if date:
+  tagline = 'on ' + format_date(date)
+
+if pilot:
+  tagline = 'of ' + unicode(pilot)
+
+if club:
+  tagline = 'of ' + unicode(club)
 ?>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
@@ -106,31 +115,13 @@ title = 'Flights'
     </script>
 
     <title py:if="date">Flights on ${format_date(date)}</title>
-    <title py:if="pilot">Flights of pilot "${pilot}"</title>
-    <title py:if="club">Flights of club "${club}"</title>"
-    <title py:if="not date and not pilot and not club">Flight list</title>
+    <title py:if="pilot">Flights of ${pilot}</title>
+    <title py:if="club">Flights of ${club}</title>"
+    <title py:if="not date and not pilot and not club">Flights</title>
   </head>
 
   <body>
     <xi:include href="flights/nav.html" />
-
-    <h3 py:if="date">
-      <noscript>
-        <a href="/flights/date/${(date - timedelta(days=1)).strftime('%Y-%m-%d')}"><span class="add-on"><i class="icon-arrow-left"></i></span></a>
-      </noscript>
-      Flights on ${format_date(date)}
-      <noscript>
-        <a href="/flights/date/${(date + timedelta(days=1)).strftime('%Y-%m-%d')}"><span class="add-on"><i class="icon-arrow-right"></i></span></a>
-      </noscript>
-    </h3>
-
-    <h3 py:if="pilot">
-      Flights of pilot "<a href="/users/${pilot.user_id}/">${pilot}</a>"
-    </h3>
-
-    <h3 py:if="club">
-      Flights of club "<a href="/clubs/${club.id}/">${club}</a>"
-    </h3>
 
       <div id="getting_started">
         <table id="flight-table" class="table table-striped table-condensed">

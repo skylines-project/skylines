@@ -11,6 +11,13 @@ my_club = request.identity['user'].club if request.identity else None
 <ul xmlns="http://www.w3.org/1999/xhtml"
     xmlns:py="http://genshi.edgewall.org/"
     class="nav nav-pills">
+  <li class="${('', 'active')[defined('tab') and tab == 'all']}"><a href="/flights/all">All Flights</a></li>
+
+  <li py:if="date">
+    <a href="/flights/date/${(date - timedelta(days=1)).strftime('%Y-%m-%d')}">
+      &nbsp;<i class="icon-arrow-left"></i>&nbsp;
+    </a>
+  </li>
   <li class="${('', 'active')[defined('tab') and tab == 'date']}">
     <a href="/flights/today" id="datepicker">
       <span class="date"><py:choose>
@@ -20,7 +27,11 @@ my_club = request.identity['user'].club if request.identity else None
       &nbsp;<span class="add-on"><i class="icon-th"></i></span>
     </a>
   </li>
-  <li class="${('', 'active')[defined('tab') and tab == 'all']}"><a href="/flights/all">All Flights</a></li>
+  <li py:if="date">
+    <a href="/flights/date/${(date + timedelta(days=1)).strftime('%Y-%m-%d')}">
+      &nbsp;<i class="icon-arrow-right"></i>&nbsp;
+    </a>
+  </li>
 
   <li py:if="club" class="active"><a href="/flights/club/${club.id}" py:content="club">LV Aachen</a></li>
   <li py:if="my_club and (not club or my_club != club)"><a href="/flights/club/${my_club.id}" py:content="my_club">LV Aachen</a></li>
