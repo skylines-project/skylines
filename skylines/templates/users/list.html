@@ -43,8 +43,8 @@
             </td>
             <td>
               <a href="/flights/pilot/${user.user_id}" class="btn btn-mini">Flights</a>
-              <a href="/users/id/${user.user_id}/" class="btn btn-mini">Info</a>
-              <a py:if="user.is_writable()" href="/users/id/${user.user_id}/edit" class="btn btn-mini">Edit</a>
+              <a href="/users/${user.user_id}/" class="btn btn-mini">Info</a>
+              <a py:if="user.is_writable()" href="/users/${user.user_id}/edit" class="btn btn-mini">Edit</a>
             </td>
           </tr>
         </tbody>

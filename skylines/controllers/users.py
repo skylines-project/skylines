@@ -82,21 +82,30 @@ class UserController(BaseController):
 
         redirect('.')
 
-class UserIdController(BaseController):
-    @expose()
-    def lookup(self, id, *remainder):
-        user = DBSession.query(User).get(int(id))
-        if user is None:
-            raise HTTPNotFound
-
-        controller = UserController(user)
-        return controller, remainder
 
 class UsersController(BaseController):
     @expose('skylines.templates.users.list')
     def index(self):
         users = DBSession.query(User).order_by(User.display_name)
         return dict(page='settings', users=users)
+
+    @expose()
+    def lookup(self, id, *remainder):
+        # Fallback for old URLs
+        if id == 'id' and len(remainder) > 0:
+            id = remainder[0]
+            remainder = remainder[1:]
+
+        try:
+            user = DBSession.query(User).get(int(id))
+        except ValueError:
+            raise HTTPNotFound
+
+        if user is None:
+            raise HTTPNotFound
+
+        controller = UserController(user)
+        return controller, remainder
 
     @expose('skylines.templates.users.new')
     def new(self, **kwargs):
@@ -115,5 +124,3 @@ class UsersController(BaseController):
             pilots.users.append(user)
 
         redirect('/')
-
-    id = UserIdController()
