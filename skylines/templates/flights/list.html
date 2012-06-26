@@ -123,63 +123,61 @@ if club:
   <body>
     <xi:include href="flights/nav.html" />
 
-      <div id="getting_started">
-        <table id="flight-table" class="table table-striped table-condensed">
-          <thead>
-            <tr>
-              <th class="date" py:if="not date">Date</th>
-              <th class="numeric">Score</th>
-              <th>Pilot</th>
-              <th class="numeric">Distance</th>
-              <th py:if="not club and not pilot">Club</th>
-              <th>Time</th>
-              <th></th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr py:for="flight in flights">
-              <td class="date" py:if="not date">
-                <span py:if="flight.takeoff_time" py:replace="format_date(flight.takeoff_time)">
-                  2012-05-21
-                </span>
-              </td>
-              <td class="numeric" py:content="flight.olc_plus_score">
-                500
-              </td>
-              <td>
-                <a py:if="flight.pilot" py:content="flight.pilot" href="/flights/pilot/${flight.pilot_id}">
-                  Pilot Name
-                </a>
-                <br py:if="flight.pilot and flight.co_pilot"/>
-                <a py:if="flight.co_pilot" py:content="flight.co_pilot" href="/flights/pilot/${flight.co_pilot_id}">
-                  Co-Pilot Name
-                </a>
-                <span py:if="not flight.pilot and not flight.co_pilot" py:strip="True">
-                  [${flight.owner}]
-                </span>
-              </td>
-              <td class="numeric">
-                <span py:if="flight.olc_classic_distance is not None">
-                  <span py:content="flight.olc_classic_distance / 1000">500</span> km
-                </span>
-              </td>
-              <td py:if="not club and not pilot">
-                <a py:if="flight.club" py:content="flight.club" href="/flights/club/${flight.club_id}">
-                  Club Name
-                </a>
-              </td>
-              <td>
-                <span py:if="flight.takeoff_time and flight.landing_time" py:strip="True">
-                  <span py:replace="flight.takeoff_time.strftime('%H:%M')">10:00</span>-<span py:replace="flight.landing_time.strftime('%H:%M')">15:00</span>
-                </span>
-              </td>
-              <td nowrap="nowrap">
-                <a href="/flights/${flight.id}/">Show</a>
-                <span class="pin" style="visibility: hidden;" rel="tooltip" title="Activate this to show the flight on top of other flights on the map">${flight.id}</span>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+    <table id="flight-table" class="table table-striped table-condensed">
+      <thead>
+        <tr>
+          <th class="date" py:if="not date">Date</th>
+          <th class="numeric">Score</th>
+          <th>Pilot</th>
+          <th class="numeric">Distance</th>
+          <th py:if="not club and not pilot">Club</th>
+          <th>Time</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr py:for="flight in flights">
+          <td class="date" py:if="not date">
+            <span py:if="flight.takeoff_time" py:replace="format_date(flight.takeoff_time)">
+              2012-05-21
+            </span>
+          </td>
+          <td class="numeric" py:content="flight.olc_plus_score">
+            500
+          </td>
+          <td>
+            <a py:if="flight.pilot" py:content="flight.pilot" href="/flights/pilot/${flight.pilot_id}">
+              Pilot Name
+            </a>
+            <br py:if="flight.pilot and flight.co_pilot"/>
+            <a py:if="flight.co_pilot" py:content="flight.co_pilot" href="/flights/pilot/${flight.co_pilot_id}">
+              Co-Pilot Name
+            </a>
+            <span py:if="not flight.pilot and not flight.co_pilot" py:strip="True">
+              [${flight.owner}]
+            </span>
+          </td>
+          <td class="numeric">
+            <span py:if="flight.olc_classic_distance is not None">
+              <span py:content="flight.olc_classic_distance / 1000">500</span> km
+            </span>
+          </td>
+          <td py:if="not club and not pilot">
+            <a py:if="flight.club" py:content="flight.club" href="/flights/club/${flight.club_id}">
+              Club Name
+            </a>
+          </td>
+          <td>
+            <span py:if="flight.takeoff_time and flight.landing_time" py:strip="True">
+              <span py:replace="flight.takeoff_time.strftime('%H:%M')">10:00</span>-<span py:replace="flight.landing_time.strftime('%H:%M')">15:00</span>
+            </span>
+          </td>
+          <td nowrap="nowrap">
+            <a href="/flights/${flight.id}/">Show</a>
+            <span class="pin" style="visibility: hidden;" rel="tooltip" title="Activate this to show the flight on top of other flights on the map">${flight.id}</span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
   </body>
 </html>
