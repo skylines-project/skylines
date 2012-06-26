@@ -10,7 +10,7 @@ my_club = request.identity['user'].club if request.identity else None
                       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <ul xmlns="http://www.w3.org/1999/xhtml"
     xmlns:py="http://genshi.edgewall.org/"
-    class="nav nav-tabs">
+    class="nav nav-pills">
   <li class="${('', 'active')[defined('tab') and tab == 'today' or tab == 'date']}">
     <a href="/flights/today" id="datepicker">
       <span class="date"><py:choose>
