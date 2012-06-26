@@ -1,17 +1,6 @@
 <?python
-from babel.numbers import format_number
-from datetime import timedelta
-
 page = 'statistics'
 title = 'Statistics'
-
-def format_timedelta(delta):
-    if isinstance(delta, timedelta):
-      seconds = delta.total_seconds()
-    else:
-      seconds = delta
-
-    return '%d:%02d' % (seconds / 3600, seconds % 3600 / 60)
 ?>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
@@ -21,6 +10,10 @@ def format_timedelta(delta):
       xmlns:xi="http://www.w3.org/2001/XInclude">
 
   <xi:include href="master/page.html" />
+  <xi:include href="statistics/flights-table.html" />
+  <xi:include href="statistics/distance-table.html" />
+  <xi:include href="statistics/duration-table.html" />
+  <xi:include href="statistics/pilots-table.html" />
 
   <head>
     <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" py:if="False"/>
@@ -44,109 +37,17 @@ def format_timedelta(delta):
     </ul>
 
     <h1>Flights</h1>
-    <table class="table table-condensed table-striped">
-      <thead>
-        <tr>
-          <th>Year</th>
-          <th colspan="2">Flights</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr py:for="year in years">
-          <td class="span2">${int(year.year)}</td>
-          <td class="span2">${format_number(year.flights)}</td>
-          <td class="span8">
-            <div class="progress">
-              <div class="bar" style="width: ${year.flights * 100 / max_flights}%;"></div>
-            </div>
-          </td>
-        </tr>
-        <tr>
-          <td><strong>Total</strong></td>
-          <td colspan="2"><strong>${format_number(sum_flights)}</strong></td>
-        </tr>
-      </tbody>
-    </table>
+    ${render_flights_table(years, max_flights, sum_flights)}
 
     <h1>Distance</h1>
-    <table class="table table-condensed table-striped">
-      <thead>
-        <tr>
-          <th>Year</th>
-          <th colspan="2">Distance</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr py:for="year in years">
-          <td class="span2">${int(year.year)}</td>
-          <td class="span2">
-            <span rel="tooltip" title="avg. ${format_number((year.distance / 1000) / year.flights)} km per flight">
-              ${format_number(year.distance / 1000)} km
-            </span>
-          </td>
-          <td class="span8">
-            <div class="progress progress-success">
-              <div class="bar" style="width: ${year.distance * 100 / max_distance}%;"></div>
-            </div>
-          </td>
-        </tr>
-        <tr>
-          <td><strong>Total</strong></td>
-          <td colspan="2"><strong>${format_number(sum_distance / 1000)} km</strong></td>
-        </tr>
-      </tbody>
-    </table>
+    ${render_distance_table(years, max_distance, sum_distance)}
 
     <h1>Flight Time</h1>
-    <table class="table table-condensed table-striped">
-      <thead>
-        <tr>
-          <th>Year</th>
-          <th colspan="2">Flight Time</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr py:for="year in years">
-          <td class="span2">${int(year.year)}</td>
-          <td class="span2">
-            <span rel="tooltip" title="avg. ${format_timedelta(year.duration / year.flights)} Hours per flight">
-              ${format_timedelta(year.duration)} Hours
-            </span>
-          </td>
-          <td class="span8">
-            <div class="progress progress-warning">
-              <div class="bar" style="width: ${year.duration.total_seconds() * 100 / max_duration}%;"></div>
-            </div>
-          </td>
-        </tr>
-        <tr>
-          <td><strong>Total</strong></td>
-          <td colspan="2"><strong>${format_timedelta(sum_duration)} Hours</strong></td>
-        </tr>
-      </tbody>
-    </table>
+    ${render_duration_table(years, max_duration, sum_duration)}
 
     <py:if test="not selected_pilot">
     <h1>Pilots</h1>
-    <table class="table table-condensed table-striped">
-      <thead>
-        <tr>
-          <th>Year</th>
-          <th colspan="2">Pilots</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr py:for="year in years">
-          <td class="span2">${int(year.year)}</td>
-          <td class="span2">${year.pilots}</td>
-          <td class="span8">
-            <div class="progress progress-info">
-              <div class="bar" style="width: ${year.pilots * 100 / max_pilots}%;"></div>
-            </div>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+    ${render_pilots_table(years, max_pilots)}
     </py:if>
   </body>
 </html>

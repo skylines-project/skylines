@@ -1,0 +1,36 @@
+<?python
+from babel.numbers import format_number
+?>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+                      "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:py="http://genshi.edgewall.org/"
+      xmlns:xi="http://www.w3.org/2001/XInclude">
+
+  <py:def function="render_flights_table(years, max_flights, sum_flights = None)">
+    <table class="table table-condensed table-striped">
+      <thead>
+        <tr>
+          <th>Year</th>
+          <th colspan="2">Flights</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr py:for="year in years">
+          <td class="span2">${int(year.year)}</td>
+          <td class="span2">${format_number(year.flights)}</td>
+          <td class="span8">
+            <div class="progress">
+              <div class="bar" style="width: ${year.flights * 100 / max_flights}%;"></div>
+            </div>
+          </td>
+        </tr>
+        <tr py:if="sum_flights">
+          <td><strong>Total</strong></td>
+          <td colspan="2"><strong>${format_number(sum_flights)}</strong></td>
+        </tr>
+      </tbody>
+    </table>
+  </py:def>
+</html>
