@@ -67,11 +67,7 @@ class RootController(BaseController):
             else:
                 came_from = lurl('/')
 
-        login_counter = request.environ['repoze.who.logins']
-        if login_counter > 0:
-            flash(_('Wrong credentials'), 'warning')
-        return dict(page = 'login', login_counter = str(login_counter),
-                    came_from = came_from)
+        return dict(page = 'login', came_from = came_from)
 
     @expose()
     def post_login(self, came_from = None):
@@ -87,11 +83,11 @@ class RootController(BaseController):
                 came_from = lurl('/')
 
         if not request.identity:
-            login_counter = request.environ['repoze.who.logins'] + 1
-            redirect('/login',
-                params = dict(came_from = came_from, __logins = login_counter))
-        userid = request.identity['repoze.who.userid']
-        flash(_('Welcome back, %s!') % userid)
+            flash(_('Wrong credentials'), 'warning')
+        else:
+            userid = request.identity['repoze.who.userid']
+            flash(_('Welcome back, %s!') % userid)
+
         redirect(came_from)
 
     @expose()
