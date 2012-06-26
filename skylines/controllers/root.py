@@ -56,7 +56,7 @@ class RootController(BaseController):
     @expose('skylines.templates.about')
     def about(self):
         """Handle the 'about' page."""
-        return dict(page = 'about')
+        return dict()
 
     @expose('skylines.templates.login')
     def login(self, came_from = lurl('/')):
