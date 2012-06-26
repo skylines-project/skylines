@@ -48,9 +48,9 @@ def format_timedelta(timedelta):
       </thead>
       <tbody>
         <tr py:for="year in years">
-          <td>${int(year.year)}</td>
-          <td>${format_number(year.flights)}</td>
-          <td class="span9">
+          <td class="span2">${int(year.year)}</td>
+          <td class="span2">${format_number(year.flights)}</td>
+          <td class="span8">
             <div class="progress">
               <div class="bar" style="width: ${year.flights * 100 / max_flights}%;"></div>
             </div>
@@ -69,13 +69,13 @@ def format_timedelta(timedelta):
       </thead>
       <tbody>
         <tr py:for="year in years">
-          <td>${int(year.year)}</td>
-          <td>
+          <td class="span2">${int(year.year)}</td>
+          <td class="span2">
             <span rel="tooltip" title="avg. ${format_number((year.distance / 1000) / year.flights)} km per flight">
               ${format_number(year.distance / 1000)} km
             </span>
           </td>
-          <td class="span9">
+          <td class="span8">
             <div class="progress progress-success">
               <div class="bar" style="width: ${year.distance * 100 / max_distance}%;"></div>
             </div>
@@ -94,13 +94,13 @@ def format_timedelta(timedelta):
       </thead>
       <tbody>
         <tr py:for="year in years">
-          <td>${int(year.year)}</td>
-          <td>
+          <td class="span2">${int(year.year)}</td>
+          <td class="span2">
             <span rel="tooltip" title="avg. ${format_timedelta(year.duration / year.flights)} Hours per flight">
               ${format_timedelta(year.duration)} Hours
             </span>
           </td>
-          <td class="span9">
+          <td class="span8">
             <div class="progress progress-warning">
               <div class="bar" style="width: ${year.duration.total_seconds() * 100 / max_duration}%;"></div>
             </div>
@@ -120,9 +120,9 @@ def format_timedelta(timedelta):
       </thead>
       <tbody>
         <tr py:for="year in years">
-          <td>${int(year.year)}</td>
-          <td>${year.pilots}</td>
-          <td class="span9">
+          <td class="span2">${int(year.year)}</td>
+          <td class="span2">${year.pilots}</td>
+          <td class="span8">
             <div class="progress progress-info">
               <div class="bar" style="width: ${year.pilots * 100 / max_pilots}%;"></div>
             </div>
