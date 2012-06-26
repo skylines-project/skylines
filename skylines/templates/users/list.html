@@ -10,14 +10,14 @@
 
   <head>
     <title py:if="defined('club')">
-      Members of club "<a href="/clubs/id/${club.id}/">${club}</a>"
+      Members of club "<a href="/clubs/${club.id}/">${club}</a>"
     </title>
     <title py:if="not defined('club')">Users</title>
   </head>
 
   <body>
     <h3 py:if="defined('club')">
-      Members of club "<a href="/clubs/id/${club.id}/">${club}</a>"
+      Members of club "<a href="/clubs/${club.id}/">${club}</a>"
     </h3>
 
     <div id="getting_started">
@@ -37,7 +37,7 @@
               </a>
             </td>
             <td py:if="not defined('club')">
-              <a href="/clubs/id/${user.club_id}/" py:content="user.club">
+              <a href="/clubs/${user.club_id}/" py:content="user.club">
                 Name
               </a>
             </td>

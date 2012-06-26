@@ -26,7 +26,7 @@
      % if not club and not pilot:
      "\
        % if flight.club:
-         <a href=\"/clubs/id/${flight.club_id}/\">${flight.club}</a>\
+         <a href=\"/clubs/${flight.club_id}/\">${flight.club}</a>\
        % endif
      ",
      % endif

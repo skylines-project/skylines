@@ -86,15 +86,6 @@ class ClubController(BaseController):
 
         redirect('pilots')
 
-class ClubIdController(BaseController):
-    @expose()
-    def lookup(self, id, *remainder):
-        club = DBSession.query(Club).get(int(id))
-        if club is None:
-            raise HTTPNotFound
-
-        controller = ClubController(club)
-        return controller, remainder
 
 class ClubsController(BaseController):
     @expose('skylines.templates.clubs.list')
@@ -102,4 +93,20 @@ class ClubsController(BaseController):
         clubs = DBSession.query(Club).order_by(Club.name)
         return dict(page='settings', clubs=clubs)
 
-    id = ClubIdController()
+    @expose()
+    def lookup(self, id, *remainder):
+        # Fallback for old URLs
+        if id == 'id' and len(remainder) > 0:
+            id = remainder[0]
+            remainder = remainder[1:]
+
+        try:
+            club = DBSession.query(Club).get(int(id))
+        except ValueError:
+            raise HTTPNotFound
+
+        if club is None:
+            raise HTTPNotFound
+
+        controller = ClubController(club)
+        return controller, remainder
