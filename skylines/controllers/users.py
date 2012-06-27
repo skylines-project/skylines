@@ -11,6 +11,7 @@ from tw.forms import PasswordField, TextField
 from skylines.lib.base import BaseController
 from skylines.model import DBSession, User, Group, Club
 
+
 class ClubSelectField(PropertySingleSelectField):
     def _my_update_params(self, d, nullable=False):
         clubs = DBSession.query(Club).order_by(Club.name).all()
@@ -23,6 +24,7 @@ user_validator = Schema(chained_validators=(FieldsMatch('password',
                                                         'verify_password',
                                                         messages={'invalidNoMatch':
                                                                   'Passwords do not match'}),))
+
 
 class NewUserForm(AddRecordForm):
     __model__ = User
@@ -38,6 +40,7 @@ class NewUserForm(AddRecordForm):
 
 new_user_form = NewUserForm(DBSession)
 
+
 class EditUserForm(EditableForm):
     __model__ = User
     __hide_fields__ = ['user_id']
@@ -49,6 +52,7 @@ class EditUserForm(EditableForm):
     club = ClubSelectField
 
 edit_user_form = EditUserForm(DBSession)
+
 
 class UserController(BaseController):
     def __init__(self, user):
@@ -76,7 +80,8 @@ class UserController(BaseController):
         self.user.user_name = user_name
         self.user.email_address = email_address
         self.user.display_name = display_name
-        if not club: club = None
+        if not club:
+            club = None
         self.user.club_id = club
         DBSession.flush()
 
@@ -114,12 +119,14 @@ class UsersController(BaseController):
     @expose()
     @validate(form=new_user_form, error_handler=new)
     def new_post(self, user_name, display_name, club, email_address, password, **kw):
-        if not club: club = None
+        if not club:
+            club = None
+
         user = User(user_name=user_name, display_name=display_name, club_id=club,
                     email_address=email_address, password=password)
         DBSession.add(user)
 
-        pilots = DBSession.query(Group).filter(Group.group_name=='pilots').first()
+        pilots = DBSession.query(Group).filter(Group.group_name == 'pilots').first()
         if pilots:
             pilots.users.append(user)
 
