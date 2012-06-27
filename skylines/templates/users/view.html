@@ -27,7 +27,8 @@ title = user.display_name
     </script>
   </head>
 
-  <body>
+  <body itemscope="" itemtype="http://schema.org/Person">
+    <meta itemprop="url" content="/users/${user.user_id}" />
     <div class="row">
       <div class="well span8 offset2">
         <table class="right">
@@ -38,18 +39,19 @@ title = user.display_name
 
           <tr py:if="user.is_readable()">
             <th>Email</th>
-            <td py:content="user.email_address">Foo</td>
+            <td py:content="user.email_address" itemprop="email">Foo</td>
           </tr>
 
           <tr>
             <th>Display name</th>
-            <td py:content="user.display_name">Foo</td>
+            <td py:content="user.display_name" itemprop="name">Foo</td>
           </tr>
 
           <tr py:if="user.club">
             <th>Club</th>
-            <td>
-              <a href="/clubs/${user.club_id}/" py:content="user.club">
+            <td itemprop="memberof" itemscope="" itemtype="http://schema.org/SportsTeam">
+              <meta itemprop="url" content="/clubs/${user.club_id}" />
+              <a href="/clubs/${user.club_id}/" py:content="user.club" itemprop="name">
                 Foo
               </a>
             </td>

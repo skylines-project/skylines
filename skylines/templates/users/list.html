@@ -4,6 +4,17 @@ if defined('club'):
   tagline = 'of ' + unicode(club)
 else:
   title = 'Users'
+
+body_attrs = {}
+pilot_attrs = {
+  'itemscope': '',
+  'itemtype': 'http://schema.org/Person',
+}
+
+if defined('club'):
+  body_attrs['itemscope'] = 'SportsTeam'
+  body_attrs['itemtype'] = 'http://schema.org/SportsTeam'
+  pilot_attrs['itemprop'] = 'member'
 ?>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
@@ -18,7 +29,9 @@ else:
     <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" py:if="False"/>
   </head>
 
-  <body>
+  <body py:attrs="body_attrs">
+    <meta py:if="defined('club')" itemprop="name" content="${club}" />
+    <meta py:if="defined('club')" itemprop="url" content="/clubs/${club.id}" />
     <div id="getting_started">
       <table class="table table-striped">
         <thead>
@@ -29,14 +42,16 @@ else:
           </tr>
         </thead>
         <tbody>
-          <tr py:for="user in users">
-            <td>
+          <tr py:for="user in users" py:attrs="pilot_attrs">
+            <meta itemprop="url" content="/users/${user.user_id}" />
+            <td itemprop="name">
               <a href="/flights/pilot/${user.user_id}" py:content="user">
                 Name
               </a>
             </td>
-            <td py:if="not defined('club')">
-              <a href="/clubs/${user.club_id}/" py:content="user.club">
+            <td py:if="not defined('club')" itemprop="memberof" itemscope="" itemtype="http://schema.org/SportsTeam">
+              <meta py:if="user.club_id" itemprop="url" content="/clubs/${user.club_id}" />
+              <a py:if="user.club_id" href="/clubs/${user.club_id}/" py:content="user.club" itemprop="name">
                 Name
               </a>
             </td>
