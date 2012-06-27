@@ -6,6 +6,7 @@ from lxml import etree
 from skylines import files
 from tg import config
 
+
 def helper_path(helper):
     return os.path.join(config['skylines.analysis.path'], helper)
 
@@ -18,17 +19,20 @@ def import_datetime_attribute(node, name):
     except ValueError:
         return None
 
+
 def find_contest(root, name):
     for contest in root.findall('contest'):
         if contest.attrib['name'] == name:
             return contest
     return None
 
+
 def find_trace(contest, name):
     for contest in contest.findall('trace'):
         if contest.attrib['name'] == name:
             return contest
     return None
+
 
 def analyse_flight(flight):
     path = files.filename_to_path(flight.filename)
@@ -66,6 +70,7 @@ def analyse_flight(flight):
             flight.olc_plus_score = None
 
     return True
+
 
 def flight_path(flight, max_points = 1000):
     path = files.filename_to_path(flight.filename)
