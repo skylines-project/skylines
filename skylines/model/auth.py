@@ -107,12 +107,12 @@ class User(DeclarativeBase):
     user_name = Column(Unicode(255), unique=True, nullable=False)
 
     email_address = Column(Unicode(255),
-                           info={'rum': {'field':'Email'}})
+                           info={'rum': {'field': 'Email'}})
 
     display_name = Column(Unicode(255))
 
     _password = Column('password', Unicode(128),
-                       info={'rum': {'field':'Password'}})
+                       info={'rum': {'field': 'Password'}})
 
     created = Column(DateTime, default=datetime.now)
 
@@ -209,6 +209,7 @@ class User(DeclarativeBase):
                (self.user_id == request.identity['user'].user_id or
                 (self.password is None and self.club_id == request.identity['user'].club_id) or
                 'manage' in request.identity['permissions'])
+
 
 class Permission(DeclarativeBase):
     """
