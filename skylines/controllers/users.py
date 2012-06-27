@@ -10,6 +10,7 @@ from formencode.validators import FieldsMatch, Email, String
 from tw.forms import PasswordField, TextField
 from skylines.lib.base import BaseController
 from skylines.model import DBSession, User, Group, Club, Flight
+from sqlalchemy.sql.expression import desc
 
 
 class ClubSelectField(PropertySingleSelectField):
@@ -88,6 +89,12 @@ class UserController(BaseController):
 
         redirect('.')
 
+    def get_largest_flight(self):
+        return DBSession.query(Flight) \
+                        .filter(Flight.pilot == self.user) \
+                        .order_by(desc(Flight.olc_classic_distance)) \
+                        .first()
+
     def get_distance_flight(self, distance):
         return DBSession.query(Flight) \
                         .filter(Flight.pilot == self.user) \
@@ -97,10 +104,17 @@ class UserController(BaseController):
 
     def get_distance_flights(self):
         distance_flights = []
+
+        largest_flight = self.get_largest_flight()
+        if largest_flight:
+            distance_flights.append([largest_flight.olc_classic_distance / 1000,
+                                     largest_flight])
+
         for distance in [50, 100, 300, 500, 700, 1000]:
             distance_flight = self.get_distance_flight(distance * 1000)
             distance_flights.append([distance, distance_flight])
 
+        distance_flights.sort()
         return distance_flights
 
 
