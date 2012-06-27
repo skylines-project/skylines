@@ -1,10 +1,9 @@
 # -*- coding: utf-8 -*-
 
 from datetime import datetime
-from sqlalchemy import *
 from sqlalchemy.orm import relation
-from sqlalchemy import Column
-from sqlalchemy.types import Integer, Unicode
+from sqlalchemy import Column, ForeignKey
+from sqlalchemy.types import Integer, Unicode, DateTime
 from skylines.model.auth import User
 from skylines.model import DeclarativeBase
 from tg import request
