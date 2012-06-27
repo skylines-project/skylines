@@ -24,7 +24,7 @@
             <a href="${tg.url('/flights/upload/')}"><i class="icon-upload-alt"></i> Upload</a>
           </li>
 
-          <li py:if="not request.identity">
+          <li py:if="not request.identity" class="${('', 'active')[defined('page') and page=='login']}">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
               <i class="icon-signin"></i> Login <i class="icon-caret-down"></i>
             </a>
