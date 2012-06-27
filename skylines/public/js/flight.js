@@ -149,6 +149,13 @@ function addGoogleLayer() {
       {type: google.maps.MapTypeId.TERRAIN}
     );
     map.addLayer(google_physical_layer);
+
+    var google_satellite_layer = new OpenLayers.Layer.Google(
+      "Google Satellite",
+      {type: google.maps.MapTypeId.HYBRID}
+    );
+    map.addLayer(google_satellite_layer);
+
     map.addControl(new SimpleLayerSwitcher());
   }
 }
