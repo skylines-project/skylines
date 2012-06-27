@@ -1,5 +1,4 @@
 <?python
-from babel.dates import format_date, format_time, format_datetime
 from simplejson import dumps
 
 page = 'tracking'
@@ -23,9 +22,6 @@ title = 'Tracking'
   <script type="text/javascript" src="/js/OpenLayers/OpenLayers.js"></script>
   <script type="text/javascript" src="/js/OpenLayers/SimpleLayerSwitcher.js"></script>
   <script type="text/javascript" src="/static/jquery/jquery.cookie.js"></script>
-  <script type="text/javascript" src="/static/jquery/jquery.timeago.js"></script>
-
-  <script type="text/javascript" src="/static/bootstrap/js/bootstrap-tooltip.js"></script>
 
   <script type="text/javascript" src="/js/general.js"></script>
   <script type="text/javascript" src="/js/flight.js"></script>
@@ -53,9 +49,6 @@ title = 'Tracking'
       scaleBarogram();
 
       hoverMap();
-
-      $("abbr.timeago").timeago();
-      $("[rel=tooltip]").tooltip();
 
       $.getScript("http://maps.google.com/maps/api/js?v=3.7&sensor=false&callback=addGoogleLayer");
     }
