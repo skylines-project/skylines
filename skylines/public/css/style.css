@@ -124,3 +124,8 @@ input[type="file"] {
   margin-right: auto;
   width: 50%;
 }
+
+a.no-link {
+  color: inherit;
+  text-decoration: none;
+}

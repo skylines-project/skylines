@@ -31,7 +31,7 @@
      ",
      % endif
      "${flight.takeoff_time and flight.landing_time and flight.takeoff_time.strftime('%H:%M') + "-" + flight.landing_time.strftime('%H:%M')}",
-     "<a href=\"/flights/${flight.id}/\">Show</a> <span class=\"pin\" style=\"visibility: hidden;\" rel=\"tooltip\" title=\"Activate this to show the flight on top of other flights on the map\">${flight.id}</span>"]\
+     "<a href=\"/flights/${flight.id}/\">Show</a> <a class=\"pin no-link\" style=\"visibility: hidden;\" rel=\"tooltip\" title=\"Activate this to show the flight on top of other flights on the map\">${flight.id}</span>"]\
      % if loop.last != True:
      ,
      % endif
