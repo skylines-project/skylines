@@ -1,12 +1,12 @@
 # -*- coding: utf-8 -*-
 
 from datetime import datetime
-from sqlalchemy import *
 from sqlalchemy.orm import relation
-from sqlalchemy import Column
+from sqlalchemy import Column, ForeignKey
 from sqlalchemy.types import Integer, Float, DateTime
 from skylines.model.auth import User
 from skylines.model import DeclarativeBase
+
 
 class TrackingFix(DeclarativeBase):
     __tablename__ = 'tracking_fixes'
