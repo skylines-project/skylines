@@ -63,3 +63,4 @@ from skylines.model.auth import User, Group, Permission
 from skylines.model.flight import Flight
 from skylines.model.club import Club
 from skylines.model.tracking import TrackingFix
+from skylines.model.geo import Location
