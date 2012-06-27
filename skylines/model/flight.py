@@ -8,6 +8,9 @@ from sqlalchemy.ext.hybrid import hybrid_property
 from skylines.model.auth import User
 from skylines.model import DeclarativeBase, DBSession
 from tg import config, request
+from geoalchemy.geometry import GeometryColumn, Point, GeometryDDL
+from geoalchemy.postgis import PGComparator
+from skylines.model.geo import Location
 
 
 class Flight(DeclarativeBase):
@@ -32,6 +35,8 @@ class Flight(DeclarativeBase):
 
     takeoff_time = Column(DateTime, nullable=False)
     landing_time = Column(DateTime, nullable=False)
+    takeoff_location_wkt = GeometryColumn(Point(2), comparator=PGComparator)
+    landing_location_wkt = GeometryColumn(Point(2), comparator=PGComparator)
 
     olc_classic_distance = Column(Integer)
     olc_triangle_distance = Column(Integer)
@@ -49,6 +54,30 @@ class Flight(DeclarativeBase):
     def year(cls):
         return func.date_part('year', cls.takeoff_time)
 
+    @property
+    def takeoff_location(self):
+        if not self.takeoff_location_wkt:
+            return None
+
+        wkt = DBSession.scalar(self.takeoff_location_wkt.wkt)
+        return Location.from_wkt(wkt)
+
+    @takeoff_location.setter
+    def takeoff_location(self, location):
+        self.takeoff_location_wkt = location.to_wkt()
+
+    @property
+    def landing_location(self):
+        if not self.landing_location_wkt:
+            return None
+
+        wkt = DBSession.scalar(self.landing_location_wkt.wkt)
+        return Location.from_wkt(wkt)
+
+    @landing_location.setter
+    def landing_location(self, location):
+        self.landing_location_wkt = location.to_wkt()
+
     @classmethod
     def by_md5(cls, _md5):
         return DBSession.query(cls).filter_by(md5=_md5).first()
@@ -64,3 +93,5 @@ class Flight(DeclarativeBase):
 
     def may_delete(self):
         return request.identity and 'manage' in request.identity['permissions']
+
+GeometryDDL(Flight.__table__)

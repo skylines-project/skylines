@@ -48,6 +48,7 @@ install_requires = [
     "lxml",
     "skylinespolyencode",
     "psycopg2",
+    "geoalchemy",
 ]
 
 if sys.version_info[:2] == (2, 4):
