@@ -2,6 +2,7 @@
 
 from skylines import files
 
+
 def read_igc_header(flight):
     path = files.filename_to_path(flight.filename)
 
@@ -19,4 +20,5 @@ def read_igc_header(flight):
 
         # don't read more than 100 lines, that should be enough
         i += 1
-        if i > 100: break
+        if i > 100:
+            break
