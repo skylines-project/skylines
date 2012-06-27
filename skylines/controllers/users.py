@@ -9,7 +9,7 @@ from formencode import Schema
 from formencode.validators import FieldsMatch, Email, String
 from tw.forms import PasswordField, TextField
 from skylines.lib.base import BaseController
-from skylines.model import DBSession, User, Group, Club
+from skylines.model import DBSession, User, Group, Club, Flight
 
 
 class ClubSelectField(PropertySingleSelectField):
@@ -60,7 +60,8 @@ class UserController(BaseController):
 
     @expose('skylines.templates.users.view')
     def index(self):
-        return dict(page='settings', user=self.user)
+        return dict(page='settings', user=self.user,
+                    distance_flights=self.get_distance_flights())
 
     @expose('skylines.templates.generic.form')
     def edit(self, **kwargs):
@@ -86,6 +87,21 @@ class UserController(BaseController):
         DBSession.flush()
 
         redirect('.')
+
+    def get_distance_flight(self, distance):
+        return DBSession.query(Flight) \
+                        .filter(Flight.pilot == self.user) \
+                        .filter(Flight.olc_classic_distance >= distance) \
+                        .order_by(Flight.landing_time) \
+                        .first()
+
+    def get_distance_flights(self):
+        distance_flights = []
+        for distance in [50, 100, 300, 500, 700, 1000]:
+            distance_flight = self.get_distance_flight(distance * 1000)
+            distance_flights.append([distance, distance_flight])
+
+        return distance_flights
 
 
 class UsersController(BaseController):

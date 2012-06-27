@@ -1,4 +1,7 @@
 <?python
+from babel.numbers import format_number
+from babel.dates import format_date
+
 title = user.display_name
 ?>
 
@@ -13,6 +16,16 @@ title = user.display_name
   <head>
     <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" py:if="False"/>
     <title>User ${user.user_name}</title>
+
+    <script type="text/javascript" src="/static/jquery/jquery.timeago.js"></script>
+    <script type="text/javascript" src="/static/bootstrap/js/bootstrap-tooltip.js"></script>
+
+    <script type="text/javascript">
+      $(function() {
+        $("abbr.timeago").timeago();
+        $("[rel=tooltip]").tooltip();
+      });
+    </script>
   </head>
 
   <body>
@@ -47,6 +60,34 @@ title = user.display_name
         <p py:if="user.is_writable()">
           <a href="/users/${user.user_id}/edit" class="btn">Edit</a>
         </p>
+
+        <py:if test="distance_flights">
+          <h2>Distance Flights</h2>
+          <table>
+            <thead>
+              <tr>
+                <th>Distance</th>
+                <th>Date</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr py:for="distance_flight in distance_flights">
+                <td py:content="format_number(distance_flight[0]) + ' km'">300 km</td>
+                <td>
+                  <abbr py:if="distance_flight[1]" class="timeago"
+                        title="${distance_flight[1].landing_time}"
+                        py:content="format_date(distance_flight[1].landing_time)"
+                        rel="tooltip">4 days ago</abbr>
+                </td>
+                <td>
+                  <a py:if="distance_flight[1]"
+                     href="/flights/${distance_flight[1].id}">Show</a>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </py:if>
       </div>
     </div>
   </body>
