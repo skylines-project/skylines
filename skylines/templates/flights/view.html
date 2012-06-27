@@ -13,9 +13,11 @@ page = 'flights'
 
   <xi:include href="master/page.html" />
   <xi:include href="flights/details-table.html" />
+  <xi:include href="flights/meta-tags.html" />
 
 <head>
   <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" py:if="False"/>
+  ${flight_meta_tags(flight)}
 
   <link href="/css/OpenLayers.css" rel="stylesheet" type="text/css" />
   <link href="/css/SimpleLayerSwitcher.css" rel="stylesheet" type="text/css" />

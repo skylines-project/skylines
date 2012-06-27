@@ -1,0 +1,36 @@
+<?python
+from babel.numbers import format_number
+from babel.dates import format_date
+?>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+                      "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:py="http://genshi.edgewall.org/"
+      xmlns:xi="http://www.w3.org/2001/XInclude"
+      py:strip="">
+
+  <py:def function="flight_meta_tags(flight)">
+    <?python
+      description = []
+      description.append(format_number(flight.olc_classic_distance / 1000) + ' km')
+      description.append(format_number(flight.olc_plus_score) + ' pt')
+      description.append(format_date(flight.takeoff_time))
+
+      if flight.pilot:
+        description.append(unicode(flight.pilot))
+
+      if flight.co_pilot:
+        description.append(unicode(flight.co_pilot))
+
+      description = 'SkyLines (' + ' - '.join(description) + ')'
+    ?>
+    <meta name="description" content="${description}" />
+    <meta name="date" content="${flight.time_created}" />
+    <meta name="DC.description" content="${description}" />
+    <meta name="DC.date" content="${flight.time_created}" />
+    <meta name="DC.publisher" content="${flight.owner}" />
+    <meta py:if="flight.pilot" name="DC.creator" content="${flight.pilot}" />
+    <meta py:if="flight.co_pilot" name="DC.contributor" content="${flight.co_pilot}" />
+  </py:def>
+</html>

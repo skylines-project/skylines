@@ -10,10 +10,12 @@ page = 'flights'
       xmlns:py="http://genshi.edgewall.org/"
       xmlns:xi="http://www.w3.org/2001/XInclude">
 
+  <xi:include href="flights/meta-tags.html" />
   <xi:include href="master/fullscreen.html" />
 
 <head>
   <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" py:if="False"/>
+  ${flight_meta_tags(flight)}
 
   <link href="/css/OpenLayers.css" rel="stylesheet" type="text/css" />
   <link href="/css/SimpleLayerSwitcher.css" rel="stylesheet" type="text/css" />
