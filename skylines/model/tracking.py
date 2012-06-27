@@ -24,5 +24,8 @@ class TrackingFix(DeclarativeBase):
     vario = Column(Float)
     engine_noise_level = Column(Integer)
 
-    pilot_id = Column(Integer, ForeignKey('tg_user.user_id', use_alter=True, name="tg_user.user_id"), nullable=False)
-    pilot = relation('User', primaryjoin=(pilot_id==User.user_id))
+    pilot_id = Column(Integer,
+                      ForeignKey('tg_user.user_id', use_alter=True,
+                                 name="tg_user.user_id"), nullable=False)
+
+    pilot = relation('User', primaryjoin=(pilot_id == User.user_id))
