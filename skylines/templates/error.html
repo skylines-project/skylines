@@ -1,3 +1,13 @@
+<?python
+import re
+
+mf = re.compile(r'(</?)script', re.IGNORECASE)
+def fixmessage(message):
+    return mf.sub(r'\1noscript', message)
+
+title = 'Error ' + unicode(code)
+?>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
                       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
@@ -8,18 +18,9 @@
 
 <head>
   <meta content="text/html; charset=UTF-8" http-equiv="content-type" py:if="False"/>
-  <title>A ${code} Error has Occurred </title>
 </head>
 
 <body>
-<h1>Error ${code}</h1>
-
-<?python
-import re
-mf = re.compile(r'(</?)script', re.IGNORECASE)
-def fixmessage(message):
-    return mf.sub(r'\1noscript', message)
-?>
 <div>${XML(fixmessage(message))}</div>
 </body>
 </html>

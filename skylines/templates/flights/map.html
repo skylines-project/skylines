@@ -11,6 +11,10 @@ page = 'flights'
       xmlns:xi="http://www.w3.org/2001/XInclude">
 
   <xi:include href="flights/meta-tags.html" />
+  <?python
+    title, tagline = flight_title(flight)
+  ?>
+
   <xi:include href="master/fullscreen.html" />
 
 <head>
@@ -69,8 +73,6 @@ page = 'flights'
   <style>
     body { height: 100%; margin: 0; padding: 0 }
   </style>
-
-  <title>View Flight</title>
 </head>
 
 <body onload="initialize();">

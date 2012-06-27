@@ -1,4 +1,8 @@
-<?python from babel.dates import format_datetime ?>
+<?python
+from babel.dates import format_datetime
+
+title = club.name
+?>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
                       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -10,7 +14,6 @@
 
   <head>
     <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" py:if="False"/>
-    <title>Club ${club.name}</title>
 
     <script type="text/javascript" src="/static/jquery/jquery.timeago.js"></script>
     <script type="text/javascript">
