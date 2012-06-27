@@ -8,13 +8,6 @@
   <xi:include href="master.html" />
   <xi:include href="flash.html" />
 
-<py:match path="head" once="true">
-  <head py:attrs="select('@*')">
-    <meta py:replace="select('*')"/>
-    <title py:if="defined('title')">${title}</title>
-  </head>
-</py:match>
-
 <py:match path="body" once="true">
   <body py:attrs="select('@*')">
     ${topbar()}

@@ -12,7 +12,19 @@
     <meta content="text/html; charset=UTF-8" http-equiv="Content-Type"
           py:attrs="dict(content='%s; charset=%s' % (response.content_type, response.charset))" />
 
-    <title py:if="False">SkyLines</title>
+    <?python
+      html_title = ''
+
+      if defined('title'):
+        html_title = title
+        if defined('tagline'):
+          html_title = html_title + ' ' + tagline
+
+        html_title = html_title + ' - '
+
+      html_title = html_title + 'SkyLines'
+    ?>
+    <title py:content='html_title'>SkyLines</title>
 
     <link rel='shortcut icon' href='/favicon.ico' type='image/x-icon' />
     <link rel='shortcut' href='/favicon.png' type='image/png' />
