@@ -5,10 +5,23 @@ import datetime
 from lxml import etree
 from skylines import files
 from tg import config
+from skylines.model.geo import Location
 
 
 def helper_path(helper):
     return os.path.join(config['skylines.analysis.path'], helper)
+
+
+def import_location_attribute(node):
+    if node is None:
+        return None
+
+    try:
+        latitude = float(node.attrib['latitude'])
+        longitude = float(node.attrib['longitude'])
+        return Location(latitude=latitude, longitude=longitude)
+    except ValueError:
+        return None
 
 
 def import_datetime_attribute(node, name):
@@ -48,6 +61,11 @@ def analyse_flight(flight):
     times = root.find('times')
     flight.takeoff_time = import_datetime_attribute(times, "takeoff")
     flight.landing_time = import_datetime_attribute(times, "landing")
+
+    locations = root.find('locations')
+    if locations:
+        flight.takeoff_location = import_location_attribute(locations.find('takeoff'))
+        flight.landing_location = import_location_attribute(locations.find('landing'))
 
     contest = find_contest(root, 'olc_plus')
     if contest is not None:
