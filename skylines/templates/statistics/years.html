@@ -1,6 +1,12 @@
 <?python
 page = 'statistics'
 title = 'Statistics'
+
+if selected_pilot:
+  tagline = 'of ' + unicode(selected_pilot)
+
+if selected_club:
+  tagline = 'of ' + unicode(selected_club)
 ?>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
