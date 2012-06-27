@@ -24,38 +24,33 @@ from babel.dates import format_date, format_time, format_datetime
     </head>
   </py:match>
 
-  <table py:def="render_details_table(flight)" class="table">
+  <table py:def="render_details_table(flight)" class="table" itemscope="" itemtype="http://schema.org/SportsEvent">
+    <meta itemprop="url" content="/flights/${flight.id}" />
     <tbody>
-      <tr>
+      <tr py:if="flight.takeoff_time">
         <th>Date</th>
-        <td>
-          <abbr py:if="flight.takeoff_time" py:content="format_date(flight.takeoff_time)" title="${flight.takeoff_time.isoformat()}">
-            2012-05-21
-          </abbr>
+        <td py:content="format_date(flight.takeoff_time)">
+          2012-05-21
         </td>
       </tr>
-      <tr>
+      <tr py:if="flight.takeoff_time">
+        <meta itemprop="startDate" content="${flight.takeoff_time.isoformat()}" />
         <th>Take-off</th>
-        <td>
-          <abbr py:if="flight.takeoff_time" py:content="format_time(flight.takeoff_time)" title="${flight.takeoff_time.isoformat()}">
-            10:00
-          </abbr>
+        <td py:content="format_time(flight.takeoff_time)">
+          10:00
         </td>
       </tr>
-      <tr>
+      <tr py:if="flight.landing_time">
+        <meta itemprop="endDate" content="${flight.landing_time.isoformat()}" />
         <th>Landing</th>
-        <td>
-          <abbr py:if="flight.landing_time" py:content="format_time(flight.landing_time)" title="${flight.landing_time.isoformat()}">
-            15:00
-          </abbr>
+        <td py:content="format_time(flight.landing_time)">
+          15:00
         </td>
       </tr>
-      <tr>
+      <tr py:if="flight.duration">
         <th>Duration</th>
-        <td>
-          <abbr py:if="flight.duration" py:content="str(flight.duration) + ' hours'">
-            01:23:34 hours
-          </abbr>
+        <td py:content="str(flight.duration) + ' hours'">
+          01:23:34 hours
         </td>
       </tr>
       <tr>
@@ -73,23 +68,25 @@ from babel.dates import format_date, format_time, format_datetime
       <tr>
         <th>Pilot</th>
         <td>
-          <a py:if="flight.pilot" py:content="flight.pilot" href="/flights/pilot/${flight.pilot_id}">
-            Pilot Name
-          </a>
-          <br py:if="flight.pilot and flight.co_pilot"/>
-          <a py:if="flight.co_pilot" py:content="flight.co_pilot" href="/flights/pilot/${flight.co_pilot_id}">
-            Co-Pilot Name
-          </a>
-          <span py:if="not flight.pilot and not flight.co_pilot" py:strip="True">
+          <div py:if="flight.pilot" itemprop="performer" itemscope="" itemtype="http://schema.org/Person">
+            <meta itemprop="url" content="/users/${flight.pilot_id}" />
+            <a py:content="flight.pilot" href="/flights/pilot/${flight.pilot_id}" itemprop="name">Pilot Name</a>
+          </div>
+          <div py:if="flight.co_pilot" itemprop="performer" itemscope="" itemtype="http://schema.org/Person">
+            <meta itemprop="url" content="/users/${flight.co_pilot_id}" />
+            <a py:content="flight.co_pilot" href="/flights/pilot/${flight.co_pilot_id}" itemprop="name">Co-Pilot Name</a>
+          </div>
+          <div py:if="not flight.pilot and not flight.co_pilot" py:strip="True">
             [unspecified]
-          </span>
+          </div>
           <a py:if="flight.is_writable()" href="change_pilot" class="btn btn-mini">Change</a>
         </td>
       </tr>
       <tr py:if="flight.club">
         <th>Club</th>
-        <td>
-          <a py:content="flight.club" href="/flights/club/${flight.club_id}">
+        <td itemprop="performer" itemscope="" itemtype="http://schema.org/SportsTeam">
+          <meta itemprop="url" content="/clubs/${flight.club_id}" />
+          <a py:content="flight.club" href="/flights/club/${flight.club_id}" itemprop="name">
             Club Name
           </a>
         </td>
