@@ -5,7 +5,7 @@ from sqlalchemy import *
 from sqlalchemy.orm import relation
 from sqlalchemy import Column
 from sqlalchemy.types import Integer, Float, DateTime
-from auth import User
+from skylines.model.auth import User
 from skylines.model import DeclarativeBase
 
 class TrackingFix(DeclarativeBase):

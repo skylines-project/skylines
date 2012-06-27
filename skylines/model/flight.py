@@ -5,7 +5,7 @@ from sqlalchemy.orm import relation
 from sqlalchemy import ForeignKey, Column, func
 from sqlalchemy.types import Integer, DateTime, String
 from sqlalchemy.ext.hybrid import hybrid_property
-from auth import User
+from skylines.model.auth import User
 from skylines.model import DeclarativeBase, DBSession
 from tg import config, request
 
