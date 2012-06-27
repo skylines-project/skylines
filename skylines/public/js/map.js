@@ -10,10 +10,10 @@ var map;
  *
  * Initialize the map and add airspace and flight path layers.
  */
-function initOpenLayers() {
+function initOpenLayers(id) {
   OpenLayers.ImgPath = "/images/OpenLayers/"
 
-  map = new OpenLayers.Map("map_canvas", {
+  map = new OpenLayers.Map(id, {
     projection: "EPSG:900913",
     controls: [],
     theme: null
