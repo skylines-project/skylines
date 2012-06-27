@@ -29,7 +29,7 @@ from babel.dates import format_date, format_time, format_datetime
       <tr>
         <th>Date</th>
         <td>
-          <abbr py:if="flight.takeoff_time" py:content="format_date(flight.takeoff_time)" title="${flight.takeoff_time}">
+          <abbr py:if="flight.takeoff_time" py:content="format_date(flight.takeoff_time)" title="${flight.takeoff_time.isoformat()}">
             2012-05-21
           </abbr>
         </td>
@@ -37,7 +37,7 @@ from babel.dates import format_date, format_time, format_datetime
       <tr>
         <th>Take-off</th>
         <td>
-          <abbr py:if="flight.takeoff_time" py:content="format_time(flight.takeoff_time)" title="${flight.takeoff_time}">
+          <abbr py:if="flight.takeoff_time" py:content="format_time(flight.takeoff_time)" title="${flight.takeoff_time.isoformat()}">
             10:00
           </abbr>
         </td>
@@ -45,7 +45,7 @@ from babel.dates import format_date, format_time, format_datetime
       <tr>
         <th>Landing</th>
         <td>
-          <abbr py:if="flight.landing_time" py:content="format_time(flight.landing_time)" title="${flight.landing_time}">
+          <abbr py:if="flight.landing_time" py:content="format_time(flight.landing_time)" title="${flight.landing_time.isoformat()}">
             15:00
           </abbr>
         </td>
@@ -97,7 +97,7 @@ from babel.dates import format_date, format_time, format_datetime
       <tr>
         <th>Uploaded</th>
         <td>
-          <abbr class="timeago" title="${flight.time_created}" py:content="format_datetime(flight.time_created)" rel="tooltip">4 days ago</abbr>
+          <abbr class="timeago" title="${flight.time_created.isoformat()}" py:content="format_datetime(flight.time_created)" rel="tooltip">4 days ago</abbr>
           by <span py:replace="flight.owner">Turbo</span>
         </td>
       </tr>
