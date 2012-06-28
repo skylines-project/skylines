@@ -212,19 +212,23 @@ class FlightsController(BaseController):
         if not date:
             raise HTTPNotFound
 
-        redirect('/flights/date/' + date.strftime("%Y-%m-%d"))
+        return self.date(date, *kw)
 
     @expose('skylines.templates.flights.list')
-    def date(self, request_date, **kw):
+    def date(self, date, **kw):
         try:
-            date = datetime.strptime(request_date, "%Y-%m-%d")
+            if isinstance(date, str):
+                date = datetime.strptime(date, "%Y-%m-%d")
+
+            if isinstance(date, datetime):
+                date = date.date()
         except:
             raise HTTPNotFound
 
         columns = { 0 : 'olc_plus_score', 1: 'display_name', 2: 'olc_classic_distance',
                     3: 'flights.club_id', 4: 'takeoff_time', 5: 'id' }
 
-        return self.__do_list('date', kw, date=date.date(), columns=columns)
+        return self.__do_list('date', kw, date=date, columns=columns)
 
 
     @expose('skylines.templates.flights.list')
