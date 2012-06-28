@@ -3,7 +3,7 @@
 from datetime import datetime, timedelta
 from math import log
 from tg import expose, validate, require, request, redirect, config
-from tg.i18n import ugettext as _, lazy_ugettext as l_
+from tg.i18n import ugettext as _
 from tg.decorators import override_template
 from repoze.what.predicates import has_permission
 from webob.exc import HTTPNotFound, HTTPForbidden

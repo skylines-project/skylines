@@ -1,14 +1,14 @@
 # -*- coding: utf-8 -*-
 
 from tg import expose, validate, request, redirect
-from tg.i18n import ugettext as _, lazy_ugettext as l_
 from repoze.what.predicates import not_anonymous
 from sqlalchemy.sql.expression import and_, or_
-from sprox.formbase import AddRecordForm, EditableForm, Field
+from sprox.formbase import AddRecordForm, EditableForm
 from tw.forms import TextField
 from skylines.lib.base import BaseController
 from skylines.model import DBSession, User, Club, Flight
 from skylines.controllers.users import ClubSelectField
+
 
 class SelectClubForm(EditableForm):
     __model__ = User
@@ -18,12 +18,14 @@ class SelectClubForm(EditableForm):
 
 select_club_form = SelectClubForm(DBSession)
 
+
 class NewClubForm(AddRecordForm):
     __model__ = Club
     __limit_fields__ = ['name']
     name = TextField
 
 new_club_form = NewClubForm(DBSession)
+
 
 class SettingsController(BaseController):
     allow_only = not_anonymous()
