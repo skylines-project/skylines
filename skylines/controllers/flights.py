@@ -20,6 +20,7 @@ from skylines.lib.igc import read_igc_header
 from skylines.lib.analysis import analyse_flight, flight_path
 from skylinespolyencode import SkyLinesPolyEncoder
 
+
 class PilotSelectField(PropertySingleSelectField):
     def _my_update_params(self, d, nullable=False):
         users = DBSession.query(User) \
@@ -30,6 +31,7 @@ class PilotSelectField(PropertySingleSelectField):
         d['options'] = options
         return d
 
+
 class SelectPilotForm(EditableForm):
     __model__ = Flight
     __hide_fields__ = ['id']
@@ -39,6 +41,7 @@ class SelectPilotForm(EditableForm):
     co_pilot = PilotSelectField
 
 select_pilot_form = SelectPilotForm(DBSession)
+
 
 class FlightController(BaseController):
     def __init__(self, flight):
@@ -100,7 +103,6 @@ class FlightController(BaseController):
         if not self.flight.is_writable():
             raise HTTPForbidden
 
-        user = request.identity['user']
         if self.flight.pilot_id != pilot:
             self.flight.pilot_id = pilot
             if pilot:
@@ -149,10 +151,17 @@ class FlightsController(BaseController):
         if filter is not None:
             flights = flights.filter(filter)
 
-        if kw.get("json", "false")  == 'true':
+        if kw.get("json", "false") == 'true':
             if not columns:
-                columns = { 0: 'takeoff_time', 1 : 'olc_plus_score', 2: 'display_name', 3: 'olc_classic_distance',
-                            4: 'flights.club_id', 5: 'takeoff_time', 6: 'id' }
+                columns = {
+                    0: 'takeoff_time',
+                    1: 'olc_plus_score',
+                    2: 'display_name',
+                    3: 'olc_classic_distance',
+                    4: 'flights.club_id',
+                    5: 'takeoff_time',
+                    6: 'id'
+                }
 
             flights, response_dict = GetDatatableRecords(kw, flights, columns)
 
@@ -225,11 +234,16 @@ class FlightsController(BaseController):
         except:
             raise HTTPNotFound
 
-        columns = { 0 : 'olc_plus_score', 1: 'display_name', 2: 'olc_classic_distance',
-                    3: 'flights.club_id', 4: 'takeoff_time', 5: 'id' }
+        columns = {
+            0: 'olc_plus_score',
+            1: 'display_name',
+            2: 'olc_classic_distance',
+            3: 'flights.club_id',
+            4: 'takeoff_time',
+            5: 'id',
+        }
 
         return self.__do_list('date', kw, date=date, columns=columns)
-
 
     @expose('skylines.templates.flights.list')
     def my(self, **kw):
@@ -260,8 +274,14 @@ class FlightsController(BaseController):
         if not pilot:
             raise HTTPNotFound
 
-        columns = { 0: 'takeoff_time', 1 : 'olc_plus_score', 2: 'display_name', 3: 'olc_classic_distance',
-                    4: 'takeoff_time', 5: 'id' }
+        columns = {
+            0: 'takeoff_time',
+            1: 'olc_plus_score',
+            2: 'display_name',
+            3: 'olc_classic_distance',
+            4: 'takeoff_time',
+            5: 'id',
+        }
 
         return self.__do_list('pilot', kw, pilot=pilot, columns=columns)
 
@@ -271,8 +291,14 @@ class FlightsController(BaseController):
         if not club:
             raise HTTPNotFound
 
-        columns = { 0: 'takeoff_time', 1 : 'olc_plus_score', 2: 'display_name', 3: 'olc_classic_distance',
-                    4: 'takeoff_time', 5: 'id' }
+        columns = {
+            0: 'takeoff_time',
+            1: 'olc_plus_score',
+            2: 'display_name',
+            3: 'olc_classic_distance',
+            4: 'takeoff_time',
+            5: 'id'
+        }
 
         return self.__do_list('club', kw, club=club, columns=columns)
 
