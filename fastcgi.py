@@ -5,6 +5,7 @@
 
 import sys
 import thread
+import logging
 from paste.deploy import loadapp
 from flup.server.fcgi import WSGIServer
 
@@ -25,7 +26,9 @@ sys.path.append('/opt/skylines/src')
 
 thread.stack_size(524288)
 
-wsgi_app = loadapp('config:/etc/skylines/production.ini')
+config_file = '/etc/skylines/production.ini'
+wsgi_app = loadapp('config:' + config_file)
+logging.config.fileConfig(config_file)
 
 if __name__ == '__main__':
     WSGIServer(wsgi_app, minSpare=1, maxSpare=5, maxThreads=50).run()
