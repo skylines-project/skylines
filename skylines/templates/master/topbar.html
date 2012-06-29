@@ -17,6 +17,7 @@
           <li class="${('', 'active')[defined('page') and page=='flights']}"><a href="${tg.url('/flights/')}">Flights</a></li>
           <li class="${('', 'active')[defined('page') and page=='ranking']}"><a href="${tg.url('/ranking/')}">Ranking</a></li>
           <li class="${('', 'active')[defined('page') and page=='statistics']}"><a href="${tg.url('/statistics/')}">Statistics</a></li>
+          <li class="${('', 'active')[defined('page') and page=='tracking']}"><a href="${tg.url('/tracking/')}">Live</a></li>
         </ul>
         <py:if test="tg.auth_stack_enabled">
         <ul class="nav pull-right">
