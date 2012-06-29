@@ -22,9 +22,13 @@ class TrackController(BaseController):
 
         result = []
         for fix in query:
+            location = fix.location
+            if location is None:
+                continue
+
             # TODO: handle midnight wraparound
             result.append((fix.time.hour * 3600 + fix.time.minute * 60 + fix.time.second,
-                           fix.latitude, fix.longitude,
+                           location.latitude, location.longitude,
                            fix.altitude))
         return result
 

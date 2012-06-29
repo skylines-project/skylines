@@ -2,7 +2,7 @@ import struct
 from twisted.internet.protocol import DatagramProtocol
 from twisted.internet import reactor
 import transaction
-from skylines.model import DBSession, User, TrackingFix
+from skylines.model import DBSession, User, TrackingFix, Location
 
 # More information about this protocol can be found in the XCSoar
 # source code, source file src/Tracking/SkyLines/Protocol.hpp
@@ -41,8 +41,8 @@ class TrackingServer(DatagramProtocol):
         fix.pilot = pilot
 
         if flags & FLAG_LOCATION:
-            fix.latitude = data[2] / 1000000.
-            fix.longitude = data[3] / 1000000.
+            fix.location = Location(latitude=data[2] / 1000000.,
+                                    longitude=data[3] / 1000000.)
 
         if flags & FLAG_TRACK:
             fix.track = data[4]
@@ -62,7 +62,7 @@ class TrackingServer(DatagramProtocol):
         if flags & FLAG_ENL:
             fix.engine_noise_level = data[9]
 
-        print pilot, fix.latitude, fix.longitude, data
+        print pilot, fix.location, data
 
         DBSession.add(fix)
         DBSession.flush()
@@ -83,8 +83,8 @@ class TrackingServer(DatagramProtocol):
         fix.pilot = pilot
 
         if flags & FLAG_LOCATION:
-            fix.latitude = data[2] / 1000000.
-            fix.longitude = data[3] / 1000000.
+            fix.location = Location(latitude=data[2] / 1000000.,
+                                    longitude=data[3] / 1000000.)
 
         if flags & FLAG_TRACK:
             fix.track = data[5]
@@ -104,7 +104,7 @@ class TrackingServer(DatagramProtocol):
         if flags & FLAG_ENL:
             fix.engine_noise_level = data[10]
 
-        print pilot, fix.latitude, fix.longitude, data
+        print pilot, fix.location, data
 
         DBSession.add(fix)
         DBSession.flush()
