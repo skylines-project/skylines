@@ -20,3 +20,6 @@ class Location(object):
 
         return Location(latitude = float(match.group(2)), 
                         longitude = float(match.group(1)))
+
+    def __str__(self):
+        return self.to_wkt()
