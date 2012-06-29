@@ -45,7 +45,7 @@ install_requires = [
     "repoze.what-quickstart>=1.0.9",
     "repoze.what.plugins.sql>=1.0.1",
     "tw.forms",
-    "lxml",
+    "simplejson",
     "skylinespolyencode",
     "psycopg2",
     "geoalchemy",
