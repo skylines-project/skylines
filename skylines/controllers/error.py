@@ -2,6 +2,7 @@
 """Error controller"""
 
 from tg import request, expose
+from webob.exc import HTTPNotFound
 
 __all__ = ['ErrorController']
 
@@ -15,13 +16,16 @@ class ErrorController(object):
 
     This behaviour can be altered by changing the parameters to the
     ErrorDocuments middleware in your config/middleware.py file.
-    
+
     """
 
     @expose('skylines.templates.error')
     def document(self, *args, **kwargs):
         """Render the error document"""
         resp = request.environ.get('pylons.original_response')
+        if resp is None:
+            raise HTTPNotFound
+
         default_message = ("<p>We're sorry but we weren't able to process "
                            " this request.</p>")
         values = dict(prefix=request.environ.get('SCRIPT_NAME', ''),
