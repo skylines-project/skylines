@@ -1,12 +1,13 @@
 # -*- coding: utf-8 -*-
 
+import math
+import logging
 from datetime import datetime, timedelta
-from math import log
 from tg import expose, validate, require, request, redirect, config
 from tg.i18n import ugettext as _
 from tg.decorators import override_template
 from repoze.what.predicates import has_permission
-from webob.exc import HTTPNotFound, HTTPForbidden
+from webob.exc import HTTPNotFound, HTTPForbidden, HTTPServerError
 from sqlalchemy.sql.expression import desc, or_, and_, between
 from sqlalchemy import func
 from sprox.formbase import EditableForm
@@ -19,6 +20,8 @@ from skylines.lib.datatables import GetDatatableRecords
 from skylines.lib.igc import read_igc_header
 from skylines.lib.analysis import analyse_flight, flight_path
 from skylinespolyencode import SkyLinesPolyEncoder
+
+log = logging.getLogger(__name__)
 
 
 class PilotSelectField(PropertySingleSelectField):
@@ -49,11 +52,14 @@ class FlightController(BaseController):
 
     def __get_flight_path(self, threshold = 0.001, max_points = 3000):
         fp = flight_path(self.flight, max_points)
+        if len(fp) == 0:
+            log.error('flight_path("' + self.flight.filename + '") returned with an empty list')
+            raise HTTPServerError
 
         num_levels = 4
         zoom_factor = 4
         zoom_levels = [0]
-        zoom_levels.extend([round(-log(32.0/45.0 * (threshold * pow(zoom_factor, num_levels - i - 1)), 2)) for i in range(1, num_levels)])
+        zoom_levels.extend([round(-math.log(32.0/45.0 * (threshold * pow(zoom_factor, num_levels - i - 1)), 2)) for i in range(1, num_levels)])
 
         max_delta_time = max(4, (fp[-1][0] - fp[0][0]) / 500)
 
