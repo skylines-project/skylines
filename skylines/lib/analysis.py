@@ -2,7 +2,7 @@
 
 import os
 import datetime
-from lxml import etree
+import simplejson
 from skylines import files
 from tg import config
 from skylines.model.geo import Location
@@ -15,48 +15,56 @@ def helper_path(helper):
     return os.path.join(config['skylines.analysis.path'], helper)
 
 
-def import_location_attribute(node):
-    if node is None:
+def import_location_attribute(node, name):
+    if node is None or name not in node:
+        return None
+
+    location = node[name]
+    if 'latitude' not in location or 'longitude' not in location:
         return None
 
     try:
-        latitude = float(node.attrib['latitude'])
-        longitude = float(node.attrib['longitude'])
+        latitude = float(location['latitude'])
+        longitude = float(location['longitude'])
         return Location(latitude=latitude, longitude=longitude)
     except ValueError:
         return None
 
 
 def import_datetime_attribute(node, name):
-    if node is None or not name in node.attrib:
+    if node is None or name not in node:
         return None
     try:
-        return datetime.datetime.strptime(node.attrib[name], '%Y-%m-%dT%H:%M:%SZ')
+        return datetime.datetime.strptime(node[name], '%Y-%m-%dT%H:%M:%SZ')
     except ValueError:
         return None
 
 
 def find_contest(root, name):
-    for contest in root.findall('contest'):
-        if contest.attrib['name'] == name:
-            return contest
-    return None
+    if 'contests' not in root:
+        return None
+
+    if name not in root['contests']:
+        return None
+
+    return root['contests'][name]
 
 
 def find_trace(contest, name):
-    for contest in contest.findall('trace'):
-        if contest.attrib['name'] == name:
-            return contest
-    return None
+    if not name in contest:
+        return None
+
+    return contest[name]
 
 
 def analyse_flight(flight):
     path = files.filename_to_path(flight.filename)
 
+    root = None
     with os.popen(helper_path('AnalyseFlight') + ' "' + path + '"') as f:
         try:
-            doc = etree.parse(f)
-        except etree.Error:
+            root = simplejson.load(f)
+        except simplejson.JSONDecodeError:
             log.error('Parsing the output of AnalyseFlight failed.')
 
             if log.isEnabledFor(logging.DEBUG):
@@ -65,34 +73,34 @@ def analyse_flight(flight):
 
             return False
 
-    root = doc.getroot()
+    if not root:
+        return False
 
-    times = root.find('times')
+    times = root['times'] if 'times' in root else None
     flight.takeoff_time = import_datetime_attribute(times, "takeoff")
     flight.landing_time = import_datetime_attribute(times, "landing")
 
-    locations = root.find('locations')
-    if locations:
-        flight.takeoff_location = import_location_attribute(locations.find('takeoff'))
-        flight.landing_location = import_location_attribute(locations.find('landing'))
+    locations = root['locations'] if 'locations' in root else None
+    flight.takeoff_location = import_location_attribute(locations, 'takeoff')
+    flight.landing_location = import_location_attribute(locations, 'landing')
 
     contest = find_contest(root, 'olc_plus')
     if contest is not None:
         trace = find_trace(contest, 'classic')
-        if trace is not None:
-            flight.olc_classic_distance = int(float(trace.attrib['distance']))
+        if trace is not None and 'distance' in trace:
+            flight.olc_classic_distance = int(trace['distance'])
         else:
             flight.olc_classic_distance = None
 
         trace = find_trace(contest, 'triangle')
-        if trace is not None:
-            flight.olc_triangle_distance = int(float(trace.attrib['distance']))
+        if trace is not None and 'distance' in trace:
+            flight.olc_triangle_distance = int(trace['distance'])
         else:
             flight.olc_triangle_distance = None
 
         trace = find_trace(contest, 'plus')
-        if trace is not None:
-            flight.olc_plus_score = int(float(trace.attrib['score']))
+        if trace is not None and 'score' in trace:
+            flight.olc_plus_score = int(trace['score'])
         else:
             flight.olc_plus_score = None
 
