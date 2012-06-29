@@ -22732,649 +22732,6 @@ OpenLayers.Events.buttonclick = OpenLayers.Class({
     
 });
 /* ======================================================================
-    OpenLayers/Control/PanZoom.js
-   ====================================================================== */
-
-/* Copyright (c) 2006-2012 by OpenLayers Contributors (see authors.txt for 
- * full list of contributors). Published under the 2-clause BSD license.
- * See license.txt in the OpenLayers distribution or repository for the
- * full text of the license. */
-
-
-/**
- * @requires OpenLayers/Control.js
- * @requires OpenLayers/Events/buttonclick.js
- */
-
-/**
- * Class: OpenLayers.Control.PanZoom
- * The PanZoom is a visible control, composed of a
- * <OpenLayers.Control.PanPanel> and a <OpenLayers.Control.ZoomPanel>. By
- * default it is drawn in the upper left corner of the map.
- *
- * Inherits from:
- *  - <OpenLayers.Control>
- */
-OpenLayers.Control.PanZoom = OpenLayers.Class(OpenLayers.Control, {
-
-    /** 
-     * APIProperty: slideFactor
-     * {Integer} Number of pixels by which we'll pan the map in any direction 
-     *     on clicking the arrow buttons.  If you want to pan by some ratio
-     *     of the map dimensions, use <slideRatio> instead.
-     */
-    slideFactor: 50,
-
-    /** 
-     * APIProperty: slideRatio
-     * {Number} The fraction of map width/height by which we'll pan the map            
-     *     on clicking the arrow buttons.  Default is null.  If set, will
-     *     override <slideFactor>. E.g. if slideRatio is .5, then the Pan Up
-     *     button will pan up half the map height. 
-     */
-    slideRatio: null,
-
-    /** 
-     * Property: buttons
-     * {Array(DOMElement)} Array of Button Divs 
-     */
-    buttons: null,
-
-    /** 
-     * Property: position
-     * {<OpenLayers.Pixel>} 
-     */
-    position: null,
-
-    /**
-     * Constructor: OpenLayers.Control.PanZoom
-     * 
-     * Parameters:
-     * options - {Object}
-     */
-    initialize: function(options) {
-        this.position = new OpenLayers.Pixel(OpenLayers.Control.PanZoom.X,
-                                             OpenLayers.Control.PanZoom.Y);
-        OpenLayers.Control.prototype.initialize.apply(this, arguments);
-    },
-
-    /**
-     * APIMethod: destroy
-     */
-    destroy: function() {
-        if (this.map) {
-            this.map.events.unregister("buttonclick", this, this.onButtonClick);
-        }
-        this.removeButtons();
-        this.buttons = null;
-        this.position = null;
-        OpenLayers.Control.prototype.destroy.apply(this, arguments);
-    },
-
-    /** 
-     * Method: setMap
-     *
-     * Properties:
-     * map - {<OpenLayers.Map>} 
-     */
-    setMap: function(map) {
-        OpenLayers.Control.prototype.setMap.apply(this, arguments);
-        this.map.events.register("buttonclick", this, this.onButtonClick);
-    },
-
-    /**
-     * Method: draw
-     *
-     * Parameters:
-     * px - {<OpenLayers.Pixel>} 
-     * 
-     * Returns:
-     * {DOMElement} A reference to the container div for the PanZoom control.
-     */
-    draw: function(px) {
-        // initialize our internal div
-        OpenLayers.Control.prototype.draw.apply(this, arguments);
-        px = this.position;
-
-        // place the controls
-        this.buttons = [];
-
-        var sz = {w: 18, h: 18};
-        var centered = new OpenLayers.Pixel(px.x+sz.w/2, px.y);
-
-        this._addButton("panup", "north-mini.png", centered, sz);
-        px.y = centered.y+sz.h;
-        this._addButton("panleft", "west-mini.png", px, sz);
-        this._addButton("panright", "east-mini.png", px.add(sz.w, 0), sz);
-        this._addButton("pandown", "south-mini.png", 
-                        centered.add(0, sz.h*2), sz);
-        this._addButton("zoomin", "zoom-plus-mini.png", 
-                        centered.add(0, sz.h*3+5), sz);
-        this._addButton("zoomworld", "zoom-world-mini.png", 
-                        centered.add(0, sz.h*4+5), sz);
-        this._addButton("zoomout", "zoom-minus-mini.png", 
-                        centered.add(0, sz.h*5+5), sz);
-        return this.div;
-    },
-    
-    /**
-     * Method: _addButton
-     * 
-     * Parameters:
-     * id - {String} 
-     * img - {String} 
-     * xy - {<OpenLayers.Pixel>} 
-     * sz - {<OpenLayers.Size>} 
-     * 
-     * Returns:
-     * {DOMElement} A Div (an alphaImageDiv, to be precise) that contains the
-     *     image of the button, and has all the proper event handlers set.
-     */
-    _addButton:function(id, img, xy, sz) {
-        var imgLocation = OpenLayers.Util.getImageLocation(img);
-        var btn = OpenLayers.Util.createAlphaImageDiv(
-                                    this.id + "_" + id, 
-                                    xy, sz, imgLocation, "absolute");
-        btn.style.cursor = "pointer";
-        //we want to add the outer div
-        this.div.appendChild(btn);
-        btn.action = id;
-        btn.className = "olButton";
-    
-        //we want to remember/reference the outer div
-        this.buttons.push(btn);
-        return btn;
-    },
-    
-    /**
-     * Method: _removeButton
-     * 
-     * Parameters:
-     * btn - {Object}
-     */
-    _removeButton: function(btn) {
-        this.div.removeChild(btn);
-        OpenLayers.Util.removeItem(this.buttons, btn);
-    },
-    
-    /**
-     * Method: removeButtons
-     */
-    removeButtons: function() {
-        for(var i=this.buttons.length-1; i>=0; --i) {
-            this._removeButton(this.buttons[i]);
-        }
-    },
-    
-    /**
-     * Method: onButtonClick
-     *
-     * Parameters:
-     * evt - {Event}
-     */
-    onButtonClick: function(evt) {
-        var btn = evt.buttonElement;
-        switch (btn.action) {
-            case "panup": 
-                this.map.pan(0, -this.getSlideFactor("h"));
-                break;
-            case "pandown": 
-                this.map.pan(0, this.getSlideFactor("h"));
-                break;
-            case "panleft": 
-                this.map.pan(-this.getSlideFactor("w"), 0);
-                break;
-            case "panright": 
-                this.map.pan(this.getSlideFactor("w"), 0);
-                break;
-            case "zoomin": 
-                this.map.zoomIn(); 
-                break;
-            case "zoomout": 
-                this.map.zoomOut(); 
-                break;
-            case "zoomworld": 
-                this.map.zoomToMaxExtent(); 
-                break;
-        }
-    },
-    
-    /**
-     * Method: getSlideFactor
-     *
-     * Parameters:
-     * dim - {String} "w" or "h" (for width or height).
-     *
-     * Returns:
-     * {Number} The slide factor for panning in the requested direction.
-     */
-    getSlideFactor: function(dim) {
-        return this.slideRatio ?
-            this.map.getSize()[dim] * this.slideRatio :
-            this.slideFactor;
-    },
-
-    CLASS_NAME: "OpenLayers.Control.PanZoom"
-});
-
-/**
- * Constant: X
- * {Integer}
- */
-OpenLayers.Control.PanZoom.X = 4;
-
-/**
- * Constant: Y
- * {Integer}
- */
-OpenLayers.Control.PanZoom.Y = 4;
-/* ======================================================================
-    OpenLayers/Control/PanZoomBar.js
-   ====================================================================== */
-
-/* Copyright (c) 2006-2012 by OpenLayers Contributors (see authors.txt for 
- * full list of contributors). Published under the 2-clause BSD license.
- * See license.txt in the OpenLayers distribution or repository for the
- * full text of the license. */
-
-
-/**
- * @requires OpenLayers/Control/PanZoom.js
- */
-
-/**
- * Class: OpenLayers.Control.PanZoomBar
- * The PanZoomBar is a visible control composed of a
- * <OpenLayers.Control.PanPanel> and a <OpenLayers.Control.ZoomBar>. 
- * By default it is displayed in the upper left corner of the map as 4
- * directional arrows above a vertical slider.
- *
- * Inherits from:
- *  - <OpenLayers.Control.PanZoom>
- */
-OpenLayers.Control.PanZoomBar = OpenLayers.Class(OpenLayers.Control.PanZoom, {
-
-    /** 
-     * APIProperty: zoomStopWidth
-     */
-    zoomStopWidth: 18,
-
-    /** 
-     * APIProperty: zoomStopHeight
-     */
-    zoomStopHeight: 11,
-
-    /** 
-     * Property: slider
-     */
-    slider: null,
-
-    /** 
-     * Property: sliderEvents
-     * {<OpenLayers.Events>}
-     */
-    sliderEvents: null,
-
-    /** 
-     * Property: zoombarDiv
-     * {DOMElement}
-     */
-    zoombarDiv: null,
-
-    /** 
-     * APIProperty: zoomWorldIcon
-     * {Boolean}
-     */
-    zoomWorldIcon: false,
-
-    /**
-     * APIProperty: panIcons
-     * {Boolean} Set this property to false not to display the pan icons. If
-     * false the zoom world icon is placed under the zoom bar. Defaults to
-     * true.
-     */
-    panIcons: true,
-
-    /**
-     * APIProperty: forceFixedZoomLevel
-     * {Boolean} Force a fixed zoom level even though the map has 
-     *     fractionalZoom
-     */
-    forceFixedZoomLevel: false,
-
-    /**
-     * Property: mouseDragStart
-     * {<OpenLayers.Pixel>}
-     */
-    mouseDragStart: null,
-
-    /**
-     * Property: deltaY
-     * {Number} The cumulative vertical pixel offset during a zoom bar drag.
-     */
-    deltaY: null,
-
-    /**
-     * Property: zoomStart
-     * {<OpenLayers.Pixel>}
-     */
-    zoomStart: null,
-
-    /**
-     * Constructor: OpenLayers.Control.PanZoomBar
-     */ 
-
-    /**
-     * APIMethod: destroy
-     */
-    destroy: function() {
-
-        this._removeZoomBar();
-
-        this.map.events.un({
-            "changebaselayer": this.redraw,
-            scope: this
-        });
-
-        OpenLayers.Control.PanZoom.prototype.destroy.apply(this, arguments);
-
-        delete this.mouseDragStart;
-        delete this.zoomStart;
-    },
-    
-    /**
-     * Method: setMap
-     * 
-     * Parameters:
-     * map - {<OpenLayers.Map>} 
-     */
-    setMap: function(map) {
-        OpenLayers.Control.PanZoom.prototype.setMap.apply(this, arguments);
-        this.map.events.register("changebaselayer", this, this.redraw);
-    },
-
-    /** 
-     * Method: redraw
-     * clear the div and start over.
-     */
-    redraw: function() {
-        if (this.div != null) {
-            this.removeButtons();
-            this._removeZoomBar();
-        }  
-        this.draw();
-    },
-    
-    /**
-    * Method: draw 
-    *
-    * Parameters:
-    * px - {<OpenLayers.Pixel>} 
-    */
-    draw: function(px) {
-        // initialize our internal div
-        OpenLayers.Control.prototype.draw.apply(this, arguments);
-        px = this.position.clone();
-
-        // place the controls
-        this.buttons = [];
-
-        var sz = {w: 18, h: 18};
-        if (this.panIcons) {
-            var centered = new OpenLayers.Pixel(px.x+sz.w/2, px.y);
-            var wposition = sz.w;
-
-            if (this.zoomWorldIcon) {
-                centered = new OpenLayers.Pixel(px.x+sz.w, px.y);
-            }
-
-            this._addButton("panup", "north-mini.png", centered, sz);
-            px.y = centered.y+sz.h;
-            this._addButton("panleft", "west-mini.png", px, sz);
-            if (this.zoomWorldIcon) {
-                this._addButton("zoomworld", "zoom-world-mini.png", px.add(sz.w, 0), sz);
-
-                wposition *= 2;
-            }
-            this._addButton("panright", "east-mini.png", px.add(wposition, 0), sz);
-            this._addButton("pandown", "south-mini.png", centered.add(0, sz.h*2), sz);
-            this._addButton("zoomin", "zoom-plus-mini.png", centered.add(0, sz.h*3+5), sz);
-            centered = this._addZoomBar(centered.add(0, sz.h*4 + 5));
-            this._addButton("zoomout", "zoom-minus-mini.png", centered, sz);
-        }
-        else {
-            this._addButton("zoomin", "zoom-plus-mini.png", px, sz);
-            centered = this._addZoomBar(px.add(0, sz.h));
-            this._addButton("zoomout", "zoom-minus-mini.png", centered, sz);
-            if (this.zoomWorldIcon) {
-                centered = centered.add(0, sz.h+3);
-                this._addButton("zoomworld", "zoom-world-mini.png", centered, sz);
-            }
-        }
-        return this.div;
-    },
-
-    /** 
-    * Method: _addZoomBar
-    * 
-    * Parameters:
-    * centered - {<OpenLayers.Pixel>} where zoombar drawing is to start.
-    */
-    _addZoomBar:function(centered) {
-        var imgLocation = OpenLayers.Util.getImageLocation("slider.png");
-        var id = this.id + "_" + this.map.id;
-        var zoomsToEnd = this.map.getNumZoomLevels() - 1 - this.map.getZoom();
-        var slider = OpenLayers.Util.createAlphaImageDiv(id,
-                       centered.add(-1, zoomsToEnd * this.zoomStopHeight), 
-                       {w: 20, h: 9},
-                       imgLocation,
-                       "absolute");
-        slider.style.cursor = "move";
-        this.slider = slider;
-        
-        this.sliderEvents = new OpenLayers.Events(this, slider, null, true,
-                                            {includeXY: true});
-        this.sliderEvents.on({
-            "touchstart": this.zoomBarDown,
-            "touchmove": this.zoomBarDrag,
-            "touchend": this.zoomBarUp,
-            "mousedown": this.zoomBarDown,
-            "mousemove": this.zoomBarDrag,
-            "mouseup": this.zoomBarUp
-        });
-        
-        var sz = {
-            w: this.zoomStopWidth,
-            h: this.zoomStopHeight * this.map.getNumZoomLevels()
-        };
-        var imgLocation = OpenLayers.Util.getImageLocation("zoombar.png");
-        var div = null;
-        
-        if (OpenLayers.Util.alphaHack()) {
-            var id = this.id + "_" + this.map.id;
-            div = OpenLayers.Util.createAlphaImageDiv(id, centered,
-                                      {w: sz.w, h: this.zoomStopHeight},
-                                      imgLocation,
-                                      "absolute", null, "crop");
-            div.style.height = sz.h + "px";
-        } else {
-            div = OpenLayers.Util.createDiv(
-                        'OpenLayers_Control_PanZoomBar_Zoombar' + this.map.id,
-                        centered,
-                        sz,
-                        imgLocation);
-        }
-        div.style.cursor = "pointer";
-        div.className = "olButton";
-        this.zoombarDiv = div;
-        
-        this.div.appendChild(div);
-
-        this.startTop = parseInt(div.style.top);
-        this.div.appendChild(slider);
-
-        this.map.events.register("zoomend", this, this.moveZoomBar);
-
-        centered = centered.add(0, 
-            this.zoomStopHeight * this.map.getNumZoomLevels());
-        return centered; 
-    },
-    
-    /**
-     * Method: _removeZoomBar
-     */
-    _removeZoomBar: function() {
-        this.sliderEvents.un({
-            "touchstart": this.zoomBarDown,
-            "touchmove": this.zoomBarDrag,
-            "touchend": this.zoomBarUp,
-            "mousedown": this.zoomBarDown,
-            "mousemove": this.zoomBarDrag,
-            "mouseup": this.zoomBarUp
-        });
-        this.sliderEvents.destroy();
-        
-        this.div.removeChild(this.zoombarDiv);
-        this.zoombarDiv = null;
-        this.div.removeChild(this.slider);
-        this.slider = null;
-        
-        this.map.events.unregister("zoomend", this, this.moveZoomBar);
-    },
-    
-    /**
-     * Method: onButtonClick
-     *
-     * Parameters:
-     * evt - {Event}
-     */
-    onButtonClick: function(evt) {
-        OpenLayers.Control.PanZoom.prototype.onButtonClick.apply(this, arguments);
-        if (evt.buttonElement === this.zoombarDiv) {
-            var levels = evt.buttonXY.y / this.zoomStopHeight;
-            if(this.forceFixedZoomLevel || !this.map.fractionalZoom) {
-                levels = Math.floor(levels);
-            }    
-            var zoom = (this.map.getNumZoomLevels() - 1) - levels; 
-            zoom = Math.min(Math.max(zoom, 0), this.map.getNumZoomLevels() - 1);
-            this.map.zoomTo(zoom);
-        }
-    },
-    
-    /**
-     * Method: passEventToSlider
-     * This function is used to pass events that happen on the div, or the map,
-     * through to the slider, which then does its moving thing.
-     *
-     * Parameters:
-     * evt - {<OpenLayers.Event>} 
-     */
-    passEventToSlider:function(evt) {
-        this.sliderEvents.handleBrowserEvent(evt);
-    },
-    
-    /*
-     * Method: zoomBarDown
-     * event listener for clicks on the slider
-     *
-     * Parameters:
-     * evt - {<OpenLayers.Event>} 
-     */
-    zoomBarDown:function(evt) {
-        if (!OpenLayers.Event.isLeftClick(evt) && !OpenLayers.Event.isSingleTouch(evt)) {
-            return;
-        }
-        this.map.events.on({
-            "touchmove": this.passEventToSlider,
-            "mousemove": this.passEventToSlider,
-            "mouseup": this.passEventToSlider,
-            scope: this
-        });
-        this.mouseDragStart = evt.xy.clone();
-        this.zoomStart = evt.xy.clone();
-        this.div.style.cursor = "move";
-        // reset the div offsets just in case the div moved
-        this.zoombarDiv.offsets = null; 
-        OpenLayers.Event.stop(evt);
-    },
-    
-    /*
-     * Method: zoomBarDrag
-     * This is what happens when a click has occurred, and the client is
-     * dragging.  Here we must ensure that the slider doesn't go beyond the
-     * bottom/top of the zoombar div, as well as moving the slider to its new
-     * visual location
-     *
-     * Parameters:
-     * evt - {<OpenLayers.Event>} 
-     */
-    zoomBarDrag:function(evt) {
-        if (this.mouseDragStart != null) {
-            var deltaY = this.mouseDragStart.y - evt.xy.y;
-            var offsets = OpenLayers.Util.pagePosition(this.zoombarDiv);
-            if ((evt.clientY - offsets[1]) > 0 && 
-                (evt.clientY - offsets[1]) < parseInt(this.zoombarDiv.style.height) - 2) {
-                var newTop = parseInt(this.slider.style.top) - deltaY;
-                this.slider.style.top = newTop+"px";
-                this.mouseDragStart = evt.xy.clone();
-            }
-            // set cumulative displacement
-            this.deltaY = this.zoomStart.y - evt.xy.y;
-            OpenLayers.Event.stop(evt);
-        }
-    },
-    
-    /*
-     * Method: zoomBarUp
-     * Perform cleanup when a mouseup event is received -- discover new zoom
-     * level and switch to it.
-     *
-     * Parameters:
-     * evt - {<OpenLayers.Event>} 
-     */
-    zoomBarUp:function(evt) {
-        if (!OpenLayers.Event.isLeftClick(evt) && evt.type !== "touchend") {
-            return;
-        }
-        if (this.mouseDragStart) {
-            this.div.style.cursor="";
-            this.map.events.un({
-                "touchmove": this.passEventToSlider,
-                "mouseup": this.passEventToSlider,
-                "mousemove": this.passEventToSlider,
-                scope: this
-            });
-            var zoomLevel = this.map.zoom;
-            if (!this.forceFixedZoomLevel && this.map.fractionalZoom) {
-                zoomLevel += this.deltaY/this.zoomStopHeight;
-                zoomLevel = Math.min(Math.max(zoomLevel, 0), 
-                                     this.map.getNumZoomLevels() - 1);
-            } else {
-                zoomLevel += this.deltaY/this.zoomStopHeight;
-                zoomLevel = Math.max(Math.round(zoomLevel), 0);      
-            }
-            this.map.zoomTo(zoomLevel);
-            this.mouseDragStart = null;
-            this.zoomStart = null;
-            this.deltaY = 0;
-            OpenLayers.Event.stop(evt);
-        }
-    },
-    
-    /*
-    * Method: moveZoomBar
-    * Change the location of the slider to match the current zoom level.
-    */
-    moveZoomBar:function() {
-        var newTop = 
-            ((this.map.getNumZoomLevels()-1) - this.map.getZoom()) * 
-            this.zoomStopHeight + this.startTop + 1;
-        this.slider.style.top = newTop + "px";
-    },    
-    
-    CLASS_NAME: "OpenLayers.Control.PanZoomBar"
-});
-/* ======================================================================
     OpenLayers/Handler/Drag.js
    ====================================================================== */
 
@@ -29296,6 +28653,148 @@ OpenLayers.Layer.Bing.processMetadata = function(metadata) {
     window[this._callbackId] = undefined; // cannot delete from window in IE
     delete this._callbackId;
 };
+/* ======================================================================
+    OpenLayers/Control/Zoom.js
+   ====================================================================== */
+
+/* Copyright (c) 2006-2012 by OpenLayers Contributors (see authors.txt for 
+ * full list of contributors). Published under the 2-clause BSD license.
+ * See license.txt in the OpenLayers distribution or repository for the
+ * full text of the license. */
+
+/**
+ * @requires OpenLayers/Control.js
+ * @requires OpenLayers/Events/buttonclick.js
+ */
+
+/**
+ * Class: OpenLayers.Control.Zoom
+ * The Zoom control is a pair of +/- links for zooming in and out.
+ *
+ * Inherits from:
+ *  - <OpenLayers.Control>
+ */
+OpenLayers.Control.Zoom = OpenLayers.Class(OpenLayers.Control, {
+    
+    /**
+     * APIProperty: zoomInText
+     * {String}
+     * Text for zoom-in link.  Default is "+".
+     */
+    zoomInText: "+",
+
+    /**
+     * APIProperty: zoomInId
+     * {String}
+     * Instead of having the control create a zoom in link, you can provide 
+     *     the identifier for an anchor element already added to the document.
+     *     By default, an element with id "olZoomInLink" will be searched for
+     *     and used if it exists.
+     */
+    zoomInId: "olZoomInLink",
+
+    /**
+     * APIProperty: zoomOutText
+     * {String}
+     * Text for zoom-out link.  Default is "-".
+     */
+    zoomOutText: "-",
+
+    /**
+     * APIProperty: zoomOutId
+     * {String}
+     * Instead of having the control create a zoom out link, you can provide 
+     *     the identifier for an anchor element already added to the document.
+     *     By default, an element with id "olZoomOutLink" will be searched for
+     *     and used if it exists.
+     */
+    zoomOutId: "olZoomOutLink",
+
+    /**
+     * Method: draw
+     *
+     * Returns:
+     * {DOMElement} A reference to the DOMElement containing the zoom links.
+     */
+    draw: function() {
+        var div = OpenLayers.Control.prototype.draw.apply(this),
+            links = this.getOrCreateLinks(div),
+            zoomIn = links.zoomIn,
+            zoomOut = links.zoomOut,
+            eventsInstance = this.map.events;
+        
+        if (zoomOut.parentNode !== div) {
+            eventsInstance = this.events;
+            eventsInstance.attachToElement(zoomOut.parentNode);
+        }
+        eventsInstance.register("buttonclick", this, this.onZoomClick);
+        
+        this.zoomInLink = zoomIn;
+        this.zoomOutLink = zoomOut;
+        return div;
+    },
+    
+    /**
+     * Method: getOrCreateLinks
+     * 
+     * Parameters:
+     * el - {DOMElement}
+     *
+     * Return: 
+     * {Object} Object with zoomIn and zoomOut properties referencing links.
+     */
+    getOrCreateLinks: function(el) {
+        var zoomIn = document.getElementById(this.zoomInId),
+            zoomOut = document.getElementById(this.zoomOutId);
+        if (!zoomIn) {
+            zoomIn = document.createElement("a");
+            zoomIn.href = "#zoomIn";
+            zoomIn.appendChild(document.createTextNode(this.zoomInText));
+            zoomIn.className = "olControlZoomIn";
+            el.appendChild(zoomIn);
+        }
+        OpenLayers.Element.addClass(zoomIn, "olButton");
+        if (!zoomOut) {
+            zoomOut = document.createElement("a");
+            zoomOut.href = "#zoomOut";
+            zoomOut.appendChild(document.createTextNode(this.zoomOutText));
+            zoomOut.className = "olControlZoomOut";
+            el.appendChild(zoomOut);
+        }
+        OpenLayers.Element.addClass(zoomOut, "olButton");
+        return {
+            zoomIn: zoomIn, zoomOut: zoomOut
+        };
+    },
+    
+    /**
+     * Method: onZoomClick
+     * Called when zoomin/out link is clicked.
+     */
+    onZoomClick: function(evt) {
+        var button = evt.buttonElement;
+        if (button === this.zoomInLink) {
+            this.map.zoomIn();
+        } else if (button === this.zoomOutLink) {
+            this.map.zoomOut();
+        }
+    },
+
+    /** 
+     * Method: destroy
+     * Clean up.
+     */
+    destroy: function() {
+        if (this.map) {
+            this.map.events.unregister("buttonclick", this, this.onZoomClick);
+        }
+        delete this.zoomInLink;
+        delete this.zoomOutLink;
+        OpenLayers.Control.prototype.destroy.apply(this);
+    },
+
+    CLASS_NAME: "OpenLayers.Control.Zoom"
+});
 /* ======================================================================
     OpenLayers/Layer/Google/v3.js
    ====================================================================== */

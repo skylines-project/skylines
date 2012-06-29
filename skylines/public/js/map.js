@@ -19,7 +19,7 @@ function initOpenLayers(id) {
     theme: null
   });
 
-  map.addControl(new OpenLayers.Control.PanZoomBar());
+  map.addControl(new OpenLayers.Control.Zoom());
   map.addControl(new OpenLayers.Control.Navigation());
   map.addControl(new OpenLayers.Control.KeyboardDefaults());
   map.addControl(new OpenLayers.Control.Attribution());
