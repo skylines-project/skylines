@@ -32,7 +32,8 @@ title = 'Tracking'
   <script type="text/javascript">
     /* <![CDATA[ */
     function initialize() {
-      initOpenLayers();
+      initOpenLayers("map_canvas");
+      initFlightLayer();
 
       addFlight(${pilot.user_id},
         ${dumps(trace.encoded.points)},
@@ -51,6 +52,7 @@ title = 'Tracking'
       hoverMap();
 
       $.getScript("http://maps.google.com/maps/api/js?v=3.7&sensor=false&callback=addGoogleLayer");
+      addBingLayers("${config.get('skylines.bing.api_key', 'null')}");
     }
     /* ]]> */
   </script>
