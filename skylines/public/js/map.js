@@ -45,7 +45,34 @@ function initOpenLayers(id) {
   map.setCenter(new OpenLayers.LonLat(30, 0).
     transform(new OpenLayers.Projection("EPSG:4326"), map.getProjectionObject()),
     9);
+
+  map.addControl(new SimpleLayerSwitcher());
 };
+
+/**
+ * Function: addBingLayers
+ *
+ * Add the Bing layers to the map
+ */
+function addBingLayers(api_key) {
+  if (api_key == null)
+    return;
+
+  // Bing's Road imagerySet
+  var road = new OpenLayers.Layer.Bing({
+      key: api_key,
+      type: "Road"
+  });
+
+  // Bing's AerialWithLabels imagerySet
+  var hybrid = new OpenLayers.Layer.Bing({
+      key: api_key,
+      type: "AerialWithLabels",
+      name: "Bing Satellite"
+  });
+
+  map.addLayers([road, hybrid]);
+}
 
 /**
  * Function: addGoogleLayer
@@ -67,7 +94,5 @@ function addGoogleLayer() {
       {type: google.maps.MapTypeId.HYBRID}
     );
     map.addLayer(google_satellite_layer);
-
-    map.addControl(new SimpleLayerSwitcher());
   }
 }
