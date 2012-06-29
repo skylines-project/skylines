@@ -3,6 +3,22 @@ from babel.numbers import format_number
 from babel.dates import format_date
 
 title = user.display_name
+
+def add_marker(location):
+  template = '''
+        vectorLayer.addFeatures(new OpenLayers.Feature.Vector(
+          new OpenLayers.Geometry.Point({},{}).transform(new OpenLayers.Projection("EPSG:4326"), map.getProjectionObject()),
+          {{}}, {{externalGraphic: "/images/OpenLayers/marker.png", graphicHeight: 21, graphicWidth: 16}}
+        ));'''
+  return template.format(location.longitude, location.latitude)
+
+def add_distance_flight_markers(distance_flights):
+  output = []
+  for distance_flight in distance_flights:
+    if distance_flight[1] and distance_flight[1].takeoff_location:
+      output.append(add_marker(distance_flight[1].takeoff_location))
+
+  return '\n'.join(output)
 ?>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
@@ -16,14 +32,36 @@ title = user.display_name
   <head>
     <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" py:if="False"/>
 
+    <link href="/css/OpenLayers.css" rel="stylesheet" type="text/css" />
+    <link href="/css/SimpleLayerSwitcher.css" rel="stylesheet" type="text/css" />
+
+    <script type="text/javascript" src="/js/OpenLayers/OpenLayers.js"></script>
+    <script type="text/javascript" src="/js/OpenLayers/SimpleLayerSwitcher.js"></script>
+    <script type="text/javascript" src="/js/map.js"></script>
     <script type="text/javascript" src="/static/jquery/jquery.timeago.js"></script>
     <script type="text/javascript" src="/static/bootstrap/js/bootstrap-tooltip.js"></script>
 
     <script type="text/javascript">
+      /* <![CDATA[ */
       $(function() {
+        initOpenLayers("map_canvas");
+
+        $.getScript("http://maps.google.com/maps/api/js?v=3.7&sensor=false&callback=addGoogleLayer");
+
         $("abbr.timeago").timeago();
         $("[rel=tooltip]").tooltip();
+
+        var vectorLayer = new OpenLayers.Layer.Vector("Overlay");
+        map.addLayer(vectorLayer);
+
+        ${add_distance_flight_markers(distance_flights)}
+
+        map.zoomToExtent(vectorLayer.getDataExtent().scale(1.1));
+        var zoom = map.getZoom();
+        if (zoom > 10)
+          map.zoomTo(10);
       });
+      /* ]]> */
     </script>
   </head>
 
@@ -89,6 +127,11 @@ title = user.display_name
             </tbody>
           </table>
         </py:if>
+      </div>
+
+      <div class="span12">
+        <h2>Distance flight takeoff locations</h2>
+        <div id="map_canvas" style="width:100%; height:400pt;"></div>
       </div>
     </div>
   </body>
