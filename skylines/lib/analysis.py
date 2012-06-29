@@ -6,6 +6,9 @@ from lxml import etree
 from skylines import files
 from tg import config
 from skylines.model.geo import Location
+import logging
+
+log = logging.getLogger(__name__)
 
 
 def helper_path(helper):
@@ -54,6 +57,12 @@ def analyse_flight(flight):
         try:
             doc = etree.parse(f)
         except etree.Error:
+            log.error('Parsing the output of AnalyseFlight failed.')
+
+            if log.isEnabledFor(logging.DEBUG):
+                with os.popen(helper_path('AnalyseFlight') + ' "' + path + '"') as f_debug:
+                    log.debug(f_debug.readlines())
+
             return False
 
     root = doc.getroot()
