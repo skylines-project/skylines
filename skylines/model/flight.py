@@ -56,7 +56,7 @@ class Flight(DeclarativeBase):
 
     @property
     def takeoff_location(self):
-        if not self.takeoff_location_wkt:
+        if self.takeoff_location_wkt is None:
             return None
 
         wkt = DBSession.scalar(self.takeoff_location_wkt.wkt)
@@ -68,7 +68,7 @@ class Flight(DeclarativeBase):
 
     @property
     def landing_location(self):
-        if not self.landing_location_wkt:
+        if self.landing_location_wkt is None:
             return None
 
         wkt = DBSession.scalar(self.landing_location_wkt.wkt)
