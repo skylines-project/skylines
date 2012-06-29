@@ -59,6 +59,7 @@ def find_trace(contest, name):
 
 def analyse_flight(flight):
     path = files.filename_to_path(flight.filename)
+    log.info('Analyzing ' + path)
 
     root = None
     with os.popen(helper_path('AnalyseFlight') + ' "' + path + '"') as f:
@@ -69,7 +70,8 @@ def analyse_flight(flight):
 
             if log.isEnabledFor(logging.DEBUG):
                 with os.popen(helper_path('AnalyseFlight') + ' "' + path + '"') as f_debug:
-                    log.debug(f_debug.readlines())
+                    log.debug(helper_path('AnalyseFlight') +
+                              ' "' + path + '" = ' + str(f_debug.readlines()))
 
             return False
 
