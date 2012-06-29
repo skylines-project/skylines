@@ -4,6 +4,9 @@
 #
 
 import sys
+import thread
+from paste.deploy import loadapp
+from flup.server.fcgi import WSGIServer
 
 # stderr doesn't work with FastCGI; the following is a hack to get a
 # log file with diagnostics anyway
@@ -18,15 +21,11 @@ for item in list(sys.path):
         sys.path.remove(item)
 sys.path[:0] = new_sys_path
 
-import os, sys
 sys.path.append('/opt/skylines/src')
 
-import thread
 thread.stack_size(524288)
 
-from paste.deploy import loadapp
 wsgi_app = loadapp('config:/etc/skylines/production.ini')
 
 if __name__ == '__main__':
-    from flup.server.fcgi import WSGIServer
     WSGIServer(wsgi_app, minSpare=1, maxSpare=5, maxThreads=50).run()
