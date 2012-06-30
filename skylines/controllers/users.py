@@ -154,6 +154,7 @@ class UsersController(BaseController):
 
         user = User(user_name=user_name, display_name=display_name, club_id=club,
                     email_address=email_address, password=password)
+        user.generate_tracking_key()
         DBSession.add(user)
 
         pilots = DBSession.query(Group).filter(Group.group_name == 'pilots').first()
