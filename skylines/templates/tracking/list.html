@@ -18,41 +18,35 @@ title = 'Live Tracking'
   </head>
 
   <body>
-    <div class="row" py:if="request.identity and request.identity['user'].tracking_key is None">
-      <div class="span12">
-        <div class="alert alert-info">
-          To register your account for Live Tracking, go to your <a
-          href="/settings/">account Settings</a>.
-        </div>
-      </div>
+    <div class="alert alert-info" py:if="request.identity and request.identity['user'].tracking_key is None">
+      To register your account for Live Tracking, go to your <a
+      href="/settings/">account Settings</a>.
     </div>
 
-    <div id="getting_started">
-      <table id="flight-table" class="table table-striped">
-        <thead>
-          <tr>
-            <th class="date">Last fix</th>
-            <th>Pilot</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr py:for="track in tracks">
-            <td class="date">
-              <span py:replace="format_datetime(track[0])">
-                2012-05-21
-              </span>
-            </td>
-            <td>
-              <a py:content="track[1]" href="/flights/pilot/${track[1]}">
-                Pilot Name
-              </a>
-            </td>
-            <td nowrap="nowrap">
-              <a href="/tracking/${track[1]}/" class="btn btn-mini">Show</a>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+    <table id="flight-table" class="table table-striped">
+      <thead>
+        <tr>
+          <th class="date">Last fix</th>
+          <th>Pilot</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr py:for="track in tracks">
+          <td class="date">
+            <span py:replace="format_datetime(track[0])">
+              2012-05-21
+            </span>
+          </td>
+          <td>
+            <a py:content="track[1]" href="/flights/pilot/${track[1]}">
+              Pilot Name
+            </a>
+          </td>
+          <td nowrap="nowrap">
+            <a href="/tracking/${track[1]}/" class="btn btn-mini">Show</a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
   </body>
 </html>
