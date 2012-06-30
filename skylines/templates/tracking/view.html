@@ -82,6 +82,10 @@ title = 'Live Tracking'
             </tr>
           </tbody>
         </table>
+
+        <p py:if="request.identity and request.identity['user'] == pilot">
+          <a href="/settings/tracking_info" class="btn btn-mini">Your Live Tracking settings</a>
+        </p>
       </div>
       <div class="span8">
         <div id="map_canvas" style="width:100%; height:400pt;"></div>

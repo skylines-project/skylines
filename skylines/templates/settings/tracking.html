@@ -1,0 +1,46 @@
+<?python
+page = 'settings'
+title = 'Live Tracking'
+?>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+                      "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:py="http://genshi.edgewall.org/"
+      xmlns:xi="http://www.w3.org/2001/XInclude">
+  <xi:include href="master/page.html" />
+
+  <head>
+  </head>
+
+  <body>
+    <p>
+      Your Live Tracking key is:
+
+      <span style="font-size:150%; font-weight:bold;">${user.tracking_key_hex}</span>
+      <a href="tracking_register" class="btn btn-mini">Generate new key</a>
+      <a href="/tracking/${user.user_id}" class="btn btn-mini">Your Live Tracks</a>
+    </p>
+
+    <p>
+      Enter this key in your glide computer.
+    </p>
+
+    <h2>XCSoar Configuration</h2>
+
+    <p>
+      In <a href="http://www.xcsoar.org">XCSoar</a>, open
+      the <em>Setup System</em> dialog, click on <em>Setup</em> and
+      then <em>Tracking</em>.  Turn SkyLines tracking on, and enter
+      the key.
+    </p>
+
+    <p>
+      As of June 2012, this feature is only available in the XCSoar
+      6.4 alpha test version.  It can be downloaded on the <a
+      href="http://www.xcsoar.org/">XCSoar web site</a> or in <a
+      href="https://play.google.com/store/apps/details?id=org.xcsoar.testing">Google
+      Play</a> (for Android).
+    </p>
+  </body>
+</html>

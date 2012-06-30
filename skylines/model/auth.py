@@ -12,6 +12,7 @@ though.
 import os
 from datetime import datetime
 import sys
+import struct
 try:
     from hashlib import sha256
 except ImportError:
@@ -120,6 +121,13 @@ class User(DeclarativeBase):
 
     tracking_key = Column(BigInteger)
 
+    @property
+    def tracking_key_hex(self):
+        if self.tracking_key is None:
+            return None
+
+        return '%X' % self.tracking_key
+
     #{ Special methods
 
     def __repr__(self):
@@ -179,6 +187,9 @@ class User(DeclarativeBase):
 
     password = synonym('_password', descriptor=property(_get_password,
                                                         _set_password))
+
+    def generate_tracking_key(self):
+        self.tracking_key = struct.unpack('I', os.urandom(4))[0]
 
     #}
 

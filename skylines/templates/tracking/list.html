@@ -18,9 +18,14 @@ title = 'Live Tracking'
   </head>
 
   <body>
-    <h3>
-      Live Tracks
-    </h3>
+    <div class="row" py:if="request.identity and request.identity['user'].tracking_key is None">
+      <div class="span12">
+        <div class="alert alert-info">
+          To register your account for Live Tracking, go to your <a
+          href="/settings/">account Settings</a>.
+        </div>
+      </div>
+    </div>
 
     <div id="getting_started">
       <table id="flight-table" class="table table-striped">

@@ -74,3 +74,16 @@ class SettingsController(BaseController):
         DBSession.flush()
 
         redirect('.')
+
+    @expose('skylines.templates.settings.tracking')
+    def tracking_register(self):
+        user = request.identity['user']
+        user.generate_tracking_key()
+
+        redirect('tracking_info')
+
+    @expose('skylines.templates.settings.tracking')
+    def tracking_info(self):
+        user = request.identity['user']
+
+        return dict(user=user, new_key=False)
