@@ -31,19 +31,19 @@ title = 'Live Tracking'
         </tr>
       </thead>
       <tbody>
-        <tr py:for="track in tracks">
+        <tr py:for="time, pilot in tracks">
           <td class="date">
-            <span py:replace="format_datetime(track[0])">
+            <span py:replace="format_datetime(time)">
               2012-05-21
             </span>
           </td>
           <td>
-            <a py:content="track[1]" href="/flights/pilot/${track[1]}">
+            <a py:content="pilot" href="/users/${pilot.user_id}">
               Pilot Name
             </a>
           </td>
           <td nowrap="nowrap">
-            <a href="/tracking/${track[1]}/" class="btn btn-mini">Show</a>
+            <a href="/tracking/${pilot.user_id}/" class="btn btn-mini">Show</a>
           </td>
         </tr>
       </tbody>

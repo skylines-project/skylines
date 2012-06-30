@@ -5,6 +5,7 @@ from math import log
 from tg import expose
 from webob.exc import HTTPNotFound
 from sqlalchemy import func
+from sqlalchemy.sql.expression import desc
 from skylines.lib.base import BaseController
 from skylines import files
 from skylines.model import DBSession, User, TrackingFix
@@ -66,9 +67,13 @@ class TrackController(BaseController):
 class TrackingController(BaseController):
     @expose('skylines.templates.tracking.list')
     def index(self, **kw):
-        query = DBSession.query(func.max(TrackingFix.time), TrackingFix.pilot_id)
-        query = query.filter(TrackingFix.time >= datetime.now() - timedelta(hours=2))
-        query = query.group_by(TrackingFix.pilot_id)
+        subq = DBSession.query(TrackingFix.pilot_id,
+                               func.max(TrackingFix.time).label('time')) \
+               .group_by(TrackingFix.pilot_id) \
+               .subquery()
+
+        query = DBSession.query(subq.c.time, User) \
+            .filter(subq.c.pilot_id == User.user_id)
 
         return dict(tracks=query.all())
 
