@@ -5,12 +5,10 @@ from math import log
 from tg import expose
 from webob.exc import HTTPNotFound
 from sqlalchemy import func
-from sqlalchemy.sql.expression import desc
 from skylines.lib.base import BaseController
-from skylines import files
 from skylines.model import DBSession, User, TrackingFix
 from skylinespolyencode import SkyLinesPolyEncoder
-from skylines.lib.analysis import flight_path
+
 
 class TrackController(BaseController):
     def __init__(self, pilot):
