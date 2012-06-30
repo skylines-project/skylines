@@ -10,6 +10,7 @@ from skylines.model.auth import User
 from skylines.model import DeclarativeBase, DBSession
 from skylines.model.geo import Location
 
+
 class TrackingFix(DeclarativeBase):
     __tablename__ = 'tracking_fixes'
 
