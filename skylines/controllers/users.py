@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from tg import expose, validate, redirect
+from tg import expose, validate, redirect, require
 from tg.i18n import ugettext as _, lazy_ugettext as l_
 from webob.exc import HTTPNotFound, HTTPForbidden
 from sprox.formbase import AddRecordForm, EditableForm, Field
@@ -11,6 +11,7 @@ from tw.forms import PasswordField, TextField
 from skylines.lib.base import BaseController
 from skylines.model import DBSession, User, Group, Club, Flight
 from sqlalchemy.sql.expression import desc
+from repoze.what.predicates import has_permission
 
 
 class ClubSelectField(PropertySingleSelectField):
@@ -162,3 +163,15 @@ class UsersController(BaseController):
             pilots.users.append(user)
 
         redirect('/')
+
+    @expose()
+    @require(has_permission('manage'))
+    def generate_keys(self):
+        """Hidden method that generates missing tracking keys."""
+
+        for user in DBSession.query(User):
+            user.generate_tracking_key()
+
+        DBSession.flush()
+
+        return redirect('/users/')
