@@ -14,33 +14,44 @@ title = 'Live Tracking'
   </head>
 
   <body>
-    <p py:if="user is not None">
-      Your Live Tracking key is:
+    <h3>What is it?</h3>
+    <p>
+      SkyLines Live Tracking can be used to let others take part on your
+      journeys while you're flying. It uses a very light-weight protocol that
+      only transmits the necessary data and due to that it can also work in
+      areas/altitudes where the reception isn't very good. To give you an
+      example: A flight of 10 hours only uses about 340 KB of traffic when the
+      positions are transmitted every 5 seconds!
+    </p>
 
-      <span style="font-size:150%; font-weight:bold;">${user.tracking_key_hex}</span>
+    <h3>Clients</h3>
+    <ul>
+      <li><b>XCSoar:</b><br/>available starting with <a
+      href="http://www.xcsoar.org/download/latest.html">XCSoar 6.4</a>
+      (<a href="https://play.google.com/store/apps/details?id=org.xcsoar.testing">Google Play</a>).
+      Instructions are below.</li>
+      <li><b>Butterfly iGlide:</b><br/>planned</li>
+    </ul>
+
+    <py:if test="user is not None">
+    <h3>Live Tracking Key</h3>
+    <p>
+      Your Live Tracking key is: <span class="label label-info">${user.tracking_key_hex}</span>
+    </p>
+
+    <p>
       <a href="/settings/tracking_register" class="btn btn-mini">Generate new key</a>
       <a href="/tracking/${user.user_id}" class="btn btn-mini">Your Live Tracks</a>
     </p>
+    </py:if>
 
-    <p>
-      Enter this key in your glide computer.
-    </p>
-
-    <h2>XCSoar Configuration</h2>
-
+    <h3>XCSoar</h3>
     <p>
       In <a href="http://www.xcsoar.org">XCSoar</a>, open
       the <em>Setup System</em> dialog, click on <em>Setup</em> and
-      then <em>Tracking</em>.  Turn SkyLines tracking on, and enter
-      the key.
+      then <em>Tracking</em>.  Turn SkyLines tracking on, and enter your
+      Live Tracking key.
     </p>
 
-    <p>
-      As of June 2012, this feature is only available in the XCSoar
-      6.4 alpha test version.  It can be downloaded on the <a
-      href="http://www.xcsoar.org/">XCSoar web site</a> or in <a
-      href="https://play.google.com/store/apps/details?id=org.xcsoar.testing">Google
-      Play</a> (for Android).
-    </p>
   </body>
 </html>

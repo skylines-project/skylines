@@ -95,4 +95,8 @@ class TrackingController(BaseController):
 
     @expose('skylines.templates.tracking.info')
     def info(self):
-        return dict(user=request.identity['user'])
+        user = None
+        if request.identity is not None and 'user' in request.identity:
+            user = request.identity['user']
+
+        return dict(user=user)
