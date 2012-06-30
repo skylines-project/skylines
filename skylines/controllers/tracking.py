@@ -17,6 +17,7 @@ class TrackController(BaseController):
 
     def __get_flight_path2(self):
         query = DBSession.query(TrackingFix)
+        query = query.filter(TrackingFix.pilot == self.pilot)
         query = query.filter(TrackingFix.time >= datetime.now() - timedelta(hours=12))
         query = query.order_by(TrackingFix.time)
 
@@ -34,6 +35,8 @@ class TrackController(BaseController):
 
     def __get_flight_path(self, threshold = 0.001):
         fp = self.__get_flight_path2()
+        if len(fp) == 0:
+            raise HTTPNotFound
 
         num_levels = 4
         zoom_factor = 4
