@@ -170,7 +170,8 @@ class UsersController(BaseController):
         """Hidden method that generates missing tracking keys."""
 
         for user in DBSession.query(User):
-            user.generate_tracking_key()
+            if user.tracking_key is None:
+                user.generate_tracking_key()
 
         DBSession.flush()
 
