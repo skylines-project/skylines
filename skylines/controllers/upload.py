@@ -125,7 +125,3 @@ class UploadController(BaseController):
         DBSession.flush()
 
         return dict(page='upload', flights=flights)
-
-    @expose('skylines.templates.upload.result')
-    def test(self):
-        return dict(page='upload', flights=[('foo.igc', None, None),('bar.igc', None, 'Error!')])
