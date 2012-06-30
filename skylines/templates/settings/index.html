@@ -38,15 +38,15 @@
           <tr>
             <th>Live Tracking</th>
             <td>
-              <span py:if="user.tracking_key" py:strip="True">
+              <py:if test="user.tracking_key">
                 Yes
                 <a href="tracking_info" class="btn btn-mini">More Information</a>
                 <a href="/tracking/${user.user_id}" class="btn btn-mini">Your Live Tracks</a>
-              </span>
-              <span py:if="not user.tracking_key" py:strip="True">
+              </py:if>
+              <py:if test="not user.tracking_key">
                 Not registered
                 <a href="tracking_register" class="btn btn-mini">Register now</a>
-              </span>
+              </py:if>
             </td>
           </tr>
           <tr py:if="request.identity and 'manage' in request.identity['permissions']">
