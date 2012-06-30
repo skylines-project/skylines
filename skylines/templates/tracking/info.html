@@ -14,11 +14,11 @@ title = 'Live Tracking'
   </head>
 
   <body>
-    <p>
+    <p py:if="user is not None">
       Your Live Tracking key is:
 
       <span style="font-size:150%; font-weight:bold;">${user.tracking_key_hex}</span>
-      <a href="tracking_register" class="btn btn-mini">Generate new key</a>
+      <a href="/settings/tracking_register" class="btn btn-mini">Generate new key</a>
       <a href="/tracking/${user.user_id}" class="btn btn-mini">Your Live Tracks</a>
     </p>
 

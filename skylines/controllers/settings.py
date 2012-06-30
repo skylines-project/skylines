@@ -76,14 +76,8 @@ class SettingsController(BaseController):
         redirect('.')
 
     @expose()
-    def tracking_register(self, came_from = '/settings/tracking_info'):
+    def tracking_register(self, came_from = '/tracking/info'):
         user = request.identity['user']
         user.generate_tracking_key()
 
         redirect(came_from)
-
-    @expose('skylines.templates.settings.tracking')
-    def tracking_info(self):
-        user = request.identity['user']
-
-        return dict(user=user, new_key=False)

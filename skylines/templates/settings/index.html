@@ -45,10 +45,10 @@ title = 'Settings'
             <td>
               <py:if test="user.tracking_key">
                 ${user.tracking_key_hex}
-                <a href="tracking_info" class="btn btn-mini">More Information</a>
+                <a href="/tracking/info" class="btn btn-mini">More Information</a>
               </py:if>
               <py:if test="not user.tracking_key">
-                <a href="tracking_register" class="btn btn-mini">Generate Key</a>
+                <a href="/settings/tracking_register?came_from=/settings/" class="btn btn-mini">Generate Key</a>
               </py:if>
             </td>
           </tr>

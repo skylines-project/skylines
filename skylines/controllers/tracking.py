@@ -2,7 +2,7 @@
 
 from datetime import datetime, timedelta
 from math import log
-from tg import expose
+from tg import expose, request
 from webob.exc import HTTPNotFound
 from sqlalchemy import func
 from skylines.lib.base import BaseController
@@ -92,3 +92,7 @@ class TrackingController(BaseController):
 
         controller = TrackController(user)
         return controller, remainder
+
+    @expose('skylines.templates.tracking.info')
+    def info(self):
+        return dict(user=request.identity['user'])
