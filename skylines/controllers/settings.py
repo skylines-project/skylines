@@ -33,12 +33,12 @@ class SettingsController(BaseController):
     @expose('skylines.templates.settings.index')
     def index(self):
         user = request.identity['user']
-        return dict(page='settings', user=user)
+        return dict(user=user)
 
     @expose('skylines.templates.settings.change_club')
     def change_club(self, **kwargs):
         user = request.identity['user']
-        return dict(page='settings', user=user,
+        return dict(user=user,
                     select_form=select_club_form,
                     create_form=new_club_form)
 
