@@ -44,7 +44,7 @@ title = 'Settings'
             <th>Live Tracking Key</th>
             <td>
               <py:if test="user.tracking_key">
-                ${user.tracking_key_hex}
+                <span class="label label-info">${user.tracking_key_hex}</span>
                 <a href="/tracking/info" class="btn btn-mini">More Information</a>
               </py:if>
               <py:if test="not user.tracking_key">
