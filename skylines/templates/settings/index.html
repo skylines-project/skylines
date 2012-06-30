@@ -41,16 +41,14 @@ title = 'Settings'
             </td>
           </tr>
           <tr>
-            <th>Live Tracking</th>
+            <th>Live Tracking Key</th>
             <td>
               <py:if test="user.tracking_key">
-                Yes
+                ${user.tracking_key_hex}
                 <a href="tracking_info" class="btn btn-mini">More Information</a>
-                <a href="/tracking/${user.user_id}" class="btn btn-mini">Your Live Tracks</a>
               </py:if>
               <py:if test="not user.tracking_key">
-                Not registered
-                <a href="tracking_register" class="btn btn-mini">Register now</a>
+                <a href="tracking_register" class="btn btn-mini">Generate Key</a>
               </py:if>
             </td>
           </tr>
