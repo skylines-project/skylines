@@ -75,7 +75,7 @@ class SettingsController(BaseController):
 
         redirect('.')
 
-    @expose('skylines.templates.settings.tracking')
+    @expose()
     def tracking_register(self):
         user = request.identity['user']
         user.generate_tracking_key()
