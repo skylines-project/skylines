@@ -8,7 +8,13 @@
   % for flight in flights:
     [
      % if not date:
-     "${flight.takeoff_time and format_date(flight.takeoff_time)}",
+     "\
+       % if flight.takeoff_time:
+         <span title="${flight.takeoff_time.strftime('%d.%m.%Y')}">
+           ${format_date(flight.takeoff_time)}
+         </span>
+       % endif
+     ",
      % endif
      ${flight.olc_plus_score},
      "\

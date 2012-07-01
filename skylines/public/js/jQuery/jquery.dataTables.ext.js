@@ -16,7 +16,7 @@ jQuery.fn.dataTableExt.oSort['numeric-comma-formatted-desc'] = function(a,b) {
 
 jQuery.extend( jQuery.fn.dataTableExt.oSort, {
     "date-eu-pre": function ( date ) {
-        var date = date.replace(" ", "");
+        var date = date.match(/title="(.*?)"/)[1].replace(" ", "");
 
         if (date.indexOf('.') > 0) {
             /*date a, format dd.mn.(yyyy) ; (year is optional)*/

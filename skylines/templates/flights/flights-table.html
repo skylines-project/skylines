@@ -38,9 +38,9 @@ from babel.dates import format_date
     <tbody>
       <tr py:for="flight in flights">
         <td py:if="'date' not in omitted_columns" class="date">
-          <py:if test="flight.takeoff_time" py:replace="format_date(flight.takeoff_time)">
+          <span py:if="flight.takeoff_time" title="${flight.takeoff_time.strftime('%d.%m.%Y')}" py:content="format_date(flight.takeoff_time)">
             2012-05-21
-          </py:if>
+          </span>
         </td>
         <td py:if="'score' not in omitted_columns" class="numeric" py:content="flight.olc_plus_score">
           500
