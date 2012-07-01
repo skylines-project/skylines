@@ -9,7 +9,6 @@ from formencode import Schema
 from formencode.validators import FieldsMatch, Email, String
 from tw.forms import PasswordField, TextField
 from skylines.lib.base import BaseController
-from skylines.lib.sql import extract_field
 from skylines.model import DBSession, User, Group, Club, Flight
 from sqlalchemy.sql.expression import desc
 from sqlalchemy import func
@@ -123,45 +122,8 @@ class UserController(BaseController):
         return distance_flights
 
     def get_takeoff_locations(self):
-        '''
-        SELECT ST_AsText(
-            ST_Centroid(
-                (ST_Dump(
-                    ST_Union(
-                        ST_Buffer(
-                            takeoff_location_wkt::geography, 1000
-                        )::geometry
-                    )
-                )
-            ).geom)
-        ) FROM flights WHERE pilot_id=31;
-        '''
-
-        # Cast the takeoff_location_wkt column to Geography
-        geography = func.Geography(Flight.takeoff_location_wkt.RAW)
-
-        # Add a metric buffer zone around the locations
-        buffer = func.Geometry(func.ST_Buffer(geography, 1000))
-
-        # Join the locations into one MultiPolygon
-        union = func.ST_Union(buffer)
-
-        # Split the MultiPolygon into separate polygons
-        dump = extract_field(func.ST_Dump(union), 'geom')
-
-        # Calculate center points of each polygon
-        locations = func.ST_Centroid(dump)
-
-        # Convert the result into WKT
-        locations = func.ST_AsText(locations)
-
-        query = DBSession.query(locations.label('location')).filter(Flight.pilot == self.user)
-
-        result = []
-        for i in query:
-            result.append(Location.from_wkt(i.location))
-
-        return result
+        return Location.get_clustered_locations(Flight.takeoff_location_wkt,
+                                                filter=(Flight.pilot == self.user))
 
 
 class UsersController(BaseController):
