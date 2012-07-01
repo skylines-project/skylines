@@ -19,6 +19,7 @@
           <h1>
             <span py:replace="title"/>
             <small py:if="defined('tagline')" py:content="tagline"/>
+            <a py:if="defined('titleinfo')" href="${titleinfo}" class="btn btn-mini">Info</a>
           </h1>
         </div>
 

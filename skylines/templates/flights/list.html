@@ -10,9 +10,11 @@ if date:
 
 if pilot:
   tagline = 'of ' + unicode(pilot)
+  titleinfo = '/users/%u/' % pilot.user_id
 
 if club:
   tagline = 'of ' + unicode(club)
+  titleinfo = '/clubs/%u/' % club.id
 ?>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
