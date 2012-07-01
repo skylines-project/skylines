@@ -10,9 +10,9 @@
      % if not date:
      "\
        % if flight.takeoff_time:
-         <span title="${flight.takeoff_time.strftime('%d.%m.%Y')}">
-           ${format_date(flight.takeoff_time)}
-         </span>
+         <span title=\"${flight.takeoff_time.strftime('%d.%m.%Y')}\">\
+           ${format_date(flight.takeoff_time)}\
+         </span>\
        % endif
      ",
      % endif
