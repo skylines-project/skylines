@@ -228,7 +228,7 @@ class FlightsController(BaseController):
         if not date:
             raise HTTPNotFound
 
-        return self.date(date, **kw)
+        return self.date(date, today = True, **kw)
 
     @expose('skylines.templates.flights.list')
     def date(self, date, **kw):
@@ -250,7 +250,10 @@ class FlightsController(BaseController):
             5: 'id',
         }
 
-        return self.__do_list('date', kw, date=date, columns=columns)
+        if kw.get('today', False):
+            return self.__do_list('today', kw, date=date, columns=columns)
+        else:
+            return self.__do_list('date', kw, date=date, columns=columns)
 
     @expose('skylines.templates.flights.list')
     def my(self, **kw):

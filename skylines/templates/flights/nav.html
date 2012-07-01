@@ -18,7 +18,7 @@ my_club = request.identity['user'].club if request.identity else None
       &nbsp;<i class="icon-arrow-left"></i>&nbsp;
     </a>
   </li>
-  <li class="${('', 'active')[defined('tab') and tab == 'date']}">
+  <li class="${('', 'active')[defined('tab') and tab == 'date' or tab == 'today']}">
     <a href="/flights/today" id="datepicker">
       <span class="date"><py:choose>
         <py:when test="defined('date') and date != None and date != sys_date.today()">${format_date(date)}</py:when>
