@@ -15,16 +15,12 @@
     <div class="container">
 
       <div class="content">
-        <py:if test="defined('title')">
-        <div class="page-header">
+        <div py:if="defined('title')" class="page-header">
           <h1>
             <span py:replace="title"/>
-            <py:if test="defined('tagline')">
-            <small><span py:replace="tagline"/></small>
-            </py:if>
+            <small py:if="defined('tagline')" py:content="tagline"/>
           </h1>
         </div>
-        </py:if>
 
         <div class="row">
           <div class="span12">
