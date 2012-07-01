@@ -27,22 +27,22 @@ from babel.dates import format_date
     <thead>
       <tr>
         <th py:if="'date' not in omitted_columns" class="date">Date</th>
-        <th py:if="'score' not in omitted_columns" class="numeric">Score</th>
-        <th py:if="'pilot' not in omitted_columns">Pilot</th>
-        <th py:if="'distance' not in omitted_columns" class="numeric">Distance</th>
-        <th py:if="'club' not in omitted_columns">Club</th>
-        <th py:if="'times' not in omitted_columns">Time</th>
-        <th py:if="'link' not in omitted_columns"></th>
+        <th py:if="'score' not in omitted_columns" class="numeric score">Score</th>
+        <th py:if="'pilot' not in omitted_columns" class="pilot">Pilot</th>
+        <th py:if="'distance' not in omitted_columns" class="numeric distance">Distance</th>
+        <th py:if="'club' not in omitted_columns" class="club">Club</th>
+        <th py:if="'times' not in omitted_columns" class="times">Time</th>
+        <th py:if="'link' not in omitted_columns" class="show"></th>
       </tr>
     </thead>
     <tbody>
       <tr py:for="flight in flights">
-        <td py:if="'date' not in omitted_columns" class="date">
+        <td py:if="'date' not in omitted_columns">
           <span py:if="flight.takeoff_time" title="${flight.takeoff_time.strftime('%d.%m.%Y')}" py:content="format_date(flight.takeoff_time)">
             2012-05-21
           </span>
         </td>
-        <td py:if="'score' not in omitted_columns" class="numeric" py:content="flight.olc_plus_score">
+        <td py:if="'score' not in omitted_columns" py:content="flight.olc_plus_score">
           500
         </td>
         <td py:if="'pilot' not in omitted_columns">
@@ -57,7 +57,7 @@ from babel.dates import format_date
             [${flight.igc_file.owner}]
           </span>
         </td>
-        <td py:if="'distance' not in omitted_columns" class="numeric">
+        <td py:if="'distance' not in omitted_columns">
           <span py:if="flight.olc_classic_distance is not None">
             <span py:content="flight.olc_classic_distance / 1000">500</span> km
           </span>

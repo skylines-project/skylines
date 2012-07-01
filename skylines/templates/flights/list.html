@@ -50,13 +50,84 @@ if club:
           "iDisplayLength": ${repr(int(config.get('skylines.lists.display_length', 50)))},
           "iDeferLoading": ${flights_count},
           "bServerSide": (${flights_count} > ${repr(int(config.get('skylines.lists.server_side', 250)))})?true:false,
-          "sAjaxSource": (${flights_count} > ${repr(int(config.get('skylines.lists.server_side', 250)))})?"${request.url}?json=true":null,
+          "sAjaxSource": (${flights_count} > ${repr(int(config.get('skylines.lists.server_side', 250)))})?"${request.url}.json":null,
           "sDom": "<'row'<'span6'i><'span6'p>>rt<'row'<'span6'i><'span6'p>>",
           "aaSorting": [[ 0, "desc" ]],
           "aoColumnDefs": [
-            { "bSortable": false, "aTargets": [-1] },
-            { "sType": "date-eu", "aTargets": ["date"] },
-            { "sType": "numeric-comma-formatted", "aTargets": ["numeric"] }
+            {
+              "sType": "date-eu",
+              "sDefaultContent": "",
+              "aTargets": ["date"],
+              "fnRender": function(obj, row) {
+                if (obj.oSettings.jqXHR)
+                  row = "<span title=\"" + obj.aData.date + "\">" + obj.aData.date_formatted + "</span>";
+                return row;
+              }
+            }, {
+              "sType": "numeric-comma-formatted",
+              "sDefaultContent": "",
+              "aTargets": ["score"],
+              "fnRender": function(obj, row) {
+                if (obj.oSettings.jqXHR)
+                  row = obj.aData.olc_plus_score;
+                return row;
+              }
+            }, {
+              "sDefaultContent": "",
+              "aTargets": ["pilot"],
+              "fnRender": function(obj, row) {
+                if (obj.oSettings.jqXHR) {
+                  row = "";
+
+                  if (obj.aData.pilot != null)
+                    row += "<a href=\"/flights/pilot/" + obj.aData.pilot_id + "\">" + obj.aData.pilot + "</a>";
+                  if (obj.aData.pilot != null && obj.aData.co_pilot != null)
+                    row += "<br>";
+                  if (obj.aData.co_pilot != null)
+                    row += "<a href=\"/flights/pilot/" + obj.aData.co_pilot_id + "\">" + obj.aData.co_pilot + "</a>";
+
+                  if (obj.aData.pilot == null && obj.aData.co_pilot == null)
+                    row += "[" + obj.aData.owner + "]";
+                }
+                return row;
+              }
+            }, {
+              "sType": "numeric-comma-formatted",
+              "sDefaultContent": "",
+              "aTargets": ["distance"],
+              "fnRender": function(obj, row) {
+                if (obj.oSettings.jqXHR)
+                  row = Math.round(obj.aData.olc_classic_distance/1000) + " km";
+                return row;
+              }
+            }, {
+              "sType": "numeric-comma-formatted",
+              "sDefaultContent": "",
+              "aTargets": ["club"],
+              "fnRender": function(obj, row) {
+                if (obj.oSettings.jqXHR && obj.aData.club != null)
+                  row = "<a href=\"/flights/club/" + obj.oSettings.club_id + "\">" + obj.oSettings.club + "</a>";
+                return row;
+              }
+            }, {
+              "sType": "numeric-comma-formatted",
+              "sDefaultContent": "",
+              "aTargets": ["times"],
+              "fnRender": function(obj, row) {
+                if (obj.oSettings.jqXHR)
+                  row = obj.aData.takeoff_time + " - " + obj.aData.landing_time;
+                return row;
+              }
+            }, {
+              "bSortable": false,
+              "sDefaultContent": "",
+              "aTargets": ["show"],
+              "fnRender": function(obj, row) {
+                if (obj.oSettings.jqXHR)
+                  row = "<a href=\"/flights/" + obj.aData.flight_id + "\" class=\"btn btn-mini\">Show</a> <a class=\"pin no-link\" style=\"visibility: hidden\" rel=\"tooltip\" title=\"Activate this to show the flight on top of other flights on the map\">" + obj.aData.flight_id + "</a>";
+                return row;
+              }
+            }
           ],
           "fnCreatedRow": function(nRow, aData, iDataIndex) {
             $(nRow).find(".pin").each(function() {
