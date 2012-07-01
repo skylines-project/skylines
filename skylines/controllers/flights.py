@@ -2,6 +2,7 @@
 
 import math
 import logging
+from babel.dates import format_date
 from datetime import datetime, timedelta
 from tg import expose, validate, require, request, redirect, config
 from tg.i18n import ugettext as _
@@ -158,7 +159,7 @@ class FlightsController(BaseController):
         if filter is not None:
             flights = flights.filter(filter)
 
-        if kw.get("json", "false") == 'true':
+        if request.response_type == 'application/json':
             if not columns:
                 columns = {
                     0: 'takeoff_time',
@@ -172,11 +173,24 @@ class FlightsController(BaseController):
 
             flights, response_dict = GetDatatableRecords(kw, flights, columns)
 
-            method = tab
-            override_template(getattr(self, method), 'mako:skylines.templates.flights.list_json')
-            return dict(response_dict=response_dict,
-                        date=date, pilot=pilot, club=club,
-                        flights = flights)
+            aaData = []
+            for flight in flights:
+              aaData.append(dict(takeoff_time = flight.takeoff_time.strftime('%H:%M'),
+                                 landing_time = flight.landing_time.strftime('%H:%M'),
+                                 date = flight.takeoff_time.strftime('%d.%m.%Y'),
+                                 date_formatted = format_date(flight.takeoff_time),
+                                 olc_plus_score = flight.olc_plus_score,
+                                 olc_classic_distance = flight.olc_classic_distance,
+                                 pilot_id = flight.pilot_id,
+                                 pilot = flight.pilot and flight.pilot.display_name,
+                                 co_pilot_id = flight.co_pilot_id,
+                                 co_pilot = flight.co_pilot and flight.co_pilot.display_name,
+                                 club_id = flight.club_id,
+                                 club = flight.club,
+                                 owner = flight.igc_file.owner.display_name,
+                                 flight_id = flight.id))
+
+            return dict(response_dict, aaData = aaData)
 
         else:
             if date:
@@ -217,10 +231,12 @@ class FlightsController(BaseController):
         redirect('today')
 
     @expose('skylines.templates.flights.list')
+    @expose('json')
     def all(self, **kw):
         return self.__do_list('all', kw)
 
     @expose('skylines.templates.flights.list')
+    @expose('json')
     def today(self, **kw):
         query = DBSession.query(Flight).filter(Flight.takeoff_time < datetime.now())
         query = query.from_self(func.max(Flight.takeoff_time).label('date'))
@@ -231,6 +247,7 @@ class FlightsController(BaseController):
         return self.date(date, today = True, **kw)
 
     @expose('skylines.templates.flights.list')
+    @expose('json')
     def date(self, date, **kw):
         try:
             if isinstance(date, str):
@@ -256,6 +273,7 @@ class FlightsController(BaseController):
             return self.__do_list('date', kw, date=date, columns=columns)
 
     @expose('skylines.templates.flights.list')
+    @expose('json')
     def my(self, **kw):
         if not request.identity:
             raise HTTPNotFound
@@ -263,6 +281,7 @@ class FlightsController(BaseController):
         redirect('/flights/pilot/' + str(request.identity['user'].user_id))
 
     @expose('skylines.templates.flights.list')
+    @expose('json')
     def my_club(self, **kw):
         if not request.identity:
             raise HTTPNotFound
@@ -270,6 +289,7 @@ class FlightsController(BaseController):
         redirect('/flights/club/' + str(request.identity['user'].club.id))
 
     @expose('skylines.templates.flights.list')
+    @expose('json')
     def unassigned(self, **kw):
         if not request.identity:
             raise HTTPNotFound
@@ -279,6 +299,7 @@ class FlightsController(BaseController):
         return self.__do_list('unassigned', kw, filter=f)
 
     @expose('skylines.templates.flights.list')
+    @expose('json')
     def pilot(self, id, **kw):
         pilot = DBSession.query(User).get(id)
         if not pilot:
@@ -296,6 +317,7 @@ class FlightsController(BaseController):
         return self.__do_list('pilot', kw, pilot=pilot, columns=columns)
 
     @expose('skylines.templates.flights.list')
+    @expose('json')
     def club(self, id, **kw):
         club = DBSession.query(Club).get(id)
         if not club:
