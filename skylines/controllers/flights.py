@@ -228,7 +228,7 @@ class FlightsController(BaseController):
         if not date:
             raise HTTPNotFound
 
-        return self.date(date, *kw)
+        return self.date(date, **kw)
 
     @expose('skylines.templates.flights.list')
     def date(self, date, **kw):
