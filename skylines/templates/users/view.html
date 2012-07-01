@@ -88,7 +88,9 @@ def add_takeoff_location_markers(takeoff_locations):
 
           <tr py:if="user.is_readable() and user.tracking_key_hex is not None">
             <th>Tracking key</th>
-            <td py:content="user.tracking_key_hex">Foo</td>
+            <td>
+              <span class="label label-info" py:content="user.tracking_key_hex">Tracking Key</span>
+            </td>
           </tr>
 
           <tr py:if="user.club">
