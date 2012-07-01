@@ -106,7 +106,6 @@ class UploadController(BaseController):
             igc_file.filename = filename
             igc_file.md5 = md5
             read_igc_header(igc_file)
-            DBSession.add(igc_file)
 
             flight = Flight()
             flight.pilot_id = pilot_id
@@ -124,6 +123,7 @@ class UploadController(BaseController):
                 continue
 
             flights.append((name, flight, None))
+            DBSession.add(igc_file)
             DBSession.add(flight)
 
         DBSession.flush()
