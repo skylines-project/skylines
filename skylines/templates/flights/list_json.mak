@@ -25,7 +25,7 @@
          <br /><a href=\"/flights/pilot/${flight.co_pilot_id}\">${flight.co_pilot}</a>\
        % endif
        % if not flight.pilot and not flight.co_pilot:
-         [${flight.owner}]\
+         [${flight.igc_file.owner}]\
        % endif
      ",
      "${flight.olc_classic_distance and str(flight.olc_classic_distance/1000)} km",
