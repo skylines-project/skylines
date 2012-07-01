@@ -100,12 +100,10 @@ if club:
           }
         });
 
-        var datepicker = $('#datepicker').datepicker({
-          format: 'dd.mm.yyyy',
-          autoclose: true,
+        $('#datepicker').datepicker({
           weekStart: 1
-        });
-        datepicker.on('changeDate', function(e) {
+        })
+        .on('changeDate', function(e) {
           var url = "/flights/date/" + e.date.getFullYear() + "-" +
             pad(e.date.getMonth()+1, 2) + "-" + pad(e.date.getDate(), 2);
           window.location.href = url;

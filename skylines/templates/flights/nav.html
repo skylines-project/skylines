@@ -21,12 +21,12 @@ my_club = request.identity['user'].club if request.identity else None
     </a>
   </li>
   <li class="${('', 'active')[defined('tab') and tab == 'date' or tab == 'today']}">
-    <a href="/flights/today" id="datepicker">
+    <a href="/flights/today">
       <span class="date"><py:choose>
         <py:when test="defined('date') and date != None and date != sys_date.today()">${format_date(date)}</py:when>
         <py:otherwise>Today</py:otherwise>
       </py:choose></span>
-      &nbsp;<span class="add-on"><i class="icon-th"></i></span>
+      &nbsp;<span id="datepicker" data-date="${'' if date is None else date.isoformat()}" data-date-format="yyyy-mm-dd"><i class="icon-th"></i></span>
     </a>
   </li>
   <li py:if="date">
