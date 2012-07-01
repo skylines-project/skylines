@@ -63,7 +63,10 @@ class Flight(DeclarativeBase):
 
     @takeoff_location.setter
     def takeoff_location(self, location):
-        self.takeoff_location_wkt = location.to_wkt()
+        if location is None:
+            self.takeoff_location_wkt = None
+        else:
+            self.takeoff_location_wkt = location.to_wkt()
 
     @property
     def landing_location(self):
@@ -75,7 +78,10 @@ class Flight(DeclarativeBase):
 
     @landing_location.setter
     def landing_location(self, location):
-        self.landing_location_wkt = location.to_wkt()
+        if location is None:
+            self.landing_location_wkt = None
+        else:
+            self.landing_location_wkt = location.to_wkt()
 
     @classmethod
     def by_md5(cls, _md5):
