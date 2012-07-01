@@ -67,8 +67,4 @@ class Location(object):
         if filter is not None:
             query = query.filter(filter)
 
-        result = []
-        for i in query:
-            result.append(Location.from_wkt(i.location))
-
-        return result
+        return [Location.from_wkt(row.location) for row in query]
