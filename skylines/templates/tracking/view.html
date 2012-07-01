@@ -54,6 +54,12 @@ title = 'Live Tracking'
 
       $.getScript("http://maps.google.com/maps/api/js?v=3.7&sensor=false&callback=addGoogleLayer");
       addBingLayers("${config.get('skylines.bing.api_key', 'null')}");
+
+      setInterval(function() {
+          addFlightFromJSON("/tracking/${pilot.user_id}/json");
+        },
+        30*1000 // update flight track every 30 seconds
+      );
     }
     /* ]]> */
   </script>
