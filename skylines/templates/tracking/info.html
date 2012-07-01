@@ -33,8 +33,8 @@ title = 'Live Tracking'
       <li><b>Butterfly iGlide:</b><br/>planned</li>
     </ul>
 
-    <py:if test="user is not None">
     <h3>Live Tracking Key</h3>
+    <py:if test="user is not None">
     <p>
       Your Live Tracking key is: <span class="label label-info">${user.tracking_key_hex}</span>
     </p>
@@ -42,6 +42,11 @@ title = 'Live Tracking'
     <p>
       <a href="/settings/tracking_register" class="btn btn-mini">Generate new key</a>
       <a href="/tracking/${user.user_id}" class="btn btn-mini">Your Live Tracks</a>
+    </p>
+    </py:if>
+    <py:if test="user is None">
+    <p>
+      You have to <a href="/login">login</a> to see you own personal Live Tracking key.
     </p>
     </py:if>
 
