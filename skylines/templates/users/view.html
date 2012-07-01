@@ -12,11 +12,11 @@ def add_marker(location):
         ));'''
   return template.format(location.longitude, location.latitude)
 
-def add_distance_flight_markers(distance_flights):
+def add_takeoff_location_markers(takeoff_locations):
   output = []
-  for distance_flight in distance_flights:
-    if distance_flight[1] and distance_flight[1].takeoff_location:
-      output.append(add_marker(distance_flight[1].takeoff_location))
+  for takeoff_location in takeoff_locations:
+    if takeoff_location:
+      output.append(add_marker(takeoff_location))
 
   return '\n'.join(output)
 ?>
@@ -55,7 +55,7 @@ def add_distance_flight_markers(distance_flights):
         var vectorLayer = new OpenLayers.Layer.Vector("Overlay");
         map.addLayer(vectorLayer);
 
-        ${add_distance_flight_markers(distance_flights)}
+        ${add_takeoff_location_markers(takeoff_locations)}
 
         map.zoomToExtent(vectorLayer.getDataExtent().scale(1.1));
         var zoom = map.getZoom();
@@ -136,7 +136,7 @@ def add_distance_flight_markers(distance_flights):
       </div>
 
       <div class="span12">
-        <h2>Distance flight takeoff locations</h2>
+        <h2>Takeoff Locations</h2>
         <div id="map_canvas" style="width:100%; height:400pt;"></div>
       </div>
     </div>
