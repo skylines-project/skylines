@@ -86,6 +86,11 @@ def add_distance_flight_markers(distance_flights):
             <td py:content="user.display_name" itemprop="name">Foo</td>
           </tr>
 
+          <tr py:if="user.is_readable() and user.tracking_key_hex is not None">
+            <th>Tracking key</th>
+            <td py:content="user.tracking_key_hex">Foo</td>
+          </tr>
+
           <tr py:if="user.club">
             <th>Club</th>
             <td itemprop="memberof" itemscope="" itemtype="http://schema.org/SportsTeam">
