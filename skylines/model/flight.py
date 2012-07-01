@@ -3,7 +3,7 @@
 from datetime import datetime
 from sqlalchemy.orm import relation
 from sqlalchemy import ForeignKey, Column, func
-from sqlalchemy.types import Integer, DateTime, String
+from sqlalchemy.types import Integer, DateTime
 from sqlalchemy.ext.hybrid import hybrid_property
 from skylines.model.auth import User
 from skylines.model import DeclarativeBase, DBSession
@@ -11,20 +11,15 @@ from tg import config, request
 from geoalchemy.geometry import GeometryColumn, Point, GeometryDDL
 from geoalchemy.postgis import PGComparator
 from skylines.model.geo import Location
+from skylines.model.igcfile import IGCFile
 
 
 class Flight(DeclarativeBase):
     __tablename__ = 'flights'
 
     id = Column(Integer, autoincrement=True, primary_key=True)
-    owner_id = Column(Integer, ForeignKey('tg_user.user_id'), nullable=False)
-    owner = relation('User', primaryjoin=(owner_id == User.user_id))
     time_created = Column(DateTime, nullable=False, default=datetime.now)
     time_modified = Column(DateTime, nullable=False, default=datetime.now)
-    filename = Column(String(), nullable=False)
-    md5 = Column(String(32), nullable=False, unique=True)
-
-    logger_manufacturer_id = Column(String(3))
 
     pilot_id = Column(Integer, ForeignKey('tg_user.user_id'))
     pilot = relation('User', primaryjoin=(pilot_id == User.user_id))
@@ -41,6 +36,10 @@ class Flight(DeclarativeBase):
     olc_classic_distance = Column(Integer)
     olc_triangle_distance = Column(Integer)
     olc_plus_score = Column(Integer)
+
+    igc_file_id = Column(Integer, ForeignKey('igc_files.id'))
+    igc_file = relation('IGCFile', primaryjoin=(igc_file_id == IGCFile.id),
+                        backref='flights')
 
     @hybrid_property
     def duration(self):
@@ -80,14 +79,15 @@ class Flight(DeclarativeBase):
 
     @classmethod
     def by_md5(cls, _md5):
-        return DBSession.query(cls).filter_by(md5=_md5).first()
+        file = IGCFile.by_md5(_md5)
+        if file is None:
+            return None
 
-    def get_download_uri(self):
-        return config['skylines.files.uri'] + '/' + self.filename
+        return DBSession.query(cls).filter_by(igc_file=file).first()
 
     def is_writable(self):
         return request.identity and \
-               (self.owner_id == request.identity['user'].user_id or
+               (self.igc_file.owner_id == request.identity['user'].user_id or
                 self.pilot_id == request.identity['user'].user_id or
                 'manage' in request.identity['permissions'])
 

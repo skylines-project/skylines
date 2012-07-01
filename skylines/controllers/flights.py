@@ -14,7 +14,7 @@ from sprox.formbase import EditableForm
 from sprox.widgets import PropertySingleSelectField
 from skylines.lib.base import BaseController
 from skylines import files
-from skylines.model import DBSession, User, Club, Flight
+from skylines.model import DBSession, User, Club, Flight, IGCFile
 from skylines.controllers.upload import UploadController
 from skylines.lib.datatables import GetDatatableRecords
 from skylines.lib.igc import read_igc_header
@@ -51,9 +51,9 @@ class FlightController(BaseController):
         self.flight = flight
 
     def __get_flight_path(self, threshold = 0.001, max_points = 3000):
-        fp = flight_path(self.flight, max_points)
+        fp = flight_path(self.flight.igc_file, max_points)
         if len(fp) == 0:
-            log.error('flight_path("' + self.flight.filename + '") returned with an empty list')
+            log.error('flight_path("' + self.flight.igc_file.filename + '") returned with an empty list')
             raise HTTPServerError
 
         num_levels = 4
@@ -133,8 +133,9 @@ class FlightController(BaseController):
     @require(has_permission('manage'))
     def delete(self, yes=False):
         if yes:
-            files.delete_file(self.flight.filename)
+            files.delete_file(self.flight.igc_file.filename)
             DBSession.delete(self.flight)
+            DBSession.delete(self.flight.igc_file)
 
             redirect('/flights/')
         else:
@@ -145,7 +146,7 @@ class FlightController(BaseController):
 
 class FlightsController(BaseController):
     def __do_list(self, tab, kw, date=None, pilot=None, club=None, filter=None, columns=None):
-        flights = DBSession.query(Flight).outerjoin(Flight.pilot)
+        flights = DBSession.query(Flight).outerjoin(Flight.pilot).outerjoin(Flight.igc_file)
         if date:
             flights = flights.filter(between(Flight.takeoff_time,
                                              date, date + timedelta(days=1)))
@@ -271,7 +272,7 @@ class FlightsController(BaseController):
             raise HTTPNotFound
 
         f = and_(Flight.pilot_id == None,
-                 Flight.owner == request.identity['user'])
+                 IGCFile.owner == request.identity['user'])
         return self.__do_list('unassigned', kw, filter=f)
 
     @expose('skylines.templates.flights.list')
@@ -327,7 +328,8 @@ class FlightsController(BaseController):
         flights = flights.filter(Flight.logger_manufacturer_id == None)
 
         for flight in flights:
-            read_igc_header(flight)
+            read_igc_header(flight.igc_file)
+
         DBSession.flush()
 
         return redirect('/flights/')

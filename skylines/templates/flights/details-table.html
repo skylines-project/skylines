@@ -96,13 +96,13 @@ from babel.dates import format_date, format_time, format_datetime
         <th>Uploaded</th>
         <td>
           <abbr class="timeago" title="${flight.time_created.isoformat()}" py:content="format_datetime(flight.time_created)" rel="tooltip">4 days ago</abbr>
-          by <span py:replace="flight.owner">Turbo</span>
+          by <span py:replace="flight.igc_file.owner">Turbo</span>
         </td>
       </tr>
       <tr>
         <th>Download</th>
         <td>
-          <a href="${flight.get_download_uri()}" py:content="flight.filename">FOO.IGC</a>
+          <a href="${flight.igc_file.get_download_uri()}" py:content="flight.igc_file.filename">FOO.IGC</a>
         </td>
       </tr>
       <tr py:if="flight.may_delete()">

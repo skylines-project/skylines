@@ -42,7 +42,7 @@ def flight_title(flight):
     <meta name="date" content="${flight.time_created.isoformat()}" />
     <meta name="DC.description" content="${description}" />
     <meta name="DC.date" content="${flight.time_created.isoformat()}" />
-    <meta name="DC.publisher" content="${flight.owner}" />
+    <meta name="DC.publisher" content="${flight.igc_file.owner}" />
     <meta py:if="flight.pilot" name="DC.creator" content="${flight.pilot}" />
     <meta py:if="flight.co_pilot" name="DC.contributor" content="${flight.co_pilot}" />
   </py:def>

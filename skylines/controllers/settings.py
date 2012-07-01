@@ -8,6 +8,7 @@ from tw.forms import TextField
 from skylines.lib.base import BaseController
 from skylines.model import DBSession, User, Club, Flight
 from skylines.controllers.users import ClubSelectField
+from skylines.model.igcfile import IGCFile
 
 
 class SelectClubForm(EditableForm):
@@ -50,11 +51,12 @@ class SettingsController(BaseController):
 
         # assign the user's new club to all of his flights that have
         # no club yet
-        flights = DBSession.query(Flight)
+        flights = DBSession.query(Flight).outerjoin(IGCFile)
         flights = flights.filter(and_(Flight.club_id == None,
                                       or_(Flight.pilot_id == user.user_id,
-                                          Flight.owner_id == user.user_id)))
-        flights.update({Flight.club_id: club})
+                                          IGCFile.owner_id == user.user_id)))
+        for flight in flights:
+            flight.club_id = club
 
         DBSession.flush()
 

@@ -54,7 +54,7 @@ from babel.dates import format_date
             Co-Pilot Name
           </a>
           <span py:if="not flight.pilot and not flight.co_pilot" py:strip="True">
-            [${flight.owner}]
+            [${flight.igc_file.owner}]
           </span>
         </td>
         <td py:if="'distance' not in omitted_columns" class="numeric">

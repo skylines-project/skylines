@@ -3,8 +3,8 @@
 from skylines import files
 
 
-def read_igc_header(flight):
-    path = files.filename_to_path(flight.filename)
+def read_igc_header(igc_file):
+    path = files.filename_to_path(igc_file.filename)
 
     try:
         f = file(path, 'r')
@@ -14,7 +14,7 @@ def read_igc_header(flight):
     i = 0
     for line in f:
         if line[0] == 'A' and len(line) >= 4:
-            flight.logger_manufacturer_id = line[1:4]
+            igc_file.logger_manufacturer_id = line[1:4]
         else:
             break
 

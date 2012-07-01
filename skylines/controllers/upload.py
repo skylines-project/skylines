@@ -12,6 +12,7 @@ from skylines.lib.md5 import file_md5
 from skylines.lib.igc import read_igc_header
 from skylines.lib.analysis import analyse_flight
 from zipfile import ZipFile
+from skylines.model.igcfile import IGCFile
 
 class PilotSelectField(SingleSelectField):
     def update_params(self, d):
@@ -100,14 +101,17 @@ class UploadController(BaseController):
                     flights.append((name, other, _('Duplicate file')))
                     continue
 
+            igc_file = IGCFile()
+            igc_file.owner = user
+            igc_file.filename = filename
+            igc_file.md5 = md5
+            read_igc_header(igc_file)
+            DBSession.add(igc_file)
+
             flight = Flight()
-            flight.owner = user
-            flight.filename = filename
-            flight.md5 = md5
             flight.pilot_id = pilot_id
             flight.club_id = club_id
-
-            read_igc_header(flight)
+            flight.igc_file = igc_file
 
             if not analyse_flight(flight):
                 files.delete_file(filename)

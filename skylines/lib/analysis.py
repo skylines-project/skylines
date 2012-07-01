@@ -58,7 +58,7 @@ def find_trace(contest, name):
 
 
 def analyse_flight(flight):
-    path = files.filename_to_path(flight.filename)
+    path = files.filename_to_path(flight.igc_file.filename)
     log.info('Analyzing ' + path)
 
     root = None
@@ -109,8 +109,8 @@ def analyse_flight(flight):
     return True
 
 
-def flight_path(flight, max_points = 1000):
-    path = files.filename_to_path(flight.filename)
+def flight_path(igc_file, max_points = 1000):
+    path = files.filename_to_path(igc_file.filename)
     f = os.popen(helper_path('FlightPath') + ' --max-points=' + str(max_points) + ' "' + path + '"')
 
     path = []
