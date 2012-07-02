@@ -100,8 +100,38 @@ def add_locations(locations):
           </tr>
         </table>
 
-        <p py:if="user.is_writable()">
-          <a href="/users/${user.user_id}/edit" class="btn">Edit</a>
+        <p>
+          <a py:if="user.is_writable()" href="/users/${user.user_id}/edit" class="btn">Edit</a>
+
+          <span py:if="request.identity"
+                py:with="current=request.identity['user']" py:strip="True">
+            <span py:if="current!=user" py:with="follows=current.follows(user)" py:strip="True">
+              <a py:if="follows"
+                 href="/users/${user.user_id}/unfollow"
+                 class="btn">Unfollow</a>
+              <a py:if="not follows"
+                 href="/users/${user.user_id}/follow"
+                 class="btn">Follow</a>
+            </span>
+          </span>
+        </p>
+
+        <h2 py:if="user.following">Following</h2>
+        <p>
+          <a py:for="following in user.following"
+             href="/users/${following.destination_id}/"
+             py:content="following.destination">
+            Following Name
+          </a>
+        </p>
+
+        <h2 py:if="user.followers">Followers</h2>
+        <p>
+          <a py:for="follower in user.followers"
+             href="/users/${follower.source_id}/"
+             py:content="follower.source">
+            Follower Name
+          </a>
         </p>
 
         <py:if test="distance_flights">

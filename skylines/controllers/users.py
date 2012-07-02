@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from tg import expose, validate, redirect, require
+from tg import expose, validate, redirect, require, request
 from tg.i18n import ugettext as _, lazy_ugettext as l_
 from webob.exc import HTTPNotFound, HTTPForbidden
 from sprox.formbase import AddRecordForm, EditableForm, Field
@@ -9,11 +9,11 @@ from formencode import Schema
 from formencode.validators import FieldsMatch, Email, String
 from tw.forms import PasswordField, TextField
 from skylines.lib.base import BaseController
-from skylines.model import DBSession, User, Group, Club, Flight
+from skylines.model import DBSession, User, Group, Club, Flight, Follower
 from skylines.form import BootstrapForm
 from sqlalchemy.sql.expression import desc
 from sqlalchemy import func
-from repoze.what.predicates import has_permission
+from repoze.what.predicates import not_anonymous, has_permission
 from skylines.model.geo import Location
 
 
@@ -128,6 +128,17 @@ class UserController(BaseController):
         return Location.get_clustered_locations(Flight.takeoff_location_wkt,
                                                 filter=(Flight.pilot == self.user))
 
+    @expose()
+    @require(not_anonymous())
+    def follow(self):
+        Follower.follow(request.identity['user'], self.user)
+        redirect('.')
+
+    @expose()
+    @require(not_anonymous())
+    def unfollow(self):
+        Follower.unfollow(request.identity['user'], self.user)
+        redirect('.')
 
 class UsersController(BaseController):
     @expose('skylines.templates.users.list')

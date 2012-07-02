@@ -221,6 +221,10 @@ class User(DeclarativeBase):
                 (self.password is None and self.club_id == request.identity['user'].club_id) or
                 'manage' in request.identity['permissions'])
 
+    def follows(self, other):
+        assert isinstance(other, User)
+        from skylines.model.follower import Follower
+        return Follower.follows(self, other)
 
 class Permission(DeclarativeBase):
     """
