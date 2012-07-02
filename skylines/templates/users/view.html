@@ -4,21 +4,11 @@ from babel.dates import format_date
 
 title = user.display_name
 
-def add_marker(location):
-  template = '''
-        vectorLayer.addFeatures(new OpenLayers.Feature.Vector(
-          new OpenLayers.Geometry.Point({},{}).transform(new OpenLayers.Projection("EPSG:4326"), map.getProjectionObject()),
-          {{}}, {{externalGraphic: "/images/OpenLayers/marker.png", graphicHeight: 21, graphicWidth: 16}}
-        ));'''
-  return template.format(location.longitude, location.latitude)
+def add_locations(locations):
+  def jsonify(location):
+    return '[' + str(location.longitude) + ',' + str(location.latitude) + ']'
 
-def add_takeoff_location_markers(takeoff_locations):
-  output = []
-  for takeoff_location in takeoff_locations:
-    if takeoff_location:
-      output.append(add_marker(takeoff_location))
-
-  return '\n'.join(output)
+  return ', '.join([jsonify(location) for location in locations])
 ?>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
@@ -55,8 +45,14 @@ def add_takeoff_location_markers(takeoff_locations):
         var vectorLayer = new OpenLayers.Layer.Vector("Overlay");
         map.addLayer(vectorLayer);
 
-        ${add_takeoff_location_markers(takeoff_locations)}
-
+        var locations = [${add_locations(takeoff_locations)}];
+        for (var i = 0; i < locations.length; ++i) {
+          point = new OpenLayers.Geometry.Point(locations[i][0], locations[i][1]);
+          point = point.transform(new OpenLayers.Projection("EPSG:4326"), map.getProjectionObject());
+          vectorLayer.addFeatures(new OpenLayers.Feature.Vector(point, {},
+            {externalGraphic: "/images/OpenLayers/marker.png", graphicHeight: 21, graphicWidth: 16}
+          ));
+        }
         map.zoomToExtent(vectorLayer.getDataExtent().scale(1.1));
         var zoom = map.getZoom();
         if (zoom > 10)
