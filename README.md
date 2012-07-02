@@ -63,6 +63,10 @@ Create the project database for any model classes defined:
 
     $ paster setup-app development.ini
 
+Fill the airport database:
+
+    $ python import_welt2000.py development.ini
+
 Start the paste http server:
 
     $ paster serve development.ini
