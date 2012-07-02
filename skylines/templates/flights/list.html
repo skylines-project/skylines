@@ -106,7 +106,7 @@ if club:
               "aTargets": ["club"],
               "fnRender": function(obj, row) {
                 if (obj.oSettings.jqXHR && obj.aData.club != null)
-                  row = "<a href=\"/flights/club/" + obj.oSettings.club_id + "\">" + obj.oSettings.club + "</a>";
+                  row = "<a href=\"/flights/club/" + obj.aData.club_id + "\">" + obj.aData.club + "</a>";
                 return row;
               }
             }, {
