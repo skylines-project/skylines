@@ -3,7 +3,7 @@
 # Wrapper script for launching Skylines as a FastCGI in lighttpd.
 #
 
-import sys
+import sys, os
 import thread
 import logging
 from paste.deploy import loadapp
@@ -22,7 +22,7 @@ for item in list(sys.path):
         sys.path.remove(item)
 sys.path[:0] = new_sys_path
 
-sys.path.append('/opt/skylines/src')
+sys.path.append(os.path.dirname(sys.argv[0]))
 
 thread.stack_size(524288)
 

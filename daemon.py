@@ -4,11 +4,11 @@
 # Twisted applications).
 #
 
-import sys
-sys.path.append('/opt/skylines/src')
-
+import sys, os
 from paste.deploy.loadwsgi import appconfig
 from skylines.config.environment import load_environment
+
+sys.path.append(os.path.dirname(sys.argv[0]))
 
 conf = appconfig('config:/etc/skylines/production.ini')
 load_environment(conf.global_conf, conf.local_conf)
