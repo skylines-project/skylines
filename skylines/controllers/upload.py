@@ -165,6 +165,15 @@ class UploadController(BaseController):
         model_list = kw.get('model')
         registration_list = kw.get('registration')
 
+        if not isinstance(flight_id_list, list):
+            flight_id_list = [flight_id_list]
+
+        if not isinstance(model_list, list):
+            model_list = [model_list]
+
+        if not isinstance(registration_list, list):
+            registration_list = [registration_list]
+
         if flight_id_list is None \
             or len(flight_id_list) != len(model_list) \
             or len(flight_id_list) != len(registration_list):
