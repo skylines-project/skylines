@@ -55,7 +55,7 @@ class FlightController(BaseController):
         fp = flight_path(self.flight.igc_file, max_points)
         if len(fp) == 0:
             log.error('flight_path("' + self.flight.igc_file.filename + '") returned with an empty list')
-            raise HTTPServerError
+            return None
 
         num_levels = 4
         zoom_factor = 4
