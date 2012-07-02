@@ -2,7 +2,7 @@ from tempfile import TemporaryFile
 from tg import expose, request, redirect, flash, validate
 from tg.i18n import ugettext as _, lazy_ugettext as l_
 from repoze.what.predicates import has_permission
-from tw.forms.fields import TextField, FileField, SingleSelectField
+from tw.forms.fields import TextField, SingleSelectField
 from tw.forms.validators import FieldStorageUploadConverter
 from skylines.lib.base import BaseController
 from skylines import files
@@ -10,7 +10,7 @@ from skylines.model import DBSession, User, Model, Flight
 from skylines.lib.md5 import file_md5
 from skylines.lib.igc import read_igc_header
 from skylines.lib.analysis import analyse_flight
-from skylines.form import BootstrapForm
+from skylines.form import BootstrapForm, MultiFileField
 from zipfile import ZipFile
 from skylines.model.igcfile import IGCFile
 
@@ -34,7 +34,7 @@ class ModelSelectField(SingleSelectField):
         return SingleSelectField.update_params(self, d)
 
 upload_form = BootstrapForm('upload_form', submit_text="Upload", action='do', children=[
-    FileField('file', label_text="IGC or ZIP file",
+    MultiFileField('file', label_text="IGC or ZIP file",
         validator=FieldStorageUploadConverter(not_empty=True, messages=dict(empty=_("Please add a IGC or ZIP file"))) ),
     PilotSelectField('pilot', label_text="Pilot"),
     ModelSelectField('model', label_text="Aircraft model"),
@@ -69,6 +69,14 @@ def IterateUploadFiles(upload):
             f.write(upload.encode('UTF-8'))
             f.seek(0)
             yield 'direct.igc', f
+        return
+    elif isinstance(upload, list):
+        import logging
+        log = logging.getLogger(__name__)
+        for x in upload:
+            log.info('x='+repr(x))
+            for name, f in IterateUploadFiles(x):
+                yield name, f
         return
 
     for x in IterateFiles(upload.filename, upload.file):
