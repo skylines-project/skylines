@@ -419,7 +419,10 @@ class FlightsController(BaseController):
         flights = flights.filter(Flight.logger_manufacturer_id == None)
 
         for flight in flights:
-            read_igc_header(flight.igc_file)
+            igc_headers = read_igc_header(flight.igc_file)
+
+            if 'manufacturer_id' in igc_headers:
+                flight.igc_file.manufacturer_id = igc_headers['manufacturer_id']
 
         DBSession.flush()
 

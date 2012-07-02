@@ -1,4 +1,6 @@
 <?python
+from tw.forms.fields import SubmitButton, TextField, HiddenField
+from skylines.controllers.upload import ModelSelectField
 page = 'upload'
 title = 'Upload Flight'
 ?>
@@ -16,18 +18,44 @@ title = 'Upload Flight'
   </head>
 
   <body>
-    <table class="table">
-      <tr py:for="name,flight,error in flights">
-        <td py:content="name">file.igc</td>
-        <td>
-          <span class="label label-success" py:if="not error"><i class="icon-ok"></i> Success</span>
-          <span class="label label-warning" py:if="error and flight"><i class="icon-warning-sign"></i> <span py:replace="error">Warning</span></span>
-          <span class="label label-important" py:if="error and not flight"><i class="icon-warning-sign"></i> <span py:replace="error">Error</span></span>
-        </td>
-        <td><a py:if="flight" href="/flights/${flight.id}/">Show</a></td>
-      </tr>
-    </table>
-
+    <form action="/flights/upload/update" method="post">
+      <p>
+        Your flights have been saved. You may want to change the flights aircraft types and registrations below.
+        <br />
+        ${Markup(SubmitButton(default="Update Aircraft Types and Registrations", css_class="btn"))}
+      </p>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Filename</th>
+            <th>Aircraft Model</th>
+            <th>Aircraft Registration</th>
+            <th colspan="2">Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr py:for="name,flight,error in flights">
+            <td py:content="name">file.igc</td>
+            <td>
+              <span py:if="not error" py:replace="Markup(HiddenField('flight_id', default=flight.id))"></span>
+              <span py:if="not error" py:replace="Markup(ModelSelectField('model', default=flight.model_id))">Aircraft Model</span>
+            </td>
+            <td>
+              <span py:if="not error" py:replace="Markup(TextField('registration', default=flight.registration))">Aircraft Registration</span>
+            </td>
+            <td>
+              <span class="label label-success" py:if="not error"><i class="icon-ok"></i> Success</span>
+              <span class="label label-warning" py:if="error and flight"><i class="icon-warning-sign"></i> <span py:replace="error">Warning</span></span>
+              <span class="label label-important" py:if="error and not flight"><i class="icon-warning-sign"></i> <span py:replace="error">Error</span></span>
+            </td>
+            <td><a py:if="flight" href="/flights/${flight.id}/">Show</a></td>
+          </tr>
+        </tbody>
+      </table>
+      <p>
+        ${Markup(SubmitButton(default="Update Aircraft Types and Registrations", css_class="btn"))}
+      </p>
+    </form>
     <p>
       <a href="." class="btn">Upload another flight</a>
     </p>

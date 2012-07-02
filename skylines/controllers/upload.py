@@ -1,4 +1,5 @@
 from tempfile import TemporaryFile
+from datetime import datetime
 from tg import expose, request, redirect, flash, validate
 from tg.i18n import ugettext as _, lazy_ugettext as l_
 from repoze.what.predicates import has_permission
@@ -8,7 +9,7 @@ from skylines.lib.base import BaseController
 from skylines import files
 from skylines.model import DBSession, User, Model, Flight
 from skylines.lib.md5 import file_md5
-from skylines.lib.igc import read_igc_header
+from skylines.lib.igc import read_igc_header, guess_model
 from skylines.lib.analysis import analyse_flight
 from skylines.form import BootstrapForm, MultiFileField
 from zipfile import ZipFile
@@ -37,8 +38,6 @@ upload_form = BootstrapForm('upload_form', submit_text="Upload", action='do', ch
     MultiFileField('file', label_text="IGC or ZIP file",
         validator=FieldStorageUploadConverter(not_empty=True, messages=dict(empty=_("Please add a IGC or ZIP file"))) ),
     PilotSelectField('pilot', label_text="Pilot"),
-    ModelSelectField('model', label_text="Aircraft model"),
-    TextField('registration', label_text="Aircraft registration"),
 ])
 
 def IterateFiles(name, f):
@@ -94,7 +93,7 @@ class UploadController(BaseController):
 
     @expose('skylines.templates.upload.result')
     @validate(upload_form, error_handler=index)
-    def do(self, file, pilot, model, registration):
+    def do(self, file, pilot):
         user = request.identity['user']
 
         pilot_id = None
@@ -104,17 +103,6 @@ class UploadController(BaseController):
             if pilot:
                 pilot_id = pilot.user_id
                 club_id = pilot.club_id
-
-        model_id = None
-        if model:
-            model = DBSession.query(Model).get(int(model))
-            if model:
-                model_id = model.id
-
-        if registration is not None:
-            registration = registration.strip()
-            if len(registration) == 0:
-                registration = None
 
         flights = []
 
@@ -135,14 +123,21 @@ class UploadController(BaseController):
             igc_file.owner = user
             igc_file.filename = filename
             igc_file.md5 = md5
-            read_igc_header(igc_file)
+
+            igc_headers = read_igc_header(igc_file)
+
+            if 'manufacturer_id' in igc_headers:
+                igc_file.manufacturer_id = igc_headers['manufacturer_id']
 
             flight = Flight()
             flight.pilot_id = pilot_id
             flight.club_id = club_id
-            flight.model_id = model_id
-            flight.registration = registration
             flight.igc_file = igc_file
+
+            flight.model_id = guess_model(igc_headers)
+
+            if 'reg' in igc_headers:
+                flight.registration = igc_headers['reg']
 
             if not analyse_flight(flight):
                 files.delete_file(filename)
@@ -161,3 +156,45 @@ class UploadController(BaseController):
         DBSession.flush()
 
         return dict(page='upload', flights=flights)
+
+    @expose()
+    def update(self, **kw):
+        user = request.identity['user']
+
+        flight_id_list = kw.get('flight_id')
+        model_list = kw.get('model')
+        registration_list = kw.get('registration')
+
+        if flight_id_list is None \
+            or len(flight_id_list) != len(model_list) \
+            or len(flight_id_list) != len(registration_list):
+            return redirect('/flights/today')
+
+        for index, id in enumerate(flight_id_list):
+            try:
+                id = int(id)
+            except ValueError:
+                continue
+
+            try:
+                model_id = int(model_list[index])
+            except ValueError:
+                model_id = None
+
+            registration = registration_list[index]
+            if registration is not None:
+                registration = registration.strip()
+                if len(registration) == 0:
+                    registration = None
+
+            flight = DBSession.query(Flight).get(id)
+
+            if not flight.is_writable():
+                continue
+
+            flight.model_id = model_id
+            flight.registration = registration
+            flight.time_modified = datetime.now()
+
+        DBSession.flush()
+        return redirect('/flights/today')

@@ -39,7 +39,7 @@ Install the required libraries to run *SkyLines* using the setup.py script:
 
 Install postgres and postgis. On Debian Linux (testing) this is done by:
 
-    $ apt-get install postgresql postgresql-9.1-postgis
+    $ apt-get install postgresql postgresql-9.1-postgis postgresql-contrib-9.1
 
 Now create a new database and user for *SkyLines*. On Debian Linux, change to the user postgres to log into the database. Second, install postgis into this new created database:
 
@@ -52,6 +52,7 @@ Now create a new database and user for *SkyLines*. On Debian Linux, change to th
     $ psql skylines # log into postgres using skylines database
     postgres=# grant all on geometry_columns to <your username>;
     postgres=# grant select on spatial_ref_sys to <your username>;
+    postgres=# create extension fuzzystrmatch;
     postgres=# \q
 
 Note: the location of the postgis sql files may be different for other versions of postgresql, postgis and other
