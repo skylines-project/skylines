@@ -291,11 +291,14 @@ function setIndexFromTime(time) {
 
     var index = getNearestNumber(flight.t, time);
 
-    if (time < flight.t[index]) {
+    if (time < flight.t[index] && (flight.t[index] - flight.t[index-1]) != 0) {
       flight.dx = (time - flight.t[index-1])/(flight.t[index] - flight.t[index-1]);
       flight.index = index - 1;
-    } else {
+    } else if ((flight.t[index+1] - flight.t[index]) != 0) {
       flight.dx = (time - flight.t[index])/(flight.t[index+1] - flight.t[index]);
+      flight.index = index;
+    } else {
+      flight.dx = 0;
       flight.index = index;
     }
 
