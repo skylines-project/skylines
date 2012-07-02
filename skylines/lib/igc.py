@@ -43,7 +43,7 @@ def parse_glider_type(line):
     if not match:
         return None
 
-    return match.group(1).lower().strip()
+    return match.group(1).strip()
 
 def parse_glider_reg(line):
     match = hfgid_re.match(line)
@@ -67,7 +67,7 @@ def guess_model(igc_headers):
             return result.model_id
 
     if igc_headers.get('model') is not None:
-        glider_type = igc_headers.get('model')
+        glider_type = igc_headers.get('model').lower()
 
         # otherwise, try to guess the glider model by the glider type igc header
         text_fragments = ['%{}%'.format(v) for v in re.sub(r'[^a-z]', ' ', glider_type).split()]
