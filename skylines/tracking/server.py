@@ -3,6 +3,7 @@ from twisted.internet.protocol import DatagramProtocol
 from twisted.internet import reactor
 import transaction
 from skylines.model import DBSession, User, TrackingFix, Location
+from skylines.tracking.crc import check_crc, set_crc
 
 # More information about this protocol can be found in the XCSoar
 # source code, source file src/Tracking/SkyLines/Protocol.hpp
@@ -124,6 +125,7 @@ class TrackingServer(DatagramProtocol):
             return
 
         if header[0] != MAGIC: return
+        if not check_crc(data): return
 
         # XXX verify CRC
 

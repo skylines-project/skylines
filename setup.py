@@ -49,6 +49,7 @@ install_requires = [
     "skylinespolyencode",
     "psycopg2",
     "geoalchemy",
+    "crc16",
 ]
 
 if sys.version_info[:2] == (2, 4):
