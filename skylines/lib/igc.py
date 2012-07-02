@@ -72,10 +72,10 @@ def guess_model(igc_headers):
         text_fragments = ['%{}%'.format(v) for v in re.sub(r'[^a-z]', ' ', glider_type).split()]
         digit_fragments = ['%{}%'.format(v) for v in re.sub(r'[^0-9]', ' ', glider_type).split()]
 
-        glider_type_clean = re.sub(r'[^a-z0-9]', '', glider_type)
-
         if not text_fragments and not digit_fragments:
             return None
+
+        glider_type_clean = re.sub(r'[^a-z0-9]', '', glider_type)
 
         result = DBSession.query(Model) \
             .filter(and_( \
