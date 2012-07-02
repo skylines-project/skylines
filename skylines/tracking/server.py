@@ -14,7 +14,11 @@ OLD_MAGIC = 0x5df4b67a
 OLD_TYPE_FIX = 1
 
 MAGIC = 0x5df4b67b
+TYPE_PING = 1
+TYPE_PONG = 2
 TYPE_FIX = 3
+
+FLAG_PONG_BAD_KEY = 0x1
 
 FLAG_LOCATION = 0x1
 FLAG_TRACK = 0x2
@@ -69,6 +73,21 @@ class TrackingServer(DatagramProtocol):
         DBSession.add(fix)
         DBSession.flush()
         transaction.commit()
+
+    def pingReceived(self, host, port, key, payload):
+        if len(payload) != 8: return
+        id, reserved, reserved2 = struct.unpack('!HHI', payload)
+
+        flags = 0
+
+        pilot = User.by_tracking_key(key)
+        if not pilot:
+            flags |= FLAG_PONG_BAD_KEY
+
+        data = struct.pack('!IHHQHHI', MAGIC, 0, TYPE_PONG, 0,
+                           id, 0, flags)
+        data = set_crc(data)
+        self.transport.write(data, (host, port))
 
     def fixReceived(self, host, key, payload):
         if len(payload) != 32: return
@@ -133,3 +152,5 @@ class TrackingServer(DatagramProtocol):
 
         if header[2] == TYPE_FIX:
             self.fixReceived(host, header[3], data[16:])
+        elif header[2] == TYPE_PING:
+            self.pingReceived(host, port, header[3], data[16:])
