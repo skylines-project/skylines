@@ -186,7 +186,7 @@ class FlightsController(BaseController):
                                  co_pilot_id = flight.co_pilot_id,
                                  co_pilot = flight.co_pilot and flight.co_pilot.display_name,
                                  club_id = flight.club_id,
-                                 club = flight.club.name,
+                                 club = flight.club and flight.club.name,
                                  owner = flight.igc_file.owner.display_name,
                                  flight_id = flight.id))
 
