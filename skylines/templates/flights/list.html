@@ -101,6 +101,14 @@ if club:
                 return row;
               }
             }, {
+              "sDefaultContent": "",
+              "aTargets": ["airport"],
+              "fnRender": function(obj, row) {
+                if (obj.oSettings.jqXHR && obj.aData.takeoff_airport != null)
+                  row = obj.aData.takeoff_airport;
+                return row;
+              }
+            }, {
               "sType": "numeric-comma-formatted",
               "sDefaultContent": "",
               "aTargets": ["club"],
