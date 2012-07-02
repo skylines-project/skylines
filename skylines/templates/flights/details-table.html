@@ -39,7 +39,7 @@ from babel.dates import format_date, format_time, format_datetime
         <th>Take-off</th>
         <td>
           <py:if test="flight.takeoff_airport is not None">
-            <span py:content="flight.takeoff_airport.name">Airport</span>
+            <a py:content="flight.takeoff_airport.name" href="/flights/airport/${flight.takeoff_airport_id}">Airport</a>
             <br />
             at
           </py:if>
