@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 """Main Controller"""
 
+from datetime import datetime
 from tg import expose, flash, url, lurl, request, redirect
 from tg.i18n import ugettext as _, lazy_ugettext as l_
 from skylines import model
@@ -86,6 +87,7 @@ class RootController(BaseController):
             flash(_('Sorry, username or password are wrong. Please try again or register.'), 'warning')
         else:
             request.identity['user'].login_ip = request.remote_addr
+            request.identity['user'].login_time = datetime.now()
 
             userid = request.identity['repoze.who.userid']
             flash(_('You are now logged in. Welcome back, %s!') % userid)

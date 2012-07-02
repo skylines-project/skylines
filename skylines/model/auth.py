@@ -123,6 +123,8 @@ class User(DeclarativeBase):
     tracking_key = Column(BigInteger)
 
     created_ip = Column(INET)
+
+    login_time = Column(DateTime)
     login_ip = Column(INET)
 
     @property
