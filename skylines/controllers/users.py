@@ -10,12 +10,12 @@ from formencode.validators import FieldsMatch, Email, String
 from tw.forms import PasswordField, TextField
 from skylines.lib.base import BaseController
 from skylines.model import DBSession, User, Group, Club, Flight, Follower
+from skylines.model.igcfile import IGCFile
 from skylines.form import BootstrapForm
-from sqlalchemy.sql.expression import desc
+from sqlalchemy.sql.expression import desc, and_, or_
 from sqlalchemy import func
 from repoze.what.predicates import not_anonymous, has_permission
 from skylines.model.geo import Location
-
 
 class ClubSelectField(PropertySingleSelectField):
     def _my_update_params(self, d, nullable=False):
@@ -24,6 +24,24 @@ class ClubSelectField(PropertySingleSelectField):
                   [(club.id, club.name) for club in clubs]
         d['options'] = options
         return d
+
+class SelectClubForm(EditableForm):
+    __base_widget_type__ = BootstrapForm
+    __model__ = User
+    __hide_fields__ = ['user_id']
+    __limit_fields__ = ['club']
+    club = ClubSelectField
+
+select_club_form = SelectClubForm(DBSession)
+
+
+class NewClubForm(AddRecordForm):
+    __base_widget_type__ = BootstrapForm
+    __model__ = Club
+    __limit_fields__ = ['name']
+    name = TextField
+
+new_club_form = NewClubForm(DBSession)
 
 user_validator = Schema(chained_validators=(FieldsMatch('password',
                                                         'verify_password',
@@ -95,6 +113,63 @@ class UserController(BaseController):
         DBSession.flush()
 
         redirect('.')
+
+    @expose('skylines.templates.users.change_club')
+    def change_club(self, **kwargs):
+        if not self.user.is_writable():
+            raise HTTPForbidden
+
+        return dict(user=self.user,
+                    select_form=select_club_form,
+                    create_form=new_club_form)
+
+    @expose()
+    @validate(form=select_club_form, error_handler=change_club)
+    def select_club(self, club, **kwargs):
+        if not self.user.is_writable():
+            raise HTTPForbidden
+
+        self.user.club_id = club
+
+        # assign the user's new club to all of his flights that have
+        # no club yet
+        flights = DBSession.query(Flight).outerjoin(IGCFile)
+        flights = flights.filter(and_(Flight.club_id == None,
+                                      or_(Flight.pilot_id == self.user.user_id,
+                                          IGCFile.owner_id == self.user.user_id)))
+        for flight in flights:
+            flight.club_id = club
+
+        DBSession.flush()
+
+        redirect('.')
+
+    @expose()
+    @validate(form=new_club_form, error_handler=change_club)
+    def create_club(self, name, **kw):
+        if not self.user.is_writable():
+            raise HTTPForbidden
+
+        current_user = request.identity['user']
+
+        club = Club(name=name)
+        club.owner_id = current_user.user_id
+        DBSession.add(club)
+
+        self.user.club = club
+
+        DBSession.flush()
+
+        redirect('.')
+
+    @expose()
+    def tracking_register(self, came_from = '/tracking/info'):
+        if not self.user.is_writable():
+            raise HTTPForbidden
+
+        self.user.generate_tracking_key()
+
+        redirect(came_from)
 
     def get_largest_flight(self):
         return DBSession.query(Flight) \

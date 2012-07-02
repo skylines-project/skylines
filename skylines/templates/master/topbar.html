@@ -59,7 +59,7 @@
               <li><a href="/flights/pilot/${request.identity['user'].user_id}"><i class="icon-plane"></i> Flights</a></li>
               <li><a href="/statistics/pilot/${request.identity['user'].user_id}"><i class="icon-tasks"></i> Statistics</a></li>
               <li class="divider"></li>
-              <li><a href="${tg.url('/settings/')}"><i class="icon-user"></i> Settings</a></li>
+              <li><a href="/users/${request.identity['user'].user_id}/"><i class="icon-user"></i> Settings</a></li>
               <li><a href="${tg.url('/logout_handler')}"><i class="icon-signout"></i> Logout</a></li>
             </ul>
           </li>

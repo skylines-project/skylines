@@ -86,6 +86,10 @@ def add_locations(locations):
             <th>Tracking key</th>
             <td>
               <span class="label label-info" py:content="user.tracking_key_hex">Tracking Key</span>
+              <a href="/tracking/info" class="btn btn-mini">More Information</a>
+              <py:if test="user.is_writable()">
+                <a href="tracking_register?came_from=." class="btn btn-mini">Generate new key</a>
+              </py:if>
             </td>
           </tr>
 
@@ -96,6 +100,7 @@ def add_locations(locations):
               <a href="/clubs/${user.club_id}/" py:content="user.club" itemprop="name">
                 Foo
               </a>
+              <a py:if="user.is_writable()" href="change_club" class="btn btn-mini">Change</a>
             </td>
           </tr>
         </table>
