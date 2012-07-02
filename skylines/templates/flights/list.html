@@ -15,6 +15,9 @@ if pilot:
 if club:
   tagline = 'of ' + unicode(club)
   titleinfo = '/clubs/%u/' % club.id
+
+if airport:
+  tagline = 'from ' + unicode(airport.name)
 ?>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
@@ -209,6 +212,8 @@ if club:
         omitted_columns.add('date')
       if club or pilot:
         omitted_columns.add('club')
+      if airport:
+        omitted_columns.add('takeoff_airport')
     ?>
     ${render_flights_table(flights, omitted_columns)}
   </body>

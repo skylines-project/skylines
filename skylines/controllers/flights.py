@@ -197,7 +197,7 @@ class FlightController(BaseController):
 
 
 class FlightsController(BaseController):
-    def __do_list(self, tab, kw, date=None, pilot=None, club=None, filter=None, columns=None):
+    def __do_list(self, tab, kw, date=None, pilot=None, club=None, airport=None, filter=None, columns=None):
         flights = DBSession.query(Flight) \
             .outerjoin(Flight.pilot) \
             .outerjoin(Flight.igc_file) \
@@ -212,6 +212,10 @@ class FlightsController(BaseController):
                                          Flight.co_pilot == pilot))
         if club:
             flights = flights.filter(Flight.club == club)
+
+        if airport:
+            flights = flights.filter(Flight.takeoff_airport == airport)
+
         if filter is not None:
             flights = flights.filter(filter)
 
@@ -266,7 +270,7 @@ class FlightsController(BaseController):
                 limit = int(config.get('skylines.lists.server_side', 250))
 
             flights = flights.order_by(desc(Flight.takeoff_time)).limit(limit)
-            return dict(tab = tab, date=date, pilot=pilot, club=club,
+            return dict(tab = tab, date=date, pilot=pilot, club=club, airport=airport,
                         flights = flights, flights_count = flights_count)
 
     @expose()
@@ -400,6 +404,26 @@ class FlightsController(BaseController):
         }
 
         return self.__do_list('club', kw, club=club, columns=columns)
+
+    @expose('skylines.templates.flights.list')
+    @expose('json')
+    def airport(self, id, **kw):
+        airport = DBSession.query(Airport).get(id)
+        if not airport:
+            raise HTTPNotFound
+
+        columns = {
+            0: 'takeoff_time',
+            1: 'olc_plus_score',
+            2: 'display_name',
+            3: 'olc_classic_distance',
+            4: 'flights.club_id',
+            5: 'models.name',
+            6: 'takeoff_time',
+            7: 'id'
+        }
+
+        return self.__do_list('airport', kw, airport=airport, columns=columns)
 
     @expose()
     @require(has_permission('manage'))

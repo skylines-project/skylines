@@ -35,6 +35,10 @@ my_club = request.identity['user'].club if request.identity else None
     </a>
   </li>
 
+  <li py:if="airport" class="active">
+    <a href="/flights/airport/${airport.id}" py:content="airport.name">Airport</a>
+  </li>
+
   <li py:if="club" class="active">
     <a href="/flights/club/${club.id}" py:content="club">LV Aachen</a>
   </li>
