@@ -4,6 +4,7 @@ from sqlalchemy import Column
 from sqlalchemy.types import Integer, Unicode
 from skylines.model import DeclarativeBase
 
+
 class Model(DeclarativeBase):
     __tablename__ = 'models'
 
