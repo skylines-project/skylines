@@ -73,7 +73,7 @@ title = 'Live Tracking'
             <tr>
               <th>Pilot</th>
               <td>
-                <a py:if="pilot" py:content="pilot" href="/flights/pilot/${pilot.user_id}">
+                <a py:if="pilot" py:content="pilot" href="/users/${pilot.user_id}/">
                   Pilot Name
                 </a>
               </td>
@@ -81,7 +81,7 @@ title = 'Live Tracking'
             <tr py:if="pilot.club">
               <th>Club</th>
               <td>
-                <a py:content="pilot.club" href="/flights/club/${pilot.club_id}">
+                <a py:content="pilot.club" href="/clubs/${pilot.club_id}/">
                   Club Name
                 </a>
               </td>
