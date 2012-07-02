@@ -9,6 +9,7 @@ from skylines.model import DBSession, Model, Flight
 hfgid_re = re.compile(r'HFGID\s*GLIDER\s*ID\s*:(.*)', re.IGNORECASE)
 hfgty_re = re.compile(r'HFGTY\s*GLIDER\s*TYPE\s*:(.*)', re.IGNORECASE)
 
+
 def read_igc_header(igc_file):
     path = files.filename_to_path(igc_file.filename)
 
@@ -37,6 +38,7 @@ def read_igc_header(igc_file):
 
     return igc_headers
 
+
 def parse_glider_type(line):
     match = hfgty_re.match(line)
 
@@ -45,6 +47,7 @@ def parse_glider_type(line):
 
     return match.group(1).strip()
 
+
 def parse_glider_reg(line):
     match = hfgid_re.match(line)
 
@@ -52,6 +55,7 @@ def parse_glider_reg(line):
         return None
 
     return match.group(1).strip()
+
 
 def guess_model(igc_file):
     # first try to find the reg number in the database
@@ -81,7 +85,7 @@ def guess_model(igc_file):
         result = DBSession.query(Model) \
             .filter(and_( \
                 func.regexp_replace(func.lower(Model.name), '[^a-z]', ' ').like(func.any(text_fragments)), \
-                func.regexp_replace(func.lower(Model.name), '[^0-9]', ' ').like(func.all(digit_fragments)) )) \
+                func.regexp_replace(func.lower(Model.name), '[^0-9]', ' ').like(func.all(digit_fragments)))) \
             .order_by(func.levenshtein(func.regexp_replace(func.lower(Model.name), '[^a-z0-9]', ''), glider_type_clean))
 
         if result.first():
