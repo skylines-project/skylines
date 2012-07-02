@@ -5,6 +5,7 @@ from math import log
 from tg import expose, request
 from webob.exc import HTTPNotFound
 from sqlalchemy import func
+from sqlalchemy.sql.expression import desc
 from skylines.lib.base import BaseController
 from skylines.model import DBSession, User, TrackingFix
 from skylinespolyencode import SkyLinesPolyEncoder
@@ -79,7 +80,8 @@ class TrackingController(BaseController):
                 .subquery()
 
         query = DBSession.query(subq.c.time, User) \
-            .filter(subq.c.pilot_id == User.user_id)
+            .filter(subq.c.pilot_id == User.user_id) \
+            .order_by(desc(subq.c.time))
 
         return dict(tracks=query.all())
 
