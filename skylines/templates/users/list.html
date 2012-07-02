@@ -45,7 +45,7 @@ if defined('club'):
           <tr py:for="user in users" py:attrs="pilot_attrs">
             <meta itemprop="url" content="/users/${user.user_id}" />
             <td itemprop="name">
-              <a href="/flights/pilot/${user.user_id}" py:content="user">
+              <a href="/users/${user.user_id}/" py:content="user">
                 Name
               </a>
             </td>
