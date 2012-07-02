@@ -441,14 +441,14 @@ class FlightsController(BaseController):
     @require(has_permission('manage'))
     def igc_headers(self):
         """Hidden method that parses all missing IGC headers."""
-        flights = DBSession.query(Flight)
-        flights = flights.filter(Flight.logger_manufacturer_id == None)
+        igc_files = DBSession.query(IGCFile)
+        igc_files = igc_files.filter(IGCFile.logger_manufacturer_id == None)
 
-        for flight in flights:
-            igc_headers = read_igc_header(flight.igc_file)
+        for igc_file in igc_files:
+            igc_headers = read_igc_header(igc_file)
 
             if 'manufacturer_id' in igc_headers:
-                flight.igc_file.manufacturer_id = igc_headers['manufacturer_id']
+                igc_file.manufacturer_id = igc_headers['manufacturer_id']
 
         DBSession.flush()
 
