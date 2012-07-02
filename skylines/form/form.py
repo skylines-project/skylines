@@ -1,4 +1,6 @@
-from tw.forms import Form
+from tw.forms import Form, SubmitButton
+
+SubmitButton.css_class = 'btn btn-primary'
 
 class BootstrapMixin(object):
     """
