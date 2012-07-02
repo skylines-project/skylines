@@ -8,8 +8,10 @@ from formencode import validators
 from tw.forms import TextField
 from skylines.lib.base import BaseController
 from skylines.model import DBSession, User, Group, Club
+from skylines.form import BootstrapForm
 
 class EditClubForm(EditableForm):
+    __base_widget_type__ = BootstrapForm
     __model__ = Club
     __hide_fields__ = ['id']
     __limit_fields__ = ['name', 'website']
@@ -20,6 +22,7 @@ class EditClubForm(EditableForm):
 edit_club_form = EditClubForm(DBSession)
 
 class NewPilotForm(AddRecordForm):
+    __base_widget_type__ = BootstrapForm
     __model__ = User
     __required_fields__ = ['display_name']
     __limit_fields__ = ['display_name']

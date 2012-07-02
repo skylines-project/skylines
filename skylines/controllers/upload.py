@@ -2,7 +2,6 @@ from tempfile import TemporaryFile
 from tg import expose, request, redirect, flash, validate
 from tg.i18n import ugettext as _, lazy_ugettext as l_
 from repoze.what.predicates import has_permission
-from tw.forms import TableForm
 from tw.forms.fields import TextField, FileField, SingleSelectField
 from tw.forms.validators import FieldStorageUploadConverter
 from skylines.lib.base import BaseController
@@ -11,6 +10,7 @@ from skylines.model import DBSession, User, Model, Flight
 from skylines.lib.md5 import file_md5
 from skylines.lib.igc import read_igc_header
 from skylines.lib.analysis import analyse_flight
+from skylines.form import BootstrapForm
 from zipfile import ZipFile
 from skylines.model.igcfile import IGCFile
 
@@ -33,7 +33,7 @@ class ModelSelectField(SingleSelectField):
         d['options'] = options
         return SingleSelectField.update_params(self, d)
 
-upload_form = TableForm('upload_form', submit_text="Upload", action='do', children=[
+upload_form = BootstrapForm('upload_form', submit_text="Upload", action='do', children=[
     FileField('file', label_text="IGC or ZIP file",
         validator=FieldStorageUploadConverter(not_empty=True, messages=dict(empty=_("Please add a IGC or ZIP file"))) ),
     PilotSelectField('pilot', label_text="Pilot"),

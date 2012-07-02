@@ -9,9 +9,10 @@ from skylines.lib.base import BaseController
 from skylines.model import DBSession, User, Club, Flight
 from skylines.controllers.users import ClubSelectField
 from skylines.model.igcfile import IGCFile
-
+from skylines.form import BootstrapForm
 
 class SelectClubForm(EditableForm):
+    __base_widget_type__ = BootstrapForm
     __model__ = User
     __hide_fields__ = ['user_id']
     __limit_fields__ = ['club']
@@ -21,6 +22,7 @@ select_club_form = SelectClubForm(DBSession)
 
 
 class NewClubForm(AddRecordForm):
+    __base_widget_type__ = BootstrapForm
     __model__ = Club
     __limit_fields__ = ['name']
     name = TextField

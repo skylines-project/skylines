@@ -10,6 +10,7 @@ from formencode.validators import FieldsMatch, Email, String
 from tw.forms import PasswordField, TextField
 from skylines.lib.base import BaseController
 from skylines.model import DBSession, User, Group, Club, Flight
+from skylines.form import BootstrapForm
 from sqlalchemy.sql.expression import desc
 from sqlalchemy import func
 from repoze.what.predicates import has_permission
@@ -31,6 +32,7 @@ user_validator = Schema(chained_validators=(FieldsMatch('password',
 
 
 class NewUserForm(AddRecordForm):
+    __base_widget_type__ = BootstrapForm
     __model__ = User
     __required_fields__ = ['password']
     __limit_fields__ = ['user_name', 'password', 'verify_password', 'email_address', 'display_name', 'club']
@@ -46,6 +48,7 @@ new_user_form = NewUserForm(DBSession)
 
 
 class EditUserForm(EditableForm):
+    __base_widget_type__ = BootstrapForm
     __model__ = User
     __hide_fields__ = ['user_id']
     __limit_fields__ = ['user_name', 'email_address', 'display_name', 'club']

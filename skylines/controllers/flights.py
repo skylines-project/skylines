@@ -21,6 +21,7 @@ from skylines.controllers.upload import UploadController
 from skylines.lib.datatables import GetDatatableRecords
 from skylines.lib.igc import read_igc_header
 from skylines.lib.analysis import analyse_flight, flight_path
+from skylines.form import BootstrapForm
 from skylinespolyencode import SkyLinesPolyEncoder
 
 log = logging.getLogger(__name__)
@@ -38,6 +39,7 @@ class PilotSelectField(PropertySingleSelectField):
 
 
 class SelectPilotForm(EditableForm):
+    __base_widget_type__ = BootstrapForm
     __model__ = Flight
     __hide_fields__ = ['id']
     __limit_fields__ = ['pilot', 'co_pilot']
@@ -57,6 +59,7 @@ class ModelSelectField(PropertySingleSelectField):
         return d
 
 class SelectAircraftForm(EditableForm):
+    __base_widget_type__ = BootstrapForm
     __model__ = Flight
     __hide_fields__ = ['id']
     __limit_fields__ = ['model', 'registration']
