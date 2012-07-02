@@ -251,6 +251,7 @@ class FlightsController(BaseController):
                                  club = flight.club and flight.club.name,
                                  owner = flight.igc_file.owner.display_name,
                                  takeoff_airport = flight.takeoff_airport and flight.takeoff_airport.name,
+                                 takeoff_airport_id = flight.takeoff_airport and flight.takeoff_airport.id,
                                  aircraft = flight.model and flight.model.name,
                                  aircraft_reg = flight.registration or "Unknown",
                                  flight_id = flight.id))

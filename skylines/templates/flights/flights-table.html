@@ -65,7 +65,7 @@ from babel.dates import format_date
           </span>
         </td>
         <td py:if="'takeoff_airport' not in omitted_columns">
-          <span py:if="flight.takeoff_airport" py:content="flight.takeoff_airport.name">Airport</span>
+          <a py:if="flight.takeoff_airport" py:content="flight.takeoff_airport.name" href="/flights/airport/${flight.takeoff_airport_id}">Airport</a>
         </td>
         <td py:if="'club' not in omitted_columns">
           <a py:if="flight.club" py:content="flight.club" href="/flights/club/${flight.club_id}">
