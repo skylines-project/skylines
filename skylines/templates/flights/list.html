@@ -122,7 +122,7 @@ if club:
               "aTargets": ["aircraft"],
               "fnRender": function(obj, row) {
                 if (obj.oSettings.jqXHR && obj.aData.aircraft != null)
-                  row = obj.aData.aircraft;
+                  row = "<span rel=\"tooltip\" title=\"" + obj.aData.aircraft_reg + "\">" + obj.aData.aircraft + "</span>";
                 return row;
               }
             }, {
@@ -146,9 +146,9 @@ if club:
             }
           ],
           "fnCreatedRow": function(nRow, aData, iDataIndex) {
+            $(nRow).find("[rel=tooltip]").tooltip();
             $(nRow).find(".pin").each(function() {
               var sfid = parseInt($(this).text());
-              $(this).tooltip();
               if ($.inArray(sfid, pinnedFlights) >= 0) {
                 $(this).html("<i class='icon-star'></i>");
                 $(this).css("visibility", "visible");
