@@ -2,7 +2,7 @@ from tg import expose, redirect
 from sqlalchemy.sql.expression import desc
 from sqlalchemy import func
 from skylines.lib.base import BaseController
-from skylines.model import DBSession, User, Club, Flight
+from skylines.model import DBSession, User, Club, Flight, Airport
 
 
 class RankingController(BaseController):
@@ -33,3 +33,15 @@ class RankingController(BaseController):
         result = result.order_by(desc('total'))
         result = result.limit(20)
         return dict(tab='clubs', result=result)
+
+    @expose('skylines.templates.ranking.airports')
+    def airports(self):
+        subq = DBSession.query(Flight.takeoff_airport_id,
+                               func.count('*').label('count'),
+                               func.sum(Flight.olc_plus_score).label('total')) \
+               .group_by(Flight.takeoff_airport_id).subquery()
+        result = DBSession.query(Airport, subq.c.count, subq.c.total) \
+                 .join((subq, subq.c.takeoff_airport_id == Airport.id))
+        result = result.order_by(desc('total'))
+        result = result.limit(20)
+        return dict(tab='airports', result=result)
