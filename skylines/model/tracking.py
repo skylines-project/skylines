@@ -4,6 +4,7 @@ from datetime import datetime
 from sqlalchemy.orm import relation
 from sqlalchemy import Column, ForeignKey
 from sqlalchemy.types import Integer, Float, DateTime
+from sqlalchemy.dialects.postgresql import INET
 from geoalchemy.geometry import GeometryColumn, Point, GeometryDDL
 from geoalchemy.postgis import PGComparator
 from skylines.model.auth import User
@@ -32,6 +33,8 @@ class TrackingFix(DeclarativeBase):
                                  name="tg_user.user_id"), nullable=False)
 
     pilot = relation('User', primaryjoin=(pilot_id == User.user_id))
+
+    ip = Column(INET)
 
     @property
     def location(self):

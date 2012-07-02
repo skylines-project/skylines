@@ -85,6 +85,8 @@ class RootController(BaseController):
         if not request.identity:
             flash(_('Sorry, username or password are wrong. Please try again or register.'), 'warning')
         else:
+            request.identity['user'].login_ip = request.remote_addr
+
             userid = request.identity['repoze.who.userid']
             flash(_('You are now logged in. Welcome back, %s!') % userid)
 

@@ -25,7 +25,7 @@ FLAG_VARIO = 0x20
 FLAG_ENL = 0x40
 
 class TrackingServer(DatagramProtocol):
-    def oldFixReceived(self, key, payload):
+    def oldFixReceived(self, host, key, payload):
         """Compatibility with XCSoar 6.4_alpha1.  Remove when XCSoar
         6.4_alpha1 is deemed obsolete."""
         if len(payload) != 32: return
@@ -39,6 +39,7 @@ class TrackingServer(DatagramProtocol):
         flags = data[0]
 
         fix = TrackingFix()
+        fix.ip = host
         fix.pilot = pilot
 
         if flags & FLAG_LOCATION:
@@ -63,13 +64,13 @@ class TrackingServer(DatagramProtocol):
         if flags & FLAG_ENL:
             fix.engine_noise_level = data[9]
 
-        print pilot, fix.location, data
+        print host, pilot, fix.location, data
 
         DBSession.add(fix)
         DBSession.flush()
         transaction.commit()
 
-    def fixReceived(self, key, payload):
+    def fixReceived(self, host, key, payload):
         if len(payload) != 32: return
         data = struct.unpack('!IIIiiHHHhhH', payload)
 
@@ -81,6 +82,7 @@ class TrackingServer(DatagramProtocol):
         flags = data[0]
 
         fix = TrackingFix()
+        fix.ip = host
         fix.pilot = pilot
 
         if flags & FLAG_LOCATION:
@@ -105,7 +107,7 @@ class TrackingServer(DatagramProtocol):
         if flags & FLAG_ENL:
             fix.engine_noise_level = data[10]
 
-        print pilot, fix.location, data
+        print host, pilot, fix.location, data
 
         DBSession.add(fix)
         DBSession.flush()
@@ -121,7 +123,7 @@ class TrackingServer(DatagramProtocol):
             # Compatibility with XCSoar 6.4_alpha1.  Remove when
             # XCSoar 6.4_alpha1 is deemed obsolete.
             if header[2] == OLD_TYPE_FIX:
-                self.oldFixReceived(header[3], data[16:])
+                self.oldFixReceived(host, header[3], data[16:])
             return
 
         if header[0] != MAGIC: return
@@ -130,4 +132,4 @@ class TrackingServer(DatagramProtocol):
         # XXX verify CRC
 
         if header[2] == TYPE_FIX:
-            self.fixReceived(header[3], data[16:])
+            self.fixReceived(host, header[3], data[16:])

@@ -24,6 +24,7 @@ __all__ = ['User', 'Group', 'Permission']
 from sqlalchemy import Table, ForeignKey, Column
 from sqlalchemy.types import Unicode, Integer, BigInteger, DateTime
 from sqlalchemy.orm import relation, synonym
+from sqlalchemy.dialects.postgresql import INET
 
 from skylines.model import DeclarativeBase, metadata, DBSession
 from tg import request
@@ -120,6 +121,9 @@ class User(DeclarativeBase):
     club_id = Column(Integer, ForeignKey('clubs.id'))
 
     tracking_key = Column(BigInteger)
+
+    created_ip = Column(INET)
+    login_ip = Column(INET)
 
     @property
     def tracking_key_hex(self):
