@@ -6,6 +6,7 @@ import simplejson
 from skylines import files
 from tg import config
 from skylines.model.geo import Location
+from skylines.model import Airport
 import logging
 
 log = logging.getLogger(__name__)
@@ -85,6 +86,8 @@ def analyse_flight(flight):
     locations = root['locations'] if 'locations' in root else None
     flight.takeoff_location = import_location_attribute(locations, 'takeoff')
     flight.landing_location = import_location_attribute(locations, 'landing')
+
+    flight.takeoff_airport = Airport.by_location(flight.takeoff_location)
 
     contest = find_contest(root, 'olc_plus')
     if contest is not None:
