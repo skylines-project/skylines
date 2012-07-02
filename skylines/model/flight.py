@@ -13,6 +13,7 @@ from geoalchemy.postgis import PGComparator
 from skylines.model.geo import Location
 from skylines.model.igcfile import IGCFile
 from skylines.model.model import Model
+from skylines.model.airport import Airport
 
 class Flight(DeclarativeBase):
     __tablename__ = 'flights'
@@ -36,6 +37,9 @@ class Flight(DeclarativeBase):
     landing_time = Column(DateTime, nullable=False)
     takeoff_location_wkt = GeometryColumn(Point(2), comparator=PGComparator)
     landing_location_wkt = GeometryColumn(Point(2), comparator=PGComparator)
+
+    takeoff_airport_id = Column(Integer, ForeignKey('airports.id'))
+    takeoff_airport = relation('Airport', primaryjoin=(takeoff_airport_id == Airport.id))
 
     olc_classic_distance = Column(Integer)
     olc_triangle_distance = Column(Integer)
