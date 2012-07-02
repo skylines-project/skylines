@@ -6,6 +6,9 @@ from sqlalchemy.sql.expression import and_, desc
 from skylines import files
 from skylines.model import DBSession, Model, Flight
 
+hfgid_re = re.compile(r'HFGID\s*GLIDER\s*ID\s*:(.*)', re.IGNORECASE)
+hfgty_re = re.compile(r'HFGTY\s*GLIDER\s*TYPE\s*:(.*)', re.IGNORECASE)
+
 def read_igc_header(igc_file):
     path = files.filename_to_path(igc_file.filename)
 
@@ -35,7 +38,6 @@ def read_igc_header(igc_file):
     return igc_headers
 
 def parse_glider_type(line):
-    hfgty_re = re.compile(r'HFGTY\s*GLIDER\s*TYPE\s*:(.*)', re.IGNORECASE)
     match = hfgty_re.match(line)
 
     if not match:
@@ -44,7 +46,6 @@ def parse_glider_type(line):
     return match.group(1).lower().strip()
 
 def parse_glider_reg(line):
-    hfgid_re = re.compile(r'HFGID\s*GLIDER\s*ID\s*:(.*)', re.IGNORECASE)
     match = hfgid_re.match(line)
 
     if not match:
