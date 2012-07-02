@@ -74,8 +74,9 @@ class TrackingController(BaseController):
     def index(self, **kw):
         subq = DBSession.query(TrackingFix.pilot_id,
                                func.max(TrackingFix.time).label('time')) \
-               .group_by(TrackingFix.pilot_id) \
-               .subquery()
+                .filter(TrackingFix.time >= datetime.now() - timedelta(hours=6)) \
+                .group_by(TrackingFix.pilot_id) \
+                .subquery()
 
         query = DBSession.query(subq.c.time, User) \
             .filter(subq.c.pilot_id == User.user_id)
