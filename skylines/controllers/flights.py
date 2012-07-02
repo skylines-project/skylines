@@ -198,7 +198,9 @@ class FlightsController(BaseController):
         flights = DBSession.query(Flight) \
             .outerjoin(Flight.pilot) \
             .outerjoin(Flight.igc_file) \
-            .outerjoin(Flight.takeoff_airport)
+            .outerjoin(Flight.takeoff_airport) \
+            .outerjoin(Flight.model)
+
         if date:
             flights = flights.filter(between(Flight.takeoff_time,
                                              date, date + timedelta(days=1)))
@@ -219,8 +221,9 @@ class FlightsController(BaseController):
                     3: 'olc_classic_distance',
                     4: 'airports.name',
                     5: 'flights.club_id',
-                    6: 'takeoff_time',
-                    7: 'id'
+                    6: 'models.name',
+                    7: 'takeoff_time',
+                    8: 'id'
                 }
 
             flights, response_dict = GetDatatableRecords(kw, flights, columns)
@@ -241,6 +244,7 @@ class FlightsController(BaseController):
                                  club = flight.club and flight.club.name,
                                  owner = flight.igc_file.owner.display_name,
                                  takeoff_airport = flight.takeoff_airport and flight.takeoff_airport.name,
+                                 aircraft = flight.model and flight.model.name,
                                  flight_id = flight.id))
 
             return dict(response_dict, aaData = aaData)
@@ -317,8 +321,9 @@ class FlightsController(BaseController):
             2: 'olc_classic_distance',
             3: 'airports.name',
             4: 'flights.club_id',
-            5: 'takeoff_time',
-            6: 'id',
+            5: 'models.name',
+            6: 'takeoff_time',
+            7: 'id',
         }
 
         if kw.get('today', False):
@@ -365,8 +370,9 @@ class FlightsController(BaseController):
             2: 'display_name',
             3: 'olc_classic_distance',
             4: 'airports.name',
-            5: 'takeoff_time',
-            6: 'id',
+            5: 'models.name',
+            6: 'takeoff_time',
+            7: 'id',
         }
 
         return self.__do_list('pilot', kw, pilot=pilot, columns=columns)
@@ -384,8 +390,9 @@ class FlightsController(BaseController):
             2: 'display_name',
             3: 'olc_classic_distance',
             4: 'airports.name',
-            5: 'takeoff_time',
-            6: 'id'
+            5: 'models.name',
+            6: 'takeoff_time',
+            7: 'id'
         }
 
         return self.__do_list('club', kw, club=club, columns=columns)
