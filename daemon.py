@@ -4,7 +4,8 @@
 # Twisted applications).
 #
 
-import sys, os
+import sys
+import os
 from paste.deploy.loadwsgi import appconfig
 from skylines.config.environment import load_environment
 
