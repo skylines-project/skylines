@@ -122,22 +122,24 @@ def add_locations(locations):
         </p>
 
         <h2 py:if="user.following">Following</h2>
-        <p>
-          <a py:for="following in user.following"
-             href="/users/${following.destination_id}/"
-             py:content="following.destination">
-            Following Name
-          </a>
-        </p>
+        <ul class="row-fluid">
+          <li class="span4" py:for="following in user.following">
+            <a href="/users/${following.destination_id}/"
+               py:content="following.destination">
+              Following Name
+            </a>
+          </li>
+        </ul>
 
         <h2 py:if="user.followers">Followers</h2>
-        <p>
-          <a py:for="follower in user.followers"
-             href="/users/${follower.source_id}/"
-             py:content="follower.source">
-            Follower Name
-          </a>
-        </p>
+        <ul class="row-fluid">
+          <li class="span4" py:for="follower in user.followers">
+            <a href="/users/${follower.source_id}/"
+               py:content="follower.source">
+              Follower Name
+            </a>
+          </li>
+        </ul>
 
         <py:if test="distance_flights">
           <h2>Distance Flights</h2>
