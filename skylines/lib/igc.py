@@ -4,7 +4,7 @@ import re
 from sqlalchemy import func
 from sqlalchemy.sql.expression import and_, desc
 from skylines import files
-from skylines.model import DBSession, Model, Flight
+from skylines.model import DBSession, Model, Flight, IGCFile
 
 hfgid_re = re.compile(r'HFGID\s*GLIDER\s*ID\s*:(.*)', re.IGNORECASE)
 hfgty_re = re.compile(r'HFGTY\s*GLIDER\s*TYPE\s*:(.*)', re.IGNORECASE)
@@ -83,6 +83,22 @@ def guess_model(igc_file):
 
         result = DBSession.query(Flight) \
             .filter(func.upper(Flight.registration) == func.upper(glider_reg)) \
+            .order_by(desc(Flight.id)) \
+            .first()
+
+        if result and result.model_id:
+            return result.model_id
+
+    # try to find another flight with the same logger and use it's aircraft type
+    if igc_file.logger_id is not None \
+        and igc_file.logger_manufacturer_id is not None:
+        logger_id = igc_file.logger_id
+        logger_manufacturer_id = igc_file.logger_manufacturer_id
+
+        result = DBSession.query(Flight).outerjoin(IGCFile) \
+            .filter(func.upper(IGCFile.logger_manufacturer_id) == func.upper(logger_manufacturer_id)) \
+            .filter(func.upper(IGCFile.logger_id) == func.upper(logger_id)) \
+            .filter(Flight.model_id != None) \
             .order_by(desc(Flight.id)) \
             .first()
 
