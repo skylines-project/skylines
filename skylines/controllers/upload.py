@@ -127,7 +127,7 @@ class UploadController(BaseController):
             igc_headers = read_igc_header(igc_file)
 
             if 'manufacturer_id' in igc_headers:
-                igc_file.manufacturer_id = igc_headers['manufacturer_id']
+                igc_file.logger_manufacturer_id = igc_headers['manufacturer_id']
 
             if 'logger_id' in igc_headers:
                 igc_file.logger_id = igc_headers['logger_id']
