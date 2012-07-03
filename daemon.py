@@ -6,21 +6,20 @@
 
 import sys
 import os
+import argparse
 from paste.deploy.loadwsgi import appconfig
 from skylines.config.environment import load_environment
 
 sys.path.append(os.path.dirname(sys.argv[0]))
 
-conf_path = '/etc/skylines/production.ini'
-if len(sys.argv) > 1:
-    conf_path = sys.argv[1]
-    del sys.argv[1]
+parser = argparse.ArgumentParser(description='Run the SkyLines Live Tracking daemon.')
+parser.add_argument('conf_path', nargs='?', metavar='config.ini',
+                    default='/etc/skylines/production.ini',
+                    help='path to the configuration INI file')
 
-if len(sys.argv) != 1:
-    print >>sys.stderr, "Usage: %s [config.ini]" % sys.argv[0]
-    sys.exit(1)
+args = parser.parse_args()
 
-conf = appconfig('config:' + os.path.abspath(conf_path))
+conf = appconfig('config:' + os.path.abspath(args.conf_path))
 load_environment(conf.global_conf, conf.local_conf)
 
 if __name__ == '__main__':
