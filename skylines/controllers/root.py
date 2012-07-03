@@ -112,4 +112,5 @@ class RootController(BaseController):
     @expose()
     @require(Any(not_anonymous(), msg='Please login to see this page!'))
     def settings(self):
+        """Only for compatibility with old bookmarks."""
         redirect('/users/' + str(request.identity['user'].user_id))
