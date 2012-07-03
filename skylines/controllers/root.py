@@ -2,8 +2,9 @@
 """Main Controller"""
 
 from datetime import datetime
-from tg import expose, flash, url, lurl, request, redirect
+from tg import expose, flash, url, lurl, request, redirect, require
 from tg.i18n import ugettext as _, lazy_ugettext as l_
+from repoze.what.predicates import Any, not_anonymous
 from skylines import model
 from skylines.model import DBSession
 from tgext.admin.tgadminconfig import TGAdminConfig
@@ -107,3 +108,8 @@ class RootController(BaseController):
 
         flash(_('You are now logged out. We hope to see you back soon!'))
         redirect(came_from)
+
+    @expose()
+    @require(Any(not_anonymous(), msg='Please login to see this page!'))
+    def settings(self):
+        redirect('/users/' + str(request.identity['user'].user_id))
