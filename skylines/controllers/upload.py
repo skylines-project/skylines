@@ -9,7 +9,7 @@ from skylines.lib.base import BaseController
 from skylines import files
 from skylines.model import DBSession, User, Model, Flight
 from skylines.lib.md5 import file_md5
-from skylines.lib.igc import read_igc_header, guess_model
+from skylines.lib.igc import read_igc_header, guess_model, guess_registration
 from skylines.lib.analysis import analyse_flight
 from skylines.form import BootstrapForm, MultiFileField
 from zipfile import ZipFile
@@ -147,6 +147,8 @@ class UploadController(BaseController):
 
             if 'reg' in igc_headers and 0 < len(igc_headers['reg']) < 32:
                 flight.registration = igc_headers['reg']
+            else:
+                flight.registration = guess_registration(igc_file)
 
             if not analyse_flight(flight):
                 files.delete_file(filename)

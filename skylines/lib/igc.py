@@ -76,6 +76,26 @@ def parse_glider_reg(line):
     return match.group(1).strip()
 
 
+def guess_registration(igc_file):
+    # try to find another flight with the same logger and use it's aircraft registration
+    if igc_file.logger_id is not None \
+        and igc_file.logger_manufacturer_id is not None:
+        logger_id = igc_file.logger_id
+        logger_manufacturer_id = igc_file.logger_manufacturer_id
+
+        result = DBSession.query(Flight).outerjoin(IGCFile) \
+            .filter(func.upper(IGCFile.logger_manufacturer_id) == func.upper(logger_manufacturer_id)) \
+            .filter(func.upper(IGCFile.logger_id) == func.upper(logger_id)) \
+            .filter(Flight.registration != None) \
+            .order_by(desc(Flight.id)) \
+            .first()
+
+        if result and result.registration:
+            return result.registration
+
+    return None
+
+
 def guess_model(igc_file):
     # first try to find the reg number in the database
     if igc_file.registration is not None:
