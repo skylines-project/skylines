@@ -340,16 +340,14 @@ class FlightsController(BaseController):
         else:
             return self.__do_list('date', kw, date=date, columns=columns)
 
-    @expose('skylines.templates.flights.list')
-    @expose('json')
+    @expose()
     def my(self, **kw):
         if not request.identity:
             raise HTTPNotFound
 
         redirect('/flights/pilot/' + str(request.identity['user'].user_id))
 
-    @expose('skylines.templates.flights.list')
-    @expose('json')
+    @expose()
     def my_club(self, **kw):
         if not request.identity:
             raise HTTPNotFound
