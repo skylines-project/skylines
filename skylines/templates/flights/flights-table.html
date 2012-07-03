@@ -73,11 +73,13 @@ from babel.dates import format_date
           </a>
         </td>
         <td py:if="'aircraft' not in omitted_columns">
-          <span rel="tooltip" title="${flight.registration or 'Unknown'}" py:if="flight.model" py:content="flight.model">
-            Aircraft model
-          </span>
-          <span py:if="flight.model is None and flight.igc_file.model is not None">
-            [${flight.igc_file.model}]
+          <span rel="tooltip" title="${flight.registration or flight.igc_file.registration or 'Unknown'}">
+            <py:if test="flight.model" py:replace="flight.model">
+              Aircraft model
+            </py:if>
+            <py:if test="flight.model is None and flight.igc_file.model is not None">
+              [${flight.igc_file.model}]
+            </py:if>
           </span>
         </td>
         <td py:if="'times' not in omitted_columns">
