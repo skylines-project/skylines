@@ -8,6 +8,7 @@ from skylines.model import DBSession, Model, Flight
 
 hfgid_re = re.compile(r'HFGID\s*GLIDER\s*ID\s*:(.*)', re.IGNORECASE)
 hfgty_re = re.compile(r'HFGTY\s*GLIDER\s*TYPE\s*:(.*)', re.IGNORECASE)
+afil_re = re.compile(r'AFIL(\d*)FLIGHT', re.IGNORECASE)
 
 
 def read_igc_header(igc_file):
@@ -25,6 +26,9 @@ def read_igc_header(igc_file):
         if line[0] == 'A' and len(line) >= 4:
             igc_headers['manufacturer_id'] = line[1:4]
 
+            if len(line) >= 7:
+                igc_headers['logger_id'] = parse_logger_id(line)
+
         if line.startswith('HFGTY'):
             igc_headers['model'] = parse_glider_type(line)
 
@@ -37,6 +41,21 @@ def read_igc_header(igc_file):
             break
 
     return igc_headers
+
+
+def parse_logger_id(line):
+    # non IGC loggers may use more than 3 characters as unique ID.
+    # we just use the first three, currently no model is known which
+    # really uses more than 3 characters.
+
+    if line[1:4] == 'FIL':
+        # filser doesn't respect the IGC file specification and
+        # stores the unique id as base 10 instead of base 36.
+        match = afil_re.match(line)
+        if match and match.group(1):
+            return base36encode(int(match.group(1)))
+    else:
+        return line[4:7]
 
 
 def parse_glider_type(line):
@@ -93,3 +112,31 @@ def guess_model(igc_file):
 
     # nothing found
     return None
+
+
+# base 36 encoding/decoding taken from wikipedia sample code
+# http://en.wikipedia.org/wiki/Base_36#Python_Conversion_Code
+def base36encode(number, alphabet='0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ'):
+    """Converts an integer to a base36 string."""
+    if not isinstance(number, (int, long)):
+        raise TypeError('number must be an integer')
+
+    if number >= 0 and number <= 9:
+        return alphabet[number]
+
+    base36 = ''
+    sign = ''
+
+    if number < 0:
+        sign = '-'
+        number = -number
+
+    while number != 0:
+        number, i = divmod(number, len(alphabet))
+        base36 = alphabet[i] + base36
+
+    return sign + base36
+
+
+def base36decode(number):
+    return int(number, 36)

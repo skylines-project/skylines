@@ -19,6 +19,7 @@ class IGCFile(DeclarativeBase):
     filename = Column(String(), nullable=False)
     md5 = Column(String(32), nullable=False, unique=True)
 
+    logger_id = Column(String(3))
     logger_manufacturer_id = Column(String(3))
 
     registration = Column(Unicode(32))

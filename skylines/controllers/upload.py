@@ -129,6 +129,9 @@ class UploadController(BaseController):
             if 'manufacturer_id' in igc_headers:
                 igc_file.manufacturer_id = igc_headers['manufacturer_id']
 
+            if 'logger_id' in igc_headers:
+                igc_file.logger_id = igc_headers['logger_id']
+
             if 'model' in igc_headers and 0 < len(igc_headers['model']) < 64:
                 igc_file.model = igc_headers['model']
 
