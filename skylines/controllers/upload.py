@@ -142,7 +142,7 @@ class UploadController(BaseController):
 
             flight.model_id = guess_model(igc_headers)
 
-            if 'reg' in igc_headers:
+            if 'reg' in igc_headers and 0 < len(igc_headers['reg']) < 32:
                 flight.registration = igc_headers['reg']
 
             if not analyse_flight(flight):
@@ -199,7 +199,7 @@ class UploadController(BaseController):
             registration = registration_list[index]
             if registration is not None:
                 registration = registration.strip()
-                if len(registration) == 0:
+                if not 0 < len(registration) < 32:
                     registration = None
 
             flight = DBSession.query(Flight).get(id)
