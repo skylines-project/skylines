@@ -143,7 +143,7 @@ if airport:
               "aTargets": ["show"],
               "fnRender": function(obj, row) {
                 if (obj.oSettings.jqXHR)
-                  row = "<a href=\"/flights/" + obj.aData.flight_id + "\" class=\"btn btn-mini\">Show</a> <a class=\"pin no-link\" style=\"visibility: hidden\" rel=\"tooltip\" title=\"Activate this to show the flight on top of other flights on the map\">" + obj.aData.flight_id + "</a>";
+                  row = "<a href=\"/flights/" + obj.aData.flight_id + "/\" class=\"btn btn-mini\">Show</a> <a class=\"pin no-link\" style=\"visibility: hidden\" rel=\"tooltip\" title=\"Activate this to show the flight on top of other flights on the map\">" + obj.aData.flight_id + "</a>";
                 return row;
               }
             }
