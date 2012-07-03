@@ -119,8 +119,12 @@ def guess_model(igc_file):
             .filter(func.upper(IGCFile.logger_manufacturer_id) == func.upper(logger_manufacturer_id)) \
             .filter(func.upper(IGCFile.logger_id) == func.upper(logger_id)) \
             .filter(Flight.model_id != None) \
-            .order_by(desc(Flight.id)) \
-            .first()
+            .order_by(desc(Flight.id))
+
+        if igc_file.logger_manufacturer_id.startswith('X'):
+            result = result.filter(Flight.pilot == igc_file.owner)
+
+        result = result.first()
 
         if result and result.model_id:
             return result.model_id
