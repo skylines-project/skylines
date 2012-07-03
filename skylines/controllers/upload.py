@@ -140,7 +140,7 @@ class UploadController(BaseController):
             flight.club_id = club_id
             flight.igc_file = igc_file
 
-            flight.model_id = guess_model(igc_headers)
+            flight.model_id = guess_model(igc_file)
 
             if 'reg' in igc_headers and 0 < len(igc_headers['reg']) < 32:
                 flight.registration = igc_headers['reg']

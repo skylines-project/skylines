@@ -53,10 +53,10 @@ def parse_glider_reg(line):
 
     return match.group(1).strip()
 
-def guess_model(igc_headers):
+def guess_model(igc_file):
     # first try to find the reg number in the database
-    if igc_headers.get('reg') is not None:
-        glider_reg = igc_headers.get('reg')
+    if igc_file.registration is not None:
+        glider_reg = igc_file.registration
 
         result = DBSession.query(Flight) \
             .filter(func.upper(Flight.registration) == func.upper(glider_reg)) \
@@ -66,8 +66,8 @@ def guess_model(igc_headers):
         if result and result.model_id:
             return result.model_id
 
-    if igc_headers.get('model') is not None:
-        glider_type = igc_headers.get('model').lower()
+    if igc_file.model is not None:
+        glider_type = igc_file.model.lower()
 
         # otherwise, try to guess the glider model by the glider type igc header
         text_fragments = ['%{}%'.format(v) for v in re.sub(r'[^a-z]', ' ', glider_type).split()]
