@@ -129,6 +129,12 @@ class UploadController(BaseController):
             if 'manufacturer_id' in igc_headers:
                 igc_file.manufacturer_id = igc_headers['manufacturer_id']
 
+            if 'model' in igc_headers and 0 < len(igc_headers['model']) < 64:
+                igc_file.model = igc_headers['model']
+
+            if 'reg' in igc_headers and 0 < len(igc_headers['reg']) < 32:
+                igc_file.registration = igc_headers['reg']
+
             flight = Flight()
             flight.pilot_id = pilot_id
             flight.club_id = club_id

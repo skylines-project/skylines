@@ -3,7 +3,7 @@
 from datetime import datetime
 from sqlalchemy.orm import relation
 from sqlalchemy import ForeignKey, Column
-from sqlalchemy.types import Integer, DateTime, String
+from sqlalchemy.types import Integer, DateTime, String, Unicode
 from skylines.model.auth import User
 from skylines.model import DeclarativeBase, DBSession
 from tg import config, request
@@ -20,6 +20,9 @@ class IGCFile(DeclarativeBase):
     md5 = Column(String(32), nullable=False, unique=True)
 
     logger_manufacturer_id = Column(String(3))
+
+    registration = Column(Unicode(32))
+    model = Column(Unicode(64))
 
     @classmethod
     def by_md5(cls, _md5):

@@ -63,10 +63,23 @@ from babel.dates import format_date, format_time, format_datetime
         <th>Aircraft</th>
         <td>
           <span py:if="flight.model_id is not None" py:replace="flight.model"/>
-          <py:if test="flight.model_id is None">Unknown</py:if>
+          <py:if test="flight.model_id is None and
+                       flight.igc_file.model is not None">
+            [${flight.igc_file.model}]
+          </py:if>
+          <py:if test="flight.model_id is None and
+                       flight.igc_file.model is None">
+            Unknown
+          </py:if>
+
           <py:if test="flight.registration is not None">
             (${flight.registration})
           </py:if>
+          <py:if test="flight.registration is None and
+                       flight.igc_file.registration is not None">
+            (${flight.igc_file.registration})
+          </py:if>
+
           <a py:if="flight.is_writable()" href="change_aircraft" class="btn btn-mini">
             Change
           </a>

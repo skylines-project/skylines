@@ -252,8 +252,8 @@ class FlightsController(BaseController):
                                  owner = flight.igc_file.owner.display_name,
                                  takeoff_airport = flight.takeoff_airport and flight.takeoff_airport.name,
                                  takeoff_airport_id = flight.takeoff_airport and flight.takeoff_airport.id,
-                                 aircraft = flight.model and flight.model.name,
-                                 aircraft_reg = flight.registration or "Unknown",
+                                 aircraft = (flight.model and flight.model.name) or (flight.igc_file.model and '[' + flight.igc_file.model + ']'),
+                                 aircraft_reg = flight.registration or flight.igc_file.registration or "Unknown",
                                  flight_id = flight.id))
 
             return dict(response_dict, aaData = aaData)
@@ -442,13 +442,21 @@ class FlightsController(BaseController):
     def igc_headers(self):
         """Hidden method that parses all missing IGC headers."""
         igc_files = DBSession.query(IGCFile)
-        igc_files = igc_files.filter(IGCFile.logger_manufacturer_id == None)
+        igc_files = igc_files.filter(or_(IGCFile.logger_manufacturer_id == None,
+                                         IGCFile.model == None,
+                                         IGCFile.registration == None))
 
         for igc_file in igc_files:
             igc_headers = read_igc_header(igc_file)
 
             if 'manufacturer_id' in igc_headers:
                 igc_file.manufacturer_id = igc_headers['manufacturer_id']
+
+            if 'model' in igc_headers and 0 < len(igc_headers['model']) < 64:
+                igc_file.model = igc_headers['model']
+
+            if 'reg' in igc_headers and 0 < len(igc_headers['reg']) < 32:
+                igc_file.registration = igc_headers['reg']
 
         DBSession.flush()
 
