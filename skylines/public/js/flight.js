@@ -152,7 +152,8 @@ function addFlight(sfid, _lonlat, _levels, _num_levels, _time, _height, zoom_lev
     plane: plane,
     sfid: sfid,
     index: 0,
-    dx: 0
+    dx: 0,
+    last_update: time[time.length - 1]
   });
 
   var i = flights.length - 1;
