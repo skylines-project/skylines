@@ -54,12 +54,19 @@ class TrackController(BaseController):
         zoom_levels = [0]
         zoom_levels.extend([round(-log(32.0 / 45.0 * (threshold * pow(zoom_factor, num_levels - i - 1)), 2)) for i in range(1, num_levels)])
 
-        max_delta_time = max(4, (fp[-1][0] - fp[0][0]) / 500)
-
         encoder = SkyLinesPolyEncoder(num_levels=4, threshold=threshold, zoom_factor=4)
+        fixes = dict()
 
-        fixes = map(lambda x: (x[2], x[1], (x[0] / max_delta_time * threshold)), fp)
-        fixes = encoder.classify(fixes, remove=False, type="ppd")
+        if len(fp) == 1:
+            fixes['points'] = [(fp[0][0], fp[0][1])]
+            fixes['levels'] = [0]
+            fixes['numLevels'] = num_levels
+
+        else:
+            max_delta_time = max(4, (fp[-1][0] - fp[0][0]) / 500)
+
+            fixes = map(lambda x: (x[2], x[1], (x[0] / max_delta_time * threshold)), fp)
+            fixes = encoder.classify(fixes, remove=False, type="ppd")
 
         encoded = encoder.encode(fixes['points'], fixes['levels'])
 
