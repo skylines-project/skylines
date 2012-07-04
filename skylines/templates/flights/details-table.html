@@ -43,7 +43,7 @@ from babel.dates import format_date, format_time, format_datetime
             <br />
             at
           </py:if>
-          <span py:content="format_time(flight.takeoff_time)">10:00</span>
+          <span py:replace="format_time(flight.takeoff_time)">10:00</span>
         </td>
       </tr>
       <tr py:if="flight.landing_time">
