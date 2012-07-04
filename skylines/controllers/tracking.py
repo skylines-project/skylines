@@ -15,7 +15,7 @@ class TrackController(BaseController):
     def __init__(self, pilot):
         self.pilot = pilot
 
-    def __get_flight_path2(self):
+    def __get_flight_path2(self, last_update = None):
         query = DBSession.query(TrackingFix)
         query = query.filter(TrackingFix.pilot == self.pilot)
         query = query.filter(TrackingFix.time >= datetime.now() - timedelta(hours=12))
@@ -26,6 +26,10 @@ class TrackController(BaseController):
 
         start_fix = query.first()
         start_time = start_fix.time.hour * 3600 + start_fix.time.minute * 60 + start_fix.time.second
+
+        if last_update:
+            query = query.filter(TrackingFix.time >= \
+                start_fix.time + timedelta(seconds=(last_update - start_time)))
 
         result = []
         for fix in query:
@@ -40,8 +44,8 @@ class TrackController(BaseController):
                            fix.altitude))
         return result
 
-    def __get_flight_path(self, threshold = 0.001):
-        fp = self.__get_flight_path2()
+    def __get_flight_path(self, threshold = 0.001, last_update = None):
+        fp = self.__get_flight_path2(last_update = last_update)
         if len(fp) == 0:
             raise HTTPNotFound
 
@@ -70,8 +74,13 @@ class TrackController(BaseController):
         return dict(pilot=self.pilot, trace=self.__get_flight_path())
 
     @expose('json')
-    def json(self):
-        trace = self.__get_flight_path(threshold=0.001)
+    def json(self, **kw):
+        try:
+            last_update = int(kw.get('last_update'))
+        except ValueError:
+            last_update = None
+
+        trace = self.__get_flight_path(threshold=0.001, last_update=last_update)
 
         return  dict(encoded=trace['encoded'], num_levels=trace['fixes']['numLevels'],
                      barogram_t=trace['barogram_t'], barogram_h=trace['barogram_h'],
