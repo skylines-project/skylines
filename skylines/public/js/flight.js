@@ -95,12 +95,13 @@ function initFlightLayer() {
  * initiates the redraw of a layer
  */
 function initRedrawLayer(layer) {
-  if (this.timer)
-    return;
+  // Run this function only every 50ms to save some computing power.
+  if (this.initRedrawLayerRunning) return;
 
-  this.timer = window.setTimeout(function() {
-    this.timer = null; layer.redraw();
-  }, 50);
+  this.initRedrawLayerRunning = true;
+  setTimeout(function() { this.initRedrawLayerRunning = false; }, 50);
+
+  layer.redraw();
 };
 
 /**
