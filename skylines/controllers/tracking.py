@@ -21,15 +21,22 @@ class TrackController(BaseController):
         query = query.filter(TrackingFix.time >= datetime.now() - timedelta(hours=12))
         query = query.order_by(TrackingFix.time)
 
+        if not query:
+            return None
+
+        start_fix = query.first()
+        start_time = start_fix.time.hour * 3600 + start_fix.time.minute * 60 + start_fix.time.second
+
         result = []
         for fix in query:
             location = fix.location
             if location is None:
                 continue
 
-            # TODO: handle midnight wraparound
-            result.append((fix.time.hour * 3600 + fix.time.minute * 60 + fix.time.second,
-                           location.latitude, location.longitude,
+            time_delta = fix.time - start_fix.time
+            time = start_time + time_delta.days * 86400 + time_delta.seconds
+
+            result.append((time, location.latitude, location.longitude,
                            fix.altitude))
         return result
 
