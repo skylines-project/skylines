@@ -15,6 +15,7 @@ from skylines.model.igcfile import IGCFile
 from skylines.model.model import Model
 from skylines.model.airport import Airport
 
+
 class Flight(DeclarativeBase):
     __tablename__ = 'flights'
 
@@ -30,7 +31,7 @@ class Flight(DeclarativeBase):
     club_id = Column(Integer, ForeignKey('clubs.id'))
 
     model_id = Column(Integer, ForeignKey('models.id'))
-    model = relation('Model', primaryjoin=(model_id==Model.id))
+    model = relation('Model', primaryjoin=(model_id == Model.id))
     registration = Column(Unicode(32))
 
     takeoff_time = Column(DateTime, nullable=False)
@@ -39,7 +40,8 @@ class Flight(DeclarativeBase):
     landing_location_wkt = GeometryColumn(Point(2), comparator=PGComparator)
 
     takeoff_airport_id = Column(Integer, ForeignKey('airports.id'))
-    takeoff_airport = relation('Airport', primaryjoin=(takeoff_airport_id == Airport.id))
+    takeoff_airport = relation('Airport',
+                               primaryjoin=(takeoff_airport_id == Airport.id))
 
     olc_classic_distance = Column(Integer)
     olc_triangle_distance = Column(Integer)
