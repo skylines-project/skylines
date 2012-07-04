@@ -13,7 +13,7 @@ function updateFlightsFromJSON() {
         updateFlight(data.sfid, data.encoded.points, data.encoded.levels,
                      data.num_levels, data.barogram_t, data.barogram_h);
 
-        map.events.triggerEvent("move");
+        initRedrawLayer(map.getLayersByName("Flight")[0]);
         $.proxy(updateBarogram, { reset_y_axis: true })();
       }
     });
