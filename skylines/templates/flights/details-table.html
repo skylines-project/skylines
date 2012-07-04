@@ -49,8 +49,13 @@ from babel.dates import format_date, format_time, format_datetime
       <tr py:if="flight.landing_time">
         <meta itemprop="endDate" content="${flight.landing_time.isoformat()}" />
         <th>Landing</th>
-        <td py:content="format_time(flight.landing_time)">
-          15:00
+        <td>
+          <py:if test="flight.landing_airport is not None">
+            <a py:content="flight.landing_airport.name" href="/flights/airport/${flight.landing_airport_id}">Airport</a>
+            <br />
+            at
+          </py:if>
+          <span py:replace="format_time(flight.landing_time)">10:00</span>
         </td>
       </tr>
       <tr py:if="flight.duration">

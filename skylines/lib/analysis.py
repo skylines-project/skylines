@@ -88,6 +88,7 @@ def analyse_flight(flight):
     flight.landing_location = import_location_attribute(locations, 'landing')
 
     flight.takeoff_airport = Airport.by_location(flight.takeoff_location)
+    flight.landing_airport = Airport.by_location(flight.landing_location)
 
     contest = find_contest(root, 'olc_plus')
     if contest is not None:

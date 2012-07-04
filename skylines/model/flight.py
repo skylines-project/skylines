@@ -43,6 +43,10 @@ class Flight(DeclarativeBase):
     takeoff_airport = relation('Airport',
                                primaryjoin=(takeoff_airport_id == Airport.id))
 
+    landing_airport_id = Column(Integer, ForeignKey('airports.id'))
+    landing_airport = relation('Airport',
+                               primaryjoin=(landing_airport_id == Airport.id))
+
     olc_classic_distance = Column(Integer)
     olc_triangle_distance = Column(Integer)
     olc_plus_score = Column(Integer)
