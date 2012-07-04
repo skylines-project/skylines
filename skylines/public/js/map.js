@@ -55,7 +55,7 @@ function initOpenLayers(id) {
  * Add the Bing layers to the map
  */
 function addBingLayers(api_key) {
-  if (api_key == null)
+  if (api_key == 'null')
     return;
 
   // Bing's Road imagerySet
