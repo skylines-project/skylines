@@ -214,6 +214,8 @@ if airport:
         omitted_columns.add('club')
       if airport:
         omitted_columns.add('takeoff_airport')
+      if tab == 'all':
+        omitted_columns.add('times')
       if tab == 'unassigned':
         omitted_columns.add('pilot')
     ?>
