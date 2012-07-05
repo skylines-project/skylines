@@ -63,7 +63,7 @@ class TrackController(BaseController):
         barogram_h = encoder.encodeList([fp[i][3] for i in range(len(fp)) if fixes['levels'][i] != -1])
 
         return dict(encoded=encoded, zoom_levels = zoom_levels, fixes = fixes,
-                    barogram_t=barogram_t, barogram_h=barogram_h, sfid=self.pilot.user_id)
+                    barogram_t=barogram_t, barogram_h=barogram_h)
 
     @expose('skylines.templates.tracking.view')
     def index(self):
