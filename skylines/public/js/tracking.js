@@ -1,7 +1,9 @@
 /**
- * Function: updateFlightFromJSON
+ * Function: updateFlightsFromJSON
+ *
+ * Retrieves all new traces for the displayed flights
  */
-function updateFlightFromJSON() {
+function updateFlightsFromJSON() {
   for (fid in flights) {
     var url = "/tracking/" + flights[fid].sfid + "/json";
 
