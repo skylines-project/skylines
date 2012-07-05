@@ -11,7 +11,7 @@ title = 'Live Tracking'
       xmlns:py="http://genshi.edgewall.org/"
       xmlns:xi="http://www.w3.org/2001/XInclude">
 
-  <xi:include href="master/page.html" />
+  <xi:include href="master/fullscreen.html" />
 
 <head>
   <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" py:if="False"/>
@@ -31,6 +31,7 @@ title = 'Live Tracking'
   <script type="text/javascript" src="/js/g.raphael/raphael-min.js"></script>
   <script type="text/javascript" src="/js/g.raphael/g.raphael.js"></script>
   <script type="text/javascript" src="/js/g.raphael/g.line.js"></script>
+
   <script type="text/javascript">
     /* <![CDATA[ */
     function initialize() {
@@ -46,7 +47,11 @@ title = 'Live Tracking'
         ${dumps(trace.zoom_levels)}
       );
 
-      map.zoomToExtent(getAllFlightsBounds().scale(1.1));
+      var factor = $("#barogram")[0].offsetHeight / map.getSize().h;
+      var zoomExtent = getAllFlightsBounds().clone().scale(1.1);
+      zoomExtent.bottom -= zoomExtent.getHeight() * factor * 3/2;
+
+      map.zoomToExtent(zoomExtent);
 
       render_barogram($("#barogram"));
       scaleBarogram();
@@ -64,46 +69,14 @@ title = 'Live Tracking'
     }
     /* ]]> */
   </script>
+
+  <style>
+    body { height: 100%; margin: 0; padding: 0 }
+  </style>
 </head>
 
-  <body onload="initialize();">
-    <div class="row">
-      <div class="span4">
-        <table class="table">
-          <tbody>
-            <tr>
-              <th>Pilot</th>
-              <td>
-                <a py:if="pilot" py:content="pilot" href="/users/${pilot.user_id}/">
-                  Pilot Name
-                </a>
-              </td>
-            </tr>
-            <tr py:if="pilot.club">
-              <th>Club</th>
-              <td>
-                <a py:content="pilot.club" href="/clubs/${pilot.club_id}/">
-                  Club Name
-                </a>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-
-        <p>
-          <a py:if="trace" href="map" class="btn">
-            <i class="icon-fullscreen icon-large"></i> Full-screen map
-          </a>
-        </p>
-
-        <p py:if="request.identity and request.identity['user'] == pilot">
-          <a href="/tracking/info" class="btn btn-mini">Your Live Tracking settings</a>
-        </p>
-      </div>
-      <div class="span8">
-        <div id="map_canvas" style="width:100%; height:400pt;"></div>
-        <div id="barogram" style="width:100%; height:120pt;position:relative;"></div>
-      </div>
-    </div>
-  </body>
+<body onload="initialize();">
+  <div id="map_canvas" style="position: absolute; top: 40px; bottom: 0; width:100%;"></div>
+  <div id="barogram" style="position: absolute; bottom: 0; width:100%; height:100pt; background-color: white; opacity: 0.8;"></div>
+</body>
 </html>

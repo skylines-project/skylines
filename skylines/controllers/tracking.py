@@ -80,6 +80,10 @@ class TrackController(BaseController):
     def index(self):
         return dict(pilot=self.pilot, trace=self.__get_flight_path())
 
+    @expose('skylines.templates.tracking.map')
+    def map(self):
+        return dict(pilot=self.pilot, trace=self.__get_flight_path())
+
     @expose('json')
     def json(self, **kw):
         try:
