@@ -1,28 +1,20 @@
 /**
  * Function: updateFlightFromJSON
- *
- * Parameters:
- * url - {string} url to fetch
  */
-function updateFlightFromJSON(url) {
-  // check if the tracking id already shown
-  var update = -1;
+function updateFlightFromJSON() {
   for (fid in flights) {
-    if (tracking_id == flights[fid].sfid)
-      update = fid;
+    var url = "/tracking/" + flights[fid].sfid + "/json";
+
+    $.ajax(url, {
+      success: function(data) {
+        updateFlight(data.sfid, data.encoded.points, data.encoded.levels,
+                     data.num_levels, data.barogram_t, data.barogram_h);
+
+        map.events.triggerEvent("move");
+        $.proxy(updateBarogram, { reset_y_axis: true })();
+      }
+    });
   }
-
-  if (update == -1) return;
-
-  $.ajax(url, {
-    success: function(data) {
-      updateFlight(data.sfid, data.encoded.points, data.encoded.levels,
-                   data.num_levels, data.barogram_t, data.barogram_h);
-
-      map.events.triggerEvent("move");
-      $.proxy(updateBarogram, { reset_y_axis: true })();
-    }
-  });
 };
 
 /**
