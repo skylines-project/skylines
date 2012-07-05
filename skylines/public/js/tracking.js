@@ -17,7 +17,6 @@ function updateFlightFromJSON(url) {
   $.ajax(url, {
     success: function(data) {
       updateFlight(data.sfid, data.encoded.points, data.encoded.levels,
-                   data.num_levels, data.barogram_t, data.barogram_h, data.zoom_levels);
                    data.num_levels, data.barogram_t, data.barogram_h);
 
       map.events.triggerEvent("move");
@@ -38,12 +37,11 @@ function updateFlightFromJSON(url) {
  * _num_levels - {int} Number of levels encoded in _lonlat and _levels
  * _time - {String} Google polyencoded string of time values
  * _height - {String} Google polyencoded string of height values
- * zoom_levels - {Array(double)} Array of zoom levels where to switch between the LoD.
  *
  * Note: _lonlat, _levels, _time and _height MUST have the same number of elements when decoded.
  */
 
-function updateFlight(tracking_id, _lonlat, _levels, _num_levels, _time, _height, zoom_levels) {
+function updateFlight(tracking_id, _lonlat, _levels, _num_levels, _time, _height) {
   var height = OpenLayers.Util.decodeGoogle(_height);
   var time = OpenLayers.Util.decodeGoogle(_time);
   var lonlat = OpenLayers.Util.decodeGooglePolyline(_lonlat);

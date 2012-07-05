@@ -74,8 +74,8 @@ class TrackController(BaseController):
         trace = self.__get_flight_path(threshold=0.0001)
 
         return  dict(encoded=trace['encoded'], num_levels=trace['fixes']['numLevels'],
-                     zoom_levels=trace['zoom_levels'], barogram_t=trace['barogram_t'],
-                     barogram_h=trace['barogram_h'], sfid=self.pilot.user_id)
+                     barogram_t=trace['barogram_t'], barogram_h=trace['barogram_h'],
+                     sfid=self.pilot.user_id)
 
 class TrackingController(BaseController):
     @expose('skylines.templates.tracking.list')
