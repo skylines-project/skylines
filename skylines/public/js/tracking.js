@@ -8,6 +8,7 @@ function updateFlightsFromJSON() {
     var url = "/tracking/" + flights[fid].sfid + "/json";
 
     $.ajax(url, {
+      data: { last_update: flights[fid].last_update || null },
       success: function(data) {
         updateFlight(data.sfid, data.encoded.points, data.encoded.levels,
                      data.num_levels, data.barogram_t, data.barogram_h);
@@ -41,8 +42,13 @@ function updateFlight(tracking_id, _lonlat, _levels, _num_levels, _time, _height
   var lonlat = OpenLayers.Util.decodeGooglePolyline(_lonlat);
   var lod = OpenLayers.Util.decodeGoogleLoD(_levels, _num_levels);
 
+  // we skip the first point in the list because we assume it's the "linking" fix
+  // between the data we already have and the data to add.
+
+  if (lonlat.length < 2) return;
+
   var points = new Array();
-  for (var i = 0, len = lonlat.length; i < len; i++) {
+  for (var i = 1, len = lonlat.length; i < len; i++) {
     points.push(new OpenLayers.Geometry.Point(lonlat[i].lon, lonlat[i].lat).
       transform(new OpenLayers.Projection("EPSG:4326"), map.getProjectionObject()) );
   }
@@ -59,11 +65,12 @@ function updateFlight(tracking_id, _lonlat, _levels, _num_levels, _time, _height
   // update flight
   var flight = flights[update];
 
-  flight.geo.components = points;
-  flight.geo.componentsLevel = lod;
-  flight.t = time;
-  flight.h = height;
-  flight.lonlat = lonlat;
+  flight.geo.components = flight.geo.components.concat(points); // points is already sliced
+  flight.geo.componentsLevel = flight.geo.componentsLevel.concat(lod.slice(1));
+  flight.t = flight.t.concat(time.slice(1));
+  flight.h = flight.h.concat(height.slice(1));
+  flight.lonlat = flight.lonlat.concat(lonlat.slice(1));
+
   // recalculate bounds
   flight.geo.bounds = flight.geo.calculateBounds();
   // reset indices
@@ -71,6 +78,8 @@ function updateFlight(tracking_id, _lonlat, _levels, _num_levels, _time, _height
     flight.geo.components[i].originalIndex = i;
   }
 
-  barogram_t[fid] = time;
-  barogram_h[fid] = height;
+  flight.last_update = flight.t[flight.t.length - 1];
+
+  barogram_t[update] = barogram_t[update].concat(time.slice(1));
+  barogram_h[update] = barogram_h[update].concat(height.slice(1));
 };
