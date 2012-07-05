@@ -54,16 +54,16 @@ function updateFlight(tracking_id, _lonlat, _levels, _num_levels, _time, _height
   }
 
   // find the flight to update
-  var update = -1;
-  for (fid in flights) {
-    if (tracking_id == flights[fid].sfid)
-      update = fid;
+  var flight_id = -1;
+  for (i in flights) {
+    if (tracking_id == flights[i].sfid)
+      flight_id = i;
   }
 
-  if (update == -1) return;
+  if (flight_id == -1) return;
 
   // update flight
-  var flight = flights[update];
+  var flight = flights[flight_id];
 
   flight.geo.components = flight.geo.components.concat(points); // points is already sliced
   flight.geo.componentsLevel = flight.geo.componentsLevel.concat(lod.slice(1));
@@ -80,6 +80,6 @@ function updateFlight(tracking_id, _lonlat, _levels, _num_levels, _time, _height
 
   flight.last_update = flight.t[flight.t.length - 1];
 
-  barogram_t[update] = barogram_t[update].concat(time.slice(1));
-  barogram_h[update] = barogram_h[update].concat(height.slice(1));
+  barogram_t[flight_id] = barogram_t[flight_id].concat(time.slice(1));
+  barogram_h[flight_id] = barogram_h[flight_id].concat(height.slice(1));
 };
