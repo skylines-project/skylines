@@ -127,68 +127,39 @@ function addFlight(sfid, _lonlat, _levels, _num_levels, _time, _height, zoom_lev
       transform(new OpenLayers.Projection("EPSG:4326"), map.getProjectionObject()) );
   }
 
-  // check if the SkyLines flight id is already shown
-  var update = -1;
-  for (fid in flights) {
-    if (sfid == flights[fid].sfid)
-      update = fid;
-  }
+  // add new flight
+  var flight = new OpenLayers.Geometry.ProgressiveLineString(points, lod, zoom_levels);
+  flight.clip = 1;
 
-  if (update != -1) {
-    // update flight
-    var flight = flights[update];
+  var color = colors[flights.length%colors.length];
+  var feature = new OpenLayers.Feature.Vector(flight, { color: color });
 
-    flight.geo.components = points;
-    flight.geo.componentsLevel = lod;
-    flight.t = time;
-    flight.h = height;
-    flight.lonlat = lonlat;
+  var plane = new OpenLayers.Feature.Vector(
+    new OpenLayers.Geometry.Point(lonlat[0].lon, lonlat[0].lat).
+      transform(new OpenLayers.Projection("EPSG:4326"), map.getProjectionObject()),
+    { rotation: 0 }
+  );
+  plane.renderIntent = 'plane';
 
-    // recalculate bounds
-    flight.geo.bounds = flight.geo.calculateBounds();
-    // reset indices
-    for (var i = 0, len = flight.geo.components.length; i < len; i++) {
-      flight.geo.components[i].originalIndex = i;
-    }
+  map.getLayersByName("Flight")[0].addFeatures([feature, plane]);
 
-    barogram_t[fid] = time;
-    barogram_h[fid] = height;
+  flights.push({
+    lonlat: lonlat,
+    t: time,
+    h: height,
+    geo: flight,
+    color: color,
+    plane: plane,
+    sfid: sfid,
+    index: 0,
+    dx: 0
+  });
 
-  } else {
-    // add new flight
-    var flight = new OpenLayers.Geometry.ProgressiveLineString(points, lod, zoom_levels);
-    flight.clip = 1;
+  var i = flights.length - 1;
 
-    var color = colors[flights.length%colors.length];
-    var feature = new OpenLayers.Feature.Vector(flight, { color: color });
-
-    var plane = new OpenLayers.Feature.Vector(
-      new OpenLayers.Geometry.Point(lonlat[0].lon, lonlat[0].lat).
-        transform(new OpenLayers.Projection("EPSG:4326"), map.getProjectionObject()),
-      { rotation: 0 }
-    );
-    plane.renderIntent = 'plane';
-
-    map.getLayersByName("Flight")[0].addFeatures([feature, plane]);
-
-    flights.push({
-      lonlat: lonlat,
-      t: time,
-      h: height,
-      geo: flight,
-      color: color,
-      plane: plane,
-      sfid: sfid,
-      index: 0,
-      dx: 0
-    });
-
-    var i = flights.length - 1;
-
-    barogram_t.push(flights[i].t);
-    barogram_h.push(flights[i].h);
-    top_flight = i;
-  }
+  barogram_t.push(flights[i].t);
+  barogram_h.push(flights[i].h);
+  top_flight = i;
 };
 
 /**

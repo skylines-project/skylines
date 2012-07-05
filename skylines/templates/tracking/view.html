@@ -26,6 +26,7 @@ title = 'Live Tracking'
   <script type="text/javascript" src="/js/general.js"></script>
   <script type="text/javascript" src="/js/map.js"></script>
   <script type="text/javascript" src="/js/flight.js"></script>
+  <script type="text/javascript" src="/js/tracking.js"></script>
 
   <script type="text/javascript" src="/js/g.raphael/raphael-min.js"></script>
   <script type="text/javascript" src="/js/g.raphael/g.raphael.js"></script>
@@ -56,7 +57,7 @@ title = 'Live Tracking'
       addBingLayers("${config.get('skylines.bing.api_key', 'null')}");
 
       setInterval(function() {
-          addFlightFromJSON("/tracking/${pilot.user_id}/json");
+          updateFlightFromJSON("/tracking/${pilot.user_id}/json");
         },
         30*1000 // update flight track every 30 seconds
       );
