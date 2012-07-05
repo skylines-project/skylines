@@ -71,7 +71,7 @@ class TrackController(BaseController):
 
     @expose('json')
     def json(self):
-        trace = self.__get_flight_path(threshold=0.0001)
+        trace = self.__get_flight_path(threshold=0.001)
 
         return  dict(encoded=trace['encoded'], num_levels=trace['fixes']['numLevels'],
                      barogram_t=trace['barogram_t'], barogram_h=trace['barogram_h'],
