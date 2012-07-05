@@ -87,7 +87,7 @@ class TrackController(BaseController):
     @expose('json')
     def json(self, **kw):
         try:
-            last_update = int(kw.get('last_update'))
+            last_update = int(kw.get('last_update', 0))
         except ValueError:
             last_update = None
 
