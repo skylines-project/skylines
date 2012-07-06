@@ -1,7 +1,3 @@
-<?python
-from babel.numbers import format_number
-?>
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
                       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
@@ -20,8 +16,8 @@ from babel.numbers import format_number
         <tr py:for="year in years">
           <td class="span2">${int(year.year)}</td>
           <td class="span2">
-            <span rel="tooltip" title="avg. ${format_number((year.distance / 1000) / year.flights)} km per flight">
-              ${format_number(year.distance / 1000)} km
+            <span rel="tooltip" title="avg. ${h.format_number((year.distance / 1000) / year.flights)} km per flight">
+              ${h.format_number(year.distance / 1000)} km
             </span>
           </td>
           <td class="span8">
@@ -32,7 +28,7 @@ from babel.numbers import format_number
         </tr>
         <tr py:if="sum_distance">
           <td><strong>Total</strong></td>
-          <td colspan="2"><strong>${format_number(sum_distance / 1000)} km</strong></td>
+          <td colspan="2"><strong>${h.format_number(sum_distance / 1000)} km</strong></td>
         </tr>
       </tbody>
     </table>

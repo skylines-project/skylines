@@ -1,6 +1,4 @@
 <?python
-from babel.dates import format_datetime
-
 page = 'tracking'
 title = 'Live Tracking'
 ?>
@@ -28,7 +26,7 @@ title = 'Live Tracking'
       <tbody>
         <tr py:for="time, pilot in tracks">
           <td class="date">
-            <span py:replace="format_datetime(time)">
+            <span py:replace="h.format_datetime(time)">
               2012-05-21
             </span>
           </td>

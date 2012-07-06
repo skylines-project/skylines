@@ -1,6 +1,5 @@
 <?python
 from sets import Set
-from babel.dates import format_date
 ?>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
@@ -40,7 +39,7 @@ from babel.dates import format_date
     <tbody>
       <tr py:for="flight in flights">
         <td py:if="'date' not in omitted_columns">
-          <span py:if="flight.takeoff_time" title="${flight.takeoff_time.strftime('%d.%m.%Y')}" py:content="format_date(flight.takeoff_time)">
+          <span py:if="flight.takeoff_time" title="${flight.takeoff_time.strftime('%d.%m.%Y')}" py:content="h.format_date(flight.takeoff_time)">
             2012-05-21
           </span>
         </td>

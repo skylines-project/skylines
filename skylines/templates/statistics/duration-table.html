@@ -1,14 +1,3 @@
-<?python
-from datetime import timedelta
-
-def format_timedelta(delta):
-    if isinstance(delta, timedelta):
-      seconds = delta.total_seconds()
-    else:
-      seconds = delta
-
-    return '%d:%02d' % (seconds / 3600, seconds % 3600 / 60)
-?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
                       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
@@ -27,8 +16,8 @@ def format_timedelta(delta):
         <tr py:for="year in years">
           <td class="span2">${int(year.year)}</td>
           <td class="span2">
-            <span rel="tooltip" title="avg. ${format_timedelta(year.duration / year.flights)} Hours per flight">
-              ${format_timedelta(year.duration)} Hours
+            <span rel="tooltip" title="avg. ${h.format_timedelta(year.duration / year.flights)} Hours per flight">
+              ${h.format_timedelta(year.duration)} Hours
             </span>
           </td>
           <td class="span8">
@@ -39,7 +28,7 @@ def format_timedelta(delta):
         </tr>
         <tr py:if="sum_duration">
           <td><strong>Total</strong></td>
-          <td colspan="2"><strong>${format_timedelta(sum_duration)} Hours</strong></td>
+          <td colspan="2"><strong>${h.format_timedelta(sum_duration)} Hours</strong></td>
         </tr>
       </tbody>
     </table>

@@ -1,10 +1,7 @@
 <?python
-from babel.numbers import format_number
-from babel.dates import format_date
-
 def flight_title(flight):
-  title = format_number(flight.olc_classic_distance / 1000) + ' km'
-  title = title + ' on ' + format_date(flight.takeoff_time)
+  title = h.format_number(flight.olc_classic_distance / 1000) + ' km'
+  title = title + ' on ' + h.format_date(flight.takeoff_time)
 
   tagline = ''
   if flight.pilot:
@@ -26,9 +23,9 @@ def flight_title(flight):
   <py:def function="flight_meta_tags(flight)">
     <?python
       description = []
-      description.append(format_number(flight.olc_classic_distance / 1000) + ' km')
-      description.append(format_number(flight.olc_plus_score) + ' pt')
-      description.append(format_date(flight.takeoff_time))
+      description.append(h.format_number(flight.olc_classic_distance / 1000) + ' km')
+      description.append(h.format_number(flight.olc_plus_score) + ' pt')
+      description.append(h.format_date(flight.takeoff_time))
 
       if flight.pilot:
         description.append(unicode(flight.pilot))

@@ -1,12 +1,11 @@
 <?python
 from sets import Set
-from babel.dates import format_date
 
 page = 'flights'
 title = 'Flights'
 
 if date:
-  tagline = 'on ' + format_date(date)
+  tagline = 'on ' + h.format_date(date)
 
 if pilot:
   tagline = 'of ' + unicode(pilot)

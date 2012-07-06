@@ -1,6 +1,5 @@
 <?python
 from datetime import date as sys_date, timedelta
-from babel.dates import format_date
 
 my_pilot = request.identity['user'] if request.identity else None
 my_club = request.identity['user'].club if request.identity else None
@@ -23,7 +22,7 @@ my_club = request.identity['user'].club if request.identity else None
   <li class="${('', 'active')[defined('tab') and tab == 'date' or tab == 'today']}">
     <a href="/flights/today">
       <span class="date"><py:choose>
-        <py:when test="defined('date') and date != None and date != sys_date.today()">${format_date(date)}</py:when>
+        <py:when test="defined('date') and date != None and date != sys_date.today()">${h.format_date(date)}</py:when>
         <py:otherwise>Today</py:otherwise>
       </py:choose></span>
       &nbsp;<span id="datepicker" data-date="${'' if date is None else date.isoformat()}" data-date-format="yyyy-mm-dd"><i class="icon-th"></i></span>

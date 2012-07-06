@@ -1,6 +1,4 @@
 <?python
-from simplejson import dumps
-
 page = 'flights'
 ?>
 
@@ -43,12 +41,12 @@ page = 'flights'
       initFlightLayer();
 
       addFlight(${flight.id},
-        ${dumps(trace.encoded.points)},
-        ${dumps(trace.encoded.levels)},
+        ${h.json.dumps(trace.encoded.points)},
+        ${h.json.dumps(trace.encoded.levels)},
         ${trace.fixes.numLevels},
-        ${dumps(trace.barogram_t)},
-        ${dumps(trace.barogram_h)},
-        ${dumps(trace.zoom_levels)}
+        ${h.json.dumps(trace.barogram_t)},
+        ${h.json.dumps(trace.barogram_h)},
+        ${h.json.dumps(trace.zoom_levels)}
       );
 
       var factor = $("#barogram")[0].offsetHeight / map.getSize().h;

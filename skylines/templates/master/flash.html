@@ -1,7 +1,3 @@
-<?python
-from tg.flash import flash as _flash
-?>
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
                       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
@@ -19,7 +15,7 @@ from tg.flash import flash as _flash
   
   <py:def function="show_flash(floating)">
     <?python
-      flash = _flash.pop_payload()
+      flash = h.flash.pop_payload()
       flash_class = 'alert'
       
       if flash and flash['status'] == 'ok':

@@ -1,7 +1,4 @@
 <?python
-from babel.numbers import format_number
-from babel.dates import format_date
-
 title = user.display_name
 
 def add_locations(locations):
@@ -161,11 +158,11 @@ def add_locations(locations):
             </thead>
             <tbody>
               <tr py:for="distance_flight in distance_flights">
-                <td py:content="format_number(distance_flight[0]) + ' km'">300 km</td>
+                <td py:content="h.format_number(distance_flight[0]) + ' km'">300 km</td>
                 <td>
                   <abbr py:if="distance_flight[1]" class="timeago"
                         title="${distance_flight[1].landing_time.isoformat()}"
-                        py:content="format_date(distance_flight[1].landing_time)"
+                        py:content="h.format_date(distance_flight[1].landing_time)"
                         rel="tooltip">4 days ago</abbr>
                 </td>
                 <td>
