@@ -10,7 +10,7 @@ page = 'flights'
 
   <xi:include href="flights/meta-tags.html" />
   <?python
-    title, tagline = flight_title(flight)
+    title, tagline = h.format_flight_title(flight)
   ?>
 
   <xi:include href="master/fullscreen.html" />

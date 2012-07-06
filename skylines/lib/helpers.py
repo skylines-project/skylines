@@ -18,3 +18,17 @@ def format_timedelta(delta):
         seconds = delta
 
     return '%d:%02d' % (seconds / 3600, seconds % 3600 / 60)
+
+
+def format_flight_title(flight):
+    title = format_number(flight.olc_classic_distance / 1000) + ' km'
+    title = title + ' on ' + format_date(flight.takeoff_time)
+
+    tagline = ''
+    if flight.pilot:
+        tagline = tagline + ' by ' + unicode(flight.pilot)
+
+    if flight.co_pilot:
+        tagline = tagline + ' and ' + unicode(flight.co_pilot)
+
+    return title, tagline

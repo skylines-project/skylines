@@ -12,9 +12,9 @@ page = 'flights'
   <xi:include href="flights/details-table.html" />
   <?python
     if flight:
-        title, tagline = flight_title(flight)
+        title, tagline = h.format_flight_title(flight)
     elif defined('flights'):
-        title, tagline = flight_title(flights[0][0])
+        title, tagline = h.format_flight_title(flights[0][0])
   ?>
 
   <xi:include href="master/page.html" />
