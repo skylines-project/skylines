@@ -13,14 +13,18 @@ page = 'flights'
   <xi:include href="flights/meta-tags.html" />
   <xi:include href="flights/details-table.html" />
   <?python
-    title, tagline = flight_title(flight)
+    if flight:
+        title, tagline = flight_title(flight)
+    elif defined('flights'):
+        title, tagline = flight_title(flights[0][0])
   ?>
 
   <xi:include href="master/page.html" />
 
 <head>
   <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" py:if="False"/>
-  ${flight_meta_tags(flight)}
+  <span py:if="flight" py:replace="flight_meta_tags(flight)"/>
+  <span py:if="defined('flights')" py:replace="flight_meta_tags(flights[0][0])"/>
 
   <link href="/css/OpenLayers.css" rel="stylesheet" type="text/css" />
   <link href="/css/SimpleLayerSwitcher.css" rel="stylesheet" type="text/css" />
@@ -71,13 +75,49 @@ page = 'flights'
     /* ]]> */
   </script>
 
+  <script py:if="defined('flights')" type="text/javascript">
+    /* <![CDATA[ */
+    function initialize() {
+      initOpenLayers("map_canvas");
+      initFlightLayer();
+    /* ]]> */
+
+    <span py:for="flight, trace in flights" py:strip="True">
+      addFlight(${flight.id},
+        ${dumps(trace.encoded.points)},
+        ${dumps(trace.encoded.levels)},
+        ${trace.fixes.numLevels},
+        ${dumps(trace.barogram_t)},
+        ${dumps(trace.barogram_h)},
+        ${dumps(trace.zoom_levels)}
+      );
+    </span>
+
+    /* <![CDATA[ */
+      map.zoomToExtent(getAllFlightsBounds().scale(1.1));
+
+      render_barogram($("#barogram"));
+      scaleBarogram();
+
+      hoverMap();
+
+      $.getScript("http://maps.google.com/maps/api/js?v=3.7&sensor=false&callback=addGoogleLayer");
+      addBingLayers("${config.get('skylines.bing.api_key', 'null')}");
+    }
+    /* ]]> */
+  </script>
+
   <title>View Flight</title>
 </head>
 
   <body onload="initialize();">
     <div class="row">
       <div class="span4">
-        ${render_details_table(flight)}
+        <span py:if="flight" py:replace="render_details_table(flight)"/>
+        <span py:if="defined('flights')" py:strip="True">
+          <span py:for="flight, trace in flights"
+                py:replace="render_details_table(flight)"/>
+        </span>
 
         <p>
           <a py:if="trace" href="map" class="btn">
@@ -86,11 +126,11 @@ page = 'flights'
           <span id="pinned" rel="tooltip" title="Activate this to show the flight on top of other flights on the map"></span>
         </p>
       </div>
-      <div py:if="trace" class="span8">
+      <div py:if="trace or defined('flights')" class="span8">
         <div id="map_canvas" style="width:100%; height:400pt;"></div>
         <div id="barogram" style="width:100%; height:120pt;position:relative;"></div>
       </div>
-      <div py:if="not trace" class="span8">
+      <div py:if="not trace and not defined('flights')" class="span8">
         An error occurred while decoding this flight.
       </div>
     </div>

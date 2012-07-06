@@ -440,6 +440,26 @@ class FlightsController(BaseController):
 
         return self.__do_list('airport', kw, airport=airport, columns=columns)
 
+    @expose('skylines.templates.flights.view')
+    def multi(self, ids):
+        def get_flight_by_id_string(id_string):
+            try:
+                id = int(id_string)
+            except ValueError:
+                raise HTTPNotFound
+            flight = DBSession.query(Flight).get(id)
+            if flight is None:
+                raise HTTPNotFound
+            return flight
+
+        def add_flight_path(flight):
+            flight_path = get_flight_path(flight)
+            return (flight, flight_path)
+
+        flights = map(get_flight_by_id_string, ids.split(','))
+        flights = map(add_flight_path, flights)
+        return dict(flight=None, flights=flights, trace=None)
+
     @expose()
     @require(has_permission('manage'))
     def analysis(self):
