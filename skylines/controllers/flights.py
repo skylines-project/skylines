@@ -69,35 +69,38 @@ class SelectAircraftForm(EditableForm):
 
 select_aircraft_form = SelectAircraftForm(DBSession)
 
+def get_flight_path(flight, threshold = 0.001, max_points = 3000):
+    fp = flight_path(flight.igc_file, max_points)
+    if len(fp) == 0:
+        log.error('flight_path("' + flight.igc_file.filename + '") returned with an empty list')
+        return None
+
+    num_levels = 4
+    zoom_factor = 4
+    zoom_levels = [0]
+    zoom_levels.extend([round(-math.log(32.0 / 45.0 * (threshold * pow(zoom_factor, num_levels - i - 1)), 2)) for i in range(1, num_levels)])
+
+    max_delta_time = max(4, (fp[-1][0] - fp[0][0]) / 500)
+
+    encoder = SkyLinesPolyEncoder(num_levels=4, threshold=threshold, zoom_factor=4)
+
+    fixes = map(lambda x: (x[2], x[1], (x[0] / max_delta_time * threshold)), fp)
+    fixes = encoder.classify(fixes, remove=False, type="ppd")
+
+    encoded = encoder.encode(fixes['points'], fixes['levels'])
+
+    barogram_t = encoder.encodeList([fp[i][0] for i in range(len(fp)) if fixes['levels'][i] != -1])
+    barogram_h = encoder.encodeList([fp[i][3] for i in range(len(fp)) if fixes['levels'][i] != -1])
+
+    return dict(encoded=encoded, zoom_levels = zoom_levels, fixes = fixes,
+                barogram_t=barogram_t, barogram_h=barogram_h, sfid=flight.id)
+
 class FlightController(BaseController):
     def __init__(self, flight):
         self.flight = flight
 
-    def __get_flight_path(self, threshold = 0.001, max_points = 3000):
-        fp = flight_path(self.flight.igc_file, max_points)
-        if len(fp) == 0:
-            log.error('flight_path("' + self.flight.igc_file.filename + '") returned with an empty list')
-            return None
-
-        num_levels = 4
-        zoom_factor = 4
-        zoom_levels = [0]
-        zoom_levels.extend([round(-math.log(32.0 / 45.0 * (threshold * pow(zoom_factor, num_levels - i - 1)), 2)) for i in range(1, num_levels)])
-
-        max_delta_time = max(4, (fp[-1][0] - fp[0][0]) / 500)
-
-        encoder = SkyLinesPolyEncoder(num_levels=4, threshold=threshold, zoom_factor=4)
-
-        fixes = map(lambda x: (x[2], x[1], (x[0] / max_delta_time * threshold)), fp)
-        fixes = encoder.classify(fixes, remove=False, type="ppd")
-
-        encoded = encoder.encode(fixes['points'], fixes['levels'])
-
-        barogram_t = encoder.encodeList([fp[i][0] for i in range(len(fp)) if fixes['levels'][i] != -1])
-        barogram_h = encoder.encodeList([fp[i][3] for i in range(len(fp)) if fixes['levels'][i] != -1])
-
-        return dict(encoded=encoded, zoom_levels = zoom_levels, fixes = fixes,
-                    barogram_t=barogram_t, barogram_h=barogram_h, sfid=self.flight.id)
+    def __get_flight_path(self, **kw):
+        return get_flight_path(self.flight, **kw)
 
     @expose('skylines.templates.flights.view')
     def index(self):
