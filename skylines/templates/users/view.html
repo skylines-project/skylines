@@ -103,7 +103,7 @@ def add_locations(locations):
 
           <tr py:if="user.club is None and user.is_writable()">
             <th>Club</th>
-            <td itemprop="memberof" itemscope="" itemtype="http://schema.org/SportsTeam">
+            <td>
               [Unspecified]
               <a py:if="user.is_writable()" href="change_club" class="btn btn-mini">Change</a>
             </td>
