@@ -125,8 +125,10 @@ def add_locations(locations):
             </span>
           </span>
         </p>
+      </div>
 
-        <h2 py:if="user.following">Following</h2>
+      <div class="span12" py:if="user.following">
+        <h2>Following</h2>
         <ul class="row-fluid">
           <li class="span4" py:for="following in user.following">
             <a href="/users/${following.destination_id}/"
@@ -135,8 +137,10 @@ def add_locations(locations):
             </a>
           </li>
         </ul>
+      </div>
 
-        <h2 py:if="user.followers">Followers</h2>
+      <div class="span12" py:if="user.followers">
+        <h2>Followers</h2>
         <ul class="row-fluid">
           <li class="span4" py:for="follower in user.followers">
             <a href="/users/${follower.source_id}/"
@@ -145,34 +149,34 @@ def add_locations(locations):
             </a>
           </li>
         </ul>
+      </div>
 
-        <py:if test="distance_flights">
-          <h2>Distance Flights</h2>
-          <table>
-            <thead>
-              <tr>
-                <th>Distance</th>
-                <th>Date</th>
-                <th></th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr py:for="distance_flight in distance_flights">
-                <td py:content="h.format_number(distance_flight[0]) + ' km'">300 km</td>
-                <td>
-                  <abbr py:if="distance_flight[1]" class="timeago"
-                        title="${distance_flight[1].landing_time.isoformat()}"
-                        py:content="h.format_date(distance_flight[1].landing_time)"
-                        rel="tooltip">4 days ago</abbr>
-                </td>
-                <td>
-                  <a py:if="distance_flight[1]"
-                     href="/flights/${distance_flight[1].id}">Show</a>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </py:if>
+      <div class="span12" py:if="distance_flights">
+        <h2>Distance Flights</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>Distance</th>
+              <th>Date</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr py:for="distance_flight in distance_flights">
+              <td py:content="h.format_number(distance_flight[0]) + ' km'">300 km</td>
+              <td>
+                <abbr py:if="distance_flight[1]" class="timeago"
+                      title="${distance_flight[1].landing_time.isoformat()}"
+                      py:content="h.format_date(distance_flight[1].landing_time)"
+                      rel="tooltip">4 days ago</abbr>
+              </td>
+              <td>
+                <a py:if="distance_flight[1]"
+                   href="/flights/${distance_flight[1].id}">Show</a>
+              </td>
+            </tr>
+          </tbody>
+        </table>
       </div>
 
       <div class="span12">
