@@ -80,7 +80,18 @@
 <div itemscope="" itemtype="http://schema.org/Person">
   <meta itemprop="url" content="/users/{{ user.id }}" />
   <div class="row">
-    <div class="well span8 offset2">
+      <div class="span2">
+        <div class="well">
+          {% if request.identity and request.identity['user'] == user -%}
+          <a href="http://gravatar.com/emails/" title="Change your avatar at gravatar.com" target="_blank">
+            <img src="{{ h.gravatar(user.email_address, size=100) }}" class="gravatar"/>
+          </a>
+          {%- else -%}
+          <img src="{{ h.gravatar(user.email_address, size=100) }}" class="gravatar"/>
+          {%- endif %}
+        </div>
+      </div>
+      <div class="span10">
       <table class="right">
         {% if user.is_readable(request.identity) -%}
         <tr>
