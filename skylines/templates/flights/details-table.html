@@ -102,14 +102,12 @@
           <a py:if="flight.is_writable()" href="change_pilot" class="btn btn-mini" style="float: right;">Change</a>
           <span py:if="flight.pilot" itemprop="performer" itemscope="" itemtype="http://schema.org/Person">
             <meta itemprop="url" content="/users/${flight.pilot_id}" />
-            <a py:content="flight.pilot" href="/flights/pilot/${flight.pilot_id}" itemprop="name">Pilot Name</a>
-            <a href="/users/${flight.pilot_id}/" class="btn btn-mini">Info</a>
+            <a py:content="flight.pilot" href="/users/${flight.pilot_id}/" itemprop="name">Pilot Name</a>
           </span>
           <br py:if="flight.pilot and flight.co_pilot" />
           <span py:if="flight.co_pilot" itemprop="performer" itemscope="" itemtype="http://schema.org/Person">
             <meta itemprop="url" content="/users/${flight.co_pilot_id}" />
-            <a py:content="flight.co_pilot" href="/flights/pilot/${flight.co_pilot_id}" itemprop="name">Co-Pilot Name</a>
-            <a href="/users/${flight.co_pilot_id}/" class="btn btn-mini">Info</a>
+            <a py:content="flight.co_pilot" href="/users/${flight.co_pilot_id}/" itemprop="name">Co-Pilot Name</a>
           </span>
           <span py:if="not flight.pilot and not flight.co_pilot" py:strip="True">
             [unspecified]
@@ -120,10 +118,9 @@
         <th>Club</th>
         <td itemprop="performer" itemscope="" itemtype="http://schema.org/SportsTeam">
           <meta itemprop="url" content="/clubs/${flight.club_id}" />
-          <a py:content="flight.club" href="/flights/club/${flight.club_id}" itemprop="name">
+          <a py:content="flight.club" href="/clubs/${flight.club_id}/" itemprop="name">
             Club Name
           </a>
-          <a href="/clubs/${flight.club_id}/" class="btn btn-mini">Info</a>
         </td>
       </tr>
       <tr>
