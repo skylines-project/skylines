@@ -61,6 +61,10 @@
       <tr>
         <th>Aircraft</th>
         <td>
+          <a py:if="flight.is_writable()" href="change_aircraft" class="btn btn-mini" style="float: right;">
+            Change
+          </a>
+
           <span py:if="flight.model_id is not None" py:replace="flight.model"/>
           <py:if test="flight.model_id is None and
                        flight.igc_file.model is not None">
@@ -78,10 +82,6 @@
                        flight.igc_file.registration is not None">
             (${flight.igc_file.registration})
           </py:if>
-
-          <a py:if="flight.is_writable()" href="change_aircraft" class="btn btn-mini">
-            Change
-          </a>
         </td>
       </tr>
       <tr>
@@ -99,6 +99,7 @@
       <tr>
         <th>Pilot</th>
         <td>
+          <a py:if="flight.is_writable()" href="change_pilot" class="btn btn-mini" style="float: right;">Change</a>
           <span py:if="flight.pilot" itemprop="performer" itemscope="" itemtype="http://schema.org/Person">
             <meta itemprop="url" content="/users/${flight.pilot_id}" />
             <a py:content="flight.pilot" href="/flights/pilot/${flight.pilot_id}" itemprop="name">Pilot Name</a>
@@ -113,7 +114,6 @@
           <span py:if="not flight.pilot and not flight.co_pilot" py:strip="True">
             [unspecified]
           </span>
-          <a py:if="flight.is_writable()" href="change_pilot" class="btn btn-mini">Change</a>
         </td>
       </tr>
       <tr py:if="flight.club">
