@@ -9,7 +9,7 @@ from skylines.lib.base import BaseController
 from skylines import files
 from skylines.model import DBSession, User, Model, Flight
 from skylines.lib.md5 import file_md5
-from skylines.lib.igc import read_igc_header, guess_model, guess_registration
+from skylines.lib.igc import guess_model, guess_registration
 from skylines.lib.analysis import analyse_flight
 from skylines.form import BootstrapForm, MultiFileField
 from zipfile import ZipFile
@@ -123,20 +123,7 @@ class UploadController(BaseController):
             igc_file.owner = user
             igc_file.filename = filename
             igc_file.md5 = md5
-
-            igc_headers = read_igc_header(igc_file)
-
-            if 'manufacturer_id' in igc_headers:
-                igc_file.logger_manufacturer_id = igc_headers['manufacturer_id']
-
-            if 'logger_id' in igc_headers:
-                igc_file.logger_id = igc_headers['logger_id']
-
-            if 'model' in igc_headers and 0 < len(igc_headers['model']) < 64:
-                igc_file.model = igc_headers['model']
-
-            if 'reg' in igc_headers and 0 < len(igc_headers['reg']) < 32:
-                igc_file.registration = igc_headers['reg']
+            igc_file.update_igc_headers()
 
             flight = Flight()
             flight.pilot_id = pilot_id
@@ -145,8 +132,8 @@ class UploadController(BaseController):
 
             flight.model_id = guess_model(igc_file)
 
-            if 'reg' in igc_headers and 0 < len(igc_headers['reg']) < 32:
-                flight.registration = igc_headers['reg']
+            if igc_file.registration:
+                flight.registration = igc_file.registration
             else:
                 flight.registration = guess_registration(igc_file)
 

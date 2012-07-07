@@ -40,3 +40,19 @@ class IGCFile(DeclarativeBase):
 
     def may_delete(self):
         return request.identity and 'manage' in request.identity['permissions']
+
+    def update_igc_headers(self):
+        from skylines.lib.igc import read_igc_header
+        igc_headers = read_igc_header(self)
+
+        if 'manufacturer_id' in igc_headers:
+            self.logger_manufacturer_id = igc_headers['manufacturer_id']
+
+        if 'logger_id' in igc_headers:
+            self.logger_id = igc_headers['logger_id']
+
+        if 'model' in igc_headers and 0 < len(igc_headers['model']) < 64:
+            self.model = igc_headers['model']
+
+        if 'reg' in igc_headers and 0 < len(igc_headers['reg']) < 32:
+            self.registration = igc_headers['reg']
