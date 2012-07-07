@@ -34,11 +34,11 @@ from sets import Set
           500
         </td>
         <td py:if="'pilot' not in omitted_columns">
-          <a py:if="flight.pilot" py:content="flight.pilot" href="/flights/pilot/${flight.pilot_id}">
+          <a py:if="flight.pilot" py:content="flight.pilot" href="/users/${flight.pilot_id}">
             Pilot Name
           </a>
           <br py:if="flight.pilot and flight.co_pilot"/>
-          <a py:if="flight.co_pilot" py:content="flight.co_pilot" href="/flights/pilot/${flight.co_pilot_id}">
+          <a py:if="flight.co_pilot" py:content="flight.co_pilot" href="/users/${flight.co_pilot_id}">
             Co-Pilot Name
           </a>
           <span py:if="not flight.pilot and not flight.co_pilot" py:strip="True">
@@ -54,7 +54,7 @@ from sets import Set
           <a py:if="flight.takeoff_airport" py:content="flight.takeoff_airport.name" href="/flights/airport/${flight.takeoff_airport_id}">Airport</a>
         </td>
         <td py:if="'club' not in omitted_columns">
-          <a py:if="flight.club" py:content="flight.club" href="/flights/club/${flight.club_id}">
+          <a py:if="flight.club" py:content="flight.club" href="/clubs/${flight.club_id}">
             Club Name
           </a>
         </td>

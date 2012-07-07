@@ -82,11 +82,11 @@ if airport:
                   row = "";
 
                   if (obj.aData.pilot != null)
-                    row += "<a href=\"/flights/pilot/" + obj.aData.pilot_id + "\">" + obj.aData.pilot + "</a>";
+                    row += "<a href=\"/users/" + obj.aData.pilot_id + "\">" + obj.aData.pilot + "</a>";
                   if (obj.aData.pilot != null && obj.aData.co_pilot != null)
                     row += "<br>";
                   if (obj.aData.co_pilot != null)
-                    row += "<a href=\"/flights/pilot/" + obj.aData.co_pilot_id + "\">" + obj.aData.co_pilot + "</a>";
+                    row += "<a href=\"/users/" + obj.aData.co_pilot_id + "\">" + obj.aData.co_pilot + "</a>";
 
                   if (obj.aData.pilot == null && obj.aData.co_pilot == null)
                     row += "[" + obj.aData.owner + "]";
@@ -116,7 +116,7 @@ if airport:
               "aTargets": ["club"],
               "fnRender": function(obj, row) {
                 if (obj.oSettings.jqXHR && obj.aData.club != null)
-                  row = "<a href=\"/flights/club/" + obj.aData.club_id + "\">" + obj.aData.club + "</a>";
+                  row = "<a href=\"/clubs/" + obj.aData.club_id + "\">" + obj.aData.club + "</a>";
                 return row;
               }
             }, {
