@@ -12,8 +12,8 @@ hfgty_re = re.compile(r'HFGTY\s*GLIDER\s*TYPE\s*:(.*)', re.IGNORECASE)
 afil_re = re.compile(r'AFIL(\d*)FLIGHT', re.IGNORECASE)
 
 
-def read_igc_header(igc_file):
-    path = files.filename_to_path(igc_file.filename)
+def read_igc_header(filename):
+    path = files.filename_to_path(filename)
 
     try:
         f = file(path, 'r')

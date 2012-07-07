@@ -43,7 +43,7 @@ class IGCFile(DeclarativeBase):
 
     def update_igc_headers(self):
         from skylines.lib.igc import read_igc_header
-        igc_headers = read_igc_header(self)
+        igc_headers = read_igc_header(self.filename)
 
         if 'manufacturer_id' in igc_headers:
             self.logger_manufacturer_id = igc_headers['manufacturer_id']
