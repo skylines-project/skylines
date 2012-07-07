@@ -174,13 +174,12 @@ class FlightController(BaseController):
         else:
             model_id = self.flight.model_id
 
-        if self.flight.registration is None:
-            if self.flight.igc_file.registration is not None:
-                registration = self.flight.igc_file.registration
-            else:
-                registration = guess_registration(self.flight.igc_file)
-        else:
+        if self.flight.registration is not None:
             registration = self.flight.registration
+        elif self.flight.igc_file.registration is not None:
+            registration = self.flight.igc_file.registration
+        else:
+            registration = guess_registration(self.flight.igc_file)
 
         return dict(page='settings', title=_('Change Aircraft'),
                     user=request.identity['user'],
