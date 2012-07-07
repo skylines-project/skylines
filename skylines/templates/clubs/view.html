@@ -38,7 +38,7 @@ title = club.name
           <tr>
             <th>Created</th>
             <td>
-              <abbr class="timeago" title="${club.time_created.isoformat()}">${h.format_datetime(club.time_created)}</abbr>
+              <abbr class="timeago" title="${club.time_created.isoformat()}" rel="tooltip">${h.format_datetime(club.time_created)}</abbr>
               <span py:if="club.owner" py:strip="True"> by <a href="/users/${club.owner_id}/">${club.owner}</a></span>
             </td>
           </tr>
