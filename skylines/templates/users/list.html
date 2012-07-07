@@ -6,15 +6,10 @@ else:
   title = 'Users'
 
 body_attrs = {}
-pilot_attrs = {
-  'itemscope': '',
-  'itemtype': 'http://schema.org/Person',
-}
 
 if defined('club'):
   body_attrs['itemscope'] = 'SportsTeam'
   body_attrs['itemtype'] = 'http://schema.org/SportsTeam'
-  pilot_attrs['itemprop'] = 'member'
 ?>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
@@ -23,6 +18,7 @@ if defined('club'):
       xmlns:py="http://genshi.edgewall.org/"
       xmlns:xi="http://www.w3.org/2001/XInclude">
 
+  <xi:include href="users/users-table.html" />
   <xi:include href="master/page.html" />
 
   <head>
@@ -32,38 +28,7 @@ if defined('club'):
   <body py:attrs="body_attrs">
     <meta py:if="defined('club')" itemprop="name" content="${club}" />
     <meta py:if="defined('club')" itemprop="url" content="/clubs/${club.id}" />
-    <div id="getting_started">
-      <table class="table table-striped">
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th py:if="not defined('club')">Club</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr py:for="user in users" py:attrs="pilot_attrs">
-            <meta itemprop="url" content="/users/${user.user_id}" />
-            <td itemprop="name">
-              <a href="/users/${user.user_id}/" py:content="user">
-                Name
-              </a>
-            </td>
-            <td py:if="not defined('club')" itemprop="memberof" itemscope="" itemtype="http://schema.org/SportsTeam">
-              <meta py:if="user.club_id" itemprop="url" content="/clubs/${user.club_id}" />
-              <a py:if="user.club_id" href="/clubs/${user.club_id}/" py:content="user.club" itemprop="name">
-                Name
-              </a>
-            </td>
-            <td>
-              <a href="/flights/pilot/${user.user_id}" class="btn btn-mini">Flights</a>
-              <a href="/users/${user.user_id}/" class="btn btn-mini">Info</a>
-              <a py:if="user.is_writable()" href="/users/${user.user_id}/edit" class="btn btn-mini">Edit</a>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+    ${render_users_table(users, not defined('club'))}
 
     <p py:if="defined('club') and club.is_writable()">
       <a href="new_pilot" class="btn">Create Pilot</a>

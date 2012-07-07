@@ -1,0 +1,48 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+                      "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:py="http://genshi.edgewall.org/"
+      xmlns:xi="http://www.w3.org/2001/XInclude"
+      py:strip="">
+
+  <table py:def="render_users_table(users, club_column = True)" id="users-table" class="table table-striped">
+    <?python
+      pilot_attrs = {
+        'itemscope': '',
+        'itemtype': 'http://schema.org/Person',
+      }
+
+      if club_column:
+        pilot_attrs['itemprop'] = 'member'
+    ?>
+
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th py:if="club_column">Club</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr py:for="user in users" py:attrs="pilot_attrs">
+        <meta itemprop="url" content="/users/${user.user_id}" />
+        <td itemprop="name">
+          <a href="/users/${user.user_id}/" py:content="user">
+            Name
+          </a>
+        </td>
+        <td py:if="club_column" itemprop="memberof" itemscope="" itemtype="http://schema.org/SportsTeam">
+          <meta py:if="user.club_id" itemprop="url" content="/clubs/${user.club_id}" />
+          <a py:if="user.club_id" href="/clubs/${user.club_id}/" py:content="user.club" itemprop="name">
+            Name
+          </a>
+        </td>
+        <td>
+          <a href="/flights/pilot/${user.user_id}" class="btn btn-mini"><i class="icon-plane"></i> Flights</a>
+          <a href="/statistics/pilot/${user.user_id}" class="btn btn-mini"><i class="icon-tasks"></i> Statistics</a>
+          <a py:if="user.is_writable()" href="/users/${user.user_id}/edit" class="btn btn-mini">Edit</a>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</html>
