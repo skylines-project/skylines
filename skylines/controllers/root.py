@@ -88,8 +88,7 @@ class RootController(BaseController):
             request.identity['user'].login_ip = request.remote_addr
             request.identity['user'].login_time = datetime.now()
 
-            userid = request.identity['repoze.who.userid']
-            flash(_('You are now logged in. Welcome back, %s!') % userid)
+            flash(_('You are now logged in. Welcome back, %s!') % request.identity['user'])
 
         redirect(came_from)
 
