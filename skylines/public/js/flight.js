@@ -178,6 +178,10 @@ function addFlight(sfid, _lonlat, _levels, _num_levels, _time, _height, zoom_lev
 function addFlightFromJSON(url) {
   $.ajax(url,{
     success: function(data) {
+      for (flight_id in flights) {
+        if (flights[flight_id].sfid == data.sfid) return;
+      }
+
       addFlight(data.sfid, data.encoded.points, data.encoded.levels,
                 data.num_levels, data.barogram_t, data.barogram_h, data.zoom_levels);
 
