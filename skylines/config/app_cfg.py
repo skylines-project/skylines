@@ -41,8 +41,6 @@ base_config.model = skylines.model
 base_config.DBSession = skylines.model.DBSession
 # Configure the authentication backend
 
-# YOU MUST CHANGE THIS VALUE IN PRODUCTION TO SECURE YOUR APP 
-base_config.sa_auth.cookie_secret = "ChangeME" 
 
 base_config.auth_backend = 'sqlalchemy'
 base_config.sa_auth.dbsession = model.DBSession
