@@ -73,17 +73,27 @@ def get_flight_path(pilot, threshold = 0.001, last_update = None):
                 barogram_t=barogram_t, barogram_h=barogram_h)
 
 
-
 class TrackController(BaseController):
     def __init__(self, pilot):
-        self.pilot = pilot
+        if isinstance(pilot, list):
+            self.pilot = pilot[0]
+            self.other_pilots = pilot[1:]
+        else:
+            self.pilot = pilot
+            self.other_pilots = None
 
     def __get_flight_path(self, **kw):
         return get_flight_path(self.pilot, **kw)
 
     @expose('skylines.templates.tracking.view')
     def index(self):
-        return dict(pilot=self.pilot, trace=self.__get_flight_path())
+        def add_flight_path(pilot):
+            trace = get_flight_path(pilot)
+            return (pilot, trace)
+
+        other_pilots = map(add_flight_path, self.other_pilots)
+        return dict(pilot=self.pilot, trace=self.__get_flight_path(),
+                    other_pilots=other_pilots)
 
     @expose('skylines.templates.tracking.map')
     def map(self):
@@ -124,15 +134,22 @@ class TrackingController(BaseController):
             id = remainder[0]
             remainder = remainder[1:]
 
-        try:
-            user = DBSession.query(User).get(int(id))
-        except ValueError:
-            raise HTTPNotFound
+        def get_pilot_by_id_string(id_string):
+            try:
+                id = int(id_string)
+            except ValueError:
+                raise HTTPNotFound
+            user = DBSession.query(User).get(id)
+            if user is None:
+                raise HTTPNotFound
+            return user
 
-        if user is None:
-            raise HTTPNotFound
+        ids = list()
+        for unique_id in id.split(','):
+            if unique_id not in ids:
+                ids.append(unique_id)
 
-        controller = TrackController(user)
+        controller = TrackController(map(get_pilot_by_id_string, ids))
         return controller, remainder
 
     @expose('skylines.templates.tracking.info')
