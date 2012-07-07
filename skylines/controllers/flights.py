@@ -118,7 +118,13 @@ class FlightController(BaseController):
 
     @expose('skylines.templates.flights.map')
     def map(self):
-        return dict(flight=self.flight, trace=self.__get_flight_path(threshold=0.0001, max_points=10000))
+        def add_flight_path(flight):
+            trace = get_flight_path(flight, threshold=0.0001, max_points=10000)
+            return (flight, trace)
+
+        other_flights = map(add_flight_path, self.other_flights)
+        return dict(flight=self.flight, trace=self.__get_flight_path(threshold=0.0001, max_points=10000),
+                    other_flights=other_flights)
 
     @expose('json')
     def json(self):
