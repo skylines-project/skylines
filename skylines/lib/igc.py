@@ -5,6 +5,7 @@ from sqlalchemy import func
 from sqlalchemy.sql.expression import and_, desc
 from skylines import files
 from skylines.model import DBSession, Model, Flight, IGCFile
+from skylines.lib.base36 import base36encode
 
 hfgid_re = re.compile(r'HFGID\s*GLIDER\s*ID\s*:(.*)', re.IGNORECASE)
 hfgty_re = re.compile(r'HFGTY\s*GLIDER\s*TYPE\s*:(.*)', re.IGNORECASE)
@@ -156,31 +157,3 @@ def guess_model(igc_file):
 
     # nothing found
     return None
-
-
-# base 36 encoding/decoding taken from wikipedia sample code
-# http://en.wikipedia.org/wiki/Base_36#Python_Conversion_Code
-def base36encode(number, alphabet='0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ'):
-    """Converts an integer to a base36 string."""
-    if not isinstance(number, (int, long)):
-        raise TypeError('number must be an integer')
-
-    if number >= 0 and number <= 9:
-        return alphabet[number]
-
-    base36 = ''
-    sign = ''
-
-    if number < 0:
-        sign = '-'
-        number = -number
-
-    while number != 0:
-        number, i = divmod(number, len(alphabet))
-        base36 = alphabet[i] + base36
-
-    return sign + base36
-
-
-def base36decode(number):
-    return int(number, 36)
