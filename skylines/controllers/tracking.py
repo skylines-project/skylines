@@ -21,10 +21,11 @@ class TrackController(BaseController):
         query = query.filter(TrackingFix.time >= datetime.now() - timedelta(hours=12))
         query = query.order_by(TrackingFix.time)
 
-        if not query:
+        start_fix = query.first()
+
+        if not start_fix:
             return None
 
-        start_fix = query.first()
         start_time = start_fix.time.hour * 3600 + start_fix.time.minute * 60 + start_fix.time.second
 
         if last_update:
@@ -46,7 +47,7 @@ class TrackController(BaseController):
 
     def __get_flight_path(self, threshold = 0.001, last_update = None):
         fp = self.__get_flight_path2(last_update = last_update)
-        if len(fp) == 0:
+        if fp is None or len(fp) == 0:
             raise HTTPNotFound
 
         num_levels = 4
