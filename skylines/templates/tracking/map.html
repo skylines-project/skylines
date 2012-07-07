@@ -45,6 +45,21 @@ title = 'Live Tracking'
         ${h.json.dumps(trace.zoom_levels)}
       );
 
+      /* ]]> */
+      <py:if test="defined('other_pilots')">
+        <py:for each="pilot, trace in other_pilots">
+          addFlight(${pilot.user_id},
+            ${h.json.dumps(trace.encoded.points)},
+            ${h.json.dumps(trace.encoded.levels)},
+            ${trace.fixes.numLevels},
+            ${h.json.dumps(trace.barogram_t)},
+            ${h.json.dumps(trace.barogram_h)},
+            ${h.json.dumps(trace.zoom_levels)}
+          );
+        </py:for>
+      </py:if>
+      /* <![CDATA[ */
+
       var factor = $("#barogram")[0].offsetHeight / map.getSize().h;
       var zoomExtent = getAllFlightsBounds().clone().scale(1.1);
       zoomExtent.bottom -= zoomExtent.getHeight() * factor * 3/2;

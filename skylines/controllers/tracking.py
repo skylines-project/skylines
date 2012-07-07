@@ -97,7 +97,13 @@ class TrackController(BaseController):
 
     @expose('skylines.templates.tracking.map')
     def map(self):
-        return dict(pilot=self.pilot, trace=self.__get_flight_path())
+        def add_flight_path(pilot):
+            trace = get_flight_path(pilot)
+            return (pilot, trace)
+
+        other_pilots = map(add_flight_path, self.other_pilots)
+        return dict(pilot=self.pilot, trace=self.__get_flight_path(),
+                    other_pilots=other_pilots)
 
     @expose('json')
     def json(self, **kw):
