@@ -42,8 +42,8 @@ class IGCFile(DeclarativeBase):
         return request.identity and 'manage' in request.identity['permissions']
 
     def update_igc_headers(self):
-        from skylines.lib.igc import read_igc_header
-        igc_headers = read_igc_header(self.filename)
+        from skylines.lib.igc import read_igc_headers
+        igc_headers = read_igc_headers(self.filename)
 
         if 'manufacturer_id' in igc_headers:
             self.logger_manufacturer_id = igc_headers['manufacturer_id']
