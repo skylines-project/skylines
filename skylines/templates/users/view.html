@@ -133,7 +133,7 @@ def add_locations(locations):
       <div class="span12" py:if="user.following">
         <h2>Following</h2>
         <ul class="row-fluid">
-          <li class="span4" py:for="following in user.following">
+          <li class="span3" py:for="following in user.following">
             <a href="/users/${following.destination_id}/"
                py:content="following.destination">
               Following Name
@@ -145,7 +145,7 @@ def add_locations(locations):
       <div class="span12" py:if="user.followers">
         <h2>Followers</h2>
         <ul class="row-fluid">
-          <li class="span4" py:for="follower in user.followers">
+          <li class="span3" py:for="follower in user.followers">
             <a href="/users/${follower.source_id}/"
                py:content="follower.source">
               Follower Name
