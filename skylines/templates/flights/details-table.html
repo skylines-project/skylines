@@ -99,19 +99,20 @@
       <tr>
         <th>Pilot</th>
         <td>
-          <div py:if="flight.pilot" itemprop="performer" itemscope="" itemtype="http://schema.org/Person">
+          <span py:if="flight.pilot" itemprop="performer" itemscope="" itemtype="http://schema.org/Person">
             <meta itemprop="url" content="/users/${flight.pilot_id}" />
             <a py:content="flight.pilot" href="/flights/pilot/${flight.pilot_id}" itemprop="name">Pilot Name</a>
             <a href="/users/${flight.pilot_id}/" class="btn btn-mini">Info</a>
-          </div>
-          <div py:if="flight.co_pilot" itemprop="performer" itemscope="" itemtype="http://schema.org/Person">
+          </span>
+          <br py:if="flight.pilot and flight.co_pilot" />
+          <span py:if="flight.co_pilot" itemprop="performer" itemscope="" itemtype="http://schema.org/Person">
             <meta itemprop="url" content="/users/${flight.co_pilot_id}" />
             <a py:content="flight.co_pilot" href="/flights/pilot/${flight.co_pilot_id}" itemprop="name">Co-Pilot Name</a>
             <a href="/users/${flight.co_pilot_id}/" class="btn btn-mini">Info</a>
-          </div>
-          <div py:if="not flight.pilot and not flight.co_pilot" py:strip="True">
+          </span>
+          <span py:if="not flight.pilot and not flight.co_pilot" py:strip="True">
             [unspecified]
-          </div>
+          </span>
           <a py:if="flight.is_writable()" href="change_pilot" class="btn btn-mini">Change</a>
         </td>
       </tr>
