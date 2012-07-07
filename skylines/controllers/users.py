@@ -171,9 +171,6 @@ class UserController(BaseController):
 
         redirect(came_from)
 
-    def get_largest_flight(self):
-        return Flight.get_largest().filter(Flight.pilot == self.user).first()
-
     def get_distance_flight(self, distance):
         return DBSession.query(Flight) \
                         .filter(Flight.pilot == self.user) \
@@ -184,7 +181,7 @@ class UserController(BaseController):
     def get_distance_flights(self):
         distance_flights = []
 
-        largest_flight = self.get_largest_flight()
+        largest_flight = self.user.get_largest_flights().first()
         if largest_flight:
             distance_flights.append([largest_flight.olc_classic_distance / 1000,
                                      largest_flight])

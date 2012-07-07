@@ -232,6 +232,14 @@ class User(DeclarativeBase):
         from skylines.model.follower import Follower
         return Follower.follows(self, other)
 
+    def get_largest_flights(self):
+        '''
+        Returns a query with all flights by the user
+        as pilot ordered by distance
+        '''
+        from skylines.model.flight import Flight
+        return Flight.get_largest().filter(Flight.pilot == self)
+
 class Permission(DeclarativeBase):
     """
     Permission definition for :mod:`repoze.what`.
