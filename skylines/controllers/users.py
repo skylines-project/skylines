@@ -172,10 +172,7 @@ class UserController(BaseController):
         redirect(came_from)
 
     def get_largest_flight(self):
-        return DBSession.query(Flight) \
-                        .filter(Flight.pilot == self.user) \
-                        .order_by(desc(Flight.olc_classic_distance)) \
-                        .first()
+        return Flight.get_largest().filter(Flight.pilot == self.user).first()
 
     def get_distance_flight(self, distance):
         return DBSession.query(Flight) \

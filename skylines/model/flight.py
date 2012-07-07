@@ -5,6 +5,7 @@ from sqlalchemy.orm import relation
 from sqlalchemy import ForeignKey, Column, func
 from sqlalchemy.types import Unicode, Integer, DateTime
 from sqlalchemy.ext.hybrid import hybrid_property
+from sqlalchemy.sql.expression import desc
 from skylines.model.auth import User
 from skylines.model import DeclarativeBase, DBSession
 from tg import config, request
@@ -113,5 +114,10 @@ class Flight(DeclarativeBase):
 
     def may_delete(self):
         return request.identity and 'manage' in request.identity['permissions']
+
+    @classmethod
+    def get_largest(cls):
+        '''Returns a query object ordered by distance'''
+        return DBSession.query(cls).order_by(desc(cls.olc_classic_distance))
 
 GeometryDDL(Flight.__table__)
