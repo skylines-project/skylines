@@ -60,7 +60,7 @@ class ClubController(BaseController):
 
         redirect('.')
 
-    @expose('skylines.templates.users.list')
+    @expose('skylines.templates.clubs.pilots')
     def pilots(self):
         users = DBSession.query(User).order_by(User.display_name)
         return dict(page='settings', club=self.club, users=self.club.members)
