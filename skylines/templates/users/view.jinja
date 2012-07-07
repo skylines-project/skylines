@@ -179,6 +179,7 @@
       <ul class="row-fluid">
         {% for following in user.following|sort(attribute='destination.display_name') -%}
         <li class="span3">
+          <img src="{{ h.gravatar(following.destination.email_address, size=20) }}" class="gravatar"/>
           <a href="/users/{{ following.destination_id }}/">{{ following.destination }}</a>
         </li>
         {%- endfor %}
@@ -192,6 +193,7 @@
       <ul class="row-fluid">
         {% for follower in user.followers|sort(attribute='source.display_name') -%}
         <li class="span3">
+          <img src="{{ h.gravatar(follower.source.email_address, size=20) }}" class="gravatar"/>
           <a href="/users/{{ follower.source_id }}/">{{ follower.source }}</a>
         </li>
         {%- endfor %}
