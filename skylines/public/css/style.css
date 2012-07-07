@@ -68,10 +68,6 @@ input[type="file"] {
   max-width: inherit;
 }
 
-.fielderror {
-  color: red;
-}
-
 .footer {
   text-align: center;
   font-size: smaller;

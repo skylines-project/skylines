@@ -12,13 +12,12 @@
          py:with="error=error_for(field)"
          py:strip="True">
       <span py:replace="field.display(value_for(field), **args_for(field))" />
-      <span py:if="show_children_errors and error and not field.show_error"
-            class="fielderror" py:content="error" />
     </div>
   </div>
 
   <div py:for="i, field in enumerate(fields)"
-       id="${field.id}.container" class="control-group ${i%2 and 'odd' or 'even'}"
+       id="${field.id}.container"
+       class="control-group ${show_children_errors and error and not field.show_error and 'error' or ''}"
        title="${hover_help and help_text or ''}"
        py:attrs="args_for(field).get('container_attrs') or field.container_attrs"
        py:with="required = [None,' required'][int(field.is_required)];
@@ -26,16 +25,15 @@
                 label_text = field.label_text;
                 help_text = field.help_text;">
     <label py:if="show_labels and not field.suppress_label and label_text"
-           id="${field.id}.label" for="${field.id}"
-           class="fieldlabel${required} control-label"
+           for="${field.id}" class="control-label"
            py:content="label_text" />
     <div class="controls">
       ${field.display(value_for(field), **args_for(field))}
-      <span class="fieldhelp" py:if="help_text and not hover_help" py:content="help_text" />
+      <span class="help-inline" py:if="help_text and not hover_help" py:content="help_text" />
       <span py:if="show_children_errors and error and not field.show_error"
-            class="fielderror" py:content="error" />
+            class="help-inline" py:content="error" />
     </div>
   </div>
 
-  <span py:if="error and not error.error_dict" class="fielderror" py:content="error" />
+  <span py:if="error and not error.error_dict" py:content="error" />
 </form>
