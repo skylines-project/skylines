@@ -37,8 +37,8 @@ body {
 }
 
 /* Give a quick and non-cross-browser friendly divider */
-.content .span4 {
-  margin-left: 0;
+ul li[class*="span"] {
+  margin-left: 0 !important;
   padding-left: 19px;
   border-left: 1px solid #eee;
 }
