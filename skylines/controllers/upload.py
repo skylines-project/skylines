@@ -9,7 +9,6 @@ from skylines.lib.base import BaseController
 from skylines import files
 from skylines.model import DBSession, User, Model, Flight
 from skylines.lib.md5 import file_md5
-from skylines.lib.igc import guess_model, guess_registration
 from skylines.lib.analysis import analyse_flight
 from skylines.form import BootstrapForm, MultiFileField
 from zipfile import ZipFile
@@ -135,12 +134,12 @@ class UploadController(BaseController):
             flight.club_id = club_id
             flight.igc_file = igc_file
 
-            flight.model_id = guess_model(igc_file)
+            flight.model_id = igc_file.guess_model()
 
             if igc_file.registration:
                 flight.registration = igc_file.registration
             else:
-                flight.registration = guess_registration(igc_file)
+                flight.registration = igc_file.guess_registration()
 
             if not analyse_flight(flight):
                 files.delete_file(filename)

@@ -1,10 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import re
-from sqlalchemy import func
-from sqlalchemy.sql.expression import and_, desc
 from skylines import files
-from skylines.model import DBSession, Model, Flight, IGCFile
 from skylines.lib.base36 import base36encode
 
 hfgid_re = re.compile(r'HFGID\s*GLIDER\s*ID\s*:(.*)', re.IGNORECASE)
@@ -75,85 +72,3 @@ def parse_glider_reg(line):
         return None
 
     return match.group(1).strip()
-
-
-def guess_registration(igc_file):
-    # try to find another flight with the same logger and use it's aircraft registration
-    if igc_file.logger_id is not None \
-        and igc_file.logger_manufacturer_id is not None:
-        logger_id = igc_file.logger_id
-        logger_manufacturer_id = igc_file.logger_manufacturer_id
-
-        result = DBSession.query(Flight).outerjoin(IGCFile) \
-            .filter(func.upper(IGCFile.logger_manufacturer_id) == func.upper(logger_manufacturer_id)) \
-            .filter(func.upper(IGCFile.logger_id) == func.upper(logger_id)) \
-            .filter(Flight.registration != None) \
-            .order_by(desc(Flight.id))
-
-        if igc_file.logger_manufacturer_id.startswith('X'):
-            result = result.filter(Flight.pilot == igc_file.owner)
-
-        result = result.first()
-
-        if result and result.registration:
-            return result.registration
-
-    return None
-
-
-def guess_model(igc_file):
-    # first try to find the reg number in the database
-    if igc_file.registration is not None:
-        glider_reg = igc_file.registration
-
-        result = DBSession.query(Flight) \
-            .filter(func.upper(Flight.registration) == func.upper(glider_reg)) \
-            .order_by(desc(Flight.id)) \
-            .first()
-
-        if result and result.model_id:
-            return result.model_id
-
-    # try to find another flight with the same logger and use it's aircraft type
-    if igc_file.logger_id is not None \
-        and igc_file.logger_manufacturer_id is not None:
-        logger_id = igc_file.logger_id
-        logger_manufacturer_id = igc_file.logger_manufacturer_id
-
-        result = DBSession.query(Flight).outerjoin(IGCFile) \
-            .filter(func.upper(IGCFile.logger_manufacturer_id) == func.upper(logger_manufacturer_id)) \
-            .filter(func.upper(IGCFile.logger_id) == func.upper(logger_id)) \
-            .filter(Flight.model_id != None) \
-            .order_by(desc(Flight.id))
-
-        if igc_file.logger_manufacturer_id.startswith('X'):
-            result = result.filter(Flight.pilot == igc_file.owner)
-
-        result = result.first()
-
-        if result and result.model_id:
-            return result.model_id
-
-    if igc_file.model is not None:
-        glider_type = igc_file.model.lower()
-
-        # otherwise, try to guess the glider model by the glider type igc header
-        text_fragments = ['%{}%'.format(v) for v in re.sub(r'[^a-z]', ' ', glider_type).split()]
-        digit_fragments = ['%{}%'.format(v) for v in re.sub(r'[^0-9]', ' ', glider_type).split()]
-
-        if not text_fragments and not digit_fragments:
-            return None
-
-        glider_type_clean = re.sub(r'[^a-z0-9]', '', glider_type)
-
-        result = DBSession.query(Model) \
-            .filter(and_( \
-                func.regexp_replace(func.lower(Model.name), '[^a-z]', ' ').like(func.any(text_fragments)), \
-                func.regexp_replace(func.lower(Model.name), '[^0-9]', ' ').like(func.all(digit_fragments)))) \
-            .order_by(func.levenshtein(func.regexp_replace(func.lower(Model.name), '[^a-z0-9]', ''), glider_type_clean))
-
-        if result.first():
-            return result.first().id
-
-    # nothing found
-    return None

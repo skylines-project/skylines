@@ -19,7 +19,6 @@ from skylines import files
 from skylines.model import DBSession, User, Club, Flight, IGCFile, Model, Airport
 from skylines.controllers.upload import UploadController
 from skylines.lib.datatables import GetDatatableRecords
-from skylines.lib.igc import guess_model, guess_registration
 from skylines.lib.analysis import analyse_flight, flight_path
 from skylines.form import BootstrapForm
 from skylinespolyencode import SkyLinesPolyEncoder
@@ -170,7 +169,7 @@ class FlightController(BaseController):
             raise HTTPForbidden
 
         if self.flight.model_id is None:
-            model_id = guess_model(self.flight.igc_file)
+            model_id = self.flight.igc_file.guess_model()
         else:
             model_id = self.flight.model_id
 
@@ -179,7 +178,7 @@ class FlightController(BaseController):
         elif self.flight.igc_file.registration is not None:
             registration = self.flight.igc_file.registration
         else:
-            registration = guess_registration(self.flight.igc_file)
+            registration = self.flight.igc_file.guess_registration()
 
         return dict(page='settings', title=_('Change Aircraft'),
                     user=request.identity['user'],
