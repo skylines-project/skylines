@@ -2,7 +2,7 @@
 import re
 from sqlalchemy import func
 from skylines.model import DBSession
-from skylines.lib.sql import extract_field
+from skylines.lib.sql import extract_field, cast
 
 wkt_re = re.compile(r'POINT\(([\+\-\d.]+) ([\+\-\d.]+)\)')
 
@@ -45,10 +45,10 @@ class Location(object):
         '''
 
         # Cast the takeoff_location_wkt column to Geography
-        geography = func.Geography(location_column.RAW)
+        geography = cast(location_column.RAW, 'geography')
 
         # Add a metric buffer zone around the locations
-        buffer = func.Geometry(func.ST_Buffer(geography, threshold_radius))
+        buffer = cast(func.ST_Buffer(geography, threshold_radius), 'geometry')
 
         # Join the locations into one MultiPolygon
         union = func.ST_Union(buffer)
