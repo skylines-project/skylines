@@ -134,3 +134,11 @@ a.no-link {
   padding: 1px 5px;
   border-top-left-radius: 4px;
 }
+
+.olFullscreen .olControlAttribution {
+  bottom: 100pt !important;
+}
+
+.olFullscreen .olControlScaleLine {
+  bottom: 100pt !important;
+}
