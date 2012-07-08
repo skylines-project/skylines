@@ -1,6 +1,6 @@
 from tempfile import TemporaryFile
 from datetime import datetime
-from tg import expose, request, redirect, validate
+from tg import expose, request, redirect, validate, flash
 from tg.i18n import ugettext as _, lazy_ugettext as l_
 from repoze.what.predicates import has_permission
 from tw.forms.fields import SingleSelectField
@@ -178,6 +178,7 @@ class UploadController(BaseController):
         if flight_id_list is None \
             or len(flight_id_list) != len(model_list) \
             or len(flight_id_list) != len(registration_list):
+            flash(_('Sorry, some error happened when updating your flight(s). Please contact a administrator for help.'), 'warning')
             return redirect('/flights/today')
 
         for index, id in enumerate(flight_id_list):
@@ -207,4 +208,6 @@ class UploadController(BaseController):
             flight.time_modified = datetime.now()
 
         DBSession.flush()
+
+        flash(_('Your flight(s) have been successfully updated.'))
         return redirect('/flights/today')
