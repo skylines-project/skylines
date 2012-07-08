@@ -157,8 +157,6 @@ class UploadController(BaseController):
 
     @expose()
     def update(self, **kw):
-        user = request.identity['user']
-
         flight_id_list = kw.get('flight_id')
         model_list = kw.get('model')
         registration_list = kw.get('registration')
