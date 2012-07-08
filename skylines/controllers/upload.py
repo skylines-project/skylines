@@ -15,6 +15,7 @@ from skylines.form import BootstrapForm, MultiFileField
 from zipfile import ZipFile
 from skylines.model.igcfile import IGCFile
 
+
 class PilotSelectField(SingleSelectField):
     def update_params(self, d):
         users = DBSession.query(User) \
@@ -24,6 +25,7 @@ class PilotSelectField(SingleSelectField):
                   [(user.user_id, user) for user in users]
         d['options'] = options
         return SingleSelectField.update_params(self, d)
+
 
 class ModelSelectField(SingleSelectField):
     def update_params(self, d):
@@ -36,9 +38,10 @@ class ModelSelectField(SingleSelectField):
 
 upload_form = BootstrapForm('upload_form', submit_text="Upload", action='do', children=[
     MultiFileField('file', label_text="IGC or ZIP file",
-        validator=FieldStorageUploadConverter(not_empty=True, messages=dict(empty=_("Please add a IGC or ZIP file"))) ),
+        validator=FieldStorageUploadConverter(not_empty=True, messages=dict(empty=_("Please add a IGC or ZIP file")))),
     PilotSelectField('pilot', label_text="Pilot"),
 ])
+
 
 def IterateFiles(name, f):
     try:
@@ -55,6 +58,7 @@ def IterateFiles(name, f):
         for info in z.infolist():
             if info.file_size > 0:
                 yield info.filename, z.open(info.filename, 'r')
+
 
 def IterateUploadFiles(upload):
     if isinstance(upload, unicode):
@@ -73,13 +77,14 @@ def IterateUploadFiles(upload):
         import logging
         log = logging.getLogger(__name__)
         for x in upload:
-            log.info('x='+repr(x))
+            log.info('x=' + repr(x))
             for name, f in IterateUploadFiles(x):
                 yield name, f
         return
 
     for x in IterateFiles(upload.filename, upload.file):
         yield x
+
 
 class UploadController(BaseController):
     allow_only = has_permission('upload',
