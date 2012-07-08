@@ -234,7 +234,8 @@ class FlightController(BaseController):
 
 
 class FlightsController(BaseController):
-    def __do_list(self, tab, kw, date=None, pilot=None, club=None, airport=None, filter=None, columns=None):
+    def __do_list(self, tab, kw, date=None, pilot=None, club=None, airport=None, \
+                  pinned=None, filter=None, columns=None):
         flights = DBSession.query(Flight) \
             .outerjoin(Flight.pilot) \
             .outerjoin(Flight.igc_file) \
@@ -252,6 +253,9 @@ class FlightsController(BaseController):
 
         if airport:
             flights = flights.filter(Flight.takeoff_airport == airport)
+
+        if pinned:
+            flights = flights.filter(Flight.id.in_(pinned))
 
         if filter is not None:
             flights = flights.filter(filter)
@@ -467,6 +471,21 @@ class FlightsController(BaseController):
         }
 
         return self.__do_list('airport', kw, airport=airport, columns=columns)
+
+    @expose('skylines.templates.flights.list')
+    @expose('json')
+    def pinned(self, id, **kw):
+        ids = list()
+        for unique_id in id.split(','):
+            try:
+                unique_id = int(unique_id)
+            except ValueError:
+                raise HTTPNotFound
+
+            if unique_id not in ids:
+                ids.append(unique_id)
+
+        return self.__do_list('pinned', kw, pinned=ids)
 
     @expose()
     def multi(self, ids):

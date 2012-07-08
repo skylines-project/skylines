@@ -20,6 +20,9 @@ function pinFlight(sfid) {
 
   pinnedFlights.push(sfid);
   $.cookie('SkyLines_pinnedFlights', pinnedFlights.join(","), { path: "/" });
+
+  // show pinned flights link in list view if found in DOM
+  showPinnedFlightsLink();
 }
 
 /**
@@ -39,6 +42,9 @@ function unpinFlight(sfid) {
   }
 
   $.cookie('SkyLines_pinnedFlights', temp.join(","), { path: "/" });
+
+  // toggle the pinned flights link in list view if found in DOM
+  showPinnedFlightsLink();
 }
 
 
@@ -140,4 +146,19 @@ function getShareUrl(url) {
   }
 
   return url_split[1] + "/" + unique_ids.join(',') + "/" + url_split[3];
+}
+
+/**
+ * Function showPinnedFlightsLink
+ *
+ * Shows the pinned flights link at element id #pinned-flights-link
+ */
+function showPinnedFlightsLink() {
+  var pinned_flights = getPinnedFlights();
+  if (pinned_flights.length > 0) {
+    $('#pinned-flights-link a').attr("href", "/flights/pinned/" + pinned_flights.join(",") + "/");
+    $('#pinned-flights-link').show();
+  } else {
+    $('#pinned-flights-link').hide();
+  }
 }

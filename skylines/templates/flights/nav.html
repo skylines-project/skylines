@@ -55,4 +55,13 @@ my_club = request.identity['user'].club if request.identity else None
   <li py:if="request.identity" class="${('', 'active')[defined('tab') and tab == 'unassigned']}">
     <a href="/flights/unassigned">Unassigned Flights</a>
   </li>
+
+  <li id="pinned-flights-link" style="display: none;" class="${('', 'active')[defined('tab') and tab == 'pinned']}">
+    <a href="${request.url}">Pinned Flights</a>
+    <script type="text/javascript">
+    /* <![CDATA[ */
+      showPinnedFlightsLink();
+    /* ]]> */
+    </script>
+  </li>
 </ul>
