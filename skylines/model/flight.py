@@ -113,7 +113,9 @@ class Flight(DeclarativeBase):
                 'manage' in request.identity['permissions'])
 
     def may_delete(self):
-        return request.identity and 'manage' in request.identity['permissions']
+        return request.identity and \
+               (self.igc_file.owner_id == request.identity['user'].user_id or
+               'manage' in request.identity['permissions'])
 
     @classmethod
     def get_largest(cls):

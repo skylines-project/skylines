@@ -201,8 +201,10 @@ class FlightController(BaseController):
         return redirect('/flights/' + str(self.flight.id))
 
     @expose('skylines.templates.generic.confirm')
-    @require(has_permission('manage'))
     def delete(self, yes=False):
+        if not self.flight.is_writable():
+            raise HTTPForbidden
+
         if yes:
             files.delete_file(self.flight.igc_file.filename)
             DBSession.delete(self.flight)
