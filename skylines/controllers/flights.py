@@ -114,6 +114,9 @@ class FlightController(BaseController):
     def json(self):
         trace = self.__get_flight_path(threshold=0.0001, max_points=10000)
 
+        if not trace:
+            raise HTTPNotFound
+
         return  dict(encoded=trace['encoded'], num_levels=trace['fixes']['numLevels'],
                      zoom_levels=trace['zoom_levels'], barogram_t=trace['barogram_t'],
                      barogram_h=trace['barogram_h'], sfid=self.flight.id)
