@@ -1,9 +1,9 @@
 from tempfile import TemporaryFile
 from datetime import datetime
-from tg import expose, request, redirect, flash, validate
+from tg import expose, request, redirect, validate
 from tg.i18n import ugettext as _, lazy_ugettext as l_
 from repoze.what.predicates import has_permission
-from tw.forms.fields import TextField, SingleSelectField
+from tw.forms.fields import SingleSelectField
 from tw.forms.validators import FieldStorageUploadConverter
 from skylines.lib.base import BaseController
 from skylines import files
