@@ -6,8 +6,10 @@ import smtplib, email
 from webob.exc import HTTPNotFound, HTTPForbidden
 from sprox.formbase import AddRecordForm, EditableForm, Field
 from sprox.widgets import PropertySingleSelectField
-from formencode import Schema
+from formencode import Schema, All
 from formencode.validators import FieldsMatch, Email, String
+from sprox.validators import UniqueValue
+from sprox.saormprovider import SAORMProvider
 from tw.forms import PasswordField, TextField, HiddenField
 from tw.forms.validators import UnicodeString
 from skylines.lib.base import BaseController
@@ -58,7 +60,9 @@ class NewUserForm(AddRecordForm):
     __limit_fields__ = ['user_name', 'password', 'verify_password', 'email_address', 'display_name', 'club']
     __base_validator__ = user_validator
     user_name = TextField
-    email_address = Field(TextField, Email(not_empty=True))
+    email_address = Field(TextField, All(UniqueValue(SAORMProvider(DBSession),
+                                                     __model__, 'email_address'),
+                                         Email(not_empty=True)))
     display_name = TextField
     club = ClubSelectField
     password = String(min=6)

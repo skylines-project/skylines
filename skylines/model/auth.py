@@ -21,12 +21,13 @@ except ImportError:
              'Please install it. Example: easy_install hashlib')
 __all__ = ['User', 'Group', 'Permission']
 
-from sqlalchemy import Table, ForeignKey, Column
+from sqlalchemy import Table, ForeignKey, Column, event, DDL
 from sqlalchemy.types import Unicode, Integer, BigInteger, DateTime
-from sqlalchemy.orm import relation, synonym
+from sqlalchemy.orm import relation, synonym, column_property
 from sqlalchemy.dialects.postgresql import INET
 
 from skylines.model import DeclarativeBase, metadata, DBSession
+from skylines.lib.sql import LowerCaseComparator
 from tg import request
 
 #{ Association tables
@@ -108,8 +109,9 @@ class User(DeclarativeBase):
 
     user_name = Column(Unicode(255), unique=True, nullable=False)
 
-    email_address = Column(Unicode(255),
-                           info={'rum': {'field': 'Email'}})
+    email_address = column_property(Column(Unicode(255),
+                                           info={'rum': {'field': 'Email'}}),
+                                    comparator_factory=LowerCaseComparator)
 
     display_name = Column(Unicode(255))
 
@@ -253,6 +255,11 @@ class User(DeclarativeBase):
         '''
         from skylines.model.flight import Flight
         return Flight.get_largest().filter(Flight.pilot == self)
+
+
+event.listen(User.__table__, "after_create",
+             DDL("CREATE UNIQUE INDEX users_lower_email_address_idx ON tg_user(lower(email_address))"))
+
 
 class Permission(DeclarativeBase):
     """
