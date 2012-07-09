@@ -74,6 +74,10 @@ cgi-mapserver package for this.
 
     $ apt-get install python-mapscript
 
+To import airspaces into the database, install python-gdal package (using gdal extension directly from pypi is not recommended) and import the required airspace files:
+
+    $ python import_airspaces.py development.ini assets/airspace/airspace_list.txt assets/airspace/airspace_blacklist.txt
+
 Start the paste http server:
 
     $ paster serve development.ini
