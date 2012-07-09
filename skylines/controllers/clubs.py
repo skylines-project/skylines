@@ -84,7 +84,7 @@ class ClubController(BaseController):
         if not self.club.is_writable():
             raise HTTPForbidden
 
-        pilot = User(user_name=display_name, display_name=display_name,
+        pilot = User(display_name=display_name,
                      email_address=email_address, club=self.club)
         DBSession.add(pilot)
 

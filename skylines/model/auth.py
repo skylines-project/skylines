@@ -107,8 +107,6 @@ class User(DeclarativeBase):
 
     user_id = Column(Integer, autoincrement=True, primary_key=True)
 
-    user_name = Column(Unicode(255), unique=True, nullable=False)
-
     email_address = column_property(Column(Unicode(255),
                                            info={'rum': {'field': 'Email'}}),
                                     comparator_factory=LowerCaseComparator)
@@ -143,11 +141,11 @@ class User(DeclarativeBase):
     #{ Special methods
 
     def __repr__(self):
-        return ('<User: name=%s, email=%s, display=%s>' % (
-                self.user_name, self.email_address, self.display_name)).encode('utf-8')
+        return ('<User: email=%s, display=%s>' % (
+                self.email_address, self.display_name)).encode('utf-8')
 
     def __unicode__(self):
-        return self.display_name or self.user_name
+        return self.display_name
 
     #{ Getters and setters
 
@@ -163,11 +161,6 @@ class User(DeclarativeBase):
     def by_email_address(cls, email):
         """Return the user object whose email address is ``email``."""
         return DBSession.query(cls).filter_by(email_address=email).first()
-
-    @classmethod
-    def by_user_name(cls, username):
-        """Return the user object whose user name is ``username``."""
-        return DBSession.query(cls).filter_by(user_name=username).first()
 
     @classmethod
     def by_tracking_key(cls, key):
