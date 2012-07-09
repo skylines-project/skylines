@@ -3,6 +3,7 @@
 
 from tg import request, expose
 from webob.exc import HTTPNotFound
+from skylines.model import DBSession
 
 __all__ = ['ErrorController']
 
@@ -22,6 +23,12 @@ class ErrorController(object):
     @expose('skylines.templates.error')
     def document(self, *args, **kwargs):
         """Render the error document"""
+
+        # Merge the user into the current DBSession
+        # to prevent DetachedInstanceError
+        if request.identity is not None:
+            request.identity['user'] = DBSession.merge(request.identity['user'])
+
         resp = request.environ.get('pylons.original_response')
         if resp is None:
             raise HTTPNotFound
