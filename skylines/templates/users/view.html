@@ -47,7 +47,13 @@ def add_locations(locations):
           point = new OpenLayers.Geometry.Point(locations[i][0], locations[i][1]);
           point = point.transform(new OpenLayers.Projection("EPSG:4326"), map.getProjectionObject());
           vectorLayer.addFeatures(new OpenLayers.Feature.Vector(point, {},
-            {externalGraphic: "/images/OpenLayers/marker.png", graphicHeight: 21, graphicWidth: 16}
+            {
+              externalGraphic: "/images/OpenLayers/marker.png",
+              graphicHeight: 21,
+              graphicWidth: 16,
+              graphicXOffset: -16/2,
+              graphicYOffset: -21
+            }
           ));
         }
         map.zoomToExtent(vectorLayer.getDataExtent().scale(1.1));
