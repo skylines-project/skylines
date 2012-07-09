@@ -20,9 +20,6 @@ from skylines.controllers.tracking import TrackingController
 from skylines.controllers.static import StaticResourceController
 from skylines.controllers.statistics import StatisticsController
 
-import mapproxy.wsgiapp as mapproxy
-from tg.controllers import WSGIAppController
-
 __all__ = ['RootController']
 
 
@@ -50,7 +47,18 @@ class RootController(BaseController):
     tracking = TrackingController()
     static = StaticResourceController()
     statistics = StatisticsController()
-    mapproxy = WSGIAppController(mapproxy.make_wsgi_app(config.get('skylines.mapproxy')))
+
+    if 'skylines.mapproxy' in config:
+        # plug local mapproxy/mapserver at /mapproxy/
+        from tg.controllers import WSGIAppController
+        import mapproxy.wsgiapp as mapproxy
+        mapproxy = WSGIAppController(mapproxy.make_wsgi_app(config.get('skylines.mapproxy')))
+    else:
+        # local mapproxy/mapserver not enabled; this fallback will
+        # redirect to the official live server
+        @expose()
+        def mapproxy(self, *args, **kw):
+            redirect('http://skylines.xcsoar.org' + request.path_qs)
 
     @expose()
     def index(self):
