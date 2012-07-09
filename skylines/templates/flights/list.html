@@ -8,12 +8,14 @@ if date:
   tagline = 'on ' + h.format_date(date)
 
 if pilot:
-  tagline = 'of ' + unicode(pilot)
-  titleinfo = '/users/%u/' % pilot.user_id
+  tagline = 'of'
+  tagline_link = '/users/' + str(pilot.user_id) + '/'
+  tagline_link_text = pilot
 
 if club:
-  tagline = 'of ' + unicode(club)
-  titleinfo = '/clubs/%u/' % club.id
+  tagline = 'of'
+  tagline_link = '/clubs/' + str(club.id) + '/'
+  tagline_link_text = club
 
 if airport:
   tagline = 'from ' + unicode(airport.name)
