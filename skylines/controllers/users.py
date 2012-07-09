@@ -7,7 +7,7 @@ from webob.exc import HTTPNotFound, HTTPForbidden
 from sprox.formbase import AddRecordForm, EditableForm, Field
 from sprox.widgets import PropertySingleSelectField
 from formencode import Schema, All
-from formencode.validators import FieldsMatch, Email, String
+from formencode.validators import FieldsMatch, Email, String, NotEmpty
 from sprox.validators import UniqueValue
 from sprox.saormprovider import SAORMProvider
 from tw.forms import PasswordField, TextField, HiddenField
@@ -62,7 +62,7 @@ class NewUserForm(AddRecordForm):
     email_address = Field(TextField, All(UniqueValue(SAORMProvider(DBSession),
                                                      __model__, 'email_address'),
                                          Email(not_empty=True)))
-    display_name = TextField(not_empty=True)
+    display_name = Field(TextField, NotEmpty)
     club = ClubSelectField
     password = String(min=6)
     verify_password = PasswordField('verify_password')
@@ -77,7 +77,7 @@ class EditUserForm(EditableForm):
     __limit_fields__ = ['email_address', 'display_name', 'club']
     __base_widget_args__ = dict(action='save')
     email_address = Field(TextField, Email(not_empty=True))
-    display_name = TextField(not_empty=True)
+    display_name = Field(TextField, NotEmpty)
     club = ClubSelectField
 
 edit_user_form = EditUserForm(DBSession)
