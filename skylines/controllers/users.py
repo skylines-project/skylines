@@ -107,6 +107,31 @@ change_password_form = BootstrapForm('change_password_form',
 ])
 
 
+def recover_user_password(user):
+    key = user.generate_recover_key(request.remote_addr)
+
+    text = u"""Hi %s,
+
+you have asked to recover your password (from IP %s).  To enter a new
+password, click on the following link:
+
+ http://skylines.xcsoar.org/users/recover?key=%x
+
+The SkyLines Team
+""" % (unicode(user), request.remote_addr, key)
+
+    msg = email.mime.text.MIMEText(text.encode('utf-8'), 'plain', 'utf-8')
+    msg['Subject'] = 'SkyLines password recovery'
+    msg['From'] = config.get('email_from', 'skylines@xcsoar.org')
+    msg['To'] = user.email_address.encode('ascii')
+    msg['Date'] = email.Utils.formatdate(localtime = 1)
+
+    smtp = smtplib.SMTP(config.get('smtp_server', 'localhost'))
+    smtp.ehlo()
+    smtp.sendmail(config.get('email_from', 'skylines@xcsoar.org').encode('ascii'),
+                  user.email_address.encode('ascii'), msg.as_string())
+    smtp.quit()
+
 class UserController(BaseController):
     def __init__(self, user):
         self.user = user
@@ -131,6 +156,13 @@ class UserController(BaseController):
         self.user.password = password
         self.user.recover_key = None
         return redirect('.')
+
+    @expose()
+    @require(has_permission('manage'))
+    def recover_password(self):
+        recover_user_password(self.user)
+        flash('A password recovery email was sent to that user.')
+        redirect('.')
 
     @expose('skylines.templates.generic.form')
     def edit(self, **kwargs):
@@ -317,29 +349,7 @@ class UsersController(BaseController):
         if user is None:
             raise HTTPNotFound
 
-        key = user.generate_recover_key(request.remote_addr)
-
-        text = u"""Hi %s,
-
-you have asked to recover your password (from IP %s).  To enter a new
-password, click on the following link:
-
- http://skylines.xcsoar.org/users/recover?key=%x
-
-The SkyLines Team
-""" % (unicode(user), request.remote_addr, key)
-
-        msg = email.mime.text.MIMEText(text.encode('utf-8'), 'plain', 'utf-8')
-        msg['Subject'] = 'SkyLines password recovery'
-        msg['From'] = config.get('email_from', 'skylines@xcsoar.org')
-        msg['To'] = email_address.encode('ascii')
-        msg['Date'] = email.Utils.formatdate(localtime = 1)
-
-        smtp = smtplib.SMTP(config.get('smtp_server', 'localhost'))
-        smtp.ehlo()
-        smtp.sendmail(config.get('email_from', 'skylines@xcsoar.org').encode('ascii'),
-                      email_address.encode('ascii'), msg.as_string())
-        smtp.quit()
+        recover_user_password(user)
 
         flash('Check your email, we have sent you a link to recover your password.')
         redirect('/')
