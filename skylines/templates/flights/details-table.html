@@ -10,11 +10,26 @@
       ${select('*')}
   
       <script type="text/javascript" src="/static/jquery/jquery.timeago.js"></script>
+      <script type="text/javascript" src="/static/bootstrap/js/bootstrap-popover.js"></script>
     
       <script type="text/javascript">
+        /* <![CDATA[ */
         $(function() {
           $("abbr.timeago").timeago();
+          $("a.share").popover({
+            trigger: 'manual',
+            content: getShareUrl('${request.url}'),
+            title: 'Share flight'
+          }).click(function(e) {
+            e.preventDefault();
+            $(this).popover('toggle');
+          });
+
+          function getShareUrl(url) {
+            return '<input value="' + url + '" style="width: 100%;">';
+          };
         });
+        /* ]]> */
       </script>
     </head>
   </py:match>
@@ -24,8 +39,13 @@
     <tbody>
       <tr py:if="flight.takeoff_time">
         <th>Date</th>
-        <td py:content="h.format_date(flight.takeoff_time)">
-          2012-05-21
+        <td>
+          <span py:content="h.format_date(flight.takeoff_time)">
+            2012-05-21
+          </span>
+          <a href="#" class="btn btn-mini pull-right share">
+            <i class="icon-share icon-small"></i> Share this flight
+          </a>
         </td>
       </tr>
       <tr py:if="flight.takeoff_time">
