@@ -1,13 +1,14 @@
 # -*- coding: utf-8 -*-
 
-from tg import expose, validate, redirect, require, request
+from tg import expose, validate, redirect, require, request, config, flash
 from tg.i18n import ugettext as _, lazy_ugettext as l_
+import smtplib, email
 from webob.exc import HTTPNotFound, HTTPForbidden
 from sprox.formbase import AddRecordForm, EditableForm, Field
 from sprox.widgets import PropertySingleSelectField
 from formencode import Schema
 from formencode.validators import FieldsMatch, Email, String
-from tw.forms import PasswordField, TextField
+from tw.forms import PasswordField, TextField, HiddenField
 from tw.forms.validators import UnicodeString
 from skylines.lib.base import BaseController
 from skylines.model import DBSession, User, Group, Club, Flight, Follower
@@ -79,6 +80,23 @@ class EditUserForm(EditableForm):
 
 edit_user_form = EditUserForm(DBSession)
 
+recover_email_form = BootstrapForm('recover_email_form',
+                                   submit_text="Recover Password",
+                                   action='recover_email',
+                                   children=[
+    TextField('email_address', validator=Email(not_empty=True))
+])
+
+recover_password_form = BootstrapForm('recover_password_form',
+                                      submit_text="Recover Password",
+                                      action='recover_post',
+                                      validator=user_validator,
+                                      children=[
+    HiddenField('key'),
+    PasswordField('password', validator=UnicodeString(min=6)),
+    PasswordField('verify_password'),
+])
+
 change_password_form = BootstrapForm('change_password_form',
                                      submit_text="Change Password",
                                      action='save_password',
@@ -111,6 +129,7 @@ class UserController(BaseController):
     @validate(change_password_form, error_handler=change_password)
     def save_password(self, password, verify_password):
         self.user.password = password
+        self.user.recover_key = None
         return redirect('.')
 
     @expose('skylines.templates.generic.form')
@@ -278,6 +297,65 @@ class UsersController(BaseController):
             pilots.users.append(user)
 
         redirect('/')
+
+    @expose('skylines.templates.generic.form')
+    def recover(self, key=None, **kwargs):
+        if key is None:
+            return dict(page='users', form=recover_email_form, values={})
+        else:
+            user = User.by_recover_key(int(key, 16))
+            if user is None:
+                    raise HTTPNotFound
+
+            return dict(page='users', form=recover_password_form,
+                        values=dict(key=key))
+
+    @expose()
+    @validate(form=recover_email_form, error_handler=recover)
+    def recover_email(self, email_address, **kw):
+        user = User.by_email_address(email_address)
+        if user is None:
+            raise HTTPNotFound
+
+        key = user.generate_recover_key(request.remote_addr)
+
+        text = u"""Hi %s,
+
+you have asked to recover your password (from IP %s).  To enter a new
+password, click on the following link:
+
+ http://skylines.xcsoar.org/users/recover?key=%x
+
+The SkyLines Team
+""" % (unicode(user), request.remote_addr, key)
+
+        msg = email.mime.text.MIMEText(text.encode('utf-8'), 'plain', 'utf-8')
+        msg['Subject'] = 'SkyLines password recovery'
+        msg['From'] = config.get('email_from', 'skylines@xcsoar.org')
+        msg['To'] = email_address.encode('ascii')
+        msg['Date'] = email.Utils.formatdate(localtime = 1)
+
+        smtp = smtplib.SMTP(config.get('smtp_server', 'localhost'))
+        smtp.ehlo()
+        smtp.sendmail(config.get('email_from', 'skylines@xcsoar.org').encode('ascii'),
+                      email_address.encode('ascii'), msg.as_string())
+        smtp.quit()
+
+        flash('Check your email, we have sent you a link to recover your password.')
+        redirect('/')
+
+    @expose()
+    @validate(form=recover_password_form, error_handler=recover)
+    def recover_post(self, key, password, verify_password, **kw):
+        user = User.by_recover_key(int(key, 16))
+        if user is None:
+                raise HTTPNotFound
+
+        user.password = password
+        user.recover_key = None
+
+        flash(_('Password changed.'))
+        return redirect('/')
 
     @expose()
     @require(has_permission('manage'))

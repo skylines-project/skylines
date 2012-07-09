@@ -127,6 +127,10 @@ class User(DeclarativeBase):
     login_time = Column(DateTime)
     login_ip = Column(INET)
 
+    recover_key = Column(Integer)
+    recover_time = Column(DateTime)
+    recover_ip = Column(INET)
+
     @property
     def tracking_key_hex(self):
         if self.tracking_key is None:
@@ -168,6 +172,10 @@ class User(DeclarativeBase):
         return DBSession.query(cls).filter_by(tracking_key=key).first()
 
     @classmethod
+    def by_recover_key(cls, key):
+        return DBSession.query(cls).filter_by(recover_key=key).first()
+
+    @classmethod
     def _hash_password(cls, password):
         # Make sure password is a str because we cannot hash unicode objects
         if isinstance(password, unicode):
@@ -196,6 +204,12 @@ class User(DeclarativeBase):
 
     def generate_tracking_key(self):
         self.tracking_key = struct.unpack('I', os.urandom(4))[0]
+
+    def generate_recover_key(self, ip):
+        self.recover_key = struct.unpack('I', os.urandom(4))[0] & 0x7fffffff
+        self.recover_time = datetime.now()
+        self.recover_ip = ip
+        return self.recover_key
 
     #}
 
