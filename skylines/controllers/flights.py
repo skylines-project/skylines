@@ -20,6 +20,7 @@ from skylines.model import DBSession, User, Club, Flight, IGCFile, Model, Airpor
 from skylines.controllers.upload import UploadController
 from skylines.lib.datatables import GetDatatableRecords
 from skylines.lib.analysis import analyse_flight, flight_path
+from skylines.lib.helpers import truncate
 from skylines.form import BootstrapForm
 from skylinespolyencode import SkyLinesPolyEncoder
 
@@ -287,7 +288,7 @@ class FlightsController(BaseController):
                                  co_pilot_id = flight.co_pilot_id,
                                  co_pilot = flight.co_pilot and flight.co_pilot.display_name,
                                  club_id = flight.club_id,
-                                 club = flight.club and flight.club.name,
+                                 club = flight.club and truncate(flight.club.name, 25),
                                  owner = flight.igc_file.owner.display_name,
                                  takeoff_airport = flight.takeoff_airport and flight.takeoff_airport.name,
                                  takeoff_airport_id = flight.takeoff_airport and flight.takeoff_airport.id,
