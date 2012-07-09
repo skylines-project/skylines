@@ -8,6 +8,7 @@ from sprox.widgets import PropertySingleSelectField
 from formencode import Schema
 from formencode.validators import FieldsMatch, Email, String
 from tw.forms import PasswordField, TextField
+from tw.forms.validators import UnicodeString
 from skylines.lib.base import BaseController
 from skylines.model import DBSession, User, Group, Club, Flight, Follower
 from skylines.model.igcfile import IGCFile
@@ -78,6 +79,15 @@ class EditUserForm(EditableForm):
 
 edit_user_form = EditUserForm(DBSession)
 
+change_password_form = BootstrapForm('change_password_form',
+                                     submit_text="Change Password",
+                                     action='save_password',
+                                     validator=user_validator,
+                                     children=[
+    PasswordField('password', validator=UnicodeString(min=6)),
+    PasswordField('verify_password'),
+])
+
 
 class UserController(BaseController):
     def __init__(self, user):
@@ -88,6 +98,20 @@ class UserController(BaseController):
         return dict(page='settings', user=self.user,
                     distance_flights=self.get_distance_flights(),
                     takeoff_locations=self.get_takeoff_locations())
+
+    @expose('skylines.templates.generic.form')
+    def change_password(self, **kw):
+        if not self.user.is_writable():
+            raise HTTPForbidden
+
+        return dict(page='settings', title=_('Change Password'),
+                    form=change_password_form, values={})
+
+    @expose()
+    @validate(change_password_form, error_handler=change_password)
+    def save_password(self, password, verify_password):
+        self.user.password = password
+        return redirect('.')
 
     @expose('skylines.templates.generic.form')
     def edit(self, **kwargs):

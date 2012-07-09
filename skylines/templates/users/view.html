@@ -112,6 +112,8 @@ def add_locations(locations):
 
         <p style="margin-top: 10px">
           <a py:if="user.is_writable()" href="/users/${user.user_id}/edit" class="btn">Edit</a>
+          <a py:if="user.is_writable()" href="change_password"
+             class="btn">Change Password</a>
 
           <span py:if="request.identity"
                 py:with="current=request.identity['user']" py:strip="True">
