@@ -24,9 +24,10 @@ edit_club_form = EditClubForm(DBSession)
 class NewPilotForm(AddRecordForm):
     __base_widget_type__ = BootstrapForm
     __model__ = User
-    __required_fields__ = ['display_name']
-    __limit_fields__ = ['display_name']
+    __required_fields__ = ['email_address', 'display_name']
+    __limit_fields__ = ['email_address', 'display_name']
     __base_widget_args__ = dict(action='create_pilot')
+    email_address = Field(TextField, validators.Email)
     display_name = TextField
 
 new_pilot_form = NewPilotForm(DBSession)
@@ -75,12 +76,12 @@ class ClubController(BaseController):
 
     @expose()
     @validate(form=new_pilot_form, error_handler=new_pilot)
-    def create_pilot(self, display_name, **kw):
+    def create_pilot(self, email_address, display_name, **kw):
         if not self.club.is_writable():
             raise HTTPForbidden
 
         pilot = User(user_name=display_name, display_name=display_name,
-                     club=self.club)
+                     email_address=email_address, club=self.club)
         DBSession.add(pilot)
 
         pilots = DBSession.query(Group).filter(Group.group_name=='pilots').first()
