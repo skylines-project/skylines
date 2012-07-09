@@ -1,5 +1,6 @@
 <?python
 from sets import Set
+from skylines.lib.helpers import truncate
 ?>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
@@ -54,7 +55,7 @@ from sets import Set
           <a py:if="flight.takeoff_airport" py:content="flight.takeoff_airport.name" href="/flights/airport/${flight.takeoff_airport_id}">Airport</a>
         </td>
         <td py:if="'club' not in omitted_columns">
-          <a py:if="flight.club" py:content="flight.club" href="/clubs/${flight.club_id}">
+          <a py:if="flight.club" py:content="truncate(flight.club.name, 25)" href="/clubs/${flight.club_id}">
             Club Name
           </a>
         </td>
