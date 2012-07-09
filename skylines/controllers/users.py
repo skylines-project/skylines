@@ -6,8 +6,10 @@ import smtplib, email
 from webob.exc import HTTPNotFound, HTTPForbidden
 from sprox.formbase import AddRecordForm, EditableForm, Field
 from sprox.widgets import PropertySingleSelectField
-from formencode import Schema
+from formencode import Schema, All
 from formencode.validators import FieldsMatch, Email, String
+from sprox.validators import UniqueValue
+from sprox.saormprovider import SAORMProvider
 from tw.forms import PasswordField, TextField, HiddenField
 from tw.forms.validators import UnicodeString
 from skylines.lib.base import BaseController
@@ -55,11 +57,12 @@ class NewUserForm(AddRecordForm):
     __base_widget_type__ = BootstrapForm
     __model__ = User
     __required_fields__ = ['password']
-    __limit_fields__ = ['user_name', 'password', 'verify_password', 'email_address', 'display_name', 'club']
+    __limit_fields__ = ['email_address', 'display_name', 'password', 'verify_password', 'club']
     __base_validator__ = user_validator
-    user_name = TextField
-    email_address = Field(TextField, Email(not_empty=True))
-    display_name = TextField
+    email_address = Field(TextField, All(UniqueValue(SAORMProvider(DBSession),
+                                                     __model__, 'email_address'),
+                                         Email(not_empty=True)))
+    display_name = TextField(not_empty=True)
     club = ClubSelectField
     password = String(min=6)
     verify_password = PasswordField('verify_password')
@@ -71,11 +74,10 @@ class EditUserForm(EditableForm):
     __base_widget_type__ = BootstrapForm
     __model__ = User
     __hide_fields__ = ['user_id']
-    __limit_fields__ = ['user_name', 'email_address', 'display_name', 'club']
+    __limit_fields__ = ['email_address', 'display_name', 'club']
     __base_widget_args__ = dict(action='save')
-    user_name = TextField
     email_address = Field(TextField, Email(not_empty=True))
-    display_name = TextField
+    display_name = TextField(not_empty=True)
     club = ClubSelectField
 
 edit_user_form = EditUserForm(DBSession)
@@ -175,11 +177,10 @@ class UserController(BaseController):
 
     @expose()
     @validate(form=edit_user_form, error_handler=edit)
-    def save(self, user_name, email_address, display_name, club, **kwargs):
+    def save(self, email_address, display_name, club, **kwargs):
         if not self.user.is_writable():
             raise HTTPForbidden
 
-        self.user.user_name = user_name
         self.user.email_address = email_address
         self.user.display_name = display_name
         if not club:
@@ -314,11 +315,11 @@ class UsersController(BaseController):
 
     @expose()
     @validate(form=new_user_form, error_handler=new)
-    def new_post(self, user_name, display_name, club, email_address, password, **kw):
+    def new_post(self, display_name, club, email_address, password, **kw):
         if not club:
             club = None
 
-        user = User(user_name=user_name, display_name=display_name, club_id=club,
+        user = User(display_name=display_name, club_id=club,
                     email_address=email_address, password=password)
         user.created_ip = request.remote_addr
         user.generate_tracking_key()

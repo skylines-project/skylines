@@ -71,11 +71,6 @@ def add_locations(locations):
       <div class="well span8 offset2">
         <table class="right">
           <tr py:if="user.is_readable()">
-            <th>Login name</th>
-            <td py:content="user.user_name">Foo</td>
-          </tr>
-
-          <tr py:if="user.is_readable()">
             <th>Email</th>
             <td py:content="user.email_address" itemprop="email">Foo</td>
           </tr>

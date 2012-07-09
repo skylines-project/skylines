@@ -4,7 +4,9 @@ from tg import expose, validate, redirect
 from tg.i18n import ugettext as _, lazy_ugettext as l_
 from webob.exc import HTTPNotFound, HTTPForbidden
 from sprox.formbase import AddRecordForm, EditableForm, Field
-from formencode import validators
+from sprox.validators import UniqueValue
+from sprox.saormprovider import SAORMProvider
+from formencode import validators, All
 from tw.forms import TextField
 from skylines.lib.base import BaseController
 from skylines.model import DBSession, User, Group, Club
@@ -27,8 +29,10 @@ class NewPilotForm(AddRecordForm):
     __required_fields__ = ['email_address', 'display_name']
     __limit_fields__ = ['email_address', 'display_name']
     __base_widget_args__ = dict(action='create_pilot')
-    email_address = Field(TextField, validators.Email)
-    display_name = TextField
+    email_address = Field(TextField, All(UniqueValue(SAORMProvider(DBSession),
+                                                     __model__, 'email_address'),
+                                         validators.Email))
+    display_name = TextField(not_empty=True)
 
 new_pilot_form = NewPilotForm(DBSession)
 
@@ -80,7 +84,7 @@ class ClubController(BaseController):
         if not self.club.is_writable():
             raise HTTPForbidden
 
-        pilot = User(user_name=display_name, display_name=display_name,
+        pilot = User(display_name=display_name,
                      email_address=email_address, club=self.club)
         DBSession.add(pilot)
 

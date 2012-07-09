@@ -19,13 +19,8 @@ class TestUser(ModelTest):
     
     klass = model.User
     attrs = dict(
-        user_name = u"ignucius",
         email_address = u"ignucius@example.org"
         )
-
-    def test_obj_creation_username(self):
-        """The obj constructor must set the user name right"""
-        eq_(self.obj.user_name, u"ignucius")
 
     def test_obj_creation_email(self):
         """The obj constructor must set the email right"""

@@ -20,9 +20,9 @@ title = 'Login'
     <div class="well span8 offset2" id="loginform">
       <form action="${tg.url('/login_handler', params=dict(came_from=came_from.encode('utf-8')))}" method="post" accept-charset="UTF-8" class="loginfields">
         <div class="control-group">
-          <label class="control-label" for="loginusername">Username:</label>
+          <label class="control-label" for="loginusername">Email Address:</label>
           <div class="controls">
-            <input type="text" id="loginusername" name="login" />
+            <input type="text" id="loginusername" name="login" title="Attention! This was changed from username to email address." rel="tooltip"/>
           </div>
         </div>
         <div class="control-group">

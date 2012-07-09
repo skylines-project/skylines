@@ -55,6 +55,7 @@ base_config.sa_auth.permission_class = model.Permission
 # override this if you would like to provide a different who plugin for
 # managing login and logout of your application
 base_config.sa_auth.form_plugin = None
+base_config.sa_auth.translations.user_name = 'email_address'
 
 # override this if you are using a different charset for the login form
 base_config.sa_auth.charset = 'utf-8'

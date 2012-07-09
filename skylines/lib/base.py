@@ -2,7 +2,7 @@
 
 """The base Controller API."""
 
-from tg import TGController, tmpl_context, request
+from tg import TGController, tmpl_context, request, redirect, url
 
 __all__ = ['BaseController']
 
@@ -25,3 +25,10 @@ class BaseController(TGController):
         request.identity = request.environ.get('repoze.who.identity')
         tmpl_context.identity = request.identity
         return TGController.__call__(self, environ, start_response)
+
+    def __before__(self, *args, **kw):
+        if request.identity is not None and \
+           'user' in request.identity and \
+           request.identity['user'] is None:
+            raise redirect(url('/logout_handler',
+                               params=dict(came_from=request.url.encode('utf-8'))))
