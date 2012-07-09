@@ -1,3 +1,17 @@
+# Airspace/Airport map file for SkyLines
+#
+# Default resolution for mapserver is 72 dpi
+# In EPSG:3857 with zoom levels 0 to 18, this results in the
+# following map scales:
+#
+# Zoom level 0: 221,898,285
+# Zoom level 1: 110,949,142
+# Zoom level 2: 55,474,571
+# Zoom level 3: 27,737,285
+# Zoom level 4: 13,868,642
+# Zoom level 5: 6,934,321
+# and so on...
+
 MAP
   NAME "Airspace"
   UNITS METERS
