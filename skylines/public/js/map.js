@@ -34,7 +34,7 @@ function initOpenLayers(id) {
   map.addLayer(osmLayer);
 
   var airspace = new OpenLayers.Layer.XYZ("Airspace",
-    "http://www.prosoar.de/airspace/${z}/${x}/${y}.png", {
+    "/mapproxy/tiles/1.0.0/airspace/${z}/${x}/${y}.png?origin=nw", {
     isBaseLayer: false,
     transparent: true,
     'visibility': true,
