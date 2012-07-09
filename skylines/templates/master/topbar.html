@@ -32,9 +32,9 @@
             <div class="dropdown-menu">
               <form action="${tg.url('/login_handler', params=dict(came_from=request.url.encode('utf-8')))}" method="post" accept-charset="UTF-8">
                 <div class="control-group">
-                  <label class="control-label" for="username">Username:</label>
+                  <label class="control-label" for="username">Email Address:</label>
                   <div class="controls">
-                    <input type="text" id="username" name="login" />
+                    <input type="text" id="username" name="login" title="Attention! This was changed from username to email address." rel="tooltip"/>
                   </div>
                 </div>
                 <div class="control-group">

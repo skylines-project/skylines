@@ -95,7 +95,7 @@ class RootController(BaseController):
                 came_from = lurl('/')
 
         if not request.identity:
-            flash(_('Sorry, username or password are wrong. Please try again or register.'), 'warning')
+            flash(_('Sorry, email address or password are wrong. Please try again or register.'), 'warning')
         else:
             request.identity['user'].login_ip = request.remote_addr
             request.identity['user'].login_time = datetime.now()
