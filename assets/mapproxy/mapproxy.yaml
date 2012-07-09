@@ -1,5 +1,6 @@
 services:
   tms:
+    expires_hours: 48
 #  wms:
 #    srs: ['EPSG:3857'] #, 'EPSG:900913']
 #    image_formats: ['image/png']
