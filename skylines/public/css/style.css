@@ -64,6 +64,10 @@ input[type="file"] {
   text-align:right;
 }
 
+#flight-table .show {
+  white-space: nowrap;
+}
+
 #map_canvas img {
   max-width: inherit;
 }
