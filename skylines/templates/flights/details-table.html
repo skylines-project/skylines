@@ -18,16 +18,12 @@
           $("abbr.timeago").timeago();
           $("a.share").popover({
             trigger: 'manual',
-            content: getShareUrl('${request.url}'),
+            content: '<input value="' + getShareUrl('${request.url}') + '" type="text" style="width: 95%;">',
             title: 'Spread the word'
           }).click(function(e) {
             e.preventDefault();
             $(this).popover('toggle');
           });
-
-          function getShareUrl(url) {
-            return '<input value="' + url + '" type="text" style="width: 95%;">';
-          };
         });
         /* ]]> */
       </script>

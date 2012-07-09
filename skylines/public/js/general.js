@@ -115,3 +115,29 @@ function pinButton(element, sfid) {
   element.click(onClick);
 }
 
+/**
+ * Function getShareUrl
+ *
+ * Returns the URL for the current page and add pinned flights
+ * to the URL which are only stored client-side inside a cookie.
+ *
+ * Parameters:
+ * url - {String} original URL
+ */
+function getShareUrl(url) {
+  var pinnedFlights = getPinnedFlights();
+
+  var url_re = /(.*?)\/([\d,]{1,})\/(.*)/
+  var url_split = url_re.exec(url);
+
+  ids = url_split[2].split(',').concat(pinnedFlights);
+
+  unique_ids = [];
+  for (i in ids) {
+    if ($.inArray(parseInt(ids[i]), unique_ids) == -1) {
+      unique_ids.push(parseInt(ids[i]));
+    }
+  }
+
+  return url_split[1] + "/" + unique_ids.join(',') + "/" + url_split[3];
+}
