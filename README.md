@@ -68,6 +68,11 @@ Fill the airport database:
 
     $ python import_welt2000.py development.ini
 
+If you want to run the mapserver as fastcgi, install python-mapscript package (on Debian) and adjust your webserver
+configuration.
+
+    $ apt-get install python-mapscript
+
 Start the paste http server:
 
     $ paster serve development.ini
