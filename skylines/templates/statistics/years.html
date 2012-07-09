@@ -3,10 +3,14 @@ page = 'statistics'
 title = 'Statistics'
 
 if selected_pilot:
-  tagline = 'of ' + unicode(selected_pilot)
+  tagline = 'of'
+  tagline_link = '/users/' + str(selected_pilot.user_id) + '/'
+  tagline_link_text = selected_pilot
 
 if selected_club:
-  tagline = 'of ' + unicode(selected_club)
+  tagline = 'of'
+  tagline_link = '/clubs/' + str(selected_club.id) + '/'
+  tagline_link_text = selected_club
 ?>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
