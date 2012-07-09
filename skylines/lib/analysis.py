@@ -6,7 +6,7 @@ import simplejson
 from skylines import files
 from tg import config
 from skylines.model.geo import Location
-from skylines.model import Airport
+from skylines.model import Airport, Trace
 import logging
 
 log = logging.getLogger(__name__)
@@ -75,6 +75,62 @@ def find_trace(contest, name):
     return contest[name]
 
 
+def read_time_of_day(turnpoint, flight):
+    if 'time' not in turnpoint:
+        return None
+
+    time = int(turnpoint['time'])
+    time = datetime.timedelta(seconds=time)
+
+    time = datetime.datetime.combine(flight.takeoff_time.date(),
+                                     datetime.time(0, 0, 0)) + time
+
+    return time
+
+
+def save_trace(contest_name, trace_name, trace, flight):
+    if 'turnpoints' not in trace:
+        return
+
+    locations = []
+    times = []
+    for turnpoint in trace['turnpoints']:
+        location = read_location(turnpoint)
+        time = read_time_of_day(turnpoint, flight)
+
+        if location is None or time is None:
+            continue
+
+        locations.append(location)
+        times.append(time)
+
+    if len(locations) < 2 or len(times) < 2:
+        return
+
+    trace = Trace()
+    trace.contest_type = contest_name
+    trace.trace_type = trace_name
+    trace.locations = locations
+    trace.times = times
+
+    flight.traces.append(trace)
+
+
+def save_contest(contest_name, traces, flight):
+    for trace_name, trace in traces.iteritems():
+        save_trace(contest_name, trace_name, trace, flight)
+
+
+def save_contests(root, flight):
+    if 'contests' not in root or flight.takeoff_time is None:
+        # The takeoff_time is needed to convert the
+        # time integer to a DateTime instance
+        return
+
+    for contest_name, traces in root['contests'].iteritems():
+        save_contest(contest_name, traces, flight)
+
+
 def analyse_flight(flight):
     path = files.filename_to_path(flight.igc_file.filename)
     log.info('Analyzing ' + path)
@@ -126,6 +182,8 @@ def analyse_flight(flight):
             flight.olc_plus_score = int(trace['score'])
         else:
             flight.olc_plus_score = None
+
+    save_contests(root, flight)
 
     return True
 
