@@ -79,7 +79,7 @@ globals:
     meta_size: [6, 6]
     # add a buffer on all sides (in pixel) when requesting
     # new images
-    meta_buffer: 100
+    meta_buffer: 128
 
 
   # image/transformation options
