@@ -16,20 +16,37 @@ def helper_path(helper):
     return os.path.join(config['skylines.analysis.path'], helper)
 
 
+def read_location(node):
+    """
+    Reads the latitude and longitude attributes of the node
+    and returns a Location instance if the node was parsed correctly.
+    """
+
+    if node is None:
+        return None
+
+    if 'latitude' not in node or 'longitude' not in node:
+        return None
+
+    try:
+        latitude = float(node['latitude'])
+        longitude = float(node['longitude'])
+        return Location(latitude=latitude, longitude=longitude)
+    except ValueError:
+        return None
+
+
 def import_location_attribute(node, name):
+    """
+    Reads a Location instance from an attribute of the node
+    with the given name.
+    """
+
     if node is None or name not in node:
         return None
 
     location = node[name]
-    if 'latitude' not in location or 'longitude' not in location:
-        return None
-
-    try:
-        latitude = float(location['latitude'])
-        longitude = float(location['longitude'])
-        return Location(latitude=latitude, longitude=longitude)
-    except ValueError:
-        return None
+    return read_location(location)
 
 
 def import_datetime_attribute(node, name):
