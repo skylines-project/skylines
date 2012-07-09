@@ -72,6 +72,18 @@ function addBingLayers(api_key) {
   });
 
   map.addLayers([road, hybrid]);
+
+  // disable airspace layer when bing layers are shown
+  // seems to be due to off-by-one bug of zoomLevel, see https://github.com/openlayers/openlayers/issues/418
+  // should be reverted if the OL bug is fixed.
+  var airspace = map.getLayersByName('Airspace')[0];
+  map.events.register('changebaselayer', this, function() {
+    if (road.getVisibility() || hybrid.getVisibility()) {
+      airspace.setVisibility(false);
+    } else {
+      airspace.setVisibility(true);
+    }
+  });
 }
 
 /**
