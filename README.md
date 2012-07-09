@@ -68,8 +68,9 @@ Fill the airport database:
 
     $ python import_welt2000.py development.ini
 
-If you want to run the mapserver as fastcgi, install python-mapscript package (on Debian) and adjust your webserver
-configuration.
+If you want to run the mapserver as fastcgi, install python-mapscript package (on Debian). To run it locally as
+as subprocess of mapproxy, change assets/mapproxy/mapproxy.yaml to fit it to your needs. You'll need to install
+cgi-mapserver package for this.
 
     $ apt-get install python-mapscript
 

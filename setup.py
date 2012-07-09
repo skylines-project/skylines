@@ -50,6 +50,7 @@ install_requires = [
     "psycopg2",
     "geoalchemy",
     "crc16",
+    "mapproxy",
 ]
 
 if sys.version_info[:2] == (2, 4):

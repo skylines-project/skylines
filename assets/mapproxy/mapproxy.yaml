@@ -1,0 +1,96 @@
+services:
+  tms:
+#  wms:
+#    srs: ['EPSG:3857'] #, 'EPSG:900913']
+#    image_formats: ['image/png']
+#    md:
+#      title: Airspace WMS Server
+#      abstract: Airspace WMS Server for SkyLines
+
+layers:
+  - name: airspace
+    title: Airspace WMS
+    sources: [airspace_cache]
+    
+caches:
+  airspace_cache:
+    grids: [GLOBAL_MERCATOR]
+    # choose between airspace_mapserver_bin source and
+    # airspace_mapserver_wms source. The first one just
+    # needs the cgi-mapserver binary, the latter retrieves
+    # the map from a WMS server.
+    sources: [airspace_mapserver_wms]
+    image:
+      format: image/png
+      mode: RGBA
+    format: image/png
+    request_format: image/png
+    link_single_color_images: true
+
+sources:
+  airspace_mapserver_bin:
+    type: mapserver
+    supported_srs: ['EPSG:3857']
+    req:
+      layers: airspace
+      map: ../airspace/airspace.map
+      transparent: true
+    image:
+      format: image/png
+      mode: RGBA
+    mapserver:
+      binary: /usr/lib/cgi-bin/mapserv
+      working_dir: ../airspace/
+
+  airspace_mapserver_wms:
+    type: wms
+    supported_srs: ['EPSG:3857']
+    req:
+      layers: airspace
+      url: http://skylines.xcsoar.org/mapserver/?
+      transparent: true
+    image:
+      format: image/png
+      mode: RGBA
+
+globals:
+  # # coordinate transformation options
+  # srs:
+  #   # WMS 1.3.0 requires all coordiates in the correct axis order,
+  #   # i.e. lon/lat or lat/lon. Use the following settings to
+  #   # explicitly set a CRS to either North/East or East/North
+  #   # ordering.
+  #   axis_order_ne: ['EPSG:9999', 'EPSG:9998']
+  #   axis_order_en: ['EPSG:0000', 'EPSG:0001']
+  #   # you can set the proj4 data dir here, if you need custom
+  #   # epsg definitions. the path must contain a file named 'epsg'
+  #   # the format of the file is:
+  #   # <4326> +proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs  <>
+  #   proj_data_dir: '/path to dir that contains epsg file'
+
+  # # cache options
+  cache:
+    # where to store the cached images
+    base_dir: '/tmp/cache_data'
+    # where to store lockfiles
+    lock_dir: '/tmp/cache_data/locks'
+    # request x*y tiles in one step
+    meta_size: [6, 6]
+    # add a buffer on all sides (in pixel) when requesting
+    # new images
+    meta_buffer: 80
+
+
+  # image/transformation options
+  image:
+    paletted: false
+    resampling_method: nearest
+      # resampling_method: bilinear
+      # resampling_method: bicubic
+  #     jpeg_quality: 90
+  #     # stretch cached images by this factor before
+  #     # using the next level
+  #     stretch_factor: 1.15
+  #     # shrink cached images up to this factor before
+  #     # returning an empty image (for the first level)
+  #     max_shrink_factor: 4.0

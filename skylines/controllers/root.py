@@ -2,7 +2,7 @@
 """Main Controller"""
 
 from datetime import datetime
-from tg import expose, flash, url, lurl, request, redirect, require
+from tg import expose, flash, url, lurl, request, redirect, require, config
 from tg.i18n import ugettext as _, lazy_ugettext as l_
 from repoze.what.predicates import Any, not_anonymous
 from skylines import model
@@ -19,6 +19,9 @@ from skylines.controllers.ranking import RankingController
 from skylines.controllers.tracking import TrackingController
 from skylines.controllers.static import StaticResourceController
 from skylines.controllers.statistics import StatisticsController
+
+import mapproxy.wsgiapp as mapproxy
+from tg.controllers import WSGIAppController
 
 __all__ = ['RootController']
 
@@ -47,6 +50,7 @@ class RootController(BaseController):
     tracking = TrackingController()
     static = StaticResourceController()
     statistics = StatisticsController()
+    mapproxy = WSGIAppController(mapproxy.make_wsgi_app(config.get('skylines.mapproxy')))
 
     @expose()
     def index(self):
