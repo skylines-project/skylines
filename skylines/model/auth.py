@@ -113,7 +113,7 @@ class User(DeclarativeBase):
                                            info={'rum': {'field': 'Email'}}),
                                     comparator_factory=LowerCaseComparator)
 
-    display_name = Column(Unicode(255))
+    display_name = Column(Unicode(255), nullable=False)
 
     _password = Column('password', Unicode(128),
                        info={'rum': {'field': 'Password'}})

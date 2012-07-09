@@ -32,7 +32,7 @@ class NewPilotForm(AddRecordForm):
     email_address = Field(TextField, All(UniqueValue(SAORMProvider(DBSession),
                                                      __model__, 'email_address'),
                                          validators.Email))
-    display_name = TextField
+    display_name = TextField(not_empty=True)
 
 new_pilot_form = NewPilotForm(DBSession)
 

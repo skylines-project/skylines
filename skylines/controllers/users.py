@@ -63,7 +63,7 @@ class NewUserForm(AddRecordForm):
     email_address = Field(TextField, All(UniqueValue(SAORMProvider(DBSession),
                                                      __model__, 'email_address'),
                                          Email(not_empty=True)))
-    display_name = TextField
+    display_name = TextField(not_empty=True)
     club = ClubSelectField
     password = String(min=6)
     verify_password = PasswordField('verify_password')
@@ -79,7 +79,7 @@ class EditUserForm(EditableForm):
     __base_widget_args__ = dict(action='save')
     user_name = TextField
     email_address = Field(TextField, Email(not_empty=True))
-    display_name = TextField
+    display_name = TextField(not_empty=True)
     club = ClubSelectField
 
 edit_user_form = EditUserForm(DBSession)
