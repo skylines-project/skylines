@@ -78,7 +78,7 @@
         <th>Aircraft</th>
         <td>
           <a py:if="flight.is_writable()" href="change_aircraft" class="btn btn-mini" style="float: right;">
-            Change
+            <i class="icon-pencil icon-small"></i> Change
           </a>
 
           <span py:if="flight.model_id is not None" py:replace="flight.model"/>
@@ -115,7 +115,7 @@
       <tr>
         <th>Pilot</th>
         <td>
-          <a py:if="flight.is_writable()" href="change_pilot" class="btn btn-mini" style="float: right;">Change</a>
+          <a py:if="flight.is_writable()" href="change_pilot" class="btn btn-mini" style="float: right;"><i class="icon-pencil icon-small"></i> Change</a>
           <span py:if="flight.pilot" itemprop="performer" itemscope="" itemtype="http://schema.org/Person">
             <meta itemprop="url" content="/users/${flight.pilot_id}" />
             <a py:content="flight.pilot" href="/users/${flight.pilot_id}/" itemprop="name">Pilot Name</a>
@@ -155,7 +155,7 @@
       <tr py:if="flight.may_delete()">
         <th>Actions</th>
         <td>
-          <a href="delete" class="btn btn-mini">Delete</a>
+          <a href="delete" class="btn btn-mini"><i class="icon-remove icon-small"></i> Delete</a>
         </td>
       </tr>
     </tbody>
