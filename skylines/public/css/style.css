@@ -142,3 +142,7 @@ a.no-link {
 .olFullscreen .olControlScaleLine {
   bottom: 100pt !important;
 }
+
+.tooltip {
+  z-index: 2000;
+}
