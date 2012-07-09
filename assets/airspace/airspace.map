@@ -1,0 +1,623 @@
+MAP
+  NAME "Airspace"
+  UNITS METERS
+  EXTENT -180 -90 180 90 # Geographic
+  IMAGECOLOR 230 230 230
+
+#  SIZE 1024 1024
+
+#  SIZE 256 256
+  IMAGETYPE png
+  TRANSPARENT ON
+
+#  OUTPUTFORMAT
+#    NAME "cairopng"
+#    DRIVER CAIRO/PNG
+#    MIMETYPE "image/png"
+#    IMAGEMODE RGBA
+#    EXTENSION "png"
+#  END
+
+  OUTPUTFORMAT
+    NAME "png"
+    DRIVER "AGG/PNG"
+    IMAGEMODE RGBA
+    EXTENSION "png"
+ #   FORMATOPTION "QUANTIZE_FORCE=on"
+ #   FORMATOPTION "QUANZIZE_COLORS=16"
+  END
+
+#  CONFIG "MS_ERRORFILE" "ms_error.txt"
+#  DEBUG 5
+
+  FONTSET truetype.txt
+
+  STATUS ON
+
+  PROJECTION
+     "init=epsg:3857"
+#     "init=epsg:900913"
+#     "init=epsg:4326"
+  END
+
+  WEB
+    METADATA
+      "wms_title" "airspace"
+      "wms_srs" "epsg:3857"
+#      "wms_srs" "epsg:900913"
+      "wms_enable_request" "*"
+    END
+  END
+
+  #
+  # Start of layer definitions
+  #
+
+##
+## AIRPORTS
+##
+  LAYER
+    NAME 'Airports'
+    TYPE POINT
+    CONNECTIONTYPE POSTGIS
+    CONNECTION "dbname=skylines"
+    DATA "location_wkt from (SELECT id, location_wkt, name, runway_len, type, surface,
+          (-runway_dir) as runway_dir from airports) as foo using unique id"
+    LABELITEM "name"
+    STATUS DEFAULT
+
+    PROJECTION
+      "init=epsg:4326"
+    END
+
+    CLASS
+      NAME 'Airports detail'
+      MAXSCALEDENOM 1000000
+
+      STYLE 
+        SYMBOL 'airport'
+        COLOR 255 0 0
+        ANGLE [runway_dir]
+      END
+
+      LABEL
+        COLOR  0 0 0
+        OUTLINECOLOR 255 255 255
+        OUTLINEWIDTH 2
+        FONT "sans"
+        TYPE truetype
+        SIZE 7
+        POSITION AUTO
+        PARTIALS false
+        MINDISTANCE 20
+        ANTIALIAS true
+        OFFSET 0 -16
+      END
+    END
+    
+    CLASS
+      NAME 'Airports normal'
+      MINSCALEDENOM 1000000
+      MAXSCALEDENOM 5000000
+      EXPRESSION (([runway_len] <= 1000) OR ('[type]' ne 'airport') OR ('[surface]' eq 'grass'))
+
+      STYLE
+        SYMBOL 'airport small'
+        COLOR 255 0 0
+        #ANGLE [runway_dir]
+      END
+    END
+
+
+    CLASS
+      NAME 'Airports priority'
+      MINSCALEDENOM 1000000
+      MAXSCALEDENOM 5000000
+      #EXPRESSION (([runway_len] > 800 ) AND ('[type]' eq 'airport') AND ('[surface]' ne 'grass'))
+
+      STYLE
+        SYMBOL 'airport'
+        COLOR 255 0 0
+        ANGLE [runway_dir]
+      END
+
+      LABEL
+        COLOR  0 0 0
+        OUTLINECOLOR 255 255 255
+        OUTLINEWIDTH 1
+        FONT "sans"
+        TYPE truetype
+        SIZE 7
+        POSITION AUTO
+        PARTIALS false
+        MINDISTANCE 20
+        OFFSET 0 -16
+      END
+    END
+
+    CLASS
+      NAME 'Airports large'
+      MINSCALEDENOM 5000000
+      EXPRESSION (([runway_len] > 1000) AND ('[type]' eq 'airport') AND ('[surface]' ne 'grass'))
+
+      STYLE
+        SYMBOL 'airport small'
+        COLOR 255 0 0
+        #ANGLE [runway_dir]
+      END
+    END
+ 
+  END
+
+##
+## AIRSPACE WAVE (CLASS W)
+##
+  LAYER
+    NAME 'WAVE'
+    TYPE POLYGON 
+    CONNECTIONTYPE POSTGIS
+    CONNECTION "dbname=skylines"
+    DATA "the_geom from airspace using unique id"
+    STATUS DEFAULT
+    OPACITY 50
+ 
+    PROJECTION
+      "init=epsg:4326"
+    END
+
+    CLASS
+      EXPRESSION ('[airspace_class]' eq 'W')
+      NAME 'WAVE'
+      STYLE
+        OUTLINECOLOR 255 255 0
+        WIDTH 2
+        LINECAP butt
+        OPACITY 50
+      END
+      STYLE
+        COLOR 255 255 0
+        OPACITY 10
+      END
+    END
+  END
+
+##
+## AIRSPACE CLASS A and B
+##
+  LAYER
+    NAME 'Airspace CLASS A and B'
+    TYPE POLYGON
+    CONNECTIONTYPE POSTGIS
+    CONNECTION "dbname=skylines"
+    DATA "the_geom from airspace using unique id"
+    STATUS DEFAULT
+    OPACITY 50
+
+    PROJECTION
+      "init=epsg:4326"
+    END
+
+    CLASS
+      EXPRESSION ('[airspace_class]' eq 'A')
+      NAME 'A'
+      MAXSCALEDENOM 2500000
+      STYLE
+        OUTLINECOLOR 211 0 32
+        WIDTH 2
+        LINECAP butt
+      END
+      STYLE
+        SYMBOL 'filled'
+        OUTLINECOLOR 211 0 32
+        OPACITY 40
+      END
+    END
+
+    CLASS
+      EXPRESSION ('[airspace_class]' eq 'A')
+      NAME 'A'
+      MINSCALEDENOM 2500000
+      STYLE
+        OUTLINECOLOR 211 0 32
+        WIDTH 1
+        LINECAP butt
+      END
+      STYLE
+        SYMBOL 'filled-small'
+        OUTLINECOLOR 211 0 32
+        OPACITY 40
+      END
+    END
+
+
+    CLASS
+      EXPRESSION ('[airspace_class]' eq 'B')
+      NAME 'B'
+      MAXSCALEDENOM 2500000
+      STYLE
+        OUTLINECOLOR 0 12 211
+        WIDTH 2
+        LINECAP butt
+      END
+      STYLE
+        SYMBOL 'filled'
+        OUTLINECOLOR 0 12 211
+        OPACITY 40
+      END
+    END
+
+    CLASS
+      EXPRESSION ('[airspace_class]' eq 'B')
+      NAME 'B'
+      MINSCALEDENOM 2500000
+      STYLE
+        OUTLINECOLOR 0 12 211
+        WIDTH 1
+        LINECAP butt
+      END
+      STYLE
+        SYMBOL 'filled-small'
+        OUTLINECOLOR 0 12 211
+        OPACITY 40
+      END
+    END
+
+  END
+
+##
+## AIRSPACE CLASS C to D (CTR)
+##
+  LAYER
+    NAME 'Airspace CLASS C to D (CTR)'
+    TYPE POLYGON 
+    CONNECTIONTYPE POSTGIS
+    CONNECTION "dbname=skylines"
+    DATA "the_geom from airspace using unique id"
+    STATUS DEFAULT
+    OPACITY 50
+        
+    PROJECTION
+      "init=epsg:4326"
+    END 
+
+    CLASS
+      EXPRESSION ('[airspace_class]' eq 'C')
+      NAME 'C'
+      MAXSCALEDENOM 2500000
+      STYLE
+        OUTLINECOLOR 0 12 211
+        WIDTH 2
+        LINECAP butt
+      END
+      STYLE
+        SYMBOL 'filled'
+        OUTLINECOLOR 0 12 211
+        OPACITY 40
+      END
+    END
+
+    CLASS
+      EXPRESSION ('[airspace_class]' eq 'C')
+      NAME 'C'
+      MINSCALEDENOM 2500000
+      STYLE
+        OUTLINECOLOR 0 12 211
+        WIDTH 1
+        LINECAP butt
+      END
+      STYLE
+        SYMBOL 'filled-small'
+        OUTLINECOLOR 0 12 211
+        OPACITY 40
+      END
+    END
+
+
+##
+## AIRSPACE CLASS D
+##
+    CLASS
+      EXPRESSION ('[airspace_class]' eq 'D')
+      NAME 'D'
+      MAXSCALEDENOM 2500000
+      STYLE
+        OUTLINECOLOR 0 12 211
+        WIDTH 2
+        LINECAP butt
+      END
+      STYLE
+        SYMBOL 'filled'
+        OUTLINECOLOR 0 12 211
+        OPACITY 40
+      END
+    END
+
+    CLASS
+      EXPRESSION ('[airspace_class]' eq 'D')
+      NAME 'D'
+      MINSCALEDENOM 2500000
+      STYLE
+        OUTLINECOLOR 0 12 211
+        WIDTH 1
+        LINECAP butt
+      END
+      STYLE
+        SYMBOL 'filled-small'
+        OUTLINECOLOR 0 12 211
+        OPACITY 40
+      END
+    END
+
+
+##
+## AIRSPACE CTR (CLASS D)
+##
+    CLASS
+      EXPRESSION ('[airspace_class]' eq 'CTR')
+      NAME 'CTR'
+      MAXSCALEDENOM 2500000
+      STYLE
+        OUTLINECOLOR 0 12 211
+        WIDTH 2
+        LINECAP butt
+        PATTERN 5 2 END
+      END
+      STYLE
+        COLOR 211 0 32
+        OPACITY 20
+      END
+    END
+
+    CLASS
+      EXPRESSION ('[airspace_class]' eq 'CTR')
+      NAME 'CTR'
+      MINSCALEDENOM 2500000
+      STYLE
+        OUTLINECOLOR 0 12 211
+        WIDTH 1
+        LINECAP butt
+        PATTERN 5 2 END
+      END
+      STYLE
+        COLOR 211 0 32
+        OPACITY 20
+      END
+    END
+
+  END
+
+##
+## AIRSPACE CLASS E, F and TMZ
+##
+  LAYER
+    NAME 'Airspace CLASS E, F and TMZ'
+    TYPE POLYGON 
+    CONNECTIONTYPE POSTGIS
+    CONNECTION "dbname=skylines"
+    DATA "the_geom from airspace using unique id"
+    STATUS DEFAULT
+    OPACITY 50
+
+    PROJECTION
+      "init=epsg:4326"
+    END
+
+    MAXSCALEDENOM 25000000
+
+### don't render CLASS E airspace...
+#    CLASS
+#      EXPRESSION ('[airspace_class]' eq 'E')
+#      NAME 'CTR'
+#      STYLE
+#        OUTLINECOLOR 0 12 211
+#        WIDTH 2
+#        LINECAP butt
+#      END
+#    END
+
+##
+## AIRSPACE CLASS F
+##
+    CLASS
+      EXPRESSION ('[airspace_class]' eq 'F')
+      NAME 'CTR'
+      STYLE
+        OUTLINECOLOR 0 12 211
+        WIDTH 1
+        LINECAP butt
+      END
+    END
+    
+##
+## AIRSPACE TMZ
+##
+    CLASS
+      EXPRESSION ('[airspace_class]' eq 'TMZ')
+      NAME 'TMZ'
+      STYLE
+        OUTLINECOLOR 100 100 100
+        WIDTH 3
+        LINECAP butt
+        PATTERN 8 4 2 4 END
+      END
+    END
+  END
+
+##
+## PROHIBITED, DANGER and RESTRICTED AIRSPACE (CLASS P, Q and R)
+##
+  LAYER
+    NAME 'Airspace DANGER and RESTRICTED'
+    TYPE POLYGON 
+    CONNECTIONTYPE POSTGIS
+    CONNECTION "dbname=skylines"
+    DATA "the_geom from airspace using unique id"
+    STATUS DEFAULT
+    OPACITY 50
+
+    PROJECTION
+      "init=epsg:4326"
+    END
+
+##
+## DANGER AIRSPACE (CLASS Q)
+## 
+    CLASS
+      EXPRESSION ('[airspace_class]' eq 'Q')
+      NAME "Danger"
+      MAXSCALEDENOM 2500000
+      STYLE
+        OUTLINECOLOR 211 0 32
+        WIDTH 2
+        LINECAP butt
+      END
+      STYLE
+        OUTLINECOLOR 211 0 32
+        SYMBOL 'dashed'
+      END
+    END
+
+    CLASS
+      EXPRESSION ('[airspace_class]' eq 'Q')
+      NAME "Danger"
+      MINSCALEDENOM 2500000
+      STYLE
+        OUTLINECOLOR 211 0 32
+        WIDTH 1
+        LINECAP butt
+      END
+      STYLE
+        OUTLINECOLOR 211 0 32
+        SYMBOL 'dashed-small'
+      END
+    END
+
+
+##
+## RESTRICTED AIRSPACE (CLASS R)
+##
+    CLASS
+      EXPRESSION ('[airspace_class]' eq 'R')
+      NAME "Restricted"
+      MAXSCALEDENOM 2500000
+      STYLE
+        OUTLINECOLOR 211 0 32
+        WIDTH 2
+        LINECAP butt
+      END
+      STYLE
+        OUTLINECOLOR 211 0 32
+        SYMBOL 'dashed'
+      END
+    END
+
+    CLASS
+      EXPRESSION ('[airspace_class]' eq 'R')
+      NAME "Restricted"
+      MINSCALEDENOM 2500000
+      STYLE
+        OUTLINECOLOR 211 0 32
+        WIDTH 1
+        LINECAP butt
+      END
+      STYLE
+        OUTLINECOLOR 211 0 32
+        SYMBOL 'dashed-small'
+      END
+    END
+
+
+##
+## PROHIBITED AIRSPACE (CLASS P)
+##
+    CLASS
+      EXPRESSION ('[airspace_class]' eq 'P')
+      NAME "Prohibited"
+      MAXSCALEDENOM 2500000
+      STYLE
+        OUTLINECOLOR 211 0 32
+        WIDTH 2
+        LINECAP butt
+      END
+      STYLE
+        OUTLINECOLOR 211 0 32
+        SYMBOL 'dashed'
+      END
+    END
+
+    CLASS
+      EXPRESSION ('[airspace_class]' eq 'P')
+      NAME "Prohibited"
+      MINSCALEDENOM 2500000
+      STYLE
+        OUTLINECOLOR 211 0 32
+        WIDTH 1
+        LINECAP butt
+      END
+      STYLE
+        OUTLINECOLOR 211 0 32
+        SYMBOL 'dashed-small'
+      END
+    END
+
+  END
+
+
+## some symbols
+
+  SYMBOL
+    NAME 'filled'
+    TYPE vector
+    POINTS
+      0 5
+      0 10
+    END
+#    FILLED true
+  END
+
+  SYMBOL
+    NAME 'filled-small'
+    TYPE vector
+    POINTS
+      0 3
+      0 6
+    END
+#    FILLED true
+  END
+
+  SYMBOL
+    NAME 'dashed'
+    TYPE vector
+    POINTS
+      0 5
+      5 10
+      0 5
+      5 10
+    END
+  END
+
+  SYMBOL
+    NAME 'dashed-small'
+    TYPE vector
+    POINTS
+      0 5
+      5 8
+      0 5
+      5 8
+    END
+  END
+
+  SYMBOL
+    NAME 'airport'
+    TYPE pixmap
+    IMAGE 'airport.png'
+  END
+  
+  SYMBOL
+    NAME 'airport small'
+    TYPE ellipse
+    POINTS 6 6 END
+    ANTIALIAS true
+  END
+
+END # MAP

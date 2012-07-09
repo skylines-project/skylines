@@ -68,3 +68,4 @@ from skylines.model.tracking import TrackingFix
 from skylines.model.geo import Location
 from skylines.model.airport import Airport
 from skylines.model.follower import Follower
+from skylines.model.airspace import Airspace
