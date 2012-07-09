@@ -97,14 +97,24 @@ def get_flight_path(flight, threshold = 0.001, max_points = 3000):
 
 class FlightController(BaseController):
     def __init__(self, flight):
-        self.flight = flight
+        if isinstance(flight, list):
+            self.flight = flight[0]
+            self.other_flights = flight[1:]
+        else:
+            self.flight = flight
+            self.other_flights = None
 
     def __get_flight_path(self, **kw):
         return get_flight_path(self.flight, **kw)
 
     @expose('skylines.templates.flights.view')
     def index(self):
-        return dict(flight=self.flight, trace=self.__get_flight_path())
+        def add_flight_path(flight):
+            trace = get_flight_path(flight)
+            return (flight, trace)
+
+        other_flights = map(add_flight_path, self.other_flights)
+        return dict(flight=self.flight, trace=self.__get_flight_path(), other_flights=other_flights)
 
     @expose('skylines.templates.flights.map')
     def map(self):
@@ -302,15 +312,22 @@ class FlightsController(BaseController):
             id = remainder[0]
             remainder = remainder[1:]
 
-        try:
-            flight = DBSession.query(Flight).get(int(id))
-        except ValueError:
-            raise HTTPNotFound
+        def get_flight_by_id_string(id_string):
+            try:
+                id = int(id_string)
+            except ValueError:
+                raise HTTPNotFound
+            flight = DBSession.query(Flight).get(id)
+            if flight is None:
+                raise HTTPNotFound
+            return flight
 
-        if flight is None:
-            raise HTTPNotFound
+        ids = list()
+        for unique_id in id.split(','):
+            if unique_id not in ids:
+                ids.append(unique_id)
 
-        controller = FlightController(flight)
+        controller = FlightController(map(get_flight_by_id_string, ids))
         return controller, remainder
 
     @expose()
@@ -445,25 +462,9 @@ class FlightsController(BaseController):
 
         return self.__do_list('airport', kw, airport=airport, columns=columns)
 
-    @expose('skylines.templates.flights.view')
+    @expose()
     def multi(self, ids):
-        def get_flight_by_id_string(id_string):
-            try:
-                id = int(id_string)
-            except ValueError:
-                raise HTTPNotFound
-            flight = DBSession.query(Flight).get(id)
-            if flight is None:
-                raise HTTPNotFound
-            return flight
-
-        def add_flight_path(flight):
-            flight_path = get_flight_path(flight)
-            return (flight, flight_path)
-
-        flights = map(get_flight_by_id_string, ids.split(','))
-        flights = map(add_flight_path, flights)
-        return dict(flight=None, flights=flights, trace=None)
+        return redirect('/flights/' + ids + '/')
 
     @expose()
     @require(has_permission('manage'))
