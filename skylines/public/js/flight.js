@@ -47,14 +47,16 @@ var colors = ['#004bbd', '#bf0099', '#cf7c00', '#ff0000', '#00c994'];
 function initFlightLayer() {
   var default_style = new OpenLayers.Style({
     strokeColor: "${color}",
-    strokeWidth: 2
+    strokeWidth: 2,
+    graphicZIndex: 1000
   });
 
   var trace_style = new OpenLayers.Style({
     strokeColor: "${color}",
     strokeWidth: 2,
     strokeOpacity: 1.4,
-    strokeDashstyle: "dash"
+    strokeDashstyle: "dash",
+    graphicZIndex: 1500
   });
 
   var plane_style = new OpenLayers.Style({
@@ -87,7 +89,10 @@ function initFlightLayer() {
       'default': default_style,
       'trace': trace_style,
       'plane': plane_style
-    })
+    }),
+    rendererOptions: {
+        zIndexing: true
+    }
   });
 
   map.addLayer(flightPathLayer);
