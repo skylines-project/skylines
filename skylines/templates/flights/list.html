@@ -144,14 +144,14 @@ if airport:
               "aTargets": ["show"],
               "fnRender": function(obj, row) {
                 if (obj.oSettings.jqXHR)
-                  row = "<a href=\"/flights/" + obj.aData.flight_id + "/\" class=\"btn btn-mini\">Show</a> <a class=\"pin no-link\" style=\"visibility: hidden\" rel=\"tooltip-left\" title=\"Activate this to show the flight on top of other flights on the map\">" + obj.aData.flight_id + "</a>";
+                  row = "<a href=\"/flights/" + obj.aData.flight_id + "/\" class=\"btn btn-mini\">Show</a> <a class=\"pin no-link\" style=\"visibility: hidden\" rel=\"tooltip-pin\" title=\"Activate this to show the flight on top of other flights on the map\">" + obj.aData.flight_id + "</a>";
                 return row;
               }
             }
           ],
           "fnCreatedRow": function(nRow, aData, iDataIndex) {
             $(nRow).find("[rel=tooltip]").tooltip();
-            $(nRow).find("[rel=tooltip-left]").tooltip({placement: 'left'});
+            $(nRow).find("[rel=tooltip-pin]").tooltip({placement: 'left'});
             $(nRow).find(".pin").each(function() {
               var sfid = parseInt($(this).text());
               if ($.inArray(sfid, pinnedFlights) >= 0) {
