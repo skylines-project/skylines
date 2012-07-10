@@ -194,7 +194,7 @@ MAP
     CONNECTION "dbname=skylines"
     DATA "the_geom from airspace using unique id"
     STATUS DEFAULT
-    OPACITY 50
+    OPACITY 40
  
     PROJECTION
       "init=epsg:4326"
@@ -226,7 +226,7 @@ MAP
     CONNECTION "dbname=skylines"
     DATA "the_geom from airspace using unique id"
     STATUS DEFAULT
-    OPACITY 50
+    OPACITY 40
 
     PROJECTION
       "init=epsg:4326"
@@ -309,7 +309,7 @@ MAP
     CONNECTION "dbname=skylines"
     DATA "the_geom from airspace using unique id"
     STATUS DEFAULT
-    OPACITY 50
+    OPACITY 40
         
     PROJECTION
       "init=epsg:4326"
@@ -431,7 +431,7 @@ MAP
     CONNECTION "dbname=skylines"
     DATA "the_geom from airspace using unique id"
     STATUS DEFAULT
-    OPACITY 50
+    OPACITY 40
 
     PROJECTION
       "init=epsg:4326"
@@ -488,7 +488,7 @@ MAP
     CONNECTION "dbname=skylines"
     DATA "the_geom from airspace using unique id"
     STATUS DEFAULT
-    OPACITY 50
+    OPACITY 40
 
     PROJECTION
       "init=epsg:4326"
