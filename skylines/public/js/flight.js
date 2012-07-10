@@ -50,6 +50,13 @@ function initFlightLayer() {
     strokeWidth: 2
   });
 
+  var trace_style = new OpenLayers.Style({
+    strokeColor: "${color}",
+    strokeWidth: 2,
+    strokeOpacity: 1.4,
+    strokeDashstyle: "dash"
+  });
+
   var plane_style = new OpenLayers.Style({
     // Set the external graphic and background graphic images.
     externalGraphic: "${getGraphic}",
@@ -78,6 +85,7 @@ function initFlightLayer() {
   var flightPathLayer = new OpenLayers.Layer.Vector("Flight", {
     styleMap: new OpenLayers.StyleMap({
       'default': default_style,
+      'trace': trace_style,
       'plane': plane_style
     })
   });
@@ -189,6 +197,33 @@ function addFlightFromJSON(url) {
       $.proxy(updateBarogram, { reset_y_axis: true })();
     }
   });
+};
+
+
+/**
+ * Function: addTrace
+ *
+ * Add a flight trace optimization path to the map.
+ *
+ * Parameters:
+ * lonlat - {Array(Object)} Array of LonLat pairs
+ */
+
+function addTrace(lonlat, color) {
+  var points = new Array();
+  for (var i = 0, len = lonlat.length; i < len; i++) {
+    points.push(new OpenLayers.Geometry.Point(lonlat[i][0], lonlat[i][1]).
+      transform(new OpenLayers.Projection("EPSG:4326"), map.getProjectionObject()) );
+  }
+
+  var trace = new OpenLayers.Geometry.LineString(points);
+  trace.clip = 1;
+
+  //var color = colors[0];
+  var feature = new OpenLayers.Feature.Vector(trace, { color: color });
+  feature.renderIntent = 'trace';
+
+  map.getLayersByName("Flight")[0].addFeatures(feature);
 };
 
 

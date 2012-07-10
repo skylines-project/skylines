@@ -1,5 +1,18 @@
 <?python
 page = 'flights'
+
+def add_trace_turnpoints(turnpoints):
+  def jsonify(location):
+    return '[{},{}]'.format(location.longitude, location.latitude)
+
+  return ','.join([jsonify(location) for location in turnpoints.locations])
+
+def add_trace(contest_type, trace_type, color):
+  trace_turnpoints = flight.get_trace_turnpoints(contest_type, trace_type)
+  if trace_turnpoints is None:
+    return None
+
+  return 'addTrace([{}], "{}");'.format(add_trace_turnpoints(trace_turnpoints), color);
 ?>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
@@ -48,6 +61,9 @@ page = 'flights'
         ${h.json.dumps(trace.barogram_h)},
         ${h.json.dumps(trace.zoom_levels)}
       );
+
+      ${add_trace('olc_plus', 'classic', '#FF2C73')}
+      ${add_trace('olc_plus', 'triangle', '#9F14FF')}
 
       /* ]]> */
       <py:if test="defined('other_flights')">
