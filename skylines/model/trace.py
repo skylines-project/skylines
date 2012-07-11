@@ -4,7 +4,7 @@ from datetime import datetime
 
 from sqlalchemy import ForeignKey, Column
 from sqlalchemy.dialects import postgresql
-from sqlalchemy.orm import relation
+from sqlalchemy.orm import relation, backref
 from sqlalchemy.types import String, Integer, DateTime
 from geoalchemy import WKTSpatialElement
 from geoalchemy.geometry import GeometryColumn, LineString, GeometryDDL
@@ -27,7 +27,7 @@ class Trace(DeclarativeBase):
 
     flight_id = Column(Integer, ForeignKey('flights.id'), nullable=False)
     flight = relation('Flight', primaryjoin=(flight_id == Flight.id),
-                      backref='traces')
+                      backref=backref('traces', cascade="all"))
 
     contest_type = Column(String, nullable=False)
     trace_type = Column(String, nullable=False)
