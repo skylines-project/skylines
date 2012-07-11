@@ -42,6 +42,14 @@ function initOpenLayers(id) {
   });
   map.addLayer(airspace);
 
+  var airspace_baselayer = airspace.clone();
+  airspace_baselayer.setIsBaseLayer(true);
+  airspace_baselayer.setName("Airspace only");
+  airspace_baselayer.events.register('visibilitychanged', this, function() {
+    airspace.setVisibility(!airspace_baselayer.getVisibility());
+  });
+  map.addLayer(airspace_baselayer);
+
   map.setCenter(new OpenLayers.LonLat(30, 0).
     transform(new OpenLayers.Projection("EPSG:4326"), map.getProjectionObject()),
     9);
