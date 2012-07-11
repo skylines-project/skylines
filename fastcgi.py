@@ -5,13 +5,23 @@
 
 import sys, os
 import thread
+import argparse
 import logging
 from paste.deploy import loadapp
 from flup.server.fcgi import WSGIServer
 
+parser = argparse.ArgumentParser(description='Run the SkyLines FastCGI daemon.')
+parser.add_argument('config_file', nargs='?', metavar='config.ini',
+                    default='/etc/skylines/production.ini',
+                    help='path to the configuration INI file')
+parser.add_argument('--logfile', nargs='?', metavar='PATH',
+                    help='path of the log file')
+args = parser.parse_args()
+
 # stderr doesn't work with FastCGI; the following is a hack to get a
 # log file with diagnostics anyway
-sys.stderr = sys.stdout = file('/var/log/skylines/console', 'a')
+if args.logfile:
+    sys.stderr = sys.stdout = file(args.logfile, 'a')
 
 prev_sys_path = list(sys.path)
 
@@ -26,9 +36,8 @@ sys.path.append(os.path.dirname(sys.argv[0]))
 
 thread.stack_size(524288)
 
-config_file = '/etc/skylines/production.ini'
-wsgi_app = loadapp('config:' + config_file)
-logging.config.fileConfig(config_file)
+wsgi_app = loadapp('config:' + os.path.abspath(args.config_file))
+logging.config.fileConfig(args.config_file)
 
 if __name__ == '__main__':
     WSGIServer(wsgi_app, minSpare=1, maxSpare=5, maxThreads=50).run()

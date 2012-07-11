@@ -5,12 +5,22 @@
 
 import sys, os
 import thread
+import argparse
 import mapscript
 from flup.server.fcgi import WSGIServer
 
+parser = argparse.ArgumentParser(description='Run the SkyLines MapScript FastCGI daemon.')
+parser.add_argument('map_file', nargs='?', metavar='airspace.map',
+                    default='/opt/skylines/src/assets/airspace/airspace.map',
+                    help='path to the airspace map file')
+parser.add_argument('--logfile', nargs='?', metavar='PATH',
+                    help='path of the log file')
+args = parser.parse_args()
+
 # stderr doesn't work with FastCGI; the following is a hack to get a
 # log file with diagnostics anyway
-sys.stderr = sys.stdout = file('/var/log/mapserver/console', 'a')
+if args.logfile:
+    sys.stderr = sys.stdout = file(args.logfile, 'a')
 
 prev_sys_path = list(sys.path)
 
@@ -30,7 +40,7 @@ def wsgi_app(environ, start_response):
         req = mapscript.OWSRequest()
         req.loadParamsFromURL(environ.get('QUERY_STRING'))
 
-        map = mapscript.mapObj('/opt/skylines/src/assets/airspace/airspace.map')
+        map = mapscript.mapObj(args.map_file)
 
         mapscript.msIO_installStdoutToBuffer()
         map.OWSDispatch(req)
