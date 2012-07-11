@@ -14,6 +14,8 @@ parser = argparse.ArgumentParser(description='Run the SkyLines FastCGI daemon.')
 parser.add_argument('config_file', nargs='?', metavar='config.ini',
                     default='/etc/skylines/production.ini',
                     help='path to the configuration INI file')
+parser.add_argument('--socket', nargs='?', metavar='PATH',
+                    help='path of the local socket')
 parser.add_argument('--logfile', nargs='?', metavar='PATH',
                     help='path of the log file')
 args = parser.parse_args()
@@ -40,4 +42,5 @@ wsgi_app = loadapp('config:' + os.path.abspath(args.config_file))
 logging.config.fileConfig(args.config_file)
 
 if __name__ == '__main__':
-    WSGIServer(wsgi_app, minSpare=1, maxSpare=5, maxThreads=50).run()
+    WSGIServer(wsgi_app, bindAddress=args.socket, umask=0,
+               minSpare=1, maxSpare=5, maxThreads=50).run()

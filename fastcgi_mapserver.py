@@ -13,6 +13,8 @@ parser = argparse.ArgumentParser(description='Run the SkyLines MapScript FastCGI
 parser.add_argument('map_file', nargs='?', metavar='airspace.map',
                     default='/opt/skylines/src/assets/airspace/airspace.map',
                     help='path to the airspace map file')
+parser.add_argument('--socket', nargs='?', metavar='PATH',
+                    help='path of the local socket')
 parser.add_argument('--logfile', nargs='?', metavar='PATH',
                     help='path of the log file')
 args = parser.parse_args()
@@ -61,5 +63,6 @@ def wsgi_app(environ, start_response):
         return ['An error occured\n' + mapscript.msIO_getStdoutBufferString()]
 
 if __name__ == '__main__':
-    WSGIServer(wsgi_app, minSpare=1, maxSpare=5, maxThreads=10).run()
+    WSGIServer(wsgi_app, bindAddress=args.socket, umask=0,
+               minSpare=1, maxSpare=5, maxThreads=10).run()
 
