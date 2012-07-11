@@ -55,7 +55,7 @@ class Airport(DeclarativeBase):
         airport = DBSession.query(cls, functions.distance(cls.location_wkt, location.to_wkt()).label('distance'))\
             .order_by(functions.distance(cls.location_wkt, location.to_wkt())).first()
 
-        if airport and airport.distance < 0.01:
+        if airport and airport.distance < 0.025:
             return airport.Airport
         else:
             return None
