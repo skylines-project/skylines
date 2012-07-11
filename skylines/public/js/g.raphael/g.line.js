@@ -77,7 +77,9 @@
             columns = null,
             dots = null,
             chart = paper.set(),
-            path = [];
+            path = [],
+            stripesx = (opts.stripes && opts.stripes.x) || [],
+            stripesy = (opts.stripes && opts.stripes.y) || [];
 
         for (var i = 0, ii = valuesy.length; i < ii; i++) {
             len = Math.max(len, valuesy[i].length);
@@ -95,6 +97,16 @@
             }
         }
 
+        var stripesx_shrinked, stripesy_shrinked;
+
+        if (opts.stripes) {
+          stripesx_shrinked = shrink(stripesx[opts.stripes.id], width - 2 * gutter);
+          stripesy_shrinked = shrink(stripesy[opts.stripes.id], width - 2 * gutter);
+        }
+
+        var stripes_miny = Math.min.apply(Math, stripesy[opts.stripes.id]),
+            stripes_maxy = Math.max.apply(Math, stripesy[opts.stripes.id]);
+
         var allx = Array.prototype.concat.apply([], valuesx_shrinked),
             ally = Array.prototype.concat.apply([], valuesy_shrinked),
             xdim = chartinst.snapEnds(Math.min.apply(Math, allx), Math.max.apply(Math, allx), valuesx_shrinked[0].length - 1),
@@ -106,6 +118,7 @@
             kx = (width - gutter * 2) / ((maxx - minx) || 1),
             ky = (height - gutter * 2) / ((maxy - miny) || 1);
 
+        var stripes = createStripes();
         var shades = createShades();
         var axis = createAxis();
 
@@ -122,6 +135,65 @@
                 }
             }
             return shades;
+        }
+
+        function initStripes() {
+            var stripes = paper.set(),
+                Y = y + gutter,
+                h = opts.stripes.height;
+
+            for (var dx = 0; dx < (width - 2 * gutter); dx++) {
+                var X = x + gutter + dx;
+
+                stripes.push(paper.path(["M", X, Y, "v", 0, h])
+                    .attr({ stroke: "#ffffff" }));
+            }
+
+            return stripes;
+        }
+
+        function createStripes() {
+            if (!opts.stripes) return;
+
+            var stripes = chart.stripes || initStripes();
+            var u = 0,
+                v = width - 2 * gutter;
+
+            var u_min = v,
+                v_max = u;
+            var base_color = opts.stripes.color || { h: 0.42, s: 1, l: 0.5 };
+            var stripes_range = opts.stripes.range || Math.max(1, stripes_maxy - stripes_miny);
+
+            for (var j = 0, jj = stripesy_shrinked.length - 1; j < jj; j++) {
+                u = Math.max(0, Math.round( (stripesx_shrinked[j] - minx) * kx )),
+                v = Math.min(width - 2 * gutter, Math.round( (stripesx_shrinked[j+1] - minx) * kx ));
+                var value = (stripesy_shrinked[j] - stripes_miny) / stripes_range;
+
+                u_min = Math.min(u, u_min);
+                v_max = Math.max(v, v_max);
+
+                for (u; u < v; u++) {
+                    // value is the saturation of the color from 0 to 1, where 0 is white and
+                    // 1 is full saturated.
+                    var color = paper.raphael.hsl(
+                        base_color.h * 100,
+                        base_color.s * 100,
+                        base_color.l * 100 + (100 - base_color.l * 100) * (1 - value)
+                    );
+                    stripes[u].attr({ stroke: color });
+                }
+            }
+
+            // reset stripes which are not set yet...
+            for (var i = u_min - 1; i >= 0; i--) {
+                stripes[i].attr({ stroke: "#ffffff" });
+            }
+
+            for (var i = Math.max(v_max, u_min); i < (width - 2 * gutter); i++) {
+                stripes[i].attr({ stroke: "#ffffff" });
+            }
+
+            return stripes;
         }
 
         function createAxis() {
@@ -283,6 +355,11 @@
         chart.symbols = symbols;
         chart.axis = axis;
 
+        if (opts.stripes) {
+            chart.push(stripes);
+            chart.stripes = stripes;
+        }
+
         chart.hoverColumn = function (fin, fout) {
             !columns && createColumns();
             columns.mouseover(fin).mouseout(fout);
@@ -388,6 +465,10 @@
                 }
             }
 
+            if (opts.stripes) {
+                stripesx_shrinked = shrink(stripesx[opts.stripes.id].slice(from[opts.stripes.id], to[opts.stripes.id]+1), width - 2 * gutter);
+                stripesy_shrinked = shrink(stripesy[opts.stripes.id].slice(from[opts.stripes.id], to[opts.stripes.id]+1), width - 2 * gutter);
+            }
 
             allx = Array.prototype.concat.apply([], valuesx_shrinked);
             xdim = chartinst.snapEnds(Math.min.apply(Math, allx), Math.max.apply(Math, allx), max_len - 1);
@@ -400,7 +481,9 @@
               ydim = chartinst.snapEnds(Math.min.apply(Math, ally), Math.max.apply(Math, ally), max_len - 1),
               miny = ydim.from,
               maxy = ydim.to,
-              ky = (height - gutter * 2) / ((maxy - miny) || 1);
+              ky = (height - gutter * 2) / ((maxy - miny) || 1),
+              stripes_miny = Math.min.apply(Math, stripesy[opts.stripes.id]),
+              stripes_maxy = Math.max.apply(Math, stripesy[opts.stripes.id]);
             }
 
             var res = createLines();
@@ -415,6 +498,8 @@
 
             chart.axis.remove();
             chart.axis = createAxis();
+
+            chart.stripes = createStripes();
         }
 
         chart.getProperties = function() {
