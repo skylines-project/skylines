@@ -20,6 +20,7 @@ from sqlalchemy.sql.expression import desc, and_, or_
 from sqlalchemy import func
 from repoze.what.predicates import not_anonymous, has_permission
 from skylines.model.geo import Location
+from datetime import date, timedelta
 
 class ClubSelectField(PropertySingleSelectField):
     def _my_update_params(self, d, nullable=False):
@@ -142,7 +143,8 @@ class UserController(BaseController):
     def index(self):
         return dict(page='settings', user=self.user,
                     distance_flights=self.get_distance_flights(),
-                    takeoff_locations=self.get_takeoff_locations())
+                    takeoff_locations=self.get_takeoff_locations(),
+                    last_year_statistics=self.get_last_year_statistics())
 
     @expose('skylines.templates.generic.form')
     def change_password(self, **kw):
@@ -268,6 +270,31 @@ class UserController(BaseController):
 
         distance_flights.sort()
         return distance_flights
+
+    def get_last_year_statistics(self):
+        query = DBSession.query(func.count('*').label('flights'),
+                                func.sum(Flight.olc_classic_distance).label('distance'),
+                                func.sum(Flight.duration).label('duration')) \
+                         .filter(Flight.pilot == self.user) \
+                         .filter(Flight.takeoff_time > (date.today() - timedelta(days=365))) \
+                         .first()
+
+        last_year_statistics = []
+
+        if query and query.flights > 0:
+            duration_hours = query.duration.days * 24 + query.duration.seconds / 3600
+
+            last_year_statistics = dict(flights = query.flights,
+                                        distance = query.distance,
+                                        duration = query.duration,
+                                        speed = float(query.distance) / duration_hours)
+        else:
+            last_year_statistics = dict(flights = 0,
+                                        distance = 0,
+                                        duration = timedelta(0),
+                                        speed = 0)
+
+        return last_year_statistics
 
     def get_takeoff_locations(self):
         return Location.get_clustered_locations(Flight.takeoff_location_wkt,
