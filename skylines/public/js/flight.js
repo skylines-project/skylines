@@ -359,7 +359,8 @@ function render_barogram(element) {
                         width: 1.5,
                         stripes: {
                           y: barogram_enl,
-                          height: element.innerHeight() - 30 } });
+                          height: element.innerHeight() - 30,
+                          visible: !($.browser.msie && (parseInt($.browser.version, 10) < 9)) } });
 
   // create position marker and it's elements.
   var position = barogram.set().hide();
@@ -451,6 +452,23 @@ function render_barogram(element) {
     hidePlanePosition();
     position && position.hide();
   });
+
+  var enl_label = $("<span>ENL</span>");
+  enl_label.css({
+    'top': 5,
+    'right': 2,
+    position: 'absolute',
+    color: linechart.getStripesState() ? '#ffbf29' : '#aaa',
+    'font-weight': 'bold',
+    cursor: 'pointer'
+  }).tooltip({
+    placement: 'left',
+    title: 'Click to toggle ENL display'
+  }).click(function(e) {
+    linechart.toggleStripes();
+    $(this).css({ color: linechart.getStripesState() ? '#ffbf29' : '#aaa' });
+  });
+  element.append(enl_label);
 
   // update the position marker at index in flight fid. x and y are relative to the linechart viewport.
   var hoverColumn = function(index, x, y, fid) {

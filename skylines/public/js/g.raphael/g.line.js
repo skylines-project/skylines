@@ -80,7 +80,8 @@
             path = [],
             primary = opts.primary || 0,
             stripesy = (opts.stripes && opts.stripes.y) || [],
-            inactive_opacity = opts.inactive_opacity || 0.3;
+            inactive_opacity = opts.inactive_opacity || 0.3,
+            stripes_visibility = opts.stripes.visible;
 
         for (var i = 0, ii = valuesy.length; i < ii; i++) {
             len = Math.max(len, valuesy[i].length);
@@ -152,7 +153,7 @@
         }
 
         function createStripes() {
-            if (!opts.stripes) return;
+            if (!opts.stripes || !stripes_visibility) return;
 
             var stripes = chart.stripes || initStripes();
             var u = 0,
@@ -531,6 +532,24 @@
                   opacity: (i == primary) ? 1 : inactive_opacity
                 });
             }
+        }
+
+        chart.toggleStripes = function() {
+            if (!opts.stripes) return;
+
+            stripes_visibility = !stripes_visibility;
+            if (stripes_visibility) {
+                stripes = createStripes();
+                chart.push(stripes.toBack());
+                chart.stripes = stripes;
+            } else {
+                chart.stripes.remove();
+                delete chart.stripes;
+            }
+        }
+
+        chart.getStripesState = function() {
+            return stripes_visibility && opts.stripes;
         }
 
         return chart;
