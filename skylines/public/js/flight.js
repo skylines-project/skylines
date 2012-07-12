@@ -425,6 +425,9 @@ function render_barogram(element) {
     // no flight found which is in range? return early, draw nothing.
     if (flights[top_flight].index == -1) return;
 
+    // set the top flight in the barogram
+    linechart.setPrimary(top_flight);
+
     // interpolate current height of top_flight
     var height = flights[top_flight].h[flights[top_flight].index] +
       (flights[top_flight].h[flights[top_flight].index+1] - flights[top_flight].h[flights[top_flight].index]) *
@@ -629,10 +632,16 @@ function updateBarogram(e) {
 
   if (none_in_range)
     // reset linechart zoom when no flight is visible in viewport
-    setTimeout(function() { linechart.zoomReset(reset_y_axis)}, 0);
+    setTimeout(function() {
+      linechart.zoomReset(reset_y_axis);
+      linechart.setPrimary(top_flight);
+    }, 0);
   else
     // zoom linechart
-    setTimeout(function() { linechart.zoomInto(total_first, total_last, reset_y_axis)}, 0);
+    setTimeout(function() {
+      linechart.zoomInto(total_first, total_last, reset_y_axis);
+      linechart.setPrimary(top_flight);
+    }, 0);
 };
 
 
@@ -675,6 +684,9 @@ function hoverMap() {
     if (nearest !== null) {
       // we expect the currently hovered flight is the top flight.
       top_flight = nearest.fid;
+
+      // set the top flight in the barogram
+      linechart.setPrimary(top_flight);
       showPlanePosition(nearest.from, nearest.along, nearest.fid);
 
       var prop = linechart.getProperties();
