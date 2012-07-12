@@ -9,11 +9,6 @@ from skylines.tracking.crc import check_crc, set_crc
 # More information about this protocol can be found in the XCSoar
 # source code, source file src/Tracking/SkyLines/Protocol.hpp
 
-# this refers to the XCSoar 6.4_alpha1 protocol; delete this when
-# alpha1 is deemed obsolete
-OLD_MAGIC = 0x5df4b67a
-OLD_TYPE_FIX = 1
-
 MAGIC = 0x5df4b67b
 TYPE_PING = 1
 TYPE_ACK = 2
@@ -30,51 +25,6 @@ FLAG_VARIO = 0x20
 FLAG_ENL = 0x40
 
 class TrackingServer(DatagramProtocol):
-    def oldFixReceived(self, host, key, payload):
-        """Compatibility with XCSoar 6.4_alpha1.  Remove when XCSoar
-        6.4_alpha1 is deemed obsolete."""
-        if len(payload) != 32: return
-        data = struct.unpack('!QIiiHHHhhH', payload)
-
-        pilot = User.by_tracking_key(key)
-        if not pilot:
-            log.err("No such pilot: %d" % key)
-            return
-
-        flags = data[0]
-
-        fix = TrackingFix()
-        fix.ip = host
-        fix.pilot = pilot
-
-        if flags & FLAG_LOCATION:
-            fix.location = Location(latitude=data[2] / 1000000.,
-                                    longitude=data[3] / 1000000.)
-
-        if flags & FLAG_TRACK:
-            fix.track = data[4]
-
-        if flags & FLAG_GROUND_SPEED:
-            fix.ground_speed = data[5] / 16.
-
-        if flags & FLAG_AIRSPEED:
-            fix.airspeed = data[6] / 16.
-
-        if flags & FLAG_ALTITUDE:
-            fix.altitude = data[7]
-
-        if flags & FLAG_VARIO:
-            fix.vario = data[8] / 256.
-
-        if flags & FLAG_ENL:
-            fix.engine_noise_level = data[9]
-
-        log.msg("%s %s %s" % (host, pilot, fix.location))
-
-        DBSession.add(fix)
-        DBSession.flush()
-        transaction.commit()
-
     def pingReceived(self, host, port, key, payload):
         if len(payload) != 8: return
         id, reserved, reserved2 = struct.unpack('!HHI', payload)
@@ -137,13 +87,6 @@ class TrackingServer(DatagramProtocol):
         if len(data) < 16: return
 
         header = struct.unpack('!IHHQ', data[:16])
-        if header[0] == OLD_MAGIC:
-            # Compatibility with XCSoar 6.4_alpha1.  Remove when
-            # XCSoar 6.4_alpha1 is deemed obsolete.
-            if header[2] == OLD_TYPE_FIX:
-                self.oldFixReceived(host, header[3], data[16:])
-            return
-
         if header[0] != MAGIC: return
         if not check_crc(data): return
 
