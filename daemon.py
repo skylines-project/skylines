@@ -23,6 +23,9 @@ conf = appconfig('config:' + os.path.abspath(args.conf_path))
 load_environment(conf.global_conf, conf.local_conf)
 
 if __name__ == '__main__':
+    from twisted.python import log
+    log.startLogging(sys.stdout)
+
     from twisted.internet import reactor
     from skylines.tracking.server import TrackingServer
     reactor.listenUDP(5597, TrackingServer())

@@ -1,4 +1,5 @@
 import struct
+from twisted.python import log
 from twisted.internet.protocol import DatagramProtocol
 from twisted.internet import reactor
 import transaction
@@ -37,7 +38,7 @@ class TrackingServer(DatagramProtocol):
 
         pilot = User.by_tracking_key(key)
         if not pilot:
-            print "No such pilot:", key, data
+            log.err("No such pilot: %d" % key)
             return
 
         flags = data[0]
@@ -68,7 +69,7 @@ class TrackingServer(DatagramProtocol):
         if flags & FLAG_ENL:
             fix.engine_noise_level = data[9]
 
-        print host, pilot, fix.location, data
+        log.msg("%s %s %s" % (host, pilot, fix.location))
 
         DBSession.add(fix)
         DBSession.flush()
@@ -95,7 +96,7 @@ class TrackingServer(DatagramProtocol):
 
         pilot = User.by_tracking_key(key)
         if not pilot:
-            print "No such pilot:", key, data
+            log.err("No such pilot: %d" % key)
             return
 
         flags = data[0]
@@ -126,15 +127,13 @@ class TrackingServer(DatagramProtocol):
         if flags & FLAG_ENL:
             fix.engine_noise_level = data[10]
 
-        print host, pilot, fix.location, data
+        log.msg("%s %s %s" % (host, pilot, fix.location))
 
         DBSession.add(fix)
         DBSession.flush()
         transaction.commit()
 
     def datagramReceived(self, data, (host, port)):
-        #print "received %r from %s:%d" % (data, host, port)
-
         if len(data) < 16: return
 
         header = struct.unpack('!IHHQ', data[:16])
@@ -147,8 +146,6 @@ class TrackingServer(DatagramProtocol):
 
         if header[0] != MAGIC: return
         if not check_crc(data): return
-
-        # XXX verify CRC
 
         if header[2] == TYPE_FIX:
             self.fixReceived(host, header[3], data[16:])
