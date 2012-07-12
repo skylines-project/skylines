@@ -2,6 +2,7 @@ import struct
 from twisted.python import log
 from twisted.internet.protocol import DatagramProtocol
 from twisted.internet import reactor
+from sqlalchemy.exc import SQLAlchemyError
 import transaction
 from skylines.model import DBSession, User, TrackingFix, Location
 from skylines.tracking.crc import check_crc, set_crc
@@ -80,8 +81,11 @@ class TrackingServer(DatagramProtocol):
         log.msg("%s %s %s" % (host, pilot, fix.location))
 
         DBSession.add(fix)
-        DBSession.flush()
-        transaction.commit()
+        try:
+            transaction.commit()
+        except SQLAlchemyError, e:
+            log.err(e, 'database error')
+            transaction.abort()
 
     def datagramReceived(self, data, (host, port)):
         if len(data) < 16: return
