@@ -22,12 +22,13 @@ var top_flight = 0;
 var barogram;
 
 /**
- * barogram_t and barogram_h
+ * barogram_t, barogram_h and barogram_enl
  *
- * {Array(Array(double))} - contains time and height values for the barogram.
+ * {Array(Array(double))} - contains time, height and enl values for the barogram.
  */
 var barogram_t = [];
 var barogram_h = [];
+var barogram_enl = [];
 
 
 /**
@@ -128,14 +129,16 @@ function initRedrawLayer(layer) {
  * _num_levels - {int} Number of levels encoded in _lonlat and _levels
  * _time - {String} Google polyencoded string of time values
  * _height - {String} Google polyencoded string of height values
+ * _enl - {String} Google polyencoded string of engine noise levels
  * zoom_levels - {Array(double)} Array of zoom levels where to switch between the LoD.
  *
- * Note: _lonlat, _levels, _time and _height MUST have the same number of elements when decoded.
+ * Note: _lonlat, _levels, _time, _enl, and _height MUST have the same number of elements when decoded.
  */
 
-function addFlight(sfid, _lonlat, _levels, _num_levels, _time, _height, zoom_levels) {
+function addFlight(sfid, _lonlat, _levels, _num_levels, _time, _height, _enl, zoom_levels) {
   var height = OpenLayers.Util.decodeGoogle(_height);
   var time = OpenLayers.Util.decodeGoogle(_time);
+  var enl = OpenLayers.Util.decodeGoogle(_enl);
   var lonlat = OpenLayers.Util.decodeGooglePolyline(_lonlat);
   var lod = OpenLayers.Util.decodeGoogleLoD(_levels, _num_levels);
 
@@ -165,6 +168,7 @@ function addFlight(sfid, _lonlat, _levels, _num_levels, _time, _height, zoom_lev
     lonlat: lonlat,
     t: time,
     h: height,
+    enl: enl,
     geo: flight,
     color: color,
     plane: plane,
@@ -178,6 +182,7 @@ function addFlight(sfid, _lonlat, _levels, _num_levels, _time, _height, zoom_lev
 
   barogram_t.push(flights[i].t);
   barogram_h.push(flights[i].h);
+  barogram_enl.push(flights[i].enl);
   top_flight = i;
 };
 
@@ -195,7 +200,8 @@ function addFlightFromJSON(url) {
       }
 
       addFlight(data.sfid, data.encoded.points, data.encoded.levels,
-                data.num_levels, data.barogram_t, data.barogram_h, data.zoom_levels);
+                data.num_levels, data.barogram_t, data.barogram_h,
+                data.enl, data.zoom_levels);
 
       initRedrawLayer(map.getLayersByName("Flight")[0]);
       $.proxy(updateBarogram, { reset_y_axis: true })();
@@ -350,7 +356,12 @@ function render_barogram(element) {
                         axisxstep: 8,
                         axisxfunc: formatSecondsAsTime,
                         colors: colors,
-                        width: 1.5 });
+                        width: 1.5,
+                        stripes: {
+                          x: barogram_t,
+                          y: barogram_enl,
+                          height: element.innerHeight() - 30,
+                          id: 0 } });
 
   // create position marker and it's elements.
   var position = barogram.set().hide();

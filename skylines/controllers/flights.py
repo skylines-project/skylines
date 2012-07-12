@@ -91,9 +91,10 @@ def get_flight_path(flight, threshold = 0.001, max_points = 3000):
 
     barogram_t = encoder.encodeList([fp[i][0] for i in range(len(fp)) if fixes['levels'][i] != -1])
     barogram_h = encoder.encodeList([fp[i][3] for i in range(len(fp)) if fixes['levels'][i] != -1])
+    enl = encoder.encodeList([fp[i][4] for i in range(len(fp)) if fixes['levels'][i] != -1])
 
     return dict(encoded=encoded, zoom_levels = zoom_levels, fixes = fixes,
-                barogram_t=barogram_t, barogram_h=barogram_h, sfid=flight.id)
+                barogram_t=barogram_t, barogram_h=barogram_h, enl=enl, sfid=flight.id)
 
 class FlightController(BaseController):
     def __init__(self, flight):
@@ -135,7 +136,7 @@ class FlightController(BaseController):
 
         return  dict(encoded=trace['encoded'], num_levels=trace['fixes']['numLevels'],
                      zoom_levels=trace['zoom_levels'], barogram_t=trace['barogram_t'],
-                     barogram_h=trace['barogram_h'], sfid=self.flight.id)
+                     barogram_h=trace['barogram_h'], enl=trace['enl'], sfid=self.flight.id)
 
     @expose('skylines.templates.generic.form')
     def change_pilot(self):

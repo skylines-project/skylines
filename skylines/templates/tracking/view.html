@@ -41,6 +41,7 @@ title = 'Live Tracking'
         ${trace.fixes.numLevels},
         ${h.json.dumps(trace.barogram_t)},
         ${h.json.dumps(trace.barogram_h)},
+        ${h.json.dumps(trace.enl)},
         ${h.json.dumps(trace.zoom_levels)}
       );
 
@@ -53,6 +54,7 @@ title = 'Live Tracking'
             ${trace.fixes.numLevels},
             ${h.json.dumps(trace.barogram_t)},
             ${h.json.dumps(trace.barogram_h)},
+            ${h.json.dumps(trace.enl)},
             ${h.json.dumps(trace.zoom_levels)}
           );
         </py:for>

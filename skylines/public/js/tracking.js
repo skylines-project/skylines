@@ -11,7 +11,7 @@ function updateFlightsFromJSON() {
       data: { last_update: flights[fid].last_update || null },
       success: function(data) {
         updateFlight(data.sfid, data.encoded.points, data.encoded.levels,
-                     data.num_levels, data.barogram_t, data.barogram_h);
+                     data.num_levels, data.barogram_t, data.barogram_h, data.enl);
 
         initRedrawLayer(map.getLayersByName("Flight")[0]);
         $.proxy(updateBarogram, { reset_y_axis: true })();
@@ -32,13 +32,15 @@ function updateFlightsFromJSON() {
  * _num_levels - {int} Number of levels encoded in _lonlat and _levels
  * _time - {String} Google polyencoded string of time values
  * _height - {String} Google polyencoded string of height values
+ * _enl - {String} Google polyencoded string of enl values
  *
- * Note: _lonlat, _levels, _time and _height MUST have the same number of elements when decoded.
+ * Note: _lonlat, _levels, _time, _enl and _height MUST have the same number of elements when decoded.
  */
 
-function updateFlight(tracking_id, _lonlat, _levels, _num_levels, _time, _height) {
+function updateFlight(tracking_id, _lonlat, _levels, _num_levels, _time, _height, _enl) {
   var height = OpenLayers.Util.decodeGoogle(_height);
   var time = OpenLayers.Util.decodeGoogle(_time);
+  var enl = OpenLayers.Util.decodeGoogle(_enl);
   var lonlat = OpenLayers.Util.decodeGooglePolyline(_lonlat);
   var lod = OpenLayers.Util.decodeGoogleLoD(_levels, _num_levels);
 
@@ -69,6 +71,7 @@ function updateFlight(tracking_id, _lonlat, _levels, _num_levels, _time, _height
   flight.geo.componentsLevel = flight.geo.componentsLevel.concat(lod.slice(1));
   flight.t = flight.t.concat(time.slice(1));
   flight.h = flight.h.concat(height.slice(1));
+  flight.enl = flight.enl.concat(enl.slice(1));
   flight.lonlat = flight.lonlat.concat(lonlat.slice(1));
 
   // recalculate bounds
@@ -82,4 +85,5 @@ function updateFlight(tracking_id, _lonlat, _levels, _num_levels, _time, _height
 
   barogram_t[flight_id] = barogram_t[flight_id].concat(time.slice(1));
   barogram_h[flight_id] = barogram_h[flight_id].concat(height.slice(1));
+  barogram_enl[flight_id] = barogram_enl[flight_id].concat(enl.slice(1));
 };
