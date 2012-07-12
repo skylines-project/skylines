@@ -54,7 +54,6 @@ function initFlightLayer() {
   var trace_style = new OpenLayers.Style({
     strokeColor: "${color}",
     strokeWidth: 2,
-    strokeOpacity: 1.4,
     strokeDashstyle: "dash",
     graphicZIndex: 1500
   });
