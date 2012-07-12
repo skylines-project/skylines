@@ -74,7 +74,7 @@ from skylines.lib.helpers import truncate
             <span py:replace="flight.takeoff_time.strftime('%H:%M')">10:00</span>-<span py:replace="flight.landing_time.strftime('%H:%M')">15:00</span>
           </py:if>
         </td>
-        <td py:if="'link' not in omitted_columns">
+        <td py:if="'link' not in omitted_columns" class="show">
           <a href="/flights/${flight.id}/" class="btn btn-mini">Show</a>
           <a class="pin no-link" style="visibility: hidden" rel="tooltip-pin">${flight.id}</a>
         </td>
