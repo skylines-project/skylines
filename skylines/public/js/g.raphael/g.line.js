@@ -78,8 +78,9 @@
             dots = null,
             chart = paper.set(),
             path = [],
-            stripesx = (opts.stripes && opts.stripes.x) || [],
-            stripesy = (opts.stripes && opts.stripes.y) || [];
+            primary = opts.primary || 0,
+            stripesy = (opts.stripes && opts.stripes.y) || [],
+            inactive_opacity = opts.inactive_opacity || 0.3;
 
         for (var i = 0, ii = valuesy.length; i < ii; i++) {
             len = Math.max(len, valuesy[i].length);
@@ -87,6 +88,7 @@
 
         var valuesx_shrinked = [];
         var valuesy_shrinked = [];
+        var stripesy_shrinked = [];
 
         for (i = 0, ii = valuesy.length; i < ii; i++) {
             valuesy_shrinked[i] = shrink(valuesy[i], width - 2 * gutter);
@@ -95,17 +97,14 @@
             if (valuesx[i]) {
                 valuesx_shrinked[i] = shrink(valuesx[i], width - 2 * gutter);
             }
+
+            if (opts.stripes) {
+                stripesy_shrinked[i] = shrink(stripesy[i], width - 2 * gutter);
+            }
         }
 
-        var stripesx_shrinked, stripesy_shrinked;
-
-        if (opts.stripes) {
-          stripesx_shrinked = shrink(stripesx[opts.stripes.id], width - 2 * gutter);
-          stripesy_shrinked = shrink(stripesy[opts.stripes.id], width - 2 * gutter);
-        }
-
-        var stripes_miny = Math.min.apply(Math, stripesy[opts.stripes.id]),
-            stripes_maxy = Math.max.apply(Math, stripesy[opts.stripes.id]);
+        var stripes_miny = Math.min.apply(Math, stripesy[primary]),
+            stripes_maxy = Math.max.apply(Math, stripesy[primary]);
 
         var allx = Array.prototype.concat.apply([], valuesx_shrinked),
             ally = Array.prototype.concat.apply([], valuesy_shrinked),
@@ -164,10 +163,10 @@
             var base_color = opts.stripes.color || { h: 0.42, s: 1, l: 0.5 };
             var stripes_range = opts.stripes.range || Math.max(1, stripes_maxy - stripes_miny);
 
-            for (var j = 0, jj = stripesy_shrinked.length - 1; j < jj; j++) {
-                u = Math.max(0, Math.round( (stripesx_shrinked[j] - minx) * kx )),
-                v = Math.min(width - 2 * gutter, Math.round( (stripesx_shrinked[j+1] - minx) * kx ));
-                var value = (stripesy_shrinked[j] - stripes_miny) / stripes_range;
+            for (var j = 0, jj = stripesy_shrinked[primary].length - 1; j < jj; j++) {
+                u = Math.max(0, Math.round( (valuesx_shrinked[primary][j] - minx) * kx )),
+                v = Math.min(width - 2 * gutter, Math.round( (valuesx_shrinked[primary][j+1] - minx) * kx ));
+                var value = (stripesy_shrinked[primary][j] - stripes_miny) / stripes_range;
 
                 u_min = Math.min(u, u_min);
                 v_max = Math.max(v, v_max);
@@ -221,7 +220,8 @@
                         "stroke-width": opts.width || 2,
                         "stroke-linejoin": "round",
                         "stroke-linecap": "round",
-                        "stroke-dasharray": opts.dash || ""
+                        "stroke-dasharray": opts.dash || "",
+                        opacity: (i == primary) ? 1 : inactive_opacity
                     }));
                 }
 
@@ -463,11 +463,10 @@
                     valuesx_shrinked[i] = shrink(valuesx[i].slice(from[i], to[i]+1), width - 2 * gutter);
                     if (max_len < valuesx_shrinked[i].length) max_len = valuesx_shrinked[i].length;
                 }
-            }
 
-            if (opts.stripes) {
-                stripesx_shrinked = shrink(stripesx[opts.stripes.id].slice(from[opts.stripes.id], to[opts.stripes.id]+1), width - 2 * gutter);
-                stripesy_shrinked = shrink(stripesy[opts.stripes.id].slice(from[opts.stripes.id], to[opts.stripes.id]+1), width - 2 * gutter);
+                if (opts.stripes) {
+                    stripesy_shrinked[i] = shrink(stripesy[i].slice(from[i], to[i]+1), width - 2 * gutter);
+                }
             }
 
             allx = Array.prototype.concat.apply([], valuesx_shrinked);
@@ -482,8 +481,8 @@
               miny = ydim.from,
               maxy = ydim.to,
               ky = (height - gutter * 2) / ((maxy - miny) || 1),
-              stripes_miny = Math.min.apply(Math, stripesy[opts.stripes.id]),
-              stripes_maxy = Math.max.apply(Math, stripesy[opts.stripes.id]);
+              stripes_miny = Math.min.apply(Math, stripesy[primary]),
+              stripes_maxy = Math.max.apply(Math, stripesy[primary]);
             }
 
             var res = createLines();
@@ -513,7 +512,25 @@
                      x: x,
                      y: y,
                      kx: kx,
-                     ky: ky };
+                     ky: ky,
+                     primary: primary };
+        }
+
+        chart.setPrimary = function(new_primary) {
+            if (new_primary == primary) return;
+
+            primary = new_primary;
+
+            stripes_miny = Math.min.apply(Math, stripesy[primary]);
+            stripes_maxy = Math.max.apply(Math, stripesy[primary]);
+
+            chart.stripes = createStripes();
+
+            for (var i = 0; i < chart.lines.length; i++) {
+                chart.lines[i].attr({
+                  opacity: (i == primary) ? 1 : inactive_opacity
+                });
+            }
         }
 
         return chart;
