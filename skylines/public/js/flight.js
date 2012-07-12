@@ -358,10 +358,8 @@ function render_barogram(element) {
                         colors: colors,
                         width: 1.5,
                         stripes: {
-                          x: barogram_t,
                           y: barogram_enl,
-                          height: element.innerHeight() - 30,
-                          id: 0 } });
+                          height: element.innerHeight() - 30 } });
 
   // create position marker and it's elements.
   var position = barogram.set().hide();
