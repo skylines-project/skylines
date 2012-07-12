@@ -124,6 +124,7 @@ class TrackingController(BaseController):
         subq = DBSession.query(TrackingFix.pilot_id,
                                func.max(TrackingFix.time).label('time')) \
                 .filter(TrackingFix.time >= datetime.now() - timedelta(hours=6)) \
+                .filter(TrackingFix.location_wkt != None) \
                 .group_by(TrackingFix.pilot_id) \
                 .subquery()
 
