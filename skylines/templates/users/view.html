@@ -188,6 +188,43 @@ def add_locations(locations):
         </table>
       </div>
 
+      <div class="span4" py:if="defined('last_year_statistics') and last_year_statistics.flights > 0">
+        <h2>Last 12 Months</h2>
+        <table class="table">
+          <thead>
+            <tr>
+              <th colspan="2">&nbsp;</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Flights</strong></td>
+              <td>${h.format_number(last_year_statistics.flights)}</td>
+            </tr>
+            <tr>
+              <td><strong>Distance</strong></td>
+              <td>
+                <span rel="tooltip" title="avg. ${h.format_number((last_year_statistics.distance / 1000) / last_year_statistics.flights)} km per flight">
+                  ${h.format_number(last_year_statistics.distance / 1000)} km
+                </span>
+              </td>
+            </tr>
+            <tr>
+              <td><strong>Flight Time</strong></td>
+              <td>
+                <span rel="tooltip" title="avg. ${h.format_timedelta(last_year_statistics.duration / last_year_statistics.flights)} Hours per flight">
+                  ${h.format_timedelta(last_year_statistics.duration)} Hours
+                </span>
+              </td>
+            </tr>
+            <tr>
+              <td><strong>Average Speed</strong></td>
+              <td>${h.format_number(int(last_year_statistics.speed / 1000))} km/h</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
       <div class="span12">
         <h2>Takeoff Locations</h2>
         <div id="map_canvas" style="width:100%; height:400pt;"></div>
