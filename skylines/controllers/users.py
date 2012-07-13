@@ -279,20 +279,20 @@ class UserController(BaseController):
                          .filter(Flight.takeoff_time > (date.today() - timedelta(days=365))) \
                          .first()
 
-        last_year_statistics = []
+        last_year_statistics = dict(flights = 0,
+                                    distance = 0,
+                                    duration = timedelta(0),
+                                    speed = 0)
 
-        duration_hours = query.duration.days * 24 + float(query.duration.seconds) / 3600
+        if query and query.flights > 0:
+            duration_hours = query.duration.days * 24 + float(query.duration.seconds) / 3600
 
-        if query and query.flights > 0 and duration_hours > 0:
-            last_year_statistics = dict(flights = query.flights,
-                                        distance = query.distance,
-                                        duration = query.duration,
-                                        speed = float(query.distance) / duration_hours)
-        else:
-            last_year_statistics = dict(flights = 0,
-                                        distance = 0,
-                                        duration = timedelta(0),
-                                        speed = 0)
+            if duration_hours > 0:
+                last_year_statistics['speed'] = float(query.distance) / duration_hours
+
+            last_year_statistics['flights'] = query.flights
+            last_year_statistics['distance'] = query.distance
+            last_year_statistics['duration'] = query.duration
 
         return last_year_statistics
 
