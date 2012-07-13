@@ -18,11 +18,14 @@ title = 'Upload Flight'
   </head>
 
   <body>
-    <form action="/flights/upload/update" method="post">
-      <p>
+    <form action="/flights/upload/update" method="post" py:strip="not success">
+      <p py:if="success">
         Your flights have been saved. You may want to change the flights aircraft types and registrations below.
         <br />
         ${Markup(SubmitButton(default="Update Aircraft Types and Registrations", css_class="btn"))}
+      </p>
+      <p py:if="not success">
+        No flight was saved.
       </p>
       <table class="table">
         <thead>
@@ -52,7 +55,7 @@ title = 'Upload Flight'
           </tr>
         </tbody>
       </table>
-      <p>
+      <p py:if="success">
         ${Markup(SubmitButton(default="Update Aircraft Types and Registrations", css_class="btn"))}
       </p>
     </form>

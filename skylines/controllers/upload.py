@@ -109,6 +109,7 @@ class UploadController(BaseController):
                 club_id = pilot.club_id
 
         flights = []
+        success = False
 
         for name, f in IterateUploadFiles(file):
             filename = files.sanitise_filename(name)
@@ -154,10 +155,11 @@ class UploadController(BaseController):
             flights.append((name, flight, None))
             DBSession.add(igc_file)
             DBSession.add(flight)
+            success = True
 
         DBSession.flush()
 
-        return dict(page='upload', flights=flights)
+        return dict(page='upload', flights=flights, success=success)
 
     @expose()
     def update(self, **kw):
