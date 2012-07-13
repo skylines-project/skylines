@@ -281,9 +281,9 @@ class UserController(BaseController):
 
         last_year_statistics = []
 
-        if query and query.flights > 0:
-            duration_hours = query.duration.days * 24 + float(query.duration.seconds) / 3600
+        duration_hours = query.duration.days * 24 + float(query.duration.seconds) / 3600
 
+        if query and query.flights > 0 and duration_hours > 0:
             last_year_statistics = dict(flights = query.flights,
                                         distance = query.distance,
                                         duration = query.duration,
