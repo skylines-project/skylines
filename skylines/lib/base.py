@@ -26,7 +26,7 @@ class BaseController(TGController):
         tmpl_context.identity = request.identity
         return TGController.__call__(self, environ, start_response)
 
-    def __before__(self, *args, **kw):
+    def _before(self, *args, **kw):
         if request.identity is not None and \
            'user' in request.identity and \
            request.identity['user'] is None:
