@@ -1,13 +1,13 @@
 # -*- coding: utf-8 -*-
-from skylines.lib.base import BaseController
-from tg import expose, abort, config, redirect
+
+from tg import TGController, expose, abort, config, redirect
 from pylons import request
 from string import split
 
 __all__ = ['StaticResourceController']
 
 
-class StaticResourceController(BaseController):
+class StaticResourceController(TGController):
     @expose()
     def _default(self, *args, **kw):
         if not request.path.startswith(self.mount_point):
