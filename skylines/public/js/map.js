@@ -55,7 +55,27 @@ function initOpenLayers(id) {
     9);
 
   map.addControl(new SimpleLayerSwitcher());
+
+  map.events.register('changebaselayer', this, function(data) {
+    $.cookie('base_layer', data.layer.name, { path: "/", expires: 365 });
+  });
+
+  map.events.register('addlayer', this, function() {
+    loadBaseLayerFromCookie()
+  });
 };
+
+function loadBaseLayerFromCookie() {
+  var base_layer = $.cookie('base_layer');
+  if (base_layer == null)
+    return;
+
+  for (var i = 0; i < this.map.layers.length; i++) {
+    var layer = this.map.layers[i];
+    if (layer.name == base_layer)
+      map.setBaseLayer(layer);
+  }
+}
 
 /**
  * Function: addBingLayers
