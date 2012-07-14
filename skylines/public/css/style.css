@@ -139,6 +139,10 @@ a.no-link {
   border-top-left-radius: 4px;
 }
 
+.olFullscreen {
+  background-color: #fff;
+}
+
 .olFullscreen .olControlAttribution {
   bottom: 100pt !important;
 }
