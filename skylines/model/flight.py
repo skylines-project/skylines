@@ -122,7 +122,7 @@ class Flight(DeclarativeBase):
         '''Returns a query object ordered by distance'''
         return DBSession.query(cls).order_by(desc(cls.olc_classic_distance))
 
-    def get_trace_turnpoints(self, contest_type, trace_type):
+    def get_optimised_contest_trace(self, contest_type, trace_type):
         from skylines.model.trace import Trace
         query = DBSession.query(Trace) \
                     .filter(Trace.contest_type == contest_type) \

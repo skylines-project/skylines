@@ -8,7 +8,7 @@ def add_trace_turnpoints(turnpoints):
   return ','.join([jsonify(location) for location in turnpoints.locations])
 
 def add_trace(contest_type, trace_type, color):
-  trace_turnpoints = flight.get_trace_turnpoints(contest_type, trace_type)
+  trace_turnpoints = flight.get_optimised_contest_trace(contest_type, trace_type)
   if trace_turnpoints is None:
     return None
 
