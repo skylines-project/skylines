@@ -68,7 +68,7 @@ var OpenLayers = {
     /**
      * Constant: VERSION_NUMBER
      */
-    VERSION_NUMBER: "Release 2.12-rc5",
+    VERSION_NUMBER: "Release 2.12",
 
     /**
      * Constant: singleFile
@@ -457,18 +457,13 @@ OpenLayers.String = {
      * 
      * Parameters:
      * value - {String}
-     * trimWhitespace - {Boolean}
      *
      * Returns:
      * {Number|String} a Number if the passed value is a number, a String
      *     otherwise. 
      */
-    numericIf: function(value, trimWhitespace) {
-        var originalValue = value;
-        if (trimWhitespace === true && value != null && value.replace) {
-            value = value.replace(/^\s*|\s*$/g, "");
-        }
-        return OpenLayers.String.isNumeric(value) ? parseFloat(value) : originalValue;
+    numericIf: function(value) {
+        return OpenLayers.String.isNumeric(value) ? parseFloat(value) : value;
     }
 
 };
@@ -2589,8 +2584,15 @@ OpenLayers.Util.isElement = function(o) {
  * {Boolean} true if the object is an array.
  */
 OpenLayers.Util.isArray = function(a) {
-    return (Object.prototype.toString.call(a) === '[object Array]');
+	return (Object.prototype.toString.call(a) === '[object Array]');
 };
+
+/** 
+ * Maintain existing definition of $.
+ */
+if(typeof window.$  === "undefined") {
+    window.$ = OpenLayers.Util.getElement;
+}
 
 /** 
  * Function: removeItem
@@ -2623,7 +2625,7 @@ OpenLayers.Util.removeItem = function(array, item) {
  * obj - {*}
  * 
  * Returns:
- * {Integer} The index at which the first object was found in the array.
+ * {Integer} The index at, which the first object was found in the array.
  *           If not found, returns -1.
  */
 OpenLayers.Util.indexOf = function(array, obj) {
@@ -2641,17 +2643,6 @@ OpenLayers.Util.indexOf = function(array, obj) {
 };
 
 
-/**
- * Property: dotless
- * {RegExp}
- * Compiled regular expression to match dots (".").  This is used for replacing
- *     dots in identifiers.  Because object identifiers are frequently used for
- *     DOM element identifiers by the library, we avoid using dots to make for
- *     more sensible CSS selectors.
- *
- * TODO: Use a module pattern to avoid bloating the API with stuff like this.
- */
-OpenLayers.Util.dotless = /\./g;
 
 /**
  * Function: modifyDOMElement
@@ -2661,8 +2652,7 @@ OpenLayers.Util.dotless = /\./g;
  *
  * Parameters:
  * element - {DOMElement} DOM element to modify.
- * id - {String} The element id attribute to set.  Note that dots (".") will be
- *     replaced with underscore ("_") in setting the element id.
+ * id - {String} The element id attribute to set.
  * px - {<OpenLayers.Pixel>|Object} The element left and top position,
  *                                  OpenLayers.Pixel or an object with
  *                                  a 'x' and 'y' properties.
@@ -2680,7 +2670,7 @@ OpenLayers.Util.modifyDOMElement = function(element, id, px, sz, position,
                                             border, overflow, opacity) {
 
     if (id) {
-        element.id = id.replace(OpenLayers.Util.dotless, "_");
+        element.id = id;
     }
     if (px) {
         element.style.left = px.x + "px";
@@ -2718,8 +2708,7 @@ OpenLayers.Util.modifyDOMElement = function(element, id, px, sz, position,
  * Parameters:
  * id - {String} An identifier for this element.  If no id is
  *               passed an identifier will be created 
- *               automatically.  Note that dots (".") will be replaced with
- *               underscore ("_") when generating ids.
+ *               automatically.
  * px - {<OpenLayers.Pixel>|Object} The element left and top position,
  *                                  OpenLayers.Pixel or an object with
  *                                  a 'x' and 'y' properties.
@@ -3452,7 +3441,6 @@ OpenLayers.Util.lastSeqID = 0;
  * 
  * Parameters:
  * prefix - {String} Optional string to prefix unique id. Default is "id_".
- *     Note that dots (".") in the prefix will be replaced with underscore ("_").
  * 
  * Returns:
  * {String} A unique id string, built on the passed in prefix.
@@ -3460,8 +3448,6 @@ OpenLayers.Util.lastSeqID = 0;
 OpenLayers.Util.createUniqueID = function(prefix) {
     if (prefix == null) {
         prefix = "id_";
-    } else {
-        prefix = prefix.replace(OpenLayers.Util.dotless, "_");
     }
     OpenLayers.Util.lastSeqID += 1; 
     return prefix + OpenLayers.Util.lastSeqID;        
@@ -4053,6 +4039,33 @@ OpenLayers.Util.getRenderedDimensions = function(contentHTML, size, options) {
         
     var containerElement = (options && options.containerElement) 
     	? options.containerElement : document.body;
+    
+    // Opera and IE7 can't handle a node with position:aboslute if it inherits
+    // position:absolute from a parent.
+    var parentHasPositionAbsolute = false;
+    var superContainer = null;
+    var parent = containerElement;
+    while (parent && parent.tagName.toLowerCase()!="body") {
+        var parentPosition = OpenLayers.Element.getStyle(parent, "position");
+        if(parentPosition == "absolute") {
+            parentHasPositionAbsolute = true;
+            break;
+        } else if (parentPosition && parentPosition != "static") {
+            break;
+        }
+        parent = parent.parentNode;
+    }
+    if(parentHasPositionAbsolute && (containerElement.clientHeight === 0 || 
+                                     containerElement.clientWidth === 0) ){
+        superContainer = document.createElement("div");
+        superContainer.style.visibility = "hidden";
+        superContainer.style.position = "absolute";
+        superContainer.style.overflow = "visible";
+        superContainer.style.width = document.body.clientWidth + "px";
+        superContainer.style.height = document.body.clientHeight + "px";
+        superContainer.appendChild(container);
+    }
+    container.style.position = "absolute";
 
     //fix a dimension, if specified.
     if (size) {
@@ -4087,25 +4100,10 @@ OpenLayers.Util.getRenderedDimensions = function(contentHTML, size, options) {
     container.appendChild(content);
     
     // append container to body for rendering
-    containerElement.appendChild(container);
-    
-    // Opera and IE7 can't handle a node with position:aboslute if it inherits
-    // position:absolute from a parent.
-    var parentHasPositionAbsolute = false;
-    var parent = container.parentNode;
-    while (parent && parent.tagName.toLowerCase()!="body") {
-        var parentPosition = OpenLayers.Element.getStyle(parent, "position");
-        if(parentPosition == "absolute") {
-            parentHasPositionAbsolute = true;
-            break;
-        } else if (parentPosition && parentPosition != "static") {
-            break;
-        }
-        parent = parent.parentNode;
-    }
-
-    if(!parentHasPositionAbsolute) {
-        container.style.position = "absolute";
+    if (superContainer) {
+        containerElement.appendChild(superContainer);
+    } else {
+        containerElement.appendChild(container);
     }
     
     // calculate scroll width of content and add corners and shadow width
@@ -4122,7 +4120,12 @@ OpenLayers.Util.getRenderedDimensions = function(contentHTML, size, options) {
 
     // remove elements
     container.removeChild(content);
-    containerElement.removeChild(container);
+    if (superContainer) {
+        superContainer.removeChild(container);
+        containerElement.removeChild(superContainer);
+    } else {
+        containerElement.removeChild(container);
+    }
     
     return new OpenLayers.Size(w, h);
 };
@@ -5026,8 +5029,7 @@ OpenLayers.Feature.Vector = OpenLayers.Class(OpenLayers.Feature, {
  * graphicZIndex - {Number} The integer z-index value to use in rendering.
  * graphicName - {String} Named graphic to use when rendering points.  Supported values include "circle" (default),
  *     "square", "star", "x", "cross", "triangle".
- * graphicTitle - {String} Tooltip when hovering over a feature. *deprecated*, use title instead
- * title - {String} Tooltip when hovering over a feature. Not supported by the canvas renderer.
+ * graphicTitle - {String} Tooltip for an external graphic.
  * backgroundGraphic - {String} Url to a graphic to be used as the background under an externalGraphic.
  * backgroundGraphicZIndex - {Number} The integer z-index value to use in rendering the background graphic.
  * backgroundXOffset - {Number} The x offset (in pixels) for the background graphic.
@@ -5197,7 +5199,7 @@ OpenLayers.Style = OpenLayers.Class({
     rules: null,
     
     /**
-     * APIProperty: context
+     * Property: context
      * {Object} An optional object with properties that symbolizers' property
      * values should be evaluated against. If no context is specified,
      * feature.attributes will be used
@@ -7311,14 +7313,12 @@ OpenLayers.Renderer.VML = OpenLayers.Class(OpenLayers.Renderer.Elements, {
         options = options || node._options;
         var fillColor = style.fillColor;
 
-        var title = style.title || style.graphicTitle;
-        if (title) {
-            node.title = title;
-        } 
-
         if (node._geometryClass === "OpenLayers.Geometry.Point") {
             if (style.externalGraphic) {
                 options.isFilled = true;
+                if (style.graphicTitle) {
+                    node.title=style.graphicTitle;
+                } 
                 var width = style.graphicWidth || style.graphicHeight;
                 var height = style.graphicHeight || style.graphicWidth;
                 width = width ? width : style.pointRadius*2;
@@ -10882,37 +10882,21 @@ OpenLayers.Geometry.LinearRing = OpenLayers.Class(
      * {<OpenLayers.Geometry.Point>} The centroid of the collection
      */
     getCentroid: function() {
-        if (this.components) {
-            var len = this.components.length;
-            if (len > 0 && len <= 2) {
-                return this.components[0].clone();
-            } else if (len > 2) {
-                var sumX = 0.0;
-                var sumY = 0.0;
-                var x0 = this.components[0].x;
-                var y0 = this.components[0].y;
-                var area = -1 * this.getArea();
-                if (area != 0) {
-                    for (var i = 0; i < len - 1; i++) {
-                        var b = this.components[i];
-                        var c = this.components[i+1];
-                        sumX += (b.x + c.x - 2 * x0) * ((b.x - x0) * (c.y - y0) - (c.x - x0) * (b.y - y0));
-                        sumY += (b.y + c.y - 2 * y0) * ((b.x - x0) * (c.y - y0) - (c.x - x0) * (b.y - y0));
-                    }
-                    var x = x0 + sumX / (6 * area);
-                    var y = y0 + sumY / (6 * area);
-                } else {
-                    for (var i = 0; i < len - 1; i++) {
-                        sumX += this.components[i].x;
-                        sumY += this.components[i].y;
-                    }
-                    var x = sumX / (len - 1);
-                    var y = sumY / (len - 1);
-                }
-                return new OpenLayers.Geometry.Point(x, y);
-            } else {
-                return null;
+        if (this.components && (this.components.length > 2)) {
+            var sumX = 0.0;
+            var sumY = 0.0;
+            for (var i = 0; i < this.components.length - 1; i++) {
+                var b = this.components[i];
+                var c = this.components[i+1];
+                sumX += (b.x + c.x) * (b.x * c.y - c.x * b.y);
+                sumY += (b.y + c.y) * (b.x * c.y - c.x * b.y);
             }
+            var area = -1 * this.getArea();
+            var x = sumX / (6 * area);
+            var y = sumY / (6 * area);
+            return new OpenLayers.Geometry.Point(x, y);
+        } else {
+            return null;
         }
     },
 
@@ -11672,9 +11656,11 @@ OpenLayers.Event = {
         if (elementObservers) {
             for(var i = elementObservers.length-1; i >= 0; i--) {
                 var entry = elementObservers[i];
-                OpenLayers.Event.stopObserving.apply(this, [
-                    entry.element, entry.name, entry.observer, entry.useCapture
-                ]);
+                var args = new Array(entry.element,
+                                     entry.name,
+                                     entry.observer,
+                                     entry.useCapture);
+                var removed = OpenLayers.Event.stopObserving.apply(this, args);
             }
         }
     },
@@ -13353,7 +13339,6 @@ OpenLayers.Map = OpenLayers.Class({
              * be properly set below.
              */
             delete this.center;
-            delete this.zoom;
             this.addLayers(options.layers);
             // set center (and optionally zoom)
             if (options.center && !this.getCenter()) {
@@ -15652,11 +15637,6 @@ OpenLayers.Layer = OpenLayers.Class({
 
         this.metadata = {};
         
-        options = OpenLayers.Util.extend({}, options);
-        // make sure we respect alwaysInRange if set on the prototype
-        if (this.alwaysInRange != null) {
-            options.alwaysInRange = this.alwaysInRange;
-        }
         this.addOptions(options);
 
         this.name = name;
@@ -16173,7 +16153,7 @@ OpenLayers.Layer = OpenLayers.Class({
                 alwaysInRange = false;
             }
         }
-        if(this.options.alwaysInRange == null) {
+        if(this.alwaysInRange == null) {
             this.alwaysInRange = alwaysInRange;
         }
 
@@ -17564,9 +17544,9 @@ OpenLayers.Tile.Image = OpenLayers.Class(OpenLayers.Tile, {
      */
     setImgSrc: function(url) {
         var img = this.imgDiv;
+        img.style.visibility = 'hidden';
+        img.style.opacity = 0;
         if (url) {
-            img.style.visibility = 'hidden';
-            img.style.opacity = 0;
             // don't set crossOrigin if the url is a data URL
             if (this.crossOriginKeyword) {
                 if (url.substr(0, 5) !== 'data:') {
@@ -17576,13 +17556,6 @@ OpenLayers.Tile.Image = OpenLayers.Class(OpenLayers.Tile, {
                 }
             }
             img.src = url;
-        } else {
-            // Remove reference to the image, and leave it to the browser's
-            // caching and garbage collection.
-            this.imgDiv = null;
-            if (img.parentNode) {
-                img.parentNode.removeChild(img);
-            }
         }
     },
     
@@ -20936,12 +20909,6 @@ OpenLayers.Control = OpenLayers.Class({
      */
     active: null,
 
-    /**
-     * Property: handlerOptions
-     * {Object} Used to set non-default properties on the control's handler
-     */
-    handlerOptions: null,
-
     /** 
      * Property: handler 
      * {<OpenLayers.Handler>} null
@@ -21438,8 +21405,7 @@ OpenLayers.Handler = OpenLayers.Class({
         var keyModifiers =
             (evt.shiftKey ? OpenLayers.Handler.MOD_SHIFT : 0) |
             (evt.ctrlKey  ? OpenLayers.Handler.MOD_CTRL  : 0) |
-            (evt.altKey   ? OpenLayers.Handler.MOD_ALT   : 0) |
-            (evt.metaKey  ? OpenLayers.Handler.MOD_META  : 0);
+            (evt.altKey   ? OpenLayers.Handler.MOD_ALT   : 0);
     
         /* if it differs from the handler object's key mask,
            bail out of the event handler */
@@ -21532,12 +21498,12 @@ OpenLayers.Handler = OpenLayers.Class({
      *     to get more information about the event that the handler is
      *     processing.
      *
-     * This allows modifier keys on the event to be checked (alt, shift, ctrl,
-     *     and meta cannot be checked with the keyboard handler).  For a
+     * This allows modifier keys on the event to be checked (alt, shift,
+     *     and ctrl cannot be checked with the keyboard handler).  For a
      *     control to determine which modifier keys are associated with the
      *     event that a handler is currently processing, it should access
      *     (code)handler.evt.altKey || handler.evt.shiftKey ||
-     *     handler.evt.ctrlKey || handler.evt.metaKey(end).
+     *     handler.evt.ctrlKey(end).
      *
      * Parameters:
      * evt - {Event} The browser event.
@@ -21584,12 +21550,6 @@ OpenLayers.Handler.MOD_CTRL  = 2;
  * If set as the <keyMask>, <checkModifiers> returns false if Alt is down.
  */
 OpenLayers.Handler.MOD_ALT   = 4;
-
-/**
- * Constant: OpenLayers.Handler.MOD_META
- * If set as the <keyMask>, <checkModifiers> returns false if Cmd is down.
- */
-OpenLayers.Handler.MOD_META  = 8;
 
 
 /* ======================================================================
@@ -23845,6 +23805,14 @@ OpenLayers.Handler.MouseWheel = OpenLayers.Class(OpenLayers.Handler, {
      */
     wheelListener: null,
 
+    /** 
+     * Property: mousePosition
+     * {<OpenLayers.Pixel>} mousePosition is necessary because
+     * evt.clientX/Y is buggy in Moz on wheel events, so we cache and use the
+     * value from the last mousemove.
+     */
+    mousePosition: null,
+
     /**
      * Property: interval
      * {Integer} In order to increase server performance, an interval (in 
@@ -23870,7 +23838,7 @@ OpenLayers.Handler.MouseWheel = OpenLayers.Class(OpenLayers.Handler, {
      *     negative)
      */
     cumulative: true,
-    
+
     /**
      * Constructor: OpenLayers.Handler.MouseWheel
      *
@@ -23917,13 +23885,12 @@ OpenLayers.Handler.MouseWheel = OpenLayers.Class(OpenLayers.Handler, {
         
         // Ride up the element's DOM hierarchy to determine if it or any of 
         //  its ancestors was: 
-        //   * specifically marked as scrollable (CSS overflow property)
-        //   * one of our layer divs or a div marked as scrollable
-        //     ('olScrollable' CSS class)
+        //   * specifically marked as scrollable
+        //   * one of our layer divs
         //   * the map div
         //
         var overScrollableDiv = false;
-        var allowScroll = false;
+        var overLayerDiv = false;
         var overMapDiv = false;
         
         var elem = OpenLayers.Event.element(e);
@@ -23931,13 +23898,12 @@ OpenLayers.Handler.MouseWheel = OpenLayers.Class(OpenLayers.Handler, {
 
             if (!overScrollableDiv) {
                 try {
-                    var overflow;
                     if (elem.currentStyle) {
                         overflow = elem.currentStyle["overflow"];
                     } else {
                         var style = 
                             document.defaultView.getComputedStyle(elem, null);
-                        overflow = style.getPropertyValue("overflow");
+                        var overflow = style.getPropertyValue("overflow");
                     }
                     overScrollableDiv = ( overflow && 
                         (overflow == "auto") || (overflow == "scroll") );
@@ -23947,18 +23913,15 @@ OpenLayers.Handler.MouseWheel = OpenLayers.Class(OpenLayers.Handler, {
                 }
             }
 
-            if (!allowScroll) {
-                allowScroll = OpenLayers.Element.hasClass(elem, 'olScrollable');
-                if (!allowScroll) {
-                    for (var i = 0, len = this.map.layers.length; i < len; i++) {
-                        // Are we in the layer div? Note that we have two cases
-                        // here: one is to catch EventPane layers, which have a
-                        // pane above the layer (layer.pane)
-                        var layer = this.map.layers[i];
-                        if (elem == layer.div || elem == layer.pane) {
-                            allowScroll = true;
-                            break;
-                        }
+            if (!overLayerDiv) {
+                for(var i=0, len=this.map.layers.length; i<len; i++) {
+                    // Are we in the layer div? Note that we have two cases
+                    // here: one is to catch EventPane layers, which have a 
+                    // pane above the layer (layer.pane)
+                    if (elem == this.map.layers[i].div 
+                        || elem == this.map.layers[i].pane) { 
+                        overLayerDiv = true;
+                        break;
                     }
                 }
             }
@@ -23974,7 +23937,7 @@ OpenLayers.Handler.MouseWheel = OpenLayers.Class(OpenLayers.Handler, {
         //
         //    otherwise 
         // 
-        //    If we are over the layer div or a 'olScrollable' div:
+        //    If we are over the layer div: 
         //     * zoom/in out
         //     then
         //     * kill event (so as not to also scroll the page after zooming)
@@ -23985,23 +23948,18 @@ OpenLayers.Handler.MouseWheel = OpenLayers.Class(OpenLayers.Handler, {
         //        layerswitcher or the pan/zoom control)
         //
         if (!overScrollableDiv && overMapDiv) {
-            if (allowScroll) {
+            if (overLayerDiv) {
                 var delta = 0;
                 if (!e) {
                     e = window.event;
                 }
-                
                 if (e.wheelDelta) {
-                    delta = e.wheelDelta;
-                    if (delta % 160 === 0) {
-                        // opera have steps of 160 instead of 120
-                        delta = delta * 0.75;
+                    delta = e.wheelDelta/120; 
+                    if (window.opera && window.opera.version() < 9.2) {
+                        delta = -delta;
                     }
-                    delta = delta / 120;
                 } else if (e.detail) {
-                    // detail in Firefox on OS X is 1/3 of Windows
-                    // so force delta 1 / -1
-                    delta = - (e.detail / Math.abs(e.detail));
+                    delta = -e.detail / 3;
                 }
                 this.delta = this.delta + delta;
 
@@ -24034,7 +23992,23 @@ OpenLayers.Handler.MouseWheel = OpenLayers.Class(OpenLayers.Handler, {
         this.delta = 0;
         
         if (delta) {
-            e.xy = this.map.events.getMousePosition(e);
+            // add the mouse position to the event because mozilla has 
+            // a bug with clientX and clientY (see 
+            // https://bugzilla.mozilla.org/show_bug.cgi?id=352179)
+            // getLonLatFromViewPortPx(e) returns wrong values
+            if (this.mousePosition) {
+                e.xy = this.mousePosition;
+            } 
+            if (!e.xy) {
+                // If the mouse hasn't moved over the map yet, then
+                // we don't have a mouse position (in FF), so we just
+                // act as if the mouse was at the center of the map.
+                // Note that we can tell we are in the map -- and 
+                // this.map is ensured to be true above.
+                e.xy = this.map.getPixelFromLonLat(
+                    this.map.getCenter()
+                );
+            }
             if (delta < 0) {
                 this.callback("down", [e, this.cumulative ? delta : -1]);
             } else {
@@ -24043,6 +24017,20 @@ OpenLayers.Handler.MouseWheel = OpenLayers.Class(OpenLayers.Handler, {
         }
     },
     
+    /**
+     * Method: mousemove
+     * Update the stored mousePosition on every move.
+     * 
+     * Parameters:
+     * evt - {Event} The browser event
+     *
+     * Returns: 
+     * {Boolean} Allow event propagation
+     */
+    mousemove: function (evt) {
+        this.mousePosition = evt.xy;
+    },
+
     /**
      * Method: activate 
      */
@@ -24351,17 +24339,15 @@ OpenLayers.Control.Navigation = OpenLayers.Class(OpenLayers.Control, {
      * deltaZ - {Integer}
      */
     wheelChange: function(evt, deltaZ) {
-        if (!this.map.fractionalZoom) {
-            deltaZ =  Math.round(deltaZ);
-        }
         var currentZoom = this.map.getZoom();
+
         var newZoom;
 
         if (this.map.fractionalZoom && this.forceFixedZoomLevel &&
             currentZoom != Math.round(currentZoom)) {
             newZoom = (deltaZ < 0)?Math.floor(currentZoom):Math.ceil(currentZoom);
         } else {
-            newZoom = this.map.getZoom() + deltaZ;
+            newZoom = this.map.getZoom() + Math.round(deltaZ);
         }
 
         newZoom = Math.max(newZoom, 0);
@@ -26435,9 +26421,8 @@ OpenLayers.Renderer.Canvas = OpenLayers.Class(OpenLayers.Renderer, {
     drawExternalGraphic: function(geometry, style, featureId) {
         var img = new Image();
 
-        var title = style.title || style.graphicTitle;        
-        if (title) {
-            img.title = title;           
+        if (style.graphicTitle) {
+            img.title = style.graphicTitle;           
         }
 
         var width = style.graphicWidth || style.graphicHeight;
@@ -26994,7 +26979,7 @@ OpenLayers.Renderer.Canvas = OpenLayers.Class(OpenLayers.Renderer, {
                 if (data[3] === 255) { // antialiased
                     var id = data[2] + (256 * (data[1] + (256 * data[0])));
                     if (id) {
-                        featureId = "OpenLayers_Feature_Vector_" + (id - 1 + this.hitOverflow);
+                        featureId = "OpenLayers.Feature.Vector_" + (id - 1 + this.hitOverflow);
                         try {
                             feature = this.features[featureId][0];
                         } catch(err) {
@@ -27342,22 +27327,6 @@ OpenLayers.Renderer.SVG = OpenLayers.Class(OpenLayers.Renderer.Elements, {
     setStyle: function(node, style, options) {
         style = style  || node._style;
         options = options || node._options;
-
-        var title = style.title || style.graphicTitle;
-        if (title) {
-            node.setAttributeNS(null, "title", title);
-            //Standards-conformant SVG
-            // Prevent duplicate nodes. See issue https://github.com/openlayers/openlayers/issues/92 
-            var titleNode = node.getElementsByTagName("title");
-            if (titleNode.length > 0) {
-                titleNode[0].firstChild.textContent = title;
-            } else {
-                var label = this.nodeFactory(null, "title");
-                label.textContent = title;
-                node.appendChild(label);
-            }
-        }
-
         var r = parseFloat(node.getAttributeNS(null, "r"));
         var widthFactor = 1;
         var pos;
@@ -27367,6 +27336,20 @@ OpenLayers.Renderer.SVG = OpenLayers.Class(OpenLayers.Renderer.Elements, {
                 node.style.visibility = "hidden";
             } else if (style.externalGraphic) {
                 pos = this.getPosition(node);
+                
+                if (style.graphicTitle) {
+                    node.setAttributeNS(null, "title", style.graphicTitle);
+                    //Standards-conformant SVG
+                    // Prevent duplicate nodes. See issue https://github.com/openlayers/openlayers/issues/92 
+                    var titleNode = node.getElementsByTagName("title");
+                    if (titleNode.length > 0) {
+                        titleNode[0].firstChild.textContent = style.graphicTitle;
+                    } else {
+                        var label = this.nodeFactory(null, "title");
+                        label.textContent = style.graphicTitle;
+                        node.appendChild(label);
+                    }
+                }
                 if (style.graphicWidth && style.graphicHeight) {
                   node.setAttributeNS(null, "preserveAspectRatio", "none");
                 }
@@ -28515,18 +28498,6 @@ OpenLayers.Layer.Bing = OpenLayers.Class(OpenLayers.Layer.XYZ, {
                 res.zoomMax + 1 - res.zoomMin, this.numZoomLevels
             )
         }, true);
-        this.updateAttribution();
-    },
-
-    /**
-     * Method: drawTileFromQueue
-     * Draws the first tile from the tileQueue, and unqueues that tile
-     */
-    drawTileFromQueue: function() {
-        // don't start working on the queue before we have a url from initLayer
-        if (this.url) {
-            OpenLayers.Layer.XYZ.prototype.drawTileFromQueue.apply(this, arguments);
-        }
     },
 
     /**
@@ -28536,6 +28507,9 @@ OpenLayers.Layer.Bing = OpenLayers.Class(OpenLayers.Layer.XYZ, {
      * bounds - {<OpenLayers.Bounds>}
      */
     getURL: function(bounds) {
+        if (!this.url) {
+            return;
+        }
         var xyz = this.getXYZ(bounds), x = xyz.x, y = xyz.y, z = xyz.z;
         var quadDigits = [];
         for (var i = z; i > 0; --i) {
@@ -28603,6 +28577,7 @@ OpenLayers.Layer.Bing = OpenLayers.Class(OpenLayers.Layer.XYZ, {
      */
     setMap: function() {
         OpenLayers.Layer.XYZ.prototype.setMap.apply(this, arguments);
+        this.updateAttribution();
         this.map.events.register("moveend", this, this.updateAttribution);
     },
     
