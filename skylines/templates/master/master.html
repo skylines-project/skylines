@@ -19,6 +19,8 @@
         html_title = title
         if defined('tagline'):
           html_title = html_title + ' ' + tagline
+        if defined('tagline_link_text'):
+          html_title = html_title + ' ' + unicode(tagline_link_text)
 
         html_title = html_title + ' - '
 
