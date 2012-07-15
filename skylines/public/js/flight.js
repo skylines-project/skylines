@@ -387,17 +387,11 @@ function setFlightTime(time) {
   // find the position indexes of all flight available.
   setIndexFromTime(time);
 
-  // we'd like to have an flight within the current range as primary_flight.
-  if (flights[primary_flight].index == -1) {
-    // our current top flight is out of range. find first flight in range...
-    for (primary_flight in flights) if (flights[primary_flight].index != -1) break;
-  }
+  // set the primary flight
+  setPrimaryFlight(primary_flight);
 
   // no flight found which is in range? return early, draw nothing.
   if (flights[primary_flight].index == -1) return;
-
-  // set the top flight in the barogram
-  barogram.linechart.setPrimary(primary_flight);
 
   // interpolate current height of primary_flight
   var height = flights[primary_flight].h[flights[primary_flight].index] +
@@ -416,6 +410,29 @@ function setFlightTime(time) {
     if (flights[fid].index == -1) continue;
 
     showPlanePosition(flights[fid].index, flights[fid].dx, fid, (fid!=primary_flight));
+  }
+}
+
+/**
+ * Function: setPrimaryFlight
+ *
+ * Sets the primary flight. Try to set it to primary, fallback to another flight
+ *
+ * Parameters:
+ * primary - {Integer} primary flight
+ */
+function setPrimaryFlight(primary) {
+  // we'd like to have an flight within the current range as primary_flight.
+  if (flights[primary].index == -1) {
+    // our current primary flight is out of range. find first flight in range...
+    for (primary in flights) if (flights[primary].index != -1) break;
+  }
+
+  // the primary flight has changed...
+  if (primary_flight != primary) {
+    // update barogram and set primary_flight if it changed
+    barogram.linechart.setPrimary(primary);
+    primary_flight = primary;
   }
 }
 
@@ -761,7 +778,7 @@ function hoverMap() {
       var x = flights[nearest.fid].t[nearest.from] + (flights[nearest.fid].t[nearest.from+1]-flights[nearest.fid].t[nearest.from])*nearest.along;
 
       // we expect the currently hovered flight is the top flight.
-      primary_flight = nearest.fid;
+      setPrimaryFlight(nearest.fid);
 
       // set the map time to x
       setFlightTime(x);
