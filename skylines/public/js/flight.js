@@ -269,7 +269,9 @@ function addContest(name, lonlat, times, visible, sfid) {
     color: color,
     sfid: sfid
   });
-  feature.renderIntent = 'contest';
+
+  // show the contest traces only for the first flight by default
+  feature.renderIntent = (flights.length == 0) ? 'contest' : 'hidden';
 
   map.getLayersByName("Flight")[0].addFeatures(feature);
 
