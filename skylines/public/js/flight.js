@@ -55,7 +55,7 @@ function initFlightLayer() {
     graphicZIndex: 1000
   });
 
-  var trace_style = new OpenLayers.Style({
+  var contest_style = new OpenLayers.Style({
     strokeColor: "${color}",
     strokeWidth: 2,
     strokeDashstyle: "dash",
@@ -90,7 +90,7 @@ function initFlightLayer() {
   var flightPathLayer = new OpenLayers.Layer.Vector("Flight", {
     styleMap: new OpenLayers.StyleMap({
       'default': default_style,
-      'trace': trace_style,
+      'contest': contest_style,
       'plane': plane_style
     }),
     rendererOptions: {
@@ -258,7 +258,7 @@ function addContest(name, lonlat, times, visible) {
 
   var color = contest_colors[name] || '#ff2c73';
   var feature = new OpenLayers.Feature.Vector(trace, { color: color });
-  feature.renderIntent = 'trace';
+  feature.renderIntent = 'contest';
 
   map.getLayersByName("Flight")[0].addFeatures(feature);
 
