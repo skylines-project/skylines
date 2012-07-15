@@ -753,10 +753,6 @@ function hoverMap() {
     // search for a aircraft position within the bounding box
     var nearest = searchForPlane(new OpenLayers.Bounds(ll.lon, ll.lat, ur.lon, ur.lat), loc);
 
-    // hide everything
-    hidePlanePosition();
-    linechart.hoverColumn.position.hide();
-
     // if there's a aircraft within the bounding box, show the plane icon and draw
     // a position marker on the linechart.
     if (nearest !== null) {
@@ -769,6 +765,10 @@ function hoverMap() {
 
       // set the map time to x
       setFlightTime(x);
+    } else {
+      // hide everything
+      hidePlanePosition();
+      linechart.hoverColumn.position.hide();
     }
   });
 }
