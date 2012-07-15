@@ -183,7 +183,7 @@ function addFlight(sfid, _lonlat, _levels, _num_levels, _time, _height, _enl, zo
       visible: true // this is only valid for the contests of this flight.
     });
 
-    markers.push(addContest(_contests[i].name, turnpoints, times, true));
+    markers.push(addContest(_contests[i].name, turnpoints, times, true, sfid));
   }
 
   flights.push({
@@ -248,8 +248,9 @@ function addFlightFromJSON(url) {
  * lonlat - {Array(Object)} Array of LonLat pairs
  * times - {Array(Integer)} Array of times
  * visible - {Bool} Flag weather to show the trace or not
+ * sfid - {Integer} The SkyLines flight id this contest trace belongs to
  */
-function addContest(name, lonlat, times, visible) {
+function addContest(name, lonlat, times, visible, sfid) {
   var points = new Array();
   for (var i = 0, len = lonlat.length; i < len; i++) {
     points.push(new OpenLayers.Geometry.Point(lonlat[i].lon, lonlat[i].lat).
@@ -259,7 +260,10 @@ function addContest(name, lonlat, times, visible) {
   var trace = new OpenLayers.Geometry.LineString(points);
 
   var color = contest_colors[name] || '#ff2c73';
-  var feature = new OpenLayers.Feature.Vector(trace, { color: color });
+  var feature = new OpenLayers.Feature.Vector(trace, {
+    color: color,
+    sfid: sfid
+  });
   feature.renderIntent = 'contest';
 
   map.getLayersByName("Flight")[0].addFeatures(feature);
