@@ -177,7 +177,7 @@ function addFlight(sfid, _lonlat, _levels, _num_levels, _time, _height, _enl, zo
 
   var contests = [],
       markers = [];
-  for (i in _contests) {
+  for (var i = 0; i < _contests.length; i++) {
     var turnpoints = OpenLayers.Util.decodeGooglePolyline(_contests[i].turnpoints);
     var times = OpenLayers.Util.decodeGoogle(_contests[i].times);
 
@@ -226,7 +226,7 @@ function addFlight(sfid, _lonlat, _levels, _num_levels, _time, _height, _enl, zo
 function addFlightFromJSON(url) {
   $.ajax(url,{
     success: function(data) {
-      for (flight_id in flights) {
+      for (var flight_id = 0; flight_id < flights.length; flight_id++) {
         if (flights[flight_id].sfid == data.sfid) return;
       }
 
@@ -297,7 +297,7 @@ function addContest(name, lonlat, times, visible, sfid) {
 function getAllFlightsBounds() {
   var bounds = new OpenLayers.Bounds();
 
-  for (fid in flights) {
+  for (var fid = 0; fid < flights.length; fid++) {
     bounds.extend(flights[fid].geo.bounds);
   }
 
@@ -356,7 +356,7 @@ function formatSecondsAsTime(seconds) {
  * Set index and dx for the current time in each flight
  */
 function setIndexFromTime(time) {
-  for (fid in flights) {
+  for (var fid = 0; fid < flights.length; fid++) {
     var flight = flights[fid];
 
     if (time < flight.t[0] || time > flight.t[flight.t.length-1]) {
@@ -418,7 +418,7 @@ function setFlightTime(time) {
   barogram.linechart.hoverColumn(flights[primary_flight].index, rel_x, rel_y, primary_flight);
 
   // draw plane icons on map
-  for (fid in flights) {
+  for (var fid = 0; fid < flights.length; fid++) {
     // do not show plane if out of range.
     if (flights[fid].index == -1) continue;
 
@@ -438,7 +438,7 @@ function setPrimaryFlight(primary) {
   // we'd like to have an flight within the current range as primary_flight.
   if (flights[primary].index == -1) {
     // our current primary flight is out of range. find first flight in range...
-    for (primary in flights) if (flights[primary].index != -1) break;
+    for (var primary = 0; primary < flights.length; primary++) if (flights[primary].index != -1) break;
   }
 
   // the primary flight has changed...
@@ -682,7 +682,7 @@ function showPlanePosition(id, dx, fid, ghost) {
  */
 
 function hidePlanePosition() {
-  for (fid in flights) {
+  for (var fid = 0; fid < flights.length; fid++) {
     map.getLayersByName("Flight")[0].removeFeatures(flights[fid].plane);
   }
 }
@@ -710,7 +710,7 @@ function updateBarogram(e) {
   var last_t = 0;
 
   // circle throu all flights
-  for (fid in flights) {
+  for (var fid = 0; fid < flights.length; fid++) {
     var flight = flights[fid];
 
     last = flight.t.length - 1;
@@ -735,7 +735,7 @@ function updateBarogram(e) {
   // is there any flight in our viewport?
   var none_in_range = true;
 
-  for (fid in flights) {
+  for (var fid = 0; fid < flights.length; fid++) {
     // get indices of flight path between first_t(ime) and last_t(ime)
     first = getNearestNumber(flights[fid].t, first_t);
     last = getNearestNumber(flights[fid].t, last_t);
@@ -826,10 +826,10 @@ function searchForPlane(within, loc) {
   var possible_solutions = [];
 
   // circle throu all flights visible in viewport
-  for (fid in flights) {
+  for (var fid = 0; fid < flights.length; fid++) {
     var flight = flights[fid].geo;
 
-    for (part_geo in flight.partitionedGeometries) {
+    for (var part_geo = 0; part_geo < flight.partitionedGeometries.length; part_geo++) {
       var components = flight.partitionedGeometries[part_geo].components;
 
       for (var i = 1, len = components.length; i < len; i++) {
@@ -860,7 +860,7 @@ function searchForPlane(within, loc) {
 
   // find nearest distance between loc and vectors in possible_solutions
   var nearest, distance = 99999999999;
-  for (i in possible_solutions) {
+  for (var i = 0; i < possible_solutions.length; i++) {
     for (var j = possible_solutions[i].from + 1; j <= possible_solutions[i].to; j++) {
       var distToSegment = distanceToSegmentSquared({x: loc.lon, y: loc.lat},
         { x1: flights[possible_solutions[i].fid].geo.components[j-1].x, y1: flights[possible_solutions[i].fid].geo.components[j-1].y,
