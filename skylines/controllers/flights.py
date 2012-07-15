@@ -96,6 +96,28 @@ def get_flight_path(flight, threshold = 0.001, max_points = 3000):
     return dict(encoded=encoded, zoom_levels = zoom_levels, fixes = fixes,
                 barogram_t=barogram_t, barogram_h=barogram_h, enl=enl, sfid=flight.id)
 
+def get_contest_traces(flight, encoder):
+    contests = [ dict( contest_type = 'olc_plus', trace_type = 'triangle' ),
+                 dict( contest_type = 'olc_plus', trace_type = 'classic' ) ]
+
+    contest_traces = []
+
+    for contest in contests:
+        contest_trace = flight.get_optimised_contest_trace(contest['contest_type'], contest['trace_type'])
+        if not contest_trace: continue
+
+        fixes = map(lambda x: (x.longitude, x.latitude), contest_trace.locations)
+        times = []
+        for time in contest_trace.times:
+            times.append(flight.takeoff_time.hour * 3600 + flight.takeoff_time.minute * 60 + flight.takeoff_time.second + \
+                         (time - flight.takeoff_time).days * 86400 + (time - flight.takeoff_time).seconds)
+
+        contest_traces.append( dict( name = contest['contest_type'] + " " + contest['trace_type'],
+                                     turnpoints = encoder.encode(fixes, [0]*len(fixes))['points'],
+                                     times = encoder.encodeList(times) ) )
+
+    return contest_traces
+
 class FlightController(BaseController):
     def __init__(self, flight):
         if isinstance(flight, list):
