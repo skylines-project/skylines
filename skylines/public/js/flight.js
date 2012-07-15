@@ -373,6 +373,52 @@ function setIndexFromTime(time) {
   }
 }
 
+
+/**
+ * Function: setFlightTime
+ *
+ * Set the map time.
+ */
+function setFlightTime(time) {
+  // hide all planes
+  hidePlanePosition();
+  barogram.linechart.hoverColumn.position.hide();
+
+  // find the position indexes of all flight available.
+  setIndexFromTime(time);
+
+  // we'd like to have an flight within the current range as primary_flight.
+  if (flights[primary_flight].index == -1) {
+    // our current top flight is out of range. find first flight in range...
+    for (primary_flight in flights) if (flights[primary_flight].index != -1) break;
+  }
+
+  // no flight found which is in range? return early, draw nothing.
+  if (flights[primary_flight].index == -1) return;
+
+  // set the top flight in the barogram
+  barogram.linechart.setPrimary(primary_flight);
+
+  // interpolate current height of primary_flight
+  var height = flights[primary_flight].h[flights[primary_flight].index] +
+    (flights[primary_flight].h[flights[primary_flight].index+1] - flights[primary_flight].h[flights[primary_flight].index]) *
+     flights[primary_flight].dx;
+
+  // calculate y-position of position marker for current primary_flight and show marker
+  var prop = barogram.linechart.getProperties();
+  var rel_x = (time - prop.minx) * prop.kx + prop.x + prop.gutter;
+  var rel_y = prop.y - (height - prop.miny) * prop.ky + prop.height - prop.gutter;
+  barogram.linechart.hoverColumn(flights[primary_flight].index, rel_x, rel_y, primary_flight);
+
+  // draw plane icons on map
+  for (fid in flights) {
+    // do not show plane if out of range.
+    if (flights[fid].index == -1) continue;
+
+    showPlanePosition(flights[fid].index, flights[fid].dx, fid, (fid!=primary_flight));
+  }
+}
+
 /**
  * Function: render_barogram
  *
@@ -451,45 +497,14 @@ function render_barogram(element) {
     mouse_container_running = true;
     setTimeout(function() { mouse_container_running = false; }, 25);
 
-    hidePlanePosition();
-
     var prop = linechart.getProperties();
     var kx_inv = 1 / prop.kx;
     var rel_x = e.clientX - mouse_container.offset().left;
     var x = prop.minx + (rel_x - prop.x - prop.gutter) * kx_inv;
     if (x < prop.minx || x > prop.maxx) return;
 
-    // find the position indexes of all flight available.
-    setIndexFromTime(x);
-
-    // we'd like to have an flight within the current range as primary_flight.
-    if (flights[primary_flight].index == -1) {
-      // our current top flight is out of range. find first flight in range...
-      for (primary_flight in flights) if (flights[primary_flight].index != -1) break;
-    }
-
-    // no flight found which is in range? return early, draw nothing.
-    if (flights[primary_flight].index == -1) return;
-
-    // set the top flight in the barogram
-    linechart.setPrimary(primary_flight);
-
-    // interpolate current height of primary_flight
-    var height = flights[primary_flight].h[flights[primary_flight].index] +
-      (flights[primary_flight].h[flights[primary_flight].index+1] - flights[primary_flight].h[flights[primary_flight].index]) *
-       flights[primary_flight].dx;
-
-    // calculate y-position of position marker for current primary_flight and show marker
-    var rel_y = prop.y - (height - prop.miny) * prop.ky + prop.height - prop.gutter;
-    hoverColumn(flights[primary_flight].index, rel_x, rel_y, primary_flight);
-
-    // draw plane icons on map
-    for (fid in flights) {
-      // do not show plane if out of range.
-      if (flights[fid].index == -1) continue;
-
-      showPlanePosition(flights[fid].index, flights[fid].dx, fid, (fid!=primary_flight));
-    }
+    // set the map time to x
+    setFlightTime(x);
   });
 
   // hide everything on mouse out
@@ -745,32 +760,15 @@ function hoverMap() {
     // if there's a aircraft within the bounding box, show the plane icon and draw
     // a position marker on the linechart.
     if (nearest !== null) {
-      // we expect the currently hovered flight is the top flight.
-      primary_flight = nearest.fid;
-
-      // set the top flight in the barogram
-      linechart.setPrimary(primary_flight);
-      showPlanePosition(nearest.from, nearest.along, nearest.fid);
-
+      // calculate time
       var prop = linechart.getProperties();
       var x = flights[nearest.fid].t[nearest.from] + (flights[nearest.fid].t[nearest.from+1]-flights[nearest.fid].t[nearest.from])*nearest.along;
 
-      if (x > prop.minx && x < prop.maxx) {
-        // interpolate current height of nearest flight
-        var height = flights[nearest.fid].h[nearest.from] +
-          (flights[nearest.fid].h[nearest.to] - flights[nearest.fid].h[nearest.from]) *
-           nearest.along;
+      // we expect the currently hovered flight is the top flight.
+      primary_flight = nearest.fid;
 
-        var rel_x = (x - prop.minx) * prop.kx + prop.x + prop.gutter;
-        var rel_y = prop.y - (height - prop.miny) * prop.ky + prop.height - prop.gutter;
-        linechart.hoverColumn(nearest.from, rel_x, rel_y, nearest.fid);
-      }
-
-      setIndexFromTime(x);
-      for (fid in flights) {
-        if (fid == nearest.fid || flights[fid].index == -1) continue;
-        showPlanePosition(flights[fid].index, flights[fid].dx, fid, true);
-      }
+      // set the map time to x
+      setFlightTime(x);
     }
   });
 }
