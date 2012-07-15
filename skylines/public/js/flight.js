@@ -446,7 +446,14 @@ function render_barogram(element) {
   element.append(mouse_container);
 
   // add mousemove function.
+  // Run this function only every 25ms to save some computing power.
+  var mouse_container_running = false;
   mouse_container.mousemove(function(e) {
+    // call this function only every 25ms, else return early
+    if (mouse_container_running) return;
+    mouse_container_running = true;
+    setTimeout(function() { mouse_container_running = false; }, 25);
+
     hidePlanePosition();
 
     var prop = linechart.getProperties();
