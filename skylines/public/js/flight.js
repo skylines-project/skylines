@@ -134,11 +134,14 @@ function initRedrawLayer(layer) {
  * _height - {String} Google polyencoded string of height values
  * _enl - {String} Google polyencoded string of engine noise levels
  * zoom_levels - {Array(double)} Array of zoom levels where to switch between the LoD.
+ * _contests - {Array(Objects)} Array of scored/optimised contests
+ *   Such an object must contain: name, turnpoints, times
+ *   turnpoints and times are googlePolyEncoded strings.
  *
  * Note: _lonlat, _levels, _time, _enl, and _height MUST have the same number of elements when decoded.
  */
 
-function addFlight(sfid, _lonlat, _levels, _num_levels, _time, _height, _enl, zoom_levels) {
+function addFlight(sfid, _lonlat, _levels, _num_levels, _time, _height, _enl, zoom_levels, _contests) {
   var height = OpenLayers.Util.decodeGoogle(_height);
   var time = OpenLayers.Util.decodeGoogle(_time);
   var enl = OpenLayers.Util.decodeGoogle(_enl);
@@ -167,6 +170,22 @@ function addFlight(sfid, _lonlat, _levels, _num_levels, _time, _height, _enl, zo
 
   map.getLayersByName("Flight")[0].addFeatures([feature, plane]);
 
+  var contests = [],
+      markers = [];
+  for (i in _contests) {
+    var turnpoints = OpenLayers.Util.decodeGooglePolyline(_contests[i].turnpoints);
+    var times = OpenLayers.Util.decodeGoogle(_contests[i].times);
+
+    contests.push({
+      name: _contests[i].name,
+      turnpoints: turnpoints,
+      times: times,
+      visible: true // this is only valid for the contests of this flight.
+    });
+
+    markers.push(addContest(_contests[i].name, turnpoints, times, true));
+  }
+
   flights.push({
     lonlat: lonlat,
     t: time,
@@ -178,7 +197,9 @@ function addFlight(sfid, _lonlat, _levels, _num_levels, _time, _height, _enl, zo
     sfid: sfid,
     index: 0,
     dx: 0,
-    last_update: time[time.length - 1]
+    last_update: time[time.length - 1],
+    contests: contests,
+    markers: markers
   });
 
   var i = flights.length - 1;
@@ -186,6 +207,7 @@ function addFlight(sfid, _lonlat, _levels, _num_levels, _time, _height, _enl, zo
   barogram_t.push(flights[i].t);
   barogram_h.push(flights[i].h);
   barogram_enl.push(flights[i].enl);
+  barogram_markers.push(flights[i].markers);
   top_flight = i;
 };
 
@@ -204,7 +226,7 @@ function addFlightFromJSON(url) {
 
       addFlight(data.sfid, data.encoded.points, data.encoded.levels,
                 data.num_levels, data.barogram_t, data.barogram_h,
-                data.enl, data.zoom_levels);
+                data.enl, data.zoom_levels, data.contests);
 
       initRedrawLayer(map.getLayersByName("Flight")[0]);
       $.proxy(updateBarogram, { reset_y_axis: true })();
