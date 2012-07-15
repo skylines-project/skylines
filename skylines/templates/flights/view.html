@@ -60,7 +60,8 @@ def add_trace(contest_type, trace_type, color):
         ${h.json.dumps(trace.barogram_t)},
         ${h.json.dumps(trace.barogram_h)},
         ${h.json.dumps(trace.enl)},
-        ${h.json.dumps(trace.zoom_levels)}
+        ${h.json.dumps(trace.zoom_levels)},
+        ${h.json.dumps(trace.contests)}
       );
 
       ${add_trace('olc_plus', 'classic', '#FF2C73')}
@@ -76,7 +77,8 @@ def add_trace(contest_type, trace_type, color):
             ${h.json.dumps(trace.barogram_t)},
             ${h.json.dumps(trace.barogram_h)},
             ${h.json.dumps(trace.enl)},
-            ${h.json.dumps(trace.zoom_levels)}
+            ${h.json.dumps(trace.zoom_levels)},
+            ${h.json.dumps(trace.contests)}
           );
         </py:for>
       </py:if>
