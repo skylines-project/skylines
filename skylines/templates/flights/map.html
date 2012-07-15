@@ -20,6 +20,8 @@ page = 'flights'
   ${flight_meta_tags(flight)}
 
   <link href="/css/OpenLayers.css" rel="stylesheet" type="text/css" />
+  <link py:if="request.identity and request.identity['user'].eye_candy"
+        href="/css/eye_candy/OpenLayers.css" rel="stylesheet" type="text/css" />
   <link href="/css/SimpleLayerSwitcher.css" rel="stylesheet" type="text/css" />
 
   <script type="text/javascript" src="/js/OpenLayers/OpenLayers.js"></script>

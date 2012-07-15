@@ -10,7 +10,7 @@ from formencode import Schema, All
 from formencode.validators import FieldsMatch, Email, String, NotEmpty
 from sprox.validators import UniqueValue
 from sprox.saormprovider import SAORMProvider
-from tw.forms import PasswordField, TextField, HiddenField
+from tw.forms import PasswordField, TextField, CheckBox, HiddenField
 from tw.forms.validators import UnicodeString
 from skylines.lib.base import BaseController
 from skylines.model import DBSession, User, Group, Club, Flight, Follower
@@ -75,11 +75,12 @@ class EditUserForm(EditableForm):
     __base_widget_type__ = BootstrapForm
     __model__ = User
     __hide_fields__ = ['user_id']
-    __limit_fields__ = ['email_address', 'display_name', 'club']
+    __limit_fields__ = ['email_address', 'display_name', 'club', 'eye_candy']
     __base_widget_args__ = dict(action='save')
     email_address = Field(TextField, Email(not_empty=True))
     display_name = Field(TextField, NotEmpty)
     club = ClubSelectField
+    eye_candy = Field(CheckBox)
 
 edit_user_form = EditUserForm(DBSession)
 
@@ -179,7 +180,7 @@ class UserController(BaseController):
 
     @expose()
     @validate(form=edit_user_form, error_handler=edit)
-    def save(self, email_address, display_name, club, **kwargs):
+    def save(self, email_address, display_name, club, eye_candy=False, **kwargs):
         if not self.user.is_writable():
             raise HTTPForbidden
 
@@ -188,6 +189,7 @@ class UserController(BaseController):
         if not club:
             club = None
         self.user.club_id = club
+        self.user.eye_candy = eye_candy
         DBSession.flush()
 
         redirect('.')

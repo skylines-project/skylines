@@ -22,7 +22,7 @@ except ImportError:
 __all__ = ['User', 'Group', 'Permission']
 
 from sqlalchemy import Table, ForeignKey, Column, event, DDL
-from sqlalchemy.types import Unicode, Integer, BigInteger, DateTime
+from sqlalchemy.types import Unicode, Integer, BigInteger, DateTime, Boolean
 from sqlalchemy.orm import relation, synonym, column_property
 from sqlalchemy.dialects.postgresql import INET
 
@@ -130,6 +130,8 @@ class User(DeclarativeBase):
     recover_key = Column(Integer)
     recover_time = Column(DateTime)
     recover_ip = Column(INET)
+
+    eye_candy = Column(Boolean, nullable=False, default=False)
 
     @property
     def tracking_key_hex(self):

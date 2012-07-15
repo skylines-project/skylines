@@ -467,15 +467,3 @@ a.olControlZoomIn {
 a.olControlZoomOut {
     border-radius: 0 0 4px 4px;
 }
-
-
-/**
- * Animations
- */
-
-.olLayerGrid .olTileImage {
-    -webkit-transition: opacity 0.2s linear;
-    -moz-transition: opacity 0.2s linear;
-    -o-transition: opacity 0.2s linear;
-    transition: opacity 0.2s linear;
-}
