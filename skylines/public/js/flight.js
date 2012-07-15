@@ -87,11 +87,16 @@ function initFlightLayer() {
     }
   });
 
+  var hidden_style = new OpenLayers.Style({
+    display: 'none'
+  });
+
   var flightPathLayer = new OpenLayers.Layer.Vector("Flight", {
     styleMap: new OpenLayers.StyleMap({
       'default': default_style,
       'contest': contest_style,
-      'plane': plane_style
+      'plane': plane_style,
+      'hidden': hidden_style
     }),
     rendererOptions: {
         zIndexing: true
