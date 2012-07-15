@@ -29,6 +29,7 @@ var barogram;
 var barogram_t = [];
 var barogram_h = [];
 var barogram_enl = [];
+var barogram_markers = [];
 
 
 /**
@@ -401,7 +402,8 @@ function render_barogram(element) {
                         stripes: {
                           y: barogram_enl,
                           height: element.innerHeight() - 30,
-                          visible: !($.browser.msie && (parseInt($.browser.version, 10) < 9)) } });
+                          visible: !($.browser.msie && (parseInt($.browser.version, 10) < 9)) },
+                        markers: barogram_markers });
 
   // create position marker and it's elements.
   var position = barogram.set().hide();
