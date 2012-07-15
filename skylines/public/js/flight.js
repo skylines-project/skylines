@@ -208,7 +208,8 @@ function addFlight(sfid, _lonlat, _levels, _num_levels, _time, _height, _enl, zo
   barogram_h.push(flights[i].h);
   barogram_enl.push(flights[i].enl);
   barogram_markers.push(flights[i].markers);
-  primary_flight = i;
+
+  return i;
 };
 
 /**
