@@ -81,7 +81,8 @@
             primary = opts.primary || 0,
             stripesy = (opts.stripes && opts.stripes.y) || [],
             inactive_opacity = opts.inactive_opacity || 0.3,
-            stripes_visibility = opts.stripes.visible;
+            stripes_visibility = opts.stripes.visible,
+            markersSet = opts.markers || [];
 
         for (var i = 0, ii = valuesy.length; i < ii; i++) {
             len = Math.max(len, valuesy[i].length);
@@ -118,6 +119,7 @@
             kx = (width - gutter * 2) / ((maxx - minx) || 1),
             ky = (height - gutter * 2) / ((maxy - miny) || 1);
 
+        var markers = createMarkers();
         var stripes = createStripes();
         var shades = createShades();
         var axis = createAxis();
@@ -324,6 +326,73 @@
             !f && (columns = cvrs);
         }
 
+        function drawMarker(markers, set) {
+            if (!set.x || !set.value) return;
+
+            var Y = y - gutter + height,
+                H = 15;
+
+            if (set.x >= minx && set.x <= maxx) {
+                var X = x + gutter + (set.x - minx) * kx;
+                var marker = paper.set();
+
+                marker.push(paper.path(["M", X, Y, "V", H]).attr({
+                  stroke: set.color || "#000"
+                }));
+                var text = paper.text().attr({
+                  x: X,
+                  y: 10,
+                  text: set.value,
+                  fill: set.color || "#000"
+                });
+
+                var text_bbox = text.getBBox();
+                var textrect = paper.rect().attr({
+                  x: text_bbox.x - 1,
+                  y: text_bbox.y,
+                  width: text_bbox.width + 2,
+                  height: text_bbox.height,
+                  r: 2,
+                  fill: "#fff",
+                  stroke: set.color || "#000"
+                });
+
+                marker.push(textrect, text.toFront());
+                markers.push(marker);
+            }
+        }
+
+        function createMarkers() {
+            if (!opts.markers) return;
+
+            var markers = paper.set();
+
+            /**
+             * The markersSet is a array like valuesx, therefore for each dataset in the linechart
+             * one entry in the markersSet.
+             * One set of markers itself contains a array of objects with the following entries:
+             *  x: x value
+             *  value: value to display (can be any string)
+             * The set of markers can be nested into another array which will be treated as
+             * different priorities.
+             */
+
+            if (markersSet[primary]) {
+                for (var i = 0, ii = markersSet[primary].length; i < ii; i++) {
+                    if (paper.raphael.is(markersSet[primary][i], "array")) {
+                        // got a nested array. loop throu it
+                        for (var j = 0, jj = markersSet[primary][i].length; j < jj; j++) {
+                            drawMarker(markers, markersSet[primary][i][j]);
+                        }
+                    } else {
+                        drawMarker(markers, markersSet[primary][i]);
+                    }
+                }
+            }
+
+            return markers;
+        }
+
         function createDots(f) {
             var cvrs = f || paper.set(),
                 C;
@@ -359,6 +428,12 @@
         if (opts.stripes) {
             chart.push(stripes);
             chart.stripes = stripes;
+        }
+
+        if (opts.markers) {
+            chart.push(markers);
+            chart.markers = markers;
+            chart.markers.toFront();
         }
 
         chart.hoverColumn = function (fin, fout) {
@@ -500,6 +575,10 @@
             chart.axis = createAxis();
 
             chart.stripes = createStripes();
+
+            chart.markers.remove();
+            chart.markers = createMarkers();
+            chart.markers.toFront();
         }
 
         chart.getProperties = function() {
@@ -526,6 +605,10 @@
             stripes_maxy = Math.max.apply(Math, stripesy[primary]);
 
             chart.stripes = createStripes();
+
+            chart.markers.remove();
+            chart.markers = createMarkers();
+            chart.markers.toFront();
 
             for (var i = 0; i < chart.lines.length; i++) {
                 chart.lines[i].attr({
