@@ -38,6 +38,8 @@ var barogram_enl = [];
  */
 //var colors = ['#bf2fa2', '#2f69bf', '#d63a35', '#d649ff'];
 var colors = ['#004bbd', '#bf0099', '#cf7c00', '#ff0000', '#00c994'];
+var contest_colors = {'olc_plus classic': '#ff2c73',
+                      'olc_plus triangle': '#9f14ff'}
 
 /**
  * Function initOpenLayers
@@ -209,6 +211,45 @@ function addFlightFromJSON(url) {
   });
 };
 
+
+/**
+ * Function: addContest
+ *
+ * Add a flight contest trace to the map and return
+ * it's turnpoints as markers for the barogram.
+ *
+ * Parameters:
+ * name - {String} Name to display
+ * lonlat - {Array(Object)} Array of LonLat pairs
+ * times - {Array(Integer)} Array of times
+ * visible - {Bool} Flag weather to show the trace or not
+ */
+function addContest(name, lonlat, times, visible) {
+  var points = new Array();
+  for (var i = 0, len = lonlat.length; i < len; i++) {
+    points.push(new OpenLayers.Geometry.Point(lonlat[i].lon, lonlat[i].lat).
+      transform(new OpenLayers.Projection("EPSG:4326"), map.getProjectionObject()) );
+  }
+
+  var trace = new OpenLayers.Geometry.LineString(points);
+
+  var color = contest_colors[name] || '#ff2c73';
+  var feature = new OpenLayers.Feature.Vector(trace, { color: color });
+  feature.renderIntent = 'trace';
+
+  map.getLayersByName("Flight")[0].addFeatures(feature);
+
+  var markers = [];
+  for (var i = 0; i < times.length; i++) {
+    markers.push({
+      x: times[i],
+      value: (i == 0) ? 'Start' : (i == times.length - 1) ? 'End' : 'TP ' + i,
+      color: color
+    });
+  }
+
+  return markers;
+}
 
 /**
  * Function: addTrace
