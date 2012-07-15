@@ -579,10 +579,10 @@ function render_barogram(element) {
     var attrs = linechart.getProperties();
 
     hoverLine.attr({ path:
-      "M " + x.toString() + " " + attrs.height + " " +
-      "l 0 " + (-(attrs.height - y) + 6).toString() +
-      "M " + x.toString() + " 0 " +
-      "l 0 " + (y - 6).toString()
+      ["M", x, attrs.height,
+       "v", -(attrs.height - y) + 6,
+       "M", x, 0,
+       "v", y - 6]
     });
 
     hoverCircle.attr({
