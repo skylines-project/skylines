@@ -727,16 +727,10 @@ function updateBarogram(e) {
 
   if (none_in_range)
     // reset linechart zoom when no flight is visible in viewport
-    setTimeout(function() {
-      linechart.zoomReset(reset_y_axis);
-      linechart.setPrimary(primary_flight);
-    }, 0);
+    linechart.zoomReset(reset_y_axis);
   else
     // zoom linechart
-    setTimeout(function() {
-      linechart.zoomInto(total_first, total_last, reset_y_axis);
-      linechart.setPrimary(primary_flight);
-    }, 0);
+    linechart.zoomInto(total_first, total_last, reset_y_axis);
 };
 
 
