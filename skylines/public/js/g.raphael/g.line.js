@@ -147,8 +147,7 @@
             for (var dx = 0; dx < (width - 2 * gutter); dx++) {
                 var X = x + gutter + dx;
 
-                stripes.push(paper.path(["M", X, Y, "v", 0, h])
-                    .attr({ stroke: "#ffffff" }));
+                stripes.push(paper.rect(X, Y, 1, h, 0));
             }
 
             return stripes;
@@ -158,17 +157,15 @@
             if (!opts.stripes || !stripes_visibility) return;
 
             var stripes = chart.stripes || initStripes();
-            var u = 0,
-                v = width - 2 * gutter;
 
-            var u_min = v,
-                v_max = u;
+            var u_min = width - 2 * gutter,
+                v_max = 0;
             var base_color = opts.stripes.color || { h: 0.42, s: 1, l: 0.5 };
             var stripes_range = opts.stripes.range || Math.max(1, stripes_maxy - stripes_miny);
 
             for (var j = 0, jj = stripesy_shrinked[primary].length - 1; j < jj; j++) {
-                u = Math.max(0, Math.round( (valuesx_shrinked[primary][j] - minx) * kx )),
-                v = Math.min(width - 2 * gutter, Math.round( (valuesx_shrinked[primary][j+1] - minx) * kx ));
+                var u = Math.max(0, Math.round( (valuesx_shrinked[primary][j] - minx) * kx )),
+                    v = Math.min(width - 2 * gutter, Math.round( (valuesx_shrinked[primary][j+1] - minx) * kx ));
                 var value = (stripesy_shrinked[primary][j] - stripes_miny) / stripes_range;
 
                 u_min = Math.min(u, u_min);
@@ -182,17 +179,32 @@
                         base_color.s * 100,
                         base_color.l * 100 + (100 - base_color.l * 100) * (1 - value)
                     );
-                    stripes[u].attr({ stroke: color });
+                    if (Raphael.svg) {
+                        // set stroke color directly for SVG because it's a lot faster
+                        stripes[u].node.setAttribute('stroke', color);
+                    } else {
+                        stripes[u].attr({ stroke: color });
+                    }
                 }
             }
 
             // reset stripes which are not set yet...
             for (var i = u_min - 1; i >= 0; i--) {
-                stripes[i].attr({ stroke: "#ffffff" });
+                if (Raphael.svg) {
+                    // set stroke color directly for SVG because it's a lot faster
+                    stripes[i].node.setAttribute('stroke', '#fff');
+                } else {
+                    stripes[i].attr({ stroke: '#fff' });
+                }
             }
 
-            for (var i = Math.max(v_max, u_min); i < (width - 2 * gutter); i++) {
-                stripes[i].attr({ stroke: "#ffffff" });
+            for (var i = v_max; i < (width - 2 * gutter); i++) {
+                if (Raphael.svg) {
+                    // set stroke color directly for SVG because it's a lot faster
+                    stripes[i].node.setAttribute('stroke', '#fff');
+                } else {
+                    stripes[i].attr({ stroke: '#fff' });
+                }
             }
 
             return stripes;
