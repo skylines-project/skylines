@@ -177,18 +177,20 @@ function addFlight(sfid, _lonlat, _levels, _num_levels, _time, _height, _enl, zo
 
   var contests = [],
       markers = [];
-  for (var i = 0; i < _contests.length; i++) {
-    var turnpoints = OpenLayers.Util.decodeGooglePolyline(_contests[i].turnpoints);
-    var times = OpenLayers.Util.decodeGoogle(_contests[i].times);
+  if (_contests) {
+    for (var i = 0; i < _contests.length; i++) {
+      var turnpoints = OpenLayers.Util.decodeGooglePolyline(_contests[i].turnpoints);
+      var times = OpenLayers.Util.decodeGoogle(_contests[i].times);
 
-    contests.push({
-      name: _contests[i].name,
-      turnpoints: turnpoints,
-      times: times,
-      visible: true // this is only valid for the contests of this flight.
-    });
+      contests.push({
+        name: _contests[i].name,
+        turnpoints: turnpoints,
+        times: times,
+        visible: true // this is only valid for the contests of this flight.
+      });
 
-    markers.push(addContest(_contests[i].name, turnpoints, times, true, sfid));
+      markers.push(addContest(_contests[i].name, turnpoints, times, true, sfid));
+    }
   }
 
   flights.push({
