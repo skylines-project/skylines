@@ -240,7 +240,7 @@ class FlightController(BaseController):
         analyse_flight(self.flight)
         DBSession.flush()
 
-        return redirect('/flights/' + str(self.flight.id))
+        return redirect('.')
 
     @expose('skylines.templates.generic.confirm')
     def delete(self, yes=False):
