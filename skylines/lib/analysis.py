@@ -3,10 +3,11 @@
 import os
 import datetime
 import simplejson
+from sqlalchemy.sql.expression import and_
 from skylines import files
 from tg import config
 from skylines.model.geo import Location
-from skylines.model import Airport, Trace
+from skylines.model import DBSession, Airport, Trace
 import logging
 
 log = logging.getLogger(__name__)
@@ -88,8 +89,17 @@ def read_time_of_day(turnpoint, flight):
     return time
 
 
+def delete_trace(contest_name, trace_name, flight):
+    q = DBSession.query(Trace) \
+        .filter(and_(Trace.flight == flight,
+                     Trace.contest_type == contest_name,
+                     Trace.trace_type == trace_name))
+    q.delete()
+
+
 def save_trace(contest_name, trace_name, trace, flight):
     if 'turnpoints' not in trace:
+        delete_trace(contest_name, trace_name, flight)
         return
 
     locations = []
@@ -105,6 +115,7 @@ def save_trace(contest_name, trace_name, trace, flight):
         times.append(time)
 
     if len(locations) < 2 or len(times) < 2:
+        delete_trace(contest_name, trace_name, flight)
         return
 
     trace = Trace()
