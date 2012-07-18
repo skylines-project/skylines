@@ -371,20 +371,12 @@ function setIndexFromTime(time) {
 
     var index = getNextSmallerIndex(flight.t, time);
 
-    if (time < flight.t[index] && (flight.t[index] - flight.t[index-1]) != 0) {
-      flight.dx = (time - flight.t[index-1])/(flight.t[index] - flight.t[index-1]);
-      flight.index = index - 1;
-    } else if ((flight.t[index+1] - flight.t[index]) != 0) {
+    if ((flight.t[index+1] - flight.t[index]) != 0) {
       flight.dx = (time - flight.t[index])/(flight.t[index+1] - flight.t[index]);
       flight.index = index;
     } else {
       flight.dx = 0;
       flight.index = index;
-    }
-
-    if (flight.index == flight.t.length - 1) {
-      flight.index--;
-      flight.dx = 1;
     }
   }
 }
