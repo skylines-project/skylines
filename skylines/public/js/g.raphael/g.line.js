@@ -616,6 +616,9 @@
             stripes_miny = Math.min.apply(Math, stripesy[primary]);
             stripes_maxy = Math.max.apply(Math, stripesy[primary]);
 
+            // initialize shrinked array if it's not present yet.
+            if (!stripesy_shrinked[primary]) stripesy_shrinked[primary] = [];
+
             chart.stripes = createStripes();
 
             chart.markers.remove();
