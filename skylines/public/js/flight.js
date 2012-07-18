@@ -433,7 +433,9 @@ function setPrimaryFlight(primary) {
   // we'd like to have an flight within the current range as primary_flight.
   if (flights[primary].index == -1) {
     // our current primary flight is out of range. find first flight in range...
-    for (var primary = 0; primary < flights.length; primary++) if (flights[primary].index != -1) break;
+    for (primary = 0; primary < flights.length - 1; primary++) {
+      if (flights[primary].index != -1) break;
+    }
   }
 
   // the primary flight has changed...
