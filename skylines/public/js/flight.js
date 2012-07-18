@@ -743,7 +743,7 @@ function updateBarogram(e) {
       total_last.push(-1);
     } else {
       total_first.push(first);
-      total_last.push(last);
+      total_last.push(last + 1);
       none_in_range = false;
     }
   }
