@@ -308,27 +308,28 @@ function getAllFlightsBounds() {
 
 
 /**
- * Function: getNearestNumber
+ * Function: getNextSmallerIndex
  *
- * Searches the closest index to a number in a monotonic array.
+ * Searches the next smaller index to a number in a monotonic array
  *
  * Parameters:
  * a - {Array} Array
  * n - {double} Number
  *
  * Returns:
- * {int} Index closest to Number in the Array.
+ * {int} Index next smaller to Number in Array
  */
+function getNextSmallerIndex(a, n) {
+  var l = a.length;
 
-//+ Carlos R. L. Rodrigues
-//@ http://jsfromhell.com/array/nearest-number [rev. #0]
-function getNearestNumber(a, n){
-  if((l = a.length) < 2)
+  if (l < 2)
     return l - 1;
-  for(var l, p = Math.abs(a[--l] - n); l--;)
-    if(p < (p = Math.abs(a[l] - n)))
-      break;
-  return l + 1;
+
+  for (l; --l;) {
+    if (a[l] < n) break;
+  }
+
+  return l;
 }
 
 
@@ -368,7 +369,7 @@ function setIndexFromTime(time) {
       continue;
     }
 
-    var index = getNearestNumber(flight.t, time);
+    var index = getNextSmallerIndex(flight.t, time);
 
     if (time < flight.t[index] && (flight.t[index] - flight.t[index-1]) != 0) {
       flight.dx = (time - flight.t[index-1])/(flight.t[index] - flight.t[index-1]);
@@ -739,8 +740,8 @@ function updateBarogram(e) {
 
   for (var fid = 0; fid < flights.length; fid++) {
     // get indices of flight path between first_t(ime) and last_t(ime)
-    first = getNearestNumber(flights[fid].t, first_t);
-    last = getNearestNumber(flights[fid].t, last_t);
+    first = getNextSmallerIndex(flights[fid].t, first_t);
+    last = getNextSmallerIndex(flights[fid].t, last_t);
 
     if (flights[fid].t[first] > last_t || flights[fid].t[last] < first_t) {
       // current flight is out of range. don't show it in barogram...
