@@ -383,11 +383,11 @@ function setIndexFromTime(time) {
 
 
 /**
- * Function: setFlightTime
+ * Function: setFlightAndTime
  *
- * Set the map time.
+ * Set the map time and primary flight
  */
-function setFlightTime(time) {
+function setFlightAndTime(time, new_primary) {
   // hide all planes
   hidePlanePosition();
   barogram.linechart.hoverColumn.position.hide();
@@ -395,8 +395,10 @@ function setFlightTime(time) {
   // find the position indexes of all flight available.
   setIndexFromTime(time);
 
-  // set the primary flight
-  setPrimaryFlight(primary_flight);
+  // set the desired primary flight
+  if (typeof new_primary === 'number') setPrimaryFlight(new_primary);
+  // else keep the old one
+  else setPrimaryFlight(primary_flight);
 
   // no flight found which is in range? return early, draw nothing.
   if (flights[primary_flight].index == -1) return;
@@ -544,7 +546,7 @@ function render_barogram(element) {
     if (x < prop.minx || x > prop.maxx) return;
 
     // set the map time to x
-    setFlightTime(x);
+    setFlightAndTime(x);
   });
 
   // hide everything on mouse out
@@ -794,11 +796,9 @@ function hoverMap() {
       var prop = linechart.getProperties();
       var x = flights[nearest.fid].t[nearest.from] + (flights[nearest.fid].t[nearest.from+1]-flights[nearest.fid].t[nearest.from])*nearest.along;
 
-      // we expect the currently hovered flight is the top flight.
-      setPrimaryFlight(nearest.fid);
-
       // set the map time to x
-      setFlightTime(x);
+      setFlightAndTime(x, nearest.fid);
+
     } else {
       // hide everything
       hidePlanePosition();
