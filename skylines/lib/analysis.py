@@ -98,8 +98,9 @@ def delete_trace(contest_name, trace_name, flight):
 
 
 def save_trace(contest_name, trace_name, trace, flight):
+    delete_trace(contest_name, trace_name, flight)
+
     if 'turnpoints' not in trace:
-        delete_trace(contest_name, trace_name, flight)
         return
 
     locations = []
@@ -115,7 +116,6 @@ def save_trace(contest_name, trace_name, trace, flight):
         times.append(time)
 
     if len(locations) < 2 or len(times) < 2:
-        delete_trace(contest_name, trace_name, flight)
         return
 
     trace = Trace()
