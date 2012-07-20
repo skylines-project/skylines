@@ -2,7 +2,7 @@
 
 from datetime import datetime
 
-from sqlalchemy import ForeignKey, Column
+from sqlalchemy import ForeignKey, Column, event, DDL
 from sqlalchemy.dialects import postgresql
 from sqlalchemy.orm import relation, backref
 from sqlalchemy.types import String, Integer, DateTime
@@ -51,3 +51,6 @@ class Trace(DeclarativeBase):
         self._locations = WKTSpatialElement(wkt)
 
 GeometryDDL(Trace.__table__)
+
+event.listen(Trace.__table__, "after_create",
+             DDL("CREATE UNIQUE INDEX traces_contest_idx ON traces(flight_id, contest_type, trace_type)"))
