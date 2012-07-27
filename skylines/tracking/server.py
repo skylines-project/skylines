@@ -1,4 +1,5 @@
 import struct
+import datetime
 from twisted.python import log
 from twisted.internet.protocol import DatagramProtocol
 from twisted.internet import reactor
@@ -56,6 +57,25 @@ class TrackingServer(DatagramProtocol):
         fix.ip = host
         fix.pilot = pilot
 
+        # import the time stamp from the packet if it's within a
+        # certain range
+        time_of_day_ms = data[1] % (24 * 3600 * 1000)
+        time_of_day_s = time_of_day_ms / 1000
+        time_of_day = datetime.time(time_of_day_s / 3600,
+                                    (time_of_day_s / 60) % 60,
+                                    time_of_day_s % 60,
+                                    (time_of_day_ms % 1000) * 1000)
+        now = datetime.datetime.utcnow()
+        now_s = ((now.hour * 60) + now.minute) * 60 + now.second
+        if now_s - 1800 < time_of_day_s < now_s + 180:
+            fix.time = datetime.datetime.combine(now.date(), time_of_day)
+        elif now_s < 1800 and time_of_day_s > 23 * 3600:
+            # midnight rollover occurred
+            fix.time = datetime.datetime.combine(now.date(), time_of_day) \
+                       - datetime.timedelta(days=1)
+        else:
+            log.msg("ignoring time stamp from FIX packet: " + str(time_of_day))
+
         if flags & FLAG_LOCATION:
             fix.location = Location(latitude=data[2] / 1000000.,
                                     longitude=data[3] / 1000000.)
@@ -78,7 +98,7 @@ class TrackingServer(DatagramProtocol):
         if flags & FLAG_ENL:
             fix.engine_noise_level = data[10]
 
-        log.msg(u"%s %s %s" % (host, pilot, fix.location))
+        log.msg(u"%s %s %s %s" % (fix.time and fix.time.time(), host, pilot, fix.location))
 
         DBSession.add(fix)
         try:
