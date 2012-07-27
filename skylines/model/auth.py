@@ -73,7 +73,7 @@ class Group(DeclarativeBase):
 
     display_name = Column(Unicode(255))
 
-    created = Column(DateTime, default=datetime.now)
+    created = Column(DateTime, default=datetime.utcnow)
 
     #{ Relations
 
@@ -116,7 +116,7 @@ class User(DeclarativeBase):
     _password = Column('password', Unicode(128),
                        info={'rum': {'field': 'Password'}})
 
-    created = Column(DateTime, default=datetime.now)
+    created = Column(DateTime, default=datetime.utcnow)
 
     club_id = Column(Integer, ForeignKey('clubs.id'))
 
@@ -204,7 +204,7 @@ class User(DeclarativeBase):
 
     def generate_recover_key(self, ip):
         self.recover_key = struct.unpack('I', os.urandom(4))[0] & 0x7fffffff
-        self.recover_time = datetime.now()
+        self.recover_time = datetime.utcnow()
         self.recover_ip = ip
         return self.recover_key
 

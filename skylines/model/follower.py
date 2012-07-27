@@ -20,7 +20,7 @@ class Follower(DeclarativeBase):
     destination = relation('User', primaryjoin=(destination_id == User.user_id),
                            backref='followers')
 
-    time = Column(DateTime, nullable=False, default=datetime.now)
+    time = Column(DateTime, nullable=False, default=datetime.utcnow)
 
     @classmethod
     def query(cls, source, destination):

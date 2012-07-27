@@ -17,7 +17,7 @@ class TrackingFix(DeclarativeBase):
 
     id = Column(Integer, autoincrement=True, primary_key=True)
 
-    time = Column(DateTime, nullable=False, default=datetime.now)
+    time = Column(DateTime, nullable=False, default=datetime.utcnow)
 
     location_wkt = GeometryColumn(Point(2), comparator=PGComparator)
 

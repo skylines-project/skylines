@@ -21,8 +21,8 @@ class Flight(DeclarativeBase):
     __tablename__ = 'flights'
 
     id = Column(Integer, autoincrement=True, primary_key=True)
-    time_created = Column(DateTime, nullable=False, default=datetime.now)
-    time_modified = Column(DateTime, nullable=False, default=datetime.now)
+    time_created = Column(DateTime, nullable=False, default=datetime.utcnow)
+    time_modified = Column(DateTime, nullable=False, default=datetime.utcnow)
 
     pilot_id = Column(Integer, ForeignKey('tg_user.user_id'))
     pilot = relation('User', primaryjoin=(pilot_id == User.user_id))

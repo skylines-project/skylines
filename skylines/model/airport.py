@@ -15,8 +15,8 @@ class Airport(DeclarativeBase):
     __tablename__ = 'airports'
 
     id = Column(Integer, autoincrement=True, primary_key=True)
-    time_created = Column(DateTime, nullable=False, default=datetime.now)
-    time_modified = Column(DateTime, nullable=False, default=datetime.now)
+    time_created = Column(DateTime, nullable=False, default=datetime.utcnow)
+    time_modified = Column(DateTime, nullable=False, default=datetime.utcnow)
 
     location_wkt = GeometryColumn(Point(2), comparator=PGComparator)
     altitude = Column(Float)

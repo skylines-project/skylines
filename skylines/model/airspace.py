@@ -12,8 +12,8 @@ class Airspace(DeclarativeBase):
     __tablename__ = 'airspace'
 
     id = Column(Integer, autoincrement=True, primary_key=True)
-    time_created = Column(DateTime, nullable=False, default=datetime.now)
-    time_modified = Column(DateTime, nullable=False, default=datetime.now)
+    time_created = Column(DateTime, nullable=False, default=datetime.utcnow)
+    time_modified = Column(DateTime, nullable=False, default=datetime.utcnow)
 
     the_geom = GeometryColumn(Polygon(2), comparator=PGComparator)
 

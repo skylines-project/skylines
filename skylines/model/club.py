@@ -20,7 +20,7 @@ class Club(DeclarativeBase):
 
     owner = relation('User', primaryjoin=(owner_id == User.user_id))
 
-    time_created = Column(DateTime, nullable=False, default=datetime.now)
+    time_created = Column(DateTime, nullable=False, default=datetime.utcnow)
 
     website = Column(Unicode(255))
 
