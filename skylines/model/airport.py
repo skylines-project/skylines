@@ -48,14 +48,15 @@ class Airport(DeclarativeBase):
             self.location_wkt = location.to_wkt()
 
     @classmethod
-    def by_location(cls, location):
+    def by_location(cls, location, distance_threshold = 0.025):
         if location is None:
             return None
 
         airport = DBSession.query(cls, functions.distance(cls.location_wkt, location.to_wkt()).label('distance'))\
             .order_by(functions.distance(cls.location_wkt, location.to_wkt())).first()
 
-        if airport and airport.distance < 0.025:
+        if airport is not None and (distance_threshold is None or
+                                    airport.distance < distance_threshold):
             return airport.Airport
         else:
             return None
