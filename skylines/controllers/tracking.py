@@ -4,7 +4,7 @@ from datetime import datetime, timedelta
 from math import log
 from tg import expose, request
 from webob.exc import HTTPNotFound
-from sqlalchemy import func
+from sqlalchemy import func, over
 from sqlalchemy.sql.expression import desc
 from skylines.lib.base import BaseController
 from skylines.model import DBSession, User, TrackingFix
@@ -125,16 +125,18 @@ class TrackController(BaseController):
 class TrackingController(BaseController):
     @expose('skylines.templates.tracking.list')
     def index(self, **kw):
-        subq = DBSession.query(TrackingFix.pilot_id,
-                               func.max(TrackingFix.time).label('time')) \
+        subq = DBSession.query(TrackingFix,
+                               over(func.rank(),
+                                    partition_by=TrackingFix.pilot_id,
+                                    order_by=desc(TrackingFix.time)).label('rank')) \
+                .outerjoin(TrackingFix.pilot) \
                 .filter(TrackingFix.time >= datetime.now() - timedelta(hours=6)) \
                 .filter(TrackingFix.location_wkt != None) \
-                .group_by(TrackingFix.pilot_id) \
                 .subquery()
 
-        query = DBSession.query(subq.c.time, User) \
-            .filter(subq.c.pilot_id == User.user_id) \
-            .order_by(desc(subq.c.time))
+        query = DBSession.query(TrackingFix) \
+                .filter(TrackingFix.id == subq.c.id) \
+                .filter(subq.c.rank == 1)
 
         return dict(tracks=query.all())
 
