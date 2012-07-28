@@ -32,6 +32,9 @@ class Airport(DeclarativeBase):
     frequency = Column(Float)
     type = Column(String(20))
 
+    def __unicode__(self):
+        return self.name
+
     @property
     def location(self):
         if self.location_wkt is None:
