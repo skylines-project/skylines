@@ -12,6 +12,7 @@ from skylines.lib.base import BaseController
 from skylines.model import DBSession, User, Group, Club
 from skylines.form import BootstrapForm
 
+
 class EditClubForm(EditableForm):
     __base_widget_type__ = BootstrapForm
     __model__ = Club
@@ -22,6 +23,7 @@ class EditClubForm(EditableForm):
     website = Field(TextField, validators.URL())
 
 edit_club_form = EditClubForm(DBSession)
+
 
 class NewPilotForm(AddRecordForm):
     __base_widget_type__ = BootstrapForm
@@ -35,6 +37,7 @@ class NewPilotForm(AddRecordForm):
     display_name = Field(TextField, validators.NotEmpty)
 
 new_pilot_form = NewPilotForm(DBSession)
+
 
 class ClubController(BaseController):
     def __init__(self, club):
@@ -88,7 +91,7 @@ class ClubController(BaseController):
                      email_address=email_address, club=self.club)
         DBSession.add(pilot)
 
-        pilots = DBSession.query(Group).filter(Group.group_name=='pilots').first()
+        pilots = DBSession.query(Group).filter(Group.group_name == 'pilots').first()
         if pilots:
             pilots.users.append(pilot)
 
