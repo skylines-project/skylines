@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from tg import expose, validate, redirect
-from tg.i18n import ugettext as _, lazy_ugettext as l_
+from tg.i18n import ugettext as _
 from webob.exc import HTTPNotFound, HTTPForbidden
 from sprox.formbase import AddRecordForm, EditableForm, Field
 from sprox.validators import UniqueValue
