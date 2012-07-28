@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
 
 from tg import expose, validate, redirect, require, request, config, flash
-from tg.i18n import ugettext as _, lazy_ugettext as l_
-import smtplib, email
+from tg.i18n import ugettext as _
+import smtplib
+import email
 from webob.exc import HTTPNotFound, HTTPForbidden
 from sprox.formbase import AddRecordForm, EditableForm, Field
 from sprox.widgets import PropertySingleSelectField
@@ -16,7 +17,7 @@ from skylines.lib.base import BaseController
 from skylines.model import DBSession, User, Group, Club, Flight, Follower
 from skylines.model.igcfile import IGCFile
 from skylines.form import BootstrapForm
-from sqlalchemy.sql.expression import desc, and_, or_
+from sqlalchemy.sql.expression import and_, or_
 from sqlalchemy import func
 from repoze.what.predicates import not_anonymous, has_permission
 from skylines.model.geo import Location
