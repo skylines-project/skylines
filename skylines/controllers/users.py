@@ -22,6 +22,7 @@ from repoze.what.predicates import not_anonymous, has_permission
 from skylines.model.geo import Location
 from datetime import date, timedelta
 
+
 class ClubSelectField(PropertySingleSelectField):
     def _my_update_params(self, d, nullable=False):
         clubs = DBSession.query(Club).order_by(Club.name).all()
@@ -30,12 +31,14 @@ class ClubSelectField(PropertySingleSelectField):
         d['options'] = options
         return d
 
+
 class SelectClubForm(EditableForm):
     __base_widget_type__ = BootstrapForm
     __model__ = User
     __hide_fields__ = ['user_id']
     __limit_fields__ = ['club']
     club = ClubSelectField
+
 
 select_club_form = SelectClubForm(DBSession)
 
@@ -135,6 +138,7 @@ The SkyLines Team
     smtp.sendmail(config.get('email_from', 'skylines@xcsoar.org').encode('ascii'),
                   user.email_address.encode('ascii'), msg.as_string())
     smtp.quit()
+
 
 class UserController(BaseController):
     def __init__(self, user):
@@ -313,6 +317,7 @@ class UserController(BaseController):
     def unfollow(self):
         Follower.unfollow(request.identity['user'], self.user)
         redirect('.')
+
 
 class UsersController(BaseController):
     @expose('skylines.templates.users.list')
