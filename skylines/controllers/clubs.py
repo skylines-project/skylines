@@ -5,7 +5,7 @@ from tg.i18n import ugettext as _
 from webob.exc import HTTPNotFound, HTTPForbidden
 from sprox.formbase import AddRecordForm, EditableForm, Field
 from sprox.validators import UniqueValue
-from sprox.saormprovider import SAORMProvider
+from sprox.sa.provider import SAORMProvider
 from formencode import validators, All
 from tw.forms import TextField
 from skylines.lib.base import BaseController

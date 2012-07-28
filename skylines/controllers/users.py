@@ -9,7 +9,7 @@ from sprox.widgets import PropertySingleSelectField
 from formencode import Schema, All
 from formencode.validators import FieldsMatch, Email, String, NotEmpty
 from sprox.validators import UniqueValue
-from sprox.saormprovider import SAORMProvider
+from sprox.sa.provider import SAORMProvider
 from tw.forms import PasswordField, TextField, CheckBox, HiddenField
 from tw.forms.validators import UnicodeString
 from skylines.lib.base import BaseController
