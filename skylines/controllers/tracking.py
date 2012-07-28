@@ -7,7 +7,7 @@ from webob.exc import HTTPNotFound
 from sqlalchemy import func, over
 from sqlalchemy.sql.expression import desc
 from skylines.lib.base import BaseController
-from skylines.model import DBSession, User, TrackingFix
+from skylines.model import DBSession, User, TrackingFix, Airport
 from skylinespolyencode import SkyLinesPolyEncoder
 
 
@@ -138,7 +138,11 @@ class TrackingController(BaseController):
                 .filter(TrackingFix.id == subq.c.id) \
                 .filter(subq.c.rank == 1)
 
-        return dict(tracks=query.all())
+        tracks = []
+        for track in query.all():
+            tracks.append([track, Airport.by_location(track.location, None)])
+
+        return dict(tracks=tracks)
 
     @expose()
     def lookup(self, id, *remainder):

@@ -21,10 +21,11 @@ title = 'Live Tracking'
         <tr>
           <th class="date">Last fix</th>
           <th>Pilot</th>
+          <th>Nearest Airport</th>
         </tr>
       </thead>
       <tbody>
-        <tr py:for="track in tracks">
+        <tr py:for="track, airport in tracks">
           <td class="date">
             <span py:replace="h.format_datetime(track.time)">
               2012-05-21
@@ -34,6 +35,11 @@ title = 'Live Tracking'
             <a py:content="track.pilot" href="/users/${track.pilot.user_id}">
               Pilot Name
             </a>
+          </td>
+          <td>
+            <span py:replace="airport">
+              Nearest Airport
+            </span>
           </td>
           <td nowrap="nowrap">
             <a href="/tracking/${track.pilot.user_id}/" class="btn btn-mini">Show</a>
