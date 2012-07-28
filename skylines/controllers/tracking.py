@@ -10,6 +10,7 @@ from skylines.lib.base import BaseController
 from skylines.model import DBSession, User, TrackingFix
 from skylinespolyencode import SkyLinesPolyEncoder
 
+
 def get_flight_path2(pilot, last_update = None):
     query = DBSession.query(TrackingFix)
     query = query.filter(TrackingFix.pilot == pilot)
@@ -39,6 +40,7 @@ def get_flight_path2(pilot, last_update = None):
         result.append((time, location.latitude, location.longitude,
                        fix.altitude, fix.engine_noise_level))
     return result
+
 
 def get_flight_path(pilot, threshold = 0.001, last_update = None):
     fp = get_flight_path2(pilot, last_update = last_update)
@@ -118,6 +120,7 @@ class TrackController(BaseController):
         return  dict(encoded=trace['encoded'], num_levels=trace['fixes']['numLevels'],
                      barogram_t=trace['barogram_t'], barogram_h=trace['barogram_h'],
                      enl=trace['enl'], sfid=self.pilot.user_id)
+
 
 class TrackingController(BaseController):
     @expose('skylines.templates.tracking.list')
