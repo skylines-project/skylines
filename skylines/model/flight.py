@@ -37,8 +37,10 @@ class Flight(DeclarativeBase):
 
     takeoff_time = Column(DateTime, nullable=False)
     landing_time = Column(DateTime, nullable=False)
-    takeoff_location_wkt = GeometryColumn(Point(2), comparator=PGComparator)
-    landing_location_wkt = GeometryColumn(Point(2), comparator=PGComparator)
+    takeoff_location_wkt = GeometryColumn('takeoff_location', Point(2),
+                                          comparator=PGComparator)
+    landing_location_wkt = GeometryColumn('landing_location', Point(2),
+                                          comparator=PGComparator)
 
     takeoff_airport_id = Column(Integer, ForeignKey('airports.id'))
     takeoff_airport = relation('Airport',
