@@ -52,7 +52,10 @@ from skylines.lib.helpers import truncate
           </span>
         </td>
         <td py:if="'takeoff_airport' not in omitted_columns">
-          <a py:if="flight.takeoff_airport" py:content="flight.takeoff_airport.name" href="/flights/airport/${flight.takeoff_airport_id}">Airport</a>
+          <py:if test="flight.takeoff_airport is not None">
+            <span class="flag-${flight.takeoff_airport.country_code.lower()}"></span>
+            <a py:content="flight.takeoff_airport.name" href="/flights/airport/${flight.takeoff_airport_id}">Airport</a>
+          </py:if>
         </td>
         <td py:if="'club' not in omitted_columns">
           <a py:if="flight.club" py:content="truncate(flight.club.name, 25)" href="/clubs/${flight.club_id}">

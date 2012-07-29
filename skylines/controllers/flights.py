@@ -319,6 +319,7 @@ class FlightsController(BaseController):
                                  owner = flight.igc_file.owner.display_name,
                                  takeoff_airport = flight.takeoff_airport and flight.takeoff_airport.name,
                                  takeoff_airport_id = flight.takeoff_airport and flight.takeoff_airport.id,
+                                 takeoff_airport_country_code = flight.takeoff_airport and flight.takeoff_airport.country_code.lower(),
                                  aircraft = (flight.model and flight.model.name) or (flight.igc_file.model and '[' + flight.igc_file.model + ']'),
                                  aircraft_reg = flight.registration or flight.igc_file.registration or "Unknown",
                                  flight_id = flight.id))

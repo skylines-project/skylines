@@ -108,8 +108,13 @@ if airport:
               "sDefaultContent": "",
               "aTargets": ["airport"],
               "fnRender": function(obj, row) {
-                if (obj.oSettings.jqXHR && obj.aData.takeoff_airport != null)
-                  row = "<a href=\"/flights/airport/" + obj.aData.takeoff_airport_id + "\">" + obj.aData.takeoff_airport + "</a>";
+                if (obj.oSettings.jqXHR && obj.aData.takeoff_airport != null) {
+                  row = "";
+                  if (obj.aData.takeoff_airport_country_code != null)
+                    row += "<span class=\"flag-" + obj.aData.takeoff_airport_country_code + "\"></span> ";
+
+                  row += "<a href=\"/flights/airport/" + obj.aData.takeoff_airport_id + "\">" + obj.aData.takeoff_airport + "</a>";
+                }
                 return row;
               }
             }, {
