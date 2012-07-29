@@ -124,6 +124,12 @@ def save_trace(contest_name, trace_name, node, flight):
     trace.locations = locations
     trace.times = times
 
+    if 'duration' in node:
+        trace.duration = datetime.timedelta(seconds=int(node['duration']))
+
+    if 'distance' in node:
+        trace.distance = int(node['distance'])
+
     flight.traces.append(trace)
 
 
