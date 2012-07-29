@@ -142,6 +142,25 @@ def save_contests(root, flight):
         save_contest(contest_name, traces, flight)
 
 
+def save_takeoff(event, flight):
+    flight.takeoff_time = import_datetime_attribute(event, 'time')
+    flight.takeoff_location = read_location(event)
+    flight.takeoff_airport = Airport.by_location(flight.takeoff_location)
+
+
+def save_landing(event, flight):
+    flight.landing_time = import_datetime_attribute(event, 'time')
+    flight.landing_location = read_location(event)
+    flight.landing_airport = Airport.by_location(flight.landing_location)
+
+
+def save_events(events, flight):
+    if 'takeoff' in events:
+        save_takeoff(events['takeoff'], flight)
+    if 'landing' in events:
+        save_landing(events['landing'], flight)
+
+
 def analyse_flight(flight):
     path = files.filename_to_path(flight.igc_file.filename)
     log.info('Analyzing ' + path)
@@ -163,16 +182,8 @@ def analyse_flight(flight):
     if not root:
         return False
 
-    times = root['times'] if 'times' in root else None
-    flight.takeoff_time = import_datetime_attribute(times, "takeoff")
-    flight.landing_time = import_datetime_attribute(times, "landing")
-
-    locations = root['locations'] if 'locations' in root else None
-    flight.takeoff_location = import_location_attribute(locations, 'takeoff')
-    flight.landing_location = import_location_attribute(locations, 'landing')
-
-    flight.takeoff_airport = Airport.by_location(flight.takeoff_location)
-    flight.landing_airport = Airport.by_location(flight.landing_location)
+    if 'events' in root:
+        save_events(root['events'], flight)
 
     contest = find_contest(root, 'olc_plus')
     if contest is not None:
