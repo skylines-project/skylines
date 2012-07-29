@@ -150,13 +150,14 @@ if airport:
               }
             }
           ],
-          "fnCreatedRow": function(nRow, aData, iDataIndex) {
-            $(nRow).find("[rel=tooltip]").tooltip();
-            $(nRow).find("[rel=tooltip-pin]").tooltip({
+          "fnDrawCallback": function() {
+            $('#flight-table').find("[rel=tooltip]").tooltip();
+            $('#flight-table').find("[rel=tooltip-pin]").tooltip({
               placement: 'left',
               title: 'Activate this to show the flight on top of other flights on the map'
             });
-            $(nRow).find(".pin").each(function() {
+
+            $('#flight-table').find(".pin").each(function() {
               var sfid = parseInt($(this).text());
               if ($.inArray(sfid, pinnedFlights) >= 0) {
                 $(this).html("<i class='icon-star'></i>");
@@ -181,7 +182,7 @@ if airport:
               });
             });
 
-            jQuery(nRow).hover(function(e) {
+            $('#flight-table tr').hover(function(e) {
               if (e.type == "mouseenter") {
                 $(this).find(".pin").each(function() {
                   $(this).css("visibility", "visible");
