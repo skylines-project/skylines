@@ -473,8 +473,8 @@ function setPrimaryFlight(primary) {
 function render_barogram(element) {
   // create Raphael instance and draw linechart.
   barogram = Raphael("barogram", "100%", "100%");
-  var linechart = barogram.linechart(30, 0,
-                      element.innerWidth() - 50, element.innerHeight() - 10,
+  var linechart = barogram.linechart(30, 10,
+                      element.innerWidth() - 50, element.innerHeight() - 20,
                       barogram_t,
                       barogram_h,
                       { axis: "0 0 1 1",
@@ -484,7 +484,7 @@ function render_barogram(element) {
                         width: 1.5,
                         stripes: {
                           y: barogram_enl,
-                          height: element.innerHeight() - 30,
+                          height: element.innerHeight() - 40,
                           visible: !($.browser.msie && (parseInt($.browser.version, 10) < 9)) },
                         markers: barogram_markers });
 
@@ -557,7 +557,7 @@ function render_barogram(element) {
 
   var enl_label = $("<span>ENL</span>");
   enl_label.css({
-    'top': 5,
+    'top': 12,
     'right': 2,
     position: 'absolute',
     color: linechart.getStripesState() ? '#ffbf29' : '#aaa',
@@ -580,8 +580,8 @@ function render_barogram(element) {
     hoverLine.attr({ path:
       ["M", x, attrs.height,
        "v", -(attrs.height - y) + 6,
-       "M", x, 0,
-       "v", y - 6]
+       "M", x, 14,
+       "v", y - 20]
     });
 
     hoverCircle.attr({
@@ -635,8 +635,8 @@ function render_barogram(element) {
   $(window).resize(function() {
     var attrs = linechart.getProperties();
     if (element.innerWidth() - 50 != attrs.width ||
-        element.innerHeight() - 10 != attrs.height) {
-      linechart.resetSize(element.innerWidth() - 50, element.innerHeight() - 10);
+        element.innerHeight() - 20 != attrs.height) {
+      linechart.resetSize(element.innerWidth() - 50, element.innerHeight() - 20);
       mouse_container.css({
         width: element.innerWidth(),
         height: element.innerHeight(),
