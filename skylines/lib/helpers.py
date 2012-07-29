@@ -10,6 +10,11 @@ from datetime import timedelta
 from babel.dates import format_date, format_time, format_datetime
 from babel.numbers import format_number, format_decimal
 
+from markdown import Markdown
+
+
+markdown = Markdown(extensions=['nl2br'], safe_mode='escape')
+
 
 def format_timedelta(delta):
     if isinstance(delta, timedelta):

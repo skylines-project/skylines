@@ -51,6 +51,7 @@ install_requires = [
     "geoalchemy",
     "crc16",
     "mapproxy",
+    "markdown",
 ]
 
 if sys.version_info[:2] == (2, 4):

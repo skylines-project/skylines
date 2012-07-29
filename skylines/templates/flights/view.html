@@ -109,8 +109,10 @@ page = 'flights'
         <table class="table">
           <tr py:for="comment in flight.comments">
             <td>
-              <py:if test="comment.user"><a href="/users/${comment.user_id}" py:content="comment.user">Turbo</a>:</py:if>
-              <span py:replace="comment.text">Nice flight!!</span>
+              <span py:if="comment.user" style="float:left">
+                <a href="/users/${comment.user_id}" py:content="comment.user">Turbo</a>:&nbsp;
+              </span>
+              <span py:replace="Markup(h.markdown.convert(comment.text))">Nice flight!!</span>
             </td>
           </tr>
           <tr py:if="len(flight.comments) == 0">
