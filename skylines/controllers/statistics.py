@@ -5,7 +5,7 @@ from webob.exc import HTTPNotFound
 from sqlalchemy.sql.expression import desc, or_, and_, between
 from sqlalchemy import func, distinct
 from skylines.lib.base import BaseController
-from skylines.model import DBSession, User, Club, Flight
+from skylines.model import DBSession, User, Club, Flight, Airport
 
 
 class StatisticsController(BaseController):
@@ -15,6 +15,7 @@ class StatisticsController(BaseController):
         pilot = None
         selected_club = None
         selected_pilot = None
+        airport = None
 
         if args and len(args) >= 2:
             if args[0] == 'pilot':
@@ -35,6 +36,15 @@ class StatisticsController(BaseController):
                 if selected_club is None:
                     raise HTTPNotFound
 
+            if args[0] == 'airport':
+                try:
+                    airport = DBSession.query(Airport).get(int(args[1]))
+                except ValueError:
+                    raise HTTPNotFound
+
+                if airport is None:
+                    raise HTTPNotFound
+
         if request.identity:
             pilot = request.identity['user']
             club = request.identity['user'].club
@@ -50,6 +60,9 @@ class StatisticsController(BaseController):
 
         if selected_club:
             query = query.filter(Flight.club_id == selected_club.id)
+
+        if airport:
+            query = query.filter(Flight.takeoff_airport_id == airport.id)
 
         query = query.group_by(Flight.year).order_by(Flight.year.desc())
 
@@ -83,6 +96,7 @@ class StatisticsController(BaseController):
                     sum_flights = sum_flights,
                     sum_distance = sum_distance,
                     sum_duration = sum_duration,
+                    airport = airport,
                     pilot = pilot,
                     club = club,
                     selected_pilot = selected_pilot,
