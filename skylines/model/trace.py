@@ -41,6 +41,13 @@ class Trace(DeclarativeBase):
                                 nullable=False, comparator=PGComparator)
 
     @property
+    def speed(self):
+        if self.distance is None or self.duration is None:
+            return None
+
+        return float(self.distance) / self.duration.total_seconds()
+
+    @property
     def locations(self):
         return [Location(longitude=location[0], latitude=location[1])
                 for location in self._locations.coords(DBSession)]

@@ -114,6 +114,12 @@
           </span>
         </td>
       </tr>
+      <tr py:if="flight.speed">
+        <th>Speed</th>
+        <td>
+          ${h.format_decimal(flight.speed * 3.6, format='0.00')} km/h
+        </td>
+      </tr>
       <tr>
         <th>Pilot</th>
         <td>

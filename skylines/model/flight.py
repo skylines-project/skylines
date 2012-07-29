@@ -132,4 +132,12 @@ class Flight(DeclarativeBase):
                     .filter(Trace.flight == self).first()
         return query
 
+    def get_contest_speed(self, contest_type, trace_type):
+        contest = self.get_optimised_contest_trace(contest_type, trace_type)
+        return contest and contest.speed
+
+    @property
+    def speed(self):
+        return self.get_contest_speed('olc_plus', 'classic')
+
 GeometryDDL(Flight.__table__)
