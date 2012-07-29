@@ -141,7 +141,9 @@ class TrackingController(BaseController):
 
         tracks = []
         for track in query.all():
-            tracks.append([track, Airport.by_location(track.location, None)])
+            airport = Airport.by_location(track.location, None)
+            distance = airport.distance(track.location)
+            tracks.append([track, airport, distance])
 
         return dict(tracks=tracks)
 

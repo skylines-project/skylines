@@ -25,7 +25,7 @@ title = 'Live Tracking'
         </tr>
       </thead>
       <tbody>
-        <tr py:for="track, airport in tracks">
+        <tr py:for="track, airport, distance in tracks">
           <td class="date">
             <span py:replace="h.format_datetime(track.time)">
               2012-05-21
@@ -41,6 +41,7 @@ title = 'Live Tracking'
             <span py:replace="airport">
               Nearest Airport
             </span>
+            (${h.format_decimal(distance / 1000, format='0.0')} km)
           </td>
           <td nowrap="nowrap">
             <a href="/tracking/${track.pilot.user_id}/" class="btn btn-mini">Show</a>
