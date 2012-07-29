@@ -25,7 +25,8 @@ class Trace(DeclarativeBase):
 
     id = Column(Integer, autoincrement=True, primary_key=True)
 
-    flight_id = Column(Integer, ForeignKey('flights.id'), nullable=False)
+    flight_id = Column(Integer, ForeignKey('flights.id', ondelete='CASCADE'),
+                       nullable=False)
     flight = relation('Flight', primaryjoin=(flight_id == Flight.id),
                       backref=backref('traces', cascade="all"))
 
