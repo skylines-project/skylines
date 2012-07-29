@@ -136,7 +136,8 @@ class TrackingController(BaseController):
 
         query = DBSession.query(TrackingFix) \
                 .filter(TrackingFix.id == subq.c.id) \
-                .filter(subq.c.rank == 1)
+                .filter(subq.c.rank == 1) \
+                .order_by(desc(TrackingFix.time))
 
         tracks = []
         for track in query.all():
