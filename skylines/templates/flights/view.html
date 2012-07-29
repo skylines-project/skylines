@@ -104,6 +104,27 @@ page = 'flights'
           </a>
           <span id="pinned" rel="tooltip" title="Activate this to show the flight on top of other flights on the map"></span>
         </p>
+
+        <h3><i class="icon-comments-alt"></i> Comments</h3>
+        <table class="table">
+          <tr py:for="comment in flight.comments">
+            <td>
+              <py:if test="comment.user"><a href="/users/${comment.user_id}" py:content="comment.user">Turbo</a>:</py:if>
+              <span py:replace="comment.text">Nice flight!!</span>
+            </td>
+          </tr>
+          <tr py:if="len(flight.comments) == 0">
+            <td><em>No comments yet.</em></td>
+          </tr>
+          <tr py:if="request.identity">
+            <td>
+              <form action="add_comment" method="POST">
+                <textarea style="width: 100%" name="text"></textarea><br/>
+                <input type="submit" value="Add comment" class="btn btn-primary"/>
+              </form>
+            </td>
+          </tr>
+        </table>
       </div>
       <div py:if="trace" class="span8">
         <div id="map_canvas" style="width:100%; height:400pt;"></div>

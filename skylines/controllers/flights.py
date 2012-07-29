@@ -4,7 +4,7 @@ import math
 import logging
 from babel.dates import format_date
 from datetime import datetime, timedelta
-from tg import expose, validate, require, request, redirect, config
+from tg import expose, validate, require, request, redirect, config, flash
 from tg.i18n import ugettext as _
 from tg.decorators import override_template
 from repoze.what.predicates import has_permission
@@ -17,6 +17,7 @@ from sprox.widgets import PropertySingleSelectField
 from skylines.lib.base import BaseController
 from skylines import files
 from skylines.model import DBSession, User, Club, Flight, IGCFile, Model, Airport
+from skylines.model.flight_comment import FlightComment
 from skylines.controllers.upload import UploadController
 from skylines.lib.datatables import GetDatatableRecords
 from skylines.lib.analysis import analyse_flight, flight_path
@@ -257,6 +258,18 @@ class FlightController(BaseController):
             return dict(title='Delete Flight',
                         question='Are you sure you want to delete this flight?',
                         action='', cancel='.')
+
+    @expose()
+    def add_comment(self, text):
+        if request.identity is None:
+            flash(_('You have to be logged in to post comments!'), 'warning')
+        else:
+            comment = FlightComment()
+            comment.user = request.identity['user']
+            comment.flight = self.flight
+            comment.text = text
+
+        redirect('.')
 
 
 class FlightsController(BaseController):
