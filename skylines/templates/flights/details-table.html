@@ -49,6 +49,7 @@
         <th>Take-off</th>
         <td>
           <py:if test="flight.takeoff_airport is not None">
+            <span class="flag-${flight.takeoff_airport.country_code.lower()}" style="float:right;margin:3px"></span>
             <a py:content="flight.takeoff_airport.name" href="/flights/airport/${flight.takeoff_airport_id}">Airport</a>
             <br />
             at
@@ -61,6 +62,7 @@
         <th>Landing</th>
         <td>
           <py:if test="flight.landing_airport is not None">
+            <span class="flag-${flight.landing_airport.country_code.lower()}" style="float:right;margin:3px"></span>
             <a py:content="flight.landing_airport.name" href="/flights/airport/${flight.landing_airport_id}">Airport</a>
             <br />
             at
