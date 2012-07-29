@@ -145,13 +145,15 @@ def save_contests(root, flight):
 def save_takeoff(event, flight):
     flight.takeoff_time = import_datetime_attribute(event, 'time')
     flight.takeoff_location = read_location(event)
-    flight.takeoff_airport = Airport.by_location(flight.takeoff_location)
+    if flight.takeoff_location is not None:
+        flight.takeoff_airport = Airport.by_location(flight.takeoff_location)
 
 
 def save_landing(event, flight):
     flight.landing_time = import_datetime_attribute(event, 'time')
     flight.landing_location = read_location(event)
-    flight.landing_airport = Airport.by_location(flight.landing_location)
+    if flight.landing_location is not None:
+        flight.landing_airport = Airport.by_location(flight.landing_location)
 
 
 def save_events(events, flight):
