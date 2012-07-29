@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from datetime import datetime
-from sqlalchemy import Column
+from sqlalchemy import Column, func
 from sqlalchemy.types import Integer, Float, String, DateTime
 from skylines.model import DeclarativeBase, DBSession
 from tg import config, request
@@ -9,6 +9,7 @@ from geoalchemy.geometry import GeometryColumn, Point, GeometryDDL
 from geoalchemy.postgis import PGComparator
 from geoalchemy.functions import functions
 from skylines.model.geo import Location
+from skylines.lib.sql import cast
 
 
 class Airport(DeclarativeBase):
@@ -63,5 +64,10 @@ class Airport(DeclarativeBase):
             return airport.Airport
         else:
             return None
+
+    def distance(self, location):
+        loc1 = cast(self.location_wkt.wkt, 'geography')
+        loc2 = func.ST_GeographyFromText(location.to_wkt())
+        return DBSession.scalar(func.ST_Distance(loc1, loc2))
 
 GeometryDDL(Airport.__table__)
