@@ -27,7 +27,7 @@ title = 'Upload Flight'
       <p py:if="not success">
         No flight was saved.
       </p>
-      <table class="table">
+      <table class="table vmiddle">
         <thead>
           <tr>
             <th>Filename</th>
@@ -51,7 +51,7 @@ title = 'Upload Flight'
               <span class="label label-warning" py:if="error and flight"><i class="icon-warning-sign"></i> <span py:replace="error">Warning</span></span>
               <span class="label label-important" py:if="error and not flight"><i class="icon-warning-sign"></i> <span py:replace="error">Error</span></span>
             </td>
-            <td><a py:if="flight" href="/flights/${flight.id}/">Show</a></td>
+            <td><a py:if="flight" href="/flights/${flight.id}/" class="btn btn-mini">Show</a></td>
           </tr>
         </tbody>
       </table>

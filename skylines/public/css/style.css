@@ -154,3 +154,11 @@ a.no-link {
 .tooltip {
   z-index: 2000;
 }
+
+table.vmiddle td {
+  vertical-align: middle;
+}
+
+.table input, .table select {
+  margin: 0px;
+}
