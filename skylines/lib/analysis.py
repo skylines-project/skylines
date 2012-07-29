@@ -97,15 +97,15 @@ def delete_trace(contest_name, trace_name, flight):
     q.delete()
 
 
-def save_trace(contest_name, trace_name, trace, flight):
+def save_trace(contest_name, trace_name, node, flight):
     delete_trace(contest_name, trace_name, flight)
 
-    if 'turnpoints' not in trace:
+    if 'turnpoints' not in node:
         return
 
     locations = []
     times = []
-    for turnpoint in trace['turnpoints']:
+    for turnpoint in node['turnpoints']:
         location = read_location(turnpoint)
         time = read_time_of_day(turnpoint, flight)
 
