@@ -19,6 +19,9 @@ function initOpenLayers(id) {
     theme: null
   });
 
+  map.div.setAttribute("tabindex", "0");
+  $(map.div).click(function() { $(this).focus() } );
+
   map.addControl(new OpenLayers.Control.Zoom());
   map.addControl(new OpenLayers.Control.Navigation());
   map.addControl(new OpenLayers.Control.KeyboardDefaults());

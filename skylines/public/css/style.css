@@ -68,6 +68,10 @@ input[type="file"] {
   white-space: nowrap;
 }
 
+#map_canvas {
+  outline: none;
+}
+
 #map_canvas img {
   max-width: inherit;
 }
