@@ -24,7 +24,7 @@ function initOpenLayers(id) {
 
   map.addControl(new OpenLayers.Control.Zoom());
   map.addControl(new OpenLayers.Control.Navigation());
-  map.addControl(new OpenLayers.Control.KeyboardDefaults());
+  map.addControl(new OpenLayers.Control.KeyboardDefaults({observeElement: map.div}));
   map.addControl(new OpenLayers.Control.Attribution());
   map.addControl(new OpenLayers.Control.ScaleLine({geodesic: true}));
 
