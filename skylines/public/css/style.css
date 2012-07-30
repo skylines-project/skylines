@@ -60,7 +60,7 @@ input[type="file"] {
   padding-bottom: 0px;
 }
 
-.numeric {
+.numeric, td.numeric, th.numeric {
   text-align:right;
 }
 

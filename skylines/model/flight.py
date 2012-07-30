@@ -140,4 +140,33 @@ class Flight(DeclarativeBase):
     def speed(self):
         return self.get_contest_speed('olc_plus', 'classic')
 
+    @property
+    def has_phases(self):
+      return bool(self._phases)
+
+    @property
+    def phases(self):
+        return [p for p in self._phases if not p.aggregate]
+
+    @property
+    def circling_performance(self):
+        from skylines.model import FlightPhase
+        stats = [p for p in self._phases
+                 if (p.aggregate
+                     and p.phase_type == FlightPhase.PT_CIRCLING
+                     and p.duration.total_seconds() > 0)]
+        order = [FlightPhase.CD_TOTAL,
+                 FlightPhase.CD_LEFT,
+                 FlightPhase.CD_RIGHT,
+                 FlightPhase.CD_MIXED]
+        stats.sort(lambda a, b: cmp(order.index(a.circling_direction),
+                                    order.index(b.circling_direction)))
+        return stats
+
+    @property
+    def cruise_performance(self):
+        from skylines.model import FlightPhase
+        return [p for p in self._phases
+                if p.aggregate and p.phase_type == FlightPhase.PT_CRUISE]
+
 GeometryDDL(Flight.__table__)

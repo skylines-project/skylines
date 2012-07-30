@@ -7,7 +7,7 @@ from sqlalchemy.sql.expression import and_
 from skylines import files
 from tg import config
 from skylines.model.geo import Location
-from skylines.model import DBSession, Airport, Trace
+from skylines.model import DBSession, Airport, Trace, FlightPhase
 import logging
 
 log = logging.getLogger(__name__)
@@ -169,6 +169,74 @@ def save_events(events, flight):
         save_landing(events['landing'], flight)
 
 
+def save_phases(root, flight):
+
+    if 'phases' not in root or 'performance' not in root:
+        return
+
+    phases = []
+
+    PT_IDX = {'powered': FlightPhase.PT_POWERED,
+              'cruise': FlightPhase.PT_CRUISE,
+              'circling': FlightPhase.PT_CIRCLING}
+
+    CD_IDX = {'': None,
+              'left': FlightPhase.CD_LEFT,
+              'mixed': FlightPhase.CD_MIXED,
+              'right': FlightPhase.CD_RIGHT,
+              'total': FlightPhase.CD_TOTAL}
+
+
+    for phdata in root['phases']:
+        ph = FlightPhase()
+        ph.flight = flight
+        ph.aggregate = False
+        ph.start_time = import_datetime_attribute(phdata, 'start_time')
+        ph.end_time = import_datetime_attribute(phdata, 'end_time')
+        ph.phase_type = PT_IDX[phdata['type']]
+        ph.circling_direction = CD_IDX[phdata['circling_direction']]
+        ph.alt_diff = phdata['alt_diff']
+        ph.duration = datetime.timedelta(seconds=phdata['duration'])
+        ph.distance = phdata['distance']
+        ph.speed = phdata['speed']
+        ph.vario = phdata['vario']
+        ph.glide_rate = phdata['glide_rate']
+        ph.count = 1
+
+        phases.append(ph)
+
+    for statname in ["total", "left", "right", "mixed"]:
+        phdata = root['performance']["circling_%s" % statname]
+        ph = FlightPhase()
+        ph.aggregate = True
+        ph.phase_type = FlightPhase.PT_CIRCLING
+        ph.fraction = round(phdata['fraction'] * 100)
+        ph.circling_direction = CD_IDX[statname]
+        ph.alt_diff = phdata['alt_diff']
+        ph.duration = datetime.timedelta(seconds=phdata['duration'])
+        ph.vario = phdata['vario']
+        ph.count = phdata['count']
+
+        phases.append(ph)
+
+    phdata = root['performance']['cruise_total']
+    ph = FlightPhase()
+    ph.aggregate = True
+    ph.phase_type = FlightPhase.PT_CRUISE
+    ph.circling_direction = FlightPhase.CD_TOTAL
+    ph.alt_diff = phdata['alt_diff']
+    ph.duration = datetime.timedelta(seconds=phdata['duration'])
+    ph.fraction = round(phdata['fraction'] * 100)
+    ph.distance = phdata['distance']
+    ph.speed = phdata['speed']
+    ph.vario = phdata['vario']
+    ph.glide_rate = phdata['glide_rate']
+    ph.count = phdata['count']
+
+    phases.append(ph)
+
+    flight._phases = phases
+
 def analyse_flight(flight):
     path = files.filename_to_path(flight.igc_file.filename)
     log.info('Analyzing ' + path)
@@ -214,6 +282,8 @@ def analyse_flight(flight):
             flight.olc_plus_score = None
 
     save_contests(root, flight)
+
+    save_phases(root, flight)
 
     return True
 

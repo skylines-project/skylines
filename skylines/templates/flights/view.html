@@ -1,7 +1,6 @@
 <?python
 page = 'flights'
 ?>
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
                       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
@@ -10,6 +9,7 @@ page = 'flights'
 
   <xi:include href="flights/meta-tags.html" />
   <xi:include href="flights/details-table.html" />
+  <xi:include href="flights/phases-table.html" />
   <?python
     title, tagline = h.format_flight_title(flight)
   ?>
@@ -28,6 +28,7 @@ page = 'flights'
   <script type="text/javascript" src="/js/OpenLayers/OpenLayers.js"></script>
   <script type="text/javascript" src="/js/OpenLayers/SimpleLayerSwitcher.js"></script>
   <script type="text/javascript" src="/static/jquery/jquery.cookie.js"></script>
+  <script type="text/javascript" src="/static/bootstrap/js/bootstrap-collapse.js"></script>
 
   <script type="text/javascript" src="/js/general.js"></script>
   <script type="text/javascript" src="/js/map.js"></script>
@@ -86,6 +87,10 @@ page = 'flights'
 
       $.getScript("http://maps.google.com/maps/api/js?v=3.7&sensor=false&callback=addGoogleLayer");
       addBingLayers("${config.get('skylines.bing.api_key', 'null')}");
+
+      $('#detailed-stats').on('shown', function () {
+        $('html, body').animate({scrollTop: $("#detailed-stats").offset().top-100}, 200);
+      })
     }
     /* ]]> */
   </script>
@@ -102,7 +107,14 @@ page = 'flights'
           <a py:if="trace" href="map" class="btn">
             <i class="icon-fullscreen icon-large"></i> Full-screen map
           </a>
+
           <span id="pinned" rel="tooltip" title="Activate this to show the flight on top of other flights on the map"></span>
+        </p>
+        <p>
+          <a class='btn' data-toggle="collapse" data-target="#detailed-stats"
+            py:if="flight.has_phases">
+              <i class='icon-info-sign icon-large'></i>
+              Detailed statistics</a>
         </p>
 
         <h3><i class="icon-comments-alt"></i> Comments</h3>
@@ -133,8 +145,27 @@ page = 'flights'
         <div id="barogram" style="width:100%; height:120pt;position:relative;"></div>
       </div>
       <div py:if="not trace" class="span8">
-        An error occurred while decoding this flight.
+          An error occurred while decoding this flight.
+      </div>
+  </div>
+
+  <div id="detailed-stats" class="collapse out">
+    <hr />
+    <div class="row">
+      <div class="span5">
+        <h3>Circling performance <small>(summary)</small></h3>
+        ${render_circling_performance(flight)}
+
+      </div>
+      <div class="span7">
+        <h3>Cruise performance <small>(summary)</small></h3>
+        ${render_cruise_performance(flight)}
+      </div>
+      <div class="span12">
+        <h3>Phases</h3>
+        ${render_phases(flight)}
       </div>
     </div>
-  </body>
+  </div>
+</body>
 </html>

@@ -67,7 +67,7 @@ def _format(units, name, default, value):
     setting = _get_setting(name, default)
     if setting < 0 or setting >= len(units):
         setting = default
-    return units[setting][1](value)
+    return units[setting][1](float(value))
 
 def format_distance(value):
     """Formats a distance value [m] to a user-readable string."""

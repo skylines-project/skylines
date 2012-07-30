@@ -16,13 +16,15 @@ from sprox.formbase import EditableForm
 from sprox.widgets import PropertySingleSelectField
 from skylines.lib.base import BaseController
 from skylines import files
-from skylines.model import DBSession, User, Club, Flight, IGCFile, Model, Airport
+from skylines.model import (DBSession, User, Club, Flight, IGCFile, Model,
+                            Airport, FlightPhase)
 from skylines.model.flight_comment import FlightComment
 from skylines.controllers.upload import UploadController
 from skylines.lib.datatables import GetDatatableRecords
 from skylines.lib.analysis import analyse_flight, flight_path
-from skylines.lib.helpers import truncate
+from skylines.lib.helpers import truncate, format_time
 from skylines.lib.dbutil import get_requested_record, get_requested_record_list
+from skylines.lib import units
 from skylines.form import BootstrapForm
 from skylinespolyencode import SkyLinesPolyEncoder
 
@@ -126,6 +128,39 @@ def get_contest_traces(flight, encoder):
 
     return contest_traces
 
+CIRCDIR_NAMES = {FlightPhase.CD_LEFT: "Left",
+                 FlightPhase.CD_MIXED: "Mixed",
+                 FlightPhase.CD_RIGHT: "Right",
+                 FlightPhase.CD_TOTAL: "Total"}
+
+PHASETYPE_NAMES = {FlightPhase.PT_POWERED: "Powered",
+                   FlightPhase.PT_CIRCLING: "Circling",
+                   FlightPhase.PT_CRUISE: "Cruise"}
+
+def format_phase(phase):
+    """Format phase properties to human readable format
+    """
+    is_circling = phase.phase_type == FlightPhase.PT_CIRCLING
+    r = dict(start="%s" % format_time(phase.start_time),
+             fraction="%d%%" % phase.fraction if phase.fraction else "",
+             speed=units.format_speed(float(phase.speed)) if phase.speed else "",
+             vario=units.format_lift(phase.vario),
+             alt_diff=units.format_altitude(phase.alt_diff),
+             count=phase.count,
+             duration=phase.duration,
+             is_circling=is_circling,
+             type=PHASETYPE_NAMES[phase.phase_type],
+             circling_direction="",
+             distance="",
+             glide_rate="")
+
+    if not is_circling:
+        r['distance'] = units.format_distance(phase.distance)
+        r['glide_rate'] = phase.glide_rate
+    else:
+        r['circling_direction']=CIRCDIR_NAMES[phase.circling_direction]
+    return r
+
 class FlightController(BaseController):
     def __init__(self, flight):
         if isinstance(flight, list):
@@ -145,7 +180,10 @@ class FlightController(BaseController):
             return (flight, trace)
 
         other_flights = map(add_flight_path, self.other_flights)
-        return dict(flight=self.flight, trace=self.__get_flight_path(), other_flights=other_flights)
+        return dict(flight=self.flight,
+                    trace=self.__get_flight_path(),
+                    other_flights=other_flights,
+                    phase_formatter=format_phase)
 
     @expose('skylines.templates.flights.map')
     def map(self):
