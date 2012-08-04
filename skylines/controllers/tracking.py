@@ -5,7 +5,7 @@ from math import log
 from tg import expose, request
 from webob.exc import HTTPNotFound
 from sqlalchemy import func, over
-from sqlalchemy.sql.expression import desc
+from sqlalchemy.sql.expression import and_, desc
 from skylines.lib.base import BaseController
 from skylines.model import DBSession, User, TrackingFix, Airport
 from skylinespolyencode import SkyLinesPolyEncoder
@@ -13,8 +13,8 @@ from skylinespolyencode import SkyLinesPolyEncoder
 
 def get_flight_path2(pilot, last_update = None):
     query = DBSession.query(TrackingFix)
-    query = query.filter(TrackingFix.pilot == pilot)
-    query = query.filter(TrackingFix.time >= datetime.now() - timedelta(hours=12))
+    query = query.filter(and_(TrackingFix.pilot == pilot,
+                              TrackingFix.time >= datetime.now() - timedelta(hours=12)))
     query = query.order_by(TrackingFix.time)
 
     start_fix = query.first()
