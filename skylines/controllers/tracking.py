@@ -15,6 +15,7 @@ def get_flight_path2(pilot, last_update = None):
     query = DBSession.query(TrackingFix)
     query = query.filter(and_(TrackingFix.pilot == pilot,
                               TrackingFix.location != None,
+                              TrackingFix.altitude != None,
                               TrackingFix.time >= datetime.now() - timedelta(hours=12)))
     query = query.order_by(TrackingFix.time)
 
