@@ -33,6 +33,8 @@ def get_flight_path2(pilot, last_update = None):
     result = []
     for fix in query:
         location = fix.location
+        if location is None:
+            continue
 
         time_delta = fix.time - start_fix.time
         time = start_time + time_delta.days * 86400 + time_delta.seconds
