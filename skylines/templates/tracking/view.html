@@ -1,4 +1,6 @@
 <?python
+from tg.i18n import ungettext
+
 page = 'tracking'
 title = 'Live Tracking'
 ?>
@@ -102,6 +104,22 @@ title = 'Live Tracking'
                 <a py:content="pilot.club" href="/clubs/${pilot.club_id}/">
                   Club Name
                 </a>
+              </td>
+            </tr>
+            <tr py:if="pilot.tracking_delay > 0">
+              <th>
+                <span rel="tooltip" title="This pilot chose to delay the display of his live tracks.">Delay</span>
+              </th>
+
+              <td>
+                <span py:replace="ungettext(u'%u minute', u'%u minutes', pilot.tracking_delay) % pilot.tracking_delay">
+                  10 minutes
+                </span>
+
+                <span py:if="pilot.is_readable()" rel="tooltip"
+                      title="The live tracking delay is ignored because of your account privileges.">
+                  (ignored)
+                </span>
               </td>
             </tr>
           </tbody>

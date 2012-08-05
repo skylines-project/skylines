@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from tg import expose, validate, redirect, require, request, config, flash
-from tg.i18n import ugettext as _
+from tg.i18n import ugettext as _, ungettext
 import smtplib
 import email
 from webob.exc import HTTPNotFound, HTTPForbidden
@@ -30,6 +30,15 @@ class ClubSelectField(PropertySingleSelectField):
         clubs = DBSession.query(Club).order_by(Club.name).all()
         options = [(None, 'None')] + \
                   [(club.id, club.name) for club in clubs]
+        d['options'] = options
+        return d
+
+
+class DelaySelectField(PropertySingleSelectField):
+    def _my_update_params(self, d, nullable=False):
+        options = [(0, _('None'))]
+        for x in range(1, 10) + range(10, 30, 5) + range(30, 61, 15):
+            options.append((x, ungettext(u'%u minute', u'%u minutes', x) % x))
         d['options'] = options
         return d
 
@@ -80,11 +89,12 @@ class EditUserForm(EditableForm):
     __base_widget_type__ = BootstrapForm
     __model__ = User
     __hide_fields__ = ['user_id']
-    __limit_fields__ = ['email_address', 'display_name', 'club', 'eye_candy']
+    __limit_fields__ = ['email_address', 'display_name', 'club', 'tracking_delay', 'eye_candy']
     __base_widget_args__ = dict(action='save')
     email_address = Field(TextField, Email(not_empty=True))
     display_name = Field(TextField, NotEmpty)
     club = ClubSelectField
+    tracking_delay = DelaySelectField
     eye_candy = Field(CheckBox)
 
 edit_user_form = EditUserForm(DBSession)
@@ -186,7 +196,8 @@ class UserController(BaseController):
 
     @expose()
     @validate(form=edit_user_form, error_handler=edit)
-    def save(self, email_address, display_name, club, eye_candy=False, **kwargs):
+    def save(self, email_address, display_name, club,
+             tracking_delay=0, eye_candy=False, **kwargs):
         if not self.user.is_writable():
             raise HTTPForbidden
 
@@ -195,6 +206,7 @@ class UserController(BaseController):
         if not club:
             club = None
         self.user.club_id = club
+        self.user.tracking_delay = tracking_delay
         self.user.eye_candy = eye_candy
         DBSession.flush()
 

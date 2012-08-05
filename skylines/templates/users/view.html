@@ -1,4 +1,6 @@
 <?python
+from tg.i18n import ungettext
+
 title = user.display_name
 
 def add_locations(locations):
@@ -91,6 +93,14 @@ def add_locations(locations):
               <py:if test="user.is_writable()">
                 <a href="tracking_register?came_from=." class="btn btn-mini">Generate new key</a>
               </py:if>
+            </td>
+          </tr>
+
+          <tr py:if="user.is_readable() and user.tracking_key_hex is not None">
+            <th>Tracking delay</th>
+            <td>
+              <span py:if="user.tracking_delay == 0" py:strip="True">None</span>
+              <span py:if="user.tracking_delay > 0" py:replace="ungettext(u'%u minute', u'%u minutes', user.tracking_delay) % user.tracking_delay"/>
             </td>
           </tr>
 

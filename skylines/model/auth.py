@@ -22,7 +22,7 @@ except ImportError:
 __all__ = ['User', 'Group', 'Permission']
 
 from sqlalchemy import Table, ForeignKey, Column, event, DDL
-from sqlalchemy.types import Unicode, Integer, BigInteger, DateTime, Boolean
+from sqlalchemy.types import Unicode, Integer, BigInteger, SmallInteger, DateTime, Boolean
 from sqlalchemy.orm import relation, synonym, column_property
 from sqlalchemy.dialects.postgresql import INET
 
@@ -121,6 +121,9 @@ class User(DeclarativeBase):
     club_id = Column(Integer, ForeignKey('clubs.id'))
 
     tracking_key = Column(BigInteger)
+
+    # delay live tracks by this number of minutes for unauthorised users
+    tracking_delay = Column(SmallInteger, nullable=False, default=0)
 
     created_ip = Column(INET)
 

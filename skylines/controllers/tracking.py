@@ -18,6 +18,8 @@ def get_flight_path2(pilot, last_update = None):
                               TrackingFix.location != None,
                               TrackingFix.altitude != None,
                               TrackingFix.time >= datetime.utcnow() - timedelta(hours=12)))
+    if pilot.tracking_delay > 0 and not pilot.is_readable():
+        query = query.filter(TrackingFix.time <= datetime.utcnow() - timedelta(minutes=pilot.tracking_delay))
     query = query.order_by(TrackingFix.time)
 
     start_fix = query.first()
