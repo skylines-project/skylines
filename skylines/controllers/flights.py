@@ -38,6 +38,11 @@ class PilotSelectField(PropertySingleSelectField):
         d['options'] = options
         return d
 
+    def validate(self, value, *args, **kw):
+        if isinstance(value, User):
+            value = value.user_id
+        return super(PilotSelectField, self).validate(value, *args, **kw)
+
 
 class SelectPilotForm(EditableForm):
     __base_widget_type__ = BootstrapForm
@@ -173,7 +178,7 @@ class FlightController(BaseController):
                     user=request.identity['user'],
                     include_after='flights/after_change_pilot.html',
                     form=select_pilot_form,
-                    values=dict(pilot=self.flight.pilot_id, co_pilot=self.flight.co_pilot_id))
+                    values=self.flight)
 
     @expose()
     @validate(form=select_pilot_form, error_handler=change_pilot)
