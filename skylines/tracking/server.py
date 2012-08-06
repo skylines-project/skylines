@@ -44,7 +44,7 @@ class TrackingServer(DatagramProtocol):
 
     def fixReceived(self, host, key, payload):
         if len(payload) != 32: return
-        data = struct.unpack('!IIIiiHHHhhH', payload)
+        data = struct.unpack('!IIiiIHHHhhH', payload)
 
         pilot = User.by_tracking_key(key)
         if not pilot:
