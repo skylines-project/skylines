@@ -5,6 +5,7 @@ from webob.exc import HTTPNotFound
 from sqlalchemy.sql.expression import desc, or_, and_, between
 from sqlalchemy import func, distinct
 from skylines.lib.base import BaseController
+from skylines.lib.dbutil import get_requested_record
 from skylines.model import DBSession, User, Club, Flight, Airport
 
 
@@ -19,31 +20,13 @@ class StatisticsController(BaseController):
 
         if args and len(args) >= 2:
             if args[0] == 'pilot':
-                try:
-                    selected_pilot = DBSession.query(User).get(int(args[1]))
-                except ValueError:
-                    raise HTTPNotFound
-
-                if selected_pilot is None:
-                    raise HTTPNotFound
+                selected_pilot = get_requested_record(User, args[1])
 
             if args[0] == 'club':
-                try:
-                    selected_club = DBSession.query(Club).get(int(args[1]))
-                except ValueError:
-                    raise HTTPNotFound
-
-                if selected_club is None:
-                    raise HTTPNotFound
+                selected_club = get_requested_record(Club, args[1])
 
             if args[0] == 'airport':
-                try:
-                    airport = DBSession.query(Airport).get(int(args[1]))
-                except ValueError:
-                    raise HTTPNotFound
-
-                if airport is None:
-                    raise HTTPNotFound
+                airport = get_requested_record(Airport, args[1])
 
         if request.identity:
             pilot = request.identity['user']

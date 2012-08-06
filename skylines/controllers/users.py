@@ -14,6 +14,7 @@ from sprox.sa.provider import SAORMProvider
 from tw.forms import PasswordField, TextField, CheckBox, HiddenField
 from tw.forms.validators import UnicodeString
 from skylines.lib.base import BaseController
+from skylines.lib.dbutil import get_requested_record
 from skylines.model import DBSession, User, Group, Club, Flight, Follower
 from skylines.model.igcfile import IGCFile
 from skylines.form import BootstrapForm
@@ -333,15 +334,7 @@ class UsersController(BaseController):
             id = remainder[0]
             remainder = remainder[1:]
 
-        try:
-            user = DBSession.query(User).get(int(id))
-        except ValueError:
-            raise HTTPNotFound
-
-        if user is None:
-            raise HTTPNotFound
-
-        controller = UserController(user)
+        controller = UserController(get_requested_record(User, id))
         return controller, remainder
 
     @expose('skylines.templates.users.new')

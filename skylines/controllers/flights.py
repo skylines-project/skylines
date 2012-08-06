@@ -22,6 +22,7 @@ from skylines.controllers.upload import UploadController
 from skylines.lib.datatables import GetDatatableRecords
 from skylines.lib.analysis import analyse_flight, flight_path
 from skylines.lib.helpers import truncate
+from skylines.lib.dbutil import get_requested_record, get_requested_record_list
 from skylines.form import BootstrapForm
 from skylinespolyencode import SkyLinesPolyEncoder
 
@@ -362,22 +363,8 @@ class FlightsController(BaseController):
             id = remainder[0]
             remainder = remainder[1:]
 
-        def get_flight_by_id_string(id_string):
-            try:
-                id = int(id_string)
-            except ValueError:
-                raise HTTPNotFound
-            flight = DBSession.query(Flight).get(id)
-            if flight is None:
-                raise HTTPNotFound
-            return flight
-
-        ids = list()
-        for unique_id in id.split(','):
-            if unique_id not in ids:
-                ids.append(unique_id)
-
-        controller = FlightController(map(get_flight_by_id_string, ids))
+        flights = get_requested_record_list(Flight, id)
+        controller = FlightController(flights)
         return controller, remainder
 
     @expose()
@@ -455,9 +442,7 @@ class FlightsController(BaseController):
     @expose('skylines.templates.flights.list')
     @expose('json')
     def pilot(self, id, **kw):
-        pilot = DBSession.query(User).get(id)
-        if not pilot:
-            raise HTTPNotFound
+        pilot = get_requested_record(User, id)
 
         columns = {
             0: 'takeoff_time',
@@ -475,9 +460,7 @@ class FlightsController(BaseController):
     @expose('skylines.templates.flights.list')
     @expose('json')
     def club(self, id, **kw):
-        club = DBSession.query(Club).get(id)
-        if not club:
-            raise HTTPNotFound
+        club = get_requested_record(Club, id)
 
         columns = {
             0: 'takeoff_time',
@@ -495,9 +478,7 @@ class FlightsController(BaseController):
     @expose('skylines.templates.flights.list')
     @expose('json')
     def airport(self, id, **kw):
-        airport = DBSession.query(Airport).get(id)
-        if not airport:
-            raise HTTPNotFound
+        airport = get_requested_record(Airport, id)
 
         columns = {
             0: 'takeoff_time',

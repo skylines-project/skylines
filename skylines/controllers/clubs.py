@@ -9,6 +9,7 @@ from sprox.sa.provider import SAORMProvider
 from formencode import validators, All
 from tw.forms import TextField
 from skylines.lib.base import BaseController
+from skylines.lib.dbutil import get_requested_record
 from skylines.model import DBSession, User, Group, Club
 from skylines.form import BootstrapForm
 
@@ -110,13 +111,5 @@ class ClubsController(BaseController):
             id = remainder[0]
             remainder = remainder[1:]
 
-        try:
-            club = DBSession.query(Club).get(int(id))
-        except ValueError:
-            raise HTTPNotFound
-
-        if club is None:
-            raise HTTPNotFound
-
-        controller = ClubController(club)
+        controller = ClubController(get_requested_record(Club, id))
         return controller, remainder

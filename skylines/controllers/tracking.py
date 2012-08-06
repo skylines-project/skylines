@@ -7,6 +7,7 @@ from webob.exc import HTTPNotFound
 from sqlalchemy import func, over
 from sqlalchemy.sql.expression import and_, desc
 from skylines.lib.base import BaseController
+from skylines.lib.dbutil import get_requested_record_list
 from skylines.model import DBSession, User, TrackingFix, Airport
 from skylinespolyencode import SkyLinesPolyEncoder
 
@@ -156,22 +157,8 @@ class TrackingController(BaseController):
             id = remainder[0]
             remainder = remainder[1:]
 
-        def get_pilot_by_id_string(id_string):
-            try:
-                id = int(id_string)
-            except ValueError:
-                raise HTTPNotFound
-            user = DBSession.query(User).get(id)
-            if user is None:
-                raise HTTPNotFound
-            return user
-
-        ids = list()
-        for unique_id in id.split(','):
-            if unique_id not in ids:
-                ids.append(unique_id)
-
-        controller = TrackController(map(get_pilot_by_id_string, ids))
+        pilots = get_requested_record_list(User, id)
+        controller = TrackController(pilots)
         return controller, remainder
 
     @expose('skylines.templates.tracking.info')
