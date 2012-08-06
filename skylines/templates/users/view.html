@@ -1,5 +1,6 @@
 <?python
 from tg.i18n import ungettext
+from skylines.lib.units import format_distance, format_speed
 
 title = user.display_name
 
@@ -185,7 +186,7 @@ def add_locations(locations):
           </thead>
           <tbody>
             <tr py:for="distance_flight in distance_flights">
-              <td py:content="h.format_number(distance_flight[0] / 1000) + ' km'">300 km</td>
+              <td py:content="format_distance(distance_flight[0])">300 km</td>
               <td>
                 <abbr py:if="distance_flight[1]" class="timeago"
                       title="${distance_flight[1].landing_time.isoformat()}"
@@ -217,8 +218,8 @@ def add_locations(locations):
             <tr>
               <td><strong>Distance</strong></td>
               <td>
-                <span rel="tooltip" title="avg. ${h.format_number((last_year_statistics.distance / 1000) / last_year_statistics.flights)} km per flight">
-                  ${h.format_number(last_year_statistics.distance / 1000)} km
+                <span rel="tooltip" title="avg. ${format_distance(last_year_statistics.distance / last_year_statistics.flights)} per flight">
+                  ${format_distance(last_year_statistics.distance)}
                 </span>
               </td>
             </tr>
@@ -232,7 +233,7 @@ def add_locations(locations):
             </tr>
             <tr>
               <td><strong>Average Speed</strong></td>
-              <td>${h.format_number(int(last_year_statistics.speed * 3.6))} km/h</td>
+              <td>${format_speed(last_year_statistics.speed)}</td>
             </tr>
           </tbody>
         </table>

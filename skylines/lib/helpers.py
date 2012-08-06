@@ -12,6 +12,8 @@ from babel.numbers import format_number, format_decimal
 
 from markdown import Markdown
 
+from skylines.lib.units import format_distance
+
 
 markdown = Markdown(extensions=['nl2br'], safe_mode='escape')
 
@@ -26,7 +28,7 @@ def format_timedelta(delta):
 
 
 def format_flight_title(flight):
-    title = format_number(flight.olc_classic_distance / 1000) + ' km'
+    title = format_distance(flight.olc_classic_distance)
     title = title + ' on ' + format_date(flight.takeoff_time)
 
     tagline = ''

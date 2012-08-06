@@ -1,3 +1,7 @@
+<?python
+from skylines.lib.units import format_distance, format_speed
+?>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
                       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
@@ -107,17 +111,17 @@
         <td>
           ${flight.olc_plus_score} pt
           <span py:if="flight.olc_classic_distance is not None">
-            (${flight.olc_classic_distance/1000} km,
+            (${format_distance(flight.olc_classic_distance)},
           </span>
           <span py:if="flight.olc_triangle_distance is not None">
-            triangle ${flight.olc_triangle_distance/1000} km)
+            triangle ${format_distance(flight.olc_triangle_distance)})
           </span>
         </td>
       </tr>
       <tr py:if="flight.speed">
         <th>Speed</th>
         <td>
-          ${h.format_decimal(flight.speed * 3.6, format='0.00')} km/h
+          ${format_speed(flight.speed)}
         </td>
       </tr>
       <tr>

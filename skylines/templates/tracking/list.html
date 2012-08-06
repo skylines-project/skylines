@@ -1,4 +1,6 @@
 <?python
+from skylines.lib.units import format_distance
+
 page = 'tracking'
 title = 'Live Tracking'
 ?>
@@ -41,7 +43,7 @@ title = 'Live Tracking'
             <span py:replace="airport">
               Nearest Airport
             </span>
-            (${h.format_decimal(distance / 1000, format='0.0')} km)
+            (${format_distance(distance)})
           </td>
           <td nowrap="nowrap">
             <a href="/tracking/${track.pilot.user_id}/" class="btn btn-mini">Show</a>

@@ -7,8 +7,10 @@
 
   <py:def function="flight_meta_tags(flight)">
     <?python
+      from skylines.lib.units import format_distance
+
       description = []
-      description.append(h.format_number(flight.olc_classic_distance / 1000) + ' km')
+      description.append(format_distance(flight.olc_classic_distance))
       description.append(h.format_number(flight.olc_plus_score) + ' pt')
       description.append(h.format_date(flight.takeoff_time))
 

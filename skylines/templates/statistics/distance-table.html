@@ -1,3 +1,7 @@
+<?python
+from skylines.lib.units import format_distance
+?>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
                       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
@@ -16,8 +20,8 @@
         <tr py:for="year in years">
           <td class="span2">${int(year.year)}</td>
           <td class="span2">
-            <span rel="tooltip" title="avg. ${h.format_number((year.distance / 1000) / year.flights)} km per flight">
-              ${h.format_number(year.distance / 1000)} km
+            <span rel="tooltip" title="avg. ${format_distance(year.distance / year.flights)} per flight">
+              ${format_distance(year.distance)}
             </span>
           </td>
           <td class="span8">
@@ -28,7 +32,7 @@
         </tr>
         <tr py:if="sum_distance">
           <td><strong>Total</strong></td>
-          <td colspan="2"><strong>${h.format_number(sum_distance / 1000)} km</strong></td>
+          <td colspan="2"><strong>${format_distance(sum_distance)}</strong></td>
         </tr>
       </tbody>
     </table>
