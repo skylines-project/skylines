@@ -285,11 +285,11 @@ class UserController(BaseController):
 
         largest_flight = self.user.get_largest_flights().first()
         if largest_flight:
-            distance_flights.append([largest_flight.olc_classic_distance / 1000,
+            distance_flights.append([largest_flight.olc_classic_distance,
                                      largest_flight])
 
-        for distance in [50, 100, 300, 500, 700, 1000]:
-            distance_flight = self.get_distance_flight(distance * 1000)
+        for distance in [50000, 100000, 300000, 500000, 700000, 1000000]:
+            distance_flight = self.get_distance_flight(distance)
             if distance_flight is not None:
                 distance_flights.append([distance, distance_flight])
 
@@ -310,10 +310,10 @@ class UserController(BaseController):
                                     speed = 0)
 
         if query and query.flights > 0:
-            duration_hours = query.duration.days * 24 + float(query.duration.seconds) / 3600
+            duration_seconds = query.duration.days * 24 * 3600 + query.duration.seconds
 
-            if duration_hours > 0:
-                last_year_statistics['speed'] = float(query.distance) / duration_hours
+            if duration_seconds > 0:
+                last_year_statistics['speed'] = float(query.distance) / duration_seconds
 
             last_year_statistics['flights'] = query.flights
             last_year_statistics['distance'] = query.distance

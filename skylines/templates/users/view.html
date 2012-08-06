@@ -185,7 +185,7 @@ def add_locations(locations):
           </thead>
           <tbody>
             <tr py:for="distance_flight in distance_flights">
-              <td py:content="h.format_number(distance_flight[0]) + ' km'">300 km</td>
+              <td py:content="h.format_number(distance_flight[0] / 1000) + ' km'">300 km</td>
               <td>
                 <abbr py:if="distance_flight[1]" class="timeago"
                       title="${distance_flight[1].landing_time.isoformat()}"
@@ -232,7 +232,7 @@ def add_locations(locations):
             </tr>
             <tr>
               <td><strong>Average Speed</strong></td>
-              <td>${h.format_number(int(last_year_statistics.speed / 1000))} km/h</td>
+              <td>${h.format_number(int(last_year_statistics.speed * 3.6))} km/h</td>
             </tr>
           </tbody>
         </table>
