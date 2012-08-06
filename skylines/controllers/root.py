@@ -98,7 +98,7 @@ class RootController(BaseController):
             flash(_('Sorry, email address or password are wrong. Please try again or register.'), 'warning')
         else:
             request.identity['user'].login_ip = request.remote_addr
-            request.identity['user'].login_time = datetime.now()
+            request.identity['user'].login_time = datetime.utcnow()
 
             flash(_('You are now logged in. Welcome back, %s!') % request.identity['user'])
 

@@ -188,7 +188,7 @@ class FlightController(BaseController):
             if pilot:
                 self.flight.club_id = DBSession.query(User).get(pilot).club_id
         self.flight.co_pilot_id = co_pilot
-        self.flight.time_modified = datetime.now()
+        self.flight.time_modified = datetime.utcnow()
         DBSession.flush()
 
         redirect('.')
@@ -229,7 +229,7 @@ class FlightController(BaseController):
 
         self.flight.model_id = model
         self.flight.registration = registration
-        self.flight.time_modified = datetime.now()
+        self.flight.time_modified = datetime.utcnow()
         DBSession.flush()
 
         redirect('.')
@@ -379,7 +379,7 @@ class FlightsController(BaseController):
     @expose('skylines.templates.flights.list')
     @expose('json')
     def today(self, **kw):
-        query = DBSession.query(Flight).filter(Flight.takeoff_time < datetime.now())
+        query = DBSession.query(Flight).filter(Flight.takeoff_time < datetime.utcnow())
         query = query.from_self(func.max(Flight.takeoff_time).label('date'))
         date = query.one().date
         if not date:

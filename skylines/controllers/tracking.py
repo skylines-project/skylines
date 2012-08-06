@@ -17,7 +17,7 @@ def get_flight_path2(pilot, last_update = None):
     query = query.filter(and_(TrackingFix.pilot == pilot,
                               TrackingFix.location != None,
                               TrackingFix.altitude != None,
-                              TrackingFix.time >= datetime.now() - timedelta(hours=12)))
+                              TrackingFix.time >= datetime.utcnow() - timedelta(hours=12)))
     query = query.order_by(TrackingFix.time)
 
     start_fix = query.first()
@@ -133,7 +133,7 @@ class TrackingController(BaseController):
                                     partition_by=TrackingFix.pilot_id,
                                     order_by=desc(TrackingFix.time)).label('rank')) \
                 .outerjoin(TrackingFix.pilot) \
-                .filter(TrackingFix.time >= datetime.now() - timedelta(hours=6)) \
+                .filter(TrackingFix.time >= datetime.utcnow() - timedelta(hours=6)) \
                 .filter(TrackingFix.location_wkt != None) \
                 .subquery()
 

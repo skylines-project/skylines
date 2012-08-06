@@ -206,7 +206,7 @@ class UploadController(BaseController):
 
             flight.model_id = model_id
             flight.registration = registration
-            flight.time_modified = datetime.now()
+            flight.time_modified = datetime.utcnow()
 
         DBSession.flush()
 
