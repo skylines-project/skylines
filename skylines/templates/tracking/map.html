@@ -37,18 +37,20 @@ title = 'Live Tracking'
     function initialize() {
       initOpenLayers("map_canvas");
       initFlightLayer();
-
-      addFlight(${pilot.user_id},
-        ${h.json.dumps(trace.encoded.points)},
-        ${h.json.dumps(trace.encoded.levels)},
-        ${trace.fixes.numLevels},
-        ${h.json.dumps(trace.barogram_t)},
-        ${h.json.dumps(trace.barogram_h)},
-        ${h.json.dumps(trace.enl)},
-        ${h.json.dumps(trace.zoom_levels)}
-      );
-
       /* ]]> */
+
+      <py:if test="trace">
+        addFlight(${pilot.user_id},
+          ${h.json.dumps(trace.encoded.points)},
+          ${h.json.dumps(trace.encoded.levels)},
+          ${trace.fixes.numLevels},
+          ${h.json.dumps(trace.barogram_t)},
+          ${h.json.dumps(trace.barogram_h)},
+          ${h.json.dumps(trace.enl)},
+          ${h.json.dumps(trace.zoom_levels)}
+        );
+      </py:if>
+
       <py:if test="defined('other_pilots')">
         <py:for each="pilot, trace in other_pilots">
           addFlight(${pilot.user_id},
@@ -92,8 +94,14 @@ title = 'Live Tracking'
   </style>
 </head>
 
-<body onload="initialize();">
-  <div id="map_canvas" class="olFullscreen" style="position: absolute; top: 40px; bottom: 0; width:100%;"></div>
-  <div id="barogram" style="position: absolute; bottom: 0; width:100%; height:100pt; background-color: white; opacity: 0.8;"></div>
-</body>
+  <body onload="initialize();">
+    <div py:if="trace or (defined('other_pilots') and other_pilots)" py:strip="True">
+      <div id="map_canvas" class="olFullscreen" style="position: absolute; top: 40px; bottom: 0; width:100%;"></div>
+      <div id="barogram" style="position: absolute; bottom: 0; width:100%; height:100pt; background-color: white; opacity: 0.8;"></div>
+    </div>
+    <div py:if="not trace and (not defined('other_pilots') or not other_pilots)">
+      <div style="height:50pt;"/>
+      <p>There is no live track of this pilot currently.</p>
+    </div>
+  </body>
 </html>

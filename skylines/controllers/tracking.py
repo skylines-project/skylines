@@ -50,7 +50,7 @@ def get_flight_path2(pilot, last_update = None):
 def get_flight_path(pilot, threshold = 0.001, last_update = None):
     fp = get_flight_path2(pilot, last_update = last_update)
     if fp is None or len(fp) == 0:
-        raise HTTPNotFound
+        return None
 
     num_levels = 4
     zoom_factor = 4
@@ -95,21 +95,23 @@ class TrackController(BaseController):
 
     @expose('skylines.templates.tracking.view')
     def index(self):
-        def add_flight_path(pilot):
+        other_pilots = []
+        for pilot in self.other_pilots:
             trace = get_flight_path(pilot)
-            return (pilot, trace)
+            if trace is not None:
+                trace.append((pilot, trace))
 
-        other_pilots = map(add_flight_path, self.other_pilots)
         return dict(pilot=self.pilot, trace=self.__get_flight_path(),
                     other_pilots=other_pilots)
 
     @expose('skylines.templates.tracking.map')
     def map(self):
-        def add_flight_path(pilot):
+        other_pilots = []
+        for pilot in self.other_pilots:
             trace = get_flight_path(pilot)
-            return (pilot, trace)
+            if trace is not None:
+                trace.append((pilot, trace))
 
-        other_pilots = map(add_flight_path, self.other_pilots)
         return dict(pilot=self.pilot, trace=self.__get_flight_path(),
                     other_pilots=other_pilots)
 
@@ -121,6 +123,8 @@ class TrackController(BaseController):
             last_update = None
 
         trace = self.__get_flight_path(threshold=0.001, last_update=last_update)
+        if trace is None:
+            raise HTTPNotFound
 
         return  dict(encoded=trace['encoded'], num_levels=trace['fixes']['numLevels'],
                      barogram_t=trace['barogram_t'], barogram_h=trace['barogram_h'],
