@@ -2,9 +2,11 @@ import struct
 import datetime
 from twisted.python import log
 from twisted.internet.protocol import DatagramProtocol
+from sqlalchemy import distinct
 from sqlalchemy.exc import SQLAlchemyError
+from sqlalchemy.sql.expression import and_, or_, desc
 import transaction
-from skylines.model import DBSession, User, TrackingFix, Location
+from skylines.model import DBSession, User, TrackingFix, Location, Follower
 from skylines.tracking.crc import check_crc, set_crc
 
 # More information about this protocol can be found in the XCSoar
@@ -14,6 +16,8 @@ MAGIC = 0x5df4b67b
 TYPE_PING = 1
 TYPE_ACK = 2
 TYPE_FIX = 3
+TYPE_TRAFFIC_REQUEST = 4
+TYPE_TRAFFIC_RESPONSE = 5
 
 FLAG_ACK_BAD_KEY = 0x1
 
@@ -25,6 +29,9 @@ FLAG_ALTITUDE = 0x10
 FLAG_VARIO = 0x20
 FLAG_ENL = 0x40
 
+# for TYPE_TRAFFIC_REQUEST
+TRAFFIC_FLAG_FOLLOWEES = 0x1
+TRAFFIC_FLAG_CLUB = 0x2
 
 class TrackingServer(DatagramProtocol):
     def pingReceived(self, host, port, key, payload):
@@ -108,6 +115,62 @@ class TrackingServer(DatagramProtocol):
             log.err(e, 'database error')
             transaction.abort()
 
+    def trafficRequestReceived(self, host, port, key, payload):
+        if len(payload) != 8: return
+        data = struct.unpack('!II', payload)
+
+        pilot = User.by_tracking_key(key)
+        if pilot is None:
+            log.err("No such pilot: %d" % key)
+            return
+
+        flags = data[0]
+        or_filters = []
+
+        if flags & TRAFFIC_FLAG_FOLLOWEES:
+            subq = DBSession.query(Follower.destination_id) \
+                   .filter(Follower.source_id == pilot.id) \
+                   .subquery()
+            or_filters.append(TrackingFix.pilot_id.in_(subq))
+
+        if flags & TRAFFIC_FLAG_CLUB:
+            subq = DBSession.query(User.id) \
+                   .filter(User.club_id == pilot.club_id) \
+                   .subquery()
+            or_filters.append(TrackingFix.pilot_id.in_(subq))
+
+        if len(or_filters) == 0:
+            return
+
+        query = DBSession.query(TrackingFix) \
+            .distinct(TrackingFix.pilot_id) \
+            .filter(and_(TrackingFix.time >= datetime.datetime.utcnow() - datetime.timedelta(hours=2),
+                         TrackingFix.pilot_id != pilot.id,
+                         TrackingFix.location_wkt != None,
+                         TrackingFix.altitude != None,
+                         or_(*or_filters))) \
+            .order_by(TrackingFix.pilot_id, desc(TrackingFix.time)) \
+            .limit(32)
+
+        response = ''
+        count = 0
+        for fix in query:
+            location = fix.location
+            if location is None: continue
+
+            t = fix.time
+            t = t.hour * 3600000 + t.minute * 60000 + t.second * 1000 + t.microsecond / 1000
+            response += struct.pack('!IIiihHI', fix.pilot_id, t,
+                                    int(location.latitude * 1000000),
+                                    int(location.longitude * 1000000),
+                                    int(fix.altitude), 0, 0)
+            count += 1
+
+        response = struct.pack('!HBBI', 0, 0, count, 0) + response
+        response = struct.pack('!IHHQ', MAGIC, 0, TYPE_TRAFFIC_RESPONSE, 0) + response
+        response = set_crc(response)
+        self.transport.write(response, (host, port))
+
     def datagramReceived(self, data, (host, port)):
         if len(data) < 16: return
 
@@ -119,3 +182,5 @@ class TrackingServer(DatagramProtocol):
             self.fixReceived(host, header[3], data[16:])
         elif header[2] == TYPE_PING:
             self.pingReceived(host, port, header[3], data[16:])
+        elif header[2] == TYPE_TRAFFIC_REQUEST:
+            self.trafficRequestReceived(host, port, header[3], data[16:])
