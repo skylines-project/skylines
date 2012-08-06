@@ -31,7 +31,7 @@ def add_locations(locations):
     <script type="text/javascript" src="/static/jquery/jquery.cookie.js"></script>
     <script type="text/javascript" src="/static/bootstrap/js/bootstrap-tooltip.js"></script>
 
-    <script type="text/javascript">
+    <script type="text/javascript" py:if="takeoff_locations">
       /* <![CDATA[ */
       $(function() {
         initOpenLayers("map_canvas");
@@ -228,7 +228,7 @@ def add_locations(locations):
         </table>
       </div>
 
-      <div class="span12">
+      <div class="span12" py:if="takeoff_locations">
         <h2>Takeoff Locations</h2>
         <div id="map_canvas" style="width:100%; height:400pt;"></div>
       </div>
