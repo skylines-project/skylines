@@ -27,9 +27,8 @@ from datetime import date, timedelta
 
 class ClubSelectField(PropertySingleSelectField):
     def _my_update_params(self, d, nullable=False):
-        clubs = DBSession.query(Club).order_by(Club.name).all()
-        options = [(None, 'None')] + \
-                  [(club.id, club.name) for club in clubs]
+        query = DBSession.query(Club.id, Club.name).order_by(Club.name)
+        options = [(None, 'None')] + query.all()
         d['options'] = options
         return d
 

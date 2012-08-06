@@ -31,11 +31,10 @@ log = logging.getLogger(__name__)
 
 class PilotSelectField(PropertySingleSelectField):
     def _my_update_params(self, d, nullable=False):
-        users = DBSession.query(User) \
+        query = DBSession.query(User.user_id, User.display_name) \
                 .filter(User.club_id == request.identity['user'].club_id) \
                 .order_by(User.display_name)
-        options = [(None, 'None')] + \
-                  [(user.user_id, user) for user in users]
+        options = [(None, 'None')] + query.all()
         d['options'] = options
         return d
 
@@ -53,10 +52,9 @@ select_pilot_form = SelectPilotForm(DBSession)
 
 class ModelSelectField(PropertySingleSelectField):
     def _my_update_params(self, d, nullable=False):
-        models = DBSession.query(Model) \
+        query = DBSession.query(Model.id, Model.name) \
                 .order_by(Model.name)
-        options = [(None, '[unspecified]')] + \
-                  [(model.id, model) for model in models]
+        options = [(None, '[unspecified]')] + query.all()
         d['options'] = options
         return d
 
