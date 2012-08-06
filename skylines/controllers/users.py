@@ -274,7 +274,8 @@ class UserController(BaseController):
 
         for distance in [50, 100, 300, 500, 700, 1000]:
             distance_flight = self.get_distance_flight(distance * 1000)
-            distance_flights.append([distance, distance_flight])
+            if distance_flight is not None:
+                distance_flights.append([distance, distance_flight])
 
         distance_flights.sort()
         return distance_flights
