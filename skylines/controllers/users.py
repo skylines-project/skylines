@@ -15,6 +15,7 @@ from tw.forms import PasswordField, TextField, CheckBox, HiddenField
 from tw.forms.validators import UnicodeString
 from skylines.lib.base import BaseController
 from skylines.lib.dbutil import get_requested_record
+from skylines.lib.units import distance_units, speed_units
 from skylines.model import DBSession, User, Group, Club, Flight, Follower
 from skylines.model.igcfile import IGCFile
 from skylines.form import BootstrapForm
@@ -44,6 +45,18 @@ class DelaySelectField(PropertySingleSelectField):
         for x in range(1, 10) + range(10, 30, 5) + range(30, 61, 15):
             options.append((x, ungettext(u'%u minute', u'%u minutes', x) % x))
         d['options'] = options
+        return d
+
+
+class DistanceUnitSelectField(PropertySingleSelectField):
+    def _my_update_params(self, d, nullable=False):
+        d['options'] = list(enumerate(x[0] for x in distance_units))
+        return d
+
+
+class SpeedUnitSelectField(PropertySingleSelectField):
+    def _my_update_params(self, d, nullable=False):
+        d['options'] = list(enumerate(x[0] for x in speed_units))
         return d
 
 
@@ -93,12 +106,17 @@ class EditUserForm(EditableForm):
     __base_widget_type__ = BootstrapForm
     __model__ = User
     __hide_fields__ = ['user_id']
-    __limit_fields__ = ['email_address', 'display_name', 'club', 'tracking_delay', 'eye_candy']
+    __limit_fields__ = ['email_address', 'display_name', 'club',
+                        'tracking_delay',
+                        'distance_unit', 'speed_unit',
+                        'eye_candy']
     __base_widget_args__ = dict(action='save')
     email_address = Field(TextField, Email(not_empty=True))
     display_name = Field(TextField, NotEmpty)
     club = ClubSelectField
     tracking_delay = DelaySelectField
+    distance_unit = DistanceUnitSelectField
+    speed_unit = SpeedUnitSelectField
     eye_candy = Field(CheckBox)
 
 edit_user_form = EditUserForm(DBSession)
@@ -201,7 +219,9 @@ class UserController(BaseController):
     @expose()
     @validate(form=edit_user_form, error_handler=edit)
     def save(self, email_address, display_name, club,
-             tracking_delay=0, eye_candy=False, **kwargs):
+             tracking_delay=0,
+             distance_unit=1, speed_unit=1,
+             eye_candy=False, **kwargs):
         if not self.user.is_writable():
             raise HTTPForbidden
 
@@ -211,6 +231,8 @@ class UserController(BaseController):
             club = None
         self.user.club_id = club
         self.user.tracking_delay = tracking_delay
+        self.user.distance_unit = distance_unit
+        self.user.speed_unit = speed_unit
         self.user.eye_candy = eye_candy
         DBSession.flush()
 

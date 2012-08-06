@@ -134,6 +134,9 @@ class User(DeclarativeBase):
     recover_time = Column(DateTime)
     recover_ip = Column(INET)
 
+    distance_unit = Column(SmallInteger, nullable=False, default=1)
+    speed_unit = Column(SmallInteger, nullable=False, default=1)
+
     eye_candy = Column(Boolean, nullable=False, default=False)
 
     @property
