@@ -32,6 +32,11 @@ class ClubSelectField(PropertySingleSelectField):
         d['options'] = options
         return d
 
+    def validate(self, value, *args, **kw):
+        if isinstance(value, Club):
+            value = value.id
+        return super(ClubSelectField, self).validate(value, *args, **kw)
+
 
 class DelaySelectField(PropertySingleSelectField):
     def _my_update_params(self, d, nullable=False):
