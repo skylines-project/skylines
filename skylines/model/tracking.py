@@ -2,7 +2,7 @@
 
 from datetime import datetime
 from sqlalchemy.orm import relation
-from sqlalchemy import Column, ForeignKey
+from sqlalchemy import Column, ForeignKey, Index
 from sqlalchemy.types import Integer, Float, DateTime
 from sqlalchemy.dialects.postgresql import INET
 from geoalchemy.geometry import GeometryColumn, Point, GeometryDDL
@@ -48,4 +48,5 @@ class TrackingFix(DeclarativeBase):
     def location(self, location):
         self.location_wkt = location.to_wkt()
 
+Index('tracking_fixes_pilot_time', TrackingFix.pilot_id, TrackingFix.time)
 GeometryDDL(TrackingFix.__table__)

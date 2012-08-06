@@ -24,18 +24,18 @@ class Flight(DeclarativeBase):
     time_created = Column(DateTime, nullable=False, default=datetime.utcnow)
     time_modified = Column(DateTime, nullable=False, default=datetime.utcnow)
 
-    pilot_id = Column(Integer, ForeignKey('tg_user.user_id'))
+    pilot_id = Column(Integer, ForeignKey('tg_user.user_id'), index=True)
     pilot = relation('User', primaryjoin=(pilot_id == User.user_id))
-    co_pilot_id = Column(Integer, ForeignKey('tg_user.user_id'))
+    co_pilot_id = Column(Integer, ForeignKey('tg_user.user_id'), index=True)
     co_pilot = relation('User', primaryjoin=(co_pilot_id == User.user_id))
 
-    club_id = Column(Integer, ForeignKey('clubs.id'))
+    club_id = Column(Integer, ForeignKey('clubs.id'), index=True)
 
     model_id = Column(Integer, ForeignKey('models.id'))
     model = relation('Model', primaryjoin=(model_id == Model.id))
     registration = Column(Unicode(32))
 
-    takeoff_time = Column(DateTime, nullable=False)
+    takeoff_time = Column(DateTime, nullable=False, index=True)
     landing_time = Column(DateTime, nullable=False)
     takeoff_location_wkt = GeometryColumn('takeoff_location', Point(2),
                                           comparator=PGComparator)

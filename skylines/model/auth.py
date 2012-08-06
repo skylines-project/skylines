@@ -120,7 +120,7 @@ class User(DeclarativeBase):
 
     club_id = Column(Integer, ForeignKey('clubs.id'))
 
-    tracking_key = Column(BigInteger)
+    tracking_key = Column(BigInteger, index=True)
 
     # delay live tracks by this number of minutes for unauthorised users
     tracking_delay = Column(SmallInteger, nullable=False, default=0)

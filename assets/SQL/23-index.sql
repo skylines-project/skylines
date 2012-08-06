@@ -1,0 +1,11 @@
+BEGIN;
+CREATE INDEX ix_flight_comments_flight_id ON flight_comments(flight_id);
+CREATE INDEX ix_flights_pilot_id ON flights(pilot_id);
+CREATE INDEX ix_flights_co_pilot_id ON flights(co_pilot_id);
+CREATE INDEX ix_flights_club_id ON flights(club_id);
+CREATE INDEX ix_flights_takeoff_time ON flights(takeoff_time);
+CREATE INDEX ix_followers_destination_id ON followers(destination_id);
+CREATE INDEX ix_followers_source_id ON followers(source_id);
+CREATE INDEX ix_tg_user_tracking_key ON tg_user(tracking_key);
+CREATE INDEX tracking_fixes_pilot_time ON tracking_fixes(pilot_id, "time");
+COMMIT;

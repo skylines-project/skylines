@@ -15,7 +15,7 @@ class FlightComment(DeclarativeBase):
     time_created = Column(DateTime, nullable=False, default=datetime.utcnow)
 
     flight_id = Column(Integer, ForeignKey('flights.id', ondelete='CASCADE'),
-                       nullable=False)
+                       nullable=False, index=True)
     flight = relation('Flight', primaryjoin=(flight_id == Flight.id),
                       backref=backref('comments',
                                       order_by=time_created))

@@ -12,11 +12,11 @@ class Follower(DeclarativeBase):
 
     id = Column(Integer, autoincrement=True, primary_key=True)
 
-    source_id = Column(Integer, ForeignKey('tg_user.user_id'))
+    source_id = Column(Integer, ForeignKey('tg_user.user_id'), index=True)
     source = relation('User', primaryjoin=(source_id == User.user_id),
                       backref='following')
 
-    destination_id = Column(Integer, ForeignKey('tg_user.user_id'))
+    destination_id = Column(Integer, ForeignKey('tg_user.user_id'), index=True)
     destination = relation('User', primaryjoin=(destination_id == User.user_id),
                            backref='followers')
 
