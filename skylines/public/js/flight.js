@@ -484,6 +484,7 @@ function render_barogram(element) {
                         width: 1.5,
                         stripes: {
                           y: barogram_enl,
+                          range: 999,
                           height: element.innerHeight() - 40,
                           visible: !($.browser.msie && (parseInt($.browser.version, 10) < 9)) },
                         markers: barogram_markers });
