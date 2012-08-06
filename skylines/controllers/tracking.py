@@ -99,7 +99,7 @@ class TrackController(BaseController):
         for pilot in self.other_pilots:
             trace = get_flight_path(pilot)
             if trace is not None:
-                trace.append((pilot, trace))
+                other_pilots.append((pilot, trace))
 
         return dict(pilot=self.pilot, trace=self.__get_flight_path(),
                     other_pilots=other_pilots)
@@ -110,7 +110,7 @@ class TrackController(BaseController):
         for pilot in self.other_pilots:
             trace = get_flight_path(pilot)
             if trace is not None:
-                trace.append((pilot, trace))
+                other_pilots.append((pilot, trace))
 
         return dict(pilot=self.pilot, trace=self.__get_flight_path(),
                     other_pilots=other_pilots)
