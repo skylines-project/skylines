@@ -50,7 +50,6 @@ install_requires = [
     "psycopg2",
     "geoalchemy",
     "crc16",
-    "mapproxy",
     "markdown",
 ]
 
