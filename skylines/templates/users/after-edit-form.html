@@ -1,0 +1,31 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+                      "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<div>
+  <script type="text/javascript">
+
+    function updateUnitFields(preset, unit_fields) {
+        if (preset == 0) {
+          unit_fields.show();
+        }
+        else {
+          unit_fields.hide();
+        }
+    }
+    $(document).ready(function() {
+        var preset_field = $("#unit_preset");
+        var unit_field_names = ["distance_unit", "speed_unit",
+                                "lift_unit", "altitude_unit"];
+        var unit_fields = $(unit_field_names.map(function (e) {
+              /* We cannot use $() syntax here, because field container ids are
+                 not valid HTML identifiers. */
+              return document.getElementById(e+'.container');
+        }));
+
+        updateUnitFields(preset_field.val(), unit_fields);
+
+        preset_field.change(function() {
+            updateUnitFields($(this).val(), unit_fields);
+        });
+    })
+  </script>
+</div>

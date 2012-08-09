@@ -15,7 +15,7 @@ from tw.forms import PasswordField, TextField, CheckBox, HiddenField
 from tw.forms.validators import UnicodeString
 from skylines.lib.base import BaseController
 from skylines.lib.dbutil import get_requested_record
-from skylines.lib.units import distance_units, speed_units
+from skylines.lib import units
 from skylines.model import DBSession, User, Group, Club, Flight, Follower
 from skylines.model.igcfile import IGCFile
 from skylines.form import BootstrapForm
@@ -47,18 +47,27 @@ class DelaySelectField(PropertySingleSelectField):
         d['options'] = options
         return d
 
-
-class DistanceUnitSelectField(PropertySingleSelectField):
+class UnitSelectField(PropertySingleSelectField):
     def _my_update_params(self, d, nullable=False):
-        d['options'] = list(enumerate(x[0] for x in distance_units))
+        d['options'] = list(enumerate(x[0] for x in self.unit_registry))
         return d
 
+class DistanceUnitSelectField(UnitSelectField):
+    unit_registry = units.distance_units
 
-class SpeedUnitSelectField(PropertySingleSelectField):
+class SpeedUnitSelectField(UnitSelectField):
+    unit_registry = units.speed_units
+
+class LiftUnitSelectField(UnitSelectField):
+    unit_registry = units.lift_units
+
+class AltitudeUnitSelectField(UnitSelectField):
+    unit_registry = units.altitude_units
+
+class UnitPresetSelectField(PropertySingleSelectField):
     def _my_update_params(self, d, nullable=False):
-        d['options'] = list(enumerate(x[0] for x in speed_units))
+        d['options'] = list(enumerate(x[0] for x in units.unit_presets))
         return d
-
 
 class SelectClubForm(EditableForm):
     __base_widget_type__ = BootstrapForm
@@ -107,16 +116,20 @@ class EditUserForm(EditableForm):
     __model__ = User
     __hide_fields__ = ['user_id']
     __limit_fields__ = ['email_address', 'display_name', 'club',
-                        'tracking_delay',
+                        'tracking_delay', 'unit_preset',
                         'distance_unit', 'speed_unit',
+                        'lift_unit', 'altitude_unit',
                         'eye_candy']
     __base_widget_args__ = dict(action='save')
     email_address = Field(TextField, Email(not_empty=True))
     display_name = Field(TextField, NotEmpty)
     club = ClubSelectField
     tracking_delay = DelaySelectField
+    unit_preset = UnitPresetSelectField("unit_preset")
     distance_unit = DistanceUnitSelectField
     speed_unit = SpeedUnitSelectField
+    lift_unit = LiftUnitSelectField
+    altitude_unit = AltitudeUnitSelectField
     eye_candy = Field(CheckBox)
 
 edit_user_form = EditUserForm(DBSession)
@@ -214,13 +227,15 @@ class UserController(BaseController):
 
         return dict(page='settings', title=_('Edit User'),
                     form=edit_user_form,
-                    values=self.user)
+                    values=self.user,
+                    include_after='skylines.templates.users.after-edit-form')
 
     @expose()
     @validate(form=edit_user_form, error_handler=edit)
     def save(self, email_address, display_name, club,
-             tracking_delay=0,
+             tracking_delay=0, unit_preset=1,
              distance_unit=1, speed_unit=1,
+             lift_unit=0, altitude_unit=0,
              eye_candy=False, **kwargs):
         if not self.user.is_writable():
             raise HTTPForbidden
@@ -231,8 +246,16 @@ class UserController(BaseController):
             club = None
         self.user.club_id = club
         self.user.tracking_delay = tracking_delay
-        self.user.distance_unit = distance_unit
-        self.user.speed_unit = speed_unit
+
+        unit_preset = int(unit_preset)
+        if unit_preset == 0:
+            self.user.distance_unit = distance_unit
+            self.user.speed_unit = speed_unit
+            self.user.lift_unit = lift_unit
+            self.user.altitude_unit = altitude_unit
+        else:
+            self.user.unit_preset = unit_preset
+
         self.user.eye_candy = eye_candy
         DBSession.flush()
 

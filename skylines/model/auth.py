@@ -28,6 +28,7 @@ from sqlalchemy.dialects.postgresql import INET
 
 from skylines.model import DeclarativeBase, metadata, DBSession
 from skylines.lib.sql import LowerCaseComparator
+from skylines.lib import units
 from tg import request
 
 #{ Association tables
@@ -136,6 +137,8 @@ class User(DeclarativeBase):
 
     distance_unit = Column(SmallInteger, nullable=False, default=1)
     speed_unit = Column(SmallInteger, nullable=False, default=1)
+    lift_unit = Column(SmallInteger, nullable=False, default=0)
+    altitude_unit = Column(SmallInteger, nullable=False, default=0)
 
     eye_candy = Column(Boolean, nullable=False, default=False)
 
@@ -256,6 +259,43 @@ class User(DeclarativeBase):
         '''
         from skylines.model.flight import Flight
         return Flight.get_largest().filter(Flight.pilot == self)
+
+    @property
+    def unit_preset(self):
+        """Calculate unit preset based on user unit preference.
+
+        If all user unit settings exactly matches one of the preset, return
+        that preset id. Otherwise return 0, that is interpreted as 'Custom'
+        preset.
+        """
+        for pref, preset in enumerate(units.unit_presets):
+            p = preset[1]
+            if not p:
+                continue
+            eq = [p['distance_unit'] == units.distance_units[self.distance_unit][0],
+                  p['speed_unit'] == units.speed_units[self.speed_unit][0],
+                  p['lift_unit'] == units.lift_units[self.lift_unit][0],
+                  p['altitude_unit'] == units.altitude_units[self.altitude_unit][0]
+                  ]
+            if all(eq):
+                return pref
+
+        return 0
+
+    @unit_preset.setter
+    def unit_preset(self, preset):
+        """Set individual unit preferences according to given preset
+        """
+        name, settings = units.unit_presets[preset]
+        if settings:
+            self.distance_unit = units.unitid(units.distance_units,
+                                              settings['distance_unit'])
+            self.speed_unit = units.unitid(units.speed_units,
+                                           settings['speed_unit'])
+            self.lift_unit = units.unitid(units.lift_units,
+                                          settings['lift_unit'])
+            self.altitude_unit = units.unitid(units.altitude_units,
+                                              settings['altitude_unit'])
 
 
 event.listen(User.__table__, "after_create",

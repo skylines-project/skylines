@@ -15,6 +15,46 @@ speed_units = (
     (u'mph', lambda value: format_decimal(value * 2.23693629, format=u'0.00 mph')),
 )
 
+lift_units = (
+    (u'm/s', lambda value: format_decimal(value, format=u'0.00 m/s')),
+    (u'kt', lambda value: format_decimal(value * 1.94384449, format=u'0.00 kt')),
+    (u'ft/min', lambda value: format_decimal(value * 196.850394,
+                                             format=u'0.00 ft/min')),
+)
+altitude_units = (
+    (u'm', lambda value: "%d m" % value),
+    (u'ft', lambda value: "%d ft" % (value * 3.2808399))
+)
+
+unit_presets = (
+    ("Custom", {}),
+
+    ("European (metric)",
+     {'distance_unit': u'km',
+      'speed_unit': u'km/h',
+      'lift_unit': u'm/s',
+      'altitude_unit': u'm'
+      }),
+
+    ("British (imperial, distance in km)",
+     {'distance_unit': u'km',
+      'speed_unit': u'kt',
+      'lift_unit': u'kt',
+      'altitude_unit': u'ft'
+      }),
+
+    ("American (imperial)",
+     {'distance_unit': u'mi',
+      'speed_unit': u'kt',
+      'lift_unit': u'kt',
+      'altitude_unit': u'ft'
+      }),
+ )
+
+
+def unitid(options, name):
+    return [x[0] for x in options].index(name)
+
 def _get_setting(name, default=None):
     if request.identity:
         return getattr(request.identity['user'], name)
@@ -40,3 +80,15 @@ def format_speed(value):
     if value is None: return None
 
     return _format(speed_units, 'speed_unit', 1, value)
+
+def format_lift(value):
+    """Formats vertical speed value [m/s/] to a user-readable string"""
+    if value is None: return None
+
+    return _format(lift_units, 'lift_unit', 0, value)
+
+def format_altitude(value):
+    """Formats altitude value [m] to a user-readable string"""
+    if value is None: return None
+
+    return _format(altitude_units, 'altitude_unit', 0, value)
