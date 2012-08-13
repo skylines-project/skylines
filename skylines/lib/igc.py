@@ -3,6 +3,7 @@
 import re
 from skylines import files
 from skylines.lib.base36 import base36encode
+from skylines.lib.string import import_ascii, import_alnum
 
 hfgid_re = re.compile(r'HFGID\s*GLIDER\s*ID\s*:(.*)', re.IGNORECASE)
 hfgty_re = re.compile(r'HFGTY\s*GLIDER\s*TYPE\s*:(.*)', re.IGNORECASE)
@@ -53,7 +54,7 @@ def parse_logger_id(line):
         if match and match.group(1):
             return base36encode(int(match.group(1)))
     else:
-        return line[4:7]
+        return import_alnum(line[4:7]).upper()
 
 
 def parse_glider_type(line):
@@ -62,7 +63,7 @@ def parse_glider_type(line):
     if not match:
         return None
 
-    return match.group(1).strip()
+    return import_ascii(match.group(1))
 
 
 def parse_glider_reg(line):
@@ -71,4 +72,4 @@ def parse_glider_reg(line):
     if not match:
         return None
 
-    return match.group(1).strip()
+    return import_ascii(match.group(1))
