@@ -61,7 +61,8 @@ def get_flight_path(pilot, threshold = 0.001, last_update = None):
     fixes = dict()
 
     if len(fp) == 1:
-        fixes['points'] = [(fp[0][0], fp[0][1])]
+        x = fp[0]
+        fixes['points'] = [(x[2], x[1])]
         fixes['levels'] = [0]
         fixes['numLevels'] = num_levels
 
