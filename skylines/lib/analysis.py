@@ -282,9 +282,9 @@ def analyse_flight(flight):
             flight.olc_plus_score = None
 
     save_contests(root, flight)
-
     save_phases(root, flight)
 
+    flight.needs_analysis = False
     return True
 
 

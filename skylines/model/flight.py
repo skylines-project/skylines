@@ -3,7 +3,7 @@
 from datetime import datetime
 from sqlalchemy.orm import relation
 from sqlalchemy import ForeignKey, Column, func
-from sqlalchemy.types import Unicode, Integer, DateTime
+from sqlalchemy.types import Unicode, Integer, DateTime, Boolean
 from sqlalchemy.ext.hybrid import hybrid_property
 from sqlalchemy.sql.expression import desc
 from skylines.model.auth import User
@@ -57,6 +57,8 @@ class Flight(DeclarativeBase):
     igc_file_id = Column(Integer, ForeignKey('igc_files.id'))
     igc_file = relation('IGCFile', primaryjoin=(igc_file_id == IGCFile.id),
                         backref='flights')
+
+    needs_analysis = Column(Boolean, nullable=False, default=True)
 
     @hybrid_property
     def duration(self):

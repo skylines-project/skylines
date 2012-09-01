@@ -164,11 +164,18 @@ def format_phase(phase):
 class FlightController(BaseController):
     def __init__(self, flight):
         if isinstance(flight, list):
+            map(self.__reanalyse_if_needed, flight)
             self.flight = flight[0]
             self.other_flights = flight[1:]
         else:
+            self.__reanalyse_if_needed(flight)
             self.flight = flight
             self.other_flights = None
+
+    def __reanalyse_if_needed(self, flight):
+        if flight.needs_analysis:
+            log.info("Reanalysing flight %s" % flight.id)
+            analyse_flight(flight)
 
     def __get_flight_path(self, **kw):
         return get_flight_path(self.flight, **kw)
