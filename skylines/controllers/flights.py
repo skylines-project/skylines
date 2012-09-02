@@ -57,6 +57,7 @@ class SelectPilotForm(EditableForm):
 
 select_pilot_form = SelectPilotForm(DBSession)
 
+
 class ModelSelectField(PropertySingleSelectField):
     def _my_update_params(self, d, nullable=False):
         query = DBSession.query(Model.id, Model.name) \
@@ -64,6 +65,7 @@ class ModelSelectField(PropertySingleSelectField):
         options = [(None, '[unspecified]')] + query.all()
         d['options'] = options
         return d
+
 
 class SelectAircraftForm(EditableForm):
     __base_widget_type__ = BootstrapForm
@@ -75,6 +77,7 @@ class SelectAircraftForm(EditableForm):
     registration = TextField
 
 select_aircraft_form = SelectAircraftForm(DBSession)
+
 
 def get_flight_path(flight, threshold = 0.001, max_points = 3000):
     fp = flight_path(flight.igc_file, max_points)
@@ -106,15 +109,17 @@ def get_flight_path(flight, threshold = 0.001, max_points = 3000):
                 barogram_t=barogram_t, barogram_h=barogram_h, enl=enl, contests = contest_traces,
                 sfid=flight.id)
 
+
 def get_contest_traces(flight, encoder):
-    contests = [ dict( contest_type = 'olc_plus', trace_type = 'triangle' ),
-                 dict( contest_type = 'olc_plus', trace_type = 'classic' ) ]
+    contests = [dict(contest_type = 'olc_plus', trace_type = 'triangle'),
+                dict(contest_type = 'olc_plus', trace_type = 'classic')]
 
     contest_traces = []
 
     for contest in contests:
         contest_trace = flight.get_optimised_contest_trace(contest['contest_type'], contest['trace_type'])
-        if not contest_trace: continue
+        if not contest_trace:
+            continue
 
         fixes = map(lambda x: (x.longitude, x.latitude), contest_trace.locations)
         times = []
@@ -122,9 +127,9 @@ def get_contest_traces(flight, encoder):
             times.append(flight.takeoff_time.hour * 3600 + flight.takeoff_time.minute * 60 + flight.takeoff_time.second + \
                          (time - flight.takeoff_time).days * 86400 + (time - flight.takeoff_time).seconds)
 
-        contest_traces.append( dict( name = contest['contest_type'] + " " + contest['trace_type'],
-                                     turnpoints = encoder.encode(fixes, [0]*len(fixes))['points'],
-                                     times = encoder.encodeList(times) ) )
+        contest_traces.append(dict(name = contest['contest_type'] + " " + contest['trace_type'],
+                                   turnpoints = encoder.encode(fixes, [0] * len(fixes))['points'],
+                                   times = encoder.encodeList(times)))
 
     return contest_traces
 
@@ -136,6 +141,7 @@ CIRCDIR_NAMES = {FlightPhase.CD_LEFT: "Left",
 PHASETYPE_NAMES = {FlightPhase.PT_POWERED: "Powered",
                    FlightPhase.PT_CIRCLING: "Circling",
                    FlightPhase.PT_CRUISE: "Cruise"}
+
 
 def format_phase(phase):
     """Format phase properties to human readable format
@@ -158,8 +164,9 @@ def format_phase(phase):
         r['distance'] = units.format_distance(phase.distance)
         r['glide_rate'] = phase.glide_rate
     else:
-        r['circling_direction']=CIRCDIR_NAMES[phase.circling_direction]
+        r['circling_direction'] = CIRCDIR_NAMES[phase.circling_direction]
     return r
+
 
 class FlightController(BaseController):
     def __init__(self, flight):
@@ -366,25 +373,25 @@ class FlightsController(BaseController):
 
             aaData = []
             for flight in flights:
-              aaData.append(dict(takeoff_time = flight.takeoff_time.strftime('%H:%M'),
-                                 landing_time = flight.landing_time.strftime('%H:%M'),
-                                 date = flight.takeoff_time.strftime('%d.%m.%Y'),
-                                 date_formatted = format_date(flight.takeoff_time),
-                                 olc_plus_score = flight.olc_plus_score,
-                                 olc_classic_distance = flight.olc_classic_distance,
-                                 pilot_id = flight.pilot_id,
-                                 pilot = flight.pilot and flight.pilot.display_name,
-                                 co_pilot_id = flight.co_pilot_id,
-                                 co_pilot = flight.co_pilot and flight.co_pilot.display_name,
-                                 club_id = flight.club_id,
-                                 club = flight.club and truncate(flight.club.name, 25),
-                                 owner = flight.igc_file.owner.display_name,
-                                 takeoff_airport = flight.takeoff_airport and flight.takeoff_airport.name,
-                                 takeoff_airport_id = flight.takeoff_airport and flight.takeoff_airport.id,
-                                 takeoff_airport_country_code = flight.takeoff_airport and flight.takeoff_airport.country_code.lower(),
-                                 aircraft = (flight.model and flight.model.name) or (flight.igc_file.model and '[' + flight.igc_file.model + ']'),
-                                 aircraft_reg = flight.registration or flight.igc_file.registration or "Unknown",
-                                 flight_id = flight.id))
+                aaData.append(dict(takeoff_time = flight.takeoff_time.strftime('%H:%M'),
+                                   landing_time = flight.landing_time.strftime('%H:%M'),
+                                   date = flight.takeoff_time.strftime('%d.%m.%Y'),
+                                   date_formatted = format_date(flight.takeoff_time),
+                                   olc_plus_score = flight.olc_plus_score,
+                                   olc_classic_distance = flight.olc_classic_distance,
+                                   pilot_id = flight.pilot_id,
+                                   pilot = flight.pilot and flight.pilot.display_name,
+                                   co_pilot_id = flight.co_pilot_id,
+                                   co_pilot = flight.co_pilot and flight.co_pilot.display_name,
+                                   club_id = flight.club_id,
+                                   club = flight.club and truncate(flight.club.name, 25),
+                                   owner = flight.igc_file.owner.display_name,
+                                   takeoff_airport = flight.takeoff_airport and flight.takeoff_airport.name,
+                                   takeoff_airport_id = flight.takeoff_airport and flight.takeoff_airport.id,
+                                   takeoff_airport_country_code = flight.takeoff_airport and flight.takeoff_airport.country_code.lower(),
+                                   aircraft = (flight.model and flight.model.name) or (flight.igc_file.model and '[' + flight.igc_file.model + ']'),
+                                   aircraft_reg = flight.registration or flight.igc_file.registration or "Unknown",
+                                   flight_id = flight.id))
 
             return dict(response_dict, aaData = aaData)
 
