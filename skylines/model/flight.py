@@ -144,7 +144,7 @@ class Flight(DeclarativeBase):
 
     @property
     def has_phases(self):
-      return bool(self._phases)
+        return bool(self._phases)
 
     @property
     def phases(self):
