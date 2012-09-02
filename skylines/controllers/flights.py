@@ -6,9 +6,8 @@ from babel.dates import format_date
 from datetime import datetime, timedelta
 from tg import expose, validate, require, request, redirect, config, flash
 from tg.i18n import ugettext as _
-from tg.decorators import override_template
 from repoze.what.predicates import has_permission
-from webob.exc import HTTPNotFound, HTTPForbidden, HTTPServerError
+from webob.exc import HTTPNotFound, HTTPForbidden
 from sqlalchemy.sql.expression import desc, or_, and_, between
 from sqlalchemy import func
 from tw.forms.fields import TextField
