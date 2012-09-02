@@ -64,6 +64,10 @@ input[type="file"] {
   text-align:right;
 }
 
+#flight-table .date {
+  white-space: nowrap;
+}
+
 #flight-table .show {
   white-space: nowrap;
   text-align: right;

@@ -62,6 +62,7 @@ if airport:
               "sType": "date-eu",
               "sDefaultContent": "",
               "aTargets": ["date"],
+              "sClass": "date",
               "fnRender": function(obj, row) {
                 if (obj.oSettings.jqXHR)
                   row = "<span title=\"" + obj.aData.date + "\">" + obj.aData.date_formatted + "</span>";
