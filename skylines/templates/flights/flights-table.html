@@ -23,6 +23,7 @@ from skylines.lib.units import format_distance
         <th py:if="'aircraft' not in omitted_columns" class="aircraft">Aircraft</th>
         <th py:if="'times' not in omitted_columns" class="times">Time</th>
         <th py:if="'link' not in omitted_columns" class="show"></th>
+        <th py:if="'num_comments' not in omitted_columns" class="num_comments"><i class="icon-comments-alt"></i></th>
       </tr>
     </thead>
     <tbody>
@@ -82,6 +83,9 @@ from skylines.lib.units import format_distance
         <td py:if="'link' not in omitted_columns" class="show">
           <a href="/flights/${flight.id}/" class="btn btn-mini">Show</a>
           <a class="pin no-link" style="visibility: hidden" rel="tooltip-pin">${flight.id}</a>
+        </td>
+        <td py:if="'num_comments' not in omitted_columns" class="num_comments" py:with="num_comments=len(flight.comments)">
+          <span py:content="num_comments" py:if="num_comments > 0" class="label" title="${num_comments} comments">5</span>
         </td>
       </tr>
     </tbody>

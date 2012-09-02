@@ -153,6 +153,16 @@ if airport:
                   row = "<a href=\"/flights/" + obj.aData.flight_id + "/\" class=\"btn btn-mini\">Show</a> <a class=\"pin no-link\" style=\"visibility: hidden\" rel=\"tooltip-pin\">" + obj.aData.flight_id + "</a>";
                 return row;
               }
+            }, {
+              "bSortable": false,
+              "sDefaultContent": "",
+              "aTargets": ["num_comments"],
+              "sClass": "num_comments",
+              "fnRender": function(obj, row) {
+                if (obj.oSettings.jqXHR && obj.aData.num_comments > 0)
+                  row = "<span class=\"label\">" + obj.aData.num_comments + "</span>";
+                return row;
+              }
             }
           ],
           "fnDrawCallback": function() {

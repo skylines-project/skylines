@@ -365,7 +365,8 @@ class FlightsController(BaseController):
                     5: 'flights.club_id',
                     6: 'models.name',
                     7: 'takeoff_time',
-                    8: 'id'
+                    8: 'id',
+                    9: 'num_comments',
                 }
 
             flights, response_dict = GetDatatableRecords(kw, flights, columns)
@@ -390,7 +391,8 @@ class FlightsController(BaseController):
                                    takeoff_airport_country_code = flight.takeoff_airport and flight.takeoff_airport.country_code.lower(),
                                    aircraft = (flight.model and flight.model.name) or (flight.igc_file.model and '[' + flight.igc_file.model + ']'),
                                    aircraft_reg = flight.registration or flight.igc_file.registration or "Unknown",
-                                   flight_id = flight.id))
+                                   flight_id = flight.id,
+                                   num_comments = len(flight.comments)))
 
             return dict(response_dict, aaData = aaData)
 
@@ -462,6 +464,7 @@ class FlightsController(BaseController):
             5: 'models.name',
             6: 'takeoff_time',
             7: 'id',
+            8: 'num_comments',
         }
 
         if kw.get('today', False):
@@ -507,6 +510,7 @@ class FlightsController(BaseController):
             5: 'models.name',
             6: 'takeoff_time',
             7: 'id',
+            8: 'num_comments',
         }
 
         return self.__do_list('pilot', kw, pilot=pilot, columns=columns)
@@ -524,7 +528,8 @@ class FlightsController(BaseController):
             4: 'airports.name',
             5: 'models.name',
             6: 'takeoff_time',
-            7: 'id'
+            7: 'id',
+            8: 'num_comments',
         }
 
         return self.__do_list('club', kw, club=club, columns=columns)
@@ -542,7 +547,8 @@ class FlightsController(BaseController):
             4: 'flights.club_id',
             5: 'models.name',
             6: 'takeoff_time',
-            7: 'id'
+            7: 'id',
+            8: 'num_comments',
         }
 
         return self.__do_list('airport', kw, airport=airport, columns=columns)

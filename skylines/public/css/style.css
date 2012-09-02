@@ -68,6 +68,11 @@ input[type="file"] {
   white-space: nowrap;
 }
 
+#flight-table .num_comments {
+  width: 0px;
+  vertical-align: middle;
+}
+
 #map_canvas {
   outline: none;
 }
