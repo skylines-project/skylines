@@ -76,6 +76,7 @@ title = 'Live Tracking'
 
       $.getScript("http://maps.google.com/maps/api/js?v=3.7&sensor=false&callback=addGoogleLayer");
       addBingLayers("${config.get('skylines.bing.api_key', 'null')}");
+      addReliefLayer();
 
       setInterval(function() {
           updateFlightsFromJSON();

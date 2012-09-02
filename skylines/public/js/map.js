@@ -81,6 +81,21 @@ function loadBaseLayerFromCookie() {
 }
 
 /**
+ * Function: addReliefLayer
+ *
+ * Add the maps-for-free shaded relief layer to the map
+ */
+function addReliefLayer() {
+  var relief = new OpenLayers.Layer.XYZ("Shaded Relief", "http://maps-for-free.com/layer/relief/z${z}/row${y}/${z}_${x}-${y}.jpg", {
+      sphericalMercator: true,
+      numZoomLevels: 12,
+      attribution: 'SRTM relief maps from <a target="_blank" href="http://maps-for-free.com/">maps-for-free.com</a>'
+  });
+
+  map.addLayer(relief);
+}
+
+/**
  * Function: addBingLayers
  *
  * Add the Bing layers to the map
