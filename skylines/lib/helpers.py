@@ -13,9 +13,11 @@ from babel.numbers import format_number, format_decimal
 from markdown import Markdown
 
 from skylines.lib.units import format_distance
+from skylines.lib.urlize import UrlizeExtension
 
 
-markdown = Markdown(extensions=['nl2br'], safe_mode='escape')
+urlize = UrlizeExtension()
+markdown = Markdown(extensions=['nl2br', urlize], safe_mode='escape')
 
 
 def format_timedelta(delta):
