@@ -21,7 +21,7 @@ from skylines.model.flight_comment import FlightComment
 from skylines.controllers.upload import UploadController
 from skylines.lib.datatables import GetDatatableRecords
 from skylines.lib.analysis import analyse_flight, flight_path
-from skylines.lib.helpers import truncate, format_time
+from skylines.lib.helpers import truncate, format_time, format_number
 from skylines.lib.dbutil import get_requested_record, get_requested_record_list
 from skylines.lib import units
 from skylines.form import BootstrapForm
@@ -161,7 +161,7 @@ def format_phase(phase):
 
     if not is_circling:
         r['distance'] = units.format_distance(phase.distance)
-        r['glide_rate'] = phase.glide_rate
+        r['glide_rate'] = format_number(phase.glide_rate)
     else:
         r['circling_direction'] = CIRCDIR_NAMES[phase.circling_direction]
     return r
