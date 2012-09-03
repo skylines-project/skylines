@@ -10,15 +10,15 @@ class FlightPhase(DeclarativeBase):
     __tablename__ = 'flight_phases'
 
     # Flight phase types
-    PT_POWERED=1
-    PT_CRUISE=2
-    PT_CIRCLING=3
+    PT_POWERED = 1
+    PT_CRUISE = 2
+    PT_CIRCLING = 3
 
     # Circling directions
-    CD_LEFT=1
-    CD_MIXED=2
-    CD_RIGHT=3
-    CD_TOTAL=4
+    CD_LEFT = 1
+    CD_MIXED = 2
+    CD_RIGHT = 3
+    CD_TOTAL = 4
 
     id = Column(Integer, primary_key=True, autoincrement=True)
     flight_id = Column(Integer, ForeignKey('flights.id', ondelete='CASCADE'),
