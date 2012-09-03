@@ -19,7 +19,7 @@ lift_units = (
     (u'm/s', lambda value: format_decimal(value, format=u'0.00 m/s')),
     (u'kt', lambda value: format_decimal(value * 1.94384449, format=u'0.00 kt')),
     (u'ft/min', lambda value: format_decimal(value * 196.850394,
-                                             format=u'0.00 ft/min')),
+                                             format=u'0 ft/min')),
 )
 altitude_units = (
     (u'm', lambda value: "%d m" % value),
