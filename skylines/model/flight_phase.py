@@ -1,7 +1,6 @@
-from datetime import datetime
 from sqlalchemy import ForeignKey, Column
 from sqlalchemy.orm import relation, backref
-from sqlalchemy.types import String, Boolean, Numeric, Integer, DateTime, Interval
+from sqlalchemy.types import Boolean, Numeric, Integer, DateTime, Interval
 from skylines.model import DeclarativeBase
 from skylines.model.flight import Flight
 
