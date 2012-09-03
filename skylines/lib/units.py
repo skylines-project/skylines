@@ -45,7 +45,7 @@ unit_presets = (
 
     ("Australian (metric, imperial height)",
      {'distance_unit': u'km',
-      'speed_unit': u'km',
+      'speed_unit': u'km/h',
       'lift_unit': u'kt',
       'altitude_unit': u'ft'
       }),
