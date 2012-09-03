@@ -3,7 +3,7 @@
 <ul xmlns="http://www.w3.org/1999/xhtml"
     xmlns:py="http://genshi.edgewall.org/"
     class="nav nav-pills">
-  <li class="${('', 'active')[defined('tab') and tab == 'clubs']}"><a href="/ranking/clubs">Clubs</a></li>
-  <li class="${('', 'active')[defined('tab') and tab == 'pilots']}"><a href="/ranking/pilots">Pilots</a></li>
-  <li class="${('', 'active')[defined('tab') and tab == 'airports']}"><a href="/ranking/airports">Airports</a></li>
+  <li class="${(None, 'active')[defined('tab') and tab == 'clubs']}"><a href="/ranking/clubs">Clubs</a></li>
+  <li class="${(None, 'active')[defined('tab') and tab == 'pilots']}"><a href="/ranking/pilots">Pilots</a></li>
+  <li class="${(None, 'active')[defined('tab') and tab == 'airports']}"><a href="/ranking/airports">Airports</a></li>
 </ul>

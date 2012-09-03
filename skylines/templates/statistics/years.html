@@ -35,7 +35,7 @@ if airport:
 
   <body>
     <ul py:if="pilot or club or selected_club or selected_pilot" class="nav nav-pills">
-      <li class="${'' if selected_pilot or selected_club or airport else 'active'}"><a href="/statistics/">SkyLines</a></li>
+      <li class="${None if selected_pilot or selected_club or airport else 'active'}"><a href="/statistics/">SkyLines</a></li>
       <li py:if="airport" class="active"><a href="/statistics/airport/${airport.id}" py:content="airport">Aachen</a></li>
       <li py:if="selected_club" class="active"><a href="/statistics/club/${selected_club.id}" py:content="selected_club">LV Aachen</a></li>
       <li py:if="club and (not selected_club or club != selected_club)"><a href="/statistics/club/${club.id}" py:content="club">LV Aachen</a></li>

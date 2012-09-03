@@ -10,7 +10,7 @@ my_club = request.identity['user'].club if request.identity else None
 <ul xmlns="http://www.w3.org/1999/xhtml"
     xmlns:py="http://genshi.edgewall.org/"
     class="nav nav-pills">
-  <li class="${('', 'active')[defined('tab') and tab == 'all']}">
+  <li class="${(None, 'active')[defined('tab') and tab == 'all']}">
     <a href="/flights/all">All Flights</a>
   </li>
 
@@ -19,7 +19,7 @@ my_club = request.identity['user'].club if request.identity else None
       &nbsp;<i class="icon-arrow-left"></i>&nbsp;
     </a>
   </li>
-  <li class="${('', 'active')[defined('tab') and tab == 'date' or tab == 'today']}">
+  <li class="${(None, 'active')[defined('tab') and tab == 'date' or tab == 'today']}">
     <a href="/flights/today">
       <span class="date"><py:choose>
         <py:when test="defined('date') and date != None and date != sys_date.today()">${h.format_date(date)}</py:when>
@@ -52,11 +52,11 @@ my_club = request.identity['user'].club if request.identity else None
     <a href="/flights/pilot/${my_pilot.user_id}" py:content="my_pilot">Tobias Bieniek</a>
   </li>
 
-  <li py:if="request.identity" class="${('', 'active')[defined('tab') and tab == 'unassigned']}">
+  <li py:if="request.identity" class="${(None, 'active')[defined('tab') and tab == 'unassigned']}">
     <a href="/flights/unassigned">Unassigned Flights</a>
   </li>
 
-  <li id="pinned-flights-link" style="display: none;" class="${('', 'active')[defined('tab') and tab == 'pinned']}">
+  <li id="pinned-flights-link" style="display: none;" class="${(None, 'active')[defined('tab') and tab == 'pinned']}">
     <a href="${request.url}">Pinned Flights</a>
     <script type="text/javascript">
     /* <![CDATA[ */
