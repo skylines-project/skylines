@@ -43,6 +43,13 @@ unit_presets = (
       'altitude_unit': u'ft'
       }),
 
+    ("Australian (metric, imperial height)",
+     {'distance_unit': u'km',
+      'speed_unit': u'km',
+      'lift_unit': u'kt',
+      'altitude_unit': u'ft'
+      }),
+
     ("American (imperial)",
      {'distance_unit': u'mi',
       'speed_unit': u'kt',
