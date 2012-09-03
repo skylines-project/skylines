@@ -1,7 +1,5 @@
 <?python
 from sets import Set
-from skylines.lib.helpers import truncate
-from skylines.lib.units import format_distance
 ?>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
@@ -50,7 +48,7 @@ from skylines.lib.units import format_distance
         </td>
         <td py:if="'distance' not in omitted_columns">
           <span py:if="flight.olc_classic_distance is not None"
-                py:replace="format_distance(flight.olc_classic_distance)">
+                py:replace="h.format_distance(flight.olc_classic_distance)">
             500 km
           </span>
         </td>
@@ -61,7 +59,7 @@ from skylines.lib.units import format_distance
           </py:if>
         </td>
         <td py:if="'club' not in omitted_columns">
-          <a py:if="flight.club" py:content="truncate(flight.club.name, 25)" href="/clubs/${flight.club_id}">
+          <a py:if="flight.club" py:content="h.truncate(flight.club.name, 25)" href="/clubs/${flight.club_id}">
             Club Name
           </a>
         </td>
