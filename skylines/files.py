@@ -5,6 +5,8 @@ import os, shutil
 import re
 from tg import config
 
+igc_filename_numbers_regex = re.compile(r"([\w_-]+)_(\d+)")
+
 def sanitise_filename(name):
     assert isinstance(name, str) or isinstance(name, unicode)
 
@@ -40,11 +42,19 @@ def open_file(name):
 
 def next_filename(name):
     assert isinstance(name, str) or isinstance(name, unicode)
-
+    
     i = name.rfind('.')
-    if i < 0:
-        i = len(name)
-    return name[:i] + '_' + name[i:]
+    
+    match = igc_filename_numbers_regex.match(name[:i])
+
+    try:
+        number=int(match.group(2))
+        return "%s_%i%s" % (match.group(1),number + 1,name[i:])
+
+    except AttributeError:
+        pass
+
+    return "%s_1%s" % (name[:i],name[i:])
 
 def add_file(name, f):
     assert isinstance(name, str) or isinstance(name, unicode)
