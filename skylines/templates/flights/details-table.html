@@ -161,7 +161,7 @@ from skylines.lib.units import format_distance, format_speed
       <tr>
         <th>Download</th>
         <td>
-          <a href="${flight.igc_file.get_download_uri()}" py:content="flight.igc_file.filename">FOO.IGC</a>
+          <a href="${flight.igc_file.get_download_uri()}" py:content="h.truncate(flight.igc_file.filename, 25)">FOO.IGC</a>
         </td>
       </tr>
       <tr py:if="flight.may_delete()">
