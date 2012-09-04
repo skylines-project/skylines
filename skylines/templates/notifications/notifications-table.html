@@ -31,7 +31,7 @@
 
   <tr py:def="render_notification_row(notification)" class="${('muted', None)[notification.time_read is None]}">
     <td>
-      <i class="icon-chevron-right" py:if="notification.time_read is None"></i>&nbsp;
+      ${render_notification_icon(notification)}
     </td>
     <td>
       ${render_notification_text(notification)}
@@ -41,6 +41,13 @@
       <a href="/notifications/${notification.id}/" class="btn btn-mini">Show</a>
     </td>
   </tr>
+
+  <py:def function="render_notification_icon(notification)">
+    <py:choose test="notification.type">
+      <i py:when="notification.NT_FLIGHT_COMMENT" class="icon-comments-alt"></i>
+      <py:otherwise></py:otherwise>
+    </py:choose>&nbsp;
+  </py:def>
 
   <py:def function="render_notification_text(notification)">
     <py:choose test="notification.type">
