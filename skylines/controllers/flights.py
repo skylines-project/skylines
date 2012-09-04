@@ -132,12 +132,14 @@ def get_contest_traces(flight, encoder):
 
     return contest_traces
 
-CIRCDIR_NAMES = {FlightPhase.CD_LEFT: "Left",
+CIRCDIR_NAMES = {None: "",
+                 FlightPhase.CD_LEFT: "Left",
                  FlightPhase.CD_MIXED: "Mixed",
                  FlightPhase.CD_RIGHT: "Right",
                  FlightPhase.CD_TOTAL: "Total"}
 
-PHASETYPE_NAMES = {FlightPhase.PT_POWERED: "Powered",
+PHASETYPE_NAMES = {None: "",
+                   FlightPhase.PT_POWERED: "Powered",
                    FlightPhase.PT_CIRCLING: "Circling",
                    FlightPhase.PT_CRUISE: "Cruise"}
 
@@ -147,8 +149,8 @@ def format_phase(phase):
     """
     is_circling = phase.phase_type == FlightPhase.PT_CIRCLING
     r = dict(start="%s" % format_time(phase.start_time),
-             fraction="%d%%" % phase.fraction if phase.fraction else "",
-             speed=units.format_speed(float(phase.speed)) if phase.speed else "",
+             fraction="%d%%" % phase.fraction if phase.fraction is not None else "",
+             speed=units.format_speed(phase.speed) if phase.speed is not None else "",
              vario=units.format_lift(phase.vario),
              alt_diff=units.format_altitude(phase.alt_diff),
              count=phase.count,
@@ -161,7 +163,13 @@ def format_phase(phase):
 
     if not is_circling:
         r['distance'] = units.format_distance(phase.distance)
-        r['glide_rate'] = format_number(phase.glide_rate)
+
+        # Sensible glide rate values are formatted as numbers. Others are shown
+        # as infinity symbol.
+        if abs(phase.alt_diff) > 0 and abs(phase.glide_rate) < 1000:
+            r['glide_rate'] = format_number(phase.glide_rate)
+        else:
+            r['glide_rate'] = u'\u221e' # infinity
     else:
         r['circling_direction'] = CIRCDIR_NAMES[phase.circling_direction]
     return r
