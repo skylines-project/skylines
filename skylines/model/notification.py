@@ -14,6 +14,11 @@ class Notification(DeclarativeBase):
 
     id = Column(Integer, autoincrement=True, primary_key=True)
 
+    # Notification type (NT_* constants)
+    type = Column(Integer, nullable=False)
+
+    NT_FLIGHT_COMMENT = 1
+
     # Time stamps
     time_created = Column(DateTime, nullable=False, default=datetime.utcnow)
     time_read = Column(DateTime)
@@ -75,7 +80,8 @@ def create_flight_comment_notifications(comment):
         if recipient is None or recipient == comment.user:
             continue
 
-        item = Notification(sender=comment.user,
+        item = Notification(type=Notification.NT_FLIGHT_COMMENT,
+                            sender=comment.user,
                             recipient=recipient,
                             flight=comment.flight,
                             flight_comment=comment)

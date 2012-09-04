@@ -43,7 +43,12 @@
   </tr>
 
   <py:def function="render_notification_text(notification)">
-    ${render_flight_comment_notification_text(notification)}
+    <py:choose test="notification.type">
+      <py:when test="notification.NT_FLIGHT_COMMENT">
+        ${render_flight_comment_notification_text(notification)}
+      </py:when>
+      <py:otherwise>Error: Unknown notification</py:otherwise>
+    </py:choose>
   </py:def>
 
   <py:def function="render_flight_comment_notification_text(notification)">

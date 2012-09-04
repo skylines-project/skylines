@@ -1,5 +1,5 @@
 from tg import expose, request, redirect
-from webob.exc import HTTPForbidden
+from webob.exc import HTTPForbidden, HTTPNotImplemented
 from sqlalchemy.orm import joinedload
 from sqlalchemy.sql.expression import desc
 
@@ -16,7 +16,10 @@ class NotificationController(BaseController):
     def index(self):
         self.notification.mark_read()
 
-        redirect('/flights/{}/'.format(self.notification.flight_id))
+        if self.notification.type == Notification.NT_FLIGHT_COMMENT:
+            redirect('/flights/{}/'.format(self.notification.flight_id))
+        else:
+            raise HTTPNotImplemented
 
 
 class NotificationsController(BaseController):
