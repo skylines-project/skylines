@@ -163,7 +163,13 @@ def format_phase(phase):
 
     if not is_circling:
         r['distance'] = units.format_distance(phase.distance)
-        r['glide_rate'] = format_number(phase.glide_rate)
+
+        # Sensible glide rate values are formatted as numbers. Others are shown
+        # as infinity symbol.
+        if abs(phase.alt_diff) > 0 and abs(phase.glide_rate) < 1000:
+            r['glide_rate'] = format_number(phase.glide_rate)
+        else:
+            r['glide_rate'] = u'\u221e' # infinity
     else:
         r['circling_direction'] = CIRCDIR_NAMES[phase.circling_direction]
     return r
