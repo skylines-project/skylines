@@ -44,7 +44,7 @@ title = 'Live Tracking'
             </a>
           </td>
           <td>
-            <span class="flag-${airport.country_code.lower()}"></span>
+            ${insert_flag(airport.country_code)}
             <span py:replace="airport">
               Nearest Airport
             </span>

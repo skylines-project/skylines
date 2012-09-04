@@ -28,7 +28,7 @@ title = 'Ranking'
       <tbody>
         <tr py:for="airport,count,total in result">
           <td>
-            <span class="flag-${airport.country_code.lower()}"></span>
+            ${insert_flag(airport.country_code)}
             <a py:if="airport.id" py:content="airport.name" href="/flights/airport/${airport.id}">
               Airport Name
             </a>

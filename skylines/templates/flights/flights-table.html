@@ -54,7 +54,7 @@ from sets import Set
         </td>
         <td py:if="'takeoff_airport' not in omitted_columns">
           <py:if test="flight.takeoff_airport is not None">
-            <span class="flag-${flight.takeoff_airport.country_code.lower()}"></span>
+            ${insert_flag(flight.takeoff_airport.country_code)}
             <a py:content="flight.takeoff_airport.name" href="/flights/airport/${flight.takeoff_airport_id}">Airport</a>
           </py:if>
         </td>

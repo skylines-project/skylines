@@ -53,7 +53,7 @@ from skylines.lib.units import format_distance, format_speed
         <th>Take-off</th>
         <td>
           <py:if test="flight.takeoff_airport is not None">
-            <span class="flag-${flight.takeoff_airport.country_code.lower()}" style="float:right;margin:3px"></span>
+            ${insert_flag(flight.takeoff_airport.country_code, 'float:right;margin:3px')}
             <a py:content="flight.takeoff_airport.name" href="/flights/airport/${flight.takeoff_airport_id}">Airport</a>
             <br />
             at
@@ -66,7 +66,7 @@ from skylines.lib.units import format_distance, format_speed
         <th>Landing</th>
         <td>
           <py:if test="flight.landing_airport is not None">
-            <span class="flag-${flight.landing_airport.country_code.lower()}" style="float:right;margin:3px"></span>
+            ${insert_flag(flight.landing_airport.country_code, 'float:right;margin:3px')}
             <a py:content="flight.landing_airport.name" href="/flights/airport/${flight.landing_airport_id}">Airport</a>
             <br />
             at
