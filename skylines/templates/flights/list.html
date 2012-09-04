@@ -72,6 +72,7 @@ if airport:
               "sType": "numeric-comma-formatted",
               "sDefaultContent": "",
               "aTargets": ["score"],
+              "sClass": "numeric",
               "fnRender": function(obj, row) {
                 if (obj.oSettings.jqXHR)
                   row = obj.aData.olc_plus_score;
@@ -100,6 +101,7 @@ if airport:
               "sType": "numeric-comma-formatted",
               "sDefaultContent": "",
               "aTargets": ["distance"],
+              "sClass": "numeric",
               "fnRender": function(obj, row) {
                 if (obj.oSettings.jqXHR)
                   row = Math.round(obj.aData.olc_classic_distance/1000) + " km";
