@@ -1,12 +1,13 @@
 from datetime import datetime
 from sets import Set
+from collections import OrderedDict
 
 from sqlalchemy import ForeignKey, Column
 from sqlalchemy.orm import relation
 from sqlalchemy.types import Integer, DateTime
 
 from skylines.model import DeclarativeBase, DBSession
-from skylines.model import User, Flight, FlightComment
+from skylines.model import User, Flight, FlightComment, Follower
 
 
 class Notification(DeclarativeBase):
@@ -18,6 +19,7 @@ class Notification(DeclarativeBase):
     type = Column(Integer, nullable=False)
 
     NT_FLIGHT_COMMENT = 1
+    NT_FLIGHT = 2
 
     # Time stamps
     time_created = Column(DateTime, nullable=False, default=datetime.utcnow)
@@ -85,4 +87,48 @@ def create_flight_comment_notifications(comment):
                             recipient=recipient,
                             flight=comment.flight,
                             flight_comment=comment)
+        DBSession.add(item)
+
+
+def create_flight_notifications(flight):
+    '''
+    Create notifications for the followers of the owner and pilots of the flight
+    '''
+
+    # Create list of flight-related users
+    senders = [flight.pilot_id, flight.co_pilot_id, flight.igc_file.owner_id]
+    senders = OrderedDict([(s, None) for s in senders if s is not None])
+
+    # Request followers/recipients of the flight-related users from the DB
+    followers = DBSession.query(Follower.source_id, Follower.destination_id) \
+                         .filter(Follower.destination_id.in_(senders.keys())) \
+                         .all()
+
+    # Determine the recipients and their most important sender
+
+    recipients = dict()
+
+    # For each flight-related user in decreasing importance ..
+    for sender in senders.keys():
+        # For each of his followers
+        for follower in followers:
+            if follower.destination_id != sender:
+                continue
+
+            # Don't send notifications to the senders if they follow each other
+            if follower.source_id in senders:
+                continue
+
+            # If the recipient/follower is not registered
+            # yet by a more important sender
+            if follower.source_id not in recipients:
+                # Register the recipient with the sender's id
+                recipients[follower.source_id] = sender
+
+    # Create notifications for the recipients
+    for recipient, sender in recipients.iteritems():
+        item = Notification(type=Notification.NT_FLIGHT,
+                            sender_id=sender,
+                            recipient_id=recipient,
+                            flight=flight)
         DBSession.add(item)

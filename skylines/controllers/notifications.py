@@ -18,6 +18,8 @@ class NotificationController(BaseController):
 
         if self.notification.type == Notification.NT_FLIGHT_COMMENT:
             redirect('/flights/{}/'.format(self.notification.flight_id))
+        elif self.notification.type == Notification.NT_FLIGHT:
+            redirect('/flights/{}/'.format(self.notification.flight_id))
         else:
             raise HTTPNotImplemented
 

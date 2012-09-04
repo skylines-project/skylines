@@ -45,6 +45,7 @@
   <py:def function="render_notification_icon(notification)">
     <py:choose test="notification.type">
       <i py:when="notification.NT_FLIGHT_COMMENT" class="icon-comments-alt"></i>
+      <i py:when="notification.NT_FLIGHT" class="icon-plane"></i>
       <py:otherwise></py:otherwise>
     </py:choose>&nbsp;
   </py:def>
@@ -54,12 +55,21 @@
       <py:when test="notification.NT_FLIGHT_COMMENT">
         ${render_flight_comment_notification_text(notification)}
       </py:when>
+      <py:when test="notification.NT_FLIGHT">
+        ${render_flight_notification_text(notification)}
+      </py:when>
       <py:otherwise>Error: Unknown notification</py:otherwise>
     </py:choose>
   </py:def>
 
   <py:def function="render_flight_comment_notification_text(notification)">
     <strong>${notification.sender}</strong> commented on your
+    <strong>${h.format_distance(notification.flight.olc_classic_distance)}</strong> flight on the
+    <strong>${h.format_date(notification.flight.takeoff_time)}</strong>.
+  </py:def>
+
+  <py:def function="render_flight_notification_text(notification)">
+    <strong>${notification.sender}</strong> uploaded a new
     <strong>${h.format_distance(notification.flight.olc_classic_distance)}</strong> flight on the
     <strong>${h.format_date(notification.flight.takeoff_time)}</strong>.
   </py:def>
