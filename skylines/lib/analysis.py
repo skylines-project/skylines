@@ -176,7 +176,8 @@ def save_phases(root, flight):
 
     phases = []
 
-    PT_IDX = {'powered': FlightPhase.PT_POWERED,
+    PT_IDX = {'': None,
+              'powered': FlightPhase.PT_POWERED,
               'cruise': FlightPhase.PT_CRUISE,
               'circling': FlightPhase.PT_CIRCLING}
 
