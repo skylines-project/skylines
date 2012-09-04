@@ -1,0 +1,54 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+                      "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:py="http://genshi.edgewall.org/"
+      xmlns:xi="http://www.w3.org/2001/XInclude"
+      py:strip="">
+
+  <py:match path="head" once="true">
+    <head py:attrs="select('@*')">
+      ${select('*')}
+  
+      <script type="text/javascript" src="/static/jquery/jquery.timeago.js"></script>
+    
+      <script type="text/javascript">
+        /* <![CDATA[ */
+        $(function() {
+          $("abbr.timeago").timeago();
+        });
+        /* ]]> */
+      </script>
+    </head>
+  </py:match>
+
+  <table py:def="render_notifications_table(notifications)" id="notifications-table" class="table table-striped">
+    <tbody>
+      <py:for each="notification in notifications">
+        ${render_notification_row(notification)}
+      </py:for>
+    </tbody>
+  </table>
+
+  <tr py:def="render_notification_row(notification)" class="${('muted', None)[notification.time_read is None]}">
+    <td>
+      <i class="icon-chevron-right" py:if="notification.time_read is None"></i>&nbsp;
+    </td>
+    <td>
+      ${render_notification_text(notification)}
+      <small>(${insert_timeago(notification.time_created)})</small>
+    </td>
+    <td class="show">
+      <a href="/notifications/${notification.id}/" class="btn btn-mini">Show</a>
+    </td>
+  </tr>
+
+  <py:def function="render_notification_text(notification)">
+    ${render_flight_comment_notification_text(notification)}
+  </py:def>
+
+  <py:def function="render_flight_comment_notification_text(notification)">
+    <strong>${notification.sender}</strong> commented on your
+    <strong>${h.format_distance(notification.flight.olc_classic_distance)}</strong> flight on the
+    <strong>${h.format_date(notification.flight.takeoff_time)}</strong>.
+  </py:def>
+</html>

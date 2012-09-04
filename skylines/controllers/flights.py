@@ -18,6 +18,7 @@ from skylines import files
 from skylines.model import (DBSession, User, Club, Flight, IGCFile, Model,
                             Airport, FlightPhase)
 from skylines.model.flight_comment import FlightComment
+from skylines.model.notification import create_flight_comment_notifications
 from skylines.controllers.upload import UploadController
 from skylines.lib.datatables import GetDatatableRecords
 from skylines.lib.analysis import analyse_flight, flight_path
@@ -331,6 +332,8 @@ class FlightController(BaseController):
             comment.user = request.identity['user']
             comment.flight = self.flight
             comment.text = text
+
+            create_flight_comment_notifications(comment)
 
         redirect('.')
 

@@ -36,6 +36,10 @@ body {
   min-height: 500px;
 }
 
+small {
+  font-size: 85%;
+}
+
 /* Give a quick and non-cross-browser friendly divider */
 ul li[class*="span"] {
   margin-left: 0 !important;
@@ -45,6 +49,10 @@ ul li[class*="span"] {
 
 .topbar .btn {
   border: 0;
+}
+
+.navbar .badge {
+  line-height: inherit;
 }
 
 input[type="file"] {
@@ -68,7 +76,7 @@ input[type="file"] {
   white-space: nowrap;
 }
 
-#flight-table .show {
+table .show {
   white-space: nowrap;
   text-align: right;
 }
