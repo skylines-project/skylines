@@ -46,6 +46,7 @@
     <py:choose test="notification.type">
       <i py:when="notification.NT_FLIGHT_COMMENT" class="icon-comments-alt"></i>
       <i py:when="notification.NT_FLIGHT" class="icon-plane"></i>
+      <i py:when="notification.NT_FOLLOWER" class="icon-user"></i>
       <py:otherwise></py:otherwise>
     </py:choose>&nbsp;
   </py:def>
@@ -57,6 +58,9 @@
       </py:when>
       <py:when test="notification.NT_FLIGHT">
         ${render_flight_notification_text(notification)}
+      </py:when>
+      <py:when test="notification.NT_FOLLOWER">
+        ${render_follower_notification_text(notification)}
       </py:when>
       <py:otherwise>Error: Unknown notification</py:otherwise>
     </py:choose>
@@ -72,5 +76,9 @@
     <strong>${notification.sender}</strong> uploaded a new
     <strong>${h.format_distance(notification.flight.olc_classic_distance)}</strong> flight on the
     <strong>${h.format_date(notification.flight.takeoff_time)}</strong>.
+  </py:def>
+
+  <py:def function="render_follower_notification_text(notification)">
+    <strong>${notification.sender}</strong> is following you now.
   </py:def>
 </html>

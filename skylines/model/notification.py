@@ -20,6 +20,7 @@ class Notification(DeclarativeBase):
 
     NT_FLIGHT_COMMENT = 1
     NT_FLIGHT = 2
+    NT_FOLLOWER = 3
 
     # Time stamps
     time_created = Column(DateTime, nullable=False, default=datetime.utcnow)
@@ -132,3 +133,14 @@ def create_flight_notifications(flight):
                             recipient_id=recipient,
                             flight=flight)
         DBSession.add(item)
+
+
+def create_follower_notification(followed, follower):
+    '''
+    Create notification for the followed pilot about his new follower
+    '''
+
+    item = Notification(type=Notification.NT_FOLLOWER,
+                        sender=follower,
+                        recipient=followed)
+    DBSession.add(item)

@@ -20,6 +20,8 @@ class NotificationController(BaseController):
             redirect('/flights/{}/'.format(self.notification.flight_id))
         elif self.notification.type == Notification.NT_FLIGHT:
             redirect('/flights/{}/'.format(self.notification.flight_id))
+        elif self.notification.type == Notification.NT_FOLLOWER:
+            redirect('/users/{}/'.format(self.notification.sender_id))
         else:
             raise HTTPNotImplemented
 
