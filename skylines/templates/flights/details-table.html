@@ -154,7 +154,7 @@ from skylines.lib.units import format_distance, format_speed
       <tr>
         <th>Uploaded</th>
         <td>
-          <abbr class="timeago" title="${h.isoformat_utc(flight.time_created)}" py:content="h.format_datetime(flight.time_created)" rel="tooltip">4 days ago</abbr><br/>
+          ${insert_timeago(flight.time_created)}<br/>
           by <span py:replace="flight.igc_file.owner">Turbo</span>
         </td>
       </tr>
