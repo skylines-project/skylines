@@ -49,7 +49,7 @@ from skylines.lib.units import format_distance, format_speed
         </td>
       </tr>
       <tr py:if="flight.takeoff_time">
-        <meta itemprop="startDate" content="${flight.takeoff_time.isoformat()}" />
+        <meta itemprop="startDate" content="${h.isoformat_utc(flight.takeoff_time)}" />
         <th>Take-off</th>
         <td>
           <py:if test="flight.takeoff_airport is not None">
@@ -62,7 +62,7 @@ from skylines.lib.units import format_distance, format_speed
         </td>
       </tr>
       <tr py:if="flight.landing_time">
-        <meta itemprop="endDate" content="${flight.landing_time.isoformat()}" />
+        <meta itemprop="endDate" content="${h.isoformat_utc(flight.landing_time)}" />
         <th>Landing</th>
         <td>
           <py:if test="flight.landing_airport is not None">
@@ -154,7 +154,7 @@ from skylines.lib.units import format_distance, format_speed
       <tr>
         <th>Uploaded</th>
         <td>
-          <abbr class="timeago" title="${flight.time_created.isoformat()}" py:content="h.format_datetime(flight.time_created)" rel="tooltip">4 days ago</abbr><br/>
+          <abbr class="timeago" title="${h.isoformat_utc(flight.time_created)}" py:content="h.format_datetime(flight.time_created)" rel="tooltip">4 days ago</abbr><br/>
           by <span py:replace="flight.igc_file.owner">Turbo</span>
         </td>
       </tr>

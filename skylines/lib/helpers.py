@@ -20,6 +20,10 @@ urlize = UrlizeExtension()
 markdown = Markdown(extensions=['nl2br', urlize], safe_mode='escape')
 
 
+def isoformat_utc(dt):
+    return dt.isoformat() + 'Z'
+
+
 def format_timedelta(delta):
     if isinstance(delta, timedelta):
         seconds = delta.total_seconds()

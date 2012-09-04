@@ -23,9 +23,9 @@
       description = 'SkyLines (' + ' - '.join(description) + ')'
     ?>
     <meta name="description" content="${description}" />
-    <meta name="date" content="${flight.time_created.isoformat()}" />
+    <meta name="date" content="${h.isoformat_utc(flight.time_created)}" />
     <meta name="DC.description" content="${description}" />
-    <meta name="DC.date" content="${flight.time_created.isoformat()}" />
+    <meta name="DC.date" content="${h.isoformat_utc(flight.time_created)}" />
     <meta name="DC.publisher" content="${flight.igc_file.owner}" />
     <meta py:if="flight.pilot" name="DC.creator" content="${flight.pilot}" />
     <meta py:if="flight.co_pilot" name="DC.contributor" content="${flight.co_pilot}" />
