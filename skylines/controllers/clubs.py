@@ -2,6 +2,7 @@
 
 from tg import expose, validate, redirect
 from tg.i18n import ugettext as _
+from tg.decorators import with_trailing_slash
 from webob.exc import HTTPNotFound, HTTPForbidden
 from sprox.formbase import AddRecordForm, EditableForm, Field
 from sprox.validators import UniqueValue
@@ -44,6 +45,7 @@ class ClubController(BaseController):
     def __init__(self, club):
         self.club = club
 
+    @with_trailing_slash
     @expose('skylines.templates.clubs.view')
     def index(self):
         return dict(page='settings', club=self.club)
