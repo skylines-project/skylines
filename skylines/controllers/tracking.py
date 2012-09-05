@@ -6,6 +6,7 @@ from tg import expose, request
 from webob.exc import HTTPNotFound
 from sqlalchemy import func, over
 from sqlalchemy.sql.expression import and_, desc, cast
+from sqlalchemy.orm import joinedload
 from sqlalchemy.types import Interval, String
 from skylines.lib.base import BaseController
 from skylines.lib.dbutil import get_requested_record_list
@@ -136,7 +137,7 @@ class TrackController(BaseController):
 class TrackingController(BaseController):
     @expose('skylines.templates.tracking.list')
     def index(self, **kw):
-        subq = DBSession.query(TrackingFix,
+        subq = DBSession.query(TrackingFix.id,
                                over(func.rank(),
                                     partition_by=TrackingFix.pilot_id,
                                     order_by=desc(TrackingFix.time)).label('rank')) \
@@ -147,6 +148,7 @@ class TrackingController(BaseController):
                 .subquery()
 
         query = DBSession.query(TrackingFix) \
+                .options(joinedload(TrackingFix.pilot)) \
                 .filter(TrackingFix.id == subq.c.id) \
                 .filter(subq.c.rank == 1) \
                 .order_by(desc(TrackingFix.time))
