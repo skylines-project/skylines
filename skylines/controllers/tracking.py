@@ -5,7 +5,8 @@ from math import log
 from tg import expose, request
 from webob.exc import HTTPNotFound
 from sqlalchemy import func, over
-from sqlalchemy.sql.expression import and_, desc
+from sqlalchemy.sql.expression import and_, desc, cast
+from sqlalchemy.types import Interval, String
 from skylines.lib.base import BaseController
 from skylines.lib.dbutil import get_requested_record_list
 from skylines.model import DBSession, User, TrackingFix, Airport
@@ -141,6 +142,7 @@ class TrackingController(BaseController):
                                     order_by=desc(TrackingFix.time)).label('rank')) \
                 .outerjoin(TrackingFix.pilot) \
                 .filter(TrackingFix.time >= datetime.utcnow() - timedelta(hours=6)) \
+                .filter(TrackingFix.time <= datetime.utcnow() - cast(cast(User.tracking_delay, String()) + ' minutes', Interval)) \
                 .filter(TrackingFix.location_wkt != None) \
                 .subquery()
 
