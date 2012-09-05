@@ -17,7 +17,6 @@ from skylines.controllers.clubs import ClubsController
 from skylines.controllers.flights import FlightsController
 from skylines.controllers.ranking import RankingController
 from skylines.controllers.tracking import TrackingController
-from skylines.controllers.static import StaticResourceController
 from skylines.controllers.statistics import StatisticsController
 
 __all__ = ['RootController']
@@ -45,7 +44,6 @@ class RootController(BaseController):
     flights = FlightsController()
     ranking = RankingController()
     tracking = TrackingController()
-    static = StaticResourceController()
     statistics = StatisticsController()
 
     if 'skylines.mapproxy' in config:

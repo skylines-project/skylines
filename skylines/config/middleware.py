@@ -3,6 +3,8 @@
 
 from skylines.config.app_cfg import base_config
 from skylines.config.environment import load_environment
+from skylines.config.static import StaticRedirectionMiddleware
+from paste.cascade import Cascade
 
 
 __all__ = ['make_app']
@@ -33,6 +35,7 @@ def make_app(global_conf, full_stack=True, **app_conf):
    
     """
     app = make_base_app(global_conf, full_stack=True, **app_conf)
+    app = Cascade([StaticRedirectionMiddleware(app_conf), app])
     
     # Wrap your base TurboGears 2 application with custom middleware here
     
