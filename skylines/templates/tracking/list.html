@@ -39,7 +39,7 @@ title = 'Live Tracking'
             ${insert_timeago(track.time)}
           </td>
           <td>
-            <a py:content="track.pilot" href="/users/${track.pilot.user_id}">
+            <a py:content="track.pilot" href="/users/${track.pilot_id}">
               Pilot Name
             </a>
           </td>
@@ -51,7 +51,7 @@ title = 'Live Tracking'
             (${format_distance(distance)})
           </td>
           <td nowrap="nowrap" class="show">
-            <a href="/tracking/${track.pilot.user_id}/" class="btn btn-mini">Show</a>
+            <a href="/tracking/${track.pilot_id}/" class="btn btn-mini">Show</a>
           </td>
         </tr>
       </tbody>
