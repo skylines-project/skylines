@@ -1,0 +1,84 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+                      "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:py="http://genshi.edgewall.org/"
+      xmlns:xi="http://www.w3.org/2001/XInclude"
+      py:strip="">
+
+  <py:match path="head" once="true">
+    <head py:attrs="select('@*')">
+      ${select('*')}
+  
+      <script type="text/javascript" src="/static/jquery/jquery.timeago.js"></script>
+    
+      <script type="text/javascript">
+        /* <![CDATA[ */
+        $(function() {
+          $("abbr.timeago").timeago();
+        });
+        /* ]]> */
+      </script>
+    </head>
+  </py:match>
+
+  <table py:def="render_notifications_table(notifications)" id="notifications-table" class="table table-striped">
+    <tbody>
+      <py:for each="notification in notifications">
+        ${render_notification_row(notification)}
+      </py:for>
+    </tbody>
+  </table>
+
+  <tr py:def="render_notification_row(notification)" class="${('muted', None)[notification.time_read is None]}">
+    <td>
+      ${render_notification_icon(notification)}
+    </td>
+    <td>
+      ${render_notification_text(notification)}
+      <small>(${insert_timeago(notification.time_created)})</small>
+    </td>
+    <td class="show">
+      <a href="/notifications/${notification.id}/" class="btn btn-mini">Show</a>
+    </td>
+  </tr>
+
+  <py:def function="render_notification_icon(notification)">
+    <py:choose test="notification.type">
+      <i py:when="notification.NT_FLIGHT_COMMENT" class="icon-comments-alt"></i>
+      <i py:when="notification.NT_FLIGHT" class="icon-plane"></i>
+      <i py:when="notification.NT_FOLLOWER" class="icon-user"></i>
+      <py:otherwise></py:otherwise>
+    </py:choose>&nbsp;
+  </py:def>
+
+  <py:def function="render_notification_text(notification)">
+    <py:choose test="notification.type">
+      <py:when test="notification.NT_FLIGHT_COMMENT">
+        ${render_flight_comment_notification_text(notification)}
+      </py:when>
+      <py:when test="notification.NT_FLIGHT">
+        ${render_flight_notification_text(notification)}
+      </py:when>
+      <py:when test="notification.NT_FOLLOWER">
+        ${render_follower_notification_text(notification)}
+      </py:when>
+      <py:otherwise>Error: Unknown notification</py:otherwise>
+    </py:choose>
+  </py:def>
+
+  <py:def function="render_flight_comment_notification_text(notification)">
+    <strong>${notification.sender}</strong> commented on your
+    <strong>${h.format_distance(notification.flight.olc_classic_distance)}</strong> flight on the
+    <strong>${h.format_date(notification.flight.takeoff_time)}</strong>.
+  </py:def>
+
+  <py:def function="render_flight_notification_text(notification)">
+    <strong>${notification.sender}</strong> uploaded a new
+    <strong>${h.format_distance(notification.flight.olc_classic_distance)}</strong> flight on the
+    <strong>${h.format_date(notification.flight.takeoff_time)}</strong>.
+  </py:def>
+
+  <py:def function="render_follower_notification_text(notification)">
+    <strong>${notification.sender}</strong> is following you now.
+  </py:def>
+</html>

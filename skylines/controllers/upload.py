@@ -13,6 +13,7 @@ from skylines.lib.analysis import analyse_flight
 from skylines.form import BootstrapForm, MultiFileField
 from zipfile import ZipFile
 from skylines.model.igcfile import IGCFile
+from skylines.model.notification import create_flight_notifications
 
 
 class PilotSelectField(SingleSelectField):
@@ -155,6 +156,9 @@ class UploadController(BaseController):
             flights.append((name, flight, None))
             DBSession.add(igc_file)
             DBSession.add(flight)
+
+            create_flight_notifications(flight)
+
             success = True
 
         DBSession.flush()
