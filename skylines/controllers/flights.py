@@ -446,8 +446,9 @@ class FlightsController(BaseController):
     @expose('skylines.templates.flights.list')
     @expose('json')
     def today(self, **kw):
-        query = DBSession.query(Flight).filter(Flight.takeoff_time < datetime.utcnow())
-        query = query.from_self(func.max(Flight.takeoff_time).label('date'))
+        query = DBSession.query(func.max(Flight.takeoff_time).label('date')) \
+                         .filter(Flight.takeoff_time < datetime.utcnow())
+
         date = query.one().date
         if not date:
             raise HTTPNotFound
