@@ -10,6 +10,7 @@ from repoze.what.predicates import has_permission
 from webob.exc import HTTPNotFound, HTTPForbidden
 from sqlalchemy.sql.expression import desc, or_, and_, between
 from sqlalchemy import func
+from sqlalchemy.orm import joinedload, subqueryload, contains_eager
 from tw.forms.fields import TextField
 from sprox.formbase import EditableForm
 from sprox.widgets import PropertySingleSelectField
@@ -342,10 +343,14 @@ class FlightsController(BaseController):
     def __do_list(self, tab, kw, date=None, pilot=None, club=None, airport=None, \
                   pinned=None, filter=None, columns=None):
         flights = DBSession.query(Flight) \
-            .outerjoin(Flight.pilot) \
             .outerjoin(Flight.igc_file) \
-            .outerjoin(Flight.takeoff_airport) \
-            .outerjoin(Flight.model)
+            .options(contains_eager(Flight.igc_file)) \
+            .options(joinedload(Flight.pilot)) \
+            .options(joinedload(Flight.co_pilot)) \
+            .options(joinedload(Flight.club)) \
+            .options(joinedload(Flight.takeoff_airport)) \
+            .options(joinedload(Flight.model)) \
+            .options(subqueryload(Flight.comments))
 
         if date:
             flights = flights.filter(between(Flight.takeoff_time,
