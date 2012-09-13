@@ -71,5 +71,6 @@ from skylines.model.geo import Location
 from skylines.model.airport import Airport
 from skylines.model.follower import Follower
 from skylines.model.airspace import Airspace
+from skylines.model.timezone import TimeZone
 from skylines.model.trace import Trace
 from skylines.model.notification import Notification

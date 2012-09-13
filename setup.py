@@ -51,6 +51,7 @@ install_requires = [
     "geoalchemy",
     "crc16",
     "markdown",
+    "pytz",
 ]
 
 if sys.version_info[:2] == (2, 4):
