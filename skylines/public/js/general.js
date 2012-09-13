@@ -156,7 +156,6 @@ function getShareUrl(url) {
 function showPinnedFlightsLink() {
   var pinned_flights = getPinnedFlights();
   if (pinned_flights.length > 0) {
-    $('#pinned-flights-link a').attr("href", "/flights/pinned/" + pinned_flights.join(",") + "/");
     $('#pinned-flights-link').show();
   } else {
     $('#pinned-flights-link').hide();

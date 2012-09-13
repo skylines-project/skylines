@@ -6,6 +6,7 @@ from babel.dates import format_date
 from datetime import datetime, timedelta
 from tg import expose, validate, require, request, redirect, config, flash
 from tg.i18n import ugettext as _
+from tg.decorators import without_trailing_slash
 from repoze.what.predicates import has_permission
 from webob.exc import HTTPNotFound, HTTPForbidden
 from sqlalchemy.sql.expression import desc, or_, and_, between
@@ -570,18 +571,24 @@ class FlightsController(BaseController):
 
         return self.__do_list('airport', kw, airport=airport, columns=columns)
 
+    @without_trailing_slash
     @expose('skylines.templates.flights.list')
     @expose('json')
-    def pinned(self, id, **kw):
-        ids = list()
-        for unique_id in id.split(','):
-            try:
-                unique_id = int(unique_id)
-            except ValueError:
-                raise HTTPNotFound
+    def pinned(self, *remainder, **kw):
+        # Check if we have cookies
+        if request.cookies is None:
+            redirect('.')
 
-            if unique_id not in ids:
-                ids.append(unique_id)
+        # Check for the 'pinnedFlights' cookie
+        ids = request.cookies.get('SkyLines_pinnedFlights', None)
+        if ids is None:
+            redirect('.')
+
+        try:
+            # Split the string into integer IDs (%2C = comma)
+            ids = [int(id) for id in ids.split('%2C')]
+        except ValueError:
+            raise HTTPNotFound
 
         return self.__do_list('pinned', kw, pinned=ids)
 
