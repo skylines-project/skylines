@@ -347,7 +347,7 @@ class UserController(BaseController):
                                 func.sum(Flight.olc_classic_distance).label('distance'),
                                 func.sum(Flight.duration).label('duration')) \
                          .filter(Flight.pilot == self.user) \
-                         .filter(Flight.takeoff_time > (date.today() - timedelta(days=365))) \
+                         .filter(Flight.date_local > (date.today() - timedelta(days=365))) \
                          .first()
 
         last_year_statistics = dict(flights = 0,

@@ -368,8 +368,8 @@ class FlightsController(BaseController):
             .options(subqueryload(Flight.comments))
 
         if date:
-            flights = flights.filter(between(Flight.takeoff_time,
-                                             date, date + timedelta(days=1)))
+            flights = flights.filter(Flight.date_local == date)
+
         if pilot:
             flights = flights.filter(or_(Flight.pilot == pilot,
                                          Flight.co_pilot == pilot))
@@ -388,7 +388,7 @@ class FlightsController(BaseController):
         if request.response_type == 'application/json':
             if not columns:
                 columns = {
-                    0: 'takeoff_time',
+                    0: 'date_local',
                     1: 'olc_plus_score',
                     2: 'display_name',
                     3: 'olc_classic_distance',
@@ -406,8 +406,8 @@ class FlightsController(BaseController):
             for flight in flights:
                 aaData.append(dict(takeoff_time = flight.takeoff_time.strftime('%H:%M'),
                                    landing_time = flight.landing_time.strftime('%H:%M'),
-                                   date = flight.takeoff_time.strftime('%d.%m.%Y'),
-                                   date_formatted = format_date(flight.takeoff_time),
+                                   date = flight.date_local.strftime('%d.%m.%Y'),
+                                   date_formatted = format_date(flight.date_local),
                                    olc_plus_score = flight.olc_plus_score,
                                    olc_classic_distance = flight.olc_classic_distance,
                                    pilot_id = flight.pilot_id,
@@ -428,10 +428,8 @@ class FlightsController(BaseController):
             return dict(response_dict, aaData = aaData)
 
         else:
-            if date:
-                flights = flights.order_by(desc(Flight.olc_plus_score))
-            else:
-                flights = flights.order_by(desc(Flight.takeoff_time))
+            if not date:
+                flights = flights.order_by(desc(Flight.date_local))
 
             flights_count = flights.count()
             if flights_count > int(config.get('skylines.lists.server_side', 250)):
@@ -439,7 +437,8 @@ class FlightsController(BaseController):
             else:
                 limit = int(config.get('skylines.lists.server_side', 250))
 
-            flights = flights.order_by(desc(Flight.takeoff_time)).limit(limit)
+            flights = flights.order_by(desc(Flight.olc_plus_score))
+            flights = flights.limit(limit)
             return dict(tab = tab, date=date, pilot=pilot, club=club, airport=airport,
                         flights = flights, flights_count = flights_count)
 
@@ -469,7 +468,7 @@ class FlightsController(BaseController):
     @expose('skylines.templates.flights.list')
     @expose('json')
     def today(self, **kw):
-        query = DBSession.query(func.max(Flight.takeoff_time).label('date')) \
+        query = DBSession.query(func.max(Flight.date_local).label('date')) \
                          .filter(Flight.takeoff_time < datetime.utcnow())
 
         date = query.one().date
@@ -541,7 +540,7 @@ class FlightsController(BaseController):
         pilot = get_requested_record(User, id)
 
         columns = {
-            0: 'takeoff_time',
+            0: 'date_local',
             1: 'olc_plus_score',
             2: 'display_name',
             3: 'olc_classic_distance',
@@ -560,7 +559,7 @@ class FlightsController(BaseController):
         club = get_requested_record(Club, id)
 
         columns = {
-            0: 'takeoff_time',
+            0: 'date_local',
             1: 'olc_plus_score',
             2: 'display_name',
             3: 'olc_classic_distance',
@@ -579,7 +578,7 @@ class FlightsController(BaseController):
         airport = get_requested_record(Airport, id)
 
         columns = {
-            0: 'takeoff_time',
+            0: 'date_local',
             1: 'olc_plus_score',
             2: 'display_name',
             3: 'olc_classic_distance',

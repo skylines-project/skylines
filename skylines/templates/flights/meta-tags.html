@@ -12,7 +12,7 @@
       description = []
       description.append(format_distance(flight.olc_classic_distance))
       description.append(h.format_number(flight.olc_plus_score) + ' pt')
-      description.append(h.format_date(flight.takeoff_time))
+      description.append(h.format_date(flight.date_local))
 
       if flight.pilot:
         description.append(unicode(flight.pilot))

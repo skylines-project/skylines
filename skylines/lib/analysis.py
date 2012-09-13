@@ -154,6 +154,8 @@ def save_takeoff(event, flight):
     if flight.takeoff_location is not None:
         flight.takeoff_airport = Airport.by_location(flight.takeoff_location)
 
+    flight.date_local = flight.takeoff_time
+
 
 def save_landing(event, flight):
     flight.landing_time = import_datetime_attribute(event, 'time')
