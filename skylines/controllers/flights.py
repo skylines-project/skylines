@@ -217,8 +217,13 @@ class FlightController(BaseController):
             trace = get_flight_path(flight, threshold=0.0001, max_points=10000)
             return (flight, trace)
 
+        trace = self.__get_flight_path(threshold=0.0001, max_points=10000)
+        if trace is None:
+            raise HTTPNotFound
+
         other_flights = map(add_flight_path, self.other_flights)
-        return dict(flight=self.flight, trace=self.__get_flight_path(threshold=0.0001, max_points=10000),
+
+        return dict(flight=self.flight, trace=trace,
                     other_flights=other_flights)
 
     @expose('json')
