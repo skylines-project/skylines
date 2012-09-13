@@ -6,7 +6,7 @@ from babel.dates import format_date
 from datetime import datetime, timedelta
 from tg import expose, validate, require, request, redirect, config, flash
 from tg.i18n import ugettext as _
-from tg.decorators import without_trailing_slash
+from tg.decorators import with_trailing_slash, without_trailing_slash
 from repoze.what.predicates import has_permission
 from webob.exc import HTTPNotFound, HTTPForbidden
 from sqlalchemy.sql.expression import desc, or_, and_, between
@@ -197,6 +197,7 @@ class FlightController(BaseController):
     def __get_flight_path(self, **kw):
         return get_flight_path(self.flight, **kw)
 
+    @with_trailing_slash
     @expose('skylines.templates.flights.view')
     def index(self):
         def add_flight_path(flight):
@@ -209,6 +210,7 @@ class FlightController(BaseController):
                     other_flights=other_flights,
                     phase_formatter=format_phase)
 
+    @without_trailing_slash
     @expose('skylines.templates.flights.map')
     def map(self):
         def add_flight_path(flight):
@@ -231,6 +233,7 @@ class FlightController(BaseController):
                      barogram_h=trace['barogram_h'], enl=trace['enl'], contests=trace['contests'],
                      sfid=self.flight.id)
 
+    @without_trailing_slash
     @expose('skylines.templates.generic.form')
     def change_pilot(self):
         if not self.flight.is_writable():
@@ -242,6 +245,7 @@ class FlightController(BaseController):
                     form=select_pilot_form,
                     values=self.flight)
 
+    @without_trailing_slash
     @expose()
     @validate(form=select_pilot_form, error_handler=change_pilot)
     def select_pilot(self, pilot, co_pilot, **kwargs):
@@ -258,6 +262,7 @@ class FlightController(BaseController):
 
         redirect('.')
 
+    @without_trailing_slash
     @expose('skylines.templates.generic.form')
     def change_aircraft(self):
         if not self.flight.is_writable():
@@ -281,6 +286,7 @@ class FlightController(BaseController):
                     values=dict(model=model_id,
                                 registration=registration))
 
+    @without_trailing_slash
     @expose()
     @validate(form=select_aircraft_form, error_handler=change_aircraft)
     def select_aircraft(self, model, registration, **kwargs):
@@ -299,6 +305,7 @@ class FlightController(BaseController):
 
         redirect('.')
 
+    @without_trailing_slash
     @expose()
     @require(has_permission('upload'))
     def analysis(self):
@@ -309,6 +316,7 @@ class FlightController(BaseController):
 
         return redirect('.')
 
+    @without_trailing_slash
     @expose('skylines.templates.generic.confirm')
     def delete(self, yes=False):
         if not self.flight.is_writable():
@@ -325,6 +333,7 @@ class FlightController(BaseController):
                         question='Are you sure you want to delete this flight?',
                         action='', cancel='.')
 
+    @without_trailing_slash
     @expose()
     def add_comment(self, text):
         if request.identity is None:
@@ -440,15 +449,18 @@ class FlightsController(BaseController):
         controller = FlightController(flights)
         return controller, remainder
 
+    @with_trailing_slash
     @expose()
     def index(self, **kw):
         redirect('today')
 
+    @without_trailing_slash
     @expose('skylines.templates.flights.list')
     @expose('json')
     def all(self, **kw):
         return self.__do_list('all', kw)
 
+    @without_trailing_slash
     @expose('skylines.templates.flights.list')
     @expose('json')
     def today(self, **kw):
@@ -461,6 +473,7 @@ class FlightsController(BaseController):
 
         return self.date(date, today = True, **kw)
 
+    @without_trailing_slash
     @expose('skylines.templates.flights.list')
     @expose('json')
     def date(self, date, **kw):
@@ -490,20 +503,23 @@ class FlightsController(BaseController):
         else:
             return self.__do_list('date', kw, date=date, columns=columns)
 
+    @without_trailing_slash
     @expose()
     def my(self, **kw):
         if not request.identity:
             raise HTTPNotFound
 
-        redirect('/flights/pilot/' + str(request.identity['user'].user_id))
+        redirect('pilot/' + str(request.identity['user'].user_id))
 
+    @without_trailing_slash
     @expose()
     def my_club(self, **kw):
         if not request.identity:
             raise HTTPNotFound
 
-        redirect('/flights/club/' + str(request.identity['user'].club.id))
+        redirect('club/' + str(request.identity['user'].club.id))
 
+    @without_trailing_slash
     @expose('skylines.templates.flights.list')
     @expose('json')
     def unassigned(self, **kw):
@@ -596,6 +612,7 @@ class FlightsController(BaseController):
     def multi(self, ids):
         return redirect('/flights/' + ids + '/')
 
+    @without_trailing_slash
     @expose()
     @require(has_permission('manage'))
     def analysis(self):
@@ -605,8 +622,9 @@ class FlightsController(BaseController):
             analyse_flight(flight)
             DBSession.flush()
 
-        return redirect('/flights/')
+        return redirect('.')
 
+    @without_trailing_slash
     @expose()
     @require(has_permission('manage'))
     def igc_headers(self):
@@ -622,6 +640,6 @@ class FlightsController(BaseController):
 
         DBSession.flush()
 
-        return redirect('/flights/')
+        return redirect('.')
 
     upload = UploadController()
