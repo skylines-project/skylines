@@ -2,7 +2,7 @@
 
 from datetime import datetime, timedelta
 from math import log
-from tg import expose, request
+from tg import expose, request, cache
 from webob.exc import HTTPNotFound
 from sqlalchemy import func, over
 from sqlalchemy.sql.expression import and_, desc, cast
@@ -153,10 +153,16 @@ class TrackingController(BaseController):
                 .filter(subq.c.rank == 1) \
                 .order_by(desc(TrackingFix.time))
 
+        na_cache = cache.get_cache('tracking.nearest_airport', expire=60 * 60)
+
         tracks = []
         for track in query.all():
-            airport = Airport.by_location(track.location, None)
-            distance = airport.distance(track.location)
+            def get_nearest_airport():
+                airport = Airport.by_location(track.location, None)
+                distance = airport.distance(track.location)
+                return airport, distance
+
+            airport, distance = na_cache.get(key=track.id, createfunc=get_nearest_airport)
             tracks.append([track, airport, distance])
 
         return dict(tracks=tracks)
