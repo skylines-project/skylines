@@ -69,13 +69,13 @@
   <py:def function="render_flight_comment_notification_text(notification)">
     <strong>${notification.sender}</strong> commented on your
     <strong>${h.format_distance(notification.flight.olc_classic_distance)}</strong> flight on the
-    <strong>${h.format_date(notification.flight.takeoff_time)}</strong>.
+    <strong>${h.format_date(notification.flight.date_local)}</strong>.
   </py:def>
 
   <py:def function="render_flight_notification_text(notification)">
     <strong>${notification.sender}</strong> uploaded a new
     <strong>${h.format_distance(notification.flight.olc_classic_distance)}</strong> flight on the
-    <strong>${h.format_date(notification.flight.takeoff_time)}</strong>.
+    <strong>${h.format_date(notification.flight.date_local)}</strong>.
   </py:def>
 
   <py:def function="render_follower_notification_text(notification)">

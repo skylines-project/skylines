@@ -7,7 +7,7 @@ from sqlalchemy.sql.expression import and_
 from skylines import files
 from tg import config
 from skylines.model.geo import Location
-from skylines.model import DBSession, Airport, Trace, FlightPhase
+from skylines.model import DBSession, Airport, Trace, FlightPhase, TimeZone
 import logging
 
 log = logging.getLogger(__name__)
@@ -148,11 +148,24 @@ def save_contests(root, flight):
         save_contest(contest_name, traces, flight)
 
 
+def get_takeoff_date(flight):
+    if flight.takeoff_location is None:
+        return flight.takeoff_time
+
+    timezone = TimeZone.by_location(flight.takeoff_location)
+    if timezone is None:
+        return flight.takeoff_time
+
+    return timezone.fromutc(flight.takeoff_time).date()
+
+
 def save_takeoff(event, flight):
     flight.takeoff_time = import_datetime_attribute(event, 'time')
     flight.takeoff_location = read_location(event)
     if flight.takeoff_location is not None:
         flight.takeoff_airport = Airport.by_location(flight.takeoff_location)
+
+    flight.date_local = get_takeoff_date(flight)
 
 
 def save_landing(event, flight):

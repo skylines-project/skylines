@@ -35,7 +35,7 @@ def format_timedelta(delta):
 
 def format_flight_title(flight):
     title = format_distance(flight.olc_classic_distance)
-    title = title + ' on ' + format_date(flight.takeoff_time)
+    title = title + ' on ' + format_date(flight.date_local)
 
     tagline = ''
     if flight.pilot:
