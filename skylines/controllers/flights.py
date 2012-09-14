@@ -12,6 +12,7 @@ from webob.exc import HTTPNotFound, HTTPForbidden
 from sqlalchemy.sql.expression import desc, or_, and_, between
 from sqlalchemy import func
 from sqlalchemy.orm import joinedload, subqueryload, contains_eager
+from sqlalchemy.orm.util import aliased
 from tw.forms.fields import TextField
 from sprox.formbase import EditableForm
 from sprox.widgets import PropertySingleSelectField
@@ -357,14 +358,23 @@ class FlightController(BaseController):
 class FlightsController(BaseController):
     def __do_list(self, tab, kw, date=None, pilot=None, club=None, airport=None, \
                   pinned=None, filter=None, columns=None):
+        pilot_alias = aliased(User, name='pilot')
+        owner_alias = aliased(User, name='owner')
+
         flights = DBSession.query(Flight) \
             .outerjoin(Flight.igc_file) \
             .options(contains_eager(Flight.igc_file)) \
-            .options(joinedload(Flight.pilot)) \
+            .outerjoin(owner_alias, IGCFile.owner) \
+            .options(contains_eager(Flight.igc_file, IGCFile.owner, alias=owner_alias)) \
+            .outerjoin(pilot_alias, Flight.pilot) \
+            .options(contains_eager(Flight.pilot, alias=pilot_alias)) \
             .options(joinedload(Flight.co_pilot)) \
-            .options(joinedload(Flight.club)) \
-            .options(joinedload(Flight.takeoff_airport)) \
-            .options(joinedload(Flight.model)) \
+            .outerjoin(Flight.club) \
+            .options(contains_eager(Flight.club)) \
+            .outerjoin(Flight.takeoff_airport) \
+            .options(contains_eager(Flight.takeoff_airport)) \
+            .outerjoin(Flight.model) \
+            .options(contains_eager(Flight.model)) \
             .options(subqueryload(Flight.comments))
 
         if date:
@@ -390,10 +400,10 @@ class FlightsController(BaseController):
                 columns = {
                     0: 'takeoff_time',
                     1: 'olc_plus_score',
-                    2: 'display_name',
+                    2: 'pilot.display_name',
                     3: 'olc_classic_distance',
                     4: 'airports.name',
-                    5: 'flights.club_id',
+                    5: 'clubs.name',
                     6: 'models.name',
                     7: 'takeoff_time',
                     8: 'id',
@@ -493,10 +503,10 @@ class FlightsController(BaseController):
 
         columns = {
             0: 'olc_plus_score',
-            1: 'display_name',
+            1: 'pilot.display_name',
             2: 'olc_classic_distance',
             3: 'airports.name',
-            4: 'flights.club_id',
+            4: 'clubs.name',
             5: 'models.name',
             6: 'takeoff_time',
             7: 'id',
@@ -543,7 +553,7 @@ class FlightsController(BaseController):
         columns = {
             0: 'takeoff_time',
             1: 'olc_plus_score',
-            2: 'display_name',
+            2: 'pilot.display_name',
             3: 'olc_classic_distance',
             4: 'airports.name',
             5: 'models.name',
@@ -562,7 +572,7 @@ class FlightsController(BaseController):
         columns = {
             0: 'takeoff_time',
             1: 'olc_plus_score',
-            2: 'display_name',
+            2: 'pilot.display_name',
             3: 'olc_classic_distance',
             4: 'airports.name',
             5: 'models.name',
@@ -581,9 +591,9 @@ class FlightsController(BaseController):
         columns = {
             0: 'takeoff_time',
             1: 'olc_plus_score',
-            2: 'display_name',
+            2: 'pilot.display_name',
             3: 'olc_classic_distance',
-            4: 'flights.club_id',
+            4: 'clubs.name',
             5: 'models.name',
             6: 'takeoff_time',
             7: 'id',
