@@ -37,10 +37,10 @@ from skylines.lib.units import format_distance, format_speed
   <table py:def="render_details_table(flight)" class="table" itemscope="" itemtype="http://schema.org/SportsEvent">
     <meta itemprop="url" content="/flights/${flight.id}" />
     <tbody>
-      <tr py:if="flight.takeoff_time">
+      <tr py:if="flight.date_local">
         <th>Date</th>
         <td>
-          <span py:content="h.format_date(flight.takeoff_time)">
+          <span py:content="h.format_date(flight.date_local)">
             2012-05-21
           </span>
           <a href="#" class="btn btn-mini pull-right share">

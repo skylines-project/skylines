@@ -27,7 +27,7 @@ from sets import Set
     <tbody>
       <tr py:for="flight in flights">
         <td py:if="'date' not in omitted_columns">
-          <span py:if="flight.takeoff_time" title="${flight.takeoff_time.strftime('%d.%m.%Y')}" py:content="h.format_date(flight.takeoff_time)">
+          <span py:if="flight.date_local" title="${flight.date_local.strftime('%d.%m.%Y')}" py:content="h.format_date(flight.date_local)">
             2012-05-21
           </span>
         </td>
