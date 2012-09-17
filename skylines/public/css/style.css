@@ -139,6 +139,27 @@ table .show {
   margin-bottom: inherit;
 }
 
+.dropdown-menu form .btn {
+  margin: 0px;
+}
+
+.dropdown-menu form .actions {
+  margin-bottom: 15px;
+}
+
+.dropdown-menu form #remember {
+  margin-top: 5px;
+}
+
+.dropdown-menu form hr {
+  margin: 8px 0;
+}
+
+.dropdown-menu form a {
+  padding-left: 0px;
+  padding-right: 0px;
+}
+
 .alert-floating {
   position: relative;
   top: 50px;
