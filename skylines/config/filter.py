@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+
 class RootPrefixMiddleware(object):
     """This filter class is a kludge to allow the Skylines application
     to be mounted at the very root of a web server when using FastCGI.
@@ -28,6 +29,6 @@ class RootPrefixMiddleware(object):
 
         return self.app(environ, start_response)
 
+
 def make_root_prefix_middleware(app, global_conf):
     return RootPrefixMiddleware(app)
-
