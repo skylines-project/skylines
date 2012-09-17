@@ -48,6 +48,10 @@ from skylines.model.notification import count_unread_notifications
                   </div>
                 </div>
                 <div class="actions">
+                  <label class="checkbox">
+                    <input type="checkbox" id="remember" name="remember" value="31536000"/>
+                    Remember me
+                  </label>
                   <input type="submit" value="Login" class="btn btn-primary" />
                   <a href="${tg.url('/users/new')}" class="btn">Register</a>
                   <a href="${tg.url('/users/recover')}" class="btn">Recover Password</a>
