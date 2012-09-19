@@ -1,4 +1,5 @@
 from tg import expose, request, redirect
+from tg.decorators import with_trailing_slash, without_trailing_slash
 from webob.exc import HTTPForbidden, HTTPNotImplemented
 from sqlalchemy.orm import joinedload
 from sqlalchemy.sql.expression import desc
@@ -39,6 +40,7 @@ class NotificationsController(BaseController):
         controller = NotificationController(notification)
         return controller, remainder
 
+    @with_trailing_slash
     @expose('skylines.templates.notifications.list')
     def index(self):
         if not request.identity:
@@ -55,6 +57,7 @@ class NotificationsController(BaseController):
 
         return dict(notifications=query.all())
 
+    @without_trailing_slash
     @expose()
     def clear(self):
         if not request.identity:
@@ -62,4 +65,4 @@ class NotificationsController(BaseController):
 
         Notification.mark_all_read(request.identity['user'])
 
-        redirect('/notifications/')
+        redirect('.')
