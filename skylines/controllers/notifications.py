@@ -28,6 +28,16 @@ class NotificationController(BaseController):
 
 
 class NotificationsController(BaseController):
+    def __filter_query(self, query, args):
+        if 'type' in args:
+            query = query.filter(Notification.type == args['type'])
+        if 'sender' in args:
+            query = query.filter(Notification.sender_id == args['sender'])
+        if 'flight' in args:
+            query = query.filter(Notification.flight_id == args['flight'])
+
+        return query
+
     @expose()
     def lookup(self, id, *remainder):
         if not request.identity:
@@ -42,7 +52,7 @@ class NotificationsController(BaseController):
 
     @with_trailing_slash
     @expose('skylines.templates.notifications.list')
-    def index(self):
+    def index(self, **kwargs):
         if not request.identity:
             raise HTTPForbidden
 
@@ -55,14 +65,20 @@ class NotificationsController(BaseController):
                          .options(joinedload(Notification.flight_comment)) \
                          .order_by(desc(Notification.time_created))
 
-        return dict(notifications=query.all())
+        query = self.__filter_query(query, kwargs)
+
+        return dict(notifications=query.all(), params=kwargs)
 
     @without_trailing_slash
     @expose()
-    def clear(self):
+    def clear(self, **kwargs):
         if not request.identity:
             raise HTTPForbidden
 
-        Notification.mark_all_read(request.identity['user'])
+        def filter_func(query):
+            return self.__filter_query(query, kwargs)
+
+        Notification.mark_all_read(request.identity['user'],
+                                   filter_func=filter_func)
 
         redirect('.')

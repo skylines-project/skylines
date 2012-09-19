@@ -55,10 +55,14 @@ class Notification(DeclarativeBase):
         self.time_read = datetime.utcnow()
 
     @classmethod
-    def mark_all_read(cls, user):
-        DBSession.query(cls) \
-                 .filter(cls.recipient == user) \
-                 .update(dict(time_read=datetime.utcnow()))
+    def mark_all_read(cls, user, filter_func = None):
+        query = DBSession.query(cls) \
+                         .filter(cls.recipient == user)
+
+        if filter_func is not None:
+            query = filter_func(query)
+
+        query.update(dict(time_read=datetime.utcnow()))
 
 
 def count_unread_notifications(user):

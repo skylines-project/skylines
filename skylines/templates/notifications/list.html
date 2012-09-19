@@ -19,7 +19,7 @@ page = 'notifications'
   <body>
     <py:if test="len(notifications) != 0">
       ${render_notifications_table(notifications)}
-      <a href="/notifications/clear/" class="btn"><i class="icon-eye-open"></i> Mark all as read</a>
+      <a href="${tg.url('clear', params=params)}" class="btn"><i class="icon-eye-open"></i> Mark all as read</a>
     </py:if>
     <py:if test="len(notifications) == 0">
       You don't have any unread notifications.
