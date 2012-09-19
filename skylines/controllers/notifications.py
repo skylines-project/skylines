@@ -1,3 +1,6 @@
+from collections import defaultdict
+from operator import itemgetter
+
 from tg import expose, request, redirect
 from tg.decorators import with_trailing_slash, without_trailing_slash
 from webob.exc import HTTPForbidden, HTTPNotImplemented
@@ -67,7 +70,33 @@ class NotificationsController(BaseController):
 
         query = self.__filter_query(query, kwargs)
 
-        return dict(notifications=query.all(), params=kwargs)
+        notifications = []
+        pilot_flights = defaultdict(list)
+        for notification in query.all():
+            if (notification.type == Notification.NT_FLIGHT and
+                'type' not in kwargs):
+                pilot_flights[notification.sender_id].append(notification)
+            else:
+                notifications.append(dict(grouped=False,
+                                          type=notification.type,
+                                          time=notification.time_created,
+                                          notification=notification))
+
+        for flights in pilot_flights.itervalues():
+            if len(flights) == 1:
+                notifications.append(dict(grouped=False,
+                                          type=flights[0].type,
+                                          time=flights[0].time_created,
+                                          notification=flights[0]))
+            else:
+                notifications.append(dict(grouped=True,
+                                          type=flights[0].type,
+                                          time=flights[0].time_created,
+                                          notifications=flights))
+
+        notifications.sort(key=itemgetter('time'), reverse=True)
+
+        return dict(notifications=notifications, params=kwargs)
 
     @without_trailing_slash
     @expose()
