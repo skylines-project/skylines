@@ -361,7 +361,11 @@ class FlightsController(BaseController):
         pilot_alias = aliased(User, name='pilot')
         owner_alias = aliased(User, name='owner')
 
-        flights = DBSession.query(Flight) \
+        subq = DBSession.query(FlightComment.flight_id,
+                               func.count('*').label('count')) \
+               .group_by(FlightComment.flight_id).subquery()
+
+        flights = DBSession.query(Flight, subq.c.count) \
             .outerjoin(Flight.igc_file) \
             .options(contains_eager(Flight.igc_file)) \
             .outerjoin(owner_alias, IGCFile.owner) \
@@ -375,7 +379,7 @@ class FlightsController(BaseController):
             .options(contains_eager(Flight.takeoff_airport)) \
             .outerjoin(Flight.model) \
             .options(contains_eager(Flight.model)) \
-            .options(subqueryload(Flight.comments))
+            .outerjoin((subq, Flight.comments))
 
         if date:
             flights = flights.filter(Flight.date_local == date)
@@ -413,7 +417,7 @@ class FlightsController(BaseController):
             flights, response_dict = GetDatatableRecords(kw, flights, columns)
 
             aaData = []
-            for flight in flights:
+            for flight, num_comments in flights:
                 aaData.append(dict(takeoff_time = flight.takeoff_time.strftime('%H:%M'),
                                    landing_time = flight.landing_time.strftime('%H:%M'),
                                    date = flight.date_local.strftime('%d.%m.%Y'),
@@ -433,7 +437,7 @@ class FlightsController(BaseController):
                                    aircraft = (flight.model and flight.model.name) or (flight.igc_file.model and '[' + flight.igc_file.model + ']'),
                                    aircraft_reg = flight.registration or flight.igc_file.registration or "Unknown",
                                    flight_id = flight.id,
-                                   num_comments = len(flight.comments)))
+                                   num_comments = num_comments))
 
             return dict(response_dict, aaData = aaData)
 

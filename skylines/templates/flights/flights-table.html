@@ -25,7 +25,7 @@ from sets import Set
       </tr>
     </thead>
     <tbody>
-      <tr py:for="flight in flights">
+      <tr py:for="flight, num_comments in flights">
         <td py:if="'date' not in omitted_columns">
           <span py:if="flight.date_local" title="${flight.date_local.strftime('%d.%m.%Y')}" py:content="h.format_date(flight.date_local)">
             2012-05-21
@@ -82,7 +82,7 @@ from sets import Set
           <a href="/flights/${flight.id}/" class="btn btn-mini">Show</a>
           <a class="pin no-link" style="visibility: hidden" rel="tooltip-pin">${flight.id}</a>
         </td>
-        <td py:if="'num_comments' not in omitted_columns" py:with="num_comments=len(flight.comments)">
+        <td py:if="'num_comments' not in omitted_columns">
           <span py:content="num_comments" py:if="num_comments > 0" class="label" title="${num_comments} comments">5</span>
         </td>
       </tr>
