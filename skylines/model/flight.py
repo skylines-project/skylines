@@ -153,6 +153,12 @@ class Flight(DeclarativeBase):
     def phases(self):
         return [p for p in self._phases if not p.aggregate]
 
+    def delete_phases(self):
+        from skylines.model.flight_phase import FlightPhase
+        DBSession.query(FlightPhase) \
+            .filter(FlightPhase.flight == self) \
+            .delete()
+
     @property
     def circling_performance(self):
         from skylines.model import FlightPhase

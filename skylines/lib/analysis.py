@@ -183,11 +183,10 @@ def save_events(events, flight):
 
 
 def save_phases(root, flight):
+    flight.delete_phases()
 
     if 'phases' not in root or 'performance' not in root:
         return
-
-    phases = []
 
     PT_IDX = {'': None,
               'powered': FlightPhase.PT_POWERED,
@@ -217,11 +216,11 @@ def save_phases(root, flight):
         ph.glide_rate = phdata['glide_rate']
         ph.count = 1
 
-        phases.append(ph)
+        DBSession.add(ph)
 
     for statname in ["total", "left", "right", "mixed"]:
         phdata = root['performance']["circling_%s" % statname]
-        ph = FlightPhase()
+        ph = FlightPhase(flight=flight)
         ph.aggregate = True
         ph.phase_type = FlightPhase.PT_CIRCLING
         ph.fraction = round(phdata['fraction'] * 100)
@@ -231,10 +230,10 @@ def save_phases(root, flight):
         ph.vario = phdata['vario']
         ph.count = phdata['count']
 
-        phases.append(ph)
+        DBSession.add(ph)
 
     phdata = root['performance']['cruise_total']
-    ph = FlightPhase()
+    ph = FlightPhase(flight=flight)
     ph.aggregate = True
     ph.phase_type = FlightPhase.PT_CRUISE
     ph.circling_direction = FlightPhase.CD_TOTAL
@@ -247,9 +246,7 @@ def save_phases(root, flight):
     ph.glide_rate = phdata['glide_rate']
     ph.count = phdata['count']
 
-    phases.append(ph)
-
-    flight._phases = phases
+    DBSession.add(ph)
 
 def analyse_flight(flight):
     path = files.filename_to_path(flight.igc_file.filename)
