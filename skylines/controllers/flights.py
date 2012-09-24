@@ -459,7 +459,8 @@ class FlightsController(BaseController):
             id = remainder[0]
             remainder = remainder[1:]
 
-        flights = get_requested_record_list(Flight, id)
+        flights = get_requested_record_list(Flight, id,
+                                            joinedload=[Flight.igc_file])
         controller = FlightController(flights)
         return controller, remainder
 
@@ -632,7 +633,7 @@ class FlightsController(BaseController):
     def analysis(self):
         """Hidden method that restarts flight analysis."""
 
-        for flight in DBSession.query(Flight):
+        for flight in DBSession.query(Flight).options(joinedload(Flight.igc_file)):
             analyse_flight(flight)
             DBSession.flush()
 

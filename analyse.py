@@ -7,6 +7,7 @@ import sys, os
 import argparse
 import transaction
 from paste.deploy.loadwsgi import appconfig
+from sqlalchemy.orm import joinedload
 from skylines.config.environment import load_environment
 from skylines.model import DBSession, Flight
 from skylines.lib.analysis import analyse_flight
@@ -60,6 +61,7 @@ if args.force:
     DBSession.query(Flight).update({'needs_analysis': True})
 
 q = DBSession.query(Flight)
+q = q.options(joinedload(Flight.igc_file))
 if args.ids:
     apply_and_commit(do, q.filter(Flight.id.in_(args.ids)))
 else:
