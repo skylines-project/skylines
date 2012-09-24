@@ -39,4 +39,10 @@ def get_requested_record_list(model, ids):
     comma-separated list of ids, and returns a list of (unique)
     records."""
 
-    return map(lambda id: get_requested_record(model, id), _parse_id_list(ids))
+    ids = _parse_id_list(ids)
+    q = DBSession.query(model).filter(model.id.in_(ids))
+    result = list(q)
+    if len(result) != len(ids):
+        raise HTTPNotFound
+
+    return result
