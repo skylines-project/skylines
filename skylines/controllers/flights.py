@@ -634,18 +634,6 @@ class FlightsController(BaseController):
     @without_trailing_slash
     @expose()
     @require(has_permission('manage'))
-    def analysis(self):
-        """Hidden method that restarts flight analysis."""
-
-        for flight in DBSession.query(Flight).options(joinedload(Flight.igc_file)):
-            analyse_flight(flight)
-            DBSession.flush()
-
-        return redirect('.')
-
-    @without_trailing_slash
-    @expose()
-    @require(has_permission('manage'))
     def igc_headers(self):
         """Hidden method that parses all missing IGC headers."""
         igc_files = DBSession.query(IGCFile)
