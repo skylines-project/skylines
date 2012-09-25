@@ -36,7 +36,7 @@ log = logging.getLogger(__name__)
 
 class PilotSelectField(PropertySingleSelectField):
     def _my_update_params(self, d, nullable=False):
-        query = DBSession.query(User.user_id, User.display_name) \
+        query = DBSession.query(User.id, User.display_name) \
                 .filter(User.club_id == request.identity['user'].club_id) \
                 .order_by(User.display_name)
         options = [(None, 'None')] + query.all()
@@ -45,7 +45,7 @@ class PilotSelectField(PropertySingleSelectField):
 
     def validate(self, value, *args, **kw):
         if isinstance(value, User):
-            value = value.user_id
+            value = value.id
         return super(PilotSelectField, self).validate(value, *args, **kw)
 
 
@@ -528,7 +528,7 @@ class FlightsController(BaseController):
         if not request.identity:
             raise HTTPNotFound
 
-        redirect('pilot/' + str(request.identity['user'].user_id))
+        redirect('pilot/' + str(request.identity['user'].id))
 
     @without_trailing_slash
     @expose()

@@ -16,8 +16,8 @@ class IGCFile(DeclarativeBase):
     __tablename__ = 'igc_files'
 
     id = Column(Integer, autoincrement=True, primary_key=True)
-    owner_id = Column(Integer, ForeignKey('tg_user.user_id'), nullable=False)
-    owner = relation('User', primaryjoin=(owner_id == User.user_id))
+    owner_id = Column(Integer, ForeignKey('tg_user.id'), nullable=False)
+    owner = relation('User', primaryjoin=(owner_id == User.id))
     time_created = Column(DateTime, nullable=False, default=datetime.utcnow)
     filename = Column(String(), nullable=False)
     md5 = Column(String(32), nullable=False, unique=True)
@@ -37,8 +37,8 @@ class IGCFile(DeclarativeBase):
 
     def is_writable(self):
         return request.identity and \
-               (self.owner_id == request.identity['user'].user_id or
-                self.pilot_id == request.identity['user'].user_id or
+               (self.owner_id == request.identity['user'].id or
+                self.pilot_id == request.identity['user'].id or
                 'manage' in request.identity['permissions'])
 
     def may_delete(self):

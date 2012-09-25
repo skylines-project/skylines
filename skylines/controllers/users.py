@@ -73,7 +73,7 @@ class UnitPresetSelectField(PropertySingleSelectField):
 class SelectClubForm(EditableForm):
     __base_widget_type__ = BootstrapForm
     __model__ = User
-    __hide_fields__ = ['user_id']
+    __hide_fields__ = ['id']
     __limit_fields__ = ['club']
     club = ClubSelectField
 
@@ -115,7 +115,7 @@ new_user_form = NewUserForm(DBSession)
 class EditUserForm(EditableForm):
     __base_widget_type__ = BootstrapForm
     __model__ = User
-    __hide_fields__ = ['user_id']
+    __hide_fields__ = ['id']
     __limit_fields__ = ['email_address', 'display_name', 'club',
                         'tracking_delay', 'unit_preset',
                         'distance_unit', 'speed_unit',
@@ -283,8 +283,8 @@ class UserController(BaseController):
         # no club yet
         flights = DBSession.query(Flight).outerjoin(IGCFile)
         flights = flights.filter(and_(Flight.club_id == None,
-                                      or_(Flight.pilot_id == self.user.user_id,
-                                          IGCFile.owner_id == self.user.user_id)))
+                                      or_(Flight.pilot_id == self.user.id,
+                                          IGCFile.owner_id == self.user.id)))
         for flight in flights:
             flight.club_id = club
 
@@ -301,7 +301,7 @@ class UserController(BaseController):
         current_user = request.identity['user']
 
         club = Club(name=name)
-        club.owner_id = current_user.user_id
+        club.owner_id = current_user.id
         DBSession.add(club)
 
         self.user.club = club

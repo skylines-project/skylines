@@ -37,18 +37,18 @@ from tg import request
 # This is the association table for the many-to-many relationship between
 # groups and permissions. This is required by repoze.what.
 group_permission_table = Table('tg_group_permission', metadata,
-    Column('group_id', Integer, ForeignKey('tg_group.group_id',
+    Column('group_id', Integer, ForeignKey('tg_group.id',
         onupdate="CASCADE", ondelete="CASCADE"), primary_key=True),
-    Column('permission_id', Integer, ForeignKey('tg_permission.permission_id',
+    Column('permission_id', Integer, ForeignKey('tg_permission.id',
         onupdate="CASCADE", ondelete="CASCADE"), primary_key=True)
 )
 
 # This is the association table for the many-to-many relationship between
 # groups and members - this is, the memberships. It's required by repoze.what.
 user_group_table = Table('tg_user_group', metadata,
-    Column('user_id', Integer, ForeignKey('tg_user.user_id',
+    Column('user_id', Integer, ForeignKey('tg_user.id',
         onupdate="CASCADE", ondelete="CASCADE"), primary_key=True),
-    Column('group_id', Integer, ForeignKey('tg_group.group_id',
+    Column('group_id', Integer, ForeignKey('tg_group.id',
         onupdate="CASCADE", ondelete="CASCADE"), primary_key=True)
 )
 
@@ -68,7 +68,7 @@ class Group(DeclarativeBase):
 
     #{ Columns
 
-    group_id = Column(Integer, autoincrement=True, primary_key=True)
+    id = Column(Integer, autoincrement=True, primary_key=True)
 
     group_name = Column(Unicode(16), unique=True, nullable=False)
 
@@ -106,7 +106,7 @@ class User(DeclarativeBase):
 
     #{ Columns
 
-    user_id = Column(Integer, autoincrement=True, primary_key=True)
+    id = Column(Integer, autoincrement=True, primary_key=True)
 
     email_address = column_property(Column(Unicode(255),
                                            info={'rum': {'field': 'Email'}}),
@@ -243,7 +243,7 @@ class User(DeclarativeBase):
 
     def is_writable(self):
         return request.identity and \
-               (self.user_id == request.identity['user'].user_id or
+               (self.id == request.identity['user'].id or
                 (self.password is None and self.club_id == request.identity['user'].club_id) or
                 'manage' in request.identity['permissions'])
 
@@ -314,7 +314,7 @@ class Permission(DeclarativeBase):
 
     #{ Columns
 
-    permission_id = Column(Integer, autoincrement=True, primary_key=True)
+    id = Column(Integer, autoincrement=True, primary_key=True)
 
     permission_name = Column(Unicode(63), unique=True, nullable=False)
 

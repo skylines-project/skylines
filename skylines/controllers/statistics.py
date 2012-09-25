@@ -39,7 +39,7 @@ class StatisticsController(BaseController):
                                 func.sum(Flight.duration).label('duration'))
 
         if selected_pilot:
-            query = query.filter(Flight.pilot_id == selected_pilot.user_id)
+            query = query.filter(Flight.pilot_id == selected_pilot.id)
 
         if selected_club:
             query = query.filter(Flight.club_id == selected_club.id)

@@ -15,10 +15,10 @@ class Club(DeclarativeBase):
     id = Column(Integer, autoincrement=True, primary_key=True)
     name = Column(Unicode(255), unique=True, nullable=False)
 
-    owner_id = Column(Integer, ForeignKey('tg_user.user_id', use_alter=True,
-                                           name="tg_user.user_id"))
+    owner_id = Column(Integer, ForeignKey('tg_user.id', use_alter=True,
+                                           name="tg_user.id"))
 
-    owner = relation('User', primaryjoin=(owner_id == User.user_id))
+    owner = relation('User', primaryjoin=(owner_id == User.id))
 
     time_created = Column(DateTime, nullable=False, default=datetime.utcnow)
 

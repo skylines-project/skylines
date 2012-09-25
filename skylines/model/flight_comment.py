@@ -20,7 +20,7 @@ class FlightComment(DeclarativeBase):
                       backref=backref('comments',
                                       order_by=time_created))
 
-    user_id = Column(Integer, ForeignKey('tg_user.user_id', ondelete='SET NULL'))
-    user = relation('User', primaryjoin=(user_id == User.user_id))
+    user_id = Column(Integer, ForeignKey('tg_user.id', ondelete='SET NULL'))
+    user = relation('User', primaryjoin=(user_id == User.id))
 
     text = Column(Unicode, nullable=False)

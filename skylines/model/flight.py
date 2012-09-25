@@ -24,10 +24,10 @@ class Flight(DeclarativeBase):
     time_created = Column(DateTime, nullable=False, default=datetime.utcnow)
     time_modified = Column(DateTime, nullable=False, default=datetime.utcnow)
 
-    pilot_id = Column(Integer, ForeignKey('tg_user.user_id'), index=True)
-    pilot = relation('User', primaryjoin=(pilot_id == User.user_id))
-    co_pilot_id = Column(Integer, ForeignKey('tg_user.user_id'), index=True)
-    co_pilot = relation('User', primaryjoin=(co_pilot_id == User.user_id))
+    pilot_id = Column(Integer, ForeignKey('tg_user.id'), index=True)
+    pilot = relation('User', primaryjoin=(pilot_id == User.id))
+    co_pilot_id = Column(Integer, ForeignKey('tg_user.id'), index=True)
+    co_pilot = relation('User', primaryjoin=(co_pilot_id == User.id))
 
     club_id = Column(Integer, ForeignKey('clubs.id'), index=True)
 
@@ -115,13 +115,13 @@ class Flight(DeclarativeBase):
 
     def is_writable(self):
         return request.identity and \
-               (self.igc_file.owner_id == request.identity['user'].user_id or
-                self.pilot_id == request.identity['user'].user_id or
+               (self.igc_file.owner_id == request.identity['user'].id or
+                self.pilot_id == request.identity['user'].id or
                 'manage' in request.identity['permissions'])
 
     def may_delete(self):
         return request.identity and \
-               (self.igc_file.owner_id == request.identity['user'].user_id or
+               (self.igc_file.owner_id == request.identity['user'].id or
                'manage' in request.identity['permissions'])
 
     @classmethod

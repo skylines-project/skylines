@@ -46,10 +46,10 @@ my_club = request.identity['user'].club if request.identity else None
   </li>
 
   <li py:if="pilot" class="active">
-    <a href="/flights/pilot/${pilot.user_id}" py:content="pilot">Tobias Bieniek</a>
+    <a href="/flights/pilot/${pilot.id}" py:content="pilot">Tobias Bieniek</a>
   </li>
   <li py:if="my_pilot and (not pilot or my_pilot != pilot)">
-    <a href="/flights/pilot/${my_pilot.user_id}" py:content="my_pilot">Tobias Bieniek</a>
+    <a href="/flights/pilot/${my_pilot.id}" py:content="my_pilot">Tobias Bieniek</a>
   </li>
 
   <li py:if="request.identity" class="${(None, 'active')[defined('tab') and tab == 'unassigned']}">

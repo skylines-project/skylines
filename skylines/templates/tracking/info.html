@@ -41,8 +41,8 @@ title = 'Live Tracking'
     </p>
 
     <p>
-      <a href="/users/${user.user_id}/tracking_register" class="btn btn-mini">Generate new key</a>
-      <a href="/tracking/${user.user_id}" class="btn btn-mini">Your Live Tracks</a>
+      <a href="/users/${user.id}/tracking_register" class="btn btn-mini">Generate new key</a>
+      <a href="/tracking/${user.id}" class="btn btn-mini">Your Live Tracks</a>
     </p>
     </py:if>
     <py:if test="user is None">

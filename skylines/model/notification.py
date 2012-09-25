@@ -28,17 +28,17 @@ class Notification(DeclarativeBase):
 
     # The user that caused the notification (if any)
     sender_id = Column(Integer,
-                       ForeignKey('tg_user.user_id', ondelete='CASCADE'),
+                       ForeignKey('tg_user.id', ondelete='CASCADE'),
                        nullable=False)
 
-    sender = relation('User', primaryjoin=(sender_id == User.user_id))
+    sender = relation('User', primaryjoin=(sender_id == User.id))
 
     # The recipient of this notification
     recipient_id = Column(Integer,
-                          ForeignKey('tg_user.user_id', ondelete='CASCADE'),
+                          ForeignKey('tg_user.id', ondelete='CASCADE'),
                           nullable=False)
 
-    recipient = relation('User', primaryjoin=(recipient_id == User.user_id))
+    recipient = relation('User', primaryjoin=(recipient_id == User.id))
 
     # A flight if this notification is about a flight
     flight_id = Column(Integer, ForeignKey('flights.id', ondelete='CASCADE'))

@@ -17,7 +17,7 @@ class RankingController(BaseController):
                                func.sum(Flight.olc_plus_score).label('total')) \
                .group_by(Flight.pilot_id).subquery()
         result = DBSession.query(User, subq.c.count, subq.c.total) \
-                 .join((subq, subq.c.pilot_id == User.user_id))
+                 .join((subq, subq.c.pilot_id == User.id))
         result = result.order_by(desc('total'))
         result = result.limit(20)
         return dict(tab='pilots', result=result)

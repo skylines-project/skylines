@@ -25,9 +25,9 @@
     </thead>
     <tbody>
       <tr py:for="user in users" py:attrs="pilot_attrs">
-        <meta itemprop="url" content="/users/${user.user_id}" />
+        <meta itemprop="url" content="/users/${user.id}" />
         <td itemprop="name">
-          <a href="/users/${user.user_id}/" py:content="user">
+          <a href="/users/${user.id}/" py:content="user">
             Name
           </a>
         </td>
@@ -38,9 +38,9 @@
           </a>
         </td>
         <td>
-          <a href="/flights/pilot/${user.user_id}" class="btn btn-mini"><i class="icon-plane"></i> Flights</a>
-          <a href="/statistics/pilot/${user.user_id}" class="btn btn-mini"><i class="icon-tasks"></i> Statistics</a>
-          <a py:if="user.is_writable()" href="/users/${user.user_id}/edit" class="btn btn-mini">Edit</a>
+          <a href="/flights/pilot/${user.id}" class="btn btn-mini"><i class="icon-plane"></i> Flights</a>
+          <a href="/statistics/pilot/${user.id}" class="btn btn-mini"><i class="icon-tasks"></i> Statistics</a>
+          <a py:if="user.is_writable()" href="/users/${user.id}/edit" class="btn btn-mini">Edit</a>
         </td>
       </tr>
     </tbody>

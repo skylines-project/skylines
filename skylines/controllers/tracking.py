@@ -131,7 +131,7 @@ class TrackController(BaseController):
 
         return  dict(encoded=trace['encoded'], num_levels=trace['fixes']['numLevels'],
                      barogram_t=trace['barogram_t'], barogram_h=trace['barogram_h'],
-                     enl=trace['enl'], sfid=self.pilot.user_id)
+                     enl=trace['enl'], sfid=self.pilot.id)
 
 
 class TrackingController(BaseController):

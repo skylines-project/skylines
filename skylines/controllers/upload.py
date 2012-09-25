@@ -22,7 +22,7 @@ class PilotSelectField(SingleSelectField):
                 .filter(User.club_id == request.identity['user'].club_id) \
                 .order_by(User.display_name)
         options = [(None, '[unspecified]')] + \
-                  [(user.user_id, user) for user in users]
+                  [(user.id, user) for user in users]
         d['options'] = options
         return SingleSelectField.update_params(self, d)
 
@@ -94,7 +94,7 @@ class UploadController(BaseController):
     def index(self, **kw):
         return dict(page='upload', title=_("Upload Flight"),
                     form=upload_form,
-                    values=dict(pilot=request.identity['user'].user_id))
+                    values=dict(pilot=request.identity['user'].id))
 
     @expose('skylines.templates.upload.result')
     @validate(upload_form, error_handler=index)
@@ -106,7 +106,7 @@ class UploadController(BaseController):
         if pilot:
             pilot = DBSession.query(User).get(int(pilot))
             if pilot:
-                pilot_id = pilot.user_id
+                pilot_id = pilot.id
                 club_id = pilot.club_id
 
         flights = []

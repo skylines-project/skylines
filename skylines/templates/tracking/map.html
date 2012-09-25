@@ -3,7 +3,7 @@ page = 'tracking'
 title = 'Live Tracking'
 
 tagline = 'of'
-tagline_link = '/users/{}/'.format(pilot.user_id)
+tagline_link = '/users/{}/'.format(pilot.id)
 tagline_link_text = pilot
 ?>
 
@@ -44,7 +44,7 @@ tagline_link_text = pilot
       /* ]]> */
 
       <py:if test="trace">
-        addFlight(${pilot.user_id},
+        addFlight(${pilot.id},
           ${h.json.dumps(trace.encoded.points)},
           ${h.json.dumps(trace.encoded.levels)},
           ${trace.fixes.numLevels},
@@ -57,7 +57,7 @@ tagline_link_text = pilot
 
       <py:if test="defined('other_pilots')">
         <py:for each="pilot, trace in other_pilots">
-          addFlight(${pilot.user_id},
+          addFlight(${pilot.id},
             ${h.json.dumps(trace.encoded.points)},
             ${h.json.dumps(trace.encoded.levels)},
             ${trace.fixes.numLevels},

@@ -73,7 +73,7 @@ def add_locations(locations):
   </head>
 
   <body itemscope="" itemtype="http://schema.org/Person">
-    <meta itemprop="url" content="/users/${user.user_id}" />
+    <meta itemprop="url" content="/users/${user.id}" />
     <div class="row">
       <div class="well span8 offset2">
         <table class="right">
@@ -127,7 +127,7 @@ def add_locations(locations):
         </table>
 
         <p style="margin-top: 10px">
-          <a py:if="user.is_writable()" href="/users/${user.user_id}/edit" class="btn">Edit</a>
+          <a py:if="user.is_writable()" href="/users/${user.id}/edit" class="btn">Edit</a>
           <a py:if="user.is_writable()" href="change_password"
              class="btn">Change Password</a>
           <a py:if="request.identity and 'manage' in
@@ -138,16 +138,16 @@ def add_locations(locations):
                 py:with="current=request.identity['user']" py:strip="True">
             <span py:if="current!=user" py:with="follows=current.follows(user)" py:strip="True">
               <a py:if="follows"
-                 href="/users/${user.user_id}/unfollow"
+                 href="/users/${user.id}/unfollow"
                  class="btn">Unfollow</a>
               <a py:if="not follows"
-                 href="/users/${user.user_id}/follow"
+                 href="/users/${user.id}/follow"
                  class="btn">Follow</a>
             </span>
           </span>
 
-          <a href="/flights/pilot/${user.user_id}/" class="btn"><i class="icon-plane"></i> Flights</a>
-          <a href="/statistics/pilot/${user.user_id}/" class="btn"><i class="icon-tasks"></i> Statistics</a>
+          <a href="/flights/pilot/${user.id}/" class="btn"><i class="icon-plane"></i> Flights</a>
+          <a href="/statistics/pilot/${user.id}/" class="btn"><i class="icon-tasks"></i> Statistics</a>
         </p>
       </div>
 

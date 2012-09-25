@@ -29,10 +29,10 @@ class TrackingFix(DeclarativeBase):
     engine_noise_level = Column(Integer)
 
     pilot_id = Column(Integer,
-                      ForeignKey('tg_user.user_id', use_alter=True,
-                                 name="tg_user.user_id"), nullable=False)
+                      ForeignKey('tg_user.id', use_alter=True,
+                                 name="tg_user.id"), nullable=False)
 
-    pilot = relation('User', primaryjoin=(pilot_id == User.user_id))
+    pilot = relation('User', primaryjoin=(pilot_id == User.id))
 
     ip = Column(INET)
 
