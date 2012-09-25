@@ -7,8 +7,9 @@ from sqlalchemy.orm import relation
 from sqlalchemy.sql.expression import desc, and_
 from sqlalchemy.types import Integer, DateTime, String, Unicode
 from skylines.lib.igc import read_igc_headers
+from skylines.model.base import DeclarativeBase
+from skylines.model.session import DBSession
 from skylines.model.auth import User
-from skylines.model import DeclarativeBase, DBSession
 from tg import config, request
 
 

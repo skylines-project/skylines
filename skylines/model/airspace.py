@@ -3,7 +3,7 @@
 from datetime import datetime
 from sqlalchemy import Column
 from sqlalchemy.types import Integer, String, DateTime
-from skylines.model import DeclarativeBase, DBSession
+from skylines.model.base import DeclarativeBase
 from geoalchemy.geometry import GeometryColumn, Polygon, GeometryDDL
 from geoalchemy.postgis import PGComparator
 

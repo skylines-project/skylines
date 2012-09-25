@@ -4,8 +4,8 @@ from datetime import datetime
 from sqlalchemy.orm import relation
 from sqlalchemy import Column, ForeignKey
 from sqlalchemy.types import Integer, Unicode, DateTime
+from skylines.model.base import DeclarativeBase
 from skylines.model.auth import User
-from skylines.model import DeclarativeBase
 from tg import request
 
 

@@ -2,7 +2,8 @@
 
 from sqlalchemy import Column
 from sqlalchemy.types import Integer, Unicode
-from skylines.model import DeclarativeBase
+from skylines.model.base import DeclarativeBase
+from skylines.model.session import DBSession
 
 
 class Model(DeclarativeBase):
@@ -30,5 +31,4 @@ class Model(DeclarativeBase):
 
     @classmethod
     def by_name(cls, _name):
-        from skylines.model import DBSession
         return DBSession.query(cls).filter_by(name=_name).first()

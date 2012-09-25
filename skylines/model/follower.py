@@ -4,7 +4,8 @@ from datetime import datetime
 from sqlalchemy import ForeignKey, Column
 from sqlalchemy.types import Integer, DateTime
 from sqlalchemy.orm import relation
-from skylines.model import DBSession, DeclarativeBase
+from skylines.model.base import DeclarativeBase
+from skylines.model.session import DBSession
 from skylines.model.auth import User
 
 class Follower(DeclarativeBase):

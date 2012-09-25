@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import re
 from sqlalchemy import func
-from skylines.model import DBSession
+from skylines.model.session import DBSession
 from skylines.lib.sql import extract_field, cast
 
 wkt_re = re.compile(r'POINT\(([\+\-\d.]+) ([\+\-\d.]+)\)')

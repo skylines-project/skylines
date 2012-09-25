@@ -2,7 +2,7 @@ from datetime import datetime
 from sqlalchemy import ForeignKey, Column
 from sqlalchemy.orm import relation, backref
 from sqlalchemy.types import Unicode, Integer, DateTime
-from skylines.model import DeclarativeBase
+from skylines.model.base import DeclarativeBase
 from skylines.model.auth import User
 from skylines.model.flight import Flight
 

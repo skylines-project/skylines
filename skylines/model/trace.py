@@ -10,7 +10,8 @@ from geoalchemy import WKTSpatialElement
 from geoalchemy.geometry import GeometryColumn, LineString, GeometryDDL
 from geoalchemy.postgis import PGComparator
 
-from skylines.model import DeclarativeBase, DBSession
+from skylines.model.base import DeclarativeBase
+from skylines.model.session import DBSession
 from skylines.model.flight import Flight
 from skylines.model.geo import Location
 

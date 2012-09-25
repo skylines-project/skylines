@@ -7,8 +7,9 @@ from sqlalchemy.types import Integer, Float, DateTime
 from sqlalchemy.dialects.postgresql import INET
 from geoalchemy.geometry import GeometryColumn, Point, GeometryDDL
 from geoalchemy.postgis import PGComparator
+from skylines.model.base import DeclarativeBase
+from skylines.model.session import DBSession
 from skylines.model.auth import User
-from skylines.model import DeclarativeBase, DBSession
 from skylines.model.geo import Location
 
 

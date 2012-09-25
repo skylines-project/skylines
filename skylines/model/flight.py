@@ -6,11 +6,12 @@ from sqlalchemy import ForeignKey, Column, func
 from sqlalchemy.types import Unicode, Integer, DateTime, Date, Boolean
 from sqlalchemy.ext.hybrid import hybrid_property
 from sqlalchemy.sql.expression import desc
-from skylines.model.auth import User
-from skylines.model import DeclarativeBase, DBSession
 from tg import config, request
 from geoalchemy.geometry import GeometryColumn, Point, GeometryDDL
 from geoalchemy.postgis import PGComparator
+from skylines.model.base import DeclarativeBase
+from skylines.model.session import DBSession
+from skylines.model.auth import User
 from skylines.model.geo import Location
 from skylines.model.igcfile import IGCFile
 from skylines.model.model import Model
@@ -161,7 +162,7 @@ class Flight(DeclarativeBase):
 
     @property
     def circling_performance(self):
-        from skylines.model import FlightPhase
+        from skylines.model.flight_phase import FlightPhase
         stats = [p for p in self._phases
                  if (p.aggregate
                      and p.phase_type == FlightPhase.PT_CIRCLING
@@ -176,7 +177,7 @@ class Flight(DeclarativeBase):
 
     @property
     def cruise_performance(self):
-        from skylines.model import FlightPhase
+        from skylines.model.flight_phase import FlightPhase
         return [p for p in self._phases
                 if p.aggregate and p.phase_type == FlightPhase.PT_CRUISE]
 

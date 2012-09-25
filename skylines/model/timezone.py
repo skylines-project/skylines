@@ -1,6 +1,7 @@
 from sqlalchemy import Column
 from sqlalchemy.types import Integer, String
-from skylines.model import DeclarativeBase, DBSession
+from skylines.model.base import DeclarativeBase
+from skylines.model.session import DBSession
 from geoalchemy.geometry import GeometryColumn, GeometryDDL, MultiPolygon
 from geoalchemy.postgis import PGComparator
 from geoalchemy.functions import functions

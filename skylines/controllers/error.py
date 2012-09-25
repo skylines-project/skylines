@@ -3,7 +3,7 @@
 
 from tg import request, expose
 from webob.exc import HTTPNotFound
-from skylines.model import DBSession
+from skylines.model.session import DBSession
 
 __all__ = ['ErrorController']
 

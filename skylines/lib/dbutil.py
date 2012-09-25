@@ -4,7 +4,7 @@
 
 from sqlalchemy import orm
 from webob.exc import HTTPNotFound
-from skylines.model import DBSession
+from skylines.model.session import DBSession
 
 
 def _patch_query(q, joinedload=()):

@@ -26,7 +26,8 @@ from sqlalchemy.types import Unicode, Integer, BigInteger, SmallInteger, DateTim
 from sqlalchemy.orm import relation, synonym, column_property
 from sqlalchemy.dialects.postgresql import INET
 
-from skylines.model import DeclarativeBase, metadata, DBSession
+from skylines.model.base import DeclarativeBase, metadata
+from skylines.model.session import DBSession
 from skylines.lib.sql import LowerCaseComparator
 from skylines.lib import units
 from tg import request

@@ -3,11 +3,12 @@
 from datetime import datetime
 from sqlalchemy import Column, func
 from sqlalchemy.types import Integer, Float, String, DateTime
-from skylines.model import DeclarativeBase, DBSession
 from tg import config, request
 from geoalchemy.geometry import GeometryColumn, Point, GeometryDDL
 from geoalchemy.postgis import PGComparator
 from geoalchemy.functions import functions
+from skylines.model.base import DeclarativeBase
+from skylines.model.session import DBSession
 from skylines.model.geo import Location
 from skylines.lib.sql import cast
 
