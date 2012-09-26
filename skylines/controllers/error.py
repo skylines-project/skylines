@@ -1,11 +1,14 @@
 # -*- coding: utf-8 -*-
 """Error controller"""
 
+import re
 from tg import request, expose
 from webob.exc import HTTPNotFound
 from skylines.model.session import DBSession
 
 __all__ = ['ErrorController']
+
+re_message = re.compile(r'</h1>(.+)</body>', re.DOTALL)
 
 
 class ErrorController(object):
@@ -33,8 +36,13 @@ class ErrorController(object):
         if resp is None:
             raise HTTPNotFound
 
-        default_message = ("<p>We're sorry but we weren't able to process "
-                           " this request.</p>")
+        match = re.search(re_message, resp.body)
+        if match is not None:
+            default_message = '<p>{}</p>'.format(match.group(1).strip())
+        else:
+            default_message = ("<p>We're sorry but we weren't able to process "
+                               " this request.</p>")
+
         values = dict(prefix=request.environ.get('SCRIPT_NAME', ''),
                       code=request.params.get('code', resp.status_int),
                       message=request.params.get('message', default_message))
