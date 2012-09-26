@@ -14,6 +14,7 @@ from skylines.form import BootstrapForm, MultiFileField
 from zipfile import ZipFile
 from skylines.model.igcfile import IGCFile
 from skylines.model.notification import create_flight_notifications
+from skylines.lib.string import import_ascii
 
 
 class PilotSelectField(SingleSelectField):
@@ -57,7 +58,7 @@ def IterateFiles(name, f):
         # if f is a ZipFile
         for info in z.infolist():
             if info.file_size > 0:
-                yield info.filename, z.open(info.filename, 'r')
+                yield import_ascii(info.filename), z.open(info.filename, 'r')
 
 
 def IterateUploadFiles(upload):
