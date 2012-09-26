@@ -123,7 +123,7 @@ page = 'flights'
           <tr py:for="comment in flight.comments">
             <td>
               <span py:if="comment.user" style="float:left">
-                <a href="/users/${comment.id}" py:content="comment.user">Turbo</a>:&nbsp;
+                <a href="/users/${comment.user.id}" py:content="comment.user">Turbo</a>:&nbsp;
               </span>
               <span py:replace="Markup(h.markdown.convert(comment.text))">Nice flight!!</span>
             </td>
