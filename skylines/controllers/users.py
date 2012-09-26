@@ -25,6 +25,7 @@ from repoze.what.predicates import not_anonymous, has_permission
 from skylines.model.geo import Location
 from datetime import date, timedelta
 from skylines.model.notification import create_follower_notification
+from skylines.lib.validators import UniqueValueUnless
 
 
 class ClubSelectField(PropertySingleSelectField):
@@ -112,6 +113,13 @@ class NewUserForm(AddRecordForm):
 new_user_form = NewUserForm(DBSession)
 
 
+def filter_user_id(model):
+    if 'UserController.user.id' in request.environ:
+        return model.id == request.environ['UserController.user.id']
+
+    return None
+
+
 class EditUserForm(EditableForm):
     __base_widget_type__ = BootstrapForm
     __model__ = User
@@ -122,7 +130,10 @@ class EditUserForm(EditableForm):
                         'lift_unit', 'altitude_unit',
                         'eye_candy']
     __base_widget_args__ = dict(action='save')
-    email_address = Field(TextField, Email(not_empty=True))
+    email_address = Field(TextField, All(Email(not_empty=True),
+                                         UniqueValueUnless(filter_user_id,
+                                                           DBSession,
+                                                           __model__, 'email_address')))
     display_name = Field(TextField, NotEmpty)
     club = ClubSelectField
     tracking_delay = DelaySelectField
@@ -191,6 +202,7 @@ The SkyLines Team
 class UserController(BaseController):
     def __init__(self, user):
         self.user = user
+        request.environ['UserController.user.id'] = self.user.id
 
     @expose('skylines.templates.users.view')
     def index(self):
