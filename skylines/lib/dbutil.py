@@ -2,6 +2,7 @@
 
 """Database helpers used in SkyLines."""
 
+from tg.i18n import ugettext as _
 from sqlalchemy import orm
 from webob.exc import HTTPNotFound
 from skylines.model.session import DBSession
@@ -21,13 +22,16 @@ def get_requested_record(model, id, **kw):
     try:
         id = int(id)
     except ValueError:
-        raise HTTPNotFound
+        raise HTTPNotFound(detail=_('Sorry, the record id ({}) that you ' \
+                                    'requested is not a valid id.').format(id))
 
     q = DBSession.query(model)
     q = _patch_query(q, **kw)
     record = q.get(id)
     if record is None:
-        raise HTTPNotFound
+        raise HTTPNotFound(detail=_('Sorry, there is no such record ({}) in ' \
+                                    'our database.').format(id))
+
     return record
 
 
@@ -37,7 +41,8 @@ def _parse_id_list(ids):
         try:
             id = int(id)
         except ValueError:
-            raise HTTPNotFound
+            raise HTTPNotFound(detail=_('Sorry, the record id ({}) that you ' \
+                                        'requested is not a valid id.').format(id))
         if id not in out:
             out.append(id)
     return out
@@ -53,6 +58,8 @@ def get_requested_record_list(model, ids, **kw):
     q = _patch_query(q, **kw)
     result = list(q)
     if len(result) != len(ids):
-        raise HTTPNotFound
+        raise HTTPNotFound(detail=_('Sorry, {} of the requested records ({}) ' \
+                                    'do not exist in our database.') \
+                                    .format(len(ids) - len(result), ids))
 
     return result
