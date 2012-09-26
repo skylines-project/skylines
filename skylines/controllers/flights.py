@@ -457,7 +457,7 @@ class FlightsController(BaseController):
                         flights = flights, flights_count = flights_count)
 
     @expose()
-    def lookup(self, id, *remainder):
+    def _lookup(self, id, *remainder):
         # Fallback for old URLs
         if id == 'id' and len(remainder) > 0:
             id = remainder[0]

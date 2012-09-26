@@ -107,7 +107,7 @@ class ClubsController(BaseController):
         return dict(page='settings', clubs=clubs)
 
     @expose()
-    def lookup(self, id, *remainder):
+    def _lookup(self, id, *remainder):
         # Fallback for old URLs
         if id == 'id' and len(remainder) > 0:
             id = remainder[0]

@@ -392,7 +392,7 @@ class UsersController(BaseController):
         return dict(page='settings', users=users)
 
     @expose()
-    def lookup(self, id, *remainder):
+    def _lookup(self, id, *remainder):
         # Fallback for old URLs
         if id == 'id' and len(remainder) > 0:
             id = remainder[0]

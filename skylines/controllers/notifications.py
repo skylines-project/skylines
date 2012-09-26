@@ -42,7 +42,7 @@ class NotificationsController(BaseController):
         return query
 
     @expose()
-    def lookup(self, id, *remainder):
+    def _lookup(self, id, *remainder):
         if not request.identity:
             raise HTTPForbidden
 
