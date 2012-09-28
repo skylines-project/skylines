@@ -38,7 +38,7 @@ page = 'flights'
 
   <script type="text/javascript">
     /* <![CDATA[ */
-    function initialize() {
+    $(function() {
       initOpenLayers("map_canvas");
       initFlightLayer();
 
@@ -89,7 +89,7 @@ page = 'flights'
       $.getScript("http://maps.google.com/maps/api/js?v=3.7&sensor=false&callback=addGoogleLayer");
       addBingLayers("${config.get('skylines.bing.api_key', 'null')}");
       addReliefLayer();
-    }
+    });
     /* ]]> */
   </script>
 
@@ -98,7 +98,7 @@ page = 'flights'
   </style>
 </head>
 
-<body onload="initialize();">
+<body>
   <div id="map_canvas" class="olFullscreen" style="position: absolute; top: 40px; bottom: 0; width:100%;"></div>
   <div id="barogram" style="position: absolute; bottom: 0; width:100%; height:100pt; background-color: white; opacity: 0.8;"></div>
 </body>

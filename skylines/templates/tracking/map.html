@@ -38,7 +38,7 @@ tagline_link_text = pilot
 
   <script type="text/javascript">
     /* <![CDATA[ */
-    function initialize() {
+    $(function() {
       initOpenLayers("map_canvas");
       initFlightLayer();
       /* ]]> */
@@ -90,7 +90,7 @@ tagline_link_text = pilot
         },
         15*1000 // update flight track every 15 seconds
       );
-    }
+    });
     /* ]]> */
   </script>
 
@@ -99,7 +99,7 @@ tagline_link_text = pilot
   </style>
 </head>
 
-  <body onload="initialize();">
+  <body>
     <div py:if="trace or (defined('other_pilots') and other_pilots)" py:strip="True">
       <div id="map_canvas" class="olFullscreen" style="position: absolute; top: 40px; bottom: 0; width:100%;"></div>
       <div id="barogram" style="position: absolute; bottom: 0; width:100%; height:100pt; background-color: white; opacity: 0.8;"></div>

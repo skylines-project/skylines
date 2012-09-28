@@ -39,7 +39,7 @@ page = 'flights'
   <script type="text/javascript" src="/js/g.raphael/g.line.js"></script>
   <script py:if="trace" type="text/javascript">
     /* <![CDATA[ */
-    function initialize() {
+    $(function() {
       initOpenLayers("map_canvas");
       initFlightLayer();
 
@@ -91,15 +91,15 @@ page = 'flights'
 
       $('#detailed-stats').on('shown', function () {
         $('html, body').animate({scrollTop: $("#detailed-stats").offset().top-100}, 200);
-      })
-    }
+      });
+    });
     /* ]]> */
   </script>
 
   <title>View Flight</title>
 </head>
 
-  <body onload="initialize();">
+  <body>
     <div class="row">
       <div class="span4">
         ${render_details_table(flight)}

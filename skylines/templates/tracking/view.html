@@ -39,7 +39,7 @@ tagline_link_text = pilot
   <script type="text/javascript" src="/js/g.raphael/g.line.js"></script>
   <script type="text/javascript">
     /* <![CDATA[ */
-    function initialize() {
+    $(function() {
       initOpenLayers("map_canvas");
       initFlightLayer();
       /* ]]> */
@@ -87,12 +87,12 @@ tagline_link_text = pilot
         },
         15*1000 // update flight track every 15 seconds
       );
-    }
+    });
     /* ]]> */
   </script>
 </head>
 
-  <body onload="initialize();">
+  <body>
     <div class="row">
       <div class="span4">
         <table class="table">
