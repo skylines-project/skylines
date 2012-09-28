@@ -19,7 +19,7 @@ embedded = ('embedded' in request.params)
       The question?
     </label>
     <div class="form-actions">
-      <input type="submit" name="yes" value="Yes" class="btn btn-primary"/>
+      <input type="submit" value="Yes" class="btn btn-primary"/>
       <a py:if="not embedded" href="${cancel}" class="btn">No</a>
       <a py:if="embedded" href="#" data-dismiss="modal" aria-hidden="true" class="btn">No</a>
     </div>

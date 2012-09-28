@@ -324,11 +324,11 @@ class FlightController(BaseController):
 
     @without_trailing_slash
     @expose('skylines.templates.generic.confirm')
-    def delete(self, yes=False, **kwargs):
+    def delete(self, **kwargs):
         if not self.flight.is_writable():
             raise HTTPForbidden
 
-        if yes:
+        if request.method == 'POST':
             files.delete_file(self.flight.igc_file.filename)
             DBSession.delete(self.flight)
             DBSession.delete(self.flight.igc_file)
