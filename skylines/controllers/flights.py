@@ -200,7 +200,7 @@ class FlightController(BaseController):
 
     @with_trailing_slash
     @expose('skylines.templates.flights.view')
-    def index(self):
+    def index(self, **kwargs):
         def add_flight_path(flight):
             trace = get_flight_path(flight)
             return (flight, trace)
@@ -213,7 +213,7 @@ class FlightController(BaseController):
 
     @without_trailing_slash
     @expose('skylines.templates.flights.map')
-    def map(self):
+    def map(self, **kwargs):
         def add_flight_path(flight):
             trace = get_flight_path(flight, threshold=0.0001, max_points=10000)
             return (flight, trace)
@@ -228,7 +228,7 @@ class FlightController(BaseController):
                     other_flights=other_flights)
 
     @expose('json')
-    def json(self):
+    def json(self, **kwargs):
         trace = self.__get_flight_path(threshold=0.0001, max_points=10000)
 
         if not trace:
@@ -241,7 +241,7 @@ class FlightController(BaseController):
 
     @without_trailing_slash
     @expose('skylines.templates.generic.form')
-    def change_pilot(self):
+    def change_pilot(self, **kwargs):
         if not self.flight.is_writable():
             raise HTTPForbidden
 
@@ -270,7 +270,7 @@ class FlightController(BaseController):
 
     @without_trailing_slash
     @expose('skylines.templates.generic.form')
-    def change_aircraft(self):
+    def change_aircraft(self, **kwargs):
         if not self.flight.is_writable():
             raise HTTPForbidden
 
@@ -314,7 +314,7 @@ class FlightController(BaseController):
     @without_trailing_slash
     @expose()
     @require(has_permission('upload'))
-    def analysis(self):
+    def analysis(self, **kwargs):
         """Hidden method that restarts flight analysis."""
 
         analyse_flight(self.flight)
@@ -324,7 +324,7 @@ class FlightController(BaseController):
 
     @without_trailing_slash
     @expose('skylines.templates.generic.confirm')
-    def delete(self, yes=False):
+    def delete(self, yes=False, **kwargs):
         if not self.flight.is_writable():
             raise HTTPForbidden
 
@@ -341,7 +341,7 @@ class FlightController(BaseController):
 
     @without_trailing_slash
     @expose()
-    def add_comment(self, text):
+    def add_comment(self, text, **kwargs):
         if request.identity is None:
             flash(_('You have to be logged in to post comments!'), 'warning')
         else:
@@ -634,7 +634,7 @@ class FlightsController(BaseController):
     @without_trailing_slash
     @expose()
     @require(has_permission('manage'))
-    def igc_headers(self):
+    def igc_headers(self, **kwargs):
         """Hidden method that parses all missing IGC headers."""
         igc_files = DBSession.query(IGCFile)
         igc_files = igc_files.filter(or_(IGCFile.logger_manufacturer_id == None,
