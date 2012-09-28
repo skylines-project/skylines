@@ -36,8 +36,12 @@ body {
   min-height: 500px;
 }
 
-small {
+small, .small {
   font-size: 85%;
+}
+
+.large {
+  font-size: 115%;
 }
 
 /* Give a quick and non-cross-browser friendly divider */
@@ -210,4 +214,8 @@ table.vmiddle td {
 
 .table input, .table select {
   margin: 0px;
+}
+
+.modal form, .modal .form-actions {
+  margin: 0;
 }

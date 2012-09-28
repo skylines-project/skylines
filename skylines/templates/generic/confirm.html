@@ -1,28 +1,36 @@
+<?python
+embedded = ('embedded' in request.params)
+?>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
                       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:py="http://genshi.edgewall.org/"
       xmlns:xi="http://www.w3.org/2001/XInclude">
 
-  <xi:include href="master/page.html" />
+  <xi:include py:if="not embedded" href="master/page.html" />
 
   <head>
     <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" py:if="False"/>
   </head>
 
+  <form py:def="insert_form()" action="${action}" method="post">
+    <label py:content="question" class="large">
+      The question?
+    </label>
+    <div class="form-actions">
+      <input type="submit" name="yes" value="Yes" class="btn btn-primary"/>
+      <a py:if="not embedded" href="${cancel}" class="btn">No</a>
+      <a py:if="embedded" href="#" data-dismiss="modal" aria-hidden="true" class="btn">No</a>
+    </div>
+  </form>
+
   <body>
-    <div class="row">
+    <div py:if="not embedded" class="row">
       <div class="span8 offset2">
-        <form action="${action}" method="post">
-          <label py:content="question">
-            The question?
-          </label>
-          <div class="form-actions">
-            <input type="submit" name="yes" value="Yes" class="btn btn-primary"/>
-            <a href="${cancel}" class="btn">No</a>
-          </div>
-        </form>
+        ${insert_form()}
       </div>
     </div>
+    <py:if test="embedded">${insert_form()}</py:if>
   </body>
 </html>
