@@ -114,11 +114,11 @@ from skylines.lib.units import format_distance, format_speed
         <td>
           ${flight.olc_plus_score} pt
           <small><br/>
-          <span py:if="flight.olc_classic_distance is not None">
-            (${format_distance(flight.olc_classic_distance)},
+          <span py:if="flight.olc_classic_distance is not None" title="OLC Distance">
+            &#x294A; ${format_distance(flight.olc_classic_distance)},
           </span>
-          <span py:if="flight.olc_triangle_distance is not None">
-            triangle ${format_distance(flight.olc_triangle_distance)})
+          <span py:if="flight.olc_triangle_distance is not None" title="FAI Triangle Distance">
+            &#x25B2; ${format_distance(flight.olc_triangle_distance)}
           </span>
           </small>
         </td>
