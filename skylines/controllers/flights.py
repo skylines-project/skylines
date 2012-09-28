@@ -337,7 +337,7 @@ class FlightController(BaseController):
         else:
             return dict(title='Delete Flight',
                         question='Are you sure you want to delete this flight?',
-                        action='', cancel='.')
+                        action='delete', cancel='.')
 
     @without_trailing_slash
     @expose()

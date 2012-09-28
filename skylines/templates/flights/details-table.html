@@ -15,6 +15,7 @@ from skylines.lib.units import format_distance, format_speed
   
       <script type="text/javascript" src="/static/jquery/jquery.timeago.js"></script>
       <script type="text/javascript" src="/static/bootstrap/js/bootstrap-popover.js"></script>
+      <script type="text/javascript" src="/static/bootstrap/js/bootstrap-modal.js"></script>
     
       <script type="text/javascript">
         /* <![CDATA[ */
@@ -167,7 +168,11 @@ from skylines.lib.units import format_distance, format_speed
       <tr py:if="flight.may_delete()">
         <th>Actions</th>
         <td>
-          <a href="delete" class="btn btn-mini"><i class="icon-remove icon-small"></i> Delete</a>
+          <a data-toggle="modal" data-target="#modal" href="delete?embedded" class="btn btn-mini"><i class="icon-remove icon-small"></i> Delete</a>
+          <div class="modal" id="modal" tabindex="-1" role="dialog" aria-hidden="true" style="display:none">
+            <div class="modal-body">
+            </div>
+          </div>
         </td>
       </tr>
     </tbody>
