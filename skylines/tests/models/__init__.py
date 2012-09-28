@@ -6,10 +6,12 @@ from skylines.tests import setup_db, teardown_db
 
 __all__ = ['ModelTest']
 
+
 # Create an empty database before we start our tests for this module
 def setup():
     """Function called by nose on module load"""
     setup_db()
+
 
 # Tear down that database
 def teardown():

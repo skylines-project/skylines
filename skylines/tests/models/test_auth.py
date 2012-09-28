@@ -5,8 +5,10 @@ from nose.tools import eq_
 from skylines import model
 from skylines.tests.models import ModelTest
 
+
 class TestGroup(ModelTest):
     """Unit test case for the ``Group`` model."""
+
     klass = model.Group
     attrs = dict(
         group_name = u"test_group",
@@ -16,7 +18,7 @@ class TestGroup(ModelTest):
 
 class TestUser(ModelTest):
     """Unit test case for the ``User`` model."""
-    
+
     klass = model.User
     attrs = dict(
         email_address = u"ignucius@example.org"
@@ -38,7 +40,7 @@ class TestUser(ModelTest):
 
 class TestPermission(ModelTest):
     """Unit test case for the ``Permission`` model."""
-    
+
     klass = model.Permission
     attrs = dict(
         permission_name = u"test_permission",

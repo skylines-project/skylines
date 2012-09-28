@@ -14,36 +14,40 @@ from nose.tools import eq_
 from skylines import model
 
 __all__ = ['setup_db', 'teardown_db', 'TestController', 'url_for']
+
+
 def setup_db():
     """Method used to build a database"""
     engine = config['pylons.app_globals'].sa_engine
     model.init_model(engine)
     model.metadata.create_all(engine)
 
+
 def teardown_db():
     """Method used to destroy a database"""
     engine = config['pylons.app_globals'].sa_engine
     model.metadata.drop_all(engine)
 
+
 class TestController(object):
     """
     Base functional test case for the controllers.
-    
-    The SkyLines application instance (``self.app``) set up in this test 
+
+    The SkyLines application instance (``self.app``) set up in this test
     case (and descendants) has authentication disabled, so that developers can
     test the protected areas independently of the :mod:`repoze.who` plugins
     used initially. This way, authentication can be tested once and separately.
-    
+
     Check skylines.tests.functional.test_authentication for the repoze.who
     integration tests.
-    
+
     This is the officially supported way to test protected areas with
     repoze.who-testutil (http://code.gustavonarea.net/repoze.who-testutil/).
-    
+
     """
-    
+
     application_under_test = 'main_without_authn'
-    
+
     def setUp(self):
         """Method called by nose before running each test"""
         # Loading the application:
