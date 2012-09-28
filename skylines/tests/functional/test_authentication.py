@@ -33,13 +33,13 @@ class TestAuthentication(TestController):
 
         """
         # Requesting a protected area
-        resp = self.app.get('/secc/', status=302)
+        resp = self.app.get('/flights/upload/', status=302)
         assert resp.location.startswith('http://localhost/login')
         # Getting the login form:
         resp = resp.follow(status=200)
-        form = resp.form
+        form = resp.forms[1]
         # Submitting the login form:
-        form['login'] = u'manager'
+        form['login'] = u'manager@somedomain.com'
         form['password'] = 'managepass'
         post_login = form.submit(status=302)
         # Being redirected to the initially requested page:
@@ -47,16 +47,16 @@ class TestAuthentication(TestController):
         initial_page = post_login.follow(status=302)
         assert 'authtkt' in initial_page.request.cookies, \
                "Session cookie wasn't defined: %s" % initial_page.request.cookies
-        assert initial_page.location.startswith('http://localhost/secc/'), \
+        assert initial_page.location.startswith('http://localhost/flights/upload/'), \
                initial_page.location
 
     def test_voluntary_login(self):
         """Voluntary logins must work correctly"""
         # Going to the login form voluntarily:
         resp = self.app.get('/login', status=200)
-        form = resp.form
+        form = resp.forms[1]
         # Submitting the login form:
-        form['login'] = u'manager'
+        form['login'] = u'manager@somedomain.com'
         form['password'] = 'managepass'
         post_login = form.submit(status=302)
         # Being redirected to the home page:
@@ -69,7 +69,7 @@ class TestAuthentication(TestController):
     def test_logout(self):
         """Logouts must work correctly"""
         # Logging in voluntarily the quick way:
-        resp = self.app.get('/login_handler?login=manager&password=managepass',
+        resp = self.app.get('/login_handler?login=manager@somedomain.com&password=managepass',
                             status=302)
         resp = resp.follow(status=302)
         assert 'authtkt' in resp.request.cookies, \
