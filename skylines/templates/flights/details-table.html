@@ -98,25 +98,29 @@ from skylines.lib.units import format_distance, format_speed
             Unknown
           </py:if>
 
+          <small><br/>
           <py:if test="flight.registration is not None">
-            (${flight.registration})
+            ${flight.registration}
           </py:if>
           <py:if test="flight.registration is None and
                        flight.igc_file.registration is not None">
-            (${flight.igc_file.registration})
+            ${flight.igc_file.registration}
           </py:if>
+          </small>
         </td>
       </tr>
       <tr>
         <th>Score</th>
         <td>
           ${flight.olc_plus_score} pt
+          <small><br/>
           <span py:if="flight.olc_classic_distance is not None">
             (${format_distance(flight.olc_classic_distance)},
           </span>
           <span py:if="flight.olc_triangle_distance is not None">
             triangle ${format_distance(flight.olc_triangle_distance)})
           </span>
+          </small>
         </td>
       </tr>
       <tr py:if="flight.speed">
