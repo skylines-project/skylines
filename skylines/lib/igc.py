@@ -29,10 +29,11 @@ def read_igc_headers(filename):
                 igc_headers['logger_id'] = parse_logger_id(line)
 
         if line.startswith('HFGTY'):
-            igc_headers['model'] = parse_glider_type(line)
+            igc_headers['model'] = parse_pattern(hfgty_re, line)
 
         if line.startswith('HFGID'):
-            igc_headers['reg'] = parse_glider_reg(line)
+            igc_headers['reg'] = parse_pattern(hfgid_re, line)
+
 
         # don't read more than 100 lines, that should be enough
         i += 1
@@ -57,17 +58,8 @@ def parse_logger_id(line):
         return import_alnum(line[4:7]).upper()
 
 
-def parse_glider_type(line):
-    match = hfgty_re.match(line)
-
-    if not match:
-        return None
-
-    return import_ascii(match.group(1))
-
-
-def parse_glider_reg(line):
-    match = hfgid_re.match(line)
+def parse_pattern(pattern, line):
+    match = pattern.match(line)
 
     if not match:
         return None
