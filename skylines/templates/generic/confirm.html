@@ -12,17 +12,16 @@
 
   <body>
     <div class="row">
-      <div class="well span8 offset2">
-        <p py:content="question">
-          The question?
-        </p>
-
-        <p>
-          <form action="${action}" method="post">
-            <input type="submit" name="yes" value="Yes" class="btn"/>
-          </form>
-          <a href="${cancel}" class="btn">No</a>
-        </p>
+      <div class="span8 offset2">
+        <form action="${action}" method="post">
+          <label py:content="question">
+            The question?
+          </label>
+          <div class="form-actions">
+            <input type="submit" name="yes" value="Yes" class="btn btn-primary"/>
+            <a href="${cancel}" class="btn">No</a>
+          </div>
+        </form>
       </div>
     </div>
   </body>
