@@ -7,6 +7,7 @@ from skylines.lib.string import import_ascii, import_alnum
 
 hfgid_re = re.compile(r'HFGID\s*GLIDER\s*ID\s*:(.*)', re.IGNORECASE)
 hfgty_re = re.compile(r'HFGTY\s*GLIDER\s*TYPE\s*:(.*)', re.IGNORECASE)
+hfcid_re = re.compile(r'HFCID.*:(.*)', re.IGNORECASE)
 afil_re = re.compile(r'AFIL(\d*)FLIGHT', re.IGNORECASE)
 
 
@@ -34,6 +35,8 @@ def read_igc_headers(filename):
         if line.startswith('HFGID'):
             igc_headers['reg'] = parse_pattern(hfgid_re, line)
 
+        if line.startswith('HFCID'):
+            igc_headers['cid'] = parse_pattern(hfcid_re, line)
 
         # don't read more than 100 lines, that should be enough
         i += 1

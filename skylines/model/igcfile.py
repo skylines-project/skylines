@@ -27,6 +27,7 @@ class IGCFile(DeclarativeBase):
     logger_manufacturer_id = Column(String(3))
 
     registration = Column(Unicode(32))
+    competition_id = Column(Unicode(5))
     model = Column(Unicode(64))
 
     @classmethod
@@ -59,6 +60,9 @@ class IGCFile(DeclarativeBase):
 
         if 'reg' in igc_headers and 0 < len(igc_headers['reg']) < 32:
             self.registration = igc_headers['reg']
+
+        if 'cid' in igc_headers and 0 < len(igc_headers['cid']) < 5:
+            self.competition_id = igc_headers['cid']
 
     def guess_registration(self):
         from skylines.model.flight import Flight
