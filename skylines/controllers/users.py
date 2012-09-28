@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from tg import expose, validate, redirect, require, request, config, flash
+from tg import expose, validate, redirect, require, request, config, flash, cache
 from tg.i18n import ugettext as _, ungettext
 import smtplib
 import email
@@ -339,20 +339,25 @@ class UserController(BaseController):
                         .first()
 
     def get_distance_flights(self):
-        distance_flights = []
+        _cache = cache.get_cache('users.distance_flights', expire=60 * 5)
 
-        largest_flight = self.user.get_largest_flights().first()
-        if largest_flight:
-            distance_flights.append([largest_flight.olc_classic_distance,
-                                     largest_flight])
+        def update_cache():
+            distance_flights = []
 
-        for distance in [50000, 100000, 300000, 500000, 700000, 1000000]:
-            distance_flight = self.get_distance_flight(distance)
-            if distance_flight is not None:
-                distance_flights.append([distance, distance_flight])
+            largest_flight = self.user.get_largest_flights().first()
+            if largest_flight:
+                distance_flights.append([largest_flight.olc_classic_distance,
+                                         largest_flight])
 
-        distance_flights.sort()
-        return distance_flights
+            for distance in [50000, 100000, 300000, 500000, 700000, 1000000]:
+                distance_flight = self.get_distance_flight(distance)
+                if distance_flight is not None:
+                    distance_flights.append([distance, distance_flight])
+
+            distance_flights.sort()
+            return distance_flights
+
+        return _cache.get(key=self.user.id, createfunc=update_cache)
 
     def get_last_year_statistics(self):
         query = DBSession.query(func.count('*').label('flights'),
@@ -380,8 +385,13 @@ class UserController(BaseController):
         return last_year_statistics
 
     def get_takeoff_locations(self):
-        return Location.get_clustered_locations(Flight.takeoff_location_wkt,
-                                                filter=(Flight.pilot == self.user))
+        _cache = cache.get_cache('users.takeoff_locations', expire=60 * 5)
+
+        def update_cache():
+            return Location.get_clustered_locations(Flight.takeoff_location_wkt,
+                                                    filter=(Flight.pilot == self.user))
+
+        return _cache.get(key=self.user.id, createfunc=update_cache)
 
     @expose()
     @require(not_anonymous())
