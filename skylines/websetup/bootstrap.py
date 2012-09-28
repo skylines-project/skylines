@@ -1,39 +1,38 @@
 # -*- coding: utf-8 -*-
 """Setup the SkyLines application"""
 
-import logging
-from tg import config
 from skylines import model
 import transaction
+
 
 def bootstrap(command, conf, vars):
     """Place any commands to setup skylines here"""
 
-    # <websetup.bootstrap.before.auth
+    # <websetup.bootstrap.before.auth>
     from sqlalchemy.exc import IntegrityError
     try:
         u = model.User()
         u.display_name = u'Example manager'
         u.email_address = u'manager@somedomain.com'
         u.password = u'managepass'
-    
+
         model.DBSession.add(u)
-    
+
         g = model.Group()
         g.group_name = u'managers'
         g.display_name = u'Managers Group'
-    
+
         g.users.append(u)
-    
+
         model.DBSession.add(g)
-    
+
         p = model.Permission()
         p.permission_name = u'manage'
         p.description = u'This permission give an administrative right to the bearer'
         p.groups.append(g)
-    
+
         model.DBSession.add(p)
-    
+
         u1 = model.User()
         u1.display_name = u'Example user'
         u1.email_address = u'max+skylines@blarg.de'
