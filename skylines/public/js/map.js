@@ -62,12 +62,10 @@ function loadBaseLayerFromCookie() {
     return;
 
   // Cycle through the base layers to find a match
-  for (var i = 0; i < this.map.layers.length; i++) {
-    var layer = this.map.layers[i];
-    if (layer.name == base_layer)
-      // If the base layer names are matching set this layer as new base layer
-      map.setBaseLayer(layer);
-  }
+  base_layer = map.getLayersByName(base_layer)[0];
+  if (base_layer)
+    // If the base layer names are matching set this layer as new base layer
+    map.setBaseLayer(base_layer);
 }
 
 /**
