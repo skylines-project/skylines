@@ -3,7 +3,7 @@
 
 from skylines.config.app_cfg import base_config
 from skylines.config.environment import load_environment
-from skylines.config.static import StaticRedirectionMiddleware, FilesMiddleware
+from skylines.middleware import StaticRedirectionMiddleware, FilesMiddleware
 from paste.cascade import Cascade
 
 
