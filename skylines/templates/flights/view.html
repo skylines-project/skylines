@@ -18,12 +18,11 @@ page = 'flights'
   <xi:include href="../headers/bootstrap/collapse.html" />
   <xi:include href="../headers/openlayers.html" py:if="trace" />
   <xi:include href="../headers/raphael.html" py:if="trace" />
+  <xi:include href="../headers/cookie.html" />
 
 <head>
   <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" py:if="False"/>
   ${flight_meta_tags(flight)}
-
-  <script type="text/javascript" src="/static/jquery/jquery.cookie.js"></script>
 
   <script type="text/javascript" src="/js/general.js"></script>
   <script type="text/javascript" src="/js/map.js"></script>
