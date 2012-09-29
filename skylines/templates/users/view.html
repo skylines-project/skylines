@@ -18,17 +18,11 @@ def add_locations(locations):
       xmlns:xi="http://www.w3.org/2001/XInclude">
 
   <xi:include href="master/page.html" />
+  <xi:include href="../headers/openlayers.html" />
 
   <head>
     <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" py:if="False"/>
 
-    <link href="/css/OpenLayers.css" rel="stylesheet" type="text/css" />
-    <link py:if="request.identity and request.identity['user'].eye_candy"
-          href="/css/eye_candy/OpenLayers.css" rel="stylesheet" type="text/css" />
-    <link href="/css/SimpleLayerSwitcher.css" rel="stylesheet" type="text/css" />
-
-    <script type="text/javascript" src="/js/OpenLayers/OpenLayers.js"></script>
-    <script type="text/javascript" src="/js/OpenLayers/SimpleLayerSwitcher.js"></script>
     <script type="text/javascript" src="/js/map.js"></script>
     <script type="text/javascript" src="/static/jquery/jquery.cookie.js"></script>
 
