@@ -36,22 +36,7 @@ function initOpenLayers(id) {
 
   map.addLayer(osmLayer);
 
-  var airspace = new OpenLayers.Layer.XYZ("Airspace",
-    "/mapproxy/tiles/1.0.0/airspace/${z}/${x}/${y}.png?origin=nw", {
-    isBaseLayer: false,
-    transparent: true,
-    'visibility': true,
-    'displayInLayerSwitcher': true
-  });
-  map.addLayer(airspace);
-
-  var airspace_baselayer = airspace.clone();
-  airspace_baselayer.setIsBaseLayer(true);
-  airspace_baselayer.setName("Airspace only");
-  airspace_baselayer.events.register('visibilitychanged', this, function() {
-    airspace.setVisibility(!airspace_baselayer.getVisibility());
-  });
-  map.addLayer(airspace_baselayer);
+  addAirspaceLayers();
 
   map.setCenter(new OpenLayers.LonLat(30, 0).
     transform(new OpenLayers.Projection("EPSG:4326"), map.getProjectionObject()),
@@ -83,6 +68,30 @@ function loadBaseLayerFromCookie() {
       // If the base layer names are matching set this layer as new base layer
       map.setBaseLayer(layer);
   }
+}
+
+/**
+ * Function: addAirspaceLayers
+ *
+ * Add the custom airspace layers to the map
+ */
+function addAirspaceLayers() {
+  var airspace = new OpenLayers.Layer.XYZ("Airspace",
+    "/mapproxy/tiles/1.0.0/airspace/${z}/${x}/${y}.png?origin=nw", {
+    isBaseLayer: false,
+    transparent: true,
+    'visibility': true,
+    'displayInLayerSwitcher': true
+  });
+  map.addLayer(airspace);
+
+  var airspace_baselayer = airspace.clone();
+  airspace_baselayer.setIsBaseLayer(true);
+  airspace_baselayer.setName("Airspace only");
+  airspace_baselayer.events.register('visibilitychanged', this, function() {
+    airspace.setVisibility(!airspace_baselayer.getVisibility());
+  });
+  map.addLayer(airspace_baselayer);
 }
 
 /**
