@@ -35,6 +35,7 @@ def format_timedelta(delta):
 
     return '%d:%02d' % (seconds / 3600, seconds % 3600 / 60)
 
+
 def format_flight_title(flight):
     title = format_distance(flight.olc_classic_distance)
     title = title + ' on ' + format_date(flight.date_local)
@@ -47,6 +48,7 @@ def format_flight_title(flight):
         tagline = tagline + ' and ' + unicode(flight.co_pilot)
 
     return title, tagline
+
 
 def truncate(string, length=50, suffix='...', smart=False):
     if len(string) <= length:
