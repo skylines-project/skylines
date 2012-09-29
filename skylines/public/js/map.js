@@ -119,7 +119,8 @@ function addBingLayers(api_key) {
   // Bing's Road imagerySet
   var road = new OpenLayers.Layer.Bing({
       key: api_key,
-      type: "Road"
+      type: "Road",
+      name: "Bing Road"
   });
 
   // Bing's AerialWithLabels imagerySet
