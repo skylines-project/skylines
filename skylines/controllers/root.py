@@ -53,12 +53,6 @@ class RootController(BaseController):
         from tg.controllers import WSGIAppController
         import mapproxy.wsgiapp as mapproxy
         mapproxy = WSGIAppController(mapproxy.make_wsgi_app(config.get('skylines.mapproxy')))
-    else:
-        # local mapproxy/mapserver not enabled; this fallback will
-        # redirect to the official live server
-        @expose()
-        def mapproxy(self, *args, **kw):
-            redirect('http://skylines.xcsoar.org' + request.path_qs)
 
     @expose()
     def index(self):

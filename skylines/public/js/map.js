@@ -10,7 +10,7 @@ var map;
  *
  * Initialize the map and add airspace and flight path layers.
  */
-function initOpenLayers(id) {
+function initOpenLayers(id, airspace_tile_url) {
   OpenLayers.ImgPath = "/images/OpenLayers/"
 
   map = new OpenLayers.Map(id, {
@@ -36,7 +36,7 @@ function initOpenLayers(id) {
 
   map.addLayer(osmLayer);
 
-  addAirspaceLayers();
+  addAirspaceLayers(airspace_tile_url);
 
   map.setCenter(new OpenLayers.LonLat(30, 0).
     transform(new OpenLayers.Projection("EPSG:4326"), map.getProjectionObject()),
@@ -73,9 +73,11 @@ function loadBaseLayerFromCookie() {
  *
  * Add the custom airspace layers to the map
  */
-function addAirspaceLayers() {
+function addAirspaceLayers(airspace_tile_url) {
+  if (!airspace_tile_url) airspace_tile_url = "";
+
   var airspace = new OpenLayers.Layer.XYZ("Airspace",
-    "/mapproxy/tiles/1.0.0/airspace/${z}/${x}/${y}.png?origin=nw", {
+    airspace_tile_url + "/mapproxy/tiles/1.0.0/airspace/${z}/${x}/${y}.png?origin=nw", {
     isBaseLayer: false,
     transparent: true,
     'visibility': true,

@@ -37,7 +37,8 @@ def add_locations(locations):
     <script type="text/javascript" py:if="takeoff_locations">
       /* <![CDATA[ */
       $(function() {
-        initOpenLayers("map_canvas");
+        initOpenLayers("map_canvas",
+                     "${config.get('skylines.map.airspace_tile_url', '')}");
 
         $.getScript("http://maps.google.com/maps/api/js?v=3.7&sensor=false&callback=addGoogleLayer");
         addBingLayers("${config.get('skylines.bing.api_key', 'null')}");

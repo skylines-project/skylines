@@ -39,7 +39,8 @@ tagline_link_text = pilot
   <script type="text/javascript">
     /* <![CDATA[ */
     $(function() {
-      initOpenLayers("map_canvas");
+      initOpenLayers("map_canvas",
+                     "${config.get('skylines.map.airspace_tile_url', '')}");
       initFlightLayer();
       /* ]]> */
 

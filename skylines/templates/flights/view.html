@@ -40,7 +40,8 @@ page = 'flights'
   <script py:if="trace" type="text/javascript">
     /* <![CDATA[ */
     $(function() {
-      initOpenLayers("map_canvas");
+      initOpenLayers("map_canvas",
+                     "${config.get('skylines.map.airspace_tile_url', '')}");
       initFlightLayer();
 
       addFlight(${flight.id},
