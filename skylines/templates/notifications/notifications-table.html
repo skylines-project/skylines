@@ -9,6 +9,8 @@ from skylines.model import Notification
       xmlns:xi="http://www.w3.org/2001/XInclude"
       py:strip="">
 
+  <xi:include href="../snippets/datetime.html" />
+
   <table py:def="render_notifications_table(notifications)" id="notifications-table" class="table table-striped">
     <tbody>
       <py:for each="notification in notifications">
