@@ -124,11 +124,7 @@ function addBingLayers(api_key) {
   // should be reverted if the OL bug is fixed.
   var airspace = map.getLayersByName('Airspace')[0];
   map.events.register('changebaselayer', this, function() {
-    if (road.getVisibility() || hybrid.getVisibility()) {
-      airspace.setVisibility(false);
-    } else {
-      airspace.setVisibility(true);
-    }
+    airspace.setVisibility(!road.getVisibility() && !hybrid.getVisibility());
   });
 }
 
