@@ -35,7 +35,7 @@ def make_app(global_conf, full_stack=True, **app_conf):
 
     app = make_base_app(global_conf, full_stack=True, **app_conf)
     app = Cascade([StaticRedirectionMiddleware(app_conf),
-                   FilesMiddleware(app_conf),
+                   FilesMiddleware(app_conf.get('skylines.files.uri')),
                    app])
 
     return app
