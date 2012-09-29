@@ -83,12 +83,14 @@ function addAirspaceLayers() {
   });
   map.addLayer(airspace);
 
+  map.events.register('changebaselayer', this, function(data) {
+    airspace.setVisibility(!data.layer.options.hideAirspaceOverlay);
+  });
+
   var airspace_baselayer = airspace.clone();
   airspace_baselayer.setIsBaseLayer(true);
   airspace_baselayer.setName("Airspace only");
-  airspace_baselayer.events.register('visibilitychanged', this, function() {
-    airspace.setVisibility(!airspace_baselayer.getVisibility());
-  });
+  airspace_baselayer.addOptions({hideAirspaceOverlay: true});
   map.addLayer(airspace_baselayer);
 }
 
@@ -120,25 +122,19 @@ function addBingLayers(api_key) {
   var road = new OpenLayers.Layer.Bing({
       key: api_key,
       type: "Road",
-      name: "Bing Road"
+      name: "Bing Road",
+      hideAirspaceOverlay: true
   });
 
   // Bing's AerialWithLabels imagerySet
   var hybrid = new OpenLayers.Layer.Bing({
       key: api_key,
       type: "AerialWithLabels",
-      name: "Bing Satellite"
+      name: "Bing Satellite",
+      hideAirspaceOverlay: true
   });
 
   map.addLayers([road, hybrid]);
-
-  // disable airspace layer when bing layers are shown
-  // seems to be due to off-by-one bug of zoomLevel, see https://github.com/openlayers/openlayers/issues/418
-  // should be reverted if the OL bug is fixed.
-  var airspace = map.getLayersByName('Airspace')[0];
-  map.events.register('changebaselayer', this, function() {
-    airspace.setVisibility(!road.getVisibility() && !hybrid.getVisibility());
-  });
 }
 
 /**
