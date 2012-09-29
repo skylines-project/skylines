@@ -1,5 +1,8 @@
 <?python
 from skylines.model.notification import count_unread_notifications
+
+def active_if_page_is(_page):
+  return 'active' if (defined('page') and page == _page) else None
 ?>
 
 <html xmlns:py="http://genshi.edgewall.org/"
@@ -17,19 +20,19 @@ from skylines.model.notification import count_unread_notifications
           <span class="skylines-blue">Sky</span><span class="skylines-white">Lines</span>
         </a>
         <ul class="nav">
-          <li class="${(None, 'active')[defined('page') and page=='about']}"><a href="${tg.url('/about')}">About</a></li>
-          <li class="${(None, 'active')[defined('page') and page=='tracking']}"><a href="${tg.url('/tracking/')}">Live</a></li>
-          <li class="${(None, 'active')[defined('page') and page=='flights']}"><a href="${tg.url('/flights/')}">Flights</a></li>
-          <li class="${(None, 'active')[defined('page') and page=='ranking']}"><a href="${tg.url('/ranking/')}">Ranking</a></li>
-          <li class="${(None, 'active')[defined('page') and page=='statistics']}"><a href="${tg.url('/statistics/')}">Statistics</a></li>
+          <li class="${active_if_page_is('about')}"><a href="${tg.url('/about')}">About</a></li>
+          <li class="${active_if_page_is('tracking')}"><a href="${tg.url('/tracking/')}">Live</a></li>
+          <li class="${active_if_page_is('flights')}"><a href="${tg.url('/flights/')}">Flights</a></li>
+          <li class="${active_if_page_is('ranking')}"><a href="${tg.url('/ranking/')}">Ranking</a></li>
+          <li class="${active_if_page_is('statistics')}"><a href="${tg.url('/statistics/')}">Statistics</a></li>
         </ul>
         <py:if test="tg.auth_stack_enabled">
         <ul class="nav pull-right">
-          <li class="${(None, 'active')[defined('page') and page=='upload']}">
+          <li class="${active_if_page_is('upload')}">
             <a href="${tg.url('/flights/upload/')}"><i class="icon-upload-alt"></i> Upload</a>
           </li>
 
-          <li py:if="not request.identity" class="${(None, 'active')[defined('page') and page=='login']}">
+          <li py:if="not request.identity" class="${active_if_page_is('login')}">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
               <i class="icon-signin"></i> Login <i class="icon-caret-down"></i>
             </a>
@@ -63,14 +66,14 @@ from skylines.model.notification import count_unread_notifications
 
           <li py:if="request.identity"
               py:with="notifications=count_unread_notifications(request.identity['user'])"
-              class="${(None, 'active')[defined('page') and page=='notifications']}">
+              class="${active_if_page_is('notifications')}">
             <a href="/notifications/">
               <span py:if="notifications == 0" class="badge" py:content="notifications">0</span>
               <span py:if="notifications != 0" class="badge badge-warning" py:content="notifications">5</span>
             </a>
           </li>
 
-          <li py:if="request.identity" class="${(None, 'active')[defined('page') and page=='settings']} dropdown">
+          <li py:if="request.identity" class="${active_if_page_is('settings')} dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
               ${request.identity['user'].display_name} <i class="icon-caret-down"></i>
             </a>
