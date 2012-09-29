@@ -60,10 +60,13 @@ function initOpenLayers(id) {
   map.addControl(new SimpleLayerSwitcher());
 
   map.events.register('changebaselayer', this, function(data) {
+    // Save the selected base layer in a cookie
     $.cookie('base_layer', data.layer.name, { path: "/", expires: 365 });
   });
 
   map.events.register('addlayer', this, function() {
+    // When the list of layers changes load the
+    // last used base layer from the cookies
     loadBaseLayerFromCookie()
   });
 };
@@ -73,9 +76,11 @@ function loadBaseLayerFromCookie() {
   if (base_layer == null)
     return;
 
+  // Cycle through the base layers to find a match
   for (var i = 0; i < this.map.layers.length; i++) {
     var layer = this.map.layers[i];
     if (layer.name == base_layer)
+      // If the base layer names are matching set this layer as new base layer
       map.setBaseLayer(layer);
   }
 }
