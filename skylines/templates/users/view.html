@@ -18,8 +18,8 @@ def add_locations(locations):
       xmlns:xi="http://www.w3.org/2001/XInclude">
 
   <xi:include href="master/page.html" />
-  <xi:include href="../headers/openlayers.html" />
-  <xi:include href="../headers/cookie.html" />
+  <xi:include href="../headers/openlayers.html" py:if="takeoff_locations" />
+  <xi:include href="../headers/cookie.html" py:if="takeoff_locations" />
 
   <head>
     <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" py:if="False"/>
