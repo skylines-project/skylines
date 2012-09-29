@@ -8,6 +8,7 @@
   <xi:include href="topbar.html" />
   <xi:include href="../snippets/datetime.html" />
   <xi:include href="../snippets/flags.html" />
+  <xi:include href="../snippets/tooltip.html" />
 
 <py:match path="head" once="true">
   <head py:attrs="select('@*')">
@@ -40,7 +41,6 @@
     <link rel="stylesheet" type="text/css" href="${tg.url('/css/style.css')}" />
     <script type="text/javascript" src="/static/jquery/jquery.js"></script>
     <script type="text/javascript" src="/static/bootstrap/js/bootstrap-dropdown.js"></script>
-    <script type="text/javascript" src="/static/bootstrap/js/bootstrap-tooltip.js"></script>
     <meta py:replace="select('*')"/>
 
     <script>
@@ -48,8 +48,6 @@
         $('.dropdown-menu').find('form').click(function (e) {
           e.stopPropagation();
         });
-
-        $("[rel=tooltip]").tooltip();
       });
     </script>
   </head>

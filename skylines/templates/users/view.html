@@ -32,7 +32,6 @@ def add_locations(locations):
     <script type="text/javascript" src="/js/map.js"></script>
     <script type="text/javascript" src="/static/jquery/jquery.timeago.js"></script>
     <script type="text/javascript" src="/static/jquery/jquery.cookie.js"></script>
-    <script type="text/javascript" src="/static/bootstrap/js/bootstrap-tooltip.js"></script>
 
     <script type="text/javascript" py:if="takeoff_locations">
       /* <![CDATA[ */
@@ -45,7 +44,6 @@ def add_locations(locations):
         addReliefLayer();
 
         $("abbr.timeago").timeago();
-        $("[rel=tooltip]").tooltip();
 
         var vectorLayer = new OpenLayers.Layer.Vector("Overlay");
         map.addLayer(vectorLayer);
