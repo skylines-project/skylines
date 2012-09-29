@@ -8,12 +8,13 @@ from skylines.lib.units import format_distance, format_speed
       xmlns:py="http://genshi.edgewall.org/"
       xmlns:xi="http://www.w3.org/2001/XInclude"
       py:strip="">
+
+  <xi:include href="../snippets/popover.html" />
       
   <py:match path="head" once="true">
     <head py:attrs="select('@*')">
       ${select('*')}
   
-      <script type="text/javascript" src="/static/bootstrap/js/bootstrap-popover.js"></script>
       <script type="text/javascript" src="/static/bootstrap/js/bootstrap-modal.js"></script>
     
       <script type="text/javascript">

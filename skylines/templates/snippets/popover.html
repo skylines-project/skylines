@@ -1,0 +1,17 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+                      "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:py="http://genshi.edgewall.org/"
+      xmlns:xi="http://www.w3.org/2001/XInclude"
+      py:strip="">
+
+  <xi:include href="tooltip.html" />
+
+  <py:match path="head" once="true">
+    <head py:attrs="select('@*')">
+      ${select('*')}
+      <script type="text/javascript" src="/static/bootstrap/js/bootstrap-popover.js"></script>
+    </head>
+  </py:match>
+
+</html>
