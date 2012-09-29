@@ -9,22 +9,6 @@ from skylines.model import Notification
       xmlns:xi="http://www.w3.org/2001/XInclude"
       py:strip="">
 
-  <py:match path="head" once="true">
-    <head py:attrs="select('@*')">
-      ${select('*')}
-  
-      <script type="text/javascript" src="/static/jquery/jquery.timeago.js"></script>
-    
-      <script type="text/javascript">
-        /* <![CDATA[ */
-        $(function() {
-          $("abbr.timeago").timeago();
-        });
-        /* ]]> */
-      </script>
-    </head>
-  </py:match>
-
   <table py:def="render_notifications_table(notifications)" id="notifications-table" class="table table-striped">
     <tbody>
       <py:for each="notification in notifications">

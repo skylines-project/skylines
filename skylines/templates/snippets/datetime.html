@@ -5,6 +5,14 @@
       xmlns:xi="http://www.w3.org/2001/XInclude"
       py:strip="">
 
+  <py:match path="head" once="true">
+    <head py:attrs="select('@*')">
+      ${select('*')}
+      <script type="text/javascript" src="/static/jquery/jquery.timeago.js"></script>
+      <script>$(function() { $("abbr.timeago").timeago(); });</script>
+    </head>
+  </py:match>
+
   <abbr py:def="insert_timeago(dt)"
         class="timeago"
         title="${h.isoformat_utc(dt)}"

@@ -30,7 +30,6 @@ def add_locations(locations):
     <script type="text/javascript" src="/js/OpenLayers/OpenLayers.js"></script>
     <script type="text/javascript" src="/js/OpenLayers/SimpleLayerSwitcher.js"></script>
     <script type="text/javascript" src="/js/map.js"></script>
-    <script type="text/javascript" src="/static/jquery/jquery.timeago.js"></script>
     <script type="text/javascript" src="/static/jquery/jquery.cookie.js"></script>
 
     <script type="text/javascript" py:if="takeoff_locations">
@@ -42,8 +41,6 @@ def add_locations(locations):
         $.getScript("http://maps.google.com/maps/api/js?v=3.7&sensor=false&callback=addGoogleLayer");
         addBingLayers("${config.get('skylines.bing.api_key', 'null')}");
         addReliefLayer();
-
-        $("abbr.timeago").timeago();
 
         var vectorLayer = new OpenLayers.Layer.Vector("Overlay");
         map.addLayer(vectorLayer);

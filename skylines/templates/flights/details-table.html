@@ -13,14 +13,12 @@ from skylines.lib.units import format_distance, format_speed
     <head py:attrs="select('@*')">
       ${select('*')}
   
-      <script type="text/javascript" src="/static/jquery/jquery.timeago.js"></script>
       <script type="text/javascript" src="/static/bootstrap/js/bootstrap-popover.js"></script>
       <script type="text/javascript" src="/static/bootstrap/js/bootstrap-modal.js"></script>
     
       <script type="text/javascript">
         /* <![CDATA[ */
         $(function() {
-          $("abbr.timeago").timeago();
           $("a.share").popover({
             trigger: 'manual',
             content: '<input value="' + getShareUrl('${request.url}') + '" type="text" style="width: 95%;">',
