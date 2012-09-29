@@ -10,7 +10,8 @@
   <py:match path="head" once="true">
     <head py:attrs="select('@*')">
       ${select('*')}
-      <script type="text/javascript" src="/static/bootstrap/js/bootstrap-popover.js"></script>
+      <script py:if="h.not_included_yet()"
+              type="text/javascript" src="/static/bootstrap/js/bootstrap-popover.js"></script>
     </head>
   </py:match>
 

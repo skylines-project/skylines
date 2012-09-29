@@ -10,7 +10,7 @@
   <py:match path="head" once="true">
     <head py:attrs="select('@*')">
       ${select('*')}
-      <script>$(function() { $("abbr.timeago").timeago(); });</script>
+      <script py:if="h.not_included_yet()">$(function() { $("abbr.timeago").timeago(); });</script>
     </head>
   </py:match>
 

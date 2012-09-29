@@ -8,7 +8,8 @@
   <py:match path="head" once="true">
     <head py:attrs="select('@*')">
       ${select('*')}
-      <script type="text/javascript" src="/static/bootstrap/js/bootstrap-collapse.js"></script>
+      <script py:if="h.not_included_yet()"
+              type="text/javascript" src="/static/bootstrap/js/bootstrap-collapse.js"></script>
     </head>
   </py:match>
 

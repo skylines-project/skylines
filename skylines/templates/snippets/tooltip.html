@@ -10,7 +10,7 @@
   <py:match path="head" once="true">
     <head py:attrs="select('@*')">
       ${select('*')}
-      <script>$(function() { $("[rel=tooltip]").tooltip(); });</script>
+      <script py:if="h.not_included_yet()">$(function() { $("[rel=tooltip]").tooltip(); });</script>
     </head>
   </py:match>
 

@@ -8,7 +8,8 @@
   <py:match path="head" once="true">
     <head py:attrs="select('@*')">
       ${select('*')}
-      <link rel="stylesheet" href="${tg.url('/images/flags.css')}" />
+      <link py:if="h.not_included_yet()"
+            rel="stylesheet" href="${tg.url('/images/flags.css')}" />
     </head>
   </py:match>
 

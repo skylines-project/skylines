@@ -8,9 +8,11 @@
   <py:match path="head" once="true">
     <head py:attrs="select('@*')">
       ${select('*')}
+      <py:if test="h.not_included_yet()">
       <script type="text/javascript" src="/js/g.raphael/raphael-min.js"></script>
       <script type="text/javascript" src="/js/g.raphael/g.raphael.js"></script>
       <script type="text/javascript" src="/js/g.raphael/g.line.js"></script>
+      </py:if>
     </head>
   </py:match>
 
