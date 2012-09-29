@@ -17,7 +17,7 @@ class NotificationController(BaseController):
         self.notification = notification
 
     @expose()
-    def index(self):
+    def index(self, **kwargs):
         self.notification.mark_read()
 
         if self.notification.type == Notification.NT_FLIGHT_COMMENT:
