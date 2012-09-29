@@ -5,9 +5,11 @@
       xmlns:xi="http://www.w3.org/2001/XInclude"
       py:strip="">
 
-  <xi:include href="../headers/flags.html" />
+  <py:match path="head" once="true">
+    <head py:attrs="select('@*')">
+      ${select('*')}
+      <script type="text/javascript" src="/static/bootstrap/js/bootstrap-alert.js"></script>
+    </head>
+  </py:match>
 
-  <span py:def="insert_flag(country_code, style = None)"
-        class="flag-${country_code.lower()}"
-        style="${style}"></span>
 </html>

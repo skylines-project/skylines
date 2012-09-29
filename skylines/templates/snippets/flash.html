@@ -5,13 +5,7 @@
       xmlns:xi="http://www.w3.org/2001/XInclude"
       py:strip="">
 
-  <py:match path="head" once="true">
-    <head py:attrs="select('@*')">
-      ${select('*')}
-  
-      <script type="text/javascript" src="/static/bootstrap/js/bootstrap-alert.js"></script>
-    </head>
-  </py:match>
+  <xi:include href="../headers/flash.html" />
   
   <py:def function="insert_flash_message(floating)">
     <?python
