@@ -24,12 +24,12 @@
         <tr py:for="pilot,count,total,rank in result">
           <td class="numeric">${rank}</td>
           <td>
-            <a py:content="pilot" href="/flights/pilot/${pilot.id}">
+            <a py:content="pilot" href="/users/${pilot.id}">
               Pilot Name
             </a>
           </td>
           <td>
-            <a py:if="pilot.club_id" py:content="pilot.club" href="/flights/club/${pilot.club_id}">
+            <a py:if="pilot.club_id" py:content="pilot.club" href="/clubs/${pilot.club_id}">
               Club Name
             </a>
           </td>

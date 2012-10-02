@@ -23,7 +23,7 @@
         <tr py:for="club,count,total,rank in result">
           <td class="numeric">${rank}</td>
           <td>
-            <a py:if="club.id" py:content="club" href="/flights/club/${club.id}">
+            <a py:if="club.id" py:content="club" href="/clubs/${club.id}">
               Club Name
             </a>
           </td>
