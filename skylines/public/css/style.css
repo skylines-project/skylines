@@ -219,3 +219,11 @@ table.vmiddle td {
 .modal form, .modal .form-actions {
   margin: 0;
 }
+
+.pagination-condensed {
+  margin: 0;
+}
+
+.pagination-condensed a {
+  line-height: 22px;
+}

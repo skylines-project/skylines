@@ -16,15 +16,6 @@ div.dataTables_info {
 	padding-top: 8px;
 }
 
-div.dataTables_paginate {
-	float: right;
-	margin: 0;
-}
-
-.pagination a {
-	line-height: 22px;
-}
-
 table.table {
 	clear: both;
 	margin-bottom: 6px !important;
