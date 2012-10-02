@@ -7,11 +7,11 @@ from skylines.model import DBSession, User, Club, Flight, Airport
 
 class RankingController(BaseController):
     @expose()
-    def index(self):
+    def index(self, **kw):
         redirect('/ranking/clubs')
 
     @expose('skylines.templates.ranking.pilots')
-    def pilots(self):
+    def pilots(self, **kw):
         subq = DBSession.query(Flight.pilot_id,
                                func.count('*').label('count'),
                                func.sum(Flight.olc_plus_score).label('total')) \
@@ -25,7 +25,7 @@ class RankingController(BaseController):
         return dict(tab='pilots', result=result)
 
     @expose('skylines.templates.ranking.clubs')
-    def clubs(self):
+    def clubs(self, **kw):
         subq = DBSession.query(Flight.club_id,
                                func.count('*').label('count'),
                                func.sum(Flight.olc_plus_score).label('total')) \
@@ -39,7 +39,7 @@ class RankingController(BaseController):
         return dict(tab='clubs', result=result)
 
     @expose('skylines.templates.ranking.airports')
-    def airports(self):
+    def airports(self, **kw):
         subq = DBSession.query(Flight.takeoff_airport_id,
                                func.count('*').label('count'),
                                func.sum(Flight.olc_plus_score).label('total')) \
