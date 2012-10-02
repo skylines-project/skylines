@@ -22,12 +22,14 @@ title = 'Ranking'
 
     <table class="table table-striped">
       <thead>
+        <th class="numeric">#</th>
         <th>Name</th>
         <th class="numeric">Flights</th>
         <th class="numeric">Total Score</th>
       </thead>
       <tbody>
-        <tr py:for="airport,count,total in result">
+        <tr py:for="airport,count,total,rank in result">
+          <td class="numeric">${rank}</td>
           <td>
             ${insert_flag(airport.country_code)}
             <a py:if="airport.id" py:content="airport.name" href="/flights/airport/${airport.id}">

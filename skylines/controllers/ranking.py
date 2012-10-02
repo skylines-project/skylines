@@ -1,5 +1,5 @@
 from tg import expose, redirect
-from sqlalchemy.sql.expression import desc
+from sqlalchemy.sql.expression import desc, over
 from sqlalchemy import func
 from skylines.lib.base import BaseController
 from skylines.model import DBSession, User, Club, Flight, Airport
@@ -16,7 +16,9 @@ class RankingController(BaseController):
                                func.count('*').label('count'),
                                func.sum(Flight.olc_plus_score).label('total')) \
                .group_by(Flight.pilot_id).subquery()
-        result = DBSession.query(User, subq.c.count, subq.c.total) \
+        result = DBSession.query(User, subq.c.count, subq.c.total,
+                                 over(func.rank(),
+                                      order_by=desc('total')).label('rank')) \
                  .join((subq, subq.c.pilot_id == User.id))
         result = result.order_by(desc('total'))
         result = result.limit(20)
@@ -28,7 +30,9 @@ class RankingController(BaseController):
                                func.count('*').label('count'),
                                func.sum(Flight.olc_plus_score).label('total')) \
                .group_by(Flight.club_id).subquery()
-        result = DBSession.query(Club, subq.c.count, subq.c.total) \
+        result = DBSession.query(Club, subq.c.count, subq.c.total,
+                                 over(func.rank(),
+                                      order_by=desc('total')).label('rank')) \
                  .join((subq, subq.c.club_id == Club.id))
         result = result.order_by(desc('total'))
         result = result.limit(20)
@@ -40,7 +44,9 @@ class RankingController(BaseController):
                                func.count('*').label('count'),
                                func.sum(Flight.olc_plus_score).label('total')) \
                .group_by(Flight.takeoff_airport_id).subquery()
-        result = DBSession.query(Airport, subq.c.count, subq.c.total) \
+        result = DBSession.query(Airport, subq.c.count, subq.c.total,
+                                 over(func.rank(),
+                                      order_by=desc('total')).label('rank')) \
                  .join((subq, subq.c.takeoff_airport_id == Airport.id))
         result = result.order_by(desc('total'))
         result = result.limit(20)

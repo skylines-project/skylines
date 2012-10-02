@@ -21,12 +21,14 @@ title = 'Ranking'
 
     <table class="table table-striped">
       <thead>
+        <th class="numeric">#</th>
         <th>Name</th>
         <th class="numeric">Flights</th>
         <th class="numeric">Total Score</th>
       </thead>
       <tbody>
-        <tr py:for="club,count,total in result">
+        <tr py:for="club,count,total,rank in result">
+          <td class="numeric">${rank}</td>
           <td>
             <a py:if="club.id" py:content="club" href="/flights/club/${club.id}">
               Club Name
