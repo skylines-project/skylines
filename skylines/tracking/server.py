@@ -48,7 +48,7 @@ class TrackingServer(DatagramProtocol):
 
         pilot = User.by_tracking_key(key)
         if not pilot:
-            log.err("No such pilot: %d" % key)
+            log.err("No such pilot: %x" % key)
             return
 
         flags = data[0]
