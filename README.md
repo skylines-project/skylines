@@ -121,3 +121,6 @@ Submit patches to the XCSoar developer mailing list
  * Tobias Bieniek (<tobias.bieniek@gmx.de>)
  * Max Kellermann (<max@duempel.org>)
  * Tobias Lohner (<tobias@lohner-net.de>)
+ * Andrey Lebedev (<andrey@lebedev.lt>)
+ * Matthew Scutter (<yellowplantain@gmail.com>)
+ * Fabian Berstecher (<F.Berstecher@gmx.de>)
