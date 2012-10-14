@@ -1,5 +1,5 @@
 from tg import expose, redirect
-from tg.decorators import paginate
+from tg.decorators import paginate, without_trailing_slash
 from sqlalchemy.sql.expression import desc, over
 from sqlalchemy import func
 from skylines.lib.base import BaseController
@@ -28,18 +28,21 @@ class RankingController(BaseController):
         result = result.order_by(desc('total'))
         return result
 
+    @without_trailing_slash
     @expose('skylines.templates.ranking.pilots')
     @paginate('result', items_per_page=20)
     def pilots(self, **kw):
         return dict(tab='pilots',
                     result=self.__get_result(User, 'pilot_id'))
 
+    @without_trailing_slash
     @expose('skylines.templates.ranking.clubs')
     @paginate('result', items_per_page=20)
     def clubs(self, **kw):
         return dict(tab='clubs',
                     result=self.__get_result(Club, 'club_id'))
 
+    @without_trailing_slash
     @expose('skylines.templates.ranking.airports')
     @paginate('result', items_per_page=20)
     def airports(self, **kw):
