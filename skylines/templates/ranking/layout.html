@@ -18,6 +18,7 @@ title = 'Ranking'
 
 <py:match path="body" once="true">
   <body py:attrs="select('@*')">
+    <div id="partial">
     <div class="row">
       <div class="span6">
         <ul class="nav nav-pills">
@@ -42,9 +43,11 @@ title = 'Ranking'
         </div>
       </div>
     </div>
+    </div>
   </body>
 </py:match>
 
-<xi:include href="master/page.html" />
+<xi:include href="master/page.html" py:if="'partial' not in request.params" />
+<xi:include href="../snippets/pager-partial.html" />
 
 </html>
