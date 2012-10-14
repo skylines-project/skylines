@@ -1,0 +1,37 @@
+<?python
+from operator import le, ge, eq
+?>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+                      "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:py="http://genshi.edgewall.org/"
+      xmlns:xi="http://www.w3.org/2001/XInclude"
+      py:strip="True">
+
+  <div py:def="pager(name)" py:with="page=getattr(tmpl_context.paginators, name)"
+       class="pagination pagination-condensed">
+    <ul>
+      <li class="prev ${h.string_if('disabled', page.page == page.first_page)}">
+        <a py:if="page.page == page.first_page" href="#">&larr; Previous</a>
+        <a py:if="page.page != page.first_page" href="?page=${page.page - 1}">&larr; Previous</a>
+      </li>
+
+      <li py:if="ge(page.page - 4, page.first_page) and eq(page.page, page.last_page)"><a href="?page=${page.page - 4}">${page.page - 4}</a></li>
+      <li py:if="ge(page.page - 3, page.first_page) and ge(page.page, page.last_page - 1)"><a href="?page=${page.page - 3}">${page.page - 3}</a></li>
+      <li py:if="ge(page.page - 2, page.first_page)"><a href="?page=${page.page - 2}">${page.page - 2}</a></li>
+      <li py:if="ge(page.page - 1, page.first_page)"><a href="?page=${page.page - 1}">${page.page - 1}</a></li>
+      <li class="active"><a href="?page=${page.page}">${page.page}</a></li>
+      <li py:if="le(page.page + 1, page.last_page)"><a href="?page=${page.page + 1}">${page.page + 1}</a></li>
+      <li py:if="le(page.page + 2, page.last_page)"><a href="?page=${page.page + 2}">${page.page + 2}</a></li>
+      <li py:if="le(page.page + 3, page.last_page) and le(page.page, page.first_page + 1)"><a href="?page=${page.page + 3}">${page.page + 3}</a></li>
+      <li py:if="le(page.page + 4, page.last_page) and eq(page.page, page.first_page)"><a href="?page=${page.page + 4}">${page.page + 4}</a></li>
+
+      <li class="next ${h.string_if('disabled', page.page == page.last_page)}">
+        <a py:if="page.page == page.last_page" href="#">Next &rarr;</a>
+        <a py:if="page.page != page.last_page" href="?page=${page.page + 1}">Next &rarr;</a>
+      </li>
+    </ul>
+  </div>
+
+</html>

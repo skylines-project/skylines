@@ -74,3 +74,7 @@ def not_included_yet():
     # Remember that this template was included now
     request.template_includes.add(filename)
     return True
+
+
+def string_if(str, condition):
+    return str if condition else None

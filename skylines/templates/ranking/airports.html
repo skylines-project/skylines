@@ -11,6 +11,7 @@ title = 'Ranking'
 
   <xi:include href="master/page.html" />
   <xi:include href="../snippets/flags.html" />
+  <xi:include href="../snippets/pager.html" />
 
   <head>
     <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" py:if="False"/>
@@ -19,6 +20,8 @@ title = 'Ranking'
 
   <body>
     <xi:include href="ranking/nav.html" />
+
+    ${pager('result')}
 
     <table class="table table-striped">
       <thead>
@@ -41,5 +44,7 @@ title = 'Ranking'
         </tr>
       </tbody>
     </table>
+
+    ${pager('result')}
   </body>
 </html>

@@ -1,4 +1,5 @@
 from tg import expose, redirect
+from tg.decorators import paginate
 from sqlalchemy.sql.expression import desc, over
 from sqlalchemy import func
 from skylines.lib.base import BaseController
@@ -25,20 +26,22 @@ class RankingController(BaseController):
                  .join((subq, getattr(subq.c, flight_field) == model.id))
 
         result = result.order_by(desc('total'))
-        result = result.limit(20)
         return result
 
     @expose('skylines.templates.ranking.pilots')
+    @paginate('result', items_per_page=20)
     def pilots(self, **kw):
         return dict(tab='pilots',
                     result=self.__get_result(User, 'pilot_id'))
 
     @expose('skylines.templates.ranking.clubs')
+    @paginate('result', items_per_page=20)
     def clubs(self, **kw):
         return dict(tab='clubs',
                     result=self.__get_result(Club, 'club_id'))
 
     @expose('skylines.templates.ranking.airports')
+    @paginate('result', items_per_page=20)
     def airports(self, **kw):
         return dict(tab='airports',
                     result=self.__get_result(Airport, 'takeoff_airport_id'))
