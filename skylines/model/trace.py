@@ -55,10 +55,8 @@ class Trace(DeclarativeBase):
 
     @locations.setter
     def locations(self, locations):
-        points = []
-        for location in locations:
-            points.append('{} {}'.format(location.longitude, location.latitude))
-
+        points = ['{} {}'.format(location.longitude, location.latitude)
+                  for location in locations]
         wkt = "LINESTRING({})".format(','.join(points))
         self._locations = WKTSpatialElement(wkt)
 
