@@ -93,18 +93,19 @@ def get_flight_path(flight, threshold = 0.001, max_points = 3000):
     zoom_levels = [0]
     zoom_levels.extend([round(-math.log(32.0 / 45.0 * (threshold * pow(zoom_factor, num_levels - i - 1)), 2)) for i in range(1, num_levels)])
 
-    max_delta_time = max(4, (fp[-1][0] - fp[0][0]) / 500)
+    max_delta_time = max(4, (fp[-1].seconds_of_day - fp[0].seconds_of_day) / 500)
 
     encoder = SkyLinesPolyEncoder(num_levels=4, threshold=threshold, zoom_factor=4)
 
-    fixes = map(lambda x: (x[2], x[1], (x[0] / max_delta_time * threshold)), fp)
+    fixes = map(lambda x: (x.longitude, x.latitude,
+                           (x.seconds_of_day / max_delta_time * threshold)), fp)
     fixes = encoder.classify(fixes, remove=False, type="ppd")
 
     encoded = encoder.encode(fixes['points'], fixes['levels'])
 
-    barogram_t = encoder.encodeList([fp[i][0] for i in range(len(fp)) if fixes['levels'][i] != -1])
-    barogram_h = encoder.encodeList([fp[i][3] for i in range(len(fp)) if fixes['levels'][i] != -1])
-    enl = encoder.encodeList([fp[i][4] for i in range(len(fp)) if fixes['levels'][i] != -1])
+    barogram_t = encoder.encodeList([fp[i].seconds_of_day for i in range(len(fp)) if fixes['levels'][i] != -1])
+    barogram_h = encoder.encodeList([fp[i].altitude for i in range(len(fp)) if fixes['levels'][i] != -1])
+    enl = encoder.encodeList([fp[i].enl for i in range(len(fp)) if fixes['levels'][i] != -1])
 
     contest_traces = get_contest_traces(flight, encoder)
 

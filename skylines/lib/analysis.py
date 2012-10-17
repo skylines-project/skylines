@@ -3,6 +3,7 @@
 import os
 import datetime
 import simplejson
+from collections import namedtuple
 from sqlalchemy.sql.expression import and_
 from skylines import files
 from tg import config
@@ -299,6 +300,8 @@ def analyse_flight(flight):
     return True
 
 
+FlightPathFix = namedtuple('FlightPathFix', ['seconds_of_day', 'latitude', 'longitude', 'altitude', 'enl'])
+
 def flight_path(igc_file, max_points = 1000):
     path = files.filename_to_path(igc_file.filename)
     f = os.popen(helper_path('FlightPath') + ' --max-points=' + str(max_points) + ' "' + path + '"')
@@ -306,5 +309,5 @@ def flight_path(igc_file, max_points = 1000):
     path = []
     for line in f:
         line = line.split()
-        path.append((int(line[0]), float(line[1]), float(line[2]), int(line[3]), int(line[4])))
+        path.append(FlightPathFix(int(line[0]), float(line[1]), float(line[2]), int(line[3]), int(line[4])))
     return path
