@@ -1,8 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from datetime import datetime
-
-from sqlalchemy import ForeignKey, Column, event, DDL
+from sqlalchemy import ForeignKey, Column
 from sqlalchemy.dialects import postgresql
 from sqlalchemy.orm import relation, backref
 from sqlalchemy.types import String, Integer, DateTime, Interval
