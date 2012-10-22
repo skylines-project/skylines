@@ -33,6 +33,7 @@ title = 'Upload Flight'
             <th>Filename</th>
             <th>Aircraft Model</th>
             <th>Aircraft Registration</th>
+            <th>Competition Number</th>
             <th colspan="2">Status</th>
           </tr>
         </thead>
@@ -45,6 +46,9 @@ title = 'Upload Flight'
             </td>
             <td>
               <span py:if="not error" py:replace="Markup(TextField('registration', default=flight.registration))">Aircraft Registration</span>
+            </td>
+            <td>
+              <span py:if="not error" py:replace="Markup(TextField('competition_id', default=flight.competition_id))">Competition Number</span>
             </td>
             <td>
               <span class="label label-success" py:if="not error"><i class="icon-ok"></i> Success</span>

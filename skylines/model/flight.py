@@ -35,6 +35,7 @@ class Flight(DeclarativeBase):
     model_id = Column(Integer, ForeignKey('models.id'))
     model = relation('Model', primaryjoin=(model_id == Model.id))
     registration = Column(Unicode(32))
+    competition_id = Column(Unicode(5))
 
     # The date of the flight in local time instead of UTC. Used for scoring.
     date_local = Column(Date, nullable=False, index=True)

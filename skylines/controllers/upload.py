@@ -144,6 +144,8 @@ class UploadController(BaseController):
             else:
                 flight.registration = igc_file.guess_registration()
 
+            flight.competition_id = igc_file.competition_id
+
             if not analyse_flight(flight):
                 files.delete_file(filename)
                 flights.append((name, None, _('Failed to parse file')))
@@ -171,6 +173,7 @@ class UploadController(BaseController):
         flight_id_list = kw.get('flight_id')
         model_list = kw.get('model')
         registration_list = kw.get('registration')
+        competition_id_list = kw.get('competition_id')
 
         if not isinstance(flight_id_list, list):
             flight_id_list = [flight_id_list]
@@ -180,6 +183,9 @@ class UploadController(BaseController):
 
         if not isinstance(registration_list, list):
             registration_list = [registration_list]
+
+        if not isinstance(competition_id_list, list):
+            competition_id_list = [competition_id_list]
 
         if flight_id_list is None \
             or len(flight_id_list) != len(model_list) \
@@ -204,6 +210,12 @@ class UploadController(BaseController):
                 if not 0 < len(registration) < 32:
                     registration = None
 
+            competition_id = competition_id_list[index]
+            if competition_id is not None:
+                competition_id = competition_id.strip()
+                if not 0 < len(competition_id) < 5:
+                    competition_id = None
+
             flight = DBSession.query(Flight).get(id)
 
             if not flight.is_writable():
@@ -211,6 +223,7 @@ class UploadController(BaseController):
 
             flight.model_id = model_id
             flight.registration = registration
+            flight.competition_id = competition_id
             flight.time_modified = datetime.utcnow()
 
         DBSession.flush()
