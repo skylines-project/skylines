@@ -107,9 +107,14 @@ from skylines.lib.units import format_distance, format_speed
             ${flight.igc_file.registration}
           </py:if>
 
-          <py:if test="flight.igc_file.competition_id is not None">
+          <py:if test="flight.competition_id is not None">
+            &ndash; ${flight.competition_id}
+          </py:if>
+         <py:if test="flight.competition_id is None and 
+                      flight.igc_file.competition_id is not None">
             &ndash; ${flight.igc_file.competition_id}
           </py:if>
+
           </small>
         </td>
       </tr>
