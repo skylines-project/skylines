@@ -74,10 +74,11 @@ class SelectAircraftForm(EditableForm):
     __base_widget_type__ = BootstrapForm
     __model__ = Flight
     __hide_fields__ = ['id']
-    __limit_fields__ = ['model', 'registration']
+    __limit_fields__ = ['model', 'registration', 'competition_id']
     __base_widget_args__ = dict(action='select_aircraft')
     model = ModelSelectField
     registration = TextField
+    competition_id = TextField('competition_id', label_text='Competition Number')
 
 select_aircraft_form = SelectAircraftForm(DBSession)
 
@@ -286,16 +287,22 @@ class FlightController(BaseController):
         else:
             registration = self.flight.igc_file.guess_registration()
 
+        if self.flight.competition_id is not None:
+            competition_id = self.flight.competition_id
+        elif self.flight.igc_file.competition_id is not None:
+            competition_id = self.flight.igc_file.competition_id
+
         return dict(page='settings', title=_('Change Aircraft'),
                     user=request.identity['user'],
                     form=select_aircraft_form,
                     values=dict(model=model_id,
-                                registration=registration))
+                                registration=registration,
+                                competition_id=competition_id))
 
     @without_trailing_slash
     @expose()
     @validate(form=select_aircraft_form, error_handler=change_aircraft)
-    def select_aircraft(self, model, registration, **kwargs):
+    def select_aircraft(self, model, registration, competition_id, **kwargs):
         if not self.flight.is_writable():
             raise HTTPForbidden
 
@@ -306,6 +313,7 @@ class FlightController(BaseController):
 
         self.flight.model_id = model
         self.flight.registration = registration
+        self.flight.competition_id = competition_id
         self.flight.time_modified = datetime.utcnow()
         DBSession.flush()
 
