@@ -651,7 +651,8 @@ class FlightsController(BaseController):
         igc_files = igc_files.filter(or_(IGCFile.logger_manufacturer_id == None,
                                          IGCFile.logger_id == None,
                                          IGCFile.model == None,
-                                         IGCFile.registration == None))
+                                         IGCFile.registration == None,
+                                         IGCFile.competition_id == None))
 
         for igc_file in igc_files:
             igc_file.update_igc_headers()
