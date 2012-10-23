@@ -292,6 +292,8 @@ class FlightController(BaseController):
             competition_id = self.flight.competition_id
         elif self.flight.igc_file.competition_id is not None:
             competition_id = self.flight.igc_file.competition_id
+        else:
+            competition_id = None
 
         return dict(page='settings', title=_('Change Aircraft'),
                     user=request.identity['user'],
