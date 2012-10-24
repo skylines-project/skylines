@@ -2,7 +2,6 @@ import struct
 import datetime
 from twisted.python import log
 from twisted.internet.protocol import DatagramProtocol
-from twisted.internet import reactor
 from sqlalchemy.exc import SQLAlchemyError
 import transaction
 from skylines.model import DBSession, User, TrackingFix, Location
