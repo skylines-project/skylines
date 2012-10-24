@@ -26,6 +26,7 @@ FLAG_ALTITUDE = 0x10
 FLAG_VARIO = 0x20
 FLAG_ENL = 0x40
 
+
 class TrackingServer(DatagramProtocol):
     def pingReceived(self, host, port, key, payload):
         if len(payload) != 8: return
@@ -98,7 +99,8 @@ class TrackingServer(DatagramProtocol):
         if flags & FLAG_ENL:
             fix.engine_noise_level = data[10]
 
-        log.msg(u"%s %s %s %s" % (fix.time and fix.time.time(), host, pilot, fix.location))
+        log.msg(u"%s %s %s %s" % (fix.time and fix.time.time(), host, pilot,
+                                  fix.location))
 
         DBSession.add(fix)
         try:

@@ -1,6 +1,7 @@
 from crc16 import crc16xmodem
 from struct import unpack_from, pack
 
+
 def calc_crc(data):
     assert len(data) >= 16
 
@@ -9,12 +10,14 @@ def calc_crc(data):
     crc = crc16xmodem(data[6:], crc)
     return crc
 
+
 def check_crc(data):
     assert len(data) >= 16
 
     crc1 = calc_crc(data)
     crc2 = unpack_from('!H', data, 4)[0]
     return crc1 == crc2
+
 
 def set_crc(data):
     assert len(data) >= 16
