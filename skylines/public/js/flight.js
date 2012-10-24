@@ -703,7 +703,6 @@ function updateBarogram(e) {
   var linechart = barogram.linechart;
   var reset_y_axis = this.reset_y_axis || false;
 
-  var largest_partition = null;
   var total_first = [];
   var total_last = [];
   var first_t = 999999;
@@ -712,8 +711,6 @@ function updateBarogram(e) {
   // circle throu all flights
   for (var fid = 0; fid < flights.length; fid++) {
     var flight = flights[fid];
-
-    last = flight.t.length - 1;
 
     // if flight is not in viewport continue.
     if (flight.geo.partitionedGeometries.length == 0) continue;
@@ -736,11 +733,13 @@ function updateBarogram(e) {
   var none_in_range = true;
 
   for (var fid = 0; fid < flights.length; fid++) {
-    // get indices of flight path between first_t(ime) and last_t(ime)
-    first = getNextSmallerIndex(flights[fid].t, first_t);
-    last = getNextSmallerIndex(flights[fid].t, last_t);
+    var flight = flights[fid];
 
-    if (flights[fid].t[first] > last_t || flights[fid].t[last] < first_t) {
+    // get indices of flight path between first_t(ime) and last_t(ime)
+    var first = getNextSmallerIndex(flight.t, first_t);
+    var last = getNextSmallerIndex(flight.t, last_t);
+
+    if (flight.t[first] > last_t || flight.t[last] < first_t) {
       // current flight is out of range. don't show it in barogram...
       total_first.push(-1);
       total_last.push(-1);
