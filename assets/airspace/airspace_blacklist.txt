@@ -1,4 +1,5 @@
-# remove cz border
 cz CZ Border (126.1 W, 136.175 E Praha Information)
-
-no Old Comp Area with Swedish border 
+no Old Comp Area with Swedish border
+pl FIR-WARSZAWA
+au BRISBANE FIR
+au MELBOURNE FIR
