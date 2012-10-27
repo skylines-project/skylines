@@ -40,8 +40,9 @@ def main():
     # the lines in airspace_list contain the following:
     # de openair http://www.daec.de/download/ASDF.txt # for openair files
     # at sua http://www.austrocontrol.at/download/ASDF.sua # for SUA files
+    # us sua file://assets/airspace/adsf.sua # for local files
 
-    airspace_re = re.compile(r'^([^#]{1}.*?)\s+(openair|sua)\s+(http://.*)')
+    airspace_re = re.compile(r'^([^#]{1}.*?)\s+(openair|sua)\s+(http://.*|file://.*)')
 
     # import airspace blacklist to remove unwanted airspaces (e.g. borderlines)
     # each line contains the country code and the airspace name to remove
@@ -78,8 +79,11 @@ def main():
             filename = os.path.join(config['skylines.temporary_dir'], country_code, \
                 match.group(1).strip() + '.' + match.group(2))
 
-            print "\nDownloading " + url
-            filename = download_file(filename, url)
+            if url.startswith('http://'):
+                print "\nDownloading " + url
+                filename = download_file(filename, url)
+            elif url.startswith('file://'):
+                filename = url[7:]
 
             # remove all airspace definitions for the current country
             remove_country(country_code)
@@ -89,7 +93,8 @@ def main():
             elif filename.endswith('openair'):
                 import_openair(filename, country_code)
 
-            shutil.rmtree(os.path.dirname(filename))
+            if filename.startswith(config['skylines.temporary_dir']):
+                shutil.rmtree(os.path.dirname(filename))
 
 
 def import_sua(filename, country_code):
