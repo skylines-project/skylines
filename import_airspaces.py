@@ -125,7 +125,7 @@ def import_sua(filename, country_code):
             continue
 
         geom_str = "POLYGON" + str(feature.geometry())[8:]
-        name = unicode(feature.GetFieldAsString('title'), 'latin1')
+        name = unicode(feature.GetFieldAsString('title'), 'latin1').strip()
         airspace_class = feature.GetFieldAsString('class').strip()
         airspace_type = parse_airspace_type(feature.GetFieldAsString('type').strip())
 
@@ -189,7 +189,7 @@ def import_openair(filename, country_code):
             continue
 
         geom_str = "POLYGON" + str(feature.geometry())[8:]
-        name = unicode(feature.GetFieldAsString('name'), 'latin1')
+        name = unicode(feature.GetFieldAsString('name'), 'latin1').strip()
         airspace_class = feature.GetFieldAsString('class').strip()
 
         # this is a real kludge to determine if the polygon has more than 3 points...
