@@ -39,11 +39,13 @@ title = 'Live Tracking'
             </a>
           </td>
           <td>
+            <py:if test="airport is not None">
             ${insert_flag(airport.country_code)}
             <span py:replace="airport">
               Nearest Airport
             </span>
             (${format_distance(distance)})
+            </py:if>
           </td>
           <td nowrap="nowrap" class="show">
             <a href="/tracking/${track.pilot_id}/" class="btn btn-mini">Show</a>

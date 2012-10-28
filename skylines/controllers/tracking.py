@@ -159,6 +159,9 @@ class TrackingController(BaseController):
         for track in query.all():
             def get_nearest_airport():
                 airport = Airport.by_location(track.location, None)
+                if airport is None:
+                    return None, None
+
                 distance = airport.distance(track.location)
                 return airport, distance
 
