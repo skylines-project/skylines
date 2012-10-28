@@ -15,7 +15,7 @@ page = 'flights'
 
   <xi:include href="master/fullscreen.html" />
   <xi:include href="../headers/openlayers.html" />
-  <xi:include href="../headers/raphael.html" />
+  <xi:include href="../headers/flot.html" />
   <xi:include href="../headers/jquery/cookie.html" />
   <xi:include href="../snippets/tooltip.html" />
 
@@ -33,6 +33,7 @@ page = 'flights'
       initOpenLayers("map_canvas",
                      "${config.get('skylines.map.airspace_tile_url', '')}");
       initFlightLayer();
+      initFlot($("#barogram"));
 
       addFlight(${flight.id},
         ${h.json.dumps(trace.encoded.points)},
@@ -68,9 +69,6 @@ page = 'flights'
 
       map.zoomToExtent(zoomExtent);
 
-      render_barogram($("#barogram"));
-      scaleBarogram();
-
       hoverMap();
 
       var pinnedFlights = getPinnedFlights();
@@ -92,6 +90,9 @@ page = 'flights'
 
 <body>
   <div id="map_canvas" class="olFullscreen" style="position: absolute; top: 40px; bottom: 0; width:100%;"></div>
-  <div id="barogram" style="position: absolute; bottom: 0; width:100%; height:100pt; background-color: white; opacity: 0.8;"></div>
+  <div style="position: absolute; bottom: 0; width:100%; background-color: white; opacity: 0.8;">
+    <table id="fix-data" class="table table-condensed"></table>
+    <div id="barogram" style="width:100%; height:100pt;"></div>
+  </div>
 </body>
 </html>

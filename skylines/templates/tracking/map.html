@@ -15,7 +15,7 @@ tagline_link_text = pilot
 
   <xi:include href="master/fullscreen.html" />
   <xi:include href="../headers/openlayers.html" />
-  <xi:include href="../headers/raphael.html" />
+  <xi:include href="../headers/flot.html" />
   <xi:include href="../headers/jquery/cookie.html" />
   <xi:include href="../snippets/tooltip.html" />
 
@@ -33,6 +33,7 @@ tagline_link_text = pilot
       initOpenLayers("map_canvas",
                      "${config.get('skylines.map.airspace_tile_url', '')}");
       initFlightLayer();
+      initFlot($("#barogram"));
       /* ]]> */
 
       <py:if test="trace">
@@ -68,9 +69,6 @@ tagline_link_text = pilot
 
       map.zoomToExtent(zoomExtent);
 
-      render_barogram($("#barogram"));
-      scaleBarogram();
-
       hoverMap();
 
       $.getScript("http://maps.google.com/maps/api/js?v=3.7&sensor=false&callback=addGoogleLayer");
@@ -94,7 +92,10 @@ tagline_link_text = pilot
   <body>
     <div py:if="trace or (defined('other_pilots') and other_pilots)" py:strip="True">
       <div id="map_canvas" class="olFullscreen" style="position: absolute; top: 40px; bottom: 0; width:100%;"></div>
-      <div id="barogram" style="position: absolute; bottom: 0; width:100%; height:100pt; background-color: white; opacity: 0.8;"></div>
+      <div style="position: absolute; bottom: 0; width:100%; background-color: white; opacity: 0.8;">
+        <table id="fix-data" class="table table-condensed"></table>
+        <div id="barogram" style="width:100%; height:100pt;"></div>
+      </div>
     </div>
     <div py:if="not trace and (not defined('other_pilots') or not other_pilots)">
       <div style="height:50pt;"/>

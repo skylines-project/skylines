@@ -197,11 +197,11 @@ a.no-link {
 }
 
 .olFullscreen .olControlAttribution {
-  bottom: 100pt !important;
+  bottom: 125pt !important;
 }
 
 .olFullscreen .olControlScaleLine {
-  bottom: 100pt !important;
+  bottom: 125pt !important;
 }
 
 .tooltip {
@@ -226,4 +226,27 @@ table.vmiddle td {
 
 .pagination-condensed a {
   line-height: 22px;
+}
+
+#map_canvas {
+	margin-bottom: 5px !important;
+}
+
+#map_canvas.olFullscreen {
+	margin-bottom: 0px !important;
+}
+
+#fix-data {
+	margin-bottom: 0;
+}
+
+#fix-data tr td {
+	width: 22.5%;
+	text-align: right;
+}
+
+#fix-data tr td:first-child {
+	width: 10%;
+	text-align: center;
+	vertical-align: middle;
 }

@@ -17,7 +17,7 @@ page = 'flights'
   <xi:include href="master/page.html" />
   <xi:include href="../headers/bootstrap/collapse.html" />
   <xi:include href="../headers/openlayers.html" py:if="trace" />
-  <xi:include href="../headers/raphael.html" py:if="trace" />
+  <xi:include href="../headers/flot.html" py:if="trace" />
   <xi:include href="../headers/jquery/cookie.html" />
   <xi:include href="../snippets/tooltip.html" />
 
@@ -35,6 +35,7 @@ page = 'flights'
       initOpenLayers("map_canvas",
                      "${config.get('skylines.map.airspace_tile_url', '')}");
       initFlightLayer();
+      initFlot($("#barogram"));
 
       addFlight(${flight.id},
         ${h.json.dumps(trace.encoded.points)},
@@ -65,9 +66,6 @@ page = 'flights'
       /* <![CDATA[ */
 
       map.zoomToExtent(getAllFlightsBounds().scale(1.1));
-
-      render_barogram($("#barogram"));
-      scaleBarogram();
 
       hoverMap();
 
@@ -141,7 +139,8 @@ page = 'flights'
       </div>
       <div py:if="trace" class="span8">
         <div id="map_canvas" style="width:100%; height:400pt;"></div>
-        <div id="barogram" style="width:100%; height:120pt;position:relative;"></div>
+        <div id="barogram" style="width:100%; height:120pt;"></div>
+        <table id="fix-data" class="table table-condensed"></table>
       </div>
       <div py:if="not trace" class="span8">
           An error occurred while decoding this flight.

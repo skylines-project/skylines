@@ -17,7 +17,7 @@ tagline_link_text = pilot
 
   <xi:include href="master/page.html" />
   <xi:include href="../headers/openlayers.html" />
-  <xi:include href="../headers/raphael.html" />
+  <xi:include href="../headers/flot.html" />
   <xi:include href="../headers/jquery/cookie.html" />
   <xi:include href="../snippets/tooltip.html" />
 
@@ -35,6 +35,7 @@ tagline_link_text = pilot
       initOpenLayers("map_canvas",
                      "${config.get('skylines.map.airspace_tile_url', '')}");
       initFlightLayer();
+      initFlot($("#barogram"))
       /* ]]> */
 
       <py:if test="trace">
@@ -65,9 +66,6 @@ tagline_link_text = pilot
       /* <![CDATA[ */
 
       map.zoomToExtent(getAllFlightsBounds().scale(1.1));
-
-      render_barogram($("#barogram"));
-      scaleBarogram();
 
       hoverMap();
 
@@ -138,7 +136,8 @@ tagline_link_text = pilot
 
       <div class="span8" py:if="trace or (defined('other_pilots') and other_pilots)">
         <div id="map_canvas" style="width:100%; height:400pt;"></div>
-        <div id="barogram" style="width:100%; height:120pt;position:relative;"></div>
+        <div id="barogram" style="width:100%; height:120pt;"></div>
+        <table id="fix-data" class="table table-condensed"></table>
       </div>
 
       <div class="span8" py:if="not trace and (not defined('other_pilots') or not other_pilots)">

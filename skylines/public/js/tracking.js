@@ -14,7 +14,8 @@ function updateFlightsFromJSON() {
                      data.num_levels, data.barogram_t, data.barogram_h, data.enl);
 
         initRedrawLayer(map.getLayersByName("Flight")[0]);
-        $.proxy(updateBarogram, { reset_y_axis: true })();
+        updateFlotScale();
+        updateFlotData();
       }
     });
   }
@@ -64,6 +65,13 @@ function updateFlight(tracking_id, _lonlat, _levels, _num_levels, _time, _height
 
   if (flight_id == -1) return;
 
+  var flot_h = [], flot_enl = [];
+  for (var i = 0; i < time.length; i++) {
+      var timestamp = time[i] * 1000;
+      flot_h.push([timestamp, height[i]]);
+      flot_enl.push([timestamp, enl[i]]);
+  }
+
   // update flight
   var flight = flights[flight_id];
 
@@ -73,6 +81,8 @@ function updateFlight(tracking_id, _lonlat, _levels, _num_levels, _time, _height
   flight.h = flight.h.concat(height.slice(1));
   flight.enl = flight.enl.concat(enl.slice(1));
   flight.lonlat = flight.lonlat.concat(lonlat.slice(1));
+  flight.flot_h = flight.flot_h.concat(flot_h.slice(1));
+  flight.flot_enl = flight.flot_enl.concat(flot_enl.slice(1));
 
   // recalculate bounds
   flight.geo.bounds = flight.geo.calculateBounds();
@@ -82,8 +92,4 @@ function updateFlight(tracking_id, _lonlat, _levels, _num_levels, _time, _height
   }
 
   flight.last_update = flight.t[flight.t.length - 1];
-
-  barogram_t[flight_id] = barogram_t[flight_id].concat(time.slice(1));
-  barogram_h[flight_id] = barogram_h[flight_id].concat(height.slice(1));
-  barogram_enl[flight_id] = barogram_enl[flight_id].concat(enl.slice(1));
 };
