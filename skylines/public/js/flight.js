@@ -438,6 +438,30 @@ function updateFlotData() {
     });
   }
 
+  var options = flot.getOptions();
+  var markings = [];
+  if (flights.length == 1) {
+    var contests = flights[0].contests;
+    for (var i = 0; i < contests.length; ++i) {
+      var contest = contests[i];
+      var times = contest.times;
+      var color = contest_colors[contest.name];
+
+      for (var j = 0; j < times.length; ++j) {
+        var time = times[j] * 1000;
+        markings.push({
+          lineWidth: 2,
+          color: color,
+          xaxis: {
+            from: time,
+            to: time
+          }
+        });
+      }
+    }
+  }
+  options.grid.markings = markings;
+
   flot.setData(data);
   flot.setupGrid();
   flot.draw();
