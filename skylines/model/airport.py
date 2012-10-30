@@ -20,7 +20,8 @@ class Airport(DeclarativeBase):
     time_created = Column(DateTime, nullable=False, default=datetime.utcnow)
     time_modified = Column(DateTime, nullable=False, default=datetime.utcnow)
 
-    location_wkt = GeometryColumn(Point(2), comparator=PGComparator)
+    location_wkt = GeometryColumn(Point(2, wkt_internal=True),
+                                  comparator=PGComparator)
     altitude = Column(Float)
 
     name = Column(String(), nullable=False)
@@ -42,8 +43,8 @@ class Airport(DeclarativeBase):
         if self.location_wkt is None:
             return None
 
-        wkt = DBSession.scalar(self.location_wkt.wkt)
-        return Location.from_wkt(wkt)
+        coords = self.location_wkt.coords(DBSession)
+        return Location(latitude=coords[1], longitude=coords[0])
 
     @location.setter
     def location(self, location):

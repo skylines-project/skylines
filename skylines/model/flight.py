@@ -42,9 +42,11 @@ class Flight(DeclarativeBase):
 
     takeoff_time = Column(DateTime, nullable=False, index=True)
     landing_time = Column(DateTime, nullable=False)
-    takeoff_location_wkt = GeometryColumn('takeoff_location', Point(2),
+    takeoff_location_wkt = GeometryColumn('takeoff_location',
+                                          Point(2, wkt_internal=True),
                                           comparator=PGComparator)
-    landing_location_wkt = GeometryColumn('landing_location', Point(2),
+    landing_location_wkt = GeometryColumn('landing_location',
+                                          Point(2, wkt_internal=True),
                                           comparator=PGComparator)
 
     takeoff_airport_id = Column(Integer, ForeignKey('airports.id'))
@@ -82,8 +84,8 @@ class Flight(DeclarativeBase):
         if self.takeoff_location_wkt is None:
             return None
 
-        wkt = DBSession.scalar(self.takeoff_location_wkt.wkt)
-        return Location.from_wkt(wkt)
+        coords = self.takeoff_location_wkt.coords(DBSession)
+        return Location(latitude=coords[1], longitude=coords[0])
 
     @takeoff_location.setter
     def takeoff_location(self, location):
@@ -97,8 +99,8 @@ class Flight(DeclarativeBase):
         if self.landing_location_wkt is None:
             return None
 
-        wkt = DBSession.scalar(self.landing_location_wkt.wkt)
-        return Location.from_wkt(wkt)
+        coords = self.landing_location_wkt.coords(DBSession)
+        return Location(latitude=coords[1], longitude=coords[0])
 
     @landing_location.setter
     def landing_location(self, location):

@@ -37,7 +37,7 @@ class Trace(DeclarativeBase):
     duration = Column(Interval)
 
     times = Column(postgresql.ARRAY(DateTime), nullable=False)
-    _locations = GeometryColumn('locations', LineString(2),
+    _locations = GeometryColumn('locations', LineString(2, wkt_internal=True),
                                 nullable=False, comparator=PGComparator)
 
     @property
