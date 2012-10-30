@@ -45,13 +45,17 @@ Now create a new database and user for *SkyLines*. On Debian Linux, change to th
 
     $ su - postgres
     $ createuser <your username> # you don't need to grant any special privileges now
-    $ createdb skylines -O <your username> # create skylines database with owner skylines
-    $ psql skylines -c "CREATE EXTENSION postgis"
-    $ psql skylines -c "CREATE EXTENSION fuzzystrmatch"
-    $ psql skylines -c "GRANT ALL ON geometry_columns TO <your username>"
-    $ psql skylines -c "GRANT SELECT ON spatial_ref_sys TO <your username>"
+    $ createdb skylines --o <your username> # create skylines database with owner skylines
+    $ createlang plpgsql -d skylines
+    $ psql -d skylines -f /usr/share/postgresql/9.1/contrib/postgis-1.5/postgis.sql
+    $ psql -d skylines -f /usr/share/postgresql/9.1/contrib/postgis-1.5/spatial_ref_sys.sql
+    $ psql skylines # log into postgres using skylines database
+    postgres=# grant all on geometry_columns to <your username>;
+    postgres=# grant select on spatial_ref_sys to <your username>;
+    postgres=# create extension fuzzystrmatch;
+    postgres=# \q
 
-Note: the procedure of installing PostGIS may be different for other versions of postgresql, postgis and other
+Note: the location of the postgis sql files may be different for other versions of postgresql, postgis and other
 operating systems. See the approciate documentation and websites for more information.
 
 Adjust the sqlalchemy.url configuration in the development.ini.
