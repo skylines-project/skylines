@@ -19,10 +19,3 @@ def setup_schema(command, conf, vars):
     # <websetup.websetup.schema.after.metadata.create_all>
 
     transaction.commit()
-
-    from migrate.versioning.shell import main
-    from migrate.exceptions import DatabaseAlreadyControlledError
-    try:
-        main(argv=['version_control'], url=config['sqlalchemy.url'], repository='migration', name='migration')
-    except DatabaseAlreadyControlledError:
-        print 'Database already under version control'
