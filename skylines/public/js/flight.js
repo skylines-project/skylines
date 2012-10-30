@@ -7,6 +7,8 @@ var flights = [];
 
 var flot;
 
+var highlighted_flight_sfid;
+
 /**
  * colors
  *
@@ -225,6 +227,22 @@ function addFlight(sfid, _lonlat, _levels, _num_levels, _time, _height, _enl, zo
     "<td>--</td>" +
     "</tr>");
 
+
+  table_row.bind('hover', function(e) {
+    if (flights.length > 1)
+      $(this).css("cursor", "pointer");
+  });
+
+  table_row.bind('click', function(e) {
+    if (flights.length <= 1)
+      return;
+
+    if (highlighted_flight_sfid == sfid)
+      clearHighlight();
+    else
+      setHighlight(sfid);
+  });
+
   $("#fix-data").append(table_row);
 
   flights.push({
@@ -418,18 +436,48 @@ function initFlot(element) {
 }
 
 function updateFlotData() {
+  var highlighted = flightWithSFID(highlighted_flight_sfid);
+
   var data = [];
   for (var id = 0; id < flights.length; id++) {
     var flight = flights[id];
 
+    // Don't draw highlighted flight yet because it should be on top
+    if (highlighted && flight.sfid == highlighted.sfid)
+      continue;
+
+    var color = flight.color;
+    if (highlighted)
+      // Fade out line color if another flight is highlighted
+      color = $.color.parse(color).add('a', -0.6).toString()
+
     data.push({
       data: flight.flot_h,
-      color: flight.color
+      color: color
+    });
+
+    // Don't show other flight's ENL if a flight is highlighted
+    if (!highlighted)
+      data.push({
+        data: flight.flot_enl,
+        color: flight.color,
+        lines: {
+          lineWidth: 0,
+          fill: 0.2
+        },
+        yaxis: 2
+      });
+  }
+
+  if (highlighted) {
+    data.push({
+      data: highlighted.flot_h,
+      color: highlighted.color
     });
 
     data.push({
-      data: flight.flot_enl,
-      color: flight.color,
+      data: highlighted.flot_enl,
+      color: highlighted.color,
       lines: {
         lineWidth: 0,
         fill: 0.2
@@ -440,8 +488,14 @@ function updateFlotData() {
 
   var options = flot.getOptions();
   var markings = [];
-  if (flights.length == 1) {
-    var contests = flights[0].contests;
+
+  var contests;
+  if (flights.length == 1)
+    contests = flights[0].contests;
+  else if (highlighted)
+    contests = highlighted.contests;
+
+  if (contests) {
     for (var i = 0; i < contests.length; ++i) {
       var contest = contests[i];
       var times = contest.times;
@@ -460,6 +514,7 @@ function updateFlotData() {
       }
     }
   }
+
   options.grid.markings = markings;
 
   flot.setData(data);
@@ -632,6 +687,56 @@ function clearFixDataTableRow(id, fix_data) {
 function clearFixDataTable() {
   for (var id = 0; id < flights.length; id++)
     clearFixDataTableRow(id);
+}
+
+function flightWithSFID(sfid) {
+  for (var id = 0; id < flights.length; id++) {
+    var flight = flights[id];
+    if (flight.sfid == sfid)
+      return flight;
+  }
+
+  return null;
+}
+
+function clearHighlight(defer_update) {
+  if (!highlighted_flight_sfid)
+    return;
+
+  // Find currently highlighted flight
+  var flight = flightWithSFID(highlighted_flight_sfid);
+  if (flight)
+    // Removed table row styling for selected flight
+    flight.table_row.removeClass("selected");
+
+  // Unset the highlighted sfid variable
+  highlighted_flight_sfid = undefined;
+
+  // Unless specifically deferred update the barogram
+  if (defer_update != true)
+    updateFlotData();
+}
+
+function setHighlight(sfid) {
+  if (highlighted_flight_sfid == sfid)
+    return;
+
+  // Clear the currently highlighted flight
+  clearHighlight(true);
+
+  // Find flight that should be highlighted now
+  var flight = flightWithSFID(sfid);
+  if (!flight)
+    return;
+
+  // Add table row styling
+  flight.table_row.addClass("selected");
+
+  // Save highlighted status
+  highlighted_flight_sfid = sfid;
+
+  // Update barogram
+  updateFlotData();
 }
 
 /**

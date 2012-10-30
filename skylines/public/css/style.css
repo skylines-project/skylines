@@ -250,3 +250,7 @@ table.vmiddle td {
 	text-align: center;
 	vertical-align: middle;
 }
+
+.table tr.selected td, .table tr.selected:hover td {
+  background-color: #eee;
+}
