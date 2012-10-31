@@ -100,13 +100,15 @@ def main():
 def import_sua(filename, country_code):
     print "reading " + filename
     country_blacklist = blacklist.get(country_code, [])
+    temporary_file = os.path.join(config['skylines.temporary_dir'], os.path.basename(filename) + '.tmp')
 
+    # try to uncomment a CLASS definition, as many SUA files from soaringweb.org have a CLASS comment
     with open(filename, 'r') as in_file:
-        with open(filename + '.tmp', 'w') as out_file:
+        with open(temporary_file, 'w') as out_file:
             for line in in_file.xreadlines():
                 out_file.write(line.replace('# CLASS', 'CLASS'))
 
-    airspace_file = ogr.Open(filename + '.tmp')
+    airspace_file = ogr.Open(temporary_file)
     if not airspace_file:
         return
     
@@ -124,16 +126,20 @@ def import_sua(filename, country_code):
 
         geom_str = "POLYGON" + str(feature.geometry())[8:]
         name = unicode(feature.GetFieldAsString('title'), 'latin1')
-        airspace_class = feature.GetFieldAsString('class')
+        airspace_class = feature.GetFieldAsString('class').strip()
+        airspace_type = parse_airspace_type(feature.GetFieldAsString('type').strip())
 
         # this is a real kludge to determine if the polygon has more than 3 points...
         if (geom_str.count(',') < 3):
             print name + "(" + airspace_class + ") has not enough points to be a polygon"
             continue
 
-        if not airspace_class.strip():
-            print name + " has no airspace class"
-            continue
+        if not airspace_class:
+            if airspace_type:
+                airspace_class = airspace_type
+            else:
+                print name + " has neither class nor type"
+                continue
 
         if name in country_blacklist:
             print name + " is in blacklist"
@@ -156,6 +162,8 @@ def import_sua(filename, country_code):
     airspace_file.Destroy()
     DBSession.flush()
     transaction.commit()
+
+    os.remove(temporary_file)
     
     print "added " + str(j) + " features for country " + country_code
 
@@ -182,14 +190,14 @@ def import_openair(filename, country_code):
 
         geom_str = "POLYGON" + str(feature.geometry())[8:]
         name = unicode(feature.GetFieldAsString('name'), 'latin1')
-        airspace_class = feature.GetFieldAsString('class')
+        airspace_class = feature.GetFieldAsString('class').strip()
 
         # this is a real kludge to determine if the polygon has more than 3 points...
         if (geom_str.count(',') < 3):
             print name + "(" + airspace_class + ") has not enough points to be a polygon"
             continue
 
-        if not airspace_class.strip():
+        if not airspace_class:
             print name + " has no airspace class"
             continue
         
@@ -241,6 +249,39 @@ def download_file(path, url):
 
     # Return path to the file
     return path
+
+
+def parse_airspace_type(airspace_type):
+
+    if re.search('^C$', airspace_type): return 'CTR'
+    if re.search('^CTA$', airspace_type): return 'CTR'
+    if re.search('^CTR$', airspace_type): return 'CTR'
+    if re.search('^CTA/CTR$', airspace_type): return 'CTR'
+    if re.search('^CTR/CTA$', airspace_type): return 'CTR'
+
+    if re.search('^R$', airspace_type): return 'R'
+    if re.search('RESTRICTED', airspace_type): return 'R'
+    if re.search('CYR', airspace_type): return 'R'
+
+    if re.search('^P$', airspace_type): return 'P'
+    if re.search('PROHIBITED', airspace_type): return 'P'
+
+    if re.search('^D$', airspace_type): return 'Q'
+    if re.search('DANGER', airspace_type): return 'Q'
+    if re.search('CYD', airspace_type): return 'Q'
+
+    if re.search('^G$', airspace_type): return 'W'
+    if re.search('GSEC', airspace_type): return 'W'
+
+    if re.search('^T$', airspace_type): return 'TMZ'
+    if re.search('TMZ', airspace_type): return 'TMZ'
+
+    if re.search('CYA', airspace_type): return 'F'
+
+    # Military Aerodrome Traffic Zone, not in SUA / OpenAir definition
+    if re.search('MATZ', airspace_type): return 'W'
+
+    return None
 
 
 if __name__ == '__main__':
