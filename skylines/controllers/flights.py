@@ -81,28 +81,28 @@ class FlightsController(BaseController):
 
             aaData = []
             for flight, num_comments in flights:
-                aaData.append(dict(takeoff_time = flight.takeoff_time.strftime('%H:%M'),
-                                   landing_time = flight.landing_time.strftime('%H:%M'),
-                                   date = flight.date_local.strftime('%d.%m.%Y'),
-                                   date_formatted = format_date(flight.date_local),
-                                   olc_plus_score = flight.olc_plus_score,
-                                   olc_classic_distance = flight.olc_classic_distance,
-                                   pilot_id = flight.pilot_id,
-                                   pilot = flight.pilot and flight.pilot.display_name,
-                                   co_pilot_id = flight.co_pilot_id,
-                                   co_pilot = flight.co_pilot and flight.co_pilot.display_name,
-                                   club_id = flight.club_id,
-                                   club = flight.club and truncate(flight.club.name, 25),
-                                   owner = flight.igc_file.owner.display_name,
-                                   takeoff_airport = flight.takeoff_airport and flight.takeoff_airport.name,
-                                   takeoff_airport_id = flight.takeoff_airport and flight.takeoff_airport.id,
-                                   takeoff_airport_country_code = flight.takeoff_airport and flight.takeoff_airport.country_code.lower(),
-                                   aircraft = (flight.model and flight.model.name) or (flight.igc_file.model and '[' + flight.igc_file.model + ']'),
-                                   aircraft_reg = flight.registration or flight.igc_file.registration or "Unknown",
-                                   flight_id = flight.id,
-                                   num_comments = num_comments))
+                aaData.append(dict(takeoff_time=flight.takeoff_time.strftime('%H:%M'),
+                                   landing_time=flight.landing_time.strftime('%H:%M'),
+                                   date=flight.date_local.strftime('%d.%m.%Y'),
+                                   date_formatted=format_date(flight.date_local),
+                                   olc_plus_score=flight.olc_plus_score,
+                                   olc_classic_distance=flight.olc_classic_distance,
+                                   pilot_id=flight.pilot_id,
+                                   pilot=flight.pilot and flight.pilot.display_name,
+                                   co_pilot_id=flight.co_pilot_id,
+                                   co_pilot=flight.co_pilot and flight.co_pilot.display_name,
+                                   club_id=flight.club_id,
+                                   club=flight.club and truncate(flight.club.name, 25),
+                                   owner=flight.igc_file.owner.display_name,
+                                   takeoff_airport=flight.takeoff_airport and flight.takeoff_airport.name,
+                                   takeoff_airport_id=flight.takeoff_airport and flight.takeoff_airport.id,
+                                   takeoff_airport_country_code=flight.takeoff_airport and flight.takeoff_airport.country_code.lower(),
+                                   aircraft=(flight.model and flight.model.name) or (flight.igc_file.model and '[' + flight.igc_file.model + ']'),
+                                   aircraft_reg=flight.registration or flight.igc_file.registration or "Unknown",
+                                   flight_id=flight.id,
+                                   num_comments=num_comments))
 
-            return dict(response_dict, aaData = aaData)
+            return dict(response_dict, aaData=aaData)
 
         else:
             if not date:
@@ -116,8 +116,8 @@ class FlightsController(BaseController):
 
             flights = flights.order_by(desc(Flight.olc_plus_score))
             flights = flights.limit(limit)
-            return dict(tab = tab, date=date, pilot=pilot, club=club, airport=airport,
-                        flights = flights, flights_count = flights_count)
+            return dict(tab=tab, date=date, pilot=pilot, club=club, airport=airport,
+                        flights=flights, flights_count=flights_count)
 
     @expose()
     def _lookup(self, id, *remainder):
@@ -153,7 +153,7 @@ class FlightsController(BaseController):
         if not date:
             raise HTTPNotFound
 
-        return self.date(date, today = True, **kw)
+        return self.date(date, today=True, **kw)
 
     @without_trailing_slash
     @expose('skylines.templates.flights.list')

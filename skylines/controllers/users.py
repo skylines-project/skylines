@@ -49,27 +49,34 @@ class DelaySelectField(PropertySingleSelectField):
         d['options'] = options
         return d
 
+
 class UnitSelectField(PropertySingleSelectField):
     def _my_update_params(self, d, nullable=False):
         d['options'] = list(enumerate(x[0] for x in self.unit_registry))
         return d
 
+
 class DistanceUnitSelectField(UnitSelectField):
     unit_registry = units.distance_units
+
 
 class SpeedUnitSelectField(UnitSelectField):
     unit_registry = units.speed_units
 
+
 class LiftUnitSelectField(UnitSelectField):
     unit_registry = units.lift_units
 
+
 class AltitudeUnitSelectField(UnitSelectField):
     unit_registry = units.altitude_units
+
 
 class UnitPresetSelectField(PropertySingleSelectField):
     def _my_update_params(self, d, nullable=False):
         d['options'] = list(enumerate(x[0] for x in units.unit_presets))
         return d
+
 
 class SelectClubForm(EditableForm):
     __base_widget_type__ = BootstrapForm
@@ -190,7 +197,7 @@ The SkyLines Team
     msg['Subject'] = 'SkyLines password recovery'
     msg['From'] = config.get('email_from', 'skylines@xcsoar.org')
     msg['To'] = user.email_address.encode('ascii')
-    msg['Date'] = email.Utils.formatdate(localtime = 1)
+    msg['Date'] = email.Utils.formatdate(localtime=1)
 
     smtp = smtplib.SMTP(config.get('smtp_server', 'localhost'))
     smtp.ehlo()
@@ -323,7 +330,7 @@ class UserController(BaseController):
         redirect('.')
 
     @expose()
-    def tracking_register(self, came_from = '/tracking/info'):
+    def tracking_register(self, came_from='/tracking/info'):
         if not self.user.is_writable():
             raise HTTPForbidden
 
@@ -367,10 +374,10 @@ class UserController(BaseController):
                          .filter(Flight.date_local > (date.today() - timedelta(days=365))) \
                          .first()
 
-        last_year_statistics = dict(flights = 0,
-                                    distance = 0,
-                                    duration = timedelta(0),
-                                    speed = 0)
+        last_year_statistics = dict(flights=0,
+                                    distance=0,
+                                    duration=timedelta(0),
+                                    speed=0)
 
         if query and query.flights > 0:
             duration_seconds = query.duration.days * 24 * 3600 + query.duration.seconds

@@ -2,8 +2,8 @@
 """Main Controller"""
 
 from datetime import datetime
-from tg import expose, flash, url, lurl, request, redirect, require, config
-from tg.i18n import ugettext as _, lazy_ugettext as l_
+from tg import expose, flash, lurl, request, redirect, require, config
+from tg.i18n import ugettext as _
 from repoze.what.predicates import Any, not_anonymous
 from skylines import model
 from skylines.model import DBSession
@@ -37,7 +37,7 @@ class RootController(BaseController):
     must be wrapped around with :class:`tg.controllers.WSGIAppController`.
 
     """
-    admin = AdminController(model, DBSession, config_type = TGAdminConfig)
+    admin = AdminController(model, DBSession, config_type=TGAdminConfig)
 
     error = ErrorController()
     users = UsersController()
@@ -65,7 +65,7 @@ class RootController(BaseController):
         return dict()
 
     @expose('skylines.templates.login')
-    def login(self, came_from = None):
+    def login(self, came_from=None):
         """Start the user login."""
         if not came_from:
             if request.referrer:
@@ -73,10 +73,10 @@ class RootController(BaseController):
             else:
                 came_from = lurl('/')
 
-        return dict(page = 'login', came_from = came_from)
+        return dict(page='login', came_from=came_from)
 
     @expose()
-    def post_login(self, came_from = None):
+    def post_login(self, came_from=None):
         """
         Redirect the user to the initially requested page on successful
         authentication or redirect her back to the login page if login failed.
@@ -99,7 +99,7 @@ class RootController(BaseController):
         redirect(came_from)
 
     @expose()
-    def post_logout(self, came_from = None):
+    def post_logout(self, came_from=None):
         """
         Redirect the user to the initially requested page on logout and say
         goodbye as well.

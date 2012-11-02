@@ -72,7 +72,7 @@ class SelectAircraftForm(EditableForm):
 select_aircraft_form = SelectAircraftForm(DBSession)
 
 
-def get_flight_path(flight, threshold = 0.001, max_points = 3000):
+def get_flight_path(flight, threshold=0.001, max_points=3000):
     fp = flight_path(flight.igc_file, max_points)
     if len(fp) == 0:
         log.error('flight_path("' + flight.igc_file.filename + '") returned with an empty list')
@@ -99,14 +99,14 @@ def get_flight_path(flight, threshold = 0.001, max_points = 3000):
 
     contest_traces = get_contest_traces(flight, encoder)
 
-    return dict(encoded=encoded, zoom_levels = zoom_levels, fixes = fixes,
-                barogram_t=barogram_t, barogram_h=barogram_h, enl=enl, contests = contest_traces,
+    return dict(encoded=encoded, zoom_levels=zoom_levels, fixes=fixes,
+                barogram_t=barogram_t, barogram_h=barogram_h, enl=enl, contests=contest_traces,
                 sfid=flight.id)
 
 
 def get_contest_traces(flight, encoder):
-    contests = [dict(contest_type = 'olc_plus', trace_type = 'triangle'),
-                dict(contest_type = 'olc_plus', trace_type = 'classic')]
+    contests = [dict(contest_type='olc_plus', trace_type='triangle'),
+                dict(contest_type='olc_plus', trace_type='classic')]
 
     contest_traces = []
 
@@ -121,9 +121,9 @@ def get_contest_traces(flight, encoder):
             times.append(flight.takeoff_time.hour * 3600 + flight.takeoff_time.minute * 60 + flight.takeoff_time.second + \
                          (time - flight.takeoff_time).days * 86400 + (time - flight.takeoff_time).seconds)
 
-        contest_traces.append(dict(name = contest['contest_type'] + " " + contest['trace_type'],
-                                   turnpoints = encoder.encode(fixes, [0] * len(fixes))['points'],
-                                   times = encoder.encodeList(times)))
+        contest_traces.append(dict(name=contest['contest_type'] + " " + contest['trace_type'],
+                                   turnpoints=encoder.encode(fixes, [0] * len(fixes))['points'],
+                                   times=encoder.encodeList(times)))
 
     return contest_traces
 
@@ -164,7 +164,7 @@ def format_phase(phase):
         if abs(phase.alt_diff) > 0 and abs(phase.glide_rate) < 1000:
             r['glide_rate'] = format_number(phase.glide_rate)
         else:
-            r['glide_rate'] = u'\u221e' # infinity
+            r['glide_rate'] = u'\u221e'  # infinity
     else:
         r['circling_direction'] = CIRCDIR_NAMES[phase.circling_direction]
     return r
@@ -225,10 +225,10 @@ class FlightController(BaseController):
         if not trace:
             raise HTTPNotFound
 
-        return  dict(encoded=trace['encoded'], num_levels=trace['fixes']['numLevels'],
-                     zoom_levels=trace['zoom_levels'], barogram_t=trace['barogram_t'],
-                     barogram_h=trace['barogram_h'], enl=trace['enl'], contests=trace['contests'],
-                     sfid=self.flight.id)
+        return dict(encoded=trace['encoded'], num_levels=trace['fixes']['numLevels'],
+                    zoom_levels=trace['zoom_levels'], barogram_t=trace['barogram_t'],
+                    barogram_h=trace['barogram_h'], enl=trace['enl'], contests=trace['contests'],
+                    sfid=self.flight.id)
 
     @without_trailing_slash
     @expose('skylines.templates.generic.form')

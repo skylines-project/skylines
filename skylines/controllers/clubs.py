@@ -3,7 +3,7 @@
 from tg import expose, validate, redirect
 from tg.i18n import ugettext as _
 from tg.decorators import with_trailing_slash
-from webob.exc import HTTPNotFound, HTTPForbidden
+from webob.exc import HTTPForbidden
 from sprox.formbase import AddRecordForm, EditableForm, Field
 from sprox.validators import UniqueValue
 from sprox.sa.provider import SAORMProvider

@@ -15,7 +15,7 @@ from skylines.model import DBSession, User, TrackingFix, Airport
 from skylinespolyencode import SkyLinesPolyEncoder
 
 
-def get_flight_path2(pilot, last_update = None):
+def get_flight_path2(pilot, last_update=None):
     query = DBSession.query(TrackingFix)
     query = query.filter(and_(TrackingFix.pilot == pilot,
                               TrackingFix.location != None,
@@ -50,8 +50,8 @@ def get_flight_path2(pilot, last_update = None):
     return result
 
 
-def get_flight_path(pilot, threshold = 0.001, last_update = None):
-    fp = get_flight_path2(pilot, last_update = last_update)
+def get_flight_path(pilot, threshold=0.001, last_update=None):
+    fp = get_flight_path2(pilot, last_update=last_update)
     if fp is None or len(fp) == 0:
         return None
 
@@ -81,7 +81,7 @@ def get_flight_path(pilot, threshold = 0.001, last_update = None):
     barogram_h = encoder.encodeList([fp[i][3] for i in range(len(fp)) if fixes['levels'][i] != -1])
     enl = encoder.encodeList([fp[i][4] or 0 for i in range(len(fp)) if fixes['levels'][i] != -1])
 
-    return dict(encoded=encoded, zoom_levels = zoom_levels, fixes = fixes,
+    return dict(encoded=encoded, zoom_levels=zoom_levels, fixes=fixes,
                 barogram_t=barogram_t, barogram_h=barogram_h, enl=enl)
 
 
@@ -131,9 +131,9 @@ class TrackController(BaseController):
         if trace is None:
             raise HTTPNotFound
 
-        return  dict(encoded=trace['encoded'], num_levels=trace['fixes']['numLevels'],
-                     barogram_t=trace['barogram_t'], barogram_h=trace['barogram_h'],
-                     enl=trace['enl'], sfid=self.pilot.id)
+        return dict(encoded=trace['encoded'], num_levels=trace['fixes']['numLevels'],
+                    barogram_t=trace['barogram_t'], barogram_h=trace['barogram_h'],
+                    enl=trace['enl'], sfid=self.pilot.id)
 
 
 class TrackingController(BaseController):
