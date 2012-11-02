@@ -3,6 +3,7 @@
 from datetime import datetime, timedelta
 from math import log
 from tg import expose, request, cache
+from tg.decorators import with_trailing_slash
 from webob.exc import HTTPNotFound
 from sqlalchemy import func, over
 from sqlalchemy.sql.expression import and_, desc, cast
@@ -96,6 +97,7 @@ class TrackController(BaseController):
     def __get_flight_path(self, **kw):
         return get_flight_path(self.pilot, **kw)
 
+    @with_trailing_slash
     @expose('skylines.templates.tracking.view')
     def index(self):
         other_pilots = []
