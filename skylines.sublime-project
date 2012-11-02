@@ -1,0 +1,13 @@
+{
+	"folders":
+	[
+		{
+			"name": "/",
+			"path": ".",
+			"folder_exclude_patterns": ["skylines"]
+		},
+		{
+			"path": "skylines"
+		}
+	]
+}
