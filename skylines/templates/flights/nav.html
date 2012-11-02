@@ -57,7 +57,7 @@ my_club = request.identity['user'].club if request.identity else None
   </li>
 
   <li id="pinned-flights-link" style="display: none;" class="${(None, 'active')[defined('tab') and tab == 'pinned']}">
-    <a href="pinned">Pinned Flights</a>
+    <a href="/flights/pinned">Pinned Flights</a>
     <script type="text/javascript">
     /* <![CDATA[ */
       showPinnedFlightsLink();
