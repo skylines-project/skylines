@@ -1,16 +1,6 @@
 # Installation and Setup
 
-*SkyLines* is based on the [TurboGears2](http://www.turbogears.org) web framework. For further instructions visit its website. If you don't have it installed yet, install it:
-
-    $ easy_install -i http://tg.gy/current tg.devtools
-
-Install the helper applications from the XCSoar project:
-
-    $ git clone git://git.xcsoar.org/xcsoar/master/xcsoar.git
-    $ cd xcsoar
-    $ make TARGET=UNIX output/UNIX/bin/AnalyseFlight output/UNIX/bin/FlightPath
-    $ cd /opt/
-    $ sudo ln -s <path to xcsoar>/output/UNIX skylines
+*SkyLines* is based on the [TurboGears2](http://www.turbogears.org) web framework. For further instructions visit its website.
 
 Install the required libraries to run *SkyLines* using the setup.py script:
 
@@ -18,6 +8,15 @@ Install the required libraries to run *SkyLines* using the setup.py script:
     $ python setup.py develop
 
 *(You might have to install the additional debian packages `libxml2-dev`, `libxslt1-dev` and `python-dev` for the `lxml` dependency)*
+
+Install the helper applications from the XCSoar project:
+
+    $ git clone git://git.xcsoar.org/xcsoar/master/xcsoar.git
+    $ cd xcsoar
+    $ apt-get install libsdl1.2-dev libsdl-image1.2-dev libsdl-ttf2.0-dev libboost-system-dev
+    $ make TARGET=UNIX ENABLE_SDL=n output/UNIX/bin/AnalyseFlight output/UNIX/bin/FlightPath
+    $ cd /opt/
+    $ sudo ln -s <path to xcsoar>/output/UNIX skylines
 
 Install postgres and postgis. On Debian Linux (testing) this is done by:
 
