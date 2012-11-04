@@ -140,9 +140,9 @@ class TrackingController(BaseController):
     @expose('skylines.templates.tracking.list')
     def index(self, **kw):
         subq = DBSession.query(TrackingFix.id,
-                               over(func.rank(),
+                               over(func.row_number(),
                                     partition_by=TrackingFix.pilot_id,
-                                    order_by=desc(TrackingFix.time)).label('rank')) \
+                                    order_by=desc(TrackingFix.time)).label('row_number')) \
                 .outerjoin(TrackingFix.pilot) \
                 .filter(TrackingFix.time >= datetime.utcnow() - timedelta(hours=6)) \
                 .filter(TrackingFix.time <= datetime.utcnow() - cast(cast(User.tracking_delay, String()) + ' minutes', Interval)) \
@@ -152,7 +152,7 @@ class TrackingController(BaseController):
         query = DBSession.query(TrackingFix) \
                 .options(joinedload(TrackingFix.pilot)) \
                 .filter(TrackingFix.id == subq.c.id) \
-                .filter(subq.c.rank == 1) \
+                .filter(subq.c.row_number == 1) \
                 .order_by(desc(TrackingFix.time))
 
         na_cache = cache.get_cache('tracking.nearest_airport', expire=60 * 60)
