@@ -31,7 +31,7 @@ i = 0
 for airport_w2k in welt2000:
     if airport_w2k.type != 'airport' \
         and airport_w2k.type != 'glider_site' \
-        and airport_w2k.type != 'uml':
+        and airport_w2k.type != 'ulm':
       continue
 
     i += 1
