@@ -139,21 +139,7 @@ class TrackController(BaseController):
 class TrackingController(BaseController):
     @expose('skylines.templates.tracking.list')
     def index(self, **kw):
-        subq = DBSession.query(TrackingFix.id,
-                               over(func.row_number(),
-                                    partition_by=TrackingFix.pilot_id,
-                                    order_by=desc(TrackingFix.time)).label('row_number')) \
-                .outerjoin(TrackingFix.pilot) \
-                .filter(TrackingFix.time >= datetime.utcnow() - timedelta(hours=6)) \
-                .filter(TrackingFix.time <= datetime.utcnow() - cast(cast(User.tracking_delay, String()) + ' minutes', Interval)) \
-                .filter(TrackingFix.location_wkt != None) \
-                .subquery()
-
-        query = DBSession.query(TrackingFix) \
-                .options(joinedload(TrackingFix.pilot)) \
-                .filter(TrackingFix.id == subq.c.id) \
-                .filter(subq.c.row_number == 1) \
-                .order_by(desc(TrackingFix.time))
+        query = self.get_latest_fixes()
 
         na_cache = cache.get_cache('tracking.nearest_airport', expire=60 * 60)
 
@@ -190,3 +176,22 @@ class TrackingController(BaseController):
             user = request.identity['user']
 
         return dict(user=user)
+
+    def get_latest_fixes(self, **kw):
+        subq = DBSession.query(TrackingFix.id,
+                               over(func.row_number(),
+                                    partition_by=TrackingFix.pilot_id,
+                                    order_by=desc(TrackingFix.time)).label('row_number')) \
+                .outerjoin(TrackingFix.pilot) \
+                .filter(TrackingFix.time >= datetime.utcnow() - timedelta(hours=6)) \
+                .filter(TrackingFix.time <= datetime.utcnow() - cast(cast(User.tracking_delay, String()) + ' minutes', Interval)) \
+                .filter(TrackingFix.location_wkt != None) \
+                .subquery()
+
+        query = DBSession.query(TrackingFix) \
+                .options(joinedload(TrackingFix.pilot)) \
+                .filter(TrackingFix.id == subq.c.id) \
+                .filter(subq.c.row_number == 1) \
+                .order_by(desc(TrackingFix.time))
+
+        return query
