@@ -177,13 +177,13 @@ class TrackingController(BaseController):
 
         return dict(user=user)
 
-    def get_latest_fixes(self, **kw):
+    def get_latest_fixes(self, max_age=timedelta(hours=6), **kw):
         subq = DBSession.query(TrackingFix.id,
                                over(func.row_number(),
                                     partition_by=TrackingFix.pilot_id,
                                     order_by=desc(TrackingFix.time)).label('row_number')) \
                 .outerjoin(TrackingFix.pilot) \
-                .filter(TrackingFix.time >= datetime.utcnow() - timedelta(hours=6)) \
+                .filter(TrackingFix.time >= datetime.utcnow() - max_age) \
                 .filter(TrackingFix.time <= datetime.utcnow() - cast(cast(User.tracking_delay, String()) + ' minutes', Interval)) \
                 .filter(TrackingFix.location_wkt != None) \
                 .subquery()
