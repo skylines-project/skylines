@@ -5,7 +5,7 @@ from sqlalchemy.orm import relation
 from sqlalchemy import ForeignKey, Column, func
 from sqlalchemy.types import Unicode, Integer, DateTime, Date, Boolean
 from sqlalchemy.ext.hybrid import hybrid_property
-from sqlalchemy.sql.expression import desc
+from sqlalchemy.sql.expression import desc, case
 from tg import config, request
 from geoalchemy.geometry import GeometryColumn, Point, GeometryDDL
 from geoalchemy.postgis import PGComparator
@@ -74,6 +74,17 @@ class Flight(DeclarativeBase):
     @hybrid_property
     def year(self):
         return self.date_local.year
+
+    @hybrid_property
+    def index_score(self):
+        if self.model and self.model.dmst_index > 0:
+            return self.olc_plus_score * 100 / self.model.dmst_index
+        else:
+            return self.olc_plus_score
+
+    @index_score.expression
+    def index_score(cls):
+        return case([(Model.dmst_index > 0,  cls.olc_plus_score * 100 / Model.dmst_index)], else_=cls.olc_plus_score)
 
     @year.expression
     def year(cls):
