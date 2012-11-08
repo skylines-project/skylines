@@ -66,7 +66,7 @@ class FlightsController(BaseController):
             if not columns:
                 columns = {
                     0: 'date_local',
-                    1: 'olc_plus_score',
+                    1: 'index_score',
                     2: 'pilot.display_name',
                     3: 'olc_classic_distance',
                     4: 'airports.name',
@@ -85,7 +85,7 @@ class FlightsController(BaseController):
                                    landing_time=flight.landing_time.strftime('%H:%M'),
                                    date=flight.date_local.strftime('%d.%m.%Y'),
                                    date_formatted=format_date(flight.date_local),
-                                   olc_plus_score=flight.olc_plus_score,
+                                   index_score=flight.index_score,
                                    olc_classic_distance=flight.olc_classic_distance,
                                    pilot_id=flight.pilot_id,
                                    pilot=flight.pilot and flight.pilot.display_name,
@@ -114,7 +114,7 @@ class FlightsController(BaseController):
             else:
                 limit = int(config.get('skylines.lists.server_side', 250))
 
-            flights = flights.order_by(desc(Flight.olc_plus_score))
+            flights = flights.order_by(desc(Flight.index_score))
             flights = flights.limit(limit)
             return dict(tab=tab, date=date, pilot=pilot, club=club, airport=airport,
                         flights=flights, flights_count=flights_count)
@@ -169,7 +169,7 @@ class FlightsController(BaseController):
             raise HTTPNotFound
 
         columns = {
-            0: 'olc_plus_score',
+            0: 'index_score',
             1: 'pilot.display_name',
             2: 'olc_classic_distance',
             3: 'airports.name',
@@ -219,7 +219,7 @@ class FlightsController(BaseController):
 
         columns = {
             0: 'date_local',
-            1: 'olc_plus_score',
+            1: 'index_score',
             2: 'pilot.display_name',
             3: 'olc_classic_distance',
             4: 'airports.name',
@@ -238,7 +238,7 @@ class FlightsController(BaseController):
 
         columns = {
             0: 'date_local',
-            1: 'olc_plus_score',
+            1: 'index_score',
             2: 'pilot.display_name',
             3: 'olc_classic_distance',
             4: 'airports.name',
@@ -257,7 +257,7 @@ class FlightsController(BaseController):
 
         columns = {
             0: 'date_local',
-            1: 'olc_plus_score',
+            1: 'index_score',
             2: 'pilot.display_name',
             3: 'olc_classic_distance',
             4: 'clubs.name',
