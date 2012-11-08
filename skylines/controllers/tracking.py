@@ -11,6 +11,7 @@ from sqlalchemy.orm import joinedload
 from sqlalchemy.types import Interval, String
 from skylines.lib.base import BaseController
 from skylines.lib.dbutil import get_requested_record_list
+from skylines.lib.helpers import isoformat_utc
 from skylines.model import DBSession, User, TrackingFix, Airport
 from skylinespolyencode import SkyLinesPolyEncoder
 
@@ -176,6 +177,28 @@ class TrackingController(BaseController):
             user = request.identity['user']
 
         return dict(user=user)
+
+    @expose('json')
+    def latest(self):
+        if not request.path.endswith('.json'):
+            raise HTTPNotFound
+
+        fixes = []
+        for fix in self.get_latest_fixes():
+            json = dict(time=isoformat_utc(fix.time),
+                        location=fix.location_wkt.geom_wkt,
+                        pilot=dict(id=fix.pilot_id, name=unicode(fix.pilot)))
+
+            optional_attributes = ['track', 'ground_speed', 'airspeed',
+                                   'altitude', 'vario', 'engine_noise_level']
+            for attr in optional_attributes:
+                value = getattr(fix, attr)
+                if value is not None:
+                    json[attr] = value
+
+            fixes.append(json)
+
+        return dict(fixes=fixes)
 
     def get_latest_fixes(self, max_age=timedelta(hours=6), **kw):
         row_number = over(func.row_number(),
