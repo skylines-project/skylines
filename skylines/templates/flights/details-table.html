@@ -121,7 +121,7 @@ from skylines.lib.units import format_distance, format_speed
       <tr>
         <th>Score</th>
         <td>
-          ${flight.olc_plus_score} pt
+          ${flight.index_score} pt
           <small><br/>
           <span py:if="flight.olc_classic_distance is not None" title="OLC Distance">
             <span style="COLOR:#ff2c73">&#x294A;</span> ${format_distance(flight.olc_classic_distance)}<py:if test="flight.olc_triangle_distance is not None">,</py:if>
