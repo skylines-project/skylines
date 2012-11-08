@@ -12,6 +12,7 @@ from sqlalchemy.types import Interval, String
 from skylines.lib.base import BaseController
 from skylines.lib.dbutil import get_requested_record_list
 from skylines.lib.helpers import isoformat_utc
+from skylines.lib.decorators import jsonp
 from skylines.model import DBSession, User, TrackingFix, Airport
 from skylinespolyencode import SkyLinesPolyEncoder
 
@@ -179,6 +180,7 @@ class TrackingController(BaseController):
         return dict(user=user)
 
     @expose('json')
+    @jsonp
     def latest(self, **kw):
         if not request.path.endswith('.json'):
             raise HTTPNotFound
