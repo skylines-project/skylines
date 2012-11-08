@@ -13,7 +13,7 @@ class Model(DeclarativeBase):
     name = Column(Unicode(64), unique=True, nullable=False)
 
     # the kind of aircraft: 0=unspecified, 1=glider, 2=motor glider,
-    # 3=self-launching glider, 4=self-sustaining glider, 5=paraglider,
+    # 3=paraglider, 4=hangglider, 5=ul glider
     kind = Column(Integer, nullable=False, default=0)
 
     igc_index = Column(Integer)
