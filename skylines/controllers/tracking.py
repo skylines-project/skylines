@@ -171,7 +171,7 @@ class TrackingController(BaseController):
         return controller, remainder
 
     @expose('skylines.templates.tracking.info')
-    def info(self):
+    def info(self, **kw):
         user = None
         if request.identity is not None and 'user' in request.identity:
             user = request.identity['user']
@@ -179,7 +179,7 @@ class TrackingController(BaseController):
         return dict(user=user)
 
     @expose('json')
-    def latest(self):
+    def latest(self, **kw):
         if not request.path.endswith('.json'):
             raise HTTPNotFound
 
