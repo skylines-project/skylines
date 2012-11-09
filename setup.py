@@ -46,6 +46,7 @@ install_requires = [
     "crc16",
     "markdown",
     "pytz",
+    "pycountry",
 ]
 
 if sys.version_info[:2] == (2, 4):

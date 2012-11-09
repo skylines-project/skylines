@@ -9,5 +9,7 @@
 
   <span py:def="insert_flag(country_code, style = None)"
         class="flag-${country_code.lower()}"
-        style="${style}"></span>
+        style="${style}"
+        title="${h.country_name(country_code)}"
+        rel="tooltip"></span>
 </html>

@@ -14,7 +14,7 @@ from skylines.model.flight_comment import FlightComment
 from skylines.controllers.flight import FlightController
 from skylines.controllers.upload import UploadController
 from skylines.lib.datatables import GetDatatableRecords
-from skylines.lib.helpers import truncate
+from skylines.lib.helpers import truncate, country_name
 from skylines.lib.dbutil import get_requested_record, get_requested_record_list
 
 
@@ -97,6 +97,7 @@ class FlightsController(BaseController):
                                    takeoff_airport=flight.takeoff_airport and flight.takeoff_airport.name,
                                    takeoff_airport_id=flight.takeoff_airport and flight.takeoff_airport.id,
                                    takeoff_airport_country_code=flight.takeoff_airport and flight.takeoff_airport.country_code.lower(),
+                                   takeoff_airport_country_name=flight.takeoff_airport and country_name(flight.takeoff_airport.country_code),
                                    aircraft=(flight.model and flight.model.name) or (flight.igc_file.model and '[' + flight.igc_file.model + ']'),
                                    aircraft_reg=flight.registration or flight.igc_file.registration or "Unknown",
                                    flight_id=flight.id,

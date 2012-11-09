@@ -116,7 +116,8 @@ if airport:
                 if (obj.oSettings.jqXHR && obj.aData.takeoff_airport != null) {
                   row = "";
                   if (obj.aData.takeoff_airport_country_code != null)
-                    row += "<span class=\"flag-" + obj.aData.takeoff_airport_country_code + "\"></span> ";
+                    row += "<span class=\"flag-" + obj.aData.takeoff_airport_country_code +
+                           "\" title=\"" + obj.aData.takeoff_airport_country_name + "\" rel=\"tooltip\"></span> ";
 
                   row += "<a href=\"/flights/airport/" + obj.aData.takeoff_airport_id + "\">" + obj.aData.takeoff_airport + "</a>";
                 }
