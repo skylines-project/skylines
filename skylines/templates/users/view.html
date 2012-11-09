@@ -93,7 +93,7 @@ def add_locations(locations):
             <th>Tracking delay</th>
             <td>
               <span py:if="user.tracking_delay == 0" py:strip="True">None</span>
-              <span py:if="user.tracking_delay > 0" py:replace="ungettext(u'%u minute', u'%u minutes', user.tracking_delay) % user.tracking_delay"/>
+              <span py:if="user.tracking_delay > 0" py:replace="ungettext('%u minute', '%u minutes', user.tracking_delay) % user.tracking_delay"/>
             </td>
           </tr>
 
