@@ -263,6 +263,7 @@ function addFlight(sfid, _lonlat, _levels, _num_levels, _time, _height, _enl, zo
   });
 
   updateFlotData();
+  updateFlotScale();
 };
 
 /**
