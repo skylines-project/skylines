@@ -225,10 +225,17 @@ class FlightController(BaseController):
         if not trace:
             raise HTTPNotFound
 
-        return dict(encoded=trace['encoded'], num_levels=trace['fixes']['numLevels'],
-                    zoom_levels=trace['zoom_levels'], barogram_t=trace['barogram_t'],
-                    barogram_h=trace['barogram_h'], enl=trace['enl'], contests=trace['contests'],
-                    sfid=self.flight.id)
+        return dict(encoded = trace['encoded'],
+                    num_levels = trace['fixes']['numLevels'],
+                    zoom_levels = trace['zoom_levels'],
+                    barogram_t = trace['barogram_t'],
+                    barogram_h = trace['barogram_h'],
+                    enl = trace['enl'],
+                    contests = trace['contests'],
+                    sfid = self.flight.id,
+                    additional = dict(
+                        registration=self.flight.registration,
+                        competition_id=self.flight.competition_id) )
 
     @without_trailing_slash
     @expose('skylines.templates.generic.form')

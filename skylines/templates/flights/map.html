@@ -43,7 +43,9 @@ page = 'flights'
         ${h.json.dumps(trace.barogram_h)},
         ${h.json.dumps(trace.enl)},
         ${h.json.dumps(trace.zoom_levels)},
-        ${h.json.dumps(trace.contests)}
+        ${h.json.dumps(trace.contests)},
+        { registration: ${h.json.dumps(flight.registration)},
+          competition_id: ${h.json.dumps(flight.competition_id)} }
       );
 
       /* ]]> */
@@ -57,7 +59,9 @@ page = 'flights'
             ${h.json.dumps(trace.barogram_h)},
             ${h.json.dumps(trace.enl)},
             ${h.json.dumps(trace.zoom_levels)},
-            ${h.json.dumps(trace.contests)}
+            ${h.json.dumps(trace.contests)},
+            { registration: ${h.json.dumps(flight.registration)},
+              competition_id: ${h.json.dumps(flight.competition_id)} }
           );
         </py:for>
       </py:if>

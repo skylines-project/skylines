@@ -160,11 +160,13 @@ function initRedrawLayer(layer) {
  * _contests - {Array(Objects)} Array of scored/optimised contests
  *   Such an object must contain: name, turnpoints, times
  *   turnpoints and times are googlePolyEncoded strings.
+ * _additional - {Object(String)} May contain additional information about the flight,
+ *   e.g. registration number, callsign...
  *
  * Note: _lonlat, _levels, _time, _enl, and _height MUST have the same number of elements when decoded.
  */
 
-function addFlight(sfid, _lonlat, _levels, _num_levels, _time, _height, _enl, zoom_levels, _contests) {
+function addFlight(sfid, _lonlat, _levels, _num_levels, _time, _height, _enl, zoom_levels, _contests, _additional) {
   var height = OpenLayers.Util.decodeGoogle(_height);
   var time = OpenLayers.Util.decodeGoogle(_time);
   var enl = OpenLayers.Util.decodeGoogle(_enl);
@@ -220,7 +222,9 @@ function addFlight(sfid, _lonlat, _levels, _num_levels, _time, _height, _enl, zo
 
   var table_row = $(
     "<tr>" +
-    "<td><span class=\"badge\" style=\"background: " + color + ";\"></span></td>" +
+    "<td><span class=\"badge\" style=\"background: " + color + ";\">" +
+      (_additional['competition_id']?_additional['competition_id']:"") +
+    "</span></td>" +
     "<td>--:--:--</td>" +
     "<td>--</td>" +
     "<td>--</td>" +
@@ -259,7 +263,8 @@ function addFlight(sfid, _lonlat, _levels, _num_levels, _time, _height, _enl, zo
     markers: markers,
     table_row: table_row,
     flot_h: flot_h,
-    flot_enl: flot_enl
+    flot_enl: flot_enl,
+    additional: _additional
   });
 
   updateFlotData();
@@ -281,7 +286,7 @@ function addFlightFromJSON(url) {
 
       addFlight(data.sfid, data.encoded.points, data.encoded.levels,
                 data.num_levels, data.barogram_t, data.barogram_h,
-                data.enl, data.zoom_levels, data.contests);
+                data.enl, data.zoom_levels, data.contests, data.additional);
 
       initRedrawLayer(map.getLayersByName("Flight")[0]);
     }
