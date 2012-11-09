@@ -17,8 +17,10 @@ class RankingController(BaseController):
     def __get_result(model, flight_field):
         subq = DBSession.query(getattr(Flight, flight_field),
                                func.count('*').label('count'),
-                               func.sum(Flight.olc_plus_score).label('total')) \
-               .group_by(getattr(Flight, flight_field)).subquery()
+                               func.sum(Flight.index_score).label('total')) \
+               .group_by(getattr(Flight, flight_field)) \
+               .outerjoin(Flight.model) \
+               .subquery()
 
         result = DBSession.query(model, subq.c.count, subq.c.total,
                                  over(func.rank(),
