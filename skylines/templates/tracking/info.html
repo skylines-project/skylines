@@ -7,7 +7,8 @@ title = 'Live Tracking'
                       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:py="http://genshi.edgewall.org/"
-      xmlns:xi="http://www.w3.org/2001/XInclude">
+      xmlns:xi="http://www.w3.org/2001/XInclude"
+      xmlns:i18n="http://genshi.edgewall.org/i18n">
   <xi:include href="master/page.html" />
 
   <head>
@@ -26,11 +27,11 @@ title = 'Live Tracking'
 
     <h3>Clients</h3>
     <ul>
-      <li><b>XCSoar:</b><br/>available starting with <a
+      <li i18n:msg="xcsoar"><b>XCSoar:</b><br/>available starting with <a
       href="http://www.xcsoar.org/download/latest.html">XCSoar 6.4</a>
       (<a href="https://play.google.com/store/apps/details?id=org.xcsoar" target="_blank">Google Play</a>).
       Instructions are below.</li>
-      <li><b>Gaggle:</b><br/>now available in the current version of Gaggle
+      <li i18n:msg="gaggle"><b>Gaggle:</b><br/>now available in the current version of Gaggle
       (<a href="https://play.google.com/store/apps/details?id=com.geeksville.gaggle" target="_blank">Google Play</a>)</li>
       <li><b>Butterfly iGlide:</b><br/>planned</li>
     </ul>
@@ -47,13 +48,13 @@ title = 'Live Tracking'
     </p>
     </py:if>
     <py:if test="user is None">
-    <p>
+    <p i18n:msg="personal_tracking_key">
       You have to <a href="/login">login</a> to see you own personal Live Tracking key.
     </p>
     </py:if>
 
     <h3>XCSoar</h3>
-    <p>
+    <p i18n:msg="xcsoar_tracking_instructions">
       In <a href="http://www.xcsoar.org" target="_blank">XCSoar</a>, open
       the <em>Setup System</em> dialog, click on <em>Setup</em> and
       then <em>Tracking</em>.  Turn SkyLines tracking on, and enter your
