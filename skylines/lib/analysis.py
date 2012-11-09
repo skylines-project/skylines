@@ -273,6 +273,10 @@ def analyse_flight(flight):
     if 'events' in root:
         save_events(root['events'], flight)
 
+    if flight.takeoff_time is None \
+       or flight.landing_time is None:
+        return False
+
     contest = find_contest(root, 'olc_plus')
     if contest is not None:
         trace = find_trace(contest, 'classic')
