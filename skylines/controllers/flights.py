@@ -9,7 +9,7 @@ from sqlalchemy import func
 from sqlalchemy.orm import joinedload, contains_eager
 from sqlalchemy.orm.util import aliased
 from skylines.lib.base import BaseController
-from skylines.model import DBSession, User, Club, Flight, IGCFile, Airport
+from skylines.model import DBSession, User, Club, Flight, IGCFile, Model, Airport
 from skylines.model.flight_comment import FlightComment
 from skylines.controllers.flight import FlightController
 from skylines.controllers.upload import UploadController
@@ -65,16 +65,16 @@ class FlightsController(BaseController):
         if request.response_type == 'application/json':
             if not columns:
                 columns = {
-                    0: 'date_local',
-                    1: 'index_score',
-                    2: 'pilot.display_name',
-                    3: 'olc_classic_distance',
-                    4: 'airports.name',
-                    5: 'clubs.name',
-                    6: 'models.name',
-                    7: 'takeoff_time',
-                    8: 'id',
-                    9: 'num_comments',
+                    0: (Flight, 'date_local'),
+                    1: (Flight, 'index_score'),
+                    2: (pilot_alias, 'display_name'),
+                    3: (Flight, 'olc_classic_distance'),
+                    4: (Airport, 'name'),
+                    5: (Club, 'name'),
+                    6: (Model, 'name'),
+                    7: (Flight, 'takeoff_time'),
+                    8: (Flight, 'id'),
+                    9: (Flight, 'num_comments'),
                 }
 
             flights, response_dict = GetDatatableRecords(kw, flights, columns)
@@ -168,16 +168,18 @@ class FlightsController(BaseController):
         except:
             raise HTTPNotFound
 
+        pilot_alias = aliased(User, name='pilot')
+
         columns = {
-            0: 'index_score',
-            1: 'pilot.display_name',
-            2: 'olc_classic_distance',
-            3: 'airports.name',
-            4: 'clubs.name',
-            5: 'models.name',
-            6: 'takeoff_time',
-            7: 'id',
-            8: 'num_comments',
+            0: (Flight, 'index_score'),
+            1: (pilot_alias, 'display_name'),
+            2: (Flight, 'olc_classic_distance'),
+            3: (Airport, 'name'),
+            4: (Club, 'name'),
+            5: (Model, 'name'),
+            6: (Flight, 'takeoff_time'),
+            7: (Flight, 'id'),
+            8: (Flight, 'num_comments'),
         }
 
         if kw.get('today', False):
@@ -216,17 +218,18 @@ class FlightsController(BaseController):
     @expose('json')
     def pilot(self, id, **kw):
         pilot = get_requested_record(User, id)
+        pilot_alias = aliased(User, name='pilot')
 
         columns = {
-            0: 'date_local',
-            1: 'index_score',
-            2: 'pilot.display_name',
-            3: 'olc_classic_distance',
-            4: 'airports.name',
-            5: 'models.name',
-            6: 'takeoff_time',
-            7: 'id',
-            8: 'num_comments',
+            0: (Flight, 'date_local'),
+            1: (Flight, 'index_score'),
+            2: (pilot_alias, 'display_name'),
+            3: (Flight, 'olc_classic_distance'),
+            4: (Airport, 'name'),
+            5: (Model, 'name'),
+            6: (Flight, 'takeoff_time'),
+            7: (Flight, 'id'),
+            8: (Flight, 'num_comments'),
         }
 
         return self.__do_list('pilot', kw, pilot=pilot, columns=columns)
@@ -235,17 +238,18 @@ class FlightsController(BaseController):
     @expose('json')
     def club(self, id, **kw):
         club = get_requested_record(Club, id)
+        pilot_alias = aliased(User, name='pilot')
 
         columns = {
-            0: 'date_local',
-            1: 'index_score',
-            2: 'pilot.display_name',
-            3: 'olc_classic_distance',
-            4: 'airports.name',
-            5: 'models.name',
-            6: 'takeoff_time',
-            7: 'id',
-            8: 'num_comments',
+            0: (Flight, 'date_local'),
+            1: (Flight, 'index_score'),
+            2: (pilot_alias, 'display_name'),
+            3: (Flight, 'olc_classic_distance'),
+            4: (Airport, 'name'),
+            5: (Model, 'name'),
+            6: (Flight, 'takeoff_time'),
+            7: (Flight, 'id'),
+            8: (Flight, 'num_comments'),
         }
 
         return self.__do_list('club', kw, club=club, columns=columns)
@@ -254,17 +258,18 @@ class FlightsController(BaseController):
     @expose('json')
     def airport(self, id, **kw):
         airport = get_requested_record(Airport, id)
+        pilot_alias = aliased(User, name='pilot')
 
         columns = {
-            0: 'date_local',
-            1: 'index_score',
-            2: 'pilot.display_name',
-            3: 'olc_classic_distance',
-            4: 'clubs.name',
-            5: 'models.name',
-            6: 'takeoff_time',
-            7: 'id',
-            8: 'num_comments',
+            0: (Flight, 'date_local'),
+            1: (Flight, 'index_score'),
+            2: (pilot_alias, 'display_name'),
+            3: (Flight, 'olc_classic_distance'),
+            4: (Club, 'name'),
+            5: (Model, 'name'),
+            6: (Flight, 'takeoff_time'),
+            7: (Flight, 'id'),
+            8: (Flight, 'num_comments'),
         }
 
         return self.__do_list('airport', kw, airport=airport, columns=columns)
