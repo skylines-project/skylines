@@ -2,7 +2,7 @@ import math
 import logging
 from datetime import datetime
 from tg import expose, validate, require, request, redirect, flash
-from tg.i18n import ugettext as _
+from tg.i18n import ugettext as _, lazy_ugettext as l_
 from tg.decorators import with_trailing_slash, without_trailing_slash
 from repoze.what.predicates import has_permission
 from webob.exc import HTTPNotFound, HTTPForbidden
@@ -44,8 +44,8 @@ class SelectPilotForm(EditableForm):
     __hide_fields__ = ['id']
     __limit_fields__ = ['pilot', 'co_pilot']
     __base_widget_args__ = dict(action='select_pilot')
-    pilot = PilotSelectField
-    co_pilot = PilotSelectField
+    pilot = PilotSelectField('pilot', label_text=l_('Pilot'))
+    co_pilot = PilotSelectField('co_pilot', label_text=l_('Co-Pilot'))
 
 select_pilot_form = SelectPilotForm(DBSession)
 
@@ -65,9 +65,9 @@ class SelectAircraftForm(EditableForm):
     __hide_fields__ = ['id']
     __limit_fields__ = ['model', 'registration', 'competition_id']
     __base_widget_args__ = dict(action='select_aircraft')
-    model = ModelSelectField
-    registration = TextField
-    competition_id = TextField('competition_id', label_text='Competition Number')
+    model = ModelSelectField('model', label_text=l_('Aircraft Model'))
+    registration = TextField('registration', label_text=l_('Aircraft Registration'))
+    competition_id = TextField('competition_id', label_text=l_('Competition Number'))
 
 select_aircraft_form = SelectAircraftForm(DBSession)
 

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from tg import expose, validate, redirect, require, request, config, flash, cache
-from tg.i18n import ugettext as _, ungettext
+from tg.i18n import ugettext as _, ungettext, lazy_ugettext as l_
 import smtplib
 import email
 from webob.exc import HTTPNotFound, HTTPForbidden
@@ -83,7 +83,7 @@ class SelectClubForm(EditableForm):
     __model__ = User
     __hide_fields__ = ['id']
     __limit_fields__ = ['club']
-    club = ClubSelectField
+    club = ClubSelectField('club', label_text=l_('Club'))
 
 
 select_club_form = SelectClubForm(DBSession)
@@ -93,14 +93,14 @@ class NewClubForm(AddRecordForm):
     __base_widget_type__ = BootstrapForm
     __model__ = Club
     __limit_fields__ = ['name']
-    name = TextField
+    name = TextField('name', label_text=l_('Name'))
 
 new_club_form = NewClubForm(DBSession)
 
 user_validator = Schema(chained_validators=(FieldsMatch('password',
                                                         'verify_password',
                                                         messages={'invalidNoMatch':
-                                                                  'Passwords do not match'}),))
+                                                                  l_('Passwords do not match')}),))
 
 
 class NewUserForm(AddRecordForm):
@@ -109,13 +109,14 @@ class NewUserForm(AddRecordForm):
     __required_fields__ = ['password']
     __limit_fields__ = ['email_address', 'display_name', 'password', 'verify_password', 'club']
     __base_validator__ = user_validator
-    email_address = Field(TextField, All(UniqueValue(SAORMProvider(DBSession),
-                                                     __model__, 'email_address'),
-                                         Email(not_empty=True)))
-    display_name = Field(TextField, NotEmpty)
-    club = ClubSelectField
-    password = String(min=6)
-    verify_password = PasswordField('verify_password')
+    email_address = Field(TextField('email_address', label_text=l_('eMail Address')),
+                          All(UniqueValue(SAORMProvider(DBSession), __model__,
+                                          'email_address'),Email(not_empty=True)))
+    display_name = Field(TextField('display_name', label_text=l_('Name')), NotEmpty)
+    club = ClubSelectField('club', label_text=l_('Club'))
+    password = Field(PasswordField('password', label_text=l_('Password')),
+                     String(min=6))
+    verify_password = PasswordField('verify_password', label_text=l_('Verify Password'))
 
 new_user_form = NewUserForm(DBSession)
 
@@ -137,46 +138,49 @@ class EditUserForm(EditableForm):
                         'lift_unit', 'altitude_unit',
                         'eye_candy']
     __base_widget_args__ = dict(action='save')
-    email_address = Field(TextField, All(Email(not_empty=True),
-                                         UniqueValueUnless(filter_user_id,
-                                                           DBSession,
-                                                           __model__, 'email_address')))
-    display_name = Field(TextField, NotEmpty)
-    club = ClubSelectField
-    tracking_delay = DelaySelectField
-    unit_preset = UnitPresetSelectField("unit_preset")
-    distance_unit = DistanceUnitSelectField
-    speed_unit = SpeedUnitSelectField
-    lift_unit = LiftUnitSelectField
-    altitude_unit = AltitudeUnitSelectField
-    eye_candy = Field(CheckBox)
+    email_address = Field(TextField('email_address', label_text=l_('eMail Address')),
+                          All(Email(not_empty=True),
+                              UniqueValueUnless(filter_user_id, DBSession,
+                                                __model__, 'email_address')))
+    display_name = Field(TextField('display_name', label_text=l_('Name')), NotEmpty)
+    club = ClubSelectField('club', label_text=l_('Club'))
+    tracking_delay = DelaySelectField('tracking_delay', label_text=l_('Tracking Delay'))
+    unit_preset = UnitPresetSelectField("unit_preset", label_text=l_('Units'))
+    distance_unit = DistanceUnitSelectField('distance_unit', label_text=l_('Distance Unit'))
+    speed_unit = SpeedUnitSelectField('speed_unit', label_text=l_('Speed Unit'))
+    lift_unit = LiftUnitSelectField('lift_unit', label_text=l_('Lift Unit'))
+    altitude_unit = AltitudeUnitSelectField('altitude_unit', label_text=l_('Altitude Unit'))
+    eye_candy = Field(CheckBox('eye_candy', label_text=l_('Eye Candy')))
 
 edit_user_form = EditUserForm(DBSession)
 
 recover_email_form = BootstrapForm('recover_email_form',
-                                   submit_text="Recover Password",
+                                   submit_text=l_("Recover Password"),
                                    action='recover_email',
                                    children=[
-    TextField('email_address', validator=Email(not_empty=True))
+    TextField('email_address', validator=Email(not_empty=True),
+              label_text=l_('eMail Address'))
 ])
 
 recover_password_form = BootstrapForm('recover_password_form',
-                                      submit_text="Recover Password",
+                                      submit_text=l_("Recover Password"),
                                       action='recover_post',
                                       validator=user_validator,
                                       children=[
     HiddenField('key'),
-    PasswordField('password', validator=UnicodeString(min=6)),
-    PasswordField('verify_password'),
+    PasswordField('password', validator=UnicodeString(min=6),
+                  label_text=l_('Password')),
+    PasswordField('verify_password', label_text=l_('Verify Password')),
 ])
 
 change_password_form = BootstrapForm('change_password_form',
-                                     submit_text="Change Password",
+                                     submit_text=l_("Change Password"),
                                      action='save_password',
                                      validator=user_validator,
                                      children=[
-    PasswordField('password', validator=UnicodeString(min=6)),
-    PasswordField('verify_password'),
+    PasswordField('password', validator=UnicodeString(min=6),
+                  label_text=l_('Password')),
+    PasswordField('verify_password', label_text=l_('Verify Password')),
 ])
 
 

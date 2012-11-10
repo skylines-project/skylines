@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: SkyLines 0.1\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2012-11-11 00:06+0100\n"
+"POT-Creation-Date: 2012-11-11 00:56+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,12 +17,56 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 0.9.6\n"
 
-#: skylines/controllers/clubs.py:58
+#: skylines/controllers/clubs.py:24 skylines/controllers/clubs.py:40
+#: skylines/controllers/users.py:96 skylines/controllers/users.py:115
+#: skylines/controllers/users.py:145 skylines/templates/clubs/list.html:22
+#: skylines/templates/clubs/view.html:23
+#: skylines/templates/ranking/airports.html:19
+#: skylines/templates/ranking/clubs.html:18
+#: skylines/templates/ranking/pilots.html:18
+#: skylines/templates/users/users-table.html:21
+msgid "Name"
+msgstr ""
+
+#: skylines/controllers/clubs.py:25 skylines/templates/clubs/view.html:28
+msgid "Website"
+msgstr ""
+
+#: skylines/controllers/clubs.py:37 skylines/controllers/users.py:112
+#: skylines/controllers/users.py:141 skylines/controllers/users.py:162
+msgid "eMail Address"
+msgstr ""
+
+#: skylines/controllers/clubs.py:60
 msgid "Edit Club"
 msgstr ""
 
-#: skylines/controllers/clubs.py:83 skylines/templates/clubs/pilots.html:27
+#: skylines/controllers/clubs.py:85 skylines/templates/clubs/pilots.html:27
 msgid "Create Pilot"
+msgstr ""
+
+#: skylines/controllers/flight.py:47 skylines/controllers/upload.py:43
+#: skylines/templates/flights/details-table.html:143
+#: skylines/templates/flights/flights-table.html:20
+#: skylines/templates/tracking/list.html:28
+#: skylines/templates/tracking/view.html:92
+msgid "Pilot"
+msgstr ""
+
+#: skylines/controllers/flight.py:48
+msgid "Co-Pilot"
+msgstr ""
+
+#: skylines/controllers/flight.py:68 skylines/templates/upload/result.html:36
+msgid "Aircraft Model"
+msgstr ""
+
+#: skylines/controllers/flight.py:69 skylines/templates/upload/result.html:37
+msgid "Aircraft Registration"
+msgstr ""
+
+#: skylines/controllers/flight.py:70 skylines/templates/upload/result.html:38
+msgid "Competition Number"
 msgstr ""
 
 #: skylines/controllers/flight.py:246
@@ -48,6 +92,10 @@ msgstr ""
 
 #: skylines/controllers/root.py:114
 msgid "You are now logged out. We hope to see you back soon!"
+msgstr ""
+
+#: skylines/controllers/upload.py:41
+msgid "IGC or ZIP file(s)"
 msgstr ""
 
 #: skylines/controllers/upload.py:42
@@ -96,15 +144,74 @@ msgid_plural "%u minutes"
 msgstr[0] ""
 msgstr[1] ""
 
-#: skylines/controllers/users.py:226 skylines/templates/users/view.html:123
+#: skylines/controllers/users.py:86 skylines/controllers/users.py:116
+#: skylines/controllers/users.py:146
+#: skylines/templates/flights/details-table.html:161
+#: skylines/templates/flights/flights-table.html:23
+#: skylines/templates/ranking/pilots.html:19
+#: skylines/templates/tracking/view.html:100
+#: skylines/templates/users/users-table.html:22
+#: skylines/templates/users/view.html:101 skylines/templates/users/view.html:112
+msgid "Club"
+msgstr ""
+
+#: skylines/controllers/users.py:103
+msgid "Passwords do not match"
+msgstr ""
+
+#: skylines/controllers/users.py:117 skylines/controllers/users.py:172
+#: skylines/controllers/users.py:182
+msgid "Password"
+msgstr ""
+
+#: skylines/controllers/users.py:119 skylines/controllers/users.py:173
+#: skylines/controllers/users.py:183
+msgid "Verify Password"
+msgstr ""
+
+#: skylines/controllers/users.py:147
+msgid "Tracking Delay"
+msgstr ""
+
+#: skylines/controllers/users.py:148
+msgid "Units"
+msgstr ""
+
+#: skylines/controllers/users.py:149
+msgid "Distance Unit"
+msgstr ""
+
+#: skylines/controllers/users.py:150
+msgid "Speed Unit"
+msgstr ""
+
+#: skylines/controllers/users.py:151
+msgid "Lift Unit"
+msgstr ""
+
+#: skylines/controllers/users.py:152
+msgid "Altitude Unit"
+msgstr ""
+
+#: skylines/controllers/users.py:153
+msgid "Eye Candy"
+msgstr ""
+
+#: skylines/controllers/users.py:158 skylines/controllers/users.py:166
+#: skylines/templates/users/view.html:126
+msgid "Recover Password"
+msgstr ""
+
+#: skylines/controllers/users.py:177 skylines/controllers/users.py:230
+#: skylines/templates/users/view.html:123
 msgid "Change Password"
 msgstr ""
 
-#: skylines/controllers/users.py:248
+#: skylines/controllers/users.py:252
 msgid "Edit User"
 msgstr ""
 
-#: skylines/controllers/users.py:489
+#: skylines/controllers/users.py:493
 msgid "Password changed."
 msgstr ""
 
@@ -226,14 +333,6 @@ msgstr ""
 msgid "Clubs"
 msgstr ""
 
-#: skylines/templates/clubs/list.html:22 skylines/templates/clubs/view.html:23
-#: skylines/templates/ranking/airports.html:19
-#: skylines/templates/ranking/clubs.html:18
-#: skylines/templates/ranking/pilots.html:18
-#: skylines/templates/users/users-table.html:21
-msgid "Name"
-msgstr ""
-
 #: skylines/templates/clubs/list.html:23
 #: skylines/templates/flights/details-table.html:183
 #: skylines/templates/users/users-table.html:23
@@ -265,10 +364,6 @@ msgstr ""
 
 #: skylines/templates/clubs/list.html:36 skylines/templates/clubs/view.html:45
 msgid "Members"
-msgstr ""
-
-#: skylines/templates/clubs/view.html:28
-msgid "Website"
 msgstr ""
 
 #: skylines/templates/clubs/view.html:33
@@ -367,24 +462,8 @@ msgstr ""
 msgid "Speed"
 msgstr ""
 
-#: skylines/templates/flights/details-table.html:143
-#: skylines/templates/flights/flights-table.html:20
-#: skylines/templates/tracking/list.html:28
-#: skylines/templates/tracking/view.html:92
-msgid "Pilot"
-msgstr ""
-
 #: skylines/templates/flights/details-table.html:155
 msgid "[unspecified]"
-msgstr ""
-
-#: skylines/templates/flights/details-table.html:161
-#: skylines/templates/flights/flights-table.html:23
-#: skylines/templates/ranking/pilots.html:19
-#: skylines/templates/tracking/view.html:100
-#: skylines/templates/users/users-table.html:22
-#: skylines/templates/users/view.html:101 skylines/templates/users/view.html:112
-msgid "Club"
 msgstr ""
 
 #: skylines/templates/flights/details-table.html:170
@@ -825,18 +904,6 @@ msgstr ""
 msgid "Filename"
 msgstr ""
 
-#: skylines/templates/upload/result.html:36
-msgid "Aircraft Model"
-msgstr ""
-
-#: skylines/templates/upload/result.html:37
-msgid "Aircraft Registration"
-msgstr ""
-
-#: skylines/templates/upload/result.html:38
-msgid "Competition Number"
-msgstr ""
-
 #: skylines/templates/upload/result.html:39
 msgid "Status"
 msgstr ""
@@ -896,10 +963,6 @@ msgstr ""
 
 #: skylines/templates/users/view.html:113
 msgid "[Unspecified]"
-msgstr ""
-
-#: skylines/templates/users/view.html:126
-msgid "Recover Password"
 msgstr ""
 
 #: skylines/templates/users/view.html:133

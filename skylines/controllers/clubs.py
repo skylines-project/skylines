@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from tg import expose, validate, redirect
-from tg.i18n import ugettext as _
+from tg.i18n import ugettext as _, lazy_ugettext as l_
 from tg.decorators import with_trailing_slash
 from webob.exc import HTTPForbidden
 from sprox.formbase import AddRecordForm, EditableForm, Field
@@ -21,8 +21,9 @@ class EditClubForm(EditableForm):
     __hide_fields__ = ['id']
     __limit_fields__ = ['name', 'website']
     __base_widget_args__ = dict(action='save')
-    name = TextField
-    website = Field(TextField, validators.URL())
+    name = TextField('name', label_text=l_('Name'))
+    website = Field(TextField('website', label_text=l_('Website')),
+                    validators.URL())
 
 edit_club_form = EditClubForm(DBSession)
 
@@ -33,10 +34,11 @@ class NewPilotForm(AddRecordForm):
     __required_fields__ = ['email_address', 'display_name']
     __limit_fields__ = ['email_address', 'display_name']
     __base_widget_args__ = dict(action='create_pilot')
-    email_address = Field(TextField, All(UniqueValue(SAORMProvider(DBSession),
-                                                     __model__, 'email_address'),
-                                         validators.Email))
-    display_name = Field(TextField, validators.NotEmpty)
+    email_address = Field(TextField('email_address', label_text=l_('eMail Address')),
+                          All(UniqueValue(SAORMProvider(DBSession), __model__,
+                                          'email_address'), validators.Email))
+    display_name = Field(TextField('display_name', label_text=l_('Name')),
+                         validators.NotEmpty)
 
 new_pilot_form = NewPilotForm(DBSession)
 

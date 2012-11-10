@@ -38,9 +38,9 @@ class ModelSelectField(SingleSelectField):
         return SingleSelectField.update_params(self, d)
 
 upload_form = BootstrapForm('upload_form', submit_text="Upload", action='do', children=[
-    MultiFileField('file', label_text="IGC or ZIP file(s)",
+    MultiFileField('file', label_text=l_("IGC or ZIP file(s)"),
         validator=FieldStorageUploadConverter(not_empty=True, messages=dict(empty=_("Please add one or more IGC or ZIP files")))),
-    PilotSelectField('pilot', label_text="Pilot"),
+    PilotSelectField('pilot', label_text=l_("Pilot")),
 ])
 
 
