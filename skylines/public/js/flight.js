@@ -195,8 +195,7 @@ function addFlight(sfid, _lonlat, _levels, _num_levels, _time, _height, _enl, zo
 
   map.getLayersByName("Flight")[0].addFeatures([feature, plane]);
 
-  var contests = [],
-      markers = [];
+  var contests = [];
   if (_contests) {
     for (var i = 0; i < _contests.length; i++) {
       var turnpoints = OpenLayers.Util.decodeGooglePolyline(_contests[i].turnpoints);
@@ -208,8 +207,6 @@ function addFlight(sfid, _lonlat, _levels, _num_levels, _time, _height, _enl, zo
         times: times,
         visible: true // this is only valid for the contests of this flight.
       });
-
-      markers.push(addContest(_contests[i].name, turnpoints, times, true, sfid));
     }
   }
 
@@ -260,7 +257,6 @@ function addFlight(sfid, _lonlat, _levels, _num_levels, _time, _height, _enl, zo
     sfid: sfid,
     last_update: time[time.length - 1],
     contests: contests,
-    markers: markers,
     table_row: table_row,
     flot_h: flot_h,
     flot_enl: flot_enl,
@@ -297,8 +293,7 @@ function addFlightFromJSON(url) {
 /**
  * Function: addContest
  *
- * Add a flight contest trace to the map and return
- * it's turnpoints as markers for the barogram.
+ * Add a flight contest trace to the map
  *
  * Parameters:
  * name - {String} Name to display
@@ -326,17 +321,6 @@ function addContest(name, lonlat, times, visible, sfid) {
   feature.renderIntent = (flights.length == 0) ? 'contest' : 'hidden';
 
   map.getLayersByName("Flight")[0].addFeatures(feature);
-
-  var markers = [];
-  for (var i = 0; i < times.length; i++) {
-    markers.push({
-      x: times[i],
-      value: (i == 0) ? 'Start' : (i == times.length - 1) ? 'End' : 'TP ' + i,
-      color: color
-    });
-  }
-
-  return markers;
 }
 
 /**
