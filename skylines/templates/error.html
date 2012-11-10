@@ -1,11 +1,12 @@
 <?python
 import re
+from tg.i18n import ugettext as _
 
 mf = re.compile(r'(</?)script', re.IGNORECASE)
 def fixmessage(message):
     return mf.sub(r'\1noscript', message)
 
-title = 'Error ' + unicode(code)
+title = _('Error {code}').format(code=code)
 ?>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"

@@ -1,4 +1,5 @@
 <?python
+from tg.i18n import ugettext as _
 from skylines.lib.units import format_distance, format_speed
 ?>
 
@@ -24,7 +25,7 @@ from skylines.lib.units import format_distance, format_speed
           $("a.share").popover({
             trigger: 'manual',
             content: '<input value="' + getShareUrl('${request.url}') + '" type="text" style="width: 95%;">',
-            title: 'Spread the word'
+            title: ${_('Spread the word')}
           }).click(function(e) {
             e.preventDefault();
             $(this).popover('toggle');

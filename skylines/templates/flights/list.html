@@ -1,24 +1,27 @@
 <?python
+from tg.i18n import ugettext as _
 from sets import Set
 
 page = 'flights'
-title = 'Flights'
+title = _('Flights')
 
 if date:
-  tagline = 'on ' + h.format_date(date)
+  tagline = (_('{flights} on {date}').
+             format(flights='', date=h.format_date(date)))
 
 if pilot:
-  tagline = 'of'
+  tagline = _('{flights} of {pilot}').format(flights='', pilot='')
   tagline_link = '/users/' + str(pilot.id) + '/'
   tagline_link_text = pilot
 
 if club:
-  tagline = 'of'
+  tagline = _('{flights} of {club}').format(flights='', club='')
   tagline_link = '/clubs/' + str(club.id) + '/'
   tagline_link_text = club
 
 if airport:
-  tagline = 'from ' + unicode(airport.name)
+  tagline = (_('{flights} from {airport}').
+             format(flights='', airport=unicode(airport.name)))
 ?>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
