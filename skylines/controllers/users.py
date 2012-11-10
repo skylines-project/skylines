@@ -13,7 +13,7 @@ from sprox.validators import UniqueValue
 from sprox.sa.provider import SAORMProvider
 from tw.forms import PasswordField, TextField, CheckBox, HiddenField
 from tw.forms.validators import UnicodeString
-from skylines.lib.base import BaseController
+from skylines.controllers.base import BaseController
 from skylines.lib.dbutil import get_requested_record
 from skylines.lib import units
 from skylines.model import DBSession, User, Group, Club, Flight, Follower

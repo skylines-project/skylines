@@ -9,7 +9,7 @@ from sprox.validators import UniqueValue
 from sprox.sa.provider import SAORMProvider
 from formencode import validators, All
 from tw.forms import TextField
-from skylines.lib.base import BaseController
+from skylines.controllers.base import BaseController
 from skylines.lib.dbutil import get_requested_record
 from skylines.model import DBSession, User, Group, Club
 from skylines.form import BootstrapForm

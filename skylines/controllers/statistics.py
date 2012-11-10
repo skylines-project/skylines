@@ -4,7 +4,7 @@ from tg import expose, request
 from webob.exc import HTTPNotFound
 from sqlalchemy.sql.expression import desc, or_, and_, between
 from sqlalchemy import func, distinct
-from skylines.lib.base import BaseController
+from skylines.controllers.base import BaseController
 from skylines.lib.dbutil import get_requested_record
 from skylines.model import DBSession, User, Club, Flight, Airport
 

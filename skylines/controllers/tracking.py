@@ -9,7 +9,7 @@ from sqlalchemy import func, over
 from sqlalchemy.sql.expression import and_, desc, cast
 from sqlalchemy.orm import joinedload
 from sqlalchemy.types import Interval, String
-from skylines.lib.base import BaseController
+from skylines.controllers.base import BaseController
 from skylines.lib.dbutil import get_requested_record_list
 from skylines.lib.helpers import isoformat_utc
 from skylines.lib.decorators import jsonp

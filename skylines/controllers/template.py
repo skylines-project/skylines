@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """Fallback controller."""
 
-from skylines.lib.base import BaseController
+from skylines.controllers.base import BaseController
 from tg import abort
 
 __all__ = ['TemplateController']

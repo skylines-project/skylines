@@ -8,7 +8,7 @@ from sqlalchemy.sql.expression import desc, or_, and_
 from sqlalchemy import func
 from sqlalchemy.orm import joinedload, contains_eager
 from sqlalchemy.orm.util import aliased
-from skylines.lib.base import BaseController
+from skylines.controllers.base import BaseController
 from skylines.model import DBSession, User, Club, Flight, IGCFile, Model, Airport
 from skylines.model.flight_comment import FlightComment
 from skylines.controllers.flight import FlightController

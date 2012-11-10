@@ -10,7 +10,7 @@ from tg import expose
 #from repoze.what import predicates
 
 # project specific imports
-from skylines.lib.base import BaseController
+from skylines.controllers.base import BaseController
 #from skylines.model import DBSession, metadata
 
 

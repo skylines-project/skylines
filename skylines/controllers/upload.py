@@ -5,7 +5,7 @@ from tg.i18n import ugettext as _, lazy_ugettext as l_
 from repoze.what.predicates import has_permission
 from tw.forms.fields import SingleSelectField
 from tw.forms.validators import FieldStorageUploadConverter
-from skylines.lib.base import BaseController
+from skylines.controllers.base import BaseController
 from skylines import files
 from skylines.model import DBSession, User, Model, Flight
 from skylines.lib.md5 import file_md5

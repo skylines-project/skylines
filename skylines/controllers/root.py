@@ -10,7 +10,7 @@ from skylines.model import DBSession
 from tgext.admin.tgadminconfig import TGAdminConfig
 from tgext.admin.controller import AdminController
 
-from skylines.lib.base import BaseController
+from skylines.controllers.base import BaseController
 from skylines.controllers.error import ErrorController
 from skylines.controllers.users import UsersController
 from skylines.controllers.clubs import ClubsController
