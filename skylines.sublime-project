@@ -8,6 +8,10 @@
 		},
 		{
 			"path": "skylines"
+		},
+		{
+			"name": "eggs",
+			"path": "/usr/local/lib/python2.7/dist-packages"
 		}
 	]
 }
