@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: SkyLines 0.1\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2012-11-10 21:17+0100\n"
+"POT-Creation-Date: 2012-11-10 21:43+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -390,7 +390,7 @@ msgid "Time"
 msgstr ""
 
 #: skylines/templates/flights/flights-table.html:85
-#: skylines/templates/notifications/notifications-table.html:111
+#: skylines/templates/notifications/notifications-table.html:115
 #: skylines/templates/tracking/list.html:51
 #: skylines/templates/upload/result.html:58 skylines/templates/users/view.html:189
 msgid "Show"
@@ -554,37 +554,32 @@ msgstr ""
 msgid "You don't have any unread notifications."
 msgstr ""
 
-#: skylines/templates/notifications/notifications-table.html:55
+#: skylines/templates/notifications/notifications-table.html:56
 msgid "Error: Unknown notification group"
 msgstr ""
 
-#: skylines/templates/notifications/notifications-table.html:69
+#: skylines/templates/notifications/notifications-table.html:70
 msgid "Error: Unknown notification"
 msgstr ""
 
-#: skylines/templates/notifications/notifications-table.html:75
-msgid "commented on your"
-msgstr ""
-
 #: skylines/templates/notifications/notifications-table.html:76
+#, python-format
+msgid "[1:%(pilot)s] commented on your [2:%(distance)s] flight on the [3:%(date)s]."
+msgstr ""
+
 #: skylines/templates/notifications/notifications-table.html:82
-msgid "flight on the"
-msgstr ""
-
-#: skylines/templates/notifications/notifications-table.html:81
-msgid "uploaded a new"
-msgstr ""
-
-#: skylines/templates/notifications/notifications-table.html:87
-msgid "uploaded"
+#, python-format
+msgid "[1:%(pilot)s] uploaded a new [2:%(distance)s] flight on the [3:%(date)s]."
 msgstr ""
 
 #: skylines/templates/notifications/notifications-table.html:88
-msgid "new flights."
+#, python-format
+msgid "[1:%(pilot)s] uploaded [2:%(num_flights)s] new flights."
 msgstr ""
 
-#: skylines/templates/notifications/notifications-table.html:92
-msgid "is following you now."
+#: skylines/templates/notifications/notifications-table.html:94
+#, python-format
+msgid "[1:%(pilot)s] is following you now."
 msgstr ""
 
 #: skylines/templates/ranking/airports.html:12
