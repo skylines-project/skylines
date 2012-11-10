@@ -22,15 +22,15 @@ def get_requested_record(model, id, **kw):
     try:
         id = int(id)
     except ValueError:
-        raise HTTPNotFound(detail=_('Sorry, the record id ({}) that you ' \
-                                    'requested is not a valid id.').format(id))
+        raise HTTPNotFound(detail=_('Sorry, the record id ({id}) that you ' \
+                                    'requested is not a valid id.').format(id=id))
 
     q = DBSession.query(model)
     q = _patch_query(q, **kw)
     record = q.get(id)
     if record is None:
-        raise HTTPNotFound(detail=_('Sorry, there is no such record ({}) in ' \
-                                    'our database.').format(id))
+        raise HTTPNotFound(detail=_('Sorry, there is no such record ({id}) in ' \
+                                    'our database.').format(id=id))
 
     return record
 
@@ -41,8 +41,8 @@ def _parse_id_list(ids):
         try:
             id = int(id)
         except ValueError:
-            raise HTTPNotFound(detail=_('Sorry, the record id ({}) that you ' \
-                                        'requested is not a valid id.').format(id))
+            raise HTTPNotFound(detail=_('Sorry, the record id ({id}) that you ' \
+                                        'requested is not a valid id.').format(id=id))
         if id not in out:
             out.append(id)
     return out
@@ -58,8 +58,8 @@ def get_requested_record_list(model, ids, **kw):
     q = _patch_query(q, **kw)
     result = list(q)
     if len(result) != len(ids):
-        raise HTTPNotFound(detail=_('Sorry, {} of the requested records ({}) ' \
-                                    'do not exist in our database.') \
-                                    .format(len(ids) - len(result), ids))
+        raise HTTPNotFound(detail=_('Sorry, {num_missing} of the requested records ({ids}) do not exist in our database.') \
+                                    .format(num_missing=(len(ids) - len(result)),
+                                            ids=ids))
 
     return result
