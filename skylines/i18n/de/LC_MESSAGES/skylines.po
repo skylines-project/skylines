@@ -7,15 +7,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: skylines\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2012-11-09 17:07+0100\n"
-"PO-Revision-Date: 2012-11-10 13:19+0000\n"
-"Last-Translator: Turbo <Unknown>\n"
+"POT-Creation-Date: 2012-11-10 23:13+0100\n"
+"PO-Revision-Date: 2012-11-10 22:31+0000\n"
+"Last-Translator: Tobias Lohner <tobias@lohner-net.de>\n"
 "Language-Team: German <de@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2012-11-10 17:40+0000\n"
+"X-Launchpad-Export-Date: 2012-11-10 22:32+0000\n"
 "X-Generator: Launchpad (build 16251)\n"
 
 #: skylines/controllers/clubs.py:58
@@ -26,101 +26,75 @@ msgstr "Club bearbeiten"
 msgid "Create Pilot"
 msgstr "Pilot erstellen"
 
-#: skylines/controllers/flight.py:238
+#: skylines/controllers/flight.py:246
 msgid "Select Pilot"
 msgstr "Pilot wählen"
 
-#: skylines/controllers/flight.py:286
+#: skylines/controllers/flight.py:294
 msgid "Change Aircraft"
-msgstr "Luftfahrzeug ändern"
+msgstr "Flugzeug ändern"
 
-#: skylines/controllers/flight.py:345
+#: skylines/controllers/flight.py:353
 msgid "You have to be logged in to post comments!"
-msgstr "Sie müssen eingeloggt sein, um Kommentare zu posten!"
+msgstr "Du musst eingeloggt sein, um Kommentare zu posten!"
 
 #: skylines/controllers/root.py:92
 msgid ""
 "Sorry, email address or password are wrong. Please try again or register."
 msgstr ""
-"Sorry, eMail Adresse oder das Passwort ist falsch. Bitte versuchen Sie es "
-"erneut oder registrieren Sie sich."
+"Bedaure, eMail Adresse oder das Passwort ist falsch. Bitte versuche es "
+"erneut oder registriere Dich."
 
 #: skylines/controllers/root.py:97
 #, python-format
 msgid "You are now logged in. Welcome back, %s!"
-msgstr "Sie sind jetzt eingeloggt. Willkommen zurück, %s!"
+msgstr "Du bist jetzt eingeloggt. Willkommen zurück, %s!"
 
 #: skylines/controllers/root.py:114
 msgid "You are now logged out. We hope to see you back soon!"
-msgstr "Sie sind jetzt ausgeloggt. Wir hoffen, Sie kommen bald wieder!"
-
-#: skylines/controllers/upload.py:37
-msgid "Gliders"
-msgstr "Segler"
-
-#: skylines/controllers/upload.py:38
-msgid "Motor Gliders"
-msgstr "Motorsegler"
-
-#: skylines/controllers/upload.py:39
-msgid "Hanggliders"
-msgstr "Hängegleiter"
-
-#: skylines/controllers/upload.py:40
-msgid "Paragliders"
-msgstr "Paragleiter"
-
-#: skylines/controllers/upload.py:41
-msgid "UL Glider"
-msgstr "UL Gleiter"
+msgstr "Du bist jetzt ausgeloggt. Wir hoffen Dich bald wieder zu sehen!"
 
 #: skylines/controllers/upload.py:42
-msgid "Other"
-msgstr "Sonstige"
-
-#: skylines/controllers/upload.py:49
 msgid "Please add one or more IGC or ZIP files"
-msgstr "Bitte fügen Sie mindestens eine IGC oder ZIP Dateie hinzu"
+msgstr "Bitte füge ein oder mehrere IGC- oder ZIP-Dateien hinzu"
 
-#: skylines/controllers/upload.py:99
+#: skylines/controllers/upload.py:92
 msgid "You have to login to upload flights."
-msgstr "Sie müssen eingeloggt sein, um Flüge hochzuladen."
+msgstr "Du musst eingeloggt sein, um Flüge hochzuladen."
 
-#: skylines/controllers/upload.py:103
+#: skylines/controllers/upload.py:96 skylines/templates/upload/result.html:1
 msgid "Upload Flight"
 msgstr "Flug hochladen"
 
-#: skylines/controllers/upload.py:133
+#: skylines/controllers/upload.py:126
 msgid "Duplicate file"
 msgstr "Datei duplizieren"
 
-#: skylines/controllers/upload.py:158
+#: skylines/controllers/upload.py:151
 msgid "Failed to parse file"
 msgstr "Fehler beim analysieren der Datei"
 
-#: skylines/controllers/upload.py:163
+#: skylines/controllers/upload.py:156
 msgid "No flight found in file"
-msgstr "Kein Flug in der Datei gefunden"
+msgstr "Keinen Flug in der Datei gefunden"
 
-#: skylines/controllers/upload.py:200
+#: skylines/controllers/upload.py:193
 msgid ""
 "Sorry, some error happened when updating your flight(s). Please contact a "
 "administrator for help."
 msgstr ""
-"Sorry, ein Fehler ist beim Update deiner Flüge aufgetreten. Bitte "
+"Bedaure, ein Fehler ist beim Hochladen Deiner Flüge aufgetreten. Bitte "
 "kontaktiere einen Administrator."
 
-#: skylines/controllers/upload.py:238
+#: skylines/controllers/upload.py:231
 msgid "Your flight(s) have been successfully updated."
-msgstr "Flug/Flüge wurde/n erfolgreich aktualisiert."
+msgstr "Dein/e Flug/Flüge wurde/n erfolgreich aktualisiert."
 
-#: skylines/controllers/users.py:46
-#: skylines/templates/settings/change_name_email.html:34
-#: skylines/templates/users/view.html:95
+#: skylines/controllers/users.py:46 skylines/templates/users/view.html:95
 msgid "None"
 msgstr "Keine"
 
-#: skylines/controllers/users.py:48 skylines/templates/tracking/view.html:119
+#: skylines/controllers/users.py:48 skylines/templates/tracking/view.html:113
 #: skylines/templates/users/view.html:96
 #, python-format
 msgid "%u minute"
@@ -142,45 +116,59 @@ msgstr "Passwort wurde geändert"
 
 #: skylines/lib/dbutil.py:25 skylines/lib/dbutil.py:44
 msgid "Sorry, the record id ({}) that you requested is not a valid id."
-msgstr ""
+msgstr "Bedaure, die angeforderte Eintragskennung  ({})  ist nicht gültig."
 
 #: skylines/lib/dbutil.py:32
 msgid "Sorry, there is no such record ({}) in our database."
-msgstr ""
+msgstr "Bedaure, einen Eintrag  ({})  gibt es in unserer Datenbank nicht."
 
 #: skylines/lib/dbutil.py:61
 msgid "Sorry, {} of the requested records ({}) do not exist in our database."
 msgstr ""
+"Bedaure, {} der angeforderten Einträge ({}) gibt es in unserer Datenbank "
+"nicht."
 
-#: skylines/templates/about.html:22
+#: skylines/lib/helpers/__init__.py:29
+msgid "{something} by {pilot_name}"
+msgstr "{something} von {pilot_name}"
+
+#: skylines/lib/helpers/__init__.py:33
+msgid "{something} by {pilot_name} and {co_pilot_name}"
+msgstr "{something} von {pilot_name} und {co_pilot_name}"
+
+#: skylines/templates/about.html:1 skylines/templates/master/topbar.html:23
+msgid "About"
+msgstr "Info"
+
+#: skylines/templates/about.html:24
 msgid ""
 "Welcome to SkyLines, the internet platform for sharing\n"
 "        flights!"
 msgstr ""
-"Willkommen zu SkyLines, die Internet Platform zum Teilen von\n"
+"Willkommen zu SkyLines, die Internet Platform zum Austausch von\n"
 "        Flügen!"
 
-#: skylines/templates/about.html:27
-msgid "The major goals of the Skylines-Project are:"
-msgstr "Die Ziele des SkyLines Projekts sind:"
-
 #: skylines/templates/about.html:29
-msgid "To provide a free platform for sharing and analysing flights"
-msgstr ""
-"Eine freie Plattform zur Veröffentlichung und Analyse von Flügen zur "
-"Verfügung stellen"
-
-#: skylines/templates/about.html:30
-msgid "Skylines is based on free software ([1:License])."
-msgstr "Skylines basiert auf freier Software ([1:License])."
+msgid "The major goals of the Skylines-Project are:"
+msgstr "Die Hauptziele des SkyLines Projekts sind:"
 
 #: skylines/templates/about.html:31
+msgid "To provide a free platform for sharing and analysing flights"
+msgstr ""
+"Eine freie Plattform zum Austausch und zur Analyse von Flügen zu Verfügung "
+"stellen"
+
+#: skylines/templates/about.html:32
+msgid "Skylines is based on free software ([1:License])."
+msgstr "Skylines basiert auf freier Software ([1:Lizenz])."
+
+#: skylines/templates/about.html:33
 msgid ""
 "The stored flights are available for everybody without any limitations."
 msgstr ""
 "Die gespeicherten Flüge sind für jeden sichtbar ohne jegliche Limitierung."
 
-#: skylines/templates/about.html:32
+#: skylines/templates/about.html:34
 msgid ""
 "Skylines is a non-commercial project, there are no ads on the webpage, its "
 "free of charge."
@@ -188,7 +176,7 @@ msgstr ""
 "SkyLines ist ein nicht-kommerzielles Projekt, es gibt keine Werbung auf der "
 "Internetseite und die Nutzung ist komplett kostenlos."
 
-#: skylines/templates/about.html:33
+#: skylines/templates/about.html:35
 msgid ""
 "Skylines has [1:Live Tracking], let your friends parcitipate on your "
 "adventures."
@@ -196,7 +184,7 @@ msgstr ""
 "SkyLines hat [1:Live Tracking]! Lass deine Freunde teilhaben an deinen "
 "Flügen noch während du fliegst."
 
-#: skylines/templates/about.html:34
+#: skylines/templates/about.html:36
 msgid ""
 "Skylines has also some social network aspects with comments, notifications, "
 "friends and followers."
@@ -205,47 +193,62 @@ msgstr ""
 "Kommentare zu den Flügen, Benachrichtigungen über interessante Ereignisse "
 "and einem Netzwerk von Freunden und interessanten Personen."
 
-#: skylines/templates/about.html:35
+#: skylines/templates/about.html:37
 msgid ""
 "Airport and Waypoint data is provided by the [1:WELT2000] project "
 "([2:License])"
 msgstr ""
+"Flugplatz- und Wegpunktdaten kommen aus dem  [1:WELT2000] Projekt "
+"([2:Lizenz])"
 
-#: skylines/templates/about.html:39
+#: skylines/templates/about.html:41
 msgid "Current status: [1:[2:] under development]"
-msgstr ""
+msgstr "Aktueller Status: [1:[2:] in Entwicklung]"
 
-#: skylines/templates/about.html:43
+#: skylines/templates/about.html:45
 msgid ""
 "SkyLines was brought to you by the [1:XCSoar project].  It is free\n"
 "        software; [2:the source\n"
 "        code is available here]."
 msgstr ""
+"SkyLines entstand aus dem [1:XCSoar Projekt]. Es ist freie\n"
+"        Software; [2:Der Source-\n"
+"        code ist hier verfügbar]."
 
-#: skylines/templates/about.html:51
+#: skylines/templates/about.html:53
 msgid ""
 "If you think that something is missing or you think that you have found a "
 "bug please follow the instructions [1:here] to write a feature request or "
 "bug report."
 msgstr ""
+"Falls Du etwas vermisst, oder meinst Du hast einen Fehler gefunden schreibe "
+"bitte nach [1:dieser Anleitung] einen Feature-Antrag bzw. Fehlerbericht."
 
-#: skylines/templates/login.html:23 skylines/templates/master/topbar.html:42
+#: skylines/templates/error.html:1
+msgid "Error {code}"
+msgstr "Fehler {code}"
+
+#: skylines/templates/login.html:1 skylines/templates/master/topbar.html:37
+msgid "Login"
+msgstr "Anmelden"
+
+#: skylines/templates/login.html:25 skylines/templates/master/topbar.html:42
 msgid "Email Address:"
 msgstr "e-Mail Adresse:"
 
-#: skylines/templates/login.html:29 skylines/templates/master/topbar.html:48
+#: skylines/templates/login.html:31 skylines/templates/master/topbar.html:48
 msgid "Password:"
 msgstr "Passwort:"
 
-#: skylines/templates/login.html:36 skylines/templates/master/topbar.html:55
+#: skylines/templates/login.html:38 skylines/templates/master/topbar.html:55
 msgid "Remember me"
 msgstr "Angemeldet bleiben"
 
-#: skylines/templates/login.html:42
+#: skylines/templates/login.html:44 skylines/templates/users/new.html:1
 msgid "Register"
 msgstr "Registrieren"
 
-#: skylines/templates/clubs/list.html:14 skylines/templates/ranking/layout.html:25
+#: skylines/templates/clubs/list.html:14 skylines/templates/ranking/layout.html:27
 msgid "Clubs"
 msgstr "Vereine"
 
@@ -258,32 +261,33 @@ msgid "Name"
 msgstr "Name"
 
 #: skylines/templates/clubs/list.html:23
-#: skylines/templates/flights/details-table.html:182
+#: skylines/templates/flights/details-table.html:183
 #: skylines/templates/users/users-table.html:23
 msgid "Actions"
-msgstr ""
+msgstr "Aktionen"
 
 #: skylines/templates/clubs/list.html:34 skylines/templates/clubs/view.html:43
-#: skylines/templates/master/topbar.html:25
+#: skylines/templates/flights/list.html:1 skylines/templates/master/topbar.html:25
 #: skylines/templates/master/topbar.html:84
 #: skylines/templates/ranking/airports.html:20
 #: skylines/templates/ranking/clubs.html:19
 #: skylines/templates/ranking/pilots.html:20
 #: skylines/templates/statistics/flights-table.html:12
-#: skylines/templates/statistics/years.html:46
+#: skylines/templates/statistics/years.html:48
 #: skylines/templates/users/users-table.html:41
 #: skylines/templates/users/view.html:140 skylines/templates/users/view.html:206
 msgid "Flights"
-msgstr ""
+msgstr "Flüge"
 
 #: skylines/templates/clubs/list.html:35 skylines/templates/clubs/view.html:44
 #: skylines/templates/master/topbar.html:27
 #: skylines/templates/master/topbar.html:85
-#: skylines/templates/statistics/years.html:33
+#: skylines/templates/statistics/years.html:1
+#: skylines/templates/statistics/years.html:35
 #: skylines/templates/users/users-table.html:42
 #: skylines/templates/users/view.html:141
 msgid "Statistics"
-msgstr ""
+msgstr "Statistiken"
 
 #: skylines/templates/clubs/list.html:36 skylines/templates/clubs/view.html:45
 msgid "Members"
@@ -298,7 +302,7 @@ msgid "Created"
 msgstr "Angelegt"
 
 #: skylines/templates/clubs/view.html:36
-#: skylines/templates/flights/details-table.html:171
+#: skylines/templates/flights/details-table.html:172
 msgid "by"
 msgstr "von"
 
@@ -310,112 +314,114 @@ msgstr "Ändern"
 
 #: skylines/templates/flights/after_change_pilot.html:5
 msgid "Pilot missing in the list?"
-msgstr ""
+msgstr "Fehlt ein Pilot in der Liste?"
 
 #: skylines/templates/flights/after_change_pilot.html:6
 msgid "Create new pilot"
+msgstr "Neuen Pilot anlegen"
+
+#: skylines/templates/flights/details-table.html:28
+msgid "Spread the word"
 msgstr ""
 
-#: skylines/templates/flights/details-table.html:42
+#: skylines/templates/flights/details-table.html:43
 #: skylines/templates/flights/flights-table.html:18
 #: skylines/templates/users/view.html:175
 msgid "Date"
 msgstr "Datum"
 
-#: skylines/templates/flights/details-table.html:48
+#: skylines/templates/flights/details-table.html:49
 msgid "Share"
 msgstr "Teilen"
 
-#: skylines/templates/flights/details-table.html:54
+#: skylines/templates/flights/details-table.html:55
 msgid "Take-off"
 msgstr "Start"
 
-#: skylines/templates/flights/details-table.html:59
-#: skylines/templates/flights/details-table.html:72
+#: skylines/templates/flights/details-table.html:60
+#: skylines/templates/flights/details-table.html:73
 msgid "at"
-msgstr ""
+msgstr "bei"
 
-#: skylines/templates/flights/details-table.html:67
+#: skylines/templates/flights/details-table.html:68
 msgid "Landing"
 msgstr "Landung"
 
-#: skylines/templates/flights/details-table.html:79
+#: skylines/templates/flights/details-table.html:80
 #: skylines/templates/flights/phases-table.html:13
 #: skylines/templates/flights/phases-table.html:36
 #: skylines/templates/flights/phases-table.html:66
 msgid "Duration"
 msgstr "Dauer"
 
-#: skylines/templates/flights/details-table.html:85
+#: skylines/templates/flights/details-table.html:86
 #: skylines/templates/flights/flights-table.html:24
 msgid "Aircraft"
 msgstr "Flugzeug"
 
-#: skylines/templates/flights/details-table.html:88
-#: skylines/templates/flights/details-table.html:144
-#: skylines/templates/settings/change_name_email.html:35
+#: skylines/templates/flights/details-table.html:89
+#: skylines/templates/flights/details-table.html:145
 #: skylines/templates/users/view.html:107 skylines/templates/users/view.html:115
 msgid "Change"
 msgstr "Ändern"
 
-#: skylines/templates/flights/details-table.html:97
+#: skylines/templates/flights/details-table.html:98
 msgid "Unknown"
 msgstr "Unbekannt"
 
-#: skylines/templates/flights/details-table.html:122
+#: skylines/templates/flights/details-table.html:123
 #: skylines/templates/flights/flights-table.html:19
 msgid "Score"
 msgstr "Punkte"
 
-#: skylines/templates/flights/details-table.html:124
+#: skylines/templates/flights/details-table.html:125
 #: skylines/templates/ranking/airports.html:33
 #: skylines/templates/ranking/clubs.html:31
 #: skylines/templates/ranking/pilots.html:37
 msgid "pt"
 msgstr "pt"
 
-#: skylines/templates/flights/details-table.html:126
+#: skylines/templates/flights/details-table.html:127
 msgid "OLC Distance"
 msgstr "OLC Distanz"
 
-#: skylines/templates/flights/details-table.html:129
+#: skylines/templates/flights/details-table.html:130
 msgid "FAI Triangle Distance"
 msgstr "FAI Dreieck Distanz"
 
-#: skylines/templates/flights/details-table.html:136
+#: skylines/templates/flights/details-table.html:137
 msgid "Speed"
 msgstr "Geschwindigkeit"
 
-#: skylines/templates/flights/details-table.html:142
+#: skylines/templates/flights/details-table.html:143
 #: skylines/templates/flights/flights-table.html:20
-#: skylines/templates/tracking/list.html:27
-#: skylines/templates/tracking/view.html:98
+#: skylines/templates/tracking/list.html:28
+#: skylines/templates/tracking/view.html:92
 msgid "Pilot"
 msgstr "Pilot"
 
-#: skylines/templates/flights/details-table.html:154
+#: skylines/templates/flights/details-table.html:155
 msgid "[unspecified]"
 msgstr "[unbekannt]"
 
-#: skylines/templates/flights/details-table.html:160
+#: skylines/templates/flights/details-table.html:161
 #: skylines/templates/flights/flights-table.html:23
 #: skylines/templates/ranking/pilots.html:19
-#: skylines/templates/settings/change_name_email.html:31
-#: skylines/templates/tracking/view.html:106
+#: skylines/templates/tracking/view.html:100
 #: skylines/templates/users/users-table.html:22
 #: skylines/templates/users/view.html:101 skylines/templates/users/view.html:112
 msgid "Club"
 msgstr "Verein"
 
-#: skylines/templates/flights/details-table.html:169
+#: skylines/templates/flights/details-table.html:170
 msgid "Uploaded"
 msgstr "Hochgeladen"
 
-#: skylines/templates/flights/details-table.html:176
+#: skylines/templates/flights/details-table.html:177
 msgid "Download"
 msgstr "Runterladen"
 
-#: skylines/templates/flights/details-table.html:184
+#: skylines/templates/flights/details-table.html:185
 msgid "Delete"
 msgstr "Löschen"
 
@@ -423,7 +429,7 @@ msgstr "Löschen"
 #: skylines/templates/flights/phases-table.html:38
 #: skylines/templates/flights/phases-table.html:68
 #: skylines/templates/statistics/distance-table.html:18
-#: skylines/templates/statistics/years.html:49
+#: skylines/templates/statistics/years.html:51
 #: skylines/templates/users/view.html:174 skylines/templates/users/view.html:210
 msgid "Distance"
 msgstr "Distanz"
@@ -437,11 +443,27 @@ msgid "Time"
 msgstr "Uhrzeit"
 
 #: skylines/templates/flights/flights-table.html:85
-#: skylines/templates/notifications/notifications-table.html:111
-#: skylines/templates/tracking/list.html:51
-#: skylines/templates/upload/result.html:58 skylines/templates/users/view.html:189
+#: skylines/templates/notifications/notifications-table.html:115
+#: skylines/templates/tracking/list.html:52
+#: skylines/templates/upload/result.html:60 skylines/templates/users/view.html:189
 msgid "Show"
 msgstr "Anzeigen"
+
+#: skylines/templates/flights/list.html:1
+msgid "{flights} on {date}"
+msgstr "{flights} am {date}"
+
+#: skylines/templates/flights/list.html:1
+msgid "{flights} of {pilot}"
+msgstr "{flights} von {pilot}"
+
+#: skylines/templates/flights/list.html:1
+msgid "{flights} of {club}"
+msgstr "{flights} vom {club}"
+
+#: skylines/templates/flights/list.html:1
+msgid "{flights} from {airport}"
+msgstr "{flights} aus {airport}"
 
 #: skylines/templates/flights/nav.html:14
 msgid "All Flights"
@@ -469,16 +491,16 @@ msgstr "ΔH"
 #: skylines/templates/flights/phases-table.html:39
 #: skylines/templates/flights/phases-table.html:69
 msgid "Avg. vario"
-msgstr ""
+msgstr "Mittl. Steigen"
 
 #: skylines/templates/flights/phases-table.html:16
 msgid "Thermals"
-msgstr ""
+msgstr "Thermik"
 
 #: skylines/templates/flights/phases-table.html:40
 #: skylines/templates/flights/phases-table.html:70
 msgid "Avg. speed"
-msgstr ""
+msgstr "Mittl. Geschw."
 
 #: skylines/templates/flights/phases-table.html:41
 #: skylines/templates/flights/phases-table.html:71
@@ -492,7 +514,7 @@ msgstr "GZ"
 
 #: skylines/templates/flights/phases-table.html:42
 msgid "Glides"
-msgstr ""
+msgstr "Gleiflüge"
 
 #: skylines/templates/flights/phases-table.html:64
 msgid "Phase"
@@ -502,55 +524,63 @@ msgstr "Phase"
 msgid "Start"
 msgstr "Start"
 
-#: skylines/templates/flights/view.html:105
+#: skylines/templates/flights/view.html:99
 msgid "View Flight"
 msgstr "Flug anzeigen"
 
-#: skylines/templates/flights/view.html:115
-#: skylines/templates/tracking/view.html:134
+#: skylines/templates/flights/view.html:109
+#: skylines/templates/tracking/view.html:128
 msgid "Full-screen map"
 msgstr "Große Karte"
 
-#: skylines/templates/flights/view.html:118
+#: skylines/templates/flights/view.html:112
 msgid "Activate this to show the flight on top of other flights on the map"
 msgstr ""
 "Aktiviere diese Option um den Flug auch auf der Karte anderer Flüge zu sehen."
 
-#: skylines/templates/flights/view.html:123
+#: skylines/templates/flights/view.html:117
 msgid "Detailed statistics"
 msgstr "Erweiterte Statistiken"
 
-#: skylines/templates/flights/view.html:127
+#: skylines/templates/flights/view.html:121
 msgid "Comments"
 msgstr "Kommentare"
 
-#: skylines/templates/flights/view.html:138
+#: skylines/templates/flights/view.html:132
 msgid "No comments yet."
 msgstr "Keine Kommentare bisher."
 
-#: skylines/templates/flights/view.html:155
+#: skylines/templates/flights/view.html:138
+msgid "Add comment"
+msgstr "Kommentar hinzufügen"
+
+#: skylines/templates/flights/view.html:149
 msgid "An error occurred while decoding this flight."
-msgstr ""
+msgstr "Bei decodieren des Flugs ist ein Fehler aufgetreten."
 
-#: skylines/templates/flights/view.html:164
+#: skylines/templates/flights/view.html:158
 msgid "Circling performance"
-msgstr ""
+msgstr "Kreisflug Performance"
 
-#: skylines/templates/flights/view.html:164
-#: skylines/templates/flights/view.html:169
+#: skylines/templates/flights/view.html:158
+#: skylines/templates/flights/view.html:163
 msgid "(summary)"
-msgstr ""
+msgstr "(Zusammenfassung)"
 
-#: skylines/templates/flights/view.html:169
+#: skylines/templates/flights/view.html:163
 msgid "Cruise performance"
-msgstr ""
+msgstr "Vorflug Leistung"
 
-#: skylines/templates/flights/view.html:173
+#: skylines/templates/flights/view.html:167
 msgid "Phases"
 msgstr "Phasen"
 
-#: skylines/templates/generic/confirm.html:23
 #: skylines/templates/generic/confirm.html:24
+msgid "Yes"
+msgstr "Ja"
+
+#: skylines/templates/generic/confirm.html:25
+#: skylines/templates/generic/confirm.html:26
 msgid "No"
 msgstr "Nein"
 
@@ -562,34 +592,18 @@ msgstr "Das XCSoar Projekt"
 msgid "Imprint"
 msgstr "Impressum"
 
-#: skylines/templates/master/topbar.html:20
-msgid "Sky"
-msgstr "Sky"
-
-#: skylines/templates/master/topbar.html:20
-msgid "Lines"
-msgstr "Lines"
-
-#: skylines/templates/master/topbar.html:23
-msgid "About"
-msgstr "Info"
-
 #: skylines/templates/master/topbar.html:24
 msgid "Live"
 msgstr "Live"
 
 #: skylines/templates/master/topbar.html:26
+#: skylines/templates/ranking/layout.html:1
 msgid "Ranking"
 msgstr "Rangliste"
 
 #: skylines/templates/master/topbar.html:32
 msgid "Upload"
 msgstr "Hochladen"
-
-#: skylines/templates/master/topbar.html:37
-#: skylines/templates/settings/change_name_email.html:19
-msgid "Login"
-msgstr "Anmelden"
 
 #: skylines/templates/master/topbar.html:61
 msgid "Forgot password?"
@@ -603,50 +617,54 @@ msgstr "Noch kein Konto?"
 msgid "Logout"
 msgstr "Abmelden"
 
-#: skylines/templates/notifications/list.html:22
+#: skylines/templates/notifications/list.html:1
+msgid "Notifications"
+msgstr "Benachrichtigungen"
+
+#: skylines/templates/notifications/list.html:24
 msgid "Mark all as read"
 msgstr "Alle als gelesen markieren"
 
-#: skylines/templates/notifications/list.html:24
+#: skylines/templates/notifications/list.html:26
 msgid "You don't have any unread notifications."
 msgstr "Du hast keine ungelesenen Benachrichtigungen"
 
-#: skylines/templates/notifications/notifications-table.html:55
+#: skylines/templates/notifications/notifications-table.html:56
 msgid "Error: Unknown notification group"
-msgstr ""
+msgstr "Fehler: Unbekannte Meldungs-Gruppe"
 
-#: skylines/templates/notifications/notifications-table.html:69
+#: skylines/templates/notifications/notifications-table.html:70
 msgid "Error: Unknown notification"
-msgstr ""
-
-#: skylines/templates/notifications/notifications-table.html:75
-msgid "commented on your"
-msgstr ""
+msgstr "Fehler: Unbekannte Meldung"
 
 #: skylines/templates/notifications/notifications-table.html:76
+#, python-format
+msgid ""
+"[1:%(pilot)s] commented on your [2:%(distance)s] flight on the [3:%(date)s]."
+msgstr ""
+"[1:%(pilot)s] hat deinen [2:%(distance)s] Flug am [3:%(date)s] kommentiert."
+
 #: skylines/templates/notifications/notifications-table.html:82
-msgid "flight on the"
+#, python-format
+msgid ""
+"[1:%(pilot)s] uploaded a new [2:%(distance)s] flight on the [3:%(date)s]."
 msgstr ""
-
-#: skylines/templates/notifications/notifications-table.html:81
-msgid "uploaded a new"
-msgstr ""
-
-#: skylines/templates/notifications/notifications-table.html:87
-msgid "uploaded"
-msgstr ""
+"[1:%(pilot)s] hat einen neuen [2:%(distance)s] Flug am [3:%(date)s] "
+"hochgeladen."
 
 #: skylines/templates/notifications/notifications-table.html:88
-msgid "new flights."
-msgstr ""
+#, python-format
+msgid "[1:%(pilot)s] uploaded [2:%(num_flights)s] new flights."
+msgstr "[1:%(pilot)s] hat [2:%(num_flights)s] neue Flüge hochgeladen."
 
-#: skylines/templates/notifications/notifications-table.html:92
-msgid "is following you now."
-msgstr ""
+#: skylines/templates/notifications/notifications-table.html:94
+#, python-format
+msgid "[1:%(pilot)s] is following you now."
+msgstr "[1:%(pilot)s] folgt dir jetzt."
 
 #: skylines/templates/ranking/airports.html:12
 #: skylines/templates/ranking/clubs.html:11
-#: skylines/templates/ranking/layout.html:16
+#: skylines/templates/ranking/layout.html:18
 #: skylines/templates/ranking/pilots.html:11
 msgid "Top 20"
 msgstr "Top 20"
@@ -657,35 +675,15 @@ msgstr "Top 20"
 msgid "Total Score"
 msgstr "Gesamtpunkte"
 
-#: skylines/templates/ranking/layout.html:26
+#: skylines/templates/ranking/layout.html:28
 #: skylines/templates/statistics/pilots-table.html:12
-#: skylines/templates/statistics/years.html:56
+#: skylines/templates/statistics/years.html:58
 msgid "Pilots"
 msgstr "Piloten"
 
-#: skylines/templates/ranking/layout.html:27
+#: skylines/templates/ranking/layout.html:29
 msgid "Airports"
 msgstr "Flugplätze"
-
-#: skylines/templates/settings/change_name_email.html:11
-msgid "Settings"
-msgstr "Einstellungen"
-
-#: skylines/templates/settings/change_name_email.html:23
-msgid "EMail"
-msgstr "E-Mail"
-
-#: skylines/templates/settings/change_name_email.html:27
-msgid "Full name"
-msgstr "Voller Name"
-
-#: skylines/templates/settings/change_name_email.html:39
-msgid "Groups"
-msgstr "Gruppen"
-
-#: skylines/templates/snippets/datetime.html:22
-msgid "UTC"
-msgstr "UTC"
 
 #: skylines/templates/snippets/flash.html:26
 msgid "Warning!"
@@ -719,7 +717,7 @@ msgid "Total"
 msgstr "Gesamt"
 
 #: skylines/templates/statistics/duration-table.html:14
-#: skylines/templates/statistics/years.html:52
+#: skylines/templates/statistics/years.html:54
 #: skylines/templates/users/view.html:218
 msgid "Flight Time"
 msgstr "Flugzeit"
@@ -730,15 +728,16 @@ msgstr "Flugzeit"
 msgid "Hours"
 msgstr "Stunden"
 
-#: skylines/templates/statistics/years.html:38
-msgid "SkyLines"
-msgstr "SkyLines"
+#: skylines/templates/tracking/info.html:1 skylines/templates/tracking/list.html:1
+#: skylines/templates/tracking/map.html:1 skylines/templates/tracking/view.html:1
+msgid "Live Tracking"
+msgstr "Live Tracking"
 
-#: skylines/templates/tracking/info.html:18
+#: skylines/templates/tracking/info.html:20
 msgid "What is it?"
-msgstr ""
+msgstr "Was gibt's?"
 
-#: skylines/templates/tracking/info.html:19
+#: skylines/templates/tracking/info.html:21
 msgid ""
 "SkyLines Live Tracking can be used to let others take part on your\n"
 "      journeys while you're flying. It uses a very light-weight protocol "
@@ -749,161 +748,188 @@ msgid ""
 "the\n"
 "      positions are transmitted every 5 seconds!"
 msgstr ""
+"SkyLines Live-Tracking kann genutzt werden um anderen\n"
+"      an Deinen Ausflügen teilhaben zu lassen. Es verwendet ein sehr leicht-"
+"\n"
+"      gewichtiges Protokoll, dass nur die nötigen Daten übermittelt. "
+"Deswegen \n"
+"      funktioniert es auch in Gebieten/Höhen mit eher schlechtem Empfang.\n"
+"      Hier ein Beispiel: Für einen 10 stündigen Flug werden ungefähr 340 KB "
+"Daten\n"
+"      übertragen und es kann alle 5 Sekunden eine Position übertragen werden!"
 
-#: skylines/templates/tracking/info.html:28
+#: skylines/templates/tracking/info.html:30
 msgid "Clients"
 msgstr "Software"
 
-#: skylines/templates/tracking/info.html:30
+#: skylines/templates/tracking/info.html:32
 msgid ""
 "[1:XCSoar:][2:]available starting with [3:XCSoar 6.4]\n"
 "      ([4:Google Play]).\n"
 "      Instructions are below."
 msgstr ""
+"[1:XCSoar:][2:]verfügbar ab [3:XCSoar 6.4]\n"
+"      ([4:Google Play]).\n"
+"      Eine Anleitung ist unten."
 
-#: skylines/templates/tracking/info.html:34
+#: skylines/templates/tracking/info.html:36
 msgid ""
 "[1:Gaggle:][2:]now available in the current version of Gaggle\n"
 "      ([3:Google Play])"
 msgstr ""
+"[1:Gaggle:][2:] nun in der aktuellen Version von Gaggle\n"
+"      ([3:Google Play])"
 
-#: skylines/templates/tracking/info.html:36
+#: skylines/templates/tracking/info.html:38
 msgid "Butterfly iGlide:"
 msgstr "Butterfly iGlide:"
 
-#: skylines/templates/tracking/info.html:36
+#: skylines/templates/tracking/info.html:38
 msgid "planned"
 msgstr "geplant"
 
-#: skylines/templates/tracking/info.html:39
+#: skylines/templates/tracking/info.html:41
 msgid "Live Tracking Key"
 msgstr "Live Tracking Key"
 
-#: skylines/templates/tracking/info.html:41
+#: skylines/templates/tracking/info.html:43
 msgid "Your Live Tracking key is:"
 msgstr "Dein Live Tracking Key ist:"
 
-#: skylines/templates/tracking/info.html:46 skylines/templates/users/view.html:87
+#: skylines/templates/tracking/info.html:48 skylines/templates/users/view.html:87
 msgid "Generate new key"
 msgstr "Neuen Key generieren"
 
-#: skylines/templates/tracking/info.html:47
+#: skylines/templates/tracking/info.html:49
 msgid "Your Live Tracks"
 msgstr "Deine Live Tracks"
 
-#: skylines/templates/tracking/info.html:51
+#: skylines/templates/tracking/info.html:53
 msgid "You have to [1:login] to see you own personal Live Tracking key."
 msgstr ""
 "Du musst dich [1:einloggen] um deinen persönlichen Live Tracking Key zu "
 "sehen."
 
-#: skylines/templates/tracking/info.html:56
+#: skylines/templates/tracking/info.html:58
 msgid "XCSoar"
 msgstr "XCSoar"
 
-#: skylines/templates/tracking/info.html:57
+#: skylines/templates/tracking/info.html:59
 msgid ""
 "In [1:XCSoar], open\n"
 "      the [2:Setup System] dialog, click on [3:Setup] and\n"
 "      then [4:Tracking].  Turn SkyLines tracking on, and enter your\n"
 "      Live Tracking key."
 msgstr ""
+"In [1:XCSoar], öffne\n"
+"      den Dialog [2:System Einstellung], klicke auf [3:Einstellung] und\n"
+"      dann [4:Verfolgung]. Schalte SkyLines ein, und gebe Deinen\n"
+"      Live-Tracking Key ein."
 
-#: skylines/templates/tracking/list.html:26
+#: skylines/templates/tracking/list.html:27
 msgid "Last fix"
 msgstr "Letzter Kontakt"
 
-#: skylines/templates/tracking/list.html:28
+#: skylines/templates/tracking/list.html:29
 msgid "Nearest Airport"
 msgstr "Nächster Flugplatz"
 
-#: skylines/templates/tracking/list.html:57
+#: skylines/templates/tracking/list.html:58
 msgid "How to use Live Tracking?"
 msgstr "Wie benutzt man Live Tracking?"
 
-#: skylines/templates/tracking/map.html:108
-#: skylines/templates/tracking/view.html:149
+#: skylines/templates/tracking/map.html:104
+#: skylines/templates/tracking/view.html:143
 msgid "There is no live track of this pilot currently."
-msgstr ""
+msgstr "Von diesen Piloten gibt es gerade keinen Live-Track."
 
-#: skylines/templates/tracking/view.html:115
+#: skylines/templates/tracking/view.html:109
 msgid "This pilot chose to delay the display of his live tracks."
 msgstr ""
+"Der Pilot hat für seine Live-Track Anzeige eine Verzögerung eingestellt."
 
-#: skylines/templates/tracking/view.html:115
+#: skylines/templates/tracking/view.html:109
 msgid "Delay"
 msgstr "Verzögerung"
 
-#: skylines/templates/tracking/view.html:123
+#: skylines/templates/tracking/view.html:117
 msgid ""
 "The live tracking delay is ignored because of your account privileges."
 msgstr ""
+"Die Live-Track Verzögerung wird aufgrund Deiner Privilegien ignoriert."
 
-#: skylines/templates/tracking/view.html:124
+#: skylines/templates/tracking/view.html:118
 msgid "(ignored)"
 msgstr "(ignoriert)"
 
-#: skylines/templates/tracking/view.html:139
+#: skylines/templates/tracking/view.html:133
 msgid "Your Live Tracking settings"
 msgstr "Deine Live Tracking Einstellungen"
 
-#: skylines/templates/upload/result.html:22
+#: skylines/templates/upload/result.html:24
 msgid ""
 "Your flights have been saved. You may want to change the flights aircraft "
 "types and registrations below."
 msgstr ""
+"Deine Flüge sind abgespeichert worden. Flugzeug Typ und Kennzeichen können "
+"unten geändert werden."
 
-#: skylines/templates/upload/result.html:27
+#: skylines/templates/upload/result.html:29
 msgid "No flight was saved."
 msgstr "Kein Flug wurde gespeichert."
 
-#: skylines/templates/upload/result.html:33
+#: skylines/templates/upload/result.html:35
 msgid "Filename"
 msgstr "Dateiname"
 
-#: skylines/templates/upload/result.html:34
+#: skylines/templates/upload/result.html:36
 msgid "Aircraft Model"
 msgstr "Flugzeug-Typ"
 
-#: skylines/templates/upload/result.html:35
+#: skylines/templates/upload/result.html:37
 msgid "Aircraft Registration"
 msgstr "Flugzeug-Kennzeichen"
 
-#: skylines/templates/upload/result.html:36
+#: skylines/templates/upload/result.html:38
 msgid "Competition Number"
 msgstr "Wettbewerbskennzeichen"
 
-#: skylines/templates/upload/result.html:37
+#: skylines/templates/upload/result.html:39
 msgid "Status"
 msgstr "Status"
 
-#: skylines/templates/upload/result.html:54
+#: skylines/templates/upload/result.html:56
 msgid "Success"
 msgstr "Erfolgreich"
 
-#: skylines/templates/upload/result.html:67
+#: skylines/templates/upload/result.html:69
 msgid "Upload another flight"
 msgstr "Noch einen Flug hochladen"
 
-#: skylines/templates/users/change_club.html:16
+#: skylines/templates/users/change_club.html:1
+#: skylines/templates/users/change_club.html:18
 msgid "Change Club"
 msgstr "Verein ändern"
 
-#: skylines/templates/users/change_club.html:20
+#: skylines/templates/users/change_club.html:22
 msgid "Select Club"
 msgstr "Verein auswählen"
 
-#: skylines/templates/users/change_club.html:22
+#: skylines/templates/users/change_club.html:24
 msgid "Select your primary club:"
-msgstr ""
-
-#: skylines/templates/users/change_club.html:28
-msgid "Register Club"
-msgstr ""
+msgstr "Wähle Dein primären Club aus:"
 
 #: skylines/templates/users/change_club.html:30
+msgid "Register Club"
+msgstr "Club eintragen"
+
+#: skylines/templates/users/change_club.html:32
 msgid "If your club doesn't exist yet in Skylines, create it:"
 msgstr "Wenn dein Verein noch nicht existiert, dann erstell ihn jetzt:"
+
+#: skylines/templates/users/list.html:1
+msgid "Users"
+msgstr "Benutzer"
 
 #: skylines/templates/users/view.html:72
 msgid "Email"
@@ -964,3 +990,63 @@ msgstr "Durchschnittsgeschwindigkeit"
 #: skylines/templates/users/view.html:234
 msgid "Takeoff Locations"
 msgstr "Startorte"
+
+#~ msgid "Motor Gliders"
+#~ msgstr "Motorsegler"
+
+#~ msgid "UL Glider"
+#~ msgstr "UL Gleiter"
+
+#~ msgid "Other"
+#~ msgstr "Sonstige"
+
+#~ msgid "Hanggliders"
+#~ msgstr "Hängegleiter"
+
+#~ msgid "Gliders"
+#~ msgstr "Segler"
+
+#~ msgid "Sky"
+#~ msgstr "Sky"
+
+#~ msgid "Lines"
+#~ msgstr "Lines"
+
+#~ msgid "EMail"
+#~ msgstr "E-Mail"
+
+#~ msgid "Full name"
+#~ msgstr "Voller Name"
+
+#~ msgid "Settings"
+#~ msgstr "Einstellungen"
+
+#~ msgid "UTC"
+#~ msgstr "UTC"
+
+#~ msgid "Groups"
+#~ msgstr "Gruppen"
+
+#~ msgid "SkyLines"
+#~ msgstr "SkyLines"
+
+#~ msgid "uploaded"
+#~ msgstr "hochgeladen"
+
+#~ msgid "new flights."
+#~ msgstr "neue Flüge."
+
+#~ msgid "is following you now."
+#~ msgstr "folgt Dir nun."
+
+#~ msgid "uploaded a new"
+#~ msgstr "einen Neuen hochgeladen"
+
+#~ msgid "flight on the"
+#~ msgstr "Flug über den"
+
+#~ msgid "commented on your"
+#~ msgstr "kommentiert über Dein"
+
+#~ msgid "Paragliders"
+#~ msgstr "Gleitschirm"
