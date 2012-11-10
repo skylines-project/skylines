@@ -457,10 +457,17 @@ function updateFlotData() {
       // Fade out line color if another flight is highlighted
       color = $.color.parse(color).add('a', -0.6).toString()
 
-    data.push({
-      data: flight.flot_h,
-      color: color
-    });
+    series = {
+        data: flight.flot_h,
+        color: color
+    };
+
+    if (highlighted) {
+        series.shadowSize = 0;
+        series.lines = { lineWidth : 1 };
+    }
+
+    data.push(series);
 
     // Don't show other flight's ENL if a flight is highlighted
     if (!highlighted)
