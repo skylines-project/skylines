@@ -510,7 +510,7 @@ function updateFlotData() {
       for (var j = 0; j < times.length; ++j) {
         var time = times[j] * 1000;
         markings.push({
-          lineWidth: 2,
+          lineWidth: 1,
           color: color,
           xaxis: {
             from: time,
