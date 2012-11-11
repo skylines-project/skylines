@@ -33,7 +33,12 @@ class BaseController(TGController):
         def get_primary_languages():
             available_languages = [lang['language_code'] for lang in languages()]
             current_languages = []
-            for language in distinct(get_lang()):
+
+            codes = get_lang()
+            if codes is None:
+                codes = ['en']
+
+            for language in distinct(codes):
                 if language in available_languages:
                     current_languages.append(language_info(language))
 
