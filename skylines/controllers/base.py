@@ -3,6 +3,8 @@
 """The base Controller API."""
 
 from tg import TGController, tmpl_context, request, redirect, url
+from tg.i18n import get_lang
+from skylines.config.i18n import languages, language_info
 
 __all__ = ['BaseController']
 
@@ -27,6 +29,16 @@ class BaseController(TGController):
         return TGController.__call__(self, environ, start_response)
 
     def _before(self, *args, **kw):
+        def get_current_language():
+            available_languages = [lang['language_code'] for lang in languages()]
+            current_languages = get_lang()
+            for language in current_languages:
+                if language in available_languages:
+                    return language_info(language)
+
+        tmpl_context.available_languages = languages()
+        tmpl_context.current_language = get_current_language()
+
         if request.identity is not None and \
            'user' in request.identity and \
            request.identity['user'] is None:
