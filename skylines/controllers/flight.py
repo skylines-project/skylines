@@ -19,6 +19,7 @@ from skylines.lib.helpers import format_time, format_number
 from skylines.lib import units
 from skylines.form import BootstrapForm
 from skylinespolyencode import SkyLinesPolyEncoder
+from skylines.controllers.upload import ModelSelectField
 
 log = logging.getLogger(__name__)
 
@@ -48,15 +49,6 @@ class SelectPilotForm(EditableForm):
     co_pilot = PilotSelectField('co_pilot', label_text=l_('Co-Pilot'))
 
 select_pilot_form = SelectPilotForm(DBSession)
-
-
-class ModelSelectField(PropertySingleSelectField):
-    def _my_update_params(self, d, nullable=False):
-        query = DBSession.query(Model.id, Model.name) \
-                .order_by(Model.name)
-        options = [(None, '[unspecified]')] + query.all()
-        d['options'] = options
-        return d
 
 
 class SelectAircraftForm(EditableForm):
