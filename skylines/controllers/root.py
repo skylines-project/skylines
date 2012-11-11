@@ -3,7 +3,7 @@
 
 from datetime import datetime
 from tg import expose, flash, lurl, request, redirect, require, config
-from tg.i18n import ugettext as _
+from tg.i18n import ugettext as _, set_lang
 from repoze.what.predicates import Any, not_anonymous
 from skylines import model
 from skylines.model import DBSession
@@ -63,6 +63,15 @@ class RootController(BaseController):
     def about(self):
         """Handle the 'about' page."""
         return dict()
+
+    @expose()
+    def set_lang(self, language, **kw):
+        set_lang(language)
+
+        if request.referrer is None:
+            redirect('/')
+        else:
+            redirect(request.referrer)
 
     @expose('skylines.templates.login')
     def login(self, came_from=None):
