@@ -5,5 +5,5 @@ __all__ = ['country_name']
 
 
 def country_name(code):
-    return countries.get(alpha2=code).name
+    return countries.get(alpha2=code.upper()).name
 
