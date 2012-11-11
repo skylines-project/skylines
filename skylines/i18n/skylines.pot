@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: SkyLines 0.1\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2012-11-11 15:51+0100\n"
+"POT-Creation-Date: 2012-11-11 16:08+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -20,7 +20,7 @@ msgstr ""
 #: skylines/controllers/clubs.py:24 skylines/controllers/clubs.py:40
 #: skylines/controllers/users.py:96 skylines/controllers/users.py:115
 #: skylines/controllers/users.py:145 skylines/templates/clubs/list.html:22
-#: skylines/templates/clubs/view.html:23
+#: skylines/templates/clubs/view.html:24
 #: skylines/templates/ranking/airports.html:19
 #: skylines/templates/ranking/clubs.html:18
 #: skylines/templates/ranking/pilots.html:18
@@ -28,7 +28,7 @@ msgstr ""
 msgid "Name"
 msgstr ""
 
-#: skylines/controllers/clubs.py:25 skylines/templates/clubs/view.html:28
+#: skylines/controllers/clubs.py:25 skylines/templates/clubs/view.html:29
 msgid "Website"
 msgstr ""
 
@@ -46,7 +46,7 @@ msgid "Create Pilot"
 msgstr ""
 
 #: skylines/controllers/flight.py:47 skylines/controllers/upload.py:43
-#: skylines/templates/flights/details-table.html:143
+#: skylines/templates/flights/details-table.html:144
 #: skylines/templates/flights/flights-table.html:20
 #: skylines/templates/tracking/list.html:28
 #: skylines/templates/tracking/view.html:92
@@ -154,7 +154,7 @@ msgstr[1] ""
 
 #: skylines/controllers/users.py:86 skylines/controllers/users.py:116
 #: skylines/controllers/users.py:146
-#: skylines/templates/flights/details-table.html:161
+#: skylines/templates/flights/details-table.html:162
 #: skylines/templates/flights/flights-table.html:23
 #: skylines/templates/ranking/pilots.html:19
 #: skylines/templates/tracking/view.html:100
@@ -351,7 +351,7 @@ msgstr ""
 msgid "Actions"
 msgstr ""
 
-#: skylines/templates/clubs/list.html:34 skylines/templates/clubs/view.html:43
+#: skylines/templates/clubs/list.html:34 skylines/templates/clubs/view.html:50
 #: skylines/templates/flights/list.html:1 skylines/templates/master/topbar.html:25
 #: skylines/templates/master/topbar.html:84
 #: skylines/templates/ranking/airports.html:20
@@ -364,7 +364,7 @@ msgstr ""
 msgid "Flights"
 msgstr ""
 
-#: skylines/templates/clubs/list.html:35 skylines/templates/clubs/view.html:44
+#: skylines/templates/clubs/list.html:35 skylines/templates/clubs/view.html:51
 #: skylines/templates/master/topbar.html:27
 #: skylines/templates/master/topbar.html:85
 #: skylines/templates/statistics/years.html:1
@@ -374,20 +374,21 @@ msgstr ""
 msgid "Statistics"
 msgstr ""
 
-#: skylines/templates/clubs/list.html:36 skylines/templates/clubs/view.html:45
+#: skylines/templates/clubs/list.html:36 skylines/templates/clubs/view.html:52
 msgid "Members"
 msgstr ""
 
-#: skylines/templates/clubs/view.html:33
+#: skylines/templates/clubs/view.html:34
 msgid "Created"
 msgstr ""
 
-#: skylines/templates/clubs/view.html:36
-#: skylines/templates/flights/details-table.html:172
-msgid "by"
+#. e.g. 'Created: 18.01.2011 by PilotA'
+#: skylines/templates/clubs/view.html:40
+#, python-format
+msgid "%(datetime)s by [1:%(user)s]"
 msgstr ""
 
-#: skylines/templates/clubs/view.html:42
+#: skylines/templates/clubs/view.html:49
 #: skylines/templates/users/users-table.html:43
 #: skylines/templates/users/view.html:121
 msgid "Edit"
@@ -401,85 +402,91 @@ msgstr ""
 msgid "Create new pilot"
 msgstr ""
 
-#: skylines/templates/flights/details-table.html:28
+#: skylines/templates/flights/details-table.html:29
 msgid "Spread the word"
 msgstr ""
 
-#: skylines/templates/flights/details-table.html:43
+#: skylines/templates/flights/details-table.html:44
 #: skylines/templates/flights/flights-table.html:18
 #: skylines/templates/users/view.html:175
 msgid "Date"
 msgstr ""
 
-#: skylines/templates/flights/details-table.html:49
+#: skylines/templates/flights/details-table.html:50
 msgid "Share"
 msgstr ""
 
-#: skylines/templates/flights/details-table.html:55
+#: skylines/templates/flights/details-table.html:56
 msgid "Take-off"
 msgstr ""
 
-#: skylines/templates/flights/details-table.html:60
-#: skylines/templates/flights/details-table.html:73
+#: skylines/templates/flights/details-table.html:61
+#: skylines/templates/flights/details-table.html:74
 msgid "at"
 msgstr ""
 
-#: skylines/templates/flights/details-table.html:68
+#: skylines/templates/flights/details-table.html:69
 msgid "Landing"
 msgstr ""
 
-#: skylines/templates/flights/details-table.html:80
+#: skylines/templates/flights/details-table.html:81
 #: skylines/templates/flights/phases-table.html:13
 #: skylines/templates/flights/phases-table.html:36
 #: skylines/templates/flights/phases-table.html:66
 msgid "Duration"
 msgstr ""
 
-#: skylines/templates/flights/details-table.html:86
+#: skylines/templates/flights/details-table.html:87
 #: skylines/templates/flights/flights-table.html:24
 msgid "Aircraft"
 msgstr ""
 
-#: skylines/templates/flights/details-table.html:89
-#: skylines/templates/flights/details-table.html:145
+#: skylines/templates/flights/details-table.html:90
+#: skylines/templates/flights/details-table.html:146
 #: skylines/templates/users/view.html:107 skylines/templates/users/view.html:115
 msgid "Change"
 msgstr ""
 
-#: skylines/templates/flights/details-table.html:98
+#: skylines/templates/flights/details-table.html:99
 msgid "Unknown"
 msgstr ""
 
-#: skylines/templates/flights/details-table.html:123
+#: skylines/templates/flights/details-table.html:124
 #: skylines/templates/flights/flights-table.html:19
 msgid "Score"
 msgstr ""
 
-#: skylines/templates/flights/details-table.html:125
+#: skylines/templates/flights/details-table.html:126
 #: skylines/templates/ranking/airports.html:33
 #: skylines/templates/ranking/clubs.html:31
 #: skylines/templates/ranking/pilots.html:37
 msgid "pt"
 msgstr ""
 
-#: skylines/templates/flights/details-table.html:127
+#: skylines/templates/flights/details-table.html:128
 msgid "OLC Distance"
 msgstr ""
 
-#: skylines/templates/flights/details-table.html:130
+#: skylines/templates/flights/details-table.html:131
 msgid "FAI Triangle Distance"
 msgstr ""
 
-#: skylines/templates/flights/details-table.html:137
+#: skylines/templates/flights/details-table.html:138
 msgid "Speed"
 msgstr ""
 
-#: skylines/templates/flights/details-table.html:155
+#: skylines/templates/flights/details-table.html:156
 msgid "[unspecified]"
 msgstr ""
 
-#: skylines/templates/flights/details-table.html:170
+#: skylines/templates/flights/details-table.html:171
 msgid "Uploaded"
+msgstr ""
+
+#. e.g. 'Uploaded: 18.01.2011 by PilotA'
+#: skylines/templates/flights/details-table.html:172
+#, python-format
+msgid "%(datetime)s[1:] by %(user)s"
 msgstr ""
 
 #: skylines/templates/flights/details-table.html:177

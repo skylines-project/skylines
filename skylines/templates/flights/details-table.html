@@ -8,6 +8,7 @@ from skylines.lib.units import format_distance, format_speed
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:py="http://genshi.edgewall.org/"
       xmlns:xi="http://www.w3.org/2001/XInclude"
+      xmlns:i18n="http://genshi.edgewall.org/i18n"
       py:strip="">
 
   <xi:include href="../headers/bootstrap/popover.html" />
@@ -168,9 +169,8 @@ from skylines.lib.units import format_distance, format_speed
       </tr>
       <tr>
         <th>Uploaded</th>
-        <td>
-          ${insert_timeago(flight.time_created)}<br/>
-          by <span py:replace="flight.igc_file.owner">Turbo</span>
+        <td i18n:msg="datetime,user" i18n:comment="e.g. 'Uploaded: 18.01.2011 by PilotA'">
+          ${insert_timeago(flight.time_created)}<br/> by <span py:replace="flight.igc_file.owner">Turbo</span>
         </td>
       </tr>
       <tr>

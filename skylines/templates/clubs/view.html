@@ -6,7 +6,8 @@ title = club.name
                       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:py="http://genshi.edgewall.org/"
-      xmlns:xi="http://www.w3.org/2001/XInclude">
+      xmlns:xi="http://www.w3.org/2001/XInclude"
+      xmlns:i18n="http://genshi.edgewall.org/i18n">
 
   <xi:include href="master/page.html" />
   <xi:include href="../snippets/datetime.html" />
@@ -32,8 +33,14 @@ title = club.name
           <tr>
             <th>Created</th>
             <td>
-              ${insert_timeago(club.time_created)}
-              <span py:if="club.owner" py:strip="True"> by <a href="/users/${club.owner_id}/">${club.owner}</a></span>
+              <py:if test="not club.owner">
+                ${insert_timeago(club.time_created)}
+              </py:if>
+              <py:if test="club.owner">
+                <span i18n:msg="datetime,user" i18n:comment="e.g. 'Created: 18.01.2011 by PilotA'" py:strip="">
+                ${insert_timeago(club.time_created)} by <a href="/users/${club.owner_id}/">${club.owner}</a>
+                </span>
+              </py:if>
             </td>
           </tr>
         </table>
