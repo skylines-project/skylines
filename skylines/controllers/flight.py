@@ -128,15 +128,15 @@ def get_contest_traces(flight, encoder):
     return contest_traces
 
 CIRCDIR_NAMES = {None: "",
-                 FlightPhase.CD_LEFT: "Left",
-                 FlightPhase.CD_MIXED: "Mixed",
-                 FlightPhase.CD_RIGHT: "Right",
-                 FlightPhase.CD_TOTAL: "Total"}
+                 FlightPhase.CD_LEFT: _("Left"),
+                 FlightPhase.CD_MIXED: _("Mixed"),
+                 FlightPhase.CD_RIGHT: _("Right"),
+                 FlightPhase.CD_TOTAL: _("Total")}
 
 PHASETYPE_NAMES = {None: "",
-                   FlightPhase.PT_POWERED: "Powered",
-                   FlightPhase.PT_CIRCLING: "Circling",
-                   FlightPhase.PT_CRUISE: "Cruise"}
+                   FlightPhase.PT_POWERED: _("Powered"),
+                   FlightPhase.PT_CIRCLING: _("Circling"),
+                   FlightPhase.PT_CRUISE: _("Cruise")}
 
 
 def format_phase(phase):
