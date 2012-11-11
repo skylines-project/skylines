@@ -95,7 +95,11 @@ def active_if_page_is(_page):
               ${insert_flag(c.current_language['country_code'])} <i class="icon-caret-down"></i>
             </a>
             <ul class="dropdown-menu">
-              <li py:for="lang in c.available_languages">
+              <li py:for="lang in c.primary_languages">
+                <a href="/set_lang/${lang['language_code']}" title="${lang['english_name']}">${insert_flag(lang['country_code'])} ${lang['local_name']}</a>
+              </li>
+              <li class="divider"></li>
+              <li py:for="lang in c.secondary_languages">
                 <a href="/set_lang/${lang['language_code']}" title="${lang['english_name']}">${insert_flag(lang['country_code'])} ${lang['local_name']}</a>
               </li>
             </ul>

@@ -5,6 +5,7 @@
 from tg import TGController, tmpl_context, request, redirect, url
 from tg.i18n import get_lang
 from skylines.config.i18n import languages, language_info
+from babel.util import distinct
 
 __all__ = ['BaseController']
 
@@ -29,15 +30,21 @@ class BaseController(TGController):
         return TGController.__call__(self, environ, start_response)
 
     def _before(self, *args, **kw):
-        def get_current_language():
+        def get_primary_languages():
             available_languages = [lang['language_code'] for lang in languages()]
-            current_languages = get_lang()
-            for language in current_languages:
+            current_languages = []
+            for language in distinct(get_lang()):
                 if language in available_languages:
-                    return language_info(language)
+                    current_languages.append(language_info(language))
+
+            return current_languages
 
         tmpl_context.available_languages = languages()
-        tmpl_context.current_language = get_current_language()
+
+        tmpl_context.primary_languages = get_primary_languages()
+        tmpl_context.secondary_languages = [lang for lang in tmpl_context.available_languages if lang not in tmpl_context.primary_languages]
+
+        tmpl_context.current_language = tmpl_context.primary_languages[0]
 
         if request.identity is not None and \
            'user' in request.identity and \
