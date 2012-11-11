@@ -7,24 +7,68 @@ msgid ""
 msgstr ""
 "Project-Id-Version: skylines\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2012-11-10 23:13+0100\n"
-"PO-Revision-Date: 2012-11-10 22:31+0000\n"
+"POT-Creation-Date: 2012-11-11 00:56+0100\n"
+"PO-Revision-Date: 2012-11-11 00:16+0000\n"
 "Last-Translator: Tobias Lohner <tobias@lohner-net.de>\n"
 "Language-Team: German <de@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2012-11-10 22:32+0000\n"
+"X-Launchpad-Export-Date: 2012-11-11 00:20+0000\n"
 "X-Generator: Launchpad (build 16251)\n"
 
-#: skylines/controllers/clubs.py:58
+#: skylines/controllers/clubs.py:24 skylines/controllers/clubs.py:40
+#: skylines/controllers/users.py:96 skylines/controllers/users.py:115
+#: skylines/controllers/users.py:145 skylines/templates/clubs/list.html:22
+#: skylines/templates/clubs/view.html:23
+#: skylines/templates/ranking/airports.html:19
+#: skylines/templates/ranking/clubs.html:18
+#: skylines/templates/ranking/pilots.html:18
+#: skylines/templates/users/users-table.html:21
+msgid "Name"
+msgstr "Name"
+
+#: skylines/controllers/clubs.py:25 skylines/templates/clubs/view.html:28
+msgid "Website"
+msgstr "Webseite"
+
+#: skylines/controllers/clubs.py:37 skylines/controllers/users.py:112
+#: skylines/controllers/users.py:141 skylines/controllers/users.py:162
+msgid "eMail Address"
+msgstr "eMail Adresse"
+
+#: skylines/controllers/clubs.py:60
 msgid "Edit Club"
 msgstr "Club bearbeiten"
 
-#: skylines/controllers/clubs.py:83 skylines/templates/clubs/pilots.html:27
+#: skylines/controllers/clubs.py:85 skylines/templates/clubs/pilots.html:27
 msgid "Create Pilot"
 msgstr "Pilot erstellen"
+
+#: skylines/controllers/flight.py:47 skylines/controllers/upload.py:43
+#: skylines/templates/flights/details-table.html:143
+#: skylines/templates/flights/flights-table.html:20
+#: skylines/templates/tracking/list.html:28
+#: skylines/templates/tracking/view.html:92
+msgid "Pilot"
+msgstr "Pilot"
+
+#: skylines/controllers/flight.py:48
+msgid "Co-Pilot"
+msgstr "Copilot"
+
+#: skylines/controllers/flight.py:68 skylines/templates/upload/result.html:36
+msgid "Aircraft Model"
+msgstr "Flugzeug-Typ"
+
+#: skylines/controllers/flight.py:69 skylines/templates/upload/result.html:37
+msgid "Aircraft Registration"
+msgstr "Flugzeug-Kennzeichen"
+
+#: skylines/controllers/flight.py:70 skylines/templates/upload/result.html:38
+msgid "Competition Number"
+msgstr "Wettbewerbskennzeichen"
 
 #: skylines/controllers/flight.py:246
 msgid "Select Pilot"
@@ -52,7 +96,11 @@ msgstr "Du bist jetzt eingeloggt. Willkommen zurück, %s!"
 
 #: skylines/controllers/root.py:114
 msgid "You are now logged out. We hope to see you back soon!"
-msgstr "Du bist jetzt ausgeloggt. Wir hoffen Dich bald wieder zu sehen!"
+msgstr "Du bist jetzt ausgeloggt. Wir hoffen dich bald wieder zu sehen!"
+
+#: skylines/controllers/upload.py:41
+msgid "IGC or ZIP file(s)"
+msgstr "IGC oder ZIP Datei(en)"
 
 #: skylines/controllers/upload.py:42
 msgid "Please add one or more IGC or ZIP files"
@@ -68,7 +116,7 @@ msgstr "Flug hochladen"
 
 #: skylines/controllers/upload.py:126
 msgid "Duplicate file"
-msgstr "Datei duplizieren"
+msgstr "Doppelte Datei"
 
 #: skylines/controllers/upload.py:151
 msgid "Failed to parse file"
@@ -83,7 +131,7 @@ msgid ""
 "Sorry, some error happened when updating your flight(s). Please contact a "
 "administrator for help."
 msgstr ""
-"Bedaure, ein Fehler ist beim Hochladen Deiner Flüge aufgetreten. Bitte "
+"Bedaure, ein Fehler ist beim Hochladen deiner Flüge aufgetreten. Bitte "
 "kontaktiere einen Administrator."
 
 #: skylines/controllers/upload.py:231
@@ -102,31 +150,90 @@ msgid_plural "%u minutes"
 msgstr[0] "%u Minute"
 msgstr[1] "%u Minuten"
 
-#: skylines/controllers/users.py:226 skylines/templates/users/view.html:123
+#: skylines/controllers/users.py:86 skylines/controllers/users.py:116
+#: skylines/controllers/users.py:146
+#: skylines/templates/flights/details-table.html:161
+#: skylines/templates/flights/flights-table.html:23
+#: skylines/templates/ranking/pilots.html:19
+#: skylines/templates/tracking/view.html:100
+#: skylines/templates/users/users-table.html:22
+#: skylines/templates/users/view.html:101 skylines/templates/users/view.html:112
+msgid "Club"
+msgstr "Verein"
+
+#: skylines/controllers/users.py:103
+msgid "Passwords do not match"
+msgstr "Die Passwörter stimmen nicht überein"
+
+#: skylines/controllers/users.py:117 skylines/controllers/users.py:172
+#: skylines/controllers/users.py:182
+msgid "Password"
+msgstr "Passwort"
+
+#: skylines/controllers/users.py:119 skylines/controllers/users.py:173
+#: skylines/controllers/users.py:183
+msgid "Verify Password"
+msgstr "Passwort bestätigen"
+
+#: skylines/controllers/users.py:147
+msgid "Tracking Delay"
+msgstr "Tracking Verzögerung"
+
+#: skylines/controllers/users.py:148
+msgid "Units"
+msgstr "Einheiten"
+
+#: skylines/controllers/users.py:149
+msgid "Distance Unit"
+msgstr "Distanzeinheit"
+
+#: skylines/controllers/users.py:150
+msgid "Speed Unit"
+msgstr "Geschwindigkeitseinheit"
+
+#: skylines/controllers/users.py:151
+msgid "Lift Unit"
+msgstr "Varioeinheit"
+
+#: skylines/controllers/users.py:152
+msgid "Altitude Unit"
+msgstr "Höheneinheit"
+
+#: skylines/controllers/users.py:153
+msgid "Eye Candy"
+msgstr "Eye Candy"
+
+#: skylines/controllers/users.py:158 skylines/controllers/users.py:166
+#: skylines/templates/users/view.html:126
+msgid "Recover Password"
+msgstr "Passwort wiederherstellen"
+
+#: skylines/controllers/users.py:177 skylines/controllers/users.py:230
+#: skylines/templates/users/view.html:123
 msgid "Change Password"
 msgstr "Passwort ändern"
 
-#: skylines/controllers/users.py:248
+#: skylines/controllers/users.py:252
 msgid "Edit User"
 msgstr "Benutzer bearbeiten"
 
-#: skylines/controllers/users.py:489
+#: skylines/controllers/users.py:493
 msgid "Password changed."
 msgstr "Passwort wurde geändert"
 
 #: skylines/lib/dbutil.py:25 skylines/lib/dbutil.py:44
-msgid "Sorry, the record id ({}) that you requested is not a valid id."
-msgstr "Bedaure, die angeforderte Eintragskennung  ({})  ist nicht gültig."
+msgid "Sorry, the record id ({id}) that you requested is not a valid id."
+msgstr ""
 
 #: skylines/lib/dbutil.py:32
-msgid "Sorry, there is no such record ({}) in our database."
-msgstr "Bedaure, einen Eintrag  ({})  gibt es in unserer Datenbank nicht."
+msgid "Sorry, there is no such record ({id}) in our database."
+msgstr ""
 
 #: skylines/lib/dbutil.py:61
-msgid "Sorry, {} of the requested records ({}) do not exist in our database."
+msgid ""
+"Sorry, {num_missing} of the requested records ({ids}) do not exist in our "
+"database."
 msgstr ""
-"Bedaure, {} der angeforderten Einträge ({}) gibt es in unserer Datenbank "
-"nicht."
 
 #: skylines/lib/helpers/__init__.py:29
 msgid "{something} by {pilot_name}"
@@ -145,8 +252,8 @@ msgid ""
 "Welcome to SkyLines, the internet platform for sharing\n"
 "        flights!"
 msgstr ""
-"Willkommen zu SkyLines, die Internet Platform zum Austausch von\n"
-"        Flügen!"
+"Willkommen zu SkyLines, die Internetplattform zum Austausch\n"
+"        von Flügen!"
 
 #: skylines/templates/about.html:29
 msgid "The major goals of the Skylines-Project are:"
@@ -166,7 +273,8 @@ msgstr "Skylines basiert auf freier Software ([1:Lizenz])."
 msgid ""
 "The stored flights are available for everybody without any limitations."
 msgstr ""
-"Die gespeicherten Flüge sind für jeden sichtbar ohne jegliche Limitierung."
+"Die gespeicherten Flüge können ohne Limitierung angesehen, heruntergeladen "
+"und anderweitig genutzt werden."
 
 #: skylines/templates/about.html:34
 msgid ""
@@ -181,8 +289,8 @@ msgid ""
 "Skylines has [1:Live Tracking], let your friends parcitipate on your "
 "adventures."
 msgstr ""
-"SkyLines hat [1:Live Tracking]! Lass deine Freunde teilhaben an deinen "
-"Flügen noch während du fliegst."
+"SkyLines hat [1:Live Tracking], lass deine Freunde an deine Abenteuern "
+"teilhaben."
 
 #: skylines/templates/about.html:36
 msgid ""
@@ -190,8 +298,8 @@ msgid ""
 "friends and followers."
 msgstr ""
 "SkyLines hat auch einige Aspekte eines Social Networks wie zum Beispiel "
-"Kommentare zu den Flügen, Benachrichtigungen über interessante Ereignisse "
-"and einem Netzwerk von Freunden und interessanten Personen."
+"Kommentare zu den Flügen oder Benachrichtigungen über interessante "
+"Ereignisse von Freunden und interessierten Piloten."
 
 #: skylines/templates/about.html:37
 msgid ""
@@ -212,8 +320,8 @@ msgid ""
 "        code is available here]."
 msgstr ""
 "SkyLines entstand aus dem [1:XCSoar Projekt]. Es ist freie\n"
-"        Software; [2:Der Source-\n"
-"        code ist hier verfügbar]."
+"        Software; [2:Die Quellen\n"
+"        sind hier verfügbar]."
 
 #: skylines/templates/about.html:53
 msgid ""
@@ -221,7 +329,7 @@ msgid ""
 "bug please follow the instructions [1:here] to write a feature request or "
 "bug report."
 msgstr ""
-"Falls Du etwas vermisst, oder meinst Du hast einen Fehler gefunden schreibe "
+"Falls du etwas vermisst, oder meinst du hast einen Fehler gefunden schreibe "
 "bitte nach [1:dieser Anleitung] einen Feature-Antrag bzw. Fehlerbericht."
 
 #: skylines/templates/error.html:1
@@ -251,14 +359,6 @@ msgstr "Registrieren"
 #: skylines/templates/clubs/list.html:14 skylines/templates/ranking/layout.html:27
 msgid "Clubs"
 msgstr "Vereine"
-
-#: skylines/templates/clubs/list.html:22 skylines/templates/clubs/view.html:23
-#: skylines/templates/ranking/airports.html:19
-#: skylines/templates/ranking/clubs.html:18
-#: skylines/templates/ranking/pilots.html:18
-#: skylines/templates/users/users-table.html:21
-msgid "Name"
-msgstr "Name"
 
 #: skylines/templates/clubs/list.html:23
 #: skylines/templates/flights/details-table.html:183
@@ -293,10 +393,6 @@ msgstr "Statistiken"
 msgid "Members"
 msgstr "Mitglieder"
 
-#: skylines/templates/clubs/view.html:28
-msgid "Website"
-msgstr "Webseite"
-
 #: skylines/templates/clubs/view.html:33
 msgid "Created"
 msgstr "Angelegt"
@@ -322,7 +418,7 @@ msgstr "Neuen Pilot anlegen"
 
 #: skylines/templates/flights/details-table.html:28
 msgid "Spread the word"
-msgstr ""
+msgstr "Erzähl es herum"
 
 #: skylines/templates/flights/details-table.html:43
 #: skylines/templates/flights/flights-table.html:18
@@ -393,25 +489,9 @@ msgstr "FAI Dreieck Distanz"
 msgid "Speed"
 msgstr "Geschwindigkeit"
 
-#: skylines/templates/flights/details-table.html:143
-#: skylines/templates/flights/flights-table.html:20
-#: skylines/templates/tracking/list.html:28
-#: skylines/templates/tracking/view.html:92
-msgid "Pilot"
-msgstr "Pilot"
-
 #: skylines/templates/flights/details-table.html:155
 msgid "[unspecified]"
 msgstr "[unbekannt]"
-
-#: skylines/templates/flights/details-table.html:161
-#: skylines/templates/flights/flights-table.html:23
-#: skylines/templates/ranking/pilots.html:19
-#: skylines/templates/tracking/view.html:100
-#: skylines/templates/users/users-table.html:22
-#: skylines/templates/users/view.html:101 skylines/templates/users/view.html:112
-msgid "Club"
-msgstr "Verein"
 
 #: skylines/templates/flights/details-table.html:170
 msgid "Uploaded"
@@ -459,11 +539,11 @@ msgstr "{flights} von {pilot}"
 
 #: skylines/templates/flights/list.html:1
 msgid "{flights} of {club}"
-msgstr "{flights} vom {club}"
+msgstr "{flights} von {club}"
 
 #: skylines/templates/flights/list.html:1
 msgid "{flights} from {airport}"
-msgstr "{flights} aus {airport}"
+msgstr "{flights} ab {airport}"
 
 #: skylines/templates/flights/nav.html:14
 msgid "All Flights"
@@ -631,7 +711,7 @@ msgstr "Du hast keine ungelesenen Benachrichtigungen"
 
 #: skylines/templates/notifications/notifications-table.html:56
 msgid "Error: Unknown notification group"
-msgstr "Fehler: Unbekannte Meldungs-Gruppe"
+msgstr "Fehler: Unbekannte Meldungsgruppe"
 
 #: skylines/templates/notifications/notifications-table.html:70
 msgid "Error: Unknown notification"
@@ -749,7 +829,7 @@ msgid ""
 "      positions are transmitted every 5 seconds!"
 msgstr ""
 "SkyLines Live-Tracking kann genutzt werden um anderen\n"
-"      an Deinen Ausflügen teilhaben zu lassen. Es verwendet ein sehr leicht-"
+"      an deinen Ausflügen teilhaben zu lassen. Es verwendet ein sehr leicht-"
 "\n"
 "      gewichtiges Protokoll, dass nur die nötigen Daten übermittelt. "
 "Deswegen \n"
@@ -823,7 +903,7 @@ msgid ""
 msgstr ""
 "In [1:XCSoar], öffne\n"
 "      den Dialog [2:System Einstellung], klicke auf [3:Einstellung] und\n"
-"      dann [4:Verfolgung]. Schalte SkyLines ein, und gebe Deinen\n"
+"      dann [4:Verfolgung]. Schalte SkyLines ein, und gebe deinen\n"
 "      Live-Tracking Key ein."
 
 #: skylines/templates/tracking/list.html:27
@@ -856,7 +936,7 @@ msgstr "Verzögerung"
 msgid ""
 "The live tracking delay is ignored because of your account privileges."
 msgstr ""
-"Die Live-Track Verzögerung wird aufgrund Deiner Privilegien ignoriert."
+"Die Live-Track Verzögerung wird aufgrund deiner Privilegien ignoriert."
 
 #: skylines/templates/tracking/view.html:118
 msgid "(ignored)"
@@ -882,18 +962,6 @@ msgstr "Kein Flug wurde gespeichert."
 msgid "Filename"
 msgstr "Dateiname"
 
-#: skylines/templates/upload/result.html:36
-msgid "Aircraft Model"
-msgstr "Flugzeug-Typ"
-
-#: skylines/templates/upload/result.html:37
-msgid "Aircraft Registration"
-msgstr "Flugzeug-Kennzeichen"
-
-#: skylines/templates/upload/result.html:38
-msgid "Competition Number"
-msgstr "Wettbewerbskennzeichen"
-
 #: skylines/templates/upload/result.html:39
 msgid "Status"
 msgstr "Status"
@@ -917,7 +985,7 @@ msgstr "Verein auswählen"
 
 #: skylines/templates/users/change_club.html:24
 msgid "Select your primary club:"
-msgstr "Wähle Dein primären Club aus:"
+msgstr "Wähle deinen primären Club aus:"
 
 #: skylines/templates/users/change_club.html:30
 msgid "Register Club"
@@ -925,7 +993,7 @@ msgstr "Club eintragen"
 
 #: skylines/templates/users/change_club.html:32
 msgid "If your club doesn't exist yet in Skylines, create it:"
-msgstr "Wenn dein Verein noch nicht existiert, dann erstell ihn jetzt:"
+msgstr "Wenn dein Verein noch nicht existiert, dann erstelle ihn jetzt:"
 
 #: skylines/templates/users/list.html:1
 msgid "Users"
@@ -954,10 +1022,6 @@ msgstr "Tracking Verzögerung"
 #: skylines/templates/users/view.html:113
 msgid "[Unspecified]"
 msgstr "[nicht spezifiziert]"
-
-#: skylines/templates/users/view.html:126
-msgid "Recover Password"
-msgstr "Passwort wiederherstellen"
 
 #: skylines/templates/users/view.html:133
 msgid "Unfollow"
@@ -990,6 +1054,17 @@ msgstr "Durchschnittsgeschwindigkeit"
 #: skylines/templates/users/view.html:234
 msgid "Takeoff Locations"
 msgstr "Startorte"
+
+#~ msgid "Sorry, there is no such record ({}) in our database."
+#~ msgstr "Bedaure, einen Eintrag  ({})  gibt es in unserer Datenbank nicht."
+
+#~ msgid "Sorry, the record id ({}) that you requested is not a valid id."
+#~ msgstr "Bedaure, die angeforderte Eintragskennung  ({})  ist nicht gültig."
+
+#~ msgid "Sorry, {} of the requested records ({}) do not exist in our database."
+#~ msgstr ""
+#~ "Bedaure, {} der angeforderten Einträge ({}) gibt es in unserer Datenbank "
+#~ "nicht."
 
 #~ msgid "Motor Gliders"
 #~ msgstr "Motorsegler"
