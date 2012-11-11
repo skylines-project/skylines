@@ -4,7 +4,8 @@ from pycountry import countries
 __all__ = ['country_name', 'language_to_country_code']
 
 __conversion_dict = {'en': 'gb',
-                     'ja': 'jp'}
+                     'ja': 'jp',
+                     'sv': 'se'}
 
 def country_name(code):
     return countries.get(alpha2=code.upper()).name
