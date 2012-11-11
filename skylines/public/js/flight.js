@@ -220,7 +220,7 @@ function addFlight(sfid, _lonlat, _levels, _num_levels, _time, _height, _enl, zo
   var table_row = $(
     "<tr>" +
     "<td><span class=\"badge\" style=\"background: " + color + ";\">" +
-      (_additional['competition_id']?_additional['competition_id']:"") +
+      (_additional && _additional['competition_id']?_additional['competition_id']:"") +
     "</span></td>" +
     "<td>--:--:--</td>" +
     "<td>--</td>" +
@@ -260,7 +260,7 @@ function addFlight(sfid, _lonlat, _levels, _num_levels, _time, _height, _enl, zo
     table_row: table_row,
     flot_h: flot_h,
     flot_enl: flot_enl,
-    additional: _additional
+    additional: _additional?_additional:null
   });
 
   updateFlotData();
