@@ -12,9 +12,9 @@ def test_pofiles():
         po = polib.pofile(filename)
         for entry in po.translated_entries():
             if not entry.obsolete and not entry.msgstr == '':
-                yield check_placeholders, entry.msgid, entry.msgstr
+                yield check_placeholders, filename, entry.msgid, entry.msgstr
 
-def check_placeholders(msgid, msgstr):
+def check_placeholders(filename, msgid, msgstr):
     check_python_new(msgid, msgstr)
     check_python_old(msgid, msgstr)
 
