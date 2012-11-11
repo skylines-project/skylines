@@ -3,6 +3,7 @@
 
 from skylines.config.app_cfg import base_config
 from skylines.config.environment import load_environment
+from skylines.config import i18n
 from skylines.middleware import StaticRedirectionMiddleware, FilesMiddleware
 from paste.cascade import Cascade
 
@@ -37,5 +38,7 @@ def make_app(global_conf, full_stack=True, **app_conf):
     app = Cascade([StaticRedirectionMiddleware(app_conf),
                    FilesMiddleware(app_conf.get('skylines.files.uri')),
                    app])
+
+    i18n.update()
 
     return app
