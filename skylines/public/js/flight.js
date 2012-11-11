@@ -207,6 +207,8 @@ function addFlight(sfid, _lonlat, _levels, _num_levels, _time, _height, _enl, zo
         times: times,
         visible: true // this is only valid for the contests of this flight.
       });
+
+      addContest(_contests[i].name, turnpoints, times, true, sfid);
     }
   }
 
