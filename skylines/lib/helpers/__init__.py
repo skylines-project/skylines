@@ -15,7 +15,7 @@ from skylines.lib.helpers.includeguard import not_included_yet
 from skylines.lib.helpers.markdown import markdown
 from skylines.lib.helpers.string import *
 from skylines.lib.helpers.country import *
-from skylines.lib.units import format_distance
+from skylines.lib.units import format_distance, get_setting_name
 
 
 def format_flight_title(flight):

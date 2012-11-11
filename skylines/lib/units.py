@@ -68,6 +68,23 @@ def _get_setting(name, default=None):
     else:
         return default
 
+def get_setting_name(name):
+    setting = _get_setting(name)
+
+    if setting is None:
+        return None
+
+    if name == 'distance_unit' and distance_units[setting]:
+        return distance_units[setting][0]
+    elif name == 'speed_unit' and speed_units[setting]:
+        return speed_units[setting][0]
+    elif name == 'lift_unit' and lift_units[setting]:
+        return lift_units[setting][0]
+    elif name == 'altitude_unit' and altitude_units[setting]:
+        return altitude_units[setting][0]
+
+    return None
+
 def _format(units, name, default, value):
     assert isinstance(default, int)
 

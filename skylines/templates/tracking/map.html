@@ -25,6 +25,7 @@ tagline_link_text = pilot
   <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" py:if="False"/>
 
   <script type="text/javascript" src="/js/general.js"></script>
+  <script type="text/javascript" src="/js/units.js"></script>
   <script type="text/javascript" src="/js/map.js"></script>
   <script type="text/javascript" src="/js/flight.js"></script>
   <script type="text/javascript" src="/js/tracking.js"></script>
@@ -32,6 +33,11 @@ tagline_link_text = pilot
   <script type="text/javascript">
     /* <![CDATA[ */
     $(function() {
+      initUnits(${h.json.dumps(h.get_setting_name('distance_unit'))},
+                ${h.json.dumps(h.get_setting_name('speed_unit'))},
+                ${h.json.dumps(h.get_setting_name('lift_unit'))},
+                ${h.json.dumps(h.get_setting_name('altitude_unit'))});
+
       initOpenLayers("map_canvas",
                      "${config.get('skylines.map.airspace_tile_url', '')}");
       initFlightLayer();

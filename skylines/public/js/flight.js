@@ -215,7 +215,7 @@ function addFlight(sfid, _lonlat, _levels, _num_levels, _time, _height, _enl, zo
   var flot_h = [], flot_enl = [];
   for (var i = 0; i < time.length; i++) {
       var timestamp = time[i] * 1000;
-      flot_h.push([timestamp, height[i]]);
+      flot_h.push([timestamp, convert_altitude(height[i])]);
       flot_enl.push([timestamp, enl[i]]);
   }
 
@@ -400,7 +400,9 @@ function initFlot(element) {
         mode: "time",
         timeformat: "%H:%M"
       },
-      yaxes: [{}, {
+      yaxes: [{
+        tickFormatter: add_altitude_unit
+        }, {
         show: false,
         min: 0,
         max: 1000
@@ -650,12 +652,12 @@ function updateFixDataTableRow(id, fix_data) {
       $(cell).html(html);
       break;
     case 2:
-      var html = Math.round(fix_data["alt-msl"]) + " m";
+      var html = format_altitude(fix_data["alt-msl"]);
       $(cell).html(html);
       break;
     case 3:
       if (fix_data["vario"] !== undefined) {
-        var html = (fix_data["vario"]).toFixed(1) + " m/s";
+        var html = format_lift(fix_data["vario"]);
         if (fix_data["vario"] >= 0)
           html = "+" + html;
 
@@ -666,7 +668,7 @@ function updateFixDataTableRow(id, fix_data) {
       break;
     case 4:
       if (fix_data["speed"] !== undefined) {
-        var html = (fix_data["speed"] * 3.6).toFixed(1) + " km/h";
+        var html = format_speed(fix_data["speed"]);
         $(cell).html(html);
       } else {
         $(cell).html("--");
