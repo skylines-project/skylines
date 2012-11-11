@@ -19,8 +19,8 @@ from skylines.lib.units import format_distance
 
 
 def format_flight_title(flight):
-    title = '{distance} on {date}'.format(distance=format_distance(flight.olc_classic_distance),
-                                          date=format_date(flight.date_local))
+    title = _('{distance} on {date}').format(distance=format_distance(flight.olc_classic_distance),
+                                             date=format_date(flight.date_local))
 
     if flight.pilot is None:
         return title, ''
