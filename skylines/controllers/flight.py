@@ -342,8 +342,8 @@ class FlightController(BaseController):
 
             redirect('/flights/')
         else:
-            return dict(title='Delete Flight',
-                        question='Are you sure you want to delete this flight?',
+            return dict(title=_('Delete Flight'),
+                        question=_('Are you sure you want to delete this flight?'),
                         action='delete', cancel='.')
 
     @without_trailing_slash
