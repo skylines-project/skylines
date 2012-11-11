@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: skylines\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2012-11-11 00:56+0100\n"
-"PO-Revision-Date: 2012-11-11 10:09+0000\n"
+"PO-Revision-Date: 2012-11-11 14:30+0000\n"
 "Last-Translator: Roel Baardman <rbaardman@zonnet.nl>\n"
 "Language-Team: Dutch <nl@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2012-11-11 13:51+0000\n"
+"X-Launchpad-Export-Date: 2012-11-11 16:28+0000\n"
 "X-Generator: Launchpad (build 16251)\n"
 
 #: skylines/controllers/clubs.py:24 skylines/controllers/clubs.py:40
@@ -432,7 +432,7 @@ msgstr "Delen"
 
 #: skylines/templates/flights/details-table.html:55
 msgid "Take-off"
-msgstr "Starttijd"
+msgstr "Start"
 
 #: skylines/templates/flights/details-table.html:60
 #: skylines/templates/flights/details-table.html:73
@@ -441,7 +441,7 @@ msgstr "om"
 
 #: skylines/templates/flights/details-table.html:68
 msgid "Landing"
-msgstr "Landingstijd"
+msgstr "Landing"
 
 #: skylines/templates/flights/details-table.html:80
 #: skylines/templates/flights/phases-table.html:13
@@ -512,7 +512,7 @@ msgstr "Verwijder"
 #: skylines/templates/statistics/years.html:51
 #: skylines/templates/users/view.html:174 skylines/templates/users/view.html:210
 msgid "Distance"
-msgstr "afstand"
+msgstr "Afstand"
 
 #: skylines/templates/flights/flights-table.html:22
 msgid "Airport"
