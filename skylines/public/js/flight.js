@@ -774,7 +774,7 @@ function hoverMap() {
     var loc = map.getLonLatFromPixel(pixel);
 
     // search for a aircraft position within the bounding box
-    var nearest = searchForPlane(new OpenLayers.Bounds(ll.lon, ll.lat, ur.lon, ur.lat), loc);
+    var nearest = searchForPlane(new OpenLayers.Bounds(ll.lon, ll.lat, ur.lon, ur.lat), loc, hoverTolerance);
 
     // if there's a aircraft within the bounding box, show the plane icon and draw
     // a position marker on the linechart.
@@ -799,11 +799,12 @@ function hoverMap() {
  * Parameters:
  * within - {OpenLayers.Bounds} Bounds to search within
  * loc - {OpenLayers.Point} Location of mouse click
+ * hoverTolerance - {Int} Tolerance in pixel to search
  *
  * Returns:
  * {Object} An object with the nearest flight.
  */
-function searchForPlane(within, loc) {
+function searchForPlane(within, loc, hoverTolerance) {
   var possible_solutions = [];
 
   // circle throu all flights visible in viewport
@@ -839,8 +840,13 @@ function searchForPlane(within, loc) {
   // no solutions found. return.
   if (possible_solutions.length == 0) return null;
 
+  // calculate map resolution (meters per pixel) at mouse location
+  var loc_epsg4326 = loc.clone().transform(map.getProjectionObject(), new OpenLayers.Projection("EPSG:4326"));
+  var resolution = map.getResolution() * Math.cos(Math.PI/180 * loc_epsg4326.lat);
+
   // find nearest distance between loc and vectors in possible_solutions
-  var nearest, distance = 99999999999;
+  var nearest, distance = Math.pow(hoverTolerance * resolution, 2);
+
   for (var i = 0; i < possible_solutions.length; i++) {
     for (var j = possible_solutions[i].from + 1; j <= possible_solutions[i].to; j++) {
       var distToSegment = distanceToSegmentSquared({x: loc.lon, y: loc.lat},
