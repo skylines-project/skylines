@@ -252,5 +252,5 @@ table.vmiddle td {
 }
 
 .table tr.selected td, .table tr.selected:hover td {
-  background-color: #eee;
+  background-color: #eee !important;
 }
