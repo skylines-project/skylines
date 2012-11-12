@@ -778,7 +778,7 @@ function hoverMap() {
 
     // if there's a aircraft within the bounding box, show the plane icon and draw
     // a position marker on the linechart.
-    if (nearest !== null) {
+    if (nearest != null) {
       // calculate time
       var x = flights[nearest.fid].t[nearest.from] + (flights[nearest.fid].t[nearest.from+1]-flights[nearest.fid].t[nearest.from])*nearest.along;
 
