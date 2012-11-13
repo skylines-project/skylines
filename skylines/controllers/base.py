@@ -3,9 +3,10 @@
 """The base Controller API."""
 
 from tg import TGController, tmpl_context, request, redirect, url
-from tg.i18n import get_lang
+from tg.i18n import get_lang, sanitize_language_code
 from skylines.config.i18n import languages, language_info
 from babel.util import distinct
+from babel import parse_locale
 
 __all__ = ['BaseController']
 
@@ -38,9 +39,18 @@ class BaseController(TGController):
             if codes is None:
                 codes = ['en']
 
+            # add primary languages
             for language in distinct(codes):
+                language = sanitize_language_code(language)
                 if language in available_languages:
                     current_languages.append(language_info(language))
+
+            # fallback for browsers which only send languages like "en-US"
+            if len(current_languages) == 0:
+                for language in distinct(codes):
+                    language = parse_locale(sanitize_language_code(language))[0]
+                    if language in available_languages and language not in current_languages:
+                        current_languages.append(language_info(language))
 
             return current_languages
 
