@@ -1,12 +1,13 @@
 from tg import response
+from simplejson import dumps
 
 def jsonp(func):
     def jsonp_handler(*args, **kw):
         if 'callback' in kw:
-            callback = kw.pop('callback')
+            response.content_type = 'application/javascript'
+            return '{}({});'.format(kw.pop('callback'), dumps(func(*args, **kw)))
         else:
-            return func(*args, **kw)
+            response.content_type = 'application/json'
+            return dumps(func(*args, **kw))
 
-        response.content_type = 'application/javascript'
-        return '{}({});'.format(callback, func(*args, **kw))
     return jsonp_handler

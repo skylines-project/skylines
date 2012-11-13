@@ -179,7 +179,7 @@ class TrackingController(BaseController):
 
         return dict(user=user)
 
-    @expose('json')
+    @expose()
     @jsonp
     def latest(self, **kw):
         if not request.path.endswith('.json'):
