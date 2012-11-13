@@ -91,7 +91,7 @@ from skylines.lib.units import format_distance, format_speed
           </a>
 
           <span py:if="flight.model_id is not None" py:content="flight.model"
-            rel="tooltip" title="Index: ${flight.model.dmst_index}"/>
+            rel="tooltip" title="${_('Handicap')}: ${flight.model.dmst_index}"/>
           <py:if test="flight.model_id is None and
                        flight.igc_file.model is not None">
             [${flight.igc_file.model}]
