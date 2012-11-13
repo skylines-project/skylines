@@ -587,6 +587,13 @@ function getFixData(id, time) {
   var lon_prev = loc_prev.lon, lat_prev = loc_prev.lat;
   var lon_next = loc_next.lon, lat_next = loc_next.lat;
 
+  var _loc_prev = new OpenLayers.Geometry.Point(lon_prev, lat_prev);
+  _loc_prev.transform(new OpenLayers.Projection("EPSG:4326"),
+                      map.getProjectionObject());
+  var _loc_next = new OpenLayers.Geometry.Point(lon_next, lat_next);
+  _loc_next.transform(new OpenLayers.Projection("EPSG:4326"),
+                      map.getProjectionObject());
+
   fix_data["lon"] = lon_prev + (lon_next - lon_prev) * dt_rel;
   fix_data["lat"] = lat_prev + (lat_next - lat_prev) * dt_rel;
 
@@ -594,8 +601,8 @@ function getFixData(id, time) {
   fix_data["loc"].transform(new OpenLayers.Projection("EPSG:4326"),
                             map.getProjectionObject());
 
-  fix_data["heading"] = Math.atan2(lon_next - lon_prev,
-                                   lat_next - lat_prev) * 180 / Math.PI;
+  fix_data["heading"] = Math.atan2(_loc_next.x - _loc_prev.x,
+                                   _loc_next.y - _loc_prev.y) * 180 / Math.PI;
 
   if (dt_total != 0)
     fix_data["speed"] = OpenLayers.Util.distVincenty(loc_next, loc_prev) * 1000 / dt_total;
