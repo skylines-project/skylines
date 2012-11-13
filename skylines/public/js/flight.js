@@ -590,6 +590,10 @@ function getFixData(id, time) {
   fix_data["lon"] = lon_prev + (lon_next - lon_prev) * dt_rel;
   fix_data["lat"] = lat_prev + (lat_next - lat_prev) * dt_rel;
 
+  fix_data["loc"] = new OpenLayers.Geometry.Point(fix_data["lon"], fix_data["lat"]);
+  fix_data["loc"].transform(new OpenLayers.Projection("EPSG:4326"),
+                            map.getProjectionObject());
+
   fix_data["heading"] = Math.atan2(lon_next - lon_prev,
                                    lat_next - lat_prev) * 180 / Math.PI;
 
@@ -609,10 +613,7 @@ function getFixData(id, time) {
 
 function setPlaneOnMap(id, fix_data) {
   // set plane location
-  var loc = new OpenLayers.Geometry.Point(fix_data["lon"], fix_data["lat"]);
-  loc.transform(new OpenLayers.Projection("EPSG:4326"),
-                map.getProjectionObject());
-  flights[id].plane.geometry = loc;
+  flights[id].plane.geometry = fix_data["loc"];
 
   // set plane heading
   // <heading> in degrees
