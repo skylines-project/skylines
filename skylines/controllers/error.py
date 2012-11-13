@@ -5,13 +5,14 @@ import re
 from tg import request, expose
 from webob.exc import HTTPNotFound
 from skylines.model.session import DBSession
+from skylines.controllers.base import BaseController
 
 __all__ = ['ErrorController']
 
 re_message = re.compile(r'</h1>(.+)</body>', re.DOTALL)
 
 
-class ErrorController(object):
+class ErrorController(BaseController):
     """
     Generates error documents as and when they are required.
 
