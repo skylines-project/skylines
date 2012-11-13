@@ -35,19 +35,17 @@ class BaseController(TGController):
             available_languages = [lang['language_code'] for lang in languages()]
             current_languages = []
 
-            codes = get_lang()
-            if codes is None:
-                codes = ['en']
+            codes = distinct(get_lang() or ['en'])
 
             # add primary languages
-            for language in distinct(codes):
+            for language in codes:
                 language = sanitize_language_code(language)
                 if language in available_languages:
                     current_languages.append(language_info(language))
 
             # fallback for browsers which only send languages like "en-US"
             if len(current_languages) == 0:
-                for language in distinct(codes):
+                for language in codes:
                     language = parse_locale(sanitize_language_code(language))[0]
                     if language in available_languages and language not in current_languages:
                         current_languages.append(language_info(language))
