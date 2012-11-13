@@ -575,7 +575,7 @@ function getFixData(id, time) {
   var dt_rel = 0;
 
   if (dt_total != 0)
-    dt_rel = (time - flight.t[index]) / dt_total;
+    dt_rel = (time - t_prev) / dt_total;
 
   var fix_data = {};
 
