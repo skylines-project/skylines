@@ -32,25 +32,27 @@ class BaseController(TGController):
 
     def _before(self, *args, **kw):
         def get_primary_languages():
-            available_languages = [lang['language_code'] for lang in languages()]
-            current_languages = []
-
-            codes = distinct(get_lang() or ['en'])
+            available = [lang['language_code'] for lang in languages()]
+            requested = distinct(get_lang() or ['en'])
 
             # add primary languages
-            for language in codes:
-                language = sanitize_language_code(language)
-                if language in available_languages:
-                    current_languages.append(language_info(language))
+            primary = []
+            for language in requested:
+                if language in available:
+                    primary.append(language)
+                else:
+                    try:
+                        locale = parse_locale(language)
+                    except:
+                        continue
 
-            # fallback for browsers which only send languages like "en-US"
-            if len(current_languages) == 0:
-                for language in codes:
-                    language = parse_locale(sanitize_language_code(language))[0]
-                    if language in available_languages and language not in current_languages:
-                        current_languages.append(language_info(language))
+                    if locale[0] in available:
+                        primary.append(locale[0])
 
-            return current_languages
+            if len(primary) == 0:
+                return [language_info('en')]
+
+            return [language_info(lang) for lang in distinct(primary)]
 
         tmpl_context.available_languages = languages()
 
