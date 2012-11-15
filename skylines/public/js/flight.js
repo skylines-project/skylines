@@ -1006,6 +1006,29 @@ function highlightFlightPhase(table_row) {
     if (flight.lonlat[i].lat > lat_max) lat_max = flight.lonlat[i].lat;
   }
 
+  var phases_layer = new OpenLayers.Layer.Vector("Flight Phases");
+  map.addLayer(phases_layer);
+
+  var start_point = new OpenLayers.Geometry.Point(flight.lonlat[start_index].lon, flight.lonlat[start_index].lat)
+                        .transform(new OpenLayers.Projection("EPSG:4326"), map.getProjectionObject());
+  phases_layer.addFeatures(new OpenLayers.Feature.Vector(start_point, {}, {
+    externalGraphic: "/images/OpenLayers/marker-green.png",
+    graphicHeight: 21,
+    graphicWidth: 16,
+    graphicXOffset: -16/2,
+    graphicYOffset: -21
+  } ));
+
+  var end_point = new OpenLayers.Geometry.Point(flight.lonlat[end_index].lon, flight.lonlat[end_index].lat)
+                        .transform(new OpenLayers.Projection("EPSG:4326"), map.getProjectionObject());
+  phases_layer.addFeatures(new OpenLayers.Feature.Vector(end_point, {}, {
+    externalGraphic: "/images/OpenLayers/marker.png",
+    graphicHeight: 21,
+    graphicWidth: 16,
+    graphicXOffset: -16/2,
+    graphicYOffset: -21
+  } ));
+
   var bounds = new OpenLayers.Bounds(lon_min, lat_min, lon_max, lat_max);
   bounds.transform(new OpenLayers.Projection("EPSG:4326"),
                    map.getProjectionObject());
@@ -1029,6 +1052,7 @@ function highlightFlightPhase(table_row) {
 function unhighlightFlightPhase() {
   highlighted_flight_phase.row.removeClass("selected");
   highlighted_flight_phase = null;
+  map.removeLayer(map.getLayersByName("Flight Phases")[0]);
   updateFlotData();
 }
 
