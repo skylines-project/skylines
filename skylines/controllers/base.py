@@ -3,7 +3,7 @@
 """The base Controller API."""
 
 from tg import TGController, tmpl_context, request, redirect, url
-from tg.i18n import get_lang, sanitize_language_code
+from tg.i18n import get_lang
 from skylines.config.i18n import languages, language_info
 from babel.util import distinct
 from babel import parse_locale
