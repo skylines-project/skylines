@@ -1,5 +1,6 @@
 from __future__ import absolute_import
-from pycountry import countries
+from babel import Locale
+from tg import tmpl_context
 
 __all__ = ['country_name', 'language_to_country_code']
 
@@ -8,7 +9,9 @@ __conversion_dict = {'en': 'gb',
                      'sv': 'se'}
 
 def country_name(code):
-    return countries.get(alpha2=code.upper()).name
+    locale = Locale(tmpl_context.current_language['language_code'])
+    return locale.territories[code.upper()]
+
 
 def language_to_country_code(language):
     if language in __conversion_dict:
