@@ -9,6 +9,14 @@ var flot;
 
 var highlighted_flight_sfid;
 
+/*
+ * Global time, can be:
+ * null -> no time is set, don't show barogram crosshair/plane position
+ * -1 -> always show the latest time/fix for each flight
+ * >= 0 -> show the associated time in the barogram and on the map
+ */
+var global_time = null;
+
 /**
  * colors
  *
@@ -524,6 +532,8 @@ function updateFlotData() {
 }
 
 function setTime(time) {
+  global_time = time;
+
   // remove plane icons from map
   hideAllPlanesOnMap();
 
