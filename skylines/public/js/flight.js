@@ -15,7 +15,8 @@ var highlighted_flight_sfid;
  * -1 -> always show the latest time/fix for each flight
  * >= 0 -> show the associated time in the barogram and on the map
  */
-var global_time = null;
+var default_time = null;
+var global_time = default_time;
 
 /**
  * colors
@@ -433,7 +434,7 @@ function initFlot(element) {
 
     setTime(pos.x / 1000);
   }).bind('mouseout', function(event) {
-    setTime(null);
+    setTime(default_time);
   });
 }
 
@@ -803,7 +804,7 @@ function hoverMap() {
       setTime(x);
     } else {
       // hide everything
-      setTime(null);
+      setTime(default_time);
     }
   });
 }
