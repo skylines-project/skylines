@@ -92,4 +92,6 @@ function updateFlight(tracking_id, _lonlat, _levels, _num_levels, _time, _height
   }
 
   flight.last_update = flight.t[flight.t.length - 1];
+
+  setTime(global_time);
 };

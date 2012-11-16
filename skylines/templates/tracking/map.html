@@ -42,6 +42,10 @@ tagline_link_text = pilot
                      "${config.get('skylines.map.airspace_tile_url', '')}");
       initFlightLayer();
       initFlot($("#barogram"));
+
+      // initiate tracking mode
+      default_time = -1;
+      setTime(default_time);
       /* ]]> */
 
       <py:if test="trace">
