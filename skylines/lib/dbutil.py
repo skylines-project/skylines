@@ -56,10 +56,10 @@ def get_requested_record_list(model, ids, **kw):
     ids = _parse_id_list(ids)
     q = DBSession.query(model).filter(model.id.in_(ids))
     q = _patch_query(q, **kw)
-    result = list(q)
-    if len(result) != len(ids):
+    records = {record.id: record for record in q}
+    if len(records) != len(ids):
         raise HTTPNotFound(detail=_('Sorry, {num_missing} of the requested records ({ids}) do not exist in our database.') \
                                     .format(num_missing=(len(ids) - len(result)),
                                             ids=ids))
 
-    return result
+    return [records[id] for id in ids]
