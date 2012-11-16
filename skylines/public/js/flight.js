@@ -538,8 +538,13 @@ function setTime(time) {
     return;
   }
 
-  // update barogram crosshair
-  flot.lockCrosshair({x: time * 1000});
+  if (time == -1) {
+    // lock barogram crosshair at the end
+    flot.lockCrosshair({x: 999999999});
+  } else {
+    // update barogram crosshair
+    flot.lockCrosshair({x: global_time * 1000});
+  }
 
   for (var id = 0; id < flights.length; id++) {
     // calculate fix data
@@ -563,7 +568,9 @@ function setTime(time) {
 function getFixData(id, time) {
   var flight = flights[id];
 
-  if (time < flight.t[0] || time > flight.t[flight.t.length-1])
+  if (time == -1)
+    time = flight.t[flight.t.length - 1];
+  else if (time < flight.t[0] || time > flight.t[flight.t.length-1])
     return null;
 
   var index = getNextSmallerIndex(flight.t, time);
