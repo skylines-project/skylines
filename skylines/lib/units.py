@@ -1,4 +1,5 @@
 from babel.numbers import format_number, format_decimal
+from tg.i18n import lazy_ugettext as l_
 from tg import request
 
 distance_units = (
@@ -27,30 +28,30 @@ altitude_units = (
 )
 
 unit_presets = (
-    ("Custom", {}),
+    (l_("Custom"), {}),
 
-    ("European (metric)",
+    (l_("European (metric)"),
      {'distance_unit': u'km',
       'speed_unit': u'km/h',
       'lift_unit': u'm/s',
       'altitude_unit': u'm'
       }),
 
-    ("British (imperial, distance in km)",
+    (l_("British (imperial, distance in km)"),
      {'distance_unit': u'km',
       'speed_unit': u'kt',
       'lift_unit': u'kt',
       'altitude_unit': u'ft'
       }),
 
-    ("Australian (metric, imperial height)",
+    (l_("Australian (metric, imperial height)"),
      {'distance_unit': u'km',
       'speed_unit': u'km/h',
       'lift_unit': u'kt',
       'altitude_unit': u'ft'
       }),
 
-    ("American (imperial)",
+    (l_("American (imperial)"),
      {'distance_unit': u'mi',
       'speed_unit': u'kt',
       'lift_unit': u'kt',
