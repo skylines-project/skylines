@@ -458,10 +458,15 @@ class UsersController(BaseController):
 
     @expose('skylines.templates.generic.form')
     def recover(self, key=None, **kwargs):
+        try:
+            key = int(key, 16)
+        except:
+            key = None
+
         if key is None:
             return dict(page='users', form=recover_email_form, values={})
         else:
-            user = User.by_recover_key(int(key, 16))
+            user = User.by_recover_key(key)
             if user is None:
                     raise HTTPNotFound
 
@@ -483,7 +488,12 @@ class UsersController(BaseController):
     @expose()
     @validate(form=recover_password_form, error_handler=recover)
     def recover_post(self, key, password, verify_password, **kw):
-        user = User.by_recover_key(int(key, 16))
+        try:
+            key = int(key, 16)
+        except:
+            key = None
+
+        user = User.by_recover_key(key)
         if user is None:
                 raise HTTPNotFound
 
