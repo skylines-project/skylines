@@ -26,7 +26,7 @@ var global_time = default_time;
 //var colors = ['#bf2fa2', '#2f69bf', '#d63a35', '#d649ff'];
 var colors = ['#004bbd', '#bf0099', '#cf7c00', '#ff0000', '#00c994', '#ffff00'];
 var contest_colors = {'olc_plus classic': '#ff2c73',
-                      'olc_plus triangle': '#9f14ff'}
+                      'olc_plus triangle': '#9f14ff'};
 
 /**
  * Function initOpenLayers
@@ -454,7 +454,7 @@ function updateFlotData() {
     var color = flight.color;
     if (highlighted)
       // Fade out line color if another flight is highlighted
-      color = $.color.parse(color).add('a', -0.6).toString()
+      color = $.color.parse(color).add('a', -0.6).toString();
 
     series = {
         data: flight.flot_h,
