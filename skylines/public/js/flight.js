@@ -240,12 +240,12 @@ function addFlight(sfid, _lonlat, _levels, _num_levels, _time, _height, _enl, zo
     "</tr>");
 
 
-  table_row.bind('hover', function(e) {
+  table_row.on('hover', function(e) {
     if (flights.length > 1)
       $(this).css("cursor", "pointer");
   });
 
-  table_row.bind('click', function(e) {
+  table_row.on('click', function(e) {
     if (flights.length <= 1)
       return;
 
@@ -424,7 +424,7 @@ function initFlot(element) {
   });
 
   var mouse_container_running = false;
-  element.bind('plothover', function(event, pos, item) {
+  element.on('plothover', function(event, pos, item) {
     if (mouse_container_running)
       return;
 
@@ -435,7 +435,7 @@ function initFlot(element) {
     }, 25);
 
     setTime(pos.x / 1000);
-  }).bind('mouseout', function(event) {
+  }).on('mouseout', function(event) {
     setTime(default_time);
   });
 }
