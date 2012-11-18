@@ -800,10 +800,13 @@ function hoverMap() {
     // a position marker on the linechart.
     if (nearest != null) {
       // calculate time
-      var x = flights[nearest.fid].t[nearest.from] + (flights[nearest.fid].t[nearest.from+1]-flights[nearest.fid].t[nearest.from])*nearest.along;
+      var flight = flights[nearest.fid];
+      var time_prev = flight.t[nearest.from];
+      var time_next = flight.t[nearest.from + 1];
+      var time = time_prev + (time_next - time_prev) * nearest.along;
 
       // set the map time to x
-      setTime(x);
+      setTime(time);
     } else {
       // hide everything
       setTime(default_time);
