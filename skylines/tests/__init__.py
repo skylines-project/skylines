@@ -48,11 +48,8 @@ class TestController(object):
         wsgiapp = loadapp('config:test.ini#%s' % self.application_under_test,
                           relative_to=config.here)
         self.app = TestApp(wsgiapp)
-        # Setting it up:
-        setup_app()
 
     def tearDown(self):
         """Method called by nose after running each test"""
-        # Cleaning up the database:
+        # Cleaning up the session
         model.DBSession.remove()
-        teardown_db()
