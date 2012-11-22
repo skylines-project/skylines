@@ -1,7 +1,9 @@
 import os
+import sys
 import glob
 import re
 import polib
+import nose
 from collections import Counter
 
 re_python_new = re.compile(r'\{(\w*)\}')
@@ -41,3 +43,7 @@ def check_python(filename, msgid, msgstr, re):
              'File: {}\n\n'
              'Original: {}\n'
              'Translation: {}'.format(filename, msgid, msgstr))
+
+if __name__ == "__main__":
+    sys.argv.append(__name__)
+    nose.run()
