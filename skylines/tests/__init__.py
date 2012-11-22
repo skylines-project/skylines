@@ -13,7 +13,7 @@ from nose.tools import eq_
 
 from skylines import model
 
-__all__ = ['setup_db', 'teardown_db', 'TestController', 'url_for']
+__all__ = ['setup_db', 'setup_app', 'teardown_db', 'TestController', 'url_for']
 
 
 def setup_db():
@@ -21,6 +21,12 @@ def setup_db():
     engine = config['pylons.app_globals'].sa_engine
     model.init_model(engine)
     model.metadata.create_all(engine)
+
+
+def setup_app():
+    test_file = path.join(config.here, 'test.ini')
+    cmd = SetupCommand('setup-app')
+    cmd.run([test_file])
 
 
 def teardown_db():
@@ -39,14 +45,11 @@ class TestController(object):
     def setUp(self):
         """Method called by nose before running each test"""
         # Loading the application:
-        conf_dir = config.here
         wsgiapp = loadapp('config:test.ini#%s' % self.application_under_test,
-                          relative_to=conf_dir)
+                          relative_to=config.here)
         self.app = TestApp(wsgiapp)
         # Setting it up:
-        test_file = path.join(conf_dir, 'test.ini')
-        cmd = SetupCommand('setup-app')
-        cmd.run([test_file])
+        setup_app()
 
     def tearDown(self):
         """Method called by nose after running each test"""
