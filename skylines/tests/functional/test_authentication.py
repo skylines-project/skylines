@@ -22,8 +22,6 @@ class TestAuthentication(TestController):
 
     """
 
-    application_under_test = 'main'
-
     def test_forced_login(self):
         """Anonymous users are forced to login
 
