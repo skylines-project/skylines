@@ -9,8 +9,17 @@ from collections import Counter
 re_python_new = re.compile(r'\{(\w*)\}')
 re_python_old = re.compile(r'%(?:\((\w+)\))?(\w+)')
 
+
+def get_language_code(filename):
+    filename = os.path.split(filename)[0]
+    filename = os.path.split(filename)[0]
+    filename = os.path.split(filename)[1]
+    return filename
+
 def test_pofiles():
     for filename in glob.glob(os.path.join('skylines','i18n','*','LC_MESSAGES','skylines.po')):
+        test_pofiles.func_doc = ('Python string format placeholders must match '
+                                 '(lang: {})'.format(get_language_code(filename)))
         yield check_pofile, filename
 
 def check_pofile(filename):
