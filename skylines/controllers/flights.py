@@ -152,7 +152,7 @@ class FlightsController(BaseController):
 
         date = query.one().date
         if not date:
-            raise HTTPNotFound
+            date = datetime.utcnow()
 
         return self.date(date, today=True, **kw)
 
