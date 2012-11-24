@@ -10,6 +10,7 @@ from operator import le, ge, eq
       py:strip="True">
 
   <div py:def="pager(name)" py:with="page=getattr(tmpl_context.paginators, name)"
+       py:if="isinstance(page, int)"
        class="pagination pagination-condensed">
     <ul>
       <li class="prev ${h.string_if('disabled', page.page == page.first_page)}">
