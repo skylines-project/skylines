@@ -10,7 +10,6 @@ class TestRootController(TestController):
 
     def test_index(self):
         """The front page is redirecting properly"""
-        response = self.app.get('/')
+        self.browser.open('/')
 
-        assert response.status_int == 302
-        assert response.location.endswith('/flights/today')
+        assert self.browser.url.endswith('/flights/today')

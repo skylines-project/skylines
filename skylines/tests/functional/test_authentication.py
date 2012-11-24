@@ -31,53 +31,56 @@ class TestAuthentication(TestController):
 
         """
         # Requesting a protected area
-        resp = self.app.get('/flights/upload/', status=302)
-        assert resp.location.startswith('http://localhost/login')
+        self.browser.open('/flights/upload/')
+        assert self.browser.url.startswith('http://localhost/login')
+
         # Getting the login form:
-        resp = resp.follow(status=200)
-        form = resp.forms[1]
+        form = self.browser.getForm(index=1)
+
         # Submitting the login form:
-        form['login'] = u'manager@somedomain.com'
-        form['password'] = 'managepass'
-        post_login = form.submit(status=302)
+        form.getControl(name='login').value = u'max+skylines@blarg.de'
+        form.getControl(name='password').value = 'test'
+        form.submit()
+
         # Being redirected to the initially requested page:
-        assert post_login.location.startswith('http://localhost/post_login')
-        initial_page = post_login.follow(status=302)
-        assert 'authtkt' in initial_page.request.cookies, \
-               "Session cookie wasn't defined: %s" % initial_page.request.cookies
-        assert initial_page.location.startswith('http://localhost/flights/upload/'), \
-               initial_page.location
+        assert 'authtkt' in self.browser.cookies, \
+               "Session cookie wasn't defined: %s" % self.browser.cookies.items()
+        assert self.browser.url.startswith('http://localhost/flights/upload/'), \
+               self.browser.url
 
     def test_voluntary_login(self):
         """Voluntary logins must work correctly"""
+
         # Going to the login form voluntarily:
-        resp = self.app.get('/login', status=200)
-        form = resp.forms[1]
+        self.browser.open('/login')
+        form  = self.browser.getForm(index=1)
+
         # Submitting the login form:
-        form['login'] = u'manager@somedomain.com'
-        form['password'] = 'managepass'
-        post_login = form.submit(status=302)
+        form.getControl(name='login').value = u'max+skylines@blarg.de'
+        form.getControl(name='password').value = 'test'
+        print form.action
+        form.submit()
+
         # Being redirected to the home page:
-        assert post_login.location.startswith('http://localhost/post_login')
-        home_page = post_login.follow(status=302)
-        assert 'authtkt' in home_page.request.cookies, \
-               'Session cookie was not defined: %s' % home_page.request.cookies
-        assert home_page.location == 'http://localhost/'
+        assert 'authtkt' in self.browser.cookies, \
+               'Session cookie was not defined: %s' % self.browser.cookies.items()
 
     def test_logout(self):
         """Logouts must work correctly"""
+
         # Logging in voluntarily the quick way:
-        resp = self.app.get('/login_handler?login=manager@somedomain.com&password=managepass',
-                            status=302)
-        resp = resp.follow(status=302)
-        assert 'authtkt' in resp.request.cookies, \
-               'Session cookie was not defined: %s' % resp.request.cookies
+        self.browser.open('/login_handler?login={login}&password={password}'. \
+                          format(login=u'manager@somedomain.com',
+                                 password='managepass'))
+
+        # Check if the login succeeded
+        assert 'authtkt' in self.browser.cookies, \
+               'Session cookie was not defined: %s' % self.browser.cookies.items()
+
         # Logging out:
-        resp = self.app.get('/logout_handler', status=302)
-        assert resp.location.startswith('http://localhost/post_logout')
+        self.browser.open('/logout_handler')
+
         # Finally, redirected to the home page:
-        home_page = resp.follow(status=302)
-        authtkt = home_page.request.cookies.get('authtkt')
+        authtkt = self.browser.cookies.get('authtkt')
         assert not authtkt or authtkt == 'INVALID', \
-               'Session cookie was not deleted: %s' % home_page.request.cookies
-        assert home_page.location == 'http://localhost/', home_page.location
+               'Session cookie was not deleted: %s' % self.browser.cookies.items()

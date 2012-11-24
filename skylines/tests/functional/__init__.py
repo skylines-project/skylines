@@ -3,7 +3,7 @@
 
 from paste.deploy import loadapp
 from tg import config
-from webtest import TestApp
+from zope.testbrowser.wsgi import Browser
 
 from skylines.tests import setup_app, teardown_db
 from skylines import model
@@ -37,7 +37,7 @@ class TestController(object):
         # Loading the application:
         wsgiapp = loadapp('config:test.ini#%s' % self.application_under_test,
                           relative_to=config.here)
-        self.app = TestApp(wsgiapp)
+        self.browser = Browser('http://localhost/', wsgi_app=wsgiapp)
 
     def tearDown(self):
         """Method called by nose after running each test"""
