@@ -83,7 +83,9 @@ class SelectClubForm(EditableForm):
     __model__ = User
     __hide_fields__ = ['id']
     __limit_fields__ = ['club']
-    club = ClubSelectField('club', label_text=l_('Club'))
+    __field_widget_args__ = { 'club': dict(label_text=l_('Club')) }
+
+    club = ClubSelectField
 
 
 select_club_form = SelectClubForm(DBSession)
@@ -93,7 +95,9 @@ class NewClubForm(AddRecordForm):
     __base_widget_type__ = BootstrapForm
     __model__ = Club
     __limit_fields__ = ['name']
-    name = TextField('name', label_text=l_('Name'))
+    __field_widget_args__ = { 'name': dict(label_text=l_('Name')) }
+
+    name = TextField
 
 new_club_form = NewClubForm(DBSession)
 
@@ -109,14 +113,21 @@ class NewUserForm(AddRecordForm):
     __required_fields__ = ['password']
     __limit_fields__ = ['email_address', 'display_name', 'password', 'verify_password', 'club']
     __base_validator__ = user_validator
-    email_address = Field(TextField('email_address', label_text=l_('eMail Address')),
-                          All(UniqueValue(SAORMProvider(DBSession), __model__,
-                                          'email_address'),Email(not_empty=True)))
-    display_name = Field(TextField('display_name', label_text=l_('Name')), NotEmpty)
-    club = ClubSelectField('club', label_text=l_('Club'))
-    password = Field(PasswordField('password', label_text=l_('Password')),
-                     String(min=6))
-    verify_password = PasswordField('verify_password', label_text=l_('Verify Password'))
+    __field_widget_args__ = {
+        'email_address': dict(label_text=l_('eMail Address')),
+        'display_name': dict(label_text=l_('Name')),
+        'club': dict(label_text=l_('Club')),
+        'password': dict(label_text=l_('Password')),
+        'verify_password': dict(label_text=l_('Verify Password')),
+    }
+
+    email_address = Field(TextField, All(UniqueValue(SAORMProvider(DBSession),
+                                                     __model__, 'email_address'),
+                                         Email(not_empty=True)))
+    display_name = Field(TextField, NotEmpty)
+    club = ClubSelectField
+    password = String(min=6)
+    verify_password = PasswordField('verify_password')
 
 new_user_form = NewUserForm(DBSession)
 
@@ -138,19 +149,32 @@ class EditUserForm(EditableForm):
                         'lift_unit', 'altitude_unit',
                         'eye_candy']
     __base_widget_args__ = dict(action='save')
-    email_address = Field(TextField('email_address', label_text=l_('eMail Address')),
-                          All(Email(not_empty=True),
-                              UniqueValueUnless(filter_user_id, DBSession,
-                                                __model__, 'email_address')))
-    display_name = Field(TextField('display_name', label_text=l_('Name')), NotEmpty)
-    club = ClubSelectField('club', label_text=l_('Club'))
-    tracking_delay = DelaySelectField('tracking_delay', label_text=l_('Tracking Delay'))
-    unit_preset = UnitPresetSelectField("unit_preset", label_text=l_('Units'))
-    distance_unit = DistanceUnitSelectField('distance_unit', label_text=l_('Distance Unit'))
-    speed_unit = SpeedUnitSelectField('speed_unit', label_text=l_('Speed Unit'))
-    lift_unit = LiftUnitSelectField('lift_unit', label_text=l_('Lift Unit'))
-    altitude_unit = AltitudeUnitSelectField('altitude_unit', label_text=l_('Altitude Unit'))
-    eye_candy = Field(CheckBox('eye_candy', label_text=l_('Eye Candy')))
+    __field_widget_args__ = {
+        'email_address': dict(label_text=l_('eMail Address')),
+        'display_name': dict(label_text=l_('Name')),
+        'club': dict(label_text=l_('Club')),
+        'tracking_delay': dict(label_text=l_('Tracking Delay')),
+        'unit_preset': dict(label_text=l_('Unit Preset')),
+        'distance_unit': dict(label_text=l_('Distance Unit')),
+        'speed_unit': dict(label_text=l_('Speed Unit')),
+        'lift_unit': dict(label_text=l_('Lift Unit')),
+        'altitude_unit': dict(label_text=l_('Altitude Unit')),
+        'eye_candy': dict(label_text=l_('Eye Candy')),
+    }
+
+    email_address = Field(TextField, All(Email(not_empty=True),
+                                         UniqueValueUnless(filter_user_id,
+                                                           DBSession,
+                                                           __model__, 'email_address')))
+    display_name = Field(TextField, NotEmpty)
+    club = ClubSelectField
+    tracking_delay = DelaySelectField
+    unit_preset = UnitPresetSelectField("unit_preset")
+    distance_unit = DistanceUnitSelectField
+    speed_unit = SpeedUnitSelectField
+    lift_unit = LiftUnitSelectField
+    altitude_unit = AltitudeUnitSelectField
+    eye_candy = Field(CheckBox)
 
 edit_user_form = EditUserForm(DBSession)
 

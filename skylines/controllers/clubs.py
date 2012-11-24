@@ -21,9 +21,13 @@ class EditClubForm(EditableForm):
     __hide_fields__ = ['id']
     __limit_fields__ = ['name', 'website']
     __base_widget_args__ = dict(action='save')
-    name = TextField('name', label_text=l_('Name'))
-    website = Field(TextField('website', label_text=l_('Website')),
-                    validators.URL())
+    __field_widget_args__ = {
+        'name': dict(label_text=l_('Name')),
+        'website': dict(label_text=l_('Website')),
+    }
+
+    name = TextField
+    website = Field(TextField, validators.URL())
 
 edit_club_form = EditClubForm(DBSession)
 
@@ -34,11 +38,15 @@ class NewPilotForm(AddRecordForm):
     __required_fields__ = ['email_address', 'display_name']
     __limit_fields__ = ['email_address', 'display_name']
     __base_widget_args__ = dict(action='create_pilot')
-    email_address = Field(TextField('email_address', label_text=l_('eMail Address')),
-                          All(UniqueValue(SAORMProvider(DBSession), __model__,
-                                          'email_address'), validators.Email))
-    display_name = Field(TextField('display_name', label_text=l_('Name')),
-                         validators.NotEmpty)
+    __field_widget_args__ = {
+        'email_address': dict(label_text=l_('eMail Address')),
+        'display_name': dict(label_text=l_('Name')),
+    }
+
+    email_address = Field(TextField, All(UniqueValue(SAORMProvider(DBSession),
+                                                     __model__, 'email_address'),
+                                         validators.Email))
+    display_name = Field(TextField, validators.NotEmpty)
 
 new_pilot_form = NewPilotForm(DBSession)
 
