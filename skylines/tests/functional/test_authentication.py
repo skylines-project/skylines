@@ -58,7 +58,6 @@ class TestAuthentication(TestController):
         # Submitting the login form:
         form.getControl(name='login').value = u'max+skylines@blarg.de'
         form.getControl(name='password').value = 'test'
-        print form.action
         form.submit()
 
         # Being redirected to the home page:
