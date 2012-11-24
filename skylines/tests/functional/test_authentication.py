@@ -7,7 +7,7 @@ should be updated.
 
 """
 
-from skylines.tests import TestController
+from skylines.tests.functional import TestController
 
 
 class TestAuthentication(TestController):

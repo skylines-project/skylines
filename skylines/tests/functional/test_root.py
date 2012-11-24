@@ -2,7 +2,7 @@
 """
 Functional test suite for the root controller.
 """
-from skylines.tests import TestController
+from skylines.tests.functional import TestController
 
 
 class TestRootController(TestController):
