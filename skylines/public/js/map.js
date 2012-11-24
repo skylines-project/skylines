@@ -23,7 +23,7 @@ function initOpenLayers(id, airspace_tile_url) {
   $(map.div).click(function() { $(this).focus() } );
 
   map.addControl(new OpenLayers.Control.Zoom());
-  map.addControl(new OpenLayers.Control.Navigation());
+  map.addControl(new OpenLayers.Control.Navigation({documentDrag: true}));
   map.addControl(new OpenLayers.Control.KeyboardDefaults({observeElement: map.div}));
   map.addControl(new OpenLayers.Control.Attribution());
   map.addControl(new OpenLayers.Control.ScaleLine({geodesic: true}));
