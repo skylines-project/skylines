@@ -20,7 +20,11 @@ class TestRegistration(TestController):
         assert link is not None, \
                'No registration link found on %s' % self.browser.url
 
-    def open_and_fill_register_form(self, email, name, password):
+    def open_and_fill_register_form(self, email, name, password,
+                                    verify_password=None):
+        if verify_password is None:
+            verify_password = password
+
         # Open user registration page
         self.browser.open('/users/new')
 
@@ -30,15 +34,32 @@ class TestRegistration(TestController):
         form.getControl(name='email_address').value = email
         form.getControl(name='display_name').value = name
         form.getControl(name='password').value = password
-        form.getControl(name='verify_password').value = password
+        form.getControl(name='verify_password').value = verify_password
 
         return form
+
+    def expect_error(self, response,
+                     email='expect_error@skylines.xcsoar.org',
+                     name='Functional Test',
+                     password='lambda',
+                     verify_password=None):
+        form = self.open_and_fill_register_form(email, name, password,
+                                                verify_password=verify_password)
+        form.submit()
+
+        user = User.by_email_address(email)
+        assert user is None, \
+               "The user has been created by mistake: %s" % email
+
+        assert response in self.browser.contents, \
+               "String not found in response: %s\n%s" % \
+               (response, self.browser.contents)
 
     def test_registration(self):
         """User registration works properly"""
 
         name = u'Functional Test'
-        email = u'functional@test.de'
+        email = u'test_registration@skylines.xcsoar.org'
 
         form = self.open_and_fill_register_form(email, name, 'lambda')
         form.submit()
@@ -48,3 +69,25 @@ class TestRegistration(TestController):
                "The user could not be found: %s" % email
         assert user.email_address == email
         assert user.display_name == name
+
+    def test_validation_errors(self):
+        """Validation errors are working as expected"""
+
+        self.expect_error('Please enter an email address',
+                          email='')
+        self.expect_error('An email address must contain a single @',
+                          email='abc')
+        self.expect_error('The domain portion of the email address is invalid',
+                          email='abc@')
+        self.expect_error('The domain portion of the email address is invalid',
+                          email='abc@de')
+        self.expect_error('The domain portion of the email address is invalid',
+                          email='abc@de.')
+
+        self.expect_error('Please enter a value', name='')
+
+        self.expect_error('Enter a value 6 characters long or more',
+                          password='abc')
+        self.expect_error('Passwords do not match',
+                          password='lambda',
+                          verify_password='lambda2')
