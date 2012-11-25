@@ -53,14 +53,16 @@ class TestRegistration(TestController):
                      email='expect_error@skylines.xcsoar.org',
                      name='Functional Test',
                      password='lambda',
-                     verify_password=None):
+                     verify_password=None,
+                     check_user_exists=True):
         form = self.open_and_fill_register_form(email, name, password,
                                                 verify_password=verify_password)
         form.submit()
 
-        user = User.by_email_address(email)
-        assert user is None, \
-               "The user has been created by mistake: %s" % email
+        if check_user_exists:
+            user = User.by_email_address(email)
+            assert user is None, \
+                   "The user has been created by mistake: %s" % email
 
         assert response in self.browser.contents, \
                "String not found in response: %s\n%s" % \
@@ -94,3 +96,12 @@ class TestRegistration(TestController):
         self.expect_error('Passwords do not match',
                           password='lambda',
                           verify_password='lambda2')
+
+    def test_duplicates(self):
+        """Duplicate mail addresses are rejected"""
+        email = 'test_duplicates@skylines.xcsoar.org'
+        name = 'Duplicate Test'
+
+        self.register_user(email, name, 'lambda')
+        self.expect_error('That value already exists',
+                          email, name, 'lambda', check_user_exists=False)
