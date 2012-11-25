@@ -38,6 +38,17 @@ class TestRegistration(TestController):
 
         return form
 
+    def register_user(self, email, name, password, verify_password=None):
+        form = self.open_and_fill_register_form(email, name, password,
+                                                verify_password=verify_password)
+        form.submit()
+
+        user = User.by_email_address(email)
+        assert user is not None, \
+               "The user could not be found: %s" % email
+        assert user.email_address == email
+        assert user.display_name == name
+
     def expect_error(self, response,
                      email='expect_error@skylines.xcsoar.org',
                      name='Functional Test',
@@ -60,15 +71,7 @@ class TestRegistration(TestController):
 
         name = u'Functional Test'
         email = u'test_registration@skylines.xcsoar.org'
-
-        form = self.open_and_fill_register_form(email, name, 'lambda')
-        form.submit()
-
-        user = User.by_email_address(email)
-        assert user is not None, \
-               "The user could not be found: %s" % email
-        assert user.email_address == email
-        assert user.display_name == name
+        self.register_user(email, name, password='lambda')
 
     def test_validation_errors(self):
         """Validation errors are working as expected"""
