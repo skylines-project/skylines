@@ -501,7 +501,7 @@ function updateFlotData() {
   var options = flot.getOptions();
   var markings = [];
 
-  var contests;
+  var contests = null;
   if (flights.length == 1)
     contests = flights[0].contests;
   else if (highlighted)
