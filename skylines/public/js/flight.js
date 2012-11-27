@@ -8,6 +8,7 @@ var flights = [];
 var flot;
 
 var highlighted_flight_sfid;
+var highlighted_flight_phase = null;
 
 /*
  * Global time, can be:
@@ -534,6 +535,18 @@ function updateFlotData() {
     }
   }
 
+  if (highlighted_flight_phase) {
+    options.grid.markings = [{
+      color: '#fff083',
+      xaxis: {
+        from: highlighted_flight_phase.start * 1000,
+        to: highlighted_flight_phase.end * 1000
+      }
+    }];
+  } else {
+    options.grid.markings = [];
+  }
+
   flot.setData(data);
   flot.setupGrid();
   flot.draw();
@@ -945,8 +958,6 @@ distanceToSegmentSquared = function(point, segment) {
 */
 
 function initPhasesTable(id) {
-  var highlighted_flight_phase = null;
-
   $('#' + id + ' > tbody').delegate('tr', 'hover', function() {
     $(this).css("cursor", "pointer");
   });
@@ -954,20 +965,16 @@ function initPhasesTable(id) {
   $('#' + id + ' > tbody').delegate('tr', 'click', function(e) {
     if (highlighted_flight_phase && $(this).hasClass("selected")) {
       // just remove highlighted flight phase
-      unhighlightFlightPhase(highlighted_flight_phase);
-      highlighted_flight_phase = null;
+      unhighlightFlightPhase();
 
     } else if (highlighted_flight_phase) {
       // set highlighted flight phase to another phase
-      unhighlightFlightPhase(highlighted_flight_phase);
-
-      highlighted_flight_phase = $(this);
-      highlightFlightPhase(highlighted_flight_phase);
+      unhighlightFlightPhase();
+      highlightFlightPhase($(this));
 
     } else {
       // just set highlighted flight phase
-      highlighted_flight_phase = $(this);
-      highlightFlightPhase(highlighted_flight_phase);
+      highlightFlightPhase($(this));
     }
   });
 }
@@ -1005,14 +1012,24 @@ function highlightFlightPhase(table_row) {
   map.zoomToExtent(bounds.scale(2));
 
   table_row.addClass("selected");
+
+  highlighted_flight_phase = {
+    row: table_row,
+    start: start,
+    end: start + duration
+  };
+
+  updateFlotData();
 }
 
 /**
  * Function: unhighlightFlightPhase
  */
 
-function unhighlightFlightPhase(table_row) {
-  table_row.removeClass("selected");
+function unhighlightFlightPhase() {
+  highlighted_flight_phase.row.removeClass("selected");
+  highlighted_flight_phase = null;
+  updateFlotData();
 }
 
 /**
