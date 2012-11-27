@@ -937,3 +937,95 @@ distanceToSegmentSquared = function(point, segment) {
     };
 };
 
+/**
+ * Function: initPhasesTable
+ *
+ * Parameters:
+ * id - ID of the phases table
+*/
+
+function initPhasesTable(id) {
+  var highlighted_flight_phase = null;
+
+  $('#' + id + ' > tbody').delegate('tr', 'hover', function() {
+    $(this).css("cursor", "pointer");
+  });
+
+  $('#' + id + ' > tbody').delegate('tr', 'click', function(e) {
+    if (highlighted_flight_phase && $(this).hasClass("selected")) {
+      // just remove highlighted flight phase
+      unhighlightFlightPhase(highlighted_flight_phase);
+      highlighted_flight_phase = null;
+
+    } else if (highlighted_flight_phase) {
+      // set highlighted flight phase to another phase
+      unhighlightFlightPhase(highlighted_flight_phase);
+
+      highlighted_flight_phase = $(this);
+      highlightFlightPhase(highlighted_flight_phase);
+
+    } else {
+      // just set highlighted flight phase
+      highlighted_flight_phase = $(this);
+      highlightFlightPhase(highlighted_flight_phase);
+    }
+  });
+}
+
+/**
+ * Function: highlightFlightPhase
+ */
+
+function highlightFlightPhase(table_row) {
+  var start = parseFloat(table_row.children('td.start').attr('data-content'));
+  var duration = parseFloat(table_row.children('td.duration').attr('data-content'));
+
+  // the phases table should contain only phases of our first flight only
+  var flight = flights[0];
+
+  var start_index = getNextSmallerIndex(flight.t, start);
+  var end_index = getNextSmallerIndex(flight.t, start + duration);
+
+  if (start_index >= end_index) return;
+
+  // collect bounding box of flight
+  var lon_min = lon_max = flight.lonlat[start_index].lon,
+      lat_min = lat_max = flight.lonlat[start_index].lat;
+
+  for (var i = start_index; i <= end_index; ++i) {
+    if (flight.lonlat[i].lon < lon_min) lon_min = flight.lonlat[i].lon;
+    if (flight.lonlat[i].lon > lon_max) lon_max = flight.lonlat[i].lon;
+    if (flight.lonlat[i].lat < lat_min) lat_min = flight.lonlat[i].lat;
+    if (flight.lonlat[i].lat > lat_max) lat_max = flight.lonlat[i].lat;
+  }
+
+  var bounds = new OpenLayers.Bounds(lon_min, lat_min, lon_max, lat_max);
+  bounds.transform(new OpenLayers.Projection("EPSG:4326"),
+                   map.getProjectionObject());
+  map.zoomToExtent(bounds.scale(2));
+
+  table_row.addClass("selected");
+}
+
+/**
+ * Function: unhighlightFlightPhase
+ */
+
+function unhighlightFlightPhase(table_row) {
+  table_row.removeClass("selected");
+}
+
+/**
+ * Function: followFlight
+ *
+ * Moves the map to the last fix of a flight
+ */
+function followFlight(sfid) {
+  if (!sfid) return;
+
+  var flight = flightWithSFID(sfid);
+  if (flight) {
+    coordinates = flight.geo.components[flight.geo.components.length - 1];
+    map.panTo(new OpenLayers.LonLat(coordinates.x, coordinates.y));
+  }
+}

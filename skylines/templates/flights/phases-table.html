@@ -5,6 +5,7 @@
   xmlns:xi="http://www.w3.org/2001/XInclude"
   py:strip="">
 
+
   <table py:def="render_circling_performance(flight)"
     class="table table-condensed">
     <thead>
@@ -56,7 +57,7 @@
     </tbody>
   </table>
 
-  <table py:def="render_phases(flight)"
+  <table py:def="render_phases(flight)" id="phases-table"
     class="table table-condensed table-striped">
     <thead>
       <tr>
@@ -80,8 +81,8 @@
             ${phase.circling_direction.eval().lower()}
           </span>
         </td>
-        <td>${phase.start}</td>
-        <td>${phase.duration}</td>
+        <td class='start' data-content='${(ph.start_time - flight.takeoff_time.replace(hour=0, minute=0, second=0, microsecond=0)).total_seconds()}'>${phase.start}</td>
+        <td class='duration' data-content='${ph.duration.total_seconds()}'>${phase.duration}</td>
         <td class='numeric'>${phase.alt_diff}</td>
         <td class='numeric'>${phase.distance}</td>
         <td class='numeric'>${phase.vario}</td>

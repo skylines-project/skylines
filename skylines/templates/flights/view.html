@@ -96,6 +96,7 @@ page = 'flights'
     /* <![CDATA[ */
     $(function() {
       $('#detailed-stats').on('shown', function () {
+        initPhasesTable('phases-table');
         $('html, body').animate({scrollTop: $("#detailed-stats").offset().top-100}, 200);
       });
     });
