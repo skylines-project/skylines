@@ -344,6 +344,10 @@ class FlightController(BaseController):
         if request.identity is None:
             flash(_('You have to be logged in to post comments!'), 'warning')
         else:
+            text = text.strip()
+            if len(text) == 0:
+                redirect('.')
+
             comment = FlightComment()
             comment.user = request.identity['user']
             comment.flight = self.flight
