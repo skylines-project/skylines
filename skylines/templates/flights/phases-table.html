@@ -72,7 +72,7 @@
         <th class='numeric'><abbr title="Glide Rate">GR</abbr></th>
       </tr>
     </thead>
-    <tbody>
+    <tbody py:with="takeoff_midnight=flight.takeoff_time.replace(hour=0, minute=0, second=0, microsecond=0)">
       <tr py:for="pn, ph in enumerate(flight.phases)"
         py:with="phase=phase_formatter(ph)">
         <td class='numeric'>${pn + 1}</td>
@@ -81,7 +81,7 @@
             ${phase.circling_direction.eval().lower()}
           </span>
         </td>
-        <td class='start' data-content='${(ph.start_time - flight.takeoff_time.replace(hour=0, minute=0, second=0, microsecond=0)).total_seconds()}'>${phase.start}</td>
+        <td class='start' data-content='${(ph.start_time - takeoff_midnight).total_seconds()}'>${phase.start}</td>
         <td class='duration' data-content='${ph.duration.total_seconds()}'>${phase.duration}</td>
         <td class='numeric'>${phase.alt_diff}</td>
         <td class='numeric'>${phase.distance}</td>
