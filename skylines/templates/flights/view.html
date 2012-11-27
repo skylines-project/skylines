@@ -58,7 +58,7 @@ page = 'flights'
 
       /* ]]> */
       <py:if test="defined('other_flights')">
-        <py:for each="flight, trace in other_flights">
+        <py:for each="flight, trace in other_flights" py:if="trace is not None">
           addFlight(${flight.id},
             ${h.json.dumps(trace.encoded.points)},
             ${h.json.dumps(trace.encoded.levels)},
