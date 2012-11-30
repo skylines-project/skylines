@@ -7,7 +7,6 @@ import simplejson as json
 from tg import flash
 from tg.i18n import ugettext as _
 
-from babel.dates import format_date, format_time, format_datetime
 from babel.numbers import format_number, format_decimal
 
 from skylines.lib.helpers.datetime import *
