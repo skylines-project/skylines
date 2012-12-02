@@ -1,26 +1,12 @@
 from __future__ import absolute_import
 
 import babel.dates
-from babel.core import Locale, UnknownLocaleError
 from datetime import timedelta
-from tg.i18n import get_lang
+from skylines.lib.i18n import get_locale
 
 __all__ = ['isoformat_utc',
            'format_date', 'format_time', 'format_datetime',
            'format_timedelta']
-
-
-def get_locale():
-    locales = get_lang()
-    if locales is not None:
-        for locale in locales:
-            try:
-                locale = Locale.parse(locale)
-                return locale
-            except UnknownLocaleError:
-                pass
-
-    return 'en'
 
 
 def isoformat_utc(dt):
