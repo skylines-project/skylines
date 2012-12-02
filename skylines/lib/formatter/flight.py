@@ -1,6 +1,6 @@
 from tg.i18n import ugettext as _
 from skylines.lib.formatter import format_date
-from skylines.lib.units import format_distance
+from skylines.lib.formatter.units import format_distance
 
 __all__ = ['format_flight_title']
 

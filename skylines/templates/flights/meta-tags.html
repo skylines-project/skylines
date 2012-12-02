@@ -7,7 +7,7 @@
 
   <py:def function="flight_meta_tags(flight)">
     <?python
-      from skylines.lib.units import format_distance
+      from skylines.lib.formatter.units import format_distance
 
       description = []
       description.append(format_distance(flight.olc_classic_distance))

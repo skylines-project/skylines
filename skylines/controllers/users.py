@@ -15,7 +15,7 @@ from tw.forms import PasswordField, TextField, CheckBox, HiddenField
 from tw.forms.validators import UnicodeString
 from skylines.controllers.base import BaseController
 from skylines.lib.dbutil import get_requested_record
-from skylines.lib import units
+from skylines.lib.formatter import units
 from skylines.model import DBSession, User, Group, Club, Flight, Follower
 from skylines.model.igcfile import IGCFile
 from skylines.form import BootstrapForm

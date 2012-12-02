@@ -29,7 +29,7 @@ from sqlalchemy.dialects.postgresql import INET
 from skylines.model.base import DeclarativeBase, metadata
 from skylines.model.session import DBSession
 from skylines.lib.sql import LowerCaseComparator
-from skylines.lib import units
+from skylines.lib.formatter import units
 from tg import request
 
 #{ Association tables
