@@ -1,4 +1,4 @@
-from babel.numbers import format_number, format_decimal
+from skylines.lib.formatter import format_number, format_decimal
 from tg.i18n import lazy_ugettext as l_
 from tg import request
 
