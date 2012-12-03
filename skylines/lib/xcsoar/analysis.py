@@ -6,16 +6,12 @@ import simplejson
 from collections import namedtuple
 from sqlalchemy.sql.expression import and_
 from skylines import files
-from tg import config
 from skylines.model.geo import Location
 from skylines.model import DBSession, Airport, Trace, FlightPhase, TimeZone
+from skylines.lib.xcsoar.path import helper_path
 import logging
 
 log = logging.getLogger(__name__)
-
-
-def helper_path(helper):
-    return os.path.join(config['skylines.analysis.path'], helper)
 
 
 def read_location(node):
