@@ -42,9 +42,9 @@ def open_file(name):
 
 def next_filename(name):
     assert isinstance(name, str) or isinstance(name, unicode)
-    
+
     i = name.rfind('.')
-    
+
     match = igc_filename_numbers_regex.match(name[:i])
 
     try:
@@ -77,5 +77,5 @@ def delete_file(name):
     path = filename_to_path(name)
     try:
         os.unlink(path)
-    except OSError, e:
+    except OSError:
         pass
