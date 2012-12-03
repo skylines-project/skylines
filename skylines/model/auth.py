@@ -30,7 +30,6 @@ from skylines.model.base import DeclarativeBase, metadata
 from skylines.model.session import DBSession
 from skylines.lib.sql import LowerCaseComparator
 from skylines.lib.formatter import units
-from tg import request
 
 #{ Association tables
 
@@ -238,15 +237,15 @@ class User(DeclarativeBase):
         hash.update(password + str(self.password[:64]))
         return self.password[64:] == hash.hexdigest()
 
-    def is_readable(self):
+    def is_readable(self, identity):
         """Does the current user have full read access to this object?"""
-        return self.is_writable()
+        return self.is_writable(identity)
 
-    def is_writable(self):
-        return request.identity and \
-               (self.id == request.identity['user'].id or
-                (self.password is None and self.club_id == request.identity['user'].club_id) or
-                'manage' in request.identity['permissions'])
+    def is_writable(self, identity):
+        return identity and \
+               (self.id == identity['user'].id or
+                (self.password is None and self.club_id == identity['user'].club_id) or
+                'manage' in identity['permissions'])
 
     def follows(self, other):
         assert isinstance(other, User)

@@ -124,7 +124,7 @@ tagline_link_text = pilot
                   10 minutes
                 </span>
 
-                <span py:if="pilot.is_readable()" rel="tooltip"
+                <span py:if="pilot.is_readable(request.identity)" rel="tooltip"
                       title="The live tracking delay is ignored because of your account privileges.">
                   (ignored)
                 </span>

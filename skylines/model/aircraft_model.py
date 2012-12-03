@@ -24,10 +24,8 @@ class AircraftModel(DeclarativeBase):
     def __unicode__(self):
         return self.name
 
-    def is_writable(self):
-        from tg import request
-        return request.identity and \
-                   'manage' in request.identity['permissions']
+    def is_writable(self, identity):
+        return identity and 'manage' in identity['permissions']
 
     @classmethod
     def by_name(cls, _name):

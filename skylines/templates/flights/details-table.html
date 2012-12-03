@@ -86,7 +86,7 @@ from skylines.lib.formatter.units import format_distance, format_speed
       <tr>
         <th>Aircraft</th>
         <td>
-          <a py:if="flight.is_writable()" href="change_aircraft" class="btn btn-mini" style="float: right;">
+          <a py:if="flight.is_writable(request.identity)" href="change_aircraft" class="btn btn-mini" style="float: right;">
             <i class="icon-pencil icon-small"></i> Change
           </a>
 
@@ -144,7 +144,7 @@ from skylines.lib.formatter.units import format_distance, format_speed
       <tr>
         <th>Pilot</th>
         <td>
-          <a py:if="flight.is_writable()" href="change_pilot" class="btn btn-mini" style="float: right;"><i class="icon-pencil icon-small"></i> Change</a>
+          <a py:if="flight.is_writable(request.identity)" href="change_pilot" class="btn btn-mini" style="float: right;"><i class="icon-pencil icon-small"></i> Change</a>
           <span py:if="flight.pilot" itemprop="performer" itemscope="" itemtype="http://schema.org/Person">
             <meta itemprop="url" content="/users/${flight.pilot_id}" />
             <a py:content="flight.pilot" href="/users/${flight.pilot_id}/" itemprop="name">Pilot Name</a>
@@ -180,7 +180,7 @@ from skylines.lib.formatter.units import format_distance, format_speed
           <a href="${flight.igc_file.get_download_uri()}" py:content="h.truncate(flight.igc_file.filename, 25)">FOO.IGC</a>
         </td>
       </tr>
-      <tr py:if="flight.may_delete()">
+      <tr py:if="flight.may_delete(request.identity)">
         <th>Actions</th>
         <td>
           <a data-toggle="modal" data-target="#modal" href="delete?embedded" class="btn btn-mini"><i class="icon-remove icon-small"></i> Delete</a>

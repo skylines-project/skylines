@@ -68,7 +68,7 @@ def add_locations(locations):
     <div class="row">
       <div class="well span8 offset2">
         <table class="right">
-          <tr py:if="user.is_readable()">
+          <tr py:if="user.is_readable(request.identity)">
             <th>Email</th>
             <td py:content="user.email_address" itemprop="email">Foo</td>
           </tr>
@@ -78,18 +78,18 @@ def add_locations(locations):
             <td py:content="user.display_name" itemprop="name">Foo</td>
           </tr>
 
-          <tr py:if="user.is_readable() and user.tracking_key_hex is not None">
+          <tr py:if="user.is_readable(request.identity) and user.tracking_key_hex is not None">
             <th>Tracking key</th>
             <td>
               <span class="label label-info" py:content="user.tracking_key_hex">Tracking Key</span>
               <a href="/tracking/info" class="btn btn-mini">More Information</a>
-              <py:if test="user.is_writable()">
+              <py:if test="user.is_writable(request.identity)">
                 <a href="tracking_register?came_from=." class="btn btn-mini">Generate new key</a>
               </py:if>
             </td>
           </tr>
 
-          <tr py:if="user.is_readable() and user.tracking_key_hex is not None">
+          <tr py:if="user.is_readable(request.identity) and user.tracking_key_hex is not None">
             <th>Tracking delay</th>
             <td>
               <span py:if="user.tracking_delay == 0" py:strip="True">None</span>
@@ -104,22 +104,22 @@ def add_locations(locations):
               <a href="/clubs/${user.club_id}/" py:content="user.club" itemprop="name">
                 Foo
               </a>
-              <a py:if="user.is_writable()" href="change_club" class="btn btn-mini">Change</a>
+              <a py:if="user.is_writable(request.identity)" href="change_club" class="btn btn-mini">Change</a>
             </td>
           </tr>
 
-          <tr py:if="user.club is None and user.is_writable()">
+          <tr py:if="user.club is None and user.is_writable(request.identity)">
             <th>Club</th>
             <td>
               [Unspecified]
-              <a py:if="user.is_writable()" href="change_club" class="btn btn-mini">Change</a>
+              <a py:if="user.is_writable(request.identity)" href="change_club" class="btn btn-mini">Change</a>
             </td>
           </tr>
         </table>
 
         <p style="margin-top: 10px">
-          <a py:if="user.is_writable()" href="/users/${user.id}/edit" class="btn">Edit</a>
-          <a py:if="user.is_writable()" href="change_password"
+          <a py:if="user.is_writable(request.identity)" href="/users/${user.id}/edit" class="btn">Edit</a>
+          <a py:if="user.is_writable(request.identity)" href="change_password"
              class="btn">Change Password</a>
           <a py:if="request.identity and 'manage' in
                     request.identity['permissions']"

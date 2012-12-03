@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from tg import expose, validate, redirect
+from tg import expose, validate, redirect, request
 from tg.i18n import ugettext as _, lazy_ugettext as l_
 from tg.decorators import with_trailing_slash
 from webob.exc import HTTPForbidden
@@ -62,7 +62,7 @@ class ClubController(BaseController):
 
     @expose('skylines.templates.generic.form')
     def edit(self, **kwargs):
-        if not self.club.is_writable():
+        if not self.club.is_writable(request.identity):
             raise HTTPForbidden
 
         return dict(page='settings', title=_('Edit Club'),
@@ -72,7 +72,7 @@ class ClubController(BaseController):
     @expose()
     @validate(form=edit_club_form, error_handler=edit)
     def save(self, name, website, **kwargs):
-        if not self.club.is_writable():
+        if not self.club.is_writable(request.identity):
             raise HTTPForbidden
 
         self.club.name = name
@@ -87,7 +87,7 @@ class ClubController(BaseController):
 
     @expose('skylines.templates.generic.form')
     def new_pilot(self, **kwargs):
-        if not self.club.is_writable():
+        if not self.club.is_writable(request.identity):
             raise HTTPForbidden
 
         return dict(page='settings', title=_("Create Pilot"),
@@ -96,7 +96,7 @@ class ClubController(BaseController):
     @expose()
     @validate(form=new_pilot_form, error_handler=new_pilot)
     def create_pilot(self, email_address, display_name, **kw):
-        if not self.club.is_writable():
+        if not self.club.is_writable(request.identity):
             raise HTTPForbidden
 
         pilot = User(display_name=display_name,

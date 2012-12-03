@@ -232,7 +232,7 @@ class FlightController(BaseController):
     @without_trailing_slash
     @expose('skylines.templates.generic.form')
     def change_pilot(self, **kwargs):
-        if not self.flight.is_writable():
+        if not self.flight.is_writable(request.identity):
             raise HTTPForbidden
 
         return dict(page='settings', title=_('Select Pilot'),
@@ -245,7 +245,7 @@ class FlightController(BaseController):
     @expose()
     @validate(form=select_pilot_form, error_handler=change_pilot)
     def select_pilot(self, pilot, co_pilot, **kwargs):
-        if not self.flight.is_writable():
+        if not self.flight.is_writable(request.identity):
             raise HTTPForbidden
 
         if self.flight.pilot_id != pilot:
@@ -261,7 +261,7 @@ class FlightController(BaseController):
     @without_trailing_slash
     @expose('skylines.templates.generic.form')
     def change_aircraft(self, **kwargs):
-        if not self.flight.is_writable():
+        if not self.flight.is_writable(request.identity):
             raise HTTPForbidden
 
         if self.flight.model_id is None:
@@ -294,7 +294,7 @@ class FlightController(BaseController):
     @expose()
     @validate(form=select_aircraft_form, error_handler=change_aircraft)
     def select_aircraft(self, model, registration, competition_id, **kwargs):
-        if not self.flight.is_writable():
+        if not self.flight.is_writable(request.identity):
             raise HTTPForbidden
 
         if registration is not None:
@@ -324,7 +324,7 @@ class FlightController(BaseController):
     @without_trailing_slash
     @expose('skylines.templates.generic.confirm')
     def delete(self, **kwargs):
-        if not self.flight.is_writable():
+        if not self.flight.is_writable(request.identity):
             raise HTTPForbidden
 
         if request.method == 'POST':

@@ -6,7 +6,6 @@ from sqlalchemy import Column, ForeignKey
 from sqlalchemy.types import Integer, Unicode, DateTime
 from skylines.model.base import DeclarativeBase
 from skylines.model.auth import User
-from tg import request
 
 
 class Club(DeclarativeBase):
@@ -32,7 +31,7 @@ class Club(DeclarativeBase):
     def __unicode__(self):
         return self.name
 
-    def is_writable(self):
-        return request.identity and \
-               (self.id == request.identity['user'].club_id or
-                'manage' in request.identity['permissions'])
+    def is_writable(self, identity):
+        return identity and \
+               (self.id == identity['user'].club_id or
+                'manage' in identity['permissions'])

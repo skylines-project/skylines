@@ -10,7 +10,7 @@ from skylines.lib.igc import read_igc_headers
 from skylines.model.base import DeclarativeBase
 from skylines.model.session import DBSession
 from skylines.model.auth import User
-from tg import config, request
+from tg import config
 
 
 class IGCFile(DeclarativeBase):
@@ -37,14 +37,14 @@ class IGCFile(DeclarativeBase):
     def get_download_uri(self):
         return config['skylines.files.uri'] + '/' + self.filename
 
-    def is_writable(self):
-        return request.identity and \
-               (self.owner_id == request.identity['user'].id or
-                self.pilot_id == request.identity['user'].id or
-                'manage' in request.identity['permissions'])
+    def is_writable(self, identity):
+        return identity and \
+               (self.owner_id == identity['user'].id or
+                self.pilot_id == identity['user'].id or
+                'manage' in identity['permissions'])
 
-    def may_delete(self):
-        return request.identity and 'manage' in request.identity['permissions']
+    def may_delete(self, identity):
+        return identity and 'manage' in identity['permissions']
 
     def update_igc_headers(self):
         igc_headers = read_igc_headers(self.filename)

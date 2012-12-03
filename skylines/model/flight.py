@@ -6,7 +6,6 @@ from sqlalchemy import ForeignKey, Column, func
 from sqlalchemy.types import Unicode, Integer, DateTime, Date, Boolean
 from sqlalchemy.ext.hybrid import hybrid_property
 from sqlalchemy.sql.expression import desc, case
-from tg import request
 from geoalchemy.geometry import GeometryColumn, Point, GeometryDDL
 from geoalchemy.postgis import PGComparator
 from skylines.model.base import DeclarativeBase
@@ -128,16 +127,16 @@ class Flight(DeclarativeBase):
 
         return DBSession.query(cls).filter_by(igc_file=file).first()
 
-    def is_writable(self):
-        return request.identity and \
-               (self.igc_file.owner_id == request.identity['user'].id or
-                self.pilot_id == request.identity['user'].id or
-                'manage' in request.identity['permissions'])
+    def is_writable(self, identity):
+        return identity and \
+               (self.igc_file.owner_id == identity['user'].id or
+                self.pilot_id == identity['user'].id or
+                'manage' in identity['permissions'])
 
-    def may_delete(self):
-        return request.identity and \
-               (self.igc_file.owner_id == request.identity['user'].id or
-               'manage' in request.identity['permissions'])
+    def may_delete(self, identity):
+        return identity and \
+               (self.igc_file.owner_id == identity['user'].id or
+               'manage' in identity['permissions'])
 
     @classmethod
     def get_largest(cls):

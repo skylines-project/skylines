@@ -248,7 +248,7 @@ class UserController(BaseController):
 
     @expose('skylines.templates.generic.form')
     def change_password(self, **kw):
-        if not self.user.is_writable():
+        if not self.user.is_writable(request.identity):
             raise HTTPForbidden
 
         return dict(page='settings', title=_('Change Password'),
@@ -270,7 +270,7 @@ class UserController(BaseController):
 
     @expose('skylines.templates.generic.form')
     def edit(self, **kwargs):
-        if not self.user.is_writable():
+        if not self.user.is_writable(request.identity):
             raise HTTPForbidden
 
         return dict(page='settings', title=_('Edit User'),
@@ -285,7 +285,7 @@ class UserController(BaseController):
              distance_unit=1, speed_unit=1,
              lift_unit=0, altitude_unit=0,
              eye_candy=False, **kwargs):
-        if not self.user.is_writable():
+        if not self.user.is_writable(request.identity):
             raise HTTPForbidden
 
         self.user.email_address = email_address
@@ -311,7 +311,7 @@ class UserController(BaseController):
 
     @expose('skylines.templates.users.change_club')
     def change_club(self, **kwargs):
-        if not self.user.is_writable():
+        if not self.user.is_writable(request.identity):
             raise HTTPForbidden
 
         return dict(user=self.user,
@@ -321,7 +321,7 @@ class UserController(BaseController):
     @expose()
     @validate(form=select_club_form, error_handler=change_club)
     def select_club(self, club, **kwargs):
-        if not self.user.is_writable():
+        if not self.user.is_writable(request.identity):
             raise HTTPForbidden
 
         self.user.club_id = club
@@ -342,7 +342,7 @@ class UserController(BaseController):
     @expose()
     @validate(form=new_club_form, error_handler=change_club)
     def create_club(self, name, **kw):
-        if not self.user.is_writable():
+        if not self.user.is_writable(request.identity):
             raise HTTPForbidden
 
         current_user = request.identity['user']
@@ -359,7 +359,7 @@ class UserController(BaseController):
 
     @expose()
     def tracking_register(self, came_from='/tracking/info'):
-        if not self.user.is_writable():
+        if not self.user.is_writable(request.identity):
             raise HTTPForbidden
 
         self.user.generate_tracking_key()

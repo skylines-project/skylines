@@ -235,7 +235,7 @@ class UploadController(BaseController):
 
             flight = DBSession.query(Flight).get(id)
 
-            if not flight.is_writable():
+            if not flight.is_writable(request.identity):
                 continue
 
             flight.model_id = model_id
