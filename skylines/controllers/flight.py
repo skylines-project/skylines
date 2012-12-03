@@ -10,7 +10,7 @@ from tw.forms.fields import TextField
 from sprox.formbase import EditableForm
 from sprox.widgets import PropertySingleSelectField
 from skylines.controllers.base import BaseController
-from skylines import files
+from skylines.lib import files
 from skylines.model import DBSession, User, Flight, Model, FlightPhase
 from skylines.model.flight_comment import FlightComment
 from skylines.model.notification import create_flight_comment_notifications

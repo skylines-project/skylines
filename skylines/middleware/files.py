@@ -3,7 +3,7 @@ from os.path import basename
 from webob import Response
 from webob.exc import HTTPNotFound, HTTPInternalServerError
 
-from skylines.files import open_file
+from skylines.lib.files import open_file
 from skylines.middleware import PrefixHandlerMiddleware
 
 

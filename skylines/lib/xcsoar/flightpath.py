@@ -1,6 +1,6 @@
 import os
 from collections import namedtuple
-from skylines import files
+from skylines.lib import files
 from skylines.lib.xcsoar.path import helper_path
 
 

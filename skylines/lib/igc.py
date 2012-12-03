@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import re
-from skylines import files
+from skylines.lib import files
 from skylines.lib.base36 import base36encode
 from skylines.lib.string import import_ascii, import_alnum
 

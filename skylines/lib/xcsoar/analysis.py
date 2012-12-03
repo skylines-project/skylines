@@ -4,7 +4,7 @@ import os
 import datetime
 import simplejson
 from sqlalchemy.sql.expression import and_
-from skylines import files
+from skylines.lib import files
 from skylines.model.geo import Location
 from skylines.model import DBSession, Airport, Trace, FlightPhase, TimeZone
 from skylines.lib.xcsoar.path import helper_path
