@@ -111,7 +111,7 @@ def import_sua(filename, country_code):
     airspace_file = ogr.Open(temporary_file)
     if not airspace_file:
         return
-    
+
     layer = airspace_file.GetLayerByIndex(0)
 
     feature = layer.GetFeature(0)
@@ -164,14 +164,14 @@ def import_sua(filename, country_code):
     transaction.commit()
 
     os.remove(temporary_file)
-    
+
     print "added " + str(j) + " features for country " + country_code
 
 
 def import_openair(filename, country_code):
     print "reading " + filename
     country_blacklist = blacklist.get(country_code, [])
-    
+
     airspace_file = ogr.Open(filename)
     if not airspace_file:
         return
@@ -184,7 +184,7 @@ def import_openair(filename, country_code):
     while(feature):
         feature = layer.GetFeature(i)
         i += 1
-        
+
         if not feature:
             continue
 
@@ -200,7 +200,7 @@ def import_openair(filename, country_code):
         if not airspace_class:
             print name + " has no airspace class"
             continue
-        
+
         if name in country_blacklist:
             print name + " is in blacklist"
             continue
@@ -212,7 +212,7 @@ def import_openair(filename, country_code):
         airspace.base = feature.GetFieldAsString('floor')
         airspace.top = feature.GetFieldAsString('ceiling')
         airspace.the_geom = WKTSpatialElement(geom_str)
-        
+
         if i%100 == 0:
             print "inserting geometry " + str(i)
 
@@ -285,4 +285,4 @@ def parse_airspace_type(airspace_type):
 
 
 if __name__ == '__main__':
-  main()
+    main()
