@@ -90,8 +90,7 @@ class IGCFile(DeclarativeBase):
         return None
 
     def guess_model(self):
-        from skylines.model.flight import Flight
-        from skylines.model.model import Model
+        from skylines.model import Flight, AircraftModel
 
         # first try to find the reg number in the database
         if self.registration is not None:
@@ -137,11 +136,11 @@ class IGCFile(DeclarativeBase):
 
             glider_type_clean = re.sub(r'[^a-z0-9]', '', glider_type)
 
-            result = DBSession.query(Model) \
+            result = DBSession.query(AircraftModel) \
                 .filter(and_( \
-                    func.regexp_replace(func.lower(Model.name), '[^a-z]', ' ').like(func.any(text_fragments)), \
-                    func.regexp_replace(func.lower(Model.name), '[^0-9]', ' ').like(func.all(digit_fragments)))) \
-                .order_by(func.levenshtein(func.regexp_replace(func.lower(Model.name), '[^a-z0-9]', ''), glider_type_clean))
+                    func.regexp_replace(func.lower(AircraftModel.name), '[^a-z]', ' ').like(func.any(text_fragments)), \
+                    func.regexp_replace(func.lower(AircraftModel.name), '[^0-9]', ' ').like(func.all(digit_fragments)))) \
+                .order_by(func.levenshtein(func.regexp_replace(func.lower(AircraftModel.name), '[^a-z0-9]', ''), glider_type_clean))
 
             if result.first():
                 return result.first().id

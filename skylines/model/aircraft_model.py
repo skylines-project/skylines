@@ -6,7 +6,7 @@ from skylines.model.base import DeclarativeBase
 from skylines.model.session import DBSession
 
 
-class Model(DeclarativeBase):
+class AircraftModel(DeclarativeBase):
     __tablename__ = 'models'
 
     id = Column(Integer, autoincrement=True, primary_key=True)

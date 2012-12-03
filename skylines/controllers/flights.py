@@ -9,7 +9,7 @@ from sqlalchemy import func
 from sqlalchemy.orm import joinedload, contains_eager
 from sqlalchemy.orm.util import aliased
 from skylines.controllers.base import BaseController
-from skylines.model import DBSession, User, Club, Flight, IGCFile, Model, Airport
+from skylines.model import DBSession, User, Club, Flight, IGCFile, AircraftModel, Airport
 from skylines.model.flight_comment import FlightComment
 from skylines.controllers.flight import FlightController
 from skylines.controllers.upload import UploadController
@@ -71,7 +71,7 @@ class FlightsController(BaseController):
                     3: (Flight, 'olc_classic_distance'),
                     4: (Airport, 'name'),
                     5: (Club, 'name'),
-                    6: (Model, 'name'),
+                    6: (AircraftModel, 'name'),
                     7: (Flight, 'takeoff_time'),
                     8: (Flight, 'id'),
                     9: (Flight, 'num_comments'),
@@ -177,7 +177,7 @@ class FlightsController(BaseController):
             2: (Flight, 'olc_classic_distance'),
             3: (Airport, 'name'),
             4: (Club, 'name'),
-            5: (Model, 'name'),
+            5: (AircraftModel, 'name'),
             6: (Flight, 'takeoff_time'),
             7: (Flight, 'id'),
             8: (Flight, 'num_comments'),
@@ -227,7 +227,7 @@ class FlightsController(BaseController):
             2: (pilot_alias, 'display_name'),
             3: (Flight, 'olc_classic_distance'),
             4: (Airport, 'name'),
-            5: (Model, 'name'),
+            5: (AircraftModel, 'name'),
             6: (Flight, 'takeoff_time'),
             7: (Flight, 'id'),
             8: (Flight, 'num_comments'),
@@ -247,7 +247,7 @@ class FlightsController(BaseController):
             2: (pilot_alias, 'display_name'),
             3: (Flight, 'olc_classic_distance'),
             4: (Airport, 'name'),
-            5: (Model, 'name'),
+            5: (AircraftModel, 'name'),
             6: (Flight, 'takeoff_time'),
             7: (Flight, 'id'),
             8: (Flight, 'num_comments'),
@@ -267,7 +267,7 @@ class FlightsController(BaseController):
             2: (pilot_alias, 'display_name'),
             3: (Flight, 'olc_classic_distance'),
             4: (Club, 'name'),
-            5: (Model, 'name'),
+            5: (AircraftModel, 'name'),
             6: (Flight, 'takeoff_time'),
             7: (Flight, 'id'),
             8: (Flight, 'num_comments'),

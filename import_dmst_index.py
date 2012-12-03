@@ -7,7 +7,7 @@ import sys, os, re
 import transaction
 from paste.deploy.loadwsgi import appconfig
 from skylines.config.environment import load_environment
-from skylines.model import DBSession, Model
+from skylines.model import DBSession, AircraftModel
 
 sys.path.append(os.path.dirname(sys.argv[0]))
 
@@ -33,9 +33,9 @@ for line in file(path):
         names, index = m.group(1), int(m.group(2))
         for name in names.split(';'):
             name = name.strip().decode('utf-8')
-            model = Model.by_name(name)
+            model = AircraftModel.by_name(name)
             if model is None:
-                model = Model(name=name)
+                model = AircraftModel(name=name)
                 model.kind = 1
                 DBSession.add(model)
             model.dmst_index = index

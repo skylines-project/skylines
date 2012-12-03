@@ -7,7 +7,7 @@ from tw.forms.fields import SingleSelectField
 from tw.forms.validators import FieldStorageUploadConverter
 from skylines.controllers.base import BaseController
 from skylines.lib import files
-from skylines.model import DBSession, User, Model, Flight
+from skylines.model import DBSession, User, AircraftModel, Flight
 from skylines.lib.md5 import file_md5
 from skylines.lib.xcsoar import analyse_flight
 from skylines.lib.form import BootstrapForm, MultiFileField
@@ -30,9 +30,9 @@ class PilotSelectField(SingleSelectField):
 
 class ModelSelectField(SingleSelectField):
     def update_params(self, d):
-        models = DBSession.query(Model) \
-                .order_by(Model.kind) \
-                .order_by(Model.name) \
+        models = DBSession.query(AircraftModel) \
+                .order_by(AircraftModel.kind) \
+                .order_by(AircraftModel.name) \
                 .all()
 
         gliders = [(model.id, model) for model in models if model.kind == 1]

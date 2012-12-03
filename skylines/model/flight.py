@@ -14,7 +14,7 @@ from skylines.model.session import DBSession
 from skylines.model.auth import User
 from skylines.model.geo import Location
 from skylines.model.igcfile import IGCFile
-from skylines.model.model import Model
+from skylines.model.aircraft_model import AircraftModel
 from skylines.model.airport import Airport
 
 
@@ -33,7 +33,7 @@ class Flight(DeclarativeBase):
     club_id = Column(Integer, ForeignKey('clubs.id'), index=True)
 
     model_id = Column(Integer, ForeignKey('models.id'))
-    model = relation('Model', primaryjoin=(model_id == Model.id))
+    model = relation('AircraftModel', primaryjoin=(model_id == AircraftModel.id))
     registration = Column(Unicode(32))
     competition_id = Column(Unicode(5))
 
@@ -84,7 +84,7 @@ class Flight(DeclarativeBase):
 
     @index_score.expression
     def index_score(cls):
-        return case([(Model.dmst_index > 0,  cls.olc_plus_score * 100 / Model.dmst_index)], else_=cls.olc_plus_score)
+        return case([(AircraftModel.dmst_index > 0,  cls.olc_plus_score * 100 / AircraftModel.dmst_index)], else_=cls.olc_plus_score)
 
     @year.expression
     def year(cls):
