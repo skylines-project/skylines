@@ -40,7 +40,7 @@
         <td>
           <a href="/flights/pilot/${user.id}" class="btn btn-mini"><i class="icon-plane"></i> Flights</a>
           <a href="/statistics/pilot/${user.id}" class="btn btn-mini"><i class="icon-tasks"></i> Statistics</a>
-          <a py:if="user.is_writable()" href="/users/${user.id}/edit" class="btn btn-mini">Edit</a>
+          <a py:if="user.is_writable(request.identity)" href="/users/${user.id}/edit" class="btn btn-mini">Edit</a>
         </td>
       </tr>
     </tbody>

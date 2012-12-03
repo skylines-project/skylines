@@ -23,7 +23,7 @@ tagline_link_text = club
     <meta itemprop="url" content="/clubs/${club.id}" />
     ${render_users_table(users, False)}
 
-    <p py:if="club.is_writable()">
+    <p py:if="club.is_writable(request.identity)">
       <a href="new_pilot" class="btn">Create Pilot</a>
     </p>
   </body>
