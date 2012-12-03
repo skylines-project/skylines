@@ -3,11 +3,11 @@
 # Parse the DMSt index list from DMSt-WO_2012.pdf
 #
 
-import sys, os, re
+import sys, os
 import transaction
 from paste.deploy.loadwsgi import appconfig
 from skylines.config.environment import load_environment
-from skylines.model import DBSession, Location, Airport
+from skylines.model import DBSession, Airport
 from skylines.lib.waypoints.welt2000 import get_database
 
 sys.path.append(os.path.dirname(sys.argv[0]))
