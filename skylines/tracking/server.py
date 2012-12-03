@@ -7,7 +7,7 @@ from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.sql.expression import and_, or_, desc
 import transaction
 from skylines.model import DBSession, User, TrackingFix, Location, Follower
-from skylines.tracking.crc import check_crc, set_crc
+from skylines.lib.crc import check_crc, set_crc
 
 # More information about this protocol can be found in the XCSoar
 # source code, source file src/Tracking/SkyLines/Protocol.hpp
