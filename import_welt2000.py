@@ -32,10 +32,10 @@ for airport_w2k in welt2000:
     if airport_w2k.type != 'airport' \
         and airport_w2k.type != 'glider_site' \
         and airport_w2k.type != 'ulm':
-      continue
+        continue
 
     i += 1
-    if i%100 == 0:
+    if i % 100 == 0:
         DBSession.flush()
         print str(i) + ": " + airport_w2k.country_code + " " + airport_w2k.name
 
@@ -58,4 +58,3 @@ for airport_w2k in welt2000:
 DBSession.flush()
 
 transaction.commit()
-
