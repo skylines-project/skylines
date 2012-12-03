@@ -12,7 +12,7 @@ from tw.forms import TextField
 from skylines.controllers.base import BaseController
 from skylines.lib.dbutil import get_requested_record
 from skylines.model import DBSession, User, Group, Club
-from skylines.form import BootstrapForm
+from skylines.lib.form import BootstrapForm
 
 
 class EditClubForm(EditableForm):

@@ -18,7 +18,7 @@ from skylines.lib.dbutil import get_requested_record
 from skylines.lib.formatter import units
 from skylines.model import DBSession, User, Group, Club, Flight, Follower
 from skylines.model.igcfile import IGCFile
-from skylines.form import BootstrapForm
+from skylines.lib.form import BootstrapForm
 from sqlalchemy.sql.expression import and_, or_
 from sqlalchemy import func
 from repoze.what.predicates import not_anonymous, has_permission

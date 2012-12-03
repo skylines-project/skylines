@@ -17,7 +17,7 @@ from skylines.model.notification import create_flight_comment_notifications
 from skylines.lib.xcsoar import analyse_flight, flight_path
 from skylines.lib.helpers import format_time, format_number
 from skylines.lib.formatter import units
-from skylines.form import BootstrapForm
+from skylines.lib.form import BootstrapForm
 from skylinespolyencode import SkyLinesPolyEncoder
 from skylines.controllers.upload import ModelSelectField
 
