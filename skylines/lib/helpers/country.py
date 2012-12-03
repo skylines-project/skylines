@@ -14,7 +14,4 @@ def country_name(code):
 
 
 def language_to_country_code(language):
-    if language in __conversion_dict:
-        return __conversion_dict[language]
-    else:
-        return language
+    return __conversion_dict.get(language, language)
