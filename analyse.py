@@ -10,7 +10,7 @@ from paste.deploy.loadwsgi import appconfig
 from sqlalchemy.orm import joinedload
 from skylines.config.environment import load_environment
 from skylines.model import DBSession, Flight
-from skylines.lib.analysis import analyse_flight
+from skylines.lib.xcsoar import analyse_flight
 
 sys.path.append(os.path.dirname(sys.argv[0]))
 

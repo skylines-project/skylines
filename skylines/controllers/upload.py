@@ -9,7 +9,7 @@ from skylines.controllers.base import BaseController
 from skylines import files
 from skylines.model import DBSession, User, Model, Flight
 from skylines.lib.md5 import file_md5
-from skylines.lib.analysis import analyse_flight
+from skylines.lib.xcsoar import analyse_flight
 from skylines.form import BootstrapForm, MultiFileField
 from zipfile import ZipFile
 from skylines.model.igcfile import IGCFile

@@ -14,7 +14,7 @@ from skylines import files
 from skylines.model import DBSession, User, Flight, Model, FlightPhase
 from skylines.model.flight_comment import FlightComment
 from skylines.model.notification import create_flight_comment_notifications
-from skylines.lib.analysis import analyse_flight, flight_path
+from skylines.lib.xcsoar import analyse_flight, flight_path
 from skylines.lib.helpers import format_time, format_number
 from skylines.lib.formatter import units
 from skylines.form import BootstrapForm
