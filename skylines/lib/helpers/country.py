@@ -5,6 +5,7 @@ __all__ = ['country_name', 'language_to_country_code']
 
 __conversion_dict = {'en': 'gb',
                      'ja': 'jp',
+                     'nb': 'no',
                      'sv': 'se'}
 
 def country_name(code):
