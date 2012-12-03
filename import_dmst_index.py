@@ -7,7 +7,7 @@ import sys, os, re
 import transaction
 from paste.deploy.loadwsgi import appconfig
 from skylines.config.environment import load_environment
-from skylines.model import *
+from skylines.model import DBSession, Model
 
 sys.path.append(os.path.dirname(sys.argv[0]))
 
@@ -42,4 +42,3 @@ for line in file(path):
 
 DBSession.flush()
 transaction.commit()
-
