@@ -1,9 +1,6 @@
 # Compiled python files
 *.pyc
 
-# Database files
-*.db
-
 # Coverage files
 .coverage
 
