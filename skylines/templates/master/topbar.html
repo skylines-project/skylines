@@ -22,16 +22,16 @@ def active_if_page_is(_page):
           <span class="skylines-blue" xml:lang="en">Sky</span><span class="skylines-white" xml:lang="en">Lines</span>
         </a>
         <ul class="nav">
-          <li class="${active_if_page_is('about')}"><a href="${tg.url('/about')}">About</a></li>
-          <li class="${active_if_page_is('tracking')}"><a href="${tg.url('/tracking/')}">Live</a></li>
-          <li class="${active_if_page_is('flights')}"><a href="${tg.url('/flights/')}">Flights</a></li>
-          <li class="${active_if_page_is('ranking')}"><a href="${tg.url('/ranking/')}">Ranking</a></li>
-          <li class="${active_if_page_is('statistics')}"><a href="${tg.url('/statistics/')}">Statistics</a></li>
+          <li class="${active_if_page_is('about')}"><a href="/about">About</a></li>
+          <li class="${active_if_page_is('tracking')}"><a href="/tracking/">Live</a></li>
+          <li class="${active_if_page_is('flights')}"><a href="/flights/">Flights</a></li>
+          <li class="${active_if_page_is('ranking')}"><a href="/ranking/">Ranking</a></li>
+          <li class="${active_if_page_is('statistics')}"><a href="/statistics/">Statistics</a></li>
         </ul>
         <py:if test="tg.auth_stack_enabled">
         <ul class="nav pull-right">
           <li class="${active_if_page_is('upload')}">
-            <a href="${tg.url('/flights/upload/')}"><i class="icon-upload-alt"></i> Upload</a>
+            <a href="/flights/upload/"><i class="icon-upload-alt"></i> Upload</a>
           </li>
 
           <li py:if="not request.identity" class="${active_if_page_is('login')}">
@@ -60,8 +60,8 @@ def active_if_page_is(_page):
                   <input type="submit" value="Login" class="btn btn-primary pull-right" />
                 </div>
                 <hr/>
-                <a href="${tg.url('/users/recover')}">Forgot password?</a>
-                <a href="${tg.url('/users/new')}">Don't have an account?</a>
+                <a href="/users/recover">Forgot password?</a>
+                <a href="/users/new">Don't have an account?</a>
               </form>
             </div>
           </li>
@@ -86,7 +86,7 @@ def active_if_page_is(_page):
               <li><a href="/flights/pilot/${request.identity['user'].id}"><i class="icon-plane"></i> Flights</a></li>
               <li><a href="/statistics/pilot/${request.identity['user'].id}"><i class="icon-tasks"></i> Statistics</a></li>
               <li class="divider"></li>
-              <li><a href="${tg.url('/logout_handler')}"><i class="icon-signout"></i> Logout</a></li>
+              <li><a href="/logout_handler"><i class="icon-signout"></i> Logout</a></li>
             </ul>
           </li>
 
