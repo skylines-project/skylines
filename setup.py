@@ -83,9 +83,6 @@ setup(
 
     [paste.app_install]
     main = pylons.util:PylonsInstaller
-
-    [paste.filter_app_factory]
-    root = skylines.config.filter:make_root_prefix_middleware
     """,
     dependency_links=[
         "http://www.turbogears.org/2.1/downloads/current/"
