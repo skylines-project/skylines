@@ -8,15 +8,15 @@ msgstr ""
 "Project-Id-Version: skylines\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2012-11-17 16:04+0100\n"
-"PO-Revision-Date: 2012-11-10 17:35+0000\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"PO-Revision-Date: 2012-12-09 05:18+0000\n"
+"Last-Translator: Eric Praznovsky <eric@virtualsoaring.eu>\n"
 "Language-Team: Slovak <sk@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 1 : (n>=2 && n<=4) ? 2 : 0;\n"
-"X-Launchpad-Export-Date: 2012-12-07 14:28+0000\n"
-"X-Generator: Launchpad (build 16341)\n"
+"X-Launchpad-Export-Date: 2012-12-11 20:52+0000\n"
+"X-Generator: Launchpad (build 16361)\n"
 
 #: skylines/controllers/clubs.py:24 skylines/controllers/clubs.py:40
 #: skylines/controllers/users.py:96 skylines/controllers/users.py:115
@@ -76,7 +76,7 @@ msgstr "Vľavo"
 
 #: skylines/controllers/flight.py:124
 msgid "Mixed"
-msgstr "Zmiešaný"
+msgstr "Zmiešané"
 
 #: skylines/controllers/flight.py:125
 msgid "Right"
@@ -324,7 +324,7 @@ msgstr "Americké (imperiálne)"
 
 #: skylines/lib/helpers/__init__.py:22
 msgid "{distance} on {date}"
-msgstr "{distance} za {date}"
+msgstr "{distance} dňa {date}"
 
 #: skylines/lib/helpers/__init__.py:29
 msgid "{something} by {pilot_name}"
@@ -342,7 +342,9 @@ msgstr "O programe"
 msgid ""
 "Welcome to SkyLines, the internet platform for sharing\n"
 "        flights!"
-msgstr "Vitajte v SkyLines, internetovej platforme na zdieľanie\n        letov!"
+msgstr ""
+"Vitajte v SkyLines, internetovej platforme na zdieľanie\n"
+"        letov!"
 
 #: skylines/templates/about.html:29
 msgid "The major goals of the Skylines-Project are:"
@@ -366,8 +368,8 @@ msgid ""
 "Skylines is a non-commercial project, there are no ads on the webpage, its "
 "free of charge."
 msgstr ""
-"Skylines je nekomerčný projekt, na webstránkach nie sú tam žiadne reklamy, je "
-"zdarma."
+"Skylines je nekomerčný projekt, na webstránkach nie sú tam žiadne reklamy, "
+"je zdarma."
 
 #: skylines/templates/about.html:35
 msgid ""
@@ -403,8 +405,8 @@ msgid ""
 "        software; [2:the source\n"
 "        code is available here]."
 msgstr ""
-"SkyLines vám prináša [1:XCSoar project]. Je to softvér zadarmo; [2:the source "
-"code is available here]."
+"SkyLines vám prináša [1:XCSoar project]. Je to softvér zadarmo; [2:the "
+"source code is available here]."
 
 #: skylines/templates/about.html:53
 msgid ""
@@ -503,7 +505,7 @@ msgstr "Vytvoriť nového pilota"
 
 #: skylines/templates/flights/details-table.html:29
 msgid "Spread the word"
-msgstr "Povedzte o nás"
+msgstr "Pochváľte sa svojím letom"
 
 #: skylines/templates/flights/details-table.html:44
 #: skylines/templates/flights/flights-table.html:18
@@ -891,7 +893,7 @@ msgstr "Čas letu"
 #: skylines/templates/statistics/duration-table.html:33
 #: skylines/templates/users/view.html:221
 msgid "Hours"
-msgstr "Hodín"
+msgstr "hodín"
 
 #: skylines/templates/tracking/info.html:1 skylines/templates/tracking/list.html:1
 #: skylines/templates/tracking/map.html:1 skylines/templates/tracking/view.html:1
@@ -913,12 +915,14 @@ msgid ""
 "the\n"
 "      positions are transmitted every 5 seconds!"
 msgstr ""
-"SkyLines Live Tracking can be used to let others take part on your\n      "
-"journeys while you're flying. It uses a very light-weight protocol that\n     "
-" only transmits the necessary data and due to that it can also work in\n      "
-"areas/altitudes where the reception isn't very good. To give you an\n      "
-"example: A flight of 10 hours only uses about 340 KB of traffic when the\n    "
-"  positions are transmitted every 5 seconds!"
+"SkyLines Live Tracking can be used to let others take part on your\n"
+"      journeys while you're flying. It uses a very light-weight protocol "
+"that\n"
+"      only transmits the necessary data and due to that it can also work in\n"
+"      areas/altitudes where the reception isn't very good. To give you an\n"
+"      example: A flight of 10 hours only uses about 340 KB of traffic when "
+"the\n"
+"      positions are transmitted every 5 seconds!"
 
 #: skylines/templates/tracking/info.html:30
 msgid "Clients"
@@ -930,16 +934,17 @@ msgid ""
 "      ([4:Google Play]).\n"
 "      Instructions are below."
 msgstr ""
-"[1:XCSoar:][2:]k dispozícii počnúc [3:XCSoar 6.4]\n      ([4:Google Play]).\n "
-"     Pokyny sú nižšie."
+"[1:XCSoar:][2:]k dispozícii počnúc [3:XCSoar 6.4]\n"
+"      ([4:Google Play]).\n"
+"      Pokyny sú nižšie."
 
 #: skylines/templates/tracking/info.html:36
 msgid ""
 "[1:Gaggle:][2:]now available in the current version of Gaggle\n"
 "      ([3:Google Play])"
 msgstr ""
-"[1:Gaggle:][2:]teraz k dispozícii v aktuálnej verzii Gaggle\n      ([3:Google "
-"Play])"
+"[1:Gaggle:][2:]teraz k dispozícii v aktuálnej verzii Gaggle\n"
+"      ([3:Google Play])"
 
 #: skylines/templates/tracking/info.html:38
 msgid "Butterfly iGlide:"
@@ -980,148 +985,155 @@ msgid ""
 "      then [4:Tracking].  Turn SkyLines tracking on, and enter your\n"
 "      Live Tracking key."
 msgstr ""
+"In [1:XCSoar], open\n"
+"      the [2:Setup System] dialog, click on [3:Setup] and\n"
+"      then [4:Tracking].  Turn SkyLines tracking on, and enter your\n"
+"      Live Tracking key."
 
 #: skylines/templates/tracking/list.html:27
 msgid "Last fix"
-msgstr ""
+msgstr "Posledný bod"
 
 #: skylines/templates/tracking/list.html:29
 msgid "Nearest Airport"
-msgstr ""
+msgstr "Najbližšie letisko"
 
 #: skylines/templates/tracking/list.html:58
 msgid "How to use Live Tracking?"
-msgstr ""
+msgstr "Ako používať sledovanie naživo?"
 
 #: skylines/templates/tracking/map.html:114
 #: skylines/templates/tracking/view.html:153
 msgid "There is no live track of this pilot currently."
-msgstr ""
+msgstr "There is no live track of this pilot currently."
 
 #: skylines/templates/tracking/view.html:119
 msgid "This pilot chose to delay the display of his live tracks."
 msgstr ""
+"Tento pilot sa rozhodol odložiť zobrazenie jeho letov sledovaných naživo."
 
 #: skylines/templates/tracking/view.html:119
 msgid "Delay"
-msgstr ""
+msgstr "Oneskorenie"
 
 #: skylines/templates/tracking/view.html:127
 msgid ""
 "The live tracking delay is ignored because of your account privileges."
-msgstr ""
+msgstr "Oneskorenie Sledovania naživo je ignorované oprávneniami vášho účtu."
 
 #: skylines/templates/tracking/view.html:128
 msgid "(ignored)"
-msgstr ""
+msgstr "(ignorované)"
 
 #: skylines/templates/tracking/view.html:143
 msgid "Your Live Tracking settings"
-msgstr ""
+msgstr "Nastavenia vášsho Sledovania naživo"
 
 #: skylines/templates/upload/result.html:24
 msgid ""
 "Your flights have been saved. You may want to change the flights aircraft "
 "types and registrations below."
 msgstr ""
+"Vaše lety boli uložené. Možno budete chcieť zmeniť typy lietadiel a "
+"imatrikulačné znaky (nižšie)."
 
 #: skylines/templates/upload/result.html:29
 msgid "No flight was saved."
-msgstr ""
+msgstr "Žiaden let nebol uložený."
 
 #: skylines/templates/upload/result.html:35
 msgid "Filename"
-msgstr ""
+msgstr "Meno súboru"
 
 #: skylines/templates/upload/result.html:39
 msgid "Status"
-msgstr ""
+msgstr "Stav"
 
 #: skylines/templates/upload/result.html:56
 msgid "Success"
-msgstr ""
+msgstr "Úspešne"
 
 #: skylines/templates/upload/result.html:69
 msgid "Upload another flight"
-msgstr ""
+msgstr "Nahrať ďalší let"
 
 #: skylines/templates/users/change_club.html:1
 #: skylines/templates/users/change_club.html:18
 msgid "Change Club"
-msgstr ""
+msgstr "Zmeniť klub"
 
 #: skylines/templates/users/change_club.html:22
 msgid "Select Club"
-msgstr ""
+msgstr "Zvoliť klub"
 
 #: skylines/templates/users/change_club.html:24
 msgid "Select your primary club:"
-msgstr ""
+msgstr "Zvoľte váš primárny klub:"
 
 #: skylines/templates/users/change_club.html:30
 msgid "Register Club"
-msgstr ""
+msgstr "Registrovať klub"
 
 #: skylines/templates/users/change_club.html:32
 msgid "If your club doesn't exist yet in Skylines, create it:"
-msgstr ""
+msgstr "Ak váš klub doteraz neexistuje v Skylines, vytvorte ho:"
 
 #: skylines/templates/users/list.html:1
 msgid "Users"
-msgstr ""
+msgstr "Používatelia"
 
 #: skylines/templates/users/view.html:72
 msgid "Email"
-msgstr ""
+msgstr "E-mail"
 
 #: skylines/templates/users/view.html:77
 msgid "Display name"
-msgstr ""
+msgstr "Zobrazované meno"
 
 #: skylines/templates/users/view.html:82
 msgid "Tracking key"
-msgstr ""
+msgstr "Kľúč sledovania"
 
 #: skylines/templates/users/view.html:85
 msgid "More Information"
-msgstr ""
+msgstr "Viac informácií"
 
 #: skylines/templates/users/view.html:93
 msgid "Tracking delay"
-msgstr ""
+msgstr "Oneskorenie sledovania"
 
 #: skylines/templates/users/view.html:113
 msgid "[Unspecified]"
-msgstr ""
+msgstr "[nešpecifikované]"
 
 #: skylines/templates/users/view.html:133
 msgid "Unfollow"
-msgstr ""
+msgstr "Prestať sledovať"
 
 #: skylines/templates/users/view.html:136
 msgid "Follow"
-msgstr ""
+msgstr "Odoberať"
 
 #: skylines/templates/users/view.html:146
 msgid "Following"
-msgstr ""
+msgstr "Odoberáte"
 
 #: skylines/templates/users/view.html:158
 msgid "Followers"
-msgstr ""
+msgstr "Odoberatelia"
 
 #: skylines/templates/users/view.html:170
 msgid "Distance Flights"
-msgstr ""
+msgstr "Vzdialenosť letov"
 
 #: skylines/templates/users/view.html:197
 msgid "Last 12 Months"
-msgstr ""
+msgstr "Posledných 12 mesiacov"
 
 #: skylines/templates/users/view.html:226
 msgid "Average Speed"
-msgstr ""
+msgstr "Priemerná rýchlosť"
 
 #: skylines/templates/users/view.html:234
 msgid "Takeoff Locations"
-msgstr ""
+msgstr "Miesta vzletov"
