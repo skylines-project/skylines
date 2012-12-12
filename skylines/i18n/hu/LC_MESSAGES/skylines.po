@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: skylines\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2012-11-17 16:04+0100\n"
-"PO-Revision-Date: 2012-12-06 08:19+0000\n"
+"PO-Revision-Date: 2012-12-12 21:48+0000\n"
 "Last-Translator: Gabor Konrad <Unknown>\n"
 "Language-Team: Hungarian <hu@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2012-12-11 20:52+0000\n"
+"X-Launchpad-Export-Date: 2012-12-12 21:52+0000\n"
 "X-Generator: Launchpad (build 16361)\n"
 
 #: skylines/controllers/clubs.py:24 skylines/controllers/clubs.py:40
@@ -131,7 +131,7 @@ msgstr ""
 #: skylines/controllers/root.py:106
 #, python-format
 msgid "You are now logged in. Welcome back, %s!"
-msgstr "Sikeres bejelentkezés. Üdvözlünk újra itt %s!"
+msgstr "Sikeres bejelentkezés. Üdvözlünk újra %s!"
 
 #: skylines/controllers/root.py:123
 msgid "You are now logged out. We hope to see you back soon!"
@@ -326,11 +326,11 @@ msgstr "{distance} {date}-n"
 
 #: skylines/lib/helpers/__init__.py:29
 msgid "{something} by {pilot_name}"
-msgstr "{something} {pilot_name}-tól"
+msgstr "{something} {pilot_name} pilótától"
 
 #: skylines/lib/helpers/__init__.py:33
 msgid "{something} by {pilot_name} and {co_pilot_name}"
-msgstr "{something} {pilot_name} és {co_pilot_name}-tól"
+msgstr "{something} {pilot_name} és {co_pilot_name} pilótáktól"
 
 #: skylines/templates/about.html:1 skylines/templates/master/topbar.html:25
 msgid "About"
@@ -354,7 +354,7 @@ msgstr ""
 
 #: skylines/templates/about.html:32
 msgid "Skylines is based on free software ([1:License])."
-msgstr "A SkyLines szabad szoftver licencen alapul ([1:License])."
+msgstr "A SkyLines szabad szoftver licencen alapul ([1:Licenc])."
 
 #: skylines/templates/about.html:33
 msgid ""
@@ -374,25 +374,23 @@ msgid ""
 "Skylines has [1:Live Tracking], let your friends parcitipate on your "
 "adventures."
 msgstr ""
-"Skylines has [1:Live Tracking], let your friends parcitipate on your "
-"adventures.\r\n"
-"A SkyLines-ban van [1:Live Tracking], így a barátaid közreműködhetnek a "
-"kalandjaidban."
+"A SkyLines rendelkezik [1:Live Tracking]-gel, így a barátaid "
+"közreműködhetnek a kalandjaidban."
 
 #: skylines/templates/about.html:36
 msgid ""
 "Skylines has also some social network aspects with comments, notifications, "
 "friends and followers."
 msgstr ""
-"A SkyLines szociális háló jellegű is a megjegyzésekkel, értesítésekkel, "
-"barátokkal és követőkkel."
+"A SkyLines-nak van némi szociális háló jellege a megjegyzésekkel, "
+"értesítésekkel, barátokkal és követőkkel."
 
 #: skylines/templates/about.html:37
 msgid ""
 "Airport and Waypoint data is provided by the [1:WELT2000] project "
 "([2:License])"
 msgstr ""
-"Repülőtér és Fordulópont adatokat a [1:WELT2000] project ([2:License]) "
+"Repülőtér és Fordulópont adatokat a [1:WELT2000] project ([2:Licenc]) "
 "szolgáltatja."
 
 #: skylines/templates/about.html:41
@@ -406,8 +404,7 @@ msgid ""
 "        code is available here]."
 msgstr ""
 "A SkyLines-t az [1:XCSoar project] hozta létre Neked. Ez ingyenes szoftver; "
-"[2:the source\n"
-"        code is available here]."
+"a forrás program [2:innen] elérhető."
 
 #: skylines/templates/about.html:53
 msgid ""
@@ -416,7 +413,7 @@ msgid ""
 "bug report."
 msgstr ""
 "Ha úgy gondolod, hogy valami hiányzik vagy úgy gondolod, hogy találtál egy "
-"programhibát, kövesd az utasításokat [1:here] a funkciókérés vagy "
+"programhibát, kövesd az utasításokat [1:itt] a funkciókérés vagy "
 "hibajelentés megfogalmazására."
 
 #: skylines/templates/error.html:1
@@ -474,7 +471,7 @@ msgstr "Repülések"
 #: skylines/templates/users/users-table.html:42
 #: skylines/templates/users/view.html:141
 msgid "Statistics"
-msgstr "Statisztikák"
+msgstr "Statisztika"
 
 #: skylines/templates/clubs/list.html:36 skylines/templates/clubs/view.html:52
 msgid "Members"
@@ -629,19 +626,19 @@ msgstr "Megjelenítés"
 
 #: skylines/templates/flights/list.html:1
 msgid "{flights} on {date}"
-msgstr "{flights} {date}"
+msgstr "{flights} {date}-n"
 
 #: skylines/templates/flights/list.html:1
 msgid "{flights} of {pilot}"
-msgstr "{flights} {pilot}"
+msgstr "{flights} {pilot} pilótától"
 
 #: skylines/templates/flights/list.html:1
 msgid "{flights} of {club}"
-msgstr "{flights} {club}"
+msgstr "{flights} {club} klubtól"
 
 #: skylines/templates/flights/list.html:1
 msgid "{flights} from {airport}"
-msgstr "{flights} {airport}"
+msgstr "{flights} {airport} reptérről"
 
 #: skylines/templates/flights/nav.html:14
 msgid "All Flights"
@@ -764,7 +761,7 @@ msgstr "Nem"
 
 #: skylines/templates/master/page.html:37
 msgid "The XCSoar Project"
-msgstr "Az XCSoar Projekt"
+msgstr "XCSoar Projekt"
 
 #: skylines/templates/master/page.html:38
 msgid "Imprint"
@@ -851,7 +848,7 @@ msgstr "Top 20"
 #: skylines/templates/ranking/clubs.html:20
 #: skylines/templates/ranking/pilots.html:21
 msgid "Total Score"
-msgstr "Pontok összesen"
+msgstr "Összpontszám"
 
 #: skylines/templates/ranking/layout.html:28
 #: skylines/templates/statistics/pilots-table.html:12
@@ -865,7 +862,7 @@ msgstr "Repülőterek"
 
 #: skylines/templates/snippets/flash.html:26
 msgid "Warning!"
-msgstr "Vigyázat!"
+msgstr "Figyelem!"
 
 #: skylines/templates/snippets/flash.html:27
 msgid "Error!"
@@ -898,7 +895,7 @@ msgstr "Repült idő"
 #: skylines/templates/statistics/duration-table.html:33
 #: skylines/templates/users/view.html:221
 msgid "Hours"
-msgstr "Órák"
+msgstr "Óra"
 
 #: skylines/templates/tracking/info.html:1 skylines/templates/tracking/list.html:1
 #: skylines/templates/tracking/map.html:1 skylines/templates/tracking/view.html:1
@@ -976,9 +973,7 @@ msgstr "Live Track-jeid"
 #: skylines/templates/tracking/info.html:53
 msgid "You have to [1:login] to see you own personal Live Tracking key."
 msgstr ""
-"You have to [1:login] to see you own personal Live Tracking key.\r\n"
-"Be kell jelentkezned [1:login] a saját személyes Live Tracking kulcsod "
-"megtekintéséhez."
+"[1:Jelentkezz] be a saját személyes Live Tracking kulcsod megtekintéséhez."
 
 #: skylines/templates/tracking/info.html:58
 msgid "XCSoar"
@@ -1068,23 +1063,23 @@ msgstr "További repülés feltöltése"
 #: skylines/templates/users/change_club.html:1
 #: skylines/templates/users/change_club.html:18
 msgid "Change Club"
-msgstr "Egyesület módosítása"
+msgstr "Klub módosítása"
 
 #: skylines/templates/users/change_club.html:22
 msgid "Select Club"
-msgstr "Egyesület választása"
+msgstr "Klub választása"
 
 #: skylines/templates/users/change_club.html:24
 msgid "Select your primary club:"
-msgstr "Válaszd ki az elsődleges egyesületed:"
+msgstr "Válaszd ki az elsődleges klubod:"
 
 #: skylines/templates/users/change_club.html:30
 msgid "Register Club"
-msgstr "Egyesület regisztrálás"
+msgstr "Klub regisztrálás"
 
 #: skylines/templates/users/change_club.html:32
 msgid "If your club doesn't exist yet in Skylines, create it:"
-msgstr "Ha az egyesületed még nincs jelen, akkor hozd létre:"
+msgstr "Ha a klubod még nincs jelen, akkor hozd létre:"
 
 #: skylines/templates/users/list.html:1
 msgid "Users"
