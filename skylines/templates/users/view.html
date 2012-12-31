@@ -1,4 +1,5 @@
 <?python
+from operator import attrgetter
 from tg.i18n import ungettext
 from skylines.lib.formatter.units import format_distance, format_speed
 
@@ -145,7 +146,7 @@ def add_locations(locations):
       <div class="span12" py:if="user.following">
         <h2>Following</h2>
         <ul class="row-fluid">
-          <li class="span3" py:for="following in user.following">
+          <li class="span3" py:for="following in sorted(user.following, key=attrgetter('destination.display_name'))">
             <a href="/users/${following.destination_id}/"
                py:content="following.destination">
               Following Name
@@ -157,7 +158,7 @@ def add_locations(locations):
       <div class="span12" py:if="user.followers">
         <h2>Followers</h2>
         <ul class="row-fluid">
-          <li class="span3" py:for="follower in user.followers">
+          <li class="span3" py:for="follower in  sorted(user.followers, key=attrgetter('source.display_name'))">
             <a href="/users/${follower.source_id}/"
                py:content="follower.source">
               Follower Name
