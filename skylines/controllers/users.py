@@ -500,7 +500,7 @@ class UsersController(BaseController):
                     raise HTTPNotFound
 
             return dict(page='users', form=recover_password_form,
-                        values=dict(key=key))
+                        values=dict(key='%x' % key))
 
     @expose()
     @validate(form=recover_email_form, error_handler=recover)
