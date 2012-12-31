@@ -33,7 +33,7 @@ FLAG_ENL = 0x40
 TRAFFIC_FLAG_FOLLOWEES = 0x1
 TRAFFIC_FLAG_CLUB = 0x2
 
-class TrackingServer(DatagramProtocol):
+class TrackingProtocol(DatagramProtocol):
     def pingReceived(self, host, port, key, payload):
         if len(payload) != 8: return
         id, reserved, reserved2 = struct.unpack('!HHI', payload)

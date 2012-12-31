@@ -27,6 +27,6 @@ if __name__ == '__main__':
     log.startLogging(sys.stdout)
 
     from twisted.internet import reactor
-    from skylines.tracking.server import TrackingServer
-    reactor.listenUDP(5597, TrackingServer())
+    from skylines.tracking import TrackingProtocol
+    reactor.listenUDP(5597, TrackingProtocol())
     reactor.run()
