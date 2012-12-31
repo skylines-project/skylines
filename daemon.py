@@ -9,6 +9,7 @@ import os
 import argparse
 from paste.deploy.loadwsgi import appconfig
 from skylines.config.environment import load_environment
+from skylines.tracking import Server
 
 sys.path.append(os.path.dirname(sys.argv[0]))
 
@@ -23,10 +24,4 @@ conf = appconfig('config:' + os.path.abspath(args.conf_path))
 load_environment(conf.global_conf, conf.local_conf)
 
 if __name__ == '__main__':
-    from twisted.python import log
-    log.startLogging(sys.stdout)
-
-    from twisted.internet import reactor
-    from skylines.tracking import TrackingProtocol
-    reactor.listenUDP(5597, TrackingProtocol())
-    reactor.run()
+    Server().run()
