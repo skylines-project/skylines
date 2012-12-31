@@ -4,7 +4,7 @@ from tg import expose, validate, redirect, require, request, config, flash, cach
 from tg.i18n import ugettext as _, ungettext, lazy_ugettext as l_
 import smtplib
 import email
-from webob.exc import HTTPNotFound, HTTPForbidden
+from webob.exc import HTTPNotFound, HTTPForbidden, HTTPServiceUnavailable
 from sprox.formbase import AddRecordForm, EditableForm, Field
 from sprox.widgets import PropertySingleSelectField
 from formencode import Schema, All
@@ -227,11 +227,16 @@ The SkyLines Team
     msg['To'] = user.email_address.encode('ascii')
     msg['Date'] = email.Utils.formatdate(localtime=1)
 
-    smtp = smtplib.SMTP(config.get('smtp_server', 'localhost'))
-    smtp.ehlo()
-    smtp.sendmail(config.get('email_from', 'skylines@xcsoar.org').encode('ascii'),
-                  user.email_address.encode('ascii'), msg.as_string())
-    smtp.quit()
+    try:
+        smtp = smtplib.SMTP(config.get('smtp_server', 'localhost'))
+        smtp.ehlo()
+        smtp.sendmail(config.get('email_from', 'skylines@xcsoar.org').encode('ascii'),
+                      user.email_address.encode('ascii'), msg.as_string())
+        smtp.quit()
+    except:
+        raise HTTPServiceUnavailable(explanation=_(
+            "The mail server is currently not reachable. "
+            "Please try again later or contact the developers."))
 
 
 class UserController(BaseController):
