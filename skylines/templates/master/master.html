@@ -31,10 +31,12 @@
     <link rel='shortcut icon' href='/favicon.ico' type='image/x-icon' />
     <link rel='shortcut' href='/favicon.png' type='image/png' />
 
-    <link rel="stylesheet" href="/css/bootstrap.min.css" />
     <link rel="stylesheet" href="/static/fontawesome/css/font-awesome.css" />
-    <link rel="stylesheet" href="/css/font-awesome.css" />
-    <link rel="stylesheet" type="text/css" href="/css/style.css" />
+
+    <py:for each="url in g.assets['css-all'].urls()">
+      <link rel="stylesheet" type="text/css" href="${url}"/>
+    </py:for>
+
     <script type="text/javascript" src="/static/jquery/jquery.js"></script>
     <script type="text/javascript" src="/static/bootstrap/js/bootstrap-dropdown.js"></script>
     <meta py:replace="select('*')"/>

@@ -1,0 +1,7 @@
+css-all:
+    filters: cssmin
+    output: skylines-%(version)s.css
+    contents:
+        - css/bootstrap.min.css
+        - css/font-awesome.css
+        - css/style.css
