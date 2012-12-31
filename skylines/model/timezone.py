@@ -19,6 +19,9 @@ class TimeZone(DeclarativeBase):
     def __unicode__(self):
         return self.tzid
 
+    def __repr__(self):
+        return ('<AircraftModel: id=%d tzid=\'%s\'>' % (self.id, self.tzid)).encode('utf-8')
+
     @classmethod
     def by_location(cls, location):
         location = func.ST_MakePoint(location.longitude, location.latitude)

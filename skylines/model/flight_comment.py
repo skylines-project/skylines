@@ -25,4 +25,7 @@ class FlightComment(DeclarativeBase):
     user_id = Column(Integer, ForeignKey('tg_user.id', ondelete='SET NULL'))
     user = relation('User', primaryjoin=(user_id == User.id))
 
+    def __repr__(self):
+        return ('<FlightComment: id=%d user_id=%d flight_id=%d>' % (self.id, self.user_id, self.flight_id)).encode('utf-8')
+
     text = Column(Unicode, nullable=False)

@@ -55,6 +55,9 @@ class Notification(DeclarativeBase):
     flight_comment = relation('FlightComment',
                               primaryjoin=(flight_comment_id == FlightComment.id))
 
+    def __repr__(self):
+        return ('<Notification: id=%d type=%d>' % (self.id, self.type)).encode('utf-8')
+
     def mark_read(self):
         self.time_read = datetime.utcnow()
 

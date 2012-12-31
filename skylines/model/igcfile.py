@@ -30,6 +30,9 @@ class IGCFile(DeclarativeBase):
     competition_id = Column(Unicode(5))
     model = Column(Unicode(64))
 
+    def __repr__(self):
+        return ('<IGCFile: id=%d filename=\'%s\'>' % (self.id, self.filename)).encode('utf-8')
+
     @classmethod
     def by_md5(cls, _md5):
         return DBSession.query(cls).filter_by(md5=_md5).first()

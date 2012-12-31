@@ -66,6 +66,9 @@ class Flight(DeclarativeBase):
 
     needs_analysis = Column(Boolean, nullable=False, default=True)
 
+    def __repr__(self):
+        return ('<Flight: id=%d>' % self.id).encode('utf-8')
+
     @hybrid_property
     def duration(self):
         return self.landing_time - self.takeoff_time

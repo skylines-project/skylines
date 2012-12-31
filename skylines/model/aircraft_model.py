@@ -24,6 +24,9 @@ class AircraftModel(DeclarativeBase):
     def __unicode__(self):
         return self.name
 
+    def __repr__(self):
+        return ('<AircraftModel: id=%d name=\'%s\'>' % (self.id, self.name)).encode('utf-8')
+
     def is_writable(self, identity):
         return identity and 'manage' in identity['permissions']
 

@@ -31,6 +31,9 @@ class Club(DeclarativeBase):
     def __unicode__(self):
         return self.name
 
+    def __repr__(self):
+        return ('<Club: id=%d name=\'%s\'>' % (self.id, self.name)).encode('utf-8')
+
     def is_writable(self, identity):
         return identity and \
                (self.id == identity['user'].club_id or

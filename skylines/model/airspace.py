@@ -23,5 +23,8 @@ class Airspace(DeclarativeBase):
     top = Column(String(30), nullable=False)
     country_code = Column(String(2), nullable=False)
 
+    def __repr__(self):
+        return ('<Airspace: id=%d name=\'%s\'>' % (self.id, self.name)).encode('utf-8')
+
 
 GeometryDDL(Airspace.__table__)

@@ -38,6 +38,9 @@ class TrackingFix(DeclarativeBase):
 
     ip = Column(INET)
 
+    def __repr__(self):
+        return ('<TrackingFix: id=%d time=\'%s\'>' % (self.id, self.time)).encode('utf-8')
+
     @property
     def location(self):
         if self.location_wkt is None:
