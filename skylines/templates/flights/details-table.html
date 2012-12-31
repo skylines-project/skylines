@@ -24,13 +24,10 @@ from skylines.lib.formatter.units import format_distance, format_speed
         /* <![CDATA[ */
         $(function() {
           $("a.share").popover({
-            trigger: 'manual',
+            trigger: 'click',
             content: '<input value="' + getShareUrl('${request.url}') + '" type="text" style="width: 95%;">',
             title: '${_("Spread the word")}',
             html: true
-          }).click(function(e) {
-            e.preventDefault();
-            $(this).popover('toggle');
           });
         });
         /* ]]> */
