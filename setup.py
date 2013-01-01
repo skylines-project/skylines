@@ -52,6 +52,7 @@ install_requires = [
     "webassets",
     "pyyaml",
     "cssmin",
+    "jsmin",
 ]
 
 if sys.version_info[:2] == (2, 4):

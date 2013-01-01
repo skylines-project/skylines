@@ -5,3 +5,12 @@ css-all:
         - css/bootstrap.min.css
         - css/font-awesome.css
         - css/style.css
+
+js-flight:
+    filters: jsmin
+    output: flight-%(version)s.js
+    contents:
+        - js/general.js
+        - js/units.js
+        - js/map.js
+        - js/flight.js

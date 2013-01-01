@@ -24,10 +24,9 @@ tagline_link_text = pilot
 <head>
   <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" py:if="False"/>
 
-  <script type="text/javascript" src="/js/general.js"></script>
-  <script type="text/javascript" src="/js/units.js"></script>
-  <script type="text/javascript" src="/js/map.js"></script>
-  <script type="text/javascript" src="/js/flight.js"></script>
+  <py:for each="url in g.assets['js-flight'].urls()">
+    <script type="text/javascript" src="${url}"></script>
+  </py:for>
   <script type="text/javascript" src="/js/tracking.js"></script>
 
   <script type="text/javascript">
