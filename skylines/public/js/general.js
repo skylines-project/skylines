@@ -133,7 +133,7 @@ function pinButton(element, sfid) {
 function getShareUrl(url) {
   var pinnedFlights = getPinnedFlights();
 
-  var url_re = /(.*?)\/([\d,]{1,})\/(.*)/
+  var url_re = /(.*?)\/([\d,]{1,})\/(.*)/;
   var url_split = url_re.exec(url);
 
   ids = url_split[2].split(',').concat(pinnedFlights);
