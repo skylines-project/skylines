@@ -37,7 +37,10 @@
       <link rel="stylesheet" type="text/css" href="${url}"/>
     </py:for>
 
-    <script type="text/javascript" src="/js/jQuery/jquery.js"></script>
+    <py:for each="url in g.assets['js-all'].urls()">
+      <script type="text/javascript" src="${url}"></script>
+    </py:for>
+
     <script type="text/javascript" src="/static/bootstrap/js/bootstrap-dropdown.js"></script>
     <meta py:replace="select('*')"/>
 

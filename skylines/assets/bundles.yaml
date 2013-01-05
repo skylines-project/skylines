@@ -14,6 +14,16 @@ css-openlayers:
         - css/OpenLayers.css
         - css/SimpleLayerSwitcher.css
 
+js-all:
+    filters: jsmin
+    output: skylines-%(version)s.js
+    contents:
+        - js/jQuery/jquery.js
+        - js/jQuery/jquery.cookie.js
+        - js/jQuery/jquery.timeago.js
+        - js/general.js
+        - js/jQuery/bootstrap-datepicker.js
+
 js-openlayers:
     filters: jsmin
     output: ol-%(version)s.js
@@ -25,7 +35,6 @@ js-flight:
     filters: jsmin
     output: flight-%(version)s.js
     contents:
-        - js/general.js
         - js/units.js
         - js/map.js
         - js/flight.js
