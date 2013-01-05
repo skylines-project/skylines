@@ -1,10 +1,11 @@
 css-all:
-    filters: cssmin
+    filters: cssmin, cssrewrite
     output: skylines-%(version)s.css
     contents:
         - css/bootstrap.min.css
         - css/font-awesome.css
         - css/style.css
+        - images/flags.css
 
 js-flight:
     filters: jsmin
