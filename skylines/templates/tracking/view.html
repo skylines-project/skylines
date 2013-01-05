@@ -27,7 +27,9 @@ tagline_link_text = pilot
   <py:for each="url in g.assets['js-flight'].urls()">
     <script type="text/javascript" src="${url}"></script>
   </py:for>
-  <script type="text/javascript" src="/js/tracking.js"></script>
+  <py:for each="url in g.assets['js-tracking'].urls()">
+    <script type="text/javascript" src="${url}"></script>
+  </py:for>
 
   <script type="text/javascript">
     /* <![CDATA[ */

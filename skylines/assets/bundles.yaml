@@ -29,3 +29,9 @@ js-flight:
         - js/units.js
         - js/map.js
         - js/flight.js
+
+js-tracking:
+    filters: jsmin
+    output: tracking-%(version)s.js
+    contents:
+        - js/tracking.js
