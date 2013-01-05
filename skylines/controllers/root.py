@@ -55,12 +55,12 @@ class RootController(BaseController):
         mapproxy = WSGIAppController(mapproxy.make_wsgi_app(config.get('skylines.mapproxy')))
 
     @expose()
-    def index(self):
+    def index(self, **kw):
         """Handle the front-page."""
         redirect('/flights/today')
 
     @expose('skylines.templates.about')
-    def about(self):
+    def about(self, **kw):
         """Handle the 'about' page."""
         return dict()
 
@@ -74,7 +74,7 @@ class RootController(BaseController):
             redirect(request.referrer)
 
     @expose('skylines.templates.login')
-    def login(self, came_from=None):
+    def login(self, came_from=None, **kw):
         """Start the user login."""
         if not came_from:
             if request.referrer:
@@ -85,7 +85,7 @@ class RootController(BaseController):
         return dict(page='login', came_from=came_from)
 
     @expose()
-    def post_login(self, came_from=None):
+    def post_login(self, came_from=None, **kw):
         """
         Redirect the user to the initially requested page on successful
         authentication or redirect her back to the login page if login failed.
@@ -108,7 +108,7 @@ class RootController(BaseController):
         redirect(came_from)
 
     @expose()
-    def post_logout(self, came_from=None):
+    def post_logout(self, came_from=None, **kw):
         """
         Redirect the user to the initially requested page on logout and say
         goodbye as well.
@@ -125,6 +125,6 @@ class RootController(BaseController):
 
     @expose()
     @require(Any(not_anonymous(), msg='Please login to see this page!'))
-    def settings(self):
+    def settings(self, **kw):
         """Only for compatibility with old bookmarks."""
         redirect('/users/' + str(request.identity['user'].id))
