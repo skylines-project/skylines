@@ -1,14 +1,14 @@
 # Translations template for SkyLines.
-# Copyright (C) 2012 ORGANIZATION
+# Copyright (C) 2013 ORGANIZATION
 # This file is distributed under the same license as the SkyLines project.
-# FIRST AUTHOR <EMAIL@ADDRESS>, 2012.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2013.
 #
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: SkyLines 0.1\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2012-11-17 16:04+0100\n"
+"POT-Creation-Date: 2013-01-05 11:51+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,9 +17,9 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 0.9.6\n"
 
-#: skylines/controllers/clubs.py:24 skylines/controllers/clubs.py:40
-#: skylines/controllers/users.py:96 skylines/controllers/users.py:115
-#: skylines/controllers/users.py:145 skylines/templates/clubs/list.html:22
+#: skylines/controllers/clubs.py:25 skylines/controllers/clubs.py:43
+#: skylines/controllers/users.py:98 skylines/controllers/users.py:118
+#: skylines/controllers/users.py:154 skylines/templates/clubs/list.html:22
 #: skylines/templates/clubs/view.html:24
 #: skylines/templates/ranking/airports.html:19
 #: skylines/templates/ranking/clubs.html:18
@@ -28,95 +28,95 @@ msgstr ""
 msgid "Name"
 msgstr ""
 
-#: skylines/controllers/clubs.py:25 skylines/templates/clubs/view.html:29
+#: skylines/controllers/clubs.py:26 skylines/templates/clubs/view.html:29
 msgid "Website"
 msgstr ""
 
-#: skylines/controllers/clubs.py:37 skylines/controllers/users.py:112
-#: skylines/controllers/users.py:141 skylines/controllers/users.py:162
+#: skylines/controllers/clubs.py:42 skylines/controllers/users.py:117
+#: skylines/controllers/users.py:153 skylines/controllers/users.py:186
 msgid "eMail Address"
 msgstr ""
 
-#: skylines/controllers/clubs.py:60
+#: skylines/controllers/clubs.py:68
 msgid "Edit Club"
 msgstr ""
 
-#: skylines/controllers/clubs.py:85 skylines/templates/clubs/pilots.html:27
+#: skylines/controllers/clubs.py:93 skylines/templates/clubs/pilots.html:27
 msgid "Create Pilot"
 msgstr ""
 
-#: skylines/controllers/flight.py:48 skylines/controllers/upload.py:60
-#: skylines/templates/flights/details-table.html:145
+#: skylines/controllers/flight.py:49 skylines/controllers/upload.py:60
+#: skylines/templates/flights/details-table.html:150
 #: skylines/templates/flights/flights-table.html:20
 #: skylines/templates/tracking/list.html:28
 #: skylines/templates/tracking/view.html:102
 msgid "Pilot"
 msgstr ""
 
-#: skylines/controllers/flight.py:49
+#: skylines/controllers/flight.py:50
 msgid "Co-Pilot"
 msgstr ""
 
-#: skylines/controllers/flight.py:60 skylines/templates/upload/result.html:36
+#: skylines/controllers/flight.py:61 skylines/templates/upload/result.html:36
 msgid "Aircraft Model"
 msgstr ""
 
-#: skylines/controllers/flight.py:61 skylines/templates/upload/result.html:37
+#: skylines/controllers/flight.py:62 skylines/templates/upload/result.html:37
 msgid "Aircraft Registration"
 msgstr ""
 
-#: skylines/controllers/flight.py:62 skylines/templates/upload/result.html:38
+#: skylines/controllers/flight.py:63 skylines/templates/upload/result.html:38
 msgid "Competition Number"
 msgstr ""
 
-#: skylines/controllers/flight.py:123
+#: skylines/controllers/flight.py:124
 msgid "Left"
 msgstr ""
 
-#: skylines/controllers/flight.py:124
+#: skylines/controllers/flight.py:125
 msgid "Mixed"
 msgstr ""
 
-#: skylines/controllers/flight.py:125
+#: skylines/controllers/flight.py:126
 msgid "Right"
 msgstr ""
 
-#: skylines/controllers/flight.py:126
+#: skylines/controllers/flight.py:127
 #: skylines/templates/statistics/distance-table.html:36
 #: skylines/templates/statistics/duration-table.html:32
 #: skylines/templates/statistics/flights-table.html:26
 msgid "Total"
 msgstr ""
 
-#: skylines/controllers/flight.py:129
+#: skylines/controllers/flight.py:130
 msgid "Powered"
 msgstr ""
 
-#: skylines/controllers/flight.py:130
+#: skylines/controllers/flight.py:131
 msgid "Circling"
 msgstr ""
 
-#: skylines/controllers/flight.py:131
+#: skylines/controllers/flight.py:132
 msgid "Cruise"
 msgstr ""
 
-#: skylines/controllers/flight.py:238
+#: skylines/controllers/flight.py:239
 msgid "Select Pilot"
 msgstr ""
 
-#: skylines/controllers/flight.py:286
+#: skylines/controllers/flight.py:287
 msgid "Change Aircraft"
 msgstr ""
 
-#: skylines/controllers/flight.py:337
+#: skylines/controllers/flight.py:338
 msgid "Delete Flight"
 msgstr ""
 
-#: skylines/controllers/flight.py:338
+#: skylines/controllers/flight.py:339
 msgid "Are you sure you want to delete this flight?"
 msgstr ""
 
-#: skylines/controllers/flight.py:345
+#: skylines/controllers/flight.py:346
 msgid "You have to be logged in to post comments!"
 msgstr ""
 
@@ -195,86 +195,92 @@ msgstr ""
 msgid "Your flight(s) have been successfully updated."
 msgstr ""
 
-#: skylines/controllers/users.py:46 skylines/templates/users/view.html:95
+#: skylines/controllers/users.py:46 skylines/templates/users/view.html:96
 msgid "None"
 msgstr ""
 
 #: skylines/controllers/users.py:48 skylines/templates/tracking/view.html:123
-#: skylines/templates/users/view.html:96
+#: skylines/templates/users/view.html:97
 #, python-format
 msgid "%u minute"
 msgid_plural "%u minutes"
 msgstr[0] ""
 msgstr[1] ""
 
-#: skylines/controllers/users.py:86 skylines/controllers/users.py:116
-#: skylines/controllers/users.py:146
-#: skylines/templates/flights/details-table.html:163
+#: skylines/controllers/users.py:86 skylines/controllers/users.py:119
+#: skylines/controllers/users.py:155
+#: skylines/templates/flights/details-table.html:168
 #: skylines/templates/flights/flights-table.html:23
 #: skylines/templates/ranking/pilots.html:19
 #: skylines/templates/tracking/view.html:110
 #: skylines/templates/users/users-table.html:22
-#: skylines/templates/users/view.html:101 skylines/templates/users/view.html:112
+#: skylines/templates/users/view.html:102 skylines/templates/users/view.html:113
 msgid "Club"
 msgstr ""
 
-#: skylines/controllers/users.py:103
+#: skylines/controllers/users.py:107
 msgid "Passwords do not match"
 msgstr ""
 
-#: skylines/controllers/users.py:117 skylines/controllers/users.py:172
-#: skylines/controllers/users.py:182
+#: skylines/controllers/users.py:120 skylines/controllers/users.py:196
+#: skylines/controllers/users.py:206
 msgid "Password"
 msgstr ""
 
-#: skylines/controllers/users.py:119 skylines/controllers/users.py:173
-#: skylines/controllers/users.py:183
+#: skylines/controllers/users.py:121 skylines/controllers/users.py:197
+#: skylines/controllers/users.py:207
 msgid "Verify Password"
 msgstr ""
 
-#: skylines/controllers/users.py:147
+#: skylines/controllers/users.py:156
 msgid "Tracking Delay"
 msgstr ""
 
-#: skylines/controllers/users.py:148
-msgid "Units"
+#: skylines/controllers/users.py:157
+msgid "Unit Preset"
 msgstr ""
 
-#: skylines/controllers/users.py:149
+#: skylines/controllers/users.py:158
 msgid "Distance Unit"
 msgstr ""
 
-#: skylines/controllers/users.py:150
+#: skylines/controllers/users.py:159
 msgid "Speed Unit"
 msgstr ""
 
-#: skylines/controllers/users.py:151
+#: skylines/controllers/users.py:160
 msgid "Lift Unit"
 msgstr ""
 
-#: skylines/controllers/users.py:152
+#: skylines/controllers/users.py:161
 msgid "Altitude Unit"
 msgstr ""
 
-#: skylines/controllers/users.py:153
+#: skylines/controllers/users.py:162
 msgid "Eye Candy"
 msgstr ""
 
-#: skylines/controllers/users.py:158 skylines/controllers/users.py:166
-#: skylines/templates/users/view.html:126
+#: skylines/controllers/users.py:182 skylines/controllers/users.py:190
+#: skylines/templates/users/view.html:127
 msgid "Recover Password"
 msgstr ""
 
-#: skylines/controllers/users.py:177 skylines/controllers/users.py:230
-#: skylines/templates/users/view.html:123
+#: skylines/controllers/users.py:201 skylines/controllers/users.py:259
+#: skylines/templates/users/view.html:124
 msgid "Change Password"
 msgstr ""
 
-#: skylines/controllers/users.py:252
+#: skylines/controllers/users.py:237
+msgid ""
+"The mail server is currently not reachable. Please try again later or contact"
+" the developers."
+msgstr ""
+
+#: skylines/controllers/users.py:281
 msgid "Edit User"
 msgstr ""
 
-#: skylines/controllers/users.py:503
+#: skylines/controllers/users.py:532
 msgid "Password changed."
 msgstr ""
 
@@ -292,36 +298,36 @@ msgid ""
 "database."
 msgstr ""
 
-#: skylines/lib/units.py:31
-msgid "Custom"
-msgstr ""
-
-#: skylines/lib/units.py:33
-msgid "European (metric)"
-msgstr ""
-
-#: skylines/lib/units.py:40
-msgid "British (imperial, distance in km)"
-msgstr ""
-
-#: skylines/lib/units.py:47
-msgid "Australian (metric, imperial height)"
-msgstr ""
-
-#: skylines/lib/units.py:54
-msgid "American (imperial)"
-msgstr ""
-
-#: skylines/lib/helpers/__init__.py:22
+#: skylines/lib/formatter/flight.py:8
 msgid "{distance} on {date}"
 msgstr ""
 
-#: skylines/lib/helpers/__init__.py:29
+#: skylines/lib/formatter/flight.py:15
 msgid "{something} by {pilot_name}"
 msgstr ""
 
-#: skylines/lib/helpers/__init__.py:33
+#: skylines/lib/formatter/flight.py:19
 msgid "{something} by {pilot_name} and {co_pilot_name}"
+msgstr ""
+
+#: skylines/lib/formatter/units.py:31
+msgid "Custom"
+msgstr ""
+
+#: skylines/lib/formatter/units.py:33
+msgid "European (metric)"
+msgstr ""
+
+#: skylines/lib/formatter/units.py:40
+msgid "British (imperial, distance in km)"
+msgstr ""
+
+#: skylines/lib/formatter/units.py:47
+msgid "Australian (metric, imperial height)"
+msgstr ""
+
+#: skylines/lib/formatter/units.py:54
+msgid "American (imperial)"
 msgstr ""
 
 #: skylines/templates/about.html:1 skylines/templates/master/topbar.html:25
@@ -421,7 +427,7 @@ msgid "Clubs"
 msgstr ""
 
 #: skylines/templates/clubs/list.html:23
-#: skylines/templates/flights/details-table.html:184
+#: skylines/templates/flights/details-table.html:189
 #: skylines/templates/users/users-table.html:23
 msgid "Actions"
 msgstr ""
@@ -435,7 +441,7 @@ msgstr ""
 #: skylines/templates/statistics/flights-table.html:12
 #: skylines/templates/statistics/years.html:48
 #: skylines/templates/users/users-table.html:41
-#: skylines/templates/users/view.html:140 skylines/templates/users/view.html:206
+#: skylines/templates/users/view.html:141 skylines/templates/users/view.html:207
 msgid "Flights"
 msgstr ""
 
@@ -445,7 +451,7 @@ msgstr ""
 #: skylines/templates/statistics/years.html:1
 #: skylines/templates/statistics/years.html:35
 #: skylines/templates/users/users-table.html:42
-#: skylines/templates/users/view.html:141
+#: skylines/templates/users/view.html:142
 msgid "Statistics"
 msgstr ""
 
@@ -465,7 +471,7 @@ msgstr ""
 
 #: skylines/templates/clubs/view.html:49
 #: skylines/templates/users/users-table.html:43
-#: skylines/templates/users/view.html:121
+#: skylines/templates/users/view.html:122
 msgid "Edit"
 msgstr ""
 
@@ -477,111 +483,111 @@ msgstr ""
 msgid "Create new pilot"
 msgstr ""
 
-#: skylines/templates/flights/details-table.html:29
+#: skylines/templates/flights/details-table.html:36
 msgid "Spread the word"
 msgstr ""
 
-#: skylines/templates/flights/details-table.html:44
+#: skylines/templates/flights/details-table.html:49
 #: skylines/templates/flights/flights-table.html:18
-#: skylines/templates/users/view.html:175
+#: skylines/templates/users/view.html:176
 msgid "Date"
 msgstr ""
 
-#: skylines/templates/flights/details-table.html:50
+#: skylines/templates/flights/details-table.html:55
 msgid "Share"
 msgstr ""
 
-#: skylines/templates/flights/details-table.html:56
+#: skylines/templates/flights/details-table.html:61
 msgid "Take-off"
 msgstr ""
 
-#: skylines/templates/flights/details-table.html:61
-#: skylines/templates/flights/details-table.html:74
+#: skylines/templates/flights/details-table.html:66
+#: skylines/templates/flights/details-table.html:79
 msgid "at"
 msgstr ""
 
-#: skylines/templates/flights/details-table.html:69
+#: skylines/templates/flights/details-table.html:74
 msgid "Landing"
 msgstr ""
 
-#: skylines/templates/flights/details-table.html:81
-#: skylines/templates/flights/phases-table.html:13
-#: skylines/templates/flights/phases-table.html:36
-#: skylines/templates/flights/phases-table.html:66
+#: skylines/templates/flights/details-table.html:86
+#: skylines/templates/flights/phases-table.html:14
+#: skylines/templates/flights/phases-table.html:37
+#: skylines/templates/flights/phases-table.html:67
 msgid "Duration"
 msgstr ""
 
-#: skylines/templates/flights/details-table.html:87
+#: skylines/templates/flights/details-table.html:92
 #: skylines/templates/flights/flights-table.html:24
 msgid "Aircraft"
 msgstr ""
 
-#: skylines/templates/flights/details-table.html:90
-#: skylines/templates/flights/details-table.html:147
-#: skylines/templates/users/view.html:107 skylines/templates/users/view.html:115
+#: skylines/templates/flights/details-table.html:95
+#: skylines/templates/flights/details-table.html:152
+#: skylines/templates/users/view.html:108 skylines/templates/users/view.html:116
 msgid "Change"
 msgstr ""
 
-#: skylines/templates/flights/details-table.html:93
+#: skylines/templates/flights/details-table.html:98
 msgid "Handicap"
 msgstr ""
 
-#: skylines/templates/flights/details-table.html:100
+#: skylines/templates/flights/details-table.html:105
 msgid "Unknown"
 msgstr ""
 
-#: skylines/templates/flights/details-table.html:125
+#: skylines/templates/flights/details-table.html:130
 #: skylines/templates/flights/flights-table.html:19
 msgid "Score"
 msgstr ""
 
-#: skylines/templates/flights/details-table.html:127
+#: skylines/templates/flights/details-table.html:132
 #: skylines/templates/ranking/airports.html:33
 #: skylines/templates/ranking/clubs.html:31
 #: skylines/templates/ranking/pilots.html:37
 msgid "pt"
 msgstr ""
 
-#: skylines/templates/flights/details-table.html:129
+#: skylines/templates/flights/details-table.html:134
 msgid "OLC Distance"
 msgstr ""
 
-#: skylines/templates/flights/details-table.html:132
+#: skylines/templates/flights/details-table.html:137
 msgid "FAI Triangle Distance"
 msgstr ""
 
-#: skylines/templates/flights/details-table.html:139
+#: skylines/templates/flights/details-table.html:144
 msgid "Speed"
 msgstr ""
 
-#: skylines/templates/flights/details-table.html:157
+#: skylines/templates/flights/details-table.html:162
 msgid "[unspecified]"
 msgstr ""
 
-#: skylines/templates/flights/details-table.html:172
+#: skylines/templates/flights/details-table.html:177
 msgid "Uploaded"
 msgstr ""
 
 #. e.g. 'Uploaded: 18.01.2011 by PilotA'
-#: skylines/templates/flights/details-table.html:173
+#: skylines/templates/flights/details-table.html:178
 #, python-format
 msgid "%(datetime)s[1:] by %(user)s"
 msgstr ""
 
-#: skylines/templates/flights/details-table.html:178
+#: skylines/templates/flights/details-table.html:183
 msgid "Download"
 msgstr ""
 
-#: skylines/templates/flights/details-table.html:186
+#: skylines/templates/flights/details-table.html:191
 msgid "Delete"
 msgstr ""
 
 #: skylines/templates/flights/flights-table.html:21
-#: skylines/templates/flights/phases-table.html:38
-#: skylines/templates/flights/phases-table.html:68
+#: skylines/templates/flights/phases-table.html:39
+#: skylines/templates/flights/phases-table.html:69
 #: skylines/templates/statistics/distance-table.html:18
 #: skylines/templates/statistics/years.html:51
-#: skylines/templates/users/view.html:174 skylines/templates/users/view.html:210
+#: skylines/templates/users/view.html:175 skylines/templates/users/view.html:211
 msgid "Distance"
 msgstr ""
 
@@ -596,7 +602,7 @@ msgstr ""
 #: skylines/templates/flights/flights-table.html:85
 #: skylines/templates/notifications/notifications-table.html:115
 #: skylines/templates/tracking/list.html:52
-#: skylines/templates/upload/result.html:60 skylines/templates/users/view.html:189
+#: skylines/templates/upload/result.html:60 skylines/templates/users/view.html:190
 msgid "Show"
 msgstr ""
 
@@ -632,96 +638,96 @@ msgstr ""
 msgid "Pinned Flights"
 msgstr ""
 
-#: skylines/templates/flights/phases-table.html:14
-#: skylines/templates/flights/phases-table.html:37
-#: skylines/templates/flights/phases-table.html:67
+#: skylines/templates/flights/phases-table.html:15
+#: skylines/templates/flights/phases-table.html:38
+#: skylines/templates/flights/phases-table.html:68
 msgid "ΔH"
 msgstr ""
 
-#: skylines/templates/flights/phases-table.html:15
-#: skylines/templates/flights/phases-table.html:39
-#: skylines/templates/flights/phases-table.html:69
+#: skylines/templates/flights/phases-table.html:16
+#: skylines/templates/flights/phases-table.html:40
+#: skylines/templates/flights/phases-table.html:70
 msgid "Avg. vario"
 msgstr ""
 
-#: skylines/templates/flights/phases-table.html:16
+#: skylines/templates/flights/phases-table.html:17
 msgid "Thermals"
 msgstr ""
 
-#: skylines/templates/flights/phases-table.html:40
-#: skylines/templates/flights/phases-table.html:70
+#: skylines/templates/flights/phases-table.html:41
+#: skylines/templates/flights/phases-table.html:71
 msgid "Avg. speed"
 msgstr ""
 
-#: skylines/templates/flights/phases-table.html:41
-#: skylines/templates/flights/phases-table.html:71
+#: skylines/templates/flights/phases-table.html:42
+#: skylines/templates/flights/phases-table.html:72
 msgid "Glide Rate"
 msgstr ""
 
-#: skylines/templates/flights/phases-table.html:41
-#: skylines/templates/flights/phases-table.html:71
+#: skylines/templates/flights/phases-table.html:42
+#: skylines/templates/flights/phases-table.html:72
 msgid "GR"
 msgstr ""
 
-#: skylines/templates/flights/phases-table.html:42
+#: skylines/templates/flights/phases-table.html:43
 msgid "Glides"
 msgstr ""
 
-#: skylines/templates/flights/phases-table.html:64
+#: skylines/templates/flights/phases-table.html:65
 msgid "Phase"
 msgstr ""
 
-#: skylines/templates/flights/phases-table.html:65
+#: skylines/templates/flights/phases-table.html:66
 msgid "Start"
 msgstr ""
 
-#: skylines/templates/flights/view.html:105
+#: skylines/templates/flights/view.html:106
 msgid "View Flight"
 msgstr ""
 
-#: skylines/templates/flights/view.html:115
+#: skylines/templates/flights/view.html:116
 #: skylines/templates/tracking/view.html:138
 msgid "Full-screen map"
 msgstr ""
 
-#: skylines/templates/flights/view.html:118
+#: skylines/templates/flights/view.html:119
 msgid "Activate this to show the flight on top of other flights on the map"
 msgstr ""
 
-#: skylines/templates/flights/view.html:123
+#: skylines/templates/flights/view.html:124
 msgid "Detailed statistics"
 msgstr ""
 
-#: skylines/templates/flights/view.html:127
+#: skylines/templates/flights/view.html:128
 msgid "Comments"
 msgstr ""
 
-#: skylines/templates/flights/view.html:138
+#: skylines/templates/flights/view.html:139
 msgid "No comments yet."
 msgstr ""
 
-#: skylines/templates/flights/view.html:144
+#: skylines/templates/flights/view.html:145
 msgid "Add comment"
 msgstr ""
 
-#: skylines/templates/flights/view.html:155
+#: skylines/templates/flights/view.html:156
 msgid "An error occurred while decoding this flight."
 msgstr ""
 
-#: skylines/templates/flights/view.html:164
+#: skylines/templates/flights/view.html:165
 msgid "Circling performance"
 msgstr ""
 
-#: skylines/templates/flights/view.html:164
-#: skylines/templates/flights/view.html:169
+#: skylines/templates/flights/view.html:165
+#: skylines/templates/flights/view.html:170
 msgid "(summary)"
 msgstr ""
 
-#: skylines/templates/flights/view.html:169
+#: skylines/templates/flights/view.html:170
 msgid "Cruise performance"
 msgstr ""
 
-#: skylines/templates/flights/view.html:173
+#: skylines/templates/flights/view.html:174
 msgid "Phases"
 msgstr ""
 
@@ -857,13 +863,13 @@ msgstr ""
 
 #: skylines/templates/statistics/duration-table.html:14
 #: skylines/templates/statistics/years.html:54
-#: skylines/templates/users/view.html:218
+#: skylines/templates/users/view.html:219
 msgid "Flight Time"
 msgstr ""
 
 #: skylines/templates/statistics/duration-table.html:22
 #: skylines/templates/statistics/duration-table.html:33
-#: skylines/templates/users/view.html:221
+#: skylines/templates/users/view.html:222
 msgid "Hours"
 msgstr ""
 
@@ -921,7 +927,7 @@ msgstr ""
 msgid "Your Live Tracking key is:"
 msgstr ""
 
-#: skylines/templates/tracking/info.html:48 skylines/templates/users/view.html:87
+#: skylines/templates/tracking/info.html:48 skylines/templates/users/view.html:88
 msgid "Generate new key"
 msgstr ""
 
@@ -1033,59 +1039,59 @@ msgstr ""
 msgid "Users"
 msgstr ""
 
-#: skylines/templates/users/view.html:72
+#: skylines/templates/users/view.html:73
 msgid "Email"
 msgstr ""
 
-#: skylines/templates/users/view.html:77
+#: skylines/templates/users/view.html:78
 msgid "Display name"
 msgstr ""
 
-#: skylines/templates/users/view.html:82
+#: skylines/templates/users/view.html:83
 msgid "Tracking key"
 msgstr ""
 
-#: skylines/templates/users/view.html:85
+#: skylines/templates/users/view.html:86
 msgid "More Information"
 msgstr ""
 
-#: skylines/templates/users/view.html:93
+#: skylines/templates/users/view.html:94
 msgid "Tracking delay"
 msgstr ""
 
-#: skylines/templates/users/view.html:113
+#: skylines/templates/users/view.html:114
 msgid "[Unspecified]"
 msgstr ""
 
-#: skylines/templates/users/view.html:133
+#: skylines/templates/users/view.html:134
 msgid "Unfollow"
 msgstr ""
 
-#: skylines/templates/users/view.html:136
+#: skylines/templates/users/view.html:137
 msgid "Follow"
 msgstr ""
 
-#: skylines/templates/users/view.html:146
+#: skylines/templates/users/view.html:147
 msgid "Following"
 msgstr ""
 
-#: skylines/templates/users/view.html:158
+#: skylines/templates/users/view.html:159
 msgid "Followers"
 msgstr ""
 
-#: skylines/templates/users/view.html:170
+#: skylines/templates/users/view.html:171
 msgid "Distance Flights"
 msgstr ""
 
-#: skylines/templates/users/view.html:197
+#: skylines/templates/users/view.html:198
 msgid "Last 12 Months"
 msgstr ""
 
-#: skylines/templates/users/view.html:226
+#: skylines/templates/users/view.html:227
 msgid "Average Speed"
 msgstr ""
 
-#: skylines/templates/users/view.html:234
+#: skylines/templates/users/view.html:235
 msgid "Takeoff Locations"
 msgstr ""
 
