@@ -7,6 +7,20 @@ css-all:
         - css/style.css
         - images/flags.css
 
+css-openlayers:
+    filters: cssmin, cssrewrite
+    output: ol-%(version)s.css
+    contents:
+        - css/OpenLayers.css
+        - css/SimpleLayerSwitcher.css
+
+js-openlayers:
+    filters: jsmin
+    output: ol-%(version)s.js
+    contents:
+        - js/OpenLayers/OpenLayers.js
+        - js/OpenLayers/SimpleLayerSwitcher.js
+
 js-flight:
     filters: jsmin
     output: flight-%(version)s.js

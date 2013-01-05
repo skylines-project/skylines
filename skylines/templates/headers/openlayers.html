@@ -9,13 +9,16 @@
     <head py:attrs="select('@*')">
       ${select('*')}
       <py:if test="h.not_included_yet()">
-      <link href="/css/OpenLayers.css" rel="stylesheet" type="text/css" />
+      <py:for each="url in g.assets['css-openlayers'].urls()">
+        <link href="${url}" rel="stylesheet" type="text/css" />
+      </py:for>
+
+      <py:for each="url in g.assets['js-openlayers'].urls()">
+        <script type="text/javascript" src="${url}"></script>
+      </py:for>
+
       <link py:if="request.identity and request.identity['user'].eye_candy"
             href="/css/eye_candy/OpenLayers.css" rel="stylesheet" type="text/css" />
-      <link href="/css/SimpleLayerSwitcher.css" rel="stylesheet" type="text/css" />
-    
-      <script type="text/javascript" src="/js/OpenLayers/OpenLayers.js"></script>
-      <script type="text/javascript" src="/js/OpenLayers/SimpleLayerSwitcher.js"></script>
       </py:if>
     </head>
   </py:match>
