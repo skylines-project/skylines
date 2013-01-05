@@ -36,8 +36,10 @@ if airport:
 
   <head>
     <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" py:if="False"/>
-    <script src="/js/jQuery/jquery.dataTables.js" type="text/javascript" />
-    <script src="/js/jQuery/jquery.dataTables.ext.js" type="text/javascript" />
+
+    <py:for each="url in g.assets['js-datatables'].urls()">
+      <script type="text/javascript" src="${url}"></script>
+    </py:for>
 
     <link href="/css/dataTables.bootstrap.css" rel="stylesheet" type="text/css" />
 

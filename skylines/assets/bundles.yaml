@@ -25,6 +25,13 @@ js-all:
         - js/general.js
         - js/jQuery/bootstrap-datepicker.js
 
+js-datatables:
+    filters: jsmin
+    output: tables-%(version)s.js
+    contents:
+        - js/jQuery/jquery.dataTables.js
+        - js/jQuery/jquery.dataTables.ext.js
+
 js-openlayers:
     filters: jsmin
     output: ol-%(version)s.js
