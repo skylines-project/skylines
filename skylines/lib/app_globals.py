@@ -2,6 +2,9 @@
 
 """The application's Globals object"""
 
+from tg import config
+from skylines.assets import Environment
+
 __all__ = ['Globals']
 
 
@@ -14,5 +17,8 @@ class Globals(object):
     """
 
     def __init__(self):
-        """Do nothing, by default."""
-        pass
+        # Initialize webassets environment
+        self.assets = Environment(config)
+
+        # Load predefined bundles from YAML file
+        self.assets.load_bundles(config['webassets.bundles_file'])
