@@ -6,6 +6,7 @@ from tg.i18n import ugettext as _, lazy_ugettext as l_
 from tg.decorators import with_trailing_slash, without_trailing_slash
 from repoze.what.predicates import has_permission
 from webob.exc import HTTPNotFound, HTTPForbidden
+from formencode.validators import String
 from tw.forms.fields import TextField
 from sprox.formbase import EditableForm
 from sprox.widgets import PropertySingleSelectField
@@ -58,8 +59,8 @@ class SelectAircraftForm(EditableForm):
     __limit_fields__ = ['model', 'registration', 'competition_id']
     __base_widget_args__ = dict(action='select_aircraft')
     model = ModelSelectField('model', label_text=l_('Aircraft Model'))
-    registration = TextField('registration', label_text=l_('Aircraft Registration'))
-    competition_id = TextField('competition_id', label_text=l_('Competition Number'))
+    registration = TextField('registration', label_text=l_('Aircraft Registration'), maxlength=32, validator=String(max=32))
+    competition_id = TextField('competition_id', label_text=l_('Competition Number'), maxlength=5, validator=String(max=5))
 
 select_aircraft_form = SelectAircraftForm(DBSession)
 
