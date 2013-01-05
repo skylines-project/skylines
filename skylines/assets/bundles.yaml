@@ -5,6 +5,7 @@ css-all:
         - css/bootstrap.min.css
         - css/font-awesome.css
         - css/style.css
+        - css/datepicker.css
         - images/flags.css
 
 css-openlayers:
