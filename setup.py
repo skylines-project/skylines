@@ -37,6 +37,7 @@ install_requires = [
     "repoze.what >= 1.0.8",
     "repoze.who-friendlyform >= 1.0.4",
     "repoze.what-pylons >= 1.0",
+    "Pylons==1.0",
     "repoze.who==1.0.19",
     "tgext.admin >= 0.3.11",
     "repoze.what-quickstart>=1.0.9",
