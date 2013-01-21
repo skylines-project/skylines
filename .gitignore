@@ -20,3 +20,6 @@ htdocs
 data
 
 webassets
+
+# XCSoar tools
+bin
