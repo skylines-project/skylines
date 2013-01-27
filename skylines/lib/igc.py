@@ -20,9 +20,16 @@ def read_igc_headers(filename):
         return None
 
     igc_headers = dict()
+    a_record_found = False
 
     for i, line in enumerate(f):
-        if line[0] == 'A' and len(line) >= 4:
+        if not a_record_found:
+            if line[0] != 'A' or len(line) < 4:
+                # if the first record of the file is not an
+                # A record the IGC file is broken
+                return None
+
+            a_record_found = True
             igc_headers['manufacturer_id'] = line[1:4]
 
             if len(line) >= 7:
