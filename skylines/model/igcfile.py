@@ -51,6 +51,8 @@ class IGCFile(DeclarativeBase):
 
     def update_igc_headers(self):
         igc_headers = read_igc_headers(self.filename)
+        if igc_headers is None:
+            return
 
         if 'manufacturer_id' in igc_headers:
             self.logger_manufacturer_id = igc_headers['manufacturer_id']

@@ -17,7 +17,7 @@ def read_igc_headers(filename):
     try:
         f = file(path, 'r')
     except IOError:
-        return dict()
+        return None
 
     igc_headers = dict()
 
