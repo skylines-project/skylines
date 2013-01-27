@@ -21,8 +21,7 @@ def read_igc_headers(filename):
 
     igc_headers = dict()
 
-    i = 0
-    for line in f:
+    for i, line in enumerate(f):
         if line[0] == 'A' and len(line) >= 4:
             igc_headers['manufacturer_id'] = line[1:4]
 
@@ -39,7 +38,6 @@ def read_igc_headers(filename):
             igc_headers['cid'] = parse_pattern(hfcid_re, line)
 
         # don't read more than 100 lines, that should be enough
-        i += 1
         if i > 100:
             break
 
