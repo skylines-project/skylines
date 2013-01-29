@@ -7,7 +7,10 @@
 
 # Download XCsoar binaries with the -N flag,
 # which will substitute the files when the server has
-# a newer version
+# a newer version, and add +x permissions.
 wget -N --directory-prefix=bin http://download.xcsoar.org/skylines/bin/AnalyseFlight
+chmod +x bin/AnalyseFlight
+
 wget -N --directory-prefix=bin http://download.xcsoar.org/skylines/bin/FlightPath
+chmod +x bin/FlightPath
 
