@@ -2,6 +2,7 @@
 
 import os
 import sys
+import gzip
 from argparse import ArgumentParser
 from paste.deploy.loadwsgi import appconfig
 from skylines.assets import Environment
@@ -38,3 +39,12 @@ env.load_bundles(args.bundles_path)
 for bundle in env:
     print 'Generating bundle: {}'.format(bundle.output)
     bundle.build()
+
+    # Generate GZipped bundles for nginx static gzip serving
+    bundle_path = bundle.resolve_output()
+    compressed_path = bundle_path + '.gz'
+    print 'Compressing bundle: {} -> {}'.format(os.path.basename(bundle_path),
+                                                os.path.basename(compressed_path))
+    with open(bundle_path, 'rb') as f_in, \
+         gzip.open(compressed_path, 'wb') as f_out:
+        f_out.writelines(f_in)
