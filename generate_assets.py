@@ -36,5 +36,5 @@ env.load_bundles(args.bundles_path)
 
 # Generate the assets/bundles
 for bundle in env:
-    print 'Generating bundle: {}'.format(bundle)
+    print 'Generating bundle: {}'.format(bundle.output)
     bundle.build()
