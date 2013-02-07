@@ -310,18 +310,7 @@ class TrackingController(BaseController):
         if not pilot:
             raise HTTPNotFound('No pilot found with tracking key `{:X}`.'.format(key))
 
-        # Read and check the session id
-
-        if 'sid' not in kw:
-            raise HTTPBadRequest('`sid` parameter is missing.')
-
-        try:
-            session_id = int(kw['sid'])
-        except ValueError:
-            raise HTTPBadRequest('`sid` must be an integer.')
-
-        if session_id & 0x80000000 == 0:
-            raise HTTPNotImplemented('Unregistered users are not supported.')
+        session_id = self.lt24_parse_session_id(**kw)
 
         if session_id & 0x00FFFFFF != key & 0x00FFFFFF:
             raise HTTPBadRequest('The right three bytes must match the userid (tracking key).')
@@ -390,3 +379,19 @@ class TrackingController(BaseController):
             raise HTTPBadRequest('`user` must be the hexadecimal tracking key.')
 
         return key, User.by_tracking_key(key)
+
+    def lt24_parse_session_id(self, **kw):
+        """Read and check the session id"""
+
+        if 'sid' not in kw:
+            raise HTTPBadRequest('`sid` parameter is missing.')
+
+        try:
+            session_id = int(kw['sid'])
+        except ValueError:
+            raise HTTPBadRequest('`sid` must be an integer.')
+
+        if session_id & 0x80000000 == 0:
+            raise HTTPNotImplemented('Unregistered users are not supported.')
+
+        return session_id
