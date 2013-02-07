@@ -249,6 +249,9 @@ class TrackingController(BaseController):
         if leolive != 1:
             raise HTTPNotImplemented('The `Session aware protocol` is not implemented yet.')
 
+        return self.lt24_sessionless_fix(**kw)
+
+    def lt24_sessionless_fix(self, **kw):
         # Read and check the tracking key (supplied via 'user' field)
 
         if 'user' not in kw:
