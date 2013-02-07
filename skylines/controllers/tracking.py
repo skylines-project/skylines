@@ -264,7 +264,7 @@ class TrackingController(BaseController):
 
         fix = self.lt24_parse_fix(pilot.id, **kw)
         DBSession.add(fix)
-        return HTTPCreated()
+        return 'OK'
 
     def lt24_session_fix(self, **kw):
         session_id = self.lt24_parse_session_id(**kw)
@@ -274,7 +274,7 @@ class TrackingController(BaseController):
 
         fix = self.lt24_parse_fix(session.pilot_id, **kw)
         DBSession.add(fix)
-        return HTTPCreated()
+        return 'OK'
 
     def lt24_create_session(self, **kw):
         key, pilot = self.lt24_parse_user(**kw)
@@ -313,7 +313,7 @@ class TrackingController(BaseController):
                 raise HTTPBadRequest('`vtype` has to be a valid integer.')
 
         DBSession.add(session)
-        return HTTPCreated()
+        return 'OK'
 
     def lt24_finish_session(self, **kw):
         session_id = self.lt24_parse_session_id(**kw)
@@ -337,7 +337,7 @@ class TrackingController(BaseController):
                 raise HTTPBadRequest('`prid` must be an integer between 0 and 4.')
 
         DBSession.flush()
-        return HTTPOk()
+        return 'OK'
 
     def lt24_user_id(self, **kw):
         """
