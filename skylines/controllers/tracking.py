@@ -262,47 +262,8 @@ class TrackingController(BaseController):
         if not pilot:
             raise HTTPNotFound('No pilot found with tracking key `{:X}`.'.format(key))
 
-        fix = TrackingFix()
-        fix.ip = request.remote_addr
-        fix.pilot = pilot
+        fix = self.lt24_parse_fix(pilot.id, **kw)
 
-        # Time
-        if 'tm' not in kw:
-            raise HTTPBadRequest('`tm` (time) parameter is missing.')
-
-        try:
-            fix.time = datetime.utcfromtimestamp(int(kw['tm']))
-        except ValueError:
-            raise HTTPBadRequest('`tm` (time) has to be a POSIX timestamp.')
-
-        # Location
-        if 'lat' in kw and 'lon' in kw:
-            try:
-                fix.location = Location(latitude=float(kw['lat']),
-                                        longitude=float(kw['lon']))
-            except ValueError:
-                raise HTTPBadRequest('`lat` and `lon` have to be floating point value in degrees (WGS84).')
-
-        # Altitude
-        if 'alt' in kw:
-            try:
-                fix.altitude = int(kw['alt'])
-            except ValueError:
-                raise HTTPBadRequest('`alt` has to be an integer value in meters.')
-
-        # Speed
-        if 'sog' in kw:
-            try:
-                fix.ground_speed = int(kw['sog']) / 3.6
-            except ValueError:
-                raise HTTPBadRequest('`sog` (speed over ground) has to be an integer value in km/h.')
-
-        # Track
-        if 'cog' in kw:
-            try:
-                fix.track = int(kw['cog'])
-            except ValueError:
-                raise HTTPBadRequest('`cog` (course over ground) has to be an integer value in degrees.')
 
         DBSession.add(fix)
         return HTTPCreated()
@@ -421,3 +382,47 @@ class TrackingController(BaseController):
             raise HTTPNotImplemented('Unregistered users are not supported.')
 
         return session_id
+    def lt24_parse_fix(self, pilot_id, **kw):
+        fix = TrackingFix()
+        fix.ip = request.remote_addr
+        fix.pilot_id = pilot_id
+
+        # Time
+        if 'tm' not in kw:
+            raise HTTPBadRequest('`tm` (time) parameter is missing.')
+
+        try:
+            fix.time = datetime.utcfromtimestamp(int(kw['tm']))
+        except ValueError:
+            raise HTTPBadRequest('`tm` (time) has to be a POSIX timestamp.')
+
+        # Location
+        if 'lat' in kw and 'lon' in kw:
+            try:
+                fix.location = Location(latitude=float(kw['lat']),
+                                        longitude=float(kw['lon']))
+            except ValueError:
+                raise HTTPBadRequest('`lat` and `lon` have to be floating point value in degrees (WGS84).')
+
+        # Altitude
+        if 'alt' in kw:
+            try:
+                fix.altitude = int(kw['alt'])
+            except ValueError:
+                raise HTTPBadRequest('`alt` has to be an integer value in meters.')
+
+        # Speed
+        if 'sog' in kw:
+            try:
+                fix.ground_speed = int(kw['sog']) / 3.6
+            except ValueError:
+                raise HTTPBadRequest('`sog` (speed over ground) has to be an integer value in km/h.')
+
+        # Track
+        if 'cog' in kw:
+            try:
+                fix.track = int(kw['cog'])
+            except ValueError:
+                raise HTTPBadRequest('`cog` (course over ground) has to be an integer value in degrees.')
+
+        return fix
