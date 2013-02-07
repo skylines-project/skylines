@@ -69,6 +69,15 @@ class RootController(BaseController):
 
         return self.tracking.lt24(**kw)
 
+    @expose()
+    def client(self, **kw):
+        """LiveTrack24 tracking API"""
+
+        if request.path != '/client.php':
+            return HTTPNotFound()
+
+        return self.tracking.lt24_user_id(**kw)
+
     @expose('skylines.templates.about')
     def about(self, **kw):
         """Handle the 'about' page."""

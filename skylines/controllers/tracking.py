@@ -307,3 +307,34 @@ class TrackingController(BaseController):
 
         DBSession.add(fix)
         return HTTPCreated()
+
+    def lt24_user_id(self, **kw):
+        """
+        LiveTrack24 tracking API
+
+        see: http://www.livetrack24.com/wiki/LiveTracking%20API
+        """
+
+        # Read and check the request type
+
+        if 'op' not in kw:
+            raise HTTPBadRequest('`op` parameter is missing.')
+
+        if kw['op'] != 'login':
+            raise HTTPBadRequest('`op` parameter has to be `login`.')
+
+        # Read and check the tracking key (supplied via 'user' field)
+
+        if 'user' not in kw:
+            raise HTTPBadRequest('`user` parameter is missing.')
+
+        try:
+            key = int(kw['user'], 16)
+        except ValueError:
+            raise HTTPBadRequest('`user` must be the hexadecimal tracking key.')
+
+        pilot = User.by_tracking_key(key)
+        if not pilot:
+            return '0'
+
+        return '{:d}'.format(key)
