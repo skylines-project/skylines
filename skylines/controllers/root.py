@@ -147,3 +147,18 @@ class RootController(BaseController):
     def settings(self, **kw):
         """Only for compatibility with old bookmarks."""
         redirect('/users/' + str(request.identity['user'].id))
+
+    @expose()
+    def _lookup(self, *remainder):
+        """
+        Workaround: The production does not dispatch /track.php to the track
+        method, so we use the _lookup() method to dispatch it manually.
+        """
+
+        if request.path == '/track.php':
+            return self, ['track']
+
+        if request.path == '/client.php':
+            return self, ['client']
+
+        raise HTTPNotFound()
