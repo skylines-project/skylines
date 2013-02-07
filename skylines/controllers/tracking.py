@@ -5,7 +5,7 @@ from math import log
 from tg import expose, request, cache
 from tg.decorators import with_trailing_slash
 from webob.exc import HTTPNotFound, HTTPBadRequest, HTTPNotImplemented,\
-    HTTPCreated
+    HTTPCreated, HTTPOk
 from sqlalchemy import func, over
 from sqlalchemy.sql.expression import and_, desc, cast
 from sqlalchemy.orm import joinedload
@@ -251,6 +251,8 @@ class TrackingController(BaseController):
             return self.lt24_sessionless_fix(**kw)
         elif leolive == 2:
             return self.lt24_create_session(**kw)
+        elif leolive == 3:
+            return self.lt24_finish_session(**kw)
         else:
             raise HTTPNotImplemented('The `Session aware protocol` is not entirely implemented yet.')
 
@@ -343,6 +345,30 @@ class TrackingController(BaseController):
 
         DBSession.add(session)
         return HTTPCreated()
+
+    def lt24_finish_session(self, **kw):
+        session_id = self.lt24_parse_session_id(**kw)
+        session = TrackingSession.by_lt24_id(session_id)
+        if session is None:
+            raise HTTPNotFound('No open tracking session found with id `{d}`.'.format(session_id))
+
+        session.time_finished = datetime.utcnow()
+        session.ip_finished = request.remote_addr
+
+        # Pilot status
+        if 'prid' in kw:
+            try:
+                finish_status = int(kw['prid'])
+                if not (0 <= finish_status <= 4):
+                    raise ValueError()
+
+                session.finish_status = finish_status
+
+            except ValueError:
+                raise HTTPBadRequest('`prid` must be an integer between 0 and 4.')
+
+        DBSession.flush()
+        return HTTPOk()
 
     def lt24_user_id(self, **kw):
         """
