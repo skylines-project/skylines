@@ -253,8 +253,8 @@ class TrackingController(BaseController):
             return self.lt24_create_session(**kw)
         elif leolive == 3:
             return self.lt24_finish_session(**kw)
-        else:
-            raise HTTPNotImplemented('The `Session aware protocol` is not entirely implemented yet.')
+        elif leolive == 4:
+            return self.lt24_session_fix(**kw)
 
 
     def lt24_sessionless_fix(self, **kw):
@@ -263,8 +263,16 @@ class TrackingController(BaseController):
             raise HTTPNotFound('No pilot found with tracking key `{:X}`.'.format(key))
 
         fix = self.lt24_parse_fix(pilot.id, **kw)
+        DBSession.add(fix)
+        return HTTPCreated()
 
+    def lt24_session_fix(self, **kw):
+        session_id = self.lt24_parse_session_id(**kw)
+        session = TrackingSession.by_lt24_id(session_id)
+        if session is None:
+            raise HTTPNotFound('No open tracking session found with id `{d}`.'.format(session_id))
 
+        fix = self.lt24_parse_fix(session.pilot_id, **kw)
         DBSession.add(fix)
         return HTTPCreated()
 
@@ -382,6 +390,7 @@ class TrackingController(BaseController):
             raise HTTPNotImplemented('Unregistered users are not supported.')
 
         return session_id
+
     def lt24_parse_fix(self, pilot_id, **kw):
         fix = TrackingFix()
         fix.ip = request.remote_addr
