@@ -14,7 +14,8 @@ from skylines.controllers.base import BaseController
 from skylines.lib.dbutil import get_requested_record_list
 from skylines.lib.helpers import isoformat_utc
 from skylines.lib.decorators import jsonp
-from skylines.model import DBSession, User, TrackingFix, Airport, Location
+from skylines.model import DBSession, User, TrackingFix, TrackingSession, \
+    Airport, Location
 from skylinespolyencode import SkyLinesPolyEncoder
 
 
@@ -246,10 +247,13 @@ class TrackingController(BaseController):
         except ValueError:
             raise HTTPBadRequest('`leolive` must be an integer between 1 and 4.')
 
-        if leolive != 1:
-            raise HTTPNotImplemented('The `Session aware protocol` is not implemented yet.')
+        if leolive == 1:
+            return self.lt24_sessionless_fix(**kw)
+        elif leolive == 2:
+            return self.lt24_create_session(**kw)
+        else:
+            raise HTTPNotImplemented('The `Session aware protocol` is not entirely implemented yet.')
 
-        return self.lt24_sessionless_fix(**kw)
 
     def lt24_sessionless_fix(self, **kw):
         key, pilot = self.lt24_parse_user(**kw)
@@ -299,6 +303,56 @@ class TrackingController(BaseController):
                 raise HTTPBadRequest('`cog` (course over ground) has to be an integer value in degrees.')
 
         DBSession.add(fix)
+        return HTTPCreated()
+
+    def lt24_create_session(self, **kw):
+        key, pilot = self.lt24_parse_user(**kw)
+        if not pilot:
+            raise HTTPNotFound('No pilot found with tracking key `{:X}`.'.format(key))
+
+        # Read and check the session id
+
+        if 'sid' not in kw:
+            raise HTTPBadRequest('`sid` parameter is missing.')
+
+        try:
+            session_id = int(kw['sid'])
+        except ValueError:
+            raise HTTPBadRequest('`sid` must be an integer.')
+
+        if session_id & 0x80000000 == 0:
+            raise HTTPNotImplemented('Unregistered users are not supported.')
+
+        if session_id & 0x00FFFFFF != key & 0x00FFFFFF:
+            raise HTTPBadRequest('The right three bytes must match the userid (tracking key).')
+
+        session = TrackingSession()
+        session.pilot = pilot
+        session.lt24_id = session_id
+        session.ip_created = request.remote_addr
+
+        # Client application
+        if 'client' in kw:
+            session.client = kw['client'][:32]
+        if 'v' in kw:
+            session.client_version = kw['v'][:8]
+
+        # Device information
+        if 'phone' in kw:
+            session.device = kw['phone'][:32]
+        if 'gps' in kw:
+            session.gps_device = kw['gps'][:32]
+
+        # Aircraft model and type
+        if 'vname' in kw:
+            session.aircraft_model = kw['vname'][:64]
+        if 'vtype' in kw:
+            try:
+                session.aircraft_type = int(kw['vtype'])
+            except ValueError:
+                raise HTTPBadRequest('`vtype` has to be a valid integer.')
+
+        DBSession.add(session)
         return HTTPCreated()
 
     def lt24_user_id(self, **kw):
