@@ -252,17 +252,7 @@ class TrackingController(BaseController):
         return self.lt24_sessionless_fix(**kw)
 
     def lt24_sessionless_fix(self, **kw):
-        # Read and check the tracking key (supplied via 'user' field)
-
-        if 'user' not in kw:
-            raise HTTPBadRequest('`user` parameter is missing.')
-
-        try:
-            key = int(kw['user'], 16)
-        except ValueError:
-            raise HTTPBadRequest('`user` must be the hexadecimal tracking key.')
-
-        pilot = User.by_tracking_key(key)
+        key, pilot = self.lt24_parse_user(**kw)
         if not pilot:
             raise HTTPNotFound('No pilot found with tracking key `{:X}`.'.format(key))
 
@@ -328,6 +318,15 @@ class TrackingController(BaseController):
 
         # Read and check the tracking key (supplied via 'user' field)
 
+        key, pilot = self.lt24_parse_user(**kw)
+        if not pilot:
+            return '0'
+
+        return '{:d}'.format(key)
+
+    def lt24_parse_user(self, **kw):
+        """Read and check the tracking key (supplied via 'user' field)"""
+
         if 'user' not in kw:
             raise HTTPBadRequest('`user` parameter is missing.')
 
@@ -336,8 +335,4 @@ class TrackingController(BaseController):
         except ValueError:
             raise HTTPBadRequest('`user` must be the hexadecimal tracking key.')
 
-        pilot = User.by_tracking_key(key)
-        if not pilot:
-            return '0'
-
-        return '{:d}'.format(key)
+        return key, User.by_tracking_key(key)
