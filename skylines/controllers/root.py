@@ -9,6 +9,7 @@ from skylines import model
 from skylines.model import DBSession
 from tgext.admin.tgadminconfig import TGAdminConfig
 from tgext.admin.controller import AdminController
+from webob.exc import HTTPNotFound
 
 from skylines.controllers.base import BaseController
 from skylines.controllers.error import ErrorController
@@ -58,6 +59,15 @@ class RootController(BaseController):
     def index(self, **kw):
         """Handle the front-page."""
         redirect('/flights/today')
+
+    @expose()
+    def track(self, **kw):
+        """LiveTrack24 tracking API"""
+
+        if request.path != '/track.php':
+            return HTTPNotFound()
+
+        return self.tracking.lt24(**kw)
 
     @expose('skylines.templates.about')
     def about(self, **kw):

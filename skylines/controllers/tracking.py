@@ -4,7 +4,8 @@ from datetime import datetime, timedelta
 from math import log
 from tg import expose, request, cache
 from tg.decorators import with_trailing_slash
-from webob.exc import HTTPNotFound
+from webob.exc import HTTPNotFound, HTTPBadRequest, HTTPNotImplemented,\
+    HTTPCreated
 from sqlalchemy import func, over
 from sqlalchemy.sql.expression import and_, desc, cast
 from sqlalchemy.orm import joinedload
@@ -13,7 +14,7 @@ from skylines.controllers.base import BaseController
 from skylines.lib.dbutil import get_requested_record_list
 from skylines.lib.helpers import isoformat_utc
 from skylines.lib.decorators import jsonp
-from skylines.model import DBSession, User, TrackingFix, Airport
+from skylines.model import DBSession, User, TrackingFix, Airport, Location
 from skylinespolyencode import SkyLinesPolyEncoder
 
 
@@ -224,3 +225,85 @@ class TrackingController(BaseController):
                 .order_by(desc(TrackingFix.time))
 
         return query
+
+    def lt24(self, **kw):
+        """
+        LiveTrack24 tracking API
+
+        see: http://www.livetrack24.com/wiki/LiveTracking%20API
+        """
+
+        # Read and check the request type
+
+        if 'leolive' not in kw:
+            raise HTTPBadRequest('`leolive` parameter is missing.')
+
+        try:
+            leolive = int(kw['leolive'])
+            if not (1 <= leolive <= 4):
+                raise ValueError()
+
+        except ValueError:
+            raise HTTPBadRequest('`leolive` must be an integer between 1 and 4.')
+
+        if leolive != 1:
+            raise HTTPNotImplemented('The `Session aware protocol` is not implemented yet.')
+
+        # Read and check the tracking key (supplied via 'user' field)
+
+        if 'user' not in kw:
+            raise HTTPBadRequest('`user` parameter is missing.')
+
+        try:
+            key = int(kw['user'], 16)
+        except ValueError:
+            raise HTTPBadRequest('`user` must be the hexadecimal tracking key.')
+
+        pilot = User.by_tracking_key(key)
+        if not pilot:
+            raise HTTPNotFound('No pilot found with tracking key `{:X}`.'.format(key))
+
+        fix = TrackingFix()
+        fix.ip = request.remote_addr
+        fix.pilot = pilot
+
+        # Time
+        if 'tm' not in kw:
+            raise HTTPBadRequest('`tm` (time) parameter is missing.')
+
+        try:
+            fix.time = datetime.utcfromtimestamp(int(kw['tm']))
+        except ValueError:
+            raise HTTPBadRequest('`tm` (time) has to be a POSIX timestamp.')
+
+        # Location
+        if 'lat' in kw and 'lon' in kw:
+            try:
+                fix.location = Location(latitude=float(kw['lat']),
+                                        longitude=float(kw['lon']))
+            except ValueError:
+                raise HTTPBadRequest('`lat` and `lon` have to be floating point value in degrees (WGS84).')
+
+        # Altitude
+        if 'alt' in kw:
+            try:
+                fix.altitude = int(kw['alt'])
+            except ValueError:
+                raise HTTPBadRequest('`alt` has to be an integer value in meters.')
+
+        # Speed
+        if 'sog' in kw:
+            try:
+                fix.ground_speed = int(kw['sog']) / 3.6
+            except ValueError:
+                raise HTTPBadRequest('`sog` (speed over ground) has to be an integer value in km/h.')
+
+        # Track
+        if 'cog' in kw:
+            try:
+                fix.track = int(kw['cog'])
+            except ValueError:
+                raise HTTPBadRequest('`cog` (course over ground) has to be an integer value in degrees.')
+
+        DBSession.add(fix)
+        return HTTPCreated()
