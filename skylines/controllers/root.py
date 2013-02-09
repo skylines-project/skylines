@@ -67,7 +67,7 @@ class RootController(BaseController):
         if request.path != '/track.php':
             return HTTPNotFound()
 
-        return self.tracking.lt24(**kw)
+        return self.tracking.lt24.track(**kw)
 
     @expose()
     def client(self, **kw):
@@ -76,7 +76,7 @@ class RootController(BaseController):
         if request.path != '/client.php':
             return HTTPNotFound()
 
-        return self.tracking.lt24_user_id(**kw)
+        return self.tracking.lt24.client(**kw)
 
     @expose('skylines.templates.about')
     def about(self, **kw):
