@@ -4,8 +4,7 @@ from datetime import datetime, timedelta
 from math import log
 from tg import expose, request, cache
 from tg.decorators import with_trailing_slash
-from webob.exc import HTTPNotFound, HTTPBadRequest, HTTPNotImplemented,\
-    HTTPCreated, HTTPOk
+from webob.exc import HTTPNotFound, HTTPBadRequest, HTTPNotImplemented
 from sqlalchemy import func, over
 from sqlalchemy.sql.expression import and_, desc, cast
 from sqlalchemy.orm import joinedload
