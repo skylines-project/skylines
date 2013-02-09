@@ -4,9 +4,10 @@ from tg.i18n import ugettext as _, ungettext
 page = 'tracking'
 title = _('Live Tracking')
 
-tagline = 'of'
-tagline_link = '/users/{}/'.format(pilot.id)
-tagline_link_text = pilot
+if pilot is not None:
+    tagline = 'of'
+    tagline_link = '/users/{}/'.format(pilot.id)
+    tagline_link_text = pilot
 ?>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
