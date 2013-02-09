@@ -99,15 +99,15 @@ if pilot is not None:
       <div class="span4">
         <table class="table">
           <tbody>
-            <tr>
+            <tr py:if="pilot is not None">
               <th>Pilot</th>
               <td>
-                <a py:if="pilot" py:content="pilot" href="/users/${pilot.id}/">
+                <a py:content="pilot" href="/users/${pilot.id}/">
                   Pilot Name
                 </a>
               </td>
             </tr>
-            <tr py:if="pilot.club">
+            <tr py:if="pilot is not None and pilot.club">
               <th>Club</th>
               <td>
                 <a py:content="pilot.club" href="/clubs/${pilot.club_id}/">
@@ -115,7 +115,7 @@ if pilot is not None:
                 </a>
               </td>
             </tr>
-            <tr py:if="pilot.tracking_delay > 0">
+            <tr py:if="pilot is not None and pilot.tracking_delay > 0">
               <th>
                 <span rel="tooltip" title="This pilot chose to delay the display of his live tracks.">Delay</span>
               </th>
