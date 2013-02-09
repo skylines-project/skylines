@@ -21,12 +21,9 @@ class TrackingController(BaseController):
 
     @expose('skylines.templates.tracking.list')
     def index(self, **kw):
-        query = self.get_latest_fixes()
-
         na_cache = cache.get_cache('tracking.nearest_airport', expire=60 * 60)
 
-        tracks = []
-        for track in query.all():
+        def add_nearest_airport_data(track):
             def get_nearest_airport():
                 airport = Airport.by_location(track.location, None)
                 if airport is None:
@@ -36,7 +33,10 @@ class TrackingController(BaseController):
                 return airport, distance
 
             airport, distance = na_cache.get(key=track.id, createfunc=get_nearest_airport)
-            tracks.append([track, airport, distance])
+            return track, airport, distance
+
+        tracks = []
+        tracks.extend(map(add_nearest_airport_data, self.get_latest_fixes()))
 
         return dict(tracks=tracks)
 
