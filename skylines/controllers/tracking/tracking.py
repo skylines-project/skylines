@@ -9,7 +9,8 @@ from skylines.controllers.base import BaseController
 from skylines.lib.dbutil import get_requested_record_list
 from skylines.lib.helpers import isoformat_utc
 from skylines.lib.decorators import jsonp
-from skylines.model import DBSession, User, TrackingFix, Airport
+from skylines.model import DBSession, User, TrackingFix, ExternalTrackingFix, \
+    Airport
 from skylines.controllers.tracking import TrackController, \
     LiveTrack24Controller, ExternalTrackingController
 
@@ -81,6 +82,29 @@ class TrackingController(BaseController):
 
         return dict(fixes=fixes)
 
+    @expose()
+    @jsonp
+    def latest_external(self, **kw):
+        if not request.path.endswith('.json'):
+            raise HTTPNotFound
+
+        fixes = []
+        for fix in self.get_latest_external_fixes():
+            json = dict(type=fix.tracking_type,
+                        id=fix.tracking_id,
+                        time=isoformat_utc(fix.time),
+                        location=fix.location_wkt.geom_wkt)
+
+            optional_attributes = ['track', 'ground_speed', 'altitude', 'vario']
+            for attr in optional_attributes:
+                value = getattr(fix, attr)
+                if value is not None:
+                    json[attr] = value
+
+            fixes.append(json)
+
+        return dict(fixes=fixes)
+
     def get_latest_fixes(self, max_age=timedelta(hours=6), **kw):
         row_number = over(func.row_number(),
                           partition_by=TrackingFix.pilot_id,
@@ -101,5 +125,25 @@ class TrackingController(BaseController):
                 .filter(TrackingFix.id == subq.c.id) \
                 .filter(subq.c.row_number == 1) \
                 .order_by(desc(TrackingFix.time))
+
+        return query
+
+    def get_latest_external_fixes(self, max_age=timedelta(hours=6), **kw):
+        row_number = over(func.row_number(),
+                          partition_by=[ExternalTrackingFix.tracking_type,
+                                        ExternalTrackingFix.tracking_id],
+                          order_by=desc(ExternalTrackingFix.time))
+
+        subq = DBSession.query(ExternalTrackingFix.id,
+                               row_number.label('row_number')) \
+                .filter(ExternalTrackingFix.time >= datetime.utcnow() - max_age) \
+                .filter(ExternalTrackingFix.time <= datetime.utcnow()) \
+                .filter(ExternalTrackingFix.location_wkt != None) \
+                .subquery()
+
+        query = DBSession.query(ExternalTrackingFix) \
+                .filter(ExternalTrackingFix.id == subq.c.id) \
+                .filter(subq.c.row_number == 1) \
+                .order_by(desc(ExternalTrackingFix.time))
 
         return query
