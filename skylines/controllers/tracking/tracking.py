@@ -10,11 +10,13 @@ from skylines.lib.dbutil import get_requested_record_list
 from skylines.lib.helpers import isoformat_utc
 from skylines.lib.decorators import jsonp
 from skylines.model import DBSession, User, TrackingFix, Airport
-from skylines.controllers.tracking import TrackController, LiveTrack24Controller
+from skylines.controllers.tracking import TrackController, \
+    LiveTrack24Controller, ExternalTrackingController
 
 
 class TrackingController(BaseController):
     lt24 = LiveTrack24Controller()
+    external = ExternalTrackingController()
 
     @expose('skylines.templates.tracking.list')
     def index(self, **kw):
