@@ -41,7 +41,8 @@ class TrackingFix(DeclarativeBase):
     ip = Column(INET)
 
     def __repr__(self):
-        return ('<TrackingFix: id=%d time=\'%s\'>' % (self.id, self.time)).encode('utf-8')
+        return '<TrackingFix: id={} time=\'{}\'>' \
+               .format(self.id, self.time).encode('utf-8')
 
     @property
     def location(self):
