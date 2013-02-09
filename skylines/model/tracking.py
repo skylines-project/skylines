@@ -110,3 +110,72 @@ class TrackingSession(DeclarativeBase):
             query = query.filter_by(time_finished=None)
 
         return query.order_by(desc(cls.time_created)).first()
+
+
+class ExternalTrackingFix(DeclarativeBase):
+    """
+    A data point from an external tracking source like
+    a FLARM or a transponder signal receiver. The receiver is usually
+    mounted on the ground and not on board of an aircraft.
+    """
+
+    __tablename__ = 'external_tracking_fixes'
+
+    id = Column(Integer, autoincrement=True, primary_key=True)
+
+    # The type of tracking (0 = Flarm, 1 = Transponder)
+    tracking_type = Column(SmallInteger)
+
+    # e.g. Flarm ID
+    tracking_id = Column(Integer, nullable=False)
+
+    # The user account that owns the data (usually not the pilot)
+    owner_id = Column(Integer,
+                      ForeignKey('tg_user.id', use_alter=True,
+                                 name="tg_user.id"), nullable=False)
+
+    owner = relation('User', primaryjoin=(owner_id == User.id))
+
+    ip = Column(INET)
+
+    # Time in UTC
+    time = Column(DateTime, nullable=False, default=datetime.utcnow)
+
+    # Location in degrees (WGS84)
+    location_wkt = GeometryColumn('location', Point(2, wkt_internal=True),
+                                  comparator=PGComparator)
+
+    # Course over ground in degrees
+    track = Column(SmallInteger)
+
+    # Speed over ground in m/s
+    ground_speed = Column(Float)
+
+    # Altitude (MSL) in m
+    altitude = Column(SmallInteger)
+
+    # Vertical speed in m/s
+    vario = Column(Float)
+
+    # Type of the aircraft (as defined in FLARM dataport manual)
+    aircraft_type = Column(SmallInteger)
+
+    def __repr__(self):
+        return '<ExternalTrackingFix: id={} tracking_id={:X} time=\'{}\'>' \
+               .format(self.id, self.tracking_id, self.time).encode('utf-8')
+
+    @property
+    def location(self):
+        if self.location_wkt is None:
+            return None
+
+        coords = self.location_wkt.coords(DBSession)
+        return Location(latitude=coords[1], longitude=coords[0])
+
+    @location.setter
+    def location(self, location):
+        self.location_wkt = location.to_wkt()
+
+GeometryDDL(ExternalTrackingFix.__table__)
+Index('external_tracking_fixes_tracking_id_time',
+      ExternalTrackingFix.tracking_id, ExternalTrackingFix.time)
