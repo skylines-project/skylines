@@ -50,7 +50,7 @@ if pilot is not None:
       /* ]]> */
 
       <py:if test="trace">
-        addFlight(${pilot.id},
+        addFlight(${sfid},
           ${h.json.dumps(trace.encoded.points)},
           ${h.json.dumps(trace.encoded.levels)},
           ${trace.fixes.numLevels},

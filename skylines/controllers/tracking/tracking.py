@@ -37,6 +37,9 @@ class TrackingController(BaseController):
 
         tracks = []
         tracks.extend(map(add_nearest_airport_data, self.get_latest_fixes()))
+        tracks.extend(map(add_nearest_airport_data, self.get_latest_external_fixes()))
+
+        tracks = sorted(tracks, key=lambda fix: fix[0].time, reverse=True)
 
         return dict(tracks=tracks)
 
@@ -48,7 +51,7 @@ class TrackingController(BaseController):
             remainder = remainder[1:]
 
         pilots = get_requested_record_list(User, id)
-        controller = TrackController(pilots)
+        controller = TrackController(pilot=pilots)
         return controller, remainder
 
     @expose('skylines.templates.tracking.info')

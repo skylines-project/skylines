@@ -3,9 +3,21 @@ from tg import request, expose
 from webob.exc import HTTPNotFound, HTTPBadRequest, HTTPCreated
 from skylines.controllers.base import BaseController
 from skylines.model import DBSession, User, ExternalTrackingFix, Location
+from skylines.controllers.tracking.track import TrackController
 
 
 class ExternalTrackingController(BaseController):
+    @expose()
+    def _lookup(self, tracking_type, tracking_id, *remainder):
+        try:
+            tracking_type = int(tracking_type)
+            tracking_id = int(tracking_id)
+        except ValueError:
+            raise HTTPNotFound()
+
+        return TrackController(tracking_type=tracking_type,
+                               tracking_id=tracking_id), remainder
+
     @expose()
     def add(self, **kw):
         # Read and check the owner via tracking key
