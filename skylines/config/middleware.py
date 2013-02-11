@@ -4,8 +4,7 @@
 from skylines.config.app_cfg import base_config
 from skylines.config.environment import load_environment
 from skylines.config import i18n
-from skylines.middleware import (StaticRedirectionMiddleware, FilesMiddleware,
-                                 AssetsMiddleware)
+from skylines.middleware import FilesMiddleware, AssetsMiddleware
 from paste.cascade import Cascade
 
 
@@ -36,8 +35,7 @@ def make_app(global_conf, full_stack=True, **app_conf):
     """
 
     app = make_base_app(global_conf, full_stack=True, **app_conf)
-    app = Cascade([StaticRedirectionMiddleware(app_conf),
-                   FilesMiddleware(app_conf.get('skylines.files.uri')),
+    app = Cascade([FilesMiddleware(app_conf.get('skylines.files.uri')),
                    AssetsMiddleware(app_conf),
                    app])
 
