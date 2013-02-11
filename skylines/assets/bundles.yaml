@@ -29,6 +29,7 @@ js-all:
         - js/jQuery/jquery.cookie.js
         - js/jQuery/jquery.timeago.js
         - js/general.js
+        - js-bootstrap
         - js/jQuery/bootstrap-datepicker.js
 
 js-datatables:
@@ -58,6 +59,20 @@ js-tracking:
     output: js/tracking-%(version)s.js
     contents:
         - js/tracking.js
+
+#####################
+# Twitter Bootstrap #
+#####################
+
+js-bootstrap:
+    filters: rjsmin
+    output: js/bootstrap-%(version)s.js
+    contents:
+        - https://raw.github.com/twitter/bootstrap/v2.3.0/js/bootstrap-alert.js
+        - https://raw.github.com/twitter/bootstrap/v2.3.0/js/bootstrap-collapse.js
+        - https://raw.github.com/twitter/bootstrap/v2.3.0/js/bootstrap-modal.js
+        - https://raw.github.com/twitter/bootstrap/v2.3.0/js/bootstrap-tooltip.js
+        - https://raw.github.com/twitter/bootstrap/v2.3.0/js/bootstrap-popover.js
 
 ################
 # Font Awesome #

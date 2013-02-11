@@ -5,18 +5,16 @@
       xmlns:xi="http://www.w3.org/2001/XInclude"
       py:strip="">
 
-  <xi:include href="../headers/bootstrap/alert.html" />
-  
   <py:def function="insert_flash_message(floating)">
     <?python
       flash = h.flash.pop_payload()
       flash_class = 'alert'
-      
+
       if flash and flash['status'] == 'ok':
           flash_class = flash_class + ' alert-info'
       elif flash and flash['status'] == 'error':
           flash_class = flash_class + ' alert-error'
-      
+
       if floating:
           flash_class = flash_class + ' alert-floating'
     ?>
