@@ -22,7 +22,7 @@ css-openlayers:
         - css/SimpleLayerSwitcher.css
 
 js-all:
-    filters: jsmin
+    filters: rjsmin
     output: js/skylines-%(version)s.js
     contents:
         - js/jQuery/jquery.js
@@ -32,21 +32,21 @@ js-all:
         - js/jQuery/bootstrap-datepicker.js
 
 js-datatables:
-    filters: jsmin
+    filters: rjsmin
     output: js/tables-%(version)s.js
     contents:
         - js/jQuery/jquery.dataTables.js
         - js/jQuery/jquery.dataTables.ext.js
 
 js-openlayers:
-    filters: jsmin
+    filters: rjsmin
     output: js/ol-%(version)s.js
     contents:
         - js/OpenLayers/OpenLayers.js
         - js/OpenLayers/SimpleLayerSwitcher.js
 
 js-flight:
-    filters: jsmin
+    filters: rjsmin
     output: js/flight-%(version)s.js
     contents:
         - js/units.js
@@ -54,7 +54,7 @@ js-flight:
         - js/flight.js
 
 js-tracking:
-    filters: jsmin
+    filters: rjsmin
     output: js/tracking-%(version)s.js
     contents:
         - js/tracking.js
@@ -94,7 +94,7 @@ fontawesome-webfont.svg:
 ##########
 
 js-flot:
-    filters: jsmin
+    filters: rjsmin
     output: js/flot-%(version)s.js
     contents:
         - https://raw.github.com/flot/flot/ccb37e4965967d7252cc99e3b2eea8fcec3c909a/jquery.flot.js
