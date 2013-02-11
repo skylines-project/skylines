@@ -9,12 +9,9 @@
     <head py:attrs="select('@*')">
       ${select('*')}
       <py:if test="h.not_included_yet()">
-      <script type="text/javascript" src="/static/flot/jquery.flot.js"></script>
-      <script type="text/javascript" src="/static/flot/jquery.flot.time.js"></script>
-      <script type="text/javascript" src="/static/flot/jquery.flot.crosshair.js"></script>
-      <script type="text/javascript" src="/static/flot/jquery.flot.resize.js"></script>
-      <script type="text/javascript" src="/static/flot-marks/jquery.flot.marks.0.1.js"></script>
-      <script language="javascript" type="text/javascript" src="/static/flot/excanvas.min.js"></script>
+      <py:for each="url in g.assets['js-flot'].urls()">
+        <script type="text/javascript" src="${url}"></script>
+      </py:for>
       </py:if>
     </head>
   </py:match>
