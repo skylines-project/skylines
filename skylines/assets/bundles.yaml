@@ -1,9 +1,15 @@
 css-all:
-    filters: cssmin, cssrewrite
+    filters: cssmin
     output: css/skylines-%(version)s.css
     contents:
+        - css-main
+        - css-fontawesome
+
+css-main:
+    filters: cssrewrite
+    output: css/main-%(version)s.css
+    contents:
         - css/bootstrap.min.css
-        - css/font-awesome.css
         - css/style.css
         - css/datepicker.css
         - images/flags.css
@@ -52,3 +58,33 @@ js-tracking:
     output: js/tracking-%(version)s.js
     contents:
         - js/tracking.js
+
+################
+# Font Awesome #
+################
+
+css-fontawesome:
+    output: css/fontawesome-%(version)s.css
+    contents:
+        - https://raw.github.com/FortAwesome/Font-Awesome/2.0.0/css/font-awesome.css
+        - css/font-awesome.css
+
+fontawesome-webfont.eot:
+    output: font/fontawesome-webfont.eot
+    contents:
+        - https://raw.github.com/FortAwesome/Font-Awesome/2.0.0/font/fontawesome-webfont.eot
+
+fontawesome-webfont.woff:
+    output: font/fontawesome-webfont.woff
+    contents:
+        - https://raw.github.com/FortAwesome/Font-Awesome/2.0.0/font/fontawesome-webfont.woff
+
+fontawesome-webfont.ttf:
+    output: font/fontawesome-webfont.ttf
+    contents:
+        - https://raw.github.com/FortAwesome/Font-Awesome/2.0.0/font/fontawesome-webfont.ttf
+
+fontawesome-webfont.svg:
+    output: font/fontawesome-webfont.svg
+    contents:
+        - https://raw.github.com/FortAwesome/Font-Awesome/2.0.0/font/fontawesome-webfont.svg
