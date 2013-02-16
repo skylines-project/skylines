@@ -129,8 +129,7 @@ def __parse_line(line, bounds = None):
     wp.name = wp.name.title()
 
     # Strip duplicate spaces from waypoint name
-    while '  ' in wp.name:
-        wp.name = wp.name.replace('  ', ' ')
+    wp.name = re.sub(r' {2,}', ' ', wp.name)
 
     # Extract country code
     wp.country_code = line[60:62].strip();
