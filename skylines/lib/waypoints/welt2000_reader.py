@@ -79,7 +79,7 @@ def __parse_line(line, bounds = None):
         elif data[4:5] == 'L': wp.surface = 'loam'
         elif data[4:5] == 'S': wp.surface = 'sand'
         elif data[4:5] == 'Y': wp.surface = 'clay'
-        elif data[4:5] == 'G': wp.surface = 'gras'
+        elif data[4:5] == 'G': wp.surface = 'grass'
         elif data[4:5] == 'V': wp.surface = 'gravel'
         elif data[4:5] == 'D': wp.surface = 'dirt'
 
