@@ -18,6 +18,8 @@ TYPE_ACK = 2
 TYPE_FIX = 3
 TYPE_TRAFFIC_REQUEST = 4
 TYPE_TRAFFIC_RESPONSE = 5
+TYPE_USER_NAME_REQUEST = 6
+TYPE_USER_NAME_RESPONSE = 7
 
 FLAG_ACK_BAD_KEY = 0x1
 
@@ -32,6 +34,8 @@ FLAG_ENL = 0x40
 # for TYPE_TRAFFIC_REQUEST
 TRAFFIC_FLAG_FOLLOWEES = 0x1
 TRAFFIC_FLAG_CLUB = 0x2
+
+USER_FLAG_NOT_FOUND = 0x1
 
 class TrackingServer(DatagramProtocol):
     def pingReceived(self, host, port, key, payload):
@@ -171,6 +175,37 @@ class TrackingServer(DatagramProtocol):
         response = set_crc(response)
         self.transport.write(response, (host, port))
 
+    def userNameRequestReceived(self, host, port, key, payload):
+        """The client asks for the display name of a user account."""
+
+        if len(payload) != 8: return
+        data = struct.unpack('!II', payload)
+
+        pilot = User.by_tracking_key(key)
+        if pilot is None:
+            log.err("No such pilot: %d" % key)
+            return
+
+        user_id = data[0]
+
+        user = DBSession.query(User).get(user_id)
+        if user is None:
+            response = struct.pack('!IHHQIIIBBBBII', MAGIC, 0, TYPE_USER_NAME_RESPONSE, 0,
+                                   user_id, USER_FLAG_NOT_FOUND, 0,
+                                   0, 0, 0, 0, 0, 0)
+            response = set_crc(response)
+            self.transport.write(response, (host, port))
+
+        name = user.display_name[:64].encode('utf8', 'ignore')
+        club_id = user.club_id or 0
+
+        response = struct.pack('!IHHQIIIBBBBII', MAGIC, 0, TYPE_USER_NAME_RESPONSE, 0,
+                               user_id, 0, club_id,
+                               len(name), 0, 0, 0, 0, 0)
+        response += name
+        response = set_crc(response)
+        self.transport.write(response, (host, port))
+
     def datagramReceived(self, data, (host, port)):
         if len(data) < 16: return
 
@@ -184,3 +219,7 @@ class TrackingServer(DatagramProtocol):
             self.pingReceived(host, port, header[3], data[16:])
         elif header[2] == TYPE_TRAFFIC_REQUEST:
             self.trafficRequestReceived(host, port, header[3], data[16:])
+        elif header[2] == TYPE_TRAFFIC_REQUEST:
+            self.trafficRequestReceived(host, port, header[3], data[16:])
+        elif header[2] == TYPE_USER_NAME_REQUEST:
+            self.userNameRequestReceived(host, port, header[3], data[16:])
