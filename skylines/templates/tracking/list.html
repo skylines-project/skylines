@@ -25,7 +25,7 @@ title = _('Live Tracking')
       <thead>
         <tr>
           <th class="date">Last fix</th>
-          <th>Pilot / Flarm ID</th>
+          <th>Pilot / Traffic ID</th>
           <th>Nearest Airport</th>
         </tr>
       </thead>
@@ -40,8 +40,12 @@ title = _('Live Tracking')
               Pilot Name
             </a>
             <small py:if="hasattr(track, 'tracking_type') and track.tracking_type == 0"
-                   py:content="'{:X}'.format(track.tracking_id)">
+                   py:content="'Flarm {:X}'.format(track.tracking_id)">
               Flarm ID
+            </small>
+            <small py:if="hasattr(track, 'tracking_type') and track.tracking_type == 1"
+                   py:content="'ICAO {:X}'.format(track.tracking_id)">
+              ICAO ID
             </small>
           </td>
           <td>

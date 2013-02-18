@@ -99,10 +99,16 @@ if pilot is not None:
       <div class="span4">
         <table class="table">
           <tbody>
-            <tr py:if="tracking_id is not None">
+            <tr py:if="tracking_id is not None and tracking_type == 0">
               <th>Flarm ID</th>
               <td py:content="'{:X}'.format(tracking_id)">
                 Flarm ID
+              </td>
+            </tr>
+            <tr py:if="tracking_id is not None and tracking_type == 1">
+              <th>ICAO ID</th>
+              <td py:content="'{:X}'.format(tracking_id)">
+                ICAO ID
               </td>
             </tr>
             <tr py:if="pilot is not None">
