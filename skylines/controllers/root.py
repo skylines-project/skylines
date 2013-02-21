@@ -83,6 +83,11 @@ class RootController(BaseController):
         """Handle the 'about' page."""
         return dict()
 
+    @expose('imprint.jinja')
+    def imprint(self, **kw):
+        """Handle the 'imprint' page."""
+        return dict()
+
     @expose()
     def set_lang(self, language, **kw):
         set_lang(language)
