@@ -29,6 +29,7 @@ testpkgs = [
 
 install_requires = [
     "TurboGears2",
+    "tg.devtools",
     "WebOb==1.1.1",
     "Genshi",
     "zope.sqlalchemy >= 0.4",
