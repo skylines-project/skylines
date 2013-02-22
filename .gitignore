@@ -23,3 +23,9 @@ webassets
 
 # XCSoar tools
 bin
+
+# Vagrant
+.vagrant
+Cheffile.lock
+tmp/
+.cookbooks/
