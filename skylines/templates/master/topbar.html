@@ -1,6 +1,4 @@
 <?python
-from skylines.model.notification import count_unread_notifications
-
 def active_if_page_is(_page):
   return 'active' if (defined('page') and page == _page) else None
 ?>
@@ -67,7 +65,7 @@ def active_if_page_is(_page):
           </li>
 
           <li py:if="request.identity"
-              py:with="notifications=count_unread_notifications(request.identity['user'])"
+              py:with="notifications=request.identity['notifications']"
               class="${active_if_page_is('notifications')}">
             <a href="/notifications/">
               <span py:if="notifications == 0" class="badge" py:content="notifications">0</span>

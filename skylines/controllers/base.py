@@ -7,6 +7,8 @@ from tg.i18n import get_lang
 from skylines.config.i18n import languages, language_info
 from babel.util import distinct
 from babel import parse_locale
+from skylines.model.notification import count_unread_notifications
+
 
 __all__ = ['BaseController']
 
@@ -66,3 +68,6 @@ class BaseController(TGController):
            request.identity['user'] is None:
             raise redirect(url('/logout_handler',
                                params=dict(came_from=request.url.encode('utf-8'))))
+
+        if request.identity:
+            request.identity['notifications'] = count_unread_notifications(request.identity['user'])
