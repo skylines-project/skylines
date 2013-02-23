@@ -56,11 +56,11 @@ class ClubController(BaseController):
         self.club = club
 
     @with_trailing_slash
-    @expose('skylines.templates.clubs.view')
+    @expose('clubs/view.html')
     def index(self):
         return dict(page='settings', club=self.club)
 
-    @expose('skylines.templates.generic.form')
+    @expose('generic/form.html')
     def edit(self, **kwargs):
         if not self.club.is_writable(request.identity):
             raise HTTPForbidden
@@ -81,11 +81,11 @@ class ClubController(BaseController):
 
         redirect('.')
 
-    @expose('skylines.templates.clubs.pilots')
+    @expose('clubs/pilots.html')
     def pilots(self):
         return dict(page='settings', club=self.club, users=self.club.members)
 
-    @expose('skylines.templates.generic.form')
+    @expose('generic/form.html')
     def new_pilot(self, **kwargs):
         if not self.club.is_writable(request.identity):
             raise HTTPForbidden
@@ -111,7 +111,7 @@ class ClubController(BaseController):
 
 
 class ClubsController(BaseController):
-    @expose('skylines.templates.clubs.list')
+    @expose('clubs/list.html')
     def index(self):
         clubs = DBSession.query(Club).order_by(Club.name)
         return dict(page='settings', clubs=clubs)

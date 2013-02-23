@@ -111,7 +111,7 @@ class TrackController(BaseController):
                                tracking_id=self.tracking_id, **kw)
 
     @with_trailing_slash
-    @expose('skylines.templates.tracking.view')
+    @expose('tracking/view.html')
     def index(self):
         other_pilots = []
         for pilot in self.other_pilots:
@@ -126,7 +126,7 @@ class TrackController(BaseController):
                     trace=self.__get_flight_path(),
                     other_pilots=other_pilots)
 
-    @expose('skylines.templates.tracking.map')
+    @expose('tracking/map.html')
     def map(self):
         other_pilots = []
         for pilot in self.other_pilots:

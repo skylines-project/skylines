@@ -183,7 +183,7 @@ class FlightController(BaseController):
         return get_flight_path(self.flight, **kw)
 
     @with_trailing_slash
-    @expose('skylines.templates.flights.view')
+    @expose('flights/view.html')
     def index(self, **kwargs):
         def add_flight_path(flight):
             trace = get_flight_path(flight)
@@ -196,7 +196,7 @@ class FlightController(BaseController):
                     phase_formatter=format_phase)
 
     @without_trailing_slash
-    @expose('skylines.templates.flights.map')
+    @expose('flights/map.html')
     def map(self, **kwargs):
         def add_flight_path(flight):
             trace = get_flight_path(flight, threshold=0.0001, max_points=10000)
@@ -231,14 +231,14 @@ class FlightController(BaseController):
                         competition_id=self.flight.competition_id) )
 
     @without_trailing_slash
-    @expose('skylines.templates.generic.form')
+    @expose('generic/form.html')
     def change_pilot(self, **kwargs):
         if not self.flight.is_writable(request.identity):
             raise HTTPForbidden
 
         return dict(page='settings', title=_('Select Pilot'),
                     user=request.identity['user'],
-                    include_after='flights/after_change_pilot.html',
+                    include_after='../flights/after_change_pilot.html',
                     form=select_pilot_form,
                     values=self.flight)
 
@@ -260,7 +260,7 @@ class FlightController(BaseController):
         redirect('.')
 
     @without_trailing_slash
-    @expose('skylines.templates.generic.form')
+    @expose('generic/form.html')
     def change_aircraft(self, **kwargs):
         if not self.flight.is_writable(request.identity):
             raise HTTPForbidden
@@ -323,7 +323,7 @@ class FlightController(BaseController):
         return redirect('.')
 
     @without_trailing_slash
-    @expose('skylines.templates.generic.confirm')
+    @expose('generic/confirm.html')
     def delete(self, **kwargs):
         if not self.flight.is_writable(request.identity):
             raise HTTPForbidden

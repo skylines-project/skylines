@@ -19,7 +19,7 @@ class TrackingController(BaseController):
     lt24 = LiveTrack24Controller()
     external = ExternalTrackingController()
 
-    @expose('skylines.templates.tracking.list')
+    @expose('tracking/list.html')
     def index(self, **kw):
         na_cache = cache.get_cache('tracking.nearest_airport', expire=60 * 60)
 
@@ -54,7 +54,7 @@ class TrackingController(BaseController):
         controller = TrackController(pilot=pilots)
         return controller, remainder
 
-    @expose('skylines.templates.tracking.info')
+    @expose('tracking/info.html')
     def info(self, **kw):
         user = None
         if request.identity is not None and 'user' in request.identity:

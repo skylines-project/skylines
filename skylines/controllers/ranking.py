@@ -45,21 +45,21 @@ class RankingController(BaseController):
         return result
 
     @without_trailing_slash
-    @expose('skylines.templates.ranking.pilots')
+    @expose('ranking/pilots.html')
     @paginate('result', items_per_page=20)
     def pilots(self, **kw):
         return dict(tab='pilots',
                     result=self.__get_result(User, 'pilot_id', **kw))
 
     @without_trailing_slash
-    @expose('skylines.templates.ranking.clubs')
+    @expose('ranking/clubs.html')
     @paginate('result', items_per_page=20)
     def clubs(self, **kw):
         return dict(tab='clubs',
                     result=self.__get_result(Club, 'club_id', **kw))
 
     @without_trailing_slash
-    @expose('skylines.templates.ranking.airports')
+    @expose('ranking/airports.html')
     @paginate('result', items_per_page=20)
     def airports(self, **kw):
         return dict(tab='airports',

@@ -108,13 +108,13 @@ class UploadController(BaseController):
     allow_only = has_permission('upload',
                                 msg=l_("You have to login to upload flights."))
 
-    @expose('skylines.templates.generic.form')
+    @expose('generic/form.html')
     def index(self, **kw):
         return dict(page='upload', title=_("Upload Flight"),
                     form=upload_form,
                     values=dict(pilot=request.identity['user'].id))
 
-    @expose('skylines.templates.upload.result')
+    @expose('upload/result.html')
     @validate(upload_form, error_handler=index)
     def do(self, file, pilot):
         user = request.identity['user']

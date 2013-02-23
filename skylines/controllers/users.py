@@ -244,14 +244,14 @@ class UserController(BaseController):
         self.user = user
         request.environ['UserController.user.id'] = self.user.id
 
-    @expose('skylines.templates.users.view')
+    @expose('users/view.html')
     def index(self):
         return dict(page='settings', user=self.user,
                     distance_flights=self.get_distance_flights(),
                     takeoff_locations=self.get_takeoff_locations(),
                     last_year_statistics=self.get_last_year_statistics())
 
-    @expose('skylines.templates.generic.form')
+    @expose('generic/form.html')
     def change_password(self, **kw):
         if not self.user.is_writable(request.identity):
             raise HTTPForbidden
@@ -273,7 +273,7 @@ class UserController(BaseController):
         flash('A password recovery email was sent to that user.')
         redirect('.')
 
-    @expose('skylines.templates.generic.form')
+    @expose('generic/form.html')
     def edit(self, **kwargs):
         if not self.user.is_writable(request.identity):
             raise HTTPForbidden
@@ -281,7 +281,7 @@ class UserController(BaseController):
         return dict(page='settings', title=_('Edit User'),
                     form=edit_user_form,
                     values=self.user,
-                    include_after='skylines.templates.users.after-edit-form')
+                    include_after='../users/after-edit-form.html')
 
     @expose()
     @validate(form=edit_user_form, error_handler=edit)
@@ -314,7 +314,7 @@ class UserController(BaseController):
 
         redirect('.')
 
-    @expose('skylines.templates.users.change_club')
+    @expose('users/change_club.html')
     def change_club(self, **kwargs):
         if not self.user.is_writable(request.identity):
             raise HTTPForbidden
@@ -448,7 +448,7 @@ class UserController(BaseController):
 
 
 class UsersController(BaseController):
-    @expose('skylines.templates.users.list')
+    @expose('users/list.html')
     def index(self):
         users = DBSession.query(User).order_by(User.display_name)
         return dict(page='settings', users=users)
@@ -463,7 +463,7 @@ class UsersController(BaseController):
         controller = UserController(get_requested_record(User, id))
         return controller, remainder
 
-    @expose('skylines.templates.users.new')
+    @expose('users/new.html')
     def new(self, **kwargs):
         return dict(page='users', form=new_user_form)
 
@@ -485,7 +485,7 @@ class UsersController(BaseController):
 
         redirect('/')
 
-    @expose('skylines.templates.generic.form')
+    @expose('generic/form.html')
     def recover(self, key=None, **kwargs):
         try:
             key = int(key, 16)

@@ -35,6 +35,8 @@ base_config.renderers.append('genshi')
 # you should try to use this renderer instead.
 # warning: for the moment chameleon does not handle i18n translations
 #base_config.renderers.append('chameleon_genshi')
+base_config.use_dotted_templatenames = False
+
 #Configure the base SQLALchemy Setup
 base_config.use_sqlalchemy = True
 base_config.model = skylines.model

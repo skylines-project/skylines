@@ -10,7 +10,7 @@ from skylines.model import DBSession, User, Club, Flight, Airport
 
 
 class StatisticsController(BaseController):
-    @expose('skylines.templates.statistics.years')
+    @expose('statistics/years.html')
     def _default(self, *args, **kw):
         club = None
         pilot = None

@@ -24,7 +24,7 @@ class ErrorController(BaseController):
 
     """
 
-    @expose('skylines.templates.error')
+    @expose('error.html')
     def document(self, *args, **kwargs):
         """Render the error document"""
 
