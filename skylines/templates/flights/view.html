@@ -7,14 +7,14 @@ page = 'flights'
       xmlns:py="http://genshi.edgewall.org/"
       xmlns:xi="http://www.w3.org/2001/XInclude">
 
-  <xi:include href="flights/meta-tags.html" />
-  <xi:include href="flights/details-table.html" />
-  <xi:include href="flights/phases-table.html" />
+  <xi:include href="meta-tags.html" />
+  <xi:include href="details-table.html" />
+  <xi:include href="phases-table.html" />
   <?python
     title, tagline = h.format_flight_title(flight)
   ?>
 
-  <xi:include href="master/page.html" />
+  <xi:include href="../master/page.html" />
   <xi:include href="../headers/openlayers.html" py:if="trace" />
   <xi:include href="../headers/flot.html" py:if="trace" />
   <xi:include href="../snippets/tooltip.html" />

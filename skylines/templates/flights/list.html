@@ -30,8 +30,8 @@ if airport:
       xmlns:py="http://genshi.edgewall.org/"
       xmlns:xi="http://www.w3.org/2001/XInclude">
 
-  <xi:include href="flights/flights-table.html" />
-  <xi:include href="master/page.html" />
+  <xi:include href="flights-table.html" />
+  <xi:include href="../master/page.html" />
   <xi:include href="../snippets/tooltip.html" />
 
   <head>
@@ -231,7 +231,7 @@ if airport:
   </head>
 
   <body>
-    <xi:include href="flights/nav.html" />
+    <xi:include href="nav.html" />
 
     <?python
       omitted_columns = Set()
