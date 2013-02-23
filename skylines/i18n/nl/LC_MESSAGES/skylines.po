@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  skylines\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2013-01-05 11:51+0100\n"
+"POT-Creation-Date: 2013-02-23 22:09+0100\n"
 "PO-Revision-Date: 2012-12-03 10:50+0000\n"
 "Last-Translator: Quint Segers <Unknown>\n"
 "Language-Team: Dutch <nl@li.org>\n"
@@ -46,10 +46,9 @@ msgid "Create Pilot"
 msgstr "Nieuwe Vlieger"
 
 #: skylines/controllers/flight.py:49 skylines/controllers/upload.py:60
-#: skylines/templates/flights/details-table.html:150
+#: skylines/templates/flights/details-table.html:148
 #: skylines/templates/flights/flights-table.html:20
-#: skylines/templates/tracking/list.html:28
-#: skylines/templates/tracking/view.html:102
+#: skylines/templates/tracking/view.html:115
 msgid "Pilot"
 msgstr "Vlieger"
 
@@ -120,18 +119,18 @@ msgstr "Bent u zeker dat u deze vlucht wilt verwijderen?"
 msgid "You have to be logged in to post comments!"
 msgstr "Je moet ingelogt zijn om comments te plaatsen!"
 
-#: skylines/controllers/root.py:101
+#: skylines/controllers/root.py:120
 msgid "Sorry, email address or password are wrong. Please try again or register."
 msgstr ""
 "Helaas, email adres of wachtwoord is onjuist. Probeer het alsjeblieft "
 "opnieuw of registreer een gebruikersnaam."
 
-#: skylines/controllers/root.py:106
+#: skylines/controllers/root.py:125
 #, python-format
 msgid "You are now logged in. Welcome back, %s!"
 msgstr "Je bent nu ingelogt. Welkom %s!"
 
-#: skylines/controllers/root.py:123
+#: skylines/controllers/root.py:142
 msgid "You are now logged out. We hope to see you back soon!"
 msgstr "Je bent nu uitgelogt. Hopelijk tot snel!"
 
@@ -199,12 +198,12 @@ msgstr ""
 msgid "Your flight(s) have been successfully updated."
 msgstr "Je vluchten zijn succesvol geüpdate."
 
-#: skylines/controllers/users.py:46 skylines/templates/users/view.html:96
+#: skylines/controllers/users.py:46 skylines/templates/users/view.html:95
 msgid "None"
 msgstr "Geen enkele"
 
-#: skylines/controllers/users.py:48 skylines/templates/tracking/view.html:123
-#: skylines/templates/users/view.html:97
+#: skylines/controllers/users.py:48 skylines/templates/tracking/view.html:136
+#: skylines/templates/users/view.html:96
 #, python-format
 msgid "%u minute"
 msgid_plural "%u minutes"
@@ -213,13 +212,13 @@ msgstr[1] "%u minuten"
 
 #: skylines/controllers/users.py:86 skylines/controllers/users.py:119
 #: skylines/controllers/users.py:155
-#: skylines/templates/flights/details-table.html:168
+#: skylines/templates/flights/details-table.html:166
 #: skylines/templates/flights/flights-table.html:23
 #: skylines/templates/ranking/pilots.html:19
-#: skylines/templates/tracking/view.html:110
+#: skylines/templates/tracking/view.html:123
 #: skylines/templates/users/users-table.html:22
-#: skylines/templates/users/view.html:102
-#: skylines/templates/users/view.html:113
+#: skylines/templates/users/view.html:101
+#: skylines/templates/users/view.html:112
 msgid "Club"
 msgstr "Club"
 
@@ -266,12 +265,12 @@ msgid "Eye Candy"
 msgstr "Eye Candy"
 
 #: skylines/controllers/users.py:182 skylines/controllers/users.py:190
-#: skylines/templates/users/view.html:127
+#: skylines/templates/users/view.html:126
 msgid "Recover Password"
 msgstr "Wachtwoord vergeten"
 
 #: skylines/controllers/users.py:201 skylines/controllers/users.py:259
-#: skylines/templates/users/view.html:124
+#: skylines/templates/users/view.html:123
 msgid "Change Password"
 msgstr "Wachtwoord wijzigen"
 
@@ -337,7 +336,7 @@ msgstr "Australisch ( metrisch, imperial hoogte)"
 msgid "American (imperial)"
 msgstr "Amerikaans (imperial)"
 
-#: skylines/templates/about.html:1 skylines/templates/master/topbar.html:25
+#: skylines/templates/about.html:1 skylines/templates/master/topbar.html:23
 msgid "About"
 msgstr "Info"
 
@@ -426,19 +425,19 @@ msgstr ""
 msgid "Error {code}"
 msgstr "Error {code}"
 
-#: skylines/templates/login.html:1 skylines/templates/master/topbar.html:39
+#: skylines/templates/login.html:1 skylines/templates/master/topbar.html:37
 msgid "Login"
 msgstr "Inloggen"
 
-#: skylines/templates/login.html:25 skylines/templates/master/topbar.html:44
+#: skylines/templates/login.html:25 skylines/templates/master/topbar.html:42
 msgid "Email Address:"
 msgstr "Email adres"
 
-#: skylines/templates/login.html:31 skylines/templates/master/topbar.html:50
+#: skylines/templates/login.html:31 skylines/templates/master/topbar.html:48
 msgid "Password:"
 msgstr "Wachtwoord:"
 
-#: skylines/templates/login.html:38 skylines/templates/master/topbar.html:57
+#: skylines/templates/login.html:38 skylines/templates/master/topbar.html:55
 msgid "Remember me"
 msgstr "Onthoud mij"
 
@@ -452,33 +451,33 @@ msgid "Clubs"
 msgstr "Clubs"
 
 #: skylines/templates/clubs/list.html:23
-#: skylines/templates/flights/details-table.html:189
+#: skylines/templates/flights/details-table.html:187
 #: skylines/templates/users/users-table.html:23
 msgid "Actions"
 msgstr "Akties"
 
 #: skylines/templates/clubs/list.html:34 skylines/templates/clubs/view.html:50
 #: skylines/templates/flights/list.html:1
-#: skylines/templates/master/topbar.html:27
-#: skylines/templates/master/topbar.html:86
+#: skylines/templates/master/topbar.html:25
+#: skylines/templates/master/topbar.html:84
 #: skylines/templates/ranking/airports.html:20
 #: skylines/templates/ranking/clubs.html:19
 #: skylines/templates/ranking/pilots.html:20
 #: skylines/templates/statistics/flights-table.html:12
 #: skylines/templates/statistics/years.html:48
 #: skylines/templates/users/users-table.html:41
-#: skylines/templates/users/view.html:141
-#: skylines/templates/users/view.html:207
+#: skylines/templates/users/view.html:140
+#: skylines/templates/users/view.html:206
 msgid "Flights"
 msgstr "Vluchten"
 
 #: skylines/templates/clubs/list.html:35 skylines/templates/clubs/view.html:51
-#: skylines/templates/master/topbar.html:29
-#: skylines/templates/master/topbar.html:87
+#: skylines/templates/master/topbar.html:27
+#: skylines/templates/master/topbar.html:85
 #: skylines/templates/statistics/years.html:1
 #: skylines/templates/statistics/years.html:35
 #: skylines/templates/users/users-table.html:42
-#: skylines/templates/users/view.html:142
+#: skylines/templates/users/view.html:141
 msgid "Statistics"
 msgstr "Statistieken"
 
@@ -498,7 +497,7 @@ msgstr "%(datetime)s door [1:%(user)s]"
 
 #: skylines/templates/clubs/view.html:49
 #: skylines/templates/users/users-table.html:43
-#: skylines/templates/users/view.html:122
+#: skylines/templates/users/view.html:121
 msgid "Edit"
 msgstr "Bewerken"
 
@@ -510,103 +509,103 @@ msgstr "Mist de vlieger in de lijst?"
 msgid "Create new pilot"
 msgstr "Maak nieuwe vlieger aan."
 
-#: skylines/templates/flights/details-table.html:36
+#: skylines/templates/flights/details-table.html:34
 msgid "Spread the word"
 msgstr "Vertel hierover"
 
-#: skylines/templates/flights/details-table.html:49
+#: skylines/templates/flights/details-table.html:47
 #: skylines/templates/flights/flights-table.html:18
-#: skylines/templates/users/view.html:176
+#: skylines/templates/users/view.html:175
 msgid "Date"
 msgstr "Datum"
 
-#: skylines/templates/flights/details-table.html:55
+#: skylines/templates/flights/details-table.html:53
 msgid "Share"
 msgstr "Delen"
 
-#: skylines/templates/flights/details-table.html:61
+#: skylines/templates/flights/details-table.html:59
 msgid "Take-off"
 msgstr "Start"
 
-#: skylines/templates/flights/details-table.html:66
-#: skylines/templates/flights/details-table.html:79
+#: skylines/templates/flights/details-table.html:64
+#: skylines/templates/flights/details-table.html:77
 msgid "at"
 msgstr "om"
 
-#: skylines/templates/flights/details-table.html:74
+#: skylines/templates/flights/details-table.html:72
 msgid "Landing"
 msgstr "Landing"
 
-#: skylines/templates/flights/details-table.html:86
+#: skylines/templates/flights/details-table.html:84
 #: skylines/templates/flights/phases-table.html:14
 #: skylines/templates/flights/phases-table.html:37
 #: skylines/templates/flights/phases-table.html:67
 msgid "Duration"
 msgstr "Vluchtduur"
 
-#: skylines/templates/flights/details-table.html:92
+#: skylines/templates/flights/details-table.html:90
 #: skylines/templates/flights/flights-table.html:24
 msgid "Aircraft"
 msgstr "Vliegtuig"
 
-#: skylines/templates/flights/details-table.html:95
-#: skylines/templates/flights/details-table.html:152
-#: skylines/templates/users/view.html:108
-#: skylines/templates/users/view.html:116
+#: skylines/templates/flights/details-table.html:93
+#: skylines/templates/flights/details-table.html:150
+#: skylines/templates/users/view.html:107
+#: skylines/templates/users/view.html:115
 msgid "Change"
 msgstr "Wijzigen"
 
-#: skylines/templates/flights/details-table.html:98
+#: skylines/templates/flights/details-table.html:96
 msgid "Handicap"
 msgstr "penalty"
 
-#: skylines/templates/flights/details-table.html:105
+#: skylines/templates/flights/details-table.html:103
 msgid "Unknown"
 msgstr "Onbekend"
 
-#: skylines/templates/flights/details-table.html:130
+#: skylines/templates/flights/details-table.html:128
 #: skylines/templates/flights/flights-table.html:19
 msgid "Score"
 msgstr "Score"
 
-#: skylines/templates/flights/details-table.html:132
+#: skylines/templates/flights/details-table.html:130
 #: skylines/templates/ranking/airports.html:33
 #: skylines/templates/ranking/clubs.html:31
 #: skylines/templates/ranking/pilots.html:37
 msgid "pt"
 msgstr "punten"
 
-#: skylines/templates/flights/details-table.html:134
+#: skylines/templates/flights/details-table.html:132
 msgid "OLC Distance"
 msgstr "OLC Afstand"
 
-#: skylines/templates/flights/details-table.html:137
+#: skylines/templates/flights/details-table.html:135
 msgid "FAI Triangle Distance"
 msgstr "FAI Driehoek Afstand"
 
-#: skylines/templates/flights/details-table.html:144
+#: skylines/templates/flights/details-table.html:142
 msgid "Speed"
 msgstr "Snelheid"
 
-#: skylines/templates/flights/details-table.html:162
+#: skylines/templates/flights/details-table.html:160
 msgid "[unspecified]"
 msgstr "[ongespecificeerd]"
 
-#: skylines/templates/flights/details-table.html:177
+#: skylines/templates/flights/details-table.html:175
 msgid "Uploaded"
 msgstr "Geupload"
 
 #. e.g. 'Uploaded: 18.01.2011 by PilotA'
-#: skylines/templates/flights/details-table.html:178
+#: skylines/templates/flights/details-table.html:176
 #, python-format
 msgid "%(datetime)s[1:] by %(user)s"
 msgstr "%(datetime)s[1:] door %(user)s"
 
-#: skylines/templates/flights/details-table.html:183
+#: skylines/templates/flights/details-table.html:181
 msgid "Download"
 msgstr "Opslaan"
 
-#: skylines/templates/flights/details-table.html:191
+#: skylines/templates/flights/details-table.html:189
 msgid "Delete"
 msgstr "Verwijder"
 
@@ -615,8 +614,8 @@ msgstr "Verwijder"
 #: skylines/templates/flights/phases-table.html:69
 #: skylines/templates/statistics/distance-table.html:18
 #: skylines/templates/statistics/years.html:51
-#: skylines/templates/users/view.html:175
-#: skylines/templates/users/view.html:211
+#: skylines/templates/users/view.html:174
+#: skylines/templates/users/view.html:210
 msgid "Distance"
 msgstr "Afstand"
 
@@ -630,9 +629,10 @@ msgstr "Tijd"
 
 #: skylines/templates/flights/flights-table.html:85
 #: skylines/templates/notifications/notifications-table.html:115
-#: skylines/templates/tracking/list.html:52
+#: skylines/templates/tracking/list.html:62
+#: skylines/templates/tracking/list.html:64
 #: skylines/templates/upload/result.html:60
-#: skylines/templates/users/view.html:190
+#: skylines/templates/users/view.html:189
 msgid "Show"
 msgstr "Toon"
 
@@ -711,53 +711,53 @@ msgstr "Fase"
 msgid "Start"
 msgstr "Start"
 
-#: skylines/templates/flights/view.html:106
+#: skylines/templates/flights/view.html:103
 msgid "View Flight"
 msgstr "Bekijk vlucht"
 
-#: skylines/templates/flights/view.html:116
-#: skylines/templates/tracking/view.html:138
+#: skylines/templates/flights/view.html:113
+#: skylines/templates/tracking/view.html:151
 msgid "Full-screen map"
 msgstr "Volledig scherm"
 
-#: skylines/templates/flights/view.html:119
+#: skylines/templates/flights/view.html:116
 msgid "Activate this to show the flight on top of other flights on the map"
 msgstr "Activeer dit om deze vlucht bovenop andere vluchten op de kaart te tonen."
 
-#: skylines/templates/flights/view.html:124
+#: skylines/templates/flights/view.html:121
 msgid "Detailed statistics"
 msgstr "Gedetailleerde statistieken"
 
-#: skylines/templates/flights/view.html:128
+#: skylines/templates/flights/view.html:125
 msgid "Comments"
 msgstr "Reacties"
 
-#: skylines/templates/flights/view.html:139
+#: skylines/templates/flights/view.html:136
 msgid "No comments yet."
 msgstr "Tot op heden geen reacties"
 
-#: skylines/templates/flights/view.html:145
+#: skylines/templates/flights/view.html:142
 msgid "Add comment"
 msgstr "Voeg een reactie toe"
 
-#: skylines/templates/flights/view.html:156
+#: skylines/templates/flights/view.html:153
 msgid "An error occurred while decoding this flight."
 msgstr "Een fout is opgetreden tijdens het inlezen van deze vlucht."
 
-#: skylines/templates/flights/view.html:165
+#: skylines/templates/flights/view.html:162
 msgid "Circling performance"
 msgstr "Thermiek prestaties"
 
-#: skylines/templates/flights/view.html:165
-#: skylines/templates/flights/view.html:170
+#: skylines/templates/flights/view.html:162
+#: skylines/templates/flights/view.html:167
 msgid "(summary)"
 msgstr "(samenvatting)"
 
-#: skylines/templates/flights/view.html:170
+#: skylines/templates/flights/view.html:167
 msgid "Cruise performance"
 msgstr "Glij prestaties"
 
-#: skylines/templates/flights/view.html:174
+#: skylines/templates/flights/view.html:171
 msgid "Phases"
 msgstr "Fases"
 
@@ -778,28 +778,28 @@ msgstr "Het XCSoar Project"
 msgid "Imprint"
 msgstr "Afdruk"
 
-#: skylines/templates/master/topbar.html:26
+#: skylines/templates/master/topbar.html:24
 msgid "Live"
 msgstr "Live"
 
-#: skylines/templates/master/topbar.html:28
+#: skylines/templates/master/topbar.html:26
 #: skylines/templates/ranking/layout.html:1
 msgid "Ranking"
 msgstr "Score"
 
-#: skylines/templates/master/topbar.html:34
+#: skylines/templates/master/topbar.html:32
 msgid "Upload"
 msgstr "Upload"
 
-#: skylines/templates/master/topbar.html:63
+#: skylines/templates/master/topbar.html:61
 msgid "Forgot password?"
 msgstr "Wachtwoord vergeten?"
 
-#: skylines/templates/master/topbar.html:64
+#: skylines/templates/master/topbar.html:62
 msgid "Don't have an account?"
 msgstr "Nog geen account?"
 
-#: skylines/templates/master/topbar.html:89
+#: skylines/templates/master/topbar.html:87
 msgid "Logout"
 msgstr "Afmelden"
 
@@ -872,11 +872,11 @@ msgstr "Vliegers"
 msgid "Airports"
 msgstr "Vliegvelden"
 
-#: skylines/templates/snippets/flash.html:26
+#: skylines/templates/snippets/flash.html:24
 msgid "Warning!"
 msgstr "Waarschuwing!"
 
-#: skylines/templates/snippets/flash.html:27
+#: skylines/templates/snippets/flash.html:25
 msgid "Error!"
 msgstr "Error!"
 
@@ -899,13 +899,13 @@ msgstr "Jaar"
 
 #: skylines/templates/statistics/duration-table.html:14
 #: skylines/templates/statistics/years.html:54
-#: skylines/templates/users/view.html:219
+#: skylines/templates/users/view.html:218
 msgid "Flight Time"
 msgstr "Vluchttijd"
 
 #: skylines/templates/statistics/duration-table.html:22
 #: skylines/templates/statistics/duration-table.html:33
-#: skylines/templates/users/view.html:222
+#: skylines/templates/users/view.html:221
 msgid "Hours"
 msgstr "Uren"
 
@@ -981,7 +981,7 @@ msgid "Your Live Tracking key is:"
 msgstr "Je Live Tracking key is:"
 
 #: skylines/templates/tracking/info.html:48
-#: skylines/templates/users/view.html:88
+#: skylines/templates/users/view.html:87
 msgid "Generate new key"
 msgstr "Genereer nieuwe key"
 
@@ -1013,40 +1013,52 @@ msgstr ""
 msgid "Last fix"
 msgstr "Laatste positie"
 
+#: skylines/templates/tracking/list.html:28
+msgid "Pilot / Traffic ID"
+msgstr ""
+
 #: skylines/templates/tracking/list.html:29
 msgid "Nearest Airport"
 msgstr "Dichtsbijzijnde vliegveld"
 
-#: skylines/templates/tracking/list.html:58
+#: skylines/templates/tracking/list.html:70
 msgid "How to use Live Tracking?"
 msgstr "Hoe moet je Live Tracking gebruiken?"
 
-#: skylines/templates/tracking/map.html:114
-#: skylines/templates/tracking/view.html:153
+#: skylines/templates/tracking/map.html:115
+#: skylines/templates/tracking/view.html:166
 msgid "There is no live track of this pilot currently."
 msgstr "Er is momenteel geen live track van deze vlieger."
 
-#: skylines/templates/tracking/view.html:119
+#: skylines/templates/tracking/view.html:103
+msgid "Flarm ID"
+msgstr ""
+
+#: skylines/templates/tracking/view.html:109
+msgid "ICAO ID"
+msgstr ""
+
+#: skylines/templates/tracking/view.html:132
 msgid "This pilot chose to delay the display of his live tracks."
 msgstr ""
 "Deze vlieger heeft besloten om het bekijken van zijn live tracks te "
 "vertragen."
 
-#: skylines/templates/tracking/view.html:119
+#: skylines/templates/tracking/view.html:132
 msgid "Delay"
 msgstr "Vertraging"
 
-#: skylines/templates/tracking/view.html:127
+#: skylines/templates/tracking/view.html:140
 msgid "The live tracking delay is ignored because of your account privileges."
 msgstr ""
 "De live tracking vertraging wordt genegeerd, omdat je niet voldoende "
 "rechten hebt."
 
-#: skylines/templates/tracking/view.html:128
+#: skylines/templates/tracking/view.html:141
 msgid "(ignored)"
 msgstr "(genegeerd)"
 
-#: skylines/templates/tracking/view.html:143
+#: skylines/templates/tracking/view.html:156
 msgid "Your Live Tracking settings"
 msgstr "Je Live Tracking instellingen"
 
@@ -1103,62 +1115,59 @@ msgstr "Als je club nog niet bestaat in Skylines, maak hem dan aan:"
 msgid "Users"
 msgstr "Gebruikers"
 
-#: skylines/templates/users/view.html:73
+#: skylines/templates/users/view.html:72
 msgid "Email"
 msgstr "Email"
 
-#: skylines/templates/users/view.html:78
+#: skylines/templates/users/view.html:77
 msgid "Display name"
 msgstr "Weergavenaam"
 
-#: skylines/templates/users/view.html:83
+#: skylines/templates/users/view.html:82
 msgid "Tracking key"
 msgstr "Tracking key"
 
-#: skylines/templates/users/view.html:86
+#: skylines/templates/users/view.html:85
 msgid "More Information"
 msgstr "Meer informatie"
 
-#: skylines/templates/users/view.html:94
+#: skylines/templates/users/view.html:93
 msgid "Tracking delay"
 msgstr "Tracking vertraging"
 
-#: skylines/templates/users/view.html:114
+#: skylines/templates/users/view.html:113
 msgid "[Unspecified]"
 msgstr "[Ongespecificeerd]"
 
-#: skylines/templates/users/view.html:134
+#: skylines/templates/users/view.html:133
 msgid "Unfollow"
 msgstr "Niet volgen"
 
-#: skylines/templates/users/view.html:137
+#: skylines/templates/users/view.html:136
 msgid "Follow"
 msgstr "Volgen"
 
-#: skylines/templates/users/view.html:147
+#: skylines/templates/users/view.html:146
 msgid "Following"
 msgstr "Volgt"
 
-#: skylines/templates/users/view.html:159
+#: skylines/templates/users/view.html:158
 msgid "Followers"
 msgstr "Volgers"
 
-#: skylines/templates/users/view.html:171
+#: skylines/templates/users/view.html:170
 msgid "Distance Flights"
 msgstr "Afstand vluchten"
 
-#: skylines/templates/users/view.html:198
+#: skylines/templates/users/view.html:197
 msgid "Last 12 Months"
 msgstr "Afgelopen 12 maanden"
 
-#: skylines/templates/users/view.html:227
+#: skylines/templates/users/view.html:226
 msgid "Average Speed"
 msgstr "Gemiddelde snelheid"
 
-#: skylines/templates/users/view.html:235
+#: skylines/templates/users/view.html:234
 msgid "Takeoff Locations"
 msgstr "Startlocaties"
-
-#~ msgid "Units"
-#~ msgstr "Eenheden"
 
