@@ -18,7 +18,7 @@ For more information, please refer to the [git documentation](http://git-scm.com
 
 # Installation and Setup
 
-see <INSTALL.md>
+see [INSTALL.md](INSTALL.md)
 
 # Contributing
 
