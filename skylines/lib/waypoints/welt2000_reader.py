@@ -79,7 +79,7 @@ def __parse_line(line, bounds = None):
         elif data[4:5] == 'L': wp.surface = 'loam'
         elif data[4:5] == 'S': wp.surface = 'sand'
         elif data[4:5] == 'Y': wp.surface = 'clay'
-        elif data[4:5] == 'G': wp.surface = 'gras'
+        elif data[4:5] == 'G': wp.surface = 'grass'
         elif data[4:5] == 'V': wp.surface = 'gravel'
         elif data[4:5] == 'D': wp.surface = 'dirt'
 
@@ -129,8 +129,7 @@ def __parse_line(line, bounds = None):
     wp.name = wp.name.title()
 
     # Strip duplicate spaces from waypoint name
-    while '  ' in wp.name:
-        wp.name = wp.name.replace('  ', ' ')
+    wp.name = re.sub(r' {2,}', ' ', wp.name)
 
     # Extract country code
     wp.country_code = line[60:62].strip();
