@@ -73,6 +73,10 @@ In the last chapter you have setup the database server and the `skylines` databa
 
     $ paster setup-app development.ini
 
+If you have set up your environment with Vagrant, you must ssh into the virtual machine and run the previous command from within the ```/vagrant``` directory. 
+Alternatively, you can run:
+
+    vagrant ssh --command "paster setup-app /vagrant/development.ini"
 
 # XCSoar dependencies
 
@@ -107,7 +111,7 @@ If the download does not work, or you want to build the tools yourself, you can 
 
 # Running the Server
 
-You should now be able to start the server and run your development instance of *SkyLines*:
+You should now be able to start the server and run your development instance of *SkyLines* (If you have set up your environment with Vagrant, remember to ssh into the virtual machine and run the commands from the ```/vagrant```directory):
 
     $ paster serve development.ini
 
