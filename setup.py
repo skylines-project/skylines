@@ -80,6 +80,7 @@ setup(
     message_extractors={'skylines': [
             ('**.py', 'python', None),
             ('templates/**.html', 'genshi', None),
+            ('templates/**.jinja', 'jinja2', None),
             ('public/**', 'ignore', None)]},
 
     entry_points="""
