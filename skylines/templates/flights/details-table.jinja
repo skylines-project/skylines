@@ -1,0 +1,222 @@
+{% from "macros/flags.jinja" import insert_flag with context %}
+{% from "macros/datetime.jinja" import insert_timeago with context %}
+
+<xi:include href="../snippets/flags.html" />
+<xi:include href="../snippets/datetime.html" />
+
+{%- macro render_details_table(flight) %}
+<script type="text/javascript">
+  /* <![CDATA[ */
+  $(function() {
+    var url = getShareUrl('{{ request.url }}');
+    var content =
+        '<input value="' + url + '" type="text" style="width: 95%;margin-bottom:9px"><br>' +
+        '<a href="http://www.facebook.com/share.php?u=' + url + '" target="_blank" class="btn"><i class="icon-facebook"> Share</i></a> ' +
+        '<a href="https://plus.google.com/share?url=' + url + '" target="_blank" class="btn"><i class="icon-google-plus"> Share</i></a> ' +
+        '<a href="http://twitter.com/share?url=' + url + '" target="_blank" class="btn"><i class="icon-twitter"> Tweet</i></a> ';
+
+    $("a.share").popover({
+      trigger: 'click',
+      content: content,
+      title: '{{ _('Spread the word') }}',
+      html: true
+    });
+  });
+  /* ]]> */
+</script>
+
+<table py:def="render_details_table(flight)" class="table" itemscope="" itemtype="http://schema.org/SportsEvent">
+  <meta itemprop="url" content="/flights/{{ flight.id }}" />
+  <tbody>
+    {%- if flight.date_local %}
+    <tr>
+      <th>{% trans %}Date{% endtrans %}</th>
+      <td>
+        <span>{{ h.format_date(flight.date_local) }}</span>
+        <a href="#" class="btn btn-mini pull-right share">
+          <i class="icon-share-alt icon-small"></i> {% trans %}Share{% endtrans %}
+        </a>
+      </td>
+    </tr>
+    {%- endif %}
+
+    {%- if flight.takeoff_time %}
+    <tr>
+      <meta itemprop="startDate" content="{{ h.isoformat_utc(flight.takeoff_time) }}" />
+      <th>{% trans %}Take-off{% endtrans %}</th>
+      <td>
+        {%- if flight.takeoff_airport %}
+        {{ insert_flag(flight.takeoff_airport.country_code, 'float:right;margin:3px') }}
+        {%- trans url='/flights/airport/' ~ flight.takeoff_airport_id, airport=flight.takeoff_airport.name, time=h.format_time(flight.takeoff_time) %}
+        <a href="{{ url }}">{{ airport }}</a><br /> at {{ time }}
+        {%- endtrans %}
+        {%- else %}
+        {{ h.format_time(flight.takeoff_time) }}
+        {%- endif %}
+      </td>
+    </tr>
+    {%- endif %}
+
+    {%- if flight.landing_time %}
+    <tr py:if="flight.landing_time">
+      <meta itemprop="endDate" content="{{ h.isoformat_utc(flight.landing_time) }}" />
+      <th>{% trans %}Landing{% endtrans %}</th>
+      <td>
+        {%- if flight.landing_airport %}
+        {{ insert_flag(flight.landing_airport.country_code, 'float:right;margin:3px') }}
+        {%- trans url='/flights/airport/' ~ flight.landing_airport_id, airport=flight.landing_airport.name, time=h.format_time(flight.landing_time) %}
+        <a href="{{ url }}">{{ airport }}</a><br /> at {{ time }}
+        {%- endtrans %}
+        {%- else %}
+        {{ h.format_time(flight.landing_time) }}
+        {%- endif %}
+      </td>
+    </tr>
+    {%- endif %}
+
+    {%- if flight.duration %}
+    <tr py:if="flight.duration">
+      <th>{% trans %}Duration{% endtrans %}</th>
+      <td py:content="str(flight.duration) + ' hours'">
+        01:23:34 hours
+      </td>
+    </tr>
+    {%- endif %}
+
+    <tr>
+      <th>{% trans %}Aircraft{% endtrans %}</th>
+      <td>
+        {%- if flight.is_writable(request.identity) %}
+        <a href="change_aircraft" class="btn btn-mini" style="float: right;">
+          <i class="icon-pencil icon-small"></i> {% trans %}Change{% endtrans %}
+        </a>
+        {%- endif %}
+
+        {%- if flight.model_id %}
+        <span rel="tooltip" title="{{ _('Handicap') ~ ': ' ~ flight.model.dmst_index }}">{{ flight.model|e }}</span>
+        {%- else %}
+
+          {%- if flight.igc_file.model %}
+          [{{ flight.igc_file.model|e }}]
+          {%- else %}
+          {% trans %}Unknown{% endtrans %}
+          {%- endif %}
+
+        {%- endif %}
+
+        <small><br/>
+
+        {%- if flight.registration %}
+          {{ flight.registration|e }}
+        {%- elif flight.igc_file.registration %}
+          {{ flight.igc_file.registration|e }}
+        {%- endif %}
+
+        {%- if flight.competition_id %}
+          &ndash; {{ flight.competition_id|e }}
+        {%- elif flight.igc_file.competition_id %}
+          &ndash; {{ flight.igc_file.competition_id|e }}
+        {%- endif %}
+
+        </small>
+      </td>
+    </tr>
+
+    <tr>
+      <th>{% trans %}Score{% endtrans %}</th>
+      <td>
+        {{ flight.index_score }} pt
+        <small><br/>
+        {%- if flight.olc_classic_distance %}
+        <span title="OLC Distance">
+          <span style="COLOR:#ff2c73">&#x294A;</span> {{ h.format_distance(flight.olc_classic_distance) }}{% if flight.olc_triangle_distance %},{% endif %}
+        </span>
+        {%- endif %}
+        {%- if flight.olc_triangle_distance %}
+        <span title="FAI Triangle Distance">
+          <span style="COLOR:#9f14ff">&#x25B2;</span> {{ h.format_distance(flight.olc_triangle_distance) }}
+        </span>
+        {%- endif %}
+        </small>
+      </td>
+    </tr>
+
+    {%- if flight.speed %}
+    <tr>
+      <th>{% trans %}Speed{% endtrans %}</th>
+      <td>{{ h.format_speed(flight.speed) }}</td>
+    </tr>
+    {%- endif %}
+
+    <tr>
+      <th>{% trans %}Pilot{% endtrans %}</th>
+      <td>
+        {%- if flight.is_writable(request.identity) %}
+        <a href="change_pilot" class="btn btn-mini" style="float: right;">
+          <i class="icon-pencil icon-small"></i> {% trans %}Change{% endtrans %}
+        </a>
+        {%- endif %}
+
+        {%- if flight.pilot %}
+        <span itemprop="performer" itemscope="" itemtype="http://schema.org/Person">
+          <meta itemprop="url" content="/users/{{ flight.pilot_id }}" />
+          <a href="/users/{{ flight.pilot_id }}/" itemprop="name">{{ flight.pilot|e }}</a>
+        </span>
+        {%- endif %}
+
+        {%- if flight.pilot and flight.co_pilot %}<br/>{% endif -%}
+
+        {%- if flight.co_pilot %}
+        <span itemprop="performer" itemscope="" itemtype="http://schema.org/Person">
+          <meta itemprop="url" content="/users/{{ flight.co_pilot_id }}" />
+          <a href="/users/{{ flight.co_pilot_id }}/" itemprop="name">{{ flight.co_pilot|e }}</a>
+        </span>
+        {%- endif %}
+
+        {%- if not flight.pilot and not flight.co_pilot %}
+        [unspecified]
+        {%- endif %}
+      </td>
+    </tr>
+
+    {%- if flight.club %}
+    <tr>
+      <th>{% trans %}Club{% endtrans %}</th>
+      <td itemprop="performer" itemscope="" itemtype="http://schema.org/SportsTeam">
+        <meta itemprop="url" content="/clubs/{{ flight.club_id }}" />
+        <a href="/clubs/{{ flight.club_id }}/" itemprop="name">{{ flight.club|e }}</a>
+      </td>
+    </tr>
+    {%- endif %}
+
+    <tr>
+      <th>{% trans %}Uploaded{% endtrans %}</th>
+      <td>
+        {%- trans upload_time=insert_timeago(flight.time_created), uploader=flight.igc_file.owner|e %}
+        {{ upload_time }}<br/> by {{ uploader }}
+        {%- endtrans %}
+      </td>
+    </tr>
+    <tr>
+      <th>{% trans %}Download{% endtrans %}</th>
+      <td><a href="{{ flight.igc_file.get_download_uri() }}">{{ h.truncate(flight.igc_file.filename, 25) }}</a></td>
+    </tr>
+
+    {% if flight.may_delete(request.identity) %}
+    <tr>
+      <th>{% trans %}Actions{% endtrans %}</th>
+      <td>
+        <a data-toggle="modal" data-target="#modal" href="delete?embedded" class="btn btn-mini">
+          <i class="icon-remove icon-small"></i> {% trans %}Delete{% endtrans %}
+        </a>
+
+        <div class="modal" id="modal" tabindex="-1" role="dialog" aria-hidden="true" style="display:none">
+          <div class="modal-body">
+          </div>
+        </div>
+      </td>
+    </tr>
+    {% endif %}
+  </tbody>
+</table>
+{%- endmacro %}

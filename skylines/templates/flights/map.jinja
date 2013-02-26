@@ -1,0 +1,110 @@
+{% extends "base-fullscreen.jinja" %}
+{% set active_page = "flights" %}
+
+
+{% from 'flights/meta-tags.jinja' import flight_meta_tags with context %}
+
+
+{% block title -%}
+{% with title, tagline = h.format_flight_title(flight) -%}
+{{ title|e }} {{ tagline|e }}
+{%- endwith %}
+{%- endblock %}
+
+{%- block head %}
+{{ super() }}
+
+{{ flight_meta_tags(flight) }}
+
+{% for url in g.assets['css-openlayers'].urls() -%}
+<link href="{{ url }}" rel="stylesheet" type="text/css" />
+{%- endfor %}
+
+{%- if request.identity and request.identity['user'].eye_candy -%}
+<link href="/css/eye_candy/OpenLayers.css" rel="stylesheet" type="text/css" />
+{%- endif %}
+
+{% for url in g.assets['js-openlayers'].urls() -%}
+<script type="text/javascript" src="{{ url }}"></script>
+{%- endfor %}
+{% for url in g.assets['js-flot'].urls() -%}
+<script type="text/javascript" src="{{ url }}"></script>
+{%- endfor %}
+{% for url in g.assets['js-flight'].urls() -%}
+<script type="text/javascript" src="{{ url }}"></script>
+{%- endfor %}
+
+<script type="text/javascript">
+  $(function() {
+    initUnits({{ h.json.dumps(h.get_setting_name('distance_unit')) }},
+              {{ h.json.dumps(h.get_setting_name('speed_unit')) }},
+              {{ h.json.dumps(h.get_setting_name('lift_unit')) }},
+              {{ h.json.dumps(h.get_setting_name('altitude_unit')) }});
+
+    initOpenLayers("map_canvas",
+                   "{{ config.get('skylines.map.airspace_tile_url', '') }}");
+    initFlightLayer();
+    initFlot($("#barogram"));
+
+    addFlight({{ flight.id }},
+      {{ h.json.dumps(trace.encoded.points) }},
+      {{ h.json.dumps(trace.encoded.levels) }},
+      {{ trace.fixes.numLevels }},
+      {{ h.json.dumps(trace.barogram_t) }},
+      {{ h.json.dumps(trace.barogram_h) }},
+      {{ h.json.dumps(trace.enl) }},
+      {{ h.json.dumps(trace.zoom_levels) }},
+      {{ h.json.dumps(trace.contests) }},
+      { registration: {{ h.json.dumps(flight.registration)|e }},
+        competition_id: {{ h.json.dumps(flight.competition_id)|e }} }
+    );
+
+    {% if other_flights -%}
+    {% for flight, trace in other_flights if trace -%}
+    addFlight({{ flight.id }},
+      {{ h.json.dumps(trace.encoded.points) }},
+      {{ h.json.dumps(trace.encoded.levels) }},
+      {{ trace.fixes.numLevels }},
+      {{ h.json.dumps(trace.barogram_t) }},
+      {{ h.json.dumps(trace.barogram_h) }},
+      {{ h.json.dumps(trace.enl) }},
+      {{ h.json.dumps(trace.zoom_levels) }},
+      {{ h.json.dumps(trace.contests) }},
+      { registration: {{ h.json.dumps(flight.registration)|e }},
+        competition_id: {{ h.json.dumps(flight.competition_id)|e }} }
+    );
+    {%- endfor %}
+    {%- endif %}
+
+    var factor = $("#barogram")[0].offsetHeight / map.getSize().h;
+    var zoomExtent = getAllFlightsBounds().clone().scale(1.1);
+    zoomExtent.bottom -= zoomExtent.getHeight() * factor * 3/2;
+
+    map.zoomToExtent(zoomExtent);
+
+    hoverMap();
+
+    var pinnedFlights = getPinnedFlights();
+    for (i in pinnedFlights)
+      if (pinnedFlights[i] != {{ flight.id }})
+        addFlightFromJSON("/flights/" + pinnedFlights[i] + "/json");
+
+    pinButton($("#pinned"), {{ flight.id }});
+
+    $.getScript("http://maps.google.com/maps/api/js?v=3.7&sensor=false&callback=addGoogleLayer");
+    addBingLayers("{{ config.get('skylines.bing.api_key', 'null') }}");
+    addReliefLayer();
+  });
+</script>
+
+<style>body { height: 100%; margin: 0; padding: 0 }</style>
+{%- endblock %}
+
+
+{%- block content %}
+<div id="map_canvas" class="olFullscreen" style="position: absolute; top: 40px; bottom: 0; width:100%;"></div>
+<div style="position: absolute; bottom: 0; width:100%; background-color: white; opacity: 0.8;">
+    <table id="fix-data" class="table table-condensed"></table>
+    <div id="barogram" style="width:100%; height:100pt;"></div>
+</div>
+{%- endblock %}
