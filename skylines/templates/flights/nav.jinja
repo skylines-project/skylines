@@ -1,0 +1,70 @@
+{% set my_pilot = request.identity['user'] if request.identity else None %}
+{% set my_club = request.identity['user'].club if request.identity else None %}
+
+<ul class="nav nav-pills">
+  <li{% if tab == 'all' %} class="active"{% endif %}>
+    <a href="/flights/all">All Flights</a>
+  </li>
+
+  {% if date -%}
+  <li>
+    <a href="/flights/date/{{ (date - h.datetime.timedelta(days=1)).strftime('%Y-%m-%d') }}">
+      &nbsp;<i class="icon-arrow-left"></i>&nbsp;
+    </a>
+  </li>
+  {%- endif %}
+
+  <li{% if tab == 'date' or tab == 'today' %} class="active"{% endif %}>
+    <a href="/flights/today">
+      <span class="date">
+        {% if date and date != h.datetime.date.today() -%}
+        {{ h.format_date(date) }}
+        {%- else %}
+        {% trans %}Today{% endtrans %}
+        {%- endif %}
+      </span>
+      &nbsp;<span id="datepicker" data-date="{% if date %}{{ date.isoformat() }}{% endif %}" data-date-format="yyyy-mm-dd"><i class="icon-th"></i></span>
+    </a>
+  </li>
+
+  {% if date -%}
+  <li>
+    <a href="/flights/date/{{ (date + h.datetime.timedelta(days=1)).strftime('%Y-%m-%d') }}">
+      &nbsp;<i class="icon-arrow-right"></i>&nbsp;
+    </a>
+  </li>
+  {%- endif %}
+
+  {% if airport -%}
+  <li class="active"><a href="/flights/airport/{{ airport.id }}">{{ airport.name }}</a></li>
+  {%- endif %}
+
+  {% if club -%}
+  <li class="active"><a href="/flights/club/{{ club.id }}">{{ club|e }}</a></li>
+  {%- endif %}
+
+  {% if my_club and (not club or my_club != club) -%}
+  <li><a href="/flights/club/{{ my_club.id }}">{{ my_club|e }}</a></li>
+  {%- endif %}
+
+  {% if pilot -%}
+  <li class="active"><a href="/flights/pilot/{{ pilot.id }}">{{ pilot|e }}</a></li>
+  {%- endif %}
+
+  {% if my_pilot and (not pilot or my_pilot != pilot) -%}
+  <li><a href="/flights/pilot/{{ my_pilot.id }}">{{ my_pilot|e }}</a></li>
+  {%- endif %}
+
+  {% if request.identity -%}
+  <li{% if tab == 'unassigned' %} class="active"{% endif %}>
+    <a href="/flights/unassigned">{% trans %}Unassigned Flights{% endtrans %}</a>
+  </li>
+  {%- endif %}
+
+  <li id="pinned-flights-link" style="display: none;"{% if tab == 'pinned' %} class="active"{% endif %}>
+    <a href="/flights/pinned">{% trans %}Pinned Flights{% endtrans %}</a>
+    <script type="text/javascript">
+      showPinnedFlightsLink();
+    </script>
+  </li>
+</ul>
