@@ -34,7 +34,7 @@ base_config.default_renderer = 'genshi'
 base_config.renderers.append('genshi')
 
 base_config.renderers.append('jinja')
-base_config.jinja_extensions = ['jinja2.ext.i18n', 'jinja2.ext.with_']
+base_config.jinja_extensions = ['jinja2.ext.i18n', 'jinja2.ext.with_', 'jinja2.ext.do']
 
 def install_gettext_callables(app):
     from tg.i18n import ugettext, ungettext
