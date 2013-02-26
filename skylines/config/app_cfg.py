@@ -36,6 +36,14 @@ base_config.renderers.append('genshi')
 base_config.renderers.append('jinja')
 base_config.jinja_extensions = ['jinja2.ext.i18n', 'jinja2.ext.with_']
 
+def install_gettext_callables(app):
+    from tg.i18n import ugettext, ungettext
+    jinja2_env = app_globals.config['pylons.app_globals'].jinja2_env
+    jinja2_env.install_gettext_callables(ugettext, ungettext)
+    return app
+
+base_config.register_hook('after_config', install_gettext_callables)
+
 #base_config.renderers.append('mako')
 # if you want raw speed and have installed chameleon.genshi
 # you should try to use this renderer instead.
