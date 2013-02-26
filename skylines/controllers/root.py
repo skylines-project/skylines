@@ -78,7 +78,7 @@ class RootController(BaseController):
 
         return self.tracking.lt24.client(**kw)
 
-    @expose('about.html')
+    @expose('jinja:about.jinja')
     def about(self, **kw):
         """Handle the 'about' page."""
         return dict()
