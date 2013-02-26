@@ -45,9 +45,9 @@
       <meta itemprop="startDate" content="{{ h.isoformat_utc(flight.takeoff_time) }}" />
       <th>{% trans %}Take-off{% endtrans %}</th>
       <td>
-        {%- if flight.takeoff_airport %}
+        {% if flight.takeoff_airport -%}
         {{ insert_flag(flight.takeoff_airport.country_code, 'float:right;margin:3px') }}
-        {%- trans url='/flights/airport/' ~ flight.takeoff_airport_id, airport=flight.takeoff_airport.name, time=h.format_time(flight.takeoff_time) %}
+        {% trans url='/flights/airport/' ~ flight.takeoff_airport_id, airport=flight.takeoff_airport.name, time=h.format_time(flight.takeoff_time) -%}
         <a href="{{ url }}">{{ airport }}</a><br /> at {{ time }}
         {%- endtrans %}
         {%- else %}
@@ -62,9 +62,9 @@
       <meta itemprop="endDate" content="{{ h.isoformat_utc(flight.landing_time) }}" />
       <th>{% trans %}Landing{% endtrans %}</th>
       <td>
-        {%- if flight.landing_airport %}
+        {% if flight.landing_airport -%}
         {{ insert_flag(flight.landing_airport.country_code, 'float:right;margin:3px') }}
-        {%- trans url='/flights/airport/' ~ flight.landing_airport_id, airport=flight.landing_airport.name, time=h.format_time(flight.landing_time) %}
+        {% trans url='/flights/airport/' ~ flight.landing_airport_id, airport=flight.landing_airport.name, time=h.format_time(flight.landing_time) -%}
         <a href="{{ url }}">{{ airport }}</a><br /> at {{ time }}
         {%- endtrans %}
         {%- else %}
@@ -192,7 +192,7 @@
     <tr>
       <th>{% trans %}Uploaded{% endtrans %}</th>
       <td>
-        {%- trans upload_time=insert_timeago(flight.time_created), uploader=flight.igc_file.owner|e %}
+        {% trans upload_time=insert_timeago(flight.time_created), uploader=flight.igc_file.owner|e -%}
         {{ upload_time }}<br/> by {{ uploader }}
         {%- endtrans %}
       </td>
