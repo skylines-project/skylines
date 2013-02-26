@@ -1,0 +1,12 @@
+{%- macro insert_flash_message(floating) %}
+{%- with flash = h.flash.pop_payload() %}
+{%- if flash %}
+    <div class="alert{%- if flash['status'] == 'ok' %} alert-info{%- elif flash['status'] == 'error' %} alert-error{% endif %}{%- if floating %} alert-floating{% endif %}">
+      <button class="close" data-dismiss="alert">×</button>
+      {%- if flash['status'] == 'warning' %}<strong>{% trans %}Warning!{% endtrans %}</strong>{% endif %}
+      {%- if flash['status'] == 'error' %}<strong>{% trans %}Error!{% endtrans %}</strong>{% endif %}
+      {{ flash.message|e }}
+    </div>
+{%- endif %}
+{%- endwith %}
+{%- endmacro %}
