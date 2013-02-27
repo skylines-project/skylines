@@ -56,7 +56,7 @@ class ClubController(BaseController):
         self.club = club
 
     @with_trailing_slash
-    @expose('clubs/view.html')
+    @expose('jinja:clubs/view.jinja')
     def index(self):
         return dict(page='settings', club=self.club)
 
