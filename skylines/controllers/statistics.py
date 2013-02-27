@@ -10,7 +10,7 @@ from skylines.model import DBSession, User, Club, Flight, Airport
 
 
 class StatisticsController(BaseController):
-    @expose('statistics/years.html')
+    @expose('jinja:statistics/years.jinja')
     def _default(self, *args, **kw):
         club = None
         pilot = None
@@ -60,6 +60,9 @@ class StatisticsController(BaseController):
 
         list = []
         for row in query:
+            row.average_distance = row.distance / row.flights
+            row.average_duration = row.duration / row.flights
+
             list.append(row)
 
             max_flights = max(max_flights, row.flights)

@@ -1,0 +1,33 @@
+{% macro render_duration_table(years, max_duration, sum_duration = None) -%}
+<table class="table table-condensed table-striped">
+  <thead>
+    <tr>
+      <th>{% trans %}Year{% endtrans %}</th>
+      <th colspan="2">{% trans %}Flight Time{% endtrans %}</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for year in years -%}
+    <tr>
+      <td class="span2">{{ year.year|int }}</td>
+      <td class="span2">
+        <span rel="tooltip" title="{{ _('avg. %(hours)s hours per flight')|format(hours=h.format_timedelta(year.average_duration)) }}">
+          {{ h.format_timedelta(year.duration) }} Hours
+        </span>
+      </td>
+      <td class="span8">
+        <div class="progress progress-warning">
+          <div class="bar" style="width: {{ year.duration.total_seconds() * 100 / max_duration }}%;"></div>
+        </div>
+      </td>
+    </tr>
+    {%- endfor %}
+    {% if sum_duration -%}
+    <tr>
+      <td><strong>{% trans %}Total{% endtrans %}</strong></td>
+      <td colspan="2"><strong>{{ h.format_timedelta(sum_duration) }} Hours</strong></td>
+    </tr>
+    {%- endif %}
+  </tbody>
+</table>
+{%- endmacro %}

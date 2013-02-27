@@ -1,0 +1,29 @@
+{% macro render_flights_table(years, max_flights, sum_flights = None) -%}
+<table class="table table-condensed table-striped">
+  <thead>
+    <tr>
+      <th>{% trans %}Year{% endtrans %}</th>
+      <th colspan="2">{% trans %}Flights{% endtrans %}</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for year in years -%}
+    <tr>
+      <td class="span2">{{ year.year|int }}</td>
+      <td class="span2">{{ h.format_number(year.flights) }}</td>
+      <td class="span8">
+        <div class="progress">
+          <div class="bar" style="width: {{ year.flights * 100 / max_flights }}%;"></div>
+        </div>
+      </td>
+    </tr>
+    {%- endfor %}
+    {% if sum_flights -%}
+    <tr>
+      <td><strong>{% trans %}Total{% endtrans %}</strong></td>
+      <td colspan="2"><strong>{{ h.format_number(sum_flights) }}</strong></td>
+    </tr>
+    {%- endif %}
+  </tbody>
+</table>
+{%- endmacro %}
