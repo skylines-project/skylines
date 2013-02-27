@@ -54,7 +54,7 @@ class NotificationsController(BaseController):
         return controller, remainder
 
     @with_trailing_slash
-    @expose('notifications/list.html')
+    @expose('jinja:notifications/list.jinja')
     def index(self, **kwargs):
         if not request.identity:
             raise HTTPForbidden
@@ -96,7 +96,9 @@ class NotificationsController(BaseController):
 
         notifications.sort(key=itemgetter('time'), reverse=True)
 
-        return dict(notifications=notifications, params=kwargs)
+        result = dict(notifications=notifications, params=kwargs)
+        result.update(Notification.constants())
+        return result
 
     @without_trailing_slash
     @expose()
