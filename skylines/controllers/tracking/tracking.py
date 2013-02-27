@@ -54,7 +54,7 @@ class TrackingController(BaseController):
         controller = TrackController(pilot=pilots)
         return controller, remainder
 
-    @expose('tracking/info.html')
+    @expose('jinja:tracking/info.jinja')
     def info(self, **kw):
         user = None
         if request.identity is not None and 'user' in request.identity:
