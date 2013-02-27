@@ -3,7 +3,7 @@
 
 <ul class="nav nav-pills">
   <li{% if tab == 'all' %} class="active"{% endif %}>
-    <a href="/flights/all">All Flights</a>
+    <a href="/flights/all">{% trans %}All Flights{% endtrans %}</a>
   </li>
 
   {% if date -%}
