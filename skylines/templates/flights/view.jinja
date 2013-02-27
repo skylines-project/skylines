@@ -63,8 +63,8 @@
       {{ h.json.dumps(trace.enl) }},
       {{ h.json.dumps(trace.zoom_levels) }},
       {{ h.json.dumps(trace.contests) }},
-      { registration: {{ h.json.dumps(flight.registration)|e }},
-        competition_id: {{ h.json.dumps(flight.competition_id)|e }} }
+      { registration: {{ '"' ~ flight.registration|e ~ '"' if flight.registration else 'null' }},
+        competition_id: {{ '"' ~ flight.competition_id|e ~ '"' if flight.competition_id else 'null' }} }
     );
 
     {% if other_flights -%}
@@ -78,8 +78,8 @@
       {{ h.json.dumps(trace.enl) }},
       {{ h.json.dumps(trace.zoom_levels) }},
       {{ h.json.dumps(trace.contests) }},
-      { registration: {{ h.json.dumps(flight.registration)|e }},
-        competition_id: {{ h.json.dumps(flight.competition_id)|e }} }
+      { registration: {{ '"' ~ flight.registration|e ~ '"' if flight.registration else 'null' }},
+        competition_id: {{ '"' ~ flight.competition_id|e ~ '"' if flight.competition_id else 'null' }} }
     );
     {%- endfor %}
     {%- endif %}
