@@ -7,13 +7,21 @@
 
 {% block title -%}
 {% if pilot -%}
-  {% trans url='/users/' ~ pilot.id, pilot=pilot|e %}Flights <small>of <a href="{{ url }}">{{ pilot }}</a></small>{% endtrans -%}
+  {% trans pilot='<a href="/users/' ~ pilot.id ~ '">' ~ pilot|e ~ '</a>' -%}
+    Flights <small>of {{ pilot }}</small>
+  {%- endtrans %}
 {%- elif club %}
-  {% trans url='/clubs/' ~ club.id, club=club|e %}Flights <small>of <a href="{{ url }}">{{ club }}</a></small>{% endtrans -%}
+  {% trans club='<a href="/clubs/' ~ club.id ~ '">' ~ club|e ~ '</a>' -%}
+    Flights <small>of {{ club }}</small>
+  {%- endtrans %}
 {%- elif airport %}
-  {% trans airport=airport.name|e %}Flights <small>from {{ airport }}</small>{% endtrans -%}
+  {% trans airport=airport.name|e -%}
+    Flights <small>from {{ airport }}</small>
+  {%- endtrans %}
 {%- elif date %}
-  {% trans date=h.format_date(date) %}Flights <small>on {{ date }}</small>{% endtrans -%}
+  {% trans date=h.format_date(date) -%}
+    Flights <small>on {{ date }}</small>
+  {%- endtrans %}
 {%- else %}
   {% trans %}Flights{% endtrans -%}
 {%- endif %}

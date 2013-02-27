@@ -10,13 +10,13 @@
 
 {% block title -%}
 {% if selected_pilot -%}
-  {% trans url='/users/' ~ selected_pilot.id, pilot=selected_pilot|e -%}
-    Statistics <small>of <a href="{{ url }}">{{ pilot }}</a></small>
+  {% trans pilot='<a href="/users/' ~ selected_pilot.id ~ '">' ~ selected_pilot|e ~ '</a>' -%}
+    Statistics <small>of {{ pilot }}</small>
   {%- endtrans %}
 
 {%- elif selected_club %}
-  {% trans url='/clubs/' ~ selected_club.id, club=selected_club|e -%}
-    Statistics <small>of <a href="{{ url }}">{{ club }}</a></small>
+  {% trans club='<a href="/clubs/' ~ selected_club.id ~ '">' ~ selected_club|e ~ '</a>' -%}
+    Statistics <small>of {{ club }}</small>
   {%- endtrans %}
 
 {%- elif airport %}
