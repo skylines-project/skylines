@@ -111,7 +111,7 @@ class ClubController(BaseController):
 
 
 class ClubsController(BaseController):
-    @expose('clubs/list.html')
+    @expose('jinja:clubs/list.jinja')
     def index(self):
         clubs = DBSession.query(Club).order_by(Club.name)
         return dict(page='settings', clubs=clubs)
