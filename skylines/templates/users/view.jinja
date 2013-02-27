@@ -1,0 +1,260 @@
+{% from "macros/datetime.jinja" import insert_timeago_date with context %}
+
+{% extends "base-page.jinja" %}
+
+{% block title %}{{ user|e }}{% endblock %}
+
+
+{% macro add_locations(locations) -%}
+{% for location in locations -%}
+[{{ location.longitude }}, {{ location.latitude }}]{% if not loop.last %},{% endif %}
+{%- endfor %}
+{%- endmacro %}
+
+
+{% block head -%}
+{{ super() }}
+
+<script type="text/javascript" src="/js/map.js"></script>
+
+{% if takeoff_locations -%}
+{% for url in g.assets['css-openlayers'].urls() -%}
+<link href="{{ url }}" rel="stylesheet" type="text/css" />
+{%- endfor %}
+
+{%- if request.identity and request.identity['user'].eye_candy -%}
+<link href="/css/eye_candy/OpenLayers.css" rel="stylesheet" type="text/css" />
+{%- endif %}
+
+{% for url in g.assets['js-openlayers'].urls() -%}
+<script type="text/javascript" src="{{ url }}"></script>
+{%- endfor %}
+
+<script type="text/javascript">
+  $(function() {
+    initOpenLayers("map_canvas",
+                 "{{ config.get('skylines.map.airspace_tile_url', '') }}");
+
+    $.getScript("http://maps.google.com/maps/api/js?v=3.7&sensor=false&callback=addGoogleLayer");
+    addBingLayers("{{ config.get('skylines.bing.api_key', 'null') }}");
+    addReliefLayer();
+
+    var vectorLayer = new OpenLayers.Layer.Vector("Overlay");
+    map.addLayer(vectorLayer);
+
+    var locations = [{{ add_locations(takeoff_locations) }}];
+    for (var i = 0; i < locations.length; ++i) {
+      point = new OpenLayers.Geometry.Point(locations[i][0], locations[i][1]);
+      point = point.transform(new OpenLayers.Projection("EPSG:4326"), map.getProjectionObject());
+      vectorLayer.addFeatures(new OpenLayers.Feature.Vector(point, {},
+        {
+          externalGraphic: "/images/OpenLayers/marker-gold.png",
+          graphicHeight: 21,
+          graphicWidth: 16,
+          graphicXOffset: -16/2,
+          graphicYOffset: -21
+        }
+      ));
+    }
+    map.zoomToExtent(vectorLayer.getDataExtent().scale(1.1));
+    var zoom = map.getZoom();
+    if (zoom > 10)
+      map.zoomTo(10);
+  });
+</script>
+{%- endif %}
+{%- endblock %}
+
+
+{%- block content %}
+<div itemscope="" itemtype="http://schema.org/Person">
+  <meta itemprop="url" content="/users/{{ user.id }}" />
+  <div class="row">
+    <div class="well span8 offset2">
+      <table class="right">
+        {% if user.is_readable(request.identity) -%}
+        <tr>
+          <th>{% trans %}Email{% endtrans %}</th>
+          <td itemprop="email">{{ user.email_address }}</td>
+        </tr>
+        {%- endif %}
+
+        <tr>
+          <th>{% trans %}Name{% endtrans %}</th>
+          <td itemprop="name">{{ user.display_name }}</td>
+        </tr>
+
+        {% if user.is_readable(request.identity) and user.tracking_key_hex -%}
+        <tr>
+          <th>{% trans %}Tracking key{% endtrans %}</th>
+          <td>
+            <span class="label label-info">{{ user.tracking_key_hex }}</span>
+            <a href="/tracking/info" class="btn btn-mini">{% trans %}More Information{% endtrans %}</a>
+            {% if user.is_writable(request.identity) -%}
+            <a href="tracking_register?came_from=." class="btn btn-mini">{% trans %}Generate new key{% endtrans %}</a>
+            {%- endif %}
+          </td>
+        </tr>
+
+        <tr>
+          <th>{% trans %}Tracking delay{% endtrans %}</th>
+          <td>
+            {% if user.tracking_delay == 0 -%}
+            {% trans %}None{% endtrans %}
+            {%- else %}
+            {{ ungettext('%u minute', '%u minutes', user.tracking_delay) % user.tracking_delay }}
+            {%- endif %}
+          </td>
+        </tr>
+        {%- endif %}
+
+        {% if user.club or user.is_writable(request.identity) -%}
+        <tr>
+          <th>{% trans %}Club{% endtrans %}</th>
+
+          {% if user.club -%}
+          <td itemprop="memberof" itemscope="" itemtype="http://schema.org/SportsTeam">
+            <meta itemprop="url" content="/clubs/{{ user.club_id }}" />
+            <a href="/clubs/{{ user.club_id }}/" itemprop="name">{{ user.club|e }}</a>
+          {%- else %}
+          <td>
+            [{% trans %}Unspecified{% endtrans %}]
+          {%- endif %}
+
+            {% if user.is_writable(request.identity) -%}
+            <a href="change_club" class="btn btn-mini">{% trans %}Change{% endtrans %}</a>
+            {%- endif %}
+          </td>
+        </tr>
+        {%- endif %}
+      </table>
+
+      <p style="margin-top: 10px">
+        {% if user.is_writable(request.identity) -%}
+        <a href="/users/{{ user.id }}/edit" class="btn">{% trans %}Edit{% endtrans %}</a>
+        <a href="change_password" class="btn">{% trans %}Change Password{% endtrans %}</a>
+        {%- endif %}
+
+        {% if request.identity and 'manage' in request.identity['permissions'] -%}
+        <a href="recover_password" class="btn">{% trans %}Recover Password{% endtrans %}</a>
+        {%- endif %}
+
+        {% if request.identity and request.identity['user'] != user -%}
+          {% if request.identity['user'].follows(user) -%}
+            <a href="/users/{{ user.id }}/unfollow" class="btn">{% trans %}Unfollow{% endtrans %}</a>
+          {%- else %}
+            <a href="/users/{{ user.id }}/follow" class="btn">{% trans %}Follow{% endtrans %}</a>
+          {%- endif %}
+        {%- endif %}
+
+        <a href="/flights/pilot/{{ user.id }}/" class="btn"><i class="icon-plane"></i> {% trans %}Flights{% endtrans %}</a>
+        <a href="/statistics/pilot/{{ user.id }}/" class="btn"><i class="icon-tasks"></i> {% trans %}Statistics{% endtrans %}</a>
+      </p>
+    </div>
+
+    {% if user.following -%}
+    <div class="span12">
+      <h2>{% trans %}Following{% endtrans %}</h2>
+      <ul class="row-fluid">
+        {% for following in user.following|sort(attribute='destination.display_name') -%}
+        <li class="span3">
+          <a href="/users/{{ following.destination_id }}/">{{ following.destination }}</a>
+        </li>
+        {%- endfor %}
+      </ul>
+    </div>
+    {%- endif %}
+
+    {% if user.followers -%}
+    <div class="span12">
+      <h2>{% trans %}Followers{% endtrans %}</h2>
+      <ul class="row-fluid">
+        {% for follower in user.followers|sort(attribute='source.display_name') -%}
+        <li class="span3">
+          <a href="/users/{{ follower.source_id }}/">{{ follower.source }}</a>
+        </li>
+        {%- endfor %}
+      </ul>
+    </div>
+    {%- endif %}
+
+    {% if distance_flights -%}
+    <div class="span4 offset2">
+      <h2>{% trans %}Distance Flights{% endtrans %}</h2>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>{% trans %}Distance{% endtrans %}</th>
+            <th>{% trans %}Date{% endtrans %}</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for distance_flight in distance_flights -%}
+          <tr>
+            <td>{{ h.format_distance(distance_flight[0]) }}</td>
+            <td>
+              {% if distance_flight[1] -%}
+              {{ insert_timeago_date(distance_flight[1].landing_time) }}
+              {%- endif %}
+            </td>
+            <td>
+              {% if distance_flight[1] -%}
+              <a href="/flights/{{ distance_flight[1].id }}/" class="btn btn-mini">Show</a>
+              {%- endif %}
+            </td>
+          </tr>
+          {%- endfor %}
+        </tbody>
+      </table>
+    </div>
+    {%- endif %}
+
+    {% if last_year_statistics and last_year_statistics.flights > 0 -%}
+    <div class="span4">
+      <h2>{% trans %}Last 12 Months{% endtrans %}</h2>
+      <table class="table">
+        <thead>
+          <tr>
+            <th colspan="2">&nbsp;</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>{% trans %}Flights{% endtrans %}</strong></td>
+            <td>{{ h.format_number(last_year_statistics.flights) }}</td>
+          </tr>
+          <tr>
+            <td><strong>{% trans %}Distance{% endtrans %}</strong></td>
+            <td>
+              <span rel="tooltip" title="avg. {{ h.format_distance(last_year_statistics.average_distance) }} per flight">
+                {{ h.format_distance(last_year_statistics.distance) }}
+              </span>
+            </td>
+          </tr>
+          <tr>
+            <td><strong>{% trans %}Flight Time{% endtrans %}</strong></td>
+            <td>
+              <span rel="tooltip" title="avg. {{ h.format_timedelta(last_year_statistics.average_duration) }} Hours per flight">
+                {{ h.format_timedelta(last_year_statistics.duration) }} Hours
+              </span>
+            </td>
+          </tr>
+          <tr>
+            <td><strong>{% trans %}Average Speed{% endtrans %}</strong></td>
+            <td>{{ h.format_speed(last_year_statistics.speed) }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    {%- endif %}
+
+    {% if takeoff_locations -%}
+    <div class="span12">
+      <h2>{% trans %}Takeoff Locations{% endtrans %}</h2>
+      <div id="map_canvas" style="width:100%; height:400pt;"></div>
+    </div>
+    {%- endif %}
+  </div>
+</div>
+{%- endblock %}
