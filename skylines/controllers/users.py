@@ -314,7 +314,7 @@ class UserController(BaseController):
 
         redirect('.')
 
-    @expose('users/change_club.html')
+    @expose('jinja:users/change_club.jinja')
     def change_club(self, **kwargs):
         if not self.user.is_writable(request.identity):
             raise HTTPForbidden

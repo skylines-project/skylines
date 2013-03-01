@@ -1,0 +1,14 @@
+{% extends "base-page.jinja" %}
+{% set active_page = "settings" %}
+
+{% block title %}{% trans %}Change Club{% endtrans %}{% endblock %}
+
+{% block content -%}
+<h1>{% trans %}Select Club{% endtrans %}</h1>
+<p>{% trans %}Select your primary club:{% endtrans %}</p>
+{{ select_form(dict(club=user.club_id), action='select_club') }}
+
+<h2>{% trans %}Register Club{% endtrans %}</h2>
+<p>{% trans %}If your club doesn't exist yet in Skylines, create it:{% endtrans %}</p>
+{{ create_form(action='create_club') }}
+{%- endblock %}
