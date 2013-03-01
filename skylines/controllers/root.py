@@ -92,7 +92,7 @@ class RootController(BaseController):
         else:
             redirect(request.referrer)
 
-    @expose('login.html')
+    @expose('jinja:login.jinja')
     def login(self, came_from=None, **kw):
         """Start the user login."""
         if not came_from:
@@ -101,7 +101,7 @@ class RootController(BaseController):
             else:
                 came_from = lurl('/')
 
-        return dict(page='login', came_from=came_from)
+        return dict(came_from=came_from)
 
     @expose()
     def post_login(self, came_from=None, **kw):

@@ -1,0 +1,35 @@
+{% extends "base-page.jinja" %}
+{% set active_page = "login" %}
+
+{% block title %}{% trans %}Login{% endtrans %}{% endblock %}
+
+{%- block content %}
+<div class="row">
+  <div class="well span8 offset2" id="loginform">
+    <form action="{{ tg.url('/login_handler', params=dict(came_from=came_from.encode('utf-8'))) }}" method="post" accept-charset="UTF-8" class="loginfields">
+      <div class="control-group">
+        <label class="control-label" for="loginusername">Email Address:</label>
+        <div class="controls">
+          <input type="text" id="loginusername" name="login"/>
+        </div>
+      </div>
+      <div class="control-group">
+        <label class="control-label" for="loginpassword">Password:</label>
+        <div class="controls">
+          <input type="password" id="loginpassword" name="password" />
+        </div>
+      </div>
+      <div class="control-group">
+        <label id="remember" class="checkbox">
+          <input type="checkbox" name="remember" value="31536000"/>
+          Remember me
+        </label>
+      </div>
+      <div class="actions">
+        <input type="submit" id="submit" value="Login" class="btn btn-primary" />
+        <a href="/users/new" class="btn">Register</a>
+      </div>
+    </form>
+  </div>
+</div>
+{%- endblock %}
