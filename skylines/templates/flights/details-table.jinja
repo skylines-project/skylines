@@ -44,8 +44,8 @@
       <td>
         {% if flight.takeoff_airport -%}
         {{ insert_flag(flight.takeoff_airport.country_code, 'float:right;margin:3px') }}
-        {% trans url='/flights/airport/' ~ flight.takeoff_airport_id, airport=flight.takeoff_airport.name, time=h.format_time(flight.takeoff_time) -%}
-        <a href="{{ url }}">{{ airport }}</a><br /> at {{ time }}
+        {% trans airport='<a href="/flights/airport/' ~ flight.takeoff_airport_id ~ '">' ~ flight.takeoff_airport|e ~ '</a>', time=h.format_time(flight.takeoff_time) -%}
+        {{ airport }}<br /> at {{ time }}
         {%- endtrans %}
         {%- else %}
         {{ h.format_time(flight.takeoff_time) }}
@@ -61,8 +61,8 @@
       <td>
         {% if flight.landing_airport -%}
         {{ insert_flag(flight.landing_airport.country_code, 'float:right;margin:3px') }}
-        {% trans url='/flights/airport/' ~ flight.landing_airport_id, airport=flight.landing_airport.name, time=h.format_time(flight.landing_time) -%}
-        <a href="{{ url }}">{{ airport }}</a><br /> at {{ time }}
+        {% trans airport='<a href="/flights/airport/' ~ flight.landing_airport_id ~ '">' ~ flight.landing_airport|e ~ '</a>', time=h.format_time(flight.landing_time) -%}
+        {{ airport }}<br /> at {{ time }}
         {%- endtrans %}
         {%- else %}
         {{ h.format_time(flight.landing_time) }}
