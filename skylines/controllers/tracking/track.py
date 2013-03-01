@@ -111,7 +111,7 @@ class TrackController(BaseController):
                                tracking_id=self.tracking_id, **kw)
 
     @with_trailing_slash
-    @expose('jinja:tracking/view.jinja')
+    @expose('tracking/view.jinja')
     def index(self):
         other_pilots = []
         for pilot in self.other_pilots:
@@ -126,7 +126,7 @@ class TrackController(BaseController):
                     trace=self.__get_flight_path(),
                     other_pilots=other_pilots)
 
-    @expose('jinja:tracking/map.jinja')
+    @expose('tracking/map.jinja')
     def map(self):
         other_pilots = []
         for pilot in self.other_pilots:

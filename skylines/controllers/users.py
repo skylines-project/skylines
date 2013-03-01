@@ -244,14 +244,14 @@ class UserController(BaseController):
         self.user = user
         request.environ['UserController.user.id'] = self.user.id
 
-    @expose('jinja:users/view.jinja')
+    @expose('users/view.jinja')
     def index(self):
         return dict(active_page='settings', user=self.user,
                     distance_flights=self.get_distance_flights(),
                     takeoff_locations=self.get_takeoff_locations(),
                     last_year_statistics=self.get_last_year_statistics())
 
-    @expose('jinja:generic/form.jinja')
+    @expose('generic/form.jinja')
     def change_password(self, **kw):
         if not self.user.is_writable(request.identity):
             raise HTTPForbidden
@@ -273,7 +273,7 @@ class UserController(BaseController):
         flash('A password recovery email was sent to that user.')
         redirect('.')
 
-    @expose('jinja:generic/form.jinja')
+    @expose('generic/form.jinja')
     def edit(self, **kwargs):
         if not self.user.is_writable(request.identity):
             raise HTTPForbidden
@@ -314,7 +314,7 @@ class UserController(BaseController):
 
         redirect('.')
 
-    @expose('jinja:users/change_club.jinja')
+    @expose('users/change_club.jinja')
     def change_club(self, **kwargs):
         if not self.user.is_writable(request.identity):
             raise HTTPForbidden
@@ -451,7 +451,7 @@ class UserController(BaseController):
 
 
 class UsersController(BaseController):
-    @expose('jinja:users/list.jinja')
+    @expose('users/list.jinja')
     def index(self):
         users = DBSession.query(User).order_by(User.display_name)
         return dict(active_page='settings', users=users)
@@ -466,7 +466,7 @@ class UsersController(BaseController):
         controller = UserController(get_requested_record(User, id))
         return controller, remainder
 
-    @expose('jinja:users/new.jinja')
+    @expose('users/new.jinja')
     def new(self, **kwargs):
         return dict(active_page='users', form=new_user_form)
 
@@ -488,7 +488,7 @@ class UsersController(BaseController):
 
         redirect('/')
 
-    @expose('jinja:generic/form.jinja')
+    @expose('generic/form.jinja')
     def recover(self, key=None, **kwargs):
         try:
             key = int(key, 16)

@@ -138,13 +138,13 @@ class FlightsController(BaseController):
         redirect('today')
 
     @without_trailing_slash
-    @expose('jinja:flights/list.jinja')
+    @expose('flights/list.jinja')
     @expose('json')
     def all(self, **kw):
         return self.__do_list('all', kw)
 
     @without_trailing_slash
-    @expose('jinja:flights/list.jinja')
+    @expose('flights/list.jinja')
     @expose('json')
     def today(self, **kw):
         query = DBSession.query(func.max(Flight.date_local).label('date')) \
@@ -157,7 +157,7 @@ class FlightsController(BaseController):
         return self.date(date, today=True, **kw)
 
     @without_trailing_slash
-    @expose('jinja:flights/list.jinja')
+    @expose('flights/list.jinja')
     @expose('json')
     def date(self, date, **kw):
         try:
@@ -205,7 +205,7 @@ class FlightsController(BaseController):
         redirect('club/' + str(request.identity['user'].club.id))
 
     @without_trailing_slash
-    @expose('jinja:flights/list.jinja')
+    @expose('flights/list.jinja')
     @expose('json')
     def unassigned(self, **kw):
         if not request.identity:
@@ -215,7 +215,7 @@ class FlightsController(BaseController):
                  IGCFile.owner == request.identity['user'])
         return self.__do_list('unassigned', kw, filter=f)
 
-    @expose('jinja:flights/list.jinja')
+    @expose('flights/list.jinja')
     @expose('json')
     def pilot(self, id, **kw):
         pilot = get_requested_record(User, id)
@@ -235,7 +235,7 @@ class FlightsController(BaseController):
 
         return self.__do_list('pilot', kw, pilot=pilot, columns=columns)
 
-    @expose('jinja:flights/list.jinja')
+    @expose('flights/list.jinja')
     @expose('json')
     def club(self, id, **kw):
         club = get_requested_record(Club, id)
@@ -255,7 +255,7 @@ class FlightsController(BaseController):
 
         return self.__do_list('club', kw, club=club, columns=columns)
 
-    @expose('jinja:flights/list.jinja')
+    @expose('flights/list.jinja')
     @expose('json')
     def airport(self, id, **kw):
         airport = get_requested_record(Airport, id)
@@ -276,7 +276,7 @@ class FlightsController(BaseController):
         return self.__do_list('airport', kw, airport=airport, columns=columns)
 
     @without_trailing_slash
-    @expose('jinja:flights/list.jinja')
+    @expose('flights/list.jinja')
     @expose('json')
     def pinned(self, *remainder, **kw):
         # Check if we have cookies

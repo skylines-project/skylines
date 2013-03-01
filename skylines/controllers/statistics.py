@@ -10,7 +10,7 @@ from skylines.model import DBSession, User, Club, Flight, Airport
 
 
 class StatisticsController(BaseController):
-    @expose('jinja:statistics/years.jinja')
+    @expose('statistics/years.jinja')
     def _default(self, *args, **kw):
         club = None
         pilot = None

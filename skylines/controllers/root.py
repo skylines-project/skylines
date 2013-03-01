@@ -78,7 +78,7 @@ class RootController(BaseController):
 
         return self.tracking.lt24.client(**kw)
 
-    @expose('jinja:about.jinja')
+    @expose('about.jinja')
     def about(self, **kw):
         """Handle the 'about' page."""
         return dict()
@@ -92,7 +92,7 @@ class RootController(BaseController):
         else:
             redirect(request.referrer)
 
-    @expose('jinja:login.jinja')
+    @expose('login.jinja')
     def login(self, came_from=None, **kw):
         """Start the user login."""
         if not came_from:

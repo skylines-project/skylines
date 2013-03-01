@@ -30,9 +30,7 @@ base_config.package = skylines
 #Enable json in expose
 base_config.renderers.append('json')
 #Set the default renderer
-base_config.default_renderer = 'genshi'
-base_config.renderers.append('genshi')
-
+base_config.default_renderer = 'jinja'
 base_config.renderers.append('jinja')
 base_config.jinja_extensions = ['jinja2.ext.i18n', 'jinja2.ext.with_', 'jinja2.ext.do']
 

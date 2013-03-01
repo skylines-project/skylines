@@ -54,7 +54,7 @@ class NotificationsController(BaseController):
         return controller, remainder
 
     @with_trailing_slash
-    @expose('jinja:notifications/list.jinja')
+    @expose('notifications/list.jinja')
     def index(self, **kwargs):
         if not request.identity:
             raise HTTPForbidden

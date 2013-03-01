@@ -108,13 +108,13 @@ class UploadController(BaseController):
     allow_only = has_permission('upload',
                                 msg=l_("You have to login to upload flights."))
 
-    @expose('jinja:generic/form.jinja')
+    @expose('generic/form.jinja')
     def index(self, **kw):
         return dict(active_page='upload', title=_("Upload Flight"),
                     form=upload_form,
                     values=dict(pilot=request.identity['user'].id))
 
-    @expose('jinja:upload/result.jinja')
+    @expose('upload/result.jinja')
     @validate(upload_form, error_handler=index)
     def do(self, file, pilot):
         user = request.identity['user']

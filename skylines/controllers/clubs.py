@@ -56,11 +56,11 @@ class ClubController(BaseController):
         self.club = club
 
     @with_trailing_slash
-    @expose('jinja:clubs/view.jinja')
+    @expose('clubs/view.jinja')
     def index(self):
         return dict(active_page='settings', club=self.club)
 
-    @expose('jinja:generic/form.jinja')
+    @expose('generic/form.jinja')
     def edit(self, **kwargs):
         if not self.club.is_writable(request.identity):
             raise HTTPForbidden
@@ -81,11 +81,11 @@ class ClubController(BaseController):
 
         redirect('.')
 
-    @expose('jinja:clubs/pilots.jinja')
+    @expose('clubs/pilots.jinja')
     def pilots(self):
         return dict(active_page='settings', club=self.club, users=self.club.members)
 
-    @expose('jinja:generic/form.jinja')
+    @expose('generic/form.jinja')
     def new_pilot(self, **kwargs):
         if not self.club.is_writable(request.identity):
             raise HTTPForbidden
@@ -111,7 +111,7 @@ class ClubController(BaseController):
 
 
 class ClubsController(BaseController):
-    @expose('jinja:clubs/list.jinja')
+    @expose('clubs/list.jinja')
     def index(self):
         clubs = DBSession.query(Club).order_by(Club.name)
         return dict(active_page='settings', clubs=clubs)

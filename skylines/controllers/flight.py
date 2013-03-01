@@ -183,7 +183,7 @@ class FlightController(BaseController):
         return get_flight_path(self.flight, **kw)
 
     @with_trailing_slash
-    @expose('jinja:flights/view.jinja')
+    @expose('flights/view.jinja')
     def index(self, **kwargs):
         def add_flight_path(flight):
             trace = get_flight_path(flight)
@@ -196,7 +196,7 @@ class FlightController(BaseController):
                     phase_formatter=format_phase)
 
     @without_trailing_slash
-    @expose('jinja:flights/map.jinja')
+    @expose('flights/map.jinja')
     def map(self, **kwargs):
         def add_flight_path(flight):
             trace = get_flight_path(flight, threshold=0.0001, max_points=10000)
@@ -231,7 +231,7 @@ class FlightController(BaseController):
                         competition_id=self.flight.competition_id) )
 
     @without_trailing_slash
-    @expose('jinja:generic/form.jinja')
+    @expose('generic/form.jinja')
     def change_pilot(self, **kwargs):
         if not self.flight.is_writable(request.identity):
             raise HTTPForbidden
@@ -260,7 +260,7 @@ class FlightController(BaseController):
         redirect('.')
 
     @without_trailing_slash
-    @expose('jinja:generic/form.jinja')
+    @expose('generic/form.jinja')
     def change_aircraft(self, **kwargs):
         if not self.flight.is_writable(request.identity):
             raise HTTPForbidden
@@ -323,7 +323,7 @@ class FlightController(BaseController):
         return redirect('.')
 
     @without_trailing_slash
-    @expose('jinja:generic/confirm.jinja')
+    @expose('generic/confirm.jinja')
     def delete(self, **kwargs):
         if not self.flight.is_writable(request.identity):
             raise HTTPForbidden
