@@ -114,7 +114,7 @@ class UploadController(BaseController):
                     form=upload_form,
                     values=dict(pilot=request.identity['user'].id))
 
-    @expose('upload/result.html')
+    @expose('jinja:upload/result.jinja')
     @validate(upload_form, error_handler=index)
     def do(self, file, pilot):
         user = request.identity['user']
@@ -183,7 +183,8 @@ class UploadController(BaseController):
 
         DBSession.flush()
 
-        return dict(active_page='upload', flights=flights, success=success)
+        return dict(flights=flights, success=success,
+                    ModelSelectField=ModelSelectField)
 
     @expose()
     def update(self, **kw):

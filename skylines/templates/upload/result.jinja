@@ -1,0 +1,74 @@
+{% extends "base-page.jinja" %}
+{% set active_page = "upload" %}
+
+{% block title %}{% trans %}Upload Flight{% endtrans %}{% endblock %}
+
+{%- block content %}
+<form action="/flights/upload/update" method="post">
+  {% if success -%}
+  <p>
+    {% trans %}Your flights have been saved. You may want to change the flights aircraft types and registrations below.{% endtrans %}<br />
+  </p>
+  <p>
+    <input type="submit" id="submit" value="{{ _('Update Aircraft Types and Registrations') }}" class="btn btn-primary"/>
+  </p>
+  {%- else %}
+  <p>{% trans %}No flight was saved.{% endtrans %}</p>
+  {%- endif %}
+
+  <table class="table vmiddle">
+    <thead>
+      <tr>
+        <th>{% trans %}Filename{% endtrans %}</th>
+        <th>{% trans %}Aircraft Model{% endtrans %}</th>
+        <th>{% trans %}Aircraft Registration{% endtrans %}</th>
+        <th>{% trans %}Competition Number{% endtrans %}</th>
+        <th colspan="2">{% trans %}Status{% endtrans %}</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for name, flight, error in flights -%}
+      <tr>
+        <td>{{ name }}</td>
+        <td>
+          {% if not error -%}
+          <input type="hidden" id="flight_id" name="flight_id" value="{{ flight.id }}" />
+          {{ ModelSelectField('model', default=flight.model_id) }}
+          {%- endif %}
+        </td>
+        <td>
+          {% if not error -%}
+          <input type="text" id="registration" name="registration" value="{{ flight.registration|e }}" class="input-medium"/>
+          {%- endif %}
+        </td>
+        <td>
+          {% if not error -%}
+          <input type="text" id="competition_id" name="competition_id" value="{{ flight.competition_id|e }}" class="input-medium"/>
+          {%- endif %}
+        </td>
+        <td>
+          {% if not error -%}
+          <span class="label label-success"><i class="icon-ok"></i> {% trans %}Success{% endtrans %}</span>
+          {% elif error and flight %}
+          <span class="label label-warning"><i class="icon-warning-sign"></i> {{ error }}</span>
+          {%- else %}
+          <span class="label label-important"><i class="icon-warning-sign"></i> {{ error }}</span>
+          {%- endif %}
+        </td>
+        <td>
+          {% if flight -%}
+          <a href="/flights/{{ flight.id }}/" class="btn btn-mini">Show</a>
+          {%- endif %}
+        </td>
+      </tr>
+      {%- endfor %}
+    </tbody>
+  </table>
+
+  {% if success -%}
+  <p><input type="submit" id="submit" value="{{ _('Update Aircraft Types and Registrations') }}" class="btn btn-primary"/></p>
+  {%- endif %}
+</form>
+
+<p><a href="." class="btn">{% trans %}Upload another flight{% endtrans %}</a></p>
+{%- endblock %}
