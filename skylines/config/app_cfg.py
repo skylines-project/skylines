@@ -40,6 +40,7 @@ def install_gettext_callables(app):
     from tg.i18n import ugettext, ungettext
     jinja2_env = app_globals.config['pylons.app_globals'].jinja2_env
     jinja2_env.install_gettext_callables(ugettext, ungettext)
+    jinja2_env.autoescape = False
     return app
 
 base_config.register_hook('after_config', install_gettext_callables)
