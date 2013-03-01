@@ -1,0 +1,12 @@
+{% extends "base-page.jinja" %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block content -%}
+<div class="row">
+  <div class="well span8 offset2">
+    {{ form(values) }}
+    {% if include_after %}{% include include_after with context %}{% endif %}
+  </div>
+</div>
+{%- endblock %}

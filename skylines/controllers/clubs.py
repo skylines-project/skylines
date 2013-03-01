@@ -58,14 +58,14 @@ class ClubController(BaseController):
     @with_trailing_slash
     @expose('jinja:clubs/view.jinja')
     def index(self):
-        return dict(page='settings', club=self.club)
+        return dict(active_page='settings', club=self.club)
 
-    @expose('generic/form.html')
+    @expose('jinja:generic/form.jinja')
     def edit(self, **kwargs):
         if not self.club.is_writable(request.identity):
             raise HTTPForbidden
 
-        return dict(page='settings', title=_('Edit Club'),
+        return dict(active_page='settings', title=_('Edit Club'),
                     form=edit_club_form,
                     values=self.club)
 
@@ -83,14 +83,14 @@ class ClubController(BaseController):
 
     @expose('jinja:clubs/pilots.jinja')
     def pilots(self):
-        return dict(page='settings', club=self.club, users=self.club.members)
+        return dict(active_page='settings', club=self.club, users=self.club.members)
 
-    @expose('generic/form.html')
+    @expose('jinja:generic/form.jinja')
     def new_pilot(self, **kwargs):
         if not self.club.is_writable(request.identity):
             raise HTTPForbidden
 
-        return dict(page='settings', title=_("Create Pilot"),
+        return dict(active_page='settings', title=_("Create Pilot"),
                     form=new_pilot_form, values={})
 
     @expose()
@@ -114,7 +114,7 @@ class ClubsController(BaseController):
     @expose('jinja:clubs/list.jinja')
     def index(self):
         clubs = DBSession.query(Club).order_by(Club.name)
-        return dict(page='settings', clubs=clubs)
+        return dict(active_page='settings', clubs=clubs)
 
     @expose()
     def _lookup(self, id, *remainder):

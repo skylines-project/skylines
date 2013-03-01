@@ -231,14 +231,14 @@ class FlightController(BaseController):
                         competition_id=self.flight.competition_id) )
 
     @without_trailing_slash
-    @expose('generic/form.html')
+    @expose('jinja:generic/form.jinja')
     def change_pilot(self, **kwargs):
         if not self.flight.is_writable(request.identity):
             raise HTTPForbidden
 
-        return dict(page='settings', title=_('Select Pilot'),
+        return dict(active_page='settings', title=_('Select Pilot'),
                     user=request.identity['user'],
-                    include_after='../flights/after_change_pilot.html',
+                    include_after='flights/after_change_pilot.jinja',
                     form=select_pilot_form,
                     values=self.flight)
 
@@ -260,7 +260,7 @@ class FlightController(BaseController):
         redirect('.')
 
     @without_trailing_slash
-    @expose('generic/form.html')
+    @expose('jinja:generic/form.jinja')
     def change_aircraft(self, **kwargs):
         if not self.flight.is_writable(request.identity):
             raise HTTPForbidden
@@ -284,7 +284,7 @@ class FlightController(BaseController):
         else:
             competition_id = None
 
-        return dict(page='settings', title=_('Change Aircraft'),
+        return dict(active_page='settings', title=_('Change Aircraft'),
                     user=request.identity['user'],
                     form=select_aircraft_form,
                     values=dict(model=model_id,
@@ -323,7 +323,7 @@ class FlightController(BaseController):
         return redirect('.')
 
     @without_trailing_slash
-    @expose('generic/confirm.html')
+    @expose('jinja:generic/confirm.jinja')
     def delete(self, **kwargs):
         if not self.flight.is_writable(request.identity):
             raise HTTPForbidden

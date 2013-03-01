@@ -1,0 +1,34 @@
+{% set embedded = 'embedded' in request.params %}
+
+{% if not embedded -%}
+{% extends "base-page.jinja" %}
+{% block title %}{{ title }}{% endblock %}
+{%- endif %}
+
+
+{% macro insert_form() -%}
+<form action="{{ action }}" method="post">
+  <label class="large">{{ question}}</label>
+  <div class="form-actions">
+    <input type="submit" value="{{ _('Yes') }}" class="btn btn-primary"/>
+    {% if embedded -%}
+    <a href="#" data-dismiss="modal" aria-hidden="true" class="btn">{% trans %}No{% endtrans %}</a>
+    {%- else %}
+    <a href="{{ cancel }}" class="btn">{% trans %}No{% endtrans %}</a>
+    {%- endif %}
+  </div>
+</form>
+{%- endmacro %}
+
+
+{% block content -%}
+{% if embedded -%}
+{{ insert_form() }}
+{%- else %}
+<div class="row">
+  <div class="span8 offset2">
+    {{ insert_form() }}
+  </div>
+</div>
+{%- endif %}
+{%- endblock %}
