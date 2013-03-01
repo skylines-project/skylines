@@ -81,7 +81,7 @@ class ClubController(BaseController):
 
         redirect('.')
 
-    @expose('clubs/pilots.html')
+    @expose('jinja:clubs/pilots.jinja')
     def pilots(self):
         return dict(page='settings', club=self.club, users=self.club.members)
 

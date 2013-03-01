@@ -451,7 +451,7 @@ class UserController(BaseController):
 
 
 class UsersController(BaseController):
-    @expose('users/list.html')
+    @expose('jinja:users/list.jinja')
     def index(self):
         users = DBSession.query(User).order_by(User.display_name)
         return dict(page='settings', users=users)

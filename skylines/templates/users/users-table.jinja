@@ -1,0 +1,36 @@
+{% macro render_users_table(users, club_column = True) -%}
+<table id="users-table" class="table table-striped">
+  <thead>
+    <tr>
+      <th>{% trans %}Name{% endtrans %}</th>
+      {% if club_column %}<th>{% trans %}Club{% endtrans %}</th>{% endif %}
+      <th>{% trans %}Actions{% endtrans %}</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for user in users -%}
+    <tr {% if club_column %}itemprop="member"{% endif %} itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="url" content="/users/{{ user.id }}" />
+      <td itemprop="name">
+        <a href="/users/{{ user.id }}/">{{ user|e }}</a>
+      </td>
+      {% if club_column -%}
+      <td itemprop="memberof" itemscope itemtype="http://schema.org/SportsTeam">
+        {% if user.club_id -%}
+        <meta itemprop="url" content="/clubs/{{ user.club_id }}" />
+        <a href="/clubs/{{ user.club_id }}/" itemprop="name">{{ user.club|e }}</a>
+        {%- endif %}
+      </td>
+      {%- endif %}
+      <td>
+        <a href="/flights/pilot/{{ user.id }}" class="btn btn-mini"><i class="icon-plane"></i> {% trans %}Flights{% endtrans %}</a>
+        <a href="/statistics/pilot/{{ user.id }}" class="btn btn-mini"><i class="icon-tasks"></i> {% trans %}Statistics{% endtrans %}</a>
+        {% if user.is_writable(request.identity) -%}
+        <a href="/users/{{ user.id }}/edit" class="btn btn-mini">{% trans %}Edit{% endtrans %}</a>
+        {%- endif %}
+      </td>
+    </tr>
+    {%- endfor %}
+  </tbody>
+</table>
+{%- endmacro %}
