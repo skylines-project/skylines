@@ -21,6 +21,7 @@ from skylines.model.igcfile import IGCFile
 from skylines.lib.form import BootstrapForm
 from sqlalchemy.sql.expression import and_, or_
 from sqlalchemy import func
+from sqlalchemy.orm import joinedload
 from repoze.what.predicates import not_anonymous, has_permission
 from skylines.model.geo import Location
 from datetime import date, timedelta
@@ -450,7 +451,7 @@ class UserController(BaseController):
 class UsersController(BaseController):
     @expose('users/list.html')
     def index(self):
-        users = DBSession.query(User).order_by(User.display_name)
+        users = DBSession.query(User).options(joinedload(User.club)).order_by(User.display_name)
         return dict(page='settings', users=users)
 
     @expose()
