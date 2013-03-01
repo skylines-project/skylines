@@ -466,7 +466,7 @@ class UsersController(BaseController):
         controller = UserController(get_requested_record(User, id))
         return controller, remainder
 
-    @expose('users/new.html')
+    @expose('jinja:users/new.jinja')
     def new(self, **kwargs):
         return dict(page='users', form=new_user_form)
 
