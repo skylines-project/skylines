@@ -19,7 +19,7 @@ class TrackingController(BaseController):
     lt24 = LiveTrack24Controller()
     external = ExternalTrackingController()
 
-    @expose('tracking/list.html')
+    @expose('jinja:tracking/list.jinja')
     def index(self, **kw):
         na_cache = cache.get_cache('tracking.nearest_airport', expire=60 * 60)
 
