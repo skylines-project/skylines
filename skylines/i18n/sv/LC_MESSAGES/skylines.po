@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  skylines\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2013-02-23 22:09+0100\n"
+"POT-Creation-Date: 2013-03-01 19:27+0100\n"
 "PO-Revision-Date: 2012-11-11 21:06+0000\n"
 "Last-Translator: Magnus Olsson <Unknown>\n"
 "Language-Team: Swedish <sv@li.org>\n"
@@ -19,16 +19,17 @@ msgstr ""
 
 #: skylines/controllers/clubs.py:25 skylines/controllers/clubs.py:43
 #: skylines/controllers/users.py:98 skylines/controllers/users.py:118
-#: skylines/controllers/users.py:154 skylines/templates/clubs/list.html:22
-#: skylines/templates/clubs/view.html:24
-#: skylines/templates/ranking/airports.html:19
-#: skylines/templates/ranking/clubs.html:18
-#: skylines/templates/ranking/pilots.html:18
-#: skylines/templates/users/users-table.html:21
+#: skylines/controllers/users.py:154 skylines/templates/clubs/list.jinja:9
+#: skylines/templates/clubs/view.jinja:21
+#: skylines/templates/ranking/airports.jinja:9
+#: skylines/templates/ranking/clubs.jinja:7
+#: skylines/templates/ranking/pilots.jinja:7
+#: skylines/templates/users/users-table.jinja:5
+#: skylines/templates/users/view.jinja:83
 msgid "Name"
 msgstr "Namn"
 
-#: skylines/controllers/clubs.py:26 skylines/templates/clubs/view.html:29
+#: skylines/controllers/clubs.py:26 skylines/templates/clubs/view.jinja:27
 msgid "Website"
 msgstr "Webbsida"
 
@@ -41,14 +42,14 @@ msgstr "Epostadress"
 msgid "Edit Club"
 msgstr "Redigera klubb"
 
-#: skylines/controllers/clubs.py:93 skylines/templates/clubs/pilots.html:27
+#: skylines/controllers/clubs.py:93 skylines/templates/clubs/pilots.jinja:20
 msgid "Create Pilot"
 msgstr "Skapa pilot"
 
 #: skylines/controllers/flight.py:49 skylines/controllers/upload.py:60
-#: skylines/templates/flights/details-table.html:148
-#: skylines/templates/flights/flights-table.html:20
-#: skylines/templates/tracking/view.html:115
+#: skylines/templates/flights/details-table.jinja:149
+#: skylines/templates/flights/flights-table.jinja:9
+#: skylines/templates/tracking/view.jinja:111
 msgid "Pilot"
 msgstr "Pilot"
 
@@ -56,15 +57,15 @@ msgstr "Pilot"
 msgid "Co-Pilot"
 msgstr "Andrepilot"
 
-#: skylines/controllers/flight.py:61 skylines/templates/upload/result.html:36
+#: skylines/controllers/flight.py:61 skylines/templates/upload/result.jinja:23
 msgid "Aircraft Model"
 msgstr "Modell av luftfarkost"
 
-#: skylines/controllers/flight.py:62 skylines/templates/upload/result.html:37
+#: skylines/controllers/flight.py:62 skylines/templates/upload/result.jinja:24
 msgid "Aircraft Registration"
 msgstr "Luftfarkostregistrering"
 
-#: skylines/controllers/flight.py:63 skylines/templates/upload/result.html:38
+#: skylines/controllers/flight.py:63 skylines/templates/upload/result.jinja:25
 msgid "Competition Number"
 msgstr "Tävlingsnummer"
 
@@ -81,9 +82,9 @@ msgid "Right"
 msgstr ""
 
 #: skylines/controllers/flight.py:127
-#: skylines/templates/statistics/distance-table.html:36
-#: skylines/templates/statistics/duration-table.html:32
-#: skylines/templates/statistics/flights-table.html:26
+#: skylines/templates/statistics/distance-table.jinja:27
+#: skylines/templates/statistics/duration-table.jinja:27
+#: skylines/templates/statistics/flights-table.jinja:23
 msgid "Total"
 msgstr "Totalt"
 
@@ -170,7 +171,7 @@ msgstr "Vänligen lägg till en eller flera IGC- eller ZIP-filer"
 msgid "You have to login to upload flights."
 msgstr "Du måste logga in för att ladda upp flyg"
 
-#: skylines/controllers/upload.py:113 skylines/templates/upload/result.html:1
+#: skylines/controllers/upload.py:113 skylines/templates/upload/result.jinja:4
 msgid "Upload Flight"
 msgstr "Ladda upp flyg"
 
@@ -186,7 +187,7 @@ msgstr "Misslyckades att tolka fil"
 msgid "No flight found in file"
 msgstr "Inga flyg hittades i fil"
 
-#: skylines/controllers/upload.py:210
+#: skylines/controllers/upload.py:211
 msgid ""
 "Sorry, some error happened when updating your flight(s). Please contact a"
 " administrator for help."
@@ -194,16 +195,16 @@ msgstr ""
 "Ett fel uppstod när ditt/dina flyg uppdaterades. Vänligen kontakta en "
 "administratör för hjälp."
 
-#: skylines/controllers/upload.py:248
+#: skylines/controllers/upload.py:249
 msgid "Your flight(s) have been successfully updated."
 msgstr "Ditt/dina flyg har uppdaterats korrekt."
 
-#: skylines/controllers/users.py:46 skylines/templates/users/view.html:95
+#: skylines/controllers/users.py:46 skylines/templates/users/view.jinja:103
 msgid "None"
 msgstr "Ingen"
 
-#: skylines/controllers/users.py:48 skylines/templates/tracking/view.html:136
-#: skylines/templates/users/view.html:96
+#: skylines/controllers/users.py:48 skylines/templates/tracking/view.jinja:127
+#: skylines/templates/users/view.jinja:105
 #, python-format
 msgid "%u minute"
 msgid_plural "%u minutes"
@@ -212,13 +213,12 @@ msgstr[1] "%u minuter"
 
 #: skylines/controllers/users.py:86 skylines/controllers/users.py:119
 #: skylines/controllers/users.py:155
-#: skylines/templates/flights/details-table.html:166
-#: skylines/templates/flights/flights-table.html:23
-#: skylines/templates/ranking/pilots.html:19
-#: skylines/templates/tracking/view.html:123
-#: skylines/templates/users/users-table.html:22
-#: skylines/templates/users/view.html:101
-#: skylines/templates/users/view.html:112
+#: skylines/templates/flights/details-table.jinja:181
+#: skylines/templates/flights/flights-table.jinja:12
+#: skylines/templates/ranking/pilots.jinja:8
+#: skylines/templates/tracking/view.jinja:117
+#: skylines/templates/users/users-table.jinja:6
+#: skylines/templates/users/view.jinja:113
 msgid "Club"
 msgstr "Klubb"
 
@@ -227,7 +227,7 @@ msgid "Passwords do not match"
 msgstr "Lösenorden stämmer inte överens"
 
 #: skylines/controllers/users.py:120 skylines/controllers/users.py:196
-#: skylines/controllers/users.py:206
+#: skylines/controllers/users.py:206 skylines/templates/topbar.jinja:69
 msgid "Password"
 msgstr "Lösenord"
 
@@ -265,12 +265,12 @@ msgid "Eye Candy"
 msgstr "Ögongodis"
 
 #: skylines/controllers/users.py:182 skylines/controllers/users.py:190
-#: skylines/templates/users/view.html:126
+#: skylines/templates/users/view.jinja:139
 msgid "Recover Password"
 msgstr "Återfå lösenord"
 
 #: skylines/controllers/users.py:201 skylines/controllers/users.py:259
-#: skylines/templates/users/view.html:123
+#: skylines/templates/users/view.jinja:135
 msgid "Change Password"
 msgstr "Ändra lösenord"
 
@@ -284,7 +284,7 @@ msgstr ""
 msgid "Edit User"
 msgstr "Redigera användare"
 
-#: skylines/controllers/users.py:532
+#: skylines/controllers/users.py:535
 msgid "Password changed."
 msgstr "Lösenordet ändrat."
 
@@ -336,35 +336,46 @@ msgstr ""
 msgid "American (imperial)"
 msgstr ""
 
-#: skylines/templates/about.html:1 skylines/templates/master/topbar.html:23
+#: skylines/templates/about.jinja:4 skylines/templates/topbar.jinja:4
 msgid "About"
 msgstr "Om SkyLines"
 
-#: skylines/templates/about.html:24
-msgid ""
-"Welcome to SkyLines, the internet platform for sharing\n"
-"        flights!"
+#: skylines/templates/about.jinja:9
+#, fuzzy
+#| msgid "" "Welcome to SkyLines, the internet platform for sharing\n" "
+#| flights!"
+msgid "Welcome to SkyLines, the internet platform for sharing flights!"
 msgstr ""
 "Välkommen till SkyLines, internet-plattformen för att dela\n"
 "        flyg!"
 
-#: skylines/templates/about.html:29
-msgid "The major goals of the Skylines-Project are:"
+#: skylines/templates/about.jinja:12
+#, fuzzy
+#| msgid "The major goals of the Skylines-Project are:"
+msgid "The major goals of the Skylines project are:"
 msgstr "Skylines-projekets huvudmål:"
 
-#: skylines/templates/about.html:31
+#: skylines/templates/about.jinja:14
 msgid "To provide a free platform for sharing and analysing flights"
 msgstr "Förse med en gratis plattform för att dela och analysera flyg"
 
-#: skylines/templates/about.html:32
-msgid "Skylines is based on free software ([1:License])."
+#: skylines/templates/about.jinja:15
+#, fuzzy
+#| msgid "Skylines is based on free software ([1:License])."
+msgid "Skylines is based on free software"
 msgstr "Skylines skall baseras på fri mjukvara ([1:Licens])."
 
-#: skylines/templates/about.html:33
+#: skylines/templates/about.jinja:15 skylines/templates/about.jinja:20
+#, fuzzy
+#| msgid "Clients"
+msgid "License"
+msgstr "Klienter"
+
+#: skylines/templates/about.jinja:16
 msgid "The stored flights are available for everybody without any limitations."
 msgstr "Lagrade flyg skall vara tillgängliga för alla utan begränsning."
 
-#: skylines/templates/about.html:34
+#: skylines/templates/about.jinja:17
 msgid ""
 "Skylines is a non-commercial project, there are no ads on the webpage, "
 "its free of charge."
@@ -372,561 +383,580 @@ msgstr ""
 "Skylines drivs som ett icke-kommersiellt projekt. Det är kostnadsfritt "
 "att använda, och utan reklam."
 
-#: skylines/templates/about.html:35
+#: skylines/templates/about.jinja:18
+#, fuzzy, python-format
+#| msgid "" "Skylines has [1:Live Tracking], let your friends parcitipate on
+#| your " "adventures."
 msgid ""
-"Skylines has [1:Live Tracking], let your friends parcitipate on your "
-"adventures."
+"Skylines has <a href=\"%(url)s\">Live Tracking</a>, let your friends "
+"parcitipate on your adventures."
 msgstr ""
 "Skylines [1:Live Tracking], gör det möjligt för dina vänner att följa "
 "dina flyg."
 
-#: skylines/templates/about.html:36
+#: skylines/templates/about.jinja:19
 msgid ""
 "Skylines has also some social network aspects with comments, "
 "notifications, friends and followers."
 msgstr "Sociala funktioner (såsom kommentarer, notifiering, vänner och anhängare)."
 
-#: skylines/templates/about.html:37
-msgid ""
-"Airport and Waypoint data is provided by the [1:WELT2000] project "
-"([2:License])"
+#: skylines/templates/about.jinja:20
+#, fuzzy, python-format
+#| msgid "" "Airport and Waypoint data is provided by the [1:WELT2000] project
+#| " "([2:License])"
+msgid "Airport and Waypoint data is provided by the %(welt2000)s project."
 msgstr ""
 "Flygplats och waypoint-data tillhandahålls av [1:WELT2000] projektet "
 "([2:Licens])"
 
-#: skylines/templates/about.html:41
-msgid "Current status: [1:[2:] under development]"
-msgstr "Aktuell status: [1:[2:] under utveckling]"
-
-#: skylines/templates/about.html:45
-msgid ""
-"SkyLines was brought to you by the [1:XCSoar project].  It is free\n"
-"        software; [2:the source\n"
-"        code is available here]."
+#: skylines/templates/about.jinja:25
+msgid "Current status"
 msgstr ""
-"SkyLines har möjliggjorts genom [1:XCSoar projektet].  Det är fri "
-"mjukvara, källkoden finns tillgänglig [2:här]."
 
-#: skylines/templates/about.html:53
+#: skylines/templates/about.jinja:25
+msgid "under development"
+msgstr ""
+
+#: skylines/templates/about.jinja:29
+#, python-format
+msgid "SkyLines was brought to you by the %(xcsoar)s project."
+msgstr ""
+
+#: skylines/templates/about.jinja:32
+msgid "It is free software;"
+msgstr ""
+
+#: skylines/templates/about.jinja:33
+msgid "the source code is available here"
+msgstr ""
+
+#: skylines/templates/about.jinja:37
+#, fuzzy, python-format
+#| msgid "" "If you think that something is missing or you think that you have
+#| found a" " bug please follow the instructions [1:here] to write a feature
+#| request " "or bug report."
 msgid ""
 "If you think that something is missing or you think that you have found a"
-" bug please follow the instructions [1:here] to write a feature request "
-"or bug report."
+" bug please follow the instructions <a href=\"%(url)s\" "
+"target=\"_blank\">here</a> to write a feature request or bug report."
 msgstr ""
 "Om du har förbättringsförslag eller vill rapportera en bugg, vänligen "
 "följ instruktionerna [1:här]."
 
-#: skylines/templates/error.html:1
-msgid "Error {code}"
-msgstr "Fel {code}"
-
-#: skylines/templates/login.html:1 skylines/templates/master/topbar.html:37
-msgid "Login"
-msgstr "Logga in"
-
-#: skylines/templates/login.html:25 skylines/templates/master/topbar.html:42
-msgid "Email Address:"
-msgstr "E-postadress:"
-
-#: skylines/templates/login.html:31 skylines/templates/master/topbar.html:48
-msgid "Password:"
-msgstr "Lösenord:"
-
-#: skylines/templates/login.html:38 skylines/templates/master/topbar.html:55
-msgid "Remember me"
-msgstr "Kom ihåg mig"
-
-#: skylines/templates/login.html:44 skylines/templates/users/new.html:1
-msgid "Register"
-msgstr "Registrera"
-
-#: skylines/templates/clubs/list.html:14
-#: skylines/templates/ranking/layout.html:27
-msgid "Clubs"
-msgstr "Klubbar"
-
-#: skylines/templates/clubs/list.html:23
-#: skylines/templates/flights/details-table.html:187
-#: skylines/templates/users/users-table.html:23
-msgid "Actions"
-msgstr "Åtgärder"
-
-#: skylines/templates/clubs/list.html:34 skylines/templates/clubs/view.html:50
-#: skylines/templates/flights/list.html:1
-#: skylines/templates/master/topbar.html:25
-#: skylines/templates/master/topbar.html:84
-#: skylines/templates/ranking/airports.html:20
-#: skylines/templates/ranking/clubs.html:19
-#: skylines/templates/ranking/pilots.html:20
-#: skylines/templates/statistics/flights-table.html:12
-#: skylines/templates/statistics/years.html:48
-#: skylines/templates/users/users-table.html:41
-#: skylines/templates/users/view.html:140
-#: skylines/templates/users/view.html:206
-msgid "Flights"
-msgstr "Flyg"
-
-#: skylines/templates/clubs/list.html:35 skylines/templates/clubs/view.html:51
-#: skylines/templates/master/topbar.html:27
-#: skylines/templates/master/topbar.html:85
-#: skylines/templates/statistics/years.html:1
-#: skylines/templates/statistics/years.html:35
-#: skylines/templates/users/users-table.html:42
-#: skylines/templates/users/view.html:141
-msgid "Statistics"
-msgstr "Statistik"
-
-#: skylines/templates/clubs/list.html:36 skylines/templates/clubs/view.html:52
-msgid "Members"
-msgstr "Medlemmar"
-
-#: skylines/templates/clubs/view.html:34
-msgid "Created"
-msgstr "Skapad"
-
-#. e.g. 'Created: 18.01.2011 by PilotA'
-#: skylines/templates/clubs/view.html:40
-#, python-format
-msgid "%(datetime)s by [1:%(user)s]"
-msgstr "%(datetime)s av [1:%(user)s]"
-
-#: skylines/templates/clubs/view.html:49
-#: skylines/templates/users/users-table.html:43
-#: skylines/templates/users/view.html:121
-msgid "Edit"
-msgstr "Redigera"
-
-#: skylines/templates/flights/after_change_pilot.html:5
-msgid "Pilot missing in the list?"
-msgstr "Saknas piloten i listan?"
-
-#: skylines/templates/flights/after_change_pilot.html:6
-msgid "Create new pilot"
-msgstr "Skapa ny pilot"
-
-#: skylines/templates/flights/details-table.html:34
-msgid "Spread the word"
-msgstr ""
-
-#: skylines/templates/flights/details-table.html:47
-#: skylines/templates/flights/flights-table.html:18
-#: skylines/templates/users/view.html:175
-msgid "Date"
-msgstr "Datum"
-
-#: skylines/templates/flights/details-table.html:53
-msgid "Share"
-msgstr "Dela"
-
-#: skylines/templates/flights/details-table.html:59
-msgid "Take-off"
-msgstr "Startplats"
-
-#: skylines/templates/flights/details-table.html:64
-#: skylines/templates/flights/details-table.html:77
-msgid "at"
-msgstr "vid"
-
-#: skylines/templates/flights/details-table.html:72
-msgid "Landing"
-msgstr "Landning"
-
-#: skylines/templates/flights/details-table.html:84
-#: skylines/templates/flights/phases-table.html:14
-#: skylines/templates/flights/phases-table.html:37
-#: skylines/templates/flights/phases-table.html:67
-msgid "Duration"
-msgstr "Varaktighet"
-
-#: skylines/templates/flights/details-table.html:90
-#: skylines/templates/flights/flights-table.html:24
-msgid "Aircraft"
-msgstr "Flygfarkost"
-
-#: skylines/templates/flights/details-table.html:93
-#: skylines/templates/flights/details-table.html:150
-#: skylines/templates/users/view.html:107
-#: skylines/templates/users/view.html:115
-msgid "Change"
-msgstr "Ändra"
-
-#: skylines/templates/flights/details-table.html:96
-msgid "Handicap"
-msgstr ""
-
-#: skylines/templates/flights/details-table.html:103
-msgid "Unknown"
-msgstr "Okänd"
-
-#: skylines/templates/flights/details-table.html:128
-#: skylines/templates/flights/flights-table.html:19
-msgid "Score"
-msgstr "Poäng"
-
-#: skylines/templates/flights/details-table.html:130
-#: skylines/templates/ranking/airports.html:33
-#: skylines/templates/ranking/clubs.html:31
-#: skylines/templates/ranking/pilots.html:37
-msgid "pt"
-msgstr "p"
-
-#: skylines/templates/flights/details-table.html:132
-msgid "OLC Distance"
-msgstr "OLC-distans"
-
-#: skylines/templates/flights/details-table.html:135
-msgid "FAI Triangle Distance"
-msgstr "FAI-triangeldistans"
-
-#: skylines/templates/flights/details-table.html:142
-msgid "Speed"
-msgstr "Hastighet"
-
-#: skylines/templates/flights/details-table.html:160
-msgid "[unspecified]"
-msgstr "[ospecificerat]"
-
-#: skylines/templates/flights/details-table.html:175
-msgid "Uploaded"
-msgstr "Uppladdad"
-
-#. e.g. 'Uploaded: 18.01.2011 by PilotA'
-#: skylines/templates/flights/details-table.html:176
-#, python-format
-msgid "%(datetime)s[1:] by %(user)s"
-msgstr "%(datetime)s[1:] av %(user)s"
-
-#: skylines/templates/flights/details-table.html:181
-msgid "Download"
-msgstr "Hämta"
-
-#: skylines/templates/flights/details-table.html:189
-msgid "Delete"
-msgstr "Ta bort"
-
-#: skylines/templates/flights/flights-table.html:21
-#: skylines/templates/flights/phases-table.html:39
-#: skylines/templates/flights/phases-table.html:69
-#: skylines/templates/statistics/distance-table.html:18
-#: skylines/templates/statistics/years.html:51
-#: skylines/templates/users/view.html:174
-#: skylines/templates/users/view.html:210
-msgid "Distance"
-msgstr "Distans"
-
-#: skylines/templates/flights/flights-table.html:22
-msgid "Airport"
-msgstr "Flygplats"
-
-#: skylines/templates/flights/flights-table.html:25
-msgid "Time"
-msgstr "Tid"
-
-#: skylines/templates/flights/flights-table.html:85
-#: skylines/templates/notifications/notifications-table.html:115
-#: skylines/templates/tracking/list.html:62
-#: skylines/templates/tracking/list.html:64
-#: skylines/templates/upload/result.html:60
-#: skylines/templates/users/view.html:189
-msgid "Show"
-msgstr "Visa"
-
-#: skylines/templates/flights/list.html:1
-msgid "{flights} on {date}"
-msgstr "{flights} den {date}"
-
-#: skylines/templates/flights/list.html:1
-msgid "{flights} of {pilot}"
-msgstr "{flights} av {pilot}"
-
-#: skylines/templates/flights/list.html:1
-msgid "{flights} of {club}"
-msgstr "{flights} av {club}"
-
-#: skylines/templates/flights/list.html:1
-msgid "{flights} from {airport}"
-msgstr "{flights} från {airport}"
-
-#: skylines/templates/flights/nav.html:14
-msgid "All Flights"
-msgstr "Alla flyg"
-
-#: skylines/templates/flights/nav.html:26
-msgid "Today"
-msgstr "Idag"
-
-#: skylines/templates/flights/nav.html:56
-msgid "Unassigned Flights"
-msgstr "Ej tilldelat flyg"
-
-#: skylines/templates/flights/nav.html:60
-msgid "Pinned Flights"
-msgstr "Nålade flyg"
-
-#: skylines/templates/flights/phases-table.html:15
-#: skylines/templates/flights/phases-table.html:38
-#: skylines/templates/flights/phases-table.html:68
-msgid "ΔH"
-msgstr ""
-
-#: skylines/templates/flights/phases-table.html:16
-#: skylines/templates/flights/phases-table.html:40
-#: skylines/templates/flights/phases-table.html:70
-msgid "Avg. vario"
-msgstr "Snittvario"
-
-#: skylines/templates/flights/phases-table.html:17
-msgid "Thermals"
-msgstr "Termikblåsor"
-
-#: skylines/templates/flights/phases-table.html:41
-#: skylines/templates/flights/phases-table.html:71
-msgid "Avg. speed"
-msgstr "Snitthastighet"
-
-#: skylines/templates/flights/phases-table.html:42
-#: skylines/templates/flights/phases-table.html:72
-msgid "Glide Rate"
-msgstr "Glidtal"
-
-#: skylines/templates/flights/phases-table.html:42
-#: skylines/templates/flights/phases-table.html:72
-msgid "GR"
-msgstr ""
-
-#: skylines/templates/flights/phases-table.html:43
-msgid "Glides"
-msgstr "Glid"
-
-#: skylines/templates/flights/phases-table.html:65
-msgid "Phase"
-msgstr "Fas"
-
-#: skylines/templates/flights/phases-table.html:66
-msgid "Start"
-msgstr "Start"
-
-#: skylines/templates/flights/view.html:103
-msgid "View Flight"
-msgstr "Visa flyg"
-
-#: skylines/templates/flights/view.html:113
-#: skylines/templates/tracking/view.html:151
-msgid "Full-screen map"
-msgstr "Fullskärmskarta"
-
-#: skylines/templates/flights/view.html:116
-msgid "Activate this to show the flight on top of other flights on the map"
-msgstr "Aktivera för att visa flyg ovanpå andra flyg på kartan"
-
-#: skylines/templates/flights/view.html:121
-msgid "Detailed statistics"
-msgstr "Detaljerad statistik"
-
-#: skylines/templates/flights/view.html:125
-msgid "Comments"
-msgstr "Kommentarer"
-
-#: skylines/templates/flights/view.html:136
-msgid "No comments yet."
-msgstr "Inga kommentarer ännu."
-
-#: skylines/templates/flights/view.html:142
-msgid "Add comment"
-msgstr "Lägg till kommentar"
-
-#: skylines/templates/flights/view.html:153
-msgid "An error occurred while decoding this flight."
-msgstr "Ett fel uppstod vid avkodning av flyget."
-
-#: skylines/templates/flights/view.html:162
-msgid "Circling performance"
-msgstr "Kurvningsprestanda"
-
-#: skylines/templates/flights/view.html:162
-#: skylines/templates/flights/view.html:167
-msgid "(summary)"
-msgstr "(sammanfattning)"
-
-#: skylines/templates/flights/view.html:167
-msgid "Cruise performance"
-msgstr "Kryssningsprestanda"
-
-#: skylines/templates/flights/view.html:171
-msgid "Phases"
-msgstr "Faser"
-
-#: skylines/templates/generic/confirm.html:24
-msgid "Yes"
-msgstr "Ja"
-
-#: skylines/templates/generic/confirm.html:25
-#: skylines/templates/generic/confirm.html:26
-msgid "No"
-msgstr "Nej"
-
-#: skylines/templates/master/page.html:37
-msgid "The XCSoar Project"
-msgstr "XCSoar-projektet"
-
-#: skylines/templates/master/page.html:38
+#: skylines/templates/base-page.jinja:28
 msgid "Imprint"
 msgstr ""
 
-#: skylines/templates/master/topbar.html:24
+#: skylines/templates/error.jinja:3
+#, fuzzy, python-format
+#| msgid "Error {code}"
+msgid "Error %(code)s"
+msgstr "Fel {code}"
+
+#: skylines/templates/login.jinja:4 skylines/templates/topbar.jinja:52
+msgid "Login"
+msgstr "Logga in"
+
+#: skylines/templates/topbar.jinja:5
 msgid "Live"
 msgstr "Live"
 
-#: skylines/templates/master/topbar.html:26
-#: skylines/templates/ranking/layout.html:1
+#: skylines/templates/topbar.jinja:6 skylines/templates/topbar.jinja:107
+#: skylines/templates/clubs/list.jinja:20
+#: skylines/templates/clubs/view.jinja:49
+#: skylines/templates/flights/list.jinja:26
+#: skylines/templates/ranking/airports.jinja:10
+#: skylines/templates/ranking/clubs.jinja:8
+#: skylines/templates/ranking/pilots.jinja:9
+#: skylines/templates/statistics/flights-table.jinja:6
+#: skylines/templates/statistics/years.jinja:61
+#: skylines/templates/users/users-table.jinja:26
+#: skylines/templates/users/view.jinja:150
+#: skylines/templates/users/view.jinja:224
+msgid "Flights"
+msgstr "Flyg"
+
+#: skylines/templates/topbar.jinja:7 skylines/templates/ranking/layout.jinja:9
 msgid "Ranking"
 msgstr "Rankning"
 
-#: skylines/templates/master/topbar.html:32
+#: skylines/templates/topbar.jinja:8 skylines/templates/topbar.jinja:108
+#: skylines/templates/clubs/list.jinja:21
+#: skylines/templates/clubs/view.jinja:50
+#: skylines/templates/statistics/years.jinja:28
+#: skylines/templates/users/users-table.jinja:27
+#: skylines/templates/users/view.jinja:151
+msgid "Statistics"
+msgstr "Statistik"
+
+#: skylines/templates/topbar.jinja:35
 msgid "Upload"
 msgstr "Ladda upp"
 
-#: skylines/templates/master/topbar.html:61
+#: skylines/templates/topbar.jinja:63
+#, fuzzy
+#| msgid "eMail Address"
+msgid "Email Address"
+msgstr "Epostadress"
+
+#: skylines/templates/topbar.jinja:76
+msgid "Remember me"
+msgstr "Kom ihåg mig"
+
+#: skylines/templates/topbar.jinja:81
 msgid "Forgot password?"
 msgstr "Glömt lösenordet?"
 
-#: skylines/templates/master/topbar.html:62
+#: skylines/templates/topbar.jinja:82
 msgid "Don't have an account?"
 msgstr "Inget konto?"
 
-#: skylines/templates/master/topbar.html:87
-msgid "Logout"
-msgstr "Logga ut"
-
-#: skylines/templates/notifications/list.html:1
+#: skylines/templates/topbar.jinja:89
+#: skylines/templates/notifications/list.jinja:7
 msgid "Notifications"
 msgstr "Notifieringar"
 
-#: skylines/templates/notifications/list.html:24
+#: skylines/templates/topbar.jinja:110
+msgid "Logout"
+msgstr "Logga ut"
+
+#: skylines/templates/clubs/list.jinja:3
+#: skylines/templates/ranking/layout.jinja:16
+msgid "Clubs"
+msgstr "Klubbar"
+
+#: skylines/templates/clubs/list.jinja:10
+#: skylines/templates/flights/details-table.jinja:204
+#: skylines/templates/users/users-table.jinja:7
+msgid "Actions"
+msgstr "Åtgärder"
+
+#: skylines/templates/clubs/list.jinja:22
+#: skylines/templates/clubs/view.jinja:51
+msgid "Members"
+msgstr "Medlemmar"
+
+#: skylines/templates/clubs/pilots.jinja:6
+#, python-format
+msgid "Members <small>of %(club)s</small>"
+msgstr ""
+
+#: skylines/templates/clubs/view.jinja:33
+msgid "Created"
+msgstr "Skapad"
+
+#: skylines/templates/clubs/view.jinja:36
+#, fuzzy, python-format
+#| msgid "%(datetime)s[1:] by %(user)s"
+msgid "%(time_ago)s by %(creator)s"
+msgstr "%(datetime)s[1:] av %(user)s"
+
+#: skylines/templates/clubs/view.jinja:46
+#: skylines/templates/users/users-table.jinja:29
+#: skylines/templates/users/view.jinja:134
+msgid "Edit"
+msgstr "Redigera"
+
+#: skylines/templates/flights/after_change_pilot.jinja:3
+msgid "Pilot missing in the list?"
+msgstr "Saknas piloten i listan?"
+
+#: skylines/templates/flights/after_change_pilot.jinja:4
+msgid "Create new pilot"
+msgstr "Skapa ny pilot"
+
+#: skylines/templates/flights/details-table.jinja:18
+msgid "Spread the word"
+msgstr ""
+
+#: skylines/templates/flights/details-table.jinja:30
+#: skylines/templates/flights/flights-table.jinja:7
+#: skylines/templates/users/view.jinja:188
+msgid "Date"
+msgstr "Datum"
+
+#: skylines/templates/flights/details-table.jinja:34
+msgid "Share"
+msgstr "Dela"
+
+#: skylines/templates/flights/details-table.jinja:43
+msgid "Take-off"
+msgstr "Startplats"
+
+#: skylines/templates/flights/details-table.jinja:47
+#: skylines/templates/flights/details-table.jinja:64
+#, python-format
+msgid "%(airport)s<br /> at %(time)s"
+msgstr ""
+
+#: skylines/templates/flights/details-table.jinja:60
+msgid "Landing"
+msgstr "Landning"
+
+#: skylines/templates/flights/details-table.jinja:76
+#: skylines/templates/flights/phases-table.jinja:6
+#: skylines/templates/flights/phases-table.jinja:32
+#: skylines/templates/flights/phases-table.jinja:66
+msgid "Duration"
+msgstr "Varaktighet"
+
+#: skylines/templates/flights/details-table.jinja:84
+#: skylines/templates/flights/flights-table.jinja:13
+msgid "Aircraft"
+msgstr "Flygfarkost"
+
+#: skylines/templates/flights/details-table.jinja:88
+#: skylines/templates/flights/details-table.jinja:153
+#: skylines/templates/users/view.jinja:125
+msgid "Change"
+msgstr "Ändra"
+
+#: skylines/templates/flights/details-table.jinja:93
+msgid "Handicap"
+msgstr ""
+
+#: skylines/templates/flights/details-table.jinja:99
+#: skylines/templates/flights/flights-table.jinja:83
+msgid "Unknown"
+msgstr "Okänd"
+
+#: skylines/templates/flights/details-table.jinja:123
+#: skylines/templates/flights/flights-table.jinja:8
+msgid "Score"
+msgstr "Poäng"
+
+#: skylines/templates/flights/details-table.jinja:125
+#: skylines/templates/ranking/airports.jinja:22
+#: skylines/templates/ranking/clubs.jinja:17
+#: skylines/templates/ranking/pilots.jinja:19
+#, python-format
+msgid "%(points)s pt"
+msgstr ""
+
+#: skylines/templates/flights/details-table.jinja:128
+msgid "OLC Distance"
+msgstr "OLC-distans"
+
+#: skylines/templates/flights/details-table.jinja:133
+msgid "FAI Triangle Distance"
+msgstr "FAI-triangeldistans"
+
+#: skylines/templates/flights/details-table.jinja:143
+msgid "Speed"
+msgstr "Hastighet"
+
+#: skylines/templates/flights/details-table.jinja:190
+msgid "Uploaded"
+msgstr "Uppladdad"
+
+#: skylines/templates/flights/details-table.jinja:192
+#, fuzzy, python-format
+#| msgid "%(datetime)s[1:] by %(user)s"
+msgid "%(upload_time)s<br/> by %(uploader)s"
+msgstr "%(datetime)s[1:] av %(user)s"
+
+#: skylines/templates/flights/details-table.jinja:198
+msgid "Download"
+msgstr "Hämta"
+
+#: skylines/templates/flights/details-table.jinja:207
+msgid "Delete"
+msgstr "Ta bort"
+
+#: skylines/templates/flights/flights-table.jinja:10
+#: skylines/templates/flights/phases-table.jinja:34
+#: skylines/templates/flights/phases-table.jinja:68
+#: skylines/templates/statistics/distance-table.jinja:6
+#: skylines/templates/statistics/years.jinja:64
+#: skylines/templates/users/view.jinja:187
+#: skylines/templates/users/view.jinja:228
+msgid "Distance"
+msgstr "Distans"
+
+#: skylines/templates/flights/flights-table.jinja:11
+msgid "Airport"
+msgstr "Flygplats"
+
+#: skylines/templates/flights/flights-table.jinja:14
+msgid "Time"
+msgstr "Tid"
+
+#: skylines/templates/flights/flights-table.jinja:103
+msgid "Show"
+msgstr "Visa"
+
+#: skylines/templates/flights/flights-table.jinja:111
+#, fuzzy, python-format
+#| msgid "Add comment"
+msgid "%(num)d comment"
+msgid_plural "%(num)d comments"
+msgstr[0] "Lägg till kommentar"
+msgstr[1] ""
+
+#: skylines/templates/flights/list.jinja:10
+#, python-format
+msgid "Flights <small>of %(pilot)s</small>"
+msgstr ""
+
+#: skylines/templates/flights/list.jinja:14
+#, python-format
+msgid "Flights <small>of %(club)s</small>"
+msgstr ""
+
+#: skylines/templates/flights/list.jinja:18
+#, fuzzy, python-format
+#| msgid "{flights} from {airport}"
+msgid "Flights <small>from %(airport)s</small>"
+msgstr "{flights} från {airport}"
+
+#: skylines/templates/flights/list.jinja:22
+#, python-format
+msgid "Flights <small>on %(date)s</small>"
+msgstr ""
+
+#: skylines/templates/flights/nav.jinja:6
+msgid "All Flights"
+msgstr "Alla flyg"
+
+#: skylines/templates/flights/nav.jinja:23
+msgid "Today"
+msgstr "Idag"
+
+#: skylines/templates/flights/nav.jinja:60
+msgid "Unassigned Flights"
+msgstr "Ej tilldelat flyg"
+
+#: skylines/templates/flights/nav.jinja:65
+msgid "Pinned Flights"
+msgstr "Nålade flyg"
+
+#: skylines/templates/flights/phases-table.jinja:8
+#: skylines/templates/flights/phases-table.jinja:35
+#: skylines/templates/flights/phases-table.jinja:69
+msgid "Avg. vario"
+msgstr "Snittvario"
+
+#: skylines/templates/flights/phases-table.jinja:9
+msgid "Thermals"
+msgstr "Termikblåsor"
+
+#: skylines/templates/flights/phases-table.jinja:36
+#: skylines/templates/flights/phases-table.jinja:70
+msgid "Avg. speed"
+msgstr "Snitthastighet"
+
+#: skylines/templates/flights/phases-table.jinja:37
+#: skylines/templates/flights/phases-table.jinja:71
+msgid "Glide Rate"
+msgstr "Glidtal"
+
+#: skylines/templates/flights/phases-table.jinja:37
+#: skylines/templates/flights/phases-table.jinja:71
+msgid "GR"
+msgstr ""
+
+#: skylines/templates/flights/phases-table.jinja:38
+msgid "Glides"
+msgstr "Glid"
+
+#: skylines/templates/flights/phases-table.jinja:64
+msgid "Phase"
+msgstr "Fas"
+
+#: skylines/templates/flights/phases-table.jinja:65
+msgid "Start"
+msgstr "Start"
+
+#: skylines/templates/flights/view.jinja:125
+#: skylines/templates/tracking/view.jinja:158
+msgid "Full-screen map"
+msgstr "Fullskärmskarta"
+
+#: skylines/templates/flights/view.jinja:128
+msgid "Activate this to show the flight on top of other flights on the map"
+msgstr "Aktivera för att visa flyg ovanpå andra flyg på kartan"
+
+#: skylines/templates/flights/view.jinja:133
+msgid "Detailed statistics"
+msgstr "Detaljerad statistik"
+
+#: skylines/templates/flights/view.jinja:138
+msgid "Comments"
+msgstr "Kommentarer"
+
+#: skylines/templates/flights/view.jinja:154
+msgid "No comments yet."
+msgstr "Inga kommentarer ännu."
+
+#: skylines/templates/flights/view.jinja:163
+msgid "Add comment"
+msgstr "Lägg till kommentar"
+
+#: skylines/templates/flights/view.jinja:177
+msgid "An error occurred while decoding this flight."
+msgstr "Ett fel uppstod vid avkodning av flyget."
+
+#: skylines/templates/flights/view.jinja:186
+msgid "Circling performance"
+msgstr "Kurvningsprestanda"
+
+#: skylines/templates/flights/view.jinja:186
+#: skylines/templates/flights/view.jinja:191
+#, fuzzy
+#| msgid "(summary)"
+msgid "summary"
+msgstr "(sammanfattning)"
+
+#: skylines/templates/flights/view.jinja:191
+msgid "Cruise performance"
+msgstr "Kryssningsprestanda"
+
+#: skylines/templates/flights/view.jinja:198
+msgid "Phases"
+msgstr "Faser"
+
+#: skylines/templates/generic/confirm.jinja:13
+msgid "Yes"
+msgstr "Ja"
+
+#: skylines/templates/generic/confirm.jinja:15
+#: skylines/templates/generic/confirm.jinja:17
+msgid "No"
+msgstr "Nej"
+
+#: skylines/templates/macros/flash.jinja:6
+msgid "Warning!"
+msgstr "Varning!"
+
+#: skylines/templates/macros/flash.jinja:7
+msgid "Error!"
+msgstr "Fel!"
+
+#: skylines/templates/notifications/list.jinja:19
 msgid "Mark all as read"
 msgstr "Markera alla som lästa"
 
-#: skylines/templates/notifications/list.html:26
+#: skylines/templates/notifications/list.jinja:21
 msgid "You don't have any unread notifications."
 msgstr "Du har inga olästa notifieringar."
 
-#: skylines/templates/notifications/notifications-table.html:56
-msgid "Error: Unknown notification group"
-msgstr "Fel: Okänd notifieringsgrupp"
-
-#: skylines/templates/notifications/notifications-table.html:70
-msgid "Error: Unknown notification"
-msgstr "Fel: Okänd notifiering"
-
-#: skylines/templates/notifications/notifications-table.html:76
-#, python-format
+#: skylines/templates/notifications/notifications-table.jinja:68
+#, fuzzy, python-format
+#| msgid "" "[1:%(pilot)s] commented on your [2:%(distance)s] flight on the "
+#| "[3:%(date)s]."
 msgid ""
-"[1:%(pilot)s] commented on your [2:%(distance)s] flight on the "
-"[3:%(date)s]."
+"<strong>%(pilot)s</strong> commented on your "
+"<strong>%(distance)s</strong> flight on the <strong>%(date)s</strong>."
 msgstr ""
 "[1:%(pilot)s] kommenterade på ditt  [2:%(distance)s] flyg på den "
 "[3:%(date)s]."
 
-#: skylines/templates/notifications/notifications-table.html:82
-#, python-format
-msgid "[1:%(pilot)s] uploaded a new [2:%(distance)s] flight on the [3:%(date)s]."
+#: skylines/templates/notifications/notifications-table.jinja:75
+#, fuzzy, python-format
+#| msgid "[1:%(pilot)s] uploaded a new [2:%(distance)s] flight on the
+#| [3:%(date)s]."
+msgid ""
+"<strong>%(pilot)s</strong> uploaded a new <strong>%(distance)s</strong> "
+"flight on the <strong>%(date)s</strong>."
 msgstr ""
 "[1:%(pilot)s] laddade upp en ett nytt [2:%(distance)s] flyg på den "
 "[3:%(date)s]."
 
-#: skylines/templates/notifications/notifications-table.html:88
-#, python-format
-msgid "[1:%(pilot)s] uploaded [2:%(num_flights)s] new flights."
+#: skylines/templates/notifications/notifications-table.jinja:82
+#, fuzzy, python-format
+#| msgid "[1:%(pilot)s] uploaded [2:%(num_flights)s] new flights."
+msgid ""
+"<strong>%(pilot)s</strong> uploaded <strong>%(num_flights)s</strong> new "
+"flights."
 msgstr "[1:%(pilot)s] laddade upp [2:%(num_flights)s] nya flyg."
 
-#: skylines/templates/notifications/notifications-table.html:94
-#, python-format
-msgid "[1:%(pilot)s] is following you now."
+#: skylines/templates/notifications/notifications-table.jinja:89
+#, fuzzy, python-format
+#| msgid "[1:%(pilot)s] is following you now."
+msgid "<strong>%(pilot)s</strong> is following you now."
 msgstr "[1:%(pilot)s] är nu en anhängare till dig."
 
-#: skylines/templates/ranking/airports.html:12
-#: skylines/templates/ranking/clubs.html:11
-#: skylines/templates/ranking/layout.html:18
-#: skylines/templates/ranking/pilots.html:11
-msgid "Top 20"
-msgstr "Topp 20"
-
-#: skylines/templates/ranking/airports.html:21
-#: skylines/templates/ranking/clubs.html:20
-#: skylines/templates/ranking/pilots.html:21
+#: skylines/templates/ranking/airports.jinja:11
+#: skylines/templates/ranking/clubs.jinja:9
+#: skylines/templates/ranking/pilots.jinja:10
 msgid "Total Score"
 msgstr "Total poäng"
 
-#: skylines/templates/ranking/layout.html:28
-#: skylines/templates/statistics/pilots-table.html:12
-#: skylines/templates/statistics/years.html:58
+#: skylines/templates/ranking/layout.jinja:17
+#: skylines/templates/statistics/pilots-table.jinja:6
+#: skylines/templates/statistics/years.jinja:71
 msgid "Pilots"
 msgstr "Piloter"
 
-#: skylines/templates/ranking/layout.html:29
+#: skylines/templates/ranking/layout.jinja:18
 msgid "Airports"
 msgstr "Flygplatser"
 
-#: skylines/templates/snippets/flash.html:24
-msgid "Warning!"
-msgstr "Varning!"
-
-#: skylines/templates/snippets/flash.html:25
-msgid "Error!"
-msgstr "Fel!"
-
-#: skylines/templates/snippets/pager.html:16
-#: skylines/templates/snippets/pager.html:17
-msgid "← Previous"
-msgstr "← Föregående"
-
-#: skylines/templates/snippets/pager.html:31
-#: skylines/templates/snippets/pager.html:32
-msgid "Next →"
-msgstr "Nästa →"
-
-#: skylines/templates/statistics/distance-table.html:17
-#: skylines/templates/statistics/duration-table.html:13
-#: skylines/templates/statistics/flights-table.html:11
-#: skylines/templates/statistics/pilots-table.html:11
+#: skylines/templates/statistics/distance-table.jinja:5
+#: skylines/templates/statistics/duration-table.jinja:5
+#: skylines/templates/statistics/flights-table.jinja:5
+#: skylines/templates/statistics/pilots-table.jinja:5
 msgid "Year"
 msgstr "År"
 
-#: skylines/templates/statistics/duration-table.html:14
-#: skylines/templates/statistics/years.html:54
-#: skylines/templates/users/view.html:218
+#: skylines/templates/statistics/distance-table.jinja:14
+#, python-format
+msgid "avg. %(distance)s per flight"
+msgstr ""
+
+#: skylines/templates/statistics/duration-table.jinja:6
+#: skylines/templates/statistics/years.jinja:67
+#: skylines/templates/users/view.jinja:236
 msgid "Flight Time"
 msgstr "Flygtid"
 
-#: skylines/templates/statistics/duration-table.html:22
-#: skylines/templates/statistics/duration-table.html:33
-#: skylines/templates/users/view.html:221
-msgid "Hours"
-msgstr "Timmar"
+#: skylines/templates/statistics/duration-table.jinja:14
+#, python-format
+msgid "avg. %(hours)s hours per flight"
+msgstr ""
 
-#: skylines/templates/tracking/info.html:1
-#: skylines/templates/tracking/list.html:1
-#: skylines/templates/tracking/map.html:1
-#: skylines/templates/tracking/view.html:1
+#: skylines/templates/statistics/years.jinja:13
+#, python-format
+msgid "Statistics <small>of %(pilot)s</small>"
+msgstr ""
+
+#: skylines/templates/statistics/years.jinja:18
+#, python-format
+msgid "Statistics <small>of %(club)s</small>"
+msgstr ""
+
+#: skylines/templates/statistics/years.jinja:23
+#, python-format
+msgid "Statistics <small>from %(airport)s</small>"
+msgstr ""
+
+#: skylines/templates/tracking/info.jinja:4
+#: skylines/templates/tracking/list.jinja:8
+#: skylines/templates/tracking/map.jinja:14
+#: skylines/templates/tracking/view.jinja:14
 msgid "Live Tracking"
 msgstr "Live-tracking"
 
-#: skylines/templates/tracking/info.html:20
+#: skylines/templates/tracking/info.jinja:7
 msgid "What is it?"
 msgstr "Vad är detta?"
 
-#: skylines/templates/tracking/info.html:21
+#: skylines/templates/tracking/info.jinja:9
+#, fuzzy
+#| msgid "" "SkyLines Live Tracking can be used to let others take part on
+#| your\n" "      journeys while you're flying. It uses a very light-weight
+#| protocol " "that\n" "      only transmits the necessary data and due to that
+#| it can also work " "in\n" "      areas/altitudes where the reception isn't
+#| very good. To give you an" "\n" "      example: A flight of 10 hours only
+#| uses about 340 KB of traffic " "when the\n" "      positions are transmitted
+#| every 5 seconds!"
 msgid ""
-"SkyLines Live Tracking can be used to let others take part on your\n"
-"      journeys while you're flying. It uses a very light-weight protocol "
-"that\n"
-"      only transmits the necessary data and due to that it can also work "
-"in\n"
-"      areas/altitudes where the reception isn't very good. To give you an"
-"\n"
-"      example: A flight of 10 hours only uses about 340 KB of traffic "
-"when the\n"
-"      positions are transmitted every 5 seconds!"
+"SkyLines Live Tracking can be used to let others take part on your "
+"journeys while you're flying. It uses a very light-weight protocol that "
+"only transmits the necessary data and due to that it can also work in "
+"areas/altitudes where the reception isn't very good. To give you an "
+"example: A flight of 10 hours only uses about 340 KB of traffic when the "
+"positions are transmitted every 5 seconds!"
 msgstr ""
 "SkyLines Live Tracking kan användas för att låta andra ta del av dina "
 "resor medans du flyger. Live Tracking använder ett minimalt protokoll som"
@@ -935,122 +965,127 @@ msgstr ""
 " Live Tracking endast ca 340 KB data (med positionsuppdatering var 5:e "
 "sekund)!"
 
-#: skylines/templates/tracking/info.html:30
+#: skylines/templates/tracking/info.jinja:12
 msgid "Clients"
 msgstr "Klienter"
 
-#: skylines/templates/tracking/info.html:32
-msgid ""
-"[1:XCSoar:][2:]available starting with [3:XCSoar 6.4]\n"
-"      ([4:Google Play]).\n"
-"      Instructions are below."
+#: skylines/templates/tracking/info.jinja:14
+#, python-format
+msgid "available starting with %(xcsoar_6_4)s"
 msgstr ""
-"[1:XCSoar:][2:] Live-track tillgänglig från och med [3:XCSoar 6.4]\n"
-"      ([4:Google Play]).\n"
-"      Instruktioner finns nedan."
 
-#: skylines/templates/tracking/info.html:36
-msgid ""
-"[1:Gaggle:][2:]now available in the current version of Gaggle\n"
-"      ([3:Google Play])"
+#: skylines/templates/tracking/info.jinja:16
+#, fuzzy
+#| msgid "" "[1:Gaggle:][2:]now available in the current version of Gaggle\n" "
+#| ([3:Google Play])"
+msgid "now available in the current version of Gaggle"
 msgstr ""
 "[1:Gaggle:][2:] tillgänglig i den aktuella version av Gaggle\n"
 "      ([3:Google Play])"
 
-#: skylines/templates/tracking/info.html:38
-msgid "Butterfly iGlide:"
-msgstr "Butterfly iGlide:"
-
-#: skylines/templates/tracking/info.html:38
+#: skylines/templates/tracking/info.jinja:18
 msgid "planned"
 msgstr "Stöd för Live-track är planerat."
 
-#: skylines/templates/tracking/info.html:41
+#: skylines/templates/tracking/info.jinja:21
 msgid "Live Tracking Key"
 msgstr "Live-trackingnyckel"
 
-#: skylines/templates/tracking/info.html:43
-msgid "Your Live Tracking key is:"
+#: skylines/templates/tracking/info.jinja:24
+#, fuzzy, python-format
+#| msgid "Your Live Tracking key is:"
+msgid "Your Live Tracking key is: %(key)s"
 msgstr "Din Live-trackingnyckel är:"
 
-#: skylines/templates/tracking/info.html:48
-#: skylines/templates/users/view.html:87
+#: skylines/templates/tracking/info.jinja:28
+#: skylines/templates/users/view.jinja:94
 msgid "Generate new key"
 msgstr "Generera ny nyckel"
 
-#: skylines/templates/tracking/info.html:49
+#: skylines/templates/tracking/info.jinja:29
 msgid "Your Live Tracks"
 msgstr "Dina Livetracks"
 
-#: skylines/templates/tracking/info.html:53
-msgid "You have to [1:login] to see you own personal Live Tracking key."
+#: skylines/templates/tracking/info.jinja:32
+#, fuzzy, python-format
+#| msgid "You have to [1:login] to see you own personal Live Tracking key."
+msgid ""
+"You have to <a href=\"%(url)s\">login</a> to see you own personal Live "
+"Tracking key."
 msgstr "Du måste [1:logga in] för att se din egna personliga Live-trackingnyckel."
 
-#: skylines/templates/tracking/info.html:58
-msgid "XCSoar"
-msgstr "XCSoar"
-
-#: skylines/templates/tracking/info.html:59
+#: skylines/templates/tracking/info.jinja:37
+#, fuzzy, python-format
+#| msgid "" "In [1:XCSoar], open\n" "      the [2:Setup System] dialog, click
+#| on [3:Setup] and\n" "      then [4:Tracking].  Turn SkyLines tracking on,
+#| and enter your\n" "      Live Tracking key."
 msgid ""
-"In [1:XCSoar], open\n"
-"      the [2:Setup System] dialog, click on [3:Setup] and\n"
-"      then [4:Tracking].  Turn SkyLines tracking on, and enter your\n"
-"      Live Tracking key."
+"In %(xcsoar)s, open the <em>Setup System</em> dialog, click on "
+"<em>Setup</em> and then <em>Tracking</em>.  Turn SkyLines tracking on, "
+"and enter your Live Tracking key."
 msgstr ""
 "I [1:XCSoar], öppna [2:Setup System] dialogen, klicka på [3:Setup] och "
 "sedan [4:Tracking].  Slå på \"SkyLines tracking\" och ange din live-"
 "trackingnyckel."
 
-#: skylines/templates/tracking/list.html:27
+#: skylines/templates/tracking/list.jinja:21
 msgid "Last fix"
 msgstr "Sista fix"
 
-#: skylines/templates/tracking/list.html:28
+#: skylines/templates/tracking/list.jinja:22
 msgid "Pilot / Traffic ID"
 msgstr ""
 
-#: skylines/templates/tracking/list.html:29
+#: skylines/templates/tracking/list.jinja:23
 msgid "Nearest Airport"
 msgstr "Närmast flygplats"
 
-#: skylines/templates/tracking/list.html:70
+#: skylines/templates/tracking/list.jinja:56
 msgid "How to use Live Tracking?"
 msgstr "Hur använder jag Live Tracking?"
 
-#: skylines/templates/tracking/map.html:115
-#: skylines/templates/tracking/view.html:166
+#: skylines/templates/tracking/map.jinja:10
+#: skylines/templates/tracking/view.jinja:10
+#, python-format
+msgid "Live Tracking <small>of %(pilot)s</small>"
+msgstr ""
+
+#: skylines/templates/tracking/map.jinja:120
+#: skylines/templates/tracking/view.jinja:174
 msgid "There is no live track of this pilot currently."
 msgstr "Det finns inget Live-track för denna pilot just nu."
 
-#: skylines/templates/tracking/view.html:103
-msgid "Flarm ID"
-msgstr ""
-
-#: skylines/templates/tracking/view.html:109
-msgid "ICAO ID"
-msgstr ""
-
-#: skylines/templates/tracking/view.html:132
+#: skylines/templates/tracking/view.jinja:124
 msgid "This pilot chose to delay the display of his live tracks."
 msgstr "Denna pilot har valt att fördröja visning av sina Live tracks."
 
-#: skylines/templates/tracking/view.html:132
+#: skylines/templates/tracking/view.jinja:124
 msgid "Delay"
 msgstr "Fördröjning"
 
-#: skylines/templates/tracking/view.html:140
+#: skylines/templates/tracking/view.jinja:130
 msgid "The live tracking delay is ignored because of your account privileges."
 msgstr "Live-trackfördröjning ignoreras på grund av dina kontoprivilegier."
 
-#: skylines/templates/tracking/view.html:141
-msgid "(ignored)"
+#: skylines/templates/tracking/view.jinja:130
+#, fuzzy
+#| msgid "(ignored)"
+msgid "ignored"
 msgstr "(ignorerad)"
 
-#: skylines/templates/tracking/view.html:156
+#: skylines/templates/tracking/view.jinja:138
+msgid "Flarm ID"
+msgstr ""
+
+#: skylines/templates/tracking/view.jinja:146
+msgid "ICAO ID"
+msgstr ""
+
+#: skylines/templates/tracking/view.jinja:164
 msgid "Your Live Tracking settings"
 msgstr "Dina Live-trackinställningar"
 
-#: skylines/templates/upload/result.html:24
+#: skylines/templates/upload/result.jinja:10
 msgid ""
 "Your flights have been saved. You may want to change the flights aircraft"
 " types and registrations below."
@@ -1058,104 +1093,196 @@ msgstr ""
 "Dina flyg har sparats. Nedan kan du ändra typ av luftfarkost och "
 "registreringar efter behov."
 
-#: skylines/templates/upload/result.html:29
+#: skylines/templates/upload/result.jinja:13
+#: skylines/templates/upload/result.jinja:69
+#, fuzzy
+#| msgid "Aircraft Registration"
+msgid "Update Aircraft Types and Registrations"
+msgstr "Luftfarkostregistrering"
+
+#: skylines/templates/upload/result.jinja:16
 msgid "No flight was saved."
 msgstr "Inga flyg sparades."
 
-#: skylines/templates/upload/result.html:35
+#: skylines/templates/upload/result.jinja:22
 msgid "Filename"
 msgstr "Filnamn"
 
-#: skylines/templates/upload/result.html:39
+#: skylines/templates/upload/result.jinja:26
 msgid "Status"
 msgstr "Status"
 
-#: skylines/templates/upload/result.html:56
+#: skylines/templates/upload/result.jinja:51
 msgid "Success"
 msgstr "Lyckades"
 
-#: skylines/templates/upload/result.html:69
+#: skylines/templates/upload/result.jinja:73
 msgid "Upload another flight"
 msgstr "Ladda upp ännu ett flyg"
 
-#: skylines/templates/users/change_club.html:1
-#: skylines/templates/users/change_club.html:18
+#: skylines/templates/users/change_club.jinja:4
 msgid "Change Club"
 msgstr "Ändra klubb"
 
-#: skylines/templates/users/change_club.html:22
+#: skylines/templates/users/change_club.jinja:7
 msgid "Select Club"
 msgstr "Välj klubb"
 
-#: skylines/templates/users/change_club.html:24
+#: skylines/templates/users/change_club.jinja:8
 msgid "Select your primary club:"
 msgstr "Välj din huvudklubb:"
 
-#: skylines/templates/users/change_club.html:30
+#: skylines/templates/users/change_club.jinja:11
 msgid "Register Club"
 msgstr "Registrera klubb"
 
-#: skylines/templates/users/change_club.html:32
+#: skylines/templates/users/change_club.jinja:12
 msgid "If your club doesn't exist yet in Skylines, create it:"
 msgstr "Om din klubb inte redan existerar i Skylines, skapa den:"
 
-#: skylines/templates/users/list.html:1
+#: skylines/templates/users/list.jinja:5
 msgid "Users"
 msgstr "Användare"
 
-#: skylines/templates/users/view.html:72
+#: skylines/templates/users/new.jinja:4
+msgid "Register"
+msgstr "Registrera"
+
+#: skylines/templates/users/view.jinja:77
 msgid "Email"
 msgstr "Epost"
 
-#: skylines/templates/users/view.html:77
-msgid "Display name"
-msgstr "Visningsnamn"
-
-#: skylines/templates/users/view.html:82
+#: skylines/templates/users/view.jinja:89
 msgid "Tracking key"
 msgstr "Live-trackingnyckel"
 
-#: skylines/templates/users/view.html:85
+#: skylines/templates/users/view.jinja:92
 msgid "More Information"
 msgstr "Mer information"
 
-#: skylines/templates/users/view.html:93
+#: skylines/templates/users/view.jinja:100
 msgid "Tracking delay"
 msgstr "Live-trackingfördröjning"
 
-#: skylines/templates/users/view.html:113
-msgid "[Unspecified]"
-msgstr "[Ospecificerad]"
+#: skylines/templates/users/view.jinja:121
+#, fuzzy
+#| msgid "[unspecified]"
+msgid "Unspecified"
+msgstr "[ospecificerat]"
 
-#: skylines/templates/users/view.html:133
+#: skylines/templates/users/view.jinja:144
 msgid "Unfollow"
 msgstr "Sluta följa"
 
-#: skylines/templates/users/view.html:136
+#: skylines/templates/users/view.jinja:146
 msgid "Follow"
 msgstr "Följ"
 
-#: skylines/templates/users/view.html:146
+#: skylines/templates/users/view.jinja:157
 msgid "Following"
 msgstr "Följer"
 
-#: skylines/templates/users/view.html:158
+#: skylines/templates/users/view.jinja:170
 msgid "Followers"
 msgstr "Anhängare"
 
-#: skylines/templates/users/view.html:170
+#: skylines/templates/users/view.jinja:183
 msgid "Distance Flights"
 msgstr "Distansflyg"
 
-#: skylines/templates/users/view.html:197
+#: skylines/templates/users/view.jinja:215
 msgid "Last 12 Months"
 msgstr "Sista 12 månaderna"
 
-#: skylines/templates/users/view.html:226
+#: skylines/templates/users/view.jinja:244
 msgid "Average Speed"
 msgstr "Snittshastighet"
 
-#: skylines/templates/users/view.html:234
+#: skylines/templates/users/view.jinja:254
 msgid "Takeoff Locations"
 msgstr "Startplats"
+
+#~ msgid "Current status: [1:[2:] under development]"
+#~ msgstr "Aktuell status: [1:[2:] under utveckling]"
+
+#~ msgid ""
+#~ "SkyLines was brought to you by the [1:XCSoar project].  It is free\n"
+#~ "        software; [2:the source\n"
+#~ "        code is available here]."
+#~ msgstr ""
+#~ "SkyLines har möjliggjorts genom [1:XCSoar "
+#~ "projektet].  Det är fri mjukvara, "
+#~ "källkoden finns tillgänglig [2:här]."
+
+#~ msgid "Email Address:"
+#~ msgstr "E-postadress:"
+
+#~ msgid "Password:"
+#~ msgstr "Lösenord:"
+
+#~ msgid "%(datetime)s by [1:%(user)s]"
+#~ msgstr "%(datetime)s av [1:%(user)s]"
+
+#~ msgid "at"
+#~ msgstr "vid"
+
+#~ msgid "pt"
+#~ msgstr "p"
+
+#~ msgid "{flights} on {date}"
+#~ msgstr "{flights} den {date}"
+
+#~ msgid "{flights} of {pilot}"
+#~ msgstr "{flights} av {pilot}"
+
+#~ msgid "{flights} of {club}"
+#~ msgstr "{flights} av {club}"
+
+#~ msgid "ΔH"
+#~ msgstr ""
+
+#~ msgid "View Flight"
+#~ msgstr "Visa flyg"
+
+#~ msgid "The XCSoar Project"
+#~ msgstr "XCSoar-projektet"
+
+#~ msgid "Error: Unknown notification group"
+#~ msgstr "Fel: Okänd notifieringsgrupp"
+
+#~ msgid "Error: Unknown notification"
+#~ msgstr "Fel: Okänd notifiering"
+
+#~ msgid "Top 20"
+#~ msgstr "Topp 20"
+
+#~ msgid "← Previous"
+#~ msgstr "← Föregående"
+
+#~ msgid "Next →"
+#~ msgstr "Nästa →"
+
+#~ msgid "Hours"
+#~ msgstr "Timmar"
+
+#~ msgid ""
+#~ "[1:XCSoar:][2:]available starting with [3:XCSoar 6.4]\n"
+#~ "      ([4:Google Play]).\n"
+#~ "      Instructions are below."
+#~ msgstr ""
+#~ "[1:XCSoar:][2:] Live-track tillgänglig från och med [3:XCSoar 6.4]\n"
+#~ "      ([4:Google Play]).\n"
+#~ "      Instruktioner finns nedan."
+
+#~ msgid "Butterfly iGlide:"
+#~ msgstr "Butterfly iGlide:"
+
+#~ msgid "XCSoar"
+#~ msgstr "XCSoar"
+
+#~ msgid "Display name"
+#~ msgstr "Visningsnamn"
+
+#~ msgid "[Unspecified]"
+#~ msgstr "[Ospecificerad]"
 
