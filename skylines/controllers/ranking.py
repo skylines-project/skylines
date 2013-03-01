@@ -45,21 +45,21 @@ class RankingController(BaseController):
         return result
 
     @without_trailing_slash
-    @expose('ranking/pilots.html')
+    @expose('jinja:ranking/pilots.jinja')
     @paginate('result', items_per_page=20)
     def pilots(self, **kw):
         return dict(tab='pilots',
                     result=self.__get_result(User, 'pilot_id', **kw))
 
     @without_trailing_slash
-    @expose('ranking/clubs.html')
+    @expose('jinja:ranking/clubs.jinja')
     @paginate('result', items_per_page=20)
     def clubs(self, **kw):
         return dict(tab='clubs',
                     result=self.__get_result(Club, 'club_id', **kw))
 
     @without_trailing_slash
-    @expose('ranking/airports.html')
+    @expose('jinja:ranking/airports.jinja')
     @paginate('result', items_per_page=20)
     def airports(self, **kw):
         return dict(tab='airports',

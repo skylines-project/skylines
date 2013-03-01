@@ -1,0 +1,22 @@
+{% extends "ranking/layout.jinja" %}
+
+{% block ranking -%}
+<table class="table table-striped">
+  <thead>
+    <th class="numeric">{% trans %}#{% endtrans %}</th>
+    <th>{% trans %}Name{% endtrans %}</th>
+    <th class="numeric">{% trans %}Flights{% endtrans %}</th>
+    <th class="numeric">{% trans %}Total Score{% endtrans %}</th>
+  </thead>
+  <tbody>
+    {% for club, count, total, rank in result -%}
+    <tr>
+      <td class="numeric">{{ rank }}</td>
+      <td><a href="/clubs/{{ club.id }}">{{ club|e }}</a></td>
+      <td class="numeric">{{ count }}</td>
+      <td class="numeric">{{ _('%(points)s pt')|format(points=total) }}</td>
+    </tr>
+    {%- endfor %}
+  </tbody>
+</table>
+{%- endblock %}

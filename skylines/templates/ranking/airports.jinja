@@ -1,0 +1,27 @@
+{% from "macros/flags.jinja" import insert_flag with context %}
+
+{% extends "ranking/layout.jinja" %}
+
+{% block ranking -%}
+<table class="table table-striped">
+  <thead>
+    <th class="numeric">{% trans %}#{% endtrans %}</th>
+    <th>{% trans %}Name{% endtrans %}</th>
+    <th class="numeric">{% trans %}Flights{% endtrans %}</th>
+    <th class="numeric">{% trans %}Total Score{% endtrans %}</th>
+  </thead>
+  <tbody>
+    {% for airport, count, total, rank in result -%}
+    <tr>
+      <td class="numeric">{{ rank }}</td>
+      <td>
+        {{ insert_flag(airport.country_code) }}
+        <a href="/flights/airport/{{ airport.id }}">{{ airport|e }}</a>
+      </td>
+      <td class="numeric">{{ count }}</td>
+      <td class="numeric">{{ _('%(points)s pt')|format(points=total) }}</td>
+    </tr>
+    {%- endfor %}
+  </tbody>
+</table>
+{%- endblock %}
