@@ -54,6 +54,7 @@ install_requires = [
     "webassets",
     "pyyaml",
     "cssmin",
+    "jinja2"
 ]
 
 if sys.version_info[:2] == (2, 4):
