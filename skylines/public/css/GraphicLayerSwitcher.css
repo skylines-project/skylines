@@ -14,11 +14,10 @@
   height: 30px;
   text-align: right;
   white-space: nowrap;
-  padding-left: 2px;
 }
 
 .GraphicLayerSwitcher.current img {
-  padding: 2px 2px 2px 5px;
+  padding: 2px;
   width: 26px;
   height: 26px;
 }

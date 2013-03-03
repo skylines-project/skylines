@@ -104,7 +104,6 @@ var GraphicLayerSwitcher = OpenLayers.Class(OpenLayers.Control, {
           var id = this.id + '_input_' + layer.name;
           var current = $(
             "<a id='" + id + "' href='#'>" +
-              layer.name +
               "<img src='../../images/layers.png' />" +
             "</a>");
           current.addClass('GraphicLayerSwitcher current');
