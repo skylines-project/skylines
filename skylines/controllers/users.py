@@ -119,7 +119,6 @@ class NewUserForm(AddRecordForm):
         'display_name': dict(label_text=l_('Name')),
         'club': dict(label_text=l_('Club')),
         'password': dict(label_text=l_('Password')),
-        'verify_password': dict(label_text=l_('Verify Password')),
     }
 
     email_address = Field(TextField, All(UniqueValue(SAORMProvider(DBSession),
@@ -128,7 +127,8 @@ class NewUserForm(AddRecordForm):
     display_name = Field(TextField, NotEmpty)
     club = ClubSelectField
     password = String(min=6)
-    verify_password = PasswordField('verify_password')
+    verify_password = PasswordField('verify_password',
+                                    label_text=l_('Verify Password'))
 
 new_user_form = NewUserForm(DBSession)
 
