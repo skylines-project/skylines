@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: SkyLines 0.1\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2013-03-01 19:27+0100\n"
+"POT-Creation-Date: 2013-03-03 21:04+0100\n"
 "PO-Revision-Date: 2012-11-11 20:36+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: en <LL@li.org>\n"
@@ -368,7 +368,7 @@ msgstr ""
 #, python-format
 msgid ""
 "Skylines has <a href=\"%(url)s\">Live Tracking</a>, let your friends "
-"parcitipate on your adventures."
+"participate on your adventures."
 msgstr ""
 
 #: skylines/templates/about.jinja:19
@@ -1115,180 +1115,4 @@ msgstr ""
 #: skylines/templates/users/view.jinja:254
 msgid "Takeoff Locations"
 msgstr ""
-
-#~ msgid ""
-#~ "Welcome to SkyLines, the internet platform for sharing\n"
-#~ "        flights!"
-#~ msgstr ""
-
-#~ msgid "The major goals of the Skylines-Project are:"
-#~ msgstr ""
-
-#~ msgid "Skylines is based on free software ([1:License])."
-#~ msgstr ""
-
-#~ msgid ""
-#~ "Skylines has [1:Live Tracking], let your"
-#~ " friends parcitipate on your adventures."
-#~ msgstr ""
-
-#~ msgid ""
-#~ "Airport and Waypoint data is provided"
-#~ " by the [1:WELT2000] project ([2:License])"
-#~ msgstr ""
-
-#~ msgid "Current status: [1:[2:] under development]"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "SkyLines was brought to you by the [1:XCSoar project].  It is free\n"
-#~ "        software; [2:the source\n"
-#~ "        code is available here]."
-#~ msgstr ""
-
-#~ msgid ""
-#~ "If you think that something is "
-#~ "missing or you think that you have"
-#~ " found a bug please follow the "
-#~ "instructions [1:here] to write a feature"
-#~ " request or bug report."
-#~ msgstr ""
-
-#~ msgid "Error {code}"
-#~ msgstr ""
-
-#~ msgid "Email Address:"
-#~ msgstr ""
-
-#~ msgid "Password:"
-#~ msgstr ""
-
-#~ msgid "%(datetime)s by [1:%(user)s]"
-#~ msgstr ""
-
-#~ msgid "at"
-#~ msgstr ""
-
-#~ msgid "pt"
-#~ msgstr ""
-
-#~ msgid "[unspecified]"
-#~ msgstr ""
-
-#~ msgid "%(datetime)s[1:] by %(user)s"
-#~ msgstr ""
-
-#~ msgid "{flights} on {date}"
-#~ msgstr ""
-
-#~ msgid "{flights} of {pilot}"
-#~ msgstr ""
-
-#~ msgid "{flights} of {club}"
-#~ msgstr ""
-
-#~ msgid "{flights} from {airport}"
-#~ msgstr ""
-
-#~ msgid "ΔH"
-#~ msgstr ""
-
-#~ msgid "View Flight"
-#~ msgstr ""
-
-#~ msgid "(summary)"
-#~ msgstr ""
-
-#~ msgid "The XCSoar Project"
-#~ msgstr ""
-
-#~ msgid "Error: Unknown notification group"
-#~ msgstr ""
-
-#~ msgid "Error: Unknown notification"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "[1:%(pilot)s] commented on your "
-#~ "[2:%(distance)s] flight on the [3:%(date)s]."
-#~ msgstr ""
-
-#~ msgid ""
-#~ "[1:%(pilot)s] uploaded a new [2:%(distance)s]"
-#~ " flight on the [3:%(date)s]."
-#~ msgstr ""
-
-#~ msgid "[1:%(pilot)s] uploaded [2:%(num_flights)s] new flights."
-#~ msgstr ""
-
-#~ msgid "[1:%(pilot)s] is following you now."
-#~ msgstr ""
-
-#~ msgid "Top 20"
-#~ msgstr ""
-
-#~ msgid "← Previous"
-#~ msgstr ""
-
-#~ msgid "Next →"
-#~ msgstr ""
-
-#~ msgid "Hours"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "SkyLines Live Tracking can be used to let others take part on your\n"
-#~ "      journeys while you're flying. It"
-#~ " uses a very light-weight protocol"
-#~ " that\n"
-#~ "      only transmits the necessary data"
-#~ " and due to that it can also"
-#~ " work in\n"
-#~ "      areas/altitudes where the reception "
-#~ "isn't very good. To give you an"
-#~ "\n"
-#~ "      example: A flight of 10 "
-#~ "hours only uses about 340 KB of"
-#~ " traffic when the\n"
-#~ "      positions are transmitted every 5 seconds!"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "[1:XCSoar:][2:]available starting with [3:XCSoar 6.4]\n"
-#~ "      ([4:Google Play]).\n"
-#~ "      Instructions are below."
-#~ msgstr ""
-
-#~ msgid ""
-#~ "[1:Gaggle:][2:]now available in the current version of Gaggle\n"
-#~ "      ([3:Google Play])"
-#~ msgstr ""
-
-#~ msgid "Butterfly iGlide:"
-#~ msgstr ""
-
-#~ msgid "Your Live Tracking key is:"
-#~ msgstr ""
-
-#~ msgid "You have to [1:login] to see you own personal Live Tracking key."
-#~ msgstr ""
-
-#~ msgid "XCSoar"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "In [1:XCSoar], open\n"
-#~ "      the [2:Setup System] dialog, click on [3:Setup] and\n"
-#~ "      then [4:Tracking].  Turn SkyLines tracking on, and enter your\n"
-#~ "      Live Tracking key."
-#~ msgstr ""
-
-#~ msgid "(ignored)"
-#~ msgstr ""
-
-#~ msgid "Display name"
-#~ msgstr ""
-
-#~ msgid "[Unspecified]"
-#~ msgstr ""
 
