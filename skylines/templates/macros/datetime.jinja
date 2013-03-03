@@ -1,0 +1,7 @@
+{% macro insert_timeago(dt) -%}
+<abbr class="timeago" title="{{ h.isoformat_utc(dt) }}" rel="tooltip">{{ h.format_datetime(dt) }} UTC</abbr>
+{%- endmacro %}
+
+{% macro insert_timeago_date(dt) -%}
+<abbr class="timeago" title="{{ h.isoformat_utc(dt) }}" rel="tooltip">{{ h.format_date(dt) }}</abbr>
+{%- endmacro %}

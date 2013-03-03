@@ -1,0 +1,22 @@
+{% from "users/users-table.jinja" import render_users_table with context %}
+
+{% extends "base-page.jinja" %}
+
+{% block title -%}
+{% trans club=('<a href="/clubs/' ~ club.id ~ '/">' ~ club|e ~ '</a>')|safe -%}
+Members <small>of {{ club }}</small>
+{%- endtrans %}
+{%- endblock %}
+
+{% block body_attributes -%} itemscope="SportsTeam" itemtype="http://schema.org/SportsTeam"{%- endblock %}
+
+{% block content -%}
+<meta itemprop="name" content="{{ club|e }}" />
+<meta itemprop="url" content="/clubs/{{ club.id }}" />
+
+{{ render_users_table(users, False) }}
+
+{% if club.is_writable(request.identity) -%}
+<a href="new_pilot" class="btn">{% trans %}Create Pilot{% endtrans %}</a>
+{%- endif %}
+{%- endblock %}

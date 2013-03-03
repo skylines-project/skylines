@@ -1,0 +1,6 @@
+{%- macro insert_flag(country_code, style=None) %}
+  <span class="flag-{{ country_code|lower }}"
+        style="{{style}}"
+        title="{{h.country_name(country_code)}}"
+        rel="tooltip"></span>
+{%- endmacro %}

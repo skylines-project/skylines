@@ -1,0 +1,13 @@
+{%- macro flight_meta_tags(flight) -%}
+<meta name="description" content="{{ flight_description(flight) }}" />
+<meta name="date" content="{{ h.isoformat_utc(flight.time_created) }}" />
+<meta name="DC.description" content="{{ flight_description(flight) }}" />
+<meta name="DC.date" content="{{ h.isoformat_utc(flight.time_created) }}" />
+<meta name="DC.publisher" content="{{ flight.igc_file.owner|e }}" />
+<meta py:if="flight.pilot" name="DC.creator" content="{{ flight.pilot|e }}" />
+<meta py:if="flight.co_pilot" name="DC.contributor" content="{{ flight.co_pilot|e }}" />
+{%- endmacro %}
+
+{%- macro flight_description(flight) -%}
+SkyLines ({{ h.format_distance(flight.olc_classic_distance) }} - {{ h.format_number(flight.index_score) ~ ' pt' }} - {{ h.format_date(flight.date_local) }}{%- if flight.pilot %} - {{ flight.pilot|e }}{% endif -%}{%- if flight.co_pilot %} - {{ flight.co_pilot|e }}{% endif -%})
+{%- endmacro -%}

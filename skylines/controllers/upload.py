@@ -108,13 +108,13 @@ class UploadController(BaseController):
     allow_only = has_permission('upload',
                                 msg=l_("You have to login to upload flights."))
 
-    @expose('generic/form.html')
+    @expose('generic/form.jinja')
     def index(self, **kw):
-        return dict(page='upload', title=_("Upload Flight"),
+        return dict(active_page='upload', title=_("Upload Flight"),
                     form=upload_form,
                     values=dict(pilot=request.identity['user'].id))
 
-    @expose('upload/result.html')
+    @expose('upload/result.jinja')
     @validate(upload_form, error_handler=index)
     def do(self, file, pilot):
         user = request.identity['user']
@@ -183,7 +183,8 @@ class UploadController(BaseController):
 
         DBSession.flush()
 
-        return dict(page='upload', flights=flights, success=success)
+        return dict(flights=flights, success=success,
+                    ModelSelectField=ModelSelectField)
 
     @expose()
     def update(self, **kw):

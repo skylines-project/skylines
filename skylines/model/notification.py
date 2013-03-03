@@ -71,6 +71,10 @@ class Notification(DeclarativeBase):
 
         query.update(dict(time_read=datetime.utcnow()))
 
+    @classmethod
+    def constants(cls):
+        return { member: getattr(cls, member) for member in dir(cls) if member.isupper() }
+
 
 def count_unread_notifications(user):
     return DBSession.query(Notification) \

@@ -1,0 +1,55 @@
+{% from "macros/datetime.jinja" import insert_timeago with context %}
+
+
+{% extends "base-page.jinja" %}
+
+
+{% block title %}{{ club.name|e }}{% endblock %}
+
+
+{% block head -%}
+{{ super() }}
+<script type="text/javascript">$(function() { $("abbr.timeago").timeago(); });</script>
+{%- endblock %}
+
+
+{% block content -%}
+<div class="row">
+  <div class="well span8 offset2">
+    <table class="right">
+      <tr>
+        <th>{% trans %}Name{% endtrans %}</th>
+        <td>{{ club.name }}</td>
+      </tr>
+
+      {% if club.website -%}
+      <tr>
+        <th>{% trans %}Website{% endtrans %}</th>
+        <td><a target="_blank" href="{{ club.website|e }}">{{ club.website|e }}</a></td>
+      </tr>
+      {%- endif %}
+
+      <tr>
+        <th>{% trans %}Created{% endtrans %}</th>
+        <td>
+          {% if club.owner -%}
+            {{ _('%(time_ago)s by %(creator)s')|format(time_ago=insert_timeago(club.time_created)|safe, creator='<a href="/users/' ~ club.owner_id ~ '">' ~ club.owner|e ~ '</a>') }}
+          {%- else %}
+            {{ insert_timeago(club.time_created) }}
+          {%- endif %}
+        </td>
+      </tr>
+    </table>
+
+    <p>
+      {% if club.is_writable(request.identity) -%}
+      <a href="edit" class="btn">{% trans %}Edit{% endtrans %}</a>
+      {%- endif %}
+
+      <a href="/flights/club/{{ club.id }}" class="btn"><i class="icon-plane"></i> {% trans %}Flights{% endtrans %}</a>
+      <a href="/statistics/club/{{ club.id }}" class="btn"><i class="icon-tasks"></i> {% trans %}Statistics{% endtrans %}</a>
+      <a href="pilots" class="btn"><i class="icon-group"></i> {% trans %}Members{% endtrans %}</a>
+    </p>
+  </div>
+</div>
+{%- endblock %}

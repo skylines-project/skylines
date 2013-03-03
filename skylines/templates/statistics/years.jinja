@@ -1,0 +1,74 @@
+{% from 'statistics/flights-table.jinja' import render_flights_table with context %}
+{% from 'statistics/distance-table.jinja' import render_distance_table with context %}
+{% from 'statistics/duration-table.jinja' import render_duration_table with context %}
+{% from 'statistics/pilots-table.jinja' import render_pilots_table with context %}
+
+
+{% extends "base-page.jinja" %}
+{% set active_page = "statistics" %}
+
+
+{% block title -%}
+{% if selected_pilot -%}
+  {% trans pilot='<a href="/users/' ~ selected_pilot.id ~ '">' ~ selected_pilot|e ~ '</a>' -%}
+    Statistics <small>of {{ pilot }}</small>
+  {%- endtrans %}
+
+{%- elif selected_club %}
+  {% trans club='<a href="/clubs/' ~ selected_club.id ~ '">' ~ selected_club|e ~ '</a>' -%}
+    Statistics <small>of {{ club }}</small>
+  {%- endtrans %}
+
+{%- elif airport %}
+  {% trans airport=airport.name|e -%}
+    Statistics <small>from {{ airport }}</small>
+  {%- endtrans %}
+
+{%- else %}
+  {% trans %}Statistics{% endtrans -%}
+
+{%- endif %}
+{%- endblock %}
+
+
+{%- block content %}
+{% if pilot or club or selected_club or selected_pilot -%}
+<ul class="nav nav-pills">
+  <li{% if not selected_pilot and not selected_club and not airport %} class="active"{% endif %}><a href="/statistics/">SkyLines</a></li>
+
+  {% if airport -%}
+  <li class="active"><a href="/statistics/airport/{{ airport.id }}">{{ airport|e }}</a></li>
+  {%- endif %}
+
+  {% if selected_club -%}
+  <li class="active"><a href="/statistics/club/{{ selected_club.id }}">{{ selected_club|e }}</a></li>
+  {%- endif %}
+
+  {% if club and (not selected_club or club != selected_club) -%}
+  <li><a href="/statistics/club/{{ club.id }}">{{ club|e }}</a></li>
+  {%- endif %}
+
+  {% if selected_pilot -%}
+  <li class="active"><a href="/statistics/pilot/{{ selected_pilot.id }}">{{ selected_pilot|e }}</a></li>
+  {%- endif %}
+
+  {% if pilot and (not selected_pilot or pilot != selected_pilot) -%}
+  <li><a href="/statistics/pilot/{{ pilot.id }}">{{ pilot|e }}</a></li>
+  {%- endif %}
+</ul>
+{%- endif %}
+
+<h1>{% trans %}Flights{% endtrans %}</h1>
+{{ render_flights_table(years, max_flights, sum_flights) }}
+
+<h1>{% trans %}Distance{% endtrans %}</h1>
+{{ render_distance_table(years, max_distance, sum_distance) }}
+
+<h1>{% trans %}Flight Time{% endtrans %}</h1>
+{{ render_duration_table(years, max_duration, sum_duration) }}
+
+{% if not selected_pilot -%}
+<h1>{% trans %}Pilots{% endtrans %}</h1>
+{{ render_pilots_table(years, max_pilots) }}
+{%- endif %}
+{%- endblock %}

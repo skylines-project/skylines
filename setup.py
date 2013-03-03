@@ -55,6 +55,7 @@ install_requires = [
     "webassets",
     "pyyaml",
     "cssmin",
+    "jinja2"
 ]
 
 if sys.version_info[:2] == (2, 4):
@@ -81,6 +82,10 @@ setup(
     message_extractors={'skylines': [
             ('**.py', 'python', None),
             ('templates/**.html', 'genshi', None),
+            ('templates/**.jinja', 'jinja2', {
+                'encoding': 'utf-8',
+                'extensions': 'jinja2.ext.with_, jinja2.ext.do'
+            }),
             ('public/**', 'ignore', None)]},
 
     entry_points="""

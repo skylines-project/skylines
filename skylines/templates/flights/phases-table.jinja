@@ -1,0 +1,98 @@
+{% macro render_circling_performance(flight) -%}
+<table class="table table-condensed">
+  <thead>
+    <tr>
+      <th></th>
+      <th>{% trans %}Duration{% endtrans %}</th>
+      <th class='numeric'>&Delta;H</th>
+      <th class='numeric'>{% trans %}Avg. vario{% endtrans %}</th>
+      <th class='numeric'>{% trans %}Thermals{% endtrans %}</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for ph in flight.circling_performance -%}
+    {% with phase=phase_formatter(ph) -%}
+    <tr>
+      <th>{{ phase.circling_direction }}</th>
+      <td>{{ phase.duration }} ({{ phase.fraction }})</td>
+      <td class='numeric'>{{ phase.alt_diff }}</td>
+      <td class='numeric'>{{ phase.vario }}</td>
+      <td class='numeric'>{{ phase.count }}</td>
+    </tr>
+    {%- endwith %}
+    {%- endfor %}
+  </tbody>
+</table>
+{%- endmacro %}
+
+{% macro render_cruise_performance(flight) -%}
+<table class="table table-condensed">
+  <thead>
+    <tr>
+      <th>{% trans %}Duration{% endtrans %}</th>
+      <th>&Delta;H</th>
+      <th class='numeric'>{% trans %}Distance{% endtrans %}</th>
+      <th class='numeric'>{% trans %}Avg. vario{% endtrans %}</th>
+      <th class='numeric'>{% trans %}Avg. speed{% endtrans %}</th>
+      <th class='numeric'><abbr title="{% trans %}Glide Rate{% endtrans %}">{% trans %}GR{% endtrans %}</abbr></th>
+      <th class='numeric'>{% trans %}Glides{% endtrans %}</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for ph in flight.cruise_performance -%}
+    {% with phase=phase_formatter(ph) -%}
+    <tr>
+      <td>{{ phase.duration }} ({{ phase.fraction }})</td>
+      <td>{{ phase.alt_diff }}</td>
+      <td class='numeric'>{{ phase.distance }}</td>
+      <td class='numeric'>{{ phase.vario }}</td>
+      <td class='numeric'>{{ phase.speed }}</td>
+      <td class='numeric'>{{ phase.glide_rate }}</td>
+      <td class='numeric'>{{ phase.count }}</td>
+    </tr>
+    {%- endwith %}
+    {%- endfor %}
+  </tbody>
+</table>
+{%- endmacro %}
+
+{% macro render_phases(flight) -%}
+<table id="phases-table" class="table table-condensed table-striped">
+  <thead>
+    <tr>
+      <th class='numeric'>#</th>
+      <th>{% trans %}Phase{% endtrans %}</th>
+      <th>{% trans %}Start{% endtrans %}</th>
+      <th>{% trans %}Duration{% endtrans %}</th>
+      <th class='numeric'>&Delta;H</th>
+      <th class='numeric'>{% trans %}Distance{% endtrans %}</th>
+      <th class='numeric'>{% trans %}Avg. vario{% endtrans %}</th>
+      <th class='numeric'>{% trans %}Avg. speed{% endtrans %}</th>
+      <th class='numeric'><abbr title="{% trans %}Glide Rate{% endtrans %}">{% trans %}GR{% endtrans %}</abbr></th>
+    </tr>
+  </thead>
+  {% with takeoff_midnight=flight.takeoff_time.replace(hour=0, minute=0, second=0, microsecond=0) -%}
+  <tbody>
+    {% for ph in flight.phases -%}
+    {% with phase=phase_formatter(ph) -%}
+    <tr>
+      <td class='numeric'>{{ loop.index }}</td>
+      <td>{{ phase.type }}
+        <span py:if="phase.is_circling" class='label'>
+          {{ phase.circling_direction|lower }}
+        </span>
+      </td>
+      <td class='start' data-content='{{ (ph.start_time - takeoff_midnight).total_seconds() }}'>{{ phase.start }}</td>
+      <td class='duration' data-content='{{ ph.duration.total_seconds() }}'>{{ phase.duration }}</td>
+      <td class='numeric'>{{ phase.alt_diff }}</td>
+      <td class='numeric'>{{ phase.distance }}</td>
+      <td class='numeric'>{{ phase.vario }}</td>
+      <td class='numeric'>{{ phase.speed }}</td>
+      <td class='numeric'>{{ phase.glide_rate }}</td>
+    </tr>
+    {%- endwith %}
+    {%- endfor %}
+  </tbody>
+  {%- endwith %}
+</table>
+{%- endmacro %}

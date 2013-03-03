@@ -1,0 +1,31 @@
+<!doctype html>
+<html>
+<head>
+    {%- block head %}
+    <meta charset="UTF-8">
+    <title>{% filter striptags %}{% block title %}SkyLines{% endblock %}{% endfilter %}</title>
+
+    <link rel='shortcut icon' href='/favicon.ico' type='image/x-icon' />
+    <link rel='shortcut' href='/favicon.png' type='image/png' />
+
+    {%- for url in g.assets['css-all'].urls() %}
+    <link rel="stylesheet" type="text/css" href="{{ url }}"/>
+    {%- endfor %}
+
+    {%- for url in g.assets['js-all'].urls() %}
+    <script type="text/javascript" src="{{ url }}"></script>
+    {%- endfor %}
+
+    <script>
+    $(function() {
+        $('.dropdown-menu').find('form').click(function (e) {
+            e.stopPropagation();
+        });
+    });
+    </script>
+    {%- endblock %}
+</head>
+<body{% block body_attributes %}{% endblock %}>
+    {%- block body %}{% endblock %}
+</body>
+</html>

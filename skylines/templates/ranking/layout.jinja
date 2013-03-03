@@ -1,0 +1,43 @@
+{% from 'macros/pager.jinja' import pager, pager_script with context %}
+
+
+{% set partial = 'partial' in request.params %}
+
+{% if not partial %}
+{% extends "base-page.jinja" %}
+{% set active_page = "ranking" %}
+{% block title %}{% trans %}Ranking{% endtrans %}{% endblock %}
+{%- endif %}
+
+{% macro ranking() -%}
+<div class="row">
+  <div class="span6">
+    <ul class="nav nav-pills">
+      <li{% if tab == 'clubs' %} class="active"{% endif %}><a href="clubs">{% trans %}Clubs{% endtrans %}</a></li>
+      <li{% if tab == 'pilots' %} class="active"{% endif %}><a href="pilots">{% trans %}Pilots{% endtrans %}</a></li>
+      <li{% if tab == 'airports' %} class="active"{% endif %}><a href="airports">{% trans %}Airports{% endtrans %}</a></li>
+    </ul>
+  </div>
+  <div class="span6">
+    <div class="pull-right">
+      {{ pager('result') }}
+    </div>
+  </div>
+</div>
+
+{% block ranking %}{% endblock %}
+
+<div class="row">
+  <div class="span12">
+    <div class="pull-right">
+      {{ pager('result') }}
+    </div>
+  </div>
+</div>
+
+{%- endmacro %}
+
+{% block content -%}
+{% if partial %}{{ ranking() }}{% else %}<div id="partial">{{ ranking() }}</div>{% endif %}
+{{ pager_script() }}
+{%- endblock %}

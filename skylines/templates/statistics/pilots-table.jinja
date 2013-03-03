@@ -1,0 +1,23 @@
+{% macro render_pilots_table(years, max_pilots) -%}
+<table class="table table-condensed table-striped">
+  <thead>
+    <tr>
+      <th>{% trans %}Year{% endtrans %}</th>
+      <th colspan="2">{% trans %}Pilots{% endtrans %}</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for year in years -%}
+    <tr>
+      <td class="span2">{{ year.year|int }}</td>
+      <td class="span2">{{ year.pilots|int }}</td>
+      <td class="span8">
+        <div class="progress progress-info">
+          <div class="bar" style="width: {{ year.pilots * 100 / max_pilots }}%;"></div>
+        </div>
+      </td>
+    </tr>
+    {%- endfor %}
+  </tbody>
+</table>
+{%- endmacro %}

@@ -1,0 +1,39 @@
+{% extends "base-page.jinja" %}
+{% set active_page = "tracking" %}
+
+{% block title %}{% trans %}Live Tracking{% endtrans %}{% endblock %}
+
+{%- block content %}
+<h3>{% trans %}What is it?{% endtrans %}</h3>
+<p>
+  {% trans %}SkyLines Live Tracking can be used to let others take part on your journeys while you're flying. It uses a very light-weight protocol that only transmits the necessary data and due to that it can also work in areas/altitudes where the reception isn't very good. To give you an example: A flight of 10 hours only uses about 340 KB of traffic when the positions are transmitted every 5 seconds!{% endtrans %}
+</p>
+
+<h3>{% trans %}Clients{% endtrans %}</h3>
+<ul>
+  <li><b>XCSoar:</b><br/>{% trans xcsoar_6_4='<a href="http://www.xcsoar.org/download/latest.html">XCSoar 6.4</a>' %}available starting with {{ xcsoar_6_4 }}{% endtrans %} (<a href="https://play.google.com/store/apps/details?id=org.xcsoar" target="_blank">Google Play</a>).
+  Instructions are below.</li>
+  <li><b>Gaggle:</b><br/>{% trans %}now available in the current version of Gaggle{% endtrans %}
+  (<a href="https://play.google.com/store/apps/details?id=com.geeksville.gaggle" target="_blank">Google Play</a>)</li>
+  <li><b>Butterfly iGlide:</b><br/>{% trans %}planned{% endtrans %}</li>
+</ul>
+
+<h3>{% trans %}Live Tracking Key{% endtrans %}</h3>
+{% if user -%}
+<p>
+  {% trans key='<span class="label label-info">' ~ user.tracking_key_hex ~ '</span>'%}Your Live Tracking key is: {{ key }}{% endtrans %}
+</p>
+
+<p>
+  <a href="/users/{{ user.id }}/tracking_register" class="btn btn-mini">{% trans %}Generate new key{% endtrans %}</a>
+  <a href="/tracking/{{ user.id }}" class="btn btn-mini">{% trans %}Your Live Tracks{% endtrans %}</a>
+</p>
+{%- else %}
+<p>{% trans url='/login' %}You have to <a href="{{ url }}">login</a> to see you own personal Live Tracking key.{% endtrans %}</p>
+{%- endif %}
+
+<h3>XCSoar</h3>
+<p>
+  {% trans xcsoar='<a href="http://www.xcsoar.org" target="_blank">XCSoar</a>'%}In {{ xcsoar }}, open the <em>Setup System</em> dialog, click on <em>Setup</em> and then <em>Tracking</em>.  Turn SkyLines tracking on, and enter your Live Tracking key.{% endtrans %}
+</p>
+{%- endblock %}

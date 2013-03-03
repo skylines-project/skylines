@@ -1,0 +1,108 @@
+{% from "macros/datetime.jinja" import insert_timeago with context %}
+
+
+{% macro render_notifications_table(notifications) -%}
+<table id="notifications-table" class="table table-striped">
+  <tbody>
+    {% for notification in notifications -%}
+    {{ render_notification_row(notification) }}
+    {%- endfor %}
+  </tbody>
+</table>
+{%- endmacro %}
+
+
+{% macro render_notification_row(notification) -%}
+<tr>
+  <td>
+    {% if notification.grouped -%}
+    {{ render_notification_icon(notification.notifications[0]) }}
+    {%- else %}
+    {{ render_notification_icon(notification.notification) }}
+    {%- endif %}
+  </td>
+  <td>
+    {{ render_notification_text(notification) }}
+    <small>({{ insert_timeago(notification.time) }})</small>
+  </td>
+  <td class="show">
+    {{ render_notification_link(notification) }}
+  </td>
+</tr>
+{%- endmacro %}
+
+
+{% macro render_notification_icon(notification) -%}
+{% if notification.type == NT_FLIGHT_COMMENT -%}
+  <i class="icon-comments-alt"></i>
+{%- elif notification.type == NT_FLIGHT %}
+  <i class="icon-plane"></i>
+{%- elif notification.type == NT_FOLLOWER %}
+  <i class="icon-user"></i>
+{%- endif %}&nbsp;
+{%- endmacro %}
+
+
+{% macro render_notification_text(notification) -%}
+{% if notification.grouped -%}
+  {% if notification.type == NT_FLIGHT -%}
+    {{ render_flight_notifications_text(notification.notifications) }}
+  {%- else %}
+    Error: Unknown notification group
+  {%- endif %}
+{%- else %}
+  {% if notification.type == NT_FLIGHT_COMMENT -%}
+    {{ render_flight_comment_notification_text(notification.notification) }}
+  {%- elif notification.type == NT_FLIGHT %}
+    {{ render_flight_notification_text(notification.notification) }}
+  {%- elif notification.type == NT_FOLLOWER %}
+    {{ render_follower_notification_text(notification.notification) }}
+  {%- else %}
+    Error: Unknown notification
+  {%- endif %}
+{%- endif %}
+{%- endmacro %}
+
+
+{% macro render_flight_comment_notification_text(notification) -%}
+{% trans pilot=notification.sender|e, distance=h.format_distance(notification.flight.olc_classic_distance), date=h.format_date(notification.flight.date_local) -%}
+<strong>{{ pilot }}</strong> commented on your <strong>{{ distance }}</strong> flight on the <strong>{{ date }}</strong>.
+{%- endtrans %}
+{%- endmacro %}
+
+
+{% macro render_flight_notification_text(notification) -%}
+{% trans pilot=notification.sender|e, distance=h.format_distance(notification.flight.olc_classic_distance), date=h.format_date(notification.flight.date_local) -%}
+<strong>{{ pilot }}</strong> uploaded a new <strong>{{ distance }}</strong> flight on the <strong>{{ date }}</strong>.
+{%- endtrans %}
+{%- endmacro %}
+
+
+{% macro render_flight_notifications_text(notifications) -%}
+{% trans pilot=notifications[0].sender|e, num_flights=notifications|count -%}
+<strong>{{ pilot }}</strong> uploaded <strong>{{ num_flights }}</strong> new flights.
+{%- endtrans %}
+{%- endmacro %}
+
+
+{% macro render_follower_notification_text(notification) -%}
+{% trans pilot=notification.sender|e -%}
+<strong>{{ pilot }}</strong> is following you now.
+{%- endtrans %}
+{%- endmacro %}
+
+
+{% macro render_notification_link(notification) -%}
+{% if notification.grouped -%}
+  {% if notification.type == NT_FLIGHT -%}
+    {{ _render_show_button(tg.url('.', params=dict(type=NT_FLIGHT, sender=notification.notifications[0].sender_id))) }}
+  {%- endif %}
+{%- else %}
+  {{ _render_show_button(notification.notification.id) }}
+{%- endif %}
+{%- endmacro %}
+
+
+{% macro _render_show_button(link) -%}
+<a href="{{ link }}" class="btn btn-mini">Show</a>
+{%- endmacro %}

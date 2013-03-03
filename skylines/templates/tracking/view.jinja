@@ -1,0 +1,178 @@
+{% from "macros/flags.jinja" import insert_flag with context %}
+{% from "macros/datetime.jinja" import insert_timeago with context %}
+
+{% extends "base-page.jinja" %}
+{% set active_page = "tracking" %}
+
+
+{% block title -%}
+{% if pilot -%}
+  {% trans pilot='<a href="/users/' ~ pilot.id ~ '/">' ~ pilot|e ~ '</a>' -%}
+  Live Tracking <small>of {{ pilot }}</small>
+  {%- endtrans %}
+{%- else -%}
+  {% trans %}Live Tracking{% endtrans %}
+{%- endif %}
+{%- endblock %}
+
+
+{%- block head %}
+{{ super() }}
+
+{% if trace -%}
+  {% for url in g.assets['css-openlayers'].urls() -%}
+  <link href="{{ url }}" rel="stylesheet" type="text/css" />
+  {%- endfor %}
+
+  {%- if request.identity and request.identity['user'].eye_candy -%}
+  <link href="/css/eye_candy/OpenLayers.css" rel="stylesheet" type="text/css" />
+  {%- endif %}
+
+  {% for url in g.assets['js-openlayers'].urls() -%}
+  <script type="text/javascript" src="{{ url }}"></script>
+  {%- endfor %}
+  {% for url in g.assets['js-flot'].urls() -%}
+  <script type="text/javascript" src="{{ url }}"></script>
+  {%- endfor %}
+{%- endif %}
+{% for url in g.assets['js-flight'].urls() -%}
+<script type="text/javascript" src="{{ url }}"></script>
+{%- endfor %}
+{% for url in g.assets['js-tracking'].urls() -%}
+<script type="text/javascript" src="{{ url }}"></script>
+{%- endfor %}
+
+{% if trace -%}
+<script type="text/javascript">
+  $(function() {
+    initUnits({{ h.json.dumps(h.get_setting_name('distance_unit')) }},
+              {{ h.json.dumps(h.get_setting_name('speed_unit')) }},
+              {{ h.json.dumps(h.get_setting_name('lift_unit')) }},
+              {{ h.json.dumps(h.get_setting_name('altitude_unit')) }});
+
+    initOpenLayers("map_canvas",
+                   "{{ config.get('skylines.map.airspace_tile_url', '') }}");
+    initFlightLayer();
+    initFlot($("#barogram"));
+
+    // initiate tracking mode
+    default_time = -1;
+    setTime(default_time);
+
+    addFlight({{ sfid }},
+      {{ h.json.dumps(trace.encoded.points) }},
+      {{ h.json.dumps(trace.encoded.levels) }},
+      {{ trace.fixes.numLevels }},
+      {{ h.json.dumps(trace.barogram_t) }},
+      {{ h.json.dumps(trace.barogram_h) }},
+      {{ h.json.dumps(trace.enl) }},
+      {{ h.json.dumps(trace.zoom_levels) }}
+    );
+
+    {% if other_pilots -%}
+    {% for pilot, trace in other_pilots -%}
+    addFlight({{ pilot.id }},
+      {{ h.json.dumps(trace.encoded.points) }},
+      {{ h.json.dumps(trace.encoded.levels) }},
+      {{ trace.fixes.numLevels }},
+      {{ h.json.dumps(trace.barogram_t) }},
+      {{ h.json.dumps(trace.barogram_h) }},
+      {{ h.json.dumps(trace.enl) }},
+      {{ h.json.dumps(trace.zoom_levels) }}
+    );
+    {%- endfor %}
+    {%- endif %}
+
+    map.zoomToExtent(getAllFlightsBounds().scale(1.1));
+
+    hoverMap();
+
+    $.getScript("http://maps.google.com/maps/api/js?v=3.7&sensor=false&callback=addGoogleLayer");
+    addBingLayers("{{ config.get('skylines.bing.api_key', 'null') }}");
+    addReliefLayer();
+
+    // update flight track every 15 seconds
+    setInterval(function() {
+      updateFlightsFromJSON();
+    }, 15*1000);
+  });
+</script>
+{%- endif %}
+{%- endblock %}
+
+
+{% block content -%}
+<div class="row">
+  <div class="span4">
+    <table class="table">
+      <tbody>
+        {% if pilot -%}
+        <tr>
+          <th>{% trans %}Pilot{% endtrans %}</th>
+          <td><a href="/users/{{ pilot.id }}/">{{ pilot|e }}</a></td>
+        </tr>
+
+        {% if pilot.club -%}
+        <tr>
+          <th>{% trans %}Club{% endtrans %}</th>
+          <td><a href="/clubs/{{ pilot.club_id }}/">{{ pilot.club|e }}</a></td>
+        </tr>
+        {%- endif %}
+
+        {% if pilot.tracking_delay > 0 -%}
+        <tr>
+          <th><span rel="tooltip" title="{{ _('This pilot chose to delay the display of his live tracks.') }}">{% trans %}Delay{% endtrans %}</span></th>
+
+          <td>
+            {{ ungettext('%u minute', '%u minutes', pilot.tracking_delay)|format(pilot.tracking_delay) }}
+
+            {%- if pilot.is_readable(request.identity) -%}
+            <span rel="tooltip" title="{{ _('The live tracking delay is ignored because of your account privileges.') }}">({% trans %}ignored{% endtrans %})</span>
+            {%- endif %}
+          </td>
+        </tr>
+        {%- endif %}
+
+        {%- elif tracking_type == 0 -%}
+        <tr py:if="tracking_id is not None and tracking_type == 0">
+          <th>{% trans %}Flarm ID{% endtrans %}</th>
+          <td py:content="'{:X}'.format(tracking_id)">
+            Flarm ID
+          </td>
+        </tr>
+
+        {%- elif tracking_type == 1 -%}
+        <tr py:if="tracking_id is not None and tracking_type == 1">
+          <th>{% trans %}ICAO ID{% endtrans %}</th>
+          <td py:content="'{:X}'.format(tracking_id)">
+            ICAO ID
+          </td>
+        </tr>
+        {%- endif %}
+      </tbody>
+    </table>
+
+    {% if trace -%}
+    <p>
+      <a href="map" class="btn">
+        <i class="icon-fullscreen icon-large"></i> {% trans %}Full-screen map{% endtrans %}
+      </a>
+    </p>
+    {%- endif %}
+
+    {% if request.identity and request.identity['user'] == pilot -%}
+    <p><a href="/tracking/info" class="btn btn-mini">{% trans %}Your Live Tracking settings{% endtrans %}</a></p>
+    {%- endif %}
+  </div>
+
+  <div class="span8">
+    {% if trace or other_pilots -%}
+    <div id="map_canvas" style="width:100%; height:400pt;"></div>
+    <div id="barogram" style="width:100%; height:120pt;"></div>
+    <table id="fix-data" class="table table-condensed"></table>
+    {%- else -%}
+      {% trans %}There is no live track of this pilot currently.{% endtrans %}
+    {%- endif %}
+  </div>
+</div>
+{%- endblock %}

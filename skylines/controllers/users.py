@@ -245,19 +245,19 @@ class UserController(BaseController):
         self.user = user
         request.environ['UserController.user.id'] = self.user.id
 
-    @expose('users/view.html')
+    @expose('users/view.jinja')
     def index(self):
-        return dict(page='settings', user=self.user,
+        return dict(active_page='settings', user=self.user,
                     distance_flights=self.get_distance_flights(),
                     takeoff_locations=self.get_takeoff_locations(),
                     last_year_statistics=self.get_last_year_statistics())
 
-    @expose('generic/form.html')
+    @expose('generic/form.jinja')
     def change_password(self, **kw):
         if not self.user.is_writable(request.identity):
             raise HTTPForbidden
 
-        return dict(page='settings', title=_('Change Password'),
+        return dict(active_page='settings', title=_('Change Password'),
                     form=change_password_form, values={})
 
     @expose()
@@ -274,15 +274,15 @@ class UserController(BaseController):
         flash('A password recovery email was sent to that user.')
         redirect('.')
 
-    @expose('generic/form.html')
+    @expose('generic/form.jinja')
     def edit(self, **kwargs):
         if not self.user.is_writable(request.identity):
             raise HTTPForbidden
 
-        return dict(page='settings', title=_('Edit User'),
+        return dict(active_page='settings', title=_('Edit User'),
                     form=edit_user_form,
                     values=self.user,
-                    include_after='../users/after-edit-form.html')
+                    include_after='users/after-edit-form.jinja')
 
     @expose()
     @validate(form=edit_user_form, error_handler=edit)
@@ -315,7 +315,7 @@ class UserController(BaseController):
 
         redirect('.')
 
-    @expose('users/change_club.html')
+    @expose('users/change_club.jinja')
     def change_club(self, **kwargs):
         if not self.user.is_writable(request.identity):
             raise HTTPForbidden
@@ -423,6 +423,9 @@ class UserController(BaseController):
             last_year_statistics['distance'] = query.distance
             last_year_statistics['duration'] = query.duration
 
+            last_year_statistics['average_distance'] = query.distance / query.flights
+            last_year_statistics['average_duration'] = query.duration / query.flights
+
         return last_year_statistics
 
     def get_takeoff_locations(self):
@@ -449,10 +452,10 @@ class UserController(BaseController):
 
 
 class UsersController(BaseController):
-    @expose('users/list.html')
+    @expose('users/list.jinja')
     def index(self):
         users = DBSession.query(User).options(joinedload(User.club)).order_by(User.display_name)
-        return dict(page='settings', users=users)
+        return dict(active_page='settings', users=users)
 
     @expose()
     def _lookup(self, id, *remainder):
@@ -464,9 +467,9 @@ class UsersController(BaseController):
         controller = UserController(get_requested_record(User, id))
         return controller, remainder
 
-    @expose('users/new.html')
+    @expose('users/new.jinja')
     def new(self, **kwargs):
-        return dict(page='users', form=new_user_form)
+        return dict(active_page='users', form=new_user_form)
 
     @expose()
     @validate(form=new_user_form, error_handler=new)
@@ -486,7 +489,7 @@ class UsersController(BaseController):
 
         redirect('/')
 
-    @expose('generic/form.html')
+    @expose('generic/form.jinja')
     def recover(self, key=None, **kwargs):
         try:
             key = int(key, 16)
@@ -494,13 +497,13 @@ class UsersController(BaseController):
             key = None
 
         if key is None:
-            return dict(page='users', form=recover_email_form, values={})
+            return dict(active_page='users', form=recover_email_form, values={})
         else:
             user = User.by_recover_key(key)
             if user is None:
                     raise HTTPNotFound
 
-            return dict(page='users', form=recover_password_form,
+            return dict(active_page='users', form=recover_password_form,
                         values=dict(key='%x' % key))
 
     @expose()

@@ -24,7 +24,7 @@ class ErrorController(BaseController):
 
     """
 
-    @expose('error.html')
+    @expose('error.jinja')
     def document(self, *args, **kwargs):
         """Render the error document"""
 

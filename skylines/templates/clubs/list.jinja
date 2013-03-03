@@ -1,0 +1,28 @@
+{% extends "base-page.jinja" %}
+
+{% block title %}{% trans %}Clubs{% endtrans %}{% endblock %}
+
+{%- block content %}
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>{% trans %}Name{% endtrans %}</th>
+      <th>{% trans %}Actions{% endtrans %}</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for club in clubs -%}
+    <tr>
+      <td>
+        <a href="/clubs/{{ club.id }}">{{ club.name|e }}</a>
+      </td>
+      <td>
+        <a href="/flights/club/{{ club.id }}" class="btn btn-mini"><i class="icon-plane"></i> {% trans %}Flights{% endtrans %}</a>
+        <a href="/statistics/club/{{ club.id }}" class="btn btn-mini"><i class="icon-tasks"></i> {% trans %}Statistics{% endtrans %}</a>
+        <a href="/clubs/{{ club.id }}/pilots" class="btn btn-mini"><i class="icon-group"></i> {% trans %}Members{% endtrans %}</a>
+      </td>
+    </tr>
+    {%- endfor %}
+  </tbody>
+</table>
+{%- endblock %}

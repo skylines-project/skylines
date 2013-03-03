@@ -1,0 +1,33 @@
+{% macro render_distance_table(years, max_distance, sum_distance = None) -%}
+<table class="table table-condensed table-striped">
+  <thead>
+    <tr>
+      <th>{% trans %}Year{% endtrans %}</th>
+      <th colspan="2">{% trans %}Distance{% endtrans %}</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for year in years -%}
+    <tr>
+      <td class="span2">{{ year.year|int }}</td>
+      <td class="span2">
+        <span rel="tooltip" title="{{ _('avg. %(distance)s per flight')|format(distance=h.format_distance(year.average_distance)) }}">
+          {{ h.format_distance(year.distance) }}
+        </span>
+      </td>
+      <td class="span8">
+        <div class="progress progress-success">
+          <div class="bar" style="width: {{ year.distance * 100 / max_distance }}%;"></div>
+        </div>
+      </td>
+    </tr>
+    {%- endfor %}
+    {% if sum_distance -%}
+    <tr>
+      <td><strong>{% trans %}Total{% endtrans %}</strong></td>
+      <td colspan="2"><strong>{{ h.format_distance(sum_distance) }}</strong></td>
+    </tr>
+    {%- endif %}
+  </tbody>
+</table>
+{%- endmacro %}
