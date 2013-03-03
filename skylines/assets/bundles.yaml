@@ -19,7 +19,7 @@ css-openlayers:
     output: css/ol-%(version)s.css
     contents:
         - css/OpenLayers.css
-        - css/SimpleLayerSwitcher.css
+        - css/GraphicLayerSwitcher.css
 
 js-all:
     filters: rjsmin
@@ -45,7 +45,7 @@ js-openlayers:
     output: js/ol-%(version)s.js
     contents:
         - js/OpenLayers/OpenLayers.js
-        - js/OpenLayers/SimpleLayerSwitcher.js
+        - js/OpenLayers/GraphicLayerSwitcher.js
 
 js-flight:
     filters: rjsmin

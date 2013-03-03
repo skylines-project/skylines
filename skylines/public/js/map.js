@@ -42,7 +42,7 @@ function initOpenLayers(id, airspace_tile_url) {
     transform(new OpenLayers.Projection("EPSG:4326"), map.getProjectionObject()),
     9);
 
-  map.addControl(new SimpleLayerSwitcher());
+  map.addControl(new GraphicLayerSwitcher());
 
   map.events.register('changebaselayer', this, function(data) {
     // Save the selected base layer in a cookie
