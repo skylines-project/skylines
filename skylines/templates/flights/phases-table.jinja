@@ -78,9 +78,11 @@
     <tr>
       <td class='numeric'>{{ loop.index }}</td>
       <td>{{ phase.type }}
-        <span py:if="phase.is_circling" class='label'>
+        {% if phase.is_circling -%}
+        <span class='label'>
           {{ phase.circling_direction|lower }}
         </span>
+        {%- endif %}
       </td>
       <td class='start' data-content='{{ (ph.start_time - takeoff_midnight).total_seconds() }}'>{{ phase.start }}</td>
       <td class='duration' data-content='{{ ph.duration.total_seconds() }}'>{{ phase.duration }}</td>

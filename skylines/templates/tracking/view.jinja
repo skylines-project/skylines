@@ -134,19 +134,15 @@
         {%- endif %}
 
         {%- elif tracking_type == 0 -%}
-        <tr py:if="tracking_id is not None and tracking_type == 0">
+        <tr>
           <th>{% trans %}Flarm ID{% endtrans %}</th>
-          <td py:content="'{:X}'.format(tracking_id)">
-            Flarm ID
-          </td>
+          <td>{{ '%X'|format(tracking_id) }}</td>
         </tr>
 
         {%- elif tracking_type == 1 -%}
-        <tr py:if="tracking_id is not None and tracking_type == 1">
+        <tr>
           <th>{% trans %}ICAO ID{% endtrans %}</th>
-          <td py:content="'{:X}'.format(tracking_id)">
-            ICAO ID
-          </td>
+          <td>{{ '%X'|format(tracking_id) }}</td>
         </tr>
         {%- endif %}
       </tbody>

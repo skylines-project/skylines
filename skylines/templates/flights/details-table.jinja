@@ -22,7 +22,7 @@
   /* ]]> */
 </script>
 
-<table py:def="render_details_table(flight)" class="table" itemscope="" itemtype="http://schema.org/SportsEvent">
+<table class="table" itemscope="" itemtype="http://schema.org/SportsEvent">
   <meta itemprop="url" content="/flights/{{ flight.id }}" />
   <tbody>
     {%- if flight.date_local %}
@@ -55,7 +55,7 @@
     {%- endif %}
 
     {%- if flight.landing_time %}
-    <tr py:if="flight.landing_time">
+    <tr>
       <meta itemprop="endDate" content="{{ h.isoformat_utc(flight.landing_time) }}" />
       <th>{% trans %}Landing{% endtrans %}</th>
       <td>
@@ -72,11 +72,9 @@
     {%- endif %}
 
     {%- if flight.duration %}
-    <tr py:if="flight.duration">
+    <tr>
       <th>{% trans %}Duration{% endtrans %}</th>
-      <td py:content="str(flight.duration) + ' hours'">
-        01:23:34 hours
-      </td>
+      <td>{{ _('%(hours)s hours')|format(hours=flight.duration) }}</td>
     </tr>
     {%- endif %}
 

@@ -4,8 +4,8 @@
 <meta name="DC.description" content="{{ flight_description(flight) }}" />
 <meta name="DC.date" content="{{ h.isoformat_utc(flight.time_created) }}" />
 <meta name="DC.publisher" content="{{ flight.igc_file.owner|e }}" />
-<meta py:if="flight.pilot" name="DC.creator" content="{{ flight.pilot|e }}" />
-<meta py:if="flight.co_pilot" name="DC.contributor" content="{{ flight.co_pilot|e }}" />
+{% if flight.pilot %}<meta name="DC.creator" content="{{ flight.pilot|e }}" />{% endif %}
+{% if flight.co_pilot %}<meta name="DC.contributor" content="{{ flight.co_pilot|e }}" />{% endif %}
 {%- endmacro %}
 
 {%- macro flight_description(flight) -%}
