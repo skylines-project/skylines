@@ -3,7 +3,7 @@
 <head>
     {%- block head %}
     <meta charset="UTF-8">
-    <title>{% filter striptags %}{% block title %}SkyLines{% endblock %}{% endfilter %}</title>
+    <title>{% filter striptags %}{% block title %}{% endblock %}{% if self.title() %} - {% endif %}SkyLines{% endfilter %}</title>
 
     <link rel='shortcut icon' href='/favicon.ico' type='image/x-icon' />
     <link rel='shortcut' href='/favicon.png' type='image/png' />
