@@ -108,7 +108,7 @@ var GraphicLayerSwitcher = OpenLayers.Class(OpenLayers.Control, {
             "</a>");
           current.addClass('GraphicLayerSwitcher current');
 
-          current.on('hover touchstart', function(e) {
+          current.on('click touchstart', function(e) {
             $(this).hide();
             $('.GraphicLayerSwitcher.box').show();
           });

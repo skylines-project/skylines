@@ -22,6 +22,10 @@
   height: 26px;
 }
 
+.GraphicLayerSwitcher.current:hover {
+  opacity: 1;
+}
+
 .GraphicLayerSwitcher.box {
   background: #000; /* fallback for old browsers */
   background: rgba(0, 0, 0, 0.7);
