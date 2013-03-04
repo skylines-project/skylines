@@ -1,5 +1,5 @@
 {% from "macros/flags.jinja" import insert_flag with context %}
-{% from "macros/datetime.jinja" import insert_timeago with context %}
+{% from "macros/datetime.jinja" import insert_timeago, timeago_script with context %}
 
 {% extends "base-page.jinja" %}
 {% set active_page = "tracking" %}
@@ -10,7 +10,7 @@
 
 {%- block head %}
 {{ super() }}
-<script type="text/javascript">$(function() { $("abbr.timeago").timeago(); });</script>
+{{ timeago_script() }}
 {%- endblock %}
 
 

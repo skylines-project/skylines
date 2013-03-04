@@ -5,6 +5,7 @@
 {% from 'flights/meta-tags.jinja' import flight_meta_tags with context %}
 {% from 'flights/details-table.jinja' import render_details_table with context %}
 {% from 'flights/phases-table.jinja' import render_circling_performance, render_cruise_performance, render_phases with context %}
+{% from 'macros/datetime.jinja' import timeago_script with context %}
 
 
 {% block title -%}
@@ -39,7 +40,7 @@
 <script type="text/javascript" src="{{ url }}"></script>
 {%- endfor %}
 
-<script type="text/javascript">$(function() { $("abbr.timeago").timeago(); });</script>
+{{ timeago_script() }}
 
 {% if trace -%}
 <script type="text/javascript">

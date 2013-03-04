@@ -1,3 +1,7 @@
+{% macro timeago_script() -%}
+<script type="text/javascript">$(function() { $("abbr.timeago").timeago(); });</script>
+{%- endmacro %}
+
 {% macro insert_timeago(dt) -%}
 <abbr class="timeago" title="{{ h.isoformat_utc(dt) }}" rel="tooltip">{{ h.format_datetime(dt) }} UTC</abbr>
 {%- endmacro %}

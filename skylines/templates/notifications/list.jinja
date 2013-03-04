@@ -1,4 +1,5 @@
 {% from "notifications/notifications-table.jinja" import render_notifications_table with context %}
+{% from "macros/datetime.jinja" import timeago_script with context %}
 
 {% extends "base-page.jinja" %}
 {% set active_page = "notifications" %}
@@ -9,7 +10,7 @@
 
 {% block head -%}
 {{ super() }}
-<script type="text/javascript">$(function() { $("abbr.timeago").timeago(); });</script>
+{{ timeago_script() }}
 {%- endblock %}
 
 

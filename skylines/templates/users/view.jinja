@@ -1,4 +1,4 @@
-{% from "macros/datetime.jinja" import insert_timeago_date with context %}
+{% from "macros/datetime.jinja" import insert_timeago_date, timeago_script with context %}
 
 {% extends "base-page.jinja" %}
 
@@ -258,5 +258,5 @@
   </div>
 </div>
 
-<script type="text/javascript">$(function() { $("abbr.timeago").timeago(); });</script>
+{{ timeago_script() }}
 {%- endblock %}
