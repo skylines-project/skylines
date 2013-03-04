@@ -2,9 +2,8 @@
   position: absolute;
   top: 5px;
   right: 5px;
-  -moz-border-radius: 4px;
-  border-radius: 4px;
   text-decoration: none;
+  width: 100%;
 }
 
 .GraphicLayerSwitcher.current {
@@ -12,8 +11,11 @@
   color: #000;
   opacity: 0.5;
   height: 30px;
+  width: 30px;
   text-align: right;
   white-space: nowrap;
+  -moz-border-radius: 4px;
+  border-radius: 4px;
 }
 
 .GraphicLayerSwitcher.current img {
@@ -30,21 +32,35 @@
   display: none;
 }
 
-.GraphicLayerSwitcher .base {
+.GraphicLayerSwitcher .active {
+  font-weight: bold;
+}
+
+.GraphicLayerSwitcher .base,
+.GraphicLayerSwitcher .overlay {
   background: #000; /* fallback for old browsers */
   background: rgba(0, 0, 0, 0.7);
   color: #fff;
   padding: 3px 5px 3px 3px;
+  float: right;
+  -moz-border-radius: 4px;
+  border-radius: 4px;
 }
 
-.GraphicLayerSwitcher .base img {
+.GraphicLayerSwitcher .base img,
+.GraphicLayerSwitcher .overlay img {
   width: 100px;
   height: 50px;
   padding: 3px 8px 3px 2px;
 }
 
-.GraphicLayerSwitcher .base a {
+.GraphicLayerSwitcher .base a,
+.GraphicLayerSwitcher .overlay a {
   white-space: nowrap;
   color: #fff;
+}
+
+.GraphicLayerSwitcher .overlay {
+  margin-right: 10px;
 }
 

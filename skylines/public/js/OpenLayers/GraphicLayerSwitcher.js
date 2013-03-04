@@ -53,7 +53,7 @@ var GraphicLayerSwitcher = OpenLayers.Class(OpenLayers.Control, {
         if ( (layerState.name != layer.name) ||
              (layerState.inRange != layer.inRange) ||
              (layerState.id != layer.id) ||
-             (layerState.visibility != layer.visibility) ) {
+             ((layerState.visibility != layer.visibility) && layer.isBaseLayer) ) {
           redraw = true;
           break;
         }
@@ -83,6 +83,10 @@ var GraphicLayerSwitcher = OpenLayers.Class(OpenLayers.Control, {
 
     var layers = this.map.layers.slice();
 
+    var layer_switcher = $("<div class='GraphicLayerSwitcher box'></div>");
+    var base_layers = $("<div id='GraphicLayerSwitcher_base' class='base'></div>");
+    var overlay_layers = $("<div id='GraphicLayerSwitcher_overlay' class='overlay'></div>");
+
     var current = $(
       "<a href='#'>" +
         "<img src='../../images/layers.png' />" +
@@ -96,20 +100,15 @@ var GraphicLayerSwitcher = OpenLayers.Class(OpenLayers.Control, {
 
     $(this.div).append(current);
 
-    var layer_switcher = $("<div class='GraphicLayerSwitcher box'></div>");
 
-    var base_layers = $("<div class='base'></div>");
     if (!this.ascending) { layers.reverse(); }
     for (var i = 0; i < layers.length; i++) {
       var layer = layers[i];
       var baseLayer = layer.isBaseLayer;
 
-      // populate base layer box
       if (layer.displayInLayerSwitcher && baseLayer) {
-        var on = (baseLayer) ? (layer == this.map.baseLayer)
-                    : layer.getVisibility();
-        
-
+        // populate base layer box
+        var on = (layer == this.map.baseLayer);
         var id = this.id + '_input_' + layer.name.replace(/ /g, '_');
 
         var layer_image = '../../images/layers/' + layer.name +
@@ -147,15 +146,37 @@ var GraphicLayerSwitcher = OpenLayers.Class(OpenLayers.Control, {
           }
         }, { id: id, name: layer.name, active: this.map.baseLayer.name }));
 
-        $(base_layers).append(base_item);
+        base_layers.append(base_item);
+
+      } else if (layer.displayInLayerSwitcher) {
+        // populate overlay layer box
+        var on = layer.getVisibility();
+
+        var id = this.id + '_input_' + layer.name.replace(/ /g, '_');
+        var layer_image = '../../images/layers/' + layer.name +
+          (on ? '.png' : '.bw.png');
+
+        var overlay_item = $(
+          "<a id='" + id + "' href='#'>" +
+            "<img src='" + layer_image + "' />" +
+            layer.name +
+          "</a><br />");
+
+        overlay_item.on('click touchend', $.proxy(
+          this.onOverlayClick, {'layer': layer, 'id': id}
+        ));
+
+        overlay_layers.append(overlay_item);
       }
     }
 
     // hide box when clicked outside
     $(document).mouseup(function (e) {
-      if ($('.GraphicLayerSwitcher.box').has(e.target).length === 0) {
+      if (base_layers.find(e.target).length === 0 &&
+          overlay_layers.find(e.target).length === 0) {
         $('.GraphicLayerSwitcher.box').hide();
         $('.GraphicLayerSwitcher.current').show();
+        OpenLayers.Event.stop(e);
       }
     });
 
@@ -170,8 +191,23 @@ var GraphicLayerSwitcher = OpenLayers.Class(OpenLayers.Control, {
     });
 
     layer_switcher.append(base_layers);
+    layer_switcher.append(overlay_layers);
+
     $(this.div).append(layer_switcher);
+
+    // prevent mouse events bubbling throu the overlay
+    base_layers.on('mouseup', $.proxy(this.mouseUp, this));
+    base_layers.on('mousedown', $.proxy(this.mouseDown, this));
+
+    overlay_layers.on('mouseup', $.proxy(this.mouseUp, this));
+    overlay_layers.on('mousedown', $.proxy(this.mouseDown, this));
+
     return this.div;
+  },
+
+  onOverlayClick: function(e) {
+    this.layer.setVisibility(!this.layer.getVisibility());
+    OpenLayers.Event.stop(e);
   },
 
   onInputClick: function(e) {
@@ -205,13 +241,8 @@ var GraphicLayerSwitcher = OpenLayers.Class(OpenLayers.Control, {
   },
 
   loadContents: function() {
-    //configure main div
-    OpenLayers.Event.observe(this.div, 'mouseup',
-      OpenLayers.Function.bindAsEventListener(this.mouseUp, this));
     OpenLayers.Event.observe(this.div, 'click',
       this.ignoreEvent);
-    OpenLayers.Event.observe(this.div, 'mousedown',
-      OpenLayers.Function.bindAsEventListener(this.mouseDown, this));
     OpenLayers.Event.observe(this.div, 'dblclick', this.ignoreEvent);
   },
 
