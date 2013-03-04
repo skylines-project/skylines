@@ -88,12 +88,6 @@ function addAirspaceLayers(airspace_tile_url) {
   map.events.register('changebaselayer', this, function(data) {
     airspace.setVisibility(!data.layer.options.hideAirspaceOverlay);
   });
-
-  var airspace_baselayer = airspace.clone();
-  airspace_baselayer.setIsBaseLayer(true);
-  airspace_baselayer.setName("Airspace only");
-  airspace_baselayer.addOptions({hideAirspaceOverlay: true});
-  map.addLayer(airspace_baselayer);
 }
 
 /**
