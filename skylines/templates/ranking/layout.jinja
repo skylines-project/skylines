@@ -37,7 +37,11 @@
 
 {%- endmacro %}
 
+{% block scripts -%}
+{% if not partial %}{{ super() }}{%- endif %}
+{{ pager_script() }}
+{%- endblock %}
+
 {% block content -%}
 {% if partial %}{{ ranking() }}{% else %}<div id="partial">{{ ranking() }}</div>{% endif %}
-{{ pager_script() }}
 {%- endblock %}

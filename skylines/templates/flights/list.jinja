@@ -29,14 +29,19 @@
 
 
 
-{% block head -%}
+{% block styles -%}
+{{ super() }}
+<link href="/css/dataTables.bootstrap.css" rel="stylesheet" type="text/css" />
+{%- endblock %}
+
+
+
+{% block scripts -%}
 {{ super() }}
 
 {% for url in g.assets['js-datatables'].urls() -%}
 <script type="text/javascript" src="{{ url }}"></script>
 {%- endfor %}
-
-<link href="/css/dataTables.bootstrap.css" rel="stylesheet" type="text/css" />
 
 <script type="text/javascript" charset="utf-8">
 /* <![CDATA[ */
@@ -222,6 +227,10 @@
     });
   });
 /* ]]> */
+</script>
+
+<script type="text/javascript">
+showPinnedFlightsLink();
 </script>
 {%- endblock %}
 

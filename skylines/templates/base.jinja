@@ -8,24 +8,29 @@
     <link rel='shortcut icon' href='/favicon.ico' type='image/x-icon' />
     <link rel='shortcut' href='/favicon.png' type='image/png' />
 
+    {% block styles -%}
     {%- for url in g.assets['css-all'].urls() %}
     <link rel="stylesheet" type="text/css" href="{{ url }}"/>
     {%- endfor %}
+    {%- endblock %}
 
-    {%- for url in g.assets['js-all'].urls() %}
-    <script type="text/javascript" src="{{ url }}"></script>
-    {%- endfor %}
-
-    <script>
-    $(function() {
-        $('.dropdown-menu').find('form').click(function (e) {
-            e.stopPropagation();
-        });
-    });
-    </script>
     {%- endblock %}
 </head>
 <body{% block body_attributes %}{% endblock %}>
-    {%- block body %}{% endblock %}
+{%- block body %}{% endblock %}
+
+{% block scripts -%}
+{%- for url in g.assets['js-all'].urls() %}
+<script type="text/javascript" src="{{ url }}"></script>
+{%- endfor %}
+
+<script>
+$(function() {
+    $('.dropdown-menu').find('form').click(function (e) {
+        e.stopPropagation();
+    });
+});
+</script>
+{%- endblock %}
 </body>
 </html>

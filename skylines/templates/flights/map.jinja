@@ -11,10 +11,15 @@
 {%- endwith %}
 {%- endblock %}
 
+
 {%- block head %}
 {{ super() }}
-
 {{ flight_meta_tags(flight) }}
+{%- endblock %}
+
+
+{%- block styles %}
+{{ super() }}
 
 {% for url in g.assets['css-openlayers'].urls() -%}
 <link href="{{ url }}" rel="stylesheet" type="text/css" />
@@ -24,12 +29,21 @@
 <link href="/css/eye_candy/OpenLayers.css" rel="stylesheet" type="text/css" />
 {%- endif %}
 
+<style>body { height: 100%; margin: 0; padding: 0 }</style>
+{%- endblock %}
+
+
+{%- block scripts %}
+{{ super() }}
+
 {% for url in g.assets['js-openlayers'].urls() -%}
 <script type="text/javascript" src="{{ url }}"></script>
 {%- endfor %}
+
 {% for url in g.assets['js-flot'].urls() -%}
 <script type="text/javascript" src="{{ url }}"></script>
 {%- endfor %}
+
 {% for url in g.assets['js-flight'].urls() -%}
 <script type="text/javascript" src="{{ url }}"></script>
 {%- endfor %}
@@ -96,8 +110,6 @@
     addReliefLayer();
   });
 </script>
-
-<style>body { height: 100%; margin: 0; padding: 0 }</style>
 {%- endblock %}
 
 

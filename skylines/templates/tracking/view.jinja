@@ -18,6 +18,11 @@
 
 {%- block head %}
 {{ super() }}
+{%- endblock %}
+
+
+{%- block styles %}
+{{ super() }}
 
 {% if trace -%}
   {% for url in g.assets['css-openlayers'].urls() -%}
@@ -27,17 +32,27 @@
   {%- if request.identity and request.identity['user'].eye_candy -%}
   <link href="/css/eye_candy/OpenLayers.css" rel="stylesheet" type="text/css" />
   {%- endif %}
+{%- endif %}
+{%- endblock %}
 
+
+{%- block scripts %}
+{{ super() }}
+
+{% if trace -%}
   {% for url in g.assets['js-openlayers'].urls() -%}
   <script type="text/javascript" src="{{ url }}"></script>
   {%- endfor %}
+
   {% for url in g.assets['js-flot'].urls() -%}
   <script type="text/javascript" src="{{ url }}"></script>
   {%- endfor %}
 {%- endif %}
+
 {% for url in g.assets['js-flight'].urls() -%}
 <script type="text/javascript" src="{{ url }}"></script>
 {%- endfor %}
+
 {% for url in g.assets['js-tracking'].urls() -%}
 <script type="text/javascript" src="{{ url }}"></script>
 {%- endfor %}

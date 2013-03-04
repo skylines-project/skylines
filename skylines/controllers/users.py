@@ -282,7 +282,7 @@ class UserController(BaseController):
         return dict(active_page='settings', title=_('Edit User'),
                     form=edit_user_form,
                     values=self.user,
-                    include_after='users/after-edit-form.jinja')
+                    include_script='users/after-edit-form.jinja')
 
     @expose()
     @validate(form=edit_user_form, error_handler=edit)

@@ -12,10 +12,8 @@
 {%- endmacro %}
 
 
-{% block head -%}
+{% block styles -%}
 {{ super() }}
-
-<script type="text/javascript" src="/js/map.js"></script>
 
 {% if takeoff_locations -%}
 {% for url in g.assets['css-openlayers'].urls() -%}
@@ -25,7 +23,16 @@
 {%- if request.identity and request.identity['user'].eye_candy -%}
 <link href="/css/eye_candy/OpenLayers.css" rel="stylesheet" type="text/css" />
 {%- endif %}
+{%- endif %}
+{%- endblock %}
 
+
+{% block scripts -%}
+{{ super() }}
+
+<script type="text/javascript" src="/js/map.js"></script>
+
+{% if takeoff_locations -%}
 {% for url in g.assets['js-openlayers'].urls() -%}
 <script type="text/javascript" src="{{ url }}"></script>
 {%- endfor %}

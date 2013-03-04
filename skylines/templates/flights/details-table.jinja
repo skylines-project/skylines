@@ -1,7 +1,7 @@
 {% from "macros/flags.jinja" import insert_flag with context %}
 {% from "macros/datetime.jinja" import insert_timeago with context %}
 
-{%- macro render_details_table(flight) %}
+{% macro details_table_script(flight) -%}
 <script type="text/javascript">
   /* <![CDATA[ */
   $(function() {
@@ -21,7 +21,9 @@
   });
   /* ]]> */
 </script>
+{%- endmacro %}
 
+{%- macro render_details_table(flight) %}
 <table class="table" itemscope="" itemtype="http://schema.org/SportsEvent">
   <meta itemprop="url" content="/flights/{{ flight.id }}" />
   <tbody>

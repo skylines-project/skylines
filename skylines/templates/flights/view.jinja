@@ -3,7 +3,7 @@
 
 
 {% from 'flights/meta-tags.jinja' import flight_meta_tags with context %}
-{% from 'flights/details-table.jinja' import render_details_table with context %}
+{% from 'flights/details-table.jinja' import render_details_table, details_table_script with context %}
 {% from 'flights/phases-table.jinja' import render_circling_performance, render_cruise_performance, render_phases with context %}
 {% from 'macros/datetime.jinja' import timeago_script with context %}
 
@@ -17,8 +17,12 @@
 
 {%- block head %}
 {{ super() }}
-
 {{ flight_meta_tags(flight) }}
+{%- endblock %}
+
+
+{%- block styles %}
+{{ super() }}
 
 {% if trace -%}
   {% for url in g.assets['css-openlayers'].urls() -%}
@@ -28,14 +32,23 @@
   {%- if request.identity and request.identity['user'].eye_candy -%}
   <link href="/css/eye_candy/OpenLayers.css" rel="stylesheet" type="text/css" />
   {%- endif %}
+{%- endif %}
+{%- endblock %}
 
+
+{%- block scripts %}
+{{ super() }}
+
+{% if trace -%}
   {% for url in g.assets['js-openlayers'].urls() -%}
   <script type="text/javascript" src="{{ url }}"></script>
   {%- endfor %}
+
   {% for url in g.assets['js-flot'].urls() -%}
   <script type="text/javascript" src="{{ url }}"></script>
   {%- endfor %}
 {%- endif %}
+
 {% for url in g.assets['js-flight'].urls() -%}
 <script type="text/javascript" src="{{ url }}"></script>
 {%- endfor %}
@@ -102,6 +115,8 @@
   });
 </script>
 {%- endif %}
+
+{{ details_table_script() }}
 
 <script type="text/javascript">
   /* <![CDATA[ */
