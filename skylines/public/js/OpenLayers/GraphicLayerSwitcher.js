@@ -83,7 +83,18 @@ var GraphicLayerSwitcher = OpenLayers.Class(OpenLayers.Control, {
 
     var layers = this.map.layers.slice();
     var box = $("<div class='GraphicLayerSwitcher box'></div>");
+    var current = $(
+      "<a href='#'>" +
+        "<img src='../../images/layers.png' />" +
+      "</a>");
+    current.addClass('GraphicLayerSwitcher current');
 
+    current.on('click touchstart', function(e) {
+      $(this).hide();
+      $('.GraphicLayerSwitcher.box').show();
+    });
+
+    $(this.div).append(current);
     if (!this.ascending) { layers.reverse(); }
     for (var i = 0; i < layers.length; i++) {
       var layer = layers[i];
@@ -107,18 +118,7 @@ var GraphicLayerSwitcher = OpenLayers.Class(OpenLayers.Control, {
           "</a><br />");
 
         if (on) {
-          var current = $(
-            "<a id='" + id + "_current' href='#'>" +
-              "<img src='../../images/layers.png' />" +
-            "</a>");
-          current.addClass('GraphicLayerSwitcher current');
 
-          current.on('click touchstart', function(e) {
-            $(this).hide();
-            $('.GraphicLayerSwitcher.box').show();
-          });
-
-          $(this.div).append(current);
 
           box_item.addClass('active');
         }
