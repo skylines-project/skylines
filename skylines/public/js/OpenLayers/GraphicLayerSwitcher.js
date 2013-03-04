@@ -94,16 +94,21 @@ var GraphicLayerSwitcher = OpenLayers.Class(OpenLayers.Control, {
         var on = (baseLayer) ? (layer == this.map.baseLayer)
                     : layer.getVisibility();
         
+
+        var id = this.id + '_input_' + layer.name.replace(/ /g, '_');
+
+        var layer_image = '../../images/layers/' + layer.name +
+          (on ? '.png' : '.bw.png');
+
         var box_item = $(
           "<a id='" + id + "' href='#'>" +
-            "<img src='../../images/layers/" + layer.name + ".png' />" +
+            "<img src='" + layer_image + "' />" +
             layer.name +
           "</a><br />");
-        
+
         if (on) {
-          var id = this.id + '_input_' + layer.name;
           var current = $(
-            "<a id='" + id + "' href='#'>" +
+            "<a id='" + id + "_current' href='#'>" +
               "<img src='../../images/layers.png' />" +
             "</a>");
           current.addClass('GraphicLayerSwitcher current');
@@ -114,9 +119,29 @@ var GraphicLayerSwitcher = OpenLayers.Class(OpenLayers.Control, {
           });
 
           $(this.div).append(current);
+
+          box_item.addClass('active');
         }
         
         box_item.on('click touchend', $.proxy(this.onInputClick, {'layer': layer}));
+
+        box_item.on('mouseover touchstart', $.proxy(function() {
+          if (this.name != this.active) {
+            $('#' + this.id).find('img').attr('src', '../../images/layers/' + this.name + '.png');
+
+            $('.GraphicLayerSwitcher.box .active').find('img')
+              .attr('src', '../../images/layers/' + this.active + '.bw.png');
+          }
+        }, { id: id, name: layer.name, active: this.map.baseLayer.name }));
+
+        box_item.on('mouseout touchend', $.proxy(function() {
+          if (this.name != this.active) {
+            $('#' + this.id).find('img').attr('src', '../../images/layers/' + this.name + '.bw.png');
+
+            $('.GraphicLayerSwitcher.box .active').find('img')
+              .attr('src', '../../images/layers/' + this.active + '.png');
+          }
+        }, { id: id, name: layer.name, active: this.map.baseLayer.name }));
 
         $(box).append(box_item);
       }
