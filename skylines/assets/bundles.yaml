@@ -30,7 +30,6 @@ js-all:
         - js/jQuery/jquery.timeago.js
         - js/general.js
         - js-bootstrap
-        - js/jQuery/bootstrap-datepicker.js
         - js/topbar.js
 
 js-datatables:
@@ -39,6 +38,7 @@ js-datatables:
     contents:
         - js/jQuery/jquery.dataTables.js
         - js/jQuery/jquery.dataTables.ext.js
+        - js/jQuery/bootstrap-datepicker.js
 
 js-openlayers:
     filters: rjsmin
