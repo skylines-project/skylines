@@ -82,7 +82,7 @@ var GraphicLayerSwitcher = OpenLayers.Class(OpenLayers.Control, {
     }
 
     var layers = this.map.layers.slice();
-    var box = $("<div class='GraphicLayerSwitcher box'></div>");
+
     var current = $(
       "<a href='#'>" +
         "<img src='../../images/layers.png' />" +
@@ -95,6 +95,10 @@ var GraphicLayerSwitcher = OpenLayers.Class(OpenLayers.Control, {
     });
 
     $(this.div).append(current);
+
+    var layer_switcher = $("<div class='GraphicLayerSwitcher box'></div>");
+
+    var base_layers = $("<div class='base'></div>");
     if (!this.ascending) { layers.reverse(); }
     for (var i = 0; i < layers.length; i++) {
       var layer = layers[i];
@@ -111,7 +115,7 @@ var GraphicLayerSwitcher = OpenLayers.Class(OpenLayers.Control, {
         var layer_image = '../../images/layers/' + layer.name +
           (on ? '.png' : '.bw.png');
 
-        var box_item = $(
+        var base_item = $(
           "<a id='" + id + "' href='#'>" +
             "<img src='" + layer_image + "' />" +
             layer.name +
@@ -119,31 +123,31 @@ var GraphicLayerSwitcher = OpenLayers.Class(OpenLayers.Control, {
 
         if (on) {
 
+          base_item.addClass('active');
 
-          box_item.addClass('active');
         }
         
-        box_item.on('click touchend', $.proxy(this.onInputClick, {'layer': layer}));
+        base_item.on('click touchend', $.proxy(this.onInputClick, {'layer': layer}));
 
-        box_item.on('mouseover touchstart', $.proxy(function() {
+        base_item.on('mouseover touchstart', $.proxy(function() {
           if (this.name != this.active) {
             $('#' + this.id).find('img').attr('src', '../../images/layers/' + this.name + '.png');
 
-            $('.GraphicLayerSwitcher.box .active').find('img')
+            $('.GraphicLayerSwitcher.base .active').find('img')
               .attr('src', '../../images/layers/' + this.active + '.bw.png');
           }
         }, { id: id, name: layer.name, active: this.map.baseLayer.name }));
 
-        box_item.on('mouseout touchend', $.proxy(function() {
+        base_item.on('mouseout touchend', $.proxy(function() {
           if (this.name != this.active) {
             $('#' + this.id).find('img').attr('src', '../../images/layers/' + this.name + '.bw.png');
 
-            $('.GraphicLayerSwitcher.box .active').find('img')
+            $('.GraphicLayerSwitcher.base .active').find('img')
               .attr('src', '../../images/layers/' + this.active + '.png');
           }
         }, { id: id, name: layer.name, active: this.map.baseLayer.name }));
 
-        $(box).append(box_item);
+        $(base_layers).append(base_item);
       }
     }
 
@@ -165,7 +169,8 @@ var GraphicLayerSwitcher = OpenLayers.Class(OpenLayers.Control, {
       }, 5000);
     });
 
-    $(this.div).append(box);
+    layer_switcher.append(base_layers);
+    $(this.div).append(layer_switcher);
     return this.div;
   },
 

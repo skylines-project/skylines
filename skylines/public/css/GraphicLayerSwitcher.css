@@ -27,20 +27,23 @@
 }
 
 .GraphicLayerSwitcher.box {
+  display: none;
+}
+
+.GraphicLayerSwitcher .base {
   background: #000; /* fallback for old browsers */
   background: rgba(0, 0, 0, 0.7);
   color: #fff;
-  display: none;
   padding: 3px 5px 3px 3px;
 }
 
-.GraphicLayerSwitcher.box img {
+.GraphicLayerSwitcher .base img {
   width: 100px;
   height: 50px;
   padding: 3px 8px 3px 2px;
 }
 
-.GraphicLayerSwitcher.box a {
+.GraphicLayerSwitcher .base a {
   white-space: nowrap;
   color: #fff;
 }
