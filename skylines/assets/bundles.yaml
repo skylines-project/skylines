@@ -31,6 +31,7 @@ js-all:
         - js/general.js
         - js-bootstrap
         - js/jQuery/bootstrap-datepicker.js
+        - js/topbar.js
 
 js-datatables:
     filters: rjsmin

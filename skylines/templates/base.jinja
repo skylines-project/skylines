@@ -23,14 +23,6 @@
 {%- for url in g.assets['js-all'].urls() %}
 <script type="text/javascript" src="{{ url }}"></script>
 {%- endfor %}
-
-<script>
-$(function() {
-    $('.dropdown-menu').find('form').click(function (e) {
-        e.stopPropagation();
-    });
-});
-</script>
 {%- endblock %}
 </body>
 </html>
