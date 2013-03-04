@@ -162,6 +162,10 @@ var GraphicLayerSwitcher = OpenLayers.Class(OpenLayers.Control, {
             layer.name +
           "</a><br />");
 
+        if (on) {
+          overlay_item.addClass('active');
+        }
+
         overlay_item.on('click touchend', $.proxy(
           this.onOverlayClick, {'layer': layer, 'id': id}
         ));
@@ -207,6 +211,12 @@ var GraphicLayerSwitcher = OpenLayers.Class(OpenLayers.Control, {
 
   onOverlayClick: function(e) {
     this.layer.setVisibility(!this.layer.getVisibility());
+
+    var layer_image = '../../images/layers/' + this.layer.name +
+      (this.layer.getVisibility() ? '.png' : '.bw.png');
+
+    $('#' + this.id).find('img').attr('src', layer_image);
+    $('#' + this.id).toggleClass('active');
     OpenLayers.Event.stop(e);
   },
 
