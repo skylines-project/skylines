@@ -37,6 +37,7 @@ function initOpenLayers(id, airspace_tile_url) {
   map.addLayer(osmLayer);
 
   addAirspaceLayers(airspace_tile_url);
+  addEmptyLayer();
 
   map.setCenter(new OpenLayers.LonLat(30, 0).
     transform(new OpenLayers.Projection("EPSG:4326"), map.getProjectionObject()),
@@ -155,3 +156,17 @@ function addGoogleLayer() {
     map.addLayer(google_satellite_layer);
   }
 }
+
+/**
+ * Function: addEmptyLayer
+ *
+ * Add a empty layer to the map
+ */
+function addEmptyLayer() {
+  var empty_layer = new OpenLayers.Layer("Empty", {
+    isBaseLayer: true
+  });
+
+  map.addLayer(empty_layer);
+}
+
