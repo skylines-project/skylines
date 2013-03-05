@@ -19,7 +19,7 @@
   <thead>
     <tr>
       <th class="date">{% trans %}Last fix{% endtrans %}</th>
-      <th>{% trans %}Pilot / Traffic ID{% endtrans %}</th>
+      <th>{% trans %}Pilot{% endtrans %}</th>
       <th>{% trans %}Nearest Airport{% endtrans %}</th>
     </tr>
   </thead>
@@ -28,13 +28,7 @@
     <tr>
       <td class="date">{{ insert_timeago(track.time) }}</td>
       <td>
-        {% if track.pilot_id -%}
         <a href="/users/{{ track.pilot_id }}">{{ track.pilot|e }}</a>
-        {%- elif track.tracking_type == 0 -%}
-        Flarm {{ '%X'|format(track.tracking_id) }}
-        {%- elif track.tracking_type == 1 -%}
-        ICAO {{ '%X'|format(track.tracking_id) }}
-        {%- endif %}
       </td>
       <td>
         {% if airport -%}
@@ -42,11 +36,7 @@
         {%- endif %}
       </td>
       <td nowrap="nowrap" class="show">
-        {% if track.pilot_id -%}
         <a href="/tracking/{{ track.pilot_id }}/" class="btn btn-mini">Show</a>
-        {%- elif track.tracking_id -%}
-        <a href="/tracking/external/{{ track.tracking_type }}/{{ track.tracking_id }}/" class="btn btn-mini">Show</a>
-        {%- endif %}
       </td>
     </tr>
     {%- endfor %}

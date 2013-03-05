@@ -6,13 +6,9 @@
 
 
 {% block title -%}
-{% if pilot -%}
-  {% trans pilot='<a href="/users/' ~ pilot.id ~ '/">' ~ pilot|e ~ '</a>' -%}
-  Live Tracking <small>of {{ pilot }}</small>
-  {%- endtrans %}
-{%- else -%}
-  {% trans %}Live Tracking{% endtrans %}
-{%- endif %}
+{% trans pilot='<a href="/users/' ~ pilot.id ~ '/">' ~ pilot|e ~ '</a>' -%}
+Live Tracking <small>of {{ pilot }}</small>
+{%- endtrans %}
 {%- endblock %}
 
 
@@ -71,7 +67,7 @@
     default_time = -1;
     setTime(default_time);
 
-    addFlight({{ sfid }},
+    addFlight({{ pilot.id }},
       {{ h.json.dumps(trace.encoded.points) }},
       {{ h.json.dumps(trace.encoded.levels) }},
       {{ trace.fixes.numLevels }},

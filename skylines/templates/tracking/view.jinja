@@ -6,13 +6,9 @@
 
 
 {% block title -%}
-{% if pilot -%}
-  {% trans pilot='<a href="/users/' ~ pilot.id ~ '/">' ~ pilot|e ~ '</a>' -%}
-  Live Tracking <small>of {{ pilot }}</small>
-  {%- endtrans %}
-{%- else -%}
-  {% trans %}Live Tracking{% endtrans %}
-{%- endif %}
+{% trans pilot='<a href="/users/' ~ pilot.id ~ '/">' ~ pilot|e ~ '</a>' -%}
+Live Tracking <small>of {{ pilot }}</small>
+{%- endtrans %}
 {%- endblock %}
 
 
@@ -74,7 +70,7 @@
     default_time = -1;
     setTime(default_time);
 
-    addFlight({{ sfid }},
+    addFlight({{ pilot.id }},
       {{ h.json.dumps(trace.encoded.points) }},
       {{ h.json.dumps(trace.encoded.levels) }},
       {{ trace.fixes.numLevels }},
@@ -121,7 +117,6 @@
   <div class="span4">
     <table class="table">
       <tbody>
-        {% if pilot -%}
         <tr>
           <th>{% trans %}Pilot{% endtrans %}</th>
           <td><a href="/users/{{ pilot.id }}/">{{ pilot|e }}</a></td>
@@ -145,19 +140,6 @@
             <span rel="tooltip" title="{{ _('The live tracking delay is ignored because of your account privileges.') }}">({% trans %}ignored{% endtrans %})</span>
             {%- endif %}
           </td>
-        </tr>
-        {%- endif %}
-
-        {%- elif tracking_type == 0 -%}
-        <tr>
-          <th>{% trans %}Flarm ID{% endtrans %}</th>
-          <td>{{ '%X'|format(tracking_id) }}</td>
-        </tr>
-
-        {%- elif tracking_type == 1 -%}
-        <tr>
-          <th>{% trans %}ICAO ID{% endtrans %}</th>
-          <td>{{ '%X'|format(tracking_id) }}</td>
         </tr>
         {%- endif %}
       </tbody>
