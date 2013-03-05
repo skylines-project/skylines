@@ -8,7 +8,7 @@
 {% block title %}{% trans %}Live Tracking{% endtrans %}{% endblock %}
 
 
-{%- block head %}
+{% block scripts -%}
 {{ super() }}
 {{ timeago_script() }}
 {%- endblock %}
