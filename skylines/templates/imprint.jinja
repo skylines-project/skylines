@@ -3,12 +3,6 @@
 
 {% block title %}{% trans %}Imprint{% endtrans %}{% endblock %}
 
-{%- block content %}
-<div id="getting_started">
-  <p>
-    Tobias Bieniek<br>
-    Bismarckstrasse 31<br>
-    52066 Aachen
-  </p>
-</div>
+{% block content -%}
+{{ config.get('skylines.imprint', 'Please set the skylines.imprint variable in the environment INI file.') }}
 {%- endblock %}
