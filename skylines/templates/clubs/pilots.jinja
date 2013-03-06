@@ -1,9 +1,10 @@
 {% from "users/users-table.jinja" import render_users_table with context %}
+{% from "macros/links.jinja" import club_link %}
 
 {% extends "base-page.jinja" %}
 
 {% block title -%}
-{% trans club=('<a href="/clubs/' ~ club.id ~ '/">' ~ club|e ~ '</a>')|safe -%}
+{% trans club=club_link(club) -%}
 Members <small>of {{ club }}</small>
 {%- endtrans %}
 {%- endblock %}

@@ -1,3 +1,5 @@
+{% from "macros/links.jinja" import user_link, club_link %}
+
 {% macro render_users_table(users, club_column = True) -%}
 <table id="users-table" class="table table-striped">
   <thead>
@@ -11,14 +13,12 @@
     {% for user in users -%}
     <tr {% if club_column %}itemprop="member"{% endif %} itemscope itemtype="http://schema.org/Person">
       <meta itemprop="url" content="/users/{{ user.id }}" />
-      <td itemprop="name">
-        <a href="/users/{{ user.id }}/">{{ user|e }}</a>
-      </td>
+      <td itemprop="name">{{ user_link(user) }}</td>
       {% if club_column -%}
       <td itemprop="memberof" itemscope itemtype="http://schema.org/SportsTeam">
         {% if user.club_id -%}
         <meta itemprop="url" content="/clubs/{{ user.club_id }}" />
-        <a href="/clubs/{{ user.club_id }}/" itemprop="name">{{ user.club|e }}</a>
+        {{ club_link(user.club, ' itemprop="name"') }}
         {%- endif %}
       </td>
       {%- endif %}

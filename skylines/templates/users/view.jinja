@@ -1,4 +1,5 @@
 {% from "macros/datetime.jinja" import insert_timeago_date, timeago_script with context %}
+{% from "macros/links.jinja" import club_link %}
 
 {% extends "base-page.jinja" %}
 
@@ -124,7 +125,7 @@
           {% if user.club -%}
           <td itemprop="memberof" itemscope="" itemtype="http://schema.org/SportsTeam">
             <meta itemprop="url" content="/clubs/{{ user.club_id }}" />
-            <a href="/clubs/{{ user.club_id }}/" itemprop="name">{{ user.club|e }}</a>
+            {{ club_link(user.club, ' itemprop="name"') }}
           {%- else %}
           <td>
             [{% trans %}Unspecified{% endtrans %}]

@@ -1,5 +1,6 @@
 {% from "macros/flags.jinja" import insert_flag with context %}
 {% from "macros/datetime.jinja" import insert_timeago with context %}
+{% from "macros/links.jinja" import user_link, club_link %}
 
 {% macro details_table_script(flight) -%}
 <script type="text/javascript">
@@ -157,7 +158,7 @@
         {%- if flight.pilot %}
         <span itemprop="performer" itemscope="" itemtype="http://schema.org/Person">
           <meta itemprop="url" content="/users/{{ flight.pilot_id }}" />
-          <a href="/users/{{ flight.pilot_id }}/" itemprop="name">{{ flight.pilot|e }}</a>
+          {{ user_link(flight.pilot, ' itemprop="name"') }}
         </span>
         {%- endif %}
 
@@ -166,7 +167,7 @@
         {%- if flight.co_pilot %}
         <span itemprop="performer" itemscope="" itemtype="http://schema.org/Person">
           <meta itemprop="url" content="/users/{{ flight.co_pilot_id }}" />
-          <a href="/users/{{ flight.co_pilot_id }}/" itemprop="name">{{ flight.co_pilot|e }}</a>
+          {{ user_link(flight.co_pilot, ' itemprop="name"') }}
         </span>
         {%- endif %}
 
@@ -181,7 +182,7 @@
       <th>{% trans %}Club{% endtrans %}</th>
       <td itemprop="performer" itemscope="" itemtype="http://schema.org/SportsTeam">
         <meta itemprop="url" content="/clubs/{{ flight.club_id }}" />
-        <a href="/clubs/{{ flight.club_id }}/" itemprop="name">{{ flight.club|e }}</a>
+        {{ club_link(flight.club, ' itemprop="name"') }}
       </td>
     </tr>
     {%- endif %}

@@ -1,12 +1,13 @@
 {% from "macros/flags.jinja" import insert_flag with context %}
 {% from "macros/datetime.jinja" import insert_timeago with context %}
+{% from "macros/links.jinja" import user_link, club_link %}
 
 {% extends "base-page.jinja" %}
 {% set active_page = "tracking" %}
 
 
 {% block title -%}
-{% trans pilot='<a href="/users/' ~ pilot.id ~ '/">' ~ pilot|e ~ '</a>' -%}
+{% trans pilot=user_link(pilot) -%}
 Live Tracking <small>of {{ pilot }}</small>
 {%- endtrans %}
 {%- endblock %}
@@ -114,13 +115,13 @@ Live Tracking <small>of {{ pilot }}</small>
       <tbody>
         <tr>
           <th>{% trans %}Pilot{% endtrans %}</th>
-          <td><a href="/users/{{ pilot.id }}/">{{ pilot|e }}</a></td>
+          <td>{{ user_link(pilot) }}</td>
         </tr>
 
         {% if pilot.club -%}
         <tr>
           <th>{% trans %}Club{% endtrans %}</th>
-          <td><a href="/clubs/{{ pilot.club_id }}/">{{ pilot.club|e }}</a></td>
+          <td>{{ club_link(pilot.club) }}</td>
         </tr>
         {%- endif %}
 

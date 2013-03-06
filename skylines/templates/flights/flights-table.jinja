@@ -1,4 +1,5 @@
 {% from "macros/flags.jinja" import insert_flag with context %}
+{% from "macros/links.jinja" import user_link %}
 
 {% macro render_flights_table(flights, omitted_columns = []) -%}
 <table id="flight-table" class="table table-striped table-condensed">
@@ -35,17 +36,9 @@
 
       {% if 'pilot' not in omitted_columns -%}
       <td>
-        {% if flight.pilot -%}
-        <a href="/users/{{ flight.pilot_id }}">{{ flight.pilot|e }}</a>
-        {%- endif -%}
-
-        {% if flight.pilot and flight.co_pilot -%}
-        <br/>
-        {%- endif -%}
-
-        {% if flight.co_pilot -%}
-        <a href="/users/{{ flight.co_pilot_id }}">{{ flight.co_pilot|e }}</a>
-        {%- endif -%}
+        {% if flight.pilot %}{{ user_link(flight.pilot) }}{% endif -%}
+        {% if flight.pilot and flight.co_pilot %}<br/>{% endif -%}
+        {% if flight.co_pilot %}{{ user_link(flight.co_pilot) }}{% endif -%}
 
         {% if not flight.pilot and not flight.co_pilot -%}
         [{{ flight.igc_file.owner|e }}]

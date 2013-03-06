@@ -1,12 +1,13 @@
 {% from "macros/flags.jinja" import insert_flag with context %}
 {% from "macros/datetime.jinja" import insert_timeago with context %}
+{% from "macros/links.jinja" import user_link %}
 
 {% extends "base-fullscreen.jinja" %}
 {% set active_page = "tracking" %}
 
 
 {% block title -%}
-{% trans pilot='<a href="/users/' ~ pilot.id ~ '/">' ~ pilot|e ~ '</a>' -%}
+{% trans pilot=user_link(pilot) -%}
 Live Tracking <small>of {{ pilot }}</small>
 {%- endtrans %}
 {%- endblock %}

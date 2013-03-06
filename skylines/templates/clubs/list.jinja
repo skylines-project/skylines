@@ -1,3 +1,5 @@
+{% from "macros/links.jinja" import club_link %}
+
 {% extends "base-page.jinja" %}
 
 {% block title %}{% trans %}Clubs{% endtrans %}{% endblock %}
@@ -13,9 +15,7 @@
   <tbody>
     {% for club in clubs -%}
     <tr>
-      <td>
-        <a href="/clubs/{{ club.id }}">{{ club.name|e }}</a>
-      </td>
+      <td>{{ club_link(club) }}</td>
       <td>
         <a href="/flights/club/{{ club.id }}" class="btn btn-mini"><i class="icon-plane"></i> {% trans %}Flights{% endtrans %}</a>
         <a href="/statistics/club/{{ club.id }}" class="btn btn-mini"><i class="icon-tasks"></i> {% trans %}Statistics{% endtrans %}</a>

@@ -2,6 +2,7 @@
 {% from 'statistics/distance-table.jinja' import render_distance_table with context %}
 {% from 'statistics/duration-table.jinja' import render_duration_table with context %}
 {% from 'statistics/pilots-table.jinja' import render_pilots_table with context %}
+{% from 'macros/links.jinja' import user_link, club_link %}
 
 
 {% extends "base-page.jinja" %}
@@ -10,12 +11,12 @@
 
 {% block title -%}
 {% if selected_pilot -%}
-  {% trans pilot='<a href="/users/' ~ selected_pilot.id ~ '">' ~ selected_pilot|e ~ '</a>' -%}
+  {% trans pilot=user_link(selected_pilot) -%}
     Statistics <small>of {{ pilot }}</small>
   {%- endtrans %}
 
 {%- elif selected_club %}
-  {% trans club='<a href="/clubs/' ~ selected_club.id ~ '">' ~ selected_club|e ~ '</a>' -%}
+  {% trans club=club_link(selected_club) -%}
     Statistics <small>of {{ club }}</small>
   {%- endtrans %}
 

@@ -1,4 +1,5 @@
 {% from "macros/datetime.jinja" import insert_timeago, timeago_script with context %}
+{% from "macros/links.jinja" import user_link %}
 
 
 {% extends "base-page.jinja" %}
@@ -33,7 +34,7 @@
         <th>{% trans %}Created{% endtrans %}</th>
         <td>
           {% if club.owner -%}
-            {{ _('%(time_ago)s by %(creator)s')|format(time_ago=insert_timeago(club.time_created)|safe, creator='<a href="/users/' ~ club.owner_id ~ '">' ~ club.owner|e ~ '</a>') }}
+            {{ _('%(time_ago)s by %(creator)s')|format(time_ago=insert_timeago(club.time_created)|safe, creator=user_link(club.owner)) }}
           {%- else %}
             {{ insert_timeago(club.time_created) }}
           {%- endif %}

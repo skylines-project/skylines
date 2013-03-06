@@ -1,0 +1,7 @@
+{% macro user_link(user, attributes='') -%}
+<a href="/users/{{ user.id }}"{{attributes}}>{{ user|e }}</a>
+{%- endmacro %}
+
+{% macro club_link(club, attributes='') -%}
+<a href="/clubs/{{ club.id }}"{{attributes}}>{{ club|e }}</a>
+{%- endmacro %}

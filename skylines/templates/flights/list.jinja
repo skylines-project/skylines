@@ -1,4 +1,5 @@
 {% from "flights/flights-table.jinja" import render_flights_table with context %}
+{% from "macros/links.jinja" import user_link, club_link %}
 
 
 {% extends "base-page.jinja" %}
@@ -7,11 +8,11 @@
 
 {% block title -%}
 {% if pilot -%}
-  {% trans pilot='<a href="/users/' ~ pilot.id ~ '">' ~ pilot|e ~ '</a>' -%}
+  {% trans pilot=user_link(pilot) -%}
     Flights <small>of {{ pilot }}</small>
   {%- endtrans %}
 {%- elif club %}
-  {% trans club='<a href="/clubs/' ~ club.id ~ '">' ~ club|e ~ '</a>' -%}
+  {% trans club=club_link(club) -%}
     Flights <small>of {{ club }}</small>
   {%- endtrans %}
 {%- elif airport %}

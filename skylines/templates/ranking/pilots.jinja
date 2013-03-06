@@ -1,3 +1,5 @@
+{% from "macros/links.jinja" import user_link, club_link %}
+
 {% extends "ranking/layout.jinja" %}
 
 {% block ranking -%}
@@ -13,8 +15,8 @@
     {% for pilot, count, total, rank in result -%}
     <tr>
       <td class="numeric">{{ rank }}</td>
-      <td><a href="/users/{{ pilot.id }}">{{ pilot|e }}</a></td>
-      <td>{% if pilot.club_id %}<a href="/clubs/{{ pilot.club_id }}">{{ pilot.club|e }}</a>{% endif %}</td>
+      <td>{{ user_link(pilot) }}</td>
+      <td>{% if pilot.club_id %}{{ club_link(pilot.club) }}{% endif %}</td>
       <td class="numeric">{{ count }}</td>
       <td class="numeric">{{ _('%(points)s pt')|format(points=total) }}</td>
     </tr>

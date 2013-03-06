@@ -7,6 +7,7 @@
 {% from 'flights/phases-table.jinja' import render_circling_performance, render_cruise_performance, render_phases with context %}
 {% from 'flights/macros.jinja' import flight_title with context %}
 {% from 'macros/datetime.jinja' import timeago_script with context %}
+{% from 'macros/links.jinja' import user_link %}
 
 
 {% block title -%}{{ flight_title(flight) }}{%- endblock %}
@@ -155,7 +156,7 @@
         <td>
           {%- if comment.user %}
           <span style="float:left">
-            <a href="/users/{{ comment.user.id }}">{{ comment.user|e }}</a>:&nbsp;
+            {{ user_link(comment.user) }}:&nbsp;
           </span>
           {%- endif %}
 
