@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import re
-from skylines.lib import files
-from skylines.lib.base36 import base36encode
+from skylines.lib import files, base36
 from skylines.lib.string import import_ascii, import_alnum
 
 hfgid_re = re.compile(r'HFGID\s*GLIDER\s*ID\s*:(.*)', re.IGNORECASE)
@@ -61,7 +60,7 @@ def parse_logger_id(line):
         # stores the unique id as base 10 instead of base 36.
         match = afil_re.match(line)
         if match and match.group(1):
-            return base36encode(int(match.group(1)))
+            return base36.encode(int(match.group(1)))
     else:
         return import_alnum(line[4:7]).upper()
 

@@ -4,7 +4,7 @@ http://en.wikipedia.org/wiki/Base_36#Python_Conversion_Code
 """
 
 
-def base36encode(number, alphabet='0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ'):
+def encode(number, alphabet='0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ'):
     """Converts an integer to a base36 string."""
     if not isinstance(number, (int, long)):
         raise TypeError('number must be an integer')
@@ -26,6 +26,6 @@ def base36encode(number, alphabet='0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ'):
     return sign + base36
 
 
-def base36decode(number):
+def decode(number):
     """Converts a base36 string to an integer."""
     return int(number, 36)
