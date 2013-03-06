@@ -8,6 +8,7 @@ from skylines.lib import files
 from skylines.model.geo import Location
 from skylines.model import DBSession, Airport, Trace, FlightPhase, TimeZone
 from skylines.lib.xcsoar.path import helper_path
+from skylines.lib.datetime import from_seconds_of_day
 import logging
 
 log = logging.getLogger(__name__)
@@ -76,13 +77,8 @@ def read_time_of_day(turnpoint, flight):
     if 'time' not in turnpoint:
         return None
 
-    time = int(turnpoint['time'])
-    time = datetime.timedelta(seconds=time)
-
-    time = datetime.datetime.combine(flight.takeoff_time.date(),
-                                     datetime.time(0, 0, 0)) + time
-
-    return time
+    return from_seconds_of_day(flight.takeoff_time.date(),
+                               int(turnpoint['time']))
 
 
 def delete_trace(contest_name, trace_name, flight):
