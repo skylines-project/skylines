@@ -1,3 +1,5 @@
+{% from "macros/links.jinja" import airport_link %}
+
 {% set my_pilot = request.identity['user'] if request.identity else None %}
 {% set my_club = request.identity['user'].club if request.identity else None %}
 
@@ -36,7 +38,7 @@
   {%- endif %}
 
   {% if airport -%}
-  <li class="active"><a href="/flights/airport/{{ airport.id }}">{{ airport.name }}</a></li>
+  <li class="active">{{ airport_link(airport) }}</li>
   {%- endif %}
 
   {% if club -%}

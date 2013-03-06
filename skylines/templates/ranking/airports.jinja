@@ -1,4 +1,5 @@
 {% from "macros/flags.jinja" import insert_flag with context %}
+{% from "macros/links.jinja" import airport_link %}
 
 {% extends "ranking/layout.jinja" %}
 
@@ -16,7 +17,7 @@
       <td class="numeric">{{ rank }}</td>
       <td>
         {{ insert_flag(airport.country_code) }}
-        <a href="/flights/airport/{{ airport.id }}">{{ airport|e }}</a>
+        {{ airport_link(airport) }}
       </td>
       <td class="numeric">{{ count }}</td>
       <td class="numeric">{{ _('%(points)s pt')|format(points=total) }}</td>

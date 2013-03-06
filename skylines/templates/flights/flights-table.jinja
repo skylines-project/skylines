@@ -1,5 +1,5 @@
 {% from "macros/flags.jinja" import insert_flag with context %}
-{% from "macros/links.jinja" import user_link %}
+{% from "macros/links.jinja" import user_link, airport_link %}
 
 {% macro render_flights_table(flights, omitted_columns = []) -%}
 <table id="flight-table" class="table table-striped table-condensed">
@@ -58,7 +58,7 @@
       <td>
         {% if flight.takeoff_airport -%}
         {{ insert_flag(flight.takeoff_airport.country_code) }}
-        <a href="/flights/airport/{{ flight.takeoff_airport_id }}">{{ flight.takeoff_airport.name|e }}</a>
+        {{ airport_link(flight.takeoff_airport) }}
         {%- endif %}
       </td>
       {%- endif %}

@@ -5,3 +5,7 @@
 {% macro club_link(club, attributes='') -%}
 <a href="/clubs/{{ club.id }}"{{attributes}}>{{ club|e }}</a>
 {%- endmacro %}
+
+{% macro airport_link(airport, attributes='') -%}
+<a href="/flights/airport/{{ airport.id }}"{{attributes}}>{{ airport|e }}</a>
+{%- endmacro %}

@@ -1,6 +1,6 @@
 {% from "macros/flags.jinja" import insert_flag with context %}
 {% from "macros/datetime.jinja" import insert_timeago with context %}
-{% from "macros/links.jinja" import user_link, club_link %}
+{% from "macros/links.jinja" import user_link, club_link, airport_link %}
 
 {% macro details_table_script(flight) -%}
 <script type="text/javascript">
@@ -47,7 +47,7 @@
       <td>
         {% if flight.takeoff_airport -%}
         {{ insert_flag(flight.takeoff_airport.country_code, 'float:right;margin:3px') }}
-        {% trans airport='<a href="/flights/airport/' ~ flight.takeoff_airport_id ~ '">' ~ flight.takeoff_airport|e ~ '</a>', time=h.format_time(flight.takeoff_time) -%}
+        {% trans airport=airport_link(flight.takeoff_airport), time=h.format_time(flight.takeoff_time) -%}
         {{ airport }}<br /> at {{ time }}
         {%- endtrans %}
         {%- else %}
@@ -64,7 +64,7 @@
       <td>
         {% if flight.landing_airport -%}
         {{ insert_flag(flight.landing_airport.country_code, 'float:right;margin:3px') }}
-        {% trans airport='<a href="/flights/airport/' ~ flight.landing_airport_id ~ '">' ~ flight.landing_airport|e ~ '</a>', time=h.format_time(flight.landing_time) -%}
+        {% trans airport=airport_link(flight.landing_airport), time=h.format_time(flight.landing_time) -%}
         {{ airport }}<br /> at {{ time }}
         {%- endtrans %}
         {%- else %}
