@@ -1,9 +1,13 @@
 # -*- coding: utf-8 -*-
 
+from __future__ import absolute_import
+
 import re
+from datetime import date, datetime
 from skylines.lib import files, base36
 from skylines.lib.string import import_ascii, import_alnum
 
+hfdte_re = re.compile(r'HFDTE(\d{6})', re.IGNORECASE)
 hfgid_re = re.compile(r'HFGID\s*GLIDER\s*ID\s*:(.*)', re.IGNORECASE)
 hfgty_re = re.compile(r'HFGTY\s*GLIDER\s*TYPE\s*:(.*)', re.IGNORECASE)
 hfcid_re = re.compile(r'HFCID.*:(.*)', re.IGNORECASE)
@@ -33,6 +37,9 @@ def read_igc_headers(filename):
 
             if len(line) >= 7:
                 igc_headers['logger_id'] = parse_logger_id(line)
+
+        if line.startswith('HFDTE'):
+            igc_headers['date_utc'] = parse_date(line)
 
         if line.startswith('HFGTY'):
             igc_headers['model'] = parse_pattern(hfgty_re, line)
@@ -72,3 +79,16 @@ def parse_pattern(pattern, line):
         return None
 
     return import_ascii(match.group(1))
+
+
+def parse_date(line):
+    match = hfdte_re.match(line)
+
+    if not match:
+        return None
+
+    date_str = match.group(1)
+    try:
+        return datetime.strptime(date_str, '%d%m%y').date()
+    except ValueError:
+        return None
