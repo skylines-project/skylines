@@ -11,7 +11,7 @@ def normalize_whitespace(s):
 
     assert isinstance(s, str) or isinstance(s, unicode)
 
-    return whitespace_re.sub(s.strip(), ' ')
+    return whitespace_re.sub(' ', s.strip())
 
 
 def import_ascii(s):
@@ -30,5 +30,5 @@ def import_alnum(s):
 
     assert isinstance(s, str)
 
-    s = non_alnum_re.sub(s, '')
+    s = non_alnum_re.sub('', s)
     return unicode(s, 'ascii')
