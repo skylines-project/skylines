@@ -527,7 +527,7 @@ msgstr "Mitglieder"
 #: skylines/templates/clubs/pilots.jinja:6
 #, python-format
 msgid "Members <small>of %(club)s</small>"
-msgstr "Mitglider <small>von %(club)s</small>"
+msgstr "Mitglieder <small>von %(club)s</small>"
 
 #: skylines/templates/clubs/view.jinja:33
 msgid "Created"
@@ -1058,7 +1058,7 @@ msgstr ""
 #: skylines/templates/upload/result.jinja:13
 #: skylines/templates/upload/result.jinja:69
 msgid "Update Aircraft Types and Registrations"
-msgstr "Flugzeugmuster und Kennzeichen akutalisieren"
+msgstr "Flugzeugmuster und Kennzeichen aktualisieren"
 
 #: skylines/templates/upload/result.jinja:16
 msgid "No flight was saved."
