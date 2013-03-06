@@ -5,14 +5,11 @@
 {% from 'flights/meta-tags.jinja' import flight_meta_tags with context %}
 {% from 'flights/details-table.jinja' import render_details_table, details_table_script with context %}
 {% from 'flights/phases-table.jinja' import render_circling_performance, render_cruise_performance, render_phases with context %}
+{% from 'flights/macros.jinja' import flight_title with context %}
 {% from 'macros/datetime.jinja' import timeago_script with context %}
 
 
-{% block title -%}
-{% with title, tagline = h.format_flight_title(flight) -%}
-{{ title|e }} <small>{{ tagline|e }}</small>
-{%- endwith %}
-{%- endblock %}
+{% block title -%}{{ flight_title(flight) }}{%- endblock %}
 
 
 {%- block head %}

@@ -3,13 +3,10 @@
 
 
 {% from 'flights/meta-tags.jinja' import flight_meta_tags with context %}
+{% from 'flights/macros.jinja' import flight_title with context %}
 
 
-{% block title -%}
-{% with title, tagline = h.format_flight_title(flight) -%}
-{{ title|e }} {{ tagline|e }}
-{%- endwith %}
-{%- endblock %}
+{% block title -%}{{ flight_title(flight) }}{%- endblock %}
 
 
 {%- block head %}
