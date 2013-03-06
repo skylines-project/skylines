@@ -2,7 +2,7 @@ import re
 
 
 whitespace_re = re.compile(r'[\x00-\x20\s]')
-non_alnum_re = re.compile(r'^[0-9a-zA-Z]$')
+non_alnum_re = re.compile(r'[^0-9a-zA-Z]')
 
 
 def normalize_whitespace(s):
