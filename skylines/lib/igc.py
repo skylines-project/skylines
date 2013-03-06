@@ -4,7 +4,7 @@ from __future__ import absolute_import
 
 import re
 from datetime import date, datetime
-from skylines.lib import files, base36
+from skylines.lib import base36
 from skylines.lib.string import import_ascii, import_alnum
 
 hfdte_re = re.compile(r'HFDTE(\d{6})', re.IGNORECASE)
@@ -14,13 +14,15 @@ hfcid_re = re.compile(r'HFCID.*:(.*)', re.IGNORECASE)
 afil_re = re.compile(r'AFIL(\d*)FLIGHT', re.IGNORECASE)
 
 
-def read_igc_headers(filename):
-    path = files.filename_to_path(filename)
+def read_igc_headers(f):
+    ''' Read IGC file headers from a file-like object, a list of strings or a
+    file if the parameter is a path. '''
 
-    try:
-        f = file(path, 'r')
-    except IOError:
-        return None
+    if isinstance(f, str) or isinstance(f, unicode):
+        try:
+            f = file(f, 'r')
+        except IOError:
+            return None
 
     igc_headers = dict()
 

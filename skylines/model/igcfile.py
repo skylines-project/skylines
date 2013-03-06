@@ -6,6 +6,7 @@ from sqlalchemy import ForeignKey, Column, func
 from sqlalchemy.orm import relation
 from sqlalchemy.sql.expression import desc, and_
 from sqlalchemy.types import Integer, DateTime, String, Unicode, Date
+from skylines.lib import files
 from skylines.lib.igc import read_igc_headers
 from skylines.model.base import DeclarativeBase
 from skylines.model.session import DBSession
@@ -52,7 +53,8 @@ class IGCFile(DeclarativeBase):
         return identity and 'manage' in identity['permissions']
 
     def update_igc_headers(self):
-        igc_headers = read_igc_headers(self.filename)
+        path = files.filename_to_path(self.filename)
+        igc_headers = read_igc_headers(path)
         if igc_headers is None:
             return
 
