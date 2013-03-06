@@ -5,39 +5,37 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: skylines\n"
+"Project-Id-Version:  skylines\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2013-03-02 11:46+0100\n"
+"POT-Creation-Date: 2013-03-06 22:57+0100\n"
 "PO-Revision-Date: 2013-03-02 17:43+0000\n"
 "Last-Translator: Andrey Lebedev <Unknown>\n"
 "Language-Team: Russian <ru@li.org>\n"
+"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
-"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
-"X-Launchpad-Export-Date: 2013-03-03 20:04+0000\n"
-"X-Generator: Launchpad (build 16514)\n"
 "Generated-By: Babel 0.9.6\n"
 
 #: skylines/controllers/clubs.py:25 skylines/controllers/clubs.py:43
-#: skylines/controllers/users.py:98 skylines/controllers/users.py:118
-#: skylines/controllers/users.py:154 skylines/templates/clubs/list.jinja:9
-#: skylines/templates/clubs/view.jinja:21
-#: skylines/templates/ranking/airports.jinja:9
-#: skylines/templates/ranking/clubs.jinja:7
-#: skylines/templates/ranking/pilots.jinja:7
-#: skylines/templates/users/users-table.jinja:5
-#: skylines/templates/users/view.jinja:83
+#: skylines/controllers/users.py:99 skylines/controllers/users.py:119
+#: skylines/controllers/users.py:155 skylines/templates/clubs/list.jinja:11
+#: skylines/templates/clubs/view.jinja:22
+#: skylines/templates/ranking/airports.jinja:10
+#: skylines/templates/ranking/clubs.jinja:9
+#: skylines/templates/ranking/pilots.jinja:9
+#: skylines/templates/users/users-table.jinja:7
+#: skylines/templates/users/view.jinja:93
 msgid "Name"
 msgstr "Имя"
 
-#: skylines/controllers/clubs.py:26 skylines/templates/clubs/view.jinja:27
+#: skylines/controllers/clubs.py:26 skylines/templates/clubs/view.jinja:28
 msgid "Website"
 msgstr "Веб-сайт"
 
-#: skylines/controllers/clubs.py:42 skylines/controllers/users.py:117
-#: skylines/controllers/users.py:153 skylines/controllers/users.py:186
+#: skylines/controllers/clubs.py:42 skylines/controllers/users.py:118
+#: skylines/controllers/users.py:154 skylines/controllers/users.py:187
 msgid "eMail Address"
 msgstr "Адрес эл. почты"
 
@@ -45,14 +43,15 @@ msgstr "Адрес эл. почты"
 msgid "Edit Club"
 msgstr "Изменить клуб"
 
-#: skylines/controllers/clubs.py:93 skylines/templates/clubs/pilots.jinja:20
+#: skylines/controllers/clubs.py:93 skylines/templates/clubs/pilots.jinja:21
 msgid "Create Pilot"
 msgstr "Создать пилота"
 
 #: skylines/controllers/flight.py:49 skylines/controllers/upload.py:60
-#: skylines/templates/flights/details-table.jinja:149
-#: skylines/templates/flights/flights-table.jinja:9
-#: skylines/templates/tracking/view.jinja:111
+#: skylines/templates/flights/details-table.jinja:150
+#: skylines/templates/flights/flights-table.jinja:10
+#: skylines/templates/tracking/list.jinja:23
+#: skylines/templates/tracking/view.jinja:117
 msgid "Pilot"
 msgstr "Пилот"
 
@@ -123,19 +122,18 @@ msgstr "Вы уверены, что хотите удалить полет?"
 msgid "You have to be logged in to post comments!"
 msgstr "Для того, чтобы оставлять комментарии, надо войти"
 
-#: skylines/controllers/root.py:120
-msgid ""
-"Sorry, email address or password are wrong. Please try again or register."
+#: skylines/controllers/root.py:125
+msgid "Sorry, email address or password are wrong. Please try again or register."
 msgstr ""
 "Адрес эл. почти или пароль введен неверно. Попробуйте заново или "
 "зарегистрируйтесь."
 
-#: skylines/controllers/root.py:125
+#: skylines/controllers/root.py:130
 #, python-format
 msgid "You are now logged in. Welcome back, %s!"
 msgstr "Вы вошли в систему. Добро пожаловать, %s!"
 
-#: skylines/controllers/root.py:142
+#: skylines/controllers/root.py:147
 msgid "You are now logged out. We hope to see you back soon!"
 msgstr "Вы вышли из системы. Надеемся увидеть вас снова!"
 
@@ -193,22 +191,22 @@ msgstr "В файле не обнаружено данных о полете"
 
 #: skylines/controllers/upload.py:211
 msgid ""
-"Sorry, some error happened when updating your flight(s). Please contact a "
-"administrator for help."
+"Sorry, some error happened when updating your flight(s). Please contact a"
+" administrator for help."
 msgstr ""
-"Извините, во время загрузки полета(-ов) произошла ошибка. Если необходима "
-"помощь , пожалуйста свяжитесь с администратором."
+"Извините, во время загрузки полета(-ов) произошла ошибка. Если необходима"
+" помощь , пожалуйста свяжитесь с администратором."
 
 #: skylines/controllers/upload.py:249
 msgid "Your flight(s) have been successfully updated."
 msgstr "Данные о полете были успешно обновлены."
 
-#: skylines/controllers/users.py:46 skylines/templates/users/view.jinja:103
+#: skylines/controllers/users.py:47 skylines/templates/users/view.jinja:113
 msgid "None"
 msgstr "Нет"
 
-#: skylines/controllers/users.py:48 skylines/templates/tracking/view.jinja:127
-#: skylines/templates/users/view.jinja:105
+#: skylines/controllers/users.py:49 skylines/templates/tracking/view.jinja:133
+#: skylines/templates/users/view.jinja:115
 #, python-format
 msgid "%u minute"
 msgid_plural "%u minutes"
@@ -216,82 +214,82 @@ msgstr[0] "%u минута"
 msgstr[1] "%u минуты"
 msgstr[2] "%u минут"
 
-#: skylines/controllers/users.py:86 skylines/controllers/users.py:119
-#: skylines/controllers/users.py:155
-#: skylines/templates/flights/details-table.jinja:181
-#: skylines/templates/flights/flights-table.jinja:12
-#: skylines/templates/ranking/pilots.jinja:8
-#: skylines/templates/tracking/view.jinja:117
-#: skylines/templates/users/users-table.jinja:6
-#: skylines/templates/users/view.jinja:113
+#: skylines/controllers/users.py:87 skylines/controllers/users.py:120
+#: skylines/controllers/users.py:156
+#: skylines/templates/flights/details-table.jinja:182
+#: skylines/templates/flights/flights-table.jinja:13
+#: skylines/templates/ranking/pilots.jinja:10
+#: skylines/templates/tracking/view.jinja:123
+#: skylines/templates/users/users-table.jinja:8
+#: skylines/templates/users/view.jinja:123
 msgid "Club"
 msgstr "Клуб"
 
-#: skylines/controllers/users.py:107
+#: skylines/controllers/users.py:108
 msgid "Passwords do not match"
 msgstr "Пароли не совпадают"
 
-#: skylines/controllers/users.py:120 skylines/controllers/users.py:196
-#: skylines/controllers/users.py:206 skylines/templates/topbar.jinja:69
+#: skylines/controllers/users.py:121 skylines/controllers/users.py:197
+#: skylines/controllers/users.py:207 skylines/templates/topbar.jinja:69
 msgid "Password"
 msgstr "Пароль"
 
-#: skylines/controllers/users.py:121 skylines/controllers/users.py:197
-#: skylines/controllers/users.py:207
+#: skylines/controllers/users.py:131 skylines/controllers/users.py:198
+#: skylines/controllers/users.py:208
 msgid "Verify Password"
 msgstr "Проверить пароль"
 
-#: skylines/controllers/users.py:156
+#: skylines/controllers/users.py:157
 msgid "Tracking Delay"
 msgstr "Задержка трекинга"
 
-#: skylines/controllers/users.py:157
+#: skylines/controllers/users.py:158
 msgid "Unit Preset"
 msgstr "Еденицы измерения"
 
-#: skylines/controllers/users.py:158
+#: skylines/controllers/users.py:159
 msgid "Distance Unit"
 msgstr "Единица расстояния"
 
-#: skylines/controllers/users.py:159
+#: skylines/controllers/users.py:160
 msgid "Speed Unit"
 msgstr "Единица скорости"
 
-#: skylines/controllers/users.py:160
+#: skylines/controllers/users.py:161
 msgid "Lift Unit"
 msgstr "Единица скорости подъема"
 
-#: skylines/controllers/users.py:161
+#: skylines/controllers/users.py:162
 msgid "Altitude Unit"
 msgstr "Единица высоты"
 
-#: skylines/controllers/users.py:162
+#: skylines/controllers/users.py:163
 msgid "Eye Candy"
 msgstr "Красивости"
 
-#: skylines/controllers/users.py:182 skylines/controllers/users.py:190
-#: skylines/templates/users/view.jinja:139
+#: skylines/controllers/users.py:183 skylines/controllers/users.py:191
+#: skylines/templates/users/view.jinja:149
 msgid "Recover Password"
 msgstr "Восстановить пароль"
 
-#: skylines/controllers/users.py:201 skylines/controllers/users.py:259
-#: skylines/templates/users/view.jinja:135
+#: skylines/controllers/users.py:202 skylines/controllers/users.py:260
+#: skylines/templates/users/view.jinja:145
 msgid "Change Password"
 msgstr "Изменить пароль"
 
-#: skylines/controllers/users.py:237
+#: skylines/controllers/users.py:238
 msgid ""
 "The mail server is currently not reachable. Please try again later or "
 "contact the developers."
 msgstr ""
-"Сервер ел. почты в данный момент недоступен. Попробуйте снова или свяжитесь "
-"с разработчиками."
+"Сервер ел. почты в данный момент недоступен. Попробуйте снова или "
+"свяжитесь с разработчиками."
 
-#: skylines/controllers/users.py:281
+#: skylines/controllers/users.py:282
 msgid "Edit User"
 msgstr "Изменить пользователя"
 
-#: skylines/controllers/users.py:535
+#: skylines/controllers/users.py:536
 msgid "Password changed."
 msgstr "Пароль изменен."
 
@@ -305,23 +303,11 @@ msgstr "Извините, в базе данных нет такой запис�
 
 #: skylines/lib/dbutil.py:61
 msgid ""
-"Sorry, {num_missing} of the requested records ({ids}) do not exist in our "
-"database."
+"Sorry, {num_missing} of the requested records ({ids}) do not exist in our"
+" database."
 msgstr ""
 "Извините, {num_missing} из запрашиваемых записей ({ids}) в базе данных "
 "отсутствует."
-
-#: skylines/lib/formatter/flight.py:8
-msgid "{distance} on {date}"
-msgstr "{distance} за {date}"
-
-#: skylines/lib/formatter/flight.py:15
-msgid "{something} by {pilot_name}"
-msgstr "{something}: {pilot_name}"
-
-#: skylines/lib/formatter/flight.py:19
-msgid "{something} by {pilot_name} and {co_pilot_name}"
-msgstr "{something}: {pilot_name} и {co_pilot_name}"
 
 #: skylines/lib/formatter/units.py:31
 msgid "Custom"
@@ -368,16 +354,16 @@ msgid "License"
 msgstr "Лицензия"
 
 #: skylines/templates/about.jinja:16
-msgid ""
-"The stored flights are available for everybody without any limitations."
+msgid "The stored flights are available for everybody without any limitations."
 msgstr "Сохраненные полеты доступны всем без всяких ограничений."
 
 #: skylines/templates/about.jinja:17
 msgid ""
-"Skylines is a non-commercial project, there are no ads on the webpage, its "
-"free of charge."
+"Skylines is a non-commercial project, there are no ads on the webpage, "
+"its free of charge."
 msgstr ""
-"Skylines - это некоммерческий проект. На страницах нет рекламы, он бесплатен."
+"Skylines - это некоммерческий проект. На страницах нет рекламы, он "
+"бесплатен."
 
 #: skylines/templates/about.jinja:18
 #, python-format
@@ -390,17 +376,18 @@ msgstr ""
 
 #: skylines/templates/about.jinja:19
 msgid ""
-"Skylines has also some social network aspects with comments, notifications, "
-"friends and followers."
+"Skylines has also some social network aspects with comments, "
+"notifications, friends and followers."
 msgstr ""
-"В Skylines так-же есть некоторые аспекты социальных сетей с комментариями, "
-"уведомлениями, друзьями и последователями."
+"В Skylines так-же есть некоторые аспекты социальных сетей с "
+"комментариями, уведомлениями, друзьями и последователями."
 
 #: skylines/templates/about.jinja:20
 #, python-format
 msgid "Airport and Waypoint data is provided by the %(welt2000)s project."
 msgstr ""
-"Данные о аэропортах и контрольных точках предоставлены проектом %(welt2000)s."
+"Данные о аэропортах и контрольных точках предоставлены проектом "
+"%(welt2000)s."
 
 #: skylines/templates/about.jinja:25
 msgid "Current status"
@@ -426,15 +413,15 @@ msgstr "исходные коды доступны здесь"
 #: skylines/templates/about.jinja:37
 #, python-format
 msgid ""
-"If you think that something is missing or you think that you have found a "
-"bug please follow the instructions <a href=\"%(url)s\" "
+"If you think that something is missing or you think that you have found a"
+" bug please follow the instructions <a href=\"%(url)s\" "
 "target=\"_blank\">here</a> to write a feature request or bug report."
 msgstr ""
 "Если вам кажется, что чего-то нехватает или вы нашли ошибку, пожалуйста  "
-"воспользуйтесь <a href=\"%(url)s\" target=\"_blank\">инструкциями</a> чтобы "
-"зарегестрировать запрос новых возможностей или сообщение об ошибке."
+"воспользуйтесь <a href=\"%(url)s\" target=\"_blank\">инструкциями</a> "
+"чтобы зарегестрировать запрос новых возможностей или сообщение об ошибке."
 
-#: skylines/templates/base-page.jinja:28
+#: skylines/templates/base-page.jinja:28 skylines/templates/imprint.jinja:4
 msgid "Imprint"
 msgstr "Печать"
 
@@ -452,15 +439,17 @@ msgid "Live"
 msgstr "Вживую"
 
 #: skylines/templates/topbar.jinja:6 skylines/templates/topbar.jinja:107
-#: skylines/templates/clubs/list.jinja:20 skylines/templates/clubs/view.jinja:49
-#: skylines/templates/flights/list.jinja:26
-#: skylines/templates/ranking/airports.jinja:10
-#: skylines/templates/ranking/clubs.jinja:8
-#: skylines/templates/ranking/pilots.jinja:9
+#: skylines/templates/clubs/list.jinja:20
+#: skylines/templates/clubs/view.jinja:50
+#: skylines/templates/flights/list.jinja:27
+#: skylines/templates/ranking/airports.jinja:11
+#: skylines/templates/ranking/clubs.jinja:10
+#: skylines/templates/ranking/pilots.jinja:11
 #: skylines/templates/statistics/flights-table.jinja:6
-#: skylines/templates/statistics/years.jinja:61
+#: skylines/templates/statistics/years.jinja:62
 #: skylines/templates/users/users-table.jinja:26
-#: skylines/templates/users/view.jinja:150 skylines/templates/users/view.jinja:224
+#: skylines/templates/users/view.jinja:160
+#: skylines/templates/users/view.jinja:234
 msgid "Flights"
 msgstr "Полеты"
 
@@ -469,10 +458,11 @@ msgid "Ranking"
 msgstr "Рейтинг"
 
 #: skylines/templates/topbar.jinja:8 skylines/templates/topbar.jinja:108
-#: skylines/templates/clubs/list.jinja:21 skylines/templates/clubs/view.jinja:50
-#: skylines/templates/statistics/years.jinja:28
+#: skylines/templates/clubs/list.jinja:21
+#: skylines/templates/clubs/view.jinja:51
+#: skylines/templates/statistics/years.jinja:29
 #: skylines/templates/users/users-table.jinja:27
-#: skylines/templates/users/view.jinja:151
+#: skylines/templates/users/view.jinja:161
 msgid "Statistics"
 msgstr "Статистика"
 
@@ -496,7 +486,8 @@ msgstr "Забыли пароль?"
 msgid "Don't have an account?"
 msgstr "Еще не зарегистрированы?"
 
-#: skylines/templates/topbar.jinja:89 skylines/templates/notifications/list.jinja:7
+#: skylines/templates/topbar.jinja:89
+#: skylines/templates/notifications/list.jinja:8
 msgid "Notifications"
 msgstr "Уведомления"
 
@@ -504,37 +495,39 @@ msgstr "Уведомления"
 msgid "Logout"
 msgstr "Выйти"
 
-#: skylines/templates/clubs/list.jinja:3 skylines/templates/ranking/layout.jinja:16
+#: skylines/templates/clubs/list.jinja:5
+#: skylines/templates/ranking/layout.jinja:16
 msgid "Clubs"
 msgstr "Клубы"
 
-#: skylines/templates/clubs/list.jinja:10
-#: skylines/templates/flights/details-table.jinja:204
-#: skylines/templates/users/users-table.jinja:7
+#: skylines/templates/clubs/list.jinja:12
+#: skylines/templates/flights/details-table.jinja:205
+#: skylines/templates/users/users-table.jinja:9
 msgid "Actions"
 msgstr "Действия"
 
-#: skylines/templates/clubs/list.jinja:22 skylines/templates/clubs/view.jinja:51
+#: skylines/templates/clubs/list.jinja:22
+#: skylines/templates/clubs/view.jinja:52
 msgid "Members"
 msgstr "Участники"
 
-#: skylines/templates/clubs/pilots.jinja:6
+#: skylines/templates/clubs/pilots.jinja:7
 #, python-format
 msgid "Members <small>of %(club)s</small>"
 msgstr "Члены клуба <small>%(club)s</small>"
 
-#: skylines/templates/clubs/view.jinja:33
+#: skylines/templates/clubs/view.jinja:34
 msgid "Created"
 msgstr "Создан"
 
-#: skylines/templates/clubs/view.jinja:36
+#: skylines/templates/clubs/view.jinja:37
 #, python-format
 msgid "%(time_ago)s by %(creator)s"
 msgstr "%(time_ago)s by %(creator)s"
 
-#: skylines/templates/clubs/view.jinja:46
+#: skylines/templates/clubs/view.jinja:47
 #: skylines/templates/users/users-table.jinja:29
-#: skylines/templates/users/view.jinja:134
+#: skylines/templates/users/view.jinja:144
 msgid "Edit"
 msgstr "Изменить"
 
@@ -546,125 +539,132 @@ msgstr "Пилот отсутствует в списке?"
 msgid "Create new pilot"
 msgstr "Создать нового пилота"
 
-#: skylines/templates/flights/details-table.jinja:18
+#: skylines/templates/flights/details-table.jinja:19
 msgid "Spread the word"
 msgstr "Расскажите о нас"
 
-#: skylines/templates/flights/details-table.jinja:30
-#: skylines/templates/flights/flights-table.jinja:7
-#: skylines/templates/users/view.jinja:188
+#: skylines/templates/flights/details-table.jinja:33
+#: skylines/templates/flights/flights-table.jinja:8
+#: skylines/templates/users/view.jinja:198
 msgid "Date"
 msgstr "Дата"
 
-#: skylines/templates/flights/details-table.jinja:34
+#: skylines/templates/flights/details-table.jinja:37
 msgid "Share"
 msgstr "Поделиться"
 
-#: skylines/templates/flights/details-table.jinja:43
+#: skylines/templates/flights/details-table.jinja:46
 msgid "Take-off"
 msgstr "Взлет"
 
-#: skylines/templates/flights/details-table.jinja:47
-#: skylines/templates/flights/details-table.jinja:64
+#: skylines/templates/flights/details-table.jinja:50
+#: skylines/templates/flights/details-table.jinja:67
 #, python-format
 msgid "%(airport)s<br /> at %(time)s"
 msgstr "%(airport)s<br /> at %(time)s"
 
-#: skylines/templates/flights/details-table.jinja:60
+#: skylines/templates/flights/details-table.jinja:63
 msgid "Landing"
 msgstr "Посадка"
 
-#: skylines/templates/flights/details-table.jinja:76
+#: skylines/templates/flights/details-table.jinja:79
 #: skylines/templates/flights/phases-table.jinja:6
 #: skylines/templates/flights/phases-table.jinja:32
 #: skylines/templates/flights/phases-table.jinja:66
 msgid "Duration"
 msgstr "Длительность"
 
-#: skylines/templates/flights/details-table.jinja:84
-#: skylines/templates/flights/flights-table.jinja:13
+#: skylines/templates/flights/details-table.jinja:80
+#, fuzzy, python-format
+#| msgid "avg. %(hours)s hours per flight"
+msgid "%(hours)s hours"
+msgstr "в среднем %(hours)s часов за полет"
+
+#: skylines/templates/flights/details-table.jinja:85
+#: skylines/templates/flights/flights-table.jinja:14
 msgid "Aircraft"
 msgstr "Воздушное судно"
 
-#: skylines/templates/flights/details-table.jinja:88
-#: skylines/templates/flights/details-table.jinja:153
-#: skylines/templates/users/view.jinja:125
+#: skylines/templates/flights/details-table.jinja:89
+#: skylines/templates/flights/details-table.jinja:154
+#: skylines/templates/users/view.jinja:135
 msgid "Change"
 msgstr "Изменить"
 
-#: skylines/templates/flights/details-table.jinja:93
+#: skylines/templates/flights/details-table.jinja:94
 msgid "Handicap"
 msgstr "Гандикап"
 
-#: skylines/templates/flights/details-table.jinja:99
-#: skylines/templates/flights/flights-table.jinja:83
+#: skylines/templates/flights/details-table.jinja:100
+#: skylines/templates/flights/flights-table.jinja:76
 msgid "Unknown"
 msgstr "Неизвестно"
 
-#: skylines/templates/flights/details-table.jinja:123
-#: skylines/templates/flights/flights-table.jinja:8
+#: skylines/templates/flights/details-table.jinja:124
+#: skylines/templates/flights/flights-table.jinja:9
 msgid "Score"
 msgstr "Очки"
 
-#: skylines/templates/flights/details-table.jinja:125
-#: skylines/templates/ranking/airports.jinja:22
-#: skylines/templates/ranking/clubs.jinja:17
-#: skylines/templates/ranking/pilots.jinja:19
+#: skylines/templates/flights/details-table.jinja:126
+#: skylines/templates/ranking/airports.jinja:23
+#: skylines/templates/ranking/clubs.jinja:19
+#: skylines/templates/ranking/pilots.jinja:21
 #, python-format
 msgid "%(points)s pt"
 msgstr "%(points)s очков"
 
-#: skylines/templates/flights/details-table.jinja:128
+#: skylines/templates/flights/details-table.jinja:129
 msgid "OLC Distance"
 msgstr "Расстояние по OLC"
 
-#: skylines/templates/flights/details-table.jinja:133
+#: skylines/templates/flights/details-table.jinja:134
 msgid "FAI Triangle Distance"
 msgstr "Расстояние по треугольнику FAI"
 
-#: skylines/templates/flights/details-table.jinja:143
+#: skylines/templates/flights/details-table.jinja:144
 msgid "Speed"
 msgstr "Скорость"
 
-#: skylines/templates/flights/details-table.jinja:190
+#: skylines/templates/flights/details-table.jinja:191
 msgid "Uploaded"
 msgstr "Загружен"
 
-#: skylines/templates/flights/details-table.jinja:192
+#: skylines/templates/flights/details-table.jinja:193
 #, python-format
 msgid "%(upload_time)s<br/> by %(uploader)s"
 msgstr "%(upload_time)s<br/> пользователем %(uploader)s"
 
-#: skylines/templates/flights/details-table.jinja:198
+#: skylines/templates/flights/details-table.jinja:199
 msgid "Download"
 msgstr "Скачать"
 
-#: skylines/templates/flights/details-table.jinja:207
+#: skylines/templates/flights/details-table.jinja:208
 msgid "Delete"
 msgstr "Удалить"
 
-#: skylines/templates/flights/flights-table.jinja:10
+#: skylines/templates/flights/flights-table.jinja:11
 #: skylines/templates/flights/phases-table.jinja:34
 #: skylines/templates/flights/phases-table.jinja:68
 #: skylines/templates/statistics/distance-table.jinja:6
-#: skylines/templates/statistics/years.jinja:64
-#: skylines/templates/users/view.jinja:187 skylines/templates/users/view.jinja:228
+#: skylines/templates/statistics/years.jinja:65
+#: skylines/templates/users/view.jinja:197
+#: skylines/templates/users/view.jinja:238
 msgid "Distance"
 msgstr "Расстояние"
 
-#: skylines/templates/flights/flights-table.jinja:11
+#: skylines/templates/flights/flights-table.jinja:12
 msgid "Airport"
 msgstr "Аэропорт"
 
-#: skylines/templates/flights/flights-table.jinja:14
+#: skylines/templates/flights/flights-table.jinja:15
 msgid "Time"
 msgstr "Время"
 
-#: skylines/templates/flights/flights-table.jinja:103
+#: skylines/templates/flights/flights-table.jinja:96
 msgid "Show"
 msgstr "Показать"
 
-#: skylines/templates/flights/flights-table.jinja:111
+#: skylines/templates/flights/flights-table.jinja:104
 #, python-format
 msgid "%(num)d comment"
 msgid_plural "%(num)d comments"
@@ -672,39 +672,56 @@ msgstr[0] "%(num)d коментарий"
 msgstr[1] "%(num)d коментария"
 msgstr[2] "%(num)d коментариев"
 
-#: skylines/templates/flights/list.jinja:10
+#: skylines/templates/flights/list.jinja:11
 #, python-format
 msgid "Flights <small>of %(pilot)s</small>"
 msgstr "Полеты <small>пилота %(pilot)s</small>"
 
-#: skylines/templates/flights/list.jinja:14
+#: skylines/templates/flights/list.jinja:15
 #, python-format
 msgid "Flights <small>of %(club)s</small>"
 msgstr "Полеты <small>в клубе %(club)s</small>"
 
-#: skylines/templates/flights/list.jinja:18
+#: skylines/templates/flights/list.jinja:19
 #, python-format
 msgid "Flights <small>from %(airport)s</small>"
 msgstr "Полеты <small>из аэродрома %(airport)s</small>"
 
-#: skylines/templates/flights/list.jinja:22
+#: skylines/templates/flights/list.jinja:23
 #, python-format
 msgid "Flights <small>on %(date)s</small>"
 msgstr "Полеты <small>за %(date)s</small>"
 
-#: skylines/templates/flights/nav.jinja:6
+#: skylines/templates/flights/macros.jinja:5
+#, python-format
+msgid "%(distance)s on %(date)s <small>by %(pilot)s and %(co_pilot)s</small>"
+msgstr ""
+
+#: skylines/templates/flights/macros.jinja:12
+#, fuzzy, python-format
+#| msgid "Statistics <small>of %(pilot)s</small>"
+msgid "%(distance)s on %(date)s <small>by %(pilot)s</small>"
+msgstr "Статистика <small>по пилоту %(pilot)s</small>"
+
+#: skylines/templates/flights/macros.jinja:18
+#, fuzzy, python-format
+#| msgid "{distance} on {date}"
+msgid "%(distance)s on %(date)s"
+msgstr "{distance} за {date}"
+
+#: skylines/templates/flights/nav.jinja:8
 msgid "All Flights"
 msgstr "Все полеты"
 
-#: skylines/templates/flights/nav.jinja:23
+#: skylines/templates/flights/nav.jinja:25
 msgid "Today"
 msgstr "Сегодня"
 
-#: skylines/templates/flights/nav.jinja:60
+#: skylines/templates/flights/nav.jinja:62
 msgid "Unassigned Flights"
 msgstr "Неприписанные полеты"
 
-#: skylines/templates/flights/nav.jinja:65
+#: skylines/templates/flights/nav.jinja:67
 msgid "Pinned Flights"
 msgstr "Приколотые полеты"
 
@@ -745,49 +762,49 @@ msgstr "Фаза"
 msgid "Start"
 msgstr "Старт"
 
-#: skylines/templates/flights/view.jinja:125
-#: skylines/templates/tracking/view.jinja:158
+#: skylines/templates/flights/view.jinja:139
+#: skylines/templates/tracking/view.jinja:147
 msgid "Full-screen map"
 msgstr "Карта на полный экран"
 
-#: skylines/templates/flights/view.jinja:128
+#: skylines/templates/flights/view.jinja:142
 msgid "Activate this to show the flight on top of other flights on the map"
 msgstr "Нажмите сюда чтобы видеть этот полет поверх других на карте"
 
-#: skylines/templates/flights/view.jinja:133
+#: skylines/templates/flights/view.jinja:147
 msgid "Detailed statistics"
 msgstr "Детальная статистика"
 
-#: skylines/templates/flights/view.jinja:138
+#: skylines/templates/flights/view.jinja:152
 msgid "Comments"
 msgstr "Комментарии"
 
-#: skylines/templates/flights/view.jinja:154
+#: skylines/templates/flights/view.jinja:168
 msgid "No comments yet."
 msgstr "Комментариев пока нет."
 
-#: skylines/templates/flights/view.jinja:163
+#: skylines/templates/flights/view.jinja:177
 msgid "Add comment"
 msgstr "Добавить комментарий"
 
-#: skylines/templates/flights/view.jinja:177
+#: skylines/templates/flights/view.jinja:191
 msgid "An error occurred while decoding this flight."
 msgstr "Во время декодирования файла полета произошла ошибка."
 
-#: skylines/templates/flights/view.jinja:186
+#: skylines/templates/flights/view.jinja:200
 msgid "Circling performance"
 msgstr "Характеристика спиралей"
 
-#: skylines/templates/flights/view.jinja:186
-#: skylines/templates/flights/view.jinja:191
+#: skylines/templates/flights/view.jinja:200
+#: skylines/templates/flights/view.jinja:205
 msgid "summary"
 msgstr "сводка"
 
-#: skylines/templates/flights/view.jinja:191
+#: skylines/templates/flights/view.jinja:205
 msgid "Cruise performance"
 msgstr "Характеристики перелетов"
 
-#: skylines/templates/flights/view.jinja:198
+#: skylines/templates/flights/view.jinja:212
 msgid "Phases"
 msgstr "Фазы"
 
@@ -808,19 +825,19 @@ msgstr "Внимание!"
 msgid "Error!"
 msgstr "Ошибка!"
 
-#: skylines/templates/notifications/list.jinja:19
+#: skylines/templates/notifications/list.jinja:20
 msgid "Mark all as read"
 msgstr "Отметить все как прочитанные"
 
-#: skylines/templates/notifications/list.jinja:21
+#: skylines/templates/notifications/list.jinja:22
 msgid "You don't have any unread notifications."
 msgstr "Непрочитанных уведомлений нет"
 
 #: skylines/templates/notifications/notifications-table.jinja:68
 #, python-format
 msgid ""
-"<strong>%(pilot)s</strong> commented on your <strong>%(distance)s</strong> "
-"flight on the <strong>%(date)s</strong>."
+"<strong>%(pilot)s</strong> commented on your "
+"<strong>%(distance)s</strong> flight on the <strong>%(date)s</strong>."
 msgstr ""
 "<strong>%(pilot)s</strong> прокоментировал ваш полет на "
 "<strong>%(distance)s</strong> за <strong>%(date)s</strong>."
@@ -840,23 +857,23 @@ msgid ""
 "<strong>%(pilot)s</strong> uploaded <strong>%(num_flights)s</strong> new "
 "flights."
 msgstr ""
-"<strong>%(pilot)s</strong> добавил <strong>%(num_flights)s</strong> новых "
-"полета."
+"<strong>%(pilot)s</strong> добавил <strong>%(num_flights)s</strong> новых"
+" полета."
 
 #: skylines/templates/notifications/notifications-table.jinja:89
 #, python-format
 msgid "<strong>%(pilot)s</strong> is following you now."
 msgstr "<strong>%(pilot)s</strong> начал следить за вашими полетами."
 
-#: skylines/templates/ranking/airports.jinja:11
-#: skylines/templates/ranking/clubs.jinja:9
-#: skylines/templates/ranking/pilots.jinja:10
+#: skylines/templates/ranking/airports.jinja:12
+#: skylines/templates/ranking/clubs.jinja:11
+#: skylines/templates/ranking/pilots.jinja:12
 msgid "Total Score"
 msgstr "Общий результат"
 
 #: skylines/templates/ranking/layout.jinja:17
 #: skylines/templates/statistics/pilots-table.jinja:6
-#: skylines/templates/statistics/years.jinja:71
+#: skylines/templates/statistics/years.jinja:72
 msgid "Pilots"
 msgstr "Пилоты"
 
@@ -877,8 +894,8 @@ msgid "avg. %(distance)s per flight"
 msgstr "в среднем %(distance)s за полет"
 
 #: skylines/templates/statistics/duration-table.jinja:6
-#: skylines/templates/statistics/years.jinja:67
-#: skylines/templates/users/view.jinja:236
+#: skylines/templates/statistics/years.jinja:68
+#: skylines/templates/users/view.jinja:246
 msgid "Flight Time"
 msgstr "Время полёта"
 
@@ -887,25 +904,23 @@ msgstr "Время полёта"
 msgid "avg. %(hours)s hours per flight"
 msgstr "в среднем %(hours)s часов за полет"
 
-#: skylines/templates/statistics/years.jinja:13
+#: skylines/templates/statistics/years.jinja:14
 #, python-format
 msgid "Statistics <small>of %(pilot)s</small>"
 msgstr "Статистика <small>по пилоту %(pilot)s</small>"
 
-#: skylines/templates/statistics/years.jinja:18
+#: skylines/templates/statistics/years.jinja:19
 #, python-format
 msgid "Statistics <small>of %(club)s</small>"
 msgstr "Статистика <small>по клубу %(club)s</small>"
 
-#: skylines/templates/statistics/years.jinja:23
+#: skylines/templates/statistics/years.jinja:24
 #, python-format
 msgid "Statistics <small>from %(airport)s</small>"
 msgstr "Статистика <small>по аэродрому %(airport)s</small>"
 
 #: skylines/templates/tracking/info.jinja:4
-#: skylines/templates/tracking/list.jinja:8
-#: skylines/templates/tracking/map.jinja:14
-#: skylines/templates/tracking/view.jinja:14
+#: skylines/templates/tracking/list.jinja:9
 msgid "Live Tracking"
 msgstr "Живой трекинг"
 
@@ -915,19 +930,19 @@ msgstr "Что это?"
 
 #: skylines/templates/tracking/info.jinja:9
 msgid ""
-"SkyLines Live Tracking can be used to let others take part on your journeys "
-"while you're flying. It uses a very light-weight protocol that only "
-"transmits the necessary data and due to that it can also work in "
-"areas/altitudes where the reception isn't very good. To give you an example: "
-"A flight of 10 hours only uses about 340 KB of traffic when the positions "
-"are transmitted every 5 seconds!"
+"SkyLines Live Tracking can be used to let others take part on your "
+"journeys while you're flying. It uses a very light-weight protocol that "
+"only transmits the necessary data and due to that it can also work in "
+"areas/altitudes where the reception isn't very good. To give you an "
+"example: A flight of 10 hours only uses about 340 KB of traffic when the "
+"positions are transmitted every 5 seconds!"
 msgstr ""
-"Вы можете использовать трекинг Skylines чтобы остальные могли наблюдать за "
-"вашим путешествием, пока вы летаете. Он использует очень легкий протокол, "
-"передавая только самые необходимые данные, и поэтому он способен работать на "
-"высотах, где качество связи не очень высоко. Например: во время "
-"десятичасового полета используется только 340 КБ трафика, в то время как "
-"текущая позиция передается каждые 5 минут."
+"Вы можете использовать трекинг Skylines чтобы остальные могли наблюдать "
+"за вашим путешествием, пока вы летаете. Он использует очень легкий "
+"протокол, передавая только самые необходимые данные, и поэтому он "
+"способен работать на высотах, где качество связи не очень высоко. "
+"Например: во время десятичасового полета используется только 340 КБ "
+"трафика, в то время как текущая позиция передается каждые 5 минут."
 
 #: skylines/templates/tracking/info.jinja:12
 msgid "Clients"
@@ -955,7 +970,8 @@ msgstr "Ключ для живого трекинга"
 msgid "Your Live Tracking key is: %(key)s"
 msgstr "Ваш ключ живого трекинга: %(key)s"
 
-#: skylines/templates/tracking/info.jinja:28 skylines/templates/users/view.jinja:94
+#: skylines/templates/tracking/info.jinja:28
+#: skylines/templates/users/view.jinja:104
 msgid "Generate new key"
 msgstr "Сгенерировать новый ключ"
 
@@ -976,26 +992,22 @@ msgstr ""
 #, python-format
 msgid ""
 "In %(xcsoar)s, open the <em>Setup System</em> dialog, click on "
-"<em>Setup</em> and then <em>Tracking</em>.  Turn SkyLines tracking on, and "
-"enter your Live Tracking key."
+"<em>Setup</em> and then <em>Tracking</em>.  Turn SkyLines tracking on, "
+"and enter your Live Tracking key."
 msgstr ""
 "В %(xcsoar)s, откройте <em>Системные настройки</em>, нажмите на пункт "
-"<em>Установки</em>, затем на <em>Tracking</em>.  Включите трекинг SkyLines и "
-"введите свой ключ трекинга."
+"<em>Установки</em>, затем на <em>Tracking</em>.  Включите трекинг "
+"SkyLines и введите свой ключ трекинга."
 
-#: skylines/templates/tracking/list.jinja:21
+#: skylines/templates/tracking/list.jinja:22
 msgid "Last fix"
 msgstr "Последняя точка"
 
-#: skylines/templates/tracking/list.jinja:22
-msgid "Pilot / Traffic ID"
-msgstr "Пилот / Traffic ID"
-
-#: skylines/templates/tracking/list.jinja:23
+#: skylines/templates/tracking/list.jinja:24
 msgid "Nearest Airport"
 msgstr "Ближайший аэродром"
 
-#: skylines/templates/tracking/list.jinja:56
+#: skylines/templates/tracking/list.jinja:45
 msgid "How to use Live Tracking?"
 msgstr "Как пользоваться трекингом?"
 
@@ -1005,48 +1017,40 @@ msgstr "Как пользоваться трекингом?"
 msgid "Live Tracking <small>of %(pilot)s</small>"
 msgstr "Живой трекинг <small>пилота %(pilot)s</small>"
 
-#: skylines/templates/tracking/map.jinja:120
-#: skylines/templates/tracking/view.jinja:174
+#: skylines/templates/tracking/map.jinja:125
+#: skylines/templates/tracking/view.jinja:163
 msgid "There is no live track of this pilot currently."
 msgstr "У этого пилота в настоящий момент нет живих треков."
 
-#: skylines/templates/tracking/view.jinja:124
+#: skylines/templates/tracking/view.jinja:130
 msgid "This pilot chose to delay the display of his live tracks."
 msgstr "Этот пилот решил показывать полет вживую с задержкой."
 
-#: skylines/templates/tracking/view.jinja:124
+#: skylines/templates/tracking/view.jinja:130
 msgid "Delay"
 msgstr "Задержка"
 
-#: skylines/templates/tracking/view.jinja:130
-msgid ""
-"The live tracking delay is ignored because of your account privileges."
+#: skylines/templates/tracking/view.jinja:136
+msgid "The live tracking delay is ignored because of your account privileges."
 msgstr ""
-"Установленная задержка трекинга не учитывается в связи с привилегиями вашей "
-"учетной записи."
+"Установленная задержка трекинга не учитывается в связи с привилегиями "
+"вашей учетной записи."
 
-#: skylines/templates/tracking/view.jinja:130
+#: skylines/templates/tracking/view.jinja:136
 msgid "ignored"
 msgstr "игнорируется"
 
-#: skylines/templates/tracking/view.jinja:138
-msgid "Flarm ID"
-msgstr "Flarm ID"
-
-#: skylines/templates/tracking/view.jinja:146
-msgid "ICAO ID"
-msgstr "Код ICAO"
-
-#: skylines/templates/tracking/view.jinja:164
+#: skylines/templates/tracking/view.jinja:153
 msgid "Your Live Tracking settings"
 msgstr "Настройки трекинга"
 
 #: skylines/templates/upload/result.jinja:10
 msgid ""
-"Your flights have been saved. You may want to change the flights aircraft "
-"types and registrations below."
+"Your flights have been saved. You may want to change the flights aircraft"
+" types and registrations below."
 msgstr ""
-"Ваши полеты сохранены. Ниже Вы можете изменить типы Л/А и номера регистрации."
+"Ваши полеты сохранены. Ниже Вы можете изменить типы Л/А и номера "
+"регистрации."
 
 #: skylines/templates/upload/result.jinja:13
 #: skylines/templates/upload/result.jinja:69
@@ -1101,54 +1105,70 @@ msgstr "Пользователи"
 msgid "Register"
 msgstr "Зарегистрироваться"
 
-#: skylines/templates/users/view.jinja:77
+#: skylines/templates/users/view.jinja:87
 msgid "Email"
 msgstr "Адрес эл. почты"
 
-#: skylines/templates/users/view.jinja:89
+#: skylines/templates/users/view.jinja:99
 msgid "Tracking key"
 msgstr "Ключ трэкинга"
 
-#: skylines/templates/users/view.jinja:92
+#: skylines/templates/users/view.jinja:102
 msgid "More Information"
 msgstr "Дополнительная информация"
 
-#: skylines/templates/users/view.jinja:100
+#: skylines/templates/users/view.jinja:110
 msgid "Tracking delay"
 msgstr "Задержка трекинга"
 
-#: skylines/templates/users/view.jinja:121
+#: skylines/templates/users/view.jinja:131
 msgid "Unspecified"
 msgstr "Не задано"
 
-#: skylines/templates/users/view.jinja:144
+#: skylines/templates/users/view.jinja:154
 msgid "Unfollow"
 msgstr "Отписаться"
 
-#: skylines/templates/users/view.jinja:146
+#: skylines/templates/users/view.jinja:156
 msgid "Follow"
 msgstr "Подписаться"
 
-#: skylines/templates/users/view.jinja:157
+#: skylines/templates/users/view.jinja:167
 msgid "Following"
 msgstr "Подписан"
 
-#: skylines/templates/users/view.jinja:170
+#: skylines/templates/users/view.jinja:180
 msgid "Followers"
 msgstr "Подписчики"
 
-#: skylines/templates/users/view.jinja:183
+#: skylines/templates/users/view.jinja:193
 msgid "Distance Flights"
 msgstr "Полеты на дистанцию"
 
-#: skylines/templates/users/view.jinja:215
+#: skylines/templates/users/view.jinja:225
 msgid "Last 12 Months"
 msgstr "Последние 12 месяцев"
 
-#: skylines/templates/users/view.jinja:244
+#: skylines/templates/users/view.jinja:254
 msgid "Average Speed"
 msgstr "Средняя скорость"
 
-#: skylines/templates/users/view.jinja:254
+#: skylines/templates/users/view.jinja:264
 msgid "Takeoff Locations"
 msgstr "Места взлета"
+
+#~ msgid "{something} by {pilot_name}"
+#~ msgstr "{something}: {pilot_name}"
+
+#~ msgid "{something} by {pilot_name} and {co_pilot_name}"
+#~ msgstr "{something}: {pilot_name} и {co_pilot_name}"
+
+#~ msgid "Pilot / Traffic ID"
+#~ msgstr "Пилот / Traffic ID"
+
+#~ msgid "Flarm ID"
+#~ msgstr "Flarm ID"
+
+#~ msgid "ICAO ID"
+#~ msgstr "Код ICAO"
+
