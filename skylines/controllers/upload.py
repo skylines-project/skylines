@@ -149,6 +149,11 @@ class UploadController(BaseController):
             igc_file.md5 = md5
             igc_file.update_igc_headers()
 
+            if igc_file.date_utc is None:
+                files.delete_file(filename)
+                flights.append((name, None, _('Date missing in IGC file')))
+                continue
+
             flight = Flight()
             flight.pilot_id = pilot_id
             flight.club_id = club_id
