@@ -310,7 +310,8 @@ class FlightsController(BaseController):
                                          IGCFile.logger_id == None,
                                          IGCFile.model == None,
                                          IGCFile.registration == None,
-                                         IGCFile.competition_id == None))
+                                         IGCFile.competition_id == None,
+                                         IGCFile.date_utc == None))
 
         for igc_file in igc_files:
             igc_file.update_igc_headers()

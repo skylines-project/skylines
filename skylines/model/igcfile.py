@@ -5,7 +5,7 @@ import re
 from sqlalchemy import ForeignKey, Column, func
 from sqlalchemy.orm import relation
 from sqlalchemy.sql.expression import desc, and_
-from sqlalchemy.types import Integer, DateTime, String, Unicode
+from sqlalchemy.types import Integer, DateTime, String, Unicode, Date
 from skylines.lib.igc import read_igc_headers
 from skylines.model.base import DeclarativeBase
 from skylines.model.session import DBSession
@@ -29,6 +29,8 @@ class IGCFile(DeclarativeBase):
     registration = Column(Unicode(32))
     competition_id = Column(Unicode(5))
     model = Column(Unicode(64))
+
+    date_utc = Column(Date)
 
     def __repr__(self):
         return ('<IGCFile: id=%d filename=\'%s\'>' % (self.id, self.filename)).encode('utf-8')
@@ -59,6 +61,9 @@ class IGCFile(DeclarativeBase):
 
         if 'logger_id' in igc_headers:
             self.logger_id = igc_headers['logger_id']
+
+        if 'date_utc' in igc_headers:
+            self.date_utc = igc_headers['date_utc']
 
         if 'model' in igc_headers and 0 < len(igc_headers['model']) < 64:
             self.model = igc_headers['model']
