@@ -23,19 +23,15 @@ def read_igc_headers(filename):
         return None
 
     igc_headers = dict()
-    a_record_found = False
 
     for i, line in enumerate(f):
-        if not a_record_found:
-            if line[0] != 'A' or len(line) < 4:
-                # if the first record of the file is not an
-                # A record the IGC file is broken
-                return None
+        if line[0] == 'A':
+            length = len(line)
 
-            a_record_found = True
-            igc_headers['manufacturer_id'] = line[1:4]
+            if length >= 4:
+                igc_headers['manufacturer_id'] = line[1:4]
 
-            if len(line) >= 7:
+            if length >= 7:
                 igc_headers['logger_id'] = parse_logger_id(line)
 
         if line.startswith('HFDTE'):
