@@ -283,7 +283,10 @@ def add_airspace(country_code, airspace_class, name, base, top, geom_str):
         print name + " has no airspace class"
         return False
 
-    flightlevel_re = re.compile(r'^FL\s?(\d*)$')
+    base = normalise_height(base, name)
+    top = normalise_height(top, name)
+
+    flightlevel_re = re.compile(r'^FL (\d+)$')
     match = flightlevel_re.match(base)
     if match and int(match.group(1)) >= 100:
         print name + " has it's base above FL 100 and is therefore disregarded"
@@ -301,6 +304,44 @@ def add_airspace(country_code, airspace_class, name, base, top, geom_str):
     DBSession.add(airspace)
 
     return True
+
+
+msl_re = re.compile(r'^(\d+)\s?(f|ft|m)?\s?([a]?msl|asl)$')
+flightlevel_re = re.compile(r'^fl\s?(\d+)$')
+agl_re = re.compile(r'^(\d+)\s?(f|ft|m)?\s?(agl|gnd|asfc|sfc)$')
+unl_re = re.compile(r'^unl(td)?$')
+
+def normalise_height(height, name):
+    height = height.lower().strip()
+
+    # is it GND or SFC?
+    if re.search('^(gnd|sfc|msl)$', height): return 'GND'
+
+    # is it a flightlevel?
+    match = flightlevel_re.match(height)
+    if match: return 'FL {0}'.format(int(match.group(1)))
+
+    # is it AGL?
+    match = agl_re.match(height)
+    if match and match.group(2) == 'm':
+        return '{0} AGL'.format((int(match.group(1))*3.2808399))
+    elif match:
+        return '{0} AGL'.format(int(match.group(1)))
+
+    # is it MSL?
+    match = msl_re.match(height)
+    if match and match.group(2) == 'm':
+        return '{0} MSL'.format(int(match.group(1))*3.2808399)
+    elif match:
+        return '{0} MSL'.format(int(match.group(1)))
+
+    # is it unlimited?
+    match = unl_re.match(height)
+    if match:
+        return 'FL 999'
+
+    print name + " has unknown height format: '" + height + "'"
+    return height
 
 
 if __name__ == '__main__':
