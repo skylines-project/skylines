@@ -99,7 +99,7 @@ MAP
       LABEL
         COLOR  0 0 0
         OUTLINECOLOR 255 255 255
-        OUTLINEWIDTH 2
+        OUTLINEWIDTH 1
         FONT "sans"
         TYPE truetype
         SIZE 7
