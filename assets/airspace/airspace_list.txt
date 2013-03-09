@@ -4,20 +4,20 @@
 # 2-letter-country-code openair/sua url
 
 cz openair http://soaringweb.org/Airspace/CZ/CZ2012.txt
-de openair http://www.daec.de/fileadmin/user_upload/files/2012/service/luftraumdaten/120531OpenAir.txt
+de openair http://www.daec.de/fileadmin/user_upload/files/2012/fachbereiche/luftraum/20130307_OpenAir.txt
 at openair http://www.austrocontrol.at/jart/prj3/austro_control/data/uploads/austria_ATS_2011_openair.txt
 be openair http://www.zweefvliegen.be/index.php/secretariaat/documenten/doc_view/322-bellux-week-120112
-fr openair http://s289271336.onlinehome.fr/dossiers_ffvv/files/120703__AIRSPACE_France2012-07.txt
+fr openair http://soaringweb.org/Airspace/FR/121009__AIRSPACE_France2012-10.txt
 nl openair http://www.gliderpilotshop.nl/documents/EHv12_3d.txt
 hu openair http://soaringweb.org/Airspace/HU/Hungary_2012.txt
 sk openair http://soaringweb.org/Airspace/SK/SK2012.txt
-uk openair http://soaringweb.org/Airspace/UK/WPLTAS181012.txt
-ch openair http://soaringweb.org/Airspace/CH/ch_201103.txt
+uk openair http://soaringweb.org/Airspace/UK/WPLTAS070313.txt
+ch openair http://soaringweb.org/Airspace/CH/CH-Luftraum_2013_03_07.txt
 es openair http://soaringweb.org/Airspace/ES/SUASpain201209.txt
-pl openair http://soaringweb.org/Airspace/PL/18_OCT_2012_Polska.txt
+pl openair http://soaringweb.org/Airspace/PL/07_MAR_2013_Polska.txt
 no openair http://soaringweb.org/Airspace/NO/NO.txt
 dk sua http://soaringweb.org/Airspace/DK/DK-TNP-AllinOne-2012-v4.1.sua
-us openair http://user.xmission.com/~lalley/aviation/countHits.php?count=oaCount&file=allusa.v12.11-15.1.txt
+us openair http://user.xmission.com/~lalley/aviation/countHits.php?count=oaCount&file=allusa.v13.03-07.2.txt
 za openair http://soaringweb.org/Airspace/ZA/SAGlidingAirsp-10102011_v1.22.txt
 au openair http://soaringweb.org/Airspace/AU/australia.txt
 ca openair http://soaringweb.org/Airspace/NA/CA_2012_05a.txt
