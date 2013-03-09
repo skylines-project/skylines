@@ -219,10 +219,6 @@ var GraphicLayerSwitcher = OpenLayers.Class(OpenLayers.Control, {
   onInputClick: function(e) {
     if (this.layer.isBaseLayer) {
       this.layer.map.setBaseLayer(this.layer);
-
-      $('.GraphicLayerSwitcher.box').hide();
-      $('.GraphicLayerSwitcher.current').show();
-
     } else {
       this.layer.setVisibility(!this.layer.getVisibility());
     }
