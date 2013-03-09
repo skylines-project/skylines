@@ -1,6 +1,6 @@
 services:
   tms:
-    expires_hours: 48
+    origin: 'nw'
 #  wms:
 #    srs: ['EPSG:3857'] #, 'EPSG:900913']
 #    image_formats: ['image/png']
@@ -95,3 +95,6 @@ globals:
   #     # shrink cached images up to this factor before
   #     # returning an empty image (for the first level)
   #     max_shrink_factor: 4.0
+
+  tiles:
+    expires_hours: 48

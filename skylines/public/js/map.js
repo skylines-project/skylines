@@ -78,7 +78,7 @@ function addAirspaceLayers(airspace_tile_url) {
   if (!airspace_tile_url) airspace_tile_url = "";
 
   var airspace = new OpenLayers.Layer.XYZ("Airspace",
-    airspace_tile_url + "/mapproxy/tiles/1.0.0/airspace/${z}/${x}/${y}.png?origin=nw", {
+    airspace_tile_url + "/mapproxy/tiles/1.0.0/airspace/${z}/${x}/${y}.png", {
     isBaseLayer: false,
     transparent: true,
     'visibility': true,
