@@ -124,15 +124,14 @@ def import_sua(filename, country_code):
         if not feature:
             continue
 
-        geom_str = "POLYGON" + str(feature.geometry())[8:]
         name = unicode(feature.GetFieldAsString('title'), 'latin1').strip()
+
+        if name in country_blacklist:
+            print name + " is in blacklist"
+            continue
+
         airspace_class = feature.GetFieldAsString('class').strip()
         airspace_type = parse_airspace_type(feature.GetFieldAsString('type').strip())
-
-        # this is a real kludge to determine if the polygon has more than 3 points...
-        if (geom_str.count(',') < 3):
-            print name + "(" + airspace_class + ") has not enough points to be a polygon"
-            continue
 
         if not airspace_class:
             if airspace_type:
@@ -141,23 +140,21 @@ def import_sua(filename, country_code):
                 print name + " has neither class nor type"
                 continue
 
-        if name in country_blacklist:
-            print name + " is in blacklist"
-            continue
+        added = add_airspace(
+            country_code,
+            airspace_class,
+            name,
+            feature.GetFieldAsString('base'),
+            feature.GetFieldAsString('tops'),
+            "POLYGON" + str(feature.geometry())[8:])
 
-        airspace = Airspace()
-        airspace.country_code = country_code
-        airspace.airspace_class = airspace_class
-        airspace.name = name
-        airspace.base = feature.GetFieldAsString('base')
-        airspace.top = feature.GetFieldAsString('tops')
-        airspace.the_geom = WKTSpatialElement(geom_str)
+        if not added:
+            continue
 
         if i%100 == 0:
             print "inserting geometry " + str(i)
 
         j += 1
-        DBSession.add(airspace)
 
     airspace_file.Destroy()
     DBSession.flush()
@@ -188,36 +185,27 @@ def import_openair(filename, country_code):
         if not feature:
             continue
 
-        geom_str = "POLYGON" + str(feature.geometry())[8:]
         name = unicode(feature.GetFieldAsString('name'), 'latin1').strip()
-        airspace_class = feature.GetFieldAsString('class').strip()
-
-        # this is a real kludge to determine if the polygon has more than 3 points...
-        if (geom_str.count(',') < 3):
-            print name + "(" + airspace_class + ") has not enough points to be a polygon"
-            continue
-
-        if not airspace_class:
-            print name + " has no airspace class"
-            continue
 
         if name in country_blacklist:
             print name + " is in blacklist"
             continue
 
-        airspace = Airspace()
-        airspace.country_code = country_code
-        airspace.airspace_class = airspace_class
-        airspace.name = name
-        airspace.base = feature.GetFieldAsString('floor')
-        airspace.top = feature.GetFieldAsString('ceiling')
-        airspace.the_geom = WKTSpatialElement(geom_str)
+        added = add_airspace(
+            country_code,
+            feature.GetFieldAsString('class').strip(),
+            name,
+            feature.GetFieldAsString('floor'),
+            feature.GetFieldAsString('ceiling'),
+            "POLYGON" + str(feature.geometry())[8:])
+
+        if not added:
+            continue
 
         if i%100 == 0:
             print "inserting geometry " + str(i)
 
         j += 1
-        DBSession.add(airspace)
 
     airspace_file.Destroy()
     DBSession.flush()
@@ -282,6 +270,30 @@ def parse_airspace_type(airspace_type):
     if re.search('MATZ', airspace_type): return 'W'
 
     return None
+
+
+def add_airspace(country_code, airspace_class, name, base, top, geom_str):
+
+    # this is a real kludge to determine if the polygon has more than 3 points...
+    if (geom_str.count(',') < 3):
+        print name + "(" + airspace_class + ") has not enough points to be a polygon"
+        return False
+
+    if not airspace_class:
+        print name + " has no airspace class"
+        return False
+
+    airspace = Airspace()
+    airspace.country_code = country_code
+    airspace.airspace_class = airspace_class
+    airspace.name = name
+    airspace.base = base
+    airspace.top = top
+    airspace.the_geom = WKTSpatialElement(geom_str)
+
+    DBSession.add(airspace)
+
+    return True
 
 
 if __name__ == '__main__':
