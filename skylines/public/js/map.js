@@ -87,7 +87,8 @@ function addAirspaceLayers(airspace_tile_url) {
   map.addLayer(airspace);
 
   map.events.register('changebaselayer', this, function(data) {
-    airspace.setVisibility(!data.layer.options.hideAirspaceOverlay);
+    if (data.layer.hideAirspaceOverlay)
+      airspace.setVisibility(false);
   });
 }
 
