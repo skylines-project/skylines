@@ -52,8 +52,7 @@ var GraphicLayerSwitcher = OpenLayers.Class(OpenLayers.Control, {
         var layer = this.map.layers[i];
         if ( (layerState.name != layer.name) ||
              (layerState.inRange != layer.inRange) ||
-             (layerState.id != layer.id) ||
-             ((layerState.visibility != layer.visibility) && layer.isBaseLayer) ) {
+             (layerState.id != layer.id) ) {
           redraw = true;
           break;
         }
