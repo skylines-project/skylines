@@ -83,28 +83,28 @@ js-bootstrap:
 css-fontawesome:
     output: css/fontawesome-%(version)s.css
     contents:
-        - https://raw.github.com/FortAwesome/Font-Awesome/2.0.0/css/font-awesome.css
+        - https://raw.github.com/FortAwesome/Font-Awesome/v3.0.2/css/font-awesome.css
         - css/font-awesome.css
 
 fontawesome-webfont.eot:
     output: font/fontawesome-webfont.eot
     contents:
-        - https://raw.github.com/FortAwesome/Font-Awesome/2.0.0/font/fontawesome-webfont.eot
+        - https://github.com/FortAwesome/Font-Awesome/blob/v3.0.2/font/fontawesome-webfont.eot?raw=true
 
 fontawesome-webfont.woff:
     output: font/fontawesome-webfont.woff
     contents:
-        - https://raw.github.com/FortAwesome/Font-Awesome/2.0.0/font/fontawesome-webfont.woff
+        - https://github.com/FortAwesome/Font-Awesome/blob/v3.0.2/font/fontawesome-webfont.woff?raw=true
 
 fontawesome-webfont.ttf:
     output: font/fontawesome-webfont.ttf
     contents:
-        - https://raw.github.com/FortAwesome/Font-Awesome/2.0.0/font/fontawesome-webfont.ttf
+        - https://github.com/FortAwesome/Font-Awesome/blob/v3.0.2/font/fontawesome-webfont.ttf?raw=true
 
 fontawesome-webfont.svg:
     output: font/fontawesome-webfont.svg
     contents:
-        - https://raw.github.com/FortAwesome/Font-Awesome/2.0.0/font/fontawesome-webfont.svg
+        - https://raw.github.com/FortAwesome/Font-Awesome/v3.0.2/font/fontawesome-webfont.svg
 
 ##########
 #  Flot  #
