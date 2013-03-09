@@ -105,72 +105,53 @@ var GraphicLayerSwitcher = OpenLayers.Class(OpenLayers.Control, {
     for (var i = 0; i < layers.length; i++) {
       var layer = layers[i];
       var baseLayer = layer.isBaseLayer;
+      var id = this.id + '_input_' + layer.name.replace(/ /g, '_');
 
-      if (layer.displayInLayerSwitcher && baseLayer) {
+      if (layer.displayInLayerSwitcher) {
         // populate base layer box
-        var on = (layer == this.map.baseLayer);
-        var id = this.id + '_input_' + layer.name.replace(/ /g, '_');
+        var on;
+        if (baseLayer) on = (layer == this.map.baseLayer);
+        else on = layer.getVisibility();
 
         var layer_image = '../../images/layers/' + layer.name +
           (on ? '.png' : '.bw.png');
 
-        var base_item = $(
+        var item = $(
           "<a id='" + id + "' href='#'>" +
             "<img src='" + layer_image + "' />" +
             layer.name +
           "</a><br />");
 
         if (on) {
-
-          base_item.addClass('active');
-
+          item.addClass('active');
         }
         
-        base_item.on('click touchend', $.proxy(this.onInputClick, {'layer': layer}));
+        item.on('click touchend', $.proxy(this.onInputClick, {'layerSwitcher': this, 'layer': layer}));
 
-        base_item.on('mouseover touchstart', $.proxy(function() {
-          if (this.name != this.active) {
-            $('#' + this.id).find('img').attr('src', '../../images/layers/' + this.name + '.png');
+        if (baseLayer) {
+          item.on('mouseover touchstart', $.proxy(function() {
+            if (this.layer != this.map.baseLayer) {
+              $('#' + this.id).find('img').attr('src', '../../images/layers/' + this.layer.name + '.png');
 
-            $('.GraphicLayerSwitcher.base .active').find('img')
-              .attr('src', '../../images/layers/' + this.active + '.bw.png');
-          }
-        }, { id: id, name: layer.name, active: this.map.baseLayer.name }));
+              $('.GraphicLayerSwitcher.base .active').find('img')
+              .attr('src', '../../images/layers/' + this.map.baseLayer.name + '.bw.png');
+            }
+          }, { id: id, layer: layer, map: this.map}));
 
-        base_item.on('mouseout touchend', $.proxy(function() {
-          if (this.name != this.active) {
-            $('#' + this.id).find('img').attr('src', '../../images/layers/' + this.name + '.bw.png');
+          item.on('mouseout touchend', $.proxy(function() {
+            if (this.layer != this.map.baseLayer) {
+              $('#' + this.id).find('img').attr('src', '../../images/layers/' + this.layer.name + '.bw.png');
 
-            $('.GraphicLayerSwitcher.base .active').find('img')
-              .attr('src', '../../images/layers/' + this.active + '.png');
-          }
-        }, { id: id, name: layer.name, active: this.map.baseLayer.name }));
+              $('.GraphicLayerSwitcher.base .active').find('img')
+                .attr('src', '../../images/layers/' + this.map.baseLayer.name + '.png');
+            }
+          }, { id: id, layer: layer, map: this.map }));
 
-        base_layers.append(base_item);
-
-      } else if (layer.displayInLayerSwitcher) {
-        // populate overlay layer box
-        var on = layer.getVisibility();
-
-        var id = this.id + '_input_' + layer.name.replace(/ /g, '_');
-        var layer_image = '../../images/layers/' + layer.name +
-          (on ? '.png' : '.bw.png');
-
-        var overlay_item = $(
-          "<a id='" + id + "' href='#'>" +
-            "<img src='" + layer_image + "' />" +
-            layer.name +
-          "</a><br />");
-
-        if (on) {
-          overlay_item.addClass('active');
+          base_layers.append(item);
+        } else {
+          overlay_layers.append(item);
         }
 
-        overlay_item.on('click touchend', $.proxy(
-          this.onOverlayClick, {'layer': layer, 'id': id}
-        ));
-
-        overlay_layers.append(overlay_item);
       }
     }
 
@@ -209,31 +190,49 @@ var GraphicLayerSwitcher = OpenLayers.Class(OpenLayers.Control, {
     return this.div;
   },
 
-  onOverlayClick: function(e) {
-    this.layer.setVisibility(!this.layer.getVisibility());
+  updateLayerItems: function() {
+    for (var i = 0; i < this.map.layers.length; i++) {
+      var layer = this.map.layers[i];
+      var baseLayer = layer.isBaseLayer;
 
-    var layer_image = '../../images/layers/' + this.layer.name +
-      (this.layer.getVisibility() ? '.png' : '.bw.png');
+      var id = this.id + '_input_' + layer.name.replace(/ /g, '_');
 
-    $('#' + this.id).find('img').attr('src', layer_image);
-    $('#' + this.id).toggleClass('active');
-    OpenLayers.Event.stop(e);
+      if (layer.displayInLayerSwitcher) {
+        // populate base layer box
+        var on;
+        if (baseLayer) on = (layer == this.map.baseLayer);
+        else on = layer.getVisibility();
+
+        var layer_image = '../../images/layers/' + layer.name +
+          (on ? '.png' : '.bw.png');
+
+        $('#' + id).find('img').attr('src', layer_image);
+
+        if (on) {
+          $('#' + id).addClass('active');
+        } else {
+          $('#' + id).removeClass('active');
+        }
+      }
+    }
   },
 
   onInputClick: function(e) {
     if (this.layer.isBaseLayer) {
       this.layer.map.setBaseLayer(this.layer);
+
+      $('.GraphicLayerSwitcher.box').hide();
+      $('.GraphicLayerSwitcher.current').show();
+
     } else {
       this.layer.setVisibility(!this.layer.getVisibility());
     }
 
-    $('.GraphicLayerSwitcher.box').hide();
-    $('.GraphicLayerSwitcher.current').show();
+    this.layerSwitcher.updateLayerItems();
     OpenLayers.Event.stop(e);
   },
 
   updateMap: function() {
-
     // set the newly selected base layer
     for(var i=0, len=this.baseLayers.length; i<len; i++) {
       var layerEntry = this.baseLayers[i];
@@ -247,7 +246,6 @@ var GraphicLayerSwitcher = OpenLayers.Class(OpenLayers.Control, {
       var layerEntry = this.dataLayers[i];
       layerEntry.layer.setVisibility(layerEntry.inputElem.checked);
     }
-
   },
 
   loadContents: function() {
