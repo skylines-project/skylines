@@ -86,7 +86,8 @@ function initFlightLayer() {
     }),
     rendererOptions: {
         zIndexing: true
-    }
+    },
+    displayInLayerSwitcher: false
   });
 
   map.addLayer(flightPathLayer);
