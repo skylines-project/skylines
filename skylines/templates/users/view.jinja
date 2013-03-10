@@ -47,7 +47,9 @@
     addBingLayers("{{ config.get('skylines.bing.api_key', 'null') }}");
     addReliefLayer();
 
-    var vectorLayer = new OpenLayers.Layer.Vector("Takeoff Locations");
+    var vectorLayer = new OpenLayers.Layer.Vector("Takeoff Locations"{
+      displayInLayerSwitcher: false
+    });
     map.addLayer(vectorLayer);
 
     var locations = [{{ add_locations(takeoff_locations) }}];
