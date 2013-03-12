@@ -1,7 +1,7 @@
 // add leading zeros to a number
 function pad(num, size) {
-  var s = "000000000" + num;
-  return s.substr(s.length-size);
+  var s = '000000000' + num;
+  return s.substr(s.length - size);
 }
 
 /**
@@ -19,7 +19,7 @@ function pinFlight(sfid) {
   }
 
   pinnedFlights.push(sfid);
-  $.cookie('SkyLines_pinnedFlights', pinnedFlights.join(","), { path: "/" });
+  $.cookie('SkyLines_pinnedFlights', pinnedFlights.join(','), { path: '/' });
 
   // show pinned flights link in list view if found in DOM
   showPinnedFlightsLink();
@@ -41,7 +41,7 @@ function unpinFlight(sfid) {
     if (pinnedFlights[i] != sfid) temp.push(pinnedFlights[i]);
   }
 
-  $.cookie('SkyLines_pinnedFlights', temp.join(","), { path: "/" });
+  $.cookie('SkyLines_pinnedFlights', temp.join(','), { path: '/' });
 
   // toggle the pinned flights link in list view if found in DOM
   showPinnedFlightsLink();
@@ -60,7 +60,7 @@ function getPinnedFlights() {
   var cookie = $.cookie('SkyLines_pinnedFlights');
 
   if (cookie) {
-    var pinnedFlights = cookie.split(",");
+    var pinnedFlights = cookie.split(',');
 
     for (var i = 0; i < pinnedFlights.length; i++) {
       pinnedFlights[i] = parseInt(pinnedFlights[i]);
@@ -110,7 +110,7 @@ function pinButton(element, sfid) {
   };
 
   // initial setting
-  element.addClass("btn");
+  element.addClass('btn');
   if (!isPinnedFlight(sfid)) {
     element.html("<i class='icon-star-empty icon-large'></i> Click to pin");
   } else {
@@ -145,7 +145,7 @@ function getShareUrl(url) {
     }
   }
 
-  return url_split[1] + "/" + unique_ids.join(',') + "/" + url_split[3];
+  return url_split[1] + '/' + unique_ids.join(',') + '/' + url_split[3];
 }
 
 /**

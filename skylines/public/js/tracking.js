@@ -5,7 +5,7 @@
  */
 function updateFlightsFromJSON() {
   for (fid in flights) {
-    var url = "/tracking/" + flights[fid].sfid + "/json";
+    var url = '/tracking/' + flights[fid].sfid + '/json';
 
     $.ajax(url, {
       data: { last_update: flights[fid].last_update || null },
@@ -13,13 +13,13 @@ function updateFlightsFromJSON() {
         updateFlight(data.sfid, data.encoded.points, data.encoded.levels,
                      data.num_levels, data.barogram_t, data.barogram_h, data.enl);
 
-        initRedrawLayer(map.getLayersByName("Flight")[0]);
+        initRedrawLayer(map.getLayersByName('Flight')[0]);
         updateFlotScale();
         updateFlotData();
       }
     });
   }
-};
+}
 
 /**
  * Function: updateFlight
@@ -53,7 +53,7 @@ function updateFlight(tracking_id, _lonlat, _levels, _num_levels, _time, _height
   var points = new Array();
   for (var i = 1, len = lonlat.length; i < len; i++) {
     points.push(new OpenLayers.Geometry.Point(lonlat[i].lon, lonlat[i].lat).
-      transform(new OpenLayers.Projection("EPSG:4326"), map.getProjectionObject()) );
+      transform(new OpenLayers.Projection('EPSG:4326'), map.getProjectionObject()));
   }
 
   // find the flight to update
@@ -94,4 +94,4 @@ function updateFlight(tracking_id, _lonlat, _levels, _num_levels, _time, _height
   flight.last_update = flight.t[flight.t.length - 1];
 
   setTime(global_time);
-};
+}

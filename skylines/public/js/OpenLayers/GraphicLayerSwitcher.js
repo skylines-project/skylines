@@ -11,12 +11,12 @@ var GraphicLayerSwitcher = OpenLayers.Class(OpenLayers.Control, {
   destroy: function() {
     OpenLayers.Event.stopObservingElement(this.div);
 
-    //clear out layers info and unregister their events 
+    //clear out layers info and unregister their events
     this.map.events.un({
-      "addlayer": this.redraw,
-      "changelayer": this.redraw,
-      "removelayer": this.redraw,
-      "changebaselayer": this.redraw,
+      'addlayer': this.redraw,
+      'changelayer': this.redraw,
+      'removelayer': this.redraw,
+      'changebaselayer': this.redraw,
       scope: this
     });
     OpenLayers.Control.prototype.destroy.apply(this, arguments);
@@ -26,10 +26,10 @@ var GraphicLayerSwitcher = OpenLayers.Class(OpenLayers.Control, {
     OpenLayers.Control.prototype.setMap.apply(this, arguments);
 
     this.map.events.on({
-      "addlayer": this.redraw,
-      "changelayer": this.redraw,
-      "removelayer": this.redraw,
-      "changebaselayer": this.redraw,
+      'addlayer': this.redraw,
+      'changelayer': this.redraw,
+      'removelayer': this.redraw,
+      'changebaselayer': this.redraw,
       scope: this
     });
   },
@@ -43,16 +43,16 @@ var GraphicLayerSwitcher = OpenLayers.Class(OpenLayers.Control, {
 
   checkRedraw: function() {
     var redraw = false;
-    if ( !this.layerStates.length ||
-         (this.map.layers.length != this.layerStates.length) ) {
+    if (!this.layerStates.length ||
+         (this.map.layers.length != this.layerStates.length)) {
       redraw = true;
     } else {
-      for (var i=0, len=this.layerStates.length; i<len; i++) {
+      for (var i = 0, len = this.layerStates.length; i < len; i++) {
         var layerState = this.layerStates[i];
         var layer = this.map.layers[i];
-        if ( (layerState.name != layer.name) ||
+        if ((layerState.name != layer.name) ||
              (layerState.inRange != layer.inRange) ||
-             (layerState.id != layer.id) ) {
+             (layerState.id != layer.id)) {
           redraw = true;
           break;
         }
@@ -89,7 +89,7 @@ var GraphicLayerSwitcher = OpenLayers.Class(OpenLayers.Control, {
     var current = $(
       "<a href='#'>" +
         "<img src='../../images/layers.png' />" +
-      "</a>");
+      '</a>');
     current.addClass('GraphicLayerSwitcher current');
 
     current.on('click touchstart', function(e) {
@@ -119,12 +119,12 @@ var GraphicLayerSwitcher = OpenLayers.Class(OpenLayers.Control, {
           "<a id='" + id + "' href='#'>" +
             "<img src='" + layer_image + "' />" +
             layer.name +
-          "</a><br />");
+          '</a><br />');
 
         if (on) {
           item.addClass('active');
         }
-        
+
         item.on('click touchend', $.proxy(this.onInputClick, {'layerSwitcher': this, 'layer': layer}));
 
         if (baseLayer) {
@@ -155,7 +155,7 @@ var GraphicLayerSwitcher = OpenLayers.Class(OpenLayers.Control, {
     }
 
     // hide box when clicked outside
-    $(document).mouseup(function (e) {
+    $(document).mouseup(function(e) {
       if (base_layers.find(e.target).length === 0 &&
           overlay_layers.find(e.target).length === 0) {
         $('.GraphicLayerSwitcher.box').hide();
@@ -229,7 +229,7 @@ var GraphicLayerSwitcher = OpenLayers.Class(OpenLayers.Control, {
 
   updateMap: function() {
     // set the newly selected base layer
-    for(var i=0, len=this.baseLayers.length; i<len; i++) {
+    for (var i = 0, len = this.baseLayers.length; i < len; i++) {
       var layerEntry = this.baseLayers[i];
       if (layerEntry.inputElem.checked) {
         this.map.setBaseLayer(layerEntry.layer, false);
@@ -237,7 +237,7 @@ var GraphicLayerSwitcher = OpenLayers.Class(OpenLayers.Control, {
     }
 
     // set the correct visibilities for the overlays
-    for(var i=0, len=this.dataLayers.length; i<len; i++) {
+    for (var i = 0, len = this.dataLayers.length; i < len; i++) {
       var layerEntry = this.dataLayers[i];
       layerEntry.layer.setVisibility(layerEntry.inputElem.checked);
     }
@@ -265,6 +265,6 @@ var GraphicLayerSwitcher = OpenLayers.Class(OpenLayers.Control, {
     }
   },
 
-  CLASS_NAME: "GraphicLayerSwitcher"
+  CLASS_NAME: 'GraphicLayerSwitcher'
 });
 

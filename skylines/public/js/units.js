@@ -4,25 +4,25 @@ distance_units = {
     'km': function(value) { return format_number(value / 1000.) },
     'NM': function(value) { return format_number(value / 1852.) },
     'mi': function(value) { return format_number(value / 1609.34) }
-}
+};
 
 speed_units = {
     'm/s': function(value) { return format_decimal(value, 2) },
     'km/h': function(value) { return format_decimal(value * 3.6, 2) },
     'kt': function(value) { return format_decimal(value * 1.94384449, 2) },
     'mph': function(value) { return format_decimal(value * 2.23693629, 2) }
-}
+};
 
 lift_units = {
     'm/s': function(value) { return format_decimal(value, 2) },
     'kt': function(value) { return format_decimal(value * 1.94384449, 2) },
     'ft/min': function(value) { return format_decimal(value * 196.850394, 2) }
-}
+};
 
 altitude_units = {
     'm': function(value) { return format_number(value) },
     'ft': function(value) { return format_number(value * 3.2808399) }
-}
+};
 
 
 // default units
@@ -93,9 +93,9 @@ function add_altitude_unit(value) {
 
 // initialisation
 function initUnits(distance, speed, lift, altitude) {
-  DISTANCE_UNIT = distance_units[distance]?distance:'km';
-  SPEED_UNIT = speed_units[speed]?speed:'km/h';
-  LIFT_UNIT = lift_units[lift]?lift:'m/s';
-  ALTITUDE_UNIT = altitude_units[altitude]?altitude:'m';
+  DISTANCE_UNIT = distance_units[distance] ? distance : 'km';
+  SPEED_UNIT = speed_units[speed] ? speed : 'km/h';
+  LIFT_UNIT = lift_units[lift] ? lift : 'm/s';
+  ALTITUDE_UNIT = altitude_units[altitude] ? altitude : 'm';
 }
 
