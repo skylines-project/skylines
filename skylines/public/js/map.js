@@ -1,7 +1,10 @@
+
+
 /**
  * Holds the OpenLayers map
  */
 var map;
+
 
 /**
  * Initialize the map and add airspace and flight path layers.
@@ -41,9 +44,8 @@ function initOpenLayers(id, airspace_tile_url) {
   addEmptyLayer();
 
   map.setCenter(new OpenLayers.LonLat(30, 0).
-    transform(new OpenLayers.Projection('EPSG:4326'),
-              map.getProjectionObject()),
-    9);
+      transform(new OpenLayers.Projection('EPSG:4326'),
+                map.getProjectionObject()), 9);
 
   map.addControl(new GraphicLayerSwitcher());
 
@@ -59,6 +61,7 @@ function initOpenLayers(id, airspace_tile_url) {
   });
 }
 
+
 function loadBaseLayerFromCookie() {
   var base_layer = $.cookie('base_layer');
   if (base_layer == null)
@@ -71,6 +74,7 @@ function loadBaseLayerFromCookie() {
     map.setBaseLayer(base_layer);
 }
 
+
 /**
  * Add the custom airspace layers to the map
 
@@ -80,12 +84,12 @@ function addAirspaceLayers(airspace_tile_url) {
   if (!airspace_tile_url) airspace_tile_url = '';
 
   var airspace = new OpenLayers.Layer.XYZ('Airspace',
-    airspace_tile_url + '/mapproxy/tiles/1.0.0/airspace/${z}/${x}/${y}.png', {
-    isBaseLayer: false,
-    transparent: true,
-    'visibility': true,
-    'displayInLayerSwitcher': true
-  });
+      airspace_tile_url + '/mapproxy/tiles/1.0.0/airspace/${z}/${x}/${y}.png', {
+        isBaseLayer: false,
+        transparent: true,
+        'visibility': true,
+        'displayInLayerSwitcher': true
+      });
   map.addLayer(airspace);
 
   map.events.register('changebaselayer', null, function(data) {
@@ -93,6 +97,7 @@ function addAirspaceLayers(airspace_tile_url) {
       airspace.setVisibility(false);
   });
 }
+
 
 /**
  * Add the maps-for-free shaded relief layer to the map
@@ -104,11 +109,12 @@ function addReliefLayer() {
     sphericalMercator: true,
     numZoomLevels: 12,
     attribution: 'SRTM relief maps from <a target="_blank" ' +
-                  'href="http://maps-for-free.com/">maps-for-free.com</a>'
+                 'href="http://maps-for-free.com/">maps-for-free.com</a>'
   });
 
   map.addLayer(relief);
 }
+
 
 /**
  * Add the Bing layers to the map
@@ -121,22 +127,23 @@ function addBingLayers(api_key) {
 
   // Bing's Road imagerySet
   var road = new OpenLayers.Layer.Bing({
-      key: api_key,
-      type: 'Road',
-      name: 'Bing Road',
-      hideAirspaceOverlay: true
+    key: api_key,
+    type: 'Road',
+    name: 'Bing Road',
+    hideAirspaceOverlay: true
   });
 
   // Bing's AerialWithLabels imagerySet
   var hybrid = new OpenLayers.Layer.Bing({
-      key: api_key,
-      type: 'AerialWithLabels',
-      name: 'Bing Satellite',
-      hideAirspaceOverlay: true
+    key: api_key,
+    type: 'AerialWithLabels',
+    name: 'Bing Satellite',
+    hideAirspaceOverlay: true
   });
 
   map.addLayers([road, hybrid]);
 }
+
 
 /**
  * Callback when Google Maps API has been loaded.
@@ -146,18 +153,15 @@ function addGoogleLayer() {
   // add google maps if google script loaded
   if (window.google) {
     var google_physical_layer = new OpenLayers.Layer.Google(
-      'Google Physical',
-      {type: google.maps.MapTypeId.TERRAIN}
-    );
+        'Google Physical', { type: google.maps.MapTypeId.TERRAIN });
     map.addLayer(google_physical_layer);
 
     var google_satellite_layer = new OpenLayers.Layer.Google(
-      'Google Satellite',
-      {type: google.maps.MapTypeId.HYBRID}
-    );
+        'Google Satellite', { type: google.maps.MapTypeId.HYBRID });
     map.addLayer(google_satellite_layer);
   }
 }
+
 
 /**
  * Add a empty layer to the map

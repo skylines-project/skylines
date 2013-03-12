@@ -1,5 +1,5 @@
 $(function() {
-    $('.dropdown-menu').find('form').click(function(e) {
-        e.stopPropagation();
-    });
+  $('.dropdown-menu').find('form').click(function(e) {
+    e.stopPropagation();
+  });
 });

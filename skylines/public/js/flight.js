@@ -1,3 +1,5 @@
+
+
 /**
  * Array of flight objects. (see addFlight method)
  */
@@ -17,12 +19,15 @@ var highlighted_flight_phase = null;
 var default_time = null;
 var global_time = default_time;
 
+
 /**
  * List of colors for flight path display
  */
 var colors = ['#004bbd', '#bf0099', '#cf7c00', '#ff0000', '#00c994', '#ffff00'];
-var contest_colors = {'olc_plus classic': '#ff2c73',
-                      'olc_plus triangle': '#9f14ff'};
+var contest_colors = {
+  'olc_plus classic': '#ff2c73',
+  'olc_plus triangle': '#9f14ff'
+};
 
 /**
  * Initialize the map and add airspace and flight path layers.
@@ -117,7 +122,7 @@ function updateFlotScale() {
       first_t = flight.t[first];
 
     if (flight.t[last] > last_t)
-     last_t = flight.t[last];
+      last_t = flight.t[last];
   }
 
   var opt = flot.getOptions();
@@ -132,6 +137,7 @@ function updateFlotScale() {
   flot.setupGrid();
   flot.draw();
 }
+
 
 /**
  * Initiates the redraw of a layer
@@ -148,6 +154,7 @@ function initRedrawLayer(layer) {
 
   layer.redraw();
 }
+
 
 /**
  * Add a flight to the map and barogram.
@@ -171,7 +178,6 @@ function initRedrawLayer(layer) {
  * @param {Object(String)} _additional May contain additional information about
  *   the flight, e.g. registration number, callsign, ...
  */
-
 function addFlight(sfid, _lonlat, _levels, _num_levels, _time, _height, _enl,
     zoom_levels, _contests, _additional) {
   var height = OpenLayers.Util.decodeGoogle(_height);
@@ -183,8 +189,8 @@ function addFlight(sfid, _lonlat, _levels, _num_levels, _time, _height, _enl,
   var points = new Array();
   for (var i = 0, len = lonlat.length; i < len; i++) {
     points.push(new OpenLayers.Geometry.Point(lonlat[i].lon, lonlat[i].lat).
-      transform(new OpenLayers.Projection('EPSG:4326'),
-                map.getProjectionObject()));
+        transform(new OpenLayers.Projection('EPSG:4326'),
+                  map.getProjectionObject()));
   }
 
   // add new flight
@@ -196,11 +202,9 @@ function addFlight(sfid, _lonlat, _levels, _num_levels, _time, _height, _enl,
   var feature = new OpenLayers.Feature.Vector(flight, { color: color });
 
   var plane = new OpenLayers.Feature.Vector(
-    new OpenLayers.Geometry.Point(lonlat[0].lon, lonlat[0].lat).
-      transform(new OpenLayers.Projection('EPSG:4326'),
-                map.getProjectionObject()),
-    { rotation: 0 }
-  );
+      new OpenLayers.Geometry.Point(lonlat[0].lon, lonlat[0].lat).
+          transform(new OpenLayers.Projection('EPSG:4326'),
+                    map.getProjectionObject()), { rotation: 0 });
   plane.renderIntent = 'plane';
 
   map.getLayersByName('Flight')[0].addFeatures([feature, plane]);
@@ -225,22 +229,22 @@ function addFlight(sfid, _lonlat, _levels, _num_levels, _time, _height, _enl,
 
   var flot_h = [], flot_enl = [];
   for (var i = 0; i < time.length; i++) {
-      var timestamp = time[i] * 1000;
-      flot_h.push([timestamp, convert_altitude(height[i])]);
-      flot_enl.push([timestamp, enl[i]]);
+    var timestamp = time[i] * 1000;
+    flot_h.push([timestamp, convert_altitude(height[i])]);
+    flot_enl.push([timestamp, enl[i]]);
   }
 
   var table_row = $(
-    '<tr>' +
-    '<td><span class=\"badge\" style=\"background: ' + color + ';\">' +
+      '<tr>' +
+      '<td><span class=\"badge\" style=\"background: ' + color + ';\">' +
       (_additional && _additional['competition_id'] ?
        _additional['competition_id'] : '') +
-    '</span></td>' +
-    '<td>--:--:--</td>' +
-    '<td>--</td>' +
-    '<td>--</td>' +
-    '<td>--</td>' +
-    '</tr>');
+      '</span></td>' +
+      '<td>--:--:--</td>' +
+      '<td>--</td>' +
+      '<td>--</td>' +
+      '<td>--</td>' +
+      '</tr>');
 
 
   table_row.on('hover', function(e) {
@@ -283,6 +287,7 @@ function addFlight(sfid, _lonlat, _levels, _num_levels, _time, _height, _enl,
   setTime(global_time);
 }
 
+
 /**
  * @param {string} url URL to fetch.
  */
@@ -316,8 +321,8 @@ function addContest(name, lonlat, times, visible, sfid) {
   var points = new Array();
   for (var i = 0, len = lonlat.length; i < len; i++) {
     points.push(new OpenLayers.Geometry.Point(lonlat[i].lon, lonlat[i].lat).
-      transform(new OpenLayers.Projection('EPSG:4326'),
-                map.getProjectionObject()));
+        transform(new OpenLayers.Projection('EPSG:4326'),
+                  map.getProjectionObject()));
   }
 
   var trace = new OpenLayers.Geometry.LineString(points);
@@ -386,26 +391,28 @@ function formatSecondsAsTime(seconds) {
 
 function initFlot(element) {
   flot = $.plot(element, [], {
-      grid: {
-        borderWidth: 0,
-        hoverable: true,
-        autoHighlight: false,
-        margin: 5
-      },
-      xaxis: {
-        mode: 'time',
-        timeformat: '%H:%M'
-      },
-      yaxes: [{
+    grid: {
+      borderWidth: 0,
+      hoverable: true,
+      autoHighlight: false,
+      margin: 5
+    },
+    xaxis: {
+      mode: 'time',
+      timeformat: '%H:%M'
+    },
+    yaxes: [
+      {
         tickFormatter: add_altitude_unit
-        }, {
+      }, {
         show: false,
         min: 0,
         max: 1000
-      }],
-      crosshair: {
-        mode: 'x'
       }
+    ],
+    crosshair: {
+      mode: 'x'
+    }
   });
 
   var mouse_container_running = false;
@@ -442,13 +449,13 @@ function updateFlotData() {
       color = $.color.parse(color).add('a', -0.6).toString();
 
     series = {
-        data: flight.flot_h,
-        color: color
+      data: flight.flot_h,
+      color: color
     };
 
     if (highlighted) {
-        series.shadowSize = 0;
-        series.lines = { lineWidth: 1 };
+      series.shadowSize = 0;
+      series.lines = { lineWidth: 1 };
     }
 
     data.push(series);
@@ -501,7 +508,7 @@ function updateFlotData() {
       for (var j = 0; j < times.length; ++j) {
         var time = times[j] * 1000;
         markings.push({
-            position: time
+          position: time
         });
       }
 
@@ -669,35 +676,35 @@ function hideAllPlanesOnMap() {
 function updateFixDataTableRow(id, fix_data) {
   flights[id].table_row.find('td').each(function(index, cell) {
     switch (index) {
-    case 0:
-      return;
-    case 1:
-      var html = formatSecondsAsTime(fix_data['time']);
-      $(cell).html(html);
-      break;
-    case 2:
-      var html = format_altitude(fix_data['alt-msl']);
-      $(cell).html(html);
-      break;
-    case 3:
-      if (fix_data['vario'] !== undefined) {
-        var html = format_lift(fix_data['vario']);
-        if (fix_data['vario'] >= 0)
-          html = '+' + html;
+      case 0:
+        return;
+      case 1:
+        var html = formatSecondsAsTime(fix_data['time']);
+        $(cell).html(html);
+        break;
+      case 2:
+        var html = format_altitude(fix_data['alt-msl']);
+        $(cell).html(html);
+        break;
+      case 3:
+        if (fix_data['vario'] !== undefined) {
+          var html = format_lift(fix_data['vario']);
+          if (fix_data['vario'] >= 0)
+            html = '+' + html;
 
-        $(cell).html(html);
-      } else {
-        $(cell).html('--');
-      }
-      break;
-    case 4:
-      if (fix_data['speed'] !== undefined) {
-        var html = format_speed(fix_data['speed']);
-        $(cell).html(html);
-      } else {
-        $(cell).html('--');
-      }
-      break;
+          $(cell).html(html);
+        } else {
+          $(cell).html('--');
+        }
+        break;
+      case 4:
+        if (fix_data['speed'] !== undefined) {
+          var html = format_speed(fix_data['speed']);
+          $(cell).html(html);
+        } else {
+          $(cell).html('--');
+        }
+        break;
     }
   });
 }
@@ -705,14 +712,14 @@ function updateFixDataTableRow(id, fix_data) {
 function clearFixDataTableRow(id, fix_data) {
   flights[id].table_row.find('td').each(function(index, cell) {
     switch (index) {
-    case 0:
-      return;
-    case 1:
-      $(cell).html('--:--:--');
-      break;
-    default:
-      $(cell).html('--');
-      break;
+      case 0:
+        return;
+      case 1:
+        $(cell).html('--:--:--');
+        break;
+      default:
+        $(cell).html('--');
+        break;
     }
   });
 }
@@ -772,6 +779,7 @@ function setHighlight(sfid) {
   updateFlotData();
 }
 
+
 /**
  * Handles the mouseover events over the map to display near airplanes
  */
@@ -816,6 +824,7 @@ function hoverMap() {
   });
 }
 
+
 /**
  * Searches for the nearest aircraft position in mouse range
  *
@@ -843,11 +852,11 @@ function searchForPlane(within, loc, hoverTolerance) {
         vector.bottom = Math.min(components[i - 1].y,
                                  components[i].y);
         vector.top = Math.max(components[i - 1].y,
-                               components[i].y);
+                              components[i].y);
         vector.left = Math.min(components[i - 1].x,
                                components[i].x);
         vector.right = Math.max(components[i - 1].x,
-                                 components[i].x);
+                                components[i].x);
 
         if (within.intersectsBounds(vector))
           possible_solutions.push({
@@ -875,14 +884,14 @@ function searchForPlane(within, loc, hoverTolerance) {
     for (var j = possible_solutions[i].from + 1; j <= possible_solutions[i].to;
         j++) {
       var distToSegment = distanceToSegmentSquared({
-          x: loc.lon,
-          y: loc.lat
-        }, {
-          x1: flights[possible_solutions[i].fid].geo.components[j - 1].x,
-          y1: flights[possible_solutions[i].fid].geo.components[j - 1].y,
-          x2: flights[possible_solutions[i].fid].geo.components[j].x,
-          y2: flights[possible_solutions[i].fid].geo.components[j].y
-        });
+        x: loc.lon,
+        y: loc.lat
+      }, {
+        x1: flights[possible_solutions[i].fid].geo.components[j - 1].x,
+        y1: flights[possible_solutions[i].fid].geo.components[j - 1].y,
+        x2: flights[possible_solutions[i].fid].geo.components[j].x,
+        y2: flights[possible_solutions[i].fid].geo.components[j].y
+      });
 
       if (distToSegment.distance < distance) {
         distance = distToSegment.distance;
@@ -910,35 +919,36 @@ function searchForPlane(within, loc, hoverTolerance) {
  * @return {Object} An object with distance (squared) and along.
  */
 distanceToSegmentSquared = function(point, segment) {
-    var x0 = point.x;
-    var y0 = point.y;
-    var x1 = segment.x1;
-    var y1 = segment.y1;
-    var x2 = segment.x2;
-    var y2 = segment.y2;
-    var dx = x2 - x1;
-    var dy = y2 - y1;
-    var along = ((dx * (x0 - x1)) + (dy * (y0 - y1))) /
-                (Math.pow(dx, 2) + Math.pow(dy, 2));
-    var x, y;
-    if (along <= 0.0) {
-        x = x1;
-        y = y1;
-        along = 0;
-    } else if (along >= 1.0) {
-        x = x2;
-        y = y2;
-        along = 1;
-    } else {
-        x = x1 + along * dx;
-        y = y1 + along * dy;
-    }
+  var x0 = point.x;
+  var y0 = point.y;
+  var x1 = segment.x1;
+  var y1 = segment.y1;
+  var x2 = segment.x2;
+  var y2 = segment.y2;
+  var dx = x2 - x1;
+  var dy = y2 - y1;
+  var along = ((dx * (x0 - x1)) + (dy * (y0 - y1))) /
+              (Math.pow(dx, 2) + Math.pow(dy, 2));
+  var x, y;
+  if (along <= 0.0) {
+    x = x1;
+    y = y1;
+    along = 0;
+  } else if (along >= 1.0) {
+    x = x2;
+    y = y2;
+    along = 1;
+  } else {
+    x = x1 + along * dx;
+    y = y1 + along * dy;
+  }
 
-    return {
-        distance: Math.pow(x - x0, 2) + Math.pow(y - y0, 2),
-        along: along
-    };
+  return {
+    distance: Math.pow(x - x0, 2) + Math.pow(y - y0, 2),
+    along: along
+  };
 };
+
 
 /**
  * @param {String} id ID of the phases table.
@@ -964,6 +974,7 @@ function initPhasesTable(id) {
     }
   });
 }
+
 
 function highlightFlightPhase(table_row) {
   var start = parseFloat(table_row.children('td.start').attr('data-content'));
@@ -1032,12 +1043,14 @@ function highlightFlightPhase(table_row) {
   updateFlotData();
 }
 
+
 function unhighlightFlightPhase() {
   highlighted_flight_phase.row.removeClass('selected');
   highlighted_flight_phase = null;
   map.removeLayer(map.getLayersByName('Flight Phases')[0]);
   updateFlotData();
 }
+
 
 /**
  * Moves the map to the last fix of a flight

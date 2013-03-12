@@ -1,3 +1,5 @@
+
+
 /**
  * Retrieves all new traces for the displayed flights
  */
@@ -52,8 +54,8 @@ function updateFlight(tracking_id, _lonlat, _levels, _num_levels, _time,
   var points = new Array();
   for (var i = 1, len = lonlat.length; i < len; i++) {
     points.push(new OpenLayers.Geometry.Point(lonlat[i].lon, lonlat[i].lat).
-      transform(new OpenLayers.Projection('EPSG:4326'),
-                map.getProjectionObject()));
+        transform(new OpenLayers.Projection('EPSG:4326'),
+                  map.getProjectionObject()));
   }
 
   // find the flight to update
@@ -67,9 +69,9 @@ function updateFlight(tracking_id, _lonlat, _levels, _num_levels, _time,
 
   var flot_h = [], flot_enl = [];
   for (var i = 0; i < time.length; i++) {
-      var timestamp = time[i] * 1000;
-      flot_h.push([timestamp, height[i]]);
-      flot_enl.push([timestamp, enl[i]]);
+    var timestamp = time[i] * 1000;
+    flot_h.push([timestamp, height[i]]);
+    flot_enl.push([timestamp, enl[i]]);
   }
 
   // update flight

@@ -4,6 +4,7 @@ function pad(num, size) {
   return s.substr(s.length - size);
 }
 
+
 /**
  * Saves the flight id into a cookie
  *
@@ -21,6 +22,7 @@ function pinFlight(sfid) {
   // show pinned flights link in list view if found in DOM
   showPinnedFlightsLink();
 }
+
 
 /**
  * Removes a pinned flight
@@ -63,6 +65,7 @@ function getPinnedFlights() {
   return [];
 }
 
+
 /**
  * @param {int} sfid SkyLines flight ID.
  * @return {bool} pinned flight or not pinned flight.
@@ -76,6 +79,7 @@ function isPinnedFlight(sfid) {
 
   return false;
 }
+
 
 /**
  * @param {Object} element jQuery element which will be the button.
@@ -104,6 +108,7 @@ function pinButton(element, sfid) {
   element.click(onClick);
 }
 
+
 /**
  * Returns the URL for the current page and add pinned flights
  * to the URL which are only stored client-side inside a cookie.
@@ -128,6 +133,7 @@ function getShareUrl(url) {
 
   return url_split[1] + '/' + unique_ids.join(',') + '/' + url_split[3];
 }
+
 
 /**
  * Shows the pinned flights link at element id #pinned-flights-link

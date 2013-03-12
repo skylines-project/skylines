@@ -6,7 +6,7 @@ from functools import partial
 
 GJSLINT_COMMAND = 'gjslint'
 
-GJSLINT_OPTIONS = []
+GJSLINT_OPTIONS = ['--strict']
 
 JS_BASE_FOLDER = os.path.join('skylines', 'public', 'js')
 
