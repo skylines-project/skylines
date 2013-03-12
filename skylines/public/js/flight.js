@@ -106,16 +106,17 @@ function updateFlotScale() {
   // circle throu all flights
   for (var fid = 0; fid < flights.length; fid++) {
     var flight = flights[fid];
+    var geometries = flight.geo.partitionedGeometries;
 
     // if flight is not in viewport continue.
-    if (flight.geo.partitionedGeometries.length == 0)
+    if (geometries.length == 0)
       continue;
 
     // show barogram of all trace parts visible
-    var length = flight.geo.partitionedGeometries.length;
-    var comp_length = flight.geo.partitionedGeometries[length - 1].components.length;
-    var first = flight.geo.partitionedGeometries[0].components[0].originalIndex;
-    var last = flight.geo.partitionedGeometries[length - 1].components[comp_length - 1].originalIndex;
+    var length = geometries.length;
+    var comp_length = geometries[length - 1].components.length;
+    var first = geometries[0].components[0].originalIndex;
+    var last = geometries[length - 1].components[comp_length - 1].originalIndex;
 
     // get first and last time which should be the bounds of the barogram
     if (flight.t[first] < first_t)
