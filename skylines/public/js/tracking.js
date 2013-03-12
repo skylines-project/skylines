@@ -1,6 +1,4 @@
 /**
- * Function: updateFlightsFromJSON
- *
  * Retrieves all new traces for the displayed flights
  */
 function updateFlightsFromJSON() {
@@ -23,22 +21,19 @@ function updateFlightsFromJSON() {
 }
 
 /**
- * Function: updateFlight
- *
  * Updates a tracking flight.
- *
- * Parameters:
- * tracking_id - {int} SkyLines tracking ID
- * _lonlat - {String} Google polyencoded string of geolocations
- *   (lon + lat, WSG 84)
- * _levels - {String} Google polyencoded string of levels of detail
- * _num_levels - {int} Number of levels encoded in _lonlat and _levels
- * _time - {String} Google polyencoded string of time values
- * _height - {String} Google polyencoded string of height values
- * _enl - {String} Google polyencoded string of enl values
  *
  * Note: _lonlat, _levels, _time, _enl and _height MUST have the same number of
  *   elements when decoded.
+ *
+ * @param {int} tracking_id SkyLines tracking ID.
+ * @param {String} _lonlat Google polyencoded string of geolocations
+ *   (lon + lat, WSG 84).
+ * @param {String} _levels Google polyencoded string of levels of detail.
+ * @param {int} _num_levels Number of levels encoded in _lonlat and _levels.
+ * @param {String} _time Google polyencoded string of time values.
+ * @param {String} _height Google polyencoded string of height values.
+ * @param {String} _enl Google polyencoded string of enl values.
  */
 
 function updateFlight(tracking_id, _lonlat, _levels, _num_levels, _time,

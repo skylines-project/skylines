@@ -6,7 +6,7 @@ from functools import partial
 
 GJSLINT_COMMAND = 'gjslint'
 
-GJSLINT_OPTIONS = ['--nojsdoc']
+GJSLINT_OPTIONS = []
 
 JS_BASE_FOLDER = os.path.join('skylines', 'public', 'js')
 

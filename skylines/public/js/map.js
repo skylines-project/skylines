@@ -1,14 +1,13 @@
 /**
- * map
- *
  * Holds the OpenLayers map
  */
 var map;
 
 /**
- * Function initOpenLayers
- *
  * Initialize the map and add airspace and flight path layers.
+ *
+ * @param {String} id The ID of the HTML element used for the map.
+ * @param {String} airspace_tile_url The base URL of the airspace tile server.
  */
 function initOpenLayers(id, airspace_tile_url) {
   OpenLayers.ImgPath = '/images/OpenLayers/';
@@ -73,9 +72,9 @@ function loadBaseLayerFromCookie() {
 }
 
 /**
- * Function: addAirspaceLayers
- *
  * Add the custom airspace layers to the map
+
+ * @param {String} airspace_tile_url The base URL of the airspace tile server.
  */
 function addAirspaceLayers(airspace_tile_url) {
   if (!airspace_tile_url) airspace_tile_url = '';
@@ -96,8 +95,6 @@ function addAirspaceLayers(airspace_tile_url) {
 }
 
 /**
- * Function: addReliefLayer
- *
  * Add the maps-for-free shaded relief layer to the map
  */
 function addReliefLayer() {
@@ -114,9 +111,9 @@ function addReliefLayer() {
 }
 
 /**
- * Function: addBingLayers
- *
  * Add the Bing layers to the map
+ *
+ * @param {String} api_key The API key supplied by Bing.
  */
 function addBingLayers(api_key) {
   if (api_key == 'null')
@@ -142,8 +139,6 @@ function addBingLayers(api_key) {
 }
 
 /**
- * Function: addGoogleLayer
- *
  * Callback when Google Maps API has been loaded.
  * Add the google physical layer to the map
  */
@@ -165,8 +160,6 @@ function addGoogleLayer() {
 }
 
 /**
- * Function: addEmptyLayer
- *
  * Add a empty layer to the map
  */
 function addEmptyLayer() {

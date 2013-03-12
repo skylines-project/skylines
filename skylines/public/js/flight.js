@@ -1,6 +1,4 @@
 /**
- * flights
- *
  * Array of flight objects. (see addFlight method)
  */
 var flights = [];
@@ -20,18 +18,13 @@ var default_time = null;
 var global_time = default_time;
 
 /**
- * colors
- *
  * List of colors for flight path display
  */
-//var colors = ['#bf2fa2', '#2f69bf', '#d63a35', '#d649ff'];
 var colors = ['#004bbd', '#bf0099', '#cf7c00', '#ff0000', '#00c994', '#ffff00'];
 var contest_colors = {'olc_plus classic': '#ff2c73',
                       'olc_plus triangle': '#9f14ff'};
 
 /**
- * Function initOpenLayers
- *
  * Initialize the map and add airspace and flight path layers.
  */
 
@@ -141,9 +134,10 @@ function updateFlotScale() {
 }
 
 /**
- * Function: initRedrawLayer
+ * Initiates the redraw of a layer
  *
- * initiates the redraw of a layer
+ * @this {Object}
+ * @param {OpenLayers.Layer} layer The layer that should be redrawn.
  */
 function initRedrawLayer(layer) {
   // Run this function only every 50ms to save some computing power.
@@ -156,30 +150,26 @@ function initRedrawLayer(layer) {
 }
 
 /**
- * Function: addFlight
- *
  * Add a flight to the map and barogram.
- *
- * Parameters:
- * sfid - {int} SkyLines flight ID
- * _lonlat - {String} Google polyencoded string of geolocations
- *   (lon + lat, WSG 84)
- * _levels - {String} Google polyencoded string of levels of detail
- * _num_levels - {int} Number of levels encoded in _lonlat and _levels
- * _time - {String} Google polyencoded string of time values
- * _height - {String} Google polyencoded string of height values
- * _enl - {String} Google polyencoded string of engine noise levels
- * zoom_levels - {Array(double)} Array of zoom levels where to switch between
- *   the LoD.
- * _contests - {Array(Objects)} Array of scored/optimised contests
- *   Such an object must contain: name, turnpoints, times
- *   turnpoints and times are googlePolyEncoded strings.
- * _additional - {Object(String)} May contain additional information about
- *   the flight,
- *   e.g. registration number, callsign...
  *
  * Note: _lonlat, _levels, _time, _enl, and _height MUST have the same number
  *   of elements when decoded.
+ *
+ * @param {int} sfid SkyLines flight ID.
+ * @param {String} _lonlat Google polyencoded string of geolocations
+ *   (lon + lat, WSG 84).
+ * @param {String} _levels Google polyencoded string of levels of detail.
+ * @param {int} _num_levels Number of levels encoded in _lonlat and _levels.
+ * @param {String} _time Google polyencoded string of time values.
+ * @param {String} _height Google polyencoded string of height values.
+ * @param {String} _enl Google polyencoded string of engine noise levels.
+ * @param {Array(double)} zoom_levels Array of zoom levels where to switch
+ *   between the LoD.
+ * @param {Array(Objects)} _contests Array of scored/optimised contests.
+ *   Such an object must contain: name, turnpoints, times
+ *   turnpoints and times are googlePolyEncoded strings.
+ * @param {Object(String)} _additional May contain additional information about
+ *   the flight, e.g. registration number, callsign, ...
  */
 
 function addFlight(sfid, _lonlat, _levels, _num_levels, _time, _height, _enl,
@@ -294,10 +284,7 @@ function addFlight(sfid, _lonlat, _levels, _num_levels, _time, _height, _enl,
 }
 
 /**
- * Function: addFlightFromJSON
- *
- * Parameters:
- * url - {string} URL to fetch
+ * @param {string} url URL to fetch.
  */
 function addFlightFromJSON(url) {
   $.ajax(url, {
@@ -317,16 +304,13 @@ function addFlightFromJSON(url) {
 
 
 /**
- * Function: addContest
- *
  * Add a flight contest trace to the map
  *
- * Parameters:
- * name - {String} Name to display
- * lonlat - {Array(Object)} Array of LonLat pairs
- * times - {Array(Integer)} Array of times
- * visible - {Bool} Flag weather to show the trace or not
- * sfid - {Integer} The SkyLines flight id this contest trace belongs to
+ * @param {String} name Name to display.
+ * @param {Array(Object)} lonlat Array of LonLat pairs.
+ * @param {Array(Integer)} times Array of times.
+ * @param {Bool} visible Flag weather to show the trace or not.
+ * @param {Integer} sfid The SkyLines flight id this contest trace belongs to.
  */
 function addContest(name, lonlat, times, visible, sfid) {
   var points = new Array();
@@ -351,10 +335,7 @@ function addContest(name, lonlat, times, visible, sfid) {
 }
 
 /**
- * Function: getAllFlightsBounds
- *
- * Returns:
- * {OpenLayers.Bounds} - bounds containing all flights on the map.
+ * @return {OpenLayers.Bounds} bounds containing all flights on the map.
  */
 
 function getAllFlightsBounds() {
@@ -369,16 +350,11 @@ function getAllFlightsBounds() {
 
 
 /**
- * Function: getNextSmallerIndex
- *
  * Searches the next smaller index to a number in a monotonic array
  *
- * Parameters:
- * a - {Array} Array
- * n - {double} Number
- *
- * Returns:
- * {int} Index next smaller to Number in Array
+ * @param {Array} a Array.
+ * @param {double} n Number.
+ * @return {int} Index next smaller to Number in Array.
  */
 function getNextSmallerIndex(a, n) {
   var l = a.length;
@@ -395,15 +371,9 @@ function getNextSmallerIndex(a, n) {
 
 
 /**
- * Function: formatSecondsAsTime
- *
- * Parameters:
- * seconds - {int} Seconds of day
- *
- * Returns:
- * {String} formatted time "HH:MM:SS"
+ * @param {int} seconds Seconds of day.
+ * @return {String} formatted time "HH:MM:SS".
  */
-
 function formatSecondsAsTime(seconds) {
   seconds %= 86400;
   var h = Math.floor(seconds / 3600);
@@ -803,11 +773,8 @@ function setHighlight(sfid) {
 }
 
 /**
- * Function: hoverMap
- *
  * Handles the mouseover events over the map to display near airplanes
  */
-
 function hoverMap() {
   // search on every mousemove over the map viewport. Run this function only
   // every 25ms to save some computing power.
@@ -850,17 +817,12 @@ function hoverMap() {
 }
 
 /**
- * Function: searchForPlane
- *
  * Searches for the nearest aircraft position in mouse range
  *
- * Parameters:
- * within - {OpenLayers.Bounds} Bounds to search within
- * loc - {OpenLayers.Point} Location of mouse click
- * hoverTolerance - {Int} Tolerance in pixel to search
- *
- * Returns:
- * {Object} An object with the nearest flight.
+ * @param {OpenLayers.Bounds} within Bounds to search within.
+ * @param {OpenLayers.Point} loc Location of mouse click.
+ * @param {Int} hoverTolerance Tolerance in pixel to search.
+ * @return {Object} An object with the nearest flight.
  */
 function searchForPlane(within, loc, hoverTolerance) {
   var possible_solutions = [];
@@ -939,19 +901,14 @@ function searchForPlane(within, loc, hoverTolerance) {
 
 
 /**
- * Function: (OpenLayers.Geometry.)distanceToSegmentSquared
- * modified to return along, too.
+ * (OpenLayers.Geometry.)distanceToSegmentSquared modified to return along, too.
  *
- * Parameters:
- * point - {Object} An object with x and y properties representing the
+ * @param {Object} point An object with x and y properties representing the
  *     point coordinates.
- * segment - {Object} An object with x1, y1, x2, and y2 properties
+ * @param {Object} segment An object with x1, y1, x2, and y2 properties
  *     representing endpoint coordinates.
- *
- * Returns:
- * {Object} An object with distance (squared) and along.
+ * @return {Object} An object with distance (squared) and along.
  */
-
 distanceToSegmentSquared = function(point, segment) {
     var x0 = point.x;
     var y0 = point.y;
@@ -984,12 +941,8 @@ distanceToSegmentSquared = function(point, segment) {
 };
 
 /**
- * Function: initPhasesTable
- *
- * Parameters:
- * id - ID of the phases table
+ * @param {String} id ID of the phases table.
 */
-
 function initPhasesTable(id) {
   $('#' + id + ' > tbody').delegate('tr', 'hover', function() {
     $(this).css('cursor', 'pointer');
@@ -1011,10 +964,6 @@ function initPhasesTable(id) {
     }
   });
 }
-
-/**
- * Function: highlightFlightPhase
- */
 
 function highlightFlightPhase(table_row) {
   var start = parseFloat(table_row.children('td.start').attr('data-content'));
@@ -1083,10 +1032,6 @@ function highlightFlightPhase(table_row) {
   updateFlotData();
 }
 
-/**
- * Function: unhighlightFlightPhase
- */
-
 function unhighlightFlightPhase() {
   highlighted_flight_phase.row.removeClass('selected');
   highlighted_flight_phase = null;
@@ -1095,9 +1040,9 @@ function unhighlightFlightPhase() {
 }
 
 /**
- * Function: followFlight
- *
  * Moves the map to the last fix of a flight
+ *
+ * @param {int} sfid SkyLines flight ID.
  */
 function followFlight(sfid) {
   if (!sfid) return;

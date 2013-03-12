@@ -5,12 +5,9 @@ function pad(num, size) {
 }
 
 /**
- * Function: pinFlight
- *
  * Saves the flight id into a cookie
  *
- * Parameters:
- * sfid - {int} SkyLines flight ID
+ * @param {int} sfid SkyLines flight ID.
  */
 function pinFlight(sfid) {
   var pinnedFlights = getPinnedFlights();
@@ -26,12 +23,9 @@ function pinFlight(sfid) {
 }
 
 /**
- * Function: unpinFlight
- *
  * Removes a pinned flight
  *
- * Parameters:
- * sfid - {int} SkyLines flight ID
+ * @param {int} sfid SkyLines flight ID.
  */
 function unpinFlight(sfid) {
   var pinnedFlights = getPinnedFlights();
@@ -49,12 +43,9 @@ function unpinFlight(sfid) {
 
 
 /**
- * Function: getPinnedFlights
- *
  * Gets all pinned flights from the cookie
  *
- * Returns:
- * {Array(int)} Array of SkyLine flight IDs
+ * @return {Array(int)} Array of SkyLines flight IDs.
  */
 function getPinnedFlights() {
   var cookie = $.cookie('SkyLines_pinnedFlights');
@@ -73,13 +64,8 @@ function getPinnedFlights() {
 }
 
 /**
- * Function: isPinnedFlight
- *
- * Parameters:
- * sfid - {int} SkyLines flight ID
- *
- * Returns:
- * {bool} pinned flight or not pinned flight
+ * @param {int} sfid SkyLines flight ID.
+ * @return {bool} pinned flight or not pinned flight.
  */
 function isPinnedFlight(sfid) {
   var pinnedFlights = getPinnedFlights();
@@ -92,11 +78,8 @@ function isPinnedFlight(sfid) {
 }
 
 /**
- * Function: pinButton
- *
- * Parameters:
- * element - {Object} jQuery element which will be the button
- * sfid - {int} SkyLines flight ID
+ * @param {Object} element jQuery element which will be the button.
+ * @param {int} sfid SkyLines flight ID.
  */
 function pinButton(element, sfid) {
   var onClick = function() {
@@ -122,13 +105,11 @@ function pinButton(element, sfid) {
 }
 
 /**
- * Function getShareUrl
- *
  * Returns the URL for the current page and add pinned flights
  * to the URL which are only stored client-side inside a cookie.
  *
- * Parameters:
- * url - {String} original URL
+ * @param {String} url original URL.
+ * @return {String} URL for the current flights including pinned flights.
  */
 function getShareUrl(url) {
   var pinnedFlights = getPinnedFlights();
@@ -149,8 +130,6 @@ function getShareUrl(url) {
 }
 
 /**
- * Function showPinnedFlightsLink
- *
  * Shows the pinned flights link at element id #pinned-flights-link
  */
 function showPinnedFlightsLink() {
