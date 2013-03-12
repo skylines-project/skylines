@@ -109,11 +109,11 @@ function updateFlotScale() {
     var geometries = flight.geo.partitionedGeometries;
 
     // if flight is not in viewport continue.
-    if (geometries.length == 0)
+    var length = geometries.length;
+    if (length == 0)
       continue;
 
     // show barogram of all trace parts visible
-    var length = geometries.length;
     var comp_length = geometries[length - 1].components.length;
     var first = geometries[0].components[0].originalIndex;
     var last = geometries[length - 1].components[comp_length - 1].originalIndex;
