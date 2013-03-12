@@ -25,7 +25,8 @@ js-all:
     filters: rjsmin
     output: js/skylines-%(version)s.js
     contents:
-        - http://code.jquery.com/jquery-1.7.1.min.js
+        - http://code.jquery.com/jquery-1.9.1.min.js
+        - js/jQuery/jquery.browser.js
         - js/jQuery/jquery.cookie.js
         - js/jQuery/jquery.timeago.js
         - js/general.js
