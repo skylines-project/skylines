@@ -25,6 +25,7 @@ testpkgs = [
     'repoze.who-testutil >= 1.0.1',
     'polib',
     'zope.testbrowser',
+    'gjslint'
 ]
 
 install_requires = [
