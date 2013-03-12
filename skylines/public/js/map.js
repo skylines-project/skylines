@@ -48,12 +48,12 @@ function initOpenLayers(id, airspace_tile_url) {
 
   map.addControl(new GraphicLayerSwitcher());
 
-  map.events.register('changebaselayer', this, function(data) {
+  map.events.register('changebaselayer', null, function(data) {
     // Save the selected base layer in a cookie
     $.cookie('base_layer', data.layer.name, { path: '/', expires: 365 });
   });
 
-  map.events.register('addlayer', this, function() {
+  map.events.register('addlayer', null, function() {
     // When the list of layers changes load the
     // last used base layer from the cookies
     loadBaseLayerFromCookie();
@@ -89,7 +89,7 @@ function addAirspaceLayers(airspace_tile_url) {
   });
   map.addLayer(airspace);
 
-  map.events.register('changebaselayer', this, function(data) {
+  map.events.register('changebaselayer', null, function(data) {
     if (data.layer.hideAirspaceOverlay)
       airspace.setVisibility(false);
   });

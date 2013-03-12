@@ -93,11 +93,11 @@ function initFlightLayer() {
 
   map.addLayer(flightPathLayer);
 
-  map.events.register('move', this, function() {
+  map.events.register('move', null, function() {
     initRedrawLayer(flightPathLayer);
   });
 
-  map.events.register('moveend', this, updateFlotScale);
+  map.events.register('moveend', null, updateFlotScale);
 }
 
 function updateFlotScale() {
@@ -812,7 +812,7 @@ function hoverMap() {
   // search on every mousemove over the map viewport. Run this function only
   // every 25ms to save some computing power.
   var running = false;
-  map.events.register('mousemove', this, function(e) {
+  map.events.register('mousemove', null, function(e) {
     // call this function only every 25ms, else return early
     if (running) return;
     running = true;
