@@ -67,7 +67,8 @@ function initFlightLayer() {
     context: {
       getGraphic: function(feature) {
         var msie_8 = $.browser.msie && (parseInt($.browser.version, 10) < 9);
-        var normal_glider = msie_8 ? '/images/glider_symbol_msie.png': '/images/glider_symbol.png';
+        var normal_glider = msie_8 ?
+            '/images/glider_symbol_msie.png' : '/images/glider_symbol.png';
         return normal_glider;
       }
     }
@@ -85,7 +86,7 @@ function initFlightLayer() {
       'hidden': hidden_style
     }),
     rendererOptions: {
-        zIndexing: true
+      zIndexing: true
     },
     displayInLayerSwitcher: false
   });
@@ -161,23 +162,28 @@ function initRedrawLayer(layer) {
  *
  * Parameters:
  * sfid - {int} SkyLines flight ID
- * _lonlat - {String} Google polyencoded string of geolocations (lon + lat, WSG 84)
+ * _lonlat - {String} Google polyencoded string of geolocations
+ *   (lon + lat, WSG 84)
  * _levels - {String} Google polyencoded string of levels of detail
  * _num_levels - {int} Number of levels encoded in _lonlat and _levels
  * _time - {String} Google polyencoded string of time values
  * _height - {String} Google polyencoded string of height values
  * _enl - {String} Google polyencoded string of engine noise levels
- * zoom_levels - {Array(double)} Array of zoom levels where to switch between the LoD.
+ * zoom_levels - {Array(double)} Array of zoom levels where to switch between
+ *   the LoD.
  * _contests - {Array(Objects)} Array of scored/optimised contests
  *   Such an object must contain: name, turnpoints, times
  *   turnpoints and times are googlePolyEncoded strings.
- * _additional - {Object(String)} May contain additional information about the flight,
+ * _additional - {Object(String)} May contain additional information about
+ *   the flight,
  *   e.g. registration number, callsign...
  *
- * Note: _lonlat, _levels, _time, _enl, and _height MUST have the same number of elements when decoded.
+ * Note: _lonlat, _levels, _time, _enl, and _height MUST have the same number
+ *   of elements when decoded.
  */
 
-function addFlight(sfid, _lonlat, _levels, _num_levels, _time, _height, _enl, zoom_levels, _contests, _additional) {
+function addFlight(sfid, _lonlat, _levels, _num_levels, _time, _height, _enl,
+    zoom_levels, _contests, _additional) {
   var height = OpenLayers.Util.decodeGoogle(_height);
   var time = OpenLayers.Util.decodeGoogle(_time);
   var enl = OpenLayers.Util.decodeGoogle(_enl);
@@ -187,11 +193,13 @@ function addFlight(sfid, _lonlat, _levels, _num_levels, _time, _height, _enl, zo
   var points = new Array();
   for (var i = 0, len = lonlat.length; i < len; i++) {
     points.push(new OpenLayers.Geometry.Point(lonlat[i].lon, lonlat[i].lat).
-      transform(new OpenLayers.Projection('EPSG:4326'), map.getProjectionObject()));
+      transform(new OpenLayers.Projection('EPSG:4326'),
+                map.getProjectionObject()));
   }
 
   // add new flight
-  var flight = new OpenLayers.Geometry.ProgressiveLineString(points, lod, zoom_levels);
+  var flight = new OpenLayers.Geometry.ProgressiveLineString(
+      points, lod, zoom_levels);
   flight.clip = 1;
 
   var color = colors[flights.length % colors.length];
@@ -199,7 +207,8 @@ function addFlight(sfid, _lonlat, _levels, _num_levels, _time, _height, _enl, zo
 
   var plane = new OpenLayers.Feature.Vector(
     new OpenLayers.Geometry.Point(lonlat[0].lon, lonlat[0].lat).
-      transform(new OpenLayers.Projection('EPSG:4326'), map.getProjectionObject()),
+      transform(new OpenLayers.Projection('EPSG:4326'),
+                map.getProjectionObject()),
     { rotation: 0 }
   );
   plane.renderIntent = 'plane';
@@ -209,7 +218,8 @@ function addFlight(sfid, _lonlat, _levels, _num_levels, _time, _height, _enl, zo
   var contests = [];
   if (_contests) {
     for (var i = 0; i < _contests.length; i++) {
-      var turnpoints = OpenLayers.Util.decodeGooglePolyline(_contests[i].turnpoints);
+      var turnpoints = OpenLayers.Util.decodeGooglePolyline(
+          _contests[i].turnpoints);
       var times = OpenLayers.Util.decodeGoogle(_contests[i].times);
 
       contests.push({
@@ -233,7 +243,8 @@ function addFlight(sfid, _lonlat, _levels, _num_levels, _time, _height, _enl, zo
   var table_row = $(
     '<tr>' +
     '<td><span class=\"badge\" style=\"background: ' + color + ';\">' +
-      (_additional && _additional['competition_id'] ? _additional['competition_id'] : '') +
+      (_additional && _additional['competition_id'] ?
+       _additional['competition_id'] : '') +
     '</span></td>' +
     '<td>--:--:--</td>' +
     '<td>--</td>' +
@@ -321,7 +332,8 @@ function addContest(name, lonlat, times, visible, sfid) {
   var points = new Array();
   for (var i = 0, len = lonlat.length; i < len; i++) {
     points.push(new OpenLayers.Geometry.Point(lonlat[i].lon, lonlat[i].lat).
-      transform(new OpenLayers.Projection('EPSG:4326'), map.getProjectionObject()));
+      transform(new OpenLayers.Projection('EPSG:4326'),
+                map.getProjectionObject()));
   }
 
   var trace = new OpenLayers.Geometry.LineString(points);
@@ -398,7 +410,8 @@ function formatSecondsAsTime(seconds) {
   var m = Math.floor((seconds % 3600) / 60);
   var s = Math.floor(seconds % 3600 % 60);
 
-  return pad(h, 2) + ':' + pad(m, 2) + ':' + pad(s, 2); // Format the result into time strings
+  // Format the result into time strings
+  return pad(h, 2) + ':' + pad(m, 2) + ':' + pad(s, 2);
 }
 
 function initFlot(element) {
@@ -638,7 +651,8 @@ function getFixData(id, time) {
   fix_data['lon'] = lon_prev + (lon_next - lon_prev) * dt_rel;
   fix_data['lat'] = lat_prev + (lat_next - lat_prev) * dt_rel;
 
-  fix_data['loc'] = new OpenLayers.Geometry.Point(fix_data['lon'], fix_data['lat']);
+  fix_data['loc'] = new OpenLayers.Geometry.Point(
+      fix_data['lon'], fix_data['lat']);
   fix_data['loc'].transform(new OpenLayers.Projection('EPSG:4326'),
                             map.getProjectionObject());
 
@@ -646,7 +660,8 @@ function getFixData(id, time) {
                                    _loc_next.y - _loc_prev.y) * 180 / Math.PI;
 
   if (dt_total != 0)
-    fix_data['speed'] = OpenLayers.Util.distVincenty(loc_next, loc_prev) * 1000 / dt_total;
+    fix_data['speed'] = OpenLayers.Util.distVincenty(
+        loc_next, loc_prev) * 1000 / dt_total;
 
   var h_prev = flights[id].h[index];
   var h_next = flights[id].h[index + 1];
@@ -813,10 +828,11 @@ function hoverMap() {
     var loc = map.getLonLatFromPixel(pixel);
 
     // search for a aircraft position within the bounding box
-    var nearest = searchForPlane(new OpenLayers.Bounds(ll.lon, ll.lat, ur.lon, ur.lat), loc, hoverTolerance);
+    var nearest = searchForPlane(new OpenLayers.Bounds(
+        ll.lon, ll.lat, ur.lon, ur.lat), loc, hoverTolerance);
 
-    // if there's a aircraft within the bounding box, show the plane icon and draw
-    // a position marker on the linechart.
+    // if there's a aircraft within the bounding box, show the plane icon
+    // and draw a position marker on the linechart.
     if (nearest != null) {
       // calculate time
       var flight = flights[nearest.fid];
@@ -852,13 +868,15 @@ function searchForPlane(within, loc, hoverTolerance) {
   // circle throu all flights visible in viewport
   for (var fid = 0; fid < flights.length; fid++) {
     var flight = flights[fid].geo;
+    var geometries = flight.partitionedGeometries;
 
-    for (var part_geo = 0; part_geo < flight.partitionedGeometries.length; part_geo++) {
-      var components = flight.partitionedGeometries[part_geo].components;
+    for (var part_geo = 0; part_geo < geometries.length; part_geo++) {
+      var components = geometries[part_geo].components;
 
       for (var i = 1, len = components.length; i < len; i++) {
-        // check if the current vector between two points intersects our "within" bounds
-        // if so, process this vector in the next step (possible_solutions)
+        // check if the current vector between two points intersects our
+        // "within" bounds if so, process this vector in the next step
+        // (possible_solutions)
         var vector = new OpenLayers.Bounds();
         vector.bottom = Math.min(components[i - 1].y,
                                  components[i].y);
@@ -883,21 +901,35 @@ function searchForPlane(within, loc, hoverTolerance) {
   if (possible_solutions.length == 0) return null;
 
   // calculate map resolution (meters per pixel) at mouse location
-  var loc_epsg4326 = loc.clone().transform(map.getProjectionObject(), new OpenLayers.Projection('EPSG:4326'));
-  var resolution = map.getResolution() * Math.cos(Math.PI / 180 * loc_epsg4326.lat);
+  var loc_epsg4326 = loc.clone().transform(
+      map.getProjectionObject(), new OpenLayers.Projection('EPSG:4326'));
+  var resolution = map.getResolution() * Math.cos(
+      Math.PI / 180 * loc_epsg4326.lat);
 
   // find nearest distance between loc and vectors in possible_solutions
   var nearest, distance = Math.pow(hoverTolerance * resolution, 2);
 
   for (var i = 0; i < possible_solutions.length; i++) {
-    for (var j = possible_solutions[i].from + 1; j <= possible_solutions[i].to; j++) {
-      var distToSegment = distanceToSegmentSquared({x: loc.lon, y: loc.lat},
-        { x1: flights[possible_solutions[i].fid].geo.components[j - 1].x, y1: flights[possible_solutions[i].fid].geo.components[j - 1].y,
-          x2: flights[possible_solutions[i].fid].geo.components[j].x, y2: flights[possible_solutions[i].fid].geo.components[j].y });
+    for (var j = possible_solutions[i].from + 1; j <= possible_solutions[i].to;
+        j++) {
+      var distToSegment = distanceToSegmentSquared({
+          x: loc.lon,
+          y: loc.lat
+        }, {
+          x1: flights[possible_solutions[i].fid].geo.components[j - 1].x,
+          y1: flights[possible_solutions[i].fid].geo.components[j - 1].y,
+          x2: flights[possible_solutions[i].fid].geo.components[j].x,
+          y2: flights[possible_solutions[i].fid].geo.components[j].y
+        });
 
       if (distToSegment.distance < distance) {
         distance = distToSegment.distance;
-        nearest = { from: j - 1, to: j, along: distToSegment.along, fid: possible_solutions[i].fid};
+        nearest = {
+          from: j - 1,
+          to: j,
+          along: distToSegment.along,
+          fid: possible_solutions[i].fid
+        };
       }
     }
   }
@@ -986,7 +1018,8 @@ function initPhasesTable(id) {
 
 function highlightFlightPhase(table_row) {
   var start = parseFloat(table_row.children('td.start').attr('data-content'));
-  var duration = parseFloat(table_row.children('td.duration').attr('data-content'));
+  var duration = parseFloat(
+      table_row.children('td.duration').attr('data-content'));
 
   // the phases table should contain only phases of our first flight only
   var flight = flights[0];
@@ -1010,8 +1043,10 @@ function highlightFlightPhase(table_row) {
   var phases_layer = new OpenLayers.Layer.Vector('Flight Phases');
   map.addLayer(phases_layer);
 
-  var start_point = new OpenLayers.Geometry.Point(flight.lonlat[start_index].lon, flight.lonlat[start_index].lat)
-                        .transform(new OpenLayers.Projection('EPSG:4326'), map.getProjectionObject());
+  var start_point = new OpenLayers.Geometry.Point(
+      flight.lonlat[start_index].lon, flight.lonlat[start_index].lat)
+      .transform(new OpenLayers.Projection('EPSG:4326'),
+                 map.getProjectionObject());
   phases_layer.addFeatures(new OpenLayers.Feature.Vector(start_point, {}, {
     externalGraphic: '/images/OpenLayers/marker-green.png',
     graphicHeight: 21,
@@ -1020,8 +1055,10 @@ function highlightFlightPhase(table_row) {
     graphicYOffset: -21
   }));
 
-  var end_point = new OpenLayers.Geometry.Point(flight.lonlat[end_index].lon, flight.lonlat[end_index].lat)
-                        .transform(new OpenLayers.Projection('EPSG:4326'), map.getProjectionObject());
+  var end_point = new OpenLayers.Geometry.Point(
+      flight.lonlat[end_index].lon, flight.lonlat[end_index].lat)
+      .transform(new OpenLayers.Projection('EPSG:4326'),
+                 map.getProjectionObject());
   phases_layer.addFeatures(new OpenLayers.Feature.Vector(end_point, {}, {
     externalGraphic: '/images/OpenLayers/marker.png',
     graphicHeight: 21,

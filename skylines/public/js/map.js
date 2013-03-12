@@ -24,7 +24,9 @@ function initOpenLayers(id, airspace_tile_url) {
 
   map.addControl(new OpenLayers.Control.Zoom());
   map.addControl(new OpenLayers.Control.Navigation({documentDrag: true}));
-  map.addControl(new OpenLayers.Control.KeyboardDefaults({observeElement: map.div}));
+  map.addControl(new OpenLayers.Control.KeyboardDefaults({
+    observeElement: map.div
+  }));
   map.addControl(new OpenLayers.Control.Attribution());
   map.addControl(new OpenLayers.Control.ScaleLine({geodesic: true}));
 
@@ -40,7 +42,8 @@ function initOpenLayers(id, airspace_tile_url) {
   addEmptyLayer();
 
   map.setCenter(new OpenLayers.LonLat(30, 0).
-    transform(new OpenLayers.Projection('EPSG:4326'), map.getProjectionObject()),
+    transform(new OpenLayers.Projection('EPSG:4326'),
+              map.getProjectionObject()),
     9);
 
   map.addControl(new GraphicLayerSwitcher());
@@ -98,10 +101,13 @@ function addAirspaceLayers(airspace_tile_url) {
  * Add the maps-for-free shaded relief layer to the map
  */
 function addReliefLayer() {
-  var relief = new OpenLayers.Layer.XYZ('Shaded Relief', 'http://maps-for-free.com/layer/relief/z${z}/row${y}/${z}_${x}-${y}.jpg', {
-      sphericalMercator: true,
-      numZoomLevels: 12,
-      attribution: 'SRTM relief maps from <a target="_blank" href="http://maps-for-free.com/">maps-for-free.com</a>'
+  var url =
+      'http://maps-for-free.com/layer/relief/z${z}/row${y}/${z}_${x}-${y}.jpg';
+  var relief = new OpenLayers.Layer.XYZ('Shaded Relief', url, {
+    sphericalMercator: true,
+    numZoomLevels: 12,
+    attribution: 'SRTM relief maps from <a target="_blank" ' +
+                  'href="http://maps-for-free.com/">maps-for-free.com</a>'
   });
 
   map.addLayer(relief);
