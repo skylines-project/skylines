@@ -29,10 +29,10 @@ testpkgs = [
 ]
 
 install_requires = [
+    "WebTest < 2.0",
+    "WebOb == 1.1.1",
     "TurboGears2",
     "tg.devtools",
-    "WebOb==1.1.1",
-    "WebTest < 2.0"
     "Genshi",
     "zope.sqlalchemy >= 0.4",
     "repoze.tm2 >= 1.0a5",
