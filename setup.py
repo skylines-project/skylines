@@ -50,10 +50,6 @@ install_requires = [
     "jinja2"
 ]
 
-if sys.version_info[:2] == (2, 4):
-    testpkgs.extend(['hashlib', 'pysqlite'])
-    install_requires.extend(['hashlib', 'pysqlite'])
-
 setup(
     name='SkyLines',
     version='0.1',
