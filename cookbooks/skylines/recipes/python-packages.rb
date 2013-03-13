@@ -34,8 +34,8 @@ include_recipe "build-essential"
 include_recipe "postgresql::libpq"
 
 # install python packages
-execute "python setup.py develop" do
-	cwd "/vagrant" 
+execute "pip install -r requirements.txt" do
+	cwd "/vagrant"
 	action :run
 end
 

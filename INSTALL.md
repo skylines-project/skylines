@@ -15,7 +15,7 @@ Now that you have the necessary tools it is time to create and start the virtual
 
     # download necessary chef cookbooks
     librarian-chef install
-    
+
     # create and start virtual machine
     vagrant up
 
@@ -33,7 +33,7 @@ Since the Vagrant environment is based on Chef, it should be possible to run the
 
 First of all make sure you have [Python](http://www.python.org/) installed! After that install the required Python packages to run *SkyLines* using the setup.py script:
 
-    $ python setup.py develop
+    $ pip install -r requirements.txt
 
 *(You might have to install the additional debian packages `libxml2-dev`, `libxslt1-dev` and `python-dev` for the `lxml` dependency)*
 
@@ -73,7 +73,7 @@ In the last chapter you have setup the database server and the `skylines` databa
 
     $ paster setup-app development.ini
 
-If you have set up your environment with Vagrant, you must ssh into the virtual machine and run the previous command from within the ```/vagrant``` directory. 
+If you have set up your environment with Vagrant, you must ssh into the virtual machine and run the previous command from within the ```/vagrant``` directory.
 Alternatively, you can run:
 
     vagrant ssh --command "paster setup-app /vagrant/development.ini"
