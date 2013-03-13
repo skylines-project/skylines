@@ -9,46 +9,8 @@ except ImportError:
     use_setuptools()
     from setuptools import setup, find_packages
 
-testpkgs = [
-    'WebTest >= 1.2.3',
-    'nose',
-    'coverage',
-    'wsgiref',
-    'repoze.who-testutil >= 1.0.1',
-    'polib',
-    'zope.testbrowser'
-]
-
-install_requires = [
-    "WebTest < 2.0",
-    "WebOb == 1.1.1",
-    "TurboGears2",
-    "tg.devtools",
-    "Genshi",
-    "zope.sqlalchemy >= 0.4",
-    "repoze.tm2 >= 1.0a5",
-    "sqlalchemy < 0.8",
-    "repoze.what >= 1.0.8",
-    "repoze.who-friendlyform >= 1.0.4",
-    "repoze.what-pylons >= 1.0",
-    "Pylons==1.0",
-    "repoze.who==1.0.19",
-    "tgext.admin >= 0.3.11",
-    "repoze.what-quickstart>=1.0.9",
-    "repoze.what.plugins.sql>=1.0.1",
-    "tw.forms",
-    "simplejson",
-    "skylinespolyencode",
-    "psycopg2",
-    "geoalchemy",
-    "crc16",
-    "markdown",
-    "pytz",
-    "webassets",
-    "pyyaml",
-    "cssmin",
-    "jinja2"
-]
+requirements = open('requirements.txt').readlines()
+test_requirements = requirements + open('test-requirements.txt').readlines()
 
 setup(
     name='SkyLines',
@@ -60,10 +22,10 @@ setup(
     setup_requires=["PasteScript >= 1.7"],
     paster_plugins=['PasteScript', 'Pylons', 'TurboGears2', 'tg.devtools'],
     packages=find_packages(exclude=['ez_setup']),
-    install_requires=install_requires,
+    install_requires=requirements,
     include_package_data=True,
     test_suite='nose.collector',
-    tests_require=testpkgs,
+    tests_require=test_requirements,
     package_data={'skylines': ['i18n/*/LC_MESSAGES/*.mo',
                                'templates/*/*',
                                'public/*/*']},

@@ -1,0 +1,7 @@
+nose
+coverage
+wsgiref
+repoze.who-testutil>=1.0.1
+polib
+zope.testbrowser
+http://closure-linter.googlecode.com/files/closure_linter-latest.tar.gz
