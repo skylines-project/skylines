@@ -35,8 +35,15 @@ pg_user "vagrant" do
   privileges :login => true
 end
 
-# create database
+# create databases
 pg_database "skylines" do
+  owner "vagrant"
+  encoding "utf8"
+  template "template0"
+  locale "en_US.UTF8"
+end
+
+pg_database "skylines_test" do
   owner "vagrant"
   encoding "utf8"
   template "template0"
@@ -45,6 +52,11 @@ end
 
 # add extensions to database
 pg_database_extensions "skylines" do
+  extensions ["fuzzystrmatch"]
+  postgis true
+end
+
+pg_database_extensions "skylines_test" do
   extensions ["fuzzystrmatch"]
   postgis true
 end
