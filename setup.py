@@ -1,12 +1,4 @@
 #!/usr/bin/python
-# -*- coding: utf-8 -*-
-#quckstarted Options:
-#
-# sqlalchemy: True
-# auth:       sqlalchemy
-# mako:       False
-#
-#
 
 import sys
 
