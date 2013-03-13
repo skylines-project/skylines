@@ -1,7 +1,5 @@
 #!/usr/bin/python
 
-import sys
-
 try:
     from setuptools import setup, find_packages
 except ImportError:
