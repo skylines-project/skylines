@@ -1,0 +1,24 @@
+language: python
+
+python:
+  - 2.7
+
+services:
+  - postgresql
+
+install:
+  - sudo apt-get install postgresql-9.1-postgis postgresql-contrib-9.1 -q > /dev/null
+  - pip install -e . > /dev/null
+  - pip install -r test-requirements.txt > /dev/null
+
+before_script:
+  - psql -c 'create database skylines_test;' -U postgres > /dev/null
+  - psql -d skylines_test -f /usr/share/postgresql/9.1/contrib/postgis-1.5/postgis.sql -U postgres > /dev/null
+  - psql -d skylines_test -f /usr/share/postgresql/9.1/contrib/postgis-1.5/spatial_ref_sys.sql -U postgres > /dev/null
+  - psql -d skylines_test -c 'create extension fuzzystrmatch;' -U postgres > /dev/null
+
+script:
+  - nosetests -v
+
+notifications:
+  email: false
