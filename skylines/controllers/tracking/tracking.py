@@ -87,18 +87,19 @@ class TrackingController(BaseController):
 
         tracking_delay = cast(cast(User.tracking_delay, String) + ' minutes', Interval)
 
-        subq = DBSession.query(TrackingFix.id,
-                               row_number.label('row_number')) \
-                .outerjoin(TrackingFix.pilot) \
-                .filter(TrackingFix.time >= datetime.utcnow() - max_age) \
-                .filter(TrackingFix.time <= datetime.utcnow() - tracking_delay) \
-                .filter(TrackingFix.location_wkt != None) \
-                .subquery()
+        subq = DBSession \
+            .query(TrackingFix.id, row_number.label('row_number')) \
+            .outerjoin(TrackingFix.pilot) \
+            .filter(TrackingFix.time >= datetime.utcnow() - max_age) \
+            .filter(TrackingFix.time <= datetime.utcnow() - tracking_delay) \
+            .filter(TrackingFix.location_wkt is not None) \
+            .subquery()
 
-        query = DBSession.query(TrackingFix) \
-                .options(joinedload(TrackingFix.pilot)) \
-                .filter(TrackingFix.id == subq.c.id) \
-                .filter(subq.c.row_number == 1) \
-                .order_by(desc(TrackingFix.time))
+        query = DBSession \
+            .query(TrackingFix) \
+            .options(joinedload(TrackingFix.pilot)) \
+            .filter(TrackingFix.id == subq.c.id) \
+            .filter(subq.c.row_number == 1) \
+            .order_by(desc(TrackingFix.time))
 
         return query

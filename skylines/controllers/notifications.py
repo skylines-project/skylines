@@ -61,7 +61,7 @@ class NotificationsController(BaseController):
 
         query = DBSession.query(Notification) \
                          .filter(Notification.recipient == request.identity['user']) \
-                         .filter(Notification.time_read == None) \
+                         .filter(Notification.time_read is None) \
                          .options(joinedload(Notification.sender)) \
                          .options(joinedload(Notification.recipient)) \
                          .options(joinedload(Notification.flight)) \
@@ -74,7 +74,7 @@ class NotificationsController(BaseController):
         pilot_flights = defaultdict(list)
         for notification in query.all():
             if (notification.type == Notification.NT_FLIGHT and
-                'type' not in kwargs):
+                    'type' not in kwargs):
                 pilot_flights[notification.sender_id].append(notification)
             else:
                 notifications.append(dict(grouped=False,

@@ -111,7 +111,7 @@ def get_contest_traces(flight, encoder):
         fixes = map(lambda x: (x.longitude, x.latitude), contest_trace.locations)
         times = []
         for time in contest_trace.times:
-            times.append(flight.takeoff_time.hour * 3600 + flight.takeoff_time.minute * 60 + flight.takeoff_time.second + \
+            times.append(flight.takeoff_time.hour * 3600 + flight.takeoff_time.minute * 60 + flight.takeoff_time.second +
                          (time - flight.takeoff_time).days * 86400 + (time - flight.takeoff_time).seconds)
 
         contest_traces.append(dict(name=contest['contest_type'] + " " + contest['trace_type'],
@@ -218,17 +218,17 @@ class FlightController(BaseController):
         if not trace:
             raise HTTPNotFound
 
-        return dict(encoded = trace['encoded'],
-                    num_levels = trace['fixes']['numLevels'],
-                    zoom_levels = trace['zoom_levels'],
-                    barogram_t = trace['barogram_t'],
-                    barogram_h = trace['barogram_h'],
-                    enl = trace['enl'],
-                    contests = trace['contests'],
-                    sfid = self.flight.id,
-                    additional = dict(
+        return dict(encoded=trace['encoded'],
+                    num_levels=trace['fixes']['numLevels'],
+                    zoom_levels=trace['zoom_levels'],
+                    barogram_t=trace['barogram_t'],
+                    barogram_h=trace['barogram_h'],
+                    enl=trace['enl'],
+                    contests=trace['contests'],
+                    sfid=self.flight.id,
+                    additional=dict(
                         registration=self.flight.registration,
-                        competition_id=self.flight.competition_id) )
+                        competition_id=self.flight.competition_id))
 
     @without_trailing_slash
     @expose('generic/form.jinja')

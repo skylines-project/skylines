@@ -84,7 +84,9 @@ class SelectClubForm(EditableForm):
     __model__ = User
     __hide_fields__ = ['id']
     __limit_fields__ = ['club']
-    __field_widget_args__ = { 'club': dict(label_text=l_('Club')) }
+    __field_widget_args__ = {
+        'club': dict(label_text=l_('Club'))
+    }
 
     club = ClubSelectField
 
@@ -96,7 +98,9 @@ class NewClubForm(AddRecordForm):
     __base_widget_type__ = BootstrapForm
     __model__ = Club
     __limit_fields__ = ['name']
-    __field_widget_args__ = { 'name': dict(label_text=l_('Name')) }
+    __field_widget_args__ = {
+        'name': dict(label_text=l_('Name'))
+    }
 
     name = TextField
 
@@ -179,34 +183,45 @@ class EditUserForm(EditableForm):
 
 edit_user_form = EditUserForm(DBSession)
 
-recover_email_form = BootstrapForm('recover_email_form',
-                                   submit_text=l_("Recover Password"),
-                                   action='recover_email',
-                                   children=[
-    TextField('email_address', validator=Email(not_empty=True),
-              label_text=l_('eMail Address'))
-])
+recover_email_form = BootstrapForm(
+    'recover_email_form',
+    submit_text=l_("Recover Password"),
+    action='recover_email',
+    children=[
+        TextField('email_address',
+                  validator=Email(not_empty=True),
+                  label_text=l_('eMail Address'))
+    ]
+)
 
-recover_password_form = BootstrapForm('recover_password_form',
-                                      submit_text=l_("Recover Password"),
-                                      action='recover_post',
-                                      validator=user_validator,
-                                      children=[
-    HiddenField('key'),
-    PasswordField('password', validator=UnicodeString(min=6),
-                  label_text=l_('Password')),
-    PasswordField('verify_password', label_text=l_('Verify Password')),
-])
+recover_password_form = BootstrapForm(
+    'recover_password_form',
+    submit_text=l_("Recover Password"),
+    action='recover_post',
+    validator=user_validator,
+    children=[
+        HiddenField('key'),
+        PasswordField('password',
+                      validator=UnicodeString(min=6),
+                      label_text=l_('Password')),
+        PasswordField('verify_password',
+                      label_text=l_('Verify Password')),
+    ]
+)
 
-change_password_form = BootstrapForm('change_password_form',
-                                     submit_text=l_("Change Password"),
-                                     action='save_password',
-                                     validator=user_validator,
-                                     children=[
-    PasswordField('password', validator=UnicodeString(min=6),
-                  label_text=l_('Password')),
-    PasswordField('verify_password', label_text=l_('Verify Password')),
-])
+change_password_form = BootstrapForm(
+    'change_password_form',
+    submit_text=l_("Change Password"),
+    action='save_password',
+    validator=user_validator,
+    children=[
+        PasswordField('password',
+                      validator=UnicodeString(min=6),
+                      label_text=l_('Password')),
+        PasswordField('verify_password',
+                      label_text=l_('Verify Password')),
+    ]
+)
 
 
 def recover_user_password(user):
@@ -335,7 +350,7 @@ class UserController(BaseController):
         # assign the user's new club to all of his flights that have
         # no club yet
         flights = DBSession.query(Flight).outerjoin(IGCFile)
-        flights = flights.filter(and_(Flight.club_id == None,
+        flights = flights.filter(and_(Flight.club_id is None,
                                       or_(Flight.pilot_id == self.user.id,
                                           IGCFile.owner_id == self.user.id)))
         for flight in flights:
