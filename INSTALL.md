@@ -33,7 +33,7 @@ Since the Vagrant environment is based on Chef, it should be possible to run the
 
 First of all make sure you have [Python](http://www.python.org/) installed! After that install the required Python packages to run *SkyLines* using the setup.py script:
 
-    $ pip install -r requirements.txt
+    $ pip install -e .
 
 *(You might have to install the additional debian packages `libxml2-dev`, `libxslt1-dev` and `python-dev` for the `lxml` dependency)*
 
