@@ -3,7 +3,6 @@
 from datetime import datetime
 from sqlalchemy import Column, func
 from sqlalchemy.types import Integer, Float, String, DateTime
-from tg import config, request
 from geoalchemy.geometry import GeometryColumn, Point, GeometryDDL
 from geoalchemy.postgis import PGComparator
 from geoalchemy.functions import functions

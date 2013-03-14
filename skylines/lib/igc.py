@@ -3,7 +3,7 @@
 from __future__ import absolute_import
 
 import re
-from datetime import date, datetime
+from datetime import datetime
 from skylines.lib import base36
 from skylines.lib.string import import_ascii, import_alnum
 

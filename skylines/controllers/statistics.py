@@ -1,8 +1,6 @@
 # -*- coding: utf-8 -*-
 
 from tg import expose, request
-from webob.exc import HTTPNotFound
-from sqlalchemy.sql.expression import desc, or_, and_, between
 from sqlalchemy import func, distinct
 from skylines.controllers.base import BaseController
 from skylines.lib.dbutil import get_requested_record

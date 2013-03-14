@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from sqlalchemy.sql.expression import desc, asc
+from sqlalchemy.sql.expression import desc
 
 
 def GetDatatableRecords(kw, querySet, columnIndexNameMap):
