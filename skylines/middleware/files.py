@@ -8,7 +8,7 @@ from skylines.middleware import PrefixHandlerMiddleware
 
 
 class FilesMiddleware(PrefixHandlerMiddleware):
-    def __init__(self, mount_point = '/files'):
+    def __init__(self, mount_point='/files'):
         PrefixHandlerMiddleware.__init__(self, mount_point)
 
     def handle(self, path, environ, start_response):
