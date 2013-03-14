@@ -38,6 +38,3 @@ execute "pip install -r requirements.txt" do
 	cwd "/vagrant"
 	action :run
 end
-
-# fix the WebError package
-include_recipe "skylines::weberror-fix"
