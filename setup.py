@@ -8,7 +8,8 @@ except ImportError:
     from setuptools import setup, find_packages
 
 requirements = open('requirements.txt').readlines()
-test_requirements = requirements + open('test-requirements.txt').readlines()
+test_requirements = [r for r in open('test-requirements.txt').readlines()
+                     if not r.startswith('http')]
 
 setup(
     name='SkyLines',
@@ -23,7 +24,7 @@ setup(
     install_requires=requirements,
     include_package_data=True,
     test_suite='nose.collector',
-    tests_require=test_requirements,
+    tests_require=requirements + test_requirements,
     package_data={'skylines': ['i18n/*/LC_MESSAGES/*.mo',
                                'templates/*/*',
                                'public/*/*']},
