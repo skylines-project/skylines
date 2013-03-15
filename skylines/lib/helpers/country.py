@@ -9,6 +9,7 @@ __conversion_dict = {'en': 'gb',
                      'sv': 'se',
                      'zh_TW': 'cn'}
 
+
 def country_name(code):
     locale = Locale(tmpl_context.current_language['language_code'])
     return locale.territories[code.upper()]

@@ -2,7 +2,8 @@ import re
 
 from skylines.lib.waypoints.waypoint import Waypoint
 
-def __parse_line(line, bounds = None):
+
+def __parse_line(line, bounds=None):
     # Ignore comments
     if line.startswith('$'): return None
 
@@ -37,12 +38,12 @@ def __parse_line(line, bounds = None):
 
     # Parse and strip optional type identifier from short name
     if wp.short_name.endswith('1'):
-      wp.type = 'airport'
-      wp.short_name = wp.short_name[:5]
+        wp.type = 'airport'
+        wp.short_name = wp.short_name[:5]
 
     elif wp.short_name.endswith('2'):
-      wp.type = 'outlanding'
-      wp.short_name = wp.short_name[:5]
+        wp.type = 'outlanding'
+        wp.short_name = wp.short_name[:5]
 
     # Extract waypoint name
     wp.name = line[7:41].strip()
@@ -132,11 +133,12 @@ def __parse_line(line, bounds = None):
     wp.name = re.sub(r' {2,}', ' ', wp.name)
 
     # Extract country code
-    wp.country_code = line[60:62].strip();
+    wp.country_code = line[60:62].strip()
 
     return wp
 
-def parse_welt2000_waypoints(lines, bounds = None):
+
+def parse_welt2000_waypoints(lines, bounds=None):
     waypoint_list = []
 
     for line in lines:

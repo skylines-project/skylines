@@ -191,7 +191,6 @@ def save_phases(root, flight):
               'right': FlightPhase.CD_RIGHT,
               'total': FlightPhase.CD_TOTAL}
 
-
     for phdata in root['phases']:
         ph = FlightPhase()
         ph.flight = flight
@@ -239,6 +238,7 @@ def save_phases(root, flight):
     ph.count = phdata['count']
 
     DBSession.add(ph)
+
 
 def analyse_flight(flight):
     path = files.filename_to_path(flight.igc_file.filename)

@@ -1,11 +1,13 @@
 # -*- coding: utf-8 -*-
 """This library helps storing data files in the server file system."""
 
-import os, shutil
+import os
+import shutil
 import re
 from tg import config
 
 igc_filename_numbers_regex = re.compile(r"([\w_-]+)_(\d+)")
+
 
 def sanitise_filename(name):
     assert isinstance(name, str) or isinstance(name, unicode)
@@ -30,15 +32,18 @@ def sanitise_filename(name):
         name = 'empty'
     return name
 
+
 def filename_to_path(name):
     assert isinstance(name, str) or isinstance(name, unicode)
 
     return os.path.join(config['skylines.files.path'], name)
 
+
 def open_file(name):
     assert isinstance(name, str) or isinstance(name, unicode)
 
     return file(filename_to_path(name))
+
 
 def next_filename(name):
     assert isinstance(name, str) or isinstance(name, unicode)
@@ -48,13 +53,14 @@ def next_filename(name):
     match = igc_filename_numbers_regex.match(name[:i])
 
     try:
-        number=int(match.group(2))
-        return "%s_%i%s" % (match.group(1),number + 1,name[i:])
+        number = int(match.group(2))
+        return "%s_%i%s" % (match.group(1), number + 1, name[i:])
 
     except AttributeError:
         pass
 
-    return "%s_1%s" % (name[:i],name[i:])
+    return "%s_1%s" % (name[:i], name[i:])
+
 
 def add_file(name, f):
     assert isinstance(name, str) or isinstance(name, unicode)
@@ -70,6 +76,7 @@ def add_file(name, f):
     dest.close()
 
     return name
+
 
 def delete_file(name):
     assert isinstance(name, str) or isinstance(name, unicode)
