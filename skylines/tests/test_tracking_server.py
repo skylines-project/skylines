@@ -25,7 +25,7 @@ def teardown():
 
 
 class TrackingServerTest(TestCase):
-    HOST_PORT = ('localhost', 5597)
+    HOST_PORT = ('127.0.0.1', 5597)
 
     def setUp(self):
         server.TrackingServer.__init__ = Mock(return_value=None)
