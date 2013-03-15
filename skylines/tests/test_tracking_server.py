@@ -1,5 +1,3 @@
-import sys
-
 from unittest import TestCase
 from nose.tools import eq_, ok_
 from mock import Mock
@@ -109,5 +107,8 @@ class TrackingServerTest(TestCase):
 
 
 if __name__ == "__main__":
+    import sys
+    import nose
+
     sys.argv.append(__name__)
     nose.run()
