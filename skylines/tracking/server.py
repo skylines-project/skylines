@@ -37,6 +37,7 @@ TRAFFIC_FLAG_CLUB = 0x2
 
 USER_FLAG_NOT_FOUND = 0x1
 
+
 class TrackingServer(DatagramProtocol):
     def pingReceived(self, host, port, key, payload):
         if len(payload) != 8: return
@@ -82,8 +83,8 @@ class TrackingServer(DatagramProtocol):
             fix.time = datetime.datetime.combine(now.date(), time_of_day)
         elif now_s < 1800 and time_of_day_s > 23 * 3600:
             # midnight rollover occurred
-            fix.time = datetime.datetime.combine(now.date(), time_of_day) \
-                       - datetime.timedelta(days=1)
+            fix.time = (datetime.datetime.combine(now.date(), time_of_day) -
+                        datetime.timedelta(days=1))
         else:
             log.msg("ignoring time stamp from FIX packet: " + str(time_of_day))
 
@@ -132,15 +133,19 @@ class TrackingServer(DatagramProtocol):
         or_filters = []
 
         if flags & TRAFFIC_FLAG_FOLLOWEES:
-            subq = DBSession.query(Follower.destination_id) \
-                   .filter(Follower.source_id == pilot.id) \
-                   .subquery()
+            subq = DBSession \
+                .query(Follower.destination_id) \
+                .filter(Follower.source_id == pilot.id) \
+                .subquery()
+
             or_filters.append(TrackingFix.pilot_id.in_(subq))
 
         if flags & TRAFFIC_FLAG_CLUB:
-            subq = DBSession.query(User.id) \
-                   .filter(User.club_id == pilot.club_id) \
-                   .subquery()
+            subq = DBSession \
+                .query(User.id) \
+                .filter(User.club_id == pilot.club_id) \
+                .subquery()
+
             or_filters.append(TrackingFix.pilot_id.in_(subq))
 
         if len(or_filters) == 0:
@@ -150,8 +155,8 @@ class TrackingServer(DatagramProtocol):
             .distinct(TrackingFix.pilot_id) \
             .filter(and_(TrackingFix.time >= datetime.datetime.utcnow() - datetime.timedelta(hours=2),
                          TrackingFix.pilot_id != pilot.id,
-                         TrackingFix.location_wkt != None,
-                         TrackingFix.altitude != None,
+                         TrackingFix.location_wkt is not None,
+                         TrackingFix.altitude is not None,
                          or_(*or_filters))) \
             .order_by(TrackingFix.pilot_id, desc(TrackingFix.time)) \
             .limit(32)
