@@ -195,6 +195,7 @@ class TrackingServer(DatagramProtocol):
                                    0, 0, 0, 0, 0, 0)
             response = set_crc(response)
             self.transport.write(response, (host, port))
+            return
 
         name = user.display_name[:64].encode('utf8', 'ignore')
         club_id = user.club_id or 0
