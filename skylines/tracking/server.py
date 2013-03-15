@@ -109,8 +109,9 @@ class TrackingServer(DatagramProtocol):
         if flags & FLAG_ENL:
             fix.engine_noise_level = data[10]
 
-        log.msg(u"%s %s %s %s" % (fix.time and fix.time.time(), host, pilot,
-                                  fix.location))
+        log.msg("{} {} {} {}".format(
+            fix.time and fix.time.time(), host,
+            unicode(pilot).encode('utf8', 'ignore'), fix.location))
 
         DBSession.add(fix)
         try:
