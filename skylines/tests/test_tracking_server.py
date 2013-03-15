@@ -15,6 +15,7 @@ from skylines.lib.crc import set_crc, check_crc
 
 def setup():
     # Setup the database
+    DBSession.remove()
     transaction.begin()
     setup_app()
 
