@@ -44,16 +44,16 @@ class TestAuthentication(TestController):
 
         # Being redirected to the initially requested page:
         assert 'authtkt' in self.browser.cookies, \
-               "Session cookie wasn't defined: %s" % self.browser.cookies.items()
+            "Session cookie wasn't defined: %s" % self.browser.cookies.items()
         assert self.browser.url.startswith('http://localhost/flights/upload/'), \
-               self.browser.url
+            self.browser.url
 
     def test_voluntary_login(self):
         """Voluntary logins must work correctly"""
 
         # Going to the login form voluntarily:
         self.browser.open('/login')
-        form  = self.browser.getForm(index=1)
+        form = self.browser.getForm(index=1)
 
         # Submitting the login form:
         form.getControl(name='login').value = u'max+skylines@blarg.de'
@@ -62,19 +62,19 @@ class TestAuthentication(TestController):
 
         # Being redirected to the home page:
         assert 'authtkt' in self.browser.cookies, \
-               'Session cookie was not defined: %s' % self.browser.cookies.items()
+            'Session cookie was not defined: %s' % self.browser.cookies.items()
 
     def test_logout(self):
         """Logouts must work correctly"""
 
         # Logging in voluntarily the quick way:
-        self.browser.open('/login_handler?login={login}&password={password}'. \
-                          format(login=u'manager@somedomain.com',
-                                 password='managepass'))
+        self.browser.open('/login_handler?login={login}&password={password}'
+                          .format(login=u'manager@somedomain.com',
+                                  password='managepass'))
 
         # Check if the login succeeded
         assert 'authtkt' in self.browser.cookies, \
-               'Session cookie was not defined: %s' % self.browser.cookies.items()
+            'Session cookie was not defined: %s' % self.browser.cookies.items()
 
         # Logging out:
         self.browser.open('/logout_handler')
@@ -82,4 +82,4 @@ class TestAuthentication(TestController):
         # Finally, redirected to the home page:
         authtkt = self.browser.cookies.get('authtkt')
         assert not authtkt or authtkt == 'INVALID', \
-               'Session cookie was not deleted: %s' % self.browser.cookies.items()
+            'Session cookie was not deleted: %s' % self.browser.cookies.items()
