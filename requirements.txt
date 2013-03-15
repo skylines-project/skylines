@@ -26,3 +26,4 @@ webassets
 pyyaml
 cssmin
 jinja2
+twisted
