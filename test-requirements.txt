@@ -4,4 +4,5 @@ wsgiref
 repoze.who-testutil>=1.0.1
 polib
 zope.testbrowser
+pep8
 http://closure-linter.googlecode.com/files/closure_linter-latest.tar.gz
