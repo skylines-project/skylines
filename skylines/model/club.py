@@ -15,7 +15,7 @@ class Club(DeclarativeBase):
     name = Column(Unicode(255), unique=True, nullable=False)
 
     owner_id = Column(Integer, ForeignKey('tg_user.id', use_alter=True,
-                                           name="tg_user.id"))
+                                          name="tg_user.id"))
 
     owner = relation('User', primaryjoin=(owner_id == User.id))
 
@@ -36,5 +36,5 @@ class Club(DeclarativeBase):
 
     def is_writable(self, identity):
         return identity and \
-               (self.id == identity['user'].club_id or
-                'manage' in identity['permissions'])
+            (self.id == identity['user'].club_id or
+             'manage' in identity['permissions'])
