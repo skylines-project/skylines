@@ -1,9 +1,9 @@
-nose
-coverage
-wsgiref
-repoze.who-testutil>=1.0.1
-polib
-zope.testbrowser
-mock
-pep8
+nose==1.2.1
+coverage==3.6
+wsgiref==0.1.2
+repoze.who-testutil==1.0.1
+polib==1.0.3
+zope.testbrowser==4.0.2
+mock==1.0.1
+pep8==1.4.5
 http://closure-linter.googlecode.com/files/closure_linter-latest.tar.gz
