@@ -5,7 +5,7 @@ tg.devtools==2.2.2
 Genshi==0.7
 zope.sqlalchemy==0.7.2
 repoze.tm2==1.0
-sqlalchemy==0.7.9
+sqlalchemy==0.8.0
 repoze.what==1.0.9
 repoze.who-friendlyform==1.0.8
 repoze.what-pylons==1.0
