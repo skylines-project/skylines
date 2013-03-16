@@ -86,7 +86,7 @@ class Flight(DeclarativeBase):
 
     @index_score.expression
     def index_score(cls):
-        return case([(AircraftModel.dmst_index > 0,  cls.olc_plus_score * 100 / AircraftModel.dmst_index)], else_=cls.olc_plus_score)
+        return case([(AircraftModel.dmst_index > 0, cls.olc_plus_score * 100 / AircraftModel.dmst_index)], else_=cls.olc_plus_score)
 
     @year.expression
     def year(cls):
@@ -132,14 +132,14 @@ class Flight(DeclarativeBase):
 
     def is_writable(self, identity):
         return identity and \
-               (self.igc_file.owner_id == identity['user'].id or
-                self.pilot_id == identity['user'].id or
-                'manage' in identity['permissions'])
+            (self.igc_file.owner_id == identity['user'].id or
+             self.pilot_id == identity['user'].id or
+             'manage' in identity['permissions'])
 
     def may_delete(self, identity):
         return identity and \
-               (self.igc_file.owner_id == identity['user'].id or
-               'manage' in identity['permissions'])
+            (self.igc_file.owner_id == identity['user'].id or
+             'manage' in identity['permissions'])
 
     @classmethod
     def get_largest(cls):
@@ -148,10 +148,11 @@ class Flight(DeclarativeBase):
 
     def get_optimised_contest_trace(self, contest_type, trace_type):
         from skylines.model.trace import Trace
-        query = DBSession.query(Trace) \
-                    .filter(Trace.contest_type == contest_type) \
-                    .filter(Trace.trace_type == trace_type) \
-                    .filter(Trace.flight == self).first()
+        query = DBSession \
+            .query(Trace) \
+            .filter(Trace.contest_type == contest_type) \
+            .filter(Trace.trace_type == trace_type) \
+            .filter(Trace.flight == self).first()
         return query
 
     def get_contest_speed(self, contest_type, trace_type):

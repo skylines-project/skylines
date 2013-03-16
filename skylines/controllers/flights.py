@@ -19,14 +19,14 @@ from skylines.lib.dbutil import get_requested_record, get_requested_record_list
 
 
 class FlightsController(BaseController):
-    def __do_list(self, tab, kw, date=None, pilot=None, club=None, airport=None, \
+    def __do_list(self, tab, kw, date=None, pilot=None, club=None, airport=None,
                   pinned=None, filter=None, columns=None):
         pilot_alias = aliased(User, name='pilot')
         owner_alias = aliased(User, name='owner')
 
-        subq = DBSession.query(FlightComment.flight_id,
-                               func.count('*').label('count')) \
-               .group_by(FlightComment.flight_id).subquery()
+        subq = DBSession \
+            .query(FlightComment.flight_id, func.count('*').label('count')) \
+            .group_by(FlightComment.flight_id).subquery()
 
         flights = DBSession.query(Flight, subq.c.count) \
             .outerjoin(Flight.igc_file) \
@@ -211,7 +211,7 @@ class FlightsController(BaseController):
         if not request.identity:
             raise HTTPNotFound
 
-        f = and_(Flight.pilot_id == None,
+        f = and_(Flight.pilot_id is None,
                  IGCFile.owner == request.identity['user'])
         return self.__do_list('unassigned', kw, filter=f)
 
@@ -306,12 +306,12 @@ class FlightsController(BaseController):
     def igc_headers(self, **kwargs):
         """Hidden method that parses all missing IGC headers."""
         igc_files = DBSession.query(IGCFile)
-        igc_files = igc_files.filter(or_(IGCFile.logger_manufacturer_id == None,
-                                         IGCFile.logger_id == None,
-                                         IGCFile.model == None,
-                                         IGCFile.registration == None,
-                                         IGCFile.competition_id == None,
-                                         IGCFile.date_utc == None))
+        igc_files = igc_files.filter(or_(IGCFile.logger_manufacturer_id is None,
+                                         IGCFile.logger_id is None,
+                                         IGCFile.model is None,
+                                         IGCFile.registration is None,
+                                         IGCFile.competition_id is None,
+                                         IGCFile.date_utc is None))
 
         for igc_file in igc_files:
             igc_file.update_igc_headers()

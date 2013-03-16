@@ -36,20 +36,22 @@ from skylines.lib.formatter import units
 
 # This is the association table for the many-to-many relationship between
 # groups and permissions. This is required by repoze.what.
-group_permission_table = Table('tg_group_permission', metadata,
+group_permission_table = Table(
+    'tg_group_permission', metadata,
     Column('group_id', Integer, ForeignKey('tg_group.id',
-        onupdate="CASCADE", ondelete="CASCADE"), primary_key=True),
+           onupdate="CASCADE", ondelete="CASCADE"), primary_key=True),
     Column('permission_id', Integer, ForeignKey('tg_permission.id',
-        onupdate="CASCADE", ondelete="CASCADE"), primary_key=True)
+           onupdate="CASCADE", ondelete="CASCADE"), primary_key=True)
 )
 
 # This is the association table for the many-to-many relationship between
 # groups and members - this is, the memberships. It's required by repoze.what.
-user_group_table = Table('tg_user_group', metadata,
+user_group_table = Table(
+    'tg_user_group', metadata,
     Column('user_id', Integer, ForeignKey('tg_user.id',
-        onupdate="CASCADE", ondelete="CASCADE"), primary_key=True),
+           onupdate="CASCADE", ondelete="CASCADE"), primary_key=True),
     Column('group_id', Integer, ForeignKey('tg_group.id',
-        onupdate="CASCADE", ondelete="CASCADE"), primary_key=True)
+           onupdate="CASCADE", ondelete="CASCADE"), primary_key=True)
 )
 
 
@@ -243,9 +245,9 @@ class User(DeclarativeBase):
 
     def is_writable(self, identity):
         return identity and \
-               (self.id == identity['user'].id or
-                (self.password is None and self.club_id == identity['user'].club_id) or
-                'manage' in identity['permissions'])
+            (self.id == identity['user'].id or
+             (self.password is None and self.club_id == identity['user'].club_id) or
+             'manage' in identity['permissions'])
 
     def follows(self, other):
         assert isinstance(other, User)

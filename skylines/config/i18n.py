@@ -7,6 +7,7 @@ __all__ = ['language_info', 'update', 'languages']
 
 __languages = []
 
+
 def language_info(language):
     country_code = language_to_country_code(language)
     locale = Locale.parse(language)
@@ -17,6 +18,7 @@ def language_info(language):
                 country_code=country_code,
                 local_name=local_name,
                 english_name=english_name)
+
 
 def update():
     global __languages
@@ -32,6 +34,7 @@ def update():
     __languages.sort(key=lambda lang: lang['local_name'])
 
     return __languages
+
 
 def languages():
     return __languages

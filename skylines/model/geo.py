@@ -8,7 +8,7 @@ wkt_re = re.compile(r'POINT\(([\+\-\d.]+) ([\+\-\d.]+)\)')
 
 
 class Location(object):
-    def __init__(self, latitude = None, longitude = None):
+    def __init__(self, latitude=None, longitude=None):
         self.latitude = latitude
         self.longitude = longitude
 
@@ -21,15 +21,15 @@ class Location(object):
         if not match:
             return None
 
-        return Location(latitude = float(match.group(2)),
-                        longitude = float(match.group(1)))
+        return Location(latitude=float(match.group(2)),
+                        longitude=float(match.group(1)))
 
     def __str__(self):
         return self.to_wkt()
 
     @staticmethod
     def get_clustered_locations(location_column,
-                                threshold_radius = 1000, filter = None):
+                                threshold_radius=1000, filter=None):
         '''
         SELECT ST_AsText(
             ST_Centroid(

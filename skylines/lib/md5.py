@@ -2,6 +2,7 @@
 
 import hashlib
 
+
 def file_md5(f):
     """Return the hex MD5 digest of a file-like object."""
 

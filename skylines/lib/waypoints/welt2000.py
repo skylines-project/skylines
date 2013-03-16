@@ -4,6 +4,7 @@ import subprocess
 from tg import config
 from skylines.lib.waypoints.welt2000_reader import parse_welt2000_waypoints
 
+
 def __get_database_file(dir_data):
     path = os.path.join(dir_data, 'WELT2000.TXT')
 
@@ -23,7 +24,8 @@ def __get_database_file(dir_data):
     # Return path to the Welt2000 file
     return path
 
-def get_database(bounds = None):
+
+def get_database(bounds=None):
     # Get Welt2000 file
     path = __get_database_file(config['skylines.temporary_dir'])
 

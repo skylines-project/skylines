@@ -56,7 +56,7 @@ class Airport(DeclarativeBase):
             self.location_wkt = location.to_wkt()
 
     @classmethod
-    def by_location(cls, location, distance_threshold = 0.025):
+    def by_location(cls, location, distance_threshold=0.025):
         airport = DBSession.query(cls, functions.distance(cls.location_wkt, location.to_wkt()).label('distance'))\
             .order_by(functions.distance(cls.location_wkt, location.to_wkt())).first()
 

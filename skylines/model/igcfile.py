@@ -45,9 +45,9 @@ class IGCFile(DeclarativeBase):
 
     def is_writable(self, identity):
         return identity and \
-               (self.owner_id == identity['user'].id or
-                self.pilot_id == identity['user'].id or
-                'manage' in identity['permissions'])
+            (self.owner_id == identity['user'].id or
+             self.pilot_id == identity['user'].id or
+             'manage' in identity['permissions'])
 
     def may_delete(self, identity):
         return identity and 'manage' in identity['permissions']
@@ -80,15 +80,15 @@ class IGCFile(DeclarativeBase):
         from skylines.model.flight import Flight
 
         # try to find another flight with the same logger and use it's aircraft registration
-        if self.logger_id is not None \
-            and self.logger_manufacturer_id is not None:
+        if (self.logger_id is not None
+                and self.logger_manufacturer_id is not None):
             logger_id = self.logger_id
             logger_manufacturer_id = self.logger_manufacturer_id
 
             result = DBSession.query(Flight).outerjoin(IGCFile) \
-                .filter(func.upper(IGCFile.logger_manufacturer_id) == func.upper(logger_manufacturer_id)) \
-                .filter(func.upper(IGCFile.logger_id) == func.upper(logger_id)) \
-                .filter(Flight.registration != None) \
+                .filter(and_(func.upper(IGCFile.logger_manufacturer_id) == func.upper(logger_manufacturer_id),
+                             func.upper(IGCFile.logger_id) == func.upper(logger_id),
+                             Flight.registration is None)) \
                 .order_by(desc(Flight.id))
 
             if self.logger_manufacturer_id.startswith('X'):
@@ -117,15 +117,15 @@ class IGCFile(DeclarativeBase):
                 return result.model_id
 
         # try to find another flight with the same logger and use it's aircraft type
-        if self.logger_id is not None \
-            and self.logger_manufacturer_id is not None:
+        if (self.logger_id is not None
+                and self.logger_manufacturer_id is not None):
             logger_id = self.logger_id
             logger_manufacturer_id = self.logger_manufacturer_id
 
             result = DBSession.query(Flight).outerjoin(IGCFile) \
-                .filter(func.upper(IGCFile.logger_manufacturer_id) == func.upper(logger_manufacturer_id)) \
-                .filter(func.upper(IGCFile.logger_id) == func.upper(logger_id)) \
-                .filter(Flight.model_id != None) \
+                .filter(and_(func.upper(IGCFile.logger_manufacturer_id) == func.upper(logger_manufacturer_id),
+                             func.upper(IGCFile.logger_id) == func.upper(logger_id),
+                             Flight.model_id is None)) \
                 .order_by(desc(Flight.id))
 
             if self.logger_manufacturer_id.startswith('X'):
@@ -148,9 +148,10 @@ class IGCFile(DeclarativeBase):
 
             glider_type_clean = re.sub(r'[^a-z0-9]', '', glider_type)
 
-            result = DBSession.query(AircraftModel) \
-                .filter(and_( \
-                    func.regexp_replace(func.lower(AircraftModel.name), '[^a-z]', ' ').like(func.any(text_fragments)), \
+            result = DBSession \
+                .query(AircraftModel) \
+                .filter(and_(
+                    func.regexp_replace(func.lower(AircraftModel.name), '[^a-z]', ' ').like(func.any(text_fragments)),
                     func.regexp_replace(func.lower(AircraftModel.name), '[^0-9]', ' ').like(func.all(digit_fragments)))) \
                 .order_by(func.levenshtein(func.regexp_replace(func.lower(AircraftModel.name), '[^a-z0-9]', ''), glider_type_clean))
 
