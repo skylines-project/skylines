@@ -4,6 +4,8 @@ Welcome to *SkyLines*, the internet platform for sharing flights!
 
 This project is in an early stage of development.
 
+[![Build Status](https://travis-ci.org/Turbo87/Skylines.png)](https://travis-ci.org/Turbo87/Skylines)
+
 *SkyLines* is brought to you by the [XCSoar](http://www.xcsoar.org) project.
 It is free software; the source code is available [here](http://git.xcsoar.org/cgit/mirror/Skylines.git/)
 
