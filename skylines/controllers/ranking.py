@@ -17,11 +17,12 @@ class RankingController(BaseController):
 
     @staticmethod
     def __get_result(model, flight_field, **kw):
-        subq = DBSession.query(getattr(Flight, flight_field),
-                               func.count('*').label('count'),
-                               func.sum(Flight.index_score).label('total')) \
-               .group_by(getattr(Flight, flight_field)) \
-               .outerjoin(Flight.model)
+        subq = DBSession \
+            .query(getattr(Flight, flight_field),
+                   func.count('*').label('count'),
+                   func.sum(Flight.index_score).label('total')) \
+            .group_by(getattr(Flight, flight_field)) \
+            .outerjoin(Flight.model)
 
         if 'year' in kw:
             try:
@@ -36,10 +37,10 @@ class RankingController(BaseController):
 
         subq = subq.subquery()
 
-        result = DBSession.query(model, subq.c.count, subq.c.total,
-                                 over(func.rank(),
-                                      order_by=desc('total')).label('rank')) \
-                 .join((subq, getattr(subq.c, flight_field) == model.id))
+        result = DBSession \
+            .query(model, subq.c.count, subq.c.total,
+                   over(func.rank(), order_by=desc('total')).label('rank')) \
+            .join((subq, getattr(subq.c, flight_field) == model.id))
 
         result = result.order_by(desc('total'))
         return result

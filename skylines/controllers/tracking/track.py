@@ -12,8 +12,8 @@ from skylinespolyencode import SkyLinesPolyEncoder
 def get_flight_path2(pilot, last_update=None):
     query = DBSession.query(TrackingFix)
     query = query.filter(and_(TrackingFix.pilot == pilot,
-                              TrackingFix.location != None,
-                              TrackingFix.altitude != None,
+                              TrackingFix.location is not None,
+                              TrackingFix.altitude is not None,
                               TrackingFix.time >= datetime.utcnow() - timedelta(hours=12)))
     if pilot.tracking_delay > 0 and not pilot.is_readable(request.identity):
         query = query.filter(TrackingFix.time <= datetime.utcnow() - timedelta(minutes=pilot.tracking_delay))
@@ -27,8 +27,8 @@ def get_flight_path2(pilot, last_update=None):
     start_time = start_fix.time.hour * 3600 + start_fix.time.minute * 60 + start_fix.time.second
 
     if last_update:
-        query = query.filter(TrackingFix.time >= \
-            start_fix.time + timedelta(seconds=(last_update - start_time)))
+        query = query.filter(TrackingFix.time >= start_fix.time +
+                             timedelta(seconds=(last_update - start_time)))
 
     result = []
     for fix in query:

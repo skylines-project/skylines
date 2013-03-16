@@ -54,10 +54,17 @@ class ModelSelectField(SingleSelectField):
         d['options'] = options
         return SingleSelectField.update_params(self, d)
 
+file_field_validator = FieldStorageUploadConverter(
+    not_empty=True,
+    messages=dict(empty=_("Please add one or more IGC or ZIP files"))
+)
+
+file_field = MultiFileField(
+    'file', label_text=l_("IGC or ZIP file(s)"), validator=file_field_validator)
+
 upload_form = BootstrapForm('upload_form', submit_text="Upload", action='do', children=[
-    MultiFileField('file', label_text=l_("IGC or ZIP file(s)"),
-        validator=FieldStorageUploadConverter(not_empty=True, messages=dict(empty=_("Please add one or more IGC or ZIP files")))),
-    PilotSelectField('pilot', label_text=l_("Pilot")),
+    file_field,
+    PilotSelectField('pilot', label_text=l_("Pilot"))
 ])
 
 
@@ -210,9 +217,9 @@ class UploadController(BaseController):
         if not isinstance(competition_id_list, list):
             competition_id_list = [competition_id_list]
 
-        if flight_id_list is None \
-            or len(flight_id_list) != len(model_list) \
-            or len(flight_id_list) != len(registration_list):
+        if (flight_id_list is None
+                or len(flight_id_list) != len(model_list)
+                or len(flight_id_list) != len(registration_list)):
             flash(_('Sorry, some error happened when updating your flight(s). Please contact a administrator for help.'), 'warning')
             return redirect('/flights/today')
 

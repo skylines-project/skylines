@@ -1,6 +1,7 @@
 from tg import response
 from simplejson import dumps
 
+
 def jsonp(func):
     def jsonp_handler(*args, **kw):
         if 'callback' in kw:

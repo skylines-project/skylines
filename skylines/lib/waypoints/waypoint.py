@@ -1,5 +1,6 @@
 from skylines.model.geo import Location
 
+
 class Waypoint(Location):
     def __init__(self):
         self.altitude = 0
@@ -18,4 +19,3 @@ class Waypoint(Location):
                                        super(Waypoint, self).__str__(),
                                        self.altitude,
                                        self.type)
-

@@ -8,6 +8,7 @@ from skylines.model.base import DeclarativeBase
 from skylines.model.session import DBSession
 from skylines.model.auth import User
 
+
 class Follower(DeclarativeBase):
     __tablename__ = 'followers'
 
@@ -28,8 +29,9 @@ class Follower(DeclarativeBase):
         assert(isinstance(source, User))
         assert(isinstance(destination, User))
 
-        return DBSession.query(cls) \
-               .filter_by(source=source, destination=destination)
+        return DBSession \
+            .query(cls) \
+            .filter_by(source=source, destination=destination)
 
     @classmethod
     def follows(cls, source, destination):

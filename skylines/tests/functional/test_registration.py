@@ -9,7 +9,7 @@ class TestRegistration(TestController):
         # Check for link on start page
         link = self.browser.getLink(url='/users/new')
         assert link is not None, \
-               'No registration link found on %s' % self.browser.url
+            'No registration link found on %s' % self.browser.url
 
     def test_register_button(self):
         """User registration link is in the login page"""
@@ -18,7 +18,7 @@ class TestRegistration(TestController):
         self.browser.open('/login')
         link = self.browser.getLink(url='/users/new', index=1)
         assert link is not None, \
-               'No registration link found on %s' % self.browser.url
+            'No registration link found on %s' % self.browser.url
 
     def open_and_fill_register_form(self, email, name, password,
                                     verify_password=None):
@@ -45,7 +45,7 @@ class TestRegistration(TestController):
 
         user = User.by_email_address(email)
         assert user is not None, \
-               "The user could not be found: %s" % email
+            "The user could not be found: %s" % email
         assert user.email_address == email
         assert user.display_name == name
 
@@ -62,11 +62,11 @@ class TestRegistration(TestController):
         if check_user_exists:
             user = User.by_email_address(email)
             assert user is None, \
-                   "The user has been created by mistake: %s" % email
+                "The user has been created by mistake: %s" % email
 
         assert response in self.browser.contents, \
-               "String not found in response: %s\n%s" % \
-               (response, self.browser.contents)
+            "String not found in response: %s\n%s" % \
+            (response, self.browser.contents)
 
     def test_registration(self):
         """User registration works properly"""

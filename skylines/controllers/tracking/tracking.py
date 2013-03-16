@@ -2,7 +2,7 @@ from datetime import datetime, timedelta
 from tg import expose, request, cache
 from webob.exc import HTTPNotFound
 from sqlalchemy import func, over
-from sqlalchemy.sql.expression import desc, cast
+from sqlalchemy.sql.expression import desc, cast, and_
 from sqlalchemy.orm import joinedload
 from sqlalchemy.types import Interval, String
 from skylines.controllers.base import BaseController
@@ -87,18 +87,19 @@ class TrackingController(BaseController):
 
         tracking_delay = cast(cast(User.tracking_delay, String) + ' minutes', Interval)
 
-        subq = DBSession.query(TrackingFix.id,
-                               row_number.label('row_number')) \
-                .outerjoin(TrackingFix.pilot) \
-                .filter(TrackingFix.time >= datetime.utcnow() - max_age) \
-                .filter(TrackingFix.time <= datetime.utcnow() - tracking_delay) \
-                .filter(TrackingFix.location_wkt != None) \
-                .subquery()
+        subq = DBSession \
+            .query(TrackingFix.id, row_number.label('row_number')) \
+            .outerjoin(TrackingFix.pilot) \
+            .filter(and_(TrackingFix.time >= datetime.utcnow() - max_age,
+                         TrackingFix.time <= datetime.utcnow() - tracking_delay,
+                         TrackingFix.location_wkt is not None)) \
+            .subquery()
 
-        query = DBSession.query(TrackingFix) \
-                .options(joinedload(TrackingFix.pilot)) \
-                .filter(TrackingFix.id == subq.c.id) \
-                .filter(subq.c.row_number == 1) \
-                .order_by(desc(TrackingFix.time))
+        query = DBSession \
+            .query(TrackingFix) \
+            .options(joinedload(TrackingFix.pilot)) \
+            .filter(and_(TrackingFix.id == subq.c.id,
+                         subq.c.row_number == 1)) \
+            .order_by(desc(TrackingFix.time))
 
         return query

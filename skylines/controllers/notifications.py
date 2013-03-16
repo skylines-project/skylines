@@ -5,7 +5,7 @@ from tg import expose, request, redirect
 from tg.decorators import with_trailing_slash, without_trailing_slash
 from webob.exc import HTTPForbidden, HTTPNotImplemented
 from sqlalchemy.orm import joinedload
-from sqlalchemy.sql.expression import desc
+from sqlalchemy.sql.expression import desc, and_
 
 from skylines.controllers.base import BaseController
 from skylines.lib.dbutil import get_requested_record
@@ -60,8 +60,8 @@ class NotificationsController(BaseController):
             raise HTTPForbidden
 
         query = DBSession.query(Notification) \
-                         .filter(Notification.recipient == request.identity['user']) \
-                         .filter(Notification.time_read == None) \
+                         .filter(and_(Notification.recipient == request.identity['user'],
+                                      Notification.time_read is None)) \
                          .options(joinedload(Notification.sender)) \
                          .options(joinedload(Notification.recipient)) \
                          .options(joinedload(Notification.flight)) \
@@ -74,7 +74,7 @@ class NotificationsController(BaseController):
         pilot_flights = defaultdict(list)
         for notification in query.all():
             if (notification.type == Notification.NT_FLIGHT and
-                'type' not in kwargs):
+                    'type' not in kwargs):
                 pilot_flights[notification.sender_id].append(notification)
             else:
                 notifications.append(dict(grouped=False,

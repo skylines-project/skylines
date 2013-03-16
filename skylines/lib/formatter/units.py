@@ -57,17 +57,19 @@ unit_presets = (
       'lift_unit': u'kt',
       'altitude_unit': u'ft'
       }),
- )
+)
 
 
 def unitid(options, name):
     return [x[0] for x in options].index(name)
+
 
 def _get_setting(name, default=None):
     if request.identity:
         return getattr(request.identity['user'], name)
     else:
         return default
+
 
 def get_setting_name(name):
     setting = _get_setting(name)
@@ -86,6 +88,7 @@ def get_setting_name(name):
 
     return None
 
+
 def _format(units, name, default, value):
     assert isinstance(default, int)
 
@@ -94,11 +97,13 @@ def _format(units, name, default, value):
         setting = default
     return units[setting][1](float(value))
 
+
 def format_distance(value):
     """Formats a distance value [m] to a user-readable string."""
     if value is None: return None
 
     return _format(distance_units, 'distance_unit', 1, value)
+
 
 def format_speed(value):
     """Formats a speed value [m/s] to a user-readable string."""
@@ -106,11 +111,13 @@ def format_speed(value):
 
     return _format(speed_units, 'speed_unit', 1, value)
 
+
 def format_lift(value):
     """Formats vertical speed value [m/s/] to a user-readable string"""
     if value is None: return None
 
     return _format(lift_units, 'lift_unit', 0, value)
+
 
 def format_altitude(value):
     """Formats altitude value [m] to a user-readable string"""
