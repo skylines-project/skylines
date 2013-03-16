@@ -1,5 +1,5 @@
 import struct
-import datetime
+from datetime import datetime, time, timedelta
 from twisted.python import log
 from twisted.internet.protocol import DatagramProtocol
 from sqlalchemy import distinct
@@ -73,18 +73,18 @@ class TrackingServer(DatagramProtocol):
         # certain range
         time_of_day_ms = data[1] % (24 * 3600 * 1000)
         time_of_day_s = time_of_day_ms / 1000
-        time_of_day = datetime.time(time_of_day_s / 3600,
-                                    (time_of_day_s / 60) % 60,
-                                    time_of_day_s % 60,
-                                    (time_of_day_ms % 1000) * 1000)
-        now = datetime.datetime.utcnow()
+        time_of_day = time(time_of_day_s / 3600,
+                           (time_of_day_s / 60) % 60,
+                           time_of_day_s % 60,
+                           (time_of_day_ms % 1000) * 1000)
+        now = datetime.utcnow()
         now_s = ((now.hour * 60) + now.minute) * 60 + now.second
         if now_s - 1800 < time_of_day_s < now_s + 180:
-            fix.time = datetime.datetime.combine(now.date(), time_of_day)
+            fix.time = datetime.combine(now.date(), time_of_day)
         elif now_s < 1800 and time_of_day_s > 23 * 3600:
             # midnight rollover occurred
-            fix.time = (datetime.datetime.combine(now.date(), time_of_day) -
-                        datetime.timedelta(days=1))
+            fix.time = (datetime.combine(now.date(), time_of_day) -
+                        timedelta(days=1))
         else:
             log.msg("ignoring time stamp from FIX packet: " + str(time_of_day))
 
@@ -154,7 +154,7 @@ class TrackingServer(DatagramProtocol):
 
         query = DBSession.query(TrackingFix) \
             .distinct(TrackingFix.pilot_id) \
-            .filter(and_(TrackingFix.time >= datetime.datetime.utcnow() - datetime.timedelta(hours=2),
+            .filter(and_(TrackingFix.time >= datetime.utcnow() - timedelta(hours=2),
                          TrackingFix.pilot_id != pilot.id,
                          TrackingFix.location_wkt != None,
                          TrackingFix.altitude != None,
