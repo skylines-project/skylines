@@ -8,7 +8,7 @@ from skylines.tests import setup_app, teardown_db
 
 import struct
 from skylines.tracking import server
-from skylines.lib.crc import set_crc, check_crc
+from skylines.tracking.crc import set_crc, check_crc
 from skylines.lib.datetime import from_seconds_of_day
 from datetime import datetime
 from sqlalchemy.exc import SQLAlchemyError
