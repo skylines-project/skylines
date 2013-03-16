@@ -1,6 +1,6 @@
 from unittest import TestCase
 from nose.tools import eq_, ok_
-from mock import Mock
+from mock import Mock, patch
 
 import transaction
 from skylines.model import DBSession, TrackingFix
@@ -9,6 +9,7 @@ from skylines.tests import setup_app, teardown_db
 import struct
 from skylines.tracking import server
 from skylines.lib.crc import set_crc, check_crc
+from skylines.lib.datetime import from_seconds_of_day
 from datetime import datetime
 from sqlalchemy.exc import SQLAlchemyError
 
@@ -188,8 +189,16 @@ class TrackingServerTest(TestCase):
         # Create fake fix message
         message = self.create_fix_message(123456, 0)
 
-        # Send fake ping message
-        self.server.datagramReceived(message, self.HOST_PORT)
+        utcnow_return_value = datetime(year=2005, month=4, day=13)
+        with patch('skylines.tracking.server.datetime') as datetime_mock:
+            datetime_mock.combine.side_effect = \
+                lambda *args, **kw: datetime.combine(*args, **kw)
+
+            # Connect utcnow mockup
+            datetime_mock.utcnow.return_value = utcnow_return_value
+
+            # Send fake ping message
+            self.server.datagramReceived(message, self.HOST_PORT)
 
         # Check if the message was properly received and written to the database
         fixes = DBSession.query(TrackingFix).all()
@@ -199,6 +208,7 @@ class TrackingServerTest(TestCase):
         fix = fixes[0]
         eq_(fix.ip, self.HOST_PORT[0])
 
+        eq_(fix.time, utcnow_return_value)
         eq_(fix.location_wkt, None)
         eq_(fix.track, None)
         eq_(fix.ground_speed, None)
@@ -210,16 +220,26 @@ class TrackingServerTest(TestCase):
     def test_real_fix(self):
         """ Tracking server accepts real fixes """
 
+        utcnow_return_value = datetime(year=2013, month=1, day=1,
+                                       hour=12, minute=34, second=56)
+
         # Create fake fix message
-        now = datetime.utcnow()
+        now = utcnow_return_value
         now_s = ((now.hour * 60) + now.minute) * 60 + now.second
         message = self.create_fix_message(
             123456, now_s * 1000, latitude=52.7, longitude=7.52,
             track=234, ground_speed=33.25, airspeed=32., altitude=1234,
             vario=2.25, enl=10)
 
-        # Send fake ping message
-        self.server.datagramReceived(message, self.HOST_PORT)
+        with patch('skylines.tracking.server.datetime') as datetime_mock:
+            datetime_mock.combine.side_effect = \
+                lambda *args, **kw: datetime.combine(*args, **kw)
+
+            # Connect utcnow mockup
+            datetime_mock.utcnow.return_value = utcnow_return_value
+
+            # Send fake ping message
+            self.server.datagramReceived(message, self.HOST_PORT)
 
         # Check if the message was properly received and written to the database
         fixes = DBSession.query(TrackingFix).all()
@@ -229,6 +249,7 @@ class TrackingServerTest(TestCase):
         fix = fixes[0]
         eq_(fix.ip, self.HOST_PORT[0])
 
+        eq_(fix.time, utcnow_return_value)
         eq_(fix.location_wkt.coords(DBSession), [7.52, 52.7])
         eq_(fix.track, 234)
         eq_(fix.ground_speed, 33.25)
