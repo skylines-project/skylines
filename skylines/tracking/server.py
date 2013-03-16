@@ -56,14 +56,13 @@ class TrackingServer(DatagramProtocol):
 
     def fixReceived(self, host, key, payload):
         if len(payload) != 32: return
-        data = struct.unpack('!IIiiIHHHhhH', payload)
 
         pilot = User.by_tracking_key(key)
         if not pilot:
             log.err("No such pilot: %x" % key)
             return
 
-        flags = data[0]
+        data = struct.unpack('!IIiiIHHHhhH', payload)
 
         fix = TrackingFix()
         fix.ip = host
@@ -88,6 +87,7 @@ class TrackingServer(DatagramProtocol):
         else:
             log.msg("ignoring time stamp from FIX packet: " + str(time_of_day))
 
+        flags = data[0]
         if flags & FLAG_LOCATION:
             fix.location = Location(latitude=data[2] / 1000000.,
                                     longitude=data[3] / 1000000.)
@@ -123,16 +123,16 @@ class TrackingServer(DatagramProtocol):
 
     def trafficRequestReceived(self, host, port, key, payload):
         if len(payload) != 8: return
-        data = struct.unpack('!II', payload)
 
         pilot = User.by_tracking_key(key)
         if pilot is None:
             log.err("No such pilot: %d" % key)
             return
 
-        flags = data[0]
+        data = struct.unpack('!II', payload)
         or_filters = []
 
+        flags = data[0]
         if flags & TRAFFIC_FLAG_FOLLOWEES:
             subq = DBSession \
                 .query(Follower.destination_id) \
@@ -185,13 +185,13 @@ class TrackingServer(DatagramProtocol):
         """The client asks for the display name of a user account."""
 
         if len(payload) != 8: return
-        data = struct.unpack('!II', payload)
 
         pilot = User.by_tracking_key(key)
         if pilot is None:
             log.err("No such pilot: %d" % key)
             return
 
+        data = struct.unpack('!II', payload)
         user_id = data[0]
 
         user = DBSession.query(User).get(user_id)
