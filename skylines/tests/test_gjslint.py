@@ -20,13 +20,6 @@ JS_FILES = [
 ]
 
 
-def get_language_code(filename):
-    filename = os.path.split(filename)[0]
-    filename = os.path.split(filename)[0]
-    filename = os.path.split(filename)[1]
-    return filename
-
-
 def test_js_files():
     for filename in JS_FILES:
         f = partial(run_gjslint, filename)

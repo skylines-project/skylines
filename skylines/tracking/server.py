@@ -110,8 +110,9 @@ class TrackingServer(DatagramProtocol):
         if flags & FLAG_ENL:
             fix.engine_noise_level = data[10]
 
-        log.msg(u"%s %s %s %s" % (fix.time and fix.time.time(), host, pilot,
-                                  fix.location))
+        log.msg("{} {} {} {}".format(
+            fix.time and fix.time.time(), host,
+            unicode(pilot).encode('utf8', 'ignore'), fix.location))
 
         DBSession.add(fix)
         try:
@@ -200,6 +201,7 @@ class TrackingServer(DatagramProtocol):
                                    0, 0, 0, 0, 0, 0)
             response = set_crc(response)
             self.transport.write(response, (host, port))
+            return
 
         name = user.display_name[:64].encode('utf8', 'ignore')
         club_id = user.club_id or 0

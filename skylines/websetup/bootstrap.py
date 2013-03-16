@@ -37,6 +37,7 @@ def bootstrap(command, conf, vars):
         u1.display_name = u'Example user'
         u1.email_address = u'max+skylines@blarg.de'
         u1.password = u'test'
+        u1.tracking_key = 123456
 
         model.DBSession.add(u1)
 
