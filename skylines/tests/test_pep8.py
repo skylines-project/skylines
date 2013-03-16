@@ -4,7 +4,7 @@ from subprocess import CalledProcessError, check_output as run
 
 PEP8_COMMAND = 'pep8'
 
-PEP8_OPTIONS = ['--ignore=E501,E701,E126']
+PEP8_OPTIONS = ['--ignore=E501,E701,E126,E711']
 
 
 def test_pep8():

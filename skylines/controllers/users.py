@@ -350,7 +350,7 @@ class UserController(BaseController):
         # assign the user's new club to all of his flights that have
         # no club yet
         flights = DBSession.query(Flight).outerjoin(IGCFile)
-        flights = flights.filter(and_(Flight.club_id is None,
+        flights = flights.filter(and_(Flight.club_id == None,
                                       or_(Flight.pilot_id == self.user.id,
                                           IGCFile.owner_id == self.user.id)))
         for flight in flights:

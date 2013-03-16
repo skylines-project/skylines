@@ -86,9 +86,9 @@ class IGCFile(DeclarativeBase):
             logger_manufacturer_id = self.logger_manufacturer_id
 
             result = DBSession.query(Flight).outerjoin(IGCFile) \
-                .filter(and_(func.upper(IGCFile.logger_manufacturer_id) == func.upper(logger_manufacturer_id),
-                             func.upper(IGCFile.logger_id) == func.upper(logger_id),
-                             Flight.registration is None)) \
+                .filter(func.upper(IGCFile.logger_manufacturer_id) == func.upper(logger_manufacturer_id)) \
+                .filter(func.upper(IGCFile.logger_id) == func.upper(logger_id)) \
+                .filter(Flight.registration == None) \
                 .order_by(desc(Flight.id))
 
             if self.logger_manufacturer_id.startswith('X'):
@@ -123,9 +123,9 @@ class IGCFile(DeclarativeBase):
             logger_manufacturer_id = self.logger_manufacturer_id
 
             result = DBSession.query(Flight).outerjoin(IGCFile) \
-                .filter(and_(func.upper(IGCFile.logger_manufacturer_id) == func.upper(logger_manufacturer_id),
-                             func.upper(IGCFile.logger_id) == func.upper(logger_id),
-                             Flight.model_id is None)) \
+                .filter(func.upper(IGCFile.logger_manufacturer_id) == func.upper(logger_manufacturer_id)) \
+                .filter(func.upper(IGCFile.logger_id) == func.upper(logger_id)) \
+                .filter(Flight.model_id == None) \
                 .order_by(desc(Flight.id))
 
             if self.logger_manufacturer_id.startswith('X'):

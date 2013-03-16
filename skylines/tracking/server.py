@@ -156,8 +156,8 @@ class TrackingServer(DatagramProtocol):
             .distinct(TrackingFix.pilot_id) \
             .filter(and_(TrackingFix.time >= datetime.datetime.utcnow() - datetime.timedelta(hours=2),
                          TrackingFix.pilot_id != pilot.id,
-                         TrackingFix.location_wkt is not None,
-                         TrackingFix.altitude is not None,
+                         TrackingFix.location_wkt != None,
+                         TrackingFix.altitude != None,
                          or_(*or_filters))) \
             .order_by(TrackingFix.pilot_id, desc(TrackingFix.time)) \
             .limit(32)
