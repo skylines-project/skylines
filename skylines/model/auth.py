@@ -11,11 +11,8 @@ though.
 """
 import os
 from datetime import datetime
-import sys
 import struct
 from hashlib import sha256
-
-__all__ = ['User', 'Group', 'Permission']
 
 from sqlalchemy import Table, ForeignKey, Column, event, DDL
 from sqlalchemy.types import Unicode, Integer, BigInteger, SmallInteger, \
@@ -28,6 +25,8 @@ from skylines.model.base import DeclarativeBase, metadata
 from skylines.model.session import DBSession
 from skylines.lib.sql import LowerCaseComparator
 from skylines.lib.formatter import units
+
+__all__ = ['User', 'Group', 'Permission']
 
 #{ Association tables
 
