@@ -70,7 +70,7 @@ js-tracking:
 #####################
 
 js-bootstrap:
-    filters: rjsmin
+    filters: closure_js
     output: js/bootstrap-%(version)s.js
     contents:
         - https://raw.github.com/twitter/bootstrap/v2.3.0/js/bootstrap-alert.js
