@@ -8,10 +8,10 @@
 
     // Unit presets
     var DISTANCE_UNITS = {
-      'm': function(value) { return slUnits.format_number(value) },
-      'km': function(value) { return slUnits.format_number(value / 1000.) },
-      'NM': function(value) { return slUnits.format_number(value / 1852.) },
-      'mi': function(value) { return slUnits.format_number(value / 1609.34) }
+      'm': function(value) { return slUnits.format_decimal(value) },
+      'km': function(value) { return slUnits.format_decimal(value / 1000.) },
+      'NM': function(value) { return slUnits.format_decimal(value / 1852.) },
+      'mi': function(value) { return slUnits.format_decimal(value / 1609.34) }
     };
 
     var SPEED_UNITS = {
@@ -42,8 +42,8 @@
     };
 
     var ALTITUDE_UNITS = {
-      'm': function(value) { return slUnits.format_number(value) },
-      'ft': function(value) { return slUnits.format_number(value * 3.2808399) }
+      'm': function(value) { return slUnits.format_decimal(value) },
+      'ft': function(value) { return slUnits.format_decimal(value * 3.2808399) }
     };
 
     // initialisation
@@ -55,10 +55,6 @@
     };
 
     // generic number formatter function
-    this.format_number = function(value) {
-      return Math.round(value);
-    };
-
     this.format_decimal = function(value, decimals) {
       return value.toFixed(decimals);
     };
