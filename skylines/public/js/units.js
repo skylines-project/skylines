@@ -1,12 +1,10 @@
 (function() {
   slUnits = new function() {
-    // initialisation
-    this.init = function(distance, speed, lift, altitude) {
-      DISTANCE_UNIT = distance_units[distance] ? distance : 'km';
-      SPEED_UNIT = speed_units[speed] ? speed : 'km/h';
-      LIFT_UNIT = lift_units[lift] ? lift : 'm/s';
-      ALTITUDE_UNIT = altitude_units[altitude] ? altitude : 'm';
-    };
+    // default units
+    var DISTANCE_UNIT = 'm';
+    var SPEED_UNIT = 'km/h';
+    var LIFT_UNIT = 'm/s';
+    var ALTITUDE_UNIT = 'm';
 
     // Unit presets
     var distance_units = {
@@ -48,11 +46,13 @@
       'ft': function(value) { return slUnits.format_number(value * 3.2808399) }
     };
 
-    // default units
-    var DISTANCE_UNIT = 'm';
-    var SPEED_UNIT = 'km/h';
-    var LIFT_UNIT = 'm/s';
-    var ALTITUDE_UNIT = 'm';
+    // initialisation
+    this.init = function(distance, speed, lift, altitude) {
+      DISTANCE_UNIT = distance_units[distance] ? distance : 'km';
+      SPEED_UNIT = speed_units[speed] ? speed : 'km/h';
+      LIFT_UNIT = lift_units[lift] ? lift : 'm/s';
+      ALTITUDE_UNIT = altitude_units[altitude] ? altitude : 'm';
+    };
 
     // generic number formatter function
     this.format_number = function(value) {
