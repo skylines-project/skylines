@@ -1,10 +1,12 @@
 (function() {
   slUnits = new function() {
     // default units
-    var distance_unit = 'm';
-    var speed_unit = 'km/h';
-    var lift_unit = 'm/s';
-    var altitude_unit = 'm';
+    var settings = {
+      distance: 'm',
+      speed: 'km/h',
+      lift: 'm/s',
+      altitude: 'm'
+    };
 
     // Unit presets
     var UNITS = {
@@ -33,10 +35,10 @@
 
     // initialisation
     this.init = function(distance, speed, lift, altitude) {
-      if (UNITS[distance]) distance_unit = distance;
-      if (UNITS[speed]) speed_unit = speed;
-      if (UNITS[lift]) lift_unit = lift;
-      if (UNITS[altitude]) altitude_unit = altitude;
+      if (UNITS[distance]) settings.distance = distance;
+      if (UNITS[speed]) settings.speed = speed;
+      if (UNITS[lift]) settings.lift = lift;
+      if (UNITS[altitude]) settings.altitude = altitude;
     };
 
     // generic number formatter function
@@ -63,36 +65,36 @@
 
     // unit conversion functions
     this.convert_distance = function(value) {
-      return UNITS[distance_unit](value);
+      return UNITS[settings.distance](value);
     };
 
     this.convert_speed = function(value) {
-      return UNITS[speed_unit](value);
+      return UNITS[settings.speed](value);
     };
 
     this.convert_lift = function(value) {
-      return UNITS[lift_unit](value);
+      return UNITS[settings.lift](value);
     };
 
     this.convert_altitude = function(value) {
-      return UNITS[altitude_unit](value);
+      return UNITS[settings.altitude](value);
     };
 
     // unit name functions
     this.add_distance_unit = function(value) {
-      return value + ' ' + distance_unit;
+      return value + ' ' + settings.distance;
     };
 
     this.add_speed_unit = function(value) {
-      return value + ' ' + speed_unit;
+      return value + ' ' + settings.speed;
     };
 
     this.add_lift_unit = function(value) {
-      return value + ' ' + lift_unit;
+      return value + ' ' + settings.lift;
     };
 
     this.add_altitude_unit = function(value) {
-      return value + ' ' + altitude_unit;
+      return value + ' ' + settings.altitude;
     };
   };
 })();
