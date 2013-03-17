@@ -43,9 +43,9 @@ function initOpenLayers(id, airspace_tile_url) {
   addAirspaceLayers(airspace_tile_url);
   addEmptyLayer();
 
-  map.setCenter(new OpenLayers.LonLat(30, 0).
+  map.setCenter(new OpenLayers.LonLat(10, 50).
       transform(new OpenLayers.Projection('EPSG:4326'),
-                map.getProjectionObject()), 9);
+                map.getProjectionObject()), 5);
 
   map.addControl(new GraphicLayerSwitcher());
 
