@@ -168,7 +168,7 @@
         },
         yaxes: [
           {
-            tickFormatter: add_altitude_unit
+            tickFormatter: slUnits.add_altitude_unit
           },
           {
             show: false,

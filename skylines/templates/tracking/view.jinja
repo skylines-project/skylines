@@ -52,10 +52,10 @@ Live Tracking <small>of {{ pilot }}</small>
 {% if trace -%}
 <script type="text/javascript">
   $(function() {
-    initUnits({{ h.json.dumps(h.get_setting_name('distance_unit')) }},
-              {{ h.json.dumps(h.get_setting_name('speed_unit')) }},
-              {{ h.json.dumps(h.get_setting_name('lift_unit')) }},
-              {{ h.json.dumps(h.get_setting_name('altitude_unit')) }});
+    slUnits.init({{ h.json.dumps(h.get_setting_name('distance_unit')) }},
+                 {{ h.json.dumps(h.get_setting_name('speed_unit')) }},
+                 {{ h.json.dumps(h.get_setting_name('lift_unit')) }},
+                 {{ h.json.dumps(h.get_setting_name('altitude_unit')) }});
 
     initOpenLayers("map_canvas",
                    "{{ config.get('skylines.map.airspace_tile_url', '') }}");
