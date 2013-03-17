@@ -31,8 +31,6 @@
 {% block scripts -%}
 {{ super() }}
 
-<script type="text/javascript" src="/js/map.js"></script>
-
 {% if takeoff_locations -%}
 {% for url in g.assets['js-openlayers'].urls() -%}
 <script type="text/javascript" src="{{ url }}"></script>
