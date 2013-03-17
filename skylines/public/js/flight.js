@@ -5,7 +5,7 @@
  */
 var flights = [];
 
-var flot;
+var baro;
 
 var highlighted_flight_sfid;
 var highlighted_flight_phase = null;
@@ -95,10 +95,10 @@ function initFlightLayer() {
     initRedrawLayer(flightPathLayer);
   });
 
-  map.events.register('moveend', null, updateFlotScale);
+  map.events.register('moveend', null, updateBaroScale);
 }
 
-function updateFlotScale() {
+function updateBaroScale() {
   var first_t = 999999;
   var last_t = 0;
 
@@ -125,17 +125,12 @@ function updateFlotScale() {
       last_t = flight.t[last];
   }
 
-  var opt = flot.getOptions();
-  opt.yaxes[0].min = opt.yaxes[0].max = null;
-  if (last_t == 0) {
-    opt.xaxes[0].min = opt.xaxes[0].max = null;
-  } else {
-    opt.xaxes[0].min = first_t * 1000;
-    opt.xaxes[0].max = last_t * 1000;
-  }
+  if (last_t == 0)
+    baro.clearTimeInterval();
+  else
+    baro.setTimeInterval(first_t, last_t);
 
-  flot.setupGrid();
-  flot.draw();
+  baro.draw();
 }
 
 
@@ -282,8 +277,8 @@ function addFlight(sfid, _lonlat, _levels, _num_levels, _time, _height, _enl,
     additional: _additional ? _additional : null
   });
 
-  updateFlotData();
-  updateFlotScale();
+  updateBaroData();
+  updateBaroScale();
 
   setTime(global_time);
 }
@@ -389,34 +384,11 @@ function formatSecondsAsTime(seconds) {
   return pad(h, 2) + ':' + pad(m, 2) + ':' + pad(s, 2);
 }
 
-function initFlot(element) {
-  flot = $.plot(element, [], {
-    grid: {
-      borderWidth: 0,
-      hoverable: true,
-      autoHighlight: false,
-      margin: 5
-    },
-    xaxis: {
-      mode: 'time',
-      timeformat: '%H:%M'
-    },
-    yaxes: [
-      {
-        tickFormatter: add_altitude_unit
-      }, {
-        show: false,
-        min: 0,
-        max: 1000
-      }
-    ],
-    crosshair: {
-      mode: 'x'
-    }
-  });
+function initBaro(element) {
+  baro = new slBarogram(element);
 
   var mouse_container_running = false;
-  element.on('plothover', function(event, pos, item) {
+  $(baro).on('barohover', function(event, time) {
     if (mouse_container_running)
       return;
 
@@ -426,121 +398,58 @@ function initFlot(element) {
       mouse_container_running = false;
     }, 25);
 
-    setTime(pos.x / 1000);
+    setTime(time);
   }).on('mouseout', function(event) {
     setTime(default_time);
   });
 }
 
-function updateFlotData() {
-  var highlighted = flightWithSFID(highlighted_flight_sfid);
+function updateBaroData() {
+  var contests = [];
 
-  var data = [];
-  for (var id = 0; id < flights.length; id++) {
-    var flight = flights[id];
+  var active = [], passive = [], enls = [];
+  var flights_length = flights.length;
+  for (var i = 0; i < flights_length; ++i) {
+    var flight = flights[i];
 
-    // Don't draw highlighted flight yet because it should be on top
-    if (flight.sfid == highlighted_flight_sfid)
-      continue;
-
-    var color = flight.color;
-    if (highlighted)
-      // Fade out line color if another flight is highlighted
-      color = $.color.parse(color).add('a', -0.6).toString();
-
-    series = {
+    var data = {
       data: flight.flot_h,
-      color: color
+      color: flight.color
     };
 
-    if (highlighted) {
-      series.shadowSize = 0;
-      series.lines = { lineWidth: 1 };
+    var enl_data = {
+      data: flight.flot_enl,
+      color: flight.color
+    };
+
+    if (highlighted_flight_sfid && flight.sfid != highlighted_flight_sfid) {
+      passive.push(data);
+    } else {
+      active.push(data);
+      enls.push(enl_data);
     }
 
-    data.push(series);
+    // Save contests of highlighted flight for later
+    if (highlighted_flight_sfid && flight.sfid == highlighted_flight_sfid)
+      contests = flight.contests;
 
-    // Don't show other flight's ENL if a flight is highlighted
-    if (!highlighted)
-      data.push({
-        data: flight.flot_enl,
-        color: flight.color,
-        lines: {
-          lineWidth: 0,
-          fill: 0.2
-        },
-        yaxis: 2
-      });
+    // Save contests of only flight for later if applicable
+    if (flights_length == 1)
+      contests = flight.contests;
   }
 
-  if (highlighted) {
-    data.push({
-      data: highlighted.flot_h,
-      color: highlighted.color
-    });
+  baro.setActiveTraces(active);
+  baro.setPassiveTraces(passive);
+  baro.setENLData(enls);
+  baro.setContests(contests);
 
-    data.push({
-      data: highlighted.flot_enl,
-      color: highlighted.color,
-      lines: {
-        lineWidth: 0,
-        fill: 0.2
-      },
-      yaxis: 2
-    });
-  }
+  if (!highlighted_flight_phase)
+    baro.clearTimeHighlight();
+  else
+    baro.setTimeHighlight(
+        highlighted_flight_phase.start, highlighted_flight_phase.end);
 
-  var options = flot.getOptions();
-
-  var contests = null;
-  if (flights.length == 1)
-    contests = flights[0].contests;
-  else if (highlighted)
-    contests = highlighted.contests;
-
-  if (contests) {
-    for (var i = 0; i < contests.length; ++i) {
-      var contest = contests[i];
-      var times = contest.times;
-      var color = contest.color;
-
-      var markings = [];
-      for (var j = 0; j < times.length; ++j) {
-        var time = times[j] * 1000;
-        markings.push({
-          position: time
-        });
-      }
-
-      data.push({
-        marks: {
-          show: true,
-          lineWidth: 1,
-          toothSize: 6,
-          color: color,
-          fillColor: color
-        },
-        data: [],
-        markdata: markings
-      });
-    }
-  }
-
-  if (highlighted_flight_phase) {
-    options.grid.markings = [{
-      color: '#fff083',
-      xaxis: {
-        from: highlighted_flight_phase.start * 1000,
-        to: highlighted_flight_phase.end * 1000
-      }
-    }];
-  } else {
-    options.grid.markings = [];
-  }
-
-  flot.setData(data);
-  flot.setupGrid();
-  flot.draw();
+  baro.draw();
 }
 
 function setTime(time) {
@@ -552,7 +461,7 @@ function setTime(time) {
   // if the mouse is not hovering over the barogram or any trail on the map
   if (!time) {
     // remove crosshair from barogram
-    flot.clearCrosshair();
+    baro.clearTime();
 
     // remove data from fix-data table
     clearFixDataTable();
@@ -560,13 +469,8 @@ function setTime(time) {
     return;
   }
 
-  if (time == -1) {
-    // lock barogram crosshair at the end
-    flot.lockCrosshair({x: 999999999});
-  } else {
-    // update barogram crosshair
-    flot.lockCrosshair({x: global_time * 1000});
-  }
+  // update barogram crosshair
+  baro.setTime(time);
 
   for (var id = 0; id < flights.length; id++) {
     // calculate fix data
@@ -754,7 +658,7 @@ function clearHighlight(defer_update) {
 
   // Unless specifically deferred update the barogram
   if (defer_update != true)
-    updateFlotData();
+    updateBaroData();
 }
 
 function setHighlight(sfid) {
@@ -776,7 +680,7 @@ function setHighlight(sfid) {
   highlighted_flight_sfid = sfid;
 
   // Update barogram
-  updateFlotData();
+  updateBaroData();
 }
 
 
@@ -1040,7 +944,7 @@ function highlightFlightPhase(table_row) {
     end: start + duration
   };
 
-  updateFlotData();
+  updateBaroData();
 }
 
 
@@ -1048,7 +952,7 @@ function unhighlightFlightPhase() {
   highlighted_flight_phase.row.removeClass('selected');
   highlighted_flight_phase = null;
   map.removeLayer(map.getLayersByName('Flight Phases')[0]);
-  updateFlotData();
+  updateBaroData();
 }
 
 

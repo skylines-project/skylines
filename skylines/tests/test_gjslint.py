@@ -11,6 +11,7 @@ GJSLINT_OPTIONS = ['--strict']
 JS_BASE_FOLDER = os.path.join('skylines', 'public', 'js')
 
 JS_FILES = [
+    'baro.js',
     'flight.js',
     'general.js',
     'map.js',

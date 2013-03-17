@@ -64,7 +64,7 @@
     initOpenLayers("map_canvas",
                    "{{ config.get('skylines.map.airspace_tile_url', '') }}");
     initFlightLayer();
-    initFlot($("#barogram"));
+    initBaro($("#barogram"));
 
     addFlight({{ flight.id }},
       {{ h.json.dumps(trace.encoded.points) }},

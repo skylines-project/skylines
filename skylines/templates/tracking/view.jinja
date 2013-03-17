@@ -60,7 +60,7 @@ Live Tracking <small>of {{ pilot }}</small>
     initOpenLayers("map_canvas",
                    "{{ config.get('skylines.map.airspace_tile_url', '') }}");
     initFlightLayer();
-    initFlot($("#barogram"));
+    initBaro($("#barogram"));
 
     // initiate tracking mode
     default_time = -1;

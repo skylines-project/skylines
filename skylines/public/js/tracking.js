@@ -15,8 +15,8 @@ function updateFlightsFromJSON() {
                      data.enl);
 
         initRedrawLayer(map.getLayersByName('Flight')[0]);
-        updateFlotScale();
-        updateFlotData();
+        updateBaroScale();
+        updateBaroData();
       }
     });
   }
