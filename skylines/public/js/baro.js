@@ -15,6 +15,7 @@
     // Public attributes and functions
 
     /**
+     * @expose
      * Draws the barogram onto the underlying canvas
      */
     baro.draw = function() {
@@ -25,6 +26,7 @@
 
 
     /**
+     * @expose
      * Clears the active traces from the barogram
      */
     baro.clearActiveTraces = function() {
@@ -32,6 +34,7 @@
     };
 
     /**
+     * @expose
      * Sets the active traces for the barogram
      */
     baro.setActiveTraces = function(data) {
@@ -40,6 +43,7 @@
 
 
     /**
+     * @expose
      * Clears the passive traces from the barogram
      */
     baro.clearPassiveTraces = function() {
@@ -47,6 +51,7 @@
     };
 
     /**
+     * @expose
      * Sets the passive traces for the barogram
      */
     baro.setPassiveTraces = function(data) {
@@ -55,6 +60,7 @@
 
 
     /**
+     * @expose
      * Clears the ENL data
      */
     baro.clearENLData = function() {
@@ -62,6 +68,7 @@
     };
 
     /**
+     * @expose
      * Sets the ENL data
      */
     baro.setENLData = function(data) {
@@ -70,6 +77,7 @@
 
 
     /**
+     * @expose
      * Clears the contest markers
      */
     baro.clearContests = function() {
@@ -77,6 +85,7 @@
     };
 
     /**
+     * @expose
      * Sets the contest markers
      */
     baro.setContests = function(data) {
@@ -85,6 +94,7 @@
 
 
     /**
+     * @expose
      * Clears the crosshair from the barogram
      */
     baro.clearTime = function() {
@@ -92,6 +102,7 @@
     };
 
     /**
+     * @expose
      * Set the crosshair to the given time
      *
      * @param {?number} time If null the crosshair is removed,
@@ -109,6 +120,7 @@
 
 
     /**
+     * @expose
      * Clears the time interval limits from the barogram
      */
     baro.clearTimeInterval = function() {
@@ -117,6 +129,7 @@
     };
 
     /**
+     * @expose
      * Sets the time interval that should be shown on the barogram
      *
      * @param {number} start The earliest time that should be shown.
@@ -130,6 +143,7 @@
 
 
     /**
+     * @expose
      * Clears the highlight of a certain time interval from the barogram
      */
     baro.clearTimeHighlight = function() {
@@ -137,6 +151,7 @@
     };
 
     /**
+     * @expose
      * Highlights a certain time interval on the barogram
      *
      * @param {number} start The earliest time that should be highlighted.
