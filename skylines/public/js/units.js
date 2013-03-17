@@ -1,5 +1,8 @@
 (function() {
   slUnits = new function() {
+    var UNIT_TYPES = ['distance', 'speed', 'lift', 'altitude'];
+    var UNIT_TYPES_LENGTH = UNIT_TYPES.length;
+
     // default units
     var settings = {
       distance: 'm',
@@ -46,55 +49,25 @@
       return value.toFixed(decimals);
     };
 
-    // unit formatter functions
-    this.format_distance = function(value) {
-      return this.add_distance_unit(this.convert_distance(value));
-    };
+    for (var i = 0; i < UNIT_TYPES_LENGTH; ++i) {
+      var unit_type = UNIT_TYPES[i];
 
-    this.format_speed = function(value) {
-      return this.add_speed_unit(this.convert_speed(value));
-    };
+      // Generate e.g. format_distance(value) functions
+      this['format_' + unit_type] = function(value) {
+        value = this['convert_' + unit_type](value);
+        return this['add_' + unit_type + '_unit'](value);
+      };
 
-    this.format_lift = function(value) {
-      return this.add_lift_unit(this.convert_lift(value));
-    };
+      // Generate e.g. convert_distance(value) functions
+      this['convert_' + unit_type] = function(value) {
+        var setting = settings[unit_type];
+        return UNITS[setting](value);
+      };
 
-    this.format_altitude = function(value) {
-      return this.add_altitude_unit(this.convert_altitude(value));
-    };
-
-    // unit conversion functions
-    this.convert_distance = function(value) {
-      return UNITS[settings.distance](value);
-    };
-
-    this.convert_speed = function(value) {
-      return UNITS[settings.speed](value);
-    };
-
-    this.convert_lift = function(value) {
-      return UNITS[settings.lift](value);
-    };
-
-    this.convert_altitude = function(value) {
-      return UNITS[settings.altitude](value);
-    };
-
-    // unit name functions
-    this.add_distance_unit = function(value) {
-      return value + ' ' + settings.distance;
-    };
-
-    this.add_speed_unit = function(value) {
-      return value + ' ' + settings.speed;
-    };
-
-    this.add_lift_unit = function(value) {
-      return value + ' ' + settings.lift;
-    };
-
-    this.add_altitude_unit = function(value) {
-      return value + ' ' + settings.altitude;
-    };
+      // Generate e.g. add_distance_unit(value) functions
+      this['add_' + unit_type + '_unit'] = function(value) {
+        return value + ' ' + settings[unit_type];
+      };
+    }
   };
 })();
