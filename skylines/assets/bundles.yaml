@@ -34,7 +34,7 @@ js-all:
         - js/topbar.js
 
 js-datatables:
-    filters: rjsmin
+    filters: closure_js
     output: js/tables-%(version)s.js
     contents:
         - js/jQuery/jquery.dataTables.js
