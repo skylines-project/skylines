@@ -34,7 +34,7 @@ js-all:
         - js/topbar.js
 
 js-datatables:
-    filters: rjsmin
+    filters: closure_js
     output: js/tables-%(version)s.js
     contents:
         - js/jQuery/jquery.dataTables.js
@@ -53,8 +53,10 @@ js-flight:
     filters: rjsmin
     output: js/flight-%(version)s.js
     contents:
-        - js/units.js
-        - js/baro.js
+        - filters: closure_js
+          contents:
+            - js/units.js
+            - js/baro.js
         - js/flight.js
 
 js-tracking:
@@ -68,7 +70,7 @@ js-tracking:
 #####################
 
 js-bootstrap:
-    filters: rjsmin
+    filters: closure_js
     output: js/bootstrap-%(version)s.js
     contents:
         - https://raw.github.com/twitter/bootstrap/v2.3.0/js/bootstrap-alert.js
@@ -113,7 +115,7 @@ fontawesome-webfont.svg:
 ##########
 
 js-flot:
-    filters: rjsmin
+    filters: closure_js
     output: js/flot-%(version)s.js
     contents:
         - https://raw.github.com/flot/flot/ccb37e4965967d7252cc99e3b2eea8fcec3c909a/jquery.flot.js
