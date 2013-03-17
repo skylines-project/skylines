@@ -440,7 +440,7 @@ function updateFlotData() {
     var flight = flights[id];
 
     // Don't draw highlighted flight yet because it should be on top
-    if (highlighted && flight.sfid == highlighted.sfid)
+    if (flight.sfid == highlighted_flight_sfid)
       continue;
 
     var color = flight.color;
