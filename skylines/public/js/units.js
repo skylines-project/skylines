@@ -48,10 +48,10 @@
 
     // initialisation
     this.init = function(distance, speed, lift, altitude) {
-      DISTANCE_UNIT = distance_units[distance] ? distance : 'km';
-      SPEED_UNIT = speed_units[speed] ? speed : 'km/h';
-      LIFT_UNIT = lift_units[lift] ? lift : 'm/s';
-      ALTITUDE_UNIT = altitude_units[altitude] ? altitude : 'm';
+      if (distance_units[distance]) DISTANCE_UNIT = distance;
+      if (speed_units[speed]) SPEED_UNIT = speed;
+      if (lift_units[lift]) LIFT_UNIT = lift;
+      if (altitude_units[altitude]) ALTITUDE_UNIT = altitude;
     };
 
     // generic number formatter function
