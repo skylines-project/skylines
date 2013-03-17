@@ -33,8 +33,9 @@ class Environment(BaseEnvironment):
             load_url = config.get('webassets.load_url', None)
             self.append_path(load_path, load_url)
 
-        # Configure default closure compiler level
+        # Configure default closure compiler options
         self.config['CLOSURE_COMPRESSOR_OPTIMIZATION'] = 'SIMPLE_OPTIMIZATIONS'
+        self.config['CLOSURE_EXTRA_ARGS'] = ['--jscomp_off', 'internetExplorerChecks']
 
     def load_bundles(self, bundle_file):
         """

@@ -115,7 +115,7 @@ fontawesome-webfont.svg:
 ##########
 
 js-flot:
-    filters: rjsmin
+    filters: closure_js
     output: js/flot-%(version)s.js
     contents:
         - https://raw.github.com/flot/flot/ccb37e4965967d7252cc99e3b2eea8fcec3c909a/jquery.flot.js
