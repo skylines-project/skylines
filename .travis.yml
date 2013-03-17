@@ -23,3 +23,10 @@ script:
 notifications:
   email:
     on_failure: change
+  irc:
+    channels:
+      - "irc.freenode.org#skylines"
+    on_success: change
+    on_failure: always
+    use_notice: true
+    skip_join: true
