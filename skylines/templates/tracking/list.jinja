@@ -22,6 +22,7 @@
       <th class="date">{% trans %}Last fix{% endtrans %}</th>
       <th>{% trans %}Pilot{% endtrans %}</th>
       <th>{% trans %}Nearest Airport{% endtrans %}</th>
+      <th class="numeric">{% trans %}Altitude{% endtrans %}</th>
       <th></th>
     </tr>
   </thead>
@@ -35,6 +36,7 @@
         {{ insert_flag(airport.country_code) }} {{ airport|e }} ({{ h.format_distance(distance) }})
         {%- endif %}
       </td>
+      <td class="numeric">{{ h.format_altitude(track.altitude) }} <small>MSL</small></td>
       <td nowrap="nowrap" class="show">
         <a href="/tracking/{{ track.pilot_id }}/" class="btn btn-mini">Show</a>
       </td>
