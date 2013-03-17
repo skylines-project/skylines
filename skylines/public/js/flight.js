@@ -216,8 +216,10 @@ function addFlight(sfid, _lonlat, _levels, _num_levels, _time, _height, _enl,
           _contests[i].turnpoints);
       var times = OpenLayers.Util.decodeGoogle(_contests[i].times);
 
+      var name = _contests[i].name;
       contests.push({
-        name: _contests[i].name,
+        name: name,
+        color: contest_colors[name],
         turnpoints: turnpoints,
         times: times,
         visible: true // this is only valid for the contests of this flight.
@@ -502,7 +504,7 @@ function updateFlotData() {
     for (var i = 0; i < contests.length; ++i) {
       var contest = contests[i];
       var times = contest.times;
-      var color = contest_colors[contest.name];
+      var color = contest.color;
 
       var markings = [];
       for (var j = 0; j < times.length; ++j) {
