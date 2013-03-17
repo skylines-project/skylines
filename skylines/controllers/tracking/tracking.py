@@ -2,9 +2,8 @@ from datetime import datetime, timedelta
 from tg import expose, request, cache
 from webob.exc import HTTPNotFound
 from sqlalchemy import func, over
-from sqlalchemy.sql.expression import desc, cast
+from sqlalchemy.sql.expression import desc
 from sqlalchemy.orm import joinedload
-from sqlalchemy.types import Interval, String
 from skylines.controllers.base import BaseController
 from skylines.lib.dbutil import get_requested_record_list
 from skylines.lib.helpers import isoformat_utc
@@ -85,13 +84,11 @@ class TrackingController(BaseController):
                           partition_by=TrackingFix.pilot_id,
                           order_by=desc(TrackingFix.time))
 
-        tracking_delay = cast(cast(User.tracking_delay, String) + ' minutes', Interval)
-
         subq = DBSession \
             .query(TrackingFix.id, row_number.label('row_number')) \
             .outerjoin(TrackingFix.pilot) \
             .filter(TrackingFix.time >= datetime.utcnow() - max_age) \
-            .filter(TrackingFix.time <= datetime.utcnow() - tracking_delay) \
+            .filter(TrackingFix.time <= datetime.utcnow() - User.tracking_delay_interval()) \
             .filter(TrackingFix.location_wkt != None) \
             .subquery()
 
