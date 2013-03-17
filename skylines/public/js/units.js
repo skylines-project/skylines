@@ -1,20 +1,20 @@
 (function() {
   slUnits = new function() {
     // default units
-    var DISTANCE_UNIT = 'm';
-    var SPEED_UNIT = 'km/h';
-    var LIFT_UNIT = 'm/s';
-    var ALTITUDE_UNIT = 'm';
+    var distance_unit = 'm';
+    var speed_unit = 'km/h';
+    var lift_unit = 'm/s';
+    var altitude_unit = 'm';
 
     // Unit presets
-    var distance_units = {
+    var DISTANCE_UNITS = {
       'm': function(value) { return slUnits.format_number(value) },
       'km': function(value) { return slUnits.format_number(value / 1000.) },
       'NM': function(value) { return slUnits.format_number(value / 1852.) },
       'mi': function(value) { return slUnits.format_number(value / 1609.34) }
     };
 
-    var speed_units = {
+    var SPEED_UNITS = {
       'm/s': function(value) {
         return slUnits.format_decimal(value, 2);
       },
@@ -29,7 +29,7 @@
       }
     };
 
-    var lift_units = {
+    var LIFT_UNITS = {
       'm/s': function(value) {
         return slUnits.format_decimal(value, 2);
       },
@@ -41,17 +41,17 @@
       }
     };
 
-    var altitude_units = {
+    var ALTITUDE_UNITS = {
       'm': function(value) { return slUnits.format_number(value) },
       'ft': function(value) { return slUnits.format_number(value * 3.2808399) }
     };
 
     // initialisation
     this.init = function(distance, speed, lift, altitude) {
-      if (distance_units[distance]) DISTANCE_UNIT = distance;
-      if (speed_units[speed]) SPEED_UNIT = speed;
-      if (lift_units[lift]) LIFT_UNIT = lift;
-      if (altitude_units[altitude]) ALTITUDE_UNIT = altitude;
+      if (DISTANCE_UNITS[distance]) distance_unit = distance;
+      if (SPEED_UNITS[speed]) speed_unit = speed;
+      if (LIFT_UNITS[lift]) lift_unit = lift;
+      if (ALTITUDE_UNITS[altitude]) altitude_unit = altitude;
     };
 
     // generic number formatter function
@@ -82,36 +82,36 @@
 
     // unit conversion functions
     this.convert_distance = function(value) {
-      return distance_units[DISTANCE_UNIT](value);
+      return DISTANCE_UNITS[distance_unit](value);
     };
 
     this.convert_speed = function(value) {
-      return speed_units[SPEED_UNIT](value);
+      return SPEED_UNITS[speed_unit](value);
     };
 
     this.convert_lift = function(value) {
-      return lift_units[LIFT_UNIT](value);
+      return LIFT_UNITS[lift_unit](value);
     };
 
     this.convert_altitude = function(value) {
-      return altitude_units[ALTITUDE_UNIT](value);
+      return ALTITUDE_UNITS[altitude_unit](value);
     };
 
     // unit name functions
     this.add_distance_unit = function(value) {
-      return value + ' ' + DISTANCE_UNIT;
+      return value + ' ' + distance_unit;
     };
 
     this.add_speed_unit = function(value) {
-      return value + ' ' + SPEED_UNIT;
+      return value + ' ' + speed_unit;
     };
 
     this.add_lift_unit = function(value) {
-      return value + ' ' + LIFT_UNIT;
+      return value + ' ' + lift_unit;
     };
 
     this.add_altitude_unit = function(value) {
-      return value + ' ' + ALTITUDE_UNIT;
+      return value + ' ' + altitude_unit;
     };
   };
 })();
