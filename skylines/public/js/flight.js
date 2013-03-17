@@ -221,11 +221,10 @@ function addFlight(sfid, _lonlat, _levels, _num_levels, _time, _height, _enl,
         name: name,
         color: contest_colors[name],
         turnpoints: turnpoints,
-        times: times,
-        visible: true // this is only valid for the contests of this flight.
+        times: times
       });
 
-      addContest(_contests[i].name, turnpoints, times, true, sfid);
+      addContest(_contests[i].name, turnpoints, times, sfid);
     }
   }
 
@@ -316,10 +315,9 @@ function addFlightFromJSON(url) {
  * @param {String} name Name to display.
  * @param {Array(Object)} lonlat Array of LonLat pairs.
  * @param {Array(Integer)} times Array of times.
- * @param {Bool} visible Flag weather to show the trace or not.
  * @param {Integer} sfid The SkyLines flight id this contest trace belongs to.
  */
-function addContest(name, lonlat, times, visible, sfid) {
+function addContest(name, lonlat, times, sfid) {
   var points = new Array();
   for (var i = 0, len = lonlat.length; i < len; i++) {
     points.push(new OpenLayers.Geometry.Point(lonlat[i].lon, lonlat[i].lat).
