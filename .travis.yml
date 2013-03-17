@@ -21,4 +21,5 @@ script:
   - nosetests -v --with-coverage --cover-package=skylines
 
 notifications:
-  email: false
+  email:
+    on_failure: change
