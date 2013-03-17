@@ -7,14 +7,13 @@
     var altitude_unit = 'm';
 
     // Unit presets
-    var DISTANCE_UNITS = {
+    var UNITS = {
       'm': function(value) { return slUnits.format_decimal(value) },
+      'ft': function(value) { return slUnits.format_decimal(value * 3.28084) },
       'km': function(value) { return slUnits.format_decimal(value / 1000.) },
       'NM': function(value) { return slUnits.format_decimal(value / 1852.) },
-      'mi': function(value) { return slUnits.format_decimal(value / 1609.34) }
-    };
+      'mi': function(value) { return slUnits.format_decimal(value / 1609.34) },
 
-    var SPEED_UNITS = {
       'm/s': function(value) {
         return slUnits.format_decimal(value, 1);
       },
@@ -26,32 +25,18 @@
       },
       'mph': function(value) {
         return slUnits.format_decimal(value * 2.23693629, 1);
-      }
-    };
-
-    var LIFT_UNITS = {
-      'm/s': function(value) {
-        return slUnits.format_decimal(value, 1);
-      },
-      'kt': function(value) {
-        return slUnits.format_decimal(value * 1.94384449, 1);
       },
       'ft/min': function(value) {
         return slUnits.format_decimal(value * 196.850394);
       }
     };
 
-    var ALTITUDE_UNITS = {
-      'm': function(value) { return slUnits.format_decimal(value) },
-      'ft': function(value) { return slUnits.format_decimal(value * 3.2808399) }
-    };
-
     // initialisation
     this.init = function(distance, speed, lift, altitude) {
-      if (DISTANCE_UNITS[distance]) distance_unit = distance;
-      if (SPEED_UNITS[speed]) speed_unit = speed;
-      if (LIFT_UNITS[lift]) lift_unit = lift;
-      if (ALTITUDE_UNITS[altitude]) altitude_unit = altitude;
+      if (UNITS[distance]) distance_unit = distance;
+      if (UNITS[speed]) speed_unit = speed;
+      if (UNITS[lift]) lift_unit = lift;
+      if (UNITS[altitude]) altitude_unit = altitude;
     };
 
     // generic number formatter function
@@ -78,19 +63,19 @@
 
     // unit conversion functions
     this.convert_distance = function(value) {
-      return DISTANCE_UNITS[distance_unit](value);
+      return UNITS[distance_unit](value);
     };
 
     this.convert_speed = function(value) {
-      return SPEED_UNITS[speed_unit](value);
+      return UNITS[speed_unit](value);
     };
 
     this.convert_lift = function(value) {
-      return LIFT_UNITS[lift_unit](value);
+      return UNITS[lift_unit](value);
     };
 
     this.convert_altitude = function(value) {
-      return ALTITUDE_UNITS[altitude_unit](value);
+      return UNITS[altitude_unit](value);
     };
 
     // unit name functions
