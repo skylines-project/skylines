@@ -27,3 +27,4 @@ pyyaml==3.10
 cssmin==0.1.4
 jinja2==2.6
 twisted==12.3
+closure

@@ -33,6 +33,9 @@ class Environment(BaseEnvironment):
             load_url = config.get('webassets.load_url', None)
             self.append_path(load_path, load_url)
 
+        # Configure default closure compiler level
+        self.config['CLOSURE_COMPRESSOR_OPTIMIZATION'] = 'SIMPLE_OPTIMIZATIONS'
+
     def load_bundles(self, bundle_file):
         """
         Load predefined bundles from a YAML file.

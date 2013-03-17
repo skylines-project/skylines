@@ -53,8 +53,10 @@ js-flight:
     filters: rjsmin
     output: js/flight-%(version)s.js
     contents:
-        - js/units.js
-        - js/baro.js
+        - filters: closure_js
+          contents:
+            - js/units.js
+            - js/baro.js
         - js/flight.js
 
 js-tracking:
