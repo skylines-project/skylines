@@ -1,14 +1,10 @@
-from datetime import timedelta
 from tg import expose, request, cache
 from webob.exc import HTTPNotFound
-from sqlalchemy import func, over
-from sqlalchemy.sql.expression import desc
-from sqlalchemy.orm import joinedload
 from skylines.controllers.base import BaseController
 from skylines.lib.dbutil import get_requested_record_list
 from skylines.lib.helpers import isoformat_utc
 from skylines.lib.decorators import jsonp
-from skylines.model import DBSession, User, TrackingFix, Airport
+from skylines.model import User, TrackingFix, Airport
 from skylines.controllers.tracking import TrackController, \
     LiveTrack24Controller
 
@@ -33,7 +29,7 @@ class TrackingController(BaseController):
             return track, airport, distance
 
         tracks = []
-        tracks.extend(map(add_nearest_airport_data, self.get_latest_fixes()))
+        tracks.extend(map(add_nearest_airport_data, TrackingFix.get_latest()))
 
         return dict(tracks=tracks)
 
@@ -63,7 +59,7 @@ class TrackingController(BaseController):
             raise HTTPNotFound
 
         fixes = []
-        for fix in self.get_latest_fixes():
+        for fix in TrackingFix.get_latest():
             json = dict(time=isoformat_utc(fix.time),
                         location=fix.location_wkt.geom_wkt,
                         pilot=dict(id=fix.pilot_id, name=unicode(fix.pilot)))
@@ -78,25 +74,3 @@ class TrackingController(BaseController):
             fixes.append(json)
 
         return dict(fixes=fixes)
-
-    def get_latest_fixes(self, max_age=timedelta(hours=6), **kw):
-        row_number = over(func.row_number(),
-                          partition_by=TrackingFix.pilot_id,
-                          order_by=desc(TrackingFix.time))
-
-        subq = DBSession \
-            .query(TrackingFix.id, row_number.label('row_number')) \
-            .outerjoin(TrackingFix.pilot) \
-            .filter(TrackingFix.max_age_filter(max_age)) \
-            .filter(TrackingFix.delay_filter(User.tracking_delay_interval())) \
-            .filter(TrackingFix.location_wkt != None) \
-            .subquery()
-
-        query = DBSession \
-            .query(TrackingFix) \
-            .options(joinedload(TrackingFix.pilot)) \
-            .filter(TrackingFix.id == subq.c.id) \
-            .filter(subq.c.row_number == 1) \
-            .order_by(desc(TrackingFix.time))
-
-        return query

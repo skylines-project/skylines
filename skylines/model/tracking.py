@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 
 from datetime import datetime, timedelta
-from sqlalchemy.orm import relation
-from sqlalchemy import Column, ForeignKey, Index
+from sqlalchemy.orm import relation, joinedload
+from sqlalchemy import Column, ForeignKey, Index, over, func
 from sqlalchemy.types import Integer, Float, DateTime, SmallInteger, Unicode,\
     BigInteger
 from sqlalchemy.dialects.postgresql import INET
@@ -63,6 +63,34 @@ class TrackingFix(DeclarativeBase):
     @classmethod
     def delay_filter(cls, delay):
         return TrackingFix.time <= datetime.utcnow() - delay
+
+    @classmethod
+    def get_latest(cls, max_age=timedelta(hours=6)):
+        # Add a column to the inner query with
+        # numbers ordered by time for each pilot
+        row_number = over(func.row_number(),
+                          partition_by=cls.pilot_id,
+                          order_by=desc(cls.time))
+
+        # Create inner query
+        subq = DBSession \
+            .query(cls.id, row_number.label('row_number')) \
+            .outerjoin(cls.pilot) \
+            .filter(cls.max_age_filter(max_age)) \
+            .filter(cls.delay_filter(User.tracking_delay_interval())) \
+            .filter(cls.location_wkt != None) \
+            .subquery()
+
+        # Create outer query that orders by time and
+        # only selects the latest fix
+        query = DBSession \
+            .query(cls) \
+            .options(joinedload(cls.pilot)) \
+            .filter(cls.id == subq.c.id) \
+            .filter(subq.c.row_number == 1) \
+            .order_by(desc(cls.time))
+
+        return query
 
 
 Index('tracking_fixes_pilot_time', TrackingFix.pilot_id, TrackingFix.time)
