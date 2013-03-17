@@ -1,4 +1,4 @@
-from datetime import datetime, timedelta
+from datetime import timedelta
 from tg import expose, request, cache
 from webob.exc import HTTPNotFound
 from sqlalchemy import func, over
@@ -87,8 +87,8 @@ class TrackingController(BaseController):
         subq = DBSession \
             .query(TrackingFix.id, row_number.label('row_number')) \
             .outerjoin(TrackingFix.pilot) \
-            .filter(TrackingFix.time >= datetime.utcnow() - max_age) \
-            .filter(TrackingFix.time <= datetime.utcnow() - User.tracking_delay_interval()) \
+            .filter(TrackingFix.max_age_filter(max_age)) \
+            .filter(TrackingFix.delay_filter(User.tracking_delay_interval())) \
             .filter(TrackingFix.location_wkt != None) \
             .subquery()
 

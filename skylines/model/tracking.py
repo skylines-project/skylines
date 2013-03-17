@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from datetime import datetime
+from datetime import datetime, timedelta
 from sqlalchemy.orm import relation
 from sqlalchemy import Column, ForeignKey, Index
 from sqlalchemy.types import Integer, Float, DateTime, SmallInteger, Unicode,\
@@ -55,6 +55,15 @@ class TrackingFix(DeclarativeBase):
     @location.setter
     def location(self, location):
         self.location_wkt = location.to_wkt()
+
+    @classmethod
+    def max_age_filter(cls, max_age=timedelta(hours=6)):
+        return TrackingFix.time >= datetime.utcnow() - max_age
+
+    @classmethod
+    def delay_filter(cls, delay):
+        return TrackingFix.time <= datetime.utcnow() - delay
+
 
 Index('tracking_fixes_pilot_time', TrackingFix.pilot_id, TrackingFix.time)
 GeometryDDL(TrackingFix.__table__)
