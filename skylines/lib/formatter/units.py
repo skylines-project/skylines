@@ -10,15 +10,15 @@ distance_units = (
 )
 
 speed_units = (
-    (u'm/s', lambda value: format_decimal(value, format=u'0.00 m/s')),
-    (u'km/h', lambda value: format_decimal(value * 3.6, format=u'0.00 km/h')),
-    (u'kt', lambda value: format_decimal(value * 1.94384449, format=u'0.00 kt')),
-    (u'mph', lambda value: format_decimal(value * 2.23693629, format=u'0.00 mph')),
+    (u'm/s', lambda value: format_decimal(value, format=u'0.0 m/s')),
+    (u'km/h', lambda value: format_decimal(value * 3.6, format=u'0.0 km/h')),
+    (u'kt', lambda value: format_decimal(value * 1.94384449, format=u'0.0 kt')),
+    (u'mph', lambda value: format_decimal(value * 2.23693629, format=u'0.0 mph')),
 )
 
 lift_units = (
-    (u'm/s', lambda value: format_decimal(value, format=u'0.00 m/s')),
-    (u'kt', lambda value: format_decimal(value * 1.94384449, format=u'0.00 kt')),
+    (u'm/s', lambda value: format_decimal(value, format=u'0.0 m/s')),
+    (u'kt', lambda value: format_decimal(value * 1.94384449, format=u'0.0 kt')),
     (u'ft/min', lambda value: format_decimal(value * 196.850394,
                                              format=u'0 ft/min')),
 )

@@ -16,28 +16,28 @@
 
     var SPEED_UNITS = {
       'm/s': function(value) {
-        return slUnits.format_decimal(value, 2);
+        return slUnits.format_decimal(value, 1);
       },
       'km/h': function(value) {
-        return slUnits.format_decimal(value * 3.6, 2);
+        return slUnits.format_decimal(value * 3.6, 1);
       },
       'kt': function(value) {
-        return slUnits.format_decimal(value * 1.94384449, 2);
+        return slUnits.format_decimal(value * 1.94384449, 1);
       },
       'mph': function(value) {
-        return slUnits.format_decimal(value * 2.23693629, 2);
+        return slUnits.format_decimal(value * 2.23693629, 1);
       }
     };
 
     var LIFT_UNITS = {
       'm/s': function(value) {
-        return slUnits.format_decimal(value, 2);
+        return slUnits.format_decimal(value, 1);
       },
       'kt': function(value) {
-        return slUnits.format_decimal(value * 1.94384449, 2);
+        return slUnits.format_decimal(value * 1.94384449, 1);
       },
       'ft/min': function(value) {
-        return slUnits.format_decimal(value * 196.850394, 2);
+        return slUnits.format_decimal(value * 196.850394);
       }
     };
 
