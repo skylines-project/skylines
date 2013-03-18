@@ -183,7 +183,7 @@
         },
         yaxes: [
           {
-            tickFormatter: slUnits.add_altitude_unit
+            tickFormatter: slUnits.addAltitudeUnit
           },
           {
             show: false,

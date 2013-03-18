@@ -11,7 +11,7 @@
      *   The number of decimal places that should be kept.
      * @return {String} The formatted value as a string.
      */
-    slUnits.format_decimal = function(value, decimals) {
+    slUnits.formatDecimal = function(value, decimals) {
       return value.toFixed(decimals);
     };
 
@@ -21,7 +21,7 @@
      * @const
      * @type {Array}
      */
-    var UNIT_TYPES = ['distance', 'speed', 'lift', 'altitude'];
+    var UNIT_TYPES = ['Distance', 'Speed', 'Lift', 'Altitude'];
 
     /**
      * The number of elements in the UNIT_TYPES array.
@@ -57,10 +57,10 @@
      * @type {Object}
      */
     var settings = {
-      distance: 'm',
-      speed: 'km/h',
-      lift: 'm/s',
-      altitude: 'm'
+      'Distance': 'm',
+      'Speed': 'km/h',
+      'Lift': 'm/s',
+      'Altitude': 'm'
     };
 
     /**
@@ -80,20 +80,20 @@
     };
 
     function generateFunctions(unit_type) {
-      // Generate e.g. format_distance(value) functions
-      slUnits['format_' + unit_type] = function(value) {
-        value = slUnits['convert_' + unit_type](value);
-        return slUnits['add_' + unit_type + '_unit'](value);
+      // Generate e.g. formatDistance(value) functions
+      slUnits['format' + unit_type] = function(value) {
+        value = slUnits['convert' + unit_type](value);
+        return slUnits['add' + unit_type + 'Unit'](value);
       };
 
-      // Generate e.g. convert_distance(value) functions
-      slUnits['convert_' + unit_type] = function(value) {
+      // Generate e.g. convertDistance(value) functions
+      slUnits['convert' + unit_type] = function(value) {
         return value * UNITS[settings[unit_type]][0];
       };
 
-      // Generate e.g. add_distance_unit(value) functions
-      slUnits['add_' + unit_type + '_unit'] = function(value) {
-        value = slUnits.format_decimal(value, UNITS[settings[unit_type]][1]);
+      // Generate e.g. addDistanceUnit(value) functions
+      slUnits['add' + unit_type + 'Unit'] = function(value) {
+        value = slUnits.formatDecimal(value, UNITS[settings[unit_type]][1]);
         return value + ' ' + settings[unit_type];
       };
     }
