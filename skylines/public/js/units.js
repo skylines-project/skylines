@@ -1,6 +1,9 @@
 (function() {
   slUnits = new function() {
-    // default units
+    /**
+     * The container that saves the user unit settings
+     * @type {Object}
+     */
     var settings = {
       distance: 'm',
       speed: 'km/h',
@@ -8,14 +11,31 @@
       altitude: 'm'
     };
 
-    // Unit presets
+    /**
+     * A static dictionary of the supported units with its
+     * conversion factors and formatting functions
+     * @const
+     * @type {Object}
+     */
     var UNITS = {
-      'm': function(value) { return slUnits.format_decimal(value) },
-      'ft': function(value) { return slUnits.format_decimal(value * 3.28084) },
-      'km': function(value) { return slUnits.format_decimal(value / 1000.) },
-      'NM': function(value) { return slUnits.format_decimal(value / 1852.) },
-      'mi': function(value) { return slUnits.format_decimal(value / 1609.34) },
+      // Length
+      'm': function(value) {
+        return slUnits.format_decimal(value);
+      },
+      'ft': function(value) {
+        return slUnits.format_decimal(value * 3.28084);
+      },
+      'km': function(value) {
+        return slUnits.format_decimal(value / 1000.);
+      },
+      'NM': function(value) {
+        return slUnits.format_decimal(value / 1852.);
+      },
+      'mi': function(value) {
+        return slUnits.format_decimal(value / 1609.34);
+      },
 
+      // Speed
       'm/s': function(value) {
         return slUnits.format_decimal(value, 1);
       },
@@ -33,7 +53,14 @@
       }
     };
 
-    // initialisation
+    /**
+     * Initialises the slUnits module with the user settings
+     *
+     * @param {String} distance The distance unit (e.g. 'km').
+     * @param {String} speed The speed unit (e.g. 'km/h').
+     * @param {String} lift The vertical speed unit (e.g. 'm/s').
+     * @param {String} altitude The altitude unit (e.g. 'm').
+     */
     this.init = function(distance, speed, lift, altitude) {
       if (UNITS[distance]) settings.distance = distance;
       if (UNITS[speed]) settings.speed = speed;
@@ -41,7 +68,14 @@
       if (UNITS[altitude]) settings.altitude = altitude;
     };
 
-    // generic number formatter function
+    /**
+     * Formats a number to a string with a given number of decimal places
+     *
+     * @param  {number} value A number that should be formatted.
+     * @param  {[type]} decimals
+     *   The number of decimal places that should be kept.
+     * @return {String} The formatted value as a string.
+     */
     this.format_decimal = function(value, decimals) {
       return value.toFixed(decimals);
     };
