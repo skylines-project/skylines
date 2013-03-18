@@ -2,6 +2,18 @@
   slUnits = new function() {
     var slUnits = this;
 
+    /**
+     * Formats a number to a string with a given number of decimal places
+     *
+     * @param  {number} value A number that should be formatted.
+     * @param  {[type]} decimals
+     *   The number of decimal places that should be kept.
+     * @return {String} The formatted value as a string.
+     */
+    slUnits.format_decimal = function(value, decimals) {
+      return value.toFixed(decimals);
+    };
+
     var UNIT_TYPES = ['distance', 'speed', 'lift', 'altitude'];
     var UNIT_TYPES_LENGTH = UNIT_TYPES.length;
 
@@ -24,21 +36,11 @@
      */
     var UNITS = {
       // Length
-      'm': [1, function(value) {
-        return slUnits.format_decimal(value);
-      }],
-      'ft': [3.28084, function(value) {
-        return slUnits.format_decimal(value);
-      }],
-      'km': [1 / 1000., function(value) {
-        return slUnits.format_decimal(value);
-      }],
-      'NM': [1 / 1852., function(value) {
-        return slUnits.format_decimal(value);
-      }],
-      'mi': [1 / 1609.34, function(value) {
-        return slUnits.format_decimal(value);
-      }],
+      'm': [1, slUnits.format_decimal],
+      'ft': [3.28084, slUnits.format_decimal],
+      'km': [1 / 1000., slUnits.format_decimal],
+      'NM': [1 / 1852., slUnits.format_decimal],
+      'mi': [1 / 1609.34, slUnits.format_decimal],
 
       // Speed
       'm/s': [1, function(value) {
@@ -53,9 +55,7 @@
       'mph': [2.23693629, function(value) {
         return slUnits.format_decimal(value, 1);
       }],
-      'ft/min': [196.850394, function(value) {
-        return slUnits.format_decimal(value);
-      }]
+      'ft/min': [196.850394, slUnits.format_decimal]
     };
 
     /**
@@ -71,18 +71,6 @@
       if (UNITS[speed]) settings.speed = speed;
       if (UNITS[lift]) settings.lift = lift;
       if (UNITS[altitude]) settings.altitude = altitude;
-    };
-
-    /**
-     * Formats a number to a string with a given number of decimal places
-     *
-     * @param  {number} value A number that should be formatted.
-     * @param  {[type]} decimals
-     *   The number of decimal places that should be kept.
-     * @return {String} The formatted value as a string.
-     */
-    slUnits.format_decimal = function(value, decimals) {
-      return value.toFixed(decimals);
     };
 
     function generateFunctions(unit_type) {
