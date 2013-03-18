@@ -613,7 +613,7 @@ function updateFixDataTableRow(id, fix_data) {
   });
 }
 
-function clearFixDataTableRow(id, fix_data) {
+function clearFixDataTableRow(id) {
   flights[id].table_row.find('td').each(function(index, cell) {
     switch (index) {
       case 0:
