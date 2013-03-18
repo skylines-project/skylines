@@ -101,39 +101,39 @@
 
     // unit conversion functions
     slUnits.convert_distance = function(value) {
-      var unit = UNITS[settings.distance];
-      return unit[1](value * unit[0]);
+      return value * UNITS[settings.distance][0];
     };
 
     slUnits.convert_speed = function(value) {
-      var unit = UNITS[settings.speed];
-      return unit[1](value * unit[0]);
+      return value * UNITS[settings.speed][0];
     };
 
     slUnits.convert_lift = function(value) {
-      var unit = UNITS[settings.lift];
-      return unit[1](value * unit[0]);
+      return value * UNITS[settings.lift][0];
     };
 
     slUnits.convert_altitude = function(value) {
-      var unit = UNITS[settings.altitude];
-      return unit[1](value * unit[0]);
+      return value * UNITS[settings.altitude][0];
     };
 
     // unit name functions
     slUnits.add_distance_unit = function(value) {
+      value = UNITS[settings.distance][1](value);
       return value + ' ' + settings.distance;
     };
 
     slUnits.add_speed_unit = function(value) {
+      value = UNITS[settings.speed][1](value);
       return value + ' ' + settings.speed;
     };
 
     slUnits.add_lift_unit = function(value) {
+      value = UNITS[settings.lift][1](value);
       return value + ' ' + settings.lift;
     };
 
     slUnits.add_altitude_unit = function(value) {
+      value = UNITS[settings.altitude][1](value);
       return value + ' ' + settings.altitude;
     };
   };
