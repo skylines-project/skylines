@@ -21,38 +21,38 @@
      */
     var UNITS = {
       // Length
-      'm': function(value) {
+      'm': [1, function(value) {
         return slUnits.format_decimal(value);
-      },
-      'ft': function(value) {
-        return slUnits.format_decimal(value * 3.28084);
-      },
-      'km': function(value) {
-        return slUnits.format_decimal(value / 1000.);
-      },
-      'NM': function(value) {
-        return slUnits.format_decimal(value / 1852.);
-      },
-      'mi': function(value) {
-        return slUnits.format_decimal(value / 1609.34);
-      },
+      }],
+      'ft': [3.28084, function(value) {
+        return slUnits.format_decimal(value);
+      }],
+      'km': [1 / 1000., function(value) {
+        return slUnits.format_decimal(value);
+      }],
+      'NM': [1 / 1852., function(value) {
+        return slUnits.format_decimal(value);
+      }],
+      'mi': [1 / 1609.34, function(value) {
+        return slUnits.format_decimal(value);
+      }],
 
       // Speed
-      'm/s': function(value) {
+      'm/s': [1, function(value) {
         return slUnits.format_decimal(value, 1);
-      },
-      'km/h': function(value) {
-        return slUnits.format_decimal(value * 3.6, 1);
-      },
-      'kt': function(value) {
-        return slUnits.format_decimal(value * 1.94384449, 1);
-      },
-      'mph': function(value) {
-        return slUnits.format_decimal(value * 2.23693629, 1);
-      },
-      'ft/min': function(value) {
-        return slUnits.format_decimal(value * 196.850394);
-      }
+      }],
+      'km/h': [3.6, function(value) {
+        return slUnits.format_decimal(value, 1);
+      }],
+      'kt': [1.94384449, function(value) {
+        return slUnits.format_decimal(value, 1);
+      }],
+      'mph': [2.23693629, function(value) {
+        return slUnits.format_decimal(value, 1);
+      }],
+      'ft/min': [196.850394, function(value) {
+        return slUnits.format_decimal(value);
+      }]
     };
 
     /**
@@ -101,19 +101,23 @@
 
     // unit conversion functions
     slUnits.convert_distance = function(value) {
-      return UNITS[settings.distance](value);
+      var unit = UNITS[settings.distance];
+      return unit[1](value * unit[0]);
     };
 
     slUnits.convert_speed = function(value) {
-      return UNITS[settings.speed](value);
+      var unit = UNITS[settings.speed];
+      return unit[1](value * unit[0]);
     };
 
     slUnits.convert_lift = function(value) {
-      return UNITS[settings.lift](value);
+      var unit = UNITS[settings.lift];
+      return unit[1](value * unit[0]);
     };
 
     slUnits.convert_altitude = function(value) {
-      return UNITS[settings.altitude](value);
+      var unit = UNITS[settings.altitude];
+      return unit[1](value * unit[0]);
     };
 
     // unit name functions
