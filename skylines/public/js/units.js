@@ -15,19 +15,20 @@
       return value.toFixed(decimals);
     };
 
+    /**
+     * The list of supported unit types.
+     * For each type the corresponding functions are generated dynamically.
+     * @const
+     * @type {Array}
+     */
     var UNIT_TYPES = ['distance', 'speed', 'lift', 'altitude'];
-    var UNIT_TYPES_LENGTH = UNIT_TYPES.length;
 
     /**
-     * The container that saves the user unit settings
-     * @type {Object}
+     * The number of elements in the UNIT_TYPES array.
+     * @const
+     * @type {number}
      */
-    var settings = {
-      distance: 'm',
-      speed: 'km/h',
-      lift: 'm/s',
-      altitude: 'm'
-    };
+    var UNIT_TYPES_LENGTH = UNIT_TYPES.length;
 
     /**
      * A static dictionary of the supported units with its
@@ -57,6 +58,17 @@
         return slUnits.format_decimal(value, 1);
       }],
       'ft/min': [196.850394, slUnits.format_decimal]
+    };
+
+    /**
+     * The container that saves the user unit settings
+     * @type {Object}
+     */
+    var settings = {
+      distance: 'm',
+      speed: 'km/h',
+      lift: 'm/s',
+      altitude: 'm'
     };
 
     /**
