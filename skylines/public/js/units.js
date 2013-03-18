@@ -2,6 +2,9 @@
   slUnits = new function() {
     var slUnits = this;
 
+    var UNIT_TYPES = ['distance', 'speed', 'lift', 'altitude'];
+    var UNIT_TYPES_LENGTH = UNIT_TYPES.length;
+
     /**
      * The container that saves the user unit settings
      * @type {Object}
@@ -82,59 +85,27 @@
       return value.toFixed(decimals);
     };
 
-    // unit formatter functions
-    slUnits.format_distance = function(value) {
-      return slUnits.add_distance_unit(slUnits.convert_distance(value));
-    };
+    function generateFunctions(unit_type) {
+      // Generate e.g. format_distance(value) functions
+      slUnits['format_' + unit_type] = function(value) {
+        value = slUnits['convert_' + unit_type](value);
+        return slUnits['add_' + unit_type + '_unit'](value);
+      };
 
-    slUnits.format_speed = function(value) {
-      return slUnits.add_speed_unit(slUnits.convert_speed(value));
-    };
+      // Generate e.g. convert_distance(value) functions
+      slUnits['convert_' + unit_type] = function(value) {
+        return value * UNITS[settings[unit_type]][0];
+      };
 
-    slUnits.format_lift = function(value) {
-      return slUnits.add_lift_unit(slUnits.convert_lift(value));
-    };
+      // Generate e.g. add_distance_unit(value) functions
+      slUnits['add_' + unit_type + '_unit'] = function(value) {
+        value = UNITS[settings[unit_type]][1](value);
+        return value + ' ' + settings[unit_type];
+      };
+    }
 
-    slUnits.format_altitude = function(value) {
-      return slUnits.add_altitude_unit(slUnits.convert_altitude(value));
-    };
-
-    // unit conversion functions
-    slUnits.convert_distance = function(value) {
-      return value * UNITS[settings.distance][0];
-    };
-
-    slUnits.convert_speed = function(value) {
-      return value * UNITS[settings.speed][0];
-    };
-
-    slUnits.convert_lift = function(value) {
-      return value * UNITS[settings.lift][0];
-    };
-
-    slUnits.convert_altitude = function(value) {
-      return value * UNITS[settings.altitude][0];
-    };
-
-    // unit name functions
-    slUnits.add_distance_unit = function(value) {
-      value = UNITS[settings.distance][1](value);
-      return value + ' ' + settings.distance;
-    };
-
-    slUnits.add_speed_unit = function(value) {
-      value = UNITS[settings.speed][1](value);
-      return value + ' ' + settings.speed;
-    };
-
-    slUnits.add_lift_unit = function(value) {
-      value = UNITS[settings.lift][1](value);
-      return value + ' ' + settings.lift;
-    };
-
-    slUnits.add_altitude_unit = function(value) {
-      value = UNITS[settings.altitude][1](value);
-      return value + ' ' + settings.altitude;
-    };
+    for (var i = 0; i < UNIT_TYPES_LENGTH; ++i) {
+      generateFunctions(UNIT_TYPES[i]);
+    }
   };
 })();
