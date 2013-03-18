@@ -254,3 +254,11 @@ table.vmiddle td {
 .table tr.selected td, .table tr.selected:hover td {
   background-color: #eee !important;
 }
+
+.tooltip {
+  /*
+   * The tooltips in the flight table are broken otherwise because
+   * of the "table .show" rule that changes this setting.
+   */
+  white-space: normal;
+}
