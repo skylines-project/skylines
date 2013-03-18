@@ -3,6 +3,7 @@
     var slUnits = this;
 
     /**
+     * @expose
      * Formats a number to a string with a given number of decimal places
      *
      * @param  {number} value A number that should be formatted.
@@ -59,6 +60,7 @@
     };
 
     /**
+     * @expose
      * Initialises the slUnits module with the user settings
      *
      * @param {String} distance The distance unit (e.g. 'km').
