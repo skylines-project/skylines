@@ -32,32 +32,24 @@
 
     /**
      * A static dictionary of the supported units with its
-     * conversion factors and formatting functions
+     * conversion factors and default decimal places.
      * @const
      * @type {Object}
      */
     var UNITS = {
       // Length
-      'm': [1, slUnits.format_decimal],
-      'ft': [3.28084, slUnits.format_decimal],
-      'km': [1 / 1000., slUnits.format_decimal],
-      'NM': [1 / 1852., slUnits.format_decimal],
-      'mi': [1 / 1609.34, slUnits.format_decimal],
+      'm': [1, 0],
+      'ft': [3.28084, 0],
+      'km': [1 / 1000., 0],
+      'NM': [1 / 1852., 0],
+      'mi': [1 / 1609.34, 0],
 
       // Speed
-      'm/s': [1, function(value) {
-        return slUnits.format_decimal(value, 1);
-      }],
-      'km/h': [3.6, function(value) {
-        return slUnits.format_decimal(value, 1);
-      }],
-      'kt': [1.94384449, function(value) {
-        return slUnits.format_decimal(value, 1);
-      }],
-      'mph': [2.23693629, function(value) {
-        return slUnits.format_decimal(value, 1);
-      }],
-      'ft/min': [196.850394, slUnits.format_decimal]
+      'm/s': [1, 1],
+      'km/h': [3.6, 1],
+      'kt': [1.94384449, 1],
+      'mph': [2.23693629, 1],
+      'ft/min': [196.850394, 0]
     };
 
     /**
@@ -101,7 +93,7 @@
 
       // Generate e.g. add_distance_unit(value) functions
       slUnits['add_' + unit_type + '_unit'] = function(value) {
-        value = UNITS[settings[unit_type]][1](value);
+        value = slUnits.format_decimal(value, UNITS[settings[unit_type]][1]);
         return value + ' ' + settings[unit_type];
       };
     }
