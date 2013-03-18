@@ -1,5 +1,7 @@
 (function() {
   slUnits = new function() {
+    var slUnits = this;
+
     /**
      * The container that saves the user unit settings
      * @type {Object}
@@ -61,7 +63,7 @@
      * @param {String} lift The vertical speed unit (e.g. 'm/s').
      * @param {String} altitude The altitude unit (e.g. 'm').
      */
-    this.init = function(distance, speed, lift, altitude) {
+    slUnits.init = function(distance, speed, lift, altitude) {
       if (UNITS[distance]) settings.distance = distance;
       if (UNITS[speed]) settings.speed = speed;
       if (UNITS[lift]) settings.lift = lift;
@@ -76,58 +78,58 @@
      *   The number of decimal places that should be kept.
      * @return {String} The formatted value as a string.
      */
-    this.format_decimal = function(value, decimals) {
+    slUnits.format_decimal = function(value, decimals) {
       return value.toFixed(decimals);
     };
 
     // unit formatter functions
-    this.format_distance = function(value) {
-      return this.add_distance_unit(this.convert_distance(value));
+    slUnits.format_distance = function(value) {
+      return slUnits.add_distance_unit(slUnits.convert_distance(value));
     };
 
-    this.format_speed = function(value) {
-      return this.add_speed_unit(this.convert_speed(value));
+    slUnits.format_speed = function(value) {
+      return slUnits.add_speed_unit(slUnits.convert_speed(value));
     };
 
-    this.format_lift = function(value) {
-      return this.add_lift_unit(this.convert_lift(value));
+    slUnits.format_lift = function(value) {
+      return slUnits.add_lift_unit(slUnits.convert_lift(value));
     };
 
-    this.format_altitude = function(value) {
-      return this.add_altitude_unit(this.convert_altitude(value));
+    slUnits.format_altitude = function(value) {
+      return slUnits.add_altitude_unit(slUnits.convert_altitude(value));
     };
 
     // unit conversion functions
-    this.convert_distance = function(value) {
+    slUnits.convert_distance = function(value) {
       return UNITS[settings.distance](value);
     };
 
-    this.convert_speed = function(value) {
+    slUnits.convert_speed = function(value) {
       return UNITS[settings.speed](value);
     };
 
-    this.convert_lift = function(value) {
+    slUnits.convert_lift = function(value) {
       return UNITS[settings.lift](value);
     };
 
-    this.convert_altitude = function(value) {
+    slUnits.convert_altitude = function(value) {
       return UNITS[settings.altitude](value);
     };
 
     // unit name functions
-    this.add_distance_unit = function(value) {
+    slUnits.add_distance_unit = function(value) {
       return value + ' ' + settings.distance;
     };
 
-    this.add_speed_unit = function(value) {
+    slUnits.add_speed_unit = function(value) {
       return value + ' ' + settings.speed;
     };
 
-    this.add_lift_unit = function(value) {
+    slUnits.add_lift_unit = function(value) {
       return value + ' ' + settings.lift;
     };
 
-    this.add_altitude_unit = function(value) {
+    slUnits.add_altitude_unit = function(value) {
       return value + ' ' + settings.altitude;
     };
   };
