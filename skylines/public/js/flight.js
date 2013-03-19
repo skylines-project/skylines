@@ -473,8 +473,10 @@ function setTime(time) {
   baro.setTime(time);
 
   for (var id = 0; id < flights.length; id++) {
+    var flight = flights[id];
+
     // calculate fix data
-    fix_data = getFixData(id, time);
+    fix_data = getFixData(flight, time);
     if (!fix_data) {
       // update map
       hidePlaneOnMap(id);
@@ -491,9 +493,7 @@ function setTime(time) {
   }
 }
 
-function getFixData(id, time) {
-  var flight = flights[id];
-
+function getFixData(flight, time) {
   if (time == -1)
     time = flight.t[flight.t.length - 1];
   else if (time < flight.t[0] || time > flight.t[flight.t.length - 1])
