@@ -516,8 +516,8 @@ function getFixData(id, time) {
 
   fix_data['time'] = t_prev;
 
-  var loc_prev = flights[id].lonlat[index];
-  var loc_next = flights[id].lonlat[index + 1];
+  var loc_prev = flight.lonlat[index];
+  var loc_next = flight.lonlat[index + 1];
 
   var lon_prev = loc_prev.lon, lat_prev = loc_prev.lat;
   var lon_next = loc_next.lon, lat_next = loc_next.lat;
@@ -544,8 +544,8 @@ function getFixData(id, time) {
     fix_data['speed'] = OpenLayers.Util.distVincenty(
         loc_next, loc_prev) * 1000 / dt_total;
 
-  var h_prev = flights[id].h[index];
-  var h_next = flights[id].h[index + 1];
+  var h_prev = flight.h[index];
+  var h_next = flight.h[index + 1];
 
   fix_data['alt-msl'] = h_prev;
 
