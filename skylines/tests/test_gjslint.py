@@ -12,6 +12,7 @@ JS_BASE_FOLDER = os.path.join('skylines', 'public', 'js')
 
 JS_FILES = [
     'baro.js',
+    'fix-table.js',
     'flight.js',
     'general.js',
     'map.js',
