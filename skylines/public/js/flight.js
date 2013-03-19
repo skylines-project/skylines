@@ -6,9 +6,11 @@
 var flights = [];
 
 var baro;
+var fix_table;
 
 var highlighted_flight_sfid;
 var highlighted_flight_phase = null;
+
 
 /*
  * Global time, can be:
@@ -97,6 +99,13 @@ function initFlightLayer() {
 
   map.events.register('moveend', null, updateBaroScale);
 }
+
+function initFixTable() {
+  fix_table = new slFixTable($('#fix-data'));
+  $(fix_table).on('selection_changed', updateBaroData);
+}
+
+initFixTable();
 
 function updateBaroScale() {
   var first_t = 999999;
@@ -230,35 +239,8 @@ function addFlight(sfid, _lonlat, _levels, _num_levels, _time, _height, _enl,
     flot_enl.push([timestamp, enl[i]]);
   }
 
-  var table_row = $(
-      '<tr>' +
-      '<td><span class=\"badge\" style=\"background: ' + color + ';\">' +
-      (_additional && _additional['competition_id'] ?
-       _additional['competition_id'] : '') +
-      '</span></td>' +
-      '<td>--:--:--</td>' +
-      '<td>--</td>' +
-      '<td>--</td>' +
-      '<td>--</td>' +
-      '</tr>');
-
-
-  table_row.on('hover', function(e) {
-    if (flights.length > 1)
-      $(this).css('cursor', 'pointer');
-  });
-
-  table_row.on('click', function(e) {
-    if (flights.length <= 1)
-      return;
-
-    if (highlighted_flight_sfid == sfid)
-      clearHighlight();
-    else
-      setHighlight(sfid);
-  });
-
-  $('#fix-data').append(table_row);
+  // Add flight as a row to the fix data table
+  fix_table.addRow(sfid, color, _additional && _additional['competition_id']);
 
   flights.push({
     lonlat: lonlat,
@@ -271,7 +253,6 @@ function addFlight(sfid, _lonlat, _levels, _num_levels, _time, _height, _enl,
     sfid: sfid,
     last_update: time[time.length - 1],
     contests: contests,
-    table_row: table_row,
     flot_h: flot_h,
     flot_enl: flot_enl,
     additional: _additional ? _additional : null
@@ -279,6 +260,11 @@ function addFlight(sfid, _lonlat, _levels, _num_levels, _time, _height, _enl,
 
   updateBaroData();
   updateBaroScale();
+
+  // Set fix data table into "selectable" mode if
+  // more than one flight is loaded
+  if (flights.length > 1)
+    fix_table.setSelectable(true);
 
   setTime(global_time);
 }
@@ -422,7 +408,7 @@ function updateBaroData() {
       color: flight.color
     };
 
-    if (highlighted_flight_sfid && flight.sfid != highlighted_flight_sfid) {
+    if (fix_table.getSelection() && flight.sfid != fix_table.getSelection()) {
       passive.push(data);
     } else {
       active.push(data);
@@ -430,7 +416,7 @@ function updateBaroData() {
     }
 
     // Save contests of highlighted flight for later
-    if (highlighted_flight_sfid && flight.sfid == highlighted_flight_sfid)
+    if (fix_table.getSelection() && flight.sfid == fix_table.getSelection())
       contests = flight.contests;
 
     // Save contests of only flight for later if applicable
@@ -464,7 +450,8 @@ function setTime(time) {
     baro.clearTime();
 
     // remove data from fix-data table
-    clearFixDataTable();
+    fix_table.clearAllFixes();
+    fix_table.render();
 
     return;
   }
@@ -482,15 +469,17 @@ function setTime(time) {
       hidePlaneOnMap(id);
 
       // update fix-data table
-      clearFixDataTableRow(id);
+      fix_table.clearFix(flight.sfid);
     } else {
       // update map
       setPlaneOnMap(id, fix_data);
 
       // update fix-data table
-      updateFixDataTableRow(id, fix_data);
+      fix_table.updateFix(flight.sfid, fix_data);
     }
   }
+
+  fix_table.render();
 }
 
 function getFixData(flight, time) {
@@ -577,62 +566,6 @@ function hideAllPlanesOnMap() {
     layer.removeFeatures(flights[id].plane);
 }
 
-function updateFixDataTableRow(id, fix_data) {
-  flights[id].table_row.find('td').each(function(index, cell) {
-    switch (index) {
-      case 0:
-        return;
-      case 1:
-        var html = formatSecondsAsTime(fix_data['time']);
-        $(cell).html(html);
-        break;
-      case 2:
-        var html = slUnits.formatAltitude(fix_data['alt-msl']);
-        $(cell).html(html);
-        break;
-      case 3:
-        if (fix_data['vario'] !== undefined) {
-          var html = slUnits.formatLift(fix_data['vario']);
-          if (fix_data['vario'] >= 0)
-            html = '+' + html;
-
-          $(cell).html(html);
-        } else {
-          $(cell).html('--');
-        }
-        break;
-      case 4:
-        if (fix_data['speed'] !== undefined) {
-          var html = slUnits.formatSpeed(fix_data['speed']);
-          $(cell).html(html);
-        } else {
-          $(cell).html('--');
-        }
-        break;
-    }
-  });
-}
-
-function clearFixDataTableRow(id) {
-  flights[id].table_row.find('td').each(function(index, cell) {
-    switch (index) {
-      case 0:
-        return;
-      case 1:
-        $(cell).html('--:--:--');
-        break;
-      default:
-        $(cell).html('--');
-        break;
-    }
-  });
-}
-
-function clearFixDataTable() {
-  for (var id = 0; id < flights.length; id++)
-    clearFixDataTableRow(id);
-}
-
 function flightWithSFID(sfid) {
   for (var id = 0; id < flights.length; id++) {
     var flight = flights[id];
@@ -641,46 +574,6 @@ function flightWithSFID(sfid) {
   }
 
   return null;
-}
-
-function clearHighlight(defer_update) {
-  if (!highlighted_flight_sfid)
-    return;
-
-  // Find currently highlighted flight
-  var flight = flightWithSFID(highlighted_flight_sfid);
-  if (flight)
-    // Removed table row styling for selected flight
-    flight.table_row.removeClass('selected');
-
-  // Unset the highlighted sfid variable
-  highlighted_flight_sfid = undefined;
-
-  // Unless specifically deferred update the barogram
-  if (defer_update != true)
-    updateBaroData();
-}
-
-function setHighlight(sfid) {
-  if (highlighted_flight_sfid == sfid)
-    return;
-
-  // Clear the currently highlighted flight
-  clearHighlight(true);
-
-  // Find flight that should be highlighted now
-  var flight = flightWithSFID(sfid);
-  if (!flight)
-    return;
-
-  // Add table row styling
-  flight.table_row.addClass('selected');
-
-  // Save highlighted status
-  highlighted_flight_sfid = sfid;
-
-  // Update barogram
-  updateBaroData();
 }
 
 

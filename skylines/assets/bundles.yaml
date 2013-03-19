@@ -57,6 +57,7 @@ js-flight:
           contents:
             - js/units.js
             - js/baro.js
+            - js/fix-table.js
         - js/flight.js
 
 js-tracking:
