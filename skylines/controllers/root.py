@@ -5,12 +5,7 @@ from datetime import datetime
 from tg import expose, flash, lurl, request, redirect, require, config
 from tg.i18n import ugettext as _, set_lang
 from repoze.what.predicates import Any, not_anonymous
-from skylines import model
-from skylines.model import DBSession
-from tgext.admin.tgadminconfig import TGAdminConfig
-from tgext.admin.controller import AdminController
 from webob.exc import HTTPNotFound
-
 from skylines.controllers.base import BaseController
 from skylines.controllers.error import ErrorController
 from skylines.controllers.users import UsersController
@@ -38,8 +33,6 @@ class RootController(BaseController):
     must be wrapped around with :class:`tg.controllers.WSGIAppController`.
 
     """
-    admin = AdminController(model, DBSession, config_type=TGAdminConfig)
-
     error = ErrorController()
     users = UsersController()
     clubs = ClubsController()
