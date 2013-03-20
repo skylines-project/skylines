@@ -11,7 +11,6 @@ css-main:
     contents:
         - css/bootstrap.min.css
         - css/style.css
-        - css/map.css
         - css/fix-table.css
         - css/datepicker.css
         - images/flags.css
@@ -22,6 +21,7 @@ css-openlayers:
     contents:
         - css/OpenLayers.css
         - css/GraphicLayerSwitcher.css
+        - css/map.css
 
 js-all:
     filters: rjsmin
