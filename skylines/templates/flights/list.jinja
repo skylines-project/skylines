@@ -32,7 +32,9 @@
 
 {% block styles -%}
 {{ super() }}
-<link href="/css/dataTables.bootstrap.css" rel="stylesheet" type="text/css" />
+{% for url in g.assets['css-datatables'].urls() -%}
+<link href="{{ url }}" rel="stylesheet" type="text/css" />
+{%- endfor %}
 {%- endblock %}
 
 

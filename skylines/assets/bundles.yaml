@@ -23,6 +23,12 @@ css-openlayers:
         - css/GraphicLayerSwitcher.css
         - css/map.css
 
+css-datatables:
+    filters: cssmin, cssrewrite
+    output: css/datatables-%(version)s.css
+    contents:
+        - css/dataTables.bootstrap.css
+
 js-all:
     filters: rjsmin
     output: js/skylines-%(version)s.js
