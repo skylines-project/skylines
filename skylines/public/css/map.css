@@ -1,0 +1,33 @@
+#map_canvas {
+  outline: none;
+  margin-bottom: 5px !important;
+}
+
+#map_canvas img {
+  max-width: inherit;
+}
+
+.olControlAttribution {
+  background: white;
+  opacity: 0.7;
+  bottom: 0 !important;
+  right: 0 !important;
+  padding: 1px 5px;
+  border-top-left-radius: 4px;
+}
+
+.olFullscreen {
+  background-color: #fff;
+}
+
+.olFullscreen .olControlAttribution {
+  bottom: 125pt !important;
+}
+
+.olFullscreen .olControlScaleLine {
+  bottom: 125pt !important;
+}
+
+#map_canvas.olFullscreen {
+  margin-bottom: 0px !important;
+}
