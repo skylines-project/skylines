@@ -286,7 +286,8 @@ class FlightController(BaseController):
 
         return dict(active_page='flights', title=_('Change Aircraft'),
                     form=select_aircraft_form,
-                    values=dict(model=model_id,
+                    values=dict(id=self.flight.id,
+                                model=model_id,
                                 registration=registration,
                                 competition_id=competition_id))
 
