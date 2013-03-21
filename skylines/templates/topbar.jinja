@@ -118,18 +118,17 @@
         {{ insert_flag(c.current_language['country_code']) }} <i class="icon-caret-down"></i>
     </a>
     <ul class="dropdown-menu">
-      {% for lang in c.primary_languages %}
-      <li>
-          <a href="/set_lang/{{ lang['language_code'] }}" title="{{ lang['english_name'] }}">{{ insert_flag(lang['country_code']) }} {{ lang['local_name'] }}</a>
-      </li>
-      {% endfor %}
+      {% for lang in c.primary_languages -%}
+      {{ _language_item(lang) }}
+      {%- endfor %}
       <li class="divider"></li>
-      {% for lang in c.secondary_languages %}
-      <li>
-          <a href="/set_lang/{{ lang['language_code'] }}" title="{{ lang['english_name'] }}">{{ insert_flag(lang['country_code']) }} {{ lang['local_name'] }}</a>
-      </li>
-      {% endfor %}
+      {% for lang in c.secondary_languages -%}
+      {{ _language_item(lang) }}
+      {%- endfor %}
     </ul>
 </li>
 {%- endmacro %}
 
+{% macro _language_item(lang) %}
+<li><a href="/set_lang/{{ lang['language_code'] }}" title="{{ lang['english_name'] }}">{{ insert_flag(lang['country_code']) }} {{ lang['local_name'] }}</a></li>
+{%- endmacro %}
