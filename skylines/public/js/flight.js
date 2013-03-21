@@ -31,6 +31,8 @@ var contest_colors = {
   'olc_plus triangle': '#9f14ff'
 };
 
+var WGS84_PROJ = new OpenLayers.Projection('EPSG:4326');
+
 /**
  * Initialize the map and add airspace and flight path layers.
  */
@@ -195,8 +197,7 @@ function addFlight(sfid, _lonlat, _levels, _num_levels, _time, _height, _enl,
   var lonlatLength = lonlat.length;
   for (var i = 0; i < lonlatLength; ++i) {
     points.push(new OpenLayers.Geometry.Point(lonlat[i].lon, lonlat[i].lat).
-        transform(new OpenLayers.Projection('EPSG:4326'),
-                  map.getProjectionObject()));
+        transform(WGS84_PROJ, map.getProjectionObject()));
   }
 
   // add new flight
@@ -209,8 +210,7 @@ function addFlight(sfid, _lonlat, _levels, _num_levels, _time, _height, _enl,
 
   var plane = new OpenLayers.Feature.Vector(
       new OpenLayers.Geometry.Point(lonlat[0].lon, lonlat[0].lat).
-          transform(new OpenLayers.Projection('EPSG:4326'),
-                    map.getProjectionObject()), { rotation: 0 });
+          transform(WGS84_PROJ, map.getProjectionObject()), { rotation: 0 });
   plane.renderIntent = 'plane';
 
   map.getLayersByName('Flight')[0].addFeatures([feature, plane]);
@@ -308,8 +308,7 @@ function addContest(name, lonlat, times, sfid) {
   var lonlatLength = lonlat.length;
   for (var i = 0; i < lonlatLength; ++i) {
     points.push(new OpenLayers.Geometry.Point(lonlat[i].lon, lonlat[i].lat).
-        transform(new OpenLayers.Projection('EPSG:4326'),
-                  map.getProjectionObject()));
+        transform(WGS84_PROJ, map.getProjectionObject()));
   }
 
   var trace = new OpenLayers.Geometry.LineString(points);
@@ -427,7 +426,7 @@ function updateBaroData() {
       contests = flight.contests;
 
     // Save contests of only flight for later if applicable
-    if (flights_length == 1)
+    if (flightsLength == 1)
       contests = flight.contests;
   }
 
@@ -520,19 +519,16 @@ function getFixData(flight, time) {
   var lon_next = loc_next.lon, lat_next = loc_next.lat;
 
   var _loc_prev = new OpenLayers.Geometry.Point(lon_prev, lat_prev);
-  _loc_prev.transform(new OpenLayers.Projection('EPSG:4326'),
-                      map.getProjectionObject());
+  _loc_prev.transform(WGS84_PROJ, map.getProjectionObject());
   var _loc_next = new OpenLayers.Geometry.Point(lon_next, lat_next);
-  _loc_next.transform(new OpenLayers.Projection('EPSG:4326'),
-                      map.getProjectionObject());
+  _loc_next.transform(WGS84_PROJ, map.getProjectionObject());
 
   fix_data['lon'] = lon_prev + (lon_next - lon_prev) * dt_rel;
   fix_data['lat'] = lat_prev + (lat_next - lat_prev) * dt_rel;
 
   fix_data['loc'] = new OpenLayers.Geometry.Point(
       fix_data['lon'], fix_data['lat']);
-  fix_data['loc'].transform(new OpenLayers.Projection('EPSG:4326'),
-                            map.getProjectionObject());
+  fix_data['loc'].transform(WGS84_PROJ, map.getProjectionObject());
 
   fix_data['heading'] = Math.atan2(_loc_next.x - _loc_prev.x,
                                    _loc_next.y - _loc_prev.y) * 180 / Math.PI;
@@ -572,7 +568,7 @@ function hideAllPlanesOnMap() {
   var layer = map.getLayersByName('Flight')[0];
   var flightsLength = flights.length;
   for (var i = 0; i < flightsLength; ++i)
-    layer.removeFeatures(flights[id].plane);
+    layer.removeFeatures(flights[i].plane);
 }
 
 function flightWithSFID(sfid) {
@@ -684,7 +680,7 @@ function searchForPlane(within, loc, hoverTolerance) {
 
   // calculate map resolution (meters per pixel) at mouse location
   var loc_epsg4326 = loc.clone().transform(
-      map.getProjectionObject(), new OpenLayers.Projection('EPSG:4326'));
+      map.getProjectionObject(), WGS84_PROJ);
   var resolution = map.getResolution() * Math.cos(
       Math.PI / 180 * loc_epsg4326.lat);
 
@@ -821,8 +817,7 @@ function highlightFlightPhase(table_row) {
 
   var start_point = new OpenLayers.Geometry.Point(
       flight.lonlat[start_index].lon, flight.lonlat[start_index].lat)
-      .transform(new OpenLayers.Projection('EPSG:4326'),
-                 map.getProjectionObject());
+      .transform(WGS84_PROJ, map.getProjectionObject());
   phases_layer.addFeatures(new OpenLayers.Feature.Vector(start_point, {}, {
     externalGraphic: '/images/OpenLayers/marker-green.png',
     graphicHeight: 21,
@@ -833,8 +828,7 @@ function highlightFlightPhase(table_row) {
 
   var end_point = new OpenLayers.Geometry.Point(
       flight.lonlat[end_index].lon, flight.lonlat[end_index].lat)
-      .transform(new OpenLayers.Projection('EPSG:4326'),
-                 map.getProjectionObject());
+      .transform(WGS84_PROJ, map.getProjectionObject());
   phases_layer.addFeatures(new OpenLayers.Feature.Vector(end_point, {}, {
     externalGraphic: '/images/OpenLayers/marker.png',
     graphicHeight: 21,
@@ -844,8 +838,7 @@ function highlightFlightPhase(table_row) {
   }));
 
   var bounds = new OpenLayers.Bounds(lon_min, lat_min, lon_max, lat_max);
-  bounds.transform(new OpenLayers.Projection('EPSG:4326'),
-                   map.getProjectionObject());
+  bounds.transform(WGS84_PROJ, map.getProjectionObject());
   map.zoomToExtent(bounds.scale(2));
 
   table_row.addClass('selected');
