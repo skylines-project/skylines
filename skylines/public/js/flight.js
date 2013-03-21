@@ -112,8 +112,9 @@ function updateBaroScale() {
   var last_t = 0;
 
   // circle throu all flights
-  for (var fid = 0; fid < flights.length; fid++) {
-    var flight = flights[fid];
+  var flightsLength = flights.length;
+  for (var i = 0; i < flightsLength; i++) {
+    var flight = flights[i];
     var geometries = flight.geo.partitionedGeometries;
 
     // if flight is not in viewport continue.
@@ -191,7 +192,8 @@ function addFlight(sfid, _lonlat, _levels, _num_levels, _time, _height, _enl,
   var lod = OpenLayers.Util.decodeGoogleLoD(_levels, _num_levels);
 
   var points = new Array();
-  for (var i = 0, len = lonlat.length; i < len; i++) {
+  var lonlatLength = lonlat.length;
+  for (var i = 0; i < lonlatLength; ++i) {
     points.push(new OpenLayers.Geometry.Point(lonlat[i].lon, lonlat[i].lat).
         transform(new OpenLayers.Projection('EPSG:4326'),
                   map.getProjectionObject()));
@@ -215,7 +217,8 @@ function addFlight(sfid, _lonlat, _levels, _num_levels, _time, _height, _enl,
 
   var contests = [];
   if (_contests) {
-    for (var i = 0; i < _contests.length; i++) {
+    var _contestsLength = _contests.length;
+    for (var i = 0; i < _contestsLength; ++i) {
       var turnpoints = OpenLayers.Util.decodeGooglePolyline(
           _contests[i].turnpoints);
       var times = OpenLayers.Util.decodeGoogle(_contests[i].times);
@@ -233,7 +236,8 @@ function addFlight(sfid, _lonlat, _levels, _num_levels, _time, _height, _enl,
   }
 
   var flot_h = [], flot_enl = [];
-  for (var i = 0; i < time.length; i++) {
+  var timeLength = time.length;
+  for (var i = 0; i < timeLength; ++i) {
     var timestamp = time[i] * 1000;
     flot_h.push([timestamp, slUnits.convertAltitude(height[i])]);
     flot_enl.push([timestamp, enl[i]]);
@@ -276,8 +280,9 @@ function addFlight(sfid, _lonlat, _levels, _num_levels, _time, _height, _enl,
 function addFlightFromJSON(url) {
   $.ajax(url, {
     success: function(data) {
-      for (var flight_id = 0; flight_id < flights.length; flight_id++) {
-        if (flights[flight_id].sfid == data.sfid) return;
+      var flightsLength = flights.length;
+      for (var i = 0; i < flightsLength; ++i) {
+        if (flights[i].sfid == data.sfid) return;
       }
 
       addFlight(data.sfid, data.encoded.points, data.encoded.levels,
@@ -300,7 +305,8 @@ function addFlightFromJSON(url) {
  */
 function addContest(name, lonlat, times, sfid) {
   var points = new Array();
-  for (var i = 0, len = lonlat.length; i < len; i++) {
+  var lonlatLength = lonlat.length;
+  for (var i = 0; i < lonlatLength; ++i) {
     points.push(new OpenLayers.Geometry.Point(lonlat[i].lon, lonlat[i].lat).
         transform(new OpenLayers.Projection('EPSG:4326'),
                   map.getProjectionObject()));
@@ -327,8 +333,9 @@ function addContest(name, lonlat, times, sfid) {
 function getAllFlightsBounds() {
   var bounds = new OpenLayers.Bounds();
 
-  for (var fid = 0; fid < flights.length; fid++) {
-    bounds.extend(flights[fid].geo.bounds);
+  var flightsLength = flights.length;
+  for (var i = 0; i < flightsLength; ++i) {
+    bounds.extend(flights[i].geo.bounds);
   }
 
   return bounds;
@@ -394,8 +401,8 @@ function updateBaroData() {
   var contests = [];
 
   var active = [], passive = [], enls = [];
-  var flights_length = flights.length;
-  for (var i = 0; i < flights_length; ++i) {
+  var flightsLength = flights.length;
+  for (var i = 0; i < flightsLength; ++i) {
     var flight = flights[i];
 
     var data = {
@@ -459,20 +466,21 @@ function setTime(time) {
   // update barogram crosshair
   baro.setTime(time);
 
-  for (var id = 0; id < flights.length; id++) {
-    var flight = flights[id];
+  var flightsLength = flights.length;
+  for (var i = 0; i < flightsLength; ++i) {
+    var flight = flights[i];
 
     // calculate fix data
     fix_data = getFixData(flight, time);
     if (!fix_data) {
       // update map
-      hidePlaneOnMap(id);
+      hidePlaneOnMap(i);
 
       // update fix-data table
       fix_table.clearFix(flight.sfid);
     } else {
       // update map
-      setPlaneOnMap(id, fix_data);
+      setPlaneOnMap(i, fix_data);
 
       // update fix-data table
       fix_table.updateFix(flight.sfid, fix_data);
@@ -562,13 +570,15 @@ function hidePlaneOnMap(id) {
 
 function hideAllPlanesOnMap() {
   var layer = map.getLayersByName('Flight')[0];
-  for (var id = 0; id < flights.length; id++)
+  var flightsLength = flights.length;
+  for (var i = 0; i < flightsLength; ++i)
     layer.removeFeatures(flights[id].plane);
 }
 
 function flightWithSFID(sfid) {
-  for (var id = 0; id < flights.length; id++) {
-    var flight = flights[id];
+  var flightsLength = flights.length;
+  for (var i = 0; i < flightsLength; ++i) {
+    var flight = flights[i];
     if (flight.sfid == sfid)
       return flight;
   }
@@ -634,39 +644,43 @@ function searchForPlane(within, loc, hoverTolerance) {
   var possible_solutions = [];
 
   // circle throu all flights visible in viewport
-  for (var fid = 0; fid < flights.length; fid++) {
-    var flight = flights[fid].geo;
-    var geometries = flight.partitionedGeometries;
+  var flightsLength = flights.length;
+  for (var i = 0; i < flightsLength; ++i) {
+    var flight = flights[i];
+    var geometries = flight.geo.partitionedGeometries;
+    var geometriesLength = geometries.length;
 
-    for (var part_geo = 0; part_geo < geometries.length; part_geo++) {
-      var components = geometries[part_geo].components;
+    for (var j = 0; j < geometriesLength; ++j) {
+      var components = geometries[j].components;
+      var componentsLength = components.length;
 
-      for (var i = 1, len = components.length; i < len; i++) {
+      for (var k = 1; k < componentsLength; ++k) {
         // check if the current vector between two points intersects our
         // "within" bounds if so, process this vector in the next step
         // (possible_solutions)
         var vector = new OpenLayers.Bounds();
-        vector.bottom = Math.min(components[i - 1].y,
-                                 components[i].y);
-        vector.top = Math.max(components[i - 1].y,
-                              components[i].y);
-        vector.left = Math.min(components[i - 1].x,
-                               components[i].x);
-        vector.right = Math.max(components[i - 1].x,
-                                components[i].x);
+        vector.bottom = Math.min(components[k - 1].y,
+                                 components[k].y);
+        vector.top = Math.max(components[k - 1].y,
+                              components[k].y);
+        vector.left = Math.min(components[k - 1].x,
+                               components[k].x);
+        vector.right = Math.max(components[k - 1].x,
+                                components[k].x);
 
         if (within.intersectsBounds(vector))
           possible_solutions.push({
-            from: components[i - 1].originalIndex,
-            to: components[i].originalIndex,
-            fid: fid
+            from: components[k - 1].originalIndex,
+            to: components[k].originalIndex,
+            fid: i
           });
       }
     }
   }
 
   // no solutions found. return.
-  if (possible_solutions.length == 0) return null;
+  if (possible_solutions.length == 0)
+    return null;
 
   // calculate map resolution (meters per pixel) at mouse location
   var loc_epsg4326 = loc.clone().transform(
@@ -677,17 +691,21 @@ function searchForPlane(within, loc, hoverTolerance) {
   // find nearest distance between loc and vectors in possible_solutions
   var nearest, distance = Math.pow(hoverTolerance * resolution, 2);
 
-  for (var i = 0; i < possible_solutions.length; i++) {
-    for (var j = possible_solutions[i].from + 1; j <= possible_solutions[i].to;
-        j++) {
+  var possible_solutionsLength = possible_solutions.length;
+  for (var i = 0; i < possible_solutionsLength; ++i) {
+    var possible_solution = possible_solutions[i];
+    var flight = flights[possible_solution.fid];
+    var components = flight.geo.components;
+
+    for (var j = possible_solution.from + 1; j <= possible_solution.to; ++j) {
       var distToSegment = distanceToSegmentSquared({
         x: loc.lon,
         y: loc.lat
       }, {
-        x1: flights[possible_solutions[i].fid].geo.components[j - 1].x,
-        y1: flights[possible_solutions[i].fid].geo.components[j - 1].y,
-        x2: flights[possible_solutions[i].fid].geo.components[j].x,
-        y2: flights[possible_solutions[i].fid].geo.components[j].y
+        x1: components[j - 1].x,
+        y1: components[j - 1].y,
+        x2: components[j].x,
+        y2: components[j].y
       });
 
       if (distToSegment.distance < distance) {
@@ -696,7 +714,7 @@ function searchForPlane(within, loc, hoverTolerance) {
           from: j - 1,
           to: j,
           along: distToSegment.along,
-          fid: possible_solutions[i].fid
+          fid: possible_solution.fid
         };
       }
     }
@@ -791,10 +809,11 @@ function highlightFlightPhase(table_row) {
       lat_min = lat_max = flight.lonlat[start_index].lat;
 
   for (var i = start_index; i <= end_index; ++i) {
-    if (flight.lonlat[i].lon < lon_min) lon_min = flight.lonlat[i].lon;
-    if (flight.lonlat[i].lon > lon_max) lon_max = flight.lonlat[i].lon;
-    if (flight.lonlat[i].lat < lat_min) lat_min = flight.lonlat[i].lat;
-    if (flight.lonlat[i].lat > lat_max) lat_max = flight.lonlat[i].lat;
+    var lonlat = flight.lonlat[i];
+    if (lonlat.lon < lon_min) lon_min = lonlat.lon;
+    if (lonlat.lon > lon_max) lon_max = lonlat.lon;
+    if (lonlat.lat < lat_min) lat_min = lonlat.lat;
+    if (lonlat.lat > lat_max) lat_max = lonlat.lat;
   }
 
   var phases_layer = new OpenLayers.Layer.Vector('Flight Phases');
