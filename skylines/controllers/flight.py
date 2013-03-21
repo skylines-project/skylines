@@ -236,7 +236,7 @@ class FlightController(BaseController):
         if not self.flight.is_writable(request.identity):
             raise HTTPForbidden
 
-        return dict(active_page='settings', title=_('Select Pilot'),
+        return dict(active_page='flights', title=_('Select Pilot'),
                     user=request.identity['user'],
                     include_after='flights/after_change_pilot.jinja',
                     form=select_pilot_form,
