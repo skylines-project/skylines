@@ -813,7 +813,9 @@ function highlightFlightPhase(table_row) {
     if (lonlat.lat > lat_max) lat_max = lonlat.lat;
   }
 
-  var phases_layer = new OpenLayers.Layer.Vector('Flight Phases');
+  var phases_layer = new OpenLayers.Layer.Vector('Flight Phases', {
+    displayInLayerSwitcher: false
+  });
   map.addLayer(phases_layer);
 
   var start_point = new OpenLayers.Geometry.Point(
