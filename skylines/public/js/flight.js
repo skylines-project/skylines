@@ -548,15 +548,17 @@ function getFixData(flight, time) {
 }
 
 function setPlaneOnMap(id, fix_data) {
+  var plane = flights[id].plane;
+
   // set plane location
-  flights[id].plane.geometry = fix_data['loc'];
+  plane.geometry = fix_data['loc'];
 
   // set plane heading
   // <heading> in degrees
-  flights[id].plane.attributes.rotation = fix_data['heading'];
+  plane.attributes.rotation = fix_data['heading'];
 
   // add plane to map
-  map.getLayersByName('Flight')[0].addFeatures(flights[id].plane);
+  map.getLayersByName('Flight')[0].addFeatures(plane);
 }
 
 function hidePlaneOnMap(id) {
