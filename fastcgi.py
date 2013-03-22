@@ -25,15 +25,6 @@ args = parser.parse_args()
 if args.logfile:
     sys.stderr = sys.stdout = file(args.logfile, 'a')
 
-prev_sys_path = list(sys.path)
-
-new_sys_path = []
-for item in list(sys.path):
-    if item not in prev_sys_path:
-        new_sys_path.append(item)
-        sys.path.remove(item)
-sys.path[:0] = new_sys_path
-
 sys.path.append(os.path.dirname(sys.argv[0]))
 
 thread.stack_size(524288)
