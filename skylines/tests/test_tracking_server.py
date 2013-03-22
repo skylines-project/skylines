@@ -1,5 +1,3 @@
-#!/usr/bin/env python
-
 from unittest import TestCase
 from nose.tools import eq_, ok_
 from mock import Mock, patch

@@ -1,5 +1,3 @@
-#!/usr/bin/env python
-
 import sys
 import nose
 from subprocess import CalledProcessError, check_output as run
