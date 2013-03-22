@@ -766,11 +766,11 @@ distanceToSegmentSquared = function(point, segment) {
  * @param {String} id ID of the phases table.
 */
 function initPhasesTable(id) {
-  $(id + ' > tbody').find('tr').each(function(index, row) {
+  $(id).find('tr').each(function(index, row) {
     $(row).css('cursor', 'pointer');
   });
 
-  $(id + ' > tbody').on('click', 'tr', function(e) {
+  $(id).on('click', 'tr', function(e) {
     if (highlighted_flight_phase && $(this).hasClass('selected')) {
       // just remove highlighted flight phase
       unhighlightFlightPhase();
