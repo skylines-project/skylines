@@ -766,8 +766,8 @@ distanceToSegmentSquared = function(point, segment) {
  * @param {String} id ID of the phases table.
 */
 function initPhasesTable(id) {
-  $('#' + id + ' > tbody').delegate('tr', 'hover', function() {
-    $(this).css('cursor', 'pointer');
+  $('#' + id + ' > tbody').find('tr').each(function(index, row) {
+    $(row).css('cursor', 'pointer');
   });
 
   $('#' + id + ' > tbody').delegate('tr', 'click', function(e) {
