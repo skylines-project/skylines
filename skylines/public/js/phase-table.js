@@ -45,13 +45,13 @@
           var duration = parseFloat(
               $(selection).children('td.duration').attr('data-content'));
 
-          $(phase_table).trigger('selection_changed', [selection, {
+          $(phase_table).trigger('selection_changed', [{
             start: start,
             end: start + duration,
             duration: duration
           }]);
         } else {
-          $(phase_table).trigger('selection_changed', [selection]);
+          $(phase_table).trigger('selection_changed');
         }
       }
     };

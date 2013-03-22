@@ -769,10 +769,10 @@ distanceToSegmentSquared = function(point, segment) {
 function initPhasesTable(id) {
   phase_table = new slPhaseTable($(id));
 
-  $(phase_table).on('selection_changed', function(event, row, data) {
+  $(phase_table).on('selection_changed', function(event, data) {
     unhighlightFlightPhase();
 
-    if (row)
+    if (data)
       highlightFlightPhase(data.start, data.end);
   });
 }
