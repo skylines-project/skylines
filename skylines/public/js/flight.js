@@ -770,7 +770,7 @@ function initPhasesTable(id) {
     $(row).css('cursor', 'pointer');
   });
 
-  $('#' + id + ' > tbody').delegate('tr', 'click', function(e) {
+  $('#' + id + ' > tbody').on('click', 'tr', function(e) {
     if (highlighted_flight_phase && $(this).hasClass('selected')) {
       // just remove highlighted flight phase
       unhighlightFlightPhase();
