@@ -217,11 +217,11 @@ function addFlight(sfid, _lonlat, _levels, _num_levels, _time, _height, _enl,
   if (_contests) {
     var _contestsLength = _contests.length;
     for (var i = 0; i < _contestsLength; ++i) {
-      var turnpoints = OpenLayers.Util.decodeGooglePolyline(
-          _contests[i].turnpoints);
-      var times = OpenLayers.Util.decodeGoogle(_contests[i].times);
+      var contest = _contests[i];
+      var turnpoints = OpenLayers.Util.decodeGooglePolyline(contest.turnpoints);
+      var times = OpenLayers.Util.decodeGoogle(contest.times);
 
-      var name = _contests[i].name;
+      var name = contest.name;
       contests.push({
         name: name,
         color: contest_colors[name],
@@ -229,7 +229,7 @@ function addFlight(sfid, _lonlat, _levels, _num_levels, _time, _height, _enl,
         times: times
       });
 
-      addContest(_contests[i].name, turnpoints, times, sfid);
+      addContest(name, turnpoints, times, sfid);
     }
   }
 
