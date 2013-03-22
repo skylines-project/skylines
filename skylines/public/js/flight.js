@@ -798,6 +798,10 @@ function highlightFlightPhase(start, end) {
     if (lonlat.lat > lat_max) lat_max = lonlat.lat;
   }
 
+  var bounds = new OpenLayers.Bounds(lon_min, lat_min, lon_max, lat_max);
+  bounds.transform(WGS84_PROJ, map.getProjectionObject());
+  map.zoomToExtent(bounds.scale(2));
+
   var phases_layer = new OpenLayers.Layer.Vector('Flight Phases', {
     displayInLayerSwitcher: false
   });
@@ -824,10 +828,6 @@ function highlightFlightPhase(start, end) {
     graphicXOffset: -8,
     graphicYOffset: -21
   }));
-
-  var bounds = new OpenLayers.Bounds(lon_min, lat_min, lon_max, lat_max);
-  bounds.transform(WGS84_PROJ, map.getProjectionObject());
-  map.zoomToExtent(bounds.scale(2));
 }
 
 
