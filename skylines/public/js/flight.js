@@ -10,7 +10,6 @@ var fix_table;
 var phase_table;
 
 var highlighted_flight_sfid;
-var highlighted_flight_phase = null;
 
 
 /*
@@ -435,12 +434,6 @@ function updateBaroData() {
   baro.setENLData(enls);
   baro.setContests(contests);
 
-  if (!highlighted_flight_phase)
-    baro.clearTimeHighlight();
-  else
-    baro.setTimeHighlight(
-        highlighted_flight_phase.start, highlighted_flight_phase.end);
-
   baro.draw();
 }
 
@@ -830,21 +823,18 @@ function highlightFlightPhase(start, end) {
   bounds.transform(WGS84_PROJ, map.getProjectionObject());
   map.zoomToExtent(bounds.scale(2));
 
-  highlighted_flight_phase = {
-    start: start,
-    end: end
-  };
-
-  updateBaroData();
+  baro.setTimeHighlight(start, end);
+  baro.draw();
 }
 
 
 function unhighlightFlightPhase() {
-  highlighted_flight_phase = null;
   var layers = map.getLayersByName('Flight Phases');
   if (layers.length)
     map.removeLayer(layers[0]);
-  updateBaroData();
+
+  baro.clearTimeHighlight();
+  baro.draw();
 }
 
 
