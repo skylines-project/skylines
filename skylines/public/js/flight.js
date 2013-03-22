@@ -788,6 +788,22 @@ function clearPhaseMarkers() {
 }
 
 
+function addPhaseMarker(lonlat, image_url) {
+  var point = new OpenLayers.Geometry.Point(lonlat.lon, lonlat.lat);
+  point = point.transform(WGS84_PROJ, map.getProjectionObject());
+
+  var feature = new OpenLayers.Feature.Vector(point, {}, {
+    externalGraphic: image_url,
+    graphicHeight: 21,
+    graphicWidth: 16,
+    graphicXOffset: -8,
+    graphicYOffset: -21
+  });
+
+  phases_layer.addFeatures(feature);
+}
+
+
 function highlightFlightPhase(start, end) {
   // the phases table should contain only phases of our first flight only
   var flight = flights[0];
@@ -808,27 +824,11 @@ function highlightFlightPhase(start, end) {
   bounds.transform(WGS84_PROJ, map.getProjectionObject());
   map.zoomToExtent(bounds.scale(2));
 
-  var start_point = new OpenLayers.Geometry.Point(
-      flight.lonlat[start_index].lon, flight.lonlat[start_index].lat)
-      .transform(WGS84_PROJ, map.getProjectionObject());
-  phases_layer.addFeatures(new OpenLayers.Feature.Vector(start_point, {}, {
-    externalGraphic: '/images/OpenLayers/marker-green.png',
-    graphicHeight: 21,
-    graphicWidth: 16,
-    graphicXOffset: -8,
-    graphicYOffset: -21
-  }));
+  addPhaseMarker(flight.lonlat[start_index],
+      '/images/OpenLayers/marker-green.png');
 
-  var end_point = new OpenLayers.Geometry.Point(
-      flight.lonlat[end_index].lon, flight.lonlat[end_index].lat)
-      .transform(WGS84_PROJ, map.getProjectionObject());
-  phases_layer.addFeatures(new OpenLayers.Feature.Vector(end_point, {}, {
-    externalGraphic: '/images/OpenLayers/marker.png',
-    graphicHeight: 21,
-    graphicWidth: 16,
-    graphicXOffset: -8,
-    graphicYOffset: -21
-  }));
+  addPhaseMarker(flight.lonlat[end_index],
+      '/images/OpenLayers/marker.png');
 }
 
 
