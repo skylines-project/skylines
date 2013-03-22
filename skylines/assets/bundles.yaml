@@ -66,6 +66,7 @@ js-flight:
             - js/units.js
             - js/baro.js
             - js/fix-table.js
+            - js/phase-table.js
         - js/flight.js
 
 js-tracking:

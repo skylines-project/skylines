@@ -7,6 +7,7 @@ var flights = [];
 
 var baro;
 var fix_table;
+var phase_table;
 
 var highlighted_flight_sfid;
 var highlighted_flight_phase = null;
@@ -766,38 +767,23 @@ distanceToSegmentSquared = function(point, segment) {
  * @param {String} id ID of the phases table.
 */
 function initPhasesTable(id) {
-  $(id).find('tr').each(function(index, row) {
-    $(row).css('cursor', 'pointer');
-  });
+  phase_table = new slPhaseTable($(id));
 
-  $(id).on('click', 'tr', function(e) {
-    if (highlighted_flight_phase && $(this).hasClass('selected')) {
-      // just remove highlighted flight phase
-      unhighlightFlightPhase();
+  $(phase_table).on('selection_changed', function(event, row, data) {
+    unhighlightFlightPhase();
 
-    } else if (highlighted_flight_phase) {
-      // set highlighted flight phase to another phase
-      unhighlightFlightPhase();
-      highlightFlightPhase($(this));
-
-    } else {
-      // just set highlighted flight phase
-      highlightFlightPhase($(this));
-    }
+    if (row)
+      highlightFlightPhase(data.start, data.end);
   });
 }
 
 
-function highlightFlightPhase(table_row) {
-  var start = parseFloat(table_row.children('td.start').attr('data-content'));
-  var duration = parseFloat(
-      table_row.children('td.duration').attr('data-content'));
-
+function highlightFlightPhase(start, end) {
   // the phases table should contain only phases of our first flight only
   var flight = flights[0];
 
   var start_index = getNextSmallerIndex(flight.t, start);
-  var end_index = getNextSmallerIndex(flight.t, start + duration);
+  var end_index = getNextSmallerIndex(flight.t, end);
 
   if (start_index >= end_index) return;
 
@@ -844,12 +830,9 @@ function highlightFlightPhase(table_row) {
   bounds.transform(WGS84_PROJ, map.getProjectionObject());
   map.zoomToExtent(bounds.scale(2));
 
-  table_row.addClass('selected');
-
   highlighted_flight_phase = {
-    row: table_row,
     start: start,
-    end: start + duration
+    end: end
   };
 
   updateBaroData();
@@ -857,9 +840,10 @@ function highlightFlightPhase(table_row) {
 
 
 function unhighlightFlightPhase() {
-  highlighted_flight_phase.row.removeClass('selected');
   highlighted_flight_phase = null;
-  map.removeLayer(map.getLayersByName('Flight Phases')[0]);
+  var layers = map.getLayersByName('Flight Phases');
+  if (layers.length)
+    map.removeLayer(layers[0]);
   updateBaroData();
 }
 

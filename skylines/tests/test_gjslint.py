@@ -18,6 +18,7 @@ JS_FILES = [
     'flight.js',
     'general.js',
     'map.js',
+    'phase-table.js',
     'topbar.js',
     'tracking.js',
     'units.js',
