@@ -342,21 +342,22 @@ function getAllFlightsBounds() {
 /**
  * Searches the next smaller index to a number in a monotonic array
  *
- * @param {Array} a Array.
- * @param {double} n Number.
+ * @param {Array} array Array.
+ * @param {double} value Number.
  * @return {int} Index next smaller to Number in Array.
  */
-function getNextSmallerIndex(a, n) {
-  var l = a.length;
+function getNextSmallerIndex(array, value) {
+  var length = array.length;
 
-  if (l < 2)
-    return l - 1;
+  if (length < 2)
+    return length - 1;
 
-  for (l; --l;) {
-    if (a[l] < n) break;
+  for (length; --length;) {
+    if (array[length] < value)
+      break;
   }
 
-  return l;
+  return length;
 }
 
 
