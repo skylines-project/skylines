@@ -46,8 +46,6 @@ def wsgi_app(environ, start_response):
 
         start_response('200 Ok', [('Content-type', content_type)])
         return [content]
-#        start_response('200 OK', [('Content-type', 'text/plain')])
-#        return ['This is working already...']
 
     except:
         start_response('500 Ooops', [('Content-type', 'text/plain')])
