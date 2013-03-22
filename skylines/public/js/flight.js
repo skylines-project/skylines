@@ -767,7 +767,7 @@ function initPhasesTable(id) {
 
     if (data) {
       highlightFlightPhase(data.start, data.end);
-      baro.setTimeHighlight(start, end);
+      baro.setTimeHighlight(data.start, data.end);
     } else {
       baro.clearTimeHighlight();
     }
