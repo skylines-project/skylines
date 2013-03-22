@@ -787,18 +787,13 @@ function highlightFlightPhase(start, end) {
   if (start_index >= end_index) return;
 
   // collect bounding box of flight
-  var lon_min = lon_max = flight.lonlat[start_index].lon,
-      lat_min = lat_max = flight.lonlat[start_index].lat;
+  var lonlat = flight.lonlat[start_index];
+  var bounds = new OpenLayers.Bounds(
+      lonlat.lon, lonlat.lat, lonlat.lon, lonlat.lat);
 
-  for (var i = start_index; i <= end_index; ++i) {
-    var lonlat = flight.lonlat[i];
-    if (lonlat.lon < lon_min) lon_min = lonlat.lon;
-    if (lonlat.lon > lon_max) lon_max = lonlat.lon;
-    if (lonlat.lat < lat_min) lat_min = lonlat.lat;
-    if (lonlat.lat > lat_max) lat_max = lonlat.lat;
-  }
+  for (var i = start_index + 1; i <= end_index; ++i)
+    bounds.extend(flight.lonlat[i]);
 
-  var bounds = new OpenLayers.Bounds(lon_min, lat_min, lon_max, lat_max);
   bounds.transform(WGS84_PROJ, map.getProjectionObject());
   map.zoomToExtent(bounds.scale(2));
 
