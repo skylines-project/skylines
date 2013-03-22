@@ -8,6 +8,7 @@ var flights = [];
 var baro;
 var fix_table;
 var phase_table;
+var phases_layer;
 
 var highlighted_flight_sfid;
 
@@ -763,7 +764,7 @@ function initPhasesTable(id) {
   phase_table = new slPhaseTable($(id));
 
   $(phase_table).on('selection_changed', function(event, data) {
-    unhighlightFlightPhase();
+    clearPhaseMarkers();
 
     if (data) {
       highlightFlightPhase(data.start, data.end);
@@ -774,6 +775,16 @@ function initPhasesTable(id) {
 
     baro.draw();
   });
+
+  phases_layer = new OpenLayers.Layer.Vector('Flight Phases', {
+    displayInLayerSwitcher: false
+  });
+  map.addLayer(phases_layer);
+}
+
+
+function clearPhaseMarkers() {
+  phases_layer.removeAllFeatures();
 }
 
 
@@ -797,11 +808,6 @@ function highlightFlightPhase(start, end) {
   bounds.transform(WGS84_PROJ, map.getProjectionObject());
   map.zoomToExtent(bounds.scale(2));
 
-  var phases_layer = new OpenLayers.Layer.Vector('Flight Phases', {
-    displayInLayerSwitcher: false
-  });
-  map.addLayer(phases_layer);
-
   var start_point = new OpenLayers.Geometry.Point(
       flight.lonlat[start_index].lon, flight.lonlat[start_index].lat)
       .transform(WGS84_PROJ, map.getProjectionObject());
@@ -823,13 +829,6 @@ function highlightFlightPhase(start, end) {
     graphicXOffset: -8,
     graphicYOffset: -21
   }));
-}
-
-
-function unhighlightFlightPhase() {
-  var layers = map.getLayersByName('Flight Phases');
-  if (layers.length)
-    map.removeLayer(layers[0]);
 }
 
 
