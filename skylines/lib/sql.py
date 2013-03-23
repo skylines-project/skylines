@@ -5,10 +5,9 @@ from sqlalchemy.orm.properties import ColumnProperty
 
 class extract_field(ColumnElement):
     def __init__(self, base, field):
+        super(extract_field, self).__init__()
         self.base = base
         self.field = field
-        # throws an error unless declared...
-        self.type = None
 
 
 @compiles(extract_field)
@@ -18,10 +17,9 @@ def compile(expr, compiler, **kw):
 
 class cast(ColumnElement):
     def __init__(self, base, field):
+        super(cast, self).__init__()
         self.base = base
         self.field = field
-        # throws an error unless declared...
-        self.type = None
 
 
 @compiles(cast)
