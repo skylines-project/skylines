@@ -814,11 +814,8 @@ function highlightFlightPhase(start, end) {
   if (start_index >= end_index) return;
 
   // collect bounding box of flight
-  var lonlat = flight.lonlat[start_index];
-  var bounds = new OpenLayers.Bounds(
-      lonlat.lon, lonlat.lat, lonlat.lon, lonlat.lat);
-
-  for (var i = start_index + 1; i <= end_index; ++i)
+  var bounds = new OpenLayers.Bounds();
+  for (var i = start_index; i <= end_index; ++i)
     bounds.extend(flight.lonlat[i]);
 
   bounds.transform(WGS84_PROJ, map.getProjectionObject());
