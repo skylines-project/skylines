@@ -5,12 +5,11 @@ from sqlalchemy.dialects import postgresql
 from sqlalchemy.orm import relation, backref
 from sqlalchemy.types import String, Integer, DateTime, Interval
 from sqlalchemy.schema import Index
-from geoalchemy import WKTSpatialElement
-from geoalchemy.geometry import GeometryColumn, LineString, GeometryDDL
-from geoalchemy.postgis import PGComparator
+from geoalchemy2.types import Geometry
+from geoalchemy2.elements import WKTElement
+from geoalchemy2.shape import to_shape
 
 from skylines.model.base import DeclarativeBase
-from skylines.model.session import DBSession
 from skylines.model.flight import Flight
 from skylines.model.geo import Location
 
@@ -37,8 +36,8 @@ class Trace(DeclarativeBase):
     duration = Column(Interval)
 
     times = Column(postgresql.ARRAY(DateTime), nullable=False)
-    _locations = GeometryColumn('locations', LineString(2, wkt_internal=True),
-                                nullable=False, comparator=PGComparator)
+    _locations = Column(
+        'locations', Geometry('LINESTRING', management=True), nullable=False)
 
     @property
     def speed(self):
@@ -50,16 +49,14 @@ class Trace(DeclarativeBase):
     @property
     def locations(self):
         return [Location(longitude=location[0], latitude=location[1])
-                for location in self._locations.coords(DBSession)]
+                for location in to_shape(self._locations).coords]
 
     @locations.setter
     def locations(self, locations):
         points = ['{} {}'.format(location.longitude, location.latitude)
                   for location in locations]
         wkt = "LINESTRING({})".format(','.join(points))
-        self._locations = WKTSpatialElement(wkt)
-
-GeometryDDL(Trace.__table__)
+        self._locations = WKTElement(wkt, srid=4326)
 
 Index('traces_contest_idx',
       Trace.flight_id, Trace.contest_type, Trace.trace_type,

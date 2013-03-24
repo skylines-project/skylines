@@ -6,8 +6,9 @@ from sqlalchemy import ForeignKey, Column, func
 from sqlalchemy.types import Unicode, Integer, DateTime, Date, Boolean
 from sqlalchemy.ext.hybrid import hybrid_property
 from sqlalchemy.sql.expression import desc, case
-from geoalchemy.geometry import GeometryColumn, Point, GeometryDDL
-from geoalchemy.postgis import PGComparator
+from geoalchemy2.types import Geometry
+from geoalchemy2.elements import WKTElement
+from geoalchemy2.shape import to_shape
 from skylines.model.base import DeclarativeBase
 from skylines.model.session import DBSession
 from skylines.model.auth import User
@@ -41,12 +42,10 @@ class Flight(DeclarativeBase):
 
     takeoff_time = Column(DateTime, nullable=False, index=True)
     landing_time = Column(DateTime, nullable=False)
-    takeoff_location_wkt = GeometryColumn('takeoff_location',
-                                          Point(2, wkt_internal=True),
-                                          comparator=PGComparator)
-    landing_location_wkt = GeometryColumn('landing_location',
-                                          Point(2, wkt_internal=True),
-                                          comparator=PGComparator)
+    takeoff_location_wkt = Column(
+        'takeoff_location', Geometry('POINT', management=True))
+    landing_location_wkt = Column(
+        'landing_location', Geometry('POINT', management=True))
 
     takeoff_airport_id = Column(Integer, ForeignKey('airports.id'))
     takeoff_airport = relation('Airport',
@@ -97,7 +96,7 @@ class Flight(DeclarativeBase):
         if self.takeoff_location_wkt is None:
             return None
 
-        coords = self.takeoff_location_wkt.coords(DBSession)
+        coords = to_shape(self.takeoff_location_wkt).coords[0]
         return Location(latitude=coords[1], longitude=coords[0])
 
     @takeoff_location.setter
@@ -105,14 +104,14 @@ class Flight(DeclarativeBase):
         if location is None:
             self.takeoff_location_wkt = None
         else:
-            self.takeoff_location_wkt = location.to_wkt()
+            self.takeoff_location_wkt = WKTElement(location.to_wkt())
 
     @property
     def landing_location(self):
         if self.landing_location_wkt is None:
             return None
 
-        coords = self.landing_location_wkt.coords(DBSession)
+        coords = to_shape(self.landing_location_wkt).coords[0]
         return Location(latitude=coords[1], longitude=coords[0])
 
     @landing_location.setter
@@ -120,7 +119,7 @@ class Flight(DeclarativeBase):
         if location is None:
             self.landing_location_wkt = None
         else:
-            self.landing_location_wkt = location.to_wkt()
+            self.landing_location_wkt = WKTElement(location.to_wkt())
 
     @classmethod
     def by_md5(cls, _md5):
@@ -197,5 +196,3 @@ class Flight(DeclarativeBase):
         from skylines.model.flight_phase import FlightPhase
         return [p for p in self._phases
                 if p.aggregate and p.phase_type == FlightPhase.PT_CRUISE]
-
-GeometryDDL(Flight.__table__)
