@@ -250,7 +250,7 @@ class TrackingServerTest(TestCase):
         eq_(fix.ip, self.HOST_PORT[0])
 
         eq_(fix.time, utcnow_return_value)
-        eq_(fix.location_wkt.coords(DBSession), [7.52, 52.7])
+        eq_(fix.location.to_wkt(), 'POINT(7.52 52.7)')
         eq_(fix.track, 234)
         eq_(fix.ground_speed, 33.25)
         eq_(fix.airspeed, 32.)
