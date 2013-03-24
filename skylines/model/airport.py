@@ -3,13 +3,13 @@
 from datetime import datetime
 from sqlalchemy import Column, func
 from sqlalchemy.types import Integer, Float, String, DateTime
-from geoalchemy2.types import Geometry
+from sqlalchemy.sql.expression import cast
+from geoalchemy2.types import Geometry, Geography
 from geoalchemy2.elements import WKTElement
 from geoalchemy2.shape import to_shape
 from skylines.model.base import DeclarativeBase
 from skylines.model.session import DBSession
 from skylines.model.geo import Location
-from skylines.lib.sql import cast
 
 
 class Airport(DeclarativeBase):
@@ -69,6 +69,6 @@ class Airport(DeclarativeBase):
             return None
 
     def distance(self, location):
-        loc1 = cast(self.location_wkt, 'geography')
+        loc1 = cast(self.location_wkt, Geography)
         loc2 = func.ST_GeographyFromText(location.to_wkt())
         return DBSession.scalar(func.ST_Distance(loc1, loc2))
