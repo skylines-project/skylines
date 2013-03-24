@@ -5,7 +5,7 @@ from sqlalchemy.sql.expression import cast
 from geoalchemy2.types import Geometry, Geography
 from geoalchemy2.shape import to_shape
 from skylines.model.session import DBSession
-from skylines.lib.sql import extract_field
+from skylines.lib.sql import PGCompositeElement
 
 wkt_re = re.compile(r'POINT\(([\+\-\d.]+) ([\+\-\d.]+)\)')
 
@@ -60,7 +60,7 @@ class Location(object):
         union = buffer.ST_Union()
 
         # Split the MultiPolygon into separate polygons
-        dump = extract_field(func.ST_Dump(union), 'geom')
+        dump = PGCompositeElement(func.ST_Dump(union), 'geom', Geometry)
 
         # Calculate center points of each polygon
         locations = func.ST_Centroid(dump)

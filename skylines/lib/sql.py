@@ -1,18 +1,20 @@
 from sqlalchemy.sql import ColumnElement, func
 from sqlalchemy.ext.compiler import compiles
 from sqlalchemy.orm.properties import ColumnProperty
+from sqlalchemy.types import to_instance
 
 
-class extract_field(ColumnElement):
-    def __init__(self, base, field):
-        super(extract_field, self).__init__()
+class PGCompositeElement(ColumnElement):
+    def __init__(self, base, field, type_):
+        ColumnElement.__init__(self)
         self.base = base
         self.field = field
+        self.type = to_instance(type_)
 
 
-@compiles(extract_field)
-def compile(expr, compiler, **kw):
-    return '(' + compiler.process(expr.base) + ').' + expr.field
+@compiles(PGCompositeElement)
+def _compile_pgelem(expr, compiler, **kw):
+    return '(%s).%s' % (compiler.process(expr.base, **kw), expr.field)
 
 
 class LowerCaseComparator(ColumnProperty.Comparator):
