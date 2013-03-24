@@ -3,6 +3,7 @@ import re
 from sqlalchemy import func
 from sqlalchemy.sql.expression import cast
 from geoalchemy2.types import Geometry, Geography
+from geoalchemy2.shape import to_shape
 from skylines.model.session import DBSession
 from skylines.lib.sql import extract_field
 
@@ -25,6 +26,11 @@ class Location(object):
 
         return Location(latitude=float(match.group(2)),
                         longitude=float(match.group(1)))
+
+    @staticmethod
+    def from_wkb(wkb):
+        coords = to_shape(wkb).coords[0]
+        return Location(latitude=coords[1], longitude=coords[0])
 
     def __str__(self):
         return self.to_wkt()
