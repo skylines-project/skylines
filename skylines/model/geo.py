@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
 import re
-from sqlalchemy import func, String
+from sqlalchemy import func
 from sqlalchemy.sql.expression import cast
 from geoalchemy2.types import Geometry, Geography
 from geoalchemy2.shape import to_shape
 from skylines.model.session import DBSession
-from skylines.lib.sql import PGCompositeType
+from skylines.lib.sql import GeometryDump
 
 wkt_re = re.compile(r'POINT\(([\+\-\d.]+) ([\+\-\d.]+)\)')
 
@@ -60,7 +60,6 @@ class Location(object):
         union = buffer.ST_Union()
 
         # Split the MultiPolygon into separate polygons
-        GeometryDump = PGCompositeType({'path': String, 'geom': Geometry})
         dump = func.ST_Dump(union, type_=GeometryDump).geom
 
         # Calculate center points of each polygon

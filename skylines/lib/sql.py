@@ -1,7 +1,8 @@
 from sqlalchemy.sql import ColumnElement, func
 from sqlalchemy.ext.compiler import compiles
 from sqlalchemy.orm.properties import ColumnProperty
-from sqlalchemy.types import UserDefinedType, to_instance
+from sqlalchemy.types import UserDefinedType, to_instance, String
+from geoalchemy2 import Geometry
 
 
 class PGCompositeElement(ColumnElement):
@@ -29,6 +30,9 @@ class PGCompositeType(UserDefinedType):
                 raise KeyError("Type '%s' doesn't have an attribute: '%s'" % (self.type, key))
 
             return PGCompositeElement(self.expr, key, type_)
+
+
+GeometryDump = PGCompositeType({'path': String, 'geom': Geometry})
 
 
 class LowerCaseComparator(ColumnProperty.Comparator):
