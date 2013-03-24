@@ -54,10 +54,10 @@ class Location(object):
         geography = cast(location_column, Geography)
 
         # Add a metric buffer zone around the locations
-        buffer = cast(func.ST_Buffer(geography, threshold_radius), Geometry)
+        buffer = cast(geography.ST_Buffer(threshold_radius), Geometry)
 
         # Join the locations into one MultiPolygon
-        union = func.ST_Union(buffer)
+        union = buffer.ST_Union()
 
         # Split the MultiPolygon into separate polygons
         dump = extract_field(func.ST_Dump(union), 'geom')
