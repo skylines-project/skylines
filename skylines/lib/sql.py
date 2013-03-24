@@ -3,6 +3,7 @@ from sqlalchemy.ext.compiler import compiles
 from sqlalchemy.orm.properties import ColumnProperty
 from sqlalchemy.types import UserDefinedType, to_instance, String
 from geoalchemy2 import Geometry
+from geoalchemy2.functions import GenericFunction
 
 
 class PGCompositeElement(ColumnElement):
@@ -33,6 +34,11 @@ class PGCompositeType(UserDefinedType):
 
 
 GeometryDump = PGCompositeType({'path': String, 'geom': Geometry})
+
+
+class ST_Dump(GenericFunction):
+    name = 'ST_Dump'
+    type = GeometryDump
 
 
 class LowerCaseComparator(ColumnProperty.Comparator):

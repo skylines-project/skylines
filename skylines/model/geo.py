@@ -60,7 +60,7 @@ class Location(object):
         union = buffer.ST_Union()
 
         # Split the MultiPolygon into separate polygons
-        dump = func.ST_Dump(union, type_=GeometryDump).geom
+        dump = union.ST_Dump().geom
 
         # Calculate center points of each polygon
         locations = func.ST_Centroid(dump)
