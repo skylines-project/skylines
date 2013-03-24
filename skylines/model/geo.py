@@ -45,7 +45,7 @@ class Location(object):
         '''
 
         # Cast the takeoff_location_wkt column to Geography
-        geography = cast(location_column.RAW, 'geography')
+        geography = cast(location_column, 'geography')
 
         # Add a metric buffer zone around the locations
         buffer = cast(func.ST_Buffer(geography, threshold_radius), 'geometry')

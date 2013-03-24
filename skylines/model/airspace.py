@@ -4,8 +4,7 @@ from datetime import datetime
 from sqlalchemy import Column
 from sqlalchemy.types import Integer, String, DateTime
 from skylines.model.base import DeclarativeBase
-from geoalchemy.geometry import GeometryColumn, Polygon, GeometryDDL
-from geoalchemy.postgis import PGComparator
+from geoalchemy2.types import Geometry
 
 
 class Airspace(DeclarativeBase):
@@ -15,7 +14,7 @@ class Airspace(DeclarativeBase):
     time_created = Column(DateTime, nullable=False, default=datetime.utcnow)
     time_modified = Column(DateTime, nullable=False, default=datetime.utcnow)
 
-    the_geom = GeometryColumn(Polygon(2), comparator=PGComparator)
+    the_geom = Column(Geometry('POLYGON', management=True))
 
     name = Column(String(), nullable=False)
     airspace_class = Column(String(3), nullable=False)
@@ -25,6 +24,3 @@ class Airspace(DeclarativeBase):
 
     def __repr__(self):
         return ('<Airspace: id=%d name=\'%s\'>' % (self.id, self.name)).encode('utf-8')
-
-
-GeometryDDL(Airspace.__table__)

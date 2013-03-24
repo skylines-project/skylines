@@ -7,8 +7,9 @@ from sqlalchemy.types import Integer, Float, DateTime, SmallInteger, Unicode,\
     BigInteger
 from sqlalchemy.dialects.postgresql import INET
 from sqlalchemy.sql.expression import desc
-from geoalchemy.geometry import GeometryColumn, Point, GeometryDDL
-from geoalchemy.postgis import PGComparator
+from geoalchemy2.types import Geometry
+from geoalchemy2.elements import WKTElement
+from geoalchemy2.shape import to_shape
 from skylines.model.base import DeclarativeBase
 from skylines.model.session import DBSession
 from skylines.model.auth import User
@@ -22,8 +23,7 @@ class TrackingFix(DeclarativeBase):
 
     time = Column(DateTime, nullable=False, default=datetime.utcnow)
 
-    location_wkt = GeometryColumn('location', Point(2, wkt_internal=True),
-                                  comparator=PGComparator)
+    location_wkt = Column('location', Geometry('POINT', management=True))
 
     track = Column(Integer)
     ground_speed = Column(Float)
@@ -49,12 +49,12 @@ class TrackingFix(DeclarativeBase):
         if self.location_wkt is None:
             return None
 
-        coords = self.location_wkt.coords(DBSession)
+        coords = to_shape(self.location_wkt).coords[0]
         return Location(latitude=coords[1], longitude=coords[0])
 
     @location.setter
     def location(self, location):
-        self.location_wkt = location.to_wkt()
+        self.location_wkt = WKTElement(location.to_wkt())
 
     @classmethod
     def max_age_filter(cls, max_age=timedelta(hours=6)):
@@ -94,7 +94,6 @@ class TrackingFix(DeclarativeBase):
 
 
 Index('tracking_fixes_pilot_time', TrackingFix.pilot_id, TrackingFix.time)
-GeometryDDL(TrackingFix.__table__)
 
 
 class TrackingSession(DeclarativeBase):
