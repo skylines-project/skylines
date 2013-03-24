@@ -5,16 +5,18 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version:  skylines\n"
+"Project-Id-Version: skylines\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2013-03-06 22:57+0100\n"
 "PO-Revision-Date: 2012-12-21 22:21+0000\n"
 "Last-Translator: Gabor Konrad <Unknown>\n"
 "Language-Team: Hungarian <hu@li.org>\n"
-"Plural-Forms: nplurals=2; plural=n != 1\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Launchpad-Export-Date: 2013-03-24 20:08+0000\n"
+"X-Generator: Launchpad (build 16540)\n"
 "Generated-By: Babel 0.9.6\n"
 
 #: skylines/controllers/clubs.py:25 skylines/controllers/clubs.py:43
@@ -122,7 +124,8 @@ msgid "You have to be logged in to post comments!"
 msgstr "A hozzászóláshoz bejelentkezés szükséges"
 
 #: skylines/controllers/root.py:125
-msgid "Sorry, email address or password are wrong. Please try again or register."
+msgid ""
+"Sorry, email address or password are wrong. Please try again or register."
 msgstr ""
 "Sajnáljuk, az e-mail cím vagy a jelszó hibás. Kérjük írd be újra, vagy "
 "regisztrálj."
@@ -190,8 +193,8 @@ msgstr "A fájlban nem található adat"
 
 #: skylines/controllers/upload.py:211
 msgid ""
-"Sorry, some error happened when updating your flight(s). Please contact a"
-" administrator for help."
+"Sorry, some error happened when updating your flight(s). Please contact a "
+"administrator for help."
 msgstr ""
 "Sajnáljuk, hiba történt a repülési adatok feltöltése közben. Segítségért "
 "kérjük lépj kapcsolatba egy adminisztrátorral!"
@@ -299,8 +302,8 @@ msgstr "Sajnáljuk, nincs ilyen bejegyzés ({id}) az adatbázisunkban."
 
 #: skylines/lib/dbutil.py:61
 msgid ""
-"Sorry, {num_missing} of the requested records ({ids}) do not exist in our"
-" database."
+"Sorry, {num_missing} of the requested records ({ids}) do not exist in our "
+"database."
 msgstr ""
 "Sajnáljuk, {num_missing} igényelt bejegyzés ({ids}) nem létezik az "
 "adatbázisunkban."
@@ -339,7 +342,8 @@ msgstr ""
 
 #: skylines/templates/about.jinja:14
 msgid "To provide a free platform for sharing and analysing flights"
-msgstr "Ingyenes kezdőlap biztosítása a repülések megosztására és elemzésére."
+msgstr ""
+"Ingyenes kezdőlap biztosítása a repülések megosztására és elemzésére."
 
 #: skylines/templates/about.jinja:15
 msgid "Skylines is based on free software"
@@ -350,16 +354,17 @@ msgid "License"
 msgstr ""
 
 #: skylines/templates/about.jinja:16
-msgid "The stored flights are available for everybody without any limitations."
+msgid ""
+"The stored flights are available for everybody without any limitations."
 msgstr "A tárolt repülések mindenki számára korlátozás nélkül elérhetők."
 
 #: skylines/templates/about.jinja:17
 msgid ""
-"Skylines is a non-commercial project, there are no ads on the webpage, "
-"its free of charge."
+"Skylines is a non-commercial project, there are no ads on the webpage, its "
+"free of charge."
 msgstr ""
-"SkyLines nem kereskedelmi projekt, nincsenek hirdetések a weblapon, "
-"teljesen ingyenes."
+"SkyLines nem kereskedelmi projekt, nincsenek hirdetések a weblapon, teljesen "
+"ingyenes."
 
 #: skylines/templates/about.jinja:18
 #, python-format
@@ -370,8 +375,8 @@ msgstr ""
 
 #: skylines/templates/about.jinja:19
 msgid ""
-"Skylines has also some social network aspects with comments, "
-"notifications, friends and followers."
+"Skylines has also some social network aspects with comments, notifications, "
+"friends and followers."
 msgstr ""
 "A SkyLines-nak van némi szociális háló jellege a megjegyzésekkel, "
 "értesítésekkel, barátokkal és követőkkel."
@@ -405,8 +410,8 @@ msgstr ""
 #: skylines/templates/about.jinja:37
 #, python-format
 msgid ""
-"If you think that something is missing or you think that you have found a"
-" bug please follow the instructions <a href=\"%(url)s\" "
+"If you think that something is missing or you think that you have found a "
+"bug please follow the instructions <a href=\"%(url)s\" "
 "target=\"_blank\">here</a> to write a feature request or bug report."
 msgstr ""
 
@@ -428,8 +433,7 @@ msgid "Live"
 msgstr "Live"
 
 #: skylines/templates/topbar.jinja:6 skylines/templates/topbar.jinja:107
-#: skylines/templates/clubs/list.jinja:20
-#: skylines/templates/clubs/view.jinja:50
+#: skylines/templates/clubs/list.jinja:20 skylines/templates/clubs/view.jinja:50
 #: skylines/templates/flights/list.jinja:27
 #: skylines/templates/ranking/airports.jinja:11
 #: skylines/templates/ranking/clubs.jinja:10
@@ -437,8 +441,7 @@ msgstr "Live"
 #: skylines/templates/statistics/flights-table.jinja:6
 #: skylines/templates/statistics/years.jinja:62
 #: skylines/templates/users/users-table.jinja:26
-#: skylines/templates/users/view.jinja:160
-#: skylines/templates/users/view.jinja:234
+#: skylines/templates/users/view.jinja:160 skylines/templates/users/view.jinja:234
 msgid "Flights"
 msgstr "Repülések"
 
@@ -447,8 +450,7 @@ msgid "Ranking"
 msgstr "Rangsor"
 
 #: skylines/templates/topbar.jinja:8 skylines/templates/topbar.jinja:108
-#: skylines/templates/clubs/list.jinja:21
-#: skylines/templates/clubs/view.jinja:51
+#: skylines/templates/clubs/list.jinja:21 skylines/templates/clubs/view.jinja:51
 #: skylines/templates/statistics/years.jinja:29
 #: skylines/templates/users/users-table.jinja:27
 #: skylines/templates/users/view.jinja:161
@@ -475,8 +477,7 @@ msgstr "Elfejtette a jelszavát?"
 msgid "Don't have an account?"
 msgstr "Nem rendelkezik fiókkal?"
 
-#: skylines/templates/topbar.jinja:89
-#: skylines/templates/notifications/list.jinja:8
+#: skylines/templates/topbar.jinja:89 skylines/templates/notifications/list.jinja:8
 msgid "Notifications"
 msgstr "Értesítések"
 
@@ -484,8 +485,7 @@ msgstr "Értesítések"
 msgid "Logout"
 msgstr "Kilépés"
 
-#: skylines/templates/clubs/list.jinja:5
-#: skylines/templates/ranking/layout.jinja:16
+#: skylines/templates/clubs/list.jinja:5 skylines/templates/ranking/layout.jinja:16
 msgid "Clubs"
 msgstr "Klubok"
 
@@ -495,8 +495,7 @@ msgstr "Klubok"
 msgid "Actions"
 msgstr "Tevékenységek"
 
-#: skylines/templates/clubs/list.jinja:22
-#: skylines/templates/clubs/view.jinja:52
+#: skylines/templates/clubs/list.jinja:22 skylines/templates/clubs/view.jinja:52
 msgid "Members"
 msgstr "Tagok"
 
@@ -635,8 +634,7 @@ msgstr "Törlés"
 #: skylines/templates/flights/phases-table.jinja:68
 #: skylines/templates/statistics/distance-table.jinja:6
 #: skylines/templates/statistics/years.jinja:65
-#: skylines/templates/users/view.jinja:197
-#: skylines/templates/users/view.jinja:238
+#: skylines/templates/users/view.jinja:197 skylines/templates/users/view.jinja:238
 msgid "Distance"
 msgstr "Távolság"
 
@@ -690,10 +688,9 @@ msgid "%(distance)s on %(date)s <small>by %(pilot)s</small>"
 msgstr ""
 
 #: skylines/templates/flights/macros.jinja:18
-#, fuzzy, python-format
-#| msgid "{distance} on {date}"
+#, python-format
 msgid "%(distance)s on %(date)s"
-msgstr "{distance} {date}"
+msgstr ""
 
 #: skylines/templates/flights/nav.jinja:8
 msgid "All Flights"
@@ -756,8 +753,7 @@ msgstr "Teljes képernyős térkép"
 #: skylines/templates/flights/view.jinja:142
 msgid "Activate this to show the flight on top of other flights on the map"
 msgstr ""
-"Aktiváld ezt, hogy a repülés a többi repülés felett jelenjen meg a "
-"térképen."
+"Aktiváld ezt, hogy a repülés a többi repülés felett jelenjen meg a térképen."
 
 #: skylines/templates/flights/view.jinja:147
 msgid "Detailed statistics"
@@ -824,8 +820,8 @@ msgstr "Nincs olvasatlan értesítése."
 #: skylines/templates/notifications/notifications-table.jinja:68
 #, python-format
 msgid ""
-"<strong>%(pilot)s</strong> commented on your "
-"<strong>%(distance)s</strong> flight on the <strong>%(date)s</strong>."
+"<strong>%(pilot)s</strong> commented on your <strong>%(distance)s</strong> "
+"flight on the <strong>%(date)s</strong>."
 msgstr ""
 
 #: skylines/templates/notifications/notifications-table.jinja:75
@@ -912,12 +908,12 @@ msgstr "Mi ez?"
 
 #: skylines/templates/tracking/info.jinja:9
 msgid ""
-"SkyLines Live Tracking can be used to let others take part on your "
-"journeys while you're flying. It uses a very light-weight protocol that "
-"only transmits the necessary data and due to that it can also work in "
-"areas/altitudes where the reception isn't very good. To give you an "
-"example: A flight of 10 hours only uses about 340 KB of traffic when the "
-"positions are transmitted every 5 seconds!"
+"SkyLines Live Tracking can be used to let others take part on your journeys "
+"while you're flying. It uses a very light-weight protocol that only "
+"transmits the necessary data and due to that it can also work in "
+"areas/altitudes where the reception isn't very good. To give you an example: "
+"A flight of 10 hours only uses about 340 KB of traffic when the positions "
+"are transmitted every 5 seconds!"
 msgstr ""
 
 #: skylines/templates/tracking/info.jinja:12
@@ -966,8 +962,8 @@ msgstr ""
 #, python-format
 msgid ""
 "In %(xcsoar)s, open the <em>Setup System</em> dialog, click on "
-"<em>Setup</em> and then <em>Tracking</em>.  Turn SkyLines tracking on, "
-"and enter your Live Tracking key."
+"<em>Setup</em> and then <em>Tracking</em>.  Turn SkyLines tracking on, and "
+"enter your Live Tracking key."
 msgstr ""
 
 #: skylines/templates/tracking/list.jinja:22
@@ -995,15 +991,18 @@ msgstr "Jelenleg nincs live track-je ennek a pilótának."
 
 #: skylines/templates/tracking/view.jinja:130
 msgid "This pilot chose to delay the display of his live tracks."
-msgstr "Ez a pilóta a live track-je megjelenítésének késleltetését állította be."
+msgstr ""
+"Ez a pilóta a live track-je megjelenítésének késleltetését állította be."
 
 #: skylines/templates/tracking/view.jinja:130
 msgid "Delay"
 msgstr "Késleltetés"
 
 #: skylines/templates/tracking/view.jinja:136
-msgid "The live tracking delay is ignored because of your account privileges."
-msgstr "A live track késleltetést figyelmen kívül hagyjuk a jogosultságod miatt."
+msgid ""
+"The live tracking delay is ignored because of your account privileges."
+msgstr ""
+"A live track késleltetést figyelmen kívül hagyjuk a jogosultságod miatt."
 
 #: skylines/templates/tracking/view.jinja:136
 msgid "ignored"
@@ -1015,8 +1014,8 @@ msgstr "Live Tracking beállításaid"
 
 #: skylines/templates/upload/result.jinja:10
 msgid ""
-"Your flights have been saved. You may want to change the flights aircraft"
-" types and registrations below."
+"Your flights have been saved. You may want to change the flights aircraft "
+"types and registrations below."
 msgstr ""
 "A repülésed mentésre került. Alul módosíthatod a repülésedet a légijármű "
 "típusodat és a regisztrációdat."
@@ -1125,19 +1124,3 @@ msgstr "Átlagsebesség"
 #: skylines/templates/users/view.jinja:264
 msgid "Takeoff Locations"
 msgstr "Felszállóhelyek"
-
-#~ msgid "{something} by {pilot_name}"
-#~ msgstr "{something} - {pilot_name}"
-
-#~ msgid "{something} by {pilot_name} and {co_pilot_name}"
-#~ msgstr "{something} {pilot_name} és {co_pilot_name} pilótáktól"
-
-#~ msgid "Pilot / Traffic ID"
-#~ msgstr ""
-
-#~ msgid "Flarm ID"
-#~ msgstr ""
-
-#~ msgid "ICAO ID"
-#~ msgstr ""
-

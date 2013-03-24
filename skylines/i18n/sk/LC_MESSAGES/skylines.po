@@ -5,16 +5,18 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version:  skylines\n"
+"Project-Id-Version: skylines\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2013-03-06 22:57+0100\n"
 "PO-Revision-Date: 2012-12-09 05:18+0000\n"
 "Last-Translator: Eric Praznovsky <eric@virtualsoaring.eu>\n"
 "Language-Team: Slovak <sk@li.org>\n"
-"Plural-Forms: nplurals=3; plural=(n==1) ? 1 : (n>=2 && n<=4) ? 2 : 0\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n==1) ? 1 : (n>=2 && n<=4) ? 2 : 0;\n"
+"X-Launchpad-Export-Date: 2013-03-24 20:08+0000\n"
+"X-Generator: Launchpad (build 16540)\n"
 "Generated-By: Babel 0.9.6\n"
 
 #: skylines/controllers/clubs.py:25 skylines/controllers/clubs.py:43
@@ -122,7 +124,8 @@ msgid "You have to be logged in to post comments!"
 msgstr "Musíte byť prihlásený, aby ste mohli písať komentáre!"
 
 #: skylines/controllers/root.py:125
-msgid "Sorry, email address or password are wrong. Please try again or register."
+msgid ""
+"Sorry, email address or password are wrong. Please try again or register."
 msgstr ""
 "Je nám ľúto, e-mailová adresa alebo heslo sú nesprávne. Skúste to prosím "
 "znovu alebo zaregistrovať."
@@ -190,11 +193,11 @@ msgstr "V súbore nebol nájdený let"
 
 #: skylines/controllers/upload.py:211
 msgid ""
-"Sorry, some error happened when updating your flight(s). Please contact a"
-" administrator for help."
+"Sorry, some error happened when updating your flight(s). Please contact a "
+"administrator for help."
 msgstr ""
-"Je nám ľúto, došlo k chybe pri aktualizácii letu(ov). Prosím, kontaktujte"
-" správcu."
+"Je nám ľúto, došlo k chybe pri aktualizácii letu(ov). Prosím, kontaktujte "
+"správcu."
 
 #: skylines/controllers/upload.py:249
 msgid "Your flight(s) have been successfully updated."
@@ -296,15 +299,16 @@ msgstr "Je nám ľúto, záznam ID ({id}), ktorý ste žiadali, nie je platné I
 
 #: skylines/lib/dbutil.py:32
 msgid "Sorry, there is no such record ({id}) in our database."
-msgstr "Je nám ľúto, ale žiadny takýto záznam ({id}) v našej databáze neexistuje."
+msgstr ""
+"Je nám ľúto, ale žiadny takýto záznam ({id}) v našej databáze neexistuje."
 
 #: skylines/lib/dbutil.py:61
 msgid ""
-"Sorry, {num_missing} of the requested records ({ids}) do not exist in our"
-" database."
+"Sorry, {num_missing} of the requested records ({ids}) do not exist in our "
+"database."
 msgstr ""
-"Je nám ľúto, {num_missing} požadovaných záznamov ({ids}) neexistujú v "
-"našej databáze."
+"Je nám ľúto, {num_missing} požadovaných záznamov ({ids}) neexistujú v našej "
+"databáze."
 
 #: skylines/lib/formatter/units.py:31
 msgid "Custom"
@@ -351,16 +355,17 @@ msgid "License"
 msgstr ""
 
 #: skylines/templates/about.jinja:16
-msgid "The stored flights are available for everybody without any limitations."
+msgid ""
+"The stored flights are available for everybody without any limitations."
 msgstr "Uložené lety sú k dispozícii pre všetkých bez akýchkoľvek obmedzení."
 
 #: skylines/templates/about.jinja:17
 msgid ""
-"Skylines is a non-commercial project, there are no ads on the webpage, "
-"its free of charge."
+"Skylines is a non-commercial project, there are no ads on the webpage, its "
+"free of charge."
 msgstr ""
-"Skylines je nekomerčný projekt, na webstránkach nie sú tam žiadne "
-"reklamy, je zdarma."
+"Skylines je nekomerčný projekt, na webstránkach nie sú tam žiadne reklamy, "
+"je zdarma."
 
 #: skylines/templates/about.jinja:18
 #, python-format
@@ -371,8 +376,8 @@ msgstr ""
 
 #: skylines/templates/about.jinja:19
 msgid ""
-"Skylines has also some social network aspects with comments, "
-"notifications, friends and followers."
+"Skylines has also some social network aspects with comments, notifications, "
+"friends and followers."
 msgstr ""
 "Skylines má taktiež niektoré aspekty sociálnych sietí s pripomienkami, "
 "oznámeniami, priateľmi a nasledovníkmi."
@@ -406,8 +411,8 @@ msgstr ""
 #: skylines/templates/about.jinja:37
 #, python-format
 msgid ""
-"If you think that something is missing or you think that you have found a"
-" bug please follow the instructions <a href=\"%(url)s\" "
+"If you think that something is missing or you think that you have found a "
+"bug please follow the instructions <a href=\"%(url)s\" "
 "target=\"_blank\">here</a> to write a feature request or bug report."
 msgstr ""
 
@@ -429,8 +434,7 @@ msgid "Live"
 msgstr "Naživo"
 
 #: skylines/templates/topbar.jinja:6 skylines/templates/topbar.jinja:107
-#: skylines/templates/clubs/list.jinja:20
-#: skylines/templates/clubs/view.jinja:50
+#: skylines/templates/clubs/list.jinja:20 skylines/templates/clubs/view.jinja:50
 #: skylines/templates/flights/list.jinja:27
 #: skylines/templates/ranking/airports.jinja:11
 #: skylines/templates/ranking/clubs.jinja:10
@@ -438,8 +442,7 @@ msgstr "Naživo"
 #: skylines/templates/statistics/flights-table.jinja:6
 #: skylines/templates/statistics/years.jinja:62
 #: skylines/templates/users/users-table.jinja:26
-#: skylines/templates/users/view.jinja:160
-#: skylines/templates/users/view.jinja:234
+#: skylines/templates/users/view.jinja:160 skylines/templates/users/view.jinja:234
 msgid "Flights"
 msgstr "Lety"
 
@@ -448,8 +451,7 @@ msgid "Ranking"
 msgstr "Rebríček"
 
 #: skylines/templates/topbar.jinja:8 skylines/templates/topbar.jinja:108
-#: skylines/templates/clubs/list.jinja:21
-#: skylines/templates/clubs/view.jinja:51
+#: skylines/templates/clubs/list.jinja:21 skylines/templates/clubs/view.jinja:51
 #: skylines/templates/statistics/years.jinja:29
 #: skylines/templates/users/users-table.jinja:27
 #: skylines/templates/users/view.jinja:161
@@ -476,8 +478,7 @@ msgstr "Zabudli ste heslo?"
 msgid "Don't have an account?"
 msgstr "Ešte nemáte svoj ​​účet?"
 
-#: skylines/templates/topbar.jinja:89
-#: skylines/templates/notifications/list.jinja:8
+#: skylines/templates/topbar.jinja:89 skylines/templates/notifications/list.jinja:8
 msgid "Notifications"
 msgstr "Oznámenia"
 
@@ -485,8 +486,7 @@ msgstr "Oznámenia"
 msgid "Logout"
 msgstr "Odhlásiť"
 
-#: skylines/templates/clubs/list.jinja:5
-#: skylines/templates/ranking/layout.jinja:16
+#: skylines/templates/clubs/list.jinja:5 skylines/templates/ranking/layout.jinja:16
 msgid "Clubs"
 msgstr "Kluby"
 
@@ -496,8 +496,7 @@ msgstr "Kluby"
 msgid "Actions"
 msgstr "Činnosti"
 
-#: skylines/templates/clubs/list.jinja:22
-#: skylines/templates/clubs/view.jinja:52
+#: skylines/templates/clubs/list.jinja:22 skylines/templates/clubs/view.jinja:52
 msgid "Members"
 msgstr "Členovia"
 
@@ -636,8 +635,7 @@ msgstr "Vymazať"
 #: skylines/templates/flights/phases-table.jinja:68
 #: skylines/templates/statistics/distance-table.jinja:6
 #: skylines/templates/statistics/years.jinja:65
-#: skylines/templates/users/view.jinja:197
-#: skylines/templates/users/view.jinja:238
+#: skylines/templates/users/view.jinja:197 skylines/templates/users/view.jinja:238
 msgid "Distance"
 msgstr "Vzdialenosť"
 
@@ -659,7 +657,6 @@ msgid "%(num)d comment"
 msgid_plural "%(num)d comments"
 msgstr[0] ""
 msgstr[1] ""
-msgstr[2] ""
 
 #: skylines/templates/flights/list.jinja:11
 #, python-format
@@ -692,10 +689,9 @@ msgid "%(distance)s on %(date)s <small>by %(pilot)s</small>"
 msgstr ""
 
 #: skylines/templates/flights/macros.jinja:18
-#, fuzzy, python-format
-#| msgid "{distance} on {date}"
+#, python-format
 msgid "%(distance)s on %(date)s"
-msgstr "{distance} dňa {date}"
+msgstr ""
 
 #: skylines/templates/flights/nav.jinja:8
 msgid "All Flights"
@@ -824,8 +820,8 @@ msgstr "Nemáte žiadne neprečítané oznámenia."
 #: skylines/templates/notifications/notifications-table.jinja:68
 #, python-format
 msgid ""
-"<strong>%(pilot)s</strong> commented on your "
-"<strong>%(distance)s</strong> flight on the <strong>%(date)s</strong>."
+"<strong>%(pilot)s</strong> commented on your <strong>%(distance)s</strong> "
+"flight on the <strong>%(date)s</strong>."
 msgstr ""
 
 #: skylines/templates/notifications/notifications-table.jinja:75
@@ -912,12 +908,12 @@ msgstr "Čo je to?"
 
 #: skylines/templates/tracking/info.jinja:9
 msgid ""
-"SkyLines Live Tracking can be used to let others take part on your "
-"journeys while you're flying. It uses a very light-weight protocol that "
-"only transmits the necessary data and due to that it can also work in "
-"areas/altitudes where the reception isn't very good. To give you an "
-"example: A flight of 10 hours only uses about 340 KB of traffic when the "
-"positions are transmitted every 5 seconds!"
+"SkyLines Live Tracking can be used to let others take part on your journeys "
+"while you're flying. It uses a very light-weight protocol that only "
+"transmits the necessary data and due to that it can also work in "
+"areas/altitudes where the reception isn't very good. To give you an example: "
+"A flight of 10 hours only uses about 340 KB of traffic when the positions "
+"are transmitted every 5 seconds!"
 msgstr ""
 
 #: skylines/templates/tracking/info.jinja:12
@@ -966,8 +962,8 @@ msgstr ""
 #, python-format
 msgid ""
 "In %(xcsoar)s, open the <em>Setup System</em> dialog, click on "
-"<em>Setup</em> and then <em>Tracking</em>.  Turn SkyLines tracking on, "
-"and enter your Live Tracking key."
+"<em>Setup</em> and then <em>Tracking</em>.  Turn SkyLines tracking on, and "
+"enter your Live Tracking key."
 msgstr ""
 
 #: skylines/templates/tracking/list.jinja:22
@@ -995,14 +991,16 @@ msgstr "There is no live track of this pilot currently."
 
 #: skylines/templates/tracking/view.jinja:130
 msgid "This pilot chose to delay the display of his live tracks."
-msgstr "Tento pilot sa rozhodol odložiť zobrazenie jeho letov sledovaných naživo."
+msgstr ""
+"Tento pilot sa rozhodol odložiť zobrazenie jeho letov sledovaných naživo."
 
 #: skylines/templates/tracking/view.jinja:130
 msgid "Delay"
 msgstr "Oneskorenie"
 
 #: skylines/templates/tracking/view.jinja:136
-msgid "The live tracking delay is ignored because of your account privileges."
+msgid ""
+"The live tracking delay is ignored because of your account privileges."
 msgstr "Oneskorenie Sledovania naživo je ignorované oprávneniami vášho účtu."
 
 #: skylines/templates/tracking/view.jinja:136
@@ -1015,8 +1013,8 @@ msgstr "Nastavenia vášsho Sledovania naživo"
 
 #: skylines/templates/upload/result.jinja:10
 msgid ""
-"Your flights have been saved. You may want to change the flights aircraft"
-" types and registrations below."
+"Your flights have been saved. You may want to change the flights aircraft "
+"types and registrations below."
 msgstr ""
 "Vaše lety boli uložené. Možno budete chcieť zmeniť typy lietadiel a "
 "imatrikulačné znaky (nižšie)."
@@ -1125,19 +1123,3 @@ msgstr "Priemerná rýchlosť"
 #: skylines/templates/users/view.jinja:264
 msgid "Takeoff Locations"
 msgstr "Miesta vzletov"
-
-#~ msgid "{something} by {pilot_name}"
-#~ msgstr "{something}: {pilot_name}"
-
-#~ msgid "{something} by {pilot_name} and {co_pilot_name}"
-#~ msgstr "{something}: {pilot_name} a {co_pilot_name}"
-
-#~ msgid "Pilot / Traffic ID"
-#~ msgstr ""
-
-#~ msgid "Flarm ID"
-#~ msgstr ""
-
-#~ msgid "ICAO ID"
-#~ msgstr ""
-
