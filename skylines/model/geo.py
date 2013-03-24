@@ -39,17 +39,15 @@ class Location(object):
     def get_clustered_locations(location_column,
                                 threshold_radius=1000, filter=None):
         '''
-        SELECT ST_AsText(
-            ST_Centroid(
-                (ST_Dump(
-                    ST_Union(
-                        ST_Buffer(
-                            takeoff_location_wkt::geography, 1000
-                        )::geometry
-                    )
+        SELECT ST_Centroid(
+            (ST_Dump(
+                ST_Union(
+                    ST_Buffer(
+                        takeoff_location_wkt::geography, 1000
+                    )::geometry
                 )
-            ).geom)
-        ) FROM flights WHERE pilot_id=31;
+            )
+        ).geom) FROM flights WHERE pilot_id=31;
         '''
 
         # Cast the takeoff_location_wkt column to Geography
@@ -67,12 +65,9 @@ class Location(object):
         # Calculate center points of each polygon
         locations = func.ST_Centroid(dump)
 
-        # Convert the result into WKT
-        locations = func.ST_AsText(locations)
-
         query = DBSession.query(locations.label('location'))
 
         if filter is not None:
             query = query.filter(filter)
 
-        return [Location.from_wkt(row.location) for row in query]
+        return [Location.from_wkb(row.location) for row in query]
