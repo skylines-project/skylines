@@ -10,6 +10,9 @@
 
         {% if self.title() -%}
         <div class="page-header">
+            {%- if self.title_right() -%}
+            <div class="pull-right">{%- block title_right %}{% endblock %}</div>
+            {%- endif %}
             <h1>{{ self.title() }}</h1>
         </div>
         {%- endif %}
