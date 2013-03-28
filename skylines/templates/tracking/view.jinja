@@ -111,11 +111,14 @@ Live Tracking <small>of {{ pilot }}</small>
 {% block content -%}
 <div class="row">
   <div class="span4">
-    <table class="table">
+    <table class="table details">
       <tbody>
         <tr>
           <th>{% trans %}Pilot{% endtrans %}</th>
-          <td>{{ user_link(pilot) }}</td>
+          <td>
+            <img src="{{ h.gravatar(pilot.email_address, size=24) }}" class="gravatar"/>
+            {{ user_link(pilot) }}
+          </td>
         </tr>
 
         {% if pilot.club -%}

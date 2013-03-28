@@ -25,7 +25,7 @@
 {%- endmacro %}
 
 {%- macro render_details_table(flight) %}
-<table class="table" id="flight-details" itemscope="" itemtype="http://schema.org/SportsEvent">
+<table class="table details" itemscope="" itemtype="http://schema.org/SportsEvent">
   <meta itemprop="url" content="/flights/{{ flight.id }}" />
   <tbody>
     {%- if flight.date_local %}
