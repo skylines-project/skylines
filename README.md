@@ -24,8 +24,9 @@ see [INSTALL.md](INSTALL.md)
 
 # Contributing
 
-Submit patches to the XCSoar developer mailing list
-(<xcsoar-devel@lists.sourceforge.net>).
+We prefer using the pull request system of Github due to the integration with
+the TravisCI system, but you can also send patches via mail to any of the
+current developers.
 
 - patches should be self-contained
 - patches should be self-documenting (add a good description on what
