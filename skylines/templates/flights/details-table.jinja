@@ -195,10 +195,6 @@
         {%- endtrans %}
       </td>
     </tr>
-    <tr>
-      <th>{% trans %}Download{% endtrans %}</th>
-      <td><a href="{{ flight.igc_file.get_download_uri() }}">{{ h.truncate(flight.igc_file.filename, 25) }}</a></td>
-    </tr>
 
     {% if flight.may_delete(request.identity) %}
     <tr>
