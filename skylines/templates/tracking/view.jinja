@@ -1,5 +1,6 @@
 {% from "macros/flags.jinja" import insert_flag with context %}
 {% from "macros/datetime.jinja" import insert_timeago with context %}
+{% from "macros/gravatar.jinja" import gravatar with context %}
 {% from "macros/links.jinja" import user_link, club_link %}
 
 {% extends "base-page.jinja" %}
@@ -116,8 +117,7 @@ Live Tracking <small>of {{ pilot }}</small>
         <tr>
           <th>{% trans %}Pilot{% endtrans %}</th>
           <td>
-            <img src="{{ h.gravatar(pilot.email_address, size=24) }}" class="gravatar"/>
-            {{ user_link(pilot) }}
+            {{ gravatar(pilot, size=24) }} {{ user_link(pilot) }}
           </td>
         </tr>
 

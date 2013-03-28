@@ -1,3 +1,4 @@
+{% from "macros/gravatar.jinja" import gravatar with context %}
 {% from "macros/links.jinja" import user_link, club_link %}
 
 {% macro render_users_table(users, club_column = True) -%}
@@ -14,9 +15,7 @@
     {% for user in users -%}
     <tr {% if club_column %}itemprop="member"{% endif %} itemscope itemtype="http://schema.org/Person">
       <meta itemprop="url" content="/users/{{ user.id }}" />
-      <td>
-        <img src="{{ h.gravatar(user.email_address, size=20) }}" class="gravatar"/>
-      </td>
+      <td>{{ gravatar(user, size=20) }}</td>
       <td itemprop="name">{{ user_link(user) }}</td>
       {% if club_column -%}
       <td itemprop="memberof" itemscope itemtype="http://schema.org/SportsTeam">

@@ -1,4 +1,5 @@
 {% from "macros/datetime.jinja" import insert_timeago_date, timeago_script with context %}
+{% from "macros/gravatar.jinja" import gravatar with context %}
 {% from "macros/links.jinja" import club_link %}
 
 {% extends "base-page.jinja" %}
@@ -84,7 +85,7 @@
         <div class="well">
           {% if request.identity and request.identity['user'] == user -%}
           <a href="http://gravatar.com/emails/" title="Change your avatar at gravatar.com" target="_blank">
-            <img src="{{ h.gravatar(user.email_address, size=100) }}" class="gravatar"/>
+            {{ gravatar(user, size=100) }}
           </a>
           {%- else -%}
           <img src="{{ h.gravatar(user.email_address, size=100) }}" class="gravatar"/>
@@ -179,7 +180,7 @@
       <ul class="row-fluid">
         {% for following in user.following|sort(attribute='destination.display_name') -%}
         <li class="span3">
-          <img src="{{ h.gravatar(following.destination.email_address, size=20) }}" class="gravatar"/>
+          {{ gravatar(following.destination, size=20) }}
           <a href="/users/{{ following.destination_id }}/">{{ following.destination }}</a>
         </li>
         {%- endfor %}
@@ -193,7 +194,7 @@
       <ul class="row-fluid">
         {% for follower in user.followers|sort(attribute='source.display_name') -%}
         <li class="span3">
-          <img src="{{ h.gravatar(follower.source.email_address, size=20) }}" class="gravatar"/>
+          {{ gravatar(follower.source, size=20) }}
           <a href="/users/{{ follower.source_id }}/">{{ follower.source }}</a>
         </li>
         {%- endfor %}
