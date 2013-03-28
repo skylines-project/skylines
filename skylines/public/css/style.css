@@ -218,3 +218,7 @@ table.vmiddle td {
      -moz-border-radius: 3px;
           border-radius: 3px;
 }
+
+.navbar .gravatar {
+  margin: -5px 5px;
+}
