@@ -13,6 +13,7 @@ from skylines.controllers.base import BaseController
 from skylines.lib.dbutil import get_requested_record
 from skylines.model import DBSession, User, Group, Club
 from skylines.lib.form import BootstrapForm
+from sqlalchemy import func
 
 
 class EditClubForm(EditableForm):
@@ -113,7 +114,7 @@ class ClubController(BaseController):
 class ClubsController(BaseController):
     @expose('clubs/list.jinja')
     def index(self):
-        clubs = DBSession.query(Club).order_by(Club.name)
+        clubs = DBSession.query(Club).order_by(func.lower(Club.name))
         return dict(active_page='settings', clubs=clubs)
 
     @expose()

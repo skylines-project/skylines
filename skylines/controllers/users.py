@@ -469,7 +469,10 @@ class UserController(BaseController):
 class UsersController(BaseController):
     @expose('users/list.jinja')
     def index(self):
-        users = DBSession.query(User).options(joinedload(User.club)).order_by(User.display_name)
+        users = DBSession.query(User) \
+            .options(joinedload(User.club)) \
+            .order_by(func.lower(User.display_name))
+
         return dict(active_page='settings', users=users)
 
     @expose()
