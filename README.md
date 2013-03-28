@@ -7,14 +7,14 @@ This project is in an early stage of development.
 [![Build Status](https://travis-ci.org/skylines-project/skylines.png?branch=master)](https://travis-ci.org/skylines-project/skylines)
 
 *SkyLines* is brought to you by the [XCSoar](http://www.xcsoar.org) project.
-It is free software; the source code is available [here](http://git.xcsoar.org/cgit/mirror/Skylines.git/)
+It is free software; the source code is available [here](https://github.com/skylines-project/skylines)
 
 # Getting the source
 
 The *SkyLines* source code is managed with [git](http://www.git-scm.com/).
 It can be downloaded with the following command:
 
-    $ git clone git://git.xcsoar.org/xcsoar/mirror/Skylines.git
+    $ git clone git://github.com/skylines-project/skylines.git
 
 For more information, please refer to the [git documentation](http://git-scm.com/documentation).
 
