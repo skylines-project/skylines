@@ -129,6 +129,13 @@
 {%- endblock %}
 
 
+{% block title_right -%}
+<a href="{{ flight.igc_file.get_download_uri() }}" title="{{ flight.igc_file.filename }}" class="btn">
+  <i class="icon-download-alt"></i> IGC
+</a>
+{%- endblock %}
+
+
 {%- block content %}
 <div class="row">
   <div class="span4">
