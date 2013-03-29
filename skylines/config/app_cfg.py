@@ -53,8 +53,8 @@ base_config.use_dotted_templatenames = False
 
 #Configure the base SQLALchemy Setup
 base_config.use_sqlalchemy = True
-base_config.model = skylines.model
-base_config.DBSession = skylines.model.DBSession
+base_config.model = model
+base_config.DBSession = model.DBSession
 # Configure the authentication backend
 
 
