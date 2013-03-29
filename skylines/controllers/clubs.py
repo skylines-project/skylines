@@ -4,7 +4,7 @@ from tg import expose, validate, redirect, request
 from tg.i18n import ugettext as _, lazy_ugettext as l_
 from tg.decorators import with_trailing_slash
 from webob.exc import HTTPForbidden
-from sprox.formbase import AddRecordForm, EditableForm, Field
+from sprox.formbase import AddRecordForm, Field
 from sprox.validators import UniqueValue
 from sprox.sa.provider import SAORMProvider
 from formencode import validators, All
@@ -12,25 +12,8 @@ from tw.forms import TextField
 from skylines.controllers.base import BaseController
 from skylines.lib.dbutil import get_requested_record
 from skylines.model import DBSession, User, Group, Club
-from skylines.forms import BootstrapForm
+from skylines.forms import BootstrapForm, club
 from sqlalchemy import func
-
-
-class EditClubForm(EditableForm):
-    __base_widget_type__ = BootstrapForm
-    __model__ = Club
-    __hide_fields__ = ['id']
-    __limit_fields__ = ['name', 'website']
-    __base_widget_args__ = dict(action='save')
-    __field_widget_args__ = {
-        'name': dict(label_text=l_('Name')),
-        'website': dict(label_text=l_('Website')),
-    }
-
-    name = TextField
-    website = Field(TextField, validators.URL())
-
-edit_club_form = EditClubForm(DBSession)
 
 
 class NewPilotForm(AddRecordForm):
@@ -67,11 +50,11 @@ class ClubController(BaseController):
             raise HTTPForbidden
 
         return dict(active_page='settings', title=_('Edit Club'),
-                    form=edit_club_form,
+                    form=club.edit_form,
                     values=self.club)
 
     @expose()
-    @validate(form=edit_club_form, error_handler=edit)
+    @validate(form=club.edit_form, error_handler=edit)
     def save(self, name, website, **kwargs):
         if not self.club.is_writable(request.identity):
             raise HTTPForbidden

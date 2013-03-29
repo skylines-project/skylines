@@ -1,4 +1,5 @@
-from sprox.formbase import AddRecordForm, EditableForm
+from formencode.validators import URL
+from sprox.formbase import AddRecordForm, EditableForm, Field
 from sprox.widgets import PropertySingleSelectField
 from tw.forms import TextField
 from tg.i18n import lazy_ugettext as l_
@@ -46,3 +47,20 @@ class NewForm(AddRecordForm):
     name = TextField
 
 new_form = NewForm(DBSession)
+
+
+class EditForm(EditableForm):
+    __base_widget_type__ = BootstrapForm
+    __model__ = Club
+    __hide_fields__ = ['id']
+    __limit_fields__ = ['name', 'website']
+    __base_widget_args__ = dict(action='save')
+    __field_widget_args__ = {
+        'name': dict(label_text=l_('Name')),
+        'website': dict(label_text=l_('Website')),
+    }
+
+    name = TextField
+    website = Field(TextField, URL())
+
+edit_form = EditForm(DBSession)
