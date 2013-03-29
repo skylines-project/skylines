@@ -1,38 +1,14 @@
 # -*- coding: utf-8 -*-
 
 from tg import expose, validate, redirect, request
-from tg.i18n import ugettext as _, lazy_ugettext as l_
+from tg.i18n import ugettext as _
 from tg.decorators import with_trailing_slash
 from webob.exc import HTTPForbidden
-from sprox.formbase import AddRecordForm, Field
-from sprox.validators import UniqueValue
-from sprox.sa.provider import SAORMProvider
-from formencode import validators, All
-from tw.forms import TextField
 from skylines.controllers.base import BaseController
 from skylines.lib.dbutil import get_requested_record
 from skylines.model import DBSession, User, Group, Club
-from skylines.forms import BootstrapForm, club
+from skylines.forms import club, pilot as pilot_forms
 from sqlalchemy import func
-
-
-class NewPilotForm(AddRecordForm):
-    __base_widget_type__ = BootstrapForm
-    __model__ = User
-    __required_fields__ = ['email_address', 'display_name']
-    __limit_fields__ = ['email_address', 'display_name']
-    __base_widget_args__ = dict(action='create_pilot')
-    __field_widget_args__ = {
-        'email_address': dict(label_text=l_('eMail Address')),
-        'display_name': dict(label_text=l_('Name')),
-    }
-
-    email_address = Field(TextField, All(UniqueValue(SAORMProvider(DBSession),
-                                                     __model__, 'email_address'),
-                                         validators.Email))
-    display_name = Field(TextField, validators.NotEmpty)
-
-new_pilot_form = NewPilotForm(DBSession)
 
 
 class ClubController(BaseController):
@@ -75,10 +51,10 @@ class ClubController(BaseController):
             raise HTTPForbidden
 
         return dict(active_page='settings', title=_("Create Pilot"),
-                    form=new_pilot_form, values={})
+                    form=pilot_forms.new_form, values={})
 
     @expose()
-    @validate(form=new_pilot_form, error_handler=new_pilot)
+    @validate(form=pilot_forms.new_form, error_handler=new_pilot)
     def create_pilot(self, email_address, display_name, **kw):
         if not self.club.is_writable(request.identity):
             raise HTTPForbidden
