@@ -88,7 +88,7 @@ MAP
       NAME 'Airports detail'
       MAXSCALEDENOM 1000000
 
-      STYLE 
+      STYLE
         SYMBOL 'airport'
         COLOR 255 0 0
         ANGLE [runway_dir]
@@ -112,7 +112,7 @@ MAP
         OFFSET 0 -16
       END
     END
-    
+
     CLASS
       NAME 'Airports normal'
       MINSCALEDENOM 1000000
@@ -181,7 +181,7 @@ MAP
         #ANGLE [runway_dir]
       END
     END
- 
+
   END
 
 ##
@@ -189,13 +189,13 @@ MAP
 ##
   LAYER
     NAME 'WAVE'
-    TYPE POLYGON 
+    TYPE POLYGON
     CONNECTIONTYPE POSTGIS
     CONNECTION "dbname=skylines"
     DATA "the_geom from airspace using unique id"
     STATUS DEFAULT
     OPACITY 40
- 
+
     PROJECTION
       "init=epsg:4326"
     END
@@ -304,16 +304,16 @@ MAP
 ##
   LAYER
     NAME 'Airspace CLASS C to D (CTR)'
-    TYPE POLYGON 
+    TYPE POLYGON
     CONNECTIONTYPE POSTGIS
     CONNECTION "dbname=skylines"
     DATA "the_geom from airspace using unique id"
     STATUS DEFAULT
     OPACITY 40
-        
+
     PROJECTION
       "init=epsg:4326"
-    END 
+    END
 
     CLASS
       EXPRESSION ('[airspace_class]' eq 'C')
@@ -426,7 +426,7 @@ MAP
 ##
   LAYER
     NAME 'Airspace CLASS E, F and TMZ'
-    TYPE POLYGON 
+    TYPE POLYGON
     CONNECTIONTYPE POSTGIS
     CONNECTION "dbname=skylines"
     DATA "the_geom from airspace using unique id"
@@ -462,7 +462,7 @@ MAP
         LINECAP butt
       END
     END
-    
+
 ##
 ## AIRSPACE TMZ
 ##
@@ -483,7 +483,7 @@ MAP
 ##
   LAYER
     NAME 'Airspace DANGER and RESTRICTED'
-    TYPE POLYGON 
+    TYPE POLYGON
     CONNECTIONTYPE POSTGIS
     CONNECTION "dbname=skylines"
     DATA "the_geom from airspace using unique id"
@@ -496,7 +496,7 @@ MAP
 
 ##
 ## DANGER AIRSPACE (CLASS Q)
-## 
+##
     CLASS
       EXPRESSION ('[airspace_class]' eq 'Q')
       NAME "Danger"
@@ -645,9 +645,9 @@ MAP
   SYMBOL
     NAME 'airport'
     TYPE pixmap
-    IMAGE 'airport.png'
+    IMAGE '../img/airport.png'
   END
-  
+
   SYMBOL
     NAME 'airport small'
     TYPE ellipse
