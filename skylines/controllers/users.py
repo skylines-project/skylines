@@ -36,10 +36,11 @@ class DelaySelectField(PropertySingleSelectField):
         d['options'] = options
         return d
 
-user_validator = Schema(chained_validators=(FieldsMatch('password',
-                                                        'verify_password',
-                                                        messages={'invalidNoMatch':
-                                                                  l_('Passwords do not match')}),))
+password_match_validator = FieldsMatch(
+    'password', 'verify_password',
+    messages={'invalidNoMatch': l_('Passwords do not match')})
+
+user_validator = Schema(chained_validators=(password_match_validator,))
 
 
 class NewUserForm(AddRecordForm):
