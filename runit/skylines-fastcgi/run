@@ -5,7 +5,7 @@ set -e
 DAEMON_USER=skylines
 DAEMON_GROUP=skylines
 RUNDIR=/run/skylines
-SCRIPT=/opt/skylines/src/fastcgi.py
+SCRIPT=/opt/skylines/src/skylines.fastcgi
 SOCKET=$RUNDIR/fastcgi.socket
 
 if [ ! -d "$RUNDIR" ]; then
