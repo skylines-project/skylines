@@ -6,7 +6,7 @@ DAEMON_USER=mapserver
 DAEMON_GROUP=skylines
 RUNDIR=/run/skylines
 SCRIPT=/opt/skylines/src/mapserver.fastcgi
-MAPFILE=/opt/skylines/src/mapserver/airspace/airspace.map
+MAPFILE=/opt/skylines/src/mapserver/skylines.map
 SOCKET=$RUNDIR/mapserver-fastcgi.socket
 
 if [ ! -d "$RUNDIR" ]; then

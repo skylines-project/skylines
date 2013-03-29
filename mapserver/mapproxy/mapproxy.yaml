@@ -12,7 +12,7 @@ layers:
   - name: airspace
     title: Airspace WMS
     sources: [airspace_cache]
-    
+
 caches:
   airspace_cache:
     grids: [GLOBAL_MERCATOR]
@@ -34,14 +34,14 @@ sources:
     supported_srs: ['EPSG:3857']
     req:
       layers: airspace
-      map: ../airspace/airspace.map
+      map: ../skylines.map
       transparent: true
     image:
       format: image/png
       mode: RGBA
     mapserver:
       binary: /usr/lib/cgi-bin/mapserv
-      working_dir: ../airspace/
+      working_dir: ../
 
   airspace_mapserver_wms:
     type: wms

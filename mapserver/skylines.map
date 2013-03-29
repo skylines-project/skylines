@@ -44,7 +44,7 @@ MAP
 #  CONFIG "MS_ERRORFILE" "ms_error.txt"
 #  DEBUG 5
 
-  FONTSET "../fonts/truetype.txt"
+  FONTSET "fonts/truetype.txt"
 
   STATUS ON
 
@@ -645,7 +645,7 @@ MAP
   SYMBOL
     NAME 'airport'
     TYPE pixmap
-    IMAGE '../img/airport.png'
+    IMAGE 'img/airport.png'
   END
 
   SYMBOL
