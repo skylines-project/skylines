@@ -145,11 +145,11 @@ class EditUserForm(EditableForm):
     display_name = Field(TextField, NotEmpty)
     club = ClubSelectField
     tracking_delay = DelaySelectField
-    unit_preset = units.UnitPresetSelectField("unit_preset")
-    distance_unit = units.DistanceUnitSelectField
-    speed_unit = units.SpeedUnitSelectField
-    lift_unit = units.LiftUnitSelectField
-    altitude_unit = units.AltitudeUnitSelectField
+    unit_preset = units.PresetSelectField("unit_preset")
+    distance_unit = units.DistanceSelectField
+    speed_unit = units.SpeedSelectField
+    lift_unit = units.LiftSelectField
+    altitude_unit = units.AltitudeSelectField
     eye_candy = Field(CheckBox)
 
 edit_user_form = EditUserForm(DBSession)
