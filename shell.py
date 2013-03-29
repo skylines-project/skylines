@@ -3,7 +3,8 @@
 # A interactive shell for inspecting the SkyLines data model.
 #
 
-import sys, os
+import sys
+import os
 from paste.deploy.loadwsgi import appconfig
 from IPython.config.loader import Config
 from IPython.frontend.terminal.embed import InteractiveShellEmbed

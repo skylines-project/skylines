@@ -46,5 +46,5 @@ for bundle in env:
     print 'Compressing bundle: {} -> {}'.format(os.path.basename(bundle_path),
                                                 os.path.basename(compressed_path))
     with open(bundle_path, 'rb') as f_in, \
-         gzip.open(compressed_path, 'wb') as f_out:
+            gzip.open(compressed_path, 'wb') as f_out:
         f_out.writelines(f_in)
