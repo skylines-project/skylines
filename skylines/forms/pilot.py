@@ -1,10 +1,11 @@
+from tg import request
 from tg.i18n import lazy_ugettext as l_
 
 from formencode import validators, All
 from sprox.formbase import AddRecordForm, Field
 from sprox.validators import UniqueValue
 from sprox.sa.provider import SAORMProvider
-from tw.forms import TextField
+from tw.forms import SingleSelectField, TextField
 
 from skylines.forms import BootstrapForm
 from skylines.model import DBSession, User
@@ -27,3 +28,14 @@ class NewForm(AddRecordForm):
     display_name = Field(TextField, validators.NotEmpty)
 
 new_form = NewForm(DBSession)
+
+
+class SelectField(SingleSelectField):
+    def update_params(self, d):
+        users = DBSession.query(User) \
+                .filter(User.club_id == request.identity['user'].club_id) \
+                .order_by(User.display_name)
+        options = [(None, '[unspecified]')] + \
+                  [(user.id, user) for user in users]
+        d['options'] = options
+        return SingleSelectField.update_params(self, d)

@@ -10,22 +10,11 @@ from skylines.lib import files
 from skylines.model import DBSession, User, AircraftModel, Flight
 from skylines.lib.md5 import file_md5
 from skylines.lib.xcsoar import analyse_flight
-from skylines.forms import BootstrapForm, MultiFileField
+from skylines.forms import BootstrapForm, MultiFileField, pilot
 from zipfile import ZipFile
 from skylines.model.igcfile import IGCFile
 from skylines.model.notification import create_flight_notifications
 from skylines.lib.string import import_ascii
-
-
-class PilotSelectField(SingleSelectField):
-    def update_params(self, d):
-        users = DBSession.query(User) \
-                .filter(User.club_id == request.identity['user'].club_id) \
-                .order_by(User.display_name)
-        options = [(None, '[unspecified]')] + \
-                  [(user.id, user) for user in users]
-        d['options'] = options
-        return SingleSelectField.update_params(self, d)
 
 
 class ModelSelectField(SingleSelectField):
@@ -65,7 +54,7 @@ file_field = MultiFileField(
 
 upload_form = BootstrapForm('upload_form', submit_text="Upload", action='do', children=[
     file_field,
-    PilotSelectField('pilot', label_text=l_("Pilot"))
+    pilot.SelectField('pilot', label_text=l_("Pilot"))
 ])
 
 
