@@ -3,7 +3,8 @@
 # Re-analyse flights.
 #
 
-import sys, os
+import sys
+import os
 import argparse
 import transaction
 from paste.deploy.loadwsgi import appconfig
@@ -28,9 +29,11 @@ args = parser.parse_args()
 conf = appconfig('config:' + os.path.abspath(args.config))
 load_environment(conf.global_conf, conf.local_conf)
 
+
 def do(flight):
     print flight.id
     return analyse_flight(flight)
+
 
 def apply_and_commit(func, q):
     n_success, n_failed = 0, 0
@@ -44,6 +47,7 @@ def apply_and_commit(func, q):
         DBSession.flush()
         transaction.commit()
     return n_success, n_failed
+
 
 def incremental(func, q):
     """Repeatedly query 10 records and invoke the callback, commit

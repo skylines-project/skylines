@@ -3,7 +3,8 @@
 # Merge two User records.
 #
 
-import sys, os
+import sys
+import os
 import transaction
 from paste.deploy.loadwsgi import appconfig
 from skylines.config.environment import load_environment

@@ -3,7 +3,10 @@
 # Download and import airspace files for the mapserver
 #
 
-import sys, os, re, shutil
+import sys
+import os
+import re
+import shutil
 import subprocess
 from osgeo import ogr
 
@@ -11,10 +14,7 @@ import transaction
 from paste.deploy.loadwsgi import appconfig
 from skylines.config.environment import load_environment
 from skylines.model import DBSession, Airspace
-from sqlalchemy import func
-from sqlalchemy.sql.expression import not_
 from geoalchemy import WKTSpatialElement
-from geoalchemy.functions import functions
 from tg import config
 
 sys.path.append(os.path.dirname(sys.argv[0]))
@@ -73,10 +73,11 @@ def main():
 
             if not match:
                 continue
- 
+
             country_code = match.group(1).strip()
             url = match.group(3).strip()
-            filename = os.path.join(config['skylines.temporary_dir'], country_code, \
+            filename = os.path.join(
+                config['skylines.temporary_dir'], country_code,
                 match.group(1).strip() + '.' + match.group(2))
 
             if url.startswith('http://'):
@@ -151,7 +152,7 @@ def import_sua(filename, country_code):
         if not added:
             continue
 
-        if i%100 == 0:
+        if i % 100 == 0:
             print "inserting geometry " + str(i)
 
         j += 1
@@ -202,7 +203,7 @@ def import_openair(filename, country_code):
         if not added:
             continue
 
-        if i%100 == 0:
+        if i % 100 == 0:
             print "inserting geometry " + str(i)
 
         j += 1
@@ -212,6 +213,7 @@ def import_openair(filename, country_code):
     transaction.commit()
 
     print "added " + str(j) + " features for country " + country_code
+
 
 def remove_country(country_code):
     print "removing all entries for country_code " + country_code
@@ -292,7 +294,6 @@ def add_airspace(country_code, airspace_class, name, base, top, geom_str):
         print name + " has it's base above FL 100 and is therefore disregarded"
         return False
 
-
     airspace = Airspace()
     airspace.country_code = country_code
     airspace.airspace_class = airspace_class
@@ -311,6 +312,7 @@ flightlevel_re = re.compile(r'^fl\s?(\d+)$')
 agl_re = re.compile(r'^(\d+)\s?(f|ft|m)?\s?(agl|gnd|asfc|sfc)$')
 unl_re = re.compile(r'^unl(td)?$')
 
+
 def normalise_height(height, name):
     height = height.lower().strip()
 
@@ -324,14 +326,14 @@ def normalise_height(height, name):
     # is it AGL?
     match = agl_re.match(height)
     if match and match.group(2) == 'm':
-        return '{0} AGL'.format((int(match.group(1))*3.2808399))
+        return '{0} AGL'.format((int(match.group(1)) * 3.2808399))
     elif match:
         return '{0} AGL'.format(int(match.group(1)))
 
     # is it MSL?
     match = msl_re.match(height)
     if match and match.group(2) == 'm':
-        return '{0} MSL'.format(int(match.group(1))*3.2808399)
+        return '{0} MSL'.format(int(match.group(1)) * 3.2808399)
     elif match:
         return '{0} MSL'.format(int(match.group(1)))
 

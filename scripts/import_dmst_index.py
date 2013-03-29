@@ -3,7 +3,9 @@
 # Parse the DMSt index list from DMSt-WO_2012.pdf
 #
 
-import sys, os, re
+import sys
+import os
+import re
 import transaction
 from paste.deploy.loadwsgi import appconfig
 from skylines.config.environment import load_environment

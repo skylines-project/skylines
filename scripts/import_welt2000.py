@@ -3,7 +3,8 @@
 # Parse the DMSt index list from DMSt-WO_2012.pdf
 #
 
-import sys, os
+import sys
+import os
 import transaction
 from paste.deploy.loadwsgi import appconfig
 from skylines.config.environment import load_environment
@@ -29,9 +30,9 @@ welt2000 = get_database()
 i = 0
 
 for airport_w2k in welt2000:
-    if airport_w2k.type != 'airport' \
-        and airport_w2k.type != 'glider_site' \
-        and airport_w2k.type != 'ulm':
+    if (airport_w2k.type != 'airport' and
+            airport_w2k.type != 'glider_site' and
+            airport_w2k.type != 'ulm'):
         continue
 
     i += 1
