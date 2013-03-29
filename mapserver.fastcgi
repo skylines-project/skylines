@@ -11,7 +11,7 @@ from flup.server.fcgi import WSGIServer
 
 parser = argparse.ArgumentParser(description='Run the SkyLines MapScript FastCGI daemon.')
 parser.add_argument('map_file', nargs='?', metavar='airspace.map',
-                    default='/opt/skylines/src/assets/airspace/airspace.map',
+                    default='mapserver/airspace/airspace.map',
                     help='path to the airspace map file')
 parser.add_argument('--socket', nargs='?', metavar='PATH',
                     help='path of the local socket')
@@ -27,6 +27,7 @@ if args.logfile:
 sys.path.append(os.path.dirname(sys.argv[0]))
 
 thread.stack_size(524288)
+
 
 def wsgi_app(environ, start_response):
     try:
