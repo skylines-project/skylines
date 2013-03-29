@@ -19,10 +19,15 @@ PEP8_IGNORE_ERRORS = [
     # comparison to None should be 'if condition is None:'
     # this is not compatible with the sqlalchemy filter() function
     'E711',
+
+    # comparison to True should be 'if condition is True:'
+    # this is not compatible with the sqlalchemy filter() function
+    'E712',
 ]
 
 PEP8_INPUTS = [
     'skylines',
+    'scripts',
 ]
 
 
