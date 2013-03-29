@@ -28,7 +28,7 @@ from skylines.lib.formatter import units
 
 __all__ = ['User', 'Group', 'Permission']
 
-#{ Association tables
+# Association tables
 
 
 # This is the association table for the many-to-many relationship between
@@ -52,9 +52,6 @@ user_group_table = Table(
 )
 
 
-#{ The auth* model itself
-
-
 class Group(DeclarativeBase):
     """
     Group definition for :mod:`repoze.what`.
@@ -65,7 +62,7 @@ class Group(DeclarativeBase):
 
     __tablename__ = 'tg_group'
 
-    #{ Columns
+    # Columns
 
     id = Column(Integer, autoincrement=True, primary_key=True)
 
@@ -75,19 +72,17 @@ class Group(DeclarativeBase):
 
     created = Column(DateTime, default=datetime.utcnow)
 
-    #{ Relations
+    # Relations
 
     users = relation('User', secondary=user_group_table, backref='groups')
 
-    #{ Special methods
+    # Special methods
 
     def __repr__(self):
         return ('<Group: name=%s>' % self.group_name).encode('utf-8')
 
     def __unicode__(self):
         return self.group_name
-
-    #}
 
 
 # The 'info' argument we're passing to the email_address and password columns
@@ -103,7 +98,7 @@ class User(DeclarativeBase):
     """
     __tablename__ = 'tg_user'
 
-    #{ Columns
+    # Columns
 
     id = Column(Integer, autoincrement=True, primary_key=True)
 
@@ -152,7 +147,7 @@ class User(DeclarativeBase):
     def tracking_delay_interval(cls):
         return cast(cast(cls.tracking_delay, String) + ' minutes', Interval)
 
-    #{ Special methods
+    # Special methods
 
     def __repr__(self):
         return ('<User: email=%s, display=%s>' % (
@@ -161,7 +156,7 @@ class User(DeclarativeBase):
     def __unicode__(self):
         return self.display_name
 
-    #{ Getters and setters
+    # Getters and setters
 
     @property
     def permissions(self):
@@ -219,8 +214,6 @@ class User(DeclarativeBase):
         self.recover_time = datetime.utcnow()
         self.recover_ip = ip
         return self.recover_key
-
-    #}
 
     def validate_password(self, password):
         """
@@ -315,7 +308,7 @@ class Permission(DeclarativeBase):
 
     __tablename__ = 'tg_permission'
 
-    #{ Columns
+    # Columns
 
     id = Column(Integer, autoincrement=True, primary_key=True)
 
@@ -323,20 +316,15 @@ class Permission(DeclarativeBase):
 
     description = Column(Unicode(255))
 
-    #{ Relations
+    # Relations
 
     groups = relation(Group, secondary=group_permission_table,
                       backref='permissions')
 
-    #{ Special methods
+    # Special methods
 
     def __repr__(self):
         return ('<Permission: name=%s>' % self.permission_name).encode('utf-8')
 
     def __unicode__(self):
         return self.permission_name
-
-    #}
-
-
-#}
