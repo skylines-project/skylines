@@ -15,10 +15,9 @@ from tw.forms import PasswordField, TextField, CheckBox, HiddenField
 from tw.forms.validators import UnicodeString
 from skylines.controllers.base import BaseController
 from skylines.lib.dbutil import get_requested_record
-from skylines.lib.formatter import units
 from skylines.model import DBSession, User, Group, Club, Flight, Follower
 from skylines.model.igcfile import IGCFile
-from skylines.forms import BootstrapForm
+from skylines.forms import BootstrapForm, units
 from sqlalchemy.sql.expression import and_, or_
 from sqlalchemy import func
 from sqlalchemy.orm import joinedload
@@ -48,34 +47,6 @@ class DelaySelectField(PropertySingleSelectField):
         for x in range(1, 10) + range(10, 30, 5) + range(30, 61, 15):
             options.append((x, ungettext(u'%u minute', u'%u minutes', x) % x))
         d['options'] = options
-        return d
-
-
-class UnitSelectField(PropertySingleSelectField):
-    def _my_update_params(self, d, nullable=False):
-        d['options'] = list(enumerate(x[0] for x in self.unit_registry))
-        return d
-
-
-class DistanceUnitSelectField(UnitSelectField):
-    unit_registry = units.distance_units
-
-
-class SpeedUnitSelectField(UnitSelectField):
-    unit_registry = units.speed_units
-
-
-class LiftUnitSelectField(UnitSelectField):
-    unit_registry = units.lift_units
-
-
-class AltitudeUnitSelectField(UnitSelectField):
-    unit_registry = units.altitude_units
-
-
-class UnitPresetSelectField(PropertySingleSelectField):
-    def _my_update_params(self, d, nullable=False):
-        d['options'] = list(enumerate(x[0] for x in units.unit_presets))
         return d
 
 
@@ -174,11 +145,11 @@ class EditUserForm(EditableForm):
     display_name = Field(TextField, NotEmpty)
     club = ClubSelectField
     tracking_delay = DelaySelectField
-    unit_preset = UnitPresetSelectField("unit_preset")
-    distance_unit = DistanceUnitSelectField
-    speed_unit = SpeedUnitSelectField
-    lift_unit = LiftUnitSelectField
-    altitude_unit = AltitudeUnitSelectField
+    unit_preset = units.UnitPresetSelectField("unit_preset")
+    distance_unit = units.DistanceUnitSelectField
+    speed_unit = units.SpeedUnitSelectField
+    lift_unit = units.LiftUnitSelectField
+    altitude_unit = units.AltitudeUnitSelectField
     eye_candy = Field(CheckBox)
 
 edit_user_form = EditUserForm(DBSession)
