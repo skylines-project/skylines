@@ -28,6 +28,7 @@ PEP8_IGNORE_ERRORS = [
 PEP8_INPUTS = [
     'skylines',
     'scripts',
+    '.'
 ]
 
 
