@@ -17,7 +17,7 @@ from skylines.controllers.base import BaseController
 from skylines.lib.dbutil import get_requested_record
 from skylines.model import DBSession, User, Group, Club, Flight, Follower
 from skylines.model.igcfile import IGCFile
-from skylines.forms import BootstrapForm, units
+from skylines.forms import BootstrapForm, units, club
 from sqlalchemy.sql.expression import and_, or_
 from sqlalchemy import func
 from sqlalchemy.orm import joinedload
@@ -28,19 +28,6 @@ from skylines.model.notification import create_follower_notification
 from skylines.lib.validators import UniqueValueUnless
 
 
-class ClubSelectField(PropertySingleSelectField):
-    def _my_update_params(self, d, nullable=False):
-        query = DBSession.query(Club.id, Club.name).order_by(Club.name)
-        options = [(None, 'None')] + query.all()
-        d['options'] = options
-        return d
-
-    def validate(self, value, *args, **kw):
-        if isinstance(value, Club):
-            value = value.id
-        return super(ClubSelectField, self).validate(value, *args, **kw)
-
-
 class DelaySelectField(PropertySingleSelectField):
     def _my_update_params(self, d, nullable=False):
         options = [(0, _('None'))]
@@ -48,34 +35,6 @@ class DelaySelectField(PropertySingleSelectField):
             options.append((x, ungettext(u'%u minute', u'%u minutes', x) % x))
         d['options'] = options
         return d
-
-
-class SelectClubForm(EditableForm):
-    __base_widget_type__ = BootstrapForm
-    __model__ = User
-    __hide_fields__ = ['id']
-    __limit_fields__ = ['club']
-    __field_widget_args__ = {
-        'club': dict(label_text=l_('Club'))
-    }
-
-    club = ClubSelectField
-
-
-select_club_form = SelectClubForm(DBSession)
-
-
-class NewClubForm(AddRecordForm):
-    __base_widget_type__ = BootstrapForm
-    __model__ = Club
-    __limit_fields__ = ['name']
-    __field_widget_args__ = {
-        'name': dict(label_text=l_('Name'))
-    }
-
-    name = TextField
-
-new_club_form = NewClubForm(DBSession)
 
 user_validator = Schema(chained_validators=(FieldsMatch('password',
                                                         'verify_password',
@@ -100,7 +59,7 @@ class NewUserForm(AddRecordForm):
                                                      __model__, 'email_address'),
                                          Email(not_empty=True)))
     display_name = Field(TextField, NotEmpty)
-    club = ClubSelectField
+    club = club.SelectField
     password = String(min=6)
     verify_password = PasswordField('verify_password',
                                     label_text=l_('Verify Password'))
@@ -143,7 +102,7 @@ class EditUserForm(EditableForm):
                                                            DBSession,
                                                            __model__, 'email_address')))
     display_name = Field(TextField, NotEmpty)
-    club = ClubSelectField
+    club = club.SelectField
     tracking_delay = DelaySelectField
     unit_preset = units.PresetSelectField("unit_preset")
     distance_unit = units.DistanceSelectField
@@ -307,11 +266,11 @@ class UserController(BaseController):
             raise HTTPForbidden
 
         return dict(user=self.user,
-                    select_form=select_club_form,
-                    create_form=new_club_form)
+                    select_form=club.select_form,
+                    create_form=club.new_form)
 
     @expose()
-    @validate(form=select_club_form, error_handler=change_club)
+    @validate(form=club.select_form, error_handler=change_club)
     def select_club(self, club, **kwargs):
         if not self.user.is_writable(request.identity):
             raise HTTPForbidden
@@ -332,7 +291,7 @@ class UserController(BaseController):
         redirect('.')
 
     @expose()
-    @validate(form=new_club_form, error_handler=change_club)
+    @validate(form=club.new_form, error_handler=change_club)
     def create_club(self, name, **kw):
         if not self.user.is_writable(request.identity):
             raise HTTPForbidden
