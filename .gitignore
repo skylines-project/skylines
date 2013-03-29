@@ -6,9 +6,12 @@
 
 # PyDev files
 .settings/*
+.project
+.pydevproject
 
 # Sublime text files
 *.sublime-workspace
+*.sublime-project
 
 *.mo
 *.egg-info
