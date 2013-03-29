@@ -56,7 +56,8 @@ class ModelSelectField(SingleSelectField):
 
 file_field_validator = FieldStorageUploadConverter(
     not_empty=True,
-    messages=dict(empty=_("Please add one or more IGC or ZIP files"))
+    messages=dict(empty=_("Please add one or more IGC or ZIP files")),
+    accept_iterator=True
 )
 
 file_field = MultiFileField(
