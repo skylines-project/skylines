@@ -1,11 +1,6 @@
 #!/usr/bin/python
 
-try:
-    from setuptools import setup, find_packages
-except ImportError:
-    from ez_setup import use_setuptools
-    use_setuptools()
-    from setuptools import setup, find_packages
+from setuptools import setup, find_packages
 
 requirements = open('requirements.txt').readlines()
 test_requirements = [r for r in open('test-requirements.txt').readlines()
