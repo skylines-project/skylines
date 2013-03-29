@@ -6,6 +6,7 @@ DAEMON_USER=mapserver
 DAEMON_GROUP=skylines
 RUNDIR=/run/skylines
 SCRIPT=/opt/skylines/src/mapserver.fastcgi
+MAPFILE=/opt/skylines/src/mapserver/airspace/airspace.map
 SOCKET=$RUNDIR/mapserver-fastcgi.socket
 
 if [ ! -d "$RUNDIR" ]; then
@@ -19,4 +20,4 @@ export LANG=C
 export LC_ALL=C
 
 exec chpst -u$DAEMON_USER:www-data:$DAEMON_GROUP \
-    $SCRIPT --socket=$SOCKET
+    $SCRIPT --socket=$SOCKET $MAPFILE
