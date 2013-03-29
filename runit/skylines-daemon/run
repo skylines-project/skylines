@@ -6,7 +6,6 @@ DAEMON_USER=tracking
 DAEMON_GROUP=skylines
 SCRIPT=/opt/skylines/src/daemon.py
 
-export PYTHON_EGG_CACHE=/opt/skylines/var/python-eggs
 export LANG=C
 export LC_ALL=C
 

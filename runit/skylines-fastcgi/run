@@ -15,7 +15,6 @@ fi
 
 rm -f $SOCKET
 
-export PYTHON_EGG_CACHE=/opt/skylines/var/python-eggs
 export LANG=C
 export LC_ALL=C
 
