@@ -15,9 +15,9 @@ parser = ArgumentParser(description='Generate concatenated and minified CSS and 
 parser.add_argument('conf_path', nargs='?', metavar='config.ini',
                     default='/etc/skylines/production.ini',
                     help='path to the configuration INI file')
-parser.add_argument('bundles_path', nargs='?', metavar='bundles.yaml',
+parser.add_argument('bundles_module', nargs='?', metavar='skylines.assets.bundles',
                     default=None,
-                    help='path to the bundles YAML file')
+                    help='path to the bundles Python module')
 
 # Parse arguments
 args = parser.parse_args()
@@ -29,11 +29,11 @@ conf = appconfig('config:' + os.path.abspath(args.conf_path))
 env = Environment(conf)
 
 # Load the bundles from the YAML file
-if args.bundles_path is None:
-    args.bundles_path = conf['webassets.bundles_file']
+if args.bundles_module is None:
+    args.bundles_module = conf['webassets.bundles_module']
 
-print 'Loading bundles from {}'.format(args.bundles_path)
-env.load_bundles(args.bundles_path)
+print 'Loading bundles from {}'.format(args.bundles_module)
+env.load_bundles(args.bundles_module)
 
 # Generate the assets/bundles
 for bundle in env:

@@ -17,7 +17,7 @@ Live Tracking <small>of {{ pilot }}</small>
 {{ super() }}
 
 {% if trace -%}
-  {% for url in g.assets['css-openlayers'].urls() -%}
+  {% for url in g.assets['openlayers_css'].urls() -%}
   <link href="{{ url }}" rel="stylesheet" type="text/css" />
   {%- endfor %}
 
@@ -34,20 +34,20 @@ Live Tracking <small>of {{ pilot }}</small>
 {{ super() }}
 
 {% if trace -%}
-  {% for url in g.assets['js-openlayers'].urls() -%}
+  {% for url in g.assets['openlayers_js'].urls() -%}
   <script type="text/javascript" src="{{ url }}"></script>
   {%- endfor %}
 
-  {% for url in g.assets['js-flot'].urls() -%}
+  {% for url in g.assets['flot_js'].urls() -%}
   <script type="text/javascript" src="{{ url }}"></script>
   {%- endfor %}
 {%- endif %}
 
-{% for url in g.assets['js-flight'].urls() -%}
+{% for url in g.assets['flight_js'].urls() -%}
 <script type="text/javascript" src="{{ url }}"></script>
 {%- endfor %}
 
-{% for url in g.assets['js-tracking'].urls() -%}
+{% for url in g.assets['tracking_js'].urls() -%}
 <script type="text/javascript" src="{{ url }}"></script>
 {%- endfor %}
 

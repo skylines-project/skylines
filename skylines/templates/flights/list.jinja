@@ -32,7 +32,7 @@
 
 {% block styles -%}
 {{ super() }}
-{% for url in g.assets['css-datatables'].urls() -%}
+{% for url in g.assets['datatables_css'].urls() -%}
 <link href="{{ url }}" rel="stylesheet" type="text/css" />
 {%- endfor %}
 {%- endblock %}
@@ -42,7 +42,7 @@
 {% block scripts -%}
 {{ super() }}
 
-{% for url in g.assets['js-datatables'].urls() -%}
+{% for url in g.assets['datatables_js'].urls() -%}
 <script type="text/javascript" src="{{ url }}"></script>
 {%- endfor %}
 

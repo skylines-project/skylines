@@ -17,7 +17,7 @@
 {{ super() }}
 
 {% if takeoff_locations -%}
-{% for url in g.assets['css-openlayers'].urls() -%}
+{% for url in g.assets['openlayers_css'].urls() -%}
 <link href="{{ url }}" rel="stylesheet" type="text/css" />
 {%- endfor %}
 
@@ -32,7 +32,7 @@
 {{ super() }}
 
 {% if takeoff_locations -%}
-{% for url in g.assets['js-openlayers'].urls() -%}
+{% for url in g.assets['openlayers_js'].urls() -%}
 <script type="text/javascript" src="{{ url }}"></script>
 {%- endfor %}
 

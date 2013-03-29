@@ -21,4 +21,4 @@ class Globals(object):
         self.assets = Environment(config)
 
         # Load predefined bundles from YAML file
-        self.assets.load_bundles(config['webassets.bundles_file'])
+        self.assets.load_bundles(config['webassets.bundles_module'])

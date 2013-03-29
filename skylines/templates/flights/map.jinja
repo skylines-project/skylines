@@ -18,7 +18,7 @@
 {%- block styles %}
 {{ super() }}
 
-{% for url in g.assets['css-openlayers'].urls() -%}
+{% for url in g.assets['openlayers_css'].urls() -%}
 <link href="{{ url }}" rel="stylesheet" type="text/css" />
 {%- endfor %}
 
@@ -33,15 +33,15 @@
 {%- block scripts %}
 {{ super() }}
 
-{% for url in g.assets['js-openlayers'].urls() -%}
+{% for url in g.assets['openlayers_js'].urls() -%}
 <script type="text/javascript" src="{{ url }}"></script>
 {%- endfor %}
 
-{% for url in g.assets['js-flot'].urls() -%}
+{% for url in g.assets['flot_js'].urls() -%}
 <script type="text/javascript" src="{{ url }}"></script>
 {%- endfor %}
 
-{% for url in g.assets['js-flight'].urls() -%}
+{% for url in g.assets['flight_js'].urls() -%}
 <script type="text/javascript" src="{{ url }}"></script>
 {%- endfor %}
 

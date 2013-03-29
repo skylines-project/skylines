@@ -23,7 +23,6 @@ crc16==0.1.1
 markdown==2.3
 pytz
 webassets==0.8
-pyyaml==3.10
 cssmin==0.1.4
 jinja2==2.6
 twisted==12.3

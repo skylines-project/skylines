@@ -1,5 +1,5 @@
 from webassets import Environment as BaseEnvironment
-from webassets.loaders import YAMLLoader
+from webassets.loaders import PythonLoader
 from paste.deploy.converters import asbool
 
 
@@ -37,7 +37,7 @@ class Environment(BaseEnvironment):
         self.config['CLOSURE_COMPRESSOR_OPTIMIZATION'] = 'SIMPLE_OPTIMIZATIONS'
         self.config['CLOSURE_EXTRA_ARGS'] = ['--jscomp_off', 'internetExplorerChecks']
 
-    def load_bundles(self, bundle_file):
+    def load_bundles(self, module):
         """
         Load predefined bundles from a YAML file.
 
@@ -45,7 +45,7 @@ class Environment(BaseEnvironment):
         """
 
         # Load bundles from YAML file
-        loader = YAMLLoader(bundle_file)
+        loader = PythonLoader(module)
         bundles = loader.load_bundles()
 
         # Register the bundles with the environment
