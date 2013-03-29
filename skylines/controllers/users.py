@@ -477,11 +477,6 @@ class UsersController(BaseController):
 
     @expose()
     def _lookup(self, id, *remainder):
-        # Fallback for old URLs
-        if id == 'id' and len(remainder) > 0:
-            id = remainder[0]
-            remainder = remainder[1:]
-
         controller = UserController(get_requested_record(User, id))
         return controller, remainder
 

@@ -122,11 +122,6 @@ class FlightsController(BaseController):
 
     @expose()
     def _lookup(self, id, *remainder):
-        # Fallback for old URLs
-        if id == 'id' and len(remainder) > 0:
-            id = remainder[0]
-            remainder = remainder[1:]
-
         flights = get_requested_record_list(Flight, id,
                                             joinedload=[Flight.igc_file])
         controller = FlightController(flights)
@@ -295,10 +290,6 @@ class FlightsController(BaseController):
             raise HTTPNotFound
 
         return self.__do_list('pinned', kw, pinned=ids)
-
-    @expose()
-    def multi(self, ids):
-        return redirect('/flights/' + ids + '/')
 
     @without_trailing_slash
     @expose()

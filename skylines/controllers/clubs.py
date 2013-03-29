@@ -119,10 +119,5 @@ class ClubsController(BaseController):
 
     @expose()
     def _lookup(self, id, *remainder):
-        # Fallback for old URLs
-        if id == 'id' and len(remainder) > 0:
-            id = remainder[0]
-            remainder = remainder[1:]
-
         controller = ClubController(get_requested_record(Club, id))
         return controller, remainder

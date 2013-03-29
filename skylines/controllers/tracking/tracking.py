@@ -35,11 +35,6 @@ class TrackingController(BaseController):
 
     @expose()
     def _lookup(self, id, *remainder):
-        # Fallback for old URLs
-        if id == 'id' and len(remainder) > 0:
-            id = remainder[0]
-            remainder = remainder[1:]
-
         pilots = get_requested_record_list(User, id)
         controller = TrackController(pilots)
         return controller, remainder
