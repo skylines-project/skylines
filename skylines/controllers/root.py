@@ -42,11 +42,12 @@ class RootController(BaseController):
     tracking = TrackingController()
     statistics = StatisticsController()
 
-    if 'skylines.mapproxy' in config:
+    _mapproxy_config = config.get('skylines.mapproxy')
+    if _mapproxy_config is not None:
         # plug local mapproxy/mapserver at /mapproxy/
         from tg.controllers import WSGIAppController
         import mapproxy.wsgiapp as mapproxy
-        mapproxy = WSGIAppController(mapproxy.make_wsgi_app(config.get('skylines.mapproxy')))
+        mapproxy = WSGIAppController(mapproxy.make_wsgi_app(_mapproxy_config))
 
     @expose()
     def index(self, **kw):
