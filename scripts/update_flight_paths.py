@@ -6,6 +6,7 @@ import argparse
 import transaction
 from paste.deploy.loadwsgi import appconfig
 from sqlalchemy.orm import joinedload
+from sqlalchemy.sql.expression import or_
 from skylines.config.environment import load_environment
 from skylines.model import DBSession, Flight
 
@@ -68,4 +69,5 @@ if args.ids:
 elif args.force:
     incremental(do, q)
 else:
-    incremental(do, q.filter(Flight.locations == None))
+    incremental(do, q.filter(or_(Flight.locations == None,
+                                 Flight.timestamps == None)))

@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
 
 from datetime import datetime
-from sqlalchemy.orm import relation
 from sqlalchemy import ForeignKey, Column, func
+from sqlalchemy.dialects import postgresql
+from sqlalchemy.orm import relation
 from sqlalchemy.types import Unicode, Integer, DateTime, Date, Boolean
 from sqlalchemy.ext.hybrid import hybrid_property
 from sqlalchemy.sql.expression import desc, case
@@ -56,6 +57,7 @@ class Flight(DeclarativeBase):
     landing_airport = relation('Airport',
                                primaryjoin=(landing_airport_id == Airport.id))
 
+    timestamps = Column(postgresql.ARRAY(DateTime))
     locations = Column(Geometry('LINESTRING', management=True))
 
     olc_classic_distance = Column(Integer)
@@ -202,9 +204,15 @@ class Flight(DeclarativeBase):
 
     def update_flight_path(self):
         from skylines.lib.xcsoar import flight_path
+        from skylines.lib.datetime import from_seconds_of_day
 
         # Run the IGC file through the FlightPath utility
         path = flight_path(self.igc_file)
+
+        # Save the timestamps of the coordinates
+        date_utc = self.igc_file.date_utc
+        self.timestamps = \
+            [from_seconds_of_day(date_utc, c.seconds_of_day) for c in path]
 
         # Convert the coordinate into a list of tuples
         coordinates = [(c.longitude, c.latitude) for c in path]
