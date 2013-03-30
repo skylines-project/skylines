@@ -29,13 +29,7 @@ load_environment(conf.global_conf, conf.local_conf)
 
 def do(flight):
     print flight.id
-
-    try:
-        flight.update_flight_path()
-        return True
-    except Exception as ex:
-        print '{}: {}'.format(ex.__class__.__name__, ex)
-        return False
+    return flight.update_flight_path()
 
 
 def apply_and_commit(func, q):

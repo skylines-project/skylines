@@ -132,7 +132,10 @@ class UploadController(BaseController):
                 flights.append((name, None, _('No flight found in file')))
                 continue
 
-            flight.update_flight_path()
+            if not flight.update_flight_path():
+                files.delete_file(filename)
+                flights.append((name, None, _('No flight found in file')))
+                continue
 
             flights.append((name, flight, None))
             DBSession.add(igc_file)

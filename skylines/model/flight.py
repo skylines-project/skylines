@@ -208,6 +208,8 @@ class Flight(DeclarativeBase):
 
         # Run the IGC file through the FlightPath utility
         path = flight_path(self.igc_file)
+        if len(path) < 2:
+            return False
 
         # Save the timestamps of the coordinates
         date_utc = self.igc_file.date_utc
@@ -222,3 +224,5 @@ class Flight(DeclarativeBase):
 
         # Save the new path as WKB
         self.locations = from_shape(linestring)
+
+        return True
