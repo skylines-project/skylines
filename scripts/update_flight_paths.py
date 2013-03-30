@@ -33,7 +33,8 @@ def do(flight):
     try:
         flight.update_flight_path()
         return True
-    except:
+    except Exception as ex:
+        print '{}: {}'.format(ex.__class__.__name__, ex)
         return False
 
 
