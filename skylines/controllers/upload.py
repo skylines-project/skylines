@@ -3,32 +3,16 @@ from datetime import datetime
 from tg import expose, request, redirect, validate, flash
 from tg.i18n import ugettext as _, lazy_ugettext as l_
 from repoze.what.predicates import has_permission
-from tw.forms.validators import FieldStorageUploadConverter
 from skylines.controllers.base import BaseController
 from skylines.lib import files
 from skylines.model import DBSession, User, Flight
 from skylines.lib.md5 import file_md5
 from skylines.lib.xcsoar import analyse_flight
-from skylines.forms import BootstrapForm, MultiFileField, pilot, aircraft_model
+from skylines.forms import upload, aircraft_model
 from zipfile import ZipFile
 from skylines.model.igcfile import IGCFile
 from skylines.model.notification import create_flight_notifications
 from skylines.lib.string import import_ascii
-
-
-file_field_validator = FieldStorageUploadConverter(
-    not_empty=True,
-    messages=dict(empty=_("Please add one or more IGC or ZIP files")),
-    accept_iterator=True
-)
-
-file_field = MultiFileField(
-    'file', label_text=l_("IGC or ZIP file(s)"), validator=file_field_validator)
-
-upload_form = BootstrapForm('upload_form', submit_text="Upload", action='do', children=[
-    file_field,
-    pilot.SelectField('pilot', label_text=l_("Pilot"))
-])
 
 
 def IterateFiles(name, f):
@@ -81,11 +65,11 @@ class UploadController(BaseController):
     @expose('generic/form.jinja')
     def index(self, **kw):
         return dict(active_page='upload', title=_("Upload Flight"),
-                    form=upload_form,
+                    form=upload.form,
                     values=dict(pilot=request.identity['user'].id))
 
     @expose('upload/result.jinja')
-    @validate(upload_form, error_handler=index)
+    @validate(upload.form, error_handler=index)
     def do(self, file, pilot):
         user = request.identity['user']
 
