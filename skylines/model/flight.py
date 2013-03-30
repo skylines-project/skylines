@@ -8,7 +8,8 @@ from sqlalchemy.ext.hybrid import hybrid_property
 from sqlalchemy.sql.expression import desc, case
 from geoalchemy2.types import Geometry
 from geoalchemy2.elements import WKTElement
-from geoalchemy2.shape import to_shape
+from geoalchemy2.shape import to_shape, from_shape
+from shapely.geometry import LineString
 from skylines.model.base import DeclarativeBase
 from skylines.model.session import DBSession
 from skylines.model.auth import User
@@ -54,6 +55,8 @@ class Flight(DeclarativeBase):
     landing_airport_id = Column(Integer, ForeignKey('airports.id'))
     landing_airport = relation('Airport',
                                primaryjoin=(landing_airport_id == Airport.id))
+
+    locations = Column(Geometry('LINESTRING', management=True))
 
     olc_classic_distance = Column(Integer)
     olc_triangle_distance = Column(Integer)
@@ -196,3 +199,18 @@ class Flight(DeclarativeBase):
         from skylines.model.flight_phase import FlightPhase
         return [p for p in self._phases
                 if p.aggregate and p.phase_type == FlightPhase.PT_CRUISE]
+
+    def update_flight_path(self):
+        from skylines.lib.xcsoar import flight_path
+
+        # Run the IGC file through the FlightPath utility
+        path = flight_path(self.igc_file)
+
+        # Convert the coordinate into a list of tuples
+        coordinates = [(c.longitude, c.latitude) for c in path]
+
+        # Create a shapely LineString object from the coordinates
+        linestring = LineString(coordinates)
+
+        # Save the new path as WKB
+        self.locations = from_shape(linestring)
