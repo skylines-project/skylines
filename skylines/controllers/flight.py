@@ -18,9 +18,8 @@ from skylines.model.notification import create_flight_comment_notifications
 from skylines.lib.xcsoar import analyse_flight, flight_path
 from skylines.lib.helpers import format_time, format_number
 from skylines.lib.formatter import units
-from skylines.forms import BootstrapForm
+from skylines.forms import BootstrapForm, aircraft_model
 from skylinespolyencode import SkyLinesPolyEncoder
-from skylines.controllers.upload import ModelSelectField
 
 log = logging.getLogger(__name__)
 
@@ -58,7 +57,7 @@ class SelectAircraftForm(EditableForm):
     __hide_fields__ = ['id']
     __limit_fields__ = ['model', 'registration', 'competition_id']
     __base_widget_args__ = dict(action='select_aircraft')
-    model = ModelSelectField('model', label_text=l_('Aircraft Model'))
+    model = aircraft_model.SelectField('model', label_text=l_('Aircraft Model'))
     registration = TextField('registration', label_text=l_('Aircraft Registration'), maxlength=32, validator=String(max=32))
     competition_id = TextField('competition_id', label_text=l_('Competition Number'), maxlength=5, validator=String(max=5))
 

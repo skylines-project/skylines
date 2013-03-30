@@ -3,45 +3,18 @@ from datetime import datetime
 from tg import expose, request, redirect, validate, flash
 from tg.i18n import ugettext as _, lazy_ugettext as l_
 from repoze.what.predicates import has_permission
-from tw.forms.fields import SingleSelectField
 from tw.forms.validators import FieldStorageUploadConverter
 from skylines.controllers.base import BaseController
 from skylines.lib import files
-from skylines.model import DBSession, User, AircraftModel, Flight
+from skylines.model import DBSession, User, Flight
 from skylines.lib.md5 import file_md5
 from skylines.lib.xcsoar import analyse_flight
-from skylines.forms import BootstrapForm, MultiFileField, pilot
+from skylines.forms import BootstrapForm, MultiFileField, pilot, aircraft_model
 from zipfile import ZipFile
 from skylines.model.igcfile import IGCFile
 from skylines.model.notification import create_flight_notifications
 from skylines.lib.string import import_ascii
 
-
-class ModelSelectField(SingleSelectField):
-    def update_params(self, d):
-        models = DBSession.query(AircraftModel) \
-                .order_by(AircraftModel.kind) \
-                .order_by(AircraftModel.name) \
-                .all()
-
-        gliders = [(model.id, model) for model in models if model.kind == 1]
-        motor_gliders = [(model.id, model) for model in models if model.kind == 2]
-        hanggliders = [(model.id, model) for model in models if model.kind == 3]
-        paragliders = [(model.id, model) for model in models if model.kind == 4]
-        ul_gliders = [(model.id, model) for model in models if model.kind == 5]
-
-        options = []
-
-        if len(gliders) > 0: options.append((_('Gliders'), gliders))
-        if len(motor_gliders) > 0: options.append((_('Motor Gliders'), motor_gliders))
-        if len(hanggliders) > 0: options.append((_('Hanggliders'), hanggliders))
-        if len(paragliders) > 0: options.append((_('Paragliders'), paragliders))
-        if len(ul_gliders) > 0: options.append((_('UL Gliders'), ul_gliders))
-
-        options.append((_('Other'), [(None, '[unspecified]')]))
-
-        d['options'] = options
-        return SingleSelectField.update_params(self, d)
 
 file_field_validator = FieldStorageUploadConverter(
     not_empty=True,
@@ -186,7 +159,7 @@ class UploadController(BaseController):
         DBSession.flush()
 
         return dict(flights=flights, success=success,
-                    ModelSelectField=ModelSelectField)
+                    ModelSelectField=aircraft_model.SelectField)
 
     @expose()
     def update(self, **kw):
