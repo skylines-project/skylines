@@ -57,8 +57,8 @@ class Flight(DeclarativeBase):
     landing_airport = relation('Airport',
                                primaryjoin=(landing_airport_id == Airport.id))
 
-    timestamps = Column(postgresql.ARRAY(DateTime))
-    locations = Column(Geometry('LINESTRING', management=True))
+    timestamps = Column(postgresql.ARRAY(DateTime), nullable=False)
+    locations = Column(Geometry('LINESTRING', management=True), nullable=False)
 
     olc_classic_distance = Column(Integer)
     olc_triangle_distance = Column(Integer)
