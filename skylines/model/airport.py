@@ -52,7 +52,7 @@ class Airport(DeclarativeBase):
         if location is None:
             self.location_wkt = None
         else:
-            self.location_wkt = WKTElement(location.to_wkt())
+            self.location_wkt = WKTElement(location.to_wkt(), srid=4326)
 
     @classmethod
     def by_location(cls, location, distance_threshold=0.025):

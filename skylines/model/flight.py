@@ -109,7 +109,7 @@ class Flight(DeclarativeBase):
         if location is None:
             self.takeoff_location_wkt = None
         else:
-            self.takeoff_location_wkt = WKTElement(location.to_wkt())
+            self.takeoff_location_wkt = WKTElement(location.to_wkt(), srid=4326)
 
     @property
     def landing_location(self):
@@ -124,7 +124,7 @@ class Flight(DeclarativeBase):
         if location is None:
             self.landing_location_wkt = None
         else:
-            self.landing_location_wkt = WKTElement(location.to_wkt())
+            self.landing_location_wkt = WKTElement(location.to_wkt(), srid=4326)
 
     @classmethod
     def by_md5(cls, _md5):
