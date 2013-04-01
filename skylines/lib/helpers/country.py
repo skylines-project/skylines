@@ -3,11 +3,14 @@ from tg import tmpl_context
 
 __all__ = ['country_name', 'language_to_country_code']
 
-__conversion_dict = {'en': 'gb',
-                     'ja': 'jp',
-                     'nb': 'no',
-                     'sv': 'se',
-                     'zh_TW': 'cn'}
+__conversion_dict = {
+    'en': 'gb',
+    'ja': 'jp',
+    'nb': 'no',
+    'sv': 'se',
+    'zh_TW': 'cn',
+    'cs': 'cz',
+}
 
 
 def country_name(code):
