@@ -25,15 +25,19 @@ def __get_database_file(dir_data):
     return path
 
 
-def get_database(bounds=None):
-    # Get Welt2000 file
-    path = __get_database_file(config['skylines.temporary_dir'])
+def get_database(bounds=None, path=None):
+    delete_file = False
+
+    if not path:
+        # Get Welt2000 file
+        path = __get_database_file(config['skylines.temporary_dir'])
+        delete_file = True
 
     # Parse Welt2000 file
     with open(path, "r") as f:
         parsed = parse_welt2000_waypoints(f, bounds)
 
-    os.remove(path)
+    if delete_file: os.remove(path)
 
     # Return parsed WaypointList
     return parsed
