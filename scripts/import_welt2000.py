@@ -18,14 +18,19 @@ if len(sys.argv) > 1:
     conf_path = sys.argv[1]
     del sys.argv[1]
 
+welt2000_path = None
+if len(sys.argv) > 1:
+    welt2000_path = sys.argv[1]
+    del sys.argv[1]
+
 if len(sys.argv) != 1:
-    print >>sys.stderr, "Usage: %s [config.ini]" % sys.argv[0]
+    print >>sys.stderr, "Usage: %s [config.ini] [WELT2000.TXT]" % sys.argv[0]
     sys.exit(1)
 
 conf = appconfig('config:' + os.path.abspath(conf_path))
 load_environment(conf.global_conf, conf.local_conf)
 
-welt2000 = get_database()
+welt2000 = get_database(path=welt2000_path)
 
 i = 0
 
