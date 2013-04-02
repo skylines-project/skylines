@@ -7,15 +7,15 @@ services:
   - postgresql
 
 install:
-  - sudo apt-get install postgresql-9.1-postgis postgresql-contrib-9.1 -q > /dev/null
-  - pip install -e . > /dev/null
-  - pip install -r test-requirements.txt > /dev/null
+  - sudo apt-get install postgresql-9.1-postgis postgresql-contrib-9.1 -q
+  - pip install -e .
+  - pip install -r test-requirements.txt
 
 before_script:
-  - psql -c 'create database skylines_test;' -U postgres > /dev/null
-  - psql -d skylines_test -f /usr/share/postgresql/9.1/contrib/postgis-1.5/postgis.sql -U postgres > /dev/null
-  - psql -d skylines_test -f /usr/share/postgresql/9.1/contrib/postgis-1.5/spatial_ref_sys.sql -U postgres > /dev/null
-  - psql -d skylines_test -c 'create extension fuzzystrmatch;' -U postgres > /dev/null
+  - psql -U postgres -c 'CREATE DATABASE skylines_test;'
+  - psql -U postgres -d skylines_test -f /usr/share/postgresql/9.1/contrib/postgis-1.5/postgis.sql
+  - psql -U postgres -d skylines_test -f /usr/share/postgresql/9.1/contrib/postgis-1.5/spatial_ref_sys.sql
+  - psql -U postgres -d skylines_test -c 'CREATE EXTENSION fuzzystrmatch;'
 
 script:
   - nosetests -v --with-coverage --cover-package=skylines
