@@ -7,6 +7,11 @@ services:
   - postgresql
 
 install:
+  # Add PPAs for GEOS 3.3.x and PostGIS 2.x
+  - sudo apt-add-repository -y ppa:sharpie/for-science
+  - sudo apt-add-repository -y ppa:sharpie/postgis-nightly
+  - sudo apt-get update
+
   # Install PostGIS
   - sudo apt-get install postgresql-9.1-postgis postgresql-contrib-9.1 -q
 
@@ -21,8 +26,8 @@ before_script:
   - psql -U postgres -c 'CREATE DATABASE skylines_test;'
 
   # Install PostGIS extension into the database
-  - psql -U postgres -d skylines_test -f /usr/share/postgresql/9.1/contrib/postgis-1.5/postgis.sql
-  - psql -U postgres -d skylines_test -f /usr/share/postgresql/9.1/contrib/postgis-1.5/spatial_ref_sys.sql
+  - psql -U postgres -d skylines_test -c 'CREATE EXTENSION postgis;'
+  - psql -U postgres -d skylines_test -f /usr/share/postgresql/9.1/contrib/postgis-2.1/legacy_minimal.sql
 
   # Install fuzzystrmatch extension into the database
   - psql -U postgres -d skylines_test -c 'CREATE EXTENSION fuzzystrmatch;'
