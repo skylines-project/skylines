@@ -7,17 +7,28 @@ services:
   - postgresql
 
 install:
+  # Install PostGIS
   - sudo apt-get install postgresql-9.1-postgis postgresql-contrib-9.1 -q
+
+  # Install SkyLines Python dependencies
   - pip install -e .
+
+  # Install testing dependencies
   - pip install -r test-requirements.txt
 
 before_script:
+  # Create the testing database
   - psql -U postgres -c 'CREATE DATABASE skylines_test;'
+
+  # Install PostGIS extension into the database
   - psql -U postgres -d skylines_test -f /usr/share/postgresql/9.1/contrib/postgis-1.5/postgis.sql
   - psql -U postgres -d skylines_test -f /usr/share/postgresql/9.1/contrib/postgis-1.5/spatial_ref_sys.sql
+
+  # Install fuzzystrmatch extension into the database
   - psql -U postgres -d skylines_test -c 'CREATE EXTENSION fuzzystrmatch;'
 
 script:
+  # Run the test suite
   - nosetests -v --with-coverage --cover-package=skylines
 
 notifications:
