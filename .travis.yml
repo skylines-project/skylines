@@ -29,7 +29,7 @@ before_script:
 
 script:
   # Run the test suite
-  - nosetests -v --with-coverage --cover-package=skylines
+  - nosetests
 
 notifications:
   email:
