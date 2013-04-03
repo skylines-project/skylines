@@ -1,9 +1,11 @@
+{% from "macros/gravatar.jinja" import gravatar with context %}
 {% from "macros/links.jinja" import user_link, club_link %}
 
 {% macro render_users_table(users, club_column = True) -%}
 <table id="users-table" class="table table-striped">
   <thead>
     <tr>
+      <th style="width: 20px"></th>
       <th>{% trans %}Name{% endtrans %}</th>
       {% if club_column %}<th>{% trans %}Club{% endtrans %}</th>{% endif %}
       <th>{% trans %}Actions{% endtrans %}</th>
@@ -13,6 +15,7 @@
     {% for user in users -%}
     <tr {% if club_column %}itemprop="member"{% endif %} itemscope itemtype="http://schema.org/Person">
       <meta itemprop="url" content="/users/{{ user.id }}" />
+      <td>{{ gravatar(user, size=20) }}</td>
       <td itemprop="name">{{ user_link(user) }}</td>
       {% if club_column -%}
       <td itemprop="memberof" itemscope itemtype="http://schema.org/SportsTeam">

@@ -13,5 +13,6 @@ from skylines.lib.markdown import markdown
 from skylines.lib.helpers.includeguard import not_included_yet
 from skylines.lib.helpers.string import *
 from skylines.lib.helpers.country import *
+from skylines.lib.helpers.gravatar import get_url as gravatar
 
 import datetime

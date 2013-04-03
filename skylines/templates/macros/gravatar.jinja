@@ -1,0 +1,3 @@
+{% macro gravatar(user, size, attributes='') -%}
+<img class="gravatar" src="{{ h.gravatar(user.email_address, size=size) }}"{{ attributes }}/>
+{%- endmacro %}
