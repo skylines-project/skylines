@@ -14,7 +14,7 @@ import transaction
 from paste.deploy.loadwsgi import appconfig
 from skylines.config.environment import load_environment
 from skylines.model import DBSession, Airspace
-from geoalchemy import WKTSpatialElement
+from geoalchemy2 import WKTElement
 from tg import config
 
 sys.path.append(os.path.dirname(sys.argv[0]))
@@ -300,7 +300,7 @@ def add_airspace(country_code, airspace_class, name, base, top, geom_str):
     airspace.name = name
     airspace.base = base
     airspace.top = top
-    airspace.the_geom = WKTSpatialElement(geom_str)
+    airspace.the_geom = WKTElement(geom_str, srid=4326)
 
     DBSession.add(airspace)
 
