@@ -24,12 +24,18 @@ parser = argparse.ArgumentParser(description='Add or update airspace in SkyLines
 parser.add_argument('--config', metavar='config.ini',
                     default='/etc/skylines/production.ini',
                     help='path to the configuration INI file')
-parser.add_argument('airspace_list',
+parser.add_argument('airspace_list', nargs='?',
                     help='airspace list file')
-parser.add_argument('airspace_blacklist',
+parser.add_argument('airspace_blacklist', nargs='?',
                     help='airspace blacklist file')
 parser.add_argument('--country', action='append',
                     help='Update only the airspace of this country.')
+parser.add_argument('--url',
+                    help='Import single airspace file from file/url. \
+                          You need to specify a country and the filetype \
+                          when using this option.')
+parser.add_argument('--filetype',
+                    help='Choose \'sua\' or \'openair\'.')
 
 args = parser.parse_args()
 
@@ -47,12 +53,37 @@ def main():
 
     airspace_re = re.compile(r'^([^#]{1}.*?)\s+(openair|sua)\s+(http://.*|file://.*)')
 
+    if args.airspace_blacklist:
+        import_blacklist(args.airspace_blacklist)
+
+    if args.url and len(args.country) == 1 and args.filetype:
+        import_airspace(args.url, args.country[0], args.filetype)
+    else:
+        with open(args.airspace_list, "r") as f:
+
+            for line in f:
+                match = airspace_re.match(line)
+
+                if not match:
+                    continue
+
+                country_code = match.group(1).strip()
+                file_type = match.group(2).strip()
+                url = match.group(3).strip()
+
+                if args.country and country_code.lower() not in args.country:
+                    continue
+
+                import_airspace(url, country_code, file_type)
+
+
+def import_blacklist(blacklist_file):
     # import airspace blacklist to remove unwanted airspaces (e.g. borderlines)
     # each line contains the country code and the airspace name to remove
     # see provided file for example
     airspace_blacklist_re = re.compile(r'^([^#]{1}.*?)\s+(.*)')
 
-    with open(args.airspace_blacklist, "r") as f:
+    with open(blacklist_file, "r") as f:
         for line in f:
             match = airspace_blacklist_re.match(line)
             if not match:
@@ -69,39 +100,30 @@ def main():
 
             blacklist[country_code].append(name)
 
-    with open(args.airspace_list, "r") as f:
 
-        for line in f:
-            match = airspace_re.match(line)
+def import_airspace(url, country_code, file_type):
+    country_code = country_code.lower()
 
-            if not match:
-                continue
+    filename = os.path.join(
+        config['skylines.temporary_dir'], country_code,
+        country_code + '.' + file_type)
 
-            country_code = match.group(1).strip()
-            url = match.group(3).strip()
-            filename = os.path.join(
-                config['skylines.temporary_dir'], country_code,
-                match.group(1).strip() + '.' + match.group(2))
+    if url.startswith('http://'):
+        print "\nDownloading " + url
+        filename = download_file(filename, url)
+    elif url.startswith('file://'):
+        filename = url[7:]
 
-            if args.country and country_code.lower() not in args.country:
-                continue
+    # remove all airspace definitions for the current country
+    remove_country(country_code)
 
-            if url.startswith('http://'):
-                print "\nDownloading " + url
-                filename = download_file(filename, url)
-            elif url.startswith('file://'):
-                filename = url[7:]
+    if filename.endswith('sua'):
+        import_sua(filename, country_code)
+    elif filename.endswith('openair'):
+        import_openair(filename, country_code)
 
-            # remove all airspace definitions for the current country
-            remove_country(country_code)
-
-            if filename.endswith('sua'):
-                import_sua(filename, country_code)
-            elif filename.endswith('openair'):
-                import_openair(filename, country_code)
-
-            if filename.startswith(config['skylines.temporary_dir']):
-                shutil.rmtree(os.path.dirname(filename))
+    if filename.startswith(config['skylines.temporary_dir']):
+        shutil.rmtree(os.path.dirname(filename))
 
 
 def import_sua(filename, country_code):
