@@ -8,6 +8,7 @@ import os
 import re
 import shutil
 import subprocess
+import argparse
 from osgeo import ogr
 
 import transaction
@@ -19,20 +20,22 @@ from tg import config
 
 sys.path.append(os.path.dirname(sys.argv[0]))
 
-conf_path = '/etc/skylines/production.ini'
-if len(sys.argv) > 2:
-    conf_path = sys.argv[1]
-    del sys.argv[1]
+parser = argparse.ArgumentParser(description='Add or update airspace in SkyLines.')
+parser.add_argument('--config', metavar='config.ini',
+                    default='/etc/skylines/production.ini',
+                    help='path to the configuration INI file')
+parser.add_argument('airspace_list',
+                    help='airspace list file')
+parser.add_argument('airspace_blacklist',
+                    help='airspace blacklist file')
+parser.add_argument('--country', action='append',
+                    help='Update only the airspace of this country.')
 
-if len(sys.argv) != 3:
-    print >>sys.stderr, "Usage: %s [config.ini] airspace_list.txt airspace_blacklist.txt" % sys.argv[0]
-    sys.exit(1)
+args = parser.parse_args()
 
-airspace_list = sys.argv[1]
-airspace_blacklist = sys.argv[2]
 blacklist = dict()
 
-conf = appconfig('config:' + os.path.abspath(conf_path))
+conf = appconfig('config:' + os.path.abspath(args.config))
 load_environment(conf.global_conf, conf.local_conf)
 
 
@@ -49,7 +52,7 @@ def main():
     # see provided file for example
     airspace_blacklist_re = re.compile(r'^([^#]{1}.*?)\s+(.*)')
 
-    with open(airspace_blacklist, "r") as f:
+    with open(args.airspace_blacklist, "r") as f:
         for line in f:
             match = airspace_blacklist_re.match(line)
             if not match:
@@ -66,7 +69,7 @@ def main():
 
             blacklist[country_code].append(name)
 
-    with open(airspace_list, "r") as f:
+    with open(args.airspace_list, "r") as f:
 
         for line in f:
             match = airspace_re.match(line)
@@ -79,6 +82,9 @@ def main():
             filename = os.path.join(
                 config['skylines.temporary_dir'], country_code,
                 match.group(1).strip() + '.' + match.group(2))
+
+            if args.country and country_code.lower() not in args.country:
+                continue
 
             if url.startswith('http://'):
                 print "\nDownloading " + url
