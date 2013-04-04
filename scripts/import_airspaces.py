@@ -8,31 +8,40 @@ import os
 import re
 import shutil
 import subprocess
+import argparse
 from osgeo import ogr
 
 import transaction
 from paste.deploy.loadwsgi import appconfig
 from skylines.config.environment import load_environment
 from skylines.model import DBSession, Airspace
-from geoalchemy import WKTSpatialElement
+from geoalchemy2 import WKTElement
 from tg import config
 
 sys.path.append(os.path.dirname(sys.argv[0]))
 
-conf_path = '/etc/skylines/production.ini'
-if len(sys.argv) > 2:
-    conf_path = sys.argv[1]
-    del sys.argv[1]
+parser = argparse.ArgumentParser(description='Add or update airspace in SkyLines.')
+parser.add_argument('--config', metavar='config.ini',
+                    default='/etc/skylines/production.ini',
+                    help='path to the configuration INI file')
+parser.add_argument('airspace_list', nargs='?',
+                    help='airspace list file')
+parser.add_argument('airspace_blacklist', nargs='?',
+                    help='airspace blacklist file')
+parser.add_argument('--country', action='append',
+                    help='Update only the airspace of this country.')
+parser.add_argument('--url',
+                    help='Import single airspace file from file/url. \
+                          You need to specify a country and the filetype \
+                          when using this option.')
+parser.add_argument('--filetype',
+                    help='Choose \'sua\' or \'openair\'.')
 
-if len(sys.argv) != 3:
-    print >>sys.stderr, "Usage: %s [config.ini] airspace_list.txt airspace_blacklist.txt" % sys.argv[0]
-    sys.exit(1)
+args = parser.parse_args()
 
-airspace_list = sys.argv[1]
-airspace_blacklist = sys.argv[2]
 blacklist = dict()
 
-conf = appconfig('config:' + os.path.abspath(conf_path))
+conf = appconfig('config:' + os.path.abspath(args.config))
 load_environment(conf.global_conf, conf.local_conf)
 
 
@@ -44,12 +53,37 @@ def main():
 
     airspace_re = re.compile(r'^([^#]{1}.*?)\s+(openair|sua)\s+(http://.*|file://.*)')
 
+    if args.airspace_blacklist:
+        import_blacklist(args.airspace_blacklist)
+
+    if args.url and len(args.country) == 1 and args.filetype:
+        import_airspace(args.url, args.country[0], args.filetype)
+    else:
+        with open(args.airspace_list, "r") as f:
+
+            for line in f:
+                match = airspace_re.match(line)
+
+                if not match:
+                    continue
+
+                country_code = match.group(1).strip()
+                file_type = match.group(2).strip()
+                url = match.group(3).strip()
+
+                if args.country and country_code.lower() not in args.country:
+                    continue
+
+                import_airspace(url, country_code, file_type)
+
+
+def import_blacklist(blacklist_file):
     # import airspace blacklist to remove unwanted airspaces (e.g. borderlines)
     # each line contains the country code and the airspace name to remove
     # see provided file for example
     airspace_blacklist_re = re.compile(r'^([^#]{1}.*?)\s+(.*)')
 
-    with open(airspace_blacklist, "r") as f:
+    with open(blacklist_file, "r") as f:
         for line in f:
             match = airspace_blacklist_re.match(line)
             if not match:
@@ -66,36 +100,30 @@ def main():
 
             blacklist[country_code].append(name)
 
-    with open(airspace_list, "r") as f:
 
-        for line in f:
-            match = airspace_re.match(line)
+def import_airspace(url, country_code, file_type):
+    country_code = country_code.lower()
 
-            if not match:
-                continue
+    filename = os.path.join(
+        config['skylines.temporary_dir'], country_code,
+        country_code + '.' + file_type)
 
-            country_code = match.group(1).strip()
-            url = match.group(3).strip()
-            filename = os.path.join(
-                config['skylines.temporary_dir'], country_code,
-                match.group(1).strip() + '.' + match.group(2))
+    if url.startswith('http://'):
+        print "\nDownloading " + url
+        filename = download_file(filename, url)
+    elif url.startswith('file://'):
+        filename = url[7:]
 
-            if url.startswith('http://'):
-                print "\nDownloading " + url
-                filename = download_file(filename, url)
-            elif url.startswith('file://'):
-                filename = url[7:]
+    # remove all airspace definitions for the current country
+    remove_country(country_code)
 
-            # remove all airspace definitions for the current country
-            remove_country(country_code)
+    if filename.endswith('sua'):
+        import_sua(filename, country_code)
+    elif filename.endswith('openair'):
+        import_openair(filename, country_code)
 
-            if filename.endswith('sua'):
-                import_sua(filename, country_code)
-            elif filename.endswith('openair'):
-                import_openair(filename, country_code)
-
-            if filename.startswith(config['skylines.temporary_dir']):
-                shutil.rmtree(os.path.dirname(filename))
+    if filename.startswith(config['skylines.temporary_dir']):
+        shutil.rmtree(os.path.dirname(filename))
 
 
 def import_sua(filename, country_code):
@@ -300,7 +328,7 @@ def add_airspace(country_code, airspace_class, name, base, top, geom_str):
     airspace.name = name
     airspace.base = base
     airspace.top = top
-    airspace.the_geom = WKTSpatialElement(geom_str)
+    airspace.the_geom = WKTElement(geom_str, srid=4326)
 
     DBSession.add(airspace)
 
