@@ -96,7 +96,7 @@ def get_flight_path(flight, threshold=0.001, max_points=3000):
 
     contest_traces = get_contest_traces(flight, encoder)
 
-    return dict(encoded=encoded, zoom_levels=zoom_levels, fixes=fixes,
+    return dict(encoded=encoded, zoom_levels=zoom_levels, num_levels=num_levels,
                 barogram_t=barogram_t, barogram_h=barogram_h, enl=enl, contests=contest_traces,
                 sfid=flight.id)
 
@@ -280,7 +280,7 @@ class FlightController(BaseController):
             raise HTTPNotFound
 
         return dict(encoded=trace['encoded'],
-                    num_levels=trace['fixes']['numLevels'],
+                    num_levels=trace['num_levels'],
                     zoom_levels=trace['zoom_levels'],
                     barogram_t=trace['barogram_t'],
                     barogram_h=trace['barogram_h'],
