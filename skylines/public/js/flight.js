@@ -183,11 +183,14 @@ function initRedrawLayer(layer) {
  * @param {Array(Objects)} _contests Array of scored/optimised contests.
  *   Such an object must contain: name, turnpoints, times
  *   turnpoints and times are googlePolyEncoded strings.
+ * @param {String} _elevations_t Google polyencoded string of elevation
+ *   time values.
+ * @param {String} _elevations_h Google polyencoded string of elevations.
  * @param {Object(String)} _additional May contain additional information about
  *   the flight, e.g. registration number, callsign, ...
  */
 function addFlight(sfid, _lonlat, _levels, _num_levels, _time, _height, _enl,
-    zoom_levels, _contests, _additional) {
+    zoom_levels, _contests, _elevations_t, _elevations_h, _additional) {
   var height = OpenLayers.Util.decodeGoogle(_height);
   var time = OpenLayers.Util.decodeGoogle(_time);
   var enl = OpenLayers.Util.decodeGoogle(_enl);
@@ -245,6 +248,17 @@ function addFlight(sfid, _lonlat, _levels, _num_levels, _time, _height, _enl,
   // Add flight as a row to the fix data table
   fix_table.addRow(sfid, color, _additional && _additional['competition_id']);
 
+  var flot_elev = [];
+  if (_elevations_t !== undefined && _elevations_h !== undefined) {
+    var elev_t = OpenLayers.Util.decodeGoogle(_elevations_t);
+    var elev_h = OpenLayers.Util.decodeGoogle(_elevations_h);
+
+    for (var i = 0; i < elev_t.length; i++) {
+      var timestamp = elev_t[i] * 1000;
+      flot_elev.push([timestamp, elev_h[i]]);
+    }
+  }
+
   flights.push({
     lonlat: lonlat,
     t: time,
@@ -256,8 +270,11 @@ function addFlight(sfid, _lonlat, _levels, _num_levels, _time, _height, _enl,
     sfid: sfid,
     last_update: time[time.length - 1],
     contests: contests,
+    elev_t: elev_t,
+    elev_h: elev_h,
     flot_h: flot_h,
     flot_enl: flot_enl,
+    flot_elev: flot_elev,
     additional: _additional ? _additional : null
   });
 
@@ -286,7 +303,8 @@ function addFlightFromJSON(url) {
 
       addFlight(data.sfid, data.encoded.points, data.encoded.levels,
                 data.num_levels, data.barogram_t, data.barogram_h,
-                data.enl, data.zoom_levels, data.contests, data.additional);
+                data.enl, data.zoom_levels, data.contests,
+                data.elevations_t, data.elevations_h, data.additional);
 
       initRedrawLayer(map.getLayersByName('Flight')[0]);
     }
@@ -397,7 +415,7 @@ function initBaro(element) {
 }
 
 function updateBaroData() {
-  var contests = [];
+  var contests = [], elevations = [];
 
   var active = [], passive = [], enls = [];
   var flightsLength = flights.length;
@@ -422,18 +440,23 @@ function updateBaroData() {
     }
 
     // Save contests of highlighted flight for later
-    if (fix_table.getSelection() && flight.sfid == fix_table.getSelection())
+    if (fix_table.getSelection() && flight.sfid == fix_table.getSelection()) {
       contests = flight.contests;
+      elevations = flight.flot_elev;
+    }
 
     // Save contests of only flight for later if applicable
-    if (flightsLength == 1)
+    if (flightsLength == 1) {
       contests = flight.contests;
+      elevations = flight.flot_elev;
+    }
   }
 
   baro.setActiveTraces(active);
   baro.setPassiveTraces(passive);
   baro.setENLData(enls);
   baro.setContests(contests);
+  baro.setElevations(elevations);
 
   baro.draw();
 }
@@ -538,6 +561,15 @@ function getFixData(flight, time) {
 
   if (dt_total != 0)
     fix_data['vario'] = (h_next - h_prev) / dt_total;
+
+  if (flight.elev_t !== undefined && flight.elev_h !== undefined) {
+    var elev_index = getNextSmallerIndex(flight.elev_t, time);
+    if (elev_index >= 0 && elev_index < flight.elev_t.length) {
+      fix_data['alt-gnd'] = fix_data['alt-msl'] - flight.elev_h[elev_index];
+      if (fix_data['alt-gnd'] < 0)
+        fix_data['alt-gnd'] = 0;
+    }
+  }
 
   return fix_data;
 }
