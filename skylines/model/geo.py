@@ -5,7 +5,6 @@ from sqlalchemy.sql.expression import cast
 from geoalchemy2.types import Geometry, Geography
 from geoalchemy2.shape import to_shape
 from skylines.model.session import DBSession
-from skylines.lib.sql import GeometryDump
 
 wkt_re = re.compile(r'POINT\(([\+\-\d.]+) ([\+\-\d.]+)\)')
 
