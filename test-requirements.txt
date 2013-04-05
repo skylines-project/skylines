@@ -6,4 +6,4 @@ polib==1.0.3
 zope.testbrowser==4.0.2
 mock==1.0.1
 pep8==1.4.5
-closure_linter
+http://closure-linter.googlecode.com/files/closure_linter-latest.tar.gz
