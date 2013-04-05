@@ -58,7 +58,8 @@ class Flight(DeclarativeBase):
                                primaryjoin=(landing_airport_id == Airport.id))
 
     timestamps = Column(postgresql.ARRAY(DateTime), nullable=False)
-    locations = Column(Geometry('LINESTRING', management=True), nullable=False)
+    locations = Column(Geometry('LINESTRING', srid=4236, management=True),
+                       nullable=False)
 
     olc_classic_distance = Column(Integer)
     olc_triangle_distance = Column(Integer)
@@ -223,6 +224,6 @@ class Flight(DeclarativeBase):
         linestring = LineString(coordinates)
 
         # Save the new path as WKB
-        self.locations = from_shape(linestring)
+        self.locations = from_shape(linestring, srid=4236)
 
         return True
