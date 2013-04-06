@@ -63,7 +63,6 @@ def get_flight_path(pilot, threshold=0.001, last_update=None):
         x = fp[0]
         fixes['points'] = [(x[2], x[1])]
         fixes['levels'] = [0]
-        fixes['numLevels'] = num_levels
 
     else:
         max_delta_time = max(4, (fp[-1][0] - fp[0][0]) / 500)
@@ -77,7 +76,7 @@ def get_flight_path(pilot, threshold=0.001, last_update=None):
     barogram_h = encoder.encodeList([fp[i][3] for i in range(len(fp)) if fixes['levels'][i] != -1])
     enl = encoder.encodeList([fp[i][4] or 0 for i in range(len(fp)) if fixes['levels'][i] != -1])
 
-    return dict(encoded=encoded, zoom_levels=zoom_levels, fixes=fixes,
+    return dict(encoded=encoded, zoom_levels=zoom_levels, num_levels=num_levels,
                 barogram_t=barogram_t, barogram_h=barogram_h, enl=enl)
 
 
@@ -127,6 +126,6 @@ class TrackController(BaseController):
         if trace is None:
             raise HTTPNotFound
 
-        return dict(encoded=trace['encoded'], num_levels=trace['fixes']['numLevels'],
+        return dict(encoded=trace['encoded'], num_levels=trace['num_levels'],
                     barogram_t=trace['barogram_t'], barogram_h=trace['barogram_h'],
                     enl=trace['enl'], sfid=self.pilot.id)
