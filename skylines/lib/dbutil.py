@@ -60,6 +60,6 @@ def get_requested_record_list(model, ids, **kw):
     if len(records) != len(ids):
         raise HTTPNotFound(
             detail=_('Sorry, {num_missing} of the requested records ({ids}) do not exist in our database.')
-                .format(num_missing=(len(ids) - len(records)), ids=ids))
+            .format(num_missing=(len(ids) - len(records)), ids=ids))
 
     return [records[id] for id in ids]

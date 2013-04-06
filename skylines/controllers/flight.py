@@ -27,8 +27,8 @@ log = logging.getLogger(__name__)
 class PilotSelectField(PropertySingleSelectField):
     def _my_update_params(self, d, nullable=False):
         query = DBSession.query(User.id, User.display_name) \
-                .filter(User.club_id == request.identity['user'].club_id) \
-                .order_by(User.display_name)
+            .filter(User.club_id == request.identity['user'].club_id) \
+            .order_by(User.display_name)
         options = [(None, 'None')] + query.all()
         d['options'] = options
         return d

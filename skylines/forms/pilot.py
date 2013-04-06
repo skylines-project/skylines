@@ -33,9 +33,11 @@ new_form = NewForm(DBSession)
 class SelectField(SingleSelectField):
     def update_params(self, d):
         users = DBSession.query(User) \
-                .filter(User.club_id == request.identity['user'].club_id) \
-                .order_by(User.display_name)
+            .filter(User.club_id == request.identity['user'].club_id) \
+            .order_by(User.display_name)
+
         options = [(None, '[unspecified]')] + \
                   [(user.id, user) for user in users]
         d['options'] = options
+
         return SingleSelectField.update_params(self, d)
