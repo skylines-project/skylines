@@ -109,7 +109,12 @@ function initFlightLayer() {
   });
 
   map.events.register('moveend', null, updateBaroScale);
+}
 
+/*
+ * Add the InfoBox handler to the map. Only for non-tracking currently...
+ */
+function initInfoBox() {
   // add click handler for nearest flight search
   var infobox = $("<div id='MapInfoBox' class='InfoBox'></div>").hide();
   $(map.div).append(infobox);
