@@ -309,6 +309,10 @@ class FlightController(BaseController):
 
         def add_flight_path(flight):
             trace = get_flight_path(flight, threshold=0.0001, max_points=10000)
+            trace['additional'] = dict(
+                registration=flight.registration,
+                competition_id=flight.competition_id)
+
             return trace
 
         return dict(flights=map(add_flight_path, flights))

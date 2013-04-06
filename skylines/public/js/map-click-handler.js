@@ -186,7 +186,8 @@
                       data.flights[i].barogram_h,
                       data.flights[i].enl,
                       data.flights[i].zoom_levels,
-                      data.flights[i].contests);
+                      data.flights[i].contests,
+                      data.flights[i].additional);
               }
             },
             complete: function() {
