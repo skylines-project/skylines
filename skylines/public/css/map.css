@@ -1,6 +1,8 @@
 #map_canvas {
   outline: none;
   margin-bottom: 5px !important;
+  position: relative;
+  overflow: hidden;
 }
 
 #map_canvas img {
