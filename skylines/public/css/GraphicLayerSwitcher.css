@@ -4,6 +4,7 @@
   right: 5px;
   text-decoration: none;
   width: 100%;
+  z-index: 1050;
 }
 
 .GraphicLayerSwitcher.current {
