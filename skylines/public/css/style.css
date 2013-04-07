@@ -219,6 +219,7 @@ table.vmiddle td {
   z-index: 999;
   white-space: nowrap;
   text-align: center;
+  pointer-events: none;
 }
 
 .InfoBox div {
@@ -236,4 +237,8 @@ table.vmiddle td {
 
 .InfoBox .near {
   padding: 3px;
+}
+
+.InfoBox .info-item {
+  pointer-events: auto;
 }

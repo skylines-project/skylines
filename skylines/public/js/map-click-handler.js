@@ -50,7 +50,9 @@
       // flight info
 
       var flight_info = $(
-          '<span class="badge" style="background:' + flight.color + '">' +
+          '<span class="info-item badge" style="background:' +
+              flight.color +
+          '">' +
           (flight.additional && flight.additional['registration'] || '') +
           '</span>'
           );
@@ -60,7 +62,7 @@
       // near flights link
 
       var get_near_flights = $(
-          '<div>' +
+          '<div class="info-item">' +
           '<a class="near" href="#">Load nearby flights</a>' +
           '</div>'
           );
@@ -88,7 +90,8 @@
       // hide box when clicked outside
       // use OL click event which doesn't get fired on panning
       map.events.register('click', this, function(e) {
-        if (infobox.find(e.target).length === 0) {
+        if (get_near_flights.find(e.target).length === 0 &&
+            flight_info.find(e.target).length === 0) {
           infobox.hide();
           hideCircle(0);
         }
