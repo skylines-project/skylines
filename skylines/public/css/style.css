@@ -235,8 +235,26 @@ table.vmiddle td {
   color: #fff;
 }
 
-.InfoBox .near {
-  padding: 3px;
+.InfoBox .near,
+.InfoBox .airspace {
+  padding: 0 3px;
+}
+
+.InfoBox .airspace table {
+  border-style: hidden;
+}
+
+.InfoBox .airspace table td,
+.InfoBox .airspace table th {
+  border-left: 1px dotted white;
+  border-right: 1px dotted white;
+  padding: 0 0.4em;
+}
+
+.InfoBox .airspace table .airspace_name,
+.InfoBox .airspace table .airspace_base,
+.InfoBox .airspace table .airspace_top {
+  text-align: left;
 }
 
 .InfoBox .info-item {
