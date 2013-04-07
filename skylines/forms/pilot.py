@@ -22,9 +22,10 @@ class NewForm(AddRecordForm):
         'display_name': dict(label_text=l_('Name')),
     }
 
-    email_address = Field(TextField, All(UniqueValue(SAORMProvider(DBSession),
-                                                     __model__, 'email_address'),
-                                         validators.Email))
+    email_address = Field(TextField, All(
+        UniqueValue(SAORMProvider(DBSession), __model__, 'email_address'),
+        validators.Email))
+
     display_name = Field(TextField, validators.NotEmpty)
 
 new_form = NewForm(DBSession)
