@@ -4,7 +4,17 @@
 
     var map_click_handler = this;
 
+    /**
+     * The OpenLayers.Geometry object of the circle.
+     * @type {Object}
+     */
     var circle = null;
+
+    /**
+     * Stores the state if the infobox.
+     * @type {Bool}
+     */
+    var visible = false;
 
     // Public attributes and functions
 
@@ -13,8 +23,8 @@
      * Click handler which shows a info box at the click location.
      */
     map_click_handler.trigger = function(e) {
-      if (circle !== null)
-        hideCircle(0);
+      // do nothing if this is visible, let the event handler close the box.
+      if (visible) return;
 
       // create bounding box in map coordinates around mouse cursor
       var pixel = new OpenLayers.Pixel(e.layerX, e.layerY);
@@ -69,16 +79,23 @@
         } else {
           infobox.hide();
           hideCircle(0);
+          visible = false;
         }
       });
 
       // hide box when clicked outside
       // use OL click event which doesn't get fired on panning
       map.events.register('click', this, function(e) {
-        if (get_near_flights.find(e.target).length === 0 &&
-            flight_info.find(e.target).length === 0) {
+        var outside = true;
+
+        infobox.children().each(function() {
+          if ($(this).find(e.target).length !== 0) outside = false;
+        });
+
+        if (outside) {
           infobox.hide();
           hideCircle(0);
+          visible = false;
         }
       });
 
@@ -91,6 +108,8 @@
 
       infobox.show();
       showCircle(lon, lat);
+
+      visible = true;
 
       return false; // stop bubbeling
     };
@@ -117,6 +136,7 @@
       get_near_flights.on('click touchend', function(e) {
         infobox.hide();
         getNearFlights(lon, lat, time, flight);
+        visible = false;
       });
 
       return get_near_flights;
