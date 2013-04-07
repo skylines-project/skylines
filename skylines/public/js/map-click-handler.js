@@ -25,6 +25,11 @@
       var ur = map.getLonLatFromPixel(urPx);
       var loc = map.getLonLatFromPixel(pixel);
 
+      var loc_wgs84 = loc.clone()
+          .transform(map.getProjectionObject(), WGS84_PROJ);
+      var lon = loc_wgs84.lon,
+          lat = loc_wgs84.lat;
+
       // search for a aircraft position within the bounding box
       var nearest = searchForPlane(
           new OpenLayers.Bounds(ll.lon, ll.lat, ur.lon, ur.lat),
@@ -37,15 +42,14 @@
       var flight = flights[nearest.fid];
       var dx = nearest.along;
 
-      var lon = flight.lonlat[index].lon +
+      lon = flight.lonlat[index].lon +
           (flight.lonlat[index + 1].lon - flight.lonlat[index].lon) * dx;
-      var lat = flight.lonlat[index].lat +
+      lat = flight.lonlat[index].lat +
           (flight.lonlat[index + 1].lat - flight.lonlat[index].lat) * dx;
       var time = flight.t[index] +
           (flight.t[index + 1] - flight.t[index]) * dx;
 
       infobox.empty();
-      infobox.latlon = map.getLonLatFromPixel(pixel);
 
       // flight info
 
@@ -97,6 +101,10 @@
         }
       });
 
+      infobox.latlon = new OpenLayers.LonLat(lon, lat)
+          .transform(WGS84_PROJ, map.getProjectionObject());
+
+      pixel = e.object.getPixelFromLonLat(infobox.latlon);
       infobox.css('left', (pixel.x + 5) + 'px');
       infobox.css('top', (pixel.y - infobox.height() / 2) + 'px');
 
