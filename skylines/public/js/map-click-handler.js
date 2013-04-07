@@ -30,6 +30,8 @@
       var lon = loc_wgs84.lon,
           lat = loc_wgs84.lat;
 
+      infobox.empty();
+
       // search for a aircraft position within the bounding box
       var nearest = searchForPlane(
           new OpenLayers.Bounds(ll.lon, ll.lat, ur.lon, ur.lat),
@@ -49,33 +51,12 @@
       var time = flight.t[index] +
           (flight.t[index + 1] - flight.t[index]) * dx;
 
-      infobox.empty();
-
       // flight info
-
-      var flight_info = $(
-          '<span class="info-item badge" style="background:' +
-              flight.color +
-          '">' +
-          (flight.additional && flight.additional['registration'] || '') +
-          '</span>'
-          );
-
+      var flight_info = flightInfo(flight);
       infobox.append(flight_info);
 
       // near flights link
-
-      var get_near_flights = $(
-          '<div class="info-item">' +
-          '<a class="near" href="#">Load nearby flights</a>' +
-          '</div>'
-          );
-
-      get_near_flights.on('click touchend', function(e) {
-        infobox.hide();
-        getNearFlights(lon, lat, time, flight);
-      });
-
+      var get_near_flights = nearFlights(lon, lat, time, flight);
       infobox.append(get_near_flights);
 
       // general events
@@ -115,6 +96,31 @@
     };
 
     // Private functions
+
+    function flightInfo(flight) {
+      return $(
+          '<span class="info-item badge" style="background:' +
+              flight.color +
+          '">' +
+          (flight.additional && flight.additional['registration'] || '') +
+          '</span>'
+      );
+    };
+
+    function nearFlights(lon, lat, time, flight) {
+      var get_near_flights = $(
+          '<div class="info-item">' +
+          '<a class="near" href="#">Load nearby flights</a>' +
+          '</div>'
+          );
+
+      get_near_flights.on('click touchend', function(e) {
+        infobox.hide();
+        getNearFlights(lon, lat, time, flight);
+      });
+
+      return get_near_flights;
+    };
 
     /**
      * Show a circle at the clicked position
