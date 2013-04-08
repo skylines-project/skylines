@@ -73,10 +73,10 @@
      * @param {String} altitude The altitude unit (e.g. 'm').
      */
     slUnits.init = function(distance, speed, lift, altitude) {
-      if (UNITS[distance]) settings.distance = distance;
-      if (UNITS[speed]) settings.speed = speed;
-      if (UNITS[lift]) settings.lift = lift;
-      if (UNITS[altitude]) settings.altitude = altitude;
+      if (UNITS[distance]) settings['Distance'] = distance;
+      if (UNITS[speed]) settings['Speed'] = speed;
+      if (UNITS[lift]) settings['Lift'] = lift;
+      if (UNITS[altitude]) settings['Altitude'] = altitude;
     };
 
     function generateFunctions(unit_type) {
