@@ -17,7 +17,13 @@ def flight_path(igc_file, max_points=1000):
 
     path = []
     for line in p.stdout:
-        line = line.split()
-        path.append(FlightPathFix(int(line[0]), float(line[1]), float(line[2]), int(line[3]), int(line[4])))
+        fix = line_to_fix(line)
+        path.append(fix)
 
     return path
+
+
+def line_to_fix(line):
+    line = line.split()
+    return FlightPathFix(int(line[0]), float(line[1]), float(line[2]),
+                         int(line[3]), int(line[4]))
