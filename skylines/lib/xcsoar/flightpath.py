@@ -13,14 +13,7 @@ def flight_path(igc_file, max_points=1000):
         files.filename_to_path(igc_file.filename),
     ]
 
-    p = Popen(args, stdout=PIPE)
-
-    path = []
-    for line in p.stdout:
-        fix = line_to_fix(line)
-        path.append(fix)
-
-    return path
+    return map(line_to_fix, Popen(args, stdout=PIPE).stdout)
 
 
 def line_to_fix(line):
