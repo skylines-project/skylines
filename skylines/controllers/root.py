@@ -15,6 +15,7 @@ from skylines.controllers.notifications import NotificationsController
 from skylines.controllers.ranking import RankingController
 from skylines.controllers.tracking import TrackingController
 from skylines.controllers.statistics import StatisticsController
+from skylines.controllers.airspace import AirspaceController
 
 __all__ = ['RootController']
 
@@ -41,6 +42,7 @@ class RootController(BaseController):
     ranking = RankingController()
     tracking = TrackingController()
     statistics = StatisticsController()
+    airspace = AirspaceController()
 
     _mapproxy_config = config.get('skylines.mapproxy')
     if _mapproxy_config is not None:
