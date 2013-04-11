@@ -62,6 +62,9 @@ class TrackingFix(DeclarativeBase):
 
     @classmethod
     def delay_filter(cls, delay):
+        if isinstance(delay, (int, long, float)):
+            delay = timedelta(minutes=delay)
+
         return TrackingFix.time <= datetime.utcnow() - delay
 
     @classmethod
