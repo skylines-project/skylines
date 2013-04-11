@@ -15,7 +15,7 @@ repoze.what-quickstart==1.0.9
 repoze.what.plugins.sql==1.0.1
 tw.forms==0.9.9
 simplejson==3.1.0
-skylinespolyencode==0.1.1
+skylinespolyencode==0.1.2
 psycopg2==2.4.6
 geoalchemy2==0.2dev
 shapely==1.2.17
