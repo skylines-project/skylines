@@ -201,6 +201,7 @@
         },
         yaxes: [
           {
+            min: 0,
             tickFormatter: slUnits.addAltitudeUnit
           },
           {
