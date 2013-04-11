@@ -62,6 +62,14 @@ class TrackingFix(DeclarativeBase):
 
     @classmethod
     def delay_filter(cls, delay):
+        """
+        Returns a filter that makes sure that the fix was created at least
+        a certain time ago.
+
+        The delay parameter can be either a datetime.timedelta or a numeric
+        value that will be interpreted as minutes.
+        """
+
         if isinstance(delay, (int, long, float)):
             delay = timedelta(minutes=delay)
 
