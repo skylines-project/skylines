@@ -13,9 +13,6 @@ PEP8_IGNORE_ERRORS = [
     # multiple statements on one line (colon)
     'E701',
 
-    # continuation line over-indented for hanging indent
-    'E126',
-
     # comparison to None should be 'if condition is None:'
     # this is not compatible with the sqlalchemy filter() function
     'E711',

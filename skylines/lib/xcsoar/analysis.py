@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 
-import os
 import datetime
 import simplejson
+from subprocess import Popen, PIPE
 from sqlalchemy.sql.expression import and_
 from skylines.lib import files
 from skylines.model.geo import Location
@@ -244,21 +244,12 @@ def analyse_flight(flight):
     path = files.filename_to_path(flight.igc_file.filename)
     log.info('Analyzing ' + path)
 
-    root = None
-    with os.popen(helper_path('AnalyseFlight') + ' "' + path + '"') as f:
-        try:
-            root = simplejson.load(f)
-        except simplejson.JSONDecodeError:
-            log.error('Parsing the output of AnalyseFlight failed.')
+    p = Popen([helper_path('AnalyseFlight'), path], stdout=PIPE)
 
-            if log.isEnabledFor(logging.DEBUG):
-                with os.popen(helper_path('AnalyseFlight') + ' "' + path + '"') as f_debug:
-                    log.debug(helper_path('AnalyseFlight') +
-                              ' "' + path + '" = ' + str(f_debug.readlines()))
-
-            return False
-
-    if not root:
+    try:
+        root = simplejson.load(p.stdout)
+    except:
+        log.error('Parsing the output of AnalyseFlight failed.')
         return False
 
     if 'events' in root:

@@ -5,6 +5,7 @@ from sqlalchemy.sql.expression import cast
 from geoalchemy2.types import Geometry, Geography
 from geoalchemy2.shape import to_shape
 from skylines.model.session import DBSession
+from skylines.lib.geo import geographic_distance
 
 wkt_re = re.compile(r'POINT\(([\+\-\d.]+) ([\+\-\d.]+)\)')
 
@@ -70,3 +71,6 @@ class Location(object):
             query = query.filter(filter)
 
         return [Location.from_wkb(row.location) for row in query]
+
+    def geographic_distance(self, other):
+        return geographic_distance(self, other)

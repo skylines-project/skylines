@@ -110,6 +110,7 @@ flight_js = Bundle(
         'js/baro.js',
         'js/fix-table.js',
         'js/phase-table.js',
+        'js/map-click-handler.js',
         filters='closure_js'),
 
     'js/flight.js',

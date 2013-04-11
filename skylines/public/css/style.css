@@ -212,3 +212,51 @@ table.vmiddle td {
    */
   white-space: normal;
 }
+
+/* Map info popup */
+.InfoBox {
+  position: absolute;
+  z-index: 999;
+  white-space: nowrap;
+  text-align: center;
+  pointer-events: none;
+}
+
+.InfoBox div {
+  background: #000; /* fallback for old browsers */
+  background: rgba(0, 0, 0, 0.7);
+  color: #fff;
+  -moz-border-radius: 4px;
+  border-radius: 4px;
+  margin-top: 5px;
+}
+
+.InfoBox a {
+  color: #fff;
+}
+
+.InfoBox .near,
+.InfoBox .airspace {
+  padding: 0 3px;
+}
+
+.InfoBox .airspace table {
+  border-style: hidden;
+}
+
+.InfoBox .airspace table td,
+.InfoBox .airspace table th {
+  border-left: 1px dotted white;
+  border-right: 1px dotted white;
+  padding: 0 0.4em;
+}
+
+.InfoBox .airspace table .airspace_name,
+.InfoBox .airspace table .airspace_base,
+.InfoBox .airspace table .airspace_top {
+  text-align: left;
+}
+
+.InfoBox .info-item {
+  pointer-events: auto;
+}

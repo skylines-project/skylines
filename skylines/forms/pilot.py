@@ -22,9 +22,10 @@ class NewForm(AddRecordForm):
         'display_name': dict(label_text=l_('Name')),
     }
 
-    email_address = Field(TextField, All(UniqueValue(SAORMProvider(DBSession),
-                                                     __model__, 'email_address'),
-                                         validators.Email))
+    email_address = Field(TextField, All(
+        UniqueValue(SAORMProvider(DBSession), __model__, 'email_address'),
+        validators.Email))
+
     display_name = Field(TextField, validators.NotEmpty)
 
 new_form = NewForm(DBSession)
@@ -33,9 +34,11 @@ new_form = NewForm(DBSession)
 class SelectField(SingleSelectField):
     def update_params(self, d):
         users = DBSession.query(User) \
-                .filter(User.club_id == request.identity['user'].club_id) \
-                .order_by(User.display_name)
+            .filter(User.club_id == request.identity['user'].club_id) \
+            .order_by(User.display_name)
+
         options = [(None, '[unspecified]')] + \
                   [(user.id, user) for user in users]
         d['options'] = options
+
         return SingleSelectField.update_params(self, d)
