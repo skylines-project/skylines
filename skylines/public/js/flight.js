@@ -274,7 +274,7 @@ function addFlight(sfid, _lonlat, _levels, _num_levels, _time, _height, _enl,
 
     for (var i = 0; i < elev_t.length; i++) {
       var timestamp = elev_t[i] * 1000;
-      flot_elev.push([timestamp, elev_h[i]]);
+      flot_elev.push([timestamp, slUnits.convertAltitude(elev_h[i])]);
     }
   }
 
