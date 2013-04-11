@@ -3,8 +3,11 @@
 from datetime import datetime
 from sqlalchemy import Column
 from sqlalchemy.types import Integer, String, DateTime
+from sqlalchemy.sql.expression import func
 from skylines.model.base import DeclarativeBase
+from skylines.model.session import DBSession
 from geoalchemy2.types import Geometry
+from geoalchemy2.elements import WKTElement
 
 
 class Airspace(DeclarativeBase):
@@ -24,3 +27,9 @@ class Airspace(DeclarativeBase):
 
     def __repr__(self):
         return ('<Airspace: id=%d name=\'%s\'>' % (self.id, self.name)).encode('utf-8')
+
+    @classmethod
+    def get_info(cls, location):
+        '''Returns a query object of all airspaces at the location'''
+        return DBSession.query(cls) \
+            .filter(func.ST_Intersects(WKTElement(location.to_wkt(), srid=4326), cls.the_geom))

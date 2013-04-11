@@ -4,7 +4,17 @@
 
     var map_click_handler = this;
 
+    /**
+     * The OpenLayers.Geometry object of the circle.
+     * @type {Object}
+     */
     var circle = null;
+
+    /**
+     * Stores the state if the infobox.
+     * @type {Bool}
+     */
+    var visible = false;
 
     // Public attributes and functions
 
@@ -13,8 +23,8 @@
      * Click handler which shows a info box at the click location.
      */
     map_click_handler.trigger = function(e) {
-      if (circle !== null)
-        hideCircle(0);
+      // do nothing if this is visible, let the event handler close the box.
+      if (visible) return;
 
       // create bounding box in map coordinates around mouse cursor
       var pixel = new OpenLayers.Pixel(e.layerX, e.layerY);
@@ -25,42 +35,105 @@
       var ur = map.getLonLatFromPixel(urPx);
       var loc = map.getLonLatFromPixel(pixel);
 
+      var loc_wgs84 = loc.clone()
+          .transform(map.getProjectionObject(), WGS84_PROJ);
+      var lon = loc_wgs84.lon,
+          lat = loc_wgs84.lat;
+
+      infobox.stop(true); // remove any running delays or animations
+      infobox.empty();
+
       // search for a aircraft position within the bounding box
       var nearest = searchForPlane(
           new OpenLayers.Bounds(ll.lon, ll.lat, ur.lon, ur.lat),
           loc,
           clickTolerance);
 
-      if (nearest === null) return;
+      if (nearest !== null) {
+        var index = nearest.from;
+        var flight = flights[nearest.fid];
+        var dx = nearest.along;
 
-      var index = nearest.from;
-      var flight = flights[nearest.fid];
-      var dx = nearest.along;
+        lon = flight.lonlat[index].lon +
+            (flight.lonlat[index + 1].lon - flight.lonlat[index].lon) * dx;
+        lat = flight.lonlat[index].lat +
+            (flight.lonlat[index + 1].lat - flight.lonlat[index].lat) * dx;
+        var time = flight.t[index] +
+            (flight.t[index + 1] - flight.t[index]) * dx;
 
-      var lon = flight.lonlat[index].lon +
-          (flight.lonlat[index + 1].lon - flight.lonlat[index].lon) * dx;
-      var lat = flight.lonlat[index].lat +
-          (flight.lonlat[index + 1].lat - flight.lonlat[index].lat) * dx;
-      var time = flight.t[index] +
-          (flight.t[index + 1] - flight.t[index]) * dx;
+        // flight info
+        var flight_info = flightInfo(flight);
+        infobox.append(flight_info);
 
-      infobox.empty();
-      infobox.latlon = map.getLonLatFromPixel(pixel);
+        // near flights link
+        var get_near_flights = nearFlights(lon, lat, time, flight);
+        infobox.append(get_near_flights);
+      }
 
-      // flight info
+      // airspace info
+      var get_airspace_info = airspaceInfo(lon, lat);
+      infobox.append(get_airspace_info);
 
-      var flight_info = $(
-          '<span class="badge" style="background:' + flight.color + '">' +
+      // general events
+
+      map.events.register('move', this, function(e) {
+        if (e.object.getExtent().containsLonLat(infobox.latlon)) {
+          var pixel = e.object.getPixelFromLonLat(infobox.latlon);
+          infobox.css('left', (pixel.x + 15) + 'px');
+          infobox.css('top', (pixel.y - infobox.height() / 2) + 'px');
+        } else {
+          infobox.hide();
+          hideCircle(0);
+          visible = false;
+        }
+      });
+
+      // hide box when clicked outside
+      // use OL click event which doesn't get fired on panning
+      map.events.register('click', this, function(e) {
+        var outside = true;
+
+        infobox.children().each(function() {
+          if ($(this).find(e.target).length !== 0) outside = false;
+        });
+
+        if (outside) {
+          infobox.hide();
+          hideCircle(0);
+          visible = false;
+        }
+      });
+
+      infobox.latlon = new OpenLayers.LonLat(lon, lat)
+          .transform(WGS84_PROJ, map.getProjectionObject());
+
+      pixel = e.object.getPixelFromLonLat(infobox.latlon);
+      infobox.css('left', (pixel.x + 15) + 'px');
+      infobox.css('top', (pixel.y - infobox.height() / 2) + 'px');
+
+      infobox.show();
+      showCircle(lon, lat);
+
+      visible = true;
+
+      return false; // stop bubbeling
+    };
+
+    // Private functions
+
+    function flightInfo(flight) {
+      return $(
+          '<span class="info-item badge" style="background:' +
+              flight.color +
+          '">' +
           (flight.additional && flight.additional['registration'] || '') +
           '</span>'
-          );
+      );
+    };
 
-      infobox.append(flight_info);
-
-      // near flights link
-
+    function nearFlights(lon, lat, time, flight) {
       var get_near_flights = $(
-          '<div>' +
+          '<div class="info-item">' +
           '<a class="near" href="#">Load nearby flights</a>' +
           '</div>'
           );
@@ -68,42 +141,25 @@
       get_near_flights.on('click touchend', function(e) {
         infobox.hide();
         getNearFlights(lon, lat, time, flight);
+        visible = false;
       });
 
-      infobox.append(get_near_flights);
-
-      // general events
-
-      map.events.register('move', this, function(e) {
-        if (e.object.getExtent().containsLonLat(infobox.latlon)) {
-          var pixel = e.object.getPixelFromLonLat(infobox.latlon);
-          infobox.css('left', (pixel.x + 5) + 'px');
-          infobox.css('top', (pixel.y - infobox.height() / 2) + 'px');
-        } else {
-          infobox.hide();
-          hideCircle(0);
-        }
-      });
-
-      // hide box when clicked outside
-      // use OL click event which doesn't get fired on panning
-      map.events.register('click', this, function(e) {
-        if (infobox.find(e.target).length === 0) {
-          infobox.hide();
-          hideCircle(0);
-        }
-      });
-
-      infobox.css('left', (pixel.x + 5) + 'px');
-      infobox.css('top', (pixel.y - infobox.height() / 2) + 'px');
-
-      infobox.show();
-      showCircle(lon, lat);
-
-      return false; // stop bubbeling
+      return get_near_flights;
     };
 
-    // Private functions
+    function airspaceInfo(lon, lat) {
+      var get_airspace_info = $(
+          '<div class="info-item">' +
+          '<a class="near" href="#">Get airspace info</a>' +
+          '</div>'
+          );
+
+      get_airspace_info.on('click touchend', function(e) {
+        getAirspaceInfo(lon, lat);
+      });
+
+      return get_airspace_info;
+    };
 
     /**
      * Show a circle at the clicked position
@@ -194,6 +250,85 @@
               hideCircle(1000);
             }
           });
-    }
+    };
+
+    /**
+     * Request airspace informations via ajax
+     *
+     * @param {Number} lon Longitude.
+     * @param {Number} lat Latitude.
+     */
+    function getAirspaceInfo(lon, lat) {
+      var req = $.ajax('/airspace/info?lon=' + lon + '&lat=' + lat);
+
+      req.done(function(data) {
+        if (data.airspaces && data.airspaces.length != 0)
+          showAirspaceData(data.airspaces);
+        else
+          showAirspaceData(null);
+      });
+
+      req.fail(function() {
+        showAirspaceData(null);
+      });
+    };
+
+    /**
+     * Show airspace data in infobox
+     *
+     * @param {Object} data Airspace data.
+     */
+    function showAirspaceData(data) {
+      if (!visible) return; // do nothing if infobox is closed already
+
+      infobox.empty();
+      var item = $('<div class="airspace info-item"></div>');
+
+      if (!data) {
+        item.html('No airspace data retrieved for this location');
+
+        infobox.delay(1500).fadeOut(1000, function() {
+          infobox.hide();
+          visible = false;
+        });
+
+        hideCircle(1000);
+
+      } else {
+        var table = $('<table></table>');
+
+        table.append($(
+            '<thead><tr>' +
+            '<th>Name</th>' +
+            '<th>Class</th>' +
+            '<th>Base</th>' +
+            '<th>Top</th>' +
+            '</tr></thead>'
+            ));
+
+        var table_body = $('<tbody></tbody');
+
+        for (var i = 0; i < data.length; ++i) {
+          table_body.append($(
+              '<tr>' +
+              '<td class="airspace_name">' + data[i].name + '</td>' +
+              '<td class="airspace_class">' + data[i].airspace_class + '</td>' +
+              '<td class="airspace_base">' + data[i].base + '</td>' +
+              '<td class="airspace_top">' + data[i].top + '</td>' +
+              '</tr>'
+              ));
+        }
+
+        table.append(table_body);
+        item.append(table);
+      }
+
+      infobox.append(item);
+
+      pixel = map.getPixelFromLonLat(infobox.latlon);
+      infobox.css('left', (pixel.x + 15) + 'px');
+      infobox.css('top', (pixel.y - infobox.height() / 2) + 'px');
+    };
+
   };
 })();
