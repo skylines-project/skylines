@@ -70,9 +70,9 @@
         infobox.append(get_near_flights);
       }
 
-      // airspace info
-      var get_airspace_info = airspaceInfo(lon, lat);
-      infobox.append(get_airspace_info);
+      // location info
+      var get_location_info = locationInfo(lon, lat);
+      infobox.append(get_location_info);
 
       // general events
 
@@ -147,18 +147,18 @@
       return get_near_flights;
     };
 
-    function airspaceInfo(lon, lat) {
-      var get_airspace_info = $(
+    function locationInfo(lon, lat) {
+      var get_location_info = $(
           '<div class="info-item">' +
-          '<a class="near" href="#">Get airspace info</a>' +
+          '<a class="near" href="#">Get location info</a>' +
           '</div>'
           );
 
-      get_airspace_info.on('click touchend', function(e) {
-        getAirspaceInfo(lon, lat);
+      get_location_info.on('click touchend', function(e) {
+        getLocationInfo(lon, lat);
       });
 
-      return get_airspace_info;
+      return get_location_info;
     };
 
     /**
@@ -256,39 +256,36 @@
     };
 
     /**
-     * Request airspace informations via ajax
+     * Request location informations via ajax
      *
      * @param {Number} lon Longitude.
      * @param {Number} lat Latitude.
      */
-    function getAirspaceInfo(lon, lat) {
+    function getLocationInfo(lon, lat) {
       var req = $.ajax('/airspace/info?lon=' + lon + '&lat=' + lat);
 
       req.done(function(data) {
-        if (data.airspaces && data.airspaces.length != 0)
-          showAirspaceData(data.airspaces);
-        else
-          showAirspaceData(null);
+        showLocationData(data);
       });
 
       req.fail(function() {
-        showAirspaceData(null);
+        showLocationData(null);
       });
     };
 
     /**
-     * Show airspace data in infobox
+     * Show location data in infobox
      *
-     * @param {Object} data Airspace data.
+     * @param {Object} data Location data.
      */
-    function showAirspaceData(data) {
+    function showLocationData(data) {
       if (!visible) return; // do nothing if infobox is closed already
 
       infobox.empty();
-      var item = $('<div class="airspace info-item"></div>');
+      var item = $('<div class="location info-item"></div>');
 
-      if (!data) {
-        item.html('No airspace data retrieved for this location');
+      if (!data || $.isEmptyObject(data.airspaces)) {
+        item.html('No data retrieved for this location');
 
         infobox.delay(1500).fadeOut(1000, function() {
           infobox.hide();
@@ -298,7 +295,8 @@
         hideCircle(1000);
 
       } else {
-        item.append(formatAirspaceData(data));
+        if (!$.isEmptyObject(data.airspaces))
+          item.append(formatAirspaceData(data.airspaces));
       }
 
       infobox.append(item);
