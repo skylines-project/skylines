@@ -183,6 +183,12 @@
       var point = new OpenLayers.Geometry.Point(lon, lat)
                   .transform(WGS84_PROJ, map.getProjectionObject());
 
+      // make sure there's no other circle on the map
+      var infobox_layer = map.getLayersByName('InfoBox')[0];
+      infobox_layer.destroyFeatures(
+          infobox_layer.getFeatureBy('renderIntent', 'nearestCircle')
+      );
+
       circle = new OpenLayers.Feature.Vector(
           new OpenLayers.Geometry.Polygon.createRegularPolygon(point,
               distance_deg, 40, 0));
@@ -213,7 +219,8 @@
         // check if circle still exists, because it might got deleted before
         // the animation was done.
         if (circle !== null) {
-          map.getLayersByName('InfoBox')[0].destroyFeatures(circle);
+          var infobox_layer = map.getLayersByName('InfoBox')[0];
+          infobox_layer.destroyFeatures(circle);
           circle = null;
         }
       });
