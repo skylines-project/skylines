@@ -225,8 +225,17 @@ var GraphicLayerSwitcher = OpenLayers.Class(OpenLayers.Control, {
   onInputClick: function(e) {
     if (this.layer.isBaseLayer) {
       this.layer.map.setBaseLayer(this.layer);
+      $.cookie('base_layer', this.layer.name, { path: '/', expires: 365 });
     } else {
       this.layer.setVisibility(!this.layer.getVisibility());
+
+      overlay_layers = [];
+      for (var i = 0; i < this.layer.map.layers.length; ++i) {
+        var layer = this.layer.map.layers[i];
+        if (!layer.isBaseLayer && layer.visibility && layer.displayInLayerSwitcher)
+          overlay_layers.push(layer.name);
+      }
+      $.cookie('overlay_layers', overlay_layers.join(';'), { path: '/', expires: 365 });
     }
 
     this.layerSwitcher.updateLayerItems();

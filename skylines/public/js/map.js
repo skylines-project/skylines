@@ -32,6 +32,15 @@ function initOpenLayers(id, tile_url) {
   map.addControl(new OpenLayers.Control.Attribution());
   map.addControl(new OpenLayers.Control.ScaleLine({geodesic: true}));
 
+  map.events.register('addlayer', null, function(data) {
+    // When the list of layers changes load the
+    // last used base layer from the cookies
+    if (data.layer.isBaseLayer)
+      loadBaseLayerFromCookie();
+    else
+      loadOverlayLayersFromCookie();
+  });
+
   var osmLayer = new OpenLayers.Layer.OSM('OpenStreetMap');
   osmLayer.addOptions({
     transitionEffect: 'resize',
@@ -49,17 +58,6 @@ function initOpenLayers(id, tile_url) {
                 map.getProjectionObject()), 5);
 
   map.addControl(new GraphicLayerSwitcher());
-
-  map.events.register('changebaselayer', null, function(data) {
-    // Save the selected base layer in a cookie
-    $.cookie('base_layer', data.layer.name, { path: '/', expires: 365 });
-  });
-
-  map.events.register('addlayer', null, function() {
-    // When the list of layers changes load the
-    // last used base layer from the cookies
-    loadBaseLayerFromCookie();
-  });
 }
 
 
@@ -73,6 +71,25 @@ function loadBaseLayerFromCookie() {
   if (base_layer)
     // If the base layer names are matching set this layer as new base layer
     map.setBaseLayer(base_layer);
+}
+
+
+function loadOverlayLayersFromCookie() {
+  var overlay_layers = $.cookie('overlay_layers');
+  if (overlay_layers == null)
+    return;
+
+  overlay_layers = overlay_layers.split(';');
+  // Cycle through the overlay layers to find a match
+  for (var i = 0; i < map.layers.length; ++i) {
+    if (map.layers[i].isBaseLayer || !map.layers[i].displayInLayerSwitcher)
+      continue;
+
+    if ($.inArray(map.layers[i].name, overlay_layers) != -1)
+      map.layers[i].setVisibility(true);
+    else
+      map.layers[i].setVisibility(false);
+  }
 }
 
 
