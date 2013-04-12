@@ -40,7 +40,7 @@
       var lon = loc_wgs84.lon,
           lat = loc_wgs84.lat;
 
-      infobox.stop(true); // remove any running delays or animations
+      infobox.stop(true, true); // remove any running delays or animations
       infobox.empty();
 
       // search for a aircraft position within the bounding box
