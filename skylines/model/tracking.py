@@ -57,7 +57,18 @@ class TrackingFix(DeclarativeBase):
         self.location_wkt = WKTElement(location.to_wkt())
 
     @classmethod
-    def max_age_filter(cls, max_age=timedelta(hours=6)):
+    def max_age_filter(cls, max_age):
+        """
+        Returns a filter that makes sure that the fix is not older than a
+        certain time.
+
+        The delay parameter can be either a datetime.timedelta or a numeric
+        value that will be interpreted as hours.
+        """
+
+        if isinstance(max_age, (int, long, float)):
+            max_age = timedelta(hours=max_age)
+
         return TrackingFix.time >= datetime.utcnow() - max_age
 
     @classmethod
