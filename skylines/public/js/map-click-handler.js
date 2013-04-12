@@ -298,32 +298,7 @@
         hideCircle(1000);
 
       } else {
-        var table = $('<table></table>');
-
-        table.append($(
-            '<thead><tr>' +
-            '<th>Name</th>' +
-            '<th>Class</th>' +
-            '<th>Base</th>' +
-            '<th>Top</th>' +
-            '</tr></thead>'
-            ));
-
-        var table_body = $('<tbody></tbody');
-
-        for (var i = 0; i < data.length; ++i) {
-          table_body.append($(
-              '<tr>' +
-              '<td class="airspace_name">' + data[i].name + '</td>' +
-              '<td class="airspace_class">' + data[i].airspace_class + '</td>' +
-              '<td class="airspace_base">' + data[i].base + '</td>' +
-              '<td class="airspace_top">' + data[i].top + '</td>' +
-              '</tr>'
-              ));
-        }
-
-        table.append(table_body);
-        item.append(table);
+        item.append(formatAirspaceData(data));
       }
 
       infobox.append(item);
@@ -333,5 +308,39 @@
       infobox.css('top', (pixel.y - infobox.height() / 2) + 'px');
     };
 
+    /**
+     * Format Airspace data for infobox
+     *
+     * @param {Object} data Airspace data.
+     */
+    function formatAirspaceData(data) {
+      var table = $('<table></table>');
+
+      table.append($(
+          '<thead><tr>' +
+          '<th>Name</th>' +
+          '<th>Class</th>' +
+          '<th>Base</th>' +
+          '<th>Top</th>' +
+          '</tr></thead>'
+          ));
+
+      var table_body = $('<tbody></tbody');
+
+      for (var i = 0; i < data.length; ++i) {
+        table_body.append($(
+            '<tr>' +
+            '<td class="airspace_name">' + data[i].name + '</td>' +
+            '<td class="airspace_class">' + data[i].airspace_class + '</td>' +
+            '<td class="airspace_base">' + data[i].base + '</td>' +
+            '<td class="airspace_top">' + data[i].top + '</td>' +
+            '</tr>'
+            ));
+      }
+
+      table.append(table_body);
+
+      return table;
+    };
   };
 })();
