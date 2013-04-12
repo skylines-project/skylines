@@ -224,32 +224,35 @@
      * @param {Object} flight Flight.
      */
     function getNearFlights(lon, lat, time, flight) {
-      $.ajax('/flights/' + flight.sfid + '/near?lon=' + lon +
-          '&lat=' + lat + '&time=' + time, {
-            success: function(data) {
-              for (var i = 0; i < data.flights.length; ++i) {
-                // skip retrieved flight if already on map
-                var next = false;
-                for (var fid = 0; fid < flights.length; ++fid)
-                  if (flights[fid].sfid == data.flights[i].sfid) next = true;
-                  if (next) continue;
+      var req = $.ajax('/flights/' + flight.sfid + '/near?lon=' + lon +
+          '&lat=' + lat + '&time=' + time);
 
-                  var flight_id = addFlight(data.flights[i].sfid,
-                      data.flights[i].encoded.points,
-                      data.flights[i].encoded.levels,
-                      data.flights[i].num_levels,
-                      data.flights[i].barogram_t,
-                      data.flights[i].barogram_h,
-                      data.flights[i].enl,
-                      data.flights[i].zoom_levels,
-                      data.flights[i].contests,
-                      data.flights[i].additional);
-              }
-            },
-            complete: function() {
-              hideCircle(1000);
-            }
-          });
+      req.done(function(data) {
+        for (var i = 0; i < data.flights.length; ++i) {
+          // skip retrieved flight if already on map
+          var next = false;
+          for (var fid = 0; fid < flights.length; ++fid) {
+            if (flights[fid].sfid == data.flights[i].sfid) next = true;
+          }
+
+          if (next) continue;
+
+          var flight_id = addFlight(data.flights[i].sfid,
+              data.flights[i].encoded.points,
+              data.flights[i].encoded.levels,
+              data.flights[i].num_levels,
+              data.flights[i].barogram_t,
+              data.flights[i].barogram_h,
+              data.flights[i].enl,
+              data.flights[i].zoom_levels,
+              data.flights[i].contests,
+              data.flights[i].additional);
+        }
+      });
+
+      req.always(function() {
+        hideCircle(1000);
+      });
     };
 
     /**
