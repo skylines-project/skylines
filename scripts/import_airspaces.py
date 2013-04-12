@@ -318,8 +318,8 @@ def add_airspace(country_code, airspace_class, name, base, top, geom_str):
 
     flightlevel_re = re.compile(r'^FL (\d+)$')
     match = flightlevel_re.match(base)
-    if match and int(match.group(1)) >= 100:
-        print name + " has it's base above FL 100 and is therefore disregarded"
+    if match and int(match.group(1)) >= 200:
+        print name + " has it's base above FL 200 and is therefore disregarded"
         return False
 
     airspace = Airspace()
