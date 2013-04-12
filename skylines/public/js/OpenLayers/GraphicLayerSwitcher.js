@@ -92,9 +92,10 @@ var GraphicLayerSwitcher = OpenLayers.Class(OpenLayers.Control, {
       '</a>');
     current.addClass('GraphicLayerSwitcher current');
 
-    current.on('click touchstart', function(e) {
+    current.on('click touchend', function(e) {
       $(this).hide();
       $('.GraphicLayerSwitcher.box').show();
+      e.stopPropagation();
     });
 
     $(this.div).append(current);
@@ -155,7 +156,7 @@ var GraphicLayerSwitcher = OpenLayers.Class(OpenLayers.Control, {
     }
 
     // hide box when clicked outside
-    $(document).mouseup(function(e) {
+    $(document).on('mouseup touchend', function(e) {
       if (base_layers.find(e.target).length === 0 &&
           overlay_layers.find(e.target).length === 0) {
         $('.GraphicLayerSwitcher.box').hide();
@@ -166,7 +167,7 @@ var GraphicLayerSwitcher = OpenLayers.Class(OpenLayers.Control, {
 
     // close selector box when inactive for 5 seconds
     var close_timeout = false;
-    $(this.div).on('mousemove', function() {
+    $(this.div).on('mousemove touchstart', function() {
       clearTimeout(close_timeout);
       close_timeout = setTimeout(function() {
         $('.GraphicLayerSwitcher.box').hide();
