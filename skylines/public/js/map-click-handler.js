@@ -205,7 +205,7 @@
 
       var circle_id = '#' + circle.geometry.id.replace(/(:|\.)/g, '\\$1');
       // fade circle out and remove it from layer
-      $(circle_id).animate({opacity: 0}, duration, function() {
+      $(circle_id).fadeOut(duration, function() {
         // check if circle still exists, because it might got deleted before
         // the animation was done.
         if (circle !== null) {
