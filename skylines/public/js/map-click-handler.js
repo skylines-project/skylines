@@ -77,7 +77,7 @@
       // general events
 
       map.events.register('move', this, function(e) {
-        if (e.object.getExtent().containsLonLat(infobox.latlon)) {
+        if (e.object.getExtent().scale(2).containsLonLat(infobox.latlon)) {
           var pixel = e.object.getPixelFromLonLat(infobox.latlon);
           infobox.css('left', (pixel.x + 15) + 'px');
           infobox.css('top', (pixel.y - infobox.height() / 2) + 'px');
