@@ -1,0 +1,52 @@
+SYMBOL
+  NAME 'filled'
+  TYPE vector
+  POINTS
+    0 5
+    0 10
+  END
+END
+
+SYMBOL
+  NAME 'filled-small'
+  TYPE vector
+  POINTS
+    0 3
+    0 6
+  END
+END
+
+SYMBOL
+  NAME 'dashed'
+  TYPE vector
+  POINTS
+    0 5
+    5 10
+    0 5
+    5 10
+  END
+END
+
+SYMBOL
+  NAME 'dashed-small'
+  TYPE vector
+  POINTS
+    0 5
+    5 8
+    0 5
+    5 8
+  END
+END
+
+SYMBOL
+  NAME 'airport'
+  TYPE pixmap
+  IMAGE 'airports/airport.png'
+END
+
+SYMBOL
+  NAME 'airport small'
+  TYPE ellipse
+  POINTS 6 6 END
+  ANTIALIAS true
+END

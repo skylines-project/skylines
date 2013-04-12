@@ -1,0 +1,437 @@
+##
+## AIRSPACE WAVE (CLASS W)
+##
+LAYER
+  NAME 'Airspace_W'
+  GROUP 'Airspace'
+  TYPE POLYGON
+  CONNECTIONTYPE POSTGIS
+  CONNECTION "dbname=skylines"
+  DATA "the_geom from airspace using unique id"
+  OPACITY 40
+
+  PROJECTION
+    "init=epsg:4326"
+  END
+  
+  METADATA
+    WMS_NAME 'Airspace_W'
+    WMS_GROUP 'Airspace'
+  END
+
+  CLASS
+    EXPRESSION ('[airspace_class]' eq 'W')
+    NAME 'WAVE'
+    STYLE
+      OUTLINECOLOR 255 255 0
+      WIDTH 2
+      LINECAP butt
+      OPACITY 50
+    END
+    STYLE
+      COLOR 255 255 0
+      OPACITY 10
+    END
+  END
+END
+
+##
+## AIRSPACE CLASS A and B
+##
+LAYER
+  NAME 'Airspace_A_B'
+  GROUP 'Airspace'
+  TYPE POLYGON
+  CONNECTIONTYPE POSTGIS
+  CONNECTION "dbname=skylines"
+  DATA "the_geom from airspace using unique id"
+  OPACITY 40
+
+  PROJECTION
+    "init=epsg:4326"
+  END
+
+  METADATA
+    WMS_NAME 'Airspace_A_B'
+    WMS_GROUP 'Airspace'
+  END
+
+  CLASS
+    EXPRESSION ('[airspace_class]' eq 'A')
+    NAME 'A'
+    MAXSCALEDENOM 2500000
+    STYLE
+      OUTLINECOLOR 211 0 32
+      WIDTH 2
+      LINECAP butt
+    END
+    STYLE
+      SYMBOL 'filled'
+      OUTLINECOLOR 211 0 32
+      OPACITY 40
+    END
+  END
+
+  CLASS
+    EXPRESSION ('[airspace_class]' eq 'A')
+    NAME 'A'
+    MINSCALEDENOM 2500000
+    STYLE
+      OUTLINECOLOR 211 0 32
+      WIDTH 1
+      LINECAP butt
+    END
+    STYLE
+      SYMBOL 'filled-small'
+      OUTLINECOLOR 211 0 32
+      OPACITY 40
+    END
+  END
+
+
+  CLASS
+    EXPRESSION ('[airspace_class]' eq 'B')
+    NAME 'B'
+    MAXSCALEDENOM 2500000
+    STYLE
+      OUTLINECOLOR 0 12 211
+      WIDTH 2
+      LINECAP butt
+    END
+    STYLE
+      SYMBOL 'filled'
+      OUTLINECOLOR 0 12 211
+      OPACITY 40
+    END
+  END
+
+  CLASS
+    EXPRESSION ('[airspace_class]' eq 'B')
+    NAME 'B'
+    MINSCALEDENOM 2500000
+    STYLE
+      OUTLINECOLOR 0 12 211
+      WIDTH 1
+      LINECAP butt
+    END
+    STYLE
+      SYMBOL 'filled-small'
+      OUTLINECOLOR 0 12 211
+      OPACITY 40
+    END
+  END
+
+END
+
+##
+## AIRSPACE CLASS C to D (CTR)
+##
+LAYER
+  NAME 'Airspace_C_D_CTR'
+  GROUP 'Airspace'
+  TYPE POLYGON
+  CONNECTIONTYPE POSTGIS
+  CONNECTION "dbname=skylines"
+  DATA "the_geom from airspace using unique id"
+  OPACITY 40
+
+  PROJECTION
+    "init=epsg:4326"
+  END
+  
+  METADATA
+    WMS_NAME 'Airspace_C_D_CTR'
+    WMS_GROUP 'Airspace'
+  END
+
+  CLASS
+    EXPRESSION ('[airspace_class]' eq 'C')
+    NAME 'C'
+    MAXSCALEDENOM 2500000
+    STYLE
+      OUTLINECOLOR 0 12 211
+      WIDTH 2
+      LINECAP butt
+    END
+    STYLE
+      SYMBOL 'filled'
+      OUTLINECOLOR 0 12 211
+      OPACITY 40
+    END
+  END
+
+  CLASS
+    EXPRESSION ('[airspace_class]' eq 'C')
+    NAME 'C'
+    MINSCALEDENOM 2500000
+    STYLE
+      OUTLINECOLOR 0 12 211
+      WIDTH 1
+      LINECAP butt
+    END
+    STYLE
+      SYMBOL 'filled-small'
+      OUTLINECOLOR 0 12 211
+      OPACITY 40
+    END
+  END
+
+
+##
+## AIRSPACE CLASS D
+##
+  CLASS
+    EXPRESSION ('[airspace_class]' eq 'D')
+    NAME 'D'
+    MAXSCALEDENOM 2500000
+    STYLE
+      OUTLINECOLOR 0 12 211
+      WIDTH 2
+      LINECAP butt
+    END
+    STYLE
+      SYMBOL 'filled'
+      OUTLINECOLOR 0 12 211
+      OPACITY 40
+    END
+  END
+
+  CLASS
+    EXPRESSION ('[airspace_class]' eq 'D')
+    NAME 'D'
+    MINSCALEDENOM 2500000
+    STYLE
+      OUTLINECOLOR 0 12 211
+      WIDTH 1
+      LINECAP butt
+    END
+    STYLE
+      SYMBOL 'filled-small'
+      OUTLINECOLOR 0 12 211
+      OPACITY 40
+    END
+  END
+
+
+##
+## AIRSPACE CTR (CLASS D)
+##
+  CLASS
+    EXPRESSION ('[airspace_class]' eq 'CTR')
+    NAME 'CTR'
+    MAXSCALEDENOM 2500000
+    STYLE
+      OUTLINECOLOR 0 12 211
+      WIDTH 2
+      LINECAP butt
+      PATTERN 5 2 END
+    END
+    STYLE
+      COLOR 211 0 32
+      OPACITY 20
+    END
+  END
+
+  CLASS
+    EXPRESSION ('[airspace_class]' eq 'CTR')
+    NAME 'CTR'
+    MINSCALEDENOM 2500000
+    STYLE
+      OUTLINECOLOR 0 12 211
+      WIDTH 1
+      LINECAP butt
+      PATTERN 5 2 END
+    END
+    STYLE
+      COLOR 211 0 32
+      OPACITY 20
+    END
+  END
+
+END
+
+##
+## AIRSPACE CLASS E, F and TMZ
+##
+LAYER
+  NAME 'Airspace_E_F_TMZ'
+  GROUP 'Airspace'
+  TYPE POLYGON
+  CONNECTIONTYPE POSTGIS
+  CONNECTION "dbname=skylines"
+  DATA "the_geom from airspace using unique id"
+  OPACITY 40
+
+  PROJECTION
+    "init=epsg:4326"
+  END
+
+  METADATA
+    WMS_NAME 'Airspace_E_F_TMZ'
+    WMS_GROUP 'Airspace'
+  END
+
+  MAXSCALEDENOM 25000000
+
+## don't render CLASS E airspace...
+#    CLASS
+#      EXPRESSION ('[airspace_class]' eq 'E')
+#      NAME 'CTR'
+#      STYLE
+#        OUTLINECOLOR 0 12 211
+#        WIDTH 2
+#        LINECAP butt
+#      END
+#    END
+
+##
+## AIRSPACE CLASS F
+##
+  CLASS
+    EXPRESSION ('[airspace_class]' eq 'F')
+    NAME 'CTR'
+    STYLE
+      OUTLINECOLOR 0 12 211
+      WIDTH 1
+      LINECAP butt
+    END
+  END
+
+##
+## AIRSPACE TMZ
+##
+  CLASS
+    EXPRESSION ('[airspace_class]' eq 'TMZ')
+    NAME 'TMZ'
+    STYLE
+      OUTLINECOLOR 100 100 100
+      WIDTH 3
+      LINECAP butt
+      PATTERN 8 4 2 4 END
+    END
+  END
+END
+
+##
+## PROHIBITED, DANGER and RESTRICTED AIRSPACE (CLASS P, Q and R)
+##
+LAYER
+  NAME 'Airspace_P_Q_R'
+  GROUP 'Airspace'
+  TYPE POLYGON
+  CONNECTIONTYPE POSTGIS
+  CONNECTION "dbname=skylines"
+  DATA "the_geom from airspace using unique id"
+  OPACITY 40
+
+  PROJECTION
+    "init=epsg:4326"
+  END
+
+  METADATA
+    WMS_NAME 'Airspace_P_Q_R'
+    WMS_GROUP 'Airspace'
+  END
+
+##
+## DANGER AIRSPACE (CLASS Q)
+##
+  CLASS
+    EXPRESSION ('[airspace_class]' eq 'Q')
+    NAME "Danger"
+    MAXSCALEDENOM 2500000
+    STYLE
+      OUTLINECOLOR 211 0 32
+      WIDTH 2
+      LINECAP butt
+    END
+    STYLE
+      OUTLINECOLOR 211 0 32
+      SYMBOL 'dashed'
+    END
+  END
+
+  CLASS
+    EXPRESSION ('[airspace_class]' eq 'Q')
+    NAME "Danger"
+    MINSCALEDENOM 2500000
+    STYLE
+      OUTLINECOLOR 211 0 32
+      WIDTH 1
+      LINECAP butt
+    END
+    STYLE
+      OUTLINECOLOR 211 0 32
+      SYMBOL 'dashed-small'
+    END
+  END
+
+
+##
+## RESTRICTED AIRSPACE (CLASS R)
+##
+  CLASS
+    EXPRESSION ('[airspace_class]' eq 'R')
+    NAME "Restricted"
+    MAXSCALEDENOM 2500000
+    STYLE
+      OUTLINECOLOR 211 0 32
+      WIDTH 2
+      LINECAP butt
+    END
+    STYLE
+      OUTLINECOLOR 211 0 32
+      SYMBOL 'dashed'
+    END
+  END
+
+  CLASS
+    EXPRESSION ('[airspace_class]' eq 'R')
+    NAME "Restricted"
+    MINSCALEDENOM 2500000
+    STYLE
+      OUTLINECOLOR 211 0 32
+      WIDTH 1
+      LINECAP butt
+    END
+    STYLE
+      OUTLINECOLOR 211 0 32
+      SYMBOL 'dashed-small'
+    END
+  END
+
+
+##
+## PROHIBITED AIRSPACE (CLASS P)
+##
+  CLASS
+    EXPRESSION ('[airspace_class]' eq 'P')
+    NAME "Prohibited"
+    MAXSCALEDENOM 2500000
+    STYLE
+      OUTLINECOLOR 211 0 32
+      WIDTH 2
+      LINECAP butt
+    END
+    STYLE
+      OUTLINECOLOR 211 0 32
+      SYMBOL 'dashed'
+    END
+  END
+
+  CLASS
+    EXPRESSION ('[airspace_class]' eq 'P')
+    NAME "Prohibited"
+    MINSCALEDENOM 2500000
+    STYLE
+      OUTLINECOLOR 211 0 32
+      WIDTH 1
+      LINECAP butt
+    END
+    STYLE
+      OUTLINECOLOR 211 0 32
+      SYMBOL 'dashed-small'
+    END
+  END
+
+END
