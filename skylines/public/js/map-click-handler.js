@@ -283,9 +283,27 @@
 
       infobox.empty();
       var item = $('<div class="location info-item"></div>');
+      var no_data = true;
 
-      if (!data ||
-          ($.isEmptyObject(data.airspaces) && $.isEmptyObject(data.waves))) {
+      if (data) {
+        if (!$.isEmptyObject(data.airspaces) &&
+            map.getLayersByName('Airspace')[0].visibility) {
+          var p = $('<p></p>');
+          p.append(formatAirspaceData(data.airspaces));
+          item.append(p);
+          no_data = false;
+        }
+
+        if (!$.isEmptyObject(data.waves) &&
+            map.getLayersByName('Mountain Wave Project')[0].visibility) {
+          var p = $('<p></p>');
+          p.append(formatMountainWaveData(data.waves));
+          item.append(p);
+          no_data = false;
+        }
+      }
+
+      if (no_data) {
         item.html('No data retrieved for this location');
 
         infobox.delay(1500).fadeOut(1000, function() {
@@ -294,19 +312,6 @@
         });
 
         hideCircle(1000);
-
-      } else {
-        if (!$.isEmptyObject(data.airspaces)) {
-          var p = $('<p></p>');
-          p.append(formatAirspaceData(data.airspaces));
-          item.append(p);
-        }
-
-        if (!$.isEmptyObject(data.waves)) {
-          var p = $('<p></p>');
-          p.append(formatMountainWaveData(data.waves));
-          item.append(p);
-        }
       }
 
       infobox.append(item);
