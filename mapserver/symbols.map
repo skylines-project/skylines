@@ -11,8 +11,8 @@ SYMBOL
   NAME 'filled-small'
   TYPE vector
   POINTS
-    0 3
-    0 6
+    0 2
+    0 4
   END
 END
 
@@ -20,8 +20,6 @@ SYMBOL
   NAME 'dashed'
   TYPE vector
   POINTS
-    0 5
-    5 10
     0 5
     5 10
   END
@@ -32,9 +30,7 @@ SYMBOL
   TYPE vector
   POINTS
     0 5
-    5 8
-    0 5
-    5 8
+    5 7
   END
 END
 

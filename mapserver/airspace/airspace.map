@@ -24,13 +24,12 @@ LAYER
     NAME 'WAVE'
     STYLE
       OUTLINECOLOR 255 255 0
-      WIDTH 2
+      WIDTH 1
       LINECAP butt
-      OPACITY 50
     END
     STYLE
       COLOR 255 255 0
-      OPACITY 10
+      OPACITY 25
     END
   END
 END
@@ -62,7 +61,7 @@ LAYER
     MAXSCALEDENOM 2500000
     STYLE
       OUTLINECOLOR 211 0 32
-      WIDTH 2
+      WIDTH 1
       LINECAP butt
     END
     STYLE
@@ -95,7 +94,7 @@ LAYER
     MAXSCALEDENOM 2500000
     STYLE
       OUTLINECOLOR 0 12 211
-      WIDTH 2
+      WIDTH 1
       LINECAP butt
     END
     STYLE
@@ -150,7 +149,7 @@ LAYER
     MAXSCALEDENOM 2500000
     STYLE
       OUTLINECOLOR 0 12 211
-      WIDTH 2
+      WIDTH 1
       LINECAP butt
     END
     STYLE
@@ -186,7 +185,7 @@ LAYER
     MAXSCALEDENOM 2500000
     STYLE
       OUTLINECOLOR 0 12 211
-      WIDTH 2
+      WIDTH 1
       LINECAP butt
     END
     STYLE
@@ -222,13 +221,13 @@ LAYER
     MAXSCALEDENOM 2500000
     STYLE
       OUTLINECOLOR 0 12 211
-      WIDTH 2
+      WIDTH 1
       LINECAP butt
       PATTERN 5 2 END
     END
     STYLE
       COLOR 211 0 32
-      OPACITY 20
+      OPACITY 30
     END
   END
 
@@ -244,7 +243,7 @@ LAYER
     END
     STYLE
       COLOR 211 0 32
-      OPACITY 20
+      OPACITY 30
     END
   END
 
@@ -260,7 +259,7 @@ LAYER
   CONNECTIONTYPE POSTGIS
   CONNECTION "dbname=skylines"
   DATA "the_geom from airspace using unique id"
-  OPACITY 40
+  OPACITY 50
 
   PROJECTION
     "init=epsg:4326"
@@ -304,8 +303,8 @@ LAYER
     EXPRESSION ('[airspace_class]' eq 'TMZ')
     NAME 'TMZ'
     STYLE
-      OUTLINECOLOR 100 100 100
-      WIDTH 3
+      OUTLINECOLOR 80 80 80
+      WIDTH 2
       LINECAP butt
       PATTERN 8 4 2 4 END
     END
