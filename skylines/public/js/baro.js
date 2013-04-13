@@ -226,11 +226,11 @@
 
     function update() {
       var data = [];
+      addElevations(data);
       addActiveTraces(data);
       addPassiveTraces(data);
       addENLData(data);
       addContests(data);
-      addElevations(data);
       updateTimeHighlight();
 
       flot.setData(data);
