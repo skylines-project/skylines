@@ -260,3 +260,9 @@ table.vmiddle td {
 .InfoBox .info-item {
   pointer-events: auto;
 }
+
+#map_canvas .plane_marker {
+  position: absolute;
+  min-height: 1em;
+  display: inline-block;
+}

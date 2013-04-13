@@ -573,17 +573,42 @@ function setPlaneOnMap(id, fix_data) {
 
   // add plane to map
   map.getLayersByName('Flight')[0].addFeatures(plane);
+
+  // add plane marker
+  if (!plane.marker) {
+    var comp_id = flights[id].additional &&
+        flights[id].additional['competition_id'];
+
+    plane.marker = $(
+        '<span class="badge plane_marker" ' +
+            'style="background: ' + flights[id].color + ';">' +
+        (comp_id ? comp_id : '') +
+        '</span>');
+
+    $(map.getLayersByName('Flight')[0].div).append(plane.marker);
+  }
+
+  var pixel = map.getPixelFromLonLat(
+      new OpenLayers.LonLat(fix_data['loc'].x, fix_data['loc'].y));
+  plane.marker.css('left', (pixel.x - plane.marker.outerWidth() / 2) + 'px');
+  plane.marker.css('top', (pixel.y - 40) + 'px');
+
+  plane.marker.show();
 }
 
 function hidePlaneOnMap(id) {
   map.getLayersByName('Flight')[0].removeFeatures(flights[id].plane);
+
+  flights[i].plane.marker && flights[id].plane.marker.hide();
 }
 
 function hideAllPlanesOnMap() {
   var layer = map.getLayersByName('Flight')[0];
   var flightsLength = flights.length;
-  for (var i = 0; i < flightsLength; ++i)
+  for (var i = 0; i < flightsLength; ++i) {
     layer.removeFeatures(flights[i].plane);
+    flights[i].plane.marker && flights[i].plane.marker.hide();
+  }
 }
 
 function flightWithSFID(sfid) {
