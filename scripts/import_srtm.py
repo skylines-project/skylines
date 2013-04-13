@@ -86,6 +86,7 @@ args = [
     '-a',  # Append to existing table
     '-s', '4236',  # SRID 4236 (WGS 84)
     '-t', '100x100',  # 100x100 tiles
+    '-R',  # Out-of-DB raster
     os.path.abspath(tif_filename),
     'elevations',
 ]
