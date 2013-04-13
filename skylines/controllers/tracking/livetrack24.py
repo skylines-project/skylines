@@ -186,8 +186,7 @@ class LiveTrack24Controller(BaseController):
         # Location
         if 'lat' in kw and 'lon' in kw:
             try:
-                fix.location = Location(latitude=float(kw['lat']),
-                                        longitude=float(kw['lon']))
+                fix.set_location(float(kw['lon']), float(kw['lat']))
             except ValueError:
                 raise HTTPBadRequest('`lat` and `lon` have to be floating point value in degrees (WGS84).')
 

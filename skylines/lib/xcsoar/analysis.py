@@ -240,11 +240,19 @@ def save_phases(root, flight):
     DBSession.add(ph)
 
 
-def analyse_flight(flight):
+def analyse_flight(flight, full=512, triangle=2048, sprint=64):
     path = files.filename_to_path(flight.igc_file.filename)
     log.info('Analyzing ' + path)
 
-    p = Popen([helper_path('AnalyseFlight'), path], stdout=PIPE)
+    args = [
+        helper_path('AnalyseFlight'),
+        '--full-points=' + str(full),
+        '--triangle-points=' + str(triangle),
+        '--sprint-points=' + str(sprint),
+        path
+    ]
+
+    p = Popen(args, stdout=PIPE)
 
     try:
         root = simplejson.load(p.stdout)

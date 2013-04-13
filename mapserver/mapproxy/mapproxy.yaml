@@ -33,7 +33,7 @@ sources:
     type: mapserver
     supported_srs: ['EPSG:3857']
     req:
-      layers: airspace
+      layers: Airports,Airspace
       map: ../skylines.map
       transparent: true
     image:
@@ -47,7 +47,7 @@ sources:
     type: wms
     supported_srs: ['EPSG:3857']
     req:
-      layers: airspace
+      layers: Airports,Airspace
       url: http://skylines.xcsoar.org/mapserver/?
       transparent: true
     image:

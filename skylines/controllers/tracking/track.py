@@ -14,10 +14,10 @@ def get_flight_path2(pilot, last_update=None):
     query = query.filter(and_(TrackingFix.pilot == pilot,
                               TrackingFix.location != None,
                               TrackingFix.altitude != None,
-                              TrackingFix.max_age_filter(timedelta(hours=12))))
+                              TrackingFix.max_age_filter(12)))
 
     if pilot.tracking_delay > 0 and not pilot.is_readable(request.identity):
-        query = query.filter(TrackingFix.delay_filter(timedelta(minutes=pilot.tracking_delay)))
+        query = query.filter(TrackingFix.delay_filter(pilot.tracking_delay))
 
     query = query.order_by(TrackingFix.time)
 

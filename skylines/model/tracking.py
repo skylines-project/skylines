@@ -8,8 +8,8 @@ from sqlalchemy.types import Integer, Float, DateTime, SmallInteger, Unicode,\
 from sqlalchemy.dialects.postgresql import INET
 from sqlalchemy.sql.expression import desc
 from geoalchemy2.types import Geometry
-from geoalchemy2.elements import WKTElement
-from geoalchemy2.shape import to_shape
+from geoalchemy2.shape import to_shape, from_shape
+from shapely.geometry import Point
 from skylines.model.base import DeclarativeBase
 from skylines.model.session import DBSession
 from skylines.model.auth import User
@@ -49,19 +49,40 @@ class TrackingFix(DeclarativeBase):
         if self.location_wkt is None:
             return None
 
-        coords = to_shape(self.location_wkt).coords[0]
-        return Location(latitude=coords[1], longitude=coords[0])
+        coords = to_shape(self.location_wkt)
+        return Location(latitude=coords.y, longitude=coords.x)
 
-    @location.setter
-    def location(self, location):
-        self.location_wkt = WKTElement(location.to_wkt())
+    def set_location(self, longitude, latitude):
+        self.location_wkt = from_shape(Point(longitude, latitude), srid=4326)
 
     @classmethod
-    def max_age_filter(cls, max_age=timedelta(hours=6)):
+    def max_age_filter(cls, max_age):
+        """
+        Returns a filter that makes sure that the fix is not older than a
+        certain time.
+
+        The delay parameter can be either a datetime.timedelta or a numeric
+        value that will be interpreted as hours.
+        """
+
+        if isinstance(max_age, (int, long, float)):
+            max_age = timedelta(hours=max_age)
+
         return TrackingFix.time >= datetime.utcnow() - max_age
 
     @classmethod
     def delay_filter(cls, delay):
+        """
+        Returns a filter that makes sure that the fix was created at least
+        a certain time ago.
+
+        The delay parameter can be either a datetime.timedelta or a numeric
+        value that will be interpreted as minutes.
+        """
+
+        if isinstance(delay, (int, long, float)):
+            delay = timedelta(minutes=delay)
+
         return TrackingFix.time <= datetime.utcnow() - delay
 
     @classmethod

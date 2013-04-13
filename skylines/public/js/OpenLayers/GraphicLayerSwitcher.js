@@ -5,7 +5,7 @@ var GraphicLayerSwitcher = OpenLayers.Class(OpenLayers.Control, {
 
   initialize: function(options) {
     OpenLayers.Control.prototype.initialize.apply(this, arguments);
-     this.layerStates = [];
+    this.layerStates = [];
   },
 
   destroy: function() {
@@ -44,15 +44,15 @@ var GraphicLayerSwitcher = OpenLayers.Class(OpenLayers.Control, {
   checkRedraw: function() {
     var redraw = false;
     if (!this.layerStates.length ||
-         (this.map.layers.length != this.layerStates.length)) {
+        (this.map.layers.length != this.layerStates.length)) {
       redraw = true;
     } else {
       for (var i = 0, len = this.layerStates.length; i < len; i++) {
         var layerState = this.layerStates[i];
         var layer = this.map.layers[i];
         if ((layerState.name != layer.name) ||
-             (layerState.inRange != layer.inRange) ||
-             (layerState.id != layer.id)) {
+            (layerState.inRange != layer.inRange) ||
+            (layerState.id != layer.id)) {
           redraw = true;
           break;
         }
@@ -82,19 +82,22 @@ var GraphicLayerSwitcher = OpenLayers.Class(OpenLayers.Control, {
 
     var layers = this.map.layers.slice();
 
-    var layer_switcher = $("<div class='GraphicLayerSwitcher box'></div>");
-    var base_layers = $("<div id='GraphicLayerSwitcher_base' class='base'></div>");
-    var overlay_layers = $("<div id='GraphicLayerSwitcher_overlay' class='overlay'></div>");
+    var layer_switcher = $('<div class="GraphicLayerSwitcher box"></div>');
+    var base_layers = $('<div id="GraphicLayerSwitcher_base" class="base">' +
+        '</div>');
+    var overlay_layers = $('<div id="GraphicLayerSwitcher_overlay"' +
+        'class="overlay"></div>');
 
     var current = $(
-      "<a href='#'>" +
-        "<img src='../../images/layers.png' />" +
-      '</a>');
+        '<a href="#">' +
+        '<img src="../../images/layers.png" />' +
+        '</a>');
     current.addClass('GraphicLayerSwitcher current');
 
-    current.on('click touchstart', function(e) {
+    current.on('click touchend', function(e) {
       $(this).hide();
       $('.GraphicLayerSwitcher.box').show();
+      e.stopPropagation();
     });
 
     $(this.div).append(current);
@@ -113,36 +116,39 @@ var GraphicLayerSwitcher = OpenLayers.Class(OpenLayers.Control, {
         else on = layer.getVisibility();
 
         var layer_image = '../../images/layers/' + layer.name +
-          (on ? '.png' : '.bw.png');
+            (on ? '.png' : '.bw.png');
 
         var item = $(
-          "<a id='" + id + "' href='#'>" +
+            "<a id='" + id + "' href='#'>" +
             "<img src='" + layer_image + "' />" +
             layer.name +
-          '</a><br />');
+            '</a><br />');
 
         if (on) {
           item.addClass('active');
         }
 
-        item.on('click touchend', $.proxy(this.onInputClick, {'layerSwitcher': this, 'layer': layer}));
+        item.on('click touchend', $.proxy(this.onInputClick,
+            {'layerSwitcher': this, 'layer': layer}));
 
         if (baseLayer) {
           item.on('mouseover touchstart', $.proxy(function() {
             if (this.layer != this.map.baseLayer) {
-              $('#' + this.id).find('img').attr('src', '../../images/layers/' + this.layer.name + '.png');
+              $('#' + this.id).find('img').attr('src',
+                  '../../images/layers/' + this.layer.name + '.png');
 
-              $('.GraphicLayerSwitcher.base .active').find('img')
-              .attr('src', '../../images/layers/' + this.map.baseLayer.name + '.bw.png');
+              $('.GraphicLayerSwitcher.base .active').find('img').attr('src',
+                  '../../images/layers/' + this.map.baseLayer.name + '.bw.png');
             }
           }, { id: id, layer: layer, map: this.map}));
 
           item.on('mouseout touchend', $.proxy(function() {
             if (this.layer != this.map.baseLayer) {
-              $('#' + this.id).find('img').attr('src', '../../images/layers/' + this.layer.name + '.bw.png');
+              $('#' + this.id).find('img').attr('src',
+                  '../../images/layers/' + this.layer.name + '.bw.png');
 
-              $('.GraphicLayerSwitcher.base .active').find('img')
-                .attr('src', '../../images/layers/' + this.map.baseLayer.name + '.png');
+              $('.GraphicLayerSwitcher.base .active').find('img').attr('src',
+                  '../../images/layers/' + this.map.baseLayer.name + '.png');
             }
           }, { id: id, layer: layer, map: this.map }));
 
@@ -155,7 +161,7 @@ var GraphicLayerSwitcher = OpenLayers.Class(OpenLayers.Control, {
     }
 
     // hide box when clicked outside
-    $(document).mouseup(function(e) {
+    $(document).on('mouseup touchend', function(e) {
       if (base_layers.find(e.target).length === 0 &&
           overlay_layers.find(e.target).length === 0) {
         $('.GraphicLayerSwitcher.box').hide();
@@ -166,7 +172,7 @@ var GraphicLayerSwitcher = OpenLayers.Class(OpenLayers.Control, {
 
     // close selector box when inactive for 5 seconds
     var close_timeout = false;
-    $(this.div).on('mousemove', function() {
+    $(this.div).on('mousemove touchstart', function() {
       clearTimeout(close_timeout);
       close_timeout = setTimeout(function() {
         $('.GraphicLayerSwitcher.box').hide();
@@ -203,7 +209,7 @@ var GraphicLayerSwitcher = OpenLayers.Class(OpenLayers.Control, {
         else on = layer.getVisibility();
 
         var layer_image = '../../images/layers/' + layer.name +
-          (on ? '.png' : '.bw.png');
+            (on ? '.png' : '.bw.png');
 
         $('#' + id).find('img').attr('src', layer_image);
 
@@ -245,7 +251,7 @@ var GraphicLayerSwitcher = OpenLayers.Class(OpenLayers.Control, {
 
   loadContents: function() {
     OpenLayers.Event.observe(this.div, 'click',
-      this.ignoreEvent);
+        this.ignoreEvent);
     OpenLayers.Event.observe(this.div, 'dblclick', this.ignoreEvent);
   },
 

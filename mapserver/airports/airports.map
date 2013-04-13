@@ -1,0 +1,115 @@
+LAYER
+  NAME 'Airports'
+  TYPE POINT
+  CONNECTIONTYPE POSTGIS
+  CONNECTION "dbname=skylines"
+  DATA "location_wkt from (SELECT id, location_wkt, name, runway_len, type, surface,
+        (-runway_dir) as runway_dir from airports) as foo using unique id"
+  LABELITEM "name"
+
+  PROJECTION
+    "init=epsg:4326"
+  END
+
+  METADATA
+    WMS_NAME 'Airports'
+  END
+
+  CLASS
+    NAME 'Airports detail'
+    MAXSCALEDENOM 1000000
+
+    STYLE
+      SYMBOL 'airport'
+      COLOR 255 0 0
+      ANGLE [runway_dir]
+      MAXSIZE 24
+      MINSIZE 24
+    END
+
+    LABEL
+      COLOR  0 0 0
+      OUTLINECOLOR 255 255 255
+      OUTLINEWIDTH 1
+      FONT "sans"
+      TYPE truetype
+      SIZE 7
+      MAXSIZE 7
+      MINSIZE 7
+      POSITION AUTO
+      PARTIALS false
+      MINDISTANCE 20
+      ANTIALIAS true
+      OFFSET 0 -16
+    END
+  END
+
+  CLASS
+    NAME 'Airports normal'
+    MINSCALEDENOM 1000000
+    MAXSCALEDENOM 5000000
+    EXPRESSION (([runway_len] <= 1000) OR ('[type]' ne 'airport') OR ('[surface]' eq 'grass'))
+
+    STYLE
+      SYMBOL 'airport small'
+      COLOR 255 0 0
+      SIZE 2
+      MINWIDTH 1
+      MAXWIDTH 1
+      MAXSIZE 6
+      MINSIZE 3
+      #ANGLE [runway_dir]
+    END
+  END
+
+  CLASS
+    NAME 'Airports priority'
+    MINSCALEDENOM 1000000
+    MAXSCALEDENOM 5000000
+    #EXPRESSION (([runway_len] > 800 ) AND ('[type]' eq 'airport') AND ('[surface]' ne 'grass'))
+
+    STYLE
+      SYMBOL 'airport'
+      COLOR 255 0 0
+      ANGLE [runway_dir]
+      MAXSIZE 24
+      MINSIZE 24
+    END
+
+    LABEL
+      COLOR  0 0 0
+      OUTLINECOLOR 255 255 255
+      OUTLINEWIDTH 1
+      FONT "sans"
+      TYPE truetype
+      SIZE 7
+      MAXSIZE 7
+      MINSIZE 7
+      POSITION AUTO
+      PARTIALS false
+      MINDISTANCE 20
+      OFFSET 0 -16
+    END
+  END
+
+  SYMBOLSCALEDENOM 6931575 #exactly zoom level 6
+
+  CLASS
+    NAME 'Airports large'
+    MINSCALEDENOM 5000000
+    MAXSCALEDENOM 30000000
+    EXPRESSION (([runway_len] > 1000) AND ('[type]' eq 'airport') AND ('[surface]' ne 'grass'))
+
+    STYLE
+      SYMBOL 'airport small'
+      COLOR 255 0 0
+      SIZE 6
+      MINWIDTH 0.5
+      MAXWIDTH 1
+      MINSIZE 3
+      MAXSIZE 6
+      #ANGLE [runway_dir]
+    END
+  END
+
+END
