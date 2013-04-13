@@ -8,12 +8,20 @@ import argparse
 import subprocess
 from zipfile import ZipFile
 from tempfile import NamedTemporaryFile
+from paste.deploy.loadwsgi import appconfig
+from tg import config
+from skylines.config.environment import load_environment
+from skylines.model.session import DBSession
 
-BASE_URL = 'http://download.xcsoar.org/mapgen/data/srtm3/'
+SERVER_URL = 'http://download.xcsoar.org/mapgen/data/srtm3/'
 
 # Parse command line parameters
 parser = argparse.ArgumentParser(
     description='Add elevation data to the database.')
+
+parser.add_argument('--config', metavar='config.ini',
+                    default='/etc/skylines/production.ini',
+                    help='path to the configuration INI file')
 
 parser.add_argument('x', type=int)
 parser.add_argument('y', type=int)
@@ -26,53 +34,67 @@ if not 1 <= args.x <= 72:
 if not -4 <= args.y <= 24:
     parser.error('y has to be between -4 and 24')
 
+basename = 'srtm_{x:02}_{y:02}'.format(x=args.x, y=args.y)
 
-def download(filename):
-    print 'Downloading {} ...'.format(filename)
-    url = BASE_URL + filename
+
+# Load configuration file
+conf = appconfig('config:' + os.path.abspath(args.config))
+load_environment(conf.global_conf, conf.local_conf)
+
+
+# Change path to configured srtm data path
+path = config['skylines.elevation_path']
+
+if not os.path.exists(path):
+    print 'Creating {} ...'.format(path)
+    os.mkdir(path)
+
+os.chdir(path)
+
+
+# Check if GeoTIFF file already exists
+tif_filename = basename + '.tif'
+
+if os.path.exists(tif_filename):
+    print "{} exists already.".format(tif_filename)
+    exit()
+
+
+# Check if ZIP file already exists and download if necessary
+zip_filename = basename + '.zip'
+
+if not os.path.exists(zip_filename):
+    print 'Downloading {} ...'.format(zip_filename)
+    url = SERVER_URL + zip_filename
     subprocess.check_call(['wget', '-N', url])
 
 
-def extract(filename, foldername):
-    print 'Extracting {} ...'.format(filename)
-    zip = ZipFile(filename)
-    zip.extractall(path=foldername)
+# Unzip elevation data
+print 'Extracting {} ...'.format(zip_filename)
+zip = ZipFile(zip_filename)
+zip.extract(tif_filename)
 
 
-def raster2pgsql(filename, output):
-    print 'Converting {} to {} ...'.format(filename, output.name)
-    subprocess.check_call(
-        ['raster2pgsql', '-a', '-t', '100x100', filename, 'elevations'],
-        stdout=output)
+# Delete ZIP file
+os.unlink(zip_filename)
 
 
-def apply_sql(filename):
-    print 'Applying {} ...'.format(filename)
-    subprocess.check_call(['psql', '-d', 'skylines', '-f', filename])
+# Create SQL statements
+print 'Converting {} to SQL ...'.format(tif_filename)
+args = [
+    'raster2pgsql',
+    '-a',  # Append to existing table
+    '-t', '100x100',  # 100x100 tiles
+    os.path.abspath(tif_filename),
+    'elevations',
+]
+raster2pgsql = subprocess.Popen(args, stdout=subprocess.PIPE)
 
+print 'Adding SQL to the database ...'
+for i, line in enumerate(raster2pgsql.stdout):
+    if i % 100 == 0 and i != 0:
+        print i
 
-basename = 'srtm_{x:02}_{y:02}'.format(x=args.x, y=args.y)
+    DBSession.execute(line)
 
-tif_filename = basename + '.tif'
-tif_path = os.path.join(basename, tif_filename)
-
-if not os.path.exists(tif_path):
-
-    zip_filename = basename + '.zip'
-
-    # Download the elevation data
-    download(zip_filename)
-
-    # Create output folder
-    if not os.path.exists(basename):
-        os.mkdir(basename)
-
-    # Unzip elevation data
-    extract(zip_filename, basename)
-
-with NamedTemporaryFile(delete=False) as sql_file:
-    raster2pgsql(tif_path, sql_file)
-
-apply_sql(sql_file.name)
-
-os.unlink(sql_file.name)
+print "done"
