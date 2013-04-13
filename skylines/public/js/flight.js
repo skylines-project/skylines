@@ -574,26 +574,28 @@ function setPlaneOnMap(id, fix_data) {
   // add plane to map
   map.getLayersByName('Flight')[0].addFeatures(plane);
 
-  // add plane marker
-  if (!plane.marker) {
-    var comp_id = flights[id].additional &&
-        flights[id].additional['competition_id'];
+  // add plane marker if more than one flight on the map
+  if (flights.length > 1) {
+    if (!plane.marker) {
+      var comp_id = flights[id].additional &&
+          flights[id].additional['competition_id'];
 
-    plane.marker = $(
-        '<span class="badge plane_marker" ' +
-            'style="background: ' + flights[id].color + ';">' +
-        (comp_id ? comp_id : '') +
-        '</span>');
+      plane.marker = $(
+          '<span class="badge plane_marker" ' +
+              'style="background: ' + flights[id].color + ';">' +
+          (comp_id ? comp_id : '') +
+          '</span>');
 
-    $(map.getLayersByName('Flight')[0].div).append(plane.marker);
+      $(map.getLayersByName('Flight')[0].div).append(plane.marker);
+    }
+
+    var pixel = map.getPixelFromLonLat(
+        new OpenLayers.LonLat(fix_data['loc'].x, fix_data['loc'].y));
+    plane.marker.css('left', (pixel.x - plane.marker.outerWidth() / 2) + 'px');
+    plane.marker.css('top', (pixel.y - 40) + 'px');
+
+    plane.marker.show();
   }
-
-  var pixel = map.getPixelFromLonLat(
-      new OpenLayers.LonLat(fix_data['loc'].x, fix_data['loc'].y));
-  plane.marker.css('left', (pixel.x - plane.marker.outerWidth() / 2) + 'px');
-  plane.marker.css('top', (pixel.y - 40) + 'px');
-
-  plane.marker.show();
 }
 
 function hidePlaneOnMap(id) {
