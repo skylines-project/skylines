@@ -94,7 +94,7 @@ print 'Converting {} to SQL ...'.format(tiled_tif_filename)
 args = [
     'raster2pgsql',
     '-a',  # Append to existing table
-    '-s', '4236',  # SRID 4236 (WGS 84)
+    '-s', '4326',  # SRID 4326 (WGS 84)
     '-t', '100x100',  # 100x100 tiles
     '-R',  # Out-of-DB raster
     os.path.abspath(tiled_tif_filename),

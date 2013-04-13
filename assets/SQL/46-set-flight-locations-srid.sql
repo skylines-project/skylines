@@ -1,1 +1,1 @@
-UPDATE flights SET locations = ST_SetSRID(locations, 4236);
+UPDATE flights SET locations = ST_SetSRID(locations, 4326);
