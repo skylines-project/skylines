@@ -101,8 +101,8 @@ class Flight(DeclarativeBase):
         if self.takeoff_location_wkt is None:
             return None
 
-        coords = to_shape(self.takeoff_location_wkt).coords[0]
-        return Location(latitude=coords[1], longitude=coords[0])
+        coords = to_shape(self.takeoff_location_wkt)
+        return Location(latitude=coords.y, longitude=coords.x)
 
     @takeoff_location.setter
     def takeoff_location(self, location):
@@ -116,8 +116,8 @@ class Flight(DeclarativeBase):
         if self.landing_location_wkt is None:
             return None
 
-        coords = to_shape(self.landing_location_wkt).coords[0]
-        return Location(latitude=coords[1], longitude=coords[0])
+        coords = to_shape(self.landing_location_wkt)
+        return Location(latitude=coords.y, longitude=coords.x)
 
     @landing_location.setter
     def landing_location(self, location):

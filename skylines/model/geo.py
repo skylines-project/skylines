@@ -17,8 +17,8 @@ class Location(object):
 
     @staticmethod
     def from_wkb(wkb):
-        coords = to_shape(wkb).coords[0]
-        return Location(latitude=coords[1], longitude=coords[0])
+        coords = to_shape(wkb)
+        return Location(latitude=coords.y, longitude=coords.x)
 
     def __str__(self):
         return self.to_wkt()

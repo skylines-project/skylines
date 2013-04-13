@@ -49,8 +49,8 @@ class TrackingFix(DeclarativeBase):
         if self.location_wkt is None:
             return None
 
-        coords = to_shape(self.location_wkt).coords[0]
-        return Location(latitude=coords[1], longitude=coords[0])
+        coords = to_shape(self.location_wkt)
+        return Location(latitude=coords.y, longitude=coords.x)
 
     def set_location(self, longitude, latitude):
         self.location_wkt = from_shape(Point(longitude, latitude), srid=4326)
