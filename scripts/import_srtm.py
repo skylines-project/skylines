@@ -52,42 +52,52 @@ if not os.path.exists(path):
 os.chdir(path)
 
 
-# Check if GeoTIFF file already exists
-tif_filename = basename + '.tif'
+# Check if tiled GeoTIFF file already exists
+tiled_tif_filename = basename + '_tiled.tif'
 
-if os.path.exists(tif_filename):
-    print "{} exists already.".format(tif_filename)
+if os.path.exists(tiled_tif_filename):
+    print "{} exists already.".format(tiled_tif_filename)
     exit()
 
 
-# Check if ZIP file already exists and download if necessary
+# Check if original GeoTIFF file exists
+tif_filename = basename + '.tif'
 zip_filename = basename + '.zip'
 
-if not os.path.exists(zip_filename):
-    print 'Downloading {} ...'.format(zip_filename)
-    url = SERVER_URL + zip_filename
-    subprocess.check_call(['wget', '-N', url])
+if not os.path.exists(tif_filename):
+
+    # Check if ZIP file already exists and download if necessary
+    if not os.path.exists(zip_filename):
+        print 'Downloading {} ...'.format(zip_filename)
+        url = SERVER_URL + zip_filename
+        subprocess.check_call(['wget', '-N', url])
+
+    # Unzip elevation data
+    print 'Extracting {} ...'.format(zip_filename)
+    zip = ZipFile(zip_filename)
+    zip.extract(tif_filename)
 
 
-# Unzip elevation data
-print 'Extracting {} ...'.format(zip_filename)
-zip = ZipFile(zip_filename)
-zip.extract(tif_filename)
-
-
-# Delete ZIP file
-os.unlink(zip_filename)
+# Make GeoTIFF file tiled and compressed
+args = [
+    'gdal_translate',
+    '-co', 'COMPRESS=DEFLATE',  # Compress the file with DEFLATE
+    '-co', 'TILED=YES',  # Use a tiled GeoTIFF format
+    tif_filename,  # Input file
+    tiled_tif_filename,  # Output file
+]
+subprocess.check_call(args)
 
 
 # Create SQL statements
-print 'Converting {} to SQL ...'.format(tif_filename)
+print 'Converting {} to SQL ...'.format(tiled_tif_filename)
 args = [
     'raster2pgsql',
     '-a',  # Append to existing table
     '-s', '4236',  # SRID 4236 (WGS 84)
     '-t', '100x100',  # 100x100 tiles
     '-R',  # Out-of-DB raster
-    os.path.abspath(tif_filename),
+    os.path.abspath(tiled_tif_filename),
     'elevations',
 ]
 raster2pgsql = subprocess.Popen(args, stdout=subprocess.PIPE)
@@ -99,4 +109,12 @@ for i, line in enumerate(raster2pgsql.stdout):
 
     DBSession.execute(line)
 
-print "done"
+
+# Delete temporary files
+print "Cleaning up ..."
+
+if os.path.exists(zip_filename):
+    os.unlink(zip_filename)
+
+if os.path.exists(tif_filename):
+    os.unlink(tif_filename)
