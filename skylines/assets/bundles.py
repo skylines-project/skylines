@@ -32,7 +32,7 @@ bootstrap_js = Bundle(
     'https://raw.github.com/twitter/bootstrap/v2.2.0/js/bootstrap-modal.js',
     'https://raw.github.com/twitter/bootstrap/v2.2.0/js/bootstrap-tooltip.js',
     'https://raw.github.com/twitter/bootstrap/v2.2.0/js/bootstrap-popover.js',
-    'https://raw.github.com/twitter/bootstrap/v2.2.0/js/bootstrap-dropdown.js',
+    'https://raw.github.com/twitter/bootstrap/v2.3.0/js/bootstrap-dropdown.js',
     filters='closure_js',
     output='js/bootstrap-%(version)s.js')
 
