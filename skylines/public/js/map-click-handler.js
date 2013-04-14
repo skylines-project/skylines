@@ -262,7 +262,7 @@
      * @param {Number} lat Latitude.
      */
     function getLocationInfo(lon, lat) {
-      var req = $.ajax('/airspace/info?lon=' + lon + '&lat=' + lat);
+      var req = $.ajax('/api/airspace?lon=' + lon + '&lat=' + lat);
 
       req.done(function(data) {
         showLocationData(data);

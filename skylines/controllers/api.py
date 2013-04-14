@@ -5,12 +5,12 @@ from skylines.controllers.base import BaseController
 from skylines.model import DBSession, Airspace
 from skylines.model.geo import Location
 
-__all__ = ['AirspaceController']
+__all__ = ['APIController']
 
 
-class AirspaceController(BaseController):
+class APIController(BaseController):
     @expose('json')
-    def info(self, **kwargs):
+    def airspace(self, **kwargs):
         try:
             latitude = float(kwargs['lat'])
             longitude = float(kwargs['lon'])
