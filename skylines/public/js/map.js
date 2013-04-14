@@ -5,6 +5,8 @@
  */
 var map;
 
+var WGS84_PROJ = new OpenLayers.Projection('EPSG:4326');
+
 
 /**
  * Initialize the map and add airspace and flight path layers.
@@ -215,3 +217,37 @@ function addEmptyLayer() {
   map.addLayer(empty_layer);
 }
 
+
+/*
+ * Add the InfoBox handler to the map.
+ *
+ * @param {Object} settings Set flight_info or location_info to true to enable
+ */
+function initInfoBox(settings) {
+  // add a empty vector layer first
+  var nearestCircle_style = new OpenLayers.Style({
+    strokeColor: '#f4bd00',
+    strokeWidth: 3,
+    fillOpacity: 0.5,
+    fillColor: '#f4bd00'
+  });
+
+  var infobox_layer = new OpenLayers.Layer.Vector('InfoBox', {
+    styleMap: new OpenLayers.StyleMap({
+      'nearestCircle': nearestCircle_style
+    }),
+    rendererOptions: {
+      zIndexing: true
+    },
+    displayInLayerSwitcher: false
+  });
+
+  map.addLayer(infobox_layer);
+
+  // add click handler for nearest flight search
+  var infobox = $("<div id='MapInfoBox' class='InfoBox'></div>").hide();
+  $(map.div).append(infobox);
+  var map_click_handler = new slMapClickHandler(infobox,
+      settings);
+  map.events.register('click', null, map_click_handler.trigger);
+}

@@ -1,5 +1,5 @@
 (function() {
-  slMapClickHandler = function(infobox) {
+  slMapClickHandler = function(infobox, settings) {
     // Private attributes
 
     var map_click_handler = this;
@@ -43,36 +43,40 @@
       infobox.stop(true, true); // remove any running delays or animations
       infobox.empty();
 
-      // search for a aircraft position within the bounding box
-      var nearest = searchForPlane(
-          new OpenLayers.Bounds(ll.lon, ll.lat, ur.lon, ur.lat),
-          loc,
-          clickTolerance);
+      if (settings.flight_info) {
+        // search for a aircraft position within the bounding box
+        var nearest = searchForPlane(
+            new OpenLayers.Bounds(ll.lon, ll.lat, ur.lon, ur.lat),
+            loc,
+            clickTolerance);
 
-      if (nearest !== null) {
-        var index = nearest.from;
-        var flight = flights[nearest.fid];
-        var dx = nearest.along;
+        if (nearest !== null) {
+          var index = nearest.from;
+          var flight = flights[nearest.fid];
+          var dx = nearest.along;
 
-        lon = flight.lonlat[index].lon +
-            (flight.lonlat[index + 1].lon - flight.lonlat[index].lon) * dx;
-        lat = flight.lonlat[index].lat +
-            (flight.lonlat[index + 1].lat - flight.lonlat[index].lat) * dx;
-        var time = flight.t[index] +
-            (flight.t[index + 1] - flight.t[index]) * dx;
+          lon = flight.lonlat[index].lon +
+              (flight.lonlat[index + 1].lon - flight.lonlat[index].lon) * dx;
+          lat = flight.lonlat[index].lat +
+              (flight.lonlat[index + 1].lat - flight.lonlat[index].lat) * dx;
+          var time = flight.t[index] +
+              (flight.t[index + 1] - flight.t[index]) * dx;
 
-        // flight info
-        var flight_info = flightInfo(flight);
-        infobox.append(flight_info);
+          // flight info
+          var flight_info = flightInfo(flight);
+          infobox.append(flight_info);
 
-        // near flights link
-        var get_near_flights = nearFlights(lon, lat, time, flight);
-        infobox.append(get_near_flights);
+          // near flights link
+          var get_near_flights = nearFlights(lon, lat, time, flight);
+          infobox.append(get_near_flights);
+        }
       }
 
-      // location info
-      var get_location_info = locationInfo(lon, lat);
-      infobox.append(get_location_info);
+      if (settings.location_info) {
+        // location info
+        var get_location_info = locationInfo(lon, lat);
+        infobox.append(get_location_info);
+      }
 
       // general events
 
@@ -186,7 +190,7 @@
       // draw this circle and fade the inner fill within 500ms
       circle.renderIntent = 'nearestCircle';
 
-      map.getLayersByName('Flight')[0].addFeatures(circle);
+      map.getLayersByName('InfoBox')[0].addFeatures(circle);
 
       // escape points in the id, see
       // http://docs.jquery.com/Frequently_Asked_Questions#How_do_I_select_an_
@@ -209,7 +213,7 @@
         // check if circle still exists, because it might got deleted before
         // the animation was done.
         if (circle !== null) {
-          map.getLayersByName('Flight')[0].destroyFeatures(circle);
+          map.getLayersByName('InfoBox')[0].destroyFeatures(circle);
           circle = null;
         }
       });

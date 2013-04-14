@@ -68,6 +68,8 @@
     var zoom = map.getZoom();
     if (zoom > 10)
       map.zoomTo(10);
+
+    initInfoBox({flight_info: false, location_info: true});
   });
 </script>
 {%- endif %}

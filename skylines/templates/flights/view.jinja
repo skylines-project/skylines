@@ -111,7 +111,7 @@
     addBingLayers("{{ config.get('skylines.bing.api_key', 'null') }}");
     addReliefLayer();
 
-    initInfoBox();
+    initInfoBox({flight_info: true, location_info: true});
   });
 </script>
 {%- endif %}

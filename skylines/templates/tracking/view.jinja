@@ -102,6 +102,8 @@ Live Tracking <small>of {{ pilot }}</small>
     setInterval(function() {
       updateFlightsFromJSON();
     }, 15*1000);
+
+    initInfoBox({flight_info: false, location_info: true});
   });
 </script>
 {%- endif %}
