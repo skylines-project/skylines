@@ -20,3 +20,4 @@ from skylines.model.notification import Notification
 from skylines.model.timezone import TimeZone
 from skylines.model.trace import Trace
 from skylines.model.tracking import TrackingFix, TrackingSession
+from skylines.model.mountain_wave_project import MountainWaveProject

@@ -30,8 +30,6 @@ MAP
 
   PROJECTION
      "init=epsg:3857"
-#     "init=epsg:900913"
-#     "init=epsg:4326"
   END
 
   WEB
@@ -48,6 +46,9 @@ MAP
 
   # Airspace
   INCLUDE "airspace/airspace.map"
+
+  # Mountain Wave Project
+  INCLUDE "mountain_wave_project/mountain_wave_project.map"
 
   # some symbols
   INCLUDE "symbols.map"

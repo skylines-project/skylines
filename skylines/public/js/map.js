@@ -41,6 +41,7 @@ function initOpenLayers(id, tile_url) {
   map.addLayer(osmLayer);
 
   addAirspaceLayers(tile_url);
+  addMWPLayers(tile_url);
   addEmptyLayer();
 
   map.setCenter(new OpenLayers.LonLat(10, 50).
@@ -72,6 +73,29 @@ function loadBaseLayerFromCookie() {
   if (base_layer)
     // If the base layer names are matching set this layer as new base layer
     map.setBaseLayer(base_layer);
+}
+
+
+/**
+ * Add the custom Mountain Wave Project layer to the map
+
+ * @param {String} tile_url The base URL of the mwp tile server.
+ */
+function addMWPLayers(tile_url) {
+  if (!tile_url) tile_url = '';
+
+  var mwp = new OpenLayers.Layer.XYZ('Mountain Wave Project',
+      tile_url + '/mapproxy/tiles/1.0.0/mwp/${z}/${x}/${y}.png', {
+        isBaseLayer: false,
+        transparent: true,
+        'visibility': false,
+        'displayInLayerSwitcher': true,
+        attribution: 'Mountain Wave Data &copy; ' +
+            '<a href="http://www.mountain-wave-project.com/">' +
+            'Mountain Wave Project' +
+            '</a>.'
+      });
+  map.addLayer(mwp);
 }
 
 

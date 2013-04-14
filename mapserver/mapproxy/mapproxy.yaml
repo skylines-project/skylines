@@ -9,11 +9,29 @@ services:
 #      abstract: Airspace WMS Server for SkyLines
 
 layers:
+  - name: mwp
+    title: Mountain Wave Project WMS
+    sources: [mwp_cache]
+
   - name: airspace
     title: Airspace WMS
     sources: [airspace_cache]
 
 caches:
+  mwp_cache:
+    grids: [GLOBAL_MERCATOR]
+    # choose between airspace_mapserver_bin source and
+    # airspace_mapserver_wms source. The first one just
+    # needs the cgi-mapserver binary, the latter retrieves
+    # the map from a WMS server.
+    sources: [mwp_mapserver_wms]
+    image:
+      format: image/png
+      mode: RGBA
+    format: image/png
+    request_format: image/png
+    link_single_color_images: true
+
   airspace_cache:
     grids: [GLOBAL_MERCATOR]
     # choose between airspace_mapserver_bin source and
@@ -29,6 +47,20 @@ caches:
     link_single_color_images: true
 
 sources:
+  mwp_mapserver_bin:
+    type: mapserver
+    supported_srs: ['EPSG:3857']
+    req:
+      layers: MWP
+      map: ../skylines.map
+      transparent: true
+    image:
+      format: image/png
+      mode: RGBA
+    mapserver:
+      binary: /usr/lib/cgi-bin/mapserv
+      working_dir: ../
+
   airspace_mapserver_bin:
     type: mapserver
     supported_srs: ['EPSG:3857']
@@ -42,6 +74,17 @@ sources:
     mapserver:
       binary: /usr/lib/cgi-bin/mapserv
       working_dir: ../
+
+  mwp_mapserver_wms:
+    type: wms
+    supported_srs: ['EPSG:3857']
+    req:
+      layers: MWP
+      url: http://skylines.xcsoar.org/mapserver/?
+      transparent: true
+    image:
+      format: image/png
+      mode: RGBA
 
   airspace_mapserver_wms:
     type: wms
