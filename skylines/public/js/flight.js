@@ -324,9 +324,19 @@ function addFlightFromJSON(url) {
 function addContest(name, lonlat, times, sfid) {
   var points = new Array();
   var lonlatLength = lonlat.length;
+
+  var triangle = (name.search(/triangle/) != -1 && lonlatLength == 5);
+
+  triangle && lonlatLength--;
+
   for (var i = 0; i < lonlatLength; ++i) {
     points.push(new OpenLayers.Geometry.Point(lonlat[i].lon, lonlat[i].lat).
         transform(WGS84_PROJ, map.getProjectionObject()));
+  }
+
+  if (triangle) {
+    points[0] = new OpenLayers.Geometry.Point(lonlat[3].lon, lonlat[3].lat).
+        transform(WGS84_PROJ, map.getProjectionObject());
   }
 
   var trace = new OpenLayers.Geometry.LineString(points);
