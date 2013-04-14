@@ -106,7 +106,6 @@ function addMWPLayers(tile_url) {
   var mwp = new OpenLayers.Layer.XYZ('Mountain Wave Project',
       tile_url + '/mapproxy/tiles/1.0.0/mwp/${z}/${x}/${y}.png', {
         isBaseLayer: false,
-        transparent: true,
         'visibility': false,
         'displayInLayerSwitcher': true,
         attribution: 'Mountain Wave Data &copy; ' +
@@ -134,7 +133,6 @@ function addAirspaceLayers(tile_url) {
   var airspace = new OpenLayers.Layer.XYZ('Airspace',
       tile_url + '/mapproxy/tiles/1.0.0/airspace/${z}/${x}/${y}.png', {
         isBaseLayer: false,
-        transparent: true,
         'visibility': true,
         'displayInLayerSwitcher': true
       });
