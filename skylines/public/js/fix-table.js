@@ -183,16 +183,22 @@
 
         } else if (index == 2) {
           if (fix && fix['alt-msl'] !== undefined)
-            html = slUnits.formatAltitude(fix['alt-msl']);
+            html = slUnits.formatAltitude(fix['alt-msl']) +
+                ' <small>MSL</small>';
 
         } else if (index == 3) {
+          if (fix && fix['alt-gnd'] !== undefined)
+            html = slUnits.formatAltitude(fix['alt-gnd']) +
+                ' <small>GND</small>';
+
+        } else if (index == 4) {
           if (fix && fix.vario !== undefined) {
             html = slUnits.formatLift(fix.vario);
             if (fix.lift >= 0)
               html = '+' + html;
           }
 
-        } else if (index == 4) {
+        } else if (index == 5) {
           if (fix && fix.speed !== undefined)
             html = slUnits.formatSpeed(fix.speed);
 
@@ -213,6 +219,7 @@
           (opt_competition_id || '') +
           '</span></td>' +
           '<td>--:--:--</td>' +
+          '<td>--</td>' +
           '<td>--</td>' +
           '<td>--</td>' +
           '<td>--</td>' +
