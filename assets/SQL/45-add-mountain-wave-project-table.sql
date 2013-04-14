@@ -56,3 +56,14 @@ CREATE INDEX idx_mountain_wave_project_location
   USING gist
   (location );
 
+-- register geometry columns
+
+INSERT INTO geometry_columns(f_table_catalog, f_table_schema, f_table_name, f_geometry_column, coord_dimension, srid, "type")
+SELECT '', 'public', 'mountain_wave_project', 'ellipse', 2, 4326, 'LINESTRING';
+
+INSERT INTO geometry_columns(f_table_catalog, f_table_schema, f_table_name, f_geometry_column, coord_dimension, srid, "type")
+SELECT '', 'public', 'mountain_wave_project', 'axis', 2, 4326, 'LINESTRING';
+
+INSERT INTO geometry_columns(f_table_catalog, f_table_schema, f_table_name, f_geometry_column, coord_dimension, srid, "type")
+SELECT '', 'public', 'mountain_wave_project', 'location', 2, 4326, 'POINT';
+
