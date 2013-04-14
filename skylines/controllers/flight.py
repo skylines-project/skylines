@@ -235,7 +235,7 @@ def get_near_flights(flight, location, time, max_distance=1000):
         .filter(Flight.takeoff_time <= time) \
         .filter(Flight.landing_time >= time) \
         .filter(func.ST_DWithin(Flight.locations,
-                                WKTElement(location.to_wkt()),
+                                WKTElement(location.to_wkt(), srid=4326),
                                 max_distance_deg))
 
     flights = []
