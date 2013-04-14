@@ -10,9 +10,9 @@ var map;
  * Initialize the map and add airspace and flight path layers.
  *
  * @param {String} id The ID of the HTML element used for the map.
- * @param {String} airspace_tile_url The base URL of the airspace tile server.
+ * @param {String} tile_url The base URL of the SkyLines tile server.
  */
-function initOpenLayers(id, airspace_tile_url) {
+function initOpenLayers(id, tile_url) {
   OpenLayers.ImgPath = '/images/OpenLayers/';
 
   map = new OpenLayers.Map(id, {
@@ -40,7 +40,7 @@ function initOpenLayers(id, airspace_tile_url) {
 
   map.addLayer(osmLayer);
 
-  addAirspaceLayers(airspace_tile_url);
+  addAirspaceLayers(tile_url);
   addEmptyLayer();
 
   map.setCenter(new OpenLayers.LonLat(10, 50).
@@ -78,13 +78,13 @@ function loadBaseLayerFromCookie() {
 /**
  * Add the custom airspace layers to the map
 
- * @param {String} airspace_tile_url The base URL of the airspace tile server.
+ * @param {String} tile_url The base URL of the airspace tile server.
  */
-function addAirspaceLayers(airspace_tile_url) {
-  if (!airspace_tile_url) airspace_tile_url = '';
+function addAirspaceLayers(tile_url) {
+  if (!tile_url) tile_url = '';
 
   var airspace = new OpenLayers.Layer.XYZ('Airspace',
-      airspace_tile_url + '/mapproxy/tiles/1.0.0/airspace/${z}/${x}/${y}.png', {
+      tile_url + '/mapproxy/tiles/1.0.0/airspace/${z}/${x}/${y}.png', {
         isBaseLayer: false,
         transparent: true,
         'visibility': true,

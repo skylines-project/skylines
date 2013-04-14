@@ -53,7 +53,7 @@
                  {{ h.json.dumps(h.get_setting_name('altitude_unit')) }});
 
     initOpenLayers("map_canvas",
-                   "{{ config.get('skylines.map.airspace_tile_url', '') }}");
+                   "{{ config.get('skylines.map.tile_url', '') }}");
     initFlightLayer();
     initBaro($("#barogram"));
 
