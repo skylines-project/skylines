@@ -138,7 +138,7 @@
     function nearFlights(lon, lat, time, flight) {
       var get_near_flights = $(
           '<div class="info-item">' +
-          '<a class="near" href="#">Load nearby flights</a>' +
+          '<a class="near" href="#NearFlights">Load nearby flights</a>' +
           '</div>'
           );
 
@@ -154,7 +154,7 @@
     function locationInfo(lon, lat) {
       var get_location_info = $(
           '<div class="info-item">' +
-          '<a class="near" href="#">Get location info</a>' +
+          '<a class="near" href="#LocationInfo">Get location info</a>' +
           '</div>'
           );
 
