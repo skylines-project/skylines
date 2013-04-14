@@ -327,7 +327,7 @@ function addContest(name, lonlat, times, sfid) {
 
   var triangle = (name.search(/triangle/) != -1 && lonlatLength == 5);
 
-  triangle && lonlatLength--;
+  if (triangle) lonlatLength--;
 
   for (var i = 0; i < lonlatLength; ++i) {
     points.push(new OpenLayers.Geometry.Point(lonlat[i].lon, lonlat[i].lat).
@@ -335,8 +335,7 @@ function addContest(name, lonlat, times, sfid) {
   }
 
   if (triangle) {
-    points[0] = new OpenLayers.Geometry.Point(lonlat[3].lon, lonlat[3].lat).
-        transform(WGS84_PROJ, map.getProjectionObject());
+    points[0] = points[3];
   }
 
   var trace = new OpenLayers.Geometry.LineString(points);
