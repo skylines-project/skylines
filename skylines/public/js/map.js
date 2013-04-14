@@ -115,6 +115,11 @@ function addMWPLayers(tile_url) {
             '</a>.'
       });
   map.addLayer(mwp);
+
+  map.events.register('changebaselayer', null, function(data) {
+    if (data.layer.hideAirspaceOverlay)
+      mwp.setVisibility(false);
+  });
 }
 
 
