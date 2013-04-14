@@ -589,7 +589,8 @@ function setPlaneOnMap(id, fix_data) {
 function hidePlaneOnMap(id) {
   map.getLayersByName('Flight')[0].removeFeatures(flights[id].plane);
 
-  flights[i].plane.marker && flights[id].plane.marker.hide();
+  if (flights[id].plane && flights[id].plane.marker)
+    flights[id].plane.marker.hide();
 }
 
 function hideAllPlanesOnMap() {
@@ -597,7 +598,8 @@ function hideAllPlanesOnMap() {
   var flightsLength = flights.length;
   for (var i = 0; i < flightsLength; ++i) {
     layer.removeFeatures(flights[i].plane);
-    flights[i].plane.marker && flights[i].plane.marker.hide();
+    if (flights[i].plane && flights[i].plane.marker)
+      flights[i].plane.marker.hide();
   }
 }
 
