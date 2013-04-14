@@ -1,5 +1,5 @@
 (function() {
-  slMapClickHandler = function(infobox) {
+  slMapClickHandler = function(infobox, settings) {
     // Private attributes
 
     var map_click_handler = this;
@@ -43,36 +43,40 @@
       infobox.stop(true, true); // remove any running delays or animations
       infobox.empty();
 
-      // search for a aircraft position within the bounding box
-      var nearest = searchForPlane(
-          new OpenLayers.Bounds(ll.lon, ll.lat, ur.lon, ur.lat),
-          loc,
-          clickTolerance);
+      if (settings.flight_info) {
+        // search for a aircraft position within the bounding box
+        var nearest = searchForPlane(
+            new OpenLayers.Bounds(ll.lon, ll.lat, ur.lon, ur.lat),
+            loc,
+            clickTolerance);
 
-      if (nearest !== null) {
-        var index = nearest.from;
-        var flight = flights[nearest.fid];
-        var dx = nearest.along;
+        if (nearest !== null) {
+          var index = nearest.from;
+          var flight = flights[nearest.fid];
+          var dx = nearest.along;
 
-        lon = flight.lonlat[index].lon +
-            (flight.lonlat[index + 1].lon - flight.lonlat[index].lon) * dx;
-        lat = flight.lonlat[index].lat +
-            (flight.lonlat[index + 1].lat - flight.lonlat[index].lat) * dx;
-        var time = flight.t[index] +
-            (flight.t[index + 1] - flight.t[index]) * dx;
+          lon = flight.lonlat[index].lon +
+              (flight.lonlat[index + 1].lon - flight.lonlat[index].lon) * dx;
+          lat = flight.lonlat[index].lat +
+              (flight.lonlat[index + 1].lat - flight.lonlat[index].lat) * dx;
+          var time = flight.t[index] +
+              (flight.t[index + 1] - flight.t[index]) * dx;
 
-        // flight info
-        var flight_info = flightInfo(flight);
-        infobox.append(flight_info);
+          // flight info
+          var flight_info = flightInfo(flight);
+          infobox.append(flight_info);
 
-        // near flights link
-        var get_near_flights = nearFlights(lon, lat, time, flight);
-        infobox.append(get_near_flights);
+          // near flights link
+          var get_near_flights = nearFlights(lon, lat, time, flight);
+          infobox.append(get_near_flights);
+        }
       }
 
-      // airspace info
-      var get_airspace_info = airspaceInfo(lon, lat);
-      infobox.append(get_airspace_info);
+      if (settings.location_info) {
+        // location info
+        var get_location_info = locationInfo(lon, lat);
+        infobox.append(get_location_info);
+      }
 
       // general events
 
@@ -134,7 +138,7 @@
     function nearFlights(lon, lat, time, flight) {
       var get_near_flights = $(
           '<div class="info-item">' +
-          '<a class="near" href="#">Load nearby flights</a>' +
+          '<a class="near" href="#NearFlights">Load nearby flights</a>' +
           '</div>'
           );
 
@@ -147,18 +151,18 @@
       return get_near_flights;
     };
 
-    function airspaceInfo(lon, lat) {
-      var get_airspace_info = $(
+    function locationInfo(lon, lat) {
+      var get_location_info = $(
           '<div class="info-item">' +
-          '<a class="near" href="#">Get airspace info</a>' +
+          '<a class="near" href="#LocationInfo">Get location info</a>' +
           '</div>'
           );
 
-      get_airspace_info.on('click touchend', function(e) {
-        getAirspaceInfo(lon, lat);
+      get_location_info.on('click touchend', function(e) {
+        getLocationInfo(lon, lat);
       });
 
-      return get_airspace_info;
+      return get_location_info;
     };
 
     /**
@@ -179,6 +183,12 @@
       var point = new OpenLayers.Geometry.Point(lon, lat)
                   .transform(WGS84_PROJ, map.getProjectionObject());
 
+      // make sure there's no other circle on the map
+      var infobox_layer = map.getLayersByName('InfoBox')[0];
+      infobox_layer.destroyFeatures(
+          infobox_layer.getFeatureBy('renderIntent', 'nearestCircle')
+      );
+
       circle = new OpenLayers.Feature.Vector(
           new OpenLayers.Geometry.Polygon.createRegularPolygon(point,
               distance_deg, 40, 0));
@@ -186,7 +196,7 @@
       // draw this circle and fade the inner fill within 500ms
       circle.renderIntent = 'nearestCircle';
 
-      map.getLayersByName('Flight')[0].addFeatures(circle);
+      map.getLayersByName('InfoBox')[0].addFeatures(circle);
 
       // escape points in the id, see
       // http://docs.jquery.com/Frequently_Asked_Questions#How_do_I_select_an_
@@ -209,7 +219,8 @@
         // check if circle still exists, because it might got deleted before
         // the animation was done.
         if (circle !== null) {
-          map.getLayersByName('Flight')[0].destroyFeatures(circle);
+          var infobox_layer = map.getLayersByName('InfoBox')[0];
+          infobox_layer.destroyFeatures(circle);
           circle = null;
         }
       });
@@ -256,39 +267,55 @@
     };
 
     /**
-     * Request airspace informations via ajax
+     * Request location informations via ajax
      *
      * @param {Number} lon Longitude.
      * @param {Number} lat Latitude.
      */
-    function getAirspaceInfo(lon, lat) {
-      var req = $.ajax('/airspace/info?lon=' + lon + '&lat=' + lat);
+    function getLocationInfo(lon, lat) {
+      var req = $.ajax('/api/?lon=' + lon + '&lat=' + lat);
 
       req.done(function(data) {
-        if (data.airspaces && data.airspaces.length != 0)
-          showAirspaceData(data.airspaces);
-        else
-          showAirspaceData(null);
+        showLocationData(data);
       });
 
       req.fail(function() {
-        showAirspaceData(null);
+        showLocationData(null);
       });
     };
 
     /**
-     * Show airspace data in infobox
+     * Show location data in infobox
      *
-     * @param {Object} data Airspace data.
+     * @param {Object} data Location data.
      */
-    function showAirspaceData(data) {
+    function showLocationData(data) {
       if (!visible) return; // do nothing if infobox is closed already
 
       infobox.empty();
-      var item = $('<div class="airspace info-item"></div>');
+      var item = $('<div class="location info-item"></div>');
+      var no_data = true;
 
-      if (!data) {
-        item.html('No airspace data retrieved for this location');
+      if (data) {
+        if (!$.isEmptyObject(data.airspaces) &&
+            map.getLayersByName('Airspace')[0].visibility) {
+          var p = $('<p></p>');
+          p.append(formatAirspaceData(data.airspaces));
+          item.append(p);
+          no_data = false;
+        }
+
+        if (!$.isEmptyObject(data.waves) &&
+            map.getLayersByName('Mountain Wave Project')[0].visibility) {
+          var p = $('<p></p>');
+          p.append(formatMountainWaveData(data.waves));
+          item.append(p);
+          no_data = false;
+        }
+      }
+
+      if (no_data) {
+        item.html('No data retrieved for this location');
 
         infobox.delay(1500).fadeOut(1000, function() {
           infobox.hide();
@@ -296,34 +323,6 @@
         });
 
         hideCircle(1000);
-
-      } else {
-        var table = $('<table></table>');
-
-        table.append($(
-            '<thead><tr>' +
-            '<th>Name</th>' +
-            '<th>Class</th>' +
-            '<th>Base</th>' +
-            '<th>Top</th>' +
-            '</tr></thead>'
-            ));
-
-        var table_body = $('<tbody></tbody');
-
-        for (var i = 0; i < data.length; ++i) {
-          table_body.append($(
-              '<tr>' +
-              '<td class="airspace_name">' + data[i].name + '</td>' +
-              '<td class="airspace_class">' + data[i].airspace_class + '</td>' +
-              '<td class="airspace_base">' + data[i].base + '</td>' +
-              '<td class="airspace_top">' + data[i].top + '</td>' +
-              '</tr>'
-              ));
-        }
-
-        table.append(table_body);
-        item.append(table);
       }
 
       infobox.append(item);
@@ -331,6 +330,79 @@
       pixel = map.getPixelFromLonLat(infobox.latlon);
       infobox.css('left', (pixel.x + 15) + 'px');
       infobox.css('top', (pixel.y - infobox.height() / 2) + 'px');
+    };
+
+    /**
+     * Format Airspace data for infobox
+     *
+     * @param {Object} data Airspace data.
+     */
+    function formatAirspaceData(data) {
+      var table = $('<table></table>');
+
+      table.append($(
+          '<thead><tr>' +
+          '<th colspan="4">Airspaces</th>' +
+          '</tr><tr>' +
+          '<th>Name</th>' +
+          '<th>Class</th>' +
+          '<th>Base</th>' +
+          '<th>Top</th>' +
+          '</tr></thead>'
+          ));
+
+      var table_body = $('<tbody></tbody');
+
+      for (var i = 0; i < data.length; ++i) {
+        table_body.append($(
+            '<tr>' +
+            '<td class="airspace_name">' + data[i].name + '</td>' +
+            '<td class="airspace_class">' + data[i].airspace_class + '</td>' +
+            '<td class="airspace_base">' + data[i].base + '</td>' +
+            '<td class="airspace_top">' + data[i].top + '</td>' +
+            '</tr>'
+            ));
+      }
+
+      table.append(table_body);
+
+      return table;
+    };
+
+
+    /**
+     * Format Mountain Wave data in infobox
+     *
+     * @param {Object} data Wave data.
+     */
+    function formatMountainWaveData(data) {
+      var table = $('<table></table>');
+
+      table.append($(
+          '<thead><tr>' +
+          '<th colspan="2">Mountain Waves</th>' +
+          '</tr><tr>' +
+          '<th>Name</th>' +
+          '<th>Wind direction</th>' +
+          '</tr></thead>'
+          ));
+
+      var table_body = $('<tbody></tbody');
+
+      for (var i = 0; i < data.length; ++i) {
+        table_body.append($(
+            '<tr>' +
+            '<td class="wave_name">' + data[i].name + '</td>' +
+            '<td class="wave_direction">' +
+                data[i].main_wind_direction +
+            '°</td>' +
+            '</tr>'
+            ));
+      }
+
+      table.append(table_body);
+
+      return table;
     };
 
   };

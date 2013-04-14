@@ -32,8 +32,6 @@ var contest_colors = {
   'olc_plus triangle': '#9f14ff'
 };
 
-var WGS84_PROJ = new OpenLayers.Projection('EPSG:4326');
-
 /**
  * Initialize the map and add airspace and flight path layers.
  */
@@ -50,13 +48,6 @@ function initFlightLayer() {
     strokeWidth: 2,
     strokeDashstyle: 'dash',
     graphicZIndex: 1500
-  });
-
-  var nearestCircle_style = new OpenLayers.Style({
-    strokeColor: '#f4bd00',
-    strokeWidth: 3,
-    fillOpacity: 0.5,
-    fillColor: '#f4bd00'
   });
 
   var plane_style = new OpenLayers.Style({
@@ -92,7 +83,6 @@ function initFlightLayer() {
     styleMap: new OpenLayers.StyleMap({
       'default': default_style,
       'contest': contest_style,
-      'nearestCircle': nearestCircle_style,
       'plane': plane_style,
       'hidden': hidden_style
     }),
@@ -109,17 +99,6 @@ function initFlightLayer() {
   });
 
   map.events.register('moveend', null, updateBaroScale);
-}
-
-/*
- * Add the InfoBox handler to the map. Only for non-tracking currently...
- */
-function initInfoBox() {
-  // add click handler for nearest flight search
-  var infobox = $("<div id='MapInfoBox' class='InfoBox'></div>").hide();
-  $(map.div).append(infobox);
-  var map_click_handler = new slMapClickHandler(infobox);
-  map.events.register('click', null, map_click_handler.trigger);
 }
 
 function initFixTable() {
