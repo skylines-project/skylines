@@ -338,6 +338,8 @@ class FlightController(BaseController):
                     barogram_h=trace['barogram_h'],
                     enl=trace['enl'],
                     contests=trace['contests'],
+                    elevations_t=trace['elevations_t'],
+                    elevations_h=trace['elevations_h'],
                     sfid=self.flight.id,
                     additional=dict(
                         registration=self.flight.registration,
