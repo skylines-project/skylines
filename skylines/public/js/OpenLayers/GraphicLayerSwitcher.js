@@ -89,7 +89,7 @@ var GraphicLayerSwitcher = OpenLayers.Class(OpenLayers.Control, {
         'class="overlay"></div>');
 
     var current = $(
-        '<a href="#">' +
+        '<a href="#LayerSwitcher">' +
         '<img src="../../images/layers.png" />' +
         '</a>');
     current.addClass('GraphicLayerSwitcher current');
@@ -119,7 +119,7 @@ var GraphicLayerSwitcher = OpenLayers.Class(OpenLayers.Control, {
             (on ? '.png' : '.bw.png');
 
         var item = $(
-            "<a id='" + id + "' href='#'>" +
+            "<a id='" + id + "' href='#LayerSwitcher'>" +
             "<img src='" + layer_image + "' />" +
             layer.name +
             '</a><br />');
