@@ -1,0 +1,112 @@
+## Wave ellipse
+LAYER
+  NAME 'MWP_Ellipse'
+  GROUP 'MWP'
+  TYPE LINE
+  CONNECTIONTYPE POSTGIS
+  CONNECTION "dbname=skylines"
+  DATA "ellipse from mountain_wave_project"
+  LABELITEM "name"
+
+  PROJECTION
+    "init=epsg:4326"
+  END
+
+  METADATA
+    WMS_NAME 'MWP_Ellipse'
+    WMS_GROUP 'MWP'
+  END
+
+  CLASS
+    NAME 'Wave axis'
+    MAXSCALEDENOM 866792 # Zoom level 10
+
+    STYLE
+      COLOR 0 0 0
+      WIDTH 1
+      LINECAP butt
+    END
+  END
+END
+
+## Wave points
+LAYER
+  NAME 'MWP_Overview'
+  GROUP 'MWP'
+  TYPE POINT
+  CONNECTIONTYPE POSTGIS
+  CONNECTION "dbname=skylines"
+  DATA "location from (SELECT id, location, name, (-weather_dir) as wind_dir
+        from mountain_wave_project) as foo using unique id"
+  LABELITEM "name"
+
+  PROJECTION
+    "init=epsg:4326"
+  END
+
+  METADATA
+    WMS_NAME 'MWP_Overview'
+    WMS_GROUP 'MWP'
+  END
+
+  CLASS
+    NAME 'Wave Wind direction'
+    MAXSCALEDENOM 216698 # Zoom level 12
+
+    STYLE
+      SYMBOL 'arrow'
+      OUTLINECOLOR 0 0 0
+      ANGLE [wind_dir]
+    END
+
+    LABEL
+      COLOR  0 0 0
+      OUTLINECOLOR 255 255 255
+      OUTLINEWIDTH 1
+      FONT "serif"
+      TYPE truetype
+      SIZE 7
+      MAXSIZE 7
+      MINSIZE 7
+      POSITION AUTO
+      PARTIALS false
+      MINDISTANCE 20
+      ANTIALIAS true
+    END
+  END
+
+  CLASS
+    NAME 'Wave label'
+    MAXSCALEDENOM 433396
+
+    STYLE END
+
+    LABEL
+      COLOR  0 0 0
+      OUTLINECOLOR 255 255 255
+      OUTLINEWIDTH 1
+      FONT "serif"
+      TYPE truetype
+      SIZE 7
+      MAXSIZE 7
+      MINSIZE 7
+      POSITION AUTO
+      PARTIALS false
+      MINDISTANCE 20
+      ANTIALIAS true
+    END
+  END
+
+  CLASS
+    NAME 'Wave large'
+    MINSCALEDENOM 866792
+    MAXSCALEDENOM 3467160 # Zoom level 7
+
+    STYLE
+      SYMBOL 'circle'
+      COLOR 255 230 0
+      OPACITY 70
+      SIZE 6
+    END
+  END
+END

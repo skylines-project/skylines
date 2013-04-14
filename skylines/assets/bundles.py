@@ -101,6 +101,7 @@ openlayers_js = Bundle(
     'js/OpenLayers/OpenLayers.js',
     'js/OpenLayers/GraphicLayerSwitcher.js',
     'js/map.js',
+    'js/map-click-handler.js',
     filters='rjsmin',
     output='js/ol-%(version)s.js')
 
@@ -110,7 +111,6 @@ flight_js = Bundle(
         'js/baro.js',
         'js/fix-table.js',
         'js/phase-table.js',
-        'js/map-click-handler.js',
         filters='closure_js'),
 
     'js/flight.js',

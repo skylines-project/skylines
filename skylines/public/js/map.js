@@ -5,14 +5,16 @@
  */
 var map;
 
+var WGS84_PROJ = new OpenLayers.Projection('EPSG:4326');
+
 
 /**
  * Initialize the map and add airspace and flight path layers.
  *
  * @param {String} id The ID of the HTML element used for the map.
- * @param {String} airspace_tile_url The base URL of the airspace tile server.
+ * @param {String} tile_url The base URL of the SkyLines tile server.
  */
-function initOpenLayers(id, airspace_tile_url) {
+function initOpenLayers(id, tile_url) {
   OpenLayers.ImgPath = '/images/OpenLayers/';
 
   map = new OpenLayers.Map(id, {
@@ -32,6 +34,15 @@ function initOpenLayers(id, airspace_tile_url) {
   map.addControl(new OpenLayers.Control.Attribution());
   map.addControl(new OpenLayers.Control.ScaleLine({geodesic: true}));
 
+  map.events.register('addlayer', null, function(data) {
+    // When the list of layers changes load the
+    // last used base layer from the cookies
+    if (data.layer.isBaseLayer)
+      loadBaseLayerFromCookie();
+    else
+      loadOverlayLayersFromCookie();
+  });
+
   var osmLayer = new OpenLayers.Layer.OSM('OpenStreetMap');
   osmLayer.addOptions({
     transitionEffect: 'resize',
@@ -40,7 +51,8 @@ function initOpenLayers(id, airspace_tile_url) {
 
   map.addLayer(osmLayer);
 
-  addAirspaceLayers(airspace_tile_url);
+  addAirspaceLayers(tile_url);
+  addMWPLayers(tile_url);
   addEmptyLayer();
 
   map.setCenter(new OpenLayers.LonLat(10, 50).
@@ -48,17 +60,6 @@ function initOpenLayers(id, airspace_tile_url) {
                 map.getProjectionObject()), 5);
 
   map.addControl(new GraphicLayerSwitcher());
-
-  map.events.register('changebaselayer', null, function(data) {
-    // Save the selected base layer in a cookie
-    $.cookie('base_layer', data.layer.name, { path: '/', expires: 365 });
-  });
-
-  map.events.register('addlayer', null, function() {
-    // When the list of layers changes load the
-    // last used base layer from the cookies
-    loadBaseLayerFromCookie();
-  });
 }
 
 
@@ -75,16 +76,58 @@ function loadBaseLayerFromCookie() {
 }
 
 
+function loadOverlayLayersFromCookie() {
+  var overlay_layers = $.cookie('overlay_layers');
+  if (overlay_layers == null)
+    return;
+
+  overlay_layers = overlay_layers.split(';');
+  // Cycle through the overlay layers to find a match
+  for (var i = 0; i < map.layers.length; ++i) {
+    if (map.layers[i].isBaseLayer || !map.layers[i].displayInLayerSwitcher)
+      continue;
+
+    if ($.inArray(map.layers[i].name, overlay_layers) != -1)
+      map.layers[i].setVisibility(true);
+    else
+      map.layers[i].setVisibility(false);
+  }
+}
+
+
+/**
+ * Add the custom Mountain Wave Project layer to the map
+
+ * @param {String} tile_url The base URL of the mwp tile server.
+ */
+function addMWPLayers(tile_url) {
+  if (!tile_url) tile_url = '';
+
+  var mwp = new OpenLayers.Layer.XYZ('Mountain Wave Project',
+      tile_url + '/mapproxy/tiles/1.0.0/mwp/${z}/${x}/${y}.png', {
+        isBaseLayer: false,
+        transparent: true,
+        'visibility': false,
+        'displayInLayerSwitcher': true,
+        attribution: 'Mountain Wave Data &copy; ' +
+            '<a href="http://www.mountain-wave-project.com/">' +
+            'Mountain Wave Project' +
+            '</a>.'
+      });
+  map.addLayer(mwp);
+}
+
+
 /**
  * Add the custom airspace layers to the map
 
- * @param {String} airspace_tile_url The base URL of the airspace tile server.
+ * @param {String} tile_url The base URL of the airspace tile server.
  */
-function addAirspaceLayers(airspace_tile_url) {
-  if (!airspace_tile_url) airspace_tile_url = '';
+function addAirspaceLayers(tile_url) {
+  if (!tile_url) tile_url = '';
 
   var airspace = new OpenLayers.Layer.XYZ('Airspace',
-      airspace_tile_url + '/mapproxy/tiles/1.0.0/airspace/${z}/${x}/${y}.png', {
+      tile_url + '/mapproxy/tiles/1.0.0/airspace/${z}/${x}/${y}.png', {
         isBaseLayer: false,
         transparent: true,
         'visibility': true,
@@ -174,3 +217,37 @@ function addEmptyLayer() {
   map.addLayer(empty_layer);
 }
 
+
+/*
+ * Add the InfoBox handler to the map.
+ *
+ * @param {Object} settings Set flight_info or location_info to true to enable
+ */
+function initInfoBox(settings) {
+  // add a empty vector layer first
+  var nearestCircle_style = new OpenLayers.Style({
+    strokeColor: '#f4bd00',
+    strokeWidth: 3,
+    fillOpacity: 0.5,
+    fillColor: '#f4bd00'
+  });
+
+  var infobox_layer = new OpenLayers.Layer.Vector('InfoBox', {
+    styleMap: new OpenLayers.StyleMap({
+      'nearestCircle': nearestCircle_style
+    }),
+    rendererOptions: {
+      zIndexing: true
+    },
+    displayInLayerSwitcher: false
+  });
+
+  map.addLayer(infobox_layer);
+
+  // add click handler for nearest flight search
+  var infobox = $("<div id='MapInfoBox' class='InfoBox'></div>").hide();
+  $(map.div).append(infobox);
+  var map_click_handler = new slMapClickHandler(infobox,
+      settings);
+  map.events.register('click', null, map_click_handler.trigger);
+}
