@@ -3,8 +3,11 @@
 from datetime import datetime
 from sqlalchemy import Column
 from sqlalchemy.types import Integer, Float, String, DateTime
+from sqlalchemy.sql.expression import cast, func
 from skylines.model.base import DeclarativeBase
-from geoalchemy2.types import Geometry
+from skylines.model.session import DBSession
+from geoalchemy2.types import Geography, Geometry
+from geoalchemy2.elements import WKTElement
 
 
 class MountainWaveProject(DeclarativeBase):
@@ -35,3 +38,11 @@ class MountainWaveProject(DeclarativeBase):
     def __repr__(self):
         return ('<MountainWaveProject: id=%d name=\'%s\'>' % (self.id, self.name)).encode('utf-8')
 
+    @classmethod
+    def get_info(cls, location):
+        '''Returns a query object of mountain waves around the location'''
+        return DBSession.query(cls) \
+            .filter(func.ST_DWithin(
+                cast(WKTElement(location.to_wkt(), srid=4326), Geography),
+                cast(cls.location, Geography),
+                5000))

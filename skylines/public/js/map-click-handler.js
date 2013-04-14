@@ -262,7 +262,7 @@
      * @param {Number} lat Latitude.
      */
     function getLocationInfo(lon, lat) {
-      var req = $.ajax('/api/airspace?lon=' + lon + '&lat=' + lat);
+      var req = $.ajax('/api/?lon=' + lon + '&lat=' + lat);
 
       req.done(function(data) {
         showLocationData(data);
@@ -284,7 +284,8 @@
       infobox.empty();
       var item = $('<div class="location info-item"></div>');
 
-      if (!data || $.isEmptyObject(data.airspaces)) {
+      if (!data ||
+          ($.isEmptyObject(data.airspaces) && $.isEmptyObject(data.waves))) {
         item.html('No data retrieved for this location');
 
         infobox.delay(1500).fadeOut(1000, function() {
@@ -295,8 +296,17 @@
         hideCircle(1000);
 
       } else {
-        if (!$.isEmptyObject(data.airspaces))
-          item.append(formatAirspaceData(data.airspaces));
+        if (!$.isEmptyObject(data.airspaces)) {
+          var p = $('<p></p>');
+          p.append(formatAirspaceData(data.airspaces));
+          item.append(p);
+        }
+
+        if (!$.isEmptyObject(data.waves)) {
+          var p = $('<p></p>');
+          p.append(formatMountainWaveData(data.waves));
+          item.append(p);
+        }
       }
 
       infobox.append(item);
@@ -316,6 +326,8 @@
 
       table.append($(
           '<thead><tr>' +
+          '<th colspan="4">Airspaces</th>' +
+          '</tr><tr>' +
           '<th>Name</th>' +
           '<th>Class</th>' +
           '<th>Base</th>' +
@@ -340,5 +352,42 @@
 
       return table;
     };
+
+
+    /**
+     * Format Mountain Wave data in infobox
+     *
+     * @param {Object} data Wave data.
+     */
+    function formatMountainWaveData(data) {
+      var table = $('<table></table>');
+
+      table.append($(
+          '<thead><tr>' +
+          '<th colspan="2">Mountain Waves</th>' +
+          '</tr><tr>' +
+          '<th>Name</th>' +
+          '<th>Wind direction</th>' +
+          '</tr></thead>'
+          ));
+
+      var table_body = $('<tbody></tbody');
+
+      for (var i = 0; i < data.length; ++i) {
+        table_body.append($(
+            '<tr>' +
+            '<td class="wave_name">' + data[i].name + '</td>' +
+            '<td class="wave_direction">' +
+                data[i].main_wind_direction +
+            '°</td>' +
+            '</tr>'
+            ));
+      }
+
+      table.append(table_body);
+
+      return table;
+    };
+
   };
 })();

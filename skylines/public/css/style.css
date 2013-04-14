@@ -242,6 +242,7 @@ table.vmiddle td {
 
 .InfoBox .location table {
   border-style: hidden;
+  width: 100%;
 }
 
 .InfoBox .location table td,
@@ -253,7 +254,8 @@ table.vmiddle td {
 
 .InfoBox .location table .airspace_name,
 .InfoBox .location table .airspace_base,
-.InfoBox .location table .airspace_top {
+.InfoBox .location table .airspace_top,
+.InfoBox .location table .wave_name {
   text-align: left;
 }
 
