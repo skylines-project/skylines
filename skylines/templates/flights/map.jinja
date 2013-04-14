@@ -66,6 +66,8 @@
       {{ h.json.dumps(trace.enl) }},
       {{ h.json.dumps(trace.zoom_levels) }},
       {{ h.json.dumps(trace.contests) }},
+      {{ h.json.dumps(trace.elevations_t) }},
+      {{ h.json.dumps(trace.elevations_h) }},
       { registration: {{ '"' ~ flight.registration|e ~ '"' if flight.registration else 'null' }},
         competition_id: {{ '"' ~ flight.competition_id|e ~ '"' if flight.competition_id else 'null' }} }
     );
@@ -81,6 +83,8 @@
       {{ h.json.dumps(trace.enl) }},
       {{ h.json.dumps(trace.zoom_levels) }},
       {{ h.json.dumps(trace.contests) }},
+      {{ h.json.dumps(trace.elevations_t) }},
+      {{ h.json.dumps(trace.elevations_h) }},
       { registration: {{ '"' ~ flight.registration|e ~ '"' if flight.registration else 'null' }},
         competition_id: {{ '"' ~ flight.competition_id|e ~ '"' if flight.competition_id else 'null' }} }
     );

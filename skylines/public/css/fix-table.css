@@ -1,14 +1,14 @@
 #fix-data {
-	margin-bottom: 0;
+    margin-bottom: 0;
 }
 
 #fix-data tr td {
-	width: 22.5%;
-	text-align: right;
+    width: 18%;
+    text-align: right;
 }
 
 #fix-data tr td:first-child {
-	width: 10%;
-	text-align: center;
-	vertical-align: middle;
+    width: 10%;
+    text-align: center;
+    vertical-align: middle;
 }
