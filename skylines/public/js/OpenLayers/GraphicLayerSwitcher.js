@@ -103,12 +103,14 @@ var GraphicLayerSwitcher = OpenLayers.Class(OpenLayers.Control, {
 
       if (layer.displayInLayerSwitcher) {
         // populate base layer box
-        var on;
-        if (baseLayer) on = (layer == this.map.baseLayer);
-        else on = layer.getVisibility();
+        var layer_visible;
+        if (baseLayer)
+          layer_visible = (layer == this.map.baseLayer);
+        else
+          layer_visible = layer.getVisibility();
 
         var layer_image = '../../images/layers/' + layer.name +
-            (on ? '.png' : '.bw.png');
+            (layer_visible ? '.png' : '.bw.png');
 
         var item = $(
             "<a id='" + id + "' href='#LayerSwitcher'>" +
@@ -116,9 +118,8 @@ var GraphicLayerSwitcher = OpenLayers.Class(OpenLayers.Control, {
             layer.name +
             '</a><br />');
 
-        if (on) {
+        if (layer_visible)
           item.addClass('active');
-        }
 
         item.on('click touchend', $.proxy(this.onInputClick,
             {'layerSwitcher': this, 'layer': layer}));
@@ -195,16 +196,18 @@ var GraphicLayerSwitcher = OpenLayers.Class(OpenLayers.Control, {
 
       if (layer.displayInLayerSwitcher) {
         // populate base layer box
-        var on;
-        if (baseLayer) on = (layer == this.map.baseLayer);
-        else on = layer.getVisibility();
+        var layer_visible;
+        if (baseLayer)
+          layer_visible = (layer == this.map.baseLayer);
+        else
+          layer_visible = layer.getVisibility();
 
         var layer_image = '../../images/layers/' + layer.name +
-            (on ? '.png' : '.bw.png');
+            (layer_visible ? '.png' : '.bw.png');
 
         $('#' + id).find('img').attr('src', layer_image);
 
-        if (on) {
+        if (layer_visible) {
           $('#' + id).addClass('active');
         } else {
           $('#' + id).removeClass('active');
