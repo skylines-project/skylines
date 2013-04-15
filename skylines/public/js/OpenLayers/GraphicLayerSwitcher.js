@@ -86,10 +86,7 @@ var GraphicLayerSwitcher = OpenLayers.Class(OpenLayers.Control, {
     var base_layers = $('<div class="base"></div>');
     var overlay_layers = $('<div class="overlay"></div>');
 
-    var current = $(
-        '<a href="#LayerSwitcher">' +
-        '<img src="../../images/layers.png" />' +
-        '</a>');
+    var current = $('<img src="../../images/layers.png"/>');
     current.addClass('current');
 
     current.on('click touchend', function(e) {

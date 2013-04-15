@@ -12,18 +12,14 @@
   background: #fff;
   color: #000;
   opacity: 0.5;
-  height: 30px;
-  width: 30px;
+  padding: 2px;
+  height: 26px;
+  width: 26px;
   text-align: right;
   white-space: nowrap;
   -moz-border-radius: 4px;
   border-radius: 4px;
-}
-
-.GraphicLayerSwitcher .current img {
-  padding: 2px;
-  width: 26px;
-  height: 26px;
+  cursor: pointer;
 }
 
 .GraphicLayerSwitcher .current:hover {
