@@ -166,7 +166,6 @@ var GraphicLayerSwitcher = OpenLayers.Class(OpenLayers.Control, {
           overlay_layers.find(e.target).length === 0) {
         $('.GraphicLayerSwitcher.box').hide();
         $('.GraphicLayerSwitcher.current').show();
-        OpenLayers.Event.stop(e);
       }
     });
 
