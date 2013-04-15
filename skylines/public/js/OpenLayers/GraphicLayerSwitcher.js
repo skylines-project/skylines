@@ -220,10 +220,16 @@ var GraphicLayerSwitcher = OpenLayers.Class(OpenLayers.Control, {
       overlay_layers = [];
       for (var i = 0; i < this.layer.map.layers.length; ++i) {
         var layer = this.layer.map.layers[i];
-        if (!layer.isBaseLayer && layer.visibility && layer.displayInLayerSwitcher)
+        if (!layer.isBaseLayer &&
+            layer.visibility &&
+            layer.displayInLayerSwitcher)
           overlay_layers.push(layer.name);
       }
-      $.cookie('overlay_layers', overlay_layers.join(';'), { path: '/', expires: 365 });
+
+      $.cookie('overlay_layers', overlay_layers.join(';'), {
+        path: '/',
+        expires: 365
+      });
     }
 
     this.layerSwitcher.updateLayerItems();
