@@ -3,7 +3,7 @@
 from datetime import datetime, timedelta
 from sqlalchemy.orm import relation, joinedload
 from sqlalchemy import Column, ForeignKey, Index, over, func
-from sqlalchemy.types import Integer, Float, DateTime, SmallInteger, Unicode,\
+from sqlalchemy.types import Integer, REAL, DateTime, SmallInteger, Unicode,\
     BigInteger
 from sqlalchemy.dialects.postgresql import INET
 from sqlalchemy.sql.expression import desc
@@ -25,12 +25,12 @@ class TrackingFix(DeclarativeBase):
 
     location_wkt = Column('location', Geometry('POINT', management=True))
 
-    track = Column(Integer)
-    ground_speed = Column(Float)
-    airspeed = Column(Float)
-    altitude = Column(Integer)
-    vario = Column(Float)
-    engine_noise_level = Column(Integer)
+    track = Column(SmallInteger)
+    ground_speed = Column(REAL)
+    airspeed = Column(REAL)
+    altitude = Column(SmallInteger)
+    vario = Column(REAL)
+    engine_noise_level = Column(SmallInteger)
 
     pilot_id = Column(Integer,
                       ForeignKey('tg_user.id', use_alter=True,
