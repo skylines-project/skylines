@@ -7,6 +7,9 @@ var GraphicLayerSwitcher = OpenLayers.Class(OpenLayers.Control, {
   layerStates: null,
   layersDiv: null,
 
+  /**
+   * @param {Object} options
+   */
   initialize: function(options) {
     OpenLayers.Control.prototype.initialize.apply(this, arguments);
     this.layerStates = [];
@@ -26,6 +29,9 @@ var GraphicLayerSwitcher = OpenLayers.Class(OpenLayers.Control, {
     OpenLayers.Control.prototype.destroy.apply(this, arguments);
   },
 
+  /**
+   * @param {<OpenLayers.Map>} map
+   */
   setMap: function(map) {
     OpenLayers.Control.prototype.setMap.apply(this, arguments);
 
@@ -38,6 +44,10 @@ var GraphicLayerSwitcher = OpenLayers.Class(OpenLayers.Control, {
     });
   },
 
+  /**
+   * @return {DOMElement} A reference to the DIV DOMElement containing the
+   *   switcher tabs.
+   */
   draw: function() {
     OpenLayers.Control.prototype.draw.apply(this);
     this.loadContents();
@@ -45,6 +55,11 @@ var GraphicLayerSwitcher = OpenLayers.Class(OpenLayers.Control, {
     return this.div;
   },
 
+  /**
+   * Checks if the layer state has changed since the last redraw() call.
+   *
+   * @return {Boolean} The layer state changed since the last redraw() call.
+   */
   checkRedraw: function() {
     var redraw = false;
     if (!this.layerStates.length ||
@@ -65,6 +80,13 @@ var GraphicLayerSwitcher = OpenLayers.Class(OpenLayers.Control, {
     return redraw;
   },
 
+  /**
+   * Goes through and takes the current state of the Map and rebuilds the
+   * control to display that state.
+   *
+   * @return {DOMElement} A reference to the DIV DOMElement containing
+   *   the control.
+   */
   redraw: function() {
     if (!this.checkRedraw()) {
       return this.div;
@@ -241,6 +263,11 @@ var GraphicLayerSwitcher = OpenLayers.Class(OpenLayers.Control, {
     OpenLayers.Event.stop(e);
   },
 
+  /**
+   * Cycles through the loaded data and base layer input arrays and makes
+   * the necessary calls to the Map object such that that the map's
+   * visual state corresponds to what the user has selected in the control.
+   */
   updateMap: function() {
     // set the newly selected base layer
     for (var i = 0, len = this.baseLayers.length; i < len; i++) {
@@ -257,6 +284,9 @@ var GraphicLayerSwitcher = OpenLayers.Class(OpenLayers.Control, {
     }
   },
 
+  /**
+   * Set up the labels and divs for the control
+   */
   loadContents: function() {
     OpenLayers.Event.observe(this.div, 'click',
         this.ignoreEvent);
