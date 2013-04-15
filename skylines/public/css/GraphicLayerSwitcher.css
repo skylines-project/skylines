@@ -7,7 +7,8 @@
   z-index: 1050;
 }
 
-.GraphicLayerSwitcher.current {
+.GraphicLayerSwitcher .current {
+  float: right;
   background: #fff;
   color: #000;
   opacity: 0.5;
@@ -19,17 +20,17 @@
   border-radius: 4px;
 }
 
-.GraphicLayerSwitcher.current img {
+.GraphicLayerSwitcher .current img {
   padding: 2px;
   width: 26px;
   height: 26px;
 }
 
-.GraphicLayerSwitcher.current:hover {
+.GraphicLayerSwitcher .current:hover {
   opacity: 1;
 }
 
-.GraphicLayerSwitcher.box {
+.GraphicLayerSwitcher .box {
   display: none;
 }
 
@@ -48,15 +49,13 @@
   border-radius: 4px;
 }
 
-.GraphicLayerSwitcher .base img,
-.GraphicLayerSwitcher .overlay img {
+.GraphicLayerSwitcher .box img {
   width: 100px;
   height: 50px;
   padding: 3px 8px 3px 2px;
 }
 
-.GraphicLayerSwitcher .base a,
-.GraphicLayerSwitcher .overlay a {
+.GraphicLayerSwitcher .box a {
   white-space: nowrap;
   color: #fff;
 }

@@ -82,7 +82,7 @@ var GraphicLayerSwitcher = OpenLayers.Class(OpenLayers.Control, {
 
     var layers = this.map.layers.slice();
 
-    var layer_switcher = $('<div class="GraphicLayerSwitcher box"></div>');
+    var layer_switcher = $('<div class="box"></div>');
     var base_layers = $('<div class="base"></div>');
     var overlay_layers = $('<div class="overlay"></div>');
 
@@ -90,11 +90,11 @@ var GraphicLayerSwitcher = OpenLayers.Class(OpenLayers.Control, {
         '<a href="#LayerSwitcher">' +
         '<img src="../../images/layers.png" />' +
         '</a>');
-    current.addClass('GraphicLayerSwitcher current');
+    current.addClass('current');
 
     current.on('click touchend', function(e) {
       $(this).hide();
-      $('.GraphicLayerSwitcher.box').show();
+      $('.GraphicLayerSwitcher .box').show();
       e.stopPropagation();
     });
 
@@ -135,7 +135,7 @@ var GraphicLayerSwitcher = OpenLayers.Class(OpenLayers.Control, {
               $('#' + this.id).find('img').attr('src',
                   '../../images/layers/' + this.layer.name + '.png');
 
-              $('.GraphicLayerSwitcher.base .active').find('img').attr('src',
+              $('.GraphicLayerSwitcher .base .active').find('img').attr('src',
                   '../../images/layers/' + this.map.baseLayer.name + '.bw.png');
             }
           }, { id: id, layer: layer, map: this.map}));
@@ -145,7 +145,7 @@ var GraphicLayerSwitcher = OpenLayers.Class(OpenLayers.Control, {
               $('#' + this.id).find('img').attr('src',
                   '../../images/layers/' + this.layer.name + '.bw.png');
 
-              $('.GraphicLayerSwitcher.base .active').find('img').attr('src',
+              $('.GraphicLayerSwitcher .base .active').find('img').attr('src',
                   '../../images/layers/' + this.map.baseLayer.name + '.png');
             }
           }, { id: id, layer: layer, map: this.map }));
@@ -162,8 +162,8 @@ var GraphicLayerSwitcher = OpenLayers.Class(OpenLayers.Control, {
     $(document).on('mouseup touchend', function(e) {
       if (base_layers.find(e.target).length === 0 &&
           overlay_layers.find(e.target).length === 0) {
-        $('.GraphicLayerSwitcher.box').hide();
-        $('.GraphicLayerSwitcher.current').show();
+        $('.GraphicLayerSwitcher .box').hide();
+        $('.GraphicLayerSwitcher .current').show();
       }
     });
 
@@ -172,8 +172,8 @@ var GraphicLayerSwitcher = OpenLayers.Class(OpenLayers.Control, {
     $(this.div).on('mousemove touchstart', function() {
       clearTimeout(close_timeout);
       close_timeout = setTimeout(function() {
-        $('.GraphicLayerSwitcher.box').hide();
-        $('.GraphicLayerSwitcher.current').show();
+        $('.GraphicLayerSwitcher .box').hide();
+        $('.GraphicLayerSwitcher .current').show();
       }, 5000);
     });
 
