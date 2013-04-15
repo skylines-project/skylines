@@ -29,6 +29,7 @@ class TrackingFix(DeclarativeBase):
     ground_speed = Column(REAL)
     airspeed = Column(REAL)
     altitude = Column(SmallInteger)
+    elevation = Column(SmallInteger)
     vario = Column(REAL)
     engine_noise_level = Column(SmallInteger)
 
