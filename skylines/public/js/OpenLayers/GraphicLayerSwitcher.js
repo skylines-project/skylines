@@ -83,10 +83,8 @@ var GraphicLayerSwitcher = OpenLayers.Class(OpenLayers.Control, {
     var layers = this.map.layers.slice();
 
     var layer_switcher = $('<div class="GraphicLayerSwitcher box"></div>');
-    var base_layers = $('<div id="GraphicLayerSwitcher_base" class="base">' +
-        '</div>');
-    var overlay_layers = $('<div id="GraphicLayerSwitcher_overlay"' +
-        'class="overlay"></div>');
+    var base_layers = $('<div class="base"></div>');
+    var overlay_layers = $('<div class="overlay"></div>');
 
     var current = $(
         '<a href="#LayerSwitcher">' +
