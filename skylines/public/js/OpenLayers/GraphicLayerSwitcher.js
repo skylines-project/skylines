@@ -103,11 +103,8 @@ var GraphicLayerSwitcher = OpenLayers.Class(OpenLayers.Control, {
 
       if (layer.displayInLayerSwitcher) {
         // populate base layer box
-        var layer_visible;
-        if (baseLayer)
-          layer_visible = (layer == this.map.baseLayer);
-        else
-          layer_visible = layer.getVisibility();
+        var layer_visible = baseLayer ?
+            (layer == this.map.baseLayer) : layer.getVisibility();
 
         var layer_image = '../../images/layers/' + layer.name +
             (layer_visible ? '.png' : '.bw.png');
@@ -196,11 +193,8 @@ var GraphicLayerSwitcher = OpenLayers.Class(OpenLayers.Control, {
 
       if (layer.displayInLayerSwitcher) {
         // populate base layer box
-        var layer_visible;
-        if (baseLayer)
-          layer_visible = (layer == this.map.baseLayer);
-        else
-          layer_visible = layer.getVisibility();
+        var layer_visible = baseLayer ?
+            (layer == this.map.baseLayer) : layer.getVisibility();
 
         var layer_image = '../../images/layers/' + layer.name +
             (layer_visible ? '.png' : '.bw.png');
