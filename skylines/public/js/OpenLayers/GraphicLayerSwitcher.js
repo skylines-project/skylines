@@ -61,23 +61,20 @@ var GraphicLayerSwitcher = OpenLayers.Class(OpenLayers.Control, {
    * @return {Boolean} The layer state changed since the last redraw() call.
    */
   checkRedraw: function() {
-    var redraw = false;
     if (!this.layerStates.length ||
-        (this.map.layers.length != this.layerStates.length)) {
-      redraw = true;
-    } else {
-      for (var i = 0, len = this.layerStates.length; i < len; i++) {
-        var layerState = this.layerStates[i];
-        var layer = this.map.layers[i];
-        if ((layerState.name != layer.name) ||
-            (layerState.inRange != layer.inRange) ||
-            (layerState.id != layer.id)) {
-          redraw = true;
-          break;
-        }
-      }
+        (this.map.layers.length != this.layerStates.length))
+      return true;
+
+    for (var i = 0, len = this.layerStates.length; i < len; i++) {
+      var layerState = this.layerStates[i];
+      var layer = this.map.layers[i];
+      if ((layerState.name != layer.name) ||
+          (layerState.inRange != layer.inRange) ||
+          (layerState.id != layer.id))
+        return true;
     }
-    return redraw;
+
+    return false;
   },
 
   /**
