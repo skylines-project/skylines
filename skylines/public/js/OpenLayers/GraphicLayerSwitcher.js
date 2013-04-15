@@ -1,7 +1,6 @@
 var GraphicLayerSwitcher = OpenLayers.Class(OpenLayers.Control, {
   layerStates: null,
   layersDiv: null,
-  ascending: true,
 
   initialize: function(options) {
     OpenLayers.Control.prototype.initialize.apply(this, arguments);
@@ -98,7 +97,6 @@ var GraphicLayerSwitcher = OpenLayers.Class(OpenLayers.Control, {
     $(this.div).append(current);
 
 
-    if (!this.ascending) { layers.reverse(); }
     for (var i = 0; i < layers.length; i++) {
       var layer = layers[i];
       var baseLayer = layer.isBaseLayer;
