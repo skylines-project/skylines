@@ -88,8 +88,8 @@ var GraphicLayerSwitcher = OpenLayers.Class(OpenLayers.Control, {
     var current = $('<img src="../../images/layers.png" class="current"/>');
 
     current.on('click touchend', function(e) {
-      $(this).hide();
-      $('.GraphicLayerSwitcher .box').show();
+      current.hide();
+      layer_switcher.show();
       e.stopPropagation();
     });
 
@@ -154,8 +154,8 @@ var GraphicLayerSwitcher = OpenLayers.Class(OpenLayers.Control, {
     $(document).on('mouseup touchend', function(e) {
       if (base_layers.find(e.target).length === 0 &&
           overlay_layers.find(e.target).length === 0) {
-        $('.GraphicLayerSwitcher .box').hide();
-        $('.GraphicLayerSwitcher .current').show();
+        layer_switcher.hide();
+        current.show();
       }
     });
 
@@ -164,8 +164,8 @@ var GraphicLayerSwitcher = OpenLayers.Class(OpenLayers.Control, {
     $(this.div).on('mousemove touchstart', function() {
       clearTimeout(close_timeout);
       close_timeout = setTimeout(function() {
-        $('.GraphicLayerSwitcher .box').hide();
-        $('.GraphicLayerSwitcher .current').show();
+        layer_switcher.hide();
+        current.show();
       }, 5000);
     });
 
