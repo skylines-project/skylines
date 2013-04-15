@@ -26,13 +26,7 @@
       // do nothing if this is visible, let the event handler close the box.
       if (visible) return;
 
-      // create bounding box in map coordinates around mouse cursor
       var pixel = new OpenLayers.Pixel(e.layerX, e.layerY);
-      var clickTolerance = 15;
-      var llPx = pixel.add(-clickTolerance / 2, clickTolerance / 2);
-      var urPx = pixel.add(clickTolerance / 2, -clickTolerance / 2);
-      var ll = map.getLonLatFromPixel(llPx);
-      var ur = map.getLonLatFromPixel(urPx);
       var loc = map.getLonLatFromPixel(pixel);
 
       var loc_wgs84 = loc.clone()
@@ -44,11 +38,17 @@
       infobox.empty();
 
       if (settings.flight_info) {
+        // create bounding box in map coordinates around mouse cursor
+        var clickTolerance = 15;
+        var llPx = pixel.add(-clickTolerance / 2, clickTolerance / 2);
+        var urPx = pixel.add(clickTolerance / 2, -clickTolerance / 2);
+        var ll = map.getLonLatFromPixel(llPx);
+        var ur = map.getLonLatFromPixel(urPx);
+
+        var bounds = new OpenLayers.Bounds(ll.lon, ll.lat, ur.lon, ur.lat);
+
         // search for a aircraft position within the bounding box
-        var nearest = searchForPlane(
-            new OpenLayers.Bounds(ll.lon, ll.lat, ur.lon, ur.lat),
-            loc,
-            clickTolerance);
+        var nearest = searchForPlane(bounds, loc, clickTolerance);
 
         if (nearest !== null) {
           var index = nearest.from;
