@@ -1,9 +1,11 @@
 # -*- coding: utf-8 -*-
+
 from sqlalchemy import func
 from sqlalchemy.sql.expression import cast
 from geoalchemy2.types import Geometry, Geography
 from geoalchemy2.shape import to_shape
-from skylines.model.session import DBSession
+
+from .session import DBSession
 from skylines.lib.geo import geographic_distance
 
 

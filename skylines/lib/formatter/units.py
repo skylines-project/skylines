@@ -1,6 +1,7 @@
-from skylines.lib.formatter import format_number, format_decimal
-from tg.i18n import lazy_ugettext as l_
 from tg import request
+from tg.i18n import lazy_ugettext as l_
+
+from .numbers import format_number, format_decimal
 
 distance_units = (
     (u'm', lambda value: format_number(int(value)) + u' m'),

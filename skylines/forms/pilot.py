@@ -7,7 +7,7 @@ from sprox.validators import UniqueValue
 from sprox.sa.provider import SAORMProvider
 from tw.forms import SingleSelectField, TextField
 
-from skylines.forms import BootstrapForm
+from .bootstrap import BootstrapForm
 from skylines.model import DBSession, User
 
 

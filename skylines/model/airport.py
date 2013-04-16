@@ -1,15 +1,17 @@
 # -*- coding: utf-8 -*-
 
 from datetime import datetime
+
 from sqlalchemy import Column, func
 from sqlalchemy.types import Integer, Float, String, DateTime
 from sqlalchemy.sql.expression import cast
 from geoalchemy2.types import Geometry, Geography
 from geoalchemy2.elements import WKTElement
 from geoalchemy2.shape import to_shape
-from skylines.model.base import DeclarativeBase
-from skylines.model.session import DBSession
-from skylines.model.geo import Location
+
+from .base import DeclarativeBase
+from .session import DBSession
+from .geo import Location
 
 
 class Airport(DeclarativeBase):

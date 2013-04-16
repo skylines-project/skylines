@@ -1,5 +1,5 @@
-from babel.core import Locale, UnknownLocaleError
 from tg.i18n import get_lang
+from babel.core import Locale, UnknownLocaleError
 
 __all__ = ['get_locale']
 

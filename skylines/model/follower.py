@@ -1,12 +1,14 @@
 # -*- coding: utf-8 -*-
 
 from datetime import datetime
+
 from sqlalchemy import ForeignKey, Column
 from sqlalchemy.types import Integer, DateTime
 from sqlalchemy.orm import relation
-from skylines.model.base import DeclarativeBase
-from skylines.model.session import DBSession
-from skylines.model.auth import User
+
+from .base import DeclarativeBase
+from .session import DBSession
+from .auth import User
 
 
 class Follower(DeclarativeBase):

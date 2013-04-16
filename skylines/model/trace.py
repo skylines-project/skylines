@@ -9,9 +9,9 @@ from geoalchemy2.types import Geometry
 from geoalchemy2.elements import WKTElement
 from geoalchemy2.shape import to_shape
 
-from skylines.model.base import DeclarativeBase
-from skylines.model.flight import Flight
-from skylines.model.geo import Location
+from .base import DeclarativeBase
+from .flight import Flight
+from .geo import Location
 
 
 class Trace(DeclarativeBase):

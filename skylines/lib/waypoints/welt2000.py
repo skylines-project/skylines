@@ -2,7 +2,8 @@ import os
 import subprocess
 
 from tg import config
-from skylines.lib.waypoints.welt2000_reader import parse_welt2000_waypoints
+
+from .welt2000_reader import parse_welt2000_waypoints
 
 
 def __get_database_file(dir_data):
@@ -37,7 +38,8 @@ def get_database(bounds=None, path=None):
     with open(path, "r") as f:
         parsed = parse_welt2000_waypoints(f, bounds)
 
-    if delete_file: os.remove(path)
+    if delete_file:
+        os.remove(path)
 
     # Return parsed WaypointList
     return parsed

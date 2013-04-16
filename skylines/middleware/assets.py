@@ -1,10 +1,10 @@
 import os
+import mimetypes
 
 from webob import Response
 from webob.exc import HTTPNotFound, HTTPInternalServerError
 
-from skylines.middleware import PrefixHandlerMiddleware
-import mimetypes
+from .prefixhandler import PrefixHandlerMiddleware
 
 
 class AssetsMiddleware(PrefixHandlerMiddleware):

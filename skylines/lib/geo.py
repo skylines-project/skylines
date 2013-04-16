@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+
 import math
 
 EARTH_RADIUS = 6367009

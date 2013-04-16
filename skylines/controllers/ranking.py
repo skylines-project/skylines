@@ -1,10 +1,12 @@
 from datetime import date
+
 from tg import expose, redirect
 from tg.decorators import paginate, without_trailing_slash
 from webob.exc import HTTPBadRequest
 from sqlalchemy.sql.expression import desc, over
 from sqlalchemy import func
-from skylines.controllers.base import BaseController
+
+from .base import BaseController
 from skylines.model import DBSession, User, Club, Flight, Airport
 
 __all__ = ['RankingController']

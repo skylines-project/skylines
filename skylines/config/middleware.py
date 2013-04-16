@@ -1,11 +1,12 @@
 # -*- coding: utf-8 -*-
 """WSGI middleware initialization for the SkyLines application."""
 
-from skylines.config.app_cfg import base_config
-from skylines.config.environment import load_environment
-from skylines.config import i18n
-from skylines.middleware import FilesMiddleware, AssetsMiddleware
 from paste.cascade import Cascade
+
+from . import i18n
+from .app_cfg import base_config
+from .environment import load_environment
+from skylines.middleware import FilesMiddleware, AssetsMiddleware
 
 
 __all__ = ['make_app']

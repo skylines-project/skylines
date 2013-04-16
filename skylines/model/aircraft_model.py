@@ -2,8 +2,9 @@
 
 from sqlalchemy import Column
 from sqlalchemy.types import Integer, Unicode
-from skylines.model.base import DeclarativeBase
-from skylines.model.session import DBSession
+
+from .base import DeclarativeBase
+from .session import DBSession
 
 
 class AircraftModel(DeclarativeBase):

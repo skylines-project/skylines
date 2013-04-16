@@ -1,12 +1,12 @@
 from tg import expose, request, cache
 from webob.exc import HTTPNotFound
+
+from . import TrackController, LiveTrack24Controller
 from skylines.controllers.base import BaseController
 from skylines.lib.dbutil import get_requested_record_list
 from skylines.lib.helpers import isoformat_utc
 from skylines.lib.decorators import jsonp
 from skylines.model import User, TrackingFix, Airport
-from skylines.controllers.tracking import TrackController, \
-    LiveTrack24Controller
 
 
 class TrackingController(BaseController):

@@ -1,18 +1,19 @@
-from tempfile import TemporaryFile
 from datetime import datetime
+from tempfile import TemporaryFile
+from zipfile import ZipFile
+
 from tg import expose, request, redirect, validate, flash
 from tg.i18n import ugettext as _, lazy_ugettext as l_
 from repoze.what.predicates import has_permission
-from skylines.controllers.base import BaseController
-from skylines.lib import files
-from skylines.model import DBSession, User, Flight
-from skylines.lib.md5 import file_md5
-from skylines.lib.xcsoar import analyse_flight
+
+from .base import BaseController
 from skylines.forms import upload, aircraft_model
-from zipfile import ZipFile
-from skylines.model.igcfile import IGCFile
-from skylines.model.notification import create_flight_notifications
+from skylines.lib import files
+from skylines.lib.md5 import file_md5
 from skylines.lib.string import import_ascii
+from skylines.lib.xcsoar import analyse_flight
+from skylines.model import DBSession, User, Flight, IGCFile
+from skylines.model.notification import create_flight_notifications
 
 
 def IterateFiles(name, f):

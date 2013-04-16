@@ -2,7 +2,8 @@
 
 from tg import expose, request
 from sqlalchemy import func, distinct
-from skylines.controllers.base import BaseController
+
+from .base import BaseController
 from skylines.lib.dbutil import get_requested_record
 from skylines.model import DBSession, User, Club, Flight, Airport
 

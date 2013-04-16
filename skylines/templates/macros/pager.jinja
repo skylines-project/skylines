@@ -1,5 +1,6 @@
 {% macro pager(name) -%}
 {% with page=tmpl_context.paginators[name] -%}
+{% if page.page_count != 0 -%}
 <div class="pagination pagination-condensed">
   <ul>
     <li class="prev{% if page.page == page.first_page %} disabled{% endif %}">
@@ -21,6 +22,7 @@
     </li>
   </ul>
 </div>
+{%- endif %}
 {%- endwith %}
 {%- endmacro %}
 

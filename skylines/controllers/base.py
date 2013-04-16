@@ -4,9 +4,10 @@
 
 from tg import TGController, tmpl_context, request, redirect, url
 from tg.i18n import get_lang
-from skylines.config.i18n import languages, language_info
-from babel.util import distinct
 from babel import parse_locale
+from babel.util import distinct
+
+from skylines.config.i18n import languages, language_info
 from skylines.model.notification import count_unread_notifications
 
 

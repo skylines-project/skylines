@@ -5,6 +5,7 @@
 from tg.i18n import ugettext as _
 from sqlalchemy import orm
 from webob.exc import HTTPNotFound
+
 from skylines.model.session import DBSession
 
 

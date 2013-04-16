@@ -1,3 +1,3 @@
-from skylines.middleware.prefixhandler import PrefixHandlerMiddleware
-from skylines.middleware.files import FilesMiddleware
-from skylines.middleware.assets import AssetsMiddleware
+from .prefixhandler import PrefixHandlerMiddleware
+from .files import FilesMiddleware
+from .assets import AssetsMiddleware

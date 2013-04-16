@@ -1,15 +1,18 @@
 # -*- coding: utf-8 -*-
 
+import logging
 import datetime
 import simplejson
 from subprocess import Popen, PIPE
+
 from sqlalchemy.sql.expression import and_
+
+from .path import helper_path
 from skylines.lib import files
-from skylines.model.geo import Location
-from skylines.model import DBSession, Airport, Trace, FlightPhase, TimeZone
-from skylines.lib.xcsoar.path import helper_path
 from skylines.lib.datetime import from_seconds_of_day
-import logging
+from skylines.model import (
+    DBSession, Airport, Trace, FlightPhase, TimeZone, Location
+)
 
 log = logging.getLogger(__name__)
 

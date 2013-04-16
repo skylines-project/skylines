@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from datetime import datetime
+
 from sqlalchemy import ForeignKey, Column, func
 from sqlalchemy.dialects import postgresql
 from sqlalchemy.orm import relation
@@ -11,13 +12,14 @@ from geoalchemy2.types import Geometry
 from geoalchemy2.elements import WKTElement
 from geoalchemy2.shape import to_shape, from_shape
 from shapely.geometry import LineString
-from skylines.model.base import DeclarativeBase
-from skylines.model.session import DBSession
-from skylines.model.auth import User
-from skylines.model.geo import Location
-from skylines.model.igcfile import IGCFile
-from skylines.model.aircraft_model import AircraftModel
-from skylines.model.airport import Airport
+
+from .base import DeclarativeBase
+from .session import DBSession
+from .auth import User
+from .geo import Location
+from .igcfile import IGCFile
+from .aircraft_model import AircraftModel
+from .airport import Airport
 
 
 class Flight(DeclarativeBase):

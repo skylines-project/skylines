@@ -6,12 +6,12 @@ from sqlalchemy import ForeignKey, Column
 from sqlalchemy.orm import relation
 from sqlalchemy.types import Integer, DateTime
 
-from skylines.model.base import DeclarativeBase
-from skylines.model.session import DBSession
-from skylines.model.auth import User
-from skylines.model.flight import Flight
-from skylines.model.flight_comment import FlightComment
-from skylines.model.follower import Follower
+from .base import DeclarativeBase
+from .session import DBSession
+from .auth import User
+from .flight import Flight
+from .flight_comment import FlightComment
+from .follower import Follower
 
 
 class Notification(DeclarativeBase):

@@ -1,8 +1,10 @@
 from datetime import datetime
+
 from tg import request
 from webob.exc import HTTPNotFound, HTTPBadRequest, HTTPNotImplemented
+
 from skylines.controllers.base import BaseController
-from skylines.model import DBSession, User, TrackingFix, TrackingSession, Location
+from skylines.model import DBSession, User, TrackingFix, TrackingSession
 
 
 class LiveTrack24Controller(BaseController):

@@ -1,6 +1,10 @@
 from tg.i18n import lazy_ugettext as l_
+
 from tw.forms.validators import FieldStorageUploadConverter
-from skylines.forms import BootstrapForm, MultiFileField, pilot
+
+from . import pilot
+from .bootstrap import BootstrapForm
+from .file import MultiFileField
 
 
 file_field_validator = FieldStorageUploadConverter(

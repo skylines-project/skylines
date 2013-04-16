@@ -1,9 +1,8 @@
-from tg import expose, redirect
-from tg.decorators import paginate, without_trailing_slash
+from tg import expose
 from webob.exc import HTTPBadRequest
-from skylines.controllers.base import BaseController
-from skylines.model import DBSession, Airspace, MountainWaveProject
-from skylines.model.geo import Location
+
+from .base import BaseController
+from skylines.model import Airspace, MountainWaveProject, Location
 
 __all__ = ['APIController']
 
