@@ -1,6 +1,8 @@
 import os
-from babel import Locale
+
 from tg import config
+from babel import Locale
+
 from skylines.lib.helpers.country import language_to_country_code
 
 __all__ = ['language_info', 'update', 'languages']

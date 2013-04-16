@@ -1,6 +1,7 @@
 from __future__ import absolute_import
 
 import babel.numbers
+
 from skylines.lib.i18n import get_locale
 
 __all__ = ['format_number', 'format_decimal']

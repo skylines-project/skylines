@@ -1,10 +1,11 @@
+from pytz import timezone
 from sqlalchemy import Column
 from sqlalchemy.types import Integer, String
-from skylines.model.base import DeclarativeBase
-from skylines.model.session import DBSession
-from geoalchemy2.types import Geometry
 from sqlalchemy.sql.expression import func
-from pytz import timezone
+from geoalchemy2.types import Geometry
+
+from .base import DeclarativeBase
+from .session import DBSession
 
 
 class TimeZone(DeclarativeBase):

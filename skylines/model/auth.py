@@ -10,8 +10,8 @@ though.
 
 """
 import os
-from datetime import datetime
 import struct
+from datetime import datetime
 from hashlib import sha256
 
 from sqlalchemy import Table, ForeignKey, Column, event, DDL
@@ -21,8 +21,8 @@ from sqlalchemy.orm import relation, synonym, column_property
 from sqlalchemy.sql.expression import cast
 from sqlalchemy.dialects.postgresql import INET
 
-from skylines.model.base import DeclarativeBase, metadata
-from skylines.model.session import DBSession
+from .base import DeclarativeBase, metadata
+from .session import DBSession
 from skylines.lib.sql import LowerCaseComparator
 from skylines.lib.formatter import units
 

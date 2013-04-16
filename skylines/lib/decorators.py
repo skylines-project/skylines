@@ -1,5 +1,6 @@
-from tg import response
 from simplejson import dumps
+
+from tg import response
 
 
 def jsonp(func):

@@ -1,27 +1,32 @@
 import re
 
-from skylines.lib.waypoints.waypoint import Waypoint
+from .waypoint import Waypoint
 
 
 def __parse_line(line, bounds=None):
     # Ignore comments
-    if line.startswith('$'): return None
+    if line.startswith('$'):
+        return None
 
     # Parse latitude
     lat = line[45:52]
     lat_neg = lat.startswith('S')
     lat = float(lat[1:3]) + float(lat[3:5]) / 60. + float(lat[5:7]) / 3600.
-    if lat_neg: lat = -lat
+    if lat_neg:
+        lat = -lat
 
-    if bounds and (lat > bounds.top or lat < bounds.bottom): return None
+    if bounds and (lat > bounds.top or lat < bounds.bottom):
+        return None
 
     # Parse longitude
     lon = line[52:60]
     lon_neg = lon.startswith('W')
     lon = float(lon[1:4]) + float(lon[4:6]) / 60. + float(lon[6:8]) / 3600.
-    if lon_neg: lon = -lon
+    if lon_neg:
+        lon = -lon
 
-    if bounds and (lon > bounds.right or lon < bounds.left): return None
+    if bounds and (lon > bounds.right or lon < bounds.left):
+        return None
 
     # Create waypoint instance
     wp = Waypoint()
@@ -30,8 +35,10 @@ def __parse_line(line, bounds=None):
 
     # Parse elevation
     elev = line[41:45].strip()
-    if elev != '': wp.altitude = float(elev)
-    else: wp.altitude = 0.0
+    if elev != '':
+        wp.altitude = float(elev)
+    else:
+        wp.altitude = 0.0
 
     # Extract short name
     wp.short_name = line[:6].strip()
@@ -96,8 +103,10 @@ def __parse_line(line, bounds=None):
         # Extract and parse radio frequency
         freq = data[12:17].strip()
         if len(freq) == 5:
-            if freq.endswith('2') or freq.endswith('7'): freq += '5'
-            else: freq += '0'
+            if freq.endswith('2') or freq.endswith('7'):
+                freq += '5'
+            else:
+                freq += '0'
             wp.freq = float(freq) / 1000.
 
     # Strip uninvited characters from waypoint name
@@ -143,6 +152,7 @@ def parse_welt2000_waypoints(lines, bounds=None):
 
     for line in lines:
         wp = __parse_line(line, bounds)
-        if wp: waypoint_list.append(wp)
+        if wp:
+            waypoint_list.append(wp)
 
     return waypoint_list

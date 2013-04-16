@@ -7,7 +7,7 @@ from webob.exc import HTTPForbidden, HTTPNotImplemented
 from sqlalchemy.orm import joinedload
 from sqlalchemy.sql.expression import desc
 
-from skylines.controllers.base import BaseController
+from .base import BaseController
 from skylines.lib.dbutil import get_requested_record
 from skylines.model import DBSession, Notification
 

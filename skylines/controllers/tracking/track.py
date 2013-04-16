@@ -1,20 +1,22 @@
 from datetime import timedelta
 from math import log
+
 from tg import expose, request
 from tg.decorators import with_trailing_slash
 from webob.exc import HTTPNotFound
 from sqlalchemy.sql.expression import and_
+
 from skylines.controllers.base import BaseController
 from skylines.model import DBSession, TrackingFix
 from skylinespolyencode import SkyLinesPolyEncoder
 
 
 def get_flight_path2(pilot, last_update=None):
-    query = DBSession.query(TrackingFix)
-    query = query.filter(and_(TrackingFix.pilot == pilot,
-                              TrackingFix.location != None,
-                              TrackingFix.altitude != None,
-                              TrackingFix.max_age_filter(12)))
+    query = DBSession.query(TrackingFix) \
+        .filter(and_(TrackingFix.pilot == pilot,
+                     TrackingFix.location != None,
+                     TrackingFix.altitude != None,
+                     TrackingFix.max_age_filter(12)))
 
     if pilot.tracking_delay > 0 and not pilot.is_readable(request.identity):
         query = query.filter(TrackingFix.delay_filter(pilot.tracking_delay))

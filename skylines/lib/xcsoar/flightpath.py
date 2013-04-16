@@ -1,7 +1,8 @@
-from subprocess import Popen, PIPE
 from collections import namedtuple
+from subprocess import Popen, PIPE
+
+from .path import helper_path
 from skylines.lib import files
-from skylines.lib.xcsoar.path import helper_path
 
 FlightPathFix = namedtuple('FlightPathFix', ['seconds_of_day', 'latitude', 'longitude', 'altitude', 'enl'])
 

@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from datetime import datetime, timedelta
+
 from sqlalchemy.orm import relation, joinedload
 from sqlalchemy import Column, ForeignKey, Index, over, func
 from sqlalchemy.types import Integer, REAL, DateTime, SmallInteger, Unicode,\
@@ -10,10 +11,11 @@ from sqlalchemy.sql.expression import desc
 from geoalchemy2.types import Geometry
 from geoalchemy2.shape import to_shape, from_shape
 from shapely.geometry import Point
-from skylines.model.base import DeclarativeBase
-from skylines.model.session import DBSession
-from skylines.model.auth import User
-from skylines.model.geo import Location
+
+from .base import DeclarativeBase
+from .session import DBSession
+from .auth import User
+from .geo import Location
 
 
 class TrackingFix(DeclarativeBase):

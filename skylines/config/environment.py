@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """WSGI environment setup for SkyLines."""
 
-from skylines.config.app_cfg import base_config
+from .app_cfg import base_config
 
 __all__ = ['load_environment']
 

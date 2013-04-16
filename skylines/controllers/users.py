@@ -1,31 +1,35 @@
 # -*- coding: utf-8 -*-
 
+import email
+import smtplib
+from datetime import date, timedelta
+
 from tg import expose, validate, redirect, require, request, config, flash, cache
 from tg.i18n import ugettext as _, ungettext, lazy_ugettext as l_
-import smtplib
-import email
 from webob.exc import HTTPNotFound, HTTPForbidden, HTTPServiceUnavailable
-from sprox.formbase import AddRecordForm, EditableForm, Field
-from sprox.widgets import PropertySingleSelectField
+from repoze.what.predicates import not_anonymous, has_permission
+
 from formencode import Schema, All
 from formencode.validators import FieldsMatch, Email, String, NotEmpty
+from sprox.formbase import AddRecordForm, EditableForm, Field
+from sprox.widgets import PropertySingleSelectField
 from sprox.validators import UniqueValue
 from sprox.sa.provider import SAORMProvider
 from tw.forms import PasswordField, TextField, CheckBox, HiddenField
 from tw.forms.validators import UnicodeString
-from skylines.controllers.base import BaseController
-from skylines.lib.dbutil import get_requested_record
-from skylines.model import DBSession, User, Group, Club, Flight, Follower
-from skylines.model.igcfile import IGCFile
-from skylines.forms import BootstrapForm, units, club
+
 from sqlalchemy.sql.expression import and_, or_
 from sqlalchemy import func
 from sqlalchemy.orm import joinedload
-from repoze.what.predicates import not_anonymous, has_permission
-from skylines.model.geo import Location
-from datetime import date, timedelta
-from skylines.model.notification import create_follower_notification
+
+from .base import BaseController
+from skylines.forms import BootstrapForm, units, club
 from skylines.lib.validators import UniqueValueUnless
+from skylines.lib.dbutil import get_requested_record
+from skylines.model import (
+    DBSession, User, Group, Club, Flight, Follower, Location, IGCFile
+)
+from skylines.model.notification import create_follower_notification
 
 
 class DelaySelectField(PropertySingleSelectField):

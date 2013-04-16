@@ -2,20 +2,22 @@
 """Main Controller"""
 
 from datetime import datetime
+
 from tg import expose, flash, lurl, request, redirect, require, config
 from tg.i18n import ugettext as _, set_lang
 from repoze.what.predicates import Any, not_anonymous
 from webob.exc import HTTPNotFound
-from skylines.controllers.base import BaseController
-from skylines.controllers.error import ErrorController
-from skylines.controllers.users import UsersController
-from skylines.controllers.clubs import ClubsController
-from skylines.controllers.flights import FlightsController
-from skylines.controllers.notifications import NotificationsController
-from skylines.controllers.ranking import RankingController
-from skylines.controllers.tracking import TrackingController
-from skylines.controllers.statistics import StatisticsController
-from skylines.controllers.api import APIController
+
+from .base import BaseController
+from .error import ErrorController
+from .users import UsersController
+from .clubs import ClubsController
+from .flights import FlightsController
+from .notifications import NotificationsController
+from .ranking import RankingController
+from .tracking import TrackingController
+from .statistics import StatisticsController
+from .api import APIController
 
 __all__ = ['RootController']
 

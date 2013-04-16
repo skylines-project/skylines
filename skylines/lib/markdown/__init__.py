@@ -1,6 +1,8 @@
 from __future__ import absolute_import
+
 from markdown import Markdown
-from skylines.lib.markdown.urlize import UrlizeExtension
+
+from .urlize import UrlizeExtension
 
 __all__ = ['markdown']
 

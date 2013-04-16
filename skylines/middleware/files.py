@@ -3,8 +3,8 @@ from os.path import basename
 from webob import Response
 from webob.exc import HTTPNotFound, HTTPInternalServerError
 
+from .prefixhandler import PrefixHandlerMiddleware
 from skylines.lib.files import open_file
-from skylines.middleware import PrefixHandlerMiddleware
 
 
 class FilesMiddleware(PrefixHandlerMiddleware):

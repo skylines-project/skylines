@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
 """Setup the SkyLines application"""
 
-from skylines import model
 import transaction
+
+from skylines import model
 
 
 def bootstrap(command, conf, vars):

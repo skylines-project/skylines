@@ -1,10 +1,11 @@
+from tg.i18n import lazy_ugettext as l_
+
 from formencode.validators import URL
 from sprox.formbase import AddRecordForm, EditableForm, Field
 from sprox.widgets import PropertySingleSelectField
 from tw.forms import TextField
-from tg.i18n import lazy_ugettext as l_
 
-from skylines.forms import BootstrapForm
+from .bootstrap import BootstrapForm
 from skylines.model import DBSession, User, Club
 
 

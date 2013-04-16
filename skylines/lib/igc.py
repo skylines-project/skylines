@@ -4,8 +4,9 @@ from __future__ import absolute_import
 
 import re
 from datetime import datetime
-from skylines.lib import base36
-from skylines.lib.string import import_ascii, import_alnum
+
+from . import base36
+from .string import import_ascii, import_alnum
 
 hfdte_re = re.compile(r'HFDTE(\d{6})', re.IGNORECASE)
 hfgid_re = re.compile(r'HFGID\s*GLIDER\s*ID\s*:(.*)', re.IGNORECASE)

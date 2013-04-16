@@ -1,10 +1,12 @@
 import struct
 from datetime import datetime, time, timedelta
+
+import transaction
 from twisted.python import log
 from twisted.internet.protocol import DatagramProtocol
 from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.sql.expression import and_, or_, desc
-import transaction
+
 from skylines.model import DBSession, User, TrackingFix, Follower
 from skylines.tracking.crc import check_crc, set_crc
 

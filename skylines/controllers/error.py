@@ -2,10 +2,12 @@
 """Error controller"""
 
 import re
+
 from tg import request, expose
 from webob.exc import HTTPNotFound
+
+from .base import BaseController
 from skylines.model.session import DBSession
-from skylines.controllers.base import BaseController
 
 __all__ = ['ErrorController']
 

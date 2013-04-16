@@ -3,6 +3,7 @@
 """The application's Globals object"""
 
 from tg import config
+
 from skylines.assets import Environment
 
 __all__ = ['Globals']

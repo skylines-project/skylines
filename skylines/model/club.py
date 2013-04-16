@@ -1,11 +1,13 @@
 # -*- coding: utf-8 -*-
 
 from datetime import datetime
+
 from sqlalchemy.orm import relation
 from sqlalchemy import Column, ForeignKey
 from sqlalchemy.types import Integer, Unicode, DateTime
-from skylines.model.base import DeclarativeBase
-from skylines.model.auth import User
+
+from .base import DeclarativeBase
+from .auth import User
 
 
 class Club(DeclarativeBase):

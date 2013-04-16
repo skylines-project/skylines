@@ -1,17 +1,19 @@
 # -*- coding: utf-8 -*-
 
-from datetime import datetime
 import re
+from datetime import datetime
+
+from tg import config
 from sqlalchemy import ForeignKey, Column, func
 from sqlalchemy.orm import relation
 from sqlalchemy.sql.expression import desc, and_
 from sqlalchemy.types import Integer, DateTime, String, Unicode, Date
+
+from .base import DeclarativeBase
+from .session import DBSession
+from .auth import User
 from skylines.lib import files
 from skylines.lib.igc import read_igc_headers
-from skylines.model.base import DeclarativeBase
-from skylines.model.session import DBSession
-from skylines.model.auth import User
-from tg import config
 
 
 class IGCFile(DeclarativeBase):

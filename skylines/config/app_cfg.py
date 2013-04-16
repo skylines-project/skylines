@@ -19,7 +19,7 @@ import skylines
 from skylines import model
 
 # unused here, but needed by TurboGears2
-from skylines.lib import app_globals, helpers
+from skylines.lib import app_globals, helpers  # NOQA
 
 
 base_config = AppConfig()

@@ -4,11 +4,12 @@ from tg import expose, validate, redirect, request
 from tg.i18n import ugettext as _
 from tg.decorators import with_trailing_slash
 from webob.exc import HTTPForbidden
-from skylines.controllers.base import BaseController
+from sqlalchemy import func
+
+from .base import BaseController
+from skylines.forms import club, pilot as pilot_forms
 from skylines.lib.dbutil import get_requested_record
 from skylines.model import DBSession, User, Group, Club
-from skylines.forms import club, pilot as pilot_forms
-from sqlalchemy import func
 
 
 class ClubController(BaseController):

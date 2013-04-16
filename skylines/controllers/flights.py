@@ -1,21 +1,26 @@
-from babel.dates import format_date
 from datetime import datetime
+
 from tg import expose, require, request, redirect, config
 from tg.decorators import with_trailing_slash, without_trailing_slash
+from babel.dates import format_date
 from repoze.what.predicates import has_permission
 from webob.exc import HTTPNotFound
+
 from sqlalchemy.sql.expression import desc, or_, and_
 from sqlalchemy import func
 from sqlalchemy.orm import joinedload, contains_eager
 from sqlalchemy.orm.util import aliased
-from skylines.controllers.base import BaseController
-from skylines.model import DBSession, User, Club, Flight, IGCFile, AircraftModel, Airport
-from skylines.model.flight_comment import FlightComment
-from skylines.controllers.flight import FlightController
-from skylines.controllers.upload import UploadController
+
+from .base import BaseController
+from .flight import FlightController
+from .upload import UploadController
 from skylines.lib.datatables import GetDatatableRecords
-from skylines.lib.helpers import truncate, country_name
 from skylines.lib.dbutil import get_requested_record, get_requested_record_list
+from skylines.lib.helpers import truncate, country_name
+from skylines.model import (
+    DBSession, User, Club, Flight, IGCFile, AircraftModel,
+    Airport, FlightComment
+)
 
 
 class FlightsController(BaseController):

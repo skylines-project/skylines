@@ -1,13 +1,15 @@
 # -*- coding: utf-8 -*-
 
 from datetime import datetime
+
 from sqlalchemy import Column
 from sqlalchemy.types import Integer, String, DateTime
 from sqlalchemy.sql.expression import func
-from skylines.model.base import DeclarativeBase
-from skylines.model.session import DBSession
 from geoalchemy2.types import Geometry
 from geoalchemy2.elements import WKTElement
+
+from .base import DeclarativeBase
+from .session import DBSession
 
 
 class Airspace(DeclarativeBase):
