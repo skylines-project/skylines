@@ -22,6 +22,10 @@
       <td class="numeric">{{ count }}</td>
       <td class="numeric">{{ _('%(points)s pt')|format(points=total) }}</td>
     </tr>
+    {%- else -%}
+    <tr>
+      <td colspan="4">{% trans %}No airports found.{% endtrans %}</td>
+    </tr>
     {%- endfor %}
   </tbody>
 </table>
