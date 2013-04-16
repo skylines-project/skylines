@@ -20,6 +20,7 @@ JS_FILES = [
     'topbar.js',
     'tracking.js',
     'units.js',
+    'OpenLayers/GraphicLayerSwitcher.js',
 ]
 
 
