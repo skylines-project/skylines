@@ -26,7 +26,8 @@
       // do nothing if this is visible, let the event handler close the box.
       if (visible) return;
 
-      var pixel = new OpenLayers.Pixel(e.layerX, e.layerY);
+      var pixel = e.object.events.getMousePosition(e);
+
       var loc = map.getLonLatFromPixel(pixel);
 
       var loc_wgs84 = loc.clone()
