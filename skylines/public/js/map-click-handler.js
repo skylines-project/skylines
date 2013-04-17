@@ -55,12 +55,14 @@
           var flight = flights[nearest.fid];
           var dx = nearest.along;
 
-          lon = flight.lonlat[index].lon +
-              (flight.lonlat[index + 1].lon - flight.lonlat[index].lon) * dx;
-          lat = flight.lonlat[index].lat +
-              (flight.lonlat[index + 1].lat - flight.lonlat[index].lat) * dx;
-          var time = flight.t[index] +
-              (flight.t[index + 1] - flight.t[index]) * dx;
+          var lonlat_prev = flight.lonlat[index];
+          var lonlat_next = flight.lonlat[index + 1];
+          lon = lonlat_prev.lon + (lonlat_next.lon - lonlat_prev.lon) * dx;
+          lat = lonlat_prev.lat + (lonlat_next.lat - lonlat_prev.lat) * dx;
+
+          var time_prev = flight.t[index];
+          var time_next = flight.t[index + 1];
+          var time = time_prev + (time_next - time_prev) * dx;
 
           // flight info
           var flight_info = flightInfo(flight);
@@ -240,24 +242,27 @@
 
       req.done(function(data) {
         for (var i = 0; i < data.flights.length; ++i) {
+          var flight = data.flights[i];
+
           // skip retrieved flight if already on map
           var next = false;
           for (var fid = 0; fid < flights.length; ++fid) {
-            if (flights[fid].sfid == data.flights[i].sfid) next = true;
+            if (flights[fid].sfid == flight.sfid) next = true;
           }
 
           if (next) continue;
 
-          var flight_id = addFlight(data.flights[i].sfid,
-              data.flights[i].encoded.points,
-              data.flights[i].encoded.levels,
-              data.flights[i].num_levels,
-              data.flights[i].barogram_t,
-              data.flights[i].barogram_h,
-              data.flights[i].enl,
-              data.flights[i].zoom_levels,
-              data.flights[i].contests,
-              data.flights[i].additional);
+          var flight_id = addFlight(
+              flight.sfid,
+              flight.encoded.points,
+              flight.encoded.levels,
+              flight.num_levels,
+              flight.barogram_t,
+              flight.barogram_h,
+              flight.enl,
+              flight.zoom_levels,
+              flight.contests,
+              flight.additional);
         }
       });
 
