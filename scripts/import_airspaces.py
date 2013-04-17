@@ -117,9 +117,9 @@ def import_airspace(url, country_code, file_type):
     # remove all airspace definitions for the current country
     remove_country(country_code)
 
-    if filename.endswith('sua'):
+    if file_type == 'sua':
         import_sua(filename, country_code)
-    elif filename.endswith('openair'):
+    elif file_type == 'openair':
         import_openair(filename, country_code)
 
     if filename.startswith(config['skylines.temporary_dir']):
