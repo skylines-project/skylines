@@ -7,7 +7,7 @@ from twisted.internet.protocol import DatagramProtocol
 from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.sql.expression import and_, or_, desc
 
-from skylines.model import DBSession, User, TrackingFix, Follower
+from skylines.model import DBSession, User, TrackingFix, Follower, Elevation
 from skylines.tracking.crc import check_crc, set_crc
 
 # More information about this protocol can be found in the XCSoar
@@ -93,6 +93,8 @@ class TrackingServer(DatagramProtocol):
             latitude = data[2] / 1000000.
             longitude = data[3] / 1000000.
             fix.set_location(longitude, latitude)
+
+            fix.elevation = Elevation.get(fix.location_wkt)
 
         if flags & FLAG_TRACK:
             fix.track = data[5]
