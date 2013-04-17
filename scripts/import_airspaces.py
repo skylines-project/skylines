@@ -335,17 +335,18 @@ def add_airspace(country_code, airspace_class, name, base, top, geom_str):
     return True
 
 
-msl_re = re.compile(r'^(\d+)\s?(f|ft|m)?\s?([a]?msl|asl)$')
+msl_re = re.compile(r'^(\d+)\s*(f|ft|m)?\s*([a]?msl|asl|alt)')
 flightlevel_re = re.compile(r'^fl\s?(\d+)$')
-agl_re = re.compile(r'^(\d+)\s?(f|ft|m)?\s?(agl|gnd|asfc|sfc)$')
-unl_re = re.compile(r'^unl(td)?$')
+agl_re = re.compile(r'^(\d+)\s*(f|ft|m)?\s*(agl|gnd|asfc|sfc)')
+unl_re = re.compile(r'^unl')
+notam_re = re.compile(r'^notam')
 
 
 def normalise_height(height, name):
     height = height.lower().strip()
 
     # is it GND or SFC?
-    if re.search('^(gnd|sfc|msl)$', height): return 'GND'
+    if re.search('^(ground|gnd|sfc|msl)$', height): return 'GND'
 
     # is it a flightlevel?
     match = flightlevel_re.match(height)
@@ -369,6 +370,11 @@ def normalise_height(height, name):
     match = unl_re.match(height)
     if match:
         return 'FL 999'
+
+    # is it notam limited?
+    match = notam_re.match(height)
+    if match:
+        return 'NOTAM'
 
     print name + " has unknown height format: '" + height + "'"
     return height
