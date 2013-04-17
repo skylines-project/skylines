@@ -17,7 +17,7 @@ tw.forms==0.9.9
 simplejson==3.1.0
 skylinespolyencode==0.1.2
 psycopg2==2.4.6
-geoalchemy2==0.2dev
+geoalchemy2==0.2
 shapely==1.2.17
 crc16==0.1.1
 markdown==2.3

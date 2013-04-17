@@ -41,7 +41,6 @@ setup(
     """,
     dependency_links=[
         "http://www.turbogears.org/2.1/downloads/current/",
-        "http://github.com/Turbo87/geoalchemy2/tarball/82c76fd#egg=geoalchemy2-0.2dev",
     ],
     zip_safe=False
 )
