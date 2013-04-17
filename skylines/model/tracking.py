@@ -58,6 +58,13 @@ class TrackingFix(DeclarativeBase):
     def set_location(self, longitude, latitude):
         self.location_wkt = from_shape(Point(longitude, latitude), srid=4326)
 
+    @property
+    def altitude_gnd(self):
+        if not self.elevation:
+            raise ValueError('This TrackingFix has no elevation.')
+
+        return max(0, self.altitude - self.elevation)
+
     @classmethod
     def max_age_filter(cls, max_age):
         """

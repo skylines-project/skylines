@@ -36,7 +36,13 @@
         {{ insert_flag(airport.country_code) }} {{ airport|e }} ({{ h.format_distance(distance) }})
         {%- endif %}
       </td>
-      <td class="numeric">{{ h.format_altitude(track.altitude) }} <small>MSL</small></td>
+      <td class="numeric">
+        {% if track.elevation -%}
+        {{ h.format_altitude(track.altitude_gnd) }} <small>GND</small>
+        {%- else -%}
+        {{ h.format_altitude(track.altitude) }} <small>MSL</small>
+        {%- endif %}
+      </td>
       <td nowrap="nowrap" class="show">
         <a href="/tracking/{{ track.pilot_id }}/" class="btn btn-mini">Show</a>
       </td>
