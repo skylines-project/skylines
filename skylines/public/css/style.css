@@ -91,6 +91,7 @@ textarea {
 table .show {
   white-space: nowrap;
   text-align: right;
+  display: table-cell;
 }
 
 #flight-table .num_comments {
