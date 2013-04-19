@@ -582,7 +582,8 @@ function getFixData(flight, time) {
 }
 
 function setPlaneOnMap(id, fix_data) {
-  var plane = flights[id].plane;
+  var flight = flights[id];
+  var plane = flight.plane;
 
   // set plane location
   plane.geometry = fix_data['loc'];
@@ -597,12 +598,12 @@ function setPlaneOnMap(id, fix_data) {
   // add plane marker if more than one flight on the map
   if (flights.length > 1) {
     if (!plane.marker) {
-      var comp_id = flights[id].additional &&
-          flights[id].additional['competition_id'];
+      var comp_id = flight.additional &&
+          flight.additional['competition_id'];
 
       plane.marker = $(
           '<span class="badge plane_marker" ' +
-              'style="background: ' + flights[id].color + ';">' +
+              'style="background: ' + flight.color + ';">' +
           (comp_id ? comp_id : '') +
           '</span>');
 
