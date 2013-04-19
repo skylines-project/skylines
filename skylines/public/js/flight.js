@@ -620,19 +620,28 @@ function setPlaneOnMap(id, fix_data) {
 }
 
 function hidePlaneOnMap(id) {
-  map.getLayersByName('Flight')[0].removeFeatures(flights[id].plane);
+  var layer = map.getLayersByName('Flight')[0];
 
-  if (flights[id].plane && flights[id].plane.marker)
-    flights[id].plane.marker.hide();
+  var flight = flights[id];
+  var plane = flight.plane;
+
+  layer.removeFeatures(plane);
+
+  if (plane && plane.marker)
+    plane.marker.hide();
 }
 
 function hideAllPlanesOnMap() {
   var layer = map.getLayersByName('Flight')[0];
+
   var flightsLength = flights.length;
   for (var i = 0; i < flightsLength; ++i) {
-    layer.removeFeatures(flights[i].plane);
-    if (flights[i].plane && flights[i].plane.marker)
-      flights[i].plane.marker.hide();
+    var flight = flights[i];
+    var plane = flight.plane;
+
+    layer.removeFeatures(plane);
+    if (plane && plane.marker)
+      plane.marker.hide();
   }
 }
 
