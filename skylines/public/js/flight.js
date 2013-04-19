@@ -677,7 +677,7 @@ function hoverMap() {
     // and draw a position marker on the linechart.
     if (nearest != null) {
       // calculate time
-      var flight = flights[nearest.fid];
+      var flight = nearest.flight;
       var time_prev = flight.t[nearest.from];
       var time_next = flight.t[nearest.from + 1];
       var time = time_prev + (time_next - time_prev) * nearest.along;
@@ -732,7 +732,7 @@ function searchForPlane(within, loc, hoverTolerance) {
           possible_solutions.push({
             from: components[k - 1].originalIndex,
             to: components[k].originalIndex,
-            fid: i
+            flight: flight
           });
       }
     }
@@ -754,7 +754,7 @@ function searchForPlane(within, loc, hoverTolerance) {
   var possible_solutionsLength = possible_solutions.length;
   for (var i = 0; i < possible_solutionsLength; ++i) {
     var possible_solution = possible_solutions[i];
-    var flight = flights[possible_solution.fid];
+    var flight = possible_solution.flight;
     var components = flight.geo.components;
 
     for (var j = possible_solution.from + 1; j <= possible_solution.to; ++j) {
@@ -774,7 +774,7 @@ function searchForPlane(within, loc, hoverTolerance) {
           from: j - 1,
           to: j,
           along: distToSegment.along,
-          fid: possible_solution.fid
+          flight: possible_solution.flight
         };
       }
     }

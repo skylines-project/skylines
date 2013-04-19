@@ -53,7 +53,7 @@
 
         if (nearest !== null) {
           var index = nearest.from;
-          var flight = flights[nearest.fid];
+          var flight = nearest.flight;
           var dx = nearest.along;
 
           var lonlat_prev = flight.lonlat[index];
