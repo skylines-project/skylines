@@ -48,7 +48,7 @@ flot_js = Bundle(
     'https://raw.github.com/flot/flot/ccb37e4965967d7252cc99e3b2eea8fcec3c909a/jquery.flot.resize.js',
     'http://flot-marks.googlecode.com/svn-history/r13/trunk/src/jquery.flot.marks.js',
     'https://raw.github.com/flot/flot/ccb37e4965967d7252cc99e3b2eea8fcec3c909a/excanvas.min.js',
-    filters=SimpleClosureJS,
+    filters=SimpleClosureJS(disable_ie_checks=True),
     output='js/flot-%(version)s.js')
 
 
