@@ -497,13 +497,13 @@ function setTime(time) {
     fix_data = getFixData(flight, time);
     if (!fix_data) {
       // update map
-      hidePlaneOnMap(i);
+      hidePlaneOnMap(flight);
 
       // update fix-data table
       fix_table.clearFix(flight.sfid);
     } else {
       // update map
-      setPlaneOnMap(i, fix_data);
+      setPlaneOnMap(flight, fix_data);
 
       // update fix-data table
       fix_table.updateFix(flight.sfid, fix_data);
@@ -581,8 +581,7 @@ function getFixData(flight, time) {
   return fix_data;
 }
 
-function setPlaneOnMap(id, fix_data) {
-  var flight = flights[id];
+function setPlaneOnMap(flight, fix_data) {
   var plane = flight.plane;
 
   // set plane location
@@ -619,10 +618,9 @@ function setPlaneOnMap(id, fix_data) {
   }
 }
 
-function hidePlaneOnMap(id) {
+function hidePlaneOnMap(flight) {
   var layer = map.getLayersByName('Flight')[0];
 
-  var flight = flights[id];
   var plane = flight.plane;
 
   layer.removeFeatures(plane);
