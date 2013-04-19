@@ -1,5 +1,7 @@
 from webassets import Bundle
 
+from .filters import SimpleClosureJS
+
 
 # Font Awesome
 
@@ -33,7 +35,7 @@ bootstrap_js = Bundle(
     'https://raw.github.com/twitter/bootstrap/v2.2.0/js/bootstrap-tooltip.js',
     'https://raw.github.com/twitter/bootstrap/v2.2.0/js/bootstrap-popover.js',
     'https://raw.github.com/twitter/bootstrap/v2.3.0/js/bootstrap-dropdown.js',
-    filters='closure_js',
+    filters=SimpleClosureJS,
     output='js/bootstrap-%(version)s.js')
 
 
@@ -46,7 +48,7 @@ flot_js = Bundle(
     'https://raw.github.com/flot/flot/ccb37e4965967d7252cc99e3b2eea8fcec3c909a/jquery.flot.resize.js',
     'http://flot-marks.googlecode.com/svn-history/r13/trunk/src/jquery.flot.marks.js',
     'https://raw.github.com/flot/flot/ccb37e4965967d7252cc99e3b2eea8fcec3c909a/excanvas.min.js',
-    filters='closure_js',
+    filters=SimpleClosureJS,
     output='js/flot-%(version)s.js')
 
 
@@ -94,7 +96,7 @@ datatables_js = Bundle(
     'js/jQuery/jquery.dataTables.js',
     'js/jQuery/jquery.dataTables.ext.js',
     'js/jQuery/bootstrap-datepicker.js',
-    filters='closure_js',
+    filters=SimpleClosureJS,
     output='js/tables-%(version)s.js')
 
 openlayers_js = Bundle(
@@ -111,7 +113,7 @@ flight_js = Bundle(
         'js/baro.js',
         'js/fix-table.js',
         'js/phase-table.js',
-        filters='closure_js'),
+        filters=SimpleClosureJS),
 
     'js/flight.js',
     filters='rjsmin',
