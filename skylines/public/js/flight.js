@@ -345,14 +345,6 @@ function addContest(name, lonlat, times, sfid) {
   map.getLayersByName('Flight')[0].addFeatures(feature);
 }
 
-/**
- * @return {OpenLayers.Bounds} bounds containing all flights on the map.
- */
-
-function getAllFlightsBounds() {
-  return flights.getBounds();
-}
-
 
 /**
  * Searches the next smaller index to a number in a monotonic array
@@ -624,10 +616,6 @@ function hideAllPlanesOnMap() {
   });
 }
 
-function flightWithSFID(sfid) {
-  return flights.get(sfid);
-}
-
 
 /**
  * Handles the mouseover events over the map to display near airplanes
@@ -885,7 +873,7 @@ function highlightFlightPhase(start, end) {
 function followFlight(sfid) {
   if (!sfid) return;
 
-  var flight = flightWithSFID(sfid);
+  var flight = flights.get(sfid);
   if (flight) {
     coordinates = flight.geo.components[flight.geo.components.length - 1];
     map.panTo(new OpenLayers.LonLat(coordinates.x, coordinates.y));

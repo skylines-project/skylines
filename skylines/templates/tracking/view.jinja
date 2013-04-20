@@ -90,7 +90,7 @@ Live Tracking <small>of {{ pilot }}</small>
     {%- endfor %}
     {%- endif %}
 
-    map.zoomToExtent(getAllFlightsBounds().scale(1.1));
+    map.zoomToExtent(flights.getBounds().scale(1.1));
 
     hoverMap();
 
