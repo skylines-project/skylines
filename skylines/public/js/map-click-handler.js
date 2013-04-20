@@ -246,12 +246,8 @@
           var flight = data.flights[i];
 
           // skip retrieved flight if already on map
-          var next = false;
-          for (var fid = 0; fid < flights.length; ++fid) {
-            if (flights[fid].sfid == flight.sfid) next = true;
-          }
-
-          if (next) continue;
+          if (flights.has(flight.sfid))
+            continue;
 
           var flight_id = addFlight(
               flight.sfid,
