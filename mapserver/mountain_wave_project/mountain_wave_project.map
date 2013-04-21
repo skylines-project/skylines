@@ -36,9 +36,8 @@ LAYER
   TYPE POINT
   CONNECTIONTYPE POSTGIS
   CONNECTION "dbname=skylines"
-  DATA "location from (SELECT id, location, name, (-weather_dir) as wind_dir
+  DATA "location from (SELECT id, location, (-weather_dir) as wind_dir
         from mountain_wave_project) as foo using unique id"
-  LABELITEM "name"
 
   PROJECTION
     "init=epsg:4326"
@@ -52,27 +51,47 @@ LAYER
   CLASS
     NAME 'Wave Wind direction'
     MAXSCALEDENOM 216698 # Zoom level 12
+    EXPRESSION ([wind_dir])
 
     STYLE
       SYMBOL 'arrow'
       OUTLINECOLOR 0 0 0
       ANGLE [wind_dir]
     END
+  END
 
-    LABEL
-      COLOR  0 0 0
-      OUTLINECOLOR 255 255 255
-      OUTLINEWIDTH 1
-      FONT "serif"
-      TYPE truetype
-      SIZE 7
-      MAXSIZE 7
-      MINSIZE 7
-      POSITION AUTO
-      PARTIALS false
-      MINDISTANCE 20
-      ANTIALIAS true
+  CLASS
+    NAME 'Wave large'
+    MINSCALEDENOM 866792
+    MAXSCALEDENOM 3467160 # Zoom level 7
+
+    STYLE
+      SYMBOL 'circle'
+      COLOR 255 230 0
+      OPACITY 70
+      SIZE 6
     END
+  END
+END
+
+## Wave label
+LAYER
+  NAME 'MWP_Label'
+  GROUP 'MWP'
+  TYPE POINT
+  CONNECTIONTYPE POSTGIS
+  CONNECTION "dbname=skylines"
+  DATA "location from (SELECT id, location, name
+        from mountain_wave_project) as foo using unique id"
+  LABELITEM "name"
+
+  PROJECTION
+    "init=epsg:4326"
+  END
+
+  METADATA
+    WMS_NAME 'MWP_Label'
+    WMS_GROUP 'MWP'
   END
 
   CLASS
@@ -94,19 +113,6 @@ LAYER
       PARTIALS false
       MINDISTANCE 20
       ANTIALIAS true
-    END
-  END
-
-  CLASS
-    NAME 'Wave large'
-    MINSCALEDENOM 866792
-    MAXSCALEDENOM 3467160 # Zoom level 7
-
-    STYLE
-      SYMBOL 'circle'
-      COLOR 255 230 0
-      OPACITY 70
-      SIZE 6
     END
   END
 END
