@@ -51,6 +51,10 @@ def main():
 
     center_feature = mwp_center_layer.GetFeature(0)
     ext_feature = mwp_ext_layer.GetFeature(0)
+
+    # it seems we have some data in the files. clear mwp table first
+    DBSession.query(MountainWaveProject).delete()
+
     i = 0
     j = 0
     while(center_feature):
