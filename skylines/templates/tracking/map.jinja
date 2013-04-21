@@ -93,7 +93,7 @@ Live Tracking <small>of {{ pilot }}</small>
     {%- endif %}
 
     var factor = $("#barogram")[0].offsetHeight / map.getSize().h;
-    var zoomExtent = flights.getBounds().clone().scale(1.1);
+    var zoomExtent = flights.getBounds().clone().scale(1.02);
     zoomExtent.bottom -= zoomExtent.getHeight() * factor * 3/2;
 
     map.zoomToExtent(zoomExtent);
