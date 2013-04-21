@@ -66,7 +66,7 @@ def main():
         if not center_feature:
             continue
 
-        name = unicode(center_feature.GetFieldAsString('name'), 'utf-8') \
+        name = center_feature.GetFieldAsString('name') \
             .strip()
         country = center_feature.GetFieldAsString('country').strip()
         vertical_value = center_feature.GetFieldAsDouble('verticalve')
