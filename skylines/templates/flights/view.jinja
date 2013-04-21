@@ -100,7 +100,7 @@
     {%- endfor %}
     {%- endif %}
 
-    map.zoomToExtent(getAllFlightsBounds().scale(1.02));
+    map.zoomToExtent(flights.getBounds().scale(1.02));
 
     hoverMap();
 
@@ -139,7 +139,7 @@
     });
 
     $('#detailed-stats').on('shown', function () {
-      initPhasesTable('#phases-table');
+      initPhasesTable($('#phases-table'));
       $('html, body').animate({scrollTop: $("#detailed-stats").offset().top-100}, 200);
     });
   });

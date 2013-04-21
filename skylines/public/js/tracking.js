@@ -4,11 +4,11 @@
  * Retrieves all new traces for the displayed flights
  */
 function updateFlightsFromJSON() {
-  for (fid in flights) {
-    var url = '/tracking/' + flights[fid].sfid + '/json';
+  flights.each(function(flight) {
+    var url = '/tracking/' + flight.sfid + '/json';
 
     $.ajax(url, {
-      data: { last_update: flights[fid].last_update || null },
+      data: { last_update: flight.last_update || null },
       success: function(data) {
         updateFlight(data.sfid, data.encoded.points, data.encoded.levels,
                      data.num_levels, data.barogram_t, data.barogram_h,
@@ -19,7 +19,7 @@ function updateFlightsFromJSON() {
         updateBaroData();
       }
     });
-  }
+  });
 }
 
 /**
@@ -59,13 +59,9 @@ function updateFlight(tracking_id, _lonlat, _levels, _num_levels, _time,
   }
 
   // find the flight to update
-  var flight_id = -1;
-  for (i in flights) {
-    if (tracking_id == flights[i].sfid)
-      flight_id = i;
-  }
-
-  if (flight_id == -1) return;
+  var flight = flights.get(tracking_id);
+  if (!flight)
+    return;
 
   var flot_h = [], flot_enl = [];
   for (var i = 0; i < time.length; i++) {
@@ -73,9 +69,6 @@ function updateFlight(tracking_id, _lonlat, _levels, _num_levels, _time,
     flot_h.push([timestamp, height[i]]);
     flot_enl.push([timestamp, enl[i]]);
   }
-
-  // update flight
-  var flight = flights[flight_id];
 
   // points is already sliced
   flight.geo.components = flight.geo.components.concat(points);

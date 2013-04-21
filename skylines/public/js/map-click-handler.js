@@ -53,7 +53,7 @@
 
         if (nearest !== null) {
           var index = nearest.from;
-          var flight = flights[nearest.fid];
+          var flight = nearest.flight;
           var dx = nearest.along;
 
           var lonlat_prev = flight.lonlat[index];
@@ -246,12 +246,8 @@
           var flight = data.flights[i];
 
           // skip retrieved flight if already on map
-          var next = false;
-          for (var fid = 0; fid < flights.length; ++fid) {
-            if (flights[fid].sfid == flight.sfid) next = true;
-          }
-
-          if (next) continue;
+          if (flights.has(flight.sfid))
+            continue;
 
           var flight_id = addFlight(
               flight.sfid,
