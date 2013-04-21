@@ -32,3 +32,13 @@ def import_alnum(s):
 
     s = non_alnum_re.sub('', s)
     return unicode(s, 'ascii')
+
+
+def isnumeric(s):
+    """Check if a string can be parsed as floating point value"""
+    try:
+        float(s)
+    except ValueError:
+        return False
+
+    return True

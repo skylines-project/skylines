@@ -401,7 +401,7 @@
             '<td class="wave_name">' + data[i].name + '</td>' +
             '<td class="wave_direction">' +
                 data[i].main_wind_direction +
-            '°</td>' +
+            '</td>' +
             '</tr>'
             ));
       }
