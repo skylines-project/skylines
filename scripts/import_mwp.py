@@ -14,6 +14,7 @@ from osgeo import ogr
 from paste.deploy.loadwsgi import appconfig
 from skylines.config.environment import load_environment
 from skylines.model import DBSession, MountainWaveProject
+from skylines.lib.string import isnumeric
 from sqlalchemy import func
 from sqlalchemy.sql.expression import not_
 from geoalchemy2.elements import WKTElement
@@ -71,15 +72,20 @@ def main():
         country = center_feature.GetFieldAsString('country').strip()
         vertical_value = center_feature.GetFieldAsDouble('verticalve')
         synoptical = center_feature.GetFieldAsString('synoptical').strip()
-        main_wind_direction = center_feature.GetFieldAsString('mainwinddi') \
-            .strip()
+
+        if center_feature.GetFieldAsString('mainwinddi').strip() != "None":
+            main_wind_direction = center_feature \
+                .GetFieldAsString('mainwinddi').strip()
+        else:
+            main_wind_direction = None
+
         additional = center_feature.GetFieldAsString('additional').strip()
         source = center_feature.GetFieldAsString('source').strip()
         remark1 = center_feature.GetFieldAsString('remark1').strip()
         remark2 = center_feature.GetFieldAsString('remark2').strip()
         orientation = center_feature.GetFieldAsDouble('orientatio')
         rotor_height = center_feature.GetFieldAsString('rotorheigh').strip()
-        weather_dir = center_feature.GetFieldAsInteger('weatherdir')
+        weather_dir = parse_wind_direction(main_wind_direction)
         location = center_feature.geometry()
 
         if ext_feature:
@@ -171,6 +177,51 @@ def ellipse(ra, rb, ang, x0, y0, Nb=50):
     ellipse = from_shape(linestring, srid=4326)
 
     return ellipse
+
+
+def parse_wind_direction(direction):
+    if not direction:
+        return None
+
+    if isnumeric(direction):
+        return float(direction)
+
+    direction = direction.upper().replace('O', 'E')
+
+    if direction == 'N':
+        return 0
+    elif direction == 'NNE':
+        return 22.5
+    elif direction == 'NE':
+        return 45
+    elif direction == 'ENE':
+        return 67.5
+    elif direction == 'E':
+        return 90
+    elif direction == 'ESE':
+        return 112.5
+    elif direction == 'SE':
+        return 135
+    elif direction == 'SSE':
+        return 157.5
+    elif direction == 'S':
+        return 180
+    elif direction == 'SSW':
+        return 202.5
+    elif direction == 'SW':
+        return 225
+    elif direction == 'WSW':
+        return 247.5
+    elif direction == 'W':
+        return 270
+    elif direction == 'WNW':
+        return 292.5
+    elif direction == 'NW':
+        return 315
+    elif direction == 'NNW':
+        return 337.5
+    else:
+        return None
 
 
 if __name__ == '__main__':
