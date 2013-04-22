@@ -1,76 +1,84 @@
-(function() {
-  slPhaseTable = function(placeholder) {
-    var phase_table = this;
 
-    /**
-     * The selected table row or null.
-     * @type {?(String|number)}
-     */
-    var selection = null;
 
-    // Public attributes and functions
+function slPhaseTable(placeholder) {
+  /**
+   * The selected table row or null.
+   * @type {?(String|number)}
+   * @private
+   */
+  this.selection_ = null;
 
-    /**
-     * @expose
-     * Clears the current selection from the table.
-     *
-     * @param  {Boolean=} opt_trigger
-     *   The 'selection_changed' event is triggered if this parameter is true.
-     */
-    fix_table.clearSelection = function(opt_trigger) {
-      fix_table.setSelection(null, opt_trigger);
-    };
+  this.changePointers_(placeholder);
+  this.setupEvents_(placeholder);
+}
 
-    /**
-     * @expose
-     * Selects a new flight phase from the table.
-     *
-     * @param {?Object} element The table row that should be selected.
-     * @param  {Boolean=} opt_trigger
-     *   The 'selection_changed' event is triggered if this parameter is true.
-     */
-    phase_table.setSelection = function(element, opt_trigger) {
-      if (selection)
-        $(selection).removeClass('selected');
 
-      selection = element;
+/**
+ * Clears the current selection from the table.
+ *
+ * @param  {boolean=} opt_trigger
+ *   The 'selection_changed' event is triggered if this parameter is true.
+ */
+slPhaseTable.prototype.clearSelection = function(opt_trigger) {
+  this.setSelection(null, opt_trigger);
+};
 
-      if (selection)
-        $(selection).addClass('selected');
 
-      if (opt_trigger) {
-        if (selection) {
-          var start = parseFloat(
-              $(selection).children('td.start').attr('data-content'));
-          var duration = parseFloat(
-              $(selection).children('td.duration').attr('data-content'));
+/**
+ * Selects a new flight phase from the table.
+ *
+ * @param {?Object} element The table row that should be selected.
+ * @param  {boolean=} opt_trigger
+ *   The 'selection_changed' event is triggered if this parameter is true.
+ */
+slPhaseTable.prototype.setSelection = function(element, opt_trigger) {
+  if (this.selection_)
+    $(this.selection_).removeClass('selected');
 
-          $(phase_table).trigger('selection_changed', [{
-            start: start,
-            end: start + duration,
-            duration: duration
-          }]);
-        } else {
-          $(phase_table).trigger('selection_changed');
-        }
-      }
-    };
+  this.selection_ = element;
 
-    // Initialization
+  if (this.selection_)
+    $(this.selection_).addClass('selected');
 
-    changePointer();
-    setupEvents();
+  if (opt_trigger) {
+    if (this.selection_) {
+      var start = parseFloat(
+          $(this.selection_).children('td.start').attr('data-content'));
+      var duration = parseFloat(
+          $(this.selection_).children('td.duration').attr('data-content'));
 
-    function changePointer() {
-      placeholder.find('tr').each(function(index, row) {
-        $(row).css('cursor', 'pointer');
-      });
+      $(this).trigger('selection_changed', [{
+        start: start,
+        end: start + duration,
+        duration: duration
+      }]);
+    } else {
+      $(this).trigger('selection_changed');
     }
+  }
+};
 
-    function setupEvents() {
-      placeholder.on('click', 'tr', function(event) {
-        phase_table.setSelection(selection == this ? null : this, true);
-      });
-    }
-  };
-})();
+
+/**
+ * Change the cursor styles of all rows in the placeholder to pointers.
+ * @param  {DOMElement} placeholder
+ * @private
+ */
+slPhaseTable.prototype.changePointers_ = function(placeholder) {
+  placeholder.find('tr').each(function(index, row) {
+    $(row).css('cursor', 'pointer');
+  });
+};
+
+
+/**
+ * Setup the click event handlers for the rows in the placeholder.
+ * @param  {DOMElement} placeholder
+ * @private
+ */
+slPhaseTable.prototype.setupEvents_ = function(placeholder) {
+  var that = this;
+  placeholder.on('click', 'tr', function(event) {
+    that.setSelection(selection == this ? null : this, true);
+  });
+};
