@@ -256,6 +256,11 @@ class User(DeclarativeBase):
         from skylines.model.flight import Flight
         return Flight.get_largest().filter(Flight.pilot == self)
 
+    def initials(self):
+        parts = self.display_name.split()
+        initials = [p[0].upper() for p in parts if len(p) > 2 and '.' not in p]
+        return ''.join(initials)
+
     @property
     def unit_preset(self):
         """Calculate unit preset based on user unit preference.
