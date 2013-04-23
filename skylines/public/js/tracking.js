@@ -12,7 +12,7 @@ function updateFlightsFromJSON() {
       success: function(data) {
         updateFlight(data.sfid, data.encoded.points, data.encoded.levels,
                      data.num_levels, data.barogram_t, data.barogram_h,
-                     data.enl);
+                     data.enl, data.elevations);
 
         initRedrawLayer(map.getLayersByName('Flight')[0]);
         updateBaroScale();
@@ -36,15 +36,17 @@ function updateFlightsFromJSON() {
  * @param {String} _time Google polyencoded string of time values.
  * @param {String} _height Google polyencoded string of height values.
  * @param {String} _enl Google polyencoded string of enl values.
+ * @param {String} _elevations Google polyencoded string of elevations.
  */
 
 function updateFlight(tracking_id, _lonlat, _levels, _num_levels, _time,
-    _height, _enl) {
+    _height, _enl, _elevations) {
   var height = OpenLayers.Util.decodeGoogle(_height);
   var time = OpenLayers.Util.decodeGoogle(_time);
   var enl = OpenLayers.Util.decodeGoogle(_enl);
   var lonlat = OpenLayers.Util.decodeGooglePolyline(_lonlat);
   var lod = OpenLayers.Util.decodeGoogleLoD(_levels, _num_levels);
+  var elev = OpenLayers.Util.decodeGoogle(_elevations);
 
   // we skip the first point in the list because we assume it's the "linking"
   // fix between the data we already have and the data to add.
@@ -63,11 +65,19 @@ function updateFlight(tracking_id, _lonlat, _levels, _num_levels, _time,
   if (!flight)
     return;
 
-  var flot_h = [], flot_enl = [];
+  var flot_h = [], flot_enl = [], flot_elev = [], elev_t = [], elev_h = [];
   for (var i = 0; i < time.length; i++) {
     var timestamp = time[i] * 1000;
     flot_h.push([timestamp, height[i]]);
     flot_enl.push([timestamp, enl[i]]);
+
+    var e = elev[i];
+    if (e < -500)
+      e = null;
+
+    elev_t.push(time[i]);
+    elev_h.push(e);
+    flot_elev.push([timestamp, e ? slUnits.convertAltitude(e) : null]);
   }
 
   // points is already sliced
@@ -76,9 +86,12 @@ function updateFlight(tracking_id, _lonlat, _levels, _num_levels, _time,
   flight.t = flight.t.concat(time.slice(1));
   flight.h = flight.h.concat(height.slice(1));
   flight.enl = flight.enl.concat(enl.slice(1));
+  flight.elev_t = flight.elev_t.concat(elev_t.slice(1));
+  flight.elev_h = flight.elev_h.concat(elev_h.slice(1));
   flight.lonlat = flight.lonlat.concat(lonlat.slice(1));
   flight.flot_h = flight.flot_h.concat(flot_h.slice(1));
   flight.flot_enl = flight.flot_enl.concat(flot_enl.slice(1));
+  flight.flot_elev = flight.flot_elev.concat(flot_elev.slice(1));
 
   // recalculate bounds
   flight.geo.bounds = flight.geo.calculateBounds();

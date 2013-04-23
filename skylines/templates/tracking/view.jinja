@@ -73,7 +73,10 @@ Live Tracking <small>of {{ pilot }}</small>
       {{ h.json.dumps(trace.barogram_t) }},
       {{ h.json.dumps(trace.barogram_h) }},
       {{ h.json.dumps(trace.enl) }},
-      {{ h.json.dumps(trace.zoom_levels) }}
+      {{ h.json.dumps(trace.zoom_levels) }},
+      null,
+      {{ h.json.dumps(trace.barogram_t) }},
+      {{ h.json.dumps(trace.elevations) }}
     );
 
     {% if other_pilots -%}
@@ -85,7 +88,10 @@ Live Tracking <small>of {{ pilot }}</small>
       {{ h.json.dumps(trace.barogram_t) }},
       {{ h.json.dumps(trace.barogram_h) }},
       {{ h.json.dumps(trace.enl) }},
-      {{ h.json.dumps(trace.zoom_levels) }}
+      {{ h.json.dumps(trace.zoom_levels) }},
+      null,
+      {{ h.json.dumps(trace.barogram_t) }},
+      {{ h.json.dumps(trace.elevations) }}
     );
     {%- endfor %}
     {%- endif %}
