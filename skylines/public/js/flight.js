@@ -244,15 +244,19 @@ function addFlight(sfid, _lonlat, _levels, _num_levels, _time, _height, _enl,
   // Add flight as a row to the fix data table
   fix_table.addRow(sfid, color, _additional && _additional['competition_id']);
 
-  var flot_elev = [];
-  if (_elevations_t !== undefined && _elevations_h !== undefined) {
-    var elev_t = OpenLayers.Util.decodeGoogle(_elevations_t);
-    var elev_h = OpenLayers.Util.decodeGoogle(_elevations_h);
+  var _elev_t = OpenLayers.Util.decodeGoogle(_elevations_t);
+  var _elev_h = OpenLayers.Util.decodeGoogle(_elevations_h);
 
-    for (var i = 0; i < elev_t.length; i++) {
-      var timestamp = elev_t[i] * 1000;
-      flot_elev.push([timestamp, slUnits.convertAltitude(elev_h[i])]);
-    }
+  var flot_elev = [], elev_t = [], elev_h = [];
+  for (var i = 0; i < _elev_t.length; i++) {
+    var timestamp = _elev_t[i] * 1000;
+    var e = _elev_h[i];
+    if (e < -500)
+      e = null;
+
+    elev_t.push(time[i]);
+    elev_h.push(e);
+    flot_elev.push([timestamp, e ? slUnits.convertAltitude(e) : null]);
   }
 
   flights.add({
@@ -547,9 +551,12 @@ function getFixData(flight, time) {
   if (flight.elev_t !== undefined && flight.elev_h !== undefined) {
     var elev_index = getNextSmallerIndex(flight.elev_t, time);
     if (elev_index >= 0 && elev_index < flight.elev_t.length) {
-      fix_data['alt-gnd'] = fix_data['alt-msl'] - flight.elev_h[elev_index];
-      if (fix_data['alt-gnd'] < 0)
-        fix_data['alt-gnd'] = 0;
+      var elev = flight.elev_h[elev_index];
+      if (elev) {
+        fix_data['alt-gnd'] = fix_data['alt-msl'] - flight.elev_h[elev_index];
+        if (fix_data['alt-gnd'] < 0)
+          fix_data['alt-gnd'] = 0;
+      }
     }
   }
 
