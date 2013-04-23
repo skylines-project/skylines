@@ -547,9 +547,12 @@ function getFixData(flight, time) {
   if (flight.elev_t !== undefined && flight.elev_h !== undefined) {
     var elev_index = getNextSmallerIndex(flight.elev_t, time);
     if (elev_index >= 0 && elev_index < flight.elev_t.length) {
-      fix_data['alt-gnd'] = fix_data['alt-msl'] - flight.elev_h[elev_index];
-      if (fix_data['alt-gnd'] < 0)
-        fix_data['alt-gnd'] = 0;
+      var elev = flight.elev_h[elev_index];
+      if (elev) {
+        fix_data['alt-gnd'] = fix_data['alt-msl'] - flight.elev_h[elev_index];
+        if (fix_data['alt-gnd'] < 0)
+          fix_data['alt-gnd'] = 0;
+      }
     }
   }
 
