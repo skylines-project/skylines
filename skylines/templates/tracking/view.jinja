@@ -75,8 +75,8 @@ Live Tracking <small>of {{ pilot }}</small>
       {{ h.json.dumps(trace.enl) }},
       {{ h.json.dumps(trace.zoom_levels) }},
       undefined,
-      undefined,
-      undefined,
+      {{ h.json.dumps(trace.barogram_t) }},
+      {{ h.json.dumps(trace.elevations) }},
       { competition_id: "{{ pilot.initials() }}" }
     );
 
@@ -91,8 +91,8 @@ Live Tracking <small>of {{ pilot }}</small>
       {{ h.json.dumps(trace.enl) }},
       {{ h.json.dumps(trace.zoom_levels) }},
       undefined,
-      undefined,
-      undefined,
+      {{ h.json.dumps(trace.barogram_t) }},
+      {{ h.json.dumps(trace.elevations) }},
       { competition_id: "{{ pilot.initials() }}" }
     );
     {%- endfor %}
