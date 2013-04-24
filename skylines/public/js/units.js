@@ -2,19 +2,6 @@ slUnits = (function() {
   var slUnits = {};
 
   /**
-   * @expose
-   * Formats a number to a string with a given number of decimal places
-   *
-   * @param  {number} value A number that should be formatted.
-   * @param  {[type]} decimals
-   *   The number of decimal places that should be kept.
-   * @return {String} The formatted value as a string.
-   */
-  slUnits.formatDecimal = function(value, decimals) {
-    return value.toFixed(decimals);
-  };
-
-  /**
    * The list of supported unit types.
    * For each type the corresponding functions are generated dynamically.
    * @const
@@ -76,6 +63,19 @@ slUnits = (function() {
     if (UNITS[speed]) settings['Speed'] = speed;
     if (UNITS[lift]) settings['Lift'] = lift;
     if (UNITS[altitude]) settings['Altitude'] = altitude;
+  };
+
+  /**
+   * @expose
+   * Formats a number to a string with a given number of decimal places
+   *
+   * @param  {number} value A number that should be formatted.
+   * @param  {[type]} decimals
+   *   The number of decimal places that should be kept.
+   * @return {String} The formatted value as a string.
+   */
+  slUnits.formatDecimal = function(value, decimals) {
+    return value.toFixed(decimals);
   };
 
   function generateFunctions(unit_type) {
