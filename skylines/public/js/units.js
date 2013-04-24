@@ -1,5 +1,5 @@
-slUnits = new function() {
-  var slUnits = this;
+slUnits = (function() {
+  var slUnits = {};
 
   /**
    * @expose
@@ -100,4 +100,6 @@ slUnits = new function() {
   for (var i = 0; i < UNIT_TYPES_LENGTH; ++i) {
     generateFunctions(UNIT_TYPES[i]);
   }
-};
+
+  return slUnits;
+})();
