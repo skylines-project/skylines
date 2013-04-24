@@ -1,13 +1,15 @@
 slPhaseTable = function(placeholder) {
   var phase_table = {};
 
+  // Private attributes
+
   /**
    * The selected table row or null.
    * @type {?(String|number)}
    */
   var selection = null;
 
-  // Public attributes and functions
+  // Public attributes and methods
 
   /**
    * @expose
@@ -62,12 +64,20 @@ slPhaseTable = function(placeholder) {
 
   return phase_table;
 
+  // Private methods
+
+  /**
+   * Change the cursor styles of all rows in the placeholder to pointers.
+   */
   function changePointer() {
     placeholder.find('tr').each(function(index, row) {
       $(row).css('cursor', 'pointer');
     });
   }
 
+  /**
+   * Setup the click event handlers for the rows in the placeholder.
+   */
   function setupEvents() {
     placeholder.on('click', 'tr', function(event) {
       phase_table.setSelection(selection == this ? null : this, true);
