@@ -182,14 +182,14 @@ function slBarogram(placeholder) {
 
   // Initialization
 
-  setupFlot();
-  attachEventHandlers();
+  setupFlot(placeholder);
+  attachEventHandlers(placeholder);
 
   return baro;
 
   // Private methods
 
-  function setupFlot() {
+  function setupFlot(placeholder) {
     flot = $.plot(placeholder, [], {
       grid: {
         borderWidth: 0,
@@ -218,7 +218,7 @@ function slBarogram(placeholder) {
     });
   }
 
-  function attachEventHandlers() {
+  function attachEventHandlers(placeholder) {
     placeholder.on('plothover', function(event, pos) {
       $(baro).trigger('barohover', [pos.x / 1000.]);
     }).on('mouseout', function(event) {
