@@ -19,6 +19,10 @@ slMapClickHandler = function(infobox, settings) {
 
   /**
    * Click handler which shows a info box at the click location.
+   *
+   * @this {OpenLayers.Map}
+   * @param {Event} e
+   * @return {Boolean?}
    */
   map_click_handler.trigger = function(e) {
     // do nothing if this is visible, let the event handler close the box.
