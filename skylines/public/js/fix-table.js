@@ -24,7 +24,6 @@ slFixTable = function(placeholder) {
   // Public attributes and methods
 
   /**
-   * @expose
    * Renders the fix data table into the placeholder.
    * This function has to be called after the internal data store has been
    * modified by any of the following methods.
@@ -38,7 +37,6 @@ slFixTable = function(placeholder) {
   };
 
   /**
-   * @expose
    * Adds a new row to the fix data table.
    *
    * @param {string|number} id An identifier for the flight row.
@@ -66,7 +64,6 @@ slFixTable = function(placeholder) {
   };
 
   /**
-   * @expose
    * Clears all fix data from the internal data store.
    */
   fix_table.clearAllFixes = function() {
@@ -75,7 +72,6 @@ slFixTable = function(placeholder) {
   };
 
   /**
-   * @expose
    * Clears the fix data of one specific row.
    *
    * @param {String|number} id
@@ -87,7 +83,6 @@ slFixTable = function(placeholder) {
   };
 
   /**
-   * @expose
    * Updates the fix data of one specific row.
    *
    * @param {String|number} id
@@ -104,7 +99,6 @@ slFixTable = function(placeholder) {
   };
 
   /**
-   * @expose
    * Returns whether the fix data table is in "selectable" mode.
    *
    * @return {Boolean} True if "selectable" mode is active, False otherwise.
@@ -114,7 +108,6 @@ slFixTable = function(placeholder) {
   };
 
   /**
-   * @expose
    * Sets whether single flights should be selectable by clicking on the list.
    *
    * @param {Boolean} value True enables the "selectable" mode.
@@ -128,7 +121,6 @@ slFixTable = function(placeholder) {
   };
 
   /**
-   * @expose
    * Clears the current selection from the table.
    *
    * @param  {Boolean=} opt_trigger
@@ -139,7 +131,6 @@ slFixTable = function(placeholder) {
   };
 
   /**
-   * @expose
    * Returns the identifier of the selected flight or null.
    *
    * @return {?(String|number)} Identifier of the selected flight or null.
@@ -149,7 +140,6 @@ slFixTable = function(placeholder) {
   };
 
   /**
-   * @expose
    * Selects a new flight from the table in "selectable" mode.
    *
    * @param {?(String|number)} id Identifier of the flight or null.
