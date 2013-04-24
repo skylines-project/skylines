@@ -1,6 +1,3 @@
-
-
-
 /**
  * An ordered collection of flight objects.
  * @constructor

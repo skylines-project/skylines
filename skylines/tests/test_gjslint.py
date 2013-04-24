@@ -6,7 +6,17 @@ from functools import partial
 
 GJSLINT_COMMAND = 'gjslint'
 
-GJSLINT_OPTIONS = ['--strict']
+GJSLINT_OPTIONS = []
+
+GJSLINT_ERRORS = [
+    # 'blank_lines_at_top_level',
+    'indentation',
+    'well_formed_author',
+    'no_braces_around_inherit_doc',
+    'braces_around_type',
+    'optional_type_marker',
+    'unused_private_members',
+]
 
 JS_BASE_FOLDER = os.path.join('skylines', 'public', 'js')
 
@@ -37,6 +47,9 @@ def run_gjslint(filename):
 
     args = [GJSLINT_COMMAND]
     args.extend(GJSLINT_OPTIONS)
+    for error in GJSLINT_ERRORS:
+        args.extend(['--jslint_error', error])
+
     args.append(path)
 
     try:
