@@ -263,6 +263,8 @@ slMapClickHandler = function(infobox, settings) {
             flight.enl,
             flight.zoom_levels,
             flight.contests,
+            flight.elevations_t,
+            flight.elevations_h,
             flight.additional);
       }
     });
