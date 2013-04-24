@@ -21,7 +21,7 @@ slFixTable = function(placeholder) {
    */
   var selection = null;
 
-  // Public attributes and functions
+  // Public attributes and methods
 
   /**
    * @expose
@@ -41,10 +41,12 @@ slFixTable = function(placeholder) {
    * @expose
    * Adds a new row to the fix data table.
    *
-   * @param {String|number} id An identifier for the flight row.
-   * @param {String} color RGB hex color (e.g. '#FF0000').
-   * @param {String} competition_id
-   *   An optional competition id of the aircraft.
+   * @param {string|number} id An identifier for the flight row.
+   * @param {string} color RGB hex color (e.g. '#FF0000').
+   * @param {string=} opt_competition_id
+   *     An optional competition id of the aircraft.
+   * @return {boolean} false if the id is already present in the table,
+   *     true otherwise.
    */
   fix_table.addRow = function(id, color, opt_competition_id) {
     // Don't add the row if is exists already
@@ -169,8 +171,14 @@ slFixTable = function(placeholder) {
 
   return fix_table;
 
-  // Private functions
+  // Private methods
 
+  /**
+   * Updates a given row with the data from the given fix.
+   *
+   * @param {DOMElement} row
+   * @param {Object} fix
+   */
   function renderRow(row, fix) {
     // Loop through the columns and fill them
     $(row).find('td').each(function(index, cell) {
@@ -212,6 +220,14 @@ slFixTable = function(placeholder) {
     });
   }
 
+  /**
+   * Adds a new and empty row to the fix table.
+   *
+   * @param {string|number} id
+   * @param {string} color The color of the flight trace on the map.
+   * @param {string=} opt_competition_id Optional competition id of the plane.
+   * @return {DOMElement} The generated fix table row.
+   */
   function addHTMLRow(id, color, opt_competition_id) {
     // Generate a new table row for the flight
     var row = $(
