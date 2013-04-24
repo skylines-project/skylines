@@ -3,7 +3,7 @@
 /**
  * Array of flight objects. (see addFlight method)
  */
-var flights = new slFlightCollection();
+var flights = slFlightCollection();
 
 var baro;
 var fix_table;
@@ -102,7 +102,7 @@ function initFlightLayer() {
 }
 
 function initFixTable() {
-  fix_table = new slFixTable($('#fix-data'));
+  fix_table = slFixTable($('#fix-data'));
   $(fix_table).on('selection_changed', updateBaroData);
 }
 
@@ -387,7 +387,7 @@ function formatSecondsAsTime(seconds) {
 }
 
 function initBaro(element) {
-  baro = new slBarogram(element);
+  baro = slBarogram(element);
 
   var mouse_container_running = false;
   $(baro).on('barohover', function(event, time) {
@@ -804,7 +804,7 @@ distanceToSegmentSquared = function(point, segment) {
  * @param {DOMElement} placeholder DOM element of the phases table.
 */
 function initPhasesTable(placeholder) {
-  phase_table = new slPhaseTable(placeholder);
+  phase_table = slPhaseTable(placeholder);
 
   $(phase_table).on('selection_changed', function(event, data) {
     clearPhaseMarkers();

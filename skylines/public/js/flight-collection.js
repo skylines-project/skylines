@@ -3,9 +3,9 @@
  * @constructor
  */
 slFlightCollection = function() {
-  // Private attributes
+  var collection = {};
 
-  var collection = this;
+  // Private attributes
 
   /**
    * The internal data store
@@ -14,7 +14,7 @@ slFlightCollection = function() {
    */
   var data_ = [];
 
-  // Public attributes and functions
+  // Public attributes and methods
 
   collection.length = 0;
 
@@ -87,4 +87,6 @@ slFlightCollection = function() {
 
     return bounds;
   };
+
+  return collection;
 };

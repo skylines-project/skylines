@@ -250,7 +250,6 @@ function initInfoBox(settings) {
   // add click handler for nearest flight search
   var infobox = $("<div id='MapInfoBox' class='InfoBox'></div>").hide();
   $(map.div).append(infobox);
-  var map_click_handler = new slMapClickHandler(infobox,
-      settings);
+  var map_click_handler = slMapClickHandler(infobox, settings);
   map.events.register('click', null, map_click_handler.trigger);
 }
