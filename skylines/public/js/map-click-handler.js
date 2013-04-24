@@ -18,7 +18,6 @@ slMapClickHandler = function(infobox, settings) {
   // Public attributes and functions
 
   /**
-   * @expose
    * Click handler which shows a info box at the click location.
    */
   map_click_handler.trigger = function(e) {
