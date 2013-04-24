@@ -3,7 +3,7 @@
 /**
  * Array of flight objects. (see addFlight method)
  */
-var flights = new slFlightCollection();
+var flights = slFlightCollection();
 
 var baro;
 var fix_table;
