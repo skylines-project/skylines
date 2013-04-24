@@ -333,7 +333,7 @@ slMapClickHandler = function(infobox, settings) {
 
     infobox.append(item);
 
-    pixel = map.getPixelFromLonLat(infobox.latlon);
+    var pixel = map.getPixelFromLonLat(infobox.latlon);
     infobox.css('left', (pixel.x + 15) + 'px');
     infobox.css('top', (pixel.y - infobox.height() / 2) + 'px');
   };

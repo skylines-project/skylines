@@ -473,7 +473,7 @@ function setTime(time) {
 
   flights.each(function(flight) {
     // calculate fix data
-    fix_data = getFixData(flight, time);
+    var fix_data = getFixData(flight, time);
     if (!fix_data) {
       // update map
       hidePlaneOnMap(flight);
@@ -882,7 +882,7 @@ function followFlight(sfid) {
 
   var flight = flights.get(sfid);
   if (flight) {
-    coordinates = flight.geo.components[flight.geo.components.length - 1];
+    var coordinates = flight.geo.components[flight.geo.components.length - 1];
     map.panTo(new OpenLayers.LonLat(coordinates.x, coordinates.y));
   }
 }

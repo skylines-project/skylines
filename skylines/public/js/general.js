@@ -122,10 +122,10 @@ function getShareUrl(url) {
   var url_re = /(.*?)\/([\d,]{1,})\/(.*)/;
   var url_split = url_re.exec(url);
 
-  ids = url_split[2].split(',').concat(pinnedFlights);
+  var ids = url_split[2].split(',').concat(pinnedFlights);
 
-  unique_ids = [];
-  for (i in ids) {
+  var unique_ids = [];
+  for (var i in ids) {
     if ($.inArray(parseInt(ids[i]), unique_ids) == -1) {
       unique_ids.push(parseInt(ids[i]));
     }
