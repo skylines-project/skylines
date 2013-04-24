@@ -253,7 +253,7 @@ slMapClickHandler = function(infobox, settings) {
         if (flights.has(flight.sfid))
           continue;
 
-        var flight_id = addFlight(
+        addFlight(
             flight.sfid,
             flight.encoded.points,
             flight.encoded.levels,

@@ -10,8 +10,6 @@ var fix_table;
 var phase_table;
 var phases_layer;
 
-var highlighted_flight_sfid;
-
 
 /*
  * Global time, can be:
