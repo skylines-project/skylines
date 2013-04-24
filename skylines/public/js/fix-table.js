@@ -1,7 +1,7 @@
 slFixTable = function(placeholder) {
-  // Private attributes
+  var fix_table = {};
 
-  var fix_table = this;
+  // Private attributes
 
   /**
    * The internal data store for the metadata and fix data.
@@ -166,6 +166,8 @@ slFixTable = function(placeholder) {
     if (opt_trigger)
       $(fix_table).trigger('selection_changed', [selection]);
   };
+
+  return fix_table;
 
   // Private functions
 

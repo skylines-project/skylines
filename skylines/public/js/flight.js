@@ -102,7 +102,7 @@ function initFlightLayer() {
 }
 
 function initFixTable() {
-  fix_table = new slFixTable($('#fix-data'));
+  fix_table = slFixTable($('#fix-data'));
   $(fix_table).on('selection_changed', updateBaroData);
 }
 
