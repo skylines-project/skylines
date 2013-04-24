@@ -1,20 +1,58 @@
+/**
+ * An abstraction layer for the barogram view.
+ * @param  {DOMElement} placeholder
+ * @constructor
+ */
 function slBarogram(placeholder) {
   var baro = {};
 
   // Private attributes
+
+  /**
+   * The flot charts instance.
+   * @type {Object}
+   */
   var flot = null;
 
+  /**
+   * The data series that should be drawn as active.
+   * @type {Array}
+   */
   var active = [];
+
+  /**
+   * The data series that should be drawn as passive.
+   * @type {Array}
+   */
   var passive = [];
+
+  /**
+   * The ENL data series.
+   * @type {Array}
+   */
   var enls = [];
+
+  /**
+   * The contest markers.
+   * @type {Array}
+   */
   var contests = [];
+
+  /**
+   * The elevation data series.
+   * @type {Array}
+   */
   var elevations = [];
+
+  /**
+   * The object describing the highlighted time interval in the barogram.
+   * @type {?Object}
+   */
   var time_highlight = null;
 
   // Public attributes and methods
 
   /**
-   * @expose
    * Draws the barogram onto the underlying canvas
    */
   baro.draw = function() {
@@ -25,7 +63,6 @@ function slBarogram(placeholder) {
 
 
   /**
-   * @expose
    * Clears the active traces from the barogram
    */
   baro.clearActiveTraces = function() {
@@ -33,8 +70,8 @@ function slBarogram(placeholder) {
   };
 
   /**
-   * @expose
    * Sets the active traces for the barogram
+   * @param {Array} data
    */
   baro.setActiveTraces = function(data) {
     active = data;
@@ -42,7 +79,6 @@ function slBarogram(placeholder) {
 
 
   /**
-   * @expose
    * Clears the passive traces from the barogram
    */
   baro.clearPassiveTraces = function() {
@@ -50,8 +86,8 @@ function slBarogram(placeholder) {
   };
 
   /**
-   * @expose
    * Sets the passive traces for the barogram
+   * @param {Array} data
    */
   baro.setPassiveTraces = function(data) {
     passive = data;
@@ -59,7 +95,6 @@ function slBarogram(placeholder) {
 
 
   /**
-   * @expose
    * Clears the ENL data
    */
   baro.clearENLData = function() {
@@ -67,8 +102,8 @@ function slBarogram(placeholder) {
   };
 
   /**
-   * @expose
    * Sets the ENL data
+   * @param {Array} data
    */
   baro.setENLData = function(data) {
     enls = data;
@@ -76,7 +111,6 @@ function slBarogram(placeholder) {
 
 
   /**
-   * @expose
    * Clears the contest markers
    */
   baro.clearContests = function() {
@@ -84,8 +118,8 @@ function slBarogram(placeholder) {
   };
 
   /**
-   * @expose
    * Sets the contest markers
+   * @param {Array} data
    */
   baro.setContests = function(data) {
     contests = data;
@@ -93,7 +127,6 @@ function slBarogram(placeholder) {
 
 
   /**
-   * @expose
    * Clears the elevation data
    */
   baro.clearElevations = function() {
@@ -101,8 +134,8 @@ function slBarogram(placeholder) {
   };
 
   /**
-   * @expose
    * Sets the elevation data
+   * @param {Array} data
    */
   baro.setElevations = function(data) {
     elevations = data;
@@ -110,7 +143,6 @@ function slBarogram(placeholder) {
 
 
   /**
-   * @expose
    * Clears the crosshair from the barogram
    */
   baro.clearTime = function() {
@@ -118,7 +150,6 @@ function slBarogram(placeholder) {
   };
 
   /**
-   * @expose
    * Set the crosshair to the given time
    *
    * @param {?number} time If null the crosshair is removed,
@@ -136,7 +167,6 @@ function slBarogram(placeholder) {
 
 
   /**
-   * @expose
    * Clears the time interval limits from the barogram
    */
   baro.clearTimeInterval = function() {
@@ -145,7 +175,6 @@ function slBarogram(placeholder) {
   };
 
   /**
-   * @expose
    * Sets the time interval that should be shown on the barogram
    *
    * @param {number} start The earliest time that should be shown.
@@ -159,7 +188,6 @@ function slBarogram(placeholder) {
 
 
   /**
-   * @expose
    * Clears the highlight of a certain time interval from the barogram
    */
   baro.clearTimeHighlight = function() {
@@ -167,7 +195,6 @@ function slBarogram(placeholder) {
   };
 
   /**
-   * @expose
    * Highlights a certain time interval on the barogram
    *
    * @param {number} start The earliest time that should be highlighted.
@@ -189,6 +216,10 @@ function slBarogram(placeholder) {
 
   // Private methods
 
+  /**
+   * Sets up the flot charts instance.
+   * @param  {DOMElement} placeholder
+   */
   function setupFlot(placeholder) {
     flot = $.plot(placeholder, [], {
       grid: {
@@ -218,6 +249,10 @@ function slBarogram(placeholder) {
     });
   }
 
+  /**
+   * Attaches the external event handlers to the flot charts instance.
+   * @param  {DOMElement} placeholder
+   */
   function attachEventHandlers(placeholder) {
     placeholder.on('plothover', function(event, pos) {
       $(baro).trigger('barohover', [pos.x / 1000.]);
@@ -226,6 +261,9 @@ function slBarogram(placeholder) {
     });
   }
 
+  /**
+   * Updates the flot charts instance
+   */
   function update() {
     var data = [];
     addElevations(data);
@@ -238,6 +276,11 @@ function slBarogram(placeholder) {
     flot.setData(data);
   }
 
+  /**
+   * Adds the active traces to the data series array
+   *
+   * @param {Array} data The data array that will be passed to flot.
+   */
   function addActiveTraces(data) {
     var active_length = active.length;
     for (var i = 0; i < active_length; ++i) {
@@ -250,6 +293,11 @@ function slBarogram(placeholder) {
     }
   }
 
+  /**
+   * Adds the passive traces to the data series array.
+   *
+   * @param {Array} data The data array that will be passed to flot.
+   */
   function addPassiveTraces(data) {
     var passive_length = passive.length;
     for (var i = 0; i < passive_length; ++i) {
@@ -268,6 +316,11 @@ function slBarogram(placeholder) {
     }
   }
 
+  /**
+   * Adds the ENL data to the data series array.
+   *
+   * @param {Array} data The data array that will be passed to flot.
+   */
   function addENLData(data) {
     var enls_length = enls.length;
     for (var i = 0; i < enls_length; ++i) {
@@ -332,6 +385,11 @@ function slBarogram(placeholder) {
     }
   }
 
+  /**
+   * Adds the elevation data to the data series array
+   *
+   * @param {Array} data The data array that will be passed to flot.
+   */
   function addElevations(data) {
     data.push({
       data: elevations,
