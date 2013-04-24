@@ -387,7 +387,7 @@ function formatSecondsAsTime(seconds) {
 }
 
 function initBaro(element) {
-  baro = new slBarogram(element);
+  baro = slBarogram(element);
 
   var mouse_container_running = false;
   $(baro).on('barohover', function(event, time) {
