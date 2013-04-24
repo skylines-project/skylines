@@ -12,7 +12,6 @@ slPhaseTable = function(placeholder) {
   // Public attributes and methods
 
   /**
-   * @expose
    * Clears the current selection from the table.
    *
    * @param  {Boolean=} opt_trigger
@@ -23,7 +22,6 @@ slPhaseTable = function(placeholder) {
   };
 
   /**
-   * @expose
    * Selects a new flight phase from the table.
    *
    * @param {?Object} element The table row that should be selected.
