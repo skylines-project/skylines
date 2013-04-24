@@ -804,7 +804,7 @@ distanceToSegmentSquared = function(point, segment) {
  * @param {DOMElement} placeholder DOM element of the phases table.
 */
 function initPhasesTable(placeholder) {
-  phase_table = new slPhaseTable(placeholder);
+  phase_table = slPhaseTable(placeholder);
 
   $(phase_table).on('selection_changed', function(event, data) {
     clearPhaseMarkers();

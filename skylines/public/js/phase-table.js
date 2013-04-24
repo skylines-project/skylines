@@ -1,5 +1,5 @@
 slPhaseTable = function(placeholder) {
-  var phase_table = this;
+  var phase_table = {};
 
   /**
    * The selected table row or null.
@@ -59,6 +59,8 @@ slPhaseTable = function(placeholder) {
 
   changePointer();
   setupEvents();
+
+  return phase_table;
 
   function changePointer() {
     placeholder.find('tr').each(function(index, row) {
