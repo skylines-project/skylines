@@ -1,7 +1,7 @@
 slMapClickHandler = function(infobox, settings) {
-  // Private attributes
+  var map_click_handler = {};
 
-  var map_click_handler = this;
+  // Private attributes
 
   /**
    * The OpenLayers.Geometry object of the circle.
@@ -124,6 +124,8 @@ slMapClickHandler = function(infobox, settings) {
 
     return false; // stop bubbeling
   };
+
+  return map_click_handler;
 
   // Private functions
 
