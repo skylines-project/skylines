@@ -1,3 +1,28 @@
+/**
+ * An ordered collection of flight objects.
+ * @constructor
+ */
+slFlightCollection = function() {
+  var collection = slCollection();
+
+  // Public attributes and methods
+
+  /**
+   * Calculates the bounds of all flights in the collection.
+   * @return {OpenLayers.Bounds}
+   */
+  collection.getBounds = function() {
+    var bounds = new OpenLayers.Bounds();
+
+    collection.each(function(flight) {
+      bounds.extend(flight.geo.bounds);
+    });
+
+    return bounds;
+  };
+
+  return collection;
+};
 
 
 /**
@@ -203,7 +228,7 @@ function addFlight(sfid, _lonlat, _levels, _num_levels, _time, _height, _enl,
       points, lod, zoom_levels);
   flight.clip = 1;
 
-  var color = colors[flights.length % colors.length];
+  var color = colors[flights.length() % colors.length];
   var feature = new OpenLayers.Feature.Vector(flight, { color: color });
 
   var plane = new OpenLayers.Feature.Vector(points[0], { rotation: 0 });
@@ -281,7 +306,7 @@ function addFlight(sfid, _lonlat, _levels, _num_levels, _time, _height, _enl,
 
   // Set fix data table into "selectable" mode if
   // more than one flight is loaded
-  if (flights.length > 1)
+  if (flights.length() > 1)
     fix_table.setSelectable(true);
 
   setTime(global_time);
@@ -342,7 +367,7 @@ function addContest(name, lonlat, times, sfid) {
   });
 
   // show the contest traces only for the first flight by default
-  feature.renderIntent = (flights.length == 0) ? 'contest' : 'hidden';
+  feature.renderIntent = (flights.length() == 0) ? 'contest' : 'hidden';
 
   map.getLayersByName('Flight')[0].addFeatures(feature);
 }
@@ -433,7 +458,7 @@ function updateBaroData() {
     }
 
     // Save contests of only flight for later if applicable
-    if (flights.length == 1) {
+    if (flights.length() == 1) {
       contests = flight.contests;
       elevations = flight.flot_elev;
     }
@@ -575,7 +600,7 @@ function setPlaneOnMap(flight, fix_data) {
   map.getLayersByName('Flight')[0].addFeatures(plane);
 
   // add plane marker if more than one flight on the map
-  if (flights.length > 1) {
+  if (flights.length() > 1) {
     if (!plane.marker) {
       var comp_id = flight.additional &&
           flight.additional['competition_id'];
