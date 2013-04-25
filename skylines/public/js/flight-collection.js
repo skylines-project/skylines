@@ -16,7 +16,13 @@ slCollection = function() {
 
   // Public attributes and methods
 
-  collection.length = 0;
+  /**
+   * Returns the number of objects in the collection.
+   * @return {Number}
+   */
+  collection.length = function() {
+    return data_.length;
+  };
 
   /**
    * Returns the object at the specified index in the collection.
@@ -33,7 +39,7 @@ slCollection = function() {
    * @param  {Function} callback
    */
   collection.each = function(callback) {
-    for (var i = 0, len = data_.length; i < len; ++i)
+    for (var i = 0, len = collection.length(); i < len; ++i)
       callback(collection.at(i));
   };
 
@@ -44,7 +50,7 @@ slCollection = function() {
    * @return {?Object}
    */
   collection.get = function(id) {
-    for (var i = 0, len = data_.length; i < len; ++i) {
+    for (var i = 0, len = collection.length(); i < len; ++i) {
       var object = collection.at(i);
       if (object.sfid == id)
         return object;
@@ -70,7 +76,6 @@ slCollection = function() {
    */
   collection.add = function(object) {
     data_.push(object);
-    collection.length = data_.length;
   };
 
 
