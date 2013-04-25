@@ -76,6 +76,8 @@ slCollection = function() {
    */
   collection.add = function(object) {
     data_.push(object);
+
+    $(collection).triggerHandler('add', [object]);
   };
 
 
