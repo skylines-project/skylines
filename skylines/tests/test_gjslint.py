@@ -24,7 +24,7 @@ JS_FILES = [
     'baro.js',
     'fix-table.js',
     'flight.js',
-    'flight-collection.js',
+    'collection.js',
     'general.js',
     'map.js',
     'phase-table.js',
