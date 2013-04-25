@@ -1,8 +1,8 @@
 /**
- * An ordered collection of flight objects.
+ * An ordered collection of arbitrary objects.
  * @constructor
  */
-slFlightCollection = function() {
+slCollection = function() {
   var collection = {};
 
   // Private attributes
@@ -19,7 +19,7 @@ slFlightCollection = function() {
   collection.length = 0;
 
   /**
-   * Returns the flight at the specified index in the collection.
+   * Returns the object at the specified index in the collection.
    * @param  {Number} index
    * @return {?Object}
    */
@@ -28,8 +28,8 @@ slFlightCollection = function() {
   };
 
   /**
-   * Iterates through the flights in the collection and calls the callback
-   * function for every flight.
+   * Iterates through the objects in the collection and calls the callback
+   * function for every object.
    * @param  {Function} callback
    */
   collection.each = function(callback) {
@@ -39,15 +39,15 @@ slFlightCollection = function() {
 
 
   /**
-   * Returns the flight with the specified id, or null.
+   * Returns the object with the specified id, or null.
    * @param  {Number} id
    * @return {?Object}
    */
   collection.get = function(id) {
     for (var i = 0, len = data_.length; i < len; ++i) {
-      var flight = collection.at(i);
-      if (flight.sfid == id)
-        return flight;
+      var object = collection.at(i);
+      if (object.sfid == id)
+        return object;
     }
 
     return null;
@@ -55,7 +55,7 @@ slFlightCollection = function() {
 
 
   /**
-   * Returns true if a flight with the specified id is part of the collection.
+   * Returns true if a object with the specified id is part of the collection.
    * @param  {Number} id
    * @return {Boolean}
    */
@@ -65,14 +65,28 @@ slFlightCollection = function() {
 
 
   /**
-   * Adds another flight to the collection.
-   * @param {Object} flight
+   * Adds another object to the collection.
+   * @param {Object} object
    */
-  collection.add = function(flight) {
-    data_.push(flight);
+  collection.add = function(object) {
+    data_.push(object);
     collection.length = data_.length;
   };
 
+
+  return collection;
+};
+
+
+
+/**
+ * An ordered collection of flight objects.
+ * @constructor
+ */
+slFlightCollection = function() {
+  var collection = slCollection();
+
+  // Public attributes and methods
 
   /**
    * Calculates the bounds of all flights in the collection.
