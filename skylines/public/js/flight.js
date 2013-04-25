@@ -1,3 +1,28 @@
+/**
+ * An ordered collection of flight objects.
+ * @constructor
+ */
+slFlightCollection = function() {
+  var collection = slCollection();
+
+  // Public attributes and methods
+
+  /**
+   * Calculates the bounds of all flights in the collection.
+   * @return {OpenLayers.Bounds}
+   */
+  collection.getBounds = function() {
+    var bounds = new OpenLayers.Bounds();
+
+    collection.each(function(flight) {
+      bounds.extend(flight.geo.bounds);
+    });
+
+    return bounds;
+  };
+
+  return collection;
+};
 
 
 /**
