@@ -2,7 +2,7 @@
 
 """The base Controller API."""
 
-from tg import TGController, tmpl_context, request, redirect, url
+from tg import TGController, tmpl_context, request
 from tg.i18n import get_lang
 from babel import parse_locale
 from babel.util import distinct
@@ -63,12 +63,6 @@ class BaseController(TGController):
         tmpl_context.secondary_languages = [lang for lang in tmpl_context.available_languages if lang not in tmpl_context.primary_languages]
 
         tmpl_context.current_language = tmpl_context.primary_languages[0]
-
-        if request.identity is not None and \
-           'user' in request.identity and \
-           request.identity['user'] is None:
-            raise redirect(url('/logout_handler',
-                               params=dict(came_from=request.url.encode('utf-8'))))
 
         if request.identity:
             request.identity['notifications'] = count_unread_notifications(request.identity['user'])
