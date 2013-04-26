@@ -1,7 +1,7 @@
 {% from "macros/links.jinja" import airport_link %}
 
-{% set my_pilot = request.identity['user'] if request.identity else None %}
-{% set my_club = request.identity['user'].club if request.identity else None %}
+{% set my_pilot = c.identity and c.identity['user'] %}
+{% set my_club = my_pilot and my_pilot.club %}
 
 <ul class="nav nav-pills">
   <li{% if tab == 'all' %} class="active"{% endif %}>
@@ -45,7 +45,7 @@
   <li class="active"><a href="/flights/club/{{ club.id }}">{{ club|e }}</a></li>
   {%- endif %}
 
-  {% if my_club and (not club or my_club != club) -%}
+  {% if my_club and my_club != club -%}
   <li><a href="/flights/club/{{ my_club.id }}">{{ my_club|e }}</a></li>
   {%- endif %}
 
@@ -53,11 +53,11 @@
   <li class="active"><a href="/flights/pilot/{{ pilot.id }}">{{ pilot|e }}</a></li>
   {%- endif %}
 
-  {% if my_pilot and (not pilot or my_pilot != pilot) -%}
+  {% if my_pilot and my_pilot != pilot -%}
   <li><a href="/flights/pilot/{{ my_pilot.id }}">{{ my_pilot|e }}</a></li>
   {%- endif %}
 
-  {% if request.identity -%}
+  {% if my_pilot -%}
   <li{% if tab == 'unassigned' %} class="active"{% endif %}>
     <a href="/flights/unassigned">{% trans %}Unassigned Flights{% endtrans %}</a>
   </li>
