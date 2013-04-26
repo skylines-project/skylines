@@ -13,23 +13,17 @@ class StatisticsController(BaseController):
     def _default(self, *args, **kw):
         club = None
         pilot = None
-        selected_club = None
-        selected_pilot = None
         airport = None
 
         if args and len(args) >= 2:
             if args[0] == 'pilot':
-                selected_pilot = get_requested_record(User, args[1])
+                pilot = get_requested_record(User, args[1])
 
             if args[0] == 'club':
-                selected_club = get_requested_record(Club, args[1])
+                club = get_requested_record(Club, args[1])
 
             if args[0] == 'airport':
                 airport = get_requested_record(Airport, args[1])
-
-        if request.identity:
-            pilot = request.identity['user']
-            club = request.identity['user'].club
 
         query = DBSession.query(Flight.year.label('year'),
                                 func.count('*').label('flights'),
@@ -37,11 +31,11 @@ class StatisticsController(BaseController):
                                 func.sum(Flight.olc_classic_distance).label('distance'),
                                 func.sum(Flight.duration).label('duration'))
 
-        if selected_pilot:
-            query = query.filter(Flight.pilot_id == selected_pilot.id)
+        if pilot:
+            query = query.filter(Flight.pilot_id == pilot.id)
 
-        if selected_club:
-            query = query.filter(Flight.club_id == selected_club.id)
+        if club:
+            query = query.filter(Flight.club_id == club.id)
 
         if airport:
             query = query.filter(Flight.takeoff_airport_id == airport.id)
@@ -83,6 +77,4 @@ class StatisticsController(BaseController):
                     sum_duration=sum_duration,
                     airport=airport,
                     pilot=pilot,
-                    club=club,
-                    selected_pilot=selected_pilot,
-                    selected_club=selected_club)
+                    club=club)

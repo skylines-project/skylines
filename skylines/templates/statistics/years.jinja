@@ -33,29 +33,33 @@
 
 
 {%- block content %}
-{% if pilot or club or selected_club or selected_pilot -%}
+{% if pilot or club or airport or c.identity -%}
 <ul class="nav nav-pills">
-  <li{% if not selected_pilot and not selected_club and not airport %} class="active"{% endif %}><a href="/statistics/">SkyLines</a></li>
+  <li{% if not (pilot or club or airport) %} class="active"{% endif %}><a href="/statistics/">SkyLines</a></li>
 
   {% if airport -%}
   <li class="active"><a href="/statistics/airport/{{ airport.id }}">{{ airport|e }}</a></li>
   {%- endif %}
 
-  {% if selected_club -%}
-  <li class="active"><a href="/statistics/club/{{ selected_club.id }}">{{ selected_club|e }}</a></li>
+  {% if club -%}
+  <li class="active"><a href="/statistics/club/{{ club.id }}">{{ club|e }}</a></li>
   {%- endif %}
 
-  {% if club and (not selected_club or club != selected_club) -%}
-  <li><a href="/statistics/club/{{ club.id }}">{{ club|e }}</a></li>
+  {% with my_club=c.identity and c.identity['user'] and c.identity['user'].club  -%}
+  {% if my_club and club != my_club -%}
+  <li><a href="/statistics/club/{{ my_club.id }}">{{ my_club|e }}</a></li>
+  {%- endif %}
+  {%- endwith %}
+
+  {% if pilot -%}
+  <li class="active"><a href="/statistics/pilot/{{ pilot.id }}">{{ pilot|e }}</a></li>
   {%- endif %}
 
-  {% if selected_pilot -%}
-  <li class="active"><a href="/statistics/pilot/{{ selected_pilot.id }}">{{ selected_pilot|e }}</a></li>
+  {% with my_club=c.identity and c.identity['user'] -%}
+  {% if my_club and pilot != my_club -%}
+  <li><a href="/statistics/pilot/{{ my_club.id }}">{{ my_club|e }}</a></li>
   {%- endif %}
-
-  {% if pilot and (not selected_pilot or pilot != selected_pilot) -%}
-  <li><a href="/statistics/pilot/{{ pilot.id }}">{{ pilot|e }}</a></li>
-  {%- endif %}
+  {%- endwith %}
 </ul>
 {%- endif %}
 
@@ -68,7 +72,7 @@
 <h1>{% trans %}Flight Time{% endtrans %}</h1>
 {{ render_duration_table(years, max_duration, sum_duration) }}
 
-{% if not selected_pilot -%}
+{% if not pilot -%}
 <h1>{% trans %}Pilots{% endtrans %}</h1>
 {{ render_pilots_table(years, max_pilots) }}
 {%- endif %}
