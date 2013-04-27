@@ -74,13 +74,10 @@ class UploadController(BaseController):
     def do(self, file, pilot):
         user = request.identity['user']
 
-        pilot_id = None
-        club_id = user.club_id
-        if pilot:
-            pilot = DBSession.query(User).get(int(pilot))
-            if pilot:
-                pilot_id = pilot.id
-                club_id = pilot.club_id
+        pilot = pilot and DBSession.query(User).get(int(pilot))
+        pilot_id = pilot and pilot.id
+
+        club_id = (pilot and pilot.club_id) or user.club_id
 
         flights = []
         success = False
