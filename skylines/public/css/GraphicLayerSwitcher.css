@@ -3,20 +3,13 @@
   top: 5px;
   right: 5px;
   text-decoration: none;
-  width: 100%;
   z-index: 1050;
 }
 
 .GraphicLayerSwitcher .current {
-  float: right;
   background: #fff;
-  color: #000;
   opacity: 0.5;
   padding: 2px;
-  height: 26px;
-  width: 26px;
-  text-align: right;
-  white-space: nowrap;
   -moz-border-radius: 4px;
   border-radius: 4px;
   cursor: pointer;
@@ -38,8 +31,7 @@
 .GraphicLayerSwitcher .overlay {
   background: #000; /* fallback for old browsers */
   background: rgba(0, 0, 0, 0.7);
-  color: #fff;
-  padding: 3px 5px 3px 3px;
+  padding: 3px 5px;
   float: right;
   -moz-border-radius: 4px;
   border-radius: 4px;
