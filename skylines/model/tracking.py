@@ -39,7 +39,7 @@ class TrackingFix(DeclarativeBase):
                       ForeignKey('tg_user.id', use_alter=True,
                                  name="tg_user.id"), nullable=False)
 
-    pilot = relation('User', primaryjoin=(pilot_id == User.id))
+    pilot = relation('User')
 
     ip = Column(INET)
 

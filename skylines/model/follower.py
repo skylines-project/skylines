@@ -8,7 +8,6 @@ from sqlalchemy.orm import relation
 
 from .base import DeclarativeBase
 from .session import DBSession
-from .auth import User
 
 
 class Follower(DeclarativeBase):
@@ -17,11 +16,11 @@ class Follower(DeclarativeBase):
     id = Column(Integer, autoincrement=True, primary_key=True)
 
     source_id = Column(Integer, ForeignKey('tg_user.id'), index=True)
-    source = relation('User', primaryjoin=(source_id == User.id),
+    source = relation('User', foreign_keys=[source_id],
                       backref='following')
 
     destination_id = Column(Integer, ForeignKey('tg_user.id'), index=True)
-    destination = relation('User', primaryjoin=(destination_id == User.id),
+    destination = relation('User', foreign_keys=[destination_id],
                            backref='followers')
 
     time = Column(DateTime, nullable=False, default=datetime.utcnow)

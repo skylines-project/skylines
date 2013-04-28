@@ -19,7 +19,7 @@ class Club(DeclarativeBase):
     owner_id = Column(Integer, ForeignKey('tg_user.id', use_alter=True,
                                           name="tg_user.id"))
 
-    owner = relation('User', primaryjoin=(owner_id == User.id))
+    owner = relation('User', foreign_keys=[owner_id])
 
     time_created = Column(DateTime, nullable=False, default=datetime.utcnow)
 
@@ -28,6 +28,7 @@ class Club(DeclarativeBase):
     members = relation('User', primaryjoin=(User.club_id == id),
                        order_by=(User.display_name),
                        backref='club', post_update=True)
+
     flights = relation('Flight', backref='club')
 
     def __unicode__(self):

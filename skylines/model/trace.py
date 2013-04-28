@@ -10,7 +10,6 @@ from geoalchemy2.elements import WKTElement
 from geoalchemy2.shape import to_shape
 
 from .base import DeclarativeBase
-from .flight import Flight
 from .geo import Location
 
 
@@ -26,8 +25,7 @@ class Trace(DeclarativeBase):
 
     flight_id = Column(Integer, ForeignKey('flights.id', ondelete='CASCADE'),
                        nullable=False)
-    flight = relation('Flight', primaryjoin=(flight_id == Flight.id),
-                      backref=backref('traces', cascade="all"))
+    flight = relation('Flight', backref=backref('traces', cascade="all"))
 
     contest_type = Column(String, nullable=False)
     trace_type = Column(String, nullable=False)

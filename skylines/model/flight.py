@@ -15,11 +15,9 @@ from shapely.geometry import LineString
 
 from .base import DeclarativeBase
 from .session import DBSession
-from .auth import User
 from .geo import Location
 from .igcfile import IGCFile
 from .aircraft_model import AircraftModel
-from .airport import Airport
 
 
 class Flight(DeclarativeBase):
@@ -30,14 +28,14 @@ class Flight(DeclarativeBase):
     time_modified = Column(DateTime, nullable=False, default=datetime.utcnow)
 
     pilot_id = Column(Integer, ForeignKey('tg_user.id'), index=True)
-    pilot = relation('User', primaryjoin=(pilot_id == User.id))
+    pilot = relation('User', foreign_keys=[pilot_id])
     co_pilot_id = Column(Integer, ForeignKey('tg_user.id'), index=True)
-    co_pilot = relation('User', primaryjoin=(co_pilot_id == User.id))
+    co_pilot = relation('User', foreign_keys=[co_pilot_id])
 
     club_id = Column(Integer, ForeignKey('clubs.id'), index=True)
 
     model_id = Column(Integer, ForeignKey('models.id'))
-    model = relation('AircraftModel', primaryjoin=(model_id == AircraftModel.id))
+    model = relation('AircraftModel')
     registration = Column(Unicode(32))
     competition_id = Column(Unicode(5))
 
@@ -52,12 +50,10 @@ class Flight(DeclarativeBase):
         'landing_location', Geometry('POINT', management=True))
 
     takeoff_airport_id = Column(Integer, ForeignKey('airports.id'))
-    takeoff_airport = relation('Airport',
-                               primaryjoin=(takeoff_airport_id == Airport.id))
+    takeoff_airport = relation('Airport', foreign_keys=[takeoff_airport_id])
 
     landing_airport_id = Column(Integer, ForeignKey('airports.id'))
-    landing_airport = relation('Airport',
-                               primaryjoin=(landing_airport_id == Airport.id))
+    landing_airport = relation('Airport', foreign_keys=[landing_airport_id])
 
     timestamps = Column(postgresql.ARRAY(DateTime), nullable=False)
     locations = Column(Geometry('LINESTRING', srid=4326, management=True),
@@ -68,8 +64,7 @@ class Flight(DeclarativeBase):
     olc_plus_score = Column(Integer)
 
     igc_file_id = Column(Integer, ForeignKey('igc_files.id'))
-    igc_file = relation('IGCFile', primaryjoin=(igc_file_id == IGCFile.id),
-                        backref='flights')
+    igc_file = relation('IGCFile', backref='flights')
 
     needs_analysis = Column(Boolean, nullable=False, default=True)
 

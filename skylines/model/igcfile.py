@@ -11,7 +11,6 @@ from sqlalchemy.types import Integer, DateTime, String, Unicode, Date
 
 from .base import DeclarativeBase
 from .session import DBSession
-from .auth import User
 from skylines.lib import files
 from skylines.lib.igc import read_igc_headers
 
@@ -21,7 +20,7 @@ class IGCFile(DeclarativeBase):
 
     id = Column(Integer, autoincrement=True, primary_key=True)
     owner_id = Column(Integer, ForeignKey('tg_user.id'), nullable=False)
-    owner = relation('User', primaryjoin=(owner_id == User.id))
+    owner = relation('User')
     time_created = Column(DateTime, nullable=False, default=datetime.utcnow)
     filename = Column(String(), nullable=False)
     md5 = Column(String(32), nullable=False, unique=True)

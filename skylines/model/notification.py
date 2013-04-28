@@ -35,25 +35,23 @@ class Notification(DeclarativeBase):
                        ForeignKey('tg_user.id', ondelete='CASCADE'),
                        nullable=False)
 
-    sender = relation('User', primaryjoin=(sender_id == User.id))
+    sender = relation('User', foreign_keys=[sender_id])
 
     # The recipient of this notification
     recipient_id = Column(Integer,
                           ForeignKey('tg_user.id', ondelete='CASCADE'),
                           nullable=False)
 
-    recipient = relation('User', primaryjoin=(recipient_id == User.id))
+    recipient = relation('User', foreign_keys=[recipient_id])
 
     # A flight if this notification is about a flight
     flight_id = Column(Integer, ForeignKey('flights.id', ondelete='CASCADE'))
-    flight = relation('Flight', primaryjoin=(flight_id == Flight.id))
+    flight = relation('Flight')
 
     # A flight comment if this notification is about a flight comment
     flight_comment_id = Column(Integer,
                                ForeignKey('flight_comments.id', ondelete='CASCADE'))
-
-    flight_comment = relation('FlightComment',
-                              primaryjoin=(flight_comment_id == FlightComment.id))
+    flight_comment = relation('FlightComment')
 
     def __repr__(self):
         return ('<Notification: id=%d type=%d>' % (self.id, self.type)).encode('utf-8')

@@ -3,7 +3,6 @@ from sqlalchemy.orm import relation, backref
 from sqlalchemy.types import Boolean, Numeric, Integer, DateTime, Interval
 
 from .base import DeclarativeBase
-from .flight import Flight
 
 
 class FlightPhase(DeclarativeBase):
@@ -23,12 +22,14 @@ class FlightPhase(DeclarativeBase):
     id = Column(Integer, primary_key=True, autoincrement=True)
     flight_id = Column(Integer, ForeignKey('flights.id', ondelete='CASCADE'),
                        nullable=False, index=True)
+
     start_time = Column(DateTime)
     end_time = Column(DateTime)
-    flight = relation('Flight', primaryjoin=(flight_id == Flight.id),
-                      backref=backref('_phases', order_by=start_time,
-                                      cascade='all,delete-orphan',
-                                      passive_deletes=True))
+
+    flight = relation('Flight', backref=backref(
+        '_phases', order_by=start_time,
+        cascade='all,delete-orphan', passive_deletes=True))
+
     aggregate = Column(Boolean, nullable=False)
     phase_type = Column(Integer)  # see PT_* constants
     circling_direction = Column(Integer)  # see CD_* constants
