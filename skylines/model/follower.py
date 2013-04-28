@@ -28,9 +28,6 @@ class Follower(DeclarativeBase):
 
     @classmethod
     def query(cls, source, destination):
-        assert(isinstance(source, User))
-        assert(isinstance(destination, User))
-
         return DBSession \
             .query(cls) \
             .filter_by(source=source, destination=destination)
