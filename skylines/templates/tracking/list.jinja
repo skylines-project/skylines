@@ -37,7 +37,9 @@
         {%- endif %}
       </td>
       <td class="numeric">
-        {% if track.elevation -%}
+        {% if track.altitude is none -%}
+        <small>{% trans %}Unknown{% endtrans %}</small>
+        {%- elif track.elevation -%}
         {{ h.format_altitude(track.altitude_agl) }} <small>AGL</small>
         {%- else -%}
         {{ h.format_altitude(track.altitude) }} <small>MSL</small>
