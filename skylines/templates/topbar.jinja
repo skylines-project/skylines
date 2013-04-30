@@ -94,22 +94,24 @@
 {%- endmacro %}
 
 {%- macro _user_dropdown(active_page) -%}
+{%- with user=c.identity['user'] %}
 <li class="dropdown {% if active_page == 'settings' %}active{% endif %}">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-      {{ request.identity['user'].display_name|e }} <i class="icon-caret-down"></i>
+      {{ user|e }} <i class="icon-caret-down"></i>
   </a>
   <ul class="dropdown-menu">
-      <li><a href="/users/{{ request.identity['user'].id }}/"><i class="icon-user"></i> {{ request.identity['user'].display_name|e }}</a></li>
-      {%- if request.identity['user'].club %}
-      <li><a href="/clubs/{{ request.identity['user'].club.id }}/"><i class="icon-group"></i> {{ request.identity['user'].club.name|e }}</a></li>
+      <li><a href="/users/{{ user.id }}/"><i class="icon-user"></i> {{ user|e }}</a></li>
+      {%- if user.club %}
+      <li><a href="/clubs/{{ user.club.id }}/"><i class="icon-group"></i> {{ user.club|e }}</a></li>
       {%- endif %}
       <li class="divider"></li>
-      <li><a href="/flights/pilot/{{ request.identity['user'].id }}"><i class="icon-plane"></i> {% trans %}Flights{% endtrans %}</a></li>
-      <li><a href="/statistics/pilot/{{ request.identity['user'].id }}"><i class="icon-tasks"></i> {% trans %}Statistics{% endtrans %}</a></li>
+      <li><a href="/flights/pilot/{{ user.id }}"><i class="icon-plane"></i> {% trans %}Flights{% endtrans %}</a></li>
+      <li><a href="/statistics/pilot/{{ user.id }}"><i class="icon-tasks"></i> {% trans %}Statistics{% endtrans %}</a></li>
       <li class="divider"></li>
       <li><a href="/logout_handler"><i class="icon-signout"></i> {% trans %}Logout{% endtrans %}</a></li>
   </ul>
 </li>
+{%- endwith %}
 {%- endmacro %}
 
 {%- macro _language_dropdown() -%}
