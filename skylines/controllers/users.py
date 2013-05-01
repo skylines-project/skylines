@@ -83,7 +83,7 @@ class EditUserForm(EditableForm):
     __base_widget_type__ = BootstrapForm
     __model__ = User
     __hide_fields__ = ['id']
-    __limit_fields__ = ['email_address', 'display_name', 'club',
+    __limit_fields__ = ['email_address', 'display_name',
                         'tracking_delay', 'unit_preset',
                         'distance_unit', 'speed_unit',
                         'lift_unit', 'altitude_unit',
@@ -92,7 +92,6 @@ class EditUserForm(EditableForm):
     __field_widget_args__ = {
         'email_address': dict(label_text=l_('eMail Address')),
         'display_name': dict(label_text=l_('Name')),
-        'club': dict(label_text=l_('Club')),
         'tracking_delay': dict(label_text=l_('Tracking Delay')),
         'unit_preset': dict(label_text=l_('Unit Preset')),
         'distance_unit': dict(label_text=l_('Distance Unit')),
@@ -107,7 +106,6 @@ class EditUserForm(EditableForm):
                                                            DBSession,
                                                            __model__, 'email_address')))
     display_name = Field(TextField, NotEmpty)
-    club = club.SelectField
     tracking_delay = DelaySelectField
     unit_preset = units.PresetSelectField("unit_preset")
     distance_unit = units.DistanceSelectField
@@ -236,7 +234,7 @@ class UserController(BaseController):
 
     @expose()
     @validate(form=edit_user_form, error_handler=edit)
-    def save(self, email_address, display_name, club,
+    def save(self, email_address, display_name,
              tracking_delay=0, unit_preset=1,
              distance_unit=1, speed_unit=1,
              lift_unit=0, altitude_unit=0,
@@ -246,9 +244,6 @@ class UserController(BaseController):
 
         self.user.email_address = email_address
         self.user.display_name = display_name
-        if not club:
-            club = None
-        self.user.club_id = club
         self.user.tracking_delay = tracking_delay
 
         unit_preset = int(unit_preset)
