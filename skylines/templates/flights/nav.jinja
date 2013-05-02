@@ -16,8 +16,8 @@
   </li>
   {%- endif %}
 
-  <li{% if tab == 'date' or tab == 'today' %} class="active"{% endif %}>
-    <a href="/flights/today">
+  <li{% if tab == 'date' or tab == 'latest' %} class="active"{% endif %}>
+    <a href="/flights/latest">
       <span class="date">
         {% if date and date != h.datetime.date.today() -%}
         {{ h.format_date(date) }}
