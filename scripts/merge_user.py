@@ -5,31 +5,42 @@
 
 import sys
 import os
+import argparse
 import transaction
 from paste.deploy.loadwsgi import appconfig
 from skylines.config.environment import load_environment
 from skylines.model import *
 
+PRO_CONF_PATH = '/etc/skylines/production.ini'
+DEV_CONF_PATH = 'development.ini'
+
 sys.path.append(os.path.dirname(sys.argv[0]))
 
-conf_path = '/etc/skylines/production.ini'
-if len(sys.argv) > 3:
-    conf_path = sys.argv[1]
-    del sys.argv[1]
+parser = argparse.ArgumentParser(description='Merge two SkyLines user accounts.')
+parser.add_argument('--config', metavar='config.ini',
+                    help='path to the configuration INI file')
+parser.add_argument('new_id', type=int, help='ID of the new user account')
+parser.add_argument('old_id', type=int, help='ID of the old user account')
 
-if len(sys.argv) != 3:
-    print >>sys.stderr, "Usage: %s [config.ini] NEW_ID OLD_ID" % sys.argv[0]
-    sys.exit(1)
+args = parser.parse_args()
 
-conf = appconfig('config:' + os.path.abspath(conf_path))
+if args.config is not None:
+    if not os.path.exists(args.config):
+        parser.error('Config file "{}" not found.'.format(args.config))
+elif os.path.exists(PRO_CONF_PATH):
+    args.config = PRO_CONF_PATH
+else:
+    args.config = DEV_CONF_PATH
+
+conf = appconfig('config:' + os.path.abspath(args.config))
 load_environment(conf.global_conf, conf.local_conf)
 
-new_id = int(sys.argv[1])
+new_id = args.new_id
 new = DBSession.query(User).get(new_id)
 if not new:
     print >>sys.stderr, "No such user: %d" % new_id
 
-old_id = int(sys.argv[2])
+old_id = args.old_id
 old = DBSession.query(User).get(old_id)
 if not old:
     print >>sys.stderr, "No such user: %d" % old_id
