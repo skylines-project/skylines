@@ -5,22 +5,16 @@
 
 import sys
 import os
-import re
-import shutil
 import math
-import subprocess
 import transaction
 from osgeo import ogr
 from paste.deploy.loadwsgi import appconfig
 from skylines.config.environment import load_environment
 from skylines.model import DBSession, MountainWaveProject
 from skylines.lib.string import isnumeric
-from sqlalchemy import func
-from sqlalchemy.sql.expression import not_
 from geoalchemy2.elements import WKTElement
 from geoalchemy2.shape import from_shape
 from shapely.geometry import LineString
-from tg import config
 
 sys.path.append(os.path.dirname(sys.argv[0]))
 

@@ -7,7 +7,6 @@ import os.path
 import argparse
 import subprocess
 from zipfile import ZipFile
-from tempfile import NamedTemporaryFile
 from paste.deploy.loadwsgi import appconfig
 from tg import config
 from skylines.config.environment import load_environment
