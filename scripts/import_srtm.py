@@ -12,6 +12,9 @@ from tg import config
 from skylines.config.environment import load_environment
 from skylines.model.session import DBSession
 
+PRO_CONF_PATH = '/etc/skylines/production.ini'
+DEV_CONF_PATH = 'development.ini'
+
 SERVER_URL = 'http://download.xcsoar.org/mapgen/data/srtm3/'
 
 # Parse command line parameters
@@ -19,13 +22,20 @@ parser = argparse.ArgumentParser(
     description='Add elevation data to the database.')
 
 parser.add_argument('--config', metavar='config.ini',
-                    default='/etc/skylines/production.ini',
                     help='path to the configuration INI file')
 
 parser.add_argument('x', type=int)
 parser.add_argument('y', type=int)
 
 args = parser.parse_args()
+
+if args.config is not None:
+    if not os.path.exists(args.config):
+        parser.error('Config file "{}" not found.'.format(args.config))
+elif os.path.exists(PRO_CONF_PATH):
+    args.config = PRO_CONF_PATH
+else:
+    args.config = DEV_CONF_PATH
 
 if not 1 <= args.x <= 72:
     parser.error('x has to be between 1 and 72')

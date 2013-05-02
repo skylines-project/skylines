@@ -17,16 +17,26 @@ from geoalchemy2.elements import WKTElement
 from geoalchemy2.shape import from_shape
 from shapely.geometry import LineString
 
+PRO_CONF_PATH = '/etc/skylines/production.ini'
+DEV_CONF_PATH = 'development.ini'
+
 sys.path.append(os.path.dirname(sys.argv[0]))
 
 parser = argparse.ArgumentParser(description='Add or update wave data in SkyLines.')
 parser.add_argument('--config', metavar='config.ini',
-                    default='/etc/skylines/production.ini',
                     help='path to the configuration INI file')
 parser.add_argument('center_shapefile', metavar='MountainWaveCenterP.shp')
 parser.add_argument('extend_shapefile', metavar='MountainWaveExtend.shp')
 
 args = parser.parse_args()
+
+if args.config is not None:
+    if not os.path.exists(args.config):
+        parser.error('Config file "{}" not found.'.format(args.config))
+elif os.path.exists(PRO_CONF_PATH):
+    args.config = PRO_CONF_PATH
+else:
+    args.config = DEV_CONF_PATH
 
 conf = appconfig('config:' + os.path.abspath(args.config))
 load_environment(conf.global_conf, conf.local_conf)
