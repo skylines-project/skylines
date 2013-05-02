@@ -5,32 +5,29 @@
 
 import sys
 import os
+import argparse
 import transaction
 from paste.deploy.loadwsgi import appconfig
 from skylines.config.environment import load_environment
 from skylines.model import DBSession, Airport
 from skylines.lib.waypoints.welt2000 import get_database
 
+
 sys.path.append(os.path.dirname(sys.argv[0]))
 
-conf_path = '/etc/skylines/production.ini'
-if len(sys.argv) > 1:
-    conf_path = sys.argv[1]
-    del sys.argv[1]
+parser = argparse.ArgumentParser(description='Add or update welt2000 airport data in SkyLines.')
+parser.add_argument('--config', metavar='config.ini',
+                    default='/etc/skylines/production.ini',
+                    help='path to the configuration INI file')
+parser.add_argument('welt2000_path', nargs='?', metavar='WELT2000.TXT',
+                    help='path to the WELT2000 file')
 
-welt2000_path = None
-if len(sys.argv) > 1:
-    welt2000_path = sys.argv[1]
-    del sys.argv[1]
+args = parser.parse_args()
 
-if len(sys.argv) != 1:
-    print >>sys.stderr, "Usage: %s [config.ini] [WELT2000.TXT]" % sys.argv[0]
-    sys.exit(1)
-
-conf = appconfig('config:' + os.path.abspath(conf_path))
+conf = appconfig('config:' + os.path.abspath(args.config))
 load_environment(conf.global_conf, conf.local_conf)
 
-welt2000 = get_database(path=welt2000_path)
+welt2000 = get_database(path=args.welt2000_path)
 
 i = 0
 

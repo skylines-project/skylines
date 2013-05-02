@@ -6,6 +6,7 @@
 import sys
 import os
 import math
+import argparse
 import transaction
 from osgeo import ogr
 from paste.deploy.loadwsgi import appconfig
@@ -18,26 +19,25 @@ from shapely.geometry import LineString
 
 sys.path.append(os.path.dirname(sys.argv[0]))
 
-conf_path = '/etc/skylines/production.ini'
-if len(sys.argv) > 2:
-    conf_path = sys.argv[1]
-    del sys.argv[1]
+parser = argparse.ArgumentParser(description='Add or update wave data in SkyLines.')
+parser.add_argument('--config', metavar='config.ini',
+                    default='/etc/skylines/production.ini',
+                    help='path to the configuration INI file')
+parser.add_argument('center_shapefile', metavar='MountainWaveCenterP.shp')
+parser.add_argument('extend_shapefile', metavar='MountainWaveExtend.shp')
 
-if len(sys.argv) != 3:
-    print >>sys.stderr, "Usage: %s [config.ini] MountainWaveCenterP.shp \
-        MountainWaveExtend.shp" % sys.argv[0]
-    sys.exit(1)
+args = parser.parse_args()
 
-conf = appconfig('config:' + os.path.abspath(conf_path))
+conf = appconfig('config:' + os.path.abspath(args.config))
 load_environment(conf.global_conf, conf.local_conf)
 
 
 def main():
-    mwp_center_file = ogr.Open(sys.argv[1])
+    mwp_center_file = ogr.Open(args.center_shapefile)
     if not mwp_center_file:
         return
 
-    mwp_ext_file = ogr.Open(sys.argv[2])
+    mwp_ext_file = ogr.Open(args.extend_shapefile)
     if not mwp_ext_file:
         return
 

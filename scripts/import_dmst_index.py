@@ -6,6 +6,7 @@
 import sys
 import os
 import re
+import argparse
 import transaction
 from paste.deploy.loadwsgi import appconfig
 from skylines.config.environment import load_environment
@@ -13,23 +14,20 @@ from skylines.model import DBSession, AircraftModel
 
 sys.path.append(os.path.dirname(sys.argv[0]))
 
-conf_path = '/etc/skylines/production.ini'
-if len(sys.argv) > 2:
-    conf_path = sys.argv[1]
-    del sys.argv[1]
+parser = argparse.ArgumentParser(description='Add or update dmst handicaps in SkyLines.')
+parser.add_argument('--config', metavar='config.ini',
+                    default='/etc/skylines/production.ini',
+                    help='path to the configuration INI file')
+parser.add_argument('path', help='DMSt index list file')
 
-if len(sys.argv) != 2:
-    print >>sys.stderr, "Usage: %s [config.ini] PATH" % sys.argv[0]
-    sys.exit(1)
+args = parser.parse_args()
 
-conf = appconfig('config:' + os.path.abspath(conf_path))
+conf = appconfig('config:' + os.path.abspath(args.config))
 load_environment(conf.global_conf, conf.local_conf)
-
-path = sys.argv[1]
 
 r = re.compile(r'^(.*?)\s*\.+[\.\s]*(\d+)\s*$')
 
-for line in file(path):
+for line in file(args.path):
     m = r.match(line)
     if m:
         names, index = m.group(1), int(m.group(2))
