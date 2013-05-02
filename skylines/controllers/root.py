@@ -56,7 +56,7 @@ class RootController(BaseController):
     @expose()
     def index(self, **kw):
         """Handle the front-page."""
-        redirect('/flights/today')
+        redirect('/flights/latest')
 
     @expose()
     def track(self, **kw):

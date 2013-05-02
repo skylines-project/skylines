@@ -171,7 +171,7 @@ class UploadController(BaseController):
                 or len(flight_id_list) != len(model_list)
                 or len(flight_id_list) != len(registration_list)):
             flash(_('Sorry, some error happened when updating your flight(s). Please contact a administrator for help.'), 'warning')
-            return redirect('/flights/today')
+            return redirect('/flights/latest')
 
         for index, id in enumerate(flight_id_list):
             try:
@@ -209,4 +209,4 @@ class UploadController(BaseController):
         DBSession.flush()
 
         flash(_('Your flight(s) have been successfully updated.'))
-        return redirect('/flights/today')
+        return redirect('/flights/latest')

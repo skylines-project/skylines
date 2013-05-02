@@ -12,4 +12,4 @@ class TestRootController(TestController):
         """The front page is redirecting properly"""
         self.browser.open('/')
 
-        assert self.browser.url.endswith('/flights/today')
+        assert self.browser.url.endswith('/flights/latest')
