@@ -135,7 +135,13 @@ class FlightsController(BaseController):
     @with_trailing_slash
     @expose()
     def index(self, **kw):
-        redirect('today')
+        redirect('latest')
+
+    @without_trailing_slash
+    @expose()
+    def today(self, **kw):
+        """ Fallback for old /flights/today url """
+        redirect('latest')
 
     @without_trailing_slash
     @expose('flights/list.jinja')
@@ -146,7 +152,7 @@ class FlightsController(BaseController):
     @without_trailing_slash
     @expose('flights/list.jinja')
     @expose('json')
-    def today(self, **kw):
+    def latest(self, **kw):
         query = DBSession.query(func.max(Flight.date_local).label('date')) \
                          .filter(Flight.takeoff_time < datetime.utcnow())
 
@@ -154,7 +160,7 @@ class FlightsController(BaseController):
         if not date:
             date = datetime.utcnow()
 
-        return self.date(date, today=True, **kw)
+        return self.date(date, latest=True, **kw)
 
     @without_trailing_slash
     @expose('flights/list.jinja')
@@ -183,8 +189,8 @@ class FlightsController(BaseController):
             8: (Flight, 'num_comments'),
         }
 
-        if kw.get('today', False):
-            return self.__do_list('today', kw, date=date, columns=columns)
+        if kw.get('latest', False):
+            return self.__do_list('latest', kw, date=date, columns=columns)
         else:
             return self.__do_list('date', kw, date=date, columns=columns)
 
