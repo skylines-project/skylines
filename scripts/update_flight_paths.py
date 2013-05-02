@@ -10,11 +10,13 @@ from sqlalchemy.sql.expression import or_
 from skylines.config.environment import load_environment
 from skylines.model import DBSession, Flight
 
+PRO_CONF_PATH = '/etc/skylines/production.ini'
+DEV_CONF_PATH = 'development.ini'
+
 sys.path.append(os.path.dirname(sys.argv[0]))
 
 parser = argparse.ArgumentParser(description='Update Skylines flight paths.')
 parser.add_argument('--config', metavar='config.ini',
-                    default='/etc/skylines/production.ini',
                     help='path to the configuration INI file')
 parser.add_argument('--force', action='store_true',
                     help='update all flights, not just the scheduled ones')
@@ -22,6 +24,14 @@ parser.add_argument('ids', metavar='ID', nargs='*', type=int,
                     help='Any number of flight IDs.')
 
 args = parser.parse_args()
+
+if args.config is not None:
+    if not os.path.exists(args.config):
+        sys.exit('Config file "{}" not found.'.format(args.config))
+elif os.path.exists(PRO_CONF_PATH):
+    args.config = PRO_CONF_PATH
+else:
+    args.config = DEV_CONF_PATH
 
 conf = appconfig('config:' + os.path.abspath(args.config))
 load_environment(conf.global_conf, conf.local_conf)
