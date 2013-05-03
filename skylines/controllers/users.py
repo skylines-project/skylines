@@ -279,7 +279,7 @@ class UserController(BaseController):
 
         # assign the user's new club to all of his flights that have
         # no club yet
-        flights = DBSession.query(Flight).outerjoin(IGCFile)
+        flights = Flight.query().outerjoin(IGCFile)
         flights = flights.filter(and_(Flight.club_id == None,
                                       or_(Flight.pilot_id == self.user.id,
                                           IGCFile.owner_id == self.user.id)))
@@ -318,11 +318,11 @@ class UserController(BaseController):
         redirect(came_from)
 
     def get_distance_flight(self, distance):
-        return DBSession.query(Flight) \
-                        .filter(Flight.pilot == self.user) \
-                        .filter(Flight.olc_classic_distance >= distance) \
-                        .order_by(Flight.landing_time) \
-                        .first()
+        return Flight.query() \
+            .filter(Flight.pilot == self.user) \
+            .filter(Flight.olc_classic_distance >= distance) \
+            .order_by(Flight.landing_time) \
+            .first()
 
     def get_distance_flights(self):
         _cache = cache.get_cache('users.distance_flights', expire=60 * 5)
@@ -399,7 +399,7 @@ class UserController(BaseController):
 class UsersController(BaseController):
     @expose('users/list.jinja')
     def index(self):
-        users = DBSession.query(User) \
+        users = User.query() \
             .options(joinedload(User.club)) \
             .order_by(func.lower(User.display_name))
 
@@ -426,7 +426,7 @@ class UsersController(BaseController):
         user.generate_tracking_key()
         DBSession.add(user)
 
-        pilots = DBSession.query(Group).filter(Group.group_name == 'pilots').first()
+        pilots = Group.query(group_name='pilots').first()
         if pilots:
             pilots.users.append(user)
 
@@ -484,7 +484,7 @@ class UsersController(BaseController):
     def generate_keys(self):
         """Hidden method that generates missing tracking keys."""
 
-        for user in DBSession.query(User):
+        for user in User.query():
             if user.tracking_key is None:
                 user.generate_tracking_key()
 

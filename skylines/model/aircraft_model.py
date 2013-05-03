@@ -4,7 +4,6 @@ from sqlalchemy import Column
 from sqlalchemy.types import Integer, Unicode
 
 from .base import DeclarativeBase
-from .session import DBSession
 
 
 class AircraftModel(DeclarativeBase):
@@ -32,5 +31,5 @@ class AircraftModel(DeclarativeBase):
         return identity and 'manage' in identity['permissions']
 
     @classmethod
-    def by_name(cls, _name):
-        return DBSession.query(cls).filter_by(name=_name).first()
+    def by_name(cls, name):
+        return cls.query(name=name).first()

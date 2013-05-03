@@ -26,22 +26,16 @@ class Follower(DeclarativeBase):
     time = Column(DateTime, nullable=False, default=datetime.utcnow)
 
     @classmethod
-    def query(cls, source, destination):
-        return DBSession \
-            .query(cls) \
-            .filter_by(source=source, destination=destination)
-
-    @classmethod
     def follows(cls, source, destination):
-        return cls.query(source, destination).count() > 0
+        return cls.query(source=source, destination=destination).count() > 0
 
     @classmethod
     def follow(cls, source, destination):
-        f = cls.query(source, destination).first()
+        f = cls.query(source=source, destination=destination).first()
         if not f:
             f = Follower(source=source, destination=destination)
             DBSession.add(f)
 
     @classmethod
     def unfollow(cls, source, destination):
-        cls.query(source, destination).delete()
+        cls.query(source=source, destination=destination).delete()

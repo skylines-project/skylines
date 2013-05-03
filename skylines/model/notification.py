@@ -61,8 +61,7 @@ class Notification(DeclarativeBase):
 
     @classmethod
     def mark_all_read(cls, user, filter_func=None):
-        query = DBSession.query(cls) \
-                         .filter(cls.recipient == user)
+        query = cls.query(recipient=user)
 
         if filter_func is not None:
             query = filter_func(query)
@@ -78,9 +77,7 @@ class Notification(DeclarativeBase):
 
 
 def count_unread_notifications(user):
-    return DBSession.query(Notification) \
-                    .filter(Notification.recipient == user) \
-                    .filter(Notification.time_read == None).count()
+    return Notification.query(recipient=user, time_read=None).count()
 
 
 def create_flight_comment_notifications(comment):

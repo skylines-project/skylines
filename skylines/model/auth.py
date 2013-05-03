@@ -22,7 +22,6 @@ from sqlalchemy.sql.expression import cast
 from sqlalchemy.dialects.postgresql import INET
 
 from .base import DeclarativeBase, metadata
-from .session import DBSession
 from skylines.lib.sql import LowerCaseComparator
 from skylines.lib.formatter import units
 
@@ -169,15 +168,15 @@ class User(DeclarativeBase):
     @classmethod
     def by_email_address(cls, email):
         """Return the user object whose email address is ``email``."""
-        return DBSession.query(cls).filter_by(email_address=email).first()
+        return cls.query(email_address=email).first()
 
     @classmethod
     def by_tracking_key(cls, key):
-        return DBSession.query(cls).filter_by(tracking_key=key).first()
+        return cls.query(tracking_key=key).first()
 
     @classmethod
     def by_recover_key(cls, key):
-        return DBSession.query(cls).filter_by(recover_key=key).first()
+        return cls.query(recover_key=key).first()
 
     @classmethod
     def _hash_password(cls, password):
@@ -254,7 +253,7 @@ class User(DeclarativeBase):
         as pilot ordered by distance
         '''
         from skylines.model.flight import Flight
-        return Flight.get_largest().filter(Flight.pilot == self)
+        return Flight.get_largest().filter_by(pilot=self)
 
     def initials(self):
         parts = self.display_name.split()

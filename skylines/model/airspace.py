@@ -9,7 +9,6 @@ from geoalchemy2.types import Geometry
 from geoalchemy2.elements import WKTElement
 
 from .base import DeclarativeBase
-from .session import DBSession
 
 
 class Airspace(DeclarativeBase):
@@ -33,5 +32,5 @@ class Airspace(DeclarativeBase):
     @classmethod
     def get_info(cls, location):
         '''Returns a query object of all airspaces at the location'''
-        return DBSession.query(cls) \
+        return cls.query() \
             .filter(func.ST_Intersects(WKTElement(location.to_wkt(), srid=4326), cls.the_geom))
