@@ -85,10 +85,8 @@ def read_time_of_day(turnpoint, flight):
 
 
 def delete_trace(contest_name, trace_name, flight):
-    q = DBSession.query(Trace) \
-        .filter(and_(Trace.flight == flight,
-                     Trace.contest_type == contest_name,
-                     Trace.trace_type == trace_name))
+    q = Trace.query(
+        flight=flight, contest_type=contest_name, trace_type=trace_name)
     q.delete()
 
 

@@ -156,7 +156,7 @@ class TrackingServer(DatagramProtocol):
         if len(or_filters) == 0:
             return
 
-        query = DBSession.query(TrackingFix) \
+        query = TrackingFix.query() \
             .distinct(TrackingFix.pilot_id) \
             .filter(and_(TrackingFix.time >= datetime.utcnow() - timedelta(hours=2),
                          TrackingFix.pilot_id != pilot.id,
@@ -198,7 +198,7 @@ class TrackingServer(DatagramProtocol):
         data = struct.unpack('!II', payload)
         user_id = data[0]
 
-        user = DBSession.query(User).get(user_id)
+        user = User.get(user_id)
         if user is None:
             response = struct.pack('!IHHQIIIBBBBII', MAGIC, 0, TYPE_USER_NAME_RESPONSE, 0,
                                    user_id, USER_FLAG_NOT_FOUND, 0,

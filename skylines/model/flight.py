@@ -14,7 +14,6 @@ from geoalchemy2.shape import to_shape, from_shape
 from shapely.geometry import LineString
 
 from .base import DeclarativeBase
-from .session import DBSession
 from .geo import Location
 from .igcfile import IGCFile
 from .aircraft_model import AircraftModel
@@ -130,7 +129,7 @@ class Flight(DeclarativeBase):
         if file is None:
             return None
 
-        return DBSession.query(cls).filter_by(igc_file=file).first()
+        return cls.query().filter_by(igc_file=file).first()
 
     def is_writable(self, identity):
         return identity and \
@@ -146,16 +145,12 @@ class Flight(DeclarativeBase):
     @classmethod
     def get_largest(cls):
         '''Returns a query object ordered by distance'''
-        return DBSession.query(cls).order_by(desc(cls.olc_classic_distance))
+        return cls.query().order_by(desc(cls.olc_classic_distance))
 
     def get_optimised_contest_trace(self, contest_type, trace_type):
         from skylines.model.trace import Trace
-        query = DBSession \
-            .query(Trace) \
-            .filter(Trace.contest_type == contest_type) \
-            .filter(Trace.trace_type == trace_type) \
-            .filter(Trace.flight == self).first()
-        return query
+        return Trace.query(contest_type=contest_type, trace_type=trace_type,
+                           flight=self).first()
 
     def get_contest_speed(self, contest_type, trace_type):
         contest = self.get_optimised_contest_trace(contest_type, trace_type)
@@ -175,9 +170,7 @@ class Flight(DeclarativeBase):
 
     def delete_phases(self):
         from skylines.model.flight_phase import FlightPhase
-        DBSession.query(FlightPhase) \
-            .filter(FlightPhase.flight == self) \
-            .delete()
+        FlightPhase.query(flight=self).delete()
 
     @property
     def circling_performance(self):

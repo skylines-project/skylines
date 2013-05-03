@@ -10,7 +10,6 @@ from sqlalchemy.sql.expression import desc, and_
 from sqlalchemy.types import Integer, DateTime, String, Unicode, Date
 
 from .base import DeclarativeBase
-from .session import DBSession
 from skylines.lib import files
 from skylines.lib.igc import read_igc_headers
 
@@ -39,7 +38,7 @@ class IGCFile(DeclarativeBase):
 
     @classmethod
     def by_md5(cls, _md5):
-        return DBSession.query(cls).filter_by(md5=_md5).first()
+        return cls.query(md5=_md5).first()
 
     def get_download_uri(self):
         return config['skylines.files.uri'] + '/' + self.filename
@@ -86,7 +85,7 @@ class IGCFile(DeclarativeBase):
             logger_id = self.logger_id
             logger_manufacturer_id = self.logger_manufacturer_id
 
-            result = DBSession.query(Flight).outerjoin(IGCFile) \
+            result = Flight.query().outerjoin(IGCFile) \
                 .filter(func.upper(IGCFile.logger_manufacturer_id) == func.upper(logger_manufacturer_id)) \
                 .filter(func.upper(IGCFile.logger_id) == func.upper(logger_id)) \
                 .filter(Flight.registration == None) \
@@ -109,7 +108,7 @@ class IGCFile(DeclarativeBase):
         if self.registration is not None:
             glider_reg = self.registration
 
-            result = DBSession.query(Flight) \
+            result = Flight.query() \
                 .filter(func.upper(Flight.registration) == func.upper(glider_reg)) \
                 .order_by(desc(Flight.id)) \
                 .first()
@@ -123,7 +122,7 @@ class IGCFile(DeclarativeBase):
             logger_id = self.logger_id
             logger_manufacturer_id = self.logger_manufacturer_id
 
-            result = DBSession.query(Flight).outerjoin(IGCFile) \
+            result = Flight.query().outerjoin(IGCFile) \
                 .filter(func.upper(IGCFile.logger_manufacturer_id) == func.upper(logger_manufacturer_id)) \
                 .filter(func.upper(IGCFile.logger_id) == func.upper(logger_id)) \
                 .filter(Flight.model_id == None) \
@@ -149,8 +148,7 @@ class IGCFile(DeclarativeBase):
 
             glider_type_clean = re.sub(r'[^a-z0-9]', '', glider_type)
 
-            result = DBSession \
-                .query(AircraftModel) \
+            result = AircraftModel.query() \
                 .filter(and_(
                     func.regexp_replace(func.lower(AircraftModel.name), '[^a-z]', ' ').like(func.any(text_fragments)),
                     func.regexp_replace(func.lower(AircraftModel.name), '[^0-9]', ' ').like(func.all(digit_fragments)))) \

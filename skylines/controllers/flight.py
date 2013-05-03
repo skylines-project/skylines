@@ -233,7 +233,7 @@ def get_near_flights(flight, location, time, max_distance=1000):
     # inaccurate further to the poles. But it's a lot faster than the geograpic
     # filter...
 
-    result = DBSession.query(Flight) \
+    result = Flight.query() \
         .filter(Flight.id != flight.id) \
         .filter(Flight.takeoff_time <= time) \
         .filter(Flight.landing_time >= time) \
@@ -396,7 +396,8 @@ class FlightController(BaseController):
         if self.flight.pilot_id != pilot:
             self.flight.pilot_id = pilot
             if pilot:
-                self.flight.club_id = DBSession.query(User).get(pilot).club_id
+                self.flight.club_id = User.get(pilot).club_id
+
         self.flight.co_pilot_id = co_pilot
         self.flight.time_modified = datetime.utcnow()
         DBSession.flush()

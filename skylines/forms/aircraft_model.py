@@ -7,7 +7,7 @@ from skylines.model import DBSession, AircraftModel
 
 class SelectField(SingleSelectField):
     def update_params(self, d):
-        models = DBSession.query(AircraftModel) \
+        models = AircraftModel.query() \
             .order_by(AircraftModel.kind) \
             .order_by(AircraftModel.name) \
             .all()

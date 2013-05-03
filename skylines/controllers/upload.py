@@ -74,7 +74,7 @@ class UploadController(BaseController):
     def do(self, file, pilot):
         user = request.identity['user']
 
-        pilot = pilot and DBSession.query(User).get(int(pilot))
+        pilot = pilot and User.get(int(pilot))
         pilot_id = pilot and pilot.id
 
         club_id = (pilot and pilot.club_id) or user.club_id
@@ -196,7 +196,7 @@ class UploadController(BaseController):
                 if not 0 < len(competition_id) < 5:
                     competition_id = None
 
-            flight = DBSession.query(Flight).get(id)
+            flight = Flight.get(id)
 
             if not flight.is_writable(request.identity):
                 continue

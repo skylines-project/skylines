@@ -9,7 +9,7 @@ from sqlalchemy.sql.expression import desc
 
 from .base import BaseController
 from skylines.lib.dbutil import get_requested_record
-from skylines.model import DBSession, Notification
+from skylines.model import Notification
 
 
 class NotificationController(BaseController):
@@ -59,14 +59,14 @@ class NotificationsController(BaseController):
         if not request.identity:
             raise HTTPForbidden
 
-        query = DBSession.query(Notification) \
-                         .filter(Notification.recipient == request.identity['user']) \
-                         .filter(Notification.time_read == None) \
-                         .options(joinedload(Notification.sender)) \
-                         .options(joinedload(Notification.recipient)) \
-                         .options(joinedload(Notification.flight)) \
-                         .options(joinedload(Notification.flight_comment)) \
-                         .order_by(desc(Notification.time_created))
+        query = Notification.query() \
+            .filter(Notification.recipient == request.identity['user']) \
+            .filter(Notification.time_read == None) \
+            .options(joinedload(Notification.sender)) \
+            .options(joinedload(Notification.recipient)) \
+            .options(joinedload(Notification.flight)) \
+            .options(joinedload(Notification.flight_comment)) \
+            .order_by(desc(Notification.time_created))
 
         query = self.__filter_query(query, kwargs)
 
