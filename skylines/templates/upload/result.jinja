@@ -38,12 +38,12 @@
         </td>
         <td>
           {% if not error -%}
-          <input type="text" id="registration" name="registration" value="{{ flight.registration|e }}" class="input-medium"/>
+          <input type="text" id="registration" name="registration" value="{{ (flight.registration or '')|e }}" class="input-medium"/>
           {%- endif %}
         </td>
         <td>
           {% if not error -%}
-          <input type="text" id="competition_id" name="competition_id" value="{{ flight.competition_id|e }}" class="input-medium"/>
+          <input type="text" id="competition_id" name="competition_id" value="{{ (flight.competition_id or '')|e }}" class="input-medium"/>
           {%- endif %}
         </td>
         <td>
