@@ -65,14 +65,10 @@
 
         {%- if flight.model_id %}
         <span rel="tooltip" title="{{ _('Handicap') ~ ': ' ~ flight.model.dmst_index }}">{{ flight.model|e }}</span>
-        {%- else %}
-
-          {%- if flight.igc_file.model %}
-          [{{ flight.igc_file.model|e }}]
-          {%- else %}
-          {% trans %}Unknown{% endtrans %}
-          {%- endif %}
-
+        {%- elif flight.igc_file.model -%}
+        [{{ flight.igc_file.model|e }}]
+        {%- else -%}
+        {% trans %}Unknown{% endtrans %}
         {%- endif %}
 
         <small><br/>
