@@ -84,7 +84,7 @@ textarea {
   text-align:right;
 }
 
-#flight-table .date {
+#flight-table td {
   white-space: nowrap;
 }
 
