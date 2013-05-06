@@ -85,9 +85,9 @@ def create_flight_comment_notifications(comment):
     '''
 
     # Create list of potential recipients (using set to avoid duplicates)
-    recipients = set([comment.flight.igc_file.owner,
-                      comment.flight.pilot,
-                      comment.flight.co_pilot])
+    recipients = {comment.flight.igc_file.owner,
+                  comment.flight.pilot,
+                  comment.flight.co_pilot}
 
     # Create notifications for the recipients in the set
     for recipient in recipients:
