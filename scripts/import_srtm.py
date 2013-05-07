@@ -7,13 +7,9 @@ import os.path
 import argparse
 import subprocess
 from zipfile import ZipFile
-from paste.deploy.loadwsgi import appconfig
 from tg import config
-from skylines.config.environment import load_environment
+from skylines.config import environment
 from skylines.model.session import DBSession
-
-PRO_CONF_PATH = '/etc/skylines/production.ini'
-DEV_CONF_PATH = 'development.ini'
 
 SERVER_URL = 'http://download.xcsoar.org/mapgen/data/srtm3/'
 
@@ -29,13 +25,8 @@ parser.add_argument('y', type=int)
 
 args = parser.parse_args()
 
-if args.config is not None:
-    if not os.path.exists(args.config):
-        parser.error('Config file "{}" not found.'.format(args.config))
-elif os.path.exists(PRO_CONF_PATH):
-    args.config = PRO_CONF_PATH
-else:
-    args.config = DEV_CONF_PATH
+if not environment.load_from_file(args.config):
+    parser.error('Config file "{}" not found.'.format(args.config))
 
 if not 1 <= args.x <= 72:
     parser.error('x has to be between 1 and 72')
@@ -44,11 +35,6 @@ if not -4 <= args.y <= 24:
     parser.error('y has to be between -4 and 24')
 
 basename = 'srtm_{x:02}_{y:02}'.format(x=args.x, y=args.y)
-
-
-# Load configuration file
-conf = appconfig('config:' + os.path.abspath(args.config))
-load_environment(conf.global_conf, conf.local_conf)
 
 
 # Change path to configured srtm data path
