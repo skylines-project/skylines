@@ -4,12 +4,12 @@ from operator import itemgetter
 from tg import expose, request, redirect
 from tg.decorators import with_trailing_slash, without_trailing_slash
 from webob.exc import HTTPForbidden, HTTPNotImplemented
-from sqlalchemy.orm import joinedload
+from sqlalchemy.orm import joinedload, contains_eager
 from sqlalchemy.sql.expression import desc
 
 from .base import BaseController
 from skylines.lib.dbutil import get_requested_record
-from skylines.model import Notification
+from skylines.model import Event, Notification
 
 
 class NotificationController(BaseController):
@@ -20,12 +20,14 @@ class NotificationController(BaseController):
     def index(self, **kwargs):
         self.notification.mark_read()
 
-        if self.notification.type == Notification.NT_FLIGHT_COMMENT:
-            redirect('/flights/{}/'.format(self.notification.flight_id))
-        elif self.notification.type == Notification.NT_FLIGHT:
-            redirect('/flights/{}/'.format(self.notification.flight_id))
-        elif self.notification.type == Notification.NT_FOLLOWER:
-            redirect('/users/{}/'.format(self.notification.sender_id))
+        event = self.notification.event
+
+        if event.type == Event.NT_FLIGHT_COMMENT:
+            redirect('/flights/{}/'.format(event.flight_id))
+        elif event.type == Event.NT_FLIGHT:
+            redirect('/flights/{}/'.format(event.flight_id))
+        elif event.type == Event.NT_FOLLOWER:
+            redirect('/users/{}/'.format(event.actor_id))
         else:
             raise HTTPNotImplemented
 
@@ -33,11 +35,11 @@ class NotificationController(BaseController):
 class NotificationsController(BaseController):
     def __filter_query(self, query, args):
         if 'type' in args:
-            query = query.filter(Notification.type == args['type'])
+            query = query.filter(Event.type == args['type'])
         if 'sender' in args:
-            query = query.filter(Notification.sender_id == args['sender'])
+            query = query.filter(Event.actor_id == args['sender'])
         if 'flight' in args:
-            query = query.filter(Notification.flight_id == args['flight'])
+            query = query.filter(Event.flight_id == args['flight'])
 
         return query
 
@@ -59,45 +61,47 @@ class NotificationsController(BaseController):
         if not request.identity:
             raise HTTPForbidden
 
-        query = Notification.query() \
-            .filter(Notification.recipient == request.identity['user']) \
-            .filter(Notification.time_read == None) \
-            .options(joinedload(Notification.sender)) \
-            .options(joinedload(Notification.recipient)) \
-            .options(joinedload(Notification.flight)) \
-            .options(joinedload(Notification.flight_comment)) \
-            .order_by(desc(Notification.time_created))
+        query = Notification.query(
+            recipient=request.identity['user'], time_read=None) \
+            .outerjoin(Notification.event) \
+            .options(contains_eager('event')) \
+            .options(joinedload('event.actor')) \
+            .options(joinedload('event.flight')) \
+            .options(joinedload('event.flight_comment')) \
+            .options(joinedload('recipient')) \
+            .order_by(desc(Event.time))
 
         query = self.__filter_query(query, kwargs)
 
         notifications = []
         pilot_flights = defaultdict(list)
         for notification in query.all():
-            if (notification.type == Notification.NT_FLIGHT and
-                    'type' not in kwargs):
-                pilot_flights[notification.sender_id].append(notification)
+            event = notification.event
+
+            if (event.type == Event.NT_FLIGHT and 'type' not in kwargs):
+                pilot_flights[event.actor_id].append(event)
             else:
                 notifications.append(dict(grouped=False,
-                                          type=notification.type,
-                                          time=notification.time_created,
-                                          notification=notification))
+                                          type=event.type,
+                                          time=event.time,
+                                          event=event))
 
         for flights in pilot_flights.itervalues():
             if len(flights) == 1:
                 notifications.append(dict(grouped=False,
                                           type=flights[0].type,
-                                          time=flights[0].time_created,
-                                          notification=flights[0]))
+                                          time=flights[0].time,
+                                          event=flights[0]))
             else:
                 notifications.append(dict(grouped=True,
                                           type=flights[0].type,
-                                          time=flights[0].time_created,
-                                          notifications=flights))
+                                          time=flights[0].time,
+                                          events=flights))
 
         notifications.sort(key=itemgetter('time'), reverse=True)
 
         result = dict(notifications=notifications, params=kwargs)
-        result.update(Notification.constants())
+        result.update(Event.constants())
         return result
 
     @without_trailing_slash
