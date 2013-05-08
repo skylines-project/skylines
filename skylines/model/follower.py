@@ -4,7 +4,7 @@ from datetime import datetime
 
 from sqlalchemy import ForeignKey, Column
 from sqlalchemy.types import Integer, DateTime
-from sqlalchemy.orm import relation
+from sqlalchemy.orm import relationship
 
 from .base import DeclarativeBase
 from .session import DBSession
@@ -16,12 +16,12 @@ class Follower(DeclarativeBase):
     id = Column(Integer, autoincrement=True, primary_key=True)
 
     source_id = Column(Integer, ForeignKey('tg_user.id'), index=True)
-    source = relation('User', foreign_keys=[source_id],
-                      backref='following')
+    source = relationship(
+        'User', foreign_keys=[source_id], backref='following')
 
     destination_id = Column(Integer, ForeignKey('tg_user.id'), index=True)
-    destination = relation('User', foreign_keys=[destination_id],
-                           backref='followers')
+    destination = relationship(
+        'User', foreign_keys=[destination_id], backref='followers')
 
     time = Column(DateTime, nullable=False, default=datetime.utcnow)
 

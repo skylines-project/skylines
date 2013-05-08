@@ -17,7 +17,7 @@ from hashlib import sha256
 from sqlalchemy import Table, ForeignKey, Column, event, DDL
 from sqlalchemy.types import Unicode, Integer, BigInteger, SmallInteger, \
     DateTime, Boolean, Interval, String
-from sqlalchemy.orm import relation, synonym, column_property
+from sqlalchemy.orm import relationship, synonym, column_property
 from sqlalchemy.sql.expression import cast
 from sqlalchemy.dialects.postgresql import INET
 
@@ -73,7 +73,7 @@ class Group(DeclarativeBase):
 
     # Relations
 
-    users = relation('User', secondary=user_group_table, backref='groups')
+    users = relationship('User', secondary=user_group_table, backref='groups')
 
     # Special methods
 
@@ -322,8 +322,8 @@ class Permission(DeclarativeBase):
 
     # Relations
 
-    groups = relation(Group, secondary=group_permission_table,
-                      backref='permissions')
+    groups = relationship(
+        'Group', secondary=group_permission_table, backref='permissions')
 
     # Special methods
 

@@ -1,5 +1,5 @@
 from sqlalchemy import ForeignKey, Column
-from sqlalchemy.orm import relation, backref
+from sqlalchemy.orm import relationship, backref
 from sqlalchemy.types import Boolean, Numeric, Integer, DateTime, Interval
 
 from .base import DeclarativeBase
@@ -26,7 +26,7 @@ class FlightPhase(DeclarativeBase):
     start_time = Column(DateTime)
     end_time = Column(DateTime)
 
-    flight = relation('Flight', backref=backref(
+    flight = relationship('Flight', backref=backref(
         '_phases', order_by=start_time,
         cascade='all,delete-orphan', passive_deletes=True))
 
