@@ -74,7 +74,7 @@ class NotificationsController(BaseController):
 
         notifications = []
         pilot_flights = defaultdict(list)
-        for notification in query.all():
+        for notification in query:
             event = notification.event
 
             if (event.type == Event.Type.FLIGHT and 'type' not in kwargs):
