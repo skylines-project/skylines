@@ -10,6 +10,7 @@ from .airport import Airport
 from .airspace import Airspace
 from .auth import User, Group, Permission
 from .club import Club
+from .competition import Competition, CompetitionClass, CompetitionParticipation
 from .elevation import Elevation
 from .flight import Flight
 from .flight_comment import FlightComment
