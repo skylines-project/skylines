@@ -63,7 +63,7 @@ class NotificationsController(BaseController):
 
         query = Notification.query(
             recipient=request.identity['user'], time_read=None) \
-            .outerjoin(Notification.event) \
+            .join(Notification.event) \
             .options(contains_eager('event')) \
             .options(joinedload('event.actor')) \
             .options(joinedload('event.flight')) \
