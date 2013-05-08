@@ -1,0 +1,33 @@
+{% extends "base-page.jinja" %}
+{% set active_page = "competitions" %}
+
+
+{% block title %}{% trans %}Competitions{% endtrans %}{% endblock %}
+
+
+{% block content -%}
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>{% trans %}Competition{% endtrans %}</th>
+      <th>{% trans %}Location{% endtrans %}</th>
+      <th>{% trans %}Date{% endtrans %}</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for competition in competitions -%}
+    <tr>
+      <td>{{ competition.name|e }}</td>
+      <td>{{ (competition.location or '')|e }}</td>
+      <td>{{ competition.date }}</td>
+    </tr>
+    {%- else -%}
+    <tr>
+      <td colspan="3">
+        {% trans %}There are currently no competitions.{% endtrans %}
+      </td>
+    </tr>
+    {%- endfor %}
+  </tbody>
+</table>
+{%- endblock %}

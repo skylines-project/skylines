@@ -12,6 +12,7 @@ from .base import BaseController
 from .error import ErrorController
 from .users import UsersController
 from .clubs import ClubsController
+from .competitions import CompetitionsController
 from .flights import FlightsController
 from .notifications import NotificationsController
 from .ranking import RankingController
@@ -39,6 +40,7 @@ class RootController(BaseController):
     error = ErrorController()
     users = UsersController()
     clubs = ClubsController()
+    competitions = CompetitionsController()
     flights = FlightsController()
     notifications = NotificationsController()
     ranking = RankingController()
