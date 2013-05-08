@@ -113,6 +113,7 @@ class User(DeclarativeBase):
     created = Column(DateTime, default=datetime.utcnow)
 
     club_id = Column(Integer, ForeignKey('clubs.id'))
+    club = relationship('Club', foreign_keys=[club_id], backref='members')
 
     tracking_key = Column(BigInteger, index=True)
 

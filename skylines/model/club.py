@@ -25,12 +25,6 @@ class Club(DeclarativeBase):
 
     website = Column(Unicode(255))
 
-    members = relationship('User', primaryjoin=(User.club_id == id),
-                           order_by=(User.display_name),
-                           backref='club', post_update=True)
-
-    flights = relationship('Flight', backref='club')
-
     def __unicode__(self):
         return self.name
 

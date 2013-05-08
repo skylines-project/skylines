@@ -32,6 +32,7 @@ class Flight(DeclarativeBase):
     co_pilot = relationship('User', foreign_keys=[co_pilot_id])
 
     club_id = Column(Integer, ForeignKey('clubs.id'), index=True)
+    club = relationship('Club', backref='flights')
 
     model_id = Column(Integer, ForeignKey('models.id'))
     model = relationship('AircraftModel')
