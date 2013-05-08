@@ -30,4 +30,8 @@
     {%- endfor %}
   </tbody>
 </table>
+
+{% if c.identity -%}
+<a href="new" class="btn"><i class="icon-plus"></i> {% trans %}Create a new competition{% endtrans %}</a>
+{%- endif %}
 {%- endblock %}
