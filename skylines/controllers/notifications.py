@@ -68,7 +68,6 @@ class NotificationsController(BaseController):
             .options(joinedload('event.actor')) \
             .options(joinedload('event.flight')) \
             .options(joinedload('event.flight_comment')) \
-            .options(joinedload('recipient')) \
             .order_by(desc(Event.time))
 
         query = self.__filter_query(query, kwargs)
