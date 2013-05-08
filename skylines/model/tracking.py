@@ -78,7 +78,7 @@ class TrackingFix(DeclarativeBase):
         if isinstance(max_age, (int, long, float)):
             max_age = timedelta(hours=max_age)
 
-        return TrackingFix.time >= datetime.utcnow() - max_age
+        return cls.time >= datetime.utcnow() - max_age
 
     @classmethod
     def delay_filter(cls, delay):
@@ -93,7 +93,7 @@ class TrackingFix(DeclarativeBase):
         if isinstance(delay, (int, long, float)):
             delay = timedelta(minutes=delay)
 
-        return TrackingFix.time <= datetime.utcnow() - delay
+        return cls.time <= datetime.utcnow() - delay
 
     @classmethod
     def get_latest(cls, max_age=timedelta(hours=6)):
@@ -114,8 +114,7 @@ class TrackingFix(DeclarativeBase):
 
         # Create outer query that orders by time and
         # only selects the latest fix
-        query = DBSession \
-            .query(cls) \
+        query = cls.query() \
             .options(joinedload(cls.pilot)) \
             .filter(cls.id == subq.c.id) \
             .filter(subq.c.row_number == 1) \
@@ -172,7 +171,8 @@ class TrackingSession(DeclarativeBase):
 
     @classmethod
     def by_lt24_id(cls, lt24_id, filter_finished=True):
-        query = DBSession.query(cls).filter_by(lt24_id=lt24_id)
+        query = cls.query(lt24_id=lt24_id)
+
         if filter_finished:
             query = query.filter_by(time_finished=None)
 

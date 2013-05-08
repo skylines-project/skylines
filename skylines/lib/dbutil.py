@@ -6,8 +6,6 @@ from tg.i18n import ugettext as _
 from sqlalchemy import orm
 from webob.exc import HTTPNotFound
 
-from skylines.model.session import DBSession
-
 
 def _patch_query(q, joinedload=()):
     if joinedload:
@@ -26,8 +24,7 @@ def get_requested_record(model, id, **kw):
         raise HTTPNotFound(detail=_('Sorry, the record id ({id}) that you '
                                     'requested is not a valid id.').format(id=id))
 
-    q = DBSession.query(model)
-    q = _patch_query(q, **kw)
+    q = _patch_query(model.query(), **kw)
     record = q.get(id)
     if record is None:
         raise HTTPNotFound(detail=_('Sorry, there is no such record ({id}) in '
@@ -55,7 +52,7 @@ def get_requested_record_list(model, ids, **kw):
     records."""
 
     ids = _parse_id_list(ids)
-    q = DBSession.query(model).filter(model.id.in_(ids))
+    q = model.query().filter(model.id.in_(ids))
     q = _patch_query(q, **kw)
     records = {record.id: record for record in q}
     if len(records) != len(ids):

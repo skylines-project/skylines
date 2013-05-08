@@ -1,5 +1,4 @@
 from datetime import datetime
-from sets import Set
 from collections import OrderedDict
 
 from sqlalchemy import ForeignKey, Column
@@ -61,8 +60,7 @@ class Notification(DeclarativeBase):
 
     @classmethod
     def mark_all_read(cls, user, filter_func=None):
-        query = DBSession.query(cls) \
-                         .filter(cls.recipient == user)
+        query = cls.query(recipient=user)
 
         if filter_func is not None:
             query = filter_func(query)
@@ -78,9 +76,7 @@ class Notification(DeclarativeBase):
 
 
 def count_unread_notifications(user):
-    return DBSession.query(Notification) \
-                    .filter(Notification.recipient == user) \
-                    .filter(Notification.time_read == None).count()
+    return Notification.query(recipient=user, time_read=None).count()
 
 
 def create_flight_comment_notifications(comment):
@@ -88,12 +84,12 @@ def create_flight_comment_notifications(comment):
     Create notifications for the owner and pilots of the flight
     '''
 
-    # Create list of potential recipients (using Set to avoid duplicates)
-    recipients = Set([comment.flight.igc_file.owner,
-                      comment.flight.pilot,
-                      comment.flight.co_pilot])
+    # Create list of potential recipients (using set to avoid duplicates)
+    recipients = {comment.flight.igc_file.owner,
+                  comment.flight.pilot,
+                  comment.flight.co_pilot}
 
-    # Create notifications for the recipients in the Set
+    # Create notifications for the recipients in the set
     for recipient in recipients:
         # There is no need to notify the user that caused the notification
         if recipient is None or recipient == comment.user:

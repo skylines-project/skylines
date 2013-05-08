@@ -12,14 +12,10 @@ import argparse
 from osgeo import ogr
 
 import transaction
-from paste.deploy.loadwsgi import appconfig
-from skylines.config.environment import load_environment
+from skylines.config import environment
 from skylines.model import DBSession, Airspace
 from geoalchemy2 import WKTElement
 from tg import config
-
-PRO_CONF_PATH = '/etc/skylines/production.ini'
-DEV_CONF_PATH = 'development.ini'
 
 sys.path.append(os.path.dirname(sys.argv[0]))
 
@@ -41,18 +37,10 @@ parser.add_argument('--filetype',
 
 args = parser.parse_args()
 
-if args.config is not None:
-    if not os.path.exists(args.config):
-        parser.error('Config file "{}" not found.'.format(args.config))
-elif os.path.exists(PRO_CONF_PATH):
-    args.config = PRO_CONF_PATH
-else:
-    args.config = DEV_CONF_PATH
+if not environment.load_from_file(args.config):
+    parser.error('Config file "{}" not found.'.format(args.config))
 
 blacklist = dict()
-
-conf = appconfig('config:' + os.path.abspath(args.config))
-load_environment(conf.global_conf, conf.local_conf)
 
 
 def main():

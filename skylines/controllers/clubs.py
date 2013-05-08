@@ -64,7 +64,7 @@ class ClubController(BaseController):
                      email_address=email_address, club=self.club)
         DBSession.add(pilot)
 
-        pilots = DBSession.query(Group).filter(Group.group_name == 'pilots').first()
+        pilots = Group.query(group_name='pilots').first()
         if pilots:
             pilots.users.append(pilot)
 
@@ -74,7 +74,7 @@ class ClubController(BaseController):
 class ClubsController(BaseController):
     @expose('clubs/list.jinja')
     def index(self):
-        clubs = DBSession.query(Club).order_by(func.lower(Club.name))
+        clubs = Club.query().order_by(func.lower(Club.name))
         return dict(active_page='settings', clubs=clubs)
 
     @expose()

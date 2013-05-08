@@ -36,7 +36,7 @@ class TrackingServerTest(TestCase):
         self.server = server.TrackingServer()
 
         # Clear the database
-        DBSession.query(TrackingFix).delete()
+        TrackingFix.query().delete()
         transaction.commit()
 
     def test_ping(self):
@@ -181,7 +181,7 @@ class TrackingServerTest(TestCase):
         self.server.datagramReceived(message, self.HOST_PORT)
 
         # Check if the message was properly received
-        eq_(DBSession.query(TrackingFix).count(), 0)
+        eq_(TrackingFix.query().count(), 0)
 
     def test_empty_fix(self):
         """ Tracking server accepts empty fixes """
@@ -201,7 +201,7 @@ class TrackingServerTest(TestCase):
             self.server.datagramReceived(message, self.HOST_PORT)
 
         # Check if the message was properly received and written to the database
-        fixes = DBSession.query(TrackingFix).all()
+        fixes = TrackingFix.query().all()
 
         eq_(len(fixes), 1)
 
@@ -242,7 +242,7 @@ class TrackingServerTest(TestCase):
             self.server.datagramReceived(message, self.HOST_PORT)
 
         # Check if the message was properly received and written to the database
-        fixes = DBSession.query(TrackingFix).all()
+        fixes = TrackingFix.query().all()
 
         eq_(len(fixes), 1)
 
@@ -271,7 +271,7 @@ class TrackingServerTest(TestCase):
         self.server.datagramReceived(message, self.HOST_PORT)
 
         # Check if the message was properly received
-        eq_(DBSession.query(TrackingFix).count(), 0)
+        eq_(TrackingFix.query().count(), 0)
         ok_(transaction.commit.called)
 
         transaction.commit.side_effect = None

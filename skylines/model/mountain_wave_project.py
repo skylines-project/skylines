@@ -9,7 +9,6 @@ from geoalchemy2.types import Geography, Geometry
 from geoalchemy2.elements import WKTElement
 
 from .base import DeclarativeBase
-from .session import DBSession
 
 
 class MountainWaveProject(DeclarativeBase):
@@ -43,7 +42,7 @@ class MountainWaveProject(DeclarativeBase):
     @classmethod
     def get_info(cls, location):
         '''Returns a query object of mountain waves around the location'''
-        return DBSession.query(cls) \
+        return cls.query() \
             .filter(func.ST_DWithin(
                 cast(WKTElement(location.to_wkt(), srid=4326), Geography),
                 cast(cls.location, Geography),

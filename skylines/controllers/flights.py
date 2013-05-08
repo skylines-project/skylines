@@ -307,13 +307,13 @@ class FlightsController(BaseController):
     @require(has_permission('manage'))
     def igc_headers(self, **kwargs):
         """Hidden method that parses all missing IGC headers."""
-        igc_files = DBSession.query(IGCFile)
-        igc_files = igc_files.filter(or_(IGCFile.logger_manufacturer_id is None,
-                                         IGCFile.logger_id is None,
-                                         IGCFile.model is None,
-                                         IGCFile.registration is None,
-                                         IGCFile.competition_id is None,
-                                         IGCFile.date_utc is None))
+        igc_files = IGCFile.query().filter(or_(
+            IGCFile.logger_manufacturer_id is None,
+            IGCFile.logger_id is None,
+            IGCFile.model is None,
+            IGCFile.registration is None,
+            IGCFile.competition_id is None,
+            IGCFile.date_utc is None))
 
         for igc_file in igc_files:
             igc_file.update_igc_headers()
