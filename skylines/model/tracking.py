@@ -135,7 +135,7 @@ class TrackingSession(DeclarativeBase):
                       ForeignKey('tg_user.id', use_alter=True,
                                  name="tg_user.id"), nullable=False)
 
-    pilot = relationship('User', primaryjoin=(pilot_id == User.id))
+    pilot = relationship('User')
 
     lt24_id = Column(BigInteger, index=True)
 
