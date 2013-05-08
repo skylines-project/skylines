@@ -35,7 +35,7 @@ class Event(DeclarativeBase):
 
     actor_id = Column(
         Integer, ForeignKey('tg_user.id', ondelete='CASCADE'), nullable=False)
-    actor = relation('User')
+    actor = relation('User', innerjoin=True)
 
     # A flight if this event is about a flight
 
@@ -65,13 +65,13 @@ class Notification(DeclarativeBase):
 
     event_id = Column(
         Integer, ForeignKey('events.id', ondelete='CASCADE'), nullable=False)
-    event = relation('Event')
+    event = relation('Event', innerjoin=True)
 
     # The recipient of this notification
 
     recipient_id = Column(
         Integer, ForeignKey('tg_user.id', ondelete='CASCADE'), nullable=False)
-    recipient = relation('User')
+    recipient = relation('User', innerjoin=True)
 
     # The time that this notification was read by the recipient
 
