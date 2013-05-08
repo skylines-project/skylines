@@ -22,11 +22,11 @@ class NotificationController(BaseController):
 
         event = self.notification.event
 
-        if event.type == Event.NT_FLIGHT_COMMENT:
+        if event.type == Event.Type.FLIGHT_COMMENT:
             redirect('/flights/{}/'.format(event.flight_id))
-        elif event.type == Event.NT_FLIGHT:
+        elif event.type == Event.Type.FLIGHT:
             redirect('/flights/{}/'.format(event.flight_id))
-        elif event.type == Event.NT_FOLLOWER:
+        elif event.type == Event.Type.FOLLOWER:
             redirect('/users/{}/'.format(event.actor_id))
         else:
             raise HTTPNotImplemented
@@ -78,7 +78,7 @@ class NotificationsController(BaseController):
         for notification in query.all():
             event = notification.event
 
-            if (event.type == Event.NT_FLIGHT and 'type' not in kwargs):
+            if (event.type == Event.Type.FLIGHT and 'type' not in kwargs):
                 pilot_flights[event.actor_id].append(event)
             else:
                 notifications.append(dict(grouped=False,
@@ -100,9 +100,8 @@ class NotificationsController(BaseController):
 
         notifications.sort(key=itemgetter('time'), reverse=True)
 
-        result = dict(notifications=notifications, params=kwargs)
-        result.update(Event.constants())
-        return result
+        return dict(notifications=notifications, params=kwargs,
+                    types=Event.Type)
 
     @without_trailing_slash
     @expose()

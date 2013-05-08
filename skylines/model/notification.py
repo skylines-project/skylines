@@ -18,13 +18,14 @@ class Event(DeclarativeBase):
 
     id = Column(Integer, autoincrement=True, primary_key=True)
 
-    # Notification type (NT_* constants)
+    # Notification type
 
     type = Column(Integer, nullable=False)
 
-    NT_FLIGHT_COMMENT = 1
-    NT_FLIGHT = 2
-    NT_FOLLOWER = 3
+    class Type:
+        FLIGHT_COMMENT = 1
+        FLIGHT = 2
+        FOLLOWER = 3
 
     # Event time
 
@@ -53,15 +54,6 @@ class Event(DeclarativeBase):
     def __repr__(self):
         return '<Event: id={} type={}>' \
             .format(self.id, self.type).encode('utf-8')
-
-    ##############################
-
-    @classmethod
-    def constants(cls):
-        return {
-            member: getattr(cls, member)
-            for member in dir(cls) if member.isupper()
-        }
 
 
 class Notification(DeclarativeBase):

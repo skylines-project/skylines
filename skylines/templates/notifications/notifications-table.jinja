@@ -33,11 +33,11 @@
 
 
 {% macro render_notification_icon(notification) -%}
-{% if notification.type == NT_FLIGHT_COMMENT -%}
+{% if notification.type == types.FLIGHT_COMMENT -%}
   <i class="icon-comments-alt"></i>
-{%- elif notification.type == NT_FLIGHT %}
+{%- elif notification.type == types.FLIGHT %}
   <i class="icon-plane"></i>
-{%- elif notification.type == NT_FOLLOWER %}
+{%- elif notification.type == types.FOLLOWER %}
   <i class="icon-user"></i>
 {%- endif %}&nbsp;
 {%- endmacro %}
@@ -45,17 +45,17 @@
 
 {% macro render_notification_text(notification) -%}
 {% if notification.grouped -%}
-  {% if notification.type == NT_FLIGHT -%}
+  {% if notification.type == types.FLIGHT -%}
     {{ render_flight_notifications_text(notification.events) }}
   {%- else %}
     Error: Unknown notification group
   {%- endif %}
 {%- else %}
-  {% if notification.type == NT_FLIGHT_COMMENT -%}
+  {% if notification.type == types.FLIGHT_COMMENT -%}
     {{ render_flight_comment_notification_text(notification.event) }}
-  {%- elif notification.type == NT_FLIGHT %}
+  {%- elif notification.type == types.FLIGHT %}
     {{ render_flight_notification_text(notification.event) }}
-  {%- elif notification.type == NT_FOLLOWER %}
+  {%- elif notification.type == types.FOLLOWER %}
     {{ render_follower_notification_text(notification.event) }}
   {%- else %}
     Error: Unknown notification
@@ -94,8 +94,8 @@
 
 {% macro render_notification_link(notification) -%}
 {% if notification.grouped -%}
-  {% if notification.type == NT_FLIGHT -%}
-    {{ _render_show_button(tg.url('.', params=dict(type=NT_FLIGHT, sender=notification.events[0].actor_id))) }}
+  {% if notification.type == types.FLIGHT -%}
+    {{ _render_show_button(tg.url('.', params=dict(type=types.FLIGHT, sender=notification.events[0].actor_id))) }}
   {%- endif %}
 {%- else %}
   {{ _render_show_button(notification.event.id) }}
