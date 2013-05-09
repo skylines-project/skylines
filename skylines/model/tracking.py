@@ -104,7 +104,7 @@ class TrackingFix(DeclarativeBase):
         # Create inner query
         subq = DBSession \
             .query(cls.id, row_number.label('row_number')) \
-            .outerjoin(cls.pilot) \
+            .join(cls.pilot) \
             .filter(cls.max_age_filter(max_age)) \
             .filter(cls.delay_filter(User.tracking_delay_interval())) \
             .filter(cls.location_wkt != None) \
