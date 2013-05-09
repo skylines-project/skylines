@@ -77,24 +77,29 @@ class NotificationsController(BaseController):
             event = notification.event
 
             if (event.type == Event.Type.FLIGHT and 'type' not in kwargs):
-                pilot_flights[event.actor_id].append(event)
+                pilot_flights[event.actor_id].append(notification)
             else:
                 notifications.append(dict(grouped=False,
+                                          id=notification.id,
                                           type=event.type,
                                           time=event.time,
                                           event=event))
 
         for flights in pilot_flights.itervalues():
+            first_notification = flights[0]
+            first_event = first_notification.event
+
             if len(flights) == 1:
                 notifications.append(dict(grouped=False,
-                                          type=flights[0].type,
-                                          time=flights[0].time,
-                                          event=flights[0]))
+                                          id=first_notification.id,
+                                          type=first_event.type,
+                                          time=first_event.time,
+                                          event=first_event))
             else:
                 notifications.append(dict(grouped=True,
-                                          type=flights[0].type,
-                                          time=flights[0].time,
-                                          events=flights))
+                                          type=first_event.type,
+                                          time=first_event.time,
+                                          events=[n.event for n in flights]))
 
         notifications.sort(key=itemgetter('time'), reverse=True)
 
