@@ -115,25 +115,22 @@ def create_flight_comment_notifications(comment):
     Create notifications for the owner and pilots of the flight
     '''
 
+    flight = comment.flight
+    user = comment.user
+
     # Create the event
     event = Event(type=Event.Type.FLIGHT_COMMENT,
-                  actor=comment.user,
-                  flight=comment.flight,
-                  flight_comment=comment)
+                  actor=user, flight=flight, flight_comment=comment)
 
     DBSession.add(event)
 
-    # Create list of potential recipients (using Set to avoid duplicates)
-    recipients = {comment.flight.igc_file.owner,
-                  comment.flight.pilot,
-                  comment.flight.co_pilot}
+    # Create set of potential recipients
+    recipients = {flight.igc_file.owner, flight.pilot, flight.co_pilot}
+    recipients.discard(None)
+    recipients.discard(user)
 
     # Create notifications for the recipients in the set
     for recipient in recipients:
-        # There is no need to notify the user that caused the notification
-        if recipient is None or recipient == comment.user:
-            continue
-
         item = Notification(event=event, recipient=recipient)
         DBSession.add(item)
 
