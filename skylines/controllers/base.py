@@ -8,7 +8,7 @@ from babel import parse_locale
 from babel.util import distinct
 
 from skylines.config.i18n import languages, language_info
-from skylines.model.notification import count_unread_notifications
+from skylines.model import Notification
 
 
 __all__ = ['BaseController']
@@ -65,4 +65,4 @@ class BaseController(TGController):
         tmpl_context.current_language = tmpl_context.primary_languages[0]
 
         if request.identity:
-            request.identity['notifications'] = count_unread_notifications(request.identity['user'])
+            request.identity['notifications'] = Notification.count_unread(request.identity['user'])

@@ -85,6 +85,12 @@ class Notification(DeclarativeBase):
 
     ##############################
 
+    @classmethod
+    def count_unread(cls, user):
+        return cls.query(recipient=user, time_read=None).count()
+
+    ##############################
+
     def mark_read(self):
         self.time_read = datetime.utcnow()
 
@@ -98,10 +104,6 @@ class Notification(DeclarativeBase):
             query = filter_func(query)
 
         query.update(dict(time_read=datetime.utcnow()))
-
-
-def count_unread_notifications(user):
-    return Notification.query(recipient=user, time_read=None).count()
 
 
 def create_flight_comment_notifications(comment):
