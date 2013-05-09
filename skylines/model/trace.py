@@ -2,7 +2,7 @@
 
 from sqlalchemy import ForeignKey, Column
 from sqlalchemy.dialects import postgresql
-from sqlalchemy.orm import relation, backref
+from sqlalchemy.orm import relationship, backref
 from sqlalchemy.types import String, Integer, DateTime, Interval
 from sqlalchemy.schema import Index
 from geoalchemy2.types import Geometry
@@ -23,9 +23,10 @@ class Trace(DeclarativeBase):
 
     id = Column(Integer, autoincrement=True, primary_key=True)
 
-    flight_id = Column(Integer, ForeignKey('flights.id', ondelete='CASCADE'),
-                       nullable=False)
-    flight = relation('Flight', backref=backref('traces', cascade="all"))
+    flight_id = Column(
+        Integer, ForeignKey('flights.id', ondelete='CASCADE'), nullable=False)
+    flight = relationship(
+        'Flight', backref=backref('traces', passive_deletes=True))
 
     contest_type = Column(String, nullable=False)
     trace_type = Column(String, nullable=False)

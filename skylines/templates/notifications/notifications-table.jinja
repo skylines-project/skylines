@@ -16,9 +16,9 @@
 <tr>
   <td>
     {% if notification.grouped -%}
-    {{ render_notification_icon(notification.notifications[0]) }}
+    {{ render_notification_icon(notification.events[0]) }}
     {%- else %}
-    {{ render_notification_icon(notification.notification) }}
+    {{ render_notification_icon(notification.event) }}
     {%- endif %}
   </td>
   <td>
@@ -33,11 +33,11 @@
 
 
 {% macro render_notification_icon(notification) -%}
-{% if notification.type == NT_FLIGHT_COMMENT -%}
+{% if notification.type == types.FLIGHT_COMMENT -%}
   <i class="icon-comments-alt"></i>
-{%- elif notification.type == NT_FLIGHT %}
+{%- elif notification.type == types.FLIGHT %}
   <i class="icon-plane"></i>
-{%- elif notification.type == NT_FOLLOWER %}
+{%- elif notification.type == types.FOLLOWER %}
   <i class="icon-user"></i>
 {%- endif %}&nbsp;
 {%- endmacro %}
@@ -45,18 +45,18 @@
 
 {% macro render_notification_text(notification) -%}
 {% if notification.grouped -%}
-  {% if notification.type == NT_FLIGHT -%}
-    {{ render_flight_notifications_text(notification.notifications) }}
+  {% if notification.type == types.FLIGHT -%}
+    {{ render_flight_notifications_text(notification.events) }}
   {%- else %}
     Error: Unknown notification group
   {%- endif %}
 {%- else %}
-  {% if notification.type == NT_FLIGHT_COMMENT -%}
-    {{ render_flight_comment_notification_text(notification.notification) }}
-  {%- elif notification.type == NT_FLIGHT %}
-    {{ render_flight_notification_text(notification.notification) }}
-  {%- elif notification.type == NT_FOLLOWER %}
-    {{ render_follower_notification_text(notification.notification) }}
+  {% if notification.type == types.FLIGHT_COMMENT -%}
+    {{ render_flight_comment_notification_text(notification.event) }}
+  {%- elif notification.type == types.FLIGHT %}
+    {{ render_flight_notification_text(notification.event) }}
+  {%- elif notification.type == types.FOLLOWER %}
+    {{ render_follower_notification_text(notification.event) }}
   {%- else %}
     Error: Unknown notification
   {%- endif %}
@@ -65,28 +65,28 @@
 
 
 {% macro render_flight_comment_notification_text(notification) -%}
-{% trans pilot=notification.sender|e, distance=h.format_distance(notification.flight.olc_classic_distance), date=h.format_date(notification.flight.date_local) -%}
+{% trans pilot=notification.actor|e, distance=h.format_distance(notification.flight.olc_classic_distance), date=h.format_date(notification.flight.date_local) -%}
 <strong>{{ pilot }}</strong> commented on your <strong>{{ distance }}</strong> flight on the <strong>{{ date }}</strong>.
 {%- endtrans %}
 {%- endmacro %}
 
 
 {% macro render_flight_notification_text(notification) -%}
-{% trans pilot=notification.sender|e, distance=h.format_distance(notification.flight.olc_classic_distance), date=h.format_date(notification.flight.date_local) -%}
+{% trans pilot=notification.actor|e, distance=h.format_distance(notification.flight.olc_classic_distance), date=h.format_date(notification.flight.date_local) -%}
 <strong>{{ pilot }}</strong> uploaded a new <strong>{{ distance }}</strong> flight on the <strong>{{ date }}</strong>.
 {%- endtrans %}
 {%- endmacro %}
 
 
 {% macro render_flight_notifications_text(notifications) -%}
-{% trans pilot=notifications[0].sender|e, num_flights=notifications|count -%}
+{% trans pilot=notifications[0].actor|e, num_flights=notifications|count -%}
 <strong>{{ pilot }}</strong> uploaded <strong>{{ num_flights }}</strong> new flights.
 {%- endtrans %}
 {%- endmacro %}
 
 
 {% macro render_follower_notification_text(notification) -%}
-{% trans pilot=notification.sender|e -%}
+{% trans pilot=notification.actor|e -%}
 <strong>{{ pilot }}</strong> is following you now.
 {%- endtrans %}
 {%- endmacro %}
@@ -94,11 +94,11 @@
 
 {% macro render_notification_link(notification) -%}
 {% if notification.grouped -%}
-  {% if notification.type == NT_FLIGHT -%}
-    {{ _render_show_button(tg.url('.', params=dict(type=NT_FLIGHT, sender=notification.notifications[0].sender_id))) }}
+  {% if notification.type == types.FLIGHT -%}
+    {{ _render_show_button(tg.url('.', params=dict(type=types.FLIGHT, sender=notification.events[0].actor_id))) }}
   {%- endif %}
 {%- else %}
-  {{ _render_show_button(notification.notification.id) }}
+  {{ _render_show_button(notification.event.id) }}
 {%- endif %}
 {%- endmacro %}
 

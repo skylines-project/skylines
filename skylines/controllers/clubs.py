@@ -44,7 +44,10 @@ class ClubController(BaseController):
 
     @expose('clubs/pilots.jinja')
     def pilots(self):
-        return dict(active_page='settings', club=self.club, users=self.club.members)
+        users = User.query(club=self.club) \
+            .order_by(func.lower(User.display_name))
+
+        return dict(active_page='settings', club=self.club, users=users)
 
     @expose('generic/form.jinja')
     def new_pilot(self, **kwargs):
