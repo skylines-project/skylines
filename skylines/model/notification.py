@@ -2,7 +2,7 @@ from datetime import datetime
 from collections import OrderedDict
 
 from sqlalchemy import ForeignKey, Column
-from sqlalchemy.orm import relation
+from sqlalchemy.orm import relationship
 from sqlalchemy.types import Integer, DateTime
 
 from .base import DeclarativeBase
@@ -34,23 +34,23 @@ class Notification(DeclarativeBase):
                        ForeignKey('tg_user.id', ondelete='CASCADE'),
                        nullable=False)
 
-    sender = relation('User', foreign_keys=[sender_id])
+    sender = relationship('User', foreign_keys=[sender_id])
 
     # The recipient of this notification
     recipient_id = Column(Integer,
                           ForeignKey('tg_user.id', ondelete='CASCADE'),
                           nullable=False)
 
-    recipient = relation('User', foreign_keys=[recipient_id])
+    recipient = relationship('User', foreign_keys=[recipient_id])
 
     # A flight if this notification is about a flight
     flight_id = Column(Integer, ForeignKey('flights.id', ondelete='CASCADE'))
-    flight = relation('Flight')
+    flight = relationship('Flight')
 
     # A flight comment if this notification is about a flight comment
     flight_comment_id = Column(Integer,
                                ForeignKey('flight_comments.id', ondelete='CASCADE'))
-    flight_comment = relation('FlightComment')
+    flight_comment = relationship('FlightComment')
 
     def __repr__(self):
         return ('<Notification: id=%d type=%d>' % (self.id, self.type)).encode('utf-8')
