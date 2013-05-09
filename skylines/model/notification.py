@@ -86,8 +86,12 @@ class Notification(DeclarativeBase):
     ##############################
 
     @classmethod
+    def query_unread(cls, user):
+        return cls.query(recipient=user, time_read=None)
+
+    @classmethod
     def count_unread(cls, user):
-        return cls.query(recipient=user, time_read=None).count()
+        return cls.query_unread(user).count()
 
     ##############################
 

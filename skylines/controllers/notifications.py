@@ -61,8 +61,7 @@ class NotificationsController(BaseController):
         if not request.identity:
             raise HTTPForbidden
 
-        query = Notification.query(
-            recipient=request.identity['user'], time_read=None) \
+        query = Notification.query_unread(request.identity['user']) \
             .join('event') \
             .options(contains_eager('event')) \
             .options(joinedload('event.actor')) \
