@@ -56,7 +56,7 @@ class TrackingController(BaseController):
         fixes = []
         for fix in TrackingFix.get_latest():
             json = dict(time=isoformat_utc(fix.time),
-                        location=fix.location_wkt.geom_wkt,
+                        location=fix.location.to_wkt(),
                         pilot=dict(id=fix.pilot_id, name=unicode(fix.pilot)))
 
             optional_attributes = ['track', 'ground_speed', 'airspeed',
