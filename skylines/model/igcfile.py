@@ -5,7 +5,7 @@ from datetime import datetime
 
 from tg import config
 from sqlalchemy import ForeignKey, Column, func
-from sqlalchemy.orm import relation
+from sqlalchemy.orm import relationship
 from sqlalchemy.sql.expression import desc, and_
 from sqlalchemy.types import Integer, DateTime, String, Unicode, Date
 
@@ -19,7 +19,7 @@ class IGCFile(DeclarativeBase):
 
     id = Column(Integer, autoincrement=True, primary_key=True)
     owner_id = Column(Integer, ForeignKey('tg_user.id'), nullable=False)
-    owner = relation('User')
+    owner = relationship('User')
     time_created = Column(DateTime, nullable=False, default=datetime.utcnow)
     filename = Column(String(), nullable=False)
     md5 = Column(String(32), nullable=False, unique=True)
