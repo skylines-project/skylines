@@ -2,7 +2,7 @@ from datetime import datetime
 from collections import OrderedDict
 
 from sqlalchemy import ForeignKey, Column
-from sqlalchemy.orm import relation, contains_eager
+from sqlalchemy.orm import relationship, contains_eager
 from sqlalchemy.types import Integer, DateTime
 
 from .base import DeclarativeBase
@@ -35,19 +35,19 @@ class Event(DeclarativeBase):
 
     actor_id = Column(
         Integer, ForeignKey('tg_user.id', ondelete='CASCADE'), nullable=False)
-    actor = relation('User', innerjoin=True)
+    actor = relationship('User', innerjoin=True)
 
     # A flight if this event is about a flight
 
     flight_id = Column(
         Integer, ForeignKey('flights.id', ondelete='CASCADE'))
-    flight = relation('Flight')
+    flight = relationship('Flight')
 
     # A flight comment if this event is about a flight comment
 
     flight_comment_id = Column(
         Integer, ForeignKey('flight_comments.id', ondelete='CASCADE'))
-    flight_comment = relation('FlightComment')
+    flight_comment = relationship('FlightComment')
 
     ##############################
 
@@ -65,13 +65,13 @@ class Notification(DeclarativeBase):
 
     event_id = Column(
         Integer, ForeignKey('events.id', ondelete='CASCADE'), nullable=False)
-    event = relation('Event', innerjoin=True)
+    event = relationship('Event', innerjoin=True)
 
     # The recipient of this notification
 
     recipient_id = Column(
         Integer, ForeignKey('tg_user.id', ondelete='CASCADE'), nullable=False)
-    recipient = relation('User', innerjoin=True)
+    recipient = relationship('User', innerjoin=True)
 
     # The time that this notification was read by the recipient
 
