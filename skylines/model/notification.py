@@ -110,7 +110,7 @@ def create_flight_comment_notifications(comment):
     '''
 
     # Create the event
-    event = Event(type=Event.NT_FLIGHT_COMMENT,
+    event = Event(type=Event.Type.FLIGHT_COMMENT,
                   actor=comment.user,
                   flight=comment.flight,
                   flight_comment=comment)
@@ -138,7 +138,7 @@ def create_flight_notifications(flight):
     '''
 
     # Create the event
-    event = Event(type=Event.NT_FLIGHT,
+    event = Event(type=Event.Type.FLIGHT,
                   actor_id=flight.igc_file.owner.id,
                   flight=flight)
 
@@ -170,7 +170,7 @@ def create_follower_notification(followed, follower):
     '''
 
     # Create the event
-    event = Event(type=Event.NT_FOLLOWER, actor=follower)
+    event = Event(type=Event.Type.FOLLOWER, actor=follower)
     DBSession.add(event)
 
     # Create the notification
