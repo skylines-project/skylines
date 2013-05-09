@@ -26,15 +26,19 @@ class Flight(DeclarativeBase):
     time_created = Column(DateTime, nullable=False, default=datetime.utcnow)
     time_modified = Column(DateTime, nullable=False, default=datetime.utcnow)
 
-    pilot_id = Column(Integer, ForeignKey('tg_user.id'), index=True)
+    pilot_id = Column(
+        Integer, ForeignKey('tg_user.id', ondelete='SET NULL'), index=True)
     pilot = relationship('User', foreign_keys=[pilot_id])
-    co_pilot_id = Column(Integer, ForeignKey('tg_user.id'), index=True)
+
+    co_pilot_id = Column(
+        Integer, ForeignKey('tg_user.id', ondelete='SET NULL'), index=True)
     co_pilot = relationship('User', foreign_keys=[co_pilot_id])
 
-    club_id = Column(Integer, ForeignKey('clubs.id'), index=True)
+    club_id = Column(
+        Integer, ForeignKey('clubs.id', ondelete='SET NULL'), index=True)
     club = relationship('Club', backref='flights')
 
-    model_id = Column(Integer, ForeignKey('models.id'))
+    model_id = Column(Integer, ForeignKey('models.id', ondelete='SET NULL'))
     model = relationship('AircraftModel')
     registration = Column(Unicode(32))
     competition_id = Column(Unicode(5))
@@ -49,10 +53,12 @@ class Flight(DeclarativeBase):
     landing_location_wkt = Column(
         'landing_location', Geometry('POINT', management=True))
 
-    takeoff_airport_id = Column(Integer, ForeignKey('airports.id'))
+    takeoff_airport_id = Column(
+        Integer, ForeignKey('airports.id', ondelete='SET NULL'))
     takeoff_airport = relationship('Airport', foreign_keys=[takeoff_airport_id])
 
-    landing_airport_id = Column(Integer, ForeignKey('airports.id'))
+    landing_airport_id = Column(
+        Integer, ForeignKey('airports.id', ondelete='SET NULL'))
     landing_airport = relationship('Airport', foreign_keys=[landing_airport_id])
 
     timestamps = Column(postgresql.ARRAY(DateTime), nullable=False)
@@ -63,7 +69,8 @@ class Flight(DeclarativeBase):
     olc_triangle_distance = Column(Integer)
     olc_plus_score = Column(Integer)
 
-    igc_file_id = Column(Integer, ForeignKey('igc_files.id'))
+    igc_file_id = Column(
+        Integer, ForeignKey('igc_files.id', ondelete='CASCADE'), nullable=False)
     igc_file = relationship('IGCFile', backref='flights')
 
     needs_analysis = Column(Boolean, nullable=False, default=True)

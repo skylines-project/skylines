@@ -35,7 +35,8 @@ class TrackingFix(DeclarativeBase):
     vario = Column(REAL)
     engine_noise_level = Column(SmallInteger)
 
-    pilot_id = Column(Integer, ForeignKey('tg_user.id'), nullable=False)
+    pilot_id = Column(
+        Integer, ForeignKey('tg_user.id', ondelete='CASCADE'), nullable=False)
     pilot = relationship('User')
 
     ip = Column(INET)
@@ -128,7 +129,8 @@ class TrackingSession(DeclarativeBase):
 
     id = Column(Integer, autoincrement=True, primary_key=True)
 
-    pilot_id = Column(Integer, ForeignKey('tg_user.id'), nullable=False)
+    pilot_id = Column(
+        Integer, ForeignKey('tg_user.id', ondelete='CASCADE'), nullable=False)
     pilot = relationship('User')
 
     lt24_id = Column(BigInteger, index=True)

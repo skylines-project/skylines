@@ -15,9 +15,8 @@ class Club(DeclarativeBase):
     id = Column(Integer, autoincrement=True, primary_key=True)
     name = Column(Unicode(255), unique=True, nullable=False)
 
-    owner_id = Column(Integer, ForeignKey('tg_user.id', use_alter=True,
-                                          name="tg_user.id"))
-
+    owner_id = Column(Integer, ForeignKey(
+        'tg_user.id', use_alter=True, name="tg_user.id", ondelete='SET NULL'))
     owner = relationship('User', foreign_keys=[owner_id])
 
     time_created = Column(DateTime, nullable=False, default=datetime.utcnow)
