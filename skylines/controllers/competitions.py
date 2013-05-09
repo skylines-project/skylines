@@ -10,6 +10,7 @@ from sqlalchemy.orm import joinedload
 from .base import BaseController
 from skylines.model import DBSession, Competition
 from skylines.forms.competition import NewForm
+from skylines.lib.formatter import format_date
 
 
 class CompetitionsController(BaseController):
@@ -24,7 +25,8 @@ class CompetitionsController(BaseController):
         competitions = [{
             'name': competition.name,
             'location': competition.location_string,
-            'date': competition.date_string,
+            'start_date': format_date(competition.start_date),
+            'end_date': format_date(competition.end_date),
         } for competition in query]
 
         return dict(competitions=competitions)

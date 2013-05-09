@@ -11,7 +11,8 @@
     <tr>
       <th>{% trans %}Competition{% endtrans %}</th>
       <th>{% trans %}Location{% endtrans %}</th>
-      <th>{% trans %}Date{% endtrans %}</th>
+      <th>{% trans %}Start Date{% endtrans %}</th>
+      <th>{% trans %}End Date{% endtrans %}</th>
     </tr>
   </thead>
   <tbody>
@@ -19,7 +20,8 @@
     <tr>
       <td>{{ competition.name|e }}</td>
       <td>{{ (competition.location or '')|e }}</td>
-      <td>{{ competition.date }}</td>
+      <td>{{ competition.start_date }}</td>
+      <td>{{ competition.end_date }}</td>
     </tr>
     {%- else -%}
     <tr>

@@ -5,7 +5,6 @@ from sqlalchemy.orm import relationship
 from sqlalchemy.types import Integer, Unicode, UnicodeText, DateTime, Date
 
 from .base import DeclarativeBase
-from skylines.lib.formatter import format_date
 
 
 class Competition(DeclarativeBase):
@@ -79,13 +78,6 @@ class Competition(DeclarativeBase):
 
         if self.airport_id:
             return self.airport.name
-
-    @property
-    def date_string(self):
-        """ A string containing the start and end dates of the competition. """
-
-        return '{} - {}'.format(format_date(self.start_date),
-                                format_date(self.end_date))
 
 
 class CompetitionParticipation(DeclarativeBase):
