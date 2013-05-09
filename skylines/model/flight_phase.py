@@ -27,8 +27,7 @@ class FlightPhase(DeclarativeBase):
     end_time = Column(DateTime)
 
     flight = relationship('Flight', backref=backref(
-        '_phases', order_by=start_time,
-        cascade='all,delete-orphan', passive_deletes=True))
+        '_phases', order_by=start_time, passive_deletes=True))
 
     aggregate = Column(Boolean, nullable=False)
     phase_type = Column(Integer)  # see PT_* constants
