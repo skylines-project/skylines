@@ -17,7 +17,7 @@ from .flight_phase import FlightPhase
 from .follower import Follower
 from .geo import Location
 from .igcfile import IGCFile
-from .notification import Notification
+from .notification import Event, Notification
 from .timezone import TimeZone
 from .trace import Trace
 from .tracking import TrackingFix, TrackingSession
