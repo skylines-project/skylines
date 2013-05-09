@@ -7,7 +7,6 @@ from sqlalchemy import Column, ForeignKey
 from sqlalchemy.types import Integer, Unicode, DateTime
 
 from .base import DeclarativeBase
-from .auth import User
 
 
 class Club(DeclarativeBase):
