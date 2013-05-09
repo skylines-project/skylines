@@ -42,7 +42,7 @@ class Competition(DeclarativeBase):
     time_created = Column(DateTime, nullable=False, default=datetime.utcnow)
     time_modified = Column(DateTime, nullable=False, default=datetime.utcnow)
 
-    creator_id = Column(Integer, ForeignKey('tg_user.id'))
+    creator_id = Column(Integer, ForeignKey('tg_user.id', ondelete='SET NULL'))
     creator = relationship('User')
 
     # Location of the competition (optional)
@@ -51,7 +51,7 @@ class Competition(DeclarativeBase):
 
     # Competition airport (optional)
 
-    airport_id = Column(Integer, ForeignKey('airports.id'))
+    airport_id = Column(Integer, ForeignKey('airports.id', ondelete='SET NULL'))
     airport = relationship('Airport')
 
     # Competitions classes
@@ -96,17 +96,20 @@ class CompetitionParticipation(DeclarativeBase):
     # The competition that this class definition belongs to
 
     competition_id = Column(
-        Integer, ForeignKey('competitions.id'), nullable=False)
+        Integer, ForeignKey('competitions.id', ondelete='CASCADE'),
+        nullable=False)
     competition = relationship('Competition')
 
     # SkyLines user account
 
-    user_id = Column(Integer, ForeignKey('tg_user.id'), nullable=False)
+    user_id = Column(
+        Integer, ForeignKey('tg_user.id', ondelete='CASCADE'), nullable=False)
     user = relationship('User')
 
     # Competition class (optional)
 
-    class_id = Column(Integer, ForeignKey('competition_classes.id'))
+    class_id = Column(
+        Integer, ForeignKey('competition_classes.id', ondelete='SET NULL'))
     class_ = relationship('CompetitionClass')
 
     # Permissions incl. timestamps (permission missing if field is NULL)
@@ -136,7 +139,8 @@ class CompetitionClass(DeclarativeBase):
     # The competition that this class definition belongs to
 
     competition_id = Column(
-        Integer, ForeignKey('competitions.id'), nullable=False)
+        Integer, ForeignKey('competitions.id', ondelete='CASCADE'),
+        nullable=False)
     competition = relationship('Competition')
 
     # Name of the competition class
