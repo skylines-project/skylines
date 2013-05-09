@@ -98,13 +98,13 @@ class CompetitionParticipation(DeclarativeBase):
     competition_id = Column(
         Integer, ForeignKey('competitions.id', ondelete='CASCADE'),
         nullable=False)
-    competition = relationship('Competition')
+    competition = relationship('Competition', innerjoin=True)
 
     # SkyLines user account
 
     user_id = Column(
         Integer, ForeignKey('tg_user.id', ondelete='CASCADE'), nullable=False)
-    user = relationship('User')
+    user = relationship('User', innerjoin=True)
 
     # Competition class (optional)
 
@@ -141,7 +141,7 @@ class CompetitionClass(DeclarativeBase):
     competition_id = Column(
         Integer, ForeignKey('competitions.id', ondelete='CASCADE'),
         nullable=False)
-    competition = relationship('Competition')
+    competition = relationship('Competition', innerjoin=True)
 
     # Name of the competition class
 
