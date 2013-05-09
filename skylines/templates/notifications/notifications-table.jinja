@@ -98,7 +98,7 @@
     {{ _render_show_button(tg.url('.', params=dict(type=types.FLIGHT, sender=notification.events[0].actor_id))) }}
   {%- endif %}
 {%- else %}
-  {{ _render_show_button(notification.event.id) }}
+  {{ _render_show_button(notification.id) }}
 {%- endif %}
 {%- endmacro %}
 
