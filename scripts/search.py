@@ -63,7 +63,7 @@ def search_query(tokens):
     if len(tokens) > 1:
         tokens.append(' '.join(tokens))
 
-    q1 = get_query('user', model.User, 'display_name', tokens)
+    q1 = get_query('user', model.User, 'name', tokens)
     q2 = get_query('club', model.Club, 'name', tokens)
     q3 = get_query('airport', model.Airport, 'name', tokens)
 

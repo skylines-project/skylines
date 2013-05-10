@@ -72,7 +72,7 @@ class FlightsController(BaseController):
                 columns = {
                     0: (Flight, 'date_local'),
                     1: (Flight, 'index_score'),
-                    2: (pilot_alias, 'display_name'),
+                    2: (pilot_alias, 'name'),
                     3: (Flight, 'olc_classic_distance'),
                     4: (Airport, 'name'),
                     5: (Club, 'name'),
@@ -93,12 +93,12 @@ class FlightsController(BaseController):
                                    index_score=flight.index_score,
                                    olc_classic_distance=flight.olc_classic_distance,
                                    pilot_id=flight.pilot_id,
-                                   pilot=flight.pilot and flight.pilot.display_name,
+                                   pilot=flight.pilot and flight.pilot.name,
                                    co_pilot_id=flight.co_pilot_id,
-                                   co_pilot=flight.co_pilot and flight.co_pilot.display_name,
+                                   co_pilot=flight.co_pilot and flight.co_pilot.name,
                                    club_id=flight.club_id,
                                    club=flight.club and truncate(flight.club.name, 25),
-                                   owner=flight.igc_file.owner.display_name,
+                                   owner=flight.igc_file.owner.name,
                                    takeoff_airport=flight.takeoff_airport and flight.takeoff_airport.name,
                                    takeoff_airport_id=flight.takeoff_airport and flight.takeoff_airport.id,
                                    takeoff_airport_country_code=flight.takeoff_airport and flight.takeoff_airport.country_code.lower(),
@@ -179,7 +179,7 @@ class FlightsController(BaseController):
 
         columns = {
             0: (Flight, 'index_score'),
-            1: (pilot_alias, 'display_name'),
+            1: (pilot_alias, 'name'),
             2: (Flight, 'olc_classic_distance'),
             3: (Airport, 'name'),
             4: (Club, 'name'),
@@ -230,7 +230,7 @@ class FlightsController(BaseController):
         columns = {
             0: (Flight, 'date_local'),
             1: (Flight, 'index_score'),
-            2: (pilot_alias, 'display_name'),
+            2: (pilot_alias, 'name'),
             3: (Flight, 'olc_classic_distance'),
             4: (Airport, 'name'),
             5: (AircraftModel, 'name'),
@@ -250,7 +250,7 @@ class FlightsController(BaseController):
         columns = {
             0: (Flight, 'date_local'),
             1: (Flight, 'index_score'),
-            2: (pilot_alias, 'display_name'),
+            2: (pilot_alias, 'name'),
             3: (Flight, 'olc_classic_distance'),
             4: (Airport, 'name'),
             5: (AircraftModel, 'name'),
@@ -270,7 +270,7 @@ class FlightsController(BaseController):
         columns = {
             0: (Flight, 'date_local'),
             1: (Flight, 'index_score'),
-            2: (pilot_alias, 'display_name'),
+            2: (pilot_alias, 'name'),
             3: (Flight, 'olc_classic_distance'),
             4: (Club, 'name'),
             5: (AircraftModel, 'name'),

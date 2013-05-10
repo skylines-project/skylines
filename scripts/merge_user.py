@@ -52,7 +52,7 @@ assert new and old
 DBSession.delete(old)
 DBSession.flush()
 
-if new.user_name == new.display_name:
+if new.user_name == new.name:
     new.user_name = old.user_name
 
 if new.email_address is None and old.email_address is not None:
