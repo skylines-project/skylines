@@ -43,6 +43,12 @@ def get_query(type, model, query_attr, tokens):
 
 
 def search_query(tokens):
+    # Escape % and _ properly
+    tokens = [t.replace('%', '\%').replace('_', '\_') for t in tokens]
+
+    # Use * as wildcard character
+    tokens = [t.replace('*', '%') for t in tokens]
+
     if len(tokens) > 1:
         tokens.append(' '.join(tokens))
 
