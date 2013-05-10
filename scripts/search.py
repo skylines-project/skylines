@@ -30,13 +30,11 @@ def ilikes_as_int(col_vals):
 environment.load_from_file()
 
 tokens = sys.argv[1:]
-if len(tokens) > 1:
-    tokens.append(' '.join(tokens))
 
 session = model.DBSession
 
 
-def get_query(type, model, query_attr):
+def get_query(type, model, query_attr, tokens):
     query_attr = getattr(model, query_attr)
 
     col_vals = []
@@ -60,11 +58,16 @@ def get_query(type, model, query_attr):
                          query_attr.label('name'),
                          relevance.label('relevance')).filter(relevance > NULL)
 
-q1 = get_query('user', model.User, 'display_name')
-q2 = get_query('club', model.Club, 'name')
-q3 = get_query('airport', model.Airport, 'name')
 
-q = q1.union(q2, q3)
+def search_query(tokens):
+    if len(tokens) > 1:
+        tokens.append(' '.join(tokens))
 
-for u in q.order_by(desc('relevance')).limit(20):
+    q1 = get_query('user', model.User, 'display_name', tokens)
+    q2 = get_query('club', model.Club, 'name', tokens)
+    q3 = get_query('airport', model.Airport, 'name', tokens)
+
+    return q1.union(q2, q3).order_by(desc('relevance'))
+
+for u in search_query(tokens).limit(20):
     print u
