@@ -12,6 +12,22 @@ environment.load_from_file()
 tokens = sys.argv[1:]
 
 
+def combined_search_query(models, tokens, ordered=True):
+    # Build sub search queries
+    queries = [model.search_query(tokens, ordered=False) for model in models]
+
+    # Build combined search query
+    query = queries[0]
+    if len(queries) > 1:
+        query = query.union(*queries[1:])
+
+    # Order by weight (optional)
+    if ordered:
+        query = query.order_by(desc('weight'))
+
+    return query
+
+
 def search_query(tokens):
     # Escape % and _ properly
     tokens = [t.replace('%', '\%').replace('_', '\_') for t in tokens]
@@ -19,11 +35,10 @@ def search_query(tokens):
     # Use * as wildcard character
     tokens = [t.replace('*', '%') for t in tokens]
 
-    q1 = model.User.search_query(tokens, ordered=False)
-    q2 = model.Club.search_query(tokens, ordered=False)
-    q3 = model.Airport.search_query(tokens, ordered=False)
+    models = [model.User, model.Club, model.Airport]
 
-    return q1.union(q2, q3).order_by(desc('weight'))
+    return combined_search_query(models, tokens)
+
 
 for u in search_query(tokens).limit(20):
     print u
