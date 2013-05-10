@@ -2,41 +2,7 @@ from sqlalchemy import literal_column, desc
 from sqlalchemy.ext.declarative import declarative_base
 
 from .session import DBSession
-
-PATTERNS = [
-    ('{}', 5),     # Matches token exactly
-    ('{}%', 3),    # Begins with token
-    ('% {}%', 2),  # Has token at word start
-    ('%{}%', 1),   # Has token
-]
-
-
-def weight_expression(columns, tokens):
-    expressions = []
-
-    # Use entire search string as additional token
-    if len(tokens) > 1:
-        tokens = tokens + [' '.join(tokens)]
-
-    for column in columns:
-        for token in tokens:
-            len_token = len(token)
-
-            for pattern, weight in PATTERNS:
-                # Inject the token in the search pattern
-                token_pattern = pattern.format(token)
-
-                # Adjust the weight for the length of the token
-                # (the long the matched token, the greater the weight)
-                weight = weight * len_token
-
-                # Create the weighted ILIKE expression
-                expression = column.weighted_ilike(token_pattern, weight)
-
-                # Add the expression to list
-                expressions.append(expression)
-
-    return sum(expressions)
+from .search import weight_expression
 
 
 class _BaseClass(object):
