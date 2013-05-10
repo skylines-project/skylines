@@ -14,7 +14,7 @@ import struct
 from datetime import datetime
 from hashlib import sha256
 
-from sqlalchemy import Table, ForeignKey, Column, event, DDL
+from sqlalchemy import Table, ForeignKey, Column, Index, func
 from sqlalchemy.types import Unicode, Integer, BigInteger, SmallInteger, \
     DateTime, Boolean, Interval, String
 from sqlalchemy.orm import relationship, synonym, column_property
@@ -299,8 +299,8 @@ class User(DeclarativeBase):
                                               settings['altitude_unit'])
 
 
-event.listen(User.__table__, "after_create",
-             DDL("CREATE UNIQUE INDEX users_lower_email_address_idx ON tg_user(lower(email_address))"))
+Index('users_lower_email_address_idx',
+      func.lower(User.email_address), unique=True)
 
 
 class Permission(DeclarativeBase):
