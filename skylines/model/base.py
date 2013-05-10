@@ -11,29 +11,30 @@ PATTERNS = [
 ]
 
 
-def weight_expression(column, tokens):
+def weight_expression(columns, tokens):
     expressions = []
 
     # Use entire search string as additional token
     if len(tokens) > 1:
         tokens = tokens + [' '.join(tokens)]
 
-    for token in tokens:
-        len_token = len(token)
+    for column in columns:
+        for token in tokens:
+            len_token = len(token)
 
-        for pattern, weight in PATTERNS:
-            # Inject the token in the search pattern
-            token_pattern = pattern.format(token)
+            for pattern, weight in PATTERNS:
+                # Inject the token in the search pattern
+                token_pattern = pattern.format(token)
 
-            # Adjust the weight for the length of the token
-            # (the long the matched token, the greater the weight)
-            weight = weight * len_token
+                # Adjust the weight for the length of the token
+                # (the long the matched token, the greater the weight)
+                weight = weight * len_token
 
-            # Create the weighted ILIKE expression
-            expression = column.weighted_ilike(token_pattern, weight)
+                # Create the weighted ILIKE expression
+                expression = column.weighted_ilike(token_pattern, weight)
 
-            # Add the expression to list
-            expressions.append(expression)
+                # Add the expression to list
+                expressions.append(expression)
 
     return sum(expressions)
 
@@ -57,11 +58,15 @@ class _BaseClass(object):
         # Read the searchable columns from the table (strings)
         columns = cls.__searchable_columns__
 
+        # Convert the columns from strings into column objects
+        columns = [getattr(cls, c) for c in columns]
+
         # The model name that can be used to match search result to model
         cls_name = literal_column('\'{}\''.format(cls.__name__))
 
-        # Generate the search weight expression
-        weight = sum([weight_expression(getattr(cls, c), tokens) for c in columns])
+        # Generate the search weight expression from the
+        # searchable columns, tokens and patterns
+        weight = weight_expression(columns, tokens)
 
         # Create a query object
         query = DBSession.query(
