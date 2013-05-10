@@ -10,11 +10,6 @@ from skylines import model
 
 NULL = literal_column(str(0))
 
-
-def weighted_ilikes(col_vals):
-    return sum([col.weighted_ilike(val, rel) for col, val, rel in col_vals], NULL)
-
-
 environment.load_from_file()
 
 tokens = sys.argv[1:]
@@ -36,7 +31,7 @@ def get_query(type, model, query_attr, tokens):
     # Has token
     col_vals.extend([(query_attr, '%{}%'.format(token), len(token)) for token in tokens])
 
-    weight = weighted_ilikes(col_vals)
+    weight = sum([col.weighted_ilike(val, rel) for col, val, rel in col_vals], NULL)
 
     # The search result type
     type = literal_column('\'{}\''.format(type))
