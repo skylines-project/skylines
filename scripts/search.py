@@ -20,18 +20,25 @@ session = model.DBSession
 def get_query(model, query_attr, tokens):
     query_attr = getattr(model, query_attr)
 
-    col_vals = []
+    weighted_ilikes = []
 
-    # Matches token exactly
-    col_vals.extend([(query_attr, '{}'.format(token), len(token) * 5) for token in tokens])
-    # Begins with token
-    col_vals.extend([(query_attr, '{}%'.format(token), len(token) * 3) for token in tokens])
-    # Has token at word start
-    col_vals.extend([(query_attr, '% {}%'.format(token), len(token) * 2) for token in tokens])
-    # Has token
-    col_vals.extend([(query_attr, '%{}%'.format(token), len(token)) for token in tokens])
+    for token in tokens:
+        len_token = len(token)
 
-    weight = sum([col.weighted_ilike(val, rel) for col, val, rel in col_vals], NULL)
+        def add_pattern(pattern, weight):
+            weighted_ilikes.append(
+                query_attr.weighted_ilike(pattern.format(token), weight))
+
+        # Matches token exactly
+        add_pattern('{}', len_token * 5)
+        # Begins with token
+        add_pattern('{}%', len_token * 3)
+        # Has token at word start
+        add_pattern('% {}%', len_token * 2)
+        # Has token
+        add_pattern('%{}%', len_token)
+
+    weight = sum(weighted_ilikes, NULL)
 
     # The search result table
     table = literal_column('\'{}\''.format(model.__tablename__))
