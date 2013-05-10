@@ -1,0 +1,52 @@
+#!/usr/bin/python
+
+import sys
+
+from sqlalchemy import case, desc, literal_column
+
+from skylines.config import environment
+from skylines import model
+
+
+def ilike_as_int(column, value, relevance):
+    assert isinstance(relevance, (int, float))
+    return case([(column.ilike(value), literal_column(str(relevance)))], else_=literal_column(str(0)))
+
+
+def ilikes_as_int(col_vals):
+    return sum([ilike_as_int(col, val, rel) for col, val, rel in col_vals], literal_column(str(0)))
+
+
+environment.load_from_file()
+
+tokens = sys.argv[1:]
+session = model.DBSession
+
+
+def get_query(type, model, query_attr):
+    query_attr = getattr(model, query_attr)
+
+    col_vals = []
+    col_vals.extend([(query_attr, '{}'.format(token), len(token) * 5) for token in tokens])
+    col_vals.extend([(query_attr, '{}%'.format(token), len(token) * 3) for token in tokens])
+    col_vals.extend([(query_attr, '% {}%'.format(token), len(token) * 2) for token in tokens])
+    col_vals.extend([(query_attr, '%{}%'.format(token), len(token)) for token in tokens])
+    if len(tokens) > 1:
+        token = ' '.join(tokens)
+        col_vals.append((query_attr, '%{}%'.format(token), len(token)))
+
+    relevance = ilikes_as_int(col_vals)
+
+    return session.query(literal_column('\'{}\''.format(type)).label('type'),
+                         model.id.label('id'),
+                         query_attr.label('name'),
+                         relevance.label('relevance')).filter(relevance > literal_column(str(0)))
+
+q1 = get_query('user', model.User, 'display_name')
+q2 = get_query('club', model.Club, 'name')
+q3 = get_query('airport', model.Airport, 'name')
+
+q = q1.union(q2, q3)
+
+for u in q.order_by(desc('relevance')).limit(20):
+    print u
