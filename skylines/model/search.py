@@ -17,3 +17,13 @@ def combined_search_query(models, tokens, include_misses=False, ordered=True):
         query = query.order_by(desc('weight'))
 
     return query
+
+
+def escape_tokens(tokens):
+    # Escape % and _ properly
+    tokens = [t.replace('%', '\%').replace('_', '\_') for t in tokens]
+
+    # Use * as wildcard character
+    tokens = [t.replace('*', '%') for t in tokens]
+
+    return tokens

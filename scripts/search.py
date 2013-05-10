@@ -4,18 +4,12 @@ import sys
 
 from skylines.config import environment
 from skylines.model import User, Club, Airport
-from skylines.model.search import combined_search_query
+from skylines.model.search import combined_search_query, escape_tokens
 
 
 def search_query(tokens):
-    # Escape % and _ properly
-    tokens = [t.replace('%', '\%').replace('_', '\_') for t in tokens]
-
-    # Use * as wildcard character
-    tokens = [t.replace('*', '%') for t in tokens]
-
+    tokens = escape_tokens(tokens)
     models = [User, Club, Airport]
-
     return combined_search_query(models, tokens)
 
 
