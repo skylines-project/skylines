@@ -17,9 +17,7 @@ tokens = sys.argv[1:]
 session = model.DBSession
 
 
-def get_query(model, query_attr, tokens):
-    query_attr = getattr(model, query_attr)
-
+def weight_expression(column, tokens):
     weighted_ilikes = []
 
     for token in tokens:
@@ -27,7 +25,7 @@ def get_query(model, query_attr, tokens):
 
         def add_pattern(pattern, weight):
             weighted_ilikes.append(
-                query_attr.weighted_ilike(pattern.format(token), weight))
+                column.weighted_ilike(pattern.format(token), weight))
 
         # Matches token exactly
         add_pattern('{}', len_token * 5)
@@ -38,7 +36,13 @@ def get_query(model, query_attr, tokens):
         # Has token
         add_pattern('%{}%', len_token)
 
-    weight = sum(weighted_ilikes, NULL)
+    return sum(weighted_ilikes, NULL)
+
+
+def get_query(model, query_attr, tokens):
+    query_attr = getattr(model, query_attr)
+
+    weight = weight_expression(query_attr, tokens)
 
     # The search result table
     table = literal_column('\'{}\''.format(model.__tablename__))
