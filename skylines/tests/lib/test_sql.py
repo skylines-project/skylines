@@ -42,6 +42,9 @@ def test_weighted_ilike():
     eq_(DBSession.query(
         TestTable.name.weighted_ilike('%John%', 100)).scalar(), 100)
 
+    eq_(DBSession.query(
+        TestTable.name.weighted_ilike('%John%')).scalar(), 1)
+
     eq_(float(DBSession.query(
         TestTable.name.weighted_ilike('%John%', 0.1)).scalar()), 0.1)
 

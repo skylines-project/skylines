@@ -22,7 +22,7 @@ def compile(expr, compiler, **kw):
     return compiler.process(expr.array) + '[' + str(expr.index) + ']'
 
 
-def weighted_ilike(self, value, weight):
+def weighted_ilike(self, value, weight=1):
     """ Calls the ILIKE operator and returns either 0 or the given weight. """
 
     # Make sure weight is numeric and we can safely
