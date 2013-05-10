@@ -51,11 +51,11 @@ class NewUserForm(AddRecordForm):
     __base_widget_type__ = BootstrapForm
     __model__ = User
     __required_fields__ = ['password']
-    __limit_fields__ = ['email_address', 'display_name', 'password', 'verify_password', 'club']
+    __limit_fields__ = ['email_address', 'name', 'password', 'verify_password', 'club']
     __base_validator__ = user_validator
     __field_widget_args__ = {
         'email_address': dict(label_text=l_('eMail Address')),
-        'display_name': dict(label_text=l_('Name')),
+        'name': dict(label_text=l_('Name')),
         'club': dict(label_text=l_('Club')),
         'password': dict(label_text=l_('Password')),
     }
@@ -63,7 +63,7 @@ class NewUserForm(AddRecordForm):
     email_address = Field(TextField, All(UniqueValue(SAORMProvider(DBSession),
                                                      __model__, 'email_address'),
                                          Email(not_empty=True)))
-    display_name = Field(TextField, NotEmpty)
+    name = Field(TextField, NotEmpty)
     club = club.SelectField
     password = String(min=6)
     verify_password = PasswordField('verify_password',
@@ -83,7 +83,7 @@ class EditUserForm(EditableForm):
     __base_widget_type__ = BootstrapForm
     __model__ = User
     __hide_fields__ = ['id']
-    __limit_fields__ = ['email_address', 'display_name',
+    __limit_fields__ = ['email_address', 'name',
                         'tracking_delay', 'unit_preset',
                         'distance_unit', 'speed_unit',
                         'lift_unit', 'altitude_unit',
@@ -91,7 +91,7 @@ class EditUserForm(EditableForm):
     __base_widget_args__ = dict(action='save')
     __field_widget_args__ = {
         'email_address': dict(label_text=l_('eMail Address')),
-        'display_name': dict(label_text=l_('Name')),
+        'name': dict(label_text=l_('Name')),
         'tracking_delay': dict(label_text=l_('Tracking Delay')),
         'unit_preset': dict(label_text=l_('Unit Preset')),
         'distance_unit': dict(label_text=l_('Distance Unit')),
@@ -105,7 +105,7 @@ class EditUserForm(EditableForm):
                                          UniqueValueUnless(filter_user_id,
                                                            DBSession,
                                                            __model__, 'email_address')))
-    display_name = Field(TextField, NotEmpty)
+    name = Field(TextField, NotEmpty)
     tracking_delay = DelaySelectField
     unit_preset = units.PresetSelectField("unit_preset")
     distance_unit = units.DistanceSelectField
@@ -234,7 +234,7 @@ class UserController(BaseController):
 
     @expose()
     @validate(form=edit_user_form, error_handler=edit)
-    def save(self, email_address, display_name,
+    def save(self, email_address, name,
              tracking_delay=0, unit_preset=1,
              distance_unit=1, speed_unit=1,
              lift_unit=0, altitude_unit=0,
@@ -243,7 +243,7 @@ class UserController(BaseController):
             raise HTTPForbidden
 
         self.user.email_address = email_address
-        self.user.display_name = display_name
+        self.user.name = name
         self.user.tracking_delay = tracking_delay
 
         unit_preset = int(unit_preset)
@@ -401,7 +401,7 @@ class UsersController(BaseController):
     def index(self):
         users = User.query() \
             .options(joinedload(User.club)) \
-            .order_by(func.lower(User.display_name))
+            .order_by(func.lower(User.name))
 
         return dict(active_page='settings', users=users)
 
@@ -416,11 +416,11 @@ class UsersController(BaseController):
 
     @expose()
     @validate(form=new_user_form, error_handler=new)
-    def new_post(self, display_name, club, email_address, password, **kw):
+    def new_post(self, name, club, email_address, password, **kw):
         if not club:
             club = None
 
-        user = User(display_name=display_name, club_id=club,
+        user = User(name=name, club_id=club,
                     email_address=email_address, password=password)
         user.created_ip = request.remote_addr
         user.generate_tracking_key()

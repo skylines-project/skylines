@@ -67,7 +67,7 @@ class Group(DeclarativeBase):
 
     group_name = Column(Unicode(16), unique=True, nullable=False)
 
-    display_name = Column(Unicode(255))
+    name = Column(Unicode(255))
 
     created = Column(DateTime, default=datetime.utcnow)
 
@@ -105,7 +105,7 @@ class User(DeclarativeBase):
                                            info={'rum': {'field': 'Email'}}),
                                     comparator_factory=LowerCaseComparator)
 
-    display_name = Column(Unicode(255), nullable=False)
+    name = Column(Unicode(255), nullable=False)
 
     _password = Column('password', Unicode(128),
                        info={'rum': {'field': 'Password'}})
@@ -151,10 +151,10 @@ class User(DeclarativeBase):
 
     def __repr__(self):
         return ('<User: email=%s, display=%s>' % (
-                self.email_address, self.display_name)).encode('utf-8')
+                self.email_address, self.name)).encode('utf-8')
 
     def __unicode__(self):
-        return self.display_name
+        return self.name
 
     # Getters and setters
 
@@ -257,7 +257,7 @@ class User(DeclarativeBase):
         return Flight.get_largest().filter_by(pilot=self)
 
     def initials(self):
-        parts = self.display_name.split()
+        parts = self.name.split()
         initials = [p[0].upper() for p in parts if len(p) > 2 and '.' not in p]
         return ''.join(initials)
 
