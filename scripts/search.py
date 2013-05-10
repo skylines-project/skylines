@@ -8,6 +8,9 @@ from skylines.config import environment
 from skylines import model
 
 
+NULL = literal_column(str(0))
+
+
 def ilike_as_int(column, value, relevance):
     # Make sure relevance is numeric and we can safely
     # pass it to the literal_column()
@@ -17,11 +20,11 @@ def ilike_as_int(column, value, relevance):
     relevance = literal_column(str(relevance))
 
     # Return case expression
-    return case([(column.ilike(value), relevance)], else_=literal_column(str(0)))
+    return case([(column.ilike(value), relevance)], else_=NULL)
 
 
 def ilikes_as_int(col_vals):
-    return sum([ilike_as_int(col, val, rel) for col, val, rel in col_vals], literal_column(str(0)))
+    return sum([ilike_as_int(col, val, rel) for col, val, rel in col_vals], NULL)
 
 
 environment.load_from_file()
@@ -55,7 +58,7 @@ def get_query(type, model, query_attr):
     return session.query(type.label('type'),
                          model.id.label('id'),
                          query_attr.label('name'),
-                         relevance.label('relevance')).filter(relevance > literal_column(str(0)))
+                         relevance.label('relevance')).filter(relevance > NULL)
 
 q1 = get_query('user', model.User, 'display_name')
 q2 = get_query('club', model.Club, 'name')
