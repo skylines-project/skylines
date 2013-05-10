@@ -25,7 +25,7 @@ PATTERNS = [
 
 
 def weight_expression(column, tokens):
-    weighted_ilikes = []
+    expressions = []
 
     for token in tokens:
         len_token = len(token)
@@ -42,9 +42,9 @@ def weight_expression(column, tokens):
             expression = column.weighted_ilike(token_pattern, weight)
 
             # Add the expression to list
-            weighted_ilikes.append(expression)
+            expressions.append(expression)
 
-    return sum(weighted_ilikes, NULL)
+    return sum(expressions, NULL)
 
 
 def get_query(model, query_attr, tokens):
