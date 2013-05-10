@@ -9,8 +9,15 @@ from skylines import model
 
 
 def ilike_as_int(column, value, relevance):
+    # Make sure relevance is numeric and we can safely
+    # pass it to the literal_column()
     assert isinstance(relevance, (int, float))
-    return case([(column.ilike(value), literal_column(str(relevance)))], else_=literal_column(str(0)))
+
+    # Convert relevance to a literal_column()
+    relevance = literal_column(str(relevance))
+
+    # Return case expression
+    return case([(column.ilike(value), relevance)], else_=literal_column(str(0)))
 
 
 def ilikes_as_int(col_vals):
@@ -30,14 +37,22 @@ def get_query(type, model, query_attr):
     query_attr = getattr(model, query_attr)
 
     col_vals = []
+
+    # Matches token exactly
     col_vals.extend([(query_attr, '{}'.format(token), len(token) * 5) for token in tokens])
+    # Begins with token
     col_vals.extend([(query_attr, '{}%'.format(token), len(token) * 3) for token in tokens])
+    # Has token at word start
     col_vals.extend([(query_attr, '% {}%'.format(token), len(token) * 2) for token in tokens])
+    # Has token
     col_vals.extend([(query_attr, '%{}%'.format(token), len(token)) for token in tokens])
 
     relevance = ilikes_as_int(col_vals)
 
-    return session.query(literal_column('\'{}\''.format(type)).label('type'),
+    # The search result type
+    type = literal_column('\'{}\''.format(type))
+
+    return session.query(type.label('type'),
                          model.id.label('id'),
                          query_attr.label('name'),
                          relevance.label('relevance')).filter(relevance > literal_column(str(0)))
