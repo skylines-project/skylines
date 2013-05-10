@@ -6,11 +6,12 @@ from skylines.config import environment
 from skylines.model import User, Club, Airport
 from skylines.model.search import combined_search_query, escape_tokens
 
+MODELS = [User, Club, Airport]
+
 
 def search_query(tokens):
     tokens = escape_tokens(tokens)
-    models = [User, Club, Airport]
-    return combined_search_query(models, tokens)
+    return combined_search_query(MODELS, tokens)
 
 
 environment.load_from_file()
