@@ -207,7 +207,7 @@ class TrackingServer(DatagramProtocol):
             self.transport.write(response, (host, port))
             return
 
-        name = user.display_name[:64].encode('utf8', 'ignore')
+        name = user.name[:64].encode('utf8', 'ignore')
         club_id = user.club_id or 0
 
         response = struct.pack('!IHHQIIIBBBBII', MAGIC, 0, TYPE_USER_NAME_RESPONSE, 0,
