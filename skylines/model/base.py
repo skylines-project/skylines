@@ -54,7 +54,9 @@ class _BaseClass(object):
         return cls.query().get(id)
 
     @classmethod
-    def search_query(cls, tokens, include_misses=False, ordered=True):
+    def search_query(cls, tokens,
+                     weight_func=None, include_misses=False, ordered=True):
+
         # Read the searchable columns from the table (strings)
         columns = cls.__searchable_columns__
 
@@ -66,7 +68,10 @@ class _BaseClass(object):
 
         # Generate the search weight expression from the
         # searchable columns, tokens and patterns
-        weight = weight_expression(columns, tokens)
+        if not weight_func:
+            weight_func = weight_expression
+
+        weight = weight_func(columns, tokens)
 
         # Create a query object
         query = DBSession.query(
