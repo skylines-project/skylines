@@ -2,7 +2,7 @@
 
 import sys
 
-from sqlalchemy import desc, literal_column, cast, Integer, String
+from sqlalchemy import desc, literal_column
 
 from skylines.config import environment
 from skylines import model
@@ -11,24 +11,8 @@ from skylines import model
 NULL = literal_column(str(0))
 
 
-def weighted_ilike(self, value, weight):
-    # Make sure weight is numeric and we can safely
-    # pass it to the literal_column()
-    assert isinstance(weight, (int, float))
-
-    # Convert weight to a literal_column()
-    weight = literal_column(str(weight))
-
-    # Return ilike expression
-    return cast(self.ilike(value), Integer) * weight
-
-
 def weighted_ilikes(col_vals):
     return sum([col.weighted_ilike(val, rel) for col, val, rel in col_vals], NULL)
-
-
-# Inject weighted_ilike() method into String type
-setattr(String.comparator_factory, 'weighted_ilike', weighted_ilike)
 
 
 environment.load_from_file()

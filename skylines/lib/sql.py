@@ -1,4 +1,5 @@
-from sqlalchemy.sql import func, ColumnElement
+from sqlalchemy.sql import func, ColumnElement, literal_column, cast
+from sqlalchemy.types import String, Integer
 from sqlalchemy.ext.compiler import compiles
 from sqlalchemy.orm.properties import ColumnProperty
 
@@ -19,3 +20,20 @@ class extract_array_item(ColumnElement):
 @compiles(extract_array_item)
 def compile(expr, compiler, **kw):
     return compiler.process(expr.array) + '[' + str(expr.index) + ']'
+
+
+def weighted_ilike(self, value, weight):
+    """ Calls the ILIKE operator and returns either 0 or the given weight. """
+
+    # Make sure weight is numeric and we can safely
+    # pass it to the literal_column()
+    assert isinstance(weight, (int, float))
+
+    # Convert weight to a literal_column()
+    weight = literal_column(str(weight))
+
+    # Return ilike expression
+    return cast(self.ilike(value), Integer) * weight
+
+# Inject weighted_ilike() method into String type
+setattr(String.comparator_factory, 'weighted_ilike', weighted_ilike)
