@@ -16,6 +16,13 @@ tokens = sys.argv[1:]
 
 session = model.DBSession
 
+PATTERNS = [
+    ('{}', 5),     # Matches token exactly
+    ('{}%', 3),    # Begins with token
+    ('% {}%', 2),  # Has token at word start
+    ('%{}%', 1),   # Has token
+]
+
 
 def weight_expression(column, tokens):
     weighted_ilikes = []
@@ -23,18 +30,10 @@ def weight_expression(column, tokens):
     for token in tokens:
         len_token = len(token)
 
-        def add_pattern(pattern, weight):
-            weighted_ilikes.append(
-                column.weighted_ilike(pattern.format(token), weight))
-
-        # Matches token exactly
-        add_pattern('{}', len_token * 5)
-        # Begins with token
-        add_pattern('{}%', len_token * 3)
-        # Has token at word start
-        add_pattern('% {}%', len_token * 2)
-        # Has token
-        add_pattern('%{}%', len_token)
+        for pattern, weight in PATTERNS:
+            expression = column.weighted_ilike(
+                pattern.format(token), len_token * weight)
+            weighted_ilikes.append(expression)
 
     return sum(weighted_ilikes, NULL)
 
