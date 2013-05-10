@@ -13,7 +13,7 @@ def bootstrap(command, conf, vars):
     from sqlalchemy.exc import IntegrityError
     try:
         u = model.User()
-        u.display_name = u'Example manager'
+        u.name = u'Example manager'
         u.email_address = u'manager@somedomain.com'
         u.password = u'managepass'
 
@@ -21,7 +21,7 @@ def bootstrap(command, conf, vars):
 
         g = model.Group()
         g.group_name = u'managers'
-        g.display_name = u'Managers Group'
+        g.name = u'Managers Group'
 
         g.users.append(u)
 
@@ -35,7 +35,7 @@ def bootstrap(command, conf, vars):
         model.DBSession.add(p)
 
         u1 = model.User()
-        u1.display_name = u'Example user'
+        u1.name = u'Example user'
         u1.email_address = u'max+skylines@blarg.de'
         u1.password = u'test'
         u1.tracking_key = 123456
@@ -44,7 +44,7 @@ def bootstrap(command, conf, vars):
 
         g1 = model.Group()
         g1.group_name = u'pilots'
-        g1.display_name = u'Pilots Group'
+        g1.name = u'Pilots Group'
 
         g1.users.append(u1)
 
