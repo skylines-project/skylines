@@ -11,16 +11,16 @@ from skylines import model
 NULL = literal_column(str(0))
 
 
-def ilike_as_int(column, value, relevance):
-    # Make sure relevance is numeric and we can safely
+def ilike_as_int(column, value, weight):
+    # Make sure weight is numeric and we can safely
     # pass it to the literal_column()
-    assert isinstance(relevance, (int, float))
+    assert isinstance(weight, (int, float))
 
-    # Convert relevance to a literal_column()
-    relevance = literal_column(str(relevance))
+    # Convert weight to a literal_column()
+    weight = literal_column(str(weight))
 
     # Return ilike expression
-    return cast(column.ilike(value), Integer) * relevance
+    return cast(column.ilike(value), Integer) * weight
 
 
 def ilikes_as_int(col_vals):
@@ -48,7 +48,7 @@ def get_query(type, model, query_attr, tokens):
     # Has token
     col_vals.extend([(query_attr, '%{}%'.format(token), len(token)) for token in tokens])
 
-    relevance = ilikes_as_int(col_vals)
+    weight = ilikes_as_int(col_vals)
 
     # The search result type
     type = literal_column('\'{}\''.format(type))
@@ -56,7 +56,7 @@ def get_query(type, model, query_attr, tokens):
     return session.query(type.label('type'),
                          model.id.label('id'),
                          query_attr.label('name'),
-                         relevance.label('relevance')).filter(relevance > NULL)
+                         weight.label('weight')).filter(weight > NULL)
 
 
 def search_query(tokens):
@@ -67,7 +67,7 @@ def search_query(tokens):
     q2 = get_query('club', model.Club, 'name', tokens)
     q3 = get_query('airport', model.Airport, 'name', tokens)
 
-    return q1.union(q2, q3).order_by(desc('relevance'))
+    return q1.union(q2, q3).order_by(desc('weight'))
 
 for u in search_query(tokens).limit(20):
     print u
