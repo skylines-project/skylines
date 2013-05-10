@@ -84,9 +84,6 @@ class Group(DeclarativeBase):
         return self.group_name
 
 
-# The 'info' argument we're passing to the email_address and password columns
-# contain metadata that Rum (http://python-rum.org/) can use generate an
-# admin interface for your models.
 class User(DeclarativeBase):
     """
     User definition.
@@ -101,14 +98,12 @@ class User(DeclarativeBase):
 
     id = Column(Integer, autoincrement=True, primary_key=True)
 
-    email_address = column_property(Column(Unicode(255),
-                                           info={'rum': {'field': 'Email'}}),
+    email_address = column_property(Column(Unicode(255)),
                                     comparator_factory=LowerCaseComparator)
 
     display_name = Column(Unicode(255), nullable=False)
 
-    _password = Column('password', Unicode(128),
-                       info={'rum': {'field': 'Password'}})
+    _password = Column('password', Unicode(128))
 
     created = Column(DateTime, default=datetime.utcnow)
 
