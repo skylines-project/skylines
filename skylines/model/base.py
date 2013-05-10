@@ -1,7 +1,41 @@
-# -*- coding: utf-8 -*-
-
+from sqlalchemy import literal_column, desc
 from sqlalchemy.ext.declarative import declarative_base
+
 from .session import DBSession
+
+PATTERNS = [
+    ('{}', 5),     # Matches token exactly
+    ('{}%', 3),    # Begins with token
+    ('% {}%', 2),  # Has token at word start
+    ('%{}%', 1),   # Has token
+]
+
+
+def weight_expression(column, tokens):
+    expressions = []
+
+    # Use entire search string as additional token
+    if len(tokens) > 1:
+        tokens = tokens + [' '.join(tokens)]
+
+    for token in tokens:
+        len_token = len(token)
+
+        for pattern, weight in PATTERNS:
+            # Inject the token in the search pattern
+            token_pattern = pattern.format(token)
+
+            # Adjust the weight for the length of the token
+            # (the long the matched token, the greater the weight)
+            weight = weight * len_token
+
+            # Create the weighted ILIKE expression
+            expression = column.weighted_ilike(token_pattern, weight)
+
+            # Add the expression to list
+            expressions.append(expression)
+
+    return sum(expressions)
 
 
 class _BaseClass(object):
@@ -17,6 +51,32 @@ class _BaseClass(object):
     @classmethod
     def get(cls, id):
         return cls.query().get(id)
+
+    @classmethod
+    def search_query(cls, tokens, include_misses=False, ordered=True):
+        # Read the searchable columns from the table (strings)
+        columns = cls.__searchable_columns__
+
+        # The model name that can be used to match search result to model
+        cls_name = literal_column('\'{}\''.format(cls.__name__))
+
+        # Generate the search weight expression
+        weight = sum([weight_expression(getattr(cls, c), tokens) for c in columns])
+
+        # Create a query object
+        query = DBSession.query(
+            cls_name.label('model'), cls.id.label('id'),
+            cls.name.label('name'), weight.label('weight'))
+
+        # Filter out results that don't match the patterns at all (optional)
+        if not include_misses:
+            query = query.filter(weight > 0)
+
+        # Order by weight (optional)
+        if ordered:
+            query = query.order_by(desc(weight))
+
+        return query
 
 
 # Base class for all of our model classes: By default, the data model is

@@ -2,63 +2,14 @@
 
 import sys
 
-from sqlalchemy import desc, literal_column
+from sqlalchemy import desc
 
 from skylines.config import environment
 from skylines import model
 
-
-NULL = literal_column(str(0))
-
 environment.load_from_file()
 
 tokens = sys.argv[1:]
-
-session = model.DBSession
-
-PATTERNS = [
-    ('{}', 5),     # Matches token exactly
-    ('{}%', 3),    # Begins with token
-    ('% {}%', 2),  # Has token at word start
-    ('%{}%', 1),   # Has token
-]
-
-
-def weight_expression(column, tokens):
-    expressions = []
-
-    for token in tokens:
-        len_token = len(token)
-
-        for pattern, weight in PATTERNS:
-            # Inject the token in the search pattern
-            token_pattern = pattern.format(token)
-
-            # Adjust the weight for the length of the token
-            # (the long the matched token, the greater the weight)
-            weight = weight * len_token
-
-            # Create the weighted ILIKE expression
-            expression = column.weighted_ilike(token_pattern, weight)
-
-            # Add the expression to list
-            expressions.append(expression)
-
-    return sum(expressions, NULL)
-
-
-def get_query(model, query_attr, tokens):
-    query_attr = getattr(model, query_attr)
-
-    weight = weight_expression(query_attr, tokens)
-
-    # The search result table
-    table = literal_column('\'{}\''.format(model.__tablename__))
-
-    return session.query(table.label('table'),
-                         model.id.label('id'),
-                         query_attr.label('name'),
-                         weight.label('weight')).filter(weight > NULL)
 
 
 def search_query(tokens):
@@ -68,12 +19,9 @@ def search_query(tokens):
     # Use * as wildcard character
     tokens = [t.replace('*', '%') for t in tokens]
 
-    if len(tokens) > 1:
-        tokens.append(' '.join(tokens))
-
-    q1 = get_query(model.User, 'name', tokens)
-    q2 = get_query(model.Club, 'name', tokens)
-    q3 = get_query(model.Airport, 'name', tokens)
+    q1 = model.User.search_query(tokens, ordered=False)
+    q2 = model.Club.search_query(tokens, ordered=False)
+    q3 = model.Airport.search_query(tokens, ordered=False)
 
     return q1.union(q2, q3).order_by(desc('weight'))
 
