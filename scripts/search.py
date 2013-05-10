@@ -18,4 +18,7 @@ environment.load_from_file()
 
 tokens = sys.argv[1:]
 for u in search_query(tokens).limit(20):
-    print u
+    model = globals()[u.model]
+    instance = model.get(u.id)
+
+    print u.weight, instance
