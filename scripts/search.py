@@ -7,10 +7,6 @@ from sqlalchemy import desc
 from skylines.config import environment
 from skylines import model
 
-environment.load_from_file()
-
-tokens = sys.argv[1:]
-
 
 def combined_search_query(models, tokens, include_misses=False, ordered=True):
     # Build sub search queries
@@ -42,5 +38,8 @@ def search_query(tokens):
     return combined_search_query(models, tokens)
 
 
+environment.load_from_file()
+
+tokens = sys.argv[1:]
 for u in search_query(tokens).limit(20):
     print u
