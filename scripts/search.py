@@ -20,6 +20,9 @@ def ilikes_as_int(col_vals):
 environment.load_from_file()
 
 tokens = sys.argv[1:]
+if len(tokens) > 1:
+    tokens.append(' '.join(tokens))
+
 session = model.DBSession
 
 
@@ -31,9 +34,6 @@ def get_query(type, model, query_attr):
     col_vals.extend([(query_attr, '{}%'.format(token), len(token) * 3) for token in tokens])
     col_vals.extend([(query_attr, '% {}%'.format(token), len(token) * 2) for token in tokens])
     col_vals.extend([(query_attr, '%{}%'.format(token), len(token)) for token in tokens])
-    if len(tokens) > 1:
-        token = ' '.join(tokens)
-        col_vals.append((query_attr, '%{}%'.format(token), len(token)))
 
     relevance = ilikes_as_int(col_vals)
 
