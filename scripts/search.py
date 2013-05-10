@@ -2,7 +2,7 @@
 
 import sys
 
-from sqlalchemy import case, desc, literal_column
+from sqlalchemy import desc, literal_column, cast, Integer
 
 from skylines.config import environment
 from skylines import model
@@ -19,8 +19,8 @@ def ilike_as_int(column, value, relevance):
     # Convert relevance to a literal_column()
     relevance = literal_column(str(relevance))
 
-    # Return case expression
-    return case([(column.ilike(value), relevance)], else_=NULL)
+    # Return ilike expression
+    return cast(column.ilike(value), Integer) * relevance
 
 
 def ilikes_as_int(col_vals):
