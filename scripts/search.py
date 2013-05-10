@@ -11,7 +11,7 @@ from skylines import model
 NULL = literal_column(str(0))
 
 
-def ilike_as_int(column, value, weight):
+def weighted_ilike(column, value, weight):
     # Make sure weight is numeric and we can safely
     # pass it to the literal_column()
     assert isinstance(weight, (int, float))
@@ -23,8 +23,8 @@ def ilike_as_int(column, value, weight):
     return cast(column.ilike(value), Integer) * weight
 
 
-def ilikes_as_int(col_vals):
-    return sum([ilike_as_int(col, val, rel) for col, val, rel in col_vals], NULL)
+def weighted_ilikes(col_vals):
+    return sum([weighted_ilike(col, val, rel) for col, val, rel in col_vals], NULL)
 
 
 environment.load_from_file()
@@ -48,7 +48,7 @@ def get_query(type, model, query_attr, tokens):
     # Has token
     col_vals.extend([(query_attr, '%{}%'.format(token), len(token)) for token in tokens])
 
-    weight = ilikes_as_int(col_vals)
+    weight = weighted_ilikes(col_vals)
 
     # The search result type
     type = literal_column('\'{}\''.format(type))
