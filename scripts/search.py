@@ -5,7 +5,7 @@ import sys
 from sqlalchemy import desc
 
 from skylines.config import environment
-from skylines import model
+from skylines.model import User, Club, Airport
 
 
 def combined_search_query(models, tokens, include_misses=False, ordered=True):
@@ -33,7 +33,7 @@ def search_query(tokens):
     # Use * as wildcard character
     tokens = [t.replace('*', '%') for t in tokens]
 
-    models = [model.User, model.Club, model.Airport]
+    models = [User, Club, Airport]
 
     return combined_search_query(models, tokens)
 
