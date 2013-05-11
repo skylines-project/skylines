@@ -25,17 +25,30 @@ def search_query(cls, tokens,
     # The model name that can be used to match search result to model
     cls_name = literal_column('\'{}\''.format(cls.__name__))
 
-    # Generate the search weight expression from the
-    # searchable columns, tokens and patterns
-    if not weight_func:
-        weight_func = weight_expression
+    # Filter out id: tokens for later
+    ids, tokens = process_id_option(tokens)
 
-    weight = weight_func(columns, tokens)
+    # If there are still tokens left after id: token filtering
+    if tokens:
+        # Generate the search weight expression from the
+        # searchable columns, tokens and patterns
+        if not weight_func:
+            weight_func = weight_expression
+
+        weight = weight_func(columns, tokens)
+
+    # If the search expression only included "special" tokens like id:
+    else:
+        weight = literal_column(str(1))
 
     # Create a query object
     query = DBSession.query(
         cls_name.label('model'), cls.id.label('id'),
         cls.name.label('name'), weight.label('weight'))
+
+    # Filter out specific ids (optional)
+    if ids:
+        query = query.filter(cls.id.in_(ids))
 
     # Filter out results that don't match the patterns at all (optional)
     if not include_misses:
@@ -110,6 +123,47 @@ def process_type_option(models, tokens):
 
     # Return filtered models and tokens
     return new_models, new_tokens
+
+
+def process_id_option(tokens):
+    """
+    This function looks for "id:<id>" in the tokens, removes them from the
+    token list and returns a list of ids.
+    """
+
+    # The original tokens without the id: tokens
+    new_tokens = []
+
+    # The ids that were found after the id: tokens
+    ids = []
+
+    # Iterate through original tokens to find id: tokens
+    for token in tokens:
+        _token = token.lower()
+
+        if _token.startswith('id:'):
+            ids.append(_token[3:])
+
+        elif _token.startswith('ids:'):
+            ids.extend(_token[4:].split(','))
+
+        else:
+            new_tokens.append(token)
+
+    # Strip whitespace from the ids
+    ids = map(str.strip, ids)
+
+    # Convert ids to integers
+    def int_or_none(value):
+        try:
+            return int(value)
+        except ValueError:
+            return None
+
+    ids = filter(None, map(int_or_none, ids))
+
+    # Return ids and tokens
+    return ids, new_tokens
 
 
 def text_to_tokens(search_text):
