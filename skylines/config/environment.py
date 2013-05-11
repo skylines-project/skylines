@@ -8,7 +8,7 @@ from .app_cfg import base_config
 __all__ = ['load_environment']
 
 PRO_CONF_PATH = '/etc/skylines/production.ini'
-DEV_CONF_PATH = 'development.ini'
+DEV_CONF_PATH = 'config/development.ini'
 
 
 #Use base_config to setup the environment loader function
