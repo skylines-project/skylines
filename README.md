@@ -36,7 +36,7 @@ current developers.
 # License
 
     SkyLines - the free internet platform for sharing flights
-    Copyright (C) 2012  The XCSoar project
+    Copyright (C) 2012-2013  The SkyLines Team (see AUTHORS.md)
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU Affero General Public License as published by
@@ -50,12 +50,3 @@ current developers.
 
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
-
-# Authors
-
- * Tobias Bieniek (<tobias.bieniek@gmx.de>)
- * Max Kellermann (<max@duempel.org>)
- * Tobias Lohner (<tobias@lohner-net.de>)
- * Andrey Lebedev (<andrey@lebedev.lt>)
- * Matthew Scutter (<yellowplantain@gmail.com>)
- * Fabian Berstecher (<F.Berstecher@gmx.de>)

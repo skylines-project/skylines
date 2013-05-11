@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  skylines\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2013-05-09 13:42+0200\n"
+"POT-Creation-Date: 2013-05-11 16:16+0200\n"
 "PO-Revision-Date: 2013-03-02 13:17+0000\n"
 "Last-Translator: Roel Baardman <rbaardman@zonnet.nl>\n"
 "Language-Team: Dutch <nl@li.org>\n"
@@ -35,6 +35,8 @@ msgstr "Nieuwe Vlieger"
 #: skylines/controllers/flight.py:59 skylines/forms/upload.py:21
 #: skylines/templates/flights/details-table.jinja:119
 #: skylines/templates/flights/flights-table.jinja:10
+#: skylines/templates/search/list.jinja:43
+#: skylines/templates/search/list.jinja:53
 #: skylines/templates/tracking/list.jinja:23
 #: skylines/templates/tracking/view.jinja:127
 msgid "Pilot"
@@ -107,18 +109,18 @@ msgstr "Bent u zeker dat u deze vlucht wilt verwijderen?"
 msgid "You have to be logged in to post comments!"
 msgstr "Je moet ingelogt zijn om comments te plaatsen!"
 
-#: skylines/controllers/root.py:123
+#: skylines/controllers/root.py:125
 msgid "Sorry, email address or password are wrong. Please try again or register."
 msgstr ""
 "Helaas, email adres of wachtwoord is onjuist. Probeer het alsjeblieft "
 "opnieuw of registreer een gebruikersnaam."
 
-#: skylines/controllers/root.py:128
+#: skylines/controllers/root.py:130
 #, python-format
 msgid "You are now logged in. Welcome back, %s!"
 msgstr "Je bent nu ingelogt. Welkom %s!"
 
-#: skylines/controllers/root.py:145
+#: skylines/controllers/root.py:147
 msgid "You are now logged out. We hope to see you back soon!"
 msgstr "Je bent nu uitgelogt. Hopelijk tot snel!"
 
@@ -195,6 +197,8 @@ msgstr "Naam"
 #: skylines/templates/flights/details-table.jinja:151
 #: skylines/templates/flights/flights-table.jinja:13
 #: skylines/templates/ranking/pilots.jinja:10
+#: skylines/templates/search/list.jinja:45
+#: skylines/templates/search/list.jinja:55
 #: skylines/templates/tracking/view.jinja:133
 #: skylines/templates/users/users-table.jinja:8
 #: skylines/templates/users/view.jinja:125
@@ -202,7 +206,7 @@ msgid "Club"
 msgstr "Club"
 
 #: skylines/controllers/users.py:60 skylines/controllers/users.py:139
-#: skylines/controllers/users.py:153 skylines/templates/topbar.jinja:69
+#: skylines/controllers/users.py:153 skylines/templates/topbar.jinja:72
 msgid "Password"
 msgstr "Wachtwoord"
 
@@ -337,7 +341,7 @@ msgstr "Australisch ( metrisch, imperial hoogte)"
 msgid "American (imperial)"
 msgstr "Amerikaans (imperial)"
 
-#: skylines/templates/about.jinja:4 skylines/templates/topbar.jinja:4
+#: skylines/templates/about.jinja:4
 msgid "About"
 msgstr "Info"
 
@@ -442,21 +446,24 @@ msgstr "Afdruk"
 msgid "Error %(code)s"
 msgstr "Error %(code)s"
 
-#: skylines/templates/login.jinja:4 skylines/templates/topbar.jinja:52
+#: skylines/templates/login.jinja:4 skylines/templates/topbar.jinja:55
 msgid "Login"
 msgstr "Inloggen"
 
-#: skylines/templates/topbar.jinja:5
+#: skylines/templates/topbar.jinja:4
 msgid "Live"
 msgstr "Live"
 
-#: skylines/templates/topbar.jinja:6 skylines/templates/topbar.jinja:108
+#: skylines/templates/topbar.jinja:5 skylines/templates/topbar.jinja:111
 #: skylines/templates/clubs/list.jinja:20
 #: skylines/templates/clubs/view.jinja:50
 #: skylines/templates/flights/list.jinja:27
 #: skylines/templates/ranking/airports.jinja:11
 #: skylines/templates/ranking/clubs.jinja:10
 #: skylines/templates/ranking/pilots.jinja:11
+#: skylines/templates/search/list.jinja:73
+#: skylines/templates/search/list.jinja:77
+#: skylines/templates/search/list.jinja:80
 #: skylines/templates/statistics/flights-table.jinja:6
 #: skylines/templates/statistics/years.jinja:66
 #: skylines/templates/users/users-table.jinja:26
@@ -465,45 +472,54 @@ msgstr "Live"
 msgid "Flights"
 msgstr "Vluchten"
 
-#: skylines/templates/topbar.jinja:7 skylines/templates/ranking/layout.jinja:9
+#: skylines/templates/topbar.jinja:6 skylines/templates/ranking/layout.jinja:9
 msgid "Ranking"
 msgstr "Score"
 
-#: skylines/templates/topbar.jinja:8 skylines/templates/topbar.jinja:109
+#: skylines/templates/topbar.jinja:7 skylines/templates/topbar.jinja:112
 #: skylines/templates/clubs/list.jinja:21
 #: skylines/templates/clubs/view.jinja:51
+#: skylines/templates/search/list.jinja:74
+#: skylines/templates/search/list.jinja:78
+#: skylines/templates/search/list.jinja:81
 #: skylines/templates/statistics/years.jinja:29
 #: skylines/templates/users/users-table.jinja:27
 #: skylines/templates/users/view.jinja:163
 msgid "Statistics"
 msgstr "Statistieken"
 
-#: skylines/templates/topbar.jinja:35
+#: skylines/templates/topbar.jinja:33 skylines/templates/search/list.jinja:10
+#, fuzzy
+#| msgid "Year"
+msgid "Search"
+msgstr "Jaar"
+
+#: skylines/templates/topbar.jinja:38
 msgid "Upload"
 msgstr "Upload"
 
-#: skylines/templates/topbar.jinja:63
+#: skylines/templates/topbar.jinja:66
 msgid "Email Address"
 msgstr "E-mailadres"
 
-#: skylines/templates/topbar.jinja:76
+#: skylines/templates/topbar.jinja:79
 msgid "Remember me"
 msgstr "Onthoud mij"
 
-#: skylines/templates/topbar.jinja:81
+#: skylines/templates/topbar.jinja:84
 msgid "Forgot password?"
 msgstr "Wachtwoord vergeten?"
 
-#: skylines/templates/topbar.jinja:82
+#: skylines/templates/topbar.jinja:85
 msgid "Don't have an account?"
 msgstr "Nog geen account?"
 
-#: skylines/templates/topbar.jinja:89
+#: skylines/templates/topbar.jinja:92
 #: skylines/templates/notifications/list.jinja:8
 msgid "Notifications"
 msgstr "Meldingen"
 
-#: skylines/templates/topbar.jinja:111
+#: skylines/templates/topbar.jinja:114
 msgid "Logout"
 msgstr "Afmelden"
 
@@ -520,6 +536,7 @@ msgstr "Akties"
 
 #: skylines/templates/clubs/list.jinja:22
 #: skylines/templates/clubs/view.jinja:52
+#: skylines/templates/search/list.jinja:76
 msgid "Members"
 msgstr "Leden"
 
@@ -647,6 +664,8 @@ msgid "Distance"
 msgstr "Afstand"
 
 #: skylines/templates/flights/flights-table.jinja:12
+#: skylines/templates/search/list.jinja:47
+#: skylines/templates/search/list.jinja:57
 msgid "Airport"
 msgstr "Vliegveld"
 
@@ -888,6 +907,20 @@ msgstr "Vliegvelden"
 msgid "No pilots found."
 msgstr ""
 
+#: skylines/templates/search/list.jinja:8
+#, fuzzy, python-format
+#| msgid "Flights <small>on %(date)s</small>"
+msgid "Search <small>for \"%(search_text)s\"</small>"
+msgstr "Vluchten <small>op %(date)s</small>"
+
+#: skylines/templates/search/list.jinja:29
+msgid "There were no results for your search... Sorry!"
+msgstr ""
+
+#: skylines/templates/search/list.jinja:31
+msgid "Please enter something in the search bar above."
+msgstr ""
+
 #: skylines/templates/statistics/distance-table.jinja:5
 #: skylines/templates/statistics/duration-table.jinja:5
 #: skylines/templates/statistics/flights-table.jinja:5
@@ -1014,7 +1047,6 @@ msgstr "Dichtsbijzijnde vliegveld"
 
 #: skylines/templates/tracking/list.jinja:25
 #, fuzzy
-#| msgid "Altitude Unit"
 msgid "Altitude"
 msgstr "Hoogte-eenheid"
 
@@ -1169,10 +1201,4 @@ msgstr "Gemiddelde snelheid"
 #: skylines/templates/users/view.jinja:266
 msgid "Takeoff Locations"
 msgstr "Startlocaties"
-
-#~ msgid "Share"
-#~ msgstr "Delen"
-
-#~ msgid "Download"
-#~ msgstr "Opslaan"
 
