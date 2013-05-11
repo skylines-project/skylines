@@ -1,7 +1,6 @@
 {% from "macros/flags.jinja" import insert_flag with context %}
 
 {% set navigation_bar = [
-    ('/about', 'about', _('About')),
     ('/tracking/', 'tracking', _('Live')),
     ('/flights/', 'flights', _('Flights')),
     ('/ranking/', 'ranking', _('Ranking')),
@@ -19,8 +18,8 @@
 {%- endmacro %}
 
 {% macro _topbar_content(active_page) -%}
-<a href="/"><img src="/images/logo.png" class="logo" /></a>
-<a class="brand" href="/">
+<a href="/about"><img src="/images/logo.png" class="logo" /></a>
+<a class="brand" href="/about">
     <span class="skylines-blue">Sky</span><span class="skylines-white">Lines</span>
 </a>
 
