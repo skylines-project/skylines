@@ -19,7 +19,7 @@ class SearchController(BaseController):
             return dict()
 
         # Split the search text into tokens and escape them properly
-        tokens = shlex.split(search_text)
+        tokens = shlex.split(search_text.encode('utf-8'))
         tokens = escape_tokens(tokens)
 
         # Create combined search query
