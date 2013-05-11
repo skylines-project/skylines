@@ -20,7 +20,33 @@ from .tracking import TrackingController
 from .statistics import StatisticsController
 from .api import APIController
 
+from skylines.lib.helpers import markdown
+
 __all__ = ['RootController']
+
+
+class AboutController(BaseController):
+    @expose('about.jinja')
+    def index(self, **kw):
+        """Handle the 'about' page."""
+        return dict()
+
+    @expose('generic/page.jinja')
+    def team(self, **kw):
+        with open('AUTHORS.md') as f:
+            content = f.read().decode('utf-8')
+
+        content = markdown.convert(content)
+        return dict(title=_('The SkyLines Team'), content=content)
+
+    @expose('generic/page.jinja')
+    def imprint(self, **kw):
+        content = config.get(
+            'skylines.imprint',
+            'Please set the skylines.imprint variable in the environment '
+            'INI file.')
+
+        return dict(title=_('Imprint'), content=content)
 
 
 class RootController(BaseController):
@@ -37,6 +63,7 @@ class RootController(BaseController):
     must be wrapped around with :class:`tg.controllers.WSGIAppController`.
 
     """
+    about = AboutController()
     error = ErrorController()
     users = UsersController()
     clubs = ClubsController()
@@ -77,16 +104,6 @@ class RootController(BaseController):
             return HTTPNotFound()
 
         return self.tracking.lt24.client(**kw)
-
-    @expose('about.jinja')
-    def about(self, **kw):
-        """Handle the 'about' page."""
-        return dict()
-
-    @expose('imprint.jinja')
-    def imprint(self, **kw):
-        """Handle the 'imprint' page."""
-        return dict()
 
     @expose()
     def set_lang(self, language, **kw):
