@@ -73,6 +73,7 @@
   <a href="/flights/pilot/{{ result.id }}" class="btn btn-mini"><i class="icon-plane"></i> {{ _('Flights') }}</a>
   <a href="/statistics/pilot/{{ result.id }}" class="btn btn-mini"><i class="icon-tasks"></i> {{ _('Statistics') }}</a>
 {%- elif result.model == 'Club' -%}
+  <a href="/clubs/{{ result.id }}/pilots" class="btn btn-mini"><i class="icon-group"></i> {{ _('Members') }}</a>
   <a href="/flights/club/{{ result.id }}" class="btn btn-mini"><i class="icon-plane"></i> {{ _('Flights') }}</a>
   <a href="/statistics/club/{{ result.id }}" class="btn btn-mini"><i class="icon-tasks"></i> {{ _('Statistics') }}</a>
 {%- elif result.model == 'Airport' -%}
