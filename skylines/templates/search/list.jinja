@@ -1,0 +1,58 @@
+{% from "macros/links.jinja" import club_link %}
+
+{% extends "base-page.jinja" %}
+
+
+{% block title -%}
+{% if search_text -%}
+{% trans %}Search <small>for "{{ search_text }}"</small>{% endtrans %}
+{%- else -%}
+{% trans %}Search{% endtrans %}
+{%- endif %}
+{%- endblock %}
+
+
+{% block content -%}
+<table class="table table-striped search-results">
+  <tbody>
+    {% for result in results -%}
+    <tr>
+      <td class="column-icon">{{ result_icon(result) }}</td>
+      <td class="column-type"><small>{{ result_type(result) }}</small></td>
+      <td>{{ result_title(result) }}</td>
+    </tr>
+    {%- endfor %}
+  </tbody>
+</table>
+{%- endblock %}
+
+
+{% macro result_icon(result) -%}
+{% if result.model == 'User' -%}
+  <i class="icon-user" title="{{ _('Pilot') }}"></i>
+{%- elif result.model == 'Club' -%}
+  <i class="icon-group" title="{{ _('Club') }}"></i>
+{%- elif result.model == 'Airport' -%}
+  <i class="icon-map-marker" title="{{ _('Airport') }}"></i>
+{%- endif %}
+{%- endmacro %}
+
+{% macro result_type(result) -%}
+{% if result.model == 'User' -%}
+  {{ _('Pilot') }}
+{%- elif result.model == 'Club' -%}
+  {{ _('Club') }}
+{%- elif result.model == 'Airport' -%}
+  {{ _('Airport') }}
+{%- endif %}
+
+{%- endmacro %}
+{% macro result_title(result) -%}
+{% if result.model == 'User' -%}
+  <a href="/users/{{ result.id }}">{{ result.name }}</a>
+{%- elif result.model == 'Club' -%}
+  <a href="/clubs/{{ result.id }}">{{ result.name }}</a>
+{%- elif result.model == 'Airport' -%}
+  <a href="/flights/airport/{{ result.id }}">{{ result.name }}</a>
+{%- endif %}
+{%- endmacro %}
