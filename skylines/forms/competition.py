@@ -2,8 +2,8 @@ import operator
 
 from tg.i18n import lazy_ugettext as l_
 
-from formencode import Schema
-from formencode.validators import DateConverter
+from formencode import Schema, All
+from formencode.validators import DateConverter, NotEmpty
 from sprox.formbase import AddRecordForm, Field
 from tw.forms import TextField
 
@@ -32,5 +32,7 @@ class NewForm(AddRecordForm):
     }
 
     name = TextField
-    start_date = Field(TextField, DateConverter(month_style='dd/mm/yyyy'))
-    end_date = Field(TextField, DateConverter(month_style='dd/mm/yyyy'))
+    start_date = Field(TextField, All(
+        NotEmpty, DateConverter(month_style='dd/mm/yyyy')))
+    end_date = Field(TextField, All(
+        NotEmpty, DateConverter(month_style='dd/mm/yyyy')))
