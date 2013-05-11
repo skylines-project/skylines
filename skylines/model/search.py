@@ -146,7 +146,7 @@ def __filter_prefixed_tokens(prefix, tokens):
         _token = token.lower()
 
         if _token.startswith(prefix + ':'):
-            contents.append(_token[(len_prefix +1 ):])
+            contents.append(_token[(len_prefix + 1):])
 
         elif _token.startswith(prefix + 's:'):
             contents.extend(_token[(len_prefix + 2):].split(','))
