@@ -1,15 +1,28 @@
+import operator
+
 from tg.i18n import lazy_ugettext as l_
 
+from formencode import Schema
 from formencode.validators import DateConverter
 from sprox.formbase import AddRecordForm, Field
 from tw.forms import TextField
 
 from .bootstrap import BootstrapForm
+from .validators import FieldsOperatorValidator
 from skylines.model import Competition
+
+
+dates_validator = FieldsOperatorValidator(
+    'start_date', 'end_date', operator.le,
+    messages={
+        'invalidNoMatch': l_('End date has to be after start date.')
+    }
+)
 
 
 class NewForm(AddRecordForm):
     __base_widget_type__ = BootstrapForm
+    __base_validator__ = Schema(chained_validators=[dates_validator])
     __model__ = Competition
     __limit_fields__ = ['name', 'start_date', 'end_date']
     __field_widget_args__ = {
