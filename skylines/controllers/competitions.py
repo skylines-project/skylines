@@ -11,10 +11,29 @@ from .base import BaseController
 from skylines.model import DBSession, Competition
 from skylines.forms.competition import NewForm
 from skylines.lib.formatter import format_date
+from skylines.lib.dbutil import get_requested_record
+
+
+class CompetitionController(BaseController):
+    def __init__(self, competition):
+        self.competition = competition
+
+    @with_trailing_slash
+    @expose('generic/page.jinja')
+    def index(self, **kw):
+        return dict(title=self.competition.name,
+                    content='No content yet.',
+                    active_page='competitions')
 
 
 class CompetitionsController(BaseController):
     new_form = NewForm(DBSession)
+
+    @expose()
+    def _lookup(self, id, *remainder):
+        competition = get_requested_record(Competition, id)
+        controller = CompetitionController(competition)
+        return controller, remainder
 
     @with_trailing_slash
     @expose('competitions/list.jinja')
@@ -56,4 +75,4 @@ class CompetitionsController(BaseController):
         DBSession.add(competition)
         DBSession.flush()
 
-        redirect('.')
+        redirect(str(competition.id))
