@@ -89,27 +89,8 @@ def process_type_option(models, tokens):
     Returns the filtered list of models.
     """
 
-    # The original tokens without the type: tokens
-    new_tokens = []
-
-    # The types that were found after the type: tokens
-    types = []
-
-    # Iterate through original tokens to find type: tokens
-    for token in tokens:
-        _token = token.lower()
-
-        if _token.startswith('type:'):
-            types.append(_token[5:])
-
-        elif _token.startswith('types:'):
-            types.extend(_token[6:].split(','))
-
-        else:
-            new_tokens.append(token)
-
-    # Strip whitespace from the types
-    types = map(str.strip, types)
+    # Filter for type: and types: tokens
+    types, new_tokens = __filter_prefixed_tokens('type', tokens)
 
     # Filter the list of models according to the type filter
     def in_types_list(model):
@@ -131,27 +112,8 @@ def process_id_option(tokens):
     token list and returns a list of ids.
     """
 
-    # The original tokens without the id: tokens
-    new_tokens = []
-
-    # The ids that were found after the id: tokens
-    ids = []
-
-    # Iterate through original tokens to find id: tokens
-    for token in tokens:
-        _token = token.lower()
-
-        if _token.startswith('id:'):
-            ids.append(_token[3:])
-
-        elif _token.startswith('ids:'):
-            ids.extend(_token[4:].split(','))
-
-        else:
-            new_tokens.append(token)
-
-    # Strip whitespace from the ids
-    ids = map(str.strip, ids)
+    # Filter for id: and ids: tokens
+    ids, new_tokens = __filter_prefixed_tokens('id', tokens)
 
     # Convert ids to integers
     def int_or_none(value):
@@ -164,6 +126,34 @@ def process_id_option(tokens):
 
     # Return ids and tokens
     return ids, new_tokens
+
+
+def __filter_prefixed_tokens(prefix, tokens):
+    len_prefix = len(prefix)
+
+    # The original tokens without the prefixed tokens
+    new_tokens = []
+
+    # The contents that were found after the prefixed tokens
+    contents = []
+
+    # Iterate through original tokens to find prefixed tokens
+    for token in tokens:
+        _token = token.lower()
+
+        if _token.startswith(prefix + ':'):
+            contents.append(_token[(len_prefix +1 ):])
+
+        elif _token.startswith(prefix + 's:'):
+            contents.extend(_token[(len_prefix + 2):].split(','))
+
+        else:
+            new_tokens.append(token)
+
+    # Strip whitespace from the types
+    contents = map(str.strip, contents)
+
+    return contents, new_tokens
 
 
 def text_to_tokens(search_text):
