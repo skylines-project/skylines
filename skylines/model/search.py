@@ -1,3 +1,5 @@
+import shlex
+
 from sqlalchemy import literal_column, desc
 
 from .session import DBSession
@@ -62,6 +64,10 @@ def combined_search_query(models, tokens, include_misses=False, ordered=True):
         query = query.order_by(desc('weight'))
 
     return query
+
+
+def text_to_tokens(search_text):
+    return shlex.split(search_text.encode('utf-8'))
 
 
 def escape_tokens(tokens):
