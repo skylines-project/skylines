@@ -269,3 +269,11 @@ table.vmiddle td {
   min-height: 1em;
   display: inline-block;
 }
+
+.search-results .column-icon {
+  width: 1px;
+}
+
+.search-results .column-type {
+  width: 70px;
+}
