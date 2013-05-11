@@ -39,6 +39,11 @@ class AboutController(BaseController):
         content = markdown.convert(content)
         return dict(title=_('The SkyLines Team'), content=content)
 
+    @expose('imprint.jinja')
+    def imprint(self, **kw):
+        """Handle the 'imprint' page."""
+        return dict()
+
 
 class RootController(BaseController):
     """
@@ -95,11 +100,6 @@ class RootController(BaseController):
             return HTTPNotFound()
 
         return self.tracking.lt24.client(**kw)
-
-    @expose('imprint.jinja')
-    def imprint(self, **kw):
-        """Handle the 'imprint' page."""
-        return dict()
 
     @expose()
     def set_lang(self, language, **kw):
