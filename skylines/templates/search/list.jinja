@@ -24,7 +24,13 @@
     </tr>
     {%- else -%}
     <tr>
-      <td colspan="4">{{ _('There were no results for your search... Sorry!') }}</td>
+      <td colspan="4">
+      {% if search_text -%}
+        {{ _('There were no results for your search... Sorry!') }}
+      {%- else -%}
+        {{ _('Please enter something in the search bar above.') }}
+      {%- endif %}
+      </td>
     </tr>
     {%- endfor %}
   </tbody>
