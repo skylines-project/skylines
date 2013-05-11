@@ -20,6 +20,7 @@
       <td class="column-icon">{{ result_icon(result) }}</td>
       <td class="column-type"><small>{{ result_type(result) }}</small></td>
       <td>{{ result_title(result) }}</td>
+      <td class="column-buttons">{{ result_buttons(result) }}</td>
     </tr>
     {%- endfor %}
   </tbody>
@@ -45,8 +46,8 @@
 {%- elif result.model == 'Airport' -%}
   {{ _('Airport') }}
 {%- endif %}
-
 {%- endmacro %}
+
 {% macro result_title(result) -%}
 {% if result.model == 'User' -%}
   <a href="/users/{{ result.id }}">{{ result.name }}</a>
@@ -54,5 +55,18 @@
   <a href="/clubs/{{ result.id }}">{{ result.name }}</a>
 {%- elif result.model == 'Airport' -%}
   <a href="/flights/airport/{{ result.id }}">{{ result.name }}</a>
+{%- endif %}
+{%- endmacro %}
+
+{% macro result_buttons(result) -%}
+{% if result.model == 'User' -%}
+  <a href="/flights/pilot/{{ result.id }}" class="btn btn-mini"><i class="icon-plane"></i> {{ _('Flights') }}</a>
+  <a href="/statistics/pilot/{{ result.id }}" class="btn btn-mini"><i class="icon-tasks"></i> {{ _('Statistics') }}</a>
+{%- elif result.model == 'Club' -%}
+  <a href="/flights/club/{{ result.id }}" class="btn btn-mini"><i class="icon-plane"></i> {{ _('Flights') }}</a>
+  <a href="/statistics/club/{{ result.id }}" class="btn btn-mini"><i class="icon-tasks"></i> {{ _('Statistics') }}</a>
+{%- elif result.model == 'Airport' -%}
+  <a href="/flights/airport/{{ result.id }}" class="btn btn-mini"><i class="icon-plane"></i> {{ _('Flights') }}</a>
+  <a href="/statistics/airport/{{ result.id }}" class="btn btn-mini"><i class="icon-tasks"></i> {{ _('Statistics') }}</a>
 {%- endif %}
 {%- endmacro %}
