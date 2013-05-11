@@ -22,6 +22,10 @@
       <td>{{ result_title(result) }}</td>
       <td class="column-buttons">{{ result_buttons(result) }}</td>
     </tr>
+    {%- else -%}
+    <tr>
+      <td colspan="4">{{ _('There were no results for your search... Sorry!') }}</td>
+    </tr>
     {%- endfor %}
   </tbody>
 </table>
