@@ -36,7 +36,7 @@ current developers.
 # License
 
     SkyLines - the free internet platform for sharing flights
-    Copyright (C) 2012  The XCSoar project
+    Copyright (C) 2012-2013  The SkyLines Team (see AUTHORS.md)
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU Affero General Public License as published by
