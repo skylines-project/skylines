@@ -57,7 +57,8 @@ class CompetitionsController(BaseController):
             raise HTTPForbidden
 
         new_form = partial(self.new_form, action='new_post')
-        return dict(title=_('Create a new competition'), form=new_form)
+        return dict(title=_('Create a new competition'), form=new_form,
+                    active_page='competitions')
 
     @expose()
     @validate(form=new_form, error_handler=new)
