@@ -30,8 +30,7 @@
            for="${field.id}" class="control-label"
            py:content="label_text" />
     <div class="controls">
-      ${field.display(value_for(field), **args_for(field))}
-      <span class="help-inline" py:if="help_text and not hover_help" py:content="help_text" />
+      ${field.display(value_for(field), attrs={'placeholder':help_text}, **args_for(field))}
       <span py:if="show_children_errors and error and not field.show_error"
             class="help-inline" py:content="error" />
     </div>
