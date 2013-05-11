@@ -12,6 +12,8 @@ PATTERNS = [
     ('%{}%', 1),   # Has token
 ]
 
+##############################
+
 
 def search_query(cls, tokens,
                  weight_func=None, include_misses=False, ordered=True):
@@ -25,17 +27,30 @@ def search_query(cls, tokens,
     # The model name that can be used to match search result to model
     cls_name = literal_column('\'{}\''.format(cls.__name__))
 
-    # Generate the search weight expression from the
-    # searchable columns, tokens and patterns
-    if not weight_func:
-        weight_func = weight_expression
+    # Filter out id: tokens for later
+    ids, tokens = process_id_option(tokens)
 
-    weight = weight_func(columns, tokens)
+    # If there are still tokens left after id: token filtering
+    if tokens:
+        # Generate the search weight expression from the
+        # searchable columns, tokens and patterns
+        if not weight_func:
+            weight_func = weight_expression
+
+        weight = weight_func(columns, tokens)
+
+    # If the search expression only included "special" tokens like id:
+    else:
+        weight = literal_column(str(1))
 
     # Create a query object
     query = DBSession.query(
         cls_name.label('model'), cls.id.label('id'),
         cls.name.label('name'), weight.label('weight'))
+
+    # Filter out specific ids (optional)
+    if ids:
+        query = query.filter(cls.id.in_(ids))
 
     # Filter out results that don't match the patterns at all (optional)
     if not include_misses:
@@ -67,6 +82,8 @@ def combined_search_query(models, tokens, include_misses=False, ordered=True):
 
     return query
 
+##############################
+
 
 def process_type_option(models, tokens):
     """
@@ -76,27 +93,8 @@ def process_type_option(models, tokens):
     Returns the filtered list of models.
     """
 
-    # The original tokens without the type: tokens
-    new_tokens = []
-
-    # The types that were found after the type: tokens
-    types = []
-
-    # Iterate through original tokens to find type: tokens
-    for token in tokens:
-        _token = token.lower()
-
-        if _token.startswith('type:'):
-            types.append(_token[5:])
-
-        elif _token.startswith('types:'):
-            types.extend(_token[6:].split(','))
-
-        else:
-            new_tokens.append(token)
-
-    # Strip whitespace from the types
-    types = map(str.strip, types)
+    # Filter for type: and types: tokens
+    types, new_tokens = __filter_prefixed_tokens('type', tokens)
 
     # Filter the list of models according to the type filter
     def in_types_list(model):
@@ -112,6 +110,58 @@ def process_type_option(models, tokens):
     return new_models, new_tokens
 
 
+def process_id_option(tokens):
+    """
+    This function looks for "id:<id>" in the tokens, removes them from the
+    token list and returns a list of ids.
+    """
+
+    # Filter for id: and ids: tokens
+    ids, new_tokens = __filter_prefixed_tokens('id', tokens)
+
+    # Convert ids to integers
+    def int_or_none(value):
+        try:
+            return int(value)
+        except ValueError:
+            return None
+
+    ids = filter(None, map(int_or_none, ids))
+
+    # Return ids and tokens
+    return ids, new_tokens
+
+
+def __filter_prefixed_tokens(prefix, tokens):
+    len_prefix = len(prefix)
+
+    # The original tokens without the prefixed tokens
+    new_tokens = []
+
+    # The contents that were found after the prefixed tokens
+    contents = []
+
+    # Iterate through original tokens to find prefixed tokens
+    for token in tokens:
+        _token = token.lower()
+
+        if _token.startswith(prefix + ':'):
+            contents.append(_token[(len_prefix + 1):])
+
+        elif _token.startswith(prefix + 's:'):
+            contents.extend(_token[(len_prefix + 2):].split(','))
+
+        else:
+            new_tokens.append(token)
+
+    # Strip whitespace from the types
+    contents = map(str.strip, contents)
+
+    return contents, new_tokens
+
+##############################
+
+
 def text_to_tokens(search_text):
     return shlex.split(search_text.encode('utf-8'))
 
@@ -124,6 +174,8 @@ def escape_tokens(tokens):
     tokens = [t.replace('*', '%') for t in tokens]
 
     return tokens
+
+##############################
 
 
 def weight_expression(columns, tokens):
