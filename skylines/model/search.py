@@ -12,6 +12,8 @@ PATTERNS = [
     ('%{}%', 1),   # Has token
 ]
 
+##############################
+
 
 def search_query(cls, tokens,
                  weight_func=None, include_misses=False, ordered=True):
@@ -79,6 +81,8 @@ def combined_search_query(models, tokens, include_misses=False, ordered=True):
         query = query.order_by(desc('weight'))
 
     return query
+
+##############################
 
 
 def process_type_option(models, tokens):
@@ -155,6 +159,8 @@ def __filter_prefixed_tokens(prefix, tokens):
 
     return contents, new_tokens
 
+##############################
+
 
 def text_to_tokens(search_text):
     return shlex.split(search_text.encode('utf-8'))
@@ -168,6 +174,8 @@ def escape_tokens(tokens):
     tokens = [t.replace('*', '%') for t in tokens]
 
     return tokens
+
+##############################
 
 
 def weight_expression(columns, tokens):
