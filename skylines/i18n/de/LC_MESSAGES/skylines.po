@@ -490,10 +490,8 @@ msgid "Statistics"
 msgstr "Statistiken"
 
 #: skylines/templates/topbar.jinja:33 skylines/templates/search/list.jinja:10
-#, fuzzy
-#| msgid "Year"
 msgid "Search"
-msgstr "Jahr"
+msgstr "Suche"
 
 #: skylines/templates/topbar.jinja:38
 msgid "Upload"
@@ -911,18 +909,16 @@ msgid "No pilots found."
 msgstr ""
 
 #: skylines/templates/search/list.jinja:8
-#, fuzzy, python-format
-#| msgid "Flights <small>on %(date)s</small>"
 msgid "Search <small>for \"%(search_text)s\"</small>"
-msgstr "Flüge <small>am %(date)s</small>"
+msgstr "Suche <small>nach \"%(search_text)s\"</small>"
 
 #: skylines/templates/search/list.jinja:29
 msgid "There were no results for your search... Sorry!"
-msgstr ""
+msgstr "Es gibt leider keine Ergebnisse für deine Suche... Sorry!"
 
 #: skylines/templates/search/list.jinja:31
 msgid "Please enter something in the search bar above."
-msgstr ""
+msgstr "Bitte trag etwas in die Suchleiste oben ein."
 
 #: skylines/templates/statistics/distance-table.jinja:5
 #: skylines/templates/statistics/duration-table.jinja:5
