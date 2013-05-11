@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 """Main Controller"""
 
+import os
 from datetime import datetime
 
 from tg import expose, flash, lurl, request, redirect, require, config
@@ -33,7 +34,9 @@ class AboutController(BaseController):
 
     @expose('generic/page.jinja')
     def team(self, **kw):
-        with open('AUTHORS.md') as f:
+        path = os.path.join(os.path.dirname(os.path.abspath(__file__)),
+                            '..', '..', 'AUTHORS.md')
+        with open(path) as f:
             content = f.read().decode('utf-8')
 
         content = markdown.convert(content)
