@@ -15,6 +15,8 @@
     </div>
   </div>
 
+  <div class="alert alert-error" py:if="error and not error.error_dict" py:content="error" />
+
   <div py:for="i, field in enumerate(fields)"
        id="${field.id}.container"
        class="control-group ${show_children_errors and error and not field.show_error and 'error' or ''}"
@@ -34,6 +36,4 @@
             class="help-inline" py:content="error" />
     </div>
   </div>
-
-  <span py:if="error and not error.error_dict" py:content="error" />
 </form>
