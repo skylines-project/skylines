@@ -35,7 +35,7 @@ class TestAuthentication(TestController):
         assert self.browser.url.startswith('http://localhost/login')
 
         # Getting the login form:
-        form = self.browser.getForm(index=1)
+        form = self.browser.getForm(index=2)
 
         # Submitting the login form:
         form.getControl(name='login').value = u'max+skylines@blarg.de'
@@ -53,7 +53,7 @@ class TestAuthentication(TestController):
 
         # Going to the login form voluntarily:
         self.browser.open('/login')
-        form = self.browser.getForm(index=1)
+        form = self.browser.getForm(index=2)
 
         # Submitting the login form:
         form.getControl(name='login').value = u'max+skylines@blarg.de'

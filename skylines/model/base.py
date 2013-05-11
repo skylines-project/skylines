@@ -1,7 +1,7 @@
-# -*- coding: utf-8 -*-
-
 from sqlalchemy.ext.declarative import declarative_base
+
 from .session import DBSession
+from .search import search_query
 
 
 class _BaseClass(object):
@@ -17,6 +17,8 @@ class _BaseClass(object):
     @classmethod
     def get(cls, id):
         return cls.query().get(id)
+
+    search_query = classmethod(search_query)
 
 
 # Base class for all of our model classes: By default, the data model is
