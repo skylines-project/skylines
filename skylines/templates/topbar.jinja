@@ -29,6 +29,10 @@
     {%- endfor %}
 </ul>
 
+<form action="/search" class="navbar-search pull-left">
+  <input type="text" name="text" value="{{ (search_text or '')|e }}" class="search-query" placeholder="Search" style="width: 150px">
+</form>
+
 <ul class="nav pull-right">
     <li{% if active_page == 'upload' %} class="active"{% endif %}>
         <a href="/flights/upload/"><i class="icon-upload-alt"></i> {% trans %}Upload{% endtrans %}</a>
