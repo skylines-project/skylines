@@ -20,6 +20,8 @@ from .tracking import TrackingController
 from .statistics import StatisticsController
 from .api import APIController
 
+from skylines.lib.helpers import markdown
+
 __all__ = ['RootController']
 
 
@@ -28,6 +30,14 @@ class AboutController(BaseController):
     def index(self, **kw):
         """Handle the 'about' page."""
         return dict()
+
+    @expose('generic/page.jinja')
+    def team(self, **kw):
+        with open('AUTHORS.md') as f:
+            content = f.read().decode('utf-8')
+
+        content = markdown.convert(content)
+        return dict(title=_('The SkyLines Team'), content=content)
 
 
 class RootController(BaseController):
