@@ -23,6 +23,13 @@ from .api import APIController
 __all__ = ['RootController']
 
 
+class AboutController(BaseController):
+    @expose('about.jinja')
+    def index(self, **kw):
+        """Handle the 'about' page."""
+        return dict()
+
+
 class RootController(BaseController):
     """
     The root controller for the SkyLines application.
@@ -37,6 +44,7 @@ class RootController(BaseController):
     must be wrapped around with :class:`tg.controllers.WSGIAppController`.
 
     """
+    about = AboutController()
     error = ErrorController()
     users = UsersController()
     clubs = ClubsController()
@@ -77,11 +85,6 @@ class RootController(BaseController):
             return HTTPNotFound()
 
         return self.tracking.lt24.client(**kw)
-
-    @expose('about.jinja')
-    def about(self, **kw):
-        """Handle the 'about' page."""
-        return dict()
 
     @expose('imprint.jinja')
     def imprint(self, **kw):
