@@ -39,10 +39,14 @@ class AboutController(BaseController):
         content = markdown.convert(content)
         return dict(title=_('The SkyLines Team'), content=content)
 
-    @expose('imprint.jinja')
+    @expose('generic/page.jinja')
     def imprint(self, **kw):
-        """Handle the 'imprint' page."""
-        return dict()
+        content = config.get(
+            'skylines.imprint',
+            'Please set the skylines.imprint variable in the environment '
+            'INI file.')
+
+        return dict(title=_('Imprint'), content=content)
 
 
 class RootController(BaseController):
