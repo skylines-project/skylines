@@ -93,7 +93,7 @@
 
         <tr>
           <th>{% trans %}Name{% endtrans %}</th>
-          <td itemprop="name">{{ user.display_name }}</td>
+          <td itemprop="name">{{ user.name }}</td>
         </tr>
 
         {% if user.is_readable(request.identity) and user.tracking_key_hex -%}
@@ -168,7 +168,7 @@
     <div class="span12">
       <h2>{% trans %}Following{% endtrans %}</h2>
       <ul class="row-fluid">
-        {% for following in user.following|sort(attribute='destination.display_name') -%}
+        {% for following in user.following|sort(attribute='destination.name') -%}
         <li class="span3">
           <a href="/users/{{ following.destination_id }}/">{{ following.destination }}</a>
         </li>
@@ -181,7 +181,7 @@
     <div class="span12">
       <h2>{% trans %}Followers{% endtrans %}</h2>
       <ul class="row-fluid">
-        {% for follower in user.followers|sort(attribute='source.display_name') -%}
+        {% for follower in user.followers|sort(attribute='source.name') -%}
         <li class="span3">
           <a href="/users/{{ follower.source_id }}/">{{ follower.source }}</a>
         </li>

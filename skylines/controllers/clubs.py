@@ -45,7 +45,7 @@ class ClubController(BaseController):
     @expose('clubs/pilots.jinja')
     def pilots(self):
         users = User.query(club=self.club) \
-            .order_by(func.lower(User.display_name))
+            .order_by(func.lower(User.name))
 
         return dict(active_page='settings', club=self.club, users=users)
 
@@ -59,12 +59,11 @@ class ClubController(BaseController):
 
     @expose()
     @validate(form=pilot_forms.new_form, error_handler=new_pilot)
-    def create_pilot(self, email_address, display_name, **kw):
+    def create_pilot(self, email_address, name, **kw):
         if not self.club.is_writable(request.identity):
             raise HTTPForbidden
 
-        pilot = User(display_name=display_name,
-                     email_address=email_address, club=self.club)
+        pilot = User(name=name, email_address=email_address, club=self.club)
         DBSession.add(pilot)
 
         pilots = Group.query(group_name='pilots').first()
