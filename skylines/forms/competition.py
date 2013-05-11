@@ -27,8 +27,8 @@ class NewForm(AddRecordForm):
     __limit_fields__ = ['name', 'start_date', 'end_date']
     __field_widget_args__ = {
         'name': dict(label_text=l_('Name')),
-        'start_date': dict(label_text=l_('Start date')),
-        'end_date': dict(label_text=l_('End date')),
+        'start_date': dict(label_text=l_('Start date'), help_text='dd.mm.yyyy'),
+        'end_date': dict(label_text=l_('End date'), help_text='dd.mm.yyyy'),
     }
 
     name = TextField
