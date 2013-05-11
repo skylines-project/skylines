@@ -1,6 +1,6 @@
 from datetime import datetime
 
-from sqlalchemy import Column, ForeignKey
+from sqlalchemy import Column, ForeignKey, CheckConstraint
 from sqlalchemy.orm import relationship
 from sqlalchemy.types import Integer, Unicode, UnicodeText, DateTime, Date
 
@@ -17,6 +17,9 @@ class Competition(DeclarativeBase):
     """
 
     __tablename__ = 'competitions'
+    __table_args__ = (
+        CheckConstraint('end_date >= start_date', name='date_check'),
+    )
 
     id = Column(Integer, autoincrement=True, primary_key=True)
 
@@ -29,6 +32,8 @@ class Competition(DeclarativeBase):
     description = Column(UnicodeText)
 
     # Competition time
+    #
+    # start_date has to be smaller or equal to end_date
 
     start_date = Column(Date, nullable=False)
     end_date = Column(Date, nullable=False)

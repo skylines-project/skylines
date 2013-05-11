@@ -26,6 +26,10 @@ WITH (
   OIDS=FALSE
 );
 
+ALTER TABLE competitions
+  ADD CONSTRAINT date_check CHECK (end_date >= start_date);
+
+
 -- Table: competition_classes
 
 CREATE TABLE competition_classes
