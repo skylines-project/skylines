@@ -34,9 +34,9 @@ class FlightsController(BaseController):
             .group_by(FlightComment.flight_id).subquery()
 
         flights = DBSession.query(Flight, subq.c.count) \
-            .outerjoin(Flight.igc_file) \
+            .join(Flight.igc_file) \
             .options(contains_eager(Flight.igc_file)) \
-            .outerjoin(owner_alias, IGCFile.owner) \
+            .join(owner_alias, IGCFile.owner) \
             .options(contains_eager(Flight.igc_file, IGCFile.owner, alias=owner_alias)) \
             .outerjoin(pilot_alias, Flight.pilot) \
             .options(contains_eager(Flight.pilot, alias=pilot_alias)) \
