@@ -44,6 +44,4 @@ class FieldsOperatorValidator(FormValidator):
                               field_dict[self.field2])):
 
             error_message = self.message('invalidNoMatch', state)
-
-            field_dict[self.field2] = 'bbb'
             raise Invalid(error_message, field_dict, state)
