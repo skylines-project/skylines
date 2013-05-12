@@ -59,7 +59,7 @@ class CompetitionsController(BaseController):
             self.new_post(**kw)
 
         return dict(title=_('Create a new competition'), form=self.new_form,
-                    active_page='competitions', values=kw)
+                    active_page='competitions')
 
     def new_post(self, **kw):
         try:
