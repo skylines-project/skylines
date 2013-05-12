@@ -3,6 +3,7 @@
 
 {% set header_tabs = [
     ('/competitions/%d'|format(competition.id), 'details', _('Details')),
+    ('/competitions/%d/participants'|format(competition.id), 'participants', _('Participants')),
 ] %}
 
 {% block title %}{{ competition.name }}{% endblock %}

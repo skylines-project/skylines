@@ -4,10 +4,10 @@ from tg.i18n import ugettext as _
 from tg.decorators import with_trailing_slash, without_trailing_slash
 from webob.exc import HTTPForbidden
 
-from sqlalchemy.orm import joinedload
+from sqlalchemy.orm import joinedload, contains_eager
 
 from .base import BaseController
-from skylines.model import DBSession, Competition
+from skylines.model import DBSession, Competition, CompetitionParticipation
 from skylines.forms.competition import NewForm
 from skylines.lib.formatter import format_date
 from skylines.lib.dbutil import get_requested_record
@@ -21,6 +21,23 @@ class CompetitionController(BaseController):
     @expose('competitions/details.jinja')
     def index(self, **kw):
         return dict(competition=self.competition)
+
+    @without_trailing_slash
+    @expose('competitions/participants.jinja')
+    def participants(self, **kw):
+        query = CompetitionParticipation.query(competition=self.competition) \
+            .join('user').options(contains_eager('user')) \
+            .order_by('tg_user.name')
+
+        pilots = []
+        admins = []
+        for participant in query:
+            if participant.pilot_time:
+                pilots.append(participant)
+            if participant.admin_time:
+                admins.append(participant)
+
+        return dict(competition=self.competition, pilots=pilots, admin=admins)
 
 
 class CompetitionsController(BaseController):

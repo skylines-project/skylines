@@ -1,0 +1,35 @@
+{% from "macros/links.jinja" import user_link %}
+
+{% extends "competitions/base.jinja" %}
+
+{% set active_header_tab = "participants" %}
+
+
+{% block content -%}
+<div class="row">
+    <div class="span6 box">{{ participants_table(pilots, _('Pilots')) }}</div>
+    <div class="span6 box">{{ participants_table(admins, _('Organizers')) }}</div>
+</div>
+{%- endblock %}
+
+
+{% macro participants_table(participants, title) -%}
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <th>{{ title }}</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for participant in participants -%}
+    <tr>
+      <td>{{ user_link(participant.user) }}</td>
+    </tr>
+    {%- else -%}
+    <tr>
+      <td>{{ _('There are no users in this category.') }}</td>
+    </tr>
+    {%- endfor %}
+  </tbody>
+</table>
+{%- endmacro %}
