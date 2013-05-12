@@ -57,6 +57,7 @@ flot_js = Bundle(
 main_css = Bundle(
     'css/bootstrap.min.css',
     'css/style.css',
+    'css/search.css',
     'css/fix-table.css',
     'css/datepicker.css',
     'images/flags.css',
