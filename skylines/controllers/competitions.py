@@ -1,6 +1,5 @@
-from functools import partial
-
-from tg import expose, validate, request, redirect
+from formencode import Invalid
+from tg import expose, request, redirect
 from tg.i18n import ugettext as _
 from tg.decorators import with_trailing_slash, without_trailing_slash
 from webob.exc import HTTPForbidden
@@ -56,22 +55,24 @@ class CompetitionsController(BaseController):
         if not request.identity:
             raise HTTPForbidden
 
-        new_form = partial(self.new_form, action='new_post')
-        return dict(title=_('Create a new competition'), form=new_form,
-                    active_page='competitions')
+        if request.method.upper() == 'POST':
+            self.new_post(**kw)
 
-    @expose()
-    @validate(form=new_form, error_handler=new)
-    def new_post(self, name, start_date, end_date, **kw):
-        if not request.identity:
-            raise HTTPForbidden
+        return dict(title=_('Create a new competition'), form=self.new_form,
+                    active_page='competitions', values=kw)
+
+    def new_post(self, **kw):
+        try:
+            self.new_form.validate(kw)
+        except Invalid:
+            return
 
         current_user = request.identity['user']
 
-        competition = Competition(name=name)
+        competition = Competition(name=kw['name'])
         competition.creator = current_user
-        competition.start_date = start_date
-        competition.end_date = end_date
+        competition.start_date = kw['start_date']
+        competition.end_date = kw['end_date']
 
         DBSession.add(competition)
         DBSession.flush()
