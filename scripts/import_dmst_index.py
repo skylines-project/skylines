@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/env python
 #
 # Parse the DMSt index list from DMSt-WO_2012.pdf
 #

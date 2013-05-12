@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/env python
 #
 # Wrapper script for launching Skylines as a FastCGI in lighttpd.
 #
