@@ -45,6 +45,8 @@
   <i class="icon-group" title="{{ _('Club') }}"></i>
 {%- elif result.model == 'Airport' -%}
   <i class="icon-map-marker" title="{{ _('Airport') }}"></i>
+{%- elif result.model == 'Competition' -%}
+  <i class="icon-trophy" title="{{ _('Competition') }}"></i>
 {%- endif %}
 {%- endmacro %}
 
@@ -55,6 +57,8 @@
   {{ _('Club') }}
 {%- elif result.model == 'Airport' -%}
   {{ _('Airport') }}
+{%- elif result.model == 'Competition' -%}
+  {{ _('Competition') }}
 {%- endif %}
 {%- endmacro %}
 
@@ -65,6 +69,8 @@
   <a href="/clubs/{{ result.id }}">{{ result.name }}</a>
 {%- elif result.model == 'Airport' -%}
   <a href="/flights/airport/{{ result.id }}">{{ result.name }}</a>
+{%- elif result.model == 'Competition' -%}
+  <a href="/competitions/{{ result.id }}">{{ result.name }}</a>
 {%- endif %}
 {%- endmacro %}
 

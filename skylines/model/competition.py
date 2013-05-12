@@ -17,6 +17,7 @@ class Competition(DeclarativeBase):
     """
 
     __tablename__ = 'competitions'
+    __searchable_columns__ = ['name']
     __table_args__ = (
         CheckConstraint('end_date >= start_date', name='date_check'),
     )

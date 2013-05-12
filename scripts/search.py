@@ -3,10 +3,10 @@
 import sys
 
 from skylines.config import environment
-from skylines.model import User, Club, Airport
+from skylines.model import User, Club, Airport, Competition
 from skylines.model.search import combined_search_query, escape_tokens
 
-MODELS = [User, Club, Airport]
+MODELS = [User, Club, Airport, Competition]
 
 
 def search_query(tokens):

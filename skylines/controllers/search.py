@@ -2,12 +2,12 @@ from tg import expose
 from tg.decorators import without_trailing_slash
 
 from .base import BaseController
-from skylines.model import User, Club, Airport
+from skylines.model import User, Club, Airport, Competition
 from skylines.model.search import (
     combined_search_query, text_to_tokens, escape_tokens
 )
 
-MODELS = [User, Club, Airport]
+MODELS = [User, Club, Airport, Competition]
 
 
 class SearchController(BaseController):
