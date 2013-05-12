@@ -3,7 +3,7 @@ from datetime import datetime
 from tg import expose, require, request, redirect, config
 from tg.decorators import with_trailing_slash, without_trailing_slash
 from babel.dates import format_date
-from repoze.what.predicates import has_permission
+from tg.predicates import has_permission
 from webob.exc import HTTPNotFound
 
 from sqlalchemy.sql.expression import desc, or_, and_

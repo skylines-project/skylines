@@ -6,7 +6,7 @@ from datetime import datetime
 
 from tg import expose, flash, lurl, request, redirect, require, config
 from tg.i18n import ugettext as _, set_lang
-from repoze.what.predicates import Any, not_anonymous
+from tg.predicates import Any, not_anonymous
 from webob.exc import HTTPNotFound
 
 from .base import BaseController
