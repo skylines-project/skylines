@@ -272,6 +272,7 @@ table.vmiddle td {
 
 .search-results .column-icon {
   width: 1px;
+  text-align: center;
 }
 
 .search-results .column-type {
