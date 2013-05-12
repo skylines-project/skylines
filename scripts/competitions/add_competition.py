@@ -24,6 +24,7 @@ parser.add_argument('--config', metavar='config.ini',
 parser.add_argument('name', help='name of the competition')
 parser.add_argument('start', help='start date (dd.mm.yyyy)')
 parser.add_argument('end', help='end date (dd.mm.yyyy)')
+parser.add_argument('--creator', type=int, help='id of the creator')
 
 args = parser.parse_args()
 
@@ -58,6 +59,9 @@ if args.start > args.end:
 
 competition = Competition(
     name=args.name, start_date=args.start, end_date=args.end)
+
+if args.creator:
+    competition.creator_id = args.creator
 
 DBSession.add(competition)
 DBSession.flush()
