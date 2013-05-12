@@ -1,7 +1,45 @@
+{% from "macros/datetime.jinja" import insert_timeago, timeago_script with context %}
+{% from "macros/links.jinja" import user_link %}
+
 {% extends "competitions/base.jinja" %}
 
 {% set active_header_tab = "details" %}
 
+
+{% block scripts -%}
+{{ super() }}
+{{ timeago_script() }}
+{%- endblock %}
+
+
 {% block content -%}
-No content yet.
+<dl class="dl-horizontal">
+    <dt>{{ _('Start date') }}</dt>
+    <dd>{{ h.format_date(competition.start_date) }}</dd>
+
+    <dt>{{ _('End date') }}</dt>
+    <dd>{{ h.format_date(competition.end_date) }}</dd>
+
+    {% if competition.location -%}
+    <dt>{{ _('Location') }}</dt>
+    <dd>{{ competition.location|e }}</dd>
+    {%- elif competition.airport_id -%}
+    <dt>{{ _('Airport') }}</dt>
+    <dd>{{ competition.airport|e }}</dd>
+    {%- endif %}
+
+    {% if competition.description -%}
+    <dt>{{ _('Description') }}</dt>
+    <dd>{{ competition.description|e }}</dd>
+    {%- endif %}
+
+    <dt>{{ _('Created') }}</dt>
+    <dd>
+        {% if competition.creator_id -%}
+        {{ _('%(time_ago)s by %(creator)s')|format(time_ago=insert_timeago(competition.time_created), creator=user_link(competition.creator)) }}
+        {%- else %}
+        {{ insert_timeago(competition.time_created) }}
+        {%- endif %}
+    </dd>
+</dl>
 {%- endblock %}
