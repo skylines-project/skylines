@@ -18,10 +18,9 @@ class CompetitionController(BaseController):
         self.competition = competition
 
     @with_trailing_slash
-    @expose('competitions/base.jinja')
+    @expose('competitions/details.jinja')
     def index(self, **kw):
-        return dict(competition=self.competition,
-                    content='No content yet.')
+        return dict(competition=self.competition)
 
 
 class CompetitionsController(BaseController):
