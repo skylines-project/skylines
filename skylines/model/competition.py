@@ -156,6 +156,10 @@ class CompetitionClass(DeclarativeBase):
 
     description = Column(UnicodeText)
 
+    # Competition class pilots
+
+    participants = relationship('CompetitionParticipation')
+
     ##############################
 
     def __unicode__(self):
