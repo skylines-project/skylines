@@ -41,6 +41,7 @@ class CompetitionsController(BaseController):
             .options(joinedload(Competition.airport))
 
         competitions = [{
+            'id': competition.id,
             'name': competition.name,
             'location': competition.location_string,
             'start_date': format_date(competition.start_date),
