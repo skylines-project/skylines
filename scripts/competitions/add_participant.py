@@ -15,7 +15,7 @@ from skylines.model import CompetitionParticipation
 # Parse command line parameters
 
 parser = argparse.ArgumentParser(
-    description='Add a new competition to the database.')
+    description='Add a new participant to a competition.')
 
 parser.add_argument('--config', metavar='config.ini',
                     help='path to the configuration INI file')
