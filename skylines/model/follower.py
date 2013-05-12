@@ -18,12 +18,14 @@ class Follower(DeclarativeBase):
     source_id = Column(
         Integer, ForeignKey('tg_user.id', ondelete='CASCADE'), index=True)
     source = relationship(
-        'User', foreign_keys=[source_id], backref='following')
+        'User', foreign_keys=[source_id],
+        lazy='joined', backref='following')
 
     destination_id = Column(
         Integer, ForeignKey('tg_user.id', ondelete='CASCADE'), index=True)
     destination = relationship(
-        'User', foreign_keys=[destination_id], backref='followers')
+        'User', foreign_keys=[destination_id],
+        lazy='joined', backref='followers')
 
     time = Column(DateTime, nullable=False, default=datetime.utcnow)
 

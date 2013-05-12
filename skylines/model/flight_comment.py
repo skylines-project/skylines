@@ -16,8 +16,10 @@ class FlightComment(DeclarativeBase):
 
     flight_id = Column(Integer, ForeignKey('flights.id', ondelete='CASCADE'),
                        nullable=False, index=True)
-    flight = relationship('Flight', backref=backref(
-        'comments', order_by=time_created, passive_deletes=True))
+    flight = relationship(
+        'Flight', innerjoin=True,
+        backref=backref('comments', order_by=time_created,
+                        passive_deletes=True))
 
     user_id = Column(Integer, ForeignKey('tg_user.id', ondelete='SET NULL'))
     user = relationship('User')
