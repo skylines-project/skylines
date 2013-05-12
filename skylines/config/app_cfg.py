@@ -55,23 +55,40 @@ base_config.use_dotted_templatenames = False
 base_config.use_sqlalchemy = True
 base_config.model = model
 base_config.DBSession = model.DBSession
+
 # Configure the authentication backend
-
-
 base_config.auth_backend = 'sqlalchemy'
-base_config.sa_auth.dbsession = model.DBSession
 
 # what is the class you want to use to search for users in the database
 base_config.sa_auth.user_class = model.User
-# what is the class you want to use to search for groups in the database
-base_config.sa_auth.group_class = model.Group
-# what is the class you want to use to search for permissions in the database
-base_config.sa_auth.permission_class = model.Permission
+base_config.sa_auth.translations.user_name = 'email_address'
+
+from tg.configuration.auth import TGAuthMetadata
+
+
+#This tells to TurboGears how to retrieve the data for your user
+class ApplicationAuthMetadata(TGAuthMetadata):
+    def __init__(self, sa_auth):
+        self.sa_auth = sa_auth
+
+    def get_user(self, identity, userid):
+        return self.sa_auth.dbsession.query(self.sa_auth.user_class) \
+            .filter_by(**{self.sa_auth.translations.user_name: userid}).first()
+
+    def get_groups(self, identity, userid):
+        return [g.group_name for g in identity['user'].groups]
+
+    def get_permissions(self, identity, userid):
+        return [p.permission_name for p in identity['user'].permissions]
+
+base_config.sa_auth.dbsession = model.DBSession
+
+base_config.sa_auth.authmetadata = ApplicationAuthMetadata(base_config.sa_auth)
+
 
 # override this if you would like to provide a different who plugin for
 # managing login and logout of your application
 base_config.sa_auth.form_plugin = None
-base_config.sa_auth.translations.user_name = 'email_address'
 
 # override this if you are using a different charset for the login form
 base_config.sa_auth.charset = 'utf-8'
