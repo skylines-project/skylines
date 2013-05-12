@@ -7,7 +7,7 @@ from datetime import date, timedelta
 from tg import expose, validate, redirect, require, request, config, flash, cache
 from tg.i18n import ugettext as _, ungettext, lazy_ugettext as l_
 from webob.exc import HTTPNotFound, HTTPForbidden, HTTPServiceUnavailable
-from repoze.what.predicates import not_anonymous, has_permission
+from tg.predicates import not_anonymous, has_permission
 
 from formencode import Schema, All
 from formencode.validators import FieldsMatch, Email, String, NotEmpty

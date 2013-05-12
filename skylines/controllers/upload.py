@@ -4,7 +4,7 @@ from zipfile import ZipFile
 
 from tg import expose, request, redirect, validate, flash
 from tg.i18n import ugettext as _, lazy_ugettext as l_
-from repoze.what.predicates import has_permission
+from tg.predicates import has_permission
 
 from .base import BaseController
 from skylines.forms import upload, aircraft_model
