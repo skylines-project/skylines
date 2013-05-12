@@ -14,7 +14,7 @@ setup(
     author_email='',
     #url='',
     setup_requires=["PasteScript >= 1.7"],
-    paster_plugins=['PasteScript', 'Pylons', 'TurboGears2', 'tg.devtools'],
+    paster_plugins=['PasteScript', 'Pylons', 'TurboGears2'],
     packages=find_packages(exclude=['ez_setup']),
     install_requires=requirements,
     include_package_data=True,
