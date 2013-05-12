@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/env python
 #
 # The SkyLines daemon, responsible for live tracking (and maybe other
 # Twisted applications).
