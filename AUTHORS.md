@@ -15,10 +15,12 @@
 
 * Adrien Ott (<adrien.ott@gmail.com>)
 * Cheng-Han Wu (<ahan88.tw@gmail.com>)
+* Daniel Nowicki
 * Emir Sherbi (<emirsherbi@hotmail.com>)
 * Erik Praznovsky (<erik@virtualsoaring.eu>)
 * Gábor Konrád (<gabor.konrad@gmail.com>)
 * Geir Gronlien (<flyetgeir@msn.com>)
+* Helmut Rohs (<helmut.j.rohs@web.de>)
 * Juha H (<juha@siipi.fi>)
 * Julian Beckmann (<julian.beckmann@web.de>)
 * Karel Beneš (<kb@karelbenes.cz>)
