@@ -4,11 +4,9 @@
 #
 
 import argparse
-from datetime import datetime
 import transaction
 
 from skylines.config import environment
-from skylines.model.session import DBSession
 from skylines.model import CompetitionParticipation
 
 

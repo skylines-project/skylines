@@ -7,7 +7,6 @@ import argparse
 import transaction
 
 from skylines.config import environment
-from skylines.model.session import DBSession
 from skylines.model import Competition
 
 
