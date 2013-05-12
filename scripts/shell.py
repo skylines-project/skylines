@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/env python
 #
 # A interactive shell for inspecting the SkyLines data model.
 #
