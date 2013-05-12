@@ -29,6 +29,8 @@ WITH (
 ALTER TABLE competitions
   ADD CONSTRAINT date_check CHECK (end_date >= start_date);
 
+ALTER TABLE competition_participation
+  ADD CONSTRAINT unique_participation UNIQUE(competition_id , user_id );
 
 -- Table: competition_classes
 

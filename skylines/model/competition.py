@@ -1,6 +1,6 @@
 from datetime import datetime
 
-from sqlalchemy import Column, ForeignKey, CheckConstraint
+from sqlalchemy import Column, ForeignKey, CheckConstraint, UniqueConstraint
 from sqlalchemy.orm import relationship
 from sqlalchemy.types import Integer, Unicode, UnicodeText, DateTime, Date
 
@@ -96,6 +96,10 @@ class CompetitionParticipation(DeclarativeBase):
     """
 
     __tablename__ = 'competition_participation'
+    __table_args__ = (
+        UniqueConstraint(
+            'competition_id', 'user_id', name='unique_participation'),
+    )
 
     id = Column(Integer, autoincrement=True, primary_key=True)
 
