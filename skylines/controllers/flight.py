@@ -5,7 +5,7 @@ from datetime import datetime
 from tg import expose, validate, require, request, redirect, flash
 from tg.i18n import ugettext as _, lazy_ugettext as l_
 from tg.decorators import with_trailing_slash, without_trailing_slash
-from repoze.what.predicates import has_permission
+from tg.predicates import has_permission
 from webob.exc import HTTPBadRequest, HTTPNotFound, HTTPForbidden
 
 from formencode.validators import String

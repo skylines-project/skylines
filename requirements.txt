@@ -6,13 +6,9 @@ Genshi==0.7
 zope.sqlalchemy==0.7.2
 repoze.tm2==1.0
 sqlalchemy==0.8.0
-repoze.what==1.0.9
 repoze.who-friendlyform==1.0.8
-repoze.what-pylons==1.0
 Pylons==1.0
 repoze.who==1.0.19
-repoze.what-quickstart==1.0.9
-repoze.what.plugins.sql==1.0.1
 tw.forms==0.9.9
 simplejson==3.1.0
 skylinespolyencode==0.1.2
