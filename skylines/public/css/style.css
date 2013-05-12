@@ -270,6 +270,10 @@ table.vmiddle td {
   display: inline-block;
 }
 
+.navbar-search .search-query {
+  margin-bottom: 0;
+}
+
 .search-results .column-icon {
   width: 1px;
   text-align: center;
