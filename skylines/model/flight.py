@@ -71,7 +71,7 @@ class Flight(DeclarativeBase):
 
     igc_file_id = Column(
         Integer, ForeignKey('igc_files.id', ondelete='CASCADE'), nullable=False)
-    igc_file = relationship('IGCFile', backref='flights')
+    igc_file = relationship('IGCFile', backref='flights', innerjoin=True)
 
     needs_analysis = Column(Boolean, nullable=False, default=True)
 

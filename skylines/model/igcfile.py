@@ -18,8 +18,10 @@ class IGCFile(DeclarativeBase):
     __tablename__ = 'igc_files'
 
     id = Column(Integer, autoincrement=True, primary_key=True)
+
     owner_id = Column(Integer, ForeignKey('tg_user.id'), nullable=False)
-    owner = relationship('User')
+    owner = relationship('User', innerjoin=True)
+
     time_created = Column(DateTime, nullable=False, default=datetime.utcnow)
     filename = Column(String(), nullable=False)
     md5 = Column(String(32), nullable=False, unique=True)
@@ -85,7 +87,7 @@ class IGCFile(DeclarativeBase):
             logger_id = self.logger_id
             logger_manufacturer_id = self.logger_manufacturer_id
 
-            result = Flight.query().outerjoin(IGCFile) \
+            result = Flight.query().join(IGCFile) \
                 .filter(func.upper(IGCFile.logger_manufacturer_id) == func.upper(logger_manufacturer_id)) \
                 .filter(func.upper(IGCFile.logger_id) == func.upper(logger_id)) \
                 .filter(Flight.registration == None) \
@@ -122,7 +124,7 @@ class IGCFile(DeclarativeBase):
             logger_id = self.logger_id
             logger_manufacturer_id = self.logger_manufacturer_id
 
-            result = Flight.query().outerjoin(IGCFile) \
+            result = Flight.query().join(IGCFile) \
                 .filter(func.upper(IGCFile.logger_manufacturer_id) == func.upper(logger_manufacturer_id)) \
                 .filter(func.upper(IGCFile.logger_id) == func.upper(logger_id)) \
                 .filter(Flight.model_id == None) \

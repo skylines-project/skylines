@@ -2,7 +2,7 @@
 
 from datetime import datetime, timedelta
 
-from sqlalchemy.orm import relationship, joinedload
+from sqlalchemy.orm import relationship, joinedload, contains_eager
 from sqlalchemy import Column, ForeignKey, Index, over, func
 from sqlalchemy.types import Integer, REAL, DateTime, SmallInteger, Unicode,\
     BigInteger
@@ -37,7 +37,7 @@ class TrackingFix(DeclarativeBase):
 
     pilot_id = Column(
         Integer, ForeignKey('tg_user.id', ondelete='CASCADE'), nullable=False)
-    pilot = relationship('User')
+    pilot = relationship('User', innerjoin=True)
 
     ip = Column(INET)
 
@@ -131,7 +131,7 @@ class TrackingSession(DeclarativeBase):
 
     pilot_id = Column(
         Integer, ForeignKey('tg_user.id', ondelete='CASCADE'), nullable=False)
-    pilot = relationship('User')
+    pilot = relationship('User', innerjoin=True)
 
     lt24_id = Column(BigInteger, index=True)
 
