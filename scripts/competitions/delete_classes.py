@@ -25,7 +25,7 @@ parser.add_argument(metavar='class-id', dest='class_ids', type=int, nargs='*',
                     help='id of the competition class')
 
 parser.add_argument('--all', action='store_true',
-                    help='id of the competition class')
+                    help='remove all competition classes of the competition')
 
 args = parser.parse_args()
 
