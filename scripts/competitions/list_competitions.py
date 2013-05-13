@@ -21,6 +21,12 @@ parser.add_argument('--config', metavar='config.ini',
 parser.add_argument('--only-running', action='store_true',
                     help='only competitions are returned that are currently running')
 
+parser.add_argument('--only-upcoming', action='store_true',
+                    help='only competitions in the future are returned')
+
+parser.add_argument('--only-past', action='store_true',
+                    help='only competitions in the past are returned')
+
 args = parser.parse_args()
 
 # Load environment
@@ -37,6 +43,12 @@ if args.only_running:
     query = query \
         .filter(Competition.start_date <= datetime.utcnow()) \
         .filter(Competition.end_date >= datetime.utcnow())
+
+if args.only_upcoming:
+    query = query.filter(Competition.start_date > datetime.utcnow())
+
+if args.only_past:
+    query = query.filter(Competition.end_date < datetime.utcnow())
 
 
 def print_competition(competition):
