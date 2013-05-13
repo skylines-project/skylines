@@ -22,8 +22,8 @@ parser.add_argument('--config', metavar='config.ini',
 
 parser.add_argument(
     'competition_id', type=int, help='id of the competition')
-parser.add_argument(
-    'class_name', help='name of the competition class')
+parser.add_argument(metavar='class-name', dest='class_names', nargs='+',
+                    help='name of the competition class')
 
 args = parser.parse_args()
 
@@ -32,17 +32,19 @@ args = parser.parse_args()
 if not environment.load_from_file(args.config):
     parser.error('Config file "{}" not found.'.format(args.config))
 
-# Add the competition class to the competition
+# Add the competition classes to the competition
 
-class_ = CompetitionClass(
-    competition_id=args.competition_id,
-    name=args.class_name
-)
+for class_name in args.class_names:
 
-DBSession.add(class_)
-DBSession.flush()
+    class_ = CompetitionClass(
+        competition_id=args.competition_id,
+        name=class_name
+    )
 
-print 'Competition class "{}" created with id: {}' \
-    .format(class_.name, class_.id)
+    DBSession.add(class_)
+    DBSession.flush()
+
+    print 'Competition class "{}" created with id: {}' \
+        .format(class_.name, class_.id)
 
 transaction.commit()
