@@ -37,7 +37,7 @@ class CompetitionController(BaseController):
             if participant.admin_time:
                 admins.append(participant)
 
-        return dict(competition=self.competition, pilots=pilots, admin=admins)
+        return dict(competition=self.competition, pilots=pilots, admins=admins)
 
 
 class CompetitionsController(BaseController):
