@@ -4,7 +4,8 @@ from tg.decorators import without_trailing_slash
 from .base import BaseController
 from skylines.model import User, Club, Airport
 from skylines.model.search import (
-    combined_search_query, text_to_tokens, escape_tokens
+    combined_search_query, text_to_tokens, escape_tokens,
+    process_result_details
 )
 
 MODELS = [User, Club, Airport]
@@ -27,5 +28,7 @@ class SearchController(BaseController):
 
         # Perform query and limit output to 20 items
         results = query.limit(20).all()
+
+        process_result_details(MODELS, results)
 
         return dict(search_text=search_text, results=results)

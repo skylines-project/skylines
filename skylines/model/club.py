@@ -12,6 +12,7 @@ from .base import DeclarativeBase
 class Club(DeclarativeBase):
     __tablename__ = 'clubs'
     __searchable_columns__ = ['name']
+    __search_detail_columns__ = ['website']
 
     id = Column(Integer, autoincrement=True, primary_key=True)
     name = Column(Unicode(255), unique=True, nullable=False)
