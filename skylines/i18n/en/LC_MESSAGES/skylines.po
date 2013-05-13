@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: SkyLines 0.1\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2013-05-11 16:16+0200\n"
+"POT-Creation-Date: 2013-05-12 23:48+0200\n"
 "PO-Revision-Date: 2012-11-11 20:36+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: en <LL@li.org>\n"
@@ -30,6 +30,10 @@ msgstr ""
 
 #: skylines/controllers/clubs.py:57 skylines/templates/clubs/pilots.jinja:21
 msgid "Create Pilot"
+msgstr ""
+
+#: skylines/controllers/error.py:51
+msgid "Error {code}"
 msgstr ""
 
 #: skylines/controllers/flight.py:59 skylines/forms/upload.py:21
@@ -109,16 +113,24 @@ msgstr ""
 msgid "You have to be logged in to post comments!"
 msgstr ""
 
-#: skylines/controllers/root.py:125
+#: skylines/controllers/root.py:43 skylines/templates/base-page.jinja:30
+msgid "The SkyLines Team"
+msgstr ""
+
+#: skylines/controllers/root.py:52 skylines/templates/base-page.jinja:31
+msgid "Imprint"
+msgstr ""
+
+#: skylines/controllers/root.py:145
 msgid "Sorry, email address or password are wrong. Please try again or register."
 msgstr ""
 
-#: skylines/controllers/root.py:130
+#: skylines/controllers/root.py:150
 #, python-format
 msgid "You are now logged in. Welcome back, %s!"
 msgstr ""
 
-#: skylines/controllers/root.py:147
+#: skylines/controllers/root.py:167
 msgid "You are now logged out. We hope to see you back soon!"
 msgstr ""
 
@@ -412,15 +424,6 @@ msgid ""
 "If you think that something is missing or you think that you have found a"
 " bug please follow the instructions <a href=\"%(url)s\" "
 "target=\"_blank\">here</a> to write a feature request or bug report."
-msgstr ""
-
-#: skylines/templates/base-page.jinja:31 skylines/templates/imprint.jinja:4
-msgid "Imprint"
-msgstr ""
-
-#: skylines/templates/error.jinja:3
-#, python-format
-msgid "Error %(code)s"
 msgstr ""
 
 #: skylines/templates/login.jinja:4 skylines/templates/topbar.jinja:55
@@ -1153,4 +1156,7 @@ msgstr ""
 #: skylines/templates/users/view.jinja:266
 msgid "Takeoff Locations"
 msgstr ""
+
+#~ msgid "Error %(code)s"
+#~ msgstr ""
 

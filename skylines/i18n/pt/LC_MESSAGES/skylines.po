@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  skylines\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2013-05-11 16:16+0200\n"
+"POT-Creation-Date: 2013-05-12 23:48+0200\n"
 "PO-Revision-Date: 2012-11-18 01:41+0000\n"
 "Last-Translator: Sérgio Da Silva <Unknown>\n"
 "Language-Team: Portuguese <pt@li.org>\n"
@@ -31,6 +31,10 @@ msgstr "Editar Clube"
 #: skylines/controllers/clubs.py:57 skylines/templates/clubs/pilots.jinja:21
 msgid "Create Pilot"
 msgstr "Criar Piloto"
+
+#: skylines/controllers/error.py:51
+msgid "Error {code}"
+msgstr ""
 
 #: skylines/controllers/flight.py:59 skylines/forms/upload.py:21
 #: skylines/templates/flights/details-table.jinja:119
@@ -109,18 +113,26 @@ msgstr "Tem a certeza que pretende eliminar este vôo?"
 msgid "You have to be logged in to post comments!"
 msgstr "Deverá iniciar sessão para comentar!"
 
-#: skylines/controllers/root.py:125
+#: skylines/controllers/root.py:43 skylines/templates/base-page.jinja:30
+msgid "The SkyLines Team"
+msgstr ""
+
+#: skylines/controllers/root.py:52 skylines/templates/base-page.jinja:31
+msgid "Imprint"
+msgstr ""
+
+#: skylines/controllers/root.py:145
 msgid "Sorry, email address or password are wrong. Please try again or register."
 msgstr ""
 "Desculpe, endereço de email ou a password estão errados. Por favor tente "
 "novamente or registe-se."
 
-#: skylines/controllers/root.py:130
+#: skylines/controllers/root.py:150
 #, python-format
 msgid "You are now logged in. Welcome back, %s!"
 msgstr "A sua sessão foi iniciada com sucesso. Bem vindo(a), %s!"
 
-#: skylines/controllers/root.py:147
+#: skylines/controllers/root.py:167
 msgid "You are now logged out. We hope to see you back soon!"
 msgstr ""
 
@@ -416,15 +428,6 @@ msgid ""
 "target=\"_blank\">here</a> to write a feature request or bug report."
 msgstr ""
 
-#: skylines/templates/base-page.jinja:31 skylines/templates/imprint.jinja:4
-msgid "Imprint"
-msgstr ""
-
-#: skylines/templates/error.jinja:3
-#, python-format
-msgid "Error %(code)s"
-msgstr ""
-
 #: skylines/templates/login.jinja:4 skylines/templates/topbar.jinja:55
 msgid "Login"
 msgstr "Iniciar"
@@ -469,7 +472,6 @@ msgstr "Estatísticas"
 
 #: skylines/templates/topbar.jinja:33 skylines/templates/search/list.jinja:10
 #, fuzzy
-#| msgid "Year"
 msgid "Search"
 msgstr "Ano"
 
@@ -1158,4 +1160,7 @@ msgstr "Velocidade Média"
 #: skylines/templates/users/view.jinja:266
 msgid "Takeoff Locations"
 msgstr "Localização das descolagens"
+
+#~ msgid "Error %(code)s"
+#~ msgstr ""
 

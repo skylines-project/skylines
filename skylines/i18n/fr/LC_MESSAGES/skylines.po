@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  skylines\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2013-05-11 16:16+0200\n"
+"POT-Creation-Date: 2013-05-12 23:48+0200\n"
 "PO-Revision-Date: 2013-03-25 17:57+0000\n"
 "Last-Translator: Adrien Ott <Unknown>\n"
 "Language-Team: French <fr@li.org>\n"
@@ -31,6 +31,12 @@ msgstr "Editer le club"
 #: skylines/controllers/clubs.py:57 skylines/templates/clubs/pilots.jinja:21
 msgid "Create Pilot"
 msgstr "Ajouter un pilote"
+
+#: skylines/controllers/error.py:51
+#, fuzzy, python-format
+#| msgid "Error %(code)s"
+msgid "Error {code}"
+msgstr "Erreur %(code)s"
 
 #: skylines/controllers/flight.py:59 skylines/forms/upload.py:21
 #: skylines/templates/flights/details-table.jinja:119
@@ -109,18 +115,26 @@ msgstr "Etes-vous sûr(e) de vouloir effacer ce vol ?"
 msgid "You have to be logged in to post comments!"
 msgstr "Vous devez être connecté(e) pour commenter!"
 
-#: skylines/controllers/root.py:125
+#: skylines/controllers/root.py:43 skylines/templates/base-page.jinja:30
+msgid "The SkyLines Team"
+msgstr ""
+
+#: skylines/controllers/root.py:52 skylines/templates/base-page.jinja:31
+msgid "Imprint"
+msgstr "Affiliation"
+
+#: skylines/controllers/root.py:145
 msgid "Sorry, email address or password are wrong. Please try again or register."
 msgstr ""
 "Désolé, courriel ou mot de passe erroné. Merci de réessayer, ou de vous "
 "enregistrer."
 
-#: skylines/controllers/root.py:130
+#: skylines/controllers/root.py:150
 #, python-format
 msgid "You are now logged in. Welcome back, %s!"
 msgstr "Vous êtes connecté(e). Bienvenu(e) %s !"
 
-#: skylines/controllers/root.py:147
+#: skylines/controllers/root.py:167
 msgid "You are now logged out. We hope to see you back soon!"
 msgstr "Vous êtes déconnecté(e). A bientôt !"
 
@@ -434,15 +448,6 @@ msgstr ""
 "target=\"_blank\">ici</a> pour effectuer une demande de fonctionnalité ou"
 " un rapport de bug."
 
-#: skylines/templates/base-page.jinja:31 skylines/templates/imprint.jinja:4
-msgid "Imprint"
-msgstr "Affiliation"
-
-#: skylines/templates/error.jinja:3
-#, python-format
-msgid "Error %(code)s"
-msgstr "Erreur %(code)s"
-
 #: skylines/templates/login.jinja:4 skylines/templates/topbar.jinja:55
 msgid "Login"
 msgstr "Identifiant"
@@ -487,7 +492,6 @@ msgstr "Statistiques"
 
 #: skylines/templates/topbar.jinja:33 skylines/templates/search/list.jinja:10
 #, fuzzy
-#| msgid "Year"
 msgid "Search"
 msgstr "Année"
 
@@ -906,7 +910,6 @@ msgstr ""
 
 #: skylines/templates/search/list.jinja:8
 #, fuzzy, python-format
-#| msgid "Flights <small>on %(date)s</small>"
 msgid "Search <small>for \"%(search_text)s\"</small>"
 msgstr "Vols <small>le %(date)s</small>"
 
