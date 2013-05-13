@@ -23,27 +23,49 @@ parser.add_argument(
     help='id of the competition')
 
 parser.add_argument(
-    metavar='participant-id', dest='participant_ids', nargs='+', type=int,
+    metavar='participant-id', dest='participant_ids', nargs='*', type=int,
     help='id of the participant')
 
+parser.add_argument('--all', action='store_true',
+                    help='delete all participants of the competition')
+
 args = parser.parse_args()
+
+# Check --all or participant_ids are available
+
+if not (args.all or args.participant_ids):
+    parser.error('You have to use either --all or specify one or more participant ids.')
 
 # Load environment
 
 if not environment.load_from_file(args.config):
     parser.error('Config file "{}" not found.'.format(args.config))
 
-# Delete the participations from the competition
+# Delete all participants from the competition
 
-for participant_id in args.participant_ids:
+if args.all:
     num = CompetitionParticipation.query(
-        competition_id=args.competition_id, user_id=participant_id).delete()
+        competition_id=args.competition_id).delete()
 
     if num:
-        print 'Participant with id: {} got deleted from competition with id: {}.' \
-            .format(participant_id, args.competition_id)
+        print '{} participants got deleted from competition with id: {}.' \
+            .format(num, args.competition_id)
     else:
-        print 'No participant with id: {} found in competition with id: {}.' \
-            .format(participant_id, args.competition_id)
+        print 'No participants found in competition with id: {}.' \
+            .format(args.competition_id)
+
+# .. or delete specific participants from the competition
+
+elif args.participant_ids:
+    for participant_id in args.participant_ids:
+        num = CompetitionParticipation.query(
+            competition_id=args.competition_id, user_id=participant_id).delete()
+
+        if num:
+            print 'Participant with id: {} got deleted from competition with id: {}.' \
+                .format(participant_id, args.competition_id)
+        else:
+            print 'No participant with id: {} found in competition with id: {}.' \
+                .format(participant_id, args.competition_id)
 
 transaction.commit()
