@@ -20,27 +20,49 @@ parser.add_argument('--config', metavar='config.ini',
 
 parser.add_argument(metavar='competition-id', dest='competition_id', type=int,
                     help='id of the competition')
-parser.add_argument(metavar='class-id', dest='class_ids', type=int, nargs='+',
+
+parser.add_argument(metavar='class-id', dest='class_ids', type=int, nargs='*',
+                    help='id of the competition class')
+
+parser.add_argument('--all', action='store_true',
                     help='id of the competition class')
 
 args = parser.parse_args()
+
+# Check --all or class_ids are available
+
+if not (args.all or args.class_ids):
+    parser.error('You have to use either --all or specify one or more competition class ids.')
 
 # Load environment
 
 if not environment.load_from_file(args.config):
     parser.error('Config file "{}" not found.'.format(args.config))
 
-# Delete the competition class from the competition
+# Delete all competition classes from the competition
 
-for class_id in args.class_ids:
-    num = query = CompetitionClass.query(
-        id=class_id, competition_id=args.competition_id).delete()
+if args.all:
+    num = CompetitionClass.query(competition_id=args.competition_id).delete()
 
     if num:
-        print 'Competition class with id: {} got deleted from competition with id: {}.' \
-            .format(class_id, args.competition_id)
+        print '{} competition classes got deleted from competition with id: {}.' \
+            .format(num, args.competition_id)
     else:
-        print 'No competition class with id: {} found in competition with id: {}.' \
-            .format(class_id, args.competition_id)
+        print 'No competition classes found in competition with id: {}.' \
+            .format(args.competition_id)
+
+# .. or delete specific competition classes from the competition
+
+elif args.class_ids:
+    for class_id in args.class_ids:
+        num = CompetitionClass.query(
+            id=class_id, competition_id=args.competition_id).delete()
+
+        if num:
+            print 'Competition class with id: {} got deleted from competition with id: {}.' \
+                .format(class_id, args.competition_id)
+        else:
+            print 'No competition class with id: {} found in competition with id: {}.' \
+                .format(class_id, args.competition_id)
 
 transaction.commit()
