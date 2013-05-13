@@ -60,11 +60,11 @@
 
 {% macro result_title(result) -%}
 {% if result.model == 'User' -%}
-  <a href="/users/{{ result.id }}">{{ result.name }}</a>
+  <a href="/users/{{ result.id }}">{{ result.name|e }}</a>
 {%- elif result.model == 'Club' -%}
-  <a href="/clubs/{{ result.id }}">{{ result.name }}</a>
+  <a href="/clubs/{{ result.id }}">{{ result.name|e }}</a>
 {%- elif result.model == 'Airport' -%}
-  <a href="/flights/airport/{{ result.id }}">{{ result.name }}</a>
+  <a href="/flights/airport/{{ result.id }}">{{ result.name|e }}</a>
 {%- endif %}
 {%- endmacro %}
 
