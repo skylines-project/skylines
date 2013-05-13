@@ -4,6 +4,7 @@
 #
 
 import argparse
+from datetime import datetime
 
 from skylines.config import environment
 from skylines.model import Competition
@@ -17,6 +18,9 @@ parser = argparse.ArgumentParser(
 parser.add_argument('--config', metavar='config.ini',
                     help='path to the configuration INI file')
 
+parser.add_argument('--only-running', action='store_true',
+                    help='only competitions are returned that are currently running')
+
 args = parser.parse_args()
 
 # Load environment
@@ -28,6 +32,11 @@ if not environment.load_from_file(args.config):
 
 query = Competition.query() \
     .order_by(Competition.start_date.desc(), Competition.end_date.desc())
+
+if args.only_running:
+    query = query \
+        .filter(Competition.start_date <= datetime.utcnow()) \
+        .filter(Competition.end_date >= datetime.utcnow())
 
 
 def print_competition(competition):
