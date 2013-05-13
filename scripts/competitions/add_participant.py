@@ -25,6 +25,12 @@ parser.add_argument(
 parser.add_argument(
     'participant_id', type=int, help='id of the participant')
 
+parser.add_argument('--admin', action='store_true',
+                    help='make this new participant an admin, not a pilot')
+
+parser.add_argument('--pilot-and-admin', action='store_true',
+                    help='make this new participant a pilot and admin')
+
 args = parser.parse_args()
 
 # Load environment
@@ -36,9 +42,17 @@ if not environment.load_from_file(args.config):
 
 participation = CompetitionParticipation(
     competition_id=args.competition_id,
-    user_id=args.participant_id,
-    pilot_time=datetime.utcnow()
-)
+    user_id=args.participant_id)
+
+now = datetime.utcnow()
+
+if args.pilot_and_admin:
+    participation.pilot_time = now
+    participation.admin_time = now
+elif args.admin:
+    participation.admin_time = now
+else:
+    participation.pilot_time = now
 
 DBSession.add(participation)
 DBSession.flush()
