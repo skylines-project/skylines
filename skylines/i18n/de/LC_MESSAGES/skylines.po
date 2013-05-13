@@ -33,10 +33,8 @@ msgid "Create Pilot"
 msgstr "Pilot erstellen"
 
 #: skylines/controllers/error.py:51
-#, fuzzy, python-format
-#| msgid "Error %(code)s"
 msgid "Error {code}"
-msgstr "Fehler %(code)s"
+msgstr "Fehler {code}"
 
 #: skylines/controllers/flight.py:59 skylines/forms/upload.py:21
 #: skylines/templates/flights/details-table.jinja:119
@@ -117,7 +115,7 @@ msgstr "Du musst eingeloggt sein, um Kommentare zu posten!"
 
 #: skylines/controllers/root.py:43 skylines/templates/base-page.jinja:30
 msgid "The SkyLines Team"
-msgstr ""
+msgstr "Das SkyLines Team"
 
 #: skylines/controllers/root.py:52 skylines/templates/base-page.jinja:31
 msgid "Imprint"
@@ -152,7 +150,7 @@ msgstr "Doppelte Datei"
 
 #: skylines/controllers/upload.py:106
 msgid "Date missing in IGC file"
-msgstr ""
+msgstr "In der IGC Datei fehlt das Datum"
 
 #: skylines/controllers/upload.py:125
 msgid "Failed to parse file"
@@ -893,11 +891,11 @@ msgstr "Gesamtpunkte"
 
 #: skylines/templates/ranking/airports.jinja:27
 msgid "No airports found."
-msgstr ""
+msgstr "Keine Flugplätze gefunden."
 
 #: skylines/templates/ranking/clubs.jinja:23
 msgid "No clubs found."
-msgstr ""
+msgstr "Keine Vereine gefunden."
 
 #: skylines/templates/ranking/layout.jinja:17
 #: skylines/templates/statistics/pilots-table.jinja:6
@@ -911,7 +909,7 @@ msgstr "Flugplätze"
 
 #: skylines/templates/ranking/pilots.jinja:25
 msgid "No pilots found."
-msgstr ""
+msgstr "Keine Piloten gefunden."
 
 #: skylines/templates/search/list.jinja:8
 #, python-format
