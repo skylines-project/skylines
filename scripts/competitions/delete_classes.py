@@ -31,7 +31,7 @@ args = parser.parse_args()
 
 # Check --all or class_ids are available
 
-if not (args.all or args.class_ids):
+if not (bool(args.all) ^ bool(args.class_ids)):
     parser.error('You have to use either --all or specify one or more competition class ids.')
 
 # Load environment

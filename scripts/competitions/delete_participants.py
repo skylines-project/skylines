@@ -33,7 +33,7 @@ args = parser.parse_args()
 
 # Check --all or participant_ids are available
 
-if not (args.all or args.participant_ids):
+if not (bool(args.all) ^ bool(args.participant_ids)):
     parser.error('You have to use either --all or specify one or more participant ids.')
 
 # Load environment
@@ -68,4 +68,4 @@ elif args.participant_ids:
             print 'No participant with id: {} found in competition with id: {}.' \
                 .format(participant_id, args.competition_id)
 
-transaction.commit()
+#transaction.commit()
