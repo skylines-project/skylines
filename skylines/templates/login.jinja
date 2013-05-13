@@ -5,7 +5,7 @@
 
 {%- block content %}
 <div class="row">
-  <div class="well span8 offset2" id="loginform">
+  <div class="box span8 offset2" id="loginform">
     <form action="{{ tg.url('/login_handler', params=dict(came_from=came_from.encode('utf-8'))) }}" method="post" accept-charset="UTF-8" class="loginfields">
       <div class="control-group">
         <label class="control-label" for="loginusername">Email Address:</label>
