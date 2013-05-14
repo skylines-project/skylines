@@ -61,6 +61,9 @@ def print_participant(participant):
     if participant.pilot_time:
         output = output + ', pilot'
 
+        if participant.class_id:
+            output = output + ' (class: {})'.format(participant.class_id)
+
     if participant.admin_time:
         output = output + ', admin'
 
