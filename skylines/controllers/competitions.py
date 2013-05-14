@@ -27,6 +27,7 @@ class CompetitionController(BaseController):
     def participants(self, **kw):
         query = CompetitionParticipation.query(competition=self.competition) \
             .join('user').options(contains_eager('user')) \
+            .options(joinedload('class_')) \
             .order_by('tg_user.name')
 
         pilots = []

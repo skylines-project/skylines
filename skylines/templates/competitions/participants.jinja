@@ -8,26 +8,29 @@
 {% block content -%}
 <div class="row">
     <div class="span6 box">{{ participants_table(pilots, _('Pilots')) }}</div>
-    <div class="span6 box">{{ participants_table(admins, _('Organizers')) }}</div>
+    <div class="span6 box">{{ participants_table(admins, _('Organizers'), show_classes=False) }}</div>
 </div>
 {%- endblock %}
 
 
-{% macro participants_table(participants, title) -%}
+{% macro participants_table(participants, title, show_classes=True) -%}
 <table class="table table-hover">
   <thead>
     <tr>
-      <th>{{ title }}</th>
+      <th{% if show_classes %} colspan="2"{% endif %}>{{ title }}</th>
     </tr>
   </thead>
   <tbody>
     {% for participant in participants -%}
     <tr>
       <td>{{ user_link(participant.user) }}</td>
+      {% if show_classes -%}
+      <td style="text-align: right;">{{ (participant.class_ or '')|e }}</td>
+      {%- endif %}
     </tr>
     {%- else -%}
     <tr>
-      <td>{{ _('There are no users in this category.') }}</td>
+      <td{% if show_classes %} colspan="2"{% endif %}>{{ _('There are no users in this category.') }}</td>
     </tr>
     {%- endfor %}
   </tbody>
