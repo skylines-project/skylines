@@ -25,6 +25,9 @@ parser.add_argument('--config', metavar='config.ini',
 parser.add_argument(
     'competition_id', type=int, help='id of the competition')
 
+parser.add_argument('--class', dest='class_id', type=int,
+                    help='id of the competition class')
+
 args = parser.parse_args()
 
 # Load environment
@@ -40,7 +43,12 @@ if not competition:
 
 subq = DBSession.query(CompetitionParticipation.user_id) \
     .filter_by(competition=competition) \
-    .filter(CompetitionParticipation.pilot_time != None).subquery()
+    .filter(CompetitionParticipation.pilot_time != None)
+
+if args.class_id:
+    subq = subq.filter_by(class_id=args.class_id)
+
+subq = subq.subquery()
 
 query = Flight.query() \
     .filter(Flight.pilot_id.in_(subq)) \
