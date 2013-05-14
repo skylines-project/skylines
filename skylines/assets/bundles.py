@@ -103,6 +103,7 @@ datatables_js = Bundle(
 openlayers_js = Bundle(
     'js/OpenLayers/OpenLayers.js',
     'js/OpenLayers/GraphicLayerSwitcher.js',
+    'http://maps.stamen.com/js/tile.stamen.js?v1.2.0',
     'js/map.js',
     'js/map-click-handler.js',
     filters='rjsmin',

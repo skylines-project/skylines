@@ -55,6 +55,9 @@ function initOpenLayers(id, tile_url) {
   addMWPLayers(tile_url);
   addEmptyLayer();
 
+  map.addLayer(new OpenLayers.Layer.Stamen("toner"));
+  map.addLayer(new OpenLayers.Layer.Stamen("watercolor"));
+
   map.setCenter(new OpenLayers.LonLat(10, 50).
       transform(new OpenLayers.Projection('EPSG:4326'),
                 map.getProjectionObject()), 5);
