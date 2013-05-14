@@ -4,12 +4,13 @@
 #
 
 import argparse
+import sys
 from datetime import datetime
 import transaction
 
 from skylines.config import environment
 from skylines.model.session import DBSession
-from skylines.model import CompetitionParticipation
+from skylines.model import CompetitionParticipation, CompetitionClass
 
 
 # Parse command line parameters
@@ -24,6 +25,9 @@ parser.add_argument(
     'competition_id', type=int, help='id of the competition')
 parser.add_argument(
     'participant_id', type=int, help='id of the participant')
+
+parser.add_argument('--class', dest='class_id', type=int,
+                    help='id of the competition class')
 
 parser.add_argument('--admin', action='store_true',
                     help='make this new participant an admin, not a pilot')
@@ -53,6 +57,12 @@ elif args.admin:
     participation.admin_time = now
 else:
     participation.pilot_time = now
+
+if args.class_id:
+    participation.class_ = CompetitionClass.get(args.class_id)
+    if not participation.class_:
+        sys.exit('There is no competition class with id: {} in competition with id: {}'
+                 .format(args.class_id, args.competition_id))
 
 DBSession.add(participation)
 DBSession.flush()
