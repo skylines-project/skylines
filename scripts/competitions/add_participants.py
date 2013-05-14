@@ -23,8 +23,9 @@ parser.add_argument('--config', metavar='config.ini',
 
 parser.add_argument(
     'competition_id', type=int, help='id of the competition')
-parser.add_argument(
-    'participant_id', type=int, help='id of the participant')
+
+parser.add_argument(metavar='participant-id', dest='participant_ids',
+                    nargs='+', type=int, help='id of the participant')
 
 parser.add_argument('--class', dest='class_id', type=int,
                     help='id of the competition class')
@@ -42,32 +43,34 @@ args = parser.parse_args()
 if not environment.load_from_file(args.config):
     parser.error('Config file "{}" not found.'.format(args.config))
 
-# Add the participant to the competition
+# Add the participants to the competition
 
-participation = CompetitionParticipation(
-    competition_id=args.competition_id,
-    user_id=args.participant_id)
+for participant_id in args.participant_ids:
 
-now = datetime.utcnow()
+    participation = CompetitionParticipation(
+        competition_id=args.competition_id,
+        user_id=participant_id)
 
-if args.pilot_and_admin:
-    participation.pilot_time = now
-    participation.admin_time = now
-elif args.admin:
-    participation.admin_time = now
-else:
-    participation.pilot_time = now
+    now = datetime.utcnow()
 
-if args.class_id:
-    participation.class_ = CompetitionClass.get(args.class_id)
-    if not participation.class_:
-        sys.exit('There is no competition class with id: {} in competition with id: {}'
-                 .format(args.class_id, args.competition_id))
+    if args.pilot_and_admin:
+        participation.pilot_time = now
+        participation.admin_time = now
+    elif args.admin:
+        participation.admin_time = now
+    else:
+        participation.pilot_time = now
 
-DBSession.add(participation)
-DBSession.flush()
+    if args.class_id:
+        participation.class_ = CompetitionClass.get(args.class_id)
+        if not participation.class_:
+            sys.exit('There is no competition class with id: {} in competition with id: {}'
+                     .format(args.class_id, args.competition_id))
 
-print 'Participation object created with id: {}' \
-    .format(participation.id)
+    DBSession.add(participation)
+    DBSession.flush()
+
+    print 'Participation object created with id: {}' \
+        .format(participation.id)
 
 transaction.commit()
