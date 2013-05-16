@@ -19,7 +19,27 @@
 
 {% macro ranking() -%}
 <div class="row">
-  <div class="span6">&nbsp;</div>
+  <div class="span6">
+    <ul class="nav nav-pills">
+      <li class="dropdown">
+        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+          {% if year -%}
+          {{ _('Season %(year)s')|format(year=year) }}
+          {%- else -%}
+          {{ _('All time') }}
+          {%- endif %}
+          <b class="caret"></b>
+        </a>
+        <ul class="dropdown-menu">
+          <li{% if not year %} class="active"{% endif %}><a href="?year=all">{{ _('All time') }}</a></li>
+          <li class="divider"></li>
+          {% for _year in range(2013, 2008, -1) -%}
+          <li{% if year == _year %} class="active"{% endif %}><a href="?year={{ _year }}">{{ _year }}</a></li>
+          {%- endfor %}
+        </ul>
+      </li>
+    </ul>
+  </div>
   <div class="span6">
     <div class="pull-right">
       {{ pager('result', dict(year=year)) }}
