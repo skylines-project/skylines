@@ -51,19 +51,19 @@ class RankingController(BaseController):
     @expose('ranking/pilots.jinja')
     @paginate('result', items_per_page=20)
     def pilots(self, **kw):
-        return dict(tab='pilots',
+        return dict(active_header_tab='pilots',
                     result=self.__get_result(User, 'pilot_id', **kw))
 
     @without_trailing_slash
     @expose('ranking/clubs.jinja')
     @paginate('result', items_per_page=20)
     def clubs(self, **kw):
-        return dict(tab='clubs',
+        return dict(active_header_tab='clubs',
                     result=self.__get_result(Club, 'club_id', **kw))
 
     @without_trailing_slash
     @expose('ranking/airports.jinja')
     @paginate('result', items_per_page=20)
     def airports(self, **kw):
-        return dict(tab='airports',
+        return dict(active_header_tab='airports',
                     result=self.__get_result(Airport, 'takeoff_airport_id', **kw))
