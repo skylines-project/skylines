@@ -18,7 +18,7 @@ class RankingController(BaseController):
         redirect('/ranking/clubs')
 
     @staticmethod
-    def __get_result(model, flight_field, **kw):
+    def __get_result(model, flight_field, year=None):
         subq = DBSession \
             .query(getattr(Flight, flight_field),
                    func.count('*').label('count'),
@@ -26,12 +26,7 @@ class RankingController(BaseController):
             .group_by(getattr(Flight, flight_field)) \
             .outerjoin(Flight.model)
 
-        if 'year' in kw:
-            try:
-                year = int(kw['year'])
-            except:
-                raise HTTPBadRequest
-
+        if year:
             year_start = date(year, 1, 1)
             year_end = date(year, 12, 31)
             subq = subq.filter(Flight.date_local >= year_start) \
@@ -47,23 +42,33 @@ class RankingController(BaseController):
         result = result.order_by(desc('total'))
         return result
 
+    @staticmethod
+    def __parse_year(**kw):
+        try:
+            return int(kw['year'])
+        except:
+            return None
+
     @without_trailing_slash
     @expose('ranking/pilots.jinja')
     @paginate('result', items_per_page=20)
     def pilots(self, **kw):
-        return dict(active_header_tab='pilots',
-                    result=self.__get_result(User, 'pilot_id', **kw))
+        year = self.__parse_year(**kw)
+        return dict(active_header_tab='pilots', year=year,
+                    result=self.__get_result(User, 'pilot_id', year=year))
 
     @without_trailing_slash
     @expose('ranking/clubs.jinja')
     @paginate('result', items_per_page=20)
     def clubs(self, **kw):
-        return dict(active_header_tab='clubs',
-                    result=self.__get_result(Club, 'club_id', **kw))
+        year = self.__parse_year(**kw)
+        return dict(active_header_tab='clubs', year=year,
+                    result=self.__get_result(Club, 'club_id', year=year))
 
     @without_trailing_slash
     @expose('ranking/airports.jinja')
     @paginate('result', items_per_page=20)
     def airports(self, **kw):
-        return dict(active_header_tab='airports',
-                    result=self.__get_result(Airport, 'takeoff_airport_id', **kw))
+        year = self.__parse_year(**kw)
+        return dict(active_header_tab='airports', year=year,
+                    result=self.__get_result(Airport, 'takeoff_airport_id', year=year))
