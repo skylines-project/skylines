@@ -26,7 +26,7 @@ class RankingController(BaseController):
             .group_by(getattr(Flight, flight_field)) \
             .outerjoin(Flight.model)
 
-        if year:
+        if isinstance(year, int):
             year_start = date(year, 1, 1)
             year_end = date(year, 12, 31)
             subq = subq.filter(Flight.date_local >= year_start) \
@@ -52,9 +52,15 @@ class RankingController(BaseController):
     @staticmethod
     def __parse_year(**kw):
         try:
-            return int(kw['year'])
+            year = kw['year']
+
+            if year == 'all':
+                return 'all'
+
+            return int(year)
         except:
-            return None
+            current_year = date.today().year
+            return current_year
 
     @without_trailing_slash
     @expose('ranking/pilots.jinja')

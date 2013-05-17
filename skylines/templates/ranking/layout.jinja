@@ -23,7 +23,7 @@
     <ul class="nav nav-pills">
       <li class="dropdown">
         <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-          {% if year -%}
+          {% if year is number -%}
           {{ _('Season %(year)s')|format(year=year) }}
           {%- else -%}
           {{ _('All time') }}
