@@ -60,11 +60,18 @@
 
 {% macro result_title(result) -%}
 {% if result.model == 'User' -%}
-  <a href="/users/{{ result.id }}">{{ result.name }}</a>
+  <a href="/users/{{ result.id }}">{{ result.name|e }}</a>
 {%- elif result.model == 'Club' -%}
-  <a href="/clubs/{{ result.id }}">{{ result.name }}</a>
+  <a href="/clubs/{{ result.id }}">{{ result.name|e }}</a>
+  <small>
+  {% if result.website -%} - <a href="{{ result.website|e }}" target="_blank">{{ result.website|e }}</a>{%- endif %}
+  </small>
 {%- elif result.model == 'Airport' -%}
-  <a href="/flights/airport/{{ result.id }}">{{ result.name }}</a>
+  <a href="/flights/airport/{{ result.id }}">{{ result.name|e }}</a>
+  <small>
+  {% if result.icao -%} - {{ result.icao|e }}{%- endif %}
+  {% if result.frequency -%} - {{ '%.3f'|format(result.frequency|float) }} MHz{%- endif %}
+  </small>
 {%- endif %}
 {%- endmacro %}
 

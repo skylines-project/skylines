@@ -17,6 +17,7 @@ from .geo import Location
 class Airport(DeclarativeBase):
     __tablename__ = 'airports'
     __searchable_columns__ = ['name', 'icao']
+    __search_detail_columns__ = ['icao', 'frequency']
 
     id = Column(Integer, autoincrement=True, primary_key=True)
     time_created = Column(DateTime, nullable=False, default=datetime.utcnow)
