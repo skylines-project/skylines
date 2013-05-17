@@ -29,8 +29,23 @@ WITH (
 ALTER TABLE competitions
   ADD CONSTRAINT date_check CHECK (end_date >= start_date);
 
-ALTER TABLE competition_participation
-  ADD CONSTRAINT unique_participation UNIQUE(competition_id , user_id );
+-- Table: competition_admins
+
+CREATE TABLE competition_admins
+(
+  competition_id integer NOT NULL,
+  user_id integer NOT NULL,
+  CONSTRAINT competition_admins_pkey PRIMARY KEY (competition_id , user_id ),
+  CONSTRAINT competition_admins_competition_id_fkey FOREIGN KEY (competition_id)
+      REFERENCES competitions (id) MATCH SIMPLE
+      ON UPDATE CASCADE ON DELETE CASCADE,
+  CONSTRAINT competition_admins_user_id_fkey FOREIGN KEY (user_id)
+      REFERENCES tg_user (id) MATCH SIMPLE
+      ON UPDATE CASCADE ON DELETE CASCADE
+)
+WITH (
+  OIDS=FALSE
+);
 
 -- Table: competition_classes
 
@@ -57,8 +72,7 @@ CREATE TABLE competition_participation
   competition_id integer NOT NULL,
   user_id integer NOT NULL,
   class_id integer,
-  admin_time timestamp without time zone,
-  pilot_time timestamp without time zone,
+  join_time timestamp without time zone,
   CONSTRAINT competition_participation_pkey PRIMARY KEY (id ),
   CONSTRAINT competition_participation_competition_id_fkey FOREIGN KEY (competition_id)
       REFERENCES competitions (id) MATCH SIMPLE
@@ -73,5 +87,8 @@ CREATE TABLE competition_participation
 WITH (
   OIDS=FALSE
 );
+
+ALTER TABLE competition_participation
+  ADD CONSTRAINT unique_participation UNIQUE(competition_id , user_id );
 
 COMMIT;

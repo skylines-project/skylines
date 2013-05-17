@@ -1,3 +1,5 @@
+from collections import namedtuple
+
 from formencode import Invalid
 from tg import expose, request, redirect
 from tg.i18n import ugettext as _
@@ -25,18 +27,13 @@ class CompetitionController(BaseController):
     @without_trailing_slash
     @expose('competitions/participants.jinja')
     def participants(self, **kw):
-        query = CompetitionParticipation.query(competition=self.competition) \
+        pilots = CompetitionParticipation.query(competition=self.competition) \
             .join('user').options(contains_eager('user')) \
             .options(joinedload('class_')) \
             .order_by('tg_user.name')
 
-        pilots = []
-        admins = []
-        for participant in query:
-            if participant.pilot_time:
-                pilots.append(participant)
-            if participant.admin_time:
-                admins.append(participant)
+        Admin = namedtuple('Admin', ['user'])
+        admins = sorted([Admin(user) for user in self.competition.admins])
 
         return dict(competition=self.competition, pilots=pilots, admins=admins)
 

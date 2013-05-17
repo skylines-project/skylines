@@ -42,8 +42,7 @@ if not competition:
     sys.exit('No competition found with id: {}.'.format(args.competition_id))
 
 subq = DBSession.query(CompetitionParticipation.user_id) \
-    .filter_by(competition=competition) \
-    .filter(CompetitionParticipation.pilot_time != None)
+    .filter_by(competition=competition)
 
 if args.class_id:
     subq = subq.filter_by(class_id=args.class_id)

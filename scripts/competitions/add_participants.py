@@ -30,12 +30,6 @@ parser.add_argument(metavar='participant-id', dest='participant_ids',
 parser.add_argument('--class', dest='class_id', type=int,
                     help='id of the competition class')
 
-parser.add_argument('--admin', action='store_true',
-                    help='make this new participant an admin, not a pilot')
-
-parser.add_argument('--pilot-and-admin', action='store_true',
-                    help='make this new participant a pilot and admin')
-
 args = parser.parse_args()
 
 # Load environment
@@ -49,17 +43,8 @@ for participant_id in args.participant_ids:
 
     participation = CompetitionParticipation(
         competition_id=args.competition_id,
-        user_id=participant_id)
-
-    now = datetime.utcnow()
-
-    if args.pilot_and_admin:
-        participation.pilot_time = now
-        participation.admin_time = now
-    elif args.admin:
-        participation.admin_time = now
-    else:
-        participation.pilot_time = now
+        user_id=participant_id,
+        join_time=datetime.utcnow())
 
     if args.class_id:
         participation.class_ = CompetitionClass.get(args.class_id)

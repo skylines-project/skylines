@@ -1,10 +1,21 @@
 from datetime import datetime
 
-from sqlalchemy import Column, ForeignKey, CheckConstraint, UniqueConstraint
+from sqlalchemy import Table, Column, ForeignKey, CheckConstraint, UniqueConstraint
 from sqlalchemy.orm import relationship
 from sqlalchemy.types import Integer, Unicode, UnicodeText, DateTime, Date
 
-from .base import DeclarativeBase
+from .base import DeclarativeBase, metadata
+
+
+# This is the association table for the many-to-many relationship between
+# competitions and their admins.
+competition_admin_table = Table(
+    'competition_admins', metadata,
+    Column('competition_id', Integer, ForeignKey('competitions.id',
+           onupdate="CASCADE", ondelete="CASCADE"), primary_key=True),
+    Column('user_id', Integer, ForeignKey('tg_user.id',
+           onupdate="CASCADE", ondelete="CASCADE"), primary_key=True)
+)
 
 
 class Competition(DeclarativeBase):
@@ -40,6 +51,8 @@ class Competition(DeclarativeBase):
     end_date = Column(Date, nullable=False)
 
     # Competition organizers and pilots
+
+    admins = relationship('User', secondary=competition_admin_table)
 
     participants = relationship('CompetitionParticipation')
 
@@ -122,10 +135,9 @@ class CompetitionParticipation(DeclarativeBase):
         Integer, ForeignKey('competition_classes.id', ondelete='SET NULL'))
     class_ = relationship('CompetitionClass')
 
-    # Permissions incl. timestamps (permission missing if field is NULL)
+    # Timestamps
 
-    admin_time = Column(DateTime)
-    pilot_time = Column(DateTime)
+    join_time = Column(DateTime)
 
     ##############################
 
