@@ -5,7 +5,15 @@
 
 {% if not partial %}
 {% extends "base-page.jinja" %}
+
+{% set header_tabs = [
+    (tg.url('/ranking/clubs', params=dict(year=year)), 'clubs', _('Clubs')),
+    (tg.url('/ranking/pilots', params=dict(year=year)), 'pilots', _('Pilots')),
+    (tg.url('/ranking/airports', params=dict(year=year)), 'airports', _('Airports')),
+] %}
+
 {% set active_page = "ranking" %}
+
 {% block title %}{% trans %}Ranking{% endtrans %}{% endblock %}
 {%- endif %}
 
@@ -13,14 +21,28 @@
 <div class="row">
   <div class="span6">
     <ul class="nav nav-pills">
-      <li{% if tab == 'clubs' %} class="active"{% endif %}><a href="clubs">{% trans %}Clubs{% endtrans %}</a></li>
-      <li{% if tab == 'pilots' %} class="active"{% endif %}><a href="pilots">{% trans %}Pilots{% endtrans %}</a></li>
-      <li{% if tab == 'airports' %} class="active"{% endif %}><a href="airports">{% trans %}Airports{% endtrans %}</a></li>
+      <li class="dropdown">
+        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+          {% if year is number -%}
+          {{ _('Season %(year)s')|format(year=year) }}
+          {%- else -%}
+          {{ _('All time') }}
+          {%- endif %}
+          <b class="caret"></b>
+        </a>
+        <ul class="dropdown-menu">
+          <li{% if not year %} class="active"{% endif %}><a href="?year=all">{{ _('All time') }}</a></li>
+          <li class="divider"></li>
+          {% for _year in range(current_year, current_year - 5, -1) -%}
+          <li{% if year == _year %} class="active"{% endif %}><a href="?year={{ _year }}">{{ _year }}</a></li>
+          {%- endfor %}
+        </ul>
+      </li>
     </ul>
   </div>
   <div class="span6">
     <div class="pull-right">
-      {{ pager('result') }}
+      {{ pager('result', dict(year=year)) }}
     </div>
   </div>
 </div>
@@ -30,7 +52,7 @@
 <div class="row">
   <div class="span12">
     <div class="pull-right">
-      {{ pager('result') }}
+      {{ pager('result', dict(year=year)) }}
     </div>
   </div>
 </div>

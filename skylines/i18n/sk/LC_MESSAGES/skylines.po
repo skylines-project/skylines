@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  skylines\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2013-05-11 16:16+0200\n"
+"POT-Creation-Date: 2013-05-12 23:48+0200\n"
 "PO-Revision-Date: 2012-12-09 05:18+0000\n"
 "Last-Translator: Eric Praznovsky <eric@virtualsoaring.eu>\n"
 "Language-Team: Slovak <sk@li.org>\n"
@@ -31,6 +31,10 @@ msgstr "Upraviť klub"
 #: skylines/controllers/clubs.py:57 skylines/templates/clubs/pilots.jinja:21
 msgid "Create Pilot"
 msgstr "Vytvoriť pilota"
+
+#: skylines/controllers/error.py:51
+msgid "Error {code}"
+msgstr ""
 
 #: skylines/controllers/flight.py:59 skylines/forms/upload.py:21
 #: skylines/templates/flights/details-table.jinja:119
@@ -109,18 +113,26 @@ msgstr "Ste si istí, že chcete zmazať tento let?"
 msgid "You have to be logged in to post comments!"
 msgstr "Musíte byť prihlásený, aby ste mohli písať komentáre!"
 
-#: skylines/controllers/root.py:125
+#: skylines/controllers/root.py:43 skylines/templates/base-page.jinja:30
+msgid "The SkyLines Team"
+msgstr ""
+
+#: skylines/controllers/root.py:52 skylines/templates/base-page.jinja:31
+msgid "Imprint"
+msgstr "Imprint"
+
+#: skylines/controllers/root.py:145
 msgid "Sorry, email address or password are wrong. Please try again or register."
 msgstr ""
 "Je nám ľúto, e-mailová adresa alebo heslo sú nesprávne. Skúste to prosím "
 "znovu alebo zaregistrovať."
 
-#: skylines/controllers/root.py:130
+#: skylines/controllers/root.py:150
 #, python-format
 msgid "You are now logged in. Welcome back, %s!"
 msgstr "Teraz ste prihlásený. Vitajte späť, %s!"
 
-#: skylines/controllers/root.py:147
+#: skylines/controllers/root.py:167
 msgid "You are now logged out. We hope to see you back soon!"
 msgstr "Teraz ste odhlásený. Dúfame, že sa čoskoro sa vrátite!"
 
@@ -425,15 +437,6 @@ msgid ""
 "target=\"_blank\">here</a> to write a feature request or bug report."
 msgstr ""
 
-#: skylines/templates/base-page.jinja:31 skylines/templates/imprint.jinja:4
-msgid "Imprint"
-msgstr "Imprint"
-
-#: skylines/templates/error.jinja:3
-#, python-format
-msgid "Error %(code)s"
-msgstr ""
-
 #: skylines/templates/login.jinja:4 skylines/templates/topbar.jinja:55
 msgid "Login"
 msgstr "Prihlásenie"
@@ -478,7 +481,6 @@ msgstr "Štatistiky"
 
 #: skylines/templates/topbar.jinja:33 skylines/templates/search/list.jinja:10
 #, fuzzy
-#| msgid "Year"
 msgid "Search"
 msgstr "Rok"
 
@@ -1170,4 +1172,7 @@ msgstr "Priemerná rýchlosť"
 #: skylines/templates/users/view.jinja:266
 msgid "Takeoff Locations"
 msgstr "Miesta vzletov"
+
+#~ msgid "Error %(code)s"
+#~ msgstr ""
 

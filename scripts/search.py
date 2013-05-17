@@ -21,4 +21,4 @@ for u in search_query(tokens).limit(20):
     model = globals()[u.model]
     instance = model.get(u.id)
 
-    print u.weight, instance
+    print u.weight, instance, u.details

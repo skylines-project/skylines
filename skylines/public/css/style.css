@@ -114,6 +114,15 @@ table .show {
 .footer {
   text-align: center;
   font-size: smaller;
+  margin-top: 5px;
+}
+
+.footer a {
+  color: #333;
+}
+
+.footer a:hover {
+  text-decoration: none;
 }
 
 .right th {
