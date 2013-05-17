@@ -230,5 +230,5 @@ def process_result_details(models, results):
             continue
 
         for key, value in zip(details, result.details):
-            if key:
+            if isinstance(key, str):
                 setattr(result, key, value)
