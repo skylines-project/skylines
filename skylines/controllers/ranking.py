@@ -44,9 +44,10 @@ class RankingController(BaseController):
 
     @classmethod
     def __handle_request(cls, model, flight_field, **kw):
+        current_year = date.today().year
         year = cls.__parse_year(**kw)
         result = cls.__get_result(model, flight_field, year=year)
-        return dict(year=year, result=result)
+        return dict(year=year, current_year=current_year, result=result)
 
     @staticmethod
     def __parse_year(**kw):

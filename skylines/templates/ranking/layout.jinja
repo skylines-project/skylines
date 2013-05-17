@@ -33,7 +33,7 @@
         <ul class="dropdown-menu">
           <li{% if not year %} class="active"{% endif %}><a href="?year=all">{{ _('All time') }}</a></li>
           <li class="divider"></li>
-          {% for _year in range(2013, 2008, -1) -%}
+          {% for _year in range(current_year, current_year - 5, -1) -%}
           <li{% if year == _year %} class="active"{% endif %}><a href="?year={{ _year }}">{{ _year }}</a></li>
           {%- endfor %}
         </ul>
