@@ -42,6 +42,12 @@ class RankingController(BaseController):
         result = result.order_by(desc('total'))
         return result
 
+    @classmethod
+    def __handle_request(cls, model, flight_field, **kw):
+        year = cls.__parse_year(**kw)
+        result = cls.__get_result(model, flight_field, year=year)
+        return dict(year=year, result=result)
+
     @staticmethod
     def __parse_year(**kw):
         try:
@@ -53,22 +59,19 @@ class RankingController(BaseController):
     @expose('ranking/pilots.jinja')
     @paginate('result', items_per_page=20)
     def pilots(self, **kw):
-        year = self.__parse_year(**kw)
-        return dict(active_header_tab='pilots', year=year,
-                    result=self.__get_result(User, 'pilot_id', year=year))
+        return dict(self.__handle_request(User, 'pilot_id', **kw),
+                    active_header_tab='pilots')
 
     @without_trailing_slash
     @expose('ranking/clubs.jinja')
     @paginate('result', items_per_page=20)
     def clubs(self, **kw):
-        year = self.__parse_year(**kw)
-        return dict(active_header_tab='clubs', year=year,
-                    result=self.__get_result(Club, 'club_id', year=year))
+        return dict(self.__handle_request(Club, 'club_id', **kw),
+                    active_header_tab='clubs')
 
     @without_trailing_slash
     @expose('ranking/airports.jinja')
     @paginate('result', items_per_page=20)
     def airports(self, **kw):
-        year = self.__parse_year(**kw)
-        return dict(active_header_tab='airports', year=year,
-                    result=self.__get_result(Airport, 'takeoff_airport_id', year=year))
+        return dict(self.__handle_request(Airport, 'takeoff_airport_id', **kw),
+                    active_header_tab='airports')
