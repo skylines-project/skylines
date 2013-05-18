@@ -31,7 +31,8 @@ function initOpenLayers(id, tile_url) {
     projection: 'EPSG:900913',
     controls: [],
     theme: null,
-    tileManager: new OpenLayers.TileManager()
+    tileManager: new OpenLayers.TileManager(),
+    fallThrough: true
   });
 
   map.div.setAttribute('tabindex', '0');
