@@ -123,6 +123,7 @@ function addMWPLayers(tile_url) {
             '<a href="http://www.mountain-wave-project.com/">' +
             'Mountain Wave Project' +
             '</a>.',
+        transitionEffect: 'map-resize',
         serverResolutions: MAPSERVER_RESOLUTIONS
       });
   map.addLayer(mwp);
@@ -142,6 +143,7 @@ function addAirspaceLayers(tile_url) {
         isBaseLayer: false,
         'visibility': true,
         'displayInLayerSwitcher': true,
+        transitionEffect: 'map-resize',
         serverResolutions: MAPSERVER_RESOLUTIONS
       });
   map.addLayer(airspace);
