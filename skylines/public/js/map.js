@@ -30,7 +30,8 @@ function initOpenLayers(id, tile_url) {
   map = new OpenLayers.Map(id, {
     projection: 'EPSG:900913',
     controls: [],
-    theme: null
+    theme: null,
+    tileManager: new OpenLayers.TileManager()
   });
 
   map.div.setAttribute('tabindex', '0');
