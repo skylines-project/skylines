@@ -115,11 +115,11 @@ msgstr "Du musst eingeloggt sein, um Kommentare zu posten!"
 
 #: skylines/controllers/root.py:42
 msgid "Developers"
-msgstr ""
+msgstr "Entwickler"
 
 #: skylines/controllers/root.py:43
 msgid "Translators"
-msgstr ""
+msgstr "Übersetzer"
 
 #: skylines/controllers/root.py:46 skylines/templates/base-page.jinja:43
 msgid "The SkyLines Team"
@@ -711,8 +711,6 @@ msgid "Flights <small>on %(date)s</small>"
 msgstr "Flüge <small>am %(date)s</small>"
 
 #: skylines/templates/flights/list.jinja:257
-#, fuzzy
-#| msgid "Upload Flight"
 msgid "Upload flight"
 msgstr "Flug hochladen"
 
@@ -920,12 +918,12 @@ msgstr "Flugplätze"
 #: skylines/templates/ranking/layout.jinja:27
 #, python-format
 msgid "Season %(year)s"
-msgstr ""
+msgstr "Saison %(year)s"
 
 #: skylines/templates/ranking/layout.jinja:29
 #: skylines/templates/ranking/layout.jinja:34
 msgid "All time"
-msgstr ""
+msgstr "Gesamt"
 
 #: skylines/templates/ranking/pilots.jinja:25
 msgid "No pilots found."
