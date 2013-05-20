@@ -1,10 +1,10 @@
 {% from "macros/flags.jinja" import insert_flag with context %}
 
 {% set navigation_bar = [
-    ('/tracking/', 'tracking', _('Live')),
-    ('/flights/', 'flights', _('Flights')),
-    ('/ranking/', 'ranking', _('Ranking')),
-    ('/statistics/', 'statistics', _('Statistics'))
+    ('/tracking/', 'tracking', '<i class="icon-rss icon-large"></i>'),
+    ('/flights/', 'flights', '<i class="icon-plane icon-large"></i>'),
+    ('/ranking/', 'ranking', '<i class="icon-reorder icon-large"></i>'),
+    ('/statistics/', 'statistics', '<i class="icon-bar-chart icon-large"></i>')
 ] -%}
 
 {% macro topbar(active_page) -%}
