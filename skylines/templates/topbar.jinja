@@ -34,6 +34,10 @@
 </form>
 
 <ul class="nav pull-right">
+    <li{% if active_page == 'upload' %} class="active"{% endif %}>
+        <a href="/flights/upload/"><i class="icon-cloud-upload icon-large"></i></a>
+    </li>
+
     {% if request.identity -%}
     {{ _notification_item(active_page) }}
     {{ _user_dropdown(active_page) }}
