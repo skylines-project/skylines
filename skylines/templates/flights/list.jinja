@@ -250,3 +250,10 @@ showPinnedFlightsLink();
 {%- if tab == 'unassigned' %}{% do omitted_columns.append('pilot') %}{% endif %}
 {{ render_flights_table(flights, omitted_columns) }}
 {%- endblock %}
+
+
+{% block title_right -%}
+<a href="/flights/upload/" class="btn">
+  <i class="icon-upload-alt"></i> {{ _('Upload flight') }}
+</a>
+{%- endblock %}
