@@ -33,7 +33,8 @@ class CompetitionController(BaseController):
             .order_by('tg_user.name')
 
         Admin = namedtuple('Admin', ['user'])
-        admins = sorted([Admin(user) for user in self.competition.admins])
+        admins = sorted(self.competition.admins, key=str)
+        admins = [Admin(user) for user in admins]
 
         return dict(competition=self.competition, pilots=pilots, admins=admins)
 
