@@ -88,6 +88,14 @@ class Competition(DeclarativeBase):
 
     ##############################
 
+    def is_writable(self, identity):
+        return identity and \
+            ('manage' in identity['permissions'] or
+             identity['user'] == self.creator or
+             identity['user'] in self.admins)
+
+    ##############################
+
     @property
     def location_string(self):
         """ A string containing the location of the competition. """
