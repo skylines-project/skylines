@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  skylines\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2013-05-12 23:48+0200\n"
+"POT-Creation-Date: 2013-05-20 15:17+0200\n"
 "PO-Revision-Date: 2012-12-03 00:08+0000\n"
 "Last-Translator: Pop Paul <poppali1@yahoo.com>\n"
 "Language-Team: Romanian <ro@li.org>\n"
@@ -114,26 +114,34 @@ msgstr "sigur doriti sa stergeti zborul?"
 msgid "You have to be logged in to post comments!"
 msgstr "trebuie sa fi logat pentru a posta comentarii"
 
-#: skylines/controllers/root.py:43 skylines/templates/base-page.jinja:30
+#: skylines/controllers/root.py:42
+msgid "Developers"
+msgstr ""
+
+#: skylines/controllers/root.py:43
+msgid "Translators"
+msgstr ""
+
+#: skylines/controllers/root.py:46 skylines/templates/base-page.jinja:43
 msgid "The SkyLines Team"
 msgstr ""
 
-#: skylines/controllers/root.py:52 skylines/templates/base-page.jinja:31
+#: skylines/controllers/root.py:55 skylines/templates/base-page.jinja:44
 msgid "Imprint"
 msgstr ""
 
-#: skylines/controllers/root.py:145
+#: skylines/controllers/root.py:148
 msgid "Sorry, email address or password are wrong. Please try again or register."
 msgstr ""
 "Scuze, adresa de mail sau password incorect. Va rugam sa incercati din "
 "nou sau inregistrati-va."
 
-#: skylines/controllers/root.py:150
+#: skylines/controllers/root.py:153
 #, python-format
 msgid "You are now logged in. Welcome back, %s!"
 msgstr ""
 
-#: skylines/controllers/root.py:167
+#: skylines/controllers/root.py:170
 msgid "You are now logged out. We hope to see you back soon!"
 msgstr ""
 
@@ -445,9 +453,9 @@ msgstr ""
 #: skylines/templates/ranking/airports.jinja:11
 #: skylines/templates/ranking/clubs.jinja:10
 #: skylines/templates/ranking/pilots.jinja:11
-#: skylines/templates/search/list.jinja:73
-#: skylines/templates/search/list.jinja:77
 #: skylines/templates/search/list.jinja:80
+#: skylines/templates/search/list.jinja:84
+#: skylines/templates/search/list.jinja:87
 #: skylines/templates/statistics/flights-table.jinja:6
 #: skylines/templates/statistics/years.jinja:66
 #: skylines/templates/users/users-table.jinja:26
@@ -456,16 +464,16 @@ msgstr ""
 msgid "Flights"
 msgstr ""
 
-#: skylines/templates/topbar.jinja:6 skylines/templates/ranking/layout.jinja:9
+#: skylines/templates/topbar.jinja:6 skylines/templates/ranking/layout.jinja:17
 msgid "Ranking"
 msgstr ""
 
 #: skylines/templates/topbar.jinja:7 skylines/templates/topbar.jinja:112
 #: skylines/templates/clubs/list.jinja:21
 #: skylines/templates/clubs/view.jinja:51
-#: skylines/templates/search/list.jinja:74
-#: skylines/templates/search/list.jinja:78
 #: skylines/templates/search/list.jinja:81
+#: skylines/templates/search/list.jinja:85
+#: skylines/templates/search/list.jinja:88
 #: skylines/templates/statistics/years.jinja:29
 #: skylines/templates/users/users-table.jinja:27
 #: skylines/templates/users/view.jinja:163
@@ -474,10 +482,6 @@ msgstr ""
 
 #: skylines/templates/topbar.jinja:33 skylines/templates/search/list.jinja:10
 msgid "Search"
-msgstr ""
-
-#: skylines/templates/topbar.jinja:38
-msgid "Upload"
 msgstr ""
 
 #: skylines/templates/topbar.jinja:66
@@ -506,7 +510,7 @@ msgid "Logout"
 msgstr ""
 
 #: skylines/templates/clubs/list.jinja:5
-#: skylines/templates/ranking/layout.jinja:16
+#: skylines/templates/ranking/layout.jinja:10
 msgid "Clubs"
 msgstr ""
 
@@ -518,7 +522,7 @@ msgstr ""
 
 #: skylines/templates/clubs/list.jinja:22
 #: skylines/templates/clubs/view.jinja:52
-#: skylines/templates/search/list.jinja:76
+#: skylines/templates/search/list.jinja:83
 msgid "Members"
 msgstr ""
 
@@ -686,6 +690,12 @@ msgstr ""
 #, python-format
 msgid "Flights <small>on %(date)s</small>"
 msgstr ""
+
+#: skylines/templates/flights/list.jinja:257
+#, fuzzy
+#| msgid "Upload Flight"
+msgid "Upload flight"
+msgstr "Incarca fisier"
 
 #: skylines/templates/flights/macros.jinja:5
 #, python-format
@@ -870,14 +880,24 @@ msgstr ""
 msgid "No clubs found."
 msgstr ""
 
-#: skylines/templates/ranking/layout.jinja:17
+#: skylines/templates/ranking/layout.jinja:11
 #: skylines/templates/statistics/pilots-table.jinja:6
 #: skylines/templates/statistics/years.jinja:76
 msgid "Pilots"
 msgstr ""
 
-#: skylines/templates/ranking/layout.jinja:18
+#: skylines/templates/ranking/layout.jinja:12
 msgid "Airports"
+msgstr ""
+
+#: skylines/templates/ranking/layout.jinja:27
+#, python-format
+msgid "Season %(year)s"
+msgstr ""
+
+#: skylines/templates/ranking/layout.jinja:29
+#: skylines/templates/ranking/layout.jinja:34
+msgid "All time"
 msgstr ""
 
 #: skylines/templates/ranking/pilots.jinja:25
@@ -1026,7 +1046,7 @@ msgstr ""
 msgid "Live Tracking <small>of %(pilot)s</small>"
 msgstr ""
 
-#: skylines/templates/tracking/map.jinja:135
+#: skylines/templates/tracking/map.jinja:137
 #: skylines/templates/tracking/view.jinja:173
 msgid "There is no live track of this pilot currently."
 msgstr ""
@@ -1162,6 +1182,6 @@ msgstr ""
 msgid "Takeoff Locations"
 msgstr ""
 
-#~ msgid "Error %(code)s"
+#~ msgid "Upload"
 #~ msgstr ""
 

@@ -39,6 +39,9 @@ class AboutController(BaseController):
         with open(path) as f:
             content = f.read().decode('utf-8')
 
+        content = content.replace('Developers', _('Developers'))
+        content = content.replace('Translators', _('Translators'))
+
         content = markdown.convert(content)
         return dict(title=_('The SkyLines Team'), content=content)
 
