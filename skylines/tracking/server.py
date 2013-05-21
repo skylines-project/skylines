@@ -5,7 +5,7 @@ import transaction
 from twisted.python import log
 from twisted.internet.protocol import DatagramProtocol
 from sqlalchemy.exc import SQLAlchemyError
-from sqlalchemy.sql.expression import and_, or_, desc
+from sqlalchemy.sql.expression import and_, or_
 
 from skylines.model import DBSession, User, TrackingFix, Follower, Elevation
 from skylines.tracking.crc import check_crc, set_crc
@@ -163,7 +163,7 @@ class TrackingServer(DatagramProtocol):
                          TrackingFix.location_wkt != None,
                          TrackingFix.altitude != None,
                          or_(*or_filters))) \
-            .order_by(TrackingFix.pilot_id, desc(TrackingFix.time)) \
+            .order_by(TrackingFix.pilot_id, TrackingFix.time.desc()) \
             .limit(32)
 
         response = ''

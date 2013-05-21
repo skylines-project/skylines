@@ -7,7 +7,7 @@ from sqlalchemy.dialects import postgresql
 from sqlalchemy.orm import relationship
 from sqlalchemy.types import Unicode, Integer, DateTime, Date, Boolean
 from sqlalchemy.ext.hybrid import hybrid_property
-from sqlalchemy.sql.expression import desc, case
+from sqlalchemy.sql.expression import case
 from geoalchemy2.types import Geometry
 from geoalchemy2.elements import WKTElement
 from geoalchemy2.shape import to_shape, from_shape
@@ -153,7 +153,7 @@ class Flight(DeclarativeBase):
     @classmethod
     def get_largest(cls):
         '''Returns a query object ordered by distance'''
-        return cls.query().order_by(desc(cls.olc_classic_distance))
+        return cls.query().order_by(cls.olc_classic_distance.desc())
 
     def get_optimised_contest_trace(self, contest_type, trace_type):
         from skylines.model.trace import Trace

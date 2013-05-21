@@ -6,7 +6,7 @@ from datetime import datetime
 from tg import config
 from sqlalchemy import ForeignKey, Column, func
 from sqlalchemy.orm import relationship
-from sqlalchemy.sql.expression import desc, and_
+from sqlalchemy.sql.expression import and_
 from sqlalchemy.types import Integer, DateTime, String, Unicode, Date
 
 from .base import DeclarativeBase
@@ -91,7 +91,7 @@ class IGCFile(DeclarativeBase):
                 .filter(func.upper(IGCFile.logger_manufacturer_id) == func.upper(logger_manufacturer_id)) \
                 .filter(func.upper(IGCFile.logger_id) == func.upper(logger_id)) \
                 .filter(Flight.registration == None) \
-                .order_by(desc(Flight.id))
+                .order_by(Flight.id.desc())
 
             if self.logger_manufacturer_id.startswith('X'):
                 result = result.filter(Flight.pilot == self.owner)
@@ -112,7 +112,7 @@ class IGCFile(DeclarativeBase):
 
             result = Flight.query() \
                 .filter(func.upper(Flight.registration) == func.upper(glider_reg)) \
-                .order_by(desc(Flight.id)) \
+                .order_by(Flight.id.desc()) \
                 .first()
 
             if result and result.model_id:
@@ -128,7 +128,7 @@ class IGCFile(DeclarativeBase):
                 .filter(func.upper(IGCFile.logger_manufacturer_id) == func.upper(logger_manufacturer_id)) \
                 .filter(func.upper(IGCFile.logger_id) == func.upper(logger_id)) \
                 .filter(Flight.model_id == None) \
-                .order_by(desc(Flight.id))
+                .order_by(Flight.id.desc())
 
             if self.logger_manufacturer_id.startswith('X'):
                 result = result.filter(Flight.pilot == self.owner)
