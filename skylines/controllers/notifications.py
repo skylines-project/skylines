@@ -5,7 +5,6 @@ from tg import expose, request, redirect
 from tg.decorators import with_trailing_slash, without_trailing_slash
 from webob.exc import HTTPForbidden, HTTPNotImplemented
 from sqlalchemy.orm import joinedload, contains_eager
-from sqlalchemy.sql.expression import desc
 
 from .base import BaseController
 from skylines.lib.dbutil import get_requested_record
@@ -67,7 +66,7 @@ class NotificationsController(BaseController):
             .options(joinedload('event.actor')) \
             .options(joinedload('event.flight')) \
             .options(joinedload('event.flight_comment')) \
-            .order_by(desc(Event.time))
+            .order_by(Event.time.desc())
 
         query = self.__filter_query(query, kwargs)
 

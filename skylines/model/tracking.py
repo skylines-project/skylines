@@ -2,12 +2,11 @@
 
 from datetime import datetime, timedelta
 
-from sqlalchemy.orm import relationship, joinedload, contains_eager
+from sqlalchemy.orm import relationship, joinedload
 from sqlalchemy import Column, ForeignKey, Index, over, func
 from sqlalchemy.types import Integer, REAL, DateTime, SmallInteger, Unicode,\
     BigInteger
 from sqlalchemy.dialects.postgresql import INET
-from sqlalchemy.sql.expression import desc
 from geoalchemy2.types import Geometry
 from geoalchemy2.shape import to_shape, from_shape
 from shapely.geometry import Point
@@ -99,7 +98,7 @@ class TrackingFix(DeclarativeBase):
         # numbers ordered by time for each pilot
         row_number = over(func.row_number(),
                           partition_by=cls.pilot_id,
-                          order_by=desc(cls.time))
+                          order_by=cls.time.desc())
 
         # Create inner query
         subq = DBSession \
@@ -116,7 +115,7 @@ class TrackingFix(DeclarativeBase):
             .options(joinedload(cls.pilot)) \
             .filter(cls.id == subq.c.id) \
             .filter(subq.c.row_number == 1) \
-            .order_by(desc(cls.time))
+            .order_by(cls.time.desc())
 
         return query
 
@@ -172,4 +171,4 @@ class TrackingSession(DeclarativeBase):
         if filter_finished:
             query = query.filter_by(time_finished=None)
 
-        return query.order_by(desc(cls.time_created)).first()
+        return query.order_by(cls.time_created.desc()).first()
