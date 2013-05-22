@@ -1,4 +1,5 @@
 from skylines import app
+from .model import User
 
 @app.route('/')
 def index():
@@ -6,5 +7,8 @@ def index():
 
 @app.route('/hello')
 def hello_world():
-    app.logger.warning('An error occurred')
     return 'Hello World!'
+
+@app.route('/users/')
+def user_list():
+    return ', '.join([user.name for user in User.query()])
