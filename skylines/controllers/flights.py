@@ -6,7 +6,7 @@ from babel.dates import format_date
 from tg.predicates import has_permission
 from webob.exc import HTTPNotFound
 
-from sqlalchemy.sql.expression import desc, or_, and_
+from sqlalchemy.sql.expression import or_, and_
 from sqlalchemy import func
 from sqlalchemy.orm import joinedload, contains_eager
 from sqlalchemy.orm.util import aliased
@@ -112,7 +112,7 @@ class FlightsController(BaseController):
 
         else:
             if not date:
-                flights = flights.order_by(desc(Flight.date_local))
+                flights = flights.order_by(Flight.date_local.desc())
 
             flights_count = flights.count()
             if flights_count > int(config.get('skylines.lists.server_side', 250)):
@@ -120,7 +120,7 @@ class FlightsController(BaseController):
             else:
                 limit = int(config.get('skylines.lists.server_side', 250))
 
-            flights = flights.order_by(desc(Flight.index_score))
+            flights = flights.order_by(Flight.index_score.desc())
             flights = flights.limit(limit)
             return dict(tab=tab, date=date, pilot=pilot, club=club, airport=airport,
                         flights=flights, flights_count=flights_count)
