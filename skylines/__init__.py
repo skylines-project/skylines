@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, g
 from flask.ext.babel import Babel
 from flask.ext.assets import Environment
 from webassets.loaders import PythonLoader
@@ -22,3 +22,7 @@ import skylines.views
 @app.context_processor
 def inject_helpers_lib():
     return dict(h=helpers)
+
+@app.context_processor
+def inject_template_context():
+    return dict(c=g)
