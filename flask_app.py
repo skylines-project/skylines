@@ -1,13 +1,4 @@
-from flask import Flask
-app = Flask('skylines', static_folder='public')
-
-@app.route('/')
-def index():
-    return 'Index Page'
-
-@app.route('/hello')
-def hello_world():
-    return 'Hello World!'
+from skylines import app
 
 if __name__ == '__main__':
     app.debug = True
