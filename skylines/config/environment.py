@@ -15,9 +15,9 @@ DEV_CONF_PATH = 'config/development.ini'
 load_environment = base_config.make_load_environment()
 
 
-def load_from_file(path=None):
+def conf_from_file(path=None):
     """
-    Loads the application configuration from a file into the environment.
+    Loads the application configuration from a file.
     Returns the configuration or None if no configuration could be found.
     """
 
@@ -31,6 +31,16 @@ def load_from_file(path=None):
     else:
         return
 
-    conf = appconfig('config:' + os.path.abspath(path))
-    load_environment(conf.global_conf, conf.local_conf)
+    return appconfig('config:' + os.path.abspath(path))
+
+
+def load_from_file(path=None):
+    """
+    Loads the application configuration from a file into the environment.
+    Returns the configuration or None if no configuration could be found.
+    """
+
+    conf = conf_from_file(path)
+    if conf:
+        load_environment(conf.global_conf, conf.local_conf)
     return conf
