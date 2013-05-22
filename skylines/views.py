@@ -1,3 +1,5 @@
+from flask import render_template
+
 from skylines import app
 from .model import User
 
@@ -8,6 +10,10 @@ def index():
 @app.route('/hello')
 def hello_world():
     return 'Hello World!'
+
+@app.route('/about')
+def about():
+    return render_template('about.jinja')
 
 @app.route('/users/')
 def user_list():

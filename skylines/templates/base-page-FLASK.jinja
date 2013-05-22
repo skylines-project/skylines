@@ -1,0 +1,48 @@
+{% extends "base.jinja" %}
+{% from 'topbar-FLASK.jinja' import topbar with context %}
+{% from 'macros/flash.jinja' import insert_flash_message with context %}
+
+{% block body -%}
+{{ topbar(active_page) }}
+
+<div class="container">
+    <div class="content">
+
+        {% if self.title() -%}
+        <div class="page-header">
+            {%- if self.title_right() -%}
+            <div class="pull-right">{%- block title_right %}{% endblock %}</div>
+            {%- endif %}
+
+            <h1>{{ self.title() }}</h1>
+
+            {%- if header_tabs -%}
+            <div class="page-header-tabs">
+                <ul class="nav nav-tabs">
+                    {% for href, id, caption in header_tabs -%}
+                    <li{% if active_header_tab == id %} class="active"{% endif %}>
+                        <a href="{{ href }}">{{ caption }}</a>
+                    </li>
+                    {%- endfor %}
+                </ul>
+            </div>
+            {%- endif %}
+        </div>
+        {%- endif %}
+
+        <div class="row">
+            <div class="span12">
+                {#{ insert_flash_message(False) }#}
+                {%- block content %}{% endblock %}
+            </div>
+        </div>
+    </div>
+
+    <p class="footer">
+        {% block footer -%}
+        &copy; <a href="/about/team">{{ _('The SkyLines Team') }}</a> -
+        <a href="/about/imprint">{% trans %}Imprint{% endtrans %}</a>
+        {%- endblock %}
+    </p>
+</div>
+{%- endblock %}
