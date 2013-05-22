@@ -1,3 +1,4 @@
+flask==0.9
 WebTest==1.4.3
 WebOb==1.1.1
 TurboGears2==2.2.2
