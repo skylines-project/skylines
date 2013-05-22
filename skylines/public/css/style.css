@@ -317,3 +317,7 @@ table.vmiddle td {
 .box .form-horizontal {
   margin-bottom: -18px;
 }
+
+.table .column-buttons {
+  text-align: right;
+}
