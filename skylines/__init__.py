@@ -7,6 +7,8 @@ from skylines.lib import helpers
 
 def create_app():
     app = Flask(__name__, static_folder='public')
+    app.config.from_object('skylines.config.default')
+
     babel = Babel(app)
 
     bundles = PythonLoader('skylines.assets.bundles').load_bundles()
