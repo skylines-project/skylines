@@ -1,5 +1,5 @@
 from flask import Flask
-app = Flask('skylines')
+app = Flask('skylines', static_folder='public')
 
 @app.route('/')
 def index():
