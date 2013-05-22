@@ -13,6 +13,12 @@ def create_app():
 
     bundles = PythonLoader('skylines.assets.bundles').load_bundles()
     assets = Environment(app)
+
+    load_path = app.config.get('ASSETS_LOAD_DIR', None)
+    if load_path is not None:
+        load_url = app.config.get('ASSETS_LOAD_URL', None)
+        assets.append_path(load_path, load_url)
+
     assets.register(bundles)
 
     return app
