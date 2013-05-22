@@ -17,9 +17,9 @@
 {{ super() }}
 
 {% if takeoff_locations -%}
-{% for url in g.assets['openlayers_css'].urls() -%}
-<link href="{{ url }}" rel="stylesheet" type="text/css" />
-{%- endfor %}
+{% assets 'openlayers_css' -%}
+<link href="{{ ASSET_URL }}" rel="stylesheet" type="text/css" />
+{%- endassets %}
 
 {%- if request.identity and request.identity['user'].eye_candy -%}
 <link href="/css/eye_candy/OpenLayers.css" rel="stylesheet" type="text/css" />
@@ -32,9 +32,9 @@
 {{ super() }}
 
 {% if takeoff_locations -%}
-{% for url in g.assets['openlayers_js'].urls() -%}
-<script type="text/javascript" src="{{ url }}"></script>
-{%- endfor %}
+{% assets 'openlayers_js' -%}
+<script type="text/javascript" src="{{ ASSET_URL }}"></script>
+{%- endassets %}
 
 <script type="text/javascript">
   $(function() {
