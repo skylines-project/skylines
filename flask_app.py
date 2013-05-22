@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 # Flask app
 from skylines import app as flask_app
 
