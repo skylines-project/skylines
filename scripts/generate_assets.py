@@ -4,7 +4,7 @@ import os
 import sys
 import gzip
 from argparse import ArgumentParser
-from skylines import assets
+from skylines.assets import Environment as AssetEnvironment
 from skylines.config import environment
 
 # Build paths
@@ -24,7 +24,7 @@ if not conf:
     parser.error('Config file "{}" not found.'.format(args.conf_path))
 
 # Create assets environment
-env = assets.Environment(conf)
+env = AssetEnvironment(conf)
 
 # Load the bundles from the YAML file
 print 'Loading bundles from skylines.assets.bundles'
