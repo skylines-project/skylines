@@ -61,7 +61,7 @@
 {%- endmacro %}
 
 {% macro _login_form() -%}
-<form action="{{ tg.url('/login_handler', params=dict(came_from=request.url.encode('utf-8'))) }}" method="post" accept-charset="UTF-8">
+<form action="{{ h.url('/login_handler', params=dict(came_from=request.url.encode('utf-8'))) }}" method="post" accept-charset="UTF-8">
     <div class="control-group">
         <label class="control-label" for="username">{% trans %}Email Address{% endtrans %}:</label>
         <div class="controls">

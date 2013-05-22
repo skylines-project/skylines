@@ -7,7 +7,7 @@ from __future__ import absolute_import
 import datetime
 import simplejson as json
 
-from tg import flash
+from tg import flash, url
 from webhelpers import date, feedgenerator, html, number, misc, text
 
 from .string import *
