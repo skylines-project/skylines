@@ -2,6 +2,7 @@ from flask import Flask
 from flask.ext.babel import Babel
 from flask.ext.assets import Environment
 from webassets.loaders import PythonLoader
+from skylines.lib import helpers
 
 
 def create_app():
@@ -17,3 +18,7 @@ def create_app():
 app = create_app()
 
 import skylines.views
+
+@app.context_processor
+def inject_helpers_lib():
+    return dict(h=helpers)
