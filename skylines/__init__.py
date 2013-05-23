@@ -1,5 +1,5 @@
 from flask import Flask, g
-from flask.ext.babel import Babel
+from flask.ext.babel import Babel, get_locale
 from flask.ext.assets import Environment
 from webassets.loaders import PythonLoader
 from skylines.lib import helpers
@@ -27,9 +27,10 @@ app = create_app()
 
 import skylines.views
 
-@app.context_processor
-def inject_babel():
-    return dict(babel=app.babel_instance)
+@app.before_request
+def inject_active_locale():
+    g.available_locales = app.babel_instance.list_translations()
+    g.active_locale = get_locale()
 
 @app.context_processor
 def inject_helpers_lib():

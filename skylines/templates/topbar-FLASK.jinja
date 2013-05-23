@@ -1,4 +1,4 @@
-{% from "macros/flags.jinja" import insert_flag with context %}
+{% from "macros/flags-FLASK.jinja" import insert_flag with context %}
 
 {% set navigation_bar = [
     ('/tracking/', 'tracking', _('Live')),
@@ -45,7 +45,7 @@
     {{ _login_dropdown(active_page) }}
     {%- endif %}
 
-    {#{ _language_dropdown() }#}
+    {{ _language_dropdown() }}
 </ul>
 {%- endmacro %}
 
@@ -120,9 +120,13 @@
 {%- macro _language_dropdown() -%}
 <li class="dropdown">
     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-        {{ insert_flag(c.current_language['country_code']) }} <i class="icon-caret-down"></i>
+        {{ insert_flag(h.language_to_country_code(g.active_locale|string)) }} <i class="icon-caret-down"></i>
     </a>
     <ul class="dropdown-menu">
+      {% for locale in g.available_locales|sort(attribute='display_name') -%}
+      {{ _language_item(locale) }}
+      {%- endfor %}
+      {#
       {% for lang in c.primary_languages -%}
       {{ _language_item(lang) }}
       {%- endfor %}
@@ -130,10 +134,11 @@
       {% for lang in c.secondary_languages -%}
       {{ _language_item(lang) }}
       {%- endfor %}
+      #}
     </ul>
 </li>
 {%- endmacro %}
 
 {% macro _language_item(lang) %}
-<li><a href="/set_lang/{{ lang['language_code'] }}" title="{{ lang['english_name'] }}">{{ insert_flag(lang['country_code']) }} {{ lang['local_name'] }}</a></li>
+<li><a href="/set_lang/{{ lang }}" title="{{ lang.english_name }}">{{ insert_flag(h.language_to_country_code(lang|string)) }} {{ lang.display_name|capitalize }}</a></li>
 {%- endmacro %}
