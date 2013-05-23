@@ -28,6 +28,10 @@ app = create_app()
 import skylines.views
 
 @app.context_processor
+def inject_babel():
+    return dict(babel=app.babel_instance)
+
+@app.context_processor
 def inject_helpers_lib():
     return dict(h=helpers)
 
