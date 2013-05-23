@@ -1,5 +1,6 @@
-from flask import Flask, g
+from flask import Flask, g, request, session
 from flask.ext.babel import Babel, get_locale
+from babel import Locale
 from flask.ext.assets import Environment
 from webassets.loaders import PythonLoader
 from skylines.lib import helpers
@@ -24,6 +25,7 @@ def create_app():
     return app
 
 app = create_app()
+babel = app.babel_instance
 
 import skylines.views
 
@@ -31,6 +33,24 @@ import skylines.views
 def inject_active_locale():
     g.available_locales = app.babel_instance.list_translations()
     g.active_locale = get_locale()
+
+
+@babel.localeselector
+def select_locale():
+    available = map(str, g.available_locales)
+    preferred = []
+
+    session_language = session.get('language', None)
+    print 'session lang: {}'.format(session_language)
+    if session_language:
+        preferred.append(session_language)
+
+    preferred.extend([l[0] for l in request.accept_languages])
+
+    best_match = Locale.negotiate(preferred, available)
+    if best_match:
+        return str(best_match)
+
 
 @app.context_processor
 def inject_helpers_lib():
