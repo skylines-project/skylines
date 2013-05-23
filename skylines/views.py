@@ -7,10 +7,6 @@ from .model import User
 def index():
     return redirect('/flights/latest')
 
-@app.route('/hello')
-def hello_world():
-    return 'Hello World!'
-
 @app.route('/about')
 def about():
     return render_template('about.jinja')
