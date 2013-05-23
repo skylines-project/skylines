@@ -1,11 +1,11 @@
-from flask import render_template
+from flask import render_template, redirect
 
 from skylines import app
 from .model import User
 
 @app.route('/')
 def index():
-    return 'Index Page'
+    return redirect('/flights/latest')
 
 @app.route('/hello')
 def hello_world():
