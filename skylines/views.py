@@ -1,4 +1,4 @@
-from flask import render_template, redirect
+from flask import render_template, redirect, request, session
 
 from skylines import app
 from .model import User
@@ -14,6 +14,11 @@ def hello_world():
 @app.route('/about')
 def about():
     return render_template('about.jinja')
+
+@app.route('/set_lang/<language>')
+def set_lang(language):
+    session['language'] = language
+    return redirect(request.referrer)
 
 @app.route('/users/')
 def user_list():
