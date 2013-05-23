@@ -32,17 +32,42 @@ base_config.renderers.append('json')
 #Set the default renderer
 base_config.default_renderer = 'jinja'
 base_config.renderers.append('jinja')
-base_config.jinja_extensions = ['jinja2.ext.i18n', 'jinja2.ext.with_', 'jinja2.ext.do']
+base_config.jinja_extensions = [
+    'jinja2.ext.i18n',
+    'jinja2.ext.with_',
+    'jinja2.ext.do',
+    'webassets.ext.jinja2.AssetsExtension',
+]
 
 
 def install_gettext_callables(app):
+    from tg import config
     from tg.i18n import ugettext, ungettext
-    jinja2_env = app_globals.config['pylons.app_globals'].jinja2_env
+    jinja2_env = config['pylons.app_globals'].jinja2_env
     jinja2_env.install_gettext_callables(ugettext, ungettext)
     jinja2_env.autoescape = False
     return app
 
 base_config.register_hook('after_config', install_gettext_callables)
+
+
+def install_assets_environment(app):
+    from tg import config
+    from skylines.assets import Environment
+
+    jinja2_env = config['pylons.app_globals'].jinja2_env
+
+    # Initialize webassets environment
+    jinja2_env.assets_environment = Environment(config)
+
+    # Load predefined bundles from YAML file
+    jinja2_env.assets_environment.load_bundles(
+        config['webassets.bundles_module'])
+
+    return app
+
+
+base_config.register_hook('after_config', install_assets_environment)
 
 #base_config.renderers.append('mako')
 # if you want raw speed and have installed chameleon.genshi
