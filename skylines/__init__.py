@@ -40,10 +40,19 @@ def load_user(userid):
 
 @app.before_request
 def inject_request_identity():
-    if current_user.is_anonymous():
-        request.identity = None
-    else:
-        request.identity = {'user': current_user}
+    """ for compatibility with tg2 """
+
+    if not hasattr(request, 'identity'):
+        request.identity = {}
+
+    if not current_user.is_anonymous():
+        request.identity['user'] = current_user
+
+        request.identity['groups'] = \
+            [g.group_name for g in current_user.groups]
+
+        request.identity['permissions'] = \
+            [p.permission_name for p in current_user.permissions]
 
 
 @app.before_request
