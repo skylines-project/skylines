@@ -129,6 +129,16 @@ class User(DeclarativeBase):
         return cls.query(email_address=email).first()
 
     @classmethod
+    def by_credentials(cls, email, password):
+        """
+        Return the user object whose email address is ``email`` if the
+        password is matching.
+        """
+        user = cls.query(email_address=email).first()
+        if user.validate_password(password):
+            return user
+
+    @classmethod
     def by_tracking_key(cls, key):
         return cls.query(tracking_key=key).first()
 
