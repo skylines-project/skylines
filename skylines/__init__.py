@@ -1,6 +1,5 @@
-from flask import Flask, g, request, session
+from flask import Flask, g, request
 from flask.ext.babel import Babel, get_locale
-from babel import Locale
 from flask.ext.assets import Environment
 from flask.ext.login import LoginManager, current_user
 from webassets.loaders import PythonLoader
@@ -30,7 +29,6 @@ def create_app():
     return app
 
 app = create_app()
-babel = app.babel_instance
 
 import skylines.views
 
@@ -65,22 +63,6 @@ def inject_active_locale():
 def shutdown_session(exception=None):
     transaction.commit()
     DBSession.remove()
-
-
-@babel.localeselector
-def select_locale():
-    available = map(str, g.available_locales)
-    preferred = []
-
-    session_language = session.get('language', None)
-    if session_language:
-        preferred.append(session_language)
-
-    preferred.extend([l[0] for l in request.accept_languages])
-
-    best_match = Locale.negotiate(preferred, available)
-    if best_match:
-        return str(best_match)
 
 
 @app.context_processor
