@@ -5,7 +5,7 @@ from flask.ext.login import login_user, logout_user, current_user
 from flask.ext.babel import _
 
 from skylines import app
-from .model import User
+from skylines.model import User
 
 @app.route('/')
 def index():
