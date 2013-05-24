@@ -5,7 +5,8 @@ from flask.ext.assets import Environment
 from flask.ext.login import LoginManager, current_user
 from webassets.loaders import PythonLoader
 from skylines.lib import helpers
-from .model import User
+from .model import User, DBSession
+import transaction
 
 
 def create_app():
@@ -49,6 +50,12 @@ def inject_request_identity():
 def inject_active_locale():
     g.available_locales = app.babel_instance.list_translations()
     g.active_locale = get_locale()
+
+
+@app.teardown_request
+def shutdown_session(exception=None):
+    transaction.commit()
+    DBSession.remove()
 
 
 @babel.localeselector
