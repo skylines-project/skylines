@@ -1,5 +1,5 @@
 from flask import Flask, g, request
-from flask.ext.babel import Babel, get_locale
+from flask.ext.babel import Babel
 from flask.ext.assets import Environment
 from flask.ext.login import LoginManager, current_user
 from webassets.loaders import PythonLoader
@@ -51,12 +51,6 @@ def inject_request_identity():
 
         request.identity['permissions'] = \
             [p.permission_name for p in current_user.permissions]
-
-
-@app.before_request
-def inject_active_locale():
-    g.available_locales = app.babel_instance.list_translations()
-    g.active_locale = get_locale()
 
 
 @app.teardown_request

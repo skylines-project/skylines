@@ -1,7 +1,14 @@
-from flask import redirect, request, session, url_for
+from flask import redirect, request, session, url_for, g
+from flask.ext.babel import get_locale
 from babel import Locale
 
 from skylines import app
+
+
+@app.before_request
+def inject_active_locale():
+    g.available_locales = app.babel_instance.list_translations()
+    g.active_locale = get_locale()
 
 
 @app.babel_instance.localeselector
