@@ -1,9 +1,8 @@
 import os.path
 
-from flask import Blueprint, render_template
+from flask import Blueprint, render_template, current_app
 from flask.ext.babel import _
 
-from skylines import app
 from skylines.lib.helpers import markdown
 
 about_blueprint = Blueprint('about', 'skylines')
@@ -16,7 +15,7 @@ def about():
 
 @about_blueprint.route('/imprint')
 def imprint():
-    content = app.config.get(
+    content = current_app.config.get(
         'SKYLINES_IMPRINT',
         'Please set the SKYLINES_IMPRINT variable in the config file.')
 
