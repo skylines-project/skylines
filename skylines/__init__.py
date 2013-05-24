@@ -2,8 +2,10 @@ from flask import Flask, g, request, session
 from flask.ext.babel import Babel, get_locale
 from babel import Locale
 from flask.ext.assets import Environment
+from flask.ext.login import LoginManager, current_user
 from webassets.loaders import PythonLoader
 from skylines.lib import helpers
+from .model import User
 
 
 def create_app():
@@ -11,6 +13,8 @@ def create_app():
     app.config.from_object('skylines.config.default')
 
     babel = Babel(app)
+    login_manager = LoginManager()
+    login_manager.init_app(app)
 
     bundles = PythonLoader('skylines.assets.bundles').load_bundles()
     assets = Environment(app)
@@ -28,6 +32,18 @@ app = create_app()
 babel = app.babel_instance
 
 import skylines.views
+
+@app.login_manager.user_loader
+def load_user(userid):
+    return User.get(userid)
+
+@app.before_request
+def inject_request_identity():
+    if current_user.is_anonymous():
+        request.identity = None
+    else:
+        request.identity = {'user': current_user}
+
 
 @app.before_request
 def inject_active_locale():

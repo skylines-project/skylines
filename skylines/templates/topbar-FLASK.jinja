@@ -61,7 +61,7 @@
 {%- endmacro %}
 
 {% macro _login_form() -%}
-<form action="{{ h.url('/login_handler', params=dict(came_from=request.url.encode('utf-8'))) }}" method="post" accept-charset="UTF-8">
+<form action="{{ url_for('login', next=request.url) }}" method="post" accept-charset="UTF-8">
     <div class="control-group">
         <label class="control-label" for="username">{% trans %}Email Address{% endtrans %}:</label>
         <div class="controls">
@@ -97,7 +97,7 @@
 {%- endmacro %}
 
 {%- macro _user_dropdown(active_page) -%}
-{%- with user=c.identity['user'] %}
+{%- with user=request.identity['user'] %}
 <li class="dropdown {% if active_page == 'settings' %}active{% endif %}">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown">
       {{ user|e }} <i class="icon-caret-down"></i>
@@ -111,7 +111,7 @@
       <li><a href="/flights/pilot/{{ user.id }}"><i class="icon-plane"></i> {% trans %}Flights{% endtrans %}</a></li>
       <li><a href="/statistics/pilot/{{ user.id }}"><i class="icon-tasks"></i> {% trans %}Statistics{% endtrans %}</a></li>
       <li class="divider"></li>
-      <li><a href="/logout_handler"><i class="icon-signout"></i> {% trans %}Logout{% endtrans %}</a></li>
+      <li><a href="{{ url_for('logout', next=request.url) }}"><i class="icon-signout"></i> {% trans %}Logout{% endtrans %}</a></li>
   </ul>
 </li>
 {%- endwith %}

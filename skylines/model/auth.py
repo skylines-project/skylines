@@ -146,6 +146,20 @@ class User(DeclarativeBase):
     def by_recover_key(cls, key):
         return cls.query(recover_key=key).first()
 
+    ## Flask Login ###############
+
+    def is_active(self):
+        return True
+
+    def is_authenticated(self):
+        return True
+
+    def is_anonymous(self):
+        return False
+
+    def get_id(self):
+        return unicode(self.id)
+
     ##############################
 
     def initials(self):
