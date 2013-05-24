@@ -32,9 +32,9 @@
 
 {% block styles -%}
 {{ super() }}
-{% for url in g.assets['datatables_css'].urls() -%}
-<link href="{{ url }}" rel="stylesheet" type="text/css" />
-{%- endfor %}
+{% assets 'datatables_css' -%}
+<link href="{{ ASSET_URL }}" rel="stylesheet" type="text/css" />
+{%- endassets %}
 {%- endblock %}
 
 
@@ -42,9 +42,9 @@
 {% block scripts -%}
 {{ super() }}
 
-{% for url in g.assets['datatables_js'].urls() -%}
-<script type="text/javascript" src="{{ url }}"></script>
-{%- endfor %}
+{% assets 'datatables_js' -%}
+<script type="text/javascript" src="{{ ASSET_URL }}"></script>
+{%- endassets %}
 
 <script type="text/javascript" charset="utf-8">
 /* <![CDATA[ */
