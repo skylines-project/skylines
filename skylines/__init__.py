@@ -73,7 +73,6 @@ def select_locale():
     preferred = []
 
     session_language = session.get('language', None)
-    print 'session lang: {}'.format(session_language)
     if session_language:
         preferred.append(session_language)
 
