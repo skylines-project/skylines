@@ -1,18 +1,20 @@
 import os.path
 
-from flask import render_template
+from flask import Blueprint, render_template
 from flask.ext.babel import _
 
 from skylines import app
 from skylines.lib.helpers import markdown
 
+about_blueprint = Blueprint('about', 'skylines')
 
-@app.route('/about')
+
+@about_blueprint.route('/')
 def about():
     return render_template('about.jinja')
 
 
-@app.route('/about/imprint')
+@about_blueprint.route('/imprint')
 def imprint():
     content = app.config.get(
         'SKYLINES_IMPRINT',
@@ -22,7 +24,7 @@ def imprint():
         'generic/page-FLASK.jinja', title=_('Imprint'), content=content)
 
 
-@app.route('/about/team')
+@about_blueprint.route('/team')
 def skylines_team():
     path = os.path.join(os.path.dirname(os.path.abspath(__file__)),
                         '..', '..', 'AUTHORS.md')
