@@ -1,0 +1,11 @@
+{% extends "base.jinja" %}
+{% from 'topbar-FLASK.jinja' import topbar with context %}
+{% from 'macros/flash-FLASK.jinja' import insert_flash_message with context %}
+
+{% block body -%}
+{{ topbar(active_page) }}
+
+{% block content %}{% endblock %}
+
+{{ insert_flash_message(True) }}
+{%- endblock %}
