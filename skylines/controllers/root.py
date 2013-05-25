@@ -14,7 +14,6 @@ from .users import UsersController
 from .clubs import ClubsController
 from .flights import FlightsController
 from .notifications import NotificationsController
-from .ranking import RankingController
 from .tracking import TrackingController
 
 __all__ = ['RootController']
@@ -39,7 +38,6 @@ class RootController(BaseController):
     clubs = ClubsController()
     flights = FlightsController()
     notifications = NotificationsController()
-    ranking = RankingController()
     tracking = TrackingController()
 
     _mapproxy_config = config.get('skylines.mapproxy')
