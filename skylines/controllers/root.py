@@ -16,7 +16,6 @@ from .flights import FlightsController
 from .notifications import NotificationsController
 from .ranking import RankingController
 from .tracking import TrackingController
-from .statistics import StatisticsController
 
 __all__ = ['RootController']
 
@@ -42,7 +41,6 @@ class RootController(BaseController):
     notifications = NotificationsController()
     ranking = RankingController()
     tracking = TrackingController()
-    statistics = StatisticsController()
 
     _mapproxy_config = config.get('skylines.mapproxy')
     if _mapproxy_config is not None:
