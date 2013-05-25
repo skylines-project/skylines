@@ -4,10 +4,17 @@ from operator import itemgetter
 from flask import Blueprint, render_template, abort, request, url_for, redirect
 from sqlalchemy.orm import joinedload, contains_eager
 
+from skylines import app
 from skylines.lib.dbutil import get_requested_record
 from skylines.model import Event, Notification
 
 notifications_blueprint = Blueprint('notifications', 'skylines')
+
+
+@app.before_request
+def inject_notification_count():
+    if request.identity:
+        request.identity['notifications'] = Notification.count_unread(request.identity['user'])
 
 
 def _filter_query(query, args):
@@ -71,6 +78,7 @@ def index():
     return render_template('notifications/list.jinja',
                            notifications=notifications,
                            params=request.args, types=Event.Type)
+
 
 @notifications_blueprint.route('/clear')
 def clear():

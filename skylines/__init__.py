@@ -32,13 +32,6 @@ def create_app():
 
 app = create_app()
 
-import skylines.views
-
-
-@app.login_manager.user_loader
-def load_user(userid):
-    return User.get(userid)
-
 
 @app.before_request
 def inject_request_identity():
@@ -55,6 +48,14 @@ def inject_request_identity():
 
         request.identity['permissions'] = \
             [p.permission_name for p in current_user.permissions]
+
+
+import skylines.views
+
+
+@app.login_manager.user_loader
+def load_user(userid):
+    return User.get(userid)
 
 
 @app.teardown_request
