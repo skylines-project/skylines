@@ -69,4 +69,5 @@ def inject_helpers_lib():
 
 @app.context_processor
 def inject_template_context():
+    g.identity = request.identity
     return dict(c=g, tmpl_context=g)
