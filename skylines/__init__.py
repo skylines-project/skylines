@@ -69,4 +69,4 @@ def inject_helpers_lib():
 
 @app.context_processor
 def inject_template_context():
-    return dict(c=g)
+    return dict(c=g, tmpl_context=g)
