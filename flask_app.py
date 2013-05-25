@@ -13,8 +13,6 @@ from paste.cascade import Cascade
 
 
 if __name__ == '__main__':
-    flask_app.debug = True
-
     # Create TurboGears app
     tg_conf = conf_from_file()
     tg_app = make_app(tg_conf.global_conf, **tg_conf.local_conf)
