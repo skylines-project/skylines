@@ -5,6 +5,7 @@ from skylines.model import User
 
 import skylines.views.i18n
 import skylines.views.login
+import skylines.views.search
 
 from skylines.views.about import about_blueprint
 from skylines.views.api import api_blueprint

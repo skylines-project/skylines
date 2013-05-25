@@ -15,7 +15,6 @@ from .clubs import ClubsController
 from .flights import FlightsController
 from .notifications import NotificationsController
 from .ranking import RankingController
-from .search import SearchController
 from .tracking import TrackingController
 from .statistics import StatisticsController
 
@@ -42,7 +41,6 @@ class RootController(BaseController):
     flights = FlightsController()
     notifications = NotificationsController()
     ranking = RankingController()
-    search = SearchController()
     tracking = TrackingController()
     statistics = StatisticsController()
 
