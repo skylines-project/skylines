@@ -62,23 +62,15 @@ def index(page=None, id=None):
         sum_distance = sum_distance + row.distance
         sum_duration = sum_duration + row.duration.total_seconds()
 
-    return render_template('statistics/years.jinja',years=list,
-                max_flights=max_flights,
-                max_pilots=max_pilots,
-                max_distance=max_distance,
-                max_duration=max_duration,
-                sum_flights=sum_flights,
-                sum_distance=sum_distance,
-                sum_duration=sum_duration,
-                airport=airport,
-                pilot=pilot,
-                club=club)
-
-
-    return str(page)
-
-'''
-class StatisticsController(BaseController):
-    @expose('statistics/years.jinja')
-    def _default(self, *args, **kw):
-'''
+    return render_template('statistics/years.jinja',
+                           years=list,
+                           max_flights=max_flights,
+                           max_pilots=max_pilots,
+                           max_distance=max_distance,
+                           max_duration=max_duration,
+                           sum_flights=sum_flights,
+                           sum_distance=sum_distance,
+                           sum_duration=sum_duration,
+                           airport=airport,
+                           pilot=pilot,
+                           club=club)
