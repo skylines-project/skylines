@@ -32,7 +32,7 @@ def index(page=None, id=None):
         airport = get_requested_record(Airport, id)
         query = query.filter(Flight.takeoff_airport_id == airport.id)
 
-    else:
+    elif page is not None:
         abort(404)
 
     query = query.group_by(Flight.year).order_by(Flight.year.desc())
