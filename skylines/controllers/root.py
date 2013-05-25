@@ -12,7 +12,6 @@ from .base import BaseController
 from .error import ErrorController
 from .users import UsersController
 from .clubs import ClubsController
-from .flights import FlightsController
 from .notifications import NotificationsController
 from .tracking import TrackingController
 
@@ -36,7 +35,6 @@ class RootController(BaseController):
     error = ErrorController()
     users = UsersController()
     clubs = ClubsController()
-    flights = FlightsController()
     notifications = NotificationsController()
     tracking = TrackingController()
 
