@@ -12,6 +12,8 @@ def create_app():
     app = Flask(__name__, static_folder='public')
     app.config.from_object('skylines.config.default')
 
+    app.jinja_options['extensions'].append('jinja2.ext.do')
+
     babel = Babel(app)
     login_manager = LoginManager()
     login_manager.init_app(app)
