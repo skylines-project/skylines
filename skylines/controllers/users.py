@@ -471,7 +471,7 @@ class UsersController(BaseController):
 
         user = User.by_recover_key(key)
         if user is None:
-                raise HTTPNotFound
+            raise HTTPNotFound
 
         user.password = password
         user.recover_key = None
