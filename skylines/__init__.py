@@ -55,7 +55,11 @@ def inject_request_identity():
 
 @app.teardown_request
 def shutdown_session(exception=None):
-    transaction.commit()
+    if exception:
+        transaction.abort()
+    else:
+        transaction.commit()
+
     DBSession.remove()
 
 
