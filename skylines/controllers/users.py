@@ -448,16 +448,3 @@ class UsersController(BaseController):
 
         flash(_('Password changed.'))
         return redirect('/')
-
-    @expose()
-    @require(has_permission('manage'))
-    def generate_keys(self):
-        """Hidden method that generates missing tracking keys."""
-
-        for user in User.query():
-            if user.tracking_key is None:
-                user.generate_tracking_key()
-
-        DBSession.flush()
-
-        return redirect('/users/')

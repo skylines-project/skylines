@@ -1,4 +1,4 @@
-from flask import Blueprint, request, render_template, redirect, url_for
+from flask import Blueprint, request, render_template, redirect, url_for, abort
 from flask.ext.babel import lazy_gettext as l_
 
 from formencode import Schema, All, Invalid
@@ -15,7 +15,6 @@ from skylines.model import DBSession, User, Group
 from skylines.forms import BootstrapForm, club
 
 users_blueprint = Blueprint('users', 'skylines')
-
 
 
 password_match_validator = FieldsMatch(
@@ -96,3 +95,19 @@ def new():
     return render_template('users/new.jinja',
                            active_page='users',
                            form=new_user_form)
+
+
+@users_blueprint.route('/generate_keys')
+def generate_keys():
+    """Hidden method that generates missing tracking keys."""
+
+    if not request.identity or 'manage' not in request.identity['permissions']:
+        abort(401)
+
+    for user in User.query():
+        if user.tracking_key is None:
+            user.generate_tracking_key()
+
+    DBSession.flush()
+
+    return redirect(url_for('.index'))
