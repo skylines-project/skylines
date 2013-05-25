@@ -1,6 +1,6 @@
-{% extends "base-page.jinja" %}
+{% extends "base-page-FLASK.jinja" %}
 {% set active_page = "login" %}
 
 {% block title %}{% trans %}Register{% endtrans %}{% endblock %}
 
-{% block content %}{{ form(action='new_post') }}{% endblock %}
+{% block content %}{{ form(action='new') }}{% endblock %}
