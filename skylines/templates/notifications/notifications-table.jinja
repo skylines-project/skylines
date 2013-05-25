@@ -95,10 +95,10 @@
 {% macro render_notification_link(notification) -%}
 {% if notification.grouped -%}
   {% if notification.type == types.FLIGHT -%}
-    {{ _render_show_button(h.url('.', params=dict(type=types.FLIGHT, sender=notification.events[0].actor_id))) }}
+    {{ _render_show_button(url_for('notifications.index', type=types.FLIGHT, sender=notification.events[0].actor_id)) }}
   {%- endif %}
 {%- else %}
-  {{ _render_show_button(notification.id) }}
+  {{ _render_show_button(url_for('notifications.show', id=notification.id)) }}
 {%- endif %}
 {%- endmacro %}
 
