@@ -18,7 +18,6 @@ from .ranking import RankingController
 from .search import SearchController
 from .tracking import TrackingController
 from .statistics import StatisticsController
-from .api import APIController
 
 __all__ = ['RootController']
 
@@ -46,7 +45,6 @@ class RootController(BaseController):
     search = SearchController()
     tracking = TrackingController()
     statistics = StatisticsController()
-    api = APIController()
 
     _mapproxy_config = config.get('skylines.mapproxy')
     if _mapproxy_config is not None:
