@@ -397,40 +397,10 @@ class UserController(BaseController):
 
 
 class UsersController(BaseController):
-    @expose('users/list.jinja')
-    def index(self):
-        users = User.query() \
-            .options(joinedload(User.club)) \
-            .order_by(func.lower(User.name))
-
-        return dict(active_page='settings', users=users)
-
     @expose()
     def _lookup(self, id, *remainder):
         controller = UserController(get_requested_record(User, id))
         return controller, remainder
-
-    @expose('users/new.jinja')
-    def new(self, **kwargs):
-        return dict(active_page='users', form=new_user_form)
-
-    @expose()
-    @validate(form=new_user_form, error_handler=new)
-    def new_post(self, name, club, email_address, password, **kw):
-        if not club:
-            club = None
-
-        user = User(name=name, club_id=club,
-                    email_address=email_address, password=password)
-        user.created_ip = request.remote_addr
-        user.generate_tracking_key()
-        DBSession.add(user)
-
-        pilots = Group.query(group_name='pilots').first()
-        if pilots:
-            pilots.users.append(user)
-
-        redirect('/')
 
     @expose('generic/form.jinja')
     def recover(self, key=None, **kwargs):
