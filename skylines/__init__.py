@@ -32,9 +32,11 @@ app = create_app()
 
 import skylines.views
 
+
 @app.login_manager.user_loader
 def load_user(userid):
     return User.get(userid)
+
 
 @app.before_request
 def inject_request_identity():
@@ -66,6 +68,7 @@ def shutdown_session(exception=None):
 @app.context_processor
 def inject_helpers_lib():
     return dict(h=helpers)
+
 
 @app.context_processor
 def inject_template_context():

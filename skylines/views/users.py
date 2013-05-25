@@ -49,9 +49,6 @@ class NewUserForm(AddRecordForm):
 new_user_form = NewUserForm(DBSession)
 
 
-
-
-
 @users_blueprint.route('/')
 def index():
     users = User.query() \
