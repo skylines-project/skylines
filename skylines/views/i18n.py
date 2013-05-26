@@ -4,16 +4,18 @@ from babel import Locale
 
 from skylines import app
 
+available_locales = app.babel_instance.list_translations()
+
 
 @app.before_request
 def inject_active_locale():
-    g.available_locales = app.babel_instance.list_translations()
+    g.available_locales = available_locales
     g.active_locale = get_locale()
 
 
 @app.babel_instance.localeselector
 def select_locale():
-    available = map(str, g.available_locales)
+    available = map(str, available_locales)
     preferred = []
 
     session_language = session.get('language', None)
