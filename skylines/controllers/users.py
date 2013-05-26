@@ -142,19 +142,6 @@ recover_password_form = BootstrapForm(
     ]
 )
 
-change_password_form = BootstrapForm(
-    'change_password_form',
-    submit_text=l_("Change Password"),
-    action='save_password',
-    validator=user_validator,
-    children=[
-        PasswordField('password',
-                      validator=UnicodeString(min=6),
-                      label_text=l_('Password')),
-        PasswordField('verify_password',
-                      label_text=l_('Verify Password')),
-    ]
-)
 
 
 def recover_user_password(user):
@@ -192,21 +179,6 @@ class UserController(BaseController):
     def __init__(self, user):
         self.user = user
         request.environ['UserController.user.id'] = self.user.id
-
-    @expose('generic/form.jinja')
-    def change_password(self, **kw):
-        if not self.user.is_writable(request.identity):
-            raise HTTPForbidden
-
-        return dict(active_page='settings', title=_('Change Password'),
-                    form=change_password_form, values={})
-
-    @expose()
-    @validate(change_password_form, error_handler=change_password)
-    def save_password(self, password, verify_password):
-        self.user.password = password
-        self.user.recover_key = None
-        return redirect('.')
 
     @expose()
     @require(has_permission('manage'))

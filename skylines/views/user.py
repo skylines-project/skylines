@@ -1,9 +1,9 @@
 from datetime import date, timedelta
 
 from flask import Blueprint, request, render_template, redirect, url_for, abort, g
-from flask.ext.babel import lazy_gettext as l_
+from flask.ext.babel import lazy_gettext as l_, _
 
-from formencode import Schema, All
+from formencode import Schema, All, Invalid
 from formencode.validators import FieldsMatch, Email, String, NotEmpty
 from sprox.formbase import AddRecordForm, EditableForm, Field
 from sprox.widgets import PropertySingleSelectField
@@ -105,3 +105,49 @@ def index():
         distance_flights=_get_distance_flights(),
         takeoff_locations=_get_takeoff_locations(),
         last_year_statistics=_get_last_year_statistics())
+
+
+password_match_validator = FieldsMatch(
+    'password', 'verify_password',
+    messages={'invalidNoMatch': l_('Passwords do not match')})
+
+change_password_form = BootstrapForm(
+    'change_password_form',
+    submit_text=l_("Change Password"),
+    validator=Schema(chained_validators=(password_match_validator,)),
+    children=[
+        PasswordField('password',
+                      validator=UnicodeString(min=6),
+                      label_text=l_('Password')),
+        PasswordField('verify_password',
+                      label_text=l_('Verify Password')),
+    ]
+)
+
+
+def change_password_post():
+    try:
+        change_password_form.validate(request.form)
+    except Invalid:
+        return
+
+    g.user.password = request.form['password']
+    g.user.recover_key = None
+
+    return redirect(url_for('.index'))
+
+
+@user_blueprint.route('/change_password', methods=['GET', 'POST'])
+def change_password():
+    if not g.user.is_writable(request.identity):
+        abort(401)
+
+    if request.method == 'POST':
+        result = change_password_post()
+        if result:
+            return result
+
+    return render_template(
+        'generic/form.jinja',
+        active_page='settings', title=_('Change Password'),
+        form=change_password_form, values={})
