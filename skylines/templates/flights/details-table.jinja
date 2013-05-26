@@ -1,4 +1,4 @@
-{% from "macros/flags.jinja" import insert_flag with context %}
+{% from "macros/flags-FLASK.jinja" import insert_flag with context %}
 {% from "macros/datetime.jinja" import insert_timeago with context %}
 {% from "macros/links.jinja" import user_link, club_link, airport_link %}
 
@@ -50,7 +50,7 @@
     {%- if flight.duration %}
     <tr>
       <th>{% trans %}Duration{% endtrans %}</th>
-      <td>{{ _('%(hours)s hours')|format(hours=flight.duration) }}</td>
+      <td>{{ _('%(hours)s hours', hours=flight.duration) }}</td>
     </tr>
     {%- endif %}
 
@@ -92,7 +92,7 @@
     <tr>
       <th>{% trans %}Score{% endtrans %}</th>
       <td>
-        {{ _('%(points)s pt')|format(points=flight.index_score) }}
+        {{ _('%(points)s pt', points=flight.index_score) }}
         <small><br/>
         {%- if flight.olc_classic_distance %}
         <span title="{% trans %}OLC Distance{% endtrans %}">
