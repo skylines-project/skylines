@@ -1,15 +1,7 @@
 from datetime import datetime
 
 from flask import Blueprint, request, render_template, redirect, url_for, abort, current_app, jsonify
-from flask.ext.babel import lazy_gettext as l_
 from babel.dates import format_date
-
-from formencode import Schema, All, Invalid
-from formencode.validators import FieldsMatch, Email, String, NotEmpty
-from sprox.formbase import AddRecordForm, Field
-from sprox.validators import UniqueValue
-from sprox.sa.provider import SAORMProvider
-from tw.forms import PasswordField, TextField
 
 from sqlalchemy import func
 from sqlalchemy.sql.expression import or_, and_
@@ -17,7 +9,7 @@ from sqlalchemy.orm import joinedload, contains_eager
 from sqlalchemy.orm.util import aliased
 
 from skylines.lib.datatables import GetDatatableRecords
-from skylines.lib.dbutil import get_requested_record, get_requested_record_list
+from skylines.lib.dbutil import get_requested_record
 from skylines.lib.helpers import truncate, country_name_flask
 from skylines.model import (
     DBSession, User, Club, Flight, IGCFile, AircraftModel,
@@ -25,12 +17,6 @@ from skylines.model import (
 )
 
 flights_blueprint = Blueprint('flights', 'skylines')
-
-
-
-
-
-
 
 
 def _create_list(tab, kw, date=None, pilot=None, club=None, airport=None,
@@ -136,11 +122,6 @@ def _create_list(tab, kw, date=None, pilot=None, club=None, airport=None,
                                tab=tab, date=date, pilot=pilot, club=club,
                                airport=airport, flights=flights,
                                flights_count=flights_count)
-
-
-
-
-
 
 
 @flights_blueprint.route('/all')
