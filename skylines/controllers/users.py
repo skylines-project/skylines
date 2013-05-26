@@ -193,13 +193,6 @@ class UserController(BaseController):
         self.user = user
         request.environ['UserController.user.id'] = self.user.id
 
-    @expose('users/view.jinja')
-    def index(self):
-        return dict(active_page='settings', user=self.user,
-                    distance_flights=self.get_distance_flights(),
-                    takeoff_locations=self.get_takeoff_locations(),
-                    last_year_statistics=self.get_last_year_statistics())
-
     @expose('generic/form.jinja')
     def change_password(self, **kw):
         if not self.user.is_writable(request.identity):
@@ -317,71 +310,6 @@ class UserController(BaseController):
 
         redirect(came_from)
 
-    def get_distance_flight(self, distance):
-        return Flight.query() \
-            .filter(Flight.pilot == self.user) \
-            .filter(Flight.olc_classic_distance >= distance) \
-            .order_by(Flight.landing_time) \
-            .first()
-
-    def get_distance_flights(self):
-        _cache = cache.get_cache('users.distance_flights', expire=60 * 5)
-
-        def update_cache():
-            distance_flights = []
-
-            largest_flight = self.user.get_largest_flights().first()
-            if largest_flight:
-                distance_flights.append([largest_flight.olc_classic_distance,
-                                         largest_flight])
-
-            for distance in [50000, 100000, 300000, 500000, 700000, 1000000]:
-                distance_flight = self.get_distance_flight(distance)
-                if distance_flight is not None:
-                    distance_flights.append([distance, distance_flight])
-
-            distance_flights.sort()
-            return distance_flights
-
-        return _cache.get(key=self.user.id, createfunc=update_cache)
-
-    def get_last_year_statistics(self):
-        query = DBSession.query(func.count('*').label('flights'),
-                                func.sum(Flight.olc_classic_distance).label('distance'),
-                                func.sum(Flight.duration).label('duration')) \
-                         .filter(Flight.pilot == self.user) \
-                         .filter(Flight.date_local > (date.today() - timedelta(days=365))) \
-                         .first()
-
-        last_year_statistics = dict(flights=0,
-                                    distance=0,
-                                    duration=timedelta(0),
-                                    speed=0)
-
-        if query and query.flights > 0:
-            duration_seconds = query.duration.days * 24 * 3600 + query.duration.seconds
-
-            if duration_seconds > 0:
-                last_year_statistics['speed'] = float(query.distance) / duration_seconds
-
-            last_year_statistics['flights'] = query.flights
-            last_year_statistics['distance'] = query.distance
-            last_year_statistics['duration'] = query.duration
-
-            last_year_statistics['average_distance'] = query.distance / query.flights
-            last_year_statistics['average_duration'] = query.duration / query.flights
-
-        return last_year_statistics
-
-    def get_takeoff_locations(self):
-        _cache = cache.get_cache('users.takeoff_locations', expire=60 * 5)
-
-        def update_cache():
-            return Location.get_clustered_locations(Flight.takeoff_location_wkt,
-                                                    filter=(Flight.pilot == self.user))
-
-        return _cache.get(key=self.user.id, createfunc=update_cache)
-
     @expose()
     @require(not_anonymous())
     def follow(self):
@@ -397,11 +325,6 @@ class UserController(BaseController):
 
 
 class UsersController(BaseController):
-    @expose()
-    def _lookup(self, id, *remainder):
-        controller = UserController(get_requested_record(User, id))
-        return controller, remainder
-
     @expose('generic/form.jinja')
     def recover(self, key=None, **kwargs):
         try:

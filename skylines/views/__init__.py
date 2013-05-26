@@ -14,6 +14,7 @@ from skylines.views.notifications import notifications_blueprint
 from skylines.views.ranking import ranking_blueprint
 from skylines.views.statistics import statistics_blueprint
 from skylines.views.upload import upload_blueprint
+from skylines.views.user import user_blueprint
 from skylines.views.users import users_blueprint
 
 app.register_blueprint(about_blueprint, url_prefix='/about')
@@ -24,6 +25,7 @@ app.register_blueprint(notifications_blueprint, url_prefix='/notifications')
 app.register_blueprint(ranking_blueprint, url_prefix='/ranking')
 app.register_blueprint(statistics_blueprint, url_prefix='/statistics')
 app.register_blueprint(upload_blueprint, url_prefix='/flights/upload')
+app.register_blueprint(user_blueprint, url_prefix='/users/<user_id>')
 app.register_blueprint(users_blueprint, url_prefix='/users')
 
 
