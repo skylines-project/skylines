@@ -248,3 +248,86 @@ def json():
         additional=dict(
             registration=g.flight.registration,
             competition_id=g.flight.competition_id))
+
+
+def _get_near_flights(flight, location, time, max_distance=1000):
+    # calculate max_distance in degrees at the earth's sphere (approximate,
+    # cutoff at +-85 deg)
+    max_distance_deg = (max_distance / METERS_PER_DEGREE) / \
+        math.cos(math.radians(min(abs(location.latitude), 85)))
+
+    # the distance filter is geometric only, so max_distance must be given in
+    # SRID units (which is degrees for WGS84). The filter will be more and more
+    # inaccurate further to the poles. But it's a lot faster than the geograpic
+    # filter...
+
+    result = Flight.query() \
+        .filter(Flight.id != flight.id) \
+        .filter(Flight.takeoff_time <= time) \
+        .filter(Flight.landing_time >= time) \
+        .filter(func.ST_DWithin(Flight.locations,
+                                WKTElement(location.to_wkt(), srid=4326),
+                                max_distance_deg))
+
+    flights = []
+    for flight in result:
+        # find point closest to given time
+        closest = min(range(len(flight.timestamps)),
+                      key=lambda x: abs((flight.timestamps[x] - time).total_seconds()))
+
+        trace = to_shape(flight.locations).coords
+
+        if closest == 0 or closest == len(trace) - 1:
+            point = trace[closest]
+        else:
+            # interpolate flight trace between two fixes
+            next_smaller = closest if flight.timestamps[closest] < time else closest - 1
+            next_larger = closest if flight.timestamps[closest] > time else closest + 1
+            dx = (time - flight.timestamps[next_smaller]).total_seconds() / \
+                 (flight.timestamps[next_larger] - flight.timestamps[next_smaller]).total_seconds()
+
+            point_next = trace[closest]
+            point_prev = trace[closest]
+
+            point = [point_prev[0] + (point_next[0] - point_prev[0]) * dx,
+                     point_prev[1] + (point_next[1] - point_prev[1]) * dx]
+
+        point_distance = location.geographic_distance(
+            Location(latitude=point[1], longitude=point[0]))
+
+        if point_distance > max_distance:
+            continue
+
+        flights.append(flight)
+
+        # limit to 5 flights
+        if len(flights) == 5:
+            break
+
+    return flights
+
+
+@flight_blueprint.route('/near')
+def near():
+    try:
+        latitude = float(request.args['lat'])
+        longitude = float(request.args['lon'])
+        time = float(request.args['time'])
+
+    except (KeyError, ValueError):
+        abort(400)
+
+    location = Location(latitude=latitude, longitude=longitude)
+    time = from_seconds_of_day(g.flight.takeoff_time, time)
+
+    flights = _get_near_flights(g.flight, location, time, 1000)
+
+    def add_flight_path(flight):
+        trace = _get_flight_path(flight, threshold=0.0001, max_points=10000)
+        trace['additional'] = dict(
+            registration=flight.registration,
+            competition_id=flight.competition_id)
+
+        return trace
+
+    return jsonify(flights=map(add_flight_path, flights))
