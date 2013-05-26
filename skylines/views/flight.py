@@ -395,3 +395,75 @@ def change_pilot():
         user=request.identity['user'],
         include_after='flights/after_change_pilot.jinja',
         form=select_pilot_form, values=g.flight)
+
+
+class SelectAircraftForm(EditableForm):
+    __base_widget_type__ = BootstrapForm
+    __model__ = Flight
+    __hide_fields__ = ['id']
+    __limit_fields__ = ['model', 'registration', 'competition_id']
+    model = aircraft_model.SelectField('model', label_text=l_('Aircraft Model'))
+    registration = TextField('registration', label_text=l_('Aircraft Registration'), maxlength=32, validator=String(max=32))
+    competition_id = TextField('competition_id', label_text=l_('Competition Number'), maxlength=5, validator=String(max=5))
+
+select_aircraft_form = SelectAircraftForm(DBSession)
+
+
+def change_aircraft_post():
+    try:
+        select_aircraft_form.validate(request.form)
+    except Invalid:
+        return
+
+    registration = request.form['registration']
+    if registration is not None:
+        registration = registration.strip()
+        if len(registration) == 0:
+            registration = None
+
+    g.flight.model_id = request.form['model'] or None
+    g.flight.registration = registration
+    g.flight.competition_id = request.form['competition_id'] or None
+    g.flight.time_modified = datetime.utcnow()
+    DBSession.flush()
+
+    return redirect('.')
+
+
+@flight_blueprint.route('/change_aircraft', methods=['GET', 'POST'])
+def change_aircraft():
+    if not g.flight.is_writable(request.identity):
+        abort(403)
+
+    if request.method == 'POST':
+        result = change_aircraft_post()
+        if result:
+            return result
+
+    if g.flight.model_id is None:
+        model_id = g.flight.igc_file.guess_model()
+    else:
+        model_id = g.flight.model_id
+
+    if g.flight.registration is not None:
+        registration = g.flight.registration
+    elif g.flight.igc_file.registration is not None:
+        registration = g.flight.igc_file.registration
+    else:
+        registration = g.flight.igc_file.guess_registration()
+
+    if g.flight.competition_id is not None:
+        competition_id = g.flight.competition_id
+    elif g.flight.igc_file.competition_id is not None:
+        competition_id = g.flight.igc_file.competition_id
+    else:
+        competition_id = None
+
+    return render_template(
+        'generic/form.jinja',
+        active_page='flights', title=_('Change Aircraft'),
+        form=select_aircraft_form,
+        values=dict(id=g.flight.id,
+                    model=model_id,
+                    registration=registration,
+                    competition_id=competition_id))
