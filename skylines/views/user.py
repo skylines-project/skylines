@@ -2,6 +2,7 @@ from datetime import date, timedelta
 
 from flask import Blueprint, request, render_template, redirect, url_for, abort, g
 from flask.ext.babel import lazy_gettext as l_, _, ngettext
+from flask.ext.login import login_required, current_user
 
 from formencode import Schema, All, Invalid
 from formencode.validators import FieldsMatch, Email, String, NotEmpty
@@ -242,3 +243,18 @@ def edit():
         active_page='settings', title=_('Edit User'),
         form=edit_user_form, values=g.user,
         include_script='users/after-edit-form.jinja')
+
+
+@user_blueprint.route('/follow')
+@login_required
+def follow():
+    Follower.follow(current_user, g.user)
+    create_follower_notification(g.user, current_user)
+    return redirect(url_for('.index'))
+
+
+@user_blueprint.route('/unfollow')
+@login_required
+def unfollow():
+    Follower.unfollow(current_user, g.user)
+    return redirect(url_for('.index'))

@@ -192,19 +192,6 @@ class UserController(BaseController):
 
         redirect(came_from)
 
-    @expose()
-    @require(not_anonymous())
-    def follow(self):
-        Follower.follow(request.identity['user'], self.user)
-        create_follower_notification(self.user, request.identity['user'])
-        redirect('.')
-
-    @expose()
-    @require(not_anonymous())
-    def unfollow(self):
-        Follower.unfollow(request.identity['user'], self.user)
-        redirect('.')
-
 
 class UsersController(BaseController):
     @expose('generic/form.jinja')
