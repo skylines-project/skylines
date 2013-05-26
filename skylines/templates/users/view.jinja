@@ -114,7 +114,7 @@
             {% if user.tracking_delay == 0 -%}
             {% trans %}None{% endtrans %}
             {%- else %}
-            {{ ungettext('%u minute', '%u minutes', user.tracking_delay) % user.tracking_delay }}
+            {{ ngettext('%(num)u minute', '%(num)u minutes', user.tracking_delay) }}
             {%- endif %}
           </td>
         </tr>
