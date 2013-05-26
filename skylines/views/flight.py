@@ -39,12 +39,18 @@ def _reanalyse_if_needed(flight):
 
 @flight_blueprint.url_value_preprocessor
 def _pull_flight_id(endpoint, values):
-    flight_ids = values.pop('flight_id')
-    g.flights = get_requested_record_list(Flight, flight_ids)
+    g.flight_id = values.pop('flight_id')
+
+    g.flights = get_requested_record_list(Flight, g.flight_id)
     g.flight = g.flights[0]
     g.other_flights = g.flights[1:]
 
     map(_reanalyse_if_needed, g.flights)
+
+
+@flight_blueprint.url_defaults
+def _add_flight_id(endpoint, values):
+    values.setdefault('flight_id', g.flight_id)
 
 
 def _get_flight_path(flight, threshold=0.001, max_points=3000):
@@ -376,7 +382,7 @@ def change_pilot_post():
     g.flight.time_modified = datetime.utcnow()
     DBSession.flush()
 
-    return redirect('.')
+    return redirect(url_for('.index'))
 
 
 @flight_blueprint.route('/change_pilot', methods=['GET', 'POST'])
@@ -427,7 +433,7 @@ def change_aircraft_post():
     g.flight.time_modified = datetime.utcnow()
     DBSession.flush()
 
-    return redirect('.')
+    return redirect(url_for('.index'))
 
 
 @flight_blueprint.route('/change_aircraft', methods=['GET', 'POST'])
