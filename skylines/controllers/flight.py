@@ -48,23 +48,6 @@ class FlightController(BaseController):
         return redirect('.')
 
     @without_trailing_slash
-    @expose('generic/confirm.jinja')
-    def delete(self, **kwargs):
-        if not self.flight.is_writable(request.identity):
-            raise HTTPForbidden
-
-        if request.method == 'POST':
-            files.delete_file(self.flight.igc_file.filename)
-            DBSession.delete(self.flight)
-            DBSession.delete(self.flight.igc_file)
-
-            redirect('/flights/')
-        else:
-            return dict(title=_('Delete Flight'),
-                        question=_('Are you sure you want to delete this flight?'),
-                        action='delete', cancel='.')
-
-    @without_trailing_slash
     @expose()
     def add_comment(self, text, **kwargs):
         if request.identity is None:

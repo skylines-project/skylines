@@ -473,3 +473,22 @@ def change_aircraft():
                     model=model_id,
                     registration=registration,
                     competition_id=competition_id))
+
+
+@flight_blueprint.route('/delete', methods=['GET', 'POST'])
+def delete():
+    if not g.flight.is_writable(request.identity):
+        abort(403)
+
+    if request.method == 'POST':
+        files.delete_file(g.flight.igc_file.filename)
+        DBSession.delete(g.flight)
+        DBSession.delete(g.flight.igc_file)
+
+        return redirect(url_for('flights.index'))
+
+    return render_template(
+        'generic/confirm.jinja',
+        title=_('Delete Flight'),
+        question=_('Are you sure you want to delete this flight?'),
+        action=url_for('.delete'), cancel=url_for('.index'))
