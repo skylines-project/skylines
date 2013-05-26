@@ -2,9 +2,9 @@ import math
 from datetime import datetime
 
 from flask import Blueprint, request, render_template, redirect, url_for, abort, current_app, jsonify, g
-from flask.ext.babel import lazy_gettext as l_
+from flask.ext.babel import lazy_gettext as l_, _
 
-from formencode.validators import String
+from formencode.validators import String, Invalid
 from tw.forms.fields import TextField
 from sprox.formbase import EditableForm
 from sprox.widgets import PropertySingleSelectField
@@ -331,3 +331,67 @@ def near():
         return trace
 
     return jsonify(flights=map(add_flight_path, flights))
+
+
+class PilotSelectField(PropertySingleSelectField):
+    def _my_update_params(self, d, nullable=False):
+        query = DBSession.query(User.id, User.name) \
+            .filter(User.club_id == request.identity['user'].club_id) \
+            .order_by(User.name)
+        options = [(None, 'None')] + query.all()
+        d['options'] = options
+        return d
+
+    def validate(self, value, *args, **kw):
+        if isinstance(value, User):
+            value = value.id
+        return super(PilotSelectField, self).validate(value, *args, **kw)
+
+
+class SelectPilotForm(EditableForm):
+    __base_widget_type__ = BootstrapForm
+    __model__ = Flight
+    __hide_fields__ = ['id']
+    __limit_fields__ = ['pilot', 'co_pilot']
+    __base_widget_args__ = dict(action='change_pilot')
+    pilot = PilotSelectField('pilot', label_text=l_('Pilot'))
+    co_pilot = PilotSelectField('co_pilot', label_text=l_('Co-Pilot'))
+
+select_pilot_form = SelectPilotForm(DBSession)
+
+
+def change_pilot_post():
+    try:
+        select_pilot_form.validate(request.form)
+    except Invalid:
+        return
+
+    pilot = request.form['pilot'] or None
+    if g.flight.pilot_id != pilot:
+        g.flight.pilot_id = pilot
+        if pilot:
+            g.flight.club_id = User.get(pilot).club_id
+
+    g.flight.co_pilot_id = request.form['co_pilot'] or None
+    g.flight.time_modified = datetime.utcnow()
+    DBSession.flush()
+
+    return redirect('.')
+
+
+@flight_blueprint.route('/change_pilot', methods=['GET', 'POST'])
+def change_pilot():
+    if not g.flight.is_writable(request.identity):
+        abort(403)
+
+    if request.method == 'POST':
+        result = change_pilot_post()
+        if result:
+            return result
+
+    return render_template(
+        'generic/form.jinja',
+        active_page='flights', title=_('Select Pilot'),
+        user=request.identity['user'],
+        include_after='flights/after_change_pilot.jinja',
+        form=select_pilot_form, values=g.flight)

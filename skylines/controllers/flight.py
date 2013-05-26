@@ -78,36 +78,6 @@ select_aircraft_form = SelectAircraftForm(DBSession)
 class FlightController(BaseController):
     @without_trailing_slash
     @expose('generic/form.jinja')
-    def change_pilot(self, **kwargs):
-        if not self.flight.is_writable(request.identity):
-            raise HTTPForbidden
-
-        return dict(active_page='flights', title=_('Select Pilot'),
-                    user=request.identity['user'],
-                    include_after='flights/after_change_pilot.jinja',
-                    form=select_pilot_form,
-                    values=self.flight)
-
-    @without_trailing_slash
-    @expose()
-    @validate(form=select_pilot_form, error_handler=change_pilot)
-    def select_pilot(self, pilot, co_pilot, **kwargs):
-        if not self.flight.is_writable(request.identity):
-            raise HTTPForbidden
-
-        if self.flight.pilot_id != pilot:
-            self.flight.pilot_id = pilot
-            if pilot:
-                self.flight.club_id = User.get(pilot).club_id
-
-        self.flight.co_pilot_id = co_pilot
-        self.flight.time_modified = datetime.utcnow()
-        DBSession.flush()
-
-        redirect('.')
-
-    @without_trailing_slash
-    @expose('generic/form.jinja')
     def change_aircraft(self, **kwargs):
         if not self.flight.is_writable(request.identity):
             raise HTTPForbidden
