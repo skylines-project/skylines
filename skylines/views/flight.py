@@ -1,7 +1,7 @@
 import math
 from datetime import datetime
 
-from flask import Blueprint, request, render_template, redirect, url_for, abort, current_app, jsonify, g
+from flask import Blueprint, request, render_template, redirect, url_for, abort, current_app, jsonify, g, flash
 from flask.ext.babel import lazy_gettext as l_, _
 
 from formencode.validators import String, Invalid
@@ -492,3 +492,33 @@ def delete():
         title=_('Delete Flight'),
         question=_('Are you sure you want to delete this flight?'),
         action=url_for('.delete'), cancel=url_for('.index'))
+
+
+@flight_blueprint.route('/add_comment', methods=['POST'])
+def add_comment():
+    if request.identity is None:
+        flash(_('You have to be logged in to post comments!'), 'warning')
+        return redirect(url_for('.index'))
+
+    text = request.form['text'].strip()
+    if not text:
+        return redirect(url_for('.index'))
+
+    comment = FlightComment()
+    comment.user = request.identity['user']
+    comment.flight = g.flight
+    comment.text = text
+
+    create_flight_comment_notifications(comment)
+
+    return redirect(url_for('.index'))
+
+
+@flight_blueprint.route('/analysis')
+def analysis():
+    """Hidden method that restarts flight analysis."""
+
+    analyse_flight(g.flight)
+    DBSession.flush()
+
+    return redirect(url_for('.index'))
