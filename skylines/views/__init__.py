@@ -1,4 +1,4 @@
-from flask import redirect
+from flask import redirect, url_for
 
 from skylines import app
 
@@ -27,4 +27,4 @@ app.register_blueprint(users_blueprint, url_prefix='/users')
 
 @app.route('/')
 def index():
-    return redirect('/flights/latest')
+    return redirect(url_for('flights.latest'))
