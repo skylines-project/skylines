@@ -171,12 +171,6 @@ class RootController(BaseController):
         redirect(came_from)
 
     @expose()
-    @require(Any(not_anonymous(), msg='Please login to see this page!'))
-    def settings(self, **kw):
-        """Only for compatibility with old bookmarks."""
-        redirect('/users/' + str(request.identity['user'].id))
-
-    @expose()
     def _lookup(self, *remainder):
         """
         Workaround: The production does not dispatch /track.php to the track
