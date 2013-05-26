@@ -1,7 +1,7 @@
 from datetime import date, timedelta
 
 from flask import Blueprint, request, render_template, redirect, url_for, abort, g
-from flask.ext.babel import lazy_gettext as l_, _
+from flask.ext.babel import lazy_gettext as l_, _, ngettext
 
 from formencode import Schema, All, Invalid
 from formencode.validators import FieldsMatch, Email, String, NotEmpty
@@ -151,3 +151,94 @@ def change_password():
         'generic/form.jinja',
         active_page='settings', title=_('Change Password'),
         form=change_password_form, values={})
+
+
+class DelaySelectField(PropertySingleSelectField):
+    def _my_update_params(self, d, nullable=False):
+        options = [(0, _('None'))]
+        for x in range(1, 10) + range(10, 30, 5) + range(30, 61, 15):
+            options.append((x, ngettext(u'%(num)u minute', u'%(num)u minutes', x)))
+        d['options'] = options
+        return d
+
+
+def filter_user_id(model):
+    return model.id == g.user.id
+
+
+class EditUserForm(EditableForm):
+    __base_widget_type__ = BootstrapForm
+    __model__ = User
+    __hide_fields__ = ['id']
+    __limit_fields__ = ['email_address', 'name',
+                        'tracking_delay', 'unit_preset',
+                        'distance_unit', 'speed_unit',
+                        'lift_unit', 'altitude_unit',
+                        'eye_candy']
+    __field_widget_args__ = {
+        'email_address': dict(label_text=l_('eMail Address')),
+        'name': dict(label_text=l_('Name')),
+        'tracking_delay': dict(label_text=l_('Tracking Delay')),
+        'unit_preset': dict(label_text=l_('Unit Preset')),
+        'distance_unit': dict(label_text=l_('Distance Unit')),
+        'speed_unit': dict(label_text=l_('Speed Unit')),
+        'lift_unit': dict(label_text=l_('Lift Unit')),
+        'altitude_unit': dict(label_text=l_('Altitude Unit')),
+        'eye_candy': dict(label_text=l_('Eye Candy')),
+    }
+
+    email_address = Field(TextField, All(
+        Email(not_empty=True),
+        UniqueValueUnless(filter_user_id, DBSession, __model__, 'email_address')))
+    name = Field(TextField, NotEmpty)
+    tracking_delay = DelaySelectField
+    unit_preset = units.PresetSelectField("unit_preset")
+    distance_unit = units.DistanceSelectField
+    speed_unit = units.SpeedSelectField
+    lift_unit = units.LiftSelectField
+    altitude_unit = units.AltitudeSelectField
+    eye_candy = Field(CheckBox)
+
+edit_user_form = EditUserForm(DBSession)
+
+
+def edit_post():
+    try:
+        edit_user_form.validate(request.form)
+    except Invalid:
+        return
+
+    g.user.email_address = request.form['email_address']
+    g.user.name = request.form['name']
+    g.user.tracking_delay = request.form.get('tracking_delay', 0)
+
+    unit_preset = request.form.get('unit_preset', 1, type=int)
+    if unit_preset == 0:
+        g.user.distance_unit = request.form.get('distance_unit', 1, type=int)
+        g.user.speed_unit = request.form.get('speed_unit', 1, type=int)
+        g.user.lift_unit = request.form.get('lift_unit', 0, type=int)
+        g.user.altitude_unit = request.form.get('altitude_unit', 0, type=int)
+    else:
+        g.user.unit_preset = unit_preset
+
+    g.user.eye_candy = request.form.get('eye_candy', False, type=bool)
+    DBSession.flush()
+
+    return redirect(url_for('.index'))
+
+
+@user_blueprint.route('/edit', methods=['GET', 'POST'])
+def edit():
+    if not g.user.is_writable(request.identity):
+        abort(401)
+
+    if request.method == 'POST':
+        result = edit_post()
+        if result:
+            return result
+
+    return render_template(
+        'generic/form.jinja',
+        active_page='settings', title=_('Edit User'),
+        form=edit_user_form, values=g.user,
+        include_script='users/after-edit-form.jinja')

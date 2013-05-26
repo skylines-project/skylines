@@ -32,14 +32,6 @@ from skylines.model import (
 from skylines.model.notification import create_follower_notification
 
 
-class DelaySelectField(PropertySingleSelectField):
-    def _my_update_params(self, d, nullable=False):
-        options = [(0, _('None'))]
-        for x in range(1, 10) + range(10, 30, 5) + range(30, 61, 15):
-            options.append((x, ungettext(u'%u minute', u'%u minutes', x) % x))
-        d['options'] = options
-        return d
-
 password_match_validator = FieldsMatch(
     'password', 'verify_password',
     messages={'invalidNoMatch': l_('Passwords do not match')})
@@ -71,50 +63,6 @@ class NewUserForm(AddRecordForm):
 
 new_user_form = NewUserForm(DBSession)
 
-
-def filter_user_id(model):
-    if 'UserController.user.id' in request.environ:
-        return model.id == request.environ['UserController.user.id']
-
-    return None
-
-
-class EditUserForm(EditableForm):
-    __base_widget_type__ = BootstrapForm
-    __model__ = User
-    __hide_fields__ = ['id']
-    __limit_fields__ = ['email_address', 'name',
-                        'tracking_delay', 'unit_preset',
-                        'distance_unit', 'speed_unit',
-                        'lift_unit', 'altitude_unit',
-                        'eye_candy']
-    __base_widget_args__ = dict(action='save')
-    __field_widget_args__ = {
-        'email_address': dict(label_text=l_('eMail Address')),
-        'name': dict(label_text=l_('Name')),
-        'tracking_delay': dict(label_text=l_('Tracking Delay')),
-        'unit_preset': dict(label_text=l_('Unit Preset')),
-        'distance_unit': dict(label_text=l_('Distance Unit')),
-        'speed_unit': dict(label_text=l_('Speed Unit')),
-        'lift_unit': dict(label_text=l_('Lift Unit')),
-        'altitude_unit': dict(label_text=l_('Altitude Unit')),
-        'eye_candy': dict(label_text=l_('Eye Candy')),
-    }
-
-    email_address = Field(TextField, All(Email(not_empty=True),
-                                         UniqueValueUnless(filter_user_id,
-                                                           DBSession,
-                                                           __model__, 'email_address')))
-    name = Field(TextField, NotEmpty)
-    tracking_delay = DelaySelectField
-    unit_preset = units.PresetSelectField("unit_preset")
-    distance_unit = units.DistanceSelectField
-    speed_unit = units.SpeedSelectField
-    lift_unit = units.LiftSelectField
-    altitude_unit = units.AltitudeSelectField
-    eye_candy = Field(CheckBox)
-
-edit_user_form = EditUserForm(DBSession)
 
 recover_email_form = BootstrapForm(
     'recover_email_form',
@@ -185,44 +133,6 @@ class UserController(BaseController):
     def recover_password(self):
         recover_user_password(self.user)
         flash('A password recovery email was sent to that user.')
-        redirect('.')
-
-    @expose('generic/form.jinja')
-    def edit(self, **kwargs):
-        if not self.user.is_writable(request.identity):
-            raise HTTPForbidden
-
-        return dict(active_page='settings', title=_('Edit User'),
-                    form=edit_user_form,
-                    values=self.user,
-                    include_script='users/after-edit-form.jinja')
-
-    @expose()
-    @validate(form=edit_user_form, error_handler=edit)
-    def save(self, email_address, name,
-             tracking_delay=0, unit_preset=1,
-             distance_unit=1, speed_unit=1,
-             lift_unit=0, altitude_unit=0,
-             eye_candy=False, **kwargs):
-        if not self.user.is_writable(request.identity):
-            raise HTTPForbidden
-
-        self.user.email_address = email_address
-        self.user.name = name
-        self.user.tracking_delay = tracking_delay
-
-        unit_preset = int(unit_preset)
-        if unit_preset == 0:
-            self.user.distance_unit = distance_unit
-            self.user.speed_unit = speed_unit
-            self.user.lift_unit = lift_unit
-            self.user.altitude_unit = altitude_unit
-        else:
-            self.user.unit_preset = unit_preset
-
-        self.user.eye_candy = eye_candy
-        DBSession.flush()
-
         redirect('.')
 
     @expose('users/change_club.jinja')
