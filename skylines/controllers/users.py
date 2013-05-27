@@ -43,12 +43,3 @@ class UserController(BaseController):
         recover_user_password(self.user)
         flash('A password recovery email was sent to that user.')
         redirect('.')
-
-    @expose()
-    def tracking_register(self, came_from='/tracking/info'):
-        if not self.user.is_writable(request.identity):
-            raise HTTPForbidden
-
-        self.user.generate_tracking_key()
-
-        redirect(came_from)

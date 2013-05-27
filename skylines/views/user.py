@@ -298,3 +298,13 @@ def follow():
 def unfollow():
     Follower.unfollow(current_user, g.user)
     return redirect(url_for('.index'))
+
+
+@user_blueprint.route('/tracking_register')
+def tracking_register():
+    if not g.user.is_writable(request.identity):
+        abort(401)
+
+    g.user.generate_tracking_key()
+
+    return redirect(request.values.get('came_from', '/tracking/info'))

@@ -103,7 +103,7 @@
             <span class="label label-info">{{ user.tracking_key_hex }}</span>
             <a href="/tracking/info" class="btn btn-mini">{% trans %}More Information{% endtrans %}</a>
             {% if user.is_writable(request.identity) -%}
-            <a href="tracking_register?came_from=." class="btn btn-mini">{% trans %}Generate new key{% endtrans %}</a>
+            <a href="{{ url_for('.tracking_register', came_from=url_for('.index')) }}" class="btn btn-mini">{% trans %}Generate new key{% endtrans %}</a>
             {%- endif %}
           </td>
         </tr>
