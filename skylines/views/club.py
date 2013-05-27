@@ -1,5 +1,6 @@
 from flask import Blueprint, render_template, g, request, redirect, url_for, abort
 from flask.ext.babel import _
+from sqlalchemy import func
 
 from skylines.forms import club, pilot as pilot_forms
 from skylines.lib.dbutil import get_requested_record
@@ -24,6 +25,15 @@ def _add_user_id(endpoint, values):
 def index():
     return render_template(
         'clubs/view.jinja', active_page='settings', club=g.club)
+
+
+@club_blueprint.route('/pilots')
+def pilots():
+    users = User.query(club=g.club).order_by(func.lower(User.name))
+
+    return render_template(
+        'clubs/pilots.jinja', active_page='settings',
+        club=g.club, users=users)
 
 
 @club_blueprint.route('/edit')

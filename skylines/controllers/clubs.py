@@ -13,13 +13,6 @@ from skylines.model import DBSession, User, Group, Club
 
 
 class ClubController(BaseController):
-    @expose('clubs/pilots.jinja')
-    def pilots(self):
-        users = User.query(club=self.club) \
-            .order_by(func.lower(User.name))
-
-        return dict(active_page='settings', club=self.club, users=users)
-
     @expose('generic/form.jinja')
     def new_pilot(self, **kwargs):
         if not self.club.is_writable(request.identity):
