@@ -32,38 +32,6 @@ from skylines.model import (
 from skylines.model.notification import create_follower_notification
 
 
-password_match_validator = FieldsMatch(
-    'password', 'verify_password',
-    messages={'invalidNoMatch': l_('Passwords do not match')})
-
-user_validator = Schema(chained_validators=(password_match_validator,))
-
-
-class NewUserForm(AddRecordForm):
-    __base_widget_type__ = BootstrapForm
-    __model__ = User
-    __required_fields__ = ['password']
-    __limit_fields__ = ['email_address', 'name', 'password', 'verify_password', 'club']
-    __base_validator__ = user_validator
-    __field_widget_args__ = {
-        'email_address': dict(label_text=l_('eMail Address')),
-        'name': dict(label_text=l_('Name')),
-        'club': dict(label_text=l_('Club')),
-        'password': dict(label_text=l_('Password')),
-    }
-
-    email_address = Field(TextField, All(UniqueValue(SAORMProvider(DBSession),
-                                                     __model__, 'email_address'),
-                                         Email(not_empty=True)))
-    name = Field(TextField, NotEmpty)
-    club = club.SelectField
-    password = String(min=6)
-    verify_password = PasswordField('verify_password',
-                                    label_text=l_('Verify Password'))
-
-new_user_form = NewUserForm(DBSession)
-
-
 class UserController(BaseController):
     def __init__(self, user):
         self.user = user
