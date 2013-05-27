@@ -1,8 +1,9 @@
-from flask import Blueprint, render_template, g
-from sqlalchemy import func
+from flask import Blueprint, render_template, g, request, redirect, url_for, abort
+from flask.ext.babel import _
 
 from skylines.forms import club, pilot as pilot_forms
 from skylines.lib.dbutil import get_requested_record
+from skylines.lib.decorators import validate
 from skylines.model import DBSession, User, Group, Club
 
 club_blueprint = Blueprint('club', 'skylines')
@@ -23,3 +24,26 @@ def _add_user_id(endpoint, values):
 def index():
     return render_template(
         'clubs/view.jinja', active_page='settings', club=g.club)
+
+
+@club_blueprint.route('/edit')
+def edit():
+    if not g.club.is_writable(request.identity):
+        abort(403)
+
+    return render_template(
+        'generic/form.jinja', active_page='settings', title=_('Edit Club'),
+        form=club.edit_form, values=g.club)
+
+
+@club_blueprint.route('/edit', methods=['POST'])
+@validate(club.edit_form, edit)
+def edit_post():
+    if not g.club.is_writable(request.identity):
+        abort(403)
+
+    g.club.name = request.form['name']
+    g.club.website = request.form['website']
+    DBSession.flush()
+
+    return redirect(url_for('.index'))

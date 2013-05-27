@@ -13,27 +13,6 @@ from skylines.model import DBSession, User, Group, Club
 
 
 class ClubController(BaseController):
-    @expose('generic/form.jinja')
-    def edit(self, **kwargs):
-        if not self.club.is_writable(request.identity):
-            raise HTTPForbidden
-
-        return dict(active_page='settings', title=_('Edit Club'),
-                    form=club.edit_form,
-                    values=self.club)
-
-    @expose()
-    @validate(form=club.edit_form, error_handler=edit)
-    def save(self, name, website, **kwargs):
-        if not self.club.is_writable(request.identity):
-            raise HTTPForbidden
-
-        self.club.name = name
-        self.club.website = website
-        DBSession.flush()
-
-        redirect('.')
-
     @expose('clubs/pilots.jinja')
     def pilots(self):
         users = User.query(club=self.club) \
