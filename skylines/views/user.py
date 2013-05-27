@@ -1,6 +1,6 @@
 from datetime import date, timedelta
 
-from flask import Blueprint, request, render_template, redirect, url_for, abort, g
+from flask import Blueprint, request, render_template, redirect, url_for, abort, g, flash
 from flask.ext.babel import lazy_gettext as l_, _, ngettext
 from flask.ext.login import login_required, current_user
 
@@ -25,6 +25,7 @@ from skylines.model import (
     DBSession, User, Group, Club, Flight, Follower, Location, IGCFile
 )
 from skylines.model.notification import create_follower_notification
+from skylines.views.users import recover_user_password
 
 user_blueprint = Blueprint('user', 'skylines')
 
@@ -308,3 +309,14 @@ def tracking_register():
     g.user.generate_tracking_key()
 
     return redirect(request.values.get('came_from', '/tracking/info'))
+
+
+@user_blueprint.route('/recover_password')
+def recover_password():
+    if not request.identity or 'manage' not in request.identity['permissions']:
+        abort(401)
+
+    recover_user_password(g.user)
+    flash('A password recovery email was sent to that user.')
+
+    return redirect(url_for('.index'))
