@@ -35,7 +35,8 @@ def _pull_user_id(endpoint, values):
 
 @user_blueprint.url_defaults
 def _add_user_id(endpoint, values):
-    values.setdefault('user_id', g.user_id)
+    if hasattr(g, 'user_id'):
+        values.setdefault('user_id', g.user_id)
 
 
 def _get_distance_flight(distance):

@@ -51,7 +51,8 @@ def _pull_flight_id(endpoint, values):
 
 @flight_blueprint.url_defaults
 def _add_flight_id(endpoint, values):
-    values.setdefault('flight_id', g.flight_id)
+    if hasattr(g, 'flight_id'):
+        values.setdefault('flight_id', g.flight_id)
 
 
 def _get_flight_path(flight, threshold=0.001, max_points=3000):

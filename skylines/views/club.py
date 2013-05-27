@@ -18,7 +18,8 @@ def _pull_user_id(endpoint, values):
 
 @club_blueprint.url_defaults
 def _add_user_id(endpoint, values):
-    values.setdefault('club_id', g.club_id)
+    if hasattr(g, 'club_id'):
+        values.setdefault('club_id', g.club_id)
 
 
 @club_blueprint.route('/')
