@@ -13,14 +13,6 @@ from skylines.model import DBSession, User, Group, Club
 
 
 class ClubController(BaseController):
-    def __init__(self, club):
-        self.club = club
-
-    @with_trailing_slash
-    @expose('clubs/view.jinja')
-    def index(self):
-        return dict(active_page='settings', club=self.club)
-
     @expose('generic/form.jinja')
     def edit(self, **kwargs):
         if not self.club.is_writable(request.identity):
