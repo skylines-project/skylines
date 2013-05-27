@@ -23,8 +23,8 @@ if __name__ == '__main__':
     tg_conf = conf_from_file()
     tg_app = make_app(tg_conf.global_conf, **tg_conf.local_conf)
 
-    # Create WSGI cascade with flask priority
-    app = Cascade([flask_app, tg_app])
+    # Create WSGI cascade with tg priority
+    app = Cascade([tg_app, flask_app])
 
     # Run the WSGI server
     run_simple('localhost', 5000, app,
