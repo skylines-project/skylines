@@ -1,12 +1,17 @@
-from flask import Blueprint, request, render_template, redirect, url_for, abort
-from flask.ext.babel import lazy_gettext as l_
+import email
+import smtplib
+
+from flask import Blueprint, request, render_template, redirect, url_for, abort, current_app, flash
+from flask.ext.babel import lazy_gettext as l_, _
+from werkzeug.exceptions import ServiceUnavailable
 
 from formencode import Schema, All, Invalid
 from formencode.validators import FieldsMatch, Email, String, NotEmpty
 from sprox.formbase import AddRecordForm, Field
 from sprox.validators import UniqueValue
 from sprox.sa.provider import SAORMProvider
-from tw.forms import PasswordField, TextField
+from tw.forms import PasswordField, TextField, HiddenField
+from tw.forms.validators import UnicodeString
 
 from sqlalchemy import func
 from sqlalchemy.orm import joinedload
@@ -92,6 +97,127 @@ def new():
     return render_template('users/new.jinja',
                            active_page='users',
                            form=new_user_form)
+
+
+recover_email_form = BootstrapForm(
+    'recover_email_form',
+    submit_text=l_("Recover Password"),
+    action='recover_email',
+    children=[
+        TextField('email_address',
+                  validator=Email(not_empty=True),
+                  label_text=l_('eMail Address'))
+    ]
+)
+
+
+recover_password_form = BootstrapForm(
+    'recover_password_form',
+    submit_text=l_("Recover Password"),
+    action='recover_password',
+    validator=Schema(chained_validators=(password_match_validator,)),
+    children=[
+        HiddenField('key'),
+        PasswordField('password',
+                      validator=UnicodeString(min=6),
+                      label_text=l_('Password')),
+        PasswordField('verify_password',
+                      label_text=l_('Verify Password')),
+    ]
+)
+
+
+@users_blueprint.route('/recover')
+def recover():
+    try:
+        key = int(request.values['key'], 16)
+    except:
+        key = None
+
+    if key:
+        user = User.by_recover_key(key)
+        if not user:
+            abort(404)
+
+        return render_template(
+            'generic/form.jinja', active_page='users',
+            form=recover_password_form, values=dict(key='%x' % key))
+
+    return render_template(
+        'generic/form.jinja', active_page='users',
+        form=recover_email_form, values={})
+
+
+def recover_user_password(user):
+    key = user.generate_recover_key(request.remote_addr)
+
+    text = u"""Hi %s,
+
+you have asked to recover your password (from IP %s).  To enter a new
+password, click on the following link:
+
+ http://skylines.xcsoar.org/users/recover?key=%x
+
+The SkyLines Team
+""" % (unicode(user), request.remote_addr, key)
+
+    msg = email.mime.text.MIMEText(text.encode('utf-8'), 'plain', 'utf-8')
+    msg['Subject'] = 'SkyLines password recovery'
+    msg['From'] = current_app.config.get('EMAIL_FROM', 'skylines@xcsoar.org')
+    msg['To'] = user.email_address.encode('ascii')
+    msg['Date'] = email.Utils.formatdate(localtime=1)
+
+    try:
+        smtp = smtplib.SMTP(config.get('smtp_server', 'localhost'))
+        smtp.ehlo()
+        smtp.sendmail(config.get('email_from', 'skylines@xcsoar.org').encode('ascii'),
+                      user.email_address.encode('ascii'), msg.as_string())
+        smtp.quit()
+
+    except:
+        raise ServiceUnavailable(description=_(
+            "The mail server is currently not reachable. "
+            "Please try again later or contact the developers."))
+
+
+@users_blueprint.route('/recover_email', methods=['POST'])
+def recover_email():
+    try:
+        recover_email_form.validate(request.form)
+    except Invalid:
+        return recover()
+
+    user = User.by_email_address(request.form.get('email_address', None))
+    if not user:
+        abort(404)
+
+    recover_user_password(user)
+
+    flash('Check your email, we have sent you a link to recover your password.')
+    return redirect(url_for('index'))
+
+
+@users_blueprint.route('/recover_password', methods=['POST'])
+def recover_password():
+    try:
+        recover_password_form.validate(request.form)
+    except Invalid:
+        return recover()
+
+    try:
+        key = int(request.form['key'], 16)
+    except:
+        key = None
+
+    user = User.by_recover_key(key)
+    if not user:
+        abort(404)
+
+    user.password = request.form['password']
+    user.recover_key = None
+
+    flash(_('Password changed.'))
+    return redirect(url_for('index'))
 
 
 @users_blueprint.route('/generate_keys')

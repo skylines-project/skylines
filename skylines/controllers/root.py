@@ -10,7 +10,6 @@ from webob.exc import HTTPNotFound
 
 from .base import BaseController
 from .error import ErrorController
-from .users import UsersController
 from .clubs import ClubsController
 from .tracking import TrackingController
 
@@ -32,7 +31,6 @@ class RootController(BaseController):
 
     """
     error = ErrorController()
-    users = UsersController()
     clubs = ClubsController()
     tracking = TrackingController()
 
