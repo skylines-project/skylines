@@ -10,27 +10,6 @@ from skylines.model import User, TrackingFix, Airport
 
 
 class TrackingController(BaseController):
-    @expose('tracking/list.jinja')
-    def index(self, **kw):
-        na_cache = cache.get_cache('tracking.nearest_airport', expire=60 * 60)
-
-        def add_nearest_airport_data(track):
-            def get_nearest_airport():
-                airport = Airport.by_location(track.location, None)
-                if airport is None:
-                    return None, None
-
-                distance = airport.distance(track.location)
-                return airport, distance
-
-            airport, distance = na_cache.get(key=track.id, createfunc=get_nearest_airport)
-            return track, airport, distance
-
-        tracks = []
-        tracks.extend(map(add_nearest_airport_data, TrackingFix.get_latest()))
-
-        return dict(tracks=tracks)
-
     @expose()
     def _lookup(self, id, *remainder):
         pilots = get_requested_record_list(User, id)

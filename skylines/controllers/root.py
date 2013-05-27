@@ -26,7 +26,6 @@ class RootController(BaseController):
 
     """
     error = ErrorController()
-    tracking = TrackingController()
 
     _mapproxy_config = config.get('skylines.mapproxy')
     if _mapproxy_config is not None:

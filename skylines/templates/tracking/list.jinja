@@ -1,8 +1,8 @@
-{% from "macros/flags.jinja" import insert_flag with context %}
+{% from "macros/flags-FLASK.jinja" import insert_flag with context %}
 {% from "macros/datetime.jinja" import insert_timeago, timeago_script with context %}
 {% from "macros/links.jinja" import user_link %}
 
-{% extends "base-page.jinja" %}
+{% extends "base-page-FLASK.jinja" %}
 {% set active_page = "tracking" %}
 
 
@@ -27,13 +27,13 @@
     </tr>
   </thead>
   <tbody>
-    {% for track, airport, distance in tracks -%}
+    {% for track, airport in tracks -%}
     <tr>
       <td class="date">{{ insert_timeago(track.time) }}</td>
       <td>{{ user_link(track.pilot) }}</td>
       <td>
         {% if airport -%}
-        {{ insert_flag(airport.country_code) }} {{ airport|e }} ({{ h.format_distance(distance) }})
+        {{ insert_flag(airport.country_code) }} {{ airport.name|e }} ({{ h.format_distance(airport.distance) }})
         {%- endif %}
       </td>
       <td class="numeric">
