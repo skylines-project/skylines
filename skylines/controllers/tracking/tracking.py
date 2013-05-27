@@ -1,7 +1,7 @@
 from tg import expose, request, cache
 from webob.exc import HTTPNotFound
 
-from . import TrackController, LiveTrack24Controller
+from . import TrackController
 from skylines.controllers.base import BaseController
 from skylines.lib.dbutil import get_requested_record_list
 from skylines.lib.helpers import isoformat_utc
@@ -10,8 +10,6 @@ from skylines.model import User, TrackingFix, Airport
 
 
 class TrackingController(BaseController):
-    lt24 = LiveTrack24Controller()
-
     @expose('tracking/list.jinja')
     def index(self, **kw):
         na_cache = cache.get_cache('tracking.nearest_airport', expire=60 * 60)

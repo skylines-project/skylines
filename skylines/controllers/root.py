@@ -34,36 +34,3 @@ class RootController(BaseController):
         from tg.controllers import WSGIAppController
         import mapproxy.wsgiapp as mapproxy
         mapproxy = WSGIAppController(mapproxy.make_wsgi_app(_mapproxy_config))
-
-    @expose()
-    def track(self, **kw):
-        """LiveTrack24 tracking API"""
-
-        if request.path != '/track.php':
-            return HTTPNotFound()
-
-        return self.tracking.lt24.track(**kw)
-
-    @expose()
-    def client(self, **kw):
-        """LiveTrack24 tracking API"""
-
-        if request.path != '/client.php':
-            return HTTPNotFound()
-
-        return self.tracking.lt24.client(**kw)
-
-    @expose()
-    def _lookup(self, *remainder):
-        """
-        Workaround: The production does not dispatch /track.php to the track
-        method, so we use the _lookup() method to dispatch it manually.
-        """
-
-        if request.path == '/track.php':
-            return self, ['track']
-
-        if request.path == '/client.php':
-            return self, ['client']
-
-        raise HTTPNotFound()
