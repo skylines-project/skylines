@@ -16,14 +16,6 @@ class TrackingController(BaseController):
         controller = TrackController(pilots)
         return controller, remainder
 
-    @expose('tracking/info.jinja')
-    def info(self, **kw):
-        user = None
-        if request.identity is not None and 'user' in request.identity:
-            user = request.identity['user']
-
-        return dict(user=user)
-
     @expose()
     @jsonp
     def latest(self, **kw):

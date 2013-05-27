@@ -1,6 +1,7 @@
 from datetime import datetime
 
 from flask import Blueprint, request, current_app, render_template
+from flask.ext.login import current_user
 from werkzeug.exceptions import BadRequest, NotFound, NotImplemented
 
 from skylines.model import User, TrackingFix, Airport
@@ -29,3 +30,12 @@ def index():
     tracks = [(track, get_nearest_airport(track)) for track in tracks]
 
     return render_template('tracking/list.jinja', tracks=tracks)
+
+
+@tracking_blueprint.route('/info')
+def info():
+    user = None
+    if not current_user.is_anonymous():
+        user = current_user
+
+    return render_template('tracking/info.jinja', user=user)
