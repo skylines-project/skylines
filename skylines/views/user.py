@@ -4,25 +4,22 @@ from flask import Blueprint, request, render_template, redirect, url_for, abort,
 from flask.ext.babel import lazy_gettext as l_, _, ngettext
 from flask.ext.login import login_required, current_user
 
-from formencode import Schema, All, Invalid
-from formencode.validators import FieldsMatch, Email, String, NotEmpty
-from sprox.formbase import AddRecordForm, EditableForm, Field
+from formencode import Schema, All
+from formencode.validators import FieldsMatch, Email, NotEmpty
+from sprox.formbase import EditableForm, Field
 from sprox.widgets import PropertySingleSelectField
-from sprox.validators import UniqueValue
-from sprox.sa.provider import SAORMProvider
-from tw.forms import PasswordField, TextField, CheckBox, HiddenField
+from tw.forms import PasswordField, TextField, CheckBox
 from tw.forms.validators import UnicodeString
 
 from sqlalchemy.sql.expression import and_, or_
 from sqlalchemy import func
-from sqlalchemy.orm import joinedload
 
 from skylines.forms import BootstrapForm, units, club
 from skylines.lib.validators import UniqueValueUnless
 from skylines.lib.dbutil import get_requested_record
 from skylines.lib.decorators import validate
 from skylines.model import (
-    DBSession, User, Group, Club, Flight, Follower, Location, IGCFile
+    DBSession, User, Club, Flight, Follower, Location, IGCFile
 )
 from skylines.model.notification import create_follower_notification
 from skylines.views.users import recover_user_password
