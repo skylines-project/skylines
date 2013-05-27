@@ -24,7 +24,7 @@ class TrackingFix(DeclarativeBase):
 
     time = Column(DateTime, nullable=False, default=datetime.utcnow)
 
-    location_wkt = Column('location', Geometry('POINT', management=True))
+    location_wkt = Column('location', Geometry('POINT'))
 
     track = Column(SmallInteger)
     ground_speed = Column(REAL)
