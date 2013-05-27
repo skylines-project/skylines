@@ -1,22 +1,23 @@
-from simplejson import dumps
 from functools import wraps
 
-from formencode import Schema, All, Invalid
+from formencode import Invalid
 
-from tg import response
-from flask import request
+from flask import current_app, request
 
 
 def jsonp(func):
-    def jsonp_handler(*args, **kw):
-        if 'callback' in kw:
-            response.content_type = 'application/javascript'
-            return '{}({});'.format(kw.pop('callback'), dumps(func(*args, **kw)))
+    """Wraps JSONified output for JSONP requests."""
+    @wraps(func)
+    def decorated_function(*args, **kwargs):
+        callback = request.args.get('callback', False)
+        if callback:
+            data = str(func(*args, **kwargs).data)
+            content = str(callback) + '(' + data + ')'
+            mimetype = 'application/javascript'
+            return current_app.response_class(content, mimetype=mimetype)
         else:
-            response.content_type = 'application/json'
-            return dumps(func(*args, **kw))
-
-    return jsonp_handler
+            return func(*args, **kwargs)
+    return decorated_function
 
 
 class validate:
