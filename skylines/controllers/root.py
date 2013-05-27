@@ -1,11 +1,7 @@
 # -*- coding: utf-8 -*-
 """Main Controller"""
 
-from datetime import datetime
-
-from tg import expose, flash, lurl, request, redirect, require, config
-from tg.i18n import ugettext as _, set_lang
-from tg.predicates import Any, not_anonymous
+from tg import expose, request, config
 from webob.exc import HTTPNotFound
 
 from .base import BaseController
@@ -42,11 +38,6 @@ class RootController(BaseController):
         mapproxy = WSGIAppController(mapproxy.make_wsgi_app(_mapproxy_config))
 
     @expose()
-    def index(self, **kw):
-        """Handle the front-page."""
-        redirect('/flights/latest')
-
-    @expose()
     def track(self, **kw):
         """LiveTrack24 tracking API"""
 
@@ -63,71 +54,6 @@ class RootController(BaseController):
             return HTTPNotFound()
 
         return self.tracking.lt24.client(**kw)
-
-    @expose()
-    def set_lang(self, language, **kw):
-        set_lang(language)
-
-        if request.referrer is None:
-            redirect('/')
-        else:
-            redirect(request.referrer)
-
-    @expose('login.jinja')
-    def login(self, came_from=None, **kw):
-        """Start the user login."""
-        if not came_from:
-            if request.referrer:
-                came_from = request.referrer
-            else:
-                came_from = lurl('/')
-
-        return dict(came_from=came_from)
-
-    @expose()
-    def post_login(self, came_from=None, **kw):
-        """
-        Redirect the user to the initially requested page on successful
-        authentication or redirect her back to the login page if login failed.
-
-        """
-        if not came_from:
-            if request.referrer:
-                came_from = request.referrer
-            else:
-                came_from = lurl('/')
-
-        if not request.identity:
-            flash(_('Sorry, email address or password are wrong. Please try again or register.'), 'warning')
-        else:
-            request.identity['user'].login_ip = request.remote_addr
-            request.identity['user'].login_time = datetime.utcnow()
-
-            flash(_('You are now logged in. Welcome back, %s!') % request.identity['user'])
-
-        redirect(came_from)
-
-    @expose()
-    def post_logout(self, came_from=None, **kw):
-        """
-        Redirect the user to the initially requested page on logout and say
-        goodbye as well.
-
-        """
-        if not came_from:
-            if request.referrer:
-                came_from = request.referrer
-            else:
-                came_from = lurl('/')
-
-        flash(_('You are now logged out. We hope to see you back soon!'))
-        redirect(came_from)
-
-    @expose()
-    @require(Any(not_anonymous(), msg='Please login to see this page!'))
-    def settings(self, **kw):
-        """Only for compatibility with old bookmarks."""
-        redirect('/users/' + str(request.identity['user'].id))
 
     @expose()
     def _lookup(self, *remainder):
