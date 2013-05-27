@@ -298,7 +298,7 @@ def igc_headers():
     """Hidden method that parses all missing IGC headers."""
 
     if not request.identity or 'manage' not in request.identity['permissions']:
-        abort(401)
+        abort(403)
 
     igc_files = IGCFile.query().filter(or_(
         IGCFile.logger_manufacturer_id is None,

@@ -212,7 +212,7 @@ def generate_keys():
     """Hidden method that generates missing tracking keys."""
 
     if not request.identity or 'manage' not in request.identity['permissions']:
-        abort(401)
+        abort(403)
 
     for user in User.query():
         if user.tracking_key is None:

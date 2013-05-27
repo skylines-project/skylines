@@ -128,7 +128,7 @@ change_password_form = BootstrapForm(
 @user_blueprint.route('/change_password')
 def change_password():
     if not g.user.is_writable(request.identity):
-        abort(401)
+        abort(403)
 
     return render_template(
         'generic/form.jinja',
@@ -140,7 +140,7 @@ def change_password():
 @validate(change_password_form, change_password)
 def change_password_post():
     if not g.user.is_writable(request.identity):
-        abort(401)
+        abort(403)
 
     g.user.password = request.form['password']
     g.user.recover_key = None
@@ -200,7 +200,7 @@ edit_user_form = EditUserForm(DBSession)
 @user_blueprint.route('/edit')
 def edit():
     if not g.user.is_writable(request.identity):
-        abort(401)
+        abort(403)
 
     return render_template(
         'generic/form.jinja',
@@ -213,7 +213,7 @@ def edit():
 @validate(edit_user_form, edit)
 def edit_post():
     if not g.user.is_writable(request.identity):
-        abort(401)
+        abort(403)
 
     g.user.email_address = request.form['email_address']
     g.user.name = request.form['name']
@@ -237,7 +237,7 @@ def edit_post():
 @user_blueprint.route('/change_club')
 def change_club():
     if not g.user.is_writable(request.identity):
-        abort(401)
+        abort(403)
 
     return render_template(
         'users/change_club.jinja', user=g.user,
@@ -248,7 +248,7 @@ def change_club():
 @validate(club.select_form, change_club)
 def change_club_post():
     if not g.user.is_writable(request.identity):
-        abort(401)
+        abort(403)
 
     g.user.club_id = request.form['club']
 
@@ -270,7 +270,7 @@ def change_club_post():
 @validate(club.new_form, change_club)
 def create_club_post():
     if not g.user.is_writable(request.identity):
-        abort(401)
+        abort(403)
 
     club = Club(name=request.form['name'])
     club.owner_id = current_user.id
@@ -301,7 +301,7 @@ def unfollow():
 @user_blueprint.route('/tracking_register')
 def tracking_register():
     if not g.user.is_writable(request.identity):
-        abort(401)
+        abort(403)
 
     g.user.generate_tracking_key()
 
@@ -311,7 +311,7 @@ def tracking_register():
 @user_blueprint.route('/recover_password')
 def recover_password():
     if not request.identity or 'manage' not in request.identity['permissions']:
-        abort(401)
+        abort(403)
 
     recover_user_password(g.user)
     flash('A password recovery email was sent to that user.')

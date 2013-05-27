@@ -100,7 +100,7 @@ def show(id):
 
     notification = get_requested_record(Notification, id)
     if request.identity['user'] != notification.recipient:
-        abort(401)
+        abort(403)
 
     notification.mark_read()
 
