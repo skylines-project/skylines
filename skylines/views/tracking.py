@@ -1,10 +1,9 @@
-from datetime import datetime
-
-from flask import Blueprint, request, current_app, render_template
+from flask import Blueprint, current_app, render_template, jsonify
 from flask.ext.login import current_user
-from werkzeug.exceptions import BadRequest, NotFound, NotImplemented
 
-from skylines.model import User, TrackingFix, Airport
+from skylines.lib.helpers import isoformat_utc
+from skylines.lib.decorators import jsonp
+from skylines.model import TrackingFix, Airport
 
 tracking_blueprint = Blueprint('tracking', 'skylines')
 
@@ -39,3 +38,24 @@ def info():
         user = current_user
 
     return render_template('tracking/info.jinja', user=user)
+
+
+@tracking_blueprint.route('/latest.json')
+@jsonp
+def latest():
+    fixes = []
+    for fix in TrackingFix.get_latest():
+        json = dict(time=isoformat_utc(fix.time),
+                    location=fix.location.to_wkt(),
+                    pilot=dict(id=fix.pilot_id, name=unicode(fix.pilot)))
+
+        optional_attributes = ['track', 'ground_speed', 'airspeed',
+                               'altitude', 'vario', 'engine_noise_level']
+        for attr in optional_attributes:
+            value = getattr(fix, attr)
+            if value is not None:
+                json[attr] = value
+
+        fixes.append(json)
+
+    return jsonify(fixes=fixes)

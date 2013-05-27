@@ -15,26 +15,3 @@ class TrackingController(BaseController):
         pilots = get_requested_record_list(User, id)
         controller = TrackController(pilots)
         return controller, remainder
-
-    @expose()
-    @jsonp
-    def latest(self, **kw):
-        if not request.path.endswith('.json'):
-            raise HTTPNotFound
-
-        fixes = []
-        for fix in TrackingFix.get_latest():
-            json = dict(time=isoformat_utc(fix.time),
-                        location=fix.location.to_wkt(),
-                        pilot=dict(id=fix.pilot_id, name=unicode(fix.pilot)))
-
-            optional_attributes = ['track', 'ground_speed', 'airspeed',
-                                   'altitude', 'vario', 'engine_noise_level']
-            for attr in optional_attributes:
-                value = getattr(fix, attr)
-                if value is not None:
-                    json[attr] = value
-
-            fixes.append(json)
-
-        return dict(fixes=fixes)
