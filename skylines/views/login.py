@@ -15,8 +15,11 @@ def login():
         user = User.by_credentials(request.form.get('login', ''),
                                    request.form.get('password', ''))
 
+        # Check if the user wants a cookie
+        remember = 'remember' in request.form
+
         # Check if a user was found and try to login
-        if user and login_user(user):
+        if user and login_user(user, remember=remember):
             user.login_ip = request.remote_addr
             user.login_time = datetime.utcnow()
 
