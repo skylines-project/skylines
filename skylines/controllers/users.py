@@ -44,54 +44,6 @@ class UserController(BaseController):
         flash('A password recovery email was sent to that user.')
         redirect('.')
 
-    @expose('users/change_club.jinja')
-    def change_club(self, **kwargs):
-        if not self.user.is_writable(request.identity):
-            raise HTTPForbidden
-
-        return dict(user=self.user,
-                    select_form=club.select_form,
-                    create_form=club.new_form)
-
-    @expose()
-    @validate(form=club.select_form, error_handler=change_club)
-    def select_club(self, club, **kwargs):
-        if not self.user.is_writable(request.identity):
-            raise HTTPForbidden
-
-        self.user.club_id = club
-
-        # assign the user's new club to all of his flights that have
-        # no club yet
-        flights = Flight.query().join(IGCFile)
-        flights = flights.filter(and_(Flight.club_id == None,
-                                      or_(Flight.pilot_id == self.user.id,
-                                          IGCFile.owner_id == self.user.id)))
-        for flight in flights:
-            flight.club_id = club
-
-        DBSession.flush()
-
-        redirect('.')
-
-    @expose()
-    @validate(form=club.new_form, error_handler=change_club)
-    def create_club(self, name, **kw):
-        if not self.user.is_writable(request.identity):
-            raise HTTPForbidden
-
-        current_user = request.identity['user']
-
-        club = Club(name=name)
-        club.owner_id = current_user.id
-        DBSession.add(club)
-
-        self.user.club = club
-
-        DBSession.flush()
-
-        redirect('.')
-
     @expose()
     def tracking_register(self, came_from='/tracking/info'):
         if not self.user.is_writable(request.identity):

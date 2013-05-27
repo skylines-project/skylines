@@ -1,4 +1,4 @@
-from tg.i18n import lazy_ugettext as l_
+from flask.ext.babel import lazy_gettext as l_
 
 from formencode.validators import URL
 from sprox.formbase import AddRecordForm, EditableForm, Field

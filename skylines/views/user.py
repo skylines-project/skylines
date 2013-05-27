@@ -236,6 +236,55 @@ def edit_post():
     return redirect(url_for('.index'))
 
 
+@user_blueprint.route('/change_club')
+def change_club():
+    if not g.user.is_writable(request.identity):
+        abort(401)
+
+    return render_template(
+        'users/change_club.jinja', user=g.user,
+        select_form=club.select_form, create_form=club.new_form)
+
+
+@user_blueprint.route('/change_club', methods=['POST'])
+@validate(club.select_form, change_club)
+def change_club_post():
+    if not g.user.is_writable(request.identity):
+        abort(401)
+
+    g.user.club_id = request.form['club']
+
+    # assign the user's new club to all of his flights that have
+    # no club yet
+    flights = Flight.query().join(IGCFile)
+    flights = flights.filter(and_(Flight.club_id == None,
+                                  or_(Flight.pilot_id == g.user.id,
+                                      IGCFile.owner_id == g.user.id)))
+    for flight in flights:
+        flight.club_id = club
+
+    DBSession.flush()
+
+    return redirect(url_for('.index'))
+
+
+@user_blueprint.route('/create_club', methods=['POST'])
+@validate(club.new_form, change_club)
+def create_club_post():
+    if not g.user.is_writable(request.identity):
+        abort(401)
+
+    club = Club(name=request.form['name'])
+    club.owner_id = current_user.id
+    DBSession.add(club)
+
+    g.user.club = club
+
+    DBSession.flush()
+
+    return redirect(url_for('.index'))
+
+
 @user_blueprint.route('/follow')
 @login_required
 def follow():
