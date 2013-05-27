@@ -2,6 +2,7 @@ from flask import Flask, g, request
 from flask.ext.babel import Babel
 from flask.ext.assets import Environment
 from flask.ext.login import LoginManager, current_user
+from flask.ext.cache import Cache
 from webassets.loaders import PythonLoader
 from skylines.lib import helpers
 from .model import User, DBSession
@@ -13,6 +14,8 @@ def create_app():
     app.config.from_object('skylines.config.default')
 
     app.jinja_options['extensions'].append('jinja2.ext.do')
+
+    app.cache = Cache(app)
 
     babel = Babel(app)
     login_manager = LoginManager()
