@@ -5,7 +5,7 @@ from flask import Blueprint, request, render_template, redirect, url_for, abort,
 from flask.ext.babel import lazy_gettext as l_, _
 from werkzeug.exceptions import ServiceUnavailable
 
-from formencode import Schema, All, Invalid
+from formencode import Schema, All
 from formencode.validators import FieldsMatch, Email, String, NotEmpty
 from sprox.formbase import AddRecordForm, Field
 from sprox.validators import UniqueValue
@@ -66,12 +66,16 @@ def index():
                            users=users)
 
 
-def new_post():
-    try:
-        new_user_form.validate(request.form)
-    except Invalid:
-        return
+@users_blueprint.route('/new')
+def new():
+    return render_template('users/new.jinja',
+                           active_page='users',
+                           form=new_user_form)
 
+
+@users_blueprint.route('/new', methods=['POST'])
+@validate(new_user_form, new)
+def new_post():
     user = User(name=request.form['name'],
                 email_address=request.form['email_address'],
                 password=request.form['password'])
@@ -87,17 +91,7 @@ def new_post():
     if pilots:
         pilots.users.append(user)
 
-    return user
-
-
-@users_blueprint.route('/new', methods=['GET', 'POST'])
-def new():
-    if request.method == 'POST' and new_post():
-        return redirect(url_for('index'))
-
-    return render_template('users/new.jinja',
-                           active_page='users',
-                           form=new_user_form)
+    return redirect(url_for('index'))
 
 
 recover_email_form = BootstrapForm(

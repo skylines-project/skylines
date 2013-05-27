@@ -22,6 +22,7 @@ from skylines.lib.formatter import units
 from skylines.lib.datetime import from_seconds_of_day
 from skylines.lib.geo import METERS_PER_DEGREE
 from skylines.lib.sql import extract_array_item
+from skylines.lib.decorators import validate
 from skylines.model import (
     DBSession, User, Flight, FlightPhase, Location, Elevation, FlightComment
 )
@@ -366,11 +367,24 @@ class SelectPilotForm(EditableForm):
 select_pilot_form = SelectPilotForm(DBSession)
 
 
+@flight_blueprint.route('/change_pilot')
+def change_pilot():
+    if not g.flight.is_writable(request.identity):
+        abort(403)
+
+    return render_template(
+        'generic/form.jinja',
+        active_page='flights', title=_('Select Pilot'),
+        user=request.identity['user'],
+        include_after='flights/after_change_pilot.jinja',
+        form=select_pilot_form, values=g.flight)
+
+
+@flight_blueprint.route('/change_pilot', methods=['POST'])
+@validate(select_pilot_form, change_pilot)
 def change_pilot_post():
-    try:
-        select_pilot_form.validate(request.form)
-    except Invalid:
-        return
+    if not g.flight.is_writable(request.identity):
+        abort(403)
 
     pilot = request.form['pilot'] or None
     if g.flight.pilot_id != pilot:
@@ -385,24 +399,6 @@ def change_pilot_post():
     return redirect(url_for('.index'))
 
 
-@flight_blueprint.route('/change_pilot', methods=['GET', 'POST'])
-def change_pilot():
-    if not g.flight.is_writable(request.identity):
-        abort(403)
-
-    if request.method == 'POST':
-        result = change_pilot_post()
-        if result:
-            return result
-
-    return render_template(
-        'generic/form.jinja',
-        active_page='flights', title=_('Select Pilot'),
-        user=request.identity['user'],
-        include_after='flights/after_change_pilot.jinja',
-        form=select_pilot_form, values=g.flight)
-
-
 class SelectAircraftForm(EditableForm):
     __base_widget_type__ = BootstrapForm
     __model__ = Flight
@@ -415,36 +411,10 @@ class SelectAircraftForm(EditableForm):
 select_aircraft_form = SelectAircraftForm(DBSession)
 
 
-def change_aircraft_post():
-    try:
-        select_aircraft_form.validate(request.form)
-    except Invalid:
-        return
-
-    registration = request.form['registration']
-    if registration is not None:
-        registration = registration.strip()
-        if len(registration) == 0:
-            registration = None
-
-    g.flight.model_id = request.form['model'] or None
-    g.flight.registration = registration
-    g.flight.competition_id = request.form['competition_id'] or None
-    g.flight.time_modified = datetime.utcnow()
-    DBSession.flush()
-
-    return redirect(url_for('.index'))
-
-
-@flight_blueprint.route('/change_aircraft', methods=['GET', 'POST'])
+@flight_blueprint.route('/change_aircraft')
 def change_aircraft():
     if not g.flight.is_writable(request.identity):
         abort(403)
-
-    if request.method == 'POST':
-        result = change_aircraft_post()
-        if result:
-            return result
 
     if g.flight.model_id is None:
         model_id = g.flight.igc_file.guess_model()
@@ -473,6 +443,27 @@ def change_aircraft():
                     model=model_id,
                     registration=registration,
                     competition_id=competition_id))
+
+
+@flight_blueprint.route('/change_aircraft', methods=['POST'])
+@validate(select_aircraft_form, change_aircraft)
+def change_aircraft_post():
+    if not g.flight.is_writable(request.identity):
+        abort(403)
+
+    registration = request.form['registration']
+    if registration is not None:
+        registration = registration.strip()
+        if len(registration) == 0:
+            registration = None
+
+    g.flight.model_id = request.form['model'] or None
+    g.flight.registration = registration
+    g.flight.competition_id = request.form['competition_id'] or None
+    g.flight.time_modified = datetime.utcnow()
+    DBSession.flush()
+
+    return redirect(url_for('.index'))
 
 
 @flight_blueprint.route('/delete', methods=['GET', 'POST'])

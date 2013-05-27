@@ -20,6 +20,7 @@ from sqlalchemy.orm import joinedload
 from skylines.forms import BootstrapForm, units, club
 from skylines.lib.validators import UniqueValueUnless
 from skylines.lib.dbutil import get_requested_record
+from skylines.lib.decorators import validate
 from skylines.model import (
     DBSession, User, Group, Club, Flight, Follower, Location, IGCFile
 )
@@ -126,32 +127,27 @@ change_password_form = BootstrapForm(
 )
 
 
-def change_password_post():
-    try:
-        change_password_form.validate(request.form)
-    except Invalid:
-        return
-
-    g.user.password = request.form['password']
-    g.user.recover_key = None
-
-    return redirect(url_for('.index'))
-
-
-@user_blueprint.route('/change_password', methods=['GET', 'POST'])
+@user_blueprint.route('/change_password')
 def change_password():
     if not g.user.is_writable(request.identity):
         abort(401)
-
-    if request.method == 'POST':
-        result = change_password_post()
-        if result:
-            return result
 
     return render_template(
         'generic/form.jinja',
         active_page='settings', title=_('Change Password'),
         form=change_password_form, values={})
+
+
+@user_blueprint.route('/change_password', methods=['POST'])
+@validate(change_password_form, change_password)
+def change_password_post():
+    if not g.user.is_writable(request.identity):
+        abort(401)
+
+    g.user.password = request.form['password']
+    g.user.recover_key = None
+
+    return redirect(url_for('.index'))
 
 
 class DelaySelectField(PropertySingleSelectField):
@@ -203,11 +199,23 @@ class EditUserForm(EditableForm):
 edit_user_form = EditUserForm(DBSession)
 
 
+@user_blueprint.route('/edit')
+def edit():
+    if not g.user.is_writable(request.identity):
+        abort(401)
+
+    return render_template(
+        'generic/form.jinja',
+        active_page='settings', title=_('Edit User'),
+        form=edit_user_form, values=g.user,
+        include_script='users/after-edit-form.jinja')
+
+
+@user_blueprint.route('/edit', methods=['POST'])
+@validate(edit_user_form, edit)
 def edit_post():
-    try:
-        edit_user_form.validate(request.form)
-    except Invalid:
-        return
+    if not g.user.is_writable(request.identity):
+        abort(401)
 
     g.user.email_address = request.form['email_address']
     g.user.name = request.form['name']
@@ -226,23 +234,6 @@ def edit_post():
     DBSession.flush()
 
     return redirect(url_for('.index'))
-
-
-@user_blueprint.route('/edit', methods=['GET', 'POST'])
-def edit():
-    if not g.user.is_writable(request.identity):
-        abort(401)
-
-    if request.method == 'POST':
-        result = edit_post()
-        if result:
-            return result
-
-    return render_template(
-        'generic/form.jinja',
-        active_page='settings', title=_('Edit User'),
-        form=edit_user_form, values=g.user,
-        include_script='users/after-edit-form.jinja')
 
 
 @user_blueprint.route('/follow')

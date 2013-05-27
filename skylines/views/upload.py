@@ -57,12 +57,20 @@ def IterateUploadFiles(upload):
             yield x
 
 
+@upload_blueprint.route('/')
+def index():
+    return render_template(
+        'generic/form.jinja', active_page='upload', title=_("Upload Flight"),
+        form=upload.form, values=dict(pilot=request.identity['user'].id))
+
+
+@upload_blueprint.route('/', methods=['POST'])
 def index_post():
     try:
         values = CombinedMultiDict([request.form, request.files])
         upload.form.validate(values)
     except:
-        return
+        return index()
 
     user = request.identity['user']
 
@@ -141,18 +149,6 @@ def index_post():
     return render_template(
         'upload/result.jinja', flights=flights, success=success,
         ModelSelectField=aircraft_model.SelectField)
-
-
-@upload_blueprint.route('/', methods=['GET', 'POST'])
-def index():
-    if request.method == 'POST':
-        result = index_post()
-        if result:
-            return result
-
-    return render_template(
-        'generic/form.jinja', active_page='upload', title=_("Upload Flight"),
-        form=upload.form, values=dict(pilot=request.identity['user'].id))
 
 
 @upload_blueprint.route('/update', methods=['GET', 'POST'])
