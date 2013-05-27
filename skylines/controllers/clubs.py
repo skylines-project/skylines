@@ -71,15 +71,3 @@ class ClubController(BaseController):
             pilots.users.append(pilot)
 
         redirect('pilots')
-
-
-class ClubsController(BaseController):
-    @expose('clubs/list.jinja')
-    def index(self):
-        clubs = Club.query().order_by(func.lower(Club.name))
-        return dict(active_page='settings', clubs=clubs)
-
-    @expose()
-    def _lookup(self, id, *remainder):
-        controller = ClubController(get_requested_record(Club, id))
-        return controller, remainder

@@ -6,7 +6,6 @@ from webob.exc import HTTPNotFound
 
 from .base import BaseController
 from .error import ErrorController
-from .clubs import ClubsController
 from .tracking import TrackingController
 
 __all__ = ['RootController']
@@ -27,7 +26,6 @@ class RootController(BaseController):
 
     """
     error = ErrorController()
-    clubs = ClubsController()
     tracking = TrackingController()
 
     _mapproxy_config = config.get('skylines.mapproxy')
