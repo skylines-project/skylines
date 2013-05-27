@@ -4,6 +4,7 @@ from zipfile import ZipFile
 
 from flask import Blueprint, render_template, request, flash, redirect
 from flask.ext.babel import _
+from flask.ext.login import login_required
 from werkzeug.datastructures import CombinedMultiDict
 
 from skylines.forms import upload, aircraft_model
@@ -58,6 +59,7 @@ def IterateUploadFiles(upload):
 
 
 @upload_blueprint.route('/')
+@login_required
 def index():
     return render_template(
         'generic/form.jinja', active_page='upload', title=_("Upload Flight"),
@@ -65,6 +67,7 @@ def index():
 
 
 @upload_blueprint.route('/', methods=['POST'])
+@login_required
 def index_post():
     try:
         values = CombinedMultiDict([request.form, request.files])
@@ -152,6 +155,7 @@ def index_post():
 
 
 @upload_blueprint.route('/update', methods=['GET', 'POST'])
+@login_required
 def update():
     flight_id_list = request.values.getlist('flight_id')
     model_list = request.values.getlist('model')
