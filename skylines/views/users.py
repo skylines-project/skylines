@@ -18,6 +18,7 @@ from sqlalchemy.orm import joinedload
 
 from skylines.model import DBSession, User, Group
 from skylines.forms import BootstrapForm, club
+from skylines.lib.decorators import validate
 
 users_blueprint = Blueprint('users', 'skylines')
 
@@ -181,12 +182,8 @@ The SkyLines Team
 
 
 @users_blueprint.route('/recover_email', methods=['POST'])
+@validate(form=recover_email_form, errorhandler=recover)
 def recover_email():
-    try:
-        recover_email_form.validate(request.form)
-    except Invalid:
-        return recover()
-
     user = User.by_email_address(request.form.get('email_address', None))
     if not user:
         abort(404)
@@ -198,12 +195,8 @@ def recover_email():
 
 
 @users_blueprint.route('/recover_password', methods=['POST'])
+@validate(form=recover_password_form, errorhandler=recover)
 def recover_password():
-    try:
-        recover_password_form.validate(request.form)
-    except Invalid:
-        return recover()
-
     try:
         key = int(request.form['key'], 16)
     except:
