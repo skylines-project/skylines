@@ -58,3 +58,34 @@ def edit_post():
     DBSession.flush()
 
     return redirect(url_for('.index'))
+
+
+@club_blueprint.route('/create_pilot')
+def create_pilot():
+    if not g.club.is_writable(request.identity):
+        abort(403)
+
+    return render_template(
+        'generic/form.jinja', active_page='settings', title=_('Create Pilot'),
+        form=pilot_forms.new_form, values={})
+
+
+@club_blueprint.route('/create_pilot', methods=['POST'])
+@validate(pilot_forms.new_form, create_pilot)
+def create_pilot_post():
+    if not g.club.is_writable(request.identity):
+        abort(403)
+
+    pilot = User(
+        name=request.form['name'],
+        email_address=request.form['email_address'],
+        club=g.club
+    )
+
+    DBSession.add(pilot)
+
+    pilots = Group.query(group_name='pilots').first()
+    if pilots:
+        pilots.users.append(pilot)
+
+    return redirect(url_for('.pilots'))
