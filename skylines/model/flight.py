@@ -49,9 +49,9 @@ class Flight(DeclarativeBase):
     takeoff_time = Column(DateTime, nullable=False, index=True)
     landing_time = Column(DateTime, nullable=False)
     takeoff_location_wkt = Column(
-        'takeoff_location', Geometry('POINT', management=True))
+        'takeoff_location', Geometry('POINT'))
     landing_location_wkt = Column(
-        'landing_location', Geometry('POINT', management=True))
+        'landing_location', Geometry('POINT'))
 
     takeoff_airport_id = Column(
         Integer, ForeignKey('airports.id', ondelete='SET NULL'))
@@ -62,7 +62,7 @@ class Flight(DeclarativeBase):
     landing_airport = relationship('Airport', foreign_keys=[landing_airport_id])
 
     timestamps = Column(postgresql.ARRAY(DateTime), nullable=False)
-    locations = Column(Geometry('LINESTRING', srid=4326, management=True),
+    locations = Column(Geometry('LINESTRING', srid=4326),
                        nullable=False)
 
     olc_classic_distance = Column(Integer)
