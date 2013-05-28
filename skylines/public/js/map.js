@@ -32,7 +32,8 @@ function initOpenLayers(id, tile_url) {
     controls: [],
     theme: null,
     tileManager: new OpenLayers.TileManager(),
-    fallThrough: true
+    fallThrough: true,
+    zoomMethod: null
   });
 
   map.div.setAttribute('tabindex', '0');
