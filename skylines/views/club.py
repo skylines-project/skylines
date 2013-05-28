@@ -55,7 +55,7 @@ def edit_post():
 
     g.club.name = request.form['name']
     g.club.website = request.form['website']
-    DBSession.flush()
+    DBSession.commit()
 
     return redirect(url_for('.index'))
 
@@ -87,5 +87,7 @@ def create_pilot_post():
     pilots = Group.query(group_name='pilots').first()
     if pilots:
         pilots.users.append(pilot)
+
+    DBSession.commit()
 
     return redirect(url_for('.pilots'))

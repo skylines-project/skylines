@@ -147,7 +147,7 @@ def index_post():
 
         success = True
 
-    DBSession.flush()
+    DBSession.commit()
 
     return render_template(
         'upload/result.jinja', flights=flights, success=success,
@@ -201,7 +201,7 @@ def update():
         flight.competition_id = competition_id
         flight.time_modified = datetime.utcnow()
 
-    DBSession.flush()
+    DBSession.commit()
 
     flash(_('Your flight(s) have been successfully updated.'))
     return redirect('/flights/latest')

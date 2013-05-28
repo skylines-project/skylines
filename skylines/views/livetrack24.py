@@ -91,6 +91,7 @@ def _sessionless_fix():
 
     fix = _parse_fix(pilot.id)
     DBSession.add(fix)
+    DBSession.commit()
     return 'OK'
 
 
@@ -102,6 +103,7 @@ def _session_fix():
 
     fix = _parse_fix(session.pilot_id)
     DBSession.add(fix)
+    DBSession.commit()
     return 'OK'
 
 
@@ -142,6 +144,7 @@ def _create_session():
             raise BadRequest('`vtype` has to be a valid integer.')
 
     DBSession.add(session)
+    DBSession.commit()
     return 'OK'
 
 
@@ -166,7 +169,7 @@ def _finish_session():
         except ValueError:
             raise BadRequest('`prid` must be an integer between 0 and 4.')
 
-    DBSession.flush()
+    DBSession.commit()
     return 'OK'
 
 

@@ -35,7 +35,7 @@ flight_blueprint = Blueprint('flight', 'skylines')
 def _reanalyse_if_needed(flight):
     if flight.needs_analysis:
         current_app.logger.info("Reanalysing flight %s" % flight.id)
-        analyse_flight(flight)
+        return analyse_flight(flight)
 
 
 @flight_blueprint.url_value_preprocessor
@@ -48,7 +48,8 @@ def _pull_flight_id(endpoint, values):
     g.flight = g.flights[0]
     g.other_flights = g.flights[1:]
 
-    map(_reanalyse_if_needed, g.flights)
+    if any(map(_reanalyse_if_needed, g.flights)):
+        DBSession.commit()
 
 
 @flight_blueprint.url_defaults
@@ -397,7 +398,7 @@ def change_pilot_post():
 
     g.flight.co_pilot_id = request.form['co_pilot'] or None
     g.flight.time_modified = datetime.utcnow()
-    DBSession.flush()
+    DBSession.commit()
 
     return redirect(url_for('.index'))
 
@@ -464,7 +465,7 @@ def change_aircraft_post():
     g.flight.registration = registration
     g.flight.competition_id = request.form['competition_id'] or None
     g.flight.time_modified = datetime.utcnow()
-    DBSession.flush()
+    DBSession.commit()
 
     return redirect(url_for('.index'))
 
@@ -478,6 +479,7 @@ def delete():
         files.delete_file(g.flight.igc_file.filename)
         DBSession.delete(g.flight)
         DBSession.delete(g.flight.igc_file)
+        DBSession.commit()
 
         return redirect(url_for('flights.index'))
 
@@ -505,6 +507,8 @@ def add_comment():
 
     create_flight_comment_notifications(comment)
 
+    DBSession.commit()
+
     return redirect(url_for('.index'))
 
 
@@ -513,6 +517,6 @@ def analysis():
     """Hidden method that restarts flight analysis."""
 
     analyse_flight(g.flight)
-    DBSession.flush()
+    DBSession.commit()
 
     return redirect(url_for('.index'))

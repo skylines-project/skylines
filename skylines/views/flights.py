@@ -311,6 +311,6 @@ def igc_headers():
     for igc_file in igc_files:
         igc_file.update_igc_headers()
 
-    DBSession.flush()
+    DBSession.commit()
 
     return redirect(url_for('.index'))

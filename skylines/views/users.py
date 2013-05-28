@@ -91,6 +91,8 @@ def new_post():
     if pilots:
         pilots.users.append(user)
 
+    DBSession.commit()
+
     return redirect(url_for('index'))
 
 
@@ -183,8 +185,10 @@ def recover_email():
         abort(404)
 
     recover_user_password(user)
-
     flash('Check your email, we have sent you a link to recover your password.')
+
+    DBSession.commit()
+
     return redirect(url_for('index'))
 
 
@@ -204,6 +208,9 @@ def recover_password():
     user.recover_key = None
 
     flash(_('Password changed.'))
+
+    DBSession.commit()
+
     return redirect(url_for('index'))
 
 
@@ -218,6 +225,6 @@ def generate_keys():
         if user.tracking_key is None:
             user.generate_tracking_key()
 
-    DBSession.flush()
+    DBSession.commit()
 
     return redirect(url_for('.index'))

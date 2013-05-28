@@ -146,6 +146,8 @@ def change_password_post():
     g.user.password = request.form['password']
     g.user.recover_key = None
 
+    DBSession.commit()
+
     return redirect(url_for('.index'))
 
 
@@ -230,7 +232,8 @@ def edit_post():
         g.user.unit_preset = unit_preset
 
     g.user.eye_candy = request.form.get('eye_candy', False, type=bool)
-    DBSession.flush()
+
+    DBSession.commit()
 
     return redirect(url_for('.index'))
 
@@ -262,7 +265,7 @@ def change_club_post():
     for flight in flights:
         flight.club_id = club
 
-    DBSession.flush()
+    DBSession.commit()
 
     return redirect(url_for('.index'))
 
@@ -279,7 +282,7 @@ def create_club_post():
 
     g.user.club = club
 
-    DBSession.flush()
+    DBSession.commit()
 
     return redirect(url_for('.index'))
 
@@ -289,6 +292,7 @@ def create_club_post():
 def follow():
     Follower.follow(current_user, g.user)
     create_follower_notification(g.user, current_user)
+    DBSession.commit()
     return redirect(url_for('.index'))
 
 
@@ -296,6 +300,7 @@ def follow():
 @login_required
 def unfollow():
     Follower.unfollow(current_user, g.user)
+    DBSession.commit()
     return redirect(url_for('.index'))
 
 
@@ -305,6 +310,7 @@ def tracking_register():
         abort(403)
 
     g.user.generate_tracking_key()
+    DBSession.commit()
 
     return redirect(request.values.get('came_from', '/tracking/info'))
 
@@ -316,5 +322,7 @@ def recover_password():
 
     recover_user_password(g.user)
     flash('A password recovery email was sent to that user.')
+
+    DBSession.commit()
 
     return redirect(url_for('.index'))
