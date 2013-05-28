@@ -8,7 +8,7 @@ import datetime
 import simplejson as json
 from urllib import urlencode
 
-from tg import flash
+from flask import flash
 from webhelpers import date, feedgenerator, html, number, misc, text
 
 from .string import *
