@@ -3,9 +3,9 @@ from flask.ext.babel import Babel
 from flask.ext.assets import Environment
 from flask.ext.login import LoginManager, current_user
 from flask.ext.cache import Cache
+from flask.ext.sqlalchemy import SQLAlchemy
 from webassets.loaders import PythonLoader
 from skylines.lib import helpers
-from .model import User, DBSession
 import transaction
 
 
@@ -16,6 +16,7 @@ def create_app():
     app.jinja_options['extensions'].append('jinja2.ext.do')
 
     app.cache = Cache(app)
+    app.db = SQLAlchemy(app, session_options=dict(expire_on_commit=False))
 
     babel = Babel(app)
     login_manager = LoginManager()
@@ -55,20 +56,12 @@ def inject_request_identity():
 
 import skylines.views
 
+from .model import User, DBSession
+
 
 @app.login_manager.user_loader
 def load_user(userid):
     return User.get(userid)
-
-
-@app.teardown_request
-def shutdown_session(exception=None):
-    if exception:
-        transaction.abort()
-    else:
-        transaction.commit()
-
-    DBSession.remove()
 
 
 @app.context_processor
