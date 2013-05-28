@@ -1,19 +1,35 @@
 from datetime import timedelta
 from math import log
 
-from tg import expose, request
-from tg.decorators import with_trailing_slash
-from webob.exc import HTTPNotFound
+from flask import Blueprint, request, render_template, redirect, url_for, abort, jsonify, g
 from sqlalchemy.sql.expression import and_
 
-from skylines.controllers.base import BaseController
-from skylines.model import TrackingFix
+from skylines.lib.dbutil import get_requested_record_list
+from skylines.model import User, TrackingFix
 from skylinespolyencode import SkyLinesPolyEncoder
+
+track_blueprint = Blueprint('track', 'skylines')
+
+
+@track_blueprint.url_value_preprocessor
+def _pull_user_id(endpoint, values):
+    g.user_id = values.pop('user_id')
+
+    g.pilots = get_requested_record_list(User, g.user_id)
+    g.pilot = g.pilots[0]
+    g.other_pilots = g.pilots[1:]
+
+
+@track_blueprint.url_defaults
+def _add_user_id(endpoint, values):
+    if hasattr(g, 'user_id'):
+        values.setdefault('user_id', g.user_id)
+
 
 UNKNOWN_ELEVATION = -1000
 
 
-def get_flight_path2(pilot, last_update=None):
+def _get_flight_path2(pilot, last_update=None):
     query = TrackingFix.query() \
         .filter(and_(TrackingFix.pilot == pilot,
                      TrackingFix.location != None,
@@ -50,9 +66,9 @@ def get_flight_path2(pilot, last_update=None):
     return result
 
 
-def get_flight_path(pilot, threshold=0.001, last_update=None):
-    fp = get_flight_path2(pilot, last_update=last_update)
-    if fp is None or len(fp) == 0:
+def _get_flight_path(pilot, threshold=0.001, last_update=None):
+    fp = _get_flight_path2(pilot, last_update=last_update)
+    if not fp:
         return None
 
     num_levels = 4
@@ -86,53 +102,47 @@ def get_flight_path(pilot, threshold=0.001, last_update=None):
                 elevations=elevations)
 
 
-class TrackController(BaseController):
-    def __init__(self, pilot):
-        if isinstance(pilot, list):
-            self.pilot = pilot[0]
-            self.other_pilots = pilot[1:]
-        else:
-            self.pilot = pilot
-            self.other_pilots = None
+@track_blueprint.route('/')
+def index():
+    other_pilots = []
+    for pilot in g.other_pilots:
+        trace = _get_flight_path(pilot)
+        if trace:
+            other_pilots.append((pilot, trace))
 
-    def __get_flight_path(self, **kw):
-        return get_flight_path(self.pilot, **kw)
+    return render_template(
+        'tracking/view.jinja',
+        pilot=g.pilot, trace=_get_flight_path(g.pilot),
+        other_pilots=other_pilots)
 
-    @with_trailing_slash
-    @expose('tracking/view.jinja')
-    def index(self):
-        other_pilots = []
-        for pilot in self.other_pilots:
-            trace = get_flight_path(pilot)
-            if trace is not None:
-                other_pilots.append((pilot, trace))
 
-        return dict(pilot=self.pilot, trace=self.__get_flight_path(),
-                    other_pilots=other_pilots)
+@track_blueprint.route('/map')
+def map_():
+    other_pilots = []
+    for pilot in g.other_pilots:
+        trace = _get_flight_path(pilot)
+        if trace is not None:
+            other_pilots.append((pilot, trace))
 
-    @expose('tracking/map.jinja')
-    def map(self):
-        other_pilots = []
-        for pilot in self.other_pilots:
-            trace = get_flight_path(pilot)
-            if trace is not None:
-                other_pilots.append((pilot, trace))
+    return render_template(
+        'tracking/map.jinja',
+        pilot=g.pilot, trace=_get_flight_path(g.pilot),
+        other_pilots=other_pilots)
 
-        return dict(pilot=self.pilot, trace=self.__get_flight_path(),
-                    other_pilots=other_pilots)
 
-    @expose('json')
-    def json(self, **kw):
-        try:
-            last_update = int(kw.get('last_update', 0))
-        except ValueError:
-            last_update = None
+@track_blueprint.route('/json')
+def json():
+    last_update = request.values.get('last_update', 0, type=int)
 
-        trace = self.__get_flight_path(threshold=0.001, last_update=last_update)
-        if trace is None:
-            raise HTTPNotFound
+    trace = _get_flight_path(g.pilot, threshold=0.001, last_update=last_update)
+    if not trace:
+        abort(404)
 
-        return dict(encoded=trace['encoded'], num_levels=trace['num_levels'],
-                    barogram_t=trace['barogram_t'], barogram_h=trace['barogram_h'],
-                    elevations=trace['elevations'],
-                    enl=trace['enl'], sfid=self.pilot.id)
+    return jsonify(
+        encoded=trace['encoded'],
+        num_levels=trace['num_levels'],
+        barogram_t=trace['barogram_t'],
+        barogram_h=trace['barogram_h'],
+        elevations=trace['elevations'],
+        enl=trace['enl'],
+        sfid=g.pilot.id)
