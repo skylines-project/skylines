@@ -1,7 +1,7 @@
 import os
 import subprocess
 
-from tg import config
+from flask import current_app
 
 from .welt2000_reader import parse_welt2000_waypoints
 
@@ -31,7 +31,7 @@ def get_database(bounds=None, path=None):
 
     if not path:
         # Get Welt2000 file
-        path = __get_database_file(config['skylines.temporary_dir'])
+        path = __get_database_file(current_app.config['SKYLINES_TEMPORARY_DIR'])
         delete_file = True
 
     # Parse Welt2000 file

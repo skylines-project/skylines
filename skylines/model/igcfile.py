@@ -3,7 +3,7 @@
 import re
 from datetime import datetime
 
-from tg import config
+from flask import current_app
 from sqlalchemy import ForeignKey, Column, func
 from sqlalchemy.orm import relationship
 from sqlalchemy.sql.expression import and_
@@ -43,7 +43,7 @@ class IGCFile(DeclarativeBase):
         return cls.query(md5=_md5).first()
 
     def get_download_uri(self):
-        return config['skylines.files.uri'] + '/' + self.filename
+        return current_app.config['SKYLINES_FILES_URI'] + '/' + self.filename
 
     def is_writable(self, identity):
         return identity and \
