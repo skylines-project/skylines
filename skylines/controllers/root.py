@@ -6,7 +6,6 @@ from webob.exc import HTTPNotFound
 
 from .base import BaseController
 from .error import ErrorController
-from .tracking import TrackingController
 
 __all__ = ['RootController']
 
