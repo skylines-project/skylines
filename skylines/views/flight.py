@@ -42,7 +42,9 @@ def _reanalyse_if_needed(flight):
 def _pull_flight_id(endpoint, values):
     g.flight_id = values.pop('flight_id')
 
-    g.flights = get_requested_record_list(Flight, g.flight_id)
+    g.flights = get_requested_record_list(
+        Flight, g.flight_id, joinedload=[Flight.igc_file])
+
     g.flight = g.flights[0]
     g.other_flights = g.flights[1:]
 
