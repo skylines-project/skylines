@@ -58,7 +58,7 @@ def _add_flight_id(endpoint, values):
 def _get_flight_path(flight, threshold=0.001, max_points=3000):
     fp = flight_path(flight.igc_file, max_points)
     if len(fp) == 0:
-        log.error('flight_path("' + flight.igc_file.filename + '") returned with an empty list')
+        current_app.logger.error('flight_path("' + flight.igc_file.filename + '") returned with an empty list')
         return None
 
     num_levels = 4
