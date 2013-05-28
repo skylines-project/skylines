@@ -7,8 +7,7 @@ from skylines import app as flask_app
 from tw.api import make_middleware
 
 # TurboGears app
-from skylines.config.middleware import make_app
-from skylines.config.environment import conf_from_file
+from skylines.config import environment as tg_env
 
 # WSGI server
 from werkzeug.serving import run_simple
@@ -20,11 +19,10 @@ if __name__ == '__main__':
     flask_app.wsgi_app = make_middleware(flask_app.wsgi_app, stack_registry=True)
 
     # Create TurboGears app
-    tg_conf = conf_from_file()
-    tg_app = make_app(tg_conf.global_conf, **tg_conf.local_conf)
+    tg_env.load_from_file()
 
     # Create WSGI cascade with tg priority
-    app = Cascade([tg_app, flask_app])
+    app = Cascade([flask_app])
 
     # Run the WSGI server
     run_simple('localhost', 5000, app,
