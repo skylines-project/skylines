@@ -21,5 +21,5 @@ if __name__ == '__main__':
     tg_env.load_from_file()
 
     # Run the WSGI server
-    run_simple('localhost', 5000, app,
+    run_simple('localhost', 8080, app,
                use_reloader=True, use_debugger=True, use_evalex=True)
