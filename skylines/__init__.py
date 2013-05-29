@@ -25,37 +25,36 @@ class SkyLines(Flask):
         assets = Environment(self)
         assets.load_bundles('skylines.assets.bundles')
 
+    def inject_tg2_compat(self):
+        @self.before_request
+        def inject_request_identity():
+            """ for compatibility with tg2 """
+
+            if not hasattr(request, 'identity'):
+                request.identity = {}
+
+            if not current_user.is_anonymous():
+                request.identity['user'] = current_user
+
+                request.identity['groups'] = \
+                    [g.group_name for g in current_user.groups]
+
+                request.identity['permissions'] = \
+                    [p.permission_name for p in current_user.permissions]
+
+        @self.context_processor
+        def inject_helpers_lib():
+            return dict(h=helpers)
+
+        @self.context_processor
+        def inject_template_context():
+            g.identity = request.identity
+            return dict(c=g, tmpl_context=g)
+
+
 app = SkyLines()
-
-
-@app.before_request
-def inject_request_identity():
-    """ for compatibility with tg2 """
-
-    if not hasattr(request, 'identity'):
-        request.identity = {}
-
-    if not current_user.is_anonymous():
-        request.identity['user'] = current_user
-
-        request.identity['groups'] = \
-            [g.group_name for g in current_user.groups]
-
-        request.identity['permissions'] = \
-            [p.permission_name for p in current_user.permissions]
-
+app.inject_tg2_compat()
 
 import skylines.views
 
 skylines.views.register(app)
-
-
-@app.context_processor
-def inject_helpers_lib():
-    return dict(h=helpers)
-
-
-@app.context_processor
-def inject_template_context():
-    g.identity = request.identity
-    return dict(c=g, tmpl_context=g)
