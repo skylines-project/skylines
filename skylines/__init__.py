@@ -4,30 +4,28 @@ from skylines.assets import Environment
 from flask.ext.login import LoginManager, current_user
 from flask.ext.cache import Cache
 from flask.ext.sqlalchemy import SQLAlchemy
-from webassets.loaders import PythonLoader
 from skylines.lib import helpers
 
 
-def create_app():
-    app = Flask(__name__, static_folder='public')
-    app.config.from_object('skylines.config.default')
-    app.config.from_envvar('SKYLINES_CONFIG', silent=True)
+class SkyLines(Flask):
+    def __init__(self):
+        super(SkyLines, self).__init__(__name__, static_folder='public')
+        self.config.from_object('skylines.config.default')
+        self.config.from_envvar('SKYLINES_CONFIG', silent=True)
 
-    app.jinja_options['extensions'].append('jinja2.ext.do')
+        self.jinja_options['extensions'].append('jinja2.ext.do')
 
-    app.cache = Cache(app)
-    app.db = SQLAlchemy(app, session_options=dict(expire_on_commit=False))
+        self.cache = Cache(self)
+        self.db = SQLAlchemy(self, session_options=dict(expire_on_commit=False))
 
-    babel = Babel(app)
-    login_manager = LoginManager()
-    login_manager.init_app(app)
+        babel = Babel(self)
+        login_manager = LoginManager()
+        login_manager.init_app(self)
 
-    assets = Environment(app)
-    assets.load_bundles('skylines.assets.bundles')
+        assets = Environment(self)
+        assets.load_bundles('skylines.assets.bundles')
 
-    return app
-
-app = create_app()
+app = SkyLines()
 
 
 @app.before_request
