@@ -51,10 +51,11 @@ class SkyLines(Flask):
             g.identity = request.identity
             return dict(c=g, tmpl_context=g)
 
+    def register_views(self):
+        import skylines.views
+        skylines.views.register(self)
+
 
 app = SkyLines()
 app.inject_tg2_compat()
-
-import skylines.views
-
-skylines.views.register(app)
+app.register_views()
