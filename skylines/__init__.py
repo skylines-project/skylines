@@ -9,21 +9,32 @@ from skylines.lib import helpers
 
 class SkyLines(Flask):
     def __init__(self):
+        # Create Flask instance
         super(SkyLines, self).__init__(__name__, static_folder='public')
+
+        # Load default settings and from environment variable
         self.config.from_object('skylines.config.default')
         self.config.from_envvar('SKYLINES_CONFIG', silent=True)
 
+        # Configure Jinja2 template engine
         self.jinja_options['extensions'].append('jinja2.ext.do')
 
-        self.cache = Cache(self)
+        # Create and configure SQLAlchemy extension
         self.db = SQLAlchemy(self, session_options=dict(expire_on_commit=False))
 
-        babel = Babel(self)
-        login_manager = LoginManager()
-        login_manager.init_app(self)
+        # Create and attach Cache extension
+        self.cache = Cache(self)
 
-        assets = Environment(self)
-        assets.load_bundles('skylines.assets.bundles')
+        # Create and attach Babel extension
+        self.babel = Babel(self)
+
+        # Create and attach Login extension
+        self.login_manager = LoginManager()
+        self.login_manager.init_app(self)
+
+        # Create and attach Assets extension
+        self.assets = Environment(self)
+        self.assets.load_bundles('skylines.assets.bundles')
 
     def inject_tg2_compat(self):
         @self.before_request
