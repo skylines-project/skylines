@@ -36,6 +36,12 @@ class SkyLines(Flask):
         self.assets = Environment(self)
         self.assets.load_bundles('skylines.assets.bundles')
 
+        self.wrap_toscawidgets_middleware()
+
+    def wrap_toscawidgets_middleware(self):
+        from tw.api import make_middleware
+        self.wsgi_app = make_middleware(self.wsgi_app, stack_registry=True)
+
     def inject_tg2_compat(self):
         @self.before_request
         def inject_request_identity():
