@@ -4,7 +4,6 @@ from skylines import app
 
 import skylines.views.i18n
 import skylines.views.login
-import skylines.views.search
 
 from skylines.views.about import about_blueprint
 from skylines.views.api import api_blueprint
@@ -16,6 +15,7 @@ from skylines.views.flights import flights_blueprint
 from skylines.views.livetrack24 import lt24_blueprint
 from skylines.views.notifications import notifications_blueprint
 from skylines.views.ranking import ranking_blueprint
+from skylines.views.search import search_blueprint
 from skylines.views.statistics import statistics_blueprint
 from skylines.views.track import track_blueprint
 from skylines.views.tracking import tracking_blueprint
@@ -33,6 +33,7 @@ app.register_blueprint(flights_blueprint, url_prefix='/flights')
 app.register_blueprint(lt24_blueprint)
 app.register_blueprint(notifications_blueprint, url_prefix='/notifications')
 app.register_blueprint(ranking_blueprint, url_prefix='/ranking')
+app.register_blueprint(search_blueprint, url_prefix='/search')
 app.register_blueprint(statistics_blueprint, url_prefix='/statistics')
 app.register_blueprint(track_blueprint, url_prefix='/tracking/<user_id>')
 app.register_blueprint(tracking_blueprint, url_prefix='/tracking')

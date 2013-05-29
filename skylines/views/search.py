@@ -1,17 +1,18 @@
-from flask import request, render_template
+from flask import Blueprint, request, render_template
 
-from skylines import app
 from skylines.model import User, Club, Airport
 from skylines.model.search import (
     combined_search_query, text_to_tokens, escape_tokens,
     process_result_details
 )
 
+search_blueprint = Blueprint('search', 'skylines')
+
 MODELS = [User, Club, Airport]
 
 
-@app.route('/search')
-def search():
+@search_blueprint.route('/')
+def index():
     search_text = request.values.get('text', None)
     if not search_text:
         return render_template('search/list.jinja')
