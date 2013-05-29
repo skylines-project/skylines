@@ -1,7 +1,7 @@
 {% from "users/users-table.jinja" import render_users_table with context %}
 {% from "macros/links.jinja" import club_link %}
 
-{% extends "base-page-FLASK.jinja" %}
+{% extends "base-page.jinja" %}
 
 {% block title -%}
 {% trans club=club_link(club) -%}

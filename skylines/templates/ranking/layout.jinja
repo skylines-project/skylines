@@ -4,7 +4,7 @@
 {% set partial = 'partial' in request.args %}
 
 {% if not partial %}
-{% extends "base-page-FLASK.jinja" %}
+{% extends "base-page.jinja" %}
 
 {% set header_tabs = [
     (h.url('/ranking/clubs', params=dict(year=year)), 'clubs', _('Clubs')),

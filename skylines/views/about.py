@@ -20,7 +20,7 @@ def imprint():
         'Please set the SKYLINES_IMPRINT variable in the config file.')
 
     return render_template(
-        'generic/page-FLASK.jinja', title=_('Imprint'), content=content)
+        'generic/page.jinja', title=_('Imprint'), content=content)
 
 
 @about_blueprint.route('/team')
@@ -35,6 +35,6 @@ def skylines_team():
 
     content = markdown.convert(content)
 
-    return render_template('generic/page-FLASK.jinja',
+    return render_template('generic/page.jinja',
                            title=_('The SkyLines Team'),
                            content=content)

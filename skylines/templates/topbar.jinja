@@ -20,7 +20,7 @@
 {% macro _topbar_content(active_page) -%}
 <a href="/about"><img src="/images/logo.png" class="logo" /></a>
 <a class="brand" href="/about">
-    <span class="skylines-blue">Turbo</span><span class="skylines-white">Gears</span>
+    <span class="skylines-blue">Sky</span><span class="skylines-white">Lines</span>
 </a>
 
 <ul class="nav">
@@ -61,7 +61,7 @@
 {%- endmacro %}
 
 {% macro _login_form() -%}
-<form action="{{ h.url('/login_handler', params=dict(came_from=request.url.encode('utf-8'))) }}" method="post" accept-charset="UTF-8">
+<form action="{{ url_for('login', next=request.url) }}" method="post" accept-charset="UTF-8">
     <div class="control-group">
         <label class="control-label" for="username">{% trans %}Email Address{% endtrans %}:</label>
         <div class="controls">
@@ -97,7 +97,7 @@
 {%- endmacro %}
 
 {%- macro _user_dropdown(active_page) -%}
-{%- with user=c.identity['user'] %}
+{%- with user=request.identity['user'] %}
 <li class="dropdown {% if active_page == 'settings' %}active{% endif %}">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown">
       {{ user|e }} <i class="icon-caret-down"></i>
@@ -111,7 +111,7 @@
       <li><a href="/flights/pilot/{{ user.id }}"><i class="icon-plane"></i> {% trans %}Flights{% endtrans %}</a></li>
       <li><a href="/statistics/pilot/{{ user.id }}"><i class="icon-tasks"></i> {% trans %}Statistics{% endtrans %}</a></li>
       <li class="divider"></li>
-      <li><a href="/logout_handler"><i class="icon-signout"></i> {% trans %}Logout{% endtrans %}</a></li>
+      <li><a href="{{ url_for('logout', next=request.url) }}"><i class="icon-signout"></i> {% trans %}Logout{% endtrans %}</a></li>
   </ul>
 </li>
 {%- endwith %}
@@ -120,9 +120,13 @@
 {%- macro _language_dropdown() -%}
 <li class="dropdown">
     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-        {{ insert_flag(c.current_language['country_code']) }} <i class="icon-caret-down"></i>
+        {{ insert_flag(h.language_to_country_code(g.active_locale|string)) }} <i class="icon-caret-down"></i>
     </a>
     <ul class="dropdown-menu">
+      {% for locale in g.available_locales|sort(attribute='display_name') -%}
+      {{ _language_item(locale) }}
+      {%- endfor %}
+      {#
       {% for lang in c.primary_languages -%}
       {{ _language_item(lang) }}
       {%- endfor %}
@@ -130,10 +134,11 @@
       {% for lang in c.secondary_languages -%}
       {{ _language_item(lang) }}
       {%- endfor %}
+      #}
     </ul>
 </li>
 {%- endmacro %}
 
 {% macro _language_item(lang) %}
-<li><a href="/set_lang/{{ lang['language_code'] }}" title="{{ lang['english_name'] }}">{{ insert_flag(lang['country_code']) }} {{ lang['local_name'] }}</a></li>
+<li><a href="/set_lang/{{ lang }}" title="{{ lang.english_name }}">{{ insert_flag(h.language_to_country_code(lang|string)) }} {{ lang.display_name|capitalize }}</a></li>
 {%- endmacro %}
