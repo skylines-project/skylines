@@ -56,6 +56,8 @@ def inject_request_identity():
 
 import skylines.views
 
+skylines.views.register(app)
+
 from .model import User, DBSession
 
 
