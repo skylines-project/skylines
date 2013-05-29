@@ -6,7 +6,6 @@ from flask.ext.cache import Cache
 from flask.ext.sqlalchemy import SQLAlchemy
 from webassets.loaders import PythonLoader
 from skylines.lib import helpers
-import transaction
 
 
 def create_app():
@@ -58,7 +57,7 @@ import skylines.views
 
 skylines.views.register(app)
 
-from .model import User, DBSession
+from .model import User
 
 
 @app.login_manager.user_loader
