@@ -10,6 +10,10 @@ from skylines.model import User
 def register(app):
     """ Register the /login and /logout routes on the given app """
 
+    @app.login_manager.user_loader
+    def load_user(userid):
+        return User.get(userid)
+
     @app.route('/login', methods=['GET', 'POST'])
     def login():
         if request.method == 'POST':
@@ -33,7 +37,6 @@ def register(app):
 
         return render_template(
             'login.jinja', next=(request.args.get('next') or request.referrer))
-
 
     @app.route('/logout')
     def logout():

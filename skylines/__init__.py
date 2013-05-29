@@ -57,13 +57,6 @@ import skylines.views
 
 skylines.views.register(app)
 
-from .model import User
-
-
-@app.login_manager.user_loader
-def load_user(userid):
-    return User.get(userid)
-
 
 @app.context_processor
 def inject_helpers_lib():
