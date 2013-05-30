@@ -1,7 +1,7 @@
 import os.path
 
 here = os.path.abspath(os.path.dirname(__file__))
-base = os.path.abspath(os.path.join(here, '..', '..'))
+base = os.path.abspath(os.path.join(here, '..'))
 
 DEBUG = True
 SECRET_KEY = 'skylines'

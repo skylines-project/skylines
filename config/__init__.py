@@ -1,7 +1,7 @@
 import os
 
 PRO_CONF_PATH = '/etc/skylines/production.py'
-DEV_CONF_PATH = os.path.join('skylines', 'config', 'default.py')
+DEV_CONF_PATH = os.path.join('config', 'default.py')
 
 
 def to_envvar(path=None):

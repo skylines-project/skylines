@@ -1,7 +1,7 @@
 import os.path
 
 DEFAULT_CONF_PATH = os.path.abspath(os.path.join(
-    os.path.dirname(__file__), 'config', 'default.py'))
+    os.path.dirname(__file__), '..', 'config', 'default.py'))
 
 
 from flask import Flask

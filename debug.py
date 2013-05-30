@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import argparse
-from skylines.config import to_envvar
+from config import to_envvar
 
 parser = argparse.ArgumentParser(description='Run the SkyLines debug server.')
 parser.add_argument('conf_path', nargs='?', metavar='config.ini',
