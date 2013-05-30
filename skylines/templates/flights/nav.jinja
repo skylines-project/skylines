@@ -1,6 +1,6 @@
 {% from "macros/links.jinja" import airport_link %}
 
-{% set my_pilot = g.identity and g.identity['user'] %}
+{% set my_pilot = request.identity and request.identity['user'] %}
 {% set my_club = my_pilot and my_pilot.club %}
 
 <ul class="nav nav-pills">

@@ -33,7 +33,7 @@
 
 
 {%- block content %}
-{% if pilot or club or airport or g.identity -%}
+{% if pilot or club or airport or request.identity -%}
 <ul class="nav nav-pills">
   <li{% if not (pilot or club or airport) %} class="active"{% endif %}><a href="/statistics/">SkyLines</a></li>
 
@@ -45,7 +45,7 @@
   <li class="active"><a href="/statistics/club/{{ club.id }}">{{ club|e }}</a></li>
   {%- endif %}
 
-  {% with my_club=g.identity and g.identity['user'] and g.identity['user'].club  -%}
+  {% with my_club=request.identity and request.identity['user'] and request.identity['user'].club  -%}
   {% if my_club and club != my_club -%}
   <li><a href="/statistics/club/{{ my_club.id }}">{{ my_club|e }}</a></li>
   {%- endif %}
@@ -55,7 +55,7 @@
   <li class="active"><a href="/statistics/pilot/{{ pilot.id }}">{{ pilot|e }}</a></li>
   {%- endif %}
 
-  {% with my_club=g.identity and g.identity['user'] -%}
+  {% with my_club=request.identity and request.identity['user'] -%}
   {% if my_club and pilot != my_club -%}
   <li><a href="/statistics/pilot/{{ my_club.id }}">{{ my_club|e }}</a></li>
   {%- endif %}
