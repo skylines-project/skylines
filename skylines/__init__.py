@@ -14,17 +14,20 @@ class SkyLines(Flask):
         self.jinja_options['extensions'].append('jinja2.ext.do')
 
         self.add_sqlalchemy()
+        self.add_web_components()
+
+    def add_sqlalchemy(self):
+        # Create and configure SQLAlchemy extension
+        from flask.ext.sqlalchemy import SQLAlchemy
+        self.db = SQLAlchemy(self, session_options=dict(expire_on_commit=False))
+
+    def add_web_components(self):
         self.add_cache()
         self.add_babel()
         self.add_login_manager()
         self.add_assets()
         self.add_toscawidgets()
         self.add_tg2_compat()
-
-    def add_sqlalchemy(self):
-        # Create and configure SQLAlchemy extension
-        from flask.ext.sqlalchemy import SQLAlchemy
-        self.db = SQLAlchemy(self, session_options=dict(expire_on_commit=False))
 
     def add_cache(self):
         # Create and attach Cache extension
