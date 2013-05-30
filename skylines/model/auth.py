@@ -135,7 +135,7 @@ class User(DeclarativeBase):
         password is matching.
         """
         user = cls.query(email_address=email).first()
-        if user.validate_password(password):
+        if user and user.validate_password(password):
             return user
 
     @classmethod
