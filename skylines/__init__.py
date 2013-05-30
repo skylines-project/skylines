@@ -22,7 +22,6 @@ class SkyLines(Flask):
         self.jinja_options['extensions'].append('jinja2.ext.do')
 
         self.add_sqlalchemy()
-        self.add_logging_handlers()
 
     @property
     def created_by_nose(self):
@@ -38,6 +37,8 @@ class SkyLines(Flask):
         self.db = SQLAlchemy(self, session_options=dict(expire_on_commit=False))
 
     def add_web_components(self):
+        self.add_logging_handlers()
+
         self.add_cache()
         self.add_babel()
         self.add_login_manager()
