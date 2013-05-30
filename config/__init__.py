@@ -30,3 +30,6 @@ def to_envvar(path=None):
 
 def use_testing():
     os.environ['SKYLINES_CONFIG'] = TESTING_CONF_PATH
+
+# Make sure use_testing() is not detected as a unit test by nose
+use_testing.__test__ = False
