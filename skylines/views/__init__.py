@@ -1,7 +1,7 @@
 from flask import redirect, url_for
 
-from skylines.views import i18n
-from skylines.views import login
+from skylines.views.i18n import register as register_i18n
+from skylines.views.login import register as register_login
 
 from skylines.views.about import about_blueprint
 from skylines.views.api import api_blueprint
@@ -24,8 +24,8 @@ from skylines.views.users import users_blueprint
 
 
 def register(app):
-    i18n.register(app)
-    login.register(app)
+    register_i18n(app)
+    register_login(app)
 
     app.register_blueprint(about_blueprint, url_prefix='/about')
     app.register_blueprint(api_blueprint, url_prefix='/api')
