@@ -14,7 +14,6 @@ class SkyLines(Flask):
         self.jinja_options['extensions'].append('jinja2.ext.do')
 
         self.add_sqlalchemy()
-        self.add_web_components()
 
     def add_sqlalchemy(self):
         # Create and configure SQLAlchemy extension
@@ -28,6 +27,8 @@ class SkyLines(Flask):
         self.add_assets()
         self.add_toscawidgets()
         self.add_tg2_compat()
+
+        self.register_views()
 
     def add_cache(self):
         # Create and attach Cache extension
@@ -91,4 +92,4 @@ class SkyLines(Flask):
 
 
 app = SkyLines()
-app.register_views()
+app.add_web_components()
