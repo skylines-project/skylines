@@ -92,4 +92,3 @@ class SkyLines(Flask):
 
 
 app = SkyLines()
-app.add_web_components()
