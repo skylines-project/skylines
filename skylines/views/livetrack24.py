@@ -223,5 +223,3 @@ def client():
         return '0'
 
     return '{:d}'.format(key)
-
-

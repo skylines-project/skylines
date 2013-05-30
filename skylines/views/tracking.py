@@ -12,7 +12,7 @@ tracking_blueprint = Blueprint('tracking', 'skylines')
 def index():
     tracks = TrackingFix.get_latest()
 
-    @current_app.cache.memoize(timeout=60*60)
+    @current_app.cache.memoize(timeout=(60 * 60))
     def get_nearest_airport(track):
         airport = Airport.by_location(track.location, None)
         if not airport:

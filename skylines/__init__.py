@@ -57,7 +57,7 @@ class SkyLines(Flask):
         self.wsgi_app = make_middleware(self.wsgi_app, stack_registry=True)
 
     def add_tg2_compat(self):
-        from flask import request, g
+        from flask import request
         from flask.ext.login import current_user
         from skylines.lib import helpers
 
