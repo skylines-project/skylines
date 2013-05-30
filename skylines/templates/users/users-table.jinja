@@ -11,7 +11,7 @@
   </thead>
   <tbody>
     {% for user in users -%}
-    <tr {% if club_column %}itemprop="member"{% endif %} itemscope itemtype="http://schema.org/Person">
+    <tr {% if not club_column %}itemprop="member"{% endif %} itemscope itemtype="http://schema.org/Person">
       <meta itemprop="url" content="/users/{{ user.id }}" />
       <td itemprop="name">{{ user_link(user) }}</td>
       {% if club_column -%}
