@@ -165,9 +165,9 @@ The SkyLines Team
     msg['Date'] = email.Utils.formatdate(localtime=1)
 
     try:
-        smtp = smtplib.SMTP(config.get('smtp_server', 'localhost'))
+        smtp = smtplib.SMTP(current_app.config.get('SMTP_SERVER', 'localhost'))
         smtp.ehlo()
-        smtp.sendmail(config.get('email_from', 'skylines@xcsoar.org').encode('ascii'),
+        smtp.sendmail(current_app.config.get('EMAIL_FROM', 'skylines@xcsoar.org').encode('ascii'),
                       user.email_address.encode('ascii'), msg.as_string())
         smtp.quit()
 
