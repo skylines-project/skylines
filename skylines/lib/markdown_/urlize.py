@@ -35,8 +35,6 @@ u'<p>del.icio.us</p>'
 
 """
 
-from __future__ import absolute_import
-
 import markdown
 
 # Global Vars

@@ -16,7 +16,7 @@ from .country import *
 from skylines.lib.formatter.numbers import *
 from skylines.lib.formatter.datetime import *
 from skylines.lib.formatter.units import *
-from skylines.lib.markdown import markdown
+from skylines.lib.markdown_ import markdown
 
 # Jinja2 doesn't seem to have min/max... strange!
 min = min

@@ -1,5 +1,3 @@
-from __future__ import absolute_import
-
 from markdown import Markdown
 
 from .urlize import UrlizeExtension
