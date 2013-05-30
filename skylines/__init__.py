@@ -118,10 +118,21 @@ class SkyLines(Flask):
         })
 
     def add_logging_handlers(self):
-        self.logger.setLevel(self.config['LOGGING_LEVEL'])
+        import logging
+        from logging import handlers
 
-        if not self.debug:
-            map(self.logger.addHandler, self.config.get('LOGGING_HANDLERS', []))
+        self.logger.setLevel(logging.INFO)
+
+        file_formatter = logging.Formatter(
+            '%(asctime)s %(levelname)s: %(message)s [in %(pathname)s:%(lineno)d]')
+
+        for level, klass, args in self.config.get('LOGGING_HANDLERS', []):
+            handler = getattr(handlers, klass)(*args)
+            handler.setLevel(getattr(logging, level))
+            if 'FileHandler' in klass:
+                handler.setFormatter(file_formatter)
+
+            self.logger.addHandler(handler)
 
 
 app = SkyLines()

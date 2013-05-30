@@ -1,5 +1,4 @@
 import os.path
-import logging
 
 here = os.path.abspath(os.path.dirname(__file__))
 base = os.path.abspath(os.path.join(here, '..'))
@@ -10,7 +9,23 @@ SECRET_KEY = 'skylines'
 SMTP_SERVER = 'localhost'
 EMAIL_FROM = 'no-reply@skylines-project.org'
 
-LOGGING_LEVEL = logging.INFO
+"""
+# Logging handlers (disabled in DEBUG mode)
+
+ADMINS = [
+    'tobias.bieniek@gmx.de'
+]
+
+mail_handler = (
+    'ERROR', 'SMTPHandler',
+    ('localhost', 'error@skylines-project.org', ADMINS, 'SkyLines Error Report'))
+
+file_handler = (
+    'INFO', 'RotatingFileHandler',
+    ('/home/turbo/skylines.log', 'a', 10000, 4))
+
+LOGGING_HANDLERS = [mail_handler, file_handler]
+"""
 
 # This should probably be changed for a multi-threaded production server
 CACHE_TYPE = 'simple'
