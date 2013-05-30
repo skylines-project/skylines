@@ -4,11 +4,7 @@ import os
 import sys
 import gzip
 from argparse import ArgumentParser
-from skylines.assets import Environment as AssetEnvironment
-from skylines.config import environment
-
-# Build paths
-base_path = os.path.dirname(sys.argv[0])
+from skylines.config import to_envvar
 
 # Create argument parser
 parser = ArgumentParser(description='Generate concatenated and minified CSS and JS assets.')
@@ -19,19 +15,15 @@ parser.add_argument('conf_path', nargs='?', metavar='config.ini',
 args = parser.parse_args()
 
 # Load config from file
-conf = environment.load_from_file(args.conf_path)
-if not conf:
+if not to_envvar(args.conf_path):
     parser.error('Config file "{}" not found.'.format(args.conf_path))
 
 # Create assets environment
-env = AssetEnvironment(conf)
-
-# Load the bundles from the YAML file
-print 'Loading bundles from skylines.assets.bundles'
-env.load_bundles('skylines.assets.bundles')
+from skylines import app
+app.add_assets()
 
 # Generate the assets/bundles
-for bundle in env:
+for bundle in app.assets:
     print 'Generating bundle: {}'.format(bundle.output)
     bundle.build()
 
