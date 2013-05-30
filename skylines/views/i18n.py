@@ -1,6 +1,7 @@
 from flask import redirect, request, session, url_for, g
 from flask.ext.babel import get_locale
 from babel import Locale
+from formencode.api import set_stdtranslation
 
 
 def register(app):
@@ -24,9 +25,18 @@ def register(app):
 
         preferred.extend([l[0] for l in request.accept_languages])
 
+        # Find best match
         best_match = Locale.negotiate(preferred, available)
+
+        # Configure FormEncode library
+        set_formencode_language(best_match or 'en')
+
+        # Return best match
         if best_match:
             return str(best_match)
+
+    def set_formencode_language(language):
+        set_stdtranslation(languages=[str(language)])
 
     @app.route('/set_lang/<language>')
     def set_lang(language):
