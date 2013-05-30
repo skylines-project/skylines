@@ -20,6 +20,7 @@ install:
 
   # Install testing dependencies
   - pip install -r test-requirements.txt
+  - pip install rednose
 
 before_script:
   # Create the testing database
@@ -34,7 +35,7 @@ before_script:
 
 script:
   # Run the test suite
-  - nosetests
+  - nosetests --rednose
 
 notifications:
   email:
