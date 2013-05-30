@@ -1,3 +1,9 @@
+import os.path
+
+DEFAULT_CONF_PATH = os.path.abspath(os.path.join(
+    os.path.dirname(__file__), 'config', 'default.py'))
+
+
 from flask import Flask
 
 
@@ -7,7 +13,7 @@ class SkyLines(Flask):
         super(SkyLines, self).__init__(__name__, static_folder='public')
 
         # Load default settings and from environment variable
-        self.config.from_object('skylines.config.default')
+        self.config.from_pyfile(DEFAULT_CONF_PATH)
         self.config.from_envvar('SKYLINES_CONFIG', silent=True)
 
         # Configure Jinja2 template engine
