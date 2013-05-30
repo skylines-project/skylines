@@ -103,9 +103,9 @@
       {{ user|e }} <i class="icon-caret-down"></i>
   </a>
   <ul class="dropdown-menu">
-      <li><a href="{{ url_for('user.index', user_id=user.id) }}/"><i class="icon-user"></i> {{ user|e }}</a></li>
+      <li><a href="{{ url_for('user.index', user_id=user.id) }}"><i class="icon-user"></i> {{ user|e }}</a></li>
       {%- if user.club %}
-      <li><a href="{{ url_for('club.index', club_id=user.club.id) }}/"><i class="icon-group"></i> {{ user.club|e }}</a></li>
+      <li><a href="{{ url_for('club.index', club_id=user.club.id) }}"><i class="icon-group"></i> {{ user.club|e }}</a></li>
       {%- endif %}
       <li class="divider"></li>
       <li><a href="{{ url_for('flights.pilot', id=user.id) }}"><i class="icon-plane"></i> {% trans %}Flights{% endtrans %}</a></li>

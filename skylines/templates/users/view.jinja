@@ -159,7 +159,7 @@
           {%- endif %}
         {%- endif %}
 
-        <a href="{{ url_for('flights.pilot', id=user.id) }}/" class="btn"><i class="icon-plane"></i> {% trans %}Flights{% endtrans %}</a>
+        <a href="{{ url_for('flights.pilot', id=user.id) }}" class="btn"><i class="icon-plane"></i> {% trans %}Flights{% endtrans %}</a>
         <a href="{{ url_for('statistics.index', page='pilot', id=user.id) }}" class="btn"><i class="icon-tasks"></i> {% trans %}Statistics{% endtrans %}</a>
       </p>
     </div>
@@ -170,7 +170,7 @@
       <ul class="row-fluid">
         {% for following in user.following|sort(attribute='destination.name') -%}
         <li class="span3">
-          <a href="{{ url_for('user.index', id=following.destination_id) }}/">{{ following.destination }}</a>
+          <a href="{{ url_for('user.index', id=following.destination_id) }}">{{ following.destination }}</a>
         </li>
         {%- endfor %}
       </ul>
@@ -183,7 +183,7 @@
       <ul class="row-fluid">
         {% for follower in user.followers|sort(attribute='source.name') -%}
         <li class="span3">
-          <a href="{{ url_for('user.index', user_id=follower.source_id) }}/">{{ follower.source }}</a>
+          <a href="{{ url_for('user.index', user_id=follower.source_id) }}">{{ follower.source }}</a>
         </li>
         {%- endfor %}
       </ul>
