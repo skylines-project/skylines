@@ -152,7 +152,7 @@
 <a href="#" class="btn btn-share">
   <i class="icon-share-alt icon-small"></i> Share
 </a>
-<a href="{{ flight.igc_file.get_download_uri() }}" title="{{ flight.igc_file.filename }}" class="btn">
+<a href="{{ url_for('files.index', filename=flight.igc_file.filename) }}" title="{{ flight.igc_file.filename }}" class="btn">
   <i class="icon-download-alt"></i> IGC
 </a>
 {%- endblock %}

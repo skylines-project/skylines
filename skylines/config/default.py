@@ -19,8 +19,6 @@ ASSETS_LOAD_URL = '/'
 
 SKYLINES_ANALYSIS_PATH = os.path.join(base, 'bin')
 SKYLINES_FILES_PATH = os.path.join(base, 'htdocs', 'files')
-SKYLINES_FILES_URI = '/files'
-
 SKYLINES_ELEVATION_PATH = os.path.join(base, 'htdocs', 'srtm')
 
 SKYLINES_TEMPORARY_DIR = '/tmp'
