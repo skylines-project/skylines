@@ -1,8 +1,5 @@
 import os
-
-DEFAULT_CONF_PATH = os.path.abspath(os.path.join(
-    os.path.dirname(__file__), '..', 'config', 'default.py'))
-
+import config
 
 from flask import Flask
 
@@ -13,7 +10,10 @@ class SkyLines(Flask):
         super(SkyLines, self).__init__(__name__, static_folder='public')
 
         # Load default settings and from environment variable
-        self.config.from_pyfile(DEFAULT_CONF_PATH)
+        self.config.from_pyfile(config.DEFAULT_CONF_PATH)
+
+        if self.created_by_nose:
+            self.config.from_pyfile(config.TESTING_CONF_PATH)
 
         if 'SKYLINES_CONFIG' in os.environ:
             self.config.from_pyfile(os.environ['SKYLINES_CONFIG'])
@@ -22,6 +22,14 @@ class SkyLines(Flask):
         self.jinja_options['extensions'].append('jinja2.ext.do')
 
         self.add_sqlalchemy()
+
+    @property
+    def created_by_nose(self):
+        import traceback
+        top_frame = traceback.extract_stack()[0]
+        filename = os.path.abspath(top_frame[0])
+        return (filename.endswith('nosetests') or
+                os.path.join('skylines', 'tests') in filename)
 
     def add_sqlalchemy(self):
         """ Create and configure SQLAlchemy extension """

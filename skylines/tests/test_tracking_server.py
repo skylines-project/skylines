@@ -2,9 +2,6 @@ from unittest import TestCase
 from nose.tools import eq_, ok_
 from mock import Mock, patch
 
-from config import use_testing
-use_testing()
-
 from skylines.tests import setup_app, teardown_db
 from skylines.model import DBSession, TrackingFix
 

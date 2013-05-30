@@ -2,9 +2,6 @@ import sys
 import nose
 from nose.tools import eq_, assert_raises
 
-from config import use_testing
-use_testing()
-
 from skylines.model.base import DeclarativeBase
 from skylines.model import DBSession
 from skylines.tests import setup_db, teardown_db
