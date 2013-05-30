@@ -19,4 +19,5 @@ def setup_app():
 
 def teardown_db():
     """Method used to destroy a database"""
+    db.session.remove()
     model.metadata.drop_all(db.engine)
