@@ -45,6 +45,8 @@ class SkyLines(Flask):
         self.add_toscawidgets()
         self.add_tg2_compat()
 
+        self.add_mapproxy()
+
         self.register_views()
 
     def add_cache(self):
@@ -101,6 +103,18 @@ class SkyLines(Flask):
     def register_views(self):
         import skylines.views
         skylines.views.register(self)
+
+    def add_mapproxy(self):
+        mapproxy_config = self.config.get('SKYLINES_MAPPROXY')
+        if not mapproxy_config:
+            return
+
+        from werkzeug.wsgi import DispatcherMiddleware
+        import mapproxy.wsgiapp as mapproxy
+
+        self.wsgi_app = DispatcherMiddleware(self.wsgi_app, {
+            '/mapproxy': mapproxy.make_wsgi_app(mapproxy_config),
+        })
 
     def add_logging_handlers(self):
         self.logger.setLevel(self.config['LOGGING_LEVEL'])

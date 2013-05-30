@@ -38,6 +38,6 @@ SKYLINES_LISTS_SERVER_SIDE = 250
 
 # mapproxy config file; if commented,
 # SKYLINES_MAP_TILE_URL is used instead
-#SKYLINES_MAPPROXY = %(here)s/mapserver/mapproxy/mapproxy.yaml
+#SKYLINES_MAPPROXY = os.path.join(base, 'mapserver', 'mapproxy', 'mapproxy.yaml')
 
 SKYLINES_MAP_TILE_URL = 'http://skylines.xcsoar.org'
