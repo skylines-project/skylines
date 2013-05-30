@@ -6,6 +6,9 @@ base = os.path.abspath(os.path.join(here, '..'))
 DEBUG = True
 SECRET_KEY = 'skylines'
 
+SMTP_SERVER = 'localhost'
+EMAIL_FROM = 'no-reply@skylines-project.org'
+
 # This should probably be changed for a multi-threaded production server
 CACHE_TYPE = 'simple'
 

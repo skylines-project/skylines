@@ -160,14 +160,14 @@ The SkyLines Team
 
     msg = email.mime.text.MIMEText(text.encode('utf-8'), 'plain', 'utf-8')
     msg['Subject'] = 'SkyLines password recovery'
-    msg['From'] = current_app.config.get('EMAIL_FROM', 'skylines@xcsoar.org')
+    msg['From'] = current_app.config['EMAIL_FROM']
     msg['To'] = user.email_address.encode('ascii')
     msg['Date'] = email.Utils.formatdate(localtime=1)
 
     try:
-        smtp = smtplib.SMTP(current_app.config.get('SMTP_SERVER', 'localhost'))
+        smtp = smtplib.SMTP(current_app.config['SMTP_SERVER'])
         smtp.ehlo()
-        smtp.sendmail(current_app.config.get('EMAIL_FROM', 'skylines@xcsoar.org').encode('ascii'),
+        smtp.sendmail(current_app.config['EMAIL_FROM'].encode('ascii'),
                       user.email_address.encode('ascii'), msg.as_string())
         smtp.quit()
 
