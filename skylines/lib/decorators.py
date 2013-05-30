@@ -2,7 +2,8 @@ from functools import wraps
 
 from formencode import Invalid
 
-from flask import current_app, request
+from flask import current_app, request, flash, redirect, url_for
+from flask.ext.login import current_user
 
 
 def jsonp(func):
@@ -35,4 +36,21 @@ class validate:
             else:
                 return fn(*args, **kwargs)
 
+        return decorated_view
+
+
+class login_required:
+    def __init__(self, msg=None):
+        self.msg = msg
+
+    def __call__(self, fn):
+        @wraps(fn)
+        def decorated_view(*args, **kwargs):
+            if not current_user.is_authenticated():
+                if self.msg:
+                    flash(self.msg)
+
+                return redirect(url_for('login', next=request.url))
+
+            return fn(*args, **kwargs)
         return decorated_view
