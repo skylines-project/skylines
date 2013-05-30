@@ -4,7 +4,7 @@ import os
 import sys
 import gzip
 from argparse import ArgumentParser
-from skylines.config import to_envvar
+from config import to_envvar
 
 # Create argument parser
 parser = ArgumentParser(description='Generate concatenated and minified CSS and JS assets.')

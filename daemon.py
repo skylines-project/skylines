@@ -7,7 +7,7 @@
 import sys
 import os
 import argparse
-from skylines.config import to_envvar
+from config import to_envvar
 
 sys.path.append(os.path.dirname(sys.argv[0]))
 
