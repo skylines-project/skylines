@@ -16,7 +16,7 @@ class SkyLines(Flask):
         self.add_sqlalchemy()
 
     def add_sqlalchemy(self):
-        # Create and configure SQLAlchemy extension
+        """ Create and configure SQLAlchemy extension """
         from flask.ext.sqlalchemy import SQLAlchemy
         self.db = SQLAlchemy(self, session_options=dict(expire_on_commit=False))
 
@@ -31,23 +31,23 @@ class SkyLines(Flask):
         self.register_views()
 
     def add_cache(self):
-        # Create and attach Cache extension
+        """ Create and attach Cache extension """
         from flask.ext.cache import Cache
         self.cache = Cache(self)
 
     def add_babel(self):
-        # Create and attach Babel extension
+        """ Create and attach Babel extension """
         from flask.ext.babel import Babel
         self.babel = Babel(self)
 
     def add_login_manager(self):
-        # Create and attach Login extension
+        """ Create and attach Login extension """
         from flask.ext.login import LoginManager
         self.login_manager = LoginManager()
         self.login_manager.init_app(self)
 
     def add_assets(self):
-        # Create and attach Assets extension
+        """ Create and attach Assets extension """
         from skylines.assets import Environment
         self.assets = Environment(self)
         self.assets.load_bundles('skylines.assets.bundles')
