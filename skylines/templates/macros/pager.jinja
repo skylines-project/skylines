@@ -4,45 +4,45 @@
 <div class="pagination pagination-condensed">
   <ul>
     <li class="prev{% if page.page == page.first_page %} disabled{% endif %}">
-      <a href="{{ h.url('', params=h.dict(kw, page=h.max(page.first_page, page.page - 1))) }}">&larr; Previous</a>
+      <a href="{{ h.url('', page=h.max(page.first_page, page.page - 1), **kw) }}">&larr; Previous</a>
     </li>
 
     {% if (page.page - 4 >= page.first_page) and (page.page == page.last_page) -%}
-    <li><a href="{{ h.url('', params=h.dict(kw, page=(page.page - 4))) }}">{{ page.page - 4 }}</a></li>
+    <li><a href="{{ h.url('', page=(page.page - 4), **kw) }}">{{ page.page - 4 }}</a></li>
     {%- endif -%}
 
     {% if (page.page - 3 >= page.first_page) and (page.page >= page.last_page - 1) -%}
-    <li><a href="{{ h.url('', params=h.dict(kw, page=(page.page - 3))) }}">{{ page.page - 3 }}</a></li>
+    <li><a href="{{ h.url('', page=(page.page - 3), **kw) }}">{{ page.page - 3 }}</a></li>
     {%- endif -%}
 
     {% if page.page - 2 >= page.first_page -%}
-    <li><a href="{{ h.url('', params=h.dict(kw, page=(page.page - 2))) }}">{{ page.page - 2 }}</a></li>
+    <li><a href="{{ h.url('', page=(page.page - 2), **kw) }}">{{ page.page - 2 }}</a></li>
     {%- endif -%}
 
     {% if page.page - 1 >= page.first_page -%}
-    <li><a href="{{ h.url('', params=h.dict(kw, page=(page.page - 1))) }}">{{ page.page - 1 }}</a></li>
+    <li><a href="{{ h.url('', page=(page.page - 1), **kw) }}">{{ page.page - 1 }}</a></li>
     {%- endif -%}
 
-    <li class="active"><a href="{{ h.url('', params=h.dict(kw, page=(page.page))) }}">{{ page.page }}</a></li>
+    <li class="active"><a href="{{ h.url('', page=(page.page), **kw) }}">{{ page.page }}</a></li>
 
     {% if page.page + 1 <= page.last_page -%}
-    <li><a href="{{ h.url('', params=h.dict(kw, page=(page.page + 1))) }}">{{ page.page + 1 }}</a></li>
+    <li><a href="{{ h.url('', page=(page.page + 1), **kw) }}">{{ page.page + 1 }}</a></li>
     {%- endif -%}
 
     {% if page.page + 2 <= page.last_page -%}
-    <li><a href="{{ h.url('', params=h.dict(kw, page=(page.page + 2))) }}">{{ page.page + 2 }}</a></li>
+    <li><a href="{{ h.url('', page=(page.page + 2), **kw) }}">{{ page.page + 2 }}</a></li>
     {%- endif -%}
 
     {% if (page.page + 3 <= page.last_page) and (page.page <= page.first_page + 1) -%}
-    <li><a href="{{ h.url('', params=h.dict(kw, page=(page.page + 3))) }}">{{ page.page + 3 }}</a></li>
+    <li><a href="{{ h.url('', page=(page.page + 3), **kw) }}">{{ page.page + 3 }}</a></li>
     {%- endif -%}
 
     {% if (page.page + 4 <= page.last_page) and (page.page == page.first_page) -%}
-    <li><a href="{{ h.url('', params=h.dict(kw, page=(page.page + 4))) }}">{{ page.page + 4 }}</a></li>
+    <li><a href="{{ h.url('', page=(page.page + 4), **kw) }}">{{ page.page + 4 }}</a></li>
     {%- endif -%}
 
     <li class="next{% if page.page == page.last_page %} disabled{% endif %}">
-      <a href="{{ h.url('', params=h.dict(kw, page=h.min(page.last_page, page.page + 1))) }}">Next &rarr;</a>
+      <a href="{{ h.url('', page=h.min(page.last_page, page.page + 1), **kw) }}">Next &rarr;</a>
     </li>
   </ul>
 </div>
