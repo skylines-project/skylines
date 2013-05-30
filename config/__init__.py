@@ -2,6 +2,7 @@ import os
 
 PRO_CONF_PATH = '/etc/skylines/production.py'
 DEV_CONF_PATH = os.path.join('config', 'default.py')
+TESTING_CONF_PATH = os.path.join('config', 'testing.py')
 
 
 def to_envvar(path=None):
@@ -22,3 +23,7 @@ def to_envvar(path=None):
 
     os.environ['SKYLINES_CONFIG'] = path
     return True
+
+
+def use_testing():
+    os.environ['SKYLINES_CONFIG'] = TESTING_CONF_PATH
