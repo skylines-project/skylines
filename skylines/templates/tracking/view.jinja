@@ -153,7 +153,7 @@ Live Tracking <small>of {{ pilot }}</small>
 
     {% if trace -%}
     <p>
-      <a href="map" class="btn">
+      <a href="{{ url_for('.map_') }}" class="btn">
         <i class="icon-fullscreen icon-large"></i> {% trans %}Full-screen map{% endtrans %}
       </a>
     </p>

@@ -124,8 +124,8 @@ def _create_list(tab, kw, date=None, pilot=None, club=None, airport=None,
                                flights_count=flights_count)
 
 
-@flights_blueprint.route('/all')
 @flights_blueprint.route('/all.json')
+@flights_blueprint.route('/all')
 def all():
     return _create_list('all', request.args)
 

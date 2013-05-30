@@ -46,12 +46,12 @@
         {%- endif %}
       </td>
       <td nowrap="nowrap" class="show">
-        <a href="/tracking/{{ track.pilot_id }}/" class="btn btn-mini">Show</a>
+        <a href="{{ url_for('track.index', user_id=track.pilot_id) }}" class="btn btn-mini">Show</a>
       </td>
     </tr>
     {%- endfor %}
   </tbody>
 </table>
 
-<a href="/tracking/info" class="btn"><i class="icon-question-sign"></i> {% trans %}How to use Live Tracking?{% endtrans %}</a>
+<a href="{{ url_for('.info') }}" class="btn"><i class="icon-question-sign"></i> {% trans %}How to use Live Tracking?{% endtrans %}</a>
 {%- endblock %}

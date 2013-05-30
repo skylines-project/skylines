@@ -66,7 +66,7 @@
       {% if 'club' not in omitted_columns -%}
       <td>
         {% if flight.club -%}
-        <a href="/clubs/{{ flight.club_id }}">{{ h.truncate(flight.club.name, 25)|e }}</a>
+        <a href="{{ url_for('club.index', club_id=flight.club_id) }}">{{ h.truncate(flight.club.name, 25)|e }}</a>
         {%- endif %}
       </td>
       {%- endif %}
@@ -93,7 +93,7 @@
 
       {% if 'link' not in omitted_columns -%}
       <td>
-        <a href="/flights/{{ flight.id }}/" class="btn btn-mini">{% trans %}Show{% endtrans %}</a>
+        <a href="{{ url_for('flight.index', flight_id=flight.id) }}" class="btn btn-mini">{% trans %}Show{% endtrans %}</a>
         <a class="pin no-link" style="visibility: hidden" rel="tooltip-pin">{{ flight.id }}</a>
       </td>
       {%- endif %}
