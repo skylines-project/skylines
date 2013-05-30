@@ -7,9 +7,9 @@
 {% extends "base-page.jinja" %}
 
 {% set header_tabs = [
-    (h.url('/ranking/clubs', params=dict(year=year)), 'clubs', _('Clubs')),
-    (h.url('/ranking/pilots', params=dict(year=year)), 'pilots', _('Pilots')),
-    (h.url('/ranking/airports', params=dict(year=year)), 'airports', _('Airports')),
+    (url_for('.clubs', year=year), 'clubs', _('Clubs')),
+    (url_for('.pilots', year=year), 'pilots', _('Pilots')),
+    (url_for('.airports', year=year), 'airports', _('Airports')),
 ] %}
 
 {% set active_page = "ranking" %}
