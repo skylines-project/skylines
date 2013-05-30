@@ -3,6 +3,7 @@ coverage==3.6
 wsgiref==0.1.2
 polib==1.0.3
 zope.testbrowser==4.0.2
+WebTest==1.4.3
 mock==1.0.1
 pep8==1.4.5
 http://closure-linter.googlecode.com/files/closure_linter-latest.tar.gz

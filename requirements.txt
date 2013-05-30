@@ -20,3 +20,4 @@ cssmin==0.1.4
 twisted==12.3
 sprox==0.8.2
 closure
+WebHelpers==1.3
