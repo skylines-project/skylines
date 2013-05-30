@@ -1,8 +1,10 @@
 import os
 
+BASE_PATH = os.path.abspath(os.path.dirname(__file__))
+
 PRO_CONF_PATH = '/etc/skylines/production.py'
-DEV_CONF_PATH = os.path.join('config', 'default.py')
-TESTING_CONF_PATH = os.path.join('config', 'testing.py')
+DEV_CONF_PATH = os.path.join(BASE_PATH, 'default.py')
+TESTING_CONF_PATH = os.path.join(BASE_PATH, 'testing.py')
 
 
 def to_envvar(path=None):
@@ -12,6 +14,7 @@ def to_envvar(path=None):
     """
 
     if path:
+        path = os.path.abspath(path)
         if not os.path.exists(path):
             return
     elif os.path.exists(PRO_CONF_PATH):

@@ -1,4 +1,4 @@
-import os.path
+import os
 
 DEFAULT_CONF_PATH = os.path.abspath(os.path.join(
     os.path.dirname(__file__), '..', 'config', 'default.py'))
@@ -14,7 +14,9 @@ class SkyLines(Flask):
 
         # Load default settings and from environment variable
         self.config.from_pyfile(DEFAULT_CONF_PATH)
-        self.config.from_envvar('SKYLINES_CONFIG', silent=True)
+
+        if 'SKYLINES_CONFIG' in os.environ:
+            self.config.from_pyfile(os.environ['SKYLINES_CONFIG'])
 
         # Configure Jinja2 template engine
         self.jinja_options['extensions'].append('jinja2.ext.do')
