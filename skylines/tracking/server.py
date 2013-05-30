@@ -1,7 +1,6 @@
 import struct
 from datetime import datetime, time, timedelta
 
-import transaction
 from twisted.python import log
 from twisted.internet.protocol import DatagramProtocol
 from sqlalchemy.exc import SQLAlchemyError
@@ -120,10 +119,10 @@ class TrackingServer(DatagramProtocol):
 
         DBSession.add(fix)
         try:
-            transaction.commit()
+            DBSession.commit()
         except SQLAlchemyError, e:
             log.err(e, 'database error')
-            transaction.abort()
+            DBSession.rollback()
 
     def trafficRequestReceived(self, host, port, key, payload):
         if len(payload) != 8: return
