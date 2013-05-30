@@ -22,6 +22,7 @@ class SkyLines(Flask):
         self.jinja_options['extensions'].append('jinja2.ext.do')
 
         self.add_sqlalchemy()
+        self.add_logging_handlers()
 
     @property
     def created_by_nose(self):
@@ -100,6 +101,12 @@ class SkyLines(Flask):
     def register_views(self):
         import skylines.views
         skylines.views.register(self)
+
+    def add_logging_handlers(self):
+        self.logger.setLevel(self.config['LOGGING_LEVEL'])
+
+        if not self.debug:
+            map(self.logger.addHandler, self.config.get('LOGGING_HANDLERS', []))
 
 
 app = SkyLines()

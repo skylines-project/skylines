@@ -1,4 +1,5 @@
 import os.path
+import logging
 
 here = os.path.abspath(os.path.dirname(__file__))
 base = os.path.abspath(os.path.join(here, '..'))
@@ -8,6 +9,8 @@ SECRET_KEY = 'skylines'
 
 SMTP_SERVER = 'localhost'
 EMAIL_FROM = 'no-reply@skylines-project.org'
+
+LOGGING_LEVEL = logging.INFO
 
 # This should probably be changed for a multi-threaded production server
 CACHE_TYPE = 'simple'
