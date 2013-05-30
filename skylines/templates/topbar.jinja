@@ -127,11 +127,11 @@
       {{ _language_item(locale) }}
       {%- endfor %}
       {#
-      {% for lang in c.primary_languages -%}
+      {% for lang in g.primary_languages -%}
       {{ _language_item(lang) }}
       {%- endfor %}
       <li class="divider"></li>
-      {% for lang in c.secondary_languages -%}
+      {% for lang in g.secondary_languages -%}
       {{ _language_item(lang) }}
       {%- endfor %}
       #}

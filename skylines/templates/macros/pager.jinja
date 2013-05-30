@@ -1,5 +1,5 @@
 {% macro pager(name, kw={}) -%}
-{% with page=tmpl_context.paginators[name] -%}
+{% with page=g.paginators[name] -%}
 {% if page.page_count != 0 -%}
 <div class="pagination pagination-condensed">
   <ul>

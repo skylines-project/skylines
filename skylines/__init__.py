@@ -81,11 +81,6 @@ class SkyLines(Flask):
         def inject_helpers_lib():
             return dict(h=helpers)
 
-        @self.context_processor
-        def inject_template_context():
-            g.identity = request.identity
-            return dict(c=g, tmpl_context=g)
-
     def register_views(self):
         import skylines.views
         skylines.views.register(self)
