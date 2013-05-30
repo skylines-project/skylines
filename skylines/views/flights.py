@@ -144,7 +144,7 @@ def today():
 @flights_blueprint.route('/date/<date>')
 def date(date, latest=False):
     try:
-        if isinstance(date, str):
+        if isinstance(date, (str, unicode)):
             date = datetime.strptime(date, "%Y-%m-%d")
 
         if isinstance(date, datetime):
