@@ -12,7 +12,7 @@ setup(
     description='',
     author='',
     author_email='',
-    #url='',
+    url='http://www.skylines-project.org/',
     packages=find_packages(exclude=['ez_setup']),
     install_requires=requirements,
     include_package_data=True,
