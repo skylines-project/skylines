@@ -92,3 +92,4 @@ class SkyLines(Flask):
 
 
 app = SkyLines()
+db = app.db

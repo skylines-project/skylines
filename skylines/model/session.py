@@ -1,3 +1,3 @@
-from skylines import app
+from skylines import db
 
-DBSession = app.db.session
+DBSession = db.session
