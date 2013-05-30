@@ -10,7 +10,7 @@ from sqlalchemy.orm.util import aliased
 
 from skylines.lib.datatables import GetDatatableRecords
 from skylines.lib.dbutil import get_requested_record
-from skylines.lib.helpers import truncate, country_name_flask
+from skylines.lib.helpers import truncate, country_name
 from skylines.model import (
     DBSession, User, Club, Flight, IGCFile, AircraftModel,
     Airport, FlightComment
@@ -97,7 +97,7 @@ def _create_list(tab, kw, date=None, pilot=None, club=None, airport=None,
                                takeoff_airport=flight.takeoff_airport and flight.takeoff_airport.name,
                                takeoff_airport_id=flight.takeoff_airport and flight.takeoff_airport.id,
                                takeoff_airport_country_code=flight.takeoff_airport and flight.takeoff_airport.country_code.lower(),
-                               takeoff_airport_country_name=flight.takeoff_airport and country_name_flask(flight.takeoff_airport.country_code),
+                               takeoff_airport_country_name=flight.takeoff_airport and country_name(flight.takeoff_airport.country_code),
                                aircraft=(flight.model and flight.model.name) or (flight.igc_file.model and '[' + flight.igc_file.model + ']'),
                                aircraft_reg=flight.registration or flight.igc_file.registration or "Unknown",
                                flight_id=flight.id,
