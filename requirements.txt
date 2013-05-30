@@ -4,17 +4,8 @@ Flask-Assets==0.8
 Flask-Login==0.1.3
 Flask-Cache==0.12
 Flask-SQLAlchemy==0.16
-WebTest==1.4.3
-WebOb==1.1.1
-TurboGears2==2.2.2
 Genshi==0.7
-zope.sqlalchemy==0.7.2
-repoze.tm2==1.0
 sqlalchemy==0.8.0
-repoze.who-friendlyform==1.0.8
-Pylons==1.0
-repoze.who==2.1
-repoze.who.plugins.sa==1.0.1
 tw.forms==0.9.9
 simplejson==3.1.0
 skylinespolyencode==0.1.2
@@ -26,7 +17,6 @@ markdown==2.3
 pytz
 webassets==0.8
 cssmin==0.1.4
-jinja2==2.6
 twisted==12.3
 sprox==0.8.2
 closure
