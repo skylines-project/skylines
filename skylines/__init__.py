@@ -19,30 +19,41 @@ class SkyLines(Flask):
         # Configure Jinja2 template engine
         self.jinja_options['extensions'].append('jinja2.ext.do')
 
+        self.add_sqlalchemy()
+        self.add_cache()
+        self.add_babel()
+        self.add_login_manager()
+        self.add_assets()
+        self.add_toscawidgets()
+        self.add_tg2_compat()
+
+    def add_sqlalchemy(self):
         # Create and configure SQLAlchemy extension
         self.db = SQLAlchemy(self, session_options=dict(expire_on_commit=False))
 
+    def add_cache(self):
         # Create and attach Cache extension
         self.cache = Cache(self)
 
+    def add_babel(self):
         # Create and attach Babel extension
         self.babel = Babel(self)
 
+    def add_login_manager(self):
         # Create and attach Login extension
         self.login_manager = LoginManager()
         self.login_manager.init_app(self)
 
+    def add_assets(self):
         # Create and attach Assets extension
         self.assets = Environment(self)
         self.assets.load_bundles('skylines.assets.bundles')
 
-        self.wrap_toscawidgets_middleware()
-
-    def wrap_toscawidgets_middleware(self):
+    def add_toscawidgets(self):
         from tw.api import make_middleware
         self.wsgi_app = make_middleware(self.wsgi_app, stack_registry=True)
 
-    def inject_tg2_compat(self):
+    def add_tg2_compat(self):
         @self.before_request
         def inject_request_identity():
             """ for compatibility with tg2 """
@@ -74,5 +85,4 @@ class SkyLines(Flask):
 
 
 app = SkyLines()
-app.inject_tg2_compat()
 app.register_views()
