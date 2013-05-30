@@ -42,7 +42,7 @@
                  "{{ config.get('SKYLINES_MAP_TILE_URL', '') }}");
 
     $.getScript("http://maps.google.com/maps/api/js?v=3.7&sensor=false&callback=addGoogleLayer");
-    addBingLayers("{{ config.get('skylines.bing.api_key', 'null') }}");
+    addBingLayers("{{ config.get('SKYLINES_BING_API_KEY', 'null') }}");
     addReliefLayer();
 
     var vectorLayer = new OpenLayers.Layer.Vector("Takeoff Locations", {

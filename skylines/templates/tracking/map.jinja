@@ -109,7 +109,7 @@ Live Tracking <small>of {{ pilot }}</small>
     hoverMap();
 
     $.getScript("http://maps.google.com/maps/api/js?v=3.7&sensor=false&callback=addGoogleLayer");
-    addBingLayers("{{ config.get('skylines.bing.api_key', 'null') }}");
+    addBingLayers("{{ config.get('SKYLINES_BING_API_KEY', 'null') }}");
     addReliefLayer();
 
     // update flight track every 15 seconds

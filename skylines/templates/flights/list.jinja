@@ -55,10 +55,10 @@
     $('#flight-table').dataTable({
       "bProcessing": true,
       "sPaginationType": "bootstrap",
-      "iDisplayLength": {{ config.get('skylines.lists.display_length', 50) }},
+      "iDisplayLength": {{ config.get('SKYLINES_LISTS_DISPLAY_LENGTH', 50) }},
       "iDeferLoading": {{ flights_count }},
-      "bServerSide": ({{ flights_count }} > {{ config.get('skylines.lists.server_side', 250) }})?true:false,
-      "sAjaxSource": ({{ flights_count }} > {{ config.get('skylines.lists.server_side', 250) }})?"{{ request.url }}.json":null,
+      "bServerSide": ({{ flights_count }} > {{ config.get('SKYLINES_LISTS_SERVER_SIDE', 250) }})?true:false,
+      "sAjaxSource": ({{ flights_count }} > {{ config.get('SKYLINES_LISTS_SERVER_SIDE', 250) }})?"{{ request.url }}.json":null,
       "sDom": "<'row'<'span6'i><'span6'p>>rt<'row'<'span6'i><'span6'p>>",
       "aaSorting": [[ 0, "desc" ]],
       "aoColumnDefs": [
