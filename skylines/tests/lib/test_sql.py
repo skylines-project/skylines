@@ -2,25 +2,24 @@ import sys
 import nose
 from nose.tools import eq_, assert_raises
 
-import transaction
+from config import use_testing
+use_testing()
+
 from skylines.model.base import DeclarativeBase
 from skylines.model import DBSession
-from skylines.tests import setup_app, teardown_db
+from skylines.tests import setup_db, teardown_db
 from sqlalchemy import Column, Integer, String, Unicode
 
 
 def setup():
     # Setup the database
-    DBSession.remove()
-    transaction.begin()
-    setup_app()
-
+    setup_db()
     DBSession.add(TestTable(name='John Doe', uni='Jane and John Doe'))
+    DBSession.commit()
 
 
 def teardown():
     # Remove the database again
-    DBSession.rollback()
     teardown_db()
 
 
