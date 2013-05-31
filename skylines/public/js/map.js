@@ -7,6 +7,16 @@ var map;
 
 var WGS84_PROJ = new OpenLayers.Projection('EPSG:4326');
 
+var MAPSERVER_RESOLUTIONS = [
+  156543.03390625, 78271.516953125, 39135.7584765625,
+  19567.87923828125, 9783.939619140625, 4891.9698095703125,
+  2445.9849047851562, 1222.9924523925781, 611.4962261962891,
+  305.74811309814453, 152.87405654907226, 76.43702827453613,
+  38.218514137268066, 19.109257068634033, 9.554628534317017,
+  4.777314267158508, 2.388657133579254, 1.194328566789627,
+  0.5971642833948135, 0.29858214169740677, 0.14929107084870338,
+  0.07464553542435169];
+
 
 /**
  * Initialize the map and add airspace and flight path layers.
@@ -111,14 +121,10 @@ function addMWPLayers(tile_url) {
         attribution: 'Mountain Wave Data &copy; ' +
             '<a href="http://www.mountain-wave-project.com/">' +
             'Mountain Wave Project' +
-            '</a>.'
+            '</a>.',
+        serverResolutions: MAPSERVER_RESOLUTIONS
       });
   map.addLayer(mwp);
-
-  map.events.register('changebaselayer', null, function(data) {
-    if (data.layer.hideAirspaceOverlay)
-      mwp.setVisibility(false);
-  });
 }
 
 
@@ -134,14 +140,10 @@ function addAirspaceLayers(tile_url) {
       tile_url + '/mapproxy/tiles/1.0.0/airspace/${z}/${x}/${y}.png', {
         isBaseLayer: false,
         'visibility': true,
-        'displayInLayerSwitcher': true
+        'displayInLayerSwitcher': true,
+        serverResolutions: MAPSERVER_RESOLUTIONS
       });
   map.addLayer(airspace);
-
-  map.events.register('changebaselayer', null, function(data) {
-    if (data.layer.hideAirspaceOverlay)
-      airspace.setVisibility(false);
-  });
 }
 
 
@@ -175,16 +177,14 @@ function addBingLayers(api_key) {
   var road = new OpenLayers.Layer.Bing({
     key: api_key,
     type: 'Road',
-    name: 'Bing Road',
-    hideAirspaceOverlay: true
+    name: 'Bing Road'
   });
 
   // Bing's AerialWithLabels imagerySet
   var hybrid = new OpenLayers.Layer.Bing({
     key: api_key,
     type: 'AerialWithLabels',
-    name: 'Bing Satellite',
-    hideAirspaceOverlay: true
+    name: 'Bing Satellite'
   });
 
   map.addLayers([road, hybrid]);
