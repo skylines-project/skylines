@@ -123,18 +123,13 @@
         {{ insert_flag(h.language_to_country_code(g.active_locale|string)) }} <i class="icon-caret-down"></i>
     </a>
     <ul class="dropdown-menu">
-      {% for locale in g.available_locales|sort(attribute='display_name') -%}
+      {% for locale in g.primary_locales -%}
       {{ _language_item(locale) }}
       {%- endfor %}
-      {#
-      {% for lang in g.primary_languages -%}
-      {{ _language_item(lang) }}
-      {%- endfor %}
       <li class="divider"></li>
-      {% for lang in g.secondary_languages -%}
-      {{ _language_item(lang) }}
+      {% for locale in g.secondary_locales|sort(attribute='display_name') -%}
+      {{ _language_item(locale) }}
       {%- endfor %}
-      #}
     </ul>
 </li>
 {%- endmacro %}
