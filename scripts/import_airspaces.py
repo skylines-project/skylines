@@ -5,17 +5,8 @@
 
 import sys
 import os
-import re
-import shutil
-import subprocess
 import argparse
-from osgeo import ogr
-
-import transaction
-from skylines.config import environment
-from skylines.model import DBSession, Airspace
-from geoalchemy2 import WKTElement
-from tg import config
+from config import to_envvar
 
 sys.path.append(os.path.dirname(sys.argv[0]))
 
@@ -37,8 +28,20 @@ parser.add_argument('--filetype',
 
 args = parser.parse_args()
 
-if not environment.load_from_file(args.config):
+if not to_envvar(args.config):
     parser.error('Config file "{}" not found.'.format(args.config))
+
+
+import re
+import shutil
+import subprocess
+
+from osgeo import ogr
+from geoalchemy2 import WKTElement
+
+from skylines import app
+from skylines.model import DBSession, Airspace
+
 
 blacklist = dict()
 
@@ -103,7 +106,7 @@ def import_airspace(url, country_code, file_type):
     country_code = country_code.lower()
 
     filename = os.path.join(
-        config['skylines.temporary_dir'], country_code,
+        app.config['SKYLINES_TEMPORARY_DIR'], country_code,
         country_code + '.' + file_type)
 
     if url.startswith('http://'):
@@ -120,14 +123,14 @@ def import_airspace(url, country_code, file_type):
     elif file_type == 'openair':
         import_openair(filename, country_code)
 
-    if filename.startswith(config['skylines.temporary_dir']):
+    if filename.startswith(app.config['SKYLINES_TEMPORARY_DIR']):
         shutil.rmtree(os.path.dirname(filename))
 
 
 def import_sua(filename, country_code):
     print "reading " + filename
     country_blacklist = blacklist.get(country_code, [])
-    temporary_file = os.path.join(config['skylines.temporary_dir'], os.path.basename(filename) + '.tmp')
+    temporary_file = os.path.join(app.config['SKYLINES_TEMPORARY_DIR'], os.path.basename(filename) + '.tmp')
 
     # try to uncomment a CLASS definition, as many SUA files from soaringweb.org have a CLASS comment
     with open(filename, 'r') as in_file:
@@ -184,8 +187,7 @@ def import_sua(filename, country_code):
         j += 1
 
     airspace_file.Destroy()
-    DBSession.flush()
-    transaction.commit()
+    DBSession.commit()
 
     os.remove(temporary_file)
 
@@ -235,8 +237,7 @@ def import_openair(filename, country_code):
         j += 1
 
     airspace_file.Destroy()
-    DBSession.flush()
-    transaction.commit()
+    DBSession.commit()
 
     print "added " + str(j) + " features for country " + country_code
 
@@ -246,8 +247,7 @@ def remove_country(country_code):
     query = DBSession.query(Airspace) \
         .filter(Airspace.country_code == country_code)
     query.delete(synchronize_session=False)
-    DBSession.flush()
-    transaction.commit()
+    DBSession.commit()
 
 
 def download_file(path, url):

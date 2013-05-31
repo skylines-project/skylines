@@ -5,11 +5,8 @@
 
 import sys
 import os
-import re
 import argparse
-import transaction
-from skylines.config import environment
-from skylines.model import DBSession, AircraftModel
+from config import to_envvar
 
 sys.path.append(os.path.dirname(sys.argv[0]))
 
@@ -20,8 +17,13 @@ parser.add_argument('path', help='DMSt index list file')
 
 args = parser.parse_args()
 
-if not environment.load_from_file(args.config):
+if not to_envvar(args.config):
     parser.error('Config file "{}" not found.'.format(args.config))
+
+
+import re
+from skylines.config import environment
+from skylines.model import DBSession, AircraftModel
 
 r = re.compile(r'^(.*?)\s*\.+[\.\s]*(\d+)\s*$')
 
@@ -38,5 +40,4 @@ for line in file(args.path):
                 DBSession.add(model)
             model.dmst_index = index
 
-DBSession.flush()
-transaction.commit()
+DBSession.commit()
