@@ -210,16 +210,22 @@ function initRedrawLayer(layer) {
  */
 function addFlight(sfid, _lonlat, _levels, _num_levels, _time, _height, _enl,
     zoom_levels, _contests, _elevations_t, _elevations_h, _additional) {
-  var height = OpenLayers.Util.decodeGoogle(_height);
-  var time = OpenLayers.Util.decodeGoogle(_time);
-  var enl = OpenLayers.Util.decodeGoogle(_enl);
-  var lonlat = OpenLayers.Util.decodeGooglePolyline(_lonlat);
-  var lod = OpenLayers.Util.decodeGoogleLoD(_levels, _num_levels);
+  var polyline_decoder = new OpenLayers.Format.EncodedPolyline();
+
+  var height = polyline_decoder.decodeDeltas(_height, 1, 1);
+  var time = polyline_decoder.decodeDeltas(_time, 1, 1);
+  var enl = polyline_decoder.decodeDeltas(_enl, 1, 1);
+  var lonlat = polyline_decoder.decode(_lonlat, 2);
+  var lod = polyline_decoder.decodeUnsignedIntegers(_levels);
+
+  var lodLength = lod.length;
+  for (var i = 0; i < lodLength; ++i)
+    lod[i] = _num_levels - lod[i] - 1;
 
   var points = new Array();
   var lonlatLength = lonlat.length;
   for (var i = 0; i < lonlatLength; ++i) {
-    points.push(new OpenLayers.Geometry.Point(lonlat[i].lon, lonlat[i].lat).
+    points.push(new OpenLayers.Geometry.Point(lonlat[i][1], lonlat[i][0]).
         transform(WGS84_PROJ, map.getProjectionObject()));
   }
 
@@ -241,8 +247,8 @@ function addFlight(sfid, _lonlat, _levels, _num_levels, _time, _height, _enl,
     var _contestsLength = _contests.length;
     for (var i = 0; i < _contestsLength; ++i) {
       var contest = _contests[i];
-      var turnpoints = OpenLayers.Util.decodeGooglePolyline(contest.turnpoints);
-      var times = OpenLayers.Util.decodeGoogle(contest.times);
+      var turnpoints = polyline_decoder.decode(contest.turnpoints, 2);
+      var times = polyline_decoder.decodeFloats(contest.times);
 
       var name = contest.name;
       contests.push({
@@ -267,8 +273,8 @@ function addFlight(sfid, _lonlat, _levels, _num_levels, _time, _height, _enl,
   // Add flight as a row to the fix data table
   fix_table.addRow(sfid, color, _additional && _additional['competition_id']);
 
-  var _elev_t = OpenLayers.Util.decodeGoogle(_elevations_t);
-  var _elev_h = OpenLayers.Util.decodeGoogle(_elevations_h);
+  var _elev_t = polyline_decoder.decodeDeltas(_elevations_t, 1, 1);
+  var _elev_h = polyline_decoder.decodeDeltas(_elevations_h, 1, 1);
 
   var flot_elev = [], elev_t = [], elev_h = [];
   for (var i = 0; i < _elev_t.length; i++) {
@@ -350,7 +356,7 @@ function addContest(name, lonlat, times, sfid) {
   if (triangle) lonlatLength--;
 
   for (var i = 0; i < lonlatLength; ++i) {
-    points.push(new OpenLayers.Geometry.Point(lonlat[i].lon, lonlat[i].lat).
+    points.push(new OpenLayers.Geometry.Point(lonlat[i][1], lonlat[i][0]).
         transform(WGS84_PROJ, map.getProjectionObject()));
   }
 
@@ -541,8 +547,8 @@ function getFixData(flight, time) {
   var loc_prev = flight.lonlat[index];
   var loc_next = flight.lonlat[index + 1];
 
-  var lon_prev = loc_prev.lon, lat_prev = loc_prev.lat;
-  var lon_next = loc_next.lon, lat_next = loc_next.lat;
+  var lon_prev = loc_prev[1], lat_prev = loc_prev[0];
+  var lon_next = loc_next[1], lat_next = loc_next[0];
 
   var _loc_prev = new OpenLayers.Geometry.Point(lon_prev, lat_prev);
   _loc_prev.transform(WGS84_PROJ, map.getProjectionObject());
@@ -855,7 +861,7 @@ function clearPhaseMarkers() {
 
 
 function addPhaseMarker(lonlat, image_url) {
-  var point = new OpenLayers.Geometry.Point(lonlat.lon, lonlat.lat);
+  var point = new OpenLayers.Geometry.Point(lonlat[1], lonlat[0]);
   point = point.transform(WGS84_PROJ, map.getProjectionObject());
 
   var feature = new OpenLayers.Feature.Vector(point, {}, {
@@ -882,7 +888,7 @@ function highlightFlightPhase(start, end) {
   // collect bounding box of flight
   var bounds = new OpenLayers.Bounds();
   for (var i = start_index; i <= end_index; ++i)
-    bounds.extend(flight.lonlat[i]);
+    bounds.extendXY(flight.lonlat[i][1], flight.lonlat[i][0]);
 
   bounds.transform(WGS84_PROJ, map.getProjectionObject());
   map.zoomToExtent(bounds.scale(2));

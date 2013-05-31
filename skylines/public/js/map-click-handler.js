@@ -60,8 +60,8 @@ slMapClickHandler = function(infobox, settings) {
 
         var lonlat_prev = flight.lonlat[index];
         var lonlat_next = flight.lonlat[index + 1];
-        lon = lonlat_prev.lon + (lonlat_next.lon - lonlat_prev.lon) * dx;
-        lat = lonlat_prev.lat + (lonlat_next.lat - lonlat_prev.lat) * dx;
+        lon = lonlat_prev[1] + (lonlat_next[1] - lonlat_prev[1]) * dx;
+        lat = lonlat_prev[0] + (lonlat_next[0] - lonlat_prev[0]) * dx;
 
         var time_prev = flight.t[index];
         var time_next = flight.t[index + 1];
