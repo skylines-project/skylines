@@ -41,21 +41,27 @@ function updateFlightsFromJSON() {
 
 function updateFlight(tracking_id, _lonlat, _levels, _num_levels, _time,
     _height, _enl, _elevations) {
-  var height = OpenLayers.Util.decodeGoogle(_height);
-  var time = OpenLayers.Util.decodeGoogle(_time);
-  var enl = OpenLayers.Util.decodeGoogle(_enl);
-  var lonlat = OpenLayers.Util.decodeGooglePolyline(_lonlat);
-  var lod = OpenLayers.Util.decodeGoogleLoD(_levels, _num_levels);
-  var elev = OpenLayers.Util.decodeGoogle(_elevations);
+  var polyline_decoder = new OpenLayers.Format.EncodedPolyline();
+
+  var height = polyline_decoder.decodeDeltas(_height, 1, 1);
+  var time = polyline_decoder.decodeDeltas(_time, 1, 1);
+  var enl = polyline_decoder.decodeDeltas(_enl, 1, 1);
+  var lonlat = polyline_decoder.decode(_lonlat, 2);
+  var lod = polyline_decoder.decodeUnsignedIntegers(_levels);
+  var elev = polyline_decoder.decodeDeltas(_elevations, 1, 1);
 
   // we skip the first point in the list because we assume it's the "linking"
   // fix between the data we already have and the data to add.
 
   if (lonlat.length < 2) return;
 
+  var lodLength = lod.length;
+  for (var i = 0; i < lodLength; ++i)
+    lod[i] = _num_levels - lod[i] - 1;
+
   var points = new Array();
   for (var i = 1, len = lonlat.length; i < len; i++) {
-    points.push(new OpenLayers.Geometry.Point(lonlat[i].lon, lonlat[i].lat).
+    points.push(new OpenLayers.Geometry.Point(lonlat[i][1], lonlat[i][0]).
         transform(new OpenLayers.Projection('EPSG:4326'),
                   map.getProjectionObject()));
   }

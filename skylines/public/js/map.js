@@ -30,7 +30,10 @@ function initOpenLayers(id, tile_url) {
   map = new OpenLayers.Map(id, {
     projection: 'EPSG:900913',
     controls: [],
-    theme: null
+    theme: null,
+    tileManager: new OpenLayers.TileManager(),
+    fallThrough: true,
+    zoomMethod: null
   });
 
   map.div.setAttribute('tabindex', '0');
@@ -122,6 +125,7 @@ function addMWPLayers(tile_url) {
             '<a href="http://www.mountain-wave-project.com/">' +
             'Mountain Wave Project' +
             '</a>.',
+        transitionEffect: 'map-resize',
         serverResolutions: MAPSERVER_RESOLUTIONS
       });
   map.addLayer(mwp);
@@ -141,6 +145,7 @@ function addAirspaceLayers(tile_url) {
         isBaseLayer: false,
         'visibility': true,
         'displayInLayerSwitcher': true,
+        transitionEffect: 'map-resize',
         serverResolutions: MAPSERVER_RESOLUTIONS
       });
   map.addLayer(airspace);
