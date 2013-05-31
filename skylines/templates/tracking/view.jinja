@@ -140,7 +140,7 @@ Live Tracking <small>of {{ pilot }}</small>
           <th><span rel="tooltip" title="{{ _('This pilot chose to delay the display of his live tracks.') }}">{% trans %}Delay{% endtrans %}</span></th>
 
           <td>
-            {{ ungettext('%u minute', '%u minutes', pilot.tracking_delay)|format(pilot.tracking_delay) }}
+            {{ ngettext('%(num)u minute', '%(num)u minutes', pilot.tracking_delay) }}
 
             {%- if pilot.is_readable(request.identity) -%}
             <span rel="tooltip" title="{{ _('The live tracking delay is ignored because of your account privileges.') }}">({% trans %}ignored{% endtrans %})</span>
