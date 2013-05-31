@@ -7,6 +7,7 @@ div.olMap {
 
 div.olMapViewport {
     text-align: left;
+    -ms-touch-action: none;
 }
 
 div.olLayerDiv {
@@ -27,6 +28,10 @@ div.olLayerDiv {
 }
 .olLayerGoogleV3.olLayerGooglePoweredBy {
     bottom: 15px !important;
+}
+/* GMaps should not set styles on its container */
+.olForeignContainer {
+    opacity: 1 !important;
 }
 .olControlAttribution {
     font-size: smaller;
@@ -441,6 +446,7 @@ div.olControlZoom a {
     display: block;
     margin: 1px;
     padding: 0;
+    color: #555;
     font-size: 18px;
     font-family: 'Lucida Grande', Verdana, Geneva, Lucida, Arial, Helvetica, sans-serif;
     font-weight: bold;
@@ -449,12 +455,15 @@ div.olControlZoom a {
     height: 22px;
     width:22px;
     line-height: 19px;
-    color: black;
-    background-color: white;
-    opacity: 0.7;
+    background: white; /* fallback for IE - IE6 requires background shorthand*/
+    background: rgba(255, 255, 255, 0.3);
+    filter: alpha(opacity=30);
 }
 div.olControlZoom a:hover {
-    opacity: 1;
+    background: white; /* fallback for IE */
+    background: rgba(255, 255, 255, 0.7);
+    filter: alpha(opacity=100);
+    color: black;
 }
 @media only screen and (max-width: 600px) {
     div.olControlZoom a:hover {
@@ -466,4 +475,36 @@ a.olControlZoomIn {
 }
 a.olControlZoomOut {
     border-radius: 0 0 4px 4px;
+}
+
+
+/**
+ * Animations
+ */
+
+/* Turn on GPU support where available */
+.olTileImage {
+    -webkit-transform: translateZ(0);
+    -moz-transform: translateZ(0);
+    -o-transform: translateZ(0);
+    -ms-transform: translateZ(0);
+    transform: translateZ(0);
+    -webkit-backface-visibility: hidden;
+    -moz-backface-visibility: hidden;
+    -ms-backface-visibility: hidden;
+    backface-visibility: hidden;
+    -webkit-perspective: 1000;
+    -moz-perspective: 1000;
+    -ms-perspective: 1000;
+    perspective: 1000;
+}
+
+/* when replacing tiles, do not show tile and backbuffer at the same time */
+.olTileReplacing {
+    display: none;
+}
+
+/* override any max-width image settings (e.g. bootstrap.css) */
+img.olTileImage {
+    max-width: none;
 }
