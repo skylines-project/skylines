@@ -84,9 +84,9 @@ datatables_css = Bundle(
 
 all_js = Bundle(
     'http://code.jquery.com/jquery-1.9.1.min.js',
-    'js/jQuery/jquery.browser.js',
-    'js/jQuery/jquery.cookie.js',
-    'js/jQuery/jquery.timeago.js',
+    'vendor/jquery/jquery.browser.js',
+    'vendor/jquery/jquery.cookie.js',
+    'vendor/jquery/jquery.timeago.js',
     'js/general.js',
     bootstrap_js,
     'js/topbar.js',
