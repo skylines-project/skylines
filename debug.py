@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import argparse
-from config import to_envvar
+from config import to_envvar, DEFAULT_CONF_PATH
 
 parser = argparse.ArgumentParser(description='Run the SkyLines debug server.')
 parser.add_argument('conf_path', nargs='?', metavar='config.ini',
@@ -15,4 +15,4 @@ if not to_envvar(args.conf_path):
 if __name__ == '__main__':
     from skylines import app
     app.add_web_components()
-    app.run(port=8080)
+    app.run(port=8080, extra_files=[DEFAULT_CONF_PATH, args.conf_path or ''])
