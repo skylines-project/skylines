@@ -516,6 +516,9 @@ def add_comment():
 def analysis():
     """Hidden method that restarts flight analysis."""
 
+    if not request.identity or 'manage' not in request.identity['permissions']:
+        abort(403)
+
     analyse_flight(g.flight)
     DBSession.commit()
 
