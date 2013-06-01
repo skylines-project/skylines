@@ -1,8 +1,8 @@
-from tg.i18n import ugettext as _
+from flask.ext.babel import _
 
 from tw.forms.fields import SingleSelectField
 
-from skylines.model import DBSession, AircraftModel
+from skylines.model import AircraftModel
 
 
 class SelectField(SingleSelectField):

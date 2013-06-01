@@ -11,22 +11,22 @@
   </thead>
   <tbody>
     {% for user in users -%}
-    <tr {% if club_column %}itemprop="member"{% endif %} itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="url" content="/users/{{ user.id }}" />
+    <tr {% if not club_column %}itemprop="member"{% endif %} itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="url" content="{{ url_for('user.index', user_id=user.id, _external=True) }}" />
       <td itemprop="name">{{ user_link(user) }}</td>
       {% if club_column -%}
       <td itemprop="memberof" itemscope itemtype="http://schema.org/SportsTeam">
         {% if user.club_id -%}
-        <meta itemprop="url" content="/clubs/{{ user.club_id }}" />
+        <meta itemprop="url" content="{{ url_for('club.index', club_id=user.club_id, _external=True) }}" />
         {{ club_link(user.club, ' itemprop="name"') }}
         {%- endif %}
       </td>
       {%- endif %}
       <td>
-        <a href="/flights/pilot/{{ user.id }}" class="btn btn-mini"><i class="icon-plane"></i> {% trans %}Flights{% endtrans %}</a>
-        <a href="/statistics/pilot/{{ user.id }}" class="btn btn-mini"><i class="icon-tasks"></i> {% trans %}Statistics{% endtrans %}</a>
+        <a href="{{ url_for('flights.pilot', id=user.id) }}" class="btn btn-mini"><i class="icon-plane"></i> {% trans %}Flights{% endtrans %}</a>
+        <a href="{{ url_for('statistics.index', page='pilot', id=user.id) }}" class="btn btn-mini"><i class="icon-tasks"></i> {% trans %}Statistics{% endtrans %}</a>
         {% if user.is_writable(request.identity) -%}
-        <a href="/users/{{ user.id }}/edit" class="btn btn-mini">{% trans %}Edit{% endtrans %}</a>
+        <a href="{{ url_for('user.edit', user_id=user.id) }}" class="btn btn-mini">{% trans %}Edit{% endtrans %}</a>
         {%- endif %}
       </td>
     </tr>

@@ -6,9 +6,7 @@
 import sys
 import os
 import argparse
-import transaction
-from skylines.config import environment
-from skylines.model import *
+from config import to_envvar
 
 sys.path.append(os.path.dirname(sys.argv[0]))
 
@@ -20,8 +18,12 @@ parser.add_argument('old_id', type=int, help='ID of the old user account')
 
 args = parser.parse_args()
 
-if not environment.load_from_file(args.config):
+if not to_envvar(args.config):
     parser.error('Config file "{}" not found.'.format(args.config))
+
+
+from skylines.model import *
+
 
 new_id = args.new_id
 new = DBSession.query(User).get(new_id)
@@ -64,5 +66,4 @@ if new._password is None and old._password is not None:
 # TODO: merge display name or not?
 # TODO: merge tracking key or not?
 
-DBSession.flush()
-transaction.commit()
+DBSession.commit()

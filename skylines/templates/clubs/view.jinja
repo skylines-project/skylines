@@ -34,7 +34,7 @@
         <th>{% trans %}Created{% endtrans %}</th>
         <td>
           {% if club.owner -%}
-            {{ _('%(time_ago)s by %(creator)s')|format(time_ago=insert_timeago(club.time_created)|safe, creator=user_link(club.owner)) }}
+            {{ _('%(time_ago)s by %(creator)s', time_ago=insert_timeago(club.time_created)|safe, creator=user_link(club.owner)) }}
           {%- else %}
             {{ insert_timeago(club.time_created) }}
           {%- endif %}
@@ -44,12 +44,12 @@
 
     <p>
       {% if club.is_writable(request.identity) -%}
-      <a href="edit" class="btn">{% trans %}Edit{% endtrans %}</a>
+      <a href="{{ url_for('.edit') }}" class="btn">{% trans %}Edit{% endtrans %}</a>
       {%- endif %}
 
-      <a href="/flights/club/{{ club.id }}" class="btn"><i class="icon-plane"></i> {% trans %}Flights{% endtrans %}</a>
-      <a href="/statistics/club/{{ club.id }}" class="btn"><i class="icon-tasks"></i> {% trans %}Statistics{% endtrans %}</a>
-      <a href="pilots" class="btn"><i class="icon-group"></i> {% trans %}Members{% endtrans %}</a>
+      <a href="{{ url_for('flights.club', id=club.id) }}" class="btn"><i class="icon-plane"></i> {% trans %}Flights{% endtrans %}</a>
+      <a href="{{ url_for('statistics.index', page='club', id=club.id) }}" class="btn"><i class="icon-tasks"></i> {% trans %}Statistics{% endtrans %}</a>
+      <a href="{{ url_for('club.pilots') }}" class="btn"><i class="icon-group"></i> {% trans %}Members{% endtrans %}</a>
     </p>
   </div>
 </div>

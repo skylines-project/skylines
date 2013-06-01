@@ -39,10 +39,10 @@
 <script type="text/javascript">
   $(function() {
     initOpenLayers("map_canvas",
-                 "{{ config.get('skylines.map.tile_url', '') }}");
+                 "{{ config.get('SKYLINES_MAP_TILE_URL', '') }}");
 
     $.getScript("http://maps.google.com/maps/api/js?v=3.7&sensor=false&callback=addGoogleLayer");
-    addBingLayers("{{ config.get('skylines.bing.api_key', 'null') }}");
+    addBingLayers("{{ config.get('SKYLINES_BING_API_KEY', 'null') }}");
     addReliefLayer();
 
     var vectorLayer = new OpenLayers.Layer.Vector("Takeoff Locations", {
@@ -80,7 +80,7 @@
 
 {%- block content %}
 <div itemscope="" itemtype="http://schema.org/Person">
-  <meta itemprop="url" content="/users/{{ user.id }}" />
+  <meta itemprop="url" content="{{ url_for('.index', _external=True) }}" />
   <div class="row">
     <div class="well span8 offset2">
       <table class="right">
@@ -101,9 +101,9 @@
           <th>{% trans %}Tracking key{% endtrans %}</th>
           <td>
             <span class="label label-info">{{ user.tracking_key_hex }}</span>
-            <a href="/tracking/info" class="btn btn-mini">{% trans %}More Information{% endtrans %}</a>
+            <a href="{{ url_for('tracking.info') }}" class="btn btn-mini">{% trans %}More Information{% endtrans %}</a>
             {% if user.is_writable(request.identity) -%}
-            <a href="tracking_register?came_from=." class="btn btn-mini">{% trans %}Generate new key{% endtrans %}</a>
+            <a href="{{ url_for('.tracking_register', came_from=url_for('.index')) }}" class="btn btn-mini">{% trans %}Generate new key{% endtrans %}</a>
             {%- endif %}
           </td>
         </tr>
@@ -114,7 +114,7 @@
             {% if user.tracking_delay == 0 -%}
             {% trans %}None{% endtrans %}
             {%- else %}
-            {{ ungettext('%u minute', '%u minutes', user.tracking_delay) % user.tracking_delay }}
+            {{ ngettext('%(num)u minute', '%(num)u minutes', user.tracking_delay) }}
             {%- endif %}
           </td>
         </tr>
@@ -126,7 +126,7 @@
 
           {% if user.club -%}
           <td itemprop="memberof" itemscope="" itemtype="http://schema.org/SportsTeam">
-            <meta itemprop="url" content="/clubs/{{ user.club_id }}" />
+            <meta itemprop="url" content="{{ url_for('club.index', club_id=user.club_id, _external=True) }}" />
             {{ club_link(user.club, ' itemprop="name"') }}
           {%- else %}
           <td>
@@ -143,24 +143,24 @@
 
       <p style="margin-top: 10px">
         {% if user.is_writable(request.identity) -%}
-        <a href="/users/{{ user.id }}/edit" class="btn">{% trans %}Edit{% endtrans %}</a>
-        <a href="change_password" class="btn">{% trans %}Change Password{% endtrans %}</a>
+        <a href="{{ url_for('.edit') }}" class="btn">{% trans %}Edit{% endtrans %}</a>
+        <a href="{{ url_for('.change_password') }}" class="btn">{% trans %}Change Password{% endtrans %}</a>
         {%- endif %}
 
         {% if request.identity and 'manage' in request.identity['permissions'] -%}
-        <a href="recover_password" class="btn">{% trans %}Recover Password{% endtrans %}</a>
+        <a href="{{ url_for('.recover_password') }}" class="btn">{% trans %}Recover Password{% endtrans %}</a>
         {%- endif %}
 
         {% if request.identity and request.identity['user'] != user -%}
           {% if request.identity['user'].follows(user) -%}
-            <a href="/users/{{ user.id }}/unfollow" class="btn">{% trans %}Unfollow{% endtrans %}</a>
+            <a href="{{ url_for('.unfollow') }}" class="btn">{% trans %}Unfollow{% endtrans %}</a>
           {%- else %}
-            <a href="/users/{{ user.id }}/follow" class="btn">{% trans %}Follow{% endtrans %}</a>
+            <a href="{{ url_for('.follow') }}" class="btn">{% trans %}Follow{% endtrans %}</a>
           {%- endif %}
         {%- endif %}
 
-        <a href="/flights/pilot/{{ user.id }}/" class="btn"><i class="icon-plane"></i> {% trans %}Flights{% endtrans %}</a>
-        <a href="/statistics/pilot/{{ user.id }}/" class="btn"><i class="icon-tasks"></i> {% trans %}Statistics{% endtrans %}</a>
+        <a href="{{ url_for('flights.pilot', id=user.id) }}" class="btn"><i class="icon-plane"></i> {% trans %}Flights{% endtrans %}</a>
+        <a href="{{ url_for('statistics.index', page='pilot', id=user.id) }}" class="btn"><i class="icon-tasks"></i> {% trans %}Statistics{% endtrans %}</a>
       </p>
     </div>
 
@@ -170,7 +170,7 @@
       <ul class="row-fluid">
         {% for following in user.following|sort(attribute='destination.name') -%}
         <li class="span3">
-          <a href="/users/{{ following.destination_id }}/">{{ following.destination }}</a>
+          <a href="{{ url_for('user.index', user_id=following.destination_id) }}">{{ following.destination }}</a>
         </li>
         {%- endfor %}
       </ul>
@@ -183,7 +183,7 @@
       <ul class="row-fluid">
         {% for follower in user.followers|sort(attribute='source.name') -%}
         <li class="span3">
-          <a href="/users/{{ follower.source_id }}/">{{ follower.source }}</a>
+          <a href="{{ url_for('user.index', user_id=follower.source_id) }}">{{ follower.source }}</a>
         </li>
         {%- endfor %}
       </ul>
@@ -212,7 +212,7 @@
             </td>
             <td>
               {% if distance_flight[1] -%}
-              <a href="/flights/{{ distance_flight[1].id }}/" class="btn btn-mini">Show</a>
+              <a href="{{ url_for('flight.index', flight_id=distance_flight[1].id) }}" class="btn btn-mini">Show</a>
               {%- endif %}
             </td>
           </tr>

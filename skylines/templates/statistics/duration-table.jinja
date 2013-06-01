@@ -11,7 +11,7 @@
     <tr>
       <td class="span2">{{ year.year|int }}</td>
       <td class="span2">
-        <span rel="tooltip" title="{{ _('avg. %(hours)s hours per flight')|format(hours=h.format_timedelta(year.average_duration)) }}">
+        <span rel="tooltip" title="{{ _('avg. %(hours)s hours per flight', hours=h.format_timedelta(year.average_duration)) }}">
           {{ h.format_timedelta(year.duration) }} Hours
         </span>
       </td>

@@ -50,7 +50,7 @@
     {%- if flight.duration %}
     <tr>
       <th>{% trans %}Duration{% endtrans %}</th>
-      <td>{{ _('%(hours)s hours')|format(hours=flight.duration) }}</td>
+      <td>{{ _('%(hours)s hours', hours=flight.duration) }}</td>
     </tr>
     {%- endif %}
 
@@ -58,7 +58,7 @@
       <th>{% trans %}Aircraft{% endtrans %}</th>
       <td>
         {%- if flight.is_writable(request.identity) %}
-        <a href="change_aircraft" class="btn btn-mini" style="float: right;">
+        <a href="{{ url_for('.change_aircraft') }}" class="btn btn-mini" style="float: right;">
           <i class="icon-pencil icon-small"></i> {% trans %}Change{% endtrans %}
         </a>
         {%- endif %}
@@ -92,7 +92,7 @@
     <tr>
       <th>{% trans %}Score{% endtrans %}</th>
       <td>
-        {{ _('%(points)s pt')|format(points=flight.index_score) }}
+        {{ _('%(points)s pt', points=flight.index_score) }}
         <small><br/>
         {%- if flight.olc_classic_distance %}
         <span title="{% trans %}OLC Distance{% endtrans %}">
@@ -119,7 +119,7 @@
       <th>{% trans %}Pilot{% endtrans %}</th>
       <td>
         {%- if flight.is_writable(request.identity) %}
-        <a href="change_pilot" class="btn btn-mini" style="float: right;">
+        <a href="{{ url_for('.change_pilot') }}" class="btn btn-mini" style="float: right;">
           <i class="icon-pencil icon-small"></i> {% trans %}Change{% endtrans %}
         </a>
         {%- endif %}
@@ -169,7 +169,7 @@
     <tr>
       <th>{% trans %}Actions{% endtrans %}</th>
       <td>
-        <a data-toggle="modal" data-target="#modal" href="delete?embedded" class="btn btn-mini">
+        <a data-toggle="modal" data-target="#modal" href="{{ url_for('.delete') }}?embedded" class="btn btn-mini">
           <i class="icon-remove icon-small"></i> {% trans %}Delete{% endtrans %}
         </a>
 

@@ -4,7 +4,7 @@
 {% block title %}{% trans %}Upload Flight{% endtrans %}{% endblock %}
 
 {%- block content %}
-<form action="/flights/upload/update" method="post">
+<form action="{{ url_for('upload.update') }}" method="post">
   {% if success -%}
   <p>
     {% trans %}Your flights have been saved. You may want to change the flights aircraft types and registrations below.{% endtrans %}<br />
@@ -57,7 +57,7 @@
         </td>
         <td>
           {% if flight -%}
-          <a href="/flights/{{ flight.id }}/" class="btn btn-mini">Show</a>
+          <a href="{{ url_for('flight.index', flight_id=flight.id) }}" class="btn btn-mini">Show</a>
           {%- endif %}
         </td>
       </tr>
@@ -70,5 +70,5 @@
   {%- endif %}
 </form>
 
-<p><a href="." class="btn">{% trans %}Upload another flight{% endtrans %}</a></p>
+<p><a href="{{ url_for('.index') }}" class="btn">{% trans %}Upload another flight{% endtrans %}</a></p>
 {%- endblock %}

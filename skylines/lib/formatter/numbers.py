@@ -1,8 +1,7 @@
 from __future__ import absolute_import
 
+from flask.ext.babel import get_locale
 import babel.numbers
-
-from skylines.lib.i18n import get_locale
 
 __all__ = ['format_number', 'format_decimal']
 

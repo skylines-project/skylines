@@ -5,7 +5,3 @@ def truncate(string, length=50, suffix='...', smart=False):
         return string[:(length - len(suffix))].rsplit(' ', 1)[0] + suffix
     else:
         return string[:(length - len(suffix))] + suffix
-
-
-def string_if(str, condition):
-    return str if condition else None

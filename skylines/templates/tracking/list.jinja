@@ -27,13 +27,13 @@
     </tr>
   </thead>
   <tbody>
-    {% for track, airport, distance in tracks -%}
+    {% for track, airport in tracks -%}
     <tr>
       <td class="date">{{ insert_timeago(track.time) }}</td>
       <td>{{ user_link(track.pilot) }}</td>
       <td>
         {% if airport -%}
-        {{ insert_flag(airport.country_code) }} {{ airport|e }} ({{ h.format_distance(distance) }})
+        {{ insert_flag(airport.country_code) }} {{ airport.name|e }} ({{ h.format_distance(airport.distance) }})
         {%- endif %}
       </td>
       <td class="numeric">
@@ -46,12 +46,12 @@
         {%- endif %}
       </td>
       <td nowrap="nowrap" class="show">
-        <a href="/tracking/{{ track.pilot_id }}/" class="btn btn-mini">Show</a>
+        <a href="{{ url_for('track.index', user_id=track.pilot_id) }}" class="btn btn-mini">Show</a>
       </td>
     </tr>
     {%- endfor %}
   </tbody>
 </table>
 
-<a href="/tracking/info" class="btn"><i class="icon-question-sign"></i> {% trans %}How to use Live Tracking?{% endtrans %}</a>
+<a href="{{ url_for('.info') }}" class="btn"><i class="icon-question-sign"></i> {% trans %}How to use Live Tracking?{% endtrans %}</a>
 {%- endblock %}

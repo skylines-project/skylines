@@ -35,7 +35,7 @@ before_script:
 
 script:
   # Run the test suite
-  - nosetests --rednose
+  - nosetests --rednose --verbose
 
 notifications:
   email:

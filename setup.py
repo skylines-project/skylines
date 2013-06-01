@@ -12,35 +12,29 @@ setup(
     description='',
     author='',
     author_email='',
-    #url='',
-    setup_requires=["PasteScript >= 1.7"],
-    paster_plugins=['PasteScript', 'Pylons', 'TurboGears2'],
+    url='http://www.skylines-project.org/',
     packages=find_packages(exclude=['ez_setup']),
     install_requires=requirements,
     include_package_data=True,
     test_suite='nose.collector',
     tests_require=requirements + test_requirements,
-    package_data={'skylines': ['i18n/*/LC_MESSAGES/*.mo',
-                               'templates/*/*',
-                               'public/*/*']},
-    message_extractors={'skylines': [
+    package_data={
+        'skylines': [
+            'i18n/*/LC_MESSAGES/*.mo',
+            'templates/*/*',
+            'public/*/*'
+        ]
+    },
+    message_extractors={
+        'skylines': [
             ('**.py', 'python', None),
             ('templates/**.html', 'genshi', None),
             ('templates/**.jinja', 'jinja2', {
                 'encoding': 'utf-8',
                 'extensions': 'jinja2.ext.with_, jinja2.ext.do, webassets.ext.jinja2.AssetsExtension'
             }),
-            ('public/**', 'ignore', None)]},
-
-    entry_points="""
-    [paste.app_factory]
-    main = skylines.config.middleware:make_app
-
-    [paste.app_install]
-    main = pylons.util:PylonsInstaller
-    """,
-    dependency_links=[
-        "http://www.turbogears.org/2.1/downloads/current/",
-    ],
+            ('public/**', 'ignore', None)
+        ]
+    },
     zip_safe=False
 )

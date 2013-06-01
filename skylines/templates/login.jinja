@@ -6,7 +6,7 @@
 {%- block content %}
 <div class="row">
   <div class="box span8 offset2" id="loginform">
-    <form action="{{ tg.url('/login_handler', params=dict(came_from=came_from.encode('utf-8'))) }}" method="post" accept-charset="UTF-8" class="loginfields">
+    <form action="{{ url_for('login', next=next) }}" method="post" accept-charset="UTF-8" class="loginfields">
       <div class="control-group">
         <label class="control-label" for="loginusername">Email Address:</label>
         <div class="controls">
@@ -27,7 +27,7 @@
       </div>
       <div class="actions">
         <input type="submit" id="submit" value="Login" class="btn btn-primary" />
-        <a href="/users/new" class="btn">Register</a>
+        <a href="{{ url_for('users.new') }}" class="btn">Register</a>
       </div>
     </form>
   </div>
