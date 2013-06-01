@@ -3,16 +3,8 @@
 # List all classes of a competition
 #
 
-import sys
 import argparse
-
-from sqlalchemy.orm import joinedload
-
-from skylines.config import environment
-from skylines.model import (
-    DBSession, Competition, CompetitionParticipation, Flight
-)
-
+from config import to_envvar
 
 # Parse command line parameters
 
@@ -32,8 +24,15 @@ args = parser.parse_args()
 
 # Load environment
 
-if not environment.load_from_file(args.config):
+if not to_envvar(args.config):
     parser.error('Config file "{}" not found.'.format(args.config))
+
+
+import sys
+from sqlalchemy.orm import joinedload
+from skylines.model import (
+    DBSession, Competition, CompetitionParticipation, Flight
+)
 
 # List participants of the competition
 

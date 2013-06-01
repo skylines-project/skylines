@@ -18,8 +18,8 @@
 {%- endmacro %}
 
 {% macro _topbar_content(active_page) -%}
-<a href="/about"><img src="/images/logo.png" class="logo" /></a>
-<a class="brand" href="/about">
+<a href="{{ url_for('about.about') }}"><img src="/images/logo.png" class="logo" /></a>
+<a class="brand" href="{{ url_for('about.about') }}">
     <span class="skylines-blue">Sky</span><span class="skylines-white">Lines</span>
 </a>
 
@@ -35,7 +35,7 @@
 
 <ul class="nav pull-right">
     <li{% if active_page == 'upload' %} class="active"{% endif %}>
-        <a href="/flights/upload/"><i class="icon-upload-alt icon-large"></i></a>
+        <a href="{{ url_for('upload.index') }}"><i class="icon-upload-alt icon-large"></i></a>
     </li>
 
     {% if request.identity -%}
@@ -61,7 +61,7 @@
 {%- endmacro %}
 
 {% macro _login_form() -%}
-<form action="{{ tg.url('/login_handler', params=dict(came_from=request.url.encode('utf-8'))) }}" method="post" accept-charset="UTF-8">
+<form action="{{ url_for('login', next=request.url) }}" method="post" accept-charset="UTF-8">
     <div class="control-group">
         <label class="control-label" for="username">{% trans %}Email Address{% endtrans %}:</label>
         <div class="controls">
@@ -81,15 +81,15 @@
         <input type="submit" value="Login" class="btn btn-primary pull-right" />
     </div>
     <hr/>
-    <a href="/users/recover">{% trans %}Forgot password?{% endtrans %}</a>
-    <a href="/users/new">{% trans %}Don't have an account?{% endtrans %}</a>
+    <a href="{{ url_for('users.recover') }}">{% trans %}Forgot password?{% endtrans %}</a>
+    <a href="{{ url_for('users.new') }}">{% trans %}Don't have an account?{% endtrans %}</a>
 </form>
 {%- endmacro %}
 
 {%- macro _notification_item(active_page) -%}
 {%- with notifications = request.identity['notifications'] %}
 <li{% if active_page == 'notifications' %} class="active"{% endif %}>
-    <a href="/notifications/" title="{{ _('Notifications') }}">
+    <a href="{{ url_for('notifications.index') }}" title="{{ _('Notifications') }}">
         <span class="badge{% if notifications != 0 %} badge-warning{% endif %}">{{ notifications }}</span>
     </a>
 </li>
@@ -97,21 +97,21 @@
 {%- endmacro %}
 
 {%- macro _user_dropdown(active_page) -%}
-{%- with user=c.identity['user'] %}
+{%- with user=request.identity['user'] %}
 <li class="dropdown {% if active_page == 'settings' %}active{% endif %}">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown">
       {{ user|e }} <i class="icon-caret-down"></i>
   </a>
   <ul class="dropdown-menu">
-      <li><a href="/users/{{ user.id }}/"><i class="icon-user"></i> {{ user|e }}</a></li>
+      <li><a href="{{ url_for('user.index', user_id=user.id) }}"><i class="icon-user"></i> {{ user|e }}</a></li>
       {%- if user.club %}
-      <li><a href="/clubs/{{ user.club.id }}/"><i class="icon-group"></i> {{ user.club|e }}</a></li>
+      <li><a href="{{ url_for('club.index', club_id=user.club.id) }}"><i class="icon-group"></i> {{ user.club|e }}</a></li>
       {%- endif %}
       <li class="divider"></li>
-      <li><a href="/flights/pilot/{{ user.id }}"><i class="icon-plane"></i> {% trans %}Flights{% endtrans %}</a></li>
-      <li><a href="/statistics/pilot/{{ user.id }}"><i class="icon-tasks"></i> {% trans %}Statistics{% endtrans %}</a></li>
+      <li><a href="{{ url_for('flights.pilot', id=user.id) }}"><i class="icon-plane"></i> {% trans %}Flights{% endtrans %}</a></li>
+      <li><a href="{{ url_for('statistics.index', page='pilot', id=user.id) }}"><i class="icon-tasks"></i> {% trans %}Statistics{% endtrans %}</a></li>
       <li class="divider"></li>
-      <li><a href="/logout_handler"><i class="icon-signout"></i> {% trans %}Logout{% endtrans %}</a></li>
+      <li><a href="{{ url_for('logout', next=request.url) }}"><i class="icon-signout"></i> {% trans %}Logout{% endtrans %}</a></li>
   </ul>
 </li>
 {%- endwith %}
@@ -120,20 +120,20 @@
 {%- macro _language_dropdown() -%}
 <li class="dropdown">
     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-        {{ insert_flag(c.current_language['country_code']) }} <i class="icon-caret-down"></i>
+        {{ insert_flag(h.language_to_country_code(g.active_locale|string)) }} <i class="icon-caret-down"></i>
     </a>
     <ul class="dropdown-menu">
-      {% for lang in c.primary_languages -%}
-      {{ _language_item(lang) }}
+      {% for locale in g.primary_locales -%}
+      {{ _language_item(locale) }}
       {%- endfor %}
       <li class="divider"></li>
-      {% for lang in c.secondary_languages -%}
-      {{ _language_item(lang) }}
+      {% for locale in g.secondary_locales|sort(attribute='display_name') -%}
+      {{ _language_item(locale) }}
       {%- endfor %}
     </ul>
 </li>
 {%- endmacro %}
 
 {% macro _language_item(lang) %}
-<li><a href="/set_lang/{{ lang['language_code'] }}" title="{{ lang['english_name'] }}">{{ insert_flag(lang['country_code']) }} {{ lang['local_name'] }}</a></li>
+<li><a href="{{ url_for('set_lang', language=lang) }}" title="{{ lang.english_name }}">{{ insert_flag(h.language_to_country_code(lang|string)) }} {{ lang.display_name|capitalize }}</a></li>
 {%- endmacro %}

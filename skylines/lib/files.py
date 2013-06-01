@@ -5,7 +5,7 @@ import os
 import shutil
 import re
 
-from tg import config
+from flask import current_app
 
 igc_filename_numbers_regex = re.compile(r"([\w_-]+)_(\d+)")
 
@@ -37,7 +37,7 @@ def sanitise_filename(name):
 def filename_to_path(name):
     assert isinstance(name, str) or isinstance(name, unicode)
 
-    return os.path.join(config['skylines.files.path'], name)
+    return os.path.join(current_app.config['SKYLINES_FILES_PATH'], name)
 
 
 def open_file(name):

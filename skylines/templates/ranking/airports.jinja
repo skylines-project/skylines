@@ -20,7 +20,7 @@
         {{ airport_link(airport) }}
       </td>
       <td class="numeric">{{ count }}</td>
-      <td class="numeric">{{ _('%(points)s pt')|format(points=total) }}</td>
+      <td class="numeric">{{ _('%(points)s pt', points=total) }}</td>
     </tr>
     {%- else -%}
     <tr>

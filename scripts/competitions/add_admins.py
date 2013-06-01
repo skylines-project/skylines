@@ -4,14 +4,7 @@
 #
 
 import argparse
-import sys
-from datetime import datetime
-import transaction
-
-from skylines.config import environment
-from skylines.model.session import DBSession
-from skylines.model import User, Competition
-
+from config import to_envvar
 
 # Parse command line parameters
 
@@ -31,8 +24,14 @@ args = parser.parse_args()
 
 # Load environment
 
-if not environment.load_from_file(args.config):
+if not to_envvar(args.config):
     parser.error('Config file "{}" not found.'.format(args.config))
+
+
+import sys
+from datetime import datetime
+from skylines.model.session import DBSession
+from skylines.model import User, Competition
 
 # Load competition
 
@@ -57,4 +56,4 @@ for admin_id in args.admin_ids:
     print 'Added user "{}" (id: {}) to competition with id: {}' \
         .format(admin.name, admin.id, competition.id)
 
-transaction.commit()
+DBSession.commit()

@@ -1,4 +1,4 @@
-from tg.i18n import lazy_ugettext as l_
+from flask.ext.babel import lazy_gettext as l_
 
 from formencode.validators import URL
 from sprox.formbase import AddRecordForm, EditableForm, Field
@@ -55,7 +55,6 @@ class EditForm(EditableForm):
     __model__ = Club
     __hide_fields__ = ['id']
     __limit_fields__ = ['name', 'website']
-    __base_widget_args__ = dict(action='save')
     __field_widget_args__ = {
         'name': dict(label_text=l_('Name')),
         'website': dict(label_text=l_('Website')),

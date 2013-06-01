@@ -4,13 +4,7 @@
 #
 
 import argparse
-from datetime import datetime
-import transaction
-
-from skylines.config import environment
-from skylines.model.session import DBSession
-from skylines.model import CompetitionClass
-
+from config import to_envvar
 
 # Parse command line parameters
 
@@ -29,8 +23,13 @@ args = parser.parse_args()
 
 # Load environment
 
-if not environment.load_from_file(args.config):
+if not to_envvar(args.config):
     parser.error('Config file "{}" not found.'.format(args.config))
+
+
+from datetime import datetime
+from skylines.model.session import DBSession
+from skylines.model import CompetitionClass
 
 # Add the competition classes to the competition
 
@@ -47,4 +46,4 @@ for class_name in args.class_names:
     print 'Competition class "{}" created with id: {}' \
         .format(class_.name, class_.id)
 
-transaction.commit()
+DBSession.commit()

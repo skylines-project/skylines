@@ -1,7 +1,7 @@
 import os
 
-from tg import config
+from flask import current_app
 
 
 def helper_path(helper):
-    return os.path.join(config['skylines.analysis.path'], helper)
+    return os.path.join(current_app.config['SKYLINES_ANALYSIS_PATH'], helper)

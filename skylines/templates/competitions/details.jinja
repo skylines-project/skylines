@@ -36,7 +36,7 @@
     <dt>{{ _('Created') }}</dt>
     <dd>
         {% if competition.creator_id -%}
-        {{ _('%(time_ago)s by %(creator)s')|format(time_ago=insert_timeago(competition.time_created), creator=user_link(competition.creator)) }}
+        {{ _('%(time_ago)s by %(creator)s', time_ago=insert_timeago(competition.time_created), creator=user_link(competition.creator)) }}
         {%- else %}
         {{ insert_timeago(competition.time_created) }}
         {%- endif %}

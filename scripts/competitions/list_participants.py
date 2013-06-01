@@ -3,14 +3,8 @@
 # List all participants of a competition
 #
 
-import sys
 import argparse
-
-from sqlalchemy.orm import contains_eager
-
-from skylines.config import environment
-from skylines.model import Competition, CompetitionParticipation
-
+from config import to_envvar
 
 # Parse command line parameters
 
@@ -27,8 +21,13 @@ args = parser.parse_args()
 
 # Load environment
 
-if not environment.load_from_file(args.config):
+if not to_envvar(args.config):
     parser.error('Config file "{}" not found.'.format(args.config))
+
+
+import sys
+from sqlalchemy.orm import contains_eager
+from skylines.model import Competition, CompetitionParticipation
 
 # List participants of the competition
 

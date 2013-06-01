@@ -1,4 +1,4 @@
-{% set embedded = 'embedded' in request.params %}
+{% set embedded = 'embedded' in request.values %}
 
 {% if not embedded -%}
 {% extends "base-page.jinja" %}

@@ -4,11 +4,7 @@
 #
 
 import argparse
-import transaction
-
-from skylines.config import environment
-from skylines.model import CompetitionParticipation
-
+from config import to_envvar
 
 # Parse command line parameters
 
@@ -38,8 +34,11 @@ if not (bool(args.all) ^ bool(args.participant_ids)):
 
 # Load environment
 
-if not environment.load_from_file(args.config):
+if not to_envvar(args.config):
     parser.error('Config file "{}" not found.'.format(args.config))
+
+
+from skylines.model import DBSession, CompetitionParticipation
 
 # Delete all participants from the competition
 
@@ -68,4 +67,4 @@ elif args.participant_ids:
             print 'No participant with id: {} found in competition with id: {}.' \
                 .format(participant_id, args.competition_id)
 
-transaction.commit()
+DBSession.commit()

@@ -40,8 +40,8 @@
 
     <p class="footer">
         {% block footer -%}
-        &copy; <a href="/about/team">{{ _('The SkyLines Team') }}</a> -
-        <a href="/about/imprint">{% trans %}Imprint{% endtrans %}</a>
+        &copy; <a href="{{ url_for('about.skylines_team') }}">{{ _('The SkyLines Team') }}</a> -
+        <a href="{{ url_for('about.imprint') }}">{% trans %}Imprint{% endtrans %}</a>
         {%- endblock %}
     </p>
 </div>

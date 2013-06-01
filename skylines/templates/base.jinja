@@ -9,9 +9,9 @@
     <link rel='shortcut' href='/favicon.png' type='image/png' />
 
     {% block styles -%}
-    {%- for url in g.assets['all_css'].urls() %}
-    <link rel="stylesheet" type="text/css" href="{{ url }}"/>
-    {%- endfor %}
+    {%- assets 'all_css' %}
+    <link rel="stylesheet" type="text/css" href="{{ ASSET_URL }}"/>
+    {%- endassets %}
     {%- endblock %}
 
     {%- endblock %}
@@ -20,9 +20,9 @@
 {%- block body %}{% endblock %}
 
 {% block scripts -%}
-{%- for url in g.assets['all_js'].urls() %}
-<script type="text/javascript" src="{{ url }}"></script>
-{%- endfor %}
+{%- assets 'all_js' %}
+<script type="text/javascript" src="{{ ASSET_URL }}"></script>
+{%- endassets %}
 {%- endblock %}
 </body>
 </html>

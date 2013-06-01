@@ -4,14 +4,7 @@
 #
 
 import argparse
-import transaction
-
-from formencode.validators import DateConverter
-
-from skylines.config import environment
-from skylines.model.session import DBSession
-from skylines.model import Competition
-
+from config import to_envvar
 
 # Parse command line parameters
 
@@ -30,9 +23,13 @@ args = parser.parse_args()
 
 # Load environment
 
-if not environment.load_from_file(args.config):
+if not to_envvar(args.config):
     parser.error('Config file "{}" not found.'.format(args.config))
 
+
+from formencode.validators import DateConverter
+from skylines.model.session import DBSession
+from skylines.model import Competition
 
 # Parse start date
 
@@ -64,9 +61,7 @@ if args.creator:
     competition.creator_id = args.creator
 
 DBSession.add(competition)
-DBSession.flush()
+DBSession.commit()
 
 print 'Competition "{}" created with id: {}' \
     .format(competition.name, competition.id)
-
-transaction.commit()

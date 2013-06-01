@@ -18,7 +18,7 @@
   <tbody>
     {% for competition in competitions -%}
     <tr>
-      <td><a href="{{ competition.id }}">{{ competition.name|e }}</a></td>
+      <td><a href="{{ url_for('competition.index', competition_id=competition.id) }}">{{ competition.name|e }}</a></td>
       <td>{{ (competition.location or '')|e }}</td>
       <td>{{ competition.start_date }}</td>
       <td>{{ competition.end_date }}</td>
@@ -33,7 +33,7 @@
   </tbody>
 </table>
 
-{% if c.identity -%}
-<a href="new" class="btn"><i class="icon-plus"></i> {% trans %}Create a new competition{% endtrans %}</a>
+{% if request.identity -%}
+<a href="{{ url_for('competitions.new') }}" class="btn"><i class="icon-plus"></i> {% trans %}Create a new competition{% endtrans %}</a>
 {%- endif %}
 {%- endblock %}

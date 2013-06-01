@@ -43,8 +43,8 @@ class TestAuthentication(TestController):
         form.submit()
 
         # Being redirected to the initially requested page:
-        assert 'authtkt' in self.browser.cookies, \
-            "Session cookie wasn't defined: %s" % self.browser.cookies.items()
+        assert 'user_id=' in self.browser.cookies['session'], \
+            'Session cookie was not defined: %s' % self.browser.cookies.items()
         assert self.browser.url.startswith('http://localhost/flights/upload/'), \
             self.browser.url
 
@@ -61,25 +61,27 @@ class TestAuthentication(TestController):
         form.submit()
 
         # Being redirected to the home page:
-        assert 'authtkt' in self.browser.cookies, \
+        assert 'user_id=' in self.browser.cookies['session'], \
             'Session cookie was not defined: %s' % self.browser.cookies.items()
 
     def test_logout(self):
         """Logouts must work correctly"""
 
         # Logging in voluntarily the quick way:
-        self.browser.open('/login_handler?login={login}&password={password}'
+        self.browser.post('/login', 'login={login}&password={password}'
                           .format(login=u'manager@somedomain.com',
                                   password='managepass'))
 
         # Check if the login succeeded
-        assert 'authtkt' in self.browser.cookies, \
+        assert 'user_id=' in self.browser.cookies['session'], \
             'Session cookie was not defined: %s' % self.browser.cookies.items()
 
+        print self.browser.cookies
         # Logging out:
-        self.browser.open('/logout_handler')
+        self.browser.open('/logout')
+        print self.browser.cookies
 
         # Finally, redirected to the home page:
-        authtkt = self.browser.cookies.get('authtkt')
-        assert not authtkt or authtkt == 'INVALID', \
+        authtkt = self.browser.cookies.get('session')
+        assert 'user_id=' not in self.browser.cookies['session'], \
             'Session cookie was not deleted: %s' % self.browser.cookies.items()

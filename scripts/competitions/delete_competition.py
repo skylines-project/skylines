@@ -4,11 +4,7 @@
 #
 
 import argparse
-import transaction
-
-from skylines.config import environment
-from skylines.model import Competition
-
+from config import to_envvar
 
 # Parse command line parameters
 
@@ -25,8 +21,11 @@ args = parser.parse_args()
 
 # Load environment
 
-if not environment.load_from_file(args.config):
+if not to_envvar(args.config):
     parser.error('Config file "{}" not found.'.format(args.config))
+
+
+from skylines.model import DBSession, Competition
 
 # Delete the competition
 
@@ -37,4 +36,4 @@ if num:
 else:
     print 'No competition with id: {} found.'.format(args.competition_id)
 
-transaction.commit()
+DBSession.commit()

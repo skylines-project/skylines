@@ -1,6 +1,6 @@
 import operator
 
-from tg.i18n import ugettext as _
+from flask.ext.babel import _
 
 from formencode import Invalid
 from formencode.validators import FormValidator

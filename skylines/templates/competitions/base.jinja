@@ -2,8 +2,8 @@
 {% set active_page = "competitions" %}
 
 {% set header_tabs = [
-    ('/competitions/%d'|format(competition.id), 'details', _('Details')),
-    ('/competitions/%d/participants'|format(competition.id), 'participants', _('Participants')),
+    (url_for('competition.index'), 'details', _('Details')),
+    (url_for('competition.participants'), 'participants', _('Participants')),
 ] %}
 
 {% block title %}{{ competition.name }}{% endblock %}
