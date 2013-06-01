@@ -11,7 +11,7 @@
     <tr>
       <td class="span2">{{ year.year|int }}</td>
       <td class="span2">
-        <span rel="tooltip" title="{{ _('avg. %(distance)s per flight')|format(distance=h.format_distance(year.average_distance)) }}">
+        <span rel="tooltip" title="{{ _('avg. %(distance)s per flight', distance=h.format_distance(year.average_distance)) }}">
           {{ h.format_distance(year.distance) }}
         </span>
       </td>

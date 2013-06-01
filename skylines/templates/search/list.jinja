@@ -60,14 +60,14 @@
 
 {% macro result_title(result) -%}
 {% if result.model == 'User' -%}
-  <a href="/users/{{ result.id }}">{{ result.name|e }}</a>
+  <a href="{{ url_for('user.index', user_id=result.id) }}">{{ result.name|e }}</a>
 {%- elif result.model == 'Club' -%}
-  <a href="/clubs/{{ result.id }}">{{ result.name|e }}</a>
+  <a href="{{ url_for('club.index', club_id=result.id) }}">{{ result.name|e }}</a>
   <small>
   {% if result.website -%} - <a href="{{ result.website|e }}" target="_blank">{{ result.website|e }}</a>{%- endif %}
   </small>
 {%- elif result.model == 'Airport' -%}
-  <a href="/flights/airport/{{ result.id }}">{{ result.name|e }}</a>
+  <a href="{{ url_for('flights.airport', id=result.id) }}">{{ result.name|e }}</a>
   <small>
   {% if result.icao -%} - {{ result.icao|e }}{%- endif %}
   {% if result.frequency -%} - {{ '%.3f'|format(result.frequency|float) }} MHz{%- endif %}
@@ -77,14 +77,14 @@
 
 {% macro result_buttons(result) -%}
 {% if result.model == 'User' -%}
-  <a href="/flights/pilot/{{ result.id }}" class="btn btn-mini"><i class="icon-plane"></i> {{ _('Flights') }}</a>
-  <a href="/statistics/pilot/{{ result.id }}" class="btn btn-mini"><i class="icon-tasks"></i> {{ _('Statistics') }}</a>
+  <a href="{{ url_for('flights.pilot', id=result.id) }}" class="btn btn-mini"><i class="icon-plane"></i> {{ _('Flights') }}</a>
+  <a href="{{ url_for('statistics.index', page='pilot', id=result.id) }}" class="btn btn-mini"><i class="icon-tasks"></i> {{ _('Statistics') }}</a>
 {%- elif result.model == 'Club' -%}
-  <a href="/clubs/{{ result.id }}/pilots" class="btn btn-mini"><i class="icon-group"></i> {{ _('Members') }}</a>
-  <a href="/flights/club/{{ result.id }}" class="btn btn-mini"><i class="icon-plane"></i> {{ _('Flights') }}</a>
-  <a href="/statistics/club/{{ result.id }}" class="btn btn-mini"><i class="icon-tasks"></i> {{ _('Statistics') }}</a>
+  <a href="{{ url_for('club.pilots', club_id=result.id) }}" class="btn btn-mini"><i class="icon-group"></i> {{ _('Members') }}</a>
+  <a href="{{ url_for('flights.club', id=result.id) }}" class="btn btn-mini"><i class="icon-plane"></i> {{ _('Flights') }}</a>
+  <a href="{{ url_for('statistics.index', page='club', id=result.id) }}" class="btn btn-mini"><i class="icon-tasks"></i> {{ _('Statistics') }}</a>
 {%- elif result.model == 'Airport' -%}
-  <a href="/flights/airport/{{ result.id }}" class="btn btn-mini"><i class="icon-plane"></i> {{ _('Flights') }}</a>
-  <a href="/statistics/airport/{{ result.id }}" class="btn btn-mini"><i class="icon-tasks"></i> {{ _('Statistics') }}</a>
+  <a href="{{ url_for('flights.airport', id=result.id) }}" class="btn btn-mini"><i class="icon-plane"></i> {{ _('Flights') }}</a>
+  <a href="{{ url_for('statistics.index', page='airport', id=result.id) }}" class="btn btn-mini"><i class="icon-tasks"></i> {{ _('Statistics') }}</a>
 {%- endif %}
 {%- endmacro %}

@@ -1,6 +1,6 @@
 {% if user.club_id -%}
 <p>
 {% trans %}Pilot missing in the list?{% endtrans %}
-<a href="/clubs/{{ user.club_id }}/new_pilot" class="btn btn-mini">{% trans %}Create new pilot{% endtrans %}</a>
+<a href="{{ url_for('club.create_pilot', club_id=user.club_id) }}" class="btn btn-mini">{% trans %}Create new pilot{% endtrans %}</a>
 </p>
 {%- endif %}

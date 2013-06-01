@@ -1,5 +1,5 @@
-from tg import request
-from tg.i18n import lazy_ugettext as l_
+from flask import request
+from flask.ext.babel import lazy_gettext as l_
 
 from formencode import validators, All
 from sprox.formbase import AddRecordForm, Field

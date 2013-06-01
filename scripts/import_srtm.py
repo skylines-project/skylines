@@ -3,15 +3,8 @@
 # Download and import elevation data
 #
 
-import os.path
 import argparse
-import subprocess
-from zipfile import ZipFile
-from tg import config
-from skylines.config import environment
-from skylines.model.session import DBSession
-
-SERVER_URL = 'http://download.xcsoar.org/mapgen/data/srtm3/'
+from config import to_envvar
 
 # Parse command line parameters
 parser = argparse.ArgumentParser(
@@ -25,8 +18,18 @@ parser.add_argument('y', type=int)
 
 args = parser.parse_args()
 
-if not environment.load_from_file(args.config):
+if not to_envvar(args.config):
     parser.error('Config file "{}" not found.'.format(args.config))
+
+
+import os.path
+import subprocess
+from zipfile import ZipFile
+from skylines import app
+from skylines.model.session import DBSession
+
+SERVER_URL = 'http://download.xcsoar.org/mapgen/data/srtm3/'
+
 
 if not 1 <= args.x <= 72:
     parser.error('x has to be between 1 and 72')
@@ -38,7 +41,7 @@ basename = 'srtm_{x:02}_{y:02}'.format(x=args.x, y=args.y)
 
 
 # Change path to configured srtm data path
-path = config['skylines.elevation_path']
+path = app.config['SKYLINES_ELEVATION_PATH']
 
 if not os.path.exists(path):
     print 'Creating {} ...'.format(path)

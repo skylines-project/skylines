@@ -6,10 +6,7 @@
 import sys
 import os
 import argparse
-import transaction
-from skylines.config import environment
-from skylines.model import DBSession, Airport
-from skylines.lib.waypoints.welt2000 import get_database
+from config import to_envvar
 
 sys.path.append(os.path.dirname(sys.argv[0]))
 
@@ -21,8 +18,13 @@ parser.add_argument('welt2000_path', nargs='?', metavar='WELT2000.TXT',
 
 args = parser.parse_args()
 
-if not environment.load_from_file(args.config):
+if not to_envvar(args.config):
     parser.error('Config file "{}" not found.'.format(args.config))
+
+
+from skylines.model import DBSession, Airport
+from skylines.lib.waypoints.welt2000 import get_database
+
 
 welt2000 = get_database(path=args.welt2000_path)
 
@@ -55,6 +57,4 @@ for airport_w2k in welt2000:
 
     DBSession.add(airport)
 
-DBSession.flush()
-
-transaction.commit()
+DBSession.commit()

@@ -29,7 +29,7 @@ class TestRegistration(TestController):
         self.browser.open('/users/new')
 
         # Find registration form
-        form = self.browser.getForm(action='new_post')
+        form = self.browser.getForm(index=2)
 
         form.getControl(name='email_address').value = email
         form.getControl(name='name').value = name

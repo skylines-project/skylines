@@ -62,7 +62,7 @@
                  {{ h.json.dumps(h.get_setting_name('altitude_unit')) }});
 
     initOpenLayers("map_canvas",
-                   "{{ config.get('skylines.map.tile_url', '') }}");
+                   "{{ config.get('SKYLINES_MAP_TILE_URL', '') }}");
     initFlightLayer();
     initBaro($("#barogram"));
 
@@ -112,7 +112,7 @@
     pinButton($("#pinned"), {{ flight.id }});
 
     $.getScript("http://maps.google.com/maps/api/js?v=3.7&sensor=false&callback=addGoogleLayer");
-    addBingLayers("{{ config.get('skylines.bing.api_key', 'null') }}");
+    addBingLayers("{{ config.get('SKYLINES_BING_API_KEY', 'null') }}");
     addReliefLayer();
 
     initInfoBox({flight_info: true, location_info: true});
@@ -152,7 +152,7 @@
 <a href="#" class="btn btn-share">
   <i class="icon-share-alt icon-small"></i> Share
 </a>
-<a href="{{ flight.igc_file.get_download_uri() }}" title="{{ flight.igc_file.filename }}" class="btn">
+<a href="{{ url_for('files.index', filename=flight.igc_file.filename) }}" title="{{ flight.igc_file.filename }}" class="btn">
   <i class="icon-download-alt"></i> IGC
 </a>
 {%- endblock %}
@@ -165,7 +165,7 @@
 
     <p>
       {%- if trace %}
-      <a href="map" class="btn"><i class="icon-fullscreen icon-large"></i> {% trans %}Full-screen map{% endtrans %}</a>
+      <a href="{{ url_for('.map_') }}" class="btn"><i class="icon-fullscreen icon-large"></i> {% trans %}Full-screen map{% endtrans %}</a>
       {%- endif %}
 
       <span id="pinned" rel="tooltip" title="{{ _('Activate this to show the flight on top of other flights on the map') }}"></span>

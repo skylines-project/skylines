@@ -5,16 +5,8 @@
 
 import sys
 import os
-import math
 import argparse
-import transaction
-from osgeo import ogr
-from skylines.config import environment
-from skylines.model import DBSession, MountainWaveProject
-from skylines.lib.string import isnumeric
-from geoalchemy2.elements import WKTElement
-from geoalchemy2.shape import from_shape
-from shapely.geometry import LineString
+from config import to_envvar
 
 sys.path.append(os.path.dirname(sys.argv[0]))
 
@@ -26,8 +18,17 @@ parser.add_argument('extend_shapefile', metavar='MountainWaveExtend.shp')
 
 args = parser.parse_args()
 
-if not environment.load_from_file(args.config):
+if not to_envvar(args.config):
     parser.error('Config file "{}" not found.'.format(args.config))
+
+
+import math
+from osgeo import ogr
+from skylines.model import DBSession, MountainWaveProject
+from skylines.lib.string import isnumeric
+from geoalchemy2.elements import WKTElement
+from geoalchemy2.shape import from_shape
+from shapely.geometry import LineString
 
 
 def main():
@@ -118,8 +119,7 @@ def main():
 
     mwp_center_file.Destroy()
     mwp_ext_file.Destroy()
-    DBSession.flush()
-    transaction.commit()
+    DBSession.commit()
 
     print "added " + str(j) + " waves"
 

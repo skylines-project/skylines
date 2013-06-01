@@ -17,7 +17,7 @@
 {% block content -%}
 {% if notifications|count != 0 -%}
   {{ render_notifications_table(notifications) }}
-  <a href="{{ tg.url('clear', params=params) }}" class="btn"><i class="icon-eye-open"></i> {% trans %}Mark all as read{% endtrans %}</a>
+  <a href="{{ url_for('notifications.clear', **params) }}" class="btn"><i class="icon-eye-open"></i> {% trans %}Mark all as read{% endtrans %}</a>
 {%- else %}
   {% trans %}You don't have any unread notifications.{% endtrans %}
 {%- endif %}
