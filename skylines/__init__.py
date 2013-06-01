@@ -27,10 +27,30 @@ class SkyLines(Flask):
     @property
     def created_by_nose(self):
         import traceback
-        top_frame = traceback.extract_stack()[0]
+        stack = traceback.extract_stack()
+        top_frame = stack[0]
         filename = os.path.abspath(top_frame[0])
-        return (filename.endswith('nosetests') or
-                os.path.join('skylines', 'tests') in filename)
+
+        # Started by calling "nosetests"
+        if filename.endswith('nosetests'):
+            return True
+
+        # Started by calling unit test file (e.g. ./test_pep8.py)
+        if os.path.join('skylines', 'tests') in filename:
+            return True
+
+        # Started by calling "python setup.py test/nosetests"
+        if filename.endswith('setup.py'):
+            cmd_frame = stack[4]
+            filename = os.path.abspath(cmd_frame[0])
+
+            if filename.endswith('test.py'):
+                return True
+
+            if filename.endswith('nose/commands.py'):
+                return True
+
+        return False
 
     def add_sqlalchemy(self):
         """ Create and configure SQLAlchemy extension """
