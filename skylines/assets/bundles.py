@@ -55,7 +55,7 @@ flot_js = Bundle(
 # SkyLines
 
 main_css = Bundle(
-    'css/bootstrap.min.css',
+    'vendor/bootstrap/bootstrap.min.css',
     'css/style.css',
     'css/search.css',
     'css/fix-table.css',
