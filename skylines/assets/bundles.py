@@ -72,7 +72,7 @@ all_css = Bundle(
 
 openlayers_css = Bundle(
     'vendor/openlayers/OpenLayers.css',
-    'css/GraphicLayerSwitcher.css',
+    'css/ol-GraphicLayerSwitcher.css',
     'css/map.css',
     filters='cssmin, cssrewrite',
     output='css/ol-%(version)s.css')
@@ -102,7 +102,7 @@ datatables_js = Bundle(
 
 openlayers_js = Bundle(
     'vendor/openlayers/OpenLayers.js',
-    'js/OpenLayers/GraphicLayerSwitcher.js',
+    'js/ol-GraphicLayerSwitcher.js',
     'js/map.js',
     'js/map-click-handler.js',
     filters=SimpleClosureJS,
