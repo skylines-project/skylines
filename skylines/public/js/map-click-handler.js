@@ -344,6 +344,7 @@ slMapClickHandler = function(infobox, settings) {
    * Format Airspace data for infobox
    *
    * @param {Object} data Airspace data.
+   * @return {Object} HTML table with the airspace data.
    */
   function formatAirspaceData(data) {
     var table = $('<table></table>');
@@ -382,6 +383,7 @@ slMapClickHandler = function(infobox, settings) {
    * Format Mountain Wave data in infobox
    *
    * @param {Object} data Wave data.
+   * @return {Object} HTML table with the wave data.
    */
   function formatMountainWaveData(data) {
     var table = $('<table></table>');

@@ -3,6 +3,7 @@ import sys
 import nose
 from subprocess import CalledProcessError, check_output as run
 from functools import partial
+from glob import iglob
 
 GJSLINT_COMMAND = 'gjslint'
 
@@ -18,33 +19,17 @@ GJSLINT_ERRORS = [
     'unused_private_members',
 ]
 
-JS_BASE_FOLDER = os.path.join('skylines', 'public', 'js')
-
-JS_FILES = [
-    'baro.js',
-    'fix-table.js',
-    'flight.js',
-    'collection.js',
-    'general.js',
-    'map.js',
-    'phase-table.js',
-    'topbar.js',
-    'tracking.js',
-    'units.js',
-    'OpenLayers/GraphicLayerSwitcher.js',
-]
+JS_FOLDER = os.path.join('skylines', 'public', 'js')
 
 
 def test_js_files():
-    for filename in JS_FILES:
-        f = partial(run_gjslint, filename)
-        f.description = 'gjslint {}'.format(filename)
+    for path in iglob(os.path.join(JS_FOLDER, '*.js')):
+        f = partial(run_gjslint, path)
+        f.description = 'gjslint {}'.format(path)
         yield f
 
 
-def run_gjslint(filename):
-    path = os.path.join(JS_BASE_FOLDER, filename)
-
+def run_gjslint(path):
     args = [GJSLINT_COMMAND]
     args.extend(GJSLINT_OPTIONS)
     for error in GJSLINT_ERRORS:
