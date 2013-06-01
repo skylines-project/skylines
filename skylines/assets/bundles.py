@@ -59,8 +59,8 @@ main_css = Bundle(
     'css/style.css',
     'css/search.css',
     'css/fix-table.css',
-    'css/datepicker.css',
     'vendor/flags/flags.css',
+    'vendor/bootstrap-datepicker/datepicker.css',
     filters='cssrewrite',
     output='css/main-%(version)s.css')
 
@@ -96,7 +96,7 @@ all_js = Bundle(
 datatables_js = Bundle(
     'js/jQuery/jquery.dataTables.js',
     'js/jQuery/jquery.dataTables.ext.js',
-    'js/jQuery/bootstrap-datepicker.js',
+    'vendor/bootstrap-datepicker/datepicker.js',
     filters=SimpleClosureJS,
     output='js/tables-%(version)s.js')
 
