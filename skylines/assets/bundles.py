@@ -60,7 +60,7 @@ main_css = Bundle(
     'css/search.css',
     'css/fix-table.css',
     'css/datepicker.css',
-    'images/flags.css',
+    'vendor/flags/flags.css',
     filters='cssrewrite',
     output='css/main-%(version)s.css')
 
