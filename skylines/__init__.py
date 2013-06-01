@@ -21,6 +21,7 @@ class SkyLines(Flask):
         # Configure Jinja2 template engine
         self.jinja_options['extensions'].append('jinja2.ext.do')
 
+        self.add_wdb()
         self.add_sqlalchemy()
 
     @property
@@ -133,6 +134,11 @@ class SkyLines(Flask):
                 handler.setFormatter(file_formatter)
 
             self.logger.addHandler(handler)
+
+    def add_wdb(self):
+        if self.config.get('WDB_ENABLED', False):
+            from flask_wdb import Wdb
+            Wdb(self)
 
 
 app = SkyLines()

@@ -77,7 +77,7 @@ def index_post():
 
     user = request.identity['user']
 
-    pilot_id = request.form.get('pilot', None)
+    pilot_id = request.form.get('pilot', None, type=int)
     pilot = pilot_id and User.get(int(pilot_id))
     pilot_id = pilot and pilot.id
 
