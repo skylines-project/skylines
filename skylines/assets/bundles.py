@@ -55,12 +55,12 @@ flot_js = Bundle(
 # SkyLines
 
 main_css = Bundle(
-    'css/bootstrap.min.css',
+    'vendor/bootstrap/bootstrap.min.css',
     'css/style.css',
     'css/search.css',
     'css/fix-table.css',
-    'css/datepicker.css',
-    'images/flags.css',
+    'vendor/flags/flags.css',
+    'vendor/bootstrap-datepicker/datepicker.css',
     filters='cssrewrite',
     output='css/main-%(version)s.css')
 
@@ -71,22 +71,22 @@ all_css = Bundle(
     output='css/skylines-%(version)s.css')
 
 openlayers_css = Bundle(
-    'css/OpenLayers.css',
-    'css/GraphicLayerSwitcher.css',
+    'vendor/openlayers/OpenLayers.css',
+    'css/ol-GraphicLayerSwitcher.css',
     'css/map.css',
     filters='cssmin, cssrewrite',
     output='css/ol-%(version)s.css')
 
 datatables_css = Bundle(
-    'css/dataTables.bootstrap.css',
+    'vendor/jquery-datatables/dataTables.bootstrap.css',
     filters='cssmin, cssrewrite',
     output='css/datatables-%(version)s.css')
 
 all_js = Bundle(
     'http://code.jquery.com/jquery-1.9.1.min.js',
-    'js/jQuery/jquery.browser.js',
-    'js/jQuery/jquery.cookie.js',
-    'js/jQuery/jquery.timeago.js',
+    'vendor/jquery/jquery.browser.js',
+    'vendor/jquery/jquery.cookie.js',
+    'vendor/jquery/jquery.timeago.js',
     'js/general.js',
     bootstrap_js,
     'js/topbar.js',
@@ -94,15 +94,15 @@ all_js = Bundle(
     output='js/skylines-%(version)s.js')
 
 datatables_js = Bundle(
-    'js/jQuery/jquery.dataTables.js',
-    'js/jQuery/jquery.dataTables.ext.js',
-    'js/jQuery/bootstrap-datepicker.js',
+    'vendor/jquery-datatables/jquery.dataTables.js',
+    'vendor/jquery-datatables/jquery.dataTables.ext.js',
+    'vendor/bootstrap-datepicker/datepicker.js',
     filters=SimpleClosureJS,
     output='js/tables-%(version)s.js')
 
 openlayers_js = Bundle(
-    'js/OpenLayers/OpenLayers.js',
-    'js/OpenLayers/GraphicLayerSwitcher.js',
+    'vendor/openlayers/OpenLayers.js',
+    'js/ol-GraphicLayerSwitcher.js',
     'js/map.js',
     'js/map-click-handler.js',
     filters=SimpleClosureJS,
