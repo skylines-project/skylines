@@ -71,7 +71,7 @@ all_css = Bundle(
     output='css/skylines-%(version)s.css')
 
 openlayers_css = Bundle(
-    'css/OpenLayers.css',
+    'vendor/openlayers/OpenLayers.css',
     'css/GraphicLayerSwitcher.css',
     'css/map.css',
     filters='cssmin, cssrewrite',
@@ -101,7 +101,7 @@ datatables_js = Bundle(
     output='js/tables-%(version)s.js')
 
 openlayers_js = Bundle(
-    'js/OpenLayers/OpenLayers.js',
+    'vendor/openlayers/OpenLayers.js',
     'js/OpenLayers/GraphicLayerSwitcher.js',
     'js/map.js',
     'js/map-click-handler.js',
