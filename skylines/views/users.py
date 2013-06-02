@@ -1,4 +1,5 @@
-import email
+from email.mime.text import MIMEText
+from email.utils import formatdate
 import smtplib
 
 from flask import Blueprint, request, render_template, redirect, url_for, abort, current_app, flash
@@ -158,11 +159,11 @@ password, click on the following link:
 The SkyLines Team
 """ % (unicode(user), request.remote_addr, key)
 
-    msg = email.mime.text.MIMEText(text.encode('utf-8'), 'plain', 'utf-8')
+    msg = MIMEText(text.encode('utf-8'), 'plain', 'utf-8')
     msg['Subject'] = 'SkyLines password recovery'
     msg['From'] = current_app.config['EMAIL_FROM']
     msg['To'] = user.email_address.encode('ascii')
-    msg['Date'] = email.Utils.formatdate(localtime=1)
+    msg['Date'] = formatdate(localtime=1)
 
     try:
         smtp = smtplib.SMTP(current_app.config['SMTP_SERVER'])
