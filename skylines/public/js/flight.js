@@ -248,7 +248,7 @@ function addFlight(sfid, _lonlat, _levels, _num_levels, _time, _height, _enl,
     for (var i = 0; i < _contestsLength; ++i) {
       var contest = _contests[i];
       var turnpoints = polyline_decoder.decode(contest.turnpoints, 2);
-      var times = polyline_decoder.decodeFloats(contest.times);
+      var times = polyline_decoder.decodeDeltas(contest.times, 1, 1);
 
       var name = contest.name;
       contests.push({
