@@ -2,8 +2,6 @@
 
 from datetime import datetime, timedelta
 
-from sqlalchemy.orm import relationship, joinedload
-from sqlalchemy import Column, ForeignKey, Index, over, func
 from sqlalchemy.types import Integer, REAL, DateTime, SmallInteger, Unicode,\
     BigInteger
 from sqlalchemy.dialects.postgresql import INET
@@ -19,25 +17,25 @@ from .geo import Location
 class TrackingFix(db.Model):
     __tablename__ = 'tracking_fixes'
 
-    id = Column(Integer, autoincrement=True, primary_key=True)
+    id = db.Column(Integer, autoincrement=True, primary_key=True)
 
-    time = Column(DateTime, nullable=False, default=datetime.utcnow)
+    time = db.Column(DateTime, nullable=False, default=datetime.utcnow)
 
-    location_wkt = Column('location', Geometry('POINT'))
+    location_wkt = db.Column('location', Geometry('POINT'))
 
-    track = Column(SmallInteger)
-    ground_speed = Column(REAL)
-    airspeed = Column(REAL)
-    altitude = Column(SmallInteger)
-    elevation = Column(SmallInteger)
-    vario = Column(REAL)
-    engine_noise_level = Column(SmallInteger)
+    track = db.Column(SmallInteger)
+    ground_speed = db.Column(REAL)
+    airspeed = db.Column(REAL)
+    altitude = db.Column(SmallInteger)
+    elevation = db.Column(SmallInteger)
+    vario = db.Column(REAL)
+    engine_noise_level = db.Column(SmallInteger)
 
-    pilot_id = Column(
-        Integer, ForeignKey('tg_user.id', ondelete='CASCADE'), nullable=False)
-    pilot = relationship('User', innerjoin=True)
+    pilot_id = db.Column(
+        Integer, db.ForeignKey('tg_user.id', ondelete='CASCADE'), nullable=False)
+    pilot = db.relationship('User', innerjoin=True)
 
-    ip = Column(INET)
+    ip = db.Column(INET)
 
     def __repr__(self):
         return '<TrackingFix: id={} time=\'{}\'>' \
@@ -93,11 +91,11 @@ class TrackingFix(db.Model):
 
     @classmethod
     def get_latest(cls, max_age=timedelta(hours=6)):
-        # Add a column to the inner query with
+        # Add a db.Column to the inner query with
         # numbers ordered by time for each pilot
-        row_number = over(func.row_number(),
-                          partition_by=cls.pilot_id,
-                          order_by=cls.time.desc())
+        row_number = db.over(db.func.row_number(),
+                             partition_by=cls.pilot_id,
+                             order_by=cls.time.desc())
 
         # Create inner query
         subq = db.session \
@@ -111,7 +109,7 @@ class TrackingFix(db.Model):
         # Create outer query that orders by time and
         # only selects the latest fix
         query = cls.query() \
-            .options(joinedload(cls.pilot)) \
+            .options(db.joinedload(cls.pilot)) \
             .filter(cls.id == subq.c.id) \
             .filter(subq.c.row_number == 1) \
             .order_by(cls.time.desc())
@@ -119,37 +117,37 @@ class TrackingFix(db.Model):
         return query
 
 
-Index('tracking_fixes_pilot_time', TrackingFix.pilot_id, TrackingFix.time)
+db.Index('tracking_fixes_pilot_time', TrackingFix.pilot_id, TrackingFix.time)
 
 
 class TrackingSession(db.Model):
     __tablename__ = 'tracking_sessions'
 
-    id = Column(Integer, autoincrement=True, primary_key=True)
+    id = db.Column(Integer, autoincrement=True, primary_key=True)
 
-    pilot_id = Column(
-        Integer, ForeignKey('tg_user.id', ondelete='CASCADE'), nullable=False)
-    pilot = relationship('User', innerjoin=True)
+    pilot_id = db.Column(
+        Integer, db.ForeignKey('tg_user.id', ondelete='CASCADE'), nullable=False)
+    pilot = db.relationship('User', innerjoin=True)
 
-    lt24_id = Column(BigInteger, index=True)
+    lt24_id = db.Column(BigInteger, index=True)
 
-    time_created = Column(DateTime, nullable=False, default=datetime.utcnow)
-    ip_created = Column(INET)
+    time_created = db.Column(DateTime, nullable=False, default=datetime.utcnow)
+    ip_created = db.Column(INET)
 
-    time_finished = Column(DateTime)
-    ip_finished = Column(INET)
+    time_finished = db.Column(DateTime)
+    ip_finished = db.Column(INET)
 
     # client application
-    client = Column(Unicode(32))
-    client_version = Column(Unicode(8))
+    client = db.Column(Unicode(32))
+    client_version = db.Column(Unicode(8))
 
     # device information
-    device = Column(Unicode(32))
-    gps_device = Column(Unicode(32))
+    device = db.Column(Unicode(32))
+    gps_device = db.Column(Unicode(32))
 
     # aircraft information
-    aircraft_type = Column(SmallInteger)
-    aircraft_model = Column(Unicode(64))
+    aircraft_type = db.Column(SmallInteger)
+    aircraft_model = db.Column(Unicode(64))
 
     # status of the pilot after landing
     #
@@ -158,7 +156,7 @@ class TrackingSession(db.Model):
     # 2-> "Need some help, nothing broken"
     # 3-> "Need help, maybe something broken"
     # 4-> "HELP, SERIOUS INJURY"
-    finish_status = Column(SmallInteger)
+    finish_status = db.Column(SmallInteger)
 
     def __repr__(self):
         return '<TrackingSession: id={}>'.format(self.id).encode('utf-8')

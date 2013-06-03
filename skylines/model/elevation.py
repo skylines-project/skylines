@@ -1,4 +1,3 @@
-from sqlalchemy import Column
 from sqlalchemy.types import Integer
 from geoalchemy2.types import Raster
 
@@ -8,8 +7,8 @@ from skylines import db
 class Elevation(db.Model):
     __tablename__ = 'elevations'
 
-    rid = Column(Integer, autoincrement=True, primary_key=True)
-    rast = Column(Raster)
+    rid = db.Column(Integer, autoincrement=True, primary_key=True)
+    rast = db.Column(Raster)
 
     @classmethod
     def get(cls, location):

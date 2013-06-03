@@ -2,9 +2,7 @@
 
 from datetime import datetime
 
-from sqlalchemy import ForeignKey, Column, func
 from sqlalchemy.dialects import postgresql
-from sqlalchemy.orm import relationship
 from sqlalchemy.types import Unicode, Integer, DateTime, Date, Boolean
 from sqlalchemy.ext.hybrid import hybrid_property
 from sqlalchemy.sql.expression import case
@@ -22,58 +20,58 @@ from .aircraft_model import AircraftModel
 class Flight(db.Model):
     __tablename__ = 'flights'
 
-    id = Column(Integer, autoincrement=True, primary_key=True)
-    time_created = Column(DateTime, nullable=False, default=datetime.utcnow)
-    time_modified = Column(DateTime, nullable=False, default=datetime.utcnow)
+    id = db.Column(Integer, autoincrement=True, primary_key=True)
+    time_created = db.Column(DateTime, nullable=False, default=datetime.utcnow)
+    time_modified = db.Column(DateTime, nullable=False, default=datetime.utcnow)
 
-    pilot_id = Column(
-        Integer, ForeignKey('tg_user.id', ondelete='SET NULL'), index=True)
-    pilot = relationship('User', foreign_keys=[pilot_id])
+    pilot_id = db.Column(
+        Integer, db.ForeignKey('tg_user.id', ondelete='SET NULL'), index=True)
+    pilot = db.relationship('User', foreign_keys=[pilot_id])
 
-    co_pilot_id = Column(
-        Integer, ForeignKey('tg_user.id', ondelete='SET NULL'), index=True)
-    co_pilot = relationship('User', foreign_keys=[co_pilot_id])
+    co_pilot_id = db.Column(
+        Integer, db.ForeignKey('tg_user.id', ondelete='SET NULL'), index=True)
+    co_pilot = db.relationship('User', foreign_keys=[co_pilot_id])
 
-    club_id = Column(
-        Integer, ForeignKey('clubs.id', ondelete='SET NULL'), index=True)
-    club = relationship('Club', backref='flights')
+    club_id = db.Column(
+        Integer, db.ForeignKey('clubs.id', ondelete='SET NULL'), index=True)
+    club = db.relationship('Club', backref='flights')
 
-    model_id = Column(Integer, ForeignKey('models.id', ondelete='SET NULL'))
-    model = relationship('AircraftModel')
-    registration = Column(Unicode(32))
-    competition_id = Column(Unicode(5))
+    model_id = db.Column(Integer, db.ForeignKey('models.id', ondelete='SET NULL'))
+    model = db.relationship('AircraftModel')
+    registration = db.Column(Unicode(32))
+    competition_id = db.Column(Unicode(5))
 
     # The date of the flight in local time instead of UTC. Used for scoring.
-    date_local = Column(Date, nullable=False, index=True)
+    date_local = db.Column(Date, nullable=False, index=True)
 
-    takeoff_time = Column(DateTime, nullable=False, index=True)
-    landing_time = Column(DateTime, nullable=False)
-    takeoff_location_wkt = Column(
+    takeoff_time = db.Column(DateTime, nullable=False, index=True)
+    landing_time = db.Column(DateTime, nullable=False)
+    takeoff_location_wkt = db.Column(
         'takeoff_location', Geometry('POINT'))
-    landing_location_wkt = Column(
+    landing_location_wkt = db.Column(
         'landing_location', Geometry('POINT'))
 
-    takeoff_airport_id = Column(
-        Integer, ForeignKey('airports.id', ondelete='SET NULL'))
-    takeoff_airport = relationship('Airport', foreign_keys=[takeoff_airport_id])
+    takeoff_airport_id = db.Column(
+        Integer, db.ForeignKey('airports.id', ondelete='SET NULL'))
+    takeoff_airport = db.relationship('Airport', foreign_keys=[takeoff_airport_id])
 
-    landing_airport_id = Column(
-        Integer, ForeignKey('airports.id', ondelete='SET NULL'))
-    landing_airport = relationship('Airport', foreign_keys=[landing_airport_id])
+    landing_airport_id = db.Column(
+        Integer, db.ForeignKey('airports.id', ondelete='SET NULL'))
+    landing_airport = db.relationship('Airport', foreign_keys=[landing_airport_id])
 
-    timestamps = Column(postgresql.ARRAY(DateTime), nullable=False)
-    locations = Column(Geometry('LINESTRING', srid=4326),
-                       nullable=False)
+    timestamps = db.Column(postgresql.ARRAY(DateTime), nullable=False)
+    locations = db.Column(
+        Geometry('LINESTRING', srid=4326), nullable=False)
 
-    olc_classic_distance = Column(Integer)
-    olc_triangle_distance = Column(Integer)
-    olc_plus_score = Column(Integer)
+    olc_classic_distance = db.Column(Integer)
+    olc_triangle_distance = db.Column(Integer)
+    olc_plus_score = db.Column(Integer)
 
-    igc_file_id = Column(
-        Integer, ForeignKey('igc_files.id', ondelete='CASCADE'), nullable=False)
-    igc_file = relationship('IGCFile', backref='flights', innerjoin=True)
+    igc_file_id = db.Column(
+        Integer, db.ForeignKey('igc_files.id', ondelete='CASCADE'), nullable=False)
+    igc_file = db.relationship('IGCFile', backref='flights', innerjoin=True)
 
-    needs_analysis = Column(Boolean, nullable=False, default=True)
+    needs_analysis = db.Column(Boolean, nullable=False, default=True)
 
     def __repr__(self):
         return ('<Flight: id=%d>' % self.id).encode('utf-8')
@@ -99,7 +97,7 @@ class Flight(db.Model):
 
     @year.expression
     def year(cls):
-        return func.date_part('year', cls.date_local)
+        return db.func.date_part('year', cls.date_local)
 
     @property
     def takeoff_location(self):

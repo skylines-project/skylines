@@ -3,8 +3,6 @@
 import re
 from datetime import datetime
 
-from sqlalchemy import ForeignKey, Column, func
-from sqlalchemy.orm import relationship
 from sqlalchemy.sql.expression import and_
 from sqlalchemy.types import Integer, DateTime, String, Unicode, Date
 
@@ -16,23 +14,23 @@ from skylines.lib.igc import read_igc_headers
 class IGCFile(db.Model):
     __tablename__ = 'igc_files'
 
-    id = Column(Integer, autoincrement=True, primary_key=True)
+    id = db.Column(Integer, autoincrement=True, primary_key=True)
 
-    owner_id = Column(Integer, ForeignKey('tg_user.id'), nullable=False)
-    owner = relationship('User', innerjoin=True)
+    owner_id = db.Column(Integer, db.ForeignKey('tg_user.id'), nullable=False)
+    owner = db.relationship('User', innerjoin=True)
 
-    time_created = Column(DateTime, nullable=False, default=datetime.utcnow)
-    filename = Column(String(), nullable=False)
-    md5 = Column(String(32), nullable=False, unique=True)
+    time_created = db.Column(DateTime, nullable=False, default=datetime.utcnow)
+    filename = db.Column(String(), nullable=False)
+    md5 = db.Column(String(32), nullable=False, unique=True)
 
-    logger_id = Column(String(3))
-    logger_manufacturer_id = Column(String(3))
+    logger_id = db.Column(String(3))
+    logger_manufacturer_id = db.Column(String(3))
 
-    registration = Column(Unicode(32))
-    competition_id = Column(Unicode(5))
-    model = Column(Unicode(64))
+    registration = db.Column(Unicode(32))
+    competition_id = db.Column(Unicode(5))
+    model = db.Column(Unicode(64))
 
-    date_utc = Column(Date, nullable=False)
+    date_utc = db.Column(Date, nullable=False)
 
     def __repr__(self):
         return ('<IGCFile: id=%d filename=\'%s\'>' % (self.id, self.filename)).encode('utf-8')
@@ -84,8 +82,8 @@ class IGCFile(db.Model):
             logger_manufacturer_id = self.logger_manufacturer_id
 
             result = Flight.query().join(IGCFile) \
-                .filter(func.upper(IGCFile.logger_manufacturer_id) == func.upper(logger_manufacturer_id)) \
-                .filter(func.upper(IGCFile.logger_id) == func.upper(logger_id)) \
+                .filter(db.func.upper(IGCFile.logger_manufacturer_id) == db.func.upper(logger_manufacturer_id)) \
+                .filter(db.func.upper(IGCFile.logger_id) == db.func.upper(logger_id)) \
                 .filter(Flight.registration == None) \
                 .order_by(Flight.id.desc())
 
@@ -107,7 +105,7 @@ class IGCFile(db.Model):
             glider_reg = self.registration
 
             result = Flight.query() \
-                .filter(func.upper(Flight.registration) == func.upper(glider_reg)) \
+                .filter(db.func.upper(Flight.registration) == db.func.upper(glider_reg)) \
                 .order_by(Flight.id.desc()) \
                 .first()
 
@@ -121,8 +119,8 @@ class IGCFile(db.Model):
             logger_manufacturer_id = self.logger_manufacturer_id
 
             result = Flight.query().join(IGCFile) \
-                .filter(func.upper(IGCFile.logger_manufacturer_id) == func.upper(logger_manufacturer_id)) \
-                .filter(func.upper(IGCFile.logger_id) == func.upper(logger_id)) \
+                .filter(db.func.upper(IGCFile.logger_manufacturer_id) == db.func.upper(logger_manufacturer_id)) \
+                .filter(db.func.upper(IGCFile.logger_id) == db.func.upper(logger_id)) \
                 .filter(Flight.model_id == None) \
                 .order_by(Flight.id.desc())
 
@@ -148,9 +146,9 @@ class IGCFile(db.Model):
 
             result = AircraftModel.query() \
                 .filter(and_(
-                    func.regexp_replace(func.lower(AircraftModel.name), '[^a-z]', ' ').like(func.any(text_fragments)),
-                    func.regexp_replace(func.lower(AircraftModel.name), '[^0-9]', ' ').like(func.all(digit_fragments)))) \
-                .order_by(func.levenshtein(func.regexp_replace(func.lower(AircraftModel.name), '[^a-z0-9]', ''), glider_type_clean))
+                    db.func.regexp_replace(db.func.lower(AircraftModel.name), '[^a-z]', ' ').like(db.func.any(text_fragments)),
+                    db.func.regexp_replace(db.func.lower(AircraftModel.name), '[^0-9]', ' ').like(db.func.all(digit_fragments)))) \
+                .order_by(db.func.levenshtein(db.func.regexp_replace(db.func.lower(AircraftModel.name), '[^a-z0-9]', ''), glider_type_clean))
 
             if result.first():
                 return result.first().id

@@ -1,8 +1,6 @@
 from datetime import datetime
 from collections import OrderedDict
 
-from sqlalchemy import ForeignKey, Column
-from sqlalchemy.orm import relationship, contains_eager
 from sqlalchemy.types import Integer, DateTime
 
 from skylines import db
@@ -15,11 +13,11 @@ from .follower import Follower
 class Event(db.Model):
     __tablename__ = 'events'
 
-    id = Column(Integer, autoincrement=True, primary_key=True)
+    id = db.Column(Integer, autoincrement=True, primary_key=True)
 
     # Notification type
 
-    type = Column(Integer, nullable=False)
+    type = db.Column(Integer, nullable=False)
 
     class Type:
         FLIGHT_COMMENT = 1
@@ -28,25 +26,25 @@ class Event(db.Model):
 
     # Event time
 
-    time = Column(DateTime, nullable=False, default=datetime.utcnow)
+    time = db.Column(DateTime, nullable=False, default=datetime.utcnow)
 
     # The user that caused the event
 
-    actor_id = Column(
-        Integer, ForeignKey('tg_user.id', ondelete='CASCADE'), nullable=False)
-    actor = relationship('User', innerjoin=True)
+    actor_id = db.Column(
+        Integer, db.ForeignKey('tg_user.id', ondelete='CASCADE'), nullable=False)
+    actor = db.relationship('User', innerjoin=True)
 
     # A flight if this event is about a flight
 
-    flight_id = Column(
-        Integer, ForeignKey('flights.id', ondelete='CASCADE'))
-    flight = relationship('Flight')
+    flight_id = db.Column(
+        Integer, db.ForeignKey('flights.id', ondelete='CASCADE'))
+    flight = db.relationship('Flight')
 
     # A flight comment if this event is about a flight comment
 
-    flight_comment_id = Column(
-        Integer, ForeignKey('flight_comments.id', ondelete='CASCADE'))
-    flight_comment = relationship('FlightComment')
+    flight_comment_id = db.Column(
+        Integer, db.ForeignKey('flight_comments.id', ondelete='CASCADE'))
+    flight_comment = db.relationship('FlightComment')
 
     ##############################
 
@@ -58,23 +56,23 @@ class Event(db.Model):
 class Notification(db.Model):
     __tablename__ = 'notifications'
 
-    id = Column(Integer, autoincrement=True, primary_key=True)
+    id = db.Column(Integer, autoincrement=True, primary_key=True)
 
     # The event of this notification
 
-    event_id = Column(
-        Integer, ForeignKey('events.id', ondelete='CASCADE'), nullable=False)
-    event = relationship('Event', innerjoin=True)
+    event_id = db.Column(
+        Integer, db.ForeignKey('events.id', ondelete='CASCADE'), nullable=False)
+    event = db.relationship('Event', innerjoin=True)
 
     # The recipient of this notification
 
-    recipient_id = Column(
-        Integer, ForeignKey('tg_user.id', ondelete='CASCADE'), nullable=False)
-    recipient = relationship('User', innerjoin=True)
+    recipient_id = db.Column(
+        Integer, db.ForeignKey('tg_user.id', ondelete='CASCADE'), nullable=False)
+    recipient = db.relationship('User', innerjoin=True)
 
     # The time that this notification was read by the recipient
 
-    time_read = Column(DateTime)
+    time_read = db.Column(DateTime)
 
     ##############################
 

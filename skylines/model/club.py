@@ -2,8 +2,6 @@
 
 from datetime import datetime
 
-from sqlalchemy.orm import relationship
-from sqlalchemy import Column, ForeignKey
 from sqlalchemy.types import Integer, Unicode, DateTime
 
 from skylines import db
@@ -14,16 +12,16 @@ class Club(db.Model):
     __searchable_columns__ = ['name']
     __search_detail_columns__ = ['website']
 
-    id = Column(Integer, autoincrement=True, primary_key=True)
-    name = Column(Unicode(255), unique=True, nullable=False)
+    id = db.Column(Integer, autoincrement=True, primary_key=True)
+    name = db.Column(Unicode(255), unique=True, nullable=False)
 
-    owner_id = Column(Integer, ForeignKey(
+    owner_id = db.Column(Integer, db.ForeignKey(
         'tg_user.id', use_alter=True, name="tg_user.id", ondelete='SET NULL'))
-    owner = relationship('User', foreign_keys=[owner_id])
+    owner = db.relationship('User', foreign_keys=[owner_id])
 
-    time_created = Column(DateTime, nullable=False, default=datetime.utcnow)
+    time_created = db.Column(DateTime, nullable=False, default=datetime.utcnow)
 
-    website = Column(Unicode(255))
+    website = db.Column(Unicode(255))
 
     def __unicode__(self):
         return self.name

@@ -1,5 +1,3 @@
-from sqlalchemy import ForeignKey, Column
-from sqlalchemy.orm import relationship, backref
 from sqlalchemy.types import Boolean, Numeric, Integer, DateTime, Interval
 
 from skylines import db
@@ -19,25 +17,25 @@ class FlightPhase(db.Model):
     CD_RIGHT = 3
     CD_TOTAL = 4
 
-    id = Column(Integer, primary_key=True, autoincrement=True)
-    flight_id = Column(Integer, ForeignKey('flights.id', ondelete='CASCADE'),
-                       nullable=False, index=True)
+    id = db.Column(Integer, primary_key=True, autoincrement=True)
+    flight_id = db.Column(Integer, db.ForeignKey('flights.id', ondelete='CASCADE'),
+                          nullable=False, index=True)
 
-    start_time = Column(DateTime)
-    end_time = Column(DateTime)
+    start_time = db.Column(DateTime)
+    end_time = db.Column(DateTime)
 
-    flight = relationship(
+    flight = db.relationship(
         'Flight', innerjoin=True,
-        backref=backref('_phases', order_by=start_time, passive_deletes=True))
+        backref=db.backref('_phases', order_by=start_time, passive_deletes=True))
 
-    aggregate = Column(Boolean, nullable=False)
-    phase_type = Column(Integer)  # see PT_* constants
-    circling_direction = Column(Integer)  # see CD_* constants
-    alt_diff = Column(Integer)
-    duration = Column(Interval)
-    fraction = Column(Integer)
-    distance = Column(Integer)
-    speed = Column(Numeric)
-    vario = Column(Numeric)
-    glide_rate = Column(Numeric)
-    count = Column(Integer, nullable=False)
+    aggregate = db.Column(Boolean, nullable=False)
+    phase_type = db.Column(Integer)  # see PT_* constants
+    circling_direction = db.Column(Integer)  # see CD_* constants
+    alt_diff = db.Column(Integer)
+    duration = db.Column(Interval)
+    fraction = db.Column(Integer)
+    distance = db.Column(Integer)
+    speed = db.Column(Numeric)
+    vario = db.Column(Numeric)
+    glide_rate = db.Column(Numeric)
+    count = db.Column(Integer, nullable=False)
