@@ -6,7 +6,8 @@ from twisted.internet.protocol import DatagramProtocol
 from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.sql.expression import and_, or_
 
-from skylines.model import DBSession, User, TrackingFix, Follower, Elevation
+from skylines import db
+from skylines.model import User, TrackingFix, Follower, Elevation
 from skylines.tracking.crc import check_crc, set_crc
 
 # More information about this protocol can be found in the XCSoar
@@ -117,12 +118,12 @@ class TrackingServer(DatagramProtocol):
             fix.time and fix.time.time(), host,
             unicode(pilot).encode('utf8', 'ignore'), fix.location))
 
-        DBSession.add(fix)
+        db.session.add(fix)
         try:
-            DBSession.commit()
+            db.session.commit()
         except SQLAlchemyError, e:
             log.err(e, 'database error')
-            DBSession.rollback()
+            db.session.rollback()
 
     def trafficRequestReceived(self, host, port, key, payload):
         if len(payload) != 8: return
@@ -137,7 +138,7 @@ class TrackingServer(DatagramProtocol):
 
         flags = data[0]
         if flags & TRAFFIC_FLAG_FOLLOWEES:
-            subq = DBSession \
+            subq = db.session \
                 .query(Follower.destination_id) \
                 .filter(Follower.source_id == pilot.id) \
                 .subquery()
@@ -145,7 +146,7 @@ class TrackingServer(DatagramProtocol):
             or_filters.append(TrackingFix.pilot_id.in_(subq))
 
         if flags & TRAFFIC_FLAG_CLUB:
-            subq = DBSession \
+            subq = db.session \
                 .query(User.id) \
                 .filter(User.club_id == pilot.club_id) \
                 .subquery()

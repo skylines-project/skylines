@@ -14,12 +14,13 @@ from tw.forms.validators import UnicodeString
 from sqlalchemy.sql.expression import and_, or_
 from sqlalchemy import func
 
+from skylines import db
 from skylines.forms import BootstrapForm, units, club
 from skylines.lib.validators import UniqueValueUnless
 from skylines.lib.dbutil import get_requested_record
 from skylines.lib.decorators import validate
 from skylines.model import (
-    DBSession, User, Club, Flight, Follower, Location, IGCFile
+    User, Club, Flight, Follower, Location, IGCFile
 )
 from skylines.model.notification import create_follower_notification
 from skylines.views.users import recover_user_password
@@ -65,12 +66,12 @@ def _get_distance_flights():
 
 
 def _get_last_year_statistics():
-    query = DBSession.query(func.count('*').label('flights'),
-                            func.sum(Flight.olc_classic_distance).label('distance'),
-                            func.sum(Flight.duration).label('duration')) \
-                     .filter(Flight.pilot == g.user) \
-                     .filter(Flight.date_local > (date.today() - timedelta(days=365))) \
-                     .first()
+    query = db.session.query(func.count('*').label('flights'),
+                             func.sum(Flight.olc_classic_distance).label('distance'),
+                             func.sum(Flight.duration).label('duration')) \
+                      .filter(Flight.pilot == g.user) \
+                      .filter(Flight.date_local > (date.today() - timedelta(days=365))) \
+                      .first()
 
     last_year_statistics = dict(flights=0,
                                 distance=0,
@@ -146,7 +147,7 @@ def change_password_post():
     g.user.password = request.form['password']
     g.user.recover_key = None
 
-    DBSession.commit()
+    db.session.commit()
 
     return redirect(url_for('.index'))
 
@@ -187,7 +188,7 @@ class EditUserForm(EditableForm):
 
     email_address = Field(TextField, All(
         Email(not_empty=True),
-        UniqueValueUnless(filter_user_id, DBSession, __model__, 'email_address')))
+        UniqueValueUnless(filter_user_id, db.session, __model__, 'email_address')))
     name = Field(TextField, NotEmpty)
     tracking_delay = DelaySelectField
     unit_preset = units.PresetSelectField("unit_preset")
@@ -197,7 +198,7 @@ class EditUserForm(EditableForm):
     altitude_unit = units.AltitudeSelectField
     eye_candy = Field(CheckBox)
 
-edit_user_form = EditUserForm(DBSession)
+edit_user_form = EditUserForm(db.session)
 
 
 @user_blueprint.route('/edit')
@@ -233,7 +234,7 @@ def edit_post():
 
     g.user.eye_candy = request.form.get('eye_candy', False, type=bool)
 
-    DBSession.commit()
+    db.session.commit()
 
     return redirect(url_for('.index'))
 
@@ -265,7 +266,7 @@ def change_club_post():
     for flight in flights:
         flight.club_id = club
 
-    DBSession.commit()
+    db.session.commit()
 
     return redirect(url_for('.index'))
 
@@ -278,11 +279,11 @@ def create_club_post():
 
     club = Club(name=request.form['name'])
     club.owner_id = current_user.id
-    DBSession.add(club)
+    db.session.add(club)
 
     g.user.club = club
 
-    DBSession.commit()
+    db.session.commit()
 
     return redirect(url_for('.index'))
 
@@ -292,7 +293,7 @@ def create_club_post():
 def follow():
     Follower.follow(current_user, g.user)
     create_follower_notification(g.user, current_user)
-    DBSession.commit()
+    db.session.commit()
     return redirect(url_for('.index'))
 
 
@@ -300,7 +301,7 @@ def follow():
 @login_required
 def unfollow():
     Follower.unfollow(current_user, g.user)
-    DBSession.commit()
+    db.session.commit()
     return redirect(url_for('.index'))
 
 
@@ -310,7 +311,7 @@ def tracking_register():
         abort(403)
 
     g.user.generate_tracking_key()
-    DBSession.commit()
+    db.session.commit()
 
     return redirect(request.values.get('came_from', '/tracking/info'))
 
@@ -323,6 +324,6 @@ def recover_password():
     recover_user_password(g.user)
     flash('A password recovery email was sent to that user.')
 
-    DBSession.commit()
+    db.session.commit()
 
     return redirect(url_for('.index'))

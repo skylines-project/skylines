@@ -22,8 +22,9 @@ if not to_envvar(args.config):
 
 
 import re
+from skylines import db
 from skylines.config import environment
-from skylines.model import DBSession, AircraftModel
+from skylines.model import AircraftModel
 
 r = re.compile(r'^(.*?)\s*\.+[\.\s]*(\d+)\s*$')
 
@@ -37,7 +38,7 @@ for line in file(args.path):
             if model is None:
                 model = AircraftModel(name=name)
                 model.kind = 1
-                DBSession.add(model)
+                db.session.add(model)
             model.dmst_index = index
 
-DBSession.commit()
+db.session.commit()

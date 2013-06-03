@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """Unit test suite for the models of the application."""
 from nose.tools import assert_equals
-from skylines.model.session import DBSession
+from skylines import db
 from skylines.tests import setup_db, teardown_db
 
 __all__ = ['ModelTest']
@@ -32,16 +32,16 @@ class ModelTest(object):
             new_attrs.update(self.attrs)
             new_attrs.update(self.do_get_dependencies())
             self.obj = self.klass(**new_attrs)
-            DBSession.add(self.obj)
-            DBSession.flush()
+            db.session.add(self.obj)
+            db.session.flush()
             return self.obj
         except:
-            DBSession.rollback()
+            db.session.rollback()
             raise
 
     def tearDown(self):
         """Finish model test fixture."""
-        DBSession.rollback()
+        db.session.rollback()
 
     def do_get_dependencies(self):
         """Get model test dependencies.
@@ -58,6 +58,6 @@ class ModelTest(object):
 
     def test_query_obj(self):
         """Model objects can be queried"""
-        obj = DBSession.query(self.klass).one()
+        obj = db.session.query(self.klass).one()
         for key, value in self.attrs.iteritems():
             assert_equals(getattr(obj, key), value)

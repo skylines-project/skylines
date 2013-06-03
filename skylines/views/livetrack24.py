@@ -3,7 +3,8 @@ from datetime import datetime
 from flask import Blueprint, request
 from werkzeug.exceptions import BadRequest, NotFound, NotImplemented
 
-from skylines.model import DBSession, User, TrackingFix, TrackingSession
+from skylines import db
+from skylines.model import User, TrackingFix, TrackingSession
 
 lt24_blueprint = Blueprint('lt24', 'skylines')
 
@@ -90,8 +91,8 @@ def _sessionless_fix():
         raise NotFound('No pilot found with tracking key `{:X}`.'.format(key))
 
     fix = _parse_fix(pilot.id)
-    DBSession.add(fix)
-    DBSession.commit()
+    db.session.add(fix)
+    db.session.commit()
     return 'OK'
 
 
@@ -102,8 +103,8 @@ def _session_fix():
         raise NotFound('No open tracking session found with id `{d}`.'.format(session_id))
 
     fix = _parse_fix(session.pilot_id)
-    DBSession.add(fix)
-    DBSession.commit()
+    db.session.add(fix)
+    db.session.commit()
     return 'OK'
 
 
@@ -143,8 +144,8 @@ def _create_session():
         except ValueError:
             raise BadRequest('`vtype` has to be a valid integer.')
 
-    DBSession.add(session)
-    DBSession.commit()
+    db.session.add(session)
+    db.session.commit()
     return 'OK'
 
 
@@ -169,7 +170,7 @@ def _finish_session():
         except ValueError:
             raise BadRequest('`prid` must be an integer between 0 and 4.')
 
-    DBSession.commit()
+    db.session.commit()
     return 'OK'
 
 

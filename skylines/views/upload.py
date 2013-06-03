@@ -6,13 +6,14 @@ from flask import Blueprint, render_template, request, flash, redirect
 from flask.ext.babel import _, lazy_gettext as l_
 from werkzeug.datastructures import CombinedMultiDict
 
+from skylines import db
 from skylines.forms import upload, aircraft_model
 from skylines.lib import files
 from skylines.lib.decorators import login_required
 from skylines.lib.md5 import file_md5
 from skylines.lib.string import import_ascii
 from skylines.lib.xcsoar import analyse_flight
-from skylines.model import DBSession, User, Flight, IGCFile
+from skylines.model import User, Flight, IGCFile
 from skylines.model.notification import create_flight_notifications
 
 upload_blueprint = Blueprint('upload', 'skylines')
@@ -140,14 +141,14 @@ def index_post():
             continue
 
         flights.append((name, flight, None))
-        DBSession.add(igc_file)
-        DBSession.add(flight)
+        db.session.add(igc_file)
+        db.session.add(flight)
 
         create_flight_notifications(flight)
 
         success = True
 
-    DBSession.commit()
+    db.session.commit()
 
     return render_template(
         'upload/result.jinja', flights=flights, success=success,
@@ -201,7 +202,7 @@ def update():
         flight.competition_id = competition_id
         flight.time_modified = datetime.utcnow()
 
-    DBSession.commit()
+    db.session.commit()
 
     flash(_('Your flight(s) have been successfully updated.'))
     return redirect('/flights/latest')

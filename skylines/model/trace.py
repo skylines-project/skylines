@@ -1,19 +1,16 @@
 # -*- coding: utf-8 -*-
 
-from sqlalchemy import ForeignKey, Column
 from sqlalchemy.dialects import postgresql
-from sqlalchemy.orm import relationship, backref
 from sqlalchemy.types import String, Integer, DateTime, Interval
-from sqlalchemy.schema import Index
 from geoalchemy2.types import Geometry
 from geoalchemy2.elements import WKTElement
 from geoalchemy2.shape import to_shape
 
-from .base import DeclarativeBase
+from skylines import db
 from .geo import Location
 
 
-class Trace(DeclarativeBase):
+class Trace(db.Model):
     """
     This table saves the locations and visiting times of the turnpoints
     of an optimized Flight.
@@ -21,22 +18,22 @@ class Trace(DeclarativeBase):
 
     __tablename__ = 'traces'
 
-    id = Column(Integer, autoincrement=True, primary_key=True)
+    id = db.Column(Integer, autoincrement=True, primary_key=True)
 
-    flight_id = Column(
-        Integer, ForeignKey('flights.id', ondelete='CASCADE'), nullable=False)
-    flight = relationship(
+    flight_id = db.Column(
+        Integer, db.ForeignKey('flights.id', ondelete='CASCADE'), nullable=False)
+    flight = db.relationship(
         'Flight', innerjoin=True,
-        backref=backref('traces', passive_deletes=True))
+        backref=db.backref('traces', passive_deletes=True))
 
-    contest_type = Column(String, nullable=False)
-    trace_type = Column(String, nullable=False)
+    contest_type = db.Column(String, nullable=False)
+    trace_type = db.Column(String, nullable=False)
 
-    distance = Column(Integer)
-    duration = Column(Interval)
+    distance = db.Column(Integer)
+    duration = db.Column(Interval)
 
-    times = Column(postgresql.ARRAY(DateTime), nullable=False)
-    _locations = Column(
+    times = db.Column(postgresql.ARRAY(DateTime), nullable=False)
+    _locations = db.Column(
         'locations', Geometry('LINESTRING'), nullable=False)
 
     @property
@@ -58,6 +55,6 @@ class Trace(DeclarativeBase):
         wkt = "LINESTRING({})".format(','.join(points))
         self._locations = WKTElement(wkt, srid=4326)
 
-Index('traces_contest_idx',
-      Trace.flight_id, Trace.contest_type, Trace.trace_type,
-      unique=True)
+db.Index('traces_contest_idx',
+         Trace.flight_id, Trace.contest_type, Trace.trace_type,
+         unique=True)
