@@ -1,10 +1,9 @@
-# -*- coding: utf-8 -*-
 """Unit and functional test suite for SkyLines."""
 
 from skylines import db
 from skylines.websetup.bootstrap import bootstrap
 
-__all__ = ['setup_db', 'setup_app', 'teardown_db', 'url_for']
+__all__ = ['setup_db', 'setup_app', 'teardown_db']
 
 
 def setup_db():
