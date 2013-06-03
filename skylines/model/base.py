@@ -21,5 +21,3 @@ def monkey_patch_model():
 
 
 monkey_patch_model()
-
-metadata = db.metadata

@@ -22,7 +22,6 @@ from sqlalchemy.sql.expression import cast
 from sqlalchemy.dialects.postgresql import INET
 
 from skylines import db
-from .base import metadata
 from skylines.lib.sql import LowerCaseComparator
 from skylines.lib.formatter import units
 
@@ -34,7 +33,7 @@ __all__ = ['User', 'Group', 'Permission']
 # This is the association table for the many-to-many relationship between
 # groups and permissions. This is required by repoze.what.
 group_permission_table = Table(
-    'tg_group_permission', metadata,
+    'tg_group_permission', db.metadata,
     Column('group_id', Integer, ForeignKey('tg_group.id',
            onupdate="CASCADE", ondelete="CASCADE"), primary_key=True),
     Column('permission_id', Integer, ForeignKey('tg_permission.id',
@@ -44,7 +43,7 @@ group_permission_table = Table(
 # This is the association table for the many-to-many relationship between
 # groups and members - this is, the memberships. It's required by repoze.what.
 user_group_table = Table(
-    'tg_user_group', metadata,
+    'tg_user_group', db.metadata,
     Column('user_id', Integer, ForeignKey('tg_user.id',
            onupdate="CASCADE", ondelete="CASCADE"), primary_key=True),
     Column('group_id', Integer, ForeignKey('tg_group.id',
