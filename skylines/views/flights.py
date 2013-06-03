@@ -277,12 +277,12 @@ def unassigned():
 def pinned():
     # Check if we have cookies
     if request.cookies is None:
-        redirect(url_for('.index'))
+        return redirect(url_for('.index'))
 
     # Check for the 'pinnedFlights' cookie
     ids = request.cookies.get('SkyLines_pinnedFlights', None)
-    if ids is None:
-        redirect(url_for('.index'))
+    if not ids:
+        return redirect(url_for('.index'))
 
     try:
         # Split the string into integer IDs (%2C = comma)
