@@ -17,7 +17,8 @@ from tw.forms.validators import UnicodeString
 from sqlalchemy import func
 from sqlalchemy.orm import joinedload
 
-from skylines.model import DBSession, User, Group
+from skylines import db
+from skylines.model import User, Group
 from skylines.forms import BootstrapForm, club
 from skylines.lib.decorators import validate
 
@@ -44,7 +45,7 @@ class NewUserForm(AddRecordForm):
         'password': dict(label_text=l_('Password')),
     }
 
-    email_address = Field(TextField, All(UniqueValue(SAORMProvider(DBSession),
+    email_address = Field(TextField, All(UniqueValue(SAORMProvider(db.session),
                                                      __model__, 'email_address'),
                                          Email(not_empty=True)))
     name = Field(TextField, NotEmpty)
@@ -53,7 +54,7 @@ class NewUserForm(AddRecordForm):
     verify_password = PasswordField('verify_password',
                                     label_text=l_('Verify Password'))
 
-new_user_form = NewUserForm(DBSession)
+new_user_form = NewUserForm(db.session)
 
 
 @users_blueprint.route('/')
@@ -86,13 +87,13 @@ def new_post():
 
     user.created_ip = request.remote_addr
     user.generate_tracking_key()
-    DBSession.add(user)
+    db.session.add(user)
 
     pilots = Group.query(group_name='pilots').first()
     if pilots:
         pilots.users.append(user)
 
-    DBSession.commit()
+    db.session.commit()
 
     return redirect(url_for('index'))
 
@@ -188,7 +189,7 @@ def recover_email():
     recover_user_password(user)
     flash('Check your email, we have sent you a link to recover your password.')
 
-    DBSession.commit()
+    db.session.commit()
 
     return redirect(url_for('index'))
 
@@ -210,7 +211,7 @@ def recover_password():
 
     flash(_('Password changed.'))
 
-    DBSession.commit()
+    db.session.commit()
 
     return redirect(url_for('index'))
 
@@ -226,6 +227,6 @@ def generate_keys():
         if user.tracking_key is None:
             user.generate_tracking_key()
 
-    DBSession.commit()
+    db.session.commit()
 
     return redirect(url_for('.index'))

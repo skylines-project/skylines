@@ -5,7 +5,7 @@ from sqlalchemy.sql.expression import func
 from geoalchemy2.types import Geometry
 
 from .base import DeclarativeBase
-from .session import DBSession
+from skylines import db
 
 
 class TimeZone(DeclarativeBase):
@@ -25,7 +25,7 @@ class TimeZone(DeclarativeBase):
     def by_location(cls, location):
         location = func.ST_MakePoint(location.longitude, location.latitude)
         filter = func.ST_Contains(cls.the_geom, location)
-        zone = DBSession.query(cls.tzid).filter(filter).scalar()
+        zone = db.session.query(cls.tzid).filter(filter).scalar()
         if zone is None:
             return None
 

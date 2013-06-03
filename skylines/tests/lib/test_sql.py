@@ -2,8 +2,8 @@ import sys
 import nose
 from nose.tools import eq_, assert_raises
 
+from skylines import db
 from skylines.model.base import DeclarativeBase
-from skylines.model import DBSession
 from skylines.tests import setup_db, teardown_db
 from sqlalchemy import Column, Integer, String, Unicode
 
@@ -11,8 +11,8 @@ from sqlalchemy import Column, Integer, String, Unicode
 def setup():
     # Setup the database
     setup_db()
-    DBSession.add(TestTable(name='John Doe', uni='Jane and John Doe'))
-    DBSession.commit()
+    db.session.add(TestTable(name='John Doe', uni='Jane and John Doe'))
+    db.session.commit()
 
 
 def teardown():
@@ -31,17 +31,17 @@ class TestTable(DeclarativeBase):
 def test_weighted_ilike():
     """ String.weighted_ilike() works as expected """
 
-    eq_(DBSession.query(
+    eq_(db.session.query(
         TestTable.name.weighted_ilike('%John%', 1)).scalar(), 1)
-    eq_(DBSession.query(
+    eq_(db.session.query(
         TestTable.name.weighted_ilike('%John%', 5)).scalar(), 5)
-    eq_(DBSession.query(
+    eq_(db.session.query(
         TestTable.name.weighted_ilike('%John%', 100)).scalar(), 100)
 
-    eq_(DBSession.query(
+    eq_(db.session.query(
         TestTable.name.weighted_ilike('%John%')).scalar(), 1)
 
-    eq_(float(DBSession.query(
+    eq_(float(db.session.query(
         TestTable.name.weighted_ilike('%John%', 0.1)).scalar()), 0.1)
 
 

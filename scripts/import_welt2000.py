@@ -22,7 +22,8 @@ if not to_envvar(args.config):
     parser.error('Config file "{}" not found.'.format(args.config))
 
 
-from skylines.model import DBSession, Airport
+from skylines import db
+from skylines.model import Airport
 from skylines.lib.waypoints.welt2000 import get_database
 
 
@@ -38,7 +39,7 @@ for airport_w2k in welt2000:
 
     i += 1
     if i % 100 == 0:
-        DBSession.flush()
+        db.session.flush()
         print str(i) + ": " + airport_w2k.country_code + " " + airport_w2k.name
 
     airport = Airport()
@@ -55,6 +56,6 @@ for airport_w2k in welt2000:
     airport.frequency = airport_w2k.freq
     airport.type = airport_w2k.type
 
-    DBSession.add(airport)
+    db.session.add(airport)
 
-DBSession.commit()
+db.session.commit()

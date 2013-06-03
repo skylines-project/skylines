@@ -2,10 +2,11 @@ from flask import Blueprint, render_template, g, request, redirect, url_for, abo
 from flask.ext.babel import _
 from sqlalchemy import func
 
+from skylines import db
 from skylines.forms import club, pilot as pilot_forms
 from skylines.lib.dbutil import get_requested_record
 from skylines.lib.decorators import validate
-from skylines.model import DBSession, User, Group, Club
+from skylines.model import User, Group, Club
 
 club_blueprint = Blueprint('club', 'skylines')
 
@@ -55,7 +56,7 @@ def edit_post():
 
     g.club.name = request.form['name']
     g.club.website = request.form['website']
-    DBSession.commit()
+    db.session.commit()
 
     return redirect(url_for('.index'))
 
@@ -82,12 +83,12 @@ def create_pilot_post():
         club=g.club
     )
 
-    DBSession.add(pilot)
+    db.session.add(pilot)
 
     pilots = Group.query(group_name='pilots').first()
     if pilots:
         pilots.users.append(pilot)
 
-    DBSession.commit()
+    db.session.commit()
 
     return redirect(url_for('.pilots'))

@@ -24,7 +24,8 @@ if not to_envvar(args.config):
 
 import math
 from osgeo import ogr
-from skylines.model import DBSession, MountainWaveProject
+from skylines import db
+from skylines.model import MountainWaveProject
 from skylines.lib.string import isnumeric
 from geoalchemy2.elements import WKTElement
 from geoalchemy2.shape import from_shape
@@ -47,7 +48,7 @@ def main():
     ext_feature = mwp_ext_layer.GetFeature(0)
 
     # it seems we have some data in the files. clear mwp table first
-    DBSession.query(MountainWaveProject).delete()
+    db.session.query(MountainWaveProject).delete()
 
     i = 0
     j = 0
@@ -110,7 +111,7 @@ def main():
                                location.GetX(),
                                location.GetY())
 
-        DBSession.add(wave)
+        db.session.add(wave)
 
         if i % 100 == 0:
             print "inserting geometry " + str(i)
@@ -119,7 +120,7 @@ def main():
 
     mwp_center_file.Destroy()
     mwp_ext_file.Destroy()
-    DBSession.commit()
+    db.session.commit()
 
     print "added " + str(j) + " waves"
 

@@ -1,13 +1,13 @@
 from sqlalchemy.ext.declarative import declarative_base
 
-from .session import DBSession
 from .search import search_query
+from skylines import db
 
 
 class _BaseClass(object):
     @classmethod
     def query(cls, **kw):
-        q = DBSession.query(cls)
+        q = db.session.query(cls)
 
         if kw:
             q = q.filter_by(**kw)
@@ -28,9 +28,9 @@ DeclarativeBase = declarative_base(cls=_BaseClass)
 
 # There are two convenient ways for you to spare some typing.
 # You can have a query property on all your model classes by doing this:
-# DeclarativeBase.query = DBSession.query_property()
+# DeclarativeBase.query = db.session.query_property()
 # Or you can use a session-aware mapper as it was used in TurboGears 1:
-# DeclarativeBase = declarative_base(mapper=DBSession.mapper)
+# DeclarativeBase = declarative_base(mapper=db.session.mapper)
 
 # Global metadata.
 # The default metadata is the one from the declarative base.

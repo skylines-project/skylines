@@ -8,10 +8,11 @@ from subprocess import Popen, PIPE
 from sqlalchemy.sql.expression import and_
 
 from .path import helper_path
+from skylines import db
 from skylines.lib import files
 from skylines.lib.datetime import from_seconds_of_day
 from skylines.model import (
-    DBSession, Airport, Trace, FlightPhase, TimeZone, Location
+    Airport, Trace, FlightPhase, TimeZone, Location
 )
 
 log = logging.getLogger(__name__)
@@ -208,7 +209,7 @@ def save_phases(root, flight):
         ph.glide_rate = phdata['glide_rate']
         ph.count = 1
 
-        DBSession.add(ph)
+        db.session.add(ph)
 
     for statname in ["total", "left", "right", "mixed"]:
         phdata = root['performance']["circling_%s" % statname]
@@ -222,7 +223,7 @@ def save_phases(root, flight):
         ph.vario = phdata['vario']
         ph.count = phdata['count']
 
-        DBSession.add(ph)
+        db.session.add(ph)
 
     phdata = root['performance']['cruise_total']
     ph = FlightPhase(flight=flight)
@@ -238,7 +239,7 @@ def save_phases(root, flight):
     ph.glide_rate = phdata['glide_rate']
     ph.count = phdata['count']
 
-    DBSession.add(ph)
+    db.session.add(ph)
 
 
 def analyse_flight(flight, full=512, triangle=2048, sprint=64):

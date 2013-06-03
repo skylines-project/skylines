@@ -11,8 +11,8 @@ from geoalchemy2.types import Geometry
 from geoalchemy2.shape import to_shape, from_shape
 from shapely.geometry import Point
 
+from skylines import db
 from .base import DeclarativeBase
-from .session import DBSession
 from .auth import User
 from .geo import Location
 
@@ -101,7 +101,7 @@ class TrackingFix(DeclarativeBase):
                           order_by=cls.time.desc())
 
         # Create inner query
-        subq = DBSession \
+        subq = db.session \
             .query(cls.id, row_number.label('row_number')) \
             .join(cls.pilot) \
             .filter(cls.max_age_filter(max_age)) \

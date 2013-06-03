@@ -3,7 +3,7 @@ from sqlalchemy.types import Integer
 from geoalchemy2.types import Raster
 
 from .base import DeclarativeBase
-from .session import DBSession
+from skylines import db
 
 
 class Elevation(DeclarativeBase):
@@ -22,7 +22,7 @@ class Elevation(DeclarativeBase):
 
         elevation = cls.rast.ST_Value(location)
 
-        query = DBSession.query(elevation.label('elevation')) \
+        query = db.session.query(elevation.label('elevation')) \
             .filter(location.ST_Intersects(cls.rast)) \
             .filter(elevation != None)
 

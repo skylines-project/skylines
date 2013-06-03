@@ -7,7 +7,7 @@ from sqlalchemy.types import Integer, DateTime
 from sqlalchemy.orm import relationship
 
 from .base import DeclarativeBase
-from .session import DBSession
+from skylines import db
 
 
 class Follower(DeclarativeBase):
@@ -38,7 +38,7 @@ class Follower(DeclarativeBase):
         f = cls.query(source=source, destination=destination).first()
         if not f:
             f = Follower(source=source, destination=destination)
-            DBSession.add(f)
+            db.session.add(f)
 
     @classmethod
     def unfollow(cls, source, destination):

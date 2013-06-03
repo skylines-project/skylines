@@ -5,8 +5,8 @@ from sqlalchemy import ForeignKey, Column
 from sqlalchemy.orm import relationship, contains_eager
 from sqlalchemy.types import Integer, DateTime
 
+from skylines import db
 from .base import DeclarativeBase
-from .session import DBSession
 from .auth import User
 from .flight import Flight
 from .flight_comment import FlightComment
@@ -122,7 +122,7 @@ def create_flight_comment_notifications(comment):
     event = Event(type=Event.Type.FLIGHT_COMMENT,
                   actor=user, flight=flight, flight_comment=comment)
 
-    DBSession.add(event)
+    db.session.add(event)
 
     # Create set of potential recipients
     recipients = {flight.igc_file.owner, flight.pilot, flight.co_pilot}
@@ -132,7 +132,7 @@ def create_flight_comment_notifications(comment):
     # Create notifications for the recipients in the set
     for recipient in recipients:
         item = Notification(event=event, recipient=recipient)
-        DBSession.add(item)
+        db.session.add(item)
 
 
 def create_flight_notifications(flight):
@@ -145,15 +145,15 @@ def create_flight_notifications(flight):
                   actor_id=flight.igc_file.owner.id,
                   flight=flight)
 
-    DBSession.add(event)
+    db.session.add(event)
 
     # Create list of flight-related users
     senders = {flight.pilot_id, flight.co_pilot_id, flight.igc_file.owner.id}
     senders.discard(None)
 
     # Request followers/recipients of the flight-related users from the DB
-    followers = DBSession.query(Follower.source_id.label('id')) \
-                         .filter(Follower.destination_id.in_(senders))
+    followers = db.session.query(Follower.source_id.label('id')) \
+                          .filter(Follower.destination_id.in_(senders))
 
     # Determine the recipients
     recipients = set([follower.id for follower in followers])
@@ -164,7 +164,7 @@ def create_flight_notifications(flight):
     # Create notifications for the recipients
     for recipient in recipients:
         item = Notification(event=event, recipient_id=recipient)
-        DBSession.add(item)
+        db.session.add(item)
 
 
 def create_follower_notification(followed, follower):
@@ -174,8 +174,8 @@ def create_follower_notification(followed, follower):
 
     # Create the event
     event = Event(type=Event.Type.FOLLOWER, actor=follower)
-    DBSession.add(event)
+    db.session.add(event)
 
     # Create the notification
     item = Notification(event=event, recipient=followed)
-    DBSession.add(item)
+    db.session.add(item)

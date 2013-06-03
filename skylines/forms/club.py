@@ -6,12 +6,13 @@ from sprox.widgets import PropertySingleSelectField
 from tw.forms import TextField
 
 from .bootstrap import BootstrapForm
-from skylines.model import DBSession, User, Club
+from skylines import db
+from skylines.model import User, Club
 
 
 class SelectField(PropertySingleSelectField):
     def _my_update_params(self, d, nullable=False):
-        query = DBSession.query(Club.id, Club.name).order_by(Club.name)
+        query = db.session.query(Club.id, Club.name).order_by(Club.name)
         options = [(None, 'None')] + query.all()
         d['options'] = options
         return d
@@ -34,7 +35,7 @@ class SelectForm(EditableForm):
     club = SelectField
 
 
-select_form = SelectForm(DBSession)
+select_form = SelectForm(db.session)
 
 
 class NewForm(AddRecordForm):
@@ -47,7 +48,7 @@ class NewForm(AddRecordForm):
 
     name = TextField
 
-new_form = NewForm(DBSession)
+new_form = NewForm(db.session)
 
 
 class EditForm(EditableForm):
@@ -63,4 +64,4 @@ class EditForm(EditableForm):
     name = TextField
     website = Field(TextField, URL())
 
-edit_form = EditForm(DBSession)
+edit_form = EditForm(db.session)
