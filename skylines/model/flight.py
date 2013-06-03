@@ -13,13 +13,13 @@ from geoalchemy2.elements import WKTElement
 from geoalchemy2.shape import to_shape, from_shape
 from shapely.geometry import LineString
 
-from .base import DeclarativeBase
+from skylines import db
 from .geo import Location
 from .igcfile import IGCFile
 from .aircraft_model import AircraftModel
 
 
-class Flight(DeclarativeBase):
+class Flight(db.Model):
     __tablename__ = 'flights'
 
     id = Column(Integer, autoincrement=True, primary_key=True)

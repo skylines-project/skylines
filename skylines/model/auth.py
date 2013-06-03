@@ -21,7 +21,8 @@ from sqlalchemy.orm import relationship, synonym, column_property, backref
 from sqlalchemy.sql.expression import cast
 from sqlalchemy.dialects.postgresql import INET
 
-from .base import DeclarativeBase, metadata
+from skylines import db
+from .base import metadata
 from skylines.lib.sql import LowerCaseComparator
 from skylines.lib.formatter import units
 
@@ -51,7 +52,7 @@ user_group_table = Table(
 )
 
 
-class User(DeclarativeBase):
+class User(db.Model):
     """
     User definition.
 
@@ -326,7 +327,7 @@ Index('users_lower_email_address_idx',
       func.lower(User.email_address), unique=True)
 
 
-class Group(DeclarativeBase):
+class Group(db.Model):
     """
     Group definition for :mod:`repoze.what`.
 
@@ -359,7 +360,7 @@ class Group(DeclarativeBase):
         return self.group_name
 
 
-class Permission(DeclarativeBase):
+class Permission(db.Model):
     """
     Permission definition for :mod:`repoze.what`.
 

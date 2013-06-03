@@ -15,10 +15,9 @@ def get(cls, id):
     return cls.query().get(id)
 
 
-DeclarativeBase = db.Model
-DeclarativeBase.flask_query = DeclarativeBase.query
-DeclarativeBase.query = classmethod(query)
-DeclarativeBase.get = classmethod(get)
-DeclarativeBase.search_query = classmethod(search_query)
+db.Model.flask_query = db.Model.query
+db.Model.query = classmethod(query)
+db.Model.get = classmethod(get)
+db.Model.search_query = classmethod(search_query)
 
 metadata = db.metadata

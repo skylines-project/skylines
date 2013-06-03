@@ -1,16 +1,13 @@
-# -*- coding: utf-8 -*-
-
 from datetime import datetime
 
 from sqlalchemy import ForeignKey, Column
 from sqlalchemy.types import Integer, DateTime
 from sqlalchemy.orm import relationship
 
-from .base import DeclarativeBase
 from skylines import db
 
 
-class Follower(DeclarativeBase):
+class Follower(db.Model):
     __tablename__ = 'followers'
 
     id = Column(Integer, autoincrement=True, primary_key=True)

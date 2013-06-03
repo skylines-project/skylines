@@ -4,10 +4,10 @@ from sqlalchemy import ForeignKey, Column
 from sqlalchemy.orm import relationship, backref
 from sqlalchemy.types import Unicode, Integer, DateTime
 
-from .base import DeclarativeBase
+from skylines import db
 
 
-class FlightComment(DeclarativeBase):
+class FlightComment(db.Model):
     __tablename__ = 'flight_comments'
 
     id = Column(Integer, autoincrement=True, primary_key=True)

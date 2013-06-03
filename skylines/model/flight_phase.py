@@ -2,10 +2,10 @@ from sqlalchemy import ForeignKey, Column
 from sqlalchemy.orm import relationship, backref
 from sqlalchemy.types import Boolean, Numeric, Integer, DateTime, Interval
 
-from .base import DeclarativeBase
+from skylines import db
 
 
-class FlightPhase(DeclarativeBase):
+class FlightPhase(db.Model):
     __tablename__ = 'flight_phases'
 
     # Flight phase types

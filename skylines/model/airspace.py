@@ -8,10 +8,10 @@ from sqlalchemy.sql.expression import func
 from geoalchemy2.types import Geometry
 from geoalchemy2.elements import WKTElement
 
-from .base import DeclarativeBase
+from skylines import db
 
 
-class Airspace(DeclarativeBase):
+class Airspace(db.Model):
     __tablename__ = 'airspace'
 
     id = Column(Integer, autoincrement=True, primary_key=True)

@@ -6,10 +6,10 @@ from sqlalchemy.orm import relationship
 from sqlalchemy import Column, ForeignKey
 from sqlalchemy.types import Integer, Unicode, DateTime
 
-from .base import DeclarativeBase
+from skylines import db
 
 
-class Club(DeclarativeBase):
+class Club(db.Model):
     __tablename__ = 'clubs'
     __searchable_columns__ = ['name']
     __search_detail_columns__ = ['website']

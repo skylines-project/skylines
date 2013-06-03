@@ -8,12 +8,12 @@ from sqlalchemy.orm import relationship
 from sqlalchemy.sql.expression import and_
 from sqlalchemy.types import Integer, DateTime, String, Unicode, Date
 
-from .base import DeclarativeBase
+from skylines import db
 from skylines.lib import files
 from skylines.lib.igc import read_igc_headers
 
 
-class IGCFile(DeclarativeBase):
+class IGCFile(db.Model):
     __tablename__ = 'igc_files'
 
     id = Column(Integer, autoincrement=True, primary_key=True)

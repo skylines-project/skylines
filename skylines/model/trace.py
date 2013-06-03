@@ -9,11 +9,11 @@ from geoalchemy2.types import Geometry
 from geoalchemy2.elements import WKTElement
 from geoalchemy2.shape import to_shape
 
-from .base import DeclarativeBase
+from skylines import db
 from .geo import Location
 
 
-class Trace(DeclarativeBase):
+class Trace(db.Model):
     """
     This table saves the locations and visiting times of the turnpoints
     of an optimized Flight.

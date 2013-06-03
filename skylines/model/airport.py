@@ -9,12 +9,11 @@ from geoalchemy2.types import Geometry, Geography
 from geoalchemy2.elements import WKTElement
 from geoalchemy2.shape import to_shape
 
-from .base import DeclarativeBase
 from .geo import Location
 from skylines import db
 
 
-class Airport(DeclarativeBase):
+class Airport(db.Model):
     __tablename__ = 'airports'
     __searchable_columns__ = ['name', 'icao']
     __search_detail_columns__ = ['icao', 'frequency']

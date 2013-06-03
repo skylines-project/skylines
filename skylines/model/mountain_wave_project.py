@@ -8,10 +8,10 @@ from sqlalchemy.sql.expression import cast, func
 from geoalchemy2.types import Geography, Geometry
 from geoalchemy2.elements import WKTElement
 
-from .base import DeclarativeBase
+from skylines import db
 
 
-class MountainWaveProject(DeclarativeBase):
+class MountainWaveProject(db.Model):
     __tablename__ = 'mountain_wave_project'
 
     id = Column(Integer, autoincrement=True, primary_key=True)

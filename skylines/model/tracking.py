@@ -12,12 +12,11 @@ from geoalchemy2.shape import to_shape, from_shape
 from shapely.geometry import Point
 
 from skylines import db
-from .base import DeclarativeBase
 from .auth import User
 from .geo import Location
 
 
-class TrackingFix(DeclarativeBase):
+class TrackingFix(db.Model):
     __tablename__ = 'tracking_fixes'
 
     id = Column(Integer, autoincrement=True, primary_key=True)
@@ -123,7 +122,7 @@ class TrackingFix(DeclarativeBase):
 Index('tracking_fixes_pilot_time', TrackingFix.pilot_id, TrackingFix.time)
 
 
-class TrackingSession(DeclarativeBase):
+class TrackingSession(db.Model):
     __tablename__ = 'tracking_sessions'
 
     id = Column(Integer, autoincrement=True, primary_key=True)

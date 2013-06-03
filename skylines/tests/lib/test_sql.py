@@ -3,7 +3,6 @@ import nose
 from nose.tools import eq_, assert_raises
 
 from skylines import db
-from skylines.model.base import DeclarativeBase
 from skylines.tests import setup_db, teardown_db
 from sqlalchemy import Column, Integer, String, Unicode
 
@@ -20,7 +19,7 @@ def teardown():
     teardown_db()
 
 
-class TestTable(DeclarativeBase):
+class TestTable(db.Model):
     __tablename__ = 'ilike_test'
 
     id = Column(Integer, autoincrement=True, primary_key=True)

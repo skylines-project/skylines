@@ -4,11 +4,10 @@ from sqlalchemy.types import Integer, String
 from sqlalchemy.sql.expression import func
 from geoalchemy2.types import Geometry
 
-from .base import DeclarativeBase
 from skylines import db
 
 
-class TimeZone(DeclarativeBase):
+class TimeZone(db.Model):
     __tablename__ = 'tz_world'
 
     id = Column('gid', Integer, autoincrement=True, primary_key=True)

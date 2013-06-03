@@ -3,10 +3,10 @@
 from sqlalchemy import Column
 from sqlalchemy.types import Integer, Unicode
 
-from .base import DeclarativeBase
+from skylines import db
 
 
-class AircraftModel(DeclarativeBase):
+class AircraftModel(db.Model):
     __tablename__ = 'models'
 
     id = Column(Integer, autoincrement=True, primary_key=True)

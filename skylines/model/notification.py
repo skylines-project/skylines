@@ -6,14 +6,13 @@ from sqlalchemy.orm import relationship, contains_eager
 from sqlalchemy.types import Integer, DateTime
 
 from skylines import db
-from .base import DeclarativeBase
 from .auth import User
 from .flight import Flight
 from .flight_comment import FlightComment
 from .follower import Follower
 
 
-class Event(DeclarativeBase):
+class Event(db.Model):
     __tablename__ = 'events'
 
     id = Column(Integer, autoincrement=True, primary_key=True)
@@ -56,7 +55,7 @@ class Event(DeclarativeBase):
             .format(self.id, self.type).encode('utf-8')
 
 
-class Notification(DeclarativeBase):
+class Notification(db.Model):
     __tablename__ = 'notifications'
 
     id = Column(Integer, autoincrement=True, primary_key=True)
