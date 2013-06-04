@@ -264,7 +264,7 @@ def change_club_post():
                                   or_(Flight.pilot_id == g.user.id,
                                       IGCFile.owner_id == g.user.id)))
     for flight in flights:
-        flight.club_id = club
+        flight.club_id = g.user.club_id
 
     db.session.commit()
 
