@@ -8,7 +8,8 @@ from sprox.sa.provider import SAORMProvider
 from tw.forms import SingleSelectField, TextField
 
 from .bootstrap import BootstrapForm
-from skylines.model import DBSession, User
+from skylines import db
+from skylines.model import User
 
 
 class NewForm(AddRecordForm):
@@ -23,12 +24,12 @@ class NewForm(AddRecordForm):
     }
 
     email_address = Field(TextField, All(
-        UniqueValue(SAORMProvider(DBSession), __model__, 'email_address'),
+        UniqueValue(SAORMProvider(db.session), __model__, 'email_address'),
         validators.Email, validators.NotEmpty))
 
     name = Field(TextField, validators.NotEmpty)
 
-new_form = NewForm(DBSession)
+new_form = NewForm(db.session)
 
 
 class SelectField(SingleSelectField):

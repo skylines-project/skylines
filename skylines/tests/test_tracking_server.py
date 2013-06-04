@@ -2,8 +2,9 @@ from unittest import TestCase
 from nose.tools import eq_, ok_
 from mock import Mock, patch
 
+from skylines import db
 from skylines.tests import setup_app, teardown_db
-from skylines.model import DBSession, TrackingFix
+from skylines.model import TrackingFix
 
 import struct
 from skylines.tracking import server
@@ -33,7 +34,7 @@ class TrackingServerTest(TestCase):
     def tearDown(self):
         # Clear the database
         TrackingFix.query().delete()
-        DBSession.commit()
+        db.session.commit()
 
     def test_ping(self):
         """ Tracking server sends ACK when PING is received """
@@ -256,8 +257,8 @@ class TrackingServerTest(TestCase):
         """ Tracking server handles SQLAlchemyError gracefully """
 
         # Mock the transaction commit to fail
-        original = DBSession.commit
-        DBSession.commit = Mock(side_effect=SQLAlchemyError())
+        original = db.session.commit
+        db.session.commit = Mock(side_effect=SQLAlchemyError())
 
         # Create fake fix message
         message = self.create_fix_message(123456, 0)
@@ -267,9 +268,9 @@ class TrackingServerTest(TestCase):
 
         # Check if the message was properly received
         eq_(TrackingFix.query().count(), 0)
-        ok_(DBSession.commit.called)
+        ok_(db.session.commit.called)
 
-        DBSession.commit = original
+        db.session.commit = original
 
 if __name__ == "__main__":
     import sys

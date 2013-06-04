@@ -39,8 +39,8 @@ import subprocess
 from osgeo import ogr
 from geoalchemy2 import WKTElement
 
-from skylines import app
-from skylines.model import DBSession, Airspace
+from skylines import app, db
+from skylines.model import Airspace
 
 
 blacklist = dict()
@@ -187,7 +187,7 @@ def import_sua(filename, country_code):
         j += 1
 
     airspace_file.Destroy()
-    DBSession.commit()
+    db.session.commit()
 
     os.remove(temporary_file)
 
@@ -237,17 +237,17 @@ def import_openair(filename, country_code):
         j += 1
 
     airspace_file.Destroy()
-    DBSession.commit()
+    db.session.commit()
 
     print "added " + str(j) + " features for country " + country_code
 
 
 def remove_country(country_code):
     print "removing all entries for country_code " + country_code
-    query = DBSession.query(Airspace) \
+    query = db.session.query(Airspace) \
         .filter(Airspace.country_code == country_code)
     query.delete(synchronize_session=False)
-    DBSession.commit()
+    db.session.commit()
 
 
 def download_file(path, url):
@@ -328,7 +328,7 @@ def add_airspace(country_code, airspace_class, name, base, top, geom_str):
     airspace.top = top
     airspace.the_geom = WKTElement(geom_str, srid=4326)
 
-    DBSession.add(airspace)
+    db.session.add(airspace)
 
     return True
 

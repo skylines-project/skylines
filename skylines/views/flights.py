@@ -8,11 +8,12 @@ from sqlalchemy.sql.expression import or_, and_
 from sqlalchemy.orm import joinedload, contains_eager
 from sqlalchemy.orm.util import aliased
 
+from skylines import db
 from skylines.lib.datatables import GetDatatableRecords
 from skylines.lib.dbutil import get_requested_record
 from skylines.lib.helpers import truncate, country_name
 from skylines.model import (
-    DBSession, User, Club, Flight, IGCFile, AircraftModel,
+    User, Club, Flight, IGCFile, AircraftModel,
     Airport, FlightComment
 )
 
@@ -24,11 +25,11 @@ def _create_list(tab, kw, date=None, pilot=None, club=None, airport=None,
     pilot_alias = aliased(User, name='pilot')
     owner_alias = aliased(User, name='owner')
 
-    subq = DBSession \
+    subq = db.session \
         .query(FlightComment.flight_id, func.count('*').label('count')) \
         .group_by(FlightComment.flight_id).subquery()
 
-    flights = DBSession.query(Flight, subq.c.count) \
+    flights = db.session.query(Flight, subq.c.count) \
         .join(Flight.igc_file) \
         .options(contains_eager(Flight.igc_file)) \
         .join(owner_alias, IGCFile.owner) \
@@ -174,7 +175,7 @@ def date(date, latest=False):
 
 @flights_blueprint.route('/latest')
 def latest():
-    query = DBSession \
+    query = db.session \
         .query(func.max(Flight.date_local).label('date')) \
         .filter(Flight.takeoff_time < datetime.utcnow())
 
@@ -311,6 +312,6 @@ def igc_headers():
     for igc_file in igc_files:
         igc_file.update_igc_headers()
 
-    DBSession.commit()
+    db.session.commit()
 
     return redirect(url_for('.index'))

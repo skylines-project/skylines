@@ -4,8 +4,9 @@ from operator import itemgetter
 from flask import Blueprint, render_template, abort, request, url_for, redirect
 from sqlalchemy.orm import joinedload, contains_eager
 
+from skylines import db
 from skylines.lib.dbutil import get_requested_record
-from skylines.model import Event, Notification, DBSession
+from skylines.model import Event, Notification
 
 notifications_blueprint = Blueprint('notifications', 'skylines')
 
@@ -90,7 +91,7 @@ def clear():
     Notification.mark_all_read(request.identity['user'],
                                filter_func=filter_func)
 
-    DBSession.commit()
+    db.session.commit()
 
     return redirect(url_for('.index'))
 
@@ -105,7 +106,7 @@ def show(id):
         abort(403)
 
     notification.mark_read()
-    DBSession.commit()
+    db.session.commit()
 
     event = notification.event
 

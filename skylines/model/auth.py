@@ -14,14 +14,14 @@ import struct
 from datetime import datetime
 from hashlib import sha256
 
-from sqlalchemy import Table, ForeignKey, Column, Index, func
-from sqlalchemy.types import Unicode, Integer, BigInteger, SmallInteger, \
-    DateTime, Boolean, Interval, String
-from sqlalchemy.orm import relationship, synonym, column_property, backref
+from sqlalchemy.types import (
+    Unicode, Integer, BigInteger, SmallInteger,
+    DateTime, Boolean, Interval, String,
+)
 from sqlalchemy.sql.expression import cast
 from sqlalchemy.dialects.postgresql import INET
 
-from .base import DeclarativeBase, metadata
+from skylines import db
 from skylines.lib.sql import LowerCaseComparator
 from skylines.lib.formatter import units
 
@@ -32,26 +32,26 @@ __all__ = ['User', 'Group', 'Permission']
 
 # This is the association table for the many-to-many relationship between
 # groups and permissions. This is required by repoze.what.
-group_permission_table = Table(
-    'tg_group_permission', metadata,
-    Column('group_id', Integer, ForeignKey('tg_group.id',
-           onupdate="CASCADE", ondelete="CASCADE"), primary_key=True),
-    Column('permission_id', Integer, ForeignKey('tg_permission.id',
-           onupdate="CASCADE", ondelete="CASCADE"), primary_key=True)
+group_permission_table = db.Table(
+    'tg_group_permission', db.metadata,
+    db.Column('group_id', Integer, db.ForeignKey('tg_group.id',
+              onupdate="CASCADE", ondelete="CASCADE"), primary_key=True),
+    db.Column('permission_id', Integer, db.ForeignKey('tg_permission.id',
+              onupdate="CASCADE", ondelete="CASCADE"), primary_key=True)
 )
 
 # This is the association table for the many-to-many relationship between
 # groups and members - this is, the memberships. It's required by repoze.what.
-user_group_table = Table(
-    'tg_user_group', metadata,
-    Column('user_id', Integer, ForeignKey('tg_user.id',
-           onupdate="CASCADE", ondelete="CASCADE"), primary_key=True),
-    Column('group_id', Integer, ForeignKey('tg_group.id',
-           onupdate="CASCADE", ondelete="CASCADE"), primary_key=True)
+user_group_table = db.Table(
+    'tg_user_group', db.metadata,
+    db.Column('user_id', Integer, db.ForeignKey('tg_user.id',
+              onupdate="CASCADE", ondelete="CASCADE"), primary_key=True),
+    db.Column('group_id', Integer, db.ForeignKey('tg_group.id',
+              onupdate="CASCADE", ondelete="CASCADE"), primary_key=True)
 )
 
 
-class User(DeclarativeBase):
+class User(db.Model):
     """
     User definition.
 
@@ -62,55 +62,55 @@ class User(DeclarativeBase):
     __tablename__ = 'tg_user'
     __searchable_columns__ = ['name']
 
-    id = Column(Integer, autoincrement=True, primary_key=True)
+    id = db.Column(Integer, autoincrement=True, primary_key=True)
 
     # eMail address and name of the user
 
-    email_address = column_property(
-        Column(Unicode(255)), comparator_factory=LowerCaseComparator)
+    email_address = db.column_property(
+        db.Column(Unicode(255)), comparator_factory=LowerCaseComparator)
 
-    name = Column(Unicode(255), nullable=False)
+    name = db.Column(Unicode(255), nullable=False)
 
     # Hashed password
 
-    _password = Column('password', Unicode(128))
+    _password = db.Column('password', Unicode(128))
 
     # The user's club (optional)
 
-    club_id = Column(Integer, ForeignKey('clubs.id', ondelete='SET NULL'))
-    club = relationship('Club', foreign_keys=[club_id], backref='members')
+    club_id = db.Column(Integer, db.ForeignKey('clubs.id', ondelete='SET NULL'))
+    club = db.relationship('Club', foreign_keys=[club_id], backref='members')
 
     # Tracking key and delay in minutes
 
-    tracking_key = Column(BigInteger, index=True)
-    tracking_delay = Column(SmallInteger, nullable=False, default=0)
+    tracking_key = db.Column(BigInteger, index=True)
+    tracking_delay = db.Column(SmallInteger, nullable=False, default=0)
 
     # Time and IP of creation
 
-    created = Column(DateTime, default=datetime.utcnow)
-    created_ip = Column(INET)
+    created = db.Column(DateTime, default=datetime.utcnow)
+    created_ip = db.Column(INET)
 
     # Time and IP of the last login
 
-    login_time = Column(DateTime)
-    login_ip = Column(INET)
+    login_time = db.Column(DateTime)
+    login_ip = db.Column(INET)
 
     # Password recovery information
 
-    recover_key = Column(Integer)
-    recover_time = Column(DateTime)
-    recover_ip = Column(INET)
+    recover_key = db.Column(Integer)
+    recover_time = db.Column(DateTime)
+    recover_ip = db.Column(INET)
 
     # Units settings
 
-    distance_unit = Column(SmallInteger, nullable=False, default=1)
-    speed_unit = Column(SmallInteger, nullable=False, default=1)
-    lift_unit = Column(SmallInteger, nullable=False, default=0)
-    altitude_unit = Column(SmallInteger, nullable=False, default=0)
+    distance_unit = db.Column(SmallInteger, nullable=False, default=1)
+    speed_unit = db.Column(SmallInteger, nullable=False, default=1)
+    lift_unit = db.Column(SmallInteger, nullable=False, default=0)
+    altitude_unit = db.Column(SmallInteger, nullable=False, default=0)
 
     # Other settings
 
-    eye_candy = Column(Boolean, nullable=False, default=False)
+    eye_candy = db.Column(Boolean, nullable=False, default=False)
 
     ##############################
 
@@ -177,7 +177,7 @@ class User(DeclarativeBase):
         """Return the hashed version of the password."""
         return self._password
 
-    password = synonym(
+    password = db.synonym(
         '_password', descriptor=property(_get_password, _set_password))
 
     @classmethod
@@ -322,11 +322,11 @@ class User(DeclarativeBase):
                                               settings['altitude_unit'])
 
 
-Index('users_lower_email_address_idx',
-      func.lower(User.email_address), unique=True)
+db.Index('users_lower_email_address_idx',
+         db.func.lower(User.email_address), unique=True)
 
 
-class Group(DeclarativeBase):
+class Group(db.Model):
     """
     Group definition for :mod:`repoze.what`.
 
@@ -336,19 +336,19 @@ class Group(DeclarativeBase):
 
     __tablename__ = 'tg_group'
 
-    # Columns
+    # db.Columns
 
-    id = Column(Integer, autoincrement=True, primary_key=True)
+    id = db.Column(Integer, autoincrement=True, primary_key=True)
 
-    group_name = Column(Unicode(16), unique=True, nullable=False)
+    group_name = db.Column(Unicode(16), unique=True, nullable=False)
 
-    name = Column(Unicode(255))
+    name = db.Column(Unicode(255))
 
-    created = Column(DateTime, default=datetime.utcnow)
+    created = db.Column(DateTime, default=datetime.utcnow)
 
     # Relations
 
-    users = relationship('User', secondary=user_group_table, backref='groups')
+    users = db.relationship('User', secondary=user_group_table, backref='groups')
 
     # Special methods
 
@@ -359,7 +359,7 @@ class Group(DeclarativeBase):
         return self.group_name
 
 
-class Permission(DeclarativeBase):
+class Permission(db.Model):
     """
     Permission definition for :mod:`repoze.what`.
 
@@ -369,19 +369,19 @@ class Permission(DeclarativeBase):
 
     __tablename__ = 'tg_permission'
 
-    # Columns
+    # db.Columns
 
-    id = Column(Integer, autoincrement=True, primary_key=True)
+    id = db.Column(Integer, autoincrement=True, primary_key=True)
 
-    permission_name = Column(Unicode(63), unique=True, nullable=False)
+    permission_name = db.Column(Unicode(63), unique=True, nullable=False)
 
-    description = Column(Unicode(255))
+    description = db.Column(Unicode(255))
 
     # Relations
 
-    groups = relationship(
+    groups = db.relationship(
         'Group', secondary=group_permission_table,
-        backref=backref('permissions', lazy='joined'))
+        backref=db.backref('permissions', lazy='joined'))
 
     # Special methods
 

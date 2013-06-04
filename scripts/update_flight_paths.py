@@ -23,7 +23,8 @@ if not to_envvar(args.config):
 
 from sqlalchemy.orm import joinedload
 from sqlalchemy.sql.expression import or_
-from skylines.model import DBSession, Flight
+from skylines import db
+from skylines.model import Flight
 
 
 def do(flight):
@@ -40,7 +41,7 @@ def apply_and_commit(func, q):
             n_failed += 1
     if n_success > 0:
         print "commit"
-        DBSession.commit()
+        db.session.commit()
     return n_success, n_failed
 
 
@@ -55,7 +56,7 @@ def incremental(func, q):
             break
         offset += n_failed
 
-q = DBSession.query(Flight)
+q = db.session.query(Flight)
 q = q.options(joinedload(Flight.igc_file))
 if args.ids:
     apply_and_commit(do, q.filter(Flight.id.in_(args.ids)))

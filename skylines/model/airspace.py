@@ -2,29 +2,27 @@
 
 from datetime import datetime
 
-from sqlalchemy import Column
 from sqlalchemy.types import Integer, String, DateTime
-from sqlalchemy.sql.expression import func
 from geoalchemy2.types import Geometry
 from geoalchemy2.elements import WKTElement
 
-from .base import DeclarativeBase
+from skylines import db
 
 
-class Airspace(DeclarativeBase):
+class Airspace(db.Model):
     __tablename__ = 'airspace'
 
-    id = Column(Integer, autoincrement=True, primary_key=True)
-    time_created = Column(DateTime, nullable=False, default=datetime.utcnow)
-    time_modified = Column(DateTime, nullable=False, default=datetime.utcnow)
+    id = db.Column(Integer, autoincrement=True, primary_key=True)
+    time_created = db.Column(DateTime, nullable=False, default=datetime.utcnow)
+    time_modified = db.Column(DateTime, nullable=False, default=datetime.utcnow)
 
-    the_geom = Column(Geometry('POLYGON'))
+    the_geom = db.Column(Geometry('POLYGON'))
 
-    name = Column(String(), nullable=False)
-    airspace_class = Column(String(3), nullable=False)
-    base = Column(String(30), nullable=False)
-    top = Column(String(30), nullable=False)
-    country_code = Column(String(2), nullable=False)
+    name = db.Column(String(), nullable=False)
+    airspace_class = db.Column(String(3), nullable=False)
+    base = db.Column(String(30), nullable=False)
+    top = db.Column(String(30), nullable=False)
+    country_code = db.Column(String(2), nullable=False)
 
     def __repr__(self):
         return ('<Airspace: id=%d name=\'%s\'>' % (self.id, self.name)).encode('utf-8')
@@ -33,4 +31,4 @@ class Airspace(DeclarativeBase):
     def get_info(cls, location):
         '''Returns a query object of all airspaces at the location'''
         return cls.query() \
-            .filter(func.ST_Intersects(WKTElement(location.to_wkt(), srid=4326), cls.the_geom))
+            .filter(cls.the_geom.ST_Contains(WKTElement(location.to_wkt(), srid=4326)))

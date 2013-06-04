@@ -1,37 +1,23 @@
-from sqlalchemy.ext.declarative import declarative_base
-
-from .session import DBSession
 from .search import search_query
+from skylines import db
 
 
-class _BaseClass(object):
-    @classmethod
+def monkey_patch_model():
     def query(cls, **kw):
-        q = DBSession.query(cls)
+        q = db.session.query(cls)
 
         if kw:
             q = q.filter_by(**kw)
 
         return q
 
-    @classmethod
     def get(cls, id):
         return cls.query().get(id)
 
-    search_query = classmethod(search_query)
+    db.Model.flask_query = db.Model.query
+    db.Model.query = classmethod(query)
+    db.Model.get = classmethod(get)
+    db.Model.search_query = classmethod(search_query)
 
 
-# Base class for all of our model classes: By default, the data model is
-# defined with SQLAlchemy's declarative extension, but if you need more
-# control, you can switch to the traditional method.
-DeclarativeBase = declarative_base(cls=_BaseClass)
-
-# There are two convenient ways for you to spare some typing.
-# You can have a query property on all your model classes by doing this:
-# DeclarativeBase.query = DBSession.query_property()
-# Or you can use a session-aware mapper as it was used in TurboGears 1:
-# DeclarativeBase = declarative_base(mapper=DBSession.mapper)
-
-# Global metadata.
-# The default metadata is the one from the declarative base.
-metadata = DeclarativeBase.metadata
+monkey_patch_model()

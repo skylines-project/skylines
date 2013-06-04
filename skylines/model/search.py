@@ -3,7 +3,7 @@ import shlex
 from sqlalchemy import literal_column, cast, desc, Unicode
 from sqlalchemy.dialects.postgresql import array
 
-from .session import DBSession
+from skylines import db
 
 
 PATTERNS = [
@@ -52,7 +52,7 @@ def search_query(cls, tokens,
         details = [literal_column('NULL')]
 
     # Create a query object
-    query = DBSession.query(
+    query = db.session.query(
         cls_name.label('model'), cls.id.label('id'),
         cls.name.label('name'), array(details).label('details'),
         weight.label('weight'))

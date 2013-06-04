@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
 """The application's model objects"""
 
-from .base import metadata
-from .session import DBSession
+import skylines.model.base
 
 # Import your model modules here.
 from .aircraft_model import AircraftModel

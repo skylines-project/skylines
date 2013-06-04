@@ -5,7 +5,7 @@ from sqlalchemy.sql.expression import cast
 from geoalchemy2.types import Geometry, Geography
 from geoalchemy2.shape import to_shape
 
-from .session import DBSession
+from skylines import db
 from skylines.lib.geo import geographic_distance
 
 
@@ -55,7 +55,7 @@ class Location(object):
         # Calculate center points of each polygon
         locations = func.ST_Centroid(dump)
 
-        query = DBSession.query(locations.label('location'))
+        query = db.session.query(locations.label('location'))
 
         if filter is not None:
             query = query.filter(filter)

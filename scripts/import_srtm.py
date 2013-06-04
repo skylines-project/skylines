@@ -25,8 +25,7 @@ if not to_envvar(args.config):
 import os.path
 import subprocess
 from zipfile import ZipFile
-from skylines import app
-from skylines.model.session import DBSession
+from skylines import app, db
 
 SERVER_URL = 'http://download.xcsoar.org/mapgen/data/srtm3/'
 
@@ -105,7 +104,7 @@ for i, line in enumerate(raster2pgsql.stdout):
     if i % 100 == 0 and i != 0:
         print i
 
-    DBSession.execute(line)
+    db.session.execute(line)
 
 
 # Delete temporary files
