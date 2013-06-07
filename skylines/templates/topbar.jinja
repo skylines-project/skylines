@@ -87,13 +87,11 @@
 {%- endmacro %}
 
 {%- macro _notification_item(active_page) -%}
-{%- with notifications = request.identity['notifications'] %}
 <li{% if active_page == 'notifications' %} class="active"{% endif %}>
     <a href="{{ url_for('notifications.index') }}" title="{{ _('Notifications') }}">
-        <span class="badge{% if notifications != 0 %} badge-warning{% endif %}">{{ notifications }}</span>
+        <span class="badge{% if g.notifications != 0 %} badge-warning{% endif %}">{{ g.notifications }}</span>
     </a>
 </li>
-{%- endwith %}
 {%- endmacro %}
 
 {%- macro _user_dropdown(active_page) -%}

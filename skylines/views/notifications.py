@@ -1,7 +1,8 @@
 from collections import defaultdict
 from operator import itemgetter
 
-from flask import Blueprint, render_template, abort, request, url_for, redirect
+from flask import Blueprint, render_template, abort, request, url_for, redirect, g
+from flask.ext.login import current_user
 from sqlalchemy.orm import joinedload, contains_eager
 
 from skylines import db
@@ -13,8 +14,8 @@ notifications_blueprint = Blueprint('notifications', 'skylines')
 
 @notifications_blueprint.before_app_request
 def inject_notification_count():
-    if request.identity:
-        request.identity['notifications'] = Notification.count_unread(request.identity['user'])
+    if not current_user.is_anonymous():
+        g.notifications = Notification.count_unread(current_user)
 
 
 def _filter_query(query, args):
