@@ -111,7 +111,7 @@
 
     pinButton($("#pinned"), {{ flight.id }});
 
-    $.getScript("http://maps.google.com/maps/api/js?v=3.7&sensor=false&callback=addGoogleLayer");
+    $.getScript("https://maps.google.com/maps/api/js?v=3.7&sensor=false&callback=addGoogleLayer");
     addBingLayers("{{ config.get('SKYLINES_BING_API_KEY', 'null') }}");
     addReliefLayer();
 
