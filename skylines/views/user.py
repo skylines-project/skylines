@@ -318,7 +318,7 @@ def tracking_register():
 
 @user_blueprint.route('/recover_password')
 def recover_password():
-    if not request.identity or not request.identity['user'].has_permission('manage'):
+    if not request.identity or not request.identity['user'].is_manager():
         abort(403)
 
     recover_user_password(g.user)

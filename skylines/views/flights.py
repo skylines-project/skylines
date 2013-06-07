@@ -298,7 +298,7 @@ def pinned():
 def igc_headers():
     """Hidden method that parses all missing IGC headers."""
 
-    if not request.identity or not request.identity['user'].has_permission('manage'):
+    if not request.identity or not request.identity['user'].is_manager():
         abort(403)
 
     igc_files = IGCFile.query().filter(or_(

@@ -141,12 +141,12 @@ class Flight(db.Model):
         return identity and \
             (self.igc_file.owner_id == identity['user'].id or
              self.pilot_id == identity['user'].id or
-             identity['user'].has_permission('manage'))
+             identity['user'].is_manager())
 
     def may_delete(self, identity):
         return identity and \
             (self.igc_file.owner_id == identity['user'].id or
-             identity['user'].has_permission('manage'))
+             identity['user'].is_manager())
 
     @classmethod
     def get_largest(cls):

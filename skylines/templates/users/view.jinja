@@ -147,7 +147,7 @@
         <a href="{{ url_for('.change_password') }}" class="btn">{% trans %}Change Password{% endtrans %}</a>
         {%- endif %}
 
-        {% if request.identity and request.identity['user'].has_permission('manage') -%}
+        {% if request.identity and request.identity['user'].is_manager() -%}
         <a href="{{ url_for('.recover_password') }}" class="btn">{% trans %}Recover Password{% endtrans %}</a>
         {%- endif %}
 

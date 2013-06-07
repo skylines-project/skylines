@@ -252,6 +252,9 @@ class User(db.Model):
 
         return False
 
+    def is_manager(self):
+        return self.has_permission('manage')
+
     ##############################
 
     def generate_recover_key(self, ip):
@@ -270,7 +273,7 @@ class User(db.Model):
         return identity and \
             (self.id == identity['user'].id or
              (self.password is None and self.club_id == identity['user'].club_id) or
-             identity['user'].has_permission('manage'))
+             identity['user'].is_manager())
 
     ##############################
 
