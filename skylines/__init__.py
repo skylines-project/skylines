@@ -112,12 +112,6 @@ class SkyLines(Flask):
             if not current_user.is_anonymous():
                 request.identity['user'] = current_user
 
-                request.identity['groups'] = \
-                    [g.group_name for g in current_user.groups]
-
-                request.identity['permissions'] = \
-                    [p.permission_name for p in current_user.permissions]
-
         @self.context_processor
         def inject_helpers_lib():
             return dict(h=helpers)
