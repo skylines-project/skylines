@@ -32,4 +32,4 @@ class Club(db.Model):
     def is_writable(self, identity):
         return identity and \
             (self.id == identity['user'].club_id or
-             'manage' in identity['permissions'])
+             identity['user'].has_permission('manage'))

@@ -43,10 +43,10 @@ class IGCFile(db.Model):
         return identity and \
             (self.owner_id == identity['user'].id or
              self.pilot_id == identity['user'].id or
-             'manage' in identity['permissions'])
+             identity['user'].has_permission('manage'))
 
     def may_delete(self, identity):
-        return identity and 'manage' in identity['permissions']
+        return identity and identity['user'].has_permission('manage')
 
     def update_igc_headers(self):
         path = files.filename_to_path(self.filename)

@@ -245,6 +245,13 @@ class User(db.Model):
             perms = perms | set(g.permissions)
         return perms
 
+    def has_permission(self, permission):
+        for p in self.permissions:
+            if p.permission_name == permission:
+                return True
+
+        return False
+
     ##############################
 
     def generate_recover_key(self, ip):
@@ -263,7 +270,7 @@ class User(db.Model):
         return identity and \
             (self.id == identity['user'].id or
              (self.password is None and self.club_id == identity['user'].club_id) or
-             'manage' in identity['permissions'])
+             identity['user'].has_permission('manage'))
 
     ##############################
 

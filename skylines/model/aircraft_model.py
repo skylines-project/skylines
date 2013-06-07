@@ -25,7 +25,7 @@ class AircraftModel(db.Model):
         return ('<AircraftModel: id=%d name=\'%s\'>' % (self.id, self.name)).encode('utf-8')
 
     def is_writable(self, identity):
-        return identity and 'manage' in identity['permissions']
+        return identity and identity['user'].has_permission('manage')
 
     @classmethod
     def by_name(cls, name):
