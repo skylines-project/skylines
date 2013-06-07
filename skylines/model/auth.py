@@ -265,15 +265,15 @@ class User(db.Model):
 
     ##############################
 
-    def is_readable(self, identity):
+    def is_readable(self, user):
         """Does the current user have full read access to this object?"""
-        return self.is_writable(identity)
+        return self.is_writable(user)
 
-    def is_writable(self, identity):
-        return identity and \
-            (self.id == identity['user'].id or
-             (self.password is None and self.club_id == identity['user'].club_id) or
-             identity['user'].is_manager())
+    def is_writable(self, user):
+        return user and \
+            (self.id == user.id or
+             (self.password is None and self.club_id == user.club_id) or
+             user.is_manager())
 
     ##############################
 

@@ -39,14 +39,14 @@ class IGCFile(db.Model):
     def by_md5(cls, _md5):
         return cls.query(md5=_md5).first()
 
-    def is_writable(self, identity):
-        return identity and \
-            (self.owner_id == identity['user'].id or
-             self.pilot_id == identity['user'].id or
-             identity['user'].is_manager())
+    def is_writable(self, user):
+        return user and \
+            (self.owner_id == user.id or
+             self.pilot_id == user.id or
+             user.is_manager())
 
-    def may_delete(self, identity):
-        return identity and identity['user'].is_manager()
+    def may_delete(self, user):
+        return user and user.is_manager()
 
     def update_igc_headers(self):
         path = files.filename_to_path(self.filename)

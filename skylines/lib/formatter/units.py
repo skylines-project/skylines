@@ -67,7 +67,7 @@ def unitid(options, name):
 
 def _get_setting(name, default=None):
     if request.identity:
-        return getattr(request.identity['user'], name)
+        return getattr(request.identity, name)
     else:
         return default
 

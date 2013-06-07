@@ -64,7 +64,7 @@ def IterateUploadFiles(upload):
 def index():
     return render_template(
         'generic/form.jinja', active_page='upload', title=_("Upload Flight"),
-        form=upload.form, values=dict(pilot=request.identity['user'].id))
+        form=upload.form, values=dict(pilot=request.identity.id))
 
 
 @upload_blueprint.route('/', methods=['POST'])
@@ -76,7 +76,7 @@ def index_post():
     except:
         return index()
 
-    user = request.identity['user']
+    user = request.identity
 
     pilot_id = request.form.get('pilot', None, type=int)
     pilot = pilot_id and User.get(int(pilot_id))

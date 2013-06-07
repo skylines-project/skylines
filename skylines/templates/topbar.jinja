@@ -95,7 +95,7 @@
 {%- endmacro %}
 
 {%- macro _user_dropdown(active_page) -%}
-{%- with user=request.identity['user'] %}
+{%- with user=request.identity %}
 <li class="dropdown {% if active_page == 'settings' %}active{% endif %}">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown">
       {{ user|e }} <i class="icon-caret-down"></i>

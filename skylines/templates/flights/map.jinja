@@ -22,7 +22,7 @@
 <link href="{{ ASSET_URL }}" rel="stylesheet" type="text/css" />
 {%- endassets %}
 
-{%- if request.identity and request.identity['user'].eye_candy -%}
+{%- if request.identity and request.identity.eye_candy -%}
 <link href="/css/eye_candy/OpenLayers.css" rel="stylesheet" type="text/css" />
 {%- endif %}
 

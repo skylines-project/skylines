@@ -45,7 +45,7 @@
   <li class="active"><a href="{{ url_for('.index', page='club', id=club.id) }}">{{ club|e }}</a></li>
   {%- endif %}
 
-  {% with my_club=request.identity and request.identity['user'] and request.identity['user'].club  -%}
+  {% with my_club=request.identity and request.identity.club  -%}
   {% if my_club and club != my_club -%}
   <li><a href="{{ url_for('.index', page='club', id=my_club.id) }}">{{ my_club|e }}</a></li>
   {%- endif %}
@@ -55,9 +55,9 @@
   <li class="active"><a href="{{ url_for('.index', page='pilot', id=pilot.id) }}">{{ pilot|e }}</a></li>
   {%- endif %}
 
-  {% with my_club=request.identity and request.identity['user'] -%}
-  {% if my_club and pilot != my_club -%}
-  <li><a href="{{ url_for('.index', page='pilot', id=my_club.id) }}">{{ my_club|e }}</a></li>
+  {% with my_pilot=request.identity -%}
+  {% if my_pilot and pilot != my_pilot -%}
+  <li><a href="{{ url_for('.index', page='pilot', id=my_pilot.id) }}">{{ my_pilot|e }}</a></li>
   {%- endif %}
   {%- endwith %}
 </ul>

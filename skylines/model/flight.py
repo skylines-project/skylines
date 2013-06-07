@@ -137,16 +137,14 @@ class Flight(db.Model):
 
         return cls.query().filter_by(igc_file=file).first()
 
-    def is_writable(self, identity):
-        return identity and \
-            (self.igc_file.owner_id == identity['user'].id or
-             self.pilot_id == identity['user'].id or
-             identity['user'].is_manager())
+    def is_writable(self, user):
+        return user and \
+            (self.igc_file.owner_id == user.id or
+             self.pilot_id == user.id or
+             user.is_manager())
 
-    def may_delete(self, identity):
-        return identity and \
-            (self.igc_file.owner_id == identity['user'].id or
-             identity['user'].is_manager())
+    def may_delete(self, user):
+        return user and (self.igc_file.owner_id == user.id or user.is_manager())
 
     @classmethod
     def get_largest(cls):

@@ -220,7 +220,7 @@ def recover_password():
 def generate_keys():
     """Hidden method that generates missing tracking keys."""
 
-    if not request.identity or not request.identity['user'].is_manager():
+    if not request.identity or not request.identity.is_manager():
         abort(403)
 
     for user in User.query():

@@ -34,7 +34,7 @@ def index():
     if not request.identity:
         abort(401)
 
-    query = Notification.query_unread(request.identity['user']) \
+    query = Notification.query_unread(request.identity) \
         .join('event') \
         .options(contains_eager('event')) \
         .options(joinedload('event.actor')) \
@@ -89,8 +89,7 @@ def clear():
     def filter_func(query):
         return _filter_query(query, request.args)
 
-    Notification.mark_all_read(request.identity['user'],
-                               filter_func=filter_func)
+    Notification.mark_all_read(request.identity, filter_func=filter_func)
 
     db.session.commit()
 
@@ -103,7 +102,7 @@ def show(id):
         abort(401)
 
     notification = get_requested_record(Notification, id)
-    if request.identity['user'] != notification.recipient:
+    if request.identity != notification.recipient:
         abort(403)
 
     notification.mark_read()

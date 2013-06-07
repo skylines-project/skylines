@@ -24,8 +24,8 @@ class AircraftModel(db.Model):
     def __repr__(self):
         return ('<AircraftModel: id=%d name=\'%s\'>' % (self.id, self.name)).encode('utf-8')
 
-    def is_writable(self, identity):
-        return identity and identity['user'].is_manager()
+    def is_writable(self, user):
+        return user and user.is_manager()
 
     @classmethod
     def by_name(cls, name):

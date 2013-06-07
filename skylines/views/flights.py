@@ -211,7 +211,7 @@ def my():
     if not request.identity:
         abort(404)
 
-    return redirect(url_for('.pilot', id=request.identity['user'].id))
+    return redirect(url_for('.pilot', id=request.identity.id))
 
 
 @flights_blueprint.route('/club/<int:id>')
@@ -239,7 +239,7 @@ def my_club():
     if not request.identity:
         abort(404)
 
-    return redirect(url_for('.club', id=request.identity['user'].club.id))
+    return redirect(url_for('.club', id=request.identity.club.id))
 
 
 @flights_blueprint.route('/airport/<int:id>')
@@ -269,7 +269,7 @@ def unassigned():
         abort(404)
 
     f = and_(Flight.pilot_id is None,
-             IGCFile.owner == request.identity['user'])
+             IGCFile.owner == request.identity)
 
     return _create_list('unassigned', request.args, filter=f)
 
@@ -298,7 +298,7 @@ def pinned():
 def igc_headers():
     """Hidden method that parses all missing IGC headers."""
 
-    if not request.identity or not request.identity['user'].is_manager():
+    if not request.identity or not request.identity.is_manager():
         abort(403)
 
     igc_files = IGCFile.query().filter(or_(

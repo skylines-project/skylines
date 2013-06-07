@@ -21,7 +21,7 @@
 <link href="{{ ASSET_URL }}" rel="stylesheet" type="text/css" />
 {%- endassets %}
 
-{%- if request.identity and request.identity['user'].eye_candy -%}
+{%- if request.identity and request.identity.eye_candy -%}
 <link href="/css/eye_candy/OpenLayers.css" rel="stylesheet" type="text/css" />
 {%- endif %}
 {%- endif %}
@@ -147,12 +147,12 @@
         <a href="{{ url_for('.change_password') }}" class="btn">{% trans %}Change Password{% endtrans %}</a>
         {%- endif %}
 
-        {% if request.identity and request.identity['user'].is_manager() -%}
+        {% if request.identity and request.identity.is_manager() -%}
         <a href="{{ url_for('.recover_password') }}" class="btn">{% trans %}Recover Password{% endtrans %}</a>
         {%- endif %}
 
-        {% if request.identity and request.identity['user'] != user -%}
-          {% if request.identity['user'].follows(user) -%}
+        {% if request.identity and request.identity != user -%}
+          {% if request.identity.follows(user) -%}
             <a href="{{ url_for('.unfollow') }}" class="btn">{% trans %}Unfollow{% endtrans %}</a>
           {%- else %}
             <a href="{{ url_for('.follow') }}" class="btn">{% trans %}Follow{% endtrans %}</a>

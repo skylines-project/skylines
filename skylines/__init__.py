@@ -106,11 +106,10 @@ class SkyLines(Flask):
         def inject_request_identity():
             """ for compatibility with tg2 """
 
-            if not hasattr(request, 'identity'):
-                request.identity = {}
+            request.identity = None
 
             if not current_user.is_anonymous():
-                request.identity['user'] = current_user
+                request.identity = current_user
 
         @self.context_processor
         def inject_helpers_lib():

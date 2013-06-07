@@ -348,7 +348,7 @@ def near():
 class PilotSelectField(PropertySingleSelectField):
     def _my_update_params(self, d, nullable=False):
         query = db.session.query(User.id, User.name) \
-            .filter(User.club_id == request.identity['user'].club_id) \
+            .filter(User.club_id == request.identity.club_id) \
             .order_by(User.name)
         options = [(None, 'None')] + query.all()
         d['options'] = options
@@ -380,7 +380,7 @@ def change_pilot():
     return render_template(
         'generic/form.jinja',
         active_page='flights', title=_('Select Pilot'),
-        user=request.identity['user'],
+        user=request.identity,
         include_after='flights/after_change_pilot.jinja',
         form=select_pilot_form, values=g.flight)
 
@@ -502,7 +502,7 @@ def add_comment():
         return redirect(url_for('.index'))
 
     comment = FlightComment()
-    comment.user = request.identity['user']
+    comment.user = request.identity
     comment.flight = g.flight
     comment.text = text
 
@@ -517,7 +517,7 @@ def add_comment():
 def analysis():
     """Hidden method that restarts flight analysis."""
 
-    if not request.identity or not request.identity['user'].is_manager():
+    if not request.identity or not request.identity.is_manager():
         abort(403)
 
     analyse_flight(g.flight)

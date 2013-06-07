@@ -21,7 +21,7 @@ Live Tracking <small>of {{ pilot }}</small>
   <link href="{{ ASSET_URL }}" rel="stylesheet" type="text/css" />
   {%- endassets %}
 
-  {%- if request.identity and request.identity['user'].eye_candy -%}
+  {%- if request.identity and request.identity.eye_candy -%}
   <link href="/css/eye_candy/OpenLayers.css" rel="stylesheet" type="text/css" />
   {%- endif %}
 {%- endif %}
@@ -159,7 +159,7 @@ Live Tracking <small>of {{ pilot }}</small>
     </p>
     {%- endif %}
 
-    {% if request.identity and request.identity['user'] == pilot -%}
+    {% if request.identity == pilot -%}
     <p><a href="/tracking/info" class="btn btn-mini">{% trans %}Your Live Tracking settings{% endtrans %}</a></p>
     {%- endif %}
   </div>
