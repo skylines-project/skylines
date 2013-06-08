@@ -98,25 +98,7 @@ class SkyLines(Flask):
         self.wsgi_app = make_middleware(self.wsgi_app, stack_registry=True)
 
     def add_tg2_compat(self):
-        from flask import request
-        from flask.ext.login import current_user
         from skylines.lib import helpers
-
-        @self.before_request
-        def inject_request_identity():
-            """ for compatibility with tg2 """
-
-            if not hasattr(request, 'identity'):
-                request.identity = {}
-
-            if not current_user.is_anonymous():
-                request.identity['user'] = current_user
-
-                request.identity['groups'] = \
-                    [g.group_name for g in current_user.groups]
-
-                request.identity['permissions'] = \
-                    [p.permission_name for p in current_user.permissions]
 
         @self.context_processor
         def inject_helpers_lib():
