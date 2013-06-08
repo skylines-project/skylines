@@ -245,6 +245,16 @@ class User(db.Model):
             perms = perms | set(g.permissions)
         return perms
 
+    def has_permission(self, permission):
+        for p in self.permissions:
+            if p.permission_name == permission:
+                return True
+
+        return False
+
+    def is_manager(self):
+        return self.has_permission('manage')
+
     ##############################
 
     def generate_recover_key(self, ip):
@@ -255,15 +265,15 @@ class User(db.Model):
 
     ##############################
 
-    def is_readable(self, identity):
+    def is_readable(self, user):
         """Does the current user have full read access to this object?"""
-        return self.is_writable(identity)
+        return self.is_writable(user)
 
-    def is_writable(self, identity):
-        return identity and \
-            (self.id == identity['user'].id or
-             (self.password is None and self.club_id == identity['user'].club_id) or
-             'manage' in identity['permissions'])
+    def is_writable(self, user):
+        return user and \
+            (self.id == user.id or
+             (self.password is None and self.club_id == user.club_id) or
+             user.is_manager())
 
     ##############################
 

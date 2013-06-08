@@ -40,7 +40,7 @@ def pilots():
 
 @club_blueprint.route('/edit')
 def edit():
-    if not g.club.is_writable(request.identity):
+    if not g.club.is_writable(g.current_user):
         abort(403)
 
     return render_template(
@@ -51,7 +51,7 @@ def edit():
 @club_blueprint.route('/edit', methods=['POST'])
 @validate(club.edit_form, edit)
 def edit_post():
-    if not g.club.is_writable(request.identity):
+    if not g.club.is_writable(g.current_user):
         abort(403)
 
     g.club.name = request.form['name']
@@ -63,7 +63,7 @@ def edit_post():
 
 @club_blueprint.route('/create_pilot')
 def create_pilot():
-    if not g.club.is_writable(request.identity):
+    if not g.club.is_writable(g.current_user):
         abort(403)
 
     return render_template(
@@ -74,7 +74,7 @@ def create_pilot():
 @club_blueprint.route('/create_pilot', methods=['POST'])
 @validate(pilot_forms.new_form, create_pilot)
 def create_pilot_post():
-    if not g.club.is_writable(request.identity):
+    if not g.club.is_writable(g.current_user):
         abort(403)
 
     pilot = User(
