@@ -2,7 +2,7 @@ from datetime import date, timedelta
 
 from flask import Blueprint, request, render_template, redirect, url_for, abort, g, flash
 from flask.ext.babel import lazy_gettext as l_, _, ngettext
-from flask.ext.login import login_required, current_user
+from flask.ext.login import login_required
 
 from formencode import Schema, All
 from formencode.validators import FieldsMatch, Email, NotEmpty
@@ -129,7 +129,7 @@ change_password_form = BootstrapForm(
 
 @user_blueprint.route('/change_password')
 def change_password():
-    if not g.user.is_writable(request.identity):
+    if not g.user.is_writable(g.current_user):
         abort(403)
 
     return render_template(
@@ -141,7 +141,7 @@ def change_password():
 @user_blueprint.route('/change_password', methods=['POST'])
 @validate(change_password_form, change_password)
 def change_password_post():
-    if not g.user.is_writable(request.identity):
+    if not g.user.is_writable(g.current_user):
         abort(403)
 
     g.user.password = request.form['password']
@@ -203,7 +203,7 @@ edit_user_form = EditUserForm(db.session)
 
 @user_blueprint.route('/edit')
 def edit():
-    if not g.user.is_writable(request.identity):
+    if not g.user.is_writable(g.current_user):
         abort(403)
 
     return render_template(
@@ -216,7 +216,7 @@ def edit():
 @user_blueprint.route('/edit', methods=['POST'])
 @validate(edit_user_form, edit)
 def edit_post():
-    if not g.user.is_writable(request.identity):
+    if not g.user.is_writable(g.current_user):
         abort(403)
 
     g.user.email_address = request.form['email_address']
@@ -241,7 +241,7 @@ def edit_post():
 
 @user_blueprint.route('/change_club')
 def change_club():
-    if not g.user.is_writable(request.identity):
+    if not g.user.is_writable(g.current_user):
         abort(403)
 
     return render_template(
@@ -252,7 +252,7 @@ def change_club():
 @user_blueprint.route('/change_club', methods=['POST'])
 @validate(club.select_form, change_club)
 def change_club_post():
-    if not g.user.is_writable(request.identity):
+    if not g.user.is_writable(g.current_user):
         abort(403)
 
     g.user.club_id = request.form['club']
@@ -274,11 +274,11 @@ def change_club_post():
 @user_blueprint.route('/create_club', methods=['POST'])
 @validate(club.new_form, change_club)
 def create_club_post():
-    if not g.user.is_writable(request.identity):
+    if not g.user.is_writable(g.current_user):
         abort(403)
 
     club = Club(name=request.form['name'])
-    club.owner_id = current_user.id
+    club.owner_id = g.current_user.id
     db.session.add(club)
 
     g.user.club = club
@@ -291,8 +291,8 @@ def create_club_post():
 @user_blueprint.route('/follow')
 @login_required
 def follow():
-    Follower.follow(current_user, g.user)
-    create_follower_notification(g.user, current_user)
+    Follower.follow(g.current_user, g.user)
+    create_follower_notification(g.user, g.current_user)
     db.session.commit()
     return redirect(url_for('.index'))
 
@@ -300,14 +300,14 @@ def follow():
 @user_blueprint.route('/unfollow')
 @login_required
 def unfollow():
-    Follower.unfollow(current_user, g.user)
+    Follower.unfollow(g.current_user, g.user)
     db.session.commit()
     return redirect(url_for('.index'))
 
 
 @user_blueprint.route('/tracking_register')
 def tracking_register():
-    if not g.user.is_writable(request.identity):
+    if not g.user.is_writable(g.current_user):
         abort(403)
 
     g.user.generate_tracking_key()
@@ -318,7 +318,7 @@ def tracking_register():
 
 @user_blueprint.route('/recover_password')
 def recover_password():
-    if not request.identity or not request.identity.is_manager():
+    if not g.current_user or not g.current_user.is_manager():
         abort(403)
 
     recover_user_password(g.user)

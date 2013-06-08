@@ -2,7 +2,6 @@ from collections import defaultdict
 from operator import itemgetter
 
 from flask import Blueprint, render_template, abort, request, url_for, redirect, g
-from flask.ext.login import current_user
 from sqlalchemy.orm import joinedload, contains_eager
 
 from skylines import db
@@ -14,8 +13,8 @@ notifications_blueprint = Blueprint('notifications', 'skylines')
 
 @notifications_blueprint.before_app_request
 def inject_notification_count():
-    if not current_user.is_anonymous():
-        g.notifications = Notification.count_unread(current_user)
+    if g.current_user:
+        g.notifications = Notification.count_unread(g.current_user)
 
 
 def _filter_query(query, args):
@@ -31,10 +30,10 @@ def _filter_query(query, args):
 
 @notifications_blueprint.route('/')
 def index():
-    if not request.identity:
+    if not g.current_user:
         abort(401)
 
-    query = Notification.query_unread(request.identity) \
+    query = Notification.query_unread(g.current_user) \
         .join('event') \
         .options(contains_eager('event')) \
         .options(joinedload('event.actor')) \
@@ -83,13 +82,13 @@ def index():
 
 @notifications_blueprint.route('/clear')
 def clear():
-    if not request.identity:
+    if not g.current_user:
         abort(401)
 
     def filter_func(query):
         return _filter_query(query, request.args)
 
-    Notification.mark_all_read(request.identity, filter_func=filter_func)
+    Notification.mark_all_read(g.current_user, filter_func=filter_func)
 
     db.session.commit()
 
@@ -98,11 +97,11 @@ def clear():
 
 @notifications_blueprint.route('/<int:id>')
 def show(id):
-    if not request.identity:
+    if not g.current_user:
         abort(401)
 
     notification = get_requested_record(Notification, id)
-    if request.identity != notification.recipient:
+    if g.current_user != notification.recipient:
         abort(403)
 
     notification.mark_read()

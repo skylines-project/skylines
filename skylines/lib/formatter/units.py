@@ -1,4 +1,4 @@
-from flask import request
+from flask import g
 from flask.ext.babel import lazy_gettext as l_
 
 from .numbers import format_number, format_decimal
@@ -66,8 +66,8 @@ def unitid(options, name):
 
 
 def _get_setting(name, default=None):
-    if request.identity:
-        return getattr(request.identity, name)
+    if g.current_user:
+        return getattr(g.current_user, name)
     else:
         return default
 

@@ -21,7 +21,7 @@
 <link href="{{ ASSET_URL }}" rel="stylesheet" type="text/css" />
 {%- endassets %}
 
-{%- if request.identity and request.identity.eye_candy -%}
+{%- if g.current_user and g.current_user.eye_candy -%}
 <link href="/css/eye_candy/OpenLayers.css" rel="stylesheet" type="text/css" />
 {%- endif %}
 {%- endif %}
@@ -84,7 +84,7 @@
   <div class="row">
     <div class="well span8 offset2">
       <table class="right">
-        {% if user.is_readable(request.identity) -%}
+        {% if user.is_readable(g.current_user) -%}
         <tr>
           <th>{% trans %}Email{% endtrans %}</th>
           <td itemprop="email">{{ user.email_address }}</td>
@@ -96,13 +96,13 @@
           <td itemprop="name">{{ user.name }}</td>
         </tr>
 
-        {% if user.is_readable(request.identity) and user.tracking_key_hex -%}
+        {% if user.is_readable(g.current_user) and user.tracking_key_hex -%}
         <tr>
           <th>{% trans %}Tracking key{% endtrans %}</th>
           <td>
             <span class="label label-info">{{ user.tracking_key_hex }}</span>
             <a href="{{ url_for('tracking.info') }}" class="btn btn-mini">{% trans %}More Information{% endtrans %}</a>
-            {% if user.is_writable(request.identity) -%}
+            {% if user.is_writable(g.current_user) -%}
             <a href="{{ url_for('.tracking_register', came_from=url_for('.index')) }}" class="btn btn-mini">{% trans %}Generate new key{% endtrans %}</a>
             {%- endif %}
           </td>
@@ -120,7 +120,7 @@
         </tr>
         {%- endif %}
 
-        {% if user.club or user.is_writable(request.identity) -%}
+        {% if user.club or user.is_writable(g.current_user) -%}
         <tr>
           <th>{% trans %}Club{% endtrans %}</th>
 
@@ -133,7 +133,7 @@
             [{% trans %}Unspecified{% endtrans %}]
           {%- endif %}
 
-            {% if user.is_writable(request.identity) -%}
+            {% if user.is_writable(g.current_user) -%}
             <a href="change_club" class="btn btn-mini">{% trans %}Change{% endtrans %}</a>
             {%- endif %}
           </td>
@@ -142,17 +142,17 @@
       </table>
 
       <p style="margin-top: 10px">
-        {% if user.is_writable(request.identity) -%}
+        {% if user.is_writable(g.current_user) -%}
         <a href="{{ url_for('.edit') }}" class="btn">{% trans %}Edit{% endtrans %}</a>
         <a href="{{ url_for('.change_password') }}" class="btn">{% trans %}Change Password{% endtrans %}</a>
         {%- endif %}
 
-        {% if request.identity and request.identity.is_manager() -%}
+        {% if g.current_user and g.current_user.is_manager() -%}
         <a href="{{ url_for('.recover_password') }}" class="btn">{% trans %}Recover Password{% endtrans %}</a>
         {%- endif %}
 
-        {% if request.identity and request.identity != user -%}
-          {% if request.identity.follows(user) -%}
+        {% if g.current_user and g.current_user != user -%}
+          {% if g.current_user.follows(user) -%}
             <a href="{{ url_for('.unfollow') }}" class="btn">{% trans %}Unfollow{% endtrans %}</a>
           {%- else %}
             <a href="{{ url_for('.follow') }}" class="btn">{% trans %}Follow{% endtrans %}</a>

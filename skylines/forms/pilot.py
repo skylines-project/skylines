@@ -1,4 +1,4 @@
-from flask import request
+from flask import g
 from flask.ext.babel import lazy_gettext as l_
 
 from formencode import validators, All
@@ -34,7 +34,7 @@ new_form = NewForm(db.session)
 
 class SelectField(SingleSelectField):
     def update_params(self, d):
-        users = User.query(club_id=request.identity.club_id) \
+        users = User.query(club_id=g.current_user.club_id) \
             .order_by(User.name)
 
         options = [(None, '[unspecified]')] + \

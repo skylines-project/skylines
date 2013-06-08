@@ -2,7 +2,7 @@ from datetime import datetime
 from tempfile import TemporaryFile
 from zipfile import ZipFile
 
-from flask import Blueprint, render_template, request, flash, redirect
+from flask import Blueprint, render_template, request, flash, redirect, g
 from flask.ext.babel import _, lazy_gettext as l_
 from werkzeug.datastructures import CombinedMultiDict
 
@@ -64,7 +64,7 @@ def IterateUploadFiles(upload):
 def index():
     return render_template(
         'generic/form.jinja', active_page='upload', title=_("Upload Flight"),
-        form=upload.form, values=dict(pilot=request.identity.id))
+        form=upload.form, values=dict(pilot=g.current_user.id))
 
 
 @upload_blueprint.route('/', methods=['POST'])
@@ -76,7 +76,7 @@ def index_post():
     except:
         return index()
 
-    user = request.identity
+    user = g.current_user
 
     pilot_id = request.form.get('pilot', None, type=int)
     pilot = pilot_id and User.get(int(pilot_id))
@@ -194,7 +194,7 @@ def update():
 
         flight = Flight.get(id)
 
-        if not flight.is_writable(request.identity):
+        if not flight.is_writable(g.current_user):
             continue
 
         flight.model_id = model_id

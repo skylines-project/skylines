@@ -17,7 +17,7 @@ Members <small>of {{ club }}</small>
 
 {{ render_users_table(users, False) }}
 
-{% if club.is_writable(request.identity) -%}
+{% if club.is_writable(g.current_user) -%}
 <a href="{{ url_for('.create_pilot') }}" class="btn">{% trans %}Create Pilot{% endtrans %}</a>
 {%- endif %}
 {%- endblock %}

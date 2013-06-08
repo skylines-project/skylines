@@ -2,7 +2,7 @@ from email.mime.text import MIMEText
 from email.utils import formatdate
 import smtplib
 
-from flask import Blueprint, request, render_template, redirect, url_for, abort, current_app, flash
+from flask import Blueprint, request, render_template, redirect, url_for, abort, current_app, flash, g
 from flask.ext.babel import lazy_gettext as l_, _
 from werkzeug.exceptions import ServiceUnavailable
 
@@ -220,7 +220,7 @@ def recover_password():
 def generate_keys():
     """Hidden method that generates missing tracking keys."""
 
-    if not request.identity or not request.identity.is_manager():
+    if not g.current_user or not g.current_user.is_manager():
         abort(403)
 
     for user in User.query():

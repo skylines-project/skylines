@@ -1,6 +1,6 @@
 from datetime import datetime
 
-from flask import Blueprint, request, render_template, redirect, url_for, abort, current_app, jsonify
+from flask import Blueprint, request, render_template, redirect, url_for, abort, current_app, jsonify, g
 from babel.dates import format_date
 
 from sqlalchemy import func
@@ -208,10 +208,10 @@ def pilot(id):
 
 @flights_blueprint.route('/my')
 def my():
-    if not request.identity:
+    if not g.current_user:
         abort(404)
 
-    return redirect(url_for('.pilot', id=request.identity.id))
+    return redirect(url_for('.pilot', id=g.current_user.id))
 
 
 @flights_blueprint.route('/club/<int:id>')
@@ -236,10 +236,10 @@ def club(id):
 
 @flights_blueprint.route('/my_club')
 def my_club():
-    if not request.identity:
+    if not g.current_user:
         abort(404)
 
-    return redirect(url_for('.club', id=request.identity.club.id))
+    return redirect(url_for('.club', id=g.current_user.club.id))
 
 
 @flights_blueprint.route('/airport/<int:id>')
@@ -265,11 +265,11 @@ def airport(id):
 
 @flights_blueprint.route('/unassigned')
 def unassigned():
-    if not request.identity:
+    if not g.current_user:
         abort(404)
 
     f = and_(Flight.pilot_id is None,
-             IGCFile.owner == request.identity)
+             IGCFile.owner == g.current_user)
 
     return _create_list('unassigned', request.args, filter=f)
 
@@ -298,7 +298,7 @@ def pinned():
 def igc_headers():
     """Hidden method that parses all missing IGC headers."""
 
-    if not request.identity or not request.identity.is_manager():
+    if not g.current_user or not g.current_user.is_manager():
         abort(403)
 
     igc_files = IGCFile.query().filter(or_(

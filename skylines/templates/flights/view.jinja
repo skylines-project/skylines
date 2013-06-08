@@ -27,7 +27,7 @@
   <link href="{{ ASSET_URL }}" rel="stylesheet" type="text/css" />
   {%- endassets %}
 
-  {%- if request.identity and request.identity.eye_candy -%}
+  {%- if g.current_user and g.current_user.eye_candy -%}
   <link href="/css/eye_candy/OpenLayers.css" rel="stylesheet" type="text/css" />
   {%- endif %}
 {%- endif %}
@@ -198,7 +198,7 @@
       </tr>
       {%- endfor %}
 
-      {%- if request.identity %}
+      {%- if g.current_user %}
       <tr>
         <td>
           <form action="add_comment" method="POST">

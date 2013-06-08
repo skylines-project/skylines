@@ -33,7 +33,7 @@
 
 
 {%- block content %}
-{% if pilot or club or airport or request.identity -%}
+{% if pilot or club or airport or g.current_user -%}
 <ul class="nav nav-pills">
   <li{% if not (pilot or club or airport) %} class="active"{% endif %}><a href="{{ url_for('.index') }}">SkyLines</a></li>
 
@@ -45,7 +45,7 @@
   <li class="active"><a href="{{ url_for('.index', page='club', id=club.id) }}">{{ club|e }}</a></li>
   {%- endif %}
 
-  {% with my_club=request.identity and request.identity.club  -%}
+  {% with my_club=g.current_user and g.current_user.club  -%}
   {% if my_club and club != my_club -%}
   <li><a href="{{ url_for('.index', page='club', id=my_club.id) }}">{{ my_club|e }}</a></li>
   {%- endif %}
@@ -55,7 +55,7 @@
   <li class="active"><a href="{{ url_for('.index', page='pilot', id=pilot.id) }}">{{ pilot|e }}</a></li>
   {%- endif %}
 
-  {% with my_pilot=request.identity -%}
+  {% with my_pilot=g.current_user -%}
   {% if my_pilot and pilot != my_pilot -%}
   <li><a href="{{ url_for('.index', page='pilot', id=my_pilot.id) }}">{{ my_pilot|e }}</a></li>
   {%- endif %}
