@@ -76,44 +76,39 @@ After creating the database you have to create the necessary tables and indices
 by calling the `scripts/initialize_database.py` file from the the command line.
 
 
+## XCSoar tools
+
+Since the [XCSoar](http://www.xcsoar.org/) project already has much of the code
+implemented that is necessary for flight analysis, it makes sense to reuse that
+code where applicable. *SkyLines* is using two tools from the range of XCSoar
+libraries called `AnalyseFlight` and `FlightPath`.
+
+Here are the necessary commands to clone the XCSoar repository and build and
+link the two tools on Ubuntu/Debian:
+
+    # clone the XCSoar source code repository
+    $ git clone git://git.xcsoar.org/xcsoar/master/xcsoar.git
+
+    # install XCSoar build dependencies
+    $ apt-get install make libcurl4-openssl-dev
+
+    # consult the XCSoar README file for further dependency informations
+
+    # build the tools
+    $ cd xcsoar
+    $ make DEBUG=n ENABLE_SDL=n output/UNIX/bin/AnalyseFlight output/UNIX/bin/FlightPath
+
+    # create a symbolic link from SkyLines to XCSoar
+    $ cd <path to skylines>
+    $ ln -s <path to xcsoar>/output/UNIX/bin bin
+
+
 ## Running the debug server
 
 If the above steps are completed you should be able to run a base version of
 *SkyLines* locally now:
 
     $ ./debug.py
-
-
-# XCSoar dependencies
-
-Since the [XCSoar project](http://www.xcsoar.org/) already has much of the code implemented that is necessary for flight analysis, it makes sense to reuse that code where applicable. *SkyLines* is using two tools from the range of XCSoar libraries called `AnalyseFlight` and `FlightPath`. The names speak for themselves
-
-## Download
-
-We have uploaded precompiled versions of the two tools to our download server to make the initial setup faster and easier. The tools can be downloaded by calling:
-
-    ./download_xcsoar_tools.sh
-
-## Compiling
-
-If the download does not work, or you want to build the tools yourself, you can follow these instructions:
-
-    # download the XCSoar source code repository
-    $ git clone git://git.xcsoar.org/xcsoar/master/xcsoar.git
-
-    # consult the XCSoar README file for further dependency informations
-
-    # the following should be enough for the Vagrant environment
-    $ apt-get install libcurl4-openssl-dev libboost-system-dev
-
-    # build the tools
-    $ cd xcsoar
-    $ make TARGET=UNIX DEBUG=n ENABLE_SDL=n output/UNIX/bin/AnalyseFlight output/UNIX/bin/FlightPath
-
-    # create a symbolic link from skylines to xcsoar (not possible on Vagrant)
-    $ cd <path to skylines>
-    $ ln -s <path to xcsoar>/output/UNIX/bin bin
-
 
 *(The following chapters are optional!)*
 
