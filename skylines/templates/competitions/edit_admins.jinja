@@ -1,0 +1,83 @@
+{% from "macros/links.jinja" import user_link %}
+
+{% extends "competitions/base.jinja" %}
+
+{% set active_header_tab = "participants" %}
+
+
+{% block content -%}
+<div class="row">
+    <div class="span6 box">
+      {{ current_admins_table() }}
+    </div>
+    <div class="span6 box">
+      {{ search_users_table() }}
+    </div>
+</div>
+{%- endblock %}
+
+
+{% macro current_admins_table() -%}
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <th colspan="2">{{ _('Organizers') }}</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for admin in competition.admins -%}
+    <tr>
+      <td>{{ user_link(admin) }}</td>
+      <td class="column-buttons">
+        <a href="{{ url_for('competition.admins_remove', user_id=admin.id) }}" class="btn btn-danger btn-mini">
+          <i class="icon-remove"></i>
+        </a>
+      </td>
+    </tr>
+    {%- else -%}
+    <tr>
+      <td colspan="2">{{ _('This competition has no organizers.') }}</td>
+    </tr>
+    {%- endfor %}
+  </tbody>
+</table>
+{%- endmacro %}
+
+
+{% macro search_users_table() -%}
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <th colspan="2">{{ _('Add new organizers') }}</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td colspan="2" style="text-align:center">
+      <form class="form-search">
+        <div class="input-append">
+          <input type="text" class="span4 search-query" name="search" value="{{ (user_search_text or '')|e }}">
+          <button type="submit" class="btn"><i class="icon-search"></i></button>
+        </div>
+      </form>
+      </td>
+    </tr>
+    {% if user_search_text -%}
+    {% for user in user_search_results -%}
+    <tr>
+      <td>{{ user_link(user) }}</td>
+      <td class="column-buttons">
+        <a href="{{ url_for('competition.admins_add', user_id=user.id) }}" class="btn btn-success btn-mini">
+          <i class="icon-plus"></i>
+        </a>
+      </td>
+    </tr>
+    {%- else -%}
+    <tr>
+      <td colspan="2">{{ _('No matching users found.') }}</td>
+    </tr>
+    {%- endfor %}
+    {%- endif %}
+  </tbody>
+</table>
+{%- endmacro %}

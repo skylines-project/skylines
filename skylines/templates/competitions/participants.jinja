@@ -7,8 +7,15 @@
 
 {% block content -%}
 <div class="row">
-    <div class="span6 box">{{ participants_table(pilots, _('Pilots')) }}</div>
-    <div class="span6 box">{{ participants_table(admins, _('Organizers'), show_classes=False) }}</div>
+    <div class="span6 box">
+      {{ participants_table(pilots, _('Pilots')) }}
+    </div>
+    <div class="span6 box">
+      {{ participants_table(admins, _('Organizers'), show_classes=False) }}
+      {% if competition.is_writable(g.current_user) -%}
+      <a href="{{ url_for('competition.admins_edit') }}" class="btn"><i class="icon-pencil"></i> {{ _('Add/Remove Organizers') }}</a>
+      {%- endif %}
+    </div>
 </div>
 {%- endblock %}
 
