@@ -1,13 +1,21 @@
 # SkyLines
 
-Welcome to *SkyLines*, the internet platform for sharing flights!
+SkyLines is a web platform where pilots can share their flights with others
+after, or even during flight via live tracking.  SkyLines is a sort of social
+network for pilots including rankings, statistics and other interesting
+features.  Most of all SkyLines is truly open in all regards compared to other
+similar platforms.
 
-This project is in an early stage of development.
+SkyLines has started development in 2012 as a spin-off from the popular
+[XCSoar](http://www.xcsoar.org/) glide computer. Internally SkyLines is still
+sharing some code with XCSoar in the algorithmic areas and is providing the
+base for XCSoar's live tracking functionalities.
 
-[![Build Status](https://travis-ci.org/skylines-project/skylines.png?branch=master)](https://travis-ci.org/skylines-project/skylines)
+SkyLines is far from finished yet, but it has been running in production for
+quite some time now. You can reach the official server at
+<http://www.skylines-project.org> or <http://www.skylines.aero>.
 
-*SkyLines* is brought to you by the [XCSoar](http://www.xcsoar.org) project.
-It is free software; the source code is available [here](https://github.com/skylines-project/skylines)
+Build Status: [![Build Status](https://travis-ci.org/skylines-project/skylines.png?branch=master)](https://travis-ci.org/skylines-project/skylines)
 
 # Getting the source
 
