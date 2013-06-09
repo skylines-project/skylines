@@ -28,7 +28,18 @@ For more information, please refer to the [git documentation](http://git-scm.com
 
 ## Installation and Setup
 
-see [INSTALL.md](INSTALL.md)
+*SkyLines* is based on Python and depends on the following major components:
+
+* [PostgreSQL](http://www.postgresql.org/) database with
+  [PostGIS 2.x](http://www.postgis.net/) extension
+* [Flask](http://flask.pocoo.org/) web application microframework for Python
+* [SQLAlchemy](http://www.sqlalchemy.org/) ORM framework with
+  [GeoAlchemy 2](https://geoalchemy-2.readthedocs.org) extension
+* [Twisted](http://twistedmatrix.com/) networking engine for Python (used for
+  the live tracking server)
+
+The process of installing these components and setting up a server for local
+development is described in the [INSTALL.md](INSTALL.md) file.
 
 ## Contributing
 
