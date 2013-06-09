@@ -255,7 +255,7 @@ def change_club_post():
     if not g.user.is_writable(g.current_user):
         abort(403)
 
-    g.user.club_id = request.form['club']
+    g.user.club_id = request.form.get('club', None, type=int)
 
     # assign the user's new club to all of his flights that have
     # no club yet
