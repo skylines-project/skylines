@@ -1,15 +1,23 @@
 # SkyLines
 
-Welcome to *SkyLines*, the internet platform for sharing flights!
+*SkyLines* is a web platform where pilots can share their flights with others
+after, or even during flight via live tracking.  *SkyLines* is a sort of social
+network for pilots including rankings, statistics and other interesting
+features.  Most of all *SkyLines* is truly open in all regards compared to
+other similar platforms.
 
-This project is in an early stage of development.
+*SkyLines* has started development in 2012 as a spin-off from the popular
+[XCSoar](http://www.xcsoar.org/) glide computer. Internally *SkyLines* is still
+sharing some code with XCSoar in the algorithmic areas and is providing the
+base for XCSoar's live tracking functionalities.
 
-[![Build Status](https://travis-ci.org/skylines-project/skylines.png?branch=master)](https://travis-ci.org/skylines-project/skylines)
+*SkyLines* is far from finished yet, but it has been running in production for
+quite some time now. You can reach the official server at
+<http://www.skylines-project.org> or <http://www.skylines.aero>.
 
-*SkyLines* is brought to you by the [XCSoar](http://www.xcsoar.org) project.
-It is free software; the source code is available [here](https://github.com/skylines-project/skylines)
+Build Status: [![Build Status](https://travis-ci.org/skylines-project/skylines.png?branch=master)](https://travis-ci.org/skylines-project/skylines)
 
-# Getting the source
+## Getting the source
 
 The *SkyLines* source code is managed with [git](http://www.git-scm.com/).
 It can be downloaded with the following command:
@@ -18,22 +26,51 @@ It can be downloaded with the following command:
 
 For more information, please refer to the [git documentation](http://git-scm.com/documentation).
 
-# Installation and Setup
+## Installation and Setup
 
-see [INSTALL.md](INSTALL.md)
+*SkyLines* is based on Python and depends on the following major components:
 
-# Contributing
+* [PostgreSQL](http://www.postgresql.org/) database with
+  [PostGIS 2.x](http://www.postgis.net/) extension
+* [Flask](http://flask.pocoo.org/) web application microframework for Python
+* [SQLAlchemy](http://www.sqlalchemy.org/) ORM framework with
+  [GeoAlchemy 2](https://geoalchemy-2.readthedocs.org) extension
+* [Twisted](http://twistedmatrix.com/) networking engine for Python (used for
+  the live tracking server)
 
-We prefer using the pull request system of Github due to the integration with
-the TravisCI system, but you can also send patches via mail to any of the
-current developers.
+The process of installing these components and setting up a server for local
+development is described in the [INSTALL.md](INSTALL.md) file.
+
+## Contact and Contributing
+
+You can reach us and read about news on
+[Facebook](https://www.facebook.com/skylines.project),
+[Twitter](https://twitter.com/skylinesproject) and
+[Google+](https://plus.google.com/114462603028839635814). We are also reachable
+via IRC on the #skylines channel of the [freenode](http://freenode.net/)
+servers.
+
+Bugs and feature request can be submitted either to the
+[XCSoar trac](bugs.xcsoar.org) instance under the *SkyLines* milestone or on
+[GitHub](https://github.com/skylines-project/skylines/issues). New ideas can
+also be discussed in the
+[Wiki](https://github.com/skylines-project/skylines/wiki) first.
+
+Patches should be submitted using the
+[Pull Request](https://github.com/skylines-project/skylines/pulls) system of
+GitHub because of the integration with the
+[TravisCI](https://travis-ci.org/skylines-project/skylines) system. You can
+also send patches via mail to any of the [current maintainers](AUTHORS.md)
+though.
+
+Here are a few guidelines for creating patches:
 
 - patches should be self-contained
 - patches should be self-documenting (add a good description on what
   is changed, and why you are changing it)
 - write one patch for one change
 
-# License
+## License
 
     SkyLines - the free internet platform for sharing flights
     Copyright (C) 2012-2013  The SkyLines Team (see AUTHORS.md)
@@ -50,3 +87,5 @@ current developers.
 
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+You can find the full license text in the [LICENSE](LICENSE) file.
