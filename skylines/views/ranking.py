@@ -4,14 +4,15 @@ from flask import Blueprint, request, redirect, url_for, render_template
 from sqlalchemy import func
 from sqlalchemy.sql.expression import desc, over
 
-from skylines.model import DBSession, User, Club, Flight, Airport
+from skylines import db
+from skylines.model import User, Club, Flight, Airport
 from skylines.lib.paginate import Pager
 
 ranking_blueprint = Blueprint('ranking', 'skylines')
 
 
 def _get_result(model, flight_field, year=None):
-    subq = DBSession \
+    subq = db.session \
         .query(getattr(Flight, flight_field),
                func.count('*').label('count'),
                func.sum(Flight.index_score).label('total')) \
@@ -26,7 +27,7 @@ def _get_result(model, flight_field, year=None):
 
     subq = subq.subquery()
 
-    result = DBSession \
+    result = db.session \
         .query(model, subq.c.count, subq.c.total,
                over(func.rank(), order_by=desc('total')).label('rank')) \
         .join((subq, getattr(subq.c, flight_field) == model.id))

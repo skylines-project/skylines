@@ -1,7 +1,8 @@
-import email
+from email.mime.text import MIMEText
+from email.utils import formatdate
 import smtplib
 
-from flask import Blueprint, request, render_template, redirect, url_for, abort, current_app, flash
+from flask import Blueprint, request, render_template, redirect, url_for, abort, current_app, flash, g
 from flask.ext.babel import lazy_gettext as l_, _
 from werkzeug.exceptions import ServiceUnavailable
 
@@ -16,7 +17,8 @@ from tw.forms.validators import UnicodeString
 from sqlalchemy import func
 from sqlalchemy.orm import joinedload
 
-from skylines.model import DBSession, User, Group
+from skylines import db
+from skylines.model import User, Group
 from skylines.forms import BootstrapForm, club
 from skylines.lib.decorators import validate
 
@@ -43,7 +45,7 @@ class NewUserForm(AddRecordForm):
         'password': dict(label_text=l_('Password')),
     }
 
-    email_address = Field(TextField, All(UniqueValue(SAORMProvider(DBSession),
+    email_address = Field(TextField, All(UniqueValue(SAORMProvider(db.session),
                                                      __model__, 'email_address'),
                                          Email(not_empty=True)))
     name = Field(TextField, NotEmpty)
@@ -52,7 +54,7 @@ class NewUserForm(AddRecordForm):
     verify_password = PasswordField('verify_password',
                                     label_text=l_('Verify Password'))
 
-new_user_form = NewUserForm(DBSession)
+new_user_form = NewUserForm(db.session)
 
 
 @users_blueprint.route('/')
@@ -85,13 +87,13 @@ def new_post():
 
     user.created_ip = request.remote_addr
     user.generate_tracking_key()
-    DBSession.add(user)
+    db.session.add(user)
 
     pilots = Group.query(group_name='pilots').first()
     if pilots:
         pilots.users.append(user)
 
-    DBSession.commit()
+    db.session.commit()
 
     return redirect(url_for('index'))
 
@@ -158,11 +160,11 @@ password, click on the following link:
 The SkyLines Team
 """ % (unicode(user), request.remote_addr, key)
 
-    msg = email.mime.text.MIMEText(text.encode('utf-8'), 'plain', 'utf-8')
+    msg = MIMEText(text.encode('utf-8'), 'plain', 'utf-8')
     msg['Subject'] = 'SkyLines password recovery'
     msg['From'] = current_app.config['EMAIL_FROM']
     msg['To'] = user.email_address.encode('ascii')
-    msg['Date'] = email.Utils.formatdate(localtime=1)
+    msg['Date'] = formatdate(localtime=1)
 
     try:
         smtp = smtplib.SMTP(current_app.config['SMTP_SERVER'])
@@ -187,7 +189,7 @@ def recover_email():
     recover_user_password(user)
     flash('Check your email, we have sent you a link to recover your password.')
 
-    DBSession.commit()
+    db.session.commit()
 
     return redirect(url_for('index'))
 
@@ -209,7 +211,7 @@ def recover_password():
 
     flash(_('Password changed.'))
 
-    DBSession.commit()
+    db.session.commit()
 
     return redirect(url_for('index'))
 
@@ -218,13 +220,13 @@ def recover_password():
 def generate_keys():
     """Hidden method that generates missing tracking keys."""
 
-    if not request.identity or 'manage' not in request.identity['permissions']:
+    if not g.current_user or not g.current_user.is_manager():
         abort(403)
 
     for user in User.query():
         if user.tracking_key is None:
             user.generate_tracking_key()
 
-    DBSession.commit()
+    db.session.commit()
 
     return redirect(url_for('.index'))

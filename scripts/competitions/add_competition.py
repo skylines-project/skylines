@@ -28,7 +28,7 @@ if not to_envvar(args.config):
 
 
 from formencode.validators import DateConverter
-from skylines.model.session import DBSession
+from skylines import db
 from skylines.model import Competition
 
 # Parse start date
@@ -60,8 +60,8 @@ competition = Competition(
 if args.creator:
     competition.creator_id = args.creator
 
-DBSession.add(competition)
-DBSession.commit()
+db.session.add(competition)
+db.session.commit()
 
 print 'Competition "{}" created with id: {}' \
     .format(competition.name, competition.id)

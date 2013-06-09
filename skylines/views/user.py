@@ -2,7 +2,7 @@ from datetime import date, timedelta
 
 from flask import Blueprint, request, render_template, redirect, url_for, abort, g, flash
 from flask.ext.babel import lazy_gettext as l_, _, ngettext
-from flask.ext.login import login_required, current_user
+from flask.ext.login import login_required
 
 from formencode import Schema, All
 from formencode.validators import FieldsMatch, Email, NotEmpty
@@ -14,12 +14,13 @@ from tw.forms.validators import UnicodeString
 from sqlalchemy.sql.expression import and_, or_
 from sqlalchemy import func
 
+from skylines import db
 from skylines.forms import BootstrapForm, units, club
 from skylines.lib.validators import UniqueValueUnless
 from skylines.lib.dbutil import get_requested_record
 from skylines.lib.decorators import validate
 from skylines.model import (
-    DBSession, User, Club, Flight, Follower, Location, IGCFile
+    User, Club, Flight, Follower, Location, IGCFile
 )
 from skylines.model.notification import create_follower_notification
 from skylines.views.users import recover_user_password
@@ -65,12 +66,12 @@ def _get_distance_flights():
 
 
 def _get_last_year_statistics():
-    query = DBSession.query(func.count('*').label('flights'),
-                            func.sum(Flight.olc_classic_distance).label('distance'),
-                            func.sum(Flight.duration).label('duration')) \
-                     .filter(Flight.pilot == g.user) \
-                     .filter(Flight.date_local > (date.today() - timedelta(days=365))) \
-                     .first()
+    query = db.session.query(func.count('*').label('flights'),
+                             func.sum(Flight.olc_classic_distance).label('distance'),
+                             func.sum(Flight.duration).label('duration')) \
+                      .filter(Flight.pilot == g.user) \
+                      .filter(Flight.date_local > (date.today() - timedelta(days=365))) \
+                      .first()
 
     last_year_statistics = dict(flights=0,
                                 distance=0,
@@ -128,7 +129,7 @@ change_password_form = BootstrapForm(
 
 @user_blueprint.route('/change_password')
 def change_password():
-    if not g.user.is_writable(request.identity):
+    if not g.user.is_writable(g.current_user):
         abort(403)
 
     return render_template(
@@ -140,13 +141,13 @@ def change_password():
 @user_blueprint.route('/change_password', methods=['POST'])
 @validate(change_password_form, change_password)
 def change_password_post():
-    if not g.user.is_writable(request.identity):
+    if not g.user.is_writable(g.current_user):
         abort(403)
 
     g.user.password = request.form['password']
     g.user.recover_key = None
 
-    DBSession.commit()
+    db.session.commit()
 
     return redirect(url_for('.index'))
 
@@ -187,7 +188,7 @@ class EditUserForm(EditableForm):
 
     email_address = Field(TextField, All(
         Email(not_empty=True),
-        UniqueValueUnless(filter_user_id, DBSession, __model__, 'email_address')))
+        UniqueValueUnless(filter_user_id, db.session, __model__, 'email_address')))
     name = Field(TextField, NotEmpty)
     tracking_delay = DelaySelectField
     unit_preset = units.PresetSelectField("unit_preset")
@@ -197,12 +198,12 @@ class EditUserForm(EditableForm):
     altitude_unit = units.AltitudeSelectField
     eye_candy = Field(CheckBox)
 
-edit_user_form = EditUserForm(DBSession)
+edit_user_form = EditUserForm(db.session)
 
 
 @user_blueprint.route('/edit')
 def edit():
-    if not g.user.is_writable(request.identity):
+    if not g.user.is_writable(g.current_user):
         abort(403)
 
     return render_template(
@@ -215,7 +216,7 @@ def edit():
 @user_blueprint.route('/edit', methods=['POST'])
 @validate(edit_user_form, edit)
 def edit_post():
-    if not g.user.is_writable(request.identity):
+    if not g.user.is_writable(g.current_user):
         abort(403)
 
     g.user.email_address = request.form['email_address']
@@ -233,14 +234,14 @@ def edit_post():
 
     g.user.eye_candy = request.form.get('eye_candy', False, type=bool)
 
-    DBSession.commit()
+    db.session.commit()
 
     return redirect(url_for('.index'))
 
 
 @user_blueprint.route('/change_club')
 def change_club():
-    if not g.user.is_writable(request.identity):
+    if not g.user.is_writable(g.current_user):
         abort(403)
 
     return render_template(
@@ -251,10 +252,10 @@ def change_club():
 @user_blueprint.route('/change_club', methods=['POST'])
 @validate(club.select_form, change_club)
 def change_club_post():
-    if not g.user.is_writable(request.identity):
+    if not g.user.is_writable(g.current_user):
         abort(403)
 
-    g.user.club_id = request.form['club']
+    g.user.club_id = request.form.get('club', None, type=int)
 
     # assign the user's new club to all of his flights that have
     # no club yet
@@ -263,9 +264,9 @@ def change_club_post():
                                   or_(Flight.pilot_id == g.user.id,
                                       IGCFile.owner_id == g.user.id)))
     for flight in flights:
-        flight.club_id = club
+        flight.club_id = g.user.club_id
 
-    DBSession.commit()
+    db.session.commit()
 
     return redirect(url_for('.index'))
 
@@ -273,16 +274,16 @@ def change_club_post():
 @user_blueprint.route('/create_club', methods=['POST'])
 @validate(club.new_form, change_club)
 def create_club_post():
-    if not g.user.is_writable(request.identity):
+    if not g.user.is_writable(g.current_user):
         abort(403)
 
     club = Club(name=request.form['name'])
-    club.owner_id = current_user.id
-    DBSession.add(club)
+    club.owner_id = g.current_user.id
+    db.session.add(club)
 
     g.user.club = club
 
-    DBSession.commit()
+    db.session.commit()
 
     return redirect(url_for('.index'))
 
@@ -290,39 +291,39 @@ def create_club_post():
 @user_blueprint.route('/follow')
 @login_required
 def follow():
-    Follower.follow(current_user, g.user)
-    create_follower_notification(g.user, current_user)
-    DBSession.commit()
+    Follower.follow(g.current_user, g.user)
+    create_follower_notification(g.user, g.current_user)
+    db.session.commit()
     return redirect(url_for('.index'))
 
 
 @user_blueprint.route('/unfollow')
 @login_required
 def unfollow():
-    Follower.unfollow(current_user, g.user)
-    DBSession.commit()
+    Follower.unfollow(g.current_user, g.user)
+    db.session.commit()
     return redirect(url_for('.index'))
 
 
 @user_blueprint.route('/tracking_register')
 def tracking_register():
-    if not g.user.is_writable(request.identity):
+    if not g.user.is_writable(g.current_user):
         abort(403)
 
     g.user.generate_tracking_key()
-    DBSession.commit()
+    db.session.commit()
 
     return redirect(request.values.get('came_from', '/tracking/info'))
 
 
 @user_blueprint.route('/recover_password')
 def recover_password():
-    if not request.identity or 'manage' not in request.identity['permissions']:
+    if not g.current_user or not g.current_user.is_manager():
         abort(403)
 
     recover_user_password(g.user)
     flash('A password recovery email was sent to that user.')
 
-    DBSession.commit()
+    db.session.commit()
 
     return redirect(url_for('.index'))

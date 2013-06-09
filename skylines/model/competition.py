@@ -1,24 +1,22 @@
 from datetime import datetime
 
-from sqlalchemy import Table, Column, ForeignKey, CheckConstraint, UniqueConstraint
-from sqlalchemy.orm import relationship
 from sqlalchemy.types import Integer, Unicode, UnicodeText, DateTime, Date
 
-from .base import DeclarativeBase, metadata
+from skylines import db
 
 
 # This is the association table for the many-to-many relationship between
 # competitions and their admins.
-competition_admin_table = Table(
-    'competition_admins', metadata,
-    Column('competition_id', Integer, ForeignKey('competitions.id',
-           onupdate="CASCADE", ondelete="CASCADE"), primary_key=True),
-    Column('user_id', Integer, ForeignKey('tg_user.id',
-           onupdate="CASCADE", ondelete="CASCADE"), primary_key=True)
+competition_admin_table = db.Table(
+    'competition_admins', db.metadata,
+    db.Column('competition_id', Integer, db.ForeignKey('competitions.id',
+              onupdate="CASCADE", ondelete="CASCADE"), primary_key=True),
+    db.Column('user_id', Integer, db.ForeignKey('tg_user.id',
+              onupdate="CASCADE", ondelete="CASCADE"), primary_key=True)
 )
 
 
-class Competition(DeclarativeBase):
+class Competition(db.Model):
     """
     This table describes an airsport competition.
 
@@ -30,52 +28,52 @@ class Competition(DeclarativeBase):
     __tablename__ = 'competitions'
     __searchable_columns__ = ['name']
     __table_args__ = (
-        CheckConstraint('end_date >= start_date', name='date_check'),
+        db.CheckConstraint('end_date >= start_date', name='date_check'),
     )
 
-    id = Column(Integer, autoincrement=True, primary_key=True)
+    id = db.Column(Integer, autoincrement=True, primary_key=True)
 
     # Name of the competition
 
-    name = Column(Unicode(64), nullable=False)
+    name = db.Column(Unicode(64), nullable=False)
 
     # Description text for the competition (optional)
 
-    description = Column(UnicodeText)
+    description = db.Column(UnicodeText)
 
     # Competition time
     #
     # start_date has to be smaller or equal to end_date
 
-    start_date = Column(Date, nullable=False)
-    end_date = Column(Date, nullable=False)
+    start_date = db.Column(Date, nullable=False)
+    end_date = db.Column(Date, nullable=False)
 
     # Competition organizers and pilots
 
-    admins = relationship('User', secondary=competition_admin_table)
+    admins = db.relationship('User', secondary=competition_admin_table)
 
-    participants = relationship('CompetitionParticipation')
+    participants = db.relationship('CompetitionParticipation')
 
     # Metadata
 
-    time_created = Column(DateTime, nullable=False, default=datetime.utcnow)
-    time_modified = Column(DateTime, nullable=False, default=datetime.utcnow)
+    time_created = db.Column(DateTime, nullable=False, default=datetime.utcnow)
+    time_modified = db.Column(DateTime, nullable=False, default=datetime.utcnow)
 
-    creator_id = Column(Integer, ForeignKey('tg_user.id', ondelete='SET NULL'))
-    creator = relationship('User')
+    creator_id = db.Column(Integer, db.ForeignKey('tg_user.id', ondelete='SET NULL'))
+    creator = db.relationship('User')
 
     # Location of the competition (optional)
 
-    location = Column(Unicode(64))
+    location = db.Column(Unicode(64))
 
     # Competition airport (optional)
 
-    airport_id = Column(Integer, ForeignKey('airports.id', ondelete='SET NULL'))
-    airport = relationship('Airport')
+    airport_id = db.Column(Integer, db.ForeignKey('airports.id', ondelete='SET NULL'))
+    airport = db.relationship('Airport')
 
     # Competitions classes
 
-    classes = relationship('CompetitionClass')
+    classes = db.relationship('CompetitionClass')
 
     ##############################
 
@@ -88,11 +86,9 @@ class Competition(DeclarativeBase):
 
     ##############################
 
-    def is_writable(self, identity):
-        return identity and \
-            ('manage' in identity['permissions'] or
-             identity['user'] == self.creator or
-             identity['user'] in self.admins)
+    def is_writable(self, user):
+        return user and \
+            (user.is_manager() or user == self.creator or user in self.admins)
 
     ##############################
 
@@ -107,7 +103,7 @@ class Competition(DeclarativeBase):
             return self.airport.name
 
 
-class CompetitionParticipation(DeclarativeBase):
+class CompetitionParticipation(db.Model):
     """
     This table describes the many-to-many relationship between
     competitions and pilots and their type of relationship.
@@ -118,34 +114,34 @@ class CompetitionParticipation(DeclarativeBase):
 
     __tablename__ = 'competition_participation'
     __table_args__ = (
-        UniqueConstraint(
+        db.UniqueConstraint(
             'competition_id', 'user_id', name='unique_participation'),
     )
 
-    id = Column(Integer, autoincrement=True, primary_key=True)
+    id = db.Column(Integer, autoincrement=True, primary_key=True)
 
     # The competition that this class definition belongs to
 
-    competition_id = Column(
-        Integer, ForeignKey('competitions.id', ondelete='CASCADE'),
+    competition_id = db.Column(
+        Integer, db.ForeignKey('competitions.id', ondelete='CASCADE'),
         nullable=False)
-    competition = relationship('Competition', innerjoin=True)
+    competition = db.relationship('Competition', innerjoin=True)
 
     # SkyLines user account
 
-    user_id = Column(
-        Integer, ForeignKey('tg_user.id', ondelete='CASCADE'), nullable=False)
-    user = relationship('User', innerjoin=True)
+    user_id = db.Column(
+        Integer, db.ForeignKey('tg_user.id', ondelete='CASCADE'), nullable=False)
+    user = db.relationship('User', innerjoin=True)
 
     # Competition class (optional)
 
-    class_id = Column(
-        Integer, ForeignKey('competition_classes.id', ondelete='SET NULL'))
-    class_ = relationship('CompetitionClass')
+    class_id = db.Column(
+        Integer, db.ForeignKey('competition_classes.id', ondelete='SET NULL'))
+    class_ = db.relationship('CompetitionClass')
 
     # Timestamps
 
-    join_time = Column(DateTime)
+    join_time = db.Column(DateTime)
 
     ##############################
 
@@ -154,7 +150,7 @@ class CompetitionParticipation(DeclarativeBase):
             .format(self.id).encode('utf-8')
 
 
-class CompetitionClass(DeclarativeBase):
+class CompetitionClass(db.Model):
     """
     This table describes a competition class.
 
@@ -164,26 +160,26 @@ class CompetitionClass(DeclarativeBase):
 
     __tablename__ = 'competition_classes'
 
-    id = Column(Integer, autoincrement=True, primary_key=True)
+    id = db.Column(Integer, autoincrement=True, primary_key=True)
 
     # The competition that this class definition belongs to
 
-    competition_id = Column(
-        Integer, ForeignKey('competitions.id', ondelete='CASCADE'),
+    competition_id = db.Column(
+        Integer, db.ForeignKey('competitions.id', ondelete='CASCADE'),
         nullable=False)
-    competition = relationship('Competition', innerjoin=True)
+    competition = db.relationship('Competition', innerjoin=True)
 
     # Name of the competition class
 
-    name = Column(Unicode(64), nullable=False)
+    name = db.Column(Unicode(64), nullable=False)
 
     # Description of the competition class (optional)
 
-    description = Column(UnicodeText)
+    description = db.Column(UnicodeText)
 
     # Competition class pilots
 
-    participants = relationship('CompetitionParticipation')
+    participants = db.relationship('CompetitionParticipation')
 
     ##############################
 

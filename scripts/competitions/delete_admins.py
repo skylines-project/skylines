@@ -39,7 +39,8 @@ if not to_envvar(args.config):
 
 
 import sys
-from skylines.model import DBSession, Competition
+from skylines import db
+from skylines.model import Competition
 
 # Load competition
 
@@ -62,4 +63,4 @@ elif args.admin_ids:
         print 'Admin "{}" with id: {} got removed from competition with id: {}.' \
             .format(admin.name, admin.id, args.competition_id)
 
-DBSession.commit()
+db.session.commit()

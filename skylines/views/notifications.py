@@ -1,19 +1,20 @@
 from collections import defaultdict
 from operator import itemgetter
 
-from flask import Blueprint, render_template, abort, request, url_for, redirect
+from flask import Blueprint, render_template, abort, request, url_for, redirect, g
 from sqlalchemy.orm import joinedload, contains_eager
 
+from skylines import db
 from skylines.lib.dbutil import get_requested_record
-from skylines.model import Event, Notification, DBSession
+from skylines.model import Event, Notification
 
 notifications_blueprint = Blueprint('notifications', 'skylines')
 
 
 @notifications_blueprint.before_app_request
 def inject_notification_count():
-    if request.identity:
-        request.identity['notifications'] = Notification.count_unread(request.identity['user'])
+    if g.current_user:
+        g.notifications = Notification.count_unread(g.current_user)
 
 
 def _filter_query(query, args):
@@ -29,10 +30,10 @@ def _filter_query(query, args):
 
 @notifications_blueprint.route('/')
 def index():
-    if not request.identity:
+    if not g.current_user:
         abort(401)
 
-    query = Notification.query_unread(request.identity['user']) \
+    query = Notification.query_unread(g.current_user) \
         .join('event') \
         .options(contains_eager('event')) \
         .options(joinedload('event.actor')) \
@@ -81,31 +82,30 @@ def index():
 
 @notifications_blueprint.route('/clear')
 def clear():
-    if not request.identity:
+    if not g.current_user:
         abort(401)
 
     def filter_func(query):
         return _filter_query(query, request.args)
 
-    Notification.mark_all_read(request.identity['user'],
-                               filter_func=filter_func)
+    Notification.mark_all_read(g.current_user, filter_func=filter_func)
 
-    DBSession.commit()
+    db.session.commit()
 
     return redirect(url_for('.index'))
 
 
 @notifications_blueprint.route('/<int:id>')
 def show(id):
-    if not request.identity:
+    if not g.current_user:
         abort(401)
 
     notification = get_requested_record(Notification, id)
-    if request.identity['user'] != notification.recipient:
+    if g.current_user != notification.recipient:
         abort(403)
 
     notification.mark_read()
-    DBSession.commit()
+    db.session.commit()
 
     event = notification.event
 

@@ -9,12 +9,11 @@ from geoalchemy2.types import Geometry, Geography
 from geoalchemy2.elements import WKTElement
 from geoalchemy2.shape import to_shape
 
-from .base import DeclarativeBase
-from .session import DBSession
 from .geo import Location
+from skylines import db
 
 
-class Airport(DeclarativeBase):
+class Airport(db.Model):
     __tablename__ = 'airports'
     __searchable_columns__ = ['name', 'icao']
     __search_detail_columns__ = ['icao', 'frequency']
@@ -63,7 +62,7 @@ class Airport(DeclarativeBase):
         location = WKTElement(location.to_wkt(), srid=4326)
         distance = func.ST_Distance(cls.location_wkt, location)
 
-        airport = DBSession.query(cls, distance.label('distance')) \
+        airport = db.session.query(cls, distance.label('distance')) \
             .order_by(distance).first()
 
         if airport is not None and (distance_threshold is None or
@@ -75,4 +74,4 @@ class Airport(DeclarativeBase):
     def distance(self, location):
         loc1 = cast(self.location_wkt, Geography)
         loc2 = func.ST_GeographyFromText(location.to_wkt())
-        return DBSession.scalar(func.ST_Distance(loc1, loc2))
+        return db.session.scalar(func.ST_Distance(loc1, loc2))

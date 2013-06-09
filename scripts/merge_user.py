@@ -22,16 +22,17 @@ if not to_envvar(args.config):
     parser.error('Config file "{}" not found.'.format(args.config))
 
 
+from skylines import db
 from skylines.model import *
 
 
 new_id = args.new_id
-new = DBSession.query(User).get(new_id)
+new = db.session.query(User).get(new_id)
 if not new:
     print >>sys.stderr, "No such user: %d" % new_id
 
 old_id = args.old_id
-old = DBSession.query(User).get(old_id)
+old = db.session.query(User).get(old_id)
 if not old:
     print >>sys.stderr, "No such user: %d" % old_id
 
@@ -39,20 +40,20 @@ if old.club != new.club:
     print >>sys.stderr, "Different club;", old.club, new.club
     sys.exit(1)
 
-DBSession.query(Club).filter_by(owner_id=old_id).update({'owner_id': new_id})
-DBSession.query(IGCFile).filter_by(owner_id=old_id).update({'owner_id': new_id})
-DBSession.query(Flight).filter_by(pilot_id=old_id).update({'pilot_id': new_id})
-DBSession.query(Flight).filter_by(co_pilot_id=old_id).update({'co_pilot_id': new_id})
-DBSession.query(TrackingFix).filter_by(pilot_id=old_id).update({'pilot_id': new_id})
-DBSession.flush()
+db.session.query(Club).filter_by(owner_id=old_id).update({'owner_id': new_id})
+db.session.query(IGCFile).filter_by(owner_id=old_id).update({'owner_id': new_id})
+db.session.query(Flight).filter_by(pilot_id=old_id).update({'pilot_id': new_id})
+db.session.query(Flight).filter_by(co_pilot_id=old_id).update({'co_pilot_id': new_id})
+db.session.query(TrackingFix).filter_by(pilot_id=old_id).update({'pilot_id': new_id})
+db.session.flush()
 transaction.commit()
 
-new = DBSession.query(User).get(new_id)
-old = DBSession.query(User).get(old_id)
+new = db.session.query(User).get(new_id)
+old = db.session.query(User).get(old_id)
 assert new and old
 
-DBSession.delete(old)
-DBSession.flush()
+db.session.delete(old)
+db.session.flush()
 
 if new.user_name == new.name:
     new.user_name = old.user_name
@@ -66,4 +67,4 @@ if new._password is None and old._password is not None:
 # TODO: merge display name or not?
 # TODO: merge tracking key or not?
 
-DBSession.commit()
+db.session.commit()

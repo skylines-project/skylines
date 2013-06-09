@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """Setup the SkyLines application"""
 
-from skylines import model
+from skylines import model, db
 
 
 def bootstrap():
@@ -15,7 +15,7 @@ def bootstrap():
         u.email_address = u'manager@somedomain.com'
         u.password = u'managepass'
 
-        model.DBSession.add(u)
+        db.session.add(u)
 
         g = model.Group()
         g.group_name = u'managers'
@@ -23,14 +23,14 @@ def bootstrap():
 
         g.users.append(u)
 
-        model.DBSession.add(g)
+        db.session.add(g)
 
         p = model.Permission()
         p.permission_name = u'manage'
         p.description = u'This permission give an administrative right to the bearer'
         p.groups.append(g)
 
-        model.DBSession.add(p)
+        db.session.add(p)
 
         u1 = model.User()
         u1.name = u'Example user'
@@ -38,7 +38,7 @@ def bootstrap():
         u1.password = u'test'
         u1.tracking_key = 123456
 
-        model.DBSession.add(u1)
+        db.session.add(u1)
 
         g1 = model.Group()
         g1.group_name = u'pilots'
@@ -46,21 +46,21 @@ def bootstrap():
 
         g1.users.append(u1)
 
-        model.DBSession.add(g1)
+        db.session.add(g1)
 
         p1 = model.Permission()
         p1.permission_name = u'upload'
         p1.description = u'Allow uploading new flights'
         p1.groups.append(g1)
 
-        model.DBSession.add(p)
+        db.session.add(p)
 
-        model.DBSession.commit()
+        db.session.commit()
     except IntegrityError:
         print 'Warning, there was a problem adding your auth data, it may have already been added:'
         import traceback
         print traceback.format_exc()
-        model.DBSession.rollback()
+        db.session.rollback()
         print 'Continuing with bootstrapping...'
 
     # <websetup.bootstrap.after.auth>

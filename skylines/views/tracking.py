@@ -1,5 +1,4 @@
-from flask import Blueprint, current_app, render_template, jsonify
-from flask.ext.login import current_user
+from flask import Blueprint, current_app, render_template, jsonify, g
 
 from skylines.lib.helpers import isoformat_utc
 from skylines.lib.decorators import jsonp
@@ -33,11 +32,7 @@ def index():
 
 @tracking_blueprint.route('/info')
 def info():
-    user = None
-    if not current_user.is_anonymous():
-        user = current_user
-
-    return render_template('tracking/info.jinja', user=user)
+    return render_template('tracking/info.jinja', user=g.current_user)
 
 
 @tracking_blueprint.route('/latest.json')

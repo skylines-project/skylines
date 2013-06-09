@@ -25,8 +25,8 @@ if not to_envvar(args.config):
 
 
 from sqlalchemy.orm import joinedload
-from skylines import app
-from skylines.model import DBSession, Flight
+from skylines import app, db
+from skylines.model import Flight
 from skylines.lib.xcsoar import analyse_flight
 
 app.test_request_context().push()
@@ -47,7 +47,7 @@ def apply_and_commit(func, q):
 
     if n_success > 0:
         print "commit"
-        DBSession.commit()
+        db.session.commit()
 
     return n_success, n_failed
 
@@ -65,9 +65,9 @@ def incremental(func, q):
 
 if args.force:
     # invalidate all results
-    DBSession.query(Flight).update({'needs_analysis': True})
+    db.session.query(Flight).update({'needs_analysis': True})
 
-q = DBSession.query(Flight)
+q = db.session.query(Flight)
 q = q.options(joinedload(Flight.igc_file))
 if args.ids:
     apply_and_commit(do, q.filter(Flight.id.in_(args.ids)))

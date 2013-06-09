@@ -22,7 +22,7 @@
 <link href="{{ ASSET_URL }}" rel="stylesheet" type="text/css" />
 {%- endassets %}
 
-{%- if request.identity and request.identity['user'].eye_candy -%}
+{%- if g.current_user and g.current_user.eye_candy -%}
 <link href="/css/eye_candy/OpenLayers.css" rel="stylesheet" type="text/css" />
 {%- endif %}
 
@@ -106,7 +106,7 @@
 
     pinButton($("#pinned"), {{ flight.id }});
 
-    $.getScript("http://maps.google.com/maps/api/js?v=3.7&sensor=false&callback=addGoogleLayer");
+    $.getScript("https://maps.google.com/maps/api/js?v=3.7&sensor=false&callback=addGoogleLayer");
     addBingLayers("{{ config.get('SKYLINES_BING_API_KEY', 'null') }}");
     addReliefLayer();
 

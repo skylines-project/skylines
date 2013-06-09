@@ -1,4 +1,4 @@
-from flask import request
+from flask import g
 from flask.ext.babel import lazy_gettext as l_
 
 from formencode import validators, All
@@ -8,7 +8,8 @@ from sprox.sa.provider import SAORMProvider
 from tw.forms import SingleSelectField, TextField
 
 from .bootstrap import BootstrapForm
-from skylines.model import DBSession, User
+from skylines import db
+from skylines.model import User
 
 
 class NewForm(AddRecordForm):
@@ -23,17 +24,17 @@ class NewForm(AddRecordForm):
     }
 
     email_address = Field(TextField, All(
-        UniqueValue(SAORMProvider(DBSession), __model__, 'email_address'),
-        validators.Email))
+        UniqueValue(SAORMProvider(db.session), __model__, 'email_address'),
+        validators.Email, validators.NotEmpty))
 
     name = Field(TextField, validators.NotEmpty)
 
-new_form = NewForm(DBSession)
+new_form = NewForm(db.session)
 
 
 class SelectField(SingleSelectField):
     def update_params(self, d):
-        users = User.query(club_id=request.identity['user'].club_id) \
+        users = User.query(club_id=g.current_user.club_id) \
             .order_by(User.name)
 
         options = [(None, '[unspecified]')] + \

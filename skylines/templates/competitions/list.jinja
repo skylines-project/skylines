@@ -33,7 +33,7 @@
   </tbody>
 </table>
 
-{% if request.identity -%}
+{% if g.current_user -%}
 <a href="{{ url_for('competitions.new') }}" class="btn"><i class="icon-plus"></i> {% trans %}Create a new competition{% endtrans %}</a>
 {%- endif %}
 {%- endblock %}

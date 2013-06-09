@@ -27,8 +27,7 @@ if not to_envvar(args.config):
     parser.error('Config file "{}" not found.'.format(args.config))
 
 
-from datetime import datetime
-from skylines.model.session import DBSession
+from skylines import db
 from skylines.model import CompetitionClass
 
 # Add the competition classes to the competition
@@ -40,10 +39,10 @@ for class_name in args.class_names:
         name=class_name
     )
 
-    DBSession.add(class_)
-    DBSession.flush()
+    db.session.add(class_)
+    db.session.flush()
 
     print 'Competition class "{}" created with id: {}' \
         .format(class_.name, class_.id)
 
-DBSession.commit()
+db.session.commit()

@@ -36,7 +36,8 @@ if not to_envvar(args.config):
     parser.error('Config file "{}" not found.'.format(args.config))
 
 
-from skylines.model import DBSession, CompetitionClass
+from skylines import db
+from skylines.model import CompetitionClass
 
 # Delete all competition classes from the competition
 
@@ -64,4 +65,4 @@ elif args.class_ids:
             print 'No competition class with id: {} found in competition with id: {}.' \
                 .format(class_id, args.competition_id)
 
-DBSession.commit()
+db.session.commit()

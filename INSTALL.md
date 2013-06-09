@@ -1,137 +1,127 @@
-# Install
+# Installing SkyLines
 
-Since *SkyLines* has many dependencies it is not always easy to install for new developers. We have created a [Vagrant](http://www.vagrantup.com/)/[Chef](http://www.opscode.com/chef/) based environment though, that makes it much easier for starters.
+*SkyLines* has quite many dependencies and is not always easy to install for new developers. Please don't hesitate to
+[ask for help](README.md#contact-and-contributing) if you hit any roadblocks.
 
-## Vagrant
+The production server is running the Debian Linux operating system and most of
+our developers use Ubuntu or Debian too. We recommend to use either one of
+those systems for development, but it may also be possible to make it work on
+OS X or Windows.
 
-Vagrant is a wrapper around [VirtualBox](http://www.virtualbox.org/) and Chef. It can create a virtual machine on your computer and configure it, so that you can instantly start developing.
+There is also a currently unmaintained [Vagrant](http://www.vagrantup.com/) /
+[Chef](http://www.opscode.com/chef/) environment for *SkyLines*. This makes it
+possible to run a virtual machine with Ubuntu dedicated to *SkyLines*
+development on OS X or Windows. This may or may not work currently and for now
+we don't recommend using it. More information can be found in
+[INSTALL.vagrant.md](INSTALL.vagrant.md).
 
-* Make sure you have [Ruby](http://www.ruby-lang.org/de/) and [gem](http://rubygems.org/) installed
-* Install VirtualBox through your package manager or from [here](https://www.virtualbox.org/wiki/Downloads)
-* Install Vagrant by downloading and installing the right package from <http://downloads.vagrantup.com/>
-* Install [Librarian](https://github.com/applicationsonline/librarian) for Chef by calling: `gem install librarian`
 
-Now that you have the necessary tools it is time to create and start the virtual machine:
+## Python, Flask and other dependencies
 
-    # download necessary chef cookbooks
-    librarian-chef install
+Since *SkyLines* is written and based on [Python](http://www.python.org/) you
+should install it if you don't have it yet. *SkyLines* is currently targeting
+the 2.7 branch of Python. You can check your version by running `python
+--version` from the command line.
 
-    # create and start virtual machine
-    vagrant up
+All the necessary Python libraries are installed using the `pip` tool. If you
+don't have it yet please install it using e.g. `sudo apt-get install
+python-pip` on Ubuntu/Debian. More information about pip can be found at
+<http://www.pip-installer.org/>.
 
-Once the virtual machine has started it will begin to configure itself with the necessary things to run a SkyLines development server on it. As soon as it is finished you can call `vagrant ssh` to access the virtual machine from the terminal.
+Now you can install the python dependencies by calling:
 
-*(If everything has worked, you can skip the next two subchapters and continue with the database chapter.)*
+    $ sudo pip install -e .
 
-## Chef
+*Note: You might have to install the additional Ubuntu/Debian packages
+`libpq-dev`, `python-dev` and `g++` for the `psycopg2` dependency.*
 
-Since the Vagrant environment is based on Chef, it should be possible to run the Chef cookbook also outside of Vagrant. This process has not been tested as of now though, and will most likely only work on Ubuntu (and Debian).
 
-## Manual Install
+## PostGIS database
 
-*(These instructions are written for Debian/Ubuntu systems.)*
+The *SkyLines* backend is relying on the open source database
+[PostgreSQL](http://www.postgresql.org/) and its
+[PostGIS 2.x](http://www.postgis.net/) extension, that provides it with
+geospatial functionality. The `fuzzystrmatch` extension is also needed which
+is provided by the `postgresql-contrib` package on Debian/Ubuntu.
 
-First of all make sure you have [Python](http://www.python.org/) installed! After that install the required Python packages to run *SkyLines* using the setup.py script:
+To install PostGIS you should follow the instructions at
+<http://postgis.net/install> or
+<http://trac.osgeo.org/postgis/wiki/UsersWikiInstall> (for Debian/Ubuntu).
+Please note that you will need at least version 2.0 of PostGIS for *SkyLines*.
 
-    $ pip install -e .
-
-*(You might have to install the additional debian packages `libxml2-dev`, `libxslt1-dev` and `python-dev` for the `lxml` dependency)*
-
-Install the [PostgreSQL](http://www.postgresql.org/) database server and the [PostGIS](http://postgis.net/) spatial extension. This is done by:
-
-    $ apt-get install postgresql postgresql-9.1-postgis postgresql-contrib-9.1
-
-Now create a new database and user for *SkyLines*. Change to the user `postgres` to log into the database. Second, install PostGIS into this new created database:
+Once PostGIS is installed you should create a database user for yourself and
+a database for *SkyLines* roughly like this:
 
     # change to the postgres user
-    $ su - postgres
+    $ sudo su - postgres
 
     # create a database user account for yourself
-    $ createuser <your username>
+    $ createuser -s <your username>
 
     # create skylines database with yourself as the owner
-    $ createdb skylines --o <your username>
+    $ createdb skylines -O <your username>
 
-    # install PostGIS extensions into the database
-    $ createlang plpgsql -d skylines
-    $ psql -d skylines -f /usr/share/postgresql/9.1/contrib/postgis-1.5/postgis.sql
-    $ psql -d skylines -f /usr/share/postgresql/9.1/contrib/postgis-1.5/spatial_ref_sys.sql
+    # install PostGIS extensions into the PostgreSQL database
+    $ psql -d skylines -c 'CREATE EXTENSION postgis;'
+    $ psql -d skylines -f /usr/share/postgresql/9.1/contrib/postgis-2.0/legacy_minimal.sql
 
-    # log into postgres using skylines database
-    $ psql skylines
-    postgres=# grant all on geometry_columns to <your username>;
-    postgres=# grant select on spatial_ref_sys to <your username>;
-    postgres=# create extension fuzzystrmatch;
-    postgres=# \q
+    # install fuzzystrmatch extension into the database
+    $ psql -d skylines -c 'CREATE EXTENSION fuzzystrmatch;'
 
-*(Note: the location of the postgis sql files may be different for other versions of PostgreSQL, PostGIS and other operating systems. See the approciate documentation and websites for more information.)*
+*Note: The location of the legacy_minimal.sql file may be different for other
+versions of PostgreSQL, PostGIS and other operating systems. See the
+appropriate documentation and websites for more information.*
+
+After creating the database you have to create the necessary tables and indices
+by calling the `./scripts/initialize_database.py` file from the the command
+line.
 
 
-# Database
+## XCSoar tools
 
-In the last chapter you have setup the database server and the `skylines` database. Unless you have access and want to sync your development setup with the production server you will need to create the tables in the database now:
+Since the [XCSoar](http://www.xcsoar.org/) project already has much of the code
+implemented that is necessary for flight analysis, it makes sense to reuse that
+code where applicable. *SkyLines* is using two tools from the range of XCSoar
+libraries called `AnalyseFlight` and `FlightPath`.
 
-    $ paster setup-app development.ini
+Here are the necessary commands to clone the XCSoar repository and build and
+link the two tools on Ubuntu/Debian:
 
-If you have set up your environment with Vagrant, you must ssh into the virtual machine and run the previous command from within the ```/vagrant``` directory.
-Alternatively, you can run:
-
-    vagrant ssh --command "paster setup-app /vagrant/development.ini"
-
-# XCSoar dependencies
-
-Since the [XCSoar project](http://www.xcsoar.org/) already has much of the code implemented that is necessary for flight analysis, it makes sense to reuse that code where applicable. *SkyLines* is using two tools from the range of XCSoar libraries called `AnalyseFlight` and `FlightPath`. The names speak for themselves
-
-## Download
-
-We have uploaded precompiled versions of the two tools to our download server to make the initial setup faster and easier. The tools can be downloaded by calling:
-
-    ./download_xcsoar_tools.sh
-
-## Compiling
-
-If the download does not work, or you want to build the tools yourself, you can follow these instructions:
-
-    # download the XCSoar source code repository
+    # clone the XCSoar source code repository
     $ git clone git://git.xcsoar.org/xcsoar/master/xcsoar.git
+
+    # install XCSoar build dependencies
+    $ apt-get install make libcurl4-openssl-dev
 
     # consult the XCSoar README file for further dependency informations
 
-    # the following should be enough for the Vagrant environment
-    $ apt-get install libcurl4-openssl-dev libboost-system-dev
-
     # build the tools
     $ cd xcsoar
-    $ make TARGET=UNIX DEBUG=n ENABLE_SDL=n output/UNIX/bin/AnalyseFlight output/UNIX/bin/FlightPath
+    $ make DEBUG=n ENABLE_SDL=n output/UNIX/bin/AnalyseFlight output/UNIX/bin/FlightPath
 
-    # create a symbolic link from skylines to xcsoar (not possible on Vagrant)
+    # create a symbolic link from SkyLines to XCSoar
     $ cd <path to skylines>
     $ ln -s <path to xcsoar>/output/UNIX/bin bin
 
 
-# Running the Server
+## Running the debug server
 
-You should now be able to start the server and run your development instance of *SkyLines* (If you have set up your environment with Vagrant, remember to ssh into the virtual machine and run the commands from the ```/vagrant```directory):
+If the above steps are completed you should be able to run a base version of
+*SkyLines* locally now:
 
-    $ paster serve development.ini
-
-While developing you may want the server to reload after changes in package files (or its dependencies) are saved. This can be achieved easily by adding the --reload option:
-
-    $ paster serve --reload development.ini
-
-You are ready to go. Have fun developing!
+    $ ./debug.py
 
 *(The following chapters are optional!)*
 
 
-# Adding Airports
+## Adding Airports
 
 Since an empty database is boring, you should at least load the airports from the [Welt2000](http://www.segelflug.de/vereine/welt2000/) into the database by calling:
 
-    $ python import_welt2000.py development.ini
+    $ ./scripts/import_welt2000.py
 
 
-# Running a local mapserver
+## Running a local mapserver
 
 If you want to run the mapserver as fastcgi, install the `python-mapscript` package (on Debian):
 
@@ -141,4 +131,4 @@ To run it locally as subprocess of mapproxy, change `mapserver/mapproxy/mapproxy
 
 To import airspaces into the database, install the `python-gdal` package (using gdal extension directly from pypi is not recommended) and import the required airspace files:
 
-    $ python import_airspaces.py development.ini assets/airspace/airspace_list.txt assets/airspace/airspace_blacklist.txt
+    $ ./scripts/import_airspaces.py assets/airspace/airspace_list.txt assets/airspace/airspace_blacklist.txt

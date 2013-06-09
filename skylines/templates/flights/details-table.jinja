@@ -57,7 +57,7 @@
     <tr>
       <th>{% trans %}Aircraft{% endtrans %}</th>
       <td>
-        {%- if flight.is_writable(request.identity) %}
+        {%- if flight.is_writable(g.current_user) %}
         <a href="{{ url_for('.change_aircraft') }}" class="btn btn-mini" style="float: right;">
           <i class="icon-pencil icon-small"></i> {% trans %}Change{% endtrans %}
         </a>
@@ -118,7 +118,7 @@
     <tr>
       <th>{% trans %}Pilot{% endtrans %}</th>
       <td>
-        {%- if flight.is_writable(request.identity) %}
+        {%- if flight.is_writable(g.current_user) %}
         <a href="{{ url_for('.change_pilot') }}" class="btn btn-mini" style="float: right;">
           <i class="icon-pencil icon-small"></i> {% trans %}Change{% endtrans %}
         </a>
@@ -165,7 +165,7 @@
       </td>
     </tr>
 
-    {% if flight.may_delete(request.identity) %}
+    {% if flight.may_delete(g.current_user) %}
     <tr>
       <th>{% trans %}Actions{% endtrans %}</th>
       <td>

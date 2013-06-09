@@ -1,8 +1,9 @@
-from flask import Blueprint, render_template, request, redirect, url_for
+from flask import Blueprint, render_template, request, redirect, url_for, g
 from flask.ext.babel import _
 from sqlalchemy.orm import joinedload
 
-from skylines.model import DBSession, Competition
+from skylines import db
+from skylines.model import Competition
 from skylines.forms.competition import NewForm
 from skylines.lib.formatter import format_date
 from skylines.lib.decorators import validate, login_required
@@ -10,12 +11,12 @@ from skylines.lib.decorators import validate, login_required
 competitions_blueprint = Blueprint('competitions', 'skylines')
 
 # Forms
-new_form = NewForm(DBSession)
+new_form = NewForm(db.session)
 
 
 @competitions_blueprint.route('/')
 def index():
-    query = DBSession.query(Competition) \
+    query = Competition.query() \
         .options(joinedload(Competition.airport))
 
     competitions = [{
@@ -43,14 +44,12 @@ def new():
 @login_required()
 @validate(new_form, new)
 def new_post():
-    current_user = request.identity['user']
-
     competition = Competition(name=request.form['name'])
-    competition.creator = current_user
+    competition.creator = g.current_user
     competition.start_date = request.form['start_date']
     competition.end_date = request.form['end_date']
 
-    DBSession.add(competition)
-    DBSession.commit()
+    db.session.add(competition)
+    db.session.commit()
 
     return redirect(url_for('competition.index', competition_id=competition.id))

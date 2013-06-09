@@ -30,7 +30,7 @@ if not to_envvar(args.config):
 
 import sys
 from datetime import datetime
-from skylines.model.session import DBSession
+from skylines import db
 from skylines.model import User, Competition
 
 # Load competition
@@ -56,4 +56,4 @@ for admin_id in args.admin_ids:
     print 'Added user "{}" (id: {}) to competition with id: {}' \
         .format(admin.name, admin.id, competition.id)
 
-DBSession.commit()
+db.session.commit()

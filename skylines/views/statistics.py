@@ -1,8 +1,9 @@
 from flask import Blueprint, render_template, abort
 from sqlalchemy import func, distinct
 
+from skylines import db
 from skylines.lib.dbutil import get_requested_record
-from skylines.model import DBSession, User, Club, Flight, Airport
+from skylines.model import User, Club, Flight, Airport
 
 statistics_blueprint = Blueprint('statistics', 'skylines')
 
@@ -14,11 +15,11 @@ def index(page=None, id=None):
     pilot = None
     airport = None
 
-    query = DBSession.query(Flight.year.label('year'),
-                            func.count('*').label('flights'),
-                            func.count(distinct(Flight.pilot_id)).label('pilots'),
-                            func.sum(Flight.olc_classic_distance).label('distance'),
-                            func.sum(Flight.duration).label('duration'))
+    query = db.session.query(Flight.year.label('year'),
+                             func.count('*').label('flights'),
+                             func.count(distinct(Flight.pilot_id)).label('pilots'),
+                             func.sum(Flight.olc_classic_distance).label('distance'),
+                             func.sum(Flight.duration).label('duration'))
 
     if page == 'pilot':
         pilot = get_requested_record(User, id)

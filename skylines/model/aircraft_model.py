@@ -1,25 +1,22 @@
-# -*- coding: utf-8 -*-
-
-from sqlalchemy import Column
 from sqlalchemy.types import Integer, Unicode
 
-from .base import DeclarativeBase
+from skylines import db
 
 
-class AircraftModel(DeclarativeBase):
+class AircraftModel(db.Model):
     __tablename__ = 'models'
 
-    id = Column(Integer, autoincrement=True, primary_key=True)
-    name = Column(Unicode(64), unique=True, nullable=False)
+    id = db.Column(Integer, autoincrement=True, primary_key=True)
+    name = db.Column(Unicode(64), unique=True, nullable=False)
 
     # the kind of aircraft: 0=unspecified, 1=glider, 2=motor glider,
     # 3=paraglider, 4=hangglider, 5=ul glider
-    kind = Column(Integer, nullable=False, default=0)
+    kind = db.Column(Integer, nullable=False, default=0)
 
-    igc_index = Column(Integer)
+    igc_index = db.Column(Integer)
 
     # the index for the German DMSt
-    dmst_index = Column(Integer)
+    dmst_index = db.Column(Integer)
 
     def __unicode__(self):
         return self.name
@@ -27,8 +24,8 @@ class AircraftModel(DeclarativeBase):
     def __repr__(self):
         return ('<AircraftModel: id=%d name=\'%s\'>' % (self.id, self.name)).encode('utf-8')
 
-    def is_writable(self, identity):
-        return identity and 'manage' in identity['permissions']
+    def is_writable(self, user):
+        return user and user.is_manager()
 
     @classmethod
     def by_name(cls, name):

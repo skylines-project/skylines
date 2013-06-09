@@ -43,7 +43,7 @@
     </table>
 
     <p>
-      {% if club.is_writable(request.identity) -%}
+      {% if club.is_writable(g.current_user) -%}
       <a href="{{ url_for('.edit') }}" class="btn">{% trans %}Edit{% endtrans %}</a>
       {%- endif %}
 

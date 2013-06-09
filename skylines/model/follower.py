@@ -1,33 +1,28 @@
-# -*- coding: utf-8 -*-
-
 from datetime import datetime
 
-from sqlalchemy import ForeignKey, Column
 from sqlalchemy.types import Integer, DateTime
-from sqlalchemy.orm import relationship
 
-from .base import DeclarativeBase
-from .session import DBSession
+from skylines import db
 
 
-class Follower(DeclarativeBase):
+class Follower(db.Model):
     __tablename__ = 'followers'
 
-    id = Column(Integer, autoincrement=True, primary_key=True)
+    id = db.Column(Integer, autoincrement=True, primary_key=True)
 
-    source_id = Column(
-        Integer, ForeignKey('tg_user.id', ondelete='CASCADE'), index=True)
-    source = relationship(
+    source_id = db.Column(
+        Integer, db.ForeignKey('tg_user.id', ondelete='CASCADE'), index=True)
+    source = db.relationship(
         'User', foreign_keys=[source_id],
         lazy='joined', backref='following')
 
-    destination_id = Column(
-        Integer, ForeignKey('tg_user.id', ondelete='CASCADE'), index=True)
-    destination = relationship(
+    destination_id = db.Column(
+        Integer, db.ForeignKey('tg_user.id', ondelete='CASCADE'), index=True)
+    destination = db.relationship(
         'User', foreign_keys=[destination_id],
         lazy='joined', backref='followers')
 
-    time = Column(DateTime, nullable=False, default=datetime.utcnow)
+    time = db.Column(DateTime, nullable=False, default=datetime.utcnow)
 
     @classmethod
     def follows(cls, source, destination):
@@ -38,7 +33,7 @@ class Follower(DeclarativeBase):
         f = cls.query(source=source, destination=destination).first()
         if not f:
             f = Follower(source=source, destination=destination)
-            DBSession.add(f)
+            db.session.add(f)
 
     @classmethod
     def unfollow(cls, source, destination):

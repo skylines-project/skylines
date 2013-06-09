@@ -2,10 +2,11 @@ from flask import Blueprint, render_template, g, request, redirect, url_for, abo
 from flask.ext.babel import _
 from sqlalchemy import func
 
+from skylines import db
 from skylines.forms import club, pilot as pilot_forms
 from skylines.lib.dbutil import get_requested_record
 from skylines.lib.decorators import validate
-from skylines.model import DBSession, User, Group, Club
+from skylines.model import User, Group, Club
 
 club_blueprint = Blueprint('club', 'skylines')
 
@@ -39,7 +40,7 @@ def pilots():
 
 @club_blueprint.route('/edit')
 def edit():
-    if not g.club.is_writable(request.identity):
+    if not g.club.is_writable(g.current_user):
         abort(403)
 
     return render_template(
@@ -50,19 +51,19 @@ def edit():
 @club_blueprint.route('/edit', methods=['POST'])
 @validate(club.edit_form, edit)
 def edit_post():
-    if not g.club.is_writable(request.identity):
+    if not g.club.is_writable(g.current_user):
         abort(403)
 
     g.club.name = request.form['name']
     g.club.website = request.form['website']
-    DBSession.commit()
+    db.session.commit()
 
     return redirect(url_for('.index'))
 
 
 @club_blueprint.route('/create_pilot')
 def create_pilot():
-    if not g.club.is_writable(request.identity):
+    if not g.club.is_writable(g.current_user):
         abort(403)
 
     return render_template(
@@ -73,7 +74,7 @@ def create_pilot():
 @club_blueprint.route('/create_pilot', methods=['POST'])
 @validate(pilot_forms.new_form, create_pilot)
 def create_pilot_post():
-    if not g.club.is_writable(request.identity):
+    if not g.club.is_writable(g.current_user):
         abort(403)
 
     pilot = User(
@@ -82,12 +83,12 @@ def create_pilot_post():
         club=g.club
     )
 
-    DBSession.add(pilot)
+    db.session.add(pilot)
 
     pilots = Group.query(group_name='pilots').first()
     if pilots:
         pilots.users.append(pilot)
 
-    DBSession.commit()
+    db.session.commit()
 
     return redirect(url_for('.pilots'))

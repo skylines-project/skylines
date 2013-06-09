@@ -2,17 +2,18 @@ from datetime import datetime
 from tempfile import TemporaryFile
 from zipfile import ZipFile
 
-from flask import Blueprint, render_template, request, flash, redirect
+from flask import Blueprint, render_template, request, flash, redirect, g
 from flask.ext.babel import _, lazy_gettext as l_
 from werkzeug.datastructures import CombinedMultiDict
 
+from skylines import db
 from skylines.forms import upload, aircraft_model
 from skylines.lib import files
 from skylines.lib.decorators import login_required
 from skylines.lib.md5 import file_md5
 from skylines.lib.string import import_ascii
 from skylines.lib.xcsoar import analyse_flight
-from skylines.model import DBSession, User, Flight, IGCFile
+from skylines.model import User, Flight, IGCFile
 from skylines.model.notification import create_flight_notifications
 
 upload_blueprint = Blueprint('upload', 'skylines')
@@ -63,7 +64,7 @@ def IterateUploadFiles(upload):
 def index():
     return render_template(
         'generic/form.jinja', active_page='upload', title=_("Upload Flight"),
-        form=upload.form, values=dict(pilot=request.identity['user'].id))
+        form=upload.form, values=dict(pilot=g.current_user.id))
 
 
 @upload_blueprint.route('/', methods=['POST'])
@@ -75,9 +76,9 @@ def index_post():
     except:
         return index()
 
-    user = request.identity['user']
+    user = g.current_user
 
-    pilot_id = request.form.get('pilot', None)
+    pilot_id = request.form.get('pilot', None, type=int)
     pilot = pilot_id and User.get(int(pilot_id))
     pilot_id = pilot and pilot.id
 
@@ -140,14 +141,14 @@ def index_post():
             continue
 
         flights.append((name, flight, None))
-        DBSession.add(igc_file)
-        DBSession.add(flight)
+        db.session.add(igc_file)
+        db.session.add(flight)
 
         create_flight_notifications(flight)
 
         success = True
 
-    DBSession.commit()
+    db.session.commit()
 
     return render_template(
         'upload/result.jinja', flights=flights, success=success,
@@ -193,7 +194,7 @@ def update():
 
         flight = Flight.get(id)
 
-        if not flight.is_writable(request.identity):
+        if not flight.is_writable(g.current_user):
             continue
 
         flight.model_id = model_id
@@ -201,7 +202,7 @@ def update():
         flight.competition_id = competition_id
         flight.time_modified = datetime.utcnow()
 
-    DBSession.commit()
+    db.session.commit()
 
     flash(_('Your flight(s) have been successfully updated.'))
     return redirect('/flights/latest')

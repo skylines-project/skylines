@@ -1,6 +1,6 @@
 from datetime import datetime
 
-from flask import Blueprint, request, render_template, redirect, url_for, abort, current_app, jsonify
+from flask import Blueprint, request, render_template, redirect, url_for, abort, current_app, jsonify, g
 from babel.dates import format_date
 
 from sqlalchemy import func
@@ -8,11 +8,12 @@ from sqlalchemy.sql.expression import or_, and_
 from sqlalchemy.orm import joinedload, contains_eager
 from sqlalchemy.orm.util import aliased
 
+from skylines import db
 from skylines.lib.datatables import GetDatatableRecords
 from skylines.lib.dbutil import get_requested_record
 from skylines.lib.helpers import truncate, country_name
 from skylines.model import (
-    DBSession, User, Club, Flight, IGCFile, AircraftModel,
+    User, Club, Flight, IGCFile, AircraftModel,
     Airport, FlightComment
 )
 
@@ -24,11 +25,11 @@ def _create_list(tab, kw, date=None, pilot=None, club=None, airport=None,
     pilot_alias = aliased(User, name='pilot')
     owner_alias = aliased(User, name='owner')
 
-    subq = DBSession \
+    subq = db.session \
         .query(FlightComment.flight_id, func.count('*').label('count')) \
         .group_by(FlightComment.flight_id).subquery()
 
-    flights = DBSession.query(Flight, subq.c.count) \
+    flights = db.session.query(Flight, subq.c.count) \
         .join(Flight.igc_file) \
         .options(contains_eager(Flight.igc_file)) \
         .join(owner_alias, IGCFile.owner) \
@@ -174,7 +175,7 @@ def date(date, latest=False):
 
 @flights_blueprint.route('/latest')
 def latest():
-    query = DBSession \
+    query = db.session \
         .query(func.max(Flight.date_local).label('date')) \
         .filter(Flight.takeoff_time < datetime.utcnow())
 
@@ -207,10 +208,10 @@ def pilot(id):
 
 @flights_blueprint.route('/my')
 def my():
-    if not request.identity:
+    if not g.current_user:
         abort(404)
 
-    return redirect(url_for('.pilot', id=request.identity['user'].id))
+    return redirect(url_for('.pilot', id=g.current_user.id))
 
 
 @flights_blueprint.route('/club/<int:id>')
@@ -235,10 +236,10 @@ def club(id):
 
 @flights_blueprint.route('/my_club')
 def my_club():
-    if not request.identity:
+    if not g.current_user:
         abort(404)
 
-    return redirect(url_for('.club', id=request.identity['user'].club.id))
+    return redirect(url_for('.club', id=g.current_user.club.id))
 
 
 @flights_blueprint.route('/airport/<int:id>')
@@ -264,11 +265,11 @@ def airport(id):
 
 @flights_blueprint.route('/unassigned')
 def unassigned():
-    if not request.identity:
+    if not g.current_user:
         abort(404)
 
     f = and_(Flight.pilot_id is None,
-             IGCFile.owner == request.identity['user'])
+             IGCFile.owner == g.current_user)
 
     return _create_list('unassigned', request.args, filter=f)
 
@@ -277,12 +278,12 @@ def unassigned():
 def pinned():
     # Check if we have cookies
     if request.cookies is None:
-        redirect(url_for('.index'))
+        return redirect(url_for('.index'))
 
     # Check for the 'pinnedFlights' cookie
     ids = request.cookies.get('SkyLines_pinnedFlights', None)
-    if ids is None:
-        redirect(url_for('.index'))
+    if not ids:
+        return redirect(url_for('.index'))
 
     try:
         # Split the string into integer IDs (%2C = comma)
@@ -297,7 +298,7 @@ def pinned():
 def igc_headers():
     """Hidden method that parses all missing IGC headers."""
 
-    if not request.identity or 'manage' not in request.identity['permissions']:
+    if not g.current_user or not g.current_user.is_manager():
         abort(403)
 
     igc_files = IGCFile.query().filter(or_(
@@ -311,6 +312,6 @@ def igc_headers():
     for igc_file in igc_files:
         igc_file.update_igc_headers()
 
-    DBSession.commit()
+    db.session.commit()
 
     return redirect(url_for('.index'))

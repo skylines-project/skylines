@@ -21,15 +21,36 @@ class SkyLines(Flask):
         # Configure Jinja2 template engine
         self.jinja_options['extensions'].append('jinja2.ext.do')
 
+        self.add_wdb()
         self.add_sqlalchemy()
 
     @property
     def created_by_nose(self):
         import traceback
-        top_frame = traceback.extract_stack()[0]
+        stack = traceback.extract_stack()
+        top_frame = stack[0]
         filename = os.path.abspath(top_frame[0])
-        return (filename.endswith('nosetests') or
-                os.path.join('skylines', 'tests') in filename)
+
+        # Started by calling "nosetests"
+        if filename.endswith('nosetests'):
+            return True
+
+        # Started by calling unit test file (e.g. ./test_pep8.py)
+        if os.path.join('skylines', 'tests') in filename:
+            return True
+
+        # Started by calling "python setup.py test/nosetests"
+        if filename.endswith('setup.py'):
+            cmd_frame = stack[4]
+            filename = os.path.abspath(cmd_frame[0])
+
+            if filename.endswith('test.py'):
+                return True
+
+            if filename.endswith('nose/commands.py'):
+                return True
+
+        return False
 
     def add_sqlalchemy(self):
         """ Create and configure SQLAlchemy extension """
@@ -77,25 +98,7 @@ class SkyLines(Flask):
         self.wsgi_app = make_middleware(self.wsgi_app, stack_registry=True)
 
     def add_tg2_compat(self):
-        from flask import request
-        from flask.ext.login import current_user
         from skylines.lib import helpers
-
-        @self.before_request
-        def inject_request_identity():
-            """ for compatibility with tg2 """
-
-            if not hasattr(request, 'identity'):
-                request.identity = {}
-
-            if not current_user.is_anonymous():
-                request.identity['user'] = current_user
-
-                request.identity['groups'] = \
-                    [g.group_name for g in current_user.groups]
-
-                request.identity['permissions'] = \
-                    [p.permission_name for p in current_user.permissions]
 
         @self.context_processor
         def inject_helpers_lib():
@@ -133,6 +136,11 @@ class SkyLines(Flask):
                 handler.setFormatter(file_formatter)
 
             self.logger.addHandler(handler)
+
+    def add_wdb(self):
+        if self.config.get('WDB_ENABLED', False):
+            from flask_wdb import Wdb
+            Wdb(self)
 
 
 app = SkyLines()

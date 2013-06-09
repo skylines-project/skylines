@@ -13,6 +13,7 @@ from sqlalchemy.sql.expression import func, and_, literal_column
 from geoalchemy2.shape import to_shape
 from geoalchemy2.elements import WKTElement
 
+from skylines import db
 from skylines.forms import BootstrapForm, aircraft_model
 from skylines.lib import files
 from skylines.lib.dbutil import get_requested_record_list
@@ -24,7 +25,7 @@ from skylines.lib.geo import METERS_PER_DEGREE
 from skylines.lib.sql import extract_array_item
 from skylines.lib.decorators import validate
 from skylines.model import (
-    DBSession, User, Flight, FlightPhase, Location, Elevation, FlightComment
+    User, Flight, FlightPhase, Location, Elevation, FlightComment
 )
 from skylines.model.notification import create_flight_comment_notifications
 from skylinespolyencode import SkyLinesPolyEncoder
@@ -49,7 +50,7 @@ def _pull_flight_id(endpoint, values):
     g.other_flights = g.flights[1:]
 
     if any(map(_reanalyse_if_needed, g.flights)):
-        DBSession.commit()
+        db.session.commit()
 
 
 @flight_blueprint.url_defaults
@@ -100,20 +101,20 @@ def _get_elevations(flight, encoder):
     location = locations.geom
 
     # Prepare subquery
-    subq = DBSession.query(location_id.label('location_id'),
-                           location.label('location')) \
-                    .filter(Flight.id == flight.id).subquery()
+    subq = db.session.query(location_id.label('location_id'),
+                            location.label('location')) \
+                     .filter(Flight.id == flight.id).subquery()
 
     # Prepare column expressions
     timestamp = literal_column('timestamps[location_id]')
     elevation = Elevation.rast.ST_Value(subq.c.location)
 
     # Prepare main query
-    q = DBSession.query(timestamp.label('timestamp'),
-                        elevation.label('elevation')) \
-                 .filter(and_(Flight.id == flight.id,
-                              subq.c.location.ST_Intersects(Elevation.rast),
-                              elevation != None)).all()
+    q = db.session.query(timestamp.label('timestamp'),
+                         elevation.label('elevation')) \
+                  .filter(and_(Flight.id == flight.id,
+                               subq.c.location.ST_Intersects(Elevation.rast),
+                               elevation != None)).all()
 
     if len(q) == 0:
         return [], []
@@ -346,8 +347,8 @@ def near():
 
 class PilotSelectField(PropertySingleSelectField):
     def _my_update_params(self, d, nullable=False):
-        query = DBSession.query(User.id, User.name) \
-            .filter(User.club_id == request.identity['user'].club_id) \
+        query = db.session.query(User.id, User.name) \
+            .filter(User.club_id == g.current_user.club_id) \
             .order_by(User.name)
         options = [(None, 'None')] + query.all()
         d['options'] = options
@@ -368,18 +369,18 @@ class SelectPilotForm(EditableForm):
     pilot = PilotSelectField('pilot', label_text=l_('Pilot'))
     co_pilot = PilotSelectField('co_pilot', label_text=l_('Co-Pilot'))
 
-select_pilot_form = SelectPilotForm(DBSession)
+select_pilot_form = SelectPilotForm(db.session)
 
 
 @flight_blueprint.route('/change_pilot')
 def change_pilot():
-    if not g.flight.is_writable(request.identity):
+    if not g.flight.is_writable(g.current_user):
         abort(403)
 
     return render_template(
         'generic/form.jinja',
         active_page='flights', title=_('Select Pilot'),
-        user=request.identity['user'],
+        user=g.current_user,
         include_after='flights/after_change_pilot.jinja',
         form=select_pilot_form, values=g.flight)
 
@@ -387,7 +388,7 @@ def change_pilot():
 @flight_blueprint.route('/change_pilot', methods=['POST'])
 @validate(select_pilot_form, change_pilot)
 def change_pilot_post():
-    if not g.flight.is_writable(request.identity):
+    if not g.flight.is_writable(g.current_user):
         abort(403)
 
     pilot = request.form['pilot'] or None
@@ -398,7 +399,7 @@ def change_pilot_post():
 
     g.flight.co_pilot_id = request.form['co_pilot'] or None
     g.flight.time_modified = datetime.utcnow()
-    DBSession.commit()
+    db.session.commit()
 
     return redirect(url_for('.index'))
 
@@ -412,12 +413,12 @@ class SelectAircraftForm(EditableForm):
     registration = TextField('registration', label_text=l_('Aircraft Registration'), maxlength=32, validator=String(max=32))
     competition_id = TextField('competition_id', label_text=l_('Competition Number'), maxlength=5, validator=String(max=5))
 
-select_aircraft_form = SelectAircraftForm(DBSession)
+select_aircraft_form = SelectAircraftForm(db.session)
 
 
 @flight_blueprint.route('/change_aircraft')
 def change_aircraft():
-    if not g.flight.is_writable(request.identity):
+    if not g.flight.is_writable(g.current_user):
         abort(403)
 
     if g.flight.model_id is None:
@@ -452,7 +453,7 @@ def change_aircraft():
 @flight_blueprint.route('/change_aircraft', methods=['POST'])
 @validate(select_aircraft_form, change_aircraft)
 def change_aircraft_post():
-    if not g.flight.is_writable(request.identity):
+    if not g.flight.is_writable(g.current_user):
         abort(403)
 
     registration = request.form['registration']
@@ -465,21 +466,21 @@ def change_aircraft_post():
     g.flight.registration = registration
     g.flight.competition_id = request.form['competition_id'] or None
     g.flight.time_modified = datetime.utcnow()
-    DBSession.commit()
+    db.session.commit()
 
     return redirect(url_for('.index'))
 
 
 @flight_blueprint.route('/delete', methods=['GET', 'POST'])
 def delete():
-    if not g.flight.is_writable(request.identity):
+    if not g.flight.is_writable(g.current_user):
         abort(403)
 
     if request.method == 'POST':
         files.delete_file(g.flight.igc_file.filename)
-        DBSession.delete(g.flight)
-        DBSession.delete(g.flight.igc_file)
-        DBSession.commit()
+        db.session.delete(g.flight)
+        db.session.delete(g.flight.igc_file)
+        db.session.commit()
 
         return redirect(url_for('flights.index'))
 
@@ -492,7 +493,7 @@ def delete():
 
 @flight_blueprint.route('/add_comment', methods=['POST'])
 def add_comment():
-    if request.identity is None:
+    if not g.current_user:
         flash(_('You have to be logged in to post comments!'), 'warning')
         return redirect(url_for('.index'))
 
@@ -501,13 +502,13 @@ def add_comment():
         return redirect(url_for('.index'))
 
     comment = FlightComment()
-    comment.user = request.identity['user']
+    comment.user = g.current_user
     comment.flight = g.flight
     comment.text = text
 
     create_flight_comment_notifications(comment)
 
-    DBSession.commit()
+    db.session.commit()
 
     return redirect(url_for('.index'))
 
@@ -516,10 +517,10 @@ def add_comment():
 def analysis():
     """Hidden method that restarts flight analysis."""
 
-    if not request.identity or 'manage' not in request.identity['permissions']:
+    if not g.current_user or not g.current_user.is_manager():
         abort(403)
 
     analyse_flight(g.flight)
-    DBSession.commit()
+    db.session.commit()
 
     return redirect(url_for('.index'))

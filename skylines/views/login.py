@@ -1,7 +1,7 @@
 from datetime import datetime
 
-from flask import render_template, redirect, request, url_for, flash
-from flask.ext.login import login_user, logout_user
+from flask import render_template, redirect, request, url_for, flash, g
+from flask.ext.login import login_user, logout_user, current_user
 from flask.ext.babel import _
 
 from skylines.model import User
@@ -13,6 +13,18 @@ def register(app):
     @app.login_manager.user_loader
     def load_user(userid):
         return User.get(userid)
+
+    @app.before_request
+    def inject_current_user():
+        """
+        Inject a current_user variable into the global object. current_user is
+        either None or points to the User that is currently logged in.
+        """
+
+        if current_user.is_anonymous():
+            g.current_user = None
+        else:
+            g.current_user = current_user
 
     @app.route('/login', methods=['GET', 'POST'])
     def login():

@@ -34,7 +34,7 @@ if not to_envvar(args.config):
 import sys
 from datetime import datetime
 
-from skylines.model.session import DBSession
+from skylines import db
 from skylines.model import CompetitionParticipation, CompetitionClass
 
 # Add the participants to the competition
@@ -52,10 +52,10 @@ for participant_id in args.participant_ids:
             sys.exit('There is no competition class with id: {} in competition with id: {}'
                      .format(args.class_id, args.competition_id))
 
-    DBSession.add(participation)
-    DBSession.flush()
+    db.session.add(participation)
+    db.session.flush()
 
     print 'Participation object created with id: {}' \
         .format(participation.id)
 
-DBSession.commit()
+db.session.commit()
