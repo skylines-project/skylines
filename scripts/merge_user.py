@@ -46,7 +46,7 @@ db.session.query(Flight).filter_by(pilot_id=old_id).update({'pilot_id': new_id})
 db.session.query(Flight).filter_by(co_pilot_id=old_id).update({'co_pilot_id': new_id})
 db.session.query(TrackingFix).filter_by(pilot_id=old_id).update({'pilot_id': new_id})
 db.session.flush()
-transaction.commit()
+db.session.commit()
 
 new = db.session.query(User).get(new_id)
 old = db.session.query(User).get(old_id)
