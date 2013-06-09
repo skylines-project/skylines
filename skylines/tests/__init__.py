@@ -1,6 +1,8 @@
 """Unit and functional test suite for SkyLines."""
+import os
+import shutil
 
-from skylines import db
+from skylines import app, db
 from skylines.websetup.bootstrap import bootstrap
 
 __all__ = ['setup_db', 'setup_app', 'teardown_db']
@@ -11,8 +13,16 @@ def setup_db():
     db.create_all()
 
 
+def setup_dirs():
+    filesdir = app.config['SKYLINES_FILES_PATH']
+    if os.path.exists(filesdir):
+        shutil.rmtree(filesdir)
+    os.makedirs(filesdir)
+
+
 def setup_app():
     setup_db()
+    setup_dirs()
 
 
 def teardown_db():
