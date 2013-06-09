@@ -46,7 +46,9 @@ development is described in the [INSTALL.md](INSTALL.md) file.
 You can reach us and read about news on
 [Facebook](https://www.facebook.com/skylines.project),
 [Twitter](https://twitter.com/skylinesproject) and
-[Google+](https://plus.google.com/114462603028839635814).
+[Google+](https://plus.google.com/114462603028839635814). We are also reachable
+via IRC on the #skylines channel of the [freenode](http://freenode.net/)
+servers.
 
 Bugs and feature request can be submitted either to the
 [XCSoar trac](bugs.xcsoar.org) instance under the *SkyLines* milestone or on
