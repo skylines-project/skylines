@@ -7,8 +7,8 @@
 * Matthew Scutter (<yellowplantain@gmail.com>)
 * Max Kellermann (<max@duempel.org>)
 * Sebastien Chaumontet (<sebastien@chaumontet.net>)
-* Tobias Bieniek (<tobias.bieniek@gmx.de>)
-* Tobias Lohner (<tobias@lohner-net.de>)
+* Tobias Bieniek (<tobias.bieniek@gmx.de> // maintainer)
+* Tobias Lohner (<tobias@lohner-net.de> // maintainer)
 * Tom Payne (<twpayne@gmail.com>)
 
 ## Translators
