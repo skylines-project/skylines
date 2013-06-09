@@ -58,3 +58,5 @@ current developers.
 
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+You can find the full license text in the [LICENSE](LICENSE) file.
