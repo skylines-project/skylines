@@ -43,7 +43,7 @@ def skylines_team():
 @about_blueprint.route('/license')
 def license():
     path = os.path.join(os.path.dirname(os.path.abspath(__file__)),
-                        '..', '..', 'COPYING')
+                        '..', '..', 'LICENSE')
     with open(path) as f:
         content = f.read().decode('utf-8')
 
