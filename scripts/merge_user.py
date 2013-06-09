@@ -55,9 +55,6 @@ assert new and old
 db.session.delete(old)
 db.session.flush()
 
-if new.user_name == new.name:
-    new.user_name = old.user_name
-
 if new.email_address is None and old.email_address is not None:
     new.email_address = old.email_address
 
