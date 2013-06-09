@@ -73,7 +73,8 @@ versions of PostgreSQL, PostGIS and other operating systems. See the
 appropriate documentation and websites for more information.*
 
 After creating the database you have to create the necessary tables and indices
-by calling the `scripts/initialize_database.py` file from the the command line.
+by calling the `./scripts/initialize_database.py` file from the the command
+line.
 
 
 ## XCSoar tools
@@ -117,7 +118,7 @@ If the above steps are completed you should be able to run a base version of
 
 Since an empty database is boring, you should at least load the airports from the [Welt2000](http://www.segelflug.de/vereine/welt2000/) into the database by calling:
 
-    $ python import_welt2000.py development.ini
+    $ ./scripts/import_welt2000.py
 
 
 ## Running a local mapserver
@@ -130,4 +131,4 @@ To run it locally as subprocess of mapproxy, change `mapserver/mapproxy/mapproxy
 
 To import airspaces into the database, install the `python-gdal` package (using gdal extension directly from pypi is not recommended) and import the required airspace files:
 
-    $ python import_airspaces.py development.ini assets/airspace/airspace_list.txt assets/airspace/airspace_blacklist.txt
+    $ ./scripts/import_airspaces.py assets/airspace/airspace_list.txt assets/airspace/airspace_blacklist.txt
