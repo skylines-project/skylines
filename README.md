@@ -41,11 +41,27 @@ For more information, please refer to the [git documentation](http://git-scm.com
 The process of installing these components and setting up a server for local
 development is described in the [INSTALL.md](INSTALL.md) file.
 
-## Contributing
+## Contact and Contributing
 
-We prefer using the pull request system of Github due to the integration with
-the TravisCI system, but you can also send patches via mail to any of the
-current developers.
+You can reach us and read about news on
+[Facebook](https://www.facebook.com/skylines.project),
+[Twitter](https://twitter.com/skylinesproject) and
+[Google+](https://plus.google.com/114462603028839635814).
+
+Bugs and feature request can be submitted either to the
+[XCSoar trac](bugs.xcsoar.org) instance under the *SkyLines* milestone or on
+[GitHub](https://github.com/skylines-project/skylines/issues). New ideas can
+also be discussed in the
+[Wiki](https://github.com/skylines-project/skylines/wiki) first.
+
+Patches should be submitted using the
+[Pull Request](https://github.com/skylines-project/skylines/pulls) system of
+GitHub because of the integration with the
+[TravisCI](https://travis-ci.org/skylines-project/skylines) system. You can
+also send patches via mail to any of the [current maintainers](AUTHORS.md)
+though.
+
+Here are a few guidelines for creating patches:
 
 - patches should be self-contained
 - patches should be self-documenting (add a good description on what
