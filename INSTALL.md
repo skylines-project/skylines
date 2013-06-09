@@ -113,14 +113,14 @@ If the above steps are completed you should be able to run a base version of
 *(The following chapters are optional!)*
 
 
-# Adding Airports
+## Adding Airports
 
 Since an empty database is boring, you should at least load the airports from the [Welt2000](http://www.segelflug.de/vereine/welt2000/) into the database by calling:
 
     $ python import_welt2000.py development.ini
 
 
-# Running a local mapserver
+## Running a local mapserver
 
 If you want to run the mapserver as fastcgi, install the `python-mapscript` package (on Debian):
 
