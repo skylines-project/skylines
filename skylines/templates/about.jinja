@@ -12,7 +12,7 @@
     <b>{% trans %}The major goals of the Skylines project are:{% endtrans %}</b>
     <ul>
       <li>{% trans %}To provide a free platform for sharing and analysing flights{% endtrans %}</li>
-      <li>{% trans %}Skylines is based on free software{% endtrans %} (<a href="http://git.xcsoar.org/cgit/master/skylines.git/tree/COPYING" target="_blank">{% trans %}License{% endtrans %}</a>)</li>
+      <li>{% trans %}Skylines is based on free software{% endtrans %} (<a href="{{ url_for('about.license') }}">{% trans %}License{% endtrans %}</a>)</li>
       <li>{% trans %}The stored flights are available for everybody without any limitations.{% endtrans %}</li>
       <li>{% trans %}Skylines is a non-commercial project, there are no ads on the webpage, its free of charge.{% endtrans %}</li>
       <li>{% trans url='/tracking/' %}Skylines has <a href="{{ url }}">Live Tracking</a>, let your friends participate on your adventures.{% endtrans %}</li>

@@ -38,3 +38,16 @@ def skylines_team():
     return render_template('generic/page.jinja',
                            title=_('The SkyLines Team'),
                            content=content)
+
+
+@about_blueprint.route('/license')
+def license():
+    path = os.path.join(os.path.dirname(os.path.abspath(__file__)),
+                        '..', '..', 'COPYING')
+    with open(path) as f:
+        content = f.read().decode('utf-8')
+
+    content = '<pre>' + content + '</pre>'
+
+    return render_template(
+        'generic/page.jinja', title=_('License'), content=content)
