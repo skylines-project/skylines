@@ -13,10 +13,22 @@ def setup_db():
 
 def setup_app():
     setup_db()
-    bootstrap()
 
 
 def teardown_db():
     """Method used to destroy a database"""
     db.session.remove()
     db.drop_all()
+
+
+def clean_db():
+    """Clean all data, leaving schema as is
+
+    Suitable to be run before each db-aware test. This is much faster than
+    dropping whole schema an recreating from scratch.
+    """
+    for table in reversed(db.metadata.sorted_tables):
+        db.session.execute(table.delete())
+
+    bootstrap()
+    db.session.commit()
