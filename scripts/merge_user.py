@@ -62,6 +62,8 @@ if new._password is None and old._password is not None:
     new._password = old._password
 
 # TODO: merge display name or not?
-# TODO: merge tracking key or not?
+
+if old.tracking_key is not None:
+    new.tracking_key = old.tracking_key
 
 db.session.commit()
