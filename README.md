@@ -1,17 +1,17 @@
 # SkyLines
 
-SkyLines is a web platform where pilots can share their flights with others
-after, or even during flight via live tracking.  SkyLines is a sort of social
+*SkyLines* is a web platform where pilots can share their flights with others
+after, or even during flight via live tracking.  *SkyLines* is a sort of social
 network for pilots including rankings, statistics and other interesting
-features.  Most of all SkyLines is truly open in all regards compared to other
-similar platforms.
+features.  Most of all *SkyLines* is truly open in all regards compared to
+other similar platforms.
 
-SkyLines has started development in 2012 as a spin-off from the popular
-[XCSoar](http://www.xcsoar.org/) glide computer. Internally SkyLines is still
+*SkyLines* has started development in 2012 as a spin-off from the popular
+[XCSoar](http://www.xcsoar.org/) glide computer. Internally *SkyLines* is still
 sharing some code with XCSoar in the algorithmic areas and is providing the
 base for XCSoar's live tracking functionalities.
 
-SkyLines is far from finished yet, but it has been running in production for
+*SkyLines* is far from finished yet, but it has been running in production for
 quite some time now. You can reach the official server at
 <http://www.skylines-project.org> or <http://www.skylines.aero>.
 
