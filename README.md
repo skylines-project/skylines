@@ -17,7 +17,7 @@ quite some time now. You can reach the official server at
 
 Build Status: [![Build Status](https://travis-ci.org/skylines-project/skylines.png?branch=master)](https://travis-ci.org/skylines-project/skylines)
 
-# Getting the source
+## Getting the source
 
 The *SkyLines* source code is managed with [git](http://www.git-scm.com/).
 It can be downloaded with the following command:
@@ -26,11 +26,11 @@ It can be downloaded with the following command:
 
 For more information, please refer to the [git documentation](http://git-scm.com/documentation).
 
-# Installation and Setup
+## Installation and Setup
 
 see [INSTALL.md](INSTALL.md)
 
-# Contributing
+## Contributing
 
 We prefer using the pull request system of Github due to the integration with
 the TravisCI system, but you can also send patches via mail to any of the
@@ -41,7 +41,7 @@ current developers.
   is changed, and why you are changing it)
 - write one patch for one change
 
-# License
+## License
 
     SkyLines - the free internet platform for sharing flights
     Copyright (C) 2012-2013  The SkyLines Team (see AUTHORS.md)
