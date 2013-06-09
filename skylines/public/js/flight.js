@@ -567,7 +567,8 @@ function getFixData(flight, time) {
 
   if (dt_total != 0)
     fix_data['speed'] = OpenLayers.Util.distVincenty(
-        loc_next, loc_prev) * 1000 / dt_total;
+        {lon: loc_next[1], lat: loc_next[0]},
+        {lon: loc_prev[1], lat: loc_prev[0]}) * 1000 / dt_total;
 
   var h_prev = flight.h[index];
   var h_next = flight.h[index + 1];
