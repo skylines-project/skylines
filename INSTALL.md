@@ -15,56 +15,74 @@ development on OS X or Windows. This may or may not work currently and for now
 we don't recommend using it. More information can be found in
 [INSTALL.vagrant.md](INSTALL.vagrant.md).
 
-## Manual Install
 
-*(These instructions are written for Debian/Ubuntu systems.)*
+## Python, Flask and other dependencies
 
-First of all make sure you have [Python](http://www.python.org/) installed! After that install the required Python packages to run *SkyLines* using the setup.py script:
+Since *SkyLines* is written and based on [Python](http://www.python.org/) you
+should install it if you don't have it yet. *SkyLines* is currently targeting
+the 2.7 branch of Python. You can check your version by running `python
+--version` from the command line.
 
-    $ pip install -e .
+All the necessary Python libraries are installed using the `pip` tool. If you
+don't have it yet please install it using e.g. `sudo apt-get install
+python-pip` on Ubuntu/Debian. More information about pip can be found at
+<http://www.pip-installer.org/>.
 
-*(You might have to install the additional debian packages `libxml2-dev`, `libxslt1-dev` and `python-dev` for the `lxml` dependency)*
+Now you can install the python dependencies by calling:
 
-Install the [PostgreSQL](http://www.postgresql.org/) database server and the [PostGIS](http://postgis.net/) spatial extension. This is done by:
+    $ sudo pip install -e .
 
-    $ apt-get install postgresql postgresql-9.1-postgis postgresql-contrib-9.1
+*Note: You might have to install the additional Ubuntu/Debian packages
+`libpq-dev`, `python-dev` and `g++` for the `psycopg2` dependency.*
 
-Now create a new database and user for *SkyLines*. Change to the user `postgres` to log into the database. Second, install PostGIS into this new created database:
+
+## PostGIS database
+
+The *SkyLines* backend is relying on the open source database
+[PostgreSQL](http://www.postgresql.org/) and its
+[PostGIS 2.x](http://www.postgis.net/) extension, that provides it with
+geospatial functionality. The `fuzzystrmatch` extension is also needed which
+is provided by the `postgresql-contrib` package on Debian/Ubuntu.
+
+To install PostGIS you should follow the instructions at
+<http://postgis.net/install> or
+<http://trac.osgeo.org/postgis/wiki/UsersWikiInstall> (for Debian/Ubuntu).
+Please note that you will need at least version 2.0 of PostGIS for *SkyLines*.
+
+Once PostGIS is installed you should create a database user for yourself and
+a database for *SkyLines* roughly like this:
 
     # change to the postgres user
-    $ su - postgres
+    $ sudo su - postgres
 
     # create a database user account for yourself
-    $ createuser <your username>
+    $ createuser -s <your username>
 
     # create skylines database with yourself as the owner
-    $ createdb skylines --o <your username>
+    $ createdb skylines -O <your username>
 
-    # install PostGIS extensions into the database
-    $ createlang plpgsql -d skylines
-    $ psql -d skylines -f /usr/share/postgresql/9.1/contrib/postgis-1.5/postgis.sql
-    $ psql -d skylines -f /usr/share/postgresql/9.1/contrib/postgis-1.5/spatial_ref_sys.sql
+    # install PostGIS extensions into the PostgreSQL database
+    $ psql -d skylines -c 'CREATE EXTENSION postgis;'
+    $ psql -d skylines -f /usr/share/postgresql/9.1/contrib/postgis-2.0/legacy_minimal.sql
 
-    # log into postgres using skylines database
-    $ psql skylines
-    postgres=# grant all on geometry_columns to <your username>;
-    postgres=# grant select on spatial_ref_sys to <your username>;
-    postgres=# create extension fuzzystrmatch;
-    postgres=# \q
+    # install fuzzystrmatch extension into the database
+    $ psql -d skylines -c 'CREATE EXTENSION fuzzystrmatch;'
 
-*(Note: the location of the postgis sql files may be different for other versions of PostgreSQL, PostGIS and other operating systems. See the approciate documentation and websites for more information.)*
+*Note: The location of the legacy_minimal.sql file may be different for other
+versions of PostgreSQL, PostGIS and other operating systems. See the
+appropriate documentation and websites for more information.*
+
+After creating the database you have to create the necessary tables and indices
+by calling the `scripts/initialize_database.py` file from the the command line.
 
 
-# Database
+## Running the debug server
 
-In the last chapter you have setup the database server and the `skylines` database. Unless you have access and want to sync your development setup with the production server you will need to create the tables in the database now:
+If the above steps are completed you should be able to run a base version of
+*SkyLines* locally now:
 
-    $ paster setup-app development.ini
+    $ ./debug.py
 
-If you have set up your environment with Vagrant, you must ssh into the virtual machine and run the previous command from within the ```/vagrant``` directory.
-Alternatively, you can run:
-
-    vagrant ssh --command "paster setup-app /vagrant/development.ini"
 
 # XCSoar dependencies
 
@@ -96,18 +114,6 @@ If the download does not work, or you want to build the tools yourself, you can 
     $ cd <path to skylines>
     $ ln -s <path to xcsoar>/output/UNIX/bin bin
 
-
-# Running the Server
-
-You should now be able to start the server and run your development instance of *SkyLines* (If you have set up your environment with Vagrant, remember to ssh into the virtual machine and run the commands from the ```/vagrant```directory):
-
-    $ paster serve development.ini
-
-While developing you may want the server to reload after changes in package files (or its dependencies) are saved. This can be achieved easily by adding the --reload option:
-
-    $ paster serve --reload development.ini
-
-You are ready to go. Have fun developing!
 
 *(The following chapters are optional!)*
 
