@@ -46,7 +46,7 @@ db.session.query(Flight).filter_by(pilot_id=old_id).update({'pilot_id': new_id})
 db.session.query(Flight).filter_by(co_pilot_id=old_id).update({'co_pilot_id': new_id})
 db.session.query(TrackingFix).filter_by(pilot_id=old_id).update({'pilot_id': new_id})
 db.session.flush()
-transaction.commit()
+db.session.commit()
 
 new = db.session.query(User).get(new_id)
 old = db.session.query(User).get(old_id)
@@ -55,9 +55,6 @@ assert new and old
 db.session.delete(old)
 db.session.flush()
 
-if new.user_name == new.name:
-    new.user_name = old.user_name
-
 if new.email_address is None and old.email_address is not None:
     new.email_address = old.email_address
 
@@ -65,6 +62,8 @@ if new._password is None and old._password is not None:
     new._password = old._password
 
 # TODO: merge display name or not?
-# TODO: merge tracking key or not?
+
+if old.tracking_key is not None:
+    new.tracking_key = old.tracking_key
 
 db.session.commit()
