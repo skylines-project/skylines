@@ -1,31 +1,19 @@
-# Install
+# Installing SkyLines
 
-Since *SkyLines* has many dependencies it is not always easy to install for new developers. We have created a [Vagrant](http://www.vagrantup.com/)/[Chef](http://www.opscode.com/chef/) based environment though, that makes it much easier for starters.
+*SkyLines* has quite many dependencies and is not always easy to install for new developers. Please don't hesitate to
+[ask for help](README.md#contact-and-contributing) if you hit any roadblocks.
 
-## Vagrant
+The production server is running the Debian Linux operating system and most of
+our developers use Ubuntu or Debian too. We recommend to use either one of
+those systems for development, but it may also be possible to make it work on
+OS X or Windows.
 
-Vagrant is a wrapper around [VirtualBox](http://www.virtualbox.org/) and Chef. It can create a virtual machine on your computer and configure it, so that you can instantly start developing.
-
-* Make sure you have [Ruby](http://www.ruby-lang.org/de/) and [gem](http://rubygems.org/) installed
-* Install VirtualBox through your package manager or from [here](https://www.virtualbox.org/wiki/Downloads)
-* Install Vagrant by downloading and installing the right package from <http://downloads.vagrantup.com/>
-* Install [Librarian](https://github.com/applicationsonline/librarian) for Chef by calling: `gem install librarian`
-
-Now that you have the necessary tools it is time to create and start the virtual machine:
-
-    # download necessary chef cookbooks
-    librarian-chef install
-
-    # create and start virtual machine
-    vagrant up
-
-Once the virtual machine has started it will begin to configure itself with the necessary things to run a SkyLines development server on it. As soon as it is finished you can call `vagrant ssh` to access the virtual machine from the terminal.
-
-*(If everything has worked, you can skip the next two subchapters and continue with the database chapter.)*
-
-## Chef
-
-Since the Vagrant environment is based on Chef, it should be possible to run the Chef cookbook also outside of Vagrant. This process has not been tested as of now though, and will most likely only work on Ubuntu (and Debian).
+There is also a currently unmaintained [Vagrant](http://www.vagrantup.com/) /
+[Chef](http://www.opscode.com/chef/) environment for *SkyLines*. This makes it
+possible to run a virtual machine with Ubuntu dedicated to *SkyLines*
+development on OS X or Windows. This may or may not work currently and for now
+we don't recommend using it. More information can be found in
+[INSTALL.vagrant.md](INSTALL.vagrant.md).
 
 ## Manual Install
 
