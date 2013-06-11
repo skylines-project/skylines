@@ -7,6 +7,9 @@ from skylines import db
 
 class Follower(db.Model):
     __tablename__ = 'followers'
+    __table_args__ = (
+        db.UniqueConstraint('source_id', 'destination_id', name='unique_connection'),
+    )
 
     id = db.Column(Integer, autoincrement=True, primary_key=True)
 
