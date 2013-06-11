@@ -8,6 +8,7 @@ from skylines.model.auth import User
 from skylines import db
 
 HERE = os.path.dirname(__file__)
+DATADIR = os.path.join(HERE, '..', 'data')
 
 
 class TestUpload(TestController):
@@ -47,7 +48,7 @@ class TestUpload(TestController):
         # we should be logged in now
         assert 'IGC or ZIP file(s)' in b.contents
 
-        f = open(os.path.join(HERE, 'data', 'simple.igc'))
+        f = open(os.path.join(DATADIR, 'simple.igc'))
         b.getControl('IGC or ZIP file(s)').add_file(f,
                                                     'text/plain',
                                                     '/tmp/simple.igc')
