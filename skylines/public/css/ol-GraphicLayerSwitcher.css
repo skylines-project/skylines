@@ -1,51 +1,68 @@
 .GraphicLayerSwitcher {
   position: absolute;
-  top: 5px;
-  right: 5px;
-  text-decoration: none;
-  z-index: 1050;
+  top: 12px;
+  right: 12px;
 }
 
 .GraphicLayerSwitcher #current {
-  background: #fff;
-  opacity: 0.5;
-  padding: 2px;
-  -moz-border-radius: 4px;
+  background: white;
+  background: rgba(255,255,255,0.7);
   border-radius: 4px;
+  box-shadow: 0 0 8px rgba(50,50,50,0.3);
+  border: 1px solid #bbb;
+  padding: 2px;
   cursor: pointer;
 }
 
 .GraphicLayerSwitcher #current:hover {
-  opacity: 1;
+  background: white;
 }
 
 .GraphicLayerSwitcher #box {
   display: none;
 }
 
-.GraphicLayerSwitcher .active {
-  font-weight: bold;
-}
-
 .GraphicLayerSwitcher #base,
 .GraphicLayerSwitcher #overlay {
-  background: #000; /* fallback for old browsers */
-  background: rgba(0, 0, 0, 0.7);
-  padding: 3px 5px;
+  background: white;
+  background: rgba(255,255,255,0.7);
+  border-radius: 10px;
+  box-shadow: 0 0 8px rgba(50,50,50,0.3);
+  border: 1px solid #bbb;
   float: right;
-  -moz-border-radius: 4px;
-  border-radius: 4px;
+}
+
+.GraphicLayerSwitcher #box a {
+  white-space: nowrap;
+  color: #555;
+  color: rgba(0,0,0,0.7);
+  display: block;
+  margin: 5px;
+  padding-right: 10px;
+  border-radius: 8px;
+}
+
+.GraphicLayerSwitcher #box a:hover {
+  background: white;
+  background: rgba(255,255,255,0.7);
+  text-decoration: none;
+}
+
+.GraphicLayerSwitcher #box .active {
+  background: #444;
+  background: rgba(0,0,0,0.6);
+  color: white;
+}
+
+.GraphicLayerSwitcher #box a:hover.active {
+  background: #666;
+  background: rgba(50,50,50,0.6);
 }
 
 .GraphicLayerSwitcher #box img {
   width: 100px;
   height: 50px;
-  padding: 3px 8px 3px 2px;
-}
-
-.GraphicLayerSwitcher #box a {
-  white-space: nowrap;
-  color: #fff;
+  margin-right: 10px;
 }
 
 .GraphicLayerSwitcher #overlay {

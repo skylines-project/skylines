@@ -137,7 +137,7 @@ var GraphicLayerSwitcher = OpenLayers.Class(OpenLayers.Control, {
             "<a id='" + id + "' href='#LayerSwitcher'>" +
             "<img src='" + layer_image + "' />" +
             layer.name +
-            '</a><br />');
+            '</a>');
 
         if (layer_visible)
           item.addClass('active');
