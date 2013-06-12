@@ -1,6 +1,7 @@
 import os
 from io import BytesIO
 from nose.tools import assert_is_not_none, assert_in
+from mock import patch
 
 from skylines.tests.functional import TestController
 from skylines.model.auth import User
@@ -40,6 +41,8 @@ class TestUpload(TestController):
         assert 'No flight was saved.' in b.contents
 
     def test_upload_single(self):
+        import skylines.lib.xcsoar.analysis as analysis
+
         assert_is_not_none(self.bill.id)
         b = self.browser
         b.open('/flights/upload')
@@ -47,9 +50,14 @@ class TestUpload(TestController):
         # we should be logged in now
         assert_in('IGC or ZIP file(s)', b.contents)
 
-        f = open(os.path.join(DATADIR, 'simple.igc'))
-        b.getControl('IGC or ZIP file(s)').add_file(f,
+        f_igc = open(os.path.join(DATADIR, 'simple.igc'))
+        b.getControl('IGC or ZIP file(s)').add_file(f_igc,
                                                     'text/plain',
                                                     '/tmp/simple.igc')
-        b.getControl('Upload').click()
+
+        # mock run_analyse_flight() function during upload
+        f_json = open(os.path.join(DATADIR, 'simple-analysis.json'))
+        with patch.object(analysis, 'run_analyse_flight', return_value=f_json):
+            b.getControl('Upload').click()
+
         assert_in('Your flights have been saved.', b.contents)
