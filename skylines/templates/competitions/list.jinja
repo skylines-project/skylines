@@ -1,0 +1,39 @@
+{% extends "base-page.jinja" %}
+{% set active_page = "competitions" %}
+
+
+{% block title %}{% trans %}Competitions{% endtrans %}{% endblock %}
+
+
+{% block content -%}
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>{% trans %}Competition{% endtrans %}</th>
+      <th>{% trans %}Location{% endtrans %}</th>
+      <th>{% trans %}Start Date{% endtrans %}</th>
+      <th>{% trans %}End Date{% endtrans %}</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for competition in competitions -%}
+    <tr>
+      <td><a href="{{ url_for('competition.index', competition_id=competition.id) }}">{{ competition.name|e }}</a></td>
+      <td>{{ (competition.location or '')|e }}</td>
+      <td>{{ competition.start_date }}</td>
+      <td>{{ competition.end_date }}</td>
+    </tr>
+    {%- else -%}
+    <tr>
+      <td colspan="4">
+        {% trans %}There are currently no competitions.{% endtrans %}
+      </td>
+    </tr>
+    {%- endfor %}
+  </tbody>
+</table>
+
+{% if g.current_user -%}
+<a href="{{ url_for('competitions.new') }}" class="btn"><i class="icon-plus"></i> {% trans %}Create a new competition{% endtrans %}</a>
+{%- endif %}
+{%- endblock %}

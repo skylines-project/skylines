@@ -1,0 +1,11 @@
+{% extends "base-page.jinja" %}
+{% set active_page = "competitions" %}
+
+{% set header_tabs = [
+    (url_for('competition.index'), 'details', _('Details')),
+    (url_for('competition.participants'), 'participants', _('Participants')),
+] %}
+
+{% block title %}{{ competition.name }}{% endblock %}
+
+{% block content %}{{ content }}{% endblock %}

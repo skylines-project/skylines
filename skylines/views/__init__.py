@@ -8,6 +8,8 @@ from skylines.views.api import api_blueprint
 from skylines.views.assets import assets_blueprint
 from skylines.views.club import club_blueprint
 from skylines.views.clubs import clubs_blueprint
+from skylines.views.competition import competition_blueprint
+from skylines.views.competitions import competitions_blueprint
 from skylines.views.files import files_blueprint
 from skylines.views.flight import flight_blueprint
 from skylines.views.flights import flights_blueprint
@@ -32,6 +34,8 @@ def register(app):
     app.register_blueprint(assets_blueprint)
     app.register_blueprint(club_blueprint, url_prefix='/clubs/<club_id>')
     app.register_blueprint(clubs_blueprint, url_prefix='/clubs')
+    app.register_blueprint(competition_blueprint, url_prefix='/competitions/<competition_id>')
+    app.register_blueprint(competitions_blueprint, url_prefix='/competitions')
     app.register_blueprint(files_blueprint, url_prefix='/files')
     app.register_blueprint(flight_blueprint, url_prefix='/flights/<flight_id>')
     app.register_blueprint(flights_blueprint, url_prefix='/flights')
