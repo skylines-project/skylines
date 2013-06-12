@@ -7,17 +7,22 @@ from skylines import db
 
 class Follower(db.Model):
     __tablename__ = 'followers'
+    __table_args__ = (
+        db.UniqueConstraint('source_id', 'destination_id', name='unique_connection'),
+    )
 
     id = db.Column(Integer, autoincrement=True, primary_key=True)
 
     source_id = db.Column(
-        Integer, db.ForeignKey('tg_user.id', ondelete='CASCADE'), index=True)
+        Integer, db.ForeignKey('tg_user.id', ondelete='CASCADE'),
+        index=True, nullable=False)
     source = db.relationship(
         'User', foreign_keys=[source_id],
         lazy='joined', backref='following')
 
     destination_id = db.Column(
-        Integer, db.ForeignKey('tg_user.id', ondelete='CASCADE'), index=True)
+        Integer, db.ForeignKey('tg_user.id', ondelete='CASCADE'),
+        index=True, nullable=False)
     destination = db.relationship(
         'User', foreign_keys=[destination_id],
         lazy='joined', backref='followers')
