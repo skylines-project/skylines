@@ -42,6 +42,7 @@ class TestUpload(TestController):
 
     def test_upload_single(self):
         import skylines.lib.xcsoar.analysis as analysis
+        import skylines.lib.xcsoar.flightpath as flightpath
 
         assert_is_not_none(self.bill.id)
         b = self.browser
@@ -57,7 +58,9 @@ class TestUpload(TestController):
 
         # mock run_analyse_flight() function during upload
         f_json = open(os.path.join(DATADIR, 'simple-analysis.json'))
-        with patch.object(analysis, 'run_analyse_flight', return_value=f_json):
+        f_path = open(os.path.join(DATADIR, 'simple-flightpath.txt'))
+        with patch.object(analysis, 'run_analyse_flight', return_value=f_json), \
+                patch.object(flightpath, 'run_flight_path', return_value=f_path):
             b.getControl('Upload').click()
 
         assert_in('Your flights have been saved.', b.contents)
