@@ -242,22 +242,32 @@ def save_phases(root, flight):
     db.session.add(ph)
 
 
+def run_analyse_flight(path, full=None, triangle=None, sprint=None):
+    args = [helper_path('AnalyseFlight')]
+
+    if full:
+        args.append('--full-points={:d}'.format(full))
+
+    if triangle:
+        args.append('--triangle-points={:d}'.format(triangle))
+
+    if sprint:
+        args.append('--sprint-points={:d}'.format(sprint))
+
+    args.append(path)
+
+    return Popen(args, stdout=PIPE).stdout
+
+
 def analyse_flight(flight, full=512, triangle=2048, sprint=64):
     path = files.filename_to_path(flight.igc_file.filename)
     log.info('Analyzing ' + path)
 
-    args = [
-        helper_path('AnalyseFlight'),
-        '--full-points=' + str(full),
-        '--triangle-points=' + str(triangle),
-        '--sprint-points=' + str(sprint),
-        path
-    ]
-
-    p = Popen(args, stdout=PIPE)
+    analysis = run_analyse_flight(
+        path, full=full, triangle=triangle, sprint=sprint)
 
     try:
-        root = simplejson.load(p.stdout)
+        root = simplejson.load(analysis)
     except:
         log.error('Parsing the output of AnalyseFlight failed.')
         return False
