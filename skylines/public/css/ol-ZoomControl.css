@@ -1,41 +1,41 @@
 div.olControlZoom {
     position: absolute;
-    top: 8px;
-    left: 8px;
-    background: rgba(255,255,255,0.4);
+    top: 12px;
+    left: 12px;
+    background: white;
+    background: rgba(255,255,255,0.7);
     border-radius: 4px;
-    padding: 2px;
+    box-shadow: 0 0 8px rgba(50,50,50,0.3);
+    border: 1px solid #bbb;
 }
 div.olControlZoom a {
     display: block;
-    margin: 1px;
-    padding: 0;
-    color: #555;
+    color: #000;
+    color: rgba(0,0,0,0.7);
     font-size: 18px;
     font-family: 'Lucida Grande', Verdana, Geneva, Lucida, Arial, Helvetica, sans-serif;
     font-weight: bold;
     text-decoration: none;
     text-align: center;
-    height: 22px;
-    width:22px;
-    line-height: 19px;
-    background: white; /* fallback for IE - IE6 requires background shorthand*/
-    background: rgba(255, 255, 255, 0.3);
-    filter: alpha(opacity=30);
+    height: 26px;
+    width:26px;
+    line-height: 24px;
 }
 div.olControlZoom a:hover {
-    background: white; /* fallback for IE */
-    background: rgba(255, 255, 255, 0.7);
-    filter: alpha(opacity=100);
     color: black;
+    background: white;
 }
 @media only screen and (max-width: 600px) {
-    div.olControlZoom a:hover {
-        background: rgba(0, 60, 136, 0.5);
+    div.olControlZoom a {
+        font-size: 30px;
+        height: 40px;
+        width:40px;
+        line-height: 36px;
     }
 }
 a.olControlZoomIn {
     border-radius: 4px 4px 0 0;
+    border-bottom: 1px solid #ddd;
 }
 a.olControlZoomOut {
     border-radius: 0 0 4px 4px;
