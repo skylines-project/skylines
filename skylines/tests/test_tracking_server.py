@@ -3,7 +3,7 @@ from nose.tools import eq_, ok_
 from mock import Mock, patch
 
 from skylines import db
-from skylines.tests import setup_app, teardown_db
+from skylines.tests import setup_app, teardown_db, clean_db
 from skylines.model import TrackingFix
 
 import struct
@@ -28,6 +28,7 @@ class TrackingServerTest(TestCase):
 
     def setUp(self):
         # Setup tracking server mock
+        clean_db()
         server.TrackingServer.__init__ = Mock(return_value=None)
         self.server = server.TrackingServer()
 

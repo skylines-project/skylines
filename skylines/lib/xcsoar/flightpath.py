@@ -7,14 +7,21 @@ from skylines.lib import files
 FlightPathFix = namedtuple('FlightPathFix', ['seconds_of_day', 'latitude', 'longitude', 'altitude', 'enl'])
 
 
-def flight_path(igc_file, max_points=1000):
-    args = [
-        helper_path('FlightPath'),
-        '--max-points=' + str(max_points),
-        files.filename_to_path(igc_file.filename),
-    ]
+def run_flight_path(path, max_points=None):
+    args = [helper_path('FlightPath')]
 
-    return map(line_to_fix, Popen(args, stdout=PIPE).stdout)
+    if max_points:
+        args.append('--max-points={:d}'.format(max_points))
+
+    args.append(path)
+
+    return Popen(args, stdout=PIPE).stdout
+
+
+def flight_path(igc_file, max_points=1000):
+    path = files.filename_to_path(igc_file.filename)
+    output = run_flight_path(path, max_points=max_points)
+    return map(line_to_fix, output)
 
 
 def line_to_fix(line):
