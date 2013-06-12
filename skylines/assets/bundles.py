@@ -73,6 +73,7 @@ all_css = Bundle(
 openlayers_css = Bundle(
     'vendor/openlayers/OpenLayers.css',
     'css/ol-GraphicLayerSwitcher.css',
+    'css/ol-ZoomControl.css',
     'css/map.css',
     filters='cssmin, cssrewrite',
     output='css/ol-%(version)s.css')
