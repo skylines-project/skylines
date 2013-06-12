@@ -6,7 +6,7 @@
   z-index: 1050;
 }
 
-.GraphicLayerSwitcher .current {
+.GraphicLayerSwitcher #current {
   background: #fff;
   opacity: 0.5;
   padding: 2px;
@@ -15,11 +15,11 @@
   cursor: pointer;
 }
 
-.GraphicLayerSwitcher .current:hover {
+.GraphicLayerSwitcher #current:hover {
   opacity: 1;
 }
 
-.GraphicLayerSwitcher .box {
+.GraphicLayerSwitcher #box {
   display: none;
 }
 
@@ -27,8 +27,8 @@
   font-weight: bold;
 }
 
-.GraphicLayerSwitcher .base,
-.GraphicLayerSwitcher .overlay {
+.GraphicLayerSwitcher #base,
+.GraphicLayerSwitcher #overlay {
   background: #000; /* fallback for old browsers */
   background: rgba(0, 0, 0, 0.7);
   padding: 3px 5px;
@@ -37,18 +37,18 @@
   border-radius: 4px;
 }
 
-.GraphicLayerSwitcher .box img {
+.GraphicLayerSwitcher #box img {
   width: 100px;
   height: 50px;
   padding: 3px 8px 3px 2px;
 }
 
-.GraphicLayerSwitcher .box a {
+.GraphicLayerSwitcher #box a {
   white-space: nowrap;
   color: #fff;
 }
 
-.GraphicLayerSwitcher .overlay {
+.GraphicLayerSwitcher #overlay {
   margin-right: 10px;
 }
 
