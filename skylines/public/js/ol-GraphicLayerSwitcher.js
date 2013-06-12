@@ -136,6 +136,7 @@ var GraphicLayerSwitcher = OpenLayers.Class(OpenLayers.Control, {
         var item = $(
             "<a id='" + id + "' href='#LayerSwitcher'>" +
             "<img src='" + layer_image + "' />" +
+            "<i class='icon-ok' />" +
             layer.name +
             '</a>');
 

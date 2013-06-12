@@ -33,6 +33,7 @@
 }
 
 .GraphicLayerSwitcher #box a {
+  position: relative;
   white-space: nowrap;
   color: #555;
   color: rgba(0,0,0,0.7);
@@ -42,21 +43,29 @@
   border-radius: 8px;
 }
 
+.GraphicLayerSwitcher #box a.active {
+  background: white;
+  background: rgba(255,255,255,0.7);
+}
+
 .GraphicLayerSwitcher #box a:hover {
   background: white;
   background: rgba(255,255,255,0.7);
   text-decoration: none;
 }
 
-.GraphicLayerSwitcher #box .active {
-  background: #444;
-  background: rgba(0,0,0,0.6);
+.GraphicLayerSwitcher #box a .icon-ok {
+  position: absolute;
+  left: 31px;
   color: white;
+  font-size: 38px;
+  top: 5px;
+  text-shadow: 0px 0px 10px black;
+  display: none;
 }
 
-.GraphicLayerSwitcher #box a:hover.active {
-  background: #666;
-  background: rgba(50,50,50,0.6);
+.GraphicLayerSwitcher #box a.active .icon-ok {
+  display: inline;
 }
 
 .GraphicLayerSwitcher #box img {
