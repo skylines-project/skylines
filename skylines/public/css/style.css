@@ -318,6 +318,10 @@ table.vmiddle td {
   margin-bottom: -18px;
 }
 
+#getting_started #banner {
+  margin: 15px -20px;
+}
+
 #getting_started h2 {
   margin: 10px 0;
 }
