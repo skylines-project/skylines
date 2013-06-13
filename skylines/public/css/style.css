@@ -356,3 +356,7 @@ table.vmiddle td {
 #about p {
   text-align: justify;
 }
+
+.icon-small {
+  font-size: 85%;
+}
