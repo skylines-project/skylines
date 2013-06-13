@@ -20,11 +20,11 @@
 
   <div class="row">
     <div class="span4">
-      <h2><i class="icon-plane"></i> {% trans %}Flight Database{% endtrans %}</h2>
+      <h2><a href="{{ url_for('flights.index') }}"><i class="icon-plane"></i> {% trans %}Flight Database{% endtrans %}</a></h2>
       <p>{% trans url=url_for('upload.index') %}<a href="{{ url }}">Upload</a> your IGC files and share them with your friends. We won't change your files or restrict you from downloading them again!{% endtrans %}</p>
     </div>
     <div class="span4">
-      <h2><i class="icon-rss"></i> {% trans %}Live Tracking{% endtrans %}</h2>
+      <h2><a href="{{ url_for('tracking.index') }}"><i class="icon-rss"></i> {% trans %}Live Tracking{% endtrans %}</a></h2>
       <p>{% trans url=url_for('tracking.info') %}Use your mobile phone to send position updates to SkyLines. Find out how it works <a href="{{ url }}">here</a>.{% endtrans %}</p>
     </div>
     <div class="span4">
