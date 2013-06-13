@@ -25,7 +25,7 @@ var MAPSERVER_RESOLUTIONS = [
  * @param {String} tile_url The base URL of the SkyLines tile server.
  */
 function initOpenLayers(id, tile_url) {
-  OpenLayers.ImgPath = '/vendor/openlayers/images/';
+  OpenLayers.ImgPath = '/vendor/openlayers/img/';
 
   map = new OpenLayers.Map(id, {
     projection: 'EPSG:900913',
