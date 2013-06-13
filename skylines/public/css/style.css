@@ -317,3 +317,16 @@ table.vmiddle td {
 .box .form-horizontal {
   margin-bottom: -18px;
 }
+
+#getting_started h2 {
+  margin: 10px 0;
+}
+
+#getting_started h2 [class^="icon-"]:before {
+  width: 1.2em;
+  text-align: center;
+}
+
+#getting_started p {
+  text-align: justify;
+}

@@ -1,42 +1,52 @@
 {% extends "base-page.jinja" %}
 {% set active_page = "about" %}
 
-{% block title %}{% trans %}About{% endtrans %}{% endblock %}
 
 {%- block content %}
 <div id="getting_started">
-  <p>
-    <h3><b>{% trans %}Welcome to SkyLines, the internet platform for sharing flights!{% endtrans %}</b></h3>
-  </p>
-  <p>
-    <b>{% trans %}The major goals of the Skylines project are:{% endtrans %}</b>
-    <ul>
-      <li>{% trans %}To provide a free platform for sharing and analysing flights{% endtrans %}</li>
-      <li>{% trans %}Skylines is based on free software{% endtrans %} (<a href="{{ url_for('about.license') }}">{% trans %}License{% endtrans %}</a>)</li>
-      <li>{% trans %}The stored flights are available for everybody without any limitations.{% endtrans %}</li>
-      <li>{% trans %}Skylines is a non-commercial project, there are no ads on the webpage, its free of charge.{% endtrans %}</li>
-      <li>{% trans url='/tracking/' %}Skylines has <a href="{{ url }}">Live Tracking</a>, let your friends participate on your adventures.{% endtrans %}</li>
-      <li>{% trans %}Skylines has also some social network aspects with comments, notifications, friends and followers.{% endtrans %}</li>
-      <li>{% trans welt2000='<a href="http://www.segelflug.de/vereine/welt2000/" target="_blank">WELT2000</a>' %}Airport and Waypoint data is provided by the {{ welt2000 }} project.{% endtrans %} (<a href="http://opendatacommons.org/licenses/odbl/1.0/" target="_blank">{% trans %}License{% endtrans %}</a>)</li>
-    </ul>
-  </p>
+  <p class="lead">{% trans %}Welcome to SkyLines, the internet platform for sharing flights!{% endtrans %}</p>
 
-  <p>
-    {% trans %}Current status{% endtrans %}: <span class="label label-warning"><i class="icon-wrench"></i> {% trans %}under development{% endtrans %}</span>
-  </p>
-
-  <p>
-    {% trans xcsoar='<a href="http://www.xcsoar.org/" target="_blank">XCSoar</a>' -%}
-    SkyLines was brought to you by the {{ xcsoar }} project.
-    {%- endtrans %}
-    {%- trans %}It is free software;{% endtrans %}
-    <a href="http://git.xcsoar.org/cgit/master/skylines.git/" target="_blank">{% trans %}the source code is available here{% endtrans %}</a>.
-  </p>
-
-  <p>
-    {% trans url='http://www.xcsoar.org/develop/new_ticket.html' -%}
-    If you think that something is missing or you think that you have found a bug please follow the instructions <a href="{{ url }}" target="_blank">here</a> to write a feature request or bug report.
-    {%- endtrans %}
-  </p>
+  <div class="row">
+    <div class="span4">
+      <h2><i class="icon-plane"></i> {% trans %}Flight Database{% endtrans %}</h2>
+      <p>{% trans url=url_for('upload.index') %}<a href="{{ url }}">Upload</a> your IGC files and share them with your friends. We won't change your files or restrict you from downloading them again!{% endtrans %}</p>
+    </div>
+    <div class="span4">
+      <h2><i class="icon-rss"></i> {% trans %}Live Tracking{% endtrans %}</h2>
+      <p>{% trans url=url_for('tracking.info') %}Use your mobile phone to send position updates to SkyLines. Find out how it works <a href="{{ url }}">here</a>.{% endtrans %}</p>
+    </div>
+    <div class="span4">
+      <h2><i class="icon-info-sign"></i> {% trans %}Flight Analysis{% endtrans %}</h2>
+      <p>{% trans %}Use our analysis tools to have a closer look at your flights and how you might be able to improve them in the future.{% endtrans %}</p>
+    </div>
+  </div>
+  <div class="row">
+    <div class="span4">
+      <h2><i class="icon-map-marker"></i> {% trans %}Task Planning{% endtrans %} <small>({% trans %}planned{% endtrans %})</small></h2>
+      <p>{% trans prosoar='<a href="http://www.prosoar.de/" target="_blank">proSoar</a>' %}Use your browser to plan your tasks before the flight and upload them quickly to your flight computer. Integration of {{ prosoar }} is planned.{% endtrans %}</p>
+    </div>
+    <div class="span4">
+      <h2><i class="icon-trophy"></i> {% trans %}Competitions{% endtrans %} <small>({% trans %}planned{% endtrans %})</small></h2>
+      <p>{% trans %}Create competitions to offer your spectators an even better live tracking experience by following all the participants on the same map.{% endtrans %}</p>
+    </div>
+    <div class="span4">
+      <h2><i class="icon-check"></i> {% trans %}Achievements{% endtrans %} <small>({% trans %}planned{% endtrans %})</small></h2>
+      <p>{% trans %}Challenge yourself by trying to complete all the achievements that SkyLines offers. Fly large triangles, long final glides or just do your first outlanding.{% endtrans %}</p>
+    </div>
+  </div>
+  <div class="row">
+    <div class="span4">
+      <h2><i class="icon-group"></i> {% trans %}Social Network{% endtrans %}</h2>
+      <p>{% trans url=url_for('notifications.index') %}Skylines also has some social network aspects. You can comment on flights, follow your friends and get <a href="{{ url }}">notifications</a> if they do anything interesting.{% endtrans %}</p>
+    </div>
+    <div class="span4">
+      <h2><i class="icon-cloud"></i> {% trans %}Open Data{% endtrans %}</h2>
+      <p>{% trans license='<a href="http://opendatacommons.org/licenses/by/summary/" target="_blank">Open Data Commons Attribution License</a>', welt2000='<a href="http://www.segelflug.de/vereine/welt2000/" target="_blank">WELT2000</a>' %}The SkyLines flight database is made available under the {{ license }}. Skylines is using waypoint data from the {{ welt2000 }} project.{% endtrans %}</p>
+    </div>
+    <div class="span4">
+      <h2><i class="icon-wrench"></i> {% trans %}Open Source{% endtrans %}</h2>
+      <p>{% trans team_url=url_for('about.skylines_team'), license_url=url_for('about.license'), github='<a href="https://github.com/skylines-project/skylines#contact-and-contributing" target="_blank">GitHub</a>' %}Skylines is a <a href="{{ team_url }}">community</a> project and entirely based on free software (<a href="{{ license_url }}">License</a>). Visit {{ github }} if you want to help!{% endtrans %}</p>
+    </div>
+  </div>
 </div>
 {%- endblock %}
