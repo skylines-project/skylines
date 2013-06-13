@@ -56,10 +56,10 @@
 
 .GraphicLayerSwitcher #box a .icon-ok {
   position: absolute;
-  left: 31px;
+  left: 64px;
   color: white;
-  font-size: 38px;
-  top: 5px;
+  font-size: 32px;
+  top: 17px;
   text-shadow: 0px 0px 10px black;
   display: none;
 }
