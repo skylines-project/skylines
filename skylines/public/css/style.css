@@ -318,19 +318,19 @@ table.vmiddle td {
   margin-bottom: -18px;
 }
 
-#getting_started #banner {
+#about #banner {
   margin: 15px -20px;
 }
 
-#getting_started h2 {
+#about h2 {
   margin: 10px 0;
 }
 
-#getting_started h2 [class^="icon-"]:before {
+#about h2 [class^="icon-"]:before {
   width: 1.2em;
   text-align: center;
 }
 
-#getting_started p {
+#about p {
   text-align: justify;
 }
