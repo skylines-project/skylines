@@ -3,7 +3,7 @@ from flask import redirect, url_for
 from skylines.views.i18n import register as register_i18n
 from skylines.views.login import register as register_login
 
-from skylines.views.about import about_blueprint
+from skylines.views.about import about_blueprint, about
 from skylines.views.api import api_blueprint
 from skylines.views.assets import assets_blueprint
 from skylines.views.club import club_blueprint
@@ -48,4 +48,4 @@ def register(app):
 
     @app.route('/')
     def index():
-        return redirect(url_for('flights.latest'))
+        return about()
