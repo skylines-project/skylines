@@ -4,7 +4,7 @@ from celery import Celery
 
 def make_celery(app):
     celery = Celery(app.import_name,
-                    broker=app.config['CELERY_BROKER_URL'],
+                    broker=app.config['BROKER_URL'],
                     include=['skylines.worker.tasks'])
     celery.config_from_object(app.config)
 
