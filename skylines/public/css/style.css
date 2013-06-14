@@ -353,6 +353,10 @@ table.vmiddle td {
   color: #666;
 }
 
+#about h2 small {
+  font-size: 14px;
+}
+
 #about p {
   text-align: justify;
 }
