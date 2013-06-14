@@ -5,8 +5,9 @@ from zipfile import ZipFile
 from flask import Blueprint, render_template, request, flash, redirect, g
 from flask.ext.babel import _, lazy_gettext as l_
 from werkzeug.datastructures import CombinedMultiDict
+from redis.exceptions import ConnectionError
 
-from skylines import db
+from skylines import app, db
 from skylines.forms import upload, aircraft_model
 from skylines.lib import files
 from skylines.lib.decorators import login_required
@@ -15,6 +16,7 @@ from skylines.lib.string import import_ascii
 from skylines.lib.xcsoar import analyse_flight
 from skylines.model import User, Flight, IGCFile
 from skylines.model.notification import create_flight_notifications
+from skylines.worker import tasks
 
 upload_blueprint = Blueprint('upload', 'skylines')
 
@@ -149,6 +151,13 @@ def index_post():
         success = True
 
     db.session.commit()
+
+    try:
+        for flight in flights:
+            if flight[2] is None:
+                tasks.analyse_flight.delay(flight[1].id)
+    except ConnectionError:
+        app.logger.info('Cannot connect to Redis server')
 
     return render_template(
         'upload/result.jinja', flights=flights, success=success,
