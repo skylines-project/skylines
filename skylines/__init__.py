@@ -23,6 +23,7 @@ class SkyLines(Flask):
 
         self.add_wdb()
         self.add_sqlalchemy()
+        self.add_celery()
 
     @property
     def created_by_nose(self):
@@ -142,6 +143,11 @@ class SkyLines(Flask):
             from flask_wdb import Wdb
             Wdb(self)
 
+    def add_celery(self):
+        from skylines.worker.celery import make_celery
+        self.celery = make_celery(self)
+
 
 app = SkyLines()
 db = app.db
+celery = app.celery
