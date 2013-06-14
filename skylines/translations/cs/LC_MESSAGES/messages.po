@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  skylines\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2013-05-20 15:17+0200\n"
+"POT-Creation-Date: 2013-06-14 19:22+0200\n"
 "PO-Revision-Date: 2013-04-04 08:23+0000\n"
 "Last-Translator: Karel Beneš <kb@karelbenes.cz>\n"
 "Language-Team: Czech <cs@li.org>\n"
@@ -16,279 +16,6 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 0.9.6\n"
-
-#: skylines/controllers/api.py:65
-#: skylines/templates/flights/details-table.jinja:71
-#: skylines/templates/flights/flights-table.jinja:76
-#: skylines/templates/tracking/list.jinja:41
-msgid "Unknown"
-msgstr "Neznámý"
-
-#: skylines/controllers/clubs.py:29
-msgid "Edit Club"
-msgstr "Editovat klub"
-
-#: skylines/controllers/clubs.py:57 skylines/templates/clubs/pilots.jinja:21
-msgid "Create Pilot"
-msgstr "Vytvořit pilota"
-
-#: skylines/controllers/error.py:51
-msgid "Error {code}"
-msgstr ""
-
-#: skylines/controllers/flight.py:59 skylines/forms/upload.py:21
-#: skylines/templates/flights/details-table.jinja:119
-#: skylines/templates/flights/flights-table.jinja:10
-#: skylines/templates/search/list.jinja:43
-#: skylines/templates/search/list.jinja:53
-#: skylines/templates/tracking/list.jinja:23
-#: skylines/templates/tracking/view.jinja:127
-msgid "Pilot"
-msgstr "Pilot"
-
-#: skylines/controllers/flight.py:60
-msgid "Co-Pilot"
-msgstr "Co-pilot"
-
-#: skylines/controllers/flight.py:71 skylines/templates/upload/result.jinja:23
-msgid "Aircraft Model"
-msgstr "Typ letadla"
-
-#: skylines/controllers/flight.py:72 skylines/templates/upload/result.jinja:24
-msgid "Aircraft Registration"
-msgstr "Imatrikulace"
-
-#: skylines/controllers/flight.py:73 skylines/templates/upload/result.jinja:25
-msgid "Competition Number"
-msgstr "Soutežní znak"
-
-#: skylines/controllers/flight.py:183
-msgid "Left"
-msgstr "Vlevo"
-
-#: skylines/controllers/flight.py:184
-msgid "Mixed"
-msgstr "Smíšené"
-
-#: skylines/controllers/flight.py:185
-msgid "Right"
-msgstr "Vpravo"
-
-#: skylines/controllers/flight.py:186
-#: skylines/templates/statistics/distance-table.jinja:27
-#: skylines/templates/statistics/duration-table.jinja:27
-#: skylines/templates/statistics/flights-table.jinja:23
-msgid "Total"
-msgstr "Celkem"
-
-#: skylines/controllers/flight.py:189
-msgid "Powered"
-msgstr "S motorem"
-
-#: skylines/controllers/flight.py:190
-msgid "Circling"
-msgstr "Kroužení"
-
-#: skylines/controllers/flight.py:191
-msgid "Cruise"
-msgstr "Přeskok"
-
-#: skylines/controllers/flight.py:383
-msgid "Select Pilot"
-msgstr "Vybrat pilota"
-
-#: skylines/controllers/flight.py:432
-msgid "Change Aircraft"
-msgstr "Změnit letadlo"
-
-#: skylines/controllers/flight.py:483
-msgid "Delete Flight"
-msgstr "Vymazat let"
-
-#: skylines/controllers/flight.py:484
-msgid "Are you sure you want to delete this flight?"
-msgstr "Opravdu chcete tento let smazat?"
-
-#: skylines/controllers/flight.py:491
-msgid "You have to be logged in to post comments!"
-msgstr "Pro vložení komentáře musíte být přihlášen(a)!"
-
-#: skylines/controllers/root.py:42
-msgid "Developers"
-msgstr ""
-
-#: skylines/controllers/root.py:43
-msgid "Translators"
-msgstr ""
-
-#: skylines/controllers/root.py:46 skylines/templates/base-page.jinja:43
-msgid "The SkyLines Team"
-msgstr ""
-
-#: skylines/controllers/root.py:55 skylines/templates/base-page.jinja:44
-msgid "Imprint"
-msgstr "Imprint"
-
-#: skylines/controllers/root.py:148
-msgid "Sorry, email address or password are wrong. Please try again or register."
-msgstr ""
-"E-mail, nebo heslo je špatně. Zkuste to znovu, nebo se zaregistrujte, "
-"pokud nejste."
-
-#: skylines/controllers/root.py:153
-#, python-format
-msgid "You are now logged in. Welcome back, %s!"
-msgstr "Jste přihlášen(a). Wítejte zpátky, %s!"
-
-#: skylines/controllers/root.py:170
-msgid "You are now logged out. We hope to see you back soon!"
-msgstr "Odhlášení proběhlo úspěšně. Těšíme se na Vaši další návštěvu!"
-
-#: skylines/controllers/upload.py:64
-msgid "You have to login to upload flights."
-msgstr "Před nahráním souboru se musíte přihlásit"
-
-#: skylines/controllers/upload.py:68 skylines/templates/upload/result.jinja:4
-msgid "Upload Flight"
-msgstr "Nahrát let"
-
-#: skylines/controllers/upload.py:95
-msgid "Duplicate file"
-msgstr "Duplicitní soubor"
-
-#: skylines/controllers/upload.py:106
-msgid "Date missing in IGC file"
-msgstr ""
-
-#: skylines/controllers/upload.py:125
-msgid "Failed to parse file"
-msgstr "Soubor se nezdařilo zpracovat"
-
-#: skylines/controllers/upload.py:130 skylines/controllers/upload.py:135
-msgid "No flight found in file"
-msgstr "V souboru nebyl žádný let nalezen"
-
-#: skylines/controllers/upload.py:173
-msgid ""
-"Sorry, some error happened when updating your flight(s). Please contact a"
-" administrator for help."
-msgstr ""
-"Omlouváme se, během aktualizace vašeho letu se vyskytla chyba. Pro pomoc "
-"prosím kontaktujte  administrátora."
-
-#: skylines/controllers/upload.py:211
-msgid "Your flight(s) have been successfully updated."
-msgstr "Let byl aktualizaován."
-
-#: skylines/controllers/users.py:37 skylines/templates/users/view.jinja:115
-msgid "None"
-msgstr "Žádný"
-
-#: skylines/controllers/users.py:39 skylines/templates/tracking/view.jinja:143
-#: skylines/templates/users/view.jinja:117
-#, python-format
-msgid "%u minute"
-msgid_plural "%u minutes"
-msgstr[0] "%u minuta"
-msgstr[1] "%u minut"
-msgstr[2] "%u minut"
-
-#: skylines/controllers/users.py:45
-msgid "Passwords do not match"
-msgstr "Hesla se neshodují"
-
-#: skylines/controllers/users.py:57 skylines/controllers/users.py:93
-#: skylines/controllers/users.py:126 skylines/forms/pilot.py:21
-msgid "eMail Address"
-msgstr "e-mail"
-
-#: skylines/controllers/users.py:58 skylines/controllers/users.py:94
-#: skylines/forms/club.py:45 skylines/forms/club.py:60
-#: skylines/forms/pilot.py:22 skylines/templates/clubs/list.jinja:11
-#: skylines/templates/clubs/view.jinja:22
-#: skylines/templates/ranking/airports.jinja:10
-#: skylines/templates/ranking/clubs.jinja:9
-#: skylines/templates/ranking/pilots.jinja:9
-#: skylines/templates/users/users-table.jinja:7
-#: skylines/templates/users/view.jinja:95
-msgid "Name"
-msgstr "Jméno"
-
-#: skylines/controllers/users.py:59 skylines/forms/club.py:31
-#: skylines/templates/flights/details-table.jinja:151
-#: skylines/templates/flights/flights-table.jinja:13
-#: skylines/templates/ranking/pilots.jinja:10
-#: skylines/templates/search/list.jinja:45
-#: skylines/templates/search/list.jinja:55
-#: skylines/templates/tracking/view.jinja:133
-#: skylines/templates/users/users-table.jinja:8
-#: skylines/templates/users/view.jinja:125
-msgid "Club"
-msgstr "Club"
-
-#: skylines/controllers/users.py:60 skylines/controllers/users.py:139
-#: skylines/controllers/users.py:153 skylines/templates/topbar.jinja:72
-msgid "Password"
-msgstr "Heslo"
-
-#: skylines/controllers/users.py:70 skylines/controllers/users.py:141
-#: skylines/controllers/users.py:155
-msgid "Verify Password"
-msgstr "Ověření hesla"
-
-#: skylines/controllers/users.py:95
-msgid "Tracking Delay"
-msgstr "Zpoždění trackingu"
-
-#: skylines/controllers/users.py:96
-msgid "Unit Preset"
-msgstr "Jednotky"
-
-#: skylines/controllers/users.py:97
-msgid "Distance Unit"
-msgstr "Jednotka vzdálenosti"
-
-#: skylines/controllers/users.py:98
-msgid "Speed Unit"
-msgstr "Jednotka rychlosti"
-
-#: skylines/controllers/users.py:99
-msgid "Lift Unit"
-msgstr "Jednotka stoupání a kledání"
-
-#: skylines/controllers/users.py:100
-msgid "Altitude Unit"
-msgstr "Jednotka výšky"
-
-#: skylines/controllers/users.py:101
-msgid "Eye Candy"
-msgstr "Eye Candy"
-
-#: skylines/controllers/users.py:121 skylines/controllers/users.py:132
-#: skylines/templates/users/view.jinja:151
-msgid "Recover Password"
-msgstr "Obnovit heslo"
-
-#: skylines/controllers/users.py:147 skylines/controllers/users.py:208
-#: skylines/templates/users/view.jinja:147
-msgid "Change Password"
-msgstr "Změna hesla"
-
-#: skylines/controllers/users.py:186
-msgid ""
-"The mail server is currently not reachable. Please try again later or "
-"contact the developers."
-msgstr ""
-"Poštovní server je momentálně nedostupný. Zkuste to prosím později, nebo "
-"kontaktujte vývojáře systému."
-
-#: skylines/controllers/users.py:230
-msgid "Edit User"
-msgstr "Upravit uživatele"
-
-#: skylines/controllers/users.py:479
-msgid "Password changed."
-msgstr "Heslo bylo změněno."
 
 #: skylines/forms/aircraft_model.py:23
 msgid "Gliders"
@@ -314,9 +41,37 @@ msgstr "UL kluzáky"
 msgid "Other"
 msgstr "Ostatní"
 
+#: skylines/forms/club.py:32 skylines/templates/flights/details-table.jinja:151
+#: skylines/templates/flights/flights-table.jinja:13
+#: skylines/templates/ranking/pilots.jinja:10
+#: skylines/templates/search/list.jinja:45
+#: skylines/templates/search/list.jinja:55
+#: skylines/templates/tracking/view.jinja:133
+#: skylines/templates/users/users-table.jinja:8
+#: skylines/templates/users/view.jinja:125 skylines/views/users.py:44
+msgid "Club"
+msgstr "Club"
+
+#: skylines/forms/club.py:46 skylines/forms/club.py:60
+#: skylines/forms/pilot.py:23 skylines/templates/clubs/list.jinja:11
+#: skylines/templates/clubs/view.jinja:22
+#: skylines/templates/ranking/airports.jinja:10
+#: skylines/templates/ranking/clubs.jinja:9
+#: skylines/templates/ranking/pilots.jinja:9
+#: skylines/templates/users/users-table.jinja:7
+#: skylines/templates/users/view.jinja:95 skylines/views/user.py:179
+#: skylines/views/users.py:43
+msgid "Name"
+msgstr "Jméno"
+
 #: skylines/forms/club.py:61 skylines/templates/clubs/view.jinja:28
 msgid "Website"
 msgstr "Webová stránka"
+
+#: skylines/forms/pilot.py:22 skylines/views/user.py:178
+#: skylines/views/users.py:42 skylines/views/users.py:108
+msgid "eMail Address"
+msgstr "e-mail"
 
 #: skylines/forms/upload.py:12
 msgid "Please add one or more IGC or ZIP files"
@@ -325,6 +80,16 @@ msgstr "Přidejte prosím jeden nebo více IGC nebo ZIP souborů"
 #: skylines/forms/upload.py:17
 msgid "IGC or ZIP file(s)"
 msgstr "Soubor IGC nebo ZIP"
+
+#: skylines/forms/upload.py:21
+#: skylines/templates/flights/details-table.jinja:119
+#: skylines/templates/flights/flights-table.jinja:10
+#: skylines/templates/search/list.jinja:43
+#: skylines/templates/search/list.jinja:53
+#: skylines/templates/tracking/list.jinja:23
+#: skylines/templates/tracking/view.jinja:127 skylines/views/flight.py:369
+msgid "Pilot"
+msgstr "Pilot"
 
 #: skylines/lib/dbutil.py:24 skylines/lib/dbutil.py:42
 msgid "Sorry, the record id ({id}) that you requested is not a valid id."
@@ -364,95 +129,127 @@ msgstr "Australský (metrický, výška imperiální)"
 msgid "American (imperial)"
 msgstr "Americký (imperiální)"
 
-#: skylines/templates/about.jinja:4
-msgid "About"
-msgstr "O aplikaci"
-
 #: skylines/templates/about.jinja:9
-msgid "Welcome to SkyLines, the internet platform for sharing flights!"
+#, fuzzy
+#| msgid "Welcome to SkyLines, the internet platform for sharing flights!"
+msgid "Welcome to SkyLines, your internet platform for flight sharing!"
 msgstr "Vítejte na SkyLines, internetové platformě pro sdílení letů!"
 
-#: skylines/templates/about.jinja:12
-msgid "The major goals of the Skylines project are:"
-msgstr "Hlavní cíle projektu SkyLines jsou:"
-
-#: skylines/templates/about.jinja:14
-msgid "To provide a free platform for sharing and analysing flights"
-msgstr "poskytnout svobodnou platformu pro sdílení a analýzu letů"
-
-#: skylines/templates/about.jinja:15
-msgid "Skylines is based on free software"
-msgstr "SkyLines je založeno na svobodném software"
-
-#: skylines/templates/about.jinja:15 skylines/templates/about.jinja:20
-msgid "License"
-msgstr "Licence"
-
-#: skylines/templates/about.jinja:16
-msgid "The stored flights are available for everybody without any limitations."
-msgstr "Uložené lety jsou dostupné pro každého bez jekéhokoliv omezení"
-
-#: skylines/templates/about.jinja:17
-msgid ""
-"Skylines is a non-commercial project, there are no ads on the webpage, "
-"its free of charge."
+#: skylines/templates/about.jinja:23
+msgid "Flight Database"
 msgstr ""
-"SkyLines není komerční projekt, nejsou zde žádné reklamy a je k použití "
-"zdarma."
 
-#: skylines/templates/about.jinja:18
+#: skylines/templates/about.jinja:24
 #, python-format
 msgid ""
-"Skylines has <a href=\"%(url)s\">Live Tracking</a>, let your friends "
-"participate on your adventures."
+"<a href=\"%(url)s\">Upload</a> your IGC files and share them with your "
+"friends. We won't change your files or restrict you from downloading them"
+" again!"
 msgstr ""
-"SkyLines obsahuje <a href=\"%(url)s\">Live Tracking</a> - nechte své "
-"přátele zúčastnit se na vašich dobrodružství."
 
-#: skylines/templates/about.jinja:19
+#: skylines/templates/about.jinja:27 skylines/templates/tracking/info.jinja:4
+#: skylines/templates/tracking/list.jinja:9
+msgid "Live Tracking"
+msgstr "Live Tracking"
+
+#: skylines/templates/about.jinja:28
+#, python-format
 msgid ""
-"Skylines has also some social network aspects with comments, "
-"notifications, friends and followers."
+"Use your mobile phone to send position updates to SkyLines. Find out how "
+"it works <a href=\"%(url)s\">here</a>."
 msgstr ""
-"SkyLines má také některé z aspektů sociálních sítí - komentáře, "
-"notifikace, síť přátel a followerů."
 
-#: skylines/templates/about.jinja:20
-#, python-format
-msgid "Airport and Waypoint data is provided by the %(welt2000)s project."
-msgstr "Data letišť a waypointů poskytl projekt %(welt2000)s."
-
-#: skylines/templates/about.jinja:25
-msgid "Current status"
-msgstr "Aktuální stav"
-
-#: skylines/templates/about.jinja:25
-msgid "under development"
-msgstr "stále ve vývoji"
-
-#: skylines/templates/about.jinja:29
-#, python-format
-msgid "SkyLines was brought to you by the %(xcsoar)s project."
-msgstr "SkyLines vám přinesl projekt %(xcsoar)s."
+#: skylines/templates/about.jinja:31
+msgid "Flight Analysis"
+msgstr ""
 
 #: skylines/templates/about.jinja:32
-msgid "It is free software;"
-msgstr "Jde o svobodný software;"
-
-#: skylines/templates/about.jinja:33
-msgid "the source code is available here"
-msgstr "zdrojový kód je dostupný zde"
+msgid ""
+"Use our analysis tools to have a closer look at your flights and how you "
+"might be able to improve them in the future."
+msgstr ""
 
 #: skylines/templates/about.jinja:37
+msgid "Task Planning"
+msgstr ""
+
+#: skylines/templates/about.jinja:37 skylines/templates/about.jinja:41
+#: skylines/templates/about.jinja:45 skylines/templates/tracking/info.jinja:18
+msgid "planned"
+msgstr "plánovaný"
+
+#: skylines/templates/about.jinja:38
 #, python-format
 msgid ""
-"If you think that something is missing or you think that you have found a"
-" bug please follow the instructions <a href=\"%(url)s\" "
-"target=\"_blank\">here</a> to write a feature request or bug report."
+"Use your browser to plan your tasks before the flight and upload them "
+"quickly to your flight computer. Integration of %(prosoar)s is planned."
 msgstr ""
-"Pokud si myslíte, že zde něco chybí, nebo jste nalezli chybu systému, "
-"následujte prosím <a href=\"%(url)s\" target=\"_blank\">tyto</a> "
-"instrukce a napiště požadavek nové vlastnosti nebo report chyby."
+
+#: skylines/templates/about.jinja:41
+#, fuzzy
+#| msgid "Competition Number"
+msgid "Competitions"
+msgstr "Soutežní znak"
+
+#: skylines/templates/about.jinja:42
+msgid ""
+"Create competitions to offer your spectators an even better live tracking"
+" experience by following all the participants on the same map."
+msgstr ""
+
+#: skylines/templates/about.jinja:45
+msgid "Achievements"
+msgstr ""
+
+#: skylines/templates/about.jinja:46
+msgid ""
+"Challenge yourself by trying to complete all the achievements that "
+"SkyLines offers. Fly large triangles, long final glides or just do your "
+"first outlanding."
+msgstr ""
+
+#: skylines/templates/about.jinja:51
+msgid "Social Network"
+msgstr ""
+
+#: skylines/templates/about.jinja:52
+#, python-format
+msgid ""
+"Skylines also has some social network aspects. You can comment on "
+"flights, follow your friends and get <a "
+"href=\"%(url)s\">notifications</a> if they do anything interesting."
+msgstr ""
+
+#: skylines/templates/about.jinja:55
+msgid "Open Data"
+msgstr ""
+
+#: skylines/templates/about.jinja:56
+#, python-format
+msgid ""
+"The SkyLines flight database is made available under the %(license)s. "
+"Skylines is using waypoint data from the %(welt2000)s project."
+msgstr ""
+
+#: skylines/templates/about.jinja:59
+msgid "Open Source"
+msgstr ""
+
+#: skylines/templates/about.jinja:60
+#, python-format
+msgid ""
+"Skylines is a <a href=\"%(team_url)s\">community</a> project and entirely"
+" based on free software (<a href=\"%(license_url)s\">License</a>). Visit "
+"%(github)s if you want to help!"
+msgstr ""
+
+#: skylines/templates/base-page.jinja:43 skylines/views/about.py:39
+msgid "The SkyLines Team"
+msgstr ""
+
+#: skylines/templates/base-page.jinja:44 skylines/views/about.py:23
+msgid "Imprint"
+msgstr "Imprint"
 
 #: skylines/templates/login.jinja:4 skylines/templates/topbar.jinja:55
 msgid "Login"
@@ -462,7 +259,7 @@ msgstr "Přihlásit"
 msgid "Live"
 msgstr "Live"
 
-#: skylines/templates/topbar.jinja:5 skylines/templates/topbar.jinja:111
+#: skylines/templates/topbar.jinja:5 skylines/templates/topbar.jinja:109
 #: skylines/templates/clubs/list.jinja:20
 #: skylines/templates/clubs/view.jinja:50
 #: skylines/templates/flights/list.jinja:27
@@ -484,7 +281,7 @@ msgstr "Lety"
 msgid "Ranking"
 msgstr "Žebříček"
 
-#: skylines/templates/topbar.jinja:7 skylines/templates/topbar.jinja:112
+#: skylines/templates/topbar.jinja:7 skylines/templates/topbar.jinja:110
 #: skylines/templates/clubs/list.jinja:21
 #: skylines/templates/clubs/view.jinja:51
 #: skylines/templates/search/list.jinja:81
@@ -504,6 +301,11 @@ msgstr ""
 msgid "Email Address"
 msgstr "e-mailová adresa"
 
+#: skylines/templates/topbar.jinja:72 skylines/views/user.py:123
+#: skylines/views/users.py:45 skylines/views/users.py:122
+msgid "Password"
+msgstr "Heslo"
+
 #: skylines/templates/topbar.jinja:79
 msgid "Remember me"
 msgstr "Zůstat přihlášen(a)"
@@ -516,12 +318,12 @@ msgstr "Zapoměli jste heslo?"
 msgid "Don't have an account?"
 msgstr "Nemáte účet?"
 
-#: skylines/templates/topbar.jinja:92
+#: skylines/templates/topbar.jinja:91
 #: skylines/templates/notifications/list.jinja:8
 msgid "Notifications"
 msgstr "Upozornění"
 
-#: skylines/templates/topbar.jinja:114
+#: skylines/templates/topbar.jinja:112
 msgid "Logout"
 msgstr "Odhlásit"
 
@@ -546,6 +348,10 @@ msgstr "Členové"
 #, python-format
 msgid "Members <small>of %(club)s</small>"
 msgstr "Členové <small>of %(club)s</small>"
+
+#: skylines/templates/clubs/pilots.jinja:21 skylines/views/club.py:70
+msgid "Create Pilot"
+msgstr "Vytvořit pilota"
 
 #: skylines/templates/clubs/view.jinja:34
 msgid "Created"
@@ -616,6 +422,12 @@ msgstr "Změnit"
 #: skylines/templates/flights/details-table.jinja:67
 msgid "Handicap"
 msgstr "Handicap"
+
+#: skylines/templates/flights/details-table.jinja:71
+#: skylines/templates/flights/flights-table.jinja:76
+#: skylines/templates/tracking/list.jinja:41 skylines/views/api.py:57
+msgid "Unknown"
+msgstr "Neznámý"
 
 #: skylines/templates/flights/details-table.jinja:93
 #: skylines/templates/flights/flights-table.jinja:9
@@ -709,7 +521,6 @@ msgstr "Lety <small>dne %(date)s</small>"
 
 #: skylines/templates/flights/list.jinja:257
 #, fuzzy
-#| msgid "Upload Flight"
 msgid "Upload flight"
 msgstr "Nahrát let"
 
@@ -841,12 +652,12 @@ msgid "No"
 msgstr "Ne"
 
 #: skylines/templates/macros/flash.jinja:6
-msgid "Warning!"
-msgstr "Varování!"
-
-#: skylines/templates/macros/flash.jinja:7
 msgid "Error!"
 msgstr "Chyba!"
+
+#: skylines/templates/macros/flash.jinja:7
+msgid "Warning!"
+msgstr "Varování!"
 
 #: skylines/templates/notifications/list.jinja:20
 msgid "Mark all as read"
@@ -951,6 +762,13 @@ msgstr "Rok"
 msgid "avg. %(distance)s per flight"
 msgstr "průměr %(distance)s na let"
 
+#: skylines/templates/statistics/distance-table.jinja:27
+#: skylines/templates/statistics/duration-table.jinja:27
+#: skylines/templates/statistics/flights-table.jinja:23
+#: skylines/views/flight.py:171
+msgid "Total"
+msgstr "Celkem"
+
 #: skylines/templates/statistics/duration-table.jinja:6
 #: skylines/templates/statistics/years.jinja:72
 #: skylines/templates/users/view.jinja:248
@@ -976,11 +794,6 @@ msgstr "Statistika <small>klubu %(club)s</small>"
 #, python-format
 msgid "Statistics <small>from %(airport)s</small>"
 msgstr "Statistika <small>letiště %(airport)s</small>"
-
-#: skylines/templates/tracking/info.jinja:4
-#: skylines/templates/tracking/list.jinja:9
-msgid "Live Tracking"
-msgstr "Live Tracking"
 
 #: skylines/templates/tracking/info.jinja:7
 msgid "What is it?"
@@ -1013,10 +826,6 @@ msgstr "dostupné od verze %(xcsoar_6_4)s"
 #: skylines/templates/tracking/info.jinja:16
 msgid "now available in the current version of Gaggle"
 msgstr "nyní dostupné v aktuální verzi Gaggle"
-
-#: skylines/templates/tracking/info.jinja:18
-msgid "planned"
-msgstr "plánovaný"
 
 #: skylines/templates/tracking/info.jinja:21
 msgid "Live Tracking Key"
@@ -1091,6 +900,17 @@ msgstr "Tento pilot nastavil prodlevu pro zobrazení jeho live tracků."
 msgid "Delay"
 msgstr "Prodleva"
 
+#: skylines/templates/tracking/view.jinja:143
+#: skylines/templates/users/view.jinja:117 skylines/views/user.py:159
+#, fuzzy, python-format
+#| msgid "%u minute"
+#| msgid_plural "%u minutes"
+msgid "%(num)u minute"
+msgid_plural "%(num)u minutes"
+msgstr[0] "%u minuta"
+msgstr[1] "%u minut"
+msgstr[2] "%u minut"
+
 #: skylines/templates/tracking/view.jinja:146
 msgid "The live tracking delay is ignored because of your account privileges."
 msgstr "Prodleva live trackingu je z důvodu vašich oprávnění ignorována."
@@ -1102,6 +922,10 @@ msgstr "ignorováno"
 #: skylines/templates/tracking/view.jinja:163
 msgid "Your Live Tracking settings"
 msgstr "Vaše nastavení Live Trackingu"
+
+#: skylines/templates/upload/result.jinja:4 skylines/views/upload.py:66
+msgid "Upload Flight"
+msgstr "Nahrát let"
 
 #: skylines/templates/upload/result.jinja:10
 msgid ""
@@ -1123,6 +947,18 @@ msgstr "Žádné lety nebyly uloženy."
 #: skylines/templates/upload/result.jinja:22
 msgid "Filename"
 msgstr "Název souboru"
+
+#: skylines/templates/upload/result.jinja:23 skylines/views/flight.py:412
+msgid "Aircraft Model"
+msgstr "Typ letadla"
+
+#: skylines/templates/upload/result.jinja:24 skylines/views/flight.py:413
+msgid "Aircraft Registration"
+msgstr "Imatrikulace"
+
+#: skylines/templates/upload/result.jinja:25 skylines/views/flight.py:414
+msgid "Competition Number"
+msgstr "Soutežní znak"
 
 #: skylines/templates/upload/result.jinja:26
 msgid "Status"
@@ -1180,9 +1016,23 @@ msgstr "Více informací"
 msgid "Tracking delay"
 msgstr "Prodleva trackingu"
 
+#: skylines/templates/users/view.jinja:115 skylines/views/user.py:157
+msgid "None"
+msgstr "Žádný"
+
 #: skylines/templates/users/view.jinja:133
 msgid "Unspecified"
 msgstr "Neurčeno"
+
+#: skylines/templates/users/view.jinja:147 skylines/views/user.py:118
+#: skylines/views/user.py:137
+msgid "Change Password"
+msgstr "Změna hesla"
+
+#: skylines/templates/users/view.jinja:151 skylines/views/users.py:103
+#: skylines/views/users.py:115
+msgid "Recover Password"
+msgstr "Obnovit heslo"
 
 #: skylines/templates/users/view.jinja:156
 msgid "Unfollow"
@@ -1216,6 +1066,247 @@ msgstr "Průměrná rychlost"
 msgid "Takeoff Locations"
 msgstr "Místa startu"
 
-#~ msgid "Upload"
-#~ msgstr "Nahrát"
+#: skylines/views/about.py:33
+msgid "Developers"
+msgstr ""
+
+#: skylines/views/about.py:34
+msgid "Translators"
+msgstr ""
+
+#: skylines/views/about.py:53
+msgid "License"
+msgstr "Licence"
+
+#: skylines/views/club.py:47
+msgid "Edit Club"
+msgstr "Editovat klub"
+
+#: skylines/views/flight.py:168
+msgid "Left"
+msgstr "Vlevo"
+
+#: skylines/views/flight.py:169
+msgid "Mixed"
+msgstr "Smíšené"
+
+#: skylines/views/flight.py:170
+msgid "Right"
+msgstr "Vpravo"
+
+#: skylines/views/flight.py:174
+msgid "Powered"
+msgstr "S motorem"
+
+#: skylines/views/flight.py:175
+msgid "Circling"
+msgstr "Kroužení"
+
+#: skylines/views/flight.py:176
+msgid "Cruise"
+msgstr "Přeskok"
+
+#: skylines/views/flight.py:370
+msgid "Co-Pilot"
+msgstr "Co-pilot"
+
+#: skylines/views/flight.py:382
+msgid "Select Pilot"
+msgstr "Vybrat pilota"
+
+#: skylines/views/flight.py:445
+msgid "Change Aircraft"
+msgstr "Změnit letadlo"
+
+#: skylines/views/flight.py:489
+msgid "Delete Flight"
+msgstr "Vymazat let"
+
+#: skylines/views/flight.py:490
+msgid "Are you sure you want to delete this flight?"
+msgstr "Opravdu chcete tento let smazat?"
+
+#: skylines/views/flight.py:497
+msgid "You have to be logged in to post comments!"
+msgstr "Pro vložení komentáře musíte být přihlášen(a)!"
+
+#: skylines/views/login.py:44
+#, fuzzy, python-format
+#| msgid "You are now logged in. Welcome back, %s!"
+msgid "You are now logged in. Welcome back, %(user)s!"
+msgstr "Jste přihlášen(a). Wítejte zpátky, %s!"
+
+#: skylines/views/login.py:46
+msgid "Sorry, email address or password are wrong. Please try again or register."
+msgstr ""
+"E-mail, nebo heslo je špatně. Zkuste to znovu, nebo se zaregistrujte, "
+"pokud nejste."
+
+#: skylines/views/login.py:56
+msgid "You are now logged out. We hope to see you back soon!"
+msgstr "Odhlášení proběhlo úspěšně. Těšíme se na Vaši další návštěvu!"
+
+#: skylines/views/upload.py:63 skylines/views/upload.py:71
+#: skylines/views/upload.py:159
+msgid "You have to login to upload flights."
+msgstr "Před nahráním souboru se musíte přihlásit"
+
+#: skylines/views/upload.py:100
+msgid "Duplicate file"
+msgstr "Duplicitní soubor"
+
+#: skylines/views/upload.py:111
+msgid "Date missing in IGC file"
+msgstr ""
+
+#: skylines/views/upload.py:130
+msgid "Failed to parse file"
+msgstr "Soubor se nezdařilo zpracovat"
+
+#: skylines/views/upload.py:135 skylines/views/upload.py:140
+msgid "No flight found in file"
+msgstr "V souboru nebyl žádný let nalezen"
+
+#: skylines/views/upload.py:169
+msgid ""
+"Sorry, some error happened when updating your flight(s). Please contact a"
+" administrator for help."
+msgstr ""
+"Omlouváme se, během aktualizace vašeho letu se vyskytla chyba. Pro pomoc "
+"prosím kontaktujte  administrátora."
+
+#: skylines/views/upload.py:207
+msgid "Your flight(s) have been successfully updated."
+msgstr "Let byl aktualizaován."
+
+#: skylines/views/user.py:114 skylines/views/users.py:30
+msgid "Passwords do not match"
+msgstr "Hesla se neshodují"
+
+#: skylines/views/user.py:125 skylines/views/users.py:55
+#: skylines/views/users.py:124
+msgid "Verify Password"
+msgstr "Ověření hesla"
+
+#: skylines/views/user.py:180
+msgid "Tracking Delay"
+msgstr "Zpoždění trackingu"
+
+#: skylines/views/user.py:181
+msgid "Unit Preset"
+msgstr "Jednotky"
+
+#: skylines/views/user.py:182
+msgid "Distance Unit"
+msgstr "Jednotka vzdálenosti"
+
+#: skylines/views/user.py:183
+msgid "Speed Unit"
+msgstr "Jednotka rychlosti"
+
+#: skylines/views/user.py:184
+msgid "Lift Unit"
+msgstr "Jednotka stoupání a kledání"
+
+#: skylines/views/user.py:185
+msgid "Altitude Unit"
+msgstr "Jednotka výšky"
+
+#: skylines/views/user.py:186
+msgid "Eye Candy"
+msgstr "Eye Candy"
+
+#: skylines/views/user.py:211
+msgid "Edit User"
+msgstr "Upravit uživatele"
+
+#: skylines/views/users.py:177
+msgid ""
+"The mail server is currently not reachable. Please try again later or "
+"contact the developers."
+msgstr ""
+"Poštovní server je momentálně nedostupný. Zkuste to prosím později, nebo "
+"kontaktujte vývojáře systému."
+
+#: skylines/views/users.py:212
+msgid "Password changed."
+msgstr "Heslo bylo změněno."
+
+#~ msgid "Error {code}"
+#~ msgstr ""
+
+#~ msgid "About"
+#~ msgstr "O aplikaci"
+
+#~ msgid "The major goals of the Skylines project are:"
+#~ msgstr "Hlavní cíle projektu SkyLines jsou:"
+
+#~ msgid "To provide a free platform for sharing and analysing flights"
+#~ msgstr "poskytnout svobodnou platformu pro sdílení a analýzu letů"
+
+#~ msgid "Skylines is based on free software"
+#~ msgstr "SkyLines je založeno na svobodném software"
+
+#~ msgid "The stored flights are available for everybody without any limitations."
+#~ msgstr "Uložené lety jsou dostupné pro každého bez jekéhokoliv omezení"
+
+#~ msgid ""
+#~ "Skylines is a non-commercial project,"
+#~ " there are no ads on the "
+#~ "webpage, its free of charge."
+#~ msgstr ""
+#~ "SkyLines není komerční projekt, nejsou "
+#~ "zde žádné reklamy a je k použití"
+#~ " zdarma."
+
+#~ msgid ""
+#~ "Skylines has <a href=\"%(url)s\">Live "
+#~ "Tracking</a>, let your friends participate "
+#~ "on your adventures."
+#~ msgstr ""
+#~ "SkyLines obsahuje <a href=\"%(url)s\">Live "
+#~ "Tracking</a> - nechte své přátele "
+#~ "zúčastnit se na vašich dobrodružství."
+
+#~ msgid ""
+#~ "Skylines has also some social network"
+#~ " aspects with comments, notifications, "
+#~ "friends and followers."
+#~ msgstr ""
+#~ "SkyLines má také některé z aspektů "
+#~ "sociálních sítí - komentáře, notifikace, "
+#~ "síť přátel a followerů."
+
+#~ msgid "Airport and Waypoint data is provided by the %(welt2000)s project."
+#~ msgstr "Data letišť a waypointů poskytl projekt %(welt2000)s."
+
+#~ msgid "Current status"
+#~ msgstr "Aktuální stav"
+
+#~ msgid "under development"
+#~ msgstr "stále ve vývoji"
+
+#~ msgid "SkyLines was brought to you by the %(xcsoar)s project."
+#~ msgstr "SkyLines vám přinesl projekt %(xcsoar)s."
+
+#~ msgid "It is free software;"
+#~ msgstr "Jde o svobodný software;"
+
+#~ msgid "the source code is available here"
+#~ msgstr "zdrojový kód je dostupný zde"
+
+#~ msgid ""
+#~ "If you think that something is "
+#~ "missing or you think that you have"
+#~ " found a bug please follow the "
+#~ "instructions <a href=\"%(url)s\" "
+#~ "target=\"_blank\">here</a> to write a feature"
+#~ " request or bug report."
+#~ msgstr ""
+#~ "Pokud si myslíte, že zde něco "
+#~ "chybí, nebo jste nalezli chybu systému,"
+#~ " následujte prosím <a href=\"%(url)s\" "
+#~ "target=\"_blank\">tyto</a> instrukce a napiště "
+#~ "požadavek nové vlastnosti nebo report "
+#~ "chyby."
 
