@@ -64,3 +64,8 @@ SKYLINES_MAP_TILE_URL = 'http://skylines.xcsoar.org'
 BROKER_URL = 'redis://localhost:6379/0',
 CELERY_RESULT_BACKEND = 'redis://localhost:6379/0'
 CELERYD_LOG_LEVEL = 'INFO'
+
+# subprocess limits for AnalyseFlight
+# see RLIMIT_CPU and RLIMIT_AS at http://linux.die.net/man/2/setrlimit
+SKYLINES_SUBPROCESS_CPU = 120 # soft limit in seconds (hard limit: * 1.2)
+SKYLINES_SUBPROCESS_MEMORY = 256 # MB, soft limit (hard limit: * 1.2)
