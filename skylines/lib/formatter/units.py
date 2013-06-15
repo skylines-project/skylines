@@ -1,31 +1,43 @@
 from flask import g
 from flask.ext.babel import lazy_gettext as l_
 
-from .numbers import format_number, format_decimal
+from .numbers import format_decimal
 
 distance_units = (
-    (u'm', lambda value: format_number(int(value)) + u' m'),
-    (u'km', lambda value: format_number(int(value / 1000. + 0.5)) + u' km'),
-    (u'NM', lambda value: format_number(int(value / 1852. + 0.5)) + u' NM'),
-    (u'mi', lambda value: format_number(int(value / 1609.34 + 0.5)) + u' mi'),
+    (u'm', lambda value, p: format_decimal(round(value, p),
+                                           format=u'{0:.{1}f} m'.format(0.0, p)), 0),
+    (u'km', lambda value, p: format_decimal(round(value / 1000, p),
+                                            format=u'{0:.{1}f} km'.format(0.0, p)), 0),
+    (u'NM', lambda value, p: format_decimal(round(value / 1852., p),
+                                            format=u'{0:.{1}f} NM'.format(0.0, p)), 0),
+    (u'mi', lambda value, p: format_decimal(round(value / 1609.34, p),
+                                            format=u'{0:.{1}f} mi'.format(0.0, p)), 0),
 )
 
 speed_units = (
-    (u'm/s', lambda value: format_decimal(value, format=u'0.0 m/s')),
-    (u'km/h', lambda value: format_decimal(value * 3.6, format=u'0.0 km/h')),
-    (u'kt', lambda value: format_decimal(value * 1.94384449, format=u'0.0 kt')),
-    (u'mph', lambda value: format_decimal(value * 2.23693629, format=u'0.0 mph')),
+    (u'm/s', lambda value, p: format_decimal(round(value, p),
+                                             format=u'{0:.{1}f} m/s'.format(0.0, p)), 1),
+    (u'km/h', lambda value, p: format_decimal(round(value * 3.6, p),
+                                              format=u'{0:.{1}f} km/h'.format(0.0, p)), 1),
+    (u'kt', lambda value, p: format_decimal(round(value * 1.94384449, p),
+                                            format=u'{0:.{1}f} kt'.format(0.0, p)), 1),
+    (u'mph', lambda value, p: format_decimal(round(value * 2.23693629, p),
+                                             format=u'{0:.{1}f} mph'.format(0.0, p)), 1),
 )
 
 lift_units = (
-    (u'm/s', lambda value: format_decimal(value, format=u'0.0 m/s')),
-    (u'kt', lambda value: format_decimal(value * 1.94384449, format=u'0.0 kt')),
-    (u'ft/min', lambda value: format_decimal(value * 196.850394,
-                                             format=u'0 ft/min')),
+    (u'm/s', lambda value, p: format_decimal(round(value, p),
+                                             format=u'{0:.{1}f} m/s'.format(0.0, p)), 1),
+    (u'kt', lambda value, p: format_decimal(round(value * 1.94384449, p),
+                                            format=u'{0:.{1}f} kt'.format(0.0, p)), 1),
+    (u'ft/min', lambda value, p: format_decimal(round(value * 196.850394, p),
+                                                format=u'{0:.{1}f} ft/min'.format(0.0, p)), 0),
 )
 altitude_units = (
-    (u'm', lambda value: "%d m" % value),
-    (u'ft', lambda value: "%d ft" % (value * 3.2808399))
+    (u'm', lambda value, p: format_decimal(round(value, p),
+                                           format=u'{0:.{1}f} m'.format(0.0, p)), 0),
+    (u'ft', lambda value, p: format_decimal(round(value, p),
+                                            format=u'{0:.{1}f} ft'.format(0.0, p)), 0)
 )
 
 unit_presets = (
@@ -90,38 +102,42 @@ def get_setting_name(name):
     return None
 
 
-def _format(units, name, default, value):
+def _format(units, name, default, value, ndigits=None):
     assert isinstance(default, int)
 
     setting = _get_setting(name, default)
     if setting < 0 or setting >= len(units):
         setting = default
-    return units[setting][1](float(value))
+
+    if not ndigits:
+        return units[setting][1](float(value), units[setting][2])
+    else:
+        return units[setting][1](float(value), ndigits)
 
 
-def format_distance(value):
+def format_distance(value, ndigits=None):
     """Formats a distance value [m] to a user-readable string."""
     if value is None: return None
 
-    return _format(distance_units, 'distance_unit', 1, value)
+    return _format(distance_units, 'distance_unit', 1, value, ndigits)
 
 
-def format_speed(value):
+def format_speed(value, ndigits=None):
     """Formats a speed value [m/s] to a user-readable string."""
     if value is None: return None
 
-    return _format(speed_units, 'speed_unit', 1, value)
+    return _format(speed_units, 'speed_unit', 1, value, ndigits)
 
 
-def format_lift(value):
+def format_lift(value, ndigits=None):
     """Formats vertical speed value [m/s/] to a user-readable string"""
     if value is None: return None
 
-    return _format(lift_units, 'lift_unit', 0, value)
+    return _format(lift_units, 'lift_unit', 0, value, ndigits)
 
 
-def format_altitude(value):
+def format_altitude(value, ndigits=None):
     """Formats altitude value [m] to a user-readable string"""
     if value is None: return None
 
-    return _format(altitude_units, 'altitude_unit', 0, value)
+    return _format(altitude_units, 'altitude_unit', 0, value, ndigits)
