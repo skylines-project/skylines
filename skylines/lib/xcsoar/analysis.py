@@ -259,7 +259,7 @@ def run_analyse_flight(path, full=None, triangle=None, sprint=None):
     return Popen(args, stdout=PIPE).stdout
 
 
-def analyse_flight(flight, full=512, triangle=2048, sprint=64):
+def analyse_flight(flight, full=512, triangle=1024, sprint=64):
     path = files.filename_to_path(flight.igc_file.filename)
     log.info('Analyzing ' + path)
 
