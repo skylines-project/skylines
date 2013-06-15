@@ -132,3 +132,17 @@ To run it locally as subprocess of mapproxy, change `mapserver/mapproxy/mapproxy
 To import airspaces into the database, install the `python-gdal` package (using gdal extension directly from pypi is not recommended) and import the required airspace files:
 
     $ ./scripts/import_airspaces.py assets/airspace/airspace_list.txt assets/airspace/airspace_blacklist.txt
+
+
+## Asynchronous tasks
+
+*SkyLines* can use [Celery](http://www.celeryproject.org) with [Redis](http://www.redis.io) as broker
+for asynchronous tasks like in-depth analysis of flights. Celery is one of *SkyLines* requirements
+and will be installed by pip, but you need to get Redis on your own. On Debian, all you need is
+to install the `redis-server` package:
+
+    $ apt-get install redis-server
+
+To run the Celery worker, call
+
+    $ ./celery_worker.py
