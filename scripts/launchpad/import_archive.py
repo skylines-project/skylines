@@ -9,9 +9,9 @@ import tarfile
 import re
 import shutil
 
-LANG_CODE_RE = re.compile(r'skylines-([a-z]{2}(?:_[A-Z_]{2})*)\.po')
+LANG_CODE_RE = re.compile(r'translations-([a-z]{2}(?:_[A-Z_]{2})*)\.po')
 I18N_FOLDER = os.path.join(os.path.dirname(os.path.abspath(__file__)),
-                           '..', '..', 'skylines', 'i18n')
+                           '..', '..', 'skylines', 'translations')
 
 # Parse command line arguments
 
@@ -69,7 +69,7 @@ def extract_file(fileinfo):
     if not os.path.exists(path):
         os.makedirs(path)
 
-    path = os.path.join(path, 'skylines.po')
+    path = os.path.join(path, 'messages.po')
 
     # Extract the new PO file
 
