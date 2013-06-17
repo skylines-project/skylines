@@ -14,6 +14,8 @@ distance_units = (
     Unit(u'mi', 1 / 1609.34, u'{0:.{1}f} mi', 0),
 )
 
+DEFAULT_DISTANCE_UNIT = 1
+
 speed_units = (
     Unit(u'm/s', 1, u'{0:.{1}f} m/s', 1),
     Unit(u'km/h', 3.6, u'{0:.{1}f} km/h', 1),
@@ -21,15 +23,22 @@ speed_units = (
     Unit(u'mph', 2.23693629, u'{0:.{1}f} mph', 1),
 )
 
+DEFAULT_SPEED_UNIT = 1
+
 lift_units = (
     Unit(u'm/s', 1, u'{0:.{1}f} m/s', 1),
     Unit(u'kt', 1.94384449, u'{0:.{1}f} kt', 1),
     Unit(u'ft/min', 1 * 196.850394, u'{0:.{1}f} ft/min', 0),
 )
+
+DEFAULT_LIFT_UNIT = 0
+
 altitude_units = (
     Unit(u'm', 1, u'{0:.{1}f} m', 0),
     Unit(u'ft', 1, u'{0:.{1}f} ft', 0)
 )
+
+DEFAULT_ALTITUDE_UNIT = 0
 
 unit_presets = (
     (l_("Custom"), {}),
@@ -114,25 +123,29 @@ def format_distance(value, ndigits=None):
     """Formats a distance value [m] to a user-readable string."""
     if value is None: return None
 
-    return _format(distance_units, 'distance_unit', 1, value, ndigits)
+    return _format(distance_units, 'distance_unit', DEFAULT_DISTANCE_UNIT,
+                   value, ndigits)
 
 
 def format_speed(value, ndigits=None):
     """Formats a speed value [m/s] to a user-readable string."""
     if value is None: return None
 
-    return _format(speed_units, 'speed_unit', 1, value, ndigits)
+    return _format(speed_units, 'speed_unit', DEFAULT_SPEED_UNIT,
+                   value, ndigits)
 
 
 def format_lift(value, ndigits=None):
     """Formats vertical speed value [m/s/] to a user-readable string"""
     if value is None: return None
 
-    return _format(lift_units, 'lift_unit', 0, value, ndigits)
+    return _format(lift_units, 'lift_unit', DEFAULT_LIFT_UNIT,
+                   value, ndigits)
 
 
 def format_altitude(value, ndigits=None):
     """Formats altitude value [m] to a user-readable string"""
     if value is None: return None
 
-    return _format(altitude_units, 'altitude_unit', 0, value, ndigits)
+    return _format(altitude_units, 'altitude_unit', DEFAULT_ALTITUDE_UNIT,
+                   value, ndigits)
