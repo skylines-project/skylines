@@ -109,10 +109,10 @@ def _format(units, name, default, value, ndigits=None):
     if setting < 0 or setting >= len(units):
         setting = default
 
-    if not ndigits:
-        return units[setting][1](float(value), units[setting][2])
-    else:
-        return units[setting][1](float(value), ndigits)
+    if ndigits is None:
+        ndigits = units[setting][2]
+
+    return units[setting][1](float(value), ndigits)
 
 
 def format_distance(value, ndigits=None):

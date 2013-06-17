@@ -27,6 +27,7 @@ def test_distance_format():
 def test_speed_format():
     """ Check speed formatting """
 
+    eq_(units.format_speed(0, 0), '0 km/h')
     eq_(units.format_speed(0), '0.0 km/h')
     eq_(units.format_speed(12), '43.2 km/h')
     eq_(units.format_speed(10, 3), '36.000 km/h')
