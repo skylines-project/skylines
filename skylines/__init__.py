@@ -67,6 +67,7 @@ class SkyLines(Flask):
         self.add_assets()
         self.add_toscawidgets()
         self.add_tg2_compat()
+        self.add_debugging_helpers()
 
         self.add_mapproxy()
 
@@ -104,6 +105,28 @@ class SkyLines(Flask):
         @self.context_processor
         def inject_helpers_lib():
             return dict(h=helpers)
+
+    def add_debugging_helpers(self):
+        from datetime import datetime
+        from flask.ext.sqlalchemy import get_debug_queries
+        from jinja2 import escape
+
+        @self.context_processor
+        def inject_debug_setting():
+            def inject_formatted_attributes(query):
+                params = {k: u'<b title={} style="color:blue">{}</b>'
+                          .format(k, escape(repr(v)))
+                          for k, v in query.parameters.iteritems()}
+
+                query.statement_with_params = unicode(query.statement) % params
+                return query
+
+            if self.debug:
+                queries = map(inject_formatted_attributes, get_debug_queries())
+            else:
+                queries = None
+
+            return dict(debug=self.debug, queries=queries)
 
     def register_views(self):
         import skylines.views
