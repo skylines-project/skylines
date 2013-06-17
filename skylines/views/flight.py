@@ -201,7 +201,7 @@ def format_phase(phase):
              glide_rate="")
 
     if not is_circling:
-        r['distance'] = units.format_distance(phase.distance)
+        r['distance'] = units.format_distance(phase.distance, 1)
 
         # Sensible glide rate values are formatted as numbers. Others are shown
         # as infinity symbol.
