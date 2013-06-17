@@ -7,7 +7,7 @@ from .numbers import format_decimal
 
 Unit = namedtuple('Unit', ['name', 'factor', 'format', 'decimal_places'])
 
-distance_units = (
+DISTANCE_UNITS = (
     Unit(u'm', 1, u'{0:.{1}f} m', 0),
     Unit(u'km', 1 / 1000., u'{0:.{1}f} km', 0),
     Unit(u'NM', 1 / 1852., u'{0:.{1}f} NM', 0),
@@ -16,7 +16,7 @@ distance_units = (
 
 DEFAULT_DISTANCE_UNIT = 1
 
-speed_units = (
+SPEED_UNITS = (
     Unit(u'm/s', 1, u'{0:.{1}f} m/s', 1),
     Unit(u'km/h', 3.6, u'{0:.{1}f} km/h', 1),
     Unit(u'kt', 1.94384449, u'{0:.{1}f} kt', 1),
@@ -25,7 +25,7 @@ speed_units = (
 
 DEFAULT_SPEED_UNIT = 1
 
-lift_units = (
+LIFT_UNITS = (
     Unit(u'm/s', 1, u'{0:.{1}f} m/s', 1),
     Unit(u'kt', 1.94384449, u'{0:.{1}f} kt', 1),
     Unit(u'ft/min', 1 * 196.850394, u'{0:.{1}f} ft/min', 0),
@@ -33,14 +33,14 @@ lift_units = (
 
 DEFAULT_LIFT_UNIT = 0
 
-altitude_units = (
+ALTITUDE_UNITS = (
     Unit(u'm', 1, u'{0:.{1}f} m', 0),
     Unit(u'ft', 1, u'{0:.{1}f} ft', 0)
 )
 
 DEFAULT_ALTITUDE_UNIT = 0
 
-unit_presets = (
+UNIT_PRESETS = (
     (l_("Custom"), {}),
 
     (l_("European (metric)"),
@@ -90,14 +90,14 @@ def get_setting_name(name):
     if setting is None:
         return None
 
-    if name == 'distance_unit' and distance_units[setting]:
-        return distance_units[setting].name
-    elif name == 'speed_unit' and speed_units[setting]:
-        return speed_units[setting].name
-    elif name == 'lift_unit' and lift_units[setting]:
-        return lift_units[setting].name
-    elif name == 'altitude_unit' and altitude_units[setting]:
-        return altitude_units[setting].name
+    if name == 'distance_unit' and DISTANCE_UNITS[setting]:
+        return DISTANCE_UNITS[setting].name
+    elif name == 'speed_unit' and SPEED_UNITS[setting]:
+        return SPEED_UNITS[setting].name
+    elif name == 'lift_unit' and LIFT_UNITS[setting]:
+        return LIFT_UNITS[setting].name
+    elif name == 'altitude_unit' and ALTITUDE_UNITS[setting]:
+        return ALTITUDE_UNITS[setting].name
 
     return None
 
@@ -123,7 +123,7 @@ def format_distance(value, ndigits=None):
     """Formats a distance value [m] to a user-readable string."""
     if value is None: return None
 
-    return _format(distance_units, 'distance_unit', DEFAULT_DISTANCE_UNIT,
+    return _format(DISTANCE_UNITS, 'distance_unit', DEFAULT_DISTANCE_UNIT,
                    value, ndigits)
 
 
@@ -131,7 +131,7 @@ def format_speed(value, ndigits=None):
     """Formats a speed value [m/s] to a user-readable string."""
     if value is None: return None
 
-    return _format(speed_units, 'speed_unit', DEFAULT_SPEED_UNIT,
+    return _format(SPEED_UNITS, 'speed_unit', DEFAULT_SPEED_UNIT,
                    value, ndigits)
 
 
@@ -139,7 +139,7 @@ def format_lift(value, ndigits=None):
     """Formats vertical speed value [m/s/] to a user-readable string"""
     if value is None: return None
 
-    return _format(lift_units, 'lift_unit', DEFAULT_LIFT_UNIT,
+    return _format(LIFT_UNITS, 'lift_unit', DEFAULT_LIFT_UNIT,
                    value, ndigits)
 
 
@@ -147,5 +147,5 @@ def format_altitude(value, ndigits=None):
     """Formats altitude value [m] to a user-readable string"""
     if value is None: return None
 
-    return _format(altitude_units, 'altitude_unit', DEFAULT_ALTITUDE_UNIT,
+    return _format(ALTITUDE_UNITS, 'altitude_unit', DEFAULT_ALTITUDE_UNIT,
                    value, ndigits)

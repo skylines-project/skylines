@@ -10,22 +10,22 @@ class SelectField(PropertySingleSelectField):
 
 
 class DistanceSelectField(SelectField):
-    unit_registry = units.distance_units
+    unit_registry = units.DISTANCE_UNITS
 
 
 class SpeedSelectField(SelectField):
-    unit_registry = units.speed_units
+    unit_registry = units.SPEED_UNITS
 
 
 class LiftSelectField(SelectField):
-    unit_registry = units.lift_units
+    unit_registry = units.LIFT_UNITS
 
 
 class AltitudeSelectField(SelectField):
-    unit_registry = units.altitude_units
+    unit_registry = units.ALTITUDE_UNITS
 
 
 class PresetSelectField(PropertySingleSelectField):
     def _my_update_params(self, d, nullable=False):
-        d['options'] = list(enumerate(x[0] for x in units.unit_presets))
+        d['options'] = list(enumerate(x[0] for x in units.UNIT_PRESETS))
         return d
