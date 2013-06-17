@@ -1,4 +1,4 @@
-from sqlalchemy.types import Boolean, Numeric, Integer, DateTime, Interval
+from sqlalchemy.types import Boolean, Float, Integer, DateTime, Interval
 
 from skylines import db
 
@@ -35,7 +35,7 @@ class FlightPhase(db.Model):
     duration = db.Column(Interval)
     fraction = db.Column(Integer)
     distance = db.Column(Integer)
-    speed = db.Column(Numeric)
-    vario = db.Column(Numeric)
-    glide_rate = db.Column(Numeric)
+    speed = db.Column(Float)
+    vario = db.Column(Float)
+    glide_rate = db.Column(Float)
     count = db.Column(Integer, nullable=False)
