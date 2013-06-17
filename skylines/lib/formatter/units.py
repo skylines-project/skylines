@@ -115,7 +115,7 @@ def _format(units, name, default, value, ndigits=None):
     factor = units[setting].factor
     format = units[setting].format
 
-    value = round(value * factor, ndigits)
+    value = round(float(value) * factor, ndigits)
     return format_decimal(value, format=format.format(0.0, ndigits))
 
 
