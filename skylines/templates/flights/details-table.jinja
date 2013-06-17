@@ -96,12 +96,12 @@
         <small><br/>
         {%- if flight.olc_classic_distance %}
         <span title="{% trans %}OLC Distance{% endtrans %}">
-          <span style="COLOR:#ff2c73">&#x294A;</span> {{ h.format_distance(flight.olc_classic_distance) }}{% if flight.olc_triangle_distance %},{% endif %}
+          <span style="COLOR:#ff2c73">&#x294A;</span> {{ h.format_distance(flight.olc_classic_distance, 1) }}{% if flight.olc_triangle_distance %},{% endif %}
         </span>
         {%- endif %}
         {%- if flight.olc_triangle_distance %}
         <span title="{% trans %}FAI Triangle Distance{% endtrans %}">
-          <span style="COLOR:#9f14ff">&#x25B2;</span> {{ h.format_distance(flight.olc_triangle_distance) }}
+          <span style="COLOR:#9f14ff">&#x25B2;</span> {{ h.format_distance(flight.olc_triangle_distance, 1) }}
         </span>
         {%- endif %}
         </small>
