@@ -302,14 +302,14 @@ class User(db.Model):
         that preset id. Otherwise return 0, that is interpreted as 'Custom'
         preset.
         """
-        for pref, preset in enumerate(units.unit_presets):
+        for pref, preset in enumerate(units.UNIT_PRESETS):
             p = preset[1]
             if not p:
                 continue
-            eq = [p['distance_unit'] == units.distance_units[self.distance_unit][0],
-                  p['speed_unit'] == units.speed_units[self.speed_unit][0],
-                  p['lift_unit'] == units.lift_units[self.lift_unit][0],
-                  p['altitude_unit'] == units.altitude_units[self.altitude_unit][0]
+            eq = [p['distance_unit'] == units.DISTANCE_UNITS[self.distance_unit][0],
+                  p['speed_unit'] == units.SPEED_UNITS[self.speed_unit][0],
+                  p['lift_unit'] == units.LIFT_UNITS[self.lift_unit][0],
+                  p['altitude_unit'] == units.ALTITUDE_UNITS[self.altitude_unit][0]
                   ]
             if all(eq):
                 return pref
@@ -320,15 +320,15 @@ class User(db.Model):
     def unit_preset(self, preset):
         """Set individual unit preferences according to given preset
         """
-        name, settings = units.unit_presets[preset]
+        name, settings = units.UNIT_PRESETS[preset]
         if settings:
-            self.distance_unit = units.unitid(units.distance_units,
+            self.distance_unit = units.unitid(units.DISTANCE_UNITS,
                                               settings['distance_unit'])
-            self.speed_unit = units.unitid(units.speed_units,
+            self.speed_unit = units.unitid(units.SPEED_UNITS,
                                            settings['speed_unit'])
-            self.lift_unit = units.unitid(units.lift_units,
+            self.lift_unit = units.unitid(units.LIFT_UNITS,
                                           settings['lift_unit'])
-            self.altitude_unit = units.unitid(units.altitude_units,
+            self.altitude_unit = units.unitid(units.ALTITUDE_UNITS,
                                               settings['altitude_unit'])
 
 
