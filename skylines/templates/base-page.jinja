@@ -42,7 +42,33 @@
         {% block footer -%}
         &copy; <a href="{{ url_for('about.skylines_team') }}">{{ _('The SkyLines Team') }}</a> -
         <a href="{{ url_for('about.imprint') }}">{% trans %}Imprint{% endtrans %}</a>
+        {%- if debug %}
+        {% with num_queries=queries|count -%}
+        - <a href="#debug" data-toggle="collapse" title="Show Queries"{% if num_queries > 15 %} style="background:red"{% endif %}>{{ num_queries }} Queries</a>
+        {%- endwith %}
+        {%- endif %}
         {%- endblock %}
     </p>
+
+    {%- if debug -%}
+    <div id="debug" class="collapse">
+        {% for query in queries -%}
+        <div class="query">
+            <b>Query #{{ loop.index }}</b>
+            <span class="badge {{ 'badge-success' if query.duration < 0.5 else 'badge-error'}}">{{ h.format_decimal(query.duration * 1000) }} ms</span>
+            <dl>
+                <dt>Statement</dt>
+                <dd>{{ query.statement_with_params }}</dd>
+
+                <dt>Parameters</dt>
+                <dd>{{ query.parameters }}</dd>
+
+                <dt>Context</dt>
+                <dd>{{ query.context }}</dd>
+            </dl>
+        </div>
+        {%- endfor %}
+    </div>
+    {%- endif %}
 </div>
 {%- endblock %}
