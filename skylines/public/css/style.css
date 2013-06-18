@@ -322,17 +322,16 @@ table.vmiddle td {
   margin-bottom: 10px;
 }
 
-#about .social-buttons {
-  text-align: right;
+#about .social-buttons .btn-group {
+  float: right;
 }
 
-#about .social-buttons a {
-  width: 10px;
-  margin: 0 3px;
+#about .social-buttons .btn {
+  width: 13px;
 }
 
 #about .banner {
-  margin: 15px -20px;
+  margin: 12px -20px;
 }
 
 #about h2 {
