@@ -60,6 +60,7 @@ class SkyLines(Flask):
 
     def add_web_components(self):
         self.add_logging_handlers()
+        self.add_debug_toolbar()
 
         self.add_cache()
         self.add_babel()
@@ -137,6 +138,10 @@ class SkyLines(Flask):
                 handler.setFormatter(file_formatter)
 
             self.logger.addHandler(handler)
+
+    def add_debug_toolbar(self):
+        from flask_debugtoolbar import DebugToolbarExtension
+        DebugToolbarExtension(self)
 
     def add_wdb(self):
         if self.config.get('WDB_ENABLED', False):
