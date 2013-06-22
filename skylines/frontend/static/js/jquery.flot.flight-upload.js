@@ -82,6 +82,13 @@ The plugin allso adds the following methods to the plot object:
         updateSelection(e);
 
         plot.getPlaceholder().trigger('plotselecting', [getSelection()]);
+      } else {
+        var selected_marker = getMarker(e);
+
+        if (selected_marker !== null) {
+          plot.getPlaceholder().css('cursor', 'col-resize');
+        } else
+          plot.getPlaceholder().css('cursor', 'auto');
       }
     }
 
