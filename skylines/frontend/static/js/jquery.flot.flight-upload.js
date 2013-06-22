@@ -217,48 +217,12 @@ The plugin allso adds the following methods to the plot object:
       }
     }
 
-    // function taken from markings support in Flot
-    function extractRange(ranges, coord) {
-      var axis, from, to, key, axes = plot.getAxes();
-
-      for (var k in axes) {
-        axis = axes[k];
-        if (axis.direction == coord) {
-          key = coord + axis.n + 'axis';
-          if (!ranges[key] && axis.n == 1)
-            key = coord + 'axis'; // support x1axis as xaxis
-          if (ranges[key]) {
-            from = ranges[key].from;
-            to = ranges[key].to;
-            break;
-          }
-        }
-      }
-
-      // backwards-compat stuff - to be removed in future
-      if (!ranges[key]) {
-        axis = coord == 'x' ? plot.getXAxes()[0] : plot.getYAxes()[0];
-        from = ranges[coord + '1'];
-        to = ranges[coord + '2'];
-      }
-
-      // auto-reverse as an added bonus
-      if (from != null && to != null && from > to) {
-        var tmp = from;
-        from = to;
-        to = tmp;
-      }
-
-      return { from: from, to: to, axis: axis };
-    }
-
     function setSelection(ranges, preventEvent) {
-      var axis, range, o = plot.getOptions();
+      var axis, o = plot.getOptions();
 
-      range = extractRange(ranges, 'x');
-
-      selection.first.x = range.axis.p2c(range.from);
-      selection.second.x = range.axis.p2c(range.to);
+      axis = plot.getXAxes()[0];
+      selection.first.x = axis.p2c(range.from);
+      selection.second.x = axis.p2c(range.to);
 
       selection.show = true;
       plot.triggerRedrawOverlay();
