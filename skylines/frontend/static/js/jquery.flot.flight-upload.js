@@ -301,12 +301,20 @@ The plugin allso adds the following methods to the plot object:
         var w_left = Math.min(selection.first.x, selection.second.x);
 
         ctx.fillRect(0, y, w_left, h);
-        ctx.strokeRect(0, y, w_left, h);
 
         var x_right = Math.max(selection.first.x, selection.second.x);
 
         ctx.fillRect(x_right, y, plot.width() - x_right, h);
-        ctx.strokeRect(x_right, y, plot.width() - x_right, h);
+
+        ctx.beginPath();
+        ctx.moveTo(w_left, 0);
+        ctx.lineTo(w_left, plot.height());
+        ctx.stroke();
+
+        ctx.beginPath();
+        ctx.moveTo(x_right, 0);
+        ctx.lineTo(x_right, plot.height());
+        ctx.stroke();
 
         ctx.restore();
       }
