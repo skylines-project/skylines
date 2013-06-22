@@ -1,9 +1,10 @@
 /**
  * An abstraction layer for the barogram view.
  * @param  {DOMElement} placeholder
+ * @param  {Object} options Optional options.
  * @constructor
  */
-function slBarogram(placeholder) {
+function slBarogram(placeholder, options) {
   var baro = {};
 
   // Private attributes
@@ -216,7 +217,7 @@ function slBarogram(placeholder) {
 
   // Initialization
 
-  setupFlot(placeholder);
+  setupFlot(placeholder, options || null);
   attachEventHandlers(placeholder);
 
   return baro;
@@ -226,9 +227,10 @@ function slBarogram(placeholder) {
   /**
    * Sets up the flot charts instance.
    * @param  {DOMElement} placeholder
+   * @param  {Object} options Additional options.
    */
-  function setupFlot(placeholder) {
-    flot = $.plot(placeholder, [], {
+  function setupFlot(placeholder, options) {
+    var opts = {
       grid: {
         borderWidth: 0,
         hoverable: true,
@@ -254,7 +256,11 @@ function slBarogram(placeholder) {
       crosshair: {
         mode: 'x'
       }
-    });
+    };
+
+    $.extend(opts, options);
+
+    flot = $.plot(placeholder, [], opts);
   }
 
   /**
