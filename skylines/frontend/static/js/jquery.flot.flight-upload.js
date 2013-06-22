@@ -1,17 +1,15 @@
 /*
-Flot plugin for selecting regions.
+Flot plugin for selecting times in a flight
 
 The plugin defines the following options:
 
   selection: {
-    mode: null or "x" or "y" or "xy",
+    mode: null or "x",
     color: color
   }
 
-Selection support is enabled by setting the mode to one of "x", "y" or
-"xy". In "x" mode, the user will only be able to specify the x range,
-similarly for "y" mode. For "xy", the selection becomes a rectangle
-where both ranges can be specified. "color" is color of the selection
+Selection support is enabled by setting the mode to "x". The user will
+only be able to specify the x range. "color" is color of the selection
 (if you need to change the color later on, you can get to it with
 plot.getOptions().selection.color).
 
@@ -22,8 +20,7 @@ like this:
 
   placeholder.bind("plotselected", function(event, ranges) {
     alert("You selected " + ranges.xaxis.from + " to " + ranges.xaxis.to)
-    // similar for yaxis - with multiple axes, the extra ones are in
-    // x2axis, x3axis, ...
+    // with multiple axes, the extra ones are in x2axis, x3axis, ...
   });
 
 The "plotselected" event is only fired when the user has finished
@@ -38,13 +35,10 @@ The plugin allso adds the following methods to the plot object:
 
 - setSelection(ranges, preventEvent)
 
-  Set the selection rectangle. The passed in ranges is on the same
-  form as returned in the "plotselected" event. If the selection mode
-  is "x", you should put in either an xaxis range, if the mode is "y"
-  you need to put in an yaxis range and both xaxis and yaxis if the
-  selection mode is "xy", like this:
+  Set the selection range. The passed in ranges is on the same
+  form as returned in the "plotselected" event, like this:
 
-    setSelection({ xaxis: { from: 0, to: 10 }, yaxis: { from: 40, to: 60 } });
+    setSelection({ xaxis: { from: 0, to: 10 } });
 
   setSelection will trigger the "plotselected" event when called. If
   you don't want that to happen, e.g. if you're inside a
@@ -69,7 +63,7 @@ The plugin allso adds the following methods to the plot object:
 (function($) {
   function init(plot) {
     var selection = {
-      first: { x: -1, y: -1}, second: { x: -1, y: -1},
+      first: { x: -1}, second: { x: -1},
       show: false,
       active: false
     };
@@ -164,7 +158,7 @@ The plugin allso adds the following methods to the plot object:
 
       // backwards-compat stuff, to be removed in future
       if (r.xaxis && r.yaxis)
-        plot.getPlaceholder().trigger('selected', [{ x1: r.xaxis.from, y1: r.yaxis.from, x2: r.xaxis.to, y2: r.yaxis.to }]);
+        plot.getPlaceholder().trigger('selected', [{ x1: r.xaxis.from, x2: r.xaxis.to }]);
     }
 
     function clamp(min, value, max) {
@@ -176,13 +170,7 @@ The plugin allso adds the following methods to the plot object:
       var offset = plot.getPlaceholder().offset();
       var plotOffset = plot.getPlotOffset();
       pos.x = clamp(0, e.pageX - offset.left - plotOffset.left, plot.width());
-      pos.y = clamp(0, e.pageY - offset.top - plotOffset.top, plot.height());
 
-      if (o.selection.mode == 'y')
-        pos.x = pos == selection.first ? 0 : plot.width();
-
-      if (o.selection.mode == 'x')
-        pos.y = pos == selection.first ? 0 : plot.height();
     }
 
     function updateSelection(pos) {
@@ -245,27 +233,10 @@ The plugin allso adds the following methods to the plot object:
     function setSelection(ranges, preventEvent) {
       var axis, range, o = plot.getOptions();
 
-      if (o.selection.mode == 'y') {
-        selection.first.x = 0;
-        selection.second.x = plot.width();
-      }
-      else {
-        range = extractRange(ranges, 'x');
+      range = extractRange(ranges, 'x');
 
-        selection.first.x = range.axis.p2c(range.from);
-        selection.second.x = range.axis.p2c(range.to);
-      }
-
-      if (o.selection.mode == 'x') {
-        selection.first.y = 0;
-        selection.second.y = plot.height();
-      }
-      else {
-        range = extractRange(ranges, 'y');
-
-        selection.first.y = range.axis.p2c(range.from);
-        selection.second.y = range.axis.p2c(range.to);
-      }
+      selection.first.x = range.axis.p2c(range.from);
+      selection.second.x = range.axis.p2c(range.to);
 
       selection.show = true;
       plot.triggerRedrawOverlay();
@@ -275,8 +246,7 @@ The plugin allso adds the following methods to the plot object:
 
     function selectionIsSane() {
       var minSize = 5;
-      return Math.abs(selection.second.x - selection.first.x) >= minSize &&
-          Math.abs(selection.second.y - selection.first.y) >= minSize;
+      return Math.abs(selection.second.x - selection.first.x) >= minSize;
     }
 
     plot.clearSelection = clearSelection;
@@ -309,9 +279,9 @@ The plugin allso adds the following methods to the plot object:
         ctx.fillStyle = c.scale('a', 0.4).toString();
 
         var x = Math.min(selection.first.x, selection.second.x),
-                    y = Math.min(selection.first.y, selection.second.y),
+                    y = 0,
                     w = Math.abs(selection.second.x - selection.first.x),
-                    h = Math.abs(selection.second.y - selection.first.y);
+                    h = plot.height();
 
         ctx.fillRect(x, y, w, h);
         ctx.strokeRect(x, y, w, h);
@@ -334,11 +304,11 @@ The plugin allso adds the following methods to the plot object:
     init: init,
     options: {
       selection: {
-        mode: null, // one of null, "x", "y" or "xy"
+        mode: null, // one of null, "x"
         color: '#e8cfac'
       }
     },
-    name: 'selection',
-    version: '1.1'
+    name: 'flight-upload',
+    version: '0.9'
   });
 })(jQuery);
