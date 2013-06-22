@@ -278,13 +278,18 @@ The plugin allso adds the following methods to the plot object:
         ctx.lineJoin = 'round';
         ctx.fillStyle = c.scale('a', 0.4).toString();
 
-        var x = Math.min(selection.first.x, selection.second.x),
-                    y = 0,
-                    w = Math.abs(selection.second.x - selection.first.x),
-                    h = plot.height();
+        var y = 0,
+            h = plot.height();
 
-        ctx.fillRect(x, y, w, h);
-        ctx.strokeRect(x, y, w, h);
+        var w_left = Math.min(selection.first.x, selection.second.x);
+
+        ctx.fillRect(0, y, w_left, h);
+        ctx.strokeRect(0, y, w_left, h);
+
+        var x_right = Math.max(selection.first.x, selection.second.x);
+
+        ctx.fillRect(x_right, y, plot.width() - x_right, h);
+        ctx.strokeRect(x_right, y, plot.width() - x_right, h);
 
         ctx.restore();
       }
