@@ -126,20 +126,12 @@ The plugin allso adds the following methods to the plot object:
       selection.active = false;
       updateSelection(e);
 
-      if (selectionIsSane())
-        triggerSelectedEvent();
-      else {
-        // this counts as a clear
-        plot.getPlaceholder().trigger('plotunselected', []);
-        plot.getPlaceholder().trigger('plotselecting', [null]);
-      }
+      triggerSelectedEvent();
 
       return false;
     }
 
     function getSelection() {
-      if (!selectionIsSane())
-        return null;
 
       var r = {}, c1 = selection.first, c2 = selection.second;
       $.each(plot.getAxes(), function(name, axis) {
@@ -178,12 +170,8 @@ The plugin allso adds the following methods to the plot object:
         return;
 
       setSelectionPos(selection.second, pos);
-      if (selectionIsSane()) {
-        selection.show = true;
-        plot.triggerRedrawOverlay();
-      }
-      else
-        clearSelection(true);
+      selection.show = true;
+      plot.triggerRedrawOverlay();
     }
 
     function clearSelection(preventEvent) {
@@ -240,13 +228,8 @@ The plugin allso adds the following methods to the plot object:
 
       selection.show = true;
       plot.triggerRedrawOverlay();
-      if (!preventEvent && selectionIsSane())
+      if (!preventEvent)
         triggerSelectedEvent();
-    }
-
-    function selectionIsSane() {
-      var minSize = 5;
-      return Math.abs(selection.second.x - selection.first.x) >= minSize;
     }
 
     plot.clearSelection = clearSelection;
@@ -264,7 +247,7 @@ The plugin allso adds the following methods to the plot object:
 
     plot.hooks.drawOverlay.push(function(plot, ctx) {
       // draw selection
-      if (selection.show && selectionIsSane()) {
+      if (selection.show) {
         var plotOffset = plot.getPlotOffset();
         var o = plot.getOptions();
 
