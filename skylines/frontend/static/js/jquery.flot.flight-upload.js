@@ -305,7 +305,7 @@ The plugin allso adds the following methods to the plot object:
     options: {
       selection: {
         mode: null, // one of null, "x"
-        color: '#e8cfac'
+        color: '#777777'
       }
     },
     name: 'flight-upload',
