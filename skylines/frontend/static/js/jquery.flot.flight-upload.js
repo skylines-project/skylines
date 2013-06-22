@@ -200,10 +200,14 @@ The plugin allso adds the following methods to the plot object:
       if (pos.pageX == null)
         return;
 
-      if (selection.active == 'takeoff')
+      if (selection.active == 'takeoff') {
         selection.takeoff = setSelectionPos(pos);
-      else if (selection.active == 'landing')
+        selection.landing = Math.max(selection.takeoff, selection.landing);
+      } else if (selection.active == 'landing') {
         selection.landing = setSelectionPos(pos);
+        selection.takeoff = Math.min(selection.takeoff, selection.landing);
+      }
+
 
       selection.show = true;
       plot.triggerRedrawOverlay();
