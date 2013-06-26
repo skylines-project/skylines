@@ -128,8 +128,6 @@ msgid "American (imperial)"
 msgstr "Amerikaans (imperial)"
 
 #: skylines/templates/about.jinja:9
-#, fuzzy
-#| msgid "Welcome to SkyLines, the internet platform for sharing flights!"
 msgid "Welcome to SkyLines, your internet platform for flight sharing!"
 msgstr "Welkom bij SkyLines, het internet platform voor het delen van vluchten!"
 
@@ -518,7 +516,6 @@ msgid "Flights <small>on %(date)s</small>"
 msgstr "Vluchten <small>op %(date)s</small>"
 
 #: skylines/templates/flights/list.jinja:257
-#, fuzzy
 msgid "Upload flight"
 msgstr "Upload Vlucht"
 
@@ -902,13 +899,11 @@ msgstr "Vertraging"
 
 #: skylines/templates/tracking/view.jinja:143
 #: skylines/templates/users/view.jinja:117 skylines/views/user.py:159
-#, fuzzy, python-format
-#| msgid "%u minute"
-#| msgid_plural "%u minutes"
+#, python-format
 msgid "%(num)u minute"
 msgid_plural "%(num)u minutes"
-msgstr[0] "%u minuut"
-msgstr[1] "%u minuten"
+msgstr[0] "%(num)u minuut"
+msgstr[1] "%(num)u minuten"
 
 #: skylines/templates/tracking/view.jinja:146
 msgid "The live tracking delay is ignored because of your account privileges."
@@ -1132,10 +1127,9 @@ msgid "You have to be logged in to post comments!"
 msgstr "Je moet ingelogt zijn om comments te plaatsen!"
 
 #: skylines/views/login.py:44
-#, fuzzy, python-format
-#| msgid "You are now logged in. Welcome back, %s!"
+#, python-format
 msgid "You are now logged in. Welcome back, %(user)s!"
-msgstr "Je bent nu ingelogt. Welkom %s!"
+msgstr "Je bent nu ingelogt. Welkom %(user)s!"
 
 #: skylines/views/login.py:46
 msgid "Sorry, email address or password are wrong. Please try again or register."
