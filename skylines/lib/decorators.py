@@ -48,7 +48,7 @@ class login_required:
         def decorated_view(*args, **kwargs):
             if not current_user.is_authenticated():
                 if self.msg:
-                    flash(self.msg)
+                    flash(unicode(self.msg))
 
                 return redirect(url_for('login', next=request.url))
 
