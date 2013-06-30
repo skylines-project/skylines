@@ -27,10 +27,9 @@ if not to_envvar(args.config):
     parser.error('Config file "{}" not found.'.format(args.config))
 
 if not os.path.exists(args.dest):
-    print "Please create destination directory: " + args.dest
-    quit()
+    print "Creating destination directory: " + args.dest
+    os.makedirs(args.dest)
 
-dest_dir = args.dest
 
 from skylines import app, db
 from skylines.model import Airport, Flight, IGCFile
@@ -73,4 +72,4 @@ if args.date_to is not None:
 
 for flight in query:
     print "Flight: " + str(flight.id) + " " + flight.igc_file.filename
-    shutil.copy(os.path.join(app.config['SKYLINES_FILES_PATH'], flight.igc_file.filename), dest_dir)
+    shutil.copy(os.path.join(app.config['SKYLINES_FILES_PATH'], flight.igc_file.filename), args.dest)
