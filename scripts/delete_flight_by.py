@@ -52,8 +52,7 @@ if args.date_from is not None:
     try:
         date_from = strptime(args.date_from, "%Y-%m-%d")
     except:
-        print "Cannot parse from date."
-        quit()
+        parser.error("Cannot parse `from` date.")
 
     query = query.filter(Flight.takeoff_time >= datetime.fromtimestamp(mktime(date_from)))
 
@@ -61,8 +60,7 @@ if args.date_to is not None:
     try:
         date_to = strptime(args.date_to, "%Y-%m-%d")
     except:
-        print "Cannot parse to date."
-        quit()
+        parser.error("Cannot parse `to` date.")
 
     query = query.filter(Flight.takeoff_time <= datetime.fromtimestamp(mktime(date_to)))
 
