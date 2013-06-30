@@ -5,6 +5,7 @@ Flask-Assets==0.8
 Flask-Login==0.1.3
 Flask-Cache==0.12
 Flask-SQLAlchemy==0.16
+Flask-DebugToolbar==0.8.0
 Genshi==0.7
 sqlalchemy==0.8.0
 tw.forms==0.9.9
