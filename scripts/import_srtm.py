@@ -57,33 +57,12 @@ if os.path.exists(tiled_tif_filename):
     exit()
 
 
-# Check if original GeoTIFF file exists
+# Download TIF file
 tif_filename = basename + '.tif'
-zip_filename = basename + '.zip'
 
-if not os.path.exists(tif_filename):
-
-    # Check if ZIP file already exists and download if necessary
-    if not os.path.exists(zip_filename):
-        print 'Downloading {} ...'.format(zip_filename)
-        url = SERVER_URL + zip_filename
-        subprocess.check_call(['wget', '-N', url])
-
-    # Unzip elevation data
-    print 'Extracting {} ...'.format(zip_filename)
-    zip = ZipFile(zip_filename)
-    zip.extract(tif_filename)
-
-
-# Make GeoTIFF file tiled and compressed
-args = [
-    'gdal_translate',
-    '-co', 'COMPRESS=DEFLATE',  # Compress the file with DEFLATE
-    '-co', 'TILED=YES',  # Use a tiled GeoTIFF format
-    tif_filename,  # Input file
-    tiled_tif_filename,  # Output file
-]
-subprocess.check_call(args)
+print 'Downloading {} ...'.format(tif_filename)
+url = SERVER_URL + tif_filename
+subprocess.check_call(['wget', '-O', tiled_tif_filename, url])
 
 
 # Create SQL statements
@@ -105,13 +84,3 @@ for i, line in enumerate(raster2pgsql.stdout):
         print i
 
     db.session.execute(line)
-
-
-# Delete temporary files
-print "Cleaning up ..."
-
-if os.path.exists(zip_filename):
-    os.unlink(zip_filename)
-
-if os.path.exists(tif_filename):
-    os.unlink(tif_filename)
