@@ -7,6 +7,7 @@ should be updated.
 
 """
 
+from nose.tools import assert_in, assert_not_in
 from skylines.tests.functional import TestController
 
 
@@ -33,6 +34,7 @@ class TestAuthentication(TestController):
         # Requesting a protected area
         self.browser.open('/flights/upload/')
         assert self.browser.url.startswith('http://localhost/login')
+        assert_not_in('<i class="icon-signout"></i> Logout', self.browser.contents)
 
         # Getting the login form:
         form = self.browser.getForm(index=2)
@@ -43,8 +45,7 @@ class TestAuthentication(TestController):
         form.submit()
 
         # Being redirected to the initially requested page:
-        assert 'user_id=' in self.browser.cookies['session'], \
-            'Session cookie was not defined: %s' % self.browser.cookies.items()
+        assert_in('<i class="icon-signout"></i> Logout', self.browser.contents)
         assert self.browser.url.startswith('http://localhost/flights/upload/'), \
             self.browser.url
 
@@ -53,16 +54,16 @@ class TestAuthentication(TestController):
 
         # Going to the login form voluntarily:
         self.browser.open('/login')
-        form = self.browser.getForm(index=2)
+        assert_not_in('<i class="icon-signout"></i> Logout', self.browser.contents)
 
         # Submitting the login form:
+        form = self.browser.getForm(index=2)
         form.getControl(name='login').value = u'max+skylines@blarg.de'
         form.getControl(name='password').value = 'test'
         form.submit()
 
         # Being redirected to the home page:
-        assert 'user_id=' in self.browser.cookies['session'], \
-            'Session cookie was not defined: %s' % self.browser.cookies.items()
+        assert_in('<i class="icon-signout"></i> Logout', self.browser.contents)
 
     def test_logout(self):
         """Logouts must work correctly"""
@@ -73,15 +74,10 @@ class TestAuthentication(TestController):
                                   password='managepass'))
 
         # Check if the login succeeded
-        assert 'user_id=' in self.browser.cookies['session'], \
-            'Session cookie was not defined: %s' % self.browser.cookies.items()
+        assert_in('<i class="icon-signout"></i> Logout', self.browser.contents)
 
-        print self.browser.cookies
         # Logging out:
         self.browser.open('/logout')
-        print self.browser.cookies
 
         # Finally, redirected to the home page:
-        authtkt = self.browser.cookies.get('session')
-        assert 'user_id=' not in self.browser.cookies['session'], \
-            'Session cookie was not deleted: %s' % self.browser.cookies.items()
+        assert_not_in('<i class="icon-signout"></i> Logout', self.browser.contents)
