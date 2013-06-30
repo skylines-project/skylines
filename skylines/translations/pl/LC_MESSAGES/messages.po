@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: skylines\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2013-06-14 19:22+0200\n"
-"PO-Revision-Date: 2013-06-14 21:11+0000\n"
-"Last-Translator: Tobias Bieniek <Tobias.Bieniek@gmx.de>\n"
+"PO-Revision-Date: 2013-06-17 00:07+0000\n"
+"Last-Translator: Daniel Nowicki <Unknown>\n"
 "Language-Team: Polish <pl@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
 "|| n%100>=20) ? 1 : 2;\n"
-"X-Launchpad-Export-Date: 2013-06-15 10:00+0000\n"
-"X-Generator: Launchpad (build 16667)\n"
+"X-Launchpad-Export-Date: 2013-06-26 12:01+0000\n"
+"X-Generator: Launchpad (build 16681)\n"
 "Generated-By: Babel 0.9.6\n"
 
 #: skylines/forms/aircraft_model.py:23
@@ -67,7 +67,7 @@ msgstr "Klub"
 #: skylines/templates/users/view.jinja:95 skylines/views/user.py:179
 #: skylines/views/users.py:43
 msgid "Name"
-msgstr "Imię"
+msgstr "Nazwa"
 
 #: skylines/forms/club.py:61 skylines/templates/clubs/view.jinja:28
 msgid "Website"
@@ -133,11 +133,11 @@ msgstr "Amerykanskie (imperial)"
 
 #: skylines/templates/about.jinja:9
 msgid "Welcome to SkyLines, your internet platform for flight sharing!"
-msgstr ""
+msgstr "Witamy w SkyLines,"
 
 #: skylines/templates/about.jinja:23
 msgid "Flight Database"
-msgstr ""
+msgstr "Baza Lotów"
 
 #: skylines/templates/about.jinja:24
 #, python-format
@@ -161,7 +161,7 @@ msgstr ""
 
 #: skylines/templates/about.jinja:31
 msgid "Flight Analysis"
-msgstr ""
+msgstr "Analizy Lotów"
 
 #: skylines/templates/about.jinja:32
 msgid ""
@@ -171,7 +171,7 @@ msgstr ""
 
 #: skylines/templates/about.jinja:37
 msgid "Task Planning"
-msgstr ""
+msgstr "Planowanie zadań"
 
 #: skylines/templates/about.jinja:37 skylines/templates/about.jinja:41
 #: skylines/templates/about.jinja:45 skylines/templates/tracking/info.jinja:18
@@ -187,7 +187,7 @@ msgstr ""
 
 #: skylines/templates/about.jinja:41
 msgid "Competitions"
-msgstr ""
+msgstr "Zawody"
 
 #: skylines/templates/about.jinja:42
 msgid ""
@@ -197,7 +197,7 @@ msgstr ""
 
 #: skylines/templates/about.jinja:45
 msgid "Achievements"
-msgstr ""
+msgstr "Osiągnięcia"
 
 #: skylines/templates/about.jinja:46
 msgid ""
@@ -208,7 +208,7 @@ msgstr ""
 
 #: skylines/templates/about.jinja:51
 msgid "Social Network"
-msgstr ""
+msgstr "Portal społecznościowy"
 
 #: skylines/templates/about.jinja:52
 #, python-format
@@ -231,7 +231,7 @@ msgstr ""
 
 #: skylines/templates/about.jinja:59
 msgid "Open Source"
-msgstr ""
+msgstr "Wolne oprogramowanie"
 
 #: skylines/templates/about.jinja:60
 #, python-format
@@ -360,7 +360,7 @@ msgstr "Edytuj"
 
 #: skylines/templates/flights/after_change_pilot.jinja:3
 msgid "Pilot missing in the list?"
-msgstr "Brajuke Pilot w liscie?"
+msgstr "Brakuje pilota na liście?"
 
 #: skylines/templates/flights/after_change_pilot.jinja:4
 msgid "Create new pilot"
@@ -914,7 +914,7 @@ msgstr "Twoje ustawienia Live Tracking"
 
 #: skylines/templates/upload/result.jinja:4 skylines/views/upload.py:66
 msgid "Upload Flight"
-msgstr "Przekaz Plik"
+msgstr "Prześlij lot"
 
 #: skylines/templates/upload/result.jinja:10
 msgid ""
@@ -1138,7 +1138,7 @@ msgstr "Zostales wylogowany. Do zobaczenia!"
 #: skylines/views/upload.py:63 skylines/views/upload.py:71
 #: skylines/views/upload.py:159
 msgid "You have to login to upload flights."
-msgstr "Musisz być zalogowany, aby przekazać plik."
+msgstr "Musisz być zalogowany, aby przesłać lot."
 
 #: skylines/views/upload.py:100
 msgid "Duplicate file"
@@ -1198,7 +1198,7 @@ msgstr "Jednostka wzrostu"
 
 #: skylines/views/user.py:185
 msgid "Altitude Unit"
-msgstr "Jednostka wysokości"
+msgstr "Jednostka wysokości (n.p.m.)"
 
 #: skylines/views/user.py:186
 msgid "Eye Candy"
