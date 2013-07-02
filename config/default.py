@@ -61,7 +61,7 @@ SKYLINES_LISTS_SERVER_SIDE = 250
 # SKYLINES_MAP_TILE_URL is used instead
 #SKYLINES_MAPPROXY = os.path.join(base, 'mapserver', 'mapproxy', 'mapproxy.yaml')
 
-SKYLINES_MAP_TILE_URL = 'http://skylines.xcsoar.org'
+SKYLINES_MAP_TILE_URL = 'https://www.skylines-project.org'
 
 BROKER_URL = 'redis://localhost:6379/0'
 CELERY_RESULT_BACKEND = 'redis://localhost:6379/0'

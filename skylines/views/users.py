@@ -155,7 +155,7 @@ def recover_user_password(user):
 you have asked to recover your password (from IP %s).  To enter a new
 password, click on the following link:
 
- http://skylines.xcsoar.org/users/recover?key=%x
+ http://www.skylines-project.org/users/recover?key=%x
 
 The SkyLines Team
 """ % (unicode(user), request.remote_addr, key)

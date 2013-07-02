@@ -80,7 +80,7 @@ sources:
     supported_srs: ['EPSG:3857']
     req:
       layers: MWP
-      url: http://skylines.xcsoar.org/mapserver/?
+      url: http://www.skylines-project.org/mapserver/?
       transparent: true
     image:
       format: image/png
@@ -91,7 +91,7 @@ sources:
     supported_srs: ['EPSG:3857']
     req:
       layers: Airports,Airspace
-      url: http://skylines.xcsoar.org/mapserver/?
+      url: http://www.skylines-project.org/mapserver/?
       transparent: true
     image:
       format: image/png
