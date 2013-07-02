@@ -8,7 +8,16 @@ from skylines import db
 from skylines.lib.dbutil import get_requested_record
 from skylines.model import Event, Notification
 
-EventGroup = namedtuple('EventGroup', ['grouped', 'type', 'time', 'actor_id', 'link', 'events'])
+
+class EventGroup:
+    grouped = True
+
+    def __init__(self, events, link=None):
+        self.events = events
+        self.link = link
+
+    def __getattr__(self, name):
+        return getattr(self.events[0], name)
 
 
 notifications_blueprint = Blueprint('notifications', 'skylines')
@@ -49,10 +58,8 @@ def _group_events(_events):
             if isinstance(last_event, EventGroup):
                 last_event.events.append(event)
             else:
-                events[-1] = EventGroup(
-                    grouped=True, type=event.type, time=last_event.time,
-                    actor_id=event.actor_id, events=[last_event, event],
-                    link=url_for('.index', type=event.type, user=event.actor_id))
+                events[-1] = EventGroup([last_event, event], link=url_for(
+                    '.index', type=event.type, user=event.actor_id))
             continue
 
         events.append(event)
