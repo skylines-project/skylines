@@ -50,7 +50,7 @@ class TestRegistration(TestController):
         assert user.name == name
 
     def expect_error(self, response,
-                     email='expect_error@skylines.xcsoar.org',
+                     email='expect_error@skylines-project.org',
                      name='Functional Test',
                      password='lambda',
                      verify_password=None,
@@ -72,7 +72,7 @@ class TestRegistration(TestController):
         """User registration works properly"""
 
         name = u'Functional Test'
-        email = u'test_registration@skylines.xcsoar.org'
+        email = u'test_registration@skylines-project.org'
         self.register_user(email, name, password='lambda')
 
     def test_validation_errors(self):
@@ -99,7 +99,7 @@ class TestRegistration(TestController):
 
     def test_duplicates(self):
         """Duplicate mail addresses are rejected"""
-        email = 'test_duplicates@skylines.xcsoar.org'
+        email = 'test_duplicates@skylines-project.org'
         name = 'Duplicate Test'
 
         self.register_user(email, name, 'lambda')
