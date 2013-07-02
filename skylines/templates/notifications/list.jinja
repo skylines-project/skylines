@@ -1,4 +1,4 @@
-{% from "notifications/notifications-table.jinja" import render_notifications_table with context %}
+{% from "notifications/notifications-table.jinja" import render_events_table with context %}
 {% from "macros/datetime.jinja" import timeago_script with context %}
 
 {% extends "base-page.jinja" %}
@@ -15,8 +15,8 @@
 
 
 {% block content -%}
-{% if notifications|count != 0 -%}
-  {{ render_notifications_table(notifications) }}
+{% if events|count != 0 -%}
+  {{ render_events_table(events) }}
   <a href="{{ url_for('notifications.clear', **params) }}" class="btn"><i class="icon-eye-open"></i> {% trans %}Mark all as read{% endtrans %}</a>
 {%- else %}
   {% trans %}You don't have any unread notifications.{% endtrans %}

@@ -51,30 +51,28 @@ def index():
         event.notification_id = notification.id
         return event
 
-    events = map(get_event, query)
-
-    notifications = []
+    events = []
     pilot_flights = defaultdict(list)
-    for event in events:
+    for event in map(get_event, query):
         if (event.type == Event.Type.FLIGHT and 'type' not in request.args):
             pilot_flights[event.actor_id].append(event)
         else:
-            notifications.append(event)
+            events.append(event)
 
     for flights in pilot_flights.itervalues():
         first_event = flights[0]
 
         if len(flights) == 1:
-            notifications.append(first_event)
+            events.append(first_event)
         else:
-            notifications.append(EventGroup(
+            events.append(EventGroup(
                 grouped=True, type=first_event.type,
                 time=first_event.time, events=flights))
 
-    notifications.sort(key=attrgetter('time'), reverse=True)
+    events.sort(key=attrgetter('time'), reverse=True)
 
     return render_template('notifications/list.jinja',
-                           notifications=notifications,
+                           events=events,
                            params=request.args, types=Event.Type)
 
 
