@@ -8,7 +8,7 @@ from skylines import db
 from skylines.lib.dbutil import get_requested_record
 from skylines.model import Event, Notification
 
-EventGroup = namedtuple('EventGroup', ['grouped', 'type', 'time', 'events'])
+EventGroup = namedtuple('EventGroup', ['grouped', 'type', 'time', 'link', 'events'])
 
 
 notifications_blueprint = Blueprint('notifications', 'skylines')
@@ -47,8 +47,7 @@ def index():
 
     def get_event(notification):
         event = notification.event
-        event.notification = notification
-        event.notification_id = notification.id
+        event.link = url_for('.show', id=notification.id)
         return event
 
     events = []
@@ -67,7 +66,8 @@ def index():
         else:
             events.append(EventGroup(
                 grouped=True, type=first_event.type,
-                time=first_event.time, events=flights))
+                time=first_event.time, events=flights,
+                link=url_for('.index', type=first_event.type, sender=first_event.actor_id)))
 
     events.sort(key=attrgetter('time'), reverse=True)
 

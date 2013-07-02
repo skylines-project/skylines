@@ -26,7 +26,9 @@
     <small>({{ insert_timeago(event.time) }})</small>
   </td>
   <td class="show">
-    {{ render_notification_link(event) }}
+    {% if event.link -%}
+      {{ _render_show_button(event.link) }}
+    {%- endif %}
   </td>
 </tr>
 {%- endmacro %}
@@ -89,17 +91,6 @@
 {% trans pilot=event.actor|e -%}
 <strong>{{ pilot }}</strong> is following you now.
 {%- endtrans %}
-{%- endmacro %}
-
-
-{% macro render_notification_link(event) -%}
-{% if event.grouped -%}
-  {% if event.type == types.FLIGHT -%}
-    {{ _render_show_button(url_for('notifications.index', type=types.FLIGHT, sender=event.events[0].actor_id)) }}
-  {%- endif %}
-{%- else %}
-  {{ _render_show_button(url_for('notifications.show', id=event.notification_id)) }}
-{%- endif %}
 {%- endmacro %}
 
 
