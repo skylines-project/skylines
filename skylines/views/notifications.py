@@ -23,8 +23,8 @@ def inject_notification_count():
 def _filter_query(query, args):
     if 'type' in args:
         query = query.filter(Event.type == args['type'])
-    if 'sender' in args:
-        query = query.filter(Event.actor_id == args['sender'])
+    if 'user' in args:
+        query = query.filter(Event.actor_id == args['user'])
     if 'flight' in args:
         query = query.filter(Event.flight_id == args['flight'])
 
@@ -52,7 +52,7 @@ def _group_events(_events):
                 events[-1] = EventGroup(
                     grouped=True, type=event.type, time=last_event.time,
                     actor_id=event.actor_id, events=[last_event, event],
-                    link=url_for('.index', type=event.type, sender=event.actor_id))
+                    link=url_for('.index', type=event.type, user=event.actor_id))
             continue
 
         events.append(event)
