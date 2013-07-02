@@ -239,7 +239,7 @@
           <tr>
             <td><strong>{% trans %}Distance{% endtrans %}</strong></td>
             <td>
-              <span rel="tooltip" title="avg. {{ h.format_distance(last_year_statistics.average_distance) }} per flight">
+              <span rel="tooltip" title="{{ _('avg. %(distance)s per flight', distance=h.format_distance(last_year_statistics.average_distance)) }}">
                 {{ h.format_distance(last_year_statistics.distance) }}
               </span>
             </td>
@@ -247,8 +247,8 @@
           <tr>
             <td><strong>{% trans %}Flight Time{% endtrans %}</strong></td>
             <td>
-              <span rel="tooltip" title="avg. {{ h.format_timedelta(last_year_statistics.average_duration) }} Hours per flight">
-                {{ h.format_timedelta(last_year_statistics.duration) }} Hours
+              <span rel="tooltip" title="{{ _('avg. %(hours)s hours per flight', hours=h.format_timedelta(last_year_statistics.average_duration)) }}">
+                {{ _('%(hours)s Hours', hours=h.format_timedelta(last_year_statistics.duration)) }}
               </span>
             </td>
           </tr>
