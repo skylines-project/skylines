@@ -51,26 +51,29 @@ def index():
         event.link = url_for('.show', id=notification.id)
         return event
 
-    events = []
-    pilot_flights = defaultdict(list)
-    for event in imap(get_event, query):
-        if (event.type == Event.Type.FLIGHT and 'type' not in request.args):
-            pilot_flights[event.actor_id].append(event)
-        else:
-            events.append(event)
+    if 'type' in request.args:
+        events = map(get_event, query)
+    else:
+        events = []
+        pilot_flights = defaultdict(list)
+        for event in imap(get_event, query):
+            if (event.type == Event.Type.FLIGHT and 'type' not in request.args):
+                pilot_flights[event.actor_id].append(event)
+            else:
+                events.append(event)
 
-    for flights in pilot_flights.itervalues():
-        first_event = flights[0]
+        for flights in pilot_flights.itervalues():
+            first_event = flights[0]
 
-        if len(flights) == 1:
-            events.append(first_event)
-        else:
-            events.append(EventGroup(
-                grouped=True, type=first_event.type,
-                time=first_event.time, events=flights,
-                link=url_for('.index', type=first_event.type, sender=first_event.actor_id)))
+            if len(flights) == 1:
+                events.append(first_event)
+            else:
+                events.append(EventGroup(
+                    grouped=True, type=first_event.type,
+                    time=first_event.time, events=flights,
+                    link=url_for('.index', type=first_event.type, sender=first_event.actor_id)))
 
-    events.sort(key=attrgetter('time'), reverse=True)
+        events.sort(key=attrgetter('time'), reverse=True)
 
     return render_template('notifications/list.jinja',
                            events=events,
