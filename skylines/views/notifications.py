@@ -38,7 +38,6 @@ def index():
         .options(contains_eager('event')) \
         .options(joinedload('event.actor')) \
         .options(joinedload('event.flight')) \
-        .options(joinedload('event.flight_comment')) \
         .order_by(Event.time.desc())
 
     query = _filter_query(query, request.args)
