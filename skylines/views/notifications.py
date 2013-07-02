@@ -42,27 +42,31 @@ def index():
 
     query = _filter_query(query, request.args)
 
+    def get_event(notification):
+        event = notification.event
+        event.notification = notification
+        return event
+
+    events = map(get_event, query)
+
     notifications = []
     pilot_flights = defaultdict(list)
-    for notification in query:
-        event = notification.event
-
+    for event in events:
         if (event.type == Event.Type.FLIGHT and 'type' not in request.args):
-            pilot_flights[event.actor_id].append(notification)
+            pilot_flights[event.actor_id].append(event)
         else:
             notifications.append(dict(grouped=False,
-                                      id=notification.id,
+                                      id=event.notification.id,
                                       type=event.type,
                                       time=event.time,
                                       event=event))
 
     for flights in pilot_flights.itervalues():
-        first_notification = flights[0]
-        first_event = first_notification.event
+        first_event = flights[0]
 
         if len(flights) == 1:
             notifications.append(dict(grouped=False,
-                                      id=first_notification.id,
+                                      id=first_event.notification.id,
                                       type=first_event.type,
                                       time=first_event.time,
                                       event=first_event))
@@ -70,7 +74,7 @@ def index():
             notifications.append(dict(grouped=True,
                                       type=first_event.type,
                                       time=first_event.time,
-                                      events=[n.event for n in flights]))
+                                      events=flights))
 
     notifications.sort(key=itemgetter('time'), reverse=True)
 
