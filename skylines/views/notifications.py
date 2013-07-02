@@ -1,5 +1,4 @@
-from collections import defaultdict, namedtuple
-from operator import attrgetter
+from collections import namedtuple
 from itertools import imap
 
 from flask import Blueprint, render_template, abort, request, url_for, redirect, g
@@ -9,7 +8,7 @@ from skylines import db
 from skylines.lib.dbutil import get_requested_record
 from skylines.model import Event, Notification
 
-EventGroup = namedtuple('EventGroup', ['grouped', 'type', 'time', 'link', 'events'])
+EventGroup = namedtuple('EventGroup', ['grouped', 'type', 'time', 'actor_id', 'link', 'events'])
 
 
 notifications_blueprint = Blueprint('notifications', 'skylines')
@@ -34,25 +33,30 @@ def _filter_query(query, args):
 
 def _group_events(_events):
     events = []
-    pilot_flights = defaultdict(list)
     for event in _events:
-        if event.type == Event.Type.FLIGHT:
-            pilot_flights[event.actor_id].append(event)
-        else:
+        # add first event if list is empty
+        if not events:
             events.append(event)
+            continue
 
-    for flights in pilot_flights.itervalues():
-        first_event = flights[0]
+        # get last event from list for comparison
+        last_event = events[-1]
 
-        if len(flights) == 1:
-            events.append(first_event)
-        else:
-            events.append(EventGroup(
-                grouped=True, type=first_event.type,
-                time=first_event.time, events=flights,
-                link=url_for('.index', type=first_event.type, sender=first_event.actor_id)))
+        # if there are multiple flight events from the same actor -> group them
+        if (event.type == Event.Type.FLIGHT and
+                last_event.type == event.type and
+                last_event.actor_id == event.actor_id):
+            if isinstance(last_event, EventGroup):
+                last_event.events.append(event)
+            else:
+                events[-1] = EventGroup(
+                    grouped=True, type=event.type, time=last_event.time,
+                    actor_id=event.actor_id, events=[last_event, event],
+                    link=url_for('.index', type=event.type, sender=event.actor_id))
+            continue
 
-    events.sort(key=attrgetter('time'), reverse=True)
+        events.append(event)
+
     return events
 
 
