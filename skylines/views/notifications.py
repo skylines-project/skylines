@@ -32,6 +32,30 @@ def _filter_query(query, args):
     return query
 
 
+def _group_events(_events):
+    events = []
+    pilot_flights = defaultdict(list)
+    for event in _events:
+        if event.type == Event.Type.FLIGHT:
+            pilot_flights[event.actor_id].append(event)
+        else:
+            events.append(event)
+
+    for flights in pilot_flights.itervalues():
+        first_event = flights[0]
+
+        if len(flights) == 1:
+            events.append(first_event)
+        else:
+            events.append(EventGroup(
+                grouped=True, type=first_event.type,
+                time=first_event.time, events=flights,
+                link=url_for('.index', type=first_event.type, sender=first_event.actor_id)))
+
+    events.sort(key=attrgetter('time'), reverse=True)
+    return events
+
+
 @notifications_blueprint.route('/')
 def index():
     if not g.current_user:
@@ -54,26 +78,7 @@ def index():
     if 'type' in request.args:
         events = map(get_event, query)
     else:
-        events = []
-        pilot_flights = defaultdict(list)
-        for event in imap(get_event, query):
-            if (event.type == Event.Type.FLIGHT and 'type' not in request.args):
-                pilot_flights[event.actor_id].append(event)
-            else:
-                events.append(event)
-
-        for flights in pilot_flights.itervalues():
-            first_event = flights[0]
-
-            if len(flights) == 1:
-                events.append(first_event)
-            else:
-                events.append(EventGroup(
-                    grouped=True, type=first_event.type,
-                    time=first_event.time, events=flights,
-                    link=url_for('.index', type=first_event.type, sender=first_event.actor_id)))
-
-        events.sort(key=attrgetter('time'), reverse=True)
+        events = _group_events(imap(get_event, query))
 
     return render_template('notifications/list.jinja',
                            events=events,
