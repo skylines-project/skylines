@@ -1,5 +1,6 @@
 from collections import defaultdict, namedtuple
 from operator import attrgetter
+from itertools import imap
 
 from flask import Blueprint, render_template, abort, request, url_for, redirect, g
 from sqlalchemy.orm import joinedload, contains_eager
@@ -52,7 +53,7 @@ def index():
 
     events = []
     pilot_flights = defaultdict(list)
-    for event in map(get_event, query):
+    for event in imap(get_event, query):
         if (event.type == Event.Type.FLIGHT and 'type' not in request.args):
             pilot_flights[event.actor_id].append(event)
         else:
