@@ -45,6 +45,7 @@ def index():
     def get_event(notification):
         event = notification.event
         event.notification = notification
+        event.notification_id = notification.id
         return event
 
     events = map(get_event, query)
@@ -56,7 +57,7 @@ def index():
             pilot_flights[event.actor_id].append(event)
         else:
             notifications.append(dict(grouped=False,
-                                      id=event.notification.id,
+                                      notification_id=event.notification_id,
                                       type=event.type,
                                       time=event.time,
                                       event=event))
@@ -66,7 +67,7 @@ def index():
 
         if len(flights) == 1:
             notifications.append(dict(grouped=False,
-                                      id=first_event.notification.id,
+                                      notification_id=first_event.notification_id,
                                       type=first_event.type,
                                       time=first_event.time,
                                       event=first_event))
