@@ -1,5 +1,5 @@
-from collections import defaultdict
-from operator import itemgetter
+from collections import defaultdict, namedtuple
+from operator import attrgetter
 
 from flask import Blueprint, render_template, abort, request, url_for, redirect, g
 from sqlalchemy.orm import joinedload, contains_eager
@@ -7,6 +7,9 @@ from sqlalchemy.orm import joinedload, contains_eager
 from skylines import db
 from skylines.lib.dbutil import get_requested_record
 from skylines.model import Event, Notification
+
+EventGroup = namedtuple('EventGroup', ['grouped', 'type', 'time', 'events'])
+
 
 notifications_blueprint = Blueprint('notifications', 'skylines')
 
@@ -56,28 +59,19 @@ def index():
         if (event.type == Event.Type.FLIGHT and 'type' not in request.args):
             pilot_flights[event.actor_id].append(event)
         else:
-            notifications.append(dict(grouped=False,
-                                      notification_id=event.notification_id,
-                                      type=event.type,
-                                      time=event.time,
-                                      event=event))
+            notifications.append(event)
 
     for flights in pilot_flights.itervalues():
         first_event = flights[0]
 
         if len(flights) == 1:
-            notifications.append(dict(grouped=False,
-                                      notification_id=first_event.notification_id,
-                                      type=first_event.type,
-                                      time=first_event.time,
-                                      event=first_event))
+            notifications.append(first_event)
         else:
-            notifications.append(dict(grouped=True,
-                                      type=first_event.type,
-                                      time=first_event.time,
-                                      events=flights))
+            notifications.append(EventGroup(
+                grouped=True, type=first_event.type,
+                time=first_event.time, events=flights))
 
-    notifications.sort(key=itemgetter('time'), reverse=True)
+    notifications.sort(key=attrgetter('time'), reverse=True)
 
     return render_template('notifications/list.jinja',
                            notifications=notifications,

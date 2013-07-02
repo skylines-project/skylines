@@ -18,7 +18,7 @@
     {% if notification.grouped -%}
     {{ render_notification_icon(notification.events[0]) }}
     {%- else %}
-    {{ render_notification_icon(notification.event) }}
+    {{ render_notification_icon(notification) }}
     {%- endif %}
   </td>
   <td>
@@ -52,11 +52,11 @@
   {%- endif %}
 {%- else %}
   {% if notification.type == types.FLIGHT_COMMENT -%}
-    {{ render_flight_comment_notification_text(notification.event) }}
+    {{ render_flight_comment_notification_text(notification) }}
   {%- elif notification.type == types.FLIGHT %}
-    {{ render_flight_notification_text(notification.event) }}
+    {{ render_flight_notification_text(notification) }}
   {%- elif notification.type == types.FOLLOWER %}
-    {{ render_follower_notification_text(notification.event) }}
+    {{ render_follower_notification_text(notification) }}
   {%- else %}
     Error: Unknown notification
   {%- endif %}
