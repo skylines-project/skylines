@@ -1,6 +1,3 @@
-from collections import namedtuple
-from itertools import imap
-
 from flask import Blueprint, render_template, abort, request, url_for, redirect, g
 from sqlalchemy.orm import joinedload, contains_eager
 
@@ -89,19 +86,32 @@ def index():
 
     query = _filter_query(query, request.args)
 
+    page = request.args.get('page', type=int, default=0)
+    per_page = request.args.get('per_page', type=int, default=50)
+
+    query = query.limit(per_page)
+    query = query.offset(page * per_page)
+
     def get_event(notification):
         event = notification.event
         event.link = url_for('.show', id=notification.id)
         event.unread = (notification.time_read is None)
         return event
 
-    if 'type' in request.args:
-        events = map(get_event, query)
-    else:
-        events = _group_events(imap(get_event, query))
+    events = map(get_event, query)
+    events_count = len(events)
 
-    return render_template('notifications/list.jinja',
-                           events=events, types=Event.Type)
+    if 'type' not in request.args:
+        events = _group_events(events)
+
+    template_vars = dict(events=events, types=Event.Type)
+
+    if page > 0:
+        template_vars['prev_page'] = page - 1
+    if events_count == per_page:
+        template_vars['next_page'] = page + 1
+
+    return render_template('notifications/list.jinja', **template_vars)
 
 
 @notifications_blueprint.route('/clear')
@@ -116,7 +126,7 @@ def clear():
 
     db.session.commit()
 
-    return redirect(url_for('.index'))
+    return redirect(url_for('.index', **request.args))
 
 
 @notifications_blueprint.route('/<int:id>')
