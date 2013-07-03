@@ -80,7 +80,7 @@ def index():
     if not g.current_user:
         abort(401)
 
-    query = Notification.query_unread(g.current_user) \
+    query = Notification.query(recipient=g.current_user) \
         .join('event') \
         .options(contains_eager('event')) \
         .options(joinedload('event.actor')) \

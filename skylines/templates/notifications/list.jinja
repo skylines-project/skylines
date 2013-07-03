@@ -19,6 +19,6 @@
   {{ render_events_table(events) }}
   <a href="{{ url_for('notifications.clear', **params) }}" class="btn"><i class="icon-eye-open"></i> {% trans %}Mark all as read{% endtrans %}</a>
 {%- else %}
-  {% trans %}You don't have any unread notifications.{% endtrans %}
+  {% trans %}There are no more notifications.{% endtrans %}
 {%- endif %}
 {%- endblock %}
