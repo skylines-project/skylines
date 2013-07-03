@@ -101,8 +101,7 @@ def index():
         events = _group_events(imap(get_event, query))
 
     return render_template('notifications/list.jinja',
-                           events=events,
-                           params=request.args, types=Event.Type)
+                           events=events, types=Event.Type)
 
 
 @notifications_blueprint.route('/clear')
