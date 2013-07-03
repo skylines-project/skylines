@@ -14,7 +14,7 @@
 
 {% macro render_event_row(event) -%}
 <tr>
-  <td>
+  <td class="icon">
     {% if event.grouped -%}
     {{ render_event_icon(event.events[0]) }}
     {%- else %}
