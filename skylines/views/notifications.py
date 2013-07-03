@@ -16,6 +16,14 @@ class EventGroup:
         self.events = events
         self.link = link
 
+    @property
+    def unread(self):
+        for event in self.events:
+            if hasattr(event, 'unread') and event.unread:
+                return True
+
+        return False
+
     def __getattr__(self, name):
         return getattr(self.events[0], name)
 
@@ -84,6 +92,7 @@ def index():
     def get_event(notification):
         event = notification.event
         event.link = url_for('.show', id=notification.id)
+        event.unread = (notification.time_read is None)
         return event
 
     if 'type' in request.args:

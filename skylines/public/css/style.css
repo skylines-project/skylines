@@ -369,3 +369,7 @@ table.vmiddle td {
   text-align: center;
   font-size: 140%;
 }
+
+#notifications-table .badge {
+  margin-right: 10px;
+}
