@@ -16,33 +16,36 @@
 
 {% block content -%}
 {% if events|count != 0 -%}
+  {{ pager() }}
   {{ render_events_table(events) }}
-
-  <div class="row">
-    <div class="span4">
-      {% if prev_page is number -%}
-        <a href="{{ url_for('.index', **(request.args|add_to_dict(page=prev_page))) }}" class="btn"> &larr; {% trans %}Newer{% endtrans %}</a>
-      {%- else -%}
-        &nbsp;
-      {%- endif %}
-    </div>
-
-    <div class="span4" style="text-align:center">
-      <a href="{{ url_for('.clear', **request.args) }}" class="btn"><i class="icon-eye-open"></i> {% trans %}Mark all as read{% endtrans %}</a>
-    </div>
-
-    <div class="span4" style="text-align:right">
-      {% if next_page is number -%}
-        <a href="{{ url_for('.index', **(request.args|add_to_dict(page=next_page))) }}" class="btn">{% trans %}Older{% endtrans %} &rarr;</a>
-      {%- else -%}
-        &nbsp;
-      {%- endif %}
-    </div>
-  </div>
-
+  {{ pager() }}
 {%- else -%}
 
   {% trans %}There are no more notifications.{% endtrans %}
 
 {%- endif %}
 {%- endblock %}
+
+{% macro pager() -%}
+<div class="row">
+  <div class="span4">
+    {% if prev_page is number -%}
+      <a href="{{ url_for('.index', **(request.args|add_to_dict(page=prev_page))) }}" class="btn"> &larr; {% trans %}Newer{% endtrans %}</a>
+    {%- else -%}
+      &nbsp;
+    {%- endif %}
+  </div>
+
+  <div class="span4" style="text-align:center">
+    <a href="{{ url_for('.clear', **request.args) }}" class="btn"><i class="icon-eye-open"></i> {% trans %}Mark all as read{% endtrans %}</a>
+  </div>
+
+  <div class="span4" style="text-align:right">
+    {% if next_page is number -%}
+      <a href="{{ url_for('.index', **(request.args|add_to_dict(page=next_page))) }}" class="btn">{% trans %}Older{% endtrans %} &rarr;</a>
+    {%- else -%}
+      &nbsp;
+    {%- endif %}
+  </div>
+</div>
+{%- endmacro %}
