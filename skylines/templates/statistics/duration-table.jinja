@@ -12,7 +12,7 @@
       <td class="span2">{{ year.year|int }}</td>
       <td class="span2">
         <span rel="tooltip" title="{{ _('avg. %(hours)s hours per flight', hours=h.format_timedelta(year.average_duration)) }}">
-          {{ h.format_timedelta(year.duration) }} Hours
+          {{ _('%(hours)s Hours', hours=h.format_timedelta(year.duration)) }}
         </span>
       </td>
       <td class="span8">
@@ -25,7 +25,7 @@
     {% if sum_duration -%}
     <tr>
       <td><strong>{% trans %}Total{% endtrans %}</strong></td>
-      <td colspan="2"><strong>{{ h.format_timedelta(sum_duration) }} Hours</strong></td>
+      <td colspan="2"><strong>{{ _('%(hours)s Hours', hours=h.format_timedelta(sum_duration)) }}</strong></td>
     </tr>
     {%- endif %}
   </tbody>
