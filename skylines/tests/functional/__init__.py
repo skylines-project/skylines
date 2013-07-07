@@ -3,7 +3,7 @@
 
 from zope.testbrowser.wsgi import Browser
 
-from skylines.tests import setup_app, teardown_db, clean_db
+from skylines.tests import setup_app, teardown_db, clean_db_and_bootstrap
 from skylines import app, model
 
 __all__ = ['TestController']
@@ -29,6 +29,6 @@ class TestController(object):
 
     def setUp(self):
         """Method called by nose before running each test"""
-        clean_db()
+        clean_db_and_bootstrap()
 
         self.browser = Browser('http://localhost/', wsgi_app=app.wsgi_app)
