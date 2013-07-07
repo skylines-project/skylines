@@ -258,20 +258,17 @@ class TrackingServerTest(TestCase):
         """ Tracking server handles SQLAlchemyError gracefully """
 
         # Mock the transaction commit to fail
-        original = db.session.commit
-        db.session.commit = Mock(side_effect=SQLAlchemyError())
+        commitmock = Mock(side_effect=SQLAlchemyError())
+        with patch.object(db.session, 'commit', commitmock):
+            # Create fake fix message
+            message = self.create_fix_message(123456, 0)
 
-        # Create fake fix message
-        message = self.create_fix_message(123456, 0)
-
-        # Send fake ping message
-        self.server.datagramReceived(message, self.HOST_PORT)
+            # Send fake ping message
+            self.server.datagramReceived(message, self.HOST_PORT)
 
         # Check if the message was properly received
         eq_(TrackingFix.query().count(), 0)
-        ok_(db.session.commit.called)
-
-        db.session.commit = original
+        ok_(commitmock.called)
 
 if __name__ == "__main__":
     import sys
