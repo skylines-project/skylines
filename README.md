@@ -58,16 +58,15 @@ also be discussed in the
 
 Patches should be submitted using the
 [Pull Request](https://github.com/skylines-project/skylines/pulls) system of
-GitHub because of the integration with the
-[TravisCI](https://travis-ci.org/skylines-project/skylines) system. You can
-also send patches via mail to any of the [current maintainers](AUTHORS.md)
-though.
+GitHub because of the integration with
+[TravisCI](https://travis-ci.org/skylines-project/skylines). You can also send
+patches via mail to any of the [current maintainers](AUTHORS.md) though.
 
 Here are a few guidelines for creating patches:
 
 - patches should be self-contained
-- patches should be self-documenting (add a good description on what
-  is changed, and why you are changing it)
+- patches should be self-documenting
+  (add a good description on what is changed, and why you are changing it)
 - write one patch for one change
 
 ## License
