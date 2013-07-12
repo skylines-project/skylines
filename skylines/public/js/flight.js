@@ -283,7 +283,7 @@ function addFlight(sfid, _lonlat, _levels, _num_levels, _time, _height, _enl,
     if (e < -500)
       e = null;
 
-    elev_t.push(time[i]);
+    elev_t.push(_elev_t[i]);
     elev_h.push(e);
     flot_elev.push([timestamp, e ? slUnits.convertAltitude(e) : null]);
   }
