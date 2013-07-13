@@ -18,9 +18,6 @@ class SkyLines(Flask):
         if 'SKYLINES_CONFIG' in os.environ:
             self.config.from_pyfile(os.environ['SKYLINES_CONFIG'])
 
-        # Configure Jinja2 template engine
-        self.jinja_options['extensions'].append('jinja2.ext.do')
-
         self.add_wdb()
         self.add_sqlalchemy()
         self.add_celery()
@@ -62,6 +59,7 @@ class SkyLines(Flask):
         self.add_logging_handlers()
         self.add_debug_toolbar()
 
+        self.configure_jinja()
         self.add_cache()
         self.add_babel()
         self.add_login_manager()
@@ -105,6 +103,14 @@ class SkyLines(Flask):
         @self.context_processor
         def inject_helpers_lib():
             return dict(h=helpers)
+
+    def configure_jinja(self):
+        # Configure Jinja2 template engine
+        self.jinja_options['extensions'].append('jinja2.ext.do')
+
+        @self.template_filter('add_to_dict')
+        def add_to_dict(d, **kw):
+            return dict(d, **kw)
 
     def register_views(self):
         import skylines.views

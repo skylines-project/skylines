@@ -363,3 +363,17 @@ table.vmiddle td {
 .icon-small {
   font-size: 85%;
 }
+
+#notifications-table {
+  margin: 18px 0;
+}
+
+#notifications-table td.icon {
+  width: 30px;
+  text-align: center;
+  font-size: 140%;
+}
+
+#notifications-table .badge {
+  margin-right: 10px;
+}
