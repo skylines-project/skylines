@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  skylines\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2013-06-14 19:22+0200\n"
+"POT-Creation-Date: 2013-07-13 20:34+0200\n"
 "PO-Revision-Date: 2012-11-11 14:28+0000\n"
 "Last-Translator: Masahiro Mori <Unknown>\n"
 "Language-Team: Japanese <ja@li.org>\n"
@@ -87,7 +87,7 @@ msgstr "IGCまたはZIPファイル"
 #: skylines/templates/search/list.jinja:43
 #: skylines/templates/search/list.jinja:53
 #: skylines/templates/tracking/list.jinja:23
-#: skylines/templates/tracking/view.jinja:127 skylines/views/flight.py:369
+#: skylines/templates/tracking/view.jinja:127 skylines/views/flight.py:376
 msgid "Pilot"
 msgstr "パイロット"
 
@@ -105,23 +105,23 @@ msgid ""
 " database."
 msgstr ""
 
-#: skylines/lib/formatter/units.py:32
+#: skylines/lib/formatter/units.py:44
 msgid "Custom"
 msgstr ""
 
-#: skylines/lib/formatter/units.py:34
+#: skylines/lib/formatter/units.py:46
 msgid "European (metric)"
 msgstr ""
 
-#: skylines/lib/formatter/units.py:41
+#: skylines/lib/formatter/units.py:53
 msgid "British (imperial, distance in km)"
 msgstr ""
 
-#: skylines/lib/formatter/units.py:48
+#: skylines/lib/formatter/units.py:60
 msgid "Australian (metric, imperial height)"
 msgstr ""
 
-#: skylines/lib/formatter/units.py:55
+#: skylines/lib/formatter/units.py:67
 msgid "American (imperial)"
 msgstr ""
 
@@ -129,11 +129,11 @@ msgstr ""
 msgid "Welcome to SkyLines, your internet platform for flight sharing!"
 msgstr ""
 
-#: skylines/templates/about.jinja:23
+#: skylines/templates/about.jinja:25
 msgid "Flight Database"
 msgstr ""
 
-#: skylines/templates/about.jinja:24
+#: skylines/templates/about.jinja:26
 #, python-format
 msgid ""
 "<a href=\"%(url)s\">Upload</a> your IGC files and share them with your "
@@ -141,72 +141,71 @@ msgid ""
 " again!"
 msgstr ""
 
-#: skylines/templates/about.jinja:27 skylines/templates/tracking/info.jinja:4
+#: skylines/templates/about.jinja:29 skylines/templates/tracking/info.jinja:4
 #: skylines/templates/tracking/list.jinja:9
 msgid "Live Tracking"
 msgstr ""
 
-#: skylines/templates/about.jinja:28
+#: skylines/templates/about.jinja:30
 #, python-format
 msgid ""
 "Use your mobile phone to send position updates to SkyLines. Find out how "
 "it works <a href=\"%(url)s\">here</a>."
 msgstr ""
 
-#: skylines/templates/about.jinja:31
+#: skylines/templates/about.jinja:33
 msgid "Flight Analysis"
 msgstr ""
 
-#: skylines/templates/about.jinja:32
+#: skylines/templates/about.jinja:34
 msgid ""
 "Use our analysis tools to have a closer look at your flights and how you "
 "might be able to improve them in the future."
 msgstr ""
 
-#: skylines/templates/about.jinja:37
+#: skylines/templates/about.jinja:39
 msgid "Task Planning"
 msgstr ""
 
-#: skylines/templates/about.jinja:37 skylines/templates/about.jinja:41
-#: skylines/templates/about.jinja:45 skylines/templates/tracking/info.jinja:18
+#: skylines/templates/about.jinja:39 skylines/templates/about.jinja:43
+#: skylines/templates/about.jinja:47 skylines/templates/tracking/info.jinja:18
 msgid "planned"
 msgstr ""
 
-#: skylines/templates/about.jinja:38
+#: skylines/templates/about.jinja:40
 #, python-format
 msgid ""
 "Use your browser to plan your tasks before the flight and upload them "
 "quickly to your flight computer. Integration of %(prosoar)s is planned."
 msgstr ""
 
-#: skylines/templates/about.jinja:41
+#: skylines/templates/about.jinja:43
 #, fuzzy
-#| msgid "Competition Number"
 msgid "Competitions"
 msgstr "コンテストナンバー"
 
-#: skylines/templates/about.jinja:42
+#: skylines/templates/about.jinja:44
 msgid ""
 "Create competitions to offer your spectators an even better live tracking"
 " experience by following all the participants on the same map."
 msgstr ""
 
-#: skylines/templates/about.jinja:45
+#: skylines/templates/about.jinja:47
 msgid "Achievements"
 msgstr ""
 
-#: skylines/templates/about.jinja:46
+#: skylines/templates/about.jinja:48
 msgid ""
 "Challenge yourself by trying to complete all the achievements that "
 "SkyLines offers. Fly large triangles, long final glides or just do your "
 "first outlanding."
 msgstr ""
 
-#: skylines/templates/about.jinja:51
+#: skylines/templates/about.jinja:53
 msgid "Social Network"
 msgstr ""
 
-#: skylines/templates/about.jinja:52
+#: skylines/templates/about.jinja:54
 #, python-format
 msgid ""
 "Skylines also has some social network aspects. You can comment on "
@@ -214,22 +213,22 @@ msgid ""
 "href=\"%(url)s\">notifications</a> if they do anything interesting."
 msgstr ""
 
-#: skylines/templates/about.jinja:55
+#: skylines/templates/about.jinja:57
 msgid "Open Data"
 msgstr ""
 
-#: skylines/templates/about.jinja:56
+#: skylines/templates/about.jinja:58
 #, python-format
 msgid ""
 "The SkyLines flight database is made available under the %(license)s. "
 "Skylines is using waypoint data from the %(welt2000)s project."
 msgstr ""
 
-#: skylines/templates/about.jinja:59
+#: skylines/templates/about.jinja:61
 msgid "Open Source"
 msgstr ""
 
-#: skylines/templates/about.jinja:60
+#: skylines/templates/about.jinja:62
 #, python-format
 msgid ""
 "Skylines is a <a href=\"%(team_url)s\">community</a> project and entirely"
@@ -652,36 +651,50 @@ msgstr "エラー!"
 msgid "Warning!"
 msgstr "警告!"
 
-#: skylines/templates/notifications/list.jinja:20
+#: skylines/templates/notifications/list.jinja:24
+#, fuzzy
+#| msgid "You don't have any unread notifications."
+msgid "There are no more notifications."
+msgstr "すべての通知が既読です。"
+
+#: skylines/templates/notifications/list.jinja:33
+msgid "Newer"
+msgstr ""
+
+#: skylines/templates/notifications/list.jinja:40
 msgid "Mark all as read"
 msgstr "全て既読にする"
 
-#: skylines/templates/notifications/list.jinja:22
-msgid "You don't have any unread notifications."
-msgstr "すべての通知が既読です。"
+#: skylines/templates/notifications/list.jinja:45
+msgid "Older"
+msgstr ""
 
-#: skylines/templates/notifications/notifications-table.jinja:68
+#: skylines/templates/notifications/notifications-table.jinja:25
+msgid "New"
+msgstr ""
+
+#: skylines/templates/notifications/notifications-table.jinja:71
 #, python-format
 msgid ""
 "<strong>%(pilot)s</strong> commented on your "
 "<strong>%(distance)s</strong> flight on the <strong>%(date)s</strong>."
 msgstr ""
 
-#: skylines/templates/notifications/notifications-table.jinja:75
+#: skylines/templates/notifications/notifications-table.jinja:78
 #, python-format
 msgid ""
 "<strong>%(pilot)s</strong> uploaded a new <strong>%(distance)s</strong> "
 "flight on the <strong>%(date)s</strong>."
 msgstr ""
 
-#: skylines/templates/notifications/notifications-table.jinja:82
+#: skylines/templates/notifications/notifications-table.jinja:85
 #, python-format
 msgid ""
 "<strong>%(pilot)s</strong> uploaded <strong>%(num_flights)s</strong> new "
 "flights."
 msgstr ""
 
-#: skylines/templates/notifications/notifications-table.jinja:89
+#: skylines/templates/notifications/notifications-table.jinja:92
 #, python-format
 msgid "<strong>%(pilot)s</strong> is following you now."
 msgstr ""
@@ -745,6 +758,7 @@ msgid "Year"
 msgstr "年"
 
 #: skylines/templates/statistics/distance-table.jinja:14
+#: skylines/templates/users/view.jinja:242
 #, python-format
 msgid "avg. %(distance)s per flight"
 msgstr ""
@@ -752,7 +766,7 @@ msgstr ""
 #: skylines/templates/statistics/distance-table.jinja:27
 #: skylines/templates/statistics/duration-table.jinja:27
 #: skylines/templates/statistics/flights-table.jinja:23
-#: skylines/views/flight.py:171
+#: skylines/views/flight.py:178
 msgid "Total"
 msgstr "合計"
 
@@ -763,8 +777,16 @@ msgid "Flight Time"
 msgstr "飛行時間"
 
 #: skylines/templates/statistics/duration-table.jinja:14
+#: skylines/templates/users/view.jinja:250
 #, python-format
 msgid "avg. %(hours)s hours per flight"
+msgstr ""
+
+#: skylines/templates/statistics/duration-table.jinja:15
+#: skylines/templates/statistics/duration-table.jinja:28
+#: skylines/templates/users/view.jinja:251
+#, python-format
+msgid "%(hours)s Hours"
 msgstr ""
 
 #: skylines/templates/statistics/years.jinja:14
@@ -881,8 +903,6 @@ msgstr "遅延"
 #: skylines/templates/tracking/view.jinja:143
 #: skylines/templates/users/view.jinja:117 skylines/views/user.py:159
 #, fuzzy, python-format
-#| msgid "%u minute"
-#| msgid_plural "%u minutes"
 msgid "%(num)u minute"
 msgid_plural "%(num)u minutes"
 msgstr[0] "%u分"
@@ -899,7 +919,7 @@ msgstr ""
 msgid "Your Live Tracking settings"
 msgstr ""
 
-#: skylines/templates/upload/result.jinja:4 skylines/views/upload.py:66
+#: skylines/templates/upload/result.jinja:4 skylines/views/upload.py:68
 msgid "Upload Flight"
 msgstr "フライトをアップロード"
 
@@ -922,15 +942,15 @@ msgstr ""
 msgid "Filename"
 msgstr "ファイル名"
 
-#: skylines/templates/upload/result.jinja:23 skylines/views/flight.py:412
+#: skylines/templates/upload/result.jinja:23 skylines/views/flight.py:419
 msgid "Aircraft Model"
 msgstr "機種"
 
-#: skylines/templates/upload/result.jinja:24 skylines/views/flight.py:413
+#: skylines/templates/upload/result.jinja:24 skylines/views/flight.py:420
 msgid "Aircraft Registration"
 msgstr "登録記号"
 
-#: skylines/templates/upload/result.jinja:25 skylines/views/flight.py:414
+#: skylines/templates/upload/result.jinja:25 skylines/views/flight.py:421
 msgid "Competition Number"
 msgstr "コンテストナンバー"
 
@@ -1056,57 +1076,56 @@ msgstr ""
 msgid "Edit Club"
 msgstr "クラブ名編集"
 
-#: skylines/views/flight.py:168
+#: skylines/views/flight.py:175
 msgid "Left"
 msgstr ""
 
-#: skylines/views/flight.py:169
+#: skylines/views/flight.py:176
 msgid "Mixed"
 msgstr ""
 
-#: skylines/views/flight.py:170
+#: skylines/views/flight.py:177
 msgid "Right"
 msgstr ""
 
-#: skylines/views/flight.py:174
+#: skylines/views/flight.py:181
 msgid "Powered"
 msgstr ""
 
-#: skylines/views/flight.py:175
+#: skylines/views/flight.py:182
 msgid "Circling"
 msgstr ""
 
-#: skylines/views/flight.py:176
+#: skylines/views/flight.py:183
 msgid "Cruise"
 msgstr ""
 
-#: skylines/views/flight.py:370
+#: skylines/views/flight.py:377
 msgid "Co-Pilot"
 msgstr "副操縦士"
 
-#: skylines/views/flight.py:382
+#: skylines/views/flight.py:389
 msgid "Select Pilot"
 msgstr "パイロット選択"
 
-#: skylines/views/flight.py:445
+#: skylines/views/flight.py:452
 msgid "Change Aircraft"
 msgstr "機体変更"
 
-#: skylines/views/flight.py:489
+#: skylines/views/flight.py:496
 msgid "Delete Flight"
 msgstr ""
 
-#: skylines/views/flight.py:490
+#: skylines/views/flight.py:497
 msgid "Are you sure you want to delete this flight?"
 msgstr ""
 
-#: skylines/views/flight.py:497
+#: skylines/views/flight.py:504
 msgid "You have to be logged in to post comments!"
 msgstr "コメントを投稿するためにはログインしてください。"
 
 #: skylines/views/login.py:44
 #, fuzzy, python-format
-#| msgid "You are now logged in. Welcome back, %s!"
 msgid "You are now logged in. Welcome back, %(user)s!"
 msgstr "ログインしました。%sさん、ようこそ！"
 
@@ -1118,34 +1137,34 @@ msgstr "Eメールアドレスまたはパスワードが間違っています�
 msgid "You are now logged out. We hope to see you back soon!"
 msgstr "ログアウトしました。また来てね！"
 
-#: skylines/views/upload.py:63 skylines/views/upload.py:71
-#: skylines/views/upload.py:159
+#: skylines/views/upload.py:65 skylines/views/upload.py:73
+#: skylines/views/upload.py:168
 msgid "You have to login to upload flights."
 msgstr "アップロードするためには、ログインすることが必要です。"
 
-#: skylines/views/upload.py:100
+#: skylines/views/upload.py:102
 msgid "Duplicate file"
 msgstr "ファイルを複製"
 
-#: skylines/views/upload.py:111
+#: skylines/views/upload.py:113
 msgid "Date missing in IGC file"
 msgstr ""
 
-#: skylines/views/upload.py:130
+#: skylines/views/upload.py:132
 msgid "Failed to parse file"
 msgstr "ファイルを解析できませんでした。"
 
-#: skylines/views/upload.py:135 skylines/views/upload.py:140
+#: skylines/views/upload.py:137 skylines/views/upload.py:142
 msgid "No flight found in file"
 msgstr "選択したファイルにフライトが見つかりません。"
 
-#: skylines/views/upload.py:169
+#: skylines/views/upload.py:178
 msgid ""
 "Sorry, some error happened when updating your flight(s). Please contact a"
 " administrator for help."
 msgstr "アップロード中にエラーが発生しました。管理者に連絡してください。"
 
-#: skylines/views/upload.py:207
+#: skylines/views/upload.py:216
 msgid "Your flight(s) have been successfully updated."
 msgstr "フライトのアップロードに成功にしました。"
 
@@ -1199,70 +1218,4 @@ msgstr ""
 #: skylines/views/users.py:212
 msgid "Password changed."
 msgstr "パスワードを変更しました。"
-
-#~ msgid "Error {code}"
-#~ msgstr ""
-
-#~ msgid "About"
-#~ msgstr ""
-
-#~ msgid "Welcome to SkyLines, the internet platform for sharing flights!"
-#~ msgstr ""
-
-#~ msgid "The major goals of the Skylines project are:"
-#~ msgstr ""
-
-#~ msgid "To provide a free platform for sharing and analysing flights"
-#~ msgstr ""
-
-#~ msgid "Skylines is based on free software"
-#~ msgstr ""
-
-#~ msgid "The stored flights are available for everybody without any limitations."
-#~ msgstr ""
-
-#~ msgid ""
-#~ "Skylines is a non-commercial project,"
-#~ " there are no ads on the "
-#~ "webpage, its free of charge."
-#~ msgstr ""
-
-#~ msgid ""
-#~ "Skylines has <a href=\"%(url)s\">Live "
-#~ "Tracking</a>, let your friends participate "
-#~ "on your adventures."
-#~ msgstr ""
-
-#~ msgid ""
-#~ "Skylines has also some social network"
-#~ " aspects with comments, notifications, "
-#~ "friends and followers."
-#~ msgstr ""
-
-#~ msgid "Airport and Waypoint data is provided by the %(welt2000)s project."
-#~ msgstr ""
-
-#~ msgid "Current status"
-#~ msgstr ""
-
-#~ msgid "under development"
-#~ msgstr ""
-
-#~ msgid "SkyLines was brought to you by the %(xcsoar)s project."
-#~ msgstr ""
-
-#~ msgid "It is free software;"
-#~ msgstr ""
-
-#~ msgid "the source code is available here"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "If you think that something is "
-#~ "missing or you think that you have"
-#~ " found a bug please follow the "
-#~ "instructions <a href=\"%(url)s\" "
-#~ "target=\"_blank\">here</a> to write a feature"
-#~ " request or bug report."
-#~ msgstr ""
 
