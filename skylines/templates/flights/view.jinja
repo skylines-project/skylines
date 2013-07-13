@@ -170,6 +170,7 @@
           <span class="label label-info">{{ flight.comments|count }}</span>
           {%- endif %}
         </a></li>
+        <li><a href="#tab-stats" data-toggle="tab">{{ _('Statistics') }}</a></li>
       </ul>
       <div class="tab-content">
         <div class="tab-pane active" id="tab-overview">
@@ -181,13 +182,6 @@
             {%- endif %}
 
             <span id="pinned" rel="tooltip" title="{{ _('Activate this to show the flight on top of other flights on the map') }}"></span>
-          </p>
-          <p>
-            {%- if flight.has_phases %}
-            <a class='btn' data-toggle="collapse" data-target="#detailed-stats">
-                <i class='icon-info-sign icon-large'></i> {% trans %}Detailed statistics{% endtrans %}
-            </a>
-            {%- endif %}
           </p>
         </div>
 
@@ -224,6 +218,20 @@
             {%- endif %}
           </table>
         </div>
+
+        <div class="tab-pane" id="tab-stats">
+          <h3>{% trans %}Circling performance{% endtrans %}</h3>
+          {{ render_circling_performance(flight) }}
+
+          <h3>{% trans %}Cruise performance{% endtrans %}</h3>
+          {{ render_cruise_performance(flight) }}
+
+          {%- if flight.has_phases %}
+          <p><a class='btn' data-toggle="collapse" data-target="#detailed-stats">
+            <i class='icon-info-sign icon-large'></i> {% trans %}Detailed statistics{% endtrans %}
+          </a></p>
+          {%- endif %}
+        </div>
       </div>
     </div>
   </div>
@@ -241,18 +249,6 @@
 
 <div id="detailed-stats" class="collapse out">
   <hr />
-  <div class="row">
-    <div class="span5">
-      <h3>{% trans %}Circling performance{% endtrans %} <small>({% trans %}summary{% endtrans %})</small></h3>
-      {{ render_circling_performance(flight) }}
-    </div>
-
-    <div class="span7">
-      <h3>{% trans %}Cruise performance{% endtrans %} <small>({% trans %}summary{% endtrans %})</small></h3>
-      {{ render_cruise_performance(flight) }}
-    </div>
-  </div>
-
   <div class="row">
     <div class="span12">
       <h3>{% trans %}Phases{% endtrans %}</h3>
