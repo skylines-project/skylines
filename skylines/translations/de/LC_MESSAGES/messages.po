@@ -681,28 +681,24 @@ msgid "Warning!"
 msgstr "Achtung!"
 
 #: skylines/templates/notifications/list.jinja:24
-#, fuzzy
-#| msgid "You don't have any unread notifications."
 msgid "There are no more notifications."
-msgstr "Du hast keine ungelesenen Benachrichtigungen"
+msgstr "Es gibt keine weiteren Benachrichtigungen."
 
 #: skylines/templates/notifications/list.jinja:33
 msgid "Newer"
-msgstr ""
+msgstr "Neuer"
 
 #: skylines/templates/notifications/list.jinja:40
 msgid "Mark all as read"
 msgstr "Alle als gelesen markieren"
 
 #: skylines/templates/notifications/list.jinja:45
-#, fuzzy
-#| msgid "Gliders"
 msgid "Older"
-msgstr "Segelflugzeuge"
+msgstr "Älter"
 
 #: skylines/templates/notifications/notifications-table.jinja:25
 msgid "New"
-msgstr ""
+msgstr "Neu"
 
 #: skylines/templates/notifications/notifications-table.jinja:71
 #, python-format
@@ -822,8 +818,6 @@ msgstr "avg. %(hours)s Stunden pro Flug"
 #: skylines/templates/statistics/duration-table.jinja:15
 #: skylines/templates/statistics/duration-table.jinja:28
 #: skylines/templates/users/view.jinja:251
-#, fuzzy, python-format
-#| msgid "%(hours)s hours"
 msgid "%(hours)s Hours"
 msgstr "%(hours)s Stunden"
 
