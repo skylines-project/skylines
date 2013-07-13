@@ -905,11 +905,10 @@ msgstr "Fördröjning"
 
 #: skylines/templates/tracking/view.jinja:143
 #: skylines/templates/users/view.jinja:117 skylines/views/user.py:159
-#, fuzzy, python-format
 msgid "%(num)u minute"
 msgid_plural "%(num)u minutes"
-msgstr[0] "%u minut"
-msgstr[1] "%u minuter"
+msgstr[0] "%(num)u minut"
+msgstr[1] "%(num)u minuter"
 
 #: skylines/templates/tracking/view.jinja:146
 msgid "The live tracking delay is ignored because of your account privileges."
@@ -1131,9 +1130,8 @@ msgid "You have to be logged in to post comments!"
 msgstr "Du behöver vara inloggad för att posta kommentarer!"
 
 #: skylines/views/login.py:44
-#, fuzzy, python-format
 msgid "You are now logged in. Welcome back, %(user)s!"
-msgstr "Du är nu inloggad. Välkommen tillbaka, %s!"
+msgstr "Du är nu inloggad. Välkommen tillbaka, %(user)s!"
 
 #: skylines/views/login.py:46
 msgid "Sorry, email address or password are wrong. Please try again or register."

@@ -901,10 +901,9 @@ msgstr ""
 
 #: skylines/templates/tracking/view.jinja:143
 #: skylines/templates/users/view.jinja:117 skylines/views/user.py:159
-#, fuzzy, python-format
 msgid "%(num)u minute"
 msgid_plural "%(num)u minutes"
-msgstr[0] "%u 分鐘"
+msgstr[0] "%(num)u 分鐘"
 
 #: skylines/templates/tracking/view.jinja:146
 msgid "The live tracking delay is ignored because of your account privileges."

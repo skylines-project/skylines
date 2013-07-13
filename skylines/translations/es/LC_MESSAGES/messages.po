@@ -910,8 +910,8 @@ msgstr "Retrasar"
 #, fuzzy, python-format
 msgid "%(num)u minute"
 msgid_plural "%(num)u minutes"
-msgstr[0] "%u minuto"
-msgstr[1] "%u minutos"
+msgstr[0] "%(num)u minuto"
+msgstr[1] "%(num)u minutos"
 
 #: skylines/templates/tracking/view.jinja:146
 msgid "The live tracking delay is ignored because of your account privileges."
@@ -1135,9 +1135,8 @@ msgid "You have to be logged in to post comments!"
 msgstr "Tienes que estar logueado para escribir comentarios!"
 
 #: skylines/views/login.py:44
-#, fuzzy, python-format
 msgid "You are now logged in. Welcome back, %(user)s!"
-msgstr "Ahora está conectado, bienvenido, %s!"
+msgstr "Ahora está conectado, bienvenido, %(user)s!"
 
 #: skylines/views/login.py:46
 msgid "Sorry, email address or password are wrong. Please try again or register."

@@ -926,12 +926,11 @@ msgstr "Prodleva"
 
 #: skylines/templates/tracking/view.jinja:143
 #: skylines/templates/users/view.jinja:117 skylines/views/user.py:159
-#, fuzzy, python-format
 msgid "%(num)u minute"
 msgid_plural "%(num)u minutes"
-msgstr[0] "%u minuta"
-msgstr[1] "%u minut"
-msgstr[2] "%u minut"
+msgstr[0] "%(num)u minuta"
+msgstr[1] "%(num)u minut"
+msgstr[2] "%(num)u minut"
 
 #: skylines/templates/tracking/view.jinja:146
 msgid "The live tracking delay is ignored because of your account privileges."
@@ -1153,9 +1152,8 @@ msgid "You have to be logged in to post comments!"
 msgstr "Pro vložení komentáře musíte být přihlášen(a)!"
 
 #: skylines/views/login.py:44
-#, fuzzy, python-format
 msgid "You are now logged in. Welcome back, %(user)s!"
-msgstr "Jste přihlášen(a). Wítejte zpátky, %s!"
+msgstr "Jste přihlášen(a). Wítejte zpátky, %(user)s!"
 
 #: skylines/views/login.py:46
 msgid "Sorry, email address or password are wrong. Please try again or register."

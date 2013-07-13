@@ -906,12 +906,11 @@ msgstr "Oneskorenie"
 
 #: skylines/templates/tracking/view.jinja:143
 #: skylines/templates/users/view.jinja:117 skylines/views/user.py:159
-#, fuzzy, python-format
 msgid "%(num)u minute"
 msgid_plural "%(num)u minutes"
-msgstr[0] "%u minút"
-msgstr[1] "%u minúta"
-msgstr[2] "%u minúty"
+msgstr[0] "%(num)u minút"
+msgstr[1] "%(num)u minúta"
+msgstr[2] "%(num)u minúty"
 
 #: skylines/templates/tracking/view.jinja:146
 msgid "The live tracking delay is ignored because of your account privileges."
@@ -1133,9 +1132,8 @@ msgid "You have to be logged in to post comments!"
 msgstr "Musíte byť prihlásený, aby ste mohli písať komentáre!"
 
 #: skylines/views/login.py:44
-#, fuzzy, python-format
 msgid "You are now logged in. Welcome back, %(user)s!"
-msgstr "Teraz ste prihlásený. Vitajte späť, %s!"
+msgstr "Teraz ste prihlásený. Vitajte späť, %(user)s!"
 
 #: skylines/views/login.py:46
 msgid "Sorry, email address or password are wrong. Please try again or register."
