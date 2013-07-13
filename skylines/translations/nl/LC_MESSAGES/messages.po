@@ -748,9 +748,8 @@ msgid "No pilots found."
 msgstr ""
 
 #: skylines/templates/search/list.jinja:8
-#, fuzzy, python-format
 msgid "Search <small>for \"%(search_text)s\"</small>"
-msgstr "Vluchten <small>op %(date)s</small>"
+msgstr ""
 
 #: skylines/templates/search/list.jinja:29
 msgid "There were no results for your search... Sorry!"
