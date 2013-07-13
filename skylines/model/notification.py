@@ -83,12 +83,12 @@ class Notification(db.Model):
     ##############################
 
     @classmethod
-    def query_unread(cls, user):
-        return cls.query(recipient=user, time_read=None)
+    def query_unread(cls, recipient):
+        return cls.query(recipient=recipient, time_read=None)
 
     @classmethod
-    def count_unread(cls, user):
-        return cls.query_unread(user).count()
+    def count_unread(cls, recipient):
+        return cls.query_unread(recipient).count()
 
     ##############################
 
@@ -96,8 +96,8 @@ class Notification(db.Model):
         self.time_read = datetime.utcnow()
 
     @classmethod
-    def mark_all_read(cls, user, filter_func=None):
-        query = cls.query(recipient=user) \
+    def mark_all_read(cls, recipient, filter_func=None):
+        query = cls.query(recipient=recipient) \
             .outerjoin(Event) \
             .filter(Event.id == Notification.event_id)
 
