@@ -1,13 +1,8 @@
 import os
 import sys
 import glob
-import re
-import polib
+from babel.messages.pofile import read_po
 import nose
-from collections import Counter
-
-re_python_new = re.compile(r'\{(\w*)\}')
-re_python_old = re.compile(r'%(?:\((\w+)\))?(\w+)')
 
 
 def get_language_code(filename):
@@ -25,37 +20,12 @@ def test_pofiles():
 
 
 def check_pofile(filename):
-    po = polib.pofile(filename)
-    for entry in po.translated_entries():
-        if not entry.obsolete and not entry.msgstr == '':
-            check_placeholders(filename, entry.msgid, entry.msgstr)
+    with open(filename) as fileobj:
+        catalog = read_po(fileobj)
+        for error in catalog.check():
+            print 'Error in message: ' + str(error[0])
+            raise error[1][0]
 
-
-def check_placeholders(filename, msgid, msgstr):
-    check_python(filename, msgid, msgstr, re_python_new)
-    check_python(filename, msgid, msgstr, re_python_old)
-
-
-def check_python(filename, msgid, msgstr, re):
-    matches_orig = re.findall(msgid)
-    if len(matches_orig) == 0:
-        return
-
-    matches_trans = re.findall(msgstr)
-
-    counter_orig = Counter()
-    for match in matches_orig:
-        counter_orig[match] += 1
-
-    counter_trans = Counter()
-    for match in matches_trans:
-        counter_trans[match] += 1
-
-    assert counter_trans == counter_orig, \
-        (u'Python string format placeholders are not matching up!\n\n'
-         'File: {}\n\n'
-         'Original: {}\n'
-         'Translation: {}'.format(filename, msgid, msgstr))
 
 if __name__ == "__main__":
     sys.argv.append(__name__)
