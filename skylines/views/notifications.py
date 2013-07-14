@@ -2,7 +2,7 @@ from flask import Blueprint, render_template, abort, request, url_for, redirect,
 from sqlalchemy.orm import joinedload, contains_eager
 
 from skylines import db
-from skylines.lib.dbutil import get_requested_record
+from skylines.lib.util import str_to_bool
 from skylines.model import Event, Notification
 
 
@@ -101,7 +101,7 @@ def index():
     events = map(get_event, query)
     events_count = len(events)
 
-    if 'type' not in request.args:
+    if request.args.get('grouped', True, type=str_to_bool):
         events = _group_events(events)
 
     template_vars = dict(events=events, types=Event.Type)
