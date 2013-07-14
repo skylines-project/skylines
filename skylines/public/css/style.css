@@ -377,3 +377,17 @@ table.vmiddle td {
 #notifications-table .badge {
   margin-right: 10px;
 }
+
+small .badge {
+  vertical-align: middle;
+  font-size: 7px;
+  padding: 2px 5px 2px;
+  -webkit-border-radius: 5px;
+     -moz-border-radius: 5px;
+          border-radius: 5px;
+}
+
+small .badge-empty {
+  font-size: 5px;
+  padding: 1px 5px 2px;
+}

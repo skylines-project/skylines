@@ -30,7 +30,7 @@
       <br/>
       {% for event in event.events -%}
         <br/>
-        <small>{{ render_event_text(event) }}</small>
+        <small>{% if event.unread %}<span class="badge badge-warning badge-empty"></span>{% endif %} {{ render_event_text(event) }}</small>
       {%- endfor %}
     {%- endif %}
   </td>
