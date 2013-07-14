@@ -33,7 +33,7 @@ class IGCFile(db.Model):
     date_utc = db.Column(Date, nullable=False)
 
     def __repr__(self):
-        return ('<IGCFile: id=%d filename=\'%s\'>' % (self.id, self.filename)).encode('utf-8')
+        return ('<IGCFile: id=%d filename=\'%s\'>' % (self.id, self.filename)).encode('unicode_escape')
 
     @classmethod
     def by_md5(cls, _md5):

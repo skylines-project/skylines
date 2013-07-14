@@ -22,7 +22,7 @@ class AircraftModel(db.Model):
         return self.name
 
     def __repr__(self):
-        return ('<AircraftModel: id=%d name=\'%s\'>' % (self.id, self.name)).encode('utf-8')
+        return ('<AircraftModel: id=%d name=\'%s\'>' % (self.id, self.name)).encode('unicode_escape')
 
     def is_writable(self, user):
         return user and user.is_manager()

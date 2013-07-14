@@ -23,6 +23,6 @@ class FlightComment(db.Model):
     user = db.relationship('User', lazy='joined')
 
     def __repr__(self):
-        return ('<FlightComment: id=%d user_id=%d flight_id=%d>' % (self.id, self.user_id, self.flight_id)).encode('utf-8')
+        return ('<FlightComment: id=%d user_id=%d flight_id=%d>' % (self.id, self.user_id, self.flight_id)).encode('unicode_escape')
 
     text = db.Column(Unicode, nullable=False)

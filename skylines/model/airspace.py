@@ -25,7 +25,7 @@ class Airspace(db.Model):
     country_code = db.Column(String(2), nullable=False)
 
     def __repr__(self):
-        return ('<Airspace: id=%d name=\'%s\'>' % (self.id, self.name)).encode('utf-8')
+        return ('<Airspace: id=%d name=\'%s\'>' % (self.id, self.name)).encode('unicode_escape')
 
     @classmethod
     def get_info(cls, location):

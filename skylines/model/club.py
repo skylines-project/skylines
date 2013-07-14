@@ -27,7 +27,7 @@ class Club(db.Model):
         return self.name
 
     def __repr__(self):
-        return ('<Club: id=%d name=\'%s\'>' % (self.id, self.name)).encode('utf-8')
+        return ('<Club: id=%d name=\'%s\'>' % (self.id, self.name)).encode('unicode_escape')
 
     def is_writable(self, user):
         return user and (self.id == user.club_id or user.is_manager())

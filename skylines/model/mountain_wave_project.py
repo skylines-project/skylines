@@ -36,7 +36,7 @@ class MountainWaveProject(db.Model):
     axis_length = db.Column(Float)
 
     def __repr__(self):
-        return ('<MountainWaveProject: id=%d name=\'%s\'>' % (self.id, self.name)).encode('utf-8')
+        return ('<MountainWaveProject: id=%d name=\'%s\'>' % (self.id, self.name)).encode('unicode_escape')
 
     @classmethod
     def get_info(cls, location):
