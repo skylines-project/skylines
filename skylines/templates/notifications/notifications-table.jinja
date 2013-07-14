@@ -79,7 +79,7 @@
 
 
 {% macro render_flight_comment_event_text(event) -%}
-{% if current_user and (event.flight.pilot_id == current_user.id or event.flight.co_pilot_id == current_user.id) -%}
+{% if g.current_user and (event.flight.pilot_id == current_user.id or event.flight.co_pilot_id == current_user.id) -%}
   {{ _('<strong>%(pilot)s</strong> commented on your <strong>%(distance)s</strong> flight on the <strong>%(date)s</strong>.',
        pilot=user_link(event.actor),
        distance=h.format_distance(event.flight.olc_classic_distance),
@@ -108,7 +108,7 @@
 
 
 {% macro render_follower_event_text(event) -%}
-{% if current_user and event.user_id == current_user.id -%}
+{% if g.current_user and event.user_id == current_user.id -%}
   {{ _('<strong>%(pilot)s</strong> is following you now.', pilot=user_link(event.actor)) }}
 {%- else -%}
   {{ _('<strong>%(pilot)s</strong> is following <strong>%(pilot2)s</strong> now.', pilot=user_link(event.actor), pilot2=user_link(event.user)) }}

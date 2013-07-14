@@ -2,7 +2,6 @@ import math
 from datetime import datetime
 
 from flask import Blueprint, request, render_template, redirect, url_for, abort, current_app, jsonify, g, flash
-from flask.ext.login import current_user
 from flask.ext.babel import lazy_gettext as l_, _
 
 from formencode.validators import String, Invalid
@@ -217,13 +216,13 @@ def format_phase(phase):
 
 
 def mark_flight_notifications_read(flight):
-    if not current_user:
+    if not g.current_user:
         return
 
     def add_flight_filter(query):
         return query.filter(Event.flight_id == flight.id)
 
-    Notification.mark_all_read(current_user, filter_func=add_flight_filter)
+    Notification.mark_all_read(g.current_user, filter_func=add_flight_filter)
     db.session.commit()
 
 

@@ -1,7 +1,6 @@
 from datetime import datetime
 
 from flask import Blueprint, request, render_template, redirect, url_for, abort, current_app, jsonify, g
-from flask.ext.login import current_user
 from babel.dates import format_date
 
 from sqlalchemy import func
@@ -23,13 +22,13 @@ flights_blueprint = Blueprint('flights', 'skylines')
 
 
 def mark_flight_notifications_read(pilot):
-    if not current_user:
+    if not g.current_user:
         return
 
     def add_flight_filter(query):
         return query.filter(Event.actor_id == pilot.id)
 
-    Notification.mark_all_read(current_user, filter_func=add_flight_filter)
+    Notification.mark_all_read(g.current_user, filter_func=add_flight_filter)
     db.session.commit()
 
 

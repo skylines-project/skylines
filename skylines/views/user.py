@@ -2,7 +2,7 @@ from datetime import date, timedelta
 
 from flask import Blueprint, request, render_template, redirect, url_for, abort, g, flash
 from flask.ext.babel import lazy_gettext as l_, _, ngettext
-from flask.ext.login import login_required, current_user
+from flask.ext.login import login_required
 
 from formencode import Schema, All
 from formencode.validators import FieldsMatch, Email, NotEmpty
@@ -100,13 +100,13 @@ def _get_takeoff_locations():
 
 
 def mark_user_notifications_read(user):
-    if not current_user:
+    if not g.current_user:
         return
 
     def add_user_filter(query):
         return query.filter(Event.actor_id == user.id)
 
-    Notification.mark_all_read(current_user, filter_func=add_user_filter)
+    Notification.mark_all_read(g.current_user, filter_func=add_user_filter)
     db.session.commit()
 
 
