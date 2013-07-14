@@ -3,7 +3,7 @@
 
 
 {% macro render_events_table(events) -%}
-<table id="notifications-table" class="table">
+<table class="table table-events">
   <tbody>
     {% for event in events -%}
     {{ render_event_row(event) }}

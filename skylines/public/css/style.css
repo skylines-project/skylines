@@ -364,26 +364,26 @@ table.vmiddle td {
   font-size: 85%;
 }
 
-#notifications-table {
+.table-events {
   margin: 18px 0;
 }
 
-#notifications-table td.icon {
+.table-events td.icon {
   width: 30px;
   text-align: center;
   font-size: 200%;
   padding-right: 0px;
 }
 
-#notifications-table .badge {
+.table-events .badge {
   margin-right: 10px;
 }
 
-#notifications-table p small {
+.table-events p small {
   color: inherit;
 }
 
-#notifications-table a {
+.table-events a {
   color: inherit;
 }
 
