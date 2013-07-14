@@ -35,9 +35,7 @@
     </p>
   </td>
   <td class="show">
-    {% if event.link -%}
-      {{ _render_show_button(event.link) }}
-    {%- endif %}
+    {{ _render_show_button(event_link(event)) }}
   </td>
 </tr>
 {%- endmacro %}
@@ -107,4 +105,21 @@
 
 {% macro _render_show_button(link) -%}
 <a href="{{ link }}" class="btn btn-mini">{{ _('Show') }}</a>
+{%- endmacro %}
+
+
+{% macro event_link(event) -%}
+{% if event.grouped -%}
+  {% if event.type == types.FLIGHT -%}
+    {{ url_for('flights.pilot', id=event.actor_id) }}
+  {%- endif %}
+{%- else %}
+  {% if event.type == types.FLIGHT_COMMENT -%}
+    {{ url_for('flight.index', flight_id=event.flight_id) }}
+  {%- elif event.type == types.FLIGHT %}
+    {{ url_for('flight.index', flight_id=event.flight_id) }}
+  {%- elif event.type == types.FOLLOWER %}
+    {{ url_for('user.index', user_id=event.user_id) }}
+  {%- endif %}
+{%- endif %}
 {%- endmacro %}

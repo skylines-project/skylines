@@ -11,7 +11,6 @@ class EventGroup:
 
     def __init__(self, subevents, link=None):
         self.subevents = subevents
-        self.link = link
 
     @property
     def unread(self):
@@ -66,8 +65,7 @@ def _group_events(_events):
             if isinstance(last_event, EventGroup):
                 last_event.subevents.append(event)
             else:
-                events[-1] = EventGroup([last_event, event], link=url_for(
-                    '.index', type=event.type, user=event.actor_id))
+                events[-1] = EventGroup([last_event, event])
             continue
 
         events.append(event)
@@ -97,7 +95,6 @@ def index():
 
     def get_event(notification):
         event = notification.event
-        event.link = url_for('.show', id=notification.id)
         event.unread = (notification.time_read is None)
         return event
 
@@ -130,27 +127,3 @@ def clear():
     db.session.commit()
 
     return redirect(url_for('.index', **request.args))
-
-
-@notifications_blueprint.route('/<int:id>')
-def show(id):
-    if not g.current_user:
-        abort(401)
-
-    notification = get_requested_record(Notification, id)
-    if g.current_user != notification.recipient:
-        abort(403)
-
-    notification.mark_read()
-    db.session.commit()
-
-    event = notification.event
-
-    if event.type == Event.Type.FLIGHT_COMMENT:
-        return redirect('/flights/{}/'.format(event.flight_id))
-    elif event.type == Event.Type.FLIGHT:
-        return redirect('/flights/{}/'.format(event.flight_id))
-    elif event.type == Event.Type.FOLLOWER:
-        return redirect('/users/{}/'.format(event.actor_id))
-    else:
-        abort(501)
