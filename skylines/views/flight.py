@@ -2,6 +2,7 @@ import math
 from datetime import datetime
 
 from flask import Blueprint, request, render_template, redirect, url_for, abort, current_app, jsonify, g, flash
+from flask.ext.login import current_user
 from flask.ext.babel import lazy_gettext as l_, _
 
 from formencode.validators import String, Invalid
@@ -25,7 +26,8 @@ from skylines.lib.geo import METERS_PER_DEGREE
 from skylines.lib.sql import extract_array_item
 from skylines.lib.decorators import validate
 from skylines.model import (
-    User, Flight, FlightPhase, Location, Elevation, FlightComment
+    User, Flight, FlightPhase, Location, Elevation, FlightComment,
+    Notification, Event
 )
 from skylines.model.notification import create_flight_comment_notifications
 from skylines.worker import tasks
@@ -214,6 +216,17 @@ def format_phase(phase):
     return r
 
 
+def mark_flight_notifications_read(flight):
+    if not current_user:
+        return
+
+    def add_flight_filter(query):
+        return query.filter(Event.flight_id == flight.id)
+
+    Notification.mark_all_read(current_user, filter_func=add_flight_filter)
+    db.session.commit()
+
+
 @flight_blueprint.route('/')
 def index():
     def add_flight_path(flight):
@@ -221,6 +234,8 @@ def index():
         return (flight, trace)
 
     other_flights = map(add_flight_path, g.other_flights)
+
+    mark_flight_notifications_read(g.flight)
 
     return render_template(
         'flights/view.jinja',
@@ -241,6 +256,8 @@ def map_():
         abort(404)
 
     other_flights = map(add_flight_path, g.other_flights)
+
+    mark_flight_notifications_read(g.flight)
 
     return render_template(
         'flights/map.jinja',
