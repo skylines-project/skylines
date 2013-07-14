@@ -32,7 +32,13 @@ class Event(db.Model):
 
     actor_id = db.Column(
         Integer, db.ForeignKey('tg_user.id', ondelete='CASCADE'), nullable=False)
-    actor = db.relationship('User', innerjoin=True)
+    actor = db.relationship('User', foreign_keys=[actor_id], innerjoin=True)
+
+    # A user is this event is about a user (e.g. actor following user)
+
+    user_id = db.Column(
+        Integer, db.ForeignKey('tg_user.id', ondelete='CASCADE'))
+    user = db.relationship('User', foreign_keys=[user_id])
 
     # A flight if this event is about a flight
 
