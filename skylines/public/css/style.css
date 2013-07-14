@@ -379,10 +379,6 @@ table.vmiddle td {
   margin-right: 10px;
 }
 
-.table-events p small {
-  color: inherit;
-}
-
 .table-events a {
   color: inherit;
 }
@@ -397,6 +393,7 @@ small .badge {
 }
 
 small .badge-empty {
+  vertical-align: 3px;
   font-size: 5px;
   padding: 1px 5px 2px;
 }
