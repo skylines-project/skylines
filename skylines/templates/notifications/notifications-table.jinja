@@ -1,8 +1,9 @@
 {% from "macros/datetime.jinja" import insert_timeago with context %}
+{% from "macros/links.jinja" import user_link %}
 
 
 {% macro render_events_table(events) -%}
-<table id="notifications-table" class="table table-striped">
+<table class="table table-events">
   <tbody>
     {% for event in events -%}
     {{ render_event_row(event) }}
@@ -15,21 +16,31 @@
 {% macro render_event_row(event) -%}
 <tr>
   <td class="icon">
-    {% if event.grouped -%}
-    {{ render_event_icon(event.events[0]) }}
-    {%- else %}
     {{ render_event_icon(event) }}
-    {%- endif %}
   </td>
   <td>
-    {% if event.unread %}<span class="badge badge-warning">{{ _('New') }}</span>{% endif %}
+    <p>
+      {% if event.unread %}<span class="badge badge-warning">{{ _('New') }}</span>{% endif %}
+      <small>{{ insert_timeago(event.time) }}</small>
+    </p>
+    <p>
     {{ render_event_text(event) }}
-    <small>({{ insert_timeago(event.time) }})</small>
+    </p>
+    <p>
+    {% if event.grouped -%}
+      {% for event in event.subevents -%}
+        <small>
+          {% if event.unread %}<span class="badge badge-warning badge-empty"></span>{% endif %}
+          {{ render_event_text(event) }}
+          <a href="{{ event_link(event) }}"><i class="icon-circle-arrow-right"></i></a>
+        </small>
+        <br/>
+      {%- endfor %}
+    {%- endif %}
+    </p>
   </td>
   <td class="show">
-    {% if event.link -%}
-      {{ _render_show_button(event.link) }}
-    {%- endif %}
+    {{ _render_show_button(event_link(event)) }}
   </td>
 </tr>
 {%- endmacro %}
@@ -49,7 +60,7 @@
 {% macro render_event_text(event) -%}
 {% if event.grouped -%}
   {% if event.type == types.FLIGHT -%}
-    {{ render_flight_events_text(event.events) }}
+    {{ render_grouped_flights_event_text(event) }}
   {%- else %}
     Error: Unknown event group
   {%- endif %}
@@ -68,33 +79,60 @@
 
 
 {% macro render_flight_comment_event_text(event) -%}
-{% trans pilot=event.actor|e, distance=h.format_distance(event.flight.olc_classic_distance), date=h.format_date(event.flight.date_local) -%}
-<strong>{{ pilot }}</strong> commented on your <strong>{{ distance }}</strong> flight on the <strong>{{ date }}</strong>.
-{%- endtrans %}
+{% if current_user and (event.flight.pilot_id == current_user.id or event.flight.co_pilot_id == current_user.id) -%}
+  {{ _('<strong>%(pilot)s</strong> commented on your <strong>%(distance)s</strong> flight on the <strong>%(date)s</strong>.',
+       pilot=user_link(event.actor),
+       distance=h.format_distance(event.flight.olc_classic_distance),
+       date=h.format_date(event.flight.date_local)) }}
+{%- else -%}
+  {{ _('<strong>%(pilot)s</strong> commented on a <strong>%(distance)s</strong> flight on the <strong>%(date)s</strong>.',
+       pilot=user_link(event.actor),
+       distance=h.format_distance(event.flight.olc_classic_distance),
+       date=h.format_date(event.flight.date_local)) }}
+{%- endif %}
 {%- endmacro %}
 
 
 {% macro render_flight_event_text(event) -%}
-{% trans pilot=event.actor|e, distance=h.format_distance(event.flight.olc_classic_distance), date=h.format_date(event.flight.date_local) -%}
+{% trans pilot=user_link(event.actor), distance=h.format_distance(event.flight.olc_classic_distance), date=h.format_date(event.flight.date_local) -%}
 <strong>{{ pilot }}</strong> uploaded a new <strong>{{ distance }}</strong> flight on the <strong>{{ date }}</strong>.
 {%- endtrans %}
 {%- endmacro %}
 
 
-{% macro render_flight_events_text(events) -%}
-{% trans pilot=events[0].actor|e, num_flights=events|count -%}
+{% macro render_grouped_flights_event_text(event) -%}
+{% trans pilot=user_link(event.actor), num_flights=event.subevents|count -%}
 <strong>{{ pilot }}</strong> uploaded <strong>{{ num_flights }}</strong> new flights.
 {%- endtrans %}
 {%- endmacro %}
 
 
 {% macro render_follower_event_text(event) -%}
-{% trans pilot=event.actor|e -%}
-<strong>{{ pilot }}</strong> is following you now.
-{%- endtrans %}
+{% if current_user and event.user_id == current_user.id -%}
+  {{ _('<strong>%(pilot)s</strong> is following you now.', pilot=user_link(event.actor)) }}
+{%- else -%}
+  {{ _('<strong>%(pilot)s</strong> is following <strong>%(pilot2)s</strong> now.', pilot=user_link(event.actor), pilot2=user_link(event.user)) }}
+{%- endif %}
 {%- endmacro %}
 
 
 {% macro _render_show_button(link) -%}
-<a href="{{ link }}" class="btn btn-mini">Show</a>
+<a href="{{ link }}" class="btn btn-mini">{{ _('Show') }}</a>
+{%- endmacro %}
+
+
+{% macro event_link(event) -%}
+{% if event.grouped -%}
+  {% if event.type == types.FLIGHT -%}
+    {{ url_for('flights.pilot', id=event.actor_id) }}
+  {%- endif %}
+{%- else %}
+  {% if event.type == types.FLIGHT_COMMENT -%}
+    {{ url_for('flight.index', flight_id=event.flight_id) }}
+  {%- elif event.type == types.FLIGHT %}
+    {{ url_for('flight.index', flight_id=event.flight_id) }}
+  {%- elif event.type == types.FOLLOWER %}
+    {{ url_for('user.index', user_id=event.user_id) }}
+  {%- endif %}
+{%- endif %}
 {%- endmacro %}

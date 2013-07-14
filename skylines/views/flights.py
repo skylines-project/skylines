@@ -1,6 +1,7 @@
 from datetime import datetime
 
 from flask import Blueprint, request, render_template, redirect, url_for, abort, current_app, jsonify, g
+from flask.ext.login import current_user
 from babel.dates import format_date
 
 from sqlalchemy import func
@@ -14,10 +15,22 @@ from skylines.lib.dbutil import get_requested_record
 from skylines.lib.helpers import truncate, country_name
 from skylines.model import (
     User, Club, Flight, IGCFile, AircraftModel,
-    Airport, FlightComment
+    Airport, FlightComment,
+    Notification, Event,
 )
 
 flights_blueprint = Blueprint('flights', 'skylines')
+
+
+def mark_flight_notifications_read(pilot):
+    if not current_user:
+        return
+
+    def add_flight_filter(query):
+        return query.filter(Event.actor_id == pilot.id)
+
+    Notification.mark_all_read(current_user, filter_func=add_flight_filter)
+    db.session.commit()
 
 
 def _create_list(tab, kw, date=None, pilot=None, club=None, airport=None,
@@ -190,6 +203,8 @@ def latest():
 def pilot(id):
     pilot = get_requested_record(User, id)
     pilot_alias = aliased(User, name='pilot')
+
+    mark_flight_notifications_read(pilot)
 
     columns = {
         0: (Flight, 'date_local'),
