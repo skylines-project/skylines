@@ -2,7 +2,7 @@ from datetime import date, timedelta
 
 from flask import Blueprint, request, render_template, redirect, url_for, abort, g, flash
 from flask.ext.babel import lazy_gettext as l_, _, ngettext
-from flask.ext.login import login_required
+from flask.ext.login import login_required, current_user
 
 from formencode import Schema, All
 from formencode.validators import FieldsMatch, Email, NotEmpty
@@ -20,7 +20,7 @@ from skylines.lib.validators import UniqueValueUnless
 from skylines.lib.dbutil import get_requested_record
 from skylines.lib.decorators import validate
 from skylines.model import (
-    User, Club, Flight, Follower, Location, IGCFile
+    User, Club, Flight, Follower, Location, IGCFile, Notification, Event
 )
 from skylines.model.notification import create_follower_notification
 from skylines.views.users import recover_user_password
@@ -99,8 +99,21 @@ def _get_takeoff_locations():
                                             filter=(Flight.pilot == g.user))
 
 
+def mark_user_notifications_read(user):
+    if not current_user:
+        return
+
+    def add_user_filter(query):
+        return query.filter(Event.actor_id == user.id)
+
+    Notification.mark_all_read(current_user, filter_func=add_user_filter)
+    db.session.commit()
+
+
 @user_blueprint.route('/')
 def index():
+    mark_user_notifications_read(g.user)
+
     return render_template(
         'users/view.jinja',
         active_page='settings', user=g.user,

@@ -364,16 +364,36 @@ table.vmiddle td {
   font-size: 85%;
 }
 
-#notifications-table {
+.table-events {
   margin: 18px 0;
 }
 
-#notifications-table td.icon {
+.table-events td.icon {
   width: 30px;
   text-align: center;
-  font-size: 140%;
+  font-size: 200%;
+  padding-right: 0px;
 }
 
-#notifications-table .badge {
+.table-events .badge {
   margin-right: 10px;
+}
+
+.table-events a {
+  color: inherit;
+}
+
+small .badge {
+  vertical-align: middle;
+  font-size: 7px;
+  padding: 2px 5px 2px;
+  -webkit-border-radius: 5px;
+     -moz-border-radius: 5px;
+          border-radius: 5px;
+}
+
+small .badge-empty {
+  vertical-align: 3px;
+  font-size: 5px;
+  padding: 1px 5px 2px;
 }

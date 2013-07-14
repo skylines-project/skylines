@@ -2,27 +2,26 @@ from flask import Blueprint, render_template, abort, request, url_for, redirect,
 from sqlalchemy.orm import joinedload, contains_eager
 
 from skylines import db
-from skylines.lib.dbutil import get_requested_record
+from skylines.lib.util import str_to_bool
 from skylines.model import Event, Notification
 
 
 class EventGroup:
     grouped = True
 
-    def __init__(self, events, link=None):
-        self.events = events
-        self.link = link
+    def __init__(self, subevents, link=None):
+        self.subevents = subevents
 
     @property
     def unread(self):
-        for event in self.events:
+        for event in self.subevents:
             if hasattr(event, 'unread') and event.unread:
                 return True
 
         return False
 
     def __getattr__(self, name):
-        return getattr(self.events[0], name)
+        return getattr(self.subevents[0], name)
 
 
 notifications_blueprint = Blueprint('notifications', 'skylines')
@@ -31,7 +30,10 @@ notifications_blueprint = Blueprint('notifications', 'skylines')
 @notifications_blueprint.before_app_request
 def inject_notification_count():
     if g.current_user:
-        g.notifications = Notification.count_unread(g.current_user)
+        def count_unread_notifications():
+            return Notification.count_unread(g.current_user)
+
+        g.count_unread_notifications = count_unread_notifications
 
 
 def _filter_query(query, args):
@@ -61,10 +63,9 @@ def _group_events(_events):
                 last_event.type == event.type and
                 last_event.actor_id == event.actor_id):
             if isinstance(last_event, EventGroup):
-                last_event.events.append(event)
+                last_event.subevents.append(event)
             else:
-                events[-1] = EventGroup([last_event, event], link=url_for(
-                    '.index', type=event.type, user=event.actor_id))
+                events[-1] = EventGroup([last_event, event])
             continue
 
         events.append(event)
@@ -94,14 +95,13 @@ def index():
 
     def get_event(notification):
         event = notification.event
-        event.link = url_for('.show', id=notification.id)
         event.unread = (notification.time_read is None)
         return event
 
     events = map(get_event, query)
     events_count = len(events)
 
-    if 'type' not in request.args:
+    if request.args.get('grouped', True, type=str_to_bool):
         events = _group_events(events)
 
     template_vars = dict(events=events, types=Event.Type)
@@ -127,27 +127,3 @@ def clear():
     db.session.commit()
 
     return redirect(url_for('.index', **request.args))
-
-
-@notifications_blueprint.route('/<int:id>')
-def show(id):
-    if not g.current_user:
-        abort(401)
-
-    notification = get_requested_record(Notification, id)
-    if g.current_user != notification.recipient:
-        abort(403)
-
-    notification.mark_read()
-    db.session.commit()
-
-    event = notification.event
-
-    if event.type == Event.Type.FLIGHT_COMMENT:
-        return redirect('/flights/{}/'.format(event.flight_id))
-    elif event.type == Event.Type.FLIGHT:
-        return redirect('/flights/{}/'.format(event.flight_id))
-    elif event.type == Event.Type.FOLLOWER:
-        return redirect('/users/{}/'.format(event.actor_id))
-    else:
-        abort(501)
