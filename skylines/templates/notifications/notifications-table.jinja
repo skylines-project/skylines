@@ -1,4 +1,5 @@
 {% from "macros/datetime.jinja" import insert_timeago with context %}
+{% from "macros/links.jinja" import user_link %}
 
 
 {% macro render_events_table(events) -%}
@@ -68,21 +69,21 @@
 
 
 {% macro render_flight_comment_event_text(event) -%}
-{% trans pilot=event.actor|e, distance=h.format_distance(event.flight.olc_classic_distance), date=h.format_date(event.flight.date_local) -%}
+{% trans pilot=user_link(event.actor), distance=h.format_distance(event.flight.olc_classic_distance), date=h.format_date(event.flight.date_local) -%}
 <strong>{{ pilot }}</strong> commented on your <strong>{{ distance }}</strong> flight on the <strong>{{ date }}</strong>.
 {%- endtrans %}
 {%- endmacro %}
 
 
 {% macro render_flight_event_text(event) -%}
-{% trans pilot=event.actor|e, distance=h.format_distance(event.flight.olc_classic_distance), date=h.format_date(event.flight.date_local) -%}
+{% trans pilot=user_link(event.actor), distance=h.format_distance(event.flight.olc_classic_distance), date=h.format_date(event.flight.date_local) -%}
 <strong>{{ pilot }}</strong> uploaded a new <strong>{{ distance }}</strong> flight on the <strong>{{ date }}</strong>.
 {%- endtrans %}
 {%- endmacro %}
 
 
 {% macro render_flight_events_text(events) -%}
-{% trans pilot=events[0].actor|e, num_flights=events|count -%}
+{% trans pilot=user_link(events[0].actor), num_flights=events|count -%}
 <strong>{{ pilot }}</strong> uploaded <strong>{{ num_flights }}</strong> new flights.
 {%- endtrans %}
 {%- endmacro %}
@@ -90,9 +91,9 @@
 
 {% macro render_follower_event_text(event) -%}
 {% if current_user and event.user_id == current_user.id -%}
-{{ _('<strong>%(pilot)s</strong> is following you now.', pilot=event.actor|e) }}
+{{ _('<strong>%(pilot)s</strong> is following you now.', pilot=user_link(event.actor)) }}
 {%- else -%}
-{{ _('<strong>%(pilot)s</strong> is following <strong>%(pilot2)s</strong> now.', pilot=event.actor|e, pilot2=event.user|e) }}
+{{ _('<strong>%(pilot)s</strong> is following <strong>%(pilot2)s</strong> now.', pilot=user_link(event.actor), pilot2=user_link(event.user)) }}
 {%- endif %}
 {%- endmacro %}
 
