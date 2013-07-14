@@ -161,54 +161,79 @@
 {%- block content %}
 <div class="row">
   <div class="span4">
-    {{ render_details_table(flight) }}
-
-    <p>
-      {%- if trace %}
-      <a href="{{ url_for('.map_') }}" class="btn"><i class="icon-fullscreen icon-large"></i> {% trans %}Full-screen map{% endtrans %}</a>
-      {%- endif %}
-
-      <span id="pinned" rel="tooltip" title="{{ _('Activate this to show the flight on top of other flights on the map') }}"></span>
-    </p>
-    <p>
-      {%- if flight.has_phases %}
-      <a class='btn' data-toggle="collapse" data-target="#detailed-stats">
-          <i class='icon-info-sign icon-large'></i> {% trans %}Detailed statistics{% endtrans %}
-      </a>
-      {%- endif %}
-    </p>
-
-    <h3><i class="icon-comments-alt"></i> {% trans %}Comments{% endtrans %}</h3>
-    <table class="table">
-      {%- for comment in flight.comments %}
-      <tr>
-        <td>
-          {%- if comment.user %}
-          <span style="float:left">
-            {{ user_link(comment.user) }}:&nbsp;
-          </span>
+    <div class="tabbable">
+      <ul class="nav nav-tabs">
+        <li class="active"><a href="#tab-overview" data-toggle="tab">{{ _('Overview') }}</a></li>
+        <li><a href="#tab-comments" data-toggle="tab">
+          {{ _('Comments') }}
+          {% if flight.comments[0] -%}
+          <span class="label label-info">{{ flight.comments|count }}</span>
           {%- endif %}
+        </a></li>
+        <li><a href="#tab-stats" data-toggle="tab">{{ _('Statistics') }}</a></li>
+      </ul>
+      <div class="tab-content">
+        <div class="tab-pane active" id="tab-overview">
+          {{ render_details_table(flight) }}
 
-          {{ h.markdown.convert(comment.text)|safe }}
-        </td>
-      </tr>
-      {%- else %}
-      <tr>
-        <td><em>{% trans %}No comments yet.{% endtrans %}</em></td>
-      </tr>
-      {%- endfor %}
+          <p>
+            {%- if trace %}
+            <a href="{{ url_for('.map_') }}" class="btn"><i class="icon-fullscreen icon-large"></i> {% trans %}Full-screen map{% endtrans %}</a>
+            {%- endif %}
 
-      {%- if g.current_user %}
-      <tr>
-        <td>
-          <form action="add_comment" method="POST">
-            <textarea style="width: 100%" name="text"></textarea><br/>
-            <input type="submit" value="{{ _('Add comment') }}" class="btn btn-primary"/>
-          </form>
-        </td>
-      </tr>
-      {%- endif %}
-    </table>
+            <span id="pinned" rel="tooltip" title="{{ _('Activate this to show the flight on top of other flights on the map') }}"></span>
+          </p>
+        </div>
+
+        <div class="tab-pane" id="tab-comments">
+          <h3><i class="icon-comments-alt"></i> {% trans %}Comments{% endtrans %}</h3>
+          <table class="table">
+            {%- for comment in flight.comments %}
+            <tr>
+              <td>
+                {%- if comment.user %}
+                <span style="float:left">
+                  {{ user_link(comment.user) }}:&nbsp;
+                </span>
+                {%- endif %}
+
+                {{ h.markdown.convert(comment.text)|safe }}
+              </td>
+            </tr>
+            {%- else %}
+            <tr>
+              <td><em>{% trans %}No comments yet.{% endtrans %}</em></td>
+            </tr>
+            {%- endfor %}
+
+            {%- if g.current_user %}
+            <tr>
+              <td>
+                <form action="add_comment" method="POST">
+                  <textarea style="width: 100%" name="text"></textarea><br/>
+                  <input type="submit" value="{{ _('Add comment') }}" class="btn btn-primary"/>
+                </form>
+              </td>
+            </tr>
+            {%- endif %}
+          </table>
+        </div>
+
+        <div class="tab-pane" id="tab-stats">
+          <h3>{% trans %}Circling performance{% endtrans %}</h3>
+          {{ render_circling_performance(flight) }}
+
+          <h3>{% trans %}Cruise performance{% endtrans %}</h3>
+          {{ render_cruise_performance(flight) }}
+
+          {%- if flight.has_phases %}
+          <p><a class='btn' data-toggle="collapse" data-target="#detailed-stats">
+            <i class='icon-info-sign icon-large'></i> {% trans %}Detailed statistics{% endtrans %}
+          </a></p>
+          {%- endif %}
+        </div>
+      </div>
+    </div>
   </div>
 
   <div class="span8">
@@ -224,18 +249,6 @@
 
 <div id="detailed-stats" class="collapse out">
   <hr />
-  <div class="row">
-    <div class="span5">
-      <h3>{% trans %}Circling performance{% endtrans %} <small>({% trans %}summary{% endtrans %})</small></h3>
-      {{ render_circling_performance(flight) }}
-    </div>
-
-    <div class="span7">
-      <h3>{% trans %}Cruise performance{% endtrans %} <small>({% trans %}summary{% endtrans %})</small></h3>
-      {{ render_cruise_performance(flight) }}
-    </div>
-  </div>
-
   <div class="row">
     <div class="span12">
       <h3>{% trans %}Phases{% endtrans %}</h3>
