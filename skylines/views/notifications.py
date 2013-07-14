@@ -9,20 +9,20 @@ from skylines.model import Event, Notification
 class EventGroup:
     grouped = True
 
-    def __init__(self, events, link=None):
-        self.events = events
+    def __init__(self, subevents, link=None):
+        self.subevents = subevents
         self.link = link
 
     @property
     def unread(self):
-        for event in self.events:
+        for event in self.subevents:
             if hasattr(event, 'unread') and event.unread:
                 return True
 
         return False
 
     def __getattr__(self, name):
-        return getattr(self.events[0], name)
+        return getattr(self.subevents[0], name)
 
 
 notifications_blueprint = Blueprint('notifications', 'skylines')
@@ -64,7 +64,7 @@ def _group_events(_events):
                 last_event.type == event.type and
                 last_event.actor_id == event.actor_id):
             if isinstance(last_event, EventGroup):
-                last_event.events.append(event)
+                last_event.subevents.append(event)
             else:
                 events[-1] = EventGroup([last_event, event], link=url_for(
                     '.index', type=event.type, user=event.actor_id))

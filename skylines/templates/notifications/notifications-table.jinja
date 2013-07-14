@@ -28,7 +28,7 @@
     </p>
     <p>
     {% if event.grouped -%}
-      {% for event in event.events -%}
+      {% for event in event.subevents -%}
         <small>{% if event.unread %}<span class="badge badge-warning badge-empty"></span>{% endif %} {{ render_event_text(event) }}</small><br/>
       {%- endfor %}
     {%- endif %}
@@ -57,7 +57,7 @@
 {% macro render_event_text(event) -%}
 {% if event.grouped -%}
   {% if event.type == types.FLIGHT -%}
-    {{ render_flight_events_text(event.events) }}
+    {{ render_grouped_flights_event_text(event) }}
   {%- else %}
     Error: Unknown event group
   {%- endif %}
@@ -89,8 +89,8 @@
 {%- endmacro %}
 
 
-{% macro render_flight_events_text(events) -%}
-{% trans pilot=user_link(events[0].actor), num_flights=events|count -%}
+{% macro render_grouped_flights_event_text(event) -%}
+{% trans pilot=user_link(event.actor), num_flights=event.subevents|count -%}
 <strong>{{ pilot }}</strong> uploaded <strong>{{ num_flights }}</strong> new flights.
 {%- endtrans %}
 {%- endmacro %}
