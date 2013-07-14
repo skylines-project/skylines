@@ -26,6 +26,13 @@
     {% if event.unread %}<span class="badge badge-warning">{{ _('New') }}</span>{% endif %}
     {{ render_event_text(event) }}
     <small>({{ insert_timeago(event.time) }})</small>
+    {% if event.grouped -%}
+      <br/>
+      {% for event in event.events -%}
+        <br/>
+        <small>{{ render_event_text(event) }}</small>
+      {%- endfor %}
+    {%- endif %}
   </td>
   <td class="show">
     {% if event.link -%}
