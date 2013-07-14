@@ -371,11 +371,20 @@ table.vmiddle td {
 #notifications-table td.icon {
   width: 30px;
   text-align: center;
-  font-size: 140%;
+  font-size: 200%;
+  padding-right: 0px;
 }
 
 #notifications-table .badge {
   margin-right: 10px;
+}
+
+#notifications-table p small {
+  color: inherit;
+}
+
+#notifications-table a {
+  color: inherit;
 }
 
 small .badge {

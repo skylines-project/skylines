@@ -3,7 +3,7 @@
 
 
 {% macro render_events_table(events) -%}
-<table id="notifications-table" class="table table-striped">
+<table id="notifications-table" class="table">
   <tbody>
     {% for event in events -%}
     {{ render_event_row(event) }}
@@ -23,16 +23,20 @@
     {%- endif %}
   </td>
   <td>
-    {% if event.unread %}<span class="badge badge-warning">{{ _('New') }}</span>{% endif %}
+    <p>
+      {% if event.unread %}<span class="badge badge-warning">{{ _('New') }}</span>{% endif %}
+      <small>{{ insert_timeago(event.time) }}</small>
+    </p>
+    <p>
     {{ render_event_text(event) }}
-    <small>({{ insert_timeago(event.time) }})</small>
+    </p>
+    <p>
     {% if event.grouped -%}
-      <br/>
       {% for event in event.events -%}
-        <br/>
-        <small>{% if event.unread %}<span class="badge badge-warning badge-empty"></span>{% endif %} {{ render_event_text(event) }}</small>
+        <small>{% if event.unread %}<span class="badge badge-warning badge-empty"></span>{% endif %} {{ render_event_text(event) }}</small><br/>
       {%- endfor %}
     {%- endif %}
+    </p>
   </td>
   <td class="show">
     {% if event.link -%}
