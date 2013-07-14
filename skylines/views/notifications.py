@@ -31,7 +31,10 @@ notifications_blueprint = Blueprint('notifications', 'skylines')
 @notifications_blueprint.before_app_request
 def inject_notification_count():
     if g.current_user:
-        g.notifications = Notification.count_unread(g.current_user)
+        def count_unread_notifications():
+            return Notification.count_unread(g.current_user)
+
+        g.count_unread_notifications = count_unread_notifications
 
 
 def _filter_query(query, args):
