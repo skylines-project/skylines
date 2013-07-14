@@ -89,9 +89,11 @@
 
 
 {% macro render_follower_event_text(event) -%}
-{% trans pilot=event.actor|e -%}
-<strong>{{ pilot }}</strong> is following you now.
-{%- endtrans %}
+{% if current_user and event.user_id == current_user.id -%}
+{{ _('<strong>%(pilot)s</strong> is following you now.', pilot=event.actor|e) }}
+{%- else -%}
+{{ _('<strong>%(pilot)s</strong> is following <strong>%(pilot2)s</strong> now.', pilot=event.actor|e, pilot2=event.user|e) }}
+{%- endif %}
 {%- endmacro %}
 
 
