@@ -176,7 +176,7 @@ def create_follower_notification(followed, follower):
     '''
 
     # Create the event
-    event = Event(type=Event.Type.FOLLOWER, actor=follower)
+    event = Event(type=Event.Type.FOLLOWER, actor=follower, user=followed)
     db.session.add(event)
 
     # Create the notification
