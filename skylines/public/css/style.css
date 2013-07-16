@@ -92,11 +92,11 @@ textarea {
   padding-bottom: 0px;
 }
 
-.numeric, td.numeric, th.numeric {
+table .numeric {
   text-align:right;
 }
 
-#flight-table .date, #flight-table .times {
+table .date, table .times {
   white-space: nowrap;
 }
 
@@ -396,4 +396,13 @@ small .badge-empty {
   vertical-align: 3px;
   font-size: 5px;
   padding: 1px 5px 2px;
+}
+
+.table-tracking th {
+  width: 22.222%;
+}
+
+.table-tracking th:nth-child(4),
+.table-tracking th:nth-child(5) {
+    width: 11.111%;
 }

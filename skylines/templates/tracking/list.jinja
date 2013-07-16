@@ -16,7 +16,19 @@
 
 
 {% block content -%}
-<table id="flight-table" class="table table-striped">
+{% if friend_tracks -%}
+<h3>{{ _('Friends') }}</h3>
+{{ tracking_list(friend_tracks) }}
+
+<h3>{{ _('Other pilots') }}</h3>
+{%- endif %}
+{{ tracking_list(other_tracks) }}
+
+<a href="{{ url_for('.info') }}" class="btn"><i class="icon-question-sign"></i> {% trans %}How to use Live Tracking?{% endtrans %}</a>
+{%- endblock %}
+
+{% macro tracking_list(tracks) -%}
+<table class="table table-striped table-tracking">
   <thead>
     <tr>
       <th class="date">{% trans %}Last fix{% endtrans %}</th>
@@ -26,6 +38,7 @@
       <th></th>
     </tr>
   </thead>
+
   <tbody>
     {% for track, airport in tracks -%}
     <tr>
@@ -52,6 +65,4 @@
     {%- endfor %}
   </tbody>
 </table>
-
-<a href="{{ url_for('.info') }}" class="btn"><i class="icon-question-sign"></i> {% trans %}How to use Live Tracking?{% endtrans %}</a>
-{%- endblock %}
+{%- endmacro %}
