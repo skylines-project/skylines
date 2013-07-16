@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  skylines\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2013-07-16 22:32+0200\n"
+"POT-Creation-Date: 2013-07-17 00:49+0200\n"
 "PO-Revision-Date: 2013-07-14 01:47+0000\n"
 "Last-Translator: Tobias Bieniek <Tobias.Bieniek@gmx.de>\n"
 "Language-Team: German <de@li.org>\n"
@@ -48,7 +48,7 @@ msgstr "Andere"
 #: skylines/templates/search/list.jinja:55
 #: skylines/templates/tracking/view.jinja:133
 #: skylines/templates/users/users-table.jinja:8
-#: skylines/templates/users/view.jinja:125 skylines/views/users.py:44
+#: skylines/templates/users/view.jinja:125 skylines/views/users.py:45
 msgid "Club"
 msgstr "Verein"
 
@@ -60,7 +60,7 @@ msgstr "Verein"
 #: skylines/templates/ranking/pilots.jinja:9
 #: skylines/templates/users/users-table.jinja:7
 #: skylines/templates/users/view.jinja:95 skylines/views/user.py:192
-#: skylines/views/users.py:43
+#: skylines/views/users.py:44
 msgid "Name"
 msgstr "Name"
 
@@ -69,7 +69,7 @@ msgid "Website"
 msgstr "Webseite"
 
 #: skylines/forms/pilot.py:22 skylines/views/user.py:191
-#: skylines/views/users.py:42 skylines/views/users.py:108
+#: skylines/views/users.py:43 skylines/views/users.py:111
 msgid "eMail Address"
 msgstr "E-Mail-Adresse"
 
@@ -294,7 +294,7 @@ msgstr "Live"
 #: skylines/templates/statistics/years.jinja:66
 #: skylines/templates/users/users-table.jinja:26
 #: skylines/templates/users/view.jinja:162
-#: skylines/templates/users/view.jinja:236
+#: skylines/templates/users/view.jinja:237
 msgid "Flights"
 msgstr "Flüge"
 
@@ -324,7 +324,7 @@ msgid "Email Address"
 msgstr "eMail Adresse"
 
 #: skylines/templates/topbar.jinja:72 skylines/views/user.py:136
-#: skylines/views/users.py:45 skylines/views/users.py:122
+#: skylines/views/users.py:46 skylines/views/users.py:125
 msgid "Password"
 msgstr "Passwort"
 
@@ -400,7 +400,7 @@ msgstr "Neuen Pilot anlegen"
 
 #: skylines/templates/flights/details-table.jinja:11
 #: skylines/templates/flights/flights-table.jinja:8
-#: skylines/templates/users/view.jinja:200
+#: skylines/templates/users/view.jinja:201
 msgid "Date"
 msgstr "Datum"
 
@@ -494,8 +494,8 @@ msgstr "Löschen"
 #: skylines/templates/flights/phases-table.jinja:73
 #: skylines/templates/statistics/distance-table.jinja:6
 #: skylines/templates/statistics/years.jinja:69
-#: skylines/templates/users/view.jinja:199
-#: skylines/templates/users/view.jinja:240
+#: skylines/templates/users/view.jinja:200
+#: skylines/templates/users/view.jinja:241
 msgid "Distance"
 msgstr "Distanz"
 
@@ -510,7 +510,7 @@ msgid "Time"
 msgstr "Uhrzeit"
 
 #: skylines/templates/flights/flights-table.jinja:96
-#: skylines/templates/notifications/notifications-table.jinja:120
+#: skylines/templates/notifications/events-table.jinja:161
 msgid "Show"
 msgstr "Anzeigen"
 
@@ -682,27 +682,11 @@ msgstr "Fehler!"
 msgid "Warning!"
 msgstr "Achtung!"
 
-#: skylines/templates/notifications/list.jinja:24
-msgid "There are no more notifications."
-msgstr "Es gibt keine weiteren Benachrichtigungen."
-
-#: skylines/templates/notifications/list.jinja:33
-msgid "Newer"
-msgstr "Neuer"
-
-#: skylines/templates/notifications/list.jinja:40
-msgid "Mark all as read"
-msgstr "Alle als gelesen markieren"
-
-#: skylines/templates/notifications/list.jinja:45
-msgid "Older"
-msgstr "Älter"
-
-#: skylines/templates/notifications/notifications-table.jinja:23
+#: skylines/templates/notifications/events-table.jinja:23
 msgid "New"
 msgstr "Neu"
 
-#: skylines/templates/notifications/notifications-table.jinja:83
+#: skylines/templates/notifications/events-table.jinja:89
 #, python-format
 msgid ""
 "<strong>%(pilot)s</strong> commented on your "
@@ -711,7 +695,18 @@ msgstr ""
 "<strong>%(pilot)s</strong> hat deinen <strong>%(distance)s</strong> Flug "
 "am <strong>%(date)s</strong> kommentiert."
 
-#: skylines/templates/notifications/notifications-table.jinja:88
+#: skylines/templates/notifications/events-table.jinja:94
+#, fuzzy, python-format
+#| msgid "" "<strong>%(pilot)s</strong> commented on a
+#| <strong>%(distance)s</strong> " "flight on the <strong>%(date)s</strong>."
+msgid ""
+"You commented on a <strong>%(distance)s</strong> flight on the "
+"<strong>%(date)s</strong>."
+msgstr ""
+"<strong>%(pilot)s</strong> hat einen <strong>%(distance)s</strong> Flug "
+"am <strong>%(date)s</strong> kommentiert."
+
+#: skylines/templates/notifications/events-table.jinja:98
 #, python-format
 msgid ""
 "<strong>%(pilot)s</strong> commented on a <strong>%(distance)s</strong> "
@@ -720,7 +715,18 @@ msgstr ""
 "<strong>%(pilot)s</strong> hat einen <strong>%(distance)s</strong> Flug "
 "am <strong>%(date)s</strong> kommentiert."
 
-#: skylines/templates/notifications/notifications-table.jinja:97
+#: skylines/templates/notifications/events-table.jinja:108
+#, fuzzy, python-format
+#| msgid "" "<strong>%(pilot)s</strong> uploaded a new
+#| <strong>%(distance)s</strong> " "flight on the <strong>%(date)s</strong>."
+msgid ""
+"You uploaded a <strong>%(distance)s</strong> flight on the "
+"<strong>%(date)s</strong>."
+msgstr ""
+"<strong>%(pilot)s</strong> hat einen <strong>%(distance)s</strong> Flug "
+"am <strong>%(date)s</strong> hochgeladen."
+
+#: skylines/templates/notifications/events-table.jinja:112
 #, python-format
 msgid ""
 "<strong>%(pilot)s</strong> uploaded a new <strong>%(distance)s</strong> "
@@ -729,7 +735,16 @@ msgstr ""
 "<strong>%(pilot)s</strong> hat einen <strong>%(distance)s</strong> Flug "
 "am <strong>%(date)s</strong> hochgeladen."
 
-#: skylines/templates/notifications/notifications-table.jinja:104
+#: skylines/templates/notifications/events-table.jinja:122
+#, fuzzy, python-format
+#| msgid "" "<strong>%(pilot)s</strong> uploaded
+#| <strong>%(num_flights)s</strong> new " "flights."
+msgid "You uploaded <strong>%(num_flights)s</strong> new flights."
+msgstr ""
+"<strong>%(pilot)s</strong> hat <strong>%(num_flights)s</strong> neue "
+"Flüge hochgeladen."
+
+#: skylines/templates/notifications/events-table.jinja:125
 #, python-format
 msgid ""
 "<strong>%(pilot)s</strong> uploaded <strong>%(num_flights)s</strong> new "
@@ -738,15 +753,67 @@ msgstr ""
 "<strong>%(pilot)s</strong> hat <strong>%(num_flights)s</strong> neue "
 "Flüge hochgeladen."
 
-#: skylines/templates/notifications/notifications-table.jinja:112
-#, python-format
-msgid "<strong>%(pilot)s</strong> is following you now."
+#: skylines/templates/notifications/events-table.jinja:133
+#, fuzzy, python-format
+#| msgid "<strong>%(pilot)s</strong> is following you now."
+msgid "<strong>%(pilot)s</strong> started following you."
 msgstr "<strong>%(pilot)s</strong> folgt dir jetzt."
 
-#: skylines/templates/notifications/notifications-table.jinja:114
+#: skylines/templates/notifications/events-table.jinja:135
 #, python-format
-msgid "<strong>%(pilot)s</strong> is following <strong>%(pilot2)s</strong> now."
+msgid "You started following <strong>%(pilot)s</strong>."
+msgstr ""
+
+#: skylines/templates/notifications/events-table.jinja:137
+#, fuzzy, python-format
+#| msgid "<strong>%(pilot)s</strong> is following <strong>%(pilot2)s</strong>
+#| now."
+msgid "<strong>%(pilot)s</strong> started following <strong>%(pilot2)s</strong>."
 msgstr "<strong>%(pilot)s</strong> folgt jetzt <strong>%(pilot2)s</strong>."
+
+#: skylines/templates/notifications/events-table.jinja:144
+#, fuzzy, python-format
+#| msgid "<strong>%(pilot)s</strong> is following <strong>%(pilot2)s</strong>
+#| now."
+msgid "You started following <strong>%(num_pilots)s</strong> other pilots."
+msgstr "<strong>%(pilot)s</strong> folgt jetzt <strong>%(pilot2)s</strong>."
+
+#: skylines/templates/notifications/events-table.jinja:146
+#, fuzzy, python-format
+#| msgid "<strong>%(pilot)s</strong> is following <strong>%(pilot2)s</strong>
+#| now."
+msgid ""
+"<strong>%(pilot)s</strong> started following "
+"<strong>%(num_pilots)s</strong> other pilots."
+msgstr "<strong>%(pilot)s</strong> folgt jetzt <strong>%(pilot2)s</strong>."
+
+#: skylines/templates/notifications/events-table.jinja:153
+msgid "You joined SkyLines."
+msgstr ""
+
+#: skylines/templates/notifications/events-table.jinja:155
+#, fuzzy, python-format
+#| msgid "<strong>%(pilot)s</strong> is following you now."
+msgid "<strong>%(pilot)s</strong> joined SkyLines."
+msgstr "<strong>%(pilot)s</strong> folgt dir jetzt."
+
+#: skylines/templates/notifications/list.jinja:24
+msgid "There are no more notifications."
+msgstr "Es gibt keine weiteren Benachrichtigungen."
+
+#: skylines/templates/notifications/list.jinja:33
+#: skylines/templates/timeline/list.jinja:39
+msgid "Newer"
+msgstr "Neuer"
+
+#: skylines/templates/notifications/list.jinja:40
+msgid "Mark all as read"
+msgstr "Alle als gelesen markieren"
+
+#: skylines/templates/notifications/list.jinja:45
+#: skylines/templates/timeline/list.jinja:47
+msgid "Older"
+msgstr "Älter"
 
 #: skylines/templates/ranking/airports.jinja:12
 #: skylines/templates/ranking/clubs.jinja:11
@@ -807,7 +874,7 @@ msgid "Year"
 msgstr "Jahr"
 
 #: skylines/templates/statistics/distance-table.jinja:14
-#: skylines/templates/users/view.jinja:242
+#: skylines/templates/users/view.jinja:243
 #, python-format
 msgid "avg. %(distance)s per flight"
 msgstr "avg. %(distance)s pro Flug"
@@ -821,19 +888,19 @@ msgstr "Gesamt"
 
 #: skylines/templates/statistics/duration-table.jinja:6
 #: skylines/templates/statistics/years.jinja:72
-#: skylines/templates/users/view.jinja:248
+#: skylines/templates/users/view.jinja:249
 msgid "Flight Time"
 msgstr "Flugzeit"
 
 #: skylines/templates/statistics/duration-table.jinja:14
-#: skylines/templates/users/view.jinja:250
+#: skylines/templates/users/view.jinja:251
 #, python-format
 msgid "avg. %(hours)s hours per flight"
 msgstr "avg. %(hours)s Stunden pro Flug"
 
 #: skylines/templates/statistics/duration-table.jinja:15
 #: skylines/templates/statistics/duration-table.jinja:28
-#: skylines/templates/users/view.jinja:251
+#: skylines/templates/users/view.jinja:252
 #, python-format
 msgid "%(hours)s Hours"
 msgstr "%(hours)s Stunden"
@@ -852,6 +919,23 @@ msgstr "Statistik <small>von %(club)s</small>"
 #, python-format
 msgid "Statistics <small>from %(airport)s</small>"
 msgstr "Statistik <small>von %(airport)s</small>"
+
+#: skylines/templates/timeline/list.jinja:10
+#, fuzzy, python-format
+#| msgid "Flights <small>of %(pilot)s</small>"
+msgid "Timeline <small>of %(pilot)s</small>"
+msgstr "Flüge <small>von %(pilot)s</small>"
+
+#: skylines/templates/timeline/list.jinja:12
+#: skylines/templates/users/view.jinja:164
+msgid "Timeline"
+msgstr ""
+
+#: skylines/templates/timeline/list.jinja:30
+#, fuzzy
+#| msgid "There are no more notifications."
+msgid "There are no more events."
+msgstr "Es gibt keine weiteren Benachrichtigungen."
 
 #: skylines/templates/tracking/info.jinja:7
 msgid "What is it?"
@@ -1099,8 +1183,8 @@ msgstr "Nicht angegeben"
 msgid "Change Password"
 msgstr "Passwort ändern"
 
-#: skylines/templates/users/view.jinja:151 skylines/views/users.py:103
-#: skylines/views/users.py:115
+#: skylines/templates/users/view.jinja:151 skylines/views/users.py:106
+#: skylines/views/users.py:118
 msgid "Recover Password"
 msgstr "Passwort wiederherstellen"
 
@@ -1112,27 +1196,27 @@ msgstr "Nicht mehr folgen"
 msgid "Follow"
 msgstr "Folgen"
 
-#: skylines/templates/users/view.jinja:169
+#: skylines/templates/users/view.jinja:170
 msgid "Following"
 msgstr "Folgend"
 
-#: skylines/templates/users/view.jinja:182
+#: skylines/templates/users/view.jinja:183
 msgid "Followers"
 msgstr "Folgende"
 
-#: skylines/templates/users/view.jinja:195
+#: skylines/templates/users/view.jinja:196
 msgid "Distance Flights"
 msgstr "Streckenflüge"
 
-#: skylines/templates/users/view.jinja:227
+#: skylines/templates/users/view.jinja:228
 msgid "Last 12 Months"
 msgstr "Letzte 12 Monate"
 
-#: skylines/templates/users/view.jinja:256
+#: skylines/templates/users/view.jinja:257
 msgid "Average Speed"
 msgstr "Schnittgeschwindigkeit"
 
-#: skylines/templates/users/view.jinja:266
+#: skylines/templates/users/view.jinja:267
 msgid "Takeoff Locations"
 msgstr "Startorte"
 
@@ -1248,12 +1332,12 @@ msgstr ""
 msgid "Your flight(s) have been successfully updated."
 msgstr "Dein/e Flug/Flüge wurde/n erfolgreich aktualisiert."
 
-#: skylines/views/user.py:127 skylines/views/users.py:30
+#: skylines/views/user.py:127 skylines/views/users.py:31
 msgid "Passwords do not match"
 msgstr "Die Passwörter stimmen nicht überein"
 
-#: skylines/views/user.py:138 skylines/views/users.py:55
-#: skylines/views/users.py:124
+#: skylines/views/user.py:138 skylines/views/users.py:56
+#: skylines/views/users.py:127
 msgid "Verify Password"
 msgstr "Passwort bestätigen"
 
@@ -1289,7 +1373,7 @@ msgstr "Eye Candy"
 msgid "Edit User"
 msgstr "Benutzer bearbeiten"
 
-#: skylines/views/users.py:177
+#: skylines/views/users.py:180
 msgid ""
 "The mail server is currently not reachable. Please try again later or "
 "contact the developers."
@@ -1297,10 +1381,7 @@ msgstr ""
 "Der Mail Server ist gerade nicht erreichbar. Versuche es später noch "
 "einmal, oder verständige die Entwickler."
 
-#: skylines/views/users.py:212
+#: skylines/views/users.py:215
 msgid "Password changed."
 msgstr "Passwort wurde geändert"
-
-#~ msgid "summary"
-#~ msgstr "Zusammenfassung"
 
