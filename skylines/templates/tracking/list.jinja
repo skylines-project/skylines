@@ -28,7 +28,7 @@
 {%- endblock %}
 
 {% macro tracking_list(tracks) -%}
-<table id="flight-table" class="table table-striped">
+<table class="table table-striped table-tracking">
   <thead>
     <tr>
       <th class="date">{% trans %}Last fix{% endtrans %}</th>
@@ -38,6 +38,7 @@
       <th></th>
     </tr>
   </thead>
+
   <tbody>
     {% for track, airport in tracks -%}
     <tr>
