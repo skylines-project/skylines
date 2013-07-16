@@ -1,11 +1,17 @@
 {% from "notifications/events-table.jinja" import render_events_table with context %}
 {% from "macros/datetime.jinja" import timeago_script with context %}
+{% from "macros/links.jinja" import user_link %}
 
 {% extends "base-page.jinja" %}
-{% set active_page = "notifications" %}
 
 
-{% block title %}{% trans %}Notifications{% endtrans %}{% endblock %}
+{% block title -%}
+  {% if 'user' in request.args and events -%}
+    {{ _('Timeline <small>of %(pilot)s</small>', pilot=user_link(events[0].actor)) }}
+  {%- else -%}
+    {{ _('Timeline') }}
+  {%- endif %}
+{%- endblock %}
 
 
 {% block scripts -%}
@@ -21,14 +27,14 @@
   {{ pager() }}
 {%- else -%}
 
-  {% trans %}There are no more notifications.{% endtrans %}
+  {% trans %}There are no more events.{% endtrans %}
 
 {%- endif %}
 {%- endblock %}
 
 {% macro pager() -%}
 <div class="row">
-  <div class="span4">
+  <div class="span6">
     {% if prev_page is number -%}
       <a href="{{ url_for('.index', **(request.args|add_to_dict(page=prev_page))) }}" class="btn"> &larr; {% trans %}Newer{% endtrans %}</a>
     {%- else -%}
@@ -36,11 +42,7 @@
     {%- endif %}
   </div>
 
-  <div class="span4" style="text-align:center">
-    <a href="{{ url_for('.clear', **request.args) }}" class="btn"><i class="icon-eye-open"></i> {% trans %}Mark all as read{% endtrans %}</a>
-  </div>
-
-  <div class="span4" style="text-align:right">
+  <div class="span6" style="text-align:right">
     {% if next_page is number -%}
       <a href="{{ url_for('.index', **(request.args|add_to_dict(page=next_page))) }}" class="btn">{% trans %}Older{% endtrans %} &rarr;</a>
     {%- else -%}

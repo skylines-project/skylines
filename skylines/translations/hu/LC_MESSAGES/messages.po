@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  skylines\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2013-07-16 22:32+0200\n"
+"POT-Creation-Date: 2013-07-17 00:49+0200\n"
 "PO-Revision-Date: 2013-07-14 07:14+0000\n"
 "Last-Translator: Gabor Konrad <Unknown>\n"
 "Language-Team: Hungarian <hu@li.org>\n"
@@ -48,7 +48,7 @@ msgstr "Egyéb"
 #: skylines/templates/search/list.jinja:55
 #: skylines/templates/tracking/view.jinja:133
 #: skylines/templates/users/users-table.jinja:8
-#: skylines/templates/users/view.jinja:125 skylines/views/users.py:44
+#: skylines/templates/users/view.jinja:125 skylines/views/users.py:45
 msgid "Club"
 msgstr "Klub"
 
@@ -60,7 +60,7 @@ msgstr "Klub"
 #: skylines/templates/ranking/pilots.jinja:9
 #: skylines/templates/users/users-table.jinja:7
 #: skylines/templates/users/view.jinja:95 skylines/views/user.py:192
-#: skylines/views/users.py:43
+#: skylines/views/users.py:44
 msgid "Name"
 msgstr "Név"
 
@@ -69,7 +69,7 @@ msgid "Website"
 msgstr "Weboldal"
 
 #: skylines/forms/pilot.py:22 skylines/views/user.py:191
-#: skylines/views/users.py:42 skylines/views/users.py:108
+#: skylines/views/users.py:43 skylines/views/users.py:111
 msgid "eMail Address"
 msgstr "E-mail cím"
 
@@ -293,7 +293,7 @@ msgstr "Live"
 #: skylines/templates/statistics/years.jinja:66
 #: skylines/templates/users/users-table.jinja:26
 #: skylines/templates/users/view.jinja:162
-#: skylines/templates/users/view.jinja:236
+#: skylines/templates/users/view.jinja:237
 msgid "Flights"
 msgstr "Repülések"
 
@@ -323,7 +323,7 @@ msgid "Email Address"
 msgstr "E-mail cím"
 
 #: skylines/templates/topbar.jinja:72 skylines/views/user.py:136
-#: skylines/views/users.py:45 skylines/views/users.py:122
+#: skylines/views/users.py:46 skylines/views/users.py:125
 msgid "Password"
 msgstr "Jelszó"
 
@@ -399,7 +399,7 @@ msgstr "Új pilóta létrehozás"
 
 #: skylines/templates/flights/details-table.jinja:11
 #: skylines/templates/flights/flights-table.jinja:8
-#: skylines/templates/users/view.jinja:200
+#: skylines/templates/users/view.jinja:201
 msgid "Date"
 msgstr "Dátum"
 
@@ -493,8 +493,8 @@ msgstr "Törlés"
 #: skylines/templates/flights/phases-table.jinja:73
 #: skylines/templates/statistics/distance-table.jinja:6
 #: skylines/templates/statistics/years.jinja:69
-#: skylines/templates/users/view.jinja:199
-#: skylines/templates/users/view.jinja:240
+#: skylines/templates/users/view.jinja:200
+#: skylines/templates/users/view.jinja:241
 msgid "Distance"
 msgstr "Távolság"
 
@@ -509,7 +509,7 @@ msgid "Time"
 msgstr "Idő"
 
 #: skylines/templates/flights/flights-table.jinja:96
-#: skylines/templates/notifications/notifications-table.jinja:120
+#: skylines/templates/notifications/events-table.jinja:161
 msgid "Show"
 msgstr "Megjelenítés"
 
@@ -681,27 +681,11 @@ msgstr "Hiba!"
 msgid "Warning!"
 msgstr "Figyelem!"
 
-#: skylines/templates/notifications/list.jinja:24
-msgid "There are no more notifications."
-msgstr "Nincs több üzenet."
-
-#: skylines/templates/notifications/list.jinja:33
-msgid "Newer"
-msgstr "Újabb"
-
-#: skylines/templates/notifications/list.jinja:40
-msgid "Mark all as read"
-msgstr "Összes megjelölése olvasottként"
-
-#: skylines/templates/notifications/list.jinja:45
-msgid "Older"
-msgstr "Régebbi"
-
-#: skylines/templates/notifications/notifications-table.jinja:23
+#: skylines/templates/notifications/events-table.jinja:23
 msgid "New"
 msgstr "Új"
 
-#: skylines/templates/notifications/notifications-table.jinja:83
+#: skylines/templates/notifications/events-table.jinja:89
 #, python-format
 msgid ""
 "<strong>%(pilot)s</strong> commented on your "
@@ -710,10 +694,17 @@ msgstr ""
 "<strong>%(pilot)s</strong> megjegyzést fűzött a "
 "<strong>%(distance)s</strong> repülésedhez - <strong>%(date)s</strong>."
 
-#: skylines/templates/notifications/notifications-table.jinja:88
+#: skylines/templates/notifications/events-table.jinja:94
 #, fuzzy, python-format
-#| msgid "" "<strong>%(pilot)s</strong> commented on your "
-#| "<strong>%(distance)s</strong> flight on the <strong>%(date)s</strong>."
+#| msgid "" "<strong>%(pilot)s</strong> commented on a
+#| <strong>%(distance)s</strong> " "flight on the <strong>%(date)s</strong>."
+msgid ""
+"You commented on a <strong>%(distance)s</strong> flight on the "
+"<strong>%(date)s</strong>."
+msgstr ""
+
+#: skylines/templates/notifications/events-table.jinja:98
+#, fuzzy, python-format
 msgid ""
 "<strong>%(pilot)s</strong> commented on a <strong>%(distance)s</strong> "
 "flight on the <strong>%(date)s</strong>."
@@ -721,7 +712,16 @@ msgstr ""
 "<strong>%(pilot)s</strong> megjegyzést fűzött a "
 "<strong>%(distance)s</strong> repülésedhez - <strong>%(date)s</strong>."
 
-#: skylines/templates/notifications/notifications-table.jinja:97
+#: skylines/templates/notifications/events-table.jinja:108
+#, fuzzy, python-format
+#| msgid "" "<strong>%(pilot)s</strong> uploaded a new
+#| <strong>%(distance)s</strong> " "flight on the <strong>%(date)s</strong>."
+msgid ""
+"You uploaded a <strong>%(distance)s</strong> flight on the "
+"<strong>%(date)s</strong>."
+msgstr ""
+
+#: skylines/templates/notifications/events-table.jinja:112
 #, python-format
 msgid ""
 "<strong>%(pilot)s</strong> uploaded a new <strong>%(distance)s</strong> "
@@ -730,7 +730,14 @@ msgstr ""
 "<strong>%(pilot)s</strong> feltöltött egy új "
 "<strong>%(distance)s</strong> repülést - <strong>%(date)s</strong>."
 
-#: skylines/templates/notifications/notifications-table.jinja:104
+#: skylines/templates/notifications/events-table.jinja:122
+#, fuzzy, python-format
+#| msgid "" "<strong>%(pilot)s</strong> uploaded
+#| <strong>%(num_flights)s</strong> new " "flights."
+msgid "You uploaded <strong>%(num_flights)s</strong> new flights."
+msgstr ""
+
+#: skylines/templates/notifications/events-table.jinja:125
 #, python-format
 msgid ""
 "<strong>%(pilot)s</strong> uploaded <strong>%(num_flights)s</strong> new "
@@ -739,16 +746,67 @@ msgstr ""
 "<strong>%(pilot)s</strong> feltöltött <strong>%(num_flights)s</strong> új"
 " repülést."
 
-#: skylines/templates/notifications/notifications-table.jinja:112
-#, python-format
-msgid "<strong>%(pilot)s</strong> is following you now."
-msgstr "<strong>%(pilot)s</strong> követ téged."
-
-#: skylines/templates/notifications/notifications-table.jinja:114
+#: skylines/templates/notifications/events-table.jinja:133
 #, fuzzy, python-format
 #| msgid "<strong>%(pilot)s</strong> is following you now."
-msgid "<strong>%(pilot)s</strong> is following <strong>%(pilot2)s</strong> now."
+msgid "<strong>%(pilot)s</strong> started following you."
 msgstr "<strong>%(pilot)s</strong> követ téged."
+
+#: skylines/templates/notifications/events-table.jinja:135
+#, python-format
+msgid "You started following <strong>%(pilot)s</strong>."
+msgstr ""
+
+#: skylines/templates/notifications/events-table.jinja:137
+#, fuzzy, python-format
+#| msgid "<strong>%(pilot)s</strong> is following <strong>%(pilot2)s</strong>
+#| now."
+msgid "<strong>%(pilot)s</strong> started following <strong>%(pilot2)s</strong>."
+msgstr "<strong>%(pilot)s</strong> követ téged."
+
+#: skylines/templates/notifications/events-table.jinja:144
+#, fuzzy, python-format
+#| msgid "<strong>%(pilot)s</strong> is following <strong>%(pilot2)s</strong>
+#| now."
+msgid "You started following <strong>%(num_pilots)s</strong> other pilots."
+msgstr ""
+
+#: skylines/templates/notifications/events-table.jinja:146
+#, fuzzy, python-format
+#| msgid "<strong>%(pilot)s</strong> is following <strong>%(pilot2)s</strong>
+#| now."
+msgid ""
+"<strong>%(pilot)s</strong> started following "
+"<strong>%(num_pilots)s</strong> other pilots."
+msgstr "<strong>%(pilot)s</strong> követ téged."
+
+#: skylines/templates/notifications/events-table.jinja:153
+msgid "You joined SkyLines."
+msgstr ""
+
+#: skylines/templates/notifications/events-table.jinja:155
+#, fuzzy, python-format
+#| msgid "<strong>%(pilot)s</strong> is following you now."
+msgid "<strong>%(pilot)s</strong> joined SkyLines."
+msgstr "<strong>%(pilot)s</strong> követ téged."
+
+#: skylines/templates/notifications/list.jinja:24
+msgid "There are no more notifications."
+msgstr "Nincs több üzenet."
+
+#: skylines/templates/notifications/list.jinja:33
+#: skylines/templates/timeline/list.jinja:39
+msgid "Newer"
+msgstr "Újabb"
+
+#: skylines/templates/notifications/list.jinja:40
+msgid "Mark all as read"
+msgstr "Összes megjelölése olvasottként"
+
+#: skylines/templates/notifications/list.jinja:45
+#: skylines/templates/timeline/list.jinja:47
+msgid "Older"
+msgstr "Régebbi"
 
 #: skylines/templates/ranking/airports.jinja:12
 #: skylines/templates/ranking/clubs.jinja:11
@@ -809,7 +867,7 @@ msgid "Year"
 msgstr "Év"
 
 #: skylines/templates/statistics/distance-table.jinja:14
-#: skylines/templates/users/view.jinja:242
+#: skylines/templates/users/view.jinja:243
 #, python-format
 msgid "avg. %(distance)s per flight"
 msgstr "átl. %(distance)s repülésenként"
@@ -823,19 +881,19 @@ msgstr "Összesen"
 
 #: skylines/templates/statistics/duration-table.jinja:6
 #: skylines/templates/statistics/years.jinja:72
-#: skylines/templates/users/view.jinja:248
+#: skylines/templates/users/view.jinja:249
 msgid "Flight Time"
 msgstr "Repült idő"
 
 #: skylines/templates/statistics/duration-table.jinja:14
-#: skylines/templates/users/view.jinja:250
+#: skylines/templates/users/view.jinja:251
 #, python-format
 msgid "avg. %(hours)s hours per flight"
 msgstr "átl. %(hours)s óra repülésenként"
 
 #: skylines/templates/statistics/duration-table.jinja:15
 #: skylines/templates/statistics/duration-table.jinja:28
-#: skylines/templates/users/view.jinja:251
+#: skylines/templates/users/view.jinja:252
 #, python-format
 msgid "%(hours)s Hours"
 msgstr "%(hours)s óra"
@@ -854,6 +912,23 @@ msgstr "Statisztika <small> - %(club)s</small>"
 #, python-format
 msgid "Statistics <small>from %(airport)s</small>"
 msgstr "Statisztika <small> - %(airport)s</small>"
+
+#: skylines/templates/timeline/list.jinja:10
+#, fuzzy, python-format
+#| msgid "Flights <small>of %(pilot)s</small>"
+msgid "Timeline <small>of %(pilot)s</small>"
+msgstr "Flights <small> - %(pilot)s</small>"
+
+#: skylines/templates/timeline/list.jinja:12
+#: skylines/templates/users/view.jinja:164
+msgid "Timeline"
+msgstr ""
+
+#: skylines/templates/timeline/list.jinja:30
+#, fuzzy
+#| msgid "There are no more notifications."
+msgid "There are no more events."
+msgstr "Nincs több üzenet."
 
 #: skylines/templates/tracking/info.jinja:7
 msgid "What is it?"
@@ -1100,8 +1175,8 @@ msgstr "Meghatározatlan"
 msgid "Change Password"
 msgstr "Jelszó módosítás"
 
-#: skylines/templates/users/view.jinja:151 skylines/views/users.py:103
-#: skylines/views/users.py:115
+#: skylines/templates/users/view.jinja:151 skylines/views/users.py:106
+#: skylines/views/users.py:118
 msgid "Recover Password"
 msgstr "Elfelejtett jelszó"
 
@@ -1113,27 +1188,27 @@ msgstr "Követés leállítás"
 msgid "Follow"
 msgstr "Követés"
 
-#: skylines/templates/users/view.jinja:169
+#: skylines/templates/users/view.jinja:170
 msgid "Following"
 msgstr "Követés..."
 
-#: skylines/templates/users/view.jinja:182
+#: skylines/templates/users/view.jinja:183
 msgid "Followers"
 msgstr "Követők"
 
-#: skylines/templates/users/view.jinja:195
+#: skylines/templates/users/view.jinja:196
 msgid "Distance Flights"
 msgstr "Távrepülések"
 
-#: skylines/templates/users/view.jinja:227
+#: skylines/templates/users/view.jinja:228
 msgid "Last 12 Months"
 msgstr "Utolsó 12 hónap"
 
-#: skylines/templates/users/view.jinja:256
+#: skylines/templates/users/view.jinja:257
 msgid "Average Speed"
 msgstr "Átlagsebesség"
 
-#: skylines/templates/users/view.jinja:266
+#: skylines/templates/users/view.jinja:267
 msgid "Takeoff Locations"
 msgstr "Felszállóhelyek"
 
@@ -1249,12 +1324,12 @@ msgstr ""
 msgid "Your flight(s) have been successfully updated."
 msgstr "Repülési adataid feltöltése sikerült."
 
-#: skylines/views/user.py:127 skylines/views/users.py:30
+#: skylines/views/user.py:127 skylines/views/users.py:31
 msgid "Passwords do not match"
 msgstr "A jelszavak nem egyeznek"
 
-#: skylines/views/user.py:138 skylines/views/users.py:55
-#: skylines/views/users.py:124
+#: skylines/views/user.py:138 skylines/views/users.py:56
+#: skylines/views/users.py:127
 msgid "Verify Password"
 msgstr "Jelszó ellenőrzése"
 
@@ -1290,7 +1365,7 @@ msgstr "Csili-vili"
 msgid "Edit User"
 msgstr "Felhasználó módosítása"
 
-#: skylines/views/users.py:177
+#: skylines/views/users.py:180
 msgid ""
 "The mail server is currently not reachable. Please try again later or "
 "contact the developers."
@@ -1298,10 +1373,7 @@ msgstr ""
 "A levelezőszerver jelenleg nem elérhető. Kérlek próbáld meg újra később "
 "vagy jelezd a fejlesztőknek."
 
-#: skylines/views/users.py:212
+#: skylines/views/users.py:215
 msgid "Password changed."
 msgstr "Jelszó módosítva."
-
-#~ msgid "summary"
-#~ msgstr "áttekintés"
 

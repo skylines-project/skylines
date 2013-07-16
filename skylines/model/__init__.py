@@ -10,13 +10,13 @@ from .airspace import Airspace
 from .auth import User, Group, Permission
 from .club import Club
 from .elevation import Elevation
+from .event import Event, Notification
 from .flight import Flight
 from .flight_comment import FlightComment
 from .flight_phase import FlightPhase
 from .follower import Follower
 from .geo import Location
 from .igcfile import IGCFile
-from .notification import Event, Notification
 from .timezone import TimeZone
 from .trace import Trace
 from .tracking import TrackingFix, TrackingSession
