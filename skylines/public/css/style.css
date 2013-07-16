@@ -47,7 +47,7 @@ body {
   border-bottom: 0;
 }
 
-small, .small {
+small, .small, .icon-small {
   font-size: 85%;
 }
 
@@ -164,10 +164,6 @@ a.no-link {
    * of the "table .show" rule that changes this setting.
    */
   white-space: normal;
-}
-
-.icon-small {
-  font-size: 85%;
 }
 
 small .badge {
