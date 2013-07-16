@@ -23,6 +23,7 @@ class Event(db.Model):
         FLIGHT_COMMENT = 1
         FLIGHT = 2
         FOLLOWER = 3
+        NEW_USER = 4
 
     # Event time
 
@@ -211,6 +212,16 @@ def create_follower_notification(followed, follower):
     # Create the notification
     item = Notification(event=event, recipient=followed)
     db.session.add(item)
+
+
+def create_new_user_event(user):
+    """
+    Create event for a new SkyLines user.
+    """
+
+    # Create the event
+    event = Event(type=Event.Type.NEW_USER, actor=user)
+    db.session.add(event)
 
 
 def group_events(_events):

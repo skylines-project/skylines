@@ -19,6 +19,7 @@ from sqlalchemy.orm import joinedload
 
 from skylines import db
 from skylines.model import User, Group
+from skylines.model.event import create_new_user_event
 from skylines.forms import BootstrapForm, club
 from skylines.lib.decorators import validate
 
@@ -92,6 +93,8 @@ def new_post():
     pilots = Group.query(group_name='pilots').first()
     if pilots:
         pilots.users.append(user)
+
+    create_new_user_event(user)
 
     db.session.commit()
 

@@ -53,6 +53,8 @@
   <i class="icon-plane"></i>
 {%- elif event.type == types.FOLLOWER %}
   <i class="icon-user"></i>
+{%- elif event.type == types.NEW_USER %}
+  <i class="icon-asterisk small"></i>
 {%- endif %}&nbsp;
 {%- endmacro %}
 
@@ -73,6 +75,8 @@
     {{ render_flight_event_text(event) }}
   {%- elif event.type == types.FOLLOWER %}
     {{ render_follower_event_text(event) }}
+  {%- elif event.type == types.NEW_USER %}
+    {{ render_new_user_event_text(event) }}
   {%- else %}
     Error: Unknown event
   {%- endif %}
@@ -140,6 +144,15 @@
   {{ _('You started following <strong>%(num_pilots)s</strong> other pilots.', num_pilots=event.subevents|count) }}
 {%- else -%}
   {{ _('<strong>%(pilot)s</strong> started following <strong>%(num_pilots)s</strong> other pilots.', pilot=user_link(event.actor), num_pilots=event.subevents|count) }}
+{%- endif %}
+{%- endmacro %}
+
+
+{% macro render_new_user_event_text(event) -%}
+{% if g.current_user and event.actor_id == g.current_user.id -%}
+  {{ _('You joined SkyLines.') }}
+{%- else -%}
+  {{ _('<strong>%(pilot)s</strong> joined SkyLines.', pilot=user_link(event.actor)) }}
 {%- endif %}
 {%- endmacro %}
 
