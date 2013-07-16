@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version:  skylines\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2013-07-13 20:34+0200\n"
-"PO-Revision-Date: 2013-06-15 00:16+0000\n"
+"PO-Revision-Date: 2013-07-14 01:47+0000\n"
 "Last-Translator: Tobias Bieniek <Tobias.Bieniek@gmx.de>\n"
 "Language-Team: German <de@li.org>\n"
 "Plural-Forms: nplurals=2; plural=n != 1\n"
@@ -818,6 +818,7 @@ msgstr "avg. %(hours)s Stunden pro Flug"
 #: skylines/templates/statistics/duration-table.jinja:15
 #: skylines/templates/statistics/duration-table.jinja:28
 #: skylines/templates/users/view.jinja:251
+#, python-format
 msgid "%(hours)s Hours"
 msgstr "%(hours)s Stunden"
 

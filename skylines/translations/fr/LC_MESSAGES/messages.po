@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version:  skylines\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2013-07-13 20:34+0200\n"
-"PO-Revision-Date: 2013-06-26 13:10+0000\n"
+"PO-Revision-Date: 2013-07-15 17:36+0000\n"
 "Last-Translator: Adrien Ott <Unknown>\n"
 "Language-Team: French <fr@li.org>\n"
 "Plural-Forms: nplurals=2; plural=n > 1\n"
@@ -679,28 +679,24 @@ msgid "Warning!"
 msgstr "Attention !"
 
 #: skylines/templates/notifications/list.jinja:24
-#, fuzzy
-#| msgid "You don't have any unread notifications."
 msgid "There are no more notifications."
-msgstr "Vous n'avez pas de notification non lue"
+msgstr "Il n'y a plus de notification."
 
 #: skylines/templates/notifications/list.jinja:33
 msgid "Newer"
-msgstr ""
+msgstr "Plus récent"
 
 #: skylines/templates/notifications/list.jinja:40
 msgid "Mark all as read"
 msgstr "Tout marquer comme lu"
 
 #: skylines/templates/notifications/list.jinja:45
-#, fuzzy
-#| msgid "Gliders"
 msgid "Older"
-msgstr "Planeurs"
+msgstr "Plus ancien"
 
 #: skylines/templates/notifications/notifications-table.jinja:25
 msgid "New"
-msgstr ""
+msgstr "Nouveau"
 
 #: skylines/templates/notifications/notifications-table.jinja:71
 #, python-format
@@ -820,8 +816,7 @@ msgstr "%(hours)s heures en moyenne par vol"
 #: skylines/templates/statistics/duration-table.jinja:15
 #: skylines/templates/statistics/duration-table.jinja:28
 #: skylines/templates/users/view.jinja:251
-#, fuzzy, python-format
-#| msgid "%(hours)s hours"
+#, python-format
 msgid "%(hours)s Hours"
 msgstr "%(hours)s heures"
 

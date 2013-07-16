@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version:  skylines\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2013-07-13 20:34+0200\n"
-"PO-Revision-Date: 2012-12-03 00:08+0000\n"
+"PO-Revision-Date: 2013-06-01 22:39+0000\n"
 "Last-Translator: Pop Paul <poppali1@yahoo.com>\n"
 "Language-Team: Romanian <ro@li.org>\n"
 "Plural-Forms: nplurals=3; plural=(n == 1 ? 0: (((n % 100 > 19) || ((n % "
@@ -491,7 +491,6 @@ msgid "%(num)d comment"
 msgid_plural "%(num)d comments"
 msgstr[0] ""
 msgstr[1] ""
-msgstr[2] ""
 
 #: skylines/templates/flights/list.jinja:11
 #, python-format
@@ -901,12 +900,11 @@ msgstr ""
 
 #: skylines/templates/tracking/view.jinja:143
 #: skylines/templates/users/view.jinja:117 skylines/views/user.py:159
-#, fuzzy, python-format
+#, python-format
 msgid "%(num)u minute"
 msgid_plural "%(num)u minutes"
 msgstr[0] ""
 msgstr[1] ""
-msgstr[2] ""
 
 #: skylines/templates/tracking/view.jinja:146
 msgid "The live tracking delay is ignored because of your account privileges."
@@ -1221,7 +1219,3 @@ msgstr ""
 #: skylines/views/users.py:212
 msgid "Password changed."
 msgstr ""
-
-#~ msgid "You don't have any unread notifications."
-#~ msgstr ""
-

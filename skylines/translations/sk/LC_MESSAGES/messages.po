@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version:  skylines\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2013-07-13 20:34+0200\n"
-"PO-Revision-Date: 2013-03-30 10:16+0000\n"
+"PO-Revision-Date: 2013-07-14 01:46+0000\n"
 "Last-Translator: Eric Praznovsky <eric@virtualsoaring.eu>\n"
 "Language-Team: Slovak <sk@li.org>\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 1 : (n>=2 && n<=4) ? 2 : 0\n"
@@ -906,6 +906,7 @@ msgstr "Oneskorenie"
 
 #: skylines/templates/tracking/view.jinja:143
 #: skylines/templates/users/view.jinja:117 skylines/views/user.py:159
+#, python-format
 msgid "%(num)u minute"
 msgid_plural "%(num)u minutes"
 msgstr[0] "%(num)u minút"
@@ -1132,6 +1133,7 @@ msgid "You have to be logged in to post comments!"
 msgstr "Musíte byť prihlásený, aby ste mohli písať komentáre!"
 
 #: skylines/views/login.py:44
+#, python-format
 msgid "You are now logged in. Welcome back, %(user)s!"
 msgstr "Teraz ste prihlásený. Vitajte späť, %(user)s!"
 

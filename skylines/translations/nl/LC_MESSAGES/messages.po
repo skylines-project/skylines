@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version:  skylines\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2013-07-13 20:34+0200\n"
-"PO-Revision-Date: 2013-03-02 13:17+0000\n"
+"PO-Revision-Date: 2013-06-27 21:59+0000\n"
 "Last-Translator: Roel Baardman <rbaardman@zonnet.nl>\n"
 "Language-Team: Dutch <nl@li.org>\n"
 "Plural-Forms: nplurals=2; plural=n != 1\n"
@@ -748,6 +748,7 @@ msgid "No pilots found."
 msgstr ""
 
 #: skylines/templates/search/list.jinja:8
+#, python-format
 msgid "Search <small>for \"%(search_text)s\"</small>"
 msgstr ""
 

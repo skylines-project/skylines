@@ -823,8 +823,7 @@ msgstr "śred. %(hours)s godzin na lot"
 #: skylines/templates/statistics/duration-table.jinja:15
 #: skylines/templates/statistics/duration-table.jinja:28
 #: skylines/templates/users/view.jinja:251
-#, fuzzy, python-format
-#| msgid "%(hours)s hours"
+#, python-format
 msgid "%(hours)s Hours"
 msgstr "%(hours)s godzin"
 
