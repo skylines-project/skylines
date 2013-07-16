@@ -2,7 +2,7 @@ from flask import Blueprint, current_app, render_template, jsonify, g
 
 from skylines.lib.helpers import isoformat_utc
 from skylines.lib.decorators import jsonp
-from skylines.model import TrackingFix, Airport
+from skylines.model import TrackingFix, Airport, Follower
 
 tracking_blueprint = Blueprint('tracking', 'skylines')
 
@@ -27,7 +27,21 @@ def index():
 
     tracks = [(track, get_nearest_airport(track)) for track in tracks]
 
-    return render_template('tracking/list.jinja', tracks=tracks)
+    if g.current_user:
+        followers = [f.destination_id for f in Follower.query(source=g.current_user)]
+
+        friend_tracks = [t for t in tracks if t[0].pilot_id in followers]
+        other_tracks = [t for t in tracks if t not in friend_tracks]
+
+        print friend_tracks
+        print other_tracks
+    else:
+        friend_tracks = []
+        other_tracks = tracks
+
+    return render_template('tracking/list.jinja',
+                           friend_tracks=friend_tracks,
+                           other_tracks=other_tracks)
 
 
 @tracking_blueprint.route('/info')
