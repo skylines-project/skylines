@@ -19,6 +19,11 @@ class EventGroup:
 
     @property
     def unread(self):
+        """
+        If this is a notification:
+        `unread` is only false if all subnotifications are read.
+        """
+
         for event in self.subevents:
             if hasattr(event, 'unread') and event.unread:
                 return True
