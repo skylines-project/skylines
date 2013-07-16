@@ -619,7 +619,7 @@ msgstr "Erzähl es herum"
 
 #: skylines/templates/flights/view.jinja:166
 msgid "Overview"
-msgstr ""
+msgstr "Übersicht"
 
 #: skylines/templates/flights/view.jinja:168
 #: skylines/templates/flights/view.jinja:189
@@ -712,14 +712,12 @@ msgstr ""
 "am <strong>%(date)s</strong> kommentiert."
 
 #: skylines/templates/notifications/notifications-table.jinja:88
-#, fuzzy, python-format
-#| msgid "" "<strong>%(pilot)s</strong> commented on your "
-#| "<strong>%(distance)s</strong> flight on the <strong>%(date)s</strong>."
+#, python-format
 msgid ""
 "<strong>%(pilot)s</strong> commented on a <strong>%(distance)s</strong> "
 "flight on the <strong>%(date)s</strong>."
 msgstr ""
-"<strong>%(pilot)s</strong> hat deinen <strong>%(distance)s</strong> Flug "
+"<strong>%(pilot)s</strong> hat einen <strong>%(distance)s</strong> Flug "
 "am <strong>%(date)s</strong> kommentiert."
 
 #: skylines/templates/notifications/notifications-table.jinja:97
@@ -746,10 +744,9 @@ msgid "<strong>%(pilot)s</strong> is following you now."
 msgstr "<strong>%(pilot)s</strong> folgt dir jetzt."
 
 #: skylines/templates/notifications/notifications-table.jinja:114
-#, fuzzy, python-format
-#| msgid "<strong>%(pilot)s</strong> is following you now."
+#, python-format
 msgid "<strong>%(pilot)s</strong> is following <strong>%(pilot2)s</strong> now."
-msgstr "<strong>%(pilot)s</strong> folgt dir jetzt."
+msgstr "<strong>%(pilot)s</strong> folgt jetzt <strong>%(pilot2)s</strong>."
 
 #: skylines/templates/ranking/airports.jinja:12
 #: skylines/templates/ranking/clubs.jinja:11
@@ -887,7 +884,7 @@ msgstr "verfügbar ab %(xcsoar_6_4)s"
 
 #: skylines/templates/tracking/info.jinja:15
 msgid "Instructions are below."
-msgstr ""
+msgstr "Eine Anleitung findest du weiter unten."
 
 #: skylines/templates/tracking/info.jinja:16
 msgid "now available in the current version of Gaggle"
@@ -933,11 +930,11 @@ msgstr ""
 
 #: skylines/templates/tracking/list.jinja:20
 msgid "Friends"
-msgstr ""
+msgstr "Freunde"
 
 #: skylines/templates/tracking/list.jinja:23
 msgid "Other pilots"
-msgstr ""
+msgstr "Andere Piloten"
 
 #: skylines/templates/tracking/list.jinja:27
 msgid "How to use Live Tracking?"
