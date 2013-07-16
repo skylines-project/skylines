@@ -19,10 +19,13 @@ def inject_notification_count():
 
 
 def _filter_query(query, args):
-    if 'type' in args:
-        query = query.filter(Event.type == args['type'])
-    if 'user' in args:
-        query = query.filter(Event.actor_id == args['user'])
+    type_ = args.get('type', type=int)
+    if type_:
+        query = query.filter(Event.type == type_)
+
+    user = args.get('user', type=int)
+    if user:
+        query = query.filter(Event.actor_id == user)
 
     return query
 
