@@ -41,8 +41,6 @@ def _filter_query(query, args):
         query = query.filter(Event.type == args['type'])
     if 'user' in args:
         query = query.filter(Event.actor_id == args['user'])
-    if 'flight' in args:
-        query = query.filter(Event.flight_id == args['flight'])
 
     return query
 
