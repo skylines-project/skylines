@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  skylines\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2013-07-13 20:34+0200\n"
+"POT-Creation-Date: 2013-07-16 22:32+0200\n"
 "PO-Revision-Date: 2013-07-14 01:46+0000\n"
 "Last-Translator: Eric Praznovsky <eric@virtualsoaring.eu>\n"
 "Language-Team: Slovak <sk@li.org>\n"
@@ -59,7 +59,7 @@ msgstr "Klub"
 #: skylines/templates/ranking/clubs.jinja:9
 #: skylines/templates/ranking/pilots.jinja:9
 #: skylines/templates/users/users-table.jinja:7
-#: skylines/templates/users/view.jinja:95 skylines/views/user.py:179
+#: skylines/templates/users/view.jinja:95 skylines/views/user.py:192
 #: skylines/views/users.py:43
 msgid "Name"
 msgstr "Meno"
@@ -68,7 +68,7 @@ msgstr "Meno"
 msgid "Website"
 msgstr "Webstránka"
 
-#: skylines/forms/pilot.py:22 skylines/views/user.py:178
+#: skylines/forms/pilot.py:22 skylines/views/user.py:191
 #: skylines/views/users.py:42 skylines/views/users.py:108
 msgid "eMail Address"
 msgstr "E-mailová adresa"
@@ -86,8 +86,8 @@ msgstr "IGC alebo ZIP súbor(y)"
 #: skylines/templates/flights/flights-table.jinja:10
 #: skylines/templates/search/list.jinja:43
 #: skylines/templates/search/list.jinja:53
-#: skylines/templates/tracking/list.jinja:23
-#: skylines/templates/tracking/view.jinja:127 skylines/views/flight.py:376
+#: skylines/templates/tracking/list.jinja:35
+#: skylines/templates/tracking/view.jinja:127 skylines/views/flight.py:392
 msgid "Pilot"
 msgstr "Pilot"
 
@@ -254,7 +254,7 @@ msgstr "Prihlásenie"
 msgid "Live"
 msgstr "Naživo"
 
-#: skylines/templates/topbar.jinja:5 skylines/templates/topbar.jinja:109
+#: skylines/templates/topbar.jinja:5 skylines/templates/topbar.jinja:111
 #: skylines/templates/clubs/list.jinja:20
 #: skylines/templates/clubs/view.jinja:50
 #: skylines/templates/flights/list.jinja:27
@@ -276,9 +276,10 @@ msgstr "Lety"
 msgid "Ranking"
 msgstr "Rebríček"
 
-#: skylines/templates/topbar.jinja:7 skylines/templates/topbar.jinja:110
+#: skylines/templates/topbar.jinja:7 skylines/templates/topbar.jinja:112
 #: skylines/templates/clubs/list.jinja:21
 #: skylines/templates/clubs/view.jinja:51
+#: skylines/templates/flights/view.jinja:173
 #: skylines/templates/search/list.jinja:81
 #: skylines/templates/search/list.jinja:85
 #: skylines/templates/search/list.jinja:88
@@ -296,7 +297,7 @@ msgstr ""
 msgid "Email Address"
 msgstr "E-mailová adresa"
 
-#: skylines/templates/topbar.jinja:72 skylines/views/user.py:123
+#: skylines/templates/topbar.jinja:72 skylines/views/user.py:136
 #: skylines/views/users.py:45 skylines/views/users.py:122
 msgid "Password"
 msgstr "Heslo"
@@ -313,12 +314,12 @@ msgstr "Zabudli ste heslo?"
 msgid "Don't have an account?"
 msgstr "Ešte nemáte svoj ​​účet?"
 
-#: skylines/templates/topbar.jinja:91
+#: skylines/templates/topbar.jinja:92
 #: skylines/templates/notifications/list.jinja:8
 msgid "Notifications"
 msgstr "Oznámenia"
 
-#: skylines/templates/topbar.jinja:112
+#: skylines/templates/topbar.jinja:114
 msgid "Logout"
 msgstr "Odhlásiť"
 
@@ -392,9 +393,9 @@ msgid "Landing"
 msgstr "Pristátie"
 
 #: skylines/templates/flights/details-table.jinja:52
-#: skylines/templates/flights/phases-table.jinja:6
-#: skylines/templates/flights/phases-table.jinja:32
-#: skylines/templates/flights/phases-table.jinja:66
+#: skylines/templates/flights/phases-table.jinja:7
+#: skylines/templates/flights/phases-table.jinja:31
+#: skylines/templates/flights/phases-table.jinja:71
 msgid "Duration"
 msgstr "Trvanie"
 
@@ -420,7 +421,7 @@ msgstr "Hendikep"
 
 #: skylines/templates/flights/details-table.jinja:71
 #: skylines/templates/flights/flights-table.jinja:76
-#: skylines/templates/tracking/list.jinja:41 skylines/views/api.py:57
+#: skylines/templates/tracking/list.jinja:54 skylines/views/api.py:57
 msgid "Unknown"
 msgstr "Neznámy"
 
@@ -463,8 +464,8 @@ msgid "Delete"
 msgstr "Vymazať"
 
 #: skylines/templates/flights/flights-table.jinja:11
-#: skylines/templates/flights/phases-table.jinja:34
-#: skylines/templates/flights/phases-table.jinja:68
+#: skylines/templates/flights/phases-table.jinja:39
+#: skylines/templates/flights/phases-table.jinja:73
 #: skylines/templates/statistics/distance-table.jinja:6
 #: skylines/templates/statistics/years.jinja:69
 #: skylines/templates/users/view.jinja:199
@@ -483,6 +484,7 @@ msgid "Time"
 msgstr "Čas"
 
 #: skylines/templates/flights/flights-table.jinja:96
+#: skylines/templates/notifications/notifications-table.jinja:120
 msgid "Show"
 msgstr "Ukázať"
 
@@ -550,40 +552,40 @@ msgstr "Nepriradené lety"
 msgid "Pinned Flights"
 msgstr "Pripnuté lety"
 
-#: skylines/templates/flights/phases-table.jinja:8
-#: skylines/templates/flights/phases-table.jinja:35
-#: skylines/templates/flights/phases-table.jinja:69
-msgid "Avg. vario"
-msgstr "Pr. stúpanie"
-
-#: skylines/templates/flights/phases-table.jinja:9
+#: skylines/templates/flights/phases-table.jinja:6
 msgid "Thermals"
 msgstr "Stupákov"
 
-#: skylines/templates/flights/phases-table.jinja:36
-#: skylines/templates/flights/phases-table.jinja:70
+#: skylines/templates/flights/phases-table.jinja:6
+#: skylines/templates/flights/phases-table.jinja:43
+#: skylines/templates/flights/phases-table.jinja:74
+msgid "Avg. vario"
+msgstr "Pr. stúpanie"
+
+#: skylines/templates/flights/phases-table.jinja:47
+#: skylines/templates/flights/phases-table.jinja:75
 msgid "Avg. speed"
 msgstr "Pr. rýchlosť"
 
-#: skylines/templates/flights/phases-table.jinja:37
-#: skylines/templates/flights/phases-table.jinja:71
+#: skylines/templates/flights/phases-table.jinja:51
+#: skylines/templates/flights/phases-table.jinja:76
 msgid "Glide Rate"
 msgstr "Kĺzavosť"
 
-#: skylines/templates/flights/phases-table.jinja:37
-#: skylines/templates/flights/phases-table.jinja:71
+#: skylines/templates/flights/phases-table.jinja:51
+#: skylines/templates/flights/phases-table.jinja:76
 msgid "GR"
 msgstr "GR"
 
-#: skylines/templates/flights/phases-table.jinja:38
+#: skylines/templates/flights/phases-table.jinja:55
 msgid "Glides"
 msgstr "Preskokov"
 
-#: skylines/templates/flights/phases-table.jinja:64
+#: skylines/templates/flights/phases-table.jinja:69
 msgid "Phase"
 msgstr "Fáza"
 
-#: skylines/templates/flights/phases-table.jinja:65
+#: skylines/templates/flights/phases-table.jinja:70
 msgid "Start"
 msgstr "Štart"
 
@@ -591,49 +593,49 @@ msgstr "Štart"
 msgid "Spread the word"
 msgstr "Pochváľte sa svojím letom"
 
+#: skylines/templates/flights/view.jinja:166
+msgid "Overview"
+msgstr ""
+
 #: skylines/templates/flights/view.jinja:168
+#: skylines/templates/flights/view.jinja:189
+msgid "Comments"
+msgstr "Komentáre"
+
+#: skylines/templates/flights/view.jinja:181
 #: skylines/templates/tracking/view.jinja:157
 msgid "Full-screen map"
 msgstr "Celoobrazovková mapa"
 
-#: skylines/templates/flights/view.jinja:171
+#: skylines/templates/flights/view.jinja:184
 msgid "Activate this to show the flight on top of other flights on the map"
 msgstr "Kliknite tu pre zobrazenie tohto letu na vrchu ďalších letov na mape"
 
-#: skylines/templates/flights/view.jinja:176
-msgid "Detailed statistics"
-msgstr "Detailné štatistiky"
-
-#: skylines/templates/flights/view.jinja:181
-msgid "Comments"
-msgstr "Komentáre"
-
-#: skylines/templates/flights/view.jinja:197
+#: skylines/templates/flights/view.jinja:205
 msgid "No comments yet."
 msgstr "Žiadne komentáre"
 
-#: skylines/templates/flights/view.jinja:206
+#: skylines/templates/flights/view.jinja:214
 msgid "Add comment"
 msgstr "Pridať komentár"
 
-#: skylines/templates/flights/view.jinja:220
-msgid "An error occurred while decoding this flight."
-msgstr "Došlo k chybe pri dekódovaní tohto letu."
-
-#: skylines/templates/flights/view.jinja:229
+#: skylines/templates/flights/view.jinja:223
 msgid "Circling performance"
 msgstr "Charakteristiky krúžení"
 
-#: skylines/templates/flights/view.jinja:229
-#: skylines/templates/flights/view.jinja:234
-msgid "summary"
-msgstr "súhrn"
-
-#: skylines/templates/flights/view.jinja:234
+#: skylines/templates/flights/view.jinja:226
 msgid "Cruise performance"
 msgstr "Charakteristiky preskokov"
 
-#: skylines/templates/flights/view.jinja:241
+#: skylines/templates/flights/view.jinja:231
+msgid "Detailed statistics"
+msgstr "Detailné štatistiky"
+
+#: skylines/templates/flights/view.jinja:245
+msgid "An error occurred while decoding this flight."
+msgstr "Došlo k chybe pri dekódovaní tohto letu."
+
+#: skylines/templates/flights/view.jinja:254
 msgid "Phases"
 msgstr "Fázy"
 
@@ -656,7 +658,6 @@ msgstr "Varovanie!"
 
 #: skylines/templates/notifications/list.jinja:24
 #, fuzzy
-#| msgid "You don't have any unread notifications."
 msgid "There are no more notifications."
 msgstr "Nemáte žiadne neprečítané oznámenia."
 
@@ -670,38 +671,49 @@ msgstr "Označiť všetko ako prečítané"
 
 #: skylines/templates/notifications/list.jinja:45
 #, fuzzy
-#| msgid "Gliders"
 msgid "Older"
 msgstr "Vetrone"
 
-#: skylines/templates/notifications/notifications-table.jinja:25
+#: skylines/templates/notifications/notifications-table.jinja:23
 msgid "New"
 msgstr ""
 
-#: skylines/templates/notifications/notifications-table.jinja:71
+#: skylines/templates/notifications/notifications-table.jinja:83
 #, python-format
 msgid ""
 "<strong>%(pilot)s</strong> commented on your "
 "<strong>%(distance)s</strong> flight on the <strong>%(date)s</strong>."
 msgstr ""
 
-#: skylines/templates/notifications/notifications-table.jinja:78
+#: skylines/templates/notifications/notifications-table.jinja:88
+#, python-format
+msgid ""
+"<strong>%(pilot)s</strong> commented on a <strong>%(distance)s</strong> "
+"flight on the <strong>%(date)s</strong>."
+msgstr ""
+
+#: skylines/templates/notifications/notifications-table.jinja:97
 #, python-format
 msgid ""
 "<strong>%(pilot)s</strong> uploaded a new <strong>%(distance)s</strong> "
 "flight on the <strong>%(date)s</strong>."
 msgstr ""
 
-#: skylines/templates/notifications/notifications-table.jinja:85
+#: skylines/templates/notifications/notifications-table.jinja:104
 #, python-format
 msgid ""
 "<strong>%(pilot)s</strong> uploaded <strong>%(num_flights)s</strong> new "
 "flights."
 msgstr ""
 
-#: skylines/templates/notifications/notifications-table.jinja:92
+#: skylines/templates/notifications/notifications-table.jinja:112
 #, python-format
 msgid "<strong>%(pilot)s</strong> is following you now."
+msgstr ""
+
+#: skylines/templates/notifications/notifications-table.jinja:114
+#, python-format
+msgid "<strong>%(pilot)s</strong> is following <strong>%(pilot2)s</strong> now."
 msgstr ""
 
 #: skylines/templates/ranking/airports.jinja:12
@@ -771,7 +783,7 @@ msgstr ""
 #: skylines/templates/statistics/distance-table.jinja:27
 #: skylines/templates/statistics/duration-table.jinja:27
 #: skylines/templates/statistics/flights-table.jinja:23
-#: skylines/views/flight.py:178
+#: skylines/views/flight.py:179
 msgid "Total"
 msgstr "Celkovo"
 
@@ -832,6 +844,10 @@ msgstr "Klienti"
 msgid "available starting with %(xcsoar_6_4)s"
 msgstr ""
 
+#: skylines/templates/tracking/info.jinja:15
+msgid "Instructions are below."
+msgstr ""
+
 #: skylines/templates/tracking/info.jinja:16
 msgid "now available in the current version of Gaggle"
 msgstr ""
@@ -869,21 +885,29 @@ msgid ""
 "and enter your Live Tracking key."
 msgstr ""
 
-#: skylines/templates/tracking/list.jinja:22
+#: skylines/templates/tracking/list.jinja:20
+msgid "Friends"
+msgstr ""
+
+#: skylines/templates/tracking/list.jinja:23
+msgid "Other pilots"
+msgstr ""
+
+#: skylines/templates/tracking/list.jinja:27
+msgid "How to use Live Tracking?"
+msgstr "Ako používať sledovanie naživo?"
+
+#: skylines/templates/tracking/list.jinja:34
 msgid "Last fix"
 msgstr "Posledný bod"
 
-#: skylines/templates/tracking/list.jinja:24
+#: skylines/templates/tracking/list.jinja:36
 msgid "Nearest Airport"
 msgstr "Najbližšie letisko"
 
-#: skylines/templates/tracking/list.jinja:25
+#: skylines/templates/tracking/list.jinja:37
 msgid "Altitude"
 msgstr ""
-
-#: skylines/templates/tracking/list.jinja:56
-msgid "How to use Live Tracking?"
-msgstr "Ako používať sledovanie naživo?"
 
 #: skylines/templates/tracking/map.jinja:10
 #: skylines/templates/tracking/view.jinja:10
@@ -905,7 +929,7 @@ msgid "Delay"
 msgstr "Oneskorenie"
 
 #: skylines/templates/tracking/view.jinja:143
-#: skylines/templates/users/view.jinja:117 skylines/views/user.py:159
+#: skylines/templates/users/view.jinja:117 skylines/views/user.py:172
 #, python-format
 msgid "%(num)u minute"
 msgid_plural "%(num)u minutes"
@@ -950,15 +974,15 @@ msgstr "Žiaden let nebol uložený."
 msgid "Filename"
 msgstr "Meno súboru"
 
-#: skylines/templates/upload/result.jinja:23 skylines/views/flight.py:419
+#: skylines/templates/upload/result.jinja:23 skylines/views/flight.py:435
 msgid "Aircraft Model"
 msgstr "Typ lietadla"
 
-#: skylines/templates/upload/result.jinja:24 skylines/views/flight.py:420
+#: skylines/templates/upload/result.jinja:24 skylines/views/flight.py:436
 msgid "Aircraft Registration"
 msgstr "Imatrikulačná značka"
 
-#: skylines/templates/upload/result.jinja:25 skylines/views/flight.py:421
+#: skylines/templates/upload/result.jinja:25 skylines/views/flight.py:437
 msgid "Competition Number"
 msgstr "Súťažné znaky"
 
@@ -1018,7 +1042,7 @@ msgstr "Viac informácií"
 msgid "Tracking delay"
 msgstr "Oneskorenie sledovania"
 
-#: skylines/templates/users/view.jinja:115 skylines/views/user.py:157
+#: skylines/templates/users/view.jinja:115 skylines/views/user.py:170
 msgid "None"
 msgstr "Žiaden"
 
@@ -1026,8 +1050,8 @@ msgstr "Žiaden"
 msgid "Unspecified"
 msgstr ""
 
-#: skylines/templates/users/view.jinja:147 skylines/views/user.py:118
-#: skylines/views/user.py:137
+#: skylines/templates/users/view.jinja:147 skylines/views/user.py:131
+#: skylines/views/user.py:150
 msgid "Change Password"
 msgstr "Zmeniť heslo"
 
@@ -1084,51 +1108,51 @@ msgstr "Licencia"
 msgid "Edit Club"
 msgstr "Upraviť klub"
 
-#: skylines/views/flight.py:175
+#: skylines/views/flight.py:176
 msgid "Left"
 msgstr "Vľavo"
 
-#: skylines/views/flight.py:176
+#: skylines/views/flight.py:177
 msgid "Mixed"
 msgstr "Zmiešané"
 
-#: skylines/views/flight.py:177
+#: skylines/views/flight.py:178
 msgid "Right"
 msgstr "Vpravo"
 
-#: skylines/views/flight.py:181
+#: skylines/views/flight.py:182
 msgid "Powered"
 msgstr "Motor"
 
-#: skylines/views/flight.py:182
+#: skylines/views/flight.py:183
 msgid "Circling"
 msgstr "Krúženie"
 
-#: skylines/views/flight.py:183
+#: skylines/views/flight.py:184
 msgid "Cruise"
 msgstr "Preskok"
 
-#: skylines/views/flight.py:377
+#: skylines/views/flight.py:393
 msgid "Co-Pilot"
 msgstr "Druhý pilot"
 
-#: skylines/views/flight.py:389
+#: skylines/views/flight.py:405
 msgid "Select Pilot"
 msgstr "Vybrať pilota"
 
-#: skylines/views/flight.py:452
+#: skylines/views/flight.py:468
 msgid "Change Aircraft"
 msgstr "Zmeniť lietadlo"
 
-#: skylines/views/flight.py:496
+#: skylines/views/flight.py:512
 msgid "Delete Flight"
 msgstr "Vymazať let"
 
-#: skylines/views/flight.py:497
+#: skylines/views/flight.py:513
 msgid "Are you sure you want to delete this flight?"
 msgstr "Ste si istí, že chcete zmazať tento let?"
 
-#: skylines/views/flight.py:504
+#: skylines/views/flight.py:520
 msgid "You have to be logged in to post comments!"
 msgstr "Musíte byť prihlásený, aby ste mohli písať komentáre!"
 
@@ -1180,44 +1204,44 @@ msgstr ""
 msgid "Your flight(s) have been successfully updated."
 msgstr "Váš let bol úspešne aktualizovaný."
 
-#: skylines/views/user.py:114 skylines/views/users.py:30
+#: skylines/views/user.py:127 skylines/views/users.py:30
 msgid "Passwords do not match"
 msgstr "Heslá sa nezhodujú"
 
-#: skylines/views/user.py:125 skylines/views/users.py:55
+#: skylines/views/user.py:138 skylines/views/users.py:55
 #: skylines/views/users.py:124
 msgid "Verify Password"
 msgstr "Overiť heslo"
 
-#: skylines/views/user.py:180
+#: skylines/views/user.py:193
 msgid "Tracking Delay"
 msgstr "Oneskorenie sledovania"
 
-#: skylines/views/user.py:181
+#: skylines/views/user.py:194
 msgid "Unit Preset"
 msgstr ""
 
-#: skylines/views/user.py:182
+#: skylines/views/user.py:195
 msgid "Distance Unit"
 msgstr "Vzdialenostná jednotka"
 
-#: skylines/views/user.py:183
+#: skylines/views/user.py:196
 msgid "Speed Unit"
 msgstr "Rýchlostná jednotka"
 
-#: skylines/views/user.py:184
+#: skylines/views/user.py:197
 msgid "Lift Unit"
 msgstr "Jednotka stúpania"
 
-#: skylines/views/user.py:185
+#: skylines/views/user.py:198
 msgid "Altitude Unit"
 msgstr "Výšková jednotka"
 
-#: skylines/views/user.py:186
+#: skylines/views/user.py:199
 msgid "Eye Candy"
 msgstr "Eye Candy"
 
-#: skylines/views/user.py:211
+#: skylines/views/user.py:224
 msgid "Edit User"
 msgstr "Upraviť používateľa"
 
@@ -1230,4 +1254,7 @@ msgstr ""
 #: skylines/views/users.py:212
 msgid "Password changed."
 msgstr "Heslo bolo zmenené."
+
+#~ msgid "summary"
+#~ msgstr "súhrn"
 
