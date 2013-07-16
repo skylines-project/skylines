@@ -61,6 +61,8 @@
 {% if event.grouped -%}
   {% if event.type == types.FLIGHT -%}
     {{ render_grouped_flights_event_text(event) }}
+  {%- elif event.type == types.FOLLOWER -%}
+    {{ render_grouped_followers_event_text(event) }}
   {%- else %}
     Error: Unknown event group
   {%- endif %}
@@ -113,6 +115,11 @@
 {%- else -%}
   {{ _('<strong>%(pilot)s</strong> is following <strong>%(pilot2)s</strong> now.', pilot=user_link(event.actor), pilot2=user_link(event.user)) }}
 {%- endif %}
+{%- endmacro %}
+
+
+{% macro render_grouped_followers_event_text(event) -%}
+  {{ _('<strong>%(pilot)s</strong> is following <strong>%(num_pilots)s</strong> other pilots.', pilot=user_link(event.actor), num_pilots=event.subevents|count) }}
 {%- endmacro %}
 
 

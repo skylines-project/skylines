@@ -7,6 +7,7 @@ from skylines.model import Event, Notification
 
 GROUPABLE_EVENT_TYPES = [
     Event.Type.FLIGHT,
+    Event.Type.FOLLOWER,
 ]
 
 
