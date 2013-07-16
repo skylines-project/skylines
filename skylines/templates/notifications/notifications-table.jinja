@@ -86,6 +86,10 @@
        pilot=user_link(event.actor),
        distance=h.format_distance(event.flight.olc_classic_distance),
        date=h.format_date(event.flight.date_local)) }}
+{%- elif g.current_user and event.actor_id == g.current_user.id -%}
+  {{ _('You commented on a <strong>%(distance)s</strong> flight on the <strong>%(date)s</strong>.',
+       distance=h.format_distance(event.flight.olc_classic_distance),
+       date=h.format_date(event.flight.date_local)) }}
 {%- else -%}
   {{ _('<strong>%(pilot)s</strong> commented on a <strong>%(distance)s</strong> flight on the <strong>%(date)s</strong>.',
        pilot=user_link(event.actor),
@@ -96,22 +100,35 @@
 
 
 {% macro render_flight_event_text(event) -%}
-{% trans pilot=user_link(event.actor), distance=h.format_distance(event.flight.olc_classic_distance), date=h.format_date(event.flight.date_local) -%}
-<strong>{{ pilot }}</strong> uploaded a new <strong>{{ distance }}</strong> flight on the <strong>{{ date }}</strong>.
-{%- endtrans %}
+{% if g.current_user and event.actor_id == g.current_user.id -%}
+  {{ _('You uploaded a <strong>%(distance)s</strong> flight on the <strong>%(date)s</strong>.',
+       distance=h.format_distance(event.flight.olc_classic_distance),
+       date=h.format_date(event.flight.date_local)) }}
+{%- else -%}
+  {{ _('<strong>%(pilot)s</strong> uploaded a new <strong>%(distance)s</strong> flight on the <strong>%(date)s</strong>.',
+       pilot=user_link(event.actor),
+       distance=h.format_distance(event.flight.olc_classic_distance),
+       date=h.format_date(event.flight.date_local)) }}
+{%- endif %}
 {%- endmacro %}
 
 
 {% macro render_grouped_flights_event_text(event) -%}
-{% trans pilot=user_link(event.actor), num_flights=event.subevents|count -%}
-<strong>{{ pilot }}</strong> uploaded <strong>{{ num_flights }}</strong> new flights.
-{%- endtrans %}
+{% if g.current_user and event.actor_id == g.current_user.id -%}
+  {{ _('You uploaded <strong>%(num_flights)s</strong> new flights.',
+       num_flights=event.subevents|count) }}
+{%- else -%}
+  {{ _('<strong>%(pilot)s</strong> uploaded <strong>%(num_flights)s</strong> new flights.',
+       pilot=user_link(event.actor), num_flights=event.subevents|count) }}
+{%- endif %}
 {%- endmacro %}
 
 
 {% macro render_follower_event_text(event) -%}
-{% if g.current_user and event.user_id == current_user.id -%}
+{% if g.current_user and event.user_id == g.current_user.id -%}
   {{ _('<strong>%(pilot)s</strong> is following you now.', pilot=user_link(event.actor)) }}
+{%- elif g.current_user and event.actor_id == g.current_user.id -%}
+  {{ _('You are following <strong>%(pilot)s</strong> now.', pilot=user_link(event.user)) }}
 {%- else -%}
   {{ _('<strong>%(pilot)s</strong> is following <strong>%(pilot2)s</strong> now.', pilot=user_link(event.actor), pilot2=user_link(event.user)) }}
 {%- endif %}
@@ -119,7 +136,11 @@
 
 
 {% macro render_grouped_followers_event_text(event) -%}
+{% if g.current_user and event.actor_id == g.current_user.id -%}
+  {{ _('You are following <strong>%(num_pilots)s</strong> other pilots.', num_pilots=event.subevents|count) }}
+{%- else -%}
   {{ _('<strong>%(pilot)s</strong> is following <strong>%(num_pilots)s</strong> other pilots.', pilot=user_link(event.actor), num_pilots=event.subevents|count) }}
+{%- endif %}
 {%- endmacro %}
 
 
