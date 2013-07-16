@@ -16,6 +16,12 @@
 
 
 {% block content -%}
+{{ tracking_list(tracks) }}
+
+<a href="{{ url_for('.info') }}" class="btn"><i class="icon-question-sign"></i> {% trans %}How to use Live Tracking?{% endtrans %}</a>
+{%- endblock %}
+
+{% macro tracking_list(tracks) -%}
 <table id="flight-table" class="table table-striped">
   <thead>
     <tr>
@@ -52,6 +58,4 @@
     {%- endfor %}
   </tbody>
 </table>
-
-<a href="{{ url_for('.info') }}" class="btn"><i class="icon-question-sign"></i> {% trans %}How to use Live Tracking?{% endtrans %}</a>
-{%- endblock %}
+{%- endmacro %}
