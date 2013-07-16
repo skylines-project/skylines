@@ -30,7 +30,11 @@ def index():
     if g.current_user:
         followers = [f.destination_id for f in Follower.query(source=g.current_user)]
 
-        friend_tracks = [t for t in tracks if t[0].pilot_id in followers]
+        def is_self_or_follower(track):
+            pilot_id = track[0].pilot_id
+            return pilot_id == g.current_user.id or pilot_id in followers
+
+        friend_tracks = [t for t in tracks if is_self_or_follower(t)]
         other_tracks = [t for t in tracks if t not in friend_tracks]
 
         print friend_tracks
