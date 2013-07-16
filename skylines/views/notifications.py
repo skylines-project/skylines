@@ -5,6 +5,10 @@ from skylines import db
 from skylines.lib.util import str_to_bool
 from skylines.model import Event, Notification
 
+GROUPABLE_EVENT_TYPES = [
+    Event.Type.FLIGHT,
+]
+
 
 class EventGroup:
     grouped = True
@@ -56,8 +60,8 @@ def _group_events(_events):
         # get last event from list for comparison
         last_event = events[-1]
 
-        # if there are multiple flight events from the same actor -> group them
-        if (event.type == Event.Type.FLIGHT and
+        # if there are multiple groupable events from the same actor -> group them
+        if (event.type in GROUPABLE_EVENT_TYPES and
                 last_event.type == event.type and
                 last_event.actor_id == event.actor_id):
             if isinstance(last_event, EventGroup):
