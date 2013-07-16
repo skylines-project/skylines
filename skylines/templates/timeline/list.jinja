@@ -1,0 +1,46 @@
+{% from "notifications/notifications-table.jinja" import render_events_table with context %}
+{% from "macros/datetime.jinja" import timeago_script with context %}
+
+{% extends "base-page.jinja" %}
+
+
+{% block title %}{% trans %}Timeline{% endtrans %}{% endblock %}
+
+
+{% block scripts -%}
+{{ super() }}
+{{ timeago_script() }}
+{%- endblock %}
+
+
+{% block content -%}
+{% if events|count != 0 -%}
+  {{ pager() }}
+  {{ render_events_table(events) }}
+  {{ pager() }}
+{%- else -%}
+
+  {% trans %}There are no more events.{% endtrans %}
+
+{%- endif %}
+{%- endblock %}
+
+{% macro pager() -%}
+<div class="row">
+  <div class="span6">
+    {% if prev_page is number -%}
+      <a href="{{ url_for('.index', **(request.args|add_to_dict(page=prev_page))) }}" class="btn"> &larr; {% trans %}Newer{% endtrans %}</a>
+    {%- else -%}
+      &nbsp;
+    {%- endif %}
+  </div>
+
+  <div class="span6" style="text-align:right">
+    {% if next_page is number -%}
+      <a href="{{ url_for('.index', **(request.args|add_to_dict(page=next_page))) }}" class="btn">{% trans %}Older{% endtrans %} &rarr;</a>
+    {%- else -%}
+      &nbsp;
+    {%- endif %}
+  </div>
+</div>
+{%- endmacro %}
