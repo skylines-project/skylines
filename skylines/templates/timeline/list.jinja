@@ -1,10 +1,17 @@
 {% from "notifications/events-table.jinja" import render_events_table with context %}
 {% from "macros/datetime.jinja" import timeago_script with context %}
+{% from "macros/links.jinja" import user_link %}
 
 {% extends "base-page.jinja" %}
 
 
-{% block title %}{% trans %}Timeline{% endtrans %}{% endblock %}
+{% block title -%}
+  {% if 'user' in request.args and events -%}
+    {{ _('Timeline <small>of %(pilot)s</small>', pilot=user_link(events[0].actor)) }}
+  {%- else -%}
+    {{ _('Timeline') }}
+  {%- endif %}
+{%- endblock %}
 
 
 {% block scripts -%}
