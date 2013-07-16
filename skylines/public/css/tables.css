@@ -1,0 +1,39 @@
+table .numeric {
+  text-align:right;
+}
+
+table .date, table .times {
+  white-space: nowrap;
+}
+
+table .show {
+  white-space: nowrap;
+  text-align: right;
+  display: table-cell;
+}
+
+#flight-table .num_comments {
+  width: 0px;
+  vertical-align: middle;
+}
+
+.right th {
+  text-align: right;
+  padding-right: 0.5em;
+}
+
+.table .progress {
+  margin-bottom: inherit;
+}
+
+table.vmiddle td {
+  vertical-align: middle;
+}
+
+.table input, .table select {
+  margin: 0px;
+}
+
+.table tr.selected td, .table tr.selected:hover td {
+  background-color: #eee !important;
+}

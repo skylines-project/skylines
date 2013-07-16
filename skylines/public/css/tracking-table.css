@@ -1,0 +1,10 @@
+/* make sure the columns have the same width in all tracking tables */
+
+.table-tracking th {
+  width: 22.222%;
+}
+
+.table-tracking th:nth-child(4),
+.table-tracking th:nth-child(5) {
+  width: 11.111%;
+}

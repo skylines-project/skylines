@@ -9,6 +9,12 @@
   max-width: inherit;
 }
 
+#map_canvas .plane_marker {
+  position: absolute;
+  min-height: 1em;
+  display: inline-block;
+}
+
 .olControlAttribution {
   background: white;
   opacity: 0.7;

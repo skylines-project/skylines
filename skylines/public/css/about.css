@@ -1,0 +1,41 @@
+#about p.lead {
+  margin-bottom: 10px;
+}
+
+#about .social-buttons .btn-group {
+  float: right;
+}
+
+#about .social-buttons .btn {
+  width: 13px;
+}
+
+#about .banner {
+  margin: 12px -20px;
+}
+
+#about h2 {
+  margin: 10px 0;
+}
+
+#about h2 [class^="icon-"]:before {
+  width: 1.2em;
+  text-align: center;
+}
+
+#about h2 a {
+  color: black;
+  text-decoration: none;
+}
+
+#about h2 a:hover {
+  color: #666;
+}
+
+#about h2 small {
+  font-size: 14px;
+}
+
+#about p {
+  text-align: justify;
+}

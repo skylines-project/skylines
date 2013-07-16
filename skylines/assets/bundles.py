@@ -58,7 +58,13 @@ flot_js = Bundle(
 main_css = Bundle(
     'vendor/bootstrap/bootstrap.min.css',
     'css/style.css',
+    'css/box.css',
+    'css/tables.css',
+    'css/login-dropdown.css',
+    'css/about.css',
     'css/search.css',
+    'css/events.css',
+    'css/tracking-table.css',
     'css/fix-table.css',
     'vendor/flags/flags.css',
     'vendor/bootstrap-datepicker/datepicker.css',
@@ -76,6 +82,7 @@ openlayers_css = Bundle(
     'css/ol-GraphicLayerSwitcher.css',
     'css/ol-ZoomControl.css',
     'css/map.css',
+    'css/map-infobox.css',
     filters='cssmin, cssrewrite',
     output='css/ol-%(version)s.css')
 

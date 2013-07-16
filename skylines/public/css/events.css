@@ -1,0 +1,18 @@
+.table-events {
+  margin: 18px 0;
+}
+
+.table-events .icon {
+  width: 30px;
+  text-align: center;
+  font-size: 200%;
+  padding-right: 0;
+}
+
+.table-events .badge {
+  margin-right: 10px;
+}
+
+.table-events a {
+  color: inherit;
+}
