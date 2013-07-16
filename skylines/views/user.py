@@ -22,7 +22,7 @@ from skylines.lib.decorators import validate
 from skylines.model import (
     User, Club, Flight, Follower, Location, IGCFile, Notification, Event
 )
-from skylines.model.notification import create_follower_notification
+from skylines.model.event import create_follower_notification
 from skylines.views.users import recover_user_password
 
 user_blueprint = Blueprint('user', 'skylines')

@@ -2,7 +2,7 @@ from flask import Blueprint, render_template, request
 from sqlalchemy.orm import joinedload
 
 from skylines.lib.util import str_to_bool
-from skylines.model.notification import Event, group_events
+from skylines.model.event import Event, group_events
 from .notifications import _filter_query
 
 timeline_blueprint = Blueprint('timeline', 'skylines')

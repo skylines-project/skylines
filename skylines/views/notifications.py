@@ -3,7 +3,7 @@ from sqlalchemy.orm import joinedload, contains_eager
 
 from skylines import db
 from skylines.lib.util import str_to_bool
-from skylines.model.notification import Event, Notification, group_events
+from skylines.model.event import Event, Notification, group_events
 
 
 notifications_blueprint = Blueprint('notifications', 'skylines')
