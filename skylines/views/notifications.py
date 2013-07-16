@@ -3,35 +3,7 @@ from sqlalchemy.orm import joinedload, contains_eager
 
 from skylines import db
 from skylines.lib.util import str_to_bool
-from skylines.model import Event, Notification
-
-GROUPABLE_EVENT_TYPES = [
-    Event.Type.FLIGHT,
-    Event.Type.FOLLOWER,
-]
-
-
-class EventGroup:
-    grouped = True
-
-    def __init__(self, subevents, link=None):
-        self.subevents = subevents
-
-    @property
-    def unread(self):
-        """
-        If this is a notification:
-        `unread` is only false if all subnotifications are read.
-        """
-
-        for event in self.subevents:
-            if hasattr(event, 'unread') and event.unread:
-                return True
-
-        return False
-
-    def __getattr__(self, name):
-        return getattr(self.subevents[0], name)
+from skylines.model.notification import Event, Notification, group_events
 
 
 notifications_blueprint = Blueprint('notifications', 'skylines')
@@ -53,32 +25,6 @@ def _filter_query(query, args):
         query = query.filter(Event.actor_id == args['user'])
 
     return query
-
-
-def _group_events(_events):
-    events = []
-    for event in _events:
-        # add first event if list is empty
-        if not events:
-            events.append(event)
-            continue
-
-        # get last event from list for comparison
-        last_event = events[-1]
-
-        # if there are multiple groupable events from the same actor -> group them
-        if (event.type in GROUPABLE_EVENT_TYPES and
-                last_event.type == event.type and
-                last_event.actor_id == event.actor_id):
-            if isinstance(last_event, EventGroup):
-                last_event.subevents.append(event)
-            else:
-                events[-1] = EventGroup([last_event, event])
-            continue
-
-        events.append(event)
-
-    return events
 
 
 @notifications_blueprint.route('/')
@@ -110,7 +56,7 @@ def index():
     events_count = len(events)
 
     if request.args.get('grouped', True, type=str_to_bool):
-        events = _group_events(events)
+        events = group_events(events)
 
     template_vars = dict(events=events, types=Event.Type)
 

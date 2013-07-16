@@ -2,8 +2,8 @@ from flask import Blueprint, render_template, request
 from sqlalchemy.orm import joinedload
 
 from skylines.lib.util import str_to_bool
-from skylines.model import Event
-from .notifications import _filter_query, _group_events
+from skylines.model.notification import Event, group_events
+from .notifications import _filter_query
 
 timeline_blueprint = Blueprint('timeline', 'skylines')
 
@@ -27,7 +27,7 @@ def index():
     events_count = len(events)
 
     if request.args.get('grouped', True, type=str_to_bool):
-        events = _group_events(events)
+        events = group_events(events)
 
     template_vars = dict(events=events, types=Event.Type)
 

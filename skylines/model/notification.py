@@ -113,6 +113,35 @@ class Notification(db.Model):
         query.update(dict(time_read=datetime.utcnow()))
 
 
+GROUPABLE_EVENT_TYPES = [
+    Event.Type.FLIGHT,
+    Event.Type.FOLLOWER,
+]
+
+
+class EventGroup:
+    grouped = True
+
+    def __init__(self, subevents, link=None):
+        self.subevents = subevents
+
+    @property
+    def unread(self):
+        """
+        If this is a notification:
+        `unread` is only false if all subnotifications are read.
+        """
+
+        for event in self.subevents:
+            if hasattr(event, 'unread') and event.unread:
+                return True
+
+        return False
+
+    def __getattr__(self, name):
+        return getattr(self.subevents[0], name)
+
+
 def create_flight_comment_notifications(comment):
     '''
     Create notifications for the owner and pilots of the flight
@@ -182,3 +211,29 @@ def create_follower_notification(followed, follower):
     # Create the notification
     item = Notification(event=event, recipient=followed)
     db.session.add(item)
+
+
+def group_events(_events):
+    events = []
+    for event in _events:
+        # add first event if list is empty
+        if not events:
+            events.append(event)
+            continue
+
+        # get last event from list for comparison
+        last_event = events[-1]
+
+        # if there are multiple groupable events from the same actor -> group them
+        if (event.type in GROUPABLE_EVENT_TYPES and
+                last_event.type == event.type and
+                last_event.actor_id == event.actor_id):
+            if isinstance(last_event, EventGroup):
+                last_event.subevents.append(event)
+            else:
+                events[-1] = EventGroup([last_event, event])
+            continue
+
+        events.append(event)
+
+    return events
