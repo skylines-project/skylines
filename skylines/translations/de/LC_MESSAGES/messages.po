@@ -696,14 +696,12 @@ msgstr ""
 "am <strong>%(date)s</strong> kommentiert."
 
 #: skylines/templates/notifications/events-table.jinja:94
-#, fuzzy, python-format
-#| msgid "" "<strong>%(pilot)s</strong> commented on a
-#| <strong>%(distance)s</strong> " "flight on the <strong>%(date)s</strong>."
+#, python-format
 msgid ""
 "You commented on a <strong>%(distance)s</strong> flight on the "
 "<strong>%(date)s</strong>."
 msgstr ""
-"<strong>%(pilot)s</strong> hat einen <strong>%(distance)s</strong> Flug "
+"Du hast einen <strong>%(distance)s</strong> Flug "
 "am <strong>%(date)s</strong> kommentiert."
 
 #: skylines/templates/notifications/events-table.jinja:98
@@ -716,14 +714,12 @@ msgstr ""
 "am <strong>%(date)s</strong> kommentiert."
 
 #: skylines/templates/notifications/events-table.jinja:108
-#, fuzzy, python-format
-#| msgid "" "<strong>%(pilot)s</strong> uploaded a new
-#| <strong>%(distance)s</strong> " "flight on the <strong>%(date)s</strong>."
+#, python-format
 msgid ""
 "You uploaded a <strong>%(distance)s</strong> flight on the "
 "<strong>%(date)s</strong>."
 msgstr ""
-"<strong>%(pilot)s</strong> hat einen <strong>%(distance)s</strong> Flug "
+"Du hast einen <strong>%(distance)s</strong> Flug "
 "am <strong>%(date)s</strong> hochgeladen."
 
 #: skylines/templates/notifications/events-table.jinja:112
@@ -736,12 +732,10 @@ msgstr ""
 "am <strong>%(date)s</strong> hochgeladen."
 
 #: skylines/templates/notifications/events-table.jinja:122
-#, fuzzy, python-format
-#| msgid "" "<strong>%(pilot)s</strong> uploaded
-#| <strong>%(num_flights)s</strong> new " "flights."
+#, python-format
 msgid "You uploaded <strong>%(num_flights)s</strong> new flights."
 msgstr ""
-"<strong>%(pilot)s</strong> hat <strong>%(num_flights)s</strong> neue "
+"Du hast <strong>%(num_flights)s</strong> neue "
 "Flüge hochgeladen."
 
 #: skylines/templates/notifications/events-table.jinja:125
@@ -754,48 +748,42 @@ msgstr ""
 "Flüge hochgeladen."
 
 #: skylines/templates/notifications/events-table.jinja:133
-#, fuzzy, python-format
-#| msgid "<strong>%(pilot)s</strong> is following you now."
+#, python-format
 msgid "<strong>%(pilot)s</strong> started following you."
 msgstr "<strong>%(pilot)s</strong> folgt dir jetzt."
 
 #: skylines/templates/notifications/events-table.jinja:135
 #, python-format
 msgid "You started following <strong>%(pilot)s</strong>."
-msgstr ""
+msgstr "Du folgst jetzt <strong>%(pilot)s</strong>."
 
 #: skylines/templates/notifications/events-table.jinja:137
-#, fuzzy, python-format
-#| msgid "<strong>%(pilot)s</strong> is following <strong>%(pilot2)s</strong>
-#| now."
+#, python-format
 msgid "<strong>%(pilot)s</strong> started following <strong>%(pilot2)s</strong>."
 msgstr "<strong>%(pilot)s</strong> folgt jetzt <strong>%(pilot2)s</strong>."
 
 #: skylines/templates/notifications/events-table.jinja:144
-#, fuzzy, python-format
-#| msgid "<strong>%(pilot)s</strong> is following <strong>%(pilot2)s</strong>
-#| now."
+#, python-format
 msgid "You started following <strong>%(num_pilots)s</strong> other pilots."
-msgstr "<strong>%(pilot)s</strong> folgt jetzt <strong>%(pilot2)s</strong>."
+msgstr "Du folgst jetzt <strong>%(num_pilots)s</strong> anderen Piloten."
 
 #: skylines/templates/notifications/events-table.jinja:146
-#, fuzzy, python-format
-#| msgid "<strong>%(pilot)s</strong> is following <strong>%(pilot2)s</strong>
-#| now."
+#, python-format
 msgid ""
 "<strong>%(pilot)s</strong> started following "
 "<strong>%(num_pilots)s</strong> other pilots."
-msgstr "<strong>%(pilot)s</strong> folgt jetzt <strong>%(pilot2)s</strong>."
+msgstr ""
+"<strong>%(pilot)s</strong> folgt jetzt <strong>%(num_pilots)s</strong> "
+"anderen Piloten."
 
 #: skylines/templates/notifications/events-table.jinja:153
 msgid "You joined SkyLines."
-msgstr ""
+msgstr "Du bist SkyLines beigetreten."
 
 #: skylines/templates/notifications/events-table.jinja:155
-#, fuzzy, python-format
-#| msgid "<strong>%(pilot)s</strong> is following you now."
+#, python-format
 msgid "<strong>%(pilot)s</strong> joined SkyLines."
-msgstr "<strong>%(pilot)s</strong> folgt dir jetzt."
+msgstr "<strong>%(pilot)s</strong> ist SkyLines beigetreten."
 
 #: skylines/templates/notifications/list.jinja:24
 msgid "There are no more notifications."
@@ -921,21 +909,18 @@ msgid "Statistics <small>from %(airport)s</small>"
 msgstr "Statistik <small>von %(airport)s</small>"
 
 #: skylines/templates/timeline/list.jinja:10
-#, fuzzy, python-format
-#| msgid "Flights <small>of %(pilot)s</small>"
+#, python-format
 msgid "Timeline <small>of %(pilot)s</small>"
-msgstr "Flüge <small>von %(pilot)s</small>"
+msgstr "Timeline <small>von %(pilot)s</small>"
 
 #: skylines/templates/timeline/list.jinja:12
 #: skylines/templates/users/view.jinja:164
 msgid "Timeline"
-msgstr ""
+msgstr "Timeline"
 
 #: skylines/templates/timeline/list.jinja:30
-#, fuzzy
-#| msgid "There are no more notifications."
 msgid "There are no more events."
-msgstr "Es gibt keine weiteren Benachrichtigungen."
+msgstr "Es gibt keine weiteren Ereignisse."
 
 #: skylines/templates/tracking/info.jinja:7
 msgid "What is it?"
