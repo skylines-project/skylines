@@ -126,20 +126,20 @@
 
 {% macro render_follower_event_text(event) -%}
 {% if g.current_user and event.user_id == g.current_user.id -%}
-  {{ _('<strong>%(pilot)s</strong> is following you now.', pilot=user_link(event.actor)) }}
+  {{ _('<strong>%(pilot)s</strong> started following you.', pilot=user_link(event.actor)) }}
 {%- elif g.current_user and event.actor_id == g.current_user.id -%}
-  {{ _('You are following <strong>%(pilot)s</strong> now.', pilot=user_link(event.user)) }}
+  {{ _('You started following <strong>%(pilot)s</strong>.', pilot=user_link(event.user)) }}
 {%- else -%}
-  {{ _('<strong>%(pilot)s</strong> is following <strong>%(pilot2)s</strong> now.', pilot=user_link(event.actor), pilot2=user_link(event.user)) }}
+  {{ _('<strong>%(pilot)s</strong> started following <strong>%(pilot2)s</strong>.', pilot=user_link(event.actor), pilot2=user_link(event.user)) }}
 {%- endif %}
 {%- endmacro %}
 
 
 {% macro render_grouped_followers_event_text(event) -%}
 {% if g.current_user and event.actor_id == g.current_user.id -%}
-  {{ _('You are following <strong>%(num_pilots)s</strong> other pilots.', num_pilots=event.subevents|count) }}
+  {{ _('You started following <strong>%(num_pilots)s</strong> other pilots.', num_pilots=event.subevents|count) }}
 {%- else -%}
-  {{ _('<strong>%(pilot)s</strong> is following <strong>%(num_pilots)s</strong> other pilots.', pilot=user_link(event.actor), num_pilots=event.subevents|count) }}
+  {{ _('<strong>%(pilot)s</strong> started following <strong>%(num_pilots)s</strong> other pilots.', pilot=user_link(event.actor), num_pilots=event.subevents|count) }}
 {%- endif %}
 {%- endmacro %}
 
