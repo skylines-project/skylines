@@ -161,6 +161,7 @@
 
         <a href="{{ url_for('flights.pilot', id=user.id) }}" class="btn"><i class="icon-plane"></i> {% trans %}Flights{% endtrans %}</a>
         <a href="{{ url_for('statistics.index', page='pilot', id=user.id) }}" class="btn"><i class="icon-tasks"></i> {% trans %}Statistics{% endtrans %}</a>
+        <a href="{{ url_for('timeline.index', user=user.id) }}" class="btn"><i class="icon-time"></i> {{ _('Timeline') }}</a>
       </p>
     </div>
 

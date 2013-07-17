@@ -28,7 +28,7 @@ from skylines.model import (
     User, Flight, FlightPhase, Location, Elevation, FlightComment,
     Notification, Event
 )
-from skylines.model.notification import create_flight_comment_notifications
+from skylines.model.event import create_flight_comment_notifications
 from skylines.worker import tasks
 from redis.exceptions import ConnectionError
 from skylinespolyencode import SkyLinesPolyEncoder

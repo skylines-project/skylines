@@ -15,7 +15,7 @@ from skylines.lib.md5 import file_md5
 from skylines.lib.string import import_ascii
 from skylines.lib.xcsoar import analyse_flight
 from skylines.model import User, Flight, IGCFile
-from skylines.model.notification import create_flight_notifications
+from skylines.model.event import create_flight_notifications
 from skylines.worker import tasks
 
 upload_blueprint = Blueprint('upload', 'skylines')

@@ -16,6 +16,7 @@ from skylines.views.notifications import notifications_blueprint
 from skylines.views.ranking import ranking_blueprint
 from skylines.views.search import search_blueprint
 from skylines.views.statistics import statistics_blueprint
+from skylines.views.timeline import timeline_blueprint
 from skylines.views.track import track_blueprint
 from skylines.views.tracking import tracking_blueprint
 from skylines.views.upload import upload_blueprint
@@ -40,6 +41,7 @@ def register(app):
     app.register_blueprint(ranking_blueprint, url_prefix='/ranking')
     app.register_blueprint(search_blueprint, url_prefix='/search')
     app.register_blueprint(statistics_blueprint, url_prefix='/statistics')
+    app.register_blueprint(timeline_blueprint, url_prefix='/timeline')
     app.register_blueprint(track_blueprint, url_prefix='/tracking/<user_id>')
     app.register_blueprint(tracking_blueprint, url_prefix='/tracking')
     app.register_blueprint(upload_blueprint, url_prefix='/flights/upload')
