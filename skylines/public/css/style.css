@@ -5,6 +5,8 @@ html, body {
 body {
   /* 40px to make the container go all the way to the bottom of the topbar */
   padding-top: 40px;
+  font-family: "Ubuntu", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-weight: 300;
 }
 .container > footer p {
   /* center align it with the container */
@@ -107,9 +109,14 @@ textarea {
   cursor: pointer;
 }
 
+.navbar {
+  font-weight: 400;
+}
+
 .navbar .brand {
   padding-left: 40px;
   margin-left: -40px;
+  font-weight: 400;
 }
 
 .navbar .logo {

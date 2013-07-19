@@ -1,5 +1,6 @@
 #about p.lead {
   margin-bottom: 10px;
+  font-weight: 300;
 }
 
 #about .social-buttons .btn-group {
@@ -15,6 +16,7 @@
 }
 
 #about h2 {
+  font-size: 22px;
   margin: 10px 0;
 }
 
@@ -33,7 +35,7 @@
 }
 
 #about h2 small {
-  font-size: 14px;
+  font-size: 13px;
 }
 
 #about p {
