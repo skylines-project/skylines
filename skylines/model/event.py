@@ -1,10 +1,12 @@
 from datetime import datetime
 from collections import OrderedDict
+from itertools import chain
 
 from sqlalchemy.types import Integer, DateTime
 
 from skylines import db
 from .auth import User
+from .club import Club
 from .flight import Flight
 from .flight_comment import FlightComment
 from .follower import Follower
@@ -24,6 +26,7 @@ class Event(db.Model):
         FLIGHT = 2
         FOLLOWER = 3
         NEW_USER = 4
+        CLUB_JOIN = 5
 
     # Event time
 
@@ -35,11 +38,17 @@ class Event(db.Model):
         Integer, db.ForeignKey('tg_user.id', ondelete='CASCADE'), nullable=False)
     actor = db.relationship('User', foreign_keys=[actor_id], innerjoin=True)
 
-    # A user is this event is about a user (e.g. actor following user)
+    # A user if this event is about a user (e.g. actor following user)
 
     user_id = db.Column(
         Integer, db.ForeignKey('tg_user.id', ondelete='CASCADE'))
     user = db.relationship('User', foreign_keys=[user_id])
+
+    # A club if this event is about a club (e.g. actor joining club)
+
+    club_id = db.Column(
+        Integer, db.ForeignKey('clubs.id', ondelete='CASCADE'))
+    club = db.relationship('Club')
 
     # A flight if this event is about a flight
 
@@ -222,6 +231,28 @@ def create_new_user_event(user):
     # Create the event
     event = Event(type=Event.Type.NEW_USER, actor=user)
     db.session.add(event)
+
+
+def create_club_join_event(club, user):
+    """
+    Create event for a user joining a club.
+    """
+
+    if isinstance(club, Club):
+        club = club.id
+
+    # Create the event
+    event = Event(type=Event.Type.CLUB_JOIN, actor=user, club_id=club)
+    db.session.add(event)
+
+    # Create the notifications for club members and followers
+    q1 = db.session.query(User.id).filter_by(club_id=club)
+    q2 = db.session.query(Follower.source_id).filter_by(destination_id=user.id)
+
+    recipients = set([row[0] for row in chain(q1, q2)])
+    for recipient in recipients:
+        item = Notification(event=event, recipient_id=recipient)
+        db.session.add(item)
 
 
 def group_events(_events):
