@@ -174,6 +174,8 @@
     {{ url_for('flight.index', flight_id=event.flight_id) }}
   {%- elif event.type == types.FOLLOWER %}
     {{ url_for('user.index', user_id=event.user_id) }}
+  {%- elif event.type == types.NEW_USER %}
+    {{ url_for('user.index', user_id=event.actor_id) }}
   {%- endif %}
 {%- endif %}
 {%- endmacro %}
