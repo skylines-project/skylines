@@ -22,7 +22,9 @@ from skylines.lib.decorators import validate
 from skylines.model import (
     User, Club, Flight, Follower, Location, IGCFile, Notification, Event
 )
-from skylines.model.event import create_follower_notification
+from skylines.model.event import (
+    create_follower_notification, create_club_join_event
+)
 from skylines.views.users import recover_user_password
 
 user_blueprint = Blueprint('user', 'skylines')
@@ -268,7 +270,15 @@ def change_club_post():
     if not g.user.is_writable(g.current_user):
         abort(403)
 
-    g.user.club_id = request.form.get('club', None, type=int)
+    old_club_id = g.user.club_id
+    new_club_id = request.form.get('club', None, type=int)
+
+    if old_club_id == new_club_id:
+        return
+
+    g.user.club_id = new_club_id
+
+    create_club_join_event(new_club_id, g.user)
 
     # assign the user's new club to all of his flights that have
     # no club yet
