@@ -784,17 +784,14 @@ msgid "<strong>%(pilot)s</strong> joined SkyLines."
 msgstr "<strong>%(pilot)s</strong> ist SkyLines beigetreten."
 
 #: skylines/templates/notifications/events-table.jinja:166
-#, fuzzy, python-format
-#| msgid "You started following <strong>%(pilot)s</strong>."
+#, python-format
 msgid "You joined <strong>%(club)s</strong>."
-msgstr "Du folgst jetzt <strong>%(pilot)s</strong>."
+msgstr "Du bist <strong>%(club)s</strong> beigetreten."
 
 #: skylines/templates/notifications/events-table.jinja:169
-#, fuzzy, python-format
-#| msgid "<strong>%(pilot)s</strong> started following
-#| <strong>%(pilot2)s</strong>."
+#, python-format
 msgid "<strong>%(pilot)s</strong> joined <strong>%(club)s</strong>."
-msgstr "<strong>%(pilot)s</strong> folgt jetzt <strong>%(pilot2)s</strong>."
+msgstr "<strong>%(pilot)s</strong> ist <strong>%(club)s</strong> beigetreten."
 
 #: skylines/templates/notifications/list.jinja:24
 msgid "There are no more notifications."
