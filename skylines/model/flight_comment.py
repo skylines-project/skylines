@@ -20,7 +20,7 @@ class FlightComment(db.Model):
                            passive_deletes=True))
 
     user_id = db.Column(Integer, db.ForeignKey('tg_user.id', ondelete='SET NULL'))
-    user = db.relationship('User')
+    user = db.relationship('User', lazy='joined')
 
     def __repr__(self):
         return ('<FlightComment: id=%d user_id=%d flight_id=%d>' % (self.id, self.user_id, self.flight_id)).encode('utf-8')
