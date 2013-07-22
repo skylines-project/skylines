@@ -5,18 +5,16 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: skylines\n"
+"Project-Id-Version:  skylines\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2013-07-17 00:49+0200\n"
+"POT-Creation-Date: 2013-07-20 19:03+0200\n"
 "PO-Revision-Date: 2013-07-17 19:44+0000\n"
 "Last-Translator: Adrien Ott <Unknown>\n"
 "Language-Team: French <fr@li.org>\n"
+"Plural-Forms: nplurals=2; plural=n > 1\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Launchpad-Export-Date: 2013-07-18 19:12+0000\n"
-"X-Generator: Launchpad (build 16696)\n"
 "Generated-By: Babel 0.9.6\n"
 
 #: skylines/forms/aircraft_model.py:23
@@ -46,20 +44,22 @@ msgstr "Autres"
 #: skylines/forms/club.py:32 skylines/templates/flights/details-table.jinja:151
 #: skylines/templates/flights/flights-table.jinja:13
 #: skylines/templates/ranking/pilots.jinja:10
-#: skylines/templates/search/list.jinja:45 skylines/templates/search/list.jinja:55
+#: skylines/templates/search/list.jinja:45
+#: skylines/templates/search/list.jinja:55
 #: skylines/templates/tracking/view.jinja:133
 #: skylines/templates/users/users-table.jinja:8
 #: skylines/templates/users/view.jinja:125 skylines/views/users.py:45
 msgid "Club"
 msgstr "Club"
 
-#: skylines/forms/club.py:46 skylines/forms/club.py:60 skylines/forms/pilot.py:23
-#: skylines/templates/clubs/list.jinja:11 skylines/templates/clubs/view.jinja:22
+#: skylines/forms/club.py:46 skylines/forms/club.py:60
+#: skylines/forms/pilot.py:23 skylines/templates/clubs/list.jinja:11
+#: skylines/templates/clubs/view.jinja:22
 #: skylines/templates/ranking/airports.jinja:10
 #: skylines/templates/ranking/clubs.jinja:9
 #: skylines/templates/ranking/pilots.jinja:9
 #: skylines/templates/users/users-table.jinja:7
-#: skylines/templates/users/view.jinja:95 skylines/views/user.py:192
+#: skylines/templates/users/view.jinja:95 skylines/views/user.py:194
 #: skylines/views/users.py:44
 msgid "Name"
 msgstr "Nom"
@@ -68,8 +68,8 @@ msgstr "Nom"
 msgid "Website"
 msgstr "Site internet"
 
-#: skylines/forms/pilot.py:22 skylines/views/user.py:191 skylines/views/users.py:43
-#: skylines/views/users.py:111
+#: skylines/forms/pilot.py:22 skylines/views/user.py:193
+#: skylines/views/users.py:43 skylines/views/users.py:113
 msgid "eMail Address"
 msgstr "Adresse email"
 
@@ -81,9 +81,11 @@ msgstr "Ajouter un ou plusieurs fichiers IGC ou ZIP."
 msgid "IGC or ZIP file(s)"
 msgstr "Fichier(s) IGC ou ZIP"
 
-#: skylines/forms/upload.py:21 skylines/templates/flights/details-table.jinja:119
+#: skylines/forms/upload.py:21
+#: skylines/templates/flights/details-table.jinja:119
 #: skylines/templates/flights/flights-table.jinja:10
-#: skylines/templates/search/list.jinja:43 skylines/templates/search/list.jinja:53
+#: skylines/templates/search/list.jinja:43
+#: skylines/templates/search/list.jinja:53
 #: skylines/templates/tracking/list.jinja:35
 #: skylines/templates/tracking/view.jinja:127 skylines/views/flight.py:392
 msgid "Pilot"
@@ -95,16 +97,15 @@ msgstr "Désolé, l'identifiant ({id}) que vous demandez n'est pas valide."
 
 #: skylines/lib/dbutil.py:30
 msgid "Sorry, there is no such record ({id}) in our database."
-msgstr ""
-"Désolé, il n'y a pas de tel identifiant ({id}) dans notre base de donnés."
+msgstr "Désolé, il n'y a pas de tel identifiant ({id}) dans notre base de donnés."
 
 #: skylines/lib/dbutil.py:60
 msgid ""
-"Sorry, {num_missing} of the requested records ({ids}) do not exist in our "
-"database."
+"Sorry, {num_missing} of the requested records ({ids}) do not exist in our"
+" database."
 msgstr ""
-"Désolé, {num_missing} des identifiants ({ids}) requis n'existent pas dans "
-"notre base de données."
+"Désolé, {num_missing} des identifiants ({ids}) requis n'existent pas dans"
+" notre base de données."
 
 #: skylines/lib/formatter/units.py:44
 msgid "Custom"
@@ -128,8 +129,7 @@ msgstr "Américain (impérial)"
 
 #: skylines/templates/about.jinja:9
 msgid "Welcome to SkyLines, your internet platform for flight sharing!"
-msgstr ""
-"Bienvenu sur SkyLines, votre plateforme internet de partage des vols !"
+msgstr "Bienvenu sur SkyLines, votre plateforme internet de partage des vols !"
 
 #: skylines/templates/about.jinja:25
 msgid "Flight Database"
@@ -139,12 +139,12 @@ msgstr "Fichiers de vol"
 #, python-format
 msgid ""
 "<a href=\"%(url)s\">Upload</a> your IGC files and share them with your "
-"friends. We won't change your files or restrict you from downloading them "
-"again!"
+"friends. We won't change your files or restrict you from downloading them"
+" again!"
 msgstr ""
-"<a href=\"%(url)s\">Déposez</a> vos fichiers IGC et partagez les avec vos "
-"amis. Nous ne modifierons pas vos fichiers, et ne vous empêcherons pas non "
-"plus de les télécharger dans le futur !"
+"<a href=\"%(url)s\">Déposez</a> vos fichiers IGC et partagez les avec vos"
+" amis. Nous ne modifierons pas vos fichiers, et ne vous empêcherons pas "
+"non plus de les télécharger dans le futur !"
 
 #: skylines/templates/about.jinja:29 skylines/templates/tracking/info.jinja:4
 #: skylines/templates/tracking/list.jinja:9
@@ -154,11 +154,12 @@ msgstr "Tracking"
 #: skylines/templates/about.jinja:30
 #, python-format
 msgid ""
-"Use your mobile phone to send position updates to SkyLines. Find out how it "
-"works <a href=\"%(url)s\">here</a>."
+"Use your mobile phone to send position updates to SkyLines. Find out how "
+"it works <a href=\"%(url)s\">here</a>."
 msgstr ""
 "Utilisez votre téléphone portable pour envoyer des mises à jour de votre "
-"position à SkyLines. Regardez <a href=\"%(url)s\">ici</a> comment ça marche."
+"position à SkyLines. Regardez <a href=\"%(url)s\">ici</a> comment ça "
+"marche."
 
 #: skylines/templates/about.jinja:33
 msgid "Flight Analysis"
@@ -187,9 +188,9 @@ msgid ""
 "Use your browser to plan your tasks before the flight and upload them "
 "quickly to your flight computer. Integration of %(prosoar)s is planned."
 msgstr ""
-"Utilisez votre navigateur internet pour préparer vos circuits avant les vols "
-"et les charger dans votre appareil rapidement. L'intégration de %(prosoar)s "
-"est prévue."
+"Utilisez votre navigateur internet pour préparer vos circuits avant les "
+"vols et les charger dans votre appareil rapidement. L'intégration de "
+"%(prosoar)s est prévue."
 
 #: skylines/templates/about.jinja:43
 msgid "Competitions"
@@ -197,11 +198,11 @@ msgstr "Concours"
 
 #: skylines/templates/about.jinja:44
 msgid ""
-"Create competitions to offer your spectators an even better live tracking "
-"experience by following all the participants on the same map."
+"Create competitions to offer your spectators an even better live tracking"
+" experience by following all the participants on the same map."
 msgstr ""
-"Créez des concours pour offrir aux spectateurs une représentation en suivant "
-"tous les participants sur une carte en direct."
+"Créez des concours pour offrir aux spectateurs une représentation en "
+"suivant tous les participants sur une carte en direct."
 
 #: skylines/templates/about.jinja:47
 msgid "Achievements"
@@ -209,13 +210,13 @@ msgstr "Objectifs"
 
 #: skylines/templates/about.jinja:48
 msgid ""
-"Challenge yourself by trying to complete all the achievements that SkyLines "
-"offers. Fly large triangles, long final glides or just do your first "
-"outlanding."
+"Challenge yourself by trying to complete all the achievements that "
+"SkyLines offers. Fly large triangles, long final glides or just do your "
+"first outlanding."
 msgstr ""
-"Donnez vous des objectifs en essayant de réaliser ceux lancés par SkyLines. "
-"Parcourez de plus grands triangles, de plus longues arrivées, ou simplement "
-"votre première vache !"
+"Donnez vous des objectifs en essayant de réaliser ceux lancés par "
+"SkyLines. Parcourez de plus grands triangles, de plus longues arrivées, "
+"ou simplement votre première vache !"
 
 #: skylines/templates/about.jinja:53
 msgid "Social Network"
@@ -224,13 +225,14 @@ msgstr "Réseau social"
 #: skylines/templates/about.jinja:54
 #, python-format
 msgid ""
-"Skylines also has some social network aspects. You can comment on flights, "
-"follow your friends and get <a href=\"%(url)s\">notifications</a> if they do "
-"anything interesting."
+"Skylines also has some social network aspects. You can comment on "
+"flights, follow your friends and get <a "
+"href=\"%(url)s\">notifications</a> if they do anything interesting."
 msgstr ""
-"SkyLines a également un caractère de réseau social. Vous pouvez commenter "
-"les vols, suivre vos amis, et recevoir des <a "
-"href=\"%(url)s\">notifications</a> si ils font quelque chose d'intéressant."
+"SkyLines a également un caractère de réseau social. Vous pouvez commenter"
+" les vols, suivre vos amis, et recevoir des <a "
+"href=\"%(url)s\">notifications</a> si ils font quelque chose "
+"d'intéressant."
 
 #: skylines/templates/about.jinja:57
 msgid "Open Data"
@@ -243,8 +245,8 @@ msgid ""
 "Skylines is using waypoint data from the %(welt2000)s project."
 msgstr ""
 "La base de données des vol est mise à disposition sous la licence "
-"%(license)s. SkyLines utilise les données du projet %(welt2000)s pour les "
-"points de virages."
+"%(license)s. SkyLines utilise les données du projet %(welt2000)s pour les"
+" points de virages."
 
 #: skylines/templates/about.jinja:61
 msgid "Open Source"
@@ -253,14 +255,14 @@ msgstr "Open Source"
 #: skylines/templates/about.jinja:62
 #, python-format
 msgid ""
-"Skylines is a <a href=\"%(team_url)s\">community</a> project and entirely "
-"based on free software (<a href=\"%(license_url)s\">License</a>). Visit "
+"Skylines is a <a href=\"%(team_url)s\">community</a> project and entirely"
+" based on free software (<a href=\"%(license_url)s\">License</a>). Visit "
 "%(github)s if you want to help!"
 msgstr ""
 "SkyLines est un projet <a href=\"%(team_url)s\">communitaire</a> et est "
 "entièrement basé sur du logiciel libre (<a "
-"href=\"%(license_url)s\">Licence</a>). Rendez-vous sur %(github)s si vous "
-"voulez aider !"
+"href=\"%(license_url)s\">Licence</a>). Rendez-vous sur %(github)s si vous"
+" voulez aider !"
 
 #: skylines/templates/base-page.jinja:43 skylines/views/about.py:39
 msgid "The SkyLines Team"
@@ -279,17 +281,20 @@ msgid "Live"
 msgstr "En direct"
 
 #: skylines/templates/topbar.jinja:5 skylines/templates/topbar.jinja:111
-#: skylines/templates/clubs/list.jinja:20 skylines/templates/clubs/view.jinja:50
+#: skylines/templates/clubs/list.jinja:20
+#: skylines/templates/clubs/view.jinja:50
 #: skylines/templates/flights/list.jinja:27
 #: skylines/templates/ranking/airports.jinja:11
 #: skylines/templates/ranking/clubs.jinja:10
 #: skylines/templates/ranking/pilots.jinja:11
-#: skylines/templates/search/list.jinja:80 skylines/templates/search/list.jinja:84
+#: skylines/templates/search/list.jinja:80
+#: skylines/templates/search/list.jinja:84
 #: skylines/templates/search/list.jinja:87
 #: skylines/templates/statistics/flights-table.jinja:6
 #: skylines/templates/statistics/years.jinja:66
 #: skylines/templates/users/users-table.jinja:26
-#: skylines/templates/users/view.jinja:162 skylines/templates/users/view.jinja:237
+#: skylines/templates/users/view.jinja:162
+#: skylines/templates/users/view.jinja:237
 msgid "Flights"
 msgstr "Vols"
 
@@ -298,9 +303,11 @@ msgid "Ranking"
 msgstr "Classement"
 
 #: skylines/templates/topbar.jinja:7 skylines/templates/topbar.jinja:112
-#: skylines/templates/clubs/list.jinja:21 skylines/templates/clubs/view.jinja:51
+#: skylines/templates/clubs/list.jinja:21
+#: skylines/templates/clubs/view.jinja:51
 #: skylines/templates/flights/view.jinja:173
-#: skylines/templates/search/list.jinja:81 skylines/templates/search/list.jinja:85
+#: skylines/templates/search/list.jinja:81
+#: skylines/templates/search/list.jinja:85
 #: skylines/templates/search/list.jinja:88
 #: skylines/templates/statistics/years.jinja:29
 #: skylines/templates/users/users-table.jinja:27
@@ -316,8 +323,8 @@ msgstr "Chercher"
 msgid "Email Address"
 msgstr "Courriel"
 
-#: skylines/templates/topbar.jinja:72 skylines/views/user.py:136
-#: skylines/views/users.py:46 skylines/views/users.py:125
+#: skylines/templates/topbar.jinja:72 skylines/views/user.py:138
+#: skylines/views/users.py:46 skylines/views/users.py:127
 msgid "Password"
 msgstr "Mot de passe"
 
@@ -333,7 +340,8 @@ msgstr "Mot de passe oublié ?"
 msgid "Don't have an account?"
 msgstr "Vous n'avez pas encore de compte?"
 
-#: skylines/templates/topbar.jinja:92 skylines/templates/notifications/list.jinja:8
+#: skylines/templates/topbar.jinja:92
+#: skylines/templates/notifications/list.jinja:8
 msgid "Notifications"
 msgstr "Notifications"
 
@@ -341,7 +349,8 @@ msgstr "Notifications"
 msgid "Logout"
 msgstr "Déconnexion"
 
-#: skylines/templates/clubs/list.jinja:5 skylines/templates/ranking/layout.jinja:10
+#: skylines/templates/clubs/list.jinja:5
+#: skylines/templates/ranking/layout.jinja:10
 msgid "Clubs"
 msgstr "Clubs"
 
@@ -351,7 +360,8 @@ msgstr "Clubs"
 msgid "Actions"
 msgstr "Actions"
 
-#: skylines/templates/clubs/list.jinja:22 skylines/templates/clubs/view.jinja:52
+#: skylines/templates/clubs/list.jinja:22
+#: skylines/templates/clubs/view.jinja:52
 #: skylines/templates/search/list.jinja:83
 msgid "Members"
 msgstr "Membres"
@@ -484,12 +494,14 @@ msgstr "Effacer"
 #: skylines/templates/flights/phases-table.jinja:73
 #: skylines/templates/statistics/distance-table.jinja:6
 #: skylines/templates/statistics/years.jinja:69
-#: skylines/templates/users/view.jinja:200 skylines/templates/users/view.jinja:241
+#: skylines/templates/users/view.jinja:200
+#: skylines/templates/users/view.jinja:241
 msgid "Distance"
 msgstr "Distance"
 
 #: skylines/templates/flights/flights-table.jinja:12
-#: skylines/templates/search/list.jinja:47 skylines/templates/search/list.jinja:57
+#: skylines/templates/search/list.jinja:47
+#: skylines/templates/search/list.jinja:57
 msgid "Airport"
 msgstr "Aérodrome"
 
@@ -498,7 +510,7 @@ msgid "Time"
 msgstr "Durée"
 
 #: skylines/templates/flights/flights-table.jinja:96
-#: skylines/templates/notifications/events-table.jinja:161
+#: skylines/templates/notifications/events-table.jinja:177
 msgid "Show"
 msgstr "Afficher"
 
@@ -536,8 +548,7 @@ msgstr "Déposer un vol"
 #: skylines/templates/flights/macros.jinja:5
 #, python-format
 msgid "%(distance)s on %(date)s <small>by %(pilot)s and %(co_pilot)s</small>"
-msgstr ""
-"%(distance)s le %(date)s <small>par %(pilot)s et %(co_pilot)s</small>"
+msgstr "%(distance)s le %(date)s <small>par %(pilot)s et %(co_pilot)s</small>"
 
 #: skylines/templates/flights/macros.jinja:12
 #, python-format
@@ -673,16 +684,16 @@ msgstr "Attention !"
 msgid "New"
 msgstr "Nouveau"
 
-#: skylines/templates/notifications/events-table.jinja:89
+#: skylines/templates/notifications/events-table.jinja:93
 #, python-format
 msgid ""
-"<strong>%(pilot)s</strong> commented on your <strong>%(distance)s</strong> "
-"flight on the <strong>%(date)s</strong>."
+"<strong>%(pilot)s</strong> commented on your "
+"<strong>%(distance)s</strong> flight on the <strong>%(date)s</strong>."
 msgstr ""
 "<strong>%(pilot)s</strong> a commenté votre vol de "
 "<strong>%(distance)s</strong> du <strong>%(date)s</strong>."
 
-#: skylines/templates/notifications/events-table.jinja:94
+#: skylines/templates/notifications/events-table.jinja:98
 #, python-format
 msgid ""
 "You commented on a <strong>%(distance)s</strong> flight on the "
@@ -691,7 +702,7 @@ msgstr ""
 "Vous avez commenté un vol de <strong>%(distance)s</strong> le "
 "<strong>%(date)s</strong>."
 
-#: skylines/templates/notifications/events-table.jinja:98
+#: skylines/templates/notifications/events-table.jinja:102
 #, python-format
 msgid ""
 "<strong>%(pilot)s</strong> commented on a <strong>%(distance)s</strong> "
@@ -700,7 +711,7 @@ msgstr ""
 "<strong>%(pilot)s</strong> a commenté un vol de "
 "<strong>%(distance)s</strong> le <strong>%(date)s</strong>"
 
-#: skylines/templates/notifications/events-table.jinja:108
+#: skylines/templates/notifications/events-table.jinja:112
 #, python-format
 msgid ""
 "You uploaded a <strong>%(distance)s</strong> flight on the "
@@ -709,7 +720,7 @@ msgstr ""
 "Vous avez déposé un vol de <strong>%(distance)s</strong> le "
 "<strong>%(date)s</strong>"
 
-#: skylines/templates/notifications/events-table.jinja:112
+#: skylines/templates/notifications/events-table.jinja:116
 #, python-format
 msgid ""
 "<strong>%(pilot)s</strong> uploaded a new <strong>%(distance)s</strong> "
@@ -718,12 +729,12 @@ msgstr ""
 "<strong>%(pilot)s</strong> a déposé un nouveau vol de "
 "<strong>%(distance)s</strong> du <strong>%(date)s</strong>."
 
-#: skylines/templates/notifications/events-table.jinja:122
+#: skylines/templates/notifications/events-table.jinja:126
 #, python-format
 msgid "You uploaded <strong>%(num_flights)s</strong> new flights."
 msgstr "Vous avez déposé <strong>%(num_flights)s</strong> nouveaux vols."
 
-#: skylines/templates/notifications/events-table.jinja:125
+#: skylines/templates/notifications/events-table.jinja:129
 #, python-format
 msgid ""
 "<strong>%(pilot)s</strong> uploaded <strong>%(num_flights)s</strong> new "
@@ -732,44 +743,53 @@ msgstr ""
 "<strong>%(pilot)s</strong> a déposé <strong>%(num_flights)s</strong> "
 "nouveaux vols."
 
-#: skylines/templates/notifications/events-table.jinja:133
+#: skylines/templates/notifications/events-table.jinja:137
 #, python-format
 msgid "<strong>%(pilot)s</strong> started following you."
 msgstr "<strong>%(pilot)s</strong> vous suit."
 
-#: skylines/templates/notifications/events-table.jinja:135
+#: skylines/templates/notifications/events-table.jinja:139
 #, python-format
 msgid "You started following <strong>%(pilot)s</strong>."
 msgstr "Vous suivez <strong>%(pilot)s</strong>."
 
-#: skylines/templates/notifications/events-table.jinja:137
+#: skylines/templates/notifications/events-table.jinja:141
 #, python-format
-msgid ""
-"<strong>%(pilot)s</strong> started following <strong>%(pilot2)s</strong>."
+msgid "<strong>%(pilot)s</strong> started following <strong>%(pilot2)s</strong>."
 msgstr "<strong>%(pilot)s</strong> suit <strong>%(pilot2)s</strong>"
 
-#: skylines/templates/notifications/events-table.jinja:144
+#: skylines/templates/notifications/events-table.jinja:148
 #, python-format
 msgid "You started following <strong>%(num_pilots)s</strong> other pilots."
 msgstr "Vous suivez <strong>%(num_pilots)s</strong> autres pilotes."
 
-#: skylines/templates/notifications/events-table.jinja:146
+#: skylines/templates/notifications/events-table.jinja:150
 #, python-format
 msgid ""
-"<strong>%(pilot)s</strong> started following <strong>%(num_pilots)s</strong> "
-"other pilots."
+"<strong>%(pilot)s</strong> started following "
+"<strong>%(num_pilots)s</strong> other pilots."
 msgstr ""
 "<strong>%(pilot)s</strong> suit <strong>%(num_pilots)s</strong> autres "
 "pilotes."
 
-#: skylines/templates/notifications/events-table.jinja:153
+#: skylines/templates/notifications/events-table.jinja:157
 msgid "You joined SkyLines."
 msgstr "Vous vous êtes inscrit(e) sur SkyLines."
 
-#: skylines/templates/notifications/events-table.jinja:155
+#: skylines/templates/notifications/events-table.jinja:159
 #, python-format
 msgid "<strong>%(pilot)s</strong> joined SkyLines."
 msgstr "<strong>%(pilot)s</strong> s'est inscrit(e) sur SkyLines."
+
+#: skylines/templates/notifications/events-table.jinja:166
+#, python-format
+msgid "You joined <strong>%(club)s</strong>."
+msgstr ""
+
+#: skylines/templates/notifications/events-table.jinja:169
+#, python-format
+msgid "<strong>%(pilot)s</strong> joined <strong>%(club)s</strong>."
+msgstr ""
 
 #: skylines/templates/notifications/list.jinja:24
 msgid "There are no more notifications."
@@ -914,19 +934,19 @@ msgstr "Qu'est-ce que c'est ?"
 
 #: skylines/templates/tracking/info.jinja:9
 msgid ""
-"SkyLines Live Tracking can be used to let others take part on your journeys "
-"while you're flying. It uses a very light-weight protocol that only "
-"transmits the necessary data and due to that it can also work in "
-"areas/altitudes where the reception isn't very good. To give you an example: "
-"A flight of 10 hours only uses about 340 KB of traffic when the positions "
-"are transmitted every 5 seconds!"
+"SkyLines Live Tracking can be used to let others take part on your "
+"journeys while you're flying. It uses a very light-weight protocol that "
+"only transmits the necessary data and due to that it can also work in "
+"areas/altitudes where the reception isn't very good. To give you an "
+"example: A flight of 10 hours only uses about 340 KB of traffic when the "
+"positions are transmitted every 5 seconds!"
 msgstr ""
-"Le Tracking de SkyLines permet à chacun de prendre part à vos périples en "
-"planeur. Il utilise un protocole très léger pour envoyer les données "
-"strictement nécessaires, et permet ainsi de fonctionner dans des endroits et "
-"altitudes faiblement de faible couverture réseau. A titre d'exemple, un vol "
-"de 10h n'utilise que 340ko de données en envoyant la position toutes les 5 "
-"secondes."
+"Le Tracking de SkyLines permet à chacun de prendre part à vos périples en"
+" planeur. Il utilise un protocole très léger pour envoyer les données "
+"strictement nécessaires, et permet ainsi de fonctionner dans des endroits"
+" et altitudes faiblement de faible couverture réseau. A titre d'exemple, "
+"un vol de 10h n'utilise que 340ko de données en envoyant la position "
+"toutes les 5 secondes."
 
 #: skylines/templates/tracking/info.jinja:12
 msgid "Clients"
@@ -969,19 +989,20 @@ msgid ""
 "You have to <a href=\"%(url)s\">login</a> to see you own personal Live "
 "Tracking key."
 msgstr ""
-"Vous devez vous <a href=\"%(url)s\">connecter</a> pour voir clef personnelle "
-"de Tracking."
+"Vous devez vous <a href=\"%(url)s\">connecter</a> pour voir clef "
+"personnelle de Tracking."
 
 #: skylines/templates/tracking/info.jinja:37
 #, python-format
 msgid ""
 "In %(xcsoar)s, open the <em>Setup System</em> dialog, click on "
-"<em>Setup</em> and then <em>Tracking</em>.  Turn SkyLines tracking on, and "
-"enter your Live Tracking key."
+"<em>Setup</em> and then <em>Tracking</em>.  Turn SkyLines tracking on, "
+"and enter your Live Tracking key."
 msgstr ""
 "Dans %(xcsoar)s, ouvrez le menu <em>Setup System</em>, cliquez sur "
-"<em>Setup</em> puis <em>Tracking</em>. Activez le Traking en sélectionnant "
-"ON face au champ SkyLines, et saissez votre clef personnelle de Tracking."
+"<em>Setup</em> puis <em>Tracking</em>. Activez le Traking en "
+"sélectionnant ON face au champ SkyLines, et saissez votre clef "
+"personnelle de Tracking."
 
 #: skylines/templates/tracking/list.jinja:20
 msgid "Friends"
@@ -1027,7 +1048,7 @@ msgid "Delay"
 msgstr "Retard"
 
 #: skylines/templates/tracking/view.jinja:143
-#: skylines/templates/users/view.jinja:117 skylines/views/user.py:172
+#: skylines/templates/users/view.jinja:117 skylines/views/user.py:174
 #, python-format
 msgid "%(num)u minute"
 msgid_plural "%(num)u minutes"
@@ -1035,10 +1056,8 @@ msgstr[0] "%(num)u minute"
 msgstr[1] "%(num)u minutes"
 
 #: skylines/templates/tracking/view.jinja:146
-msgid ""
-"The live tracking delay is ignored because of your account privileges."
-msgstr ""
-"Le retard du tracking est ignoré à cause de vos paramètres de compte."
+msgid "The live tracking delay is ignored because of your account privileges."
+msgstr "Le retard du tracking est ignoré à cause de vos paramètres de compte."
 
 #: skylines/templates/tracking/view.jinja:146
 msgid "ignored"
@@ -1054,8 +1073,8 @@ msgstr "Déposer un vol"
 
 #: skylines/templates/upload/result.jinja:10
 msgid ""
-"Your flights have been saved. You may want to change the flights aircraft "
-"types and registrations below."
+"Your flights have been saved. You may want to change the flights aircraft"
+" types and registrations below."
 msgstr ""
 "Vos vols ont été enregistrés. Vous voudrez peut-être changer les types "
 "d'appareils ou les immatriculations ci-dessous."
@@ -1141,7 +1160,7 @@ msgstr "Plus d'informations"
 msgid "Tracking delay"
 msgstr "Délai du tracking"
 
-#: skylines/templates/users/view.jinja:115 skylines/views/user.py:170
+#: skylines/templates/users/view.jinja:115 skylines/views/user.py:172
 msgid "None"
 msgstr "Aucun"
 
@@ -1149,13 +1168,13 @@ msgstr "Aucun"
 msgid "Unspecified"
 msgstr "Non défini"
 
-#: skylines/templates/users/view.jinja:147 skylines/views/user.py:131
-#: skylines/views/user.py:150
+#: skylines/templates/users/view.jinja:147 skylines/views/user.py:133
+#: skylines/views/user.py:152
 msgid "Change Password"
 msgstr "Changer le mot de passe"
 
-#: skylines/templates/users/view.jinja:151 skylines/views/users.py:106
-#: skylines/views/users.py:118
+#: skylines/templates/users/view.jinja:151 skylines/views/users.py:108
+#: skylines/views/users.py:120
 msgid "Recover Password"
 msgstr "Récupérer le mot de passe"
 
@@ -1261,8 +1280,7 @@ msgid "You are now logged in. Welcome back, %(user)s!"
 msgstr "%(user)s vous êtes maintenant connecté !"
 
 #: skylines/views/login.py:46
-msgid ""
-"Sorry, email address or password are wrong. Please try again or register."
+msgid "Sorry, email address or password are wrong. Please try again or register."
 msgstr ""
 "Désolé, courriel ou mot de passe erroné. Merci de réessayer, ou de vous "
 "enregistrer."
@@ -1294,58 +1312,58 @@ msgstr "Aucun vol trouvé dans le fichier"
 
 #: skylines/views/upload.py:178
 msgid ""
-"Sorry, some error happened when updating your flight(s). Please contact a "
-"administrator for help."
+"Sorry, some error happened when updating your flight(s). Please contact a"
+" administrator for help."
 msgstr ""
-"Désolé, une erreur s'est produite lors du dépôt de votre (vos) vol(s). Merci "
-"de contacter l'administrateur pour obtenir de l'aide."
+"Désolé, une erreur s'est produite lors du dépôt de votre (vos) vol(s). "
+"Merci de contacter l'administrateur pour obtenir de l'aide."
 
 #: skylines/views/upload.py:216
 msgid "Your flight(s) have been successfully updated."
 msgstr "Votre (vos) vol(s) ont été déposé(s)."
 
-#: skylines/views/user.py:127 skylines/views/users.py:31
+#: skylines/views/user.py:129 skylines/views/users.py:31
 msgid "Passwords do not match"
 msgstr "Les mots de passe ne correspondent pas"
 
-#: skylines/views/user.py:138 skylines/views/users.py:56
-#: skylines/views/users.py:127
+#: skylines/views/user.py:140 skylines/views/users.py:56
+#: skylines/views/users.py:129
 msgid "Verify Password"
 msgstr "Vérification du mot de passe"
 
-#: skylines/views/user.py:193
+#: skylines/views/user.py:195
 msgid "Tracking Delay"
 msgstr "Délai de tracking"
 
-#: skylines/views/user.py:194
+#: skylines/views/user.py:196
 msgid "Unit Preset"
 msgstr "Préselection d'unités"
 
-#: skylines/views/user.py:195
+#: skylines/views/user.py:197
 msgid "Distance Unit"
 msgstr "Unité de distance"
 
-#: skylines/views/user.py:196
+#: skylines/views/user.py:198
 msgid "Speed Unit"
 msgstr "Unité de vitesse"
 
-#: skylines/views/user.py:197
+#: skylines/views/user.py:199
 msgid "Lift Unit"
 msgstr "Unité du vario"
 
-#: skylines/views/user.py:198
+#: skylines/views/user.py:200
 msgid "Altitude Unit"
 msgstr "Unité d'altitude"
 
-#: skylines/views/user.py:199
+#: skylines/views/user.py:201
 msgid "Eye Candy"
 msgstr "Effets"
 
-#: skylines/views/user.py:224
+#: skylines/views/user.py:226
 msgid "Edit User"
 msgstr "Editer utilisateur"
 
-#: skylines/views/users.py:180
+#: skylines/views/users.py:182
 msgid ""
 "The mail server is currently not reachable. Please try again later or "
 "contact the developers."
@@ -1353,6 +1371,7 @@ msgstr ""
 "Le serveur de courriel est actuellement injoignable. Merci d'essayer "
 "ultérieurement ou de contacter un développeur."
 
-#: skylines/views/users.py:215
+#: skylines/views/users.py:217
 msgid "Password changed."
 msgstr "Mot de passe modifié."
+
