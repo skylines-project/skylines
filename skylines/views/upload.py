@@ -12,7 +12,6 @@ from skylines.forms import upload, aircraft_model
 from skylines.lib import files
 from skylines.lib.decorators import login_required
 from skylines.lib.md5 import file_md5
-from skylines.lib.string import import_ascii
 from skylines.lib.xcsoar import analyse_flight
 from skylines.model import User, Flight, IGCFile
 from skylines.model.event import create_flight_notifications
@@ -35,7 +34,7 @@ def IterateFiles(name, f):
         # if f is a ZipFile
         for info in z.infolist():
             if info.file_size > 0:
-                yield import_ascii(info.filename), z.open(info.filename, 'r')
+                yield info.filename, z.open(info.filename, 'r')
 
 
 def IterateUploadFiles(upload):
