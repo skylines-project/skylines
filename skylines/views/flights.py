@@ -154,6 +154,7 @@ def today():
     return redirect(url_for('.latest'))
 
 
+@flights_blueprint.route('/date/<date>.json')
 @flights_blueprint.route('/date/<date>')
 def date(date, latest=False):
     try:
@@ -185,6 +186,7 @@ def date(date, latest=False):
         request.args, date=date, columns=columns)
 
 
+@flights_blueprint.route('/latest.json')
 @flights_blueprint.route('/latest')
 def latest():
     query = db.session \
@@ -198,6 +200,7 @@ def latest():
     return date(date_, latest=True)
 
 
+@flights_blueprint.route('/pilot/<int:id>.json')
 @flights_blueprint.route('/pilot/<int:id>')
 def pilot(id):
     pilot = get_requested_record(User, id)
@@ -228,6 +231,7 @@ def my():
     return redirect(url_for('.pilot', id=g.current_user.id))
 
 
+@flights_blueprint.route('/club/<int:id>.json')
 @flights_blueprint.route('/club/<int:id>')
 def club(id):
     club = get_requested_record(Club, id)
@@ -256,6 +260,7 @@ def my_club():
     return redirect(url_for('.club', id=g.current_user.club.id))
 
 
+@flights_blueprint.route('/airport/<int:id>.json')
 @flights_blueprint.route('/airport/<int:id>')
 def airport(id):
     airport = get_requested_record(Airport, id)
@@ -277,6 +282,7 @@ def airport(id):
                         airport=airport, columns=columns)
 
 
+@flights_blueprint.route('/unassigned.json')
 @flights_blueprint.route('/unassigned')
 def unassigned():
     if not g.current_user:
@@ -288,6 +294,7 @@ def unassigned():
     return _create_list('unassigned', request.args, filter=f)
 
 
+@flights_blueprint.route('/pinned.json')
 @flights_blueprint.route('/pinned')
 def pinned():
     # Check if we have cookies
