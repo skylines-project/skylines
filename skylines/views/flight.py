@@ -4,7 +4,7 @@ from datetime import datetime
 from flask import Blueprint, request, render_template, redirect, url_for, abort, current_app, jsonify, g, flash
 from flask.ext.babel import lazy_gettext as l_, _
 
-from formencode.validators import String, Invalid
+from formencode.validators import String
 from tw.forms.fields import TextField
 from sprox.formbase import EditableForm
 from sprox.widgets import PropertySingleSelectField
