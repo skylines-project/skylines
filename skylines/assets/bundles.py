@@ -6,7 +6,7 @@ from .filters import SimpleClosureJS
 # Font Awesome
 
 fontawesome_css = Bundle(
-    'https://raw.github.com/FortAwesome/Font-Awesome/v3.0.2/css/font-awesome.css',
+    'https://rawgithub.com/FortAwesome/Font-Awesome/v3.0.2/css/font-awesome.css',
     output='css/fontawesome-%(version)s.css')
 
 fontawesome_webfont_eot = Bundle(
@@ -22,20 +22,20 @@ fontawesome_webfont_ttf = Bundle(
     output='font/fontawesome-webfont.ttf')
 
 fontawesome_webfont_svg = Bundle(
-    'https://raw.github.com/FortAwesome/Font-Awesome/v3.0.2/font/fontawesome-webfont.svg',
+    'https://rawgithub.com/FortAwesome/Font-Awesome/v3.0.2/font/fontawesome-webfont.svg',
     output='font/fontawesome-webfont.svg')
 
 
 # Twitter Bootstrap
 
 bootstrap_js = Bundle(
-    'https://raw.github.com/twitter/bootstrap/v2.2.0/js/bootstrap-alert.js',
-    'https://raw.github.com/twitter/bootstrap/v2.2.0/js/bootstrap-collapse.js',
-    'https://raw.github.com/twitter/bootstrap/v2.2.0/js/bootstrap-modal.js',
-    'https://raw.github.com/twitter/bootstrap/v2.2.0/js/bootstrap-tooltip.js',
-    'https://raw.github.com/twitter/bootstrap/v2.2.0/js/bootstrap-popover.js',
-    'https://raw.github.com/twitter/bootstrap/v2.3.0/js/bootstrap-dropdown.js',
-    'https://raw.github.com/twitter/bootstrap/v2.3.0/js/bootstrap-tab.js',
+    'https://rawgithub.com/twitter/bootstrap/v2.2.0/js/bootstrap-alert.js',
+    'https://rawgithub.com/twitter/bootstrap/v2.2.0/js/bootstrap-collapse.js',
+    'https://rawgithub.com/twitter/bootstrap/v2.2.0/js/bootstrap-modal.js',
+    'https://rawgithub.com/twitter/bootstrap/v2.2.0/js/bootstrap-tooltip.js',
+    'https://rawgithub.com/twitter/bootstrap/v2.2.0/js/bootstrap-popover.js',
+    'https://rawgithub.com/twitter/bootstrap/v2.3.0/js/bootstrap-dropdown.js',
+    'https://rawgithub.com/twitter/bootstrap/v2.3.0/js/bootstrap-tab.js',
     filters=SimpleClosureJS,
     output='js/bootstrap-%(version)s.js')
 
@@ -43,12 +43,12 @@ bootstrap_js = Bundle(
 # Flot
 
 flot_js = Bundle(
-    'https://raw.github.com/flot/flot/ccb37e4965967d7252cc99e3b2eea8fcec3c909a/jquery.flot.js',
-    'https://raw.github.com/flot/flot/ccb37e4965967d7252cc99e3b2eea8fcec3c909a/jquery.flot.time.js',
-    'https://raw.github.com/flot/flot/ccb37e4965967d7252cc99e3b2eea8fcec3c909a/jquery.flot.crosshair.js',
-    'https://raw.github.com/flot/flot/ccb37e4965967d7252cc99e3b2eea8fcec3c909a/jquery.flot.resize.js',
+    'https://rawgithub.com/flot/flot/ccb37e4965967d7252cc99e3b2eea8fcec3c909a/jquery.flot.js',
+    'https://rawgithub.com/flot/flot/ccb37e4965967d7252cc99e3b2eea8fcec3c909a/jquery.flot.time.js',
+    'https://rawgithub.com/flot/flot/ccb37e4965967d7252cc99e3b2eea8fcec3c909a/jquery.flot.crosshair.js',
+    'https://rawgithub.com/flot/flot/ccb37e4965967d7252cc99e3b2eea8fcec3c909a/jquery.flot.resize.js',
     'http://flot-marks.googlecode.com/svn-history/r13/trunk/src/jquery.flot.marks.js',
-    'https://raw.github.com/flot/flot/ccb37e4965967d7252cc99e3b2eea8fcec3c909a/excanvas.min.js',
+    'https://rawgithub.com/flot/flot/ccb37e4965967d7252cc99e3b2eea8fcec3c909a/excanvas.min.js',
     filters=SimpleClosureJS(disable_ie_checks=True),
     output='js/flot-%(version)s.js')
 
