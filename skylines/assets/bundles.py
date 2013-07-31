@@ -29,13 +29,13 @@ fontawesome_webfont_svg = Bundle(
 # Twitter Bootstrap
 
 bootstrap_js = Bundle(
-    'https://rawgithub.com/twitter/bootstrap/v2.2.0/js/bootstrap-alert.js',
-    'https://rawgithub.com/twitter/bootstrap/v2.2.0/js/bootstrap-collapse.js',
-    'https://rawgithub.com/twitter/bootstrap/v2.2.0/js/bootstrap-modal.js',
-    'https://rawgithub.com/twitter/bootstrap/v2.2.0/js/bootstrap-tooltip.js',
-    'https://rawgithub.com/twitter/bootstrap/v2.2.0/js/bootstrap-popover.js',
-    'https://rawgithub.com/twitter/bootstrap/v2.3.0/js/bootstrap-dropdown.js',
-    'https://rawgithub.com/twitter/bootstrap/v2.3.0/js/bootstrap-tab.js',
+    'https://rawgithub.com/twbs/bootstrap/v2.2.0/js/bootstrap-alert.js',
+    'https://rawgithub.com/twbs/bootstrap/v2.2.0/js/bootstrap-collapse.js',
+    'https://rawgithub.com/twbs/bootstrap/v2.2.0/js/bootstrap-modal.js',
+    'https://rawgithub.com/twbs/bootstrap/v2.2.0/js/bootstrap-tooltip.js',
+    'https://rawgithub.com/twbs/bootstrap/v2.2.0/js/bootstrap-popover.js',
+    'https://rawgithub.com/twbs/bootstrap/v2.3.0/js/bootstrap-dropdown.js',
+    'https://rawgithub.com/twbs/bootstrap/v2.3.0/js/bootstrap-tab.js',
     filters=SimpleClosureJS,
     output='js/bootstrap-%(version)s.js')
 
