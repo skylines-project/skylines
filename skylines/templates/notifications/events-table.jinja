@@ -189,7 +189,11 @@
   {%- elif event.type == types.FLIGHT %}
     {{ url_for('flight.index', flight_id=event.flight_id) }}
   {%- elif event.type == types.FOLLOWER %}
-    {{ url_for('user.index', user_id=event.user_id) }}
+    {% if g.current_user and event.user_id == g.current_user.id -%}
+      {{ url_for('user.index', user_id=event.actor_id) }}
+    {%- else -%}
+      {{ url_for('user.index', user_id=event.user_id) }}
+    {%- endif %}
   {%- elif event.type == types.NEW_USER %}
     {{ url_for('user.index', user_id=event.actor_id) }}
   {%- elif event.type == types.CLUB_JOIN %}
