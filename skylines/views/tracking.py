@@ -37,8 +37,6 @@ def index():
         friend_tracks = [t for t in tracks if is_self_or_follower(t)]
         other_tracks = [t for t in tracks if t not in friend_tracks]
 
-        print friend_tracks
-        print other_tracks
     else:
         friend_tracks = []
         other_tracks = tracks
