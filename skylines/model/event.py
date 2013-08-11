@@ -238,6 +238,9 @@ def create_club_join_event(club, user):
     Create event for a user joining a club.
     """
 
+    if club is None:
+        return
+
     if isinstance(club, Club):
         club = club.id
 
