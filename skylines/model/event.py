@@ -66,7 +66,7 @@ class Event(db.Model):
 
     def __repr__(self):
         return '<Event: id={} type={}>' \
-            .format(self.id, self.type).encode('utf-8')
+            .format(self.id, self.type).encode('unicode_escape')
 
 
 class Notification(db.Model):
@@ -94,7 +94,7 @@ class Notification(db.Model):
 
     def __repr__(self):
         return '<Notification: id={}>' \
-            .format(self.id).encode('utf-8')
+            .format(self.id).encode('unicode_escape')
 
     ##############################
 

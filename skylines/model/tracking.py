@@ -39,7 +39,7 @@ class TrackingFix(db.Model):
 
     def __repr__(self):
         return '<TrackingFix: id={} time=\'{}\'>' \
-               .format(self.id, self.time).encode('utf-8')
+               .format(self.id, self.time).encode('unicode_escape')
 
     @property
     def location(self):
@@ -159,7 +159,7 @@ class TrackingSession(db.Model):
     finish_status = db.Column(SmallInteger)
 
     def __repr__(self):
-        return '<TrackingSession: id={}>'.format(self.id).encode('utf-8')
+        return '<TrackingSession: id={}>'.format(self.id).encode('unicode_escape')
 
     @classmethod
     def by_lt24_id(cls, lt24_id, filter_finished=True):

@@ -116,7 +116,7 @@ class User(db.Model):
 
     def __repr__(self):
         return ('<User: email=%s, display=%s>' % (
-                self.email_address, self.name)).encode('utf-8')
+                self.email_address, self.name)).encode('unicode_escape')
 
     def __unicode__(self):
         return self.name
@@ -363,7 +363,7 @@ class Group(db.Model):
     # Special methods
 
     def __repr__(self):
-        return ('<Group: name=%s>' % self.group_name).encode('utf-8')
+        return ('<Group: name=%s>' % self.group_name).encode('unicode_escape')
 
     def __unicode__(self):
         return self.group_name
@@ -396,7 +396,7 @@ class Permission(db.Model):
     # Special methods
 
     def __repr__(self):
-        return ('<Permission: name=%s>' % self.permission_name).encode('utf-8')
+        return ('<Permission: name=%s>' % self.permission_name).encode('unicode_escape')
 
     def __unicode__(self):
         return self.permission_name
