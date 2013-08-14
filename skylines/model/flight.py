@@ -74,7 +74,7 @@ class Flight(db.Model):
     needs_analysis = db.Column(Boolean, nullable=False, default=True)
 
     def __repr__(self):
-        return ('<Flight: id=%d>' % self.id).encode('utf-8')
+        return ('<Flight: id=%d>' % self.id).encode('unicode_escape')
 
     @hybrid_property
     def duration(self):

@@ -16,7 +16,7 @@ class TimeZone(db.Model):
         return self.tzid
 
     def __repr__(self):
-        return ('<AircraftModel: id=%d tzid=\'%s\'>' % (self.id, self.tzid)).encode('utf-8')
+        return ('<AircraftModel: id=%d tzid=\'%s\'>' % (self.id, self.tzid)).encode('unicode_escape')
 
     @classmethod
     def by_location(cls, location):

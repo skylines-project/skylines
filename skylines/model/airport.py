@@ -40,7 +40,7 @@ class Airport(db.Model):
         return self.name
 
     def __repr__(self):
-        return ('<Airport: id=%d name=\'%s\'>' % (self.id, self.name)).encode('utf-8')
+        return ('<Airport: id=%d name=\'%s\'>' % (self.id, self.name)).encode('unicode_escape')
 
     @property
     def location(self):
