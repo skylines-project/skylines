@@ -54,6 +54,9 @@ def gather_sessions_statistics(user_id):
         dt = (fix.time - last_fix.time) if (fix and last_fix) else None
         is_new_session = dt and dt > timedelta(hours=3)
 
+        # update current session
+        if not is_start:
+            session['num_fixes'] += 1
 
         # save last_fix in session and append it to the session list
         if is_end or is_new_session:
@@ -64,6 +67,7 @@ def gather_sessions_statistics(user_id):
         if is_start or is_new_session:
             session = dict()
             session['start'] = fix.time
+            session['num_fixes'] = 1
 
         last_fix = fix
 
@@ -89,10 +93,17 @@ def print_statistics(stats):
     print
     print 'Sessions:'
     for session in sessions:
-        print '{date}: {start}-{end}'.format(
-            date=session.get('start').strftime('%d.%m.%Y'),
-            start=session.get('start').strftime('%H:%M'),
-            end=session.get('end').strftime('%H:%M'))
+        start = session.get('start')
+        end = session.get('end')
+        duration = end - start
+        duration -= timedelta(microseconds=duration.microseconds)
+
+        print '{date} - {start}-{end} - {duration} - {num_fixes} fixes'.format(
+            date=start.strftime('%d.%m.%Y'),
+            start=start.strftime('%H:%M'),
+            end=end.strftime('%H:%M'),
+            duration=duration,
+            num_fixes=session.get('num_fixes'))
 
 
 stats = gather_statistics(args)
