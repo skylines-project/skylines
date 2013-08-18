@@ -63,7 +63,7 @@ def gather_sessions_statistics(user_id):
             session['max_dt'] = max(dt_secs, session.get('max_dt', 0))
 
         # save last_fix in session and append it to the session list
-        if is_end or is_new_session:
+        if last_fix and (is_end or is_new_session):
             session['end'] = last_fix.time
 
             duration = (session.get('end') - session.get('start')).total_seconds()
@@ -74,7 +74,7 @@ def gather_sessions_statistics(user_id):
             sessions.append(session)
 
         # start a new session
-        if is_start or is_new_session:
+        if fix and (is_start or is_new_session):
             session = dict()
             session['start'] = fix.time
             session['num_fixes'] = 1
