@@ -55,12 +55,22 @@ def gather_sessions_statistics(user_id):
         is_new_session = dt and dt > timedelta(hours=3)
 
         # update current session
-        if not is_start:
+        if not (is_start or is_new_session or is_end):
             session['num_fixes'] += 1
+
+            dt_secs = dt.total_seconds()
+            session['min_dt'] = min(dt_secs, session.get('min_dt', 999999))
+            session['max_dt'] = max(dt_secs, session.get('max_dt', 0))
 
         # save last_fix in session and append it to the session list
         if is_end or is_new_session:
             session['end'] = last_fix.time
+
+            duration = (session.get('end') - session.get('start')).total_seconds()
+            if session.get('num_fixes') > 1 and duration > 0:
+                session['avg_dt'] = duration / (session.get('num_fixes') - 1)
+                session['quality'] = session.get('min_dt') / session.get('avg_dt')
+
             sessions.append(session)
 
         # start a new session
@@ -98,12 +108,15 @@ def print_statistics(stats):
         duration = end - start
         duration -= timedelta(microseconds=duration.microseconds)
 
-        print '{date} - {start}-{end} - {duration} - {num_fixes} fixes'.format(
+        print '{date} - {start}-{end} - {duration} - Q {quality:04.2%} - {num_fixes} fixes (dt: {min_dt:.1f}, avg {avg_dt:.1f})'.format(
             date=start.strftime('%d.%m.%Y'),
             start=start.strftime('%H:%M'),
             end=end.strftime('%H:%M'),
             duration=duration,
-            num_fixes=session.get('num_fixes'))
+            quality=session.get('quality', 1),
+            num_fixes=session.get('num_fixes'),
+            min_dt=session.get('min_dt', 0),
+            avg_dt=session.get('avg_dt', 0))
 
 
 stats = gather_statistics(args)
