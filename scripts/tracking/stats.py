@@ -26,20 +26,19 @@ from skylines import db
 from skylines.model import TrackingFix, User
 
 
-def get_pilot(id):
-    pilot = User.get(id)
+def get_pilot(user_id):
+    pilot = User.get(user_id)
     return dict(name=pilot.name, id=pilot.id)
+
+
+def get_base_query(user_id):
+    return db.session.query(TrackingFix).filter_by(pilot_id=user_id)
 
 
 def gather_statistics(args):
     stats = dict()
     stats['pilot'] = get_pilot(args.user)
-
-    q = db.session.query(TrackingFix) \
-        .filter_by(pilot_id=args.user)
-
-    stats['num_fixes'] = q.count()
-
+    stats['num_fixes'] = get_base_query(args.user).count()
     return stats
 
 
