@@ -13,6 +13,8 @@ sys.path.append(os.path.dirname(sys.argv[0]))
 parser = argparse.ArgumentParser(description='Analyse live tracks and output statistics.')
 parser.add_argument('--config', metavar='config.ini',
                     help='path to the configuration INI file')
+parser.add_argument('--json', action='store_true',
+                    help='enable JSON output')
 parser.add_argument('user', type=int,
                     help='A user ID')
 
@@ -94,4 +96,9 @@ def print_statistics(stats):
 
 
 stats = gather_statistics(args)
-print_statistics(stats)
+
+if args.json:
+    from flask import json
+    print json.dumps(stats)
+else:
+    print_statistics(stats)
