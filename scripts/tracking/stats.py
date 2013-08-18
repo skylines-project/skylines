@@ -100,23 +100,29 @@ def print_statistics(stats):
     print
     print 'Number of sessions: {}'.format(len(sessions))
     print 'Number of received fixes: {}'.format(stats.get('num_fixes'))
-    print
-    print 'Sessions:'
-    for session in sessions:
-        start = session.get('start')
-        end = session.get('end')
-        duration = end - start
-        duration -= timedelta(microseconds=duration.microseconds)
 
-        print '{date} - {start}-{end} - {duration} - Q {quality:04.2%} - {num_fixes} fixes (dt: {min_dt:.1f}, avg {avg_dt:.1f})'.format(
-            date=start.strftime('%d.%m.%Y'),
-            start=start.strftime('%H:%M'),
-            end=end.strftime('%H:%M'),
-            duration=duration,
-            quality=session.get('quality', 1),
-            num_fixes=session.get('num_fixes'),
-            min_dt=session.get('min_dt', 0),
-            avg_dt=session.get('avg_dt', 0))
+    if sessions:
+        print
+        print 'Sessions:'
+        for session in sessions:
+            print_session(session)
+
+
+def print_session(session):
+    start = session.get('start')
+    end = session.get('end')
+    duration = end - start
+    duration -= timedelta(microseconds=duration.microseconds)
+
+    print '{date} - {start}-{end} - {duration} - Q {quality:04.2%} - {num_fixes} fixes (dt: {min_dt:.1f}, avg {avg_dt:.1f})'.format(
+        date=start.strftime('%d.%m.%Y'),
+        start=start.strftime('%H:%M'),
+        end=end.strftime('%H:%M'),
+        duration=duration,
+        quality=session.get('quality', 1),
+        num_fixes=session.get('num_fixes'),
+        min_dt=session.get('min_dt', 0),
+        avg_dt=session.get('avg_dt', 0))
 
 
 stats = gather_statistics(args)
