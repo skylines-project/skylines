@@ -280,7 +280,7 @@ def analyse_flight(flight, full=512, triangle=1024, sprint=64):
     try:
         root = simplejson.load(analysis)
     except:
-        log.error('Parsing the output of AnalyseFlight failed.')
+        log.warning('Parsing the output of AnalyseFlight failed.')
         return False
 
     if 'events' in root:
