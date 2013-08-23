@@ -147,6 +147,9 @@ def index_post():
 
         create_flight_notifications(flight)
 
+        # flush data to make sure we don't get duplicate files from ZIP files
+        db.session.flush()
+
         success = True
 
     db.session.commit()
