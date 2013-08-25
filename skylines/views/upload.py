@@ -181,10 +181,21 @@ def update():
         return redirect('/flights/latest')
 
     for index, id in enumerate(flight_id_list):
+        # Parse flight id
+
         try:
             id = int(id)
         except ValueError:
             continue
+
+        # Get flight from database and check if it is writable
+
+        flight = Flight.get(id)
+
+        if not flight or not flight.is_writable(g.current_user):
+            continue
+
+        # Parse model, registration and competition ID
 
         try:
             model_id = int(model_list[index])
@@ -203,10 +214,7 @@ def update():
             if not 0 < len(competition_id) < 5:
                 competition_id = None
 
-        flight = Flight.get(id)
-
-        if not flight.is_writable(g.current_user):
-            continue
+        # Set new values
 
         flight.model_id = model_id
         flight.registration = registration
