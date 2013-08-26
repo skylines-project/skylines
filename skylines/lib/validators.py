@@ -1,3 +1,5 @@
+from flask.ext.babel import _
+
 from formencode.api import FancyValidator, Invalid
 from sqlalchemy.orm.exc import NoResultFound
 from sqlalchemy.sql.expression import and_, not_
@@ -29,7 +31,7 @@ class UniqueValueUnless(FancyValidator):
 
     def _to_python(self, value, state):
         if not self._is_unique_unless(self.entity, self.field_name, value):
-            raise Invalid('That value already exists', value, state)
+            raise Invalid(_('That value already exists'), value, state)
         return value
 
 
