@@ -172,12 +172,12 @@ def __filter_prefixed_tokens(prefix, tokens):
 
 
 def text_to_tokens(search_text):
-    return shlex.split(search_text.encode('utf-8'))
+    return shlex.split(search_text.replace('\\', '\\\\\\\\').encode('utf-8'))
 
 
 def escape_tokens(tokens):
     # Escape % and _ properly
-    tokens = [t.replace('%', '\%').replace('_', '\_') for t in tokens]
+    tokens = [t.replace('%', '\\%').replace('_', '\\_') for t in tokens]
 
     # Use * as wildcard character
     tokens = [t.replace('*', '%') for t in tokens]
