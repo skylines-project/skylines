@@ -13,7 +13,7 @@ MODELS = [User, Club, Airport]
 
 @search_blueprint.route('/')
 def index():
-    search_text = request.values.get('text', None)
+    search_text = request.values.get('text', '').strip()
     if not search_text:
         return render_template('search/list.jinja')
 
