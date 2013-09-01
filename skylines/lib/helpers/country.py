@@ -1,4 +1,3 @@
-from babel import Locale
 from flask.ext.babel import get_locale
 
 __all__ = ['country_name', 'country_name', 'language_to_country_code']
