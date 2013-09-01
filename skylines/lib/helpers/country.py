@@ -8,6 +8,7 @@ __conversion_dict = {
     'nb': 'no',
     'sv': 'se',
     'zh_TW': 'cn',
+    'zh_Hant_TW': 'cn',
     'cs': 'cz',
 }
 
