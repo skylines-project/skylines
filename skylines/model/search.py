@@ -172,7 +172,10 @@ def __filter_prefixed_tokens(prefix, tokens):
 
 
 def text_to_tokens(search_text):
-    return shlex.split(search_text.replace('\\', '\\\\\\\\').encode('utf-8'))
+    try:
+        return shlex.split(search_text.encode('utf-8'))
+    except ValueError:
+        return search_text.split(' ')
 
 
 def escape_tokens(tokens):
