@@ -38,7 +38,7 @@ class MountainWaveProject(db.Model):
         return ('<MountainWaveProject: id=%d name=\'%s\'>' % (self.id, self.name)).encode('unicode_escape')
 
     @classmethod
-    def get_info(cls, location):
+    def by_location(cls, location):
         '''Returns a query object of mountain waves around the location'''
         return cls.query() \
             .filter(db.func.ST_DWithin(
