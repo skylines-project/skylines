@@ -38,21 +38,18 @@ def _query_airspace():
 def _query_waves():
     location = parse_location()
 
-    mwp = MountainWaveProject.get_info(location)
+    waves = MountainWaveProject.get_info(location)
 
     mwp_info = []
-    for wave in mwp:
-        if wave.main_wind_direction:
-            if isnumeric(wave.main_wind_direction):
-                wind_direction = wave.main_wind_direction + u"°"
-            else:
-                wind_direction = wave.main_wind_direction
-        else:
-            wind_direction = _("Unknown")
+    for wave in waves:
+        wind_direction = wave.main_wind_direction or ''
+        if isnumeric(wind_direction):
+            wind_direction += u'°'
 
-        mwp_info.append(dict(name=wave.name,
-                             main_wind_direction=wind_direction
-                             ))
+        mwp_info.append({
+            'name': wave.name,
+            'main_wind_direction': wind_direction
+        })
 
     return mwp_info
 

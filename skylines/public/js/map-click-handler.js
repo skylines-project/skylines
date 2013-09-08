@@ -400,12 +400,12 @@ slMapClickHandler = function(infobox, settings) {
     var table_body = $('<tbody></tbody');
 
     for (var i = 0; i < data.length; ++i) {
+      var wind_direction = data[i].main_wind_direction || 'Unknown';
+
       table_body.append($(
           '<tr>' +
           '<td class="wave_name">' + data[i].name + '</td>' +
-          '<td class="wave_direction">' +
-              data[i].main_wind_direction +
-          '</td>' +
+          '<td class="wave_direction">' + wind_direction + '</td>' +
           '</tr>'
           ));
     }
