@@ -77,3 +77,33 @@ class Location(object):
 
     def geographic_distance(self, other):
         return geographic_distance(self, other)
+
+
+class Bounds(object):
+    def __init__(self, southwest, northeast):
+        if not (isinstance(southwest, Location) and
+                isinstance(northeast, Location)):
+            raise ValueError()
+
+        self.southwest = southwest
+        self.northeast = northeast
+
+    @staticmethod
+    def from_bbox_string(bbox):
+        bbox = bbox.split(',')
+        if len(bbox) != 4:
+            raise ValueError()
+
+        bbox = map(float, bbox)
+
+        sw = Location(latitude=bbox[1], longitude=bbox[0])
+        ne = Location(latitude=bbox[3], longitude=bbox[2])
+        return Bounds(sw, ne)
+
+    def make_box(self, srid=4326):
+        box = db.func.ST_MakeBox2D(self.southwest.make_point(srid=None),
+                                   self.northeast.make_point(srid=None))
+        if srid:
+            box = db.func.ST_SetSRID(box, srid)
+
+        return box
