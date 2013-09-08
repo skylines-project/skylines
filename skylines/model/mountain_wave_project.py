@@ -5,7 +5,6 @@ from datetime import datetime
 from sqlalchemy.types import Integer, Float, String, DateTime
 from sqlalchemy.sql.expression import cast
 from geoalchemy2.types import Geography, Geometry
-from geoalchemy2.elements import WKTElement
 
 from skylines import db
 
@@ -43,6 +42,6 @@ class MountainWaveProject(db.Model):
         '''Returns a query object of mountain waves around the location'''
         return cls.query() \
             .filter(db.func.ST_DWithin(
-                cast(WKTElement(location.to_wkt(), srid=4326), Geography),
+                cast(location.to_wkt_element(), Geography),
                 cast(cls.location, Geography),
                 5000))

@@ -2,6 +2,7 @@
 
 from sqlalchemy import func
 from sqlalchemy.sql.expression import cast
+from geoalchemy2.elements import WKTElement
 from geoalchemy2.types import Geometry, Geography
 from geoalchemy2.shape import to_shape
 
@@ -16,6 +17,9 @@ class Location(object):
 
     def to_wkt(self):
         return 'POINT({0} {1})'.format(self.longitude, self.latitude)
+
+    def to_wkt_element(self):
+        return WKTElement(self.to_wkt(), srid=4326)
 
     @staticmethod
     def from_wkb(wkb):

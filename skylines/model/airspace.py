@@ -4,7 +4,6 @@ from datetime import datetime
 
 from sqlalchemy.types import Integer, String, DateTime
 from geoalchemy2.types import Geometry
-from geoalchemy2.elements import WKTElement
 
 from skylines import db
 
@@ -31,4 +30,4 @@ class Airspace(db.Model):
     def get_info(cls, location):
         '''Returns a query object of all airspaces at the location'''
         return cls.query() \
-            .filter(cls.the_geom.ST_Contains(WKTElement(location.to_wkt(), srid=4326)))
+            .filter(cls.the_geom.ST_Contains(location.to_wkt_element()))
