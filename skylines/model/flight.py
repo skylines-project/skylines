@@ -7,7 +7,6 @@ from sqlalchemy.types import Unicode, Integer, DateTime, Date, Boolean
 from sqlalchemy.ext.hybrid import hybrid_property
 from sqlalchemy.sql.expression import case
 from geoalchemy2.types import Geometry
-from geoalchemy2.elements import WKTElement
 from geoalchemy2.shape import to_shape, from_shape
 from shapely.geometry import LineString
 
@@ -112,7 +111,7 @@ class Flight(db.Model):
         if location is None:
             self.takeoff_location_wkt = None
         else:
-            self.takeoff_location_wkt = WKTElement(location.to_wkt(), srid=4326)
+            self.takeoff_location_wkt = location.to_wkt_element()
 
     @property
     def landing_location(self):
@@ -127,7 +126,7 @@ class Flight(db.Model):
         if location is None:
             self.landing_location_wkt = None
         else:
-            self.landing_location_wkt = WKTElement(location.to_wkt(), srid=4326)
+            self.landing_location_wkt = location.to_wkt_element()
 
     @classmethod
     def by_md5(cls, _md5):

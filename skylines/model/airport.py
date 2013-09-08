@@ -6,7 +6,6 @@ from sqlalchemy import Column, func
 from sqlalchemy.types import Integer, Float, String, DateTime
 from sqlalchemy.sql.expression import cast
 from geoalchemy2.types import Geometry, Geography
-from geoalchemy2.elements import WKTElement
 from geoalchemy2.shape import to_shape
 
 from .geo import Location
@@ -55,11 +54,11 @@ class Airport(db.Model):
         if location is None:
             self.location_wkt = None
         else:
-            self.location_wkt = WKTElement(location.to_wkt(), srid=4326)
+            self.location_wkt = location.to_wkt_element()
 
     @classmethod
     def by_location(cls, location, distance_threshold=0.025):
-        location = WKTElement(location.to_wkt(), srid=4326)
+        location = location.to_wkt_element()
         distance = func.ST_Distance(cls.location_wkt, location)
 
         airport = db.session.query(cls, distance.label('distance')) \
@@ -70,6 +69,12 @@ class Airport(db.Model):
             return airport.Airport
         else:
             return None
+
+    @classmethod
+    def by_bbox(cls, bbox):
+        return cls.query() \
+            .order_by(cls.id) \
+            .filter(db.func.ST_Contains(bbox.make_box(), cls.location_wkt))
 
     def distance(self, location):
         loc1 = cast(self.location_wkt, Geography)
