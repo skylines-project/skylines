@@ -31,14 +31,8 @@ def airspace_to_json(airspace):
 
 def _query_airspace():
     location = parse_location()
-
     airspaces = Airspace.get_info(location)
-    info = []
-
-    for airspace in airspaces:
-        info.append(airspace_to_json(airspace))
-
-    return info
+    return map(airspace_to_json, airspaces)
 
 
 def wave_to_json(wave):
@@ -54,14 +48,8 @@ def wave_to_json(wave):
 
 def _query_waves():
     location = parse_location()
-
     waves = MountainWaveProject.get_info(location)
-
-    mwp_info = []
-    for wave in waves:
-        mwp_info.append(wave_to_json(wave))
-
-    return mwp_info
+    return map(wave_to_json, waves)
 
 
 @api_blueprint.route('/')
