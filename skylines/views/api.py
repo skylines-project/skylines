@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 
 from flask import Blueprint, request, abort, jsonify
-from flask.ext.babel import _
 
 from skylines.model import Airspace, MountainWaveProject, Location
 from skylines.lib.string import isnumeric
