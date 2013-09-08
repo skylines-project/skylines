@@ -27,6 +27,9 @@ def search(text):
 def test_tokenizer():
     # Check that this does not throw exceptions
     text_to_tokens('\\')
+    text_to_tokens('blabla \\')
+    text_to_tokens('"')
+    text_to_tokens('"blabla \\')
 
     # Check that the tokenizer returns expected results
     eq_(text_to_tokens('a b c'), ['a', 'b', 'c'])
