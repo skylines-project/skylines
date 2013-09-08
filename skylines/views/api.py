@@ -6,6 +6,7 @@ from werkzeug.exceptions import BadRequest
 from skylines.model import (
     Airspace, Airport, MountainWaveProject, Location, Bounds
 )
+from skylines.lib.decorators import jsonp
 from skylines.lib.string import isnumeric
 
 api_blueprint = Blueprint('api', 'skylines')
@@ -53,6 +54,7 @@ def _query_waves(location):
 
 
 @api_blueprint.route('/mapitems')
+@jsonp
 def mapitems():
     location = parse_location()
     return jsonify(airspaces=_query_airspace(location),
@@ -60,18 +62,21 @@ def mapitems():
 
 
 @api_blueprint.route('/airspace')
+@jsonp
 def airspace():
     location = parse_location()
     return jsonify(airspaces=_query_airspace(location))
 
 
 @api_blueprint.route('/mountain_wave_project')
+@jsonp
 def waves():
     location = parse_location()
     return jsonify(waves=_query_waves(location))
 
 
 @api_blueprint.route('/airports/')
+@jsonp
 def airports():
     bbox = request.args.get('bbox', type=Bounds.from_bbox_string)
     if not bbox:
@@ -84,6 +89,7 @@ def airports():
 
 
 @api_blueprint.route('/airports/<int:id>')
+@jsonp
 def airport(id):
     airport = Airport.get(id)
     if not airport:
