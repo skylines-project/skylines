@@ -42,6 +42,6 @@ class MountainWaveProject(db.Model):
         '''Returns a query object of mountain waves around the location'''
         return cls.query() \
             .filter(db.func.ST_DWithin(
-                cast(location.to_wkt_element(), Geography),
+                cast(location.make_point(), Geography),
                 cast(cls.location, Geography),
                 5000))

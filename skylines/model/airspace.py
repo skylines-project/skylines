@@ -30,4 +30,4 @@ class Airspace(db.Model):
     def get_info(cls, location):
         '''Returns a query object of all airspaces at the location'''
         return cls.query() \
-            .filter(cls.the_geom.ST_Contains(location.to_wkt_element()))
+            .filter(cls.the_geom.ST_Contains(location.make_point()))
