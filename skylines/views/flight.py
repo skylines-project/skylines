@@ -11,7 +11,6 @@ from sprox.widgets import PropertySingleSelectField
 
 from sqlalchemy.sql.expression import func, and_, literal_column
 from geoalchemy2.shape import to_shape
-from geoalchemy2.elements import WKTElement
 
 from skylines import db
 from skylines.forms import BootstrapForm, aircraft_model
@@ -301,7 +300,7 @@ def _get_near_flights(flight, location, time, max_distance=1000):
         .filter(Flight.takeoff_time <= time) \
         .filter(Flight.landing_time >= time) \
         .filter(func.ST_DWithin(Flight.locations,
-                                WKTElement(location.to_wkt(), srid=4326),
+                                location.to_wkt_element(),
                                 max_distance_deg))
 
     flights = []
