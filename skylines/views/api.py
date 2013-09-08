@@ -35,6 +35,17 @@ def _query_airspace():
     return info
 
 
+def wave_to_json(wave):
+    wind_direction = wave.main_wind_direction or ''
+    if isnumeric(wind_direction):
+        wind_direction += u'°'
+
+    return {
+        'name': wave.name,
+        'main_wind_direction': wind_direction,
+    }
+
+
 def _query_waves():
     location = parse_location()
 
@@ -42,14 +53,7 @@ def _query_waves():
 
     mwp_info = []
     for wave in waves:
-        wind_direction = wave.main_wind_direction or ''
-        if isnumeric(wind_direction):
-            wind_direction += u'°'
-
-        mwp_info.append({
-            'name': wave.name,
-            'main_wind_direction': wind_direction
-        })
+        mwp_info.append(wave_to_json(wave))
 
     return mwp_info
 
