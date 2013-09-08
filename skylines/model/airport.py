@@ -70,6 +70,12 @@ class Airport(db.Model):
         else:
             return None
 
+    @classmethod
+    def by_bbox(cls, bbox):
+        return cls.query() \
+            .order_by(cls.id) \
+            .filter(db.func.ST_Contains(bbox.make_box(), cls.location_wkt))
+
     def distance(self, location):
         loc1 = cast(self.location_wkt, Geography)
         loc2 = func.ST_GeographyFromText(location.to_wkt())
