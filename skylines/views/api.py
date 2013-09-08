@@ -9,16 +9,18 @@ from skylines.lib.string import isnumeric
 api_blueprint = Blueprint('api', 'skylines')
 
 
-def _query_airspace():
+def parse_location():
     try:
         latitude = float(request.args['lat'])
         longitude = float(request.args['lon'])
+        return Location(latitude=latitude, longitude=longitude)
 
     except (KeyError, ValueError):
         abort(400)
 
-    location = Location(latitude=latitude,
-                        longitude=longitude)
+
+def _query_airspace():
+    location = parse_location()
 
     airspaces = Airspace.get_info(location)
     info = []
@@ -34,15 +36,7 @@ def _query_airspace():
 
 
 def _query_waves():
-    try:
-        latitude = float(request.args['lat'])
-        longitude = float(request.args['lon'])
-
-    except (KeyError, ValueError):
-        abort(400)
-
-    location = Location(latitude=latitude,
-                        longitude=longitude)
+    location = parse_location()
 
     mwp = MountainWaveProject.get_info(location)
 
