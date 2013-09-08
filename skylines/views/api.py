@@ -28,8 +28,7 @@ def airspace_to_json(airspace):
     }
 
 
-def _query_airspace():
-    location = parse_location()
+def _query_airspace(location):
     airspaces = Airspace.by_location(location)
     return map(airspace_to_json, airspaces)
 
@@ -45,22 +44,25 @@ def wave_to_json(wave):
     }
 
 
-def _query_waves():
-    location = parse_location()
+def _query_waves(location):
     waves = MountainWaveProject.by_location(location)
     return map(wave_to_json, waves)
 
 
 @api_blueprint.route('/')
 def index():
-    return jsonify(airspaces=_query_airspace(), waves=_query_waves())
+    location = parse_location()
+    return jsonify(airspaces=_query_airspace(location),
+                   waves=_query_waves(location))
 
 
 @api_blueprint.route('/airspace')
 def airspace():
-    return jsonify(airspaces=_query_airspace())
+    location = parse_location()
+    return jsonify(airspaces=_query_airspace(location))
 
 
 @api_blueprint.route('/mountain_wave_project')
 def waves():
-    return jsonify(waves=_query_waves())
+    location = parse_location()
+    return jsonify(waves=_query_waves(location))
