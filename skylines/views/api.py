@@ -81,6 +81,8 @@ def airports():
     bbox = request.args.get('bbox', type=Bounds.from_bbox_string)
     if not bbox:
         raise BadRequest('Invalid `bbox` parameter.')
+
+    bbox.normalize()
     if bbox.get_size() > 20 * 20:
         raise BadRequest('Requested `bbox` is too large.')
 

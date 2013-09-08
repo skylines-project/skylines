@@ -35,6 +35,11 @@ class Location(object):
         coords = to_shape(wkb)
         return Location(latitude=coords.y, longitude=coords.x)
 
+    def normalize(self):
+        self.longitude = self.longitude % 360
+        if self.longitude > 180:
+            self.longitude -= 360
+
     def __str__(self):
         return self.to_wkt()
 
@@ -113,6 +118,10 @@ class Bounds(object):
 
     def get_size(self):
         return self.get_width() * self.get_height()
+
+    def normalize(self):
+        self.southwest.normalize()
+        self.northeast.normalize()
 
     def make_box(self, srid=4326):
         box = db.func.ST_MakeBox2D(self.southwest.make_point(srid=None),
