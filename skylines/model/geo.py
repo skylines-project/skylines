@@ -21,6 +21,12 @@ class Location(object):
     def to_wkt_element(self):
         return WKTElement(self.to_wkt(), srid=4326)
 
+    def make_point(self, srid=4326):
+        point = db.func.ST_MakePoint(self.longitude, self.latitude)
+        if srid:
+            point = db.func.ST_SetSRID(point, srid)
+        return point
+
     @staticmethod
     def from_wkb(wkb):
         coords = to_shape(wkb)
