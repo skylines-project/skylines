@@ -19,6 +19,16 @@ def parse_location():
         abort(400)
 
 
+def airspace_to_json(airspace):
+    return {
+        'name': airspace.name,
+        'base': airspace.base,
+        'top': airspace.top,
+        'airspace_class': airspace.airspace_class,
+        'country': airspace.country_code,
+    }
+
+
 def _query_airspace():
     location = parse_location()
 
@@ -26,11 +36,7 @@ def _query_airspace():
     info = []
 
     for airspace in airspaces:
-        info.append(dict(name=airspace.name,
-                         base=airspace.base,
-                         top=airspace.top,
-                         airspace_class=airspace.airspace_class,
-                         country=airspace.country_code))
+        info.append(airspace_to_json(airspace))
 
     return info
 
