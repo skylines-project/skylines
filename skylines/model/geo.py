@@ -83,7 +83,7 @@ class Bounds(object):
     def __init__(self, southwest, northeast):
         if not (isinstance(southwest, Location) and
                 isinstance(northeast, Location)):
-            raise ValueError()
+            raise ValueError('SW and NE must be Location instances.')
 
         self.southwest = southwest
         self.northeast = northeast
@@ -92,7 +92,8 @@ class Bounds(object):
     def from_bbox_string(bbox):
         bbox = bbox.split(',')
         if len(bbox) != 4:
-            raise ValueError()
+            raise ValueError(
+                'BBox string needs to have exactly four components')
 
         bbox = map(float, bbox)
 
