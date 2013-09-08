@@ -49,8 +49,8 @@ def _query_waves(location):
     return map(wave_to_json, waves)
 
 
-@api_blueprint.route('/')
-def index():
+@api_blueprint.route('/mapitems')
+def mapitems():
     location = parse_location()
     return jsonify(airspaces=_query_airspace(location),
                    waves=_query_waves(location))

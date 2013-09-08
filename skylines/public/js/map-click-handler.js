@@ -281,7 +281,7 @@ slMapClickHandler = function(infobox, settings) {
    * @param {Number} lat Latitude.
    */
   function getLocationInfo(lon, lat) {
-    var req = $.ajax('/api/?lon=' + lon + '&lat=' + lat);
+    var req = $.ajax('/api/mapitems?lon=' + lon + '&lat=' + lat);
 
     req.done(function(data) {
       showLocationData(data);
