@@ -85,6 +85,10 @@ class Bounds(object):
                 isinstance(northeast, Location)):
             raise ValueError('SW and NE must be Location instances.')
 
+        if southwest.latitude > northeast.latitude:
+            raise ValueError(
+                'SW latitude must be smaller or equal to NE latitude.')
+
         self.southwest = southwest
         self.northeast = northeast
 
