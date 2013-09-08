@@ -34,3 +34,18 @@ class TestBounds():
         eq_(b.southwest.longitude, 6.05)
         eq_(b.northeast.latitude, 51)
         eq_(b.northeast.longitude, 7)
+
+    def test_get_sizes(self):
+        # Check normal size calculations
+        b = Bounds.from_bbox_string('1,50,21,52')
+
+        eq_(b.get_width(), 20)
+        eq_(b.get_height(), 2)
+        eq_(b.get_size(), 40)
+
+        # Check longitude wraparound and height == 0
+        b = Bounds.from_bbox_string('170,50,-165,50')
+
+        eq_(b.get_width(), 25)
+        eq_(b.get_height(), 0)
+        eq_(b.get_size(), 0)

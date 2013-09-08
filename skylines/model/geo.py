@@ -105,6 +105,15 @@ class Bounds(object):
         ne = Location(latitude=bbox[3], longitude=bbox[2])
         return Bounds(sw, ne)
 
+    def get_width(self):
+        return (self.northeast.longitude - self.southwest.longitude) % 360
+
+    def get_height(self):
+        return self.northeast.latitude - self.southwest.latitude
+
+    def get_size(self):
+        return self.get_width() * self.get_height()
+
     def make_box(self, srid=4326):
         box = db.func.ST_MakeBox2D(self.southwest.make_point(srid=None),
                                    self.northeast.make_point(srid=None))
