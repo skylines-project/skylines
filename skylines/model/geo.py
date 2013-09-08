@@ -18,8 +18,11 @@ class Location(object):
     def to_wkt(self):
         return 'POINT({0} {1})'.format(self.longitude, self.latitude)
 
-    def to_wkt_element(self):
-        return WKTElement(self.to_wkt(), srid=4326)
+    def to_wkt_element(self, srid=4326):
+        if not srid:
+            srid = -1
+
+        return WKTElement(self.to_wkt(), srid=srid)
 
     def make_point(self, srid=4326):
         point = db.func.ST_MakePoint(self.longitude, self.latitude)
