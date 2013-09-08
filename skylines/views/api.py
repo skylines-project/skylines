@@ -1,8 +1,11 @@
 # -*- coding: utf-8 -*-
 
 from flask import Blueprint, request, abort, jsonify
+from werkzeug.exceptions import BadRequest
 
-from skylines.model import Airspace, MountainWaveProject, Location
+from skylines.model import (
+    Airspace, Airport, MountainWaveProject, Location, Bounds
+)
 from skylines.lib.string import isnumeric
 
 api_blueprint = Blueprint('api', 'skylines')
@@ -66,3 +69,55 @@ def airspace():
 def waves():
     location = parse_location()
     return jsonify(waves=_query_waves(location))
+
+
+@api_blueprint.route('/airports/')
+def airports():
+    bbox = request.args.get('bbox', type=Bounds.from_bbox_string)
+    if not bbox:
+        raise BadRequest('Invalid `bbox` parameter.')
+    if bbox.get_size() > 20 * 20:
+        raise BadRequest('Requested `bbox` is too large.')
+
+    airports = map(airport_to_json, Airport.by_bbox(bbox))
+    return jsonify(airports=airports)
+
+
+@api_blueprint.route('/airports/<int:id>')
+def airport(id):
+    airport = Airport.get(id)
+    if not airport:
+        abort(404)
+
+    airport = airport_to_json(airport, short=False)
+    return jsonify(airport)
+
+
+def airport_to_json(airport, short=True):
+    json = {
+        'id': airport.id,
+        'name': airport.name,
+        'elevation': airport.altitude,
+        'location': {
+            'latitude': airport.location.latitude,
+            'longitude': airport.location.longitude,
+        },
+    }
+
+    if not short:
+        json.update({
+            'icao': airport.icao,
+            'short_name': airport.short_name,
+            'country_code': airport.country_code,
+            'type': airport.type,
+            'runways': [{
+                'length': airport.runway_len,
+                'direction': airport.runway_dir,
+                'surface': airport.surface,
+            }],
+            'frequencies': [{
+                'frequency': airport.frequency,
+            }],
+        })
+
+    return json
