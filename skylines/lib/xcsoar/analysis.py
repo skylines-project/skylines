@@ -306,7 +306,7 @@ def analyse_flight(flight, full=512, triangle=1024, sprint=64):
 
         trace = find_trace(contest, 'plus')
         if trace is not None and 'score' in trace:
-            flight.olc_plus_score = int(trace['score'])
+            flight.olc_plus_score = trace['score']
         else:
             flight.olc_plus_score = None
 

@@ -31,7 +31,7 @@
       {%- endif %}
 
       {% if 'score' not in omitted_columns -%}
-      <td>{{ flight.index_score }}</td>
+      <td>{{ h.format_decimal(flight.index_score, format='0') }}</td>
       {%- endif %}
 
       {% if 'pilot' not in omitted_columns -%}
