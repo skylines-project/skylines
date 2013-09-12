@@ -25,9 +25,6 @@
       <td>
         <a href="{{ url_for('flights.pilot', id=user.id) }}" class="btn btn-mini"><i class="icon-plane"></i> {% trans %}Flights{% endtrans %}</a>
         <a href="{{ url_for('statistics.index', page='pilot', id=user.id) }}" class="btn btn-mini"><i class="icon-tasks"></i> {% trans %}Statistics{% endtrans %}</a>
-        {% if user.is_writable(g.current_user) -%}
-        <a href="{{ url_for('user.edit', user_id=user.id) }}" class="btn btn-mini">{% trans %}Edit{% endtrans %}</a>
-        {%- endif %}
       </td>
     </tr>
     {%- endfor %}
