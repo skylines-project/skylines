@@ -11,7 +11,7 @@ from sqlalchemy.orm.util import aliased
 from skylines import db
 from skylines.lib.datatables import GetDatatableRecords
 from skylines.lib.dbutil import get_requested_record
-from skylines.lib.helpers import truncate, country_name
+from skylines.lib.helpers import truncate, country_name, format_decimal
 from skylines.model import (
     User, Club, Flight, IGCFile, AircraftModel,
     Airport, FlightComment,
@@ -98,7 +98,7 @@ def _create_list(tab, kw, date=None, pilot=None, club=None, airport=None,
                                landing_time=flight.landing_time.strftime('%H:%M'),
                                date=flight.date_local.strftime('%d.%m.%Y'),
                                date_formatted=format_date(flight.date_local),
-                               index_score=flight.index_score,
+                               index_score=format_decimal(flight.index_score, format='0'),
                                olc_classic_distance=flight.olc_classic_distance,
                                pilot_id=flight.pilot_id,
                                pilot=flight.pilot and flight.pilot.name,

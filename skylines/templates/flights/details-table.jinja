@@ -92,7 +92,7 @@
     <tr>
       <th>{% trans %}Score{% endtrans %}</th>
       <td>
-        {{ _('%(points)s pt', points=flight.index_score) }}
+        {{ _('%(points)s pt', points=h.format_decimal(flight.index_score, format='0.0')) }}
         <small><br/>
         {%- if flight.olc_classic_distance %}
         <span title="{% trans %}OLC Distance{% endtrans %}">

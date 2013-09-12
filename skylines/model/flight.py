@@ -3,7 +3,7 @@
 from datetime import datetime
 
 from sqlalchemy.dialects import postgresql
-from sqlalchemy.types import Unicode, Integer, DateTime, Date, Boolean
+from sqlalchemy.types import Unicode, Integer, Float, DateTime, Date, Boolean
 from sqlalchemy.ext.hybrid import hybrid_property
 from sqlalchemy.sql.expression import case
 from geoalchemy2.types import Geometry
@@ -64,7 +64,7 @@ class Flight(db.Model):
 
     olc_classic_distance = db.Column(Integer)
     olc_triangle_distance = db.Column(Integer)
-    olc_plus_score = db.Column(Integer)
+    olc_plus_score = db.Column(Float)
 
     igc_file_id = db.Column(
         Integer, db.ForeignKey('igc_files.id', ondelete='CASCADE'), nullable=False)
