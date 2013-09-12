@@ -57,7 +57,7 @@ main_css = Bundle(
     'css/bootstrap-theme-skylines.css',
     #'css/style.css',
     #'css/box.css',
-    #'css/tables.css',
+    'css/tables.css',
     'css/login-dropdown.css',
     'css/about.css',
     'css/search.css',

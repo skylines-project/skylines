@@ -9,16 +9,18 @@
   <tbody>
     {% for year in years -%}
     <tr>
-      <td class="span2">{{ year.year|int }}</td>
-      <td class="span2">
+      <td class="col-xs-2">{{ year.year|int }}</td>
+      <td class="col-xs-2">
         <span rel="tooltip" title="{{ _('avg. %(distance)s per flight', distance=h.format_distance(year.average_distance)) }}">
           {{ h.format_distance(year.distance) }}
         </span>
       </td>
-      <td class="span8">
-        <div class="progress progress-success">
-          <div class="bar" style="width: {{ year.distance * 100 / max_distance }}%;"></div>
+      <td class="col-xs-8">
+        {% with value=(year.distance * 100 / max_distance) -%}
+        <div class="progress">
+          <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="{{ value }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ value }}%;"></div>
         </div>
+        {%- endwith %}
       </td>
     </tr>
     {%- endfor %}
