@@ -5,59 +5,62 @@
 {%- block content %}
 <div id="about">
   <div class="row">
-    <div class="span9 tagline">
-      <p class="lead">{% trans %}Welcome to SkyLines, your internet platform for flight sharing!{% endtrans %}</p>
-    </div>
-    <div class="span3 social-buttons">
-      <div class="btn-group">
-        <a href="https://www.facebook.com/skylines.project" class="btn" target="_blank"><i class="icon-facebook-sign"></i></a>
-        <a href="https://twitter.com/skylinesproject" class="btn" target="_blank"><i class="icon-twitter"></i></a>
-        <a href="https://plus.google.com/114462603028839635814" class="btn" target="_blank"><i class="icon-google-plus"></i></a>
-        <a href="https://github.com/skylines-project/skylines" class="btn" target="_blank"><i class="icon-github-alt"></i></a>
+    <div class="col-md-12 tagline">
+      <p class="lead pull-left">{% trans %}Welcome to SkyLines, your internet platform for flight sharing!{% endtrans %}</p>
+
+      <div class="btn-group social-buttons pull-right hidden-xs hidden-sm">
+        <a href="https://www.facebook.com/skylines.project" class="btn btn-default" target="_blank"><i class="icon-facebook-sign"></i></a>
+        <a href="https://twitter.com/skylinesproject" class="btn btn-default" target="_blank"><i class="icon-twitter"></i></a>
+        <a href="https://plus.google.com/114462603028839635814" class="btn btn-default" target="_blank"><i class="icon-google-plus"></i></a>
+        <a href="https://github.com/skylines-project/skylines" class="btn btn-default" target="_blank"><i class="icon-github-alt"></i></a>
       </div>
     </div>
   </div>
 
-  <div class="banner"><img src="/images/about-banner.png"/></div>
+  <div class="row">
+    <div class="col-md-12">
+      <img src="/images/about-banner.png" class="img-responsive" style="width:100%"/>
+    </div>
+  </div>
 
   <div class="row">
-    <div class="span4">
+    <div class="col-md-4">
       <h2><a href="{{ url_for('flights.index') }}"><i class="icon-plane"></i> {% trans %}Flight Database{% endtrans %}</a></h2>
       <p>{% trans url=url_for('upload.index') %}<a href="{{ url }}">Upload</a> your IGC files and share them with your friends. We won't change your files or restrict you from downloading them again!{% endtrans %}</p>
     </div>
-    <div class="span4">
+    <div class="col-md-4">
       <h2><a href="{{ url_for('tracking.index') }}"><i class="icon-rss"></i> {% trans %}Live Tracking{% endtrans %}</a></h2>
       <p>{% trans url=url_for('tracking.info') %}Use your mobile phone to send position updates to SkyLines. Find out how it works <a href="{{ url }}">here</a>.{% endtrans %}</p>
     </div>
-    <div class="span4">
+    <div class="col-md-4">
       <h2><i class="icon-info-sign"></i> {% trans %}Flight Analysis{% endtrans %}</h2>
       <p>{% trans %}Use our analysis tools to have a closer look at your flights and how you might be able to improve them in the future.{% endtrans %}</p>
     </div>
   </div>
   <div class="row">
-    <div class="span4">
+    <div class="col-md-4">
       <h2><i class="icon-map-marker"></i> {% trans %}Task Planning{% endtrans %} <small>({% trans %}planned{% endtrans %})</small></h2>
       <p>{% trans prosoar='<a href="http://www.prosoar.de/" target="_blank">proSoar <i class="icon-external-link icon-small"></i></a>' %}Use your browser to plan your tasks before the flight and upload them quickly to your flight computer. Integration of {{ prosoar }} is planned.{% endtrans %}</p>
     </div>
-    <div class="span4">
+    <div class="col-md-4">
       <h2><i class="icon-trophy"></i> {% trans %}Competitions{% endtrans %} <small>({% trans %}planned{% endtrans %})</small></h2>
       <p>{% trans %}Create competitions to offer your spectators an even better live tracking experience by following all the participants on the same map.{% endtrans %}</p>
     </div>
-    <div class="span4">
+    <div class="col-md-4">
       <h2><i class="icon-check"></i> {% trans %}Achievements{% endtrans %} <small>({% trans %}planned{% endtrans %})</small></h2>
       <p>{% trans %}Challenge yourself by trying to complete all the achievements that SkyLines offers. Fly large triangles, long final glides or just do your first outlanding.{% endtrans %}</p>
     </div>
   </div>
   <div class="row">
-    <div class="span4">
+    <div class="col-md-4">
       <h2><i class="icon-group"></i> {% trans %}Social Network{% endtrans %}</h2>
       <p>{% trans url=url_for('notifications.index') %}Skylines also has some social network aspects. You can comment on flights, follow your friends and get <a href="{{ url }}">notifications</a> if they do anything interesting.{% endtrans %}</p>
     </div>
-    <div class="span4">
+    <div class="col-md-4">
       <h2><i class="icon-cloud"></i> {% trans %}Open Data{% endtrans %}</h2>
       <p>{% trans license='<a href="http://opendatacommons.org/licenses/by/summary/" target="_blank">Open Data Commons Attribution License (ODBY) <i class="icon-external-link icon-small"></i></a></a>', welt2000='<a href="http://www.segelflug.de/vereine/welt2000/" target="_blank">WELT2000 <i class="icon-external-link icon-small"></i></a></a>' %}The SkyLines flight database is made available under the {{ license }}. Skylines is using waypoint data from the {{ welt2000 }} project.{% endtrans %}</p>
     </div>
-    <div class="span4">
+    <div class="col-md-4">
       <h2><i class="icon-wrench"></i> {% trans %}Open Source{% endtrans %}</h2>
       <p>{% trans team_url=url_for('about.skylines_team'), license_url=url_for('about.license'), github='<a href="https://github.com/skylines-project/skylines#contact-and-contributing" target="_blank">GitHub <i class="icon-external-link icon-small"></i></a></a>' %}Skylines is a <a href="{{ team_url }}">community</a> project and entirely based on free software (<a href="{{ license_url }}">License</a>). Visit {{ github }} if you want to help!{% endtrans %}</p>
     </div>
