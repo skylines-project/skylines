@@ -9,7 +9,7 @@
     <div class="content">
 
         {% if self.title() -%}
-        <div class="page-header">
+        <div class="page-header{% if header_tabs %} page-header-with-tabs{% endif %}">
             {%- if self.title_right() -%}
             <div class="pull-right">{%- block title_right %}{% endblock %}</div>
             {%- endif %}

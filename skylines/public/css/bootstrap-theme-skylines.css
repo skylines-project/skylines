@@ -30,7 +30,34 @@ body {
 }
 
 .page-header {
+  position: relative;
   margin-top: 20px;
+}
+
+.page-header-with-tabs {
+  padding-bottom: 50px;
+}
+
+.page-header-tabs {
+  position: absolute;
+  bottom: 0;
+  left: 5px;
+}
+
+.page-header-tabs .nav-tabs {
+  margin-bottom: 0;
+  border-bottom: 0;
+}
+
+@media (min-width: 768px) {
+  .page-header-with-tabs {
+    padding-bottom: 0;
+  }
+
+  .page-header-tabs {
+    left: auto;
+    right: 5px;
+  }
 }
 
 /* The white background content wrapper */
@@ -78,4 +105,13 @@ body {
 /* File upload field fix */
 input[type="file"].form-control {
   height: auto;
+}
+
+/* Pagination */
+.pagination-condensed {
+  margin: 0;
+}
+
+.pagination-condensed a {
+  line-height: 22px;
 }
