@@ -82,7 +82,7 @@
 <div itemscope="" itemtype="http://schema.org/Person">
   <meta itemprop="url" content="{{ url_for('.index', _external=True) }}" />
   <div class="row">
-    <div class="well span8 offset2">
+    <div class="well col-md-8 col-md-offset-2">
       <table class="right">
         {% if user.is_readable(g.current_user) -%}
         <tr>
@@ -101,9 +101,9 @@
           <th>{% trans %}Tracking key{% endtrans %}</th>
           <td>
             <span class="label label-info">{{ user.tracking_key_hex }}</span>
-            <a href="{{ url_for('tracking.info') }}" class="btn btn-mini">{% trans %}More Information{% endtrans %}</a>
+            <a href="{{ url_for('tracking.info') }}" class="btn btn-default btn-sm">{% trans %}More Information{% endtrans %}</a>
             {% if user.is_writable(g.current_user) -%}
-            <a href="{{ url_for('.tracking_register', came_from=url_for('.index')) }}" class="btn btn-mini">{% trans %}Generate new key{% endtrans %}</a>
+            <a href="{{ url_for('.tracking_register', came_from=url_for('.index')) }}" class="btn btn-default btn-sm">{% trans %}Generate new key{% endtrans %}</a>
             {%- endif %}
           </td>
         </tr>
@@ -134,7 +134,7 @@
           {%- endif %}
 
             {% if user.is_writable(g.current_user) -%}
-            <a href="change_club" class="btn btn-mini">{% trans %}Change{% endtrans %}</a>
+            <a href="change_club" class="btn btn-default btn-sm">{% trans %}Change{% endtrans %}</a>
             {%- endif %}
           </td>
         </tr>
@@ -143,63 +143,68 @@
 
       <p style="margin-top: 10px">
         {% if user.is_writable(g.current_user) -%}
-        <a href="{{ url_for('.edit') }}" class="btn">{% trans %}Edit{% endtrans %}</a>
-        <a href="{{ url_for('.change_password') }}" class="btn">{% trans %}Change Password{% endtrans %}</a>
+        <a href="{{ url_for('.edit') }}" class="btn btn-default">{% trans %}Edit{% endtrans %}</a>
+        <a href="{{ url_for('.change_password') }}" class="btn btn-default">{% trans %}Change Password{% endtrans %}</a>
         {%- endif %}
 
         {% if g.current_user and g.current_user.is_manager() -%}
-        <a href="{{ url_for('.recover_password') }}" class="btn">{% trans %}Recover Password{% endtrans %}</a>
+        <a href="{{ url_for('.recover_password') }}" class="btn btn-default">{% trans %}Recover Password{% endtrans %}</a>
         {%- endif %}
 
         {% if g.current_user and g.current_user != user -%}
           {% if g.current_user.follows(user) -%}
-            <a href="{{ url_for('.unfollow') }}" class="btn">{% trans %}Unfollow{% endtrans %}</a>
+            <a href="{{ url_for('.unfollow') }}" class="btn btn-default">{% trans %}Unfollow{% endtrans %}</a>
           {%- else %}
-            <a href="{{ url_for('.follow') }}" class="btn">{% trans %}Follow{% endtrans %}</a>
+            <a href="{{ url_for('.follow') }}" class="btn btn-default">{% trans %}Follow{% endtrans %}</a>
           {%- endif %}
         {%- endif %}
 
-        <a href="{{ url_for('flights.pilot', id=user.id) }}" class="btn"><i class="icon-plane"></i> {% trans %}Flights{% endtrans %}</a>
-        <a href="{{ url_for('statistics.index', page='pilot', id=user.id) }}" class="btn"><i class="icon-tasks"></i> {% trans %}Statistics{% endtrans %}</a>
-        <a href="{{ url_for('timeline.index', user=user.id) }}" class="btn"><i class="icon-time"></i> {{ _('Timeline') }}</a>
+        <a href="{{ url_for('flights.pilot', id=user.id) }}" class="btn btn-default"><i class="icon-plane"></i> {% trans %}Flights{% endtrans %}</a>
+        <a href="{{ url_for('statistics.index', page='pilot', id=user.id) }}" class="btn btn-default"><i class="icon-tasks"></i> {% trans %}Statistics{% endtrans %}</a>
+        <a href="{{ url_for('timeline.index', user=user.id) }}" class="btn btn-default"><i class="icon-time"></i> {{ _('Timeline') }}</a>
       </p>
     </div>
+  </div>
 
-    {% if user.following -%}
-    <div class="span12">
+  {% if user.following -%}
+  <div class="row">
+    <div class="col-md-12">
       <h2>{% trans %}Following{% endtrans %}</h2>
-      <ul class="row-fluid">
+      <ul class="row">
         {% for following in user.following|sort(attribute='destination.name') -%}
-        <li class="span3">
+        <li class="col-md-3 col-sm-4 col-xs-6">
           <a href="{{ url_for('user.index', user_id=following.destination_id) }}">{{ following.destination }}</a>
         </li>
         {%- endfor %}
       </ul>
     </div>
-    {%- endif %}
+  </div>
+  {%- endif %}
 
-    {% if user.followers -%}
-    <div class="span12">
+  {% if user.followers -%}
+  <div class="row">
+    <div class="col-md-12">
       <h2>{% trans %}Followers{% endtrans %}</h2>
-      <ul class="row-fluid">
+      <ul class="row">
         {% for follower in user.followers|sort(attribute='source.name') -%}
-        <li class="span3">
+        <li class="col-md-3 col-sm-4 col-xs-6">
           <a href="{{ url_for('user.index', user_id=follower.source_id) }}">{{ follower.source }}</a>
         </li>
         {%- endfor %}
       </ul>
     </div>
-    {%- endif %}
+  </div>
+  {%- endif %}
 
+  <div class="row">
     {% if distance_flights -%}
-    <div class="span4 offset2">
+    <div class="col-sm-6 col-md-4 col-md-offset-2">
       <h2>{% trans %}Distance Flights{% endtrans %}</h2>
       <table class="table">
         <thead>
           <tr>
             <th>{% trans %}Distance{% endtrans %}</th>
             <th>{% trans %}Date{% endtrans %}</th>
-            <th></th>
           </tr>
         </thead>
         <tbody>
@@ -209,11 +214,9 @@
             <td>
               {% if distance_flight[1] -%}
               {{ insert_timeago_date(distance_flight[1].landing_time) }}
-              {%- endif %}
-            </td>
-            <td>
-              {% if distance_flight[1] -%}
-              <a href="{{ url_for('flight.index', flight_id=distance_flight[1].id) }}" class="btn btn-mini">Show</a>
+              <div class="pull-right">
+                <a href="{{ url_for('flight.index', flight_id=distance_flight[1].id) }}" class="btn btn-default btn-sm">Show</a>
+              </div>
               {%- endif %}
             </td>
           </tr>
@@ -224,7 +227,7 @@
     {%- endif %}
 
     {% if last_year_statistics and last_year_statistics.flights > 0 -%}
-    <div class="span4">
+    <div class="col-sm-6 col-md-4">
       <h2>{% trans %}Last 12 Months{% endtrans %}</h2>
       <table class="table">
         <thead>
@@ -261,13 +264,16 @@
       </table>
     </div>
     {%- endif %}
+  </div>
 
-    {% if takeoff_locations -%}
-    <div class="span12">
+  {% if takeoff_locations -%}
+  <div class="row">
+    <div class="col-md-12">
       <h2>{% trans %}Takeoff Locations{% endtrans %}</h2>
       <div id="map_canvas" style="width:100%; height:400pt;"></div>
     </div>
-    {%- endif %}
+  </div>
+  {%- endif %}
   </div>
 </div>
 {%- endblock %}

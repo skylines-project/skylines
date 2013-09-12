@@ -126,3 +126,11 @@ input[type="file"].form-control {
 .pagination-condensed a {
   line-height: 22px;
 }
+
+/* Give a quick and non-cross-browser friendly divider */
+ul li[class*="col"] {
+  margin-left: 0 !important;
+  padding-left: 19px;
+  border-left: 1px solid #eee;
+  list-style: none;
+}
