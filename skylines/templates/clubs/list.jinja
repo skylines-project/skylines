@@ -9,17 +9,18 @@
   <thead>
     <tr>
       <th>{% trans %}Name{% endtrans %}</th>
-      <th>{% trans %}Actions{% endtrans %}</th>
     </tr>
   </thead>
   <tbody>
     {% for club in clubs -%}
     <tr>
-      <td>{{ club_link(club) }}</td>
       <td>
-        <a href="{{ url_for('flights.club', id=club.id) }}" class="btn btn-mini"><i class="icon-plane"></i> {% trans %}Flights{% endtrans %}</a>
-        <a href="{{ url_for('statistics.index', page='club', id=club.id) }}" class="btn btn-mini"><i class="icon-tasks"></i> {% trans %}Statistics{% endtrans %}</a>
-        <a href="{{ url_for('club.pilots', club_id=club.id) }}" class="btn btn-mini"><i class="icon-group"></i> {% trans %}Members{% endtrans %}</a>
+        {{ club_link(club) }}
+        <div class="pull-right">
+          <a href="{{ url_for('flights.club', id=club.id) }}" class="btn btn-default btn-sm"><i class="icon-plane"></i> {% trans %}Flights{% endtrans %}</a>
+          <a href="{{ url_for('statistics.index', page='club', id=club.id) }}" class="btn btn-default btn-sm hidden-xs"><i class="icon-tasks"></i> {% trans %}Statistics{% endtrans %}</a>
+          <a href="{{ url_for('club.pilots', club_id=club.id) }}" class="btn btn-default btn-sm hidden-xs"><i class="icon-group"></i> {% trans %}Members{% endtrans %}</a>
+        </div>
       </td>
     </tr>
     {%- endfor %}

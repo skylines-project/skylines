@@ -16,7 +16,7 @@
 
 {% block content -%}
 <div class="row">
-  <div class="well span8 offset2">
+  <div class="well col-sm-8 col-sm-offset-2">
     <table class="right">
       <tr>
         <th>{% trans %}Name{% endtrans %}</th>
@@ -44,12 +44,12 @@
 
     <p>
       {% if club.is_writable(g.current_user) -%}
-      <a href="{{ url_for('.edit') }}" class="btn">{% trans %}Edit{% endtrans %}</a>
+      <a href="{{ url_for('.edit') }}" class="btn btn-default">{% trans %}Edit{% endtrans %}</a>
       {%- endif %}
 
-      <a href="{{ url_for('flights.club', id=club.id) }}" class="btn"><i class="icon-plane"></i> {% trans %}Flights{% endtrans %}</a>
-      <a href="{{ url_for('statistics.index', page='club', id=club.id) }}" class="btn"><i class="icon-tasks"></i> {% trans %}Statistics{% endtrans %}</a>
-      <a href="{{ url_for('club.pilots') }}" class="btn"><i class="icon-group"></i> {% trans %}Members{% endtrans %}</a>
+      <a href="{{ url_for('flights.club', id=club.id) }}" class="btn btn-default"><i class="icon-plane"></i> {% trans %}Flights{% endtrans %}</a>
+      <a href="{{ url_for('statistics.index', page='club', id=club.id) }}" class="btn btn-default"><i class="icon-tasks"></i> {% trans %}Statistics{% endtrans %}</a>
+      <a href="{{ url_for('club.pilots') }}" class="btn btn-default"><i class="icon-group"></i> {% trans %}Members{% endtrans %}</a>
     </p>
   </div>
 </div>

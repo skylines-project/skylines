@@ -29,6 +29,17 @@ body {
   font-weight: 300;
 }
 
+a.hidden-xs {
+  display: inline-block !important;
+}
+
+@media (max-width: 768px) {
+  a.hidden-xs {
+    display: none !important;
+  }
+}
+
+/* Page header */
 .page-header {
   position: relative;
   margin-top: 20px;
