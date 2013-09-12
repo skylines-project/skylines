@@ -8,45 +8,54 @@
 ] -%}
 
 {% macro topbar(active_page) -%}
-<div class="navbar navbar-fixed-top">
-    <div class="navbar-inner">
-        <div class="container">
-            {{ _topbar_content(active_page) }}
-        </div>
+<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container">
+        {{ _topbar_content(active_page) }}
     </div>
 </div>
 {%- endmacro %}
 
 {% macro _topbar_content(active_page) -%}
-<a href="{{ url_for('index') }}"><img src="/images/logo.png" class="logo" /></a>
-<a class="brand" href="{{ url_for('index') }}">
-    <span class="skylines-blue">Sky</span><span class="skylines-white">Lines</span>
-</a>
+<div class="navbar-header">
+    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+    </button>
+    <a class="navbar-brand" href="{{ url_for('index') }}">
+        <img src="/images/logo.png" class="logo" /> <span class="skylines-blue">Sky</span><span class="skylines-white">Lines</span>
+    </a>
+</div>
 
-<ul class="nav">
-    {% for href, id, caption in navigation_bar -%}
-    <li{% if active_page == id %} class="active"{% endif %}><a href="{{ href }}">{{ caption }}</a></li>
-    {%- endfor %}
-</ul>
+<div class="collapse navbar-collapse navbar-ex1-collapse">
+    <ul class="nav navbar-nav">
+        {% for href, id, caption in navigation_bar -%}
+        <li{% if active_page == id %} class="active"{% endif %}><a href="{{ href }}">{{ caption }}</a></li>
+        {%- endfor %}
+    </ul>
 
-<form action="/search" class="navbar-search pull-left">
-  <input type="text" name="text" value="{{ (search_text or '')|e }}" class="search-query" placeholder="{{ _('Search') }}" style="width: 150px">
-</form>
+    <form action="{{ url_for('search.index') }}" class="navbar-form navbar-left navbar-search" role="search">
+        <div class="form-group">
+            <input type="text" name="text" value="{{ (search_text or '')|e }}" placeholder="{{ _('Search') }}" class="form-control" placeholder="Search">
+        </div>
+    </form>
 
-<ul class="nav pull-right">
-    <li{% if active_page == 'upload' %} class="active"{% endif %}>
-        <a href="{{ url_for('upload.index') }}"><i class="icon-upload-alt icon-large"></i></a>
-    </li>
+    <ul class="nav navbar-nav navbar-right">
+        <li{% if active_page == 'upload' %} class="active"{% endif %}>
+            <a href="{{ url_for('upload.index') }}"><i class="icon-upload-alt icon-large"></i></a>
+        </li>
 
-    {% if g.current_user -%}
-    {{ _notification_item(active_page) }}
-    {{ _user_dropdown(active_page) }}
-    {%-  else %}
-    {{ _login_dropdown(active_page) }}
-    {%- endif %}
+        {% if g.current_user -%}
+        {{ _notification_item(active_page) }}
+        {{ _user_dropdown(active_page) }}
+        {%- else %}
+        {{ _login_dropdown(active_page) }}
+        {%- endif %}
 
-    {{ _language_dropdown() }}
-</ul>
+        {{ _language_dropdown() }}
+    </ul>
+</div>
 {%- endmacro %}
 
 {% macro _login_dropdown(active_page) -%}
@@ -61,28 +70,28 @@
 {%- endmacro %}
 
 {% macro _login_form() -%}
-<form action="{{ url_for('login', next=request.url) }}" method="post" accept-charset="UTF-8">
-    <div class="control-group">
-        <label class="control-label" for="username">{% trans %}Email Address{% endtrans %}:</label>
-        <div class="controls">
-            <input type="text" id="username" name="login"/>
-        </div>
+<form action="{{ url_for('login', next=request.url) }}" method="post" accept-charset="UTF-8" class="form-login">
+    <div class="form-group">
+        <label for="username">{% trans %}Email Address{% endtrans %}:</label>
+        <input type="text" id="username" name="login" class="form-control" />
     </div>
-    <div class="control-group">
-        <label class="control-label" for="password">{% trans %}Password{% endtrans %}:</label>
-        <div class="controls">
-            <input type="password" id="password" name="password" />
-        </div>
+    <div class="form-group">
+        <label for="password">{% trans %}Password{% endtrans %}:</label>
+        <input type="password" id="password" name="password" class="form-control" />
     </div>
-    <div class="actions clearfix">
+    <div class="clearfix">
         <label id="remember" class="checkbox pull-left">
             <input type="checkbox" name="remember" value="31536000"/> {% trans %}Remember me{% endtrans %}
         </label>
-        <input type="submit" value="Login" class="btn btn-primary pull-right" />
+        <button type="submit" class="btn btn-primary pull-right">{{ _('Login') }}</button>
     </div>
     <hr/>
-    <a href="{{ url_for('users.recover') }}">{% trans %}Forgot password?{% endtrans %}</a>
-    <a href="{{ url_for('users.new') }}">{% trans %}Don't have an account?{% endtrans %}</a>
+    <div>
+        <a href="{{ url_for('users.recover') }}">{% trans %}Forgot password?{% endtrans %}</a>
+    </div>
+    <div>
+        <a href="{{ url_for('users.new') }}">{% trans %}Don't have an account?{% endtrans %}</a>
+    </div>
 </form>
 {%- endmacro %}
 

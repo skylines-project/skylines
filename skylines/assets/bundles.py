@@ -54,17 +54,18 @@ flot_js = Bundle(
 # SkyLines
 
 main_css = Bundle(
-    'css/style.css',
-    'css/box.css',
-    'css/tables.css',
+    'css/bootstrap-theme-skylines.css',
+    #'css/style.css',
+    #'css/box.css',
+    #'css/tables.css',
     'css/login-dropdown.css',
     'css/about.css',
     'css/search.css',
-    'css/events.css',
-    'css/tracking-table.css',
-    'css/fix-table.css',
+    #'css/events.css',
+    #'css/tracking-table.css',
+    #'css/fix-table.css',
     'vendor/flags/flags.css',
-    'vendor/bootstrap-datepicker/datepicker.css',
+    #'vendor/bootstrap-datepicker/datepicker.css',
     filters='cssrewrite',
     output='css/main-%(version)s.css')
 

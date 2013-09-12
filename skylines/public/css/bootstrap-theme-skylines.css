@@ -1,0 +1,76 @@
+.skylines-white {
+  color: #ffffff;
+}
+
+.skylines-blue {
+  color: #008eda;
+}
+
+.skylines-black {
+  color: #000000;
+}
+
+/* Override some defaults */
+html, body {
+  background-color: #eee;
+}
+
+body, h1, h2, h3, h4, h5, h6 {
+  font-family: "Ubuntu", "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 700;
+}
+
+body {
+  /* 50px to make the container go all the way to the bottom of the topbar */
+  padding-top: 50px;
+  font-weight: 300;
+}
+
+.page-header {
+  margin-top: 20px;
+}
+
+/* The white background content wrapper */
+.content {
+  min-height: 500px;
+  background-color: #fff;
+  padding: 20px;
+  /* negative indent the amount of the padding to maintain the grid system */
+  margin: 0 -20px;
+  -webkit-border-radius: 0 0 6px 6px;
+     -moz-border-radius: 0 0 6px 6px;
+          border-radius: 0 0 6px 6px;
+  -webkit-box-shadow: 0 1px 2px rgba(0,0,0,.15);
+     -moz-box-shadow: 0 1px 2px rgba(0,0,0,.15);
+          box-shadow: 0 1px 2px rgba(0,0,0,.15);
+}
+
+/* Navbar */
+
+.logo {
+  margin: -6px 4px -3px 0;
+}
+
+.navbar-form .form-control,
+.dropdown-menu > li > a {
+  font-weight: 300;
+}
+
+/* Page footer */
+.footer {
+  /* center align it with the container */
+  text-align: center;
+  margin-top: 5px;
+  font-size: 85%;
+}
+
+.footer a {
+  color: #333;
+}
+
+.footer a:hover {
+  text-decoration: none;
+}
