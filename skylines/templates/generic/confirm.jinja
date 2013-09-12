@@ -9,12 +9,12 @@
 {% macro insert_form() -%}
 <form action="{{ action }}" method="post">
   <label class="large">{{ question}}</label>
-  <div class="form-actions">
+  <div>
     <input type="submit" value="{{ _('Yes') }}" class="btn btn-primary"/>
     {% if embedded -%}
-    <a href="#" data-dismiss="modal" aria-hidden="true" class="btn">{% trans %}No{% endtrans %}</a>
+    <a href="#" data-dismiss="modal" aria-hidden="true" class="btn btn-default">{% trans %}No{% endtrans %}</a>
     {%- else %}
-    <a href="{{ cancel }}" class="btn">{% trans %}No{% endtrans %}</a>
+    <a href="{{ cancel }}" class="btn btn-default">{% trans %}No{% endtrans %}</a>
     {%- endif %}
   </div>
 </form>
@@ -26,7 +26,7 @@
 {{ insert_form() }}
 {%- else %}
 <div class="row">
-  <div class="span8 offset2">
+  <div class="col-sm-8 col-sm-offset-2">
     {{ insert_form() }}
   </div>
 </div>

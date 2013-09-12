@@ -1,10 +1,10 @@
-<form xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:py="http://genshi.edgewall.org/"
+<form xmlns:py="http://genshi.edgewall.org/"
     id="${id}"
     name="${name}"
     action="${action}"
     method="${method}"
-    class="${css_class} form-horizontal"
+    class="${css_class}"
+    role="form"
     py:attrs="attrs" >
 
   <div py:if="hidden_fields">
@@ -17,7 +17,7 @@
 
   <div py:for="i, field in enumerate(fields)"
        id="${field.id}.container"
-       class="control-group ${show_children_errors and error and not field.show_error and 'error' or ''}"
+       class="form-group ${show_children_errors and error and not field.show_error and 'has-error' or ''}"
        title="${hover_help and help_text or ''}"
        py:attrs="args_for(field).get('container_attrs') or field.container_attrs"
        py:with="required = [None,' required'][int(field.is_required)];
@@ -27,12 +27,10 @@
     <label py:if="show_labels and not field.suppress_label and label_text"
            for="${field.id}" class="control-label"
            py:content="label_text" />
-    <div class="controls">
-      ${field.display(value_for(field), **args_for(field))}
-      <span class="help-inline" py:if="help_text and not hover_help" py:content="help_text" />
-      <span py:if="show_children_errors and error and not field.show_error"
-            class="help-inline" py:content="error" />
-    </div>
+    ${field.display(value_for(field), css_class='form-control', **args_for(field))}
+    <span class="help-block" py:if="help_text and not hover_help" py:content="help_text" />
+    <span py:if="show_children_errors and error and not field.show_error"
+          class="help-block" py:content="error" />
   </div>
 
   <span py:if="error and not error.error_dict" py:content="error" />

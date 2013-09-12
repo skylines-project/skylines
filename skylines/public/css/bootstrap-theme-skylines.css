@@ -74,3 +74,8 @@ body {
 .footer a:hover {
   text-decoration: none;
 }
+
+/* File upload field fix */
+input[type="file"].form-control {
+  height: auto;
+}

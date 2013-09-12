@@ -56,7 +56,7 @@ flot_js = Bundle(
 main_css = Bundle(
     'css/bootstrap-theme-skylines.css',
     #'css/style.css',
-    #'css/box.css',
+    'css/panel.css',
     'css/tables.css',
     'css/login-dropdown.css',
     'css/about.css',
