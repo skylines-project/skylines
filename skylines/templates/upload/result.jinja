@@ -57,7 +57,7 @@
         </td>
         <td>
           {% if flight -%}
-          <a href="{{ url_for('flight.index', flight_id=flight.id) }}" class="btn btn-mini">Show</a>
+          <a href="{{ url_for('flight.index', flight_id=flight.id) }}" class="btn btn-default btn-sm">Show</a>
           {%- endif %}
         </td>
       </tr>
@@ -70,5 +70,5 @@
   {%- endif %}
 </form>
 
-<p><a href="{{ url_for('.index') }}" class="btn">{% trans %}Upload another flight{% endtrans %}</a></p>
+<p><a href="{{ url_for('.index') }}" class="btn btn-default">{% trans %}Upload another flight{% endtrans %}</a></p>
 {%- endblock %}
