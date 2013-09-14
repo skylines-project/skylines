@@ -24,17 +24,17 @@
 {%- endif %}
 {{ tracking_list(other_tracks) }}
 
-<a href="{{ url_for('.info') }}" class="btn"><i class="icon-question-sign"></i> {% trans %}How to use Live Tracking?{% endtrans %}</a>
+<a href="{{ url_for('.info') }}" class="btn btn-default"><i class="icon-question-sign"></i> {% trans %}How to use Live Tracking?{% endtrans %}</a>
 {%- endblock %}
 
 {% macro tracking_list(tracks) -%}
 <table class="table table-striped table-tracking">
   <thead>
     <tr>
-      <th class="date">{% trans %}Last fix{% endtrans %}</th>
+      <th class="hidden-xs date">{% trans %}Last fix{% endtrans %}</th>
       <th>{% trans %}Pilot{% endtrans %}</th>
       <th>{% trans %}Nearest Airport{% endtrans %}</th>
-      <th class="numeric">{% trans %}Altitude{% endtrans %}</th>
+      <th class="hidden-xs numeric">{% trans %}Altitude{% endtrans %}</th>
       <th></th>
     </tr>
   </thead>
@@ -42,14 +42,14 @@
   <tbody>
     {% for track, airport in tracks -%}
     <tr>
-      <td class="date">{{ insert_timeago(track.time) }}</td>
+      <td class="hidden-xs date">{{ insert_timeago(track.time) }}</td>
       <td>{{ user_link(track.pilot) }}</td>
       <td>
         {% if airport -%}
         {{ insert_flag(airport.country_code) }} {{ airport.name|e }} ({{ h.format_distance(airport.distance) }})
         {%- endif %}
       </td>
-      <td class="numeric">
+      <td class="hidden-xs numeric">
         {% if track.altitude is none -%}
         <small>{% trans %}Unknown{% endtrans %}</small>
         {%- elif track.elevation -%}
@@ -59,7 +59,7 @@
         {%- endif %}
       </td>
       <td nowrap="nowrap" class="show">
-        <a href="{{ url_for('track.index', user_id=track.pilot_id) }}" class="btn btn-mini">Show</a>
+        <a href="{{ url_for('track.index', user_id=track.pilot_id) }}" class="btn btn-default btn-sm">Show</a>
       </td>
     </tr>
     {%- endfor %}
