@@ -29,12 +29,12 @@ body {
   font-weight: 300;
 }
 
-a.hidden-xs {
+.hidden-inline-xs {
   display: inline-block !important;
 }
 
 @media (max-width: 768px) {
-  a.hidden-xs {
+  .hidden-inline-xs {
     display: none !important;
   }
 }

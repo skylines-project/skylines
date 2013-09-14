@@ -61,7 +61,7 @@ main_css = Bundle(
     'css/login-dropdown.css',
     'css/about.css',
     'css/search.css',
-    #'css/events.css',
+    'css/events.css',
     #'css/tracking-table.css',
     #'css/fix-table.css',
     'vendor/flags/flags.css',
