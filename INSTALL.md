@@ -1,6 +1,7 @@
 # Installing SkyLines
 
-*SkyLines* has quite many dependencies and is not always easy to install for new developers. Please don't hesitate to
+*SkyLines* has quite many dependencies and is not always easy to install for
+new developers. Please don't hesitate to
 [ask for help](README.md#contact-and-contributing) if you hit any roadblocks.
 
 The production server is running the Debian Linux operating system and most of
@@ -116,30 +117,20 @@ If the above steps are completed you should be able to run a base version of
 
 ## Adding Airports
 
-Since an empty database is boring, you should at least load the airports from the [Welt2000](http://www.segelflug.de/vereine/welt2000/) into the database by calling:
+Since an empty database is boring, you should at least load the airports from
+the [Welt2000](http://www.segelflug.de/vereine/welt2000/) into the database by
+calling:
 
     $ ./scripts/import_welt2000.py
 
 
-## Running a local mapserver
-
-If you want to run the mapserver as fastcgi, install the `python-mapscript` package (on Debian):
-
-    $ apt-get install python-mapscript
-
-To run it locally as subprocess of mapproxy, change `mapserver/mapproxy/mapproxy.yaml` to fit it to your needs. You'll need to install the `cgi-mapserver` package for this.
-
-To import airspaces into the database, install the `python-gdal` package (using gdal extension directly from pypi is not recommended) and import the required airspace files:
-
-    $ ./scripts/import_airspaces.py mapserver/airspace/airspace_list.txt mapserver/airspace/airspace_blacklist.txt
-
-
 ## Asynchronous tasks
 
-*SkyLines* can use [Celery](http://www.celeryproject.org) with [Redis](http://www.redis.io) as broker
-for asynchronous tasks like in-depth analysis of flights. Celery is one of *SkyLines* requirements
-and will be installed by pip, but you need to get Redis on your own. On Debian, all you need is
-to install the `redis-server` package:
+*SkyLines* can use [Celery](http://www.celeryproject.org) with
+[Redis](http://www.redis.io) as broker for asynchronous tasks like in-depth
+analysis of flights. Celery is one of *SkyLines* requirements and will be
+installed by pip, but you need to get Redis on your own. On Debian, all you
+need is to install the `redis-server` package:
 
     $ apt-get install redis-server
 
