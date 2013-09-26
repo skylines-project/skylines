@@ -1,10 +1,11 @@
 {% from "macros/flags.jinja" import insert_flag with context %}
 
 {% set navigation_bar = [
-    ('/tracking/', 'tracking', _('Live')),
-    ('/flights/', 'flights', _('Flights')),
-    ('/ranking/', 'ranking', _('Ranking')),
-    ('/statistics/', 'statistics', _('Statistics'))
+    ('/tracking/', 'tracking', _('Live'), 'icon-rss', ''),
+    ('/flights/', 'flights', _('Flights'), 'icon-plane', ''),
+    ('/ranking/', 'ranking', _('Ranking'), 'icon-reorder', ''),
+    ('/statistics/', 'statistics', _('Statistics'), 'icon-tasks', ''),
+    ('/search/', 'search', _('Search'), 'icon-search', 'hidden-lg'),
 ] -%}
 
 {% macro topbar(active_page) -%}
@@ -30,12 +31,17 @@
 
 <div class="collapse navbar-collapse navbar-ex1-collapse">
     <ul class="nav navbar-nav">
-        {% for href, id, caption in navigation_bar -%}
-        <li{% if active_page == id %} class="active"{% endif %}><a href="{{ href }}">{{ caption }}</a></li>
+        {% for href, id, caption, icon, css_class in navigation_bar -%}
+        <li class="{% if active_page == id %}active{% endif %} {{ css_class }}">
+          <a href="{{ href }}">
+            <i class="{{ icon }} hidden-inline-md hidden-inline-lg"></i>
+            <span class="hidden-inline-sm">{{ caption }}</span>
+          </a>
+        </li>
         {%- endfor %}
     </ul>
 
-    <form action="{{ url_for('search.index') }}" class="navbar-form navbar-left navbar-search" role="search">
+    <form action="{{ url_for('search.index') }}" class="navbar-form navbar-left navbar-search hidden-md hidden-sm hidden-xs" role="search">
         <div class="form-group">
             <input type="text" name="text" value="{{ (search_text or '')|e }}" placeholder="{{ _('Search') }}" class="form-control" placeholder="Search">
         </div>
@@ -43,7 +49,11 @@
 
     <ul class="nav navbar-nav navbar-right">
         <li{% if active_page == 'upload' %} class="active"{% endif %}>
-            <a href="{{ url_for('upload.index') }}"><i class="icon-upload-alt icon-large"></i></a>
+            <a href="{{ url_for('upload.index') }}">
+              <i class="icon-upload-alt icon-large hidden-inline-xs"></i>
+              <i class="icon-upload-alt hidden-inline-sm hidden-inline-md hidden-inline-lg"></i>
+              <span class="hidden-inline-sm hidden-inline-md hidden-inline-lg">{{ _('Upload flight') }}</span>
+            </a>
         </li>
 
         {% if g.current_user -%}
@@ -99,6 +109,7 @@
 {% with notifications=g.count_unread_notifications() -%}
 <li{% if active_page == 'notifications' %} class="active"{% endif %}>
     <a href="{{ url_for('notifications.index') }}" title="{{ _('Notifications') }}">
+        <span class="hidden-inline-sm hidden-inline-md hidden-inline-lg">{{ _('Notifications') }}&nbsp;&nbsp;</span>
         <span class="badge{% if notifications != 0 %} badge-warning{% endif %}">{{ notifications }}</span>
     </a>
 </li>
@@ -129,7 +140,9 @@
 {%- macro _language_dropdown() -%}
 <li class="dropdown">
     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-        {{ insert_flag(h.language_to_country_code(g.active_locale|string)) }} <i class="icon-caret-down"></i>
+      {{ insert_flag(h.language_to_country_code(g.active_locale|string)) }}
+      <span class="hidden-inline-sm hidden-inline-md hidden-inline-lg">{{ g.active_locale.display_name|capitalize }}</span>
+      <i class="icon-caret-down"></i>
     </a>
     <ul class="dropdown-menu">
       {% for locale in g.primary_locales -%}
