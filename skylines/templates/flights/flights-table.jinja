@@ -10,11 +10,11 @@
       {%- if 'pilot' not in omitted_columns %}<th class="pilot">{% trans %}Pilot{% endtrans %}</th>{% endif %}
       {%- if 'distance' not in omitted_columns %}<th class="numeric distance">{% trans %}Distance{% endtrans %}</th>{% endif %}
       {%- if 'takeoff_airport' not in omitted_columns %}<th class="airport">{% trans %}Airport{% endtrans %}</th>{% endif %}
-      {%- if 'club' not in omitted_columns %}<th class="club">{% trans %}Club{% endtrans %}</th>{% endif %}
-      {%- if 'aircraft' not in omitted_columns %}<th class="aircraft">{% trans %}Aircraft{% endtrans %}</th>{% endif %}
-      {%- if 'times' not in omitted_columns %}<th class="times">{% trans %}Time{% endtrans %}</th>{% endif %}
+      {%- if 'club' not in omitted_columns %}<th class="club hidden-sm hidden-xs">{% trans %}Club{% endtrans %}</th>{% endif %}
+      {%- if 'aircraft' not in omitted_columns %}<th class="aircraft hidden-xs">{% trans %}Aircraft{% endtrans %}</th>{% endif %}
+      {%- if 'times' not in omitted_columns %}<th class="times hidden-xs">{% trans %}Time{% endtrans %}</th>{% endif %}
       {%- if 'link' not in omitted_columns %}<th class="show"></th>{% endif %}
-      {%- if 'num_comments' not in omitted_columns %}<th class="num_comments"><i class="icon-comments-alt"></i></th>{% endif %}
+      {%- if 'num_comments' not in omitted_columns %}<th class="num_comments hidden-xs"><i class="icon-comments-alt"></i></th>{% endif %}
     </tr>
   </thead>
   <tbody>
@@ -64,7 +64,7 @@
       {%- endif %}
 
       {% if 'club' not in omitted_columns -%}
-      <td>
+      <td class="hidden-sm hidden-xs">
         {% if flight.club -%}
         <a href="{{ url_for('club.index', club_id=flight.club_id) }}">{{ h.truncate(flight.club.name, 25)|e }}</a>
         {%- endif %}
@@ -72,7 +72,7 @@
       {%- endif %}
 
       {% if 'aircraft' not in omitted_columns -%}
-      <td>
+      <td class="hidden-xs">
         <span rel="tooltip" title="{{ flight.registration|e or flight.igc_file.registration|e or _('Unknown') }}">
           {% if flight.model -%}
           {{ flight.model|e }}
@@ -84,7 +84,7 @@
       {%- endif %}
 
       {% if 'times' not in omitted_columns -%}
-      <td>
+      <td class="hidden-xs">
         {% if flight.takeoff_time and flight.landing_time -%}
         {{ flight.takeoff_time.strftime('%H:%M') }}-{{ flight.landing_time.strftime('%H:%M') }}
         {%- endif %}
@@ -93,13 +93,13 @@
 
       {% if 'link' not in omitted_columns -%}
       <td>
-        <a href="{{ url_for('flight.index', flight_id=flight.id) }}" class="btn btn-mini">{% trans %}Show{% endtrans %}</a>
+        <a href="{{ url_for('flight.index', flight_id=flight.id) }}" class="btn btn-default btn-sm">{% trans %}Show{% endtrans %}</a>
         <a class="pin no-link" style="visibility: hidden" rel="tooltip-pin">{{ flight.id }}</a>
       </td>
       {%- endif %}
 
       {% if 'num_comments' not in omitted_columns -%}
-      <td>
+      <td class="hidden-xs">
         {% if num_comments > 0 -%}
         <span class="label" title="{{ ngettext('%(num)d comment', '%(num)d comments', num_comments)|format(num=num_comments) }}">{{ num_comments }}</span>
         {% endif %}
