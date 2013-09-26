@@ -13,6 +13,21 @@
 
 
 {% block content -%}
+<div class="row">
+  <form action="{{ url_for('search.index') }}" class="" role="search">
+    <div class="col-sm-9">
+      <div class="form-group">
+        <input type="text" name="text" value="{{ (search_text or '')|e }}" placeholder="{{ _('Search') }}" class="form-control">
+      </div>
+    </div>
+    <div class="col-sm-3">
+      <div class="form-group">
+        <input type="submit" value="Search" class="form-control">
+      </div>
+    </div>
+  </form>
+</div>
+
 <table class="table table-striped search-results">
   <tbody>
     {% for result in results -%}
