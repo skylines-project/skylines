@@ -34,7 +34,7 @@ from datetime import datetime
 
 app.test_request_context().push()
 
-query = db.session.query(Flight).join(Flight.takeoff_airport).join(IGCFile)
+query = db.session.query(Flight).outerjoin(Flight.takeoff_airport).join(IGCFile)
 
 if args.flight_id is not None:
     print "Filter by flight id: " + str(args.flight_id)
