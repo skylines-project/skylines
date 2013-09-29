@@ -84,7 +84,7 @@
       <td class='numeric'>{{ loop.index }}</td>
       <td>{{ phase.type }}
         {% if phase.is_circling -%}
-        <span class='label'>
+        <span class='label label-default'>
           {{ phase.circling_direction|lower }}
         </span>
         {%- endif %}

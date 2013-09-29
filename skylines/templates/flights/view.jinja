@@ -140,7 +140,7 @@
       html: true
     });
 
-    $('#detailed-stats').on('shown', function () {
+    $('#detailed-stats').on('shown.bs.collapse', function () {
       initPhasesTable($('#phases-table'));
       $('html, body').animate({scrollTop: $("#detailed-stats").offset().top-100}, 200);
     });
