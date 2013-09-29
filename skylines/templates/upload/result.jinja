@@ -6,10 +6,13 @@
 {%- block content %}
 <form action="{{ url_for('upload.update') }}" method="post">
   {% if success -%}
-  <p>
+  <p class="hidden-lg hidden-md hidden-sm">
+    {% trans %}Your flights have been saved.{% endtrans %}<br />
+  </p>
+  <p class="hidden-xs">
     {% trans %}Your flights have been saved. You may want to change the flights aircraft types and registrations below.{% endtrans %}<br />
   </p>
-  <p>
+  <p class="hidden-xs">
     <input type="submit" id="submit" value="{{ _('Update Aircraft Types and Registrations') }}" class="btn btn-primary"/>
   </p>
   {%- else %}
@@ -20,9 +23,9 @@
     <thead>
       <tr>
         <th>{% trans %}Filename{% endtrans %}</th>
-        <th>{% trans %}Aircraft Model{% endtrans %}</th>
-        <th>{% trans %}Aircraft Registration{% endtrans %}</th>
-        <th>{% trans %}Competition Number{% endtrans %}</th>
+        <th class="hidden-xs">{% trans %}Aircraft Model{% endtrans %}</th>
+        <th class="hidden-xs">{% trans %}Aircraft Registration{% endtrans %}</th>
+        <th class="hidden-xs">{% trans %}Competition Number{% endtrans %}</th>
         <th colspan="2">{% trans %}Status{% endtrans %}</th>
       </tr>
     </thead>
@@ -30,18 +33,18 @@
       {% for name, flight, error in flights -%}
       <tr>
         <td>{{ name }}</td>
-        <td>
+        <td class="hidden-xs">
           {% if not error -%}
           <input type="hidden" id="flight_id" name="flight_id" value="{{ flight.id }}" />
           {{ ModelSelectField('model', default=flight.model_id) }}
           {%- endif %}
         </td>
-        <td>
+        <td class="hidden-xs">
           {% if not error -%}
           <input type="text" id="registration" name="registration" value="{{ (flight.registration or '')|e }}" class="input-medium"/>
           {%- endif %}
         </td>
-        <td>
+        <td class="hidden-xs">
           {% if not error -%}
           <input type="text" id="competition_id" name="competition_id" value="{{ (flight.competition_id or '')|e }}" class="input-medium"/>
           {%- endif %}
@@ -66,7 +69,7 @@
   </table>
 
   {% if success -%}
-  <p><input type="submit" id="submit" value="{{ _('Update Aircraft Types and Registrations') }}" class="btn btn-primary"/></p>
+  <p class="hidden-xs"><input type="submit" id="submit" value="{{ _('Update Aircraft Types and Registrations') }}" class="btn btn-primary"/></p>
   {%- endif %}
 </form>
 

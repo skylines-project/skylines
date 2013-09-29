@@ -32,6 +32,7 @@ table.vmiddle td {
 
 .table input, .table select {
   margin: 0px;
+  width: 100%;
 }
 
 .table tr.selected td, .table tr.selected:hover td {
