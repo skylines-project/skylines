@@ -164,3 +164,11 @@ ul li[class*="col"] {
   border-left: 1px solid #eee;
   list-style: none;
 }
+
+.alert-floating {
+  position: relative;
+  top: 60px;
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%;
+}
