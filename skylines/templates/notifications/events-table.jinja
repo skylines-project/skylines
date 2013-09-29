@@ -19,6 +19,7 @@
     {{ render_event_icon(event) }}
   </td>
   <td>
+    {{ _render_show_button(event_link(event)) }}
     <p>
       {% if event.unread %}<span class="badge badge-warning">{{ _('New') }}</span>{% endif %}
       <small>{{ insert_timeago(event.time) }}</small>
@@ -38,9 +39,6 @@
       {%- endfor %}
     {%- endif %}
     </p>
-  </td>
-  <td class="show">
-    {{ _render_show_button(event_link(event)) }}
   </td>
 </tr>
 {%- endmacro %}
@@ -174,7 +172,7 @@
 
 
 {% macro _render_show_button(link) -%}
-<a href="{{ link }}" class="btn btn-default btn-sm">{{ _('Show') }}</a>
+<a href="{{ link }}" class="btn btn-default btn-sm pull-right">{{ _('Show') }}</a>
 {%- endmacro %}
 
 

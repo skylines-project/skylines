@@ -34,17 +34,17 @@
 
 {% macro pager() -%}
 <div class="row">
-  <div class="span6">
+  <div class="col-xs-6">
     {% if prev_page is number -%}
-      <a href="{{ url_for('.index', **(request.args|add_to_dict(page=prev_page))) }}" class="btn"> &larr; {% trans %}Newer{% endtrans %}</a>
+      <a href="{{ url_for('.index', **(request.args|add_to_dict(page=prev_page))) }}" class="btn btn-default"> &larr; {% trans %}Newer{% endtrans %}</a>
     {%- else -%}
       &nbsp;
     {%- endif %}
   </div>
 
-  <div class="span6" style="text-align:right">
+  <div class="col-xs-6" style="text-align:right">
     {% if next_page is number -%}
-      <a href="{{ url_for('.index', **(request.args|add_to_dict(page=next_page))) }}" class="btn">{% trans %}Older{% endtrans %} &rarr;</a>
+      <a href="{{ url_for('.index', **(request.args|add_to_dict(page=next_page))) }}" class="btn btn-default">{% trans %}Older{% endtrans %} &rarr;</a>
     {%- else -%}
       &nbsp;
     {%- endif %}
