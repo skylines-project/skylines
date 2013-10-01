@@ -27,7 +27,7 @@
     <label py:if="show_labels and not field.suppress_label and label_text"
            for="${field.id}"
            py:content="label_text" />
-    ${field.display(value_for(field), css_class='form-control', **args_for(field))}
+    ${field.display(value_for(field), **args_for(field))}
     <span class="help-block" py:if="help_text and not hover_help" py:content="help_text" />
     <span py:if="show_children_errors and error and not field.show_error"
           class="help-block" py:content="error" />
