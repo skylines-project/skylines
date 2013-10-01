@@ -51,7 +51,7 @@
   $(document).ready(function() {
     var pinnedFlights = getPinnedFlights();
 
-    $.fn.dataTableExt.oStdClasses.sPaging = "dataTables_paginate pagination-condensed pull-right paging_";
+    $.fn.dataTableExt.oStdClasses.sPaging = "pull-right paging_";
     $('#flight-table').dataTable({
       "bProcessing": true,
       "sPaginationType": "bootstrap",
