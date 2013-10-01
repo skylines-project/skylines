@@ -33,7 +33,7 @@
     <ul class="nav navbar-nav">
         {% for href, id, caption, icon, css_class in navigation_bar -%}
         <li class="{% if active_page == id %}active{% endif %} {{ css_class }}">
-          <a href="{{ href }}">
+          <a href="{{ href }}" title="{{ caption }}">
             <i class="{{ icon }} hidden-inline-md hidden-inline-lg"></i>
             <span class="hidden-inline-sm">{{ caption }}</span>
           </a>
@@ -49,7 +49,7 @@
 
     <ul class="nav navbar-nav navbar-right">
         <li{% if active_page == 'upload' %} class="active"{% endif %}>
-            <a href="{{ url_for('upload.index') }}">
+            <a href="{{ url_for('upload.index') }}" title="{{ _('Upload flight') }}">
               <i class="icon-upload-alt icon-large hidden-inline-xs"></i>
               <i class="icon-upload-alt hidden-inline-sm hidden-inline-md hidden-inline-lg"></i>
               <span class="hidden-inline-sm hidden-inline-md hidden-inline-lg">{{ _('Upload flight') }}</span>
