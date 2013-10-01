@@ -6,25 +6,31 @@
 {%- block content %}
 <div class="row">
   <div class="panel col-sm-8 col-sm-offset-2" id="loginform">
-    <form action="{{ url_for('login', next=next) }}" method="post" accept-charset="UTF-8" class="loginfields">
+    <form action="{{ url_for('login', next=next) }}" method="post" accept-charset="UTF-8" class="form-login">
       <div class="form-group">
-        <label for="loginusername">Email Address:</label>
+        <label for="loginusername">{{ _("Email Address") }}:</label>
         <input type="text" class="form-control" id="loginusername" name="login"/>
       </div>
       <div class="form-group">
-        <label for="loginpassword">Password:</label>
+        <label for="loginpassword">{{ _("Password") }}:</label>
         <input type="password" class="form-control" id="loginpassword" name="password" />
       </div>
       <div class="checkbox">
         <label id="remember">
           <input type="checkbox" name="remember" value="31536000"/>
-          Remember me
+          {{ _("Remember me") }}
         </label>
       </div>
       <div class="form-group">
-      <input type="submit" id="submit" value="Login" class="btn btn-primary" />
-      <a href="{{ url_for('users.new') }}" class="btn btn-default">Register</a>
-    </div>
+        <input type="submit" id="submit" value="{{ _('Login') }}" class="form-control btn btn-primary" />
+      </div>
+      <hr/>
+      <div>
+        <a href="{{ url_for('users.recover') }}">{% trans %}Forgot password?{% endtrans %}</a>
+      </div>
+      <div>
+        <a href="{{ url_for('users.new') }}">{% trans %}Don't have an account?{% endtrans %}</a>
+      </div>
     </form>
   </div>
 </div>

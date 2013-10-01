@@ -95,8 +95,8 @@
         <label for="password">{% trans %}Password{% endtrans %}:</label>
         <input type="password" id="password" name="password" class="form-control" />
     </div>
-    <div class="clearfix">
-        <label id="remember" class="checkbox pull-left">
+    <div class="form-group checkbox clearfix">
+        <label id="remember" class="pull-left">
             <input type="checkbox" name="remember" value="31536000"/> {% trans %}Remember me{% endtrans %}
         </label>
         <button type="submit" class="btn btn-primary pull-right">{{ _('Login') }}</button>
