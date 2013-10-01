@@ -122,6 +122,10 @@ body {
   margin: -6px 4px -3px 0;
 }
 
+.navbar-brand {
+  font-weight: 400;
+}
+
 .navbar-form .form-control,
 .dropdown-menu > li > a {
   font-weight: 300;
