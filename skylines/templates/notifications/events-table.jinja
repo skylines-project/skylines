@@ -29,14 +29,14 @@
     </p>
     <p>
     {% if event.grouped -%}
+      <ul class="list-subevents">
       {% for event in event.subevents -%}
-        <small>
-          {% if event.unread %}<span class="badge badge-warning badge-empty"></span>{% endif %}
+        <li{% if event.unread %} class="unread"{% endif %}>
           {{ render_event_text(event) }}
           <a href="{{ event_link(event) }}"><i class="icon-circle-arrow-right"></i></a>
-        </small>
-        <br/>
+        </li>
       {%- endfor %}
+      </ul>
     {%- endif %}
     </p>
   </td>
