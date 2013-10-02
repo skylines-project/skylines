@@ -166,13 +166,21 @@
     <div class="tabbable">
       <ul class="nav nav-tabs">
         <li class="active"><a href="#tab-overview" data-toggle="tab">{{ _('Overview') }}</a></li>
-        <li><a href="#tab-comments" data-toggle="tab">
-          {{ _('Comments') }}
-          {% if flight.comments[0] -%}
-          <span class="label label-info">{{ flight.comments|count }}</span>
-          {%- endif %}
-        </a></li>
-        <li><a href="#tab-stats" data-toggle="tab">{{ _('Statistics') }}</a></li>
+        <li>
+          <a href="#tab-comments" title="{{ _('Comments') }}" data-toggle="tab">
+            <i class="icon-comments-alt icon-large hidden-inline-lg hidden-inline-sm hidden-inline-xs"></i>
+            <span class="hidden-inline-md">{{ _('Comments') }}</span>
+            {% if flight.comments[0] -%}
+            ({{ flight.comments|count }})
+            {%- endif %}
+          </a>
+        </li>
+        <li>
+          <a href="#tab-stats" title="{{ _('Statistics') }}" data-toggle="tab">
+            <i class="icon-bar-chart icon-large hidden-inline-lg hidden-inline-sm hidden-inline-xs"></i>
+            <span class="hidden-inline-md">{{ _('Statistics') }}</span>
+          </a>
+        </li>
       </ul>
       <div class="tab-content">
         <div class="tab-pane active" id="tab-overview">
