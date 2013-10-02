@@ -24,9 +24,15 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 body {
-  /* 50px to make the container go all the way to the bottom of the topbar */
-  padding-top: 50px;
+  /* 40px to make the container go all the way to the bottom of the topbar */
+  padding-top: 40px;
   font-weight: 300;
+}
+
+@media (max-width: 768px) {
+  body {
+    padding-top: 50px;
+  }
 }
 
 .hidden-inline-xs {
@@ -72,7 +78,12 @@ body {
 /* Page header */
 .page-header {
   position: relative;
-  margin-top: 20px;
+  padding: 0;
+  margin: 10px 0;
+}
+
+.page-header h1 {
+  margin-top: 0;
 }
 
 .page-header-with-tabs {
@@ -118,12 +129,36 @@ body {
 
 /* Navbar */
 
+.navbar {
+  min-height: 40px;
+}
+
 .logo {
   margin: -6px 4px -3px 0;
 }
 
 .navbar-brand {
   font-weight: 400;
+  padding: 10px 15px;
+}
+
+@media (max-width: 768px) {
+  .navbar-brand {
+    padding: 15px;
+  }
+}
+
+.navbar-nav > li > a {
+    padding-top: 10px !important;
+    padding-bottom: 10px !important;
+}
+
+.navbar-form {
+  margin: 5px 0;
+}
+
+.navbar-form .form-control {
+  height: 30px;
 }
 
 .navbar-form .form-control,
@@ -197,4 +232,13 @@ a.no-link {
 .table .modal input,
 .table .modal select {
   width: auto;
+}
+
+/* Font size adjustments */
+body, .btn, .form-control, .dropdown-menu {
+  font-size: 13px;
+}
+
+.btn-sm, .btn-xs {
+  font-size: 11px;
 }
