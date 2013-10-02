@@ -6,10 +6,11 @@ table .date, table .times {
   white-space: nowrap;
 }
 
-table .show {
+td.show, th.show {
   white-space: nowrap;
   text-align: right;
   display: table-cell !important;
+  padding: 1px !important;
 }
 
 #flight-table .num_comments {
