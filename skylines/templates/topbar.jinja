@@ -4,7 +4,7 @@
     ('/tracking/', 'tracking', _('Live'), 'icon-rss', ''),
     ('/flights/', 'flights', _('Flights'), 'icon-plane', ''),
     ('/ranking/', 'ranking', _('Ranking'), 'icon-reorder', ''),
-    ('/statistics/', 'statistics', _('Statistics'), 'icon-tasks', ''),
+    ('/statistics/', 'statistics', _('Statistics'), 'icon-bar-chart', ''),
     ('/search/', 'search', _('Search'), 'icon-search', 'hidden-lg'),
 ] -%}
 
@@ -135,7 +135,7 @@
       {%- endif %}
       <li class="divider"></li>
       <li><a href="{{ url_for('flights.pilot', id=user.id) }}"><i class="icon-plane"></i> {% trans %}Flights{% endtrans %}</a></li>
-      <li><a href="{{ url_for('statistics.index', page='pilot', id=user.id) }}"><i class="icon-tasks"></i> {% trans %}Statistics{% endtrans %}</a></li>
+      <li><a href="{{ url_for('statistics.index', page='pilot', id=user.id) }}"><i class="icon-bar-chart"></i> {% trans %}Statistics{% endtrans %}</a></li>
       <li class="divider"></li>
       <li><a href="{{ url_for('logout', next=request.url) }}"><i class="icon-signout"></i> {% trans %}Logout{% endtrans %}</a></li>
   </ul>
