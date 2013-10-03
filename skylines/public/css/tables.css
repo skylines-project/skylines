@@ -6,11 +6,22 @@ table .date, table .times {
   white-space: nowrap;
 }
 
-td.show, th.show {
+.table-condensed .column-buttons {
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+.table .column-buttons .btn {
+  margin: -5px 0;
+}
+
+.table-condensed .column-buttons .btn {
+  margin: -3px 0;
+}
+
+#flight-table .column-buttons {
   white-space: nowrap;
   text-align: right;
-  display: table-cell !important;
-  padding: 1px !important;
 }
 
 #flight-table .num_comments {

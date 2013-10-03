@@ -161,11 +161,11 @@
         }, {
           "bSortable": false,
           "sDefaultContent": "",
-          "aTargets": ["show"],
-          "sClass": "show",
+          "aTargets": ["column-buttons"],
+          "sClass": "column-buttons",
           "fnRender": function(obj, row) {
             if (obj.oSettings.jqXHR)
-              row = "<a href=\"/flights/" + obj.aData.flight_id + "/\" class=\"btn btn-default btn-sm\">Show</a> <a class=\"pin no-link\" style=\"visibility: hidden\" rel=\"tooltip-pin\">" + obj.aData.flight_id + "</a>";
+              row = "<a href=\"/flights/" + obj.aData.flight_id + "/\" class=\"btn btn-default btn-sm\">{{ _("Show") }}</a> <a class=\"pin no-link\" style=\"visibility: hidden\" rel=\"tooltip-pin\">" + obj.aData.flight_id + "</a>";
             return row;
           }
         }, {

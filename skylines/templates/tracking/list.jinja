@@ -58,8 +58,8 @@
         {{ h.format_altitude(track.altitude) }} <small>MSL</small>
         {%- endif %}
       </td>
-      <td nowrap="nowrap" class="show">
-        <a href="{{ url_for('track.index', user_id=track.pilot_id) }}" class="btn btn-default btn-sm">Show</a>
+      <td nowrap="nowrap" class="column-buttons">
+        <a href="{{ url_for('track.index', user_id=track.pilot_id) }}" class="btn btn-default btn-sm">{{ _("Show") }}</a>
       </td>
     </tr>
     {%- endfor %}

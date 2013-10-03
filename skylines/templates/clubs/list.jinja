@@ -14,7 +14,7 @@
   <tbody>
     {% for club in clubs -%}
     <tr>
-      <td>
+      <td class="column-buttons">
         {{ club_link(club) }}
         <div class="pull-right">
           <a href="{{ url_for('flights.club', id=club.id) }}" class="btn btn-default btn-sm"><i class="icon-plane"></i> {% trans %}Flights{% endtrans %}</a>

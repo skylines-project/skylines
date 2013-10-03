@@ -211,7 +211,7 @@
           {% for distance_flight in distance_flights -%}
           <tr>
             <td>{{ h.format_distance(distance_flight[0]) }}</td>
-            <td>
+            <td class="column-buttons">
               {% if distance_flight[1] -%}
               {{ insert_timeago_date(distance_flight[1].landing_time) }}
               <div class="pull-right">
