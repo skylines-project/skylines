@@ -29,7 +29,7 @@ body {
   font-weight: 300;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 767px) {
   body {
     padding-top: 50px;
   }
@@ -105,7 +105,7 @@ body {
   padding: 10px 15px;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 767px) {
   .navbar-brand {
     padding: 15px;
   }
