@@ -6,15 +6,31 @@ table .date, table .times {
   white-space: nowrap;
 }
 
-table .show {
+.table-condensed .column-buttons {
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+.table .column-buttons .btn {
+  margin: -5px 0;
+}
+
+.table-condensed .column-buttons .btn {
+  margin: -3px 0;
+}
+
+#flight-table .column-buttons {
   white-space: nowrap;
   text-align: right;
-  display: table-cell;
 }
 
 #flight-table .num_comments {
   width: 0px;
   vertical-align: middle;
+}
+
+.table-flight-details {
+  margin-top: 10px;
 }
 
 .right th {
@@ -32,6 +48,7 @@ table.vmiddle td {
 
 .table input, .table select {
   margin: 0px;
+  width: 100%;
 }
 
 .table tr.selected td, .table tr.selected:hover td {

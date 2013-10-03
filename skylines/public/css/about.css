@@ -1,23 +1,13 @@
-#about p.lead {
-  margin-bottom: 10px;
-  font-weight: 300;
-}
-
 #about .social-buttons .btn-group {
   float: right;
 }
 
 #about .social-buttons .btn {
-  width: 13px;
-}
-
-#about .banner {
-  margin: 12px -20px;
+  width: 40px;
 }
 
 #about h2 {
   font-size: 22px;
-  margin: 10px 0;
 }
 
 #about h2 [class^="icon-"]:before {

@@ -3,4 +3,8 @@
 
 {% block title %}{% trans %}Register{% endtrans %}{% endblock %}
 
-{% block content %}{{ form(action='new') }}{% endblock %}
+{% block content -%}
+<div class="col-sm-8 col-sm-offset-2">
+{{ form(action='new') }}
+</div>
+{%- endblock %}

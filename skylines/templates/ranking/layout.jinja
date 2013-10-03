@@ -19,7 +19,7 @@
 
 {% macro ranking() -%}
 <div class="row">
-  <div class="span6">
+  <div class="col-sm-6">
     <ul class="nav nav-pills">
       <li class="dropdown">
         <a class="dropdown-toggle" data-toggle="dropdown" href="#">
@@ -40,7 +40,7 @@
       </li>
     </ul>
   </div>
-  <div class="span6">
+  <div class="col-sm-6">
     <div class="pull-right">
       {{ pager('result', dict(year=year)) }}
     </div>
@@ -50,7 +50,7 @@
 {% block ranking %}{% endblock %}
 
 <div class="row">
-  <div class="span12">
+  <div class="col-sm-12">
     <div class="pull-right">
       {{ pager('result', dict(year=year)) }}
     </div>

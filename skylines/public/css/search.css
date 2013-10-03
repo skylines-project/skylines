@@ -1,5 +1,12 @@
-.navbar-search .search-query {
-  margin-bottom: 0;
+.navbar-search input {
+  color: #bbb;
+  background-color: #626262;
+  border: 1px solid #333;
+}
+
+.navbar-search input:focus {
+  color: #666;
+  background-color: white;
 }
 
 .search-results .column-icon {
@@ -9,8 +16,4 @@
 
 .search-results .column-type {
   width: 70px;
-}
-
-.search-results .column-buttons {
-  text-align: right;
 }

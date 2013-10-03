@@ -3,7 +3,7 @@
 {% from "macros/links.jinja" import user_link, club_link, airport_link %}
 
 {%- macro render_details_table(flight) %}
-<table class="table" itemscope="" itemtype="http://schema.org/SportsEvent">
+<table class="table table-flight-details" itemscope="" itemtype="http://schema.org/SportsEvent">
   <meta itemprop="url" content="/flights/{{ flight.id }}" />
   <tbody>
     {%- if flight.date_local %}
@@ -56,9 +56,9 @@
 
     <tr>
       <th>{% trans %}Aircraft{% endtrans %}</th>
-      <td>
+      <td class="column-buttons">
         {%- if flight.is_writable(g.current_user) %}
-        <a href="{{ url_for('.change_aircraft') }}" class="btn btn-mini" style="float: right;">
+        <a href="{{ url_for('.change_aircraft') }}" class="btn btn-default btn-sm pull-right">
           <i class="icon-pencil icon-small"></i> {% trans %}Change{% endtrans %}
         </a>
         {%- endif %}
@@ -96,12 +96,12 @@
         <small><br/>
         {%- if flight.olc_classic_distance %}
         <span title="{% trans %}OLC Distance{% endtrans %}">
-          <span style="COLOR:#ff2c73">&#x294A;</span> {{ h.format_distance(flight.olc_classic_distance, 1) }}{% if flight.olc_triangle_distance %},{% endif %}
+          <span style="COLOR:#ff2c73"><i class="icon-resize-horizontal"></i></span> {{ h.format_distance(flight.olc_classic_distance, 1) }}{% if flight.olc_triangle_distance %},{% endif %}
         </span>
         {%- endif %}
         {%- if flight.olc_triangle_distance %}
         <span title="{% trans %}FAI Triangle Distance{% endtrans %}">
-          <span style="COLOR:#9f14ff">&#x25B2;</span> {{ h.format_distance(flight.olc_triangle_distance, 1) }}
+          <span style="COLOR:#9f14ff"><i class="icon-play icon-rotate-270"></i></span> {{ h.format_distance(flight.olc_triangle_distance, 1) }}
         </span>
         {%- endif %}
         </small>
@@ -117,9 +117,9 @@
 
     <tr>
       <th>{% trans %}Pilot{% endtrans %}</th>
-      <td>
+      <td class="column-buttons">
         {%- if flight.is_writable(g.current_user) %}
-        <a href="{{ url_for('.change_pilot') }}" class="btn btn-mini" style="float: right;">
+        <a href="{{ url_for('.change_pilot') }}" class="btn btn-default btn-sm pull-right">
           <i class="icon-pencil icon-small"></i> {% trans %}Change{% endtrans %}
         </a>
         {%- endif %}
@@ -169,13 +169,11 @@
     <tr>
       <th>{% trans %}Actions{% endtrans %}</th>
       <td>
-        <a data-toggle="modal" data-target="#modal" href="{{ url_for('.delete') }}?embedded" class="btn btn-mini">
+        <a data-toggle="modal" data-target="#modal" href="{{ url_for('.delete') }}?embedded" class="btn btn-default btn-sm">
           <i class="icon-remove icon-small"></i> {% trans %}Delete{% endtrans %}
         </a>
 
-        <div class="modal" id="modal" tabindex="-1" role="dialog" aria-hidden="true" style="display:none">
-          <div class="modal-body">
-          </div>
+        <div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-hidden="true" style="display:none">
         </div>
       </td>
     </tr>

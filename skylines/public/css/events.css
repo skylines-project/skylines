@@ -16,3 +16,18 @@
 .table-events a {
   color: inherit;
 }
+
+.list-subevents {
+    font-size: 85%;
+    list-style: none;
+    padding: 0;
+}
+
+.list-subevents li:before {
+    padding: 0.5em;
+    content: "▶";
+}
+
+.list-subevents li.unread:before {
+    color: #f0ad4e;
+}

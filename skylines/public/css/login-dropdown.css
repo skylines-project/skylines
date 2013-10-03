@@ -1,25 +1,26 @@
-.dropdown-menu form {
-  padding: 10px 20px;
+.form-login {
+  min-width: 300px;
+  padding: 0 20px;
   margin-bottom: inherit;
 }
 
-.dropdown-menu form .btn {
-  margin: 0px;
+.form-login div {
+  margin: 10px 0;
 }
 
-.dropdown-menu form .actions {
-  margin-bottom: 15px;
+.form-login .btn {
+  margin: 0;
 }
 
-.dropdown-menu form #remember {
+.form-login #remember {
   margin-top: 5px;
 }
 
-.dropdown-menu form hr {
+.form-login hr {
   margin: 8px 0;
 }
 
-.dropdown-menu form a {
-  padding-left: 0px;
-  padding-right: 0px;
+.form-login a {
+  padding-left: 0;
+  padding-right: 0;
 }

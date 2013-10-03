@@ -6,13 +6,13 @@
            date=h.format_date(flight.date_local),
            pilot=user_link(flight.pilot),
            co_pilot=user_link(flight.co_pilot) -%}
-    {{ distance }} on {{ date }} <small>by {{ pilot }} and {{ co_pilot }}</small>
+    {{ distance }} on {{ date }} <br class="visible-xs visible-sm"/><small>by {{ pilot }} and {{ co_pilot }}</small>
   {%- endtrans %}
 {%- elif flight.pilot -%}
   {% trans distance=h.format_distance(flight.olc_classic_distance),
            date=h.format_date(flight.date_local),
            pilot=user_link(flight.pilot) -%}
-    {{ distance }} on {{ date }} <small>by {{ pilot }}</small>
+    {{ distance }} on {{ date }} <br class="visible-xs visible-sm"/><small>by {{ pilot }}</small>
   {%- endtrans %}
 {%- else -%}
   {% trans distance=h.format_distance(flight.olc_classic_distance),
