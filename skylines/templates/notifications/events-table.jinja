@@ -19,6 +19,7 @@
     {{ render_event_icon(event) }}
   </td>
   <td>
+    {{ _render_show_button(event_link(event)) }}
     <p>
       {% if event.unread %}<span class="badge badge-warning">{{ _('New') }}</span>{% endif %}
       <small>{{ insert_timeago(event.time) }}</small>
@@ -28,19 +29,16 @@
     </p>
     <p>
     {% if event.grouped -%}
+      <ul class="list-subevents">
       {% for event in event.subevents -%}
-        <small>
-          {% if event.unread %}<span class="badge badge-warning badge-empty"></span>{% endif %}
+        <li{% if event.unread %} class="unread"{% endif %}>
           {{ render_event_text(event) }}
           <a href="{{ event_link(event) }}"><i class="icon-circle-arrow-right"></i></a>
-        </small>
-        <br/>
+        </li>
       {%- endfor %}
+      </ul>
     {%- endif %}
     </p>
-  </td>
-  <td class="show">
-    {{ _render_show_button(event_link(event)) }}
   </td>
 </tr>
 {%- endmacro %}
@@ -174,7 +172,7 @@
 
 
 {% macro _render_show_button(link) -%}
-<a href="{{ link }}" class="btn btn-mini">{{ _('Show') }}</a>
+<a href="{{ link }}" class="btn btn-default btn-sm pull-right">{{ _('Show') }}</a>
 {%- endmacro %}
 
 

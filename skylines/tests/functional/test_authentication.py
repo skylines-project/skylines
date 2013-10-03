@@ -34,7 +34,7 @@ class TestAuthentication(TestController):
         # Requesting a protected area
         self.browser.open('/flights/upload/')
         assert self.browser.url.startswith('http://localhost/login')
-        assert_not_in('<i class="icon-signout"></i> Logout', self.browser.contents)
+        assert_not_in('</i> Logout', self.browser.contents)
 
         # Getting the login form:
         form = self.browser.getForm(index=2)
@@ -45,7 +45,7 @@ class TestAuthentication(TestController):
         form.submit()
 
         # Being redirected to the initially requested page:
-        assert_in('<i class="icon-signout"></i> Logout', self.browser.contents)
+        assert_in('</i> Logout', self.browser.contents)
         assert self.browser.url.startswith('http://localhost/flights/upload/'), \
             self.browser.url
 
@@ -54,7 +54,7 @@ class TestAuthentication(TestController):
 
         # Going to the login form voluntarily:
         self.browser.open('/login')
-        assert_not_in('<i class="icon-signout"></i> Logout', self.browser.contents)
+        assert_not_in('</i> Logout', self.browser.contents)
 
         # Submitting the login form:
         form = self.browser.getForm(index=2)
@@ -63,7 +63,7 @@ class TestAuthentication(TestController):
         form.submit()
 
         # Being redirected to the home page:
-        assert_in('<i class="icon-signout"></i> Logout', self.browser.contents)
+        assert_in('</i> Logout', self.browser.contents)
 
     def test_logout(self):
         """Logouts must work correctly"""
@@ -74,10 +74,10 @@ class TestAuthentication(TestController):
                                   password='managepass'))
 
         # Check if the login succeeded
-        assert_in('<i class="icon-signout"></i> Logout', self.browser.contents)
+        assert_in('</i> Logout', self.browser.contents)
 
         # Logging out:
         self.browser.open('/logout')
 
         # Finally, redirected to the home page:
-        assert_not_in('<i class="icon-signout"></i> Logout', self.browser.contents)
+        assert_not_in('</i> Logout', self.browser.contents)

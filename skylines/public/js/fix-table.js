@@ -223,7 +223,7 @@ slFixTable = function(placeholder) {
     var row = $(
         '<tr>' +
         '<td><span class="badge" style="background:' + color + '">' +
-        (opt_competition_id || '') +
+        (opt_competition_id || '&nbsp;') +
         '</span></td>' +
         '<td>--:--:--</td>' +
         '<td>--</td>' +

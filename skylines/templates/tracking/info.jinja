@@ -28,8 +28,7 @@
 </p>
 
 <p>
-  <a href="{{ url_for('user.tracking_register', user_id=user.id) }}" class="btn btn-mini">{% trans %}Generate new key{% endtrans %}</a>
-  <a href="{{ url_for('track.index', user_id=user.id) }}" class="btn btn-mini">{% trans %}Your Live Tracks{% endtrans %}</a>
+  <a href="{{ url_for('user.tracking_register', user_id=user.id) }}" class="btn btn-default btn-sm">{% trans %}Generate new key{% endtrans %}</a>
 </p>
 {%- else %}
 <p>{% trans url=url_for('login', next=request.url) %}You have to <a href="{{ url }}">login</a> to see you own personal Live Tracking key.{% endtrans %}</p>

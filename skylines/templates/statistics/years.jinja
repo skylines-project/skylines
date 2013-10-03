@@ -63,17 +63,17 @@
 </ul>
 {%- endif %}
 
-<h1>{% trans %}Flights{% endtrans %}</h1>
+<h2>{% trans %}Flights{% endtrans %}</h2>
 {{ render_flights_table(years, max_flights, sum_flights) }}
 
-<h1>{% trans %}Distance{% endtrans %}</h1>
+<h2>{% trans %}Distance{% endtrans %}</h2>
 {{ render_distance_table(years, max_distance, sum_distance) }}
 
-<h1>{% trans %}Flight Time{% endtrans %}</h1>
+<h2>{% trans %}Flight Time{% endtrans %}</h2>
 {{ render_duration_table(years, max_duration, sum_duration) }}
 
 {% if not pilot -%}
-<h1>{% trans %}Pilots{% endtrans %}</h1>
+<h2>{% trans %}Pilots{% endtrans %}</h2>
 {{ render_pilots_table(years, max_pilots) }}
 {%- endif %}
 {%- endblock %}

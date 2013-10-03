@@ -1,56 +1,82 @@
 {% from "macros/flags.jinja" import insert_flag with context %}
 
 {% set navigation_bar = [
-    ('/tracking/', 'tracking', _('Live')),
-    ('/flights/', 'flights', _('Flights')),
-    ('/ranking/', 'ranking', _('Ranking')),
-    ('/statistics/', 'statistics', _('Statistics'))
+    ('/tracking/', 'tracking', _('Live'), 'icon-rss', ''),
+    ('/flights/', 'flights', _('Flights'), 'icon-plane', ''),
+    ('/ranking/', 'ranking', _('Ranking'), 'icon-reorder', ''),
+    ('/statistics/', 'statistics', _('Statistics'), 'icon-bar-chart', ''),
+    ('/search/', 'search', _('Search'), 'icon-search', 'hidden-lg'),
 ] -%}
 
 {% macro topbar(active_page) -%}
-<div class="navbar navbar-fixed-top">
-    <div class="navbar-inner">
-        <div class="container">
-            {{ _topbar_content(active_page) }}
-        </div>
+<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container">
+        {{ _topbar_content(active_page) }}
     </div>
 </div>
 {%- endmacro %}
 
 {% macro _topbar_content(active_page) -%}
-<a href="{{ url_for('index') }}"><img src="/images/logo.png" class="logo" /></a>
-<a class="brand" href="{{ url_for('index') }}">
-    <span class="skylines-blue">Sky</span><span class="skylines-white">Lines</span>
-</a>
+<div class="navbar-header">
+    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+    </button>
+    <a class="navbar-brand" href="{{ url_for('index') }}">
+        <img src="/images/logo.png" class="logo" /> <span class="skylines-blue">Sky</span><span class="skylines-white">Lines</span>
+    </a>
+</div>
 
-<ul class="nav">
-    {% for href, id, caption in navigation_bar -%}
-    <li{% if active_page == id %} class="active"{% endif %}><a href="{{ href }}">{{ caption }}</a></li>
-    {%- endfor %}
-</ul>
+<div class="collapse navbar-collapse navbar-ex1-collapse">
+    <ul class="nav navbar-nav">
+        {% for href, id, caption, icon, css_class in navigation_bar -%}
+        <li class="{% if active_page == id %}active{% endif %} {{ css_class }}">
+          <a href="{{ href }}" title="{{ caption }}">
+            <i class="{{ icon }} icon-large visible-sm"></i>
+            <i class="{{ icon }} icon-fixed-width visible-xs"></i>
+            <span class="hidden-sm">{{ caption }}</span>
+          </a>
+        </li>
+        {%- endfor %}
+    </ul>
 
-<form action="/search" class="navbar-search pull-left">
-  <input type="text" name="text" value="{{ (search_text or '')|e }}" class="search-query" placeholder="{{ _('Search') }}" style="width: 150px">
-</form>
+    <form action="{{ url_for('search.index') }}" class="navbar-form navbar-left navbar-search visible-lg" role="search">
+        <div class="form-group">
+            <input type="text" name="text" value="{{ (search_text or '')|e }}" placeholder="{{ _('Search') }}" class="form-control" placeholder="Search">
+        </div>
+    </form>
 
-<ul class="nav pull-right">
-    <li{% if active_page == 'upload' %} class="active"{% endif %}>
-        <a href="{{ url_for('upload.index') }}"><i class="icon-upload-alt icon-large"></i></a>
-    </li>
+    <ul class="nav navbar-nav navbar-right">
+        <li{% if active_page == 'upload' %} class="active"{% endif %}>
+            <a href="{{ url_for('upload.index') }}" title="{{ _('Upload flight') }}">
+              <i class="icon-upload-alt icon-large hidden-xs"></i>
+              <i class="icon-upload-alt icon-fixed-width visible-xs"></i>
+              <span class="visible-xs">{{ _('Upload flight') }}</span>
+            </a>
+        </li>
 
-    {% if g.current_user -%}
-    {{ _notification_item(active_page) }}
-    {{ _user_dropdown(active_page) }}
-    {%-  else %}
-    {{ _login_dropdown(active_page) }}
-    {%- endif %}
+        {% if g.current_user -%}
+        {{ _notification_item(active_page) }}
+        {{ _user_dropdown(active_page) }}
+        {%- else %}
+        {{ _login_dropdown(active_page) }}
+        {%- endif %}
 
-    {{ _language_dropdown() }}
-</ul>
+        {{ _language_dropdown() }}
+    </ul>
+</div>
 {%- endmacro %}
 
 {% macro _login_dropdown(active_page) -%}
-<li class="dropdown {% if active_page == 'login' %}active{% endif %}">
+<li class="dropdown {% if active_page == 'login' %}active{% endif %} visible-xs">
+    <a href="{{ url_for('login') }}">
+        <i class="icon-signin"></i> {% trans %}Login{% endtrans %}
+    </a>
+</li>
+
+<li class="dropdown {% if active_page == 'login' %}active{% endif %} hidden-xs">
     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
         <i class="icon-signin"></i> {% trans %}Login{% endtrans %} <i class="icon-caret-down"></i>
     </a>
@@ -61,28 +87,28 @@
 {%- endmacro %}
 
 {% macro _login_form() -%}
-<form action="{{ url_for('login', next=request.url) }}" method="post" accept-charset="UTF-8">
-    <div class="control-group">
-        <label class="control-label" for="username">{% trans %}Email Address{% endtrans %}:</label>
-        <div class="controls">
-            <input type="text" id="username" name="login"/>
-        </div>
+<form action="{{ url_for('login', next=request.url) }}" method="post" accept-charset="UTF-8" class="form-login">
+    <div class="form-group">
+        <label for="username">{% trans %}Email Address{% endtrans %}:</label>
+        <input type="text" id="username" name="login" class="form-control" />
     </div>
-    <div class="control-group">
-        <label class="control-label" for="password">{% trans %}Password{% endtrans %}:</label>
-        <div class="controls">
-            <input type="password" id="password" name="password" />
-        </div>
+    <div class="form-group">
+        <label for="password">{% trans %}Password{% endtrans %}:</label>
+        <input type="password" id="password" name="password" class="form-control" />
     </div>
-    <div class="actions clearfix">
-        <label id="remember" class="checkbox pull-left">
+    <div class="form-group checkbox clearfix">
+        <label id="remember" class="pull-left">
             <input type="checkbox" name="remember" value="31536000"/> {% trans %}Remember me{% endtrans %}
         </label>
-        <input type="submit" value="Login" class="btn btn-primary pull-right" />
+        <button type="submit" class="btn btn-primary pull-right">{{ _('Login') }}</button>
     </div>
     <hr/>
-    <a href="{{ url_for('users.recover') }}">{% trans %}Forgot password?{% endtrans %}</a>
-    <a href="{{ url_for('users.new') }}">{% trans %}Don't have an account?{% endtrans %}</a>
+    <div>
+        <a href="{{ url_for('users.recover') }}">{% trans %}Forgot password?{% endtrans %}</a>
+    </div>
+    <div>
+        <a href="{{ url_for('users.new') }}">{% trans %}Don't have an account?{% endtrans %}</a>
+    </div>
 </form>
 {%- endmacro %}
 
@@ -90,6 +116,7 @@
 {% with notifications=g.count_unread_notifications() -%}
 <li{% if active_page == 'notifications' %} class="active"{% endif %}>
     <a href="{{ url_for('notifications.index') }}" title="{{ _('Notifications') }}">
+        <span class="visible-xs">{{ _('Notifications') }}&nbsp;&nbsp;</span>
         <span class="badge{% if notifications != 0 %} badge-warning{% endif %}">{{ notifications }}</span>
     </a>
 </li>
@@ -103,15 +130,15 @@
       {{ user|e }} <i class="icon-caret-down"></i>
   </a>
   <ul class="dropdown-menu">
-      <li><a href="{{ url_for('user.index', user_id=user.id) }}"><i class="icon-user"></i> {{ user|e }}</a></li>
+      <li><a href="{{ url_for('user.index', user_id=user.id) }}"><i class="icon-user icon-fixed-width"></i> {{ user|e }}</a></li>
       {%- if user.club %}
-      <li><a href="{{ url_for('club.index', club_id=user.club.id) }}"><i class="icon-group"></i> {{ user.club|e }}</a></li>
+      <li><a href="{{ url_for('club.index', club_id=user.club.id) }}"><i class="icon-group icon-fixed-width"></i> {{ user.club|e }}</a></li>
       {%- endif %}
       <li class="divider"></li>
-      <li><a href="{{ url_for('flights.pilot', id=user.id) }}"><i class="icon-plane"></i> {% trans %}Flights{% endtrans %}</a></li>
-      <li><a href="{{ url_for('statistics.index', page='pilot', id=user.id) }}"><i class="icon-tasks"></i> {% trans %}Statistics{% endtrans %}</a></li>
+      <li><a href="{{ url_for('flights.pilot', id=user.id) }}"><i class="icon-plane icon-fixed-width"></i> {% trans %}Flights{% endtrans %}</a></li>
+      <li><a href="{{ url_for('statistics.index', page='pilot', id=user.id) }}"><i class="icon-bar-chart icon-fixed-width"></i> {% trans %}Statistics{% endtrans %}</a></li>
       <li class="divider"></li>
-      <li><a href="{{ url_for('logout', next=request.url) }}"><i class="icon-signout"></i> {% trans %}Logout{% endtrans %}</a></li>
+      <li><a href="{{ url_for('logout', next=request.url) }}"><i class="icon-signout icon-fixed-width"></i> {% trans %}Logout{% endtrans %}</a></li>
   </ul>
 </li>
 {%- endwith %}
@@ -120,7 +147,9 @@
 {%- macro _language_dropdown() -%}
 <li class="dropdown">
     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-        {{ insert_flag(h.language_to_country_code(g.active_locale|string)) }} <i class="icon-caret-down"></i>
+      {{ insert_flag(h.language_to_country_code(g.active_locale|string)) }}
+      <span class="visible-xs">{{ g.active_locale.display_name|capitalize }}</span>
+      <i class="icon-caret-down"></i>
     </a>
     <ul class="dropdown-menu">
       {% for locale in g.primary_locales -%}

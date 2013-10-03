@@ -6,38 +6,36 @@ from .filters import SimpleClosureJS
 # Font Awesome
 
 fontawesome_css = Bundle(
-    'https://rawgithub.com/FortAwesome/Font-Awesome/v3.0.2/css/font-awesome.css',
+    'https://rawgithub.com/FortAwesome/Font-Awesome/v3.2.1/css/font-awesome.css',
     output='css/fontawesome-%(version)s.css')
 
 fontawesome_webfont_eot = Bundle(
-    'https://github.com/FortAwesome/Font-Awesome/blob/v3.0.2/font/fontawesome-webfont.eot?raw=true',
+    'https://github.com/FortAwesome/Font-Awesome/blob/v3.2.1/font/fontawesome-webfont.eot?raw=true',
     output='font/fontawesome-webfont.eot')
 
 fontawesome_webfont_woff = Bundle(
-    'https://github.com/FortAwesome/Font-Awesome/blob/v3.0.2/font/fontawesome-webfont.woff?raw=true',
+    'https://github.com/FortAwesome/Font-Awesome/blob/v3.2.1/font/fontawesome-webfont.woff?raw=true',
     output='font/fontawesome-webfont.woff')
 
 fontawesome_webfont_ttf = Bundle(
-    'https://github.com/FortAwesome/Font-Awesome/blob/v3.0.2/font/fontawesome-webfont.ttf?raw=true',
+    'https://github.com/FortAwesome/Font-Awesome/blob/v3.2.1/font/fontawesome-webfont.ttf?raw=true',
     output='font/fontawesome-webfont.ttf')
 
 fontawesome_webfont_svg = Bundle(
-    'https://rawgithub.com/FortAwesome/Font-Awesome/v3.0.2/font/fontawesome-webfont.svg',
+    'https://rawgithub.com/FortAwesome/Font-Awesome/v3.2.1/font/fontawesome-webfont.svg',
     output='font/fontawesome-webfont.svg')
 
 
 # Twitter Bootstrap
 
 bootstrap_js = Bundle(
-    'https://rawgithub.com/twbs/bootstrap/v2.2.0/js/bootstrap-alert.js',
-    'https://rawgithub.com/twbs/bootstrap/v2.2.0/js/bootstrap-collapse.js',
-    'https://rawgithub.com/twbs/bootstrap/v2.2.0/js/bootstrap-modal.js',
-    'https://rawgithub.com/twbs/bootstrap/v2.2.0/js/bootstrap-tooltip.js',
-    'https://rawgithub.com/twbs/bootstrap/v2.2.0/js/bootstrap-popover.js',
-    'https://rawgithub.com/twbs/bootstrap/v2.3.0/js/bootstrap-dropdown.js',
-    'https://rawgithub.com/twbs/bootstrap/v2.3.0/js/bootstrap-tab.js',
-    filters=SimpleClosureJS,
+    'https://netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js',
     output='js/bootstrap-%(version)s.js')
+
+bootstrap_css = Bundle(
+    'https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css',
+    'https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-theme.min.css',
+    output='css/bootstrap-%(version)s.js')
 
 
 # Flot
@@ -56,9 +54,10 @@ flot_js = Bundle(
 # SkyLines
 
 main_css = Bundle(
-    'vendor/bootstrap/bootstrap.min.css',
-    'css/style.css',
-    'css/box.css',
+    'css/bootstrap-visibilites.css',
+    'css/bootstrap-theme-skylines.css',
+    'css/bootstrap-badges.css',
+    'css/panel.css',
     'css/tables.css',
     'css/login-dropdown.css',
     'css/about.css',
@@ -72,6 +71,7 @@ main_css = Bundle(
     output='css/main-%(version)s.css')
 
 all_css = Bundle(
+    bootstrap_css,
     main_css,
     fontawesome_css,
     filters='cssmin',

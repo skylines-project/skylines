@@ -7,7 +7,7 @@
   <thead>
     <th class="numeric">#</th>
     <th>{% trans %}Name{% endtrans %}</th>
-    <th>{% trans %}Club{% endtrans %}</th>
+    <th class="hidden-xs">{% trans %}Club{% endtrans %}</th>
     <th class="numeric">{% trans %}Flights{% endtrans %}</th>
     <th class="numeric">{% trans %}Total Score{% endtrans %}</th>
   </thead>
@@ -16,7 +16,7 @@
     <tr>
       <td class="numeric">{{ rank }}</td>
       <td>{{ user_link(pilot) }}</td>
-      <td>{% if pilot.club_id %}{{ club_link(pilot.club) }}{% endif %}</td>
+      <td class="hidden-xs">{% if pilot.club_id %}{{ club_link(pilot.club) }}{% endif %}</td>
       <td class="numeric">{{ count }}</td>
       <td class="numeric">{{ _('%(points)s pt', points=h.format_decimal(total, format='0.0')) }}</td>
     </tr>

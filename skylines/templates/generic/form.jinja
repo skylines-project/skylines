@@ -9,7 +9,7 @@
 
 {% block content -%}
 <div class="row">
-  <div class="box span8 offset2">
+  <div class="panel col-sm-8 col-sm-offset-2">
     {{ form(values) }}
     {% if include_after %}{% include include_after with context %}{% endif %}
   </div>

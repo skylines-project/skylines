@@ -9,12 +9,14 @@
   <tbody>
     {% for year in years -%}
     <tr>
-      <td class="span2">{{ year.year|int }}</td>
-      <td class="span2">{{ year.pilots|int }}</td>
-      <td class="span8">
-        <div class="progress progress-info">
-          <div class="bar" style="width: {{ year.pilots * 100 / max_pilots }}%;"></div>
+      <td class="col-xs-2">{{ year.year|int }}</td>
+      <td class="col-xs-2">{{ year.pilots|int }}</td>
+      <td class="col-xs-8">
+        {% with value=(year.pilots * 100 / max_pilots) -%}
+        <div class="progress">
+          <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="{{ value }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ value }}%;"></div>
         </div>
+        {%- endwith %}
       </td>
     </tr>
     {%- endfor %}
