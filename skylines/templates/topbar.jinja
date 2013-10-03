@@ -34,7 +34,8 @@
         {% for href, id, caption, icon, css_class in navigation_bar -%}
         <li class="{% if active_page == id %}active{% endif %} {{ css_class }}">
           <a href="{{ href }}" title="{{ caption }}">
-            <i class="{{ icon }} hidden-inline-md hidden-inline-lg"></i>
+            <i class="{{ icon }} icon-large hidden-inline-xs hidden-inline-md hidden-inline-lg"></i>
+            <i class="{{ icon }} icon-fixed-width hidden-inline-sm hidden-inline-md hidden-inline-lg"></i>
             <span class="hidden-inline-sm">{{ caption }}</span>
           </a>
         </li>
@@ -51,7 +52,7 @@
         <li{% if active_page == 'upload' %} class="active"{% endif %}>
             <a href="{{ url_for('upload.index') }}" title="{{ _('Upload flight') }}">
               <i class="icon-upload-alt icon-large hidden-inline-xs"></i>
-              <i class="icon-upload-alt hidden-inline-sm hidden-inline-md hidden-inline-lg"></i>
+              <i class="icon-upload-alt icon-fixed-width hidden-inline-sm hidden-inline-md hidden-inline-lg"></i>
               <span class="hidden-inline-sm hidden-inline-md hidden-inline-lg">{{ _('Upload flight') }}</span>
             </a>
         </li>
@@ -129,15 +130,15 @@
       {{ user|e }} <i class="icon-caret-down"></i>
   </a>
   <ul class="dropdown-menu">
-      <li><a href="{{ url_for('user.index', user_id=user.id) }}"><i class="icon-user"></i> {{ user|e }}</a></li>
+      <li><a href="{{ url_for('user.index', user_id=user.id) }}"><i class="icon-user icon-fixed-width"></i> {{ user|e }}</a></li>
       {%- if user.club %}
-      <li><a href="{{ url_for('club.index', club_id=user.club.id) }}"><i class="icon-group"></i> {{ user.club|e }}</a></li>
+      <li><a href="{{ url_for('club.index', club_id=user.club.id) }}"><i class="icon-group icon-fixed-width"></i> {{ user.club|e }}</a></li>
       {%- endif %}
       <li class="divider"></li>
-      <li><a href="{{ url_for('flights.pilot', id=user.id) }}"><i class="icon-plane"></i> {% trans %}Flights{% endtrans %}</a></li>
-      <li><a href="{{ url_for('statistics.index', page='pilot', id=user.id) }}"><i class="icon-bar-chart"></i> {% trans %}Statistics{% endtrans %}</a></li>
+      <li><a href="{{ url_for('flights.pilot', id=user.id) }}"><i class="icon-plane icon-fixed-width"></i> {% trans %}Flights{% endtrans %}</a></li>
+      <li><a href="{{ url_for('statistics.index', page='pilot', id=user.id) }}"><i class="icon-bar-chart icon-fixed-width"></i> {% trans %}Statistics{% endtrans %}</a></li>
       <li class="divider"></li>
-      <li><a href="{{ url_for('logout', next=request.url) }}"><i class="icon-signout"></i> {% trans %}Logout{% endtrans %}</a></li>
+      <li><a href="{{ url_for('logout', next=request.url) }}"><i class="icon-signout icon-fixed-width"></i> {% trans %}Logout{% endtrans %}</a></li>
   </ul>
 </li>
 {%- endwith %}
