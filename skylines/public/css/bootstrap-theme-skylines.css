@@ -91,6 +91,7 @@ body {
 
 .navbar {
   min-height: 40px;
+  font-weight: 400;
 }
 
 .logo {
@@ -107,6 +108,10 @@ body {
 @media (max-width: 768px) {
   .navbar-brand {
     padding: 15px;
+  }
+
+  .dropdown-menu .divider {
+    background-color: #666;
   }
 }
 
