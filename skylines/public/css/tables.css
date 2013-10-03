@@ -29,6 +29,10 @@ table .date, table .times {
   vertical-align: middle;
 }
 
+.table-flight-details {
+  margin-top: 10px;
+}
+
 .right th {
   text-align: right;
   padding-right: 0.5em;
