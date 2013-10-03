@@ -25,7 +25,7 @@
 
         <div class="pull-right{% if club_column %} hidden-xs{% endif %}">
           <a href="{{ url_for('flights.pilot', id=user.id) }}" class="btn btn-default btn-sm"><i class="icon-plane"></i> {% trans %}Flights{% endtrans %}</a>
-          <a href="{{ url_for('statistics.index', page='pilot', id=user.id) }}" class="btn btn-default btn-sm"><i class="icon-tasks"></i> {% trans %}Statistics{% endtrans %}</a>
+          <a href="{{ url_for('statistics.index', page='pilot', id=user.id) }}" class="btn btn-default btn-sm"><i class="icon-bar-chart"></i> {% trans %}Statistics{% endtrans %}</a>
         </div>
       </td>
     </tr>
