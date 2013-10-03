@@ -6,7 +6,7 @@
 {%- block content %}
 <form action="{{ url_for('upload.update') }}" method="post">
   {% if success -%}
-  <p class="hidden-lg hidden-md hidden-sm">
+  <p class="visible-xs">
     {% trans %}Your flights have been saved.{% endtrans %}<br />
   </p>
   <p class="hidden-xs">

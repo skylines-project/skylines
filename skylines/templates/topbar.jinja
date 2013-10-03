@@ -34,15 +34,15 @@
         {% for href, id, caption, icon, css_class in navigation_bar -%}
         <li class="{% if active_page == id %}active{% endif %} {{ css_class }}">
           <a href="{{ href }}" title="{{ caption }}">
-            <i class="{{ icon }} icon-large hidden-inline-xs hidden-inline-md hidden-inline-lg"></i>
-            <i class="{{ icon }} icon-fixed-width hidden-inline-sm hidden-inline-md hidden-inline-lg"></i>
-            <span class="hidden-inline-sm">{{ caption }}</span>
+            <i class="{{ icon }} icon-large visible-sm"></i>
+            <i class="{{ icon }} icon-fixed-width visible-xs"></i>
+            <span class="hidden-sm">{{ caption }}</span>
           </a>
         </li>
         {%- endfor %}
     </ul>
 
-    <form action="{{ url_for('search.index') }}" class="navbar-form navbar-left navbar-search hidden-md hidden-sm hidden-xs" role="search">
+    <form action="{{ url_for('search.index') }}" class="navbar-form navbar-left navbar-search visible-lg" role="search">
         <div class="form-group">
             <input type="text" name="text" value="{{ (search_text or '')|e }}" placeholder="{{ _('Search') }}" class="form-control" placeholder="Search">
         </div>
@@ -51,9 +51,9 @@
     <ul class="nav navbar-nav navbar-right">
         <li{% if active_page == 'upload' %} class="active"{% endif %}>
             <a href="{{ url_for('upload.index') }}" title="{{ _('Upload flight') }}">
-              <i class="icon-upload-alt icon-large hidden-inline-xs"></i>
-              <i class="icon-upload-alt icon-fixed-width hidden-inline-sm hidden-inline-md hidden-inline-lg"></i>
-              <span class="hidden-inline-sm hidden-inline-md hidden-inline-lg">{{ _('Upload flight') }}</span>
+              <i class="icon-upload-alt icon-large hidden-xs"></i>
+              <i class="icon-upload-alt icon-fixed-width visible-xs"></i>
+              <span class="visible-xs">{{ _('Upload flight') }}</span>
             </a>
         </li>
 
@@ -70,7 +70,7 @@
 {%- endmacro %}
 
 {% macro _login_dropdown(active_page) -%}
-<li class="dropdown {% if active_page == 'login' %}active{% endif %} hidden-sm hidden-md hidden-lg">
+<li class="dropdown {% if active_page == 'login' %}active{% endif %} visible-xs">
     <a href="{{ url_for('login') }}">
         <i class="icon-signin"></i> {% trans %}Login{% endtrans %}
     </a>
@@ -116,7 +116,7 @@
 {% with notifications=g.count_unread_notifications() -%}
 <li{% if active_page == 'notifications' %} class="active"{% endif %}>
     <a href="{{ url_for('notifications.index') }}" title="{{ _('Notifications') }}">
-        <span class="hidden-inline-sm hidden-inline-md hidden-inline-lg">{{ _('Notifications') }}&nbsp;&nbsp;</span>
+        <span class="visible-xs">{{ _('Notifications') }}&nbsp;&nbsp;</span>
         <span class="badge{% if notifications != 0 %} badge-warning{% endif %}">{{ notifications }}</span>
     </a>
 </li>
@@ -148,7 +148,7 @@
 <li class="dropdown">
     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
       {{ insert_flag(h.language_to_country_code(g.active_locale|string)) }}
-      <span class="hidden-inline-sm hidden-inline-md hidden-inline-lg">{{ g.active_locale.display_name|capitalize }}</span>
+      <span class="visible-xs">{{ g.active_locale.display_name|capitalize }}</span>
       <i class="icon-caret-down"></i>
     </a>
     <ul class="dropdown-menu">
