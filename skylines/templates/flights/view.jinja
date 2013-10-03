@@ -168,8 +168,7 @@
         <li class="active"><a href="#tab-overview" data-toggle="tab">{{ _('Overview') }}</a></li>
         <li>
           <a href="#tab-comments" title="{{ _('Comments') }}" data-toggle="tab">
-            <i class="icon-comments-alt icon-large hidden-inline-lg hidden-inline-sm hidden-inline-xs"></i>
-            <span class="hidden-inline-md">{{ _('Comments') }}</span>
+            <i class="icon-comments-alt icon-large"></i>
             {% if flight.comments[0] -%}
             ({{ flight.comments|count }})
             {%- endif %}
@@ -177,8 +176,7 @@
         </li>
         <li>
           <a href="#tab-stats" title="{{ _('Statistics') }}" data-toggle="tab">
-            <i class="icon-bar-chart icon-large hidden-inline-lg hidden-inline-sm hidden-inline-xs"></i>
-            <span class="hidden-inline-md">{{ _('Statistics') }}</span>
+            <i class="icon-bar-chart icon-large"></i>
           </a>
         </li>
       </ul>
