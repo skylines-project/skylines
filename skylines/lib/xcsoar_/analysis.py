@@ -255,8 +255,8 @@ def analyse_flight(flight, full=512, triangle=1024, sprint=64):
         root = xcsoar.analyse_flight(
             path, full_points=full, triangle_points=triangle,
             sprint_points=sprint, popen_kwargs=dict(preexec_fn=setlimits))
-    except:
-        log.warning('Parsing the output of AnalyseFlight failed.')
+    except Exception, e:
+        log.warning('Parsing the output of AnalyseFlight failed. (' + str(e) + ')')
         return False
 
     if 'events' in root:

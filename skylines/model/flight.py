@@ -197,7 +197,7 @@ class Flight(db.Model):
                 if p.aggregate and p.phase_type == FlightPhase.PT_CRUISE]
 
     def update_flight_path(self):
-        from skylines.lib.xcsoar import flight_path
+        from skylines.lib.xcsoar_ import flight_path
         from skylines.lib.datetime import from_seconds_of_day
 
         # Run the IGC file through the FlightPath utility
