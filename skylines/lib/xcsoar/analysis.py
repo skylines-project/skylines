@@ -1,15 +1,9 @@
-# -*- coding: utf-8 -*-
-
 import logging
 import datetime
-import simplejson
-from subprocess import Popen, PIPE
 import resource
 
-from sqlalchemy.sql.expression import and_
-
+import xcsoar
 from flask import current_app
-from .path import helper_path
 from skylines import db
 from skylines.lib import files
 from skylines.lib.datetime import from_seconds_of_day
@@ -253,32 +247,14 @@ def setlimits():
     resource.setrlimit(resource.RLIMIT_AS, (mem_limit, mem_limit * 1.2))
 
 
-def run_analyse_flight(path, full=None, triangle=None, sprint=None):
-    args = [helper_path('AnalyseFlight')]
-
-    if full:
-        args.append('--full-points={:d}'.format(full))
-
-    if triangle:
-        args.append('--triangle-points={:d}'.format(triangle))
-
-    if sprint:
-        args.append('--sprint-points={:d}'.format(sprint))
-
-    args.append(path)
-
-    return Popen(args, stdout=PIPE, preexec_fn=setlimits).stdout
-
-
 def analyse_flight(flight, full=512, triangle=1024, sprint=64):
     path = files.filename_to_path(flight.igc_file.filename)
     log.info('Analyzing ' + path)
 
-    analysis = run_analyse_flight(
-        path, full=full, triangle=triangle, sprint=sprint)
-
     try:
-        root = simplejson.load(analysis)
+        root = xcsoar.analyse_flight(
+            path, full_points=full, triangle_points=triangle,
+            sprint_points=sprint, popen_kwargs=dict(preexec_fn=setlimits))
     except:
         log.warning('Parsing the output of AnalyseFlight failed.')
         return False

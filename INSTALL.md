@@ -83,26 +83,12 @@ line.
 Since the [XCSoar](http://www.xcsoar.org/) project already has much of the code
 implemented that is necessary for flight analysis, it makes sense to reuse that
 code where applicable. *SkyLines* is using two tools from the range of XCSoar
-libraries called `AnalyseFlight` and `FlightPath`.
-
-Here are the necessary commands to clone the XCSoar repository and build and
-link the two tools on Ubuntu/Debian:
-
-    # clone the XCSoar source code repository
-    $ git clone git://git.xcsoar.org/xcsoar/master/xcsoar.git
-
-    # install XCSoar build dependencies
-    $ apt-get install make libcurl4-openssl-dev
-
-    # consult the XCSoar README file for further dependency informations
-
-    # build the tools
-    $ cd xcsoar
-    $ make DEBUG=n ENABLE_SDL=n output/UNIX/bin/AnalyseFlight output/UNIX/bin/FlightPath
-
-    # create a symbolic link from SkyLines to XCSoar
-    $ cd <path to skylines>
-    $ ln -s <path to xcsoar>/output/UNIX/bin bin
+libraries called `AnalyseFlight` and `FlightPath`. These tools are installed
+and build by the `xcsoar` python package, which also includes wrappers for both
+tools. To build the tools you might have to install additional libraries like
+`libcurl`, which can be installed on Debian/Ubuntu by executing `apt-get
+install libcurl4-openssl-dev`. Please have a look into the XCSoar documentation
+if you need more help with the building process.
 
 
 ## Running the debug server
