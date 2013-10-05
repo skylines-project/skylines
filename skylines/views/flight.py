@@ -16,7 +16,7 @@ from skylines import db
 from skylines.forms import BootstrapForm, aircraft_model
 from skylines.lib import files
 from skylines.lib.dbutil import get_requested_record_list
-from skylines.lib.xcsoar import analyse_flight, flight_path
+from skylines.lib.xcsoar_ import analyse_flight, flight_path
 from skylines.lib.helpers import format_time, format_number
 from skylines.lib.formatter import units
 from skylines.lib.datetime import from_seconds_of_day

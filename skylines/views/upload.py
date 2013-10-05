@@ -12,7 +12,7 @@ from skylines.forms import upload, aircraft_model
 from skylines.lib import files
 from skylines.lib.decorators import login_required
 from skylines.lib.md5 import file_md5
-from skylines.lib.xcsoar import analyse_flight
+from skylines.lib.xcsoar_ import analyse_flight
 from skylines.model import User, Flight, IGCFile
 from skylines.model.event import create_flight_notifications
 from skylines.worker import tasks
