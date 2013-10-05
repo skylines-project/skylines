@@ -44,7 +44,6 @@ ASSETS_URL = '/assets'
 ASSETS_LOAD_DIR = os.path.join(base, 'skylines', 'public')
 ASSETS_LOAD_URL = '/'
 
-SKYLINES_ANALYSIS_PATH = os.path.join(base, 'bin')
 SKYLINES_FILES_PATH = os.path.join(base, 'htdocs', 'files')
 SKYLINES_ELEVATION_PATH = os.path.join(base, 'htdocs', 'srtm')
 
