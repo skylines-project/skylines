@@ -51,7 +51,7 @@ via IRC on the #skylines channel of the [freenode](http://freenode.net/)
 servers.
 
 Bugs and feature request can be submitted either to the
-[XCSoar trac](bugs.xcsoar.org) instance under the *SkyLines* milestone or on
+[XCSoar trac](http://bugs.xcsoar.org) instance under the *SkyLines* milestone or on
 [GitHub](https://github.com/skylines-project/skylines/issues). New ideas can
 also be discussed in the
 [Wiki](https://github.com/skylines-project/skylines/wiki) first.
