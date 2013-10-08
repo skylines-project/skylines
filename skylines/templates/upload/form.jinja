@@ -1,0 +1,8 @@
+{% extends "base-form.jinja" %}
+{% set active_page = "upload" %}
+
+{% block title %}{% trans %}Upload Flight{% endtrans %}{% endblock %}
+
+{% block form -%}
+{{ form(values) }}
+{%- endblock %}

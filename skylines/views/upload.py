@@ -64,7 +64,7 @@ def IterateUploadFiles(upload):
 @login_required(l_("You have to login to upload flights."))
 def index():
     return render_template(
-        'generic/form.jinja', active_page='upload', title=_("Upload Flight"),
+        'upload/form.jinja',
         form=upload.form, values=dict(pilot=g.current_user.id))
 
 
