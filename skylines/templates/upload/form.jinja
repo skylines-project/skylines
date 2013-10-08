@@ -3,6 +3,24 @@
 
 {% block title %}{% trans %}Upload Flight{% endtrans %}{% endblock %}
 
+{% macro render_field(field) -%}
+  <div class="form-group{% if field.errors %} has-error{% endif %}">
+    {{ field.label }}
+    {{ field(class_="form-control", **kwargs)|safe }}
+
+    {% for error in field.errors %}
+    <p class="help-block">{{ error }}</p>
+    {% endfor %}
+  </div>
+{%- endmacro %}
+
 {% block form -%}
-{{ form(values) }}
+<form method="POST" action="." role="form" enctype="multipart/form-data">
+  {{ form.hidden_tag() }}
+  {{ render_field(form.file, multiple=1) }}
+  {{ render_field(form.pilot) }}
+  <div class="form-group">
+    <input class="form-control btn btn-primary" value="Upload" type="submit">
+  </div>
+</form>
 {%- endblock %}

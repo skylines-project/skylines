@@ -6,6 +6,7 @@ from sprox.formbase import AddRecordForm, Field
 from sprox.validators import UniqueValue
 from sprox.sa.provider import SAORMProvider
 from tw.forms import SingleSelectField, TextField
+from wtforms import SelectField as _SelectField
 
 from .bootstrap import BootstrapForm
 from skylines import db
@@ -42,3 +43,16 @@ class SelectField(SingleSelectField):
         d['options'] = options
 
         return SingleSelectField.update_params(self, d)
+
+
+class ClubPilotsSelectField(_SelectField):
+    def __init__(self, *args, **kwargs):
+        super(ClubPilotsSelectField, self).__init__(*args, **kwargs)
+        self.coerce = int
+
+    def process(self, *args, **kwargs):
+        users = User.query(club_id=g.current_user.club_id).order_by(User.name)
+        self.choices = [(0, '[unspecified]')]
+        self.choices.extend([(user.id, user) for user in users])
+
+        super(ClubPilotsSelectField, self).process(*args, **kwargs)

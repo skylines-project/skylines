@@ -1,22 +1,16 @@
 from flask.ext.babel import lazy_gettext as l_
+from flask_wtf import Form
+from flask_wtf.file import FileRequired
 
-from skylines.lib.validators import FileFieldValidator
-
-from . import pilot
-from .bootstrap import BootstrapForm
 from .file import MultiFileField
+from .pilot import ClubPilotsSelectField
 
 
-file_field_validator = FileFieldValidator(
-    not_empty=True,
-    messages=dict(empty=l_("Please add one or more IGC or ZIP files")),
-    accept_iterator=True
-)
 
-file_field = MultiFileField(
-    'file', label_text=l_("IGC or ZIP file(s)"), validator=file_field_validator)
 
-form = BootstrapForm('upload_form', submit_text="Upload", children=[
-    file_field,
-    pilot.SelectField('pilot', label_text=l_("Pilot"))
-])
+
+class UploadForm(Form):
+    file = MultiFileField(l_(u'IGC or ZIP file(s)'), validators=(
+        FileRequired(l_('Please add one or more IGC or ZIP files')),
+    ))
+    pilot = ClubPilotsSelectField(l_(u'Pilot'))
