@@ -4,11 +4,10 @@ from zipfile import ZipFile
 
 from flask import Blueprint, render_template, request, flash, redirect, g
 from flask.ext.babel import _, lazy_gettext as l_
-from werkzeug.datastructures import CombinedMultiDict
 from redis.exceptions import ConnectionError
 
 from skylines import app, db
-from skylines.forms import UploadForm, aircraft_model
+from skylines.forms import UploadForm, AircraftModelSelectField
 from skylines.lib import files
 from skylines.lib.decorators import login_required
 from skylines.lib.md5 import file_md5
@@ -157,9 +156,12 @@ def index_post(form):
     except ConnectionError:
         app.logger.info('Cannot connect to Redis server')
 
+    def ModelSelectField(*args, **kwargs):
+        return AircraftModelSelectField().bind(None, 'model', *args, **kwargs)()
+
     return render_template(
         'upload/result.jinja', flights=flights, success=success,
-        ModelSelectField=aircraft_model.SelectField)
+        ModelSelectField=ModelSelectField)
 
 
 @upload_blueprint.route('/update', methods=['GET', 'POST'])
