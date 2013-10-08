@@ -1,18 +1,9 @@
 {% extends "base-form.jinja" %}
 {% set active_page = "upload" %}
 
+{% from "macros/form.jinja" import render_field %}
+
 {% block title %}{% trans %}Upload Flight{% endtrans %}{% endblock %}
-
-{% macro render_field(field) -%}
-  <div class="form-group{% if field.errors %} has-error{% endif %}">
-    {{ field.label }}
-    {{ field(class_="form-control", **kwargs)|safe }}
-
-    {% for error in field.errors %}
-    <p class="help-block">{{ error }}</p>
-    {% endfor %}
-  </div>
-{%- endmacro %}
 
 {% block form -%}
 <form method="POST" action="." role="form" enctype="multipart/form-data">
