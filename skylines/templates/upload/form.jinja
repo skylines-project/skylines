@@ -6,7 +6,7 @@
 {% block title %}{% trans %}Upload Flight{% endtrans %}{% endblock %}
 
 {% block form -%}
-<form method="POST" action="." role="form" enctype="multipart/form-data">
+<form method="POST" action="{{ url_for('upload.index') }}" role="form" enctype="multipart/form-data">
   {{ form.hidden_tag() }}
   {{ render_field(form.file, multiple=1) }}
   {{ render_field(form.pilot) }}
