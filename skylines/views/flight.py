@@ -4,15 +4,11 @@ from datetime import datetime
 from flask import Blueprint, request, render_template, redirect, url_for, abort, current_app, jsonify, g, flash
 from flask.ext.babel import lazy_gettext as l_, _
 
-from formencode.validators import String
-from tw.forms.fields import TextField
-from sprox.formbase import EditableForm
-
 from sqlalchemy.sql.expression import func, and_, literal_column
 from geoalchemy2.shape import to_shape
 
 from skylines import db
-from skylines.forms import BootstrapForm, aircraft_model, ChangePilotsForm
+from skylines.forms import ChangePilotsForm, ChangeAircraftForm
 from skylines.lib import files
 from skylines.lib.dbutil import get_requested_record_list
 from skylines.lib.xcsoar_ import analyse_flight, flight_path
@@ -21,7 +17,6 @@ from skylines.lib.formatter import units
 from skylines.lib.datetime import from_seconds_of_day
 from skylines.lib.geo import METERS_PER_DEGREE
 from skylines.lib.sql import extract_array_item
-from skylines.lib.decorators import validate
 from skylines.model import (
     User, Flight, FlightPhase, Location, Elevation, FlightComment,
     Notification, Event
@@ -394,19 +389,7 @@ def change_pilot_post(form):
     return redirect(url_for('.index'))
 
 
-class SelectAircraftForm(EditableForm):
-    __base_widget_type__ = BootstrapForm
-    __model__ = Flight
-    __hide_fields__ = ['id']
-    __limit_fields__ = ['model', 'registration', 'competition_id']
-    model = aircraft_model.SelectField('model', label_text=l_('Aircraft Model'))
-    registration = TextField('registration', label_text=l_('Aircraft Registration'), maxlength=32, validator=String(max=32))
-    competition_id = TextField('competition_id', label_text=l_('Competition Number'), maxlength=5, validator=String(max=5))
-
-select_aircraft_form = SelectAircraftForm(db.session)
-
-
-@flight_blueprint.route('/change_aircraft')
+@flight_blueprint.route('/change_aircraft', methods=['GET', 'POST'])
 def change_aircraft():
     if not g.flight.is_writable(g.current_user):
         abort(403)
@@ -430,31 +413,27 @@ def change_aircraft():
     else:
         competition_id = None
 
-    return render_template(
-        'generic/form.jinja',
-        active_page='flights', title=_('Change Aircraft'),
-        form=select_aircraft_form,
-        values=dict(id=g.flight.id,
-                    model=model_id,
-                    registration=registration,
-                    competition_id=competition_id))
+    form = ChangeAircraftForm(
+        model_id=model_id,
+        registration=registration,
+        competition_id=competition_id
+    )
+    if form.validate_on_submit():
+        return change_aircraft_post(form)
+
+    return render_template('flights/change_aircraft.jinja', form=form)
 
 
-@flight_blueprint.route('/change_aircraft', methods=['POST'])
-@validate(select_aircraft_form, change_aircraft)
-def change_aircraft_post():
-    if not g.flight.is_writable(g.current_user):
-        abort(403)
-
-    registration = request.form['registration']
+def change_aircraft_post(form):
+    registration = form.registration.data
     if registration is not None:
         registration = registration.strip()
         if len(registration) == 0:
             registration = None
 
-    g.flight.model_id = request.form['model'] or None
+    g.flight.model_id = form.model_id.data or None
     g.flight.registration = registration
-    g.flight.competition_id = request.form['competition_id'] or None
+    g.flight.competition_id = form.competition_id.data or None
     g.flight.time_modified = datetime.utcnow()
     db.session.commit()
 
