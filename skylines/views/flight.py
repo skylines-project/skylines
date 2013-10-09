@@ -7,13 +7,12 @@ from flask.ext.babel import lazy_gettext as l_, _
 from formencode.validators import String
 from tw.forms.fields import TextField
 from sprox.formbase import EditableForm
-from sprox.widgets import PropertySingleSelectField
 
 from sqlalchemy.sql.expression import func, and_, literal_column
 from geoalchemy2.shape import to_shape
 
 from skylines import db
-from skylines.forms import BootstrapForm, aircraft_model
+from skylines.forms import BootstrapForm, aircraft_model, ChangePilotsForm
 from skylines.lib import files
 from skylines.lib.dbutil import get_requested_record_list
 from skylines.lib.xcsoar_ import analyse_flight, flight_path
@@ -367,59 +366,28 @@ def near():
     return jsonify(flights=map(add_flight_path, flights))
 
 
-class PilotSelectField(PropertySingleSelectField):
-    def _my_update_params(self, d, nullable=False):
-        query = db.session.query(User.id, User.name) \
-            .filter(User.club_id == g.current_user.club_id) \
-            .order_by(User.name)
-        options = [(None, 'None')] + query.all()
-        d['options'] = options
-        return d
-
-    def validate(self, value, *args, **kw):
-        if isinstance(value, User):
-            value = value.id
-        return super(PilotSelectField, self).validate(value, *args, **kw)
-
-
-class SelectPilotForm(EditableForm):
-    __base_widget_type__ = BootstrapForm
-    __model__ = Flight
-    __hide_fields__ = ['id']
-    __limit_fields__ = ['pilot', 'co_pilot']
-    __base_widget_args__ = dict(action='change_pilot')
-    pilot = PilotSelectField('pilot', label_text=l_('Pilot'))
-    co_pilot = PilotSelectField('co_pilot', label_text=l_('Co-Pilot'))
-
-select_pilot_form = SelectPilotForm(db.session)
-
-
-@flight_blueprint.route('/change_pilot')
+@flight_blueprint.route('/change_pilot', methods=['GET', 'POST'])
 def change_pilot():
     if not g.flight.is_writable(g.current_user):
         abort(403)
 
-    return render_template(
-        'generic/form.jinja',
-        active_page='flights', title=_('Select Pilot'),
-        user=g.current_user,
-        include_after='flights/after_change_pilot.jinja',
-        form=select_pilot_form, values=g.flight)
+    form = ChangePilotsForm(obj=g.flight)
+    if form.validate_on_submit():
+        return change_pilot_post(form)
+
+    return render_template('flights/change_pilot.jinja', form=form)
 
 
-@flight_blueprint.route('/change_pilot', methods=['POST'])
-@validate(select_pilot_form, change_pilot)
-def change_pilot_post():
-    if not g.flight.is_writable(g.current_user):
-        abort(403)
+def change_pilot_post(form):
+    pilot_id = form.pilot_id.data if form.pilot_id.data != 0 else None
+    if g.flight.pilot_id != pilot_id:
+        g.flight.pilot_id = pilot_id
 
-    pilot = request.form['pilot'] or None
-    if g.flight.pilot_id != pilot:
-        g.flight.pilot_id = pilot
-        if pilot:
-            g.flight.club_id = User.get(pilot).club_id
+        # update club if pilot changed
+        if pilot_id:
+            g.flight.club_id = User.get(pilot_id).club_id
 
-    g.flight.co_pilot_id = request.form['co_pilot'] or None
+    g.flight.co_pilot_id = form.co_pilot_id.data if form.co_pilot_id.data != 0 else None
     g.flight.time_modified = datetime.utcnow()
     db.session.commit()
 
