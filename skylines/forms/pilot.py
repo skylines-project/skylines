@@ -1,12 +1,14 @@
 from flask import g
 from flask.ext.babel import lazy_gettext as l_
+from flask_wtf import Form
 
 from formencode import validators, All
 from sprox.formbase import AddRecordForm, Field
 from sprox.validators import UniqueValue
 from sprox.sa.provider import SAORMProvider
 from tw.forms import SingleSelectField, TextField
-from wtforms import SelectField as _SelectField
+from wtforms import SelectField as _SelectField, PasswordField
+from wtforms.validators import Length, EqualTo
 
 from .bootstrap import BootstrapForm
 from skylines import db
@@ -56,3 +58,12 @@ class ClubPilotsSelectField(_SelectField):
         self.choices.extend([(user.id, user) for user in users])
 
         super(ClubPilotsSelectField, self).process(*args, **kwargs)
+
+
+class ChangePasswordForm(Form):
+    password = PasswordField(l_('Password'), validators=[
+        Length(min=6),
+    ])
+    verify_password = PasswordField(l_('Verify Password'), validators=[
+        EqualTo('password', message=l_('Passwords do not match')),
+    ])

@@ -4,18 +4,17 @@ from flask import Blueprint, request, render_template, redirect, url_for, abort,
 from flask.ext.babel import lazy_gettext as l_, _, ngettext
 from flask.ext.login import login_required
 
-from formencode import Schema, All
-from formencode.validators import FieldsMatch, Email, NotEmpty
+from formencode import All
+from formencode.validators import Email, NotEmpty
 from sprox.formbase import EditableForm, Field
 from sprox.widgets import PropertySingleSelectField
-from tw.forms import PasswordField, TextField, CheckBox
-from tw.forms.validators import UnicodeString
+from tw.forms import TextField, CheckBox
 
 from sqlalchemy.sql.expression import and_, or_
 from sqlalchemy import func
 
 from skylines import db
-from skylines.forms import BootstrapForm, units, club
+from skylines.forms import BootstrapForm, units, club, ChangePasswordForm
 from skylines.lib.validators import UniqueValueUnless
 from skylines.lib.dbutil import get_requested_record
 from skylines.lib.decorators import validate
@@ -124,42 +123,22 @@ def index():
         last_year_statistics=_get_last_year_statistics())
 
 
-password_match_validator = FieldsMatch(
-    'password', 'verify_password',
-    messages={'invalidNoMatch': l_('Passwords do not match')})
-
-change_password_form = BootstrapForm(
-    'change_password_form',
-    submit_text=l_("Change Password"),
-    validator=Schema(chained_validators=(password_match_validator,)),
-    children=[
-        PasswordField('password',
-                      validator=UnicodeString(min=6),
-                      label_text=l_('Password')),
-        PasswordField('verify_password',
-                      label_text=l_('Verify Password')),
-    ]
-)
-
-
-@user_blueprint.route('/change_password')
+@user_blueprint.route('/change_password', methods=['GET', 'POST'])
 def change_password():
     if not g.user.is_writable(g.current_user):
         abort(403)
 
-    return render_template(
-        'generic/form.jinja',
-        active_page='settings', title=_('Change Password'),
-        form=change_password_form, values={})
+    form = ChangePasswordForm()
+    if form.validate_on_submit():
+        response = change_password_post(form)
+        if response:
+            return response
+
+    return render_template('users/change_password.jinja', form=form)
 
 
-@user_blueprint.route('/change_password', methods=['POST'])
-@validate(change_password_form, change_password)
-def change_password_post():
-    if not g.user.is_writable(g.current_user):
-        abort(403)
-
-    g.user.password = request.form['password']
+def change_password_post(form):
+    g.user.password = form.password.data
     g.user.recover_key = None
 
     db.session.commit()
