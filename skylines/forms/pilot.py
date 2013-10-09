@@ -29,20 +29,20 @@ class ClubPilotsSelectField(SelectField):
 
 class ChangePasswordForm(Form):
     password = PasswordField(l_('Password'), validators=[
-        Length(min=6),
+        Length(min=6, message=l_('Your password must have at least 6 characters.')),
     ])
     verify_password = PasswordField(l_('Verify Password'), validators=[
-        EqualTo('password', message=l_('Passwords do not match')),
+        EqualTo('password', message=l_('Your passwords do not match.')),
     ])
 
 
 class CreateClubPilotForm(Form):
     email_address = _TextField(l_('eMail Address'), validators=[
-        InputRequired(),
+        InputRequired(message=l_('Please enter your email address.')),
         Email(),
     ])
     name = _TextField(l_('Name'), validators=[
-        InputRequired(),
+        InputRequired(message=l_('Please enter your name.')),
     ])
 
     def validate_email_address(form, field):
