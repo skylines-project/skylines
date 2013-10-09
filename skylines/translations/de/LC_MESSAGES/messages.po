@@ -117,10 +117,8 @@ msgid "Verify Password"
 msgstr "Passwort bestätigen"
 
 #: skylines/forms/pilot.py:35
-#, fuzzy
-#| msgid "Passwords do not match"
 msgid "Your passwords do not match."
-msgstr "Die Passwörter stimmen nicht überein"
+msgstr "Deine Passwörter stimmen nicht überein"
 
 #: skylines/forms/pilot.py:40 skylines/forms/pilot.py:70
 #: skylines/forms/pilot.py:94
@@ -510,10 +508,8 @@ msgid "Edit"
 msgstr "Ändern"
 
 #: skylines/templates/flights/change_aircraft.jinja:6
-#, fuzzy
-#| msgid "Aircraft"
 msgid "Select Aircraft"
-msgstr "Flugzeug"
+msgstr "Flugzeug wählen"
 
 #: skylines/templates/flights/change_pilot.jinja:6
 msgid "Select Pilot"
@@ -1203,23 +1199,19 @@ msgid "Upload Flight"
 msgstr "Flug hochladen"
 
 #: skylines/templates/upload/form.jinja:14
-#, fuzzy
-#| msgid "Uploaded"
 msgid "Upload"
-msgstr "Hochgeladen"
+msgstr "Hochladen"
 
 #: skylines/templates/upload/result.jinja:10
-#, fuzzy
-#| msgid "Your flight(s) have been successfully updated."
 msgid "Your flights have been saved."
-msgstr "Dein/e Flug/Flüge wurde/n erfolgreich aktualisiert."
+msgstr "Deine Flüge wurden gespeichert."
 
 #: skylines/templates/upload/result.jinja:13
 msgid ""
 "Your flights have been saved. You may want to change the flights aircraft"
 " types and registrations below."
 msgstr ""
-"Deine Flüge sind abgespeichert worden. Flugzeugtyp und Kennzeichen können"
+"Deine Flüge wurden gespeichert. Flugzeugtyp und Kennzeichen können"
 " unten geändert werden."
 
 #: skylines/templates/upload/result.jinja:16
@@ -1268,10 +1260,8 @@ msgid "If your club doesn't exist yet in Skylines, create it:"
 msgstr "Wenn dein Verein noch nicht existiert, dann erstelle ihn jetzt:"
 
 #: skylines/templates/users/change_club.jinja:29
-#, fuzzy
-#| msgid "Created"
 msgid "Create"
-msgstr "Angelegt"
+msgstr "Erstellen"
 
 #: skylines/templates/users/change_password.jinja:6
 #: skylines/templates/users/recover_step1.jinja:6
