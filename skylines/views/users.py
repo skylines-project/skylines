@@ -3,13 +3,8 @@ from email.utils import formatdate
 import smtplib
 
 from flask import Blueprint, request, render_template, redirect, url_for, abort, current_app, flash, g
-from flask.ext.babel import lazy_gettext as l_, _
+from flask.ext.babel import _
 from werkzeug.exceptions import ServiceUnavailable
-
-from formencode import Schema
-from formencode.validators import FieldsMatch, Email
-from tw.forms import PasswordField, TextField, HiddenField
-from tw.forms.validators import UnicodeString
 
 from sqlalchemy import func
 from sqlalchemy.orm import joinedload
@@ -17,15 +12,9 @@ from sqlalchemy.orm import joinedload
 from skylines import db
 from skylines.model import User, Group
 from skylines.model.event import create_new_user_event, create_club_join_event
-from skylines.forms import CreatePilotForm, BootstrapForm
-from skylines.lib.decorators import validate
+from skylines.forms import CreatePilotForm, RecoverStep1Form, RecoverStep2Form
 
 users_blueprint = Blueprint('users', 'skylines')
-
-
-password_match_validator = FieldsMatch(
-    'password', 'verify_password',
-    messages={'invalidNoMatch': l_('Passwords do not match')})
 
 
 @users_blueprint.route('/')
@@ -73,58 +62,41 @@ def new_post(form):
     return redirect(url_for('index'))
 
 
-recover_email_form = BootstrapForm(
-    'recover_email_form',
-    submit_text=l_("Recover Password"),
-    action='recover_email',
-    children=[
-        TextField('email_address',
-                  validator=Email(not_empty=True),
-                  label_text=l_('eMail Address'))
-    ]
-)
+def hex(value):
+    return int(value, 16)
 
 
-recover_password_form = BootstrapForm(
-    'recover_password_form',
-    submit_text=l_("Recover Password"),
-    action='recover_password',
-    validator=Schema(chained_validators=(password_match_validator,)),
-    children=[
-        HiddenField('key'),
-        PasswordField('password',
-                      validator=UnicodeString(min=6),
-                      label_text=l_('Password')),
-        PasswordField('verify_password',
-                      label_text=l_('Verify Password')),
-    ]
-)
-
-
-@users_blueprint.route('/recover')
+@users_blueprint.route('/recover', methods=['GET', 'POST'])
 def recover():
-    try:
-        key = int(request.values['key'], 16)
-    except:
-        key = None
-
-    if key:
-        user = User.by_recover_key(key)
-        if not user:
-            abort(404)
-
-        return render_template(
-            'generic/form.jinja', active_page='users',
-            form=recover_password_form, values=dict(key='%x' % key))
-
-    return render_template(
-        'generic/form.jinja', active_page='users',
-        form=recover_email_form, values={})
+    key = request.values.get('key', type=hex)
+    if key is None:
+        return recover_step1()
+    else:
+        return recover_step2(key)
 
 
-def recover_user_password(user):
-    key = user.generate_recover_key(request.remote_addr)
+def recover_step1():
+    form = RecoverStep1Form()
+    if form.validate_on_submit():
+        return recover_step1_post(form)
 
+    return render_template('users/recover_step1.jinja', form=form)
+
+
+def recover_step1_post(form):
+    user = User.by_email_address(form.email_address.data)
+    if not user:
+        abort(404)
+
+    user.generate_recover_key(request.remote_addr)
+    send_recover_mail(user)
+    flash('Check your email, we have sent you a link to recover your password.')
+
+    db.session.commit()
+    return redirect(url_for('index'))
+
+
+def send_recover_mail(user):
     text = u"""Hi %s,
 
 you have asked to recover your password (from IP %s).  To enter a new
@@ -133,7 +105,7 @@ password, click on the following link:
  http://www.skylines-project.org/users/recover?key=%x
 
 The SkyLines Team
-""" % (unicode(user), request.remote_addr, key)
+""" % (unicode(user), request.remote_addr, user.recover_key)
 
     msg = MIMEText(text.encode('utf-8'), 'plain', 'utf-8')
     msg['Subject'] = 'SkyLines password recovery'
@@ -154,34 +126,24 @@ The SkyLines Team
             "Please try again later or contact the developers."))
 
 
-@users_blueprint.route('/recover_email', methods=['POST'])
-@validate(form=recover_email_form, errorhandler=recover)
-def recover_email():
-    user = User.by_email_address(request.form.get('email_address', None))
-    if not user:
-        abort(404)
-
-    recover_user_password(user)
-    flash('Check your email, we have sent you a link to recover your password.')
-
-    db.session.commit()
-
-    return redirect(url_for('index'))
-
-
-@users_blueprint.route('/recover_password', methods=['POST'])
-@validate(form=recover_password_form, errorhandler=recover)
-def recover_password():
-    try:
-        key = int(request.form['key'], 16)
-    except:
-        key = None
-
+def recover_step2(key):
     user = User.by_recover_key(key)
     if not user:
         abort(404)
 
-    user.password = request.form['password']
+    form = RecoverStep2Form(key='%x' % key)
+    if form.validate_on_submit():
+        return recover_step2_post(key, form)
+
+    return render_template('users/recover_step2.jinja', form=form)
+
+
+def recover_step2_post(key, form):
+    user = User.by_recover_key(key)
+    if not user:
+        abort(404)
+
+    user.password = form.password.data
     user.recover_key = None
 
     flash(_('Password changed.'))

@@ -3,7 +3,7 @@ from flask.ext.babel import lazy_gettext as l_, ngettext
 from flask_wtf import Form
 
 from wtforms import (
-    TextField as _TextField, SelectField, PasswordField, BooleanField
+    TextField as _TextField, SelectField, PasswordField, BooleanField, HiddenField
 )
 from wtforms.validators import (
     Length, EqualTo, InputRequired, Email, ValidationError
@@ -88,3 +88,18 @@ class EditPilotForm(Form):
 
         if User.exists(email_address=field.data):
             raise ValidationError(l_('A pilot with this email address exists already.'))
+
+
+class RecoverStep1Form(Form):
+    email_address = _TextField(l_('eMail Address'), validators=[
+        InputRequired(),
+        Email(),
+    ])
+
+    def validate_email_address(form, field):
+        if not User.exists(email_address=field.data):
+            raise ValidationError(l_('There is no pilot with this email address.'))
+
+
+class RecoverStep2Form(ChangePasswordForm):
+    key = HiddenField()

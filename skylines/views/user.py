@@ -17,7 +17,7 @@ from skylines.model import (
 from skylines.model.event import (
     create_follower_notification, create_club_join_event
 )
-from skylines.views.users import recover_user_password
+#from skylines.views.users import recover_user_password
 
 user_blueprint = Blueprint('user', 'skylines')
 
