@@ -1,5 +1,5 @@
 flask==0.10.1
-werkzeug==0.9.1
+werkzeug==0.9.4
 Flask-Babel==0.8
 Flask-Assets==0.8
 Flask-Login==0.2.3
