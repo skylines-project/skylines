@@ -4,11 +4,10 @@ from zipfile import ZipFile
 
 from flask import Blueprint, render_template, request, flash, redirect, g
 from flask.ext.babel import _, lazy_gettext as l_
-from werkzeug.datastructures import CombinedMultiDict
 from redis.exceptions import ConnectionError
 
 from skylines import app, db
-from skylines.forms import upload, aircraft_model
+from skylines.forms import UploadForm, AircraftModelSelectField
 from skylines.lib import files
 from skylines.lib.decorators import login_required
 from skylines.lib.md5 import file_md5
@@ -60,26 +59,22 @@ def IterateUploadFiles(upload):
             yield x
 
 
-@upload_blueprint.route('/')
+@upload_blueprint.route('/', methods=('GET', 'POST'))
 @login_required(l_("You have to login to upload flights."))
 def index():
-    return render_template(
-        'generic/form.jinja', active_page='upload', title=_("Upload Flight"),
-        form=upload.form, values=dict(pilot=g.current_user.id))
+
+    form = UploadForm(pilot=g.current_user.id)
+
+    if form.validate_on_submit():
+        return index_post(form)
+
+    return render_template('upload/form.jinja', form=form)
 
 
-@upload_blueprint.route('/', methods=['POST'])
-@login_required(l_("You have to login to upload flights."))
-def index_post():
-    try:
-        values = CombinedMultiDict([request.form, request.files])
-        upload.form.validate(values)
-    except:
-        return index()
-
+def index_post(form):
     user = g.current_user
 
-    pilot_id = request.form.get('pilot', None, type=int)
+    pilot_id = form.pilot.data if form.pilot.data != 0 else None
     pilot = pilot_id and User.get(int(pilot_id))
     pilot_id = pilot and pilot.id
 
@@ -88,7 +83,7 @@ def index_post():
     flights = []
     success = False
 
-    for name, f in IterateUploadFiles(request.files.getlist('file')):
+    for name, f in IterateUploadFiles(form.file.raw_data):
         filename = files.sanitise_filename(name)
         filename = files.add_file(filename, f)
 
@@ -161,9 +156,12 @@ def index_post():
     except ConnectionError:
         app.logger.info('Cannot connect to Redis server')
 
+    def ModelSelectField(*args, **kwargs):
+        return AircraftModelSelectField().bind(None, 'model', *args, **kwargs)()
+
     return render_template(
         'upload/result.jinja', flights=flights, success=success,
-        ModelSelectField=aircraft_model.SelectField)
+        ModelSelectField=ModelSelectField)
 
 
 @upload_blueprint.route('/update', methods=['GET', 'POST'])

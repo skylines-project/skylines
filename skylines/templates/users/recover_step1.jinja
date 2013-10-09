@@ -1,0 +1,16 @@
+{% extends "base-form.jinja" %}
+{% set active_page = "settings" %}
+
+{% from "macros/form.jinja" import render_field %}
+
+{% block title %}{% trans %}Change Password{% endtrans %}{% endblock %}
+
+{% block form -%}
+<form method="POST" action="{{ url_for('users.recover') }}" role="form">
+  {{ form.hidden_tag() }}
+  {{ render_field(form.email_address) }}
+  <div class="form-group">
+    <input class="form-control btn btn-primary" value="{{ _('Recover Password') }}" type="submit">
+  </div>
+</form>
+{%- endblock %}

@@ -78,22 +78,17 @@ class TestRegistration(TestController):
     def test_validation_errors(self):
         """Validation errors are working as expected"""
 
-        self.expect_error('Please enter an email address',
-                          email='')
-        self.expect_error('An email address must contain a single @',
-                          email='abc')
-        self.expect_error('The domain portion of the email address is invalid',
-                          email='abc@')
-        self.expect_error('The domain portion of the email address is invalid',
-                          email='abc@de')
-        self.expect_error('The domain portion of the email address is invalid',
-                          email='abc@de.')
+        self.expect_error('Please enter your email address', email='')
+        self.expect_error('Invalid email address', email='abc')
+        self.expect_error('Invalid email address', email='abc@')
+        self.expect_error('Invalid email address', email='abc@de')
+        self.expect_error('Invalid email address', email='abc@de.')
 
-        self.expect_error('Please enter a value', name='')
+        self.expect_error('Please enter your name', name='')
 
-        self.expect_error('Enter a value 6 characters long or more',
+        self.expect_error('Your password must have at least 6 characters',
                           password='abc')
-        self.expect_error('Passwords do not match',
+        self.expect_error('Your passwords do not match',
                           password='lambda',
                           verify_password='lambda2')
 
@@ -103,5 +98,5 @@ class TestRegistration(TestController):
         name = 'Duplicate Test'
 
         self.register_user(email, name, 'lambda')
-        self.expect_error('That value already exists',
+        self.expect_error('A pilot with this email address exists already.',
                           email, name, 'lambda', check_user_exists=False)
