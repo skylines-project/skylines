@@ -14,7 +14,9 @@ from sqlalchemy.sql.expression import and_, or_
 from sqlalchemy import func
 
 from skylines import db
-from skylines.forms import BootstrapForm, units, club, ChangePasswordForm
+from skylines.forms import (
+    BootstrapForm, units, ChangePasswordForm, ChangeClubForm, CreateClubForm
+)
 from skylines.lib.validators import UniqueValueUnless
 from skylines.lib.dbutil import get_requested_record
 from skylines.lib.decorators import validate
@@ -233,24 +235,39 @@ def edit_post():
     return redirect(url_for('.index'))
 
 
-@user_blueprint.route('/change_club')
+@user_blueprint.route('/change_club', methods=['GET', 'POST'])
 def change_club():
     if not g.user.is_writable(g.current_user):
         abort(403)
 
+    change_form = ChangeClubForm(club=g.user.club_id)
+    create_form = CreateClubForm()
+
+    if request.endpoint.endswith('.change_club'):
+        if change_form.validate_on_submit():
+            response = change_club_post(change_form)
+            if response:
+                return response
+
+    if request.endpoint.endswith('.create_club'):
+        if create_form.validate_on_submit():
+            response = create_club_post(create_form)
+            if response:
+                return response
+
     return render_template(
-        'users/change_club.jinja', user=g.user,
-        select_form=club.select_form, create_form=club.new_form)
+        'users/change_club.jinja',
+        change_form=change_form, create_form=create_form)
 
 
-@user_blueprint.route('/change_club', methods=['POST'])
-@validate(club.select_form, change_club)
-def change_club_post():
-    if not g.user.is_writable(g.current_user):
-        abort(403)
+@user_blueprint.route('/create_club', methods=['GET', 'POST'])
+def create_club():
+    return change_club()
 
+
+def change_club_post(form):
     old_club_id = g.user.club_id
-    new_club_id = request.form.get('club', None, type=int)
+    new_club_id = form.club.data if form.club.data != 0 else None
 
     if old_club_id == new_club_id:
         return
@@ -273,13 +290,8 @@ def change_club_post():
     return redirect(url_for('.index'))
 
 
-@user_blueprint.route('/create_club', methods=['POST'])
-@validate(club.new_form, change_club)
-def create_club_post():
-    if not g.user.is_writable(g.current_user):
-        abort(403)
-
-    club = Club(name=request.form['name'])
+def create_club_post(form):
+    club = Club(name=form.name.data)
     club.owner_id = g.current_user.id
     db.session.add(club)
 

@@ -1,10 +1,13 @@
 from flask import g
 from flask.ext.babel import lazy_gettext as l_
+from flask_wtf import Form
 
 from formencode.validators import URL
 from sprox.formbase import AddRecordForm, EditableForm, Field
 from sprox.widgets import PropertySingleSelectField
 from tw.forms import TextField
+from wtforms import TextField as _TextField, SelectField as _SelectField
+from wtforms.validators import InputRequired, ValidationError
 
 from .bootstrap import BootstrapForm
 from skylines import db
@@ -71,3 +74,28 @@ class EditForm(EditableForm):
     website = Field(TextField, URL())
 
 edit_form = EditForm(db.session)
+
+
+class ClubsSelectField(_SelectField):
+    def __init__(self, *args, **kwargs):
+        super(ClubsSelectField, self).__init__(*args, **kwargs)
+        self.coerce = int
+
+    def process(self, *args, **kwargs):
+        users = Club.query().order_by(Club.name)
+        self.choices = [(0, '[' + l_('No club') + ']')]
+        self.choices.extend([(user.id, user) for user in users])
+
+        super(ClubsSelectField, self).process(*args, **kwargs)
+
+
+class ChangeClubForm(Form):
+    club = ClubsSelectField(l_('Club'))
+
+
+class CreateClubForm(Form):
+    name = _TextField(l_('Name'), validators=[InputRequired()])
+
+    def validate_name(form, field):
+        if Club.exists(name=field.data):
+            raise ValidationError(l_('A club with this name exists already.'))
