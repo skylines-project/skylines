@@ -132,9 +132,7 @@ def change_password():
 
     form = ChangePasswordForm()
     if form.validate_on_submit():
-        response = change_password_post(form)
-        if response:
-            return response
+        return change_password_post(form)
 
     return render_template('users/change_password.jinja', form=form)
 
@@ -245,15 +243,11 @@ def change_club():
 
     if request.endpoint.endswith('.change_club'):
         if change_form.validate_on_submit():
-            response = change_club_post(change_form)
-            if response:
-                return response
+            return change_club_post(change_form)
 
     if request.endpoint.endswith('.create_club'):
         if create_form.validate_on_submit():
-            response = create_club_post(create_form)
-            if response:
-                return response
+            return create_club_post(create_form)
 
     return render_template(
         'users/change_club.jinja',
@@ -270,7 +264,7 @@ def change_club_post(form):
     new_club_id = form.club.data if form.club.data != 0 else None
 
     if old_club_id == new_club_id:
-        return
+        return redirect(url_for('.index'))
 
     g.user.club_id = new_club_id
 
