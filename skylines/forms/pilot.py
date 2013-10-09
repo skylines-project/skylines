@@ -1,31 +1,19 @@
 from flask import g
-from flask.ext.babel import lazy_gettext as l_
+from flask.ext.babel import lazy_gettext as l_, ngettext
 from flask_wtf import Form
 
-from tw.forms import SingleSelectField
 from wtforms import (
-    TextField as _TextField, SelectField as _SelectField, PasswordField
+    TextField as _TextField, SelectField, PasswordField, BooleanField
 )
 from wtforms.validators import (
     Length, EqualTo, InputRequired, Email, ValidationError
 )
 
 from skylines.model import User
+from skylines.forms import units
 
 
-class SelectField(SingleSelectField):
-    def update_params(self, d):
-        users = User.query(club_id=g.current_user.club_id) \
-            .order_by(User.name)
-
-        options = [(None, '[unspecified]')] + \
-                  [(user.id, user) for user in users]
-        d['options'] = options
-
-        return SingleSelectField.update_params(self, d)
-
-
-class ClubPilotsSelectField(_SelectField):
+class ClubPilotsSelectField(SelectField):
     def __init__(self, *args, **kwargs):
         super(ClubPilotsSelectField, self).__init__(*args, **kwargs)
         self.coerce = int
@@ -57,5 +45,39 @@ class CreatePilotForm(Form):
     ])
 
     def validate_email_address(form, field):
+        if User.exists(email_address=field.data):
+            raise ValidationError(l_('A pilot with this email address exists already.'))
+
+
+class TrackingDelaySelectField(SelectField):
+    def __init__(self, *args, **kwargs):
+        super(TrackingDelaySelectField, self).__init__(*args, **kwargs)
+
+        self.coerce = int
+        self.choices = [(0, l_('None'))]
+        for x in range(1, 10) + range(10, 30, 5) + range(30, 61, 15):
+            self.choices.append((x, ngettext(u'%(num)u minute', u'%(num)u minutes', x)))
+
+
+class EditPilotForm(Form):
+    email_address = _TextField(l_('eMail Address'), validators=[
+        InputRequired(),
+        Email(),
+    ])
+    name = _TextField(l_('Name'), validators=[
+        InputRequired(),
+    ])
+    tracking_delay = TrackingDelaySelectField(l_('Tracking Delay'))
+    unit_preset = units.PresetSelectField(l_('Unit Preset'))
+    distance_unit = units.DistanceSelectField(l_('Distance Unit'))
+    speed_unit = units.SpeedSelectField(l_('Speed Unit'))
+    lift_unit = units.LiftSelectField(l_('Lift Unit'))
+    altitude_unit = units.AltitudeSelectField(l_('Altitude Unit'))
+    eye_candy = BooleanField(l_('Eye Candy'))
+
+    def validate_email_address(form, field):
+        if field.data == field.object_data:
+            return
+
         if User.exists(email_address=field.data):
             raise ValidationError(l_('A pilot with this email address exists already.'))
