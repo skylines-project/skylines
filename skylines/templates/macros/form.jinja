@@ -1,4 +1,11 @@
 {% macro render_field(field) -%}
+{% if field.widget.input_type == 'checkbox' -%}
+  <div class="checkbox">
+    <label>
+        {{ field(**kwargs)|safe }}{{ field.label.text }}
+    </label>
+  </div>
+{%- else -%}
   <div class="form-group{% if field.errors %} has-error{% endif %}">
     {{ field.label }}
     {{ field(class_="form-control", **kwargs)|safe }}
@@ -7,4 +14,5 @@
     <p class="help-block">{{ error }}</p>
     {% endfor %}
   </div>
+{%- endif %}
 {%- endmacro %}
