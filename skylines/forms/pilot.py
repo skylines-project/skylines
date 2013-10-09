@@ -2,37 +2,15 @@ from flask import g
 from flask.ext.babel import lazy_gettext as l_
 from flask_wtf import Form
 
-from formencode import validators, All
-from sprox.formbase import AddRecordForm, Field
-from sprox.validators import UniqueValue
-from sprox.sa.provider import SAORMProvider
-from tw.forms import SingleSelectField, TextField
-from wtforms import SelectField as _SelectField, PasswordField
-from wtforms.validators import Length, EqualTo
+from tw.forms import SingleSelectField
+from wtforms import (
+    TextField as _TextField, SelectField as _SelectField, PasswordField
+)
+from wtforms.validators import (
+    Length, EqualTo, InputRequired, Email, ValidationError
+)
 
-from .bootstrap import BootstrapForm
-from skylines import db
 from skylines.model import User
-
-
-class NewForm(AddRecordForm):
-    __base_widget_type__ = BootstrapForm
-    __model__ = User
-    __required_fields__ = ['email_address', 'name']
-    __limit_fields__ = ['email_address', 'name']
-    __base_widget_args__ = dict(action='create_pilot')
-    __field_widget_args__ = {
-        'email_address': dict(label_text=l_('eMail Address')),
-        'name': dict(label_text=l_('Name')),
-    }
-
-    email_address = Field(TextField, All(
-        UniqueValue(SAORMProvider(db.session), __model__, 'email_address'),
-        validators.Email, validators.NotEmpty))
-
-    name = Field(TextField, validators.NotEmpty)
-
-new_form = NewForm(db.session)
 
 
 class SelectField(SingleSelectField):
@@ -67,3 +45,17 @@ class ChangePasswordForm(Form):
     verify_password = PasswordField(l_('Verify Password'), validators=[
         EqualTo('password', message=l_('Passwords do not match')),
     ])
+
+
+class CreatePilotForm(Form):
+    email_address = _TextField(l_('eMail Address'), validators=[
+        InputRequired(),
+        Email(),
+    ])
+    name = _TextField(l_('Name'), validators=[
+        InputRequired(),
+    ])
+
+    def validate_email_address(form, field):
+        if User.exists(email_address=field.data):
+            raise ValidationError(l_('A pilot with this email address exists already.'))
