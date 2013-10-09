@@ -1,0 +1,24 @@
+{% extends "base-form.jinja" %}
+{% set active_page = "flights" %}
+
+{% from "macros/form.jinja" import render_field %}
+
+{% block title %}{% trans %}Select Pilot{% endtrans %}{% endblock %}
+
+{% block form -%}
+<form method="POST" action="{{ url_for('flight.change_pilot') }}" role="form">
+  {{ form.hidden_tag() }}
+  {{ render_field(form.pilot_id) }}
+  {{ render_field(form.co_pilot_id) }}
+  <div class="form-group">
+    <input class="form-control btn btn-primary" value="{{ _('Change') }}" type="submit">
+  </div>
+</form>
+
+{% if g.current_user.club_id -%}
+<p>
+{% trans %}Pilot missing in the list?{% endtrans %}
+<a href="{{ url_for('club.create_pilot', club_id=g.current_user.club_id) }}">{% trans %}Create new pilot{% endtrans %}</a>
+</p>
+{%- endif %}
+{%- endblock %}

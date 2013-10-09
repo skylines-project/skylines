@@ -1,11 +1,9 @@
-from flask import Blueprint, render_template, g, request, redirect, url_for, abort
-from flask.ext.babel import _
+from flask import Blueprint, render_template, g, redirect, url_for, abort
 from sqlalchemy import func
 
 from skylines import db
-from skylines.forms import club, pilot as pilot_forms
+from skylines.forms import EditClubForm, CreateClubPilotForm
 from skylines.lib.dbutil import get_requested_record
-from skylines.lib.decorators import validate
 from skylines.model import User, Group, Club
 
 club_blueprint = Blueprint('club', 'skylines')
@@ -38,48 +36,42 @@ def pilots():
         club=g.club, users=users)
 
 
-@club_blueprint.route('/edit')
+@club_blueprint.route('/edit', methods=['GET', 'POST'])
 def edit():
     if not g.club.is_writable(g.current_user):
         abort(403)
 
-    return render_template(
-        'generic/form.jinja', active_page='settings', title=_('Edit Club'),
-        form=club.edit_form, values=g.club)
+    form = EditClubForm(obj=g.club)
+    if form.validate_on_submit():
+        return edit_post(form)
+
+    return render_template('clubs/edit.jinja', form=form)
 
 
-@club_blueprint.route('/edit', methods=['POST'])
-@validate(club.edit_form, edit)
-def edit_post():
-    if not g.club.is_writable(g.current_user):
-        abort(403)
-
-    g.club.name = request.form['name']
-    g.club.website = request.form['website']
+def edit_post(form):
+    g.club.name = form.name.data
+    g.club.website = form.website.data
     db.session.commit()
 
     return redirect(url_for('.index'))
 
 
-@club_blueprint.route('/create_pilot')
+@club_blueprint.route('/create_pilot', methods=['GET', 'POST'])
 def create_pilot():
     if not g.club.is_writable(g.current_user):
         abort(403)
 
-    return render_template(
-        'generic/form.jinja', active_page='settings', title=_('Create Pilot'),
-        form=pilot_forms.new_form, values={})
+    form = CreateClubPilotForm()
+    if form.validate_on_submit():
+        return create_pilot_post(form)
+
+    return render_template('clubs/create_pilot.jinja', form=form)
 
 
-@club_blueprint.route('/create_pilot', methods=['POST'])
-@validate(pilot_forms.new_form, create_pilot)
-def create_pilot_post():
-    if not g.club.is_writable(g.current_user):
-        abort(403)
-
+def create_pilot_post(form):
     pilot = User(
-        name=request.form['name'],
-        email_address=request.form['email_address'],
+        name=form.name.data,
+        email_address=form.email_address.data,
         club=g.club
     )
 

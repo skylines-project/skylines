@@ -1,12 +1,13 @@
-from sprox.widgets import PropertySingleSelectField
+from wtforms import SelectField as _SelectField
 
 from skylines.lib.formatter import units
 
 
-class SelectField(PropertySingleSelectField):
-    def _my_update_params(self, d, nullable=False):
-        d['options'] = list(enumerate(x[0] for x in self.unit_registry))
-        return d
+class SelectField(_SelectField):
+    def __init__(self, *args, **kwargs):
+        super(SelectField, self).__init__(*args, **kwargs)
+        self.coerce = int
+        self.choices = list(enumerate(x[0] for x in self.unit_registry))
 
 
 class DistanceSelectField(SelectField):
@@ -25,7 +26,8 @@ class AltitudeSelectField(SelectField):
     unit_registry = units.ALTITUDE_UNITS
 
 
-class PresetSelectField(PropertySingleSelectField):
-    def _my_update_params(self, d, nullable=False):
-        d['options'] = list(enumerate(x[0] for x in units.UNIT_PRESETS))
-        return d
+class PresetSelectField(_SelectField):
+    def __init__(self, *args, **kwargs):
+        super(PresetSelectField, self).__init__(*args, **kwargs)
+        self.coerce = int
+        self.choices = list(enumerate(x[0] for x in units.UNIT_PRESETS))

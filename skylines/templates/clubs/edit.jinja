@@ -1,0 +1,17 @@
+{% extends "base-form.jinja" %}
+{% set active_page = "settings" %}
+
+{% from "macros/form.jinja" import render_field %}
+
+{% block title %}{% trans %}Edit Club{% endtrans %}{% endblock %}
+
+{% block form -%}
+<form method="POST" action="{{ url_for('club.edit') }}" role="form">
+  {{ form.hidden_tag() }}
+  {{ render_field(form.name) }}
+  {{ render_field(form.website) }}
+  <div class="form-group">
+    <input class="form-control btn btn-primary" value="{{ _('Change') }}" type="submit">
+  </div>
+</form>
+{%- endblock %}

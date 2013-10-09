@@ -1,0 +1,17 @@
+{% extends "base-form.jinja" %}
+{% set active_page = "settings" %}
+
+{% from "macros/form.jinja" import render_field %}
+
+{% block title %}{% trans %}Create Pilot{% endtrans %}{% endblock %}
+
+{% block form -%}
+<form method="POST" action="{{ url_for('club.create_pilot') }}" role="form">
+  {{ form.hidden_tag() }}
+  {{ render_field(form.email_address) }}
+  {{ render_field(form.name) }}
+  <div class="form-group">
+    <input class="form-control btn btn-primary" value="{{ _('Create Pilot') }}" type="submit">
+  </div>
+</form>
+{%- endblock %}
