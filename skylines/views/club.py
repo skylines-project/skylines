@@ -2,7 +2,7 @@ from flask import Blueprint, render_template, g, redirect, url_for, abort
 from sqlalchemy import func
 
 from skylines import db
-from skylines.forms import EditClubForm, CreatePilotForm
+from skylines.forms import EditClubForm, CreateClubPilotForm
 from skylines.lib.dbutil import get_requested_record
 from skylines.model import User, Group, Club
 
@@ -61,7 +61,7 @@ def create_pilot():
     if not g.club.is_writable(g.current_user):
         abort(403)
 
-    form = CreatePilotForm()
+    form = CreateClubPilotForm()
     if form.validate_on_submit():
         return create_pilot_post(form)
 

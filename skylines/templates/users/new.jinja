@@ -1,10 +1,20 @@
-{% extends "base-page.jinja" %}
+{% extends "base-form.jinja" %}
 {% set active_page = "login" %}
+
+{% from "macros/form.jinja" import render_field %}
 
 {% block title %}{% trans %}Register{% endtrans %}{% endblock %}
 
-{% block content -%}
-<div class="col-sm-8 col-sm-offset-2">
-{{ form(action='new') }}
-</div>
+{% block form -%}
+<form method="POST" action="{{ url_for('users.new') }}" role="form">
+  {{ form.hidden_tag() }}
+  {{ render_field(form.email_address) }}
+  {{ render_field(form.name) }}
+  {{ render_field(form.club_id) }}
+  {{ render_field(form.password) }}
+  {{ render_field(form.verify_password) }}
+  <div class="form-group">
+    <input class="form-control btn btn-primary" value="{{ _('Change') }}" type="submit">
+  </div>
+</form>
 {%- endblock %}

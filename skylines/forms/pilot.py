@@ -11,6 +11,7 @@ from wtforms.validators import (
 
 from skylines.model import User
 from skylines.forms import units
+from skylines.forms.club import ClubsSelectField
 
 
 class ClubPilotsSelectField(SelectField):
@@ -35,7 +36,7 @@ class ChangePasswordForm(Form):
     ])
 
 
-class CreatePilotForm(Form):
+class CreateClubPilotForm(Form):
     email_address = _TextField(l_('eMail Address'), validators=[
         InputRequired(),
         Email(),
@@ -47,6 +48,12 @@ class CreatePilotForm(Form):
     def validate_email_address(form, field):
         if User.exists(email_address=field.data):
             raise ValidationError(l_('A pilot with this email address exists already.'))
+
+
+class CreatePilotForm(CreateClubPilotForm, ChangePasswordForm):
+    # email_address, name from CreateClubPilotForm
+    # password, verify_password from ChangePasswordForm
+    club_id = ClubsSelectField(l_('Club'))
 
 
 class TrackingDelaySelectField(SelectField):

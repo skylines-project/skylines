@@ -6,11 +6,8 @@ from flask import Blueprint, request, render_template, redirect, url_for, abort,
 from flask.ext.babel import lazy_gettext as l_, _
 from werkzeug.exceptions import ServiceUnavailable
 
-from formencode import Schema, All
-from formencode.validators import FieldsMatch, Email, String, NotEmpty
-from sprox.formbase import AddRecordForm, Field
-from sprox.validators import UniqueValue
-from sprox.sa.provider import SAORMProvider
+from formencode import Schema
+from formencode.validators import FieldsMatch, Email
 from tw.forms import PasswordField, TextField, HiddenField
 from tw.forms.validators import UnicodeString
 
@@ -20,7 +17,7 @@ from sqlalchemy.orm import joinedload
 from skylines import db
 from skylines.model import User, Group
 from skylines.model.event import create_new_user_event, create_club_join_event
-from skylines.forms import BootstrapForm, club
+from skylines.forms import CreatePilotForm, BootstrapForm
 from skylines.lib.decorators import validate
 
 users_blueprint = Blueprint('users', 'skylines')
@@ -29,33 +26,6 @@ users_blueprint = Blueprint('users', 'skylines')
 password_match_validator = FieldsMatch(
     'password', 'verify_password',
     messages={'invalidNoMatch': l_('Passwords do not match')})
-
-user_validator = Schema(chained_validators=(password_match_validator,))
-
-
-class NewUserForm(AddRecordForm):
-    __base_widget_type__ = BootstrapForm
-    __model__ = User
-    __required_fields__ = ['password']
-    __limit_fields__ = ['email_address', 'name', 'password', 'verify_password', 'club']
-    __base_validator__ = user_validator
-    __field_widget_args__ = {
-        'email_address': dict(label_text=l_('eMail Address')),
-        'name': dict(label_text=l_('Name')),
-        'club': dict(label_text=l_('Club')),
-        'password': dict(label_text=l_('Password')),
-    }
-
-    email_address = Field(TextField, All(UniqueValue(SAORMProvider(db.session),
-                                                     __model__, 'email_address'),
-                                         Email(not_empty=True)))
-    name = Field(TextField, NotEmpty)
-    club = club.SelectField
-    password = String(min=6)
-    verify_password = PasswordField('verify_password',
-                                    label_text=l_('Verify Password'))
-
-new_user_form = NewUserForm(db.session)
 
 
 @users_blueprint.route('/')
@@ -69,22 +39,22 @@ def index():
                            users=users)
 
 
-@users_blueprint.route('/new')
+@users_blueprint.route('/new', methods=['GET', 'POST'])
 def new():
-    return render_template('users/new.jinja',
-                           active_page='users',
-                           form=new_user_form)
+    form = CreatePilotForm()
+    if form.validate_on_submit():
+        return new_post(form)
+
+    return render_template('users/new.jinja', form=form)
 
 
-@users_blueprint.route('/new', methods=['POST'])
-@validate(new_user_form, new)
-def new_post():
-    user = User(name=request.form['name'],
-                email_address=request.form['email_address'],
-                password=request.form['password'])
+def new_post(form):
+    user = User(name=form.name.data,
+                email_address=form.email_address.data,
+                password=form.password.data)
 
-    if request.form['club']:
-        user.club_id = request.form['club']
+    if form.club_id.data:
+        user.club_id = form.club_id.data
 
     user.created_ip = request.remote_addr
     user.generate_tracking_key()
