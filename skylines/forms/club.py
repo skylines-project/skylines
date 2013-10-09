@@ -1,25 +1,10 @@
 from flask.ext.babel import lazy_gettext as l_
 from flask_wtf import Form
 
-from sprox.widgets import PropertySingleSelectField
 from wtforms import TextField, SelectField as _SelectField
 from wtforms.validators import InputRequired, URL, ValidationError
 
-from skylines import db
 from skylines.model import Club
-
-
-class SelectField(PropertySingleSelectField):
-    def _my_update_params(self, d, nullable=False):
-        query = db.session.query(Club.id, Club.name).order_by(Club.name)
-        options = [(None, 'None')] + query.all()
-        d['options'] = options
-        return d
-
-    def validate(self, value, *args, **kw):
-        if isinstance(value, Club):
-            value = value.id
-        return super(SelectField, self).validate(value, *args, **kw)
 
 
 class ClubsSelectField(_SelectField):
