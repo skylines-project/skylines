@@ -4,10 +4,10 @@ Flask-Babel==0.9
 Flask-Assets==0.8
 Flask-Login==0.2.3
 Flask-Cache==0.12
-Flask-SQLAlchemy==0.16
+Flask-SQLAlchemy==1.0
 Flask-DebugToolbar==0.8.0
 Flask-WTF==0.9.3
-sqlalchemy==0.8.0
+sqlalchemy==0.8.2
 simplejson==3.1.0
 skylinespolyencode==0.1.2
 psycopg2==2.4.6
