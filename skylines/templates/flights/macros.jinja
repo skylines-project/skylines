@@ -2,22 +2,22 @@
 
 {% macro flight_title(flight) -%}
 {% if flight.pilot and flight.co_pilot -%}
-  {% trans distance=h.format_distance(flight.olc_classic_distance),
-           date=h.format_date(flight.date_local),
-           pilot=user_link(flight.pilot),
-           co_pilot=user_link(flight.co_pilot) -%}
-    {{ distance }} on {{ date }} <br class="visible-xs visible-sm"/><small>by {{ pilot }} and {{ co_pilot }}</small>
-  {%- endtrans %}
+  {{ _('%(distance)s on %(date)s <small>by %(pilot)s and %(co_pilot)s</small>',
+       distance=h.format_distance(flight.olc_classic_distance),
+       date=h.format_date(flight.date_local),
+       pilot=user_link(flight.pilot),
+       co_pilot=user_link(flight.co_pilot))|replace('<small>', '<br class="visible-xs visible-sm"/><small>') }}
+
 {%- elif flight.pilot -%}
-  {% trans distance=h.format_distance(flight.olc_classic_distance),
-           date=h.format_date(flight.date_local),
-           pilot=user_link(flight.pilot) -%}
-    {{ distance }} on {{ date }} <br class="visible-xs visible-sm"/><small>by {{ pilot }}</small>
-  {%- endtrans %}
+  {{ _('%(distance)s on %(date)s <small>by %(pilot)s</small>',
+       distance=h.format_distance(flight.olc_classic_distance),
+       date=h.format_date(flight.date_local),
+       pilot=user_link(flight.pilot))|replace('<small>', '<br class="visible-xs visible-sm"/><small>') }}
+
 {%- else -%}
-  {% trans distance=h.format_distance(flight.olc_classic_distance),
-           date=h.format_date(flight.date_local) -%}
-    {{ distance }} on {{ date }}
-  {%- endtrans %}
+  {{ _('%(distance)s on %(date)s',
+       distance=h.format_distance(flight.olc_classic_distance),
+       date=h.format_date(flight.date_local)) }}
+
 {%- endif %}
 {%- endmacro %}
