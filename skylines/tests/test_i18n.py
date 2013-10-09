@@ -24,7 +24,7 @@ def check_pofile(filename):
         catalog = read_po(fileobj)
         for error in catalog.check():
             print 'Error in message: ' + str(error[0])
-            raise error[1][0]
+            raise AssertionError(error[1][0])
 
 
 if __name__ == "__main__":
