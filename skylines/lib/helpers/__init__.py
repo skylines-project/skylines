@@ -5,10 +5,9 @@
 from __future__ import absolute_import
 
 import datetime
-import simplejson as json
 from urllib import urlencode
 
-from flask import flash
+from flask import flash, json
 from webhelpers import date, feedgenerator, html, number, misc, text
 
 from .string import *
