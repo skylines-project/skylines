@@ -64,7 +64,6 @@ class SkyLines(Flask):
         self.add_babel()
         self.add_login_manager()
         self.add_assets()
-        self.add_toscawidgets()
         self.add_tg2_compat()
 
         self.add_mapproxy()
@@ -92,10 +91,6 @@ class SkyLines(Flask):
         from skylines.assets import Environment
         self.assets = Environment(self)
         self.assets.load_bundles('skylines.assets.bundles')
-
-    def add_toscawidgets(self):
-        from tw.api import make_middleware
-        self.wsgi_app = make_middleware(self.wsgi_app, stack_registry=True)
 
     def add_tg2_compat(self):
         from skylines.lib import helpers
