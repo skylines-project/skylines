@@ -3,7 +3,7 @@ from flask.ext.babel import lazy_gettext as l_
 from flask_wtf import Form
 
 from formencode.validators import URL
-from sprox.formbase import AddRecordForm, EditableForm, Field
+from sprox.formbase import EditableForm, Field
 from sprox.widgets import PropertySingleSelectField
 from tw.forms import TextField
 from wtforms import TextField as _TextField, SelectField as _SelectField
@@ -11,7 +11,7 @@ from wtforms.validators import InputRequired, ValidationError
 
 from .bootstrap import BootstrapForm
 from skylines import db
-from skylines.model import User, Club
+from skylines.model import Club
 from skylines.lib.validators import UniqueValueUnless
 
 
@@ -26,34 +26,6 @@ class SelectField(PropertySingleSelectField):
         if isinstance(value, Club):
             value = value.id
         return super(SelectField, self).validate(value, *args, **kw)
-
-
-class SelectForm(EditableForm):
-    __base_widget_type__ = BootstrapForm
-    __model__ = User
-    __hide_fields__ = ['id']
-    __limit_fields__ = ['club']
-    __field_widget_args__ = {
-        'club': dict(label_text=l_('Club'))
-    }
-
-    club = SelectField
-
-
-select_form = SelectForm(db.session)
-
-
-class NewForm(AddRecordForm):
-    __base_widget_type__ = BootstrapForm
-    __model__ = Club
-    __limit_fields__ = ['name']
-    __field_widget_args__ = {
-        'name': dict(label_text=l_('Name'))
-    }
-
-    name = TextField
-
-new_form = NewForm(db.session)
 
 
 def filter_club_id(model):
