@@ -6,9 +6,6 @@ from .file import MultiFileField
 from .pilot import ClubPilotsSelectField
 
 
-
-
-
 class UploadForm(Form):
     file = MultiFileField(l_(u'IGC or ZIP file(s)'), validators=(
         FileRequired(l_('Please add one or more IGC or ZIP files')),
