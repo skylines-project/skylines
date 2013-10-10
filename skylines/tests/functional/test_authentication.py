@@ -23,6 +23,12 @@ class TestAuthentication(TestController):
 
     """
 
+    def login(self, email, password):
+        form = self.browser.getForm(index=2)
+        form.getControl(name='email_address').value = email
+        form.getControl(name='password').value = password
+        form.submit()
+
     def test_forced_login(self):
         """Anonymous users are forced to login
 
@@ -36,13 +42,7 @@ class TestAuthentication(TestController):
         assert self.browser.url.startswith('http://localhost/login')
         assert_not_in('</i> Logout', self.browser.contents)
 
-        # Getting the login form:
-        form = self.browser.getForm(index=2)
-
-        # Submitting the login form:
-        form.getControl(name='login').value = u'max+skylines@blarg.de'
-        form.getControl(name='password').value = 'test'
-        form.submit()
+        self.login(u'max+skylines@blarg.de', 'test')
 
         # Being redirected to the initially requested page:
         assert_in('</i> Logout', self.browser.contents)
@@ -57,10 +57,7 @@ class TestAuthentication(TestController):
         assert_not_in('</i> Logout', self.browser.contents)
 
         # Submitting the login form:
-        form = self.browser.getForm(index=2)
-        form.getControl(name='login').value = u'max+skylines@blarg.de'
-        form.getControl(name='password').value = 'test'
-        form.submit()
+        self.login(u'max+skylines@blarg.de', 'test')
 
         # Being redirected to the home page:
         assert_in('</i> Logout', self.browser.contents)
@@ -68,10 +65,10 @@ class TestAuthentication(TestController):
     def test_logout(self):
         """Logouts must work correctly"""
 
+        self.browser.open('/login')
+
         # Logging in voluntarily the quick way:
-        self.browser.post('/login', 'login={login}&password={password}'
-                          .format(login=u'manager@somedomain.com',
-                                  password='managepass'))
+        self.login(u'manager@somedomain.com', 'managepass')
 
         # Check if the login succeeded
         assert_in('</i> Logout', self.browser.contents)

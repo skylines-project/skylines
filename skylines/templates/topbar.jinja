@@ -1,4 +1,5 @@
 {% from "macros/flags.jinja" import insert_flag with context %}
+{% from "macros/form.jinja" import render_field %}
 
 {% set navigation_bar = [
     ('/tracking/', 'tracking', _('Live'), 'icon-rss', ''),
@@ -71,7 +72,7 @@
 
 {% macro _login_dropdown(active_page) -%}
 <li class="dropdown {% if active_page == 'login' %}active{% endif %} visible-xs">
-    <a href="{{ url_for('login') }}">
+    <a href="{{ url_for('login', next=request.url) }}">
         <i class="icon-signin"></i> {% trans %}Login{% endtrans %}
     </a>
 </li>
@@ -87,20 +88,15 @@
 {%- endmacro %}
 
 {% macro _login_form() -%}
-<form action="{{ url_for('login', next=request.url) }}" method="post" accept-charset="UTF-8" class="form-login">
-    <div class="form-group">
-        <label for="username">{% trans %}Email Address{% endtrans %}:</label>
-        <input type="text" id="username" name="login" class="form-control" />
-    </div>
-    <div class="form-group">
-        <label for="password">{% trans %}Password{% endtrans %}:</label>
-        <input type="password" id="password" name="password" class="form-control" />
-    </div>
+<form method="POST" action="{{ url_for('login', next=(request.values.get('next') or request.url)) }}" role="form" class="form-login">
+    {{ g.login_form.hidden_tag() }}
+    {{ render_field(g.login_form.email_address, hide_error_text=True) }}
+    {{ render_field(g.login_form.password, hide_error_text=True) }}
     <div class="form-group checkbox clearfix">
         <label id="remember" class="pull-left">
-            <input type="checkbox" name="remember" value="31536000"/> {% trans %}Remember me{% endtrans %}
+            {{ g.login_form.remember_me()|safe }} {{ g.login_form.remember_me.label.text }}
         </label>
-        <button type="submit" class="btn btn-primary pull-right">{{ _('Login') }}</button>
+        <input class="btn btn-primary pull-right" value="{{ _('Login') }}" type="submit"/>
     </div>
     <hr/>
     <div>
