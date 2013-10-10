@@ -3,14 +3,17 @@ from flask.ext.babel import lazy_gettext as l_, ngettext
 from flask_wtf import Form
 
 from wtforms import (
-    TextField as _TextField, SelectField, PasswordField, BooleanField, HiddenField
+    TextField, SelectField, PasswordField, BooleanField, HiddenField
 )
 from wtforms.validators import (
     Length, EqualTo, InputRequired, Email, ValidationError
 )
 
 from skylines.model import User
-from skylines.forms import units
+from skylines.forms.units import (
+    UnitsPresetSelectField, DistanceUnitSelectField, AltitudeUnitSelectField,
+    LiftUnitSelectField, SpeedUnitSelectField
+)
 from skylines.forms.club import ClubsSelectField
 
 
@@ -37,11 +40,11 @@ class ChangePasswordForm(Form):
 
 
 class CreateClubPilotForm(Form):
-    email_address = _TextField(l_('eMail Address'), validators=[
+    email_address = TextField(l_('eMail Address'), validators=[
         InputRequired(message=l_('Please enter your email address.')),
         Email(),
     ])
-    name = _TextField(l_('Name'), validators=[
+    name = TextField(l_('Name'), validators=[
         InputRequired(message=l_('Please enter your name.')),
     ])
 
@@ -67,19 +70,19 @@ class TrackingDelaySelectField(SelectField):
 
 
 class EditPilotForm(Form):
-    email_address = _TextField(l_('eMail Address'), validators=[
+    email_address = TextField(l_('eMail Address'), validators=[
         InputRequired(),
         Email(),
     ])
-    name = _TextField(l_('Name'), validators=[
+    name = TextField(l_('Name'), validators=[
         InputRequired(),
     ])
     tracking_delay = TrackingDelaySelectField(l_('Tracking Delay'))
-    unit_preset = units.PresetSelectField(l_('Unit Preset'))
-    distance_unit = units.DistanceSelectField(l_('Distance Unit'))
-    speed_unit = units.SpeedSelectField(l_('Speed Unit'))
-    lift_unit = units.LiftSelectField(l_('Lift Unit'))
-    altitude_unit = units.AltitudeSelectField(l_('Altitude Unit'))
+    unit_preset = UnitsPresetSelectField(l_('Unit Preset'))
+    distance_unit = DistanceUnitSelectField(l_('Distance Unit'))
+    speed_unit = SpeedUnitSelectField(l_('Speed Unit'))
+    lift_unit = LiftUnitSelectField(l_('Lift Unit'))
+    altitude_unit = AltitudeUnitSelectField(l_('Altitude Unit'))
     eye_candy = BooleanField(l_('Eye Candy'))
 
     def validate_email_address(form, field):
@@ -91,7 +94,7 @@ class EditPilotForm(Form):
 
 
 class RecoverStep1Form(Form):
-    email_address = _TextField(l_('eMail Address'), validators=[
+    email_address = TextField(l_('eMail Address'), validators=[
         InputRequired(),
         Email(),
     ])
