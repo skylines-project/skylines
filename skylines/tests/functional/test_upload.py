@@ -22,8 +22,8 @@ class TestUpload(TestController):
 
     def login(self, email, password):
         form = self.browser.getForm(index=1)
-        form.getControl('Email Address:').value = 'bill@example.com'
-        form.getControl('Password:').value = 'pass'
+        form.getControl(name='email_address').value = email
+        form.getControl(name='password').value = password
         form.submit()
 
     def test_upload_broken_igc(self):
