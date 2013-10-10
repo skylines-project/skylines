@@ -5,6 +5,7 @@ from flask_wtf import Form
 from wtforms import (
     TextField, SelectField, PasswordField, BooleanField, HiddenField
 )
+from wtforms.fields.html5 import EmailField
 from wtforms.validators import (
     Length, EqualTo, InputRequired, Email, ValidationError
 )
@@ -40,7 +41,7 @@ class ChangePasswordForm(Form):
 
 
 class CreateClubPilotForm(Form):
-    email_address = TextField(l_('eMail Address'), validators=[
+    email_address = EmailField(l_('eMail Address'), validators=[
         InputRequired(message=l_('Please enter your email address.')),
         Email(),
     ])
@@ -70,7 +71,7 @@ class TrackingDelaySelectField(SelectField):
 
 
 class EditPilotForm(Form):
-    email_address = TextField(l_('eMail Address'), validators=[
+    email_address = EmailField(l_('eMail Address'), validators=[
         InputRequired(),
         Email(),
     ])
@@ -94,7 +95,7 @@ class EditPilotForm(Form):
 
 
 class RecoverStep1Form(Form):
-    email_address = TextField(l_('eMail Address'), validators=[
+    email_address = EmailField(l_('eMail Address'), validators=[
         InputRequired(),
         Email(),
     ])
