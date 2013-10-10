@@ -1,13 +1,13 @@
 from flask.ext.babel import lazy_gettext as l_
 from flask_wtf import Form
 
-from wtforms import TextField, SelectField as _SelectField
+from wtforms import TextField, SelectField
 from wtforms.validators import InputRequired, URL, ValidationError
 
 from skylines.model import Club
 
 
-class ClubsSelectField(_SelectField):
+class ClubsSelectField(SelectField):
     def __init__(self, *args, **kwargs):
         super(ClubsSelectField, self).__init__(*args, **kwargs)
         self.coerce = int

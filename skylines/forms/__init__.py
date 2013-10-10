@@ -4,6 +4,6 @@ from .file import MultiFileField
 from .flight import ChangePilotsForm, ChangeAircraftForm
 from .pilot import (
     ChangePasswordForm, CreatePilotForm, CreateClubPilotForm, EditPilotForm,
-    RecoverStep1Form, RecoverStep2Form
+    RecoverStep1Form, RecoverStep2Form, LoginForm
 )
 from .upload import UploadForm
