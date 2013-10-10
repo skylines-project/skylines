@@ -10,7 +10,7 @@
     {{ field.label }}
     {{ field(class_="form-control", **kwargs)|safe }}
 
-    {% for error in field.errors %}
+    {% for error in field.errors[:1] %}
     <p class="help-block">{{ error }}</p>
     {% endfor %}
   </div>
