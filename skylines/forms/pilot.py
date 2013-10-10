@@ -72,7 +72,7 @@ class TrackingDelaySelectField(SelectField):
 
 class EditPilotForm(Form):
     email_address = EmailField(l_('eMail Address'), validators=[
-        InputRequired(),
+        InputRequired(message=l_('Please enter your email address.')),
         Email(),
     ])
     name = TextField(l_('Name'), validators=[
@@ -96,7 +96,7 @@ class EditPilotForm(Form):
 
 class RecoverStep1Form(Form):
     email_address = EmailField(l_('eMail Address'), validators=[
-        InputRequired(),
+        InputRequired(message=l_('Please enter your email address.')),
         Email(),
     ])
 
@@ -107,3 +107,14 @@ class RecoverStep1Form(Form):
 
 class RecoverStep2Form(ChangePasswordForm):
     key = HiddenField()
+
+
+class LoginForm(Form):
+    email_address = EmailField(l_('eMail Address'), validators=[
+        InputRequired(message=l_('Please enter your email address.')),
+        Email(),
+    ])
+    password = PasswordField(l_('Password'), validators=[
+        InputRequired(message=l_('Please enter your password.')),
+    ])
+    remember_me = BooleanField(l_('Remember me'))
