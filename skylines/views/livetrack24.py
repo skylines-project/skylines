@@ -68,6 +68,9 @@ def _parse_fix(pilot_id):
         except ValueError:
             raise BadRequest('`alt` has to be an integer value in meters.')
 
+        if not -1000 <= fix.altitude <= 15000:
+            raise BadRequest('`alt` has to be a valid altitude in the range of -1000 to 15000 meters.')
+
     # Speed
     if 'sog' in request.values:
         try:
@@ -75,12 +78,18 @@ def _parse_fix(pilot_id):
         except ValueError:
             raise BadRequest('`sog` (speed over ground) has to be an integer value in km/h.')
 
+        if not 0 <= fix.ground_speed <= (500 / 3.6):
+            raise BadRequest('`sog` (speed over ground) has to be a valid speed in the range of 0 to 500 km/h.')
+
     # Track
     if 'cog' in request.values:
         try:
             fix.track = int(request.values['cog'])
         except ValueError:
             raise BadRequest('`cog` (course over ground) has to be an integer value in degrees.')
+
+        if not 0 <= fix.track < 360:
+            raise BadRequest('`cog` (course over ground) has to be a valid angle between 0 and 360 degrees.')
 
     return fix
 
