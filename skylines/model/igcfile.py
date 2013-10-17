@@ -63,13 +63,13 @@ class IGCFile(db.Model):
         if 'date_utc' in igc_headers:
             self.date_utc = igc_headers['date_utc']
 
-        if 'model' in igc_headers and 0 < len(igc_headers['model']) < 64:
+        if 'model' in igc_headers and (igc_headers['model'] is None or 0 < len(igc_headers['model']) < 64):
             self.model = igc_headers['model']
 
-        if 'reg' in igc_headers and 0 < len(igc_headers['reg']) < 32:
+        if 'reg' in igc_headers and (igc_headers['reg'] is None or 0 < len(igc_headers['reg']) < 32):
             self.registration = igc_headers['reg']
 
-        if 'cid' in igc_headers and 0 < len(igc_headers['cid']) < 5:
+        if 'cid' in igc_headers and (igc_headers['cid'] is None or 0 < len(igc_headers['cid']) < 5):
             self.competition_id = igc_headers['cid']
 
     def guess_registration(self):
