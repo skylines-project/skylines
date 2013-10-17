@@ -200,6 +200,9 @@ def update():
         except ValueError:
             model_id = None
 
+        if model_id == 0:
+            model_id = None
+
         registration = registration_list[index]
         if registration is not None:
             registration = registration.strip()
