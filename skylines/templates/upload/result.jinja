@@ -36,7 +36,7 @@
         <td class="hidden-xs">
           {% if not error -%}
           <input type="hidden" id="flight_id" name="flight_id" value="{{ flight.id }}" />
-          {{ ModelSelectField(default=flight.model_id) }}
+          {{ ModelSelectField(default=(flight.model_id or 0)) }}
           {%- endif %}
         </td>
         <td class="hidden-xs">
