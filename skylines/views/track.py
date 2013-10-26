@@ -15,7 +15,8 @@ track_blueprint = Blueprint('track', 'skylines')
 def _pull_user_id(endpoint, values):
     g.user_id = values.pop('user_id')
 
-    g.pilots = get_requested_record_list(User, g.user_id)
+    g.pilots = get_requested_record_list(
+        User, g.user_id, joinedload=[User.club])
 
 
 @track_blueprint.url_defaults
