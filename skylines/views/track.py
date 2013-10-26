@@ -16,8 +16,6 @@ def _pull_user_id(endpoint, values):
     g.user_id = values.pop('user_id')
 
     g.pilots = get_requested_record_list(User, g.user_id)
-    g.pilot = g.pilots[0]
-    g.other_pilots = g.pilots[1:]
 
 
 @track_blueprint.url_defaults
@@ -104,37 +102,32 @@ def _get_flight_path(pilot, threshold=0.001, last_update=None):
 
 @track_blueprint.route('/')
 def index():
-    other_pilots = []
-    for pilot in g.other_pilots:
-        trace = _get_flight_path(pilot)
-        if trace:
-            other_pilots.append((pilot, trace))
+    traces = map(_get_flight_path, g.pilots)
+    if not any(traces):
+        traces = None
 
     return render_template(
         'tracking/view.jinja',
-        pilot=g.pilot, trace=_get_flight_path(g.pilot),
-        other_pilots=other_pilots)
+        pilots=g.pilots, traces=traces)
 
 
 @track_blueprint.route('/map')
 def map_():
-    other_pilots = []
-    for pilot in g.other_pilots:
-        trace = _get_flight_path(pilot)
-        if trace is not None:
-            other_pilots.append((pilot, trace))
+    traces = map(_get_flight_path, g.pilots)
+    if not any(traces):
+        traces = None
 
     return render_template(
         'tracking/map.jinja',
-        pilot=g.pilot, trace=_get_flight_path(g.pilot),
-        other_pilots=other_pilots)
+        pilots=g.pilots, traces=traces)
 
 
 @track_blueprint.route('/json')
 def json():
+    pilot = g.pilots[0]
     last_update = request.values.get('last_update', 0, type=int)
 
-    trace = _get_flight_path(g.pilot, threshold=0.001, last_update=last_update)
+    trace = _get_flight_path(pilot, threshold=0.001, last_update=last_update)
     if not trace:
         abort(404)
 
@@ -145,4 +138,4 @@ def json():
         barogram_h=trace['barogram_h'],
         elevations=trace['elevations'],
         enl=trace['enl'],
-        sfid=g.pilot.id)
+        sfid=pilot.id)

@@ -7,16 +7,20 @@
 
 
 {% block title -%}
-{% trans pilot=user_link(pilot) -%}
-Live Tracking <small>of {{ pilot }}</small>
-{%- endtrans %}
+{% if pilots|length == 1 -%}
+{{ _('Live Tracking <small>of %(pilot)s</small>', pilot=user_link(pilots[0])) }}
+{%- elif pilots|length == 2 -%}
+{{ _('Live Tracking <small>of %(pilot)s and %(other_pilot)s</small>', pilot=user_link(pilots[0]), other_pilot=user_link(pilots[1])) }}
+{%- else -%}
+{{ _('Live Tracking <small>of %(pilot)s and %(num_pilots)d other pilots</small>', pilot=user_link(pilots[0]), num_pilots=(pilots|length - 1)) }}
+{%- endif %}
 {%- endblock %}
 
 
 {%- block styles %}
 {{ super() }}
 
-{% if trace -%}
+{% if traces -%}
   {% assets 'openlayers_css' -%}
   <link href="{{ ASSET_URL }}" rel="stylesheet" type="text/css" />
   {%- endassets %}
@@ -33,7 +37,7 @@ Live Tracking <small>of {{ pilot }}</small>
 {%- block scripts %}
 {{ super() }}
 
-{% if trace -%}
+{% if traces -%}
   {% assets 'openlayers_js' -%}
   <script type="text/javascript" src="{{ ASSET_URL }}"></script>
   {%- endassets %}
@@ -51,7 +55,7 @@ Live Tracking <small>of {{ pilot }}</small>
 <script type="text/javascript" src="{{ ASSET_URL }}"></script>
 {%- endassets %}
 
-{% if trace -%}
+{% if traces -%}
 <script type="text/javascript">
   $(function() {
     slUnits.init({{ h.json.dumps(h.get_setting_name('distance_unit')) }},
@@ -68,6 +72,8 @@ Live Tracking <small>of {{ pilot }}</small>
     default_time = -1;
     setTime(default_time);
 
+    {% for pilot, trace in zip(pilots, traces) -%}
+    {% if trace -%}
     addFlight({{ pilot.id }},
       {{ h.json.dumps(trace.encoded.points) }},
       {{ h.json.dumps(trace.encoded.levels) }},
@@ -81,24 +87,8 @@ Live Tracking <small>of {{ pilot }}</small>
       {{ h.json.dumps(trace.elevations) }},
       { competition_id: "{{ pilot.initials() }}" }
     );
-
-    {% if other_pilots -%}
-    {% for pilot, trace in other_pilots -%}
-    addFlight({{ pilot.id }},
-      {{ h.json.dumps(trace.encoded.points) }},
-      {{ h.json.dumps(trace.encoded.levels) }},
-      {{ trace.num_levels }},
-      {{ h.json.dumps(trace.barogram_t) }},
-      {{ h.json.dumps(trace.barogram_h) }},
-      {{ h.json.dumps(trace.enl) }},
-      {{ h.json.dumps(trace.zoom_levels) }},
-      undefined,
-      {{ h.json.dumps(trace.barogram_t) }},
-      {{ h.json.dumps(trace.elevations) }},
-      { competition_id: "{{ pilot.initials() }}" }
-    );
-    {%- endfor %}
     {%- endif %}
+    {%- endfor %}
 
     var factor = $("#barogram")[0].offsetHeight / map.getSize().h;
     var zoomExtent = flights.getBounds().clone().scale(1.02);
@@ -125,7 +115,7 @@ Live Tracking <small>of {{ pilot }}</small>
 
 
 {% block content -%}
-{% if trace or other_pilots -%}
+{% if traces -%}
 <div id="map_canvas" class="olFullscreen" style="position: absolute; top: 40px; bottom: 0; width:100%;"></div>
 <div style="position: absolute; bottom: 0; width:100%; background-color: white; opacity: 0.8;">
     <div style="overflow: auto; max-height: 115px">
@@ -134,6 +124,12 @@ Live Tracking <small>of {{ pilot }}</small>
     <div id="barogram" style="width:100%; height:100pt;"></div>
 </div>
 {%- else -%}
-<p style="margin:10pt;margin-top:40pt;">{% trans %}There is no live track of this pilot currently.{% endtrans %}</p>
+<p style="margin:10pt;margin-top:40pt;">
+  {% if pilots|length == 1 -%}
+  {% trans %}There is no live track of this pilot currently.{% endtrans %}
+  {%- else -%}
+  {% trans %}There are no live tracks of these pilots currently.{% endtrans %}
+  {%- endif %}
+</p>
 {%- endif %}
 {%- endblock %}

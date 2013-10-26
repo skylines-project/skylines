@@ -100,12 +100,18 @@ class SkyLines(Flask):
             return dict(h=helpers)
 
     def configure_jinja(self):
+        from itertools import izip
+
         # Configure Jinja2 template engine
         self.jinja_options['extensions'].append('jinja2.ext.do')
 
         @self.template_filter('add_to_dict')
         def add_to_dict(d, **kw):
             return dict(d, **kw)
+
+        @self.template_global()
+        def zip(*args, **kw):
+            return izip(*args, **kw)
 
     def register_views(self):
         import skylines.views

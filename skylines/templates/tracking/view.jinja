@@ -7,16 +7,20 @@
 
 
 {% block title -%}
-{% trans pilot=user_link(pilot) -%}
-Live Tracking <small>of {{ pilot }}</small>
-{%- endtrans %}
+{% if pilots|length == 1 -%}
+{{ _('Live Tracking <small>of %(pilot)s</small>', pilot=user_link(pilots[0])) }}
+{%- elif pilots|length == 2 -%}
+{{ _('Live Tracking <small>of %(pilot)s and %(other_pilot)s</small>', pilot=user_link(pilots[0]), other_pilot=user_link(pilots[1])) }}
+{%- else -%}
+{{ _('Live Tracking <small>of %(pilot)s and %(num_pilots)d other pilots</small>', pilot=user_link(pilots[0]), num_pilots=(pilots|length - 1)) }}
+{%- endif %}
 {%- endblock %}
 
 
 {%- block styles %}
 {{ super() }}
 
-{% if trace -%}
+{% if traces -%}
   {% assets 'openlayers_css' -%}
   <link href="{{ ASSET_URL }}" rel="stylesheet" type="text/css" />
   {%- endassets %}
@@ -31,7 +35,7 @@ Live Tracking <small>of {{ pilot }}</small>
 {%- block scripts %}
 {{ super() }}
 
-{% if trace -%}
+{% if traces -%}
   {% assets 'openlayers_js' -%}
   <script type="text/javascript" src="{{ ASSET_URL }}"></script>
   {%- endassets %}
@@ -49,7 +53,7 @@ Live Tracking <small>of {{ pilot }}</small>
 <script type="text/javascript" src="{{ ASSET_URL }}"></script>
 {%- endassets %}
 
-{% if trace -%}
+{% if traces -%}
 <script type="text/javascript">
   $(function() {
     slUnits.init({{ h.json.dumps(h.get_setting_name('distance_unit')) }},
@@ -66,6 +70,8 @@ Live Tracking <small>of {{ pilot }}</small>
     default_time = -1;
     setTime(default_time);
 
+    {% for pilot, trace in zip(pilots, traces) -%}
+    {% if trace -%}
     addFlight({{ pilot.id }},
       {{ h.json.dumps(trace.encoded.points) }},
       {{ h.json.dumps(trace.encoded.levels) }},
@@ -79,24 +85,8 @@ Live Tracking <small>of {{ pilot }}</small>
       {{ h.json.dumps(trace.elevations) }},
       { competition_id: "{{ pilot.initials() }}" }
     );
-
-    {% if other_pilots -%}
-    {% for pilot, trace in other_pilots -%}
-    addFlight({{ pilot.id }},
-      {{ h.json.dumps(trace.encoded.points) }},
-      {{ h.json.dumps(trace.encoded.levels) }},
-      {{ trace.num_levels }},
-      {{ h.json.dumps(trace.barogram_t) }},
-      {{ h.json.dumps(trace.barogram_h) }},
-      {{ h.json.dumps(trace.enl) }},
-      {{ h.json.dumps(trace.zoom_levels) }},
-      undefined,
-      {{ h.json.dumps(trace.barogram_t) }},
-      {{ h.json.dumps(trace.elevations) }},
-      { competition_id: "{{ pilot.initials() }}" }
-    );
-    {%- endfor %}
     {%- endif %}
+    {%- endfor %}
 
     map.zoomToExtent(flights.getBounds().scale(1.02));
 
@@ -121,28 +111,29 @@ Live Tracking <small>of {{ pilot }}</small>
 {% block content -%}
 <div class="row">
   <div class="col-sm-4">
+    {% if pilots|length == 1 -%}
     <table class="table">
       <tbody>
         <tr>
           <th>{% trans %}Pilot{% endtrans %}</th>
-          <td>{{ user_link(pilot) }}</td>
+          <td>{{ user_link(pilots[0]) }}</td>
         </tr>
 
-        {% if pilot.club -%}
+        {% if pilots[0].club -%}
         <tr>
           <th>{% trans %}Club{% endtrans %}</th>
-          <td>{{ club_link(pilot.club) }}</td>
+          <td>{{ club_link(pilots[0].club) }}</td>
         </tr>
         {%- endif %}
 
-        {% if pilot.tracking_delay > 0 -%}
+        {% if pilots[0].tracking_delay > 0 -%}
         <tr>
           <th><span rel="tooltip" title="{{ _('This pilot chose to delay the display of his live tracks.') }}">{% trans %}Delay{% endtrans %}</span></th>
 
           <td>
-            {{ ngettext('%(num)u minute', '%(num)u minutes', pilot.tracking_delay) }}
+            {{ ngettext('%(num)u minute', '%(num)u minutes', pilots[0].tracking_delay) }}
 
-            {%- if pilot.is_readable(g.current_user) -%}
+            {%- if pilots[0].is_readable(g.current_user) -%}
             <span rel="tooltip" title="{{ _('The live tracking delay is ignored because of your account privileges.') }}">({% trans %}ignored{% endtrans %})</span>
             {%- endif %}
           </td>
@@ -150,27 +141,40 @@ Live Tracking <small>of {{ pilot }}</small>
         {%- endif %}
       </tbody>
     </table>
+    {%- else -%}
+    <table class="table">
+      <tbody>
+        {% for pilot in pilots -%}
+        <tr>
+          <td><span class="badge">{{ pilot.initials() }}</span></td>
+          <td>{{ user_link(pilot) }}</td>
+          <td>{% if pilot.club_id %}{{ club_link(pilot.club) }}{% endif %}</td>
+        </tr>
+        {%- endfor %}
+      </tbody>
+    </table>
+    {%- endif %}
 
-    {% if trace -%}
+    {% if traces -%}
     <p>
       <a href="{{ url_for('.map_') }}" class="btn btn-default">
         <i class="icon-fullscreen icon-large"></i> {% trans %}Full-screen map{% endtrans %}
       </a>
     </p>
     {%- endif %}
-
-    {% if g.current_user == pilot -%}
-    <p><a href="/tracking/info" class="btn btn-default btn-sm">{% trans %}Your Live Tracking settings{% endtrans %}</a></p>
-    {%- endif %}
   </div>
 
   <div class="col-sm-8">
-    {% if trace or other_pilots -%}
+    {% if traces -%}
     <div id="map_canvas" style="width:100%; height:400pt;"></div>
     <div id="barogram" style="width:100%; height:120pt;"></div>
     <table id="fix-data" class="table table-condensed"></table>
     {%- else -%}
+      {% if pilots|length == 1 -%}
       {% trans %}There is no live track of this pilot currently.{% endtrans %}
+      {%- else -%}
+      {% trans %}There are no live tracks of these pilots currently.{% endtrans %}
+      {%- endif %}
     {%- endif %}
   </div>
 </div>
