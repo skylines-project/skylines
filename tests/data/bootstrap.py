@@ -5,9 +5,6 @@ from skylines import model, db
 
 
 def bootstrap():
-    """Place any commands to setup skylines here"""
-
-    # <websetup.bootstrap.before.auth>
     from sqlalchemy.exc import IntegrityError
     try:
         u = model.User()
@@ -62,5 +59,3 @@ def bootstrap():
         print traceback.format_exc()
         db.session.rollback()
         print 'Continuing with bootstrapping...'
-
-    # <websetup.bootstrap.after.auth>

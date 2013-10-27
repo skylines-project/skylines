@@ -5,7 +5,7 @@ from skylines.model import User, Club, Airport
 from skylines.model.search import (
     combined_search_query, escape_tokens, text_to_tokens
 )
-from skylines.websetup.bootstrap import bootstrap
+from tests.data.bootstrap import bootstrap
 
 MODELS = [User, Club, Airport]
 
