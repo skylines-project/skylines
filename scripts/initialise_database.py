@@ -26,3 +26,10 @@ from skylines import db, model
 # create all tables and indices
 
 db.create_all()
+
+# create alembic version table
+
+from alembic.config import Config
+from alembic import command
+alembic_cfg = Config("alembic.ini")
+command.stamp(alembic_cfg, "head")
