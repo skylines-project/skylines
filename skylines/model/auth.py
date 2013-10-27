@@ -69,7 +69,8 @@ class User(db.Model):
     email_address = db.column_property(
         db.Column(Unicode(255)), comparator_factory=LowerCaseComparator)
 
-    name = db.Column(Unicode(255), nullable=False)
+    first_name = db.Column(Unicode(255), nullable=False)
+    last_name = db.Column(Unicode(255))
 
     # Hashed password
 
@@ -161,6 +162,13 @@ class User(db.Model):
         return unicode(self.id)
 
     ##############################
+
+    @property
+    def name(self):
+        if not self.last_name:
+            return self.first_name
+
+        return '%s %s' % (self.first_name, self.last_name)
 
     def initials(self):
         parts = self.name.split()
