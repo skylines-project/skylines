@@ -20,3 +20,26 @@
   </div>
 {%- endif %}
 {%- endmacro %}
+
+
+{% macro render_two_fields(label, field1, field2) -%}
+  <div class="form-group{% if field1.errors or field2.errors %} has-error{% endif %}">
+    <label for="{{ field1.name }}">{{ label }}</label>
+
+    <div class="row">
+      <div class="col-sm-6">
+      {{ field1(class_="form-control", **kwargs)|safe }}
+      </div>
+      <div class="col-sm-6">
+      {{ field2(class_="form-control", **kwargs)|safe }}
+      </div>
+    </div>
+
+    {% if field1.errors -%}
+    <p class="help-block">{{ field1.errors[0] }}</p>
+    {%- endif %}
+    {% if field2.errors -%}
+    <p class="help-block">{{ field2.errors[0] }}</p>
+    {%- endif %}
+  </div>
+{%- endmacro %}
