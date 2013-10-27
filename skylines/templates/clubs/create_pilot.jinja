@@ -1,7 +1,7 @@
 {% extends "base-form.jinja" %}
 {% set active_page = "settings" %}
 
-{% from "macros/form.jinja" import render_field %}
+{% from "macros/form.jinja" import render_field, render_two_fields %}
 
 {% block title %}{% trans %}Create Pilot{% endtrans %}{% endblock %}
 
@@ -9,7 +9,7 @@
 <form method="POST" action="{{ url_for('club.create_pilot') }}" role="form">
   {{ form.hidden_tag() }}
   {{ render_field(form.email_address) }}
-  {{ render_field(form.name) }}
+  {{ render_two_fields(_('First and last name'), form.first_name, form.last_name) }}
   <div class="form-group">
     <input class="form-control btn btn-primary" value="{{ _('Create Pilot') }}" type="submit">
   </div>

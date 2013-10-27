@@ -70,7 +70,8 @@ def create_pilot():
 
 def create_pilot_post(form):
     pilot = User(
-        name=form.name.data,
+        first_name=form.first_name.data,
+        last_name=form.last_name.data,
         email_address=form.email_address.data,
         club=g.club
     )

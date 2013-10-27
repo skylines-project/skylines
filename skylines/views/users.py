@@ -38,9 +38,12 @@ def new():
 
 
 def new_post(form):
-    user = User(name=form.name.data,
-                email_address=form.email_address.data,
-                password=form.password.data)
+    user = User(
+        first_name=form.first_name.data,
+        last_name=form.last_name.data,
+        email_address=form.email_address.data,
+        password=form.password.data
+    )
 
     if form.club_id.data:
         user.club_id = form.club_id.data
