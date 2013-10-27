@@ -4,7 +4,7 @@ assets_blueprint = Blueprint('assets', 'skylines')
 
 
 @assets_blueprint.route('/<path:filename>')
-def public(filename):
+def static(filename):
     return send_from_directory(current_app.config.get('ASSETS_LOAD_DIR'), filename)
 
 

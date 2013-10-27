@@ -41,7 +41,7 @@ ASSETS_DEBUG = False
 ASSETS_AUTO_BUILD = True
 ASSETS_DIRECTORY = os.path.join(base, 'webassets')
 ASSETS_URL = '/assets'
-ASSETS_LOAD_DIR = os.path.join(base, 'skylines', 'public')
+ASSETS_LOAD_DIR = os.path.join(base, 'skylines', 'assets', 'static')
 ASSETS_LOAD_URL = '/'
 
 SKYLINES_FILES_PATH = os.path.join(base, 'htdocs', 'files')

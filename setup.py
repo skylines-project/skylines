@@ -22,7 +22,7 @@ setup(
         'skylines': [
             'i18n/*/LC_MESSAGES/*.mo',
             'templates/*/*',
-            'public/*/*'
+            'assets/static/*/*'
         ]
     },
     message_extractors={
@@ -32,7 +32,7 @@ setup(
                 'encoding': 'utf-8',
                 'extensions': 'jinja2.ext.with_, jinja2.ext.do, webassets.ext.jinja2.AssetsExtension'
             }),
-            ('public/**', 'ignore', None)
+            ('assets/static/**', 'ignore', None)
         ]
     },
     zip_safe=False
