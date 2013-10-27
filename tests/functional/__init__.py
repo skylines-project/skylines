@@ -3,7 +3,7 @@
 
 from zope.testbrowser.wsgi import Browser
 
-from skylines.tests import setup_app, teardown_db, clean_db_and_bootstrap
+from tests import setup_app, teardown_db, clean_db_and_bootstrap
 from skylines import app, model
 
 __all__ = ['TestController']

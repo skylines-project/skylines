@@ -3,7 +3,7 @@ from nose.tools import eq_, ok_
 from mock import Mock, patch
 
 from skylines import db
-from skylines.tests import setup_app, teardown_db, clean_db_and_bootstrap
+from tests import setup_app, teardown_db, clean_db_and_bootstrap
 from skylines.model import TrackingFix
 
 import struct

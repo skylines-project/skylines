@@ -2,7 +2,7 @@ import os
 from io import BytesIO
 from nose.tools import assert_is_not_none, assert_in
 
-from skylines.tests.functional import TestController
+from tests.functional import TestController
 from skylines.model.auth import User
 from skylines import db
 

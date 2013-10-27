@@ -2,7 +2,7 @@
 """
 Functional test suite for the root controller.
 """
-from skylines.tests.functional import TestController
+from tests.functional import TestController
 from nose.tools import assert_in
 
 
