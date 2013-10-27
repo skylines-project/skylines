@@ -7,7 +7,7 @@ from flask import Flask
 class SkyLines(Flask):
     def __init__(self):
         # Create Flask instance
-        super(SkyLines, self).__init__(__name__, static_folder='public')
+        super(SkyLines, self).__init__(__name__)
 
         # Load default settings and from environment variable
         self.config.from_pyfile(config.DEFAULT_CONF_PATH)

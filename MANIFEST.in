@@ -1,4 +1,4 @@
-recursive-include skylines/public *
-include skylines/public/favicon.ico
+recursive-include skylines/assets/static *
+include skylines/assets/static/favicon.ico
 recursive-include skylines/i18n *
 recursive-include skylines/templates *

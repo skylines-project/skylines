@@ -3,7 +3,7 @@ import nose
 from nose.tools import eq_, assert_raises
 
 from skylines import db
-from skylines.tests import setup_db, teardown_db
+from tests import setup_db, teardown_db
 from sqlalchemy import Column, Integer, String, Unicode
 
 

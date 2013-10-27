@@ -3,7 +3,7 @@
 from nose.tools import eq_
 
 from skylines import model
-from skylines.tests.models import ModelTest
+from tests.models import ModelTest
 
 
 class TestGroup(ModelTest):

@@ -2,7 +2,7 @@
 """Unit test suite for the models of the application."""
 from nose.tools import assert_equals
 from skylines import db
-from skylines.tests import setup_db, teardown_db
+from tests import setup_db, teardown_db
 
 __all__ = ['ModelTest']
 
