@@ -192,6 +192,10 @@ class Flight(db.Model):
                    cls.is_writable(user))
 
     @hybrid_method
+    def is_rankable(self):
+        return self.privacy_level == Flight.PrivacyLevel.PUBLIC
+
+    @hybrid_method
     def is_writable(self, user):
         return user and \
             (self.igc_file.owner_id == user.id or
