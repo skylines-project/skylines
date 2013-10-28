@@ -7,7 +7,7 @@ import skylines.model.base
 from .aircraft_model import AircraftModel
 from .airport import Airport
 from .airspace import Airspace
-from .auth import User, Group, Permission
+from .auth import User
 from .club import Club
 from .elevation import Elevation
 from .event import Event, Notification

@@ -4,7 +4,7 @@ from sqlalchemy import func
 from skylines import db
 from skylines.forms import EditClubForm, CreateClubPilotForm
 from skylines.lib.dbutil import get_requested_record
-from skylines.model import User, Group, Club
+from skylines.model import User, Club
 
 club_blueprint = Blueprint('club', 'skylines')
 
@@ -77,11 +77,6 @@ def create_pilot_post(form):
     )
 
     db.session.add(pilot)
-
-    pilots = Group.query(group_name='pilots').first()
-    if pilots:
-        pilots.users.append(pilot)
-
     db.session.commit()
 
     return redirect(url_for('.pilots'))

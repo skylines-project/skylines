@@ -1,14 +1,3 @@
-# -*- coding: utf-8 -*-
-"""
-Auth* related model.
-
-This is where the models used by :mod:`repoze.who` and :mod:`repoze.what` are
-defined.
-
-It's perfectly fine to re-use this definition in the SkyLines application,
-though.
-
-"""
 import os
 import struct
 from datetime import datetime
@@ -26,30 +15,7 @@ from skylines import db
 from skylines.lib.sql import LowerCaseComparator
 from skylines.lib.formatter import units
 
-__all__ = ['User', 'Group', 'Permission']
-
-# Association tables
-
-
-# This is the association table for the many-to-many relationship between
-# groups and permissions. This is required by repoze.what.
-group_permission_table = db.Table(
-    'group_permissions', db.metadata,
-    db.Column('group_id', Integer, db.ForeignKey('groups.id',
-              onupdate="CASCADE", ondelete="CASCADE"), primary_key=True),
-    db.Column('permission_id', Integer, db.ForeignKey('permissions.id',
-              onupdate="CASCADE", ondelete="CASCADE"), primary_key=True)
-)
-
-# This is the association table for the many-to-many relationship between
-# groups and members - this is, the memberships. It's required by repoze.what.
-user_group_table = db.Table(
-    'user_groups', db.metadata,
-    db.Column('user_id', Integer, db.ForeignKey('users.id',
-              onupdate="CASCADE", ondelete="CASCADE"), primary_key=True),
-    db.Column('group_id', Integer, db.ForeignKey('groups.id',
-              onupdate="CASCADE", ondelete="CASCADE"), primary_key=True)
-)
+__all__ = ['User']
 
 
 class User(db.Model):
@@ -112,6 +78,7 @@ class User(db.Model):
 
     # Other settings
 
+    admin = db.Column(Boolean, nullable=False, default=False)
     eye_candy = db.Column(Boolean, nullable=False, default=False)
 
     ##############################
@@ -252,23 +219,8 @@ class User(db.Model):
 
     ##############################
 
-    @property
-    def permissions(self):
-        """Return a set with all permissions granted to the user."""
-        perms = set()
-        for g in self.groups:
-            perms = perms | set(g.permissions)
-        return perms
-
-    def has_permission(self, permission):
-        for p in self.permissions:
-            if p.permission_name == permission:
-                return True
-
-        return False
-
     def is_manager(self):
-        return self.has_permission('manage')
+        return self.admin
 
     ##############################
 
@@ -349,69 +301,3 @@ class User(db.Model):
 
 db.Index('users_lower_email_address_idx',
          db.func.lower(User.email_address), unique=True)
-
-
-class Group(db.Model):
-    """
-    Group definition for :mod:`repoze.what`.
-
-    Only the ``group_name`` column is required by :mod:`repoze.what`.
-
-    """
-
-    __tablename__ = 'groups'
-
-    # db.Columns
-
-    id = db.Column(Integer, autoincrement=True, primary_key=True)
-
-    group_name = db.Column(Unicode(16), unique=True, nullable=False)
-
-    name = db.Column(Unicode(255))
-
-    created = db.Column(DateTime, default=datetime.utcnow)
-
-    # Relations
-
-    users = db.relationship('User', secondary=user_group_table, backref='groups')
-
-    # Special methods
-
-    def __repr__(self):
-        return ('<Group: name=%s>' % self.group_name).encode('unicode_escape')
-
-    def __unicode__(self):
-        return self.group_name
-
-
-class Permission(db.Model):
-    """
-    Permission definition for :mod:`repoze.what`.
-
-    Only the ``permission_name`` column is required by :mod:`repoze.what`.
-
-    """
-
-    __tablename__ = 'permissions'
-
-    # db.Columns
-
-    id = db.Column(Integer, autoincrement=True, primary_key=True)
-
-    permission_name = db.Column(Unicode(63), unique=True, nullable=False)
-
-    description = db.Column(Unicode(255))
-
-    # Relations
-
-    groups = db.relationship(
-        'Group', secondary=group_permission_table,
-        backref=db.backref('permissions', lazy='joined'))
-
-    # Special methods
-
-    def __repr__(self):
-        return ('<Permission: name=%s>' % self.permission_name).encode('unicode_escape')
-
-    def __unicode__(self):
-        return self.permission_name

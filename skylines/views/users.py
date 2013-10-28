@@ -10,7 +10,7 @@ from sqlalchemy import func
 from sqlalchemy.orm import joinedload
 
 from skylines import db
-from skylines.model import User, Group
+from skylines.model import User
 from skylines.model.event import create_new_user_event, create_club_join_event
 from skylines.forms import CreatePilotForm, RecoverStep1Form, RecoverStep2Form
 
@@ -51,10 +51,6 @@ def new_post(form):
     user.created_ip = request.remote_addr
     user.generate_tracking_key()
     db.session.add(user)
-
-    pilots = Group.query(group_name='pilots').first()
-    if pilots:
-        pilots.users.append(user)
 
     create_new_user_event(user)
     if user.club_id:
