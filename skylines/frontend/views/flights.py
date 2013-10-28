@@ -41,6 +41,7 @@ def _create_list(tab, kw, date=None, pilot=None, club=None, airport=None,
         .group_by(FlightComment.flight_id).subquery()
 
     flights = db.session.query(Flight, subq.c.count) \
+        .filter(Flight.is_listable(g.current_user)) \
         .join(Flight.igc_file) \
         .options(contains_eager(Flight.igc_file)) \
         .join(owner_alias, IGCFile.owner) \
@@ -192,7 +193,9 @@ def date(date, latest=False):
 def latest():
     query = db.session \
         .query(func.max(Flight.date_local).label('date')) \
-        .filter(Flight.takeoff_time < datetime.utcnow())
+        .filter(Flight.takeoff_time < datetime.utcnow()) \
+        .join(Flight.igc_file) \
+        .filter(Flight.is_listable(g.current_user))
 
     date_ = query.one().date
     if not date_:
