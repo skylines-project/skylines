@@ -236,7 +236,7 @@ function addFlight(sfid, _lonlat, _levels, _num_levels, _time, _height, _enl,
       points, lod, zoom_levels);
   flight.clip = 1;
 
-  var color = colors[flights.length() % colors.length];
+  var color = _additional.color || colors[flights.length() % colors.length];
   var feature = new OpenLayers.Feature.Vector(flight, { color: color });
 
   var plane = new OpenLayers.Feature.Vector(points[0], { rotation: 0 });
