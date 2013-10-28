@@ -7,9 +7,13 @@ from flask.ext.babel import _
 from sqlalchemy import orm
 
 
-def _patch_query(q, joinedload=()):
+def _patch_query(q, joinedload=(), patch_query=None):
     if joinedload:
         q = q.options(orm.joinedload(*joinedload))
+
+    if patch_query:
+        q = patch_query(q)
+
     return q
 
 
