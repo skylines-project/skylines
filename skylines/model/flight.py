@@ -167,6 +167,19 @@ class Flight(db.Model):
 
         return cls.query().filter_by(igc_file=file).first()
 
+    def is_viewable(self, user):
+        if (self.privacy_level == Flight.PrivacyLevel.PUBLIC or
+            self.privacy_level == Flight.PrivacyLevel.LINK_ONLY):
+            return True
+
+        return self.is_writable(user)
+
+    def is_listable(self, user):
+        if self.privacy_level == Flight.PrivacyLevel.PUBLIC:
+            return True
+
+        return self.is_writable(user)
+
     def is_writable(self, user):
         return user and \
             (self.igc_file.owner_id == user.id or
