@@ -39,7 +39,11 @@ def _get_distance_flight(distance):
 def _get_distance_flights():
     distance_flights = []
 
-    largest_flight = g.user.get_largest_flights().first()
+    largest_flight = g.user.get_largest_flights() \
+        .join(Flight.igc_file) \
+        .filter(Flight.is_listable(g.current_user)) \
+        .first()
+
     if largest_flight:
         distance_flights.append([largest_flight.olc_classic_distance,
                                  largest_flight])
