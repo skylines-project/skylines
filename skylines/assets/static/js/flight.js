@@ -205,11 +205,13 @@ function initRedrawLayer(layer) {
  * @param {String} _elevations_t Google polyencoded string of elevation
  *   time values.
  * @param {String} _elevations_h Google polyencoded string of elevations.
- * @param {Object(String)} _additional May contain additional information about
+ * @param {Object=} opt_additional May contain additional information about
  *   the flight, e.g. registration number, callsign, ...
  */
 function addFlight(sfid, _lonlat, _levels, _num_levels, _time, _height, _enl,
-    zoom_levels, _contests, _elevations_t, _elevations_h, _additional) {
+    zoom_levels, _contests, _elevations_t, _elevations_h, opt_additional) {
+  var _additional = opt_additional || {};
+
   var polyline_decoder = new OpenLayers.Format.EncodedPolyline();
 
   var height = polyline_decoder.decodeDeltas(_height, 1, 1);
@@ -271,7 +273,7 @@ function addFlight(sfid, _lonlat, _levels, _num_levels, _time, _height, _enl,
   }
 
   // Add flight as a row to the fix data table
-  fix_table.addRow(sfid, color, _additional && _additional['competition_id']);
+  fix_table.addRow(sfid, color, _additional['competition_id']);
 
   var _elev_t = polyline_decoder.decodeDeltas(_elevations_t, 1, 1);
   var _elev_h = polyline_decoder.decodeDeltas(_elevations_h, 1, 1);
@@ -304,7 +306,7 @@ function addFlight(sfid, _lonlat, _levels, _num_levels, _time, _height, _enl,
     flot_h: flot_h,
     flot_enl: flot_enl,
     flot_elev: flot_elev,
-    additional: _additional ? _additional : null
+    additional: _additional
   });
 
   updateBaroData();
@@ -609,13 +611,10 @@ function setPlaneOnMap(flight, fix_data) {
   // add plane marker if more than one flight on the map
   if (flights.length() > 1) {
     if (!plane.marker) {
-      var comp_id = flight.additional &&
-          flight.additional['competition_id'];
-
       plane.marker = $(
           '<span class="badge plane_marker" ' +
               'style="background: ' + flight.color + ';">' +
-          (comp_id ? comp_id : '') +
+          (flight.additional['competition_id'] || '') +
           '</span>');
 
       $(map.getLayersByName('Flight')[0].div).append(plane.marker);
