@@ -14,7 +14,7 @@
       {%- if 'aircraft' not in omitted_columns %}<th class="aircraft hidden-xs">{% trans %}Aircraft{% endtrans %}</th>{% endif %}
       {%- if 'times' not in omitted_columns %}<th class="times hidden-xs">{% trans %}Time{% endtrans %}</th>{% endif %}
       {%- if 'link' not in omitted_columns %}<th class="column-buttons"></th>{% endif %}
-      {%- if 'num_comments' not in omitted_columns %}<th class="num_comments hidden-xs"><i class="icon-comments-alt"></i></th>{% endif %}
+      {%- if 'num_comments' not in omitted_columns %}<th class="num_comments hidden-xs"></th>{% endif %}
     </tr>
   </thead>
   <tbody>
@@ -101,7 +101,7 @@
       {% if 'num_comments' not in omitted_columns -%}
       <td class="hidden-xs">
         {% if num_comments > 0 -%}
-        <span class="label" title="{{ ngettext('%(num)d comment', '%(num)d comments', num_comments)|format(num=num_comments) }}">{{ num_comments }}</span>
+        <i class="icon-comments-alt" title="{{ ngettext('%(num)d comment', '%(num)d comments', num_comments)|format(num=num_comments) }}"></i>
         {% endif %}
       </td>
       {%- endif %}
