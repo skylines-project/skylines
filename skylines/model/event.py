@@ -35,13 +35,13 @@ class Event(db.Model):
     # The user that caused the event
 
     actor_id = db.Column(
-        Integer, db.ForeignKey('tg_user.id', ondelete='CASCADE'), nullable=False)
+        Integer, db.ForeignKey('users.id', ondelete='CASCADE'), nullable=False)
     actor = db.relationship('User', foreign_keys=[actor_id], innerjoin=True)
 
     # A user if this event is about a user (e.g. actor following user)
 
     user_id = db.Column(
-        Integer, db.ForeignKey('tg_user.id', ondelete='CASCADE'))
+        Integer, db.ForeignKey('users.id', ondelete='CASCADE'))
     user = db.relationship('User', foreign_keys=[user_id])
 
     # A club if this event is about a club (e.g. actor joining club)
@@ -83,7 +83,7 @@ class Notification(db.Model):
     # The recipient of this notification
 
     recipient_id = db.Column(
-        Integer, db.ForeignKey('tg_user.id', ondelete='CASCADE'), nullable=False)
+        Integer, db.ForeignKey('users.id', ondelete='CASCADE'), nullable=False)
     recipient = db.relationship('User', innerjoin=True)
 
     # The time that this notification was read by the recipient

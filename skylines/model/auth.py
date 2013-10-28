@@ -34,20 +34,20 @@ __all__ = ['User', 'Group', 'Permission']
 # This is the association table for the many-to-many relationship between
 # groups and permissions. This is required by repoze.what.
 group_permission_table = db.Table(
-    'tg_group_permission', db.metadata,
-    db.Column('group_id', Integer, db.ForeignKey('tg_group.id',
+    'group_permissions', db.metadata,
+    db.Column('group_id', Integer, db.ForeignKey('groups.id',
               onupdate="CASCADE", ondelete="CASCADE"), primary_key=True),
-    db.Column('permission_id', Integer, db.ForeignKey('tg_permission.id',
+    db.Column('permission_id', Integer, db.ForeignKey('permissions.id',
               onupdate="CASCADE", ondelete="CASCADE"), primary_key=True)
 )
 
 # This is the association table for the many-to-many relationship between
 # groups and members - this is, the memberships. It's required by repoze.what.
 user_group_table = db.Table(
-    'tg_user_group', db.metadata,
-    db.Column('user_id', Integer, db.ForeignKey('tg_user.id',
+    'user_groups', db.metadata,
+    db.Column('user_id', Integer, db.ForeignKey('users.id',
               onupdate="CASCADE", ondelete="CASCADE"), primary_key=True),
-    db.Column('group_id', Integer, db.ForeignKey('tg_group.id',
+    db.Column('group_id', Integer, db.ForeignKey('groups.id',
               onupdate="CASCADE", ondelete="CASCADE"), primary_key=True)
 )
 
@@ -60,7 +60,7 @@ class User(db.Model):
     least the ``user_name`` column.
     """
 
-    __tablename__ = 'tg_user'
+    __tablename__ = 'users'
     __searchable_columns__ = ['name']
 
     id = db.Column(Integer, autoincrement=True, primary_key=True)
@@ -359,7 +359,7 @@ class Group(db.Model):
 
     """
 
-    __tablename__ = 'tg_group'
+    __tablename__ = 'groups'
 
     # db.Columns
 
@@ -392,7 +392,7 @@ class Permission(db.Model):
 
     """
 
-    __tablename__ = 'tg_permission'
+    __tablename__ = 'permissions'
 
     # db.Columns
 

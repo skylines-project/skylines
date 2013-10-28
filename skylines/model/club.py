@@ -16,7 +16,7 @@ class Club(db.Model):
     name = db.Column(Unicode(255), unique=True, nullable=False)
 
     owner_id = db.Column(Integer, db.ForeignKey(
-        'tg_user.id', use_alter=True, name="tg_user.id", ondelete='SET NULL'))
+        'users.id', use_alter=True, name="users.id", ondelete='SET NULL'))
     owner = db.relationship('User', foreign_keys=[owner_id])
 
     time_created = db.Column(DateTime, nullable=False, default=datetime.utcnow)
