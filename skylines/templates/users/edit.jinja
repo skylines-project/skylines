@@ -1,7 +1,7 @@
 {% extends "base-form.jinja" %}
 {% set active_page = "settings" %}
 
-{% from "macros/form.jinja" import render_field %}
+{% from "macros/form.jinja" import render_field, render_two_fields %}
 
 {% block title %}{% trans %}Edit User{% endtrans %}{% endblock %}
 
@@ -9,7 +9,7 @@
 <form method="POST" action="{{ url_for('user.edit') }}" role="form">
   {{ form.hidden_tag() }}
   {{ render_field(form.email_address) }}
-  {{ render_field(form.name) }}
+  {{ render_two_fields(_('First and last name'), form.first_name, form.last_name) }}
   {{ render_field(form.tracking_delay) }}
   {{ render_field(form.unit_preset) }}
   <div id="custom_units">

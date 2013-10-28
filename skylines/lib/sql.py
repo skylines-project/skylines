@@ -1,4 +1,4 @@
-from sqlalchemy.sql import func, ColumnElement, literal_column, cast
+from sqlalchemy.sql import func, ColumnElement, literal_column, cast, and_
 from sqlalchemy.types import String, Integer
 from sqlalchemy.ext.compiler import compiles
 from sqlalchemy.orm.properties import ColumnProperty
@@ -33,7 +33,7 @@ def weighted_ilike(self, value, weight=1):
     weight = literal_column(str(weight))
 
     # Return ilike expression
-    return cast(self.ilike(value), Integer) * weight
+    return cast(and_(self != None, self.ilike(value)), Integer) * weight
 
 # Inject weighted_ilike() method into String type
 setattr(String.comparator_factory, 'weighted_ilike', weighted_ilike)

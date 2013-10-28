@@ -45,8 +45,11 @@ class CreateClubPilotForm(Form):
         InputRequired(message=l_('Please enter your email address.')),
         Email(),
     ])
-    name = TextField(l_('Name'), validators=[
-        InputRequired(message=l_('Please enter your name.')),
+    first_name = TextField(l_('First Name'), validators=[
+        InputRequired(message=l_('Please enter your first name.')),
+    ])
+    last_name = TextField(l_('Last Name'), validators=[
+        InputRequired(message=l_('Please enter your last name.')),
     ])
 
     def validate_email_address(form, field):
@@ -75,8 +78,11 @@ class EditPilotForm(Form):
         InputRequired(message=l_('Please enter your email address.')),
         Email(),
     ])
-    name = TextField(l_('Name'), validators=[
-        InputRequired(),
+    first_name = TextField(l_('First Name'), validators=[
+        InputRequired(message=l_('Please enter your first name.')),
+    ])
+    last_name = TextField(l_('Last Name'), validators=[
+        InputRequired(message=l_('Please enter your last name.')),
     ])
     tracking_delay = TrackingDelaySelectField(l_('Tracking Delay'))
     unit_preset = UnitsPresetSelectField(l_('Unit Preset'))

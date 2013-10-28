@@ -8,7 +8,8 @@ def bootstrap():
     from sqlalchemy.exc import IntegrityError
     try:
         u = model.User()
-        u.name = u'Example manager'
+        u.first_name = u'Example'
+        u.last_name = u'Manager'
         u.email_address = u'manager@somedomain.com'
         u.password = u'managepass'
 
@@ -30,7 +31,8 @@ def bootstrap():
         db.session.add(p)
 
         u1 = model.User()
-        u1.name = u'Example user'
+        u1.first_name = u'Example'
+        u1.last_name = u'User'
         u1.email_address = u'max+skylines@blarg.de'
         u1.password = u'test'
         u1.tracking_key = 123456

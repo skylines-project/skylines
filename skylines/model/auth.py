@@ -18,8 +18,9 @@ from sqlalchemy.types import (
     Unicode, Integer, BigInteger, SmallInteger,
     DateTime, Boolean, Interval, String,
 )
-from sqlalchemy.sql.expression import cast
+from sqlalchemy.sql.expression import cast, case
 from sqlalchemy.dialects.postgresql import INET
+from sqlalchemy.ext.hybrid import hybrid_property
 
 from skylines import db
 from skylines.lib.sql import LowerCaseComparator
@@ -69,7 +70,8 @@ class User(db.Model):
     email_address = db.column_property(
         db.Column(Unicode(255)), comparator_factory=LowerCaseComparator)
 
-    name = db.Column(Unicode(255), nullable=False)
+    first_name = db.Column(Unicode(255), nullable=False)
+    last_name = db.Column(Unicode(255))
 
     # Hashed password
 
@@ -161,6 +163,19 @@ class User(db.Model):
         return unicode(self.id)
 
     ##############################
+
+    @hybrid_property
+    def name(self):
+        if not self.last_name:
+            return self.first_name
+
+        return self.first_name + ' ' + self.last_name
+
+    @name.expression
+    def name_expression(cls):
+        return case([
+            (cls.last_name != None, cls.first_name + ' ' + cls.last_name),
+        ], else_=cls.first_name)
 
     def initials(self):
         parts = self.name.split()
