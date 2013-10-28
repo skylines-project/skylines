@@ -24,11 +24,11 @@ class Flight(db.Model):
     time_modified = db.Column(DateTime, nullable=False, default=datetime.utcnow)
 
     pilot_id = db.Column(
-        Integer, db.ForeignKey('tg_user.id', ondelete='SET NULL'), index=True)
+        Integer, db.ForeignKey('users.id', ondelete='SET NULL'), index=True)
     pilot = db.relationship('User', foreign_keys=[pilot_id])
 
     co_pilot_id = db.Column(
-        Integer, db.ForeignKey('tg_user.id', ondelete='SET NULL'), index=True)
+        Integer, db.ForeignKey('users.id', ondelete='SET NULL'), index=True)
     co_pilot = db.relationship('User', foreign_keys=[co_pilot_id])
 
     club_id = db.Column(

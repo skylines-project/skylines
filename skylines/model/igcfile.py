@@ -16,7 +16,7 @@ class IGCFile(db.Model):
 
     id = db.Column(Integer, autoincrement=True, primary_key=True)
 
-    owner_id = db.Column(Integer, db.ForeignKey('tg_user.id'), nullable=False)
+    owner_id = db.Column(Integer, db.ForeignKey('users.id'), nullable=False)
     owner = db.relationship('User', innerjoin=True)
 
     time_created = db.Column(DateTime, nullable=False, default=datetime.utcnow)

@@ -19,7 +19,7 @@ class FlightComment(db.Model):
         backref=db.backref('comments', order_by=time_created,
                            passive_deletes=True))
 
-    user_id = db.Column(Integer, db.ForeignKey('tg_user.id', ondelete='SET NULL'))
+    user_id = db.Column(Integer, db.ForeignKey('users.id', ondelete='SET NULL'))
     user = db.relationship('User', lazy='joined')
 
     def __repr__(self):

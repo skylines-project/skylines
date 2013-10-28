@@ -10,7 +10,7 @@ from geoalchemy2.shape import to_shape, from_shape
 from shapely.geometry import Point
 
 from skylines import db
-from .auth import User
+from .user import User
 from .geo import Location
 
 
@@ -32,7 +32,7 @@ class TrackingFix(db.Model):
     engine_noise_level = db.Column(SmallInteger)
 
     pilot_id = db.Column(
-        Integer, db.ForeignKey('tg_user.id', ondelete='CASCADE'), nullable=False)
+        Integer, db.ForeignKey('users.id', ondelete='CASCADE'), nullable=False)
     pilot = db.relationship('User', innerjoin=True)
 
     ip = db.Column(INET)
@@ -126,7 +126,7 @@ class TrackingSession(db.Model):
     id = db.Column(Integer, autoincrement=True, primary_key=True)
 
     pilot_id = db.Column(
-        Integer, db.ForeignKey('tg_user.id', ondelete='CASCADE'), nullable=False)
+        Integer, db.ForeignKey('users.id', ondelete='CASCADE'), nullable=False)
     pilot = db.relationship('User', innerjoin=True)
 
     lt24_id = db.Column(BigInteger, index=True)

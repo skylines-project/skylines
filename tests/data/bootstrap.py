@@ -12,23 +12,10 @@ def bootstrap():
         u.last_name = u'Manager'
         u.email_address = u'manager@somedomain.com'
         u.password = u'managepass'
+        u.admin = True
 
         db.session.add(u)
 
-        g = model.Group()
-        g.group_name = u'managers'
-        g.name = u'Managers Group'
-
-        g.users.append(u)
-
-        db.session.add(g)
-
-        p = model.Permission()
-        p.permission_name = u'manage'
-        p.description = u'This permission give an administrative right to the bearer'
-        p.groups.append(g)
-
-        db.session.add(p)
 
         u1 = model.User()
         u1.first_name = u'Example'
@@ -39,20 +26,6 @@ def bootstrap():
 
         db.session.add(u1)
 
-        g1 = model.Group()
-        g1.group_name = u'pilots'
-        g1.name = u'Pilots Group'
-
-        g1.users.append(u1)
-
-        db.session.add(g1)
-
-        p1 = model.Permission()
-        p1.permission_name = u'upload'
-        p1.description = u'Allow uploading new flights'
-        p1.groups.append(g1)
-
-        db.session.add(p)
 
         db.session.commit()
     except IntegrityError:
