@@ -5,7 +5,7 @@ from itertools import chain
 from sqlalchemy.types import Integer, DateTime
 
 from skylines import db
-from .auth import User
+from .user import User
 from .club import Club
 from .flight import Flight
 from .flight_comment import FlightComment

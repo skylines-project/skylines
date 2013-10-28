@@ -10,7 +10,7 @@ from geoalchemy2.shape import to_shape, from_shape
 from shapely.geometry import Point
 
 from skylines import db
-from .auth import User
+from .user import User
 from .geo import Location
 
 
