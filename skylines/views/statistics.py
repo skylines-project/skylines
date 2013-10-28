@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, abort
+from flask import Blueprint, render_template, abort, g
 from sqlalchemy import func, distinct
 
 from skylines import db
@@ -35,6 +35,8 @@ def index(page=None, id=None):
 
     elif page is not None:
         abort(404)
+
+    query = query.join(Flight.igc_file).filter(Flight.is_listable(g.current_user))
 
     query = query.group_by(Flight.year).order_by(Flight.year.desc())
 
