@@ -14,7 +14,7 @@ class TestUpload(TestController):
     def setUp(self):
         super(TestUpload, self).setUp()
 
-        self.bill = User(name='bill', email_address='bill@example.com',
+        self.bill = User(first_name='bill', email_address='bill@example.com',
                          password='pass')
         db.session.add(self.bill)
         db.session.commit()
