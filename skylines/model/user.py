@@ -9,7 +9,7 @@ from sqlalchemy.types import (
 )
 from sqlalchemy.sql.expression import cast, case
 from sqlalchemy.dialects.postgresql import INET
-from sqlalchemy.ext.hybrid import hybrid_property
+from sqlalchemy.ext.hybrid import hybrid_property, hybrid_method
 
 from skylines.model import db
 from skylines.lib.sql import LowerCaseComparator
@@ -225,6 +225,7 @@ class User(db.Model):
 
     ##############################
 
+    @hybrid_method
     def is_manager(self):
         return self.admin
 
