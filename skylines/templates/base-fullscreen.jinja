@@ -5,7 +5,9 @@
 {% block body -%}
 {{ topbar(active_page) }}
 
-{% block content %}{% endblock %}
+<div class="container-fullscreen">
+    {% block content %}{% endblock %}
+</div>
 
 {{ insert_flash_message(True) }}
 {%- endblock %}

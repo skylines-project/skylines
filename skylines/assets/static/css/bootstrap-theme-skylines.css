@@ -35,6 +35,19 @@ body {
   }
 }
 
+.container-fullscreen {
+    position: absolute;
+    top: 40px;
+    bottom: 0px;
+    width: 100%;
+}
+
+@media (max-width: 767px) {
+  .container-fullscreen {
+    top: 50px;
+  }
+}
+
 /* Page header */
 .page-header {
   position: relative;

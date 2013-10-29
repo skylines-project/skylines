@@ -29,8 +29,6 @@
   <link href="/css/eye_candy/OpenLayers.css" rel="stylesheet" type="text/css" />
   {%- endif %}
 {%- endif %}
-
-<style>body{height:100%;margin:0;padding:0}</style>
 {%- endblock %}
 
 
@@ -119,7 +117,7 @@
 
 {% block content -%}
 {% if traces -%}
-<div id="map_canvas" class="olFullscreen" style="position: absolute; top: 40px; bottom: 0; width:100%;"></div>
+<div id="map_canvas" class="olFullscreen" style="width:100%;height:100%"></div>
 <div style="position: absolute; bottom: 0; width:100%; background-color: white; opacity: 0.8;">
     <div style="overflow: auto; max-height: 115px">
         <table id="fix-data" class="table table-condensed"></table>
