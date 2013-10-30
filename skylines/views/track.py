@@ -5,6 +5,7 @@ from flask import Blueprint, request, render_template, abort, jsonify, g
 from sqlalchemy.sql.expression import and_
 
 from skylines.lib.dbutil import get_requested_record_list
+from skylines.lib.helpers import color
 from skylines.model import User, TrackingFix
 from skylinespolyencode import SkyLinesPolyEncoder
 
@@ -17,6 +18,10 @@ def _pull_user_id(endpoint, values):
 
     g.pilots = get_requested_record_list(
         User, g.user_id, joinedload=[User.club])
+
+    color_gen = color.generator()
+    for pilot in g.pilots:
+        pilot.color = color_gen.next()
 
 
 @track_blueprint.url_defaults

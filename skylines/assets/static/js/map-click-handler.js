@@ -137,7 +137,7 @@ slMapClickHandler = function(infobox, settings) {
         '<span class="info-item badge" style="background:' +
             flight.color +
         '">' +
-        (flight.additional && flight.additional['registration'] || '') +
+        (flight.additional['registration'] || '') +
         '</span>'
     );
   };

@@ -85,7 +85,10 @@
       undefined,
       {{ h.json.dumps(trace.barogram_t) }},
       {{ h.json.dumps(trace.elevations) }},
-      { competition_id: "{{ pilot.initials() }}" }
+      {
+        competition_id: "{{ pilot.initials() }}",
+        color: "{{ pilot.color }}",
+      }
     );
     {%- endif %}
     {%- endfor %}
