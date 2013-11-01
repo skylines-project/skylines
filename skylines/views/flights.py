@@ -5,7 +5,7 @@ from babel.dates import format_date
 
 from sqlalchemy import func
 from sqlalchemy.sql.expression import or_, and_
-from sqlalchemy.orm import joinedload, contains_eager
+from sqlalchemy.orm import joinedload, contains_eager, subqueryload
 from sqlalchemy.orm.util import aliased
 
 from skylines import db
@@ -44,15 +44,11 @@ def _create_list(tab, kw, date=None, pilot=None, club=None, airport=None,
     flights = db.session.query(Flight, subq.c.count) \
         .join(Flight.igc_file) \
         .options(contains_eager(Flight.igc_file)) \
-        .join(owner_alias, IGCFile.owner) \
-        .options(contains_eager(Flight.igc_file, IGCFile.owner, alias=owner_alias)) \
-        .outerjoin(pilot_alias, Flight.pilot) \
-        .options(contains_eager(Flight.pilot, alias=pilot_alias)) \
-        .options(joinedload(Flight.co_pilot)) \
-        .outerjoin(Flight.club) \
-        .options(contains_eager(Flight.club)) \
-        .outerjoin(Flight.takeoff_airport) \
-        .options(contains_eager(Flight.takeoff_airport)) \
+        .options(subqueryload(Flight.igc_file, IGCFile.owner)) \
+        .options(subqueryload(Flight.pilot)) \
+        .options(subqueryload(Flight.co_pilot)) \
+        .options(subqueryload(Flight.club)) \
+        .options(subqueryload(Flight.takeoff_airport)) \
         .outerjoin(Flight.model) \
         .options(contains_eager(Flight.model)) \
         .outerjoin((subq, Flight.comments))
