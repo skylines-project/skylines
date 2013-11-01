@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, abort, request, url_for, redirect, g
-from sqlalchemy.orm import joinedload, contains_eager
+from sqlalchemy.orm import subqueryload, contains_eager
 
 from skylines import db
 from skylines.lib.util import str_to_bool
@@ -38,8 +38,8 @@ def index():
     query = Notification.query(recipient=g.current_user) \
         .join('event') \
         .options(contains_eager('event')) \
-        .options(joinedload('event.actor')) \
-        .options(joinedload('event.flight')) \
+        .options(subqueryload('event.actor')) \
+        .options(subqueryload('event.flight')) \
         .order_by(Event.time.desc())
 
     query = _filter_query(query, request.args)
