@@ -65,7 +65,7 @@ patches via mail to any of the [current maintainers](AUTHORS.md) though.
 Here are a few guidelines for creating patches:
 
 - patches should be self-contained
-- patches should be self-documenting
+- patches should be self-documenting  
   (add a good description on what is changed, and why you are changing it)
 - write one patch for one change
 
