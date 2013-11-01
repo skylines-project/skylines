@@ -3,6 +3,7 @@
 from datetime import datetime
 
 from sqlalchemy.dialects import postgresql
+from sqlalchemy.orm import deferred
 from sqlalchemy.types import Unicode, Integer, Float, DateTime, Date, Boolean
 from sqlalchemy.ext.hybrid import hybrid_property
 from sqlalchemy.sql.expression import case
@@ -58,9 +59,12 @@ class Flight(db.Model):
         Integer, db.ForeignKey('airports.id', ondelete='SET NULL'))
     landing_airport = db.relationship('Airport', foreign_keys=[landing_airport_id])
 
-    timestamps = db.Column(postgresql.ARRAY(DateTime), nullable=False)
-    locations = db.Column(
-        Geometry('LINESTRING', srid=4326), nullable=False)
+    timestamps = deferred(db.Column(
+        postgresql.ARRAY(DateTime), nullable=False), group='path')
+
+    locations = deferred(db.Column(
+        Geometry('LINESTRING', srid=4326), nullable=False),
+        group='path')
 
     olc_classic_distance = db.Column(Integer)
     olc_triangle_distance = db.Column(Integer)
