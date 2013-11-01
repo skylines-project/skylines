@@ -4,6 +4,7 @@ from datetime import datetime
 from flask import Blueprint, request, render_template, redirect, url_for, abort, current_app, jsonify, g, flash
 from flask.ext.babel import lazy_gettext as l_, _
 
+from sqlalchemy.orm import undefer
 from sqlalchemy.sql.expression import func, and_, literal_column
 from geoalchemy2.shape import to_shape
 
@@ -290,6 +291,7 @@ def _get_near_flights(flight, location, time, max_distance=1000):
     # filter...
 
     result = Flight.query() \
+        .options(undefer('path')) \
         .filter(Flight.id != flight.id) \
         .filter(Flight.takeoff_time <= time) \
         .filter(Flight.landing_time >= time) \

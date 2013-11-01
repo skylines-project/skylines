@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, request
-from sqlalchemy.orm import joinedload
+from sqlalchemy.orm import subqueryload
 
 from skylines.lib.util import str_to_bool
 from skylines.model.event import Event, group_events
@@ -11,8 +11,10 @@ timeline_blueprint = Blueprint('timeline', 'skylines')
 @timeline_blueprint.route('/')
 def index():
     query = Event.query() \
-        .options(joinedload('actor')) \
-        .options(joinedload('flight')) \
+        .options(subqueryload('actor')) \
+        .options(subqueryload('user')) \
+        .options(subqueryload('club')) \
+        .options(subqueryload('flight')) \
         .order_by(Event.time.desc())
 
     query = _filter_query(query, request.args)

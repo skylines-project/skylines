@@ -3,6 +3,7 @@ from datetime import date
 from flask import Blueprint, request, redirect, url_for, render_template
 from sqlalchemy import func
 from sqlalchemy.sql.expression import desc, over
+from sqlalchemy.orm import subqueryload
 
 from skylines import db
 from skylines.model import User, Club, Flight, Airport
@@ -31,6 +32,9 @@ def _get_result(model, flight_field, year=None):
         .query(model, subq.c.count, subq.c.total,
                over(func.rank(), order_by=desc('total')).label('rank')) \
         .join((subq, getattr(subq.c, flight_field) == model.id))
+
+    if model == User:
+        result = result.options(subqueryload(model.club))
 
     result = result.order_by(desc('total'))
     return result
