@@ -29,12 +29,12 @@ fontawesome_webfont_svg = Bundle(
 # Twitter Bootstrap
 
 bootstrap_js = Bundle(
-    'https://netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js',
+    'https://netdna.bootstrapcdn.com/bootstrap/3.0.1/js/bootstrap.min.js',
     output='js/bootstrap-%(version)s.js')
 
 bootstrap_css = Bundle(
-    'https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css',
-    'https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-theme.min.css',
+    'https://netdna.bootstrapcdn.com/bootstrap/3.0.1/css/bootstrap.min.css',
+    'https://netdna.bootstrapcdn.com/bootstrap/3.0.1/css/bootstrap-theme.min.css',
     output='css/bootstrap-%(version)s.js')
 
 
