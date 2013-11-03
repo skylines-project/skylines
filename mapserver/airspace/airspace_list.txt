@@ -19,6 +19,6 @@ no openair http://soaringweb.org/Airspace/NO/NO.txt
 dk sua http://soaringweb.org/Airspace/DK/DK-OpenAir-AllinOne-2013-V2.sua
 us openair http://user.xmission.com/~lalley/aviation/countHits.php?count=oaCount&file=allusa.v13.03-07.2.txt
 za openair http://soaringweb.org/Airspace/ZA/SAGlidingAirsp-17102011_v1.3.txt
-au openair http://soaringweb.org/Airspace/AU/australia.txt
+au openair http://soaringweb.org/Airspace/AU/australia_class_all_13_05_30.txt
 ca openair http://soaringweb.org/Airspace/NA/CA_2012_05a.txt
 
