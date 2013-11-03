@@ -27,7 +27,6 @@ caches:
     sources: [mwp_mapserver_wms]
     image:
       format: image/png
-      mode: RGBA
     format: image/png
     request_format: image/png
     link_single_color_images: true
@@ -41,7 +40,6 @@ caches:
     sources: [airspace_mapserver_wms]
     image:
       format: image/png
-      mode: RGBA
     format: image/png
     request_format: image/png
     link_single_color_images: true
@@ -56,7 +54,6 @@ sources:
       transparent: true
     image:
       format: image/png
-      mode: RGBA
     mapserver:
       binary: /usr/lib/cgi-bin/mapserv
       working_dir: ../
@@ -70,7 +67,6 @@ sources:
       transparent: true
     image:
       format: image/png
-      mode: RGBA
     mapserver:
       binary: /usr/lib/cgi-bin/mapserv
       working_dir: ../
@@ -84,7 +80,6 @@ sources:
       transparent: true
     image:
       format: image/png
-      mode: RGBA
 
   airspace_mapserver_wms:
     type: wms
@@ -95,7 +90,6 @@ sources:
       transparent: true
     image:
       format: image/png
-      mode: RGBA
 
 globals:
   # # coordinate transformation options
@@ -129,6 +123,14 @@ globals:
   image:
     paletted: false
     resampling_method: nearest
+
+    formats:
+      image/png:
+        colors: 256
+        transparent: true
+        encoding_options:
+          quantizer: mediancut
+
       # resampling_method: bilinear
       # resampling_method: bicubic
   #     jpeg_quality: 90
