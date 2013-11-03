@@ -35,7 +35,7 @@ DEFAULT_LIFT_UNIT = 0
 
 ALTITUDE_UNITS = (
     Unit(u'm', 1, u'{0:.{1}f} m', 0),
-    Unit(u'ft', 1, u'{0:.{1}f} ft', 0)
+    Unit(u'ft', 3.280839895, u'{0:.{1}f} ft', 0)
 )
 
 DEFAULT_ALTITUDE_UNIT = 0
