@@ -37,7 +37,10 @@ import shutil
 import subprocess
 
 from osgeo import ogr
-from geoalchemy2 import WKTElement
+from geoalchemy2.shape import from_shape
+from shapely.geometry import polygon
+from shapely.wkt import loads
+from shapely.geos import ReadingError
 
 from skylines import app, db
 from skylines.model import Airspace
@@ -301,11 +304,14 @@ def parse_airspace_type(airspace_type):
 
 
 def add_airspace(country_code, airspace_class, name, base, top, geom_str):
-
-    # this is a real kludge to determine if the polygon has more than 3 points...
-    if (geom_str.count(',') < 3):
-        print name + "(" + airspace_class + ") has not enough points to be a polygon"
+    try:
+        geom = loads(geom_str)
+    except ReadingError:
+        print name + "(" + airspace_class + ") is not a polygon (maybe not enough points?)"
         return False
+
+    # orient polygon clockwise
+    geom = polygon.orient(geom, sign=-1)
 
     if not airspace_class:
         print name + " has no airspace class"
@@ -326,7 +332,7 @@ def add_airspace(country_code, airspace_class, name, base, top, geom_str):
     airspace.name = name
     airspace.base = base
     airspace.top = top
-    airspace.the_geom = WKTElement(geom_str, srid=4326)
+    airspace.the_geom = from_shape(geom, srid=4326)
 
     db.session.add(airspace)
 
