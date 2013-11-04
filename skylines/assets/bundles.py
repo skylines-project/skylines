@@ -67,6 +67,7 @@ main_css = Bundle(
     'css/fix-table.css',
     'vendor/flags/flags.css',
     'vendor/bootstrap-datepicker/datepicker.css',
+    'vendor/fonts/stylesheet.css',
     filters='cssrewrite',
     output='css/main-%(version)s.css')
 

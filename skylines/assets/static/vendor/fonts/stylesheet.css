@@ -1,0 +1,35 @@
+@font-face {
+  font-family: 'Ubuntu';
+  src: local('Ubuntu Light'), local('Ubuntu-Light'), url('ubuntu-l.eot');
+  src: local('Ubuntu Light'), local('Ubuntu-Light'),
+       url('ubuntu-l.eot?#iefix') format('embedded-opentype'),
+       url('ubuntu-l.woff') format('woff'),
+       url('ubuntu-l.ttf') format('truetype'),
+       url('ubuntu-l.svg#UbuntuLight') format('svg');
+  font-weight: 300;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Ubuntu';
+  src: local('Ubuntu Bold'), local('Ubuntu-Bold'), url('ubuntu-b.eot');
+  src: local('Ubuntu Bold'), local('Ubuntu-Bold'),
+       url('ubuntu-b.eot?#iefix') format('embedded-opentype'),
+       url('ubuntu-b.woff') format('woff'),
+       url('ubuntu-b.ttf') format('truetype'),
+       url('ubuntu-b.svg#UbuntuBold') format('svg');
+  font-weight: 700;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Ubuntu';
+  src: local('Ubuntu'), url('ubuntu-r.eot');
+  src: local('Ubuntu'),
+       url('ubuntu-r.eot?#iefix') format('embedded-opentype'),
+       url('ubuntu-r.woff') format('woff'),
+       url('ubuntu-r.ttf') format('truetype'),
+       url('ubuntu-r.svg#UbuntuRegular') format('svg');
+  font-weight: 400;
+  font-style: normal;
+}
