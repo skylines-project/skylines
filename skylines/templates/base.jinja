@@ -19,7 +19,7 @@
     {%- endblock %}
 
     <!--[if lte IE 8]>
-    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/respond.js/1.3.0/respond.min.js"></script>
+    {% assets 'respond_js' -%}<script type="text/javascript" src="{{ ASSET_URL }}"></script>{%- endassets %}
     <![endif]-->
 
     {%- endblock %}
