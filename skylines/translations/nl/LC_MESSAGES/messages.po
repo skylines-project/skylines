@@ -5,19 +5,17 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: skylines\n"
+"Project-Id-Version:  skylines\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2013-10-09 22:02+0200\n"
+"POT-Creation-Date: 2013-11-04 23:29+0100\n"
 "PO-Revision-Date: 2013-10-31 09:54+0000\n"
 "Last-Translator: Quint Segers <Unknown>\n"
 "Language-Team: Dutch <nl@li.org>\n"
+"Plural-Forms: nplurals=2; plural=n != 1\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2013-11-01 13:24+0000\n"
-"X-Generator: Launchpad (build 16820)\n"
-"Generated-By: Babel 1.3\n"
+"Generated-By: Babel 0.9.6\n"
 
 #: skylines/forms/aircraft_model.py:29
 msgid "Gliders"
@@ -47,19 +45,20 @@ msgstr "Andere"
 msgid "No club"
 msgstr "Geen club"
 
-#: skylines/forms/club.py:24 skylines/forms/pilot.py:56
+#: skylines/forms/club.py:24 skylines/forms/pilot.py:63
 #: skylines/templates/flights/details-table.jinja:151
 #: skylines/templates/flights/flights-table.jinja:13
 #: skylines/templates/ranking/pilots.jinja:10
-#: skylines/templates/search/list.jinja:65 skylines/templates/search/list.jinja:75
-#: skylines/templates/tracking/view.jinja:133
+#: skylines/templates/search/list.jinja:65
+#: skylines/templates/search/list.jinja:75
+#: skylines/templates/tracking/view.jinja:127
 #: skylines/templates/users/users-table.jinja:8
 #: skylines/templates/users/view.jinja:125
 msgid "Club"
 msgstr "Club"
 
-#: skylines/forms/club.py:28 skylines/forms/club.py:36 skylines/forms/pilot.py:44
-#: skylines/forms/pilot.py:74 skylines/templates/clubs/list.jinja:11
+#: skylines/forms/club.py:28 skylines/forms/club.py:36
+#: skylines/templates/clubs/list.jinja:11
 #: skylines/templates/clubs/view.jinja:22
 #: skylines/templates/ranking/airports.jinja:10
 #: skylines/templates/ranking/clubs.jinja:9
@@ -80,9 +79,10 @@ msgstr "Website"
 #: skylines/forms/flight.py:12 skylines/forms/upload.py:13
 #: skylines/templates/flights/details-table.jinja:119
 #: skylines/templates/flights/flights-table.jinja:10
-#: skylines/templates/search/list.jinja:63 skylines/templates/search/list.jinja:73
+#: skylines/templates/search/list.jinja:63
+#: skylines/templates/search/list.jinja:73
 #: skylines/templates/tracking/list.jinja:35
-#: skylines/templates/tracking/view.jinja:127
+#: skylines/templates/tracking/view.jinja:121
 msgid "Pilot"
 msgstr "Vlieger"
 
@@ -102,44 +102,61 @@ msgstr "Vliegtuig Registratie"
 msgid "Competition Number"
 msgstr "Wedstrijdregistratie"
 
-#: skylines/forms/pilot.py:31 skylines/templates/login.jinja:15
-#: skylines/templates/topbar.jinja:96
+#: skylines/forms/pilot.py:35 skylines/forms/pilot.py:123
 msgid "Password"
 msgstr "Wachtwoord"
 
-#: skylines/forms/pilot.py:32
+#: skylines/forms/pilot.py:36
 msgid "Your password must have at least 6 characters."
 msgstr "Uw paswoord moet uit minstens 6 karakters bestaan."
 
-#: skylines/forms/pilot.py:34
+#: skylines/forms/pilot.py:38
 msgid "Verify Password"
 msgstr "Bevestig wachtwoord"
 
-#: skylines/forms/pilot.py:35
+#: skylines/forms/pilot.py:39
 msgid "Your passwords do not match."
 msgstr "Uw paswoorden komen niet overeen."
 
-#: skylines/forms/pilot.py:40 skylines/forms/pilot.py:70 skylines/forms/pilot.py:94
+#: skylines/forms/pilot.py:44 skylines/forms/pilot.py:77
+#: skylines/forms/pilot.py:104 skylines/forms/pilot.py:119
 msgid "eMail Address"
 msgstr "EMail adres"
 
-#: skylines/forms/pilot.py:41
+#: skylines/forms/pilot.py:45 skylines/forms/pilot.py:78
+#: skylines/forms/pilot.py:105 skylines/forms/pilot.py:120
 msgid "Please enter your email address."
 msgstr "Voer uw e-mailadres in."
 
-#: skylines/forms/pilot.py:45
-msgid "Please enter your name."
+#: skylines/forms/pilot.py:48 skylines/forms/pilot.py:81
+msgid "First Name"
+msgstr ""
+
+#: skylines/forms/pilot.py:49 skylines/forms/pilot.py:82
+#, fuzzy
+#| msgid "Please enter your name."
+msgid "Please enter your first name."
 msgstr "Vul uw naam in."
 
-#: skylines/forms/pilot.py:50 skylines/forms/pilot.py:90
+#: skylines/forms/pilot.py:51 skylines/forms/pilot.py:84
+msgid "Last Name"
+msgstr ""
+
+#: skylines/forms/pilot.py:52 skylines/forms/pilot.py:85
+#, fuzzy
+#| msgid "Please enter your name."
+msgid "Please enter your last name."
+msgstr "Vul uw naam in."
+
+#: skylines/forms/pilot.py:57 skylines/forms/pilot.py:100
 msgid "A pilot with this email address exists already."
 msgstr "Een piloot met dit e-mail adres bestaat al."
 
-#: skylines/forms/pilot.py:64 skylines/templates/users/view.jinja:115
+#: skylines/forms/pilot.py:71 skylines/templates/users/view.jinja:115
 msgid "None"
 msgstr "Geen enkele"
 
-#: skylines/forms/pilot.py:66 skylines/templates/tracking/view.jinja:143
+#: skylines/forms/pilot.py:73 skylines/templates/tracking/view.jinja:137
 #: skylines/templates/users/view.jinja:117
 #, python-format
 msgid "%(num)u minute"
@@ -147,37 +164,47 @@ msgid_plural "%(num)u minutes"
 msgstr[0] "%(num)u minuut"
 msgstr[1] "%(num)u minuten"
 
-#: skylines/forms/pilot.py:77
+#: skylines/forms/pilot.py:87
 msgid "Tracking Delay"
 msgstr "Tracking vertraging"
 
-#: skylines/forms/pilot.py:78
+#: skylines/forms/pilot.py:88
 msgid "Unit Preset"
 msgstr "Standaardeenheid"
 
-#: skylines/forms/pilot.py:79
+#: skylines/forms/pilot.py:89
 msgid "Distance Unit"
 msgstr "Afstandseenheid"
 
-#: skylines/forms/pilot.py:80
+#: skylines/forms/pilot.py:90
 msgid "Speed Unit"
 msgstr "Snelheidseenheid"
 
-#: skylines/forms/pilot.py:81
+#: skylines/forms/pilot.py:91
 msgid "Lift Unit"
 msgstr "Stijgeenheid"
 
-#: skylines/forms/pilot.py:82
+#: skylines/forms/pilot.py:92
 msgid "Altitude Unit"
 msgstr "Hoogte-eenheid"
 
-#: skylines/forms/pilot.py:83
+#: skylines/forms/pilot.py:93
 msgid "Eye Candy"
 msgstr "Eye Candy"
 
-#: skylines/forms/pilot.py:101
+#: skylines/forms/pilot.py:111
 msgid "There is no pilot with this email address."
 msgstr "Er is geen piloot met dit e-mail adres."
+
+#: skylines/forms/pilot.py:124
+#, fuzzy
+#| msgid "Please enter your name."
+msgid "Please enter your password."
+msgstr "Vul uw naam in."
+
+#: skylines/forms/pilot.py:126
+msgid "Remember me"
+msgstr "Onthoud mij"
 
 #: skylines/forms/select.py:93
 msgid "Not a valid choice"
@@ -193,8 +220,7 @@ msgstr "Selecteer één of meerdere IGC of ZIP bestanden."
 
 #: skylines/lib/dbutil.py:24 skylines/lib/dbutil.py:42
 msgid "Sorry, the record id ({id}) that you requested is not a valid id."
-msgstr ""
-"Sorry, het record id ({id}) die je opgevraagd hebt is geen geldig id."
+msgstr "Sorry, het record id ({id}) die je opgevraagd hebt is geen geldig id."
 
 #: skylines/lib/dbutil.py:30
 msgid "Sorry, there is no such record ({id}) in our database."
@@ -202,11 +228,11 @@ msgstr "Sorry, er is geen record ({id}) in onze database."
 
 #: skylines/lib/dbutil.py:60
 msgid ""
-"Sorry, {num_missing} of the requested records ({ids}) do not exist in our "
-"database."
+"Sorry, {num_missing} of the requested records ({ids}) do not exist in our"
+" database."
 msgstr ""
-"Sorry, {num_missing} van de opgevraagde records ({ids}) staan niet in onze "
-"database."
+"Sorry, {num_missing} van de opgevraagde records ({ids}) staan niet in "
+"onze database."
 
 #: skylines/lib/formatter/units.py:44
 msgid "Custom"
@@ -230,8 +256,7 @@ msgstr "Amerikaans (imperial)"
 
 #: skylines/templates/about.jinja:9
 msgid "Welcome to SkyLines, your internet platform for flight sharing!"
-msgstr ""
-"Welkom bij SkyLines, het internet platform voor het delen van vluchten!"
+msgstr "Welkom bij SkyLines, het internet platform voor het delen van vluchten!"
 
 #: skylines/templates/about.jinja:28
 msgid "Flight Database"
@@ -241,22 +266,24 @@ msgstr "Vluchten Database"
 #, python-format
 msgid ""
 "<a href=\"%(url)s\">Upload</a> your IGC files and share them with your "
-"friends. We won't change your files or restrict you from downloading them "
-"again!"
+"friends. We won't change your files or restrict you from downloading them"
+" again!"
 msgstr ""
-"<a href=\"%(url)s\">Upload</a> je IGC bestand en deel ze met je vrienden. We "
-"zullen je bestanden niet aanpassen, of je beletten ze opnieuw te downloaden"
+"<a href=\"%(url)s\">Upload</a> je IGC bestand en deel ze met je vrienden."
+" We zullen je bestanden niet aanpassen, of je beletten ze opnieuw te "
+"downloaden"
 
 #: skylines/templates/about.jinja:32 skylines/templates/tracking/info.jinja:4
 #: skylines/templates/tracking/list.jinja:9
+#: skylines/templates/tracking/map2.jinja:6
 msgid "Live Tracking"
 msgstr "Live Tracking"
 
 #: skylines/templates/about.jinja:33
 #, python-format
 msgid ""
-"Use your mobile phone to send position updates to SkyLines. Find out how it "
-"works <a href=\"%(url)s\">here</a>."
+"Use your mobile phone to send position updates to SkyLines. Find out how "
+"it works <a href=\"%(url)s\">here</a>."
 msgstr ""
 "Gebruik je mobiele telefoon om je locatie updates door te sturen naar "
 "SkyLines. Hoe het werkt vind je <a href=\"%(url)s\">hier</a>."
@@ -288,8 +315,8 @@ msgid ""
 "Use your browser to plan your tasks before the flight and upload them "
 "quickly to your flight computer. Integration of %(prosoar)s is planned."
 msgstr ""
-"Gebruik uw browser om een opdracht te plannen voor uw vlucht en upload ze "
-"snel naar uw vlucht computer. Integratie van %(prosoar)s is gepland."
+"Gebruik uw browser om een opdracht te plannen voor uw vlucht en upload ze"
+" snel naar uw vlucht computer. Integratie van %(prosoar)s is gepland."
 
 #: skylines/templates/about.jinja:46
 msgid "Competitions"
@@ -297,11 +324,11 @@ msgstr "Wedstrijden"
 
 #: skylines/templates/about.jinja:47
 msgid ""
-"Create competitions to offer your spectators an even better live tracking "
-"experience by following all the participants on the same map."
+"Create competitions to offer your spectators an even better live tracking"
+" experience by following all the participants on the same map."
 msgstr ""
-"Maak wedstrijden aan om je toeschouwers een betere ervaring te geven door "
-"alle deelnemers op dezelfde map te laten zien."
+"Maak wedstrijden aan om je toeschouwers een betere ervaring te geven door"
+" alle deelnemers op dezelfde map te laten zien."
 
 #: skylines/templates/about.jinja:50
 msgid "Achievements"
@@ -309,13 +336,13 @@ msgstr "Prestaties"
 
 #: skylines/templates/about.jinja:51
 msgid ""
-"Challenge yourself by trying to complete all the achievements that SkyLines "
-"offers. Fly large triangles, long final glides or just do your first "
-"outlanding."
+"Challenge yourself by trying to complete all the achievements that "
+"SkyLines offers. Fly large triangles, long final glides or just do your "
+"first outlanding."
 msgstr ""
-"Daag jezelf uit door te alle uitdagingen te voltooien die SkyLines aanbiedt. "
-"Vlieg grote driehoeken, lange final glides of landt gewoon voor de eerste "
-"maal buiten."
+"Daag jezelf uit door te alle uitdagingen te voltooien die SkyLines "
+"aanbiedt. Vlieg grote driehoeken, lange final glides of landt gewoon voor"
+" de eerste maal buiten."
 
 #: skylines/templates/about.jinja:56
 msgid "Social Network"
@@ -324,13 +351,13 @@ msgstr "Sociaal netwerk"
 #: skylines/templates/about.jinja:57
 #, python-format
 msgid ""
-"Skylines also has some social network aspects. You can comment on flights, "
-"follow your friends and get <a href=\"%(url)s\">notifications</a> if they do "
-"anything interesting."
+"Skylines also has some social network aspects. You can comment on "
+"flights, follow your friends and get <a "
+"href=\"%(url)s\">notifications</a> if they do anything interesting."
 msgstr ""
 "SkyLines heeft ook sociale netwerkaspecten. Je kan commentaar geven bij "
-"vluchten, je vrienden volgen en <a href=\"%(url)s\">notificaties</a> krijgen "
-"als ze iets interessants doen."
+"vluchten, je vrienden volgen en <a href=\"%(url)s\">notificaties</a> "
+"krijgen als ze iets interessants doen."
 
 #: skylines/templates/about.jinja:60
 msgid "Open Data"
@@ -343,8 +370,8 @@ msgid ""
 "Skylines is using waypoint data from the %(welt2000)s project."
 msgstr ""
 "De SkyLines vluchten database wordt beschikbaar gemaakt onder de "
-"%(license)s. SkyLines maakt gebruik van de keerpuntdata van het %(welt2000)s "
-"project."
+"%(license)s. SkyLines maakt gebruik van de keerpuntdata van het "
+"%(welt2000)s project."
 
 #: skylines/templates/about.jinja:64
 msgid "Open Source"
@@ -353,8 +380,8 @@ msgstr "Opensource"
 #: skylines/templates/about.jinja:65
 #, python-format
 msgid ""
-"Skylines is a <a href=\"%(team_url)s\">community</a> project and entirely "
-"based on free software (<a href=\"%(license_url)s\">License</a>). Visit "
+"Skylines is a <a href=\"%(team_url)s\">community</a> project and entirely"
+" based on free software (<a href=\"%(license_url)s\">License</a>). Visit "
 "%(github)s if you want to help!"
 msgstr ""
 "Skylines is een <a href=\"%(team_url)s\">gemeenschaps</a> project en "
@@ -370,34 +397,27 @@ msgstr "Het SkyLines Team"
 msgid "Imprint"
 msgstr "Afdruk"
 
-#: skylines/templates/login.jinja:4 skylines/templates/login.jinja:25
-#: skylines/templates/topbar.jinja:75 skylines/templates/topbar.jinja:81
-#: skylines/templates/topbar.jinja:103
+#: skylines/templates/login.jinja:6 skylines/templates/login.jinja:15
+#: skylines/templates/topbar.jinja:76 skylines/templates/topbar.jinja:82
+#: skylines/templates/topbar.jinja:99
 msgid "Login"
 msgstr "Aanmelden"
 
-#: skylines/templates/login.jinja:11 skylines/templates/topbar.jinja:92
-msgid "Email Address"
-msgstr "E-mailadres"
-
-#: skylines/templates/login.jinja:21 skylines/templates/topbar.jinja:101
-msgid "Remember me"
-msgstr "Onthoud mij"
-
-#: skylines/templates/login.jinja:29 skylines/templates/topbar.jinja:107
+#: skylines/templates/login.jinja:21 skylines/templates/topbar.jinja:103
 msgid "Forgot password?"
 msgstr "Wachtwoord vergeten?"
 
-#: skylines/templates/login.jinja:32 skylines/templates/topbar.jinja:110
+#: skylines/templates/login.jinja:25 skylines/templates/topbar.jinja:106
 msgid "Don't have an account?"
 msgstr "Nog geen account?"
 
-#: skylines/templates/topbar.jinja:4
+#: skylines/templates/topbar.jinja:5
 msgid "Live"
 msgstr "Live"
 
-#: skylines/templates/topbar.jinja:5 skylines/templates/topbar.jinja:138
-#: skylines/templates/clubs/list.jinja:20 skylines/templates/clubs/view.jinja:50
+#: skylines/templates/topbar.jinja:6 skylines/templates/topbar.jinja:134
+#: skylines/templates/clubs/list.jinja:20
+#: skylines/templates/clubs/view.jinja:50
 #: skylines/templates/flights/list.jinja:27
 #: skylines/templates/ranking/airports.jinja:11
 #: skylines/templates/ranking/clubs.jinja:10
@@ -408,16 +428,18 @@ msgstr "Live"
 #: skylines/templates/statistics/flights-table.jinja:6
 #: skylines/templates/statistics/years.jinja:66
 #: skylines/templates/users/users-table.jinja:27
-#: skylines/templates/users/view.jinja:162 skylines/templates/users/view.jinja:240
+#: skylines/templates/users/view.jinja:162
+#: skylines/templates/users/view.jinja:240
 msgid "Flights"
 msgstr "Vluchten"
 
-#: skylines/templates/topbar.jinja:6 skylines/templates/ranking/layout.jinja:17
+#: skylines/templates/topbar.jinja:7 skylines/templates/ranking/layout.jinja:17
 msgid "Ranking"
 msgstr "Klassement"
 
-#: skylines/templates/topbar.jinja:7 skylines/templates/topbar.jinja:139
-#: skylines/templates/clubs/list.jinja:21 skylines/templates/clubs/view.jinja:51
+#: skylines/templates/topbar.jinja:8 skylines/templates/topbar.jinja:135
+#: skylines/templates/clubs/list.jinja:21
+#: skylines/templates/clubs/view.jinja:51
 #: skylines/templates/flights/view.jinja:178
 #: skylines/templates/search/list.jinja:101
 #: skylines/templates/search/list.jinja:105
@@ -428,22 +450,23 @@ msgstr "Klassement"
 msgid "Statistics"
 msgstr "Statistieken"
 
-#: skylines/templates/topbar.jinja:8 skylines/templates/topbar.jinja:47
-#: skylines/templates/search/list.jinja:11 skylines/templates/search/list.jinja:21
+#: skylines/templates/topbar.jinja:9 skylines/templates/topbar.jinja:48
+#: skylines/templates/search/list.jinja:11
+#: skylines/templates/search/list.jinja:21
 msgid "Search"
 msgstr "Zoeken"
 
-#: skylines/templates/topbar.jinja:53 skylines/templates/topbar.jinja:56
+#: skylines/templates/topbar.jinja:54 skylines/templates/topbar.jinja:57
 #: skylines/templates/flights/list.jinja:264
 msgid "Upload flight"
 msgstr "Upload Vlucht"
 
-#: skylines/templates/topbar.jinja:118 skylines/templates/topbar.jinja:119
+#: skylines/templates/topbar.jinja:114 skylines/templates/topbar.jinja:115
 #: skylines/templates/notifications/list.jinja:8
 msgid "Notifications"
 msgstr "Meldingen"
 
-#: skylines/templates/topbar.jinja:141
+#: skylines/templates/topbar.jinja:137
 msgid "Logout"
 msgstr "Afmelden"
 
@@ -452,6 +475,11 @@ msgstr "Afmelden"
 #: skylines/templates/clubs/pilots.jinja:21
 msgid "Create Pilot"
 msgstr "Nieuwe Vlieger"
+
+#: skylines/templates/clubs/create_pilot.jinja:12
+#: skylines/templates/users/edit.jinja:12 skylines/templates/users/new.jinja:12
+msgid "First and last name"
+msgstr ""
 
 #: skylines/templates/clubs/edit.jinja:6
 msgid "Edit Club"
@@ -464,16 +492,18 @@ msgstr "Bewerk Club"
 #: skylines/templates/flights/details-table.jinja:123
 #: skylines/templates/users/change_club.jinja:17
 #: skylines/templates/users/change_password.jinja:14
-#: skylines/templates/users/edit.jinja:23 skylines/templates/users/new.jinja:17
+#: skylines/templates/users/edit.jinja:23
 #: skylines/templates/users/view.jinja:137
 msgid "Change"
 msgstr "Wijzigen"
 
-#: skylines/templates/clubs/list.jinja:5 skylines/templates/ranking/layout.jinja:10
+#: skylines/templates/clubs/list.jinja:5
+#: skylines/templates/ranking/layout.jinja:10
 msgid "Clubs"
 msgstr "Clubs"
 
-#: skylines/templates/clubs/list.jinja:22 skylines/templates/clubs/view.jinja:52
+#: skylines/templates/clubs/list.jinja:22
+#: skylines/templates/clubs/view.jinja:52
 #: skylines/templates/search/list.jinja:103
 msgid "Members"
 msgstr "Leden"
@@ -492,7 +522,8 @@ msgstr "Aangemaakt"
 msgid "%(time_ago)s by %(creator)s"
 msgstr "%(time_ago)s door %(creator)s"
 
-#: skylines/templates/clubs/view.jinja:47 skylines/templates/users/view.jinja:146
+#: skylines/templates/clubs/view.jinja:47
+#: skylines/templates/users/view.jinja:146
 msgid "Edit"
 msgstr "Bewerken"
 
@@ -606,12 +637,14 @@ msgstr "Verwijder"
 #: skylines/templates/flights/phases-table.jinja:73
 #: skylines/templates/statistics/distance-table.jinja:6
 #: skylines/templates/statistics/years.jinja:69
-#: skylines/templates/users/view.jinja:206 skylines/templates/users/view.jinja:244
+#: skylines/templates/users/view.jinja:206
+#: skylines/templates/users/view.jinja:244
 msgid "Distance"
 msgstr "Afstand"
 
 #: skylines/templates/flights/flights-table.jinja:12
-#: skylines/templates/search/list.jinja:67 skylines/templates/search/list.jinja:77
+#: skylines/templates/search/list.jinja:67
+#: skylines/templates/search/list.jinja:77
 msgid "Airport"
 msgstr "Vliegveld"
 
@@ -656,8 +689,7 @@ msgstr "Vluchten <small>op %(date)s</small>"
 #: skylines/templates/flights/macros.jinja:5
 #, python-format
 msgid "%(distance)s on %(date)s <small>by %(pilot)s and %(co_pilot)s</small>"
-msgstr ""
-"%(distance)s op %(date)s <small>door %(pilot)s en %(co_pilot)s</small>"
+msgstr "%(distance)s op %(date)s <small>door %(pilot)s en %(co_pilot)s</small>"
 
 #: skylines/templates/flights/macros.jinja:12
 #, python-format
@@ -736,14 +768,13 @@ msgid "Comments"
 msgstr "Reacties"
 
 #: skylines/templates/flights/view.jinja:189
-#: skylines/templates/tracking/view.jinja:157
+#: skylines/templates/tracking/view.jinja:164
 msgid "Full-screen map"
 msgstr "Volledig scherm"
 
 #: skylines/templates/flights/view.jinja:192
 msgid "Activate this to show the flight on top of other flights on the map"
-msgstr ""
-"Activeer dit om deze vlucht bovenop andere vluchten op de kaart te tonen."
+msgstr "Activeer dit om deze vlucht bovenop andere vluchten op de kaart te tonen."
 
 #: skylines/templates/flights/view.jinja:213
 msgid "No comments yet."
@@ -798,8 +829,8 @@ msgstr "Nieuw"
 #: skylines/templates/notifications/events-table.jinja:91
 #, python-format
 msgid ""
-"<strong>%(pilot)s</strong> commented on your <strong>%(distance)s</strong> "
-"flight on the <strong>%(date)s</strong>."
+"<strong>%(pilot)s</strong> commented on your "
+"<strong>%(distance)s</strong> flight on the <strong>%(date)s</strong>."
 msgstr ""
 "<strong>%(pilot)s</strong> heeft gereageerd op jouw vlucht van "
 "<strong>%(distance)s</strong> op <strong>%(date)s</strong>."
@@ -866,8 +897,7 @@ msgstr "U volgt <strong>%(pilot)s</strong>."
 
 #: skylines/templates/notifications/events-table.jinja:139
 #, python-format
-msgid ""
-"<strong>%(pilot)s</strong> started following <strong>%(pilot2)s</strong>."
+msgid "<strong>%(pilot)s</strong> started following <strong>%(pilot2)s</strong>."
 msgstr "<strong>%(pilot)s</strong> volgt <strong>%(pilot2)s</strong>."
 
 #: skylines/templates/notifications/events-table.jinja:146
@@ -878,8 +908,8 @@ msgstr "U volgt <strong>%(num_pilots)s</strong> andere piloten."
 #: skylines/templates/notifications/events-table.jinja:148
 #, python-format
 msgid ""
-"<strong>%(pilot)s</strong> started following <strong>%(num_pilots)s</strong> "
-"other pilots."
+"<strong>%(pilot)s</strong> started following "
+"<strong>%(num_pilots)s</strong> other pilots."
 msgstr ""
 "<strong>%(pilot)s</strong> volgt <strong>%(num_pilots)s</strong> andere "
 "piloten."
@@ -988,7 +1018,7 @@ msgstr "gem. %(distance)s per vlucht"
 #: skylines/templates/statistics/distance-table.jinja:29
 #: skylines/templates/statistics/duration-table.jinja:29
 #: skylines/templates/statistics/flights-table.jinja:25
-#: skylines/views/flight.py:172
+#: skylines/views/flight.py:173
 msgid "Total"
 msgstr "Totaal"
 
@@ -1046,19 +1076,19 @@ msgstr "Wat is dit?"
 
 #: skylines/templates/tracking/info.jinja:9
 msgid ""
-"SkyLines Live Tracking can be used to let others take part on your journeys "
-"while you're flying. It uses a very light-weight protocol that only "
-"transmits the necessary data and due to that it can also work in "
-"areas/altitudes where the reception isn't very good. To give you an example: "
-"A flight of 10 hours only uses about 340 KB of traffic when the positions "
-"are transmitted every 5 seconds!"
+"SkyLines Live Tracking can be used to let others take part on your "
+"journeys while you're flying. It uses a very light-weight protocol that "
+"only transmits the necessary data and due to that it can also work in "
+"areas/altitudes where the reception isn't very good. To give you an "
+"example: A flight of 10 hours only uses about 340 KB of traffic when the "
+"positions are transmitted every 5 seconds!"
 msgstr ""
 "SkyLines Live Tracking kan gebuikt worden om je avonturen met anderen te "
 "delen terwijl je vlucht. Het gebruikt een zeer lichtgewicht protocol wat "
 "alleen noodzakelijke informatie verstuurt, waardoor het ook werkt in "
 "gebieden waar de ontvangst niet goed is. Om een voorbeeld te geven: een "
-"vlucht van 10 uur gebruikt slechts 340KB verkeer wanneer je elke 5 seconden "
-"je positie verstuurt!"
+"vlucht van 10 uur gebruikt slechts 340KB verkeer wanneer je elke 5 "
+"seconden je positie verstuurt!"
 
 #: skylines/templates/tracking/info.jinja:12
 msgid "Clients"
@@ -1085,9 +1115,9 @@ msgstr "LiveTrack24 gebruikers"
 #, python-format
 msgid ""
 "You can also use all available applications that use the %(livetrack24)s "
-"protocol for sending your locations to SkyLines. Just use your Live Tracking "
-"Key as username, choose any password you want and configure %(server)s as "
-"the server."
+"protocol for sending your locations to SkyLines. Just use your Live "
+"Tracking Key as username, choose any password you want and configure "
+"%(server)s as the server."
 msgstr ""
 
 #: skylines/templates/tracking/info.jinja:24
@@ -1109,19 +1139,18 @@ msgstr "Genereer nieuwe key"
 msgid ""
 "You have to <a href=\"%(url)s\">login</a> to see you own personal Live "
 "Tracking key."
-msgstr ""
-"Je moet <a href=\"%(url)s\">inloggen</a> om je Live Tracking key te zien."
+msgstr "Je moet <a href=\"%(url)s\">inloggen</a> om je Live Tracking key te zien."
 
 #: skylines/templates/tracking/info.jinja:39
 #, python-format
 msgid ""
 "In %(xcsoar)s, open the <em>Setup System</em> dialog, click on "
-"<em>Setup</em> and then <em>Tracking</em>.  Turn SkyLines tracking on, and "
-"enter your Live Tracking key."
+"<em>Setup</em> and then <em>Tracking</em>.  Turn SkyLines tracking on, "
+"and enter your Live Tracking key."
 msgstr ""
-"In %(xcsoar)s, open het <em>Setup System</em> scherm, klik op <em>Setup</em> "
-"en dan <em>Tracking</em>.  Zet SkyLines tracking aan, en vul je Live "
-"Tracking key in."
+"In %(xcsoar)s, open het <em>Setup System</em> scherm, klik op "
+"<em>Setup</em> en dan <em>Tracking</em>.  Zet SkyLines tracking aan, en "
+"vul je Live Tracking key in."
 
 #: skylines/templates/tracking/list.jinja:20
 msgid "Friends"
@@ -1147,43 +1176,60 @@ msgstr "Dichtsbijzijnde vliegveld"
 msgid "Altitude"
 msgstr "Hoogte"
 
-#: skylines/templates/tracking/map.jinja:10
-#: skylines/templates/tracking/view.jinja:10
+#: skylines/templates/tracking/map.jinja:11
+#: skylines/templates/tracking/view.jinja:11
 #, python-format
 msgid "Live Tracking <small>of %(pilot)s</small>"
 msgstr "Live Tracking <small>van %(pilot)s</small>"
 
-#: skylines/templates/tracking/map.jinja:137
-#: skylines/templates/tracking/view.jinja:173
+#: skylines/templates/tracking/map.jinja:13
+#: skylines/templates/tracking/view.jinja:13
+#, fuzzy, python-format
+#| msgid "Live Tracking <small>of %(pilot)s</small>"
+msgid "Live Tracking <small>of %(pilot)s and %(other_pilot)s</small>"
+msgstr "Live Tracking <small>van %(pilot)s</small>"
+
+#: skylines/templates/tracking/map.jinja:15
+#: skylines/templates/tracking/view.jinja:15
+#, fuzzy, python-format
+#| msgid "Live Tracking <small>of %(pilot)s</small>"
+msgid "Live Tracking <small>of %(pilot)s and %(num_pilots)d other pilots</small>"
+msgstr "Live Tracking <small>van %(pilot)s</small>"
+
+#: skylines/templates/tracking/map.jinja:132
+#: skylines/templates/tracking/view.jinja:177
 msgid "There is no live track of this pilot currently."
 msgstr "Er is momenteel geen live track van deze vlieger."
 
-#: skylines/templates/tracking/view.jinja:140
+#: skylines/templates/tracking/map.jinja:134
+#: skylines/templates/tracking/view.jinja:179
+#, fuzzy
+#| msgid "There is no live track of this pilot currently."
+msgid "There are no live tracks of these pilots currently."
+msgstr "Er is momenteel geen live track van deze vlieger."
+
+#: skylines/templates/tracking/view.jinja:134
 msgid "This pilot chose to delay the display of his live tracks."
 msgstr ""
 "Deze vlieger heeft besloten om het bekijken van zijn live tracks te "
 "vertragen."
 
-#: skylines/templates/tracking/view.jinja:140
+#: skylines/templates/tracking/view.jinja:134
 msgid "Delay"
 msgstr "Vertraging"
 
-#: skylines/templates/tracking/view.jinja:146
-msgid ""
-"The live tracking delay is ignored because of your account privileges."
+#: skylines/templates/tracking/view.jinja:140
+msgid "The live tracking delay is ignored because of your account privileges."
 msgstr ""
-"De live tracking vertraging wordt genegeerd, omdat je niet voldoende rechten "
-"hebt."
+"De live tracking vertraging wordt genegeerd, omdat je niet voldoende "
+"rechten hebt."
 
-#: skylines/templates/tracking/view.jinja:146
+#: skylines/templates/tracking/view.jinja:140
 msgid "ignored"
 msgstr "genegeerd"
 
-#: skylines/templates/tracking/view.jinja:163
-msgid "Your Live Tracking settings"
-msgstr "Je Live Tracking instellingen"
-
-#: skylines/templates/upload/form.jinja:6 skylines/templates/upload/result.jinja:4
+#: skylines/templates/upload/form.jinja:6
+#: skylines/templates/upload/result.jinja:4
 msgid "Upload Flight"
 msgstr "Upload Vlucht"
 
@@ -1197,11 +1243,11 @@ msgstr "Uw vluchten zijn opgeslagen."
 
 #: skylines/templates/upload/result.jinja:13
 msgid ""
-"Your flights have been saved. You may want to change the flights aircraft "
-"types and registrations below."
+"Your flights have been saved. You may want to change the flights aircraft"
+" types and registrations below."
 msgstr ""
-"Je vluchten zijn opgeslagen. Hieronder kan je de vluchten, vliegtuigtypen en "
-"registraties wijzigen."
+"Je vluchten zijn opgeslagen. Hieronder kan je de vluchten, vliegtuigtypen"
+" en registraties wijzigen."
 
 #: skylines/templates/upload/result.jinja:16
 #: skylines/templates/upload/result.jinja:72
@@ -1267,7 +1313,7 @@ msgstr "Bewerk Gebruiker"
 msgid "Users"
 msgstr "Gebruikers"
 
-#: skylines/templates/users/new.jinja:6
+#: skylines/templates/users/new.jinja:6 skylines/templates/users/new.jinja:17
 msgid "Register"
 msgstr "Registreren"
 
@@ -1341,55 +1387,58 @@ msgstr "Vertalers"
 msgid "License"
 msgstr "Licentie"
 
-#: skylines/views/flight.py:169
+#: skylines/views/flight.py:170
 msgid "Left"
 msgstr "Links"
 
-#: skylines/views/flight.py:170
+#: skylines/views/flight.py:171
 msgid "Mixed"
 msgstr "Gemengd"
 
-#: skylines/views/flight.py:171
+#: skylines/views/flight.py:172
 msgid "Right"
 msgstr "Rechts"
 
-#: skylines/views/flight.py:175
+#: skylines/views/flight.py:176
 msgid "Powered"
 msgstr "gemotoriseerd"
 
-#: skylines/views/flight.py:176
+#: skylines/views/flight.py:177
 msgid "Circling"
 msgstr "Thermieken"
 
-#: skylines/views/flight.py:177
+#: skylines/views/flight.py:178
 msgid "Cruise"
 msgstr "Kruisvlucht"
 
-#: skylines/views/flight.py:458
+#: skylines/views/flight.py:460
 msgid "Delete Flight"
 msgstr "Vlucht verwijderen"
 
-#: skylines/views/flight.py:459
+#: skylines/views/flight.py:461
 msgid "Are you sure you want to delete this flight?"
 msgstr "Bent u zeker dat u deze vlucht wilt verwijderen?"
 
-#: skylines/views/flight.py:466
+#: skylines/views/flight.py:468
 msgid "You have to be logged in to post comments!"
 msgstr "Je moet ingelogt zijn om comments te plaatsen!"
 
-#: skylines/views/login.py:44
+#: skylines/views/login.py:57
 #, python-format
 msgid "You are now logged in. Welcome back, %(user)s!"
 msgstr "Je bent nu ingelogt. Welkom %(user)s!"
 
-#: skylines/views/login.py:46
-msgid ""
-"Sorry, email address or password are wrong. Please try again or register."
-msgstr ""
-"Helaas, email adres of wachtwoord is onjuist. Probeer het alsjeblieft "
-"opnieuw of registreer een gebruikersnaam."
+#: skylines/views/login.py:60
+#, fuzzy
+#| msgid "Please enter your email address."
+msgid "Login failed. Please check your eMail address."
+msgstr "Voer uw e-mailadres in."
 
-#: skylines/views/login.py:56
+#: skylines/views/login.py:61
+msgid "Login failed. Please check your password."
+msgstr ""
+
+#: skylines/views/login.py:68
 msgid "You are now logged out. We hope to see you back soon!"
 msgstr "Je bent nu uitgelogt. Hopelijk tot snel!"
 
@@ -1415,24 +1464,39 @@ msgstr "Geen vlucht gevonden in bestand"
 
 #: skylines/views/upload.py:178
 msgid ""
-"Sorry, some error happened when updating your flight(s). Please contact a "
-"administrator for help."
+"Sorry, some error happened when updating your flight(s). Please contact a"
+" administrator for help."
 msgstr ""
-"Sorry, er is ergens een fout opgetreden bij het uploaden van je vlucht(en). "
-"Neem alsjeblieft contact op met een admin voor hulp."
+"Sorry, er is ergens een fout opgetreden bij het uploaden van je "
+"vlucht(en). Neem alsjeblieft contact op met een admin voor hulp."
 
-#: skylines/views/upload.py:224
+#: skylines/views/upload.py:227
 msgid "Your flight(s) have been successfully updated."
 msgstr "Je vluchten zijn succesvol geüpdate."
 
-#: skylines/views/users.py:124
+#: skylines/views/users.py:123
 msgid ""
 "The mail server is currently not reachable. Please try again later or "
 "contact the developers."
 msgstr ""
-"De mail server is momenteel niet bereikbaar. Probeer het later nog eens, of "
-"neem contact op met de ontwikkelaars."
+"De mail server is momenteel niet bereikbaar. Probeer het later nog eens, "
+"of neem contact op met de ontwikkelaars."
 
-#: skylines/views/users.py:149
+#: skylines/views/users.py:148
 msgid "Password changed."
 msgstr "Wachtwoord is veranderd."
+
+#~ msgid "Email Address"
+#~ msgstr "E-mailadres"
+
+#~ msgid "Your Live Tracking settings"
+#~ msgstr "Je Live Tracking instellingen"
+
+#~ msgid ""
+#~ "Sorry, email address or password are "
+#~ "wrong. Please try again or register."
+#~ msgstr ""
+#~ "Helaas, email adres of wachtwoord is "
+#~ "onjuist. Probeer het alsjeblieft opnieuw "
+#~ "of registreer een gebruikersnaam."
+
