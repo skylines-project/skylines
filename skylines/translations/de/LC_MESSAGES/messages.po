@@ -130,23 +130,19 @@ msgstr "Bitte gib deine E-Mail-Adresse ein."
 
 #: skylines/forms/pilot.py:48 skylines/forms/pilot.py:81
 msgid "First Name"
-msgstr ""
+msgstr "Vorname"
 
 #: skylines/forms/pilot.py:49 skylines/forms/pilot.py:82
-#, fuzzy
-#| msgid "Please enter your name."
 msgid "Please enter your first name."
-msgstr "Bitte gib deinen Namen an."
+msgstr "Bitte gib deinen Vornamen an."
 
 #: skylines/forms/pilot.py:51 skylines/forms/pilot.py:84
 msgid "Last Name"
-msgstr ""
+msgstr "Nachname"
 
 #: skylines/forms/pilot.py:52 skylines/forms/pilot.py:85
-#, fuzzy
-#| msgid "Please enter your name."
 msgid "Please enter your last name."
-msgstr "Bitte gib deinen Namen an."
+msgstr "Bitte gib deinen Nachnamen an."
 
 #: skylines/forms/pilot.py:57 skylines/forms/pilot.py:100
 msgid "A pilot with this email address exists already."
@@ -197,10 +193,8 @@ msgid "There is no pilot with this email address."
 msgstr "Ein Pilot mit dieser E-Mail-Adresse existiert nicht."
 
 #: skylines/forms/pilot.py:124
-#, fuzzy
-#| msgid "Please enter your name."
 msgid "Please enter your password."
-msgstr "Bitte gib deinen Namen an."
+msgstr "Bitte gib dein Passwort an."
 
 #: skylines/forms/pilot.py:126
 msgid "Remember me"
@@ -482,7 +476,7 @@ msgstr "Pilot erstellen"
 #: skylines/templates/clubs/create_pilot.jinja:12
 #: skylines/templates/users/edit.jinja:12 skylines/templates/users/new.jinja:12
 msgid "First and last name"
-msgstr ""
+msgstr "Vor- und Nachname"
 
 #: skylines/templates/clubs/edit.jinja:6
 msgid "Edit Club"
@@ -1195,17 +1189,15 @@ msgstr "Live Tracking <small>von %(pilot)s</small>"
 
 #: skylines/templates/tracking/map.jinja:13
 #: skylines/templates/tracking/view.jinja:13
-#, fuzzy, python-format
-#| msgid "Live Tracking <small>of %(pilot)s</small>"
+#, python-format
 msgid "Live Tracking <small>of %(pilot)s and %(other_pilot)s</small>"
-msgstr "Live Tracking <small>von %(pilot)s</small>"
+msgstr "Live Tracking <small>von %(pilot)s und %(other_pilot)s</small>"
 
 #: skylines/templates/tracking/map.jinja:15
 #: skylines/templates/tracking/view.jinja:15
-#, fuzzy, python-format
-#| msgid "Live Tracking <small>of %(pilot)s</small>"
+#, python-format
 msgid "Live Tracking <small>of %(pilot)s and %(num_pilots)d other pilots</small>"
-msgstr "Live Tracking <small>von %(pilot)s</small>"
+msgstr "Live Tracking <small>von %(pilot)s und %(num_pilots)d anderen Piloten</small>"
 
 #: skylines/templates/tracking/map.jinja:132
 #: skylines/templates/tracking/view.jinja:177
@@ -1214,8 +1206,6 @@ msgstr "Von diesen Piloten gibt es gerade keinen Live Track."
 
 #: skylines/templates/tracking/map.jinja:134
 #: skylines/templates/tracking/view.jinja:179
-#, fuzzy
-#| msgid "There is no live track of this pilot currently."
 msgid "There are no live tracks of these pilots currently."
 msgstr "Von diesen Piloten gibt es gerade keinen Live Track."
 
@@ -1438,14 +1428,12 @@ msgid "You are now logged in. Welcome back, %(user)s!"
 msgstr "Du bist jetzt eingeloggt. Willkommen zurück, %(user)s!"
 
 #: skylines/views/login.py:60
-#, fuzzy
-#| msgid "Please enter your email address."
 msgid "Login failed. Please check your eMail address."
-msgstr "Bitte gib deine E-Mail-Adresse ein."
+msgstr "Login fehlgeschlagen. Bitte prüfe deine E-Mail-Adresse."
 
 #: skylines/views/login.py:61
 msgid "Login failed. Please check your password."
-msgstr ""
+msgstr "Login fehlgeschlagen. Bitte prüfe dein Passwort."
 
 #: skylines/views/login.py:68
 msgid "You are now logged out. We hope to see you back soon!"
