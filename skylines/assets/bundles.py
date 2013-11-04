@@ -29,12 +29,12 @@ fontawesome_webfont_svg = Bundle(
 # Twitter Bootstrap
 
 bootstrap_js = Bundle(
-    'https://netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js',
+    'https://netdna.bootstrapcdn.com/bootstrap/3.0.1/js/bootstrap.min.js',
     output='js/bootstrap-%(version)s.js')
 
 bootstrap_css = Bundle(
-    'https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css',
-    'https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-theme.min.css',
+    'https://netdna.bootstrapcdn.com/bootstrap/3.0.1/css/bootstrap.min.css',
+    'https://netdna.bootstrapcdn.com/bootstrap/3.0.1/css/bootstrap-theme.min.css',
     output='css/bootstrap-%(version)s.js')
 
 
@@ -49,6 +49,13 @@ flot_js = Bundle(
     'https://rawgithub.com/flot/flot/ccb37e4965967d7252cc99e3b2eea8fcec3c909a/excanvas.min.js',
     filters=SimpleClosureJS(disable_ie_checks=True),
     output='js/flot-%(version)s.js')
+
+
+# Respond.js
+
+respond_js = Bundle(
+    'https://cdnjs.cloudflare.com/ajax/libs/respond.js/1.3.0/respond.min.js',
+    output='js/respond-%(version)s.js')
 
 
 # SkyLines

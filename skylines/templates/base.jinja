@@ -4,6 +4,7 @@
     {%- block head %}
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
     <title>{% filter striptags %}{% block title %}{% endblock %}{% if self.title() %} - {% endif %}SkyLines{% endfilter %}</title>
 
@@ -16,6 +17,10 @@
     {%- endassets %}
     <link href='//fonts.googleapis.com/css?family=Ubuntu:300,400,700' rel='stylesheet' type='text/css'>
     {%- endblock %}
+
+    <!--[if lte IE 8]>
+    {% assets 'respond_js' -%}<script type="text/javascript" src="{{ ASSET_URL }}"></script>{%- endassets %}
+    <![endif]-->
 
     {%- endblock %}
 </head>
