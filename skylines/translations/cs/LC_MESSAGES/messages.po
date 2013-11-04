@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  skylines\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2013-10-09 22:02+0200\n"
+"POT-Creation-Date: 2013-11-04 23:29+0100\n"
 "PO-Revision-Date: 2013-07-14 01:47+0000\n"
 "Last-Translator: Karel Beneš <kb@karelbenes.cz>\n"
 "Language-Team: Czech <cs@li.org>\n"
@@ -15,7 +15,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Generated-By: Babel 1.3\n"
+"Generated-By: Babel 0.9.6\n"
 
 #: skylines/forms/aircraft_model.py:29
 msgid "Gliders"
@@ -45,20 +45,19 @@ msgstr "Ostatní"
 msgid "No club"
 msgstr ""
 
-#: skylines/forms/club.py:24 skylines/forms/pilot.py:56
+#: skylines/forms/club.py:24 skylines/forms/pilot.py:63
 #: skylines/templates/flights/details-table.jinja:151
 #: skylines/templates/flights/flights-table.jinja:13
 #: skylines/templates/ranking/pilots.jinja:10
 #: skylines/templates/search/list.jinja:65
 #: skylines/templates/search/list.jinja:75
-#: skylines/templates/tracking/view.jinja:133
+#: skylines/templates/tracking/view.jinja:127
 #: skylines/templates/users/users-table.jinja:8
 #: skylines/templates/users/view.jinja:125
 msgid "Club"
 msgstr "Club"
 
 #: skylines/forms/club.py:28 skylines/forms/club.py:36
-#: skylines/forms/pilot.py:44 skylines/forms/pilot.py:74
 #: skylines/templates/clubs/list.jinja:11
 #: skylines/templates/clubs/view.jinja:22
 #: skylines/templates/ranking/airports.jinja:10
@@ -83,7 +82,7 @@ msgstr "Webová stránka"
 #: skylines/templates/search/list.jinja:63
 #: skylines/templates/search/list.jinja:73
 #: skylines/templates/tracking/list.jinja:35
-#: skylines/templates/tracking/view.jinja:127
+#: skylines/templates/tracking/view.jinja:121
 msgid "Pilot"
 msgstr "Pilot"
 
@@ -103,47 +102,58 @@ msgstr "Imatrikulace"
 msgid "Competition Number"
 msgstr "Soutežní znak"
 
-#: skylines/forms/pilot.py:31 skylines/templates/login.jinja:15
-#: skylines/templates/topbar.jinja:96
+#: skylines/forms/pilot.py:35 skylines/forms/pilot.py:123
 msgid "Password"
 msgstr "Heslo"
 
-#: skylines/forms/pilot.py:32
+#: skylines/forms/pilot.py:36
 msgid "Your password must have at least 6 characters."
 msgstr ""
 
-#: skylines/forms/pilot.py:34
+#: skylines/forms/pilot.py:38
 msgid "Verify Password"
 msgstr "Ověření hesla"
 
-#: skylines/forms/pilot.py:35
+#: skylines/forms/pilot.py:39
 #, fuzzy
-#| msgid "Passwords do not match"
 msgid "Your passwords do not match."
 msgstr "Hesla se neshodují"
 
-#: skylines/forms/pilot.py:40 skylines/forms/pilot.py:70
-#: skylines/forms/pilot.py:94
+#: skylines/forms/pilot.py:44 skylines/forms/pilot.py:77
+#: skylines/forms/pilot.py:104 skylines/forms/pilot.py:119
 msgid "eMail Address"
 msgstr "e-mail"
 
-#: skylines/forms/pilot.py:41
+#: skylines/forms/pilot.py:45 skylines/forms/pilot.py:78
+#: skylines/forms/pilot.py:105 skylines/forms/pilot.py:120
 msgid "Please enter your email address."
 msgstr ""
 
-#: skylines/forms/pilot.py:45
-msgid "Please enter your name."
+#: skylines/forms/pilot.py:48 skylines/forms/pilot.py:81
+msgid "First Name"
 msgstr ""
 
-#: skylines/forms/pilot.py:50 skylines/forms/pilot.py:90
+#: skylines/forms/pilot.py:49 skylines/forms/pilot.py:82
+msgid "Please enter your first name."
+msgstr ""
+
+#: skylines/forms/pilot.py:51 skylines/forms/pilot.py:84
+msgid "Last Name"
+msgstr ""
+
+#: skylines/forms/pilot.py:52 skylines/forms/pilot.py:85
+msgid "Please enter your last name."
+msgstr ""
+
+#: skylines/forms/pilot.py:57 skylines/forms/pilot.py:100
 msgid "A pilot with this email address exists already."
 msgstr ""
 
-#: skylines/forms/pilot.py:64 skylines/templates/users/view.jinja:115
+#: skylines/forms/pilot.py:71 skylines/templates/users/view.jinja:115
 msgid "None"
 msgstr "Žádný"
 
-#: skylines/forms/pilot.py:66 skylines/templates/tracking/view.jinja:143
+#: skylines/forms/pilot.py:73 skylines/templates/tracking/view.jinja:137
 #: skylines/templates/users/view.jinja:117
 #, python-format
 msgid "%(num)u minute"
@@ -152,37 +162,45 @@ msgstr[0] "%(num)u minuta"
 msgstr[1] "%(num)u minut"
 msgstr[2] "%(num)u minut"
 
-#: skylines/forms/pilot.py:77
+#: skylines/forms/pilot.py:87
 msgid "Tracking Delay"
 msgstr "Zpoždění trackingu"
 
-#: skylines/forms/pilot.py:78
+#: skylines/forms/pilot.py:88
 msgid "Unit Preset"
 msgstr "Jednotky"
 
-#: skylines/forms/pilot.py:79
+#: skylines/forms/pilot.py:89
 msgid "Distance Unit"
 msgstr "Jednotka vzdálenosti"
 
-#: skylines/forms/pilot.py:80
+#: skylines/forms/pilot.py:90
 msgid "Speed Unit"
 msgstr "Jednotka rychlosti"
 
-#: skylines/forms/pilot.py:81
+#: skylines/forms/pilot.py:91
 msgid "Lift Unit"
 msgstr "Jednotka stoupání a kledání"
 
-#: skylines/forms/pilot.py:82
+#: skylines/forms/pilot.py:92
 msgid "Altitude Unit"
 msgstr "Jednotka výšky"
 
-#: skylines/forms/pilot.py:83
+#: skylines/forms/pilot.py:93
 msgid "Eye Candy"
 msgstr "Eye Candy"
 
-#: skylines/forms/pilot.py:101
+#: skylines/forms/pilot.py:111
 msgid "There is no pilot with this email address."
 msgstr ""
+
+#: skylines/forms/pilot.py:124
+msgid "Please enter your password."
+msgstr ""
+
+#: skylines/forms/pilot.py:126
+msgid "Remember me"
+msgstr "Zůstat přihlášen(a)"
 
 #: skylines/forms/select.py:93
 msgid "Not a valid choice"
@@ -253,6 +271,7 @@ msgstr ""
 
 #: skylines/templates/about.jinja:32 skylines/templates/tracking/info.jinja:4
 #: skylines/templates/tracking/list.jinja:9
+#: skylines/templates/tracking/map2.jinja:6
 msgid "Live Tracking"
 msgstr "Live Tracking"
 
@@ -354,33 +373,25 @@ msgstr ""
 msgid "Imprint"
 msgstr "Imprint"
 
-#: skylines/templates/login.jinja:4 skylines/templates/login.jinja:25
-#: skylines/templates/topbar.jinja:75 skylines/templates/topbar.jinja:81
-#: skylines/templates/topbar.jinja:103
+#: skylines/templates/login.jinja:6 skylines/templates/login.jinja:15
+#: skylines/templates/topbar.jinja:76 skylines/templates/topbar.jinja:82
+#: skylines/templates/topbar.jinja:99
 msgid "Login"
 msgstr "Přihlásit"
 
-#: skylines/templates/login.jinja:11 skylines/templates/topbar.jinja:92
-msgid "Email Address"
-msgstr "e-mailová adresa"
-
-#: skylines/templates/login.jinja:21 skylines/templates/topbar.jinja:101
-msgid "Remember me"
-msgstr "Zůstat přihlášen(a)"
-
-#: skylines/templates/login.jinja:29 skylines/templates/topbar.jinja:107
+#: skylines/templates/login.jinja:21 skylines/templates/topbar.jinja:103
 msgid "Forgot password?"
 msgstr "Zapoměli jste heslo?"
 
-#: skylines/templates/login.jinja:32 skylines/templates/topbar.jinja:110
+#: skylines/templates/login.jinja:25 skylines/templates/topbar.jinja:106
 msgid "Don't have an account?"
 msgstr "Nemáte účet?"
 
-#: skylines/templates/topbar.jinja:4
+#: skylines/templates/topbar.jinja:5
 msgid "Live"
 msgstr "Live"
 
-#: skylines/templates/topbar.jinja:5 skylines/templates/topbar.jinja:138
+#: skylines/templates/topbar.jinja:6 skylines/templates/topbar.jinja:134
 #: skylines/templates/clubs/list.jinja:20
 #: skylines/templates/clubs/view.jinja:50
 #: skylines/templates/flights/list.jinja:27
@@ -398,11 +409,11 @@ msgstr "Live"
 msgid "Flights"
 msgstr "Lety"
 
-#: skylines/templates/topbar.jinja:6 skylines/templates/ranking/layout.jinja:17
+#: skylines/templates/topbar.jinja:7 skylines/templates/ranking/layout.jinja:17
 msgid "Ranking"
 msgstr "Žebříček"
 
-#: skylines/templates/topbar.jinja:7 skylines/templates/topbar.jinja:139
+#: skylines/templates/topbar.jinja:8 skylines/templates/topbar.jinja:135
 #: skylines/templates/clubs/list.jinja:21
 #: skylines/templates/clubs/view.jinja:51
 #: skylines/templates/flights/view.jinja:178
@@ -415,24 +426,24 @@ msgstr "Žebříček"
 msgid "Statistics"
 msgstr "Statistika"
 
-#: skylines/templates/topbar.jinja:8 skylines/templates/topbar.jinja:47
+#: skylines/templates/topbar.jinja:9 skylines/templates/topbar.jinja:48
 #: skylines/templates/search/list.jinja:11
 #: skylines/templates/search/list.jinja:21
 msgid "Search"
 msgstr ""
 
-#: skylines/templates/topbar.jinja:53 skylines/templates/topbar.jinja:56
+#: skylines/templates/topbar.jinja:54 skylines/templates/topbar.jinja:57
 #: skylines/templates/flights/list.jinja:264
 #, fuzzy
 msgid "Upload flight"
 msgstr "Nahrát let"
 
-#: skylines/templates/topbar.jinja:118 skylines/templates/topbar.jinja:119
+#: skylines/templates/topbar.jinja:114 skylines/templates/topbar.jinja:115
 #: skylines/templates/notifications/list.jinja:8
 msgid "Notifications"
 msgstr "Upozornění"
 
-#: skylines/templates/topbar.jinja:141
+#: skylines/templates/topbar.jinja:137
 msgid "Logout"
 msgstr "Odhlásit"
 
@@ -441,6 +452,11 @@ msgstr "Odhlásit"
 #: skylines/templates/clubs/pilots.jinja:21
 msgid "Create Pilot"
 msgstr "Vytvořit pilota"
+
+#: skylines/templates/clubs/create_pilot.jinja:12
+#: skylines/templates/users/edit.jinja:12 skylines/templates/users/new.jinja:12
+msgid "First and last name"
+msgstr ""
 
 #: skylines/templates/clubs/edit.jinja:6
 msgid "Edit Club"
@@ -453,7 +469,7 @@ msgstr "Editovat klub"
 #: skylines/templates/flights/details-table.jinja:123
 #: skylines/templates/users/change_club.jinja:17
 #: skylines/templates/users/change_password.jinja:14
-#: skylines/templates/users/edit.jinja:23 skylines/templates/users/new.jinja:17
+#: skylines/templates/users/edit.jinja:23
 #: skylines/templates/users/view.jinja:137
 msgid "Change"
 msgstr "Změnit"
@@ -490,7 +506,6 @@ msgstr "Upravit"
 
 #: skylines/templates/flights/change_aircraft.jinja:6
 #, fuzzy
-#| msgid "Aircraft"
 msgid "Select Aircraft"
 msgstr "Typ letadla"
 
@@ -732,7 +747,7 @@ msgid "Comments"
 msgstr "Komentáře"
 
 #: skylines/templates/flights/view.jinja:189
-#: skylines/templates/tracking/view.jinja:157
+#: skylines/templates/tracking/view.jinja:164
 msgid "Full-screen map"
 msgstr "Mapa na celou obrazovku"
 
@@ -978,7 +993,7 @@ msgstr "průměr %(distance)s na let"
 #: skylines/templates/statistics/distance-table.jinja:29
 #: skylines/templates/statistics/duration-table.jinja:29
 #: skylines/templates/statistics/flights-table.jinja:25
-#: skylines/views/flight.py:172
+#: skylines/views/flight.py:173
 msgid "Total"
 msgstr "Celkem"
 
@@ -1138,36 +1153,53 @@ msgstr "Nejbližší letiště"
 msgid "Altitude"
 msgstr ""
 
-#: skylines/templates/tracking/map.jinja:10
-#: skylines/templates/tracking/view.jinja:10
+#: skylines/templates/tracking/map.jinja:11
+#: skylines/templates/tracking/view.jinja:11
 #, python-format
 msgid "Live Tracking <small>of %(pilot)s</small>"
 msgstr "Live Tracking <small>pilota %(pilot)s</small>"
 
-#: skylines/templates/tracking/map.jinja:137
-#: skylines/templates/tracking/view.jinja:173
+#: skylines/templates/tracking/map.jinja:13
+#: skylines/templates/tracking/view.jinja:13
+#, fuzzy, python-format
+#| msgid "Live Tracking <small>of %(pilot)s</small>"
+msgid "Live Tracking <small>of %(pilot)s and %(other_pilot)s</small>"
+msgstr "Live Tracking <small>pilota %(pilot)s</small>"
+
+#: skylines/templates/tracking/map.jinja:15
+#: skylines/templates/tracking/view.jinja:15
+#, fuzzy, python-format
+#| msgid "Live Tracking <small>of %(pilot)s</small>"
+msgid "Live Tracking <small>of %(pilot)s and %(num_pilots)d other pilots</small>"
+msgstr "Live Tracking <small>pilota %(pilot)s</small>"
+
+#: skylines/templates/tracking/map.jinja:132
+#: skylines/templates/tracking/view.jinja:177
 msgid "There is no live track of this pilot currently."
 msgstr "Právě teď není žádný live track pro tohoto pilota."
 
-#: skylines/templates/tracking/view.jinja:140
+#: skylines/templates/tracking/map.jinja:134
+#: skylines/templates/tracking/view.jinja:179
+#, fuzzy
+#| msgid "There is no live track of this pilot currently."
+msgid "There are no live tracks of these pilots currently."
+msgstr "Právě teď není žádný live track pro tohoto pilota."
+
+#: skylines/templates/tracking/view.jinja:134
 msgid "This pilot chose to delay the display of his live tracks."
 msgstr "Tento pilot nastavil prodlevu pro zobrazení jeho live tracků."
 
-#: skylines/templates/tracking/view.jinja:140
+#: skylines/templates/tracking/view.jinja:134
 msgid "Delay"
 msgstr "Prodleva"
 
-#: skylines/templates/tracking/view.jinja:146
+#: skylines/templates/tracking/view.jinja:140
 msgid "The live tracking delay is ignored because of your account privileges."
 msgstr "Prodleva live trackingu je z důvodu vašich oprávnění ignorována."
 
-#: skylines/templates/tracking/view.jinja:146
+#: skylines/templates/tracking/view.jinja:140
 msgid "ignored"
 msgstr "ignorováno"
-
-#: skylines/templates/tracking/view.jinja:163
-msgid "Your Live Tracking settings"
-msgstr "Vaše nastavení Live Trackingu"
 
 #: skylines/templates/upload/form.jinja:6
 #: skylines/templates/upload/result.jinja:4
@@ -1176,13 +1208,11 @@ msgstr "Nahrát let"
 
 #: skylines/templates/upload/form.jinja:14
 #, fuzzy
-#| msgid "Uploaded"
 msgid "Upload"
 msgstr "Odesláno"
 
 #: skylines/templates/upload/result.jinja:10
 #, fuzzy
-#| msgid "Your flight(s) have been successfully updated."
 msgid "Your flights have been saved."
 msgstr "Let byl aktualizaován."
 
@@ -1241,7 +1271,6 @@ msgstr "Pokud váš klub zatím není na SkyLines, tak ho vytvořte:"
 
 #: skylines/templates/users/change_club.jinja:29
 #, fuzzy
-#| msgid "Created"
 msgid "Create"
 msgstr "Vytvořeno"
 
@@ -1260,7 +1289,7 @@ msgstr "Upravit uživatele"
 msgid "Users"
 msgstr "Uživatelé"
 
-#: skylines/templates/users/new.jinja:6
+#: skylines/templates/users/new.jinja:6 skylines/templates/users/new.jinja:17
 msgid "Register"
 msgstr "Zaregistrovat"
 
@@ -1334,54 +1363,56 @@ msgstr ""
 msgid "License"
 msgstr "Licence"
 
-#: skylines/views/flight.py:169
+#: skylines/views/flight.py:170
 msgid "Left"
 msgstr "Vlevo"
 
-#: skylines/views/flight.py:170
+#: skylines/views/flight.py:171
 msgid "Mixed"
 msgstr "Smíšené"
 
-#: skylines/views/flight.py:171
+#: skylines/views/flight.py:172
 msgid "Right"
 msgstr "Vpravo"
 
-#: skylines/views/flight.py:175
+#: skylines/views/flight.py:176
 msgid "Powered"
 msgstr "S motorem"
 
-#: skylines/views/flight.py:176
+#: skylines/views/flight.py:177
 msgid "Circling"
 msgstr "Kroužení"
 
-#: skylines/views/flight.py:177
+#: skylines/views/flight.py:178
 msgid "Cruise"
 msgstr "Přeskok"
 
-#: skylines/views/flight.py:458
+#: skylines/views/flight.py:460
 msgid "Delete Flight"
 msgstr "Vymazat let"
 
-#: skylines/views/flight.py:459
+#: skylines/views/flight.py:461
 msgid "Are you sure you want to delete this flight?"
 msgstr "Opravdu chcete tento let smazat?"
 
-#: skylines/views/flight.py:466
+#: skylines/views/flight.py:468
 msgid "You have to be logged in to post comments!"
 msgstr "Pro vložení komentáře musíte být přihlášen(a)!"
 
-#: skylines/views/login.py:44
+#: skylines/views/login.py:57
 #, python-format
 msgid "You are now logged in. Welcome back, %(user)s!"
 msgstr "Jste přihlášen(a). Wítejte zpátky, %(user)s!"
 
-#: skylines/views/login.py:46
-msgid "Sorry, email address or password are wrong. Please try again or register."
+#: skylines/views/login.py:60
+msgid "Login failed. Please check your eMail address."
 msgstr ""
-"E-mail, nebo heslo je špatně. Zkuste to znovu, nebo se zaregistrujte, "
-"pokud nejste."
 
-#: skylines/views/login.py:56
+#: skylines/views/login.py:61
+msgid "Login failed. Please check your password."
+msgstr ""
+
+#: skylines/views/login.py:68
 msgid "You are now logged out. We hope to see you back soon!"
 msgstr "Odhlášení proběhlo úspěšně. Těšíme se na Vaši další návštěvu!"
 
@@ -1413,11 +1444,11 @@ msgstr ""
 "Omlouváme se, během aktualizace vašeho letu se vyskytla chyba. Pro pomoc "
 "prosím kontaktujte  administrátora."
 
-#: skylines/views/upload.py:224
+#: skylines/views/upload.py:227
 msgid "Your flight(s) have been successfully updated."
 msgstr "Let byl aktualizaován."
 
-#: skylines/views/users.py:124
+#: skylines/views/users.py:123
 msgid ""
 "The mail server is currently not reachable. Please try again later or "
 "contact the developers."
@@ -1425,13 +1456,24 @@ msgstr ""
 "Poštovní server je momentálně nedostupný. Zkuste to prosím později, nebo "
 "kontaktujte vývojáře systému."
 
-#: skylines/views/users.py:149
+#: skylines/views/users.py:148
 msgid "Password changed."
 msgstr "Heslo bylo změněno."
 
-#~ msgid "Your Live Tracks"
-#~ msgstr "Vaše Live Tracks"
+#~ msgid "Please enter your name."
+#~ msgstr ""
 
-#~ msgid "Change Aircraft"
-#~ msgstr "Změnit letadlo"
+#~ msgid "Email Address"
+#~ msgstr "e-mailová adresa"
+
+#~ msgid "Your Live Tracking settings"
+#~ msgstr "Vaše nastavení Live Trackingu"
+
+#~ msgid ""
+#~ "Sorry, email address or password are "
+#~ "wrong. Please try again or register."
+#~ msgstr ""
+#~ "E-mail, nebo heslo je špatně. Zkuste "
+#~ "to znovu, nebo se zaregistrujte, pokud"
+#~ " nejste."
 
