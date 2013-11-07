@@ -17,12 +17,18 @@
 
 {% block content -%}
 {% if friend_tracks -%}
+{% if other_tracks -%}
 <h3>{{ _('Friends') }}</h3>
+{%- endif %}
 {{ tracking_list(friend_tracks) }}
+{%- endif %}
 
+{% if other_tracks -%}
+{% if friend_tracks -%}
 <h3>{{ _('Other pilots') }}</h3>
 {%- endif %}
 {{ tracking_list(other_tracks) }}
+{%- endif %}
 
 <a href="{{ url_for('.info') }}" class="btn btn-default"><i class="icon-question-sign"></i> {% trans %}How to use Live Tracking?{% endtrans %}</a>
 {%- endblock %}
