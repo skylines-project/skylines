@@ -153,6 +153,7 @@ def edit_post(form):
     g.user.email_address = form.email_address.data
     g.user.first_name = form.first_name.data
     g.user.last_name = form.last_name.data
+    g.user.tracking_callsign = form.tracking_callsign.data
     g.user.tracking_delay = request.form.get('tracking_delay', 0)
 
     unit_preset = request.form.get('unit_preset', 1, type=int)

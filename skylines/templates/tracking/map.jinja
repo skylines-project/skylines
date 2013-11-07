@@ -86,7 +86,7 @@
       {{ h.json.dumps(trace.barogram_t) }},
       {{ h.json.dumps(trace.elevations) }},
       {
-        competition_id: "{{ pilot.initials() }}",
+        competition_id: "{{ pilot.tracking_callsign or pilot.initials() }}",
         color: "{{ pilot.color }}",
       }
     );

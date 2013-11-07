@@ -84,7 +84,7 @@
       {{ h.json.dumps(trace.barogram_t) }},
       {{ h.json.dumps(trace.elevations) }},
       {
-        competition_id: "{{ pilot.initials() }}",
+        competition_id: "{{ pilot.tracking_callsign or pilot.initials() }}",
         color: "{{ pilot.color }}",
       }
     );
@@ -149,7 +149,7 @@
       <tbody>
         {% for pilot in pilots -%}
         <tr>
-          <td><span class="badge" style="background-color:{{ pilot.color }}">{{ pilot.initials() }}</span></td>
+          <td><span class="badge" style="background-color:{{ pilot.color }}">{{ pilot.tracking_callsign or pilot.initials() }}</span></td>
           <td>{{ user_link(pilot) }}</td>
           <td>{% if pilot.club_id %}{{ club_link(pilot.club) }}{% endif %}</td>
         </tr>

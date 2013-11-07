@@ -48,10 +48,12 @@ class User(db.Model):
     club_id = db.Column(Integer, db.ForeignKey('clubs.id', ondelete='SET NULL'))
     club = db.relationship('Club', foreign_keys=[club_id], backref='members')
 
-    # Tracking key and delay in minutes
+    # Tracking key, delay in minutes and other settings
 
     tracking_key = db.Column(BigInteger, index=True)
     tracking_delay = db.Column(SmallInteger, nullable=False, default=0)
+
+    tracking_callsign = db.Column(Unicode(5))
 
     # Time and IP of creation
 
