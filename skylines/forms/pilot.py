@@ -15,7 +15,6 @@ from skylines.forms.units import (
     UnitsPresetSelectField, DistanceUnitSelectField, AltitudeUnitSelectField,
     LiftUnitSelectField, SpeedUnitSelectField
 )
-from skylines.forms.club import ClubsSelectField
 
 
 class ClubPilotsSelectField(SelectField):
@@ -60,7 +59,7 @@ class CreateClubPilotForm(Form):
 class CreatePilotForm(CreateClubPilotForm, ChangePasswordForm):
     # email_address, name from CreateClubPilotForm
     # password, verify_password from ChangePasswordForm
-    club_id = ClubsSelectField(l_('Club'))
+    pass
 
 
 class TrackingDelaySelectField(SelectField):
