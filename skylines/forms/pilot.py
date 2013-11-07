@@ -85,6 +85,9 @@ class EditPilotForm(Form):
         InputRequired(message=l_('Please enter your last name.')),
     ])
     tracking_delay = TrackingDelaySelectField(l_('Tracking Delay'))
+    tracking_callsign = TextField(l_('Tracking callsign'), validators=[
+        Length(max=5, message=l_('Your callsign must not have more than 5 characters.')),
+    ])
     unit_preset = UnitsPresetSelectField(l_('Unit Preset'))
     distance_unit = DistanceUnitSelectField(l_('Distance Unit'))
     speed_unit = SpeedUnitSelectField(l_('Speed Unit'))
