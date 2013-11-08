@@ -23,7 +23,9 @@ if not to_envvar(args.config):
 
 
 from skylines import db
-from skylines.model import *
+from skylines.model import (
+    User, Club, IGCFile, Flight, TrackingFix
+)
 
 
 new_id = args.new_id

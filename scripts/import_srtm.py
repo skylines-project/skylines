@@ -24,7 +24,6 @@ if not to_envvar(args.config):
 
 import os.path
 import subprocess
-from zipfile import ZipFile
 from skylines import app, db
 
 SERVER_URL = 'http://download.xcsoar.org/mapgen/data/srtm3/'

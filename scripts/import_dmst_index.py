@@ -23,7 +23,6 @@ if not to_envvar(args.config):
 
 import re
 from skylines import db
-from skylines.config import environment
 from skylines.model import AircraftModel
 
 r = re.compile(r'^(.*?)\s*\.+[\.\s]*(\d+)\s*$')

@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 
 import os
-import sys
 import gzip
 from argparse import ArgumentParser
 from config import to_envvar
