@@ -2,7 +2,7 @@ from flask import Blueprint, request, render_template, redirect, url_for, abort,
 from flask.ext.babel import _
 
 from skylines import db
-from skylines.forms import EditPilotForm
+from skylines.forms import ChangePasswordForm, EditPilotForm
 from skylines.lib.dbutil import get_requested_record
 from skylines.model import User
 
@@ -65,3 +65,19 @@ def profile():
     flash(_('Profile was saved.'), 'success')
 
     return redirect(url_for('.profile', user=g.user_id))
+
+
+@settings_blueprint.route('/password', methods=['GET', 'POST'])
+def password():
+    form = ChangePasswordForm()
+    if not form.validate_on_submit():
+        return render_template('settings/password.jinja', form=form)
+
+    g.user.password = form.password.data
+    g.user.recover_key = None
+
+    db.session.commit()
+
+    flash(_('Your password was changed.'), 'success')
+
+    return redirect(url_for('.password', user=g.user_id))

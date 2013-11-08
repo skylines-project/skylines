@@ -7,9 +7,7 @@ from sqlalchemy.sql.expression import and_, or_
 from sqlalchemy import func
 
 from skylines import db
-from skylines.forms import (
-    ChangePasswordForm, ChangeClubForm, CreateClubForm
-)
+from skylines.forms import ChangeClubForm, CreateClubForm
 from skylines.lib.dbutil import get_requested_record
 from skylines.model import (
     User, Club, Flight, Follower, Location, IGCFile, Notification, Event
@@ -114,27 +112,6 @@ def index():
         distance_flights=_get_distance_flights(),
         takeoff_locations=_get_takeoff_locations(),
         last_year_statistics=_get_last_year_statistics())
-
-
-@user_blueprint.route('/change_password', methods=['GET', 'POST'])
-def change_password():
-    if not g.user.is_writable(g.current_user):
-        abort(403)
-
-    form = ChangePasswordForm()
-    if form.validate_on_submit():
-        return change_password_post(form)
-
-    return render_template('users/change_password.jinja', form=form)
-
-
-def change_password_post(form):
-    g.user.password = form.password.data
-    g.user.recover_key = None
-
-    db.session.commit()
-
-    return redirect(url_for('.index'))
 
 
 @user_blueprint.route('/change_club', methods=['GET', 'POST'])
