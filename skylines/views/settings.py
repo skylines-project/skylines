@@ -73,7 +73,7 @@ def password():
 
     form_validated = form.validate_on_submit()
 
-    if not (g.user.validate_password(form.password.data) or g.current_user.is_manager()):
+    if request.method == 'POST' and not (g.user.validate_password(form.password.data) or g.current_user.is_manager()):
         form.current_password.errors.append(_('This password does not match your current password.'))
         form_validated = False
 
