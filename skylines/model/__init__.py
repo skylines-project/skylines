@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
-"""The application's model objects"""
+
+# flake8: noqa
 
 import skylines.model.base
 
