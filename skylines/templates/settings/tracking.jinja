@@ -1,0 +1,18 @@
+{% extends "settings/base.jinja" %}
+{% set active_page = "settings" %}
+{% set settings_page = "tracking" %}
+
+{% from "macros/form.jinja" import render_field %}
+
+{% block title %}{{ _('Live Tracking Settings') }}{% endblock %}
+
+{% block form -%}
+<form method="POST" action="{{ url_for('settings.tracking', user=g.user_id) }}" role="form">
+  {{ form.hidden_tag() }}
+  {{ render_field(form.tracking_callsign) }}
+  {{ render_field(form.tracking_delay) }}
+  <div class="form-group">
+    <input class="form-control btn btn-primary" value="{{ _('Change') }}" type="submit">
+  </div>
+</form>
+{%- endblock %}

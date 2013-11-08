@@ -2,7 +2,9 @@ from flask import Blueprint, request, render_template, redirect, url_for, abort,
 from flask.ext.babel import _
 
 from skylines import db
-from skylines.forms import ChangePasswordForm, EditPilotForm
+from skylines.forms import (
+    ChangePasswordForm, EditPilotForm, LiveTrackingSettingsForm
+)
 from skylines.lib.dbutil import get_requested_record
 from skylines.model import User
 
@@ -46,8 +48,6 @@ def profile():
     g.user.email_address = form.email_address.data
     g.user.first_name = form.first_name.data
     g.user.last_name = form.last_name.data
-    g.user.tracking_callsign = form.tracking_callsign.data
-    g.user.tracking_delay = request.form.get('tracking_delay', 0)
 
     unit_preset = request.form.get('unit_preset', 1, type=int)
     if unit_preset == 0:
@@ -88,3 +88,18 @@ def password():
     flash(_('Your password was changed.'), 'success')
 
     return redirect(url_for('.password', user=g.user_id))
+
+
+@settings_blueprint.route('/tracking', methods=['GET', 'POST'])
+def tracking():
+    form = LiveTrackingSettingsForm(obj=g.user)
+    if not form.validate_on_submit():
+        return render_template('settings/tracking.jinja', form=form)
+
+    g.user.tracking_callsign = form.tracking_callsign.data
+    g.user.tracking_delay = request.form.get('tracking_delay', 0)
+    db.session.commit()
+
+    flash(_('Live Tracking settings were saved.'), 'success')
+
+    return redirect(url_for('.tracking', user=g.user_id))

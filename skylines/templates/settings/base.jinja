@@ -14,6 +14,7 @@
     <div class="list-group">
       <a href="{{ url_for('.profile', user=g.user_id) }}" class="list-group-item{% if settings_page == 'profile' %} active{% endif %}">{{ _('Profile') }}</a>
       <a href="{{ url_for('.password', user=g.user_id) }}" class="list-group-item{% if settings_page == 'password' %} active{% endif %}">{{ _('Password') }}</a>
+      <a href="{{ url_for('.tracking', user=g.user_id) }}" class="list-group-item{% if settings_page == 'tracking' %} active{% endif %}">{{ _('Live Tracking') }}</a>
     </div>
   </div>
 </div>

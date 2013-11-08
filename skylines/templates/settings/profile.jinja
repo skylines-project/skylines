@@ -11,8 +11,6 @@
   {{ form.hidden_tag() }}
   {{ render_field(form.email_address) }}
   {{ render_two_fields(_('First and last name'), form.first_name, form.last_name) }}
-  {{ render_field(form.tracking_callsign) }}
-  {{ render_field(form.tracking_delay) }}
   {{ render_field(form.unit_preset) }}
   <div id="custom_units">
   {{ render_field(form.distance_unit) }}
