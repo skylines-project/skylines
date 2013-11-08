@@ -1,13 +1,19 @@
 from flask import Blueprint, request, render_template, redirect, url_for, abort, g, flash
 from flask.ext.babel import _
 
+from sqlalchemy.sql.expression import and_, or_
+
 from skylines import db
 from skylines.forms import (
-    ChangePasswordForm, EditPilotForm, LiveTrackingSettingsForm
+    ChangePasswordForm, EditPilotForm, LiveTrackingSettingsForm,
+    ChangeClubForm, CreateClubForm
 )
 from skylines.lib.dbutil import get_requested_record
-from skylines.model import User
+from skylines.model import User, Club, Flight, IGCFile
 from skylines.views.users import send_recover_mail
+from skylines.model.event import (
+    create_club_join_event
+)
 
 settings_blueprint = Blueprint('settings', 'skylines')
 
@@ -126,3 +132,74 @@ def tracking_generate_key():
     db.session.commit()
 
     return redirect(url_for('.tracking', user=g.user_id))
+
+
+@settings_blueprint.route('/club', methods=['GET'])
+def club():
+    change_form = ChangeClubForm(club=g.user.club_id)
+    create_form = CreateClubForm()
+
+    if request.endpoint.endswith('.club_change'):
+        if change_form.validate_on_submit():
+            return club_change_post(change_form)
+
+    if request.endpoint.endswith('.club_create'):
+        if create_form.validate_on_submit():
+            return club_create_post(create_form)
+
+    return render_template(
+        'settings/club.jinja',
+        change_form=change_form, create_form=create_form)
+
+
+@settings_blueprint.route('/club', methods=['POST'])
+def club_change():
+    return club()
+
+
+@settings_blueprint.route('/club/create', methods=['POST'])
+def club_create():
+    return club()
+
+
+def club_change_post(form):
+    old_club_id = g.user.club_id
+    new_club_id = form.club.data if form.club.data != 0 else None
+
+    if old_club_id == new_club_id:
+        return redirect(url_for('.club', user=g.user_id))
+
+    g.user.club_id = new_club_id
+
+    create_club_join_event(new_club_id, g.user)
+
+    # assign the user's new club to all of his flights that have
+    # no club yet
+    flights = Flight.query().join(IGCFile)
+    flights = flights.filter(and_(Flight.club_id == None,
+                                  or_(Flight.pilot_id == g.user.id,
+                                      IGCFile.owner_id == g.user.id)))
+    for flight in flights:
+        flight.club_id = g.user.club_id
+
+    db.session.commit()
+
+    flash(_('New club was saved.'), 'success')
+
+    return redirect(url_for('.club', user=g.user_id))
+
+
+def club_create_post(form):
+    club = Club(name=form.name.data)
+    club.owner_id = g.current_user.id
+    db.session.add(club)
+
+    db.session.flush()
+
+    g.user.club = club
+
+    create_club_join_event(club.id, g.user)
+
+    db.session.commit()
+
+    return redirect(url_for('.club', user=g.user_id))

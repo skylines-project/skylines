@@ -1,16 +1,18 @@
-{% extends "base-page.jinja" %}
+{% extends "settings/base.jinja" %}
 {% set active_page = "settings" %}
+{% set settings_page = "club" %}
 
 {% from "macros/form.jinja" import render_field %}
 
 {% block title %}{% trans %}Change Club{% endtrans %}{% endblock %}
 
-{% block content -%}
-<div class="row">
-  <div class="col-md-6">
-    <h2>{% trans %}Select Club{% endtrans %}</h2>
-    <p>{% trans %}Select your primary club:{% endtrans %}</p>
-    <form method="POST" action="{{ url_for('user.change_club') }}" role="form">
+{% block settings_content -%}
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h3 class="panel-title">{{ _('Select Club') }}</h3>
+  </div>
+  <div class="panel-body">
+    <form method="POST" action="{{ url_for('settings.club_change', user=g.user_id) }}" role="form">
       {{ change_form.hidden_tag() }}
       {{ render_field(change_form.club) }}
       <div class="form-group">
@@ -18,11 +20,14 @@
       </div>
     </form>
   </div>
+</div>
 
-  <div class="col-md-6">
-    <h2>{% trans %}Register Club{% endtrans %}</h2>
-    <p>{% trans %}If your club doesn't exist yet in Skylines, create it:{% endtrans %}</p>
-    <form method="POST" action="{{ url_for('user.create_club') }}" role="form">
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h3 class="panel-title">{{ _('Register Club') }}</h3>
+  </div>
+  <div class="panel-body">
+    <form method="POST" action="{{ url_for('settings.club_create', user=g.user_id) }}" role="form">
       {{ create_form.hidden_tag() }}
       {{ render_field(create_form.name) }}
       <div class="form-group">

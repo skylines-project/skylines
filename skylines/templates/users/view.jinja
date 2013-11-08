@@ -110,7 +110,7 @@
           {%- endif %}
 
             {% if user.is_writable(g.current_user) -%}
-            <a href="change_club" class="btn btn-default btn-sm">{% trans %}Change{% endtrans %}</a>
+            <a href="{{ url_for('settings.club', user=(g.current_user != g.user and g.user_id or None)) }}" class="btn btn-default btn-sm">{% trans %}Change{% endtrans %}</a>
             {%- endif %}
           </td>
         </tr>

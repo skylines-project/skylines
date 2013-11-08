@@ -3,18 +3,14 @@ from datetime import date, timedelta
 from flask import Blueprint, request, render_template, redirect, url_for, abort, g
 from flask.ext.login import login_required
 
-from sqlalchemy.sql.expression import and_, or_
 from sqlalchemy import func
 
 from skylines import db
-from skylines.forms import ChangeClubForm, CreateClubForm
 from skylines.lib.dbutil import get_requested_record
 from skylines.model import (
-    User, Club, Flight, Follower, Location, IGCFile, Notification, Event
+    User, Flight, Follower, Location, Notification, Event
 )
-from skylines.model.event import (
-    create_follower_notification, create_club_join_event
-)
+from skylines.model.event import create_follower_notification
 
 user_blueprint = Blueprint('user', 'skylines')
 
@@ -111,69 +107,6 @@ def index():
         distance_flights=_get_distance_flights(),
         takeoff_locations=_get_takeoff_locations(),
         last_year_statistics=_get_last_year_statistics())
-
-
-@user_blueprint.route('/change_club', methods=['GET', 'POST'])
-def change_club():
-    if not g.user.is_writable(g.current_user):
-        abort(403)
-
-    change_form = ChangeClubForm(club=g.user.club_id)
-    create_form = CreateClubForm()
-
-    if request.endpoint.endswith('.change_club'):
-        if change_form.validate_on_submit():
-            return change_club_post(change_form)
-
-    if request.endpoint.endswith('.create_club'):
-        if create_form.validate_on_submit():
-            return create_club_post(create_form)
-
-    return render_template(
-        'users/change_club.jinja',
-        change_form=change_form, create_form=create_form)
-
-
-@user_blueprint.route('/create_club', methods=['GET', 'POST'])
-def create_club():
-    return change_club()
-
-
-def change_club_post(form):
-    old_club_id = g.user.club_id
-    new_club_id = form.club.data if form.club.data != 0 else None
-
-    if old_club_id == new_club_id:
-        return redirect(url_for('.index'))
-
-    g.user.club_id = new_club_id
-
-    create_club_join_event(new_club_id, g.user)
-
-    # assign the user's new club to all of his flights that have
-    # no club yet
-    flights = Flight.query().join(IGCFile)
-    flights = flights.filter(and_(Flight.club_id == None,
-                                  or_(Flight.pilot_id == g.user.id,
-                                      IGCFile.owner_id == g.user.id)))
-    for flight in flights:
-        flight.club_id = g.user.club_id
-
-    db.session.commit()
-
-    return redirect(url_for('.index'))
-
-
-def create_club_post(form):
-    club = Club(name=form.name.data)
-    club.owner_id = g.current_user.id
-    db.session.add(club)
-
-    g.user.club = club
-
-    db.session.commit()
-
-    return redirect(url_for('.index'))
 
 
 @user_blueprint.route('/follow')
