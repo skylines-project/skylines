@@ -17,7 +17,7 @@ from skylines.model import (
 from skylines.model.event import (
     create_follower_notification, create_club_join_event
 )
-#from skylines.views.users import recover_user_password
+from skylines.views.users import send_recover_mail
 
 user_blueprint = Blueprint('user', 'skylines')
 
@@ -268,7 +268,8 @@ def recover_password():
     if not g.current_user or not g.current_user.is_manager():
         abort(403)
 
-    recover_user_password(g.user)
+    g.user.generate_recover_key(request.remote_addr)
+    send_recover_mail(g.user)
     flash('A password recovery email was sent to that user.')
 
     db.session.commit()
