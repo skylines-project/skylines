@@ -1,5 +1,3 @@
-from flask import redirect, url_for
-
 from skylines.views.i18n import register as register_i18n
 from skylines.views.login import register as register_login
 
