@@ -103,3 +103,11 @@ def tracking():
     flash(_('Live Tracking settings were saved.'), 'success')
 
     return redirect(url_for('.tracking', user=g.user_id))
+
+
+@settings_blueprint.route('/tracking/generate-key')
+def tracking_generate_key():
+    g.user.generate_tracking_key()
+    db.session.commit()
+
+    return redirect(url_for('.tracking', user=g.user_id))
