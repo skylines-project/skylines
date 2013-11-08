@@ -194,7 +194,7 @@ class User(db.Model):
         """
 
         # Make sure accounts without a password can't log in
-        if not self.password:
+        if not self.password or not password:
             return False
 
         hash = sha256()
