@@ -96,30 +96,6 @@
           <td itemprop="name">{{ user.name }}</td>
         </tr>
 
-        {% if user.is_readable(g.current_user) and user.tracking_key_hex -%}
-        <tr>
-          <th>{% trans %}Tracking key{% endtrans %}</th>
-          <td>
-            <span class="label label-info">{{ user.tracking_key_hex }}</span>
-            <a href="{{ url_for('tracking.info') }}" class="btn btn-default btn-sm">{% trans %}More Information{% endtrans %}</a>
-            {% if user.is_writable(g.current_user) -%}
-            <a href="{{ url_for('.tracking_register', came_from=url_for('.index')) }}" class="btn btn-default btn-sm">{% trans %}Generate new key{% endtrans %}</a>
-            {%- endif %}
-          </td>
-        </tr>
-
-        <tr>
-          <th>{% trans %}Tracking delay{% endtrans %}</th>
-          <td>
-            {% if user.tracking_delay == 0 -%}
-            {% trans %}None{% endtrans %}
-            {%- else %}
-            {{ ngettext('%(num)u minute', '%(num)u minutes', user.tracking_delay) }}
-            {%- endif %}
-          </td>
-        </tr>
-        {%- endif %}
-
         {% if user.club or user.is_writable(g.current_user) -%}
         <tr>
           <th>{% trans %}Club{% endtrans %}</th>

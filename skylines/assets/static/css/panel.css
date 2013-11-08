@@ -1,7 +1,31 @@
+.panel {
+  position: relative;
+}
+
 .panel > form {
   padding-top: 12px;
 }
 
 .panel-body > form:last-child > .form-group:last-child {
   margin-bottom: 0;
+}
+
+.panel-body > p:last-child {
+  margin-bottom: 0;
+}
+
+.panel-help-icon {
+  position: absolute;
+  right: 5pt;
+  top: 0px;
+  font-size: 20pt;
+}
+
+.panel-help-icon > a {
+  color: #aaa;
+  text-decoration: none;
+}
+
+.panel-help-icon > a:hover {
+  color: #666;
 }

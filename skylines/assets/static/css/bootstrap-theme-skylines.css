@@ -209,3 +209,10 @@ body, .btn, .form-control, .dropdown-menu {
 .btn-sm, .btn-xs {
   font-size: 11px;
 }
+
+.tracking-key {
+    font-size: 100%;
+    font-family: monospace;
+    margin: 0px 6px;
+    background: #008eda;
+}

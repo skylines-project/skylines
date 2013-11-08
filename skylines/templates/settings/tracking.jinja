@@ -1,4 +1,4 @@
-{% extends "settings/base-form.jinja" %}
+{% extends "settings/base.jinja" %}
 {% set active_page = "settings" %}
 {% set settings_page = "tracking" %}
 
@@ -6,13 +6,34 @@
 
 {% block title %}{{ _('Live Tracking Settings') }}{% endblock %}
 
-{% block form -%}
-<form method="POST" action="{{ url_for('settings.tracking', user=g.user_id) }}" role="form">
-  {{ form.hidden_tag() }}
-  {{ render_field(form.tracking_callsign) }}
-  {{ render_field(form.tracking_delay) }}
-  <div class="form-group">
-    <input class="form-control btn btn-primary" value="{{ _('Change') }}" type="submit">
+{% block settings_content -%}
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h3 class="panel-title">Live Tracking Key</h3>
+    <p class="panel-help-icon">
+      <a href="{{ url_for('tracking.info') }}"><i class="icon-question-sign"></i></a>
+    </p>
   </div>
-</form>
+  <div class="panel-body">
+    <p style="margin: 10px 0px 20px;">
+      Your current live tracking key is: <span class="label tracking-key">{{ g.user.tracking_key_hex }}</span>
+    </p>
+    <p>
+      <a href="{{ url_for('user.tracking_register', came_from=url_for('.index'), user_id=g.user.id) }}" class="btn btn-primary form-control">{% trans %}Generate new key{% endtrans %}</a>
+    </p>
+  </div>
+</div>
+
+<div class="panel panel-default">
+  <div class="panel-body">
+    <form method="POST" action="{{ url_for('settings.tracking', user=g.user_id) }}" role="form">
+      {{ form.hidden_tag() }}
+      {{ render_field(form.tracking_callsign) }}
+      {{ render_field(form.tracking_delay) }}
+      <div class="form-group">
+        <input class="form-control btn btn-primary" value="{{ _('Change') }}" type="submit">
+      </div>
+    </form>
+  </div>
+</div>
 {%- endblock %}
