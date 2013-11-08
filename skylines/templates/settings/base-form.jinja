@@ -1,0 +1,9 @@
+{% extends "settings/base.jinja" %}
+
+{% block settings_content -%}
+<div class="panel panel-default">
+  <div class="panel-body">
+    {% block form %}{% endblock %}
+  </div>
+</div>
+{%- endblock %}
