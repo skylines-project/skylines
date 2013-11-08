@@ -8,7 +8,7 @@ from sqlalchemy import func
 
 from skylines import db
 from skylines.forms import (
-    ChangePasswordForm, ChangeClubForm, CreateClubForm, EditPilotForm
+    ChangePasswordForm, ChangeClubForm, CreateClubForm
 )
 from skylines.lib.dbutil import get_requested_record
 from skylines.model import (
@@ -131,41 +131,6 @@ def change_password():
 def change_password_post(form):
     g.user.password = form.password.data
     g.user.recover_key = None
-
-    db.session.commit()
-
-    return redirect(url_for('.index'))
-
-
-@user_blueprint.route('/edit', methods=['GET', 'POST'])
-def edit():
-    if not g.user.is_writable(g.current_user):
-        abort(403)
-
-    form = EditPilotForm(obj=g.user)
-    if form.validate_on_submit():
-        return edit_post(form)
-
-    return render_template('users/edit.jinja', form=form)
-
-
-def edit_post(form):
-    g.user.email_address = form.email_address.data
-    g.user.first_name = form.first_name.data
-    g.user.last_name = form.last_name.data
-    g.user.tracking_callsign = form.tracking_callsign.data
-    g.user.tracking_delay = request.form.get('tracking_delay', 0)
-
-    unit_preset = request.form.get('unit_preset', 1, type=int)
-    if unit_preset == 0:
-        g.user.distance_unit = request.form.get('distance_unit', 1, type=int)
-        g.user.speed_unit = request.form.get('speed_unit', 1, type=int)
-        g.user.lift_unit = request.form.get('lift_unit', 0, type=int)
-        g.user.altitude_unit = request.form.get('altitude_unit', 0, type=int)
-    else:
-        g.user.unit_preset = unit_preset
-
-    g.user.eye_candy = request.form.get('eye_candy', False, type=bool)
 
     db.session.commit()
 

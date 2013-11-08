@@ -143,7 +143,7 @@
 
       <p style="margin-top: 10px">
         {% if user.is_writable(g.current_user) -%}
-        <a href="{{ url_for('.edit') }}" class="btn btn-default">{% trans %}Edit{% endtrans %}</a>
+        <a href="{{ url_for('settings.profile', user=(g.current_user != g.user and g.user_id or None)) }}" class="btn btn-default">{% trans %}Edit{% endtrans %}</a>
         <a href="{{ url_for('.change_password') }}" class="btn btn-default">{% trans %}Change Password{% endtrans %}</a>
         {%- endif %}
 
