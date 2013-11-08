@@ -11,7 +11,7 @@ from sqlalchemy.orm import joinedload
 
 from skylines import db
 from skylines.model import User
-from skylines.model.event import create_new_user_event, create_club_join_event
+from skylines.model.event import create_new_user_event
 from skylines.forms import CreatePilotForm, RecoverStep1Form, RecoverStep2Form
 
 users_blueprint = Blueprint('users', 'skylines')
@@ -45,16 +45,11 @@ def new_post(form):
         password=form.password.data
     )
 
-    if form.club_id.data:
-        user.club_id = form.club_id.data
-
     user.created_ip = request.remote_addr
     user.generate_tracking_key()
     db.session.add(user)
 
     create_new_user_event(user)
-    if user.club_id:
-        create_club_join_event(user.club_id, user)
 
     db.session.commit()
 
