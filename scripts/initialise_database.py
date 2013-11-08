@@ -21,7 +21,7 @@ if not to_envvar(args.config):
 
 # import db instance and the model to register the model metadata
 
-from skylines import db, model
+from skylines import db, model  # noqa
 
 # create all tables and indices
 
