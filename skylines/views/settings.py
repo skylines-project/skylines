@@ -7,6 +7,7 @@ from skylines.forms import (
 )
 from skylines.lib.dbutil import get_requested_record
 from skylines.model import User
+from skylines.views.users import send_recover_mail
 
 settings_blueprint = Blueprint('settings', 'skylines')
 
@@ -86,6 +87,20 @@ def password():
     db.session.commit()
 
     flash(_('Your password was changed.'), 'success')
+
+    return redirect(url_for('.password', user=g.user_id))
+
+
+@settings_blueprint.route('/password/recover')
+def password_recover():
+    if not g.current_user.is_manager():
+        abort(403)
+
+    g.user.generate_recover_key(request.remote_addr)
+    send_recover_mail(g.user)
+    flash('A password recovery email was sent to that user.')
+
+    db.session.commit()
 
     return redirect(url_for('.password', user=g.user_id))
 
