@@ -70,7 +70,14 @@ def profile():
 @settings_blueprint.route('/password', methods=['GET', 'POST'])
 def password():
     form = ChangePasswordForm()
-    if not form.validate_on_submit():
+
+    form_validated = form.validate_on_submit()
+
+    if not (g.user.validate_password(form.password.data) or g.current_user.is_manager()):
+        form.current_password.errors.append(_('This password does not match your current password.'))
+        form_validated = False
+
+    if not form_validated:
         return render_template('settings/password.jinja', form=form)
 
     g.user.password = form.password.data

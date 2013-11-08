@@ -31,6 +31,7 @@ class ClubPilotsSelectField(SelectField):
 
 
 class ChangePasswordForm(Form):
+    current_password = PasswordField(l_('Current Password'))
     password = PasswordField(l_('Password'), validators=[
         Length(min=6, message=l_('Your password must have at least 6 characters.')),
     ])
