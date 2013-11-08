@@ -1,4 +1,7 @@
-.panel form {
+.panel > form {
   padding-top: 12px;
 }
 
+.panel-body > form:last-child > .form-group:last-child {
+  margin-bottom: 0;
+}

@@ -1,0 +1,20 @@
+{% extends "base-page.jinja" %}
+
+{% block content -%}
+<div class="row">
+  <div class="col-sm-9 col-sm-push-3">
+    <div class="panel panel-default">
+      <div class="panel-body">
+        {% block form %}{% endblock %}
+      </div>
+    </div>
+  </div>
+
+  <div class="col-sm-3 col-sm-pull-9">
+    <div class="list-group">
+      <a href="{{ url_for('.profile', user=g.user_id) }}" class="list-group-item{% if settings_page == 'profile' %} active{% endif %}">{{ _('Profile') }}</a>
+      <a href="{{ url_for('.password', user=g.user_id) }}" class="list-group-item{% if settings_page == 'password' %} active{% endif %}">{{ _('Password') }}</a>
+    </div>
+  </div>
+</div>
+{%- endblock %}
