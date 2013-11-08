@@ -1,5 +1,4 @@
 from datetime import datetime
-from collections import OrderedDict
 from itertools import chain
 
 from sqlalchemy.types import Integer, DateTime
@@ -7,8 +6,6 @@ from sqlalchemy.types import Integer, DateTime
 from skylines import db
 from .user import User
 from .club import Club
-from .flight import Flight
-from .flight_comment import FlightComment
 from .follower import Follower
 
 
