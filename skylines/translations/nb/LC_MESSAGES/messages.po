@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  skylines\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2013-11-04 23:29+0100\n"
+"POT-Creation-Date: 2013-11-09 16:45+0100\n"
 "PO-Revision-Date: 2013-07-14 01:46+0000\n"
 "Last-Translator: Geir Gronlien <Unknown>\n"
 "Language-Team: Norwegian Bokmal <nb@li.org>\n"
@@ -15,7 +15,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Generated-By: Babel 0.9.6\n"
+"Generated-By: Babel 1.3\n"
 
 #: skylines/forms/aircraft_model.py:29
 msgid "Gliders"
@@ -45,15 +45,15 @@ msgstr "Annet"
 msgid "No club"
 msgstr ""
 
-#: skylines/forms/club.py:24 skylines/forms/pilot.py:63
-#: skylines/templates/flights/details-table.jinja:151
+#: skylines/forms/club.py:24 skylines/templates/flights/details-table.jinja:151
 #: skylines/templates/flights/flights-table.jinja:13
 #: skylines/templates/ranking/pilots.jinja:10
 #: skylines/templates/search/list.jinja:65
 #: skylines/templates/search/list.jinja:75
+#: skylines/templates/settings/base.jinja:18
 #: skylines/templates/tracking/view.jinja:127
 #: skylines/templates/users/users-table.jinja:8
-#: skylines/templates/users/view.jinja:125
+#: skylines/templates/users/view.jinja:101
 msgid "Club"
 msgstr "Klubb"
 
@@ -81,7 +81,7 @@ msgstr "Nettside"
 #: skylines/templates/flights/flights-table.jinja:10
 #: skylines/templates/search/list.jinja:63
 #: skylines/templates/search/list.jinja:73
-#: skylines/templates/tracking/list.jinja:35
+#: skylines/templates/tracking/list.jinja:41
 #: skylines/templates/tracking/view.jinja:121
 msgid "Pilot"
 msgstr "Pilot"
@@ -102,7 +102,14 @@ msgstr "Registrering"
 msgid "Competition Number"
 msgstr "Konkurransenummer"
 
-#: skylines/forms/pilot.py:35 skylines/forms/pilot.py:123
+#: skylines/forms/pilot.py:34
+#, fuzzy
+#| msgid "Forgot password?"
+msgid "Current Password"
+msgstr "Glemt passord?"
+
+#: skylines/forms/pilot.py:35 skylines/forms/pilot.py:129
+#: skylines/templates/settings/base.jinja:17
 msgid "Password"
 msgstr "Passord"
 
@@ -120,12 +127,12 @@ msgid "Your passwords do not match."
 msgstr "Passordene er ikke like"
 
 #: skylines/forms/pilot.py:44 skylines/forms/pilot.py:77
-#: skylines/forms/pilot.py:104 skylines/forms/pilot.py:119
+#: skylines/forms/pilot.py:110 skylines/forms/pilot.py:125
 msgid "eMail Address"
 msgstr "Epost"
 
 #: skylines/forms/pilot.py:45 skylines/forms/pilot.py:78
-#: skylines/forms/pilot.py:105 skylines/forms/pilot.py:120
+#: skylines/forms/pilot.py:111 skylines/forms/pilot.py:126
 msgid "Please enter your email address."
 msgstr ""
 
@@ -145,16 +152,15 @@ msgstr ""
 msgid "Please enter your last name."
 msgstr ""
 
-#: skylines/forms/pilot.py:57 skylines/forms/pilot.py:100
+#: skylines/forms/pilot.py:57 skylines/forms/pilot.py:99
 msgid "A pilot with this email address exists already."
 msgstr ""
 
-#: skylines/forms/pilot.py:71 skylines/templates/users/view.jinja:115
+#: skylines/forms/pilot.py:71
 msgid "None"
 msgstr "Ingen"
 
 #: skylines/forms/pilot.py:73 skylines/templates/tracking/view.jinja:137
-#: skylines/templates/users/view.jinja:117
 #, python-format
 msgid "%(num)u minute"
 msgid_plural "%(num)u minutes"
@@ -162,42 +168,50 @@ msgstr[0] "%(num)u minutt"
 msgstr[1] "%(num)u minutter"
 
 #: skylines/forms/pilot.py:87
-msgid "Tracking Delay"
-msgstr "Sporingsforsinkelse"
-
-#: skylines/forms/pilot.py:88
 msgid "Unit Preset"
 msgstr ""
 
-#: skylines/forms/pilot.py:89
+#: skylines/forms/pilot.py:88
 msgid "Distance Unit"
 msgstr "Distanseenhet"
 
-#: skylines/forms/pilot.py:90
+#: skylines/forms/pilot.py:89
 msgid "Speed Unit"
 msgstr "Hastighetsenhet"
 
-#: skylines/forms/pilot.py:91
+#: skylines/forms/pilot.py:90
 msgid "Lift Unit"
 msgstr "Stig-enhet"
 
-#: skylines/forms/pilot.py:92
+#: skylines/forms/pilot.py:91
 msgid "Altitude Unit"
 msgstr "Høydeenhet"
 
-#: skylines/forms/pilot.py:93
+#: skylines/forms/pilot.py:92
 msgid "Eye Candy"
 msgstr "\"Eye Candy\""
 
-#: skylines/forms/pilot.py:111
+#: skylines/forms/pilot.py:103
+msgid "Tracking Delay"
+msgstr "Sporingsforsinkelse"
+
+#: skylines/forms/pilot.py:104
+msgid "Tracking Callsign"
+msgstr ""
+
+#: skylines/forms/pilot.py:105
+msgid "Your callsign must not have more than 5 characters."
+msgstr ""
+
+#: skylines/forms/pilot.py:117
 msgid "There is no pilot with this email address."
 msgstr ""
 
-#: skylines/forms/pilot.py:124
+#: skylines/forms/pilot.py:130
 msgid "Please enter your password."
 msgstr ""
 
-#: skylines/forms/pilot.py:126
+#: skylines/forms/pilot.py:132
 msgid "Remember me"
 msgstr "Husk meg"
 
@@ -265,9 +279,9 @@ msgid ""
 " again!"
 msgstr ""
 
-#: skylines/templates/about.jinja:32 skylines/templates/tracking/info.jinja:4
+#: skylines/templates/about.jinja:32 skylines/templates/settings/base.jinja:19
+#: skylines/templates/tracking/info.jinja:4
 #: skylines/templates/tracking/list.jinja:9
-#: skylines/templates/tracking/map2.jinja:6
 msgid "Live Tracking"
 msgstr "Følg direkte"
 
@@ -400,8 +414,8 @@ msgstr "Levende"
 #: skylines/templates/statistics/flights-table.jinja:6
 #: skylines/templates/statistics/years.jinja:66
 #: skylines/templates/users/users-table.jinja:27
-#: skylines/templates/users/view.jinja:162
-#: skylines/templates/users/view.jinja:240
+#: skylines/templates/users/view.jinja:133
+#: skylines/templates/users/view.jinja:211
 msgid "Flights"
 msgstr "Flygning"
 
@@ -418,7 +432,7 @@ msgstr "Rangering"
 #: skylines/templates/search/list.jinja:108
 #: skylines/templates/statistics/years.jinja:29
 #: skylines/templates/users/users-table.jinja:28
-#: skylines/templates/users/view.jinja:163
+#: skylines/templates/users/view.jinja:134
 msgid "Statistics"
 msgstr "Statistikk"
 
@@ -440,7 +454,13 @@ msgstr "Last opp flygning"
 msgid "Notifications"
 msgstr "Varsling"
 
-#: skylines/templates/topbar.jinja:137
+#: skylines/templates/topbar.jinja:137 skylines/templates/users/view.jinja:122
+#, fuzzy
+#| msgid "Competitions"
+msgid "Settings"
+msgstr "Konkurransenummer"
+
+#: skylines/templates/topbar.jinja:138
 msgid "Logout"
 msgstr "Logg ut"
 
@@ -451,7 +471,8 @@ msgid "Create Pilot"
 msgstr "Legg til pilot"
 
 #: skylines/templates/clubs/create_pilot.jinja:12
-#: skylines/templates/users/edit.jinja:12 skylines/templates/users/new.jinja:12
+#: skylines/templates/settings/profile.jinja:12
+#: skylines/templates/users/new.jinja:12
 msgid "First and last name"
 msgstr ""
 
@@ -464,10 +485,11 @@ msgstr "Endre klubb"
 #: skylines/templates/flights/change_pilot.jinja:14
 #: skylines/templates/flights/details-table.jinja:62
 #: skylines/templates/flights/details-table.jinja:123
-#: skylines/templates/users/change_club.jinja:17
-#: skylines/templates/users/change_password.jinja:14
-#: skylines/templates/users/edit.jinja:23
-#: skylines/templates/users/view.jinja:137
+#: skylines/templates/settings/club.jinja:18
+#: skylines/templates/settings/password.jinja:30
+#: skylines/templates/settings/profile.jinja:22
+#: skylines/templates/settings/tracking.jinja:33
+#: skylines/templates/users/view.jinja:113
 msgid "Change"
 msgstr "Endre"
 
@@ -497,7 +519,6 @@ msgid "%(time_ago)s by %(creator)s"
 msgstr ""
 
 #: skylines/templates/clubs/view.jinja:47
-#: skylines/templates/users/view.jinja:146
 msgid "Edit"
 msgstr "Endre"
 
@@ -520,7 +541,7 @@ msgstr "Lag ny pilot"
 
 #: skylines/templates/flights/details-table.jinja:11
 #: skylines/templates/flights/flights-table.jinja:8
-#: skylines/templates/users/view.jinja:207
+#: skylines/templates/users/view.jinja:178
 msgid "Date"
 msgstr "Dato"
 
@@ -561,7 +582,7 @@ msgstr "Handikapp"
 
 #: skylines/templates/flights/details-table.jinja:71
 #: skylines/templates/flights/flights-table.jinja:76
-#: skylines/templates/tracking/list.jinja:54
+#: skylines/templates/tracking/list.jinja:60
 msgid "Unknown"
 msgstr "Ukjent"
 
@@ -612,8 +633,8 @@ msgstr "Slett"
 #: skylines/templates/flights/phases-table.jinja:73
 #: skylines/templates/statistics/distance-table.jinja:6
 #: skylines/templates/statistics/years.jinja:69
-#: skylines/templates/users/view.jinja:206
-#: skylines/templates/users/view.jinja:244
+#: skylines/templates/users/view.jinja:177
+#: skylines/templates/users/view.jinja:215
 msgid "Distance"
 msgstr "Distanse"
 
@@ -630,7 +651,7 @@ msgstr "Tid"
 #: skylines/templates/flights/flights-table.jinja:96
 #: skylines/templates/flights/list.jinja:168
 #: skylines/templates/notifications/events-table.jinja:175
-#: skylines/templates/tracking/list.jinja:62
+#: skylines/templates/tracking/list.jinja:68
 msgid "Show"
 msgstr "Vis"
 
@@ -789,11 +810,11 @@ msgstr "Ja"
 msgid "No"
 msgstr "Nei"
 
-#: skylines/templates/macros/flash.jinja:6
+#: skylines/templates/macros/flash.jinja:16
 msgid "Error!"
 msgstr "Feil!"
 
-#: skylines/templates/macros/flash.jinja:7
+#: skylines/templates/macros/flash.jinja:17
 msgid "Warning!"
 msgstr "Advarsel!"
 
@@ -965,6 +986,66 @@ msgstr ""
 msgid "Please enter something in the search bar above."
 msgstr ""
 
+#: skylines/templates/settings/base.jinja:16
+msgid "Profile"
+msgstr ""
+
+#: skylines/templates/settings/club.jinja:6
+msgid "Change Club"
+msgstr "Endre flyklubb"
+
+#: skylines/templates/settings/club.jinja:11
+msgid "Select Club"
+msgstr "Velg klubb"
+
+#: skylines/templates/settings/club.jinja:26
+msgid "Register Club"
+msgstr "Registrer klubb"
+
+#: skylines/templates/settings/club.jinja:33
+#, fuzzy
+msgid "Create"
+msgstr "Opprettet"
+
+#: skylines/templates/settings/password.jinja:6
+#: skylines/templates/users/recover_step1.jinja:6
+#: skylines/templates/users/recover_step2.jinja:6
+msgid "Change Password"
+msgstr "Endre passord"
+
+#: skylines/templates/settings/password.jinja:12
+#: skylines/templates/settings/password.jinja:16
+#: skylines/templates/users/recover_step1.jinja:13
+#: skylines/templates/users/recover_step2.jinja:14
+msgid "Recover Password"
+msgstr "Gjenopprett Passord"
+
+#: skylines/templates/settings/profile.jinja:6
+msgid "Edit User"
+msgstr "Redigér bruker"
+
+#: skylines/templates/settings/tracking.jinja:6
+#, fuzzy
+#| msgid "Live Tracking Key"
+msgid "Live Tracking Settings"
+msgstr "Direktesporingsnøkkel"
+
+#: skylines/templates/settings/tracking.jinja:11
+#: skylines/templates/tracking/info.jinja:24
+msgid "Live Tracking Key"
+msgstr "Direktesporingsnøkkel"
+
+#: skylines/templates/settings/tracking.jinja:18
+#: skylines/templates/tracking/info.jinja:27
+#, python-format
+msgid "Your Live Tracking key is: %(key)s"
+msgstr ""
+
+#: skylines/templates/settings/tracking.jinja:21
+#: skylines/templates/tracking/info.jinja:31
+msgid "Generate new key"
+msgstr "Lag ny nøkkel"
+
 #: skylines/templates/statistics/distance-table.jinja:5
 #: skylines/templates/statistics/duration-table.jinja:5
 #: skylines/templates/statistics/flights-table.jinja:5
@@ -973,7 +1054,7 @@ msgid "Year"
 msgstr "År"
 
 #: skylines/templates/statistics/distance-table.jinja:14
-#: skylines/templates/users/view.jinja:246
+#: skylines/templates/users/view.jinja:217
 #, python-format
 msgid "avg. %(distance)s per flight"
 msgstr ""
@@ -987,19 +1068,19 @@ msgstr "Totalt"
 
 #: skylines/templates/statistics/duration-table.jinja:6
 #: skylines/templates/statistics/years.jinja:72
-#: skylines/templates/users/view.jinja:252
+#: skylines/templates/users/view.jinja:223
 msgid "Flight Time"
 msgstr "Flytid"
 
 #: skylines/templates/statistics/duration-table.jinja:14
-#: skylines/templates/users/view.jinja:254
+#: skylines/templates/users/view.jinja:225
 #, python-format
 msgid "avg. %(hours)s hours per flight"
 msgstr ""
 
 #: skylines/templates/statistics/duration-table.jinja:15
 #: skylines/templates/statistics/duration-table.jinja:30
-#: skylines/templates/users/view.jinja:255
+#: skylines/templates/users/view.jinja:226
 #, python-format
 msgid "%(hours)s Hours"
 msgstr ""
@@ -1025,7 +1106,7 @@ msgid "Timeline <small>of %(pilot)s</small>"
 msgstr ""
 
 #: skylines/templates/timeline/list.jinja:12
-#: skylines/templates/users/view.jinja:164
+#: skylines/templates/users/view.jinja:135
 msgid "Timeline"
 msgstr ""
 
@@ -1078,20 +1159,6 @@ msgid ""
 "%(server)s as the server."
 msgstr ""
 
-#: skylines/templates/tracking/info.jinja:24
-msgid "Live Tracking Key"
-msgstr "Direktesporingsnøkkel"
-
-#: skylines/templates/tracking/info.jinja:27
-#, python-format
-msgid "Your Live Tracking key is: %(key)s"
-msgstr ""
-
-#: skylines/templates/tracking/info.jinja:31
-#: skylines/templates/users/view.jinja:106
-msgid "Generate new key"
-msgstr "Lag ny nøkkel"
-
 #: skylines/templates/tracking/info.jinja:34
 #, python-format
 msgid ""
@@ -1107,27 +1174,27 @@ msgid ""
 "and enter your Live Tracking key."
 msgstr ""
 
-#: skylines/templates/tracking/list.jinja:20
+#: skylines/templates/tracking/list.jinja:21
 msgid "Friends"
 msgstr ""
 
-#: skylines/templates/tracking/list.jinja:23
+#: skylines/templates/tracking/list.jinja:28
 msgid "Other pilots"
 msgstr ""
 
-#: skylines/templates/tracking/list.jinja:27
+#: skylines/templates/tracking/list.jinja:33
 msgid "How to use Live Tracking?"
 msgstr "Hvordan bruke direktesporing?"
 
-#: skylines/templates/tracking/list.jinja:34
+#: skylines/templates/tracking/list.jinja:40
 msgid "Last fix"
 msgstr "Siste punkt"
 
-#: skylines/templates/tracking/list.jinja:36
+#: skylines/templates/tracking/list.jinja:42
 msgid "Nearest Airport"
 msgstr "Nærmeste flyplass"
 
-#: skylines/templates/tracking/list.jinja:37
+#: skylines/templates/tracking/list.jinja:43
 #, fuzzy
 msgid "Altitude"
 msgstr "Høydeenhet"
@@ -1158,7 +1225,6 @@ msgstr "Det er fortiden ingen direktesporing for denne piloten."
 #: skylines/templates/tracking/map.jinja:134
 #: skylines/templates/tracking/view.jinja:179
 #, fuzzy
-#| msgid "There is no live track of this pilot currently."
 msgid "There are no live tracks of these pilots currently."
 msgstr "Det er fortiden ingen direktesporing for denne piloten."
 
@@ -1226,105 +1292,51 @@ msgstr "Vellykket"
 msgid "Upload another flight"
 msgstr "Last opp en annen flygning"
 
-#: skylines/templates/users/change_club.jinja:6
-msgid "Change Club"
-msgstr "Endre flyklubb"
-
-#: skylines/templates/users/change_club.jinja:11
-msgid "Select Club"
-msgstr "Velg klubb"
-
-#: skylines/templates/users/change_club.jinja:12
-msgid "Select your primary club:"
-msgstr "Velg din primærklubb"
-
-#: skylines/templates/users/change_club.jinja:23
-msgid "Register Club"
-msgstr "Registrer klubb"
-
-#: skylines/templates/users/change_club.jinja:24
-msgid "If your club doesn't exist yet in Skylines, create it:"
-msgstr "Om din flyklubb ikke eksisterer i Skylines, lag den:"
-
-#: skylines/templates/users/change_club.jinja:29
-#, fuzzy
-msgid "Create"
-msgstr "Opprettet"
-
-#: skylines/templates/users/change_password.jinja:6
-#: skylines/templates/users/recover_step1.jinja:6
-#: skylines/templates/users/recover_step2.jinja:6
-#: skylines/templates/users/view.jinja:147
-msgid "Change Password"
-msgstr "Endre passord"
-
-#: skylines/templates/users/edit.jinja:6
-msgid "Edit User"
-msgstr "Redigér bruker"
-
 #: skylines/templates/users/list.jinja:5
 msgid "Users"
 msgstr "Brukere"
 
-#: skylines/templates/users/new.jinja:6 skylines/templates/users/new.jinja:17
+#: skylines/templates/users/new.jinja:6 skylines/templates/users/new.jinja:16
 msgid "Register"
 msgstr "Registrer"
-
-#: skylines/templates/users/recover_step1.jinja:13
-#: skylines/templates/users/recover_step2.jinja:14
-#: skylines/templates/users/view.jinja:151
-msgid "Recover Password"
-msgstr "Gjenopprett Passord"
 
 #: skylines/templates/users/view.jinja:89
 msgid "Email"
 msgstr "E-post"
 
-#: skylines/templates/users/view.jinja:101
-msgid "Tracking key"
-msgstr "Direktesporingsnøkkel"
-
-#: skylines/templates/users/view.jinja:104
-msgid "More Information"
-msgstr "Mer informasjon"
-
-#: skylines/templates/users/view.jinja:112
-msgid "Tracking delay"
-msgstr "Direktesporingforsinkelse"
-
-#: skylines/templates/users/view.jinja:133
+#: skylines/templates/users/view.jinja:109
 msgid "Unspecified"
 msgstr ""
 
-#: skylines/templates/users/view.jinja:156
+#: skylines/templates/users/view.jinja:127
 msgid "Unfollow"
 msgstr "Ikke følg"
 
-#: skylines/templates/users/view.jinja:158
+#: skylines/templates/users/view.jinja:129
 msgid "Follow"
 msgstr "Følg"
 
-#: skylines/templates/users/view.jinja:172
+#: skylines/templates/users/view.jinja:143
 msgid "Following"
 msgstr "Tilhenger"
 
-#: skylines/templates/users/view.jinja:187
+#: skylines/templates/users/view.jinja:158
 msgid "Followers"
 msgstr "Tilhengere"
 
-#: skylines/templates/users/view.jinja:202
+#: skylines/templates/users/view.jinja:173
 msgid "Distance Flights"
 msgstr "Distanseflygninger"
 
-#: skylines/templates/users/view.jinja:231
+#: skylines/templates/users/view.jinja:202
 msgid "Last 12 Months"
 msgstr "Siste 12 måneder"
 
-#: skylines/templates/users/view.jinja:260
+#: skylines/templates/users/view.jinja:231
 msgid "Average Speed"
 msgstr "Snitthastighet"
 
-#: skylines/templates/users/view.jinja:272
+#: skylines/templates/users/view.jinja:243
 msgid "Takeoff Locations"
 msgstr "Avgangflyplasser"
 
@@ -1393,6 +1405,32 @@ msgstr ""
 msgid "You are now logged out. We hope to see you back soon!"
 msgstr "Du er nå logget ut. Velkommen tilbake."
 
+#: skylines/views/settings.py:72
+#, fuzzy
+#| msgid "No flight was saved."
+msgid "Profile was saved."
+msgstr "Ingen flygninger ble lagret"
+
+#: skylines/views/settings.py:84
+msgid "This password does not match your current password."
+msgstr ""
+
+#: skylines/views/settings.py:95
+#, fuzzy
+#| msgid "Password changed."
+msgid "Your password was changed."
+msgstr "Passord endret."
+
+#: skylines/views/settings.py:124
+msgid "Live Tracking settings were saved."
+msgstr ""
+
+#: skylines/views/settings.py:187
+#, fuzzy
+#| msgid "No flight was saved."
+msgid "New club was saved."
+msgstr "Ingen flygninger ble lagret"
+
 #: skylines/views/upload.py:63 skylines/views/upload.py:168
 msgid "You have to login to upload flights."
 msgstr "Du må logge inn får å laste opp en flygning."
@@ -1425,13 +1463,13 @@ msgstr ""
 msgid "Your flight(s) have been successfully updated."
 msgstr "Din flygning har blitt oppdatert"
 
-#: skylines/views/users.py:123
+#: skylines/views/users.py:118
 msgid ""
 "The mail server is currently not reachable. Please try again later or "
 "contact the developers."
 msgstr ""
 
-#: skylines/views/users.py:148
+#: skylines/views/users.py:143
 msgid "Password changed."
 msgstr "Passord endret."
 
@@ -1445,7 +1483,20 @@ msgstr "Passord endret."
 #~ msgstr "Direktesporinginstillinger"
 
 #~ msgid ""
-#~ "Sorry, email address or password are "
-#~ "wrong. Please try again or register."
 #~ msgstr "Beklager, men epostadressen eller passordet er feil. Prøv igjen."
+
+#~ msgid "Select your primary club:"
+#~ msgstr "Velg din primærklubb"
+
+#~ msgid "If your club doesn't exist yet in Skylines, create it:"
+#~ msgstr "Om din flyklubb ikke eksisterer i Skylines, lag den:"
+
+#~ msgid "Tracking key"
+#~ msgstr "Direktesporingsnøkkel"
+
+#~ msgid "More Information"
+#~ msgstr "Mer informasjon"
+
+#~ msgid "Tracking delay"
+#~ msgstr "Direktesporingforsinkelse"
 
