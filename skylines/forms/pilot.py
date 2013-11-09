@@ -101,7 +101,7 @@ class EditPilotForm(Form):
 
 class LiveTrackingSettingsForm(Form):
     tracking_delay = TrackingDelaySelectField(l_('Tracking Delay'))
-    tracking_callsign = TextField(l_('Tracking callsign'), validators=[
+    tracking_callsign = TextField(l_('Tracking Callsign'), validators=[
         Length(max=5, message=l_('Your callsign must not have more than 5 characters.')),
     ])
 

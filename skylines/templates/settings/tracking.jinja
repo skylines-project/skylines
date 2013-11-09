@@ -15,7 +15,7 @@
   </div>
   <div class="panel-body">
     <p style="margin: 10px 0px 20px;">
-      {{ _('Your current live tracking key is: %(tracking_key)s', tracking_key='<span class="label tracking-key">' + g.user.tracking_key_hex + '</span>') }}
+      {{ _('Your Live Tracking key is: %(key)s', key='<span class="label tracking-key">' + g.user.tracking_key_hex + '</span>') }}
     </p>
     <p>
       <a href="{{ url_for('settings.tracking_generate_key', user=g.user_id) }}" class="btn btn-primary form-control">{% trans %}Generate new key{% endtrans %}</a>
