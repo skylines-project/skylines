@@ -1,17 +1,15 @@
-{% extends "base-form.jinja" %}
-{% set active_page = "settings" %}
+{% extends "settings/base-form.jinja" %}
+{% set settings_page = "profile" %}
 
 {% from "macros/form.jinja" import render_field, render_two_fields %}
 
 {% block title %}{% trans %}Edit User{% endtrans %}{% endblock %}
 
 {% block form -%}
-<form method="POST" action="{{ url_for('user.edit') }}" role="form">
+<form method="POST" action="{{ url_for('settings.profile', user=g.user_id) }}" role="form">
   {{ form.hidden_tag() }}
   {{ render_field(form.email_address) }}
   {{ render_two_fields(_('First and last name'), form.first_name, form.last_name) }}
-  {{ render_field(form.tracking_callsign) }}
-  {{ render_field(form.tracking_delay) }}
   {{ render_field(form.unit_preset) }}
   <div id="custom_units">
   {{ render_field(form.distance_unit) }}

@@ -1,0 +1,24 @@
+{% extends "base-page.jinja" %}
+{% set active_page = "settings" %}
+
+{% block content -%}
+<div class="row">
+  <div class="col-sm-8 col-sm-push-4 col-md-9 col-md-push-3">
+    {% block settings_content %}{% endblock %}
+  </div>
+
+  <div class="col-sm-4 col-sm-pull-8 col-md-3 col-md-pull-9">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title">{{ g.user }}</h3>
+      </div>
+      <div class="list-group">
+        <a href="{{ url_for('.profile', user=g.user_id) }}" class="list-group-item{% if settings_page == 'profile' %} active{% endif %}">{{ _('Profile') }}</a>
+        <a href="{{ url_for('.password', user=g.user_id) }}" class="list-group-item{% if settings_page == 'password' %} active{% endif %}">{{ _('Password') }}</a>
+        <a href="{{ url_for('.club', user=g.user_id) }}" class="list-group-item{% if settings_page == 'club' %} active{% endif %}">{{ _('Club') }}</a>
+        <a href="{{ url_for('.tracking', user=g.user_id) }}" class="list-group-item{% if settings_page == 'tracking' %} active{% endif %}">{{ _('Live Tracking') }}</a>
+      </div>
+    </div>
+  </div>
+</div>
+{%- endblock %}

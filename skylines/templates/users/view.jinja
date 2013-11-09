@@ -96,30 +96,6 @@
           <td itemprop="name">{{ user.name }}</td>
         </tr>
 
-        {% if user.is_readable(g.current_user) and user.tracking_key_hex -%}
-        <tr>
-          <th>{% trans %}Tracking key{% endtrans %}</th>
-          <td>
-            <span class="label label-info">{{ user.tracking_key_hex }}</span>
-            <a href="{{ url_for('tracking.info') }}" class="btn btn-default btn-sm">{% trans %}More Information{% endtrans %}</a>
-            {% if user.is_writable(g.current_user) -%}
-            <a href="{{ url_for('.tracking_register', came_from=url_for('.index')) }}" class="btn btn-default btn-sm">{% trans %}Generate new key{% endtrans %}</a>
-            {%- endif %}
-          </td>
-        </tr>
-
-        <tr>
-          <th>{% trans %}Tracking delay{% endtrans %}</th>
-          <td>
-            {% if user.tracking_delay == 0 -%}
-            {% trans %}None{% endtrans %}
-            {%- else %}
-            {{ ngettext('%(num)u minute', '%(num)u minutes', user.tracking_delay) }}
-            {%- endif %}
-          </td>
-        </tr>
-        {%- endif %}
-
         {% if user.club or user.is_writable(g.current_user) -%}
         <tr>
           <th>{% trans %}Club{% endtrans %}</th>
@@ -134,7 +110,7 @@
           {%- endif %}
 
             {% if user.is_writable(g.current_user) -%}
-            <a href="change_club" class="btn btn-default btn-sm">{% trans %}Change{% endtrans %}</a>
+            <a href="{{ url_for('settings.club', user=(g.current_user != g.user and g.user_id or None)) }}" class="btn btn-default btn-sm">{% trans %}Change{% endtrans %}</a>
             {%- endif %}
           </td>
         </tr>
@@ -143,12 +119,7 @@
 
       <p style="margin-top: 10px">
         {% if user.is_writable(g.current_user) -%}
-        <a href="{{ url_for('.edit') }}" class="btn btn-default">{% trans %}Edit{% endtrans %}</a>
-        <a href="{{ url_for('.change_password') }}" class="btn btn-default">{% trans %}Change Password{% endtrans %}</a>
-        {%- endif %}
-
-        {% if g.current_user and g.current_user.is_manager() -%}
-        <a href="{{ url_for('.recover_password') }}" class="btn btn-default">{% trans %}Recover Password{% endtrans %}</a>
+        <a href="{{ url_for('settings.profile', user=(g.current_user != g.user and g.user_id or None)) }}" class="btn btn-default"><i class="icon-cog"></i> {% trans %}Settings{% endtrans %}</a>
         {%- endif %}
 
         {% if g.current_user and g.current_user != user -%}

@@ -31,6 +31,7 @@ class ClubPilotsSelectField(SelectField):
 
 
 class ChangePasswordForm(Form):
+    current_password = PasswordField(l_('Current Password'))
     password = PasswordField(l_('Password'), validators=[
         Length(min=6, message=l_('Your password must have at least 6 characters.')),
     ])
@@ -83,10 +84,6 @@ class EditPilotForm(Form):
     last_name = TextField(l_('Last Name'), validators=[
         InputRequired(message=l_('Please enter your last name.')),
     ])
-    tracking_delay = TrackingDelaySelectField(l_('Tracking Delay'))
-    tracking_callsign = TextField(l_('Tracking callsign'), validators=[
-        Length(max=5, message=l_('Your callsign must not have more than 5 characters.')),
-    ])
     unit_preset = UnitsPresetSelectField(l_('Unit Preset'))
     distance_unit = DistanceUnitSelectField(l_('Distance Unit'))
     speed_unit = SpeedUnitSelectField(l_('Speed Unit'))
@@ -100,6 +97,13 @@ class EditPilotForm(Form):
 
         if User.exists(email_address=field.data):
             raise ValidationError(l_('A pilot with this email address exists already.'))
+
+
+class LiveTrackingSettingsForm(Form):
+    tracking_delay = TrackingDelaySelectField(l_('Tracking Delay'))
+    tracking_callsign = TextField(l_('Tracking callsign'), validators=[
+        Length(max=5, message=l_('Your callsign must not have more than 5 characters.')),
+    ])
 
 
 class RecoverStep1Form(Form):

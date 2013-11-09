@@ -1,23 +1,16 @@
 from datetime import date, timedelta
 
-from flask import Blueprint, request, render_template, redirect, url_for, abort, g, flash
+from flask import Blueprint, request, render_template, redirect, url_for, abort, g
 from flask.ext.login import login_required
 
-from sqlalchemy.sql.expression import and_, or_
 from sqlalchemy import func
 
 from skylines import db
-from skylines.forms import (
-    ChangePasswordForm, ChangeClubForm, CreateClubForm, EditPilotForm
-)
 from skylines.lib.dbutil import get_requested_record
 from skylines.model import (
-    User, Club, Flight, Follower, Location, IGCFile, Notification, Event
+    User, Flight, Follower, Location, Notification, Event
 )
-from skylines.model.event import (
-    create_follower_notification, create_club_join_event
-)
-from skylines.views.users import send_recover_mail
+from skylines.model.event import create_follower_notification
 
 user_blueprint = Blueprint('user', 'skylines')
 
@@ -116,125 +109,6 @@ def index():
         last_year_statistics=_get_last_year_statistics())
 
 
-@user_blueprint.route('/change_password', methods=['GET', 'POST'])
-def change_password():
-    if not g.user.is_writable(g.current_user):
-        abort(403)
-
-    form = ChangePasswordForm()
-    if form.validate_on_submit():
-        return change_password_post(form)
-
-    return render_template('users/change_password.jinja', form=form)
-
-
-def change_password_post(form):
-    g.user.password = form.password.data
-    g.user.recover_key = None
-
-    db.session.commit()
-
-    return redirect(url_for('.index'))
-
-
-@user_blueprint.route('/edit', methods=['GET', 'POST'])
-def edit():
-    if not g.user.is_writable(g.current_user):
-        abort(403)
-
-    form = EditPilotForm(obj=g.user)
-    if form.validate_on_submit():
-        return edit_post(form)
-
-    return render_template('users/edit.jinja', form=form)
-
-
-def edit_post(form):
-    g.user.email_address = form.email_address.data
-    g.user.first_name = form.first_name.data
-    g.user.last_name = form.last_name.data
-    g.user.tracking_callsign = form.tracking_callsign.data
-    g.user.tracking_delay = request.form.get('tracking_delay', 0)
-
-    unit_preset = request.form.get('unit_preset', 1, type=int)
-    if unit_preset == 0:
-        g.user.distance_unit = request.form.get('distance_unit', 1, type=int)
-        g.user.speed_unit = request.form.get('speed_unit', 1, type=int)
-        g.user.lift_unit = request.form.get('lift_unit', 0, type=int)
-        g.user.altitude_unit = request.form.get('altitude_unit', 0, type=int)
-    else:
-        g.user.unit_preset = unit_preset
-
-    g.user.eye_candy = request.form.get('eye_candy', False, type=bool)
-
-    db.session.commit()
-
-    return redirect(url_for('.index'))
-
-
-@user_blueprint.route('/change_club', methods=['GET', 'POST'])
-def change_club():
-    if not g.user.is_writable(g.current_user):
-        abort(403)
-
-    change_form = ChangeClubForm(club=g.user.club_id)
-    create_form = CreateClubForm()
-
-    if request.endpoint.endswith('.change_club'):
-        if change_form.validate_on_submit():
-            return change_club_post(change_form)
-
-    if request.endpoint.endswith('.create_club'):
-        if create_form.validate_on_submit():
-            return create_club_post(create_form)
-
-    return render_template(
-        'users/change_club.jinja',
-        change_form=change_form, create_form=create_form)
-
-
-@user_blueprint.route('/create_club', methods=['GET', 'POST'])
-def create_club():
-    return change_club()
-
-
-def change_club_post(form):
-    old_club_id = g.user.club_id
-    new_club_id = form.club.data if form.club.data != 0 else None
-
-    if old_club_id == new_club_id:
-        return redirect(url_for('.index'))
-
-    g.user.club_id = new_club_id
-
-    create_club_join_event(new_club_id, g.user)
-
-    # assign the user's new club to all of his flights that have
-    # no club yet
-    flights = Flight.query().join(IGCFile)
-    flights = flights.filter(and_(Flight.club_id == None,
-                                  or_(Flight.pilot_id == g.user.id,
-                                      IGCFile.owner_id == g.user.id)))
-    for flight in flights:
-        flight.club_id = g.user.club_id
-
-    db.session.commit()
-
-    return redirect(url_for('.index'))
-
-
-def create_club_post(form):
-    club = Club(name=form.name.data)
-    club.owner_id = g.current_user.id
-    db.session.add(club)
-
-    g.user.club = club
-
-    db.session.commit()
-
-    return redirect(url_for('.index'))
-
-
 @user_blueprint.route('/follow')
 @login_required
 def follow():
@@ -261,17 +135,3 @@ def tracking_register():
     db.session.commit()
 
     return redirect(request.values.get('came_from', '/tracking/info'))
-
-
-@user_blueprint.route('/recover_password')
-def recover_password():
-    if not g.current_user or not g.current_user.is_manager():
-        abort(403)
-
-    g.user.generate_recover_key(request.remote_addr)
-    send_recover_mail(g.user)
-    flash('A password recovery email was sent to that user.')
-
-    db.session.commit()
-
-    return redirect(url_for('.index'))

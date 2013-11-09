@@ -1,4 +1,4 @@
-{% macro render_field(field, hide_error_text=False) -%}
+{% macro render_field(field, hide_error_text=False, disabled=False) -%}
 {% if field.widget.input_type == 'checkbox' -%}
   <div class="checkbox">
     <label>
@@ -12,7 +12,12 @@
     {% if hide_error_text -%}
       {{ field(class_="form-control", title=field.errors[0], **kwargs)|safe }}
     {%- else -%}
+      {% if disabled -%}
+      {{ field(class_="form-control", disabled='true', **kwargs)|safe }}
+      {%- else -%}
       {{ field(class_="form-control", **kwargs)|safe }}
+      {%- endif %}
+
       {% if field.errors -%}
       <p class="help-block">{{ field.errors[0] }}</p>
       {%- endif %}

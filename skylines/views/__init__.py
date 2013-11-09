@@ -13,6 +13,7 @@ from skylines.views.livetrack24 import lt24_blueprint
 from skylines.views.notifications import notifications_blueprint
 from skylines.views.ranking import ranking_blueprint
 from skylines.views.search import search_blueprint
+from skylines.views.settings import settings_blueprint
 from skylines.views.statistics import statistics_blueprint
 from skylines.views.timeline import timeline_blueprint
 from skylines.views.track import track_blueprint
@@ -38,6 +39,7 @@ def register(app):
     app.register_blueprint(notifications_blueprint, url_prefix='/notifications')
     app.register_blueprint(ranking_blueprint, url_prefix='/ranking')
     app.register_blueprint(search_blueprint, url_prefix='/search')
+    app.register_blueprint(settings_blueprint, url_prefix='/settings')
     app.register_blueprint(statistics_blueprint, url_prefix='/statistics')
     app.register_blueprint(timeline_blueprint, url_prefix='/timeline')
     app.register_blueprint(track_blueprint, url_prefix='/tracking/<user_id>')
