@@ -230,7 +230,5 @@ class TrackingServer(DatagramProtocol):
             self.pingReceived(host, port, header[3], data[16:])
         elif header[2] == TYPE_TRAFFIC_REQUEST:
             self.trafficRequestReceived(host, port, header[3], data[16:])
-        elif header[2] == TYPE_TRAFFIC_REQUEST:
-            self.trafficRequestReceived(host, port, header[3], data[16:])
         elif header[2] == TYPE_USER_NAME_REQUEST:
             self.userNameRequestReceived(host, port, header[3], data[16:])
