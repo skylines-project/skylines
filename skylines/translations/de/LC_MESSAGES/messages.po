@@ -103,10 +103,8 @@ msgid "Competition Number"
 msgstr "Wettbewerbskennzeichen"
 
 #: skylines/forms/pilot.py:34
-#, fuzzy
-#| msgid "Forgot password?"
 msgid "Current Password"
-msgstr "Passwort vergessen?"
+msgstr "Aktuelles Passwort"
 
 #: skylines/forms/pilot.py:35 skylines/forms/pilot.py:129
 #: skylines/templates/settings/base.jinja:17
@@ -196,13 +194,11 @@ msgstr "Tracking Verzögerung"
 
 #: skylines/forms/pilot.py:104
 msgid "Tracking Callsign"
-msgstr ""
+msgstr "Tracking Kennzeichen"
 
 #: skylines/forms/pilot.py:105
-#, fuzzy
-#| msgid "Your password must have at least 6 characters."
 msgid "Your callsign must not have more than 5 characters."
-msgstr "Dein Passwort muss mindestens 6 Zeichen haben."
+msgstr "Dein Kennzeichen darf maximal 5 Zeichen haben."
 
 #: skylines/forms/pilot.py:117
 msgid "There is no pilot with this email address."
@@ -480,10 +476,8 @@ msgid "Notifications"
 msgstr "Benachrichtigungen"
 
 #: skylines/templates/topbar.jinja:137 skylines/templates/users/view.jinja:122
-#, fuzzy
-#| msgid "Competitions"
 msgid "Settings"
-msgstr "Wettbewerbe"
+msgstr "Einstellungen"
 
 #: skylines/templates/topbar.jinja:138
 msgid "Logout"
@@ -1026,7 +1020,7 @@ msgstr "Bitte trag etwas in die Suchleiste oben ein."
 
 #: skylines/templates/settings/base.jinja:16
 msgid "Profile"
-msgstr ""
+msgstr "Profil"
 
 #: skylines/templates/settings/club.jinja:6
 msgid "Change Club"
@@ -1062,10 +1056,8 @@ msgid "Edit User"
 msgstr "Benutzer bearbeiten"
 
 #: skylines/templates/settings/tracking.jinja:6
-#, fuzzy
-#| msgid "Live Tracking Key"
 msgid "Live Tracking Settings"
-msgstr "Live Tracking Key"
+msgstr "Live Tracking Einstellungen"
 
 #: skylines/templates/settings/tracking.jinja:11
 #: skylines/templates/tracking/info.jinja:24
@@ -1457,30 +1449,24 @@ msgid "You are now logged out. We hope to see you back soon!"
 msgstr "Du bist jetzt ausgeloggt. Wir hoffen dich bald wieder zu sehen!"
 
 #: skylines/views/settings.py:72
-#, fuzzy
-#| msgid "No flight was saved."
 msgid "Profile was saved."
-msgstr "Kein Flug wurde gespeichert."
+msgstr "Profil wurde gespeichert."
 
 #: skylines/views/settings.py:84
 msgid "This password does not match your current password."
-msgstr ""
+msgstr "Das Passwort stimmt nicht mit dem aktuellen Passwort überein."
 
 #: skylines/views/settings.py:95
-#, fuzzy
-#| msgid "Password changed."
 msgid "Your password was changed."
-msgstr "Passwort wurde geändert"
+msgstr "Dein Passwort wurde geändert."
 
 #: skylines/views/settings.py:124
 msgid "Live Tracking settings were saved."
-msgstr ""
+msgstr "Live Tracking Einstellungen wurden gespeichert."
 
 #: skylines/views/settings.py:187
-#, fuzzy
-#| msgid "No flight was saved."
 msgid "New club was saved."
-msgstr "Kein Flug wurde gespeichert."
+msgstr "Neuer Verein wurde gespeichert."
 
 #: skylines/views/upload.py:63 skylines/views/upload.py:168
 msgid "You have to login to upload flights."
