@@ -1,10 +1,82 @@
+# inactive airports
 LAYER
-  NAME 'Airports'
+  NAME 'Airports_Inactive'
+  GROUP 'Airports'
   TYPE POINT
   CONNECTIONTYPE POSTGIS
   CONNECTION "dbname=skylines"
   DATA "location_wkt from (SELECT id, location_wkt, name, runway_len, type, surface,
-        (-runway_dir) as runway_dir from airports) as foo using unique id"
+       (-runway_dir) as runway_dir, valid_until from airports) as foo using unique id"
+  FILTER "valid_until < now() at time zone 'utc'"
+  LABELITEM "name"
+
+  PROJECTION
+    "init=epsg:4326"
+  END
+
+  METADATA
+    WMS_NAME 'Airports'
+  END
+
+  CLASS
+    NAME 'Airports detail'
+    MAXSCALEDENOM 400000
+
+    STYLE
+      SYMBOL 'airport gray'
+      COLOR 255 0 0
+      ANGLE [runway_dir]
+      MAXSIZE 24
+      MINSIZE 24
+    END
+
+    LABEL
+      COLOR  80 80 80
+      OUTLINECOLOR 255 255 255
+      OUTLINEWIDTH 1
+      FONT "sans"
+      TYPE truetype
+      SIZE 6
+      MAXSIZE 6
+      MINSIZE 6
+      POSITION AUTO
+      PARTIALS false
+      MINDISTANCE 20
+      ANTIALIAS true
+      OFFSET 0 -16
+    END
+  END
+
+  CLASS
+    NAME 'Airports priority'
+    MINSCALEDENOM 400000
+    MAXSCALEDENOM 5000000
+    EXPRESSION (([runway_len] > 1000 ) AND ('[type]' eq 'airport') AND ('[surface]' ne 'grass'))
+
+    STYLE
+      SYMBOL 'airport gray'
+      COLOR 255 0 0
+      ANGLE [runway_dir]
+      MAXSIZE 24
+      MINSIZE 24
+    END
+  END
+
+  SYMBOLSCALEDENOM 6931575 #exactly zoom level 6
+
+END
+
+
+# active airports, rendered on top of the inactive ones
+LAYER
+  NAME 'Airports_Current'
+  GROUP 'Airports'
+  TYPE POINT
+  CONNECTIONTYPE POSTGIS
+  CONNECTION "dbname=skylines"
+  DATA "location_wkt from (SELECT id, location_wkt, name, runway_len, type, surface,
+        (-runway_dir) as runway_dir, valid_until from airports) as foo using unique id"
+  FILTER "valid_until >= now() at time zone 'utc' or valid_until is NULL"
   LABELITEM "name"
 
   PROJECTION
@@ -113,3 +185,4 @@ LAYER
   END
 
 END
+
