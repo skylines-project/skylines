@@ -4,7 +4,7 @@ from datetime import datetime
 
 from sqlalchemy import Column, func
 from sqlalchemy.types import Integer, Float, String, DateTime
-from sqlalchemy.sql.expression import cast
+from sqlalchemy.sql.expression import cast, or_
 from geoalchemy2.types import Geometry, Geography
 from geoalchemy2.shape import to_shape
 
@@ -58,11 +58,12 @@ class Airport(db.Model):
             self.location_wkt = location.to_wkt_element()
 
     @classmethod
-    def by_location(cls, location, distance_threshold=0.025):
+    def by_location(cls, location, distance_threshold=0.025, date=datetime.utcnow()):
         location = location.to_wkt_element()
         distance = func.ST_Distance(cls.location_wkt, location)
 
         airport = db.session.query(cls, distance.label('distance')) \
+            .filter(or_(cls.valid_until == None, cls.valid_until > date)) \
             .order_by(distance).first()
 
         if airport is not None and (distance_threshold is None or
@@ -72,9 +73,10 @@ class Airport(db.Model):
             return None
 
     @classmethod
-    def by_bbox(cls, bbox):
+    def by_bbox(cls, bbox, date=datetime.utcnow()):
         return cls.query() \
             .order_by(cls.id) \
+            .filter(or_(cls.valid_until == None, cls.valid_until > date)) \
             .filter(db.func.ST_Contains(bbox.make_box(), cls.location_wkt))
 
     def distance(self, location):
