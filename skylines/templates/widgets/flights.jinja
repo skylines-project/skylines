@@ -1,0 +1,46 @@
+{% from "macros/links.jinja" import user_link, airport_link %}
+
+<table class="{{ request.values.get('table_class', '') }}">
+    <tr>
+        <th>{{ _('Date') }}</th>
+        <th>{{ _('Pilot') }}</th>
+        <th>{{ _('Distance') }}</th>
+        <th>{{ _('Airport') }}</th>
+        <th>{{ _('Aircraft') }}</th>
+        <th></th>
+    </tr>
+    {% for flight in flights %}
+    <tr>
+        <td>{{ h.format_date(flight.date_local) }}</td>
+        <td>
+            {% if flight.pilot %}{{ user_link(flight.pilot, _external=True) }}{% endif -%}
+            {% if flight.pilot and flight.co_pilot %}<br/>{% endif -%}
+            {% if flight.co_pilot %}{{ user_link(flight.co_pilot, _external=True) }}{% endif -%}
+
+            {% if not flight.pilot and not flight.co_pilot -%}
+            [{{ flight.igc_file.owner|e }}]
+            {%- endif %}
+        </td>
+        <td>
+            {% if flight.olc_classic_distance -%}
+            {{ h.format_distance(flight.olc_classic_distance) }}
+            {%- endif %}
+        </td>
+        <td>
+            {% if flight.takeoff_airport -%}
+            {{ airport_link(flight.takeoff_airport, _external=True) }}
+            {%- endif %}
+        </td>
+        <td title="{{ flight.registration|e or flight.igc_file.registration|e }}">
+            {% if flight.model -%}
+            {{ flight.model|e }}
+            {%- elif flight.igc_file.model %}
+            [{{ flight.igc_file.model|e }}]
+            {%- endif %}
+        </td>
+        <td>
+            <a href="{{ url_for('flight.index', _external=True, flight_id=flight.id) }}">{{ _('Details') }}</a>
+        </td>
+    </tr>
+    {% endfor %}
+</table>
