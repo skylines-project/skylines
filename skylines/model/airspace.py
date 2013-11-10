@@ -15,7 +15,7 @@ class Airspace(db.Model):
     time_created = db.Column(DateTime, nullable=False, default=datetime.utcnow)
     time_modified = db.Column(DateTime, nullable=False, default=datetime.utcnow)
 
-    the_geom = db.Column(Geometry('POLYGON'))
+    the_geom = db.Column(Geometry('POLYGON', srid=4326))
 
     name = db.Column(String(), nullable=False)
     airspace_class = db.Column(String(3), nullable=False)

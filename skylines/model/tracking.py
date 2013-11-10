@@ -21,7 +21,7 @@ class TrackingFix(db.Model):
 
     time = db.Column(DateTime, nullable=False, default=datetime.utcnow)
 
-    location_wkt = db.Column('location', Geometry('POINT'))
+    location_wkt = db.Column('location', Geometry('POINT', srid=4326))
 
     track = db.Column(SmallInteger)
     ground_speed = db.Column(REAL)

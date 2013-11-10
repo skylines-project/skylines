@@ -47,9 +47,9 @@ class Flight(db.Model):
     takeoff_time = db.Column(DateTime, nullable=False, index=True)
     landing_time = db.Column(DateTime, nullable=False)
     takeoff_location_wkt = db.Column(
-        'takeoff_location', Geometry('POINT'))
+        'takeoff_location', Geometry('POINT', srid=4326))
     landing_location_wkt = db.Column(
-        'landing_location', Geometry('POINT'))
+        'landing_location', Geometry('POINT', srid=4326))
 
     takeoff_airport_id = db.Column(
         Integer, db.ForeignKey('airports.id', ondelete='SET NULL'))

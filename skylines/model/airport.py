@@ -22,7 +22,7 @@ class Airport(db.Model):
     time_modified = Column(DateTime, nullable=False, default=datetime.utcnow)
     valid_until = Column(DateTime, nullable=True)
 
-    location_wkt = Column(Geometry('POINT'))
+    location_wkt = Column(Geometry('POINT', srid=4326))
     altitude = Column(Float)
 
     name = Column(String(), nullable=False)
