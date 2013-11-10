@@ -20,6 +20,7 @@ class Airport(db.Model):
     id = Column(Integer, autoincrement=True, primary_key=True)
     time_created = Column(DateTime, nullable=False, default=datetime.utcnow)
     time_modified = Column(DateTime, nullable=False, default=datetime.utcnow)
+    valid_until = Column(DateTime, nullable=True)
 
     location_wkt = Column(Geometry('POINT'))
     altitude = Column(Float)
