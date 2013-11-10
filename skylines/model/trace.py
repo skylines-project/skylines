@@ -34,7 +34,7 @@ class Trace(db.Model):
 
     times = db.Column(postgresql.ARRAY(DateTime), nullable=False)
     _locations = db.Column(
-        'locations', Geometry('LINESTRING'), nullable=False)
+        'locations', Geometry('LINESTRING', srid=4326), nullable=False)
 
     @property
     def speed(self):

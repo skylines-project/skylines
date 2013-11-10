@@ -41,6 +41,12 @@ SYMBOL
 END
 
 SYMBOL
+  NAME 'airport gray'
+  TYPE pixmap
+  IMAGE 'airports/airport_gray.png'
+END
+
+SYMBOL
   NAME 'airport small'
   TYPE ellipse
   POINTS 6 6 END
