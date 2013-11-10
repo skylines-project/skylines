@@ -10,7 +10,8 @@
   margin-bottom: 0;
 }
 
-.panel-body > p:last-child {
+.panel-body > :last-child,
+.panel-body > div:last-child > :last-child {
   margin-bottom: 0;
 }
 
@@ -28,4 +29,18 @@
 
 .panel-help-icon > a:hover {
   color: #666;
+}
+
+.panel-separator {
+  padding: 10px 15px;
+  background-color: rgb(245, 245, 245);
+  border-top: 1px solid rgb(221, 221, 221);
+  border-bottom: 1px solid rgb(221, 221, 221);
+}
+
+.panel-subtitle {
+    margin-top: 0px;
+    margin-bottom: 0px;
+    font-size: 16px;
+    font-weight: normal;
 }
