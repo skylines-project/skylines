@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: SkyLines 0.1\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2013-11-11 18:37+0100\n"
+"POT-Creation-Date: 2013-11-11 19:52+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -444,7 +444,7 @@ msgstr ""
 msgid "Settings"
 msgstr ""
 
-#: skylines/templates/topbar.jinja:138
+#: skylines/templates/topbar.jinja:139
 msgid "Logout"
 msgstr ""
 
@@ -1005,6 +1005,7 @@ msgid "Edit User"
 msgstr ""
 
 #: skylines/templates/settings/tracking.jinja:6
+#: skylines/templates/tracking/info.jinja:31
 msgid "Live Tracking Settings"
 msgstr ""
 
@@ -1020,7 +1021,6 @@ msgid "Your Live Tracking key is: %(key)s"
 msgstr ""
 
 #: skylines/templates/settings/tracking.jinja:21
-#: skylines/templates/tracking/info.jinja:31
 msgid "Generate new key"
 msgstr ""
 
@@ -1324,7 +1324,7 @@ msgstr ""
 
 #: skylines/templates/widgets/index.jinja:16
 msgid ""
-"This widget show the latest flights of you, your club or whatever other "
+"This widget shows the latest flights of you, your club or whatever other "
 "options you use in the URL."
 msgstr ""
 
