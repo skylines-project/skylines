@@ -1,6 +1,6 @@
 from datetime import date, timedelta
 
-from flask import Blueprint, request, render_template, redirect, url_for, abort, g
+from flask import Blueprint, render_template, redirect, url_for, g
 from flask.ext.login import login_required
 
 from sqlalchemy import func
@@ -124,14 +124,3 @@ def unfollow():
     Follower.unfollow(g.current_user, g.user)
     db.session.commit()
     return redirect(url_for('.index'))
-
-
-@user_blueprint.route('/tracking_register')
-def tracking_register():
-    if not g.user.is_writable(g.current_user):
-        abort(403)
-
-    g.user.generate_tracking_key()
-    db.session.commit()
-
-    return redirect(request.values.get('came_from', '/tracking/info'))
