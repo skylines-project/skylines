@@ -54,7 +54,7 @@
   <div class="row">
     <div class="col-md-4">
       <h2><i class="icon-group"></i> {% trans %}Social Network{% endtrans %}</h2>
-      <p>{% trans url=url_for('notifications.index') %}Skylines also has some social network aspects. You can comment on flights, follow your friends and get <a href="{{ url }}">notifications</a> if they do anything interesting.{% endtrans %}</p>
+      <p>{% trans url=(g.current_user and url_for('notifications.index') or url_for('timeline.index')) %}Skylines also has some social network aspects. You can comment on flights, follow your friends and get <a href="{{ url }}">notifications</a> if they do anything interesting.{% endtrans %}</p>
     </div>
     <div class="col-md-4">
       <h2><i class="icon-cloud"></i> {% trans %}Open Data{% endtrans %}</h2>
