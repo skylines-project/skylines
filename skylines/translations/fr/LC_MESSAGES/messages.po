@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  skylines\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2013-11-09 16:45+0100\n"
-"PO-Revision-Date: 2013-10-11 19:29+0000\n"
+"POT-Creation-Date: 2013-11-11 18:37+0100\n"
+"PO-Revision-Date: 2013-11-11 17:25+0000\n"
 "Last-Translator: Adrien Ott <Unknown>\n"
 "Language-Team: French <fr@li.org>\n"
 "Plural-Forms: nplurals=2; plural=n > 1\n"
@@ -83,6 +83,7 @@ msgstr "Site internet"
 #: skylines/templates/search/list.jinja:73
 #: skylines/templates/tracking/list.jinja:41
 #: skylines/templates/tracking/view.jinja:121
+#: skylines/templates/widgets/flights.jinja:6
 msgid "Pilot"
 msgstr "Pilote"
 
@@ -103,10 +104,8 @@ msgid "Competition Number"
 msgstr "Immatriculation de compétition"
 
 #: skylines/forms/pilot.py:34
-#, fuzzy
-#| msgid "Forgot password?"
 msgid "Current Password"
-msgstr "Mot de passe oublié ?"
+msgstr "Mot de passe actuel"
 
 #: skylines/forms/pilot.py:35 skylines/forms/pilot.py:129
 #: skylines/templates/settings/base.jinja:17
@@ -137,21 +136,19 @@ msgstr "Veuillez saisir votre adresse email."
 
 #: skylines/forms/pilot.py:48 skylines/forms/pilot.py:81
 msgid "First Name"
-msgstr ""
+msgstr "Prénom"
 
 #: skylines/forms/pilot.py:49 skylines/forms/pilot.py:82
-#, fuzzy
 msgid "Please enter your first name."
-msgstr "Veuillez saisir votre nom."
+msgstr "Veuillez saisir votre prénom."
 
 #: skylines/forms/pilot.py:51 skylines/forms/pilot.py:84
 msgid "Last Name"
-msgstr ""
+msgstr "Nom"
 
 #: skylines/forms/pilot.py:52 skylines/forms/pilot.py:85
-#, fuzzy
 msgid "Please enter your last name."
-msgstr "Veuillez saisir votre nom."
+msgstr "Veuillez saisir votre nom de famille"
 
 #: skylines/forms/pilot.py:57 skylines/forms/pilot.py:99
 msgid "A pilot with this email address exists already."
@@ -198,22 +195,19 @@ msgstr "Délai de tracking"
 
 #: skylines/forms/pilot.py:104
 msgid "Tracking Callsign"
-msgstr ""
+msgstr "Identifiant de tracking"
 
 #: skylines/forms/pilot.py:105
-#, fuzzy
-#| msgid "Your password must have at least 6 characters."
 msgid "Your callsign must not have more than 5 characters."
-msgstr "Votre mot de passe doit contenir au moins 6 caractères."
+msgstr "Votre identifiant doit se limiter à 5 caractères."
 
 #: skylines/forms/pilot.py:117
 msgid "There is no pilot with this email address."
 msgstr "Il n'y a pas de pilote avec cette adresse."
 
 #: skylines/forms/pilot.py:130
-#, fuzzy
 msgid "Please enter your password."
-msgstr "Veuillez saisir votre nom."
+msgstr "Veuillez saisir votre mot de passe."
 
 #: skylines/forms/pilot.py:132
 msgid "Remember me"
@@ -483,10 +477,8 @@ msgid "Notifications"
 msgstr "Notifications"
 
 #: skylines/templates/topbar.jinja:137 skylines/templates/users/view.jinja:122
-#, fuzzy
-#| msgid "Competitions"
 msgid "Settings"
-msgstr "Concours"
+msgstr "Configuration"
 
 #: skylines/templates/topbar.jinja:138
 msgid "Logout"
@@ -502,7 +494,7 @@ msgstr "Ajouter un pilote"
 #: skylines/templates/settings/profile.jinja:12
 #: skylines/templates/users/new.jinja:12
 msgid "First and last name"
-msgstr ""
+msgstr "Prénom et nom"
 
 #: skylines/templates/clubs/edit.jinja:6
 msgid "Edit Club"
@@ -569,6 +561,7 @@ msgstr "Créer un nouveau pilote"
 #: skylines/templates/flights/details-table.jinja:11
 #: skylines/templates/flights/flights-table.jinja:8
 #: skylines/templates/users/view.jinja:178
+#: skylines/templates/widgets/flights.jinja:5
 msgid "Date"
 msgstr "Date"
 
@@ -600,6 +593,7 @@ msgstr "%(hours)s heures"
 
 #: skylines/templates/flights/details-table.jinja:58
 #: skylines/templates/flights/flights-table.jinja:14
+#: skylines/templates/widgets/flights.jinja:9
 msgid "Aircraft"
 msgstr "Aéronef"
 
@@ -662,12 +656,14 @@ msgstr "Effacer"
 #: skylines/templates/statistics/years.jinja:69
 #: skylines/templates/users/view.jinja:177
 #: skylines/templates/users/view.jinja:215
+#: skylines/templates/widgets/flights.jinja:7
 msgid "Distance"
 msgstr "Distance"
 
 #: skylines/templates/flights/flights-table.jinja:12
 #: skylines/templates/search/list.jinja:67
 #: skylines/templates/search/list.jinja:77
+#: skylines/templates/widgets/flights.jinja:8
 msgid "Airport"
 msgstr "Aérodrome"
 
@@ -805,7 +801,7 @@ msgstr "Pas encore de commentaire."
 
 #: skylines/templates/flights/view.jinja:222
 msgid "Add comment"
-msgstr "Ajouter un commentaire"
+msgstr "Ajouter le commentaire"
 
 #: skylines/templates/flights/view.jinja:231
 msgid "Circling performance"
@@ -1027,7 +1023,7 @@ msgstr "Saisissez quelque-chose dans la barre de recherche ci-dessus."
 
 #: skylines/templates/settings/base.jinja:16
 msgid "Profile"
-msgstr ""
+msgstr "Profil"
 
 #: skylines/templates/settings/club.jinja:6
 msgid "Change Club"
@@ -1063,10 +1059,8 @@ msgid "Edit User"
 msgstr "Editer utilisateur"
 
 #: skylines/templates/settings/tracking.jinja:6
-#, fuzzy
-#| msgid "Live Tracking Key"
 msgid "Live Tracking Settings"
-msgstr "Clef de tracking"
+msgstr "Paramètres du tracking"
 
 #: skylines/templates/settings/tracking.jinja:11
 #: skylines/templates/tracking/info.jinja:24
@@ -1260,26 +1254,25 @@ msgstr "Live Tracking <small>de %(pilot)s</small>"
 
 #: skylines/templates/tracking/map.jinja:13
 #: skylines/templates/tracking/view.jinja:13
-#, fuzzy, python-format
+#, python-format
 msgid "Live Tracking <small>of %(pilot)s and %(other_pilot)s</small>"
-msgstr "Live Tracking <small>de %(pilot)s</small>"
+msgstr "Tracking <small>de %(pilot)s et %(other_pilot)s</small)"
 
 #: skylines/templates/tracking/map.jinja:15
 #: skylines/templates/tracking/view.jinja:15
-#, fuzzy, python-format
+#, python-format
 msgid "Live Tracking <small>of %(pilot)s and %(num_pilots)d other pilots</small>"
-msgstr "Live Tracking <small>de %(pilot)s</small>"
+msgstr "Tracking <small>de%(pilot)s et %(num_pilots)d autres pilotes </small>"
 
-#: skylines/templates/tracking/map.jinja:132
+#: skylines/templates/tracking/map.jinja:130
 #: skylines/templates/tracking/view.jinja:177
 msgid "There is no live track of this pilot currently."
 msgstr "Il n'y a actuellement pas de tracking pour ce pilote."
 
-#: skylines/templates/tracking/map.jinja:134
+#: skylines/templates/tracking/map.jinja:132
 #: skylines/templates/tracking/view.jinja:179
-#, fuzzy
 msgid "There are no live tracks of these pilots currently."
-msgstr "Il n'y a actuellement pas de tracking pour ce pilote."
+msgstr "Aucun tracking de ces pilotes actuellement."
 
 #: skylines/templates/tracking/view.jinja:134
 msgid "This pilot chose to delay the display of his live tracks."
@@ -1391,6 +1384,89 @@ msgstr "Vitesse moyenne"
 msgid "Takeoff Locations"
 msgstr "Lieux de décollage"
 
+#: skylines/templates/widgets/flights.jinja:42
+msgid "Details"
+msgstr ""
+
+#: skylines/templates/widgets/index.jinja:6
+#, fuzzy
+#| msgid "Glides"
+msgid "Widgets"
+msgstr "Transitions"
+
+#: skylines/templates/widgets/index.jinja:11
+#, fuzzy
+#| msgid "Upload flight"
+msgid "Latest Flights"
+msgstr "Déposer un vol"
+
+#: skylines/templates/widgets/index.jinja:16
+msgid ""
+"This widget show the latest flights of you, your club or whatever other "
+"options you use in the URL."
+msgstr ""
+
+#: skylines/templates/widgets/index.jinja:17
+#, python-format
+msgid ""
+"The example below shows the flights of %(club)s by using the %(option)s "
+"option."
+msgstr ""
+
+#: skylines/templates/widgets/index.jinja:21
+#, fuzzy
+#| msgid "Overview"
+msgid "Preview"
+msgstr "Vue d’ensemble"
+
+#: skylines/templates/widgets/index.jinja:25
+#: skylines/templates/widgets/index.jinja:33
+msgid "Loading..."
+msgstr ""
+
+#: skylines/templates/widgets/index.jinja:29
+#, fuzzy
+#| msgid "Score"
+msgid "Code"
+msgstr "Score"
+
+#: skylines/templates/widgets/index.jinja:37
+#, fuzzy
+#| msgid "Competitions"
+msgid "Options"
+msgstr "Concours"
+
+#: skylines/templates/widgets/index.jinja:43
+#, fuzzy
+#| msgid "Competitions"
+msgid "Option"
+msgstr "Concours"
+
+#: skylines/templates/widgets/index.jinja:44
+msgid "Default"
+msgstr ""
+
+#: skylines/templates/widgets/index.jinja:45
+msgid "Description"
+msgstr ""
+
+#: skylines/templates/widgets/index.jinja:50
+msgid "Name of the callback function that is called once the data is available."
+msgstr ""
+
+#: skylines/templates/widgets/index.jinja:55
+msgid "Use this to only show flights of the club with the specified ID."
+msgstr ""
+
+#: skylines/templates/widgets/index.jinja:60
+msgid "Use this to only show flights of the user with the specified ID."
+msgstr ""
+
+#: skylines/templates/widgets/index.jinja:65
+#, python-format
+msgid "Limits the number of returned flights. (max. %(max)d)"
+msgstr ""
+
 #: skylines/views/about.py:33
 msgid "Developers"
 msgstr "Développeurs"
@@ -1445,43 +1521,36 @@ msgid "You are now logged in. Welcome back, %(user)s!"
 msgstr "%(user)s vous êtes maintenant connecté !"
 
 #: skylines/views/login.py:60
-#, fuzzy
 msgid "Login failed. Please check your eMail address."
-msgstr "Veuillez saisir votre adresse email."
+msgstr "La connexion a échoué. Veuillez vérifier votre adresse email."
 
 #: skylines/views/login.py:61
 msgid "Login failed. Please check your password."
-msgstr ""
+msgstr "La connexion a échoué. Veuillez vérifier votre mot de passe."
 
 #: skylines/views/login.py:68
 msgid "You are now logged out. We hope to see you back soon!"
 msgstr "Vous êtes déconnecté(e). A bientôt !"
 
-#: skylines/views/settings.py:72
-#, fuzzy
-#| msgid "No flight was saved."
+#: skylines/views/settings.py:74
 msgid "Profile was saved."
-msgstr "Aucun vol n'a été enregistré."
+msgstr "Profil sauvegardé?"
 
-#: skylines/views/settings.py:84
+#: skylines/views/settings.py:86
 msgid "This password does not match your current password."
-msgstr ""
+msgstr "Ce mot de passe ne correspond pas à votr mot de passe actuel."
 
-#: skylines/views/settings.py:95
-#, fuzzy
-#| msgid "Password changed."
+#: skylines/views/settings.py:97
 msgid "Your password was changed."
-msgstr "Mot de passe modifié."
+msgstr "Votre mot de passe a été changé."
 
-#: skylines/views/settings.py:124
+#: skylines/views/settings.py:126
 msgid "Live Tracking settings were saved."
-msgstr ""
+msgstr "La configuration du Tracking a été sauvegardée."
 
-#: skylines/views/settings.py:187
-#, fuzzy
-#| msgid "No flight was saved."
+#: skylines/views/settings.py:189
 msgid "New club was saved."
-msgstr "Aucun vol n'a été enregistré."
+msgstr "Nouveau club sauvegardé."
 
 #: skylines/views/upload.py:63 skylines/views/upload.py:168
 msgid "You have to login to upload flights."
@@ -1526,28 +1595,4 @@ msgstr ""
 #: skylines/views/users.py:143
 msgid "Password changed."
 msgstr "Mot de passe modifié."
-
-#~ msgid "Email Address"
-#~ msgstr "Courriel"
-
-#~ msgid "Your Live Tracking settings"
-#~ msgstr "Vos paramètres de tracking"
-
-#~ msgid ""
-#~ msgstr ""
-
-#~ msgid "Select your primary club:"
-#~ msgstr "Sélectionnez votre club principal :"
-
-#~ msgid "If your club doesn't exist yet in Skylines, create it:"
-#~ msgstr "Si votre club n'existe pas dans SkyLines, créez le :"
-
-#~ msgid "Tracking key"
-#~ msgstr "Clef de tracking"
-
-#~ msgid "More Information"
-#~ msgstr "Plus d'informations"
-
-#~ msgid "Tracking delay"
-#~ msgstr "Délai du tracking"
 
