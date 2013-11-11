@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: SkyLines 0.1\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2013-11-09 16:45+0100\n"
+"POT-Creation-Date: 2013-11-11 18:37+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -80,6 +80,7 @@ msgstr ""
 #: skylines/templates/search/list.jinja:63 skylines/templates/search/list.jinja:73
 #: skylines/templates/tracking/list.jinja:41
 #: skylines/templates/tracking/view.jinja:121
+#: skylines/templates/widgets/flights.jinja:6
 msgid "Pilot"
 msgstr ""
 
@@ -522,6 +523,7 @@ msgstr ""
 #: skylines/templates/flights/details-table.jinja:11
 #: skylines/templates/flights/flights-table.jinja:8
 #: skylines/templates/users/view.jinja:178
+#: skylines/templates/widgets/flights.jinja:5
 msgid "Date"
 msgstr ""
 
@@ -553,6 +555,7 @@ msgstr ""
 
 #: skylines/templates/flights/details-table.jinja:58
 #: skylines/templates/flights/flights-table.jinja:14
+#: skylines/templates/widgets/flights.jinja:9
 msgid "Aircraft"
 msgstr ""
 
@@ -614,11 +617,13 @@ msgstr ""
 #: skylines/templates/statistics/distance-table.jinja:6
 #: skylines/templates/statistics/years.jinja:69
 #: skylines/templates/users/view.jinja:177 skylines/templates/users/view.jinja:215
+#: skylines/templates/widgets/flights.jinja:7
 msgid "Distance"
 msgstr ""
 
 #: skylines/templates/flights/flights-table.jinja:12
 #: skylines/templates/search/list.jinja:67 skylines/templates/search/list.jinja:77
+#: skylines/templates/widgets/flights.jinja:8
 msgid "Airport"
 msgstr ""
 
@@ -1188,12 +1193,12 @@ msgstr ""
 msgid "Live Tracking <small>of %(pilot)s and %(num_pilots)d other pilots</small>"
 msgstr ""
 
-#: skylines/templates/tracking/map.jinja:132
+#: skylines/templates/tracking/map.jinja:130
 #: skylines/templates/tracking/view.jinja:177
 msgid "There is no live track of this pilot currently."
 msgstr ""
 
-#: skylines/templates/tracking/map.jinja:134
+#: skylines/templates/tracking/map.jinja:132
 #: skylines/templates/tracking/view.jinja:179
 msgid "There are no live tracks of these pilots currently."
 msgstr ""
@@ -1305,6 +1310,77 @@ msgstr ""
 msgid "Takeoff Locations"
 msgstr ""
 
+#: skylines/templates/widgets/flights.jinja:42
+msgid "Details"
+msgstr ""
+
+#: skylines/templates/widgets/index.jinja:6
+msgid "Widgets"
+msgstr ""
+
+#: skylines/templates/widgets/index.jinja:11
+msgid "Latest Flights"
+msgstr ""
+
+#: skylines/templates/widgets/index.jinja:16
+msgid ""
+"This widget show the latest flights of you, your club or whatever other "
+"options you use in the URL."
+msgstr ""
+
+#: skylines/templates/widgets/index.jinja:17
+#, python-format
+msgid ""
+"The example below shows the flights of %(club)s by using the %(option)s "
+"option."
+msgstr ""
+
+#: skylines/templates/widgets/index.jinja:21
+msgid "Preview"
+msgstr ""
+
+#: skylines/templates/widgets/index.jinja:25
+#: skylines/templates/widgets/index.jinja:33
+msgid "Loading..."
+msgstr ""
+
+#: skylines/templates/widgets/index.jinja:29
+msgid "Code"
+msgstr ""
+
+#: skylines/templates/widgets/index.jinja:37
+msgid "Options"
+msgstr ""
+
+#: skylines/templates/widgets/index.jinja:43
+msgid "Option"
+msgstr ""
+
+#: skylines/templates/widgets/index.jinja:44
+msgid "Default"
+msgstr ""
+
+#: skylines/templates/widgets/index.jinja:45
+msgid "Description"
+msgstr ""
+
+#: skylines/templates/widgets/index.jinja:50
+msgid "Name of the callback function that is called once the data is available."
+msgstr ""
+
+#: skylines/templates/widgets/index.jinja:55
+msgid "Use this to only show flights of the club with the specified ID."
+msgstr ""
+
+#: skylines/templates/widgets/index.jinja:60
+msgid "Use this to only show flights of the user with the specified ID."
+msgstr ""
+
+#: skylines/templates/widgets/index.jinja:65
+#, python-format
+msgid "Limits the number of returned flights. (max. %(max)d)"
+msgstr ""
+
 #: skylines/views/about.py:33
 msgid "Developers"
 msgstr ""
@@ -1370,23 +1446,23 @@ msgstr ""
 msgid "You are now logged out. We hope to see you back soon!"
 msgstr ""
 
-#: skylines/views/settings.py:72
+#: skylines/views/settings.py:74
 msgid "Profile was saved."
 msgstr ""
 
-#: skylines/views/settings.py:84
+#: skylines/views/settings.py:86
 msgid "This password does not match your current password."
 msgstr ""
 
-#: skylines/views/settings.py:95
+#: skylines/views/settings.py:97
 msgid "Your password was changed."
 msgstr ""
 
-#: skylines/views/settings.py:124
+#: skylines/views/settings.py:126
 msgid "Live Tracking settings were saved."
 msgstr ""
 
-#: skylines/views/settings.py:187
+#: skylines/views/settings.py:189
 msgid "New club was saved."
 msgstr ""
 
