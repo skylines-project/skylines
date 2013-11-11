@@ -1390,86 +1390,75 @@ msgstr "Startorte"
 
 #: skylines/templates/widgets/flights.jinja:42
 msgid "Details"
-msgstr ""
+msgstr "Details"
 
 #: skylines/templates/widgets/index.jinja:6
-#, fuzzy
-#| msgid "Glides"
 msgid "Widgets"
-msgstr "Gleiflüge"
+msgstr "Widgets"
 
 #: skylines/templates/widgets/index.jinja:11
-#, fuzzy
-#| msgid "Upload flight"
 msgid "Latest Flights"
-msgstr "Flug hochladen"
+msgstr "Letzte Flüge"
 
 #: skylines/templates/widgets/index.jinja:16
 msgid ""
 "This widget show the latest flights of you, your club or whatever other "
 "options you use in the URL."
-msgstr ""
+msgstr "Dieses Widget zeigt die letzten Flüge von dir, deinem Verein oder "
+"was auch immer du sonst für Optionen in der URL nutzt."
 
 #: skylines/templates/widgets/index.jinja:17
 #, python-format
 msgid ""
 "The example below shows the flights of %(club)s by using the %(option)s "
 "option."
-msgstr ""
+msgstr "Das Beispiel unten zeigt die Flüge des %(club)s durch Nutzung der %(option)s Option."
 
 #: skylines/templates/widgets/index.jinja:21
-#, fuzzy
-#| msgid "Overview"
 msgid "Preview"
-msgstr "Übersicht"
+msgstr "Vorschau"
 
 #: skylines/templates/widgets/index.jinja:25
 #: skylines/templates/widgets/index.jinja:33
 msgid "Loading..."
-msgstr ""
+msgstr "Lade..."
 
 #: skylines/templates/widgets/index.jinja:29
-#, fuzzy
-#| msgid "Score"
 msgid "Code"
-msgstr "Punkte"
+msgstr "Code"
 
 #: skylines/templates/widgets/index.jinja:37
-#, fuzzy
-#| msgid "Competitions"
 msgid "Options"
-msgstr "Wettbewerbe"
+msgstr "Optionen"
 
 #: skylines/templates/widgets/index.jinja:43
-#, fuzzy
-#| msgid "Competitions"
 msgid "Option"
-msgstr "Wettbewerbe"
+msgstr "Option"
 
 #: skylines/templates/widgets/index.jinja:44
 msgid "Default"
-msgstr ""
+msgstr "Vorgabe"
 
 #: skylines/templates/widgets/index.jinja:45
 msgid "Description"
-msgstr ""
+msgstr "Beschreibung"
 
 #: skylines/templates/widgets/index.jinja:50
 msgid "Name of the callback function that is called once the data is available."
-msgstr ""
+msgstr "Name der Callback-Funktion, die aufgerufen wird sobald die Daten verfügbar sind."
 
 #: skylines/templates/widgets/index.jinja:55
 msgid "Use this to only show flights of the club with the specified ID."
-msgstr ""
+msgstr "Benutze diese Option um nur Flüge des angegebenen Vereins anzuzeigen."
 
 #: skylines/templates/widgets/index.jinja:60
 msgid "Use this to only show flights of the user with the specified ID."
-msgstr ""
+msgstr "Benutze diese Option um nur Flüge des angegebenen Piloten anzuzeigen."
 
 #: skylines/templates/widgets/index.jinja:65
 #, python-format
 msgid "Limits the number of returned flights. (max. %(max)d)"
-msgstr ""
+msgstr "Limitiert die Anzahl der zurückgegebenen Flüge. (max. %(max)d)"
 
 #: skylines/views/about.py:33
 msgid "Developers"
