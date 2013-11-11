@@ -48,7 +48,7 @@ def index():
 
 @tracking_blueprint.route('/info')
 def info():
-    return render_template('tracking/info.jinja', user=g.current_user)
+    return render_template('tracking/info.jinja')
 
 
 @tracking_blueprint.route('/latest.json')
