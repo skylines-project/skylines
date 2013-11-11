@@ -135,6 +135,7 @@
       <li><a href="{{ url_for('statistics.index', page='pilot', id=user.id) }}"><i class="icon-bar-chart icon-fixed-width"></i> {% trans %}Statistics{% endtrans %}</a></li>
       <li class="divider"></li>
       <li><a href="{{ url_for('settings.profile') }}"><i class="icon-cog icon-fixed-width"></i> {% trans %}Settings{% endtrans %}</a></li>
+      <li class="divider"></li>
       <li><a href="{{ url_for('logout', next=g.logout_next or request.url) }}"><i class="icon-signout icon-fixed-width"></i> {% trans %}Logout{% endtrans %}</a></li>
   </ul>
 </li>
