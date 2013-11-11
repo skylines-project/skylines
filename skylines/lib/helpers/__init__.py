@@ -19,6 +19,12 @@ from skylines.lib.formatter.datetime import *
 from skylines.lib.formatter.units import *
 from skylines.lib.markdown_ import markdown
 
+from pygments import highlight
+from pygments.lexers import HtmlLexer
+from pygments.formatters import HtmlFormatter
+
+html_formatter = HtmlFormatter(style='tango', nowrap=True)
+
 # Jinja2 doesn't seem to have min/max... strange!
 min = min
 max = max
@@ -32,3 +38,11 @@ def url(base_url='/', **params):
         return '?'.join((base_url, urlencode(params)))
 
     return base_url
+
+
+def pygmentize(html):
+    return highlight(html, HtmlLexer(), html_formatter)
+
+
+def pygments_styles():
+    return html_formatter.get_style_defs('.highlight')

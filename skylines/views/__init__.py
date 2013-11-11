@@ -21,6 +21,7 @@ from skylines.views.tracking import tracking_blueprint
 from skylines.views.upload import upload_blueprint
 from skylines.views.user import user_blueprint
 from skylines.views.users import users_blueprint
+from skylines.views.widgets import widgets_blueprint
 
 
 def register(app):
@@ -47,6 +48,7 @@ def register(app):
     app.register_blueprint(upload_blueprint, url_prefix='/flights/upload')
     app.register_blueprint(user_blueprint, url_prefix='/users/<user_id>')
     app.register_blueprint(users_blueprint, url_prefix='/users')
+    app.register_blueprint(widgets_blueprint, url_prefix='/widgets')
 
     @app.route('/')
     def index():

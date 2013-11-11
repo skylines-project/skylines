@@ -28,6 +28,7 @@ requirements = [
     'WebHelpers==1.3',
     'celery_with_redis==3.0',
     'xcsoar==0.1.1',
+    'Pygments==1.6',
 ]
 
 test_requirements = [r for r in open('requirements.txt').readlines()

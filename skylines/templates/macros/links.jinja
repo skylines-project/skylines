@@ -1,11 +1,11 @@
 {% macro user_link(user, attributes='') -%}
-<a href="{{ url_for('user.index', user_id=user.id) }}"{{attributes}}>{{ user|e }}</a>
+<a href="{{ url_for('user.index', user_id=user.id, **kwargs) }}"{{attributes}}>{{ user|e }}</a>
 {%- endmacro %}
 
 {% macro club_link(club, attributes='') -%}
-<a href="{{ url_for('club.index', club_id=club.id) }}"{{attributes}}>{{ club|e }}</a>
+<a href="{{ url_for('club.index', club_id=club.id, **kwargs) }}"{{attributes}}>{{ club|e }}</a>
 {%- endmacro %}
 
 {% macro airport_link(airport, attributes='') -%}
-<a href="{{ url_for('flights.airport', id=airport.id) }}"{{attributes}}>{{ airport|e }}</a>
+<a href="{{ url_for('flights.airport', id=airport.id, **kwargs) }}"{{attributes}}>{{ airport|e }}</a>
 {%- endmacro %}
