@@ -29,24 +29,24 @@ fontawesome_webfont_svg = Bundle(
 # Twitter Bootstrap
 
 bootstrap_js = Bundle(
-    'https://netdna.bootstrapcdn.com/bootstrap/3.0.1/js/bootstrap.min.js',
+    'https://netdna.bootstrapcdn.com/bootstrap/3.0.2/js/bootstrap.min.js',
     output='js/bootstrap-%(version)s.js')
 
 bootstrap_css = Bundle(
-    'https://netdna.bootstrapcdn.com/bootstrap/3.0.1/css/bootstrap.min.css',
-    'https://netdna.bootstrapcdn.com/bootstrap/3.0.1/css/bootstrap-theme.min.css',
+    'https://netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css',
+    'https://netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap-theme.min.css',
     output='css/bootstrap-%(version)s.js')
 
 
 # Flot
 
 flot_js = Bundle(
-    'https://rawgithub.com/flot/flot/ccb37e4965967d7252cc99e3b2eea8fcec3c909a/jquery.flot.js',
-    'https://rawgithub.com/flot/flot/ccb37e4965967d7252cc99e3b2eea8fcec3c909a/jquery.flot.time.js',
-    'https://rawgithub.com/flot/flot/ccb37e4965967d7252cc99e3b2eea8fcec3c909a/jquery.flot.crosshair.js',
-    'https://rawgithub.com/flot/flot/ccb37e4965967d7252cc99e3b2eea8fcec3c909a/jquery.flot.resize.js',
+    'https://rawgithub.com/flot/flot/0.8.1/jquery.flot.js',
+    'https://rawgithub.com/flot/flot/0.8.1/jquery.flot.time.js',
+    'https://rawgithub.com/flot/flot/0.8.1/jquery.flot.crosshair.js',
+    'https://rawgithub.com/flot/flot/0.8.1/jquery.flot.resize.js',
     'http://flot-marks.googlecode.com/svn-history/r13/trunk/src/jquery.flot.marks.js',
-    'https://rawgithub.com/flot/flot/ccb37e4965967d7252cc99e3b2eea8fcec3c909a/excanvas.min.js',
+    'https://rawgithub.com/flot/flot/0.8.1/excanvas.min.js',
     filters=SimpleClosureJS(disable_ie_checks=True),
     output='js/flot-%(version)s.js')
 
@@ -100,13 +100,12 @@ datatables_css = Bundle(
     output='css/datatables-%(version)s.css')
 
 all_js = Bundle(
-    'http://code.jquery.com/jquery-1.9.1.min.js',
+    'http://code.jquery.com/jquery-1.10.2.min.js',
     'vendor/jquery/jquery.browser.js',
     'vendor/jquery/jquery.cookie.js',
     'vendor/jquery/jquery.timeago.js',
     'js/general.js',
     bootstrap_js,
-    'js/topbar.js',
     filters='rjsmin',
     output='js/skylines-%(version)s.js')
 
