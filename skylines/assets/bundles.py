@@ -100,7 +100,7 @@ datatables_css = Bundle(
     output='css/datatables-%(version)s.css')
 
 all_js = Bundle(
-    'http://code.jquery.com/jquery-1.9.1.min.js',
+    'http://code.jquery.com/jquery-1.10.2.min.js',
     'vendor/jquery/jquery.browser.js',
     'vendor/jquery/jquery.cookie.js',
     'vendor/jquery/jquery.timeago.js',
