@@ -41,12 +41,12 @@ bootstrap_css = Bundle(
 # Flot
 
 flot_js = Bundle(
-    'https://rawgithub.com/flot/flot/ccb37e4965967d7252cc99e3b2eea8fcec3c909a/jquery.flot.js',
-    'https://rawgithub.com/flot/flot/ccb37e4965967d7252cc99e3b2eea8fcec3c909a/jquery.flot.time.js',
-    'https://rawgithub.com/flot/flot/ccb37e4965967d7252cc99e3b2eea8fcec3c909a/jquery.flot.crosshair.js',
-    'https://rawgithub.com/flot/flot/ccb37e4965967d7252cc99e3b2eea8fcec3c909a/jquery.flot.resize.js',
+    'https://rawgithub.com/flot/flot/0.8.1/jquery.flot.js',
+    'https://rawgithub.com/flot/flot/0.8.1/jquery.flot.time.js',
+    'https://rawgithub.com/flot/flot/0.8.1/jquery.flot.crosshair.js',
+    'https://rawgithub.com/flot/flot/0.8.1/jquery.flot.resize.js',
     'http://flot-marks.googlecode.com/svn-history/r13/trunk/src/jquery.flot.marks.js',
-    'https://rawgithub.com/flot/flot/ccb37e4965967d7252cc99e3b2eea8fcec3c909a/excanvas.min.js',
+    'https://rawgithub.com/flot/flot/0.8.1/excanvas.min.js',
     filters=SimpleClosureJS(disable_ie_checks=True),
     output='js/flot-%(version)s.js')
 
