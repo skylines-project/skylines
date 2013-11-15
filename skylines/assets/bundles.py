@@ -106,7 +106,6 @@ all_js = Bundle(
     'vendor/jquery/jquery.timeago.js',
     'js/general.js',
     bootstrap_js,
-    'js/topbar.js',
     filters='rjsmin',
     output='js/skylines-%(version)s.js')
 
