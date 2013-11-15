@@ -89,7 +89,6 @@ class EditPilotForm(Form):
     speed_unit = SpeedUnitSelectField(l_('Speed Unit'))
     lift_unit = LiftUnitSelectField(l_('Lift Unit'))
     altitude_unit = AltitudeUnitSelectField(l_('Altitude Unit'))
-    eye_candy = BooleanField(l_('Eye Candy'))
 
     def validate_email_address(form, field):
         if field.data == field.object_data:
