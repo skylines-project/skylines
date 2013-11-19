@@ -152,16 +152,15 @@ class User(db.Model):
 
     ##############################
 
-    def _set_password(self, password):
-        """Hash ``password`` on the fly and store its hashed version."""
-        self._password = self._hash_password(password)
-
-    def _get_password(self):
+    @hybrid_property
+    def password(self):
         """Return the hashed version of the password."""
         return self._password
 
-    password = db.synonym(
-        '_password', descriptor=property(_get_password, _set_password))
+    @password.setter
+    def set_password(self, password):
+        """Hash ``password`` on the fly and store its hashed version."""
+        self._password = self._hash_password(password)
 
     @classmethod
     def _hash_password(cls, password):
