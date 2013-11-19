@@ -62,6 +62,9 @@ def _query_flights():
     g.flight = g.flights[0]
     g.other_flights = g.flights[1:]
 
+    if not g.flight.is_viewable(None):
+        g.logout_next = url_for('index')
+
     map(_reanalyse_if_needed, g.flights)
 
 
