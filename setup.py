@@ -24,7 +24,7 @@ requirements = [
     'webassets==0.8',
     'cssmin==0.1.4',
     'twisted==13.1',
-    'closure',
+    'closure==20121212',
     'WebHelpers==1.3',
     'celery_with_redis==3.0',
     'xcsoar==0.1.1',
