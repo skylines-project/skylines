@@ -4,7 +4,7 @@
 {% extends "base-page.jinja" %}
 {% set active_page = "settings" %}
 
-{% block title %}{{ user|e }}{% endblock %}
+{% block title %}{{ g.user|e }}{% endblock %}
 
 
 {% macro add_locations(locations) -%}
@@ -81,32 +81,32 @@
   <div class="row">
     <div class="well col-md-8 col-md-offset-2">
       <table class="right">
-        {% if user.is_readable(g.current_user) -%}
+        {% if g.user.is_readable(g.current_user) -%}
         <tr>
           <th>{% trans %}Email{% endtrans %}</th>
-          <td itemprop="email">{{ user.email_address }}</td>
+          <td itemprop="email">{{ g.user.email_address }}</td>
         </tr>
         {%- endif %}
 
         <tr>
           <th>{% trans %}Name{% endtrans %}</th>
-          <td itemprop="name">{{ user.name }}</td>
+          <td itemprop="name">{{ g.user.name }}</td>
         </tr>
 
-        {% if user.club or user.is_writable(g.current_user) -%}
+        {% if g.user.club or g.user.is_writable(g.current_user) -%}
         <tr>
           <th>{% trans %}Club{% endtrans %}</th>
 
-          {% if user.club -%}
+          {% if g.user.club -%}
           <td itemprop="memberof" itemscope="" itemtype="http://schema.org/SportsTeam">
-            <meta itemprop="url" content="{{ url_for('club.index', club_id=user.club_id, _external=True) }}" />
-            {{ club_link(user.club, ' itemprop="name"') }}
+            <meta itemprop="url" content="{{ url_for('club.index', club_id=g.user.club_id, _external=True) }}" />
+            {{ club_link(g.user.club, ' itemprop="name"') }}
           {%- else %}
           <td>
             [{% trans %}Unspecified{% endtrans %}]
           {%- endif %}
 
-            {% if user.is_writable(g.current_user) -%}
+            {% if g.user.is_writable(g.current_user) -%}
             <a href="{{ url_for('settings.club', user=(g.current_user != g.user and g.user_id or None)) }}" class="btn btn-default btn-sm">{% trans %}Change{% endtrans %}</a>
             {%- endif %}
           </td>
@@ -115,31 +115,31 @@
       </table>
 
       <p style="margin-top: 10px">
-        {% if user.is_writable(g.current_user) -%}
+        {% if g.user.is_writable(g.current_user) -%}
         <a href="{{ url_for('settings.profile', user=(g.current_user != g.user and g.user_id or None)) }}" class="btn btn-default"><i class="icon-cog"></i> {% trans %}Settings{% endtrans %}</a>
         {%- endif %}
 
-        {% if g.current_user and g.current_user != user -%}
-          {% if g.current_user.follows(user) -%}
+        {% if g.current_user and g.current_user != g.user -%}
+          {% if g.current_user.follows(g.user) -%}
             <a href="{{ url_for('.unfollow') }}" class="btn btn-default">{% trans %}Unfollow{% endtrans %}</a>
           {%- else %}
             <a href="{{ url_for('.follow') }}" class="btn btn-default">{% trans %}Follow{% endtrans %}</a>
           {%- endif %}
         {%- endif %}
 
-        <a href="{{ url_for('flights.pilot', id=user.id) }}" class="btn btn-default"><i class="icon-plane"></i> {% trans %}Flights{% endtrans %}</a>
-        <a href="{{ url_for('statistics.index', page='pilot', id=user.id) }}" class="btn btn-default"><i class="icon-bar-chart"></i> {% trans %}Statistics{% endtrans %}</a>
-        <a href="{{ url_for('timeline.index', user=user.id) }}" class="btn btn-default"><i class="icon-time"></i> {{ _('Timeline') }}</a>
+        <a href="{{ url_for('flights.pilot', id=g.user.id) }}" class="btn btn-default"><i class="icon-plane"></i> {% trans %}Flights{% endtrans %}</a>
+        <a href="{{ url_for('statistics.index', page='pilot', id=g.user.id) }}" class="btn btn-default"><i class="icon-bar-chart"></i> {% trans %}Statistics{% endtrans %}</a>
+        <a href="{{ url_for('timeline.index', user=g.user.id) }}" class="btn btn-default"><i class="icon-time"></i> {{ _('Timeline') }}</a>
       </p>
     </div>
   </div>
 
-  {% if user.following -%}
+  {% if g.user.following -%}
   <div class="row">
     <div class="col-md-12">
       <h2>{% trans %}Following{% endtrans %}</h2>
       <ul class="row">
-        {% for following in user.following|sort(attribute='destination.name') -%}
+        {% for following in g.user.following|sort(attribute='destination.name') -%}
         <li class="col-md-3 col-sm-4 col-xs-6">
           <a href="{{ url_for('user.index', user_id=following.destination_id) }}">{{ following.destination }}</a>
         </li>
@@ -149,12 +149,12 @@
   </div>
   {%- endif %}
 
-  {% if user.followers -%}
+  {% if g.user.followers -%}
   <div class="row">
     <div class="col-md-12">
       <h2>{% trans %}Followers{% endtrans %}</h2>
       <ul class="row">
-        {% for follower in user.followers|sort(attribute='source.name') -%}
+        {% for follower in g.user.followers|sort(attribute='source.name') -%}
         <li class="col-md-3 col-sm-4 col-xs-6">
           <a href="{{ url_for('user.index', user_id=follower.source_id) }}">{{ follower.source }}</a>
         </li>

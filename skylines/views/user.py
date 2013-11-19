@@ -103,7 +103,6 @@ def index():
 
     return render_template(
         'users/view.jinja',
-        user=g.user,
         distance_flights=_get_distance_flights(),
         takeoff_locations=_get_takeoff_locations(),
         last_year_statistics=_get_last_year_statistics())
