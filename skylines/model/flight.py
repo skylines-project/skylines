@@ -2,6 +2,7 @@
 
 from datetime import datetime
 
+import sqlalchemy as sa
 from sqlalchemy.dialects import postgresql
 from sqlalchemy.orm import deferred
 from sqlalchemy.types import Unicode, Integer, Float, DateTime, Date, Boolean
@@ -76,8 +77,22 @@ class Flight(db.Model):
 
     needs_analysis = db.Column(Boolean, nullable=False, default=True)
 
+    # Privacy level of the flight
+
+    class PrivacyLevel:
+        PUBLIC = 0
+        LINK_ONLY = 1
+        PRIVATE = 2
+
+    privacy_level = db.Column(
+        sa.SmallInteger, nullable=False, default=PrivacyLevel.PUBLIC)
+
+    ##############################
+
     def __repr__(self):
         return ('<Flight: id=%d>' % self.id).encode('unicode_escape')
+
+    ##############################
 
     @hybrid_property
     def duration(self):
