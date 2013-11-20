@@ -17,15 +17,13 @@ class Follower(db.Model):
         Integer, db.ForeignKey('users.id', ondelete='CASCADE'),
         index=True, nullable=False)
     source = db.relationship(
-        'User', foreign_keys=[source_id],
-        lazy='joined', backref='following')
+        'User', foreign_keys=[source_id], backref='following')
 
     destination_id = db.Column(
         Integer, db.ForeignKey('users.id', ondelete='CASCADE'),
         index=True, nullable=False)
     destination = db.relationship(
-        'User', foreign_keys=[destination_id],
-        lazy='joined', backref='followers')
+        'User', foreign_keys=[destination_id], backref='followers')
 
     time = db.Column(DateTime, nullable=False, default=datetime.utcnow)
 
