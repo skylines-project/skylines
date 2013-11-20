@@ -1343,7 +1343,7 @@ msgstr "Folgende"
 
 #: skylines/templates/users/followers.jinja:24
 msgid "This is you"
-msgstr ""
+msgstr "Das bist du"
 
 #: skylines/templates/users/followers.jinja:29
 #: skylines/templates/users/view.jinja:142
@@ -1358,7 +1358,7 @@ msgstr "Folgen"
 #: skylines/templates/users/following.jinja:3
 #: skylines/templates/users/view.jinja:127
 msgid "Following"
-msgstr "Folgend"
+msgstr "Folgt"
 
 #: skylines/templates/users/list.jinja:5
 msgid "Users"
