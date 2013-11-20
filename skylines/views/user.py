@@ -1,6 +1,6 @@
 from datetime import date, timedelta
 
-from flask import Blueprint, render_template, redirect, url_for, g
+from flask import Blueprint, render_template, redirect, url_for, g, request
 from flask.ext.login import login_required
 
 from sqlalchemy import func
@@ -114,7 +114,7 @@ def follow():
     Follower.follow(g.current_user, g.user)
     create_follower_notification(g.user, g.current_user)
     db.session.commit()
-    return redirect(url_for('.index'))
+    return redirect(request.referrer or url_for('.index'))
 
 
 @user_blueprint.route('/unfollow')
@@ -122,4 +122,4 @@ def follow():
 def unfollow():
     Follower.unfollow(g.current_user, g.user)
     db.session.commit()
-    return redirect(url_for('.index'))
+    return redirect(request.referrer or url_for('.index'))
