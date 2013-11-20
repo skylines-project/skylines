@@ -112,6 +112,24 @@
           </td>
         </tr>
         {%- endif %}
+
+        {% if g.user.followers -%}
+        <tr>
+          <th>{{ _('Followers') }}</th>
+          <td>
+            <a href="{{ url_for('user.followers') }}">{{ ngettext('%(num)d pilot', '%(num)d pilots', g.user.followers|count) }}</a>
+          </td>
+        </tr>
+        {%- endif %}
+
+        {% if g.user.following -%}
+        <tr>
+          <th>{{ _('Following') }}</th>
+          <td>
+            <a href="{{ url_for('user.following') }}">{{ ngettext('%(num)d pilot', '%(num)d pilots', g.user.following|count) }}</a>
+          </td>
+        </tr>
+        {%- endif %}
       </table>
 
       <p style="margin-top: 10px">
@@ -133,36 +151,6 @@
       </p>
     </div>
   </div>
-
-  {% if g.user.following -%}
-  <div class="row">
-    <div class="col-md-12">
-      <h2>{% trans %}Following{% endtrans %}</h2>
-      <ul class="row list-with-dividers">
-        {% for following in g.user.following|sort(attribute='destination.name') -%}
-        <li class="col-md-3 col-sm-4 col-xs-6">
-          <a href="{{ url_for('user.index', user_id=following.destination_id) }}">{{ following.destination }}</a>
-        </li>
-        {%- endfor %}
-      </ul>
-    </div>
-  </div>
-  {%- endif %}
-
-  {% if g.user.followers -%}
-  <div class="row">
-    <div class="col-md-12">
-      <h2>{% trans %}Followers{% endtrans %}</h2>
-      <ul class="row list-with-dividers">
-        {% for follower in g.user.followers|sort(attribute='source.name') -%}
-        <li class="col-md-3 col-sm-4 col-xs-6">
-          <a href="{{ url_for('user.index', user_id=follower.source_id) }}">{{ follower.source }}</a>
-        </li>
-        {%- endfor %}
-      </ul>
-    </div>
-  </div>
-  {%- endif %}
 
   <div class="row">
     {% if distance_flights -%}
