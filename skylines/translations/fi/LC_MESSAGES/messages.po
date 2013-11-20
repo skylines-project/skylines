@@ -5,16 +5,18 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version:  skylines\n"
+"Project-Id-Version: skylines\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2013-11-11 18:37+0100\n"
-"PO-Revision-Date: 2013-06-21 07:08+0000\n"
-"Last-Translator: Juha Huvilinna <Unknown>\n"
+"POT-Creation-Date: 2013-11-11 19:52+0100\n"
+"PO-Revision-Date: 2013-11-20 23:13+0000\n"
+"Last-Translator: Lauri Kangas <vostok@iki.fi>\n"
 "Language-Team: Finnish <fi@li.org>\n"
-"Plural-Forms: nplurals=2; plural=n != 1\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Launchpad-Export-Date: 2013-11-20 23:16+0000\n"
+"X-Generator: Launchpad (build 16831)\n"
 "Generated-By: Babel 1.3\n"
 
 #: skylines/forms/aircraft_model.py:29
@@ -35,7 +37,7 @@ msgstr "Varjoliitimet"
 
 #: skylines/forms/aircraft_model.py:33
 msgid "UL Gliders"
-msgstr ""
+msgstr "UL-purjekoneet"
 
 #: skylines/forms/aircraft_model.py:35
 msgid "Other"
@@ -43,13 +45,12 @@ msgstr "Muut"
 
 #: skylines/forms/club.py:17
 msgid "No club"
-msgstr ""
+msgstr "Ei kerhoa"
 
 #: skylines/forms/club.py:24 skylines/templates/flights/details-table.jinja:151
 #: skylines/templates/flights/flights-table.jinja:13
 #: skylines/templates/ranking/pilots.jinja:10
-#: skylines/templates/search/list.jinja:65
-#: skylines/templates/search/list.jinja:75
+#: skylines/templates/search/list.jinja:65 skylines/templates/search/list.jinja:75
 #: skylines/templates/settings/base.jinja:18
 #: skylines/templates/tracking/view.jinja:127
 #: skylines/templates/users/users-table.jinja:8
@@ -58,8 +59,7 @@ msgid "Club"
 msgstr "Kerho"
 
 #: skylines/forms/club.py:28 skylines/forms/club.py:36
-#: skylines/templates/clubs/list.jinja:11
-#: skylines/templates/clubs/view.jinja:22
+#: skylines/templates/clubs/list.jinja:11 skylines/templates/clubs/view.jinja:22
 #: skylines/templates/ranking/airports.jinja:10
 #: skylines/templates/ranking/clubs.jinja:9
 #: skylines/templates/ranking/pilots.jinja:9
@@ -70,7 +70,7 @@ msgstr "Nimi"
 
 #: skylines/forms/club.py:32 skylines/forms/club.py:44
 msgid "A club with this name exists already."
-msgstr ""
+msgstr "Tämänniminen kerho on jo olemassa."
 
 #: skylines/forms/club.py:37 skylines/templates/clubs/view.jinja:28
 msgid "Website"
@@ -79,8 +79,7 @@ msgstr "Web-sivu"
 #: skylines/forms/flight.py:12 skylines/forms/upload.py:13
 #: skylines/templates/flights/details-table.jinja:119
 #: skylines/templates/flights/flights-table.jinja:10
-#: skylines/templates/search/list.jinja:63
-#: skylines/templates/search/list.jinja:73
+#: skylines/templates/search/list.jinja:63 skylines/templates/search/list.jinja:73
 #: skylines/templates/tracking/list.jinja:41
 #: skylines/templates/tracking/view.jinja:121
 #: skylines/templates/widgets/flights.jinja:6
@@ -104,9 +103,8 @@ msgid "Competition Number"
 msgstr "Kilpailutunnus"
 
 #: skylines/forms/pilot.py:34
-#, fuzzy
 msgid "Current Password"
-msgstr "Unohditko salasanan?"
+msgstr "Nykyinen salasana"
 
 #: skylines/forms/pilot.py:35 skylines/forms/pilot.py:129
 #: skylines/templates/settings/base.jinja:17
@@ -115,16 +113,15 @@ msgstr "Salasana"
 
 #: skylines/forms/pilot.py:36
 msgid "Your password must have at least 6 characters."
-msgstr ""
+msgstr "Salasanan vähimmäispituus on 6 merkkiä"
 
 #: skylines/forms/pilot.py:38
 msgid "Verify Password"
 msgstr "Toista salasana"
 
 #: skylines/forms/pilot.py:39
-#, fuzzy
 msgid "Your passwords do not match."
-msgstr "Salasanat eivät täsmää"
+msgstr "Salasanat eivät täsmää."
 
 #: skylines/forms/pilot.py:44 skylines/forms/pilot.py:77
 #: skylines/forms/pilot.py:110 skylines/forms/pilot.py:125
@@ -134,27 +131,27 @@ msgstr "Sähköpostiosoite"
 #: skylines/forms/pilot.py:45 skylines/forms/pilot.py:78
 #: skylines/forms/pilot.py:111 skylines/forms/pilot.py:126
 msgid "Please enter your email address."
-msgstr ""
+msgstr "Syötä sähköpostiosoitteesi."
 
 #: skylines/forms/pilot.py:48 skylines/forms/pilot.py:81
 msgid "First Name"
-msgstr ""
+msgstr "Etunimi"
 
 #: skylines/forms/pilot.py:49 skylines/forms/pilot.py:82
 msgid "Please enter your first name."
-msgstr ""
+msgstr "Syötä etunimesi."
 
 #: skylines/forms/pilot.py:51 skylines/forms/pilot.py:84
 msgid "Last Name"
-msgstr ""
+msgstr "Sukunimi"
 
 #: skylines/forms/pilot.py:52 skylines/forms/pilot.py:85
 msgid "Please enter your last name."
-msgstr ""
+msgstr "Syötä sukunimesi."
 
 #: skylines/forms/pilot.py:57 skylines/forms/pilot.py:99
 msgid "A pilot with this email address exists already."
-msgstr ""
+msgstr "Sähköpostiosoite on jo käytössä."
 
 #: skylines/forms/pilot.py:71
 msgid "None"
@@ -169,7 +166,7 @@ msgstr[1] "%(num)u minuuttia"
 
 #: skylines/forms/pilot.py:87
 msgid "Unit Preset"
-msgstr ""
+msgstr "Käytettävät yksiköt"
 
 #: skylines/forms/pilot.py:88
 msgid "Distance Unit"
@@ -197,19 +194,19 @@ msgstr "Seurannan viive"
 
 #: skylines/forms/pilot.py:104
 msgid "Tracking Callsign"
-msgstr ""
+msgstr "Live-seurannan kutsumerkki"
 
 #: skylines/forms/pilot.py:105
 msgid "Your callsign must not have more than 5 characters."
-msgstr ""
+msgstr "Kutsumerkkisi ei voi olla yli viisi merkkiä pitkä."
 
 #: skylines/forms/pilot.py:117
 msgid "There is no pilot with this email address."
-msgstr ""
+msgstr "Sähköpostiosoitetta ei löytynyt."
 
 #: skylines/forms/pilot.py:130
 msgid "Please enter your password."
-msgstr ""
+msgstr "Syötä salasanasi."
 
 #: skylines/forms/pilot.py:132
 msgid "Remember me"
@@ -217,7 +214,7 @@ msgstr "Muista minut"
 
 #: skylines/forms/select.py:93
 msgid "Not a valid choice"
-msgstr ""
+msgstr "Virheellinen valinta"
 
 #: skylines/forms/upload.py:10
 msgid "IGC or ZIP file(s)"
@@ -229,17 +226,17 @@ msgstr "Ole hyvä ja liitä yksi tai useampi IGC- tai ZIP-tiedosto"
 
 #: skylines/lib/dbutil.py:24 skylines/lib/dbutil.py:42
 msgid "Sorry, the record id ({id}) that you requested is not a valid id."
-msgstr ""
+msgstr "Virheellinen record id ({id})."
 
 #: skylines/lib/dbutil.py:30
 msgid "Sorry, there is no such record ({id}) in our database."
-msgstr ""
+msgstr "Ei löytynyt ({id})."
 
 #: skylines/lib/dbutil.py:60
 msgid ""
-"Sorry, {num_missing} of the requested records ({ids}) do not exist in our"
-" database."
-msgstr ""
+"Sorry, {num_missing} of the requested records ({ids}) do not exist in our "
+"database."
+msgstr "{num_missing} tiedostoa ({ids}) ei löytynyt tietokannasta."
 
 #: skylines/lib/formatter/units.py:44
 msgid "Custom"
@@ -251,19 +248,19 @@ msgstr "Eurooppalainen (metrit)"
 
 #: skylines/lib/formatter/units.py:53
 msgid "British (imperial, distance in km)"
-msgstr ""
+msgstr "Brittiläinen (Imperial, etäisyys km)"
 
 #: skylines/lib/formatter/units.py:60
 msgid "Australian (metric, imperial height)"
-msgstr ""
+msgstr "Australialainen (metrinen, korkeus jaloissa)"
 
 #: skylines/lib/formatter/units.py:67
 msgid "American (imperial)"
-msgstr ""
+msgstr "Amerikkalainen (Imperial)"
 
 #: skylines/templates/about.jinja:9
 msgid "Welcome to SkyLines, your internet platform for flight sharing!"
-msgstr ""
+msgstr "Tervetuloa SkyLinesiin! Jaa lentosi netissä!"
 
 #: skylines/templates/about.jinja:28
 msgid "Flight Database"
@@ -273,9 +270,12 @@ msgstr "Lentotietokanta"
 #, python-format
 msgid ""
 "<a href=\"%(url)s\">Upload</a> your IGC files and share them with your "
-"friends. We won't change your files or restrict you from downloading them"
-" again!"
+"friends. We won't change your files or restrict you from downloading them "
+"again!"
 msgstr ""
+"<a href=\"%(url)s\">Lähetä</a> IGC-tiedostoja jakaaksesi lentosi muiden "
+"kanssa. Toisin kuin eräs toinen lentotietokanta, SkyLines ei peukaloi "
+"tiedostojasi eikä rajoita lataamasta niitä."
 
 #: skylines/templates/about.jinja:32 skylines/templates/settings/base.jinja:19
 #: skylines/templates/tracking/info.jinja:4
@@ -286,9 +286,11 @@ msgstr "Liveseuranta"
 #: skylines/templates/about.jinja:33
 #, python-format
 msgid ""
-"Use your mobile phone to send position updates to SkyLines. Find out how "
-"it works <a href=\"%(url)s\">here</a>."
+"Use your mobile phone to send position updates to SkyLines. Find out how it "
+"works <a href=\"%(url)s\">here</a>."
 msgstr ""
+"Lähetä sijaintitietosi SkyLinesiin reaaliajassa kännykälläsi. <a "
+"href=\"%(url)s\">Näin se toimii</a>."
 
 #: skylines/templates/about.jinja:36
 msgid "Flight Analysis"
@@ -299,6 +301,8 @@ msgid ""
 "Use our analysis tools to have a closer look at your flights and how you "
 "might be able to improve them in the future."
 msgstr ""
+"Analyysityökaluilla voit tarkastella lentojasi jälkikäteen ja lentää vielä "
+"nopeammin huomenna."
 
 #: skylines/templates/about.jinja:42
 msgid "Task Planning"
@@ -315,6 +319,8 @@ msgid ""
 "Use your browser to plan your tasks before the flight and upload them "
 "quickly to your flight computer. Integration of %(prosoar)s is planned."
 msgstr ""
+"Laadi tehtävä selaimessasi ja lataa se lentonavigaattoriisi. Suunnitelmissa "
+"on myös %(prosoar)s -tuki."
 
 #: skylines/templates/about.jinja:46
 msgid "Competitions"
@@ -322,9 +328,11 @@ msgstr "Kilpailut"
 
 #: skylines/templates/about.jinja:47
 msgid ""
-"Create competitions to offer your spectators an even better live tracking"
-" experience by following all the participants on the same map."
+"Create competitions to offer your spectators an even better live tracking "
+"experience by following all the participants on the same map."
 msgstr ""
+"Tee purjelentokisoista katsojaystävällistä näyttämällä kaikki kilpailiajat "
+"samalla kartalla."
 
 #: skylines/templates/about.jinja:50
 msgid "Achievements"
@@ -332,10 +340,12 @@ msgstr "Saavutukset"
 
 #: skylines/templates/about.jinja:51
 msgid ""
-"Challenge yourself by trying to complete all the achievements that "
-"SkyLines offers. Fly large triangles, long final glides or just do your "
-"first outlanding."
+"Challenge yourself by trying to complete all the achievements that SkyLines "
+"offers. Fly large triangles, long final glides or just do your first "
+"outlanding."
 msgstr ""
+"Haasta itsesi saavuttamalla kaikki SkyLinesin suoritukset. Lennä iso kolmio, "
+"pitkä loppuliuku tai tee ensimmäinen maastolaskusi."
 
 #: skylines/templates/about.jinja:56
 msgid "Social Network"
@@ -344,10 +354,13 @@ msgstr "Sosiaalinen media"
 #: skylines/templates/about.jinja:57
 #, python-format
 msgid ""
-"Skylines also has some social network aspects. You can comment on "
-"flights, follow your friends and get <a "
-"href=\"%(url)s\">notifications</a> if they do anything interesting."
+"Skylines also has some social network aspects. You can comment on flights, "
+"follow your friends and get <a href=\"%(url)s\">notifications</a> if they do "
+"anything interesting."
 msgstr ""
+"Skylines on sosiaalinen. Voit kommentoida lentoja, seurata kollegojasi ja "
+"saat halutessasi <a href=\"%(url)s\">muistutuksia</a>, kun jotain jännää "
+"tapahtuu."
 
 #: skylines/templates/about.jinja:60
 msgid "Open Data"
@@ -359,26 +372,31 @@ msgid ""
 "The SkyLines flight database is made available under the %(license)s. "
 "Skylines is using waypoint data from the %(welt2000)s project."
 msgstr ""
+"SkyLinesin lentotietokanta on %(license)s-lisensoitu. SkyLines käyttää "
+"%(welt2000)s-projektin käännepiste- ja lentokenttätietoja."
 
 #: skylines/templates/about.jinja:64
 msgid "Open Source"
-msgstr ""
+msgstr "Avoin lähdekoodi (Open Source)"
 
 #: skylines/templates/about.jinja:65
 #, python-format
 msgid ""
-"Skylines is a <a href=\"%(team_url)s\">community</a> project and entirely"
-" based on free software (<a href=\"%(license_url)s\">License</a>). Visit "
+"Skylines is a <a href=\"%(team_url)s\">community</a> project and entirely "
+"based on free software (<a href=\"%(license_url)s\">License</a>). Visit "
 "%(github)s if you want to help!"
 msgstr ""
+"SkyLines on <a href=\"%(team_url)s\">yhteisöprojekti</a> ja pohjautuu "
+"vapaaseen lähdekoodiin (<a href=\"%(license_url)s\">Lisenssi</a>). Katso, "
+"miten voit itse parantaa SkyLinesiä: %(github)s."
 
 #: skylines/templates/base-page.jinja:43 skylines/views/about.py:39
 msgid "The SkyLines Team"
-msgstr ""
+msgstr "SkyLines-tiimi"
 
 #: skylines/templates/base-page.jinja:44 skylines/views/about.py:23
 msgid "Imprint"
-msgstr ""
+msgstr "Imprint"
 
 #: skylines/templates/login.jinja:6 skylines/templates/login.jinja:15
 #: skylines/templates/topbar.jinja:76 skylines/templates/topbar.jinja:82
@@ -399,8 +417,7 @@ msgid "Live"
 msgstr "Live"
 
 #: skylines/templates/topbar.jinja:6 skylines/templates/topbar.jinja:134
-#: skylines/templates/clubs/list.jinja:20
-#: skylines/templates/clubs/view.jinja:50
+#: skylines/templates/clubs/list.jinja:20 skylines/templates/clubs/view.jinja:50
 #: skylines/templates/flights/list.jinja:27
 #: skylines/templates/ranking/airports.jinja:11
 #: skylines/templates/ranking/clubs.jinja:10
@@ -411,18 +428,16 @@ msgstr "Live"
 #: skylines/templates/statistics/flights-table.jinja:6
 #: skylines/templates/statistics/years.jinja:66
 #: skylines/templates/users/users-table.jinja:27
-#: skylines/templates/users/view.jinja:133
-#: skylines/templates/users/view.jinja:211
+#: skylines/templates/users/view.jinja:133 skylines/templates/users/view.jinja:211
 msgid "Flights"
 msgstr "Lennot"
 
 #: skylines/templates/topbar.jinja:7 skylines/templates/ranking/layout.jinja:17
 msgid "Ranking"
-msgstr ""
+msgstr "Ranking"
 
 #: skylines/templates/topbar.jinja:8 skylines/templates/topbar.jinja:135
-#: skylines/templates/clubs/list.jinja:21
-#: skylines/templates/clubs/view.jinja:51
+#: skylines/templates/clubs/list.jinja:21 skylines/templates/clubs/view.jinja:51
 #: skylines/templates/flights/view.jinja:178
 #: skylines/templates/search/list.jinja:101
 #: skylines/templates/search/list.jinja:105
@@ -434,8 +449,7 @@ msgid "Statistics"
 msgstr "Tilastot"
 
 #: skylines/templates/topbar.jinja:9 skylines/templates/topbar.jinja:48
-#: skylines/templates/search/list.jinja:11
-#: skylines/templates/search/list.jinja:21
+#: skylines/templates/search/list.jinja:11 skylines/templates/search/list.jinja:21
 msgid "Search"
 msgstr "Haku"
 
@@ -450,11 +464,10 @@ msgid "Notifications"
 msgstr "Ilmoitukset"
 
 #: skylines/templates/topbar.jinja:137 skylines/templates/users/view.jinja:122
-#, fuzzy
 msgid "Settings"
-msgstr "Kilpailut"
+msgstr "Omat asetukset"
 
-#: skylines/templates/topbar.jinja:138
+#: skylines/templates/topbar.jinja:139
 msgid "Logout"
 msgstr "Kirjaudu ulos"
 
@@ -468,7 +481,7 @@ msgstr "Luo lentäjä"
 #: skylines/templates/settings/profile.jinja:12
 #: skylines/templates/users/new.jinja:12
 msgid "First and last name"
-msgstr ""
+msgstr "Etu- ja sukunimi"
 
 #: skylines/templates/clubs/edit.jinja:6
 msgid "Edit Club"
@@ -487,13 +500,11 @@ msgstr "Muokkaa kerhoa"
 msgid "Change"
 msgstr "Muuta"
 
-#: skylines/templates/clubs/list.jinja:5
-#: skylines/templates/ranking/layout.jinja:10
+#: skylines/templates/clubs/list.jinja:5 skylines/templates/ranking/layout.jinja:10
 msgid "Clubs"
 msgstr "Kerhot"
 
-#: skylines/templates/clubs/list.jinja:22
-#: skylines/templates/clubs/view.jinja:52
+#: skylines/templates/clubs/list.jinja:22 skylines/templates/clubs/view.jinja:52
 #: skylines/templates/search/list.jinja:103
 msgid "Members"
 msgstr "Jäsenet"
@@ -501,7 +512,7 @@ msgstr "Jäsenet"
 #: skylines/templates/clubs/pilots.jinja:7
 #, python-format
 msgid "Members <small>of %(club)s</small>"
-msgstr ""
+msgstr "Jäsenet <small>(%(club)s)</small>"
 
 #: skylines/templates/clubs/view.jinja:34
 msgid "Created"
@@ -510,16 +521,15 @@ msgstr "Luotu"
 #: skylines/templates/clubs/view.jinja:37
 #, python-format
 msgid "%(time_ago)s by %(creator)s"
-msgstr ""
+msgstr "%(time_ago)s sitten (%(creator)s)"
 
 #: skylines/templates/clubs/view.jinja:47
 msgid "Edit"
 msgstr "Muokkaa"
 
 #: skylines/templates/flights/change_aircraft.jinja:6
-#, fuzzy
 msgid "Select Aircraft"
-msgstr "Lentokone"
+msgstr "Valitse lentokone"
 
 #: skylines/templates/flights/change_pilot.jinja:6
 msgid "Select Pilot"
@@ -548,7 +558,7 @@ msgstr "Lentoonlähtö"
 #: skylines/templates/flights/details-table.jinja:40
 #, python-format
 msgid "%(airport)s<br /> at %(time)s"
-msgstr ""
+msgstr "%(airport)s<br /> klo %(time)s"
 
 #: skylines/templates/flights/details-table.jinja:36
 msgid "Landing"
@@ -564,7 +574,7 @@ msgstr "Kesto"
 #: skylines/templates/flights/details-table.jinja:53
 #, python-format
 msgid "%(hours)s hours"
-msgstr ""
+msgstr "%(hours)s tuntia"
 
 #: skylines/templates/flights/details-table.jinja:58
 #: skylines/templates/flights/flights-table.jinja:14
@@ -593,7 +603,7 @@ msgstr "Pistemäärä"
 #: skylines/templates/ranking/pilots.jinja:21
 #, python-format
 msgid "%(points)s pt"
-msgstr ""
+msgstr "%(points)s pistettä"
 
 #: skylines/templates/flights/details-table.jinja:98
 msgid "OLC Distance"
@@ -614,7 +624,7 @@ msgstr "Lähetetty"
 #: skylines/templates/flights/details-table.jinja:162
 #, python-format
 msgid "%(upload_time)s<br/> by %(uploader)s"
-msgstr ""
+msgstr "%(upload_time)s<br/> %(uploader)s"
 
 #: skylines/templates/flights/details-table.jinja:170
 msgid "Actions"
@@ -629,15 +639,13 @@ msgstr "Poista"
 #: skylines/templates/flights/phases-table.jinja:73
 #: skylines/templates/statistics/distance-table.jinja:6
 #: skylines/templates/statistics/years.jinja:69
-#: skylines/templates/users/view.jinja:177
-#: skylines/templates/users/view.jinja:215
+#: skylines/templates/users/view.jinja:177 skylines/templates/users/view.jinja:215
 #: skylines/templates/widgets/flights.jinja:7
 msgid "Distance"
 msgstr "Matka"
 
 #: skylines/templates/flights/flights-table.jinja:12
-#: skylines/templates/search/list.jinja:67
-#: skylines/templates/search/list.jinja:77
+#: skylines/templates/search/list.jinja:67 skylines/templates/search/list.jinja:77
 #: skylines/templates/widgets/flights.jinja:8
 msgid "Airport"
 msgstr "Lentokenttä"
@@ -688,12 +696,12 @@ msgstr "%(distance)s / %(date)s <small>/ %(pilot)s ja %(co_pilot)s</small>"
 #: skylines/templates/flights/macros.jinja:12
 #, python-format
 msgid "%(distance)s on %(date)s <small>by %(pilot)s</small>"
-msgstr ""
+msgstr "%(distance)s:  %(date)s <small>%(pilot)s</small>"
 
 #: skylines/templates/flights/macros.jinja:18
 #, python-format
 msgid "%(distance)s on %(date)s"
-msgstr ""
+msgstr "%(distance)s:  %(date)s"
 
 #: skylines/templates/flights/nav.jinja:8
 msgid "All Flights"
@@ -709,36 +717,36 @@ msgstr "Määrittämättömät lennot"
 
 #: skylines/templates/flights/nav.jinja:67
 msgid "Pinned Flights"
-msgstr ""
+msgstr "Kiinnitetyt lennot"
 
 #: skylines/templates/flights/phases-table.jinja:6
 msgid "Thermals"
-msgstr ""
+msgstr "Nostoja"
 
 #: skylines/templates/flights/phases-table.jinja:6
 #: skylines/templates/flights/phases-table.jinja:43
 #: skylines/templates/flights/phases-table.jinja:74
 msgid "Avg. vario"
-msgstr ""
+msgstr "Keskinosto"
 
 #: skylines/templates/flights/phases-table.jinja:47
 #: skylines/templates/flights/phases-table.jinja:75
 msgid "Avg. speed"
-msgstr ""
+msgstr "Keskinopeus"
 
 #: skylines/templates/flights/phases-table.jinja:51
 #: skylines/templates/flights/phases-table.jinja:76
 msgid "Glide Rate"
-msgstr ""
+msgstr "Liitosuhde"
 
 #: skylines/templates/flights/phases-table.jinja:51
 #: skylines/templates/flights/phases-table.jinja:76
 msgid "GR"
-msgstr ""
+msgstr "GR"
 
 #: skylines/templates/flights/phases-table.jinja:55
 msgid "Glides"
-msgstr ""
+msgstr "Liu'ut"
 
 #: skylines/templates/flights/phases-table.jinja:69
 msgid "Phase"
@@ -750,11 +758,11 @@ msgstr "Lähtö"
 
 #: skylines/templates/flights/view.jinja:138
 msgid "Spread the word"
-msgstr ""
+msgstr "Levitä sanaa"
 
 #: skylines/templates/flights/view.jinja:168
 msgid "Overview"
-msgstr ""
+msgstr "Yhteenveto"
 
 #: skylines/templates/flights/view.jinja:170
 #: skylines/templates/flights/view.jinja:197
@@ -769,6 +777,7 @@ msgstr "Koko ruudun kartta"
 #: skylines/templates/flights/view.jinja:192
 msgid "Activate this to show the flight on top of other flights on the map"
 msgstr ""
+"Kiinnitä lento näyttääksesi sen muiden lentojen kartoilla, vertailua varten."
 
 #: skylines/templates/flights/view.jinja:213
 msgid "No comments yet."
@@ -780,11 +789,11 @@ msgstr "Lisää kommentti"
 
 #: skylines/templates/flights/view.jinja:231
 msgid "Circling performance"
-msgstr ""
+msgstr "Nostoissa"
 
 #: skylines/templates/flights/view.jinja:234
 msgid "Cruise performance"
-msgstr ""
+msgstr "Liu'ussa"
 
 #: skylines/templates/flights/view.jinja:239
 msgid "Detailed statistics"
@@ -792,7 +801,7 @@ msgstr "Yksityiskohtaiset tilastot"
 
 #: skylines/templates/flights/view.jinja:253
 msgid "An error occurred while decoding this flight."
-msgstr ""
+msgstr "Lentoa ladattaessa tapahtui virhe"
 
 #: skylines/templates/flights/view.jinja:262
 msgid "Phases"
@@ -818,14 +827,16 @@ msgstr "Varoitus!"
 
 #: skylines/templates/notifications/events-table.jinja:24
 msgid "New"
-msgstr ""
+msgstr "Uusi..."
 
 #: skylines/templates/notifications/events-table.jinja:91
 #, python-format
 msgid ""
-"<strong>%(pilot)s</strong> commented on your "
-"<strong>%(distance)s</strong> flight on the <strong>%(date)s</strong>."
+"<strong>%(pilot)s</strong> commented on your <strong>%(distance)s</strong> "
+"flight on the <strong>%(date)s</strong>."
 msgstr ""
+"<strong>%(pilot)s</strong> kommentoi <strong>%(distance)s</strong> lentoasi "
+"<strong>%(date)s</strong>."
 
 #: skylines/templates/notifications/events-table.jinja:96
 #, python-format
@@ -833,6 +844,7 @@ msgid ""
 "You commented on a <strong>%(distance)s</strong> flight on the "
 "<strong>%(date)s</strong>."
 msgstr ""
+"Kommentoit <strong>%(distance)s</strong> lentoa <strong>%(date)s</strong>."
 
 #: skylines/templates/notifications/events-table.jinja:100
 #, python-format
@@ -840,6 +852,8 @@ msgid ""
 "<strong>%(pilot)s</strong> commented on a <strong>%(distance)s</strong> "
 "flight on the <strong>%(date)s</strong>."
 msgstr ""
+"<strong>%(pilot)s</strong> kommentoi  <strong>%(distance)s</strong> lentoa "
+"<strong>%(date)s</strong>."
 
 #: skylines/templates/notifications/events-table.jinja:110
 #, python-format
@@ -847,6 +861,7 @@ msgid ""
 "You uploaded a <strong>%(distance)s</strong> flight on the "
 "<strong>%(date)s</strong>."
 msgstr ""
+"Latasit <strong>%(distance)s</strong> lennon <strong>%(date)s</strong>."
 
 #: skylines/templates/notifications/events-table.jinja:114
 #, python-format
@@ -854,11 +869,13 @@ msgid ""
 "<strong>%(pilot)s</strong> uploaded a new <strong>%(distance)s</strong> "
 "flight on the <strong>%(date)s</strong>."
 msgstr ""
+"<strong>%(pilot)s</strong> latasi <strong>%(distance)s</strong> lennon "
+"<strong>%(date)s</strong>."
 
 #: skylines/templates/notifications/events-table.jinja:124
 #, python-format
 msgid "You uploaded <strong>%(num_flights)s</strong> new flights."
-msgstr ""
+msgstr "Latasit <strong>%(num_flights)s</strong> uutta lentoa."
 
 #: skylines/templates/notifications/events-table.jinja:127
 #, python-format
@@ -866,62 +883,68 @@ msgid ""
 "<strong>%(pilot)s</strong> uploaded <strong>%(num_flights)s</strong> new "
 "flights."
 msgstr ""
+"<strong>%(pilot)s</strong> latasi <strong>%(num_flights)s</strong> uutta "
+"lentoa."
 
 #: skylines/templates/notifications/events-table.jinja:135
 #, python-format
 msgid "<strong>%(pilot)s</strong> started following you."
-msgstr ""
+msgstr "<strong>%(pilot)s</strong> seuraa sinua."
 
 #: skylines/templates/notifications/events-table.jinja:137
 #, python-format
 msgid "You started following <strong>%(pilot)s</strong>."
-msgstr ""
+msgstr "Seuraat lentäjää <strong>%(pilot)s</strong>."
 
 #: skylines/templates/notifications/events-table.jinja:139
 #, python-format
-msgid "<strong>%(pilot)s</strong> started following <strong>%(pilot2)s</strong>."
+msgid ""
+"<strong>%(pilot)s</strong> started following <strong>%(pilot2)s</strong>."
 msgstr ""
+"<strong>%(pilot)s</strong> seuraa lentäjää <strong>%(pilot2)s</strong>."
 
 #: skylines/templates/notifications/events-table.jinja:146
 #, python-format
 msgid "You started following <strong>%(num_pilots)s</strong> other pilots."
-msgstr ""
+msgstr "Seuraat <strong>%(num_pilots)s</strong> uutta lentäjää."
 
 #: skylines/templates/notifications/events-table.jinja:148
 #, python-format
 msgid ""
-"<strong>%(pilot)s</strong> started following "
-"<strong>%(num_pilots)s</strong> other pilots."
+"<strong>%(pilot)s</strong> started following <strong>%(num_pilots)s</strong> "
+"other pilots."
 msgstr ""
+"<strong>%(pilot)s</strong> seuraa <strong>%(num_pilots)s</strong> muuta "
+"lentäjää."
 
 #: skylines/templates/notifications/events-table.jinja:155
 msgid "You joined SkyLines."
-msgstr ""
+msgstr "Liityit SkyLinesiin."
 
 #: skylines/templates/notifications/events-table.jinja:157
 #, python-format
 msgid "<strong>%(pilot)s</strong> joined SkyLines."
-msgstr ""
+msgstr "<strong>%(pilot)s</strong> liittyi SkyLinesiin."
 
 #: skylines/templates/notifications/events-table.jinja:164
 #, python-format
 msgid "You joined <strong>%(club)s</strong>."
-msgstr ""
+msgstr "Liityit kerhoon <strong>%(club)s</strong>."
 
 #: skylines/templates/notifications/events-table.jinja:167
 #, python-format
 msgid "<strong>%(pilot)s</strong> joined <strong>%(club)s</strong>."
 msgstr ""
+"<strong>%(pilot)s</strong> liittyi kerhoon <strong>%(club)s</strong>."
 
 #: skylines/templates/notifications/list.jinja:24
-#, fuzzy
 msgid "There are no more notifications."
-msgstr "Sinulla ei ole lukemattomia ilmoituksia."
+msgstr "Ei muistutuksia."
 
 #: skylines/templates/notifications/list.jinja:33
 #: skylines/templates/timeline/list.jinja:39
 msgid "Newer"
-msgstr ""
+msgstr "Uudemmat"
 
 #: skylines/templates/notifications/list.jinja:40
 msgid "Mark all as read"
@@ -929,9 +952,8 @@ msgstr "Merkitse kaikki luetuiksi"
 
 #: skylines/templates/notifications/list.jinja:45
 #: skylines/templates/timeline/list.jinja:47
-#, fuzzy
 msgid "Older"
-msgstr "Purjekoneet"
+msgstr "Vanhemmat"
 
 #: skylines/templates/ranking/airports.jinja:12
 #: skylines/templates/ranking/clubs.jinja:11
@@ -960,12 +982,12 @@ msgstr "Lentokentät"
 #: skylines/templates/ranking/layout.jinja:27
 #, python-format
 msgid "Season %(year)s"
-msgstr ""
+msgstr "Kausi %(year)s"
 
 #: skylines/templates/ranking/layout.jinja:29
 #: skylines/templates/ranking/layout.jinja:34
 msgid "All time"
-msgstr ""
+msgstr "Kaikki kaudet"
 
 #: skylines/templates/ranking/pilots.jinja:25
 msgid "No pilots found."
@@ -974,7 +996,7 @@ msgstr "Lentäjiä ei löytynyt."
 #: skylines/templates/search/list.jinja:9
 #, python-format
 msgid "Search <small>for \"%(search_text)s\"</small>"
-msgstr ""
+msgstr "Etsi <small>\"%(search_text)s\"</small>"
 
 #: skylines/templates/search/list.jinja:49
 msgid "There were no results for your search... Sorry!"
@@ -986,7 +1008,7 @@ msgstr "Ole hyvä ja syötä hakukenttään jotain."
 
 #: skylines/templates/settings/base.jinja:16
 msgid "Profile"
-msgstr ""
+msgstr "Profiili"
 
 #: skylines/templates/settings/club.jinja:6
 msgid "Change Club"
@@ -1001,9 +1023,8 @@ msgid "Register Club"
 msgstr "Rekisteröi kerho"
 
 #: skylines/templates/settings/club.jinja:33
-#, fuzzy
 msgid "Create"
-msgstr "Luotu"
+msgstr "Tee uusi"
 
 #: skylines/templates/settings/password.jinja:6
 #: skylines/templates/users/recover_step1.jinja:6
@@ -1023,9 +1044,9 @@ msgid "Edit User"
 msgstr "Muokkaa käyttäjää"
 
 #: skylines/templates/settings/tracking.jinja:6
-#, fuzzy
+#: skylines/templates/tracking/info.jinja:31
 msgid "Live Tracking Settings"
-msgstr "Liveseurannan Avain"
+msgstr "Live-seurannan asetukset"
 
 #: skylines/templates/settings/tracking.jinja:11
 #: skylines/templates/tracking/info.jinja:24
@@ -1039,7 +1060,6 @@ msgid "Your Live Tracking key is: %(key)s"
 msgstr "Avaimesi Liveseurantaan on: %(key)s"
 
 #: skylines/templates/settings/tracking.jinja:21
-#: skylines/templates/tracking/info.jinja:31
 msgid "Generate new key"
 msgstr "Luo uusi avain"
 
@@ -1054,7 +1074,7 @@ msgstr "Vuosi"
 #: skylines/templates/users/view.jinja:217
 #, python-format
 msgid "avg. %(distance)s per flight"
-msgstr ""
+msgstr "keskim. %(distance)s per lento"
 
 #: skylines/templates/statistics/distance-table.jinja:29
 #: skylines/templates/statistics/duration-table.jinja:29
@@ -1073,14 +1093,14 @@ msgstr "Lentoaika"
 #: skylines/templates/users/view.jinja:225
 #, python-format
 msgid "avg. %(hours)s hours per flight"
-msgstr ""
+msgstr "keskim. %(hours)s per lento"
 
 #: skylines/templates/statistics/duration-table.jinja:15
 #: skylines/templates/statistics/duration-table.jinja:30
 #: skylines/templates/users/view.jinja:226
 #, python-format
 msgid "%(hours)s Hours"
-msgstr ""
+msgstr "%(hours)s tuntia"
 
 #: skylines/templates/statistics/years.jinja:14
 #, python-format
@@ -1098,19 +1118,18 @@ msgid "Statistics <small>from %(airport)s</small>"
 msgstr "Tilastot <small>/ %(airport)s</small>"
 
 #: skylines/templates/timeline/list.jinja:10
-#, fuzzy, python-format
+#, python-format
 msgid "Timeline <small>of %(pilot)s</small>"
-msgstr "Lennot <small>/ %(pilot)s</small>"
+msgstr "Aikajana (<small>%(pilot)s</small>)"
 
 #: skylines/templates/timeline/list.jinja:12
 #: skylines/templates/users/view.jinja:135
 msgid "Timeline"
-msgstr ""
+msgstr "Aikajana"
 
 #: skylines/templates/timeline/list.jinja:30
-#, fuzzy
 msgid "There are no more events."
-msgstr "Sinulla ei ole lukemattomia ilmoituksia."
+msgstr "Ei tapahtumia."
 
 #: skylines/templates/tracking/info.jinja:7
 msgid "What is it?"
@@ -1118,43 +1137,51 @@ msgstr "Mikä tämä on?"
 
 #: skylines/templates/tracking/info.jinja:9
 msgid ""
-"SkyLines Live Tracking can be used to let others take part on your "
-"journeys while you're flying. It uses a very light-weight protocol that "
-"only transmits the necessary data and due to that it can also work in "
-"areas/altitudes where the reception isn't very good. To give you an "
-"example: A flight of 10 hours only uses about 340 KB of traffic when the "
-"positions are transmitted every 5 seconds!"
+"SkyLines Live Tracking can be used to let others take part on your journeys "
+"while you're flying. It uses a very light-weight protocol that only "
+"transmits the necessary data and due to that it can also work in "
+"areas/altitudes where the reception isn't very good. To give you an example: "
+"A flight of 10 hours only uses about 340 KB of traffic when the positions "
+"are transmitted every 5 seconds!"
 msgstr ""
+"SkyLines Live-seurannalla muut voivat seurata missä lennät. Koska seuranta "
+"käyttää erittäin kevyttä protokollaa datan siirtoon, seuranta toimii myös "
+"melko korkealla, vaikka puhelimen kenttä olisi heikko. Esimerkiksi 10 tunnin "
+"lento 5 sekunnin välein raportoituna käyttää ainoastaan 340 kilotavua."
 
 #: skylines/templates/tracking/info.jinja:12
 msgid "Clients"
-msgstr ""
+msgstr "Asiakasohjelmat (Client)"
 
 #: skylines/templates/tracking/info.jinja:14
 #, python-format
 msgid "available starting with %(xcsoar_6_4)s"
-msgstr ""
+msgstr "alkaen %(xcsoar_6_4)s:stä"
 
 #: skylines/templates/tracking/info.jinja:15
 msgid "Instructions are below."
-msgstr ""
+msgstr "Ohjeet alla."
 
 #: skylines/templates/tracking/info.jinja:16
 msgid "now available in the current version of Gaggle"
-msgstr ""
+msgstr "Gagglen uusimmassa versiossa."
 
 #: skylines/templates/tracking/info.jinja:19
 msgid "LiveTrack24 clients"
-msgstr ""
+msgstr "LiveTrack24-yhteensopivat ohjelmat"
 
 #: skylines/templates/tracking/info.jinja:20
 #, python-format
 msgid ""
 "You can also use all available applications that use the %(livetrack24)s "
-"protocol for sending your locations to SkyLines. Just use your Live "
-"Tracking Key as username, choose any password you want and configure "
-"%(server)s as the server."
+"protocol for sending your locations to SkyLines. Just use your Live Tracking "
+"Key as username, choose any password you want and configure %(server)s as "
+"the server."
 msgstr ""
+"Voit myös käyttää mitä tahansa %(livetrack24)s-protokollaa käyttävää "
+"ohjelmaa lähettääksesi paikkasi SkyLinesiin. Käyttäjätunnuksesi on Live-"
+"seurannan avainkoodisi. Valitse haluamasi salasana ja valitse palvelimeksi "
+"%(server)s."
 
 #: skylines/templates/tracking/info.jinja:34
 #, python-format
@@ -1162,28 +1189,31 @@ msgid ""
 "You have to <a href=\"%(url)s\">login</a> to see you own personal Live "
 "Tracking key."
 msgstr ""
-"Sinun täytyy <a href=\"%(url)s\">kirjautua</a> nähdäksesi "
-"henkilökohtaisen avaimesi Liveseurantaan."
+"Sinun täytyy <a href=\"%(url)s\">kirjautua</a> nähdäksesi henkilökohtaisen "
+"avaimesi Liveseurantaan."
 
 #: skylines/templates/tracking/info.jinja:39
 #, python-format
 msgid ""
 "In %(xcsoar)s, open the <em>Setup System</em> dialog, click on "
-"<em>Setup</em> and then <em>Tracking</em>.  Turn SkyLines tracking on, "
-"and enter your Live Tracking key."
+"<em>Setup</em> and then <em>Tracking</em>.  Turn SkyLines tracking on, and "
+"enter your Live Tracking key."
 msgstr ""
+"%(xcsoar)sissa valitse <em>Setup System</em> -dialogi, paina <em>Setup</em> "
+"ja <em>Tracking</em>. Käynnistä Skylines tracking ja syötä Live-seurannan "
+"avainkoodisi."
 
 #: skylines/templates/tracking/list.jinja:21
 msgid "Friends"
-msgstr ""
+msgstr "Kaverit"
 
 #: skylines/templates/tracking/list.jinja:28
 msgid "Other pilots"
-msgstr ""
+msgstr "Muut lentäjät"
 
 #: skylines/templates/tracking/list.jinja:33
 msgid "How to use Live Tracking?"
-msgstr ""
+msgstr "Live-seurannan käyttäminen"
 
 #: skylines/templates/tracking/list.jinja:40
 msgid "Last fix"
@@ -1205,15 +1235,16 @@ msgstr "Liveseuranta <small>/ %(pilot)s</small>"
 
 #: skylines/templates/tracking/map.jinja:13
 #: skylines/templates/tracking/view.jinja:13
-#, fuzzy, python-format
+#, python-format
 msgid "Live Tracking <small>of %(pilot)s and %(other_pilot)s</small>"
-msgstr "Liveseuranta <small>/ %(pilot)s</small>"
+msgstr "Live-seuranta <small>%(pilot)s ja %(other_pilot)s</small>"
 
 #: skylines/templates/tracking/map.jinja:15
 #: skylines/templates/tracking/view.jinja:15
-#, fuzzy, python-format
-msgid "Live Tracking <small>of %(pilot)s and %(num_pilots)d other pilots</small>"
-msgstr "Liveseuranta <small>/ %(pilot)s</small>"
+#, python-format
+msgid ""
+"Live Tracking <small>of %(pilot)s and %(num_pilots)d other pilots</small>"
+msgstr "Live-seuranta <small>%(pilot)s ja %(num_pilots)d muuta</small>"
 
 #: skylines/templates/tracking/map.jinja:130
 #: skylines/templates/tracking/view.jinja:177
@@ -1222,9 +1253,8 @@ msgstr "Tälle lentäjälle ei ole tällä hetkellä Live-jälkeä."
 
 #: skylines/templates/tracking/map.jinja:132
 #: skylines/templates/tracking/view.jinja:179
-#, fuzzy
 msgid "There are no live tracks of these pilots currently."
-msgstr "Tälle lentäjälle ei ole tällä hetkellä Live-jälkeä."
+msgstr "Ei Live-lentoja."
 
 #: skylines/templates/tracking/view.jinja:134
 msgid "This pilot chose to delay the display of his live tracks."
@@ -1235,32 +1265,30 @@ msgid "Delay"
 msgstr "Viive"
 
 #: skylines/templates/tracking/view.jinja:140
-msgid "The live tracking delay is ignored because of your account privileges."
-msgstr ""
+msgid ""
+"The live tracking delay is ignored because of your account privileges."
+msgstr "Käyttäjäoikeuksiesi ansiosta Live-seurannan viive on pois päältä."
 
 #: skylines/templates/tracking/view.jinja:140
 msgid "ignored"
-msgstr ""
+msgstr "pois päältä"
 
-#: skylines/templates/upload/form.jinja:6
-#: skylines/templates/upload/result.jinja:4
+#: skylines/templates/upload/form.jinja:6 skylines/templates/upload/result.jinja:4
 msgid "Upload Flight"
 msgstr "Lähetä lento"
 
 #: skylines/templates/upload/form.jinja:14
-#, fuzzy
 msgid "Upload"
-msgstr "Lähetetty"
+msgstr "Lähetä"
 
 #: skylines/templates/upload/result.jinja:10
-#, fuzzy
 msgid "Your flights have been saved."
-msgstr "Lentosi on lisätty onnistuneesti!"
+msgstr "Lentosi on tallennettu."
 
 #: skylines/templates/upload/result.jinja:13
 msgid ""
-"Your flights have been saved. You may want to change the flights aircraft"
-" types and registrations below."
+"Your flights have been saved. You may want to change the flights aircraft "
+"types and registrations below."
 msgstr ""
 "Lentosi on tallennettu. Alla voit tehdä muutoksia ilma-alustyyppiin ja "
 "rekisteritietoihin."
@@ -1304,11 +1332,11 @@ msgstr "Sähköposti"
 
 #: skylines/templates/users/view.jinja:109
 msgid "Unspecified"
-msgstr ""
+msgstr "Määrittelemätön"
 
 #: skylines/templates/users/view.jinja:127
 msgid "Unfollow"
-msgstr "Lopeta seuraaminen"
+msgstr "Älä seuraa"
 
 #: skylines/templates/users/view.jinja:129
 msgid "Follow"
@@ -1324,7 +1352,7 @@ msgstr "Seuraajat"
 
 #: skylines/templates/users/view.jinja:173
 msgid "Distance Flights"
-msgstr ""
+msgstr "Matkalennot"
 
 #: skylines/templates/users/view.jinja:202
 msgid "Last 12 Months"
@@ -1340,90 +1368,85 @@ msgstr "Lentoonlähtöpaikat"
 
 #: skylines/templates/widgets/flights.jinja:42
 msgid "Details"
-msgstr ""
+msgstr "Tiedot"
 
 #: skylines/templates/widgets/index.jinja:6
 msgid "Widgets"
-msgstr ""
+msgstr "Widgetit"
 
 #: skylines/templates/widgets/index.jinja:11
-#, fuzzy
-#| msgid "Upload flight"
 msgid "Latest Flights"
-msgstr "Lähetä lento"
+msgstr "Uusimmat lennot"
 
 #: skylines/templates/widgets/index.jinja:16
 msgid ""
-"This widget show the latest flights of you, your club or whatever other "
+"This widget shows the latest flights of you, your club or whatever other "
 "options you use in the URL."
 msgstr ""
+"Tämä näyttää sinun tai kerhosi uusimmat lennot. Voit myös määritellä oman "
+"suodatuksen."
 
 #: skylines/templates/widgets/index.jinja:17
 #, python-format
 msgid ""
 "The example below shows the flights of %(club)s by using the %(option)s "
 "option."
-msgstr ""
+msgstr "Esimerkki alla näyttää kerhon %(club)s kaikki lennot (%(option)s)."
 
 #: skylines/templates/widgets/index.jinja:21
 msgid "Preview"
-msgstr ""
+msgstr "Esikatselu"
 
 #: skylines/templates/widgets/index.jinja:25
 #: skylines/templates/widgets/index.jinja:33
 msgid "Loading..."
-msgstr ""
+msgstr "Ladataan..."
 
 #: skylines/templates/widgets/index.jinja:29
-#, fuzzy
-#| msgid "Score"
 msgid "Code"
-msgstr "Pistemäärä"
+msgstr "Lähdekoodi"
 
 #: skylines/templates/widgets/index.jinja:37
-#, fuzzy
-#| msgid "Competitions"
 msgid "Options"
-msgstr "Kilpailut"
+msgstr "Valinnat"
 
 #: skylines/templates/widgets/index.jinja:43
-#, fuzzy
-#| msgid "Competitions"
 msgid "Option"
-msgstr "Kilpailut"
+msgstr "Valinta"
 
 #: skylines/templates/widgets/index.jinja:44
 msgid "Default"
-msgstr ""
+msgstr "Oletus"
 
 #: skylines/templates/widgets/index.jinja:45
 msgid "Description"
-msgstr ""
+msgstr "Kuvaus"
 
 #: skylines/templates/widgets/index.jinja:50
-msgid "Name of the callback function that is called once the data is available."
-msgstr ""
+msgid ""
+"Name of the callback function that is called once the data is available."
+msgstr "Callback-funktio, jota kutsutaan kun data on tarjolla."
 
 #: skylines/templates/widgets/index.jinja:55
 msgid "Use this to only show flights of the club with the specified ID."
-msgstr ""
+msgstr "Tämä näyttää ID:n perusteella määritellyn kerhon lennot."
 
 #: skylines/templates/widgets/index.jinja:60
 msgid "Use this to only show flights of the user with the specified ID."
-msgstr ""
+msgstr "Tämä näyttää vain ID:llä määritellyn käyttäjän lennot."
 
 #: skylines/templates/widgets/index.jinja:65
 #, python-format
 msgid "Limits the number of returned flights. (max. %(max)d)"
-msgstr ""
+msgstr "Näytettävien lentojen maksimimäärä (max. %(max)d)"
 
 #: skylines/views/about.py:33
 msgid "Developers"
-msgstr ""
+msgstr "Kehittäjät"
 
 #: skylines/views/about.py:34
 msgid "Translators"
-msgstr ""
+msgstr "Kääntäjät"
 
 #: skylines/views/about.py:53
 msgid "License"
@@ -1435,7 +1458,7 @@ msgstr "Vasen"
 
 #: skylines/views/flight.py:171
 msgid "Mixed"
-msgstr ""
+msgstr "Seka"
 
 #: skylines/views/flight.py:172
 msgid "Right"
@@ -1447,7 +1470,7 @@ msgstr "Moottorilla"
 
 #: skylines/views/flight.py:177
 msgid "Circling"
-msgstr ""
+msgstr "Nosto"
 
 #: skylines/views/flight.py:178
 msgid "Cruise"
@@ -1472,38 +1495,35 @@ msgstr "Olet nyt kirjautuneena sisään. Tervetuloa %(user)s!"
 
 #: skylines/views/login.py:60
 msgid "Login failed. Please check your eMail address."
-msgstr ""
+msgstr "Sisäänkirjautuminen epäonnistui. Tarkista sähköpostiosoite."
 
 #: skylines/views/login.py:61
 msgid "Login failed. Please check your password."
-msgstr ""
+msgstr "Sisäänkirjautuminen epäonnistui. Tarkista salasana."
 
 #: skylines/views/login.py:68
 msgid "You are now logged out. We hope to see you back soon!"
 msgstr "Olet nyt kirjautunut ulos. Nähdään taas pian!"
 
 #: skylines/views/settings.py:74
-#, fuzzy
 msgid "Profile was saved."
-msgstr "Lentoa ei tallennettu."
+msgstr "Profiili tallennettu."
 
 #: skylines/views/settings.py:86
 msgid "This password does not match your current password."
-msgstr ""
+msgstr "Antamasi salasana ei täsmää."
 
 #: skylines/views/settings.py:97
-#, fuzzy
 msgid "Your password was changed."
 msgstr "Salasana vaihdettu."
 
 #: skylines/views/settings.py:126
 msgid "Live Tracking settings were saved."
-msgstr ""
+msgstr "Live-seurannan asetukset tallennettu."
 
 #: skylines/views/settings.py:189
-#, fuzzy
 msgid "New club was saved."
-msgstr "Lentoa ei tallennettu."
+msgstr "Uusi kerho tallennettu."
 
 #: skylines/views/upload.py:63 skylines/views/upload.py:168
 msgid "You have to login to upload flights."
@@ -1511,7 +1531,7 @@ msgstr "Sinun täytyy kirjautua sisään lähettääksesi lentoja."
 
 #: skylines/views/upload.py:96
 msgid "Duplicate file"
-msgstr ""
+msgstr "Duplikaattitiedosto"
 
 #: skylines/views/upload.py:107
 msgid "Date missing in IGC file"
@@ -1527,9 +1547,11 @@ msgstr "Tiedostosta ei löytynyt lentoja"
 
 #: skylines/views/upload.py:178
 msgid ""
-"Sorry, some error happened when updating your flight(s). Please contact a"
-" administrator for help."
+"Sorry, some error happened when updating your flight(s). Please contact a "
+"administrator for help."
 msgstr ""
+"Hitto, joku virhe tapahtui lento(j)asi päivitettäessä. Ota yhteys ylläpitoon "
+"saadaksesi apua."
 
 #: skylines/views/upload.py:227
 msgid "Your flight(s) have been successfully updated."
@@ -1540,35 +1562,8 @@ msgid ""
 "The mail server is currently not reachable. Please try again later or "
 "contact the developers."
 msgstr ""
+"Postipalvelin ei vastaa. Yritä myöhemmin uudestaan tai ota yhteys ylläpitoon."
 
 #: skylines/views/users.py:143
 msgid "Password changed."
 msgstr "Salasana vaihdettu."
-
-#~ msgid "Please enter your name."
-#~ msgstr ""
-
-#~ msgid "Email Address"
-#~ msgstr "Sähköpostiosoite"
-
-#~ msgid "Your Live Tracking settings"
-#~ msgstr "Liveseuranta-asetuksesi"
-
-#~ msgid ""
-#~ msgstr ""
-
-#~ msgid "Select your primary club:"
-#~ msgstr "Valitse ensisijainen kerhosi:"
-
-#~ msgid "If your club doesn't exist yet in Skylines, create it:"
-#~ msgstr "Jos kerhosi ei ole vielä mukana, voit luoda sen:"
-
-#~ msgid "Tracking key"
-#~ msgstr "Seurantatunnus"
-
-#~ msgid "More Information"
-#~ msgstr ""
-
-#~ msgid "Tracking delay"
-#~ msgstr "Seurannan viive"
-
