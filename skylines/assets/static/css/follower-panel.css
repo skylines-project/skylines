@@ -1,0 +1,9 @@
+.follower-panel a {
+  color: #333;
+}
+
+.follower-panel, .follower-panel h4 {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}

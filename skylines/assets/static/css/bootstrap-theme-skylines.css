@@ -177,7 +177,7 @@ input[type="file"].form-control {
 }
 
 /* Give a quick and non-cross-browser friendly divider */
-ul li[class*="col"] {
+ul.list-with-dividers li[class*="col"] {
   margin-left: 0 !important;
   padding-left: 19px;
   border-left: 1px solid #eee;
