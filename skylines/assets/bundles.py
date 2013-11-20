@@ -65,6 +65,7 @@ main_css = Bundle(
     'css/bootstrap-theme-skylines.css',
     'css/bootstrap-badges.css',
     'css/panel.css',
+    'css/follower-panel.css',
     'css/tables.css',
     'css/login-dropdown.css',
     'css/about.css',

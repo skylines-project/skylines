@@ -4,6 +4,7 @@ from flask import Blueprint, render_template, redirect, url_for, g, request
 from flask.ext.login import login_required
 
 from sqlalchemy import func
+from sqlalchemy.orm import contains_eager, subqueryload
 
 from skylines import db
 from skylines.lib.dbutil import get_requested_record
@@ -106,6 +107,56 @@ def index():
         distance_flights=_get_distance_flights(),
         takeoff_locations=_get_takeoff_locations(),
         last_year_statistics=_get_last_year_statistics())
+
+
+@user_blueprint.route('/followers')
+def followers():
+    # Query list of pilots that are following the selected user
+    query = Follower.query(destination=g.user) \
+        .join('source') \
+        .options(contains_eager('source')) \
+        .options(subqueryload('source.club')) \
+        .order_by(User.name)
+
+    followers = [follower.source for follower in query]
+
+    add_current_user_follows(followers)
+
+    return render_template('users/followers.jinja', followers=followers)
+
+
+@user_blueprint.route('/following')
+def following():
+    # Query list of pilots that are following the selected user
+    query = Follower.query(source=g.user) \
+        .join('destination') \
+        .options(contains_eager('destination')) \
+        .options(subqueryload('destination.club')) \
+        .order_by(User.name)
+
+    followers = [follower.destination for follower in query]
+
+    add_current_user_follows(followers)
+
+    return render_template('users/following.jinja', followers=followers)
+
+
+def add_current_user_follows(followers):
+    """
+    If the user if signed in the followers will get an additional
+    `current_user_follows` attribute, that shows if the signed in user is
+    following the pilot
+    """
+
+    if not g.current_user:
+        return
+
+    # Query list of people that the current user is following
+    query = Follower.query(source=g.current_user)
+    current_user_follows = [follower.destination_id for follower in query]
+
+    for follower in followers:
+        follower.current_user_follows = (follower.id in current_user_follows)
 
 
 @user_blueprint.route('/follow')
