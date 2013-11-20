@@ -35,6 +35,10 @@ class Follower(db.Model):
 
     @classmethod
     def follow(cls, source, destination):
+        # don't allow to follow yourself
+        if source == destination:
+            return
+
         f = cls.query(source=source, destination=destination).first()
         if not f:
             f = Follower(source=source, destination=destination)
