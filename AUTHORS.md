@@ -28,6 +28,7 @@
 * Karel Beneš (<kb@karelbenes.cz>)
 * Ken Gypen (<kengypen@gmail.com>)
 * Kevin Szostok (<niveksz@web.de>)
+* Lauri Kangas (<vostok@iki.fi>)
 * Magnus Olsson (<magnus@minimum.se>)
 * Masahiro Mori (<mron@n08.itscom.net>)
 * Petrovits István (<ipetrovits@gmail.com>)
