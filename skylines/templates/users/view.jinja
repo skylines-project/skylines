@@ -138,7 +138,7 @@
   <div class="row">
     <div class="col-md-12">
       <h2>{% trans %}Following{% endtrans %}</h2>
-      <ul class="row">
+      <ul class="row list-with-dividers">
         {% for following in g.user.following|sort(attribute='destination.name') -%}
         <li class="col-md-3 col-sm-4 col-xs-6">
           <a href="{{ url_for('user.index', user_id=following.destination_id) }}">{{ following.destination }}</a>
@@ -153,7 +153,7 @@
   <div class="row">
     <div class="col-md-12">
       <h2>{% trans %}Followers{% endtrans %}</h2>
-      <ul class="row">
+      <ul class="row list-with-dividers">
         {% for follower in g.user.followers|sort(attribute='source.name') -%}
         <li class="col-md-3 col-sm-4 col-xs-6">
           <a href="{{ url_for('user.index', user_id=follower.source_id) }}">{{ follower.source }}</a>
