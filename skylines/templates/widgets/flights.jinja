@@ -11,7 +11,7 @@
     </tr>
     {% for flight in flights %}
     <tr class="row-item">
-        <td class="col-date">
+        <td class="col-date" title="{{ flight.takeoff_time.strftime('%H:%M') }}-{{ flight.landing_time.strftime('%H:%M') }}">
             {{ h.format_date(flight.date_local) }}
         </td>
         <td class="col-pilot">
