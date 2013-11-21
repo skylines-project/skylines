@@ -1,18 +1,20 @@
 {% from "macros/links.jinja" import user_link, airport_link %}
 
 <table class="{{ request.values.get('table_class', '') }}">
-    <tr>
-        <th>{{ _('Date') }}</th>
-        <th>{{ _('Pilot') }}</th>
-        <th>{{ _('Distance') }}</th>
-        <th>{{ _('Airport') }}</th>
-        <th>{{ _('Aircraft') }}</th>
+    <tr class="row-heading">
+        <th class="col-date">{{ _('Date') }}</th>
+        <th class="col-pilot">{{ _('Pilot') }}</th>
+        <th class="col-distance">{{ _('Distance') }}</th>
+        <th class="col-airport">{{ _('Airport') }}</th>
+        <th class="col-aircraft">{{ _('Aircraft') }}</th>
         <th></th>
     </tr>
     {% for flight in flights %}
-    <tr>
-        <td>{{ h.format_date(flight.date_local) }}</td>
-        <td>
+    <tr class="row-item">
+        <td class="col-date">
+            {{ h.format_date(flight.date_local) }}
+        </td>
+        <td class="col-pilot">
             {% if flight.pilot %}{{ user_link(flight.pilot, _external=True) }}{% endif -%}
             {% if flight.pilot and flight.co_pilot %}<br/>{% endif -%}
             {% if flight.co_pilot %}{{ user_link(flight.co_pilot, _external=True) }}{% endif -%}
@@ -21,24 +23,24 @@
             [{{ flight.igc_file.owner|e }}]
             {%- endif %}
         </td>
-        <td>
+        <td class="col-distance">
             {% if flight.olc_classic_distance -%}
             {{ h.format_distance(flight.olc_classic_distance) }}
             {%- endif %}
         </td>
-        <td>
+        <td class="col-airport">
             {% if flight.takeoff_airport -%}
             {{ airport_link(flight.takeoff_airport, _external=True) }}
             {%- endif %}
         </td>
-        <td title="{{ flight.registration|e or flight.igc_file.registration|e }}">
+        <td class="col-aircraft" title="{{ flight.registration|e or flight.igc_file.registration|e }}">
             {% if flight.model -%}
             {{ flight.model|e }}
             {%- elif flight.igc_file.model %}
             [{{ flight.igc_file.model|e }}]
             {%- endif %}
         </td>
-        <td>
+        <td class="col-link">
             <a href="{{ url_for('flight.index', _external=True, flight_id=flight.id) }}">{{ _('Details') }}</a>
         </td>
     </tr>
