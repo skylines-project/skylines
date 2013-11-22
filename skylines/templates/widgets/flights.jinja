@@ -10,7 +10,7 @@
         <th class="col-link"></th>
     </tr>
     {% for flight in flights %}
-    <tr class="row-item">
+    <tr>
         <td class="col-date" title="{{ flight.takeoff_time.strftime('%H:%M') }}-{{ flight.landing_time.strftime('%H:%M') }}">
             {{ h.format_date(flight.date_local) }}
         </td>
