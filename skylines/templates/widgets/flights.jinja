@@ -1,13 +1,13 @@
 {% from "macros/links.jinja" import user_link, airport_link %}
 
 <table class="{{ request.values.get('table_class', '') }}">
-    <tr class="row-heading">
+    <tr>
         <th class="col-date">{{ _('Date') }}</th>
         <th class="col-pilot">{{ _('Pilot') }}</th>
         <th class="col-distance">{{ _('Distance') }}</th>
         <th class="col-airport">{{ _('Airport') }}</th>
         <th class="col-aircraft">{{ _('Aircraft') }}</th>
-        <th></th>
+        <th class="col-link"></th>
     </tr>
     {% for flight in flights %}
     <tr class="row-item">
