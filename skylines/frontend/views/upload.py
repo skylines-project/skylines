@@ -174,6 +174,49 @@ def index_post(form):
         ModelSelectField=ModelSelectField)
 
 
+def _update_flight(flight_id, model_id, registration, competition_id):
+    # Parse flight id
+    try:
+        flight_id = int(flight_id)
+    except ValueError:
+        return False
+
+    # Get flight from database and check if it is writable
+    flight = Flight.get(flight_id)
+
+    if not flight or not flight.is_writable(g.current_user):
+        return False
+
+    # Parse model, registration and competition ID
+    try:
+        model_id = int(model_id)
+    except ValueError:
+        model_id = None
+
+    if model_id == 0:
+        model_id = None
+
+    if registration is not None:
+        registration = registration.strip()
+        if not 0 < len(registration) < 32:
+            registration = None
+
+    if competition_id is not None:
+        competition_id = competition_id.strip()
+        if not 0 < len(competition_id) < 5:
+            competition_id = None
+
+    # Set new values
+    flight.model_id = model_id
+    flight.registration = registration
+    flight.competition_id = competition_id
+    flight.time_modified = datetime.utcnow()
+
+    db.session.commit()
+
+    return True
+
+
 @upload_blueprint.route('/update', methods=['GET', 'POST'])
 @login_required(l_("You have to login to upload flights."))
 def update():
@@ -189,50 +232,10 @@ def update():
         return redirect('/flights/latest')
 
     for index, id in enumerate(flight_id_list):
-        # Parse flight id
-
-        try:
-            id = int(id)
-        except ValueError:
-            continue
-
-        # Get flight from database and check if it is writable
-
-        flight = Flight.get(id)
-
-        if not flight or not flight.is_writable(g.current_user):
-            continue
-
-        # Parse model, registration and competition ID
-
-        try:
-            model_id = int(model_list[index])
-        except ValueError:
-            model_id = None
-
-        if model_id == 0:
-            model_id = None
-
-        registration = registration_list[index]
-        if registration is not None:
-            registration = registration.strip()
-            if not 0 < len(registration) < 32:
-                registration = None
-
-        competition_id = competition_id_list[index]
-        if competition_id is not None:
-            competition_id = competition_id.strip()
-            if not 0 < len(competition_id) < 5:
-                competition_id = None
-
-        # Set new values
-
-        flight.model_id = model_id
-        flight.registration = registration
-        flight.competition_id = competition_id
-        flight.time_modified = datetime.utcnow()
-
-    db.session.commit()
+        _update_flight(id,
+                       model_list[index],
+                       registration_list[index],
+                       competition_id_list[index])
 
     flash(_('Your flight(s) have been successfully updated.'))
     return redirect('/flights/latest')
