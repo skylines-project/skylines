@@ -4,6 +4,7 @@ from datetime import datetime
 from flask import Blueprint, request, render_template, redirect, url_for, abort, current_app, jsonify, g, flash
 from flask.ext.babel import lazy_gettext as l_, _
 
+import sqlalchemy as sa
 from sqlalchemy.orm import undefer_group
 from sqlalchemy.sql.expression import func, and_, literal_column
 from geoalchemy2.shape import to_shape
@@ -46,11 +47,22 @@ def _reanalyse_if_needed(flight):
 def _pull_flight_id(endpoint, values):
     g.flight_id = values.pop('flight_id')
 
+
+@flight_blueprint.before_request
+def _query_flights():
+    def patch_query(q):
+        return q.join(Flight.igc_file) \
+                .options(sa.orm.contains_eager(Flight.igc_file)) \
+                .filter(Flight.is_viewable(g.current_user))
+
     g.flights = get_requested_record_list(
-        Flight, g.flight_id, joinedload=[Flight.igc_file])
+        Flight, g.flight_id, patch_query=patch_query)
 
     g.flight = g.flights[0]
     g.other_flights = g.flights[1:]
+
+    if not g.flight.is_viewable(None):
+        g.logout_next = url_for('index')
 
     map(_reanalyse_if_needed, g.flights)
 
