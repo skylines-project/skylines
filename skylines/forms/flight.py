@@ -6,13 +6,17 @@ from wtforms.validators import Length
 
 from skylines.forms.pilot import ClubPilotsSelectField
 from skylines.forms.aircraft_model import AircraftModelSelectField
-from skylines.forms.validators import NotEqualTo
+from skylines.forms.validators import CompareTo
 
 
 class ChangePilotsForm(Form):
     pilot_id = ClubPilotsSelectField(l_('Pilot'))
     co_pilot_id = ClubPilotsSelectField(l_('Co-Pilot'), validators=[
-        NotEqualTo('pilot_id', message=l_('Pilot and co-pilot can not be the same person.')),
+        CompareTo(
+            'pilot_id',
+            cmp=(lambda x, y: x == 0 or x != y),
+            message=l_('Pilot and co-pilot can not be the same person.')
+        ),
     ])
 
 
