@@ -89,14 +89,20 @@
             if (obj.oSettings.jqXHR) {
               row = "";
 
-              if (obj.aData.pilot != null)
+              if (obj.aData.pilot)
                 row += "<a href=\"/users/" + obj.aData.pilot_id + "/\">" + obj.aData.pilot + "</a>";
-              if (obj.aData.pilot != null && obj.aData.co_pilot != null)
-                row += "<br>";
-              if (obj.aData.co_pilot != null)
-                row += "<a href=\"/users/" + obj.aData.co_pilot_id + "/\">" + obj.aData.co_pilot + "</a>";
+              else if (obj.aData.pilot_name)
+                row += obj.aData.pilot_name;
 
-              if (obj.aData.pilot == null && obj.aData.co_pilot == null)
+              if ((obj.aData.pilot || obj.aData.pilot_name) && (obj.aData.co_pilot || obj.aData.co_pilot_name))
+                row += "<br>";
+
+              if (obj.aData.co_pilot)
+                row += "<a href=\"/users/" + obj.aData.co_pilot_id + "/\">" + obj.aData.co_pilot + "</a>";
+              else if (obj.aData.co_pilot_name)
+                row += obj.aData.co_pilot_name;
+
+              if (!(obj.aData.pilot || obj.aData.pilot_name || obj.aData.co_pilot || obj.aData.co_pilot_name))
                 row += "[" + obj.aData.owner + "]";
             }
             return row;
