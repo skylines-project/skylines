@@ -4,10 +4,12 @@
 <meta name="DC.description" content="{{ flight_description(flight) }}" />
 <meta name="DC.date" content="{{ h.isoformat_utc(flight.time_created) }}" />
 <meta name="DC.publisher" content="{{ flight.igc_file.owner|e }}" />
-{% if flight.pilot %}<meta name="DC.creator" content="{{ flight.pilot|e }}" />{% endif %}
-{% if flight.co_pilot %}<meta name="DC.contributor" content="{{ flight.co_pilot|e }}" />{% endif %}
+{% if flight.pilot %}<meta name="DC.creator" content="{{ flight.pilot|e }}" />
+{%- elif flight.pilot_name %}<meta name="DC.creator" content="{{ flight.pilot_name|e }}" />{% endif %}
+{% if flight.co_pilot %}<meta name="DC.contributor" content="{{ flight.co_pilot|e }}" />
+{%- elif flight.co_pilot_name %}<meta name="DC.contributor" content="{{ flight.co_pilot_name|e }}" />{% endif %}
 {%- endmacro %}
 
 {%- macro flight_description(flight) -%}
-SkyLines ({{ h.format_distance(flight.olc_classic_distance) }} - {{ h.format_decimal(flight.index_score, format='0.0') ~ ' pt' }} - {{ h.format_date(flight.date_local) }}{%- if flight.pilot %} - {{ flight.pilot|e }}{% endif -%}{%- if flight.co_pilot %} - {{ flight.co_pilot|e }}{% endif -%})
+SkyLines ({{ h.format_distance(flight.olc_classic_distance) }} - {{ h.format_decimal(flight.index_score, format='0.0') ~ ' pt' }} - {{ h.format_date(flight.date_local) }}{%- if flight.pilot %} - {{ flight.pilot|e }}{% elif flight.pilot_name %} - {{ flight.pilot_name|e}}{% endif -%}{%- if flight.co_pilot %} - {{ flight.co_pilot|e }}{% elif flight.co_pilot_name %} - {{ flight.co_pilot_name|e}}{% endif -%})
 {%- endmacro -%}

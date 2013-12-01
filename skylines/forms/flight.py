@@ -11,6 +11,7 @@ from skylines.forms.validators import CompareTo
 
 class ChangePilotsForm(Form):
     pilot_id = ClubPilotsSelectField(l_('Pilot'))
+    pilot_name = TextField(l_(u'Pilot name'))
     co_pilot_id = ClubPilotsSelectField(l_('Co-Pilot'), validators=[
         CompareTo(
             'pilot_id',
@@ -18,6 +19,7 @@ class ChangePilotsForm(Form):
             message=l_('Pilot and co-pilot can not be the same person.')
         ),
     ])
+    co_pilot_name = TextField(l_(u'Co-Pilot name'))
 
 
 class ChangeAircraftForm(Form):

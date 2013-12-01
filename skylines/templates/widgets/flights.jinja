@@ -15,13 +15,17 @@
             {{ h.format_date(flight.date_local) }}
         </td>
         <td class="col-pilot">
-            {% if flight.pilot %}{{ user_link(flight.pilot, _external=True) }}{% endif -%}
-            {% if flight.pilot and flight.co_pilot %}<br/>{% endif -%}
-            {% if flight.co_pilot %}{{ user_link(flight.co_pilot, _external=True) }}{% endif -%}
+            {%- if flight.pilot -%}{{ user_link(flight.pilot, _external=True) }}
+            {%- elif flight.pilot_name -%}{{ flight.pilot_name|e }}{%- endif -%}
 
-            {% if not flight.pilot and not flight.co_pilot -%}
+            {%- if (flight.pilot or flight.pilot_name) and (flight.co_pilot or flight.co_pilot_name) -%}<br/>{%- endif -%}
+
+            {%- if flight.co_pilot -%}{{ user_link(flight.co_pilot, _external=True) }}
+            {%- elif flight.co_pilot_name -%}{{ flight.co_pilot_name|e }}{%- endif -%}
+
+            {%- if not (flight.pilot or flight.pilot_name or flight.co_pilot or flight.co_pilot_name) -%}
             [{{ flight.igc_file.owner|e }}]
-            {%- endif %}
+            {%- endif -%}
         </td>
         <td class="col-distance">
             {% if flight.olc_classic_distance -%}

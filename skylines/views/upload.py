@@ -109,6 +109,7 @@ def index_post(form):
 
         flight = Flight()
         flight.pilot_id = pilot_id
+        flight.pilot_name = form.pilot_name.data if form.pilot_name.data else None
         flight.club_id = club_id
         flight.igc_file = igc_file
 

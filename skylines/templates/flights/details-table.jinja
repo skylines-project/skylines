@@ -124,23 +124,31 @@
         </a>
         {%- endif %}
 
-        {%- if flight.pilot %}
+        {% if flight.pilot or flight.pilot_name -%}
         <span itemprop="performer" itemscope="" itemtype="http://schema.org/Person">
-          <meta itemprop="url" content="/users/{{ flight.pilot_id }}" />
+          {% if flight.pilot -%}
+          <meta itemprop="url" content="{{ url_for('user.index', user_id=flight.pilot_id) }}" />
           {{ user_link(flight.pilot, ' itemprop="name"') }}
+          {%- else -%}
+          {{ flight.pilot_name|e }}
+          {%- endif %}
         </span>
         {%- endif %}
 
-        {%- if flight.pilot and flight.co_pilot %}<br/>{% endif -%}
+        {%- if (flight.pilot or flight.pilot_name) and (flight.co_pilot or flight.co_pilot_name) %}<br/>{% endif -%}
 
-        {%- if flight.co_pilot %}
+        {% if flight.co_pilot or flight.co_pilot_name -%}
         <span itemprop="performer" itemscope="" itemtype="http://schema.org/Person">
-          <meta itemprop="url" content="/users/{{ flight.co_pilot_id }}" />
+          {% if flight.co_pilot -%}
+          <meta itemprop="url" content="{{ url_for('user.index', user_id=flight.co_pilot_id) }}" />
           {{ user_link(flight.co_pilot, ' itemprop="name"') }}
+          {%- else -%}
+          {{ flight.co_pilot_name|e }}
+          {%- endif %}
         </span>
         {%- endif %}
 
-        {%- if not flight.pilot and not flight.co_pilot %}
+        {%- if not (flight.pilot or flight.pilot_name or flight.co_pilot or flight.co_pilot_name) %}
         [unspecified]
         {%- endif %}
       </td>

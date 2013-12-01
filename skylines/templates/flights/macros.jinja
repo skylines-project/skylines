@@ -1,18 +1,20 @@
 {% from "macros/links.jinja" import user_link %}
 
 {% macro flight_title(flight) -%}
-{% if flight.pilot and flight.co_pilot -%}
+{% if (flight.pilot or flight.pilot_name) and (flight.co_pilot or flight.co_pilot_name) -%}
   {{ _('%(distance)s on %(date)s <small>by %(pilot)s and %(co_pilot)s</small>',
        distance=h.format_distance(flight.olc_classic_distance),
        date=h.format_date(flight.date_local),
-       pilot=user_link(flight.pilot),
-       co_pilot=user_link(flight.co_pilot))|replace('<small>', '<br class="visible-xs visible-sm"/><small>') }}
+       pilot=(flight.pilot and user_link(flight.pilot) or flight.pilot_name|e),
+       co_pilot=(flight.co_pilot and user_link(flight.co_pilot) or flight.co_pilot_name),
+     )|replace('<small>', '<br class="visible-xs visible-sm"/><small>') }}
 
-{%- elif flight.pilot -%}
+{%- elif flight.pilot or flight.pilot_name -%}
   {{ _('%(distance)s on %(date)s <small>by %(pilot)s</small>',
        distance=h.format_distance(flight.olc_classic_distance),
        date=h.format_date(flight.date_local),
-       pilot=user_link(flight.pilot))|replace('<small>', '<br class="visible-xs visible-sm"/><small>') }}
+       pilot=(flight.pilot and user_link(flight.pilot) or flight.pilot_name|e),
+     )|replace('<small>', '<br class="visible-xs visible-sm"/><small>') }}
 
 {%- else -%}
   {{ _('%(distance)s on %(date)s',

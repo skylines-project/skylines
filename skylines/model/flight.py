@@ -28,9 +28,15 @@ class Flight(db.Model):
         Integer, db.ForeignKey('users.id', ondelete='SET NULL'), index=True)
     pilot = db.relationship('User', foreign_keys=[pilot_id])
 
+    # Fallback if the pilot is not registered
+    pilot_name = db.Column(Unicode(255))
+
     co_pilot_id = db.Column(
         Integer, db.ForeignKey('users.id', ondelete='SET NULL'), index=True)
     co_pilot = db.relationship('User', foreign_keys=[co_pilot_id])
+
+    # Fallback if the co-pilot is not registered
+    co_pilot_name = db.Column(Unicode(255))
 
     club_id = db.Column(
         Integer, db.ForeignKey('clubs.id', ondelete='SET NULL'), index=True)

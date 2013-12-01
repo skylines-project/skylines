@@ -9,7 +9,9 @@
 <form method="POST" action="{{ url_for('flight.change_pilot') }}" role="form">
   {{ form.hidden_tag() }}
   {{ render_field(form.pilot_id) }}
+  {{ render_field(form.pilot_name) }}
   {{ render_field(form.co_pilot_id) }}
+  {{ render_field(form.co_pilot_name) }}
   <div class="form-group">
     <input class="form-control btn btn-primary" value="{{ _('Change') }}" type="submit">
   </div>
@@ -21,4 +23,25 @@
 <a href="{{ url_for('club.create_pilot', club_id=g.current_user.club_id) }}">{% trans %}Create new pilot{% endtrans %}</a>
 </p>
 {%- endif %}
+{%- endblock %}
+
+
+{% block scripts -%}
+{{ super() }}
+<script type="text/javascript">
+  function updateVisibilities() {
+    $('#form-group-pilot_name').toggle($('#pilot_id').val() == 0);
+    $('#form-group-co_pilot_name').toggle($('#co_pilot_id').val() == 0);
+  }
+
+  $(document).ready(function() {
+    updateVisibilities();
+    $('#pilot_id').on('change', function() {
+      updateVisibilities();
+    });
+    $('#co_pilot_id').on('change', function() {
+      updateVisibilities();
+    });
+  })
+</script>
 {%- endblock %}
