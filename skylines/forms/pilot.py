@@ -15,17 +15,29 @@ from skylines.forms.units import (
     UnitsPresetSelectField, DistanceUnitSelectField, AltitudeUnitSelectField,
     LiftUnitSelectField, SpeedUnitSelectField
 )
+from skylines.forms.select import GroupSelectField
 
 
-class ClubPilotsSelectField(SelectField):
+class ClubPilotsSelectField(GroupSelectField):
     def __init__(self, *args, **kwargs):
         super(ClubPilotsSelectField, self).__init__(*args, **kwargs)
         self.coerce = int
 
     def process(self, *args, **kwargs):
-        users = User.query(club_id=g.current_user.club_id).order_by(User.name)
-        self.choices = [(0, '[unspecified]')]
-        self.choices.extend([(user.id, user) for user in users])
+        self.choices = [
+            (0, '[unspecified]'),
+            (g.current_user.id, g.current_user.name),
+        ]
+
+        club = g.current_user.club
+        if club:
+            members = User.query(club_id=club.id) \
+                .order_by(User.name) \
+                .filter(User.id != g.current_user.id)
+
+            members = [(member.id, member.name) for member in members]
+
+            self.choices.append((club.name, members))
 
         super(ClubPilotsSelectField, self).process(*args, **kwargs)
 
