@@ -10,8 +10,26 @@
   {{ form.hidden_tag() }}
   {{ render_field(form.file, multiple=1) }}
   {{ render_field(form.pilot) }}
+  {{ render_field(form.pilot_name) }}
   <div class="form-group">
     <input class="form-control btn btn-primary" value="{{ _('Upload') }}" type="submit">
   </div>
 </form>
+{%- endblock %}
+
+
+{% block scripts -%}
+{{ super() }}
+<script type="text/javascript">
+  function updateVisibilities() {
+    $('#form-group-pilot_name').toggle($('#pilot').val() == 0);
+  }
+
+  $(document).ready(function() {
+    updateVisibilities();
+    $('#pilot').on('change', function() {
+      updateVisibilities();
+    });
+  })
+</script>
 {%- endblock %}

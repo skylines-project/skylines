@@ -6,7 +6,7 @@
     </label>
   </div>
 {%- else -%}
-  <div class="form-group{% if field.errors %} has-error{% endif %}">
+  <div class="form-group{% if field.errors %} has-error{% endif %}" id="form-group-{{ field.id }}">
     {{ field.label }}
 
     {% if hide_error_text -%}
