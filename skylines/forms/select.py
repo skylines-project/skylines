@@ -1,13 +1,13 @@
-from wtforms.fields import SelectField as BaseSelectField
+from wtforms.fields import SelectField
 from wtforms.validators import ValidationError
-from wtforms.widgets import Select as BaseSelectWidget
+from wtforms.widgets import Select
 from wtforms.widgets.core import HTMLString, html_params, escape
 
 
-__all__ = ('SelectField', 'SelectWidget')
+__all__ = ('GroupSelectField', 'GroupSelectWidget')
 
 
-class SelectWidget(BaseSelectWidget):
+class GroupSelect(Select):
     """
     Add support of choices with ``optgroup`` to the ``Select`` widget.
     """
@@ -41,7 +41,7 @@ class SelectWidget(BaseSelectWidget):
         return HTMLString(html % data)
 
 
-class SelectField(BaseSelectField):
+class GroupSelectField(SelectField):
     """
     Add support of ``optgorup``'s' to default WTForms' ``SelectField`` class.
 
@@ -61,7 +61,7 @@ class SelectField(BaseSelectField):
         )
 
     """
-    widget = SelectWidget()
+    widget = GroupSelect()
 
     def iter_choices(self):
         """
