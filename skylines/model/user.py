@@ -50,7 +50,7 @@ class User(db.Model):
 
     # Tracking key, delay in minutes and other settings
 
-    tracking_key = db.Column(BigInteger, index=True)
+    tracking_key = db.Column(BigInteger, nullable=False, index=True)
     tracking_delay = db.Column(SmallInteger, nullable=False, default=0)
 
     tracking_callsign = db.Column(Unicode(5))
