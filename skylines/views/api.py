@@ -1,15 +1,43 @@
 # -*- coding: utf-8 -*-
 
-from flask import Blueprint, request, abort, jsonify
+from flask import Blueprint, request, abort, json, current_app
 from werkzeug.exceptions import BadRequest
 
 from skylines.model import (
     Airspace, Airport, MountainWaveProject, Location, Bounds
 )
-from skylines.lib.decorators import jsonp
 from skylines.lib.string import isnumeric
 
 api_blueprint = Blueprint('api', 'skylines')
+
+
+def jsonify(data, status=200):
+    if not isinstance(data, (dict, list)):
+        raise TypeError
+
+    # Determine JSON indentation
+    indent = None
+    if current_app.config['JSONIFY_PRETTYPRINT_REGULAR'] and not request.is_xhr:
+        indent = 2
+
+    # Determine if this is a JSONP request
+    callback = request.args.get('callback', False)
+    if callback:
+        content = str(callback) + '(' + json.dumps({
+            'meta': {
+                'status': status,
+            },
+            'data': data,
+        }, indent=indent) + ')'
+        mimetype = 'application/javascript'
+        status = 200
+
+    else:
+        content = json.dumps(data, indent=indent)
+        mimetype = 'application/json'
+
+    return current_app.response_class(
+        content, mimetype=mimetype), status
 
 
 def parse_location():
@@ -54,29 +82,27 @@ def _query_waves(location):
 
 
 @api_blueprint.route('/mapitems')
-@jsonp
 def mapitems():
     location = parse_location()
-    return jsonify(airspaces=_query_airspace(location),
-                   waves=_query_waves(location))
+    return jsonify(dict(
+        airspaces=_query_airspace(location),
+        waves=_query_waves(location),
+    ))
 
 
 @api_blueprint.route('/airspace')
-@jsonp
 def airspace():
     location = parse_location()
-    return jsonify(airspaces=_query_airspace(location))
+    return jsonify(_query_airspace(location))
 
 
 @api_blueprint.route('/mountain_wave_project')
-@jsonp
 def waves():
     location = parse_location()
-    return jsonify(waves=_query_waves(location))
+    return jsonify(_query_waves(location))
 
 
 @api_blueprint.route('/airports/')
-@jsonp
 def airports():
     bbox = request.args.get('bbox', type=Bounds.from_bbox_string)
     if not bbox:
@@ -87,11 +113,10 @@ def airports():
         raise BadRequest('Requested `bbox` is too large.')
 
     airports = map(airport_to_json, Airport.by_bbox(bbox))
-    return jsonify(airports=airports)
+    return jsonify(airports)
 
 
 @api_blueprint.route('/airports/<int:id>')
-@jsonp
 def airport(id):
     airport = Airport.get(id)
     if not airport:
