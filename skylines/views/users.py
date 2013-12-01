@@ -46,7 +46,6 @@ def new_post(form):
     )
 
     user.created_ip = request.remote_addr
-    user.generate_tracking_key()
     db.session.add(user)
 
     create_new_user_event(user)

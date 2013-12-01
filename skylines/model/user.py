@@ -84,6 +84,12 @@ class User(db.Model):
 
     ##############################
 
+    def __init__(self, *args, **kw):
+        self.generate_tracking_key()
+        super(User, self).__init__(*args, **kw)
+
+    ##############################
+
     def __repr__(self):
         return ('<User: email=%s, display=%s>' % (
                 self.email_address, self.name)).encode('unicode_escape')
