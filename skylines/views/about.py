@@ -17,7 +17,9 @@ def about():
 def imprint():
     content = current_app.config.get(
         'SKYLINES_IMPRINT',
-        'Please set the SKYLINES_IMPRINT variable in the config file.')
+        'Please set the `SKYLINES_IMPRINT` variable in the config file.')
+
+    content = markdown.convert(content)
 
     return render_template(
         'generic/page.jinja', title=_('Imprint'), content=content)
