@@ -1,12 +1,7 @@
-# -*- coding: utf-8 -*-
-
 from flask import Blueprint, request, abort, json, current_app
 from werkzeug.exceptions import BadRequest
 
-from skylines.model import (
-    Airspace, MountainWaveProject, Location, Bounds
-)
-from skylines.lib.string import isnumeric
+from skylines.model import Location, Bounds
 from skylines import api
 
 api_blueprint = Blueprint('api', 'skylines')
@@ -66,56 +61,25 @@ def parse_location():
         abort(400)
 
 
-def airspace_to_json(airspace):
-    return {
-        'name': airspace.name,
-        'base': airspace.base,
-        'top': airspace.top,
-        'airspace_class': airspace.airspace_class,
-        'country': airspace.country_code,
-    }
-
-
-def _query_airspace(location):
-    airspaces = Airspace.by_location(location)
-    return map(airspace_to_json, airspaces)
-
-
-def wave_to_json(wave):
-    wind_direction = wave.main_wind_direction or ''
-    if isnumeric(wind_direction):
-        wind_direction += u'°'
-
-    return {
-        'name': wave.name,
-        'main_wind_direction': wind_direction,
-    }
-
-
-def _query_waves(location):
-    waves = MountainWaveProject.by_location(location)
-    return map(wave_to_json, waves)
-
-
 @api_blueprint.route('/mapitems')
 def mapitems():
     location = parse_location()
-    return jsonify(dict(
-        airspaces=_query_airspace(location),
-        waves=_query_waves(location),
-    ))
+    return jsonify({
+        'airspaces': api.get_airspaces_by_location(location),
+        'waves': api.get_waves_by_location(location),
+    })
 
 
 @api_blueprint.route('/airspace')
 def airspace():
     location = parse_location()
-    return jsonify(_query_airspace(location))
+    return jsonify(api.get_airspaces_by_location(location))
 
 
 @api_blueprint.route('/mountain_wave_project')
 def waves():
     location = parse_location()
-    return jsonify(_query_waves(location))
+    return jsonify(api.get_waves_by_location(location))
 
 
 @api_blueprint.route('/airports/')
