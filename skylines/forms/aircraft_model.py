@@ -1,10 +1,10 @@
 from flask.ext.babel import _
 
-from skylines.forms.select import SelectField
+from skylines.forms.select import GroupSelectField
 from skylines.model import AircraftModel
 
 
-class AircraftModelSelectField(SelectField):
+class AircraftModelSelectField(GroupSelectField):
     def __init__(self, *args, **kwargs):
         super(AircraftModelSelectField, self).__init__(*args, **kwargs)
         self.coerce = int
