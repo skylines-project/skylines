@@ -32,8 +32,9 @@ thread.stack_size(524288)
 
 if __name__ == '__main__':
     from flup.server.fcgi import WSGIServer
-    from skylines import app
+    from skylines import create_app
 
+    app = create_app()
     app.add_web_components()
 
     WSGIServer(app, bindAddress=args.socket, umask=0,

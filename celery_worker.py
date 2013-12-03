@@ -16,7 +16,8 @@ if not to_envvar(args.config):
     parser.error('Config file "{}" not found.'.format(args.config))
 
 if __name__ == '__main__':
-    from skylines import app
+    from skylines import create_app
 
+    app = create_app()
     with app.app_context():
         app.celery.worker_main()
