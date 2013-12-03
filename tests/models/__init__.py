@@ -3,6 +3,7 @@
 from nose.tools import assert_equals
 from tests import setup_db, teardown_db
 
+import config
 from skylines import create_app
 from skylines.model import db
 
@@ -19,7 +20,7 @@ class ModelTest(object):
     @classmethod
     def setup_class(cls):
         """Function called by nose on module load"""
-        cls.app = create_app()
+        cls.app = create_app(config.TESTING_CONF_PATH)
 
         with cls.app.app_context():
             setup_db()

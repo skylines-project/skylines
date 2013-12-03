@@ -2,6 +2,7 @@ from unittest import TestCase
 from nose.tools import eq_, ok_
 from mock import Mock, patch
 
+import config
 from tests import setup_app, teardown_db, clean_db_and_bootstrap
 from skylines import create_app
 from skylines.model import db, TrackingFix
@@ -18,7 +19,7 @@ class TrackingServerTest(TestCase):
 
     @classmethod
     def setup_class(cls):
-        cls.app = create_app()
+        cls.app = create_app(config.TESTING_CONF_PATH)
 
         # Setup the database
         with cls.app.app_context():

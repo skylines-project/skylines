@@ -3,12 +3,14 @@ import nose
 from nose.tools import eq_
 
 from flask import g
+
+import config
 from skylines import create_app
 import skylines.lib.formatter.units as units
 
 
 def setup():
-    app = create_app()
+    app = create_app(config.TESTING_CONF_PATH)
     app.add_babel()
     app.test_request_context().push()
     g.current_user = None

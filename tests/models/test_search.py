@@ -1,5 +1,6 @@
 from nose.tools import eq_
 
+import config
 from skylines import create_app
 from skylines.model import db, User, Club, Airport
 from skylines.model.search import (
@@ -26,7 +27,7 @@ class TestSearch:
     @classmethod
     def setup_class(cls):
         """Function called by nose on module load"""
-        cls.app = create_app()
+        cls.app = create_app(config.TESTING_CONF_PATH)
 
         with cls.app.app_context():
             setup_db()

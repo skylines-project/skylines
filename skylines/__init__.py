@@ -5,48 +5,20 @@ from flask import Flask
 
 
 class SkyLines(Flask):
-    def __init__(self):
+    def __init__(self, config_file=None):
         # Create Flask instance
         super(SkyLines, self).__init__(__name__)
 
         # Load default settings and from environment variable
         self.config.from_pyfile(config.DEFAULT_CONF_PATH)
 
-        if self.created_by_nose:
-            self.config.from_pyfile(config.TESTING_CONF_PATH)
-
         if 'SKYLINES_CONFIG' in os.environ:
             self.config.from_pyfile(os.environ['SKYLINES_CONFIG'])
 
+        if config_file:
+            self.config.from_pyfile(config_file)
+
         self.add_sqlalchemy()
-
-    @property
-    def created_by_nose(self):
-        import traceback
-        stack = traceback.extract_stack()
-        top_frame = stack[0]
-        filename = os.path.abspath(top_frame[0])
-
-        # Started by calling "nosetests"
-        if filename.endswith('nosetests'):
-            return True
-
-        # Started by calling unit test file (e.g. ./test_pep8.py)
-        if os.path.join('skylines', 'tests') in filename:
-            return True
-
-        # Started by calling "python setup.py test/nosetests"
-        if filename.endswith('setup.py'):
-            cmd_frame = stack[4]
-            filename = os.path.abspath(cmd_frame[0])
-
-            if filename.endswith('test.py'):
-                return True
-
-            if filename.endswith('nose/commands.py'):
-                return True
-
-        return False
 
     def add_sqlalchemy(self):
         """ Create and configure SQLAlchemy extension """
@@ -155,16 +127,16 @@ class SkyLines(Flask):
         return celery
 
 
-def create_app():
-    return SkyLines()
+def create_app(config_file=None):
+    return SkyLines(config_file)
 
 
-def create_frontend_app():
-    app = create_app()
+def create_frontend_app(config_file=None):
+    app = create_app(config_file)
     app.add_web_components()
     return app
 
 
-def create_celery_app():
-    app = create_app()
+def create_celery_app(config_file=None):
+    app = create_app(config_file)
     return app.add_celery()

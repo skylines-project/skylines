@@ -2,6 +2,7 @@ import sys
 import nose
 from nose.tools import eq_, assert_raises
 
+import config
 from tests import setup_db, teardown_db
 from sqlalchemy import Column, Integer, String, Unicode
 
@@ -21,7 +22,7 @@ class TestSqlLib:
 
     @classmethod
     def setup_class(cls):
-        cls.app = create_app()
+        cls.app = create_app(config.TESTING_CONF_PATH)
 
     def setup(self):
         self.context = self.app.app_context()

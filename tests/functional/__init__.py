@@ -3,6 +3,7 @@
 
 from zope.testbrowser.wsgi import Browser
 
+import config
 from tests import setup_app, teardown_db, clean_db_and_bootstrap
 from skylines import create_frontend_app, model
 
@@ -16,7 +17,7 @@ class TestController(object):
 
     @classmethod
     def setup_class(cls):
-        cls.app = create_frontend_app()
+        cls.app = create_frontend_app(config.TESTING_CONF_PATH)
 
         # Setup the database
         with cls.app.app_context():
