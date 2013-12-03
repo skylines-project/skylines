@@ -20,7 +20,6 @@ class SkyLines(Flask):
 
         self.add_wdb()
         self.add_sqlalchemy()
-        self.add_celery()
 
     @property
     def created_by_nose(self):
@@ -65,6 +64,7 @@ class SkyLines(Flask):
         self.add_login_manager()
         self.add_assets()
         self.add_tg2_compat()
+        self.add_celery()
 
         self.add_mapproxy()
 
