@@ -15,7 +15,7 @@ fileConfig(config.config_file_name)
 # for 'autogenerate' support
 # from myapp import mymodel
 # target_metadata = mymodel.Base.metadata
-from skylines import db, model
+from skylines.model import db
 target_metadata = db.Model.metadata
 
 # other values from the config, defined by the needs of env.py,
