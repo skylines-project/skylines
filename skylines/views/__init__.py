@@ -1,3 +1,4 @@
+from skylines.views.errors import register as register_error_handlers
 from skylines.views.i18n import register as register_i18n
 from skylines.views.login import register as register_login
 
@@ -25,6 +26,7 @@ from skylines.views.widgets import widgets_blueprint
 
 
 def register(app):
+    register_error_handlers(app)
     register_i18n(app)
     register_login(app)
 
