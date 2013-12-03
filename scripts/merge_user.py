@@ -22,11 +22,12 @@ if not to_envvar(args.config):
     parser.error('Config file "{}" not found.'.format(args.config))
 
 
-from skylines import app
+from skylines import create_app
 from skylines.model import (
     db, User, Club, IGCFile, Flight, TrackingFix
 )
 
+app = create_app()
 app.app_context().push()
 
 new_id = args.new_id

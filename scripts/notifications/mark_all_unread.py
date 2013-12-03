@@ -15,9 +15,10 @@ args = parser.parse_args()
 if not to_envvar(args.config):
     parser.error('Config file "{}" not found.'.format(args.config))
 
-from skylines import app
+from skylines import create_app
 from skylines.model import db, Notification
 
+app = create_app()
 app.app_context().push()
 
 Notification.query().update(dict(time_read=None))

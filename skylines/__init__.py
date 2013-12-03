@@ -164,3 +164,7 @@ class SkyLines(Flask):
 app = SkyLines()
 db = app.db
 celery = app.celery
+
+
+def create_app():
+    return app

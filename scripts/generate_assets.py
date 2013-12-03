@@ -18,7 +18,9 @@ if not to_envvar(args.conf_path):
     parser.error('Config file "{}" not found.'.format(args.conf_path))
 
 # Create assets environment
-from skylines import app
+from skylines import create_app
+
+app = create_app()
 app.add_assets()
 
 # Generate the assets/bundles

@@ -26,9 +26,10 @@ if not to_envvar(args.config):
 
 from datetime import timedelta
 from itertools import chain
-from skylines import app
+from skylines import create_app
 from skylines.model import db, TrackingFix, User
 
+app = create_app()
 app.app_context().push()
 
 

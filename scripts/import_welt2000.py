@@ -24,7 +24,7 @@ if not to_envvar(args.config):
     parser.error('Config file "{}" not found.'.format(args.config))
 
 
-from skylines import app
+from skylines import create_app
 from skylines.model import db, Airport
 from skylines.lib.waypoints.welt2000 import get_database
 from datetime import datetime
@@ -100,6 +100,7 @@ def show_differences(airport, airport_w2k):
                 .format(item, row2dict(airport)[item], airport_w2k.__dict__[item])
 
 
+app = create_app()
 app.app_context().push()
 
 welt2000 = get_database(path=args.welt2000_path)

@@ -24,13 +24,14 @@ args = parser.parse_args()
 if not to_envvar(args.config):
     parser.error('Config file "{}" not found.'.format(args.config))
 
-from skylines import app
+from skylines import create_app
 from skylines.model import db, Airport, Flight, IGCFile
 from skylines.lib import files
 from sqlalchemy import func
 from time import mktime, strptime
 from datetime import datetime
 
+app = create_app()
 app.app_context().push()
 
 query = db.session.query(Flight).outerjoin(Flight.takeoff_airport).join(IGCFile)

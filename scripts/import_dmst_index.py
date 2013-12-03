@@ -22,9 +22,10 @@ if not to_envvar(args.config):
 
 
 import re
-from skylines import app
+from skylines import create_app
 from skylines.model import db, AircraftModel
 
+app = create_app()
 app.app_context().push()
 
 r = re.compile(r'^(.*?)\s*\.+[\.\s]*(\d+)\s*$')

@@ -24,9 +24,10 @@ if not to_envvar(args.config):
 
 import os.path
 import subprocess
-from skylines import app
+from skylines import create_app
 from skylines.model import db
 
+app = create_app()
 app.app_context().push()
 
 SERVER_URL = 'http://download.xcsoar.org/mapgen/data/srtm3/'

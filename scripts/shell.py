@@ -17,7 +17,7 @@ if not to_envvar(conf_path):
 from IPython.config.loader import Config
 from IPython.frontend.terminal.embed import InteractiveShellEmbed
 
-from skylines import app  # noqa
+from skylines import create_app  # noqa
 from skylines.model import *  # noqa
 
 config = Config()
