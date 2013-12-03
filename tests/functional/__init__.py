@@ -4,7 +4,7 @@
 from zope.testbrowser.wsgi import Browser
 
 from tests import setup_app, teardown_db, clean_db_and_bootstrap
-from skylines import create_app, model
+from skylines import create_frontend_app, model
 
 __all__ = ['TestController']
 
@@ -16,10 +16,7 @@ class TestController(object):
 
     @classmethod
     def setup_class(cls):
-        cls.app = create_app()
-
-        # Setup the Flask app
-        cls.app.add_web_components()
+        cls.app = create_frontend_app()
 
         # Setup the database
         with cls.app.app_context():

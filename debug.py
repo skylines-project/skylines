@@ -13,7 +13,6 @@ if not to_envvar(args.conf_path):
     parser.error('Config file "{}" not found.'.format(args.conf_path))
 
 if __name__ == '__main__':
-    from skylines import create_app
-    app = create_app()
-    app.add_web_components()
+    from skylines import create_frontend_app
+    app = create_frontend_app()
     app.run(port=8080, extra_files=[DEFAULT_CONF_PATH, args.conf_path or ''])

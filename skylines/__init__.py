@@ -162,3 +162,9 @@ class SkyLines(Flask):
 
 def create_app():
     return SkyLines()
+
+
+def create_frontend_app():
+    app = create_app()
+    app.add_web_components()
+    return app
