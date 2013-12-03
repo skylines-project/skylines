@@ -158,6 +158,7 @@ class SkyLines(Flask):
     def add_celery(self):
         from skylines.worker.celery import celery
         celery.init_app(self)
+        return celery
 
 
 def create_app():
@@ -168,3 +169,8 @@ def create_frontend_app():
     app = create_app()
     app.add_web_components()
     return app
+
+
+def create_celery_app():
+    app = create_app()
+    return app.add_celery()
