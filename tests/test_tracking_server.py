@@ -2,9 +2,8 @@ from unittest import TestCase
 from nose.tools import eq_, ok_
 from mock import Mock, patch
 
-from skylines import db
 from tests import setup_app, teardown_db, clean_db_and_bootstrap
-from skylines.model import TrackingFix
+from skylines.model import db, TrackingFix
 
 import struct
 from skylines.tracking import server

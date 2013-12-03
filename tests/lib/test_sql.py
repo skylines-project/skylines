@@ -2,9 +2,11 @@ import sys
 import nose
 from nose.tools import eq_, assert_raises
 
-from skylines import db, app
 from tests import setup_db, teardown_db
 from sqlalchemy import Column, Integer, String, Unicode
+
+from skylines import app
+from skylines.model import db
 
 
 class TestTable(db.Model):

@@ -2,7 +2,8 @@
 import os
 import shutil
 
-from skylines import app, db
+from skylines import app
+from skylines.model import db
 from tests.data.bootstrap import bootstrap
 
 __all__ = ['setup_db', 'setup_app', 'teardown_db']

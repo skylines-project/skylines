@@ -1,7 +1,6 @@
 from nose.tools import eq_
 
-from skylines import db
-from skylines.model import User, Club, Airport
+from skylines.model import db, User, Club, Airport
 from skylines.model.search import (
     combined_search_query, escape_tokens, text_to_tokens
 )
