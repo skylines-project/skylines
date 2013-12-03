@@ -2,8 +2,8 @@ from __future__ import absolute_import
 from celery.utils.log import get_task_logger
 
 from skylines.lib.xcsoar_ import analysis
-from skylines import celery, db
-from skylines.model import Flight
+from skylines import celery
+from skylines.model import db, Flight
 
 logger = get_task_logger(__name__)
 

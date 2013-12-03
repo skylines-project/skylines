@@ -4,7 +4,7 @@ import resource
 
 import xcsoar
 from flask import current_app
-from skylines import db
+from skylines.model import db
 from skylines.lib import files
 from skylines.lib.datetime import from_seconds_of_day
 from skylines.model import (
