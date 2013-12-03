@@ -53,7 +53,6 @@ class SkyLines(Flask):
     def add_sqlalchemy(self):
         """ Create and configure SQLAlchemy extension """
         from skylines.model import db
-        self.db = db
         db.init_app(self)
 
     def add_web_components(self):
@@ -162,7 +161,6 @@ class SkyLines(Flask):
 
 
 app = SkyLines()
-db = app.db
 celery = app.celery
 
 
