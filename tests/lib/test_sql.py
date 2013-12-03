@@ -5,7 +5,7 @@ from nose.tools import eq_, assert_raises
 from tests import setup_db, teardown_db
 from sqlalchemy import Column, Integer, String, Unicode
 
-from skylines import app
+from skylines import create_app
 from skylines.model import db
 
 
@@ -19,8 +19,12 @@ class TestTable(db.Model):
 
 class TestSqlLib:
 
+    @classmethod
+    def setup_class(cls):
+        cls.app = create_app()
+
     def setup(self):
-        self.context = app.app_context()
+        self.context = self.app.app_context()
         self.context.push()
 
         # Setup the database

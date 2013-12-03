@@ -17,7 +17,7 @@ if not to_envvar(args.config):
 
 if __name__ == '__main__':
     from skylines import create_app
+    from skylines.worker.celery import celery
 
-    app = create_app()
-    with app.app_context():
-        app.celery.worker_main()
+    celery.init_app(create_app())
+    celery.worker_main()

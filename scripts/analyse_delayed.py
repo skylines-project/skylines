@@ -20,8 +20,12 @@ if not to_envvar(args.config):
     parser.error('Config file "{}" not found.'.format(args.config))
 
 
+from skylines import create_app
 from skylines.model import Flight
 from skylines.worker import tasks
+from skylines.worker.celery import celery
+
+celery.init_app(create_app())
 
 
 def do(flight_id):

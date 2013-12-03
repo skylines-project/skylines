@@ -2,7 +2,6 @@
 import os
 import shutil
 
-from skylines import app
 from skylines.model import db
 from tests.data.bootstrap import bootstrap
 
@@ -14,16 +13,16 @@ def setup_db():
     db.create_all()
 
 
-def setup_dirs():
+def setup_dirs(app):
     filesdir = app.config['SKYLINES_FILES_PATH']
     if os.path.exists(filesdir):
         shutil.rmtree(filesdir)
     os.makedirs(filesdir)
 
 
-def setup_app():
+def setup_app(app):
     setup_db()
-    setup_dirs()
+    setup_dirs(app)
 
 
 def teardown_db():

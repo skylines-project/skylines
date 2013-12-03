@@ -3,6 +3,7 @@ from nose.tools import eq_, ok_
 from mock import Mock, patch
 
 from tests import setup_app, teardown_db, clean_db_and_bootstrap
+from skylines import create_app
 from skylines.model import db, TrackingFix
 
 import struct
@@ -12,20 +13,27 @@ from datetime import datetime
 from sqlalchemy.exc import SQLAlchemyError
 
 
-def setup():
-    # Setup the database
-    setup_app()
-
-
-def teardown():
-    # Remove the database again
-    teardown_db()
-
-
 class TrackingServerTest(TestCase):
     HOST_PORT = ('127.0.0.1', 5597)
 
+    @classmethod
+    def setup_class(cls):
+        cls.app = create_app()
+
+        # Setup the database
+        with cls.app.app_context():
+            setup_app(cls.app)
+
+    @classmethod
+    def teardown_class(cls):
+        # Remove the database again
+        with cls.app.app_context():
+            teardown_db()
+
     def setUp(self):
+        self.context = self.app.app_context()
+        self.context.push()
+
         # Setup tracking server mock
         clean_db_and_bootstrap()
         server.TrackingServer.__init__ = Mock(return_value=None)
@@ -35,6 +43,8 @@ class TrackingServerTest(TestCase):
         # Clear the database
         TrackingFix.query().delete()
         db.session.commit()
+
+        self.context.pop()
 
     def test_ping(self):
         """ Tracking server sends ACK when PING is received """

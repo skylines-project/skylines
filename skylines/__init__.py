@@ -156,13 +156,9 @@ class SkyLines(Flask):
             Wdb(self)
 
     def add_celery(self):
-        from skylines.worker.celery import make_celery
-        self.celery = make_celery(self)
-
-
-app = SkyLines()
-celery = app.celery
+        from skylines.worker.celery import celery
+        celery.init_app(self)
 
 
 def create_app():
-    return app
+    return SkyLines()
