@@ -5,9 +5,6 @@ import os.path
 here = os.path.abspath(os.path.dirname(__file__))
 base = os.path.abspath(os.path.join(here, '..'))
 
-# Enables the wdb debugger (you need the flask-wdb package for this)
-#WDB_ENABLED = True
-
 DEBUG_TB_INTERCEPT_REDIRECTS = False
 
 DEBUG = True

@@ -18,7 +18,6 @@ class SkyLines(Flask):
         if 'SKYLINES_CONFIG' in os.environ:
             self.config.from_pyfile(os.environ['SKYLINES_CONFIG'])
 
-        self.add_wdb()
         self.add_sqlalchemy()
 
     @property
@@ -149,11 +148,6 @@ class SkyLines(Flask):
     def add_debug_toolbar(self):
         from flask_debugtoolbar import DebugToolbarExtension
         DebugToolbarExtension(self)
-
-    def add_wdb(self):
-        if self.config.get('WDB_ENABLED', False):
-            from flask_wdb import Wdb
-            Wdb(self)
 
     def add_celery(self):
         from skylines.worker.celery import celery
