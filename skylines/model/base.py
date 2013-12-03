@@ -1,5 +1,5 @@
 from .search import search_query
-from skylines import db
+from skylines.model import db
 
 
 def monkey_patch_model():

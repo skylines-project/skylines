@@ -10,16 +10,18 @@ __all__ = ['TestController']
 
 
 def setup():
-    # Setup the Flask app
-    app.add_web_components()
+    with app.app_context():
+        # Setup the Flask app
+        app.add_web_components()
 
-    # Setup the database
-    setup_app()
+        # Setup the database
+        setup_app()
 
 
 def teardown():
-    # Remove the database again
-    teardown_db()
+    with app.app_context():
+        # Remove the database again
+        teardown_db()
 
 
 class TestController(object):
@@ -29,6 +31,12 @@ class TestController(object):
 
     def setUp(self):
         """Method called by nose before running each test"""
+        self.context = app.app_context()
+        self.context.push()
+
         clean_db_and_bootstrap()
 
         self.browser = Browser('http://localhost/', wsgi_app=app.wsgi_app)
+
+    def tearDown(self):
+        self.context.pop()

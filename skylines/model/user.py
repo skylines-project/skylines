@@ -11,7 +11,7 @@ from sqlalchemy.sql.expression import cast, case
 from sqlalchemy.dialects.postgresql import INET
 from sqlalchemy.ext.hybrid import hybrid_property
 
-from skylines import db
+from skylines.model import db
 from skylines.lib.sql import LowerCaseComparator
 from skylines.lib.formatter import units
 

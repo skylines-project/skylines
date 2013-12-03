@@ -52,8 +52,9 @@ class SkyLines(Flask):
 
     def add_sqlalchemy(self):
         """ Create and configure SQLAlchemy extension """
-        from flask.ext.sqlalchemy import SQLAlchemy
-        self.db = SQLAlchemy(self, session_options=dict(expire_on_commit=False))
+        from skylines.model import db
+        self.db = db
+        db.init_app(self)
 
     def add_web_components(self):
         self.add_logging_handlers()

@@ -2,12 +2,18 @@ import sys
 import nose
 from nose.tools import eq_, assert_raises
 
-from skylines import db
+from skylines import db, app
 from tests import setup_db, teardown_db
 from sqlalchemy import Column, Integer, String, Unicode
 
+context = None
+
 
 def setup():
+    global context
+    context = app.app_context()
+    context.push()
+
     # Setup the database
     setup_db()
     db.session.add(TestTable(name='John Doe', uni='Jane and John Doe'))
@@ -17,6 +23,8 @@ def setup():
 def teardown():
     # Remove the database again
     teardown_db()
+
+    context.pop()
 
 
 class TestTable(db.Model):

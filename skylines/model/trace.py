@@ -6,7 +6,7 @@ from geoalchemy2.types import Geometry
 from geoalchemy2.elements import WKTElement
 from geoalchemy2.shape import to_shape
 
-from skylines import db
+from skylines.model import db
 from .geo import Location
 
 

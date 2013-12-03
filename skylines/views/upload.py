@@ -2,11 +2,11 @@ from datetime import datetime
 from tempfile import TemporaryFile
 from zipfile import ZipFile
 
-from flask import Blueprint, render_template, request, flash, redirect, g
+from flask import Blueprint, render_template, request, flash, redirect, g, current_app
 from flask.ext.babel import _, lazy_gettext as l_
 from redis.exceptions import ConnectionError
 
-from skylines import app, db
+from skylines import db
 from skylines.forms import UploadForm, AircraftModelSelectField
 from skylines.lib import files
 from skylines.lib.decorators import login_required
@@ -155,7 +155,7 @@ def index_post(form):
             if flight[2] is None:
                 tasks.analyse_flight.delay(flight[1].id)
     except ConnectionError:
-        app.logger.info('Cannot connect to Redis server')
+        current_app.logger.info('Cannot connect to Redis server')
 
     def ModelSelectField(*args, **kwargs):
         return AircraftModelSelectField().bind(None, 'model', *args, **kwargs)()

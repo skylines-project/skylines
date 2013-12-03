@@ -4,7 +4,7 @@ from datetime import datetime
 
 from sqlalchemy.types import Integer, Unicode, DateTime
 
-from skylines import db
+from skylines.model import db
 
 
 class Club(db.Model):

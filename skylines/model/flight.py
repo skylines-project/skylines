@@ -11,7 +11,7 @@ from geoalchemy2.types import Geometry
 from geoalchemy2.shape import to_shape, from_shape
 from shapely.geometry import LineString
 
-from skylines import db
+from skylines.model import db
 from .geo import Location
 from .igcfile import IGCFile
 from .aircraft_model import AircraftModel
