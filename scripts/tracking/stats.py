@@ -26,8 +26,10 @@ if not to_envvar(args.config):
 
 from datetime import timedelta
 from itertools import chain
-from skylines import db
-from skylines.model import TrackingFix, User
+from skylines import app
+from skylines.model import db, TrackingFix, User
+
+app.app_context().push()
 
 
 def get_pilot(user_id):

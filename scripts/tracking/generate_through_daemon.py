@@ -24,6 +24,7 @@ if not to_envvar(args.config):
 import sys
 import socket
 import struct
+from skylines import app
 from skylines.model import User
 from skylines.tracking.server import *  # noqa
 from math import sin
@@ -37,9 +38,10 @@ ADDRESS = (UDP_IP, UDP_PORT)
 
 sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 
-user = User.get(args.user)
-if not user:
-    parser.error('User with id "{}" not found.'.format(args.user))
+with app.app_context():
+    user = User.get(args.user)
+    if not user:
+        parser.error('User with id "{}" not found.'.format(args.user))
 
 start_time = datetime.utcnow()
 

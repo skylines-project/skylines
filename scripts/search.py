@@ -2,10 +2,13 @@
 
 import sys
 
+from skylines import app
 from skylines.model import User, Club, Airport
 from skylines.model.search import combined_search_query, escape_tokens
 
 MODELS = [User, Club, Airport]
+
+app.app_context().push()
 
 
 def search_query(tokens):

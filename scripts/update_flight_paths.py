@@ -23,8 +23,10 @@ if not to_envvar(args.config):
 
 from sqlalchemy.orm import joinedload
 from sqlalchemy.sql.expression import or_
-from skylines import db
-from skylines.model import Flight
+from skylines import app
+from skylines.model import db, Flight
+
+app.app_context().push()
 
 
 def do(flight):

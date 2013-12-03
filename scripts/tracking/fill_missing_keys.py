@@ -22,9 +22,10 @@ if not to_envvar(args.config):
     parser.error('Config file "{}" not found.'.format(args.config))
 
 
-from skylines import db
-from skylines.model import User
+from skylines import app
+from skylines.model import db, User
 
+app.app_context().push()
 
 keyless_users = User.query(tracking_key=None)
 

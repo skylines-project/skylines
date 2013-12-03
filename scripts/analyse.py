@@ -25,11 +25,11 @@ if not to_envvar(args.config):
 
 
 from sqlalchemy.orm import joinedload
-from skylines import app, db
-from skylines.model import Flight
+from skylines import app
+from skylines.model import db, Flight
 from skylines.lib.xcsoar_ import analyse_flight
 
-app.test_request_context().push()
+app.app_context().push()
 
 
 def do(flight):

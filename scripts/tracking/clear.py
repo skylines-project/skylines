@@ -22,8 +22,10 @@ if not to_envvar(args.config):
     parser.error('Config file "{}" not found.'.format(args.config))
 
 
-from skylines import db
-from skylines.model import TrackingFix
+from skylines import app
+from skylines.model import db, TrackingFix
+
+app.app_context().push()
 
 result = TrackingFix.query(pilot_id=args.user).delete()
 db.session.commit()
