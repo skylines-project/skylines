@@ -9,8 +9,7 @@ from werkzeug.exceptions import ServiceUnavailable
 from sqlalchemy import func
 from sqlalchemy.orm import joinedload
 
-from skylines import db
-from skylines.model import User
+from skylines.model import db, User
 from skylines.model.event import create_new_user_event
 from skylines.forms import CreatePilotForm, RecoverStep1Form, RecoverStep2Form
 

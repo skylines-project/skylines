@@ -3,8 +3,7 @@ from datetime import datetime
 from flask import Blueprint, request
 from werkzeug.exceptions import BadRequest, NotFound, NotImplemented
 
-from skylines import db
-from skylines.model import User, TrackingFix, TrackingSession
+from skylines.model import db, User, TrackingFix, TrackingSession
 
 lt24_blueprint = Blueprint('lt24', 'skylines')
 

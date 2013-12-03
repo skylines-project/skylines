@@ -3,13 +3,12 @@ from flask.ext.babel import _
 
 from sqlalchemy.sql.expression import and_, or_
 
-from skylines import db
 from skylines.forms import (
     ChangePasswordForm, EditPilotForm, LiveTrackingSettingsForm,
     ChangeClubForm, CreateClubForm
 )
 from skylines.lib.dbutil import get_requested_record
-from skylines.model import User, Club, Flight, IGCFile
+from skylines.model import db, User, Club, Flight, IGCFile
 from skylines.views.users import send_recover_mail
 from skylines.model.event import (
     create_club_join_event

@@ -6,13 +6,12 @@ from flask import Blueprint, render_template, request, flash, redirect, g, curre
 from flask.ext.babel import _, lazy_gettext as l_
 from redis.exceptions import ConnectionError
 
-from skylines import db
 from skylines.forms import UploadForm, AircraftModelSelectField
 from skylines.lib import files
 from skylines.lib.decorators import login_required
 from skylines.lib.md5 import file_md5
 from skylines.lib.xcsoar_ import analyse_flight
-from skylines.model import User, Flight, IGCFile
+from skylines.model import db, User, Flight, IGCFile
 from skylines.model.event import create_flight_notifications
 from skylines.worker import tasks
 

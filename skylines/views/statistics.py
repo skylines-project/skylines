@@ -1,9 +1,8 @@
 from flask import Blueprint, render_template, abort
 from sqlalchemy import func, distinct
 
-from skylines import db
 from skylines.lib.dbutil import get_requested_record
-from skylines.model import User, Club, Flight, Airport
+from skylines.model import db, User, Club, Flight, Airport
 
 statistics_blueprint = Blueprint('statistics', 'skylines')
 

@@ -8,7 +8,6 @@ from sqlalchemy.orm import undefer_group
 from sqlalchemy.sql.expression import func, and_, literal_column
 from geoalchemy2.shape import to_shape
 
-from skylines import db
 from skylines.forms import ChangePilotsForm, ChangeAircraftForm
 from skylines.lib import files
 from skylines.lib.dbutil import get_requested_record_list
@@ -19,7 +18,7 @@ from skylines.lib.datetime import from_seconds_of_day
 from skylines.lib.geo import METERS_PER_DEGREE
 from skylines.lib.sql import extract_array_item
 from skylines.model import (
-    User, Flight, FlightPhase, Location, Elevation, FlightComment,
+    db, User, Flight, FlightPhase, Location, Elevation, FlightComment,
     Notification, Event
 )
 from skylines.model.event import create_flight_comment_notifications

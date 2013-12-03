@@ -8,12 +8,11 @@ from sqlalchemy.sql.expression import or_, and_
 from sqlalchemy.orm import joinedload, contains_eager
 from sqlalchemy.orm.util import aliased
 
-from skylines import db
 from skylines.lib.datatables import GetDatatableRecords
 from skylines.lib.dbutil import get_requested_record
 from skylines.lib.helpers import truncate, country_name, format_decimal
 from skylines.model import (
-    User, Club, Flight, IGCFile, AircraftModel,
+    db, User, Club, Flight, IGCFile, AircraftModel,
     Airport, FlightComment,
     Notification, Event,
 )
