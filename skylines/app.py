@@ -120,8 +120,8 @@ def create_frontend_app(config_file=None):
     app.add_assets()
     app.add_tg2_compat()
 
-    import skylines.views
-    skylines.views.register(app)
+    import skylines.frontend.views
+    skylines.frontend.views.register(app)
 
     return app
 

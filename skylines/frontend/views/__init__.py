@@ -1,27 +1,27 @@
-from skylines.views.errors import register as register_error_handlers
-from skylines.views.i18n import register as register_i18n
-from skylines.views.login import register as register_login
+from .errors import register as register_error_handlers
+from .i18n import register as register_i18n
+from .login import register as register_login
 
-from skylines.views.about import about_blueprint, about
-from skylines.views.assets import assets_blueprint
-from skylines.views.club import club_blueprint
-from skylines.views.clubs import clubs_blueprint
-from skylines.views.files import files_blueprint
-from skylines.views.flight import flight_blueprint
-from skylines.views.flights import flights_blueprint
-from skylines.views.livetrack24 import lt24_blueprint
-from skylines.views.notifications import notifications_blueprint
-from skylines.views.ranking import ranking_blueprint
-from skylines.views.search import search_blueprint
-from skylines.views.settings import settings_blueprint
-from skylines.views.statistics import statistics_blueprint
-from skylines.views.timeline import timeline_blueprint
-from skylines.views.track import track_blueprint
-from skylines.views.tracking import tracking_blueprint
-from skylines.views.upload import upload_blueprint
-from skylines.views.user import user_blueprint
-from skylines.views.users import users_blueprint
-from skylines.views.widgets import widgets_blueprint
+from .about import about_blueprint, about
+from .assets import assets_blueprint
+from .club import club_blueprint
+from .clubs import clubs_blueprint
+from .files import files_blueprint
+from .flight import flight_blueprint
+from .flights import flights_blueprint
+from .livetrack24 import lt24_blueprint
+from .notifications import notifications_blueprint
+from .ranking import ranking_blueprint
+from .search import search_blueprint
+from .settings import settings_blueprint
+from .statistics import statistics_blueprint
+from .timeline import timeline_blueprint
+from .track import track_blueprint
+from .tracking import tracking_blueprint
+from .upload import upload_blueprint
+from .user import user_blueprint
+from .users import users_blueprint
+from .widgets import widgets_blueprint
 
 
 def register(app):

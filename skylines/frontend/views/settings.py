@@ -9,7 +9,7 @@ from skylines.forms import (
 )
 from skylines.lib.dbutil import get_requested_record
 from skylines.model import db, User, Club, Flight, IGCFile
-from skylines.views.users import send_recover_mail
+from skylines.frontend.views.users import send_recover_mail
 from skylines.model.event import (
     create_club_join_event
 )
