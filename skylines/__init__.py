@@ -130,7 +130,7 @@ def create_api_app(config_file=None):
     app = create_http_app(config_file)
 
     from skylines.views.api import api_blueprint
-    from skylines.views.errors import register as register_error_handlers
+    from skylines.views.errors import register_api as register_error_handlers
 
     register_error_handlers(app)
     app.register_blueprint(api_blueprint)
