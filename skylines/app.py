@@ -7,7 +7,8 @@ from flask import Flask
 class SkyLines(Flask):
     def __init__(self, config_file=None):
         # Create Flask instance
-        super(SkyLines, self).__init__(__name__)
+        super(SkyLines, self).__init__(
+            __name__, template_folder='frontend/templates')
 
         # Load default settings and from environment variable
         self.config.from_pyfile(config.DEFAULT_CONF_PATH)
