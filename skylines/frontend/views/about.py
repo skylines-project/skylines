@@ -28,7 +28,7 @@ def imprint():
 @about_blueprint.route('/team')
 def skylines_team():
     path = os.path.join(os.path.dirname(os.path.abspath(__file__)),
-                        '..', '..', 'AUTHORS.md')
+                        '..', '..', '..', 'AUTHORS.md')
     with open(path) as f:
         content = f.read().decode('utf-8')
 
@@ -45,7 +45,7 @@ def skylines_team():
 @about_blueprint.route('/license')
 def license():
     path = os.path.join(os.path.dirname(os.path.abspath(__file__)),
-                        '..', '..', 'LICENSE')
+                        '..', '..', '..', 'LICENSE')
     with open(path) as f:
         content = f.read().decode('utf-8')
 
