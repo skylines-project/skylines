@@ -7,6 +7,7 @@ from flask.ext.babel import lazy_gettext as l_, _
 from sqlalchemy.orm import undefer_group
 from sqlalchemy.sql.expression import func
 from geoalchemy2.shape import to_shape
+from datetime import timedelta
 
 from skylines.frontend.forms import ChangePilotsForm, ChangeAircraftForm
 from skylines.lib import files
@@ -68,8 +69,8 @@ def _get_flight_path(flight, threshold=0.001, max_points=3000):
     zoom_levels.extend([round(-math.log(32.0 / 45.0 * (threshold * pow(zoom_factor, num_levels - i - 1)), 2)) for i in range(1, num_levels)])
 
     xcsoar_flight = xcsoar.Flight(files.filename_to_path(flight.igc_file.filename))
-    xcsoar_flight.reduce(begin=flight.takeoff_time,
-                         end=flight.landing_time,
+    xcsoar_flight.reduce(begin=flight.takeoff_time - timedelta(seconds=2 * 60),
+                         end=flight.landing_time + timedelta(seconds=2 * 60),
                          num_levels=num_levels,
                          zoom_factor=zoom_factor,
                          threshold=threshold,
