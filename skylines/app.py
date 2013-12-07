@@ -42,9 +42,9 @@ class SkyLines(Flask):
 
     def add_assets(self):
         """ Create and attach Assets extension """
-        from skylines.assets import Environment
+        from skylines.frontend.assets import Environment
         self.assets = Environment(self)
-        self.assets.load_bundles('skylines.assets.bundles')
+        self.assets.load_bundles('skylines.frontend.assets.bundles')
 
     def add_tg2_compat(self):
         from skylines.lib import helpers
