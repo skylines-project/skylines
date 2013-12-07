@@ -13,7 +13,7 @@ def get_language_code(filename):
 
 
 def test_pofiles():
-    for filename in glob.glob(os.path.join('skylines', 'translations', '*', 'LC_MESSAGES', 'messages.po')):
+    for filename in glob.glob(os.path.join('skylines', 'frontend', 'translations', '*', 'LC_MESSAGES', 'messages.po')):
         test_pofiles.func_doc = ('Python string format placeholders must match '
                                  '(lang: {})'.format(get_language_code(filename)))
         yield check_pofile, filename

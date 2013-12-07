@@ -11,7 +11,7 @@ import shutil
 
 LANG_CODE_RE = re.compile(r'translations-([a-z]{2}(?:_[A-Z_]{2})*)\.po')
 I18N_FOLDER = os.path.join(os.path.dirname(os.path.abspath(__file__)),
-                           '..', '..', 'skylines', 'translations')
+                           '..', '..', 'skylines', 'frontend', 'translations')
 
 # Parse command line arguments
 
