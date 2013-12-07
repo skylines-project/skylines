@@ -66,10 +66,6 @@ class SkyLines(Flask):
         def zip(*args, **kw):
             return izip(*args, **kw)
 
-    def register_views(self):
-        import skylines.views
-        skylines.views.register(self)
-
     def add_logging_handlers(self):
         import logging
         from logging import handlers
@@ -124,7 +120,8 @@ def create_frontend_app(config_file=None):
     app.add_assets()
     app.add_tg2_compat()
 
-    app.register_views()
+    import skylines.views
+    skylines.views.register(app)
 
     return app
 
