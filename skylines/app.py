@@ -5,10 +5,9 @@ from flask import Flask
 
 
 class SkyLines(Flask):
-    def __init__(self, config_file=None):
+    def __init__(self, name='skylines', config_file=None, *args, **kw):
         # Create Flask instance
-        super(SkyLines, self).__init__(
-            __name__, template_folder='frontend/templates')
+        super(SkyLines, self).__init__(name, *args, **kw)
 
         # Load default settings and from environment variable
         self.config.from_pyfile(config.DEFAULT_CONF_PATH)
@@ -94,14 +93,14 @@ class SkyLines(Flask):
         return celery
 
 
-def create_app(config_file=None):
-    app = SkyLines(config_file)
+def create_app(*args, **kw):
+    app = SkyLines(*args, **kw)
     app.add_sqlalchemy()
     return app
 
 
-def create_http_app(config_file=None):
-    app = create_app(config_file)
+def create_http_app(*args, **kw):
+    app = create_app(*args, **kw)
 
     app.add_logging_handlers()
     app.add_cache()
@@ -110,8 +109,8 @@ def create_http_app(config_file=None):
     return app
 
 
-def create_frontend_app(config_file=None):
-    app = create_http_app(config_file)
+def create_frontend_app(*args, **kw):
+    app = create_http_app('skylines.frontend', *args, **kw)
 
     app.add_debug_toolbar()
 
@@ -127,8 +126,8 @@ def create_frontend_app(config_file=None):
     return app
 
 
-def create_api_app(config_file=None):
-    app = create_http_app(config_file)
+def create_api_app(*args, **kw):
+    app = create_http_app('skylines.api', *args, **kw)
 
     import skylines.api.views
     skylines.api.views.register(app)
@@ -136,11 +135,11 @@ def create_api_app(config_file=None):
     return app
 
 
-def create_combined_app(config_file=None):
+def create_combined_app(*args, **kw):
     from werkzeug.wsgi import DispatcherMiddleware
 
-    frontend = create_frontend_app(config_file)
-    api = create_api_app(config_file)
+    frontend = create_frontend_app(*args, **kw)
+    api = create_api_app(*args, **kw)
 
     mounts = {
         '/api': api,
@@ -158,6 +157,6 @@ def create_combined_app(config_file=None):
     return frontend
 
 
-def create_celery_app(config_file=None):
-    app = create_app(config_file)
+def create_celery_app(*args, **kw):
+    app = create_app('skylines.worker', *args, **kw)
     return app.add_celery()
