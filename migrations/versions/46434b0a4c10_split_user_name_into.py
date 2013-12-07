@@ -4,7 +4,7 @@ down_revision = None
 
 from alembic import op
 import sqlalchemy as sa
-from skylines import db
+from skylines.model import db
 
 
 users = sa.sql.table(

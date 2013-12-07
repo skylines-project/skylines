@@ -1,22 +1,13 @@
 # -*- coding: utf-8 -*-
 """Unit test suite for the models of the application."""
 from nose.tools import assert_equals
-from skylines import db
 from tests import setup_db, teardown_db
 
+import config
+from skylines import create_app
+from skylines.model import db
+
 __all__ = ['ModelTest']
-
-
-# Create an empty database before we start our tests for this module
-def setup():
-    """Function called by nose on module load"""
-    setup_db()
-
-
-# Tear down that database
-def teardown():
-    """Function called by nose after all tests in this module ran"""
-    teardown_db()
 
 
 class ModelTest(object):
@@ -25,8 +16,27 @@ class ModelTest(object):
     klass = None
     attrs = {}
 
+    # Create an empty database before we start our tests for this module
+    @classmethod
+    def setup_class(cls):
+        """Function called by nose on module load"""
+        cls.app = create_app(config_file=config.TESTING_CONF_PATH)
+
+        with cls.app.app_context():
+            setup_db()
+
+    # Tear down that database
+    @classmethod
+    def teardown_class(cls):
+        """Function called by nose after all tests in this module ran"""
+        with cls.app.app_context():
+            teardown_db()
+
     def setUp(self):
         """Prepare model test fixture."""
+        self.context = self.app.app_context()
+        self.context.push()
+
         try:
             new_attrs = {}
             new_attrs.update(self.attrs)
@@ -42,6 +52,7 @@ class ModelTest(object):
     def tearDown(self):
         """Finish model test fixture."""
         db.session.rollback()
+        self.context.pop()
 
     def do_get_dependencies(self):
         """Get model test dependencies.

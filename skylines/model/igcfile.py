@@ -6,7 +6,7 @@ from datetime import datetime
 from sqlalchemy.sql.expression import and_
 from sqlalchemy.types import Integer, DateTime, String, Unicode, Date
 
-from skylines import db
+from skylines.model import db
 from skylines.lib import files
 from skylines.lib.igc import read_igc_headers
 

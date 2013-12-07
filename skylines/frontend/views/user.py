@@ -6,10 +6,9 @@ from flask.ext.login import login_required
 from sqlalchemy import func
 from sqlalchemy.orm import contains_eager, subqueryload
 
-from skylines import db
 from skylines.lib.dbutil import get_requested_record
 from skylines.model import (
-    User, Flight, Follower, Location, Notification, Event
+    db, User, Flight, Follower, Location, Notification, Event
 )
 from skylines.model.event import create_follower_notification
 

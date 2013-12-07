@@ -5,7 +5,7 @@ from datetime import datetime
 from sqlalchemy.types import Integer, String, DateTime
 from geoalchemy2.types import Geometry
 
-from skylines import db
+from skylines.model import db
 
 
 class Airspace(db.Model):

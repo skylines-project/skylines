@@ -1,6 +1,6 @@
 from sqlalchemy.types import Boolean, Float, Integer, DateTime, Interval
 
-from skylines import db
+from skylines.model import db
 
 
 class FlightPhase(db.Model):

@@ -5,7 +5,7 @@ from flask.ext.login import login_user, logout_user, current_user
 from flask.ext.babel import _
 
 from skylines.model import User
-from skylines.forms import LoginForm
+from skylines.frontend.forms import LoginForm
 
 
 def register(app):

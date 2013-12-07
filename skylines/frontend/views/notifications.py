@@ -1,8 +1,8 @@
 from flask import Blueprint, render_template, abort, request, url_for, redirect, g
 from sqlalchemy.orm import subqueryload, contains_eager
 
-from skylines import db
 from skylines.lib.util import str_to_bool
+from skylines.model import db
 from skylines.model.event import Event, Notification, group_events
 
 

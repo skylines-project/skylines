@@ -2,7 +2,7 @@ from pytz import timezone
 from sqlalchemy.types import Integer, String
 from geoalchemy2.types import Geometry
 
-from skylines import db
+from skylines.model import db
 
 
 class TimeZone(db.Model):

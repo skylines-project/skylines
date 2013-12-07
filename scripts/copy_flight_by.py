@@ -31,11 +31,14 @@ if not os.path.exists(args.dest):
     os.makedirs(args.dest)
 
 
-from skylines import app, db
-from skylines.model import Airport, Flight, IGCFile
+from skylines import create_app
+from skylines.model import db, Airport, Flight, IGCFile
 from sqlalchemy import func
 from time import mktime, strptime
 from datetime import datetime
+
+app = create_app()
+app.app_context().push()
 
 query = db.session.query(Flight).join(Flight.takeoff_airport).join(IGCFile)
 

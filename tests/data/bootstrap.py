@@ -1,13 +1,13 @@
 # -*- coding: utf-8 -*-
 """Setup the SkyLines application"""
 
-from skylines import model, db
+from skylines.model import db, User
 
 
 def bootstrap():
     from sqlalchemy.exc import IntegrityError
     try:
-        u = model.User()
+        u = User()
         u.first_name = u'Example'
         u.last_name = u'Manager'
         u.email_address = u'manager@somedomain.com'
@@ -17,7 +17,7 @@ def bootstrap():
         db.session.add(u)
 
 
-        u1 = model.User()
+        u1 = User()
         u1.first_name = u'Example'
         u1.last_name = u'User'
         u1.email_address = u'max+skylines@blarg.de'

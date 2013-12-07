@@ -3,8 +3,7 @@ from io import BytesIO
 from nose.tools import assert_is_not_none, assert_in
 
 from tests.functional import TestController
-from skylines.model.user import User
-from skylines import db
+from skylines.model import db, User
 
 HERE = os.path.dirname(__file__)
 DATADIR = os.path.join(HERE, '..', 'data')

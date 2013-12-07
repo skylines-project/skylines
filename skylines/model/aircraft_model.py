@@ -1,6 +1,6 @@
 from sqlalchemy.types import Integer, Unicode
 
-from skylines import db
+from skylines.model import db
 
 
 class AircraftModel(db.Model):

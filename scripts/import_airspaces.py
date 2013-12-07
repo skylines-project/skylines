@@ -42,9 +42,11 @@ from shapely.geometry import polygon
 from shapely.wkt import loads
 from shapely.geos import ReadingError
 
-from skylines import app, db
-from skylines.model import Airspace
+from skylines import create_app
+from skylines.model import db, Airspace
 
+app = create_app()
+app.app_context().push()
 
 blacklist = dict()
 

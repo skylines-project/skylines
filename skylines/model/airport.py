@@ -9,7 +9,7 @@ from geoalchemy2.types import Geometry, Geography
 from geoalchemy2.shape import to_shape
 
 from .geo import Location
-from skylines import db
+from skylines.model import db
 
 
 class Airport(db.Model):

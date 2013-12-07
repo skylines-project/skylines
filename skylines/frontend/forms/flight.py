@@ -4,9 +4,9 @@ from flask_wtf import Form
 from wtforms import TextField
 from wtforms.validators import Length
 
-from skylines.forms.pilot import ClubPilotsSelectField
-from skylines.forms.aircraft_model import AircraftModelSelectField
-from skylines.forms.validators import CompareTo
+from .pilot import ClubPilotsSelectField
+from .aircraft_model import AircraftModelSelectField
+from .validators import CompareTo
 
 
 class ChangePilotsForm(Form):

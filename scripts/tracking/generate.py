@@ -25,9 +25,11 @@ import sys
 from math import sin
 from random import randint
 from time import sleep
-from skylines import db
-from skylines.model import TrackingFix
+from skylines import create_app
+from skylines.model import db, TrackingFix
 
+app = create_app()
+app.app_context().push()
 
 i = randint(0, 100)
 _longitude = randint(6500, 7500) / 1000.

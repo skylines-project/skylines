@@ -11,11 +11,11 @@ from wtforms.validators import (
 )
 
 from skylines.model import User
-from skylines.forms.units import (
+from .units import (
     UnitsPresetSelectField, DistanceUnitSelectField, AltitudeUnitSelectField,
     LiftUnitSelectField, SpeedUnitSelectField
 )
-from skylines.forms.select import GroupSelectField
+from .select import GroupSelectField
 
 
 class ClubPilotsSelectField(GroupSelectField):

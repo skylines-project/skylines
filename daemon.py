@@ -25,6 +25,9 @@ if __name__ == '__main__':
     log.startLogging(sys.stdout)
 
     from twisted.internet import reactor
+    from skylines import create_app
     from skylines.tracking.server import TrackingServer
-    reactor.listenUDP(5597, TrackingServer())
-    reactor.run()
+
+    with create_app().app_context():
+        reactor.listenUDP(5597, TrackingServer())
+        reactor.run()

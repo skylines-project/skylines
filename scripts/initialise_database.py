@@ -21,7 +21,11 @@ if not to_envvar(args.config):
 
 # import db instance and the model to register the model metadata
 
-from skylines import db, model  # noqa
+from skylines import create_app
+from skylines.model import db
+
+app = create_app()
+app.app_context().push()
 
 # create all tables and indices
 

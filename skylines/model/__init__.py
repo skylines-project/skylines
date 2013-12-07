@@ -2,6 +2,10 @@
 
 # flake8: noqa
 
+from flask.ext.sqlalchemy import SQLAlchemy
+
+db = SQLAlchemy(session_options=dict(expire_on_commit=False))
+
 import skylines.model.base
 
 # Import your model modules here.

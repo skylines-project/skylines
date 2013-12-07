@@ -9,7 +9,7 @@ from geoalchemy2.types import Geometry
 from geoalchemy2.shape import to_shape, from_shape
 from shapely.geometry import Point
 
-from skylines import db
+from skylines.model import db
 from .user import User
 from .geo import Location
 

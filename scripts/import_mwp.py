@@ -24,12 +24,15 @@ if not to_envvar(args.config):
 
 import math
 from osgeo import ogr
-from skylines import db
-from skylines.model import MountainWaveProject
+from skylines import create_app
+from skylines.model import db, MountainWaveProject
 from skylines.lib.string import isnumeric
 from geoalchemy2.elements import WKTElement
 from geoalchemy2.shape import from_shape
 from shapely.geometry import LineString
+
+app = create_app()
+app.app_context().push()
 
 
 def main():

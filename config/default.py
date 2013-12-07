@@ -5,9 +5,6 @@ import os.path
 here = os.path.abspath(os.path.dirname(__file__))
 base = os.path.abspath(os.path.join(here, '..'))
 
-# Enables the wdb debugger (you need the flask-wdb package for this)
-#WDB_ENABLED = True
-
 DEBUG_TB_INTERCEPT_REDIRECTS = False
 
 DEBUG = True
@@ -43,7 +40,7 @@ ASSETS_DEBUG = False
 ASSETS_AUTO_BUILD = True
 ASSETS_DIRECTORY = os.path.join(base, 'webassets')
 ASSETS_URL = '/assets'
-ASSETS_LOAD_DIR = os.path.join(base, 'skylines', 'assets', 'static')
+ASSETS_LOAD_DIR = os.path.join(base, 'skylines', 'frontend', 'static')
 ASSETS_LOAD_URL = '/'
 
 SKYLINES_FILES_PATH = os.path.join(base, 'htdocs', 'files')
