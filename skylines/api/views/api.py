@@ -7,21 +7,6 @@ from skylines import api
 api_blueprint = Blueprint('api', 'skylines')
 
 
-@api_blueprint.errorhandler(TypeError)
-@api_blueprint.errorhandler(ValueError)
-def raise_bad_request(e):
-    return jsonify({
-        'message': e.message,
-    }, status=400)
-
-
-@api_blueprint.errorhandler(LookupError)
-def raise_not_found(e):
-    return jsonify({
-        'message': e.message,
-    }, status=404)
-
-
 def jsonify(data, status=200):
     if not isinstance(data, (dict, list)):
         raise TypeError
