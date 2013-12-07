@@ -70,18 +70,6 @@ class SkyLines(Flask):
         import skylines.views
         skylines.views.register(self)
 
-    def add_mapproxy(self):
-        mapproxy_config = self.config.get('SKYLINES_MAPPROXY')
-        if not mapproxy_config:
-            return
-
-        from werkzeug.wsgi import DispatcherMiddleware
-        import mapproxy.wsgiapp as mapproxy
-
-        self.wsgi_app = DispatcherMiddleware(self.wsgi_app, {
-            '/mapproxy': mapproxy.make_wsgi_app(mapproxy_config),
-        })
-
     def add_logging_handlers(self):
         import logging
         from logging import handlers
@@ -136,11 +124,28 @@ def create_frontend_app(config_file=None):
     app.add_assets()
     app.add_tg2_compat()
 
-    app.add_mapproxy()
-
     app.register_views()
 
     return app
+
+
+def create_combined_app(config_file=None):
+    from werkzeug.wsgi import DispatcherMiddleware
+
+    frontend = create_frontend_app(config_file)
+
+    mounts = {}
+
+    if frontend.config.get('SKYLINES_MAPPROXY'):
+        from mapproxy.wsgiapp import make_wsgi_app as create_mapproxy_app
+
+        mapproxy = create_mapproxy_app(
+            frontend.config.get('SKYLINES_MAPPROXY'))
+
+        mounts['/mapproxy'] = mapproxy
+
+    frontend.wsgi_app = DispatcherMiddleware(frontend.wsgi_app, mounts)
+    return frontend
 
 
 def create_celery_app(config_file=None):
