@@ -19,7 +19,7 @@ GJSLINT_ERRORS = [
     'unused_private_members',
 ]
 
-JS_FOLDER = os.path.join('skylines', 'assets', 'static', 'js')
+JS_FOLDER = os.path.join('skylines', 'frontend', 'static', 'js')
 
 
 def test_js_files():
