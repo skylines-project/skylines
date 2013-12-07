@@ -1,4 +1,4 @@
-from flask import render_template, request
+from flask import render_template
 
 from skylines.views import api
 
