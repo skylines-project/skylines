@@ -3,7 +3,6 @@ from skylines.views.i18n import register as register_i18n
 from skylines.views.login import register as register_login
 
 from skylines.views.about import about_blueprint, about
-from skylines.views.api import api_blueprint
 from skylines.views.assets import assets_blueprint
 from skylines.views.club import club_blueprint
 from skylines.views.clubs import clubs_blueprint
@@ -31,7 +30,6 @@ def register(app):
     register_login(app)
 
     app.register_blueprint(about_blueprint, url_prefix='/about')
-    app.register_blueprint(api_blueprint, url_prefix='/api')
     app.register_blueprint(assets_blueprint)
     app.register_blueprint(club_blueprint, url_prefix='/clubs/<club_id>')
     app.register_blueprint(clubs_blueprint, url_prefix='/clubs')

@@ -126,12 +126,27 @@ def create_frontend_app(config_file=None):
     return app
 
 
+def create_api_app(config_file=None):
+    app = create_http_app(config_file)
+
+    from skylines.views.api import api_blueprint
+    from skylines.views.errors import register as register_error_handlers
+
+    register_error_handlers(app)
+    app.register_blueprint(api_blueprint)
+
+    return app
+
+
 def create_combined_app(config_file=None):
     from werkzeug.wsgi import DispatcherMiddleware
 
     frontend = create_frontend_app(config_file)
+    api = create_api_app(config_file)
 
-    mounts = {}
+    mounts = {
+        '/api': api,
+    }
 
     if frontend.config.get('SKYLINES_MAPPROXY'):
         from mapproxy.wsgiapp import make_wsgi_app as create_mapproxy_app
