@@ -25,22 +25,6 @@ class SkyLines(Flask):
         from skylines.model import db
         db.init_app(self)
 
-    def add_web_components(self):
-        self.add_logging_handlers()
-        self.add_debug_toolbar()
-
-        self.configure_jinja()
-        self.add_cache()
-        self.add_babel()
-        self.add_login_manager()
-        self.add_assets()
-        self.add_tg2_compat()
-        self.add_celery()
-
-        self.add_mapproxy()
-
-        self.register_views()
-
     def add_cache(self):
         """ Create and attach Cache extension """
         from flask.ext.cache import Cache
@@ -133,7 +117,22 @@ def create_app(config_file=None):
 
 def create_frontend_app(config_file=None):
     app = create_app(config_file)
-    app.add_web_components()
+
+    app.add_logging_handlers()
+    app.add_debug_toolbar()
+
+    app.configure_jinja()
+    app.add_cache()
+    app.add_babel()
+    app.add_login_manager()
+    app.add_assets()
+    app.add_tg2_compat()
+    app.add_celery()
+
+    app.add_mapproxy()
+
+    app.register_views()
+
     return app
 
 
