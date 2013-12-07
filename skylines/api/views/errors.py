@@ -1,4 +1,5 @@
 from skylines.api.views import api
+from werkzeug.exceptions import HTTPException, InternalServerError
 
 
 def register(app):
@@ -8,6 +9,9 @@ def register(app):
     @app.errorhandler(404)
     @app.errorhandler(500)
     def handle_http_error(e):
+        if not isinstance(e, HTTPException):
+            e = InternalServerError()
+
         return api.jsonify({
             'message': e.description,
         }, status=e.code)

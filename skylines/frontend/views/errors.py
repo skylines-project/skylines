@@ -1,4 +1,5 @@
 from flask import render_template
+from werkzeug.exceptions import HTTPException, InternalServerError
 
 
 def register(app):
@@ -8,6 +9,9 @@ def register(app):
     @app.errorhandler(404)
     @app.errorhandler(500)
     def handle_error(e):
+        if not isinstance(e, HTTPException):
+            e = InternalServerError()
+
         return render_template(
             'error.jinja',
             code=e.code,
