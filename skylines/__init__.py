@@ -28,7 +28,7 @@ class SkyLines(Flask):
     def add_cache(self):
         """ Create and attach Cache extension """
         from flask.ext.cache import Cache
-        self.cache = Cache(self)
+        self.cache = Cache(self, with_jinja2_ext=False)
 
     def add_babel(self):
         """ Create and attach Babel extension """
@@ -115,19 +115,27 @@ def create_app(config_file=None):
     return SkyLines(config_file)
 
 
-def create_frontend_app(config_file=None):
+
+def create_http_app(config_file=None):
     app = create_app(config_file)
 
     app.add_logging_handlers()
+    app.add_cache()
+    app.add_celery()
+
+    return app
+
+
+def create_frontend_app(config_file=None):
+    app = create_http_app(config_file)
+
     app.add_debug_toolbar()
 
     app.configure_jinja()
-    app.add_cache()
     app.add_babel()
     app.add_login_manager()
     app.add_assets()
     app.add_tg2_compat()
-    app.add_celery()
 
     app.add_mapproxy()
 
