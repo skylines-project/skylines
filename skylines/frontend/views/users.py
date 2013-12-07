@@ -11,7 +11,7 @@ from sqlalchemy.orm import joinedload
 
 from skylines.model import db, User
 from skylines.model.event import create_new_user_event
-from skylines.forms import CreatePilotForm, RecoverStep1Form, RecoverStep2Form
+from skylines.frontend.forms import CreatePilotForm, RecoverStep1Form, RecoverStep2Form
 
 users_blueprint = Blueprint('users', 'skylines')
 

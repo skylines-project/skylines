@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template, g, redirect, url_for, abort
 from sqlalchemy import func
 
-from skylines.forms import EditClubForm, CreateClubPilotForm
+from skylines.frontend.forms import EditClubForm, CreateClubPilotForm
 from skylines.lib.dbutil import get_requested_record
 from skylines.model import db, User, Club
 

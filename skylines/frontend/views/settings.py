@@ -3,7 +3,7 @@ from flask.ext.babel import _
 
 from sqlalchemy.sql.expression import and_, or_
 
-from skylines.forms import (
+from skylines.frontend.forms import (
     ChangePasswordForm, EditPilotForm, LiveTrackingSettingsForm,
     ChangeClubForm, CreateClubForm
 )

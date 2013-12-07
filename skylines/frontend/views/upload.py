@@ -6,7 +6,7 @@ from flask import Blueprint, render_template, request, flash, redirect, g, curre
 from flask.ext.babel import _, lazy_gettext as l_
 from redis.exceptions import ConnectionError
 
-from skylines.forms import UploadForm, AircraftModelSelectField
+from skylines.frontend.forms import UploadForm, AircraftModelSelectField
 from skylines.lib import files
 from skylines.lib.decorators import login_required
 from skylines.lib.md5 import file_md5

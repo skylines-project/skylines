@@ -1,6 +1,6 @@
 from flask.ext.babel import _
 
-from skylines.forms.select import GroupSelectField
+from .select import GroupSelectField
 from skylines.model import AircraftModel
 
 

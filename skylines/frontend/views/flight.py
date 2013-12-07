@@ -8,7 +8,7 @@ from sqlalchemy.orm import undefer_group
 from sqlalchemy.sql.expression import func, and_, literal_column
 from geoalchemy2.shape import to_shape
 
-from skylines.forms import ChangePilotsForm, ChangeAircraftForm
+from skylines.frontend.forms import ChangePilotsForm, ChangeAircraftForm
 from skylines.lib import files
 from skylines.lib.dbutil import get_requested_record_list
 from skylines.lib.xcsoar_ import analyse_flight, flight_path
