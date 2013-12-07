@@ -3,6 +3,7 @@
 
 # Coverage files
 .coverage
+cover
 
 # PyDev files
 .settings/*
