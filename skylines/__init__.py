@@ -18,8 +18,6 @@ class SkyLines(Flask):
         if config_file:
             self.config.from_pyfile(config_file)
 
-        self.add_sqlalchemy()
-
     def add_sqlalchemy(self):
         """ Create and configure SQLAlchemy extension """
         from skylines.model import db
@@ -112,8 +110,9 @@ class SkyLines(Flask):
 
 
 def create_app(config_file=None):
-    return SkyLines(config_file)
-
+    app = SkyLines(config_file)
+    app.add_sqlalchemy()
+    return app
 
 
 def create_http_app(config_file=None):
