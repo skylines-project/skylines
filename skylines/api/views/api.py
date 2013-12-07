@@ -4,23 +4,14 @@ from werkzeug.exceptions import BadRequest
 from skylines.model import Location, Bounds
 from skylines import api
 from .json import jsonify
+from .parser import parse_location
 
 api_blueprint = Blueprint('api', 'skylines')
 
 
-def parse_location():
-    try:
-        latitude = float(request.args['lat'])
-        longitude = float(request.args['lon'])
-        return Location(latitude=latitude, longitude=longitude)
-
-    except (KeyError, ValueError):
-        abort(400)
-
-
 @api_blueprint.route('/mapitems')
 def mapitems():
-    location = parse_location()
+    location = parse_location(request.args)
     return jsonify({
         'airspaces': api.get_airspaces_by_location(location),
         'waves': api.get_waves_by_location(location),
@@ -29,13 +20,13 @@ def mapitems():
 
 @api_blueprint.route('/airspace')
 def airspace():
-    location = parse_location()
+    location = parse_location(request.args)
     return jsonify(api.get_airspaces_by_location(location))
 
 
 @api_blueprint.route('/mountain_wave_project')
 def waves():
-    location = parse_location()
+    location = parse_location(request.args)
     return jsonify(api.get_waves_by_location(location))
 
 
