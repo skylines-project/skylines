@@ -19,7 +19,7 @@ class TrackingServerTest(TestCase):
 
     @classmethod
     def setup_class(cls):
-        cls.app = create_app(config.TESTING_CONF_PATH)
+        cls.app = create_app(config_file=config.TESTING_CONF_PATH)
 
         # Setup the database
         with cls.app.app_context():

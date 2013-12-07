@@ -20,7 +20,7 @@ class ModelTest(object):
     @classmethod
     def setup_class(cls):
         """Function called by nose on module load"""
-        cls.app = create_app(config.TESTING_CONF_PATH)
+        cls.app = create_app(config_file=config.TESTING_CONF_PATH)
 
         with cls.app.app_context():
             setup_db()

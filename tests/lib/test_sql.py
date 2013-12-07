@@ -22,7 +22,7 @@ class TestSqlLib:
 
     @classmethod
     def setup_class(cls):
-        cls.app = create_app(config.TESTING_CONF_PATH)
+        cls.app = create_app(config_file=config.TESTING_CONF_PATH)
 
     def setup(self):
         self.context = self.app.app_context()
