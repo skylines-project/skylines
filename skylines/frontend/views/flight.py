@@ -5,7 +5,7 @@ from flask import Blueprint, request, render_template, redirect, url_for, abort,
 from flask.ext.babel import lazy_gettext as l_, _
 
 from sqlalchemy.orm import undefer_group
-from sqlalchemy.sql.expression import func, and_, literal_column
+from sqlalchemy.sql.expression import func
 from geoalchemy2.shape import to_shape
 
 from skylines.frontend.forms import ChangePilotsForm, ChangeAircraftForm
@@ -16,12 +16,12 @@ from skylines.lib.helpers import format_time, format_number
 from skylines.lib.formatter import units
 from skylines.lib.datetime import from_seconds_of_day
 from skylines.lib.geo import METERS_PER_DEGREE
-from skylines.lib.sql import extract_array_item
 from skylines.model import (
-    db, User, Flight, FlightPhase, Location, Elevation, FlightComment,
+    db, User, Flight, FlightPhase, Location, FlightComment,
     Notification, Event
 )
 from skylines.model.event import create_flight_comment_notifications
+from skylines.model.flight import get_elevations_for_flight
 from skylines.worker import tasks
 from redis.exceptions import ConnectionError
 from skylinespolyencode import SkyLinesPolyEncoder
@@ -96,47 +96,11 @@ def _get_flight_path(flight, threshold=0.001, max_points=3000):
 
 
 def _get_elevations(flight, encoder):
-    # Prepare column expressions
-    locations = Flight.locations.ST_DumpPoints()
-    location_id = extract_array_item(locations.path, 1)
-    location = locations.geom
-
-    # Prepare subquery
-    subq = db.session.query(location_id.label('location_id'),
-                            location.label('location')) \
-                     .filter(Flight.id == flight.id).subquery()
-
-    # Prepare column expressions
-    timestamp = literal_column('timestamps[location_id]')
-    elevation = Elevation.rast.ST_Value(subq.c.location)
-
-    # Prepare main query
-    q = db.session.query(timestamp.label('timestamp'),
-                         elevation.label('elevation')) \
-                  .filter(and_(Flight.id == flight.id,
-                               subq.c.location.ST_Intersects(Elevation.rast),
-                               elevation != None)).all()
-
-    if len(q) == 0:
-        return [], []
-
-    # Assemble elevation data
-    elevations_t = []
-    elevations_h = []
-
-    start_time = q[0][0]
-    start_midnight = start_time.replace(hour=0, minute=0, second=0, microsecond=0)
-
-    for time, elevation in q:
-        time_delta = time - start_midnight
-        time = time_delta.days * 86400 + time_delta.seconds
-
-        elevations_t.append(time)
-        elevations_h.append(elevation)
+    elevations = get_elevations_for_flight(flight)
 
     # Encode lists
-    elevations_t = encoder.encodeList(elevations_t)
-    elevations_h = encoder.encodeList(elevations_h)
+    elevations_t = encoder.encodeList([t for t, h in elevations])
+    elevations_h = encoder.encodeList([h for t, h in elevations])
 
     return elevations_t, elevations_h
 

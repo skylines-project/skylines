@@ -6,15 +6,18 @@ from sqlalchemy.dialects import postgresql
 from sqlalchemy.orm import deferred
 from sqlalchemy.types import Unicode, Integer, Float, DateTime, Date, Boolean
 from sqlalchemy.ext.hybrid import hybrid_property
-from sqlalchemy.sql.expression import case
+from sqlalchemy.sql.expression import case, and_, literal_column
 from geoalchemy2.types import Geometry
 from geoalchemy2.shape import to_shape, from_shape
 from shapely.geometry import LineString
 
 from skylines.model import db
+from skylines.lib.sql import extract_array_item
+
 from .geo import Location
 from .igcfile import IGCFile
 from .aircraft_model import AircraftModel
+from .elevation import Elevation
 
 
 class Flight(db.Model):
@@ -230,3 +233,42 @@ class Flight(db.Model):
         self.locations = from_shape(linestring, srid=4326)
 
         return True
+
+
+def get_elevations_for_flight(flight):
+    # Prepare column expressions
+    locations = Flight.locations.ST_DumpPoints()
+    location_id = extract_array_item(locations.path, 1)
+    location = locations.geom
+
+    # Prepare subquery
+    subq = db.session.query(location_id.label('location_id'),
+                            location.label('location')) \
+                     .filter(Flight.id == flight.id).subquery()
+
+    # Prepare column expressions
+    timestamp = literal_column('timestamps[location_id]')
+    elevation = Elevation.rast.ST_Value(subq.c.location)
+
+    # Prepare main query
+    q = db.session.query(timestamp.label('timestamp'),
+                         elevation.label('elevation')) \
+                  .filter(and_(Flight.id == flight.id,
+                               subq.c.location.ST_Intersects(Elevation.rast),
+                               elevation != None)).all()
+
+    if len(q) == 0:
+        return []
+
+    start_time = q[0][0]
+    start_midnight = start_time.replace(hour=0, minute=0, second=0,
+                                        microsecond=0)
+
+    elevations = []
+    for time, elevation in q:
+        time_delta = time - start_midnight
+        time = time_delta.days * 86400 + time_delta.seconds
+
+        elevations.append((time, elevation))
+
+    return elevations
