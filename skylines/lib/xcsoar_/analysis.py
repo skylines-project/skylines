@@ -1,4 +1,3 @@
-import logging
 import datetime
 import resource
 
@@ -10,8 +9,6 @@ from skylines.lib.datetime import from_seconds_of_day
 from skylines.model import (
     Airport, Trace, FlightPhase, TimeZone, Location
 )
-
-log = logging.getLogger(__name__)
 
 
 def read_location(node):
@@ -251,14 +248,14 @@ def setlimits():
 
 def analyse_flight(flight, full=512, triangle=1024, sprint=64):
     path = files.filename_to_path(flight.igc_file.filename)
-    log.info('Analyzing ' + path)
+    current_app.logger.info('Analyzing ' + path)
 
     try:
         root = xcsoar.analyse_flight(
             path, full_points=full, triangle_points=triangle,
             sprint_points=sprint, popen_kwargs=dict(preexec_fn=setlimits))
     except Exception, e:
-        log.warning('Parsing the output of AnalyseFlight failed. (' + str(e) + ')')
+        current_app.logger.warning('Parsing the output of AnalyseFlight failed. (' + str(e) + ')')
         return False
 
     if 'events' in root:

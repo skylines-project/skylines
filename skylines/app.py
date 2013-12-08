@@ -1,7 +1,7 @@
 import os
 import config
 
-from flask import Flask
+from flask import Flask, request, g
 
 
 class SkyLines(Flask):
@@ -67,21 +67,65 @@ class SkyLines(Flask):
             return izip(*args, **kw)
 
     def add_logging_handlers(self):
-        import logging
-        from logging import handlers
+        if self.debug: return
 
+        import logging
+        from logging import Formatter, Filter
+        from logging.handlers import RotatingFileHandler, SMTPHandler
+
+        # Set general log level
         self.logger.setLevel(logging.INFO)
 
-        file_formatter = logging.Formatter(
-            '%(asctime)s %(levelname)s: %(message)s [in %(pathname)s:%(lineno)d]')
+        # Inject additional log record fields
+        class ContextFilter(Filter):
+            def __init__(self, app):
+                self.app = app
 
-        for level, klass, args in self.config.get('LOGGING_HANDLERS', []):
-            handler = getattr(handlers, klass)(*args)
-            handler.setLevel(getattr(logging, level))
-            if 'FileHandler' in klass:
-                handler.setFormatter(file_formatter)
+            def filter(self, record):
+                record.app_name = self.app.name
+                record.url = request.url
+                record.ip = request.remote_addr
+                if g.current_user:
+                    user = g.current_user
+                    record.user = '%s <%s>' % (user.name, user.email_address)
+                else:
+                    record.user = 'anonymous'
 
-            self.logger.addHandler(handler)
+                return True
+
+        self.logger.addFilter(ContextFilter(self))
+
+        # Add SMTP handler
+        mail_handler = SMTPHandler(
+            'localhost', 'error@skylines-project.org',
+            self.config.get('ADMINS', []), 'SkyLines Error Report')
+        mail_handler.setLevel(logging.ERROR)
+
+        mail_formatter = Formatter('''
+App:                %(app_name)s
+Time:               %(asctime)s
+URL:                %(url)s
+IP:                 %(ip)s
+User:               %(user)s
+
+Message:
+
+%(message)s
+''')
+        mail_handler.setFormatter(mail_formatter)
+        self.logger.addHandler(mail_handler)
+
+        # Add log file handler (if configured)
+        path = self.config.get('LOGFILE')
+        if path:
+            file_handler = RotatingFileHandler(path, 'a', 10000, 4)
+            file_handler.setLevel(logging.INFO)
+
+            file_formatter = Formatter(
+                '%(asctime)s %(levelname)s: %(message)s [in %(pathname)s:%(lineno)d]')
+            file_handler.setFormatter(file_formatter)
+
+            self.logger.addHandler(file_handler)
 
     def add_debug_toolbar(self):
         from flask_debugtoolbar import DebugToolbarExtension
