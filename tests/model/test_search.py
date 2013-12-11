@@ -42,12 +42,12 @@ class TestSearch:
         with cls.app.app_context():
             teardown_db()
 
-    def setUp(self):
+    def setup(self):
         """Prepare model test fixture."""
         self.context = self.app.app_context()
         self.context.push()
 
-    def tearDown(self):
+    def teardown(self):
         """Finish model test fixture."""
         db.session.rollback()
         self.context.pop()

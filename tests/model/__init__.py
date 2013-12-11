@@ -32,7 +32,7 @@ class ModelTest(object):
         with cls.app.app_context():
             teardown_db()
 
-    def setUp(self):
+    def setup(self):
         """Prepare model test fixture."""
         self.context = self.app.app_context()
         self.context.push()
@@ -49,7 +49,7 @@ class ModelTest(object):
             db.session.rollback()
             raise
 
-    def tearDown(self):
+    def teardown(self):
         """Finish model test fixture."""
         db.session.rollback()
         self.context.pop()
