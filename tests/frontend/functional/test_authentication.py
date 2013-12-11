@@ -8,7 +8,7 @@ should be updated.
 """
 
 from nose.tools import assert_in, assert_not_in
-from tests.functional import TestController
+from . import TestController
 
 
 class TestAuthentication(TestController):

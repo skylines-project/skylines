@@ -2,7 +2,7 @@
 """
 Functional test suite for the root controller.
 """
-from tests.functional import TestController
+from . import TestController
 from nose.tools import assert_in
 
 
