@@ -10,12 +10,16 @@ FLAKE8_INPUTS = [
 ]
 
 
-def test_flake8():
+def pytest_generate_tests(metafunc):
+    metafunc.parametrize('folder', FLAKE8_INPUTS)
+
+
+def test_flake8(folder):
     """ Run skylines package through flake8 """
     args = [FLAKE8_COMMAND]
 
     # Append package name that should be checked
-    args.extend(FLAKE8_INPUTS)
+    args.append(folder)
 
     try:
         run(args)
