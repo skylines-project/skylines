@@ -1,8 +1,10 @@
 import os
 import sys
-import glob
+from glob import glob
 from babel.messages.pofile import read_po
 import pytest
+
+TRANSLATION_PATH = os.path.join('skylines', 'frontend', 'translations')
 
 
 def get_language_code(filename):
@@ -12,19 +14,33 @@ def get_language_code(filename):
     return filename
 
 
-def test_pofiles():
-    for filename in glob.glob(os.path.join('skylines', 'frontend', 'translations', '*', 'LC_MESSAGES', 'messages.po')):
-        test_pofiles.func_doc = ('Python string format placeholders must match '
-                                 '(lang: {})'.format(get_language_code(filename)))
-        yield check_pofile, filename
+def pytest_generate_tests(metafunc):
+    pattern = os.path.join(TRANSLATION_PATH, '*', 'LC_MESSAGES', 'messages.po')
+    languages = map(get_language_code, glob(pattern))
+    metafunc.parametrize('language', languages)
 
 
-def check_pofile(filename):
-    with open(filename) as fileobj:
+def test_pofile(language):
+    path = os.path.join(TRANSLATION_PATH, language, 'LC_MESSAGES', 'messages.po')
+    with open(path) as fileobj:
         catalog = read_po(fileobj)
-        for error in catalog.check():
-            print 'Error in message: ' + str(error[0])
-            raise AssertionError(error[1][0])
+
+        errors = list(catalog.check())
+        if errors:
+            for message, merrors in errors:
+
+                print 'Translation Error:'
+                for error in merrors:
+                    s = str(error)
+                    if message.lineno:
+                        s += ' (line ' + str(message.lineno) + ')'
+                    print s
+
+                print
+                print str(message.id) + '\n'
+                print str(message.string) + '\n\n'
+
+            raise AssertionError("There are errors in the translation files. Please check the captured output.")
 
 
 if __name__ == "__main__":
