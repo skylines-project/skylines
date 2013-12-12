@@ -10,8 +10,8 @@ DATADIR = os.path.join(HERE, '..', '..', 'data')
 
 
 class TestUpload(TestController):
-    def setUp(self):
-        super(TestUpload, self).setUp()
+    def setup(self):
+        super(TestUpload, self).setup()
 
         self.bill = User(first_name='bill', email_address='bill@example.com',
                          password='pass')
