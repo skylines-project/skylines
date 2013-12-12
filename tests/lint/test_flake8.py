@@ -1,5 +1,5 @@
 import sys
-import nose
+import pytest
 from subprocess import CalledProcessError, check_output as run
 
 FLAKE8_COMMAND = 'flake8'
@@ -28,5 +28,4 @@ def test_flake8():
 
 
 if __name__ == "__main__":
-    sys.argv.append(__name__)
-    nose.run()
+    pytest.main(__file__)

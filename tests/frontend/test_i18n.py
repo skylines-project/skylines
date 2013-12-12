@@ -2,7 +2,7 @@ import os
 import sys
 import glob
 from babel.messages.pofile import read_po
-import nose
+import pytest
 
 
 def get_language_code(filename):
@@ -28,5 +28,4 @@ def check_pofile(filename):
 
 
 if __name__ == "__main__":
-    sys.argv.append(__name__)
-    nose.run()
+    pytest.main(__file__)

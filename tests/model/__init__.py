@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 """Unit test suite for the models of the application."""
-from nose.tools import assert_equals
 from tests import setup_db, teardown_db
 
 import config
@@ -71,4 +70,4 @@ class ModelTest(object):
         """Model objects can be queried"""
         obj = db.session.query(self.klass).one()
         for key, value in self.attrs.iteritems():
-            assert_equals(getattr(obj, key), value)
+            assert getattr(obj, key) == value

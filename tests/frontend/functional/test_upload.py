@@ -1,6 +1,5 @@
 import os
 from io import BytesIO
-from nose.tools import assert_is_not_none, assert_in
 
 from . import TestController
 from skylines.model import db, User
@@ -39,12 +38,12 @@ class TestUpload(TestController):
         assert 'No flight was saved.' in b.contents
 
     def test_upload_single(self):
-        assert_is_not_none(self.bill.id)
+        assert self.bill.id is not None
         b = self.browser
         b.open('/flights/upload')
 
         # we should be logged in now
-        assert_in('IGC or ZIP file(s)', b.contents)
+        assert 'IGC or ZIP file(s)' in b.contents
 
         f_igc = open(os.path.join(DATADIR, 'simple.igc'))
         b.getControl('IGC or ZIP file(s)').add_file(f_igc,
@@ -53,4 +52,4 @@ class TestUpload(TestController):
 
         b.getControl('Upload').click()
 
-        assert_in('Your flights have been saved.', b.contents)
+        assert 'Your flights have been saved.' in b.contents

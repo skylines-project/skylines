@@ -1,6 +1,6 @@
 import os
 import sys
-import nose
+import pytest
 from subprocess import CalledProcessError, check_output as run
 from functools import partial
 from glob import glob
@@ -46,5 +46,4 @@ def test_gjslint(path):
 
 
 if __name__ == "__main__":
-    sys.argv.append(__name__)
-    nose.run()
+    pytest.main(__file__)
