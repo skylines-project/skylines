@@ -1,8 +1,6 @@
 import os
-import sys
 import pytest
 from subprocess import CalledProcessError, check_output as run
-from functools import partial
 from glob import glob
 
 GJSLINT_COMMAND = 'gjslint'

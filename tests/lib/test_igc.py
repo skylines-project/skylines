@@ -1,8 +1,6 @@
 # -*- coding: utf-8 -*-
 
-import sys
 import pytest
-from unittest import TestCase
 
 import datetime
 from skylines.lib.igc import read_igc_headers

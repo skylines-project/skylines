@@ -5,7 +5,7 @@ from zope.testbrowser.wsgi import Browser
 
 import config
 from tests import setup_app, teardown_db, clean_db_and_bootstrap
-from skylines import create_frontend_app, model
+from skylines import create_frontend_app
 
 __all__ = ['TestController']
 

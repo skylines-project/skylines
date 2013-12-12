@@ -1,4 +1,3 @@
-import sys
 import pytest
 
 from flask import g

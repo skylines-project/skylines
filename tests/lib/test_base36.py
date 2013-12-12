@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 
-import sys
 import pytest
 
 from skylines.lib import base36

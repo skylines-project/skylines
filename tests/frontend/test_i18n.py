@@ -1,5 +1,4 @@
 import os
-import sys
 from glob import glob
 from babel.messages.pofile import read_po
 import pytest

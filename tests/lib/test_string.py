@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 
-import sys
 import pytest
 
 from skylines.lib.string import normalize_whitespace, import_ascii, \

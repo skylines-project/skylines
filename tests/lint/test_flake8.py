@@ -1,4 +1,3 @@
-import sys
 import pytest
 from subprocess import CalledProcessError, check_output as run
 
