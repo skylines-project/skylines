@@ -4,7 +4,7 @@
 
 # Install development requirements
 
-nose==1.2.1
+pytest==2.5.0
 wsgiref==0.1.2
 zope.testbrowser==4.0.2
 WebTest==1.4.3

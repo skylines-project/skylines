@@ -7,8 +7,7 @@ should be updated.
 
 """
 
-from nose.tools import assert_in, assert_not_in
-from tests.functional import TestController
+from . import TestController
 
 
 class TestAuthentication(TestController):
@@ -40,12 +39,12 @@ class TestAuthentication(TestController):
         # Requesting a protected area
         self.browser.open('/flights/upload/')
         assert self.browser.url.startswith('http://localhost/login')
-        assert_not_in('</i> Logout', self.browser.contents)
+        assert '</i> Logout' not in self.browser.contents
 
         self.login(u'max+skylines@blarg.de', 'test')
 
         # Being redirected to the initially requested page:
-        assert_in('</i> Logout', self.browser.contents)
+        assert '</i> Logout' in self.browser.contents
         assert self.browser.url.startswith('http://localhost/flights/upload/'), \
             self.browser.url
 
@@ -54,13 +53,13 @@ class TestAuthentication(TestController):
 
         # Going to the login form voluntarily:
         self.browser.open('/login')
-        assert_not_in('</i> Logout', self.browser.contents)
+        assert '</i> Logout' not in self.browser.contents
 
         # Submitting the login form:
         self.login(u'max+skylines@blarg.de', 'test')
 
         # Being redirected to the home page:
-        assert_in('</i> Logout', self.browser.contents)
+        assert '</i> Logout' in self.browser.contents
 
     def test_logout(self):
         """Logouts must work correctly"""
@@ -71,10 +70,10 @@ class TestAuthentication(TestController):
         self.login(u'manager@somedomain.com', 'managepass')
 
         # Check if the login succeeded
-        assert_in('</i> Logout', self.browser.contents)
+        assert '</i> Logout' in self.browser.contents
 
         # Logging out:
         self.browser.open('/logout')
 
         # Finally, redirected to the home page:
-        assert_not_in('</i> Logout', self.browser.contents)
+        assert '</i> Logout' not in self.browser.contents

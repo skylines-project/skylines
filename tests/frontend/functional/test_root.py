@@ -2,8 +2,7 @@
 """
 Functional test suite for the root controller.
 """
-from tests.functional import TestController
-from nose.tools import assert_in
+from . import TestController
 
 
 class TestRootController(TestController):
@@ -13,4 +12,4 @@ class TestRootController(TestController):
         """ The front page is show the about page """
         self.browser.open('/')
 
-        assert_in('Welcome to SkyLines', self.browser.contents)
+        assert 'Welcome to SkyLines' in self.browser.contents

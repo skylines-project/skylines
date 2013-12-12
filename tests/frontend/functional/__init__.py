@@ -5,7 +5,7 @@ from zope.testbrowser.wsgi import Browser
 
 import config
 from tests import setup_app, teardown_db, clean_db_and_bootstrap
-from skylines import create_frontend_app, model
+from skylines import create_frontend_app
 
 __all__ = ['TestController']
 
@@ -29,7 +29,7 @@ class TestController(object):
         with cls.app.app_context():
             teardown_db()
 
-    def setUp(self):
+    def setup(self):
         """Method called by nose before running each test"""
         self.context = self.app.app_context()
         self.context.push()
@@ -38,5 +38,5 @@ class TestController(object):
 
         self.browser = Browser('http://localhost/', wsgi_app=self.app.wsgi_app)
 
-    def tearDown(self):
+    def teardown(self):
         self.context.pop()

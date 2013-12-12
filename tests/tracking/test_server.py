@@ -1,5 +1,5 @@
+import pytest
 from unittest import TestCase
-from nose.tools import eq_, ok_
 from mock import Mock, patch
 
 import config
@@ -59,20 +59,20 @@ class TrackingServerTest(TestCase):
         # Create mockup function
         def check_pong(data, host_port):
             # Make sure the host and port match up
-            eq_(host_port, self.HOST_PORT)
+            assert host_port == self.HOST_PORT
 
             # Check if this is a valid message
             assert len(data) >= 16
 
             header = struct.unpack('!IHHQ', data[:16])
-            eq_(header[0], server.MAGIC)
-            ok_(check_crc(data))
+            assert header[0] == server.MAGIC
+            assert check_crc(data)
 
-            eq_(header[2], server.TYPE_ACK)
+            assert header[2] == server.TYPE_ACK
 
             ping_id2, _, flags = struct.unpack('!HHI', data[16:])
-            eq_(ping_id2, ping_id)
-            ok_(flags & server.FLAG_ACK_BAD_KEY)
+            assert ping_id2 == ping_id
+            assert flags & server.FLAG_ACK_BAD_KEY
 
         # Connect mockup function to tracking server
         self.server.transport = Mock()
@@ -82,7 +82,7 @@ class TrackingServerTest(TestCase):
         self.server.datagramReceived(message, self.HOST_PORT)
 
         # Check that mockup function was called
-        ok_(self.server.transport.write.called)
+        assert self.server.transport.write.called
 
     def test_ping_with_key(self):
         """ Tracking server can query by tracking key """
@@ -96,20 +96,20 @@ class TrackingServerTest(TestCase):
         # Create mockup function
         def check_pong(data, host_port):
             # Make sure the host and port match up
-            eq_(host_port, self.HOST_PORT)
+            assert host_port == self.HOST_PORT
 
             # Check if this is a valid message
             assert len(data) >= 16
 
             header = struct.unpack('!IHHQ', data[:16])
-            eq_(header[0], server.MAGIC)
-            ok_(check_crc(data))
+            assert header[0] == server.MAGIC
+            assert check_crc(data)
 
-            eq_(header[2], server.TYPE_ACK)
+            assert header[2] == server.TYPE_ACK
 
             ping_id2, _, flags = struct.unpack('!HHI', data[16:])
-            eq_(ping_id2, ping_id)
-            ok_(not (flags & server.FLAG_ACK_BAD_KEY))
+            assert ping_id2 == ping_id
+            assert not (flags & server.FLAG_ACK_BAD_KEY)
 
         # Connect mockup function to tracking server
         self.server.transport = Mock()
@@ -119,7 +119,7 @@ class TrackingServerTest(TestCase):
         self.server.datagramReceived(message, self.HOST_PORT)
 
         # Check that mockup function was called
-        ok_(self.server.transport.write.called)
+        assert self.server.transport.write.called
 
     def create_fix_message(
             self, tracking_key, time, latitude=None, longitude=None,
@@ -187,7 +187,7 @@ class TrackingServerTest(TestCase):
         self.server.datagramReceived(message, self.HOST_PORT)
 
         # Check if the message was properly received
-        eq_(TrackingFix.query().count(), 0)
+        assert TrackingFix.query().count() == 0
 
     def test_empty_fix(self):
         """ Tracking server accepts empty fixes """
@@ -209,19 +209,19 @@ class TrackingServerTest(TestCase):
         # Check if the message was properly received and written to the database
         fixes = TrackingFix.query().all()
 
-        eq_(len(fixes), 1)
+        assert len(fixes) == 1
 
         fix = fixes[0]
-        eq_(fix.ip, self.HOST_PORT[0])
+        assert fix.ip == self.HOST_PORT[0]
 
-        eq_(fix.time, utcnow_return_value)
-        eq_(fix.location_wkt, None)
-        eq_(fix.track, None)
-        eq_(fix.ground_speed, None)
-        eq_(fix.airspeed, None)
-        eq_(fix.altitude, None)
-        eq_(fix.vario, None)
-        eq_(fix.engine_noise_level, None)
+        assert fix.time == utcnow_return_value
+        assert fix.location_wkt == None
+        assert fix.track == None
+        assert fix.ground_speed == None
+        assert fix.airspeed == None
+        assert fix.altitude == None
+        assert fix.vario == None
+        assert fix.engine_noise_level == None
 
     def test_real_fix(self):
         """ Tracking server accepts real fixes """
@@ -250,19 +250,19 @@ class TrackingServerTest(TestCase):
         # Check if the message was properly received and written to the database
         fixes = TrackingFix.query().all()
 
-        eq_(len(fixes), 1)
+        assert len(fixes) == 1
 
         fix = fixes[0]
-        eq_(fix.ip, self.HOST_PORT[0])
+        assert fix.ip == self.HOST_PORT[0]
 
-        eq_(fix.time, utcnow_return_value)
-        eq_(fix.location.to_wkt(), 'POINT(7.52 52.7)')
-        eq_(fix.track, 234)
-        eq_(fix.ground_speed, 33.25)
-        eq_(fix.airspeed, 32.)
-        eq_(fix.altitude, 1234)
-        eq_(fix.vario, 2.25)
-        eq_(fix.engine_noise_level, 10)
+        assert fix.time == utcnow_return_value
+        assert fix.location.to_wkt() == 'POINT(7.52 52.7)'
+        assert fix.track == 234
+        assert fix.ground_speed == 33.25
+        assert fix.airspeed == 32.
+        assert fix.altitude == 1234
+        assert fix.vario == 2.25
+        assert fix.engine_noise_level == 10
 
     def test_failing_fix(self):
         """ Tracking server handles SQLAlchemyError gracefully """
@@ -277,12 +277,8 @@ class TrackingServerTest(TestCase):
             self.server.datagramReceived(message, self.HOST_PORT)
 
         # Check if the message was properly received
-        eq_(TrackingFix.query().count(), 0)
-        ok_(commitmock.called)
+        assert TrackingFix.query().count() == 0
+        assert commitmock.called
 
 if __name__ == "__main__":
-    import sys
-    import nose
-
-    sys.argv.append(__name__)
-    nose.run()
+    pytest.main(__file__)

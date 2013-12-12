@@ -1,4 +1,4 @@
-from tests.functional import TestController
+from . import TestController
 from skylines.model import User
 
 

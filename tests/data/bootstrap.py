@@ -16,7 +16,6 @@ def bootstrap():
 
         db.session.add(u)
 
-
         u1 = User()
         u1.first_name = u'Example'
         u1.last_name = u'User'
@@ -25,7 +24,6 @@ def bootstrap():
         u1.tracking_key = 123456
 
         db.session.add(u1)
-
 
         db.session.commit()
     except IntegrityError:
