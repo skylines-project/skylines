@@ -10,7 +10,7 @@ from skylines import create_app
 from skylines.model import db
 
 
-class TestTable(db.Model):
+class ExampleTable(db.Model):
     __tablename__ = 'ilike_test'
 
     id = Column(Integer, autoincrement=True, primary_key=True)
@@ -30,7 +30,7 @@ class TestSqlLib:
 
         # Setup the database
         setup_db()
-        db.session.add(TestTable(name='John Doe', uni='Jane and John Doe'))
+        db.session.add(ExampleTable(name='John Doe', uni='Jane and John Doe'))
         db.session.commit()
 
     def teardown(self):
@@ -43,22 +43,22 @@ class TestSqlLib:
         """ String.weighted_ilike() works as expected """
 
         eq_(db.session.query(
-            TestTable.name.weighted_ilike('%John%', 1)).scalar(), 1)
+            ExampleTable.name.weighted_ilike('%John%', 1)).scalar(), 1)
         eq_(db.session.query(
-            TestTable.name.weighted_ilike('%John%', 5)).scalar(), 5)
+            ExampleTable.name.weighted_ilike('%John%', 5)).scalar(), 5)
         eq_(db.session.query(
-            TestTable.name.weighted_ilike('%John%', 100)).scalar(), 100)
+            ExampleTable.name.weighted_ilike('%John%', 100)).scalar(), 100)
 
         eq_(db.session.query(
-            TestTable.name.weighted_ilike('%John%')).scalar(), 1)
+            ExampleTable.name.weighted_ilike('%John%')).scalar(), 1)
 
         eq_(float(db.session.query(
-            TestTable.name.weighted_ilike('%John%', 0.1)).scalar()), 0.1)
+            ExampleTable.name.weighted_ilike('%John%', 0.1)).scalar()), 0.1)
 
     def test_weighted_ilike_exception(self):
         """ String.weighted_ilike() fails as expected """
 
-        assert_raises(AssertionError, TestTable.name.weighted_ilike, '%John%', '5')
+        assert_raises(AssertionError, ExampleTable.name.weighted_ilike, '%John%', '5')
 
 
 if __name__ == "__main__":
