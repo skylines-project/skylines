@@ -45,3 +45,35 @@ def clean_db_and_bootstrap():
     clean_db()
     bootstrap()
     db.session.commit()
+
+
+class AppTest(object):
+
+    bootstrap_db = False
+
+    @classmethod
+    def setup_class(cls):
+        import config
+        from skylines.app import create_app
+        cls.app = create_app(config_file=config.TESTING_CONF_PATH)
+
+        with cls.app.app_context():
+            setup_db()
+            if cls.bootstrap_db: bootstrap()
+
+    # Tear down that database
+    @classmethod
+    def teardown_class(cls):
+        with cls.app.app_context():
+            if cls.bootstrap_db: clean_db()
+            teardown_db()
+
+    def setup(self):
+        """Prepare model test fixture."""
+        self.context = self.app.app_context()
+        self.context.push()
+
+    def teardown(self):
+        """Finish model test fixture."""
+        db.session.rollback()
+        self.context.pop()
