@@ -62,21 +62,23 @@ class AppTest(object):
 
         with cls.app.app_context():
             setup_db()
-            if cls.bootstrap_db: bootstrap()
 
     # Tear down that database
     @classmethod
     def teardown_class(cls):
         with cls.app.app_context():
-            if cls.bootstrap_db: clean_db()
             teardown_db()
 
     def setup(self):
-        """Prepare model test fixture."""
         self.context = self.app.app_context()
         self.context.push()
 
+        if self.bootstrap_db:
+            bootstrap()
+
     def teardown(self):
-        """Finish model test fixture."""
-        db.session.rollback()
+        if self.bootstrap_db:
+            clean_db()
+            db.session.commit()
+
         self.context.pop()
