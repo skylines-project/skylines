@@ -128,8 +128,11 @@ Message:
             self.logger.addHandler(file_handler)
 
     def add_debug_toolbar(self):
-        from flask_debugtoolbar import DebugToolbarExtension
-        DebugToolbarExtension(self)
+        try:
+            from flask_debugtoolbar import DebugToolbarExtension
+            DebugToolbarExtension(self)
+        except ImportError:
+            pass
 
     def add_celery(self):
         from skylines.worker.celery import celery
