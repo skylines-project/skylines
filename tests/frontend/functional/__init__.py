@@ -4,39 +4,20 @@
 from zope.testbrowser.wsgi import Browser
 
 import config
-from tests import setup_app, teardown_db, clean_db_and_bootstrap
+from tests import AppTest
 from skylines import create_frontend_app
 
 __all__ = ['TestController']
 
 
-class TestController(object):
-    """
-    Base functional test case for the controllers.
-    """
+class TestController(AppTest):
 
-    @classmethod
-    def setup_class(cls):
-        cls.app = create_frontend_app(config.TESTING_CONF_PATH)
+    SETUP_DIRS = True
+    BOOTSTRAP_DB = True
 
-        # Setup the database
-        with cls.app.app_context():
-            setup_app(cls.app)
-
-    @classmethod
-    def teardown_class(cls):
-        # Remove the database again
-        with cls.app.app_context():
-            teardown_db()
+    def create_app(self):
+        return create_frontend_app(config_file=config.TESTING_CONF_PATH)
 
     def setup(self):
-        """Method called by nose before running each test"""
-        self.context = self.app.app_context()
-        self.context.push()
-
-        clean_db_and_bootstrap()
-
+        super(TestController, self).setup()
         self.browser = Browser('http://localhost/', wsgi_app=self.app.wsgi_app)
-
-    def teardown(self):
-        self.context.pop()

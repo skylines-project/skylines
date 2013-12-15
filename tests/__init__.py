@@ -52,6 +52,8 @@ class AppTest(object):
     SETUP_DB = True
     BOOTSTRAP_DB = False
 
+    SETUP_DIRS = False
+
     def create_app(self):
         import config
         from skylines.app import create_app
@@ -64,6 +66,9 @@ class AppTest(object):
         if cls.SETUP_DB:
             with cls.app.app_context():
                 setup_db()
+
+        if cls.SETUP_DIRS:
+            setup_dirs(cls.app)
 
     # Tear down that database
     @classmethod
