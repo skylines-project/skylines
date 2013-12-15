@@ -18,7 +18,7 @@ def search(text):
 
 class TestSearch(AppTest):
 
-    bootstrap_db = True
+    BOOTSTRAP_DB = True
 
     def test_tokenizer(self):
         # Check that this does not throw exceptions

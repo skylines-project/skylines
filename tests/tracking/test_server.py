@@ -14,7 +14,7 @@ from sqlalchemy.exc import SQLAlchemyError
 class TestTrackingServer(AppTest):
     HOST_PORT = ('127.0.0.1', 5597)
 
-    bootstrap_db = True
+    BOOTSTRAP_DB = True
 
     def setup(self):
         super(TestTrackingServer, self).setup()

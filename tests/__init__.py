@@ -49,8 +49,8 @@ def clean_db_and_bootstrap():
 
 class AppTest(object):
 
-    bootstrap_db = False
     SETUP_DB = True
+    BOOTSTRAP_DB = False
 
     def create_app(self):
         import config
@@ -76,11 +76,14 @@ class AppTest(object):
         self.context = self.app.test_request_context()
         self.context.push()
 
-        if self.bootstrap_db:
+        if self.BOOTSTRAP_DB:
             bootstrap()
 
     def teardown(self):
-        if self.bootstrap_db:
+        if self.SETUP_DB:
+            db.session.rollback()
+
+        if self.BOOTSTRAP_DB:
             clean_db()
             db.session.commit()
 
