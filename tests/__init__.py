@@ -51,11 +51,14 @@ class AppTest(object):
 
     bootstrap_db = False
 
-    @classmethod
-    def setup_class(cls):
+    def create_app(self):
         import config
         from skylines.app import create_app
-        cls.app = create_app(config_file=config.TESTING_CONF_PATH)
+        return create_app(config_file=config.TESTING_CONF_PATH)
+
+    @classmethod
+    def setup_class(cls):
+        cls.app = cls().create_app()
 
         with cls.app.app_context():
             setup_db()
