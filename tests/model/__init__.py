@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 """Unit test suite for the models of the application."""
-from tests import setup_db, teardown_db
+from tests import setup_db, teardown_db, clean_db
+from tests.data.bootstrap import bootstrap
 
 import config
 from skylines import create_app
@@ -11,17 +12,21 @@ __all__ = ['ModelTest']
 
 class AppTest(object):
 
+    bootstrap_db = False
+
     @classmethod
     def setup_class(cls):
         cls.app = create_app(config_file=config.TESTING_CONF_PATH)
 
         with cls.app.app_context():
             setup_db()
+            if cls.bootstrap_db: bootstrap()
 
     # Tear down that database
     @classmethod
     def teardown_class(cls):
         with cls.app.app_context():
+            if cls.bootstrap_db: clean_db()
             teardown_db()
 
     def setup(self):
