@@ -1,26 +1,10 @@
 # -*- coding: utf-8 -*-
-"""
-Integration tests for the :mod:`repoze.who`-powered authentication sub-system.
-
-As SkyLines grows and the authentication method changes, only these tests
-should be updated.
-
-"""
 
 from . import TestController
 
 
 class TestAuthentication(TestController):
-    """Tests for the default authentication setup.
-
-    By default in TurboGears 2, :mod:`repoze.who` is configured with the same
-    plugins specified by repoze.what-quickstart (which are listed in
-    http://code.gustavonarea.net/repoze.what-quickstart/#repoze.what.plugins.quickstart.setup_sql_auth).
-
-    As the settings for those plugins change, or the plugins are replaced,
-    these tests should be updated.
-
-    """
+    """ Tests for the default authentication setup. """
 
     def login(self, email, password):
         form = self.browser.getForm(index=2)
