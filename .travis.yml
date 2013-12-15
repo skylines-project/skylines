@@ -24,6 +24,9 @@ before_script:
   - psql -U postgres -d skylines_test -c 'CREATE EXTENSION fuzzystrmatch;'
 
 script:
+  # Generate asset files
+  - ./scripts/generate_assets.py
+
   # Run the test suite
   - py.test
 
