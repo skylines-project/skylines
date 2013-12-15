@@ -50,6 +50,7 @@ def clean_db_and_bootstrap():
 class AppTest(object):
 
     bootstrap_db = False
+    SETUP_DB = True
 
     def create_app(self):
         import config
@@ -60,17 +61,19 @@ class AppTest(object):
     def setup_class(cls):
         cls.app = cls().create_app()
 
-        with cls.app.app_context():
-            setup_db()
+        if cls.SETUP_DB:
+            with cls.app.app_context():
+                setup_db()
 
     # Tear down that database
     @classmethod
     def teardown_class(cls):
-        with cls.app.app_context():
-            teardown_db()
+        if cls.SETUP_DB:
+            with cls.app.app_context():
+                teardown_db()
 
     def setup(self):
-        self.context = self.app.app_context()
+        self.context = self.app.test_request_context()
         self.context.push()
 
         if self.bootstrap_db:
