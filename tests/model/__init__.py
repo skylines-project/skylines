@@ -1,12 +1,14 @@
 # -*- coding: utf-8 -*-
 """Unit test suite for the models of the application."""
-from tests import AppTest
+
+import pytest
 from skylines.model import db
 
 __all__ = ['ModelTest']
 
 
-class ModelTest(AppTest):
+@pytest.mark.usefixtures("app", "db", "cleanup")
+class ModelTest(object):
     """Base unit test case for the models."""
 
     klass = None
@@ -14,7 +16,6 @@ class ModelTest(AppTest):
 
     def setup(self):
         """Prepare model test fixture."""
-        super(ModelTest, self).setup()
 
         try:
             new_attrs = {}

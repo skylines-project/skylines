@@ -1,21 +1,19 @@
 import pytest
-from tests import AppTest
 
 from flask import g
 
 import skylines.lib.formatter.units as units
 
 
-class TestUnitFormatter(AppTest):
-    SETUP_DB = False
+@pytest.fixture
+def babel_app(app):
+    app.add_babel()
+    return app
 
-    def create_app(self):
-        app = super(TestUnitFormatter, self).create_app()
-        app.add_babel()
-        return app
 
+@pytest.mark.usefixtures("babel_app", "request_context")
+class TestUnitFormatter(object):
     def setup(self):
-        super(TestUnitFormatter, self).setup()
         g.current_user = None
 
     def test_distance_format(self):

@@ -1,8 +1,9 @@
+import pytest
+
 from skylines.model import User, Club, Airport
 from skylines.model.search import (
     combined_search_query, escape_tokens, text_to_tokens
 )
-from tests.model import AppTest
 
 MODELS = [User, Club, Airport]
 
@@ -16,9 +17,7 @@ def search(text):
     return combined_search_query(MODELS, tokens)
 
 
-class TestSearch(AppTest):
-
-    BOOTSTRAP_DB = True
+class TestSearch(object):
 
     def test_tokenizer(self):
         # Check that this does not throw exceptions
@@ -40,6 +39,7 @@ class TestSearch(AppTest):
         assert escape_tokens(['hello %!']) == ['hello \\%!']
         assert escape_tokens(['hello _!']) == ['hello \\_!']
 
+    @pytest.mark.usefixtures("app", "db", "bootstrap")
     def test_search(self):
         assert search('example').count() == 2
         assert search('user').count() == 1

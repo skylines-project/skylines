@@ -1,6 +1,5 @@
 import pytest
 
-from tests import AppTest
 from sqlalchemy import Column, Integer, String, Unicode
 
 from skylines.model import db
@@ -14,10 +13,10 @@ class ExampleTable(db.Model):
     uni = Column(Unicode(32))
 
 
-class TestSqlLib(AppTest):
+@pytest.mark.usefixtures("app", "db", "cleanup")
+class TestSqlLib(object):
 
     def setup(self):
-        super(TestSqlLib, self).setup()
         db.session.add(ExampleTable(name='John Doe', uni='Jane and John Doe'))
         db.session.flush()
 

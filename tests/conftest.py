@@ -1,3 +1,5 @@
+import os
+import shutil
 import pytest
 from tests.data.bootstrap import bootstrap as _bootstrap
 
@@ -23,6 +25,17 @@ def app(request):
     return app
 
 
+@pytest.fixture(scope='function')
+def request_context(app, request):
+    ctx = app.test_request_context()
+    ctx.push()
+
+    def teardown():
+        ctx.pop()
+
+    request.addfinalizer(teardown)
+
+
 @pytest.fixture(scope='session')
 def db(app, request):
     """Session-wide test database."""
@@ -38,13 +51,26 @@ def db(app, request):
 
 
 @pytest.fixture(scope='function')
-def bootstrap(db, request):
-    _bootstrap()
-
+def cleanup(db, request):
     def teardown():
+        db.session.rollback()
+
         for table in reversed(db.metadata.sorted_tables):
             db.session.execute(table.delete())
 
         db.session.commit()
 
     request.addfinalizer(teardown)
+
+
+@pytest.fixture(scope='function')
+def bootstrap(cleanup, request):
+    _bootstrap()
+
+
+@pytest.fixture(scope='session')
+def dirs(app, request):
+    path = app.config['SKYLINES_FILES_PATH']
+    if os.path.exists(path):
+        shutil.rmtree(path)
+    os.makedirs(path)
