@@ -1,7 +1,6 @@
 import pytest
 from mock import Mock, patch
 
-from tests import AppTest
 from skylines.model import db, TrackingFix
 
 import struct
@@ -11,14 +10,11 @@ from datetime import datetime
 from sqlalchemy.exc import SQLAlchemyError
 
 
-class TestTrackingServer(AppTest):
+@pytest.mark.usefixtures("app", "db", "bootstrap")
+class TestTrackingServer(object):
     HOST_PORT = ('127.0.0.1', 5597)
 
-    BOOTSTRAP_DB = True
-
     def setup(self):
-        super(TestTrackingServer, self).setup()
-
         # Setup tracking server mock
         server.TrackingServer.__init__ = Mock(return_value=None)
         self.server = server.TrackingServer()
