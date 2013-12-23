@@ -12,7 +12,6 @@ requirements = [
     'Flask-Login==0.2.7',
     'Flask-Cache==0.12',
     'Flask-SQLAlchemy==1.0',
-    'Flask-DebugToolbar==0.8.0',
     'Flask-WTF==0.9.3',
     'sqlalchemy==0.8.2',
     'alembic==0.6.0',

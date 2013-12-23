@@ -1,31 +1,31 @@
 import os
 from io import BytesIO
 
-from . import TestController
+import pytest
 from skylines.model import db, User
 
 HERE = os.path.dirname(__file__)
 DATADIR = os.path.join(HERE, '..', '..', 'data')
 
 
-class TestUpload(TestController):
+@pytest.mark.usefixtures("app", "db", "cleanup", "dirs")
+class TestUpload(object):
     def setup(self):
-        super(TestUpload, self).setup()
-
         self.bill = User(first_name='bill', email_address='bill@example.com',
                          password='pass')
         db.session.add(self.bill)
         db.session.commit()
-        self.login('bill@example.com', 'pass')
 
-    def login(self, email, password):
-        form = self.browser.getForm(index=1)
+    def login(self, browser, email, password):
+        form = browser.getForm(index=1)
         form.getControl(name='email_address').value = email
         form.getControl(name='password').value = password
         form.submit()
 
-    def test_upload_broken_igc(self):
-        b = self.browser
+    def test_upload_broken_igc(self, browser):
+        self.login(browser, 'bill@example.com', 'pass')
+
+        b = browser
         b.open('/flights/upload')
 
         # we should be logged in now
@@ -37,9 +37,11 @@ class TestUpload(TestController):
         b.getControl('Upload').click()
         assert 'No flight was saved.' in b.contents
 
-    def test_upload_single(self):
+    def test_upload_single(self, browser):
+        self.login(browser, 'bill@example.com', 'pass')
+
         assert self.bill.id is not None
-        b = self.browser
+        b = browser
         b.open('/flights/upload')
 
         # we should be logged in now

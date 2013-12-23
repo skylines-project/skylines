@@ -11,3 +11,5 @@ WebTest==1.4.3
 mock==1.0.1
 flake8==2.1.0
 http://closure-linter.googlecode.com/files/closure_linter-latest.tar.gz
+
+Flask-Testing==0.4

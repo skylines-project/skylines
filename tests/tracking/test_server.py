@@ -1,10 +1,6 @@
 import pytest
-from unittest import TestCase
 from mock import Mock, patch
 
-import config
-from tests import setup_app, teardown_db, clean_db_and_bootstrap
-from skylines import create_app
 from skylines.model import db, TrackingFix
 
 import struct
@@ -14,38 +10,14 @@ from datetime import datetime
 from sqlalchemy.exc import SQLAlchemyError
 
 
-class TrackingServerTest(TestCase):
+@pytest.mark.usefixtures("app", "db", "bootstrap")
+class TestTrackingServer(object):
     HOST_PORT = ('127.0.0.1', 5597)
 
-    @classmethod
-    def setup_class(cls):
-        cls.app = create_app(config_file=config.TESTING_CONF_PATH)
-
-        # Setup the database
-        with cls.app.app_context():
-            setup_app(cls.app)
-
-    @classmethod
-    def teardown_class(cls):
-        # Remove the database again
-        with cls.app.app_context():
-            teardown_db()
-
-    def setUp(self):
-        self.context = self.app.app_context()
-        self.context.push()
-
+    def setup(self):
         # Setup tracking server mock
-        clean_db_and_bootstrap()
         server.TrackingServer.__init__ = Mock(return_value=None)
         self.server = server.TrackingServer()
-
-    def tearDown(self):
-        # Clear the database
-        TrackingFix.query().delete()
-        db.session.commit()
-
-        self.context.pop()
 
     def test_ping(self):
         """ Tracking server sends ACK when PING is received """

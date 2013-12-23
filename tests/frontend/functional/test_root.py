@@ -2,14 +2,15 @@
 """
 Functional test suite for the root controller.
 """
-from . import TestController
+import pytest
 
 
-class TestRootController(TestController):
+@pytest.mark.usefixtures("app")
+class TestRootController(object):
     """Tests for the method in the root controller."""
 
-    def test_index(self):
+    def test_index(self, browser):
         """ The front page is show the about page """
-        self.browser.open('/')
+        browser.open('/')
 
-        assert 'Welcome to SkyLines' in self.browser.contents
+        assert 'Welcome to SkyLines' in browser.contents
