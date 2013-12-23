@@ -29,6 +29,7 @@ def teardown_db():
     """Method used to destroy a database"""
     db.session.remove()
     db.drop_all()
+    db.session.bind.dispose()
 
 
 def clean_db():

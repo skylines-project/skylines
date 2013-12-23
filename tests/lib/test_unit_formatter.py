@@ -7,11 +7,13 @@ from skylines import create_app
 import skylines.lib.formatter.units as units
 
 
-def setup():
+@pytest.yield_fixture(scope="module", autouse=True)
+def setup_app():
     app = create_app(config_file=config.TESTING_CONF_PATH)
     app.add_babel()
-    app.test_request_context().push()
-    g.current_user = None
+    with app.test_request_context():
+        g.current_user = None
+        yield
 
 
 def test_distance_format():

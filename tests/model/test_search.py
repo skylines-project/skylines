@@ -1,11 +1,9 @@
-import config
-from skylines import create_app
-from skylines.model import db, User, Club, Airport
+import pytest
+
+from skylines.model import User, Club, Airport
 from skylines.model.search import (
     combined_search_query, escape_tokens, text_to_tokens
 )
-from tests import setup_db, teardown_db
-from tests.data.bootstrap import bootstrap
 
 MODELS = [User, Club, Airport]
 
@@ -19,36 +17,8 @@ def search(text):
     return combined_search_query(MODELS, tokens)
 
 
+@pytest.mark.usefixtures("bootstraped_db")
 class TestSearch:
-
-    # Create an empty database before we start our tests for this module
-    @classmethod
-    def setup_class(cls):
-        """Function called by nose on module load"""
-        cls.app = create_app(config_file=config.TESTING_CONF_PATH)
-
-        with cls.app.app_context():
-            setup_db()
-
-            # Add sample data to the database
-            bootstrap()
-
-    # Tear down that database
-    @classmethod
-    def teardown_class(cls):
-        """Function called by nose after all tests in this module ran"""
-        with cls.app.app_context():
-            teardown_db()
-
-    def setup(self):
-        """Prepare model test fixture."""
-        self.context = self.app.app_context()
-        self.context.push()
-
-    def teardown(self):
-        """Finish model test fixture."""
-        db.session.rollback()
-        self.context.pop()
 
     def test_tokenizer(self):
         # Check that this does not throw exceptions

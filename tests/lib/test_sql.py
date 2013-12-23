@@ -1,10 +1,7 @@
 import pytest
 
-import config
-from tests import setup_db, teardown_db
 from sqlalchemy import Column, Integer, String, Unicode
 
-from skylines import create_app
 from skylines.model import db
 
 
@@ -16,26 +13,12 @@ class ExampleTable(db.Model):
     uni = Column(Unicode(32))
 
 
+@pytest.mark.usefixtures("db")
 class TestSqlLib:
 
-    @classmethod
-    def setup_class(cls):
-        cls.app = create_app(config_file=config.TESTING_CONF_PATH)
-
     def setup(self):
-        self.context = self.app.app_context()
-        self.context.push()
-
-        # Setup the database
-        setup_db()
         db.session.add(ExampleTable(name='John Doe', uni='Jane and John Doe'))
         db.session.commit()
-
-    def teardown(self):
-        # Remove the database again
-        teardown_db()
-
-        self.context.pop()
 
     def test_weighted_ilike(self):
         """ String.weighted_ilike() works as expected """
