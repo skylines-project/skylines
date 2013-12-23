@@ -57,7 +57,7 @@ def bootstraped_db(db):
 
 @pytest.yield_fixture(scope="session")
 def frontend_app():
-    """Set up global front-end up for functional tests
+    """Set up global front-end app for functional tests
 
     Initialized once per test-run
     """
