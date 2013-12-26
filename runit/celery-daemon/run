@@ -4,7 +4,7 @@ set -e
 
 DAEMON_USER=skylines
 DAEMON_GROUP=skylines
-SCRIPT=/opt/skylines/src/celery_worker.py
+SCRIPT="/opt/skylines/src/manage.py celery runworker"
 
 export LANG=C
 export LC_ALL=C

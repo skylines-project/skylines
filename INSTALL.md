@@ -122,4 +122,4 @@ need is to install the `redis-server` package:
 
 To run the Celery worker, call
 
-    $ ./celery_worker.py
+    $ ./manage.py celery runworker
