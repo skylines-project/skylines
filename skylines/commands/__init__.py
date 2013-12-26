@@ -4,6 +4,7 @@ from flask.ext.script import Manager
 
 from .assets import manager as assets_manager
 from .celery import manager as celery_manager
+from .database import manager as database_manager
 from .flights import manager as flights_manager
 from .notifications import manager as notifications_manager
 from .tracking import manager as tracking_manager
@@ -31,6 +32,7 @@ manager.add_command("runserver", Server())
 
 manager.add_command("assets", assets_manager)
 manager.add_command("celery", celery_manager)
+manager.add_command("db", database_manager)
 manager.add_command("flights", flights_manager)
 manager.add_command("notifications", notifications_manager)
 manager.add_command("tracking", tracking_manager)
