@@ -15,8 +15,8 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2013-11-22 19:12+0000\n"
-"X-Generator: Launchpad (build 16831)\n"
+"X-Launchpad-Export-Date: 2013-12-26 23:00+0000\n"
+"X-Generator: Launchpad (build 16877)\n"
 "Generated-By: Babel 1.3\n"
 
 #: skylines/forms/aircraft_model.py:29
