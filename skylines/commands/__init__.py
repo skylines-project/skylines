@@ -4,6 +4,7 @@ from flask.ext.script import Manager
 
 from .celery import manager as celery_manager
 from .flights import manager as flights_manager
+from .notifications import manager as notifications_manager
 from .tracking import manager as tracking_manager
 from .import_srtm import ImportSRTM
 from .server import Server
@@ -26,6 +27,7 @@ manager.add_option('-c', '--config', dest='config', required=False)
 manager.add_command("shell", Shell())
 manager.add_command("runserver", Server())
 manager.add_command("flights", flights_manager)
+manager.add_command("notifications", notifications_manager)
 manager.add_command("tracking", tracking_manager)
 manager.add_command("celery", celery_manager)
 manager.add_command("import-srtm", ImportSRTM())
