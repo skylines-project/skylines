@@ -16,8 +16,6 @@ from .notifications import manager as notifications_manager
 from .tracking import manager as tracking_manager
 from .users import manager as users_manager
 
-from .import_translations import ImportTranslations
-
 from .search import Search
 
 from skylines.app import create_app
@@ -47,7 +45,5 @@ manager.add_command("import", import_manager)
 manager.add_command("notifications", notifications_manager)
 manager.add_command("tracking", tracking_manager)
 manager.add_command("users", users_manager)
-
-manager.add_command("import-translations", ImportTranslations())
 
 manager.add_command("search", Search())
