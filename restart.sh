@@ -9,7 +9,7 @@ set -e
 cd `dirname $0`
 
 # compile i18n .mo files
-python setup.py compile_catalog
+./manage.py babel compile
 
 # generate JS/CSS assets
 ./manage.py assets build

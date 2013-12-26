@@ -7,6 +7,7 @@ from .shell import Shell
 from .server import Server
 
 from .assets import manager as assets_manager
+from .babel import manager as babel_manager
 from .celery import manager as celery_manager
 from .database import manager as database_manager
 from .flights import manager as flights_manager
@@ -42,6 +43,7 @@ manager.add_command("runserver", Server())
 manager.add_command("migrate", MigrateCommand)
 
 manager.add_command("assets", assets_manager)
+manager.add_command("babel", babel_manager)
 manager.add_command("celery", celery_manager)
 manager.add_command("db", database_manager)
 manager.add_command("flights", flights_manager)
