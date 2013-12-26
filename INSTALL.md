@@ -96,7 +96,7 @@ if you need more help with the building process.
 If the above steps are completed you should be able to run a base version of
 *SkyLines* locally now:
 
-    $ ./debug.py
+    $ ./manage.py runserver
 
 *(The following chapters are optional!)*
 
