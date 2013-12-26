@@ -106,7 +106,7 @@ Since an empty database is boring, you should at least load the airports from
 the [Welt2000](http://www.segelflug.de/vereine/welt2000/) into the database by
 calling:
 
-    $ ./scripts/import_welt2000.py
+    $ ./manage.py import-welt2000
 
 
 ## Asynchronous tasks
