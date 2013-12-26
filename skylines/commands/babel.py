@@ -92,6 +92,7 @@ def extract():
         ' --copyright-holder="' + __title__ + ' team"'
         ' --msgid-bugs-address="' + __email__ + '"'
         ' -F %(BABEL_FOLDER)s/babel.cfg'
+        ' -w 79'
         ' -o %(POT_PATH)s .')
 
 
@@ -108,7 +109,7 @@ def update():
     .po translations
     """
 
-    run('pybabel update -i %(POT_PATH)s -d %(BABEL_FOLDER)s')
+    run('pybabel update -i %(POT_PATH)s -d %(BABEL_FOLDER)s -w 79')
 
 
 @manager.command
