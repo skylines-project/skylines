@@ -12,7 +12,7 @@ cd `dirname $0`
 python setup.py compile_catalog
 
 # generate JS/CSS assets
-python scripts/generate_assets.py
+./manage.py assets build
 
 # do database migrations
 sudo -u skylines alembic upgrade head
