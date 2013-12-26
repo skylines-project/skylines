@@ -15,7 +15,7 @@ python setup.py compile_catalog
 ./manage.py assets build
 
 # do database migrations
-sudo -u skylines alembic upgrade head
+sudo -u skylines ./manage.py migrate upgrade
 
 # restart services
 sv restart skylines-fastcgi

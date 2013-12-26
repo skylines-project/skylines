@@ -11,6 +11,7 @@ requirements = [
     'Flask-Assets==0.8',
     'Flask-Login==0.2.7',
     'Flask-Cache==0.12',
+    'Flask-Migrate==1.1.0',
     'Flask-Script==0.6.6',
     'Flask-SQLAlchemy==1.0',
     'Flask-WTF==0.9.3',

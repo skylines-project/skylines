@@ -1,8 +1,7 @@
 from flask.ext.script import Manager, prompt_bool
+from flask.ext.migrate import stamp
 
 from skylines.model import db
-from alembic.config import Config
-from alembic import command
 from tests.data.bootstrap import bootstrap as _bootstrap
 
 manager = Manager(help="Perform database operations")
@@ -16,8 +15,7 @@ def create():
     db.create_all()
 
     # create alembic version table
-    alembic_cfg = Config("alembic.ini")
-    command.stamp(alembic_cfg, "head")
+    stamp()
 
 
 @manager.command

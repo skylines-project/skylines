@@ -1,6 +1,7 @@
 import sys
 
 from flask.ext.script import Manager
+from flask.ext.migrate import MigrateCommand
 
 from .shell import Shell
 from .server import Server
@@ -38,6 +39,7 @@ manager = Manager(_create_app)
 manager.add_option('-c', '--config', dest='config', required=False)
 manager.add_command("shell", Shell())
 manager.add_command("runserver", Server())
+manager.add_command("migrate", MigrateCommand)
 
 manager.add_command("assets", assets_manager)
 manager.add_command("celery", celery_manager)
