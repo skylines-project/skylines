@@ -11,16 +11,12 @@ from .babel import manager as babel_manager
 from .celery import manager as celery_manager
 from .database import manager as database_manager
 from .flights import manager as flights_manager
+from .import_ import manager as import_manager
 from .notifications import manager as notifications_manager
 from .tracking import manager as tracking_manager
 from .users import manager as users_manager
 
-from .import_airspace import ImportAirspace
-from .import_dmst_index import ImportDMStIndex
-from .import_mwp import ImportMWP
-from .import_srtm import ImportSRTM
 from .import_translations import ImportTranslations
-from .import_welt2000 import ImportWelt2000
 
 from .search import Search
 
@@ -47,15 +43,11 @@ manager.add_command("babel", babel_manager)
 manager.add_command("celery", celery_manager)
 manager.add_command("db", database_manager)
 manager.add_command("flights", flights_manager)
+manager.add_command("import", import_manager)
 manager.add_command("notifications", notifications_manager)
 manager.add_command("tracking", tracking_manager)
 manager.add_command("users", users_manager)
 
-manager.add_command("import-airspace", ImportAirspace())
-manager.add_command("import-dmst-index", ImportDMStIndex())
-manager.add_command("import-mwp", ImportMWP())
-manager.add_command("import-srtm", ImportSRTM())
 manager.add_command("import-translations", ImportTranslations())
-manager.add_command("import-welt2000", ImportWelt2000())
 
 manager.add_command("search", Search())

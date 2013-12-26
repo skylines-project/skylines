@@ -23,7 +23,7 @@ unl_re = re.compile(r'^unl')
 notam_re = re.compile(r'^notam')
 
 
-class ImportAirspace(Command):
+class Airspace(Command):
     """ Download and import airspace files for the mapserver """
 
     option_list = (

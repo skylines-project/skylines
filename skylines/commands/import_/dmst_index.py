@@ -6,7 +6,7 @@ from skylines.model import db, AircraftModel
 r = re.compile(r'^(.*?)\s*\.+[\.\s]*(\d+)\s*$')
 
 
-class ImportDMStIndex(Command):
+class DMStIndex(Command):
     """ Add or update dmst handicaps in SkyLines """
 
     option_list = (

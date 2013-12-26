@@ -6,7 +6,7 @@ from datetime import datetime
 from sqlalchemy.sql.expression import or_
 
 
-class ImportWelt2000(Command):
+class Welt2000(Command):
     """ Import all airports from the WELT2000 project """
 
     option_list = (

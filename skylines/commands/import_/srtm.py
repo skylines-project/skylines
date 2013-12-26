@@ -7,7 +7,7 @@ from flask import current_app
 from skylines.model import db
 
 
-class ImportSRTM(Command):
+class SRTM(Command):
     """ Download and import elevation data """
 
     SERVER_URL = 'http://download.xcsoar.org/mapgen/data/srtm3/'

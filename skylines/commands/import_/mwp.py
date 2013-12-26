@@ -8,7 +8,7 @@ from geoalchemy2.shape import from_shape
 from shapely.geometry import LineString
 
 
-class ImportMWP(Command):
+class MWP(Command):
     """ Import data from the Mountain Wave Project """
 
     option_list = (
