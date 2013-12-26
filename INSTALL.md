@@ -74,7 +74,7 @@ versions of PostgreSQL, PostGIS and other operating systems. See the
 appropriate documentation and websites for more information.*
 
 After creating the database you have to create the necessary tables and indices
-by calling `./manage.py db init` from the the command line.
+by calling `./manage.py db create` from the the command line.
 
 
 ## XCSoar tools
