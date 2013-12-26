@@ -1,7 +1,5 @@
 from flask.ext.script import Command, Option
 
-import sys
-
 from skylines.model import User, Club, Airport
 from skylines.model.search import combined_search_query, escape_tokens
 
