@@ -9,13 +9,13 @@ set -e
 cd `dirname $0`
 
 # compile i18n .mo files
-python setup.py compile_catalog
+./manage.py babel compile
 
 # generate JS/CSS assets
-python scripts/generate_assets.py
+./manage.py assets build
 
 # do database migrations
-sudo -u skylines alembic upgrade head
+sudo -u skylines ./manage.py migrate upgrade
 
 # restart services
 sv restart skylines-fastcgi

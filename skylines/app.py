@@ -23,6 +23,9 @@ class SkyLines(Flask):
         from skylines.model import db
         db.init_app(self)
 
+        from flask.ext.migrate import Migrate
+        Migrate(self, db)
+
     def add_cache(self):
         """ Create and attach Cache extension """
         from flask.ext.cache import Cache

@@ -5,7 +5,6 @@ FLAKE8_COMMAND = 'flake8'
 
 FLAKE8_INPUTS = [
     'skylines',
-    'scripts',
     'tests'
 ]
 

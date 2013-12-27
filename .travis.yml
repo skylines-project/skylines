@@ -25,7 +25,7 @@ before_script:
 
 script:
   # Generate asset files
-  - ./scripts/generate_assets.py
+  - ./manage.py assets build
 
   # Run the test suite
   - py.test

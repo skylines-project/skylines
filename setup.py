@@ -11,6 +11,8 @@ requirements = [
     'Flask-Assets==0.8',
     'Flask-Login==0.2.7',
     'Flask-Cache==0.12',
+    'Flask-Migrate==1.1.0',
+    'Flask-Script==0.6.6',
     'Flask-SQLAlchemy==1.0',
     'Flask-WTF==0.9.3',
     'sqlalchemy==0.8.2',
@@ -65,16 +67,6 @@ setup(
             'i18n/*/LC_MESSAGES/*.mo',
             'templates/*/*',
             'assets/static/*/*'
-        ]
-    },
-    message_extractors={
-        'skylines': [
-            ('**.py', 'python', None),
-            ('templates/**.jinja', 'jinja2', {
-                'encoding': 'utf-8',
-                'extensions': 'jinja2.ext.with_, jinja2.ext.do, webassets.ext.jinja2.AssetsExtension'
-            }),
-            ('assets/static/**', 'ignore', None)
         ]
     },
     zip_safe=False

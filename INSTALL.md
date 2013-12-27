@@ -74,8 +74,7 @@ versions of PostgreSQL, PostGIS and other operating systems. See the
 appropriate documentation and websites for more information.*
 
 After creating the database you have to create the necessary tables and indices
-by calling the `./scripts/initialise_database.py` file from the the command
-line.
+by calling `./manage.py db create` from the the command line.
 
 
 ## XCSoar tools
@@ -96,7 +95,7 @@ if you need more help with the building process.
 If the above steps are completed you should be able to run a base version of
 *SkyLines* locally now:
 
-    $ ./debug.py
+    $ ./manage.py runserver
 
 *(The following chapters are optional!)*
 
@@ -107,7 +106,7 @@ Since an empty database is boring, you should at least load the airports from
 the [Welt2000](http://www.segelflug.de/vereine/welt2000/) into the database by
 calling:
 
-    $ ./scripts/import_welt2000.py
+    $ ./manage.py import-welt2000
 
 
 ## Asynchronous tasks
@@ -122,4 +121,4 @@ need is to install the `redis-server` package:
 
 To run the Celery worker, call
 
-    $ ./celery_worker.py
+    $ ./manage.py celery runworker
