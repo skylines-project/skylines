@@ -24,7 +24,9 @@ var MAPSERVER_RESOLUTIONS = [
  * @param {String} id The ID of the HTML element used for the map.
  * @param {String} tile_url The base URL of the SkyLines tile server.
  */
-function initOpenLayers(id, tile_url) {
+function initOpenLayers(id, tile_url, options) {
+  options = options || {};
+
   OpenLayers.ImgPath = '/vendor/openlayers/img/';
 
   map = new OpenLayers.Map(id, {
@@ -51,9 +53,9 @@ function initOpenLayers(id, tile_url) {
     // When the list of layers changes load the
     // last used base layer from the cookies
     if (data.layer.isBaseLayer)
-      loadBaseLayerFromCookie();
+      setBaseLayer(options.base_layer || $.cookie('base_layer'));
     else
-      loadOverlayLayersFromCookie();
+      setOverlayLayers(options.overlay_layers || $.cookie('overlay_layers'));
   });
 
   var osmLayer = new OpenLayers.Layer.OSM('OpenStreetMap');
@@ -76,9 +78,8 @@ function initOpenLayers(id, tile_url) {
 }
 
 
-function loadBaseLayerFromCookie() {
-  var base_layer = $.cookie('base_layer');
-  if (base_layer == null)
+function setBaseLayer(base_layer) {
+  if (!base_layer)
     return;
 
   // Cycle through the base layers to find a match
@@ -89,9 +90,8 @@ function loadBaseLayerFromCookie() {
 }
 
 
-function loadOverlayLayersFromCookie() {
-  var overlay_layers = $.cookie('overlay_layers');
-  if (overlay_layers == null)
+function setOverlayLayers(overlay_layers) {
+  if (!overlay_layers)
     return;
 
   overlay_layers = overlay_layers.split(';');

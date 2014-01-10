@@ -58,7 +58,8 @@
                  {{ h.json.dumps(h.get_setting_name('altitude_unit')) }});
 
     initOpenLayers("map_canvas",
-                   "{{ config.get('SKYLINES_MAP_TILE_URL', '') }}");
+                   "{{ config.get('SKYLINES_MAP_TILE_URL', '') }}",
+                   { {% if 'baselayer' in request.args %}'base_layer': '{{ request.args['baselayer'] }}',{% endif %}{% if 'overlays' in request.args %}'overlay_layers': '{{ request.args['overlays'] }}',{% endif %} });
     initFlightLayer();
     initBaro($("#barogram"));
 
@@ -182,7 +183,7 @@
 
           <p>
             {%- if trace %}
-            <a href="{{ url_for('.map_') }}" class="btn btn-default"><i class="icon-fullscreen icon-large"></i> {% trans %}Full-screen map{% endtrans %}</a>
+            <a href="{{ url_for('.map_', baselayer=request.args.get('baselayer'), overlays=request.args.get('overlays')) }}" class="btn btn-default"><i class="icon-fullscreen icon-large"></i> {% trans %}Full-screen map{% endtrans %}</a>
             {%- endif %}
 
             <span id="pinned" rel="tooltip" title="{{ _('Activate this to show the flight on top of other flights on the map') }}"></span>
