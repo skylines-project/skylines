@@ -23,9 +23,10 @@ var MAPSERVER_RESOLUTIONS = [
  *
  * @param {String} id The ID of the HTML element used for the map.
  * @param {String} tile_url The base URL of the SkyLines tile server.
+ * @param {Object=} opt_options Optional options object.
  */
-function initOpenLayers(id, tile_url, options) {
-  options = options || {};
+function initOpenLayers(id, tile_url, opt_options) {
+  var options = opt_options || {};
 
   OpenLayers.ImgPath = '/vendor/openlayers/img/';
 
