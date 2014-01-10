@@ -31,3 +31,7 @@
 #about p {
   text-align: justify;
 }
+
+#about .banner div {
+  padding: 0;
+}
