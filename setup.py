@@ -9,7 +9,7 @@ setup(
     author='',
     author_email='',
     url='http://www.skylines-project.org/',
-    packages=find_packages(exclude=['ez_setup']),
+    packages=find_packages(),
     install_requires=[
         'flask==0.10.1',
         'werkzeug==0.9.4',
