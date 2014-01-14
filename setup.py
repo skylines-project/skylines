@@ -2,13 +2,17 @@
 
 from setuptools import setup, find_packages
 
+about = {}
+with open("skylines/__about__.py") as fp:
+    exec(fp.read(), about)
+
 setup(
-    name='SkyLines',
-    version='0.1',
-    description='',
-    author='',
-    author_email='',
-    url='http://www.skylines-project.org/',
+    name=about['__title__'],
+    version=about['__version__'],
+    description=about['__summary__'],
+    author=about['__author__'],
+    author_email=about['__email__'],
+    url=about['__uri__'],
     packages=find_packages(),
     install_requires=[
         'flask==0.10.1',
