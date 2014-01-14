@@ -108,7 +108,7 @@ def _session_fix():
     session_id = _parse_session_id()
     session = TrackingSession.by_lt24_id(session_id)
     if session is None:
-        raise NotFound('No open tracking session found with id `{d}`.'.format(session_id))
+        raise NotFound('No open tracking session found with id `{:d}`.'.format(session_id))
 
     fix = _parse_fix(session.pilot_id)
     db.session.add(fix)
@@ -161,7 +161,7 @@ def _finish_session():
     session_id = _parse_session_id()
     session = TrackingSession.by_lt24_id(session_id)
     if session is None:
-        raise NotFound('No open tracking session found with id `{d}`.'.format(session_id))
+        raise NotFound('No open tracking session found with id `{:d}`.'.format(session_id))
 
     session.time_finished = datetime.utcnow()
     session.ip_finished = request.remote_addr
