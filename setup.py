@@ -1,8 +1,6 @@
 #!/usr/bin/env python
 
-import sys
 from setuptools import setup, find_packages
-from setuptools.command.test import test as TestCommand
 
 requirements = [
     'flask==0.10.1',
@@ -34,22 +32,6 @@ requirements = [
     'Pygments==1.6',
 ]
 
-test_requirements = [r for r in open('requirements.txt').readlines()
-                     if not r.startswith('http') and not r.startswith('-e')]
-
-
-class PyTest(TestCommand):
-    def finalize_options(self):
-        TestCommand.finalize_options(self)
-        self.test_args = []
-        self.test_suite = True
-    def run_tests(self):
-        #import here, cause outside the eggs aren't loaded
-        import pytest
-        errno = pytest.main(self.test_args)
-        sys.exit(errno)
-
-
 setup(
     name='SkyLines',
     version='0.1',
@@ -60,8 +42,6 @@ setup(
     packages=find_packages(exclude=['ez_setup']),
     install_requires=requirements,
     include_package_data=True,
-    cmdclass = {'test': PyTest},
-    tests_require=requirements + test_requirements,
     package_data={
         'skylines': [
             'i18n/*/LC_MESSAGES/*.mo',
