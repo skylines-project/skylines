@@ -46,6 +46,11 @@ def index(page=None, id=None):
     sum_distance = 0
     sum_duration = 0
 
+    if page == 'pilot':
+        sum_pilots = 0
+    else:
+        sum_pilots = db.session.query(func.count(distinct(Flight.pilot_id))).scalar()
+
     list = []
     for row in query:
         row.average_distance = row.distance / row.flights
@@ -71,6 +76,7 @@ def index(page=None, id=None):
                            sum_flights=sum_flights,
                            sum_distance=sum_distance,
                            sum_duration=sum_duration,
+                           sum_pilots=sum_pilots,
                            airport=airport,
                            pilot=pilot,
                            club=club)
