@@ -20,6 +20,8 @@ def index(page=None, id=None):
                              func.sum(Flight.olc_classic_distance).label('distance'),
                              func.sum(Flight.duration).label('duration'))
 
+    pilots_query = db.session.query(func.count(distinct(Flight.pilot_id)))
+
     if page == 'pilot':
         pilot = get_requested_record(User, id)
         query = query.filter(Flight.pilot_id == pilot.id)
@@ -27,10 +29,12 @@ def index(page=None, id=None):
     elif page == 'club':
         club = get_requested_record(Club, id)
         query = query.filter(Flight.club_id == club.id)
+        pilots_query = pilots_query.filter(Flight.club_id == club.id)
 
     elif page == 'airport':
         airport = get_requested_record(Airport, id)
         query = query.filter(Flight.takeoff_airport_id == airport.id)
+        pilots_query = pilots_query.filter(Flight.takeoff_airport_id == airport.id)
 
     elif page is not None:
         abort(404)
@@ -49,7 +53,7 @@ def index(page=None, id=None):
     if page == 'pilot':
         sum_pilots = 0
     else:
-        sum_pilots = db.session.query(func.count(distinct(Flight.pilot_id))).scalar()
+        sum_pilots = pilots_query.scalar()
 
     list = []
     for row in query:
