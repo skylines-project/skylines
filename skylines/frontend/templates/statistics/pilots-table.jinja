@@ -1,4 +1,4 @@
-{% macro render_pilots_table(years, max_pilots) -%}
+{% macro render_pilots_table(years, max_pilots, sum_pilots=None) -%}
 <table class="table table-condensed table-striped">
   <thead>
     <tr>
@@ -20,6 +20,12 @@
       </td>
     </tr>
     {%- endfor %}
+    {% if sum_pilots != None -%}
+    <tr>
+      <td><strong>{% trans %}Total{% endtrans %}</strong></td>
+      <td colspan="2"><strong>{{ h.format_number(sum_pilots) }}</strong></td>
+    </tr>
+    {%- endif %}
   </tbody>
 </table>
 {%- endmacro %}

@@ -74,6 +74,6 @@
 
 {% if not pilot -%}
 <h2>{% trans %}Pilots{% endtrans %}</h2>
-{{ render_pilots_table(years, max_pilots) }}
+{{ render_pilots_table(years, max_pilots, sum_pilots) }}
 {%- endif %}
 {%- endblock %}
