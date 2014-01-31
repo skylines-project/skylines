@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template, g, redirect, url_for, abort
 from sqlalchemy import func
 
-from skylines.frontend.forms import EditClubForm, CreateClubPilotForm
+from skylines.frontend.forms import EditClubForm
 from skylines.lib.dbutil import get_requested_record
 from skylines.model import db, User, Club
 
@@ -53,29 +53,3 @@ def edit_post(form):
     db.session.commit()
 
     return redirect(url_for('.index'))
-
-
-@club_blueprint.route('/create_pilot', methods=['GET', 'POST'])
-def create_pilot():
-    if not g.club.is_writable(g.current_user):
-        abort(403)
-
-    form = CreateClubPilotForm()
-    if form.validate_on_submit():
-        return create_pilot_post(form)
-
-    return render_template('clubs/create_pilot.jinja', form=form)
-
-
-def create_pilot_post(form):
-    pilot = User(
-        first_name=form.first_name.data,
-        last_name=form.last_name.data,
-        email_address=form.email_address.data,
-        club=g.club
-    )
-
-    db.session.add(pilot)
-    db.session.commit()
-
-    return redirect(url_for('.pilots'))
