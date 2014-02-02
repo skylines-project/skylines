@@ -41,7 +41,7 @@ class User(db.Model):
 
     # Hashed password
 
-    _password = db.Column('password', Unicode(128))
+    _password = db.Column('password', Unicode(128), nullable=False)
 
     # The user's club (optional)
 

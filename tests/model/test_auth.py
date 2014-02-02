@@ -14,6 +14,9 @@ class TestUser(ModelTest):
         last_name=u"User",
     )
 
+    def do_get_dependencies(self):
+        return dict(password="something")
+
     def test_obj_creation_email(self):
         """The obj constructor must set the email right"""
         assert self.obj.email_address == u"ignucius@example.org"
