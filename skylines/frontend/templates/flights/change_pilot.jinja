@@ -16,13 +16,6 @@
     <input class="form-control btn btn-primary" value="{{ _('Change') }}" type="submit">
   </div>
 </form>
-
-{% if g.current_user.club_id -%}
-<p>
-{% trans %}Pilot missing in the list?{% endtrans %}
-<a href="{{ url_for('club.create_pilot', club_id=g.current_user.club_id) }}">{% trans %}Create new pilot{% endtrans %}</a>
-</p>
-{%- endif %}
 {%- endblock %}
 
 
