@@ -42,6 +42,7 @@ setup(
         'celery_with_redis==3.0',
         'xcsoar==0.1.1',
         'Pygments==1.6',
+        'aerofiles==0.1.1',
     ],
     include_package_data=True,
     package_data={
