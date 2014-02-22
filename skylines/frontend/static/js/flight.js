@@ -125,6 +125,15 @@ function initFlightLayer() {
   map.events.register('moveend', null, updateBaroScale);
 
   map.hover_enabled = true;
+
+  map.play_button = new PlayButton();
+  $(map.play_button).on('click', function() {
+    if (playing)
+      stop();
+    else
+      play();
+  });
+  map.addControl(map.play_button);
 }
 
 function initFixTable() {
@@ -406,6 +415,9 @@ function play() {
   map.hover_enabled = false;
   baro.hover_enabled = false;
 
+  // set play button to "stop" mode
+  map.play_button.setMode('stop');
+
   // start animation
   playing = true;
   tick();
@@ -415,6 +427,9 @@ function play() {
 function stop() {
   // stop the tick() function if it is still running
   playing = false;
+
+  // set play button to "play" mode
+  map.play_button.setMode('play');
 
   // reenable mouse hovering
   map.hover_enabled = true;
