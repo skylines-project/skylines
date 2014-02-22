@@ -44,6 +44,7 @@ var phases_layer;
  */
 var default_time = null;
 var global_time = default_time;
+var playing = false;
 
 
 /**
@@ -380,6 +381,73 @@ function addContest(name, lonlat, times, sfid) {
   feature.renderIntent = (flights.length() == 0) ? 'contest' : 'hidden';
 
   map.getLayersByName('Flight')[0].addFeatures(feature);
+}
+
+
+function play() {
+  // if there are no flights, then there is nothing to animate
+  if (flights.length == 0)
+    return false;
+
+  // if no time is set
+  if (!global_time) {
+    // find the first timestamp of all flights
+    var start_time = Number.MAX_VALUE;
+    flights.each(function(flight) {
+      if (flight.t[0] < start_time)
+        start_time = flight.t[0];
+    });
+
+    // start the animation at the beginning
+    setTime(start_time);
+  }
+
+  // disable mouse hovering
+  map.hover_enabled = false;
+  baro.hover_enabled = false;
+
+  // start animation
+  playing = true;
+  tick();
+}
+
+
+function stop() {
+  // stop the tick() function if it is still running
+  playing = false;
+
+  // reenable mouse hovering
+  map.hover_enabled = true;
+  baro.hover_enabled = true;
+}
+
+
+function tick() {
+  if (!playing)
+    return;
+
+  // increase time
+  var time = global_time + 1;
+
+  // find the last timestamp of all flights
+  var stop_time = Number.MIN_VALUE;
+  flights.each(function(flight) {
+    var idx = flight.t.length - 1;
+    if (flight.t[idx] > stop_time)
+      stop_time = flight.t[idx];
+  });
+
+  // check if we are at the end of the animation
+  if (time > stop_time) {
+    stop();
+    return;
+  }
+
+  // set the time for the new animation frame
+  setTime(time);
+
+  // schedule next call
+  setTimeout(tick, 50);
 }
 
 
