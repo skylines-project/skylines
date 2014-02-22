@@ -505,6 +505,8 @@ function initBaro(element) {
     }, 25);
 
     setTime(time);
+  }).on('baroclick', function(event, time) {
+    setTime(time);
   }).on('mouseout', function(event) {
     if (!baro.hover_enabled)
       return;
