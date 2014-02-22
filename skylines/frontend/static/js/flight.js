@@ -399,7 +399,7 @@ function play() {
     return false;
 
   // if no time is set
-  if (!global_time) {
+  if (global_time == null || global_time == -1) {
     // find the first timestamp of all flights
     var start_time = Number.MAX_VALUE;
     flights.each(function(flight) {
