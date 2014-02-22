@@ -424,6 +424,9 @@ function initBaro(element) {
 
   var mouse_container_running = false;
   $(baro).on('barohover', function(event, time) {
+    if (!baro.hover_enabled)
+      return;
+
     if (mouse_container_running)
       return;
 
@@ -435,8 +438,13 @@ function initBaro(element) {
 
     setTime(time);
   }).on('mouseout', function(event) {
+    if (!baro.hover_enabled)
+      return;
+
     setTime(default_time);
   });
+
+  baro.hover_enabled = true;
 }
 
 function updateBaroData() {
