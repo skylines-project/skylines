@@ -1,3 +1,8 @@
+.olMap {
+  overflow: hidden;
+  position: relative;
+}
+
 .olControlAttribution {
   background: white;
   opacity: 0.7;
