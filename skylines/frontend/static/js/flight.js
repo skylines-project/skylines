@@ -122,6 +122,8 @@ function initFlightLayer() {
   });
 
   map.events.register('moveend', null, updateBaroScale);
+
+  map.hover_enabled = true;
 }
 
 function initFixTable() {
@@ -661,6 +663,9 @@ function hoverMap() {
   // every 25ms to save some computing power.
   var running = false;
   map.events.register('mousemove', null, function(e) {
+    if (!map.hover_enabled)
+      return;
+
     // call this function only every 25ms, else return early
     if (running) return;
     running = true;
