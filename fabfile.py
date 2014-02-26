@@ -1,7 +1,15 @@
-from fabric.api import env, cd, run
+from fabric.api import env, local, cd, run
 
 env.use_ssh_config = True
 env.hosts = ['root@skylines']
+
+
+def push(branch='master', force=False):
+    cmd = 'git push %s:/opt/skylines/src/ %s:master' % (env.host_string, branch)
+    if force:
+        cmd += ' --force'
+
+    local(cmd)
 
 
 def restart():
