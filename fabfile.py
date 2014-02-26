@@ -18,7 +18,12 @@ def restart():
         run('sudo -u skylines ./manage.py migrate upgrade')
 
         # restart services
-        run('sv restart skylines-fastcgi')
-        run('sv restart mapserver-fastcgi')
-        run('sv restart skylines-daemon')
-        run('sv restart celery-daemon')
+        restart_service('skylines-fastcgi')
+        restart_service('mapserver-fastcgi')
+        restart_service('skylines-daemon')
+        restart_service('celery-daemon')
+
+
+def restart_service(service):
+    with cd('/opt/skylines/src'):
+        run('sv restart ' + service)
