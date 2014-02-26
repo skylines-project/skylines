@@ -1,4 +1,4 @@
-from fabric.api import env, local, cd, run
+from fabric.api import env, local, cd, run, settings, sudo
 
 env.use_ssh_config = True
 env.hosts = ['root@skylines']
@@ -28,7 +28,8 @@ def restart():
         run('./manage.py assets build')
 
         # do database migrations
-        run('sudo -u skylines ./manage.py migrate upgrade')
+        with settings(sudo_user='skylines'):
+            sudo('./manage.py migrate upgrade')
 
         # restart services
         restart_service('skylines-fastcgi')
