@@ -1,4 +1,6 @@
 .PlayButton {
+  z-index: 900 !important;
+
   position: absolute;
   top: 50px;
   right: 12px;
