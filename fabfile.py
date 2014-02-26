@@ -3,6 +3,8 @@ from fabric.api import env, local, cd, run, sudo
 env.use_ssh_config = True
 env.hosts = ['root@skylines']
 
+WORKING_DIR = '/opt/skylines/src/'
+
 
 def deploy(branch='master', force=False):
     push(branch, force)
@@ -10,7 +12,7 @@ def deploy(branch='master', force=False):
 
 
 def push(branch='master', force=False):
-    cmd = 'git push %s:/opt/skylines/src/ %s:master' % (env.host_string, branch)
+    cmd = 'git push %s:%s %s:master' % (env.host_string, WORKING_DIR, branch)
     if force:
         cmd += ' --force'
 
@@ -18,7 +20,7 @@ def push(branch='master', force=False):
 
 
 def restart():
-    with cd('/opt/skylines/src'):
+    with cd(WORKING_DIR):
         run('git reset --hard')
 
         # compile i18n .mo files
@@ -42,7 +44,7 @@ def restart_service(service):
 
 
 def manage(cmd, user=None):
-    with cd('/opt/skylines/src'):
+    with cd(WORKING_DIR):
         if user:
             sudo('./manage.py %s' % cmd, user=user)
         else:
