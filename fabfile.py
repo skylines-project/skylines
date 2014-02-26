@@ -22,10 +22,10 @@ def restart():
         run('git reset --hard')
 
         # compile i18n .mo files
-        run('./manage.py babel compile')
+        manage('babel compile')
 
         # generate JS/CSS assets
-        run('./manage.py assets build')
+        manage('assets build')
 
         # do database migrations
         with settings(sudo_user='skylines'):
@@ -40,3 +40,8 @@ def restart():
 
 def restart_service(service):
     run('sv restart ' + service)
+
+
+def manage(cmd):
+    with cd('/opt/skylines/src'):
+        run('./manage.py %s' % cmd)
