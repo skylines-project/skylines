@@ -4,6 +4,11 @@ env.use_ssh_config = True
 env.hosts = ['root@skylines']
 
 
+def deploy(branch='master', force=False):
+    push(branch, force)
+    restart()
+
+
 def push(branch='master', force=False):
     cmd = 'git push %s:/opt/skylines/src/ %s:master' % (env.host_string, branch)
     if force:
