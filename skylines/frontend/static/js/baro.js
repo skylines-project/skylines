@@ -225,6 +225,7 @@ function slBarogram(placeholder) {
       grid: {
         borderWidth: 0,
         hoverable: true,
+        clickable: true,
         autoHighlight: false,
         margin: 5
       },
@@ -256,6 +257,8 @@ function slBarogram(placeholder) {
   function attachEventHandlers(placeholder) {
     placeholder.on('plothover', function(event, pos) {
       $(baro).trigger('barohover', [pos.x / 1000.]);
+    }).on('plotclick', function(event, pos) {
+      $(baro).trigger('baroclick', [pos.x / 1000.]);
     }).on('mouseout', function(event) {
       $(baro).trigger('mouseout');
     });

@@ -44,6 +44,7 @@ var phases_layer;
  */
 var default_time = null;
 var global_time = default_time;
+var playing = false;
 
 
 /**
@@ -122,6 +123,17 @@ function initFlightLayer() {
   });
 
   map.events.register('moveend', null, updateBaroScale);
+
+  map.hover_enabled = true;
+
+  map.play_button = new PlayButton();
+  $(map.play_button).on('click', function() {
+    if (playing)
+      stop();
+    else
+      play();
+  });
+  map.addControl(map.play_button);
 }
 
 function initFixTable() {
@@ -381,6 +393,79 @@ function addContest(name, lonlat, times, sfid) {
 }
 
 
+function play() {
+  // if there are no flights, then there is nothing to animate
+  if (flights.length == 0)
+    return false;
+
+  // if no time is set
+  if (global_time == null || global_time == -1) {
+    // find the first timestamp of all flights
+    var start_time = Number.MAX_VALUE;
+    flights.each(function(flight) {
+      if (flight.t[0] < start_time)
+        start_time = flight.t[0];
+    });
+
+    // start the animation at the beginning
+    setTime(start_time);
+  }
+
+  // disable mouse hovering
+  map.hover_enabled = false;
+  baro.hover_enabled = false;
+
+  // set play button to "stop" mode
+  map.play_button.setMode('stop');
+
+  // start animation
+  playing = true;
+  tick();
+}
+
+
+function stop() {
+  // stop the tick() function if it is still running
+  playing = false;
+
+  // set play button to "play" mode
+  map.play_button.setMode('play');
+
+  // reenable mouse hovering
+  map.hover_enabled = true;
+  baro.hover_enabled = true;
+}
+
+
+function tick() {
+  if (!playing)
+    return;
+
+  // increase time
+  var time = global_time + 1;
+
+  // find the last timestamp of all flights
+  var stop_time = Number.MIN_VALUE;
+  flights.each(function(flight) {
+    var idx = flight.t.length - 1;
+    if (flight.t[idx] > stop_time)
+      stop_time = flight.t[idx];
+  });
+
+  // check if we are at the end of the animation
+  if (time > stop_time) {
+    stop();
+    return;
+  }
+
+  // set the time for the new animation frame
+  setTime(time);
+
+  // schedule next call
+  setTimeout(tick, 50);
+}
+
+
 /**
  * Searches the next smaller index to a number in a monotonic array
  *
@@ -422,6 +507,9 @@ function initBaro(element) {
 
   var mouse_container_running = false;
   $(baro).on('barohover', function(event, time) {
+    if (!baro.hover_enabled)
+      return;
+
     if (mouse_container_running)
       return;
 
@@ -432,9 +520,16 @@ function initBaro(element) {
     }, 25);
 
     setTime(time);
+  }).on('baroclick', function(event, time) {
+    setTime(time);
   }).on('mouseout', function(event) {
+    if (!baro.hover_enabled)
+      return;
+
     setTime(default_time);
   });
+
+  baro.hover_enabled = true;
 }
 
 function updateBaroData() {
@@ -661,6 +756,9 @@ function hoverMap() {
   // every 25ms to save some computing power.
   var running = false;
   map.events.register('mousemove', null, function(e) {
+    if (!map.hover_enabled)
+      return;
+
     // call this function only every 25ms, else return early
     if (running) return;
     running = true;

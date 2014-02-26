@@ -89,6 +89,7 @@ all_css = Bundle(
 openlayers_css = Bundle(
     'vendor/openlayers/OpenLayers.css',
     'css/ol-GraphicLayerSwitcher.css',
+    'css/ol-PlayButton.css',
     'css/ol-ZoomControl.css',
     'css/map.css',
     'css/map-infobox.css',
@@ -120,6 +121,7 @@ datatables_js = Bundle(
 openlayers_js = Bundle(
     'vendor/openlayers/OpenLayers.js',
     'js/ol-GraphicLayerSwitcher.js',
+    'js/ol-PlayButton.js',
     'js/map.js',
     'js/map-click-handler.js',
     filters=SimpleClosureJS,
