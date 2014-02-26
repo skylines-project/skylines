@@ -1,4 +1,4 @@
-from fabric.api import env, local, cd, run, sudo
+from fabric.api import env, task, local, cd, run, sudo
 
 env.use_ssh_config = True
 env.hosts = ['root@skylines']
@@ -6,11 +6,13 @@ env.hosts = ['root@skylines']
 WORKING_DIR = '/opt/skylines/src/'
 
 
+@task
 def deploy(branch='master', force=False):
     push(branch, force)
     restart()
 
 
+@task
 def push(branch='master', force=False):
     cmd = 'git push %s:%s %s:master' % (env.host_string, WORKING_DIR, branch)
     if force:
@@ -19,6 +21,7 @@ def push(branch='master', force=False):
     local(cmd)
 
 
+@task
 def restart():
     with cd(WORKING_DIR):
         run('git reset --hard')
@@ -39,10 +42,12 @@ def restart():
         restart_service('celery-daemon')
 
 
+@task
 def restart_service(service):
     run('sv restart ' + service)
 
 
+@task
 def manage(cmd, user=None):
     with cd(WORKING_DIR):
         if user:
