@@ -38,5 +38,4 @@ def restart():
 
 
 def restart_service(service):
-    with cd('/opt/skylines/src'):
-        run('sv restart ' + service)
+    run('sv restart ' + service)
