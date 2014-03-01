@@ -224,7 +224,7 @@ class Flight(db.Model):
             [from_seconds_of_day(date_utc, c.seconds_of_day) for c in path]
 
         # Convert the coordinate into a list of tuples
-        coordinates = [(c.longitude, c.latitude) for c in path]
+        coordinates = [(c.location['longitude'], c.location['latitude']) for c in path]
 
         # Create a shapely LineString object from the coordinates
         linestring = LineString(coordinates)

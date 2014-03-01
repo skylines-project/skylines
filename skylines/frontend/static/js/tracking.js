@@ -55,10 +55,6 @@ function updateFlight(tracking_id, _lonlat, _levels, _num_levels, _time,
 
   if (lonlat.length < 2) return;
 
-  var lodLength = lod.length;
-  for (var i = 0; i < lodLength; ++i)
-    lod[i] = _num_levels - lod[i] - 1;
-
   var points = new Array();
   for (var i = 1, len = lonlat.length; i < len; i++) {
     points.push(new OpenLayers.Geometry.Point(lonlat[i][1], lonlat[i][0]).

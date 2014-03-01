@@ -11,7 +11,7 @@ from geoalchemy2.shape import to_shape
 from skylines.frontend.forms import ChangePilotsForm, ChangeAircraftForm
 from skylines.lib import files
 from skylines.lib.dbutil import get_requested_record_list
-from skylines.lib.xcsoar_ import analyse_flight, flight_path
+from skylines.lib.xcsoar_ import analyse_flight
 from skylines.lib.helpers import format_time, format_number
 from skylines.lib.formatter import units
 from skylines.lib.datetime import from_seconds_of_day
@@ -24,7 +24,8 @@ from skylines.model.event import create_flight_comment_notifications
 from skylines.model.flight import get_elevations_for_flight
 from skylines.worker import tasks
 from redis.exceptions import ConnectionError
-from skylinespolyencode import SkyLinesPolyEncoder
+
+import xcsoar
 
 flight_blueprint = Blueprint('flight', 'skylines')
 
@@ -61,32 +62,31 @@ def _add_flight_id(endpoint, values):
 
 
 def _get_flight_path(flight, threshold=0.001, max_points=3000):
-    fp = flight_path(flight.igc_file, max_points)
-    if len(fp) == 0:
-        current_app.logger.error('flight_path("' + flight.igc_file.filename + '") returned with an empty list')
-        return None
-
     num_levels = 4
     zoom_factor = 4
     zoom_levels = [0]
     zoom_levels.extend([round(-math.log(32.0 / 45.0 * (threshold * pow(zoom_factor, num_levels - i - 1)), 2)) for i in range(1, num_levels)])
 
-    max_delta_time = max(4, (fp[-1].seconds_of_day - fp[0].seconds_of_day) / 500)
+    xcsoar_flight = xcsoar.Flight(files.filename_to_path(flight.igc_file.filename))
+    xcsoar_flight.reduce(begin=flight.takeoff_time,
+                         end=flight.landing_time,
+                         num_levels=num_levels,
+                         zoom_factor=zoom_factor,
+                         threshold=threshold,
+                         max_points=max_points)
 
-    encoder = SkyLinesPolyEncoder(num_levels=4, threshold=threshold, zoom_factor=4)
+    encoded_flight = xcsoar_flight.encode()
 
-    fixes = map(lambda x: (x.longitude, x.latitude,
-                           (x.seconds_of_day / max_delta_time * threshold)), fp)
-    fixes = encoder.classify(fixes, remove=False, type="ppd")
+    encoded = dict(points=encoded_flight['locations'],
+                   levels=encoded_flight['levels'],
+                   zoom_levels=zoom_levels)
 
-    encoded = encoder.encode(fixes['points'], fixes['levels'])
+    barogram_t = encoded_flight['times']
+    barogram_h = encoded_flight['altitude']
+    enl = encoded_flight['enl']
 
-    barogram_t = encoder.encodeList([fp[i].seconds_of_day for i in range(len(fp)) if fixes['levels'][i] != -1])
-    barogram_h = encoder.encodeList([fp[i].altitude for i in range(len(fp)) if fixes['levels'][i] != -1])
-    enl = encoder.encodeList([fp[i].enl for i in range(len(fp)) if fixes['levels'][i] != -1])
-
-    elevations_t, elevations_h = _get_elevations(flight, encoder)
-    contest_traces = _get_contest_traces(flight, encoder)
+    elevations_t, elevations_h = _get_elevations(flight)
+    contest_traces = _get_contest_traces(flight)
 
     return dict(encoded=encoded, zoom_levels=zoom_levels, num_levels=num_levels,
                 barogram_t=barogram_t, barogram_h=barogram_h,
@@ -95,17 +95,17 @@ def _get_flight_path(flight, threshold=0.001, max_points=3000):
                 sfid=flight.id)
 
 
-def _get_elevations(flight, encoder):
+def _get_elevations(flight):
     elevations = get_elevations_for_flight(flight)
 
     # Encode lists
-    elevations_t = encoder.encodeList([t for t, h in elevations])
-    elevations_h = encoder.encodeList([h for t, h in elevations])
+    elevations_t = xcsoar.encode([t for t, h in elevations], method="signed")
+    elevations_h = xcsoar.encode([h for t, h in elevations], method="signed")
 
     return elevations_t, elevations_h
 
 
-def _get_contest_traces(flight, encoder):
+def _get_contest_traces(flight):
     contests = [dict(contest_type='olc_plus', trace_type='triangle'),
                 dict(contest_type='olc_plus', trace_type='classic')]
 
@@ -116,15 +116,15 @@ def _get_contest_traces(flight, encoder):
         if not contest_trace:
             continue
 
-        fixes = map(lambda x: (x.longitude, x.latitude), contest_trace.locations)
+        fixes = map(lambda x: (x.latitude, x.longitude), contest_trace.locations)
         times = []
         for time in contest_trace.times:
             times.append(flight.takeoff_time.hour * 3600 + flight.takeoff_time.minute * 60 + flight.takeoff_time.second +
                          (time - flight.takeoff_time).days * 86400 + (time - flight.takeoff_time).seconds)
 
         contest_traces.append(dict(name=contest['contest_type'] + " " + contest['trace_type'],
-                                   turnpoints=encoder.encode(fixes, [0] * len(fixes))['points'],
-                                   times=encoder.encodeList(times)))
+                                   turnpoints=xcsoar.encode(fixes, floor=1e5, method="double"),
+                                   times=xcsoar.encode(times, method="signed")))
 
     return contest_traces
 
