@@ -246,12 +246,7 @@ def get_limits():
     return dict(iter_limit=iter_limit, tree_size_limit=tree_size_limit)
 
 
-def run_analyse_flight(filename, full=None, triangle=None, sprint=None):
-    limits = get_limits()
-
-    flight = xcsoar.Flight(flight_path(filename, add_elevation=True))
-    times = flight.times()
-
+def get_analysis_times(times):
     chosen_period = 0
     chosen_events = None
 
@@ -279,19 +274,27 @@ def run_analyse_flight(filename, full=None, triangle=None, sprint=None):
                 chosen_events['scoring_start'] = None
                 chosen_events['scoring_end'] = None
 
-    if chosen_events:
-        analysis = flight.analyse(chosen_events['takeoff']['time'],
-                                  chosen_events['scoring_start']['time']
-                                  if chosen_events['scoring_start'] else None,
-                                  chosen_events['scoring_end']['time']
-                                  if chosen_events['scoring_end'] else None,
-                                  chosen_events['landing']['time'],
+
+def run_analyse_flight(filename, full=None, triangle=None, sprint=None):
+    limits = get_limits()
+
+    flight = xcsoar.Flight(flight_path(filename, add_elevation=True))
+
+    analysis_times = get_analysis_times(flight.times())
+
+    if analysis_times:
+        analysis = flight.analyse(analysis_times['takeoff']['time'],
+                                  analysis_times['scoring_start']['time']
+                                  if analysis_times['scoring_start'] else None,
+                                  analysis_times['scoring_end']['time']
+                                  if analysis_times['scoring_end'] else None,
+                                  analysis_times['landing']['time'],
                                   full=full,
                                   triangle=triangle,
                                   sprint=sprint,
                                   max_iterations=limits['iter_limit'],
                                   max_tree_size=limits['tree_size_limit'])
-        analysis['events'] = chosen_events
+        analysis['events'] = analysis_times
 
         return analysis
 
