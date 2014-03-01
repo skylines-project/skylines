@@ -5,6 +5,7 @@ from flask import current_app
 from skylines.model import db
 from skylines.lib import files
 from skylines.lib.datetime import from_seconds_of_day
+from skylines.lib.xcsoar_.flightpath import flight_path
 from skylines.model import (
     Airport, Trace, FlightPhase, TimeZone, Location
 )
@@ -245,10 +246,10 @@ def get_limits():
     return dict(iter_limit=iter_limit, tree_size_limit=tree_size_limit)
 
 
-def run_analyse_flight(path, full=None, triangle=None, sprint=None):
+def run_analyse_flight(filename, full=None, triangle=None, sprint=None):
     limits = get_limits()
 
-    flight = xcsoar.Flight(path)
+    flight = xcsoar.Flight(flight_path(filename, add_elevation=True))
     times = flight.times()
 
     chosen_period = 0
