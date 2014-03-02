@@ -7,6 +7,7 @@ from skylines.lib.xcsoar_ import analyse_flight
 from skylines.worker import tasks
 from datetime import datetime
 
+
 class Analyze(Command):
     """ (Re)analyze flights """
 
