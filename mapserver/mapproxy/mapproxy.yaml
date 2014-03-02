@@ -1,17 +1,15 @@
 services:
   tms:
     origin: 'nw'
-#  wms:
-#    srs: ['EPSG:3857'] #, 'EPSG:900913']
-#    image_formats: ['image/png']
-#    md:
-#      title: Airspace WMS Server
-#      abstract: Airspace WMS Server for SkyLines
 
 layers:
   - name: mwp
     title: Mountain Wave Project WMS
     sources: [mwp_cache]
+
+  - name: airspace+airports
+    title: Airspace and Airports WMS
+    sources: [airspace_airports_cache]
 
   - name: airspace
     title: Airspace WMS
@@ -25,6 +23,19 @@ caches:
     # needs the cgi-mapserver binary, the latter retrieves
     # the map from a WMS server.
     sources: [mwp_mapserver_wms]
+    image:
+      format: image/png
+    format: image/png
+    request_format: image/png
+    link_single_color_images: true
+
+  airspace_airports_cache:
+    grids: [GLOBAL_MERCATOR]
+    # choose between airspace_airports_mapserver_bin source and
+    # airspace_airports_mapserver_wms source. The first one just
+    # needs the cgi-mapserver binary, the latter retrieves
+    # the map from a WMS server.
+    sources: [airspace_airports_mapserver_wms]
     image:
       format: image/png
     format: image/png
@@ -58,11 +69,24 @@ sources:
       binary: /usr/lib/cgi-bin/mapserv
       working_dir: ../
 
-  airspace_mapserver_bin:
+  airspace_airports_mapserver_bin:
     type: mapserver
     supported_srs: ['EPSG:3857']
     req:
       layers: Airports,Airspace
+      map: ../skylines.map
+      transparent: true
+    image:
+      format: image/png
+    mapserver:
+      binary: /usr/lib/cgi-bin/mapserv
+      working_dir: ../
+
+  airspace_mapserver_bin:
+    type: mapserver
+    supported_srs: ['EPSG:3857']
+    req:
+      layers: Airspace
       map: ../skylines.map
       transparent: true
     image:
@@ -81,11 +105,21 @@ sources:
     image:
       format: image/png
 
-  airspace_mapserver_wms:
+  airspace_airports_mapserver_wms:
     type: wms
     supported_srs: ['EPSG:3857']
     req:
       layers: Airports,Airspace
+      url: http://www.skylines-project.org/mapserver/?
+      transparent: true
+    image:
+      format: image/png
+
+  airspace_mapserver_wms:
+    type: wms
+    supported_srs: ['EPSG:3857']
+    req:
+      layers: Airspace
       url: http://www.skylines-project.org/mapserver/?
       transparent: true
     image:
