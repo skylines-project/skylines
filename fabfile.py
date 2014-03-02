@@ -77,3 +77,9 @@ def update_mapproxy():
         f.flush()
 
         put(f.name, '/opt/skylines/etc/mapproxy.yaml')
+
+
+@task
+def clean_mapproxy_cache():
+    with cd('/opt/skylines/var/cache/mapproxy'):
+        run('rm -rv *')
