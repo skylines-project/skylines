@@ -3,7 +3,7 @@ from flask.ext.script import Command, Option
 from skylines.model import db, Airport
 from skylines.lib.waypoints.welt2000 import get_database
 from datetime import datetime
-from sqlalchemy.sql.expression import or_
+from sqlalchemy.sql.expression import or_, and_
 
 
 class Welt2000(Command):
@@ -35,7 +35,8 @@ class Welt2000(Command):
 
             # try to find this airport in the database
             near_airport = Airport.query() \
-                .filter(Airport.short_name == airport_w2k.short_name) \
+                .filter(and_(Airport.short_name == airport_w2k.short_name,
+                             Airport.country_code == airport_w2k.country_code)) \
                 .filter(or_(Airport.valid_until == None, Airport.valid_until > self.current_date)) \
                 .first()
 
