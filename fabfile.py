@@ -1,4 +1,6 @@
-from fabric.api import env, task, local, cd, run, sudo
+from fabric.api import env, task, local, cd, run, sudo, put
+
+from tempfile import NamedTemporaryFile
 
 env.use_ssh_config = True
 env.hosts = ['root@skylines']
@@ -54,3 +56,24 @@ def manage(cmd, user=None):
             sudo('./manage.py %s' % cmd, user=user)
         else:
             run('./manage.py %s' % cmd)
+
+
+@task
+def update_mapproxy():
+    with NamedTemporaryFile() as f:
+        content = open('mapserver/mapproxy/mapproxy.yaml').read()
+
+        content = content.replace(
+            'base_dir: \'/tmp/cache_data\'',
+            'base_dir: \'/opt/skylines/var/cache/mapproxy\'',
+        )
+
+        content = content.replace(
+            'lock_dir: \'/tmp/cache_data/locks\'',
+            'lock_dir: \'/opt/skylines/var/cache/mapproxy/locks\'',
+        )
+
+        f.write(content)
+        f.flush()
+
+        put(f.name, '/opt/skylines/etc/mapproxy.yaml')
