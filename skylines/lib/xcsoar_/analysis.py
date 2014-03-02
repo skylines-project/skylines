@@ -247,32 +247,67 @@ def get_limits():
 
 
 def get_analysis_times(times):
-    chosen_period = 0
-    chosen_events = None
+    chosen_period_seconds = 0
+    chosen_period = None
 
     has_release = [key for key, value in enumerate(times) if 'release' in value]
 
     if has_release:
         for i in has_release:
-            scoring_period = (times[i]['landing']['time']
-                              - times[i]['release']['time']).total_seconds()
+            scoring_periods = []
 
-            if scoring_period > chosen_period:
-                chosen_period = scoring_period
-                chosen_events = times[i]
-                chosen_events['scoring_start'] = times[i]['release']
-                chosen_events['scoring_end'] = times[i]['landing']
+            # gather all possible scoring periods of this flight
+            if times[i]['power_states'] and \
+                [not state['powered'] for state in times[i]['power_states']
+                 if not state['powered']]:
+                scoring_start = min(next(state for state in times[i]['power_states']
+                                         if not state['powered']),
+                                    times[i]['release'],
+                                    key=lambda x: x['time'])
+            else:
+                scoring_start = times[i]['release']
+
+            if times[i]['power_states']:
+                for state in times[i]['power_states']:
+                    if state['powered'] and state['time'] > scoring_start['time']:
+                        scoring_periods.append(
+                            dict(takeoff=times[i]['takeoff'],
+                                 scoring_start=scoring_start,
+                                 scoring_end=min(state,
+                                                 times[i]['landing'],
+                                                 key=lambda x: x['time']),
+                                 landing=times[i]['landing']))
+
+                    elif not state['powered'] and state['time'] > scoring_start['time']:
+                        scoring_start = state
+
+            if scoring_start['time'] < times[i]['landing']['time']:
+                scoring_periods.append(dict(takeoff=times[i]['takeoff'],
+                                            scoring_start=scoring_start,
+                                            scoring_end=times[i]['landing'],
+                                            landing=times[i]['landing']))
+
+            for period in scoring_periods:
+                total_seconds = (period['scoring_end']['time']
+                                 - period['scoring_start']['time']).total_seconds()
+
+                if total_seconds > chosen_period_seconds:
+                    chosen_period_seconds = total_seconds
+                    chosen_period = period
 
     else:
         for i in range(len(times)):
-            flight_length = (times[i]['landing']['time']
+            total_seconds = (times[i]['landing']['time']
                              - times[i]['takeoff']['time']).total_seconds()
 
-            if flight_length > chosen_period:
-                chosen_period = flight_length
-                chosen_events = times[i]
-                chosen_events['scoring_start'] = None
-                chosen_events['scoring_end'] = None
+            if total_seconds > chosen_period_seconds:
+                chosen_period_seconds = total_seconds
+                chosen_period = dict(takeoff=times[i]['takeoff'],
+                                     scoring_start=None,
+                                     scoring_end=None,
+                                     landing=times[i]['landing'])
+
+    return chosen_period
 
 
 def run_analyse_flight(filename, full=None, triangle=None, sprint=None):
