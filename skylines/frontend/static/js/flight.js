@@ -232,10 +232,6 @@ function addFlight(sfid, _lonlat, _levels, _num_levels, _time, _height, _enl,
   var lonlat = polyline_decoder.decode(_lonlat, 2);
   var lod = polyline_decoder.decodeUnsignedIntegers(_levels);
 
-  var lodLength = lod.length;
-  for (var i = 0; i < lodLength; ++i)
-    lod[i] = _num_levels - lod[i] - 1;
-
   var points = new Array();
   var lonlatLength = lonlat.length;
   for (var i = 0; i < lonlatLength; ++i) {

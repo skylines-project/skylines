@@ -1,11 +1,11 @@
 import datetime
-import resource
 
 import xcsoar
 from flask import current_app
 from skylines.model import db
 from skylines.lib import files
 from skylines.lib.datetime import from_seconds_of_day
+from skylines.lib.xcsoar_.flightpath import flight_path
 from skylines.model import (
     Airport, Trace, FlightPhase, TimeZone, Location
 )
@@ -47,9 +47,9 @@ def import_location_attribute(node, name):
 def import_datetime_attribute(node, name):
     if node is None or name not in node:
         return None
-    try:
-        return datetime.datetime.strptime(node[name], '%Y-%m-%dT%H:%M:%SZ')
-    except ValueError:
+    if isinstance(node[name], datetime.datetime):
+        return node[name]
+    else:
         return None
 
 
@@ -93,7 +93,7 @@ def save_trace(contest_name, trace_name, node, flight):
     locations = []
     times = []
     for turnpoint in node['turnpoints']:
-        location = read_location(turnpoint)
+        location = read_location(turnpoint['location'])
         time = read_time_of_day(turnpoint, flight)
 
         if location is None or time is None:
@@ -148,7 +148,7 @@ def get_takeoff_date(flight):
 
 def save_takeoff(event, flight):
     flight.takeoff_time = import_datetime_attribute(event, 'time')
-    flight.takeoff_location = read_location(event)
+    flight.takeoff_location = read_location(event['location'])
     if flight.takeoff_location is not None:
         flight.takeoff_airport = Airport.by_location(flight.takeoff_location,
                                                      date=flight.takeoff_time)
@@ -158,7 +158,7 @@ def save_takeoff(event, flight):
 
 def save_landing(event, flight):
     flight.landing_time = import_datetime_attribute(event, 'time')
-    flight.landing_location = read_location(event)
+    flight.landing_location = read_location(event['location'])
     if flight.landing_location is not None:
         flight.landing_airport = Airport.by_location(flight.landing_location,
                                                      date=flight.landing_time)
@@ -237,25 +237,115 @@ def save_phases(root, flight):
     db.session.add(ph)
 
 
-def setlimits():
-    cpu_limit = current_app.config.get('SKYLINES_SUBPROCESS_CPU', 120)
-    mem_limit = current_app.config.get('SKYLINES_SUBPROCESS_MEMORY', 256) \
-        * 1024 * 1024
+def get_limits():
+    iter_limit = int(current_app.config.get('SKYLINES_ANALYSIS_ITER', 10e6))
+    # Each node of the triangle solver has a size of 92 bytes...
+    tree_size_limit = int(current_app.config.get('SKYLINES_ANALYSIS_MEMORY', 256)) \
+        * 1024 * 1024 / 92
 
-    resource.setrlimit(resource.RLIMIT_CPU, (cpu_limit, cpu_limit * 1.2))
-    resource.setrlimit(resource.RLIMIT_AS, (mem_limit, mem_limit * 1.2))
+    return dict(iter_limit=iter_limit, tree_size_limit=tree_size_limit)
+
+
+def get_analysis_times(times):
+    chosen_period_seconds = 0
+    chosen_period = None
+
+    has_release = [key for key, value in enumerate(times) if 'release' in value]
+
+    if has_release:
+        for i in has_release:
+            scoring_periods = []
+
+            # gather all possible scoring periods of this flight
+            if times[i]['power_states'] and \
+                [not state['powered'] for state in times[i]['power_states']
+                 if not state['powered']]:
+                scoring_start = min(next(state for state in times[i]['power_states']
+                                         if not state['powered']),
+                                    times[i]['release'],
+                                    key=lambda x: x['time'])
+            else:
+                scoring_start = times[i]['release']
+
+            if times[i]['power_states']:
+                for state in times[i]['power_states']:
+                    if state['powered'] and state['time'] > scoring_start['time']:
+                        scoring_periods.append(
+                            dict(takeoff=times[i]['takeoff'],
+                                 scoring_start=scoring_start,
+                                 scoring_end=min(state,
+                                                 times[i]['landing'],
+                                                 key=lambda x: x['time']),
+                                 landing=times[i]['landing']))
+
+                    elif not state['powered'] and state['time'] > scoring_start['time']:
+                        scoring_start = state
+
+            if scoring_start['time'] < times[i]['landing']['time']:
+                scoring_periods.append(dict(takeoff=times[i]['takeoff'],
+                                            scoring_start=scoring_start,
+                                            scoring_end=times[i]['landing'],
+                                            landing=times[i]['landing']))
+
+            for period in scoring_periods:
+                total_seconds = (period['scoring_end']['time']
+                                 - period['scoring_start']['time']).total_seconds()
+
+                if total_seconds > chosen_period_seconds:
+                    chosen_period_seconds = total_seconds
+                    chosen_period = period
+
+    else:
+        for i in range(len(times)):
+            total_seconds = (times[i]['landing']['time']
+                             - times[i]['takeoff']['time']).total_seconds()
+
+            if total_seconds > chosen_period_seconds:
+                chosen_period_seconds = total_seconds
+                chosen_period = dict(takeoff=times[i]['takeoff'],
+                                     scoring_start=None,
+                                     scoring_end=None,
+                                     landing=times[i]['landing'])
+
+    return chosen_period
+
+
+def run_analyse_flight(filename, full=None, triangle=None, sprint=None):
+    limits = get_limits()
+
+    flight = xcsoar.Flight(flight_path(filename, add_elevation=True))
+
+    analysis_times = get_analysis_times(flight.times())
+
+    if analysis_times:
+        analysis = flight.analyse(analysis_times['takeoff']['time'],
+                                  analysis_times['scoring_start']['time']
+                                  if analysis_times['scoring_start'] else None,
+                                  analysis_times['scoring_end']['time']
+                                  if analysis_times['scoring_end'] else None,
+                                  analysis_times['landing']['time'],
+                                  full=full,
+                                  triangle=triangle,
+                                  sprint=sprint,
+                                  max_iterations=limits['iter_limit'],
+                                  max_tree_size=limits['tree_size_limit'])
+        analysis['events'] = analysis_times
+
+        return analysis
+
+    else:
+        return None
 
 
 def analyse_flight(flight, full=512, triangle=1024, sprint=64):
     path = files.filename_to_path(flight.igc_file.filename)
     current_app.logger.info('Analyzing ' + path)
 
-    try:
-        root = xcsoar.analyse_flight(
-            path, full_points=full, triangle_points=triangle,
-            sprint_points=sprint, popen_kwargs=dict(preexec_fn=setlimits))
-    except Exception, e:
-        current_app.logger.warning('Parsing the output of AnalyseFlight failed. (' + str(e) + ')')
+    root = run_analyse_flight(
+        path, full=full, triangle=triangle, sprint=sprint)
+
+    if root is None:
+        current_app.logger.warning('Analyze flight failed.')
         return False
 
     if 'events' in root:

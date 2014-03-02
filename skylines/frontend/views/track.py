@@ -6,8 +6,9 @@ from sqlalchemy.sql.expression import and_
 
 from skylines.lib.dbutil import get_requested_record_list
 from skylines.lib.helpers import color
+from skylines.lib.xcsoar_ import FlightPathFix
 from skylines.model import User, TrackingFix
-from skylinespolyencode import SkyLinesPolyEncoder
+import xcsoar
 
 track_blueprint = Blueprint('track', 'skylines')
 
@@ -65,8 +66,17 @@ def _get_flight_path2(pilot, last_update=None):
         time_delta = fix.time - start_fix.time
         time = start_time + time_delta.days * 86400 + time_delta.seconds
 
-        result.append((time, location.latitude, location.longitude,
-                       fix.altitude, fix.engine_noise_level, fix.elevation))
+        result.append(FlightPathFix(datetime=fix.time,
+                                    seconds_of_day=time,
+                                    location={'latitude': location.latitude,
+                                              'longitude': location.longitude},
+                                    altitude=fix.altitude,
+                                    enl=fix.engine_noise_level,
+                                    track=fix.track,
+                                    groundspeed=fix.ground_speed,
+                                    tas=fix.airspeed,
+                                    elevation=fix.elevation))
+
     return result
 
 
@@ -80,26 +90,22 @@ def _get_flight_path(pilot, threshold=0.001, last_update=None):
     zoom_levels = [0]
     zoom_levels.extend([round(-log(32.0 / 45.0 * (threshold * pow(zoom_factor, num_levels - i - 1)), 2)) for i in range(1, num_levels)])
 
-    encoder = SkyLinesPolyEncoder(num_levels=4, threshold=threshold, zoom_factor=4)
-    fixes = dict()
+    xcsoar_flight = xcsoar.Flight(fp)
 
-    if len(fp) == 1:
-        x = fp[0]
-        fixes['points'] = [(x[2], x[1])]
-        fixes['levels'] = [0]
+    xcsoar_flight.reduce(num_levels=num_levels,
+                         zoom_factor=zoom_factor,
+                         threshold=threshold)
 
-    else:
-        max_delta_time = max(4, (fp[-1][0] - fp[0][0]) / 500)
+    encoded_flight = xcsoar_flight.encode()
 
-        fixes = map(lambda x: (x[2], x[1], (x[0] / max_delta_time * threshold)), fp)
-        fixes = encoder.classify(fixes, remove=False, type="ppd")
+    encoded = dict(points=encoded_flight['locations'],
+                   levels=encoded_flight['levels'],
+                   zoom_levels=zoom_levels)
 
-    encoded = encoder.encode(fixes['points'], fixes['levels'])
-
-    barogram_t = encoder.encodeList([fp[i][0] for i in range(len(fp)) if fixes['levels'][i] != -1])
-    barogram_h = encoder.encodeList([fp[i][3] for i in range(len(fp)) if fixes['levels'][i] != -1])
-    enl = encoder.encodeList([fp[i][4] or 0 for i in range(len(fp)) if fixes['levels'][i] != -1])
-    elevations = encoder.encodeList([fp[i][5] or UNKNOWN_ELEVATION for i in range(len(fp)) if fixes['levels'][i] != -1])
+    barogram_t = encoded_flight['times']
+    barogram_h = encoded_flight['altitude']
+    enl = encoded_flight['enl']
+    elevations = xcsoar.encode([fix.elevation if fix.elevation is not None else UNKNOWN_ELEVATION for fix in fp], method="signed")
 
     return dict(encoded=encoded, zoom_levels=zoom_levels, num_levels=num_levels,
                 barogram_t=barogram_t, barogram_h=barogram_h, enl=enl,
