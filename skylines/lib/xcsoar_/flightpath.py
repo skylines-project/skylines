@@ -1,6 +1,6 @@
 from collections import namedtuple
 from sqlalchemy.sql.expression import and_, literal_column
-from shapely.geometry import LineString
+from shapely.geometry import MultiPoint
 from geoalchemy2.shape import from_shape
 
 from skylines.lib import files
@@ -57,8 +57,8 @@ def get_elevation(fixes):
     shortener = int(max(1, len(fixes) / 1000))
 
     coordinates = [(fix[2]['longitude'], fix[2]['latitude']) for fix in fixes]
-    linestring = LineString(coordinates[::shortener])
-    locations = from_shape(linestring, srid=4326).ST_DumpPoints()
+    points = MultiPoint(coordinates[::shortener])
+    locations = from_shape(points, srid=4326).ST_DumpPoints()
     locations_id = extract_array_item(locations.path, 1)
 
     subq = db.session.query(locations_id.label('location_id'),
