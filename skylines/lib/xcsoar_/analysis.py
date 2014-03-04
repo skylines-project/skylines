@@ -313,7 +313,7 @@ def get_analysis_times(times):
 def run_analyse_flight(filename, full=None, triangle=None, sprint=None):
     limits = get_limits()
 
-    flight = xcsoar.Flight(flight_path(filename, add_elevation=True))
+    flight = xcsoar.Flight(flight_path(filename, add_elevation=True, max_points=None))
 
     analysis_times = get_analysis_times(flight.times())
 
