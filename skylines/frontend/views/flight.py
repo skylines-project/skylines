@@ -69,8 +69,16 @@ def _get_flight_path(flight, threshold=0.001, max_points=3000):
     zoom_levels.extend([round(-math.log(32.0 / 45.0 * (threshold * pow(zoom_factor, num_levels - i - 1)), 2)) for i in range(1, num_levels)])
 
     xcsoar_flight = xcsoar.Flight(files.filename_to_path(flight.igc_file.filename))
-    xcsoar_flight.reduce(begin=flight.takeoff_time - timedelta(seconds=2 * 60),
-                         end=flight.landing_time + timedelta(seconds=2 * 60),
+
+    begin = flight.takeoff_time - timedelta(seconds=2 * 60)
+    end = flight.landing_time + timedelta(seconds=2 * 60)
+
+    if begin > end:
+        begin = datetime.min
+        end = datetime.max
+
+    xcsoar_flight.reduce(begin=begin,
+                         end=end,
                          num_levels=num_levels,
                          zoom_factor=zoom_factor,
                          threshold=threshold,
