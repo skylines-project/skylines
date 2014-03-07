@@ -6,6 +6,7 @@ from flask.ext.migrate import MigrateCommand
 from .shell import Shell
 from .server import Server
 
+from .aircraft import manager as aircraft_manager
 from .assets import manager as assets_manager
 from .babel import manager as babel_manager
 from .celery import manager as celery_manager
@@ -36,6 +37,7 @@ manager.add_command("shell", Shell())
 manager.add_command("runserver", Server())
 manager.add_command("migrate", MigrateCommand)
 
+manager.add_command("aircraft", aircraft_manager)
 manager.add_command("assets", assets_manager)
 manager.add_command("babel", babel_manager)
 manager.add_command("celery", celery_manager)
