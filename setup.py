@@ -28,7 +28,7 @@ setup(
         'sqlalchemy==0.8.2',
         'alembic==0.6.0',
         'psycopg2==2.4.6',
-        'geoalchemy2==0.2.1',
+        'GeoAlchemy2==0.2.3',
         'shapely==1.2.18',
         'crc16==0.1.1',
         'markdown==2.3.1',
