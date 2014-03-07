@@ -27,7 +27,7 @@ setup(
         'Flask-WTF==0.9.3',
         'SQLAlchemy==0.9.3',
         'alembic==0.6.0',
-        'psycopg2==2.4.6',
+        'psycopg2==2.5.2',
         'GeoAlchemy2==0.2.3',
         'Shapely==1.3.0',
         'crc16==0.1.1',
