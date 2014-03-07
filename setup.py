@@ -35,7 +35,7 @@ setup(
         'pytz',
         'webassets==0.8',
         'cssmin==0.1.4',
-        'twisted==13.1',
+        'Twisted==13.2.0',
         'closure==20140110',
         'WebHelpers==1.3',
         'celery_with_redis==3.0',
