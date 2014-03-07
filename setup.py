@@ -31,7 +31,7 @@ setup(
         'GeoAlchemy2==0.2.3',
         'Shapely==1.3.0',
         'crc16==0.1.1',
-        'markdown==2.3.1',
+        'Markdown==2.4',
         'pytz',
         'webassets==0.8',
         'cssmin==0.1.4',
