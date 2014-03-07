@@ -29,7 +29,7 @@ setup(
         'alembic==0.6.0',
         'psycopg2==2.4.6',
         'GeoAlchemy2==0.2.3',
-        'shapely==1.2.18',
+        'Shapely==1.3.0',
         'crc16==0.1.1',
         'markdown==2.3.1',
         'pytz',
