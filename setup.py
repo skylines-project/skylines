@@ -19,7 +19,7 @@ setup(
         'werkzeug==0.9.4',
         'Flask-Babel==0.9',
         'Flask-Assets==0.8',
-        'Flask-Login==0.2.7',
+        'Flask-Login==0.2.9',
         'Flask-Cache==0.12',
         'Flask-Migrate==1.1.0',
         'Flask-Script==0.6.7',
