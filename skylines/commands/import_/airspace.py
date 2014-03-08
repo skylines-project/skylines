@@ -39,9 +39,11 @@ class AirspaceCommand(Command):
                     'when using this option.'),
         Option('--filetype',
                help='Choose \'sua\' or \'openair\'.'),
+        Option('--debug', action='store_true',
+               help='Be more verbose'),
     )
 
-    def run(self, airspace_list, airspace_blacklist, country, url, filetype):
+    def run(self, airspace_list, airspace_blacklist, country, url, filetype, debug):
         # the lines in airspace_list contain the following:
         # de openair http://www.daec.de/download/ASDF.txt # for openair files
         # at sua http://www.austrocontrol.at/download/ASDF.sua # for SUA files
@@ -52,7 +54,7 @@ class AirspaceCommand(Command):
             self.import_blacklist(airspace_blacklist)
 
         if url and len(country) == 1 and filetype:
-            self.import_airspace(url, country[0], filetype)
+            self.import_airspace(url, country[0], filetype, debug)
         else:
             with open(airspace_list, "r") as f:
 
@@ -66,10 +68,13 @@ class AirspaceCommand(Command):
                     file_type = match.group(2).strip()
                     url = match.group(3).strip()
 
+                    if debug:
+                        print "Found {} with filetype {} and URL {}".format(country_code, file_type, url)
+
                     if country and country_code.lower() not in country:
                         continue
 
-                    self.import_airspace(url, country_code, file_type)
+                    self.import_airspace(url, country_code, file_type, debug)
 
     def import_blacklist(self, blacklist_file):
         # import airspace blacklist to remove unwanted airspaces (e.g. borderlines)
@@ -93,7 +98,7 @@ class AirspaceCommand(Command):
 
                 self.blacklist[country_code].append(name)
 
-    def import_airspace(self, url, country_code, file_type):
+    def import_airspace(self, url, country_code, file_type, debug):
         country_code = country_code.lower()
 
         filename = os.path.join(
@@ -110,14 +115,14 @@ class AirspaceCommand(Command):
         self.remove_country(country_code)
 
         if file_type == 'sua':
-            self.import_sua(filename, country_code)
+            self.import_sua(filename, country_code, debug)
         elif file_type == 'openair':
-            self.import_openair(filename, country_code)
+            self.import_openair(filename, country_code, debug)
 
         if filename.startswith(current_app.config['SKYLINES_TEMPORARY_DIR']):
             shutil.rmtree(os.path.dirname(filename))
 
-    def import_sua(self, filename, country_code):
+    def import_sua(self, filename, country_code, debug):
         from osgeo import ogr
 
         print "reading " + filename
@@ -133,8 +138,13 @@ class AirspaceCommand(Command):
                 for line in in_file.xreadlines():
                     out_file.write(line.replace('# CLASS', 'CLASS'))
 
+        if debug:
+            print "Trying to open " + temporary_file
+
         airspace_file = ogr.Open(temporary_file)
         if not airspace_file:
+            if debug:
+                print "OGR doesn't think that's a airspace file..."
             return
 
         layer = airspace_file.GetLayerByIndex(0)
@@ -154,6 +164,9 @@ class AirspaceCommand(Command):
             if name in country_blacklist:
                 print name + " is in blacklist"
                 continue
+
+            if debug:
+                print "Adding " + name
 
             airspace_class = feature.GetFieldAsString('class').strip()
             airspace_type = self.parse_airspace_type(feature.GetFieldAsString('type').strip())
@@ -189,7 +202,7 @@ class AirspaceCommand(Command):
 
         print "added " + str(j) + " features for country " + country_code
 
-    def import_openair(self, filename, country_code):
+    def import_openair(self, filename, country_code, debug):
         from osgeo import ogr
 
         print "reading " + filename
@@ -197,6 +210,8 @@ class AirspaceCommand(Command):
 
         airspace_file = ogr.Open(filename)
         if not airspace_file:
+            if debug:
+                print "OGR doesn't think that's a airspace file..."
             return
 
         layer = airspace_file.GetLayerByIndex(0)
@@ -216,6 +231,9 @@ class AirspaceCommand(Command):
             if name in country_blacklist:
                 print name + " is in blacklist"
                 continue
+
+            if debug:
+                print "Adding " + name
 
             added = self.add_airspace(
                 country_code,
