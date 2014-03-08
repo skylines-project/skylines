@@ -12,7 +12,7 @@ from shapely.wkt import loads
 from shapely.geos import ReadingError
 from skylines.model import db, Airspace
 
-airspace_re = re.compile(r'^([^#]{1}.*?)\s+(openair|sua)\s+(http://.*|file://.*)')
+airspace_re = re.compile(r'^([^#]{1}.*?)\s+(openair|sua)\s+(https?://.*|file://.*)')
 airspace_blacklist_re = re.compile(r'^([^#]{1}.*?)\s+(.*)')
 
 msl_re = re.compile(r'^(\d+)\s*(f|ft|m)?\s*([a]?msl|asl|alt)')
@@ -100,7 +100,7 @@ class AirspaceCommand(Command):
             current_app.config['SKYLINES_TEMPORARY_DIR'], country_code,
             country_code + '.' + file_type)
 
-        if url.startswith('http://'):
+        if url.startswith('http://') or url.startswith('https://'):
             print "\nDownloading " + url
             filename = self.download_file(filename, url)
         elif url.startswith('file://'):
