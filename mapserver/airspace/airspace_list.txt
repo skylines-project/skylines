@@ -3,22 +3,24 @@
 # each line contains:
 # 2-letter-country-code openair/sua url
 
+# cz 2014 file can't be read by ogr...
 cz openair http://soaringweb.org/Airspace/CZ/CZ_2013.txt
-de openair http://www.daec.de/fileadmin/user_upload/files/2012/fachbereiche/luftraum/20130524OpenAir_deakt_coleman.txt
+de openair http://www.daec.de/fileadmin/user_upload/files/2012/fachbereiche/luftraum/20140306OpenAir.txt
 at openair http://www.austrocontrol.at/jart/prj3/austro_control/data/uploads/austria_ATS_2011_openair.txt
+# current belgium airspace can be downloaded from http://www.lvzc.be/index.php/secretariaat/documenten/cat_view/53-luchtruim/54-luchtruimbestanden as zip file
 be openair http://www.zweefvliegen.be/index.php/secretariaat/documenten/doc_view/322-bellux-week-120112
-fr openair http://soaringweb.org/Airspace/FR/130609__AIRSPACE_France_1306c.txt
+fr openair http://soaringweb.org/Airspace/FR/140215__AIRSPACE_France_1402c.txt
 nl openair http://www.gliderpilotshop.nl/documents/EHv13_5.txt
 hu openair http://soaringweb.org/Airspace/HU/Hungary_2012.txt
 sk openair http://soaringweb.org/Airspace/SK/SK2012.txt
 uk openair http://soaringweb.org/Airspace/UK/WPLTAS141113.txt
-ch openair http://soaringweb.org/Airspace/CH/CH-Luftraum_2013_03_07_R1.txt
+ch openair http://soaringweb.org/Airspace/CH/CH-Luftraum_2014.txt
 es openair http://soaringweb.org/Airspace/ES/SUASpain201305.txt
-pl openair http://soaringweb.org/Airspace/PL/17_OCT_2013_Polska.txt
+pl openair http://soaringweb.org/Airspace/PL/06_MAR_2014_Polska.txt
 no openair http://soaringweb.org/Airspace/NO/NO.txt
 dk sua http://soaringweb.org/Airspace/DK/DK-OpenAir-AllinOne-2013-V2a.sua
-us openair http://user.xmission.com/~lalley/aviation/countHits.php?count=oaCount&file=allusa.v13.03-07.2.txt
+us openair https://user.xmission.com/~lalley/aviation/countHits.php?count=oaCount&file=allusa.v14.02-06.1.txt
 za openair http://soaringweb.org/Airspace/ZA/SAGlidingAirsp-17102011_v1.3.txt
 au openair http://soaringweb.org/Airspace/AU/australia_class_all_13_05_30.txt
-ca openair http://soaringweb.org/Airspace/NA/canadian_airspace239.txt
+ca openair http://soaringweb.org/Airspace/NA/canadian_airspace241.air
 
