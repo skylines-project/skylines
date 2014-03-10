@@ -6,8 +6,8 @@ from sqlalchemy.dialects import postgresql
 from sqlalchemy.orm import deferred
 from sqlalchemy.types import Unicode, Integer, Float, DateTime, Date, \
     Boolean, SmallInteger
-from sqlalchemy.ext.hybrid import hybrid_property
-from sqlalchemy.sql.expression import case, and_, literal_column
+from sqlalchemy.ext.hybrid import hybrid_method, hybrid_property
+from sqlalchemy.sql.expression import case, and_, or_, literal_column
 from geoalchemy2.types import Geometry
 from geoalchemy2.shape import to_shape, from_shape
 from shapely.geometry import LineString
@@ -167,27 +167,52 @@ class Flight(db.Model):
 
         return cls.query().filter_by(igc_file=file).first()
 
+    ## Permissions ###############
+
+    @hybrid_method
     def is_viewable(self, user):
-        if (self.privacy_level == Flight.PrivacyLevel.PUBLIC or
-            self.privacy_level == Flight.PrivacyLevel.LINK_ONLY):
-            return True
+        return (self.privacy_level == Flight.PrivacyLevel.PUBLIC or
+                self.privacy_level == Flight.PrivacyLevel.LINK_ONLY or
+                self.is_writable(user))
 
-        return self.is_writable(user)
+    @is_viewable.expression
+    def is_viewable_expression(cls, user):
+        return or_(cls.privacy_level == Flight.PrivacyLevel.PUBLIC,
+                   cls.privacy_level == Flight.PrivacyLevel.LINK_ONLY,
+                   cls.is_writable(user))
 
+    @hybrid_method
     def is_listable(self, user):
-        if self.privacy_level == Flight.PrivacyLevel.PUBLIC:
-            return True
+        return (self.privacy_level == Flight.PrivacyLevel.PUBLIC or
+                self.is_writable(user))
 
-        return self.is_writable(user)
+    @is_listable.expression
+    def is_listable_expression(cls, user):
+        return or_(cls.privacy_level == Flight.PrivacyLevel.PUBLIC,
+                   cls.is_writable(user))
 
+    @hybrid_method
     def is_writable(self, user):
         return user and \
             (self.igc_file.owner_id == user.id or
              self.pilot_id == user.id or
              user.is_manager())
 
+    @is_writable.expression
+    def is_writable_expression(self, user):
+        return user and (
+            user.is_manager() or
+            or_(
+                IGCFile.owner_id == user.id,
+                self.pilot_id == user.id
+            )
+        )
+
+    @hybrid_method
     def may_delete(self, user):
         return user and (self.igc_file.owner_id == user.id or user.is_manager())
+
+    ##############################
 
     @classmethod
     def get_largest(cls):
