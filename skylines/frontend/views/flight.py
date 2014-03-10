@@ -4,7 +4,7 @@ from datetime import datetime
 from flask import Blueprint, request, render_template, redirect, url_for, abort, current_app, jsonify, g, flash
 from flask.ext.babel import lazy_gettext as l_, _
 
-from sqlalchemy.orm import undefer_group
+from sqlalchemy.orm import undefer_group, contains_eager
 from sqlalchemy.sql.expression import func
 from geoalchemy2.shape import to_shape
 from datetime import timedelta
@@ -47,8 +47,17 @@ def _reanalyse_if_needed(flight):
 def _pull_flight_id(endpoint, values):
     g.flight_id = values.pop('flight_id')
 
+
+def _patch_query(q):
+    return q.join(Flight.igc_file) \
+            .options(contains_eager(Flight.igc_file)) \
+            .filter(Flight.is_viewable(g.current_user))
+
+
+@flight_blueprint.before_request
+def _query_flights():
     g.flights = get_requested_record_list(
-        Flight, g.flight_id, joinedload=[Flight.igc_file])
+        Flight, g.flight_id, patch_query=_patch_query)
 
     g.flight = g.flights[0]
     g.other_flights = g.flights[1:]
@@ -270,6 +279,8 @@ def _get_near_flights(flight, location, time, max_distance=1000):
         .filter(func.ST_DWithin(Flight.locations,
                                 location.to_wkt_element(),
                                 max_distance_deg))
+
+    result = _patch_query(result)
 
     flights = []
     for flight in result:
