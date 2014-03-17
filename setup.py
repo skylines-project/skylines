@@ -39,7 +39,7 @@ setup(
         'closure==20140110',
         'WebHelpers==1.3',
         'celery_with_redis==3.0',
-        'xcsoar==0.2',
+        'xcsoar==0.2.1',
         'Pygments==1.6',
         'aerofiles==0.1.1',
     ],
