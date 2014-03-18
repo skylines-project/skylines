@@ -105,7 +105,9 @@ def _get_flight_path(pilot, threshold=0.001, last_update=None):
     barogram_t = encoded_flight['times']
     barogram_h = encoded_flight['altitude']
     enl = encoded_flight['enl']
-    elevations = xcsoar.encode([fix.elevation if fix.elevation is not None else UNKNOWN_ELEVATION for fix in fp], method="signed")
+
+    fp_reduced = map(lambda line: FlightPathFix(*line), xcsoar_flight.path())
+    elevations = xcsoar.encode([fix.elevation if fix.elevation is not None else UNKNOWN_ELEVATION for fix in fp_reduced], method="signed")
 
     return dict(encoded=encoded, zoom_levels=zoom_levels, num_levels=num_levels,
                 barogram_t=barogram_t, barogram_h=barogram_h, enl=enl,
