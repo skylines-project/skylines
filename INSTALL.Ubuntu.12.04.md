@@ -18,7 +18,7 @@ The following test describes how to perform all the install steps mentioned in I
     $ sudo apt-get update
 
     # Install all required software
-    $ sudo apt-get install libpq-dev Postgresql-9.3-postgis pgadmin3 postgresql-contrib python-pip git libcurl4-openssl-dev nedit python-dev g++ python-virtualenv make redis-server
+    $ sudo apt-get install libpq-dev Postgresql-9.3-postgis pgadmin3 postgresql-contrib python-pip git libcurl4-openssl-dev nedit python-dev g++ python-virtualenv make redis-server openjdk-7-jre
 
     # Clone GIT-Server
     $ cd 
