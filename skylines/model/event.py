@@ -7,6 +7,7 @@ from skylines.model import db
 from .user import User
 from .club import Club
 from .follower import Follower
+from .flight import Flight
 
 
 class Event(db.Model):
@@ -97,7 +98,10 @@ class Notification(db.Model):
 
     @classmethod
     def query_unread(cls, recipient):
-        return cls.query(recipient=recipient, time_read=None)
+        return cls.query(recipient=recipient, time_read=None) \
+                  .join(cls.event) \
+                  .outerjoin(Event.flight) \
+                  .filter(Flight.is_rankable())
 
     @classmethod
     def count_unread(cls, recipient):
