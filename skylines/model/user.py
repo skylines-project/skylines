@@ -264,7 +264,7 @@ class User(db.Model):
         as pilot ordered by distance
         '''
         from skylines.model.flight import Flight
-        return Flight.get_largest().filter_by(pilot=self)
+        return Flight.get_largest().filter(Flight.pilot == self)
 
     ##############################
 
