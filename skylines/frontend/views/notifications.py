@@ -3,7 +3,7 @@ from sqlalchemy.orm import subqueryload, contains_eager
 
 from skylines.lib.util import str_to_bool
 from skylines.model import db
-from skylines.model.event import Event, Notification, group_events
+from skylines.model.event import Event, Notification, Flight, group_events
 
 
 notifications_blueprint = Blueprint('notifications', 'skylines')
@@ -39,7 +39,9 @@ def index():
         .join('event') \
         .options(contains_eager('event')) \
         .options(subqueryload('event.actor')) \
-        .options(subqueryload('event.flight')) \
+        .outerjoin(Event.flight) \
+        .options(contains_eager('event.flight')) \
+        .filter(Flight.is_rankable()) \
         .order_by(Event.time.desc())
 
     query = _filter_query(query, request.args)
