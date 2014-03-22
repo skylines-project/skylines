@@ -89,7 +89,6 @@ tools. To build the tools you might have to install additional libraries like
 install libcurl4-openssl-dev`. Please have a look into the XCSoar documentation
 if you need more help with the building process.
 
-
 ## Running the debug server
 
 If the above steps are completed you should be able to run a base version of
@@ -106,7 +105,7 @@ Since an empty database is boring, you should at least load the airports from
 the [Welt2000](http://www.segelflug.de/vereine/welt2000/) into the database by
 calling:
 
-    $ ./manage.py import welt2000
+    $ ./manage.py import welt2000 --commit
 
 
 ## Asynchronous tasks
@@ -122,3 +121,6 @@ need is to install the `redis-server` package:
 To run the Celery worker, call
 
     $ ./manage.py celery runworker
+    
+## Complete OS-specific installation instructions can be found below:
+[INSTALL.Ubuntu.12.04.md](INSTALL.Ubuntu.12.04.md)
