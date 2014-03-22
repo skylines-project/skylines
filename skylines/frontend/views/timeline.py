@@ -1,8 +1,9 @@
 from flask import Blueprint, render_template, request
-from sqlalchemy.orm import subqueryload
+from sqlalchemy.orm import subqueryload, contains_eager
 
 from skylines.lib.util import str_to_bool
 from skylines.model.event import Event, group_events
+from skylines.model import Flight
 from .notifications import _filter_query
 
 timeline_blueprint = Blueprint('timeline', 'skylines')
@@ -14,7 +15,9 @@ def index():
         .options(subqueryload('actor')) \
         .options(subqueryload('user')) \
         .options(subqueryload('club')) \
-        .options(subqueryload('flight')) \
+        .outerjoin(Event.flight) \
+        .options(contains_eager(Event.flight)) \
+        .filter(Flight.is_rankable()) \
         .order_by(Event.time.desc())
 
     query = _filter_query(query, request.args)
