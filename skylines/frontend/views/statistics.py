@@ -39,6 +39,8 @@ def index(page=None, id=None):
     elif page is not None:
         abort(404)
 
+    query = query.filter(Flight.is_rankable())
+
     query = query.group_by(Flight.year).order_by(Flight.year.desc())
 
     max_flights = 1
