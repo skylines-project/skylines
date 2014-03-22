@@ -3,7 +3,7 @@ from datetime import date, timedelta
 from flask import Blueprint, render_template, redirect, url_for, g, request
 from flask.ext.login import login_required
 
-from sqlalchemy import func
+from sqlalchemy import func, and_
 from sqlalchemy.orm import contains_eager, subqueryload
 
 from skylines.lib.dbutil import get_requested_record
@@ -87,9 +87,9 @@ def _get_last_year_statistics():
 
 
 def _get_takeoff_locations():
-    # TODO respect privacy levels
-    return Location.get_clustered_locations(Flight.takeoff_location_wkt,
-                                            filter=(Flight.pilot == g.user))
+    return Location.get_clustered_locations(
+        Flight.takeoff_location_wkt,
+        filter=and_(Flight.pilot == g.user, Flight.is_rankable()))
 
 
 def mark_user_notifications_read(user):
