@@ -32,6 +32,7 @@ def _get_distance_flight(distance):
         .filter(Flight.pilot == g.user) \
         .filter(Flight.olc_classic_distance >= distance) \
         .order_by(Flight.landing_time) \
+        .filter(Flight.is_rankable()) \
         .first()
 
 
@@ -61,6 +62,7 @@ def _get_last_year_statistics():
                              func.sum(Flight.duration).label('duration')) \
                       .filter(Flight.pilot == g.user) \
                       .filter(Flight.date_local > (date.today() - timedelta(days=365))) \
+                      .filter(Flight.is_rankable()) \
                       .first()
 
     last_year_statistics = dict(flights=0,
@@ -85,6 +87,7 @@ def _get_last_year_statistics():
 
 
 def _get_takeoff_locations():
+    # TODO respect privacy levels
     return Location.get_clustered_locations(Flight.takeoff_location_wkt,
                                             filter=(Flight.pilot == g.user))
 
