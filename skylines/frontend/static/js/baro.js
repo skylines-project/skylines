@@ -241,6 +241,15 @@ function slBarogram(placeholder, options) {
     });
   };
 
+  /**
+   * Update the highlights the selected flight with takeoff, release and landing
+   *
+   * @param {number} time The time to set to.
+   * @param {string} field The field name to set.
+   */
+  baro.updateFlightTime = function(time, field) {
+    flot.updateSelection(time * 1000, field);
+  };
 
   /**
    * Get the current marker positions
