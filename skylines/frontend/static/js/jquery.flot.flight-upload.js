@@ -171,28 +171,12 @@ The plugin allso adds the following methods to the plot object:
     }
 
     function getSelection() {
-      var r = {},
-          c1 = selection.times.takeoff,
-          c2 = selection.times.scoring_start,
-          c3 = selection.times.scoring_end,
-          c4 = selection.times.landing;
-
-      $.each(plot.getAxes(), function(name, axis) {
-        if (axis.used) {
-          var p1 = axis.c2p(c1[axis.direction]),
-              p2 = axis.c2p(c2[axis.direction]),
-              p3 = axis.c2p(c3[axis.direction]),
-              p4 = axis.c2p(c4[axis.direction]);
-
-          r[name] = {
-            takeoff: p1,
-            scoring_start: p2,
-            scoring_end: p3,
-            landing: p4
-          };
-        }
-      });
-      return r;
+      return {
+        takeoff: selection.times.takeoff,
+        scoring_start: selection.times.scoring_start,
+        scoring_end: selection.times.scoring_end,
+        landing: selection.times.landing
+      };
     }
 
     function triggerSelectedEvent() {
