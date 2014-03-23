@@ -272,8 +272,8 @@ The plugin allso adds the following methods to the plot object:
     plot.hooks.bindEvents.push(function(plot, eventHolder) {
       var o = plot.getOptions();
       if (o.selection.mode != null) {
-        eventHolder.mousemove(onMouseMove);
-        eventHolder.mousedown(onMouseDown);
+        eventHolder.on('mousemove', onMouseMove);
+        eventHolder.on('mousedown', onMouseDown);
       }
     });
 
