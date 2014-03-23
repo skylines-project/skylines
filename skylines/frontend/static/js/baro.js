@@ -196,6 +196,15 @@ function slBarogram(placeholder, options) {
 
 
   /**
+   * Enable flight selection for upload page
+   */
+  baro.enableFlightSelection = function() {
+    var opt = flot.getOptions();
+
+    opt.selection.mode = 'x';
+  };
+
+  /**
    * Clears the highlight of a certain time interval from the barogram
    */
   baro.clearTimeHighlight = function() {

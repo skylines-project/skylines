@@ -63,7 +63,8 @@ The plugin allso adds the following methods to the plot object:
 (function($) {
   function init(plot) {
     var selection = {
-      first: { x: -1}, second: { x: -1},
+      takeoff: -1,
+      landing: -1,
       show: false,
       active: false
     };
@@ -113,10 +114,10 @@ The plugin allso adds the following methods to the plot object:
 
       if (selected_marker == null)
         return;
-      else if (selected_marker == 'first')
-        setSelectionPos(selection.first, e);
+      else if (selected_marker == 'takeoff')
+        selection.takeoff = setSelectionPos(e);
       else
-        setSelectionPos(selection.second, e);
+        selection.landing = setSelectionPos(e);
 
       selection.active = selected_marker;
 
@@ -151,23 +152,23 @@ The plugin allso adds the following methods to the plot object:
       var plotOffset = plot.getPlotOffset();
       var pos = clamp(0, e.pageX - offset.left - plotOffset.left, plot.width());
 
-      var dist_to_first = Math.abs(selection.first.x - pos),
-          dist_to_second = Math.abs(selection.second.x - pos);
+      var dist_to_takeoff = Math.abs(selection.takeoff - pos),
+          dist_to_landing = Math.abs(selection.landing - pos);
 
-      if (dist_to_first <= dist_to_second && dist_to_first < 10)
-        return 'first';
-      else if (dist_to_first > dist_to_second && dist_to_second < 10)
-        return 'second';
+      if (dist_to_takeoff <= dist_to_landing && dist_to_takeoff < 4)
+        return 'takeoff';
+      else if (dist_to_takeoff > dist_to_landing && dist_to_landing < 4)
+        return 'landing';
       else
         return null;
     }
 
     function getSelection() {
-      var r = {}, c1 = selection.first, c2 = selection.second;
+      var r = {}, c1 = selection.takeoff, c2 = selection.landing;
       $.each(plot.getAxes(), function(name, axis) {
         if (axis.used) {
           var p1 = axis.c2p(c1[axis.direction]), p2 = axis.c2p(c2[axis.direction]);
-          r[name] = { from: Math.min(p1, p2), to: Math.max(p1, p2) };
+          r[name] = { takeoff: Math.min(p1, p2), landing: Math.max(p1, p2) };
         }
       });
       return r;
@@ -180,18 +181,18 @@ The plugin allso adds the following methods to the plot object:
 
       // backwards-compat stuff, to be removed in future
       if (r.xaxis && r.yaxis)
-        plot.getPlaceholder().trigger('selected', [{ x1: r.xaxis.from, x2: r.xaxis.to }]);
+        plot.getPlaceholder().trigger('selected', [{ x1: r.xaxis.takeoff, x2: r.xaxis.landing }]);
     }
 
     function clamp(min, value, max) {
       return value < min ? min : (value > max ? max : value);
     }
 
-    function setSelectionPos(pos, e) {
+    function setSelectionPos(e) {
       var o = plot.getOptions();
       var offset = plot.getPlaceholder().offset();
       var plotOffset = plot.getPlotOffset();
-      pos.x = clamp(0, e.pageX - offset.left - plotOffset.left, plot.width());
+      return clamp(0, e.pageX - offset.left - plotOffset.left, plot.width());
 
     }
 
@@ -199,10 +200,10 @@ The plugin allso adds the following methods to the plot object:
       if (pos.pageX == null)
         return;
 
-      if (selection.active == 'first')
-        setSelectionPos(selection.first, pos);
-      else if (selection.active == 'second')
-        setSelectionPos(selection.second, pos);
+      if (selection.active == 'takeoff')
+        selection.takeoff = setSelectionPos(pos);
+      else if (selection.active == 'landing')
+        selection.landing = setSelectionPos(pos);
 
       selection.show = true;
       plot.triggerRedrawOverlay();
@@ -217,12 +218,12 @@ The plugin allso adds the following methods to the plot object:
       }
     }
 
-    function setSelection(ranges, preventEvent) {
+    function setSelection(times, preventEvent) {
       var axis, o = plot.getOptions();
 
       axis = plot.getXAxes()[0];
-      selection.first.x = axis.p2c(range.from);
-      selection.second.x = axis.p2c(range.to);
+      selection.takeoff = axis.p2c(times.takeoff);
+      selection.landing = axis.p2c(times.landing);
 
       selection.show = true;
       plot.triggerRedrawOverlay();
@@ -262,11 +263,11 @@ The plugin allso adds the following methods to the plot object:
         var y = 0,
             h = plot.height();
 
-        var w_left = Math.min(selection.first.x, selection.second.x);
+        var w_left = selection.takeoff;
 
         ctx.fillRect(0, y, w_left, h);
 
-        var x_right = Math.max(selection.first.x, selection.second.x);
+        var x_right = selection.landing;
 
         ctx.fillRect(x_right, y, plot.width() - x_right, h);
 
