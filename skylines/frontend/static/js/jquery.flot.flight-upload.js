@@ -63,8 +63,8 @@ The plugin allso adds the following methods to the plot object:
 (function($) {
   function init(plot) {
     var selection = {
-      takeoff: -1,
-      landing: -1,
+      times: { takeoff: -1, landing: -1},
+      canvas: { takeoff: -1, landing: -1},
       show: false,
       active: false
     };
@@ -115,9 +115,9 @@ The plugin allso adds the following methods to the plot object:
       if (selected_marker == null)
         return;
       else if (selected_marker == 'takeoff')
-        selection.takeoff = setSelectionPos(e);
+        selection.canvas.takeoff = setSelectionPos(e);
       else
-        selection.landing = setSelectionPos(e);
+        selection.canvas.landing = setSelectionPos(e);
 
       selection.active = selected_marker;
 
@@ -152,8 +152,8 @@ The plugin allso adds the following methods to the plot object:
       var plotOffset = plot.getPlotOffset();
       var pos = clamp(0, e.pageX - offset.left - plotOffset.left, plot.width());
 
-      var dist_to_takeoff = Math.abs(selection.takeoff - pos),
-          dist_to_landing = Math.abs(selection.landing - pos);
+      var dist_to_takeoff = Math.abs(selection.canvas.takeoff - pos),
+          dist_to_landing = Math.abs(selection.canvas.landing - pos);
 
       if (dist_to_takeoff <= dist_to_landing && dist_to_takeoff < 4)
         return 'takeoff';
@@ -164,7 +164,7 @@ The plugin allso adds the following methods to the plot object:
     }
 
     function getSelection() {
-      var r = {}, c1 = selection.takeoff, c2 = selection.landing;
+      var r = {}, c1 = selection.canvas.takeoff, c2 = selection.canvas.landing;
       $.each(plot.getAxes(), function(name, axis) {
         if (axis.used) {
           var p1 = axis.c2p(c1[axis.direction]), p2 = axis.c2p(c2[axis.direction]);
@@ -200,14 +200,15 @@ The plugin allso adds the following methods to the plot object:
       if (pos.pageX == null)
         return;
 
-      if (selection.active == 'takeoff') {
-        selection.takeoff = setSelectionPos(pos);
-        selection.landing = Math.max(selection.takeoff, selection.landing);
-      } else if (selection.active == 'landing') {
-        selection.landing = setSelectionPos(pos);
-        selection.takeoff = Math.min(selection.takeoff, selection.landing);
-      }
+      axis = plot.getXAxes()[0];
 
+      if (selection.active == 'takeoff') {
+        selection.times.takeoff = axis.c2p(setSelectionPos(pos));
+        selection.times.landing = Math.max(selection.times.takeoff, selection.times.landing);
+      } else if (selection.active == 'landing') {
+        selection.times.landing = axis.c2p(setSelectionPos(pos));
+        selection.times.takeoff = Math.min(selection.times.takeoff, selection.times.landing);
+      }
 
       selection.show = true;
       plot.triggerRedrawOverlay();
@@ -224,10 +225,7 @@ The plugin allso adds the following methods to the plot object:
 
     function setSelection(times, preventEvent) {
       var axis, o = plot.getOptions();
-
-      axis = plot.getXAxes()[0];
-      selection.takeoff = axis.p2c(times.takeoff);
-      selection.landing = axis.p2c(times.landing);
+      selection.times = times;
 
       selection.show = true;
       plot.triggerRedrawOverlay();
@@ -254,6 +252,10 @@ The plugin allso adds the following methods to the plot object:
         var plotOffset = plot.getPlotOffset();
         var o = plot.getOptions();
 
+        axis = plot.getXAxes()[0];
+        selection.canvas.takeoff = axis.p2c(selection.times.takeoff);
+        selection.canvas.landing = axis.p2c(selection.times.landing);
+
         ctx.save();
         ctx.translate(plotOffset.left, plotOffset.top);
 
@@ -267,11 +269,11 @@ The plugin allso adds the following methods to the plot object:
         var y = 0,
             h = plot.height();
 
-        var w_left = selection.takeoff;
+        var w_left = selection.canvas.takeoff;
 
         ctx.fillRect(0, y, w_left, h);
 
-        var x_right = selection.landing;
+        var x_right = selection.canvas.landing;
 
         ctx.fillRect(x_right, y, plot.width() - x_right, h);
 
