@@ -61,7 +61,13 @@ function initBaro(placeholder, sfid, _time, _height, _enl,
   baro.setActiveTraces([data]);
   baro.setENLData([enl_data]);
   baro.setElevations(flot_elev);
-  baro.setFlightTimes(time[0], time[timeLength - 1]);
+
+  baro.setFlightTimes(
+      time[0],
+      time[0] + (time[timeLength - 1] - time[0]) * 0.33,
+      time[0] + (time[timeLength - 1] - time[0]) * 0.66,
+      time[timeLength - 1]
+  );
 
   baro.draw();
 }

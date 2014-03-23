@@ -225,14 +225,18 @@ function slBarogram(placeholder, options) {
   };
 
   /**
-   * Highlights the selected flight with takeoff and landing
+   * Highlights the selected flight with takeoff, release and landing
    *
    * @param {number} takeoff The takeoff time.
+   * @param {number} scoring_start The scoring window start time.
+   * @param {number} scoring_end The scoring window end time.
    * @param {number} landing The landing time.
    */
-  baro.setFlightTimes = function(takeoff, landing) {
+  baro.setFlightTimes = function(takeoff, scoring_start, scoring_end, landing) {
     flot.setSelection({
       takeoff: takeoff * 1000,
+      scoring_start: scoring_start * 1000,
+      scoring_end: scoring_end * 1000,
       landing: landing * 1000
     });
   };

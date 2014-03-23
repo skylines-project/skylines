@@ -63,8 +63,8 @@ The plugin allso adds the following methods to the plot object:
 (function($) {
   function init(plot) {
     var selection = {
-      times: { takeoff: -1, landing: -1},
-      canvas: { takeoff: -1, landing: -1},
+      times: { takeoff: -1, scoring_start: -1, scoring_end: -1, landing: -1},
+      canvas: { takeoff: -1, scoring_start: -1, scorint_end: -1, landing: -1},
       show: false,
       active: false
     };
@@ -116,6 +116,10 @@ The plugin allso adds the following methods to the plot object:
         return;
       else if (selected_marker == 'takeoff')
         selection.canvas.takeoff = setSelectionPos(e);
+      else if (selected_marker == 'scoring_start')
+        selection.canvas.scoring_start = setSelectionPos(e);
+      else if (selected_marker == 'scoring_end')
+        selection.canvas.scoring_end = setSelectionPos(e);
       else
         selection.canvas.landing = setSelectionPos(e);
 
@@ -152,23 +156,40 @@ The plugin allso adds the following methods to the plot object:
       var plotOffset = plot.getPlotOffset();
       var pos = clamp(0, e.pageX - offset.left - plotOffset.left, plot.width());
 
-      var dist_to_takeoff = Math.abs(selection.canvas.takeoff - pos),
-          dist_to_landing = Math.abs(selection.canvas.landing - pos);
+      var min = 4;
+      var selected = null;
 
-      if (dist_to_takeoff <= dist_to_landing && dist_to_takeoff < 4)
-        return 'takeoff';
-      else if (dist_to_takeoff > dist_to_landing && dist_to_landing < 4)
-        return 'landing';
-      else
-        return null;
+      for (var index in selection.canvas) {
+        var dist = Math.abs(selection.canvas[index] - pos);
+        if (dist <= min) {
+          selected = index;
+          min = dist;
+        }
+      }
+
+      return selected;
     }
 
     function getSelection() {
-      var r = {}, c1 = selection.canvas.takeoff, c2 = selection.canvas.landing;
+      var r = {},
+          c1 = selection.times.takeoff,
+          c2 = selection.times.scoring_start,
+          c3 = selection.times.scoring_end,
+          c4 = selection.times.landing;
+
       $.each(plot.getAxes(), function(name, axis) {
         if (axis.used) {
-          var p1 = axis.c2p(c1[axis.direction]), p2 = axis.c2p(c2[axis.direction]);
-          r[name] = { takeoff: Math.min(p1, p2), landing: Math.max(p1, p2) };
+          var p1 = axis.c2p(c1[axis.direction]),
+              p2 = axis.c2p(c2[axis.direction]),
+              p3 = axis.c2p(c3[axis.direction]),
+              p4 = axis.c2p(c4[axis.direction]);
+
+          r[name] = {
+            takeoff: p1,
+            scoring_start: p2,
+            scoring_end: p3,
+            landing: p4
+          };
         }
       });
       return r;
@@ -181,7 +202,12 @@ The plugin allso adds the following methods to the plot object:
 
       // backwards-compat stuff, to be removed in future
       if (r.xaxis && r.yaxis)
-        plot.getPlaceholder().trigger('selected', [{ x1: r.xaxis.takeoff, x2: r.xaxis.landing }]);
+        plot.getPlaceholder().trigger('selected', [{
+          x1: r.xaxis.takeoff,
+          x2: r.xaxis.scoring_start,
+          x3: r.xaxis.scoring_end,
+          x4: r.xaxis.landing
+        }]);
     }
 
     function clamp(min, value, max) {
@@ -193,21 +219,42 @@ The plugin allso adds the following methods to the plot object:
       var offset = plot.getPlaceholder().offset();
       var plotOffset = plot.getPlotOffset();
       return clamp(0, e.pageX - offset.left - plotOffset.left, plot.width());
-
     }
 
     function updateSelection(pos) {
       if (pos.pageX == null)
         return;
 
-      axis = plot.getXAxes()[0];
+      var axis = plot.getXAxes()[0];
+      var times = selection.times;
 
       if (selection.active == 'takeoff') {
-        selection.times.takeoff = axis.c2p(setSelectionPos(pos));
-        selection.times.landing = Math.max(selection.times.takeoff, selection.times.landing);
+        times.takeoff = axis.c2p(setSelectionPos(pos));
+
+        times.scoring_start = Math.max(times.takeoff, times.scoring_start);
+        times.scoring_end = Math.max(times.takeoff, times.scoring_end);
+        times.landing = Math.max(times.takeoff, times.landing);
+
+      } else if (selection.active == 'scoring_start') {
+        times.scoring_start = axis.c2p(setSelectionPos(pos));
+
+        times.takeoff = Math.min(times.scoring_start, times.takeoff);
+        times.scoring_end = Math.max(times.scoring_start, times.scoring_end);
+        times.landing = Math.max(times.scoring_start, times.landing);
+
+      } else if (selection.active == 'scoring_end') {
+        times.scoring_end = axis.c2p(setSelectionPos(pos));
+
+        times.takeoff = Math.min(times.scoring_end, times.takeoff);
+        times.scoring_start = Math.min(times.scoring_end, times.scoring_start);
+        times.landing = Math.max(times.scoring_end, times.landing);
+
       } else if (selection.active == 'landing') {
-        selection.times.landing = axis.c2p(setSelectionPos(pos));
-        selection.times.takeoff = Math.min(selection.times.takeoff, selection.times.landing);
+        times.landing = axis.c2p(setSelectionPos(pos));
+
+        times.takeoff = Math.min(times.landing, times.takeoff);
+        times.scoring_start = Math.min(times.landing, times.scoring_start);
+        times.scoring_end = Math.min(times.landing, times.scoring_end);
       }
 
       selection.show = true;
@@ -225,6 +272,7 @@ The plugin allso adds the following methods to the plot object:
 
     function setSelection(times, preventEvent) {
       var axis, o = plot.getOptions();
+
       selection.times = times;
 
       selection.show = true;
@@ -254,6 +302,8 @@ The plugin allso adds the following methods to the plot object:
 
         axis = plot.getXAxes()[0];
         selection.canvas.takeoff = axis.p2c(selection.times.takeoff);
+        selection.canvas.scoring_start = axis.p2c(selection.times.scoring_start);
+        selection.canvas.scoring_end = axis.p2c(selection.times.scoring_end);
         selection.canvas.landing = axis.p2c(selection.times.landing);
 
         ctx.save();
@@ -270,11 +320,9 @@ The plugin allso adds the following methods to the plot object:
             h = plot.height();
 
         var w_left = selection.canvas.takeoff;
-
         ctx.fillRect(0, y, w_left, h);
 
         var x_right = selection.canvas.landing;
-
         ctx.fillRect(x_right, y, plot.width() - x_right, h);
 
         ctx.beginPath();
@@ -286,6 +334,24 @@ The plugin allso adds the following methods to the plot object:
         ctx.moveTo(x_right, 0);
         ctx.lineTo(x_right, plot.height());
         ctx.stroke();
+
+
+        var c_start = $.color.parse(o.selection.scoring_start_color);
+        ctx.strokeStyle = c_start.scale('a', 0.8).toString();
+
+        ctx.beginPath();
+        ctx.moveTo(selection.canvas.scoring_start, 0);
+        ctx.lineTo(selection.canvas.scoring_start, plot.height());
+        ctx.stroke();
+
+        var c_end = $.color.parse(o.selection.scoring_end_color);
+        ctx.strokeStyle = c_end.scale('a', 0.8).toString();
+
+        ctx.beginPath();
+        ctx.moveTo(selection.canvas.scoring_end, 0);
+        ctx.lineTo(selection.canvas.scoring_end, plot.height());
+        ctx.stroke();
+
 
         ctx.restore();
       }
@@ -306,7 +372,9 @@ The plugin allso adds the following methods to the plot object:
     options: {
       selection: {
         mode: null, // one of null, "x"
-        color: '#777777'
+        color: '#777777',
+        scoring_start_color: '#008800',
+        scoring_end_color: '#880000'
       }
     },
     name: 'flight-upload',
