@@ -10,6 +10,7 @@
  * @param {String} _height Google polyencoded string of height values.
  * @param {String} _enl Google polyencoded string of engine noise levels.
  * @param {String} _elevations_h Google polyencoded string of elevations.
+ * @return {Object} Barogram.
  */
 function initBaro(placeholder, sfid, _time, _height, _enl,
                   _elevations_h) {
@@ -57,7 +58,7 @@ function initBaro(placeholder, sfid, _time, _height, _enl,
     }
   };
 
-  baro = slBarogram(placeholder, baro_opts);
+  var baro = slBarogram(placeholder, baro_opts);
   baro.setActiveTraces([data]);
   baro.setENLData([enl_data]);
   baro.setElevations(flot_elev);
@@ -70,4 +71,6 @@ function initBaro(placeholder, sfid, _time, _height, _enl,
   );
 
   baro.draw();
+
+  return baro;
 }
