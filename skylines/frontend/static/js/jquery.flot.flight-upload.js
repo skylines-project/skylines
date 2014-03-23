@@ -79,8 +79,10 @@ The plugin allso adds the following methods to the plot object:
     var mouseUpHandler = null;
 
     function onMouseMove(e) {
-      if (selection.active) {
-        updateSelection(e);
+      if (selection.active && e.pageX != null) {
+        var axis = plot.getXAxes()[0];
+        value = axis.c2p(setSelectionPos(e));
+        updateSelection(value, selection.active);
 
         plot.getPlaceholder().trigger('plotselecting', [getSelection(), selection.active]);
       } else {
@@ -143,7 +145,7 @@ The plugin allso adds the following methods to the plot object:
 
       // no more dragging
       selection.active = null;
-      updateSelection(e);
+      updateSelection();
 
       triggerSelectedEvent();
 
@@ -196,36 +198,32 @@ The plugin allso adds the following methods to the plot object:
       return clamp(0, e.pageX - offset.left - plotOffset.left, plot.width());
     }
 
-    function updateSelection(pos) {
-      if (pos.pageX == null)
-        return;
-
-      var axis = plot.getXAxes()[0];
+    function updateSelection(value, active) {
       var times = selection.times;
 
-      if (selection.active == 'takeoff') {
-        times.takeoff = axis.c2p(setSelectionPos(pos));
+      if (active == 'takeoff') {
+        times.takeoff = value;
 
         times.scoring_start = Math.max(times.takeoff, times.scoring_start);
         times.scoring_end = Math.max(times.takeoff, times.scoring_end);
         times.landing = Math.max(times.takeoff, times.landing);
 
-      } else if (selection.active == 'scoring_start') {
-        times.scoring_start = axis.c2p(setSelectionPos(pos));
+      } else if (active == 'scoring_start') {
+        times.scoring_start = value;
 
         times.takeoff = Math.min(times.scoring_start, times.takeoff);
         times.scoring_end = Math.max(times.scoring_start, times.scoring_end);
         times.landing = Math.max(times.scoring_start, times.landing);
 
-      } else if (selection.active == 'scoring_end') {
-        times.scoring_end = axis.c2p(setSelectionPos(pos));
+      } else if (active == 'scoring_end') {
+        times.scoring_end = value;
 
         times.takeoff = Math.min(times.scoring_end, times.takeoff);
         times.scoring_start = Math.min(times.scoring_end, times.scoring_start);
         times.landing = Math.max(times.scoring_end, times.landing);
 
-      } else if (selection.active == 'landing') {
-        times.landing = axis.c2p(setSelectionPos(pos));
+      } else if (active == 'landing') {
+        times.landing = value;
 
         times.takeoff = Math.min(times.landing, times.takeoff);
         times.scoring_start = Math.min(times.landing, times.scoring_start);
@@ -259,6 +257,7 @@ The plugin allso adds the following methods to the plot object:
     plot.clearSelection = clearSelection;
     plot.setSelection = setSelection;
     plot.getSelection = getSelection;
+    plot.updateSelection = updateSelection;
 
     plot.hooks.bindEvents.push(function(plot, eventHolder) {
       var o = plot.getOptions();
