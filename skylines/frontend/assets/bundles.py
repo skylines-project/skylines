@@ -140,5 +140,6 @@ upload_js = Bundle(
     'js/units.js',
     'js/baro.js',
     'js/upload.js',
+    'js/jquery.flot.flight-upload.js',
     filters=SimpleClosureJS,
     output='js/upload-%(version)s.js')

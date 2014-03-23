@@ -48,7 +48,16 @@ function initBaro(placeholder, sfid, _time, _height, _enl,
     color: color
   };
 
-  baro = slBarogram(placeholder);
+  var baro_opts = {
+    selection: {
+      mode: 'x'
+    },
+    crosshair: {
+      mode: null
+    }
+  };
+
+  baro = slBarogram(placeholder, baro_opts);
   baro.setActiveTraces([data]);
   baro.setENLData([enl_data]);
   baro.setElevations(flot_elev);
