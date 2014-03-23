@@ -224,6 +224,20 @@ function slBarogram(placeholder, options) {
     };
   };
 
+  /**
+   * Highlights the selected flight with takeoff and landing
+   *
+   * @param {number} takeoff The takeoff time.
+   * @param {number} landing The landing time.
+   */
+  baro.setFlightTimes = function(takeoff, landing) {
+    flot.setSelection({
+      takeoff: takeoff * 1000,
+      landing: landing * 1000
+    });
+  };
+
+
   // Initialization
 
   setupFlot(placeholder, options || null);
