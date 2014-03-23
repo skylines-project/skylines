@@ -54,7 +54,10 @@ class Flight(db.Model):
     date_local = db.Column(Date, nullable=False, index=True)
 
     takeoff_time = db.Column(DateTime, nullable=False, index=True)
+    scoring_start_time = db.Column(DateTime, nullable=True)
+    scoring_end_time = db.Column(DateTime, nullable=True)
     landing_time = db.Column(DateTime, nullable=False)
+
     takeoff_location_wkt = db.Column(
         'takeoff_location', Geometry('POINT', srid=4326))
     landing_location_wkt = db.Column(

@@ -167,6 +167,10 @@ def save_landing(event, flight):
 def save_events(events, flight):
     if 'takeoff' in events:
         save_takeoff(events['takeoff'], flight)
+    if 'scoring_start' in events:
+        flight.scoring_start_time = import_datetime_attribute(events['scoring_start'], 'time')
+    if 'scoring_end' in events:
+        flight.scoring_end_time = import_datetime_attribute(events['scoring_end'], 'time')
     if 'landing' in events:
         save_landing(events['landing'], flight)
 
