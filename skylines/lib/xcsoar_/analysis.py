@@ -314,25 +314,42 @@ def get_analysis_times(times):
     return chosen_period
 
 
-def run_analyse_flight(filename, full=None, triangle=None, sprint=None):
+def run_analyse_flight(flight, full=None, triangle=None, sprint=None):
     limits = get_limits()
 
-    flight = xcsoar.Flight(flight_path(filename, add_elevation=True, max_points=None))
+    filename = files.filename_to_path(flight.igc_file.filename)
+    xcsoar_flight = xcsoar.Flight(flight_path(filename, add_elevation=True, max_points=None))
 
-    analysis_times = get_analysis_times(flight.times())
+    analysis_times = get_analysis_times(xcsoar_flight.times())
+
+    if flight.takeoff_time:
+        analysis_times['takeoff']['time'] = flight.takeoff_time
+        analysis_times['takeoff']['location']['latitude'] = flight.takeoff_location.latitude
+        analysis_times['takeoff']['location']['longitude'] = flight.takeoff_location.longitude
+
+    if flight.scoring_start_time:
+        analysis_times['scoring_start']['time'] = flight.scoring_start_time
+
+    if flight.scoring_end_time:
+        analysis_times['scoring_end']['time'] = flight.scoring_end_time
+
+    if flight.landing_time:
+        analysis_times['landing']['time'] = flight.landing_time
+        analysis_times['landing']['location']['latitude'] = flight.landing_location.latitude
+        analysis_times['landing']['location']['longitude'] = flight.landing_location.longitude
 
     if analysis_times:
-        analysis = flight.analyse(analysis_times['takeoff']['time'],
-                                  analysis_times['scoring_start']['time']
-                                  if analysis_times['scoring_start'] else None,
-                                  analysis_times['scoring_end']['time']
-                                  if analysis_times['scoring_end'] else None,
-                                  analysis_times['landing']['time'],
-                                  full=full,
-                                  triangle=triangle,
-                                  sprint=sprint,
-                                  max_iterations=limits['iter_limit'],
-                                  max_tree_size=limits['tree_size_limit'])
+        analysis = xcsoar_flight.analyse(analysis_times['takeoff']['time'],
+                                         analysis_times['scoring_start']['time']
+                                         if analysis_times['scoring_start'] else None,
+                                         analysis_times['scoring_end']['time']
+                                         if analysis_times['scoring_end'] else None,
+                                         analysis_times['landing']['time'],
+                                         full=full,
+                                         triangle=triangle,
+                                         sprint=sprint,
+                                         max_iterations=limits['iter_limit'],
+                                         max_tree_size=limits['tree_size_limit'])
         analysis['events'] = analysis_times
 
         return analysis
@@ -346,7 +363,7 @@ def analyse_flight(flight, full=512, triangle=1024, sprint=64):
     current_app.logger.info('Analyzing ' + path)
 
     root = run_analyse_flight(
-        path, full=full, triangle=triangle, sprint=sprint)
+        flight, full=full, triangle=triangle, sprint=sprint)
 
     if root is None:
         current_app.logger.warning('Analyze flight failed.')
