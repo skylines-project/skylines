@@ -242,6 +242,14 @@ function slBarogram(placeholder, options) {
   };
 
 
+  /**
+   * Get the current marker positions
+   */
+  baro.getFlightTime = function() {
+    return flot.getSelection();
+  };
+
+
   // Initialization
 
   setupFlot(placeholder, options || null);
