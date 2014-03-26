@@ -4,7 +4,8 @@ from datetime import datetime
 
 from sqlalchemy.dialects import postgresql
 from sqlalchemy.orm import deferred
-from sqlalchemy.types import Unicode, Integer, Float, DateTime, Date, Boolean
+from sqlalchemy.types import Unicode, Integer, Float, DateTime, Date, \
+    Boolean, SmallInteger
 from sqlalchemy.ext.hybrid import hybrid_property
 from sqlalchemy.sql.expression import case, and_, literal_column
 from geoalchemy2.types import Geometry
@@ -88,8 +89,22 @@ class Flight(db.Model):
 
     needs_analysis = db.Column(Boolean, nullable=False, default=True)
 
+    # Privacy level of the flight
+
+    class PrivacyLevel:
+        PUBLIC = 0
+        LINK_ONLY = 1
+        PRIVATE = 2
+
+    privacy_level = db.Column(
+        SmallInteger, nullable=False, default=PrivacyLevel.PUBLIC)
+
+    ##############################
+
     def __repr__(self):
         return ('<Flight: id=%s>' % self.id).encode('unicode_escape')
+
+    ##############################
 
     @hybrid_property
     def duration(self):
