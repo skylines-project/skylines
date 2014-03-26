@@ -4,7 +4,7 @@ from wtforms.widgets import Select
 from wtforms.widgets.core import HTMLString, html_params, escape
 
 
-__all__ = ('GroupSelectField', 'GroupSelectWidget')
+__all__ = ('GroupSelectField')
 
 
 class GroupSelect(Select):
