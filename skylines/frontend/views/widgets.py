@@ -29,7 +29,8 @@ def wrap(callback, content):
 
 @widgets_blueprint.route('/v1.0/flights.js')
 def flights_js():
-    flights = Flight.query()
+    flights = Flight.query() \
+                    .filter(Flight.is_rankable())
 
     # Filter by user
     user_id = request.values.get('user', type=int)

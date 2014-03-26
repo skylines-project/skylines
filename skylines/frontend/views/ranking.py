@@ -17,7 +17,8 @@ def _get_result(model, flight_field, year=None):
                func.count('*').label('count'),
                func.sum(Flight.index_score).label('total')) \
         .group_by(getattr(Flight, flight_field)) \
-        .outerjoin(Flight.model)
+        .outerjoin(Flight.model) \
+        .filter(Flight.is_rankable())
 
     if isinstance(year, int):
         year_start = date(year, 1, 1)

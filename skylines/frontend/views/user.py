@@ -3,7 +3,7 @@ from datetime import date, timedelta
 from flask import Blueprint, render_template, redirect, url_for, g, request
 from flask.ext.login import login_required
 
-from sqlalchemy import func
+from sqlalchemy import func, and_
 from sqlalchemy.orm import contains_eager, subqueryload
 
 from skylines.lib.dbutil import get_requested_record
@@ -32,13 +32,17 @@ def _get_distance_flight(distance):
         .filter(Flight.pilot == g.user) \
         .filter(Flight.olc_classic_distance >= distance) \
         .order_by(Flight.landing_time) \
+        .filter(Flight.is_rankable()) \
         .first()
 
 
 def _get_distance_flights():
     distance_flights = []
 
-    largest_flight = g.user.get_largest_flights().first()
+    largest_flight = g.user.get_largest_flights() \
+        .filter(Flight.is_rankable()) \
+        .first()
+
     if largest_flight:
         distance_flights.append([largest_flight.olc_classic_distance,
                                  largest_flight])
@@ -58,6 +62,7 @@ def _get_last_year_statistics():
                              func.sum(Flight.duration).label('duration')) \
                       .filter(Flight.pilot == g.user) \
                       .filter(Flight.date_local > (date.today() - timedelta(days=365))) \
+                      .filter(Flight.is_rankable()) \
                       .first()
 
     last_year_statistics = dict(flights=0,
@@ -82,8 +87,9 @@ def _get_last_year_statistics():
 
 
 def _get_takeoff_locations():
-    return Location.get_clustered_locations(Flight.takeoff_location_wkt,
-                                            filter=(Flight.pilot == g.user))
+    return Location.get_clustered_locations(
+        Flight.takeoff_location_wkt,
+        filter=and_(Flight.pilot == g.user, Flight.is_rankable()))
 
 
 def mark_user_notifications_read(user):
