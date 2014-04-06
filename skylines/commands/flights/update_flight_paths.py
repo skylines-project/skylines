@@ -52,4 +52,4 @@ class UpdateFlightPaths(Command):
                 func, q.offset(offset).limit(n))
             if n_success == 0 and n_failed == 0:
                 break
-            offset += n_failed
+            offset += n_failed + n_success
