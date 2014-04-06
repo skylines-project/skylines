@@ -64,7 +64,7 @@ def find_contest(root, name):
 
 
 def find_trace(contest, name):
-    if not name in contest:
+    if name not in contest:
         return None
 
     return contest[name]

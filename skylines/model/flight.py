@@ -167,7 +167,7 @@ class Flight(db.Model):
 
         return cls.query().filter_by(igc_file=file).first()
 
-    ## Permissions ###############
+    # Permissions ################
 
     @hybrid_method
     def is_viewable(self, user):
