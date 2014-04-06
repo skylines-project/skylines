@@ -122,7 +122,7 @@ class User(db.Model):
     def by_recover_key(cls, key):
         return cls.query(recover_key=key).first()
 
-    ## Flask Login ###############
+    # Flask Login ################
 
     def is_active(self):
         return True
