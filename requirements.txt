@@ -11,4 +11,6 @@ zope.testbrowser==4.0.2
 WebTest==1.4.3
 mock==1.0.1
 flake8==2.1.0
+pyflakes==0.8.1
+pep8==1.5.3
 http://closure-linter.googlecode.com/files/closure_linter-latest.tar.gz
