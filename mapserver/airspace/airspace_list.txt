@@ -10,7 +10,7 @@ at openair http://www.austrocontrol.at/jart/prj3/austro_control/data/uploads/aus
 # current belgium airspace can be downloaded from http://www.lvzc.be/index.php/secretariaat/documenten/cat_view/53-luchtruim/54-luchtruimbestanden as zip file
 be openair http://www.zweefvliegen.be/index.php/secretariaat/documenten/doc_view/322-bellux-week-120112
 fr openair http://soaringweb.org/Airspace/FR/140215__AIRSPACE_France_1402c.txt
-nl openair http://www.gliderpilotshop.nl/documents/EHv13_5.txt
+nl openair http://www.gliderpilotshop.nl/documents/EHv14_4.txt
 hu openair http://soaringweb.org/Airspace/HU/Hungary_2012.txt
 sk openair http://soaringweb.org/Airspace/SK/SK2012.txt
 uk openair http://soaringweb.org/Airspace/UK/WPLTAS141113.txt
