@@ -81,4 +81,7 @@ def get_elevation(fixes):
             elev = q[i - 1].elevation + (q[i].elevation - q[i - 1].elevation) * (j - prev * shortener)
             fixes_copy[j][11] = elev
 
+    if len(q):
+        fixes_copy[-1][11] = q[-1].elevation
+
     return fixes_copy
