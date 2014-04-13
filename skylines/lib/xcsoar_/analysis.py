@@ -278,7 +278,7 @@ def get_analysis_times(times):
                             dict(takeoff=times[i]['takeoff'],
                                  scoring_start=scoring_start,
                                  scoring_end=min(state,
-                                                 times[i]['landing'],
+                                                 times[i]['landing'].copy(),
                                                  key=lambda x: x['time']),
                                  landing=times[i]['landing']))
 
@@ -288,7 +288,7 @@ def get_analysis_times(times):
             if scoring_start['time'] < times[i]['landing']['time']:
                 scoring_periods.append(dict(takeoff=times[i]['takeoff'],
                                             scoring_start=scoring_start,
-                                            scoring_end=times[i]['landing'],
+                                            scoring_end=times[i]['landing'].copy(),
                                             landing=times[i]['landing']))
 
             for period in scoring_periods:
