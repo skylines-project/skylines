@@ -179,11 +179,18 @@ function slBarogram(placeholder) {
    *
    * @param {number} start The earliest time that should be shown.
    * @param {number} end The latest time that should be shown.
+   * @return {Boolean} true if the time interval has changed
    */
   baro.setTimeInterval = function(start, end) {
     var opt = flot.getOptions();
-    opt.xaxes[0].min = start * 1000;
-    opt.xaxes[0].max = end * 1000;
+    if (opt.xaxes[0].min != start * 1000 &&
+        opt.xaxes[0].max != end * 1000) {
+      opt.xaxes[0].min = start * 1000;
+      opt.xaxes[0].max = end * 1000;
+      return true;
+    } else {
+      return false;
+    }
   };
 
 
