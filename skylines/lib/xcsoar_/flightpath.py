@@ -32,7 +32,7 @@ def run_flight_path(path, max_points=None):
     flight = Flight(path)
 
     if max_points:
-        flight.reduce(threshold=0, max_points=max_points)
+        flight.reduce(max_points=max_points)
 
     return flight.path()
 
