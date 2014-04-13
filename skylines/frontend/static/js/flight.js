@@ -169,12 +169,16 @@ function updateBaroScale() {
       last_t = flight.t[last];
   });
 
-  if (last_t == 0)
-    baro.clearTimeInterval();
-  else
-    baro.setTimeInterval(first_t, last_t);
+  var redraw = false;
 
-  baro.draw();
+  if (last_t == 0) {
+    baro.clearTimeInterval();
+    redraw = true;
+  } else {
+    redraw = baro.setTimeInterval(first_t, last_t);
+  }
+
+  if (redraw) baro.draw();
 }
 
 
