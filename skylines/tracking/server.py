@@ -22,6 +22,7 @@ TYPE_USER_NAME_REQUEST = 6
 TYPE_USER_NAME_RESPONSE = 7
 
 FLAG_ACK_BAD_KEY = 0x1
+FLAG_ACK_FIX_ACK = 0x2
 
 FLAG_LOCATION = 0x1
 FLAG_TRACK = 0x2
@@ -54,7 +55,7 @@ class TrackingServer(DatagramProtocol):
         data = set_crc(data)
         self.transport.write(data, (host, port))
 
-    def fixReceived(self, host, key, payload):
+    def fixReceived(self, host, port, key, payload):
         if len(payload) < 32: return
 
         pilot = User.by_tracking_key(key)
@@ -63,6 +64,12 @@ class TrackingServer(DatagramProtocol):
             return
 
         data = struct.unpack('!IIiiIHHHhhH', payload)
+
+        delta_time = data[1]
+        ack_data = struct.pack('!IHHQII', MAGIC, 0, TYPE_ACK, 0,
+                               delta_time, FLAG_ACK_FIX_ACK)
+        ack_data = set_crc(ack_data)
+        self.transport.write(ack_data, (host, port))
 
         fix = TrackingFix()
         fix.ip = host
@@ -224,7 +231,7 @@ class TrackingServer(DatagramProtocol):
         if not check_crc(data): return
 
         if header[2] == TYPE_FIX:
-            self.fixReceived(host, header[3], data[16:])
+            self.fixReceived(host, port, header[3], data[16:])
         elif header[2] == TYPE_PING:
             self.pingReceived(host, port, header[3], data[16:])
         elif header[2] == TYPE_TRAFFIC_REQUEST:
