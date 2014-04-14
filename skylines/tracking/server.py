@@ -63,7 +63,8 @@ class TrackingServer(DatagramProtocol):
             log.err("No such pilot: %x" % key)
             return
 
-        data = struct.unpack('!IIiiIHHHhhH', payload)
+        # unpack first fix in packet
+        data = struct.unpack('!IIiixxxxHHHhhH', payload[:32])
         self.storeFix(pilot, host, data)
 
         delta_time = data[1]
@@ -115,22 +116,22 @@ class TrackingServer(DatagramProtocol):
             fix.elevation = Elevation.get(fix.location_wkt)
 
         if flags & FLAG_TRACK:
-            fix.track = data[5]
+            fix.track = data[4]
 
         if flags & FLAG_GROUND_SPEED:
-            fix.ground_speed = data[6] / 16.
+            fix.ground_speed = data[5] / 16.
 
         if flags & FLAG_AIRSPEED:
-            fix.airspeed = data[7] / 16.
+            fix.airspeed = data[6] / 16.
 
         if flags & FLAG_ALTITUDE:
-            fix.altitude = data[8]
+            fix.altitude = data[7]
 
         if flags & FLAG_VARIO:
-            fix.vario = data[9] / 256.
+            fix.vario = data[8] / 256.
 
         if flags & FLAG_ENL:
-            fix.engine_noise_level = data[10]
+            fix.engine_noise_level = data[9]
 
         log.msg("{} {} {} {}".format(
             fix.time and fix.time.time(), host,
