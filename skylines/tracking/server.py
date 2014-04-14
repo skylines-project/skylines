@@ -63,16 +63,38 @@ class TrackingServer(DatagramProtocol):
             log.err("No such pilot: %x" % key)
             return
 
+        # get number of delta fixes in packet
+        number_of_delta_fixes = struct.unpack('!B', payload[16:17])[0]
         # unpack first fix in packet
         data = struct.unpack('!IIiixxxxHHHhhH', payload[:32])
         self.storeFix(pilot, host, data)
 
         delta_time = data[1]
+        delta_latitude = data[2]
+        delta_longitude = data[3]
+
         ack_data = struct.pack('!IHHQII', MAGIC, 0, TYPE_ACK, 0,
                                delta_time, FLAG_ACK_FIX_ACK)
         ack_data = set_crc(ack_data)
         self.transport.write(ack_data, (host, port))
 
+        # unpack delta fixes
+        fix_id = 0
+        while fix_id < number_of_delta_fixes and len(payload) >= 32 + (fix_id + 1) * 24:
+            data = list(struct.unpack('!IHhhxxHHHhhH',
+                                      payload[32 + fix_id * 24:32 + (fix_id + 1) * 24]))
+
+            data[1] = delta_time - data[1]
+            data[2] = delta_latitude - data[2]
+            data[3] = delta_longitude - data[3]
+
+            self.storeFix(pilot, host, data)
+
+            delta_time = data[1]
+            delta_latitude = data[2]
+            delta_longitude = data[3]
+
+            fix_id += 1
 
     def storeFix(self, pilot, host, data):
         fix = TrackingFix()
