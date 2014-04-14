@@ -55,7 +55,7 @@ class TrackingServer(DatagramProtocol):
         self.transport.write(data, (host, port))
 
     def fixReceived(self, host, key, payload):
-        if len(payload) != 32: return
+        if len(payload) < 32: return
 
         pilot = User.by_tracking_key(key)
         if not pilot:
