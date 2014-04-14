@@ -97,6 +97,15 @@ class TrackingServer(DatagramProtocol):
         else:
             log.msg("ignoring time stamp from FIX packet: " + str(time_of_day))
 
+        # check if this fix was already be sent some time before...
+        q = db.session.query(TrackingFix) \
+            .filter(and_(TrackingFix.time == fix.time,
+                         TrackingFix.pilot == pilot)) \
+            .first()
+
+        if q:
+            return
+
         flags = data[0]
         if flags & FLAG_LOCATION:
             latitude = data[2] / 1000000.
