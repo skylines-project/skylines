@@ -64,6 +64,7 @@ class TrackingServer(DatagramProtocol):
             return
 
         data = struct.unpack('!IIiiIHHHhhH', payload)
+        self.storeFix(pilot, host, data)
 
         delta_time = data[1]
         ack_data = struct.pack('!IHHQII', MAGIC, 0, TYPE_ACK, 0,
@@ -71,6 +72,8 @@ class TrackingServer(DatagramProtocol):
         ack_data = set_crc(ack_data)
         self.transport.write(ack_data, (host, port))
 
+
+    def storeFix(self, pilot, host, data):
         fix = TrackingFix()
         fix.ip = host
         fix.pilot = pilot
