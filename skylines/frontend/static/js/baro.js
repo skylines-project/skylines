@@ -183,7 +183,7 @@ function slBarogram(placeholder) {
    */
   baro.setTimeInterval = function(start, end) {
     var opt = flot.getOptions();
-    if (opt.xaxes[0].min != start * 1000 &&
+    if (opt.xaxes[0].min != start * 1000 ||
         opt.xaxes[0].max != end * 1000) {
       opt.xaxes[0].min = start * 1000;
       opt.xaxes[0].max = end * 1000;
