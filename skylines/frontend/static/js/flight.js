@@ -249,9 +249,15 @@ function addFlight(sfid, _lonlat, _levels, _num_levels, _time, _height, _enl,
   flight.clip = 1;
 
   var color = _additional.color || colors[flights.length() % colors.length];
-  var feature = new OpenLayers.Feature.Vector(flight, { color: color });
+  var feature = new OpenLayers.Feature.Vector(flight, {
+    color: color,
+    sfid: sfid
+  });
 
-  var plane = new OpenLayers.Feature.Vector(points[0], { rotation: 0 });
+  var plane = new OpenLayers.Feature.Vector(points[0], {
+    rotation: 0,
+    sfid: sfid
+  });
   plane.renderIntent = 'plane';
 
   map.getLayersByName('Flight')[0].addFeatures([feature, plane]);
