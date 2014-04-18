@@ -6974,8 +6974,8 @@ OpenLayers.Renderer.Elements = OpenLayers.Class(OpenLayers.Renderer, {
                 this.eraseGeometry(geometry.components[i], featureId);
             }
         } else if (geometry.CLASS_NAME == "OpenLayers.Geometry.ProgressiveLineString") {
-            for (var i=0, len=geometry.progressive_geometries.length; i<len; i++) {
-                this.eraseGeometry(geometry.progressive_geometries[i], featureId);
+            for (var i=0, len=geometry.partitionedGeometries.length; i<len; i++) {
+                this.eraseGeometry(geometry.partitionedGeometries[i], featureId);
             }
         } else {    
             var element = OpenLayers.Util.getElement(geometry.id);
