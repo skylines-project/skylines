@@ -122,7 +122,7 @@ function initFlightLayer() {
     initRedrawLayer(flightPathLayer);
   });
 
-  map.events.register('moveend', null, updateBaroScale);
+  map.events.register('moveend', null, function(e) { updateBaroScale(); });
 
   map.hover_enabled = true;
 
@@ -146,7 +146,7 @@ function initFixTable() {
 
 initFixTable();
 
-function updateBaroScale() {
+function updateBaroScale(opt_force) {
   var first_t = 999999;
   var last_t = 0;
 
@@ -181,7 +181,7 @@ function updateBaroScale() {
     redraw = baro.setTimeInterval(first_t, last_t);
   }
 
-  if (redraw) baro.draw();
+  if (redraw || opt_force) baro.draw();
 }
 
 
@@ -331,7 +331,7 @@ function addFlight(sfid, _lonlat, _levels, _num_levels, _time, _height, _enl,
   });
 
   updateBaroData();
-  updateBaroScale();
+  updateBaroScale(true);
 
   // Set fix data table into "selectable" mode if
   // more than one flight is loaded
@@ -423,7 +423,7 @@ function removeFlight(sfid) {
   flights.remove(sfid);
   fix_table.removeRow(sfid);
   updateBaroData();
-  updateBaroScale();
+  updateBaroScale(true);
 }
 
 
