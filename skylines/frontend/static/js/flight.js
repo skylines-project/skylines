@@ -398,6 +398,31 @@ function addContest(name, lonlat, times, sfid) {
   map.getLayersByName('Flight')[0].addFeatures(feature);
 }
 
+function removeFlight(sfid) {
+  // never remove the first flight...
+  if (flights.at(0).sfid == sfid)
+    return;
+
+  var flight = flights.get(sfid);
+
+  // this flight doesn't exist, do nothing...
+  if (flight === null)
+    return;
+
+  // Hide plane to remove any additional related objects from the map
+  hidePlaneOnMap(flight);
+
+  var flight_layer = map.getLayersByName('Flight')[0];
+  flight_layer.destroyFeatures(
+      flight_layer.getFeaturesByAttribute('sfid', sfid)
+  );
+
+  flights.remove(sfid);
+  fix_table.removeRow(sfid);
+  updateBaroData();
+  updateBaroScale();
+}
+
 
 function play() {
   // if there are no flights, then there is nothing to animate
