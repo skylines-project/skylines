@@ -18,6 +18,8 @@ class UpdateFlightPaths(Command):
     def run(self, force, ids):
         q = db.session.query(Flight)
         q = q.options(joinedload(Flight.igc_file))
+        q = q.order_by(Flight.id)
+
         if ids:
             self.apply_and_commit(self.do, q.filter(Flight.id.in_(ids)))
         elif force:

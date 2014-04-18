@@ -30,7 +30,8 @@ class CopyFlights(Command):
 
         query = db.session.query(Flight) \
             .join(Flight.takeoff_airport) \
-            .join(IGCFile)
+            .join(IGCFile) \
+            .order_by(Flight.id)
 
         if flight_id is not None:
             print "Filter by flight id: " + str(flight_id)
