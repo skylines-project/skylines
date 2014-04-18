@@ -4,6 +4,7 @@
 
 {% from 'flights/meta-tags.jinja' import flight_meta_tags with context %}
 {% from 'flights/details-table.jinja' import render_details_table with context %}
+{% from 'flights/wingman-table.jinja' import render_wingman_table with context %}
 {% from 'flights/phases-table.jinja' import render_circling_performance, render_cruise_performance, render_phases with context %}
 {% from 'flights/macros.jinja' import flight_title with context %}
 {% from 'macros/datetime.jinja' import timeago_script with context %}
@@ -113,6 +114,31 @@
     addReliefLayer();
 
     initInfoBox({flight_info: true, location_info: true});
+
+    $('#wingman-table').find('tbody').find('tr').each(function(index, row) {
+      $(this).on('click', function() {
+        var sfid = $(this).data('sfid');
+        if (flights.has(sfid)) {
+          removeFlight(sfid);
+          unpinFlight(sfid);
+        } else {
+          addFlightFromJSON("/flights/" + sfid + "/json");
+          pinFlight(sfid);
+        }
+      });
+    });
+
+    $('#wingman-table').find('[rel=popover]').popover({
+      html: true,
+      title: 'Periods',
+      placement: 'right',
+      trigger: 'hover',
+      template: '<div class="popover" style="white-space: nowrap;">' +
+                   '<div class="arrow"></div>' +
+                   '<h3 class="popover-title"></h3>' +
+                   '<div class="popover-content"></div>' +
+                '</div>'
+    });
   });
 </script>
 {%- endif %}
@@ -176,6 +202,11 @@
             <i class="icon-bar-chart icon-large"></i>
           </a>
         </li>
+        <li>
+          <a href="#tab-wingman" title="{{ _('Wingmen') }}" data-toggle="tab">
+            <i class="icon-group icon-large"></i>
+          </a>
+        </li>
       </ul>
       <div class="tab-content">
         <div class="tab-pane active" id="tab-overview">
@@ -236,6 +267,11 @@
             <i class='icon-info-sign icon-large'></i> {% trans %}Detailed statistics{% endtrans %}
           </a></p>
           {%- endif %}
+        </div>
+
+        <div class="tab-pane" id="tab-wingman">
+          <h3>{% trans %}Wingmen{% endtrans %}</h3>
+          {{ render_wingman_table(near_flights) }}
         </div>
       </div>
     </div>

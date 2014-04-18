@@ -19,7 +19,7 @@ from skylines.lib.datetime import from_seconds_of_day
 from skylines.lib.geo import METERS_PER_DEGREE
 from skylines.model import (
     db, User, Flight, FlightPhase, Location, FlightComment,
-    Notification, Event
+    Notification, Event, FlightMeetings
 )
 from skylines.model.event import create_flight_comment_notifications
 from skylines.model.flight import get_elevations_for_flight
@@ -210,6 +210,7 @@ def index():
         trace = _get_flight_path(flight)
         return (flight, trace)
 
+    near_flights = FlightMeetings.get_meetings(g.flight)
     other_flights = map(add_flight_path, g.other_flights)
 
     mark_flight_notifications_read(g.flight)
@@ -218,6 +219,7 @@ def index():
         'flights/view.jinja',
         flight=g.flight,
         trace=_get_flight_path(g.flight),
+        near_flights=near_flights,
         other_flights=other_flights,
         phase_formatter=format_phase)
 

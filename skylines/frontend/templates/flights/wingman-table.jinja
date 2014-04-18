@@ -1,0 +1,38 @@
+{% macro render_wingman_table(near_flights) -%}
+<table id="wingman-table" class="table table-condensed">
+  <thead>
+    <tr>
+      <th class="color-stripe"></th>
+      <th>{% trans %}Reg.{% endtrans %}</th>
+      <th>{% trans %}Pilot{% endtrans %}</th>
+      <th>First / Last</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for key, near_flight in near_flights.iteritems() -%}
+    <tr data-sfid="{{ near_flight['flight'].id }}">
+      <td class="color-stripe"></td>
+      <td>{%- if near_flight['flight'].igc_file.competition_id %}
+            {{ near_flight['flight'].igc_file.competition_id }}<br />
+          {%- endif %}
+          {%- if near_flight['flight'].igc_file.registration %}
+            {{ near_flight['flight'].igc_file.registration }}
+          {%- endif %}
+      </td>
+      <td>{{ near_flight['flight'].pilot.first_name }} {{ near_flight['flight'].pilot.last_name }}</td>
+      <td rel="popover" data-content="<table>
+        {% for times in near_flight['times'] -%}
+          <tr>
+            <td style='text-align: right;'>{{ h.format_time(times['start']) }}</td>
+            <td>-</td>
+            <td>{{ h.format_time(times['end']) }}</td>
+          </tr>
+        {%- endfor %}</table>">
+          {{ h.format_time(near_flight['times'][0]['start']) }}<br />
+          {{ h.format_time(near_flight['times'][-1]['end']) }}
+      </td>
+    </tr>
+    {%- endfor %}
+  </tbody>
+</table>
+{%- endmacro %}
