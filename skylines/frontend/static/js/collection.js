@@ -81,5 +81,23 @@ slCollection = function() {
   };
 
 
+  /**
+   * Removes the object with the specified id.
+   * @param  {Number} id
+   * @return {Bool} true if success
+   */
+  collection.remove = function(id) {
+    for (var i = 0, len = collection.length(); i < len; ++i) {
+      var object = collection.at(i);
+      if (object.sfid == id) {
+        data_.splice(i, 1);
+        return true;
+      }
+    }
+
+    return false;
+  };
+
+
   return collection;
 };
