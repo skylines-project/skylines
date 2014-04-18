@@ -25,7 +25,18 @@ class FlightMeetings(db.Model):
 
     @classmethod
     def get_meetings(cls, source):
-        return cls.query().filter(or_(cls.source == source, cls.destination == source))
+        q = cls.query() \
+               .filter(or_(cls.source == source, cls.destination == source)) \
+               .order_by(cls.start_time)
+
+        meetings = []
+        for mp in q:
+            meetings.append(dict(
+                flight=mp.source if mp.source != source else mp.destination,
+                start_time=mp.start_time,
+                end_time=mp.end_time))
+
+        return meetings
 
     @classmethod
     def add_meeting(cls, source, destination, start_time, end_time):
