@@ -1,6 +1,7 @@
 from sqlalchemy.types import Integer, DateTime
 from sqlalchemy.sql.expression import or_
-from skylines.model import db
+from sqlalchemy.orm import aliased
+from skylines.model import db, Flight
 
 
 class FlightMeetings(db.Model):
@@ -25,8 +26,15 @@ class FlightMeetings(db.Model):
 
     @classmethod
     def get_meetings(cls, source):
+        flight_source = aliased(Flight, name='flight_source')
+        flight_destination = aliased(Flight, name='flight_destination')
+
         q = cls.query() \
                .filter(or_(cls.source == source, cls.destination == source)) \
+               .join(flight_source, cls.source_id == flight_source.id) \
+               .join(flight_destination, cls.destination_id == flight_destination.id) \
+               .filter(flight_source.is_rankable()) \
+               .filter(flight_destination.is_rankable()) \
                .order_by(cls.start_time)
 
         meetings = []
