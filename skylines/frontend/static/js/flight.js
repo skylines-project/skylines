@@ -139,6 +139,9 @@ function initFlightLayer() {
 function initFixTable() {
   fix_table = slFixTable($('#fix-data'));
   $(fix_table).on('selection_changed', updateBaroData);
+  $(fix_table).on('remove_flight', function(e, sfid) {
+    removeFlight(sfid);
+  });
 }
 
 initFixTable();
@@ -249,9 +252,15 @@ function addFlight(sfid, _lonlat, _levels, _num_levels, _time, _height, _enl,
   flight.clip = 1;
 
   var color = _additional.color || colors[flights.length() % colors.length];
-  var feature = new OpenLayers.Feature.Vector(flight, { color: color });
+  var feature = new OpenLayers.Feature.Vector(flight, {
+    color: color,
+    sfid: sfid
+  });
 
-  var plane = new OpenLayers.Feature.Vector(points[0], { rotation: 0 });
+  var plane = new OpenLayers.Feature.Vector(points[0], {
+    rotation: 0,
+    sfid: sfid
+  });
   plane.renderIntent = 'plane';
 
   map.getLayersByName('Flight')[0].addFeatures([feature, plane]);
@@ -390,6 +399,31 @@ function addContest(name, lonlat, times, sfid) {
   feature.renderIntent = (flights.length() == 0) ? 'contest' : 'hidden';
 
   map.getLayersByName('Flight')[0].addFeatures(feature);
+}
+
+function removeFlight(sfid) {
+  // never remove the first flight...
+  if (flights.at(0).sfid == sfid)
+    return;
+
+  var flight = flights.get(sfid);
+
+  // this flight doesn't exist, do nothing...
+  if (flight === null)
+    return;
+
+  // Hide plane to remove any additional related objects from the map
+  hidePlaneOnMap(flight);
+
+  var flight_layer = map.getLayersByName('Flight')[0];
+  flight_layer.destroyFeatures(
+      flight_layer.getFeaturesByAttribute('sfid', sfid)
+  );
+
+  flights.remove(sfid);
+  fix_table.removeRow(sfid);
+  updateBaroData();
+  updateBaroScale();
 }
 
 

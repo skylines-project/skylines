@@ -51,8 +51,10 @@ slFixTable = function(placeholder) {
     if (id in data)
       return false;
 
+    var opt_remove_icon = !($.isEmptyObject(data));
+
     // Generate new HTML table row element
-    var element = addHTMLRow(id, color, opt_competition_id);
+    var element = addHTMLRow(id, color, opt_competition_id, opt_remove_icon);
 
     // Save the relevant metadata for later
     data[id] = {
@@ -60,6 +62,26 @@ slFixTable = function(placeholder) {
       fix: {}
     };
 
+    return true;
+  };
+
+  /**
+   * Removes a row from the fix data table.
+   *
+   * @param {string|number} id An identifier for the flight row.
+   * @return {boolean} true if success.
+   */
+  fix_table.removeRow = function(id) {
+    // Don't remove row if it doesn't exist
+    if (!id in data)
+      return false;
+
+    if (fix_table.getSelection() == id)
+      fix_table.clearSelection(true);
+
+    data[id].element.remove();
+
+    delete data[id];
     return true;
   };
 
@@ -216,9 +238,10 @@ slFixTable = function(placeholder) {
    * @param {string|number} id
    * @param {string} color The color of the flight trace on the map.
    * @param {string=} opt_competition_id Optional competition id of the plane.
+   * @param {bool=} opt_remove_icon Optional remove icon for this flight.
    * @return {DOMElement} The generated fix table row.
    */
-  function addHTMLRow(id, color, opt_competition_id) {
+  function addHTMLRow(id, color, opt_competition_id, opt_remove_icon) {
     // Generate a new table row for the flight
     var row = $(
         '<tr>' +
@@ -230,6 +253,13 @@ slFixTable = function(placeholder) {
         '<td>--</td>' +
         '<td>--</td>' +
         '<td>--</td>' +
+        '<td>' +
+            (opt_remove_icon ?
+                '<i id="remove-flight-' + id + '" data-sfid="' +
+                id + '" class="icon-remove"></i>' :
+                ''
+            ) +
+        '</td>' +
         '</tr>');
 
     // Attach onClick event handler
@@ -242,6 +272,11 @@ slFixTable = function(placeholder) {
 
     // Attach the new row to the table
     placeholder.append(row);
+
+    $('#remove-flight-' + id).on('click', function(e) {
+      $(fix_table).trigger('remove_flight', [$(this).data('sfid')]);
+      return false; // prevent event bubbling
+    });
 
     return row;
   }
