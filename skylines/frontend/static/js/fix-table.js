@@ -64,6 +64,26 @@ slFixTable = function(placeholder) {
   };
 
   /**
+   * Removes a row from the fix data table.
+   *
+   * @param {string|number} id An identifier for the flight row.
+   * @return {boolean} true if success.
+   */
+  fix_table.removeRow = function(id) {
+    // Don't remove row if it doesn't exist
+    if (!id in data)
+      return false;
+
+    if (fix_table.getSelection() == id)
+      fix_table.clearSelection(true);
+
+    data[id].element.remove();
+
+    delete data[id];
+    return true;
+  };
+
+  /**
    * Clears all fix data from the internal data store.
    */
   fix_table.clearAllFixes = function() {
