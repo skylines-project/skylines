@@ -2,6 +2,7 @@ from sqlalchemy.types import Integer, DateTime
 from sqlalchemy.sql.expression import or_
 from sqlalchemy.orm import aliased
 from skylines.model import db, Flight
+from collections import OrderedDict
 
 
 class FlightMeetings(db.Model):
@@ -37,12 +38,20 @@ class FlightMeetings(db.Model):
                .filter(flight_destination.is_rankable()) \
                .order_by(cls.start_time)
 
-        meetings = []
+        meetings = OrderedDict()
         for mp in q:
-            meetings.append(dict(
-                flight=mp.source if mp.source != source else mp.destination,
-                start_time=mp.start_time,
-                end_time=mp.end_time))
+            flight = mp.source if mp.source != source else mp.destination
+
+            if flight.id not in meetings:
+                meetings[flight.id] = dict(
+                    flight=flight,
+                    times=[]
+                )
+
+            meetings[flight.id]['times'].append(dict(
+                start=mp.start_time,
+                end=mp.end_time
+            ))
 
         return meetings
 
