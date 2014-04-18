@@ -139,6 +139,9 @@ function initFlightLayer() {
 function initFixTable() {
   fix_table = slFixTable($('#fix-data'));
   $(fix_table).on('selection_changed', updateBaroData);
+  $(fix_table).on('remove_flight', function(e, sfid) {
+    removeFlight(sfid);
+  });
 }
 
 initFixTable();
