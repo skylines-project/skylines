@@ -275,6 +275,7 @@ slFixTable = function(placeholder) {
 
     $('#remove-flight-' + id).on('click', function(e) {
       $(fix_table).trigger('remove_flight', [$(this).data('sfid')]);
+      unpinFlight(sfid);
       return false; // prevent event bubbling
     });
 
