@@ -333,6 +333,9 @@ function addFlight(sfid, _lonlat, _levels, _num_levels, _time, _height, _enl,
   updateBaroData();
   updateBaroScale();
 
+  $('#wingman-table').find('*[data-sfid=' + sfid + ']')
+      .find('.color-stripe').css('background-color', color);
+
   // Set fix data table into "selectable" mode if
   // more than one flight is loaded
   if (flights.length() > 1)
@@ -419,6 +422,9 @@ function removeFlight(sfid) {
   flight_layer.destroyFeatures(
       flight_layer.getFeaturesByAttribute('sfid', sfid)
   );
+
+  $('#wingman-table').find('*[data-sfid=' + sfid + ']')
+      .find('.color-stripe').css('background-color', '');
 
   flights.remove(sfid);
   fix_table.removeRow(sfid);

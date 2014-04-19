@@ -73,6 +73,7 @@ main_css = Bundle(
     'css/events.css',
     'css/tracking-table.css',
     'css/fix-table.css',
+    'css/wingman.css',
     'vendor/flags/flags.css',
     'vendor/bootstrap-datepicker/datepicker.css',
     'vendor/fonts/stylesheet.css',

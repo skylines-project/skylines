@@ -1,15 +1,18 @@
 # -*- coding: utf-8 -*-
 
 from datetime import datetime
+from bisect import bisect_left
 
 from sqlalchemy.dialects import postgresql
 from sqlalchemy.orm import deferred
 from sqlalchemy.types import Unicode, Integer, Float, DateTime, Date, \
     Boolean, SmallInteger
+from sqlalchemy import func
 from sqlalchemy.ext.hybrid import hybrid_method, hybrid_property
 from sqlalchemy.sql.expression import case, and_, or_, literal_column
 from geoalchemy2.types import Geometry
 from geoalchemy2.shape import to_shape, from_shape
+from geoalchemy2.functions import GenericFunction
 from shapely.geometry import LineString
 
 from skylines.model import db
@@ -292,7 +295,203 @@ class Flight(db.Model):
         # Save the new path as WKB
         self.locations = from_shape(linestring, srid=4326)
 
+        # Now populate the FlightPathChunks table with the full flight path
+        path_detailed = flight_path(self.igc_file, max_points=99999)
+        if len(path_detailed) < 2:
+            return False
+
+        # Number of points in each chunck.
+        num_points = 100
+
+        # Interval of the current chunck: [i, j] (-> path_detailed[i:j + 1])
+        i = 0
+        j = min(num_points - 1, len(path_detailed) - 1)
+
+        # Ensure that the last chunk contains at least two fixes
+        if j == len(path_detailed) - 2:
+            j = len(path_detailed) - 1
+
+        FlightPathChunks.query().filter(FlightPathChunks.flight == self).delete()
+
+        while True:
+            flight_path = FlightPathChunks(flight=self)
+
+            # Save the timestamps of the coordinates
+            flight_path.timestamps = \
+                [from_seconds_of_day(date_utc, c.seconds_of_day) for c in path_detailed[i:j + 1]]
+
+            flight_path.start_time = path_detailed[i].datetime
+            flight_path.end_time = path_detailed[j].datetime
+
+            # Convert the coordinate into a list of tuples
+            coordinates = [(c.location['longitude'], c.location['latitude']) for c in path_detailed[i:j + 1]]
+
+            # Create a shapely LineString object from the coordinates
+            linestring = LineString(coordinates)
+
+            # Save the new path as WKB
+            flight_path.locations = from_shape(linestring, srid=4326)
+
+            db.session.add(flight_path)
+
+            if j == len(path_detailed) - 1:
+                break
+            else:
+                i = j + 1
+                j = min(j + num_points, len(path_detailed) - 1)
+
+                if j == len(path_detailed) - 2:
+                    j = len(path_detailed) - 1
+
         return True
+
+
+class _ST_Contains(GenericFunction):
+    '''
+    ST_Contains without index search
+    '''
+    name = '_ST_Contains'
+    type = None
+
+
+class _ST_Intersects(GenericFunction):
+    '''
+    ST_Intersects without index search
+    '''
+    name = '_ST_Intersects'
+    type = None
+
+
+class FlightPathChunks(db.Model):
+    '''
+    This table stores flight path chunks of about 100 fixes per column which
+    enable PostGIS/Postgres to do fast queries due to tight bounding boxes
+    around those short flight pahts.
+    '''
+
+    __tablename__ = 'flight_path_chunks'
+
+    id = db.Column(Integer, autoincrement=True, primary_key=True)
+    time_created = db.Column(DateTime, nullable=False, default=datetime.utcnow)
+    time_modified = db.Column(DateTime, nullable=False, default=datetime.utcnow)
+
+    timestamps = deferred(db.Column(
+        postgresql.ARRAY(DateTime), nullable=False), group='path')
+
+    locations = deferred(db.Column(
+        Geometry('LINESTRING', srid=4326), nullable=False),
+        group='path')
+
+    start_time = db.Column(DateTime, nullable=False, index=True)
+    end_time = db.Column(DateTime, nullable=False, index=True)
+
+    flight_id = db.Column(
+        Integer, db.ForeignKey('flights.id', ondelete='CASCADE'), nullable=False)
+    flight = db.relationship('Flight')
+
+    @staticmethod
+    def get_near_flights(flight, filter=None):
+        '''
+        WITH src AS
+            (SELECT ST_Buffer(ST_Simplify(locations, 0.005), 0.015) AS src_loc_buf,
+                    start_time AS src_start,
+                    end_time AS src_end
+             FROM flight_paths
+             WHERE flight_id = 8503)
+        SELECT (dst_points).geom AS dst_point,
+               dst_times[(dst_points).path[1]] AS dst_time,
+               dst_points_fid AS dst_flight_id
+        FROM
+            (SELECT ST_dumppoints(locations) as dst_points,
+                    timestamps AS dst_times,
+                    src_loc_buf,
+                    flight_id AS dst_points_fid,
+                    src_start,
+                    src_end
+            FROM flight_paths, src
+            WHERE flight_id != 8503 AND
+                  end_time >= src_start AND
+                  start_time <= src_end AND
+                  locations && src_loc_buf AND
+                  _ST_Intersects(ST_Simplify(locations, 0.005), src_loc_buf)) AS foo
+        WHERE _ST_Contains(src_loc_buf, (dst_points).geom);
+        '''
+
+        cte = db.session.query(FlightPathChunks.locations.ST_Simplify(0.005).ST_Buffer(0.015).label('src_loc_buf'),
+                               FlightPathChunks.start_time.label('src_start'),
+                               FlightPathChunks.end_time.label('src_end')) \
+            .filter(FlightPathChunks.flight == flight) \
+            .cte('src')
+
+        subq = db.session.query(func.ST_DumpPoints(FlightPathChunks.locations).label('dst_points'),
+                                FlightPathChunks.timestamps.label('dst_times'),
+                                cte.c.src_loc_buf,
+                                FlightPathChunks.flight_id.label('dst_points_fid'),
+                                cte.c.src_start,
+                                cte.c.src_end) \
+            .filter(and_(FlightPathChunks.flight != flight,
+                         FlightPathChunks.end_time >= cte.c.src_start,
+                         FlightPathChunks.start_time <= cte.c.src_end,
+                         FlightPathChunks.locations.intersects(cte.c.src_loc_buf),
+                         _ST_Intersects(FlightPathChunks.locations.ST_Simplify(0.005), cte.c.src_loc_buf))) \
+            .subquery()
+
+        dst_times = literal_column('dst_times[(dst_points).path[1]]')
+
+        q = db.session.query(subq.c.dst_points.geom.label('dst_location'),
+                             dst_times.label('dst_time'),
+                             subq.c.dst_points_fid.label('dst_point_fid')) \
+            .filter(_ST_Contains(subq.c.src_loc_buf, subq.c.dst_points.geom)) \
+            .order_by(subq.c.dst_points_fid, dst_times) \
+            .all()
+
+        src_trace = to_shape(flight.locations).coords
+        max_distance = 1000
+        other_flights = dict()
+
+        for point in q:
+            dst_time = point.dst_time
+            dst_loc = to_shape(point.dst_location).coords
+
+            # we might have got a destination point earier than source takeoff
+            # or later than source landing. Check this case and disregard early.
+            if dst_time < flight.takeoff_time or dst_time > flight.landing_time:
+                continue
+
+            # find point closest to given time
+            closest = bisect_left(flight.timestamps, dst_time, hi=len(flight.timestamps) - 1)
+
+            if closest == 0:
+                src_point = src_trace[0]
+            else:
+                # interpolate flight trace between two fixes
+                dx = (dst_time - flight.timestamps[closest - 1]).total_seconds() / \
+                     (flight.timestamps[closest] - flight.timestamps[closest - 1]).total_seconds()
+
+                src_point_prev = src_trace[closest - 1]
+                src_point_next = src_trace[closest]
+
+                src_point = [src_point_prev[0] + (src_point_next[0] - src_point_prev[0]) * dx,
+                             src_point_prev[1] + (src_point_next[1] - src_point_prev[1]) * dx]
+
+            point_distance = Location(latitude=dst_loc[0][1], longitude=dst_loc[0][0]).geographic_distance(
+                Location(latitude=src_point[1], longitude=src_point[0]))
+
+            if point_distance > max_distance:
+                continue
+
+            if point.dst_point_fid not in other_flights:
+                other_flights[point.dst_point_fid] = []
+                other_flights[point.dst_point_fid].append(dict(times=list(), points=list()))
+
+            elif len(other_flights[point.dst_point_fid][-1]['times']) and \
+                    (dst_time - other_flights[point.dst_point_fid][-1]['times'][-1]).total_seconds() > 600:
+                other_flights[point.dst_point_fid].append(dict(times=list(), points=list()))
+
+            other_flights[point.dst_point_fid][-1]['times'].append(dst_time)
+            other_flights[point.dst_point_fid][-1]['points'].append(Location(latitude=dst_loc[0][1], longitude=dst_loc[0][0]))
+
+        return other_flights
 
 
 def get_elevations_for_flight(flight):
