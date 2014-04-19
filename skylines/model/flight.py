@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from datetime import datetime
+from bisect import bisect_left
 
 from sqlalchemy.dialects import postgresql
 from sqlalchemy.orm import deferred
@@ -388,7 +389,6 @@ class FlightPathChunks(db.Model):
         Integer, db.ForeignKey('flights.id', ondelete='CASCADE'), nullable=False)
     flight = db.relationship('Flight')
 
-
     @staticmethod
     def get_near_flights(flight, filter=None):
         '''
@@ -438,15 +438,47 @@ class FlightPathChunks(db.Model):
 
         dst_times = literal_column('dst_times[(dst_points).path[1]]')
 
-        q = db.session.query(subq.c.dst_points.geom,
+        q = db.session.query(subq.c.dst_points.geom.label('dst_location'),
                              dst_times.label('dst_time'),
                              subq.c.dst_points_fid.label('dst_point_fid')) \
             .filter(_ST_Contains(subq.c.src_loc_buf, subq.c.dst_points.geom)) \
             .all()
 
-        other_flights = set()
+        src_trace = to_shape(flight.locations).coords
+        max_distance = 1000
+        other_flights = dict()
+
         for point in q:
-            other_flights.add(point.dst_point_fid)
+            dst_time = point.dst_time
+            dst_loc = to_shape(point.dst_location).coords
+
+            # find point closest to given time
+            closest = bisect_left(flight.timestamps, dst_time, hi=len(flight.timestamps) - 1)
+
+            if closest == 0:
+                src_point = src_trace[0]
+            else:
+                # interpolate flight trace between two fixes
+                dx = (dst_time - flight.timestamps[closest - 1]).total_seconds() / \
+                     (flight.timestamps[closest] - flight.timestamps[closest - 1]).total_seconds()
+
+                src_point_prev = src_trace[closest - 1]
+                src_point_next = src_trace[closest]
+
+                src_point = [src_point_prev[0] + (src_point_next[0] - src_point_prev[0]) * dx,
+                             src_point_prev[1] + (src_point_next[1] - src_point_prev[1]) * dx]
+
+            point_distance = Location(latitude=dst_loc[0][1], longitude=dst_loc[0][0]).geographic_distance(
+                Location(latitude=src_point[1], longitude=src_point[0]))
+
+            if point_distance > max_distance:
+                continue
+
+            if point.dst_point_fid not in other_flights:
+                other_flights[point.dst_point_fid] = dict(times=list(), points=list())
+
+            other_flights[point.dst_point_fid]['times'].append(dst_time)
+            other_flights[point.dst_point_fid]['points'].append(Location(latitude=dst_loc[0][1], longitude=dst_loc[0][0]))
 
         return other_flights
 
