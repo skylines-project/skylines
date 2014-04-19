@@ -38,6 +38,7 @@ def find_meetings(flight_id):
     for flight_id, meetings in other_flights.iteritems():
         other_flight = Flight.get(flight_id)
 
-        FlightMeetings.add_meeting(flight, other_flight, meetings['times'][0], meetings['times'][-1])
+        for meeting in meetings:
+            FlightMeetings.add_meeting(flight, other_flight, meeting['times'][0], meeting['times'][-1])
 
     db.session.commit()

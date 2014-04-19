@@ -442,6 +442,7 @@ class FlightPathChunks(db.Model):
                              dst_times.label('dst_time'),
                              subq.c.dst_points_fid.label('dst_point_fid')) \
             .filter(_ST_Contains(subq.c.src_loc_buf, subq.c.dst_points.geom)) \
+            .order_by(subq.c.dst_points_fid, dst_times) \
             .all()
 
         src_trace = to_shape(flight.locations).coords
@@ -475,10 +476,15 @@ class FlightPathChunks(db.Model):
                 continue
 
             if point.dst_point_fid not in other_flights:
-                other_flights[point.dst_point_fid] = dict(times=list(), points=list())
+                other_flights[point.dst_point_fid] = []
+                other_flights[point.dst_point_fid].append(dict(times=list(), points=list()))
 
-            other_flights[point.dst_point_fid]['times'].append(dst_time)
-            other_flights[point.dst_point_fid]['points'].append(Location(latitude=dst_loc[0][1], longitude=dst_loc[0][0]))
+            elif len(other_flights[point.dst_point_fid][-1]['times']) and \
+                    (dst_time - other_flights[point.dst_point_fid][-1]['times'][-1]).total_seconds() > 600:
+                other_flights[point.dst_point_fid].append(dict(times=list(), points=list()))
+
+            other_flights[point.dst_point_fid][-1]['times'].append(dst_time)
+            other_flights[point.dst_point_fid][-1]['points'].append(Location(latitude=dst_loc[0][1], longitude=dst_loc[0][0]))
 
         return other_flights
 
