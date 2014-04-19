@@ -295,6 +295,34 @@ class Flight(db.Model):
         return True
 
 
+class FlightPathChunks(db.Model):
+    '''
+    This table stores flight path chunks of about 100 fixes per column which
+    enable PostGIS/Postgres to do fast queries due to tight bounding boxes
+    around those short flight pahts.
+    '''
+
+    __tablename__ = 'flight_path_chunks'
+
+    id = db.Column(Integer, autoincrement=True, primary_key=True)
+    time_created = db.Column(DateTime, nullable=False, default=datetime.utcnow)
+    time_modified = db.Column(DateTime, nullable=False, default=datetime.utcnow)
+
+    timestamps = deferred(db.Column(
+        postgresql.ARRAY(DateTime), nullable=False), group='path')
+
+    locations = deferred(db.Column(
+        Geometry('LINESTRING', srid=4326), nullable=False),
+        group='path')
+
+    start_time = db.Column(DateTime, nullable=False, index=True)
+    end_time = db.Column(DateTime, nullable=False, index=True)
+
+    flight_id = db.Column(
+        Integer, db.ForeignKey('flights.id', ondelete='CASCADE'), nullable=False)
+    flight = db.relationship('Flight')
+
+
 def get_elevations_for_flight(flight):
     # Prepare column expressions
     locations = Flight.locations.ST_DumpPoints()
