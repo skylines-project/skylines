@@ -1,3 +1,5 @@
+{% from 'macros/links.jinja' import user_link %}
+
 {% macro render_wingman_table(near_flights) -%}
 <table id="wingman-table" class="table table-condensed">
   <thead>
@@ -19,7 +21,35 @@
             {{ near_flight['flight'].igc_file.registration }}
           {%- endif %}
       </td>
-      <td>{{ near_flight['flight'].pilot.first_name }} {{ near_flight['flight'].pilot.last_name }}</td>
+      <td>
+        {% if near_flight['flight'].pilot or near_flight['flight'].pilot_name -%}
+        <span itemprop="performer" itemscope="" itemtype="http://schema.org/Person">
+          {% if near_flight['flight'].pilot -%}
+          <meta itemprop="url" content="{{ url_for('user.index', user_id=near_flight['flight'].pilot_id) }}" />
+          {{ user_link(near_flight['flight'].pilot, ' itemprop="name"') }}
+          {%- else -%}
+          {{ near_flight['flight'].pilot_name|e }}
+          {%- endif %}
+        </span>
+        {%- endif %}
+
+        {%- if (near_flight['flight'].pilot or near_flight['flight'].pilot_name) and (near_flight['flight'].co_pilot or near_flight['flight'].co_pilot_name) %}<br/>{% endif -%}
+
+        {% if near_flight['flight'].co_pilot or near_flight['flight'].co_pilot_name -%}
+        <span itemprop="performer" itemscope="" itemtype="http://schema.org/Person">
+          {% if near_flight['flight'].co_pilot -%}
+          <meta itemprop="url" content="{{ url_for('user.index', user_id=near_flight['flight'].co_pilot_id) }}" />
+          {{ user_link(near_flight['flight'].co_pilot, ' itemprop="name"') }}
+          {%- else -%}
+          {{ near_flight['flight'].co_pilot_name|e }}
+          {%- endif %}
+        </span>
+        {%- endif %}
+
+        {%- if not (near_flight['flight'].pilot or near_flight['flight'].pilot_name or near_flight['flight'].co_pilot or near_flight['flight'].co_pilot_name) %}
+        [unspecified]
+        {%- endif %}
+      </td>
       <td rel="popover" data-content="<table>
         {% for times in near_flight['times'] -%}
           <tr>
