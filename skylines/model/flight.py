@@ -295,8 +295,8 @@ class Flight(db.Model):
         # Save the new path as WKB
         self.locations = from_shape(linestring, srid=4326)
 
-        # Now populate the FlightPathChunks table with the full flight path
-        path_detailed = flight_path(self.igc_file, max_points=99999)
+        # Now populate the FlightPathChunks table with the (full) flight path
+        path_detailed = flight_path(self.igc_file, max_points=3000)
         if len(path_detailed) < 2:
             return False
 
