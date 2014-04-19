@@ -2,6 +2,7 @@
 
 from datetime import datetime
 from bisect import bisect_left
+from flask import current_app
 
 from sqlalchemy.dialects import postgresql
 from sqlalchemy.orm import deferred
@@ -105,7 +106,8 @@ class Flight(db.Model):
     ##############################
 
     def __repr__(self):
-        return ('<Flight: id=%s>' % self.id).encode('unicode_escape')
+        return ('<Flight: id=%s, modified=%s>'
+                % (self.id, self.time_modified)).encode('unicode_escape')
 
     ##############################
 
@@ -495,6 +497,10 @@ class FlightPathChunks(db.Model):
 
 
 def get_elevations_for_flight(flight):
+    cached_elevations = current_app.cache.get('elevations_' + flight.__repr__())
+    if cached_elevations:
+        return cached_elevations
+
     # Prepare column expressions
     locations = Flight.locations.ST_DumpPoints()
     location_id = extract_array_item(locations.path, 1)
@@ -529,5 +535,7 @@ def get_elevations_for_flight(flight):
         time = time_delta.days * 86400 + time_delta.seconds
 
         elevations.append((time, elevation))
+
+    current_app.cache.set('elevations_' + flight.__repr__(), elevations, timeout=3600 * 24)
 
     return elevations
