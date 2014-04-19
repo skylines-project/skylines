@@ -1,6 +1,6 @@
 from flask.ext.script import Command, Option
-from sqlalchemy.sql.expression import and_, or_
-from skylines.model import db, Flight, FlightPathChunks, FlightMeetings
+from skylines.model import db, Flight
+from skylines.worker import tasks
 
 
 class FindMeetings(Command):
@@ -24,21 +24,7 @@ class FindMeetings(Command):
 
     def do(self, flight):
         print flight.id
-        other_flights = FlightPathChunks.get_near_flights(flight)
-
-        # delete all previous detected points between src and dst
-        for key in other_flights:
-            FlightMeetings.query() \
-                .filter(or_(and_(FlightMeetings.source == flight, FlightMeetings.destination_id == key),
-                            and_(FlightMeetings.destination == flight, FlightMeetings.source_id == key))) \
-                .delete()
-
-        # Insert new meetings into table
-        for key, value in other_flights.iteritems():
-            other_flight = Flight.get(key)
-
-            FlightMeetings.add_meeting(flight, other_flight, value['times'][0], value['times'][-1])
-
+        tasks.find_meetings(flight.id)
         return True
 
     def apply_and_commit(self, func, q):

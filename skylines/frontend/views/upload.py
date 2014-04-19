@@ -153,6 +153,7 @@ def index_post(form):
         for flight in flights:
             if flight[2] is None:
                 tasks.analyse_flight.delay(flight[1].id)
+                tasks.find_meetings.delay(flight[1].id)
     except ConnectionError:
         current_app.logger.info('Cannot connect to Redis server')
 
