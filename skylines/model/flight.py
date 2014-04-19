@@ -453,6 +453,11 @@ class FlightPathChunks(db.Model):
             dst_time = point.dst_time
             dst_loc = to_shape(point.dst_location).coords
 
+            # we might have got a destination point earier than source takeoff
+            # or later than source landing. Check this case and disregard early.
+            if dst_time < flight.takeoff_time or dst_time > flight.landing_time:
+                continue
+
             # find point closest to given time
             closest = bisect_left(flight.timestamps, dst_time, hi=len(flight.timestamps) - 1)
 
