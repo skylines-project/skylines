@@ -146,6 +146,7 @@ Message:
 def create_app(*args, **kw):
     app = SkyLines(*args, **kw)
     app.add_sqlalchemy()
+    app.add_cache()
     return app
 
 
