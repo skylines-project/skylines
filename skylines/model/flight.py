@@ -6,10 +6,12 @@ from sqlalchemy.dialects import postgresql
 from sqlalchemy.orm import deferred
 from sqlalchemy.types import Unicode, Integer, Float, DateTime, Date, \
     Boolean, SmallInteger
+from sqlalchemy import func
 from sqlalchemy.ext.hybrid import hybrid_method, hybrid_property
 from sqlalchemy.sql.expression import case, and_, or_, literal_column
 from geoalchemy2.types import Geometry
 from geoalchemy2.shape import to_shape, from_shape
+from geoalchemy2.functions import GenericFunction
 from shapely.geometry import LineString
 
 from skylines.model import db
@@ -343,6 +345,22 @@ class Flight(db.Model):
         return True
 
 
+class _ST_Contains(GenericFunction):
+    '''
+    ST_Contains without index search
+    '''
+    name = '_ST_Contains'
+    type = None
+
+
+class _ST_Intersects(GenericFunction):
+    '''
+    ST_Intersects without index search
+    '''
+    name = '_ST_Intersects'
+    type = None
+
+
 class FlightPathChunks(db.Model):
     '''
     This table stores flight path chunks of about 100 fixes per column which
@@ -369,6 +387,68 @@ class FlightPathChunks(db.Model):
     flight_id = db.Column(
         Integer, db.ForeignKey('flights.id', ondelete='CASCADE'), nullable=False)
     flight = db.relationship('Flight')
+
+
+    @staticmethod
+    def get_near_flights(flight, filter=None):
+        '''
+        WITH src AS
+            (SELECT ST_Buffer(ST_Simplify(locations, 0.005), 0.015) AS src_loc_buf,
+                    start_time AS src_start,
+                    end_time AS src_end
+             FROM flight_paths
+             WHERE flight_id = 8503)
+        SELECT (dst_points).geom AS dst_point,
+               dst_times[(dst_points).path[1]] AS dst_time,
+               dst_points_fid AS dst_flight_id
+        FROM
+            (SELECT ST_dumppoints(locations) as dst_points,
+                    timestamps AS dst_times,
+                    src_loc_buf,
+                    flight_id AS dst_points_fid,
+                    src_start,
+                    src_end
+            FROM flight_paths, src
+            WHERE flight_id != 8503 AND
+                  end_time >= src_start AND
+                  start_time <= src_end AND
+                  locations && src_loc_buf AND
+                  _ST_Intersects(ST_Simplify(locations, 0.005), src_loc_buf)) AS foo
+        WHERE _ST_Contains(src_loc_buf, (dst_points).geom);
+        '''
+
+        cte = db.session.query(FlightPathChunks.locations.ST_Simplify(0.005).ST_Buffer(0.015).label('src_loc_buf'),
+                               FlightPathChunks.start_time.label('src_start'),
+                               FlightPathChunks.end_time.label('src_end')) \
+            .filter(FlightPathChunks.flight == flight) \
+            .cte('src')
+
+        subq = db.session.query(func.ST_DumpPoints(FlightPathChunks.locations).label('dst_points'),
+                                FlightPathChunks.timestamps.label('dst_times'),
+                                cte.c.src_loc_buf,
+                                FlightPathChunks.flight_id.label('dst_points_fid'),
+                                cte.c.src_start,
+                                cte.c.src_end) \
+            .filter(and_(FlightPathChunks.flight != flight,
+                         FlightPathChunks.end_time >= cte.c.src_start,
+                         FlightPathChunks.start_time <= cte.c.src_end,
+                         FlightPathChunks.locations.intersects(cte.c.src_loc_buf),
+                         _ST_Intersects(FlightPathChunks.locations.ST_Simplify(0.005), cte.c.src_loc_buf))) \
+            .subquery()
+
+        dst_times = literal_column('dst_times[(dst_points).path[1]]')
+
+        q = db.session.query(subq.c.dst_points.geom,
+                             dst_times.label('dst_time'),
+                             subq.c.dst_points_fid.label('dst_point_fid')) \
+            .filter(_ST_Contains(subq.c.src_loc_buf, subq.c.dst_points.geom)) \
+            .all()
+
+        other_flights = set()
+        for point in q:
+            other_flights.add(point.dst_point_fid)
+
+        return other_flights
 
 
 def get_elevations_for_flight(flight):

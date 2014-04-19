@@ -15,7 +15,7 @@ from .airspace import Airspace
 from .club import Club
 from .elevation import Elevation
 from .event import Event, Notification
-from .flight import Flight
+from .flight import Flight, FlightPathChunks
 from .flight_comment import FlightComment
 from .flight_phase import FlightPhase
 from .follower import Follower
