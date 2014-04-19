@@ -105,7 +105,8 @@ class Flight(db.Model):
     ##############################
 
     def __repr__(self):
-        return ('<Flight: id=%s>' % self.id).encode('unicode_escape')
+        return ('<Flight: id=%s, modified=%s>'
+                % (self.id, self.time_modified)).encode('unicode_escape')
 
     ##############################
 
