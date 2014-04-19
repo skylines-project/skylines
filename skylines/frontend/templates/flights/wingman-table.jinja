@@ -5,7 +5,7 @@
   <thead>
     <tr>
       <th class="color-stripe"></th>
-      <th>{% trans %}Reg.{% endtrans %}</th>
+      <th>{% trans %}Aircraft{% endtrans %}</th>
       <th>{% trans %}Pilot{% endtrans %}</th>
       <th>First / Last</th>
     </tr>
@@ -14,12 +14,27 @@
     {% for key, near_flight in near_flights.iteritems() -%}
     <tr data-sfid="{{ near_flight['flight'].id }}">
       <td class="color-stripe"></td>
-      <td>{%- if near_flight['flight'].igc_file.competition_id %}
-            {{ near_flight['flight'].igc_file.competition_id }}<br />
+      <td>
+        {%- if near_flight['flight'].model_id %}
+        <span rel="tooltip" title="{{ _('Handicap') ~ ': ' ~ near_flight['flight'].model.dmst_index }}">{{ near_flight['flight'].model|e }}</span>
+        {%- elif near_flight['flight'].igc_file.model -%}
+        [{{ near_flight['flight'].igc_file.model|e }}]
+        {%- else -%}
+        {% trans %}Unknown{% endtrans %}
+        {%- endif %}
+        <small><br />
+          {%- if near_flight['flight'].registration %}
+            {{ near_flight['flight'].registration|e }}
+          {%- elif near_flight['flight'].igc_file.registration %}
+            {{ near_flight['flight'].igc_file.registration|e }}
           {%- endif %}
-          {%- if near_flight['flight'].igc_file.registration %}
-            {{ near_flight['flight'].igc_file.registration }}
+
+          {%- if near_flight['flight'].competition_id %}
+            &ndash; {{ near_flight['flight'].competition_id|e }}
+          {%- elif near_flight['flight'].igc_file.competition_id %}
+            &ndash; {{ near_flight['flight'].igc_file.competition_id|e }}
           {%- endif %}
+        </small>
       </td>
       <td>
         {% if near_flight['flight'].pilot or near_flight['flight'].pilot_name -%}
