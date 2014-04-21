@@ -514,17 +514,15 @@ function tick() {
  * @return {int} Index next smaller to Number in Array.
  */
 function getNextSmallerIndex(array, value) {
-  var length = array.length;
+  var low = 0;
+  var high = array.length;
 
-  if (length < 2)
-    return length - 1;
-
-  for (length; --length;) {
-    if (array[length] < value)
-      break;
+  while (low < high) {
+    var mid = (low + high) >> 1;
+    if (value < array[mid]) high = mid;
+    else low = mid + 1;
   }
-
-  return length;
+  return low;
 }
 
 
