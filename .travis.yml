@@ -5,6 +5,7 @@ python:
 
 services:
   - postgresql
+  - redis
 
 install:
   # Install SkyLines Python dependencies
