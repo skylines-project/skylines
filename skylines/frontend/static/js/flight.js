@@ -507,7 +507,11 @@ function tick() {
 
 
 /**
- * Searches the next smaller index to a number in a monotonic array
+ * Searches the next smaller index to a number in a monotonic array.
+ * If value == array[idx] it returns the next smaller index idx - 1
+ * (the only way to return array.length - 1 is to search for values larger
+ * than the last element). For values smaller than the first element
+ * it returns 0.
  *
  * @param {Array} array Array.
  * @param {double} value Number.
@@ -515,7 +519,7 @@ function tick() {
  */
 function getNextSmallerIndex(array, value) {
   var low = 1;
-  var high = array.length;
+  var high = array.length - 1;
 
   while (low < high) {
     var mid = (low + high) >> 1;
