@@ -6,7 +6,7 @@ from .filters import SimpleClosureJS
 # Font Awesome
 
 fontawesome_css = Bundle(
-    'https://rawgithub.com/FortAwesome/Font-Awesome/v3.2.1/css/font-awesome.css',
+    'https://raw.github.com/FortAwesome/Font-Awesome/v3.2.1/css/font-awesome.css',
     output='css/fontawesome-%(version)s.css')
 
 fontawesome_webfont_eot = Bundle(
@@ -22,7 +22,7 @@ fontawesome_webfont_ttf = Bundle(
     output='font/fontawesome-webfont.ttf')
 
 fontawesome_webfont_svg = Bundle(
-    'https://rawgithub.com/FortAwesome/Font-Awesome/v3.2.1/font/fontawesome-webfont.svg',
+    'https://raw.github.com/FortAwesome/Font-Awesome/v3.2.1/font/fontawesome-webfont.svg',
     output='font/fontawesome-webfont.svg')
 
 
@@ -41,12 +41,12 @@ bootstrap_css = Bundle(
 # Flot
 
 flot_js = Bundle(
-    'https://rawgithub.com/flot/flot/0.8.2/jquery.flot.js',
-    'https://rawgithub.com/flot/flot/0.8.2/jquery.flot.time.js',
-    'https://rawgithub.com/flot/flot/0.8.2/jquery.flot.crosshair.js',
-    'https://rawgithub.com/flot/flot/0.8.2/jquery.flot.resize.js',
+    'https://raw.github.com/flot/flot/0.8.2/jquery.flot.time.js',
+    'https://raw.github.com/flot/flot/0.8.2/jquery.flot.crosshair.js',
+    'https://raw.github.com/flot/flot/0.8.2/jquery.flot.js',
+    'https://raw.github.com/flot/flot/0.8.2/jquery.flot.resize.js',
     'http://flot-marks.googlecode.com/svn-history/r13/trunk/src/jquery.flot.marks.js',
-    'https://rawgithub.com/flot/flot/0.8.2/excanvas.min.js',
+    'https://raw.github.com/flot/flot/0.8.2/excanvas.min.js',
     filters=SimpleClosureJS(disable_ie_checks=True),
     output='js/flot-%(version)s.js')
 
