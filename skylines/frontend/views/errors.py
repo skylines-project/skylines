@@ -1,5 +1,7 @@
 from flask import render_template
-from werkzeug.exceptions import HTTPException, InternalServerError
+from werkzeug.exceptions import (
+    HTTPException, InternalServerError, RequestTimeout,
+)
 
 
 def register(app):
@@ -18,3 +20,7 @@ def register(app):
             name=e.name,
             description=e.description,
         ), e.code
+
+    @app.errorhandler(EOFError)
+    def handle_eof_error(e):
+        return handle_error(RequestTimeout())
