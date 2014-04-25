@@ -97,7 +97,7 @@
     var pinnedFlights = getPinnedFlights();
     for (i in pinnedFlights)
       if (pinnedFlights[i] != {{ flight.id }})
-        addFlightFromJSON("/flights/" + pinnedFlights[i] + "/json");
+        addFlightFromJSON("/flights/" + pinnedFlights[i] + "/json?" + {{ config.get('SKYLINES_CACHE_BUSTER', '') }});
 
     pinButton($("#pinned"), {{ flight.id }});
 

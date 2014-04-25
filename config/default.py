@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import os.path
+import random
 
 here = os.path.abspath(os.path.dirname(__file__))
 base = os.path.abspath(os.path.join(here, '..'))
@@ -47,6 +48,8 @@ SKYLINES_FILES_PATH = os.path.join(base, 'htdocs', 'files')
 SKYLINES_ELEVATION_PATH = os.path.join(base, 'htdocs', 'srtm')
 
 SKYLINES_TEMPORARY_DIR = '/tmp'
+
+SKYLINES_CACHE_BUSTER = random.randint(1,1e6)
 
 # how many entries should a list have?
 SKYLINES_LISTS_DISPLAY_LENGTH = 50
