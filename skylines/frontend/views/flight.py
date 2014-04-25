@@ -278,7 +278,7 @@ def json():
             competition_id=g.flight.competition_id)))
     resp.headers['Last-Modified'] = last_modified
     resp.headers['Etag'] = g.flight.igc_file.md5
-    resp.headers['Cache-Control'] = 'public'
+    resp.headers['Cache-Control'] = 'public, max-age=86400'
     return resp
 
 
