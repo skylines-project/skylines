@@ -250,8 +250,8 @@ def json():
     # latency and server load
     # This implementation is very basic. Sadly Flask (0.10.1) does not have
     # this feature
-    last_modified = g.flight.igc_file.time_created \
-            .strftime('%a, %d %b %Y %H:%M:%S GMT')
+    last_modified = g.flight.time_modified \
+        .strftime('%a, %d %b %Y %H:%M:%S GMT')
     modified_since = request.headers.get('If-Modified-Since')
     etag = request.headers.get('If-None-Match')
     if (modified_since and modified_since == last_modified) or \
