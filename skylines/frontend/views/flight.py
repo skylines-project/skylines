@@ -253,7 +253,7 @@ def json():
     last_modified = g.flight.igc_file.time_created \
             .strftime('%a, %d %b %Y %H:%M:%S GMT')
     modified_since = request.headers.get('If-Modified-Since')
-    etag = request.headers.get('If-Non-Match')
+    etag = request.headers.get('If-None-Match')
     if (modified_since and modified_since == last_modified) or \
        (etag and etag == g.flight.igc_file.md5):
         return ('', 304)
