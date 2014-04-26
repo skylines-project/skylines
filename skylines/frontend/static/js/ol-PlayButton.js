@@ -1,7 +1,7 @@
 var PlayButton = OpenLayers.Class(OpenLayers.Control, {
   draw: function() {
     OpenLayers.Control.prototype.draw.apply(this);
-    $(this.div).on('click', $.proxy(this.onClick, this));
+    $(this.div).on('click touchend', $.proxy(this.onClick, this));
     this.setMode('play');
     return this.div;
   },
