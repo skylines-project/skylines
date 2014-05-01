@@ -7,8 +7,9 @@ import re
 from sqlalchemy import func
 from sqlalchemy.sql.expression import or_
 
-from skylines.model import db, Flight, User, Club, Airport
+from skylines.model import db, Flight, User, Club, Airport, Boundaries
 from skylines.lib.dbutil import get_requested_record
+from skylines.lib.geo import zoom_bounding_box
 
 dyn_images_blueprint = Blueprint('dyn_images', 'skylines')
 
@@ -16,6 +17,7 @@ dyn_images_blueprint = Blueprint('dyn_images', 'skylines')
 @dyn_images_blueprint.route('/overview/<string:type>/<value>/map.png')
 def overview(type=None, value=None):
     if type == 'all' or type == None:
+        extent = _guess_extent()
         f = None
 
     elif type == 'date':
@@ -29,6 +31,7 @@ def overview(type=None, value=None):
         except:
             abort(404)
 
+        extent = _guess_extent()
         f = Flight.date_local == date
 
     elif type == 'pilot':
@@ -37,6 +40,7 @@ def overview(type=None, value=None):
         except:
             abort(404)
 
+        extent = None
         f = or_(Flight.pilot == pilot,
                 Flight.co_pilot == pilot)
 
@@ -46,6 +50,7 @@ def overview(type=None, value=None):
         except:
             abort(404)
 
+        extent = None
         f = Flight.club == club
 
     elif type == 'airport':
@@ -54,6 +59,7 @@ def overview(type=None, value=None):
         except:
             abort(404)
 
+        extent = None
         f = Flight.takeoff_airport == airport
 
     elif type == 'pinned':
@@ -72,6 +78,7 @@ def overview(type=None, value=None):
         except ValueError:
             abort(404)
 
+        extent = None
         f = Flight.id.in_(ids)
 
     q = db.session.query(Flight.locations.label('flight_geometry'),
@@ -81,7 +88,7 @@ def overview(type=None, value=None):
     if f is not None:
         q = q.filter(f)
 
-    return _create_overview(query=q)
+    return _create_overview(query=q, extent=extent)
 
 
 def _query_to_sql(query):
@@ -106,20 +113,50 @@ def _query_to_sql(query):
     return (statement.string.encode(enc) % params).decode(enc)
 
 
-def _create_overview(query):
+def _guess_extent():
+    import GeoIP
+
     # maximum and default extent of epsg3857
-    extent_epsg4326 = [-180, -85.05112878, 180, 85.05112878]
+    extent = [-180, -85.05112878, 180, 85.05112878]
 
-    extent = db.session.query(func.ST_Extent(query.subquery().c.flight_geometry)
-                              .label('extent'))
+    geoip = GeoIP.open(current_app.config.get('GEOIP_DATABASE'), GeoIP.GEOIP_STANDARD)
+    country_code = geoip.country_code_by_addr(request.remote_addr)
 
-    m = re.match("BOX\(([-+]?[0-9]*\.?[0-9]+) ([-+]?[0-9]*\.?[0-9]+)," +
-                 "([-+]?[0-9]*\.?[0-9]+) ([-+]?[0-9]*\.?[0-9]+)\)", extent.scalar())
-    if m:
-        extent_epsg4326[0] = float(m.group(1))
-        extent_epsg4326[1] = float(m.group(2))
-        extent_epsg4326[2] = float(m.group(3))
-        extent_epsg4326[3] = float(m.group(4))
+    if not country_code:
+        return extent
+
+    extent_q = db.session.query(func.ST_Extent(Boundaries.geometry).label('extent')) \
+        .filter(func.lower(Boundaries.iso_a2) == func.lower(country_code))
+
+    if extent_q.scalar():
+        m = re.match("BOX\(([-+]?[0-9]*\.?[0-9]+) ([-+]?[0-9]*\.?[0-9]+)," +
+                     "([-+]?[0-9]*\.?[0-9]+) ([-+]?[0-9]*\.?[0-9]+)\)", extent_q.scalar())
+        if m:
+            extent[0] = float(m.group(1))
+            extent[1] = float(m.group(2))
+            extent[2] = float(m.group(3))
+            extent[3] = float(m.group(4))
+
+    return zoom_bounding_box(extent, 1.2)
+
+
+def _create_overview(query, extent):
+    if extent:
+        extent_epsg4326 = extent
+    else:
+        # maximum and default extent of epsg3857
+        extent_epsg4326 = [-180, -85.05112878, 180, 85.05112878]
+
+        extent_q = db.session.query(func.ST_Extent(query.subquery().c.flight_geometry)
+                                        .label('extent'))
+
+        m = re.match("BOX\(([-+]?[0-9]*\.?[0-9]+) ([-+]?[0-9]*\.?[0-9]+)," +
+                     "([-+]?[0-9]*\.?[0-9]+) ([-+]?[0-9]*\.?[0-9]+)\)", extent_q.scalar())
+        if m:
+            extent_epsg4326[0] = float(m.group(1))
+            extent_epsg4326[1] = float(m.group(2))
+            extent_epsg4326[2] = float(m.group(3))
+            extent_epsg4326[3] = float(m.group(4))
 
     # convert extent from EPSG4326 to EPSG3857
     epsg4326 = pyproj.Proj(init='epsg:4326')

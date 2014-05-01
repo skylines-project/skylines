@@ -8,6 +8,10 @@ services:
   - redis
 
 install:
+  # Install geoip depencency
+  - sudo apt-get update -qq
+  - sudo apt-get install -qq libgeoip-dev geoip-database
+
   # Install SkyLines Python dependencies
   - pip install -e .
 

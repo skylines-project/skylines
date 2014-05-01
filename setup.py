@@ -43,6 +43,7 @@ setup(
         'Pygments==1.6',
         'aerofiles==0.1.1',
         'pyproj==1.9.3',
+        'GeoIP==1.3.1',
     ],
     include_package_data=True,
     package_data={

@@ -25,3 +25,14 @@ def geographic_distance(loc1, loc2):
     c = 2 * math.asin(math.sqrt(a))
 
     return EARTH_RADIUS * c
+
+
+def zoom_bounding_box(bbox, ratio):
+    center_x = (bbox[0] + bbox[2]) / 2.
+    center_y = (bbox[1] + bbox[3]) / 2.
+
+    return [
+        (bbox[0] - center_x) * ratio + center_x,
+        (bbox[1] - center_y) * ratio + center_y,
+        (bbox[2] - center_x) * ratio + center_x,
+        (bbox[3] - center_y) * ratio + center_y]
