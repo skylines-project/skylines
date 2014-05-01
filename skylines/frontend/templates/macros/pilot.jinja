@@ -1,0 +1,32 @@
+{% from "macros/links.jinja" import user_link %}
+
+{% macro pilot_name(flight) -%}
+{% if flight.pilot or flight.pilot_name -%}
+<span itemprop="performer" itemscope="" itemtype="http://schema.org/Person">
+  {% if flight.pilot -%}
+  <meta itemprop="url" content="{{ url_for('user.index', user_id=flight.pilot_id) }}" />
+  {{ user_link(flight.pilot, ' itemprop="name"') }}
+  {%- else -%}
+  {{ flight.pilot_name|e }}
+  {%- endif %}
+</span>
+{%- endif %}
+
+{%- if (flight.pilot or flight.pilot_name) and (flight.co_pilot or flight.co_pilot_name) %}<br/>{% endif -%}
+
+{% if flight.co_pilot or flight.co_pilot_name -%}
+<span itemprop="performer" itemscope="" itemtype="http://schema.org/Person">
+{% if flight.co_pilot -%}
+<meta itemprop="url" content="{{ url_for('user.index', user_id=flight.co_pilot_id) }}" />
+{{ user_link(flight.co_pilot, ' itemprop="name"') }}
+{%- else -%}
+{{ flight.co_pilot_name|e }}
+{%- endif %}
+</span>
+{%- endif %}
+
+{%- if not (flight.pilot or flight.pilot_name or flight.co_pilot or flight.co_pilot_name) %}
+[unspecified]
+{%- endif %}
+{%- endmacro %}
+
