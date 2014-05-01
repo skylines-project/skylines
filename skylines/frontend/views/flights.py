@@ -177,6 +177,7 @@ def _create_overview(tab, kw, date=None, pilot=None, club=None, airport=None,
         q = q.filter(f)
 
     largest = q.order_by(Flight.olc_classic_distance.desc())
+    longest = q.order_by(Flight.duration.desc())
 
     # If there are no flights on that day, return early
     if not largest.first():
@@ -184,7 +185,8 @@ def _create_overview(tab, kw, date=None, pilot=None, club=None, airport=None,
                                tab=tab, date=date, pilot=pilot, club=club,
                                airport=airport, flights=None)
 
-    flights = dict(largest=largest.first())
+    flights = dict(largest=largest.first(),
+                   longest=longest.first())
 
     return render_template('flights/overview.jinja',
                            tab=tab, date=date, pilot=pilot, club=club,

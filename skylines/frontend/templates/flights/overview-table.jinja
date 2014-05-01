@@ -18,6 +18,20 @@
            </td>
          </tr>
        {%- endif %}
+
+       {% if 'longest' in flights -%}
+         {% set flight = flights['longest'] %}
+         <tr>
+           <th>{% trans %}Longest flight{% endtrans %}</th>
+           <td>{{ flight.duration }}</td>
+           <td>{{ pilot_name(flight) }}</td>
+           <td class="column-buttons">
+             <div class="pull-right">
+               <a href="{{ url_for('flight.index', flight_id=flight.id) }}" class="btn btn-default btn-sm">Show</a>
+             </div>
+           </td>
+         </tr>
+       {%- endif %}
       </tbody>
     </table>
   </div>
