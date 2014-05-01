@@ -1,11 +1,16 @@
-from flask import Blueprint, make_response, abort, request, g, current_app
+from flask import Blueprint, make_response, abort, request, g, redirect, current_app
 
 from datetime import datetime
-import mapscript
 import pyproj
 import re
 from sqlalchemy import func
 from sqlalchemy.sql.expression import or_
+
+try:
+    import mapscript
+    mapscript_available = True
+except ImportError:
+    mapscript_available = False
 
 from skylines.model import db, Flight, User, Club, Airport, Boundaries
 from skylines.lib.dbutil import get_requested_record
@@ -141,6 +146,9 @@ def _guess_extent():
 
 
 def _create_overview(query, extent):
+    if not mapscript_available:
+        return redirect('/images/no_mapscript_available.png')
+
     if extent:
         extent_epsg4326 = extent
     else:
