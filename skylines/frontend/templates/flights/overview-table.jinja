@@ -1,0 +1,25 @@
+{% from "macros/pilot.jinja" import pilot_name %}
+
+{% macro render_overview_table(flights) -%}
+<div class="row">
+  <div class="col-sm-6 col-md-6">
+    <table class="table">
+       <tbody>
+       {% if 'largest' in flights -%}
+         {% set flight = flights['largest'] %}
+         <tr>
+           <th>{% trans %}Furthest flight{% endtrans %}</th>
+           <td>{{ h.format_distance(flight.olc_classic_distance) }}</td>
+           <td>{{ pilot_name(flight) }}</td>
+           <td class="column-buttons">
+             <div class="pull-right">
+               <a href="{{ url_for('flight.index', flight_id=flight.id) }}" class="btn btn-default btn-sm">Show</a>
+             </div>
+           </td>
+         </tr>
+       {%- endif %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{%- endmacro %}

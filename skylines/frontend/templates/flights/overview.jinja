@@ -1,3 +1,4 @@
+{% from "flights/overview-table.jinja" import render_overview_table with context %}
 {% from "macros/links.jinja" import user_link, club_link %}
 
 
@@ -87,6 +88,12 @@
 {% block content -%}
 {% set overview = True %}
 {% include "flights/nav.jinja" with context %}
+
+{% if flights -%}
+{{ render_overview_table(flights) }}
+{%- else %}
+No flights today...
+{%- endif %}
 {%- endblock %}
 
 {% block title_right -%}

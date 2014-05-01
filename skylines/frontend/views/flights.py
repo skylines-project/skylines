@@ -141,7 +141,51 @@ def _create_list(tab, kw, date=None, pilot=None, club=None, airport=None,
 
 def _create_overview(tab, kw, date=None, pilot=None, club=None, airport=None,
                      pinned=None):
-    flights = None
+    pilot_alias = aliased(User, name='pilot')
+
+    q = Flight.query() \
+        .filter(Flight.is_listable(g.current_user)) \
+        .join(Flight.igc_file) \
+        .options(contains_eager(Flight.igc_file)) \
+        .outerjoin(pilot_alias, Flight.pilot) \
+        .options(contains_eager(Flight.pilot, alias=pilot_alias)) \
+        .options(joinedload(Flight.co_pilot)) \
+        .outerjoin(Flight.club) \
+        .options(contains_eager(Flight.club)) \
+        .outerjoin(Flight.takeoff_airport) \
+        .options(contains_eager(Flight.takeoff_airport))
+
+    f = None
+
+    if date:
+        f = and_(f, Flight.date_local == date)
+
+    if pilot:
+        f = and_(f, or_(Flight.pilot == pilot,
+                        Flight.co_pilot == pilot))
+
+    if club:
+        f = and_(f, Flight.club == club)
+
+    if airport:
+        f = and_(f, Flight.takeoff_airport == airport)
+
+    if pinned:
+        f = and_(f, Flight.id.in_(pinned))
+
+    if f is not None:
+        q = q.filter(f)
+
+    largest = q.order_by(Flight.olc_classic_distance.desc())
+
+    # If there are no flights on that day, return early
+    if not largest.first():
+        return render_template('flights/overview.jinja',
+                               tab=tab, date=date, pilot=pilot, club=club,
+                               airport=airport, flights=None)
+
+    flights = dict(largest=largest.first())
+
     return render_template('flights/overview.jinja',
                            tab=tab, date=date, pilot=pilot, club=club,
                            airport=airport, flights=flights)
