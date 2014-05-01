@@ -38,7 +38,7 @@
   {%- endif %}
 
   {% if airport -%}
-  <li class="active"><a href="{{ url_for('.airport' + ('_overview' if overview else ''), id=airport.id, **kwargs) }}"{{attributes}}>{{ airport|e }}</a></li>
+  <li class="active"><a href="{{ url_for('.airport' + ('_overview' if overview else ''), id=airport.id) }}"{{attributes}}>{{ airport|e }}</a></li>
   {%- endif %}
 
   {% if club -%}
