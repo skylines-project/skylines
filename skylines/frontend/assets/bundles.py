@@ -107,6 +107,7 @@ all_js = Bundle(
     'vendor/jquery/jquery.browser.js',
     'vendor/jquery/jquery.cookie.js',
     'vendor/jquery/jquery.timeago.js',
+    'vendor/bootstrap-datepicker/datepicker.js',
     'js/general.js',
     bootstrap_js,
     filters='rjsmin',
@@ -115,7 +116,6 @@ all_js = Bundle(
 datatables_js = Bundle(
     'vendor/jquery-datatables/jquery.dataTables.js',
     'vendor/jquery-datatables/jquery.dataTables.ext.js',
-    'vendor/bootstrap-datepicker/datepicker.js',
     filters=SimpleClosureJS,
     output='js/tables-%(version)s.js')
 

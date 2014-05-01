@@ -1,0 +1,57 @@
+{% from "macros/links.jinja" import user_link, club_link %}
+
+
+{% extends "base-page.jinja" %}
+{% set active_page = "flights" %}
+
+
+{% block title -%}
+{% if date -%}
+  {% trans date=h.format_date(date) -%}
+    Overview <small>on {{ date }}</small>
+  {%- endtrans %}
+{%- else %}
+  {% trans %}Overview{% endtrans -%}
+{%- endif %}
+{%- endblock %}
+
+
+
+{% block styles -%}
+{{ super() }}
+{%- endblock %}
+
+
+
+{% block scripts -%}
+{{ super() }}
+<script type="text/javascript" charset="utf-8">
+/* <![CDATA[ */
+  $(document).ready(function() {
+    showPinnedFlightsLink();
+
+    $('#datepicker').datepicker({
+      weekStart: 1
+    })
+    .on('changeDate', function(e) {
+      var url = "/flights/date/" + e.date.getFullYear() + "-" +
+        pad(e.date.getMonth()+1, 2) + "-" + pad(e.date.getDate(), 2) +
+        "/overview";
+      window.location.href = url;
+    });
+  });
+/* ]]> */
+</script>
+{%- endblock %}
+
+
+{% block content -%}
+{% set overview = True %}
+{% include "flights/nav.jinja" with context %}
+{%- endblock %}
+
+{% block title_right -%}
+<a href="{{ url_for('upload.index') }}" class="btn btn-success">
+  <i class="icon-upload-alt"></i> {{ _('Upload flight') }}
+</a>
+{%- endblock %}
