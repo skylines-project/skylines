@@ -178,6 +178,7 @@ def _create_overview(tab, kw, date=None, pilot=None, club=None, airport=None,
 
     largest = q.order_by(Flight.olc_classic_distance.desc())
     longest = q.order_by(Flight.duration.desc())
+    total_distance = q.with_entities(func.sum(Flight.olc_classic_distance)).scalar()
 
     # If there are no flights on that day, return early
     if not largest.first():
@@ -188,9 +189,11 @@ def _create_overview(tab, kw, date=None, pilot=None, club=None, airport=None,
     flights = dict(largest=largest.first(),
                    longest=longest.first())
 
+    overview = dict(total_distance=total_distance)
+
     return render_template('flights/overview.jinja',
                            tab=tab, date=date, pilot=pilot, club=club,
-                           airport=airport, flights=flights)
+                           airport=airport, flights=flights, overview=overview)
 
 
 @flights_blueprint.route('/all.json')

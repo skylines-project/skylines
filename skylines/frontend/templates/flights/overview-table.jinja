@@ -32,6 +32,13 @@
            </td>
          </tr>
        {%- endif %}
+
+       {% if 'total_distance' in overview -%}
+         <tr>
+           <th>{% trans %}Total distance{% endtrans %}</th>
+           <td colspan="3">{{ h.format_distance(overview['total_distance']) }}</td>
+         </tr>
+       {%- endif %}
       </tbody>
     </table>
   </div>
