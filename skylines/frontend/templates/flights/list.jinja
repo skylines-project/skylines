@@ -6,6 +6,45 @@
 {% set active_page = "flights" %}
 
 
+{% set active_header_tab = 'list' %}
+{% if tab == 'date' -%}
+{% set header_tabs = [
+    (url_for('.date_overview', date=date), 'overview', _('Overview')),
+    (url_for('.date', date=date), 'list', _('List')),
+] %}
+{%- elif tab == 'latest' %}
+{% set header_tabs = [
+    (url_for('.latest_overview'), 'overview', _('Overview')),
+    (url_for('.latest'), 'list', _('List')),
+] %}
+{%- elif tab == 'pilot' %}
+{% set header_tabs = [
+    (url_for('.pilot_overview', id=pilot.id), 'overview', _('Overview')),
+    (url_for('.pilot', id=pilot.id), 'list', _('List')),
+] %}
+{%- elif tab == 'airport' %}
+{% set header_tabs = [
+    (url_for('.airport_overview', id=airport.id), 'overview', _('Overview')),
+    (url_for('.airport', id=airport.id), 'list', _('List')),
+] %}
+{%- elif tab == 'club' %}
+{% set header_tabs = [
+    (url_for('.club_overview', id=club.id), 'overview', _('Overview')),
+    (url_for('.club', id=club.id), 'list', _('List')),
+] %}
+{%- elif tab == 'pinned' %}
+{% set header_tabs = [
+    (url_for('.pinned_overview'), 'overview', _('Overview')),
+    (url_for('.pinned'), 'list', _('List')),
+] %}
+{%- elif tab == 'all' %}
+{% set header_tabs = [
+    (url_for('.all_overview'), 'overview', _('Overview')),
+    (url_for('.all'), 'list', _('List')),
+] %}
+{%- endif %}
+
+
 {% block title -%}
 {% if pilot -%}
   {% trans pilot=user_link(pilot) -%}
@@ -266,7 +305,9 @@ showPinnedFlightsLink();
 
 
 {% block title_right -%}
+<!--
 <a href="{{ url_for('upload.index') }}" class="btn btn-success">
   <i class="icon-upload-alt"></i> {{ _('Upload flight') }}
 </a>
+-->
 {%- endblock %}
