@@ -158,6 +158,8 @@ def _create_overview(query, extent):
             extent_epsg4326[2] = float(m.group(3))
             extent_epsg4326[3] = float(m.group(4))
 
+        extent_epsg4326 = zoom_bounding_box(extent_epsg4326, 1.05)
+
     # convert extent from EPSG4326 to EPSG3857
     epsg4326 = pyproj.Proj(init='epsg:4326')
     epsg3857 = pyproj.Proj(init='epsg:3857')
