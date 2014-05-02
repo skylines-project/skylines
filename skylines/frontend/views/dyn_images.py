@@ -19,10 +19,11 @@ from skylines.lib.geo import zoom_bounding_box
 dyn_images_blueprint = Blueprint('dyn_images', 'skylines')
 
 
-@dyn_images_blueprint.route('/overview/<string:type>/<value>/map.png')
-def overview(type=None, value=None):
+@dyn_images_blueprint.route('/overview/<string:type>/<string:country_code>/<value>/map.png')
+@dyn_images_blueprint.route('/overview/<string:type>/<string:country_code>/map.png')
+def overview(type, country_code, value=None):
     if type == 'all' or type == None:
-        extent = _guess_extent()
+        extent = _guess_extent(country_code)
         f = None
 
     elif type == 'date':
@@ -36,7 +37,7 @@ def overview(type=None, value=None):
         except:
             abort(404)
 
-        extent = _guess_extent()
+        extent = _guess_extent(country_code)
         f = Flight.date_local == date
 
     elif type == 'pilot':
@@ -118,14 +119,9 @@ def _query_to_sql(query):
     return (statement.string.encode(enc) % params).decode(enc)
 
 
-def _guess_extent():
-    import GeoIP
-
+def _guess_extent(country_code):
     # maximum and default extent of epsg3857
     extent = [-180, -85.05112878, 180, 85.05112878]
-
-    geoip = GeoIP.open(current_app.config.get('GEOIP_DATABASE'), GeoIP.GEOIP_STANDARD)
-    country_code = geoip.country_code_by_addr(request.remote_addr)
 
     if not country_code:
         return extent
