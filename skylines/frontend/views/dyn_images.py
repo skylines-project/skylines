@@ -6,6 +6,8 @@ import re
 import math
 from sqlalchemy import func
 from sqlalchemy.sql.expression import or_
+from sqlalchemy.orm import joinedload, contains_eager
+from sqlalchemy.orm.util import aliased
 
 try:
     import mapscript
@@ -88,8 +90,20 @@ def overview(type, country_code, value=None):
         extent = None
         f = Flight.id.in_(ids)
 
-    q = db.session.query(Flight.locations.label('flight_geometry'),
-                         Flight.locations.label('flight_id')) \
+    pilot_alias = aliased(User, name='pilot')
+
+    q = db.session.query(Flight,
+                         Flight.locations.label('flight_geometry'),
+                         Flight.id.label('flight_id')) \
+        .join(Flight.igc_file) \
+        .options(contains_eager(Flight.igc_file)) \
+        .outerjoin(pilot_alias, Flight.pilot) \
+        .options(contains_eager(Flight.pilot, alias=pilot_alias)) \
+        .options(joinedload(Flight.co_pilot)) \
+        .outerjoin(Flight.club) \
+        .options(contains_eager(Flight.club)) \
+        .outerjoin(Flight.takeoff_airport) \
+        .options(contains_eager(Flight.takeoff_airport)) \
         .filter(Flight.is_listable(g.current_user))
 
     if f is not None:
