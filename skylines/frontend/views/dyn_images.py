@@ -111,7 +111,25 @@ def overview(type, country_code, value=None):
     if f is not None:
         q = q.filter(f)
 
-    return _create_overview(query=q, extent=extent)
+    modified = q.order_by(Flight.time_modified.desc()).first()
+
+    if modified:
+        last_modified = modified.Flight.time_modified
+    else:
+        last_modified = None
+
+    cache_key = 'overview_image_' + type + \
+                '_' + country_code + \
+                '_' + str(value) + \
+                '_' + str(last_modified)
+
+    overview_image = current_app.cache.get(cache_key)
+
+    if not overview_image:
+        overview_image = _create_overview(query=q, extent=extent)
+        current_app.cache.set(cache_key, overview_image, timeout=3600 * 24)
+
+    return overview_image
 
 
 def _query_to_sql(query):
