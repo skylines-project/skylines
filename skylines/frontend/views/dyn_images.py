@@ -3,6 +3,7 @@ from flask import Blueprint, make_response, abort, request, g, redirect, current
 from datetime import datetime
 import pyproj
 import re
+import math
 from sqlalchemy import func
 from sqlalchemy.sql.expression import or_
 
@@ -163,6 +164,19 @@ def _create_overview(query, extent):
             extent_epsg4326[3] = float(m.group(4))
 
         extent_epsg4326 = zoom_bounding_box(extent_epsg4326, 1.05)
+
+    # limit extent to EPSG3857 maximum extent
+    if abs(extent_epsg4326[0]) > 180:
+        extent_epsg4326[0] = math.copysign(180, extent_epsg4326[0])
+
+    if abs(extent_epsg4326[1]) > 85.05112878:
+        extent_epsg4326[1] = math.copysign(85.05112878, extent_epsg4326[1])
+
+    if abs(extent_epsg4326[2]) > 180:
+        extent_epsg4326[2] = math.copysign(180, extent_epsg4326[2])
+
+    if abs(extent_epsg4326[3]) > 85.05112878:
+        extent_epsg4326[3] = math.copysign(85.05112878, extent_epsg4326[3])
 
     # convert extent from EPSG4326 to EPSG3857
     epsg4326 = pyproj.Proj(init='epsg:4326')
