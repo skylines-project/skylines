@@ -34,9 +34,11 @@ def overview(type, country_code, value=None):
             if isinstance(value, (str, unicode)):
                 date = datetime.strptime(value, "%Y-%m-%d")
 
-            if isinstance(value, datetime):
+            elif isinstance(value, datetime):
                 date = value.date()
 
+            else:
+                abort(404)
         except:
             abort(404)
 
