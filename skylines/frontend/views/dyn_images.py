@@ -4,6 +4,7 @@ from datetime import datetime
 import pyproj
 import re
 import math
+import os
 from sqlalchemy import func
 from sqlalchemy.sql.expression import or_
 from sqlalchemy.orm import joinedload, contains_eager
@@ -222,7 +223,10 @@ def _create_overview(query, extent):
     extent_epsg3857 = [x1, y1, x2, y2]
 
     # load basemap and set size + extent
-    map_object = mapscript.mapObj('mapserver/flight_overview.map')
+    map_object = mapscript.mapObj(
+        os.path.join(current_app.config.get('SKYLINES_MAPSERVER_BASEDIR', 'mapserver'),
+                     'flight_overview.map'))
+
     map_object.setSize(400, 500)
     map_object.setExtent(extent_epsg3857[0], extent_epsg3857[1], extent_epsg3857[2], extent_epsg3857[3])
 

@@ -56,6 +56,7 @@ SKYLINES_LISTS_DISPLAY_LENGTH = 50
 SKYLINES_LISTS_SERVER_SIDE = 250
 
 SKYLINES_MAP_TILE_URL = 'https://www.skylines-project.org/mapproxy'
+SKYLINES_MAPSERVER_BASEDIR = 'mapserver'
 
 BROKER_URL = 'redis://localhost:6379/0'
 CELERY_RESULT_BACKEND = 'redis://localhost:6379/0'
