@@ -47,7 +47,7 @@
                  {{ h.json.dumps(h.get_setting_name('altitude_unit')) }});
 
     initOpenLayers("map_canvas",
-                   "{{ config.get('SKYLINES_MAP_TILE_URL', '') }}",
+                   "{{ config.get('SKYLINES_MAP_TILE_URL') }}",
                    { {% if 'baselayer' in request.args %}'base_layer': '{{ request.args['baselayer'] }}',{% endif %}{% if 'overlays' in request.args %}'overlay_layers': '{{ request.args['overlays'] }}',{% endif %} });
     initFlightLayer();
     initBaro($("#barogram"));

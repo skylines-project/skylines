@@ -196,14 +196,6 @@ def create_combined_app(*args, **kw):
         '/api': api,
     }
 
-    if frontend.config.get('SKYLINES_MAPPROXY'):
-        from mapproxy.wsgiapp import make_wsgi_app as create_mapproxy_app
-
-        mapproxy = create_mapproxy_app(
-            frontend.config.get('SKYLINES_MAPPROXY'))
-
-        mounts['/mapproxy'] = mapproxy
-
     frontend.wsgi_app = DispatcherMiddleware(frontend.wsgi_app, mounts)
     return frontend
 
