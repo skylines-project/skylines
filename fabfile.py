@@ -42,6 +42,7 @@ def restart():
         restart_service('mapserver-fastcgi')
         restart_service('skylines-daemon')
         restart_service('celery-daemon')
+        restart_service('mapproxy-uwsgi')
 
 
 @task
