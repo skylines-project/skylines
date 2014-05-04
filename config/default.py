@@ -55,7 +55,7 @@ SKYLINES_LISTS_DISPLAY_LENGTH = 50
 # this shall not be smaller than the display_lenght setting
 SKYLINES_LISTS_SERVER_SIDE = 250
 
-SKYLINES_MAP_TILE_URL = 'https://www.skylines-project.org'
+SKYLINES_MAP_TILE_URL = 'https://www.skylines-project.org/mapproxy'
 
 BROKER_URL = 'redis://localhost:6379/0'
 CELERY_RESULT_BACKEND = 'redis://localhost:6379/0'
