@@ -42,5 +42,24 @@
       </tbody>
     </table>
   </div>
+
+  <div class="col-sm-6 col-md-6">
+
+{% if tab == 'date' or tab == 'latest' -%}
+{% set image_url = url_for('dyn_images.overview', type='date', value=date) %}
+{%- elif tab == 'pilot' %}
+{% set image_url = url_for('dyn_images.overview', type='pilot', value=pilot.id) %}
+{%- elif tab == 'airport' %}
+{% set image_url = url_for('dyn_images.overview', type='airport', value=airport.id) %}
+{%- elif tab == 'club' %}
+{% set image_url = url_for('dyn_images.overview', type='club', value=club.id) %}
+{%- elif tab == 'pinned' %}
+{% set image_url = url_for('dyn_images.overview', type='pinned', value=0) %}
+{%- elif tab == 'all' %}
+{% set image_url = url_for('dyn_images.overview', type='all', value=0) %}
+{%- endif %}
+
+    <img src="{{ image_url }}" width="400" height="500" />
+  </div>
 </div>
 {%- endmacro %}
