@@ -55,10 +55,6 @@ SKYLINES_LISTS_DISPLAY_LENGTH = 50
 # this shall not be smaller than the display_lenght setting
 SKYLINES_LISTS_SERVER_SIDE = 250
 
-# mapproxy config file; if commented,
-# SKYLINES_MAP_TILE_URL is used instead
-#SKYLINES_MAPPROXY = os.path.join(base, 'mapserver', 'mapproxy', 'mapproxy.yaml')
-
 SKYLINES_MAP_TILE_URL = 'https://www.skylines-project.org'
 
 BROKER_URL = 'redis://localhost:6379/0'
