@@ -32,7 +32,8 @@ class TrackingFix(db.Model):
     engine_noise_level = db.Column(SmallInteger)
 
     pilot_id = db.Column(
-        Integer, db.ForeignKey('users.id', ondelete='CASCADE'), nullable=False)
+        Integer, db.ForeignKey('users.id', ondelete='CASCADE'), nullable=False,
+        index=True)
     pilot = db.relationship('User', innerjoin=True)
 
     ip = db.Column(INET)
