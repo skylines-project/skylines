@@ -47,7 +47,7 @@ def flight_path(igc_file, max_points=1000, add_elevation=False):
 
     output = run_flight_path(path, max_points=max_points)
 
-    if add_elevation:
+    if add_elevation and len(output):
         output = get_elevation(output)
 
     return map(lambda line: FlightPathFix(*line), output)
