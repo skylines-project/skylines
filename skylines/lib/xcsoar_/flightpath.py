@@ -1,5 +1,5 @@
 from collections import namedtuple
-from sqlalchemy.sql.expression import and_, literal_column
+from sqlalchemy.sql.expression import literal_column
 from shapely.geometry import MultiPoint
 from geoalchemy2.shape import from_shape
 
@@ -61,27 +61,41 @@ def get_elevation(fixes):
     locations = from_shape(points, srid=4326).ST_DumpPoints()
     locations_id = extract_array_item(locations.path, 1)
 
-    subq = db.session.query(locations_id.label('location_id'),
-                            locations.geom.label('location')).subquery()
+    cte = db.session.query(locations_id.label('location_id'),
+                           locations.geom.label('location')).cte()
 
-    elevation = Elevation.rast.ST_Value(subq.c.location)
+    elevation = Elevation.rast.ST_Value(cte.c.location)
 
     # Prepare main query
     q = db.session.query(literal_column('location_id'), elevation.label('elevation')) \
-                  .filter(and_(subq.c.location.ST_Intersects(Elevation.rast),
-                               elevation != None)).all()
+                  .filter(cte.c.location.ST_Intersects(Elevation.rast)).all()
 
     fixes_copy = [list(fix) for fix in fixes]
 
-    for i in xrange(1, len(q)):
-        prev = q[i - 1].location_id - 1
-        current = q[i].location_id - 1
+    # No elevations found at all...
+    if not len(q):
+        return fixes_copy
 
-        for j in range(prev * shortener, current * shortener):
-            elev = q[i - 1].elevation + (q[i].elevation - q[i - 1].elevation) * (j - prev * shortener)
+    start_idx = 0
+    while start_idx < len(q) - 1 and q[start_idx].elevation is None:
+        start_idx += 1
+
+    prev = q[start_idx]
+    current = None
+
+    for i in xrange(start_idx + 1, len(q)):
+        if q[i].elevation is None:
+            continue
+
+        current = q[i]
+
+        for j in range((prev.location_id - 1) * shortener, (current.location_id - 1) * shortener):
+            elev = prev.elevation + (current.elevation - prev.elevation) * (j - (prev.location_id - 1) * shortener)
             fixes_copy[j][11] = elev
 
-    if len(q):
+        prev = current
+
+    if len(q) and q[-1].elevation:
         fixes_copy[-1][11] = q[-1].elevation
 
     return fixes_copy

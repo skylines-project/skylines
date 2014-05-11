@@ -507,21 +507,20 @@ def get_elevations_for_flight(flight):
     location_id = extract_array_item(locations.path, 1)
     location = locations.geom
 
-    # Prepare subquery
-    subq = db.session.query(location_id.label('location_id'),
-                            location.label('location')) \
-                     .filter(Flight.id == flight.id).subquery()
+    # Prepare cte
+    cte = db.session.query(location_id.label('location_id'),
+                           location.label('location'),
+                           Flight.timestamps.label('timestamps')) \
+                    .filter(Flight.id == flight.id).cte()
 
     # Prepare column expressions
     timestamp = literal_column('timestamps[location_id]')
-    elevation = Elevation.rast.ST_Value(subq.c.location)
+    elevation = Elevation.rast.ST_Value(cte.c.location)
 
     # Prepare main query
     q = db.session.query(timestamp.label('timestamp'),
                          elevation.label('elevation')) \
-                  .filter(and_(Flight.id == flight.id,
-                               subq.c.location.ST_Intersects(Elevation.rast),
-                               elevation != None)).all()
+                  .filter(cte.c.location.ST_Intersects(Elevation.rast)).all()
 
     if len(q) == 0:
         return []
@@ -532,6 +531,9 @@ def get_elevations_for_flight(flight):
 
     elevations = []
     for time, elevation in q:
+        if elevation is None:
+            continue
+
         time_delta = time - start_midnight
         time = time_delta.days * 86400 + time_delta.seconds
 
