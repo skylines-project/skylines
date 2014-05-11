@@ -1,5 +1,6 @@
 from flask import Blueprint, render_template, abort, request, url_for, redirect, g
 from sqlalchemy.orm import subqueryload, contains_eager
+from sqlalchemy.sql.expression import or_
 
 from skylines.lib.util import str_to_bool
 from skylines.model import db
@@ -41,7 +42,7 @@ def index():
         .options(subqueryload('event.actor')) \
         .outerjoin(Event.flight) \
         .options(contains_eager('event.flight')) \
-        .filter(Flight.is_rankable()) \
+        .filter(or_(Event.flight == None, Flight.is_rankable())) \
         .order_by(Event.time.desc())
 
     query = _filter_query(query, request.args)
