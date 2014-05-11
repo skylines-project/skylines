@@ -388,7 +388,8 @@ class FlightPathChunks(db.Model):
     end_time = db.Column(DateTime, nullable=False, index=True)
 
     flight_id = db.Column(
-        Integer, db.ForeignKey('flights.id', ondelete='CASCADE'), nullable=False)
+        Integer, db.ForeignKey('flights.id', ondelete='CASCADE'), nullable=False,
+        index=True)
     flight = db.relationship('Flight')
 
     @staticmethod
