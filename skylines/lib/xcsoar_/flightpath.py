@@ -1,10 +1,9 @@
 from collections import namedtuple
-from sqlalchemy.sql.expression import literal_column
+from sqlalchemy.sql.expression import and_, literal_column
 from shapely.geometry import MultiPoint
 from geoalchemy2.shape import from_shape
 
 from skylines.lib import files
-from skylines.lib.sql import extract_array_item
 from skylines.model import db, Elevation, IGCFile
 from xcsoar import Flight
 
@@ -58,17 +57,20 @@ def get_elevation(fixes):
 
     coordinates = [(fix[2]['longitude'], fix[2]['latitude']) for fix in fixes]
     points = MultiPoint(coordinates[::shortener])
-    locations = from_shape(points, srid=4326).ST_DumpPoints()
-    locations_id = extract_array_item(locations.path, 1)
 
-    cte = db.session.query(locations_id.label('location_id'),
-                           locations.geom.label('location')).cte()
+    locations = from_shape(points, srid=4326)
+    location = locations.ST_DumpPoints()
 
-    elevation = Elevation.rast.ST_Value(cte.c.location)
+    cte = db.session.query(location.label('location'),
+                           locations.ST_Envelope().label('locations')).cte()
+
+    location_id = literal_column('(location).path[1]')
+    elevation = Elevation.rast.ST_Value(cte.c.location.geom)
 
     # Prepare main query
-    q = db.session.query(literal_column('location_id'), elevation.label('elevation')) \
-                  .filter(cte.c.location.ST_Intersects(Elevation.rast)).all()
+    q = db.session.query(location_id.label('location_id'), elevation.label('elevation')) \
+                  .filter(and_(cte.c.locations.intersects(Elevation.rast),
+                               cte.c.location.geom.intersects(Elevation.rast))).all()
 
     fixes_copy = [list(fix) for fix in fixes]
 

@@ -17,7 +17,6 @@ from geoalchemy2.functions import GenericFunction
 from shapely.geometry import LineString
 
 from skylines.model import db
-from skylines.lib.sql import extract_array_item
 
 from .geo import Location
 from .igcfile import IGCFile
@@ -502,25 +501,37 @@ def get_elevations_for_flight(flight):
     if cached_elevations:
         return cached_elevations
 
+    '''
+    WITH src AS
+        (SELECT ST_DumpPoints(flights.locations) AS location,
+                flights.timestamps AS timestamps,
+                flights.locations AS locations
+        FROM flights
+        WHERE flights.id = 30000)
+    SELECT timestamps[(src.location).path[1]] AS timestamp,
+           ST_Value(elevations.rast, (src.location).geom) AS elevation
+    FROM elevations, src
+    WHERE src.locations && elevations.rast AND (src.location).geom && elevations.rast;
+    '''
+
     # Prepare column expressions
-    locations = Flight.locations.ST_DumpPoints()
-    location_id = extract_array_item(locations.path, 1)
-    location = locations.geom
+    location = Flight.locations.ST_DumpPoints()
 
     # Prepare cte
-    cte = db.session.query(location_id.label('location_id'),
-                           location.label('location'),
+    cte = db.session.query(location.label('location'),
+                           Flight.locations.label('locations'),
                            Flight.timestamps.label('timestamps')) \
                     .filter(Flight.id == flight.id).cte()
 
     # Prepare column expressions
-    timestamp = literal_column('timestamps[location_id]')
-    elevation = Elevation.rast.ST_Value(cte.c.location)
+    timestamp = literal_column('timestamps[(location).path[1]]')
+    elevation = Elevation.rast.ST_Value(cte.c.location.geom)
 
     # Prepare main query
     q = db.session.query(timestamp.label('timestamp'),
                          elevation.label('elevation')) \
-                  .filter(cte.c.location.ST_Intersects(Elevation.rast)).all()
+                  .filter(and_(cte.c.locations.intersects(Elevation.rast),
+                               cte.c.location.geom.intersects(Elevation.rast))).all()
 
     if len(q) == 0:
         return []
