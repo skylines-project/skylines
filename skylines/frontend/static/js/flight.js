@@ -689,9 +689,9 @@ function getFixData(flight, time) {
   var lon_prev = loc_prev[1], lat_prev = loc_prev[0];
   var lon_next = loc_next[1], lat_next = loc_next[0];
 
-  var _loc_prev = new OpenLayers.Geometry.Point(lon_prev, lat_prev);
+  var _loc_prev = new OpenLayers.LonLat(lon_prev, lat_prev);
   _loc_prev.transform(WGS84_PROJ, map.getProjectionObject());
-  var _loc_next = new OpenLayers.Geometry.Point(lon_next, lat_next);
+  var _loc_next = new OpenLayers.LonLat(lon_next, lat_next);
   _loc_next.transform(WGS84_PROJ, map.getProjectionObject());
 
   fix_data['lon'] = lon_prev + (lon_next - lon_prev) * dt_rel;
@@ -701,8 +701,9 @@ function getFixData(flight, time) {
       fix_data['lon'], fix_data['lat']);
   fix_data['loc'].transform(WGS84_PROJ, map.getProjectionObject());
 
-  fix_data['heading'] = Math.atan2(_loc_next.x - _loc_prev.x,
-                                   _loc_next.y - _loc_prev.y) * 180 / Math.PI;
+  fix_data['heading'] = Math.atan2(_loc_next.lon - _loc_prev.lon,
+                                   _loc_next.lat - _loc_prev.lat) *
+                        180 / Math.PI;
 
   if (dt_total != 0)
     fix_data['speed'] = OpenLayers.Util.distVincenty(
