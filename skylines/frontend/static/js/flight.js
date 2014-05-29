@@ -761,8 +761,6 @@ function setPlaneOnMap(flight, fix_data) {
         new OpenLayers.LonLat(fix_data['loc'].x, fix_data['loc'].y));
     plane.marker.css('left', (pixel.x - plane.marker.outerWidth() / 2) + 'px');
     plane.marker.css('top', (pixel.y - 40) + 'px');
-
-    plane.marker.show();
   }
 }
 
@@ -773,8 +771,10 @@ function hidePlaneOnMap(flight) {
 
   layer.removeFeatures(plane);
 
-  if (plane && plane.marker)
-    plane.marker.hide();
+  if (plane && plane.marker) {
+    plane.marker.remove();
+    plane.marker = null;
+  }
 }
 
 function hideAllPlanesOnMap() {
@@ -784,8 +784,11 @@ function hideAllPlanesOnMap() {
     var plane = flight.plane;
 
     layer.removeFeatures(plane);
-    if (plane && plane.marker)
-      plane.marker.hide();
+
+    if (plane && plane.marker) {
+      plane.marker.remove();
+      plane.marker = null;
+    }
   });
 }
 
