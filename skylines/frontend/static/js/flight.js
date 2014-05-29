@@ -621,13 +621,13 @@ function updateBaroData() {
 function setTime(time) {
   global_time = time;
 
-  // remove plane icons from map
-  hideAllPlanesOnMap();
-
   // if the mouse is not hovering over the barogram or any trail on the map
   if (!time) {
     // remove crosshair from barogram
     baro.clearTime();
+
+    // remove plane icons from map
+    hideAllPlanesOnMap();
 
     // remove data from fix-data table
     fix_table.clearAllFixes();
@@ -697,7 +697,7 @@ function getFixData(flight, time) {
   fix_data['lon'] = lon_prev + (lon_next - lon_prev) * dt_rel;
   fix_data['lat'] = lat_prev + (lat_next - lat_prev) * dt_rel;
 
-  fix_data['loc'] = new OpenLayers.Geometry.Point(
+  fix_data['loc'] = new OpenLayers.LonLat(
       fix_data['lon'], fix_data['lat']);
   fix_data['loc'].transform(WGS84_PROJ, map.getProjectionObject());
 
@@ -736,14 +736,17 @@ function setPlaneOnMap(flight, fix_data) {
   var plane = flight.plane;
 
   // set plane location
-  plane.geometry = fix_data['loc'];
+  var old_lon = plane.geometry.x;
+  var old_lat = plane.geometry.y;
+  plane.geometry.move(fix_data['loc'].lon - old_lon,
+                      fix_data['loc'].lat - old_lat);
 
   // set plane heading
   // <heading> in degrees
   plane.attributes.rotation = fix_data['heading'];
 
-  // add plane to map
-  map.getLayersByName('Flight')[0].addFeatures(plane);
+  // update plane icon
+  map.getLayersByName('Flight')[0].drawFeature(plane);
 
   // add plane marker if more than one flight on the map
   if (flights.length() > 1) {
@@ -757,8 +760,7 @@ function setPlaneOnMap(flight, fix_data) {
       $(map.getLayersByName('Flight')[0].div).append(plane.marker);
     }
 
-    var pixel = map.getPixelFromLonLat(
-        new OpenLayers.LonLat(fix_data['loc'].x, fix_data['loc'].y));
+    var pixel = map.getPixelFromLonLat(fix_data['loc']);
     plane.marker.css('left', (pixel.x - plane.marker.outerWidth() / 2) + 'px');
     plane.marker.css('top', (pixel.y - 40) + 'px');
   }
