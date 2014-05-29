@@ -257,7 +257,7 @@ function addFlight(sfid, _lonlat, _levels, _num_levels, _time, _height, _enl,
     sfid: sfid
   });
 
-  var plane = new OpenLayers.Feature.Vector(points[0], {
+  var plane = new OpenLayers.Feature.Vector(points[0].clone(), {
     rotation: 0,
     sfid: sfid
   });
