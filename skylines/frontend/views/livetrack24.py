@@ -3,7 +3,7 @@ from datetime import datetime
 from flask import Blueprint, request
 from werkzeug.exceptions import BadRequest, NotFound, NotImplemented
 
-from skylines.model import db, User, TrackingFix, TrackingSession
+from skylines.model import db, User, TrackingFix, TrackingSession, Elevation
 
 lt24_blueprint = Blueprint('lt24', 'skylines')
 
@@ -89,6 +89,8 @@ def _parse_fix(pilot_id):
 
         if not 0 <= fix.track < 360:
             raise BadRequest('`cog` (course over ground) has to be a valid angle between 0 and 360 degrees.')
+
+    fix.elevation = Elevation.get(fix.location_wkt)
 
     return fix
 
