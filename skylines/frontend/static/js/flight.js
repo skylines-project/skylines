@@ -257,10 +257,11 @@ function addFlight(sfid, _lonlat, _levels, _num_levels, _time, _height, _enl,
     sfid: sfid
   });
 
-  var plane = new OpenLayers.Feature.Vector(points[0].clone(), {
-    rotation: 0,
-    sfid: sfid
-  });
+  var plane = new OpenLayers.Feature.Vector(
+      new OpenLayers.Geometry.Point(points[0].x, points[0].y), {
+        rotation: 0,
+        sfid: sfid
+      });
   plane.renderIntent = 'plane';
 
   map.getLayersByName('Flight')[0].addFeatures([feature, plane]);
