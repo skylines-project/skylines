@@ -610,7 +610,7 @@ msgstr "E"
 
 #: skylines/frontend/templates/flights/phases-table.jinja:55
 msgid "Glides"
-msgstr "Gleiflüge"
+msgstr "Gleitflüge"
 
 #: skylines/frontend/templates/flights/phases-table.jinja:69
 msgid "Phase"
@@ -652,11 +652,11 @@ msgstr "Kommentar hinzufügen"
 
 #: skylines/frontend/templates/flights/view.jinja:227
 msgid "Circling performance"
-msgstr "Kreisflug Performance"
+msgstr "Kreisflugleistung"
 
 #: skylines/frontend/templates/flights/view.jinja:230
 msgid "Cruise performance"
-msgstr "Vorflug Leistung"
+msgstr "Vorflugleistung"
 
 #: skylines/frontend/templates/flights/view.jinja:235
 msgid "Detailed statistics"
