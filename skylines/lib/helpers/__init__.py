@@ -18,6 +18,7 @@ from skylines.lib.formatter.numbers import *
 from skylines.lib.formatter.datetime import *
 from skylines.lib.formatter.units import *
 from skylines.lib.markdown_ import markdown
+from skylines.lib.datetime import to_seconds_of_day
 from skylines.frontend.views.upload import UploadStatus
 
 from pygments import highlight
