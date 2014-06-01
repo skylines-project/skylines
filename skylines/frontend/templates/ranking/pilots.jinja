@@ -6,11 +6,17 @@
 {% block ranking -%}
 <table class="table table-striped">
   <thead>
-    <th class="numeric sorting">{{ sorter('sorter', '#', 'rank', dict(year=year)) }}</th>
+    <th class="numeric sorting">
+      {{ sorter('sorter', '#', 'rank', dict(year=year, **g.paginators['result'].args())) }}
+    </th>
     <th>{% trans %}Name{% endtrans %}</th>
     <th class="hidden-xs">{% trans %}Club{% endtrans %}</th>
-    <th class="numeric sorting">{{ sorter('sorter', _('Flights'), 'count', dict(year=year)) }}</th>
-    <th class="numeric sorting">{{ sorter('sorter', _('Total Score'), 'total', dict(year=year)) }}</th>
+    <th class="numeric sorting">
+      {{ sorter('sorter', _('Flights'), 'count', dict(year=year, **g.paginators['result'].args())) }}
+    </th>
+    <th class="numeric sorting">
+      {{ sorter('sorter', _('Total Score'), 'total', dict(year=year, **g.paginators['result'].args())) }}
+    </th>
   </thead>
   <tbody>
     {% for pilot, count, total, rank in result -%}

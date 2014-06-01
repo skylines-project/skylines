@@ -34,6 +34,9 @@ class Pager:
         offset = (pager.page - 1) * items_per_page
         return query.limit(items_per_page).offset(offset)
 
+    def args(self):
+        return dict(page=self.page)
+
 
 class Sorter:
     def __init__(self, column, order, valid_columns):
