@@ -1,6 +1,7 @@
 from datetime import datetime
 from tempfile import TemporaryFile
 from zipfile import ZipFile
+from enum import Enum
 
 from flask import Blueprint, render_template, request, flash, redirect, g, current_app
 from flask.ext.babel import _, lazy_gettext as l_
@@ -16,6 +17,14 @@ from skylines.model.event import create_flight_notifications
 from skylines.worker import tasks
 
 upload_blueprint = Blueprint('upload', 'skylines')
+
+
+class UploadStatus(Enum):
+    SUCCESS = 0
+    DUPLICATE = 1  # _('Duplicate file')
+    MISSING_DATE = 2  # _('Date missing in IGC file')
+    PARSER_ERROR = 3  # _('Failed to parse file')
+    NO_FLIGHT = 4  # _('No flight found in file')
 
 
 def IterateFiles(name, f):
@@ -92,7 +101,7 @@ def index_post(form):
             other = Flight.by_md5(md5)
             if other:
                 files.delete_file(filename)
-                flights.append((name, other, _('Duplicate file')))
+                flights.append((name, other, UploadStatus.DUPLICATE))
                 continue
 
         igc_file = IGCFile()
@@ -103,7 +112,7 @@ def index_post(form):
 
         if igc_file.date_utc is None:
             files.delete_file(filename)
-            flights.append((name, None, _('Date missing in IGC file')))
+            flights.append((name, None, UploadStatus.MISSING_DATE))
             continue
 
         flight = Flight()
@@ -123,20 +132,20 @@ def index_post(form):
 
         if not analyse_flight(flight):
             files.delete_file(filename)
-            flights.append((name, None, _('Failed to parse file')))
+            flights.append((name, None, UploadStatus.PARSER_ERROR))
             continue
 
         if not flight.takeoff_time or not flight.landing_time:
             files.delete_file(filename)
-            flights.append((name, None, _('No flight found in file')))
+            flights.append((name, None, UploadStatus.NO_FLIGHT))
             continue
 
         if not flight.update_flight_path():
             files.delete_file(filename)
-            flights.append((name, None, _('No flight found in file')))
+            flights.append((name, None, UploadStatus.NO_FLIGHT))
             continue
 
-        flights.append((name, flight, None))
+        flights.append((name, flight, UploadStatus.SUCCESS))
         db.session.add(igc_file)
         db.session.add(flight)
 
