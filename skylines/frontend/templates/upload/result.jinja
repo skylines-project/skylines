@@ -49,15 +49,18 @@
   {%- else %}
   <p>{% trans %}No flight was saved.{% endtrans %}</p>
   {%- endif %}
+
+  {% if flights|length == 1 -%}
+  <div class="col-sm-12">
+    {% for name, flight, status, prefix, trace, form in flights -%}
+    {{ render_flight_details(name, flight, status, prefix, trace, form) }}
+    {%- endfor %}
+  </div>
+  {%- else %}
   <div class="col-sm-3">
     <ul class="nav nav-tabs tabs-left">
       {% for name, flight, status, prefix, trace, form in flights -%}
       <li {% if loop.first -%} class="active" {%- endif %}>
-        <input type="hidden" name="{{ prefix }}-status" value="{{ status.value }}" />
-        <input type="hidden" name="{{ prefix }}-name" value="{{ name }}" />
-        {% if flight %}
-        <input type="hidden" id="{{ prefix }}-sfid" name="{{ prefix }}-sfid" value="{{ flight.id }}" />
-        {% endif %}
         <a href="#upload-tab-{{ prefix }}" data-toggle="tab">
         {% if status == h.UploadStatus.SUCCESS -%}
         <i class="icon-ok text-success"></i>
@@ -83,6 +86,7 @@
   </div>
 
   <div class="clearfix"></div>
+  {%- endif %}
 
   {% if success -%}
   <p class="hidden-xs"><input type="submit" id="submit" value="{{ _('Publish Flight(s)') }}" class="btn btn-primary"/></p>
