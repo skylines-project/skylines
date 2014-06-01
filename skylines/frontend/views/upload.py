@@ -3,11 +3,12 @@ from tempfile import TemporaryFile
 from zipfile import ZipFile
 from enum import Enum
 
-from flask import Blueprint, render_template, request, flash, redirect, g, current_app, url_for
+from flask import Blueprint, render_template, request, flash, redirect, g, current_app, url_for, abort
 from flask.ext.babel import _, lazy_gettext as l_
 from redis.exceptions import ConnectionError
+from werkzeug.exceptions import BadRequest
 
-from skylines.frontend.forms import UploadForm, AircraftModelSelectField
+from skylines.frontend.forms import UploadForm, ChangeAircraftForm
 from skylines.lib import files
 from skylines.lib.decorators import login_required
 from skylines.lib.md5 import file_md5
@@ -70,13 +71,53 @@ def IterateUploadFiles(upload):
 @upload_blueprint.route('/', methods=('GET', 'POST'))
 @login_required(l_("You have to login to upload flights."))
 def index():
+    if request.values.get('stage', type=int) == 1:
+        # Parse update form
+        num_flights = request.values.get('num_flights', 0, type=int)
 
-    form = UploadForm(pilot=g.current_user.id)
+        flights = []
+        flight_id_list = []
+        form_error = False
 
-    if form.validate_on_submit():
-        return index_post(form)
+        for prefix in range(1, num_flights + 1):
+            flight_id = request.values.get('{}-sfid'.format(prefix), None, type=int)
+            name = request.values.get('{}-name'.format(prefix))
 
-    return render_template('upload/form.jinja', form=form)
+            try:
+                status = UploadStatus(request.values.get('{}-status'.format(prefix), type=int))
+            except ValueError:
+                raise BadRequest('Status unknown')
+
+            flight, form = check_update_form(prefix, flight_id, name, status)
+
+            flights.append((name, flight, status, str(prefix), form))
+
+            if form and form.validate_on_submit():
+                _update_flight(flight_id,
+                               form.model_id.data,
+                               form.registration.data,
+                               form.competition_id.data)
+                flight_id_list.append(flight_id)
+            elif form:
+                form_error = True
+
+        if form_error:
+            return render_template(
+                'upload/result.jinja', num_flights=num_flights, flights=flights, success=True)
+        elif flight_id_list:
+            flash(_('Your flight(s) have been successfully published.'))
+            return redirect(url_for('flights.list', ids=','.join(str(x) for x in flight_id_list)))
+        else:
+            return redirect(url_for('flights.today'))
+
+    else:
+        # Create/parse file selection form
+        form = UploadForm(pilot=g.current_user.id)
+
+        if form.validate_on_submit():
+            return index_post(form)
+
+        return render_template('upload/form.jinja', form=form)
 
 
 def index_post(form):
@@ -91,7 +132,9 @@ def index_post(form):
     flights = []
     success = False
 
+    prefix = 0
     for name, f in IterateUploadFiles(form.file.raw_data):
+        prefix += 1
         filename = files.sanitise_filename(name)
         filename = files.add_file(filename, f)
 
@@ -101,7 +144,7 @@ def index_post(form):
             other = Flight.by_md5(md5)
             if other:
                 files.delete_file(filename)
-                flights.append((name, other, UploadStatus.DUPLICATE))
+                flights.append((name, other, UploadStatus.DUPLICATE, str(prefix), None))
                 continue
 
         igc_file = IGCFile()
@@ -112,7 +155,7 @@ def index_post(form):
 
         if igc_file.date_utc is None:
             files.delete_file(filename)
-            flights.append((name, None, UploadStatus.MISSING_DATE))
+            flights.append((name, None, UploadStatus.MISSING_DATE, str(prefix), None))
             continue
 
         flight = Flight()
@@ -132,20 +175,21 @@ def index_post(form):
 
         if not analyse_flight(flight):
             files.delete_file(filename)
-            flights.append((name, None, UploadStatus.PARSER_ERROR))
+            flights.append((name, None, UploadStatus.PARSER_ERROR, str(prefix), None))
             continue
 
         if not flight.takeoff_time or not flight.landing_time:
             files.delete_file(filename)
-            flights.append((name, None, UploadStatus.NO_FLIGHT))
+            flights.append((name, None, UploadStatus.NO_FLIGHT, str(prefix), None))
             continue
 
         if not flight.update_flight_path():
             files.delete_file(filename)
-            flights.append((name, None, UploadStatus.NO_FLIGHT))
+            flights.append((name, None, UploadStatus.NO_FLIGHT, str(prefix), None))
             continue
 
-        flights.append((name, flight, UploadStatus.SUCCESS))
+        flights.append((name, flight, UploadStatus.SUCCESS, str(prefix),
+                        ChangeAircraftForm(formdata=None, prefix=str(prefix), obj=flight)))
         db.session.add(igc_file)
         db.session.add(flight)
 
@@ -166,21 +210,33 @@ def index_post(form):
     except ConnectionError:
         current_app.logger.info('Cannot connect to Redis server')
 
-    def ModelSelectField(*args, **kwargs):
-        return AircraftModelSelectField().bind(None, 'model', *args, **kwargs)()
-
     return render_template(
-        'upload/result.jinja', flights=flights, success=success,
-        ModelSelectField=ModelSelectField)
+        'upload/result.jinja', num_flights=prefix, flights=flights, success=success)
+
+
+def check_update_form(prefix, flight_id, name, status):
+    if not flight_id:
+        return None, None
+
+    # Get flight from database and check if it is writable
+    flight = Flight.get(flight_id)
+
+    if not flight:
+        abort(404)
+
+    if status == UploadStatus.DUPLICATE:
+        return flight, None
+
+    else:
+        if not flight.is_writable(g.current_user):
+            abort(403)
+
+        form = ChangeAircraftForm(prefix=str(prefix), obj=flight)
+
+        return flight, form
 
 
 def _update_flight(flight_id, model_id, registration, competition_id):
-    # Parse flight id
-    try:
-        flight_id = int(flight_id)
-    except ValueError:
-        return False
-
     # Get flight from database and check if it is writable
     flight = Flight.get(flight_id)
 
@@ -188,22 +244,17 @@ def _update_flight(flight_id, model_id, registration, competition_id):
         return False
 
     # Parse model, registration and competition ID
-    try:
-        model_id = int(model_id)
-    except ValueError:
-        model_id = None
-
     if model_id == 0:
         model_id = None
 
     if registration is not None:
         registration = registration.strip()
-        if not 0 < len(registration) < 32:
+        if not 0 < len(registration) <= 32:
             registration = None
 
     if competition_id is not None:
         competition_id = competition_id.strip()
-        if not 0 < len(competition_id) < 5:
+        if not 0 < len(competition_id) <= 5:
             competition_id = None
 
     # Set new values
@@ -215,27 +266,3 @@ def _update_flight(flight_id, model_id, registration, competition_id):
     db.session.commit()
 
     return True
-
-
-@upload_blueprint.route('/update', methods=['GET', 'POST'])
-@login_required(l_("You have to login to upload flights."))
-def update():
-    flight_id_list = request.values.getlist('flight_id')
-    model_list = request.values.getlist('model')
-    registration_list = request.values.getlist('registration')
-    competition_id_list = request.values.getlist('competition_id')
-
-    if (flight_id_list is None
-            or len(flight_id_list) != len(model_list)
-            or len(flight_id_list) != len(registration_list)):
-        flash(_('Sorry, some error happened when updating your flight(s). Please contact a administrator for help.'), 'warning')
-        return redirect('/flights/latest')
-
-    for index, id in enumerate(flight_id_list):
-        _update_flight(id,
-                       model_list[index],
-                       registration_list[index],
-                       competition_id_list[index])
-
-    flash(_('Your flight(s) have been successfully updated.'))
-    return redirect(url_for('flights.list', ids=','.join(flight_id_list)))

@@ -1,10 +1,13 @@
 {% extends "base-page.jinja" %}
+{% from "macros/form.jinja" import render_pure_field %}
 {% set active_page = "upload" %}
 
 {% block title %}{% trans %}Upload Flight{% endtrans %}{% endblock %}
 
 {%- block content %}
-<form action="{{ url_for('upload.update') }}" method="post">
+<form action="{{ url_for('upload.index') }}" method="post">
+  <input type="hidden" name="num_flights" value="{{ num_flights }}" />
+  <input type="hidden" name="stage" value="1" />
   {% if success -%}
   <p class="visible-xs">
     {% trans %}Your flights have been saved.{% endtrans %}<br />
@@ -30,23 +33,30 @@
       </tr>
     </thead>
     <tbody>
-      {% for name, flight, status in flights -%}
+      {% for name, flight, status, prefix, form in flights -%}
       <tr>
-        <td>{{ name }}</td>
+        <td>
+          {{ name }}
+          <input type="hidden" name="{{ prefix }}-status" value="{{ status.value }}" />
+          <input type="hidden" name="{{ prefix }}-name" value="{{ name }}" />
+          {% if flight %}
+          <input type="hidden" id="{{ prefix }}-sfid" name="{{ prefix }}-sfid" value="{{ flight.id }}" />
+          {% endif %}
+        </td>
         <td class="hidden-xs">
           {% if status == h.UploadStatus.SUCCESS -%}
-          <input type="hidden" id="flight_id" name="flight_id" value="{{ flight.id }}" />
-          {{ ModelSelectField(default=(flight.model_id or 0)) }}
+          {{ form.hidden_tag() }}
+          {{ render_pure_field(form.model_id) }}
           {%- endif %}
         </td>
         <td class="hidden-xs">
           {% if status == h.UploadStatus.SUCCESS -%}
-          <input type="text" id="registration" name="registration" value="{{ (flight.registration or '')|e }}" class="input-medium"/>
+          {{ render_pure_field(form.registration) }}
           {%- endif %}
         </td>
         <td class="hidden-xs">
           {% if status == h.UploadStatus.SUCCESS -%}
-          <input type="text" id="competition_id" name="competition_id" value="{{ (flight.competition_id or '')|e }}" class="input-medium"/>
+          {{ render_pure_field(form.competition_id) }}
           {%- endif %}
         </td>
         <td>
