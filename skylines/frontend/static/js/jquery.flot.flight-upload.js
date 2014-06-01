@@ -102,9 +102,16 @@ The plugin allso adds the following methods to the plot object:
         document.ondrag = function() { return false; };
       }
 
-      setSelectionPos(selection.first, e);
+      var selected_marker = getMarker(e);
 
-      selection.active = true;
+      if (selected_marker == null)
+        return;
+      else if (selected_marker == 'first')
+        setSelectionPos(selection.first, e);
+      else
+        setSelectionPos(selection.second, e);
+
+      selection.active = selected_marker;
 
       // this is a bit silly, but we have to use a closure to be
       // able to whack the same handler again
@@ -123,7 +130,7 @@ The plugin allso adds the following methods to the plot object:
         document.ondrag = savedhandlers.ondrag;
 
       // no more dragging
-      selection.active = false;
+      selection.active = null;
       updateSelection(e);
 
       triggerSelectedEvent();
@@ -131,8 +138,24 @@ The plugin allso adds the following methods to the plot object:
       return false;
     }
 
-    function getSelection() {
+    function getMarker(e) {
+      var o = plot.getOptions();
+      var offset = plot.getPlaceholder().offset();
+      var plotOffset = plot.getPlotOffset();
+      var pos = clamp(0, e.pageX - offset.left - plotOffset.left, plot.width());
 
+      var dist_to_first = Math.abs(selection.first.x - pos),
+          dist_to_second = Math.abs(selection.second.x - pos);
+
+      if (dist_to_first <= dist_to_second && dist_to_first < 10)
+        return 'first';
+      else if (dist_to_first > dist_to_second && dist_to_second < 10)
+        return 'second';
+      else
+        return null;
+    }
+
+    function getSelection() {
       var r = {}, c1 = selection.first, c2 = selection.second;
       $.each(plot.getAxes(), function(name, axis) {
         if (axis.used) {
@@ -169,7 +192,11 @@ The plugin allso adds the following methods to the plot object:
       if (pos.pageX == null)
         return;
 
-      setSelectionPos(selection.second, pos);
+      if (selection.active == 'first')
+        setSelectionPos(selection.first, pos);
+      else if (selection.active == 'second')
+        setSelectionPos(selection.second, pos);
+
       selection.show = true;
       plot.triggerRedrawOverlay();
     }
