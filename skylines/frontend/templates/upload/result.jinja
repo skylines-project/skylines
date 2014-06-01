@@ -20,6 +20,15 @@
   <script type="text/javascript" src="{{ ASSET_URL }}"></script>
 {%- endassets %}
 
+<script type="text/javascript">
+  $(function() {
+    slUnits.init({{ h.json.dumps(h.get_setting_name('distance_unit')) }},
+                 {{ h.json.dumps(h.get_setting_name('speed_unit')) }},
+                 {{ h.json.dumps(h.get_setting_name('lift_unit')) }},
+                 {{ h.json.dumps(h.get_setting_name('altitude_unit')) }});
+  });
+</script>
+
 {% for name, flight, status, prefix, trace, form in flights -%}
 {{ render_flight_script(name, flight, status, prefix, trace, form) }}
 {%- endfor %}

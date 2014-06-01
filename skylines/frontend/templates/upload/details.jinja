@@ -62,11 +62,6 @@
 {% if trace %}
 <script type="text/javascript">
   $(function() {
-    slUnits.init({{ h.json.dumps(h.get_setting_name('distance_unit')) }},
-                 {{ h.json.dumps(h.get_setting_name('speed_unit')) }},
-                 {{ h.json.dumps(h.get_setting_name('lift_unit')) }},
-                 {{ h.json.dumps(h.get_setting_name('altitude_unit')) }});
-
     initBaro($("#barogram-{{ prefix }}"),
       {{ flight.id }},
       {{ h.json.dumps(trace.barogram_t) }},
