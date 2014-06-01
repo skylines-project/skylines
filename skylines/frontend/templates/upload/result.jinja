@@ -44,10 +44,7 @@
     {% trans %}Your flights have been saved.{% endtrans %}<br />
   </p>
   <p class="hidden-xs">
-    {% trans %}Your flights have been saved. You may want to change the flights aircraft types and registrations below.{% endtrans %}<br />
-  </p>
-  <p class="hidden-xs">
-    <input type="submit" id="submit" value="{{ _('Update Aircraft Types and Registrations') }}" class="btn btn-primary"/>
+    {% trans %}Your flights have been saved. You have to verify their properties and click 'Publish Flight(s)' below to publish your flight(s).{% endtrans %}<br />
   </p>
   {%- else %}
   <p>{% trans %}No flight was saved.{% endtrans %}</p>
@@ -79,9 +76,7 @@
   <div class="clearfix"></div>
 
   {% if success -%}
-  <p class="hidden-xs"><input type="submit" id="submit" value="{{ _('Update Aircraft Types and Registrations') }}" class="btn btn-primary"/></p>
+  <p class="hidden-xs"><input type="submit" id="submit" value="{{ _('Publish Flight(s)') }}" class="btn btn-primary"/></p>
   {%- endif %}
 </form>
-
-<p><a href="{{ url_for('.index') }}" class="btn btn-default">{% trans %}Upload another flight{% endtrans %}</a></p>
 {%- endblock %}

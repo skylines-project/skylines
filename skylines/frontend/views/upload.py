@@ -207,6 +207,8 @@ def index_post(form):
             flights.append((name, None, UploadStatus.NO_FLIGHT, str(prefix), None, None))
             continue
 
+        flight.privacy_level = Flight.PrivacyLevel.PRIVATE
+
         trace = _get_flight_path(flight)
         flights.append((name, flight, UploadStatus.SUCCESS, str(prefix), trace,
                         UploadUpdateForm(formdata=None, prefix=str(prefix), obj=flight)))
@@ -310,6 +312,8 @@ def _update_flight(flight_id, model_id, registration, competition_id,
         flight.landing_time = landing_time
 
         trigger_analysis = True
+
+    flight.privacy_level = Flight.PrivacyLevel.PUBLIC
 
     db.session.commit()
 
