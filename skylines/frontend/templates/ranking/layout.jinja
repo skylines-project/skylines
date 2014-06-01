@@ -1,4 +1,5 @@
 {% from 'macros/pager.jinja' import pager, pager_script with context %}
+{% from 'macros/sorter.jinja' import sorter_script with context %}
 
 
 {% set partial = 'partial' in request.args %}
@@ -62,6 +63,7 @@
 {% block scripts -%}
 {% if not partial %}{{ super() }}{%- endif %}
 {{ pager_script() }}
+{{ sorter_script() }}
 {%- endblock %}
 
 {% block content -%}

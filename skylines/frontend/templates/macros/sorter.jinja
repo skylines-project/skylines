@@ -1,0 +1,32 @@
+{% macro sorter(name, title, column, kw={}) -%}
+{% with sorter=g.sorters[name] -%}
+{% if sorter.column == column %}
+  {% if sorter.order == 'asc' %}
+    <span class="sorting_asc">
+      <a href="{{ h.url('', column=column, order='desc', **kw) }}">{{ title }}</a>
+    </span>
+  {% else %}
+    <span class="sorting_desc">
+      <a href="{{ h.url('', column=column, order='asc', **kw) }}">{{ title }}</a>
+    </span>
+  {% endif %}
+{% else %}
+<span class="sorting_default">
+  <a href="{{ h.url('', column=column, order='asc', **kw) }}">{{ title }}</a>
+</span>
+{% endif %}
+{%- endwith %}
+{%- endmacro %}
+
+
+{% macro sorter_script() -%}
+<script>
+$(function() {
+   $(".sorting a").click(function() {
+     if (this.href.indexOf('#', this.href.length - 1) === -1)
+       $("#partial").load(this.href + (this.href.indexOf('?') != -1 ? "&" : "?") + "partial");
+     return false;
+   });
+});
+</script>
+{%- endmacro %}

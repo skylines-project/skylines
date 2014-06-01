@@ -54,3 +54,23 @@ table.vmiddle td {
 .table tr.selected td, .table tr.selected:hover td {
   background-color: #eee !important;
 }
+
+table thead .sorting a {
+  cursor: pointer;
+  width: 100%;
+  padding-left: 18px;
+  text-decoration: none;
+  color: black;
+}
+
+table thead .sorting .sorting_default {
+  background: url("../images/sort_both.png") no-repeat scroll left center transparent;
+}
+
+table thead .sorting .sorting_asc {
+  background: url("../images/sort_asc.png") no-repeat scroll left center transparent;
+}
+
+table thead .sorting .sorting_desc {
+  background: url("../images/sort_desc.png") no-repeat scroll left center transparent;
+}

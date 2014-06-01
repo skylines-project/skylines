@@ -1,14 +1,15 @@
 {% from "macros/links.jinja" import club_link %}
+{% from 'macros/sorter.jinja' import sorter with context %}
 
 {% extends "ranking/layout.jinja" %}
 
 {% block ranking -%}
 <table class="table table-striped">
   <thead>
-    <th class="numeric">#</th>
+    <th class="numeric sorting">{{ sorter('sorter', '#', 'rank', dict(year=year)) }}</th>
     <th>{% trans %}Name{% endtrans %}</th>
-    <th class="numeric">{% trans %}Flights{% endtrans %}</th>
-    <th class="numeric">{% trans %}Total Score{% endtrans %}</th>
+    <th class="numeric sorting">{{ sorter('sorter', _('Flights'), 'count', dict(year=year)) }}</th>
+    <th class="numeric sorting">{{ sorter('sorter', _('Total Score'), 'total', dict(year=year)) }}</th>
   </thead>
   <tbody>
     {% for club, count, total, rank in result -%}
