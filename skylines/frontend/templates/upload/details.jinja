@@ -108,6 +108,12 @@
       minDate: moment("{{ trace.igc_start_time.strftime("%Y-%m-%d %H:%M:%S") }}", "YYYY-MM-DD HH:mm:ss"),
       maxDate: moment("{{ trace.igc_end_time.strftime("%Y-%m-%d %H:%M:%S") }}", "YYYY-MM-DD HH:mm:ss")
     });
+
+    var flight_date = moment("{{ flight.igc_file.date_utc.strftime("%Y-%m-%d") }}", "YYYY-MM-DD");
+
+    $("#barogram-{{ prefix }}").on('plotselecting', function(e, range, marker) {
+      updateTimePicker({{ prefix }}, flight_date, range);
+    });
   });
 </script>
 {% endif %}
