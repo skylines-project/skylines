@@ -1,60 +1,44 @@
 {% extends "base.jinja" %}
-{% from "macros/form.jinja" import render_pure_field %}
+{% from "macros/form.jinja" import render_field %}
 {% macro render_flight_details(name, flight, status, prefix, trace, form) -%}
-<table width="100%">
-  <tbody>
-    <tr>
-      <td class="hidden-xs">
-        {% if status == h.UploadStatus.SUCCESS -%}
-        {{ form.hidden_tag() }}
-        {{ render_pure_field(form.model_id) }}
-        {%- endif %}
-      </td>
-      <td class="hidden-xs">
-        {% if status == h.UploadStatus.SUCCESS -%}
-        {{ render_pure_field(form.registration) }}
-        {%- endif %}
-      </td>
-      <td class="hidden-xs">
-        {% if status == h.UploadStatus.SUCCESS -%}
-        {{ render_pure_field(form.competition_id) }}
-        {%- endif %}
-      </td>
-      <td>
-        {% if status == h.UploadStatus.SUCCESS -%}
-        <span class="label label-success"><i class="icon-ok"></i> {% trans %}Success{% endtrans %}</span>
-        {% elif status %}
+{% if status == h.UploadStatus.SUCCESS -%}
+{{ form.hidden_tag() }}
+{{ render_field(form.model_id, class='col-sm-4') }}
+{{ render_field(form.registration, class='col-sm-4') }}
+{{ render_field(form.competition_id, class='col-sm-4') }}
 
-          {% if status == h.UploadStatus.DUPLICATE %}
-            {% set status_text = _('Duplicate file') %}
-          {% elif status == h.UploadStatus.MISSING_DATE %}
-            {% set status_text = _('Date missing in IGC file') %}
-          {% elif status == h.UploadStatus.PARSER_ERROR %}
-            {% set status_text = _('Failed to parse file') %}
-          {% elif status == h.UploadStatus.NO_FLIGHT %}
-            {% set status_text = _('No flight found in file') %}
-          {% else %}
-            {% set status_text = _('Unknown') %}
-          {% endif %}
-
-          {% if flight %}
-          <span class="label label-warning"><i class="icon-warning-sign"></i> {{ status_text }}</span>
-          {% else %}
-          <span class="label label-danger"><i class="icon-warning-sign"></i> {{ status_text }}</span>
-          {% endif %}
-        {% endif %}
-      </td>
-      <td>
-        {% if flight -%}
-        <a href="{{ url_for('flight.index', flight_id=flight.id) }}" class="btn btn-default btn-sm">Show</a>
-        {%- endif %}
-      </td>
-    </tr>
-  </tbody>
-</table>
 {% if trace %}
 <div id="barogram-{{ prefix }}" style="width: 100%; height: 120pt;"></div>
 {% endif %}
+
+{%- endif %}
+
+<p>
+  {% trans %}Status:{% endtrans %}
+  {% if status == h.UploadStatus.SUCCESS -%}
+  <span class="label label-success"><i class="icon-ok"></i> {% trans %}Success{% endtrans %}</span>
+  {% elif status %}
+
+    {% if status == h.UploadStatus.DUPLICATE %}
+      {% set status_text = _('Duplicate file') %}
+    {% elif status == h.UploadStatus.MISSING_DATE %}
+      {% set status_text = _('Date missing in IGC file') %}
+    {% elif status == h.UploadStatus.PARSER_ERROR %}
+      {% set status_text = _('Failed to parse file') %}
+    {% elif status == h.UploadStatus.NO_FLIGHT %}
+      {% set status_text = _('No flight found in file') %}
+    {% else %}
+      {% set status_text = _('Unknown') %}
+    {% endif %}
+
+    {% if flight %}
+    <span class="label label-warning"><i class="icon-warning-sign"></i> {{ status_text }}</span>
+    <a href="{{ url_for('flight.index', flight_id=flight.id) }}" class="btn btn-default btn-sm">Show</a>
+    {% else %}
+    <span class="label label-danger"><i class="icon-warning-sign"></i> {{ status_text }}</span>
+    {% endif %}
+  {%- endif %}
+</p>
 {%- endmacro %}
 
 
