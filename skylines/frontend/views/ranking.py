@@ -6,7 +6,7 @@ from sqlalchemy.sql.expression import desc, over
 from sqlalchemy.orm import subqueryload
 
 from skylines.model import db, User, Club, Flight, Airport
-from skylines.lib.paginate import Pager
+from skylines.lib.table_tools import Pager
 
 ranking_blueprint = Blueprint('ranking', 'skylines')
 
