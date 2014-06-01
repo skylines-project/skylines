@@ -93,7 +93,7 @@
 {% if trace %}
 <script type="text/javascript">
   $(function() {
-    initBaro($("#barogram-{{ prefix }}"),
+    var baro = initBaro($("#barogram-{{ prefix }}"),
       {{ flight.id }},
       {{ h.json.dumps(trace.barogram_t) }},
       {{ h.json.dumps(trace.barogram_h) }},
@@ -113,6 +113,24 @@
 
     $("#barogram-{{ prefix }}").on('plotselecting', function(e, range, marker) {
       updateTimePicker({{ prefix }}, flight_date, range);
+    });
+
+    $("[id^={{ prefix }}-][id$=-datetimepicker]").on("dp.change", function(e) {
+      var marker;
+
+      if (e.target.id == "{{ prefix }}-takeoff_time-datetimepicker")
+        marker = "takeoff";
+      else if (e.target.id == "{{ prefix }}-scoring_start_time-datetimepicker")
+        marker = "scoring_start";
+      else if (e.target.id == "{{ prefix }}-scoring_end_time-datetimepicker")
+        marker = "scoring_end";
+      else
+        marker = "landing";
+
+      var time = $(e.target).data("DateTimePicker").getDate().unix() - flight_date.unix();
+      baro.updateFlightTime(time, marker);
+
+      updateTimePicker({{ prefix }}, flight_date, baro.getFlightTime());
     });
   });
 </script>
