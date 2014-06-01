@@ -327,8 +327,14 @@ def run_analyse_flight(flight, full=None, triangle=None, sprint=None):
         analysis_times['takeoff']['location']['latitude'] = flight.takeoff_location.latitude
         analysis_times['takeoff']['location']['longitude'] = flight.takeoff_location.longitude
 
+    if not analysis_times['scoring_start']:
+        analysis_times['scoring_start'] = analysis_times['takeoff'].copy()
+
     if flight.scoring_start_time:
         analysis_times['scoring_start']['time'] = flight.scoring_start_time
+
+    if not analysis_times['scoring_end']:
+        analysis_times['scoring_end'] = analysis_times['landing'].copy()
 
     if flight.scoring_end_time:
         analysis_times['scoring_end']['time'] = flight.scoring_end_time
@@ -340,10 +346,8 @@ def run_analyse_flight(flight, full=None, triangle=None, sprint=None):
 
     if analysis_times:
         analysis = xcsoar_flight.analyse(analysis_times['takeoff']['time'],
-                                         analysis_times['scoring_start']['time']
-                                         if analysis_times['scoring_start'] else None,
-                                         analysis_times['scoring_end']['time']
-                                         if analysis_times['scoring_end'] else None,
+                                         analysis_times['scoring_start']['time'],
+                                         analysis_times['scoring_end']['time'],
                                          analysis_times['landing']['time'],
                                          full=full,
                                          triangle=triangle,
