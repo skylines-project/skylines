@@ -225,14 +225,6 @@ def index_post(form):
 
     db.session.commit()
 
-    try:
-        for flight in flights:
-            if flight[2] is UploadStatus.SUCCESS:
-                tasks.analyse_flight.delay(flight[1].id)
-                tasks.find_meetings.delay(flight[1].id)
-    except ConnectionError:
-        current_app.logger.info('Cannot connect to Redis server')
-
     return render_template(
         'upload/result.jinja', num_flights=prefix, flights=flights, success=success)
 
@@ -319,5 +311,11 @@ def _update_flight(flight_id, model_id, registration, competition_id,
 
     if trigger_analysis:
         analyse_flight(flight)
+
+    try:
+        tasks.analyse_flight.delay(flight.id)
+        tasks.find_meetings.delay(flight.id)
+    except ConnectionError:
+        current_app.logger.info('Cannot connect to Redis server')
 
     return True
