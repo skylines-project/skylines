@@ -3,7 +3,7 @@ from tempfile import TemporaryFile
 from zipfile import ZipFile
 from enum import Enum
 
-from flask import Blueprint, render_template, request, flash, redirect, g, current_app
+from flask import Blueprint, render_template, request, flash, redirect, g, current_app, url_for
 from flask.ext.babel import _, lazy_gettext as l_
 from redis.exceptions import ConnectionError
 
@@ -238,4 +238,4 @@ def update():
                        competition_id_list[index])
 
     flash(_('Your flight(s) have been successfully updated.'))
-    return redirect('/flights/latest')
+    return redirect(url_for('flights.list', ids=','.join(flight_id_list)))
