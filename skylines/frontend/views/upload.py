@@ -8,7 +8,7 @@ from flask.ext.babel import _, lazy_gettext as l_
 from redis.exceptions import ConnectionError
 from werkzeug.exceptions import BadRequest
 
-from skylines.frontend.forms import UploadForm, ChangeAircraftForm
+from skylines.frontend.forms import UploadForm, UploadUpdateForm
 from skylines.lib import files
 from skylines.lib.decorators import login_required
 from skylines.lib.md5 import file_md5
@@ -79,7 +79,8 @@ def _get_flight_path(flight):
     elevations_h = xcsoar.encode([fix.elevation if fix.elevation is not None else -1000 for fix in fp], method="signed")
 
     return dict(barogram_h=barogram_h, barogram_t=barogram_t,
-                enl=enl, elevations_h=elevations_h)
+                enl=enl, elevations_h=elevations_h,
+                igc_start_time=fp[0].datetime, igc_end_time=fp[-1].datetime)
 
 
 @upload_blueprint.route('/', methods=('GET', 'POST'))
@@ -110,7 +111,11 @@ def index():
                 _update_flight(flight_id,
                                form.model_id.data,
                                form.registration.data,
-                               form.competition_id.data)
+                               form.competition_id.data,
+                               form.takeoff_time.data,
+                               form.scoring_start_time.data,
+                               form.scoring_end_time.data,
+                               form.landing_time.data)
                 flight_id_list.append(flight_id)
             elif form:
                 form_error = True
@@ -204,7 +209,7 @@ def index_post(form):
 
         trace = _get_flight_path(flight)
         flights.append((name, flight, UploadStatus.SUCCESS, str(prefix), trace,
-                        ChangeAircraftForm(formdata=None, prefix=str(prefix), obj=flight)))
+                        UploadUpdateForm(formdata=None, prefix=str(prefix), obj=flight)))
 
         db.session.add(igc_file)
         db.session.add(flight)
@@ -247,13 +252,22 @@ def check_update_form(prefix, flight_id, name, status):
         if not flight.is_writable(g.current_user):
             abort(403)
 
-        form = ChangeAircraftForm(prefix=str(prefix), obj=flight)
+        form = UploadUpdateForm(prefix=str(prefix), obj=flight)
         trace = _get_flight_path(flight)
+
+        # Force takeoff_time and landing_time to be within the igc file limits
+        if form.takeoff_time.data < trace['igc_start_time']:
+            form.takeoff_time.data = trace['igc_start_time']
+
+        if form.landing_time.data > trace['igc_end_time']:
+            form.landing_time.data = trace['igc_end_time']
 
         return flight, trace, form
 
 
-def _update_flight(flight_id, model_id, registration, competition_id):
+def _update_flight(flight_id, model_id, registration, competition_id,
+                   takeoff_time, scoring_start_time,
+                   scoring_end_time, landing_time):
     # Get flight from database and check if it is writable
     flight = Flight.get(flight_id)
 
@@ -280,6 +294,26 @@ def _update_flight(flight_id, model_id, registration, competition_id):
     flight.competition_id = competition_id
     flight.time_modified = datetime.utcnow()
 
+    # Update times only if they are reasonable and have been changed...
+    trigger_analysis = False
+
+    if takeoff_time and scoring_start_time and scoring_end_time and landing_time \
+       and takeoff_time <= scoring_start_time <= scoring_end_time <= landing_time \
+       and (flight.takeoff_time != takeoff_time
+            or flight.scoring_start_time != scoring_start_time
+            or flight.scoring_end_time != scoring_end_time
+            or flight.landing_time != landing_time):
+
+        flight.takeoff_time = takeoff_time
+        flight.scoring_start_time = scoring_start_time
+        flight.scoring_end_time = scoring_end_time
+        flight.landing_time = landing_time
+
+        trigger_analysis = True
+
     db.session.commit()
+
+    if trigger_analysis:
+        analyse_flight(flight)
 
     return True

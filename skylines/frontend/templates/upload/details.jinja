@@ -7,9 +7,18 @@
 {{ render_field(form.registration, class='col-sm-4') }}
 {{ render_field(form.competition_id, class='col-sm-4') }}
 
+<div class="clearfix"></div>
+
 {% if trace %}
 <div id="barogram-{{ prefix }}" style="width: 100%; height: 120pt;"></div>
 {% endif %}
+
+{{ render_field(form.takeoff_time, class='col-sm-3') }}
+{{ render_field(form.scoring_start_time, class='col-sm-3') }}
+{{ render_field(form.scoring_end_time, class='col-sm-3') }}
+{{ render_field(form.landing_time, class='col-sm-3') }}
+
+<div class="clearfix"></div>
 
 {%- endif %}
 
