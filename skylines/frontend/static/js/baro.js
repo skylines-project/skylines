@@ -253,6 +253,7 @@ function slBarogram(placeholder, options) {
 
   /**
    * Get the current marker positions
+   * @return {Boolean} current selection.
    */
   baro.getFlightTime = function() {
     return flot.getSelection();

@@ -84,7 +84,8 @@ The plugin allso adds the following methods to the plot object:
         value = axis.c2p(setSelectionPos(e));
         updateSelection(value, selection.active);
 
-        plot.getPlaceholder().trigger('plotselecting', [getSelection(), selection.active]);
+        plot.getPlaceholder()
+            .trigger('plotselecting', [getSelection(), selection.active]);
       } else {
         var selected_marker = getMarker(e);
 
@@ -103,7 +104,8 @@ The plugin allso adds the following methods to the plot object:
       document.body.focus();
 
       // prevent text selection and drag in old-school browsers
-      if (document.onselectstart !== undefined && savedhandlers.onselectstart == null) {
+      if (document.onselectstart !== undefined &&
+          savedhandlers.onselectstart == null) {
         savedhandlers.onselectstart = document.onselectstart;
         document.onselectstart = function() { return false; };
       }
@@ -276,7 +278,8 @@ The plugin allso adds the following methods to the plot object:
 
         axis = plot.getXAxes()[0];
         selection.canvas.takeoff = axis.p2c(selection.times.takeoff);
-        selection.canvas.scoring_start = axis.p2c(selection.times.scoring_start);
+        selection.canvas.scoring_start =
+            axis.p2c(selection.times.scoring_start);
         selection.canvas.scoring_end = axis.p2c(selection.times.scoring_end);
         selection.canvas.landing = axis.p2c(selection.times.landing);
 
