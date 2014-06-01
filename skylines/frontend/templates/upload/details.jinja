@@ -1,5 +1,43 @@
 {% extends "base.jinja" %}
 {% from "macros/form.jinja" import render_field %}
+
+{% macro render_datetimepicker_field(field, hide_error_text=False, disabled=False, class='') -%}
+<div class="form-group{% if field.errors %} has-error{% endif %} {{ class }}" id="form-group-{{ field.id }}">
+  {{ field.label }}
+
+  {% if hide_error_text -%}
+    <div class="input-group input-group-sm date" id="{{ field.id }}-datetimepicker"
+         data-date-defaultdate="{{ field.data }}">
+      <input type="text" class="form-control" />
+      <span class="input-group-addon"><span class="glyphicon glyphicon-time"></span></span>
+    </div>
+
+    {{ field(class_="form-control", title=field.errors[0], type="hidden", **kwargs)|safe }}
+  {%- else -%}
+    {% if disabled -%}
+      <div class="input-group input-group-sm date" id="{{ field.id }}-datetimepicker"
+           data-date-defaultdate="{{ field.data }}">
+        <input type="text" disabled="disabled" class="form-control" />
+        <span class="input-group-addon"><span class="glyphicon glyphicon-time"></span></span>
+      </div>
+      {{ field(class_="form-control", disabled="true", type="hidden", **kwargs)|safe }}
+    {%- else -%}
+      <div class="input-group input-group-sm date" id="{{ field.id }}-datetimepicker"
+           data-date-defaultdate="{{ field.data }}">
+        <input type="text" class="form-control" />
+        <span class="input-group-addon"><span class="glyphicon glyphicon-time"></span></span>
+      </div>
+
+      {{ field(class_="form-control", type="hidden", **kwargs)|safe }}
+    {%- endif %}
+
+    {% if field.errors -%}
+    <p class="help-block">{{ field.errors[0] }}</p>
+    {%- endif %}
+  {%- endif %}
+</div>
+{%- endmacro %}
+
 {% macro render_flight_details(name, flight, status, prefix, trace, form) -%}
 {% if status == h.UploadStatus.SUCCESS -%}
 {{ form.hidden_tag() }}
@@ -13,10 +51,10 @@
 <div id="barogram-{{ prefix }}" style="width: 100%; height: 120pt;"></div>
 {% endif %}
 
-{{ render_field(form.takeoff_time, class='col-sm-3') }}
-{{ render_field(form.scoring_start_time, class='col-sm-3') }}
-{{ render_field(form.scoring_end_time, class='col-sm-3') }}
-{{ render_field(form.landing_time, class='col-sm-3') }}
+{{ render_datetimepicker_field(form.takeoff_time, class='col-sm-3') }}
+{{ render_datetimepicker_field(form.scoring_start_time, class='col-sm-3') }}
+{{ render_datetimepicker_field(form.scoring_end_time, class='col-sm-3') }}
+{{ render_datetimepicker_field(form.landing_time, class='col-sm-3') }}
 
 <div class="clearfix"></div>
 
@@ -62,6 +100,14 @@
       {{ h.json.dumps(trace.enl) }},
       {{ h.json.dumps(trace.elevations_h) }}
     );
+
+    $("[id^={{ prefix }}-][id$=-datetimepicker]").datetimepicker({
+      pickDate: false,
+      useSeconds: true,
+      format: 'HH:mm:ss',
+      minDate: moment("{{ trace.igc_start_time.strftime("%Y-%m-%d %H:%M:%S") }}", "YYYY-MM-DD HH:mm:ss"),
+      maxDate: moment("{{ trace.igc_end_time.strftime("%Y-%m-%d %H:%M:%S") }}", "YYYY-MM-DD HH:mm:ss")
+    });
   });
 </script>
 {% endif %}
