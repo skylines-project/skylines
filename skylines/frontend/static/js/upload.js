@@ -10,10 +10,15 @@
  * @param {String} _height Google polyencoded string of height values.
  * @param {String} _enl Google polyencoded string of engine noise levels.
  * @param {String} _elevations_h Google polyencoded string of elevations.
+ * @param {int} takeoff_time Time of takeoff.
+ * @param {int} scoring_start_time Time of scoring start.
+ * @param {int} scoring_end_time Time of scoring end.
+ * @param {int} landing_time Time of landing.
  * @return {Object} Barogram.
  */
 function initBaro(placeholder, sfid, _time, _height, _enl,
-                  _elevations_h) {
+                  _elevations_h, takeoff_time, scoring_start_time,
+                  scoring_end_time, landing_time) {
   var polyline_decoder = new OpenLayers.Format.EncodedPolyline();
 
   var height = polyline_decoder.decodeDeltas(_height, 1, 1);
@@ -64,10 +69,10 @@ function initBaro(placeholder, sfid, _time, _height, _enl,
   baro.setElevations(flot_elev);
 
   baro.setFlightTimes(
-      time[0],
-      time[0] + (time[timeLength - 1] - time[0]) * 0.33,
-      time[0] + (time[timeLength - 1] - time[0]) * 0.66,
-      time[timeLength - 1]
+      takeoff_time,
+      scoring_start_time,
+      scoring_end_time,
+      landing_time
   );
 
   baro.draw();

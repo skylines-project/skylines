@@ -98,7 +98,11 @@
       {{ h.json.dumps(trace.barogram_t) }},
       {{ h.json.dumps(trace.barogram_h) }},
       {{ h.json.dumps(trace.enl) }},
-      {{ h.json.dumps(trace.elevations_h) }}
+      {{ h.json.dumps(trace.elevations_h) }},
+      {{ h.to_seconds_of_day(flight.igc_file.date_utc, form.takeoff_time.data) }},
+      {{ h.to_seconds_of_day(flight.igc_file.date_utc, form.scoring_start_time.data) }},
+      {{ h.to_seconds_of_day(flight.igc_file.date_utc, form.scoring_end_time.data) }},
+      {{ h.to_seconds_of_day(flight.igc_file.date_utc, form.landing_time.data) }}
     );
 
     $("[id^={{ prefix }}-][id$=-datetimepicker]").datetimepicker({
