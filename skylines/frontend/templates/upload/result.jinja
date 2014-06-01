@@ -58,7 +58,16 @@
         {% if flight %}
         <input type="hidden" id="{{ prefix }}-sfid" name="{{ prefix }}-sfid" value="{{ flight.id }}" />
         {% endif %}
-        <a href="#upload-tab-{{ prefix }}" data-toggle="tab">{{ name }}</a>
+        <a href="#upload-tab-{{ prefix }}" data-toggle="tab">
+        {% if status == h.UploadStatus.SUCCESS -%}
+        <i class="icon-ok text-success"></i>
+        {% elif status and flight %}
+        <i class="icon-warning-sign text-warning"></i>
+        {%- else %}
+        <i class="icon-warning-sign text-danger"></i>
+        {%- endif %}
+        {{ name }}
+        </a>
       </li>
       {%- endfor %}
     </ul>
