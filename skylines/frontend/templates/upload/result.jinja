@@ -1,9 +1,30 @@
 {% extends "base-page.jinja" %}
 {% set active_page = "upload" %}
 
-{% from 'upload/details.jinja' import render_flight_details with context %}
+{% from 'upload/details.jinja' import render_flight_details, render_flight_script with context %}
 
 {% block title %}{% trans %}Upload Flight{% endtrans %}{% endblock %}
+
+{%- block scripts %}
+{{ super() }}
+
+{% assets 'flot_js' -%}
+  <script type="text/javascript" src="{{ ASSET_URL }}"></script>
+{%- endassets %}
+
+{% assets 'openlayers_js' -%}
+  <script type="text/javascript" src="{{ ASSET_URL }}"></script>
+{%- endassets %}
+
+{% assets 'upload_js' -%}
+  <script type="text/javascript" src="{{ ASSET_URL }}"></script>
+{%- endassets %}
+
+{% for name, flight, status, prefix, trace, form in flights -%}
+{{ render_flight_script(name, flight, status, prefix, trace, form) }}
+{%- endfor %}
+
+{% endblock %}
 
 {%- block content %}
 <form action="{{ url_for('upload.index') }}" method="post">
@@ -24,7 +45,7 @@
   {%- endif %}
   <div class="col-sm-3">
     <ul class="nav nav-tabs tabs-left">
-      {% for name, flight, status, prefix, form in flights -%}
+      {% for name, flight, status, prefix, trace, form in flights -%}
       <li {% if loop.first -%} class="active" {%- endif %}>
         <input type="hidden" name="{{ prefix }}-status" value="{{ status.value }}" />
         <input type="hidden" name="{{ prefix }}-name" value="{{ name }}" />
@@ -38,9 +59,9 @@
   </div>
   <div class="col-sm-9">
     <div class="tab-content">
-      {% for name, flight, status, prefix, form in flights -%}
+      {% for name, flight, status, prefix, trace, form in flights -%}
       <div class="tab-pane {% if loop.first -%}active{%- endif %}" id="upload-tab-{{ prefix }}">
-        {{ render_flight_details(name, flight, status, prefix, form) }}
+        {{ render_flight_details(name, flight, status, prefix, trace, form) }}
       </div>
       {%- endfor %}
     </div>

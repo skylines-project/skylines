@@ -12,10 +12,12 @@ from skylines.frontend.forms import UploadForm, ChangeAircraftForm
 from skylines.lib import files
 from skylines.lib.decorators import login_required
 from skylines.lib.md5 import file_md5
-from skylines.lib.xcsoar_ import analyse_flight
+from skylines.lib.xcsoar_ import flight_path, analyse_flight
 from skylines.model import db, User, Flight, IGCFile
 from skylines.model.event import create_flight_notifications
 from skylines.worker import tasks
+
+import xcsoar
 
 upload_blueprint = Blueprint('upload', 'skylines')
 
@@ -68,6 +70,18 @@ def IterateUploadFiles(upload):
             yield x
 
 
+def _get_flight_path(flight):
+    fp = flight_path(flight.igc_file, add_elevation=True)
+
+    barogram_h = xcsoar.encode([fix.altitude for fix in fp], method="signed")
+    barogram_t = xcsoar.encode([fix.seconds_of_day for fix in fp], method="signed")
+    enl = xcsoar.encode([fix.enl if fix.enl is not None else 0 for fix in fp], method="signed")
+    elevations_h = xcsoar.encode([fix.elevation if fix.elevation is not None else -1000 for fix in fp], method="signed")
+
+    return dict(barogram_h=barogram_h, barogram_t=barogram_t,
+                enl=enl, elevations_h=elevations_h)
+
+
 @upload_blueprint.route('/', methods=('GET', 'POST'))
 @login_required(l_("You have to login to upload flights."))
 def index():
@@ -88,9 +102,9 @@ def index():
             except ValueError:
                 raise BadRequest('Status unknown')
 
-            flight, form = check_update_form(prefix, flight_id, name, status)
+            flight, trace, form = check_update_form(prefix, flight_id, name, status)
 
-            flights.append((name, flight, status, str(prefix), form))
+            flights.append((name, flight, status, str(prefix), trace, form))
 
             if form and form.validate_on_submit():
                 _update_flight(flight_id,
@@ -144,7 +158,7 @@ def index_post(form):
             other = Flight.by_md5(md5)
             if other:
                 files.delete_file(filename)
-                flights.append((name, other, UploadStatus.DUPLICATE, str(prefix), None))
+                flights.append((name, other, UploadStatus.DUPLICATE, str(prefix), None, None))
                 continue
 
         igc_file = IGCFile()
@@ -155,7 +169,7 @@ def index_post(form):
 
         if igc_file.date_utc is None:
             files.delete_file(filename)
-            flights.append((name, None, UploadStatus.MISSING_DATE, str(prefix), None))
+            flights.append((name, None, UploadStatus.MISSING_DATE, str(prefix), None, None))
             continue
 
         flight = Flight()
@@ -175,21 +189,23 @@ def index_post(form):
 
         if not analyse_flight(flight):
             files.delete_file(filename)
-            flights.append((name, None, UploadStatus.PARSER_ERROR, str(prefix), None))
+            flights.append((name, None, UploadStatus.PARSER_ERROR, str(prefix), None, None))
             continue
 
         if not flight.takeoff_time or not flight.landing_time:
             files.delete_file(filename)
-            flights.append((name, None, UploadStatus.NO_FLIGHT, str(prefix), None))
+            flights.append((name, None, UploadStatus.NO_FLIGHT, str(prefix), None, None))
             continue
 
         if not flight.update_flight_path():
             files.delete_file(filename)
-            flights.append((name, None, UploadStatus.NO_FLIGHT, str(prefix), None))
+            flights.append((name, None, UploadStatus.NO_FLIGHT, str(prefix), None, None))
             continue
 
-        flights.append((name, flight, UploadStatus.SUCCESS, str(prefix),
+        trace = _get_flight_path(flight)
+        flights.append((name, flight, UploadStatus.SUCCESS, str(prefix), trace,
                         ChangeAircraftForm(formdata=None, prefix=str(prefix), obj=flight)))
+
         db.session.add(igc_file)
         db.session.add(flight)
 
@@ -216,7 +232,7 @@ def index_post(form):
 
 def check_update_form(prefix, flight_id, name, status):
     if not flight_id:
-        return None, None
+        return None, None, None
 
     # Get flight from database and check if it is writable
     flight = Flight.get(flight_id)
@@ -225,15 +241,16 @@ def check_update_form(prefix, flight_id, name, status):
         abort(404)
 
     if status == UploadStatus.DUPLICATE:
-        return flight, None
+        return flight, None, None
 
     else:
         if not flight.is_writable(g.current_user):
             abort(403)
 
         form = ChangeAircraftForm(prefix=str(prefix), obj=flight)
+        trace = _get_flight_path(flight)
 
-        return flight, form
+        return flight, trace, form
 
 
 def _update_flight(flight_id, model_id, registration, competition_id):

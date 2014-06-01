@@ -1,5 +1,6 @@
+{% extends "base.jinja" %}
 {% from "macros/form.jinja" import render_pure_field %}
-{% macro render_flight_details(name, flight, status, prefix, form) -%}
+{% macro render_flight_details(name, flight, status, prefix, trace, form) -%}
 <table width="100%">
   <tbody>
     <tr>
@@ -51,5 +52,30 @@
     </tr>
   </tbody>
 </table>
+{% if trace %}
+<div id="barogram-{{ prefix }}" style="width: 100%; height: 120pt;"></div>
+{% endif %}
+{%- endmacro %}
+
+
+{% macro render_flight_script(name, flight, status, prefix, trace, form) -%}
+{% if trace %}
+<script type="text/javascript">
+  $(function() {
+    slUnits.init({{ h.json.dumps(h.get_setting_name('distance_unit')) }},
+                 {{ h.json.dumps(h.get_setting_name('speed_unit')) }},
+                 {{ h.json.dumps(h.get_setting_name('lift_unit')) }},
+                 {{ h.json.dumps(h.get_setting_name('altitude_unit')) }});
+
+    initBaro($("#barogram-{{ prefix }}"),
+      {{ flight.id }},
+      {{ h.json.dumps(trace.barogram_t) }},
+      {{ h.json.dumps(trace.barogram_h) }},
+      {{ h.json.dumps(trace.enl) }},
+      {{ h.json.dumps(trace.elevations_h) }}
+    );
+  });
+</script>
+{% endif %}
 {%- endmacro %}
 

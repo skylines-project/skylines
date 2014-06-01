@@ -135,3 +135,10 @@ tracking_js = Bundle(
     'js/tracking.js',
     filters='rjsmin',
     output='js/tracking-%(version)s.js')
+
+upload_js = Bundle(
+    'js/units.js',
+    'js/baro.js',
+    'js/upload.js',
+    filters=SimpleClosureJS,
+    output='js/upload-%(version)s.js')
