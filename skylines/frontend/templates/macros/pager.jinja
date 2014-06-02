@@ -60,3 +60,16 @@ $(function() {
 });
 </script>
 {%- endmacro %}
+
+
+{% macro pager_status(name) -%}
+{% with page=g.paginators[name] -%}
+{% if page.count %}
+{% trans start=page.offset + 1, end=page.back_offset, total=page.count %}
+Showing {{ start }} to {{ end }} of {{ total }} entries.
+{% endtrans %}
+{% else %}
+{% trans -%}No entries in table.{%- endtrans %}
+{% endif %}
+{%- endwith %}
+{%- endmacro %}

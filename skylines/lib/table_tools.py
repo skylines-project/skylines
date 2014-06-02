@@ -15,6 +15,9 @@ class Pager:
 
         self.page = max(min(page, self.last_page), self.first_page)
 
+        self.offset = (self.page - 1) * items_per_page
+        self.back_offset = min(self.offset + self.items_per_page, self.count)
+
     @classmethod
     def paginate(cls, query, name, items_per_page=20):
         count = query.count()
@@ -31,8 +34,7 @@ class Pager:
 
         g.paginators[name] = pager
 
-        offset = (pager.page - 1) * items_per_page
-        return query.limit(items_per_page).offset(offset)
+        return query.limit(items_per_page).offset(pager.offset)
 
     def args(self):
         return dict(page=self.page)

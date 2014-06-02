@@ -1,7 +1,7 @@
 {% from "flights/flights-table.jinja" import render_flights_table with context %}
 {% from "macros/links.jinja" import user_link, club_link %}
 
-{% from 'macros/pager.jinja' import pager, pager_script with context %}
+{% from 'macros/pager.jinja' import pager, pager_script, pager_status with context %}
 {% from 'macros/sorter.jinja' import sorter_script with context %}
 
 
@@ -56,7 +56,10 @@
 {%- if tab == 'unassigned' %}{% do omitted_columns.append('pilot') %}{% endif %}
 
 <div class="row">
-  <div class="col-sm-12">
+  <div class="col-sm-6">
+    {{ pager_status('flights') }}
+  </div>
+  <div class="col-sm-6">
     <div class="pull-right">
       {{ pager('flights', dict(**g.sorters['flights'].args())) }}
     </div>
@@ -66,7 +69,10 @@
 {{ render_flights_table(flights, omitted_columns) }}
 
 <div class="row">
-  <div class="col-sm-12">
+  <div class="col-sm-6">
+    {{ pager_status('flights') }}
+  </div>
+  <div class="col-sm-6">
     <div class="pull-right">
       {{ pager('flights', dict(**g.sorters['flights'].args())) }}
     </div>
