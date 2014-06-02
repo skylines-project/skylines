@@ -30,7 +30,7 @@ def mark_flight_notifications_read(pilot):
 
 
 def _create_list(tab, kw, date=None, pilot=None, club=None, airport=None,
-                 pinned=None, filter=None, columns=None):
+                 pinned=None, filter=None):
     pilot_alias = aliased(User, name='pilot')
     owner_alias = aliased(User, name='owner')
 
@@ -128,23 +128,9 @@ def date(date, latest=False):
     except:
         abort(404)
 
-    pilot_alias = aliased(User, name='pilot')
-
-    columns = {
-        0: (Flight, 'index_score'),
-        1: (pilot_alias, 'name'),
-        2: (Flight, 'olc_classic_distance'),
-        3: (Airport, 'name'),
-        4: (Club, 'name'),
-        5: (AircraftModel, 'name'),
-        6: (Flight, 'takeoff_time'),
-        7: (Flight, 'id'),
-        8: (Flight, 'num_comments'),
-    }
-
     return _create_list(
         'latest' if latest else 'date',
-        request.args, date=date, columns=columns)
+        request.args, date=date)
 
 
 @flights_blueprint.route('/latest.json')
@@ -167,23 +153,10 @@ def latest():
 @flights_blueprint.route('/pilot/<int:id>')
 def pilot(id):
     pilot = get_requested_record(User, id)
-    pilot_alias = aliased(User, name='pilot')
 
     mark_flight_notifications_read(pilot)
 
-    columns = {
-        0: (Flight, 'date_local'),
-        1: (Flight, 'index_score'),
-        2: (pilot_alias, 'name'),
-        3: (Flight, 'olc_classic_distance'),
-        4: (Airport, 'name'),
-        5: (AircraftModel, 'name'),
-        6: (Flight, 'takeoff_time'),
-        7: (Flight, 'id'),
-        8: (Flight, 'num_comments'),
-    }
-
-    return _create_list('pilot', request.args, pilot=pilot, columns=columns)
+    return _create_list('pilot', request.args, pilot=pilot)
 
 
 @flights_blueprint.route('/my')
@@ -198,21 +171,8 @@ def my():
 @flights_blueprint.route('/club/<int:id>')
 def club(id):
     club = get_requested_record(Club, id)
-    pilot_alias = aliased(User, name='pilot')
 
-    columns = {
-        0: (Flight, 'date_local'),
-        1: (Flight, 'index_score'),
-        2: (pilot_alias, 'name'),
-        3: (Flight, 'olc_classic_distance'),
-        4: (Airport, 'name'),
-        5: (AircraftModel, 'name'),
-        6: (Flight, 'takeoff_time'),
-        7: (Flight, 'id'),
-        8: (Flight, 'num_comments'),
-    }
-
-    return _create_list('club', request.args, club=club, columns=columns)
+    return _create_list('club', request.args, club=club)
 
 
 @flights_blueprint.route('/my_club')
@@ -227,22 +187,9 @@ def my_club():
 @flights_blueprint.route('/airport/<int:id>')
 def airport(id):
     airport = get_requested_record(Airport, id)
-    pilot_alias = aliased(User, name='pilot')
-
-    columns = {
-        0: (Flight, 'date_local'),
-        1: (Flight, 'index_score'),
-        2: (pilot_alias, 'name'),
-        3: (Flight, 'olc_classic_distance'),
-        4: (Club, 'name'),
-        5: (AircraftModel, 'name'),
-        6: (Flight, 'takeoff_time'),
-        7: (Flight, 'id'),
-        8: (Flight, 'num_comments'),
-    }
 
     return _create_list('airport', request.args,
-                        airport=airport, columns=columns)
+                        airport=airport)
 
 
 @flights_blueprint.route('/unassigned.json')
