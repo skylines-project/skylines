@@ -3,7 +3,7 @@ from datetime import date
 from flask import Blueprint, request, redirect, url_for, render_template
 from sqlalchemy import func
 from sqlalchemy.sql.expression import desc, over
-from sqlalchemy.orm import subqueryload
+from sqlalchemy.orm import eagerload
 
 from skylines.model import db, User, Club, Flight, Airport
 from skylines.lib.table_tools import Pager, Sorter
@@ -34,7 +34,8 @@ def _get_result(model, flight_field, year=None):
         .join((subq, getattr(subq.c, flight_field) == model.id))
 
     if model == User:
-        result = result.options(subqueryload(model.club))
+        result = result.outerjoin(model.club)
+        result = result.options(eagerload(model.club))
 
     return result
 
@@ -44,7 +45,7 @@ def _handle_request(model, flight_field):
     year = _parse_year()
     result = _get_result(model, flight_field, year=year)
 
-    result = Sorter.sort(result, 'sorter', 'total',
+    result = Sorter.sort(result, 'sorter', 'rank',
                          valid_columns={'rank': 'rank',
                                         'count': 'count',
                                         'total': 'total'},
