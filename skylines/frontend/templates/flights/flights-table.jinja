@@ -1,18 +1,35 @@
 {% from "macros/flags.jinja" import insert_flag with context %}
 {% from "macros/links.jinja" import user_link, airport_link %}
+{% from 'macros/sorter.jinja' import sorter with context %}
 
 {% macro render_flights_table(flights, omitted_columns = []) -%}
 <table id="flight-table" class="table table-striped table-condensed">
   <thead>
     <tr>
-      {%- if 'date' not in omitted_columns %}<th class="date">{% trans %}Date{% endtrans %}</th>{% endif %}
-      {%- if 'score' not in omitted_columns %}<th class="numeric score">{% trans %}Score{% endtrans %}</th>{% endif %}
-      {%- if 'pilot' not in omitted_columns %}<th class="pilot">{% trans %}Pilot{% endtrans %}</th>{% endif %}
-      {%- if 'distance' not in omitted_columns %}<th class="numeric distance">{% trans %}Distance{% endtrans %}</th>{% endif %}
-      {%- if 'takeoff_airport' not in omitted_columns %}<th class="airport">{% trans %}Airport{% endtrans %}</th>{% endif %}
-      {%- if 'club' not in omitted_columns %}<th class="club hidden-sm hidden-xs">{% trans %}Club{% endtrans %}</th>{% endif %}
-      {%- if 'aircraft' not in omitted_columns %}<th class="aircraft hidden-xs">{% trans %}Aircraft{% endtrans %}</th>{% endif %}
-      {%- if 'times' not in omitted_columns %}<th class="times hidden-xs">{% trans %}Time{% endtrans %}</th>{% endif %}
+      {%- if 'date' not in omitted_columns %}
+        <th class="date sorting">{{ sorter('flights', _('Date'), 'date', dict(**g.paginators['flights'].args())) }}</th>
+      {% endif %}
+      {%- if 'score' not in omitted_columns %}
+        <th class="numeric sorting">{{ sorter('flights', _('Score'), 'score', dict(**g.paginators['flights'].args())) }}</th>
+      {% endif %}
+      {%- if 'pilot' not in omitted_columns %}
+        <th class="pilot sorting">{{ sorter('flights', _('Pilot'), 'pilot', dict(**g.paginators['flights'].args())) }}</th>
+      {% endif %}
+      {%- if 'distance' not in omitted_columns %}
+        <th class="numeric distance sorting">{{ sorter('flights', _('Distance'), 'distance', dict(**g.paginators['flights'].args())) }}</th>
+      {% endif %}
+      {%- if 'takeoff_airport' not in omitted_columns %}
+        <th class="airport sorting">{{ sorter('flights', _('Airport'), 'airport', dict(**g.paginators['flights'].args())) }}</th>
+      {% endif %}
+      {%- if 'club' not in omitted_columns %}
+        <th class="club sorting hidden-sm hidden-xs">{{ sorter('flights', _('Club'), 'club', dict(**g.paginators['flights'].args())) }}</th>
+      {% endif %}
+      {%- if 'aircraft' not in omitted_columns %}
+        <th class="aircraft sorting hidden-xs">{{ sorter('flights', _('Aircraft'), 'aircraft', dict(**g.paginators['flights'].args())) }}</th>
+      {% endif %}
+      {%- if 'times' not in omitted_columns %}
+        <th class="times sorting hidden-xs">{{ sorter('flights', _('Time'), 'time', dict(**g.paginators['flights'].args())) }}</th>
+      {% endif %}
       {%- if 'link' not in omitted_columns %}<th class="column-buttons"></th>{% endif %}
       {%- if 'num_comments' not in omitted_columns %}<th class="num_comments hidden-xs"></th>{% endif %}
     </tr>

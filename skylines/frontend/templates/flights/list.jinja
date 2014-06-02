@@ -1,6 +1,13 @@
 {% from "flights/flights-table.jinja" import render_flights_table with context %}
 {% from "macros/links.jinja" import user_link, club_link %}
 
+{% from 'macros/pager.jinja' import pager, pager_script with context %}
+{% from 'macros/sorter.jinja' import sorter_script with context %}
+
+
+{% set partial = 'partial' in request.args %}
+
+{% if not partial %}
 
 {% extends "base-page.jinja" %}
 {% set active_page = "flights" %}
@@ -29,230 +36,17 @@
 {%- endblock %}
 
 
-
 {% block styles -%}
 {{ super() }}
-{% assets 'datatables_css' -%}
-<link href="{{ ASSET_URL }}" rel="stylesheet" type="text/css" />
-{%- endassets %}
 {%- endblock %}
-
-
-
-{% block scripts -%}
-{{ super() }}
-
-{% assets 'datatables_js' -%}
-<script type="text/javascript" src="{{ ASSET_URL }}"></script>
-{%- endassets %}
-
-<script type="text/javascript" charset="utf-8">
-/* <![CDATA[ */
-  $(document).ready(function() {
-    var pinnedFlights = getPinnedFlights();
-
-    $.fn.dataTableExt.oStdClasses.sPaging = "pull-right paging_";
-    $('#flight-table').dataTable({
-      "bProcessing": true,
-      "sPaginationType": "bootstrap",
-      "iDisplayLength": {{ config.get('SKYLINES_LISTS_DISPLAY_LENGTH', 50) }},
-      "iDeferLoading": {{ flights_count }},
-      "bServerSide": ({{ flights_count }} > {{ config.get('SKYLINES_LISTS_SERVER_SIDE', 250) }})?true:false,
-      "sAjaxSource": ({{ flights_count }} > {{ config.get('SKYLINES_LISTS_SERVER_SIDE', 250) }})?"{{ request.url }}.json":null,
-      "sDom": "<'row'<'col-sm-6'i><'col-sm-6'p>>rt<'row'<'col-sm-6'i><'col-sm-6'p>>",
-      "aaSorting": [[ 0, "desc" ]],
-      "aoColumnDefs": [
-        {
-          "sType": "date-eu",
-          "sDefaultContent": "",
-          "aTargets": ["date"],
-          "sClass": "date",
-          "fnRender": function(obj, row) {
-            if (obj.oSettings.jqXHR)
-              row = "<span title=\"" + obj.aData.date + "\">" + obj.aData.date_formatted + "</span>";
-            return row;
-          }
-        }, {
-          "sType": "numeric-comma-formatted",
-          "sDefaultContent": "",
-          "aTargets": ["score"],
-          "sClass": "numeric",
-          "fnRender": function(obj, row) {
-            if (obj.oSettings.jqXHR)
-              row = obj.aData.index_score;
-            return row;
-          }
-        }, {
-          "sDefaultContent": "",
-          "aTargets": ["pilot"],
-          "fnRender": function(obj, row) {
-            if (obj.oSettings.jqXHR) {
-              row = "";
-
-              if (obj.aData.pilot)
-                row += "<a href=\"/users/" + obj.aData.pilot_id + "/\">" + obj.aData.pilot + "</a>";
-              else if (obj.aData.pilot_name)
-                row += obj.aData.pilot_name;
-
-              if ((obj.aData.pilot || obj.aData.pilot_name) && (obj.aData.co_pilot || obj.aData.co_pilot_name))
-                row += "<br>";
-
-              if (obj.aData.co_pilot)
-                row += "<a href=\"/users/" + obj.aData.co_pilot_id + "/\">" + obj.aData.co_pilot + "</a>";
-              else if (obj.aData.co_pilot_name)
-                row += obj.aData.co_pilot_name;
-
-              if (!(obj.aData.pilot || obj.aData.pilot_name || obj.aData.co_pilot || obj.aData.co_pilot_name))
-                row += "[" + obj.aData.owner + "]";
-            }
-            return row;
-          }
-        }, {
-          "sType": "numeric-comma-formatted",
-          "sDefaultContent": "",
-          "aTargets": ["distance"],
-          "sClass": "numeric",
-          "fnRender": function(obj, row) {
-            if (obj.oSettings.jqXHR)
-              row = Math.round(obj.aData.olc_classic_distance/1000) + " km";
-            return row;
-          }
-        }, {
-          "sDefaultContent": "",
-          "aTargets": ["airport"],
-          "fnRender": function(obj, row) {
-            if (obj.oSettings.jqXHR && obj.aData.takeoff_airport != null) {
-              row = "";
-              if (obj.aData.takeoff_airport_country_code != null)
-                row += "<span class=\"flag-" + obj.aData.takeoff_airport_country_code +
-                       "\" title=\"" + obj.aData.takeoff_airport_country_name + "\" rel=\"tooltip\"></span> ";
-
-              row += "<a href=\"/flights/airport/" + obj.aData.takeoff_airport_id + "\">" + obj.aData.takeoff_airport + "</a>";
-            }
-            return row;
-          }
-        }, {
-          "sType": "numeric-comma-formatted",
-          "sDefaultContent": "",
-          "aTargets": ["club"],
-          "fnRender": function(obj, row) {
-            if (obj.oSettings.jqXHR && obj.aData.club != null) {
-              this.sClass = "hidden-sm hidden-xs"
-              row = "<a href=\"/clubs/" + obj.aData.club_id + "/\">" + obj.aData.club + "</a>";
-            }
-            return row;
-          }
-        }, {
-          "sDefaultContent": "",
-          "aTargets": ["aircraft"],
-          "fnRender": function(obj, row) {
-            if (obj.oSettings.jqXHR && obj.aData.aircraft != null) {
-              this.sClass = "hidden-xs"
-              row = "<span rel=\"tooltip\" title=\"" + obj.aData.aircraft_reg + "\">" + obj.aData.aircraft + "</span>";
-            }
-            return row;
-          }
-        }, {
-          "sType": "numeric-comma-formatted",
-          "sDefaultContent": "",
-          "aTargets": ["times"],
-          "sClass": "times",
-          "fnRender": function(obj, row) {
-            if (obj.oSettings.jqXHR) {
-              this.sClass = "hidden-xs"
-              row = obj.aData.takeoff_time + " - " + obj.aData.landing_time;
-            }
-            return row;
-          }
-        }, {
-          "bSortable": false,
-          "sDefaultContent": "",
-          "aTargets": ["column-buttons"],
-          "sClass": "column-buttons",
-          "fnRender": function(obj, row) {
-            if (obj.oSettings.jqXHR)
-              row = "<a href=\"/flights/" + obj.aData.flight_id + "/\" class=\"btn btn-default btn-sm\">{{ _("Show") }}</a> <a class=\"pin no-link\" style=\"visibility: hidden\" rel=\"tooltip-pin\">" + obj.aData.flight_id + "</a>";
-            return row;
-          }
-        }, {
-          "bSortable": false,
-          "sDefaultContent": "",
-          "aTargets": ["num_comments"],
-          "sClass": "num_comments hidden-xs",
-          "fnRender": function(obj, row) {
-            if (obj.oSettings.jqXHR && obj.aData.num_comments > 0)
-              row = "<i class=\"icon-comments-alt\"></i>";
-            return row;
-          }
-        }
-      ],
-      "fnDrawCallback": function() {
-        $('#flight-table').find("[rel=tooltip]").tooltip();
-        $('#flight-table').find("[rel=tooltip-pin]").tooltip({
-          placement: 'left',
-          title: 'Activate this to show the flight on top of other flights on the map'
-        });
-
-        $('#flight-table').find(".pin").each(function() {
-          var sfid = parseInt($(this).text());
-          if ($.inArray(sfid, pinnedFlights) >= 0) {
-            $(this).html("<i class='icon-star'></i>");
-            $(this).css("visibility", "visible");
-            $(this).addClass("pinned");
-          } else {
-            $(this).html("<i class='icon-star-empty'></i>");
-          }
-
-          $(this).find("i").click(function() {
-            if ($(this).parent(".pin").hasClass("pinned")) {
-              unpinFlight(sfid);
-              $(this).addClass("icon-star-empty");
-              $(this).removeClass("icon-star");
-              $(this).parent(".pin").removeClass("pinned");
-            } else {
-              pinFlight(sfid);
-              $(this).addClass("icon-star");
-              $(this).removeClass("icon-star-empty");
-              $(this).parent(".pin").addClass("pinned");
-            }
-          });
-        });
-
-        $('#flight-table tr').hover(function(e) {
-          if (e.type == "mouseenter") {
-            $(this).find(".pin").each(function() {
-              $(this).css("visibility", "visible");
-            });
-          } else if (e.type == "mouseleave") {
-            $(this).find(".pin").each(function() {
-              if (!$(this).hasClass("pinned"))
-                $(this).css("visibility", "hidden");
-            });
-          }
-        });
-      }
-    });
-
-    $('#datepicker').datepicker({
-      weekStart: 1
-    })
-    .on('changeDate', function(e) {
-      var url = "/flights/date/" + e.date.getFullYear() + "-" +
-        pad(e.date.getMonth()+1, 2) + "-" + pad(e.date.getDate(), 2);
-      window.location.href = url;
-    });
-  });
-/* ]]> */
-</script>
-
-<script type="text/javascript">
-showPinnedFlightsLink();
-</script>
-{%- endblock %}
-
+{%- endif %}
 
 {% block content -%}
+{% if not partial %}
 {% include "flights/nav.jinja" with context %}
+
+<div id="partial">
+{% endif %}
 
 {%- set omitted_columns = [] %}
 {%- if date %}{% do omitted_columns.append('date') %}{% endif %}
@@ -261,12 +55,109 @@ showPinnedFlightsLink();
 {%- if tab == 'all' %}{% do omitted_columns.append('times') %}{% endif %}
 {%- if tab == 'unassigned' %}{% do omitted_columns.append('pilot') %}{% endif %}
 
+<div class="row">
+  <div class="col-sm-12">
+    <div class="pull-right">
+      {{ pager('flights', dict(**g.sorters['flights'].args())) }}
+    </div>
+  </div>
+</div>
+
 {{ render_flights_table(flights, omitted_columns) }}
+
+<div class="row">
+  <div class="col-sm-12">
+    <div class="pull-right">
+      {{ pager('flights', dict(**g.sorters['flights'].args())) }}
+    </div>
+  </div>
+</div>
+
+{% if not partial %}
+</div>
+{% endif %}
 {%- endblock %}
 
 
+{% block scripts -%}
+{% if not partial %}
+{{ super() }}
+
+<script>
+$(function() {
+    $('#datepicker').datepicker({
+      weekStart: 1
+    })
+    .on('changeDate', function(e) {
+      var url = "/flights/date/" + e.date.getFullYear() + "-" +
+        pad(e.date.getMonth()+1, 2) + "-" + pad(e.date.getDate(), 2);
+      window.location.href = url;
+    });
+
+    showPinnedFlightsLink();
+  });
+</script>
+{%- endif %}
+
+<script>
+$(function() {
+  var pinnedFlights = getPinnedFlights();
+
+  $('#flight-table').find("[rel=tooltip]").tooltip();
+  $('#flight-table').find("[rel=tooltip-pin]").tooltip({
+    placement: 'left',
+    title: 'Activate this to show the flight on top of other flights on the map'
+  });
+ 
+  $('#flight-table').find(".pin").each(function() {
+    var sfid = parseInt($(this).text());
+    if ($.inArray(sfid, pinnedFlights) >= 0) {
+      $(this).html("<i class='icon-star'></i>");
+      $(this).css("visibility", "visible");
+      $(this).addClass("pinned");
+    } else {
+      $(this).html("<i class='icon-star-empty'></i>");
+    }
+
+    $(this).find("i").click(function() {
+      if ($(this).parent(".pin").hasClass("pinned")) {
+        unpinFlight(sfid);
+        $(this).addClass("icon-star-empty");
+        $(this).removeClass("icon-star");
+        $(this).parent(".pin").removeClass("pinned");
+      } else {
+        pinFlight(sfid);
+        $(this).addClass("icon-star");
+        $(this).removeClass("icon-star-empty");
+        $(this).parent(".pin").addClass("pinned");
+      }
+    });
+  });
+ 
+  $('#flight-table tr').hover(function(e) {
+    if (e.type == "mouseenter") {
+      $(this).find(".pin").each(function() {
+        $(this).css("visibility", "visible");
+      });
+    } else if (e.type == "mouseleave") {
+      $(this).find(".pin").each(function() {
+        if (!$(this).hasClass("pinned"))
+          $(this).css("visibility", "hidden");
+      });
+    }
+  });
+});
+</script>
+
+{{ pager_script() }}
+{{ sorter_script() }}
+{%- endblock %}
+
+
+{% if not partial %}
 {% block title_right -%}
 <a href="{{ url_for('upload.index') }}" class="btn btn-success">
   <i class="icon-upload-alt"></i> {{ _('Upload flight') }}
 </a>
 {%- endblock %}
+{%- endif %}

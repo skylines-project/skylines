@@ -1,16 +1,14 @@
 from datetime import datetime
 
-from flask import Blueprint, request, render_template, redirect, url_for, abort, current_app, jsonify, g
-from babel.dates import format_date
+from flask import Blueprint, request, render_template, redirect, url_for, abort, current_app, g
 
 from sqlalchemy import func
 from sqlalchemy.sql.expression import or_, and_
 from sqlalchemy.orm import joinedload, contains_eager
 from sqlalchemy.orm.util import aliased
 
-from skylines.lib.datatables import GetDatatableRecords
+from skylines.lib.table_tools import Pager, Sorter
 from skylines.lib.dbutil import get_requested_record
-from skylines.lib.helpers import truncate, country_name, format_decimal
 from skylines.model import (
     db, User, Club, Flight, IGCFile, AircraftModel,
     Airport, FlightComment,
@@ -75,68 +73,29 @@ def _create_list(tab, kw, date=None, pilot=None, club=None, airport=None,
     if filter is not None:
         flights = flights.filter(filter)
 
-    if request.is_xhr:
-        if not columns:
-            columns = {
-                0: (Flight, 'date_local'),
-                1: (Flight, 'index_score'),
-                2: (pilot_alias, 'name'),
-                3: (Flight, 'olc_classic_distance'),
-                4: (Airport, 'name'),
-                5: (Club, 'name'),
-                6: (AircraftModel, 'name'),
-                7: (Flight, 'takeoff_time'),
-                8: (Flight, 'id'),
-                9: (Flight, 'num_comments'),
-            }
+    valid_columns = {
+        'date': getattr(Flight, 'date_local'),
+        'score': getattr(Flight, 'index_score'),
+        'pilot': getattr(pilot_alias, 'name'),
+        'distance': getattr(Flight, 'olc_classic_distance'),
+        'airport': getattr(Airport, 'name'),
+        'club': getattr(Club, 'name'),
+        'aircraft': getattr(AircraftModel, 'name'),
+        'time': getattr(Flight, 'takeoff_time'),
+    }
 
-        flights, response_dict = GetDatatableRecords(kw, flights, columns)
+    flights_count = flights.count()
 
-        aaData = []
-        for flight, num_comments in flights:
-            aaData.append(dict(takeoff_time=flight.takeoff_time.strftime('%H:%M'),
-                               landing_time=flight.landing_time.strftime('%H:%M'),
-                               date=flight.date_local.strftime('%d.%m.%Y'),
-                               date_formatted=format_date(flight.date_local),
-                               index_score=format_decimal(flight.index_score, format='0'),
-                               olc_classic_distance=flight.olc_classic_distance,
-                               pilot_id=flight.pilot_id,
-                               pilot=flight.pilot and flight.pilot.name,
-                               pilot_name=flight.pilot_name,
-                               co_pilot_id=flight.co_pilot_id,
-                               co_pilot=flight.co_pilot and flight.co_pilot.name,
-                               co_pilot_name=flight.co_pilot_name,
-                               club_id=flight.club_id,
-                               club=flight.club and truncate(flight.club.name, 25),
-                               owner=flight.igc_file.owner.name,
-                               takeoff_airport=flight.takeoff_airport and flight.takeoff_airport.name,
-                               takeoff_airport_id=flight.takeoff_airport and flight.takeoff_airport.id,
-                               takeoff_airport_country_code=flight.takeoff_airport and flight.takeoff_airport.country_code.lower(),
-                               takeoff_airport_country_name=flight.takeoff_airport and country_name(flight.takeoff_airport.country_code),
-                               aircraft=(flight.model and flight.model.name) or (flight.igc_file.model and '[' + flight.igc_file.model + ']'),
-                               aircraft_reg=flight.registration or flight.igc_file.registration or "Unknown",
-                               flight_id=flight.id,
-                               num_comments=num_comments))
+    flights = Sorter.sort(flights, 'flights', 'score',
+                          valid_columns=valid_columns,
+                          default_order='desc')
+    flights = Pager.paginate(flights, 'flights',
+                             items_per_page=int(current_app.config.get('SKYLINES_LISTS_DISPLAY_LENGTH', 50)))
 
-        return jsonify(aaData=aaData, **response_dict)
-
-    else:
-        if not date:
-            flights = flights.order_by(Flight.date_local.desc())
-
-        flights_count = flights.count()
-        if flights_count > int(current_app.config.get('SKYLINES_LISTS_SERVER_SIDE', 250)):
-            limit = int(current_app.config.get('SKYLINES_LISTS_DISPLAY_LENGTH', 50))
-        else:
-            limit = int(current_app.config.get('SKYLINES_LISTS_SERVER_SIDE', 250))
-
-        flights = flights.order_by(Flight.index_score.desc())
-        flights = flights.limit(limit)
-
-        return render_template('flights/list.jinja',
-                               tab=tab, date=date, pilot=pilot, club=club,
-                               airport=airport, flights=flights,
-                               flights_count=flights_count)
+    return render_template('flights/list.jinja',
+                           tab=tab, date=date, pilot=pilot, club=club,
+                           airport=airport, flights=flights,
+                           flights_count=flights_count)
 
 
 @flights_blueprint.route('/all.json')

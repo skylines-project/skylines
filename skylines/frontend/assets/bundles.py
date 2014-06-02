@@ -97,27 +97,16 @@ openlayers_css = Bundle(
     filters='cssmin, cssrewrite',
     output='css/ol-%(version)s.css')
 
-datatables_css = Bundle(
-    'vendor/jquery-datatables/dataTables.bootstrap.css',
-    filters='cssmin, cssrewrite',
-    output='css/datatables-%(version)s.css')
-
 all_js = Bundle(
     'http://code.jquery.com/jquery-1.10.2.min.js',
     'vendor/jquery/jquery.browser.js',
     'vendor/jquery/jquery.cookie.js',
     'vendor/jquery/jquery.timeago.js',
+    'vendor/bootstrap-datepicker/datepicker.js',
     'js/general.js',
     bootstrap_js,
     filters='rjsmin',
     output='js/skylines-%(version)s.js')
-
-datatables_js = Bundle(
-    'vendor/jquery-datatables/jquery.dataTables.js',
-    'vendor/jquery-datatables/jquery.dataTables.ext.js',
-    'vendor/bootstrap-datepicker/datepicker.js',
-    filters=SimpleClosureJS,
-    output='js/tables-%(version)s.js')
 
 openlayers_js = Bundle(
     'vendor/openlayers/OpenLayers.js',
