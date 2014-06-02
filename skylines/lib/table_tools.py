@@ -11,7 +11,7 @@ class Pager:
 
         self.page_count = int(ceil(count / float(items_per_page)))
         self.first_page = 1
-        self.last_page = self.page_count - 1
+        self.last_page = self.page_count
 
         self.page = max(min(page, self.last_page), self.first_page)
 
