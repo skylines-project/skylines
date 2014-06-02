@@ -30,7 +30,8 @@ def mark_flight_notifications_read(pilot):
 
 
 def _create_list(tab, kw, date=None, pilot=None, club=None, airport=None,
-                 pinned=None, filter=None):
+                 pinned=None, filter=None,
+                 default_sorting_column='score', default_sorting_order='desc'):
     pilot_alias = aliased(User, name='pilot')
     owner_alias = aliased(User, name='owner')
 
@@ -86,9 +87,12 @@ def _create_list(tab, kw, date=None, pilot=None, club=None, airport=None,
 
     flights_count = flights.count()
 
-    flights = Sorter.sort(flights, 'flights', 'score',
+    flights = Sorter.sort(flights, 'flights', default_sorting_column,
                           valid_columns=valid_columns,
-                          default_order='desc')
+                          default_order=default_sorting_order)
+
+    flights = flights.order_by(Flight.index_score.desc())
+
     flights = Pager.paginate(flights, 'flights',
                              items_per_page=int(current_app.config.get('SKYLINES_LISTS_DISPLAY_LENGTH', 50)))
 
@@ -101,7 +105,8 @@ def _create_list(tab, kw, date=None, pilot=None, club=None, airport=None,
 @flights_blueprint.route('/all.json')
 @flights_blueprint.route('/all')
 def all():
-    return _create_list('all', request.args)
+    return _create_list('all', request.args,
+                        default_sorting_column='date', default_sorting_order='desc')
 
 
 @flights_blueprint.route('/')
@@ -130,7 +135,8 @@ def date(date, latest=False):
 
     return _create_list(
         'latest' if latest else 'date',
-        request.args, date=date)
+        request.args, date=date,
+        default_sorting_column='score', default_sorting_order='desc')
 
 
 @flights_blueprint.route('/latest.json')
@@ -156,7 +162,8 @@ def pilot(id):
 
     mark_flight_notifications_read(pilot)
 
-    return _create_list('pilot', request.args, pilot=pilot)
+    return _create_list('pilot', request.args, pilot=pilot,
+                        default_sorting_column='date', default_sorting_order='desc')
 
 
 @flights_blueprint.route('/my')
@@ -172,7 +179,8 @@ def my():
 def club(id):
     club = get_requested_record(Club, id)
 
-    return _create_list('club', request.args, club=club)
+    return _create_list('club', request.args, club=club,
+                        default_sorting_column='date', default_sorting_order='desc')
 
 
 @flights_blueprint.route('/my_club')
@@ -189,7 +197,8 @@ def airport(id):
     airport = get_requested_record(Airport, id)
 
     return _create_list('airport', request.args,
-                        airport=airport)
+                        airport=airport,
+                        default_sorting_column='date', default_sorting_order='desc')
 
 
 @flights_blueprint.route('/unassigned.json')
@@ -201,7 +210,8 @@ def unassigned():
     f = and_(Flight.pilot_id is None,
              IGCFile.owner == g.current_user)
 
-    return _create_list('unassigned', request.args, filter=f)
+    return _create_list('unassigned', request.args, filter=f,
+                        default_sorting_column='date', default_sorting_order='desc')
 
 
 @flights_blueprint.route('/pinned.json')
@@ -222,7 +232,8 @@ def pinned():
     except ValueError:
         abort(404)
 
-    return _create_list('pinned', request.args, pinned=ids)
+    return _create_list('pinned', request.args, pinned=ids,
+                        default_sorting_column='date', default_sorting_order='desc')
 
 
 @flights_blueprint.route('/list/<ids>.json')
@@ -238,7 +249,8 @@ def list(ids):
     except ValueError:
         abort(404)
 
-    return _create_list('list', request.args, pinned=ids)
+    return _create_list('list', request.args, pinned=ids,
+                        default_sorting_column='date', default_sorting_order='desc')
 
 
 @flights_blueprint.route('/igc_headers')
