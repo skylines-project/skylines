@@ -55,12 +55,16 @@ table.vmiddle td {
   background-color: #eee !important;
 }
 
+table thead .sorting span {
+  display: block;
+}
+
 table thead .sorting a {
   cursor: pointer;
-  width: 100%;
   padding-left: 18px;
   text-decoration: none;
   color: black;
+  display: block;
 }
 
 table thead .sorting .sorting_default {
