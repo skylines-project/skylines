@@ -1,6 +1,7 @@
 from math import ceil
 
 from flask import request, abort, g
+from sqlalchemy.sql.expression import asc, desc
 
 
 class Pager:
@@ -32,3 +33,37 @@ class Pager:
 
         offset = (pager.page - 1) * items_per_page
         return query.limit(items_per_page).offset(offset)
+
+
+class Sorter:
+    def __init__(self, column, order, valid_columns):
+        self.column = column
+        self.order = order
+        self.valid_columns = valid_columns
+
+    @classmethod
+    def sort(cls, query, name, default_column, valid_columns={}, default_order='asc'):
+        try:
+            column = request.args.get('column', default_column)
+            order = request.args.get('order', default_order)
+        except:
+            abort(400)
+
+        if column not in valid_columns:
+            abort(400)
+
+        if not hasattr(g, 'sorters'):
+            g.sorters = {}
+
+        g.sorters[name] = cls(column, order, valid_columns)
+
+        if order == 'asc':
+            return query.order_by(asc(valid_columns.get(column)))
+        elif order == 'desc':
+            return query.order_by(desc(valid_columns.get(column)))
+        else:
+            abort(400)
+
+    def args(self):
+        return dict(column=self.column,
+                    order=self.order)

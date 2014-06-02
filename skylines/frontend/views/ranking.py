@@ -6,7 +6,7 @@ from sqlalchemy.sql.expression import desc, over
 from sqlalchemy.orm import subqueryload
 
 from skylines.model import db, User, Club, Flight, Airport
-from skylines.lib.table_tools import Pager
+from skylines.lib.table_tools import Pager, Sorter
 
 ranking_blueprint = Blueprint('ranking', 'skylines')
 
@@ -36,7 +36,6 @@ def _get_result(model, flight_field, year=None):
     if model == User:
         result = result.options(subqueryload(model.club))
 
-    result = result.order_by(desc('total'))
     return result
 
 
@@ -44,6 +43,12 @@ def _handle_request(model, flight_field):
     current_year = date.today().year
     year = _parse_year()
     result = _get_result(model, flight_field, year=year)
+
+    result = Sorter.sort(result, 'sorter', 'total',
+                         valid_columns={'rank': 'rank',
+                                        'count': 'count',
+                                        'total': 'total'},
+                         default_order='asc')
     result = Pager.paginate(result, 'result')
     return dict(year=year, current_year=current_year, result=result)
 
