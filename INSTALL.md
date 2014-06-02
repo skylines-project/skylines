@@ -34,7 +34,7 @@ Now you can install the python dependencies by calling:
     $ sudo pip install -e .
 
 *Note: You might have to install the additional Ubuntu/Debian packages
-`libpq-dev`, `python-dev` and `g++` for the `psycopg2` dependency.*
+`libpq-dev`, `python-dev`, `libgeoip-dev`, and `g++` for the `psycopg2` dependency.*
 
 
 ## PostGIS database

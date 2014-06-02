@@ -1,6 +1,11 @@
 services:
   tms:
     origin: 'nw'
+  wms:
+    srs: ['EPSG:3857']
+    image_formats: ['image/png']
+    md:
+      title: SkyLines WMS Server
 
 layers:
   - name: mwp
@@ -14,6 +19,10 @@ layers:
   - name: airspace
     title: Airspace WMS
     sources: [airspace_cache]
+
+  - name: osm
+    title: OpenStreetMap Tiles
+    sources: [osm_cache]
 
 caches:
   airspace_airports_cache:
@@ -67,6 +76,10 @@ caches:
     format: image/png
     request_format: image/png
     link_single_color_images: true
+
+  osm_cache:
+    sources: [osm_tiles]
+    format: image/png
 
 sources:
   mwp_mapserver_bin:
@@ -138,6 +151,16 @@ sources:
     image:
       format: image/png
 
+  osm_tiles:
+    type: tile
+    url: http://c.tile.openstreetmap.org/%(tms_path)s.%(format)s
+    grid: osm_grid
+
+grids:
+  osm_grid:
+    srs: EPSG:3857
+    origin: nw
+
 globals:
   # # coordinate transformation options
   # srs:
@@ -169,7 +192,7 @@ globals:
   # image/transformation options
   image:
     paletted: false
-    resampling_method: nearest
+    resampling_method: bicubic
 
     formats:
       image/png:

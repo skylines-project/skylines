@@ -22,6 +22,7 @@ from .upload import upload_blueprint
 from .user import user_blueprint
 from .users import users_blueprint
 from .widgets import widgets_blueprint
+from .dyn_images import dyn_images_blueprint
 
 
 def register(app):
@@ -49,6 +50,7 @@ def register(app):
     app.register_blueprint(user_blueprint, url_prefix='/users/<user_id>')
     app.register_blueprint(users_blueprint, url_prefix='/users')
     app.register_blueprint(widgets_blueprint, url_prefix='/widgets')
+    app.register_blueprint(dyn_images_blueprint, url_prefix='/dyn_images')
 
     @app.route('/')
     def index():

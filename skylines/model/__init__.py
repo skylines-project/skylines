@@ -12,6 +12,7 @@ import skylines.model.base
 from .aircraft_model import AircraftModel
 from .airport import Airport
 from .airspace import Airspace
+from .boundaries import Boundaries
 from .club import Club
 from .elevation import Elevation
 from .event import Event, Notification

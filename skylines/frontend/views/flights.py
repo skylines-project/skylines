@@ -139,10 +139,73 @@ def _create_list(tab, kw, date=None, pilot=None, club=None, airport=None,
                                flights_count=flights_count)
 
 
+def _create_overview(tab, kw, date=None, pilot=None, club=None, airport=None,
+                     pinned=None):
+    pilot_alias = aliased(User, name='pilot')
+
+    q = Flight.query() \
+        .filter(Flight.is_listable(g.current_user)) \
+        .join(Flight.igc_file) \
+        .options(contains_eager(Flight.igc_file)) \
+        .outerjoin(pilot_alias, Flight.pilot) \
+        .options(contains_eager(Flight.pilot, alias=pilot_alias)) \
+        .options(joinedload(Flight.co_pilot)) \
+        .outerjoin(Flight.club) \
+        .options(contains_eager(Flight.club)) \
+        .outerjoin(Flight.takeoff_airport) \
+        .options(contains_eager(Flight.takeoff_airport))
+
+    f = None
+
+    if date:
+        f = and_(f, Flight.date_local == date)
+
+    if pilot:
+        f = and_(f, or_(Flight.pilot == pilot,
+                        Flight.co_pilot == pilot))
+
+    if club:
+        f = and_(f, Flight.club == club)
+
+    if airport:
+        f = and_(f, Flight.takeoff_airport == airport)
+
+    if pinned:
+        f = and_(f, Flight.id.in_(pinned))
+
+    if f is not None:
+        q = q.filter(f)
+
+    largest = q.order_by(Flight.olc_classic_distance.desc())
+    longest = q.order_by(Flight.duration.desc())
+    total_distance = q.with_entities(func.sum(Flight.olc_classic_distance)).scalar()
+
+    # If there are no flights on that day, return early
+    if not largest.first():
+        return render_template('flights/overview.jinja',
+                               tab=tab, date=date, pilot=pilot, club=club,
+                               airport=airport, flights=None)
+
+    flights = dict(largest=largest.first(),
+                   longest=longest.first())
+
+    overview = dict(total_distance=total_distance)
+
+    return render_template('flights/overview.jinja',
+                           tab=tab, date=date, pilot=pilot, club=club,
+                           airport=airport, flights=flights, overview=overview)
+
+
 @flights_blueprint.route('/all.json')
 @flights_blueprint.route('/all')
 def all():
     return _create_list('all', request.args)
+
+
+@flights_blueprint.route('/all/overview.json')
+@flights_blueprint.route('/all/overview')
+def all_overview():
+    return _create_overview('all', request.args)
 
 
 @flights_blueprint.route('/')
@@ -204,6 +267,40 @@ def latest():
     return date(date_, latest=True)
 
 
+@flights_blueprint.route('/date/<date>/overview.json')
+@flights_blueprint.route('/date/<date>/overview')
+def date_overview(date, latest=False):
+    try:
+        if isinstance(date, (str, unicode)):
+            date = datetime.strptime(date, "%Y-%m-%d")
+
+        if isinstance(date, datetime):
+            date = date.date()
+
+    except:
+        abort(404)
+
+    return _create_overview(
+        'latest' if latest else 'date',
+        request.args, date=date)
+
+
+@flights_blueprint.route('/latest/overview.json')
+@flights_blueprint.route('/latest/overview')
+def latest_overview():
+    query = db.session \
+        .query(func.max(Flight.date_local).label('date')) \
+        .filter(Flight.takeoff_time < datetime.utcnow()) \
+        .join(Flight.igc_file) \
+        .filter(Flight.is_listable(g.current_user))
+
+    date_ = query.one().date
+    if not date_:
+        date_ = datetime.utcnow()
+
+    return date_overview(date_, latest=True)
+
+
 @flights_blueprint.route('/pilot/<int:id>.json')
 @flights_blueprint.route('/pilot/<int:id>')
 def pilot(id):
@@ -225,6 +322,14 @@ def pilot(id):
     }
 
     return _create_list('pilot', request.args, pilot=pilot, columns=columns)
+
+
+@flights_blueprint.route('/pilot/<int:id>/overview.json')
+@flights_blueprint.route('/pilot/<int:id>/overview')
+def pilot_overview(id):
+    pilot = get_requested_record(User, id)
+
+    return _create_overview('pilot', request.args, pilot=pilot)
 
 
 @flights_blueprint.route('/my')
@@ -256,6 +361,14 @@ def club(id):
     return _create_list('club', request.args, club=club, columns=columns)
 
 
+@flights_blueprint.route('/club/<int:id>/overview.json')
+@flights_blueprint.route('/club/<int:id>/overview')
+def club_overview(id):
+    club = get_requested_record(Club, id)
+
+    return _create_overview('club', request.args, club=club)
+
+
 @flights_blueprint.route('/my_club')
 def my_club():
     if not g.current_user:
@@ -284,6 +397,15 @@ def airport(id):
 
     return _create_list('airport', request.args,
                         airport=airport, columns=columns)
+
+
+@flights_blueprint.route('/airport/<int:id>/overview.json')
+@flights_blueprint.route('/airport/<int:id>/overview')
+def airport_overview(id):
+    airport = get_requested_record(Airport, id)
+
+    return _create_overview('airport', request.args,
+                            airport=airport)
 
 
 @flights_blueprint.route('/unassigned.json')
@@ -317,6 +439,27 @@ def pinned():
         abort(404)
 
     return _create_list('pinned', request.args, pinned=ids)
+
+
+@flights_blueprint.route('/pinned/overview.json')
+@flights_blueprint.route('/pinned/overview')
+def pinned_overview():
+    # Check if we have cookies
+    if request.cookies is None:
+        return redirect(url_for('.latest_overview'))
+
+    # Check for the 'pinnedFlights' cookie
+    ids = request.cookies.get('SkyLines_pinnedFlights', None)
+    if not ids:
+        return redirect(url_for('.latest_overview'))
+
+    try:
+        # Split the string into integer IDs (%2C = comma)
+        ids = [int(id) for id in ids.split('%2C')]
+    except ValueError:
+        abort(404)
+
+    return _create_overview('pinned', request.args, pinned=ids)
 
 
 @flights_blueprint.route('/igc_headers')

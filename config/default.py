@@ -56,6 +56,7 @@ SKYLINES_LISTS_DISPLAY_LENGTH = 50
 SKYLINES_LISTS_SERVER_SIDE = 250
 
 SKYLINES_MAP_TILE_URL = 'https://www.skylines-project.org/mapproxy'
+SKYLINES_MAPSERVER_BASEDIR = 'mapserver'
 
 BROKER_URL = 'redis://localhost:6379/0'
 CELERY_RESULT_BACKEND = 'redis://localhost:6379/0'
@@ -64,3 +65,6 @@ CELERYD_LOG_LEVEL = 'INFO'
 # limits for AnalyseFlight
 SKYLINES_ANALYSIS_ITER = 10e6 # iteration limit, should be around 10e6 to 50e6
 SKYLINES_ANALYSIS_MEMORY = 256 # approx memory limit in MB
+
+# Path to the geoip database file
+GEOIP_DATABASE = '/usr/share/GeoIP/GeoIP.dat'
