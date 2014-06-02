@@ -42,6 +42,7 @@ setup(
         'xcsoar==0.2.1',
         'Pygments==1.6',
         'aerofiles==0.1.1',
+        'enum34==1.0',
     ],
     include_package_data=True,
     package_data={

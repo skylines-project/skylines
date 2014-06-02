@@ -319,6 +319,22 @@ def pinned():
     return _create_list('pinned', request.args, pinned=ids)
 
 
+@flights_blueprint.route('/list/<ids>.json')
+@flights_blueprint.route('/list/<ids>')
+def list(ids):
+    # Check for the 'pinnedFlights' cookie
+    if not ids:
+        return redirect(url_for('.index'))
+
+    try:
+        # Split the string into integer IDs
+        ids = [int(id) for id in ids.split(',')]
+    except ValueError:
+        abort(404)
+
+    return _create_list('list', request.args, pinned=ids)
+
+
 @flights_blueprint.route('/igc_headers')
 def igc_headers():
     """Hidden method that parses all missing IGC headers."""
