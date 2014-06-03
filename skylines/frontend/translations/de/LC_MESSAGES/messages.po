@@ -200,7 +200,7 @@ msgstr ""
 #: skylines/frontend/templates/base-page.jinja:43
 #: skylines/frontend/views/about.py:41
 msgid "The SkyLines Team"
-msgstr "Das SkyLines Team"
+msgstr "Das SkyLines-Team"
 
 #: skylines/frontend/templates/base-page.jinja:44
 #: skylines/frontend/views/about.py:25
@@ -299,7 +299,7 @@ msgstr "Abmelden"
 #: skylines/frontend/templates/clubs/create_pilot.jinja:14
 #: skylines/frontend/templates/clubs/pilots.jinja:21
 msgid "Create Pilot"
-msgstr "Pilot erstellen"
+msgstr "Pilot anlegen"
 
 #: skylines/frontend/templates/clubs/create_pilot.jinja:12
 #: skylines/frontend/templates/settings/profile.jinja:12
@@ -1393,7 +1393,7 @@ msgstr "Dein Passwort wurde geändert."
 
 #: skylines/frontend/views/settings.py:125
 msgid "Live Tracking settings were saved."
-msgstr "Live Tracking Einstellungen wurden gespeichert."
+msgstr "Einstellungen fürs Live-Tracking wurden gespeichert."
 
 #: skylines/frontend/views/settings.py:188
 msgid "New club was saved."
