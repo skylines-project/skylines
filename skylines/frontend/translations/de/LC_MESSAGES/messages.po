@@ -1551,14 +1551,14 @@ msgstr ""
 #~ msgid "American (imperial)"
 #~ msgstr "Amerikanisch (imperial)"
 
-#~ msgid "Left"
-#~ msgstr "Links"
+msgid "Left"
+msgstr "Links"
 
-#~ msgid "Mixed"
-#~ msgstr "Gemischt"
+msgid "Mixed"
+msgstr "Gemischt"
 
-#~ msgid "Right"
-#~ msgstr "Rechts"
+msgid "Right"
+msgstr "Rechts"
 
 #~ msgid "Powered"
 #~ msgstr "Motor"
