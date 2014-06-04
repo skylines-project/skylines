@@ -5,18 +5,16 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: skylines\n"
+"Project-Id-Version:  skylines\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2013-12-27 00:36+0100\n"
+"POT-Creation-Date: 2014-06-04 17:25+0200\n"
 "PO-Revision-Date: 2014-01-20 21:11+0000\n"
 "Last-Translator: Tobias Bieniek <Tobias.Bieniek@gmx.de>\n"
 "Language-Team: German <de@li.org>\n"
+"Plural-Forms: nplurals=2; plural=n != 1\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2014-01-25 16:41+0000\n"
-"X-Generator: Launchpad (build 16914)\n"
 "Generated-By: Babel 1.3\n"
 
 #: skylines/frontend/forms/aircraft_model.py:29
@@ -44,7 +42,7 @@ msgid "Other"
 msgstr "Andere"
 
 #: skylines/frontend/forms/pilot.py:85
-#: skylines/frontend/templates/tracking/view.jinja:133
+#: skylines/frontend/templates/tracking/view.jinja:134
 #, python-format
 msgid "%(num)u minute"
 msgid_plural "%(num)u minutes"
@@ -64,11 +62,11 @@ msgstr "Ungültiger Feldname '%s'."
 msgid "Welcome to SkyLines, your internet platform for flight sharing!"
 msgstr "Willkommen bei SkyLines, deiner Internetplattform zum Austausch von Flügen!"
 
-#: skylines/frontend/templates/about.jinja:28
+#: skylines/frontend/templates/about.jinja:31
 msgid "Flight Database"
 msgstr "Flugdatenbank"
 
-#: skylines/frontend/templates/about.jinja:29
+#: skylines/frontend/templates/about.jinja:32
 #, python-format
 msgid ""
 "<a href=\"%(url)s\">Upload</a> your IGC files and share them with your "
@@ -79,14 +77,14 @@ msgstr ""
 "Freunden. Die Flüge können uneingeschränkt runtergeladen werden und werden "
 "von uns nicht verändert!"
 
-#: skylines/frontend/templates/about.jinja:32
+#: skylines/frontend/templates/about.jinja:35
 #: skylines/frontend/templates/settings/base.jinja:19
 #: skylines/frontend/templates/tracking/info.jinja:4
 #: skylines/frontend/templates/tracking/list.jinja:9
 msgid "Live Tracking"
 msgstr "Live Tracking"
 
-#: skylines/frontend/templates/about.jinja:33
+#: skylines/frontend/templates/about.jinja:36
 #, python-format
 msgid ""
 "Use your mobile phone to send position updates to SkyLines. Find out how it "
@@ -95,11 +93,11 @@ msgstr ""
 "Benutz dein Telefon um Positionsupdates an SkyLines zu schicken. Klick <a "
 "href=\"%(url)s\">hier</a> für mehr Informationen."
 
-#: skylines/frontend/templates/about.jinja:36
+#: skylines/frontend/templates/about.jinja:39
 msgid "Flight Analysis"
 msgstr "Fluganalyse"
 
-#: skylines/frontend/templates/about.jinja:37
+#: skylines/frontend/templates/about.jinja:40
 msgid ""
 "Use our analysis tools to have a closer look at your flights and how you "
 "might be able to improve them in the future."
@@ -107,17 +105,17 @@ msgstr ""
 "Benutz unsere Analysetools um dir deine Flüge im Detail anzuschauen und um "
 "herauszufinden wie du in Zukunft noch besser fliegen kannst."
 
-#: skylines/frontend/templates/about.jinja:42
+#: skylines/frontend/templates/about.jinja:45
 msgid "Task Planning"
 msgstr "Streckenplanung"
 
-#: skylines/frontend/templates/about.jinja:42
-#: skylines/frontend/templates/about.jinja:46
-#: skylines/frontend/templates/about.jinja:50
+#: skylines/frontend/templates/about.jinja:45
+#: skylines/frontend/templates/about.jinja:49
+#: skylines/frontend/templates/about.jinja:53
 msgid "planned"
 msgstr "geplant"
 
-#: skylines/frontend/templates/about.jinja:43
+#: skylines/frontend/templates/about.jinja:46
 #, python-format
 msgid ""
 "Use your browser to plan your tasks before the flight and upload them "
@@ -127,11 +125,11 @@ msgstr ""
 " auf schnellstem Weg in dein Navigationsgerät. Die Integration von "
 "%(prosoar)s ist geplant."
 
-#: skylines/frontend/templates/about.jinja:46
+#: skylines/frontend/templates/about.jinja:49
 msgid "Competitions"
 msgstr "Wettbewerbe"
 
-#: skylines/frontend/templates/about.jinja:47
+#: skylines/frontend/templates/about.jinja:50
 msgid ""
 "Create competitions to offer your spectators an even better live tracking "
 "experience by following all the participants on the same map."
@@ -140,11 +138,11 @@ msgstr ""
 "Erlebnis zu bieten. Sieh allen Teilnehmern auf der selben Karte beim Fliegen"
 " zu."
 
-#: skylines/frontend/templates/about.jinja:50
+#: skylines/frontend/templates/about.jinja:53
 msgid "Achievements"
 msgstr "Auszeichnungen"
 
-#: skylines/frontend/templates/about.jinja:51
+#: skylines/frontend/templates/about.jinja:54
 msgid ""
 "Challenge yourself by trying to complete all the achievements that SkyLines "
 "offers. Fly large triangles, long final glides or just do your first "
@@ -154,11 +152,11 @@ msgstr ""
 "erlangen. Flieg große Dreiecke, mach lange Endanflüge und mach einfach deine"
 " erste Außenlandung."
 
-#: skylines/frontend/templates/about.jinja:56
+#: skylines/frontend/templates/about.jinja:59
 msgid "Social Network"
 msgstr "Soziales Netzwerk"
 
-#: skylines/frontend/templates/about.jinja:57
+#: skylines/frontend/templates/about.jinja:60
 #, python-format
 msgid ""
 "Skylines also has some social network aspects. You can comment on flights, "
@@ -169,11 +167,11 @@ msgstr ""
 "kommentieren, deinen Freunden folgen und bekommst <a "
 "href=\"%(url)s\">Benachrichtigungen</a> wenn sie etwas interessantes machen."
 
-#: skylines/frontend/templates/about.jinja:60
+#: skylines/frontend/templates/about.jinja:63
 msgid "Open Data"
 msgstr "Open Data"
 
-#: skylines/frontend/templates/about.jinja:61
+#: skylines/frontend/templates/about.jinja:64
 #, python-format
 msgid ""
 "The SkyLines flight database is made available under the %(license)s. "
@@ -182,11 +180,11 @@ msgstr ""
 "Die Flugdatenbank von SkyLines steht unter der %(license)s. SkyLines benutzt"
 " Wendepunktdaten vom %(welt2000)s Projekt."
 
-#: skylines/frontend/templates/about.jinja:64
+#: skylines/frontend/templates/about.jinja:67
 msgid "Open Source"
 msgstr "Open Source"
 
-#: skylines/frontend/templates/about.jinja:65
+#: skylines/frontend/templates/about.jinja:68
 #, python-format
 msgid ""
 "Skylines is a <a href=\"%(team_url)s\">community</a> project and entirely "
@@ -233,23 +231,23 @@ msgstr "Live"
 #: skylines/frontend/templates/topbar.jinja:134
 #: skylines/frontend/templates/clubs/list.jinja:20
 #: skylines/frontend/templates/clubs/view.jinja:50
-#: skylines/frontend/templates/flights/list.jinja:27
-#: skylines/frontend/templates/ranking/airports.jinja:11
-#: skylines/frontend/templates/ranking/clubs.jinja:10
-#: skylines/frontend/templates/ranking/pilots.jinja:11
+#: skylines/frontend/templates/flights/list.jinja:34
+#: skylines/frontend/templates/ranking/airports.jinja:15
+#: skylines/frontend/templates/ranking/clubs.jinja:14
+#: skylines/frontend/templates/ranking/pilots.jinja:15
 #: skylines/frontend/templates/search/list.jinja:100
 #: skylines/frontend/templates/search/list.jinja:104
 #: skylines/frontend/templates/search/list.jinja:107
 #: skylines/frontend/templates/statistics/flights-table.jinja:6
 #: skylines/frontend/templates/statistics/years.jinja:66
 #: skylines/frontend/templates/users/users-table.jinja:27
-#: skylines/frontend/templates/users/view.jinja:148
-#: skylines/frontend/templates/users/view.jinja:196
+#: skylines/frontend/templates/users/view.jinja:149
+#: skylines/frontend/templates/users/view.jinja:197
 msgid "Flights"
 msgstr "Flüge"
 
 #: skylines/frontend/templates/topbar.jinja:7
-#: skylines/frontend/templates/ranking/layout.jinja:17
+#: skylines/frontend/templates/ranking/layout.jinja:18
 msgid "Ranking"
 msgstr "Rangliste"
 
@@ -257,13 +255,13 @@ msgstr "Rangliste"
 #: skylines/frontend/templates/topbar.jinja:135
 #: skylines/frontend/templates/clubs/list.jinja:21
 #: skylines/frontend/templates/clubs/view.jinja:51
-#: skylines/frontend/templates/flights/view.jinja:174
+#: skylines/frontend/templates/flights/view.jinja:204
 #: skylines/frontend/templates/search/list.jinja:101
 #: skylines/frontend/templates/search/list.jinja:105
 #: skylines/frontend/templates/search/list.jinja:108
 #: skylines/frontend/templates/statistics/years.jinja:29
 #: skylines/frontend/templates/users/users-table.jinja:28
-#: skylines/frontend/templates/users/view.jinja:149
+#: skylines/frontend/templates/users/view.jinja:150
 msgid "Statistics"
 msgstr "Statistiken"
 
@@ -276,7 +274,7 @@ msgstr "Suche"
 
 #: skylines/frontend/templates/topbar.jinja:54
 #: skylines/frontend/templates/topbar.jinja:57
-#: skylines/frontend/templates/flights/list.jinja:270
+#: skylines/frontend/templates/flights/list.jinja:166
 msgid "Upload flight"
 msgstr "Flug hochladen"
 
@@ -287,25 +285,13 @@ msgid "Notifications"
 msgstr "Benachrichtigungen"
 
 #: skylines/frontend/templates/topbar.jinja:137
-#: skylines/frontend/templates/users/view.jinja:137
+#: skylines/frontend/templates/users/view.jinja:138
 msgid "Settings"
 msgstr "Einstellungen"
 
 #: skylines/frontend/templates/topbar.jinja:139
 msgid "Logout"
 msgstr "Abmelden"
-
-#: skylines/frontend/templates/clubs/create_pilot.jinja:6
-#: skylines/frontend/templates/clubs/create_pilot.jinja:14
-#: skylines/frontend/templates/clubs/pilots.jinja:21
-msgid "Create Pilot"
-msgstr "Pilot anlegen"
-
-#: skylines/frontend/templates/clubs/create_pilot.jinja:12
-#: skylines/frontend/templates/settings/profile.jinja:12
-#: skylines/frontend/templates/users/new.jinja:12
-msgid "First and last name"
-msgstr "Vor- und Nachname"
 
 #: skylines/frontend/templates/clubs/edit.jinja:6
 msgid "Edit Club"
@@ -320,22 +306,22 @@ msgstr "Verein bearbeiten"
 #: skylines/frontend/templates/settings/password.jinja:30
 #: skylines/frontend/templates/settings/profile.jinja:21
 #: skylines/frontend/templates/settings/tracking.jinja:33
-#: skylines/frontend/templates/users/view.jinja:110
+#: skylines/frontend/templates/users/view.jinja:111
 msgid "Change"
 msgstr "Ändern"
 
 #: skylines/frontend/templates/clubs/list.jinja:5
-#: skylines/frontend/templates/ranking/layout.jinja:10
+#: skylines/frontend/templates/ranking/layout.jinja:11
 msgid "Clubs"
 msgstr "Vereine"
 
 #: skylines/frontend/templates/clubs/list.jinja:11
 #: skylines/frontend/templates/clubs/view.jinja:22
-#: skylines/frontend/templates/ranking/airports.jinja:10
-#: skylines/frontend/templates/ranking/clubs.jinja:9
-#: skylines/frontend/templates/ranking/pilots.jinja:9
+#: skylines/frontend/templates/ranking/airports.jinja:13
+#: skylines/frontend/templates/ranking/clubs.jinja:12
+#: skylines/frontend/templates/ranking/pilots.jinja:12
 #: skylines/frontend/templates/users/users-table.jinja:7
-#: skylines/frontend/templates/users/view.jinja:92
+#: skylines/frontend/templates/users/view.jinja:93
 msgid "Name"
 msgstr "Name"
 
@@ -375,17 +361,9 @@ msgstr "Flugzeug wählen"
 msgid "Select Pilot"
 msgstr "Pilot wählen"
 
-#: skylines/frontend/templates/flights/change_pilot.jinja:22
-msgid "Pilot missing in the list?"
-msgstr "Fehlt ein Pilot in der Liste?"
-
-#: skylines/frontend/templates/flights/change_pilot.jinja:23
-msgid "Create new pilot"
-msgstr "Neuen Pilot anlegen"
-
 #: skylines/frontend/templates/flights/details-table.jinja:11
-#: skylines/frontend/templates/flights/flights-table.jinja:8
-#: skylines/frontend/templates/users/view.jinja:163
+#: skylines/frontend/templates/flights/flights-table.jinja:10
+#: skylines/frontend/templates/users/view.jinja:164
 #: skylines/frontend/templates/widgets/flights.jinja:5
 msgid "Date"
 msgstr "Datum"
@@ -417,30 +395,34 @@ msgid "%(hours)s hours"
 msgstr "%(hours)s Stunden"
 
 #: skylines/frontend/templates/flights/details-table.jinja:58
-#: skylines/frontend/templates/flights/flights-table.jinja:14
+#: skylines/frontend/templates/flights/flights-table.jinja:28
+#: skylines/frontend/templates/flights/wingman-table.jinja:8
 #: skylines/frontend/templates/widgets/flights.jinja:9
 msgid "Aircraft"
 msgstr "Flugzeug"
 
 #: skylines/frontend/templates/flights/details-table.jinja:67
+#: skylines/frontend/templates/flights/wingman-table.jinja:19
 msgid "Handicap"
 msgstr "Index"
 
 #: skylines/frontend/templates/flights/details-table.jinja:71
-#: skylines/frontend/templates/flights/flights-table.jinja:86
+#: skylines/frontend/templates/flights/flights-table.jinja:103
+#: skylines/frontend/templates/flights/wingman-table.jinja:23
 #: skylines/frontend/templates/tracking/list.jinja:60
+#: skylines/frontend/templates/upload/result.jinja:76
 msgid "Unknown"
 msgstr "Unbekannt"
 
 #: skylines/frontend/templates/flights/details-table.jinja:93
-#: skylines/frontend/templates/flights/flights-table.jinja:9
+#: skylines/frontend/templates/flights/flights-table.jinja:13
 msgid "Score"
 msgstr "Punkte"
 
 #: skylines/frontend/templates/flights/details-table.jinja:95
-#: skylines/frontend/templates/ranking/airports.jinja:23
-#: skylines/frontend/templates/ranking/clubs.jinja:19
-#: skylines/frontend/templates/ranking/pilots.jinja:21
+#: skylines/frontend/templates/ranking/airports.jinja:30
+#: skylines/frontend/templates/ranking/clubs.jinja:26
+#: skylines/frontend/templates/ranking/pilots.jinja:28
 #, python-format
 msgid "%(points)s pt"
 msgstr "%(points)s pt"
@@ -458,24 +440,25 @@ msgid "Speed"
 msgstr "Geschwindigkeit"
 
 #: skylines/frontend/templates/flights/details-table.jinja:119
-#: skylines/frontend/templates/flights/flights-table.jinja:10
+#: skylines/frontend/templates/flights/flights-table.jinja:16
+#: skylines/frontend/templates/flights/wingman-table.jinja:9
 #: skylines/frontend/templates/search/list.jinja:63
 #: skylines/frontend/templates/search/list.jinja:73
 #: skylines/frontend/templates/tracking/list.jinja:41
-#: skylines/frontend/templates/tracking/view.jinja:117
+#: skylines/frontend/templates/tracking/view.jinja:118
 #: skylines/frontend/templates/widgets/flights.jinja:6
 msgid "Pilot"
 msgstr "Pilot"
 
 #: skylines/frontend/templates/flights/details-table.jinja:159
-#: skylines/frontend/templates/flights/flights-table.jinja:13
-#: skylines/frontend/templates/ranking/pilots.jinja:10
+#: skylines/frontend/templates/flights/flights-table.jinja:25
+#: skylines/frontend/templates/ranking/pilots.jinja:13
 #: skylines/frontend/templates/search/list.jinja:65
 #: skylines/frontend/templates/search/list.jinja:75
 #: skylines/frontend/templates/settings/base.jinja:18
-#: skylines/frontend/templates/tracking/view.jinja:123
+#: skylines/frontend/templates/tracking/view.jinja:124
 #: skylines/frontend/templates/users/users-table.jinja:8
-#: skylines/frontend/templates/users/view.jinja:98
+#: skylines/frontend/templates/users/view.jinja:99
 msgid "Club"
 msgstr "Verein"
 
@@ -496,58 +479,57 @@ msgstr "Aktionen"
 msgid "Delete"
 msgstr "Löschen"
 
-#: skylines/frontend/templates/flights/flights-table.jinja:11
+#: skylines/frontend/templates/flights/flights-table.jinja:19
 #: skylines/frontend/templates/flights/phases-table.jinja:39
 #: skylines/frontend/templates/flights/phases-table.jinja:73
 #: skylines/frontend/templates/statistics/distance-table.jinja:6
 #: skylines/frontend/templates/statistics/years.jinja:69
-#: skylines/frontend/templates/users/view.jinja:162
-#: skylines/frontend/templates/users/view.jinja:200
+#: skylines/frontend/templates/users/view.jinja:163
+#: skylines/frontend/templates/users/view.jinja:201
 #: skylines/frontend/templates/widgets/flights.jinja:7
 msgid "Distance"
 msgstr "Distanz"
 
-#: skylines/frontend/templates/flights/flights-table.jinja:12
+#: skylines/frontend/templates/flights/flights-table.jinja:22
 #: skylines/frontend/templates/search/list.jinja:67
 #: skylines/frontend/templates/search/list.jinja:77
 #: skylines/frontend/templates/widgets/flights.jinja:8
 msgid "Airport"
 msgstr "Flugplatz"
 
-#: skylines/frontend/templates/flights/flights-table.jinja:15
+#: skylines/frontend/templates/flights/flights-table.jinja:31
 msgid "Time"
 msgstr "Uhrzeit"
 
-#: skylines/frontend/templates/flights/flights-table.jinja:106
-#: skylines/frontend/templates/flights/list.jinja:174
+#: skylines/frontend/templates/flights/flights-table.jinja:123
 #: skylines/frontend/templates/notifications/events-table.jinja:175
 #: skylines/frontend/templates/tracking/list.jinja:68
 msgid "Show"
 msgstr "Anzeigen"
 
-#: skylines/frontend/templates/flights/flights-table.jinja:114
+#: skylines/frontend/templates/flights/flights-table.jinja:131
 #, python-format
 msgid "%(num)d comment"
 msgid_plural "%(num)d comments"
 msgstr[0] "%(num)d Kommentar"
 msgstr[1] "%(num)d Kommentare"
 
-#: skylines/frontend/templates/flights/list.jinja:11
+#: skylines/frontend/templates/flights/list.jinja:18
 #, python-format
 msgid "Flights <small>of %(pilot)s</small>"
 msgstr "Flüge <small>von %(pilot)s</small>"
 
-#: skylines/frontend/templates/flights/list.jinja:15
+#: skylines/frontend/templates/flights/list.jinja:22
 #, python-format
 msgid "Flights <small>of %(club)s</small>"
 msgstr "Flüge <small>von %(club)s</small>"
 
-#: skylines/frontend/templates/flights/list.jinja:19
+#: skylines/frontend/templates/flights/list.jinja:26
 #, python-format
 msgid "Flights <small>from %(airport)s</small>"
 msgstr "Flüge <small>ab %(airport)s</small>"
 
-#: skylines/frontend/templates/flights/list.jinja:23
+#: skylines/frontend/templates/flights/list.jinja:30
 #, python-format
 msgid "Flights <small>on %(date)s</small>"
 msgstr "Flüge <small>am %(date)s</small>"
@@ -620,53 +602,58 @@ msgstr "Phase"
 msgid "Start"
 msgstr "Start"
 
-#: skylines/frontend/templates/flights/view.jinja:134
+#: skylines/frontend/templates/flights/view.jinja:164
 msgid "Spread the word"
 msgstr "Erzähl es herum"
 
-#: skylines/frontend/templates/flights/view.jinja:164
+#: skylines/frontend/templates/flights/view.jinja:194
 msgid "Overview"
 msgstr "Übersicht"
 
-#: skylines/frontend/templates/flights/view.jinja:166
-#: skylines/frontend/templates/flights/view.jinja:193
+#: skylines/frontend/templates/flights/view.jinja:196
+#: skylines/frontend/templates/flights/view.jinja:228
 msgid "Comments"
 msgstr "Kommentare"
 
-#: skylines/frontend/templates/flights/view.jinja:185
-#: skylines/frontend/templates/tracking/view.jinja:160
+#: skylines/frontend/templates/flights/view.jinja:209
+#: skylines/frontend/templates/flights/view.jinja:276
+msgid "Wingmen"
+msgstr ""
+
+#: skylines/frontend/templates/flights/view.jinja:220
+#: skylines/frontend/templates/tracking/view.jinja:161
 msgid "Full-screen map"
 msgstr "Große Karte"
 
-#: skylines/frontend/templates/flights/view.jinja:188
+#: skylines/frontend/templates/flights/view.jinja:223
 msgid "Activate this to show the flight on top of other flights on the map"
 msgstr "Aktiviere diese Option um den Flug auch auf der Karte anderer Flüge zu sehen."
 
-#: skylines/frontend/templates/flights/view.jinja:209
+#: skylines/frontend/templates/flights/view.jinja:244
 msgid "No comments yet."
 msgstr "Keine Kommentare bisher."
 
-#: skylines/frontend/templates/flights/view.jinja:218
+#: skylines/frontend/templates/flights/view.jinja:253
 msgid "Add comment"
 msgstr "Kommentar hinzufügen"
 
-#: skylines/frontend/templates/flights/view.jinja:227
+#: skylines/frontend/templates/flights/view.jinja:262
 msgid "Circling performance"
 msgstr "Kreisflugleistung"
 
-#: skylines/frontend/templates/flights/view.jinja:230
+#: skylines/frontend/templates/flights/view.jinja:265
 msgid "Cruise performance"
 msgstr "Vorflugleistung"
 
-#: skylines/frontend/templates/flights/view.jinja:235
+#: skylines/frontend/templates/flights/view.jinja:270
 msgid "Detailed statistics"
 msgstr "Erweiterte Statistiken"
 
-#: skylines/frontend/templates/flights/view.jinja:249
+#: skylines/frontend/templates/flights/view.jinja:289
 msgid "An error occurred while decoding this flight."
 msgstr "Beim decodieren des Flugs ist ein Fehler aufgetreten."
 
-#: skylines/frontend/templates/flights/view.jinja:258
+#: skylines/frontend/templates/flights/view.jinja:298
 msgid "Phases"
 msgstr "Phasen"
 
@@ -687,6 +674,17 @@ msgstr "Fehler!"
 #: skylines/frontend/templates/macros/flash.jinja:17
 msgid "Warning!"
 msgstr "Achtung!"
+
+#: skylines/frontend/templates/macros/pager.jinja:68
+#, python-format
+msgid ""
+"\n"
+"Showing %(start)s to %(end)s of %(total)s entries.\n"
+msgstr ""
+
+#: skylines/frontend/templates/macros/pager.jinja:72
+msgid "No entries in table."
+msgstr ""
 
 #: skylines/frontend/templates/notifications/events-table.jinja:24
 msgid "New"
@@ -817,41 +815,41 @@ msgstr "Alle als gelesen markieren"
 msgid "Older"
 msgstr "Älter"
 
-#: skylines/frontend/templates/ranking/airports.jinja:12
-#: skylines/frontend/templates/ranking/clubs.jinja:11
-#: skylines/frontend/templates/ranking/pilots.jinja:12
+#: skylines/frontend/templates/ranking/airports.jinja:18
+#: skylines/frontend/templates/ranking/clubs.jinja:17
+#: skylines/frontend/templates/ranking/pilots.jinja:18
 msgid "Total Score"
 msgstr "Gesamtpunkte"
 
-#: skylines/frontend/templates/ranking/airports.jinja:27
+#: skylines/frontend/templates/ranking/airports.jinja:34
 msgid "No airports found."
 msgstr "Keine Flugplätze gefunden."
 
-#: skylines/frontend/templates/ranking/clubs.jinja:23
+#: skylines/frontend/templates/ranking/clubs.jinja:30
 msgid "No clubs found."
 msgstr "Keine Vereine gefunden."
 
-#: skylines/frontend/templates/ranking/layout.jinja:11
+#: skylines/frontend/templates/ranking/layout.jinja:12
 #: skylines/frontend/templates/statistics/pilots-table.jinja:6
 #: skylines/frontend/templates/statistics/years.jinja:76
 msgid "Pilots"
 msgstr "Piloten"
 
-#: skylines/frontend/templates/ranking/layout.jinja:12
+#: skylines/frontend/templates/ranking/layout.jinja:13
 msgid "Airports"
 msgstr "Flugplätze"
 
-#: skylines/frontend/templates/ranking/layout.jinja:27
+#: skylines/frontend/templates/ranking/layout.jinja:28
 #, python-format
 msgid "Season %(year)s"
 msgstr "Saison %(year)s"
 
-#: skylines/frontend/templates/ranking/layout.jinja:29
-#: skylines/frontend/templates/ranking/layout.jinja:34
+#: skylines/frontend/templates/ranking/layout.jinja:30
+#: skylines/frontend/templates/ranking/layout.jinja:35
 msgid "All time"
 msgstr "Gesamt"
 
-#: skylines/frontend/templates/ranking/pilots.jinja:25
+#: skylines/frontend/templates/ranking/pilots.jinja:32
 msgid "No pilots found."
 msgstr "Keine Piloten gefunden."
 
@@ -909,6 +907,11 @@ msgstr "Passwort wiederherstellen"
 msgid "Edit User"
 msgstr "Benutzer bearbeiten"
 
+#: skylines/frontend/templates/settings/profile.jinja:12
+#: skylines/frontend/templates/users/new.jinja:12
+msgid "First and last name"
+msgstr "Vor- und Nachname"
+
 #: skylines/frontend/templates/settings/tracking.jinja:6
 #: skylines/frontend/templates/tracking/info.jinja:31
 msgid "Live Tracking Settings"
@@ -937,7 +940,7 @@ msgid "Year"
 msgstr "Jahr"
 
 #: skylines/frontend/templates/statistics/distance-table.jinja:14
-#: skylines/frontend/templates/users/view.jinja:202
+#: skylines/frontend/templates/users/view.jinja:203
 #, python-format
 msgid "avg. %(distance)s per flight"
 msgstr "avg. %(distance)s pro Flug"
@@ -945,24 +948,25 @@ msgstr "avg. %(distance)s pro Flug"
 #: skylines/frontend/templates/statistics/distance-table.jinja:29
 #: skylines/frontend/templates/statistics/duration-table.jinja:29
 #: skylines/frontend/templates/statistics/flights-table.jinja:25
+#: skylines/frontend/templates/statistics/pilots-table.jinja:25
 msgid "Total"
 msgstr "Gesamt"
 
 #: skylines/frontend/templates/statistics/duration-table.jinja:6
 #: skylines/frontend/templates/statistics/years.jinja:72
-#: skylines/frontend/templates/users/view.jinja:208
+#: skylines/frontend/templates/users/view.jinja:209
 msgid "Flight Time"
 msgstr "Flugzeit"
 
 #: skylines/frontend/templates/statistics/duration-table.jinja:14
-#: skylines/frontend/templates/users/view.jinja:210
+#: skylines/frontend/templates/users/view.jinja:211
 #, python-format
 msgid "avg. %(hours)s hours per flight"
 msgstr "avg. %(hours)s Stunden pro Flug"
 
 #: skylines/frontend/templates/statistics/duration-table.jinja:15
 #: skylines/frontend/templates/statistics/duration-table.jinja:30
-#: skylines/frontend/templates/users/view.jinja:211
+#: skylines/frontend/templates/users/view.jinja:212
 #, python-format
 msgid "%(hours)s Hours"
 msgstr "%(hours)s Stunden"
@@ -988,7 +992,7 @@ msgid "Timeline <small>of %(pilot)s</small>"
 msgstr "Timeline <small>von %(pilot)s</small>"
 
 #: skylines/frontend/templates/timeline/list.jinja:12
-#: skylines/frontend/templates/users/view.jinja:150
+#: skylines/frontend/templates/users/view.jinja:151
 msgid "Timeline"
 msgstr "Timeline"
 
@@ -1112,34 +1116,34 @@ msgstr "Live Tracking <small>von %(pilot)s und %(other_pilot)s</small>"
 msgid "Live Tracking <small>of %(pilot)s and %(num_pilots)d other pilots</small>"
 msgstr "Live Tracking <small>von %(pilot)s und %(num_pilots)d anderen Piloten</small>"
 
-#: skylines/frontend/templates/tracking/map.jinja:126
-#: skylines/frontend/templates/tracking/view.jinja:173
+#: skylines/frontend/templates/tracking/map.jinja:127
+#: skylines/frontend/templates/tracking/view.jinja:174
 msgid "There is no live track of this pilot currently."
 msgstr "Von diesen Piloten gibt es gerade keinen Live Track."
 
-#: skylines/frontend/templates/tracking/map.jinja:128
-#: skylines/frontend/templates/tracking/view.jinja:175
+#: skylines/frontend/templates/tracking/map.jinja:129
+#: skylines/frontend/templates/tracking/view.jinja:176
 msgid "There are no live tracks of these pilots currently."
 msgstr "Von diesen Piloten gibt es gerade keinen Live Track."
 
-#: skylines/frontend/templates/tracking/view.jinja:130
+#: skylines/frontend/templates/tracking/view.jinja:131
 msgid "This pilot chose to delay the display of his live tracks."
 msgstr "Der Pilot hat für seine Live Tracking Anzeige eine Verzögerung eingestellt."
 
-#: skylines/frontend/templates/tracking/view.jinja:130
+#: skylines/frontend/templates/tracking/view.jinja:131
 msgid "Delay"
 msgstr "Verzögerung"
 
-#: skylines/frontend/templates/tracking/view.jinja:136
+#: skylines/frontend/templates/tracking/view.jinja:137
 msgid "The live tracking delay is ignored because of your account privileges."
 msgstr "Die Live Tracking Verzögerung wird aufgrund deiner Privilegien ignoriert."
 
-#: skylines/frontend/templates/tracking/view.jinja:136
+#: skylines/frontend/templates/tracking/view.jinja:137
 msgid "ignored"
 msgstr "ignoriert"
 
 #: skylines/frontend/templates/upload/form.jinja:6
-#: skylines/frontend/templates/upload/result.jinja:4
+#: skylines/frontend/templates/upload/result.jinja:5
 msgid "Upload Flight"
 msgstr "Flug hochladen"
 
@@ -1147,11 +1151,11 @@ msgstr "Flug hochladen"
 msgid "Upload"
 msgstr "Hochladen"
 
-#: skylines/frontend/templates/upload/result.jinja:10
+#: skylines/frontend/templates/upload/result.jinja:13
 msgid "Your flights have been saved."
 msgstr "Deine Flüge wurden gespeichert."
 
-#: skylines/frontend/templates/upload/result.jinja:13
+#: skylines/frontend/templates/upload/result.jinja:16
 msgid ""
 "Your flights have been saved. You may want to change the flights aircraft "
 "types and registrations below."
@@ -1159,45 +1163,61 @@ msgstr ""
 "Deine Flüge wurden gespeichert. Flugzeugtyp und Kennzeichen können unten "
 "geändert werden."
 
-#: skylines/frontend/templates/upload/result.jinja:16
-#: skylines/frontend/templates/upload/result.jinja:72
+#: skylines/frontend/templates/upload/result.jinja:19
+#: skylines/frontend/templates/upload/result.jinja:97
 msgid "Update Aircraft Types and Registrations"
 msgstr "Flugzeugmuster und Kennzeichen aktualisieren"
 
-#: skylines/frontend/templates/upload/result.jinja:19
+#: skylines/frontend/templates/upload/result.jinja:22
 msgid "No flight was saved."
 msgstr "Kein Flug wurde gespeichert."
 
-#: skylines/frontend/templates/upload/result.jinja:25
+#: skylines/frontend/templates/upload/result.jinja:28
 msgid "Filename"
 msgstr "Dateiname"
 
-#: skylines/frontend/templates/upload/result.jinja:26
+#: skylines/frontend/templates/upload/result.jinja:29
 msgid "Aircraft Model"
 msgstr "Flugzeug-Typ"
 
-#: skylines/frontend/templates/upload/result.jinja:27
+#: skylines/frontend/templates/upload/result.jinja:30
 msgid "Aircraft Registration"
 msgstr "Flugzeug-Kennzeichen"
 
-#: skylines/frontend/templates/upload/result.jinja:28
+#: skylines/frontend/templates/upload/result.jinja:31
 msgid "Competition Number"
 msgstr "Wettbewerbskennzeichen"
 
-#: skylines/frontend/templates/upload/result.jinja:29
+#: skylines/frontend/templates/upload/result.jinja:32
 msgid "Status"
 msgstr "Status"
 
-#: skylines/frontend/templates/upload/result.jinja:54
+#: skylines/frontend/templates/upload/result.jinja:64
 msgid "Success"
 msgstr "Erfolgreich"
 
-#: skylines/frontend/templates/upload/result.jinja:76
+#: skylines/frontend/templates/upload/result.jinja:68
+msgid "Duplicate file"
+msgstr "Doppelte Datei"
+
+#: skylines/frontend/templates/upload/result.jinja:70
+msgid "Date missing in IGC file"
+msgstr "In der IGC Datei fehlt das Datum"
+
+#: skylines/frontend/templates/upload/result.jinja:72
+msgid "Failed to parse file"
+msgstr "Fehler beim Analysieren der Datei"
+
+#: skylines/frontend/templates/upload/result.jinja:74
+msgid "No flight found in file"
+msgstr "Keinen Flug in der Datei gefunden"
+
+#: skylines/frontend/templates/upload/result.jinja:101
 msgid "Upload another flight"
 msgstr "Noch einen Flug hochladen"
 
 #: skylines/frontend/templates/users/followers.jinja:6
-#: skylines/frontend/templates/users/view.jinja:118
+#: skylines/frontend/templates/users/view.jinja:119
 msgid "Followers"
 msgstr "Folgende"
 
@@ -1206,17 +1226,17 @@ msgid "This is you"
 msgstr "Das bist du"
 
 #: skylines/frontend/templates/users/followers.jinja:29
-#: skylines/frontend/templates/users/view.jinja:142
+#: skylines/frontend/templates/users/view.jinja:143
 msgid "Unfollow"
 msgstr "Nicht mehr folgen"
 
 #: skylines/frontend/templates/users/followers.jinja:34
-#: skylines/frontend/templates/users/view.jinja:144
+#: skylines/frontend/templates/users/view.jinja:145
 msgid "Follow"
 msgstr "Folgen"
 
 #: skylines/frontend/templates/users/following.jinja:3
-#: skylines/frontend/templates/users/view.jinja:127
+#: skylines/frontend/templates/users/view.jinja:128
 msgid "Following"
 msgstr "Folgt"
 
@@ -1229,35 +1249,35 @@ msgstr "Benutzer"
 msgid "Register"
 msgstr "Registrieren"
 
-#: skylines/frontend/templates/users/view.jinja:86
+#: skylines/frontend/templates/users/view.jinja:87
 msgid "Email"
 msgstr "E-Mail"
 
-#: skylines/frontend/templates/users/view.jinja:106
+#: skylines/frontend/templates/users/view.jinja:107
 msgid "Unspecified"
 msgstr "Nicht angegeben"
 
-#: skylines/frontend/templates/users/view.jinja:120
-#: skylines/frontend/templates/users/view.jinja:129
+#: skylines/frontend/templates/users/view.jinja:121
+#: skylines/frontend/templates/users/view.jinja:130
 #, python-format
 msgid "%(num)d pilot"
 msgid_plural "%(num)d pilots"
 msgstr[0] "%(num)d Pilot"
 msgstr[1] "%(num)d Piloten"
 
-#: skylines/frontend/templates/users/view.jinja:158
+#: skylines/frontend/templates/users/view.jinja:159
 msgid "Distance Flights"
 msgstr "Streckenflüge"
 
-#: skylines/frontend/templates/users/view.jinja:187
+#: skylines/frontend/templates/users/view.jinja:188
 msgid "Last 12 Months"
 msgstr "Letzte 12 Monate"
 
-#: skylines/frontend/templates/users/view.jinja:216
+#: skylines/frontend/templates/users/view.jinja:217
 msgid "Average Speed"
 msgstr "Schnittgeschwindigkeit"
 
-#: skylines/frontend/templates/users/view.jinja:228
+#: skylines/frontend/templates/users/view.jinja:229
 msgid "Takeoff Locations"
 msgstr "Startorte"
 
@@ -1350,15 +1370,15 @@ msgstr "Übersetzer"
 msgid "License"
 msgstr "Lizenz"
 
-#: skylines/frontend/views/flight.py:427
+#: skylines/frontend/views/flight.py:452
 msgid "Delete Flight"
 msgstr "Flug löschen"
 
-#: skylines/frontend/views/flight.py:428
+#: skylines/frontend/views/flight.py:453
 msgid "Are you sure you want to delete this flight?"
 msgstr "Möchtest du diesen Flug wirklich löschen?"
 
-#: skylines/frontend/views/flight.py:435
+#: skylines/frontend/views/flight.py:460
 msgid "You have to be logged in to post comments!"
 msgstr "Du musst eingeloggt sein, um Kommentare zu posten!"
 
@@ -1399,32 +1419,9 @@ msgstr "Einstellungen fürs Live-Tracking wurden gespeichert."
 msgid "New club was saved."
 msgstr "Neuer Verein wurde gespeichert."
 
-#: skylines/frontend/views/upload.py:95
-msgid "Duplicate file"
-msgstr "Doppelte Datei"
-
-#: skylines/frontend/views/upload.py:106
-msgid "Date missing in IGC file"
-msgstr "In der IGC Datei fehlt das Datum"
-
-#: skylines/frontend/views/upload.py:126
-msgid "Failed to parse file"
-msgstr "Fehler beim Analysieren der Datei"
-
-#: skylines/frontend/views/upload.py:131 skylines/frontend/views/upload.py:136
-msgid "No flight found in file"
-msgstr "Keinen Flug in der Datei gefunden"
-
-#: skylines/frontend/views/upload.py:178
-msgid ""
-"Sorry, some error happened when updating your flight(s). Please contact a "
-"administrator for help."
-msgstr ""
-"Bedaure, ein Fehler ist beim Hochladen deiner Flüge aufgetreten. Bitte "
-"kontaktiere einen Administrator."
-
-#: skylines/frontend/views/upload.py:227
-msgid "Your flight(s) have been successfully updated."
+#: skylines/frontend/views/upload.py:108
+#, fuzzy
+msgid "Your flight(s) have been successfully published."
 msgstr "Dein/e Flug/Flüge wurde/n erfolgreich aktualisiert."
 
 #: skylines/frontend/views/users.py:116
@@ -1439,15 +1436,15 @@ msgstr ""
 msgid "Password changed."
 msgstr "Passwort wurde geändert"
 
-#: skylines/lib/dbutil.py:24 skylines/lib/dbutil.py:42
+#: skylines/lib/dbutil.py:28 skylines/lib/dbutil.py:46
 msgid "Sorry, the record id ({id}) that you requested is not a valid id."
 msgstr "Bedaure, die angeforderte Id ({id}) ist nicht gültig."
 
-#: skylines/lib/dbutil.py:30
+#: skylines/lib/dbutil.py:34
 msgid "Sorry, there is no such record ({id}) in our database."
 msgstr "Bedaure, einen Eintrag  ({id})  gibt es in unserer Datenbank nicht."
 
-#: skylines/lib/dbutil.py:60
+#: skylines/lib/dbutil.py:64
 msgid ""
 "Sorry, {num_missing} of the requested records ({ids}) do not exist in our "
 "database."
@@ -1574,4 +1571,22 @@ msgstr ""
 
 #~ msgid "You have to login to upload flights."
 #~ msgstr "Du musst eingeloggt sein, um Flüge hochzuladen."
+
+#~ msgid "Create Pilot"
+#~ msgstr "Pilot anlegen"
+
+#~ msgid "Pilot missing in the list?"
+#~ msgstr "Fehlt ein Pilot in der Liste?"
+
+#~ msgid "Create new pilot"
+#~ msgstr "Neuen Pilot anlegen"
+
+#~ msgid ""
+#~ "Sorry, some error happened when updating"
+#~ " your flight(s). Please contact a "
+#~ "administrator for help."
+#~ msgstr ""
+#~ "Bedaure, ein Fehler ist beim Hochladen "
+#~ "deiner Flüge aufgetreten. Bitte kontaktiere "
+#~ "einen Administrator."
 
