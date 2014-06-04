@@ -73,6 +73,14 @@ a database for *SkyLines* roughly like this:
 versions of PostgreSQL, PostGIS and other operating systems. See the
 appropriate documentation and websites for more information.*
 
+*Note: As of PostGIS 2.1.3, out-of-db rasters and all raster drivers are
+disabled by default. In order to re-enable these, you need to set the
+following environment variables: POSTGIS_GDAL_ENABLED_DRIVERS=1 and
+POSTGIS_ENABLE_OUTDB_RASTERS=GTiff in the server environment. For more
+information see the [PostGIS
+manual](http://postgis.net/docs/postgis_installation.html#install_short_version)
+and your distribution's documentation.*
+
 After creating the database you have to create the necessary tables and indices
 by calling `./manage.py db create` from the the command line.
 
