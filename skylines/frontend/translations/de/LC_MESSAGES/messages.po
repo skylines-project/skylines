@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  skylines\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2014-06-04 17:45+0200\n"
+"POT-Creation-Date: 2014-06-04 17:57+0200\n"
 "PO-Revision-Date: 2014-01-20 21:11+0000\n"
 "Last-Translator: Tobias Bieniek <Tobias.Bieniek@gmx.de>\n"
 "Language-Team: German <de@li.org>\n"
@@ -41,6 +41,153 @@ msgstr "UL-Segelflugzeuge"
 msgid "Other"
 msgstr "Andere"
 
+#: skylines/frontend/forms/club.py:17
+msgid "No club"
+msgstr ""
+
+#: skylines/frontend/forms/club.py:24
+#: skylines/frontend/templates/flights/details-table.jinja:159
+#: skylines/frontend/templates/flights/flights-table.jinja:25
+#: skylines/frontend/templates/ranking/pilots.jinja:13
+#: skylines/frontend/templates/search/list.jinja:65
+#: skylines/frontend/templates/search/list.jinja:75
+#: skylines/frontend/templates/settings/base.jinja:18
+#: skylines/frontend/templates/tracking/view.jinja:124
+#: skylines/frontend/templates/users/users-table.jinja:8
+#: skylines/frontend/templates/users/view.jinja:99
+msgid "Club"
+msgstr "Verein"
+
+#: skylines/frontend/forms/club.py:28 skylines/frontend/forms/club.py:36
+#: skylines/frontend/templates/clubs/list.jinja:11
+#: skylines/frontend/templates/clubs/view.jinja:22
+#: skylines/frontend/templates/ranking/airports.jinja:13
+#: skylines/frontend/templates/ranking/clubs.jinja:12
+#: skylines/frontend/templates/ranking/pilots.jinja:12
+#: skylines/frontend/templates/users/users-table.jinja:7
+#: skylines/frontend/templates/users/view.jinja:93
+msgid "Name"
+msgstr "Name"
+
+#: skylines/frontend/forms/club.py:32 skylines/frontend/forms/club.py:44
+msgid "A club with this name exists already."
+msgstr ""
+
+#: skylines/frontend/forms/club.py:37
+#: skylines/frontend/templates/clubs/view.jinja:28
+msgid "Website"
+msgstr "Webseite"
+
+#: skylines/frontend/forms/flight.py:13 skylines/frontend/forms/upload.py:15
+#: skylines/frontend/templates/flights/details-table.jinja:119
+#: skylines/frontend/templates/flights/flights-table.jinja:16
+#: skylines/frontend/templates/flights/wingman-table.jinja:9
+#: skylines/frontend/templates/search/list.jinja:63
+#: skylines/frontend/templates/search/list.jinja:73
+#: skylines/frontend/templates/tracking/list.jinja:41
+#: skylines/frontend/templates/tracking/view.jinja:118
+#: skylines/frontend/templates/widgets/flights.jinja:6
+msgid "Pilot"
+msgstr "Pilot"
+
+#: skylines/frontend/forms/flight.py:14 skylines/frontend/forms/upload.py:16
+#, fuzzy
+msgid "Pilot name"
+msgstr "Dateiname"
+
+#: skylines/frontend/forms/flight.py:15
+#, fuzzy
+msgid "Co-Pilot"
+msgstr "Pilot"
+
+#: skylines/frontend/forms/flight.py:19
+msgid "Pilot and co-pilot can not be the same person."
+msgstr ""
+
+#: skylines/frontend/forms/flight.py:22
+msgid "Co-Pilot name"
+msgstr ""
+
+#: skylines/frontend/forms/flight.py:26
+#: skylines/frontend/templates/upload/result.jinja:29
+msgid "Aircraft Model"
+msgstr "Flugzeug-Typ"
+
+#: skylines/frontend/forms/flight.py:27
+#: skylines/frontend/templates/upload/result.jinja:30
+msgid "Aircraft Registration"
+msgstr "Flugzeug-Kennzeichen"
+
+#: skylines/frontend/forms/flight.py:30
+#: skylines/frontend/templates/upload/result.jinja:31
+msgid "Competition Number"
+msgstr "Wettbewerbskennzeichen"
+
+#: skylines/frontend/forms/pilot.py:28
+msgid "Unknown or other person"
+msgstr ""
+
+#: skylines/frontend/forms/pilot.py:46
+#, fuzzy
+msgid "Current Password"
+msgstr "Passwort vergessen?"
+
+#: skylines/frontend/forms/pilot.py:47 skylines/frontend/forms/pilot.py:140
+#: skylines/frontend/templates/settings/base.jinja:17
+msgid "Password"
+msgstr "Passwort"
+
+#: skylines/frontend/forms/pilot.py:48
+msgid "Your password must have at least 6 characters."
+msgstr ""
+
+#: skylines/frontend/forms/pilot.py:50
+#, fuzzy
+msgid "Verify Password"
+msgstr "Passwort wiederherstellen"
+
+#: skylines/frontend/forms/pilot.py:51
+#, fuzzy
+msgid "Your passwords do not match."
+msgstr "Dein Passwort wurde geändert."
+
+#: skylines/frontend/forms/pilot.py:56 skylines/frontend/forms/pilot.py:89
+#: skylines/frontend/forms/pilot.py:121 skylines/frontend/forms/pilot.py:136
+msgid "eMail Address"
+msgstr ""
+
+#: skylines/frontend/forms/pilot.py:57 skylines/frontend/forms/pilot.py:90
+#: skylines/frontend/forms/pilot.py:122 skylines/frontend/forms/pilot.py:137
+#, fuzzy
+msgid "Please enter your email address."
+msgstr "Login fehlgeschlagen. Bitte prüfe deine E-Mail-Adresse."
+
+#: skylines/frontend/forms/pilot.py:60 skylines/frontend/forms/pilot.py:93
+#, fuzzy
+msgid "First Name"
+msgstr "Vor- und Nachname"
+
+#: skylines/frontend/forms/pilot.py:61 skylines/frontend/forms/pilot.py:94
+msgid "Please enter your first name."
+msgstr ""
+
+#: skylines/frontend/forms/pilot.py:63 skylines/frontend/forms/pilot.py:96
+#, fuzzy
+msgid "Last Name"
+msgstr "Vor- und Nachname"
+
+#: skylines/frontend/forms/pilot.py:64 skylines/frontend/forms/pilot.py:97
+msgid "Please enter your last name."
+msgstr ""
+
+#: skylines/frontend/forms/pilot.py:69 skylines/frontend/forms/pilot.py:110
+msgid "A pilot with this email address exists already."
+msgstr ""
+
+#: skylines/frontend/forms/pilot.py:83
+msgid "None"
+msgstr ""
+
 #: skylines/frontend/forms/pilot.py:85
 #: skylines/frontend/templates/tracking/view.jinja:134
 #, python-format
@@ -49,9 +196,65 @@ msgid_plural "%(num)u minutes"
 msgstr[0] "%(num)u Minute"
 msgstr[1] "%(num)u Minuten"
 
+#: skylines/frontend/forms/pilot.py:99
+msgid "Unit Preset"
+msgstr ""
+
+#: skylines/frontend/forms/pilot.py:100
+#, fuzzy
+msgid "Distance Unit"
+msgstr "Streckenflüge"
+
+#: skylines/frontend/forms/pilot.py:101
+msgid "Speed Unit"
+msgstr ""
+
+#: skylines/frontend/forms/pilot.py:102
+msgid "Lift Unit"
+msgstr ""
+
+#: skylines/frontend/forms/pilot.py:103
+#, fuzzy
+msgid "Altitude Unit"
+msgstr "Höhe"
+
+#: skylines/frontend/forms/pilot.py:114
+#, fuzzy
+msgid "Tracking Delay"
+msgstr "Live Tracking Key"
+
+#: skylines/frontend/forms/pilot.py:115
+msgid "Tracking Callsign"
+msgstr ""
+
+#: skylines/frontend/forms/pilot.py:116
+msgid "Your callsign must not have more than 5 characters."
+msgstr ""
+
+#: skylines/frontend/forms/pilot.py:128
+msgid "There is no pilot with this email address."
+msgstr ""
+
+#: skylines/frontend/forms/pilot.py:141
+#, fuzzy
+msgid "Please enter your password."
+msgstr "Login fehlgeschlagen. Bitte prüfe dein Passwort."
+
+#: skylines/frontend/forms/pilot.py:143
+msgid "Remember me"
+msgstr ""
+
 #: skylines/frontend/forms/select.py:93
 msgid "Not a valid choice"
 msgstr "Keine valide Auswahl"
+
+#: skylines/frontend/forms/upload.py:12
+msgid "IGC or ZIP file(s)"
+msgstr ""
+
+#: skylines/frontend/forms/upload.py:13
+msgid "Please add one or more IGC or ZIP files"
+msgstr ""
 
 #: skylines/frontend/forms/validators.py:29
 #, python-format
@@ -315,16 +518,6 @@ msgstr "Ändern"
 msgid "Clubs"
 msgstr "Vereine"
 
-#: skylines/frontend/templates/clubs/list.jinja:11
-#: skylines/frontend/templates/clubs/view.jinja:22
-#: skylines/frontend/templates/ranking/airports.jinja:13
-#: skylines/frontend/templates/ranking/clubs.jinja:12
-#: skylines/frontend/templates/ranking/pilots.jinja:12
-#: skylines/frontend/templates/users/users-table.jinja:7
-#: skylines/frontend/templates/users/view.jinja:93
-msgid "Name"
-msgstr "Name"
-
 #: skylines/frontend/templates/clubs/list.jinja:22
 #: skylines/frontend/templates/clubs/view.jinja:52
 #: skylines/frontend/templates/search/list.jinja:103
@@ -335,10 +528,6 @@ msgstr "Mitglieder"
 #, python-format
 msgid "Members <small>of %(club)s</small>"
 msgstr "Mitglieder <small>von %(club)s</small>"
-
-#: skylines/frontend/templates/clubs/view.jinja:28
-msgid "Website"
-msgstr "Webseite"
 
 #: skylines/frontend/templates/clubs/view.jinja:34
 msgid "Created"
@@ -438,29 +627,6 @@ msgstr "FAI Dreieck Distanz"
 #: skylines/frontend/templates/flights/details-table.jinja:113
 msgid "Speed"
 msgstr "Geschwindigkeit"
-
-#: skylines/frontend/templates/flights/details-table.jinja:119
-#: skylines/frontend/templates/flights/flights-table.jinja:16
-#: skylines/frontend/templates/flights/wingman-table.jinja:9
-#: skylines/frontend/templates/search/list.jinja:63
-#: skylines/frontend/templates/search/list.jinja:73
-#: skylines/frontend/templates/tracking/list.jinja:41
-#: skylines/frontend/templates/tracking/view.jinja:118
-#: skylines/frontend/templates/widgets/flights.jinja:6
-msgid "Pilot"
-msgstr "Pilot"
-
-#: skylines/frontend/templates/flights/details-table.jinja:159
-#: skylines/frontend/templates/flights/flights-table.jinja:25
-#: skylines/frontend/templates/ranking/pilots.jinja:13
-#: skylines/frontend/templates/search/list.jinja:65
-#: skylines/frontend/templates/search/list.jinja:75
-#: skylines/frontend/templates/settings/base.jinja:18
-#: skylines/frontend/templates/tracking/view.jinja:124
-#: skylines/frontend/templates/users/users-table.jinja:8
-#: skylines/frontend/templates/users/view.jinja:99
-msgid "Club"
-msgstr "Verein"
 
 #: skylines/frontend/templates/flights/details-table.jinja:168
 msgid "Uploaded"
@@ -870,10 +1036,6 @@ msgstr "Bitte trag etwas in die Suchleiste oben ein."
 msgid "Profile"
 msgstr "Profil"
 
-#: skylines/frontend/templates/settings/base.jinja:17
-msgid "Password"
-msgstr "Passwort"
-
 #: skylines/frontend/templates/settings/club.jinja:6
 msgid "Change Club"
 msgstr "Verein ändern"
@@ -1177,18 +1339,6 @@ msgstr "Kein Flug wurde gespeichert."
 msgid "Filename"
 msgstr "Dateiname"
 
-#: skylines/frontend/templates/upload/result.jinja:29
-msgid "Aircraft Model"
-msgstr "Flugzeug-Typ"
-
-#: skylines/frontend/templates/upload/result.jinja:30
-msgid "Aircraft Registration"
-msgstr "Flugzeug-Kennzeichen"
-
-#: skylines/frontend/templates/upload/result.jinja:31
-msgid "Competition Number"
-msgstr "Wettbewerbskennzeichen"
-
 #: skylines/frontend/templates/upload/result.jinja:32
 msgid "Status"
 msgstr "Status"
@@ -1444,6 +1594,11 @@ msgstr "Einstellungen fürs Live-Tracking wurden gespeichert."
 msgid "New club was saved."
 msgstr "Neuer Verein wurde gespeichert."
 
+#: skylines/frontend/views/upload.py:72
+#, fuzzy
+msgid "You have to login to upload flights."
+msgstr "Du musst eingeloggt sein, um Kommentare zu posten!"
+
 #: skylines/frontend/views/upload.py:108
 #, fuzzy
 msgid "Your flight(s) have been successfully published."
@@ -1476,6 +1631,26 @@ msgid ""
 msgstr ""
 "Bedaure, {num_missing} der angeforderten Einträge  ({ids})  gibt es in "
 "unserer Datenbank nicht."
+
+#: skylines/lib/formatter/units.py:44
+msgid "Custom"
+msgstr ""
+
+#: skylines/lib/formatter/units.py:46
+msgid "European (metric)"
+msgstr ""
+
+#: skylines/lib/formatter/units.py:53
+msgid "British (imperial, distance in km)"
+msgstr ""
+
+#: skylines/lib/formatter/units.py:60
+msgid "Australian (metric, imperial height)"
+msgstr ""
+
+#: skylines/lib/formatter/units.py:67
+msgid "American (imperial)"
+msgstr ""
 
 #~ msgid "No club"
 #~ msgstr "Kein Verein"
@@ -1595,8 +1770,5 @@ msgstr ""
 #~ msgstr ""
 
 #~ msgid ""
-#~ "Sorry, some error happened when updating"
-#~ " your flight(s). Please contact a "
-#~ "administrator for help."
 #~ msgstr ""
 
