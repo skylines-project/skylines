@@ -3,8 +3,6 @@
 # This file is distributed under the same license as the skylines package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2012.
 #
-msgid ""
-msgstr ""
 "Project-Id-Version:  skylines\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2014-06-04 17:57+0200\n"
@@ -43,7 +41,7 @@ msgstr "Andere"
 
 #: skylines/frontend/forms/club.py:17
 msgid "No club"
-msgstr ""
+msgstr "Kein Verein"
 
 #: skylines/frontend/forms/club.py:24
 #: skylines/frontend/templates/flights/details-table.jinja:159
@@ -71,7 +69,7 @@ msgstr "Name"
 
 #: skylines/frontend/forms/club.py:32 skylines/frontend/forms/club.py:44
 msgid "A club with this name exists already."
-msgstr ""
+msgstr "Ein Verein mit diesem Namen existiert bereits."
 
 #: skylines/frontend/forms/club.py:37
 #: skylines/frontend/templates/clubs/view.jinja:28
@@ -91,22 +89,20 @@ msgid "Pilot"
 msgstr "Pilot"
 
 #: skylines/frontend/forms/flight.py:14 skylines/frontend/forms/upload.py:16
-#, fuzzy
 msgid "Pilot name"
-msgstr "Dateiname"
+msgstr "Pilot"
 
 #: skylines/frontend/forms/flight.py:15
-#, fuzzy
 msgid "Co-Pilot"
-msgstr "Pilot"
+msgstr "Copilot"
 
 #: skylines/frontend/forms/flight.py:19
 msgid "Pilot and co-pilot can not be the same person."
-msgstr ""
+msgstr "Pilot und Copilot können nicht die selbe Person sein!"
 
 #: skylines/frontend/forms/flight.py:22
 msgid "Co-Pilot name"
-msgstr ""
+msgstr "Copilot"
 
 #: skylines/frontend/forms/flight.py:26
 #: skylines/frontend/templates/upload/result.jinja:29
@@ -128,7 +124,6 @@ msgid "Unknown or other person"
 msgstr ""
 
 #: skylines/frontend/forms/pilot.py:46
-#, fuzzy
 msgid "Current Password"
 msgstr "Passwort vergessen?"
 
@@ -142,25 +137,24 @@ msgid "Your password must have at least 6 characters."
 msgstr ""
 
 #: skylines/frontend/forms/pilot.py:50
-#, fuzzy
 msgid "Verify Password"
 msgstr "Passwort wiederherstellen"
 
 #: skylines/frontend/forms/pilot.py:51
 #, fuzzy
 msgid "Your passwords do not match."
-msgstr "Dein Passwort wurde geändert."
+msgstr "Deine Passwörter stimmen nicht überein"
 
 #: skylines/frontend/forms/pilot.py:56 skylines/frontend/forms/pilot.py:89
 #: skylines/frontend/forms/pilot.py:121 skylines/frontend/forms/pilot.py:136
 msgid "eMail Address"
-msgstr ""
+msgstr "E-Mail"
 
 #: skylines/frontend/forms/pilot.py:57 skylines/frontend/forms/pilot.py:90
 #: skylines/frontend/forms/pilot.py:122 skylines/frontend/forms/pilot.py:137
 #, fuzzy
 msgid "Please enter your email address."
-msgstr "Login fehlgeschlagen. Bitte prüfe deine E-Mail-Adresse."
+msgstr "Bitte gib deine E-Mail-Adresse ein."
 
 #: skylines/frontend/forms/pilot.py:60 skylines/frontend/forms/pilot.py:93
 #, fuzzy
@@ -182,7 +176,7 @@ msgstr ""
 
 #: skylines/frontend/forms/pilot.py:69 skylines/frontend/forms/pilot.py:110
 msgid "A pilot with this email address exists already."
-msgstr ""
+msgstr "Ein Pilot mit dieser E-Mail-Adresse existiert bereits."
 
 #: skylines/frontend/forms/pilot.py:83
 msgid "None"
@@ -201,7 +195,6 @@ msgid "Unit Preset"
 msgstr ""
 
 #: skylines/frontend/forms/pilot.py:100
-#, fuzzy
 msgid "Distance Unit"
 msgstr "Streckenflüge"
 
@@ -211,50 +204,47 @@ msgstr ""
 
 #: skylines/frontend/forms/pilot.py:102
 msgid "Lift Unit"
-msgstr ""
+msgstr "Varioeinheit"
 
 #: skylines/frontend/forms/pilot.py:103
-#, fuzzy
 msgid "Altitude Unit"
 msgstr "Höhe"
 
 #: skylines/frontend/forms/pilot.py:114
-#, fuzzy
 msgid "Tracking Delay"
-msgstr "Live Tracking Key"
+msgstr "Tracking-Verzögerung"
 
 #: skylines/frontend/forms/pilot.py:115
 msgid "Tracking Callsign"
-msgstr ""
+msgstr "Kennzeichen für Tracking"
 
 #: skylines/frontend/forms/pilot.py:116
 msgid "Your callsign must not have more than 5 characters."
-msgstr ""
+msgstr "Das Kennzeichen darf maximal 5 Buchstaben lang sein."
 
 #: skylines/frontend/forms/pilot.py:128
 msgid "There is no pilot with this email address."
-msgstr ""
+msgstr "Es gibt keinen Pilot mit dieser E-Mail."
 
 #: skylines/frontend/forms/pilot.py:141
-#, fuzzy
 msgid "Please enter your password."
 msgstr "Login fehlgeschlagen. Bitte prüfe dein Passwort."
 
 #: skylines/frontend/forms/pilot.py:143
 msgid "Remember me"
-msgstr ""
+msgstr "Angemeldet bleiben"
 
 #: skylines/frontend/forms/select.py:93
 msgid "Not a valid choice"
-msgstr "Keine valide Auswahl"
+msgstr "Keine gültige Option"
 
 #: skylines/frontend/forms/upload.py:12
 msgid "IGC or ZIP file(s)"
-msgstr ""
+msgstr "IGC- oder ZIP-Datei(en)"
 
 #: skylines/frontend/forms/upload.py:13
 msgid "Please add one or more IGC or ZIP files"
-msgstr ""
+msgstr "Bitte füge ein oder mehrere IGC- oder ZIP-Dateien hinzu"
 
 #: skylines/frontend/forms/validators.py:29
 #, python-format
@@ -1595,7 +1585,6 @@ msgid "New club was saved."
 msgstr "Neuer Verein wurde gespeichert."
 
 #: skylines/frontend/views/upload.py:72
-#, fuzzy
 msgid "You have to login to upload flights."
 msgstr "Du musst eingeloggt sein, um Kommentare zu posten!"
 
@@ -1638,28 +1627,20 @@ msgstr ""
 
 #: skylines/lib/formatter/units.py:46
 msgid "European (metric)"
-msgstr ""
+msgstr "Europäisch (metrisch)"
 
 #: skylines/lib/formatter/units.py:53
 msgid "British (imperial, distance in km)"
-msgstr ""
+msgstr "Britisch (imperial, Distanzen in km)"
 
 #: skylines/lib/formatter/units.py:60
 msgid "Australian (metric, imperial height)"
-msgstr ""
+msgstr "Australisch (metrisch, Höhe in ft)"
 
 #: skylines/lib/formatter/units.py:67
 msgid "American (imperial)"
-msgstr ""
+msgstr "Amerikanisch (imperial)"
 
-#~ msgid "No club"
-#~ msgstr "Kein Verein"
-
-#~ msgid "A club with this name exists already."
-#~ msgstr "Ein Verein mit diesem Namen existiert bereits."
-
-#~ msgid "Co-Pilot"
-#~ msgstr "Copilot"
 
 #~ msgid "Current Password"
 #~ msgstr "Aktuelles Passwort"
@@ -1670,14 +1651,8 @@ msgstr ""
 #~ msgid "Verify Password"
 #~ msgstr "Passwort bestätigen"
 
-#~ msgid "Your passwords do not match."
-#~ msgstr "Deine Passwörter stimmen nicht überein"
-
 #~ msgid "eMail Address"
 #~ msgstr "E-Mail-Adresse"
-
-#~ msgid "Please enter your email address."
-#~ msgstr "Bitte gib deine E-Mail-Adresse ein."
 
 #~ msgid "First Name"
 #~ msgstr "Vorname"
@@ -1691,9 +1666,6 @@ msgstr ""
 #~ msgid "Please enter your last name."
 #~ msgstr "Bitte gib deinen Nachnamen an."
 
-#~ msgid "A pilot with this email address exists already."
-#~ msgstr "Ein Pilot mit dieser E-Mail-Adresse existiert bereits."
-
 #~ msgid "None"
 #~ msgstr "Keine"
 
@@ -1705,9 +1677,6 @@ msgstr ""
 
 #~ msgid "Speed Unit"
 #~ msgstr "Geschwindigkeitseinheit"
-
-#~ msgid "Lift Unit"
-#~ msgstr "Varioeinheit"
 
 #~ msgid "Altitude Unit"
 #~ msgstr "Höheneinheit"
@@ -1730,26 +1699,8 @@ msgstr ""
 #~ msgid "Remember me"
 #~ msgstr "Angemeldet bleiben"
 
-#~ msgid "IGC or ZIP file(s)"
-#~ msgstr "IGC- oder ZIP-Datei(en)"
-
-#~ msgid "Please add one or more IGC or ZIP files"
-#~ msgstr "Bitte füge ein oder mehrere IGC- oder ZIP-Dateien hinzu"
-
 #~ msgid "Custom"
 #~ msgstr "Benutzerdefiniert"
-
-#~ msgid "European (metric)"
-#~ msgstr "Europäisch (metrisch)"
-
-#~ msgid "British (imperial, distance in km)"
-#~ msgstr "Britisch (imperial, Distanzen in km)"
-
-#~ msgid "Australian (metric, imperial height)"
-#~ msgstr "Australisch (metrisch, Höhe in ft)"
-
-#~ msgid "American (imperial)"
-#~ msgstr "Amerikanisch (imperial)"
 
 #~ msgid "You have to login to upload flights."
 #~ msgstr "Du musst eingeloggt sein, um Flüge hochzuladen."
@@ -1768,7 +1719,3 @@ msgstr ""
 
 #~ msgid "No entries in table."
 #~ msgstr ""
-
-#~ msgid ""
-#~ msgstr ""
-
