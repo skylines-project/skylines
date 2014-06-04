@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  skylines\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2014-06-04 17:25+0200\n"
+"POT-Creation-Date: 2014-06-04 17:45+0200\n"
 "PO-Revision-Date: 2014-01-20 21:11+0000\n"
 "Last-Translator: Tobias Bieniek <Tobias.Bieniek@gmx.de>\n"
 "Language-Team: German <de@li.org>\n"
@@ -949,6 +949,7 @@ msgstr "avg. %(distance)s pro Flug"
 #: skylines/frontend/templates/statistics/duration-table.jinja:29
 #: skylines/frontend/templates/statistics/flights-table.jinja:25
 #: skylines/frontend/templates/statistics/pilots-table.jinja:25
+#: skylines/frontend/views/flight.py:157
 msgid "Total"
 msgstr "Gesamt"
 
@@ -1370,6 +1371,30 @@ msgstr "Übersetzer"
 msgid "License"
 msgstr "Lizenz"
 
+#: skylines/frontend/views/flight.py:154
+msgid "Left"
+msgstr "Links"
+
+#: skylines/frontend/views/flight.py:155
+msgid "Mixed"
+msgstr "Gemischt"
+
+#: skylines/frontend/views/flight.py:156
+msgid "Right"
+msgstr "Rechts"
+
+#: skylines/frontend/views/flight.py:160
+msgid "Powered"
+msgstr "Motor"
+
+#: skylines/frontend/views/flight.py:161
+msgid "Circling"
+msgstr "Kurbeln"
+
+#: skylines/frontend/views/flight.py:162
+msgid "Cruise"
+msgstr "Vorflug"
+
 #: skylines/frontend/views/flight.py:452
 msgid "Delete Flight"
 msgstr "Flug löschen"
@@ -1551,42 +1576,27 @@ msgstr ""
 #~ msgid "American (imperial)"
 #~ msgstr "Amerikanisch (imperial)"
 
-msgid "Left"
-msgstr "Links"
-
-msgid "Mixed"
-msgstr "Gemischt"
-
-msgid "Right"
-msgstr "Rechts"
-
-#~ msgid "Powered"
-#~ msgstr "Motor"
-
-#~ msgid "Circling"
-#~ msgstr "Kreisen"
-
-#~ msgid "Cruise"
-#~ msgstr "Vorflug"
-
 #~ msgid "You have to login to upload flights."
 #~ msgstr "Du musst eingeloggt sein, um Flüge hochzuladen."
 
 #~ msgid "Create Pilot"
-#~ msgstr "Pilot anlegen"
+#~ msgstr "Andere Piloten"
 
 #~ msgid "Pilot missing in the list?"
-#~ msgstr "Fehlt ein Pilot in der Liste?"
+#~ msgstr "In der IGC Datei fehlt das Datum"
 
 #~ msgid "Create new pilot"
-#~ msgstr "Neuen Pilot anlegen"
+#~ msgstr ""
+
+#~ msgid "Wingmen"
+#~ msgstr ""
+
+#~ msgid "No entries in table."
+#~ msgstr ""
 
 #~ msgid ""
 #~ "Sorry, some error happened when updating"
 #~ " your flight(s). Please contact a "
 #~ "administrator for help."
 #~ msgstr ""
-#~ "Bedaure, ein Fehler ist beim Hochladen "
-#~ "deiner Flüge aufgetreten. Bitte kontaktiere "
-#~ "einen Administrator."
 
