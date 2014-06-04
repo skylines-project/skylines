@@ -125,7 +125,7 @@ msgstr ""
 
 #: skylines/frontend/forms/pilot.py:46
 msgid "Current Password"
-msgstr "Passwort vergessen?"
+msgstr "Aktuelles Passwort"
 
 #: skylines/frontend/forms/pilot.py:47 skylines/frontend/forms/pilot.py:140
 #: skylines/frontend/templates/settings/base.jinja:17
@@ -134,45 +134,41 @@ msgstr "Passwort"
 
 #: skylines/frontend/forms/pilot.py:48
 msgid "Your password must have at least 6 characters."
-msgstr ""
+msgstr "Dein Passwort muss mindestens 6 Zeichen haben."
 
 #: skylines/frontend/forms/pilot.py:50
 msgid "Verify Password"
-msgstr "Passwort wiederherstellen"
+msgstr "Passwort bestätigen"
 
 #: skylines/frontend/forms/pilot.py:51
-#, fuzzy
 msgid "Your passwords do not match."
 msgstr "Deine Passwörter stimmen nicht überein"
 
 #: skylines/frontend/forms/pilot.py:56 skylines/frontend/forms/pilot.py:89
 #: skylines/frontend/forms/pilot.py:121 skylines/frontend/forms/pilot.py:136
 msgid "eMail Address"
-msgstr "E-Mail"
+msgstr "E-Mail-Adresse"
 
 #: skylines/frontend/forms/pilot.py:57 skylines/frontend/forms/pilot.py:90
 #: skylines/frontend/forms/pilot.py:122 skylines/frontend/forms/pilot.py:137
-#, fuzzy
 msgid "Please enter your email address."
 msgstr "Bitte gib deine E-Mail-Adresse ein."
 
 #: skylines/frontend/forms/pilot.py:60 skylines/frontend/forms/pilot.py:93
-#, fuzzy
 msgid "First Name"
-msgstr "Vor- und Nachname"
+msgstr "Vorname"
 
 #: skylines/frontend/forms/pilot.py:61 skylines/frontend/forms/pilot.py:94
 msgid "Please enter your first name."
-msgstr ""
+msgstr "Bitte gib deinen Vornamen an."
 
 #: skylines/frontend/forms/pilot.py:63 skylines/frontend/forms/pilot.py:96
-#, fuzzy
 msgid "Last Name"
-msgstr "Vor- und Nachname"
+msgstr "Nachname"
 
 #: skylines/frontend/forms/pilot.py:64 skylines/frontend/forms/pilot.py:97
 msgid "Please enter your last name."
-msgstr ""
+msgstr "Bitte gib deinen Nachnamen an."
 
 #: skylines/frontend/forms/pilot.py:69 skylines/frontend/forms/pilot.py:110
 msgid "A pilot with this email address exists already."
@@ -180,7 +176,7 @@ msgstr "Ein Pilot mit dieser E-Mail-Adresse existiert bereits."
 
 #: skylines/frontend/forms/pilot.py:83
 msgid "None"
-msgstr ""
+msgstr "Keine"
 
 #: skylines/frontend/forms/pilot.py:85
 #: skylines/frontend/templates/tracking/view.jinja:134
@@ -192,15 +188,15 @@ msgstr[1] "%(num)u Minuten"
 
 #: skylines/frontend/forms/pilot.py:99
 msgid "Unit Preset"
-msgstr ""
+msgstr "Voreinstellung"
 
 #: skylines/frontend/forms/pilot.py:100
 msgid "Distance Unit"
-msgstr "Streckenflüge"
+msgstr "Distanzeinheit"
 
 #: skylines/frontend/forms/pilot.py:101
 msgid "Speed Unit"
-msgstr ""
+msgstr "Geschwindigkeitseinheit"
 
 #: skylines/frontend/forms/pilot.py:102
 msgid "Lift Unit"
@@ -208,7 +204,7 @@ msgstr "Varioeinheit"
 
 #: skylines/frontend/forms/pilot.py:103
 msgid "Altitude Unit"
-msgstr "Höhe"
+msgstr "Höheneinheit"
 
 #: skylines/frontend/forms/pilot.py:114
 msgid "Tracking Delay"
@@ -220,11 +216,11 @@ msgstr "Kennzeichen für Tracking"
 
 #: skylines/frontend/forms/pilot.py:116
 msgid "Your callsign must not have more than 5 characters."
-msgstr "Das Kennzeichen darf maximal 5 Buchstaben lang sein."
+msgstr "Dein Kennzeichen darf maximal 5 Zeichen haben."
 
 #: skylines/frontend/forms/pilot.py:128
 msgid "There is no pilot with this email address."
-msgstr "Es gibt keinen Pilot mit dieser E-Mail."
+msgstr "Ein Pilot mit dieser E-Mail-Adresse existiert nicht."
 
 #: skylines/frontend/forms/pilot.py:141
 msgid "Please enter your password."
@@ -840,7 +836,7 @@ msgstr ""
 
 #: skylines/frontend/templates/macros/pager.jinja:72
 msgid "No entries in table."
-msgstr ""
+msgstr "Keine Einträge."
 
 #: skylines/frontend/templates/notifications/events-table.jinja:24
 msgid "New"
@@ -1586,7 +1582,7 @@ msgstr "Neuer Verein wurde gespeichert."
 
 #: skylines/frontend/views/upload.py:72
 msgid "You have to login to upload flights."
-msgstr "Du musst eingeloggt sein, um Kommentare zu posten!"
+msgstr "Du musst eingeloggt sein, um Flüge hochzuladen."
 
 #: skylines/frontend/views/upload.py:108
 #, fuzzy
@@ -1623,7 +1619,7 @@ msgstr ""
 
 #: skylines/lib/formatter/units.py:44
 msgid "Custom"
-msgstr ""
+msgstr "Benutzerdefiniert"
 
 #: skylines/lib/formatter/units.py:46
 msgid "European (metric)"
@@ -1641,81 +1637,3 @@ msgstr "Australisch (metrisch, Höhe in ft)"
 msgid "American (imperial)"
 msgstr "Amerikanisch (imperial)"
 
-
-#~ msgid "Current Password"
-#~ msgstr "Aktuelles Passwort"
-
-#~ msgid "Your password must have at least 6 characters."
-#~ msgstr "Dein Passwort muss mindestens 6 Zeichen haben."
-
-#~ msgid "Verify Password"
-#~ msgstr "Passwort bestätigen"
-
-#~ msgid "eMail Address"
-#~ msgstr "E-Mail-Adresse"
-
-#~ msgid "First Name"
-#~ msgstr "Vorname"
-
-#~ msgid "Please enter your first name."
-#~ msgstr "Bitte gib deinen Vornamen an."
-
-#~ msgid "Last Name"
-#~ msgstr "Nachname"
-
-#~ msgid "Please enter your last name."
-#~ msgstr "Bitte gib deinen Nachnamen an."
-
-#~ msgid "None"
-#~ msgstr "Keine"
-
-#~ msgid "Unit Preset"
-#~ msgstr "Voreinstellung"
-
-#~ msgid "Distance Unit"
-#~ msgstr "Distanzeinheit"
-
-#~ msgid "Speed Unit"
-#~ msgstr "Geschwindigkeitseinheit"
-
-#~ msgid "Altitude Unit"
-#~ msgstr "Höheneinheit"
-
-#~ msgid "Tracking Delay"
-#~ msgstr "Tracking Verzögerung"
-
-#~ msgid "Tracking Callsign"
-#~ msgstr "Tracking Kennzeichen"
-
-#~ msgid "Your callsign must not have more than 5 characters."
-#~ msgstr "Dein Kennzeichen darf maximal 5 Zeichen haben."
-
-#~ msgid "There is no pilot with this email address."
-#~ msgstr "Ein Pilot mit dieser E-Mail-Adresse existiert nicht."
-
-#~ msgid "Please enter your password."
-#~ msgstr "Bitte gib dein Passwort an."
-
-#~ msgid "Remember me"
-#~ msgstr "Angemeldet bleiben"
-
-#~ msgid "Custom"
-#~ msgstr "Benutzerdefiniert"
-
-#~ msgid "You have to login to upload flights."
-#~ msgstr "Du musst eingeloggt sein, um Flüge hochzuladen."
-
-#~ msgid "Create Pilot"
-#~ msgstr "Andere Piloten"
-
-#~ msgid "Pilot missing in the list?"
-#~ msgstr "In der IGC Datei fehlt das Datum"
-
-#~ msgid "Create new pilot"
-#~ msgstr ""
-
-#~ msgid "Wingmen"
-#~ msgstr ""
-
-#~ msgid "No entries in table."
-#~ msgstr ""
