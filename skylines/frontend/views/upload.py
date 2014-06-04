@@ -204,7 +204,7 @@ def index_post(form):
 
     try:
         for flight in flights:
-            if flight[2] is None:
+            if flight[2] is UploadStatus.SUCCESS:
                 tasks.analyse_flight.delay(flight[1].id)
                 tasks.find_meetings.delay(flight[1].id)
     except ConnectionError:
