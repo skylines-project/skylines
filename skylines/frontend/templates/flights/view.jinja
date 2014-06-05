@@ -64,7 +64,7 @@
     initFlightLayer();
     initBaro($("#barogram"));
 
-    addFlightFromJSON("/flights/{{ flight.id }}/json?{{ config.get('SKYLINES_CACHE_BUSTER', '') }}");
+    addFlightFromJSON("/flights/{{ flight.id }}/json?{{ config.get('SKYLINES_CACHE_BUSTER', '') }}",false);
 
     {% if other_flights -%}
     {% for flight, trace in other_flights if trace -%}
