@@ -121,7 +121,7 @@ msgstr "Wettbewerbskennzeichen"
 
 #: skylines/frontend/forms/pilot.py:28
 msgid "Unknown or other person"
-msgstr ""
+msgstr "Unbekannte oder andere Person"
 
 #: skylines/frontend/forms/pilot.py:46
 msgid "Current Password"
@@ -192,7 +192,7 @@ msgstr "Voreinstellung"
 
 #: skylines/frontend/forms/pilot.py:100
 msgid "Distance Unit"
-msgstr "Distanzeinheit"
+msgstr "Streckeneinheit"
 
 #: skylines/frontend/forms/pilot.py:101
 msgid "Speed Unit"
@@ -604,11 +604,11 @@ msgstr "%(points)s pt"
 
 #: skylines/frontend/templates/flights/details-table.jinja:98
 msgid "OLC Distance"
-msgstr "OLC Distanz"
+msgstr "OLC-Strecke"
 
 #: skylines/frontend/templates/flights/details-table.jinja:103
 msgid "FAI Triangle Distance"
-msgstr "FAI Dreieck Distanz"
+msgstr "Strecke (FAI-Dreieck)"
 
 #: skylines/frontend/templates/flights/details-table.jinja:113
 msgid "Speed"
@@ -640,7 +640,7 @@ msgstr "Löschen"
 #: skylines/frontend/templates/users/view.jinja:201
 #: skylines/frontend/templates/widgets/flights.jinja:7
 msgid "Distance"
-msgstr "Distanz"
+msgstr "Strecke"
 
 #: skylines/frontend/templates/flights/flights-table.jinja:22
 #: skylines/frontend/templates/search/list.jinja:67
@@ -770,7 +770,7 @@ msgstr "Kommentare"
 #: skylines/frontend/templates/flights/view.jinja:209
 #: skylines/frontend/templates/flights/view.jinja:276
 msgid "Wingmen"
-msgstr ""
+msgstr "Begegnungen"
 
 #: skylines/frontend/templates/flights/view.jinja:220
 #: skylines/frontend/templates/tracking/view.jinja:161
