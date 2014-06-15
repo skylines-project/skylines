@@ -181,6 +181,12 @@
           <i class="icon-remove icon-small"></i> {% trans %}Delete{% endtrans %}
         </a>
 
+        {% if flight.is_writable(g.current_user) and not flight.is_rankable() %}
+        <a data-toggle="modal" data-target="#modal" href="{{ url_for('.publish') }}?embedded" class="btn btn-success btn-sm">
+          <i class="icon-globe icon-small"></i> {% trans %}Publish{% endtrans %}
+        </a>
+        {% endif %}
+
         <div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-hidden="true" style="display:none">
         </div>
       </td>
