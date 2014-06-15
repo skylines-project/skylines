@@ -65,7 +65,7 @@ main_css = Bundle(
     'css/bootstrap-theme-skylines.css',
     'css/bootstrap-badges.css',
     'css/bootstrap-vertical-tabs.css',
-    'https://rawgithub.com/Eonasdan/bootstrap-datetimepicker/v3.0.0/build/css/bootstrap-datetimepicker.css',
+    'css/bootstrap-datetimepicker.css',
     'css/panel.css',
     'css/follower-panel.css',
     'css/tables.css',
@@ -142,7 +142,7 @@ upload_js = Bundle(
     'js/baro.js',
     'js/upload.js',
     'http://momentjs.com/downloads/moment-with-langs.min.js',
-    'https://rawgithub.com/Eonasdan/bootstrap-datetimepicker/v3.0.0/src/js/bootstrap-datetimepicker.js',
+    'https://rawgithub.com/TobiasLohner/bootstrap-datetimepicker/7cf8cb30ad2322417d78742346f080a4889d449e/src/js/bootstrap-datetimepicker.js',
     'js/jquery.flot.flight-upload.js',
     filters=SimpleClosureJS,
     output='js/upload-%(version)s.js')
