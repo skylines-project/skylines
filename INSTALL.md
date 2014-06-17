@@ -64,14 +64,9 @@ a database for *SkyLines* roughly like this:
 
     # install PostGIS extensions into the PostgreSQL database
     $ psql -d skylines -c 'CREATE EXTENSION postgis;'
-    $ psql -d skylines -f /usr/share/postgresql/9.1/contrib/postgis-2.0/legacy_minimal.sql
 
     # install fuzzystrmatch extension into the database
     $ psql -d skylines -c 'CREATE EXTENSION fuzzystrmatch;'
-
-*Note: The location of the legacy_minimal.sql file may be different for other
-versions of PostgreSQL, PostGIS and other operating systems. See the
-appropriate documentation and websites for more information.*
 
 *Note: As of PostGIS 2.1.3, out-of-db rasters and all raster drivers are
 disabled by default. In order to re-enable these, you need to set the
