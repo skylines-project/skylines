@@ -29,6 +29,10 @@ table .date, table .times {
   vertical-align: middle;
 }
 
+#flight-table .not_published {
+  font-style: italic;
+}
+
 .table-flight-details {
   margin-top: 10px;
 }

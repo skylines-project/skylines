@@ -454,6 +454,24 @@ def delete():
         action=url_for('.delete'), cancel=url_for('.index'))
 
 
+@flight_blueprint.route('/publish', methods=['GET', 'POST'])
+def publish():
+    if not g.flight.is_writable(g.current_user):
+        abort(403)
+
+    if request.method == 'POST':
+        g.flight.privacy_level = Flight.PrivacyLevel.PUBLIC
+        db.session.commit()
+
+        return redirect(url_for('.index'))
+
+    return render_template(
+        'generic/confirm.jinja',
+        title=_('Publish Flight'),
+        question=_('Confirm to publish this flight...'),
+        action=url_for('.publish'), cancel=url_for('.index'))
+
+
 @flight_blueprint.route('/add_comment', methods=['POST'])
 def add_comment():
     if not g.current_user:

@@ -36,7 +36,11 @@
   </thead>
   <tbody>
     {% for flight, num_comments in flights -%}
+    {% if flight.is_rankable() %}
     <tr>
+    {% else %}
+    <tr class="not_published">
+    {% endif %}
       {% if 'date' not in omitted_columns -%}
       <td class="date">
         {% if flight.date_local -%}
