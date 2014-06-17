@@ -105,9 +105,10 @@ If the above steps are completed you should be able to run a base version of
 
 Since an empty database is boring, you should at least load the airports from
 the [Welt2000](http://www.segelflug.de/vereine/welt2000/) into the database by
-calling:
+calling (the `commit` flag indicates that any data should be written to the
+database):
 
-    $ ./manage.py import welt2000
+    $ ./manage.py import welt2000 --commit
 
 
 ## Asynchronous tasks
