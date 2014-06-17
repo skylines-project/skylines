@@ -64,6 +64,8 @@ main_css = Bundle(
     'css/bootstrap-visibilites.css',
     'css/bootstrap-theme-skylines.css',
     'css/bootstrap-badges.css',
+    'css/bootstrap-vertical-tabs.css',
+    'css/bootstrap-datetimepicker.css',
     'css/panel.css',
     'css/follower-panel.css',
     'css/tables.css',
@@ -134,3 +136,13 @@ tracking_js = Bundle(
     'js/tracking.js',
     filters='rjsmin',
     output='js/tracking-%(version)s.js')
+
+upload_js = Bundle(
+    'js/units.js',
+    'js/baro.js',
+    'js/upload.js',
+    'http://momentjs.com/downloads/moment.min.js',
+    'https://rawgithub.com/TobiasLohner/bootstrap-datetimepicker/7cf8cb30ad2322417d78742346f080a4889d449e/src/js/bootstrap-datetimepicker.js',
+    'js/jquery.flot.flight-upload.js',
+    filters=SimpleClosureJS,
+    output='js/upload-%(version)s.js')

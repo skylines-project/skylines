@@ -1,0 +1,37 @@
+/**
+ *  Bootstrap Vertical Tabs Component v1.0.0
+ *  http://github.com/dbtek/bootstrap-vertical-tabs
+ *  © 2013, Ismail Demirbilek
+ *  MIT License
+ */
+
+@media (min-width: 768px) {
+  .tabs-left {
+      border-bottom: none;
+      padding-top: 2px;
+  }
+
+  .tabs-left {
+      border-right: 1px solid #ddd;
+  }
+
+  .tabs-left>li, .tabs-right>li {
+      float: none;
+      margin-bottom: 2px;
+  }
+
+  .tabs-left>li {
+      margin-right: -1px;
+  }
+
+  .tabs-left>li.active>a, .tabs-left>li.active>a:hover, .tabs-left>li.active>a:focus {
+      border-bottom-color: #ddd;
+      border-right-color: transparent;
+  }
+
+  .tabs-left>li>a {
+      border-radius: 4px 0 0 4px;
+      margin-right: 0;
+      display:block;
+  }
+}

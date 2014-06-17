@@ -8,4 +8,4 @@ from .pilot import (
     ChangePasswordForm, CreatePilotForm, CreateClubPilotForm, EditPilotForm,
     RecoverStep1Form, RecoverStep2Form, LoginForm, LiveTrackingSettingsForm
 )
-from .upload import UploadForm
+from .upload import UploadForm, UploadUpdateForm

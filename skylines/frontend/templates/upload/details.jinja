@@ -1,0 +1,149 @@
+{% extends "base.jinja" %}
+{% from "macros/form.jinja" import render_field %}
+
+{% macro render_datetimepicker_field(field, hide_error_text=False, disabled=False, class='') -%}
+<div class="form-group{% if field.errors %} has-error{% endif %} {{ class }}" id="form-group-{{ field.id }}">
+  {{ field.label }}
+
+  {% if hide_error_text -%}
+    <div class="input-group input-group-sm date" id="{{ field.id }}-datetimepicker"
+         data-date-defaultdate="{{ field.data }}">
+      <input type="text" class="form-control" />
+      <span class="input-group-addon"><span class="glyphicon glyphicon-time"></span></span>
+    </div>
+
+    {{ field(class_="form-control", title=field.errors[0], type="hidden", **kwargs)|safe }}
+  {%- else -%}
+    {% if disabled -%}
+      <div class="input-group input-group-sm date" id="{{ field.id }}-datetimepicker"
+           data-date-defaultdate="{{ field.data }}">
+        <input type="text" disabled="disabled" class="form-control" />
+        <span class="input-group-addon"><span class="glyphicon glyphicon-time"></span></span>
+      </div>
+      {{ field(class_="form-control", disabled="true", type="hidden", **kwargs)|safe }}
+    {%- else -%}
+      <div class="input-group input-group-sm date" id="{{ field.id }}-datetimepicker"
+           data-date-defaultdate="{{ field.data }}">
+        <input type="text" class="form-control" />
+        <span class="input-group-addon"><span class="glyphicon glyphicon-time"></span></span>
+      </div>
+
+      {{ field(class_="form-control", type="hidden", **kwargs)|safe }}
+    {%- endif %}
+
+    {% if field.errors -%}
+    <p class="help-block">{{ field.errors[0] }}</p>
+    {%- endif %}
+  {%- endif %}
+</div>
+{%- endmacro %}
+
+{% macro render_flight_details(name, flight, status, prefix, trace, form) -%}
+<input type="hidden" name="{{ prefix }}-status" value="{{ status.value }}" />
+<input type="hidden" name="{{ prefix }}-name" value="{{ name }}" />
+{% if flight %}
+<input type="hidden" id="{{ prefix }}-sfid" name="{{ prefix }}-sfid" value="{{ flight.id }}" />
+{% endif %}
+
+{% if status == h.UploadStatus.SUCCESS -%}
+{{ form.hidden_tag() }}
+{{ render_field(form.model_id, class='col-sm-4') }}
+{{ render_field(form.registration, class='col-sm-4') }}
+{{ render_field(form.competition_id, class='col-sm-4') }}
+
+<div class="clearfix"></div>
+
+{% if trace %}
+<div id="barogram-{{ prefix }}" style="width: 100%; height: 120pt;"></div>
+{% endif %}
+
+{{ render_datetimepicker_field(form.takeoff_time, class='col-sm-3') }}
+{{ render_datetimepicker_field(form.scoring_start_time, class='col-sm-3') }}
+{{ render_datetimepicker_field(form.scoring_end_time, class='col-sm-3') }}
+{{ render_datetimepicker_field(form.landing_time, class='col-sm-3') }}
+
+<div class="clearfix"></div>
+
+{%- endif %}
+
+<p>
+  {% trans %}Status:{% endtrans %}
+  {% if status == h.UploadStatus.SUCCESS -%}
+  <span class="label label-success"><i class="icon-ok"></i> {% trans %}Success{% endtrans %}</span>
+  {% elif status %}
+
+    {% if status == h.UploadStatus.DUPLICATE %}
+      {% set status_text = _('Duplicate file') %}
+    {% elif status == h.UploadStatus.MISSING_DATE %}
+      {% set status_text = _('Date missing in IGC file') %}
+    {% elif status == h.UploadStatus.PARSER_ERROR %}
+      {% set status_text = _('Failed to parse file') %}
+    {% elif status == h.UploadStatus.NO_FLIGHT %}
+      {% set status_text = _('No flight found in file') %}
+    {% else %}
+      {% set status_text = _('Unknown') %}
+    {% endif %}
+
+    {% if flight %}
+    <span class="label label-warning"><i class="icon-warning-sign"></i> {{ status_text }}</span>
+    <a href="{{ url_for('flight.index', flight_id=flight.id) }}" class="btn btn-default btn-sm">Show</a>
+    {% else %}
+    <span class="label label-danger"><i class="icon-warning-sign"></i> {{ status_text }}</span>
+    {% endif %}
+  {%- endif %}
+</p>
+{%- endmacro %}
+
+
+{% macro render_flight_script(name, flight, status, prefix, trace, form) -%}
+{% if trace %}
+<script type="text/javascript">
+  $(function() {
+    var baro = initBaro($("#barogram-{{ prefix }}"),
+      {{ flight.id }},
+      {{ h.json.dumps(trace.barogram_t) }},
+      {{ h.json.dumps(trace.barogram_h) }},
+      {{ h.json.dumps(trace.enl) }},
+      {{ h.json.dumps(trace.elevations_h) }},
+      {{ h.to_seconds_of_day(flight.igc_file.date_utc, form.takeoff_time.data) }},
+      {{ h.to_seconds_of_day(flight.igc_file.date_utc, form.scoring_start_time.data) }},
+      {{ h.to_seconds_of_day(flight.igc_file.date_utc, form.scoring_end_time.data) }},
+      {{ h.to_seconds_of_day(flight.igc_file.date_utc, form.landing_time.data) }}
+    );
+
+    $("[id^={{ prefix }}-][id$=-datetimepicker]").datetimepicker({
+      pickDate: false,
+      useSeconds: true,
+      format: 'HH:mm:ss',
+      minDate: moment("{{ trace.igc_start_time.strftime("%Y-%m-%d %H:%M:%S") }}", "YYYY-MM-DD HH:mm:ss"),
+      maxDate: moment("{{ trace.igc_end_time.strftime("%Y-%m-%d %H:%M:%S") }}", "YYYY-MM-DD HH:mm:ss")
+    });
+
+    var flight_date = moment("{{ flight.igc_file.date_utc.strftime("%Y-%m-%d") }}", "YYYY-MM-DD");
+
+    $("#barogram-{{ prefix }}").on('plotselecting', function(e, range, marker) {
+      updateTimePicker({{ prefix }}, flight_date, range);
+    });
+
+    $("[id^={{ prefix }}-][id$=-datetimepicker]").on("dp.change", function(e) {
+      var marker;
+
+      if (e.target.id == "{{ prefix }}-takeoff_time-datetimepicker")
+        marker = "takeoff";
+      else if (e.target.id == "{{ prefix }}-scoring_start_time-datetimepicker")
+        marker = "scoring_start";
+      else if (e.target.id == "{{ prefix }}-scoring_end_time-datetimepicker")
+        marker = "scoring_end";
+      else
+        marker = "landing";
+
+      var time = $(e.target).data("DateTimePicker").getDate().unix() - flight_date.unix();
+      baro.updateFlightTime(time, marker);
+
+      updateTimePicker({{ prefix }}, flight_date, baro.getFlightTime());
+    });
+  });
+</script>
+{% endif %}
+{%- endmacro %}
+

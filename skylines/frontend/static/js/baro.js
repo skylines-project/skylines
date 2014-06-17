@@ -1,9 +1,10 @@
 /**
  * An abstraction layer for the barogram view.
  * @param  {DOMElement} placeholder
+ * @param  {Object} options Optional options.
  * @constructor
  */
-function slBarogram(placeholder) {
+function slBarogram(placeholder, options) {
   var baro = {};
 
   // Private attributes
@@ -195,6 +196,15 @@ function slBarogram(placeholder) {
 
 
   /**
+   * Enable flight selection for upload page
+   */
+  baro.enableFlightSelection = function() {
+    var opt = flot.getOptions();
+
+    opt.selection.mode = 'x';
+  };
+
+  /**
    * Clears the highlight of a certain time interval from the barogram
    */
   baro.clearTimeHighlight = function() {
@@ -214,9 +224,45 @@ function slBarogram(placeholder) {
     };
   };
 
+  /**
+   * Highlights the selected flight with takeoff, release and landing
+   *
+   * @param {number} takeoff The takeoff time.
+   * @param {number} scoring_start The scoring window start time.
+   * @param {number} scoring_end The scoring window end time.
+   * @param {number} landing The landing time.
+   */
+  baro.setFlightTimes = function(takeoff, scoring_start, scoring_end, landing) {
+    flot.setSelection({
+      takeoff: takeoff * 1000,
+      scoring_start: scoring_start * 1000,
+      scoring_end: scoring_end * 1000,
+      landing: landing * 1000
+    });
+  };
+
+  /**
+   * Update the highlights the selected flight with takeoff, release and landing
+   *
+   * @param {number} time The time to set to.
+   * @param {string} field The field name to set.
+   */
+  baro.updateFlightTime = function(time, field) {
+    flot.updateSelection(time * 1000, field);
+  };
+
+  /**
+   * Get the current marker positions
+   * @return {Boolean} current selection.
+   */
+  baro.getFlightTime = function() {
+    return flot.getSelection();
+  };
+
+
   // Initialization
 
-  setupFlot(placeholder);
+  setupFlot(placeholder, options || null);
   attachEventHandlers(placeholder);
 
   return baro;
@@ -226,9 +272,10 @@ function slBarogram(placeholder) {
   /**
    * Sets up the flot charts instance.
    * @param  {DOMElement} placeholder
+   * @param  {Object} options Additional options.
    */
-  function setupFlot(placeholder) {
-    flot = $.plot(placeholder, [], {
+  function setupFlot(placeholder, options) {
+    var opts = {
       grid: {
         borderWidth: 0,
         hoverable: true,
@@ -254,7 +301,11 @@ function slBarogram(placeholder) {
       crosshair: {
         mode: 'x'
       }
-    });
+    };
+
+    $.extend(opts, options);
+
+    flot = $.plot(placeholder, [], opts);
   }
 
   /**

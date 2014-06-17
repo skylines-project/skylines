@@ -1,12 +1,12 @@
-{% macro render_field(field, hide_error_text=False, disabled=False) -%}
+{% macro render_field(field, hide_error_text=False, disabled=False, class='') -%}
 {% if field.widget.input_type == 'checkbox' -%}
-  <div class="checkbox">
+  <div class="checkbox {{ class }}">
     <label>
         {{ field(**kwargs)|safe }}{{ field.label.text }}
     </label>
   </div>
 {%- else -%}
-  <div class="form-group{% if field.errors %} has-error{% endif %}" id="form-group-{{ field.id }}">
+  <div class="form-group{% if field.errors %} has-error{% endif %} {{ class }}" id="form-group-{{ field.id }}">
     {{ field.label }}
 
     {% if hide_error_text -%}
