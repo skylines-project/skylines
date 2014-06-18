@@ -318,31 +318,49 @@ def run_analyse_flight(flight, full=None, triangle=None, sprint=None):
     limits = get_limits()
 
     filename = files.filename_to_path(flight.igc_file.filename)
-    xcsoar_flight = xcsoar.Flight(flight_path(filename, add_elevation=True, max_points=None))
+    fp = flight_path(filename, add_elevation=True, max_points=None)
+
+    if len(fp) < 2:
+        return None
+
+    xcsoar_flight = xcsoar.Flight(fp)
 
     analysis_times = get_analysis_times(xcsoar_flight.times())
 
+    # Fallback if automated flight detection has failed - check if first and last
+    # fix could be ok and use both of them for takeoff and landing
+    if not analysis_times and fp[0].datetime < fp[-1].datetime:
+        analysis_times = dict(takeoff=dict(time=fp[0].datetime,
+                                           location=fp[0].location),
+                              scoring_start=None,
+                              scoring_end=None,
+                              landing=dict(time=fp[-1].datetime,
+                                           location=fp[-1].location))
+
+    # Give priority to already stored takeoff and landing times
     if flight.takeoff_time:
         analysis_times['takeoff']['time'] = flight.takeoff_time
-        analysis_times['takeoff']['location']['latitude'] = flight.takeoff_location.latitude
-        analysis_times['takeoff']['location']['longitude'] = flight.takeoff_location.longitude
+        analysis_times['takeoff']['location'] = dict(latitude=flight.takeoff_location.latitude,
+                                                     longitude=flight.takeoff_location.longitude)
 
+    if flight.landing_time:
+        analysis_times['landing']['time'] = flight.landing_time
+        analysis_times['landing']['location'] = dict(latitude=flight.landing_location.latitude,
+                                                     longitude=flight.landing_location.longitude)
+
+    # If no scoring window was found fallback to takeoff - landing
     if not analysis_times['scoring_start']:
         analysis_times['scoring_start'] = analysis_times['takeoff'].copy()
-
-    if flight.scoring_start_time:
-        analysis_times['scoring_start']['time'] = flight.scoring_start_time
 
     if not analysis_times['scoring_end']:
         analysis_times['scoring_end'] = analysis_times['landing'].copy()
 
+    # And give priority to already stored scoring times
+    if flight.scoring_start_time:
+        analysis_times['scoring_start']['time'] = flight.scoring_start_time
+
     if flight.scoring_end_time:
         analysis_times['scoring_end']['time'] = flight.scoring_end_time
-
-    if flight.landing_time:
-        analysis_times['landing']['time'] = flight.landing_time
-        analysis_times['landing']['location']['latitude'] = flight.landing_location.latitude
-        analysis_times['landing']['location']['longitude'] = flight.landing_location.longitude
 
     if analysis_times:
         analysis = xcsoar_flight.analyse(analysis_times['takeoff']['time'],
