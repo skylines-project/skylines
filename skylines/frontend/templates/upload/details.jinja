@@ -47,6 +47,13 @@
 
 {% if status == h.UploadStatus.SUCCESS -%}
 {{ form.hidden_tag() }}
+{{ render_field(form.pilot_id, class='col-sm-6') }}
+{{ render_field(form.pilot_name, class='col-sm-6') }}
+<div class="clearfix"></div>
+{{ render_field(form.co_pilot_id, class='col-sm-6') }}
+{{ render_field(form.co_pilot_name, class='col-sm-6') }}
+<div class="clearfix"></div>
+
 {{ render_field(form.model_id, class='col-sm-4') }}
 {{ render_field(form.registration, class='col-sm-4') }}
 {{ render_field(form.competition_id, class='col-sm-4') }}
@@ -149,6 +156,16 @@
       updateTimePicker({{ prefix }}, flight_date, baro.getFlightTime());
     });
   });
+
+  $(document).ready(function() {
+    updateVisibilities('{{ prefix }}');
+    $('#{{ prefix }}-pilot_id').on('change', function() {
+      updateVisibilities('{{ prefix }}');
+    });
+    $('#{{ prefix }}-co_pilot_id').on('change', function() {
+      updateVisibilities('{{ prefix }}');
+    });
+  })
 </script>
 {% endif %}
 {%- endmacro %}

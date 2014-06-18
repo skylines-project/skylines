@@ -27,6 +27,11 @@
                  {{ h.json.dumps(h.get_setting_name('lift_unit')) }},
                  {{ h.json.dumps(h.get_setting_name('altitude_unit')) }});
   });
+
+  function updateVisibilities(prefix) {
+    $('#form-group-' + prefix + '-pilot_name').toggle($('#' + prefix + '-pilot_id').val() == 0);
+    $('#form-group-' + prefix + '-co_pilot_name').toggle($('#' + prefix + '-co_pilot_id').val() == 0);
+  }
 </script>
 
 {% for name, flight, status, prefix, trace, form in flights -%}

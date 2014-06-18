@@ -115,7 +115,9 @@ def index():
                                form.takeoff_time.data,
                                form.scoring_start_time.data,
                                form.scoring_end_time.data,
-                               form.landing_time.data)
+                               form.landing_time.data,
+                               form.pilot_id.data, form.pilot_name.data,
+                               form.co_pilot_id.data, form.co_pilot_name.data)
                 flight_id_list.append(flight_id)
             elif form:
                 form_error = True
@@ -261,7 +263,9 @@ def check_update_form(prefix, flight_id, name, status):
 
 def _update_flight(flight_id, model_id, registration, competition_id,
                    takeoff_time, scoring_start_time,
-                   scoring_end_time, landing_time):
+                   scoring_end_time, landing_time,
+                   pilot_id, pilot_name,
+                   co_pilot_id, co_pilot_name):
     # Get flight from database and check if it is writable
     flight = Flight.get(flight_id)
 
@@ -282,7 +286,22 @@ def _update_flight(flight_id, model_id, registration, competition_id,
         if not 0 < len(competition_id) <= 5:
             competition_id = None
 
+    if pilot_id == 0:
+        pilot_id = None
+
     # Set new values
+    if flight.pilot_id != pilot_id:
+        flight.pilot_id = pilot_id
+
+        # update club if pilot changed
+        if pilot_id:
+            flight.club_id = User.get(pilot_id).club_id
+
+    flight.pilot_name = pilot_name if pilot_name else None
+
+    flight.co_pilot_id = co_pilot_id if co_pilot_id != 0 else None
+    flight.co_pilot_name = co_pilot_name if co_pilot_name else None
+
     flight.model_id = model_id
     flight.registration = registration
     flight.competition_id = competition_id

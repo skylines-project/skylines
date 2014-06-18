@@ -7,7 +7,7 @@ from wtforms.fields import DateTimeField
 
 from .file import MultiFileField
 from .pilot import ClubPilotsSelectField
-from .flight import ChangeAircraftForm
+from .flight import ChangeAircraftForm, ChangePilotsForm
 from .validators import CompareTo
 
 
@@ -19,7 +19,7 @@ class UploadForm(Form):
     pilot_name = TextField(l_(u'Pilot name'))
 
 
-class UploadUpdateForm(ChangeAircraftForm):
+class UploadUpdateForm(ChangeAircraftForm, ChangePilotsForm):
     takeoff_time = DateTimeField(l_('Takeoff'), format='%Y-%m-%d %H:%M:%S')
 
     scoring_start_time = DateTimeField(l_('Scoring Start Time'), validators=[
