@@ -9,7 +9,7 @@
     <div class="input-group input-group-sm date" id="{{ field.id }}-datetimepicker"
          data-date-defaultdate="{{ field.data }}">
       <input type="text" class="form-control" />
-      <span class="input-group-addon"><span class="glyphicon glyphicon-time"></span></span>
+      <span class="input-group-addon"><span class="icon-time"></span></span>
     </div>
 
     {{ field(class_="form-control", title=field.errors[0], type="hidden", **kwargs)|safe }}
@@ -18,14 +18,14 @@
       <div class="input-group input-group-sm date" id="{{ field.id }}-datetimepicker"
            data-date-defaultdate="{{ field.data }}">
         <input type="text" disabled="disabled" class="form-control" />
-        <span class="input-group-addon"><span class="glyphicon glyphicon-time"></span></span>
+        <span class="input-group-addon"><span class="icon-time"></span></span>
       </div>
       {{ field(class_="form-control", disabled="true", type="hidden", **kwargs)|safe }}
     {%- else -%}
       <div class="input-group input-group-sm date" id="{{ field.id }}-datetimepicker"
            data-date-defaultdate="{{ field.data }}">
         <input type="text" class="form-control" />
-        <span class="input-group-addon"><span class="glyphicon glyphicon-time"></span></span>
+        <span class="input-group-addon"><span class="icon-time"></span></span>
       </div>
 
       {{ field(class_="form-control", type="hidden", **kwargs)|safe }}
@@ -115,6 +115,12 @@
       pickDate: false,
       useSeconds: true,
       format: 'HH:mm:ss',
+      icons: {
+        time: 'icon-time',
+        date: 'icon-calendar',
+        up: 'icon-chevron-up',
+        down: 'icon-chevron-down'
+      },
       minDate: moment("{{ trace.igc_start_time.strftime("%Y-%m-%d %H:%M:%S") }}", "YYYY-MM-DD HH:mm:ss"),
       maxDate: moment("{{ trace.igc_end_time.strftime("%Y-%m-%d %H:%M:%S") }}", "YYYY-MM-DD HH:mm:ss")
     });
