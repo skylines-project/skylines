@@ -38,7 +38,7 @@
 </div>
 {%- endmacro %}
 
-{% macro render_flight_details(name, flight, status, prefix, trace, airspaces, form) -%}
+{% macro render_flight_details(name, flight, status, prefix, trace, airspaces, cache_key, form) -%}
 <input type="hidden" name="{{ prefix }}-status" value="{{ status.value }}" />
 <input type="hidden" name="{{ prefix }}-name" value="{{ name }}" />
 {% if flight %}
@@ -82,6 +82,7 @@
       <th class="class">Class</th>
       <th class="base">Base</th>
       <th class="top">Top</th>
+      <th></th>
     </tr>
   </thead>
   <tbody>
@@ -91,6 +92,9 @@
     <td class="class">{{ airspace.airspace_class }}</td>
     <td class="base">{{ airspace.base_text }}</td>
     <td class="top">{{ airspace.top_text }}</td>
+    <td>
+      <span class="icon-picture airspace-image" style="cursor: pointer;" rel="popover" data-toggle="popover" data-content="<img src='{{ url_for('.airspace_image', cache_key=cache_key, as_id=airspace.id) }}' style='width: 400px; height: 400px;' />"></span>
+    </td>
   </tr>
 {% endfor %}
   </tbody>

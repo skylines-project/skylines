@@ -85,6 +85,27 @@ MAP
     END
   END
 
+  LAYER
+    NAME 'Flights_Highlight'
+    TYPE LINE
+    CONNECTIONTYPE POSTGIS
+    CONNECTION "dbname=skylines"
+    DATA "locations from flights using unique id"
+
+    PROJECTION
+      "init=epsg:4326"
+    END
+
+    CLASS
+      NAME 'FLIGHTS'
+      STYLE
+        COLOR 255 44 0
+        WIDTH 3
+        LINECAP butt
+      END
+    END
+  END
+
   # some symbols
   INCLUDE "symbols.map"
 

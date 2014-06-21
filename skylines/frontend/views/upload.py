@@ -2,8 +2,9 @@ from datetime import datetime
 from tempfile import TemporaryFile
 from zipfile import ZipFile
 from enum import Enum
+import hashlib
 
-from flask import Blueprint, render_template, request, flash, redirect, g, current_app, url_for, abort
+from flask import Blueprint, render_template, request, flash, redirect, g, current_app, url_for, abort, make_response
 from flask.ext.babel import _, lazy_gettext as l_
 from redis.exceptions import ConnectionError
 from werkzeug.exceptions import BadRequest
@@ -12,11 +13,18 @@ from skylines.frontend.forms import UploadForm, UploadUpdateForm
 from skylines.lib import files
 from skylines.lib.decorators import login_required
 from skylines.lib.md5 import file_md5
+from skylines.lib.sql import query_to_sql
 from skylines.lib.xcsoar_ import flight_path, analyse_flight
 from skylines.model import db, User, Flight, IGCFile
 from skylines.model.airspace import get_airspace_infringements
 from skylines.model.event import create_flight_notifications
 from skylines.worker import tasks
+
+from geoalchemy2.shape import from_shape
+from sqlalchemy.sql import literal_column
+from shapely.geometry import MultiLineString, LineString
+import mapscript
+import pyproj
 
 import xcsoar
 
@@ -90,9 +98,10 @@ def _get_airspace_infringements(fp):
 
     hitlist = []
     for as_id in infringements:
+        airspaces[as_id].update(dict(id=as_id))
         hitlist.append(airspaces[as_id])
 
-    return hitlist
+    return hitlist, infringements, periods
 
 
 @upload_blueprint.route('/', methods=('GET', 'POST'))
@@ -117,14 +126,20 @@ def index():
 
             flight, fp, form = check_update_form(prefix, flight_id, name, status)
 
-            trace = _encode_flight_path(fp)
-            airspace = _get_airspace_infringements(fp)
+            if fp:
+                trace = _encode_flight_path(fp)
+                airspace, infringements, periods = _get_airspace_infringements(fp)
+            else:
+                trace = None
+                airspace = None
 
             # remove airspace field from form if no airspace infringements found
-            if not airspace:
+            if form and not airspace:
                 del form.airspace_usage
 
-            flights.append((name, flight, status, str(prefix), trace, airspace, form))
+            cache_key = hashlib.sha1(str(flight.id) + '_' + str(g.current_user.id)).hexdigest()
+
+            flights.append((name, flight, status, str(prefix), trace, airspace, cache_key, form))
 
             if form and form.validate_on_submit():
                 _update_flight(flight_id,
@@ -185,7 +200,7 @@ def index_post(form):
             other = Flight.by_md5(md5)
             if other:
                 files.delete_file(filename)
-                flights.append((name, other, UploadStatus.DUPLICATE, str(prefix), None, None))
+                flights.append((name, other, UploadStatus.DUPLICATE, str(prefix), None, None, None, None))
                 continue
 
         igc_file = IGCFile()
@@ -196,7 +211,7 @@ def index_post(form):
 
         if igc_file.date_utc is None:
             files.delete_file(filename)
-            flights.append((name, None, UploadStatus.MISSING_DATE, str(prefix), None, None))
+            flights.append((name, None, UploadStatus.MISSING_DATE, str(prefix), None, None, None, None))
             continue
 
         flight = Flight()
@@ -218,39 +233,46 @@ def index_post(form):
 
         if not analyse_flight(flight, fp=fp):
             files.delete_file(filename)
-            flights.append((name, None, UploadStatus.PARSER_ERROR, str(prefix), None, None))
+            flights.append((name, None, UploadStatus.PARSER_ERROR, str(prefix), None, None, None, None))
             continue
 
         if not flight.takeoff_time or not flight.landing_time:
             files.delete_file(filename)
-            flights.append((name, None, UploadStatus.NO_FLIGHT, str(prefix), None, None))
+            flights.append((name, None, UploadStatus.NO_FLIGHT, str(prefix), None, None, None, None))
             continue
 
         if not flight.update_flight_path():
             files.delete_file(filename)
-            flights.append((name, None, UploadStatus.NO_FLIGHT, str(prefix), None, None))
+            flights.append((name, None, UploadStatus.NO_FLIGHT, str(prefix), None, None, None, None))
             continue
 
         flight.privacy_level = Flight.PrivacyLevel.PRIVATE
 
         trace = _encode_flight_path(fp)
-        airspace = _get_airspace_infringements(fp)
+        airspace, infringements, periods = _get_airspace_infringements(fp)
         form = UploadUpdateForm(formdata=None, prefix=str(prefix), obj=flight)
 
         # remove airspace field from form if no airspace infringements found
         if not airspace:
             del form.airspace_usage
 
-        flights.append((name, flight, UploadStatus.SUCCESS, str(prefix), trace,
-                        airspace, form))
-
         db.session.add(igc_file)
         db.session.add(flight)
 
-        create_flight_notifications(flight)
-
         # flush data to make sure we don't get duplicate files from ZIP files
         db.session.flush()
+
+        # Store data in cache for image creation
+        cache_key = hashlib.sha1(str(flight.id) + '_' + str(user.id)).hexdigest()
+
+        current_app.cache.set('upload_airspace_infringements_' + cache_key, infringements, timeout=15 * 60)
+        current_app.cache.set('upload_airspace_periods_' + cache_key, periods, timeout=15 * 60)
+        current_app.cache.set('upload_airspace_flight_path_' + cache_key, fp, timeout=15 * 60)
+
+        flights.append((name, flight, UploadStatus.SUCCESS, str(prefix), trace,
+                        airspace, cache_key, form))
+
+        create_flight_notifications(flight)
 
         success = True
 
@@ -368,3 +390,130 @@ def _update_flight(flight_id, fp, model_id, registration, competition_id,
         current_app.logger.info('Cannot connect to Redis server')
 
     return True
+
+
+@upload_blueprint.route('/airspace/<string:cache_key>/<int:as_id>.png')
+def airspace_image(cache_key, as_id):
+    # get information from cache...
+    infringements = current_app.cache.get('upload_airspace_infringements_' + cache_key)
+    periods = current_app.cache.get('upload_airspace_periods_' + cache_key)
+    flight_path = current_app.cache.get('upload_airspace_flight_path_' + cache_key)
+
+    # abort if invalid cache key
+    if not infringements or not as_id in infringements:
+        abort(404)
+
+    # Convert the coordinate into a list of tuples
+    coordinates = [(c.location['longitude'], c.location['latitude']) for c in flight_path]
+    # Create a shapely LineString object from the coordinates
+    linestring = LineString(coordinates)
+    # Save the new path as WKB
+    locations = from_shape(linestring, srid=4326)
+
+    highlight_locations = []
+    extent_epsg4326 = [180, 85.05112878, -180, -85.05112878]
+
+    for period in periods:
+        if period[0] != as_id:
+            continue
+
+        start_index = period[1]
+        end_index = period[2]
+
+        # Create a shapely LineString object from the coordinates inside the airspace
+        if start_index == end_index:
+            # a LineString must contain at least two points...
+            linestring = LineString([coordinates[start_index], coordinates[start_index]])
+        else:
+            linestring = LineString(coordinates[start_index:end_index + 1])
+
+        highlight_locations.append(linestring)
+
+        # gather extent
+        if period[0] == as_id:
+            (minx, miny, maxx, maxy) = linestring.bounds
+
+            extent_epsg4326[0] = min(extent_epsg4326[0], minx)
+            extent_epsg4326[1] = min(extent_epsg4326[1], miny)
+            extent_epsg4326[2] = max(extent_epsg4326[2], maxx)
+            extent_epsg4326[3] = max(extent_epsg4326[3], maxy)
+
+    # Save the new path as WKB
+    highlight_multilinestring = from_shape(MultiLineString(highlight_locations), srid=4326)
+
+    # minimum extent should be 0.3 deg
+    width = abs(extent_epsg4326[0] - extent_epsg4326[2])
+    height = abs(extent_epsg4326[1] - extent_epsg4326[3])
+
+    if width < 0.3:
+        center_x = (extent_epsg4326[0] + extent_epsg4326[2]) / 2
+
+        extent_epsg4326[0] = center_x - 0.15
+        extent_epsg4326[2] = center_x + 0.15
+
+    if height < 0.3:
+        center_y = (extent_epsg4326[1] + extent_epsg4326[3]) / 2
+        extent_epsg4326[1] = center_y - 0.15
+        extent_epsg4326[3] = center_y + 0.15
+
+    # convert extent from EPSG4326 to EPSG3857
+    epsg4326 = pyproj.Proj(init='epsg:4326')
+    epsg3857 = pyproj.Proj(init='epsg:3857')
+
+    x1, y1 = pyproj.transform(epsg4326, epsg3857, extent_epsg4326[0], extent_epsg4326[1])
+    x2, y2 = pyproj.transform(epsg4326, epsg3857, extent_epsg4326[2], extent_epsg4326[3])
+
+    extent_epsg3857 = [x1, y1, x2, y2]
+
+    # load basemap and set size + extent
+    map_object = mapscript.mapObj('mapserver/basemap.map')
+    map_object.setSize(400, 400)
+    map_object.setExtent(extent_epsg3857[0], extent_epsg3857[1], extent_epsg3857[2], extent_epsg3857[3])
+
+    # enable airspace and airports layers
+    num_layers = map_object.numlayers
+    for i in range(num_layers):
+        layer = map_object.getLayer(i)
+
+        if layer.group == 'Airports':
+            layer.status = mapscript.MS_ON
+
+        if layer.group == 'Airspace':
+            layer.status = mapscript.MS_ON
+
+    # get flights layer
+    flights_layer = map_object.getLayerByName('Flights')
+    highlight_layer = map_object.getLayerByName('Flights_Highlight')
+
+    # set sql query for blue flight
+    one = literal_column('1 as flight_id')
+    flight_query = db.session.query(locations.label('flight_geometry'), one)
+
+    flights_layer.data = 'flight_geometry FROM (' + query_to_sql(flight_query) + ')' + \
+                         ' AS foo USING UNIQUE flight_id USING SRID=4326'
+
+    # set sql query for highlighted linestrings
+    highlighted_query = db.session.query(highlight_multilinestring.label('flight_geometry'), one)
+
+    highlight_layer.data = 'flight_geometry FROM (' + query_to_sql(highlighted_query) + ')' + \
+                           ' AS foo USING UNIQUE flight_id USING SRID=4326'
+
+    highlight_layer.status = mapscript.MS_ON
+
+    # get osm layer and set WMS url
+    osm_layer = map_object.getLayerByName('OSM')
+    osm_layer.connection = current_app.config.get('SKYLINES_MAP_TILE_URL') + \
+        '/service?'
+
+    # draw map
+    map_image = map_object.draw()
+
+    # get image
+    mapscript.msIO_installStdoutToBuffer()
+    map_image.write()
+    content = mapscript.msIO_getStdoutBufferBytes()
+
+    # return to client
+    resp = make_response(content)
+    resp.headers['Content-type'] = map_image.format.mimetype
+    return resp
