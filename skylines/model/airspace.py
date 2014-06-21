@@ -31,3 +31,30 @@ class Airspace(db.Model):
         '''Returns a query object of all airspaces at the location'''
         return cls.query() \
             .filter(cls.the_geom.ST_Contains(location.make_point()))
+
+    def extract_height(self, column):
+        if column == 'GND':
+            return -1000, 'msl'
+
+        elif column.startswith('FL'):
+            return int(column[3:]) * 100 / 3.2808399, 'fl'
+
+        elif column.endswith('AGL'):
+            return int(column[:-4]) / 3.2808399, 'agl'
+
+        elif column.endswith('MSL'):
+            return int(column[:-4]) / 3.2808399, 'msl'
+
+        elif column == 'NOTAM':
+            return -1000, 'notam'
+
+        else:
+            return -1000, 'unknown'
+
+    @property
+    def extract_base(self):
+        return self.extract_height(self.base)
+
+    @property
+    def extract_top(self):
+        return self.extract_height(self.top)
