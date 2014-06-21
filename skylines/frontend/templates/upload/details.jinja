@@ -72,14 +72,35 @@
 <div class="clearfix"></div>
 
 {% if airspaces %}
+<div class="col-md-10 col-md-offset-1">
 <p>
 <h5>Used airspaces:</h5>
+<table class="table table-condensed airspace-table">
+  <thead>
+    <tr>
+      <th class="name">Name</th>
+      <th class="class">Class</th>
+      <th class="base">Base</th>
+      <th class="top">Top</th>
+    </tr>
+  </thead>
+  <tbody>
 {% for airspace in airspaces %}
-{{ airspace.name }} ({{ airspace.base_text }} - {{ airspace.top_text }})<br />
+  <tr>
+    <td class="name">{{ airspace.name }}</td>
+    <td class="class">{{ airspace.airspace_class }}</td>
+    <td class="base">{{ airspace.base_text }}</td>
+    <td class="top">{{ airspace.top_text }}</td>
+  </tr>
 {% endfor %}
+  </tbody>
+</table>
 </p>
 {{ render_field(form.airspace_usage) }}
+</div>
 {% endif %}
+
+<div class="clearfix"></div>
 
 {%- endif %}
 

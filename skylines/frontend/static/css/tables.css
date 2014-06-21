@@ -82,3 +82,13 @@ table thead .sorting .sorting_asc {
 table thead .sorting .sorting_desc {
   background: url("../images/sort_desc.png") no-repeat scroll left center transparent;
 }
+
+.airspace-table .name {
+  text-align: left;
+}
+
+.airspace-table .class,
+.airspace-table .base,
+.airspace-table .top {
+  text-align: center;
+}

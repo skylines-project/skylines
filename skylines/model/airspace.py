@@ -91,6 +91,7 @@ def get_airspace_infringements(flight_path):
         base, base_ref = airspace.extract_base
 
         airspaces[airspace.id] = dict(
+            airspace_class=airspace.airspace_class,
             top=top,
             top_ref=top_ref,
             top_text=airspace.top,
