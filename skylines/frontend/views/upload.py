@@ -70,13 +70,14 @@ def IterateUploadFiles(upload):
             yield x
 
 
-def _get_flight_path(flight):
-    fp = flight_path(flight.igc_file, add_elevation=True)
+def _encode_flight_path(fp):
+    # Reduce to 1000 points maximum with equal spacing
+    shortener = int(max(1, len(fp) / 1000))
 
-    barogram_h = xcsoar.encode([fix.altitude for fix in fp], method="signed")
-    barogram_t = xcsoar.encode([fix.seconds_of_day for fix in fp], method="signed")
-    enl = xcsoar.encode([fix.enl if fix.enl is not None else 0 for fix in fp], method="signed")
-    elevations_h = xcsoar.encode([fix.elevation if fix.elevation is not None else -1000 for fix in fp], method="signed")
+    barogram_h = xcsoar.encode([fix.altitude for fix in fp[::shortener]], method="signed")
+    barogram_t = xcsoar.encode([fix.seconds_of_day for fix in fp[::shortener]], method="signed")
+    enl = xcsoar.encode([fix.enl if fix.enl is not None else 0 for fix in fp[::shortener]], method="signed")
+    elevations_h = xcsoar.encode([fix.elevation if fix.elevation is not None else -1000 for fix in fp[::shortener]], method="signed")
 
     return dict(barogram_h=barogram_h, barogram_t=barogram_t,
                 enl=enl, elevations_h=elevations_h,
@@ -103,12 +104,14 @@ def index():
             except ValueError:
                 raise BadRequest('Status unknown')
 
-            flight, trace, form = check_update_form(prefix, flight_id, name, status)
+            flight, fp, form = check_update_form(prefix, flight_id, name, status)
 
+            trace = _encode_flight_path(fp)
             flights.append((name, flight, status, str(prefix), trace, form))
 
             if form and form.validate_on_submit():
                 _update_flight(flight_id,
+                               fp,
                                form.model_id.data,
                                form.registration.data,
                                form.competition_id.data,
@@ -194,7 +197,9 @@ def index_post(form):
 
         flight.competition_id = igc_file.competition_id
 
-        if not analyse_flight(flight):
+        fp = flight_path(flight.igc_file, add_elevation=True, max_points=None)
+
+        if not analyse_flight(flight, fp=fp):
             files.delete_file(filename)
             flights.append((name, None, UploadStatus.PARSER_ERROR, str(prefix), None, None))
             continue
@@ -211,7 +216,7 @@ def index_post(form):
 
         flight.privacy_level = Flight.PrivacyLevel.PRIVATE
 
-        trace = _get_flight_path(flight)
+        trace = _encode_flight_path(fp)
         flights.append((name, flight, UploadStatus.SUCCESS, str(prefix), trace,
                         UploadUpdateForm(formdata=None, prefix=str(prefix), obj=flight)))
 
@@ -248,20 +253,21 @@ def check_update_form(prefix, flight_id, name, status):
         if not flight.is_writable(g.current_user):
             abort(403)
 
+        fp = flight_path(flight.igc_file, add_elevation=True, max_points=None)
+
         form = UploadUpdateForm(prefix=str(prefix), obj=flight)
-        trace = _get_flight_path(flight)
 
         # Force takeoff_time and landing_time to be within the igc file limits
-        if form.takeoff_time.data < trace['igc_start_time']:
-            form.takeoff_time.data = trace['igc_start_time']
+        if form.takeoff_time.data < fp[0].datetime:
+            form.takeoff_time.data = fp[0].datetime
 
-        if form.landing_time.data > trace['igc_end_time']:
-            form.landing_time.data = trace['igc_end_time']
+        if form.landing_time.data > fp[-1].datetime:
+            form.landing_time.data = fp[-1].datetime
 
-        return flight, trace, form
+        return flight, fp, form
 
 
-def _update_flight(flight_id, model_id, registration, competition_id,
+def _update_flight(flight_id, fp, model_id, registration, competition_id,
                    takeoff_time, scoring_start_time,
                    scoring_end_time, landing_time,
                    pilot_id, pilot_name,
@@ -329,7 +335,7 @@ def _update_flight(flight_id, model_id, registration, competition_id,
     db.session.commit()
 
     if trigger_analysis:
-        analyse_flight(flight)
+        analyse_flight(flight, fp=fp)
 
     try:
         tasks.analyse_flight.delay(flight.id)
