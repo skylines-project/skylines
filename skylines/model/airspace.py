@@ -81,7 +81,8 @@ def get_airspace_infringements(flight_path):
 
     q = db.session.query(subq.c.id,
                          cte.c.locations.path[1]) \
-                  .filter(_ST_Contains(subq.c.the_geom, cte.c.locations.geom))
+                  .filter(_ST_Contains(subq.c.the_geom, cte.c.locations.geom)) \
+                  .order_by(subq.c.id)
 
     airspaces = dict()
 
@@ -113,9 +114,8 @@ def get_airspace_infringements(flight_path):
            flight_path[fix_id].altitude >= airspaces[as_id]['base']:
             infringements.add(as_id)
 
-            periods_as_id = as_id
-
             if not start_fix:
+                periods_as_id = as_id
                 start_fix = fix_id
 
             if end_fix and end_fix != fix_id - 1:
@@ -123,6 +123,7 @@ def get_airspace_infringements(flight_path):
                 start_fix = fix_id
 
             end_fix = fix_id
+            periods_as_id = as_id
 
     if start_fix and end_fix:
         periods.append((periods_as_id, start_fix, end_fix))
