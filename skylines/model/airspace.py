@@ -4,8 +4,11 @@ from datetime import datetime
 
 from sqlalchemy.types import Integer, String, DateTime
 from geoalchemy2.types import Geometry
+from geoalchemy2.shape import from_shape
+from shapely.geometry import LineString
 
 from skylines.model import db
+from skylines.lib.sql import _ST_Contains
 
 
 class Airspace(db.Model):
@@ -58,3 +61,68 @@ class Airspace(db.Model):
     @property
     def extract_top(self):
         return self.extract_height(self.top)
+
+
+def get_airspace_infringements(flight_path):
+    # Convert the coordinate into a list of tuples
+    coordinates = [(c.location['longitude'], c.location['latitude']) for c in flight_path]
+
+    # Create a shapely LineString object from the coordinates
+    linestring = LineString(coordinates)
+
+    # Save the new path as WKB
+    locations = from_shape(linestring, srid=4326)
+
+    airspaces_q = db.session.query(Airspace) \
+                    .filter(Airspace.the_geom.ST_Intersects(locations))
+
+    subq = airspaces_q.subquery()
+    cte = db.session.query(locations.ST_DumpPoints().label('locations')).cte()
+
+    q = db.session.query(subq.c.id,
+                         cte.c.locations.path[1]) \
+                  .filter(_ST_Contains(subq.c.the_geom, cte.c.locations.geom))
+
+    airspaces = dict()
+
+    for airspace in airspaces_q.all():
+        top, top_ref = airspace.extract_top
+        base, base_ref = airspace.extract_base
+
+        airspaces[airspace.id] = dict(
+            top=top,
+            top_ref=top_ref,
+            base=base,
+            base_ref=base_ref,
+            name=airspace.name)
+
+    infringements = set()
+    periods = []
+
+    start_fix = None
+    end_fix = None
+    periods_as_id = None
+
+    for as_id, i in q.all():
+        fix_id = i - 1
+
+        # TODO: respect airspace height references (MSL, AGL, FL)
+        if flight_path[fix_id].altitude <= airspaces[as_id]['top'] and \
+           flight_path[fix_id].altitude >= airspaces[as_id]['base']:
+            infringements.add(as_id)
+
+            periods_as_id = as_id
+
+            if not start_fix:
+                start_fix = fix_id
+
+            if end_fix and end_fix != fix_id - 1:
+                periods.append((periods_as_id, start_fix, end_fix))
+                start_fix = fix_id
+
+            end_fix = fix_id
+
+    if start_fix and end_fix:
+        periods.append((periods_as_id, start_fix, end_fix))
+
+    return airspaces, infringements, periods
