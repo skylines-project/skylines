@@ -3,7 +3,8 @@ from flask_wtf import Form
 from flask_wtf.file import FileRequired
 
 from wtforms import TextField
-from wtforms.fields import DateTimeField
+from wtforms.fields import DateTimeField, BooleanField
+from wtforms.validators import Required
 
 from .file import MultiFileField
 from .pilot import ClubPilotsSelectField
@@ -45,3 +46,7 @@ class UploadUpdateForm(ChangeAircraftForm, ChangePilotsForm):
             message=l_('Landing Time must be after scoring end time')
         )
     ], format='%Y-%m-%d %H:%M:%S')
+
+    airspace_usage = BooleanField(l_('Confirm airspace usage'), validators=[
+        Required(message=l_('Please confirm you were allowed to use those airspaces'))
+    ])

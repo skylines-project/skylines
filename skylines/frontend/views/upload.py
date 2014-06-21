@@ -14,6 +14,7 @@ from skylines.lib.decorators import login_required
 from skylines.lib.md5 import file_md5
 from skylines.lib.xcsoar_ import flight_path, analyse_flight
 from skylines.model import db, User, Flight, IGCFile
+from skylines.model.airspace import get_airspace_infringements
 from skylines.model.event import create_flight_notifications
 from skylines.worker import tasks
 
@@ -84,6 +85,16 @@ def _encode_flight_path(fp):
                 igc_start_time=fp[0].datetime, igc_end_time=fp[-1].datetime)
 
 
+def _get_airspace_infringements(fp):
+    airspaces, infringements, periods = get_airspace_infringements(fp)
+
+    hitlist = []
+    for as_id in infringements:
+        hitlist.append(airspaces[as_id])
+
+    return hitlist
+
+
 @upload_blueprint.route('/', methods=('GET', 'POST'))
 @login_required(l_("You have to login to upload flights."))
 def index():
@@ -107,7 +118,13 @@ def index():
             flight, fp, form = check_update_form(prefix, flight_id, name, status)
 
             trace = _encode_flight_path(fp)
-            flights.append((name, flight, status, str(prefix), trace, form))
+            airspace = _get_airspace_infringements(fp)
+
+            # remove airspace field from form if no airspace infringements found
+            if not airspace:
+                del form.airspace_usage
+
+            flights.append((name, flight, status, str(prefix), trace, airspace, form))
 
             if form and form.validate_on_submit():
                 _update_flight(flight_id,
@@ -217,8 +234,15 @@ def index_post(form):
         flight.privacy_level = Flight.PrivacyLevel.PRIVATE
 
         trace = _encode_flight_path(fp)
+        airspace = _get_airspace_infringements(fp)
+        form = UploadUpdateForm(formdata=None, prefix=str(prefix), obj=flight)
+
+        # remove airspace field from form if no airspace infringements found
+        if not airspace:
+            del form.airspace_usage
+
         flights.append((name, flight, UploadStatus.SUCCESS, str(prefix), trace,
-                        UploadUpdateForm(formdata=None, prefix=str(prefix), obj=flight)))
+                        airspace, form))
 
         db.session.add(igc_file)
         db.session.add(flight)

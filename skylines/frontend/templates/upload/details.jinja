@@ -38,7 +38,7 @@
 </div>
 {%- endmacro %}
 
-{% macro render_flight_details(name, flight, status, prefix, trace, form) -%}
+{% macro render_flight_details(name, flight, status, prefix, trace, airspaces, form) -%}
 <input type="hidden" name="{{ prefix }}-status" value="{{ status.value }}" />
 <input type="hidden" name="{{ prefix }}-name" value="{{ name }}" />
 {% if flight %}
@@ -71,7 +71,19 @@
 
 <div class="clearfix"></div>
 
+{% if airspaces %}
+<p>
+<h5>Used airspaces:</h5>
+{% for airspace in airspaces %}
+{{ airspace.name }} ({{ airspace.base_text }} - {{ airspace.top_text }})<br />
+{% endfor %}
+</p>
+{{ render_field(form.airspace_usage) }}
+{% endif %}
+
 {%- endif %}
+
+
 
 <p>
   {% trans %}Status:{% endtrans %}

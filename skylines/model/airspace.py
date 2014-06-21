@@ -92,8 +92,10 @@ def get_airspace_infringements(flight_path):
         airspaces[airspace.id] = dict(
             top=top,
             top_ref=top_ref,
+            top_text=airspace.top,
             base=base,
             base_ref=base_ref,
+            base_text=airspace.base,
             name=airspace.name)
 
     infringements = set()
