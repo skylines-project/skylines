@@ -93,8 +93,8 @@ def get_elevation(fixes):
 
         for j in range((prev.location_id - 1) * shortener, (current.location_id - 1) * shortener):
             elev = prev.elevation + (current.elevation - prev.elevation) / \
-                (current.location_id - prev.location_id) * \
-                (j - (prev.location_id - 1))
+                ((current.location_id - prev.location_id) * shortener) * \
+                (j - (prev.location_id - 1) * shortener)
             fixes_copy[j][11] = elev
 
         prev = current
