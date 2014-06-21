@@ -2,6 +2,7 @@ from sqlalchemy.sql import func, ColumnElement, literal_column, cast, and_
 from sqlalchemy.types import String, Integer
 from sqlalchemy.ext.compiler import compiles
 from sqlalchemy.orm.properties import ColumnProperty
+from geoalchemy2.functions import GenericFunction
 
 
 class LowerCaseComparator(ColumnProperty.Comparator):
@@ -37,3 +38,19 @@ def weighted_ilike(self, value, weight=1):
 
 # Inject weighted_ilike() method into String type
 setattr(String.comparator_factory, 'weighted_ilike', weighted_ilike)
+
+
+class _ST_Intersects(GenericFunction):
+    '''
+    ST_Intersects without index search
+    '''
+    name = '_ST_Intersects'
+    type = None
+
+
+class _ST_Contains(GenericFunction):
+    '''
+    ST_Contains without index search
+    '''
+    name = '_ST_Contains'
+    type = None

@@ -13,10 +13,10 @@ from sqlalchemy.ext.hybrid import hybrid_method, hybrid_property
 from sqlalchemy.sql.expression import case, and_, or_, literal_column
 from geoalchemy2.types import Geometry
 from geoalchemy2.shape import to_shape, from_shape
-from geoalchemy2.functions import GenericFunction
 from shapely.geometry import LineString
 
 from skylines.model import db
+from skylines.lib.sql import _ST_Intersects, _ST_Contains
 
 from .geo import Location
 from .igcfile import IGCFile
@@ -345,22 +345,6 @@ class Flight(db.Model):
                     j = len(path_detailed) - 1
 
         return True
-
-
-class _ST_Contains(GenericFunction):
-    '''
-    ST_Contains without index search
-    '''
-    name = '_ST_Contains'
-    type = None
-
-
-class _ST_Intersects(GenericFunction):
-    '''
-    ST_Intersects without index search
-    '''
-    name = '_ST_Intersects'
-    type = None
 
 
 class FlightPathChunks(db.Model):
