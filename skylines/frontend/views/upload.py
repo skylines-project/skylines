@@ -449,18 +449,27 @@ def airspace_image(cache_key, as_id):
     # Save the new path as WKB
     highlight_multilinestring = from_shape(MultiLineString(highlight_locations), srid=4326)
 
+    # increase extent by factor 1.05
+    width = abs(extent_epsg4326[0] - extent_epsg4326[2])
+    height = abs(extent_epsg4326[1] - extent_epsg4326[3])
+
+    center_x = (extent_epsg4326[0] + extent_epsg4326[2]) / 2
+    center_y = (extent_epsg4326[1] + extent_epsg4326[3]) / 2
+
+    extent_epsg4326[0] = center_x - width / 2 * 1.05
+    extent_epsg4326[1] = center_y - height / 2 * 1.05
+    extent_epsg4326[2] = center_x + width / 2 * 1.05
+    extent_epsg4326[3] = center_y + height / 2 * 1.05
+
     # minimum extent should be 0.3 deg
     width = abs(extent_epsg4326[0] - extent_epsg4326[2])
     height = abs(extent_epsg4326[1] - extent_epsg4326[3])
 
     if width < 0.3:
-        center_x = (extent_epsg4326[0] + extent_epsg4326[2]) / 2
-
         extent_epsg4326[0] = center_x - 0.15
         extent_epsg4326[2] = center_x + 0.15
 
     if height < 0.3:
-        center_y = (extent_epsg4326[1] + extent_epsg4326[3]) / 2
         extent_epsg4326[1] = center_y - 0.15
         extent_epsg4326[3] = center_y + 0.15
 
