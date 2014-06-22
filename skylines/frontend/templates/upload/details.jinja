@@ -112,7 +112,7 @@
 
 <p>
   {% trans %}Status:{% endtrans %}
-  {% if status == h.UploadStatus.SUCCESS -%}
+  {% if status == h.UploadStatus.SUCCESS and not form.errors -%}
   <span class="label label-success"><i class="icon-ok"></i> {% trans %}Success{% endtrans %}</span>
   {% elif status %}
 
@@ -124,13 +124,17 @@
       {% set status_text = _('Failed to parse file') %}
     {% elif status == h.UploadStatus.NO_FLIGHT %}
       {% set status_text = _('No flight found in file') %}
+    {% elif status == h.UploadStatus.SUCCESS and form.errors %}
+      {% set status_text = _('Error found in upload form') %}
     {% else %}
       {% set status_text = _('Unknown') %}
     {% endif %}
 
-    {% if flight %}
+    {% if flight or form.errors %}
     <span class="label label-warning"><i class="icon-warning-sign"></i> {{ status_text }}</span>
-    <a href="{{ url_for('flight.index', flight_id=flight.id) }}" class="btn btn-default btn-sm">Show</a>
+    {% if not form.errors %}
+      <a href="{{ url_for('flight.index', flight_id=flight.id) }}" class="btn btn-default btn-sm">Show</a>
+    {% endif %}
     {% else %}
     <span class="label label-danger"><i class="icon-warning-sign"></i> {{ status_text }}</span>
     {% endif %}

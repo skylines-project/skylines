@@ -76,9 +76,9 @@
       {% for name, flight, status, prefix, trace, airspaces, cache_key, form in flights -%}
       <li {% if loop.first -%} class="active" {%- endif %}>
         <a href="#upload-tab-{{ prefix }}" data-toggle="tab">
-        {% if status == h.UploadStatus.SUCCESS -%}
+        {% if status == h.UploadStatus.SUCCESS and not form.errors -%}
         <i class="icon-ok text-success"></i>
-        {% elif status and flight %}
+        {% elif status and flight or (form and form.errors) %}
         <i class="icon-warning-sign text-warning"></i>
         {%- else %}
         <i class="icon-warning-sign text-danger"></i>
