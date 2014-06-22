@@ -79,7 +79,7 @@ MAP
       NAME 'FLIGHTS'
       STYLE
         COLOR 0 75 189
-        WIDTH 1
+        WIDTH 1.5
         LINECAP butt
       END
     END
