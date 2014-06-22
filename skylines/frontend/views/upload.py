@@ -23,8 +23,13 @@ from skylines.worker import tasks
 from geoalchemy2.shape import from_shape
 from sqlalchemy.sql import literal_column
 from shapely.geometry import MultiLineString, LineString
-import mapscript
-import pyproj
+
+try:
+    import mapscript
+    import pyproj
+    mapscript_available = True
+except ImportError:
+    mapscript_available = False
 
 import xcsoar
 
@@ -394,6 +399,9 @@ def _update_flight(flight_id, fp, model_id, registration, competition_id,
 
 @upload_blueprint.route('/airspace/<string:cache_key>/<int:as_id>.png')
 def airspace_image(cache_key, as_id):
+    if not mapscript_available:
+        abort(404)
+
     # get information from cache...
     infringements = current_app.cache.get('upload_airspace_infringements_' + cache_key)
     periods = current_app.cache.get('upload_airspace_periods_' + cache_key)
