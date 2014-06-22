@@ -11,7 +11,7 @@ DEBUG = True
 SECRET_KEY = 'skylines'
 
 SMTP_SERVER = 'localhost'
-EMAIL_FROM = 'no-reply@skylines-project.org'
+EMAIL_FROM = 'no-reply@skylines.aero'
 
 """
 # Logging handlers (disabled in DEBUG mode)
@@ -22,7 +22,7 @@ ADMINS = [
 
 mail_handler = (
     'ERROR', 'SMTPHandler',
-    ('localhost', 'error@skylines-project.org', ADMINS, 'SkyLines Error Report'))
+    ('localhost', 'error@skylines.aero', ADMINS, 'SkyLines Error Report'))
 
 file_handler = (
     'INFO', 'RotatingFileHandler',
@@ -51,7 +51,7 @@ SKYLINES_TEMPORARY_DIR = '/tmp'
 # how many entries should a list have?
 SKYLINES_LISTS_DISPLAY_LENGTH = 50
 
-SKYLINES_MAP_TILE_URL = 'https://www.skylines-project.org/mapproxy'
+SKYLINES_MAP_TILE_URL = 'https://www.skylines.aero/mapproxy'
 
 BROKER_URL = 'redis://localhost:6379/0'
 CELERY_RESULT_BACKEND = 'redis://localhost:6379/0'
