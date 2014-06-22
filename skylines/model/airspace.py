@@ -41,13 +41,13 @@ class Airspace(db.Model):
             return -1000, 'msl'
 
         elif column.startswith('FL'):
-            return int(column[3:]) * 100 / 3.2808399, 'fl'
+            return float(column[3:]) * 100 / 3.2808399, 'fl'
 
         elif column.endswith('AGL'):
-            return int(column[:-4]) / 3.2808399, 'agl'
+            return float(column[:-4]) / 3.2808399, 'agl'
 
         elif column.endswith('MSL'):
-            return int(column[:-4]) / 3.2808399, 'msl'
+            return float(column[:-4]) / 3.2808399, 'msl'
 
         elif column == 'NOTAM':
             return -1000, 'notam'
