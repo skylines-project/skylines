@@ -408,7 +408,7 @@ def airspace_image(cache_key, as_id):
     flight_path = current_app.cache.get('upload_airspace_flight_path_' + cache_key)
 
     # abort if invalid cache key
-    if not infringements or not as_id in infringements:
+    if not infringements or as_id not in infringements:
         abort(404)
 
     # Convert the coordinate into a list of tuples
