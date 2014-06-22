@@ -284,6 +284,9 @@ def index_post(form):
 
     db.session.commit()
 
+    if success:
+        flash(_('Please click "Publish Flight(s)" at the bottom to confirm our automatic analysis.'))
+
     return render_template(
         'upload/result.jinja', num_flights=prefix, flights=flights, success=success)
 
