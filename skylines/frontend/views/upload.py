@@ -3,6 +3,7 @@ from tempfile import TemporaryFile
 from zipfile import ZipFile
 from enum import Enum
 import hashlib
+import os
 
 from flask import Blueprint, render_template, request, flash, redirect, g, current_app, url_for, abort, make_response
 from flask.ext.babel import _, lazy_gettext as l_
@@ -483,7 +484,8 @@ def airspace_image(cache_key, as_id):
     extent_epsg3857 = [x1, y1, x2, y2]
 
     # load basemap and set size + extent
-    map_object = mapscript.mapObj('mapserver/basemap.map')
+    basemap_path = os.path.join(current_app.config.get('SKYLINES_MAPSERVER_PATH'), 'basemap.map')
+    map_object = mapscript.mapObj(basemap_path)
     map_object.setSize(400, 400)
     map_object.setExtent(extent_epsg3857[0], extent_epsg3857[1], extent_epsg3857[2], extent_epsg3857[3])
 
