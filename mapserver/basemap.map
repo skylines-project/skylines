@@ -106,6 +106,35 @@ MAP
     END
   END
 
+  LAYER
+    NAME "copyright"
+    STATUS on
+    TYPE point
+    TRANSFORM lr # set the image origin to be lower left
+    UNITS PIXELS # sets the units for the feature object
+
+    FEATURE
+      POINTS
+        -77 -7    # the offset (from lower left) in pixels
+      END # Points
+      TEXT "© OpenStreetMap contributors"  # this is your displaying text
+    END # Feature
+
+    CLASS
+      STYLE       # has to have a style
+      END # style
+      LABEL       # defines the font, colors etc. of the text
+        FONT "sans"
+        TYPE truetype
+        SIZE 7
+        COLOR 64 64 64
+        OUTLINEWIDTH 3
+        OUTLINECOLOR 255 255 255
+        FORCE true
+      END # Label
+    END # Class
+  END # Layer
+
   # some symbols
   INCLUDE "symbols.map"
 
