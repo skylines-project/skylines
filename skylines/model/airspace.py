@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from datetime import datetime
+from itertools import groupby, count
 
 from sqlalchemy.types import Integer, String, DateTime
 from geoalchemy2.types import Geometry
@@ -81,8 +82,7 @@ def get_airspace_infringements(flight_path):
 
     q = db.session.query(subq.c.id,
                          cte.c.locations.path[1]) \
-                  .filter(_ST_Contains(subq.c.the_geom, cte.c.locations.geom)) \
-                  .order_by(subq.c.id)
+                  .filter(_ST_Contains(subq.c.the_geom, cte.c.locations.geom))
 
     airspaces = dict()
 
@@ -101,11 +101,7 @@ def get_airspace_infringements(flight_path):
             name=airspace.name)
 
     infringements = set()
-    periods = []
-
-    start_fix = None
-    end_fix = None
-    periods_as_id = None
+    periods_dict = dict()
 
     for as_id, i in q.all():
         fix_id = i - 1
@@ -115,18 +111,16 @@ def get_airspace_infringements(flight_path):
            flight_path[fix_id].altitude >= airspaces[as_id]['base']:
             infringements.add(as_id)
 
-            if not start_fix:
-                periods_as_id = as_id
-                start_fix = fix_id
+            if as_id not in periods_dict:
+                periods_dict[as_id] = []
 
-            if end_fix and end_fix != fix_id - 1:
-                periods.append((periods_as_id, start_fix, end_fix))
-                start_fix = fix_id
+            periods_dict[as_id].append(fix_id)
 
-            end_fix = fix_id
-            periods_as_id = as_id
-
-    if start_fix and end_fix:
-        periods.append((periods_as_id, start_fix, end_fix))
+    periods = []
+    for as_id in periods_dict:
+        periods_dict[as_id].sort()
+        for k, g in groupby(periods_dict[as_id], key=lambda n, c=count(): n - next(c)):
+            g = list(g)
+            periods.append((as_id, g[0], g[-1]))
 
     return airspaces, infringements, periods
