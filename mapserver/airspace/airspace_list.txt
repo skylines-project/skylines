@@ -23,4 +23,4 @@ us openair https://user.xmission.com/~lalley/aviation/countHits.php?count=oaCoun
 za openair http://soaringweb.org/Airspace/ZA/SAGlidingAirsp-17102011_v1.3.txt
 au openair http://soaringweb.org/Airspace/AU/australia_class_all_13_05_30.txt
 ca openair http://soaringweb.org/Airspace/NA/canadian_airspace241.air
-
+fi openair http://www.hansto.fi/seeyou/files/Ilmatila2012.txt
