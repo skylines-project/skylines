@@ -31,6 +31,23 @@
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
 }
 
+.map-sidebar {
+  position: absolute;
+  bottom: 220px;
+  left: 20px;
+  top: 20px;
+  width: 400px;
+}
+
+@media (max-width: 767px) {
+  .map-sidebar {
+    top: 0;
+    left: 0;
+    bottom: 200px;
+    width: 100%;
+  }
+}
+
 .map-bottom-panel {
   position: absolute;
   bottom: 30px;

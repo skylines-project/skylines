@@ -4,7 +4,7 @@
 
 {% from 'flights/meta-tags.jinja' import flight_meta_tags with context %}
 {% from 'flights/macros.jinja' import flight_title with context %}
-
+{% from 'flights/details-table.jinja' import render_details_table with context %}
 
 {% block title -%}{{ flight_title(flight) }}{%- endblock %}
 
@@ -113,6 +113,9 @@
 
 {%- block content %}
 <div id="map_canvas" class="olFullscreen"></div>
+<div class="map-sidebar map-overlay">
+  {{ render_details_table(flight) }}
+</div>
 <div class="map-bottom-panel map-overlay">
     <div style="overflow: auto; max-height: 115px">
         <table id="fix-data" class="table table-condensed"></table>
