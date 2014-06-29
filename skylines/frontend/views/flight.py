@@ -261,6 +261,7 @@ def index():
         trace=_get_flight_path(g.flight),
         near_flights=near_flights,
         other_flights=other_flights,
+        comments=comments_partial(),
         phase_formatter=format_phase,
         leg_formatter=format_legs)
 
@@ -319,6 +320,13 @@ def json():
     resp.headers['Last-Modified'] = last_modified
     resp.headers['Etag'] = g.flight.igc_file.md5
     return resp
+
+
+@flight_blueprint.route('/comments.partial')
+def comments_partial():
+    return render_template(
+        'flights/comments.partial.jinja',
+        comments=g.flight.comments)
 
 
 def _get_near_flights(flight, location, time, max_distance=1000):

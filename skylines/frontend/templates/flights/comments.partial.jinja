@@ -1,0 +1,32 @@
+{% from 'macros/links.jinja' import user_link %}
+
+<table class="table">
+  {%- for comment in comments %}
+  <tr>
+    <td>
+      {%- if comment.user %}
+      <span style="float:left">
+        {{ user_link(comment.user) }}:&nbsp;
+      </span>
+      {%- endif %}
+
+      {{ h.markdown.convert(comment.text)|safe }}
+    </td>
+  </tr>
+  {%- else %}
+  <tr>
+    <td><em>{% trans %}No comments yet.{% endtrans %}</em></td>
+  </tr>
+  {%- endfor %}
+
+  {%- if g.current_user %}
+  <tr>
+    <td>
+      <form action="add_comment" method="POST">
+        <textarea name="text" class="form-control"></textarea><br/>
+        <input type="submit" value="{{ _('Add comment') }}" class="btn btn-primary"/>
+      </form>
+    </td>
+  </tr>
+  {%- endif %}
+</table>
