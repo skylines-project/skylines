@@ -77,12 +77,12 @@ def get_airspace_infringements(flight_path):
     airspaces_q = db.session.query(Airspace) \
                     .filter(Airspace.the_geom.ST_Intersects(locations))
 
-    subq = airspaces_q.subquery()
+    airspaces_cte = airspaces_q.cte()
     cte = db.session.query(locations.ST_DumpPoints().label('locations')).cte()
 
-    q = db.session.query(subq.c.id,
+    q = db.session.query(airspaces_cte.c.id,
                          cte.c.locations.path[1]) \
-                  .filter(_ST_Contains(subq.c.the_geom, cte.c.locations.geom))
+                  .filter(_ST_Contains(airspaces_cte.c.the_geom, cte.c.locations.geom))
 
     airspaces = dict()
 
