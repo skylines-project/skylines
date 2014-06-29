@@ -139,11 +139,15 @@ def index():
                 trace = None
                 airspace = None
 
-            # remove airspace field from form if no airspace infringements found
+            cache_key = None
+
             if form and not airspace:
+                # remove airspace field from form if no airspace infringements found
                 del form.airspace_usage
 
-            cache_key = hashlib.sha1(str(flight.id) + '_' + str(g.current_user.id)).hexdigest()
+            elif form and airspace:
+                # if airspace infringements found create cache_key from flight id and user id
+                cache_key = hashlib.sha1(str(flight.id) + '_' + str(g.current_user.id)).hexdigest()
 
             flights.append((name, flight, status, str(prefix), trace, airspace, cache_key, form))
 
