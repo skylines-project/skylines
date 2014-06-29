@@ -37,13 +37,14 @@
   left: 20px;
   top: 20px;
   width: 400px;
+  overflow: scroll;
 }
 
 @media (max-width: 767px) {
   .map-sidebar {
     top: 0;
     left: 0;
-    bottom: 200px;
+    bottom: 0;
     width: 100%;
   }
 }
