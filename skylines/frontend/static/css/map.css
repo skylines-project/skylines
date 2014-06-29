@@ -65,15 +65,18 @@
   background: white;
 }
 
+.map-overlay {
+  background-color: white;
+  opacity: 0.95;
+  border-radius: 3px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+}
+
 .map-bottom-panel {
   position: absolute;
   bottom: 30px;
   left: 20px;
   right: 20px;
-  background-color: white;
-  opacity: 0.95;
-  border-radius: 3px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
 }
 
 @media (max-width: 767px) {
