@@ -4,6 +4,7 @@ from flask.ext.script import Command, Option
 import os
 import subprocess
 import shutil
+import tempfile
 from glob import glob
 from flask import current_app
 from skylines.model import db
@@ -17,24 +18,32 @@ class SRTM(Command):
     option_list = (
         Option('--tile', nargs=2, type=int, metavar=('x', 'y'), help='Import SRTM tile x y'),
         Option('--file', nargs='+', metavar=('filename'), help='Import tile from local file(s)'),
+        Option('--in-db', action='store_true',
+               help='Store data in-db instead of out-of-db'),
     )
 
-    def run(self, tile, file):
+    def run(self, tile, file, in_db):
         if tile and file:
             print 'Please select either a tile to download or specify local file(s).'
             sys.exit(1)
 
-        # Change path to configured srtm data path
-        path = current_app.config['SKYLINES_ELEVATION_PATH']
+        if not in_db:
+            # Change path to configured srtm data path
+            path = current_app.config['SKYLINES_ELEVATION_PATH']
 
-        if not os.path.exists(path):
-            print 'Creating {} ...'.format(path)
-            os.mkdir(path)
+            if not os.path.exists(path):
+                print 'Creating {} ...'.format(path)
+                os.mkdir(path)
+        else:
+            path = tempfile.gettempdir()
 
         if tile:
             os.chdir(path)
             filename = self.download_tile(tile[0], tile[1])
-            self.raster2pgsql(filename)
+            self.raster2pgsql(filename, in_db)
+
+            if in_db:
+                os.remove(filename)
 
         if file:
             files = []
@@ -43,15 +52,17 @@ class SRTM(Command):
 
             for filename in files:
                 abspath = os.path.abspath(filename)
-                tiled_tif_filename = os.path.join(path, os.path.basename(abspath))
 
-                if os.path.exists(tiled_tif_filename):
-                    print "{} exists already.".format(tiled_tif_filename)
-                    continue
+                if not in_db:
+                    tiled_tif_filename = os.path.join(path, os.path.basename(abspath))
+                    if os.path.exists(tiled_tif_filename):
+                        print "{} exists already.".format(tiled_tif_filename)
+                        continue
 
-                shutil.copy(abspath, tiled_tif_filename)
-
-                self.raster2pgsql(tiled_tif_filename)
+                    shutil.copy(abspath, tiled_tif_filename)
+                    self.raster2pgsql(tiled_tif_filename, in_db)
+                else:
+                    self.raster2pgsql(abspath, in_db)
 
     def download_tile(self, x, y):
         if not 1 <= x <= 72:
@@ -80,7 +91,7 @@ class SRTM(Command):
 
         return tiled_tif_filename
 
-    def raster2pgsql(self, tiled_tif_filename):
+    def raster2pgsql(self, tiled_tif_filename, in_db):
         # Create SQL statements
         print 'Converting {} to SQL ...'.format(tiled_tif_filename)
         args = [
@@ -88,10 +99,16 @@ class SRTM(Command):
             '-a',  # Append to existing table
             '-s', '4326',  # SRID 4326 (WGS 84)
             '-t', '100x100',  # 100x100 tiles
-            '-R',  # Out-of-DB raster
+        ]
+
+        if not in_db:
+            args.append('-R')  # Out-of-DB raster
+
+        args += [
             os.path.abspath(tiled_tif_filename),
             'elevations',
         ]
+
         raster2pgsql = subprocess.Popen(args, stdout=subprocess.PIPE)
 
         print 'Adding SQL to the database ...'
