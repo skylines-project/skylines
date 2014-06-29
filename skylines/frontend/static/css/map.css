@@ -64,3 +64,11 @@
 .ol-attribution:not(.ol-collapsed) {
   background: white;
 }
+
+.map-bottom-panel {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  background-color: white;
+  opacity: 0.8;
+}
