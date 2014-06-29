@@ -51,6 +51,8 @@ def new_post(form):
 
     db.session.commit()
 
+    flash(_('Welcome to SkyLines, %(user)s! You can now log in and share your flights with the world!', user=user))
+
     return redirect(url_for('index'))
 
 
