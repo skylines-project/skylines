@@ -221,6 +221,7 @@ def index():
         trace=_get_flight_path(g.flight),
         near_flights=near_flights,
         other_flights=other_flights,
+        comments=comments_partial(),
         phase_formatter=format_phase)
 
 
@@ -263,6 +264,13 @@ def json():
         additional=dict(
             registration=g.flight.registration,
             competition_id=g.flight.competition_id))
+
+
+@flight_blueprint.route('/comments.partial')
+def comments_partial():
+    return render_template(
+        'flights/comments.partial.jinja',
+        comments=g.flight.comments)
 
 
 def _get_near_flights(flight, location, time, max_distance=1000):
