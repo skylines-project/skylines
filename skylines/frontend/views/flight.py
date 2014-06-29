@@ -241,7 +241,10 @@ def map_():
 
     return render_template(
         'flights/map.jinja',
-        flight=g.flight, trace=trace, other_flights=other_flights)
+        flight=g.flight,
+        trace=trace,
+        other_flights=other_flights,
+        comments=comments_partial())
 
 
 @flight_blueprint.route('/json')

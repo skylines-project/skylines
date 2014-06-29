@@ -114,7 +114,55 @@
 {%- block content %}
 <div id="map_canvas" class="olFullscreen"></div>
 <div class="map-sidebar map-overlay">
-  {{ render_details_table(flight) }}
+<!-- Nav tabs -->
+  <ul class="map-tabs" role="tablist">
+    <li class="active"><a href="#summary" role="tab" data-toggle="tab">
+      <i class="icon-info"></i>
+    </a></li>
+    <li><a href="#comments" role="tab" data-toggle="tab">
+      <i class="icon-comments-alt"></i>
+    </a></li>
+    <li><a href="#stats" role="tab" data-toggle="tab">
+      <i class="icon-bar-chart"></i>
+    </a></li>
+    <li><a href="#wingmen" role="tab" data-toggle="tab">
+      <i class="icon-group"></i>
+    </a></li>
+  </ul>
+
+  <!-- Tab panes -->
+  <div class="map-tab-content">
+    <div class="map-tab-pane active" id="summary">
+      <div class="map-tab-header">
+        <h3>Summary</h3>
+      </div>
+
+      {{ render_details_table(flight) }}
+    </div>
+
+    <div class="map-tab-pane" id="comments">
+      <div class="map-tab-header">
+        <h3>Comments</h3>
+      </div>
+
+      {{ comments|safe }}
+    </div>
+
+    <div class="map-tab-pane" id="stats">
+      <div class="map-tab-header">
+        <h3>Statistics</h3>
+      </div>
+
+      Hello World!
+    </div>
+    <div class="map-tab-pane" id="wingmen">
+      <div class="map-tab-header">
+        <h3>Wingmen</h3>
+      </div>
+
+      Hello World!
+    </div>
+  </div>
 </div>
 <div class="map-bottom-panel map-overlay">
     <div style="overflow: auto; max-height: 115px">
