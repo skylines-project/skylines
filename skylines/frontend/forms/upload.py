@@ -3,11 +3,12 @@ from flask_wtf import Form
 from flask_wtf.file import FileRequired
 
 from wtforms import TextField
-from wtforms.fields import DateTimeField
+from wtforms.fields import DateTimeField, BooleanField
+from wtforms.validators import Required
 
 from .file import MultiFileField
 from .pilot import ClubPilotsSelectField
-from .flight import ChangeAircraftForm
+from .flight import ChangeAircraftForm, ChangePilotsForm
 from .validators import CompareTo
 
 
@@ -19,7 +20,7 @@ class UploadForm(Form):
     pilot_name = TextField(l_(u'Pilot name'))
 
 
-class UploadUpdateForm(ChangeAircraftForm):
+class UploadUpdateForm(ChangeAircraftForm, ChangePilotsForm):
     takeoff_time = DateTimeField(l_('Takeoff'), format='%Y-%m-%d %H:%M:%S')
 
     scoring_start_time = DateTimeField(l_('Scoring Start Time'), validators=[
@@ -45,3 +46,7 @@ class UploadUpdateForm(ChangeAircraftForm):
             message=l_('Landing Time must be after scoring end time')
         )
     ], format='%Y-%m-%d %H:%M:%S')
+
+    airspace_usage = BooleanField(l_('Confirm airspace usage'), validators=[
+        Required(message=l_('Please confirm you were allowed to use those airspaces'))
+    ])

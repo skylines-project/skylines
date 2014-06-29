@@ -463,6 +463,12 @@ def publish():
         g.flight.privacy_level = Flight.PrivacyLevel.PUBLIC
         db.session.commit()
 
+        try:
+            tasks.analyse_flight.delay(g.flight.id)
+            tasks.find_meetings.delay(g.flight.id)
+        except ConnectionError:
+            current_app.logger.info('Cannot connect to Redis server')
+
         return redirect(url_for('.index'))
 
     return render_template(

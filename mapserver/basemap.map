@@ -1,0 +1,141 @@
+# Map file for SkyLines
+#
+# Default resolution for mapserver is 72 dpi
+# In EPSG:3857 with zoom levels 0 to 18, this results in the
+# following map scales:
+#
+# Zoom level 0: 221,898,285
+# Zoom level 1: 110,949,142
+# Zoom level 2: 55,474,571
+# Zoom level 3: 27,737,285
+# Zoom level 4: 13,868,642
+# Zoom level 5: 6,934,321
+# and so on...
+
+MAP
+  NAME "SkyLines Background Map"
+  UNITS METERS
+  EXTENT -180 -90 180 90 # Geographic
+  IMAGECOLOR 230 230 230
+
+  IMAGETYPE png
+  TRANSPARENT ON
+
+#  CONFIG "MS_ERRORFILE" "ms_error.txt"
+#  DEBUG 5
+
+  FONTSET "fonts/truetype.txt"
+
+  STATUS ON
+
+  PROJECTION
+     "init=epsg:3857"
+  END
+
+  WEB
+    METADATA
+      "wms_title" "SkyLines"
+      "wms_srs" "epsg:3857"
+      "wms_enable_request" "*"
+    END
+  END
+
+
+  LAYER
+    NAME "OSM"
+    TYPE RASTER
+    STATUS ON
+    # The following connection (gis-lab.info) can be used for testing purposes
+    #CONNECTION "http://irs.gis-lab.info/?"
+    CONNECTION ""
+    CONNECTIONTYPE WMS
+    METADATA
+      "wms_srs"             "EPSG:3857"
+      "wms_name"            "osm"
+      "wms_server_version"  "1.1.1"
+      "wms_format"          "image/png"
+    END
+  END
+
+  # Airports
+  INCLUDE "airports/airports.map"
+
+  # Airspace
+  INCLUDE "airspace/airspace.map"
+
+  LAYER
+    NAME 'Flights'
+    STATUS ON
+    TYPE LINE
+    CONNECTIONTYPE POSTGIS
+    CONNECTION "dbname=skylines"
+    DATA "locations from flights using unique id"
+
+    PROJECTION
+      "init=epsg:4326"
+    END
+
+    CLASS
+      NAME 'FLIGHTS'
+      STYLE
+        COLOR 0 75 189
+        WIDTH 1.5
+        LINECAP butt
+      END
+    END
+  END
+
+  LAYER
+    NAME 'Flights_Highlight'
+    TYPE LINE
+    CONNECTIONTYPE POSTGIS
+    CONNECTION "dbname=skylines"
+    DATA "locations from flights using unique id"
+
+    PROJECTION
+      "init=epsg:4326"
+    END
+
+    CLASS
+      NAME 'FLIGHTS'
+      STYLE
+        COLOR 255 44 0
+        WIDTH 3
+        LINECAP butt
+      END
+    END
+  END
+
+  LAYER
+    NAME "copyright"
+    STATUS on
+    TYPE point
+    TRANSFORM lr # set the image origin to be lower left
+    UNITS PIXELS # sets the units for the feature object
+
+    FEATURE
+      POINTS
+        -77 -7    # the offset (from lower left) in pixels
+      END # Points
+      TEXT "© OpenStreetMap contributors"  # this is your displaying text
+    END # Feature
+
+    CLASS
+      STYLE       # has to have a style
+      END # style
+      LABEL       # defines the font, colors etc. of the text
+        FONT "sans"
+        TYPE truetype
+        SIZE 7
+        COLOR 64 64 64
+        OUTLINEWIDTH 3
+        OUTLINECOLOR 255 255 255
+        FORCE true
+      END # Label
+    END # Class
+  END # Layer
+
+  # some symbols
+  INCLUDE "symbols.map"
+
+END # MAP

@@ -27,9 +27,23 @@
                  {{ h.json.dumps(h.get_setting_name('lift_unit')) }},
                  {{ h.json.dumps(h.get_setting_name('altitude_unit')) }});
   });
+
+  $(document).ready(function() {
+    $('.airspace-image[rel=popover]').popover({
+      html: true,
+      template: '<div class="popover" style="max-width: 500px;"><div class="arrow"></div><div class="popover-content"></div></div>',
+      trigger: 'hover',
+      placement: 'top'
+    });
+  });
+
+  function updateVisibilities(prefix) {
+    $('#form-group-' + prefix + '-pilot_name').toggle($('#' + prefix + '-pilot_id').val() == 0);
+    $('#form-group-' + prefix + '-co_pilot_name').toggle($('#' + prefix + '-co_pilot_id').val() == 0);
+  }
 </script>
 
-{% for name, flight, status, prefix, trace, form in flights -%}
+{% for name, flight, status, prefix, trace, airspaces, cache_key, form in flights -%}
 {{ render_flight_script(name, flight, status, prefix, trace, form) }}
 {%- endfor %}
 
@@ -51,20 +65,20 @@
   {%- endif %}
 
   {% if flights|length == 1 -%}
-  <div class="col-sm-12">
-    {% for name, flight, status, prefix, trace, form in flights -%}
-    {{ render_flight_details(name, flight, status, prefix, trace, form) }}
+  <div class="col-xs-12">
+    {% for name, flight, status, prefix, trace, airspaces, cache_key, form in flights -%}
+    {{ render_flight_details(name, flight, status, prefix, trace, airspaces, cache_key, form) }}
     {%- endfor %}
   </div>
   {%- else %}
   <div class="col-sm-3">
     <ul class="nav nav-tabs tabs-left">
-      {% for name, flight, status, prefix, trace, form in flights -%}
+      {% for name, flight, status, prefix, trace, airspaces, cache_key, form in flights -%}
       <li {% if loop.first -%} class="active" {%- endif %}>
         <a href="#upload-tab-{{ prefix }}" data-toggle="tab">
-        {% if status == h.UploadStatus.SUCCESS -%}
+        {% if status == h.UploadStatus.SUCCESS and not form.errors -%}
         <i class="icon-ok text-success"></i>
-        {% elif status and flight %}
+        {% elif status and flight or (form and form.errors) %}
         <i class="icon-warning-sign text-warning"></i>
         {%- else %}
         <i class="icon-warning-sign text-danger"></i>
@@ -77,9 +91,9 @@
   </div>
   <div class="col-sm-9">
     <div class="tab-content">
-      {% for name, flight, status, prefix, trace, form in flights -%}
+      {% for name, flight, status, prefix, trace, airspaces, cache_key, form in flights -%}
       <div class="tab-pane {% if loop.first -%}active{%- endif %}" id="upload-tab-{{ prefix }}">
-        {{ render_flight_details(name, flight, status, prefix, trace, form) }}
+        {{ render_flight_details(name, flight, status, prefix, trace, airspaces, cache_key, form) }}
       </div>
       {%- endfor %}
     </div>
@@ -89,7 +103,7 @@
   {%- endif %}
 
   {% if success -%}
-  <p class="hidden-xs"><input type="submit" id="submit" value="{{ _('Publish Flight(s)') }}" class="btn btn-primary"/></p>
+  <p class="col-xs-12"><input type="submit" id="submit" value="{{ _('Publish Flight(s)') }}" class="btn btn-primary"/></p>
   {%- endif %}
 </form>
 {%- endblock %}

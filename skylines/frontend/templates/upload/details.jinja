@@ -38,7 +38,7 @@
 </div>
 {%- endmacro %}
 
-{% macro render_flight_details(name, flight, status, prefix, trace, form) -%}
+{% macro render_flight_details(name, flight, status, prefix, trace, airspaces, cache_key, form) -%}
 <input type="hidden" name="{{ prefix }}-status" value="{{ status.value }}" />
 <input type="hidden" name="{{ prefix }}-name" value="{{ name }}" />
 {% if flight %}
@@ -47,6 +47,13 @@
 
 {% if status == h.UploadStatus.SUCCESS -%}
 {{ form.hidden_tag() }}
+{{ render_field(form.pilot_id, class='col-sm-6') }}
+{{ render_field(form.pilot_name, class='col-sm-6') }}
+<div class="clearfix"></div>
+{{ render_field(form.co_pilot_id, class='col-sm-6') }}
+{{ render_field(form.co_pilot_name, class='col-sm-6') }}
+<div class="clearfix"></div>
+
 {{ render_field(form.model_id, class='col-sm-4') }}
 {{ render_field(form.registration, class='col-sm-4') }}
 {{ render_field(form.competition_id, class='col-sm-4') }}
@@ -64,11 +71,48 @@
 
 <div class="clearfix"></div>
 
+{% if airspaces %}
+<div class="col-md-10 col-md-offset-1">
+<p>
+<h5>Used airspaces:</h5>
+<table class="table table-condensed airspace-table">
+  <thead>
+    <tr>
+      <th class="name">Name</th>
+      <th class="class">Class</th>
+      <th class="base">Base</th>
+      <th class="top">Top</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+{% for airspace in airspaces %}
+  <tr>
+    <td class="name">{{ airspace.name }}</td>
+    <td class="class">{{ airspace.airspace_class }}</td>
+    <td class="base">{{ airspace.base_text }}</td>
+    <td class="top">{{ airspace.top_text }}</td>
+    <td>
+      <span class="icon-picture airspace-image" style="cursor: pointer;" rel="popover" data-toggle="popover" data-content="<img src='{{ url_for('.airspace_image', cache_key=cache_key, as_id=airspace.id) }}' style='width: 400px; height: 400px;' />"></span>
+    </td>
+  </tr>
+{% endfor %}
+  </tbody>
+</table>
+</p>
+{{ render_field(form.airspace_usage) }}
+</div>
+{% endif %}
+
+<div class="clearfix"></div>
+
 {%- endif %}
+
+
 
 <p>
   {% trans %}Status:{% endtrans %}
-  {% if status == h.UploadStatus.SUCCESS -%}
+  {% if status == h.UploadStatus.SUCCESS and not form.errors -%}
   <span class="label label-success"><i class="icon-ok"></i> {% trans %}Success{% endtrans %}</span>
   {% elif status %}
 
@@ -80,13 +124,17 @@
       {% set status_text = _('Failed to parse file') %}
     {% elif status == h.UploadStatus.NO_FLIGHT %}
       {% set status_text = _('No flight found in file') %}
+    {% elif status == h.UploadStatus.SUCCESS and form.errors %}
+      {% set status_text = _('Error found in upload form') %}
     {% else %}
       {% set status_text = _('Unknown') %}
     {% endif %}
 
-    {% if flight %}
+    {% if flight or form.errors %}
     <span class="label label-warning"><i class="icon-warning-sign"></i> {{ status_text }}</span>
-    <a href="{{ url_for('flight.index', flight_id=flight.id) }}" class="btn btn-default btn-sm">Show</a>
+    {% if not form.errors %}
+      <a href="{{ url_for('flight.index', flight_id=flight.id) }}" class="btn btn-default btn-sm">Show</a>
+    {% endif %}
     {% else %}
     <span class="label label-danger"><i class="icon-warning-sign"></i> {{ status_text }}</span>
     {% endif %}
@@ -149,6 +197,16 @@
       updateTimePicker({{ prefix }}, flight_date, baro.getFlightTime());
     });
   });
+
+  $(document).ready(function() {
+    updateVisibilities('{{ prefix }}');
+    $('#{{ prefix }}-pilot_id').on('change', function() {
+      updateVisibilities('{{ prefix }}');
+    });
+    $('#{{ prefix }}-co_pilot_id').on('change', function() {
+      updateVisibilities('{{ prefix }}');
+    });
+  })
 </script>
 {% endif %}
 {%- endmacro %}
