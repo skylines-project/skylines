@@ -10,6 +10,8 @@ from geoalchemy2.shape import from_shape
 from shapely.geometry import polygon
 from shapely.wkt import loads
 from shapely.geos import ReadingError
+from sqlalchemy.sql.expression import case
+from sqlalchemy import func
 from skylines.model import db, Airspace
 
 airspace_re = re.compile(r'^([^#]{1}.*?)\s+(openair|sua)\s+(https?://.*|file://.*)')
@@ -341,7 +343,40 @@ class AirspaceCommand(Command):
         airspace.name = name
         airspace.base = base
         airspace.top = top
-        airspace.the_geom = from_shape(geom, srid=4326)
+
+        # Check geometry type, disregard everything except POLYGON
+        if geom.geom_type != 'Polygon':
+            print name + " is not a polygon (it's a " + geom.geom_type + ")"
+            return False
+
+        wkb = from_shape(geom, srid=4326)
+
+        # Try to fix invalid (self-intersecting) geometries
+        valid_dump = (func.ST_Dump(func.ST_MakeValid(wkb))).geom
+        valid_query = db.session.query(func.ST_SetSRID(valid_dump, 4326)).order_by(func.ST_Area(valid_dump).desc()).first()
+
+        if not valid_query:
+            print 'Error importing ' + name
+            print 'Could not validate geometry'
+            return False
+        else:
+            wkb = valid_query[0]
+
+        geom_type = db.session.query(func.ST_GeometryType(wkb)).first()[0]
+
+        if geom_type != 'ST_Polygon':
+            print name + " got some errors makeing it valid..."
+            return False
+
+        tolerance = 0.0000001
+        simplify = lambda x: func.ST_SimplifyPreserveTopology(x, tolerance)
+
+        airspace.the_geom = case(
+            [
+                (func.ST_IsValid(wkb), wkb),
+                (func.ST_IsValid(simplify(wkb)), simplify(wkb)),
+            ],
+            else_=None)
 
         db.session.add(airspace)
 
