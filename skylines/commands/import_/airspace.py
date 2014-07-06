@@ -273,7 +273,13 @@ class AirspaceCommand(Command):
 
         # Download the current file
         # (only if server file is newer than local file)
-        subprocess.check_call(['wget', '-q', '-N', '-P', os.path.dirname(path), '-O', path, url])
+        subprocess.check_call(['wget',
+                               '-q',
+                               '-N',
+                               '-U', 'Mozilla/5.0 (Windows NT 5.1; rv:30.0) Gecko/20100101 Firefox/30.0',
+                               '-P', os.path.dirname(path),
+                               '-O', path,
+                               url])
 
         # Check if download succeeded
         if not os.path.exists(path):
