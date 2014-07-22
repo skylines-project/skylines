@@ -366,10 +366,10 @@ def run_analyse_flight(flight,
         analysis_times['scoring_end']['time'] = flight.scoring_end_time
 
     if analysis_times:
-        analysis = xcsoar_flight.analyse(analysis_times['takeoff']['time'],
+        analysis = xcsoar_flight.analyse(analysis_times['takeoff']['time'] - datetime.timedelta(seconds=300),
                                          analysis_times['scoring_start']['time'],
                                          analysis_times['scoring_end']['time'],
-                                         analysis_times['landing']['time'],
+                                         analysis_times['landing']['time'] + datetime.timedelta(seconds=300),
                                          full=full,
                                          triangle=triangle,
                                          sprint=sprint,
@@ -394,6 +394,9 @@ def analyse_flight(flight, full=512, triangle=1024, sprint=64, fp=None):
     if root is None:
         current_app.logger.warning('Analyze flight failed.')
         return False
+
+    if 'qnh' in root and root['qnh'] is not None:
+        flight.qnh = root['qnh']
 
     if 'events' in root:
         save_events(root['events'], flight)
