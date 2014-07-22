@@ -90,6 +90,7 @@ class Flight(db.Model):
         Integer, db.ForeignKey('igc_files.id', ondelete='CASCADE'), nullable=False)
     igc_file = db.relationship('IGCFile', backref='flights', innerjoin=True)
 
+    qnh = db.Column(Float)
     needs_analysis = db.Column(Boolean, nullable=False, default=True)
 
     # Privacy level of the flight
