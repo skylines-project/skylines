@@ -107,8 +107,8 @@ def get_airspace_infringements(flight_path):
         fix_id = i - 1
 
         # TODO: respect airspace height references (MSL, AGL, FL)
-        if flight_path[fix_id].altitude <= airspaces[as_id]['top'] and \
-           flight_path[fix_id].altitude >= airspaces[as_id]['base']:
+        if flight_path[fix_id].gps_altitude <= airspaces[as_id]['top'] and \
+           flight_path[fix_id].gps_altitude >= airspaces[as_id]['base']:
             infringements.add(as_id)
 
             if as_id not in periods_dict:

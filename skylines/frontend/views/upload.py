@@ -89,7 +89,7 @@ def _encode_flight_path(fp):
     # Reduce to 1000 points maximum with equal spacing
     shortener = int(max(1, len(fp) / 1000))
 
-    barogram_h = xcsoar.encode([fix.altitude for fix in fp[::shortener]], method="signed")
+    barogram_h = xcsoar.encode([fix.gps_altitude for fix in fp[::shortener]], method="signed")
     barogram_t = xcsoar.encode([fix.seconds_of_day for fix in fp[::shortener]], method="signed")
     enl = xcsoar.encode([fix.enl if fix.enl is not None else 0 for fix in fp[::shortener]], method="signed")
     elevations_h = xcsoar.encode([fix.elevation if fix.elevation is not None else -1000 for fix in fp[::shortener]], method="signed")

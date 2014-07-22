@@ -9,7 +9,7 @@ from xcsoar import Flight
 
 
 flightpathfix_fields = ['datetime', 'seconds_of_day',
-                        'location', 'altitude', 'pressure_altitude',
+                        'location', 'gps_altitude', 'pressure_altitude',
                         'enl', 'track', 'groundspeed', 'tas', 'ias',
                         'siu', 'elevation']
 
