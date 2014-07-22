@@ -27,8 +27,11 @@ class FlightPathFix(namedtuple('FlightPathFix', flightpathfix_fields)):
         return super(FlightPathFix, cls).__new__(cls, *values)
 
 
-def run_flight_path(path, max_points=None):
+def run_flight_path(path, max_points=None, qnh=None):
     flight = Flight(path)
+
+    if qnh:
+        flight.setQNH(qnh)
 
     if max_points:
         flight.reduce(threshold=0, max_points=max_points)
@@ -36,7 +39,7 @@ def run_flight_path(path, max_points=None):
     return flight.path()
 
 
-def flight_path(igc_file, max_points=1000, add_elevation=False):
+def flight_path(igc_file, max_points=1000, add_elevation=False, qnh=None):
     if isinstance(igc_file, IGCFile):
         path = files.filename_to_path(igc_file.filename)
     elif isinstance(igc_file, (str, unicode)):
@@ -44,7 +47,7 @@ def flight_path(igc_file, max_points=1000, add_elevation=False):
     else:
         return None
 
-    output = run_flight_path(path, max_points=max_points)
+    output = run_flight_path(path, max_points=max_points, qnh=qnh)
 
     if add_elevation and len(output):
         output = get_elevation(output)

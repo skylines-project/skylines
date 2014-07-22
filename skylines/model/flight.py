@@ -279,7 +279,7 @@ class Flight(db.Model):
         from skylines.lib.datetime import from_seconds_of_day
 
         # Run the IGC file through the FlightPath utility
-        path = flight_path(self.igc_file)
+        path = flight_path(self.igc_file, qnh=self.qnh)
         if len(path) < 2:
             return False
 
@@ -298,7 +298,7 @@ class Flight(db.Model):
         self.locations = from_shape(linestring, srid=4326)
 
         # Now populate the FlightPathChunks table with the (full) flight path
-        path_detailed = flight_path(self.igc_file, max_points=3000)
+        path_detailed = flight_path(self.igc_file, max_points=3000, qnh=self.qnh)
         if len(path_detailed) < 2:
             return False
 

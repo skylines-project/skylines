@@ -82,6 +82,9 @@ def _get_flight_path(flight, threshold=0.001, max_points=3000):
 
     xcsoar_flight = xcsoar.Flight(files.filename_to_path(flight.igc_file.filename))
 
+    if flight.qnh:
+        xcsoar_flight.setQNH(flight.qnh)
+
     begin = flight.takeoff_time - timedelta(seconds=2 * 60)
     end = flight.landing_time + timedelta(seconds=2 * 60)
 
