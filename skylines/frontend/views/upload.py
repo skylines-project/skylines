@@ -12,6 +12,7 @@ from werkzeug.exceptions import BadRequest
 
 from skylines.frontend.forms import UploadForm, UploadUpdateForm
 from skylines.lib import files
+from skylines.lib.util import pressure_alt_to_qnh_alt
 from skylines.lib.decorators import login_required
 from skylines.lib.md5 import file_md5
 from skylines.lib.sql import query_to_sql
@@ -85,11 +86,15 @@ def IterateUploadFiles(upload):
             yield x
 
 
-def _encode_flight_path(fp):
+def _encode_flight_path(fp, qnh):
     # Reduce to 1000 points maximum with equal spacing
     shortener = int(max(1, len(fp) / 1000))
 
-    barogram_h = xcsoar.encode([fix.gps_altitude for fix in fp[::shortener]], method="signed")
+    if not qnh:
+        qnh = 1013.25
+
+    barogram_h = xcsoar.encode([pressure_alt_to_qnh_alt(fix.pressure_altitude, qnh) for fix in fp[::shortener]],
+                               method="signed")
     barogram_t = xcsoar.encode([fix.seconds_of_day for fix in fp[::shortener]], method="signed")
     enl = xcsoar.encode([fix.enl if fix.enl is not None else 0 for fix in fp[::shortener]], method="signed")
     elevations_h = xcsoar.encode([fix.elevation if fix.elevation is not None else -1000 for fix in fp[::shortener]], method="signed")
@@ -133,7 +138,7 @@ def index():
             flight, fp, form = check_update_form(prefix, flight_id, name, status)
 
             if fp:
-                trace = _encode_flight_path(fp)
+                trace = _encode_flight_path(fp, flight.qnh)
                 airspace, infringements, periods = _get_airspace_infringements(fp)
             else:
                 trace = None
@@ -258,7 +263,7 @@ def index_post(form):
 
         flight.privacy_level = Flight.PrivacyLevel.PRIVATE
 
-        trace = _encode_flight_path(fp)
+        trace = _encode_flight_path(fp, qnh=flight.qnh)
         airspace, infringements, periods = _get_airspace_infringements(fp)
         form = UploadUpdateForm(formdata=None, prefix=str(prefix), obj=flight)
 
