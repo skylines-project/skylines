@@ -70,7 +70,7 @@ def _get_flight_path2(pilot, last_update=None):
                                     seconds_of_day=time,
                                     location={'latitude': location.latitude,
                                               'longitude': location.longitude},
-                                    altitude=fix.altitude,
+                                    gps_altitude=fix.altitude,
                                     enl=fix.engine_noise_level,
                                     track=fix.track,
                                     groundspeed=fix.ground_speed,
