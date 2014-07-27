@@ -17,7 +17,7 @@ from skylines.lib.decorators import login_required
 from skylines.lib.md5 import file_md5
 from skylines.lib.sql import query_to_sql
 from skylines.lib.xcsoar_ import flight_path, analyse_flight
-from skylines.model import db, User, Flight, IGCFile
+from skylines.model import db, User, Flight, IGCFile, Airspace
 from skylines.model.airspace import get_airspace_infringements
 from skylines.model.event import create_flight_notifications
 from skylines.worker import tasks
@@ -104,17 +104,6 @@ def _encode_flight_path(fp, qnh):
                 igc_start_time=fp[0].datetime, igc_end_time=fp[-1].datetime)
 
 
-def _get_airspace_infringements(fp):
-    airspaces, infringements, periods = get_airspace_infringements(fp)
-
-    hitlist = []
-    for as_id in infringements:
-        airspaces[as_id].update(dict(id=as_id))
-        hitlist.append(airspaces[as_id])
-
-    return hitlist, infringements, periods
-
-
 @upload_blueprint.route('/', methods=('GET', 'POST'))
 @login_required(l_("You have to login to upload flights."))
 def index():
@@ -139,20 +128,24 @@ def index():
 
             if fp:
                 trace = _encode_flight_path(fp, flight.qnh)
-                airspace, infringements, periods = _get_airspace_infringements(fp)
+                infringements = get_airspace_infringements(fp)
             else:
                 trace = None
                 airspace = None
 
             cache_key = None
 
-            if form and not airspace:
+            if form and not infringements:
                 # remove airspace field from form if no airspace infringements found
                 del form.airspace_usage
 
-            elif form and airspace:
+            elif form and infringements:
                 # if airspace infringements found create cache_key from flight id and user id
                 cache_key = hashlib.sha1(str(flight.id) + '_' + str(g.current_user.id)).hexdigest()
+
+            airspace = db.session.query(Airspace) \
+                                 .filter(Airspace.id.in_(infringements.keys())) \
+                                 .all()
 
             flights.append((name, flight, status, str(prefix), trace, airspace, cache_key, form))
 
@@ -264,11 +257,11 @@ def index_post(form):
         flight.privacy_level = Flight.PrivacyLevel.PRIVATE
 
         trace = _encode_flight_path(fp, qnh=flight.qnh)
-        airspace, infringements, periods = _get_airspace_infringements(fp)
+        infringements = get_airspace_infringements(fp)
         form = UploadUpdateForm(formdata=None, prefix=str(prefix), obj=flight)
 
         # remove airspace field from form if no airspace infringements found
-        if not airspace:
+        if not infringements:
             del form.airspace_usage
 
         db.session.add(igc_file)
@@ -281,8 +274,11 @@ def index_post(form):
         cache_key = hashlib.sha1(str(flight.id) + '_' + str(user.id)).hexdigest()
 
         current_app.cache.set('upload_airspace_infringements_' + cache_key, infringements, timeout=15 * 60)
-        current_app.cache.set('upload_airspace_periods_' + cache_key, periods, timeout=15 * 60)
         current_app.cache.set('upload_airspace_flight_path_' + cache_key, fp, timeout=15 * 60)
+
+        airspace = db.session.query(Airspace) \
+                             .filter(Airspace.id.in_(infringements.keys())) \
+                             .all()
 
         flights.append((name, flight, UploadStatus.SUCCESS, str(prefix), trace,
                         airspace, cache_key, form))
@@ -417,13 +413,10 @@ def airspace_image(cache_key, as_id):
 
     # get information from cache...
     infringements = current_app.cache.get('upload_airspace_infringements_' + cache_key)
-    periods = current_app.cache.get('upload_airspace_periods_' + cache_key)
     flight_path = current_app.cache.get('upload_airspace_flight_path_' + cache_key)
 
     # abort if invalid cache key
     if not infringements \
-       or as_id not in infringements \
-       or not periods \
        or not flight_path:
         abort(404)
 
@@ -437,30 +430,26 @@ def airspace_image(cache_key, as_id):
     highlight_locations = []
     extent_epsg4326 = [180, 85.05112878, -180, -85.05112878]
 
-    for period in periods:
-        if period[0] != as_id:
-            continue
+    for period in infringements[as_id]:
+        # Convert the coordinate into a list of tuples
+        coordinates = [(c['location']['longitude'], c['location']['latitude']) for c in period]
 
-        start_index = period[1]
-        end_index = period[2]
-
-        # Create a shapely LineString object from the coordinates inside the airspace
-        if start_index == end_index:
+        # Create a shapely LineString object from the coordinates
+        if len(coordinates) == 1:
             # a LineString must contain at least two points...
-            linestring = LineString([coordinates[start_index], coordinates[start_index]])
+            linestring = LineString([coordinates[0], coordinates[0]])
         else:
-            linestring = LineString(coordinates[start_index:end_index + 1])
+            linestring = LineString(coordinates)
 
         highlight_locations.append(linestring)
 
         # gather extent
-        if period[0] == as_id:
-            (minx, miny, maxx, maxy) = linestring.bounds
+        (minx, miny, maxx, maxy) = linestring.bounds
 
-            extent_epsg4326[0] = min(extent_epsg4326[0], minx)
-            extent_epsg4326[1] = min(extent_epsg4326[1], miny)
-            extent_epsg4326[2] = max(extent_epsg4326[2], maxx)
-            extent_epsg4326[3] = max(extent_epsg4326[3], maxy)
+        extent_epsg4326[0] = min(extent_epsg4326[0], minx)
+        extent_epsg4326[1] = min(extent_epsg4326[1], miny)
+        extent_epsg4326[2] = max(extent_epsg4326[2], maxx)
+        extent_epsg4326[3] = max(extent_epsg4326[3], maxy)
 
     # Save the new path as WKB
     highlight_multilinestring = from_shape(MultiLineString(highlight_locations), srid=4326)

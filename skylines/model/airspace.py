@@ -1,15 +1,14 @@
 # -*- coding: utf-8 -*-
 
 from datetime import datetime
-from itertools import groupby, count
 
 from sqlalchemy.types import Integer, String, DateTime
 from geoalchemy2.types import Geometry
-from geoalchemy2.shape import from_shape
-from shapely.geometry import LineString
+from geoalchemy2.shape import to_shape, from_shape
+from shapely.geometry import LineString, box
+import xcsoar
 
 from skylines.model import db
-from skylines.lib.sql import _ST_Contains
 from skylines.lib.geo import FEET_PER_METER
 
 
@@ -72,56 +71,27 @@ def get_airspace_infringements(flight_path):
     # Create a shapely LineString object from the coordinates
     linestring = LineString(coordinates)
 
-    # Save the new path as WKB
-    locations = from_shape(linestring, srid=4326)
+    bbox = from_shape(box(*linestring.bounds), srid=4326)
 
-    airspaces_q = db.session.query(Airspace) \
-                    .filter(Airspace.the_geom.ST_Intersects(locations))
+    q = db.session.query(Airspace) \
+          .filter(Airspace.the_geom.intersects(bbox))
 
-    airspaces_cte = airspaces_q.cte()
-    cte = db.session.query(locations.ST_DumpPoints().label('locations')).cte()
+    xcs_airspace = xcsoar.Airspaces()
 
-    q = db.session.query(airspaces_cte.c.id,
-                         cte.c.locations.path[1]) \
-                  .filter(_ST_Contains(airspaces_cte.c.the_geom, cte.c.locations.geom))
+    for airspace in q.all():
+        poly = list(to_shape(airspace.the_geom).exterior.coords)
+        coords = [dict(latitude=c[1], longitude=c[0]) for c in poly]
 
-    airspaces = dict()
-
-    for airspace in airspaces_q.all():
         top, top_ref = airspace.extract_top
         base, base_ref = airspace.extract_base
 
-        airspaces[airspace.id] = dict(
-            airspace_class=airspace.airspace_class,
-            top=top,
-            top_ref=top_ref,
-            top_text=airspace.top,
-            base=base,
-            base_ref=base_ref,
-            base_text=airspace.base,
-            name=airspace.name)
+        xcs_airspace.addPolygon(coords, str(airspace.id), airspace.airspace_class,
+                                base * 3.2808399, base_ref.upper(),
+                                top * 3.2808399, top_ref.upper())
 
-    infringements = set()
-    periods_dict = dict()
+    xcs_airspace.optimise()
+    xcs_flight = xcsoar.Flight(flight_path)
+    infringements = xcs_airspace.findIntrusions(xcs_flight)
 
-    for as_id, i in q.all():
-        fix_id = i - 1
-
-        # TODO: respect airspace height references (MSL, AGL, FL)
-        if flight_path[fix_id].gps_altitude <= airspaces[as_id]['top'] and \
-           flight_path[fix_id].gps_altitude >= airspaces[as_id]['base']:
-            infringements.add(as_id)
-
-            if as_id not in periods_dict:
-                periods_dict[as_id] = []
-
-            periods_dict[as_id].append(fix_id)
-
-    periods = []
-    for as_id in periods_dict:
-        periods_dict[as_id].sort()
-        for k, g in groupby(periods_dict[as_id], key=lambda n, c=count(): n - next(c)):
-            g = list(g)
-            periods.append((as_id, g[0], g[-1]))
-
-    return airspaces, infringements, periods
+    # Replace airspace id string with ints in returned infringements
+    return dict((int(k), v) for k, v in infringements.items())
