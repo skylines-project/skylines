@@ -61,3 +61,8 @@ CELERYD_LOG_LEVEL = 'INFO'
 # limits for AnalyseFlight
 SKYLINES_ANALYSIS_ITER = 10e6 # iteration limit, should be around 10e6 to 50e6
 SKYLINES_ANALYSIS_MEMORY = 256 # approx memory limit in MB
+
+# List of airspace types to check for infringements
+SKYLINES_AIRSPACE_CHECK = ('RESTRICT', 'DANGER', 'PROHIBITED', 'CTR',
+                           'CLASSA', 'CLASSB', 'CLASSC', 'CLASSD',
+                           'NOGLIDER', 'TMZ', 'MATZ')

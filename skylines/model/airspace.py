@@ -8,6 +8,7 @@ from geoalchemy2.shape import to_shape, from_shape
 from shapely.geometry import LineString, box
 import xcsoar
 
+from flask import current_app
 from skylines.model import db
 from skylines.lib.geo import FEET_PER_METER
 
@@ -79,6 +80,9 @@ def get_airspace_infringements(flight_path):
     xcs_airspace = xcsoar.Airspaces()
 
     for airspace in q.all():
+        if airspace.airspace_class not in current_app.config['SKYLINES_AIRSPACE_CHECK']:
+            continue
+
         poly = list(to_shape(airspace.the_geom).exterior.coords)
         coords = [dict(latitude=c[1], longitude=c[0]) for c in poly]
 
