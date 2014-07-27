@@ -23,7 +23,7 @@ class Airspace(db.Model):
     the_geom = db.Column(Geometry('POLYGON', srid=4326))
 
     name = db.Column(String(), nullable=False)
-    airspace_class = db.Column(String(3), nullable=False)
+    airspace_class = db.Column(String(12), nullable=False)
     base = db.Column(String(30), nullable=False)
     top = db.Column(String(30), nullable=False)
     country_code = db.Column(String(2), nullable=False)

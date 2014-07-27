@@ -25,6 +25,55 @@ agl_re = re.compile(r'^(\d+)\s*(f|ft|m)?\s*(agl|gnd|asfc|sfc)')
 unl_re = re.compile(r'^unl')
 notam_re = re.compile(r'^notam')
 
+airspace_tnp_class = [
+    ("A", "CLASSA"),
+    ("B", "CLASSB"),
+    ("C", "CLASSC"),
+    ("D", "CLASSD"),
+    ("E", "CLASSE"),
+    ("F", "CLASSF"),
+    ("G", "CLASSG"),
+]
+
+airspace_tnp_types = [
+    ("C", "CTR"),
+    ("CTA", "CTR"),
+    ("CTR", "CTR"),
+    ("CTA/CTR", "CTR"),
+    ("CTR/CTA", "CTR"),
+    ("R", "RESTRICT"),
+    ("RESTRICTED", "RESTRICT"),
+    ("P", "PROHIBITED"),
+    ("PROHIBITED", "PROHIBITED"),
+    ("D", "DANGER"),
+    ("DANGER", "DANGER"),
+    ("G", "WAVE"),
+    ("GSEC", "WAVE"),
+    ("T", "TMZ"),
+    ("TMZ", "TMZ"),
+    ("CYR", "RESTRICT"),
+    ("CYD", "DANGER"),
+    ("CYA", "CLASSF"),
+    ("MATZ", "MATZ"),
+]
+
+airspace_openair_class = [
+    ("R", "RESTRICT"),
+    ("Q", "DANGER"),
+    ("P", "PROHIBITED"),
+    ("CTR", "CTR"),
+    ("A", "CLASSA"),
+    ("B", "CLASSB"),
+    ("C", "CLASSC"),
+    ("D", "CLASSD"),
+    ("GP", "NOGLIDER"),
+    ("W", "WAVE"),
+    ("E", "CLASSE"),
+    ("F", "CLASSF"),
+    ("TMZ", "TMZ"),
+    ("G", "CLASSG"),
+]
+
 
 class AirspaceCommand(Command):
     """ Download and import airspace files for the mapserver """
@@ -172,14 +221,15 @@ class AirspaceCommand(Command):
                 print "Adding " + name
 
             airspace_class = feature.GetFieldAsString('class').strip()
-            airspace_type = self.parse_airspace_type(feature.GetFieldAsString('type').strip())
+            airspace_type = feature.GetFieldAsString('type').strip()
 
-            if not airspace_class:
-                if airspace_type:
-                    airspace_class = airspace_type
-                else:
-                    print name + " has neither class nor type"
-                    continue
+            if airspace_type:
+                airspace_class = self.parse_airspace_type_tnp(airspace_type)
+            elif airspace_class:
+                airspace_class = self.parse_airspace_class_tnp(airspace_class)
+            else:
+                print name + " has neither class nor type"
+                continue
 
             added = self.add_airspace(
                 country_code,
@@ -238,9 +288,17 @@ class AirspaceCommand(Command):
             if debug:
                 print "Adding " + name
 
+            airspace_class = feature.GetFieldAsString('class').strip()
+
+            if airspace_class:
+                airspace_class = self.parse_airspace_class_openair(airspace_class)
+            else:
+                print name + " has no class"
+                continue
+
             added = self.add_airspace(
                 country_code,
-                feature.GetFieldAsString('class').strip(),
+                airspace_class,
                 name,
                 feature.GetFieldAsString('floor'),
                 feature.GetFieldAsString('ceiling'),
@@ -289,37 +347,32 @@ class AirspaceCommand(Command):
         # Return path to the file
         return path
 
-    def parse_airspace_type(self, airspace_type):
+    def parse_airspace_type_tnp(self, airspace_type):
+        if airspace_type.startswith('CLASS '):
+            as_class = self.parse_airspace_class_tnp(airspace_type[6:])
 
-        if re.search('^C$', airspace_type): return 'CTR'
-        if re.search('^CTA$', airspace_type): return 'CTR'
-        if re.search('^CTR$', airspace_type): return 'CTR'
-        if re.search('^CTA/CTR$', airspace_type): return 'CTR'
-        if re.search('^CTR/CTA$', airspace_type): return 'CTR'
+            if as_class != "OTHER":
+                return as_class
 
-        if re.search('^R$', airspace_type): return 'R'
-        if re.search('RESTRICTED', airspace_type): return 'R'
-        if re.search('CYR', airspace_type): return 'R'
+        for airspace in airspace_tnp_types:
+            if re.search("^" + airspace[0] + "$", airspace_type):
+                return airspace[1]
 
-        if re.search('^P$', airspace_type): return 'P'
-        if re.search('PROHIBITED', airspace_type): return 'P'
+        return "OTHER"
 
-        if re.search('^D$', airspace_type): return 'Q'
-        if re.search('DANGER', airspace_type): return 'Q'
-        if re.search('CYD', airspace_type): return 'Q'
+    def parse_airspace_class_tnp(self, airspace_class):
+        for airspace in airspace_tnp_class:
+            if re.search("^" + airspace[0] + "$", airspace_class[0]):
+                return airspace[1]
 
-        if re.search('^G$', airspace_type): return 'W'
-        if re.search('GSEC', airspace_type): return 'W'
+        return "OTHER"
 
-        if re.search('^T$', airspace_type): return 'TMZ'
-        if re.search('TMZ', airspace_type): return 'TMZ'
+    def parse_airspace_class_openair(self, airspace_class):
+        for airspace in airspace_openair_class:
+            if re.search("^" + airspace[0] + "$", airspace_class):
+                return airspace[1]
 
-        if re.search('CYA', airspace_type): return 'F'
-
-        # Military Aerodrome Traffic Zone, not in SUA / OpenAir definition
-        if re.search('MATZ', airspace_type): return 'W'
-
-        return None
+        return "OTHER"
 
     def add_airspace(self, country_code, airspace_class, name, base, top, geom_str):
         try:
