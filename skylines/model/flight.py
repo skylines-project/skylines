@@ -297,54 +297,6 @@ class Flight(db.Model):
         # Save the new path as WKB
         self.locations = from_shape(linestring, srid=4326)
 
-        # Now populate the FlightPathChunks table with the (full) flight path
-        path_detailed = flight_path(self.igc_file, max_points=3000, qnh=self.qnh)
-        if len(path_detailed) < 2:
-            return False
-
-        # Number of points in each chunck.
-        num_points = 100
-
-        # Interval of the current chunck: [i, j] (-> path_detailed[i:j + 1])
-        i = 0
-        j = min(num_points - 1, len(path_detailed) - 1)
-
-        # Ensure that the last chunk contains at least two fixes
-        if j == len(path_detailed) - 2:
-            j = len(path_detailed) - 1
-
-        FlightPathChunks.query().filter(FlightPathChunks.flight == self).delete()
-
-        while True:
-            flight_path = FlightPathChunks(flight=self)
-
-            # Save the timestamps of the coordinates
-            flight_path.timestamps = \
-                [from_seconds_of_day(date_utc, c.seconds_of_day) for c in path_detailed[i:j + 1]]
-
-            flight_path.start_time = path_detailed[i].datetime
-            flight_path.end_time = path_detailed[j].datetime
-
-            # Convert the coordinate into a list of tuples
-            coordinates = [(c.location['longitude'], c.location['latitude']) for c in path_detailed[i:j + 1]]
-
-            # Create a shapely LineString object from the coordinates
-            linestring = LineString(coordinates)
-
-            # Save the new path as WKB
-            flight_path.locations = from_shape(linestring, srid=4326)
-
-            db.session.add(flight_path)
-
-            if j == len(path_detailed) - 1:
-                break
-            else:
-                i = j + 1
-                j = min(j + num_points, len(path_detailed) - 1)
-
-                if j == len(path_detailed) - 2:
-                    j = len(path_detailed) - 1
-
         return True
 
 
@@ -479,6 +431,62 @@ class FlightPathChunks(db.Model):
             other_flights[point.dst_point_fid][-1]['points'].append(Location(latitude=dst_loc[0][1], longitude=dst_loc[0][0]))
 
         return other_flights
+
+    @staticmethod
+    def update_flight_path(flight):
+        from skylines.lib.xcsoar_ import flight_path
+        from skylines.lib.datetime import from_seconds_of_day
+
+        # Now populate the FlightPathChunks table with the (full) flight path
+        path_detailed = flight_path(flight.igc_file, max_points=3000, qnh=flight.qnh)
+        if len(path_detailed) < 2:
+            return False
+
+        # Number of points in each chunck.
+        num_points = 100
+
+        # Interval of the current chunck: [i, j] (-> path_detailed[i:j + 1])
+        i = 0
+        j = min(num_points - 1, len(path_detailed) - 1)
+
+        # Ensure that the last chunk contains at least two fixes
+        if j == len(path_detailed) - 2:
+            j = len(path_detailed) - 1
+
+        FlightPathChunks.query().filter(FlightPathChunks.flight == flight).delete()
+        date_utc = flight.igc_file.date_utc
+
+        while True:
+            flight_path = FlightPathChunks(flight=flight)
+
+            # Save the timestamps of the coordinates
+            flight_path.timestamps = \
+                [from_seconds_of_day(date_utc, c.seconds_of_day) for c in path_detailed[i:j + 1]]
+
+            flight_path.start_time = path_detailed[i].datetime
+            flight_path.end_time = path_detailed[j].datetime
+
+            # Convert the coordinate into a list of tuples
+            coordinates = [(c.location['longitude'], c.location['latitude']) for c in path_detailed[i:j + 1]]
+
+            # Create a shapely LineString object from the coordinates
+            linestring = LineString(coordinates)
+
+            # Save the new path as WKB
+            flight_path.locations = from_shape(linestring, srid=4326)
+
+            db.session.add(flight_path)
+
+            if j == len(path_detailed) - 1:
+                break
+            else:
+                i = j + 1
+                j = min(j + num_points, len(path_detailed) - 1)
+
+                if j == len(path_detailed) - 2:
+                    j = len(path_detailed) - 1
+
+        return True
 
 
 def get_elevations_for_flight(flight):

@@ -25,6 +25,9 @@ def find_meetings(flight_id):
 
     flight = Flight.get(flight_id)
 
+    # Update FlightPathChunks of current flight
+    FlightPathChunks.update_flight_path(flight)
+
     other_flights = FlightPathChunks.get_near_flights(flight)
 
     # delete all previous detected points between src and dst
