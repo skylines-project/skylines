@@ -20,7 +20,7 @@ LAYER
   END
 
   CLASS
-    EXPRESSION ('[airspace_class]' eq 'W')
+    EXPRESSION ('[airspace_class]' eq 'WAVE')
     NAME 'WAVE'
     STYLE
       OUTLINECOLOR 255 255 0
@@ -56,7 +56,7 @@ LAYER
   END
 
   CLASS
-    EXPRESSION ('[airspace_class]' eq 'A')
+    EXPRESSION ('[airspace_class]' eq 'CLASSA')
     NAME 'A'
     MAXSCALEDENOM 2500000
     STYLE
@@ -72,7 +72,7 @@ LAYER
   END
 
   CLASS
-    EXPRESSION ('[airspace_class]' eq 'A')
+    EXPRESSION ('[airspace_class]' eq 'CLASSA')
     NAME 'A'
     MINSCALEDENOM 2500000
     STYLE
@@ -89,7 +89,7 @@ LAYER
 
 
   CLASS
-    EXPRESSION ('[airspace_class]' eq 'B')
+    EXPRESSION ('[airspace_class]' eq 'CLASSB')
     NAME 'B'
     MAXSCALEDENOM 2500000
     STYLE
@@ -105,7 +105,7 @@ LAYER
   END
 
   CLASS
-    EXPRESSION ('[airspace_class]' eq 'B')
+    EXPRESSION ('[airspace_class]' eq 'CLASSB')
     NAME 'B'
     MINSCALEDENOM 2500000
     STYLE
@@ -144,7 +144,7 @@ LAYER
   END
 
   CLASS
-    EXPRESSION ('[airspace_class]' eq 'C')
+    EXPRESSION ('[airspace_class]' eq 'CLASSC')
     NAME 'C'
     MAXSCALEDENOM 2500000
     STYLE
@@ -160,7 +160,7 @@ LAYER
   END
 
   CLASS
-    EXPRESSION ('[airspace_class]' eq 'C')
+    EXPRESSION ('[airspace_class]' eq 'CLASSC')
     NAME 'C'
     MINSCALEDENOM 2500000
     STYLE
@@ -180,7 +180,7 @@ LAYER
 ## AIRSPACE CLASS D
 ##
   CLASS
-    EXPRESSION ('[airspace_class]' eq 'D')
+    EXPRESSION ('[airspace_class]' eq 'CLASSD')
     NAME 'D'
     MAXSCALEDENOM 2500000
     STYLE
@@ -196,7 +196,7 @@ LAYER
   END
 
   CLASS
-    EXPRESSION ('[airspace_class]' eq 'D')
+    EXPRESSION ('[airspace_class]' eq 'CLASSD')
     NAME 'D'
     MINSCALEDENOM 2500000
     STYLE
@@ -273,21 +273,21 @@ LAYER
   MAXSCALEDENOM 25000000
 
 ## don't render CLASS E airspace...
-#    CLASS
-#      EXPRESSION ('[airspace_class]' eq 'E')
-#      NAME 'CTR'
-#      STYLE
-#        OUTLINECOLOR 0 12 211
-#        WIDTH 2
-#        LINECAP butt
-#      END
-#    END
+#   CLASS
+#     EXPRESSION ('[airspace_class]' eq 'CLASSE')
+#     NAME 'CTR'
+#     STYLE
+#       OUTLINECOLOR 0 12 211
+#       WIDTH 2
+#       LINECAP butt
+#     END
+#   END
 
 ##
 ## AIRSPACE CLASS F
 ##
   CLASS
-    EXPRESSION ('[airspace_class]' eq 'F')
+    EXPRESSION ('[airspace_class]' eq 'CLASSF')
     NAME 'CTR'
     STYLE
       OUTLINECOLOR 0 12 211
@@ -336,7 +336,7 @@ LAYER
 ## DANGER AIRSPACE (CLASS Q)
 ##
   CLASS
-    EXPRESSION ('[airspace_class]' eq 'Q')
+    EXPRESSION ('[airspace_class]' eq 'DANGER')
     NAME "Danger"
     MAXSCALEDENOM 2500000
     STYLE
@@ -351,7 +351,7 @@ LAYER
   END
 
   CLASS
-    EXPRESSION ('[airspace_class]' eq 'Q')
+    EXPRESSION ('[airspace_class]' eq 'DANGER')
     NAME "Danger"
     MINSCALEDENOM 2500000
     STYLE
@@ -370,7 +370,7 @@ LAYER
 ## RESTRICTED AIRSPACE (CLASS R)
 ##
   CLASS
-    EXPRESSION ('[airspace_class]' eq 'R')
+    EXPRESSION ('[airspace_class]' eq 'RESTRICT')
     NAME "Restricted"
     MAXSCALEDENOM 2500000
     STYLE
@@ -385,7 +385,7 @@ LAYER
   END
 
   CLASS
-    EXPRESSION ('[airspace_class]' eq 'R')
+    EXPRESSION ('[airspace_class]' eq 'RESTRICT')
     NAME "Restricted"
     MINSCALEDENOM 2500000
     STYLE
@@ -404,7 +404,7 @@ LAYER
 ## PROHIBITED AIRSPACE (CLASS P)
 ##
   CLASS
-    EXPRESSION ('[airspace_class]' eq 'P')
+    EXPRESSION ('[airspace_class]' eq 'PROHIBITED')
     NAME "Prohibited"
     MAXSCALEDENOM 2500000
     STYLE
@@ -419,7 +419,7 @@ LAYER
   END
 
   CLASS
-    EXPRESSION ('[airspace_class]' eq 'P')
+    EXPRESSION ('[airspace_class]' eq 'PROHIBITED')
     NAME "Prohibited"
     MINSCALEDENOM 2500000
     STYLE
