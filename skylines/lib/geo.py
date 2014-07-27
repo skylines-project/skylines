@@ -4,6 +4,7 @@ import math
 
 EARTH_RADIUS = 6367009
 METERS_PER_DEGREE = 111319.0
+FEET_PER_METER = 3.2808399
 
 
 def geographic_distance(loc1, loc2):

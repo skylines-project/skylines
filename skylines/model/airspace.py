@@ -10,6 +10,7 @@ from shapely.geometry import LineString
 
 from skylines.model import db
 from skylines.lib.sql import _ST_Contains
+from skylines.lib.geo import FEET_PER_METER
 
 
 class Airspace(db.Model):
@@ -41,13 +42,13 @@ class Airspace(db.Model):
             return -1000, 'msl'
 
         elif column.startswith('FL'):
-            return float(column[3:]) * 100 / 3.2808399, 'fl'
+            return float(column[3:]) * 100 / FEET_PER_METER, 'fl'
 
         elif column.endswith('AGL'):
-            return float(column[:-4]) / 3.2808399, 'agl'
+            return float(column[:-4]) / FEET_PER_METER, 'agl'
 
         elif column.endswith('MSL'):
-            return float(column[:-4]) / 3.2808399, 'msl'
+            return float(column[:-4]) / FEET_PER_METER, 'msl'
 
         elif column == 'NOTAM':
             return -1000, 'notam'

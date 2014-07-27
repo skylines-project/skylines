@@ -13,6 +13,7 @@ from shapely.geos import ReadingError
 from sqlalchemy.sql.expression import case
 from sqlalchemy import func
 from skylines.model import db, Airspace
+from skylines.lib.geo import FEET_PER_METER
 
 airspace_re = re.compile(r'^([^#]{1}.*?)\s+(openair|sua)\s+(https?://.*|file://.*)')
 airspace_blacklist_re = re.compile(r'^([^#]{1}.*?)\s+(.*)')
@@ -401,21 +402,21 @@ class AirspaceCommand(Command):
         # is it AGL?
         match = agl_re.match(height)
         if match and match.group(2) == 'm':
-            return '{0} AGL'.format((int(match.group(1)) * 3.2808399))
+            return '{0} AGL'.format((int(match.group(1)) * FEET_PER_METER))
         elif match:
             return '{0} AGL'.format(int(match.group(1)))
 
         # is it MSL?
         match = msl_re.match(height)
         if match and match.group(2) == 'm':
-            return '{0} MSL'.format(int(match.group(1)) * 3.2808399)
+            return '{0} MSL'.format(int(match.group(1)) * FEET_PER_METER)
         elif match:
             return '{0} MSL'.format(int(match.group(1)))
 
         # is it MSL without the msl moniker?
         match = msld_re.match(height)
         if match and match.group(2) == 'm':
-            return '{0} MSL'.format(int(match.group(1)) * 3.2808399)
+            return '{0} MSL'.format(int(match.group(1)) * FEET_PER_METER)
         elif match:
             return '{0} MSL'.format(int(match.group(1)))
 
