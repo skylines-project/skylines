@@ -85,6 +85,12 @@ def get_airspace_infringements(flight_path):
         top, top_ref = airspace.extract_top
         base, base_ref = airspace.extract_base
 
+        if top_ref == 'NOTAM' or top_ref == 'UNKNOWN':
+            top_ref = 'MSL'
+
+        if base_ref == 'NOTAM' or base_ref == 'UNKNOWN':
+            base_ref = 'MSL'
+
         xcs_airspace.addPolygon(coords, str(airspace.id), airspace.airspace_class,
                                 base, base_ref.upper(),
                                 top, top_ref.upper())
