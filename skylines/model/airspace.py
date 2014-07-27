@@ -38,22 +38,22 @@ class Airspace(db.Model):
 
     def extract_height(self, column):
         if column == 'GND':
-            return -1000, 'msl'
+            return -1000, 'MSL'
 
         elif column.startswith('FL'):
-            return float(column[3:]) * 100 / FEET_PER_METER, 'fl'
+            return float(column[3:]) * 100 / FEET_PER_METER, 'FL'
 
         elif column.endswith('AGL'):
-            return float(column[:-4]) / FEET_PER_METER, 'agl'
+            return float(column[:-4]) / FEET_PER_METER, 'AGL'
 
         elif column.endswith('MSL'):
-            return float(column[:-4]) / FEET_PER_METER, 'msl'
+            return float(column[:-4]) / FEET_PER_METER, 'MSL'
 
         elif column == 'NOTAM':
-            return -1000, 'notam'
+            return -1000, 'NOTAM'
 
         else:
-            return -1000, 'unknown'
+            return -1000, 'UNKNOWN'
 
     @property
     def extract_base(self):
@@ -86,8 +86,8 @@ def get_airspace_infringements(flight_path):
         base, base_ref = airspace.extract_base
 
         xcs_airspace.addPolygon(coords, str(airspace.id), airspace.airspace_class,
-                                base * 3.2808399, base_ref.upper(),
-                                top * 3.2808399, top_ref.upper())
+                                base, base_ref.upper(),
+                                top, top_ref.upper())
 
     xcs_airspace.optimise()
     xcs_flight = xcsoar.Flight(flight_path)
