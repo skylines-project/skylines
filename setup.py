@@ -44,6 +44,7 @@ setup(
         'aerofiles==0.1.1',
         'enum34==1.0',
         'pyproj==1.9.3',
+        'gevent==1.0.1',
     ],
     include_package_data=True,
     package_data={
