@@ -8,7 +8,6 @@ from gevent.server import DatagramServer
 from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.sql.expression import and_, or_
 
-from skylines.app import create_app
 from skylines.model import db, User, TrackingFix, Follower, Elevation
 from skylines.tracking.crc import check_crc, set_crc
 
@@ -40,10 +39,11 @@ TRAFFIC_FLAG_CLUB = 0x2
 
 USER_FLAG_NOT_FOUND = 0x1
 
-app = create_app()
-
 
 class TrackingServer(DatagramServer):
+    def init_app(self, app):
+        self.app = app
+
     def pingReceived(self, host, port, key, payload):
         if len(payload) != 8: return
         id, reserved, reserved2 = struct.unpack('!HHI', payload)
@@ -228,7 +228,7 @@ class TrackingServer(DatagramServer):
         if header[0] != MAGIC: return
         if not check_crc(data): return
 
-        with app.app_context():
+        with self.app.app_context():
             if header[2] == TYPE_FIX:
                 self.fixReceived(host, header[3], data[16:])
             elif header[2] == TYPE_PING:
@@ -237,3 +237,9 @@ class TrackingServer(DatagramServer):
                 self.trafficRequestReceived(host, port, header[3], data[16:])
             elif header[2] == TYPE_USER_NAME_REQUEST:
                 self.userNameRequestReceived(host, port, header[3], data[16:])
+
+    def serve_forever(self):
+        if not self.app:
+            raise RuntimeError('application not registered on server instance')
+
+        super(TrackingServer, self).serve_forever()
