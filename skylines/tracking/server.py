@@ -1,11 +1,14 @@
+from __future__ import print_function
+
 import struct
 from datetime import datetime, time, timedelta
 
-from twisted.python import log
-from twisted.internet.protocol import DatagramProtocol
+from gevent.server import DatagramServer
+
 from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.sql.expression import and_, or_
 
+from skylines.app import create_app
 from skylines.model import db, User, TrackingFix, Follower, Elevation
 from skylines.tracking.crc import check_crc, set_crc
 
@@ -37,8 +40,10 @@ TRAFFIC_FLAG_CLUB = 0x2
 
 USER_FLAG_NOT_FOUND = 0x1
 
+app = create_app()
 
-class TrackingServer(DatagramProtocol):
+
+class TrackingServer(DatagramServer):
     def pingReceived(self, host, port, key, payload):
         if len(payload) != 8: return
         id, reserved, reserved2 = struct.unpack('!HHI', payload)
@@ -52,14 +57,14 @@ class TrackingServer(DatagramProtocol):
         data = struct.pack('!IHHQHHI', MAGIC, 0, TYPE_ACK, 0,
                            id, 0, flags)
         data = set_crc(data)
-        self.transport.write(data, (host, port))
+        self.socket.sendto(data, (host, port))
 
     def fixReceived(self, host, key, payload):
         if len(payload) != 32: return
 
         pilot = User.by_tracking_key(key)
         if not pilot:
-            log.err("No such pilot: %x" % key)
+            print("No such pilot: %x" % key)
             return
 
         data = struct.unpack('!IIiiIHHHhhH', payload)
@@ -85,7 +90,7 @@ class TrackingServer(DatagramProtocol):
             fix.time = (datetime.combine(now.date(), time_of_day) -
                         timedelta(days=1))
         else:
-            log.msg("ignoring time stamp from FIX packet: " + str(time_of_day))
+            print("ignoring time stamp from FIX packet: " + str(time_of_day))
 
         flags = data[0]
         if flags & FLAG_LOCATION:
@@ -113,7 +118,7 @@ class TrackingServer(DatagramProtocol):
         if flags & FLAG_ENL:
             fix.engine_noise_level = data[10]
 
-        log.msg("{} {} {} {}".format(
+        print("{} {} {} {}".format(
             fix.time and fix.time.time(), host,
             unicode(pilot).encode('utf8', 'ignore'), fix.location))
 
@@ -121,7 +126,7 @@ class TrackingServer(DatagramProtocol):
         try:
             db.session.commit()
         except SQLAlchemyError, e:
-            log.err(e, 'database error')
+            print('database error', e)
             db.session.rollback()
 
     def trafficRequestReceived(self, host, port, key, payload):
@@ -129,7 +134,7 @@ class TrackingServer(DatagramProtocol):
 
         pilot = User.by_tracking_key(key)
         if pilot is None:
-            log.err("No such pilot: %d" % key)
+            print("No such pilot: %d" % key)
             return
 
         data = struct.unpack('!II', payload)
@@ -182,7 +187,7 @@ class TrackingServer(DatagramProtocol):
         response = struct.pack('!HBBI', 0, 0, count, 0) + response
         response = struct.pack('!IHHQ', MAGIC, 0, TYPE_TRAFFIC_RESPONSE, 0) + response
         response = set_crc(response)
-        self.transport.write(response, (host, port))
+        self.socket.sendto(response, (host, port))
 
     def userNameRequestReceived(self, host, port, key, payload):
         """The client asks for the display name of a user account."""
@@ -191,7 +196,7 @@ class TrackingServer(DatagramProtocol):
 
         pilot = User.by_tracking_key(key)
         if pilot is None:
-            log.err("No such pilot: %d" % key)
+            print("No such pilot: %d" % key)
             return
 
         data = struct.unpack('!II', payload)
@@ -214,20 +219,21 @@ class TrackingServer(DatagramProtocol):
                                len(name), 0, 0, 0, 0, 0)
         response += name
         response = set_crc(response)
-        self.transport.write(response, (host, port))
+        self.socket.sendto(response, (host, port))
 
-    def datagramReceived(self, data, (host, port)):
+    def handle(self, data, (host, port)):
         if len(data) < 16: return
 
         header = struct.unpack('!IHHQ', data[:16])
         if header[0] != MAGIC: return
         if not check_crc(data): return
 
-        if header[2] == TYPE_FIX:
-            self.fixReceived(host, header[3], data[16:])
-        elif header[2] == TYPE_PING:
-            self.pingReceived(host, port, header[3], data[16:])
-        elif header[2] == TYPE_TRAFFIC_REQUEST:
-            self.trafficRequestReceived(host, port, header[3], data[16:])
-        elif header[2] == TYPE_USER_NAME_REQUEST:
-            self.userNameRequestReceived(host, port, header[3], data[16:])
+        with app.app_context():
+            if header[2] == TYPE_FIX:
+                self.fixReceived(host, header[3], data[16:])
+            elif header[2] == TYPE_PING:
+                self.pingReceived(host, port, header[3], data[16:])
+            elif header[2] == TYPE_TRAFFIC_REQUEST:
+                self.trafficRequestReceived(host, port, header[3], data[16:])
+            elif header[2] == TYPE_USER_NAME_REQUEST:
+                self.userNameRequestReceived(host, port, header[3], data[16:])
