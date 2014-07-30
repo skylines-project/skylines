@@ -88,7 +88,7 @@ class SkyLines(Flask):
                 record.app_name = self.app.name
                 record.url = request.url
                 record.ip = request.remote_addr
-                if g.current_user:
+                if hasattr(g, 'current_user') and g.current_user:
                     user = g.current_user
                     record.user = '%s <%s>' % (user.name, user.email_address)
                 else:
