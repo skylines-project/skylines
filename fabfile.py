@@ -3,9 +3,9 @@ from fabric.api import env, task, local, cd, run, sudo, put
 from tempfile import NamedTemporaryFile
 
 env.use_ssh_config = True
-env.hosts = ['root@skylines']
+env.hosts = ['skylines@skylines']
 
-WORKING_DIR = '/opt/skylines/src/'
+WORKING_DIR = '/home/skylines/src/'
 
 
 @task
@@ -35,19 +35,24 @@ def restart():
         manage('assets build')
 
         # do database migrations
-        manage('migrate upgrade', user='skylines')
+        manage('migrate upgrade')
 
         # restart services
-        restart_service('skylines-fastcgi')
-        restart_service('mapserver-fastcgi')
-        restart_service('skylines-daemon')
-        restart_service('celery-daemon')
-        restart_service('mapproxy-uwsgi')
+        restart_service('skylines-fastcgi', user='root')
+        restart_service('mapserver-fastcgi', user='root')
+        restart_service('skylines-daemon', user='root')
+        restart_service('celery-daemon', user='root')
+        restart_service('mapproxy-uwsgi', user='root')
 
 
 @task
-def restart_service(service):
-    run('sv restart ' + service)
+def restart_service(service, user=None):
+    if user:
+        # Using the sudo() command somehow always provokes a password prompt,
+        # even if NOPASSWD is specified in the sudoers file...
+        run('sudo -u %s sv restart %s' % (user, service))
+    else:
+        run('sv restart ' + service)
 
 
 @task
@@ -66,21 +71,21 @@ def update_mapproxy():
 
         content = content.replace(
             'base_dir: \'/tmp/cache_data\'',
-            'base_dir: \'/opt/skylines/var/cache/mapproxy\'',
+            'base_dir: \'/home/skylines/cache/mapproxy\'',
         )
 
         content = content.replace(
-            'lock_dir: \'/tmp/cache_data/locks\'',
-            'lock_dir: \'/opt/skylines/var/cache/mapproxy/locks\'',
+            'lock_dir: \'/tmp/cache_data/tile_locks\'',
+            'lock_dir: \'/home/skylines/cache/mapproxy/tile_locks\'',
         )
 
         f.write(content)
         f.flush()
 
-        put(f.name, '/opt/skylines/etc/mapproxy.yaml')
+        put(f.name, '/home/skylines/config/mapproxy.yaml')
 
 
 @task
 def clean_mapproxy_cache():
-    with cd('/opt/skylines/var/cache/mapproxy'):
+    with cd('/home/skylines/cache/mapproxy'):
         run('rm -rv *')
