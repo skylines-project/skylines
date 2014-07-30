@@ -126,7 +126,7 @@ sources:
     supported_srs: ['EPSG:3857']
     req:
       layers: MWP
-      url: http://www.skylines-project.org/mapserver/?
+      url: https://maps.skylines.aero/mapserver/?
       transparent: true
     image:
       format: image/png
@@ -136,7 +136,7 @@ sources:
     supported_srs: ['EPSG:3857']
     req:
       layers: Airports
-      url: http://www.skylines-project.org/mapserver/?
+      url: https://maps.skylines.aero/mapserver/?
       transparent: true
     image:
       format: image/png
@@ -146,7 +146,7 @@ sources:
     supported_srs: ['EPSG:3857']
     req:
       layers: Airspace
-      url: http://www.skylines-project.org/mapserver/?
+      url: https://maps.skylines.aero/mapserver/?
       transparent: true
     image:
       format: image/png
@@ -213,3 +213,6 @@ globals:
 
   tiles:
     expires_hours: 48
+
+  http:
+    ssl_no_cert_checks: True
