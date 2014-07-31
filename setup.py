@@ -16,7 +16,7 @@ setup(
     packages=find_packages(),
     install_requires=[
         'flask==0.10.1',
-        'werkzeug==0.9.4',
+        'werkzeug==0.9.6',
         'Flask-Babel==0.9',
         'Flask-Assets==0.8',
         'Flask-Login==0.2.9',
