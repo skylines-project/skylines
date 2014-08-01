@@ -65,7 +65,7 @@ class Airspace(db.Model):
         return self.extract_height(self.top)
 
 
-def get_airspace_infringements(flight_path):
+def get_airspace_infringements(flight_path, qnh=None):
     # Convert the coordinate into a list of tuples
     coordinates = [(c.location['longitude'], c.location['latitude']) for c in flight_path]
 
@@ -101,6 +101,10 @@ def get_airspace_infringements(flight_path):
 
     xcs_airspace.optimise()
     xcs_flight = xcsoar.Flight(flight_path)
+
+    if qnh:
+        xcs_flight.setQNH(qnh)
+
     infringements = xcs_airspace.findIntrusions(xcs_flight)
 
     # Replace airspace id string with ints in returned infringements

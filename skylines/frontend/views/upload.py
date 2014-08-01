@@ -128,7 +128,7 @@ def index():
 
             if fp:
                 trace = _encode_flight_path(fp, flight.qnh)
-                infringements = get_airspace_infringements(fp)
+                infringements = get_airspace_infringements(fp, qnh=flight.qnh)
             else:
                 trace = None
                 airspace = None
@@ -257,7 +257,7 @@ def index_post(form):
         flight.privacy_level = Flight.PrivacyLevel.PRIVATE
 
         trace = _encode_flight_path(fp, qnh=flight.qnh)
-        infringements = get_airspace_infringements(fp)
+        infringements = get_airspace_infringements(fp, qnh=flight.qnh)
         form = UploadUpdateForm(formdata=None, prefix=str(prefix), obj=flight)
 
         # remove airspace field from form if no airspace infringements found
