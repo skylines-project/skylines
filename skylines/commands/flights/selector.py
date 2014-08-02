@@ -1,6 +1,8 @@
 from flask.ext.script import Option
-from skylines.model import Flight
+from sqlalchemy import func
 from datetime import datetime
+
+from skylines.model import Airport, Flight
 
 
 selector_options = (
@@ -10,6 +12,8 @@ selector_options = (
     Option('--uploaded-to', help='Date to (YYYY-MM-DD)'),
     Option('--private', action='store_true',
            help='Process private flights, too'),
+    Option('--country-code', help='Country code of the start airport'),
+    Option('--airport-name', help='Airport name of the start airport'),
     Option('ids', metavar='ID', nargs='*', type=int,
            help='Any number of flight IDs.'),
 )
@@ -59,5 +63,19 @@ def select(q, **kwargs):
     if not kwargs.get('private'):
         print "privacy_level == PUBLIC"
         q = q.filter(Flight.privacy_level == Flight.PrivacyLevel.PUBLIC)
+
+    if kwargs.get('country_code'):
+        country_code = kwargs.get('country_code')
+
+        q = q.join(Flight.takeoff_airport)
+        q = q.filter(func.lower(Airport.country_code) == func.lower(country_code))
+        print "takeoff_airport country code: " + country_code
+
+    if kwargs.get('airport_name'):
+        airport_name = kwargs.get('airport_name')
+
+        q = q.join(Flight.takeoff_airport)
+        q = q.filter(func.lower(Airport.name) == func.lower(airport_name))
+        print "takeoff_airport name: " + airport_name
 
     return q
