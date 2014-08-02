@@ -56,7 +56,10 @@ class TrackingServer(DatagramServer):
 
         pilot = User.by_tracking_key(key)
         if not pilot:
+            log("%s PING unknown pilot (key: %x)" % (host, key))
             flags |= FLAG_ACK_BAD_KEY
+        else:
+            log("%s PING %s -> PONG" % (host, unicode(pilot).encode('utf8', 'ignore')))
 
         data = struct.pack('!IHHQHHI', MAGIC, 0, TYPE_ACK, 0,
                            id, 0, flags)
@@ -68,7 +71,7 @@ class TrackingServer(DatagramServer):
 
         pilot = User.by_tracking_key(key)
         if not pilot:
-            log("No such pilot: %x" % key)
+            log("%s FIX unknown pilot (key: %x)" % (host, key))
             return
 
         data = struct.unpack('!IIiiIHHHhhH', payload)
@@ -94,7 +97,7 @@ class TrackingServer(DatagramServer):
             fix.time = (datetime.combine(now.date(), time_of_day) -
                         timedelta(days=1))
         else:
-            log("ignoring time stamp from FIX packet: " + str(time_of_day))
+            log("bad time stamp: " + str(time_of_day))
 
         flags = data[0]
         if flags & FLAG_LOCATION:
@@ -122,9 +125,9 @@ class TrackingServer(DatagramServer):
         if flags & FLAG_ENL:
             fix.engine_noise_level = data[10]
 
-        log("{} {} {} {}".format(
-            fix.time and fix.time.time(), host,
-            unicode(pilot).encode('utf8', 'ignore'), fix.location))
+        log("{} FIX {} {} {}".format(
+            host, unicode(pilot).encode('utf8', 'ignore'),
+            fix.time and fix.time.time(), fix.location))
 
         db.session.add(fix)
         try:
@@ -138,7 +141,7 @@ class TrackingServer(DatagramServer):
 
         pilot = User.by_tracking_key(key)
         if pilot is None:
-            log("No such pilot: %d" % key)
+            log("%s TRAFFIC_REQUEST unknown pilot (key: %x)" % (host, key))
             return
 
         data = struct.unpack('!II', payload)
@@ -193,6 +196,9 @@ class TrackingServer(DatagramServer):
         response = set_crc(response)
         self.socket.sendto(response, (host, port))
 
+        log("%s TRAFFIC_REQUEST %s -> %d locations" %
+            (host, unicode(pilot).encode('utf8', 'ignore'), count))
+
     def userNameRequestReceived(self, host, port, key, payload):
         """The client asks for the display name of a user account."""
 
@@ -200,7 +206,7 @@ class TrackingServer(DatagramServer):
 
         pilot = User.by_tracking_key(key)
         if pilot is None:
-            log("No such pilot: %d" % key)
+            log("%s USER_NAME_REQUEST unknown pilot (key: %x)" % (host, key))
             return
 
         data = struct.unpack('!II', payload)
@@ -213,6 +219,10 @@ class TrackingServer(DatagramServer):
                                    0, 0, 0, 0, 0, 0)
             response = set_crc(response)
             self.transport.write(response, (host, port))
+
+            log("%s, USER_NAME_REQUEST %s -> NOT_FOUND" %
+                (host, unicode(pilot).encode('utf8', 'ignore')))
+
             return
 
         name = user.name[:64].encode('utf8', 'ignore')
@@ -224,6 +234,10 @@ class TrackingServer(DatagramServer):
         response += name
         response = set_crc(response)
         self.socket.sendto(response, (host, port))
+
+        log("%s USER_NAME_REQUEST %s -> %s" %
+            (host, unicode(pilot).encode('utf8', 'ignore'),
+             unicode(user).encode('utf8', 'ignore')))
 
     def handle(self, data, (host, port)):
         if len(data) < 16: return
