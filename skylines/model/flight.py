@@ -486,6 +486,8 @@ class FlightPathChunks(db.Model):
                 if j == len(path_detailed) - 2:
                     j = len(path_detailed) - 1
 
+        db.session.commit()
+
         return True
 
 
