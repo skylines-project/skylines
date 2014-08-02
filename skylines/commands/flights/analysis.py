@@ -5,32 +5,32 @@ from sqlalchemy.orm import joinedload
 from skylines.model import db, Flight
 from skylines.lib.xcsoar_ import analyse_flight
 from skylines.worker import tasks
-from datetime import datetime
+
+from selector import selector_options, select
 
 
 class Analyze(Command):
     """ (Re)analyze flights """
 
-    option_list = (
+    option_list = selector_options + (
         Option('--force', action='store_true',
                help='re-analyse all flights, not just the scheduled ones'),
-        Option('ids', metavar='ID', nargs='*', type=int,
-               help='Any number of flight IDs.'),
     )
 
-    def run(self, force, ids):
-        if force:
-            # invalidate all results
-            db.session.query(Flight).update({'needs_analysis': True})
-
+    def run(self, force, **kwargs):
         q = db.session.query(Flight)
         q = q.options(joinedload(Flight.igc_file))
         q = q.order_by(Flight.id)
 
-        if ids:
-            self.apply_and_commit(self.do, q.filter(Flight.id.in_(ids)))
-        else:
-            self.incremental(self.do, q.filter(Flight.needs_analysis == True))
+        q = select(q, **kwargs)
+
+        if not q:
+            quit()
+
+        if not force:
+            q = q.filter(Flight.needs_analysis == True)
+
+        self.incremental(self.do, q)
 
     def do(self, flight):
         print flight.id
@@ -60,49 +60,34 @@ class Analyze(Command):
                 func, q.offset(offset).limit(n))
             if n_success == 0 and n_failed == 0:
                 break
-            offset += n_failed
+            offset += n_success + n_failed
 
 
 class AnalyzeDelayed(Command):
     """ Schedule flight reanalysis via celery worker """
 
-    option_list = (
+    option_list = selector_options + (
         Option('--force', action='store_true',
                help='re-analyse all flights, not just the scheduled ones'),
-        Option('--date_from', help='Date from (YYYY-MM-DD)'),
-        Option('--date_to', help='Date to (YYYY-MM-DD)'),
-        Option('ids', metavar='ID', nargs='*', type=int,
-               help='Any number of flight IDs.'),
     )
 
-    def run(self, force, date_from, date_to, ids):
+    def run(self, force, **kwargs):
         current_app.add_celery()
 
-        if force:
-            # invalidate all results
-            Flight.query().update({'needs_analysis': True})
+        q = db.session.query(Flight)
+        q = q.options(joinedload(Flight.igc_file))
+        q = q.order_by(Flight.id)
 
-        if ids:
-            for flight_id in ids:
-                self.do(flight_id)
-        elif date_from and date_to:
-            print date_from
-            try:
-                date_from = datetime.strptime(date_from, "%Y-%m-%d")
-                date_to = datetime.strptime(date_to, "%Y-%m-%d")
-            except:
-                print "Cannot parse date."
-                quit()
+        q = select(q, **kwargs)
 
-            q = db.session.query(Flight)
-            q = q.filter(Flight.takeoff_time >= date_from) \
-                 .filter(Flight.takeoff_time <= date_to)
+        if not q:
+            quit()
 
-            for flight in q:
-                self.do(flight.id)
-        else:
-            for flight in Flight.query(needs_analysis=True):
-                self.do(flight.id)
+        if not force:
+            q = q.filter(Flight.needs_analysis == True)
+
+        for flight in q:
+            self.do(flight.id)
 
     def do(self, flight_id):
         print flight_id
