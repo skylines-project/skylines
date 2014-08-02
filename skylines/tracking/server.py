@@ -1,5 +1,4 @@
-from __future__ import print_function
-
+import sys
 import struct
 from datetime import datetime, time, timedelta
 
@@ -40,6 +39,11 @@ TRAFFIC_FLAG_CLUB = 0x2
 USER_FLAG_NOT_FOUND = 0x1
 
 
+def log(message):
+    print message
+    sys.stdout.flush()
+
+
 class TrackingServer(DatagramServer):
     def init_app(self, app):
         self.app = app
@@ -64,7 +68,7 @@ class TrackingServer(DatagramServer):
 
         pilot = User.by_tracking_key(key)
         if not pilot:
-            print("No such pilot: %x" % key)
+            log("No such pilot: %x" % key)
             return
 
         data = struct.unpack('!IIiiIHHHhhH', payload)
@@ -90,7 +94,7 @@ class TrackingServer(DatagramServer):
             fix.time = (datetime.combine(now.date(), time_of_day) -
                         timedelta(days=1))
         else:
-            print("ignoring time stamp from FIX packet: " + str(time_of_day))
+            log("ignoring time stamp from FIX packet: " + str(time_of_day))
 
         flags = data[0]
         if flags & FLAG_LOCATION:
@@ -118,7 +122,7 @@ class TrackingServer(DatagramServer):
         if flags & FLAG_ENL:
             fix.engine_noise_level = data[10]
 
-        print("{} {} {} {}".format(
+        log("{} {} {} {}".format(
             fix.time and fix.time.time(), host,
             unicode(pilot).encode('utf8', 'ignore'), fix.location))
 
@@ -126,7 +130,7 @@ class TrackingServer(DatagramServer):
         try:
             db.session.commit()
         except SQLAlchemyError, e:
-            print('database error', e)
+            log('database error:' + str(e))
             db.session.rollback()
 
     def trafficRequestReceived(self, host, port, key, payload):
@@ -134,7 +138,7 @@ class TrackingServer(DatagramServer):
 
         pilot = User.by_tracking_key(key)
         if pilot is None:
-            print("No such pilot: %d" % key)
+            log("No such pilot: %d" % key)
             return
 
         data = struct.unpack('!II', payload)
@@ -196,7 +200,7 @@ class TrackingServer(DatagramServer):
 
         pilot = User.by_tracking_key(key)
         if pilot is None:
-            print("No such pilot: %d" % key)
+            log("No such pilot: %d" % key)
             return
 
         data = struct.unpack('!II', payload)
