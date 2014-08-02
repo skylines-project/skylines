@@ -1,32 +1,33 @@
 from flask.ext.script import Command, Option
 
 from sqlalchemy.orm import joinedload
-from sqlalchemy.sql.expression import or_
 from skylines.model import db, Flight
+
+from selector import selector_options, select
 
 
 class UpdateFlightPaths(Command):
     """ Update Skylines flight paths """
 
-    option_list = (
+    option_list = selector_options + (
         Option('--force', action='store_true',
                help='re-analyse all flights, not just the scheduled ones'),
-        Option('ids', metavar='ID', nargs='*', type=int,
-               help='Any number of flight IDs.'),
     )
 
-    def run(self, force, ids):
+    def run(self, force, **kwargs):
         q = db.session.query(Flight)
         q = q.options(joinedload(Flight.igc_file))
         q = q.order_by(Flight.id)
 
-        if ids:
-            self.apply_and_commit(self.do, q.filter(Flight.id.in_(ids)))
-        elif force:
-            self.incremental(self.do, q)
-        else:
-            self.incremental(self.do, q.filter(
-                or_(Flight.locations == None, Flight.timestamps == None)))
+        q = select(q, **kwargs)
+
+        if not q:
+            quit()
+
+        if not force:
+            q = q.filter(Flight.needs_analysis == True)
+
+        self.incremental(self.do, q)
 
     def do(self, flight):
         print flight.id
