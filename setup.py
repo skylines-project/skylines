@@ -38,7 +38,7 @@ setup(
         'Twisted==13.2.0',
         'closure==20140110',
         'WebHelpers==1.3',
-        'celery_with_redis==3.0',
+        'celery[redis]>=3.1,<3.2',
         'xcsoar==0.4',
         'Pygments==1.6',
         'aerofiles==0.1.1',
