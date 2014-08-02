@@ -1,30 +1,46 @@
 from flask.ext.script import Command, Option
+from flask import current_app
 from skylines.model import db, Flight
 from skylines.worker import tasks
+
+from selector import selector_options, select
 
 
 class FindMeetings(Command):
     """ Find meetings points between flights """
 
-    option_list = (
+    option_list = selector_options + (
         Option('--force', action='store_true',
                help='re-analyse all flights, not just the scheduled ones'),
-        Option('ids', metavar='ID', nargs='*', type=int,
-               help='Any number of flight IDs.'),
+        Option('--async', action='store_true',
+               help='put flights in celery queue'),
     )
 
-    def run(self, force, ids):
+    def run(self, force, async, **kwargs):
         q = db.session.query(Flight)
         q = q.order_by(Flight.id)
 
-        if ids:
-            self.apply_and_commit(self.do, q.filter(Flight.id.in_(ids)))
-        elif force:
-            self.incremental(self.do, q)
+        q = select(q, **kwargs)
 
-    def do(self, flight):
+        if not q:
+            quit()
+
+        if not force:
+            q = q.filter(Flight.needs_analysis == True)
+
+        if async:
+            current_app.add_celery()
+
+        self.incremental(lambda f: self.do(f, async=async), q)
+
+    def do(self, flight, async):
         print flight.id
-        tasks.find_meetings(flight.id)
+
+        if async:
+            tasks.find_meetings.delay(flight.id)
+        else:
+            tasks.find_meetings(flight.id)
+
         return True
 
     def apply_and_commit(self, func, q):
