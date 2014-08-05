@@ -22,6 +22,7 @@ TYPE_USER_NAME_REQUEST = 6
 TYPE_USER_NAME_RESPONSE = 7
 
 FLAG_ACK_BAD_KEY = 0x1
+FLAG_ACK_FIX_ACK = 0x2
 
 FLAG_LOCATION = 0x1
 FLAG_TRACK = 0x2
@@ -54,16 +55,48 @@ class TrackingServer(DatagramProtocol):
         data = set_crc(data)
         self.transport.write(data, (host, port))
 
-    def fixReceived(self, host, key, payload):
-        if len(payload) != 32: return
+    def fixReceived(self, host, port, key, payload):
+        if len(payload) < 32: return
 
         pilot = User.by_tracking_key(key)
         if not pilot:
             log.err("No such pilot: %x" % key)
             return
 
-        data = struct.unpack('!IIiiIHHHhhH', payload)
+        # get number of delta fixes in packet
+        number_of_delta_fixes = struct.unpack('!B', payload[16:17])[0]
+        # unpack first fix in packet
+        data = struct.unpack('!IIiixxxxHHHhhH', payload[:32])
+        self.storeFix(pilot, host, data)
 
+        delta_time = data[1]
+        delta_latitude = data[2]
+        delta_longitude = data[3]
+
+        ack_data = struct.pack('!IHHQII', MAGIC, 0, TYPE_ACK, 0,
+                               delta_time, FLAG_ACK_FIX_ACK)
+        ack_data = set_crc(ack_data)
+        self.transport.write(ack_data, (host, port))
+
+        # unpack delta fixes
+        fix_id = 0
+        while fix_id < number_of_delta_fixes and len(payload) >= 32 + (fix_id + 1) * 24:
+            data = list(struct.unpack('!IHhhxxHHHhhH',
+                                      payload[32 + fix_id * 24:32 + (fix_id + 1) * 24]))
+
+            data[1] = delta_time - data[1]
+            data[2] = delta_latitude - data[2]
+            data[3] = delta_longitude - data[3]
+
+            self.storeFix(pilot, host, data)
+
+            delta_time = data[1]
+            delta_latitude = data[2]
+            delta_longitude = data[3]
+
+            fix_id += 1
+
+    def storeFix(self, pilot, host, data):
         fix = TrackingFix()
         fix.ip = host
         fix.pilot = pilot
@@ -87,6 +120,15 @@ class TrackingServer(DatagramProtocol):
         else:
             log.msg("ignoring time stamp from FIX packet: " + str(time_of_day))
 
+        # check if this fix was already be sent some time before...
+        q = db.session.query(TrackingFix) \
+            .filter(and_(TrackingFix.time == fix.time,
+                         TrackingFix.pilot == pilot)) \
+            .first()
+
+        if q:
+            return
+
         flags = data[0]
         if flags & FLAG_LOCATION:
             latitude = data[2] / 1000000.
@@ -96,22 +138,22 @@ class TrackingServer(DatagramProtocol):
             fix.elevation = Elevation.get(fix.location_wkt)
 
         if flags & FLAG_TRACK:
-            fix.track = data[5]
+            fix.track = data[4]
 
         if flags & FLAG_GROUND_SPEED:
-            fix.ground_speed = data[6] / 16.
+            fix.ground_speed = data[5] / 16.
 
         if flags & FLAG_AIRSPEED:
-            fix.airspeed = data[7] / 16.
+            fix.airspeed = data[6] / 16.
 
         if flags & FLAG_ALTITUDE:
-            fix.altitude = data[8]
+            fix.altitude = data[7]
 
         if flags & FLAG_VARIO:
-            fix.vario = data[9] / 256.
+            fix.vario = data[8] / 256.
 
         if flags & FLAG_ENL:
-            fix.engine_noise_level = data[10]
+            fix.engine_noise_level = data[9]
 
         log.msg("{} {} {} {}".format(
             fix.time and fix.time.time(), host,
@@ -224,7 +266,7 @@ class TrackingServer(DatagramProtocol):
         if not check_crc(data): return
 
         if header[2] == TYPE_FIX:
-            self.fixReceived(host, header[3], data[16:])
+            self.fixReceived(host, port, header[3], data[16:])
         elif header[2] == TYPE_PING:
             self.pingReceived(host, port, header[3], data[16:])
         elif header[2] == TYPE_TRAFFIC_REQUEST:
