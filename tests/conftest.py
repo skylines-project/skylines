@@ -17,6 +17,11 @@ def app():
     yield app
 
 
+@pytest.fixture(scope="class")
+def app_class(request, app):
+    request.cls.app = app
+
+
 @pytest.yield_fixture(scope="session")
 def db_schema(app):
     """Creates clean database schema and drops it on teardown

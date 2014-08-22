@@ -35,7 +35,6 @@ setup(
         'pytz',
         'webassets==0.8',
         'cssmin==0.1.4',
-        'Twisted==13.2.0',
         'closure==20140110',
         'WebHelpers==1.3',
         'celery[redis]>=3.1,<3.2',
@@ -44,6 +43,7 @@ setup(
         'aerofiles==0.1.1',
         'enum34==1.0',
         'pyproj==1.9.3',
+        'gevent==1.0.1',
     ],
     include_package_data=True,
     package_data={

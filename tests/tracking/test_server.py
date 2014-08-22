@@ -11,6 +11,7 @@ from datetime import datetime
 from sqlalchemy.exc import SQLAlchemyError
 
 
+@pytest.mark.usefixtures("app_class")
 @pytest.mark.usefixtures("bootstraped_db")
 class TrackingServerTest(TestCase):
     HOST_PORT = ('127.0.0.1', 5597)
@@ -18,6 +19,7 @@ class TrackingServerTest(TestCase):
     def setUp(self):
         server.TrackingServer.__init__ = Mock(return_value=None)
         self.server = server.TrackingServer()
+        self.server.app = self.app
 
     def tearDown(self):
         # Clear the database
@@ -51,14 +53,14 @@ class TrackingServerTest(TestCase):
             assert flags & server.FLAG_ACK_BAD_KEY
 
         # Connect mockup function to tracking server
-        self.server.transport = Mock()
-        self.server.transport.write = Mock(side_effect=check_pong)
+        self.server.socket = Mock()
+        self.server.socket.sendto = Mock(side_effect=check_pong)
 
         # Send fake ping message
-        self.server.datagramReceived(message, self.HOST_PORT)
+        self.server.handle(message, self.HOST_PORT)
 
         # Check that mockup function was called
-        assert self.server.transport.write.called
+        assert self.server.socket.sendto.called
 
     def test_ping_with_key(self):
         """ Tracking server can query by tracking key """
@@ -88,14 +90,14 @@ class TrackingServerTest(TestCase):
             assert not (flags & server.FLAG_ACK_BAD_KEY)
 
         # Connect mockup function to tracking server
-        self.server.transport = Mock()
-        self.server.transport.write = Mock(side_effect=check_pong)
+        self.server.socket = Mock()
+        self.server.socket.sendto = Mock(side_effect=check_pong)
 
         # Send fake ping message
-        self.server.datagramReceived(message, self.HOST_PORT)
+        self.server.handle(message, self.HOST_PORT)
 
         # Check that mockup function was called
-        assert self.server.transport.write.called
+        assert self.server.socket.sendto.called
 
     def create_fix_message(
             self, tracking_key, time, latitude=None, longitude=None,
@@ -160,7 +162,7 @@ class TrackingServerTest(TestCase):
         message = self.create_fix_message(0, 0)
 
         # Send fake ping message
-        self.server.datagramReceived(message, self.HOST_PORT)
+        self.server.handle(message, self.HOST_PORT)
 
         # Check if the message was properly received
         assert TrackingFix.query().count() == 0
@@ -180,7 +182,7 @@ class TrackingServerTest(TestCase):
             datetime_mock.utcnow.return_value = utcnow_return_value
 
             # Send fake ping message
-            self.server.datagramReceived(message, self.HOST_PORT)
+            self.server.handle(message, self.HOST_PORT)
 
         # Check if the message was properly received and written to the database
         fixes = TrackingFix.query().all()
@@ -221,7 +223,7 @@ class TrackingServerTest(TestCase):
             datetime_mock.utcnow.return_value = utcnow_return_value
 
             # Send fake ping message
-            self.server.datagramReceived(message, self.HOST_PORT)
+            self.server.handle(message, self.HOST_PORT)
 
         # Check if the message was properly received and written to the database
         fixes = TrackingFix.query().all()
@@ -250,7 +252,7 @@ class TrackingServerTest(TestCase):
             message = self.create_fix_message(123456, 0)
 
             # Send fake ping message
-            self.server.datagramReceived(message, self.HOST_PORT)
+            self.server.handle(message, self.HOST_PORT)
 
         # Check if the message was properly received
         assert TrackingFix.query().count() == 0
