@@ -38,21 +38,18 @@ def restart():
         manage('migrate upgrade')
 
         # restart services
-        restart_service('skylines-fastcgi', user='root')
-        restart_service('mapserver-fastcgi', user='root')
-        restart_service('skylines-daemon', user='root')
-        restart_service('celery-daemon', user='root')
-        restart_service('mapproxy-uwsgi', user='root')
+        restart_service('skylines')
+        restart_service('mapserver')
+        restart_service('tracking')
+        restart_service('celery')
+        restart_service('mapproxy')
 
 
 @task
-def restart_service(service, user=None):
-    if user:
-        # Using the sudo() command somehow always provokes a password prompt,
-        # even if NOPASSWD is specified in the sudoers file...
-        run('sudo -u %s sv restart %s' % (user, service))
-    else:
-        run('sv restart ' + service)
+def restart_service(service):
+    # Using the sudo() command somehow always provokes a password prompt,
+    # even if NOPASSWD is specified in the sudoers file...
+    run('sudo supervisorctl restart %s' % service)
 
 
 @task
