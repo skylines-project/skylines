@@ -1,6 +1,0 @@
-#!/bin/sh
-set -e
-
-LOG=/var/log/skylines/mapproxy
-test -d "$LOG" || mkdir -p -m2750 "$LOG" && chown skylog:adm "$LOG"
-exec chpst -uskylog svlogd -tt "$LOG"
