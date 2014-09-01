@@ -131,7 +131,7 @@ def index():
                 infringements = get_airspace_infringements(fp, qnh=flight.qnh)
             else:
                 trace = None
-                airspace = None
+                infringements = {}
 
             cache_key = None
 
