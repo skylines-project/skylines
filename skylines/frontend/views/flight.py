@@ -1,7 +1,7 @@
 import math
 from datetime import datetime
 
-from flask import Blueprint, request, render_template, redirect, url_for, abort, current_app, jsonify, g, flash
+from flask import Blueprint, request, render_template, redirect, url_for, abort, current_app, jsonify, g, flash, make_response
 from flask.ext.babel import lazy_gettext as l_, _
 
 from sqlalchemy.orm import undefer_group, contains_eager
@@ -248,11 +248,24 @@ def map_():
 
 @flight_blueprint.route('/json')
 def json():
+    # Return HTTP Status code 304 if an upstream or browser cache already
+    # contains the response and if the igc file did not change to reduce
+    # latency and server load
+    # This implementation is very basic. Sadly Flask (0.10.1) does not have
+    # this feature
+    last_modified = g.flight.time_modified \
+        .strftime('%a, %d %b %Y %H:%M:%S GMT')
+    modified_since = request.headers.get('If-Modified-Since')
+    etag = request.headers.get('If-None-Match')
+    if (modified_since and modified_since == last_modified) or \
+       (etag and etag == g.flight.igc_file.md5):
+        return ('', 304)
+
     trace = _get_flight_path(g.flight, threshold=0.0001, max_points=10000)
     if not trace:
         abort(404)
 
-    return jsonify(
+    resp = make_response(jsonify(
         encoded=trace['encoded'],
         num_levels=trace['num_levels'],
         zoom_levels=trace['zoom_levels'],
@@ -265,7 +278,11 @@ def json():
         sfid=g.flight.id,
         additional=dict(
             registration=g.flight.registration,
-            competition_id=g.flight.competition_id))
+            competition_id=g.flight.competition_id)))
+
+    resp.headers['Last-Modified'] = last_modified
+    resp.headers['Etag'] = g.flight.igc_file.md5
+    return resp
 
 
 def _get_near_flights(flight, location, time, max_distance=1000):
