@@ -5,7 +5,8 @@ from tempfile import NamedTemporaryFile
 env.use_ssh_config = True
 env.hosts = ['skylines@skylines']
 
-WORKING_DIR = '/home/skylines/src/'
+APP_DIR = '/home/skylines'
+SRC_DIR = '%s/src' % APP_DIR
 
 
 @task
@@ -16,7 +17,7 @@ def deploy(branch='master', force=False):
 
 @task
 def push(branch='master', force=False):
-    cmd = 'git push %s:%s %s:master' % (env.host_string, WORKING_DIR, branch)
+    cmd = 'git push %s:%s %s:master' % (env.host_string, SRC_DIR, branch)
     if force:
         cmd += ' --force'
 
@@ -25,7 +26,7 @@ def push(branch='master', force=False):
 
 @task
 def restart():
-    with cd(WORKING_DIR):
+    with cd(SRC_DIR):
         run('git reset --hard')
 
         # compile i18n .mo files
@@ -54,7 +55,7 @@ def restart_service(service):
 
 @task
 def manage(cmd, user=None):
-    with cd(WORKING_DIR):
+    with cd(SRC_DIR):
         if user:
             sudo('./manage.py %s' % cmd, user=user)
         else:
@@ -68,18 +69,18 @@ def update_mapproxy():
 
         content = content.replace(
             'base_dir: \'/tmp/cache_data\'',
-            'base_dir: \'/home/skylines/cache/mapproxy\'',
+            'base_dir: \'%s/cache/mapproxy\'' % APP_DIR,
         )
 
         content = content.replace(
             'lock_dir: \'/tmp/cache_data/tile_locks\'',
-            'lock_dir: \'/home/skylines/cache/mapproxy/tile_locks\'',
+            'lock_dir: \'%s/cache/mapproxy/tile_locks\'' % APP_DIR,
         )
 
         f.write(content)
         f.flush()
 
-        put(f.name, '/home/skylines/config/mapproxy.yaml')
+        put(f.name, '%s/config/mapproxy.yaml' % APP_DIR)
 
 
 @task
