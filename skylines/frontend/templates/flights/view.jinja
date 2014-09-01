@@ -64,37 +64,11 @@
     initFlightLayer();
     initBaro($("#barogram"));
 
-    addFlight({{ flight.id }},
-      {{ h.json.dumps(trace.encoded.points) }},
-      {{ h.json.dumps(trace.encoded.levels) }},
-      {{ trace.num_levels }},
-      {{ h.json.dumps(trace.barogram_t) }},
-      {{ h.json.dumps(trace.barogram_h) }},
-      {{ h.json.dumps(trace.enl) }},
-      {{ h.json.dumps(trace.zoom_levels) }},
-      {{ h.json.dumps(trace.contests) }},
-      {{ h.json.dumps(trace.elevations_t) }},
-      {{ h.json.dumps(trace.elevations_h) }},
-      { registration: {{ '"' ~ flight.registration|e ~ '"' if flight.registration else 'null' }},
-        competition_id: {{ '"' ~ flight.competition_id|e ~ '"' if flight.competition_id else 'null' }} }
-    );
+    addFlightFromJSON("/flights/{{ flight.id }}/json?{{ config.get('SKYLINES_CACHE_BUSTER', '') }}",false);
 
     {% if other_flights -%}
     {% for flight, trace in other_flights if trace -%}
-    addFlight({{ flight.id }},
-      {{ h.json.dumps(trace.encoded.points) }},
-      {{ h.json.dumps(trace.encoded.levels) }},
-      {{ trace.num_levels }},
-      {{ h.json.dumps(trace.barogram_t) }},
-      {{ h.json.dumps(trace.barogram_h) }},
-      {{ h.json.dumps(trace.enl) }},
-      {{ h.json.dumps(trace.zoom_levels) }},
-      {{ h.json.dumps(trace.contests) }},
-      {{ h.json.dumps(trace.elevations_t) }},
-      {{ h.json.dumps(trace.elevations_h) }},
-      { registration: {{ '"' ~ flight.registration|e ~ '"' if flight.registration else 'null' }},
-        competition_id: {{ '"' ~ flight.competition_id|e ~ '"' if flight.competition_id else 'null' }} }
-    );
+    addFlightFromJSON("/flights/{{ flight.id }}/json?{{ config.get('SKYLINES_CACHE_BUSTER', '') }}");
     {%- endfor %}
     {%- endif %}
 
@@ -105,7 +79,7 @@
     var pinnedFlights = getPinnedFlights();
     for (i in pinnedFlights)
       if (pinnedFlights[i] != {{ flight.id }})
-        addFlightFromJSON("/flights/" + pinnedFlights[i] + "/json");
+        addFlightFromJSON("/flights/" + pinnedFlights[i] + "/json?{{ config.get('SKYLINES_CACHE_BUSTER', '') }}");
 
     pinButton($("#pinned"), {{ flight.id }});
 
@@ -122,7 +96,7 @@
           removeFlight(sfid);
           unpinFlight(sfid);
         } else {
-          addFlightFromJSON("/flights/" + sfid + "/json");
+          addFlightFromJSON("/flights/" + sfid + "/json?{{ config.get('SKYLINES_CACHE_BUSTER', '') }}");
           pinFlight(sfid);
         }
       });

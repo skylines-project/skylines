@@ -348,9 +348,11 @@ function addFlight(sfid, _lonlat, _levels, _num_levels, _time, _height, _enl,
 
 /**
  * @param {string} url URL to fetch.
+ * @param {boolean} async do asynchronous request (defaults true)
  */
-function addFlightFromJSON(url) {
+function addFlightFromJSON(url, async) {
   $.ajax(url, {
+    async: (typeof async === undefined) || async === true,
     success: function(data) {
       if (flights.has(data.sfid))
         return;
