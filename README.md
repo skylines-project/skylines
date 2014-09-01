@@ -13,7 +13,7 @@ base for XCSoar's live tracking functionalities.
 
 *SkyLines* is far from finished yet, but it has been running in production for
 quite some time now. You can reach the official server at
-<http://www.skylines-project.org> or <http://www.skylines.aero>.
+<http://www.skylines.aero>.
 
 Build Status: [![Build Status](https://travis-ci.org/skylines-project/skylines.png?branch=master)](https://travis-ci.org/skylines-project/skylines)
 
