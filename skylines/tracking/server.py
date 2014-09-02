@@ -5,7 +5,7 @@ from datetime import datetime, time, timedelta
 from gevent.server import DatagramServer
 
 from sqlalchemy.exc import SQLAlchemyError
-from sqlalchemy.sql.expression import and_, or_
+from sqlalchemy.sql.expression import or_
 
 from skylines.model import db, User, TrackingFix, Follower, Elevation
 from skylines.tracking.crc import check_crc, set_crc
