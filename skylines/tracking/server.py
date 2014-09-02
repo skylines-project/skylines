@@ -169,7 +169,7 @@ class TrackingServer(DatagramServer):
 
         query = TrackingFix.query() \
             .distinct(TrackingFix.pilot_id) \
-            .filter(and_(TrackingFix.time >= datetime.utcnow() - timedelta(hours=2),
+            .filter(and_(TrackingFix.max_age_filter(2),
                          TrackingFix.pilot_id != pilot.id,
                          TrackingFix.location_wkt != None,
                          TrackingFix.altitude != None,
