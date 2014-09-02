@@ -167,15 +167,29 @@ class TrackingServer(DatagramServer):
         if len(or_filters) == 0:
             return
 
+        # Add a db.Column to the inner query with
+        # numbers ordered by time for each pilot
+        row_number = db.over(db.func.row_number(),
+                             partition_by=TrackingFix.pilot_id,
+                             order_by=TrackingFix.time.desc())
+
+        # Create inner query
+        subq = db.session \
+            .query(TrackingFix.id, row_number.label('row_number')) \
+            .join(TrackingFix.pilot) \
+            .filter(TrackingFix.pilot_id != pilot.id) \
+            .filter(TrackingFix.max_age_filter(2)) \
+            .filter(TrackingFix.delay_filter(User.tracking_delay_interval())) \
+            .filter(TrackingFix.location_wkt != None) \
+            .filter(or_(*or_filters)) \
+            .subquery()
+
+        # Create outer query that orders by time and
+        # only selects the latest fix
         query = TrackingFix.query() \
-            .distinct(TrackingFix.pilot_id) \
-            .filter(and_(TrackingFix.max_age_filter(2),
-                         TrackingFix.pilot_id != pilot.id,
-                         TrackingFix.location_wkt != None,
-                         TrackingFix.altitude != None,
-                         or_(*or_filters))) \
-            .order_by(TrackingFix.pilot_id, TrackingFix.time.desc()) \
-            .limit(32)
+            .filter(TrackingFix.id == subq.c.id) \
+            .filter(subq.c.row_number == 1) \
+            .order_by(TrackingFix.time.desc())
 
         response = ''
         count = 0
