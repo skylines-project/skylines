@@ -181,6 +181,7 @@ class TrackingServer(DatagramServer):
             .filter(TrackingFix.max_age_filter(2)) \
             .filter(TrackingFix.delay_filter(User.tracking_delay_interval())) \
             .filter(TrackingFix.location_wkt != None) \
+            .filter(TrackingFix.altitude != None) \
             .filter(or_(*or_filters)) \
             .subquery()
 
@@ -189,7 +190,8 @@ class TrackingServer(DatagramServer):
         query = TrackingFix.query() \
             .filter(TrackingFix.id == subq.c.id) \
             .filter(subq.c.row_number == 1) \
-            .order_by(TrackingFix.time.desc())
+            .order_by(TrackingFix.time.desc()) \
+            .limit(32)
 
         response = ''
         count = 0
