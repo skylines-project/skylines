@@ -34,7 +34,7 @@ script:
   - ./manage.py assets build
 
   # Run the test suite
-  - py.test
+  - py.test --ignore bower_components
 
 notifications:
   email:
