@@ -8,6 +8,11 @@ services:
   - redis
 
 install:
+  # Install bower components
+  - sudo apt-get install npm
+  - npm install -g bower
+  - bower install --config.interactive=false
+
   # Install SkyLines Python dependencies
   - pip install -e .
 
