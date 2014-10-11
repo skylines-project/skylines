@@ -36,7 +36,7 @@ def select(q, **kwargs):
     if kwargs.get('date_to'):
         try:
             date_to = datetime.strptime(kwargs.get('date_to'), "%Y-%m-%d")
-            q = q.filter(Flight.takeoff_time >= date_to)
+            q = q.filter(Flight.takeoff_time < date_to)
             print "takeoff_time < " + str(date_to)
         except:
             print "Cannot parse date-to"
