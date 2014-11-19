@@ -3,7 +3,7 @@
 {% from "macros/links.jinja" import user_link, club_link, airport_link %}
 
 {%- macro render_details_table(flight) %}
-<table class="table table-flight-details" itemscope="" itemtype="http://schema.org/SportsEvent">
+<table class="table table-flight-details" itemscope="" itemtype="https://schema.org/SportsEvent">
   <meta itemprop="url" content="/flights/{{ flight.id }}" />
   <tbody>
     {%- if flight.date_local %}
@@ -125,7 +125,7 @@
         {%- endif %}
 
         {%- if flight.pilot %}
-        <span itemprop="performer" itemscope="" itemtype="http://schema.org/Person">
+        <span itemprop="performer" itemscope="" itemtype="https://schema.org/Person">
           <meta itemprop="url" content="/users/{{ flight.pilot_id }}" />
           {{ user_link(flight.pilot, ' itemprop="name"') }}
         </span>
@@ -134,7 +134,7 @@
         {%- if flight.pilot and flight.co_pilot %}<br/>{% endif -%}
 
         {%- if flight.co_pilot %}
-        <span itemprop="performer" itemscope="" itemtype="http://schema.org/Person">
+        <span itemprop="performer" itemscope="" itemtype="https://schema.org/Person">
           <meta itemprop="url" content="/users/{{ flight.co_pilot_id }}" />
           {{ user_link(flight.co_pilot, ' itemprop="name"') }}
         </span>
@@ -149,7 +149,7 @@
     {%- if flight.club %}
     <tr>
       <th>{% trans %}Club{% endtrans %}</th>
-      <td itemprop="performer" itemscope="" itemtype="http://schema.org/SportsTeam">
+      <td itemprop="performer" itemscope="" itemtype="https://schema.org/SportsTeam">
         <meta itemprop="url" content="/clubs/{{ flight.club_id }}" />
         {{ club_link(flight.club, ' itemprop="name"') }}
       </td>
