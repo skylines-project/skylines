@@ -3,7 +3,8 @@ from flask_wtf import Form
 from flask_wtf.file import FileRequired
 
 from wtforms import TextField
-from wtforms.fields import DateTimeField, BooleanField
+from wtforms.fields import DateTimeField, BooleanField, IntegerField
+from wtforms.widgets import HiddenInput
 from wtforms.validators import Required
 
 from .file import MultiFileField
@@ -21,6 +22,8 @@ class UploadForm(Form):
 
 
 class UploadUpdateForm(ChangeAircraftForm, ChangePilotsForm):
+    id = IntegerField(widget=HiddenInput())
+
     takeoff_time = DateTimeField(l_('Takeoff'), format='%Y-%m-%d %H:%M:%S')
 
     scoring_start_time = DateTimeField(l_('Scoring Start Time'), validators=[

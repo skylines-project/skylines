@@ -41,9 +41,6 @@
 {% macro render_flight_details(name, flight, status, prefix, trace, airspaces, cache_key, form) -%}
 <input type="hidden" name="{{ prefix }}-status" value="{{ status.value }}" />
 <input type="hidden" name="{{ prefix }}-name" value="{{ name }}" />
-{% if flight %}
-<input type="hidden" id="{{ prefix }}-sfid" name="{{ prefix }}-sfid" value="{{ flight.id }}" />
-{% endif %}
 
 {% if status == h.UploadStatus.SUCCESS -%}
 {{ form.hidden_tag() }}
