@@ -290,6 +290,8 @@ def index_post(form):
         if not form.pilot_id.data: form.pilot_id.data = 0
         if not form.co_pilot_id.data: form.co_pilot_id.data = 0
 
+        form.pilot_id.validate(form)
+
         flights.append((name, flight, UploadStatus.SUCCESS, str(prefix), trace,
                         airspace, cache_key, form))
 
