@@ -3,13 +3,19 @@ from flask_wtf import Form
 
 from wtforms import TextField
 from wtforms.validators import Length
+from wtforms.fields import IntegerField
+from wtforms.widgets import HiddenInput
 
 from .pilot import ClubPilotsSelectField
 from .aircraft_model import AircraftModelSelectField
 from .validators import CompareTo
 
 
-class ChangePilotsForm(Form):
+class FlightForm(Form):
+    id = IntegerField(widget=HiddenInput())
+
+
+class ChangePilotsForm(FlightForm):
     pilot_id = ClubPilotsSelectField(l_('Pilot'))
     pilot_name = TextField(l_(u'Pilot name'))
     co_pilot_id = ClubPilotsSelectField(l_('Co-Pilot'), validators=[
@@ -22,7 +28,7 @@ class ChangePilotsForm(Form):
     co_pilot_name = TextField(l_(u'Co-Pilot name'))
 
 
-class ChangeAircraftForm(Form):
+class ChangeAircraftForm(FlightForm):
     model_id = AircraftModelSelectField(l_('Aircraft Model'))
     registration = TextField(l_('Aircraft Registration'), validators=[
         Length(max=32),

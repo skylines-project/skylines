@@ -428,6 +428,7 @@ def change_aircraft():
         competition_id = None
 
     form = ChangeAircraftForm(
+        id=g.flight.id,
         model_id=model_id,
         registration=registration,
         competition_id=competition_id
