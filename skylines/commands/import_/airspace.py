@@ -55,6 +55,7 @@ airspace_tnp_types = [
     ("CYD", "DANGER"),
     ("CYA", "CLASSF"),
     ("MATZ", "MATZ"),
+    ("RMZ", "RMZ"),
 ]
 
 airspace_openair_class = [
@@ -72,6 +73,7 @@ airspace_openair_class = [
     ("F", "CLASSF"),
     ("TMZ", "TMZ"),
     ("G", "CLASSG"),
+    ("RMZ", "RMZ"),
 ]
 
 
