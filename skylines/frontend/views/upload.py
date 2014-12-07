@@ -286,6 +286,10 @@ def index_post(form):
         if not infringements:
             del form.airspace_usage
 
+        # replace None in form.pilot_id and form.co_pilot_id with 0
+        if not form.pilot_id.data: form.pilot_id.data = 0
+        if not form.co_pilot_id.data: form.co_pilot_id.data = 0
+
         flights.append((name, flight, UploadStatus.SUCCESS, str(prefix), trace,
                         airspace, cache_key, form))
 
@@ -326,6 +330,10 @@ def check_update_form(prefix, status):
         fp = flight_path(flight.igc_file, add_elevation=True, max_points=None)
 
         form.populate_obj(flight)
+
+        # replace None in form.pilot_id and form.co_pilot_id with 0
+        if not form.pilot_id.data: form.pilot_id.data = 0
+        if not form.co_pilot_id.data: form.co_pilot_id.data = 0
 
         # Force takeoff_time and landing_time to be within the igc file limits
         if form.takeoff_time.data < fp[0].datetime:
