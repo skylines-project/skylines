@@ -124,6 +124,8 @@
       {% set status_text = _('Failed to parse file') %}
     {% elif status == h.UploadStatus.NO_FLIGHT %}
       {% set status_text = _('No flight found in file') %}
+    {% elif status == h.UploadStatus.FLIGHT_IN_FUTURE %}
+      {% set status_text = _('Date of flight in future') %}
     {% elif status == h.UploadStatus.SUCCESS and form.errors %}
       {% set status_text = _('Error found in upload form') %}
     {% else %}

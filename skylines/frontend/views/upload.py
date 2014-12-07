@@ -44,6 +44,7 @@ class UploadStatus(Enum):
     MISSING_DATE = 2  # _('Date missing in IGC file')
     PARSER_ERROR = 3  # _('Failed to parse file')
     NO_FLIGHT = 4  # _('No flight found in file')
+    FLIGHT_IN_FUTURE = 5  # _('Date of flight in future')
 
 
 def IterateFiles(name, f):
@@ -247,6 +248,11 @@ def index_post(form):
         if not flight.takeoff_time or not flight.landing_time:
             files.delete_file(filename)
             flights.append((name, None, UploadStatus.NO_FLIGHT, str(prefix), None, None, None, None))
+            continue
+
+        if flight.landing_time > datetime.now():
+            files.delete_file(filename)
+            flights.append((name, None, UploadStatus.FLIGHT_IN_FUTURE, str(prefix), None, None, None, None))
             continue
 
         if not flight.update_flight_path():
