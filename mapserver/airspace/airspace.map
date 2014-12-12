@@ -250,10 +250,10 @@ LAYER
 END
 
 ##
-## AIRSPACE CLASS E, F and TMZ
+## AIRSPACE CLASS E, F, TMZ and RMZ
 ##
 LAYER
-  NAME 'Airspace_E_F_TMZ'
+  NAME 'Airspace_E_F_TMZ_RMZ'
   GROUP 'Airspace'
   TYPE POLYGON
   CONNECTIONTYPE POSTGIS
@@ -266,7 +266,7 @@ LAYER
   END
 
   METADATA
-    WMS_NAME 'Airspace_E_F_TMZ'
+    WMS_NAME 'Airspace_E_F_TMZ_RMZ'
     WMS_GROUP 'Airspace'
   END
 
@@ -307,6 +307,20 @@ LAYER
       WIDTH 2
       LINECAP butt
       PATTERN 8 4 2 4 END
+    END
+  END
+
+##
+## AIRSPACE RMZ
+##
+  CLASS
+    EXPRESSION ('[airspace_class]' eq 'RMZ')
+    NAME 'TMZ'
+    STYLE
+      OUTLINECOLOR 0 12 211
+      WIDTH 2
+      LINECAP butt
+      PATTERN 4 4 END
     END
   END
 END
