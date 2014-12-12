@@ -44,6 +44,7 @@ class UploadStatus(Enum):
     MISSING_DATE = 2  # _('Date missing in IGC file')
     PARSER_ERROR = 3  # _('Failed to parse file')
     NO_FLIGHT = 4  # _('No flight found in file')
+    FLIGHT_IN_FUTURE = 5  # _('Date of flight in future')
 
 
 def IterateFiles(name, f):
@@ -116,7 +117,6 @@ def index():
         form_error = False
 
         for prefix in range(1, num_flights + 1):
-            flight_id = request.values.get('{}-sfid'.format(prefix), None, type=int)
             name = request.values.get('{}-name'.format(prefix))
 
             try:
@@ -124,7 +124,7 @@ def index():
             except ValueError:
                 raise BadRequest('Status unknown')
 
-            flight, fp, form = check_update_form(prefix, flight_id, name, status)
+            flight, fp, form = check_update_form(prefix, status)
 
             if fp:
                 trace = _encode_flight_path(fp, flight.qnh)
@@ -150,7 +150,7 @@ def index():
             flights.append((name, flight, status, str(prefix), trace, airspace, cache_key, form))
 
             if form and form.validate_on_submit():
-                _update_flight(flight_id,
+                _update_flight(flight.id,
                                fp,
                                form.model_id.data,
                                form.registration.data,
@@ -161,7 +161,7 @@ def index():
                                form.landing_time.data,
                                form.pilot_id.data, form.pilot_name.data,
                                form.co_pilot_id.data, form.co_pilot_name.data)
-                flight_id_list.append(flight_id)
+                flight_id_list.append(flight.id)
             elif form:
                 form_error = True
 
@@ -249,6 +249,11 @@ def index_post(form):
             flights.append((name, None, UploadStatus.NO_FLIGHT, str(prefix), None, None, None, None))
             continue
 
+        if flight.landing_time > datetime.now():
+            files.delete_file(filename)
+            flights.append((name, None, UploadStatus.FLIGHT_IN_FUTURE, str(prefix), None, None, None, None))
+            continue
+
         if not flight.update_flight_path():
             files.delete_file(filename)
             flights.append((name, None, UploadStatus.NO_FLIGHT, str(prefix), None, None, None, None))
@@ -258,11 +263,6 @@ def index_post(form):
 
         trace = _encode_flight_path(fp, qnh=flight.qnh)
         infringements = get_airspace_infringements(fp, qnh=flight.qnh)
-        form = UploadUpdateForm(formdata=None, prefix=str(prefix), obj=flight)
-
-        # remove airspace field from form if no airspace infringements found
-        if not infringements:
-            del form.airspace_usage
 
         db.session.add(igc_file)
         db.session.add(flight)
@@ -280,6 +280,18 @@ def index_post(form):
                              .filter(Airspace.id.in_(infringements.keys())) \
                              .all()
 
+        # create form after flushing the session, otherwise we wouldn't have a flight.id
+        form = UploadUpdateForm(formdata=None, prefix=str(prefix), obj=flight)
+        # remove airspace field from form if no airspace infringements found
+        if not infringements:
+            del form.airspace_usage
+
+        # replace None in form.pilot_id and form.co_pilot_id with 0
+        if not form.pilot_id.data: form.pilot_id.data = 0
+        if not form.co_pilot_id.data: form.co_pilot_id.data = 0
+
+        form.pilot_id.validate(form)
+
         flights.append((name, flight, UploadStatus.SUCCESS, str(prefix), trace,
                         airspace, cache_key, form))
 
@@ -296,9 +308,13 @@ def index_post(form):
         'upload/result.jinja', num_flights=prefix, flights=flights, success=success)
 
 
-def check_update_form(prefix, flight_id, name, status):
-    if not flight_id:
+def check_update_form(prefix, status):
+    form = UploadUpdateForm(prefix=str(prefix))
+
+    if not form.id and not form.id.data:
         return None, None, None
+
+    flight_id = form.id.data
 
     # Get flight from database and check if it is writable
     flight = Flight.get(flight_id)
@@ -315,7 +331,11 @@ def check_update_form(prefix, flight_id, name, status):
 
         fp = flight_path(flight.igc_file, add_elevation=True, max_points=None)
 
-        form = UploadUpdateForm(prefix=str(prefix), obj=flight)
+        form.populate_obj(flight)
+
+        # replace None in form.pilot_id and form.co_pilot_id with 0
+        if not form.pilot_id.data: form.pilot_id.data = 0
+        if not form.co_pilot_id.data: form.co_pilot_id.data = 0
 
         # Force takeoff_time and landing_time to be within the igc file limits
         if form.takeoff_time.data < fp[0].datetime:

@@ -1,4 +1,7 @@
 from wtforms.validators import ValidationError
+from sqlalchemy.sql.expression import or_
+
+from skylines.model import db, Flight
 
 
 class CompareTo(object):
@@ -44,3 +47,38 @@ class NotEqualTo(CompareTo):
 
     def __init__(self, *args, **kw):
         super(NotEqualTo, self).__init__(*args, cmp=(lambda x, y: x != y), **kw)
+
+
+class CheckPilot(object):
+    """
+    Checks if the pilot/co-pilot is airborne already with another flight.
+
+    :param flight_id_field:
+        The flight id field inside the current form.
+    """
+
+    def __init__(self, flight_id_field, message=None):
+        self.flight_id_field = flight_id_field
+        self.message = message
+
+    def __call__(self, form, field):
+        try:
+            flight = form[self.flight_id_field]
+        except KeyError:
+            raise ValidationError(field.gettext("Invalid field name '%s'.") % self.fieldname)
+
+        cte = db.session.query(Flight).filter(Flight.id == flight.data).cte()
+
+        count = db.session.query(Flight) \
+                  .filter(Flight.id != flight.data) \
+                  .filter(Flight.landing_time >= cte.c.takeoff_time) \
+                  .filter(Flight.takeoff_time <= cte.c.landing_time) \
+                  .filter(or_(Flight.pilot_id == field.data, Flight.co_pilot_id == field.data)) \
+                  .count()
+
+        if count:
+            message = self.message
+            if message is None:
+                message = field.gettext(self.DEFAULT_ERROR_MSG)
+
+            raise ValidationError(message)

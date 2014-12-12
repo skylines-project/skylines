@@ -41,9 +41,6 @@
 {% macro render_flight_details(name, flight, status, prefix, trace, airspaces, cache_key, form) -%}
 <input type="hidden" name="{{ prefix }}-status" value="{{ status.value }}" />
 <input type="hidden" name="{{ prefix }}-name" value="{{ name }}" />
-{% if flight %}
-<input type="hidden" id="{{ prefix }}-sfid" name="{{ prefix }}-sfid" value="{{ flight.id }}" />
-{% endif %}
 
 {% if status == h.UploadStatus.SUCCESS -%}
 {{ form.hidden_tag() }}
@@ -124,6 +121,8 @@
       {% set status_text = _('Failed to parse file') %}
     {% elif status == h.UploadStatus.NO_FLIGHT %}
       {% set status_text = _('No flight found in file') %}
+    {% elif status == h.UploadStatus.FLIGHT_IN_FUTURE %}
+      {% set status_text = _('Date of flight in future') %}
     {% elif status == h.UploadStatus.SUCCESS and form.errors %}
       {% set status_text = _('Error found in upload form') %}
     {% else %}
