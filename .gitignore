@@ -23,6 +23,7 @@ dist
 htdocs
 
 webassets
+bower_components
 
 # Vagrant
 .vagrant

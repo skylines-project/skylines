@@ -2,51 +2,52 @@ from webassets import Bundle
 
 from .filters import SimpleClosureJS
 
+BOWER = '../../../bower_components/'
 
 # Font Awesome
 
 fontawesome_css = Bundle(
-    'https://rawgithub.com/FortAwesome/Font-Awesome/v3.2.1/css/font-awesome.css',
+    BOWER + 'font-awesome/css/font-awesome.css',
     output='css/fontawesome-%(version)s.css')
 
 fontawesome_webfont_eot = Bundle(
-    'https://github.com/FortAwesome/Font-Awesome/blob/v3.2.1/font/fontawesome-webfont.eot?raw=true',
+    BOWER + 'font-awesome/font/fontawesome-webfont.eot',
     output='font/fontawesome-webfont.eot')
 
 fontawesome_webfont_woff = Bundle(
-    'https://github.com/FortAwesome/Font-Awesome/blob/v3.2.1/font/fontawesome-webfont.woff?raw=true',
+    BOWER + 'font-awesome/font/fontawesome-webfont.woff',
     output='font/fontawesome-webfont.woff')
 
 fontawesome_webfont_ttf = Bundle(
-    'https://github.com/FortAwesome/Font-Awesome/blob/v3.2.1/font/fontawesome-webfont.ttf?raw=true',
+    BOWER + 'font-awesome/font/fontawesome-webfont.ttf',
     output='font/fontawesome-webfont.ttf')
 
 fontawesome_webfont_svg = Bundle(
-    'https://rawgithub.com/FortAwesome/Font-Awesome/v3.2.1/font/fontawesome-webfont.svg',
+    BOWER + 'font-awesome/font/fontawesome-webfont.svg',
     output='font/fontawesome-webfont.svg')
 
 
 # Twitter Bootstrap
 
 bootstrap_js = Bundle(
-    'https://netdna.bootstrapcdn.com/bootstrap/3.0.2/js/bootstrap.min.js',
+    BOWER + 'bootstrap/dist/js/bootstrap.min.js',
     output='js/bootstrap-%(version)s.js')
 
 bootstrap_css = Bundle(
-    'https://netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css',
-    'https://netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap-theme.min.css',
+    BOWER + 'bootstrap/dist/css/bootstrap.min.css',
+    BOWER + 'bootstrap/dist/css/bootstrap-theme.min.css',
     output='css/bootstrap-%(version)s.js')
 
 
 # Flot
 
 flot_js = Bundle(
-    'https://rawgithub.com/flot/flot/0.8.2/jquery.flot.js',
-    'https://rawgithub.com/flot/flot/0.8.2/jquery.flot.time.js',
-    'https://rawgithub.com/flot/flot/0.8.2/jquery.flot.crosshair.js',
-    'https://rawgithub.com/flot/flot/0.8.2/jquery.flot.resize.js',
-    'http://flot-marks.googlecode.com/svn-history/r13/trunk/src/jquery.flot.marks.js',
-    'https://rawgithub.com/flot/flot/0.8.2/excanvas.min.js',
+    BOWER + 'flot/jquery.flot.js',
+    BOWER + 'flot/jquery.flot.time.js',
+    BOWER + 'flot/jquery.flot.crosshair.js',
+    BOWER + 'flot/jquery.flot.resize.js',
+    BOWER + 'flot.marks/index.js',
+    BOWER + 'flot/excanvas.min.js',
     filters=SimpleClosureJS(disable_ie_checks=True),
     output='js/flot-%(version)s.js')
 
@@ -54,7 +55,7 @@ flot_js = Bundle(
 # Respond.js
 
 respond_js = Bundle(
-    'https://cdnjs.cloudflare.com/ajax/libs/respond.js/1.3.0/respond.min.js',
+    BOWER + 'respond/respond.min.js',
     output='js/respond-%(version)s.js')
 
 
@@ -77,7 +78,6 @@ main_css = Bundle(
     'css/fix-table.css',
     'css/wingman.css',
     'vendor/flags/flags.css',
-    'vendor/bootstrap-datepicker/datepicker.css',
     'vendor/fonts/stylesheet.css',
     filters='cssrewrite',
     output='css/main-%(version)s.css')
@@ -86,6 +86,7 @@ all_css = Bundle(
     bootstrap_css,
     main_css,
     fontawesome_css,
+    BOWER + 'bootstrap-datepicker/css/datepicker.css',
     filters='cssmin',
     output='css/skylines-%(version)s.css')
 
@@ -100,11 +101,11 @@ openlayers_css = Bundle(
     output='css/ol-%(version)s.css')
 
 all_js = Bundle(
-    'http://code.jquery.com/jquery-1.10.2.min.js',
-    'vendor/jquery/jquery.browser.js',
-    'vendor/jquery/jquery.cookie.js',
-    'vendor/jquery/jquery.timeago.js',
-    'vendor/bootstrap-datepicker/datepicker.js',
+    BOWER + 'jquery/jquery.js',
+    BOWER + 'jquery.browser/dist/jquery.browser.js',
+    BOWER + 'jquery.cookie/jquery.cookie.js',
+    BOWER + 'jquery-timeago/jquery.timeago.js',
+    BOWER + 'bootstrap-datepicker/js/bootstrap-datepicker.js',
     'js/general.js',
     bootstrap_js,
     filters='rjsmin',
@@ -141,8 +142,8 @@ upload_js = Bundle(
     'js/units.js',
     'js/baro.js',
     'js/upload.js',
-    'http://momentjs.com/downloads/moment.min.js',
-    'https://rawgithub.com/TobiasLohner/bootstrap-datetimepicker/7cf8cb30ad2322417d78742346f080a4889d449e/src/js/bootstrap-datetimepicker.js',
+    BOWER + 'moment/moment.js',
+    BOWER + 'bootstrap-datetimepicker/index.js',
     'js/jquery.flot.flight-upload.js',
     filters=SimpleClosureJS,
     output='js/upload-%(version)s.js')
