@@ -91,9 +91,6 @@ def _encode_flight_path(fp, qnh):
     # Reduce to 1000 points maximum with equal spacing
     shortener = int(max(1, len(fp) / 1000))
 
-    if not qnh:
-        qnh = 1013.25
-
     barogram_h = xcsoar.encode([pressure_alt_to_qnh_alt(fix.pressure_altitude, qnh) for fix in fp[::shortener]],
                                method="signed")
     barogram_t = xcsoar.encode([fix.seconds_of_day for fix in fp[::shortener]], method="signed")
