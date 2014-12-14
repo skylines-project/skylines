@@ -37,6 +37,8 @@ caches:
     format: image/png
     request_format: image/png
     link_single_color_images: true
+    cache:
+      type: sqlite
 
   mwp_cache:
     grids: [GLOBAL_MERCATOR]
@@ -50,6 +52,8 @@ caches:
     format: image/png
     request_format: image/png
     link_single_color_images: true
+    cache:
+      type: sqlite
 
   airports_cache:
     grids: [GLOBAL_MERCATOR]
@@ -63,6 +67,8 @@ caches:
     format: image/png
     request_format: image/png
     link_single_color_images: true
+    cache:
+      type: sqlite
 
   airspace_cache:
     grids: [GLOBAL_MERCATOR]
@@ -76,10 +82,14 @@ caches:
     format: image/png
     request_format: image/png
     link_single_color_images: true
+    cache:
+      type: sqlite
 
   osm_cache:
     sources: [osm_tiles]
     format: image/png
+    cache:
+      type: sqlite
 
 sources:
   mwp_mapserver_bin:
