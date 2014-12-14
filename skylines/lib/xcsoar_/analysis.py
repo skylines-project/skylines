@@ -6,7 +6,7 @@ from skylines.lib import files
 from skylines.lib.datetime import from_seconds_of_day
 from skylines.lib.xcsoar_.flightpath import flight_path
 from skylines.model import (
-    Airport, Trace, FlightPhase, TimeZone, Location
+    Airport, Trace, ContestLeg, FlightPhase, TimeZone, Location
 )
 
 
@@ -83,6 +83,17 @@ def delete_trace(contest_name, trace_name, flight):
     q.delete()
 
 
+def delete_contest_legs(contest_name, trace_name, flight):
+    to_remove = []
+
+    for leg in flight._legs:
+        if leg.contest_type == contest_name and leg.trace_type == trace_name:
+            to_remove.append(leg)
+
+    for leg in to_remove:
+        flight._legs.remove(leg)
+
+
 def save_trace(contest_name, trace_name, node, flight):
     delete_trace(contest_name, trace_name, flight)
 
@@ -119,9 +130,45 @@ def save_trace(contest_name, trace_name, node, flight):
     flight.traces.append(trace)
 
 
+def save_contest_legs(contest_name, trace_name, node, flight):
+    delete_contest_legs(contest_name, trace_name, flight)
+
+    if 'turnpoints' not in node:
+        return
+
+    last_location = last_time = None
+
+    for turnpoint in node['turnpoints']:
+        location = read_location(turnpoint['location'])
+        time = read_time_of_day(turnpoint, flight)
+
+        if location is None or time is None:
+            return
+
+        if last_location is not None:
+            leg = ContestLeg()
+
+            leg.contest_type = contest_name
+            leg.trace_type = trace_name
+
+            leg.start_time = last_time
+            leg.end_time = time
+
+            leg.start_location = last_location
+            leg.end_location = location
+
+            leg.distance = location.geographic_distance(last_location)
+
+            flight._legs.append(leg)
+
+        last_location = location
+        last_time = time
+
+
 def save_contest(contest_name, traces, flight):
     for trace_name, trace in traces.iteritems():
         save_trace(contest_name, trace_name, trace, flight)
+        save_contest_legs(contest_name, trace_name, trace, flight)
 
 
 def save_contests(root, flight):
