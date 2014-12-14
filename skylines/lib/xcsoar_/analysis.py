@@ -376,17 +376,17 @@ def run_analyse_flight(flight,
                                          max_tree_size=limits['tree_size_limit'])
         analysis['events'] = analysis_times
 
-        return analysis
+        return analysis, fp
 
     else:
-        return None
+        return None, None
 
 
 def analyse_flight(flight, full=512, triangle=1024, sprint=64, fp=None):
     path = files.filename_to_path(flight.igc_file.filename)
     current_app.logger.info('Analyzing ' + path)
 
-    root = run_analyse_flight(
+    root, fp = run_analyse_flight(
         flight, full=full, triangle=triangle, sprint=sprint,
         fp=fp)
 
