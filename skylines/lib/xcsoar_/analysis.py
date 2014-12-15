@@ -1,10 +1,12 @@
 import datetime
+from bisect import bisect_left
 
 import xcsoar
 from flask import current_app
 from skylines.lib import files
+from skylines.lib.util import pressure_alt_to_qnh_alt
 from skylines.lib.datetime import from_seconds_of_day
-from skylines.lib.xcsoar_.flightpath import flight_path
+from skylines.lib.xcsoar_.flightpath import flight_path, cumulative_distance
 from skylines.model import (
     Airport, Trace, ContestLeg, FlightPhase, TimeZone, Location
 )
@@ -287,6 +289,74 @@ def save_phases(root, flight):
     flight._phases.append(ph)
 
 
+def calculate_leg_statistics(flight, fp):
+    for leg in flight._legs:
+        start_fix_id = bisect_left([fix.datetime for fix in fp], leg.start_time, hi=len(fp) - 1)
+        end_fix_id = bisect_left([fix.datetime for fix in fp], leg.end_time, hi=len(fp) - 1)
+
+        leg.start_height = int(pressure_alt_to_qnh_alt(fp[start_fix_id].pressure_altitude, flight.qnh))
+        leg.end_height = int(pressure_alt_to_qnh_alt(fp[end_fix_id].pressure_altitude, flight.qnh))
+
+        cruise_height = climb_height = 0
+        cruise_duration = climb_duration = datetime.timedelta()
+        cruise_distance = 0
+
+        for phase in flight._phases:
+            if phase.aggregate:
+                continue
+
+            duration = datetime.timedelta()
+            delta_height = distance = 0
+
+            # phase is completely within leg
+            if phase.start_time >= leg.start_time and phase.end_time <= leg.end_time:
+                duration = phase.duration
+                delta_height = phase.alt_diff
+                distance = phase.distance
+
+            # partial phase at begin of leg
+            elif phase.start_time < leg.start_time and leg.start_time < phase.end_time <= leg.end_time:
+                end_fix = bisect_left([fix.datetime for fix in fp], phase.end_time, hi=len(fp) - 1)
+
+                end_height = int(pressure_alt_to_qnh_alt(fp[end_fix].pressure_altitude, flight.qnh))
+
+                duration = fp[end_fix].datetime - leg.start_time
+                delta_height = end_height - leg.start_height
+                distance = cumulative_distance(fp, start_fix_id, end_fix)
+
+            # partial phase at end of leg
+            elif leg.start_time <= phase.start_time < leg.end_time and phase.end_time > leg.end_time:
+                start_fix = bisect_left([fix.datetime for fix in fp], phase.start_time, hi=len(fp) - 1)
+
+                start_height = int(pressure_alt_to_qnh_alt(fp[start_fix].pressure_altitude, flight.qnh))
+
+                duration = leg.end_time - fp[start_fix].datetime
+                delta_height = leg.end_height - start_height
+                distance = cumulative_distance(fp, start_fix, end_fix_id)
+
+            # leg shorter than phase
+            elif phase.start_time < leg.start_time and phase.end_time > leg.end_time:
+                duration = leg.end_time - leg.start_time
+                delta_height = leg.end_height - leg.start_height
+                distance = cumulative_distance(fp, start_fix_id, end_fix_id)
+
+            if phase.phase_type == FlightPhase.PT_CIRCLING:
+                climb_duration += duration
+                climb_height += delta_height
+
+            elif phase.phase_type == FlightPhase.PT_CRUISE:
+                cruise_duration += duration
+                cruise_height += delta_height
+                cruise_distance += distance
+
+        leg.cruise_height = cruise_height
+        leg.cruise_duration = cruise_duration
+        leg.cruise_distance = cruise_distance
+
+        leg.climb_height = climb_height
+        leg.climb_duration = climb_duration
+
+
 def get_limits():
     iter_limit = int(current_app.config.get('SKYLINES_ANALYSIS_ITER', 10e6))
     # Each node of the triangle solver has a size of 92 bytes...
@@ -473,6 +543,8 @@ def analyse_flight(flight, full=512, triangle=1024, sprint=64, fp=None):
 
     save_contests(root, flight)
     save_phases(root, flight)
+
+    calculate_leg_statistics(flight, fp)
 
     flight.needs_analysis = False
     return True
