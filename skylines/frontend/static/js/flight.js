@@ -996,6 +996,11 @@ function initPhasesTable(placeholder) {
 
     baro.draw();
   });
+}
+
+
+function addPhasesLayer() {
+  if (phases_layer) return;
 
   phases_layer = new OpenLayers.Layer.Vector('Flight Phases', {
     displayInLayerSwitcher: false

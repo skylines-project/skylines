@@ -142,6 +142,7 @@
     });
 
     $('#detailed-stats').on('shown.bs.collapse', function () {
+      addPhasesLayer();
       initPhasesTable($('#phases-table'));
       $('html, body').animate({scrollTop: $("#detailed-stats").offset().top-100}, 200);
     });
