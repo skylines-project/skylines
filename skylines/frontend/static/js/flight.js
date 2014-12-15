@@ -32,7 +32,6 @@ var flights = slFlightCollection();
 
 var baro;
 var fix_table;
-var phase_table;
 var phases_layer;
 
 
@@ -982,9 +981,9 @@ distanceToSegmentSquared = function(point, segment) {
  * @param {DOMElement} placeholder DOM element of the phases table.
 */
 function initPhasesTable(placeholder) {
-  phase_table = slPhaseTable(placeholder);
+  placeholder.data('phase_table', slPhaseTable(placeholder));
 
-  $(phase_table).on('selection_changed', function(event, data) {
+  $(placeholder.data('phase_table')).on('selection_changed', function(event, data) {
     clearPhaseMarkers();
 
     if (data) {
