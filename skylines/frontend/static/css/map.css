@@ -19,15 +19,122 @@
   background-color: #fff;
 }
 
-.olFullscreen .olControlAttribution {
-  bottom: 125pt !important;
-}
-
-.olFullscreen .olControlScaleLine {
-  bottom: 125pt !important;
-}
-
 .olMap .plane_marker {
   position: absolute;
   min-height: 1em;
+}
+
+.map-overlay {
+  background-color: white;
+  opacity: 0.95;
+  border-radius: 3px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+}
+
+.map-sidebar {
+  position: absolute;
+  bottom: 220px;
+  left: 20px;
+  top: 20px;
+  width: 400px;
+}
+
+@media (max-width: 767px) {
+  .map-sidebar {
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+  }
+}
+
+.map-bottom-panel {
+  position: absolute;
+  bottom: 30px;
+  left: 20px;
+  right: 20px;
+}
+
+@media (max-width: 767px) {
+  .map-bottom-panel {
+    bottom: 0;
+    left: 0;
+    right: 0;
+  }
+}
+
+.map-tabs {
+  position: absolute;
+  left: 0;
+  width: 50px;
+  top: 0;
+  bottom: 0;
+
+  margin: 0;
+  padding: 0;
+
+  background: rgba(0, 0, 0, 0.05);
+  list-style: none;
+  border-right: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.map-tabs li {
+  height: 50px;
+  width: 50px;
+}
+
+.map-tabs li a {
+  text-decoration: none;
+  display: block;
+  text-align: center;
+  line-height: 50px;
+  font-size: 26px;
+  color: #999;
+  background: transparent;
+}
+
+.map-tabs li:first-child a {
+  border-top-left-radius: 3px;
+}
+
+.map-tabs li.active a, .map-tabs li.active a:hover {
+  color: #fff;
+  background: #428BCA;
+}
+
+.map-tabs li a:hover {
+  color: #000;
+  background: #CCC;
+}
+
+.map-tab-content {
+  position: absolute;
+  right: 0;
+  left: 50px;
+  top: 0;
+  bottom: 0;
+
+  overflow: auto;
+}
+
+.map-tab-pane {
+  display: none;
+}
+
+.map-tab-pane.active {
+  display: block;
+}
+
+.map-tab-header {
+  height: 50px;
+
+  background: rgba(0, 0, 0, 0.05);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.map-tab-header h3 {
+  margin: 0;
+  padding-left: 15px;
+  line-height: 50px;
+  font-weight: 400;
 }

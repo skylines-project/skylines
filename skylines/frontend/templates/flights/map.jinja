@@ -4,7 +4,7 @@
 
 {% from 'flights/meta-tags.jinja' import flight_meta_tags with context %}
 {% from 'flights/macros.jinja' import flight_title with context %}
-
+{% from 'flights/details-table.jinja' import render_details_table with context %}
 
 {% block title -%}{{ flight_title(flight) }}{%- endblock %}
 
@@ -113,7 +113,58 @@
 
 {%- block content %}
 <div id="map_canvas" class="olFullscreen"></div>
-<div style="position: absolute; bottom: 0; width:100%; background-color: white; opacity: 0.8;">
+<div class="map-sidebar map-overlay">
+<!-- Nav tabs -->
+  <ul class="map-tabs" role="tablist">
+    <li class="active"><a href="#summary" role="tab" data-toggle="tab">
+      <i class="icon-info"></i>
+    </a></li>
+    <li><a href="#comments" role="tab" data-toggle="tab">
+      <i class="icon-comments-alt"></i>
+    </a></li>
+    <li><a href="#stats" role="tab" data-toggle="tab">
+      <i class="icon-bar-chart"></i>
+    </a></li>
+    <li><a href="#wingmen" role="tab" data-toggle="tab">
+      <i class="icon-group"></i>
+    </a></li>
+  </ul>
+
+  <!-- Tab panes -->
+  <div class="map-tab-content">
+    <div class="map-tab-pane active" id="summary">
+      <div class="map-tab-header">
+        <h3>Summary</h3>
+      </div>
+
+      {{ render_details_table(flight) }}
+    </div>
+
+    <div class="map-tab-pane" id="comments">
+      <div class="map-tab-header">
+        <h3>Comments</h3>
+      </div>
+
+      {{ comments|safe }}
+    </div>
+
+    <div class="map-tab-pane" id="stats">
+      <div class="map-tab-header">
+        <h3>Statistics</h3>
+      </div>
+
+      Hello World!
+    </div>
+    <div class="map-tab-pane" id="wingmen">
+      <div class="map-tab-header">
+        <h3>Wingmen</h3>
+      </div>
+
+      Hello World!
+    </div>
+  </div>
+</div>
+<div class="map-bottom-panel map-overlay">
     <div style="overflow: auto; max-height: 115px">
         <table id="fix-data" class="table table-condensed"></table>
     </div>
