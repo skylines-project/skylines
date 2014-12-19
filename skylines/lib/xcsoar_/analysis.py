@@ -340,12 +340,12 @@ def run_analyse_flight(flight,
                                            location=fp[-1].location))
 
     # Give priority to already stored takeoff and landing times
-    if flight.takeoff_time:
+    if flight.takeoff_time and flight.takeoff_location:
         analysis_times['takeoff']['time'] = flight.takeoff_time
         analysis_times['takeoff']['location'] = dict(latitude=flight.takeoff_location.latitude,
                                                      longitude=flight.takeoff_location.longitude)
 
-    if flight.landing_time:
+    if flight.landing_time and flight.landing_location:
         analysis_times['landing']['time'] = flight.landing_time
         analysis_times['landing']['location'] = dict(latitude=flight.landing_location.latitude,
                                                      longitude=flight.landing_location.longitude)
