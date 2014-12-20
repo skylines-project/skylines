@@ -13,7 +13,7 @@ from skylines.frontend.forms import ChangePilotsForm, ChangeAircraftForm
 from skylines.lib import files
 from skylines.lib.dbutil import get_requested_record_list
 from skylines.lib.xcsoar_ import analyse_flight
-from skylines.lib.helpers import format_time, format_number
+from skylines.lib.helpers import format_time, format_decimal, format_number
 from skylines.lib.formatter import units
 from skylines.lib.datetime import from_seconds_of_day
 from skylines.lib.geo import METERS_PER_DEGREE
@@ -196,6 +196,42 @@ def format_phase(phase):
     return r
 
 
+def format_legs(legs):
+    r = []
+
+    for leg in legs:
+        duration = leg.end_time - leg.start_time
+
+        if duration.total_seconds() > 0:
+            speed = leg.distance / duration.total_seconds()
+        else:
+            speed = 0
+
+        if abs(leg.cruise_height) > 0 and leg.cruise_distance \
+           and abs(leg.cruise_distance / leg.cruise_height) < 1000:
+            glide_rate = format_decimal(float(leg.cruise_distance) / -leg.cruise_height, format='#.#')
+        else:
+            glide_rate = u'\u221e'  # infinity
+
+        if leg.climb_duration.total_seconds() > 0:
+            if leg.climb_height:
+                climbrate = leg.climb_height / leg.climb_duration.total_seconds()
+            else:
+                climbrate = 0
+
+            climbrate_text = units.format_lift(climbrate)
+        else:
+            climbrate_text = u'-'
+
+        r.append(dict(distance=units.format_distance(leg.distance, 1),
+                      duration=duration,
+                      speed=units.format_speed(speed),
+                      climbrate=climbrate_text,
+                      glide_rate=glide_rate))
+
+    return r
+
+
 def mark_flight_notifications_read(flight):
     if not g.current_user:
         return
@@ -224,7 +260,8 @@ def index():
         trace=_get_flight_path(g.flight),
         near_flights=near_flights,
         other_flights=other_flights,
-        phase_formatter=format_phase)
+        phase_formatter=format_phase,
+        leg_formatter=format_legs)
 
 
 @flight_blueprint.route('/map')
