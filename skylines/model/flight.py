@@ -22,6 +22,7 @@ from .geo import Location
 from .igcfile import IGCFile
 from .aircraft_model import AircraftModel
 from .elevation import Elevation
+from .contest_leg import ContestLeg
 
 
 class Flight(db.Model):
@@ -236,6 +237,10 @@ class Flight(db.Model):
     def get_contest_speed(self, contest_type, trace_type):
         contest = self.get_optimised_contest_trace(contest_type, trace_type)
         return contest and contest.speed
+
+    def get_contest_legs(self, contest_type, trace_type):
+        return ContestLeg.query(contest_type=contest_type, trace_type=trace_type,
+                                flight=self).order_by(ContestLeg.start_time)
 
     @property
     def speed(self):
