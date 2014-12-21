@@ -32,6 +32,7 @@ var flights = slFlightCollection();
 
 var baro;
 var fix_table;
+var phase_tables = new Array();
 var phases_layer;
 
 
@@ -984,6 +985,7 @@ function initPhasesTable(placeholder) {
   if (placeholder.data('phase_table')) return;
 
   placeholder.data('phase_table', slPhaseTable(placeholder));
+  phase_tables.push(placeholder.data('phase_table'));
 
   $(placeholder.data('phase_table')).on('selection_changed', function(event, data) {
     clearPhaseMarkers();
@@ -991,6 +993,12 @@ function initPhasesTable(placeholder) {
     if (data) {
       highlightFlightPhase(data.start, data.end);
       baro.setTimeHighlight(data.start, data.end);
+
+      for (var i = 0; i < phase_tables.length; i++) {
+        if (phase_tables[i] != this) {
+          phase_tables[i].setSelection(null, false);
+        }
+      }
     } else {
       baro.clearTimeHighlight();
     }
