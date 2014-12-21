@@ -4,7 +4,7 @@ from shapely.geometry import MultiPoint
 from geoalchemy2.shape import from_shape
 
 from skylines.lib import files
-from skylines.model import db, Elevation, IGCFile
+from skylines.model import db, Elevation, IGCFile, Location
 from xcsoar import Flight
 
 
@@ -53,6 +53,24 @@ def flight_path(igc_file, max_points=1000, add_elevation=False, qnh=None):
         output = get_elevation(output)
 
     return map(lambda line: FlightPathFix(*line), output)
+
+
+def cumulative_distance(fixes, start_fix, end_fix):
+    if start_fix >= end_fix:
+        return 0
+
+    distance = 0
+    last_location = None
+
+    for fix in fixes[start_fix:end_fix + 1]:
+        location = Location(longitude=fix.location['longitude'], latitude=fix.location['latitude'])
+
+        if last_location:
+            distance += location.geographic_distance(last_location)
+
+        last_location = location
+
+    return distance
 
 
 def get_elevation(fixes):

@@ -61,6 +61,37 @@
 </table>
 {%- endmacro %}
 
+{% macro render_leg_statistics(flight, contest_type, trace_type) -%}
+{% with legs=leg_formatter(flight.get_contest_legs(contest_type, trace_type)) -%}
+{% if legs -%}
+<table class="table table-condensed">
+  <tbody>
+    <tr class="small">
+      <th></th>
+      <th class='numeric'>{% trans %}Dist.{% endtrans %}</th>
+      <th class='numeric'><abbr title="{% trans %}Duration{% endtrans %}">{% trans %}&Delta;t{% endtrans %}</th>
+      <th class='numeric'>{% trans %}Avg. speed{% endtrans %}</th>
+      <th class='numeric'>{% trans %}Avg. vario{% endtrans %}</th>
+      <th class='numeric'><abbr title="{% trans %}Glide Rate while cruising{% endtrans %}">{% trans %}GR{% endtrans %}</abbr></th>
+    </tr>
+    {% for leg in legs -%}
+    <tr class="small">
+      <th>{{ loop.index }}</th>
+      <td class='numeric'>{{ leg.distance }}</td>
+      <td class='numeric'>{{ leg.duration }}</td>
+      <td class='numeric'>{{ leg.speed }}</td>
+      <td class='numeric'>{{ leg.climbrate }}</td>
+      <td class='numeric'>{{ leg.glide_rate }}</td>
+    </tr>
+    {%- endfor %}
+  </tbody>
+</table>
+{%- else %}
+{% trans %}No data found...{% endtrans %}
+{%- endif %}
+{%- endwith %}
+{%- endmacro %}
+
 {% macro render_phases(flight) -%}
 <table id="phases-table" class="table table-condensed table-striped">
   <thead>

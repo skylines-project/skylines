@@ -1,12 +1,14 @@
 import datetime
+from bisect import bisect_left
 
 import xcsoar
 from flask import current_app
 from skylines.lib import files
+from skylines.lib.util import pressure_alt_to_qnh_alt
 from skylines.lib.datetime import from_seconds_of_day
-from skylines.lib.xcsoar_.flightpath import flight_path
+from skylines.lib.xcsoar_.flightpath import flight_path, cumulative_distance
 from skylines.model import (
-    Airport, Trace, FlightPhase, TimeZone, Location
+    Airport, Trace, ContestLeg, FlightPhase, TimeZone, Location
 )
 
 
@@ -83,6 +85,17 @@ def delete_trace(contest_name, trace_name, flight):
     q.delete()
 
 
+def delete_contest_legs(contest_name, trace_name, flight):
+    to_remove = []
+
+    for leg in flight._legs:
+        if leg.contest_type == contest_name and leg.trace_type == trace_name:
+            to_remove.append(leg)
+
+    for leg in to_remove:
+        flight._legs.remove(leg)
+
+
 def save_trace(contest_name, trace_name, node, flight):
     delete_trace(contest_name, trace_name, flight)
 
@@ -119,9 +132,45 @@ def save_trace(contest_name, trace_name, node, flight):
     flight.traces.append(trace)
 
 
+def save_contest_legs(contest_name, trace_name, node, flight):
+    delete_contest_legs(contest_name, trace_name, flight)
+
+    if 'turnpoints' not in node:
+        return
+
+    last_location = last_time = None
+
+    for turnpoint in node['turnpoints']:
+        location = read_location(turnpoint['location'])
+        time = read_time_of_day(turnpoint, flight)
+
+        if location is None or time is None:
+            return
+
+        if last_location is not None:
+            leg = ContestLeg()
+
+            leg.contest_type = contest_name
+            leg.trace_type = trace_name
+
+            leg.start_time = last_time
+            leg.end_time = time
+
+            leg.start_location = last_location
+            leg.end_location = location
+
+            leg.distance = location.geographic_distance(last_location)
+
+            flight._legs.append(leg)
+
+        last_location = location
+        last_time = time
+
+
 def save_contest(contest_name, traces, flight):
     for trace_name, trace in traces.iteritems():
         save_trace(contest_name, trace_name, trace, flight)
+        save_contest_legs(contest_name, trace_name, trace, flight)
 
 
 def save_contests(root, flight):
@@ -238,6 +287,74 @@ def save_phases(root, flight):
     ph.count = phdata['count']
 
     flight._phases.append(ph)
+
+
+def calculate_leg_statistics(flight, fp):
+    for leg in flight._legs:
+        start_fix_id = bisect_left([fix.datetime for fix in fp], leg.start_time, hi=len(fp) - 1)
+        end_fix_id = bisect_left([fix.datetime for fix in fp], leg.end_time, hi=len(fp) - 1)
+
+        leg.start_height = int(pressure_alt_to_qnh_alt(fp[start_fix_id].pressure_altitude, flight.qnh))
+        leg.end_height = int(pressure_alt_to_qnh_alt(fp[end_fix_id].pressure_altitude, flight.qnh))
+
+        cruise_height = climb_height = 0
+        cruise_duration = climb_duration = datetime.timedelta()
+        cruise_distance = 0
+
+        for phase in flight._phases:
+            if phase.aggregate:
+                continue
+
+            duration = datetime.timedelta()
+            delta_height = distance = 0
+
+            # phase is completely within leg
+            if phase.start_time >= leg.start_time and phase.end_time <= leg.end_time:
+                duration = phase.duration
+                delta_height = phase.alt_diff
+                distance = phase.distance
+
+            # partial phase at begin of leg
+            elif phase.start_time < leg.start_time and leg.start_time < phase.end_time <= leg.end_time:
+                end_fix = bisect_left([fix.datetime for fix in fp], phase.end_time, hi=len(fp) - 1)
+
+                end_height = int(pressure_alt_to_qnh_alt(fp[end_fix].pressure_altitude, flight.qnh))
+
+                duration = fp[end_fix].datetime - leg.start_time
+                delta_height = end_height - leg.start_height
+                distance = cumulative_distance(fp, start_fix_id, end_fix)
+
+            # partial phase at end of leg
+            elif leg.start_time <= phase.start_time < leg.end_time and phase.end_time > leg.end_time:
+                start_fix = bisect_left([fix.datetime for fix in fp], phase.start_time, hi=len(fp) - 1)
+
+                start_height = int(pressure_alt_to_qnh_alt(fp[start_fix].pressure_altitude, flight.qnh))
+
+                duration = leg.end_time - fp[start_fix].datetime
+                delta_height = leg.end_height - start_height
+                distance = cumulative_distance(fp, start_fix, end_fix_id)
+
+            # leg shorter than phase
+            elif phase.start_time < leg.start_time and phase.end_time > leg.end_time:
+                duration = leg.end_time - leg.start_time
+                delta_height = leg.end_height - leg.start_height
+                distance = cumulative_distance(fp, start_fix_id, end_fix_id)
+
+            if phase.phase_type == FlightPhase.PT_CIRCLING:
+                climb_duration += duration
+                climb_height += delta_height
+
+            elif phase.phase_type == FlightPhase.PT_CRUISE:
+                cruise_duration += duration
+                cruise_height += delta_height
+                cruise_distance += distance
+
+        leg.cruise_height = cruise_height
+        leg.cruise_duration = cruise_duration
+        leg.cruise_distance = cruise_distance
+
+        leg.climb_height = climb_height
+        leg.climb_duration = climb_duration
 
 
 def get_limits():
@@ -376,17 +493,17 @@ def run_analyse_flight(flight,
                                          max_tree_size=limits['tree_size_limit'])
         analysis['events'] = analysis_times
 
-        return analysis
+        return analysis, fp
 
     else:
-        return None
+        return None, None
 
 
 def analyse_flight(flight, full=512, triangle=1024, sprint=64, fp=None):
     path = files.filename_to_path(flight.igc_file.filename)
     current_app.logger.info('Analyzing ' + path)
 
-    root = run_analyse_flight(
+    root, fp = run_analyse_flight(
         flight, full=full, triangle=triangle, sprint=sprint,
         fp=fp)
 
@@ -426,6 +543,8 @@ def analyse_flight(flight, full=512, triangle=1024, sprint=64, fp=None):
 
     save_contests(root, flight)
     save_phases(root, flight)
+
+    calculate_leg_statistics(flight, fp)
 
     flight.needs_analysis = False
     return True

@@ -5,7 +5,8 @@
 {% from 'flights/meta-tags.jinja' import flight_meta_tags with context %}
 {% from 'flights/details-table.jinja' import render_details_table with context %}
 {% from 'flights/wingman-table.jinja' import render_wingman_table with context %}
-{% from 'flights/phases-table.jinja' import render_circling_performance, render_cruise_performance, render_phases with context %}
+{% from 'flights/phases-table.jinja' import render_circling_performance, render_cruise_performance,
+                                            render_leg_statistics, render_phases with context %}
 {% from 'flights/macros.jinja' import flight_title with context %}
 {% from 'macros/datetime.jinja' import timeago_script with context %}
 {% from 'macros/links.jinja' import user_link %}
@@ -174,10 +175,23 @@
             {%- endif %}
           </a>
         </li>
-        <li>
-          <a href="#tab-stats" title="{{ _('Statistics') }}" data-toggle="tab">
-            <i class="icon-bar-chart icon-large"></i>
+        <li class="dropdown">
+          <a href="#" title="{{ _('Statistics') }}" class="dropdown-toggle" data-toggle="dropdown">
+            <i class="icon-bar-chart icon-large"></i> <span class="caret"></span>
           </a>
+
+          <ul class="dropdown-menu" role="menu">
+            <li>
+              <a href="#tab-stats-total" title="{{ _('Total') }}" data-toggle="tab">
+                <i class="icon-plane icon-large"></i> {% trans %}Total{% endtrans %}
+              </a>
+            </li>
+            <li>
+              <a href="#tab-stats-legs" title="{{ _('Leg Statistics') }}" data-toggle="tab">
+                <i class="icon-resize-horizontal icon-large"></i> {% trans %}Legs{% endtrans %}
+              </a>
+            </li>
+          </ul>
         </li>
         <li>
           <a href="#tab-wingman" title="{{ _('Wingmen') }}" data-toggle="tab">
@@ -232,7 +246,7 @@
           </table>
         </div>
 
-        <div class="tab-pane" id="tab-stats">
+        <div class="tab-pane" id="tab-stats-total">
           <h3>{% trans %}Circling performance{% endtrans %}</h3>
           {{ render_circling_performance(flight) }}
 
@@ -244,6 +258,14 @@
             <i class='icon-info-sign icon-large'></i> {% trans %}Detailed statistics{% endtrans %}
           </a></p>
           {%- endif %}
+        </div>
+
+        <div class="tab-pane" id="tab-stats-legs">
+          <h3>{% trans %}Distance{% endtrans %}</h3>
+          {{ render_leg_statistics(flight, 'olc_plus', 'classic') }}
+
+          <h3>{% trans %}Triangle{% endtrans %}</h3>
+          {{ render_leg_statistics(flight, 'olc_plus', 'triangle') }}
         </div>
 
         <div class="tab-pane" id="tab-wingman">
