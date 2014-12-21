@@ -62,9 +62,9 @@
 {%- endmacro %}
 
 {% macro render_leg_statistics(flight, contest_type, trace_type) -%}
-{% with legs=leg_formatter(flight.get_contest_legs(contest_type, trace_type)) -%}
+{% with legs=leg_formatter(flight, flight.get_contest_legs(contest_type, trace_type)) -%}
 {% if legs -%}
-<table class="table table-condensed">
+<table id="leg-table-{{ contest_type }}-{{ trace_type }}" class="table table-condensed">
   <tbody>
     <tr class="small">
       <th></th>
@@ -76,9 +76,9 @@
     </tr>
     {% for leg in legs -%}
     <tr class="small">
-      <th>{{ loop.index }}</th>
+      <td class='start' data-content='{{ leg.start_time_of_day }}'>{{ loop.index }}</td>
       <td class='numeric'>{{ leg.distance }}</td>
-      <td class='numeric'>{{ leg.duration }}</td>
+      <td class='duration' data-content='{{ leg.duration.total_seconds() }}'>{{ leg.duration }}</td>
       <td class='numeric'>{{ leg.speed }}</td>
       <td class='numeric'>{{ leg.climbrate }}</td>
       <td class='numeric'>{{ leg.glide_rate }}</td>

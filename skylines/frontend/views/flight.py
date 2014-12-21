@@ -15,7 +15,7 @@ from skylines.lib.dbutil import get_requested_record_list
 from skylines.lib.xcsoar_ import analyse_flight
 from skylines.lib.helpers import format_time, format_decimal, format_number
 from skylines.lib.formatter import units
-from skylines.lib.datetime import from_seconds_of_day
+from skylines.lib.datetime import from_seconds_of_day, to_seconds_of_day
 from skylines.lib.geo import METERS_PER_DEGREE
 from skylines.model import (
     db, User, Flight, FlightPhase, Location, FlightComment,
@@ -196,7 +196,7 @@ def format_phase(phase):
     return r
 
 
-def format_legs(legs):
+def format_legs(flight, legs):
     r = []
 
     for leg in legs:
@@ -227,7 +227,8 @@ def format_legs(legs):
                       duration=duration,
                       speed=units.format_speed(speed),
                       climbrate=climbrate_text,
-                      glide_rate=glide_rate))
+                      glide_rate=glide_rate,
+                      start_time_of_day=to_seconds_of_day(flight.takeoff_time, leg.start_time)))
 
     return r
 

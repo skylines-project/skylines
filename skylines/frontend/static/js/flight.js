@@ -32,7 +32,7 @@ var flights = slFlightCollection();
 
 var baro;
 var fix_table;
-var phase_table;
+var phase_tables = new Array();
 var phases_layer;
 
 
@@ -982,20 +982,35 @@ distanceToSegmentSquared = function(point, segment) {
  * @param {DOMElement} placeholder DOM element of the phases table.
 */
 function initPhasesTable(placeholder) {
-  phase_table = slPhaseTable(placeholder);
+  if (placeholder.data('phase_table')) return;
 
-  $(phase_table).on('selection_changed', function(event, data) {
-    clearPhaseMarkers();
+  placeholder.data('phase_table', slPhaseTable(placeholder));
+  phase_tables.push(placeholder.data('phase_table'));
 
-    if (data) {
-      highlightFlightPhase(data.start, data.end);
-      baro.setTimeHighlight(data.start, data.end);
-    } else {
-      baro.clearTimeHighlight();
-    }
+  $(placeholder.data('phase_table'))
+      .on('selection_changed', function(event, data) {
+        clearPhaseMarkers();
 
-    baro.draw();
-  });
+        if (data) {
+          highlightFlightPhase(data.start, data.end);
+          baro.setTimeHighlight(data.start, data.end);
+
+          for (var i = 0; i < phase_tables.length; i++) {
+            if (phase_tables[i] != this) {
+              phase_tables[i].setSelection(null, false);
+            }
+          }
+        } else {
+          baro.clearTimeHighlight();
+        }
+
+        baro.draw();
+      });
+}
+
+
+function addPhasesLayer() {
+  if (phases_layer) return;
 
   phases_layer = new OpenLayers.Layer.Vector('Flight Phases', {
     displayInLayerSwitcher: false
