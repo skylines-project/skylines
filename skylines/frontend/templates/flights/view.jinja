@@ -146,6 +146,12 @@
       initPhasesTable($('#phases-table'));
       $('html, body').animate({scrollTop: $("#detailed-stats").offset().top-100}, 200);
     });
+
+    $('a[data-toggle="tab"]').on('shown.bs.tab', function(e) {
+        addPhasesLayer();
+        initPhasesTable($('#leg-table-olc_plus-classic'));
+        initPhasesTable($('#leg-table-olc_plus-triangle'));
+    });
   });
   /* ]]> */
 </script>
