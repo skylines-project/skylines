@@ -987,24 +987,25 @@ function initPhasesTable(placeholder) {
   placeholder.data('phase_table', slPhaseTable(placeholder));
   phase_tables.push(placeholder.data('phase_table'));
 
-  $(placeholder.data('phase_table')).on('selection_changed', function(event, data) {
-    clearPhaseMarkers();
+  $(placeholder.data('phase_table'))
+      .on('selection_changed', function(event, data) {
+        clearPhaseMarkers();
 
-    if (data) {
-      highlightFlightPhase(data.start, data.end);
-      baro.setTimeHighlight(data.start, data.end);
+        if (data) {
+          highlightFlightPhase(data.start, data.end);
+          baro.setTimeHighlight(data.start, data.end);
 
-      for (var i = 0; i < phase_tables.length; i++) {
-        if (phase_tables[i] != this) {
-          phase_tables[i].setSelection(null, false);
+          for (var i = 0; i < phase_tables.length; i++) {
+            if (phase_tables[i] != this) {
+              phase_tables[i].setSelection(null, false);
+            }
+          }
+        } else {
+          baro.clearTimeHighlight();
         }
-      }
-    } else {
-      baro.clearTimeHighlight();
-    }
 
-    baro.draw();
-  });
+        baro.draw();
+      });
 }
 
 
