@@ -255,8 +255,7 @@ class Flight(db.Model):
         return [p for p in self._phases if not p.aggregate]
 
     def delete_phases(self):
-        from skylines.model.flight_phase import FlightPhase
-        FlightPhase.query(flight=self).delete()
+        self._phases = []
 
     @property
     def circling_performance(self):

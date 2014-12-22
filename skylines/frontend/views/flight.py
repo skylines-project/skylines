@@ -204,8 +204,10 @@ def format_legs(flight, legs):
 
         if duration.total_seconds() > 0:
             speed = leg.distance / duration.total_seconds()
+            climb_percentage = leg.climb_duration.total_seconds() / duration.total_seconds() * 100
         else:
             speed = 0
+            climb_percentage = 0
 
         if abs(leg.cruise_height) > 0 and leg.cruise_distance \
            and abs(leg.cruise_distance / leg.cruise_height) < 1000:
@@ -226,6 +228,7 @@ def format_legs(flight, legs):
         r.append(dict(distance=units.format_distance(leg.distance, 1),
                       duration=duration,
                       speed=units.format_speed(speed),
+                      climb_percentage=format_decimal(climb_percentage, format='#.#'),
                       climbrate=climbrate_text,
                       glide_rate=glide_rate,
                       start_time_of_day=to_seconds_of_day(flight.takeoff_time, leg.start_time)))
