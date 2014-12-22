@@ -69,8 +69,9 @@
     <tr class="small">
       <th></th>
       <th class='numeric'>{% trans %}Dist.{% endtrans %}</th>
-      <th class='numeric'><abbr title="{% trans %}Duration{% endtrans %}">{% trans %}&Delta;t{% endtrans %}</th>
+      <th class='numeric hidden-md'><abbr title="{% trans %}Duration{% endtrans %}">{% trans %}&Delta;t{% endtrans %}</th>
       <th class='numeric'>{% trans %}Avg. speed{% endtrans %}</th>
+      <th class='numeric'>{% trans %}Climb %{% endtrans %}</th>
       <th class='numeric'>{% trans %}Avg. vario{% endtrans %}</th>
       <th class='numeric'><abbr title="{% trans %}Glide Rate while cruising{% endtrans %}">{% trans %}GR{% endtrans %}</abbr></th>
     </tr>
@@ -78,8 +79,9 @@
     <tr class="small">
       <td class='start' data-content='{{ leg.start_time_of_day }}'>{{ loop.index }}</td>
       <td class='numeric'>{{ leg.distance }}</td>
-      <td class='duration' data-content='{{ leg.duration.total_seconds() }}'>{{ leg.duration }}</td>
+      <td class='duration hidden-md' data-content='{{ leg.duration.total_seconds() }}'>{{ leg.duration }}</td>
       <td class='numeric'>{{ leg.speed }}</td>
+      <td class='numeric'>{{ leg.climb_percentage }}%</td>
       <td class='numeric'>{{ leg.climbrate }}</td>
       <td class='numeric'>{{ leg.glide_rate }}</td>
     </tr>
