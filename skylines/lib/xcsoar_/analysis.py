@@ -242,7 +242,6 @@ def save_phases(root, flight):
 
     for phdata in root['phases']:
         ph = FlightPhase()
-        ph.flight = flight
         ph.aggregate = False
         ph.start_time = import_datetime_attribute(phdata, 'start_time')
         ph.end_time = import_datetime_attribute(phdata, 'end_time')
@@ -260,7 +259,7 @@ def save_phases(root, flight):
 
     for statname in ["total", "left", "right", "mixed"]:
         phdata = root['performance']["circling_%s" % statname]
-        ph = FlightPhase(flight=flight)
+        ph = FlightPhase()
         ph.aggregate = True
         ph.phase_type = FlightPhase.PT_CIRCLING
         ph.fraction = round(phdata['fraction'] * 100)
@@ -273,7 +272,7 @@ def save_phases(root, flight):
         flight._phases.append(ph)
 
     phdata = root['performance']['cruise_total']
-    ph = FlightPhase(flight=flight)
+    ph = FlightPhase()
     ph.aggregate = True
     ph.phase_type = FlightPhase.PT_CRUISE
     ph.circling_direction = FlightPhase.CD_TOTAL
