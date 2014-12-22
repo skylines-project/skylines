@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from datetime import datetime
+from datetime import datetime, timedelta
 from bisect import bisect_left
 from flask import current_app
 
@@ -240,7 +240,9 @@ class Flight(db.Model):
 
     def get_contest_legs(self, contest_type, trace_type):
         return ContestLeg.query(contest_type=contest_type, trace_type=trace_type,
-                                flight=self).order_by(ContestLeg.start_time)
+                                flight=self) \
+                         .filter(ContestLeg.end_time - ContestLeg.start_time > timedelta(0)) \
+                         .order_by(ContestLeg.start_time)
 
     @property
     def speed(self):
