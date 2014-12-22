@@ -64,7 +64,7 @@
 {% macro render_leg_statistics(flight, contest_type, trace_type) -%}
 {% with legs=leg_formatter(flight, flight.get_contest_legs(contest_type, trace_type)) -%}
 {% if legs -%}
-<table id="leg-table-{{ contest_type }}-{{ trace_type }}" class="table table-condensed">
+<table id="leg-table-{{ contest_type }}-{{ trace_type }}" class="table table-condensed text-right">
   <tbody>
     <tr class="small">
       <th></th>
