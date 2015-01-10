@@ -94,6 +94,15 @@ class SkyLines(Flask):
                 else:
                     record.user = 'anonymous'
 
+                def filter_password(k, v):
+                    if 'password' in k:
+                        v = 'xxxxxxx'
+
+                    return (k, v)
+
+                record.request_args = '\n'.join('%s: %r' % (k, v) for (k, v) in request.args.iteritems())
+                record.request_form = '\n'.join('%s: %r' % filter_password(k, v) for (k, v) in request.form.iteritems())
+
                 return True
 
         self.logger.addFilter(ContextFilter(self))
@@ -110,6 +119,12 @@ Time:               %(asctime)s
 URL:                %(url)s
 IP:                 %(ip)s
 User:               %(user)s
+
+Args:
+%(request_args)s
+
+Form:
+%(request_form)s
 
 Message:
 
