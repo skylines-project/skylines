@@ -3,7 +3,7 @@
 {% from "macros/links.jinja" import user_link, club_link, airport_link %}
 
 {%- macro render_details_table(flight) %}
-<table class="table table-flight-details" id="flight-details-table" itemscope="" itemtype="http://schema.org/SportsEvent">
+<table class="table table-flight-details" id="flight-details-table" itemscope="" itemtype="https://schema.org/SportsEvent">
   <meta itemprop="url" content="/flights/{{ flight.id }}" />
   <tbody>
     {%- if flight.date_local %}
@@ -129,7 +129,7 @@
         {%- endif %}
 
         {% if flight.pilot or flight.pilot_name -%}
-        <span itemprop="performer" itemscope="" itemtype="http://schema.org/Person">
+        <span itemprop="performer" itemscope="" itemtype="https://schema.org/Person">
           {% if flight.pilot -%}
           <meta itemprop="url" content="{{ url_for('user.index', user_id=flight.pilot_id) }}" />
           {{ user_link(flight.pilot, ' itemprop="name"') }}
@@ -142,7 +142,7 @@
         {%- if (flight.pilot or flight.pilot_name) and (flight.co_pilot or flight.co_pilot_name) %}<br/>{% endif -%}
 
         {% if flight.co_pilot or flight.co_pilot_name -%}
-        <span itemprop="performer" itemscope="" itemtype="http://schema.org/Person">
+        <span itemprop="performer" itemscope="" itemtype="https://schema.org/Person">
           {% if flight.co_pilot -%}
           <meta itemprop="url" content="{{ url_for('user.index', user_id=flight.co_pilot_id) }}" />
           {{ user_link(flight.co_pilot, ' itemprop="name"') }}
@@ -161,7 +161,7 @@
     {%- if flight.club %}
     <tr>
       <th>{% trans %}Club{% endtrans %}</th>
-      <td itemprop="performer" itemscope="" itemtype="http://schema.org/SportsTeam">
+      <td itemprop="performer" itemscope="" itemtype="https://schema.org/SportsTeam">
         <meta itemprop="url" content="/clubs/{{ flight.club_id }}" />
         {{ club_link(flight.club, ' itemprop="name"') }}
       </td>

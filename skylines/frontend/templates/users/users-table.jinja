@@ -10,13 +10,13 @@
   </thead>
   <tbody>
     {% for user in users -%}
-    <tr {% if not club_column %}itemprop="member"{% endif %} itemscope itemtype="http://schema.org/Person">
+    <tr {% if not club_column %}itemprop="member"{% endif %} itemscope itemtype="https://schema.org/Person">
       <meta itemprop="url" content="{{ url_for('user.index', user_id=user.id, _external=True) }}" />
       <td class="column-buttons" itemprop="name">
         {{ user_link(user) }}
       {% if club_column -%}
       </td>
-      <td class="column-buttons" itemprop="memberof" itemscope itemtype="http://schema.org/SportsTeam">
+      <td class="column-buttons" itemprop="memberof" itemscope itemtype="https://schema.org/SportsTeam">
         {% if user.club_id -%}
         <meta itemprop="url" content="{{ url_for('club.index', club_id=user.club_id, _external=True) }}" />
         {{ club_link(user.club, ' itemprop="name"') }}
