@@ -77,7 +77,7 @@
 
 
 {%- block content %}
-<div itemscope="" itemtype="http://schema.org/Person">
+<div itemscope="" itemtype="https://schema.org/Person">
   <meta itemprop="url" content="{{ url_for('.index', _external=True) }}" />
   <div class="row">
     <div class="well col-md-8 col-md-offset-2">
@@ -99,7 +99,7 @@
           <th>{% trans %}Club{% endtrans %}</th>
 
           {% if g.user.club -%}
-          <td itemprop="memberof" itemscope="" itemtype="http://schema.org/SportsTeam">
+          <td itemprop="memberof" itemscope="" itemtype="https://schema.org/SportsTeam">
             <meta itemprop="url" content="{{ url_for('club.index', club_id=g.user.club_id, _external=True) }}" />
             {{ club_link(g.user.club, ' itemprop="name"') }}
           {%- else %}

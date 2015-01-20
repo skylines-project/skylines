@@ -1,7 +1,7 @@
 {% from 'macros/links.jinja' import user_link %}
 
 {% macro render_wingman_table(near_flights) -%}
-<table id="wingman-table" class="table table-condensed" itemscope="" itemtype="http://schema.org/SportsEvent">
+<table id="wingman-table" class="table table-condensed" itemscope="" itemtype="https://schema.org/SportsEvent">
   <thead>
     <tr>
       <th class="color-stripe"></th>
@@ -38,7 +38,7 @@
       </td>
       <td>
         {% if near_flight['flight'].pilot or near_flight['flight'].pilot_name -%}
-        <span itemprop="performer" itemscope="" itemtype="http://schema.org/Person">
+        <span itemprop="performer" itemscope="" itemtype="https://schema.org/Person">
           {% if near_flight['flight'].pilot -%}
           <meta itemprop="url" content="{{ url_for('user.index', user_id=near_flight['flight'].pilot_id) }}" />
           {{ user_link(near_flight['flight'].pilot, ' itemprop="name"') }}
@@ -51,7 +51,7 @@
         {%- if (near_flight['flight'].pilot or near_flight['flight'].pilot_name) and (near_flight['flight'].co_pilot or near_flight['flight'].co_pilot_name) %}<br/>{% endif -%}
 
         {% if near_flight['flight'].co_pilot or near_flight['flight'].co_pilot_name -%}
-        <span itemprop="performer" itemscope="" itemtype="http://schema.org/Person">
+        <span itemprop="performer" itemscope="" itemtype="https://schema.org/Person">
           {% if near_flight['flight'].co_pilot -%}
           <meta itemprop="url" content="{{ url_for('user.index', user_id=near_flight['flight'].co_pilot_id) }}" />
           {{ user_link(near_flight['flight'].co_pilot, ' itemprop="name"') }}
