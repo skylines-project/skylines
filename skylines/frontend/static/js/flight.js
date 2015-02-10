@@ -122,7 +122,10 @@ function initFlightLayer() {
     initRedrawLayer(flightPathLayer);
   });
 
-  map.events.register('moveend', null, updateBaroScale);
+  map.events.register('moveend', null, function(e) {
+    if (updateBaroScale())
+      baro.draw();
+  });
 
   map.hover_enabled = true;
 
@@ -138,7 +141,10 @@ function initFlightLayer() {
 
 function initFixTable() {
   fix_table = slFixTable($('#fix-data'));
-  $(fix_table).on('selection_changed', updateBaroData);
+  $(fix_table).on('selection_changed', function(e) {
+    updateBaroData();
+    baro.draw();
+  });
   $(fix_table).on('remove_flight', function(e, sfid) {
     removeFlight(sfid);
   });
@@ -181,7 +187,7 @@ function updateBaroScale() {
     redraw = baro.setTimeInterval(first_t, last_t);
   }
 
-  if (redraw) baro.draw();
+  return redraw;
 }
 
 
@@ -333,6 +339,7 @@ function addFlight(sfid, _lonlat, _levels, _num_levels, _time, _height, _enl,
 
   updateBaroData();
   updateBaroScale();
+  baro.draw();
 
   $('#wingman-table').find('*[data-sfid=' + sfid + ']')
       .find('.color-stripe').css('background-color', color);
@@ -433,6 +440,7 @@ function removeFlight(sfid) {
   fix_table.removeRow(sfid);
   updateBaroData();
   updateBaroScale();
+  baro.draw();
 }
 
 
@@ -617,8 +625,6 @@ function updateBaroData() {
   baro.setENLData(enls);
   baro.setContests(contests);
   baro.setElevations(elevations);
-
-  baro.draw();
 }
 
 function setTime(time) {
