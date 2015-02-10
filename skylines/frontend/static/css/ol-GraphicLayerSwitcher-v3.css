@@ -1,0 +1,74 @@
+.GraphicLayerSwitcher {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+}
+
+.GraphicLayerSwitcher button {
+  background: white;
+  background: rgba(255,255,255,0.7);
+  border-radius: 4px;
+  box-shadow: 0 0 8px rgba(50,50,50,0.3);
+  border: 1px solid #bbb;
+  padding: 2px;
+  display: block;
+  cursor: pointer;
+}
+
+.GraphicLayerSwitcher button:hover {
+  background: white;
+}
+
+.GraphicLayerSwitcher .base_layers,
+.GraphicLayerSwitcher .overlay_layers {
+  background: white;
+  background: rgba(255,255,255,0.7);
+  border-radius: 10px;
+  box-shadow: 0 0 8px rgba(50,50,50,0.3);
+  border: 1px solid #bbb;
+  float: right;
+}
+
+.GraphicLayerSwitcher .overlay_layers {
+  margin-right: 5px;
+}
+
+.GraphicLayerSwitcher a {
+  position: relative;
+  white-space: nowrap;
+  color: #555;
+  color: rgba(0,0,0,0.7);
+  display: block;
+  margin: 5px;
+  padding-right: 10px;
+  border-radius: 8px;
+  text-decoration: none;
+}
+
+.GraphicLayerSwitcher a.active {
+  background: white;
+  background: rgba(255,255,255,0.7);
+}
+
+.GraphicLayerSwitcher a:hover {
+  background: white;
+  background: rgba(255,255,255,0.7);
+}
+
+.GraphicLayerSwitcher a .icon-ok {
+  position: absolute;
+  left: 64px;
+  color: white;
+  font-size: 32px;
+  top: 17px;
+  text-shadow: 0px 0px 10px black;
+  display: none;
+}
+
+.GraphicLayerSwitcher a.active .icon-ok {
+  display: inline;
+}
+
+.GraphicLayerSwitcher a img {
+  margin-right: 0.4em;
+}
