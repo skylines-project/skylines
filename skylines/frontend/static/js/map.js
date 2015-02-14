@@ -204,25 +204,6 @@ function addBingLayers(api_key) {
   map.addLayers([road, hybrid]);
 }
 
-
-/**
- * Callback when Google Maps API has been loaded.
- * Add the google physical layer to the map
- */
-function addGoogleLayer() {
-  // add google maps if google script loaded
-  if (window.google) {
-    var google_physical_layer = new OpenLayers.Layer.Google(
-        'Google Physical', { type: google.maps.MapTypeId.TERRAIN });
-    map.addLayer(google_physical_layer);
-
-    var google_satellite_layer = new OpenLayers.Layer.Google(
-        'Google Satellite', { type: google.maps.MapTypeId.HYBRID });
-    map.addLayer(google_satellite_layer);
-  }
-}
-
-
 /*
  * Add the InfoBox handler to the map.
  *
