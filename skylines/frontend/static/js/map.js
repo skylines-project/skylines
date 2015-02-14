@@ -36,6 +36,11 @@ function initOpenLayers(id, tile_url, opt_options) {
 
 
   map.getLayers().on('change:length', $.proxy(function() {
+    // set z-index (order) of layers
+    map.getLayers().getArray().sort(function(a, b) {
+      return a.get('z_index') > b.get('z_index');
+    });
+
     // When the list of layers changes load the
     // last used base layer from the cookies
     setBaseLayer(this.options.base_layer || $.cookie('base_layer'));
@@ -47,10 +52,10 @@ function initOpenLayers(id, tile_url, opt_options) {
     name: 'OpenStreetMap',
     id: 'OpenStreetMap',
     base_layer: true,
+    z_index: 1,
     display_in_layer_switcher: true
   });
 
-  // add layers according to their z-index...
   map.addLayer(osm_layer);
   addReliefLayer();
 
@@ -118,6 +123,7 @@ function addMWPLayers(tile_url) {
     name: 'Mountain Wave Project',
     id: 'MountainWaveProject',
     base_layer: false,
+    z_index: 11,
     display_in_layer_switcher: true
   });
 
@@ -140,6 +146,7 @@ function addAirspaceLayers(tile_url) {
     name: 'Airspace',
     id: 'Airspace',
     base_layer: false,
+    z_index: 10,
     display_in_layer_switcher: true
   });
 
@@ -167,6 +174,7 @@ function addReliefLayer() {
     name: 'Shaded Relief',
     id: 'ShadedRelief',
     base_layer: true,
+    z_index: 2,
     display_in_layer_switcher: true
   });
 

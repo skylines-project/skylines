@@ -175,7 +175,8 @@ function initFlightLayer() {
       source: flights.getSource(),
       style: style_function
     }),
-    name: 'Flight'
+    name: 'Flight',
+    z_index: 50
   });
 
   map.addLayer(flight_path_layer);
@@ -187,7 +188,8 @@ function initFlightLayer() {
   var flight_contest_layer = new ol.layer.Vector({
     source: flight_contest_source,
     style: style_function,
-    name: 'Contest'
+    name: 'Contest',
+    z_index: 49
   });
 
   map.addLayer(flight_contest_layer);
