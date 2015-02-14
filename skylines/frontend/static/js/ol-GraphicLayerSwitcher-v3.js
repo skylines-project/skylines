@@ -140,7 +140,7 @@ var GraphicLayerSwitcher = function(opt_options) {
         if (!other_layer.get('base_layer') &&
             other_layer.getVisible() &&
             other_layer.get('display_in_layer_switcher'))
-          overlay_layers.push(other_layer.name);
+          overlay_layers.push(other_layer.get('name'));
       }
 
       $.cookie('overlay_layers', overlay_layers.join(';'), {
