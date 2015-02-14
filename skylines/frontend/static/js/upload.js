@@ -19,12 +19,10 @@
 function initBaro(placeholder, sfid, _time, _height, _enl,
                   _elevations_h, takeoff_time, scoring_start_time,
                   scoring_end_time, landing_time) {
-  var polyline_decoder = new OpenLayers.Format.EncodedPolyline();
-
-  var height = polyline_decoder.decodeDeltas(_height, 1, 1);
-  var time = polyline_decoder.decodeDeltas(_time, 1, 1);
-  var enl = polyline_decoder.decodeDeltas(_enl, 1, 1);
-  var _elev_h = polyline_decoder.decodeDeltas(_elevations_h, 1, 1);
+  var height = ol.format.Polyline.decodeDeltas(_height, 1, 1);
+  var time = ol.format.Polyline.decodeDeltas(_time, 1, 1);
+  var enl = ol.format.Polyline.decodeDeltas(_enl, 1, 1);
+  var _elev_h = ol.format.Polyline.decodeDeltas(_elevations_h, 1, 1);
 
   var flot_h = [], flot_enl = [];
   var flot_elev = [], elev_h = [];

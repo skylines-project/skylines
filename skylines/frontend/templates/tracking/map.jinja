@@ -71,8 +71,6 @@
     {% if trace -%}
     addFlight({{ pilot.id }},
       {{ h.json.dumps(trace.encoded.points) }},
-      {{ h.json.dumps(trace.encoded.levels) }},
-      {{ trace.num_levels }},
       {{ h.json.dumps(trace.barogram_t) }},
       {{ h.json.dumps(trace.barogram_h) }},
       {{ h.json.dumps(trace.enl) }},
@@ -88,17 +86,18 @@
     {%- endif %}
     {%- endfor %}
 
-    var factor = $("#barogram")[0].offsetHeight / map.getSize().h;
-    var zoomExtent = flights.getBounds().clone().scale(1.02);
-    zoomExtent.bottom -= zoomExtent.getHeight() * factor * 3/2;
+    var factor = $("#barogram")[0].offsetHeight / map.getSize()[1];
 
-    map.zoomToExtent(zoomExtent);
+    var view = map.getView();
+    var extent = flights.getBounds();
+    var buffer = Math.max(ol.extent.getWidth(extent), ol.extent.getHeight(extent));
+    extent = ol.extent.buffer(extent, buffer * 0.02);
+    extent[1] -= ol.extent.getHeight(extent) * factor * 3/2;
+    view.fitExtent(extent, map.getSize());
 
     hoverMap();
 
-    $.getScript("https://maps.google.com/maps/api/js?v=3.7&sensor=false&callback=addGoogleLayer");
-    addBingLayers("{{ config.get('SKYLINES_BING_API_KEY', 'null') }}");
-    addReliefLayer();
+    //addBingLayers("{{ config.get('SKYLINES_BING_API_KEY', 'null') }}");
 
     // update flight track every 15 seconds
     setInterval(function() {

@@ -1,21 +1,7 @@
-
-
 /**
  * Holds the OpenLayers map
  */
 var map;
-
-var WGS84_PROJ = new OpenLayers.Projection('EPSG:4326');
-
-var MAPSERVER_RESOLUTIONS = [
-  156543.03390625, 78271.516953125, 39135.7584765625,
-  19567.87923828125, 9783.939619140625, 4891.9698095703125,
-  2445.9849047851562, 1222.9924523925781, 611.4962261962891,
-  305.74811309814453, 152.87405654907226, 76.43702827453613,
-  38.218514137268066, 19.109257068634033, 9.554628534317017,
-  4.777314267158508, 2.388657133579254, 1.194328566789627,
-  0.5971642833948135, 0.29858214169740677, 0.14929107084870338,
-  0.07464553542435169];
 
 
 /**
@@ -28,54 +14,53 @@ var MAPSERVER_RESOLUTIONS = [
 function initOpenLayers(id, tile_url, opt_options) {
   var options = opt_options || {};
 
-  OpenLayers.ImgPath = '/vendor/openlayers/img/';
+  if (!options.base_layer) options.base_layer = 'OpenStreetMap';
 
-  map = new OpenLayers.Map(id, {
-    projection: 'EPSG:900913',
-    controls: [],
-    theme: null,
-    tileManager: new OpenLayers.TileManager(),
-    fallThrough: true,
-    zoomMethod: null
+  var interactions = ol.interaction.defaults({
+    altShiftDragRotate: false,
+    pinchRotate: false
   });
 
-  map.div.setAttribute('tabindex', '0');
-  $(map.div).click(function() { $(this).focus() });
+  map = new ol.Map({
+    target: id,
+    controls: ol.control.defaults().extend([
+      new ol.control.ScaleLine(),
+      new GraphicLayerSwitcher()
+    ]),
+    interactions: interactions,
+    ol3Logo: false
+  });
 
-  map.addControl(new OpenLayers.Control.Zoom());
-  map.addControl(new OpenLayers.Control.Navigation({documentDrag: true}));
-  map.addControl(new OpenLayers.Control.KeyboardDefaults({
-    observeElement: map.div
-  }));
-  map.addControl(new OpenLayers.Control.Attribution());
-  map.addControl(new OpenLayers.Control.ScaleLine({geodesic: true}));
+  map.getViewport().setAttribute('tabindex', '0');
+  $(map.getViewport()).click(function() { $(this).focus() });
 
-  map.events.register('addlayer', null, function(data) {
+
+  map.getLayers().on('change:length', $.proxy(function() {
     // When the list of layers changes load the
     // last used base layer from the cookies
-    if (data.layer.isBaseLayer)
-      setBaseLayer(options.base_layer || $.cookie('base_layer'));
-    else
-      setOverlayLayers(options.overlay_layers || $.cookie('overlay_layers'));
+    setBaseLayer(this.options.base_layer || $.cookie('base_layer'));
+    setOverlayLayers(this.options.overlay_layers || $.cookie('overlay_layers'));
+  }, { options: options }));
+
+  var osm_layer = new ol.layer.Tile({
+    source: new ol.source.OSM(),
+    name: 'OpenStreetMap',
+    id: 'OpenStreetMap',
+    base_layer: true,
+    display_in_layer_switcher: true
   });
 
-  var osmLayer = new OpenLayers.Layer.OSM('OpenStreetMap');
-  osmLayer.addOptions({
-    transitionEffect: 'resize',
-    numZoomLevels: 18
-  });
-
-  map.addLayer(osmLayer);
+  // add layers according to their z-index...
+  map.addLayer(osm_layer);
+  addReliefLayer();
 
   addAirspaceLayers(tile_url);
   addMWPLayers(tile_url);
-  addEmptyLayer();
 
-  map.setCenter(new OpenLayers.LonLat(10, 50).
-      transform(new OpenLayers.Projection('EPSG:4326'),
-                map.getProjectionObject()), 5);
-
-  map.addControl(new GraphicLayerSwitcher());
+  map.getView().setCenter(
+      ol.proj.transform([10, 50], 'EPSG:4326', 'EPSG:3857')
+  );
+  map.getView().setZoom(5);
 }
 
 
@@ -83,11 +68,11 @@ function setBaseLayer(base_layer) {
   if (!base_layer)
     return;
 
-  // Cycle through the base layers to find a match
-  base_layer = map.getLayersByName(base_layer)[0];
-  if (base_layer)
-    // If the base layer names are matching set this layer as new base layer
-    map.setBaseLayer(base_layer);
+  map.getLayers().forEach(function(layer) {
+    if (layer.get('base_layer')) {
+      layer.setVisible(layer.get('name') == base_layer);
+    }
+  });
 }
 
 
@@ -96,16 +81,17 @@ function setOverlayLayers(overlay_layers) {
     return;
 
   overlay_layers = overlay_layers.split(';');
-  // Cycle through the overlay layers to find a match
-  for (var i = 0; i < map.layers.length; ++i) {
-    if (map.layers[i].isBaseLayer || !map.layers[i].displayInLayerSwitcher)
-      continue;
 
-    if ($.inArray(map.layers[i].name, overlay_layers) != -1)
-      map.layers[i].setVisibility(true);
+  // Cycle through the overlay layers to find a match
+  map.getLayers().forEach(function(layer) {
+    if (layer.get('base_layer') || !layer.get('display_in_layer_switcher'))
+      return;
+
+    if ($.inArray(layer.get('name'), overlay_layers) != -1)
+      layer.setVisible(true);
     else
-      map.layers[i].setVisibility(false);
-  }
+      layer.setVisible(false);
+  });
 }
 
 
@@ -117,19 +103,25 @@ function setOverlayLayers(overlay_layers) {
 function addMWPLayers(tile_url) {
   if (!tile_url) tile_url = '';
 
-  var mwp = new OpenLayers.Layer.XYZ('Mountain Wave Project',
-      tile_url + '/tiles/1.0.0/mwp/${z}/${x}/${y}.png', {
-        isBaseLayer: false,
-        'visibility': false,
-        'displayInLayerSwitcher': true,
-        attribution: 'Mountain Wave Data &copy; ' +
-            '<a href="http://www.mountain-wave-project.com/">' +
-            'Mountain Wave Project' +
-            '</a>.',
-        transitionEffect: 'map-resize',
-        serverResolutions: MAPSERVER_RESOLUTIONS
-      });
-  map.addLayer(mwp);
+  var mwp_layer = new ol.layer.Tile({
+    source: new ol.source.XYZ({
+      attributions: [
+        new ol.Attribution({
+          html: 'Mountain Wave Data &copy; ' +
+              '<a href="http://www.mountain-wave-project.com/">' +
+              'Mountain Wave Project' +
+              '</a>.'
+        })
+      ],
+      url: tile_url + '/tiles/1.0.0/mwp/{z}/{x}/{y}.png'
+    }),
+    name: 'Mountain Wave Project',
+    id: 'MountainWaveProject',
+    base_layer: false,
+    display_in_layer_switcher: true
+  });
+
+  map.addLayer(mwp_layer);
 }
 
 
@@ -141,15 +133,17 @@ function addMWPLayers(tile_url) {
 function addAirspaceLayers(tile_url) {
   if (!tile_url) tile_url = '';
 
-  var airspace = new OpenLayers.Layer.XYZ('Airspace',
-      tile_url + '/tiles/1.0.0/airspace+airports/${z}/${x}/${y}.png', {
-        isBaseLayer: false,
-        'visibility': true,
-        'displayInLayerSwitcher': true,
-        transitionEffect: 'map-resize',
-        serverResolutions: MAPSERVER_RESOLUTIONS
-      });
-  map.addLayer(airspace);
+  var airspace_layer = new ol.layer.Tile({
+    source: new ol.source.XYZ({
+      url: tile_url + '/tiles/1.0.0/airspace+airports/{z}/{x}/{y}.png'
+    }),
+    name: 'Airspace',
+    id: 'Airspace',
+    base_layer: false,
+    display_in_layer_switcher: true
+  });
+
+  map.addLayer(airspace_layer);
 }
 
 
@@ -158,15 +152,25 @@ function addAirspaceLayers(tile_url) {
  */
 function addReliefLayer() {
   var url =
-      'http://maps-for-free.com/layer/relief/z${z}/row${y}/${z}_${x}-${y}.jpg';
-  var relief = new OpenLayers.Layer.XYZ('Shaded Relief', url, {
-    sphericalMercator: true,
-    numZoomLevels: 12,
-    attribution: 'SRTM relief maps from <a target="_blank" ' +
-                 'href="http://maps-for-free.com/">maps-for-free.com</a>'
+      'http://maps-for-free.com/layer/relief/z{z}/row{y}/{z}_{x}-{y}.jpg';
+
+  var relief_layer = new ol.layer.Tile({
+    source: new ol.source.XYZ({
+      attributions: [
+        new ol.Attribution({
+          html: 'SRTM relief maps from <a target="_blank" ' +
+              'href="http://maps-for-free.com/">maps-for-free.com</a>'
+        })
+      ],
+      url: url
+    }),
+    name: 'Shaded Relief',
+    id: 'ShadedRelief',
+    base_layer: true,
+    display_in_layer_switcher: true
   });
 
-  map.addLayer(relief);
+  map.addLayer(relief_layer);
 }
 
 
@@ -183,14 +187,18 @@ function addBingLayers(api_key) {
   var road = new OpenLayers.Layer.Bing({
     key: api_key,
     type: 'Road',
-    name: 'Bing Road'
+    name: 'Bing Road',
+    base_layer: true,
+    display_in_layer_switcher: true
   });
 
   // Bing's AerialWithLabels imagerySet
   var hybrid = new OpenLayers.Layer.Bing({
     key: api_key,
     type: 'AerialWithLabels',
-    name: 'Bing Satellite'
+    name: 'Bing Satellite',
+    base_layer: true,
+    display_in_layer_switcher: true
   });
 
   map.addLayers([road, hybrid]);
@@ -215,47 +223,13 @@ function addGoogleLayer() {
 }
 
 
-/**
- * Add a empty layer to the map
- */
-function addEmptyLayer() {
-  var empty_layer = new OpenLayers.Layer('Empty', {
-    isBaseLayer: true
-  });
-
-  map.addLayer(empty_layer);
-}
-
-
 /*
  * Add the InfoBox handler to the map.
  *
  * @param {Object} settings Set flight_info or location_info to true to enable
  */
 function initInfoBox(settings) {
-  // add a empty vector layer first
-  var nearestCircle_style = new OpenLayers.Style({
-    strokeColor: '#f4bd00',
-    strokeWidth: 3,
-    fillOpacity: 0.5,
-    fillColor: '#f4bd00'
-  });
-
-  var infobox_layer = new OpenLayers.Layer.Vector('InfoBox', {
-    styleMap: new OpenLayers.StyleMap({
-      'nearestCircle': nearestCircle_style
-    }),
-    rendererOptions: {
-      zIndexing: true
-    },
-    displayInLayerSwitcher: false
-  });
-
-  map.addLayer(infobox_layer);
-
   // add click handler for nearest flight search
-  var infobox = $("<div id='MapInfoBox' class='InfoBox'></div>").hide();
-  $(map.div).append(infobox);
-  var map_click_handler = slMapClickHandler(infobox, settings);
-  map.events.register('click', null, map_click_handler.trigger);
+  var map_click_handler = slMapClickHandler(map, settings);
+  map.on('click', map_click_handler.trigger);
 }
