@@ -14,7 +14,7 @@ var map;
 function initOpenLayers(id, tile_url, opt_options) {
   var options = opt_options || {};
 
-  if (!options.base_layer) options.base_layer = 'OpenStreetMap';
+  if (!options.base_layer && !$.cookie('base_layer')) options.base_layer = 'OpenStreetMap';
 
   var interactions = ol.interaction.defaults({
     altShiftDragRotate: false,
