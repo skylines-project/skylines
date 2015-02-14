@@ -23,15 +23,12 @@ for fabric provisioning.
         $ pip install pycrypto 
         $ pip install fabric        
         $ pip install fabtools
-        # pip install cuisine
+        $ pip install cuisine
         
         if you have problems on osx try
         $ pip install pycrypto==2.3
         $ pip install fabric 
-        
-        or
-        $ pip install pycrypto==2.3
-        $ pip install fabric --no-use-wheel
+             
         
 Now that you have the necessary tools it is time to create and start the virtual machine:
 
