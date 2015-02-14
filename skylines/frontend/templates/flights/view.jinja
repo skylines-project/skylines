@@ -87,8 +87,7 @@
         addFlightFromJSON("/flights/" + pinnedFlights[i] + "/json");
 
     pinButton($("#pinned"), {{ flight.id }});
-
-    //addBingLayers("{{ config.get('SKYLINES_BING_API_KEY', 'null') }}");
+    addBingLayers("{{ config.get('SKYLINES_BING_API_KEY', 'null') }}");
 
     $('#wingman-table').find('tbody').find('tr').each(function(index, row) {
       $(this).on('click', function() {

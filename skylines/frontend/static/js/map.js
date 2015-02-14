@@ -192,24 +192,33 @@ function addBingLayers(api_key) {
     return;
 
   // Bing's Road imagerySet
-  var road = new OpenLayers.Layer.Bing({
-    key: api_key,
-    type: 'Road',
+  var road = new ol.layer.Tile({
+    source: new ol.source.BingMaps({
+      key: api_key,
+      imagerySet: 'Road'
+    }),
     name: 'Bing Road',
+    id: 'BingRoad',
     base_layer: true,
+    z_index: 3,
     display_in_layer_switcher: true
   });
 
   // Bing's AerialWithLabels imagerySet
-  var hybrid = new OpenLayers.Layer.Bing({
-    key: api_key,
-    type: 'AerialWithLabels',
+  var hybrid = new ol.layer.Tile({
+    source: new ol.source.BingMaps({
+      key: api_key,
+      imagerySet: 'AerialWithLabels'
+    }),
     name: 'Bing Satellite',
+    id: 'BingSatellite',
     base_layer: true,
+    z_index: 4,
     display_in_layer_switcher: true
   });
 
-  map.addLayers([road, hybrid]);
+  map.addLayer(road);
+  map.addLayer(hybrid);
 }
 
 /*

@@ -93,8 +93,7 @@
     view.fitExtent(extent, map.getSize());
 
     hoverMap();
-
-    //addBingLayers("{{ config.get('SKYLINES_BING_API_KEY', 'null') }}");
+    addBingLayers("{{ config.get('SKYLINES_BING_API_KEY', 'null') }}");
 
     // update flight track every 15 seconds
     setInterval(function() {

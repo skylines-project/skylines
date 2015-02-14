@@ -78,6 +78,7 @@
     if (zoom > 10)
       map.getView().setZoom(10);
 
+    addBingLayers("{{ config.get('SKYLINES_BING_API_KEY', 'null') }}");
     initInfoBox({flight_info: false, location_info: true});
   });
 </script>

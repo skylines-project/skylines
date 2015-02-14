@@ -99,8 +99,7 @@
         addFlightFromJSON("/flights/" + pinnedFlights[i] + "/json");
 
     pinButton($("#pinned"), {{ flight.id }});
-
-    //addBingLayers("{{ config.get('SKYLINES_BING_API_KEY', 'null') }}");
+    addBingLayers("{{ config.get('SKYLINES_BING_API_KEY', 'null') }}");
 
     initInfoBox({flight_info: true, location_info: true});
   });
