@@ -7,7 +7,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     v.gui = true
   end
 
-  config.vm.box = "chef/ubuntu-14.04"
+  config.vm.box = "ubuntu/trusty64"
 
   config.vm.network "forwarded_port", guest: 5000, host: 5000
 end
