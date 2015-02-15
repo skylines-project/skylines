@@ -1,27 +1,25 @@
-from fabric.api import task, env, local, run, sudo, prefix, cd
+from fabric.api import task, env, run, sudo, prefix, cd
+from fabric.contrib.files import append
 import cuisine
 import fabtools
 from fabtools import require
-from fabtools.vagrant import vagrant
-
-env.user = 'vagrant'
-env.hosts = ['127.0.0.1:2222']
-
-# use vagrant ssh key
-result = local('vagrant ssh-config | grep IdentityFile', capture=True)
-env.key_filename = result.split()[1]
 
 
 @task
 def provision():
     print('Provision')
-    _setup_users()
-    _install_build_essential()
-    _install_virtualenv_wrapper()
-    _mkvirtualenv('skylines')
-    _install_skylines_python_requirements()
-    _install_postgres()
-    _install_mapserver()
+
+    if env.user != 'vagrant':
+        print('This task must be run as vagrant:')
+        print('ex.: fab vagrant provision')
+    else:
+        _setup_users()
+        _install_build_essential()
+        _install_virtualenv_wrapper()
+        _mkvirtualenv('skylines')
+        _install_skylines_python_requirements()
+        _install_postgres()
+        _install_mapserver()
 
 
 def _setup_users():
@@ -52,8 +50,6 @@ def _install_build_essential():
         'libcurl4-openssl-dev',
         'redis-server'
     ])
-    if not fabtools.user.exists('skylines'):
-        fabtools.user.create('skylines', password='skylines')
 
 
 def _install_virtualenv_wrapper():
@@ -61,14 +57,19 @@ def _install_virtualenv_wrapper():
         fabtools.python.install('virtualenvwrapper', use_sudo=True)
         workon_home = 'export WORKON_HOME=$HOME/.virtualenvs'
         virtualenvwrapper = 'source /usr/local/bin/virtualenvwrapper.sh'
-        run("echo '%s' >> $HOME/.bashrc" % workon_home)
-        run("echo '%s' >> $HOME/.bashrc" % virtualenvwrapper)
+        append('/home/vagrant/.bashrc', workon_home)
+        append('/home/vagrant/.bashrc', virtualenvwrapper)
 
 
 def _mkvirtualenv(name):
     with prefix('export WORKON_HOME=$HOME/.virtualenvs'):
         with prefix('source /usr/local/bin/virtualenvwrapper.sh'):
             run("mkvirtualenv %s" % name)
+
+    postactivate = '/home/vagrant/.virtualenvs/skylines/bin/postactivate'
+    if not cuisine.file_exists(postactivate):
+        cuisine.file_write(postactivate, '#!/bin/bash\n\n')
+    append(postactivate, "cd /vagrant")
 
 
 def _install_skylines_python_requirements():
@@ -104,8 +105,8 @@ def _install_postgres():
     sudo("psql -d skylines_test -c 'CREATE EXTENSION IF NOT EXISTS fuzzystrmatch;'", user='postgres')
 
     print('setup postgres variables')
-    run("echo 'export POSTGIS_GDAL_ENABLED_DRIVERS=GTiff' >> $HOME/.bashrc")
-    run("echo 'export POSTGIS_ENABLE_OUTDB_RASTERS=1' >> $HOME/.bashrc")
+    append('/home/vagrant/.bashrc', 'export POSTGIS_GDAL_ENABLED_DRIVERS=GTiff')
+    append('/home/vagrant/.bashrc', 'export POSTGIS_ENABLE_OUTDB_RASTERS=1')
 
 
 def _install_mapserver():
