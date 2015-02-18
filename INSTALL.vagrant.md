@@ -20,8 +20,6 @@ for fabric provisioning.
         
         $ mkvirtualenv skylines
         $ workon skylines
-        $ pip install pycrypto 
-        $ pip install fabric        
         $ pip install fabtools
         $ pip install cuisine
         
