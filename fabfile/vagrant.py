@@ -14,6 +14,7 @@ def provision():
         print('ex.: fab vagrant provision')
     else:
         _setup_users()
+        require.deb.uptodate_index(max_age={'hour': 1})
         _install_build_essential()
         _install_virtualenv_wrapper()
         _mkvirtualenv('skylines')
