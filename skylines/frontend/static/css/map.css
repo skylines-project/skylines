@@ -19,11 +19,11 @@
   background-color: #fff;
 }
 
-.olFullscreen .olControlAttribution {
+.olFullscreen .ol-viewport .ol-attribution {
   bottom: 125pt !important;
 }
 
-.olFullscreen .olControlScaleLine {
+.olFullscreen .ol-viewport .ol-scale-line {
   bottom: 125pt !important;
 }
 
