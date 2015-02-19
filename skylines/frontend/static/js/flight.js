@@ -671,7 +671,6 @@ function setTime(time) {
   if (!time) {
     // remove crosshair from barogram
     baro.clearTime();
-    hideAllPlanesOnMap();
 
     // remove plane icons from map
     hideAllPlanesOnMap();
