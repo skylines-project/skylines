@@ -452,8 +452,8 @@ function removeFlight(sfid) {
   var flight_layer = map.getLayers().getArray().filter(function(e) {
     return e.get('name') == 'Flight';
   })[0];
-  flight_layer.getSource().getSource().removeFeature(
-      flight_layer.getSource().getSource().getFeatures().filter(function(e) {
+  flights.getSource().removeFeature(
+      flights.getSource().getFeatures().filter(function(e) {
         return e.get('sfid') == sfid;
       })[0]
   );
