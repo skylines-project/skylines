@@ -17,3 +17,50 @@
   position: absolute;
   min-height: 1em;
 }
+
+.ol-control,
+.ol-control:hover {
+  padding: 0px;
+  background: none;
+  box-shadow: 0 0 8px rgba(50,50,50,0.3);
+}
+
+.ol-scale-line,
+.ol-control button {
+  background: white;
+  background: rgba(255,255,255,0.7);
+  border: 1px solid #bbb;
+  border-radius: 4px;
+  color: #000;
+  margin: 0px;
+}
+
+.ol-control button:hover {
+  background: white;
+}
+
+.ol-scale-line-inner {
+  color: #000;
+  border-color: #000;
+}
+
+.ol-zoom {
+  border: 1px solid #bbb;
+}
+
+.ol-zoom .ol-zoom-in {
+  border: 0px;
+  border-bottom: 1px solid #bbb;
+  border-radius: 4px 4px 0px 0px;
+  margin: 0px;
+}
+
+.ol-zoom .ol-zoom-out {
+  border: 0px;
+  border-radius: 0px 0px 4px 4px;
+  margin: 0px;
+}
+
+.ol-attribution:not(.ol-collapsed) {
+  background: white;
+}
