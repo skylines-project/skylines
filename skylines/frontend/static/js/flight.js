@@ -737,19 +737,15 @@ function getFixData(flight, time) {
   fix_data['heading'] = Math.atan2(_loc_next[0] - _loc_prev[0],
                                    _loc_next[1] - _loc_prev[1]);
 
+  fix_data['alt-msl'] = _loc_current[2];
+
   var loc_prev = ol.proj.transform(_loc_prev, 'EPSG:3857', 'EPSG:4326');
   var loc_next = ol.proj.transform(_loc_next, 'EPSG:3857', 'EPSG:4326');
 
-  if (dt_total != 0)
+  if (dt_total != 0) {
     fix_data['speed'] = geographicDistance(loc_next, loc_prev) / dt_total;
-
-  var h_prev = flight.h[index];
-  var h_next = flight.h[index + 1];
-
-  fix_data['alt-msl'] = h_prev;
-
-  if (dt_total != 0)
-    fix_data['vario'] = (h_next - h_prev) / dt_total;
+    fix_data['vario'] = (_loc_next[2] - _loc_prev[2]) / dt_total;
+  }
 
   if (flight.elev_t !== undefined && flight.elev_h !== undefined) {
     var elev_index = getNextSmallerIndex(flight.elev_t, time);
