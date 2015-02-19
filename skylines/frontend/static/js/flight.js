@@ -721,31 +721,23 @@ function getFixData(flight, time) {
   var t_prev = flight.t[index];
   var t_next = flight.t[index + 1];
   var dt_total = t_next - t_prev;
-  var dt_rel = 0;
-
-  if (dt_total != 0)
-    dt_rel = (time - t_prev) / dt_total;
 
   var fix_data = {};
 
   fix_data['time'] = t_prev;
 
-  var loc_prev = [flight.lonlat[index * 2], flight.lonlat[index * 2 + 1]];
-  var loc_next = [flight.lonlat[index * 2 + 2], flight.lonlat[index * 2 + 3]];
+  var _loc_prev = flight.geo.getCoordinateAtM(t_prev);
+  var _loc_current = flight.geo.getCoordinateAtM(time);
+  var _loc_next = flight.geo.getCoordinateAtM(t_next);
 
-  var lon_prev = loc_prev[1], lat_prev = loc_prev[0];
-  var lon_next = loc_next[1], lat_next = loc_next[0];
-
-  var _loc_prev = ol.proj.transform([lon_prev, lat_prev],
-                                    'EPSG:4326', 'EPSG:3857');
-  var _loc_next = ol.proj.transform([lon_next, lat_next],
-                                    'EPSG:4326', 'EPSG:3857');
-
-  fix_data['lon'] = _loc_prev[0] + (_loc_next[0] - _loc_prev[0]) * dt_rel;
-  fix_data['lat'] = _loc_prev[1] + (_loc_next[1] - _loc_prev[1]) * dt_rel;
+  fix_data['lon'] = _loc_current[0];
+  fix_data['lat'] = _loc_current[1];
 
   fix_data['heading'] = Math.atan2(_loc_next[0] - _loc_prev[0],
                                    _loc_next[1] - _loc_prev[1]);
+
+  var loc_prev = ol.proj.transform(_loc_prev, 'EPSG:3857', 'EPSG:4326');
+  var loc_next = ol.proj.transform(_loc_next, 'EPSG:3857', 'EPSG:4326');
 
   if (dt_total != 0)
     fix_data['speed'] = geographicDistance(loc_next, loc_prev) / dt_total;
