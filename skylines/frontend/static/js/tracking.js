@@ -77,11 +77,9 @@ function updateFlight(tracking_id, _lonlat, _time,
 
   // points is already sliced
   flight.t = flight.t.concat(time);
-  flight.h = flight.h.concat(height);
   flight.enl = flight.enl.concat(enl);
   flight.elev_t = flight.elev_t.concat(elev_t);
   flight.elev_h = flight.elev_h.concat(elev_h);
-  flight.lonlat = flight.lonlat.concat(lonlat);
   flight.flot_h = flight.flot_h.concat(flot_h);
   flight.flot_enl = flight.flot_enl.concat(flot_enl);
   flight.flot_elev = flight.flot_elev.concat(flot_elev);

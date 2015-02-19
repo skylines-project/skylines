@@ -340,9 +340,7 @@ function addFlight(sfid, _lonlat, _time, _height, _enl,
   }
 
   flights.add({
-    lonlat: lonlat,
     t: time,
-    h: height,
     enl: enl,
     geo: coordinates,
     color: color,
