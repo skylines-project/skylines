@@ -13,7 +13,7 @@
   bottom: 125pt !important;
 }
 
-.olMap .plane_marker {
+.ol-viewport .plane_marker {
   position: absolute;
   min-height: 1em;
 }
