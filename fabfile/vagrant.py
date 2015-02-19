@@ -27,9 +27,10 @@ def _setup_users():
     if not fabtools.user.exists('skylines'):
         fabtools.user.create('skylines', password='skylines')
 
-    if not cuisine.file_exists('/etc/sudoers.d/vagrant'):
+    vsudoers_path = '/etc/sudoers.d/vagrant'
+    if not cuisine.file_exists(vsudoers_path):
         vagrant_sudo = 'vagrant ALL=(ALL) NOPASSWD:ALL'
-        cuisine.file_write('/etc/sudoers.d/vagrant', vagrant_sudo,
+        cuisine.file_write(vsudoers_path, vagrant_sudo,
                            owner='root', group='root', sudo=True)
 
 
@@ -67,7 +68,7 @@ def _mkvirtualenv(name):
         with prefix('source /usr/local/bin/virtualenvwrapper.sh'):
             run("mkvirtualenv %s" % name)
 
-    postactivate = '/home/vagrant/.virtualenvs/skylines/bin/postactivate'
+    postactivate = '/home/vagrant/.virtualenvs/%s/bin/postactivate' % name
     if not cuisine.file_exists(postactivate):
         cuisine.file_write(postactivate, '#!/bin/bash\n\n')
     append(postactivate, "cd /vagrant")

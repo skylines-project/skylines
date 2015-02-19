@@ -4,7 +4,6 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.provider "virtualbox" do |v|
     v.memory = 512
     v.cpus = 1
-    v.gui = true
   end
 
   config.vm.box = "ubuntu/trusty64"
