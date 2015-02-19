@@ -61,7 +61,7 @@ function updateFlight(tracking_id, _lonlat, _time,
 
     var point = ol.proj.transform([lonlat[(i * 2) + 1], lonlat[i * 2]],
                                   'EPSG:4326', 'EPSG:3857');
-    flight.geo.appendCoordinate([point[0], point[1], time[i]]);
+    flight.geo.appendCoordinate([point[0], point[1], height[i], time[i]]);
 
     flot_h.push([timestamp, slUnits.convertAltitude(height[i])]);
     flot_enl.push([timestamp, enl[i]]);

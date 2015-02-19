@@ -50,10 +50,10 @@ slFlightCollection = function() {
       var lastRel = ol.extent.containsCoordinate(extent, lastCoord),
           nextRel;
 
-      total_min = Math.min(total_min, lastCoord[2]);
+      total_min = Math.min(total_min, lastCoord[3]);
 
       if (lastRel == true)
-        min = Math.min(lastCoord[2], min);
+        min = Math.min(lastCoord[3], min);
 
       for (var i = 1; i < end; i += 1) {
         nextCoord = coordinates[i];
@@ -65,11 +65,11 @@ slFlightCollection = function() {
 
         // last vertice was inside extent, next one is outside.
         if (lastRel && !nextRel) {
-          max = Math.max(nextCoord[2], max);
+          max = Math.max(nextCoord[3], max);
           lastRel = nextRel;
         } else if (!lastRel && nextRel) {
           // last vertice was outside extent, next one is inside
-          min = Math.min(lastCoord[2], min);
+          min = Math.min(lastCoord[3], min);
         }
 
         lastCoord = nextCoord;
@@ -77,9 +77,9 @@ slFlightCollection = function() {
       }
 
       if (lastRel == true)
-        max = Math.max(lastCoord[2], max);
+        max = Math.max(lastCoord[3], max);
 
-      total_max = Math.max(total_max, lastCoord[2]);
+      total_max = Math.max(total_max, lastCoord[3]);
     });
 
     if (min == Infinity) min = total_min;
@@ -272,13 +272,14 @@ function addFlight(sfid, _lonlat, _time, _height, _enl,
   var enl = ol.format.Polyline.decodeDeltas(_enl, 1, 1);
   var lonlat = ol.format.Polyline.decodeDeltas(_lonlat, 2);
 
-  var coordinates = new ol.geom.LineString([], 'XYM');
+  var coordinates = new ol.geom.LineString([], 'XYZM');
 
   var lonlatLength = lonlat.length;
   for (var i = 0; i < lonlatLength; i += 2) {
     var point = ol.proj.transform([lonlat[i + 1], lonlat[i]],
                                   'EPSG:4326', 'EPSG:3857');
-    coordinates.appendCoordinate([point[0], point[1], time[i / 2]]);
+    coordinates.appendCoordinate([point[0], point[1],
+                                  height[i / 2], time[i / 2]]);
   }
 
   var color = _additional.color || colors[flights.length() % colors.length];
@@ -875,7 +876,7 @@ function hoverMap() {
       if (squared_distance > 100) {
         setTime(default_time);
       } else {
-        var time = closest_point[2];
+        var time = closest_point[3];
         setTime(time);
       }
     }
