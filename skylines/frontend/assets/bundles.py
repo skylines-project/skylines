@@ -142,7 +142,7 @@ upload_js = Bundle(
     'js/baro.js',
     'js/upload.js',
     'http://momentjs.com/downloads/moment.min.js',
-    'https://rawgithub.com/TobiasLohner/bootstrap-datetimepicker/7cf8cb30ad2322417d78742346f080a4889d449e/src/js/bootstrap-datetimepicker.js',
+    'https://rawgithub.com/TobiasLohner/bootstrap-datetimepicker/c36342415a1be8fa013548402bf01718ca93d454/src/js/bootstrap-datetimepicker.js',
     'js/jquery.flot.flight-upload.js',
     filters=SimpleClosureJS,
     output='js/upload-%(version)s.js')
