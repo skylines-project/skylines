@@ -747,12 +747,9 @@ function getFixData(flight, time) {
   fix_data['heading'] = Math.atan2(_loc_next[0] - _loc_prev[0],
                                    _loc_next[1] - _loc_prev[1]);
 
-  /*
   if (dt_total != 0)
-    fix_data['speed'] = ol.ellipsoid.WGS84.vincentyDistance(
-        [loc_next[1], loc_next[0]],
-        [loc_prev[1], loc_prev[0]]) / dt_total;
-  */
+    fix_data['speed'] = geographicDistance(loc_next, loc_prev) / dt_total;
+
   var h_prev = flight.h[index];
   var h_next = flight.h[index + 1];
 
@@ -1010,4 +1007,22 @@ function followFlight(sfid) {
     map.beforeRender(pan);
     map.getView().setCenter(coordinate);
   }
+}
+
+
+function geographicDistance(loc1_deg, loc2_deg) {
+  var radius = 6367009;
+
+  var loc1 = [loc1_deg[0] * Math.PI / 180, loc1_deg[1] * Math.PI / 180];
+  var loc2 = [loc2_deg[0] * Math.PI / 180, loc2_deg[1] * Math.PI / 180];
+
+  var dlon = loc2[1] - loc1[1];
+  var dlat = loc2[0] - loc1[0];
+
+  var a = Math.pow(Math.sin(dlat / 2), 2) +
+          Math.cos(loc1[0]) * Math.cos(loc2[0]) *
+          Math.pow(Math.sin(dlon / 2), 2);
+  var c = 2 * Math.asin(Math.sqrt(a));
+
+  return radius * c;
 }
