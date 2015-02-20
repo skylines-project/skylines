@@ -252,8 +252,6 @@ function updateBaroScale() {
  * @param {String} _time Google polyencoded string of time values.
  * @param {String} _height Google polyencoded string of height values.
  * @param {String} _enl Google polyencoded string of engine noise levels.
- * @param {Array(double)} zoom_levels Array of zoom levels where to switch
- *   between the LoD.
  * @param {Array(Objects)} _contests Array of scored/optimised contests.
  *   Such an object must contain: name, turnpoints, times
  *   turnpoints and times are googlePolyEncoded strings.
@@ -264,7 +262,7 @@ function updateBaroScale() {
  *   the flight, e.g. registration number, callsign, ...
  */
 function addFlight(sfid, _lonlat, _time, _height, _enl,
-    zoom_levels, _contests, _elevations_t, _elevations_h, opt_additional) {
+    _contests, _elevations_t, _elevations_h, opt_additional) {
   var _additional = opt_additional || {};
 
   var height = ol.format.Polyline.decodeDeltas(_height, 1, 1);
@@ -383,9 +381,9 @@ function addFlightFromJSON(url, async) {
       if (flights.has(data.sfid))
         return;
 
-      addFlight(data.sfid, data.encoded.points,
+      addFlight(data.sfid, data.points,
                 data.barogram_t, data.barogram_h,
-                data.enl, data.zoom_levels, data.contests,
+                data.enl, data.contests,
                 data.elevations_t, data.elevations_h, data.additional);
 
       map.render();
