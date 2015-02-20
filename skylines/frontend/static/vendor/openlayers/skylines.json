@@ -28,6 +28,7 @@
     "ol.Overlay#getElement",
     "ol.Overlay#setOffset",
     "ol.Overlay#setPosition",
+    "ol.View",
     "ol.View#calculateExtent",
     "ol.View#fitExtent",
     "ol.View#getCenter",
