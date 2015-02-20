@@ -24,6 +24,11 @@ function initOpenLayers(id, tile_url, opt_options) {
 
   map = new ol.Map({
     target: id,
+    view: new ol.View({
+      center: ol.proj.transform([10, 50], 'EPSG:4326', 'EPSG:3857'),
+      maxZoom: 17,
+      zoom: 5
+    }),
     controls: ol.control.defaults().extend([
       new ol.control.ScaleLine(),
       new GraphicLayerSwitcher()
@@ -62,11 +67,6 @@ function initOpenLayers(id, tile_url, opt_options) {
 
   addAirspaceLayers(tile_url);
   addMWPLayers(tile_url);
-
-  map.getView().setCenter(
-      ol.proj.transform([10, 50], 'EPSG:4326', 'EPSG:3857')
-  );
-  map.getView().setZoom(5);
 }
 
 
