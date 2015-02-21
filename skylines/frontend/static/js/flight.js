@@ -142,7 +142,7 @@ function style_function(feature) {
     color = feature.get('color');
 
   var z_index = 1000; // default z-index
-  var line_dash = []; // default line style
+  var line_dash = undefined; // default line style
 
   switch (feature.get('type')) {
     case 'flight':
