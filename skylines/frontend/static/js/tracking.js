@@ -10,7 +10,7 @@ function updateFlightsFromJSON() {
     $.ajax(url, {
       data: { last_update: flight.last_update || null },
       success: function(data) {
-        updateFlight(data.sfid, data.encoded.points,
+        updateFlight(data.sfid, data.points,
                      data.barogram_t, data.barogram_h,
                      data.enl, data.elevations);
 

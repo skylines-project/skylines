@@ -70,11 +70,10 @@
     {% for pilot, trace in zip(pilots, traces) -%}
     {% if trace -%}
     addFlight({{ pilot.id }},
-      {{ h.json.dumps(trace.encoded.points) }},
+      {{ h.json.dumps(trace.points) }},
       {{ h.json.dumps(trace.barogram_t) }},
       {{ h.json.dumps(trace.barogram_h) }},
       {{ h.json.dumps(trace.enl) }},
-      {{ h.json.dumps(trace.zoom_levels) }},
       undefined,
       {{ h.json.dumps(trace.barogram_t) }},
       {{ h.json.dumps(trace.elevations) }},
