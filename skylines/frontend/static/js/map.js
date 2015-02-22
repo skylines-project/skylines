@@ -74,11 +74,19 @@ function setBaseLayer(base_layer) {
   if (!base_layer)
     return;
 
+  var fallback = false;
+
   map.getLayers().forEach(function(layer) {
     if (layer.get('base_layer')) {
       layer.setVisible(layer.get('name') == base_layer);
+      fallback |= layer.get('name') == base_layer;
     }
   });
+
+  if (!fallback)
+    map.getLayers().getArray().filter(function(e) {
+      return e.get('name') == 'OpenStreetMap';
+    })[0].setVisible(true);
 }
 
 
