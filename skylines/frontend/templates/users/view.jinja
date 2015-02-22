@@ -79,6 +79,7 @@
       map.getView().setZoom(10);
 
     addBingLayers("{{ config.get('SKYLINES_BING_API_KEY', 'null') }}");
+    addMapboxLayer("{{ config.get('SKYLINES_MAPBOX_API_KEY', 'null') }}");
     initInfoBox({flight_info: false, location_info: true});
   });
 </script>

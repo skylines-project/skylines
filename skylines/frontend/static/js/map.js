@@ -192,6 +192,39 @@ function addReliefLayer() {
 
 
 /**
+ * Add the Mapbox layer to the map
+ *
+ * @param {String} tile_url The tile url supplied by Mapbox
+ */
+function addMapboxLayer(tile_url) {
+  if (tile_url == 'null') return;
+
+  var mapbox_layer = new ol.layer.Tile({
+    source: new ol.source.XYZ({
+      attributions: [
+        new ol.Attribution({
+          html: '<a href="https://www.mapbox.com/about/maps/"' +
+              ' target="_blank">' +
+              '&copy; Mapbox &copy; OpenStreetMap</a> <a' +
+              ' class="mapbox-improve-map"' +
+              ' href="https://www.mapbox.com/map-feedback/"' +
+              ' target="_blank">Improve this map</a>'
+        })
+      ],
+      url: tile_url
+    }),
+    name: 'Terrain',
+    id: 'Terrain',
+    base_layer: true,
+    z_index: 5,
+    display_in_layer_switcher: true
+  });
+
+  map.addLayer(mapbox_layer);
+}
+
+
+/**
  * Add the Bing layers to the map
  *
  * @param {String} api_key The API key supplied by Bing.

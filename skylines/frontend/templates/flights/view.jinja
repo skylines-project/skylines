@@ -88,6 +88,7 @@
 
     pinButton($("#pinned"), {{ flight.id }});
     addBingLayers("{{ config.get('SKYLINES_BING_API_KEY', 'null') }}");
+    addMapboxLayer("{{ config.get('SKYLINES_MAPBOX_API_KEY', 'null') }}");
 
     $('#wingman-table').find('tbody').find('tr').each(function(index, row) {
       $(this).on('click', function() {
