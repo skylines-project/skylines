@@ -79,7 +79,7 @@ def _install_skylines_python_requirements():
         with prefix('export WORKON_HOME=$HOME/.virtualenvs'):
             with prefix('source /usr/local/bin/virtualenvwrapper.sh'):
                 with prefix("workon skylines"):
-                    run("pip install -e .")
+                    run("pip install -r requirements.txt")
 
 
 def _install_postgres():
