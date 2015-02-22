@@ -1,16 +1,16 @@
 # Slovenian translations for SkyLines.
-# Copyright (C) 2012 ORGANIZATION
+# Copyright (C) 2012 PGC
 # This file is distributed under the same license as the SkyLines project.
-# FIRST AUTHOR <primoz.susa@niceclouds.com>, 2012.
+# FIRST AUTHOR <primoz.susa@niceclouds.com>, 2015.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: SkyLines 0.1\n"
-"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2013-12-27 00:36+0100\n"
-"PO-Revision-Date: 2012-11-11 20:36+0100\n"
+"Report-Msgid-Bugs-To: Primoz Susa <primoz.susa@niceclouds.com>\n"
+"POT-Creation-Date: 2015-2-22 00:36+0100\n"
+"PO-Revision-Date: 2015-2-22 20:36+0100\n"
 "Last-Translator: Primoz Susa <primoz.susa@niceclouds.com>\n"
-"Language-Team: en <LL@li.org>\n"
+"Language-Team: en <sl@li.org>\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
