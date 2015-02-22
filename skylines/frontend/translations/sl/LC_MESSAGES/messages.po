@@ -341,7 +341,7 @@ msgstr "Člani"
 #: skylines/frontend/templates/clubs/pilots.jinja:7
 #, python-format
 msgid "Members <small>of %(club)s</small>"
-msgstr "Člani <small> %(club)ov</small>"
+msgstr "Člani <small>%(club)s</small>"
 
 #: skylines/frontend/templates/clubs/view.jinja:28
 msgid "Website"
