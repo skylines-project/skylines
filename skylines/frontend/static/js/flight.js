@@ -129,8 +129,6 @@ function initFixTable() {
   });
 }
 
-initFixTable();
-
 function updateBaroScale() {
   var extent = map.getView().calculateExtent(map.getSize());
   var interval = flights.getMinMaxTimeInExtent(extent);

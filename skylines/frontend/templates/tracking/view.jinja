@@ -62,6 +62,7 @@
                    { {% if 'baselayer' in request.args %}'base_layer': '{{ request.args['baselayer'] }}',{% endif %}{% if 'overlays' in request.args %}'overlay_layers': '{{ request.args['overlays'] }}',{% endif %} });
     initFlightLayer();
     initBaro($("#barogram"));
+    initFixTable();
 
     // initiate tracking mode
     default_time = -1;
