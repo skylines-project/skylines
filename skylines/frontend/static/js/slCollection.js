@@ -90,7 +90,9 @@ slCollection = function() {
     for (var i = 0, len = collection.length(); i < len; ++i) {
       var object = collection.at(i);
       if (object.getID() == id) {
+        $(collection).triggerHandler('preremove', object);
         data_.splice(i, 1);
+        $(collection).triggerHandler('removed', id);
         return true;
       }
     }
