@@ -7,7 +7,7 @@ slMapClickHandler = function(map, flight_display, settings) {
    * The OpenLayers.Geometry object of the circle.
    * @type {Object}
    */
-  var circle = null;
+  var circle = { geometry: null, animation: null };
 
   /**
    * Stores the state if the infobox.
@@ -168,37 +168,37 @@ slMapClickHandler = function(map, flight_display, settings) {
     });
     */
 
-    if (!circle)
-      circle = new ol.geom.Circle(coordinate, 1000);
+    if (!circle.geometry)
+      circle.geometry = new ol.geom.Circle(coordinate, 1000);
     else
-      circle.setCenterAndRadius(coordinate, 1000);
+      circle.geometry.setCenterAndRadius(coordinate, 1000);
 
-    circle.hide_animation = null;
+    circle.animation = null;
 
     map.on('postcompose', function(e) {
       var vector_context = e.vectorContext;
 
-      if (circle) {
-        if (circle.hide_animation != null) {
+      if (circle.geometry) {
+        if (circle.animation != null) {
           var frame_state = e.frameState;
-          if (!circle.hide_animation.start)
-            circle.hide_animation.start = frame_state.time;
+          if (!circle.animation.start)
+            circle.animation.start = frame_state.time;
 
-          if (circle.hide_animation.duration <= 0 ||
+          if (circle.animation.duration <= 0 ||
               frame_state.time >
-              circle.hide_animation.start + circle.hide_animation.duration) {
-            circle = null;
+              circle.animation.start + circle.animation.duration) {
+            circle.geometry = null;
             return;
           }
 
-          var delta_time = -(circle.hide_animation.start - frame_state.time) %
-                           circle.hide_animation.duration;
+          var delta_time = -(circle.animation.start - frame_state.time) %
+                           circle.animation.duration;
           stroke_style.setWidth(3 - delta_time /
-                                (circle.hide_animation.duration / 3));
+                                (circle.animation.duration / 3));
         }
 
         vector_context.setFillStrokeStyle(null, stroke_style);
-        vector_context.drawCircleGeometry(circle);
+        vector_context.drawCircleGeometry(circle.geometry);
         map.render();
       }
     });
@@ -210,7 +210,7 @@ slMapClickHandler = function(map, flight_display, settings) {
    * @param {Integer} duration Fade duration.
    */
   function hideCircle(duration) {
-    circle.hide_animation = { duration: duration, start: null };
+    circle.animation = { duration: duration, start: null };
   };
 
   /**
