@@ -1,3 +1,6 @@
+
+
+
 /**
  * An ordered collection of flight objects.
  * @constructor
@@ -7,18 +10,82 @@ slFlightCollection = function() {
 
   // Public attributes and methods
 
+  var source = new ol.source.Vector();
+
   /**
    * Calculates the bounds of all flights in the collection.
-   * @return {OpenLayers.Bounds}
+   * @return {ol.extent}
    */
   collection.getBounds = function() {
-    var bounds = new OpenLayers.Bounds();
+    return source.getExtent();
+  };
 
-    collection.each(function(flight) {
-      bounds.extend(flight.geo.bounds);
+  /**
+   * Returns the vector layer source of this collection.
+   * @return {ol.source.Vector}
+   */
+  collection.getSource = function() {
+    return source;
+  };
+
+  /**
+   * Returns the minimum and maximum fix time within the extent.
+   * Code based on ol.render.canvas.Replay.prototype.appendFlatCoordinates.
+   * @param {ol.extent} extent
+   * @return {Object}
+   */
+  collection.getMinMaxTimeInExtent = function(extent) {
+    var min = Infinity,
+        total_min = Infinity;
+    var max = -Infinity,
+        total_max = -Infinity;
+
+    source.forEachFeatureInExtent(extent, function(f) {
+      var coordinates = f.getGeometry().getCoordinates();
+
+      var lastCoord = coordinates[0];
+      var nextCoord = null;
+      var end = coordinates.length;
+
+      var lastRel = ol.extent.containsCoordinate(extent, lastCoord),
+          nextRel;
+
+      total_min = Math.min(total_min, lastCoord[3]);
+
+      if (lastRel == true)
+        min = Math.min(lastCoord[3], min);
+
+      for (var i = 1; i < end; i += 1) {
+        nextCoord = coordinates[i];
+
+        nextRel = ol.extent.containsCoordinate(extent, nextCoord);
+
+        // current vector completely within extent. do nothing.
+        // current vector completely outside extent. do nothing.
+
+        // last vertice was inside extent, next one is outside.
+        if (lastRel && !nextRel) {
+          max = Math.max(nextCoord[3], max);
+          lastRel = nextRel;
+        } else if (!lastRel && nextRel) {
+          // last vertice was outside extent, next one is inside
+          min = Math.min(lastCoord[3], min);
+        }
+
+        lastCoord = nextCoord;
+        lastRel = nextRel;
+      }
+
+      if (lastRel == true)
+        max = Math.max(lastCoord[3], max);
+
+      total_max = Math.max(total_max, lastCoord[3]);
     });
 
-    return bounds;
+    if (min == Infinity) min = total_min;
+    if (max == -Infinity) max = total_max;
+
+    return { min: min, max: max };
   };
 
   return collection;
@@ -33,8 +100,12 @@ var flights = slFlightCollection();
 var baro;
 var fix_table;
 var phase_tables = new Array();
-var phases_layer;
+var styles;
 
+var phase_markers = {
+  start: null,
+  end: null
+};
 
 /*
  * Global time, can be:
@@ -56,78 +127,81 @@ var contest_colors = {
   'olc_plus triangle': '#9f14ff'
 };
 
+
+/**
+ * Style function
+ * @param {ol.feature} feature - Feature to style
+ * @return {Array} style
+ */
+function style_function(feature) {
+  if (!$.inArray('type', feature.getKeys()))
+    return null;
+
+  var color = '#004bbd'; // default color
+  if ($.inArray('color', feature.getKeys()))
+    color = feature.get('color');
+
+  var z_index = 1000; // default z-index
+  var line_dash = undefined; // default line style
+
+  switch (feature.get('type')) {
+    case 'flight':
+      z_index = 1000;
+      break;
+
+    case 'contest':
+      z_index = 999;
+      line_dash = [5];
+      break;
+  }
+
+  return [new ol.style.Style({
+    stroke: new ol.style.Stroke({
+      color: color,
+      width: 2,
+      lineDash: line_dash
+    }),
+    zIndex: z_index
+  })];
+}
+
+
 /**
  * Initialize the map and add airspace and flight path layers.
  */
-
 function initFlightLayer() {
-  var default_style = new OpenLayers.Style({
-    strokeColor: '${color}',
-    strokeWidth: 2,
-    graphicZIndex: 1000
-  });
-
-  var contest_style = new OpenLayers.Style({
-    strokeColor: '${color}',
-    strokeWidth: 2,
-    strokeDashstyle: 'dash',
-    graphicZIndex: 1500
-  });
-
-  var plane_style = new OpenLayers.Style({
-    // Set the external graphic and background graphic images.
-    externalGraphic: '${getGraphic}',
-    // Makes sure the background graphic is placed correctly relative
-    // to the external graphic.
-    graphicXOffset: -20,
-    graphicYOffset: -8,
-    graphicWidth: 40,
-    graphicHeight: 24,
-    rotation: '${rotation}',
-    // Set the z-indexes of both graphics to make sure the background
-    // graphics stay in the background (shadows on top of markers looks
-    // odd; let's not do that).
-    graphicZIndex: 2000
-  }, {
-    context: {
-      getGraphic: function(feature) {
-        var msie_8 = $.browser.msie && (parseInt($.browser.version, 10) < 9);
-        var normal_glider = msie_8 ?
-            '/images/glider_symbol_msie.png' : '/images/glider_symbol.png';
-        return normal_glider;
-      }
-    }
-  });
-
-  var hidden_style = new OpenLayers.Style({
-    display: 'none'
-  });
-
-  var flightPathLayer = new OpenLayers.Layer.Vector('Flight', {
-    styleMap: new OpenLayers.StyleMap({
-      'default': default_style,
-      'contest': contest_style,
-      'plane': plane_style,
-      'hidden': hidden_style
+  var flight_path_layer = new ol.layer.Image({
+    source: new ol.source.ImageVector({
+      source: flights.getSource(),
+      style: style_function
     }),
-    rendererOptions: {
-      zIndexing: true
-    },
-    displayInLayerSwitcher: false
+    name: 'Flight',
+    z_index: 50
   });
 
-  map.addLayer(flightPathLayer);
+  map.addLayer(flight_path_layer);
 
-  map.events.register('move', null, function() {
-    initRedrawLayer(flightPathLayer);
+  var flight_contest_source = new ol.source.Vector({
+    features: []
   });
 
-  map.events.register('moveend', null, updateBaroScale);
+  var flight_contest_layer = new ol.layer.Vector({
+    source: flight_contest_source,
+    style: style_function,
+    name: 'Contest',
+    z_index: 49
+  });
+
+  map.addLayer(flight_contest_layer);
+  map.on('moveend', function(e) {
+    if (updateBaroScale())
+      baro.draw();
+  });
 
   map.hover_enabled = true;
 
   map.play_button = new PlayButton();
-  $(map.play_button).on('click', function() {
+  $(map.play_button).on('click touchend', function() {
     if (playing)
       stop();
     else
@@ -138,7 +212,10 @@ function initFlightLayer() {
 
 function initFixTable() {
   fix_table = slFixTable($('#fix-data'));
-  $(fix_table).on('selection_changed', updateBaroData);
+  $(fix_table).on('selection_changed', function(e) {
+    updateBaroData();
+    baro.draw();
+  });
   $(fix_table).on('remove_flight', function(e, sfid) {
     removeFlight(sfid);
   });
@@ -147,58 +224,19 @@ function initFixTable() {
 initFixTable();
 
 function updateBaroScale() {
-  var first_t = 999999;
-  var last_t = 0;
-
-  // circle throu all flights
-  flights.each(function(flight) {
-    var geometries = flight.geo.partitionedGeometries;
-
-    // if flight is not in viewport continue.
-    var length = geometries.length;
-    if (length == 0)
-      return;
-
-    // show barogram of all trace parts visible
-    var comp_length = geometries[length - 1].components.length;
-    var first = geometries[0].components[0].originalIndex;
-    var last = geometries[length - 1].components[comp_length - 1].originalIndex;
-
-    // get first and last time which should be the bounds of the barogram
-    if (flight.t[first] < first_t)
-      first_t = flight.t[first];
-
-    if (flight.t[last] > last_t)
-      last_t = flight.t[last];
-  });
+  var extent = map.getView().calculateExtent(map.getSize());
+  var interval = flights.getMinMaxTimeInExtent(extent);
 
   var redraw = false;
 
-  if (last_t == 0) {
+  if (interval.max == -Infinity) {
     baro.clearTimeInterval();
     redraw = true;
   } else {
-    redraw = baro.setTimeInterval(first_t, last_t);
+    redraw = baro.setTimeInterval(interval.min, interval.max);
   }
 
-  if (redraw) baro.draw();
-}
-
-
-/**
- * Initiates the redraw of a layer
- *
- * @this {Object}
- * @param {OpenLayers.Layer} layer The layer that should be redrawn.
- */
-function initRedrawLayer(layer) {
-  // Run this function only every 50ms to save some computing power.
-  if (this.initRedrawLayerRunning) return;
-
-  this.initRedrawLayerRunning = true;
-  setTimeout(function() { this.initRedrawLayerRunning = false; }, 50);
-
-  layer.redraw();
+  return redraw;
 }
 
 
@@ -211,13 +249,9 @@ function initRedrawLayer(layer) {
  * @param {int} sfid SkyLines flight ID.
  * @param {String} _lonlat Google polyencoded string of geolocations
  *   (lon + lat, WSG 84).
- * @param {String} _levels Google polyencoded string of levels of detail.
- * @param {int} _num_levels Number of levels encoded in _lonlat and _levels.
  * @param {String} _time Google polyencoded string of time values.
  * @param {String} _height Google polyencoded string of height values.
  * @param {String} _enl Google polyencoded string of engine noise levels.
- * @param {Array(double)} zoom_levels Array of zoom levels where to switch
- *   between the LoD.
  * @param {Array(Objects)} _contests Array of scored/optimised contests.
  *   Such an object must contain: name, turnpoints, times
  *   turnpoints and times are googlePolyEncoded strings.
@@ -227,52 +261,43 @@ function initRedrawLayer(layer) {
  * @param {Object=} opt_additional May contain additional information about
  *   the flight, e.g. registration number, callsign, ...
  */
-function addFlight(sfid, _lonlat, _levels, _num_levels, _time, _height, _enl,
-    zoom_levels, _contests, _elevations_t, _elevations_h, opt_additional) {
+function addFlight(sfid, _lonlat, _time, _height, _enl,
+    _contests, _elevations_t, _elevations_h, opt_additional) {
   var _additional = opt_additional || {};
 
-  var polyline_decoder = new OpenLayers.Format.EncodedPolyline();
+  var height = ol.format.Polyline.decodeDeltas(_height, 1, 1);
+  var time = ol.format.Polyline.decodeDeltas(_time, 1, 1);
+  var enl = ol.format.Polyline.decodeDeltas(_enl, 1, 1);
+  var lonlat = ol.format.Polyline.decodeDeltas(_lonlat, 2);
 
-  var height = polyline_decoder.decodeDeltas(_height, 1, 1);
-  var time = polyline_decoder.decodeDeltas(_time, 1, 1);
-  var enl = polyline_decoder.decodeDeltas(_enl, 1, 1);
-  var lonlat = polyline_decoder.decode(_lonlat, 2);
-  var lod = polyline_decoder.decodeUnsignedIntegers(_levels);
+  var coordinates = new ol.geom.LineString([], 'XYZM');
 
-  var points = new Array();
   var lonlatLength = lonlat.length;
-  for (var i = 0; i < lonlatLength; ++i) {
-    points.push(new OpenLayers.Geometry.Point(lonlat[i][1], lonlat[i][0]).
-        transform(WGS84_PROJ, map.getProjectionObject()));
+  for (var i = 0; i < lonlatLength; i += 2) {
+    var point = ol.proj.transform([lonlat[i + 1], lonlat[i]],
+                                  'EPSG:4326', 'EPSG:3857');
+    coordinates.appendCoordinate([point[0], point[1],
+                                  height[i / 2], time[i / 2]]);
   }
 
-  // add new flight
-  var flight = new OpenLayers.Geometry.ProgressiveLineString(
-      points, lod, zoom_levels);
-  flight.clip = 1;
-
   var color = _additional.color || colors[flights.length() % colors.length];
-  var feature = new OpenLayers.Feature.Vector(flight, {
+
+  var feature = new ol.Feature({
+    geometry: coordinates,
+    sfid: sfid,
     color: color,
-    sfid: sfid
+    type: 'flight'
   });
 
-  var plane = new OpenLayers.Feature.Vector(
-      new OpenLayers.Geometry.Point(points[0].x, points[0].y), {
-        rotation: 0,
-        sfid: sfid
-      });
-  plane.renderIntent = 'plane';
-
-  map.getLayersByName('Flight')[0].addFeatures([feature, plane]);
+  flights.getSource().addFeature(feature);
 
   var contests = [];
   if (_contests) {
     var _contestsLength = _contests.length;
     for (var i = 0; i < _contestsLength; ++i) {
       var contest = _contests[i];
-      var turnpoints = polyline_decoder.decode(contest.turnpoints, 2);
-      var times = polyline_decoder.decodeDeltas(contest.times, 1, 1);
+      var turnpoints = ol.format.Polyline.decodeDeltas(contest.turnpoints, 2);
+      var times = ol.format.Polyline.decodeDeltas(contest.times, 1, 1);
 
       var name = contest.name;
       contests.push({
@@ -297,8 +322,8 @@ function addFlight(sfid, _lonlat, _levels, _num_levels, _time, _height, _enl,
   // Add flight as a row to the fix data table
   fix_table.addRow(sfid, color, _additional['competition_id']);
 
-  var _elev_t = polyline_decoder.decodeDeltas(_elevations_t, 1, 1);
-  var _elev_h = polyline_decoder.decodeDeltas(_elevations_h, 1, 1);
+  var _elev_t = ol.format.Polyline.decodeDeltas(_elevations_t, 1, 1);
+  var _elev_h = ol.format.Polyline.decodeDeltas(_elevations_h, 1, 1);
 
   var flot_elev = [], elev_t = [], elev_h = [];
   for (var i = 0; i < _elev_t.length; i++) {
@@ -313,14 +338,12 @@ function addFlight(sfid, _lonlat, _levels, _num_levels, _time, _height, _enl,
   }
 
   flights.add({
-    lonlat: lonlat,
     t: time,
-    h: height,
     enl: enl,
-    geo: flight,
+    geo: coordinates,
     color: color,
-    plane: plane,
     sfid: sfid,
+    plane: { point: null, marker: null },
     last_update: time[time.length - 1],
     contests: contests,
     elev_t: elev_t,
@@ -333,6 +356,7 @@ function addFlight(sfid, _lonlat, _levels, _num_levels, _time, _height, _enl,
 
   updateBaroData();
   updateBaroScale();
+  baro.draw();
 
   $('#wingman-table').find('*[data-sfid=' + sfid + ']')
       .find('.color-stripe').css('background-color', color);
@@ -357,12 +381,12 @@ function addFlightFromJSON(url, async) {
       if (flights.has(data.sfid))
         return;
 
-      addFlight(data.sfid, data.encoded.points, data.encoded.levels,
-                data.num_levels, data.barogram_t, data.barogram_h,
-                data.enl, data.zoom_levels, data.contests,
+      addFlight(data.sfid, data.points,
+                data.barogram_t, data.barogram_h,
+                data.enl, data.contests,
                 data.elevations_t, data.elevations_h, data.additional);
 
-      initRedrawLayer(map.getLayersByName('Flight')[0]);
+      map.render();
     }
   });
 }
@@ -377,34 +401,35 @@ function addFlightFromJSON(url, async) {
  * @param {Integer} sfid The SkyLines flight id this contest trace belongs to.
  */
 function addContest(name, lonlat, times, sfid) {
-  var points = new Array();
+  var coordinates = new ol.geom.LineString([]);
   var lonlatLength = lonlat.length;
 
-  var triangle = (name.search(/triangle/) != -1 && lonlatLength == 5);
+  var triangle = (name.search(/triangle/) != -1 && lonlatLength == 5 * 2);
 
-  if (triangle) lonlatLength--;
+  if (triangle) lonlatLength -= 2;
 
-  for (var i = 0; i < lonlatLength; ++i) {
-    points.push(new OpenLayers.Geometry.Point(lonlat[i][1], lonlat[i][0]).
-        transform(WGS84_PROJ, map.getProjectionObject()));
+  for (var i = 0; i < lonlatLength; i += 2) {
+    var point = ol.proj.transform([lonlat[i + 1], lonlat[i]],
+                                  'EPSG:4326', 'EPSG:3857');
+    coordinates.appendCoordinate(point);
   }
 
   if (triangle) {
-    points[0] = points[3];
+    coordinates.appendCoordinate(coordinates.getFirstCoordinate());
   }
 
-  var trace = new OpenLayers.Geometry.LineString(points);
-
   var color = contest_colors[name] || '#ff2c73';
-  var feature = new OpenLayers.Feature.Vector(trace, {
+  var feature = new ol.Feature({
+    geometry: coordinates,
+    sfid: sfid,
     color: color,
-    sfid: sfid
+    type: 'contest'
   });
 
-  // show the contest traces only for the first flight by default
-  feature.renderIntent = (flights.length() == 0) ? 'contest' : 'hidden';
-
-  map.getLayersByName('Flight')[0].addFeatures(feature);
+  var contest_layer = map.getLayers().getArray().filter(function(e) {
+    return e.get('name') == 'Contest';
+  })[0];
+  contest_layer.getSource().addFeature(feature);
 }
 
 function removeFlight(sfid) {
@@ -421,10 +446,27 @@ function removeFlight(sfid) {
   // Hide plane to remove any additional related objects from the map
   hidePlaneOnMap(flight);
 
-  var flight_layer = map.getLayersByName('Flight')[0];
-  flight_layer.destroyFeatures(
-      flight_layer.getFeaturesByAttribute('sfid', sfid)
+  var flight_layer = map.getLayers().getArray().filter(function(e) {
+    return e.get('name') == 'Flight';
+  })[0];
+  flights.getSource().removeFeature(
+      flights.getSource().getFeatures().filter(function(e) {
+        return e.get('sfid') == sfid;
+      })[0]
   );
+
+  var contest_layer = map.getLayers().getArray().filter(function(e) {
+    return e.get('name') == 'Contest';
+  })[0];
+
+  var contest_features = contest_layer.getSource().getFeatures()
+    .filter(function(e) {
+        return e.get('sfid') == sfid;
+      });
+
+  for (var i = 0; i < contest_features.length; i++)
+    contest_layer.getSource().removeFeature(contest_features[i]);
+
 
   $('#wingman-table').find('*[data-sfid=' + sfid + ']')
       .find('.color-stripe').css('background-color', '');
@@ -433,6 +475,7 @@ function removeFlight(sfid) {
   fix_table.removeRow(sfid);
   updateBaroData();
   updateBaroScale();
+  baro.draw();
 }
 
 
@@ -617,8 +660,6 @@ function updateBaroData() {
   baro.setENLData(enls);
   baro.setContests(contests);
   baro.setElevations(elevations);
-
-  baro.draw();
 }
 
 function setTime(time) {
@@ -634,32 +675,31 @@ function setTime(time) {
 
     // remove data from fix-data table
     fix_table.clearAllFixes();
-    fix_table.render();
 
-    return;
+  } else {
+    // update barogram crosshair
+    baro.setTime(time);
+
+    flights.each(function(flight) {
+      // calculate fix data
+      var fix_data = getFixData(flight, time);
+      if (!fix_data) {
+        // update map
+        hidePlaneOnMap(flight);
+
+        // update fix-data table
+        fix_table.clearFix(flight.sfid);
+      } else {
+        // update map
+        setPlaneOnMap(flight, fix_data);
+
+        // update fix-data table
+        fix_table.updateFix(flight.sfid, fix_data);
+      }
+    });
   }
 
-  // update barogram crosshair
-  baro.setTime(time);
-
-  flights.each(function(flight) {
-    // calculate fix data
-    var fix_data = getFixData(flight, time);
-    if (!fix_data) {
-      // update map
-      hidePlaneOnMap(flight);
-
-      // update fix-data table
-      fix_table.clearFix(flight.sfid);
-    } else {
-      // update map
-      setPlaneOnMap(flight, fix_data);
-
-      // update fix-data table
-      fix_table.updateFix(flight.sfid, fix_data);
-    }
-  });
-
+  map.render();
   fix_table.render();
 }
 
@@ -677,49 +717,30 @@ function getFixData(flight, time) {
   var t_prev = flight.t[index];
   var t_next = flight.t[index + 1];
   var dt_total = t_next - t_prev;
-  var dt_rel = 0;
-
-  if (dt_total != 0)
-    dt_rel = (time - t_prev) / dt_total;
 
   var fix_data = {};
 
   fix_data['time'] = t_prev;
 
-  var loc_prev = flight.lonlat[index];
-  var loc_next = flight.lonlat[index + 1];
+  var _loc_prev = flight.geo.getCoordinateAtM(t_prev);
+  var _loc_current = flight.geo.getCoordinateAtM(time);
+  var _loc_next = flight.geo.getCoordinateAtM(t_next);
 
-  var lon_prev = loc_prev[1], lat_prev = loc_prev[0];
-  var lon_next = loc_next[1], lat_next = loc_next[0];
+  fix_data['lon'] = _loc_current[0];
+  fix_data['lat'] = _loc_current[1];
 
-  var _loc_prev = new OpenLayers.LonLat(lon_prev, lat_prev);
-  _loc_prev.transform(WGS84_PROJ, map.getProjectionObject());
-  var _loc_next = new OpenLayers.LonLat(lon_next, lat_next);
-  _loc_next.transform(WGS84_PROJ, map.getProjectionObject());
+  fix_data['heading'] = Math.atan2(_loc_next[0] - _loc_prev[0],
+                                   _loc_next[1] - _loc_prev[1]);
 
-  fix_data['lon'] = lon_prev + (lon_next - lon_prev) * dt_rel;
-  fix_data['lat'] = lat_prev + (lat_next - lat_prev) * dt_rel;
+  fix_data['alt-msl'] = _loc_current[2];
 
-  fix_data['loc'] = new OpenLayers.LonLat(
-      fix_data['lon'], fix_data['lat']);
-  fix_data['loc'].transform(WGS84_PROJ, map.getProjectionObject());
+  var loc_prev = ol.proj.transform(_loc_prev, 'EPSG:3857', 'EPSG:4326');
+  var loc_next = ol.proj.transform(_loc_next, 'EPSG:3857', 'EPSG:4326');
 
-  fix_data['heading'] = Math.atan2(_loc_next.lon - _loc_prev.lon,
-                                   _loc_next.lat - _loc_prev.lat) *
-                        180 / Math.PI;
-
-  if (dt_total != 0)
-    fix_data['speed'] = OpenLayers.Util.distVincenty(
-        {lon: loc_next[1], lat: loc_next[0]},
-        {lon: loc_prev[1], lat: loc_prev[0]}) * 1000 / dt_total;
-
-  var h_prev = flight.h[index];
-  var h_next = flight.h[index + 1];
-
-  fix_data['alt-msl'] = h_prev;
-
-  if (dt_total != 0)
-    fix_data['vario'] = (h_next - h_prev) / dt_total;
+  if (dt_total != 0) {
+    fix_data['speed'] = geographicDistance(loc_next, loc_prev) / dt_total;
+    fix_data['vario'] = (_loc_next[2] - _loc_prev[2]) / dt_total;
+  }
 
   if (flight.elev_t !== undefined && flight.elev_h !== undefined) {
     var elev_index = getNextSmallerIndex(flight.elev_t, time);
@@ -740,62 +761,48 @@ function setPlaneOnMap(flight, fix_data) {
   var plane = flight.plane;
 
   // set plane location
-  var old_lon = plane.geometry.x;
-  var old_lat = plane.geometry.y;
-  plane.geometry.move(fix_data['loc'].lon - old_lon,
-                      fix_data['loc'].lat - old_lat);
+  if (plane.point === null) {
+    plane.point = new ol.geom.Point([fix_data['lon'], fix_data['lat']]);
+  } else {
+    plane.point.setCoordinates([fix_data['lon'], fix_data['lat']]);
+  }
 
   // set plane heading
-  // <heading> in degrees
-  plane.attributes.rotation = fix_data['heading'];
-
-  // update plane icon
-  map.getLayersByName('Flight')[0].drawFeature(plane);
+  // <heading> in radians
+  plane['heading'] = fix_data['heading'];
 
   // add plane marker if more than one flight on the map
   if (flights.length() > 1) {
-    if (!plane.marker) {
-      plane.marker = $(
-          '<span class="badge plane_marker" ' +
-              'style="background: ' + flight.color + ';">' +
+    if (plane.marker === null) {
+      var badge = $('<span class="badge plane_marker" ' +
+              'style="display: inline-block; text-align: center; ' +
+              'background: ' + flight.color + ';">' +
           (flight.additional['competition_id'] || '') +
           '</span>');
 
-      $(map.getLayersByName('Flight')[0].div).append(plane.marker);
+      plane.marker = new ol.Overlay({
+        element: badge
+      });
+      map.addOverlay(plane.marker);
+      plane.marker.setOffset([badge.width(), -40]);
     }
 
-    var pixel = map.getPixelFromLonLat(fix_data['loc']);
-    plane.marker.css('left', (pixel.x - plane.marker.outerWidth() / 2) + 'px');
-    plane.marker.css('top', (pixel.y - 40) + 'px');
+    plane.marker.setPosition(plane.point.getCoordinates());
   }
 }
 
 function hidePlaneOnMap(flight) {
-  var layer = map.getLayersByName('Flight')[0];
-
   var plane = flight.plane;
 
-  layer.removeFeatures(plane);
-
-  if (plane && plane.marker) {
-    plane.marker.remove();
+  plane.point = null;
+  if (plane.marker !== null) {
+    map.removeOverlay(plane.marker);
     plane.marker = null;
   }
 }
 
 function hideAllPlanesOnMap() {
-  var layer = map.getLayersByName('Flight')[0];
-
-  flights.each(function(flight) {
-    var plane = flight.plane;
-
-    layer.removeFeatures(plane);
-
-    if (plane && plane.marker) {
-      plane.marker.remove();
-      plane.marker = null;
-    }
-  });
+  flights.each(hidePlaneOnMap);
 }
 
 
@@ -805,177 +812,70 @@ function hideAllPlanesOnMap() {
 function hoverMap() {
   // search on every mousemove over the map viewport. Run this function only
   // every 25ms to save some computing power.
-  var running = false;
-  map.events.register('mousemove', null, function(e) {
-    if (!map.hover_enabled)
+  //var running = false;
+
+  var msie_8 = $.browser.msie && (parseInt($.browser.version, 10) < 9);
+
+  var style = new ol.style.Icon({
+    anchor: [0.5, 0.5],
+    anchorXUnits: 'fraction',
+    anchorYUnits: 'fraction',
+    size: [40, 24],
+    src: msie_8 ?
+        '/images/glider_symbol_msie.png' : '/images/glider_symbol.png',
+    rotation: 0,
+    rotateWithView: true
+  });
+
+  style.load();
+
+  map.on('pointermove', function(e) {
+    if (!map.hover_enabled || e.dragging)
       return;
 
-    // call this function only every 25ms, else return early
-    if (running) return;
-    running = true;
-    setTimeout(function() { running = false; }, 25);
-
-    // create bounding box in map coordinates around mouse cursor
-    var pixel = e.xy.clone();
-    var hoverTolerance = 15;
-    var llPx = pixel.add(-hoverTolerance / 2, hoverTolerance / 2);
-    var urPx = pixel.add(hoverTolerance / 2, -hoverTolerance / 2);
-    var ll = map.getLonLatFromPixel(llPx);
-    var ur = map.getLonLatFromPixel(urPx);
-    var loc = map.getLonLatFromPixel(pixel);
-
-    // search for a aircraft position within the bounding box
-    var nearest = searchForPlane(new OpenLayers.Bounds(
-        ll.lon, ll.lat, ur.lon, ur.lat), loc, hoverTolerance);
-
-    // if there's a aircraft within the bounding box, show the plane icon
-    // and draw a position marker on the linechart.
-    if (nearest != null) {
-      // calculate time
-      var flight = nearest.flight;
-      var time_prev = flight.t[nearest.from];
-      var time_next = flight.t[nearest.from + 1];
-      var time = time_prev + (time_next - time_prev) * nearest.along;
-
-      // set the map time to x
-      setTime(time);
-    } else {
-      // hide everything
-      setTime(default_time);
-    }
-  });
-}
-
-
-/**
- * Searches for the nearest aircraft position in mouse range
- *
- * @param {OpenLayers.Bounds} within Bounds to search within.
- * @param {OpenLayers.Point} loc Location of mouse click.
- * @param {Int} hoverTolerance Tolerance in pixel to search.
- * @return {Object} An object with the nearest flight.
- */
-function searchForPlane(within, loc, hoverTolerance) {
-  var possible_solutions = [];
-
-  // circle throu all flights visible in viewport
-  flights.each(function(flight) {
-    var geometries = flight.geo.partitionedGeometries;
-    var geometriesLength = geometries.length;
-
-    for (var j = 0; j < geometriesLength; ++j) {
-      var components = geometries[j].components;
-      var componentsLength = components.length;
-
-      for (var k = 1; k < componentsLength; ++k) {
-        // check if the current vector between two points intersects our
-        // "within" bounds if so, process this vector in the next step
-        // (possible_solutions)
-        var vector = new OpenLayers.Bounds();
-        vector.bottom = Math.min(components[k - 1].y,
-                                 components[k].y);
-        vector.top = Math.max(components[k - 1].y,
-                              components[k].y);
-        vector.left = Math.min(components[k - 1].x,
-                               components[k].x);
-        vector.right = Math.max(components[k - 1].x,
-                                components[k].x);
-
-        if (within.intersectsBounds(vector))
-          possible_solutions.push({
-            from: components[k - 1].originalIndex,
-            to: components[k].originalIndex,
-            flight: flight
-          });
-      }
-    }
+    var coordinate = map.getEventCoordinate(e.originalEvent);
+    displaySnap(coordinate);
   });
 
-  // no solutions found. return.
-  if (possible_solutions.length == 0)
-    return null;
+  map.on('postcompose', function(e) {
+    var vector_context = e.vectorContext;
 
-  // calculate map resolution (meters per pixel) at mouse location
-  var loc_epsg4326 = loc.clone().transform(
-      map.getProjectionObject(), WGS84_PROJ);
-  var resolution = map.getResolution() * Math.cos(
-      Math.PI / 180 * loc_epsg4326.lat);
+    flights.each(function(flight) {
+      if (flight.plane.point !== null) {
+        style.setRotation(flight.plane['heading']);
+        vector_context.setImageStyle(style);
+        vector_context.drawPointGeometry(flight.plane.point);
+      }
+    });
+  });
 
-  // find nearest distance between loc and vectors in possible_solutions
-  var nearest, distance = Math.pow(hoverTolerance * resolution, 2);
+  function displaySnap(coordinate) {
+    var flight_path_source = flights.getSource();
 
-  var possible_solutionsLength = possible_solutions.length;
-  for (var i = 0; i < possible_solutionsLength; ++i) {
-    var possible_solution = possible_solutions[i];
-    var flight = possible_solution.flight;
-    var components = flight.geo.components;
+    var closest_feature = flight_path_source
+        .getClosestFeatureToCoordinate(coordinate);
 
-    for (var j = possible_solution.from + 1; j <= possible_solution.to; ++j) {
-      var distToSegment = distanceToSegmentSquared({
-        x: loc.lon,
-        y: loc.lat
-      }, {
-        x1: components[j - 1].x,
-        y1: components[j - 1].y,
-        x2: components[j].x,
-        y2: components[j].y
-      });
+    if (closest_feature !== null) {
+      var geometry = closest_feature.getGeometry();
+      var closest_point = geometry.getClosestPoint(coordinate);
 
-      if (distToSegment.distance < distance) {
-        distance = distToSegment.distance;
-        nearest = {
-          from: j - 1,
-          to: j,
-          along: distToSegment.along,
-          flight: possible_solution.flight
-        };
+      var feature_pixel = map.getPixelFromCoordinate(closest_point);
+      var mouse_pixel = map.getPixelFromCoordinate(coordinate);
+
+      var squared_distance = Math.pow(mouse_pixel[0] - feature_pixel[0], 2) +
+                             Math.pow(mouse_pixel[1] - feature_pixel[1], 2);
+
+      if (squared_distance > 100) {
+        setTime(default_time);
+      } else {
+        var time = closest_point[3];
+        setTime(time);
       }
     }
-  }
 
-  return nearest;
+    map.render();
+  }
 }
-
-
-/**
- * (OpenLayers.Geometry.)distanceToSegmentSquared modified to return along, too.
- *
- * @param {Object} point An object with x and y properties representing the
- *     point coordinates.
- * @param {Object} segment An object with x1, y1, x2, and y2 properties
- *     representing endpoint coordinates.
- * @return {Object} An object with distance (squared) and along.
- */
-distanceToSegmentSquared = function(point, segment) {
-  var x0 = point.x;
-  var y0 = point.y;
-  var x1 = segment.x1;
-  var y1 = segment.y1;
-  var x2 = segment.x2;
-  var y2 = segment.y2;
-  var dx = x2 - x1;
-  var dy = y2 - y1;
-  var along = ((dx * (x0 - x1)) + (dy * (y0 - y1))) /
-              (Math.pow(dx, 2) + Math.pow(dy, 2));
-  var x, y;
-  if (along <= 0.0) {
-    x = x1;
-    y = y1;
-    along = 0;
-  } else if (along >= 1.0) {
-    x = x2;
-    y = y2;
-    along = 1;
-  } else {
-    x = x1 + along * dx;
-    y = y1 + along * dy;
-  }
-
-  return {
-    distance: Math.pow(x - x0, 2) + Math.pow(y - y0, 2),
-    along: along
-  };
-};
 
 
 /**
@@ -987,12 +887,11 @@ function initPhasesTable(placeholder) {
   placeholder.data('phase_table', slPhaseTable(placeholder));
   phase_tables.push(placeholder.data('phase_table'));
 
+
   $(placeholder.data('phase_table'))
       .on('selection_changed', function(event, data) {
-        clearPhaseMarkers();
-
         if (data) {
-          highlightFlightPhase(data.start, data.end);
+          phase_markers = highlightFlightPhase(data.start, data.end);
           baro.setTimeHighlight(data.start, data.end);
 
           for (var i = 0; i < phase_tables.length; i++) {
@@ -1001,44 +900,44 @@ function initPhasesTable(placeholder) {
             }
           }
         } else {
+          phase_markers.start = null;
+          phase_markers.end = null;
+
           baro.clearTimeHighlight();
         }
 
         baro.draw();
+        map.render();
       });
-}
 
-
-function addPhasesLayer() {
-  if (phases_layer) return;
-
-  phases_layer = new OpenLayers.Layer.Vector('Flight Phases', {
-    displayInLayerSwitcher: false
-  });
-  map.addLayer(phases_layer);
-}
-
-
-function clearPhaseMarkers() {
-  phases_layer.removeAllFeatures();
-}
-
-
-function addPhaseMarker(lonlat, image_url) {
-  var point = new OpenLayers.Geometry.Point(lonlat[1], lonlat[0]);
-  point = point.transform(WGS84_PROJ, map.getProjectionObject());
-
-  var feature = new OpenLayers.Feature.Vector(point, {}, {
-    externalGraphic: image_url,
-    graphicHeight: 21,
-    graphicWidth: 16,
-    graphicXOffset: -8,
-    graphicYOffset: -21
+  var phase_start_marker_style = new ol.style.Icon({
+    anchor: [0.5, 1],
+    anchorXUnits: 'fraction',
+    anchorYUnits: 'fraction',
+    src: '/vendor/openlayers/img/marker-green.png'
   });
 
-  phases_layer.addFeatures(feature);
-}
+  var phase_end_marker_style = new ol.style.Icon({
+    anchor: [0.5, 1],
+    anchorXUnits: 'fraction',
+    anchorYUnits: 'fraction',
+    src: '/vendor/openlayers/img/marker.png'
+  });
 
+  phase_start_marker_style.load();
+  phase_end_marker_style.load();
+
+  map.on('postcompose', function(e) {
+    var vector_context = e.vectorContext;
+
+    if (phase_markers.start !== null) {
+      vector_context.setImageStyle(phase_start_marker_style);
+      vector_context.drawPointGeometry(phase_markers.start);
+      vector_context.setImageStyle(phase_end_marker_style);
+      vector_context.drawPointGeometry(phase_markers.end);
+    }
+  });
+}
 
 function highlightFlightPhase(start, end) {
   // the phases table should contain only phases of our first flight only
@@ -1047,21 +946,29 @@ function highlightFlightPhase(start, end) {
   var start_index = getNextSmallerIndex(flight.t, start);
   var end_index = getNextSmallerIndex(flight.t, end);
 
-  if (start_index >= end_index) return;
+  var phase_markers = {
+    start: null,
+    end: null
+  };
 
-  // collect bounding box of flight
-  var bounds = new OpenLayers.Bounds();
-  for (var i = start_index; i <= end_index; ++i)
-    bounds.extendXY(flight.lonlat[i][1], flight.lonlat[i][0]);
+  if (start_index >= end_index) return phase_markers;
 
-  bounds.transform(WGS84_PROJ, map.getProjectionObject());
-  map.zoomToExtent(bounds.scale(2));
+  var extent = ol.extent.boundingExtent(
+      flight.geo.getCoordinates().slice(start_index, end_index + 1)
+      );
 
-  addPhaseMarker(flight.lonlat[start_index],
-      '/vendor/openlayers/img/marker-green.png');
+  var view = map.getView();
+  var buffer = Math.max(ol.extent.getWidth(extent),
+                        ol.extent.getHeight(extent));
+  view.fitExtent(ol.extent.buffer(extent, buffer * 0.05), map.getSize());
 
-  addPhaseMarker(flight.lonlat[end_index],
-      '/vendor/openlayers/img/marker.png');
+  var start_point = flight.geo.getCoordinateAtM(start);
+  var end_point = flight.geo.getCoordinateAtM(end);
+
+  phase_markers.start = new ol.geom.Point([start_point[0], start_point[1]]);
+  phase_markers.end = new ol.geom.Point([end_point[0], end_point[1]]);
+
+  return phase_markers;
 }
 
 
@@ -1075,7 +982,32 @@ function followFlight(sfid) {
 
   var flight = flights.get(sfid);
   if (flight) {
-    var coordinates = flight.geo.components[flight.geo.components.length - 1];
-    map.panTo(new OpenLayers.LonLat(coordinates.x, coordinates.y));
+    var coordinate = flight.geo.getLastCoordinate();
+
+    var pan = ol.animation.pan({
+      duration: 200,
+      source: (map.getView().getCenter())
+    });
+
+    map.beforeRender(pan);
+    map.getView().setCenter(coordinate);
   }
+}
+
+
+function geographicDistance(loc1_deg, loc2_deg) {
+  var radius = 6367009;
+
+  var loc1 = [loc1_deg[0] * Math.PI / 180, loc1_deg[1] * Math.PI / 180];
+  var loc2 = [loc2_deg[0] * Math.PI / 180, loc2_deg[1] * Math.PI / 180];
+
+  var dlon = loc2[1] - loc1[1];
+  var dlat = loc2[0] - loc1[0];
+
+  var a = Math.pow(Math.sin(dlat / 2), 2) +
+          Math.cos(loc1[0]) * Math.cos(loc2[0]) *
+          Math.pow(Math.sin(dlon / 2), 2);
+  var c = 2 * Math.asin(Math.sqrt(a));
+
+  return radius * c;
 }

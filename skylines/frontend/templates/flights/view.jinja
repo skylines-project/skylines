@@ -73,7 +73,11 @@
     {%- endfor %}
     {%- endif %}
 
-    map.zoomToExtent(flights.getBounds().scale(1.02));
+    var view = map.getView();
+    var extent = flights.getBounds();
+    var buffer = Math.max(ol.extent.getWidth(extent), ol.extent.getHeight(extent));
+    extent = ol.extent.buffer(extent, buffer * 0.02);
+    view.fitExtent(extent, map.getSize());
 
     hoverMap();
 
@@ -83,12 +87,8 @@
         addFlightFromJSON("/flights/" + pinnedFlights[i] + "/json");
 
     pinButton($("#pinned"), {{ flight.id }});
-
-    $.getScript("https://maps.google.com/maps/api/js?v=3.7&sensor=false&callback=addGoogleLayer");
     addBingLayers("{{ config.get('SKYLINES_BING_API_KEY', 'null') }}");
-    addReliefLayer();
-
-    initInfoBox({flight_info: true, location_info: true});
+    addMapboxLayer("{{ config.get('SKYLINES_MAPBOX_API_KEY', 'null') }}");
 
     $('#wingman-table').find('tbody').find('tr').each(function(index, row) {
       $(this).on('click', function() {
@@ -117,6 +117,8 @@
 
     $('#wingman-table').find('[rel=tooltip]').tooltip();
     $('#flight-details-table').find('[rel=tooltip]').tooltip();
+
+    initInfoBox({flight_info: true, location_info: true});
   });
 </script>
 {%- endif %}
@@ -142,13 +144,11 @@
     });
 
     $('#detailed-stats').on('shown.bs.collapse', function () {
-      addPhasesLayer();
       initPhasesTable($('#phases-table'));
       $('html, body').animate({scrollTop: $("#detailed-stats").offset().top-100}, 200);
     });
 
     $('a[data-toggle="tab"]').on('shown.bs.tab', function(e) {
-        addPhasesLayer();
         initPhasesTable($('#leg-table-olc_plus-classic'));
         initPhasesTable($('#leg-table-olc_plus-triangle'));
     });

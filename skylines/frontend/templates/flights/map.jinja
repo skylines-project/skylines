@@ -52,45 +52,22 @@
     initFlightLayer();
     initBaro($("#barogram"));
 
-    addFlight({{ flight.id }},
-      {{ h.json.dumps(trace.encoded.points) }},
-      {{ h.json.dumps(trace.encoded.levels) }},
-      {{ trace.num_levels }},
-      {{ h.json.dumps(trace.barogram_t) }},
-      {{ h.json.dumps(trace.barogram_h) }},
-      {{ h.json.dumps(trace.enl) }},
-      {{ h.json.dumps(trace.zoom_levels) }},
-      {{ h.json.dumps(trace.contests) }},
-      {{ h.json.dumps(trace.elevations_t) }},
-      {{ h.json.dumps(trace.elevations_h) }},
-      { registration: {{ '"' ~ flight.registration|e ~ '"' if flight.registration else 'null' }},
-        competition_id: {{ '"' ~ flight.competition_id|e ~ '"' if flight.competition_id else 'null' }} }
-    );
+    addFlightFromJSON("/flights/{{ flight.id }}/json?{{ config.get('SKYLINES_CACHE_BUSTER', '') }}",false);
 
     {% if other_flights -%}
     {% for flight, trace in other_flights if trace -%}
-    addFlight({{ flight.id }},
-      {{ h.json.dumps(trace.encoded.points) }},
-      {{ h.json.dumps(trace.encoded.levels) }},
-      {{ trace.num_levels }},
-      {{ h.json.dumps(trace.barogram_t) }},
-      {{ h.json.dumps(trace.barogram_h) }},
-      {{ h.json.dumps(trace.enl) }},
-      {{ h.json.dumps(trace.zoom_levels) }},
-      {{ h.json.dumps(trace.contests) }},
-      {{ h.json.dumps(trace.elevations_t) }},
-      {{ h.json.dumps(trace.elevations_h) }},
-      { registration: {{ '"' ~ flight.registration|e ~ '"' if flight.registration else 'null' }},
-        competition_id: {{ '"' ~ flight.competition_id|e ~ '"' if flight.competition_id else 'null' }} }
-    );
+    addFlightFromJSON("/flights/{{ flight.id }}/json?{{ config.get('SKYLINES_CACHE_BUSTER', '') }}");
     {%- endfor %}
     {%- endif %}
 
-    var factor = $("#barogram")[0].offsetHeight / map.getSize().h;
-    var zoomExtent = flights.getBounds().clone().scale(1.02);
-    zoomExtent.bottom -= zoomExtent.getHeight() * factor * 3/2;
+    var factor = $("#barogram")[0].offsetHeight / map.getSize()[1];
 
-    map.zoomToExtent(zoomExtent);
+    var view = map.getView();
+    var extent = flights.getBounds();
+    var buffer = Math.max(ol.extent.getWidth(extent), ol.extent.getHeight(extent));
+    extent = ol.extent.buffer(extent, buffer * 0.02);
+    extent[1] -= ol.extent.getHeight(extent) * factor * 3/2;
+    view.fitExtent(extent, map.getSize());
 
     hoverMap();
 
@@ -100,10 +77,8 @@
         addFlightFromJSON("/flights/" + pinnedFlights[i] + "/json");
 
     pinButton($("#pinned"), {{ flight.id }});
-
-    $.getScript("https://maps.google.com/maps/api/js?v=3.7&sensor=false&callback=addGoogleLayer");
     addBingLayers("{{ config.get('SKYLINES_BING_API_KEY', 'null') }}");
-    addReliefLayer();
+    addMapboxLayer("{{ config.get('SKYLINES_MAPBOX_API_KEY', 'null') }}");
 
     initInfoBox({flight_info: true, location_info: true});
   });

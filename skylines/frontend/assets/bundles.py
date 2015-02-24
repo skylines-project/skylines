@@ -90,10 +90,9 @@ all_css = Bundle(
     output='css/skylines-%(version)s.css')
 
 openlayers_css = Bundle(
-    'vendor/openlayers/OpenLayers.css',
-    'css/ol-GraphicLayerSwitcher.css',
+    'vendor/openlayers/ol.css',
+    'css/ol-GraphicLayerSwitcher-v3.css',
     'css/ol-PlayButton.css',
-    'css/ol-ZoomControl.css',
     'css/map.css',
     'css/map-infobox.css',
     filters='cssmin, cssrewrite',
@@ -111,9 +110,9 @@ all_js = Bundle(
     output='js/skylines-%(version)s.js')
 
 openlayers_js = Bundle(
-    'vendor/openlayers/OpenLayers.js',
-    'js/ol-GraphicLayerSwitcher.js',
-    'js/ol-PlayButton.js',
+    'vendor/openlayers/ol.js',
+    'js/ol-GraphicLayerSwitcher-v3.js',
+    'js/ol-PlayButton-v3.js',
     'js/map.js',
     'js/map-click-handler.js',
     filters=SimpleClosureJS,

@@ -39,34 +39,47 @@
                    "{{ config.get('SKYLINES_MAP_TILE_URL') }}",
                    { {% if 'baselayer' in request.args %}'base_layer': '{{ request.args['baselayer'] }}',{% endif %}{% if 'overlays' in request.args %}'overlay_layers': '{{ request.args['overlays'] }}',{% endif %} });
 
-    $.getScript("https://maps.google.com/maps/api/js?v=3.7&sensor=false&callback=addGoogleLayer");
-    addBingLayers("{{ config.get('SKYLINES_BING_API_KEY', 'null') }}");
-    addReliefLayer();
-
-    var vectorLayer = new OpenLayers.Layer.Vector("Takeoff Locations", {
-      displayInLayerSwitcher: false
+    var vector_source = new ol.source.Vector({
+      features: []
     });
-    map.addLayer(vectorLayer);
+
+    var vector_layer = new ol.layer.Vector({
+      source: vector_source,
+      display_in_layer_switcher: false,
+      z_index: 51,
+      name: 'Takeoff Locations',
+      id: 'TakeoffLocations'
+    });
+
+    map.addLayer(vector_layer);
+
+    var icon_style = new ol.style.Style({
+      image: new ol.style.Icon(({
+        anchor: [0.5, 1],
+        anchorXUnits: 'fraction',
+        anchorYUnits: 'fraction',
+        src: '/vendor/openlayers/img/marker-gold.png'
+      }))
+    });
 
     var locations = [{{ add_locations(takeoff_locations) }}];
     for (var i = 0; i < locations.length; ++i) {
-      point = new OpenLayers.Geometry.Point(locations[i][0], locations[i][1]);
-      point = point.transform(new OpenLayers.Projection("EPSG:4326"), map.getProjectionObject());
-      vectorLayer.addFeatures(new OpenLayers.Feature.Vector(point, {},
-        {
-          externalGraphic: "/vendor/openlayers/img/marker-gold.png",
-          graphicHeight: 21,
-          graphicWidth: 16,
-          graphicXOffset: -16/2,
-          graphicYOffset: -21
-        }
-      ));
-    }
-    map.zoomToExtent(vectorLayer.getDataExtent().scale(1.1));
-    var zoom = map.getZoom();
-    if (zoom > 10)
-      map.zoomTo(10);
+      var feature = new ol.Feature({
+        geometry: new ol.geom.Point(ol.proj.transform(locations[i], 'EPSG:4326', 'EPSG:3857'))
+      });
 
+      feature.setStyle(icon_style);
+
+      vector_source.addFeature(feature);
+    }
+
+    map.getView().fitExtent(vector_source.getExtent(), map.getSize());
+    var zoom = map.getView().getZoom();
+    if (zoom > 10)
+      map.getView().setZoom(10);
+
+    addBingLayers("{{ config.get('SKYLINES_BING_API_KEY', 'null') }}");
+    addMapboxLayer("{{ config.get('SKYLINES_MAPBOX_API_KEY', 'null') }}");
     initInfoBox({flight_info: false, location_info: true});
   });
 </script>
