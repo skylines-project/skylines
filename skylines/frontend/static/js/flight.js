@@ -963,8 +963,8 @@ function highlightFlightPhase(start, end) {
                         ol.extent.getHeight(extent));
   view.fitExtent(ol.extent.buffer(extent, buffer * 0.05), map.getSize());
 
-  var start_point = flight.geo.getCoordinateAtM(start);
-  var end_point = flight.geo.getCoordinateAtM(end);
+  var start_point = flight.geo.getCoordinates()[start_index];
+  var end_point = flight.geo.getCoordinates()[end_index];
 
   phase_markers.start = new ol.geom.Point([start_point[0], start_point[1]]);
   phase_markers.end = new ol.geom.Point([end_point[0], end_point[1]]);
