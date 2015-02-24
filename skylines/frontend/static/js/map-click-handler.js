@@ -62,7 +62,7 @@ slMapClickHandler = function(map, settings) {
                                Math.pow(mouse_pixel[1] - feature_pixel[1], 2);
 
         if (squared_distance < 100) {
-          var time = closest_point[2];
+          var time = closest_point[3];
           var sfid = closest_feature.get('sfid');
           var flight = flights.get(sfid);
 
