@@ -882,13 +882,14 @@ function hoverMap() {
  * @param {DOMElement} placeholder DOM element of the phases table.
 */
 function initPhasesTable(placeholder) {
-  if (placeholder.data('phase_table')) return;
+  if (placeholder.length === 0 || placeholder.data('phase_table')) return;
 
-  placeholder.data('phase_table', slPhaseTable(placeholder));
-  phase_tables.push(placeholder.data('phase_table'));
+  var phase_table = slPhaseTable(placeholder);
 
+  placeholder.data('phase_table', phase_table);
+  phase_tables.push(phase_table);
 
-  $(placeholder.data('phase_table'))
+  $(phase_table)
       .on('selection_changed', function(event, data) {
         if (data) {
           phase_markers = highlightFlightPhase(data.start, data.end);
