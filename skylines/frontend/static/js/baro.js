@@ -169,7 +169,7 @@ function slBarogram(placeholder, options) {
     else if (time == -1)
       flot.lockCrosshair({x: 999999999});
     else
-      flot.lockCrosshair({x: global_time * 1000});
+      flot.lockCrosshair({x: time * 1000});
   };
 
 
