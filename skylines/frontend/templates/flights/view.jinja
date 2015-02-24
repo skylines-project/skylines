@@ -148,14 +148,16 @@
       html: true
     });
 
+    var phase_highlighter = slPhaseHighlighter(map, baro);
+
     $('#detailed-stats').on('shown.bs.collapse', function () {
-      initPhasesTable($('#phases-table'));
+      phase_highlighter.addTable($('#phases-table'));
       $('html, body').animate({scrollTop: $("#detailed-stats").offset().top-100}, 200);
     });
 
     $('a[data-toggle="tab"]').on('shown.bs.tab', function(e) {
-        initPhasesTable($('#leg-table-olc_plus-classic'));
-        initPhasesTable($('#leg-table-olc_plus-triangle'));
+        phase_highlighter.addTable($('#leg-table-olc_plus-classic'));
+        phase_highlighter.addTable($('#leg-table-olc_plus-triangle'));
     });
   });
   /* ]]> */
