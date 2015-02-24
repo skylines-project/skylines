@@ -128,6 +128,7 @@ flight_js = Bundle(
         'js/slFlightCollection.js',
         'js/slFlight.js',
         'js/slPhaseHighlighter.js',
+        'js/slMapIconHandler.js',
         filters=SimpleClosureJS),
 
     'js/flight.js',

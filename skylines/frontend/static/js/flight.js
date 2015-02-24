@@ -8,6 +8,7 @@ var flights = slFlightCollection();
 var map;
 var baro;
 var fix_table;
+var map_icon_handler;
 
 /*
  * Global time, can be:
@@ -100,7 +101,7 @@ function initFlightLayer() {
       baro.draw();
   });
 
-  map.hover_enabled = true;
+  map_icon_handler.setMode(true);
 
   map.play_button = new PlayButton();
   $(map.play_button).on('click touchend', function() {
@@ -254,7 +255,7 @@ function addContest(name, lonlat, times, sfid) {
 function setupEvents() {
   $(flights).on('preremove', function(e, flight) {
     // Hide plane to remove any additional related objects from the map
-    hidePlaneOnMap(flight);
+    map_icon_handler.hidePlane(flight);
 
     var contest_layer = map.getLayers().getArray().filter(function(e) {
       return e.get('name') == 'Contest';
@@ -300,7 +301,7 @@ function play() {
   }
 
   // disable mouse hovering
-  map.hover_enabled = false;
+  map_icon_handler.setMode(false);
   baro.hover_enabled = false;
 
   // set play button to "stop" mode
@@ -320,7 +321,7 @@ function stop() {
   map.play_button.setMode('play');
 
   // reenable mouse hovering
-  map.hover_enabled = true;
+  map_icon_handler.setMode(true);
   baro.hover_enabled = true;
 }
 
@@ -474,7 +475,7 @@ function setTime(time) {
     baro.clearTime();
 
     // remove plane icons from map
-    hideAllPlanesOnMap();
+    map_icon_handler.hideAllPlanes();
 
     // remove data from fix-data table
     fix_table.clearAllFixes();
@@ -488,13 +489,13 @@ function setTime(time) {
       var fix_data = flight.getFixData(time);
       if (!fix_data) {
         // update map
-        hidePlaneOnMap(flight);
+        map_icon_handler.hidePlane(flight);
 
         // update fix-data table
         fix_table.clearFix(flight.getID());
       } else {
         // update map
-        setPlaneOnMap(flight, fix_data);
+        map_icon_handler.showPlane(flight, fix_data);
 
         // update fix-data table
         fix_table.updateFix(flight.getID(), fix_data);
@@ -504,127 +505,6 @@ function setTime(time) {
 
   map.render();
   fix_table.render();
-}
-
-function setPlaneOnMap(flight, fix_data) {
-  var plane = flight.getPlane();
-
-  // set plane location
-  if (plane.point === null) {
-    plane.point = new ol.geom.Point([fix_data['lon'], fix_data['lat']]);
-  } else {
-    plane.point.setCoordinates([fix_data['lon'], fix_data['lat']]);
-  }
-
-  // set plane heading
-  // <heading> in radians
-  plane['heading'] = fix_data['heading'];
-
-  // add plane marker if more than one flight on the map
-  if (flights.length() > 1) {
-    if (plane.marker === null) {
-      var badge = $('<span class="badge plane_marker" ' +
-              'style="display: inline-block; text-align: center; ' +
-              'background: ' + flight.getColor() + ';">' +
-          (flight.getCompetitionID() || '') +
-          '</span>');
-
-      plane.marker = new ol.Overlay({
-        element: badge
-      });
-      map.addOverlay(plane.marker);
-      plane.marker.setOffset([badge.width(), -40]);
-    }
-
-    plane.marker.setPosition(plane.point.getCoordinates());
-  }
-}
-
-function hidePlaneOnMap(flight) {
-  var plane = flight.getPlane();
-
-  plane.point = null;
-  if (plane.marker !== null) {
-    map.removeOverlay(plane.marker);
-    plane.marker = null;
-  }
-}
-
-function hideAllPlanesOnMap() {
-  flights.each(hidePlaneOnMap);
-}
-
-
-/**
- * Handles the mouseover events over the map to display near airplanes
- */
-function hoverMap() {
-  // search on every mousemove over the map viewport. Run this function only
-  // every 25ms to save some computing power.
-  //var running = false;
-
-  var msie_8 = $.browser.msie && (parseInt($.browser.version, 10) < 9);
-
-  var style = new ol.style.Icon({
-    anchor: [0.5, 0.5],
-    anchorXUnits: 'fraction',
-    anchorYUnits: 'fraction',
-    size: [40, 24],
-    src: msie_8 ?
-        '/images/glider_symbol_msie.png' : '/images/glider_symbol.png',
-    rotation: 0,
-    rotateWithView: true
-  });
-
-  style.load();
-
-  map.on('pointermove', function(e) {
-    if (!map.hover_enabled || e.dragging)
-      return;
-
-    var coordinate = map.getEventCoordinate(e.originalEvent);
-    displaySnap(coordinate);
-  });
-
-  map.on('postcompose', function(e) {
-    var vector_context = e.vectorContext;
-
-    flights.each(function(flight) {
-      var plane = flight.getPlane();
-      if (plane.point !== null) {
-        style.setRotation(plane['heading']);
-        vector_context.setImageStyle(style);
-        vector_context.drawPointGeometry(plane.point);
-      }
-    });
-  });
-
-  function displaySnap(coordinate) {
-    var flight_path_source = flights.getSource();
-
-    var closest_feature = flight_path_source
-        .getClosestFeatureToCoordinate(coordinate);
-
-    if (closest_feature !== null) {
-      var geometry = closest_feature.getGeometry();
-      var closest_point = geometry.getClosestPoint(coordinate);
-
-      var feature_pixel = map.getPixelFromCoordinate(closest_point);
-      var mouse_pixel = map.getPixelFromCoordinate(coordinate);
-
-      var squared_distance = Math.pow(mouse_pixel[0] - feature_pixel[0], 2) +
-                             Math.pow(mouse_pixel[1] - feature_pixel[1], 2);
-
-      if (squared_distance > 100) {
-        setTime(default_time);
-      } else {
-        var time = closest_point[3];
-        setTime(time);
-      }
-    }
-
-    map.render();
-  }
 }
 
 

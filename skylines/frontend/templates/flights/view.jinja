@@ -65,6 +65,7 @@
             { {% if 'baselayer' in request.args %}'base_layer': '{{ request.args['baselayer'] }}',{% endif %}{% if 'overlays' in request.args %}'overlay_layers': '{{ request.args['overlays'] }}',{% endif %} });
 
     map = sl_map.getMap();
+    map_icon_handler = slMapIconHandler(map, flights);
 
     initFlightLayer();
     initBaro($("#barogram"));
@@ -83,8 +84,6 @@
     var buffer = Math.max(ol.extent.getWidth(extent), ol.extent.getHeight(extent));
     extent = ol.extent.buffer(extent, buffer * 0.02);
     view.fitExtent(extent, map.getSize());
-
-    hoverMap();
 
     var pinnedFlights = getPinnedFlights();
     for (i in pinnedFlights)

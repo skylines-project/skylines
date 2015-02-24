@@ -63,6 +63,7 @@
             { {% if 'baselayer' in request.args %}'base_layer': '{{ request.args['baselayer'] }}',{% endif %}{% if 'overlays' in request.args %}'overlay_layers': '{{ request.args['overlays'] }}',{% endif %} });
 
     map = sl_map.getMap();
+    map_icon_handler = slMapIconHandler(map, flights);
 
     initFlightLayer();
     initBaro($("#barogram"));
@@ -96,7 +97,6 @@
     extent = ol.extent.buffer(extent, buffer * 0.02);
     view.fitExtent(extent, map.getSize());
 
-    hoverMap();
     sl_map.addBingLayers("{{ config.get('SKYLINES_BING_API_KEY', 'null') }}");
     sl_map.addMapboxLayer("{{ config.get('SKYLINES_MAPBOX_API_KEY', 'null') }}");
 
