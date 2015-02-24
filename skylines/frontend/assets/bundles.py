@@ -131,7 +131,7 @@ flight_js = Bundle(
     'js/slContest.js',
     'js/slPhaseHighlighter.js',
     'js/slMapIconHandler.js',
-    'js/flight.js',
+    'js/slFlightDisplay.js',
     filters=SimpleClosureJS,
     output='js/flight-%(version)s.js')
 
