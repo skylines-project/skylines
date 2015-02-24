@@ -120,7 +120,7 @@ openlayers_js = Bundle(
 
 flight_js = Bundle(
     Bundle(
-        'js/units.js',
+        'js/slUnits.js',
         'js/baro.js',
         'js/fix-table.js',
         'js/phase-table.js',
@@ -139,7 +139,7 @@ tracking_js = Bundle(
     output='js/tracking-%(version)s.js')
 
 upload_js = Bundle(
-    'js/units.js',
+    'js/slUnits.js',
     'js/baro.js',
     'js/upload.js',
     'http://momentjs.com/downloads/moment.min.js',
