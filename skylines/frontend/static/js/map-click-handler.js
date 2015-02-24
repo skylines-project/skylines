@@ -230,11 +230,10 @@ slMapClickHandler = function(map, settings) {
 
         addFlight(
             flight.sfid,
-            flight.encoded.points,
+            flight.points,
             flight.barogram_t,
             flight.barogram_h,
             flight.enl,
-            flight.zoom_levels,
             flight.contests,
             flight.elevations_t,
             flight.elevations_h,
