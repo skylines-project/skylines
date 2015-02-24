@@ -302,7 +302,7 @@ function play() {
 
   // disable mouse hovering
   map_icon_handler.setMode(false);
-  baro.hover_enabled = false;
+  baro.setHoverMode(false);
 
   // set play button to "stop" mode
   map.play_button.setMode('stop');
@@ -322,7 +322,7 @@ function stop() {
 
   // reenable mouse hovering
   map_icon_handler.setMode(true);
-  baro.hover_enabled = true;
+  baro.setHoverMode(true);
 }
 
 
@@ -359,9 +359,6 @@ function initBaro(element) {
 
   var mouse_container_running = false;
   $(baro).on('barohover', function(event, time) {
-    if (!baro.hover_enabled)
-      return;
-
     if (mouse_container_running)
       return;
 
@@ -375,13 +372,10 @@ function initBaro(element) {
   }).on('baroclick', function(event, time) {
     setTime(time);
   }).on('mouseout', function(event) {
-    if (!baro.hover_enabled)
-      return;
-
     setTime(default_time);
   });
 
-  baro.hover_enabled = true;
+  baro.setHoverMode(true);
 }
 
 function updateBaroData() {
