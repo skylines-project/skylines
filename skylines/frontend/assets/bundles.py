@@ -74,7 +74,7 @@ main_css = Bundle(
     'css/search.css',
     'css/events.css',
     'css/tracking-table.css',
-    'css/fix-table.css',
+    'css/slFixTable.css',
     'css/wingman.css',
     'vendor/flags/flags.css',
     'vendor/bootstrap-datepicker/datepicker.css',
@@ -122,7 +122,7 @@ flight_js = Bundle(
     Bundle(
         'js/slUnits.js',
         'js/baro.js',
-        'js/fix-table.js',
+        'js/slFixTable.js',
         'js/phase-table.js',
         'js/slCollection.js',
         'js/slFlightCollection.js',
