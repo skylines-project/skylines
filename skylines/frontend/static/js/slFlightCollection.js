@@ -88,5 +88,18 @@ slFlightCollection = function() {
     return { min: min, max: max };
   };
 
+
+  function setupEvents() {
+    $(collection).on('preremove', function(e, flight) {
+      source.removeFeature(
+          source.getFeatures().filter(function(e) {
+            return e.get('sfid') == flight.getID();
+          })[0]
+      );
+    });
+  };
+
+
+  setupEvents();
   return collection;
 };

@@ -110,6 +110,8 @@ function initFlightLayer() {
       play();
   });
   map.addControl(map.play_button);
+
+  setupEvents();
 }
 
 function initFixTable() {
@@ -119,7 +121,9 @@ function initFixTable() {
     baro.draw();
   });
   $(fix_table).on('remove_flight', function(e, sfid) {
-    removeFlight(sfid);
+    // never remove the first flight...
+    if (flights.at(0).getID() == sfid) return;
+    flights.remove(sfid);
   });
 }
 
@@ -247,50 +251,33 @@ function addContest(name, lonlat, times, sfid) {
   contest_layer.getSource().addFeature(feature);
 }
 
-function removeFlight(sfid) {
-  // never remove the first flight...
-  if (flights.at(0).getID() == sfid)
-    return;
+function setupEvents() {
+  $(flights).on('preremove', function(e, flight) {
+    // Hide plane to remove any additional related objects from the map
+    hidePlaneOnMap(flight);
 
-  var flight = flights.get(sfid);
+    var contest_layer = map.getLayers().getArray().filter(function(e) {
+      return e.get('name') == 'Contest';
+    })[0];
 
-  // this flight doesn't exist, do nothing...
-  if (flight === null)
-    return;
+    var contest_features = contest_layer.getSource().getFeatures()
+      .filter(function(e) {
+          return e.get('sfid') == flight.getID();
+        });
 
-  // Hide plane to remove any additional related objects from the map
-  hidePlaneOnMap(flight);
+    for (var i = 0; i < contest_features.length; i++)
+      contest_layer.getSource().removeFeature(contest_features[i]);
+  });
 
-  var flight_layer = map.getLayers().getArray().filter(function(e) {
-    return e.get('name') == 'Flight';
-  })[0];
-  flights.getSource().removeFeature(
-      flights.getSource().getFeatures().filter(function(e) {
-        return e.get('sfid') == sfid;
-      })[0]
-  );
+  $(flights).on('removed', function(e, sfid) {
+    $('#wingman-table').find('*[data-sfid=' + sfid + ']')
+        .find('.color-stripe').css('background-color', '');
 
-  var contest_layer = map.getLayers().getArray().filter(function(e) {
-    return e.get('name') == 'Contest';
-  })[0];
-
-  var contest_features = contest_layer.getSource().getFeatures()
-    .filter(function(e) {
-        return e.get('sfid') == sfid;
-      });
-
-  for (var i = 0; i < contest_features.length; i++)
-    contest_layer.getSource().removeFeature(contest_features[i]);
-
-
-  $('#wingman-table').find('*[data-sfid=' + sfid + ']')
-      .find('.color-stripe').css('background-color', '');
-
-  flights.remove(sfid);
-  fix_table.removeRow(sfid);
-  updateBaroData();
-  updateBaroScale();
-  baro.draw();
+    fix_table.removeRow(sfid);
+    updateBaroData();
+    updateBaroScale();
+    baro.draw();
+  });
 }
 
 
