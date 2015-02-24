@@ -155,42 +155,16 @@ function addFlight(data) {
                     data.barogram_t, data.barogram_h,
                     data.enl, data.contests,
                     data.elevations_t, data.elevations_h, data.additional);
-  flights.add(flight);
 
   flight.setColor(data.additional.color ||
-                  colors[(flights.length() - 1) % colors.length]);
+                  colors[flights.length() % colors.length]);
 
-  var feature = new ol.Feature({
-    geometry: flight.getGeometry(),
-    sfid: flight.getID(),
-    color: flight.getColor(),
-    type: 'flight'
-  });
-
-  flights.getSource().addFeature(feature);
+  flights.add(flight);
 
   flight.getContests().forEach(function(contest) {
     addContest(contest.name, contest.turnpoints,
                contest.times, flight.getID());
   });
-
-  // Add flight as a row to the fix data table
-  fix_table.addRow(flight.getID(), flight.getColor(),
-                   flight.getCompetitionID());
-
-  updateBaroData();
-  updateBaroScale();
-  baro.draw();
-
-  $('#wingman-table').find('*[data-sfid=' + flight.getID() + ']')
-      .find('.color-stripe').css('background-color', flight.getColor());
-
-  // Set fix data table into "selectable" mode if
-  // more than one flight is loaded
-  if (flights.length() > 1)
-    fix_table.setSelectable(true);
-
-  setTime(global_time);
 }
 
 
@@ -278,6 +252,26 @@ function setupEvents() {
     updateBaroData();
     updateBaroScale();
     baro.draw();
+  });
+
+  $(flights).on('add', function(e, flight) {
+    // Add flight as a row to the fix data table
+    fix_table.addRow(flight.getID(), flight.getColor(),
+                     flight.getCompetitionID());
+
+    updateBaroData();
+    updateBaroScale();
+    baro.draw();
+
+    $('#wingman-table').find('*[data-sfid=' + flight.getID() + ']')
+        .find('.color-stripe').css('background-color', flight.getColor());
+
+    // Set fix data table into "selectable" mode if
+    // more than one flight is loaded
+    if (flights.length() > 1)
+      fix_table.setSelectable(true);
+
+    setTime(global_time);
   });
 }
 

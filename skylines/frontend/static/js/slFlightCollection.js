@@ -97,6 +97,17 @@ slFlightCollection = function() {
           })[0]
       );
     });
+
+    $(collection).on('add', function(e, flight) {
+      var feature = new ol.Feature({
+        geometry: flight.getGeometry(),
+        sfid: flight.getID(),
+        color: flight.getColor(),
+        type: 'flight'
+      });
+
+      source.addFeature(feature);
+    });
   };
 
 
