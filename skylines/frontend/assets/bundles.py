@@ -124,7 +124,7 @@ flight_js = Bundle(
         'js/baro.js',
         'js/fix-table.js',
         'js/phase-table.js',
-        'js/collection.js',
+        'js/slCollection.js',
         'js/slFlightCollection.js',
         filters=SimpleClosureJS),
 
