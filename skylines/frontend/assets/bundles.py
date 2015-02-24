@@ -114,7 +114,7 @@ openlayers_js = Bundle(
     'js/ol-GraphicLayerSwitcher-v3.js',
     'js/ol-PlayButton-v3.js',
     'js/map.js',
-    'js/map-click-handler.js',
+    'js/slMapClickHandler.js',
     filters=SimpleClosureJS,
     output='js/ol-%(version)s.js')
 
