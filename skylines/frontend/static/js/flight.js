@@ -143,32 +143,16 @@ function updateBaroScale() {
 /**
  * Add a flight to the map and barogram.
  *
- * Note: _lonlat, _levels, _time, _enl, and _height MUST have the same number
- *   of elements when decoded.
- *
- * @param {int} sfid SkyLines flight ID.
- * @param {String} _lonlat Google polyencoded string of geolocations
- *   (lon + lat, WSG 84).
- * @param {String} _time Google polyencoded string of time values.
- * @param {String} _height Google polyencoded string of height values.
- * @param {String} _enl Google polyencoded string of engine noise levels.
- * @param {Array(Objects)} _contests Array of scored/optimised contests.
- *   Such an object must contain: name, turnpoints, times
- *   turnpoints and times are googlePolyEncoded strings.
- * @param {String} _elevations_t Google polyencoded string of elevation
- *   time values.
- * @param {String} _elevations_h Google polyencoded string of elevations.
- * @param {Object=} opt_additional May contain additional information about
- *   the flight, e.g. registration number, callsign, ...
+ * @param {Object} data The data received from the JSON request.
  */
-function addFlight(sfid, _lonlat, _time, _height, _enl,
-    _contests, _elevations_t, _elevations_h, opt_additional) {
-
-  flight = slFlight(sfid, _lonlat, _time, _height, _enl,
-                    _contests, _elevations_t, _elevations_h, opt_additional);
+function addFlight(data) {
+  flight = slFlight(data.sfid, data.points,
+                    data.barogram_t, data.barogram_h,
+                    data.enl, data.contests,
+                    data.elevations_t, data.elevations_h, data.additional);
   flights.add(flight);
 
-  flight.setColor(opt_additional.color ||
+  flight.setColor(data.additional.color ||
                   colors[(flights.length() - 1) % colors.length]);
 
   var feature = new ol.Feature({
@@ -216,11 +200,7 @@ function addFlightFromJSON(url, async) {
       if (flights.has(data.sfid))
         return;
 
-      addFlight(data.sfid, data.points,
-                data.barogram_t, data.barogram_h,
-                data.enl, data.contests,
-                data.elevations_t, data.elevations_h, data.additional);
-
+      addFlight(data);
       map.render();
     }
   });

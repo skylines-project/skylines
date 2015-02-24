@@ -74,19 +74,19 @@
 
     {% for pilot, trace in zip(pilots, traces) -%}
     {% if trace -%}
-    addFlight({{ pilot.id }},
-      {{ h.json.dumps(trace.points) }},
-      {{ h.json.dumps(trace.barogram_t) }},
-      {{ h.json.dumps(trace.barogram_h) }},
-      {{ h.json.dumps(trace.enl) }},
-      undefined,
-      {{ h.json.dumps(trace.barogram_t) }},
-      {{ h.json.dumps(trace.elevations) }},
-      {
-        competition_id: "{{ pilot.tracking_callsign or pilot.initials() }}",
-        color: "{{ pilot.color }}",
-      }
-    );
+    addFlight({ sfid: {{ pilot.id }},
+                points: {{ h.json.dumps(trace.points) }},
+                barogram_t: {{ h.json.dumps(trace.barogram_t) }},
+                barogram_h: {{ h.json.dumps(trace.barogram_h) }},
+                enl: {{ h.json.dumps(trace.enl) }},
+                contests: undefined,
+                elevations_t: {{ h.json.dumps(trace.barogram_t) }},
+                elevations_h: {{ h.json.dumps(trace.elevations) }},
+                additional: {
+                  competition_id: "{{ pilot.tracking_callsign or pilot.initials() }}",
+                  color: "{{ pilot.color }}"
+                }
+    });
     {%- endif %}
     {%- endfor %}
 

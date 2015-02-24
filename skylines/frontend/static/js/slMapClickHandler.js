@@ -233,16 +233,7 @@ slMapClickHandler = function(map, settings) {
         if (flights.has(flight.sfid))
           continue;
 
-        addFlight(
-            flight.sfid,
-            flight.points,
-            flight.barogram_t,
-            flight.barogram_h,
-            flight.enl,
-            flight.contests,
-            flight.elevations_t,
-            flight.elevations_h,
-            flight.additional);
+        addFlight(flight);
       }
     });
 
