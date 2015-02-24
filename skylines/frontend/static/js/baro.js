@@ -432,12 +432,12 @@ function slBarogram(placeholder, options) {
     for (var i = 0; i < contests_length; ++i) {
       var contest = contests[i];
 
-      var times = contest.times;
+      var times = contest.getTimes();
       var times_length = times.length;
       if (times_length < 1)
         continue;
 
-      var color = contest.color;
+      var color = contest.getColor();
 
       // Add the turnpoint markers to the markings array
       var markings = [];

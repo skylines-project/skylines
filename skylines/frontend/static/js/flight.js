@@ -4,6 +4,7 @@
  * Array of flight objects. (see addFlight method)
  */
 var flights = slFlightCollection();
+var contests = slContestCollection();
 
 var map;
 var baro;
@@ -25,10 +26,6 @@ var playing = false;
  * List of colors for flight path display
  */
 var colors = ['#004bbd', '#bf0099', '#cf7c00', '#ff0000', '#00c994', '#ffff00'];
-var contest_colors = {
-  'olc_plus classic': '#ff2c73',
-  'olc_plus triangle': '#9f14ff'
-};
 
 
 /**
@@ -84,12 +81,8 @@ function initFlightLayer() {
 
   map.addLayer(flight_path_layer);
 
-  var flight_contest_source = new ol.source.Vector({
-    features: []
-  });
-
   var flight_contest_layer = new ol.layer.Vector({
-    source: flight_contest_source,
+    source: contests.getSource(),
     style: style_function,
     name: 'Contest',
     z_index: 49
@@ -153,18 +146,19 @@ function updateBaroScale() {
 function addFlight(data) {
   flight = slFlight(data.sfid, data.points,
                     data.barogram_t, data.barogram_h,
-                    data.enl, data.contests,
+                    data.enl,
                     data.elevations_t, data.elevations_h, data.additional);
 
   flight.setColor(data.additional.color ||
                   colors[flights.length() % colors.length]);
 
-  flights.add(flight);
+  if (data.contests) {
+    var _contestsLength = data.contests.length;
+    for (var i = 0; i < _contestsLength; ++i)
+      contests.add(slContest(data.contests[i], flight.getID()));
+  }
 
-  flight.getContests().forEach(function(contest) {
-    addContest(contest.name, contest.turnpoints,
-               contest.times, flight.getID());
-  });
+  flights.add(flight);
 }
 
 
@@ -186,62 +180,10 @@ function addFlightFromJSON(url, async) {
 }
 
 
-/**
- * Add a flight contest trace to the map
- *
- * @param {String} name Name to display.
- * @param {Array(Object)} lonlat Array of LonLat pairs.
- * @param {Array(Integer)} times Array of times.
- * @param {Integer} sfid The SkyLines flight id this contest trace belongs to.
- */
-function addContest(name, lonlat, times, sfid) {
-  var coordinates = new ol.geom.LineString([]);
-  var lonlatLength = lonlat.length;
-
-  var triangle = (name.search(/triangle/) != -1 && lonlatLength == 5 * 2);
-
-  if (triangle) lonlatLength -= 2;
-
-  for (var i = 0; i < lonlatLength; i += 2) {
-    var point = ol.proj.transform([lonlat[i + 1], lonlat[i]],
-                                  'EPSG:4326', 'EPSG:3857');
-    coordinates.appendCoordinate(point);
-  }
-
-  if (triangle) {
-    coordinates.appendCoordinate(coordinates.getFirstCoordinate());
-  }
-
-  var color = contest_colors[name] || '#ff2c73';
-  var feature = new ol.Feature({
-    geometry: coordinates,
-    sfid: sfid,
-    color: color,
-    type: 'contest'
-  });
-
-  var contest_layer = map.getLayers().getArray().filter(function(e) {
-    return e.get('name') == 'Contest';
-  })[0];
-  contest_layer.getSource().addFeature(feature);
-}
-
 function setupEvents() {
   $(flights).on('preremove', function(e, flight) {
     // Hide plane to remove any additional related objects from the map
     map_icon_handler.hidePlane(flight);
-
-    var contest_layer = map.getLayers().getArray().filter(function(e) {
-      return e.get('name') == 'Contest';
-    })[0];
-
-    var contest_features = contest_layer.getSource().getFeatures()
-      .filter(function(e) {
-          return e.get('sfid') == flight.getID();
-        });
-
-    for (var i = 0; i < contest_features.length; i++)
-      contest_layer.getSource().removeFeature(contest_features[i]);
   });
 
   $(flights).on('removed', function(e, sfid) {
@@ -373,7 +315,7 @@ function initBaro(element) {
 }
 
 function updateBaroData() {
-  var contests = [], elevations = [];
+  var _contests = [], elevations = [];
 
   var active = [], passive = [], enls = [];
   flights.each(function(flight) {
@@ -398,13 +340,13 @@ function updateBaroData() {
     // Save contests of highlighted flight for later
     if (fix_table.getSelection() &&
         flight.getID() == fix_table.getSelection()) {
-      contests = flight.getContests();
+      _contests = contests.all(flight.getID());
       elevations = flight.getFlotElev();
     }
 
     // Save contests of only flight for later if applicable
     if (flights.length() == 1) {
-      contests = flight.getContests();
+      _contests = contests.all(flight.getID());
       elevations = flight.getFlotElev();
     }
   });
@@ -412,7 +354,7 @@ function updateBaroData() {
   baro.setActiveTraces(active);
   baro.setPassiveTraces(passive);
   baro.setENLData(enls);
-  baro.setContests(contests);
+  baro.setContests(_contests);
   baro.setElevations(elevations);
 }
 

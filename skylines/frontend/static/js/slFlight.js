@@ -10,9 +10,6 @@
  * @param {String} _time Google polyencoded string of time values.
  * @param {String} _height Google polyencoded string of height values.
  * @param {String} _enl Google polyencoded string of engine noise levels.
- * @param {Array(Objects)} _contests Array of scored/optimised contests.
- *   Such an object must contain: name, turnpoints, times
- *   turnpoints and times are googlePolyEncoded strings.
  * @param {String} _elevations_t Google polyencoded string of elevation
  *   time values.
  * @param {String} _elevations_h Google polyencoded string of elevations.
@@ -20,7 +17,7 @@
  *   the flight, e.g. registration number, callsign, ...
  */
 slFlight = function(_sfid, _lonlat, _time, _height, _enl,
-                    _contests, _elevations_t, _elevations_h, opt_additional) {
+                    _elevations_t, _elevations_h, opt_additional) {
   var flight = {};
 
   var time;
@@ -30,7 +27,6 @@ slFlight = function(_sfid, _lonlat, _time, _height, _enl,
   var sfid = _sfid;
   var plane;
   var last_update;
-  var contests = [];
   var elev_t = [];
   var elev_h = [];
   var flot_h = [];
@@ -39,7 +35,7 @@ slFlight = function(_sfid, _lonlat, _time, _height, _enl,
   var additional = opt_additional || {};
 
   flight.init = function(_lonlat, _time, _height, _enl,
-                         _contests, _elevations_t, _elevations_h) {
+                         _elevations_t, _elevations_h) {
     var height = ol.format.Polyline.decodeDeltas(_height, 1, 1);
     time = ol.format.Polyline.decodeDeltas(_time, 1, 1);
     var enl = ol.format.Polyline.decodeDeltas(_enl, 1, 1);
@@ -53,23 +49,6 @@ slFlight = function(_sfid, _lonlat, _time, _height, _enl,
                                     'EPSG:4326', 'EPSG:3857');
       geometry.appendCoordinate([point[0], point[1],
                                  height[i / 2], time[i / 2]]);
-    }
-
-    if (_contests) {
-      var _contestsLength = _contests.length;
-      for (var i = 0; i < _contestsLength; ++i) {
-        var contest = _contests[i];
-        var turnpoints = ol.format.Polyline.decodeDeltas(contest.turnpoints, 2);
-        var times = ol.format.Polyline.decodeDeltas(contest.times, 1, 1);
-
-        var name = contest.name;
-        contests.push({
-          name: name,
-          color: contest_colors[name],
-          turnpoints: turnpoints,
-          times: times
-        });
-      }
     }
 
     var timeLength = time.length;
@@ -149,10 +128,6 @@ slFlight = function(_sfid, _lonlat, _time, _height, _enl,
 
   flight.getGeometry = function() {
     return geometry;
-  };
-
-  flight.getContests = function() {
-    return contests;
   };
 
   flight.getCompetitionID = function() {
@@ -259,7 +234,7 @@ slFlight = function(_sfid, _lonlat, _time, _height, _enl,
     return sfid;
   };
 
-  flight.init(_lonlat, _time, _height, _enl, _contests,
+  flight.init(_lonlat, _time, _height, _enl,
               _elevations_t, _elevations_h);
   return flight;
 };
