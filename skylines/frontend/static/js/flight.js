@@ -8,7 +8,6 @@ var flights = slFlightCollection();
 var map;
 var baro;
 var fix_table;
-var styles;
 
 /*
  * Global time, can be:
