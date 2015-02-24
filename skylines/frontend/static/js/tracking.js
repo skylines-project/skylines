@@ -10,10 +10,7 @@ function updateFlightsFromJSON() {
     $.ajax(url, {
       data: { last_update: flight.getLastUpdate() || null },
       success: function(data) {
-        updateFlight(data.sfid, data.points,
-                     data.barogram_t, data.barogram_h,
-                     data.enl, data.elevations);
-
+        updateFlight(data);
         updateBaroData();
         updateBaroScale();
         baro.draw();
@@ -25,25 +22,16 @@ function updateFlightsFromJSON() {
 /**
  * Updates a tracking flight.
  *
- * Note: _lonlat, _levels, _time, _enl and _height MUST have the same number of
- *   elements when decoded.
- *
- * @param {int} tracking_id SkyLines tracking ID.
- * @param {String} _lonlat Google polyencoded string of geolocations
- *   (lon + lat, WSG 84).
- * @param {String} _time Google polyencoded string of time values.
- * @param {String} _height Google polyencoded string of height values.
- * @param {String} _enl Google polyencoded string of enl values.
- * @param {String} _elevations Google polyencoded string of elevations.
+ * @param {Object} data The data returned by the JSON request.
  */
 
-function updateFlight(tracking_id, _lonlat, _time,
-    _height, _enl, _elevations) {
+function updateFlight(data) {
   // find the flight to update
-  var flight = flights.get(tracking_id);
+  var flight = flights.get(data.sfid);
   if (!flight)
     return;
 
-  flight.update(_lonlat, _time, _height, _enl, _elevations);
+  flight.update(data.points, data.barogram_t, data.barogram_h,
+                data.enl, data.elevations);
   setTime(global_time);
 }
