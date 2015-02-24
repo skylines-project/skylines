@@ -468,26 +468,3 @@ function setTime(time) {
   map.render();
   fix_table.render();
 }
-
-
-/**
- * Moves the map to the last fix of a flight
- *
- * @param {int} sfid SkyLines flight ID.
- */
-function followFlight(sfid) {
-  if (!sfid) return;
-
-  var flight = flights.get(sfid);
-  if (flight) {
-    var coordinate = flight.getGeometry().getLastCoordinate();
-
-    var pan = ol.animation.pan({
-      duration: 200,
-      source: (map.getView().getCenter())
-    });
-
-    map.beforeRender(pan);
-    map.getView().setCenter(coordinate);
-  }
-}
