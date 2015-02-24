@@ -10,6 +10,7 @@ var map;
 var baro;
 var fix_table;
 var map_icon_handler;
+var play_button;
 
 /*
  * Global time, can be:
@@ -19,7 +20,6 @@ var map_icon_handler;
  */
 var default_time = null;
 var global_time = default_time;
-var playing = false;
 
 
 /**
@@ -96,14 +96,8 @@ function initFlightLayer() {
 
   map_icon_handler.setMode(true);
 
-  map.play_button = new PlayButton();
-  $(map.play_button).on('click touchend', function() {
-    if (playing)
-      stop();
-    else
-      play();
-  });
-  map.addControl(map.play_button);
+  play_button = new PlayButton();
+  map.addControl(play_button);
 
   setupEvents();
 }
@@ -215,78 +209,60 @@ function setupEvents() {
 
     setTime(global_time);
   });
-}
 
+  $(play_button).on('play', function(e) {
+    // if there are no flights, then there is nothing to animate
+    if (flights.length == 0)
+      return false;
 
-function play() {
-  // if there are no flights, then there is nothing to animate
-  if (flights.length == 0)
-    return false;
+    // if no time is set
+    if (global_time == null || global_time == -1) {
+      // find the first timestamp of all flights
+      var start_time = Number.MAX_VALUE;
+      flights.each(function(flight) {
+        if (flight.getStartTime() < start_time)
+          start_time = flight.getStartTime();
+      });
 
-  // if no time is set
-  if (global_time == null || global_time == -1) {
-    // find the first timestamp of all flights
-    var start_time = Number.MAX_VALUE;
-    flights.each(function(flight) {
-      if (flight.getStartTime() < start_time)
-        start_time = flight.getStartTime();
-    });
+      // start the animation at the beginning
+      setTime(start_time);
+    }
 
-    // start the animation at the beginning
-    setTime(start_time);
-  }
+    // disable mouse hovering
+    map_icon_handler.setMode(false);
+    baro.setHoverMode(false);
 
-  // disable mouse hovering
-  map_icon_handler.setMode(false);
-  baro.setHoverMode(false);
-
-  // set play button to "stop" mode
-  map.play_button.setMode('stop');
-
-  // start animation
-  playing = true;
-  tick();
-}
-
-
-function stop() {
-  // stop the tick() function if it is still running
-  playing = false;
-
-  // set play button to "play" mode
-  map.play_button.setMode('play');
-
-  // reenable mouse hovering
-  map_icon_handler.setMode(true);
-  baro.setHoverMode(true);
-}
-
-
-function tick() {
-  if (!playing)
-    return;
-
-  // increase time
-  var time = global_time + 1;
-
-  // find the last timestamp of all flights
-  var stop_time = Number.MIN_VALUE;
-  flights.each(function(flight) {
-    if (flight.getEndTime() > stop_time)
-      stop_time = flight.getEndTime();
+    return true;
   });
 
-  // check if we are at the end of the animation
-  if (time > stop_time) {
-    stop();
-    return;
-  }
+  $(play_button).on('stop', function(e) {
+    // reenable mouse hovering
+    map_icon_handler.setMode(true);
+    baro.setHoverMode(true);
+  });
 
-  // set the time for the new animation frame
-  setTime(time);
+  $(play_button).on('tick', function(e) {
+    // increase time
+    var time = global_time + 1;
 
-  // schedule next call
-  setTimeout(tick, 50);
+    // find the last timestamp of all flights
+    var stop_time = Number.MIN_VALUE;
+    flights.each(function(flight) {
+      if (flight.getEndTime() > stop_time)
+        stop_time = flight.getEndTime();
+    });
+
+    // check if we are at the end of the animation
+    if (time > stop_time) {
+      stop();
+      return false;
+    }
+
+    // set the time for the new animation frame
+    setTime(time);
+
+    return true;
+  });
 }
 
 
