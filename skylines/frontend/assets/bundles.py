@@ -125,6 +125,7 @@ flight_js = Bundle(
         'js/fix-table.js',
         'js/phase-table.js',
         'js/collection.js',
+        'js/slFlightCollection.js',
         filters=SimpleClosureJS),
 
     'js/flight.js',
