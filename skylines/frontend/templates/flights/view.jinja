@@ -123,7 +123,7 @@
     $('#wingman-table').find('[rel=tooltip]').tooltip();
     $('#flight-details-table').find('[rel=tooltip]').tooltip();
 
-    initInfoBox(map, {flight_info: true, location_info: true});
+    var map_click_handler = slMapClickHandler(map, {flight_info: true, location_info: true});
   });
 </script>
 {%- endif %}

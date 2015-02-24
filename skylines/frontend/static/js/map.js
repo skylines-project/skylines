@@ -280,15 +280,3 @@ slMap = function(_id, _tile_url, opt_options) {
   sl_map.init();
   return sl_map;
 };
-
-
-/*
- * Add the InfoBox handler to the map.
- *
- * @param {Object} settings Set flight_info or location_info to true to enable
- */
-function initInfoBox(map, settings) {
-  // add click handler for nearest flight search
-  var map_click_handler = slMapClickHandler(map, settings);
-  map.on('click', map_click_handler.trigger);
-}

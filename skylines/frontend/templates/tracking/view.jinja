@@ -105,7 +105,7 @@
       updateFlightsFromJSON();
     }, 15*1000);
 
-    initInfoBox(map, {flight_info: false, location_info: true});
+    var map_click_handler = slMapClickHandler(map, {flight_info: false, location_info: true});
   });
 </script>
 {%- endif %}

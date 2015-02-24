@@ -98,6 +98,11 @@ slMapClickHandler = function(map, settings) {
     return false; // stop bubbeling
   };
 
+  map_click_handler.init = function() {
+    map.on('click', map_click_handler.trigger);
+  };
+
+  map_click_handler.init();
   return map_click_handler;
 
   // Private functions
