@@ -59,6 +59,22 @@ slCollection = function() {
     return null;
   };
 
+  /**
+   * Returns all objects with the specified id, or null.
+   * @param  {Number} id
+   * @return {?Object}
+   */
+  collection.all = function(id) {
+    var objects = [];
+    for (var i = 0, len = collection.length(); i < len; ++i) {
+      var object = collection.at(i);
+      if (object.getID() == id)
+        objects.push(object);
+    }
+
+    if (objects) return objects;
+    else return null;
+  };
 
   /**
    * Returns true if a object with the specified id is part of the collection.
