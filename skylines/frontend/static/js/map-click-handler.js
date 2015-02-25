@@ -105,9 +105,9 @@ slMapClickHandler = function(map, settings) {
   function flightInfo(flight) {
     return $(
         '<span class="info-item badge" style="background:' +
-            flight.color +
+            flight.getColor() +
         '">' +
-        (flight.additional['registration'] || '') +
+        (flight.getRegistration() || '') +
         '</span>'
     );
   };
@@ -217,7 +217,7 @@ slMapClickHandler = function(map, settings) {
    * @param {Object} flight Flight.
    */
   function getNearFlights(lon, lat, time, flight) {
-    var req = $.ajax('/flights/' + flight.sfid + '/near?lon=' + lon +
+    var req = $.ajax('/flights/' + flight.getID() + '/near?lon=' + lon +
         '&lat=' + lat + '&time=' + time);
 
     req.done(function(data) {

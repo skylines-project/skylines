@@ -52,7 +52,7 @@ slCollection = function() {
   collection.get = function(id) {
     for (var i = 0, len = collection.length(); i < len; ++i) {
       var object = collection.at(i);
-      if (object.sfid == id)
+      if (object.getID() == id)
         return object;
     }
 
@@ -89,7 +89,7 @@ slCollection = function() {
   collection.remove = function(id) {
     for (var i = 0, len = collection.length(); i < len; ++i) {
       var object = collection.at(i);
-      if (object.sfid == id) {
+      if (object.getID() == id) {
         data_.splice(i, 1);
         return true;
       }
