@@ -46,7 +46,7 @@ slMapClickHandler = function(map, flight_display, settings) {
     var infobox_element = infobox.getElement();
     var coordinate = e.coordinate;
 
-    if (settings.flight_info && flight_display) {
+    if (settings['flight_info'] && flight_display) {
       var flight_path_source = flight_display.getFlights().getSource();
       var closest_feature = flight_path_source
           .getClosestFeatureToCoordinate(coordinate);
@@ -82,7 +82,7 @@ slMapClickHandler = function(map, flight_display, settings) {
       }
     }
 
-    if (settings.location_info) {
+    if (settings['location_info']) {
       // location info
       var loc = ol.proj.transform(coordinate, 'EPSG:3857', 'EPSG:4326');
       var get_location_info = locationInfo(loc[0], loc[1]);
@@ -228,11 +228,11 @@ slMapClickHandler = function(map, flight_display, settings) {
         '&lat=' + lat + '&time=' + time);
 
     req.done(function(data) {
-      for (var i = 0; i < data.flights.length; ++i) {
-        var flight = data.flights[i];
+      for (var i = 0; i < data['flights'].length; ++i) {
+        var flight = data['flights'][i];
 
         // skip retrieved flight if already on map
-        if (flight_display.getFlights().has(flight.sfid))
+        if (flight_display.getFlights().has(flight['sfid']))
           continue;
 
         flight_display.addFlight(flight);
@@ -282,18 +282,18 @@ slMapClickHandler = function(map, flight_display, settings) {
         return e.get('name') == 'Mountain Wave Project';
       })[0];
 
-      if (!$.isEmptyObject(data.airspaces) &&
+      if (!$.isEmptyObject(data['airspaces']) &&
           airspace_layer.getVisible()) {
         var p = $('<p></p>');
-        p.append(formatAirspaceData(data.airspaces));
+        p.append(formatAirspaceData(data['airspaces']));
         item.append(p);
         no_data = false;
       }
 
-      if (!$.isEmptyObject(data.waves) &&
+      if (!$.isEmptyObject(data['waves']) &&
           mwp_layer.getVisible()) {
         var p = $('<p></p>');
-        p.append(formatMountainWaveData(data.waves));
+        p.append(formatMountainWaveData(data['waves']));
         item.append(p);
         no_data = false;
       }
@@ -340,10 +340,10 @@ slMapClickHandler = function(map, flight_display, settings) {
     for (var i = 0; i < data.length; ++i) {
       table_body.append($(
           '<tr>' +
-          '<td class="airspace_name">' + data[i].name + '</td>' +
-          '<td class="airspace_class">' + data[i].airspace_class + '</td>' +
-          '<td class="airspace_base">' + data[i].base + '</td>' +
-          '<td class="airspace_top">' + data[i].top + '</td>' +
+          '<td class="airspace_name">' + data[i]['name'] + '</td>' +
+          '<td class="airspace_class">' + data[i]['airspace_class'] + '</td>' +
+          '<td class="airspace_base">' + data[i]['base'] + '</td>' +
+          '<td class="airspace_top">' + data[i]['top'] + '</td>' +
           '</tr>'
           ));
     }
@@ -375,11 +375,11 @@ slMapClickHandler = function(map, flight_display, settings) {
     var table_body = $('<tbody></tbody');
 
     for (var i = 0; i < data.length; ++i) {
-      var wind_direction = data[i].main_wind_direction || 'Unknown';
+      var wind_direction = data[i]['main_wind_direction'] || 'Unknown';
 
       table_body.append($(
           '<tr>' +
-          '<td class="wave_name">' + data[i].name + '</td>' +
+          '<td class="wave_name">' + data[i]['name'] + '</td>' +
           '<td class="wave_direction">' + wind_direction + '</td>' +
           '</tr>'
           ));
