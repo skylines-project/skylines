@@ -156,3 +156,12 @@ function showPinnedFlightsLink() {
     $('#pinned-flights-link').hide();
   }
 }
+
+/**
+ * Checks if the canvas element is supported
+ * @return {Boolean} True if it's supported
+ */
+function isCanvasSupported() {
+  var elem = document.createElement('canvas');
+  return !!(elem.getContext && elem.getContext('2d'));
+}
