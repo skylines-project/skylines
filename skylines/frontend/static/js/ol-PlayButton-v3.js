@@ -1,3 +1,13 @@
+
+
+
+/**
+ * Play button control
+ *
+ * @constructor
+ * @export
+ * @param {Object=} opt_options Optional options object.
+ */
 var PlayButton = function(opt_options) {
   var options = opt_options || {};
   var control = this;
