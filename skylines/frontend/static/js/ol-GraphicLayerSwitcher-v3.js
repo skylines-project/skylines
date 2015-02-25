@@ -75,19 +75,22 @@ var GraphicLayerSwitcher = function(opt_options) {
         if (layer_visible)
           item.addClass('active');
 
-        item.on('click', $.proxy(onInputClick, { layer: layer }));
+        item.on('click', null, { layer: layer }, onInputClick);
 
-        item.on('mouseover touchstart', $.proxy(function() {
-          $(this.item).find('img').attr('src',
-              '../../images/layers/' + this.layer.get('name') + '.png');
-        }, { item: item, layer: layer }));
+        item.on('mouseover touchstart', null, { item: item, layer: layer },
+            function(e) {
+              $(e.data.item).find('img').attr('src',
+                  '../../images/layers/' + e.data.layer.get('name') + '.png');
+            });
 
-        item.on('mouseout touchend', $.proxy(function() {
-          if (!this.layer.getVisible()) {
-            $(this.item).find('img').attr('src',
-                '../../images/layers/' + this.layer.get('name') + '.bw.png');
-          }
-        }, { item: item, layer: layer }));
+        item.on('mouseout touchend', null, { item: item, layer: layer },
+            function(e) {
+              if (!e.data.layer.getVisible()) {
+                $(e.data.item).find('img').attr('src',
+                    '../../images/layers/' + e.data.layer.get('name') +
+                    '.bw.png');
+              }
+            });
 
         if (layer.get('base_layer')) {
           base_layers.append(item);
@@ -102,8 +105,7 @@ var GraphicLayerSwitcher = function(opt_options) {
   };
 
   var onInputClick = function(e) {
-    var layer = this.layer;
-
+    var layer = e.data.layer;
     if (layer.get('base_layer')) {
       control.getMap().getLayers().forEach(function(other_layer) {
         if (other_layer.get('base_layer')) {
@@ -125,7 +127,7 @@ var GraphicLayerSwitcher = function(opt_options) {
       });
 
       $.cookie('base_layer',
-               this.layer.get('name'),
+               layer.get('name'),
                { path: '/', expires: 365 });
 
     } else {
