@@ -1,13 +1,16 @@
+
+
+
 /**
  * The SkyLines map instance
  * @constructor
+ * @export
  * @param {String} _id The ID of the HTML element used for the map.
  * @param {String} _tile_url The base URL of the SkyLines tile server.
  * @param {Object=} opt_options Optional options object.
  */
-
 slMap = function(_id, _tile_url, opt_options) {
-  var sl_map = {};
+  var sl_map = this;
 
   var options = opt_options || {};
 
@@ -211,93 +214,103 @@ slMap = function(_id, _tile_url, opt_options) {
     map.addLayer(relief_layer);
   };
 
-
-  /**
-   * Add the Mapbox layer to the map
-   *
-   * @param {String} tile_url The tile url supplied by Mapbox
-   */
-  sl_map.addMapboxLayer = function(tile_url) {
-    if (tile_url == 'null') return;
-
-    var mapbox_layer = new ol.layer.Tile({
-      source: new ol.source.XYZ({
-        attributions: [
-          new ol.Attribution({
-            html: '<a href="https://www.mapbox.com/about/maps/"' +
-                ' target="_blank">' +
-                '&copy; Mapbox &copy; OpenStreetMap</a> <a' +
-                ' class="mapbox-improve-map"' +
-                ' href="https://www.mapbox.com/map-feedback/"' +
-                ' target="_blank">Improve this map</a>'
-          })
-        ],
-        url: tile_url
-      })
-    });
-
-    mapbox_layer.setProperties({
-      'name': 'Terrain',
-      'id': 'Terrain',
-      'base_layer': true,
-      'z_index': 5,
-      'display_in_layer_switcher': true
-    });
-
-    map.addLayer(mapbox_layer);
-  };
-
-
-  /**
-   * Add the Bing layers to the map
-   *
-   * @param {String} api_key The API key supplied by Bing.
-   */
-  sl_map.addBingLayers = function(api_key) {
-    if (api_key == 'null')
-      return;
-
-    // Bing's Road imagerySet
-    var road = new ol.layer.Tile({
-      source: new ol.source.BingMaps({
-        key: api_key,
-        imagerySet: 'Road'
-      })
-    });
-
-    road.setProperties({
-      'name': 'Bing Road',
-      'id': 'BingRoad',
-      'base_layer': true,
-      'z_index': 3,
-      'display_in_layer_switcher': true
-    });
-
-    // Bing's AerialWithLabels imagerySet
-    var hybrid = new ol.layer.Tile({
-      source: new ol.source.BingMaps({
-        key: api_key,
-        imagerySet: 'AerialWithLabels'
-      })
-    });
-
-    hybrid.setProperties({
-      'name': 'Bing Satellite',
-      'id': 'BingSatellite',
-      'base_layer': true,
-      'z_index': 4,
-      'display_in_layer_switcher': true
-    });
-
-    map.addLayer(road);
-    map.addLayer(hybrid);
-  };
-
-
-  sl_map.getMap = function() {
-    return map;
-  };
-
   sl_map.init();
+
+  sl_map.map = map;
   return sl_map;
+};
+
+
+/**
+ * Add the Mapbox layer to the map
+ *
+ * @export
+ * @param {String} tile_url The tile url supplied by Mapbox
+ */
+slMap.prototype.addMapboxLayer = function(tile_url) {
+  if (tile_url == 'null') return;
+
+  var mapbox_layer = new ol.layer.Tile({
+    source: new ol.source.XYZ({
+      attributions: [
+        new ol.Attribution({
+          html: '<a href="https://www.mapbox.com/about/maps/"' +
+              ' target="_blank">' +
+              '&copy; Mapbox &copy; OpenStreetMap</a> <a' +
+              ' class="mapbox-improve-map"' +
+              ' href="https://www.mapbox.com/map-feedback/"' +
+              ' target="_blank">Improve this map</a>'
+        })
+      ],
+      url: tile_url
+    })
+  });
+
+  mapbox_layer.setProperties({
+    'name': 'Terrain',
+    'id': 'Terrain',
+    'base_layer': true,
+    'z_index': 5,
+    'display_in_layer_switcher': true
+  });
+
+  this.map.addLayer(mapbox_layer);
+};
+
+
+/**
+ * Add the Bing layers to the map
+ *
+ * @export
+ * @param {String} api_key The API key supplied by Bing.
+ */
+slMap.prototype.addBingLayers = function(api_key) {
+  if (api_key == 'null')
+    return;
+
+  // Bing's Road imagerySet
+  var road = new ol.layer.Tile({
+    source: new ol.source.BingMaps({
+      key: api_key,
+      imagerySet: 'Road'
+    })
+  });
+
+  road.setProperties({
+    'name': 'Bing Road',
+    'id': 'BingRoad',
+    'base_layer': true,
+    'z_index': 3,
+    'display_in_layer_switcher': true
+  });
+
+  // Bing's AerialWithLabels imagerySet
+  var hybrid = new ol.layer.Tile({
+    source: new ol.source.BingMaps({
+      key: api_key,
+      imagerySet: 'AerialWithLabels'
+    })
+  });
+
+  hybrid.setProperties({
+    'name': 'Bing Satellite',
+    'id': 'BingSatellite',
+    'base_layer': true,
+    'z_index': 4,
+    'display_in_layer_switcher': true
+  });
+
+  this.map.addLayer(road);
+  this.map.addLayer(hybrid);
+};
+
+
+/**
+ * Return the map object.
+ *
+ * @export
+ * @return {ol.Map} map Object
+ */
+slMap.prototype.getMap = function() {
+  return this.map;
 };
