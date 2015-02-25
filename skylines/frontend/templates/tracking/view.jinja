@@ -57,9 +57,13 @@
                  {{ h.json.dumps(h.get_setting_name('lift_unit')) }},
                  {{ h.json.dumps(h.get_setting_name('altitude_unit')) }});
 
-    initOpenLayers("map_canvas",
-                   "{{ config.get('SKYLINES_MAP_TILE_URL') }}",
-                   { {% if 'baselayer' in request.args %}'base_layer': '{{ request.args['baselayer'] }}',{% endif %}{% if 'overlays' in request.args %}'overlay_layers': '{{ request.args['overlays'] }}',{% endif %} });
+    var sl_map =
+      slMap("map_canvas",
+            "{{ config.get('SKYLINES_MAP_TILE_URL') }}",
+            { {% if 'baselayer' in request.args %}'base_layer': '{{ request.args['baselayer'] }}',{% endif %}{% if 'overlays' in request.args %}'overlay_layers': '{{ request.args['overlays'] }}',{% endif %} });
+
+    map = sl_map.getMap();
+
     initFlightLayer();
     initBaro($("#barogram"));
     initFixTable();
@@ -93,15 +97,15 @@
     view.fitExtent(extent, map.getSize());
 
     hoverMap();
-    addBingLayers("{{ config.get('SKYLINES_BING_API_KEY', 'null') }}");
-    addMapboxLayer("{{ config.get('SKYLINES_MAPBOX_API_KEY', 'null') }}");
+    sl_map.addBingLayers("{{ config.get('SKYLINES_BING_API_KEY', 'null') }}");
+    sl_map.addMapboxLayer("{{ config.get('SKYLINES_MAPBOX_API_KEY', 'null') }}");
 
     // update flight track every 15 seconds
     setInterval(function() {
       updateFlightsFromJSON();
     }, 15*1000);
 
-    initInfoBox({flight_info: false, location_info: true});
+    initInfoBox(map, {flight_info: false, location_info: true});
   });
 </script>
 {%- endif %}
