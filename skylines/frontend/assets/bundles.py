@@ -121,7 +121,7 @@ openlayers_js = Bundle(
 flight_js = Bundle(
     'js/util.js',
     'js/slUnits.js',
-    'js/baro.js',
+    'js/slBarogram.js',
     'js/slFixTable.js',
     'js/slPhaseTable.js',
     'js/slCollection.js',
@@ -142,7 +142,7 @@ tracking_js = Bundle(
 
 upload_js = Bundle(
     'js/slUnits.js',
-    'js/baro.js',
+    'js/slBarogram.js',
     'js/upload.js',
     'http://momentjs.com/downloads/moment.min.js',
     'https://rawgithub.com/TobiasLohner/bootstrap-datetimepicker/c36342415a1be8fa013548402bf01718ca93d454/src/js/bootstrap-datetimepicker.js',
