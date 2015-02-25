@@ -1,10 +1,7 @@
-
-
-
 /**
  * A SkyLines flight.
  * @constructor
- * @param {int} _sfid SkyLines flight ID.
+ * @param {Number} _sfid SkyLines flight ID.
  * @param {String} _lonlat Google polyencoded string of geolocations
  *   (lon + lat, WSG 84).
  * @param {String} _time Google polyencoded string of time values.

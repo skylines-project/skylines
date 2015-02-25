@@ -100,7 +100,7 @@ slCollection = function() {
   /**
    * Removes the object with the specified id.
    * @param  {Number} id
-   * @return {Bool} true if success
+   * @return {Boolean} true if success
    */
   collection.remove = function(id) {
     for (var i = 0, len = collection.length(); i < len; ++i) {

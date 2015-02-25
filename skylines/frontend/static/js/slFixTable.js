@@ -1,3 +1,8 @@
+/**
+ * Module to handle the fix table
+ * @constructor
+ * @param {jQuery} placeholder jQuery object of the placeholder
+ */
 slFixTable = function(placeholder) {
   var fix_table = {};
 

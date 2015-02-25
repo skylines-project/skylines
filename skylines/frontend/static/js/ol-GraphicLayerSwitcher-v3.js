@@ -1,3 +1,9 @@
+/**
+ * Graphic layer switcher for base layers and overlay layers.
+ *
+ * @constructor
+ * @param {Object=} opt_options Options
+ */
 var GraphicLayerSwitcher = function(opt_options) {
   var options = opt_options || {};
 
@@ -6,6 +12,9 @@ var GraphicLayerSwitcher = function(opt_options) {
   var element = document.createElement('div');
   element.className = 'GraphicLayerSwitcher ol-unselectable';
 
+  /**
+   * Initially draws the layer switcher
+   */
   var draw = function() {
     // closed layer switcher icon
     var anchor = $('<button><img src="../../images/layers.png" /></button>');
@@ -43,6 +52,11 @@ var GraphicLayerSwitcher = function(opt_options) {
     });
   };
 
+  /**
+   * Updates the layer switcher according to the current layer state
+   *
+   * @param {jQuery} layer_switcher_box jQuery element of the layer switcher
+   */
   var update = function(layer_switcher_box) {
     // empty layer switcher box...
     layer_switcher_box.empty();
@@ -104,6 +118,10 @@ var GraphicLayerSwitcher = function(opt_options) {
     layer_switcher_box.append(overlay_layers);
   };
 
+  /**
+   * Event handler for the click event
+   * @param {Event} e Event
+   */
   var onInputClick = function(e) {
     var layer = e.data.layer;
     if (layer.get('base_layer')) {

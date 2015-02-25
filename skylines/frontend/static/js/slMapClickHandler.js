@@ -1,3 +1,9 @@
+/**
+ * @constructor
+ * @param {ol.Map} map Openlayers map instance
+ * @param {slFlightDisplay} flight_display Flight display module
+ * @param {Object} settings Settings for this module
+ */
 slMapClickHandler = function(map, flight_display, settings) {
   var map_click_handler = {};
 
@@ -11,7 +17,7 @@ slMapClickHandler = function(map, flight_display, settings) {
 
   /**
    * Stores the state if the infobox.
-   * @type {Bool}
+   * @type {Boolean}
    */
   var visible = false;
 
@@ -23,7 +29,7 @@ slMapClickHandler = function(map, flight_display, settings) {
   /**
    * Click handler which shows a info box at the click location.
    *
-   * @this {OpenLayers.Map}
+   * @this {ol.Map}
    * @param {Event} e
    * @return {Boolean?}
    */
@@ -107,6 +113,11 @@ slMapClickHandler = function(map, flight_display, settings) {
 
   // Private functions
 
+  /**
+   * Returns the flight badge element
+   * @param {slFlight} flight Flight object
+   * @return {jQuery}
+   */
   function flightInfo(flight) {
     return $(
         '<span class="info-item badge" style="background:' +
@@ -153,7 +164,7 @@ slMapClickHandler = function(map, flight_display, settings) {
   /**
    * Show a circle at the clicked position
    *
-   * @param {Array} coordinate Coordinate
+   * @param {Array<Number>} coordinate Coordinate
    */
   function showCircle(coordinate) {
     var stroke_style = new ol.style.Stroke({
@@ -207,7 +218,7 @@ slMapClickHandler = function(map, flight_display, settings) {
   /**
    * Hides the search circle
    *
-   * @param {Integer} duration Fade duration.
+   * @param {Number} duration Fade duration in ms
    */
   function hideCircle(duration) {
     circle.animation = { duration: duration, start: null };
@@ -219,7 +230,7 @@ slMapClickHandler = function(map, flight_display, settings) {
    * @param {Number} lon Longitude.
    * @param {Number} lat Latitude.
    * @param {Number} time Time.
-   * @param {Object} flight Flight.
+   * @param {slFlight} flight Flight.
    */
   function getNearFlights(lon, lat, time, flight) {
     if (!flight_display) return;
@@ -319,7 +330,7 @@ slMapClickHandler = function(map, flight_display, settings) {
    * Format Airspace data for infobox
    *
    * @param {Object} data Airspace data.
-   * @return {Object} HTML table with the airspace data.
+   * @return {jQuery} HTML table with the airspace data.
    */
   function formatAirspaceData(data) {
     var table = $('<table></table>');
@@ -358,7 +369,7 @@ slMapClickHandler = function(map, flight_display, settings) {
    * Format Mountain Wave data in infobox
    *
    * @param {Object} data Wave data.
-   * @return {Object} HTML table with the wave data.
+   * @return {jQuery} HTML table with the wave data.
    */
   function formatMountainWaveData(data) {
     var table = $('<table></table>');

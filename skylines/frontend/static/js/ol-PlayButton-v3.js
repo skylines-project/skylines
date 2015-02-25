@@ -1,6 +1,3 @@
-
-
-
 /**
  * Play button control
  *

@@ -1,39 +1,80 @@
+/**
+ * This module handles the flight display page
+ *
+ * @constructor
+ * @export
+ * @param {ol.Map} _map OpenLayers map object
+ * @param {jQuery} fix_table_placeholder Placeholder for the fix table
+ * @param {jQuery} baro_placeholder Placeholder for the barogram
+ */
 slFlightDisplay = function(_map, fix_table_placeholder, baro_placeholder) {
   var flight_display = {};
   var map = _map;
 
   /**
-   * Array of flight objects. (see addFlight method)
+   * Flight collection
+   * @type {slFlightCollection}
    */
   var flights = slFlightCollection();
+
+  /**
+   * Contest collection
+   * @type {slContestCollection}
+   */
   var contests = slContestCollection();
+
+  /**
+   * Fix table module
+   * @type {slFixTable}
+   */
   var fix_table = slFixTable(fix_table_placeholder);
+
+  /**
+   * Handler for the plane icons and map hover events
+   * @type {slMapIconHandler}
+   */
   var map_icon_handler = slMapIconHandler(map, flights);
+
+  /**
+   * Barogram module
+   * @type {slBarogram}
+   */
   var baro = slBarogram(baro_placeholder);
 
+  /**
+   * Play button control
+   * @type {PlayButton}
+   */
   var play_button;
+
+  /**
+   * Default time - the time to set when no time is set
+   * @type {!Number}
+   */
+  var default_time = null;
 
   /*
    * Global time, can be:
    * null -> no time is set, don't show barogram crosshair/plane position
    * -1 -> always show the latest time/fix for each flight
    * >= 0 -> show the associated time in the barogram and on the map
+   * @type {!Number}
    */
-  var default_time = null;
   var global_time = default_time;
 
 
   /**
    * List of colors for flight path display
+   * @type {Array<String>}
    */
   var colors = ['#004bbd', '#bf0099', '#cf7c00',
                 '#ff0000', '#00c994', '#ffff00'];
 
 
   /**
-   * Style function
-   * @param {ol.feature} feature - Feature to style
-   * @return {Array} style
+   * Determin the drawing style for the feature
+   * @param {ol.feature} feature Feature to style
+   * @return {!Array<ol.style.Style>} Style of the feature
    */
   function style_function(feature) {
     if (!$.inArray('type', feature.getKeys()))
@@ -69,7 +110,8 @@ slFlightDisplay = function(_map, fix_table_placeholder, baro_placeholder) {
 
 
   /**
-   * Initialize the map and add airspace and flight path layers.
+   * Initialize the map, add flight path and contest layers.
+   * Adds the PlayButton to the map and activates all hover modes.
    */
   flight_display.init = function() {
     var flight_path_layer = new ol.layer.Image({
@@ -101,6 +143,10 @@ slFlightDisplay = function(_map, fix_table_placeholder, baro_placeholder) {
     setupEvents();
   };
 
+  /**
+   * Update the x-scale of the barogram
+   * @return {Boolean} True if the barogram should be redrawn
+   */
   function updateBaroScale() {
     var extent = map.getView().calculateExtent(map.getSize());
     var interval = flights.getMinMaxTimeInExtent(extent);
@@ -143,8 +189,10 @@ slFlightDisplay = function(_map, fix_table_placeholder, baro_placeholder) {
 
 
   /**
-   * @param {string} url URL to fetch.
-   * @param {boolean} async do asynchronous request (defaults true)
+   * Perform a JSON request to get a flight.
+   *
+   * @param {String} url URL to fetch.
+   * @param {Boolean} async do asynchronous request (defaults true)
    */
   flight_display.addFlightFromJSON = function(url, async) {
     $.ajax(url, {
@@ -159,34 +207,45 @@ slFlightDisplay = function(_map, fix_table_placeholder, baro_placeholder) {
     });
   };
 
-
+  /**
+   * Setup several events...
+   */
   function setupEvents() {
+    // Update the baro scale when the map has been zoomed/moved.
     map.on('moveend', function(e) {
       if (updateBaroScale())
         baro.draw();
     });
 
+    // Set the time when the mouse hoves the map
     $(map_icon_handler).on('set_time', function(e, time) {
       if (time) flight_display.setTime(time);
       else flight_display.setTime(default_time);
     });
 
+    // Update the barogram when another flight has been selected
+    // in the fix table.
     $(fix_table).on('selection_changed', function(e) {
       updateBaroData();
       baro.draw();
     });
 
+    // Remove a flight when the removal button has been pressed
+    // in the fix table.
     $(fix_table).on('remove_flight', function(e, sfid) {
       // never remove the first flight...
       if (flights.at(0).getID() == sfid) return;
       flights.remove(sfid);
     });
 
+    // Hide the plane icon of a flight which is scheduled for removal.
     $(flights).on('preremove', function(e, flight) {
       // Hide plane to remove any additional related objects from the map
       map_icon_handler.hidePlane(flight);
     });
 
+    // After a flight has been removed, remove highlights from the
+    // wingman table, remove it from the fix table and update the barogram.
     $(flights).on('removed', function(e, sfid) {
       $('#wingman-table').find('*[data-sfid=' + sfid + ']')
           .find('.color-stripe').css('background-color', '');
@@ -197,6 +256,8 @@ slFlightDisplay = function(_map, fix_table_placeholder, baro_placeholder) {
       baro.draw();
     });
 
+    // Add a flight to the fix table and barogram, highlight in the
+    // wingman table.
     $(flights).on('add', function(e, flight) {
       // Add flight as a row to the fix data table
       fix_table.addRow(flight.getID(), flight.getColor(),
@@ -217,6 +278,8 @@ slFlightDisplay = function(_map, fix_table_placeholder, baro_placeholder) {
       flight_display.setTime(global_time);
     });
 
+    // Disable hover modes for map and barogram when the play button
+    // has been pressed. Determine the start time for playing.
     $(play_button).on('play', function(e) {
       // if there are no flights, then there is nothing to animate
       if (flights.length == 0)
@@ -242,12 +305,14 @@ slFlightDisplay = function(_map, fix_table_placeholder, baro_placeholder) {
       return true;
     });
 
+    // Enable hover modes after stopping replay.
     $(play_button).on('stop', function(e) {
       // reenable mouse hovering
       map_icon_handler.setMode(true);
       baro.setHoverMode(true);
     });
 
+    // Advance time on replay tick.
     $(play_button).on('tick', function(e) {
       // increase time
       var time = global_time + 1;
@@ -271,6 +336,7 @@ slFlightDisplay = function(_map, fix_table_placeholder, baro_placeholder) {
       return true;
     });
 
+    // Add hover and click events to the barogram.
     $(baro).on('barohover', function(event, time) {
       flight_display.setTime(time);
     }).on('baroclick', function(event, time) {
@@ -280,6 +346,9 @@ slFlightDisplay = function(_map, fix_table_placeholder, baro_placeholder) {
     });
   }
 
+  /**
+   * Update the data to be displayed in the barogram
+   */
   function updateBaroData() {
     var _contests = [], elevations = [];
 
@@ -324,6 +393,10 @@ slFlightDisplay = function(_map, fix_table_placeholder, baro_placeholder) {
     baro.setElevations(elevations);
   }
 
+  /**
+   * Set the current time.
+   * @param {!Number} time Time to set
+   */
   flight_display.setTime = function(time) {
     global_time = time;
 
@@ -365,24 +438,43 @@ slFlightDisplay = function(_map, fix_table_placeholder, baro_placeholder) {
     fix_table.render();
   };
 
+  /**
+   * Updates the barogram
+   */
   flight_display.update = function() {
     updateBaroData();
     updateBaroScale();
     baro.draw();
   };
 
+  /**
+   * Returns the flights collection
+   * @return {slFlightCollection}
+   */
   flight_display.getFlights = function() {
     return flights;
   };
 
+  /**
+   * Set the default time. Used at the tracking page.
+   * @param {!Number} time Default time to set
+   */
   flight_display.setDefaultTime = function(time) {
     default_time = time;
   };
 
+  /**
+   * Returns the current global time.
+   * @return {!Number}
+   */
   flight_display.getGlobalTime = function() {
     return global_time;
   };
 
+  /**
+   * Returns the barogram module
+   * @return {slBarogram}
+   */
   flight_display.getBaro = function() {
     return baro;
   };

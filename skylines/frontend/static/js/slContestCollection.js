@@ -1,6 +1,3 @@
-
-
-
 /**
  * An ordered collection of contest objects.
  * @constructor
@@ -21,6 +18,9 @@ slContestCollection = function() {
   };
 
 
+  /**
+   * Setup event handlers for the 'add' and 'preremove' events
+   */
   function setupEvents() {
     $(collection).on('preremove', function(e, contest) {
       source.removeFeature(

@@ -1,6 +1,3 @@
-
-
-
 /**
  * An ordered collection of flight objects.
  * @constructor
@@ -88,7 +85,9 @@ slFlightCollection = function() {
     return { min: min, max: max };
   };
 
-
+  /**
+   * Setup the event handlers for the 'preremove' and 'add' events.
+   */
   function setupEvents() {
     $(collection).on('preremove', function(e, flight) {
       source.removeFeature(
