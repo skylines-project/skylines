@@ -146,17 +146,21 @@
 {% if trace %}
 <script type="text/javascript">
   $(function() {
-    var baro = initBaro($("#barogram-{{ prefix }}"),
-      {{ flight.id }},
-      {{ h.json.dumps(trace.barogram_t) }},
-      {{ h.json.dumps(trace.barogram_h) }},
-      {{ h.json.dumps(trace.enl) }},
-      {{ h.json.dumps(trace.elevations_h) }},
-      {{ h.to_seconds_of_day(flight.igc_file.date_utc, form.takeoff_time.data) }},
-      {{ h.to_seconds_of_day(flight.igc_file.date_utc, form.scoring_start_time.data) }},
-      {{ h.to_seconds_of_day(flight.igc_file.date_utc, form.scoring_end_time.data) }},
-      {{ h.to_seconds_of_day(flight.igc_file.date_utc, form.landing_time.data) }}
-    );
+    var baro = null;
+
+    if (isCanvasSupported()) {
+      baro = initBaro($("#barogram-{{ prefix }}"),
+        {{ flight.id }},
+        {{ h.json.dumps(trace.barogram_t) }},
+        {{ h.json.dumps(trace.barogram_h) }},
+        {{ h.json.dumps(trace.enl) }},
+        {{ h.json.dumps(trace.elevations_h) }},
+        {{ h.to_seconds_of_day(flight.igc_file.date_utc, form.takeoff_time.data) }},
+        {{ h.to_seconds_of_day(flight.igc_file.date_utc, form.scoring_start_time.data) }},
+        {{ h.to_seconds_of_day(flight.igc_file.date_utc, form.scoring_end_time.data) }},
+        {{ h.to_seconds_of_day(flight.igc_file.date_utc, form.landing_time.data) }}
+      );
+    }
 
     $("[id^={{ prefix }}-][id$=-datetimepicker]").datetimepicker({
       pickDate: false,
@@ -191,9 +195,10 @@
         marker = "landing";
 
       var time = $(e.target).data("DateTimePicker").getDate().unix() - flight_date.unix();
-      baro.updateFlightTime(time, marker);
-
-      updateTimePicker({{ prefix }}, flight_date, baro.getFlightTime());
+      if (baro) {
+        baro.updateFlightTime(time, marker);
+        updateTimePicker({{ prefix }}, flight_date, baro.getFlightTime());
+      }
     });
   });
 

@@ -35,6 +35,8 @@
 
 <script type="text/javascript">
   $(function() {
+    if (!isCanvasSupported()) return;
+
     var sl_map =
       new slMap("map_canvas",
                 "{{ config.get('SKYLINES_MAP_TILE_URL') }}",

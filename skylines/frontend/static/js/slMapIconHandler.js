@@ -15,15 +15,12 @@ slMapIconHandler = function(_map, _flights) {
   var hover_enabled = true;
 
   map_icon_handler.init = function() {
-    var msie_8 = $.browser.msie && (parseInt($.browser.version, 10) < 9);
-
     var style = new ol.style.Icon({
       anchor: [0.5, 0.5],
       anchorXUnits: 'fraction',
       anchorYUnits: 'fraction',
       size: [40, 24],
-      src: msie_8 ?
-          '/images/glider_symbol_msie.png' : '/images/glider_symbol.png',
+      src: '/images/glider_symbol.png',
       rotation: 0,
       rotateWithView: true
     });

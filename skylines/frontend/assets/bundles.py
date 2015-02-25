@@ -46,7 +46,6 @@ flot_js = Bundle(
     'https://rawgithub.com/flot/flot/v0.8.3/jquery.flot.crosshair.js',
     'https://rawgithub.com/flot/flot/v0.8.3/jquery.flot.resize.js',
     'http://flot-marks.googlecode.com/svn-history/r13/trunk/src/jquery.flot.marks.js',
-    'https://rawgithub.com/flot/flot/v0.8.3/excanvas.min.js',
     filters=SimpleClosureJS(disable_ie_checks=True),
     output='js/flot-%(version)s.js')
 
@@ -100,7 +99,6 @@ openlayers_css = Bundle(
 
 all_js = Bundle(
     'http://code.jquery.com/jquery-1.10.2.min.js',
-    'vendor/jquery/jquery.browser.js',
     'vendor/jquery/jquery.cookie.js',
     'vendor/jquery/jquery.timeago.js',
     'vendor/bootstrap-datepicker/datepicker.js',
