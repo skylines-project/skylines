@@ -24,8 +24,8 @@ slMap = function(_id, _tile_url, opt_options) {
    * Initialize the map and add airspace and flight path layers.
    */
   sl_map.init = function() {
-    if (!options.base_layer && !$.cookie('base_layer'))
-      options.base_layer = 'OpenStreetMap';
+    if (!options['base_layer'] && !$.cookie('base_layer'))
+      options['base_layer'] = 'OpenStreetMap';
 
     var interactions = ol.interaction.defaults({
       altShiftDragRotate: false,
@@ -59,18 +59,21 @@ slMap = function(_id, _tile_url, opt_options) {
 
       // When the list of layers changes load the
       // last used base layer from the cookies
-      sl_map.setBaseLayer(this.options.base_layer || $.cookie('base_layer'));
-      sl_map.setOverlayLayers(this.options.overlay_layers ||
+      sl_map.setBaseLayer(this.options['base_layer'] || $.cookie('base_layer'));
+      sl_map.setOverlayLayers(this.options['overlay_layers'] ||
                               $.cookie('overlay_layers'));
     }, { options: options }));
 
     var osm_layer = new ol.layer.Tile({
-      source: new ol.source.OSM(),
-      name: 'OpenStreetMap',
-      id: 'OpenStreetMap',
-      base_layer: true,
-      z_index: 1,
-      display_in_layer_switcher: true
+      source: new ol.source.OSM()
+    });
+
+    osm_layer.setProperties({
+      'name': 'OpenStreetMap',
+      'id': 'OpenStreetMap',
+      'base_layer': true,
+      'z_index': 1,
+      'display_in_layer_switcher': true
     });
 
     map.addLayer(osm_layer);
@@ -138,12 +141,15 @@ slMap = function(_id, _tile_url, opt_options) {
           })
         ],
         url: tile_url + '/tiles/1.0.0/mwp/{z}/{x}/{y}.png'
-      }),
-      name: 'Mountain Wave Project',
-      id: 'MountainWaveProject',
-      base_layer: false,
-      z_index: 11,
-      display_in_layer_switcher: true
+      })
+    });
+
+    mwp_layer.setProperties({
+      'name': 'Mountain Wave Project',
+      'id': 'MountainWaveProject',
+      'base_layer': false,
+      'z_index': 11,
+      'display_in_layer_switcher': true
     });
 
     map.addLayer(mwp_layer);
@@ -160,12 +166,15 @@ slMap = function(_id, _tile_url, opt_options) {
     var airspace_layer = new ol.layer.Tile({
       source: new ol.source.XYZ({
         url: tile_url + '/tiles/1.0.0/airspace+airports/{z}/{x}/{y}.png'
-      }),
-      name: 'Airspace',
-      id: 'Airspace',
-      base_layer: false,
-      z_index: 10,
-      display_in_layer_switcher: true
+      })
+    });
+
+    airspace_layer.setProperties({
+      'name': 'Airspace',
+      'id': 'Airspace',
+      'base_layer': false,
+      'z_index': 10,
+      'display_in_layer_switcher': true
     });
 
     map.addLayer(airspace_layer);
@@ -188,12 +197,15 @@ slMap = function(_id, _tile_url, opt_options) {
           })
         ],
         url: url
-      }),
-      name: 'Shaded Relief',
-      id: 'ShadedRelief',
-      base_layer: true,
-      z_index: 2,
-      display_in_layer_switcher: true
+      })
+    });
+
+    relief_layer.setProperties({
+      'name': 'Shaded Relief',
+      'id': 'ShadedRelief',
+      'base_layer': true,
+      'z_index': 2,
+      'display_in_layer_switcher': true
     });
 
     map.addLayer(relief_layer);
@@ -221,12 +233,15 @@ slMap = function(_id, _tile_url, opt_options) {
           })
         ],
         url: tile_url
-      }),
-      name: 'Terrain',
-      id: 'Terrain',
-      base_layer: true,
-      z_index: 5,
-      display_in_layer_switcher: true
+      })
+    });
+
+    mapbox_layer.setProperties({
+      'name': 'Terrain',
+      'id': 'Terrain',
+      'base_layer': true,
+      'z_index': 5,
+      'display_in_layer_switcher': true
     });
 
     map.addLayer(mapbox_layer);
@@ -247,12 +262,15 @@ slMap = function(_id, _tile_url, opt_options) {
       source: new ol.source.BingMaps({
         key: api_key,
         imagerySet: 'Road'
-      }),
-      name: 'Bing Road',
-      id: 'BingRoad',
-      base_layer: true,
-      z_index: 3,
-      display_in_layer_switcher: true
+      })
+    });
+
+    road.setProperties({
+      'name': 'Bing Road',
+      'id': 'BingRoad',
+      'base_layer': true,
+      'z_index': 3,
+      'display_in_layer_switcher': true
     });
 
     // Bing's AerialWithLabels imagerySet
@@ -260,12 +278,15 @@ slMap = function(_id, _tile_url, opt_options) {
       source: new ol.source.BingMaps({
         key: api_key,
         imagerySet: 'AerialWithLabels'
-      }),
-      name: 'Bing Satellite',
-      id: 'BingSatellite',
-      base_layer: true,
-      z_index: 4,
-      display_in_layer_switcher: true
+      })
+    });
+
+    hybrid.setProperties({
+      'name': 'Bing Satellite',
+      'id': 'BingSatellite',
+      'base_layer': true,
+      'z_index': 4,
+      'display_in_layer_switcher': true
     });
 
     map.addLayer(road);
