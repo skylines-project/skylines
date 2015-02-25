@@ -83,7 +83,7 @@
 
     sl_map.addBingLayers("{{ config.get('SKYLINES_BING_API_KEY', 'null') }}");
     sl_map.addMapboxLayer("{{ config.get('SKYLINES_MAPBOX_API_KEY', 'null') }}");
-    var map_click_handler = slMapClickHandler(map, {flight_info: false, location_info: true});
+    var map_click_handler = slMapClickHandler(map, null, {flight_info: false, location_info: true});
   });
 </script>
 {%- endif %}

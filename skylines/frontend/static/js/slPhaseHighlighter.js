@@ -6,14 +6,16 @@
  * @constructor
  * @param {Object} _map ol3 map object.
  * @param {Object} _baro slBarogram object.
+ * @param {slFlightCollection} _flights slFlightCollection object
  */
-slPhaseHighlighter = function(_map, _baro) {
+slPhaseHighlighter = function(_map, _baro, _flights) {
   var phase_tables = [];
 
   var phase_highlighter = {};
   var phase_start_marker_style, phase_end_marker_style;
   var map = _map;
   var baro = _baro;
+  var flights = _flights;
 
   var phase_markers = {
     start: null,

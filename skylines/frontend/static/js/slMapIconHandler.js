@@ -126,10 +126,10 @@ slMapIconHandler = function(_map, _flights) {
                              Math.pow(mouse_pixel[1] - feature_pixel[1], 2);
 
       if (squared_distance > 100) {
-        setTime(default_time);
+        $(map_icon_handler).triggerHandler('set_time', null);
       } else {
         var time = closest_point[3];
-        setTime(time);
+        $(map_icon_handler).triggerHandler('set_time', time);
       }
     }
 

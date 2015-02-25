@@ -119,23 +119,20 @@ openlayers_js = Bundle(
     output='js/ol-%(version)s.js')
 
 flight_js = Bundle(
-    Bundle(
-        'js/util.js',
-        'js/slUnits.js',
-        'js/baro.js',
-        'js/slFixTable.js',
-        'js/slPhaseTable.js',
-        'js/slCollection.js',
-        'js/slFlightCollection.js',
-        'js/slFlight.js',
-        'js/slContestCollection.js',
-        'js/slContest.js',
-        'js/slPhaseHighlighter.js',
-        'js/slMapIconHandler.js',
-        filters=SimpleClosureJS),
-
+    'js/util.js',
+    'js/slUnits.js',
+    'js/baro.js',
+    'js/slFixTable.js',
+    'js/slPhaseTable.js',
+    'js/slCollection.js',
+    'js/slFlightCollection.js',
+    'js/slFlight.js',
+    'js/slContestCollection.js',
+    'js/slContest.js',
+    'js/slPhaseHighlighter.js',
+    'js/slMapIconHandler.js',
     'js/flight.js',
-    filters='rjsmin',
+    filters=SimpleClosureJS,
     output='js/flight-%(version)s.js')
 
 tracking_js = Bundle(

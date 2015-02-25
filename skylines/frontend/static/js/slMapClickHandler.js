@@ -1,4 +1,4 @@
-slMapClickHandler = function(map, settings) {
+slMapClickHandler = function(map, flight_display, settings) {
   var map_click_handler = {};
 
   // Private attributes
@@ -46,8 +46,8 @@ slMapClickHandler = function(map, settings) {
     var infobox_element = infobox.getElement();
     var coordinate = e.coordinate;
 
-    if (settings.flight_info) {
-      var flight_path_source = flights.getSource();
+    if (settings.flight_info && flight_display) {
+      var flight_path_source = flight_display.getFlights().getSource();
       var closest_feature = flight_path_source
           .getClosestFeatureToCoordinate(coordinate);
 
@@ -64,7 +64,7 @@ slMapClickHandler = function(map, settings) {
         if (squared_distance < 100) {
           var time = closest_point[3];
           var sfid = closest_feature.get('sfid');
-          var flight = flights.get(sfid);
+          var flight = flight_display.getFlights().get(sfid);
 
           // flight info
           var flight_info = flightInfo(flight);
@@ -222,6 +222,8 @@ slMapClickHandler = function(map, settings) {
    * @param {Object} flight Flight.
    */
   function getNearFlights(lon, lat, time, flight) {
+    if (!flight_display) return;
+
     var req = $.ajax('/flights/' + flight.getID() + '/near?lon=' + lon +
         '&lat=' + lat + '&time=' + time);
 
@@ -230,10 +232,10 @@ slMapClickHandler = function(map, settings) {
         var flight = data.flights[i];
 
         // skip retrieved flight if already on map
-        if (flights.has(flight.sfid))
+        if (flight_display.getFlights().has(flight.sfid))
           continue;
 
-        addFlight(flight);
+        flight_display.addFlight(flight);
       }
     });
 

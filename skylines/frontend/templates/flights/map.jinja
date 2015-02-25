@@ -51,25 +51,21 @@
             "{{ config.get('SKYLINES_MAP_TILE_URL') }}",
             { {% if 'baselayer' in request.args %}'base_layer': '{{ request.args['baselayer'] }}',{% endif %}{% if 'overlays' in request.args %}'overlay_layers': '{{ request.args['overlays'] }}',{% endif %} });
 
-    map = sl_map.getMap();
-    map_icon_handler = slMapIconHandler(map, flights);
+    var map = sl_map.getMap();
 
-    initFlightLayer();
-    initBaro($("#barogram"));
-    initFixTable();
-
-    addFlightFromJSON("/flights/{{ flight.id }}/json?{{ config.get('SKYLINES_CACHE_BUSTER', '') }}",false);
+    var flight_display = slFlightDisplay(sl_map.getMap(), $("#fix-data"), $("#barogram"));
+    flight_display.addFlightFromJSON("/flights/{{ flight.id }}/json?{{ config.get('SKYLINES_CACHE_BUSTER', '') }}",false);
 
     {% if other_flights -%}
     {% for flight, trace in other_flights if trace -%}
-    addFlightFromJSON("/flights/{{ flight.id }}/json?{{ config.get('SKYLINES_CACHE_BUSTER', '') }}");
+    flight_display.addFlightFromJSON("/flights/{{ flight.id }}/json?{{ config.get('SKYLINES_CACHE_BUSTER', '') }}");
     {%- endfor %}
     {%- endif %}
 
     var factor = $("#barogram")[0].offsetHeight / map.getSize()[1];
 
     var view = map.getView();
-    var extent = flights.getBounds();
+    var extent = flight_display.getFlights().getBounds();
     var buffer = Math.max(ol.extent.getWidth(extent), ol.extent.getHeight(extent));
     extent = ol.extent.buffer(extent, buffer * 0.02);
     extent[1] -= ol.extent.getHeight(extent) * factor * 3/2;
@@ -78,13 +74,14 @@
     var pinnedFlights = getPinnedFlights();
     for (i in pinnedFlights)
       if (pinnedFlights[i] != {{ flight.id }})
-        addFlightFromJSON("/flights/" + pinnedFlights[i] + "/json");
+        flight_display.addFlightFromJSON("/flights/" + pinnedFlights[i] + "/json");
 
     pinButton($("#pinned"), {{ flight.id }});
     sl_map.addBingLayers("{{ config.get('SKYLINES_BING_API_KEY', 'null') }}");
     sl_map.addMapboxLayer("{{ config.get('SKYLINES_MAPBOX_API_KEY', 'null') }}");
 
-    var map_click_handler = slMapClickHandler(map, {flight_info: true, location_info: true});
+    var map_click_handler = slMapClickHandler(map, flight_display,
+                                              {flight_info: true, location_info: true});
   });
 </script>
 {%- endblock %}

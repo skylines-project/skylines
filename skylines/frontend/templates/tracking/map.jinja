@@ -62,20 +62,12 @@
             "{{ config.get('SKYLINES_MAP_TILE_URL') }}",
             { {% if 'baselayer' in request.args %}'base_layer': '{{ request.args['baselayer'] }}',{% endif %}{% if 'overlays' in request.args %}'overlay_layers': '{{ request.args['overlays'] }}',{% endif %} });
 
-    map = sl_map.getMap();
-    map_icon_handler = slMapIconHandler(map, flights);
-
-    initFlightLayer();
-    initBaro($("#barogram"));
-    initFixTable();
-
-    // initiate tracking mode
-    default_time = -1;
-    setTime(default_time);
+    var map = sl_map.getMap();
+    var flight_display = slFlightTracking(sl_map.getMap(), $("#fix-data"), $("#barogram"));
 
     {% for pilot, trace in zip(pilots, traces) -%}
     {% if trace -%}
-    addFlight({ sfid: {{ pilot.id }},
+    flight_display.addFlight({ sfid: {{ pilot.id }},
                 points: {{ h.json.dumps(trace.points) }},
                 barogram_t: {{ h.json.dumps(trace.barogram_t) }},
                 barogram_h: {{ h.json.dumps(trace.barogram_h) }},
@@ -94,7 +86,7 @@
     var factor = $("#barogram")[0].offsetHeight / map.getSize()[1];
 
     var view = map.getView();
-    var extent = flights.getBounds();
+    var extent = flight_display.getFlights().getBounds();
     var buffer = Math.max(ol.extent.getWidth(extent), ol.extent.getHeight(extent));
     extent = ol.extent.buffer(extent, buffer * 0.02);
     extent[1] -= ol.extent.getHeight(extent) * factor * 3/2;
@@ -105,10 +97,11 @@
 
     // update flight track every 15 seconds
     setInterval(function() {
-      updateFlightsFromJSON();
+      flight_display.updateFlightsFromJSON();
     }, 15*1000);
 
-    var map_click_handler = slMapClickHandler(map, {flight_info: false, location_info: true});
+    var map_click_handler = slMapClickHandler(map, flight_display,
+                                              {flight_info: true, location_info: true});
   });
 </script>
 {%- endif %}
