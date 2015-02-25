@@ -160,6 +160,9 @@
         {{ h.to_seconds_of_day(flight.igc_file.date_utc, form.scoring_end_time.data) }},
         {{ h.to_seconds_of_day(flight.igc_file.date_utc, form.landing_time.data) }}
       );
+    } else {
+      $("#barogram-{{ prefix }}").html('<b>Your browser is too old to display this barogram.<br />' +
+                                       'Please update to a current version.</b>');
     }
 
     $("[id^={{ prefix }}-][id$=-datetimepicker]").datetimepicker({

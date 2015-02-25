@@ -35,7 +35,11 @@
 
 <script type="text/javascript">
   $(function() {
-    if (!isCanvasSupported()) return;
+    if (!isCanvasSupported()) {
+      $("#map_canvas").html('<b>Your browser is too old to display this map.<br />' +
+                            'Please update to a current version.</b>');
+      return;
+    }
 
     var sl_map =
       new slMap("map_canvas",
