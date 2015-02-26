@@ -67,6 +67,9 @@ $(function() {
 <script>
 $(function() {
    $(window).keydown(function(e) {
+     if ($(document.activeElement).closest('input').length != 0)
+       return;
+
      var href = null;
      if (e.key == "Right" || e.keyCode == 39) {
        href = "{{ h.url('', page='PAGENUM', **kw) }}";
