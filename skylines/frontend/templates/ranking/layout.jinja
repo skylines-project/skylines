@@ -1,4 +1,4 @@
-{% from 'macros/pager.jinja' import pager, pager_script with context %}
+{% from 'macros/pager.jinja' import pager, pager_script, pager_shortcut_script with context %}
 {% from 'macros/sorter.jinja' import sorter_script with context %}
 
 
@@ -58,10 +58,21 @@
   </div>
 </div>
 
+{% with page=g.paginators['result'] -%}
+<div id="page-position"
+     data-page-prev="{{ h.max(page.first_page, page.page - 1) }}"
+     data-page-current="{{ page.page }}"
+     data-page-next="{{ h.min(page.last_page, page.page + 1) }}"></div>
+{% endwith %}
+
+
 {%- endmacro %}
 
 {% block scripts -%}
-{% if not partial %}{{ super() }}{%- endif %}
+{% if not partial %}
+{{ super() }}
+{{ pager_shortcut_script('result', dict(year=year, **g.sorters['sorter'].args())) }}
+{%- endif %}
 {{ pager_script() }}
 {{ sorter_script() }}
 {%- endblock %}

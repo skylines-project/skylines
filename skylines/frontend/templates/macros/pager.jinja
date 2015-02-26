@@ -62,6 +62,31 @@ $(function() {
 {%- endmacro %}
 
 
+{% macro pager_shortcut_script(name, kw={}) -%}
+{% with page=g.paginators[name] -%}
+<script>
+$(function() {
+   $(window).keydown(function(e) {
+     var href = null;
+     if (e.key == "Right" || e.keyCode == 39) {
+       href = "{{ h.url('', page='PAGENUM', **kw) }}";
+       href = href.replace('PAGENUM', $('#page-position').data('page-next'));
+     } else if (e.key == "Left" || e.keyCode == 37) {
+       href = "{{ h.url('', page='PAGENUM', **kw) }}";
+       href = href.replace('PAGENUM', $('#page-position').data('page-prev'));
+     }
+
+     if (href && href.indexOf('#', href.length - 1) === -1) {
+       $("#partial").load(href + (href.indexOf('?') != -1 ? "&" : "?") + "partial");
+       return false;
+     }
+   });
+});
+</script>
+{%- endwith %}
+{%- endmacro %}
+
+
 {% macro pager_status(name) -%}
 {% with page=g.paginators[name] -%}
 {% if page.count %}

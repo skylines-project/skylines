@@ -1,7 +1,7 @@
 {% from "flights/flights-table.jinja" import render_flights_table with context %}
 {% from "macros/links.jinja" import user_link, club_link %}
 
-{% from 'macros/pager.jinja' import pager, pager_script, pager_status with context %}
+{% from 'macros/pager.jinja' import pager, pager_script, pager_shortcut_script, pager_status with context %}
 {% from 'macros/sorter.jinja' import sorter_script with context %}
 
 
@@ -54,6 +54,13 @@
 {%- if airport %}{% do omitted_columns.append('takeoff_airport') %}{% endif %}
 {%- if tab == 'all' %}{% do omitted_columns.append('times') %}{% endif %}
 {%- if tab == 'unassigned' %}{% do omitted_columns.append('pilot') %}{% endif %}
+
+{% with page=g.paginators['flights'] -%}
+<div id="page-position"
+     data-page-prev="{{ h.max(page.first_page, page.page - 1) }}"
+     data-page-current="{{ page.page }}"
+     data-page-next="{{ h.min(page.last_page, page.page + 1) }}"></div>
+{% endwith %}
 
 <div class="row">
   <div class="col-sm-6">
@@ -154,6 +161,10 @@ $(function() {
   });
 });
 </script>
+
+{% if not partial %}
+{{ pager_shortcut_script('flights', dict(**g.sorters['flights'].args())) }}
+{%- endif %}
 
 {{ pager_script() }}
 {{ sorter_script() }}
