@@ -46,7 +46,6 @@ flot_js = Bundle(
     'https://rawgithub.com/flot/flot/v0.8.3/jquery.flot.crosshair.js',
     'https://rawgithub.com/flot/flot/v0.8.3/jquery.flot.resize.js',
     'http://flot-marks.googlecode.com/svn-history/r13/trunk/src/jquery.flot.marks.js',
-    'https://rawgithub.com/flot/flot/v0.8.3/excanvas.min.js',
     filters=SimpleClosureJS(disable_ie_checks=True),
     output='js/flot-%(version)s.js')
 
@@ -74,7 +73,7 @@ main_css = Bundle(
     'css/search.css',
     'css/events.css',
     'css/tracking-table.css',
-    'css/fix-table.css',
+    'css/slFixTable.css',
     'css/wingman.css',
     'vendor/flags/flags.css',
     'vendor/bootstrap-datepicker/datepicker.css',
@@ -100,7 +99,6 @@ openlayers_css = Bundle(
 
 all_js = Bundle(
     'http://code.jquery.com/jquery-1.10.2.min.js',
-    'vendor/jquery/jquery.browser.js',
     'vendor/jquery/jquery.cookie.js',
     'vendor/jquery/jquery.timeago.js',
     'vendor/bootstrap-datepicker/datepicker.js',
@@ -113,32 +111,36 @@ openlayers_js = Bundle(
     'vendor/openlayers/ol.js',
     'js/ol-GraphicLayerSwitcher-v3.js',
     'js/ol-PlayButton-v3.js',
-    'js/map.js',
-    'js/map-click-handler.js',
+    'js/slMap.js',
+    'js/slMapClickHandler.js',
     filters=SimpleClosureJS,
     output='js/ol-%(version)s.js')
 
 flight_js = Bundle(
-    Bundle(
-        'js/units.js',
-        'js/baro.js',
-        'js/fix-table.js',
-        'js/phase-table.js',
-        'js/collection.js',
-        filters=SimpleClosureJS),
-
-    'js/flight.js',
-    filters='rjsmin',
+    'js/util.js',
+    'js/slUnits.js',
+    'js/slBarogram.js',
+    'js/slFixTable.js',
+    'js/slPhaseTable.js',
+    'js/slCollection.js',
+    'js/slFlightCollection.js',
+    'js/slFlight.js',
+    'js/slContestCollection.js',
+    'js/slContest.js',
+    'js/slPhaseHighlighter.js',
+    'js/slMapIconHandler.js',
+    'js/slFlightDisplay.js',
+    filters=SimpleClosureJS,
     output='js/flight-%(version)s.js')
 
 tracking_js = Bundle(
-    'js/tracking.js',
-    filters='rjsmin',
+    'js/slFlightTracking.js',
+    filters=SimpleClosureJS,
     output='js/tracking-%(version)s.js')
 
 upload_js = Bundle(
-    'js/units.js',
-    'js/baro.js',
+    'js/slUnits.js',
+    'js/slBarogram.js',
     'js/upload.js',
     'http://momentjs.com/downloads/moment.min.js',
     'https://rawgithub.com/TobiasLohner/bootstrap-datetimepicker/c36342415a1be8fa013548402bf01718ca93d454/src/js/bootstrap-datetimepicker.js',

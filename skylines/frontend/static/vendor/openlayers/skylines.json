@@ -64,6 +64,7 @@
     "ol.layer.Image#getVisible",
     "ol.layer.Image#setVisible",
     "ol.layer.Tile",
+    "ol.layer.Tile#setProperties",
     "ol.layer.Tile#getVisible",
     "ol.layer.Tile#setVisible",
     "ol.layer.Vector",

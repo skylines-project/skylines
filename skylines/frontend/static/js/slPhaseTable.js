@@ -12,16 +12,6 @@ slPhaseTable = function(placeholder) {
   // Public attributes and methods
 
   /**
-   * Clears the current selection from the table.
-   *
-   * @param  {Boolean=} opt_trigger
-   *   The 'selection_changed' event is triggered if this parameter is true.
-   */
-  fix_table.clearSelection = function(opt_trigger) {
-    fix_table.setSelection(null, opt_trigger);
-  };
-
-  /**
    * Selects a new flight phase from the table.
    *
    * @param {?Object} element The table row that should be selected.

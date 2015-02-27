@@ -1,4 +1,10 @@
-slMapClickHandler = function(map, settings) {
+/**
+ * @constructor
+ * @param {ol.Map} map Openlayers map instance
+ * @param {slFlightDisplay} flight_display Flight display module
+ * @param {Object} settings Settings for this module
+ */
+slMapClickHandler = function(map, flight_display, settings) {
   var map_click_handler = {};
 
   // Private attributes
@@ -7,11 +13,11 @@ slMapClickHandler = function(map, settings) {
    * The OpenLayers.Geometry object of the circle.
    * @type {Object}
    */
-  var circle = null;
+  var circle = { geometry: null, animation: null };
 
   /**
    * Stores the state if the infobox.
-   * @type {Bool}
+   * @type {Boolean}
    */
   var visible = false;
 
@@ -23,7 +29,7 @@ slMapClickHandler = function(map, settings) {
   /**
    * Click handler which shows a info box at the click location.
    *
-   * @this {OpenLayers.Map}
+   * @this {ol.Map}
    * @param {Event} e
    * @return {Boolean?}
    */
@@ -46,8 +52,8 @@ slMapClickHandler = function(map, settings) {
     var infobox_element = infobox.getElement();
     var coordinate = e.coordinate;
 
-    if (settings.flight_info) {
-      var flight_path_source = flights.getSource();
+    if (settings['flight_info'] && flight_display) {
+      var flight_path_source = flight_display.getFlights().getSource();
       var closest_feature = flight_path_source
           .getClosestFeatureToCoordinate(coordinate);
 
@@ -64,7 +70,7 @@ slMapClickHandler = function(map, settings) {
         if (squared_distance < 100) {
           var time = closest_point[3];
           var sfid = closest_feature.get('sfid');
-          var flight = flights.get(sfid);
+          var flight = flight_display.getFlights().get(sfid);
 
           // flight info
           var flight_info = flightInfo(flight);
@@ -82,7 +88,7 @@ slMapClickHandler = function(map, settings) {
       }
     }
 
-    if (settings.location_info) {
+    if (settings['location_info']) {
       // location info
       var loc = ol.proj.transform(coordinate, 'EPSG:3857', 'EPSG:4326');
       var get_location_info = locationInfo(loc[0], loc[1]);
@@ -98,16 +104,26 @@ slMapClickHandler = function(map, settings) {
     return false; // stop bubbeling
   };
 
+  map_click_handler.init = function() {
+    map.on('click', map_click_handler.trigger);
+  };
+
+  map_click_handler.init();
   return map_click_handler;
 
   // Private functions
 
+  /**
+   * Returns the flight badge element
+   * @param {slFlight} flight Flight object
+   * @return {jQuery}
+   */
   function flightInfo(flight) {
     return $(
         '<span class="info-item badge" style="background:' +
-            flight.color +
+            flight.getColor() +
         '">' +
-        (flight.additional['registration'] || '') +
+        (flight.getRegistration() || '') +
         '</span>'
     );
   };
@@ -148,7 +164,7 @@ slMapClickHandler = function(map, settings) {
   /**
    * Show a circle at the clicked position
    *
-   * @param {Array} coordinate Coordinate
+   * @param {Array<Number>} coordinate Coordinate
    */
   function showCircle(coordinate) {
     var stroke_style = new ol.style.Stroke({
@@ -163,37 +179,37 @@ slMapClickHandler = function(map, settings) {
     });
     */
 
-    if (!circle)
-      circle = new ol.geom.Circle(coordinate, 1000);
+    if (!circle.geometry)
+      circle.geometry = new ol.geom.Circle(coordinate, 1000);
     else
-      circle.setCenterAndRadius(coordinate, 1000);
+      circle.geometry.setCenterAndRadius(coordinate, 1000);
 
-    circle.hide_animation = null;
+    circle.animation = null;
 
     map.on('postcompose', function(e) {
       var vector_context = e.vectorContext;
 
-      if (circle) {
-        if (circle.hide_animation != null) {
+      if (circle.geometry) {
+        if (circle.animation != null) {
           var frame_state = e.frameState;
-          if (!circle.hide_animation.start)
-            circle.hide_animation.start = frame_state.time;
+          if (!circle.animation.start)
+            circle.animation.start = frame_state.time;
 
-          if (circle.hide_animation.duration <= 0 ||
+          if (circle.animation.duration <= 0 ||
               frame_state.time >
-              circle.hide_animation.start + circle.hide_animation.duration) {
-            circle = null;
+              circle.animation.start + circle.animation.duration) {
+            circle.geometry = null;
             return;
           }
 
-          var delta_time = -(circle.hide_animation.start - frame_state.time) %
-                           circle.hide_animation.duration;
+          var delta_time = -(circle.animation.start - frame_state.time) %
+                           circle.animation.duration;
           stroke_style.setWidth(3 - delta_time /
-                                (circle.hide_animation.duration / 3));
+                                (circle.animation.duration / 3));
         }
 
         vector_context.setFillStrokeStyle(null, stroke_style);
-        vector_context.drawCircleGeometry(circle);
+        vector_context.drawCircleGeometry(circle.geometry);
         map.render();
       }
     });
@@ -202,10 +218,10 @@ slMapClickHandler = function(map, settings) {
   /**
    * Hides the search circle
    *
-   * @param {Integer} duration Fade duration.
+   * @param {Number} duration Fade duration in ms
    */
   function hideCircle(duration) {
-    circle.hide_animation = { duration: duration, start: null };
+    circle.animation = { duration: duration, start: null };
   };
 
   /**
@@ -214,30 +230,23 @@ slMapClickHandler = function(map, settings) {
    * @param {Number} lon Longitude.
    * @param {Number} lat Latitude.
    * @param {Number} time Time.
-   * @param {Object} flight Flight.
+   * @param {slFlight} flight Flight.
    */
   function getNearFlights(lon, lat, time, flight) {
-    var req = $.ajax('/flights/' + flight.sfid + '/near?lon=' + lon +
+    if (!flight_display) return;
+
+    var req = $.ajax('/flights/' + flight.getID() + '/near?lon=' + lon +
         '&lat=' + lat + '&time=' + time);
 
     req.done(function(data) {
-      for (var i = 0; i < data.flights.length; ++i) {
-        var flight = data.flights[i];
+      for (var i = 0; i < data['flights'].length; ++i) {
+        var flight = data['flights'][i];
 
         // skip retrieved flight if already on map
-        if (flights.has(flight.sfid))
+        if (flight_display.getFlights().has(flight['sfid']))
           continue;
 
-        addFlight(
-            flight.sfid,
-            flight.points,
-            flight.barogram_t,
-            flight.barogram_h,
-            flight.enl,
-            flight.contests,
-            flight.elevations_t,
-            flight.elevations_h,
-            flight.additional);
+        flight_display.addFlight(flight);
       }
     });
 
@@ -284,18 +293,18 @@ slMapClickHandler = function(map, settings) {
         return e.get('name') == 'Mountain Wave Project';
       })[0];
 
-      if (!$.isEmptyObject(data.airspaces) &&
+      if (!$.isEmptyObject(data['airspaces']) &&
           airspace_layer.getVisible()) {
         var p = $('<p></p>');
-        p.append(formatAirspaceData(data.airspaces));
+        p.append(formatAirspaceData(data['airspaces']));
         item.append(p);
         no_data = false;
       }
 
-      if (!$.isEmptyObject(data.waves) &&
+      if (!$.isEmptyObject(data['waves']) &&
           mwp_layer.getVisible()) {
         var p = $('<p></p>');
-        p.append(formatMountainWaveData(data.waves));
+        p.append(formatMountainWaveData(data['waves']));
         item.append(p);
         no_data = false;
       }
@@ -321,7 +330,7 @@ slMapClickHandler = function(map, settings) {
    * Format Airspace data for infobox
    *
    * @param {Object} data Airspace data.
-   * @return {Object} HTML table with the airspace data.
+   * @return {jQuery} HTML table with the airspace data.
    */
   function formatAirspaceData(data) {
     var table = $('<table></table>');
@@ -342,10 +351,10 @@ slMapClickHandler = function(map, settings) {
     for (var i = 0; i < data.length; ++i) {
       table_body.append($(
           '<tr>' +
-          '<td class="airspace_name">' + data[i].name + '</td>' +
-          '<td class="airspace_class">' + data[i].airspace_class + '</td>' +
-          '<td class="airspace_base">' + data[i].base + '</td>' +
-          '<td class="airspace_top">' + data[i].top + '</td>' +
+          '<td class="airspace_name">' + data[i]['name'] + '</td>' +
+          '<td class="airspace_class">' + data[i]['airspace_class'] + '</td>' +
+          '<td class="airspace_base">' + data[i]['base'] + '</td>' +
+          '<td class="airspace_top">' + data[i]['top'] + '</td>' +
           '</tr>'
           ));
     }
@@ -360,7 +369,7 @@ slMapClickHandler = function(map, settings) {
    * Format Mountain Wave data in infobox
    *
    * @param {Object} data Wave data.
-   * @return {Object} HTML table with the wave data.
+   * @return {jQuery} HTML table with the wave data.
    */
   function formatMountainWaveData(data) {
     var table = $('<table></table>');
@@ -377,11 +386,11 @@ slMapClickHandler = function(map, settings) {
     var table_body = $('<tbody></tbody');
 
     for (var i = 0; i < data.length; ++i) {
-      var wind_direction = data[i].main_wind_direction || 'Unknown';
+      var wind_direction = data[i]['main_wind_direction'] || 'Unknown';
 
       table_body.append($(
           '<tr>' +
-          '<td class="wave_name">' + data[i].name + '</td>' +
+          '<td class="wave_name">' + data[i]['name'] + '</td>' +
           '<td class="wave_direction">' + wind_direction + '</td>' +
           '</tr>'
           ));

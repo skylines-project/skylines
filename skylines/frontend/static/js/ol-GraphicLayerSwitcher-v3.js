@@ -1,3 +1,9 @@
+/**
+ * Graphic layer switcher for base layers and overlay layers.
+ *
+ * @constructor
+ * @param {Object=} opt_options Options
+ */
 var GraphicLayerSwitcher = function(opt_options) {
   var options = opt_options || {};
 
@@ -6,6 +12,9 @@ var GraphicLayerSwitcher = function(opt_options) {
   var element = document.createElement('div');
   element.className = 'GraphicLayerSwitcher ol-unselectable';
 
+  /**
+   * Initially draws the layer switcher
+   */
   var draw = function() {
     // closed layer switcher icon
     var anchor = $('<button><img src="../../images/layers.png" /></button>');
@@ -43,6 +52,11 @@ var GraphicLayerSwitcher = function(opt_options) {
     });
   };
 
+  /**
+   * Updates the layer switcher according to the current layer state
+   *
+   * @param {jQuery} layer_switcher_box jQuery element of the layer switcher
+   */
   var update = function(layer_switcher_box) {
     // empty layer switcher box...
     layer_switcher_box.empty();
@@ -75,19 +89,22 @@ var GraphicLayerSwitcher = function(opt_options) {
         if (layer_visible)
           item.addClass('active');
 
-        item.on('click', $.proxy(onInputClick, { layer: layer }));
+        item.on('click', null, { layer: layer }, onInputClick);
 
-        item.on('mouseover touchstart', $.proxy(function() {
-          $(this.item).find('img').attr('src',
-              '../../images/layers/' + this.layer.get('name') + '.png');
-        }, { item: item, layer: layer }));
+        item.on('mouseover touchstart', null, { item: item, layer: layer },
+            function(e) {
+              $(e.data.item).find('img').attr('src',
+                  '../../images/layers/' + e.data.layer.get('name') + '.png');
+            });
 
-        item.on('mouseout touchend', $.proxy(function() {
-          if (!this.layer.getVisible()) {
-            $(this.item).find('img').attr('src',
-                '../../images/layers/' + this.layer.get('name') + '.bw.png');
-          }
-        }, { item: item, layer: layer }));
+        item.on('mouseout touchend', null, { item: item, layer: layer },
+            function(e) {
+              if (!e.data.layer.getVisible()) {
+                $(e.data.item).find('img').attr('src',
+                    '../../images/layers/' + e.data.layer.get('name') +
+                    '.bw.png');
+              }
+            });
 
         if (layer.get('base_layer')) {
           base_layers.append(item);
@@ -101,9 +118,12 @@ var GraphicLayerSwitcher = function(opt_options) {
     layer_switcher_box.append(overlay_layers);
   };
 
+  /**
+   * Event handler for the click event
+   * @param {Event} e Event
+   */
   var onInputClick = function(e) {
-    var layer = this.layer;
-
+    var layer = e.data.layer;
     if (layer.get('base_layer')) {
       control.getMap().getLayers().forEach(function(other_layer) {
         if (other_layer.get('base_layer')) {
@@ -125,7 +145,7 @@ var GraphicLayerSwitcher = function(opt_options) {
       });
 
       $.cookie('base_layer',
-               this.layer.get('name'),
+               layer.get('name'),
                { path: '/', expires: 365 });
 
     } else {

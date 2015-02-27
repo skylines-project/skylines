@@ -51,6 +51,12 @@ function slBarogram(placeholder, options) {
    */
   var time_highlight = null;
 
+  /**
+   * Flag whether the baro will emit a plothover event.
+   * @type {Bool}
+   */
+  var plot_hover = false;
+
   // Public attributes and methods
 
   /**
@@ -163,7 +169,7 @@ function slBarogram(placeholder, options) {
     else if (time == -1)
       flot.lockCrosshair({x: 999999999});
     else
-      flot.lockCrosshair({x: global_time * 1000});
+      flot.lockCrosshair({x: time * 1000});
   };
 
 
@@ -259,6 +265,22 @@ function slBarogram(placeholder, options) {
     return flot.getSelection();
   };
 
+  baro.setHoverMode = function(_hover_mode) {
+    if (_hover_mode) {
+      placeholder.on('plothover', function(event, pos) {
+        $(baro).trigger('barohover', [pos.x / 1000.]);
+      });
+
+      placeholder.on('mouseout', function(event) {
+        $(baro).trigger('mouseout');
+      });
+    } else {
+      placeholder.off('plothover');
+      placeholder.off('mouseout');
+    }
+
+    plot_hover = _hover_mode;
+  };
 
   // Initialization
 
@@ -313,12 +335,8 @@ function slBarogram(placeholder, options) {
    * @param  {DOMElement} placeholder
    */
   function attachEventHandlers(placeholder) {
-    placeholder.on('plothover', function(event, pos) {
-      $(baro).trigger('barohover', [pos.x / 1000.]);
-    }).on('plotclick', function(event, pos) {
+    placeholder.on('plotclick', function(event, pos) {
       $(baro).trigger('baroclick', [pos.x / 1000.]);
-    }).on('mouseout', function(event) {
-      $(baro).trigger('mouseout');
     });
   }
 
@@ -414,12 +432,12 @@ function slBarogram(placeholder, options) {
     for (var i = 0; i < contests_length; ++i) {
       var contest = contests[i];
 
-      var times = contest.times;
+      var times = contest.getTimes();
       var times_length = times.length;
       if (times_length < 1)
         continue;
 
-      var color = contest.color;
+      var color = contest.getColor();
 
       // Add the turnpoint markers to the markings array
       var markings = [];
