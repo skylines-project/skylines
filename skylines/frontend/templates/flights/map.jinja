@@ -45,6 +45,18 @@
 
 <script type="text/javascript">
   $(function() {
+    var sidebar = $('#sidebar').sidebar();
+
+    $("#barogram_panel").resize(function() {
+      var height = $("#barogram_panel").height() + 10;
+      sidebar.css('bottom', height);
+    });
+  });
+</script>
+
+
+<script type="text/javascript">
+  $(function() {
     if (!isCanvasSupported()) {
       $("#map_canvas").html('<b>Your browser is too old to display this map.<br />' +
                             'Please update to a current version.</b>');
@@ -92,8 +104,6 @@
 
     var map_click_handler = slMapClickHandler(map, flight_display,
                                               {flight_info: true, location_info: true});
-
-    var sidebar = $('#sidebar').sidebar();
   });
 </script>
 {%- endblock %}
@@ -174,7 +184,7 @@
 </div>
 
 <div id="map_canvas" class="olFullscreen"></div>
-<div class="map-bottom-panel map-overlay">
+<div id="barogram_panel" class="map-bottom-panel map-overlay">
     <div style="overflow: auto; max-height: 115px">
         <table id="fix-data" class="table table-condensed"></table>
     </div>

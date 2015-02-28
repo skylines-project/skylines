@@ -35,7 +35,6 @@ bootstrap_js = Bundle(
 bootstrap_css = Bundle(
     'https://netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css',
     'https://netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap-theme.min.css',
-    'https://raw.githubusercontent.com/Turbo87/sidebar-v2/v0.2.1/css/ol3-sidebar.min.css',
     output='css/bootstrap-%(version)s.js')
 
 
@@ -76,6 +75,7 @@ main_css = Bundle(
     'css/tracking-table.css',
     'css/slFixTable.css',
     'css/wingman.css',
+    'css/ol3-sidebar.css',
     'vendor/flags/flags.css',
     'vendor/bootstrap-datepicker/datepicker.css',
     'vendor/fonts/stylesheet.css',
