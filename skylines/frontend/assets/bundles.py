@@ -35,6 +35,7 @@ bootstrap_js = Bundle(
 bootstrap_css = Bundle(
     'https://netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css',
     'https://netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap-theme.min.css',
+    'https://raw.githubusercontent.com/Turbo87/sidebar-v2/v0.2.1/css/ol3-sidebar.min.css',
     output='css/bootstrap-%(version)s.js')
 
 
@@ -130,6 +131,7 @@ flight_js = Bundle(
     'js/slPhaseHighlighter.js',
     'js/slMapIconHandler.js',
     'js/slFlightDisplay.js',
+    'https://raw.githubusercontent.com/Turbo87/sidebar-v2/v0.2.1/js/jquery-sidebar.min.js',
     filters=SimpleClosureJS,
     output='js/flight-%(version)s.js')
 

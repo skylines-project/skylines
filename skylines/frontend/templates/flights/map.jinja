@@ -4,6 +4,10 @@
 
 {% from 'flights/meta-tags.jinja' import flight_meta_tags with context %}
 {% from 'flights/macros.jinja' import flight_title with context %}
+{% from 'flights/details-table.jinja' import render_details_table with context %}
+{% from 'flights/wingman-table.jinja' import render_wingman_table with context %}
+{% from 'flights/phases-table.jinja' import render_circling_performance, render_cruise_performance,
+                                            render_leg_statistics, render_phases with context %}
 
 
 {% block title -%}{{ flight_title(flight) }}{%- endblock %}
@@ -88,12 +92,86 @@
 
     var map_click_handler = slMapClickHandler(map, flight_display,
                                               {flight_info: true, location_info: true});
+
+    var sidebar = $('#sidebar').sidebar();
   });
 </script>
 {%- endblock %}
 
 
 {%- block content %}
+<div id="sidebar" class="sidebar collapsed">
+<!-- Nav tabs -->
+  <ul class="sidebar-tabs" role="tablist">
+    <li>
+      <a href="#tab-overview" title="{{ _('Overview') }}" role="tab">
+        <i class="icon-info icon-large"></i>
+      </a>
+    </li>
+    <li>
+      <a href="#tab-comments" title="{{ _('Comments') }}" role="tab">
+        <i class="icon-comments-alt icon-large"></i>
+        {% if flight.comments[0] -%}
+        ({{ flight.comments|count }})
+        {%- endif %}
+      </a>
+    </li>
+    <li>
+      <a href="#tab-stats-total" title="{{ _('Total') }}" role="tab">
+        <i class="icon-bar-chart icon-large"></i> {% trans %}Total{% endtrans %}
+      </a>
+    </li>
+    <li>
+      <a href="#tab-stats-legs" title="{{ _('Leg Statistics') }}" role="tab">
+        <i class="icon-resize-horizontal icon-large"></i> {% trans %}Legs{% endtrans %}
+      </a>
+    </li>
+    <li>
+      <a href="#tab-wingmen" title="{{ _('Wingmen') }}" role="tab">
+        <i class="icon-group icon-large"></i>
+      </a>
+    </li>
+  </ul>
+<!-- Tab panes -->
+  <div class="sidebar-content active">
+    <div class="sidebar-pane" id="tab-overview">
+      {{ render_details_table(flight) }}
+
+      <p>
+        <span id="pinned" rel="tooltip" title="{{ _('Activate this to show the flight on top of other flights on the map') }}"></span>
+      </p>
+    </div>
+    <div class="sidebar-pane" id="tab-comments">
+      <h3><i class="icon-comments-alt"></i> {% trans %}Comments{% endtrans %}</h3>
+      {{ comments|safe }}
+    </div>
+    <div class="sidebar-pane" id="tab-stats-total">
+      <h3>{% trans %}Circling performance{% endtrans %}</h3>
+      {{ render_circling_performance(flight) }}
+
+      <h3>{% trans %}Cruise performance{% endtrans %}</h3>
+      {{ render_cruise_performance(flight) }}
+
+      {%- if flight.has_phases %}
+      <p><a class='btn btn-default' data-toggle="collapse" data-target="#detailed-stats">
+        <i class='icon-info-sign icon-large'></i> {% trans %}Detailed statistics{% endtrans %}
+      </a></p>
+      {%- endif %}
+    </div>
+    <div class="sidebar-pane" id="tab-stats-legs">
+      <h3>{% trans %}Distance{% endtrans %}</h3>
+      {{ render_leg_statistics(flight, 'olc_plus', 'classic') }}
+
+      <h3>{% trans %}Triangle{% endtrans %}</h3>
+      {{ render_leg_statistics(flight, 'olc_plus', 'triangle') }}
+    </div>
+    <div class="sidebar-pane" id="tab-wingmen">
+      <h3>{% trans %}Wingmen{% endtrans %}</h3>
+      {{ render_wingman_table(near_flights) }}
+    </div>
+  </div>
+</div>
+
 <div id="map_canvas" class="olFullscreen"></div>
 <div class="map-bottom-panel map-overlay">
     <div style="overflow: auto; max-height: 115px">
