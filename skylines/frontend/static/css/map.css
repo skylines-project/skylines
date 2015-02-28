@@ -5,21 +5,20 @@
   background-color: #fff;
 }
 
-.olFullscreen .ol-viewport .ol-attribution {
-  bottom: 125pt !important;
-}
-
-.olFullscreen .ol-viewport .ol-scale-line {
-  bottom: 125pt !important;
-}
-
 .ol-viewport .plane_marker {
   position: absolute;
   min-height: 1em;
 }
 
+.ol-scale-line,
+.ol-attribution {
+  bottom: 172px;
+  margin-bottom: 10px;
+}
+
 .ol-control,
 .ol-control:hover {
+  z-index: 1001;
   padding: 0px;
   background: none;
   box-shadow: 0 0 8px rgba(50,50,50,0.3);
@@ -32,7 +31,6 @@
   border: 1px solid #bbb;
   border-radius: 4px;
   color: #000;
-  margin: 0px;
 }
 
 .ol-control button:hover {
@@ -77,6 +75,7 @@
   bottom: 10px;
   left: 7px;
   right: 7px;
+  z-index: 2000;
 }
 
 @media (max-width: 767px) {

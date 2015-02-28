@@ -50,6 +50,8 @@
     $("#barogram_panel").resize(function() {
       var height = $("#barogram_panel").height() + 10;
       sidebar.css('bottom', height);
+      $(".ol-scale-line").css('bottom', height);
+      $(".ol-attribution").css('bottom', height);
     });
   });
 </script>
@@ -183,7 +185,7 @@
   </div>
 </div>
 
-<div id="map_canvas" class="olFullscreen"></div>
+<div id="map_canvas" class="olFullscreen sidebar-map"></div>
 <div id="barogram_panel" class="map-bottom-panel map-overlay">
     <div style="overflow: auto; max-height: 115px">
         <table id="fix-data" class="table table-condensed"></table>

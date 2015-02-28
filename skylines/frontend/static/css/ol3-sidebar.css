@@ -103,21 +103,29 @@
   .sidebar-content {
     border-radius: 0 2px 2px 0; } }
 
+
 @media (min-width: 768px) {
+  .sidebar.collapsed ~ .sidebar-map .ol-scale-line,
   .sidebar.collapsed ~ .sidebar-map .ol-zoom {
     margin-left: 52px; } }
 
+
+.sidebar-map .ol-scale-line,
 .sidebar-map .ol-zoom {
   margin-left: 46px; }
   @media (min-width: 768px) {
+    .sidebar-map .ol-scale-line,
     .sidebar-map .ol-zoom {
       transition: margin-left 500ms; } }
   @media (min-width: 768px) and (max-width: 991px) {
+    .sidebar-map .ol-scale-line,
     .sidebar-map .ol-zoom {
       margin-left: 317px; } }
   @media (min-width: 992px) and (max-width: 1199px) {
+    .sidebar-map .ol-scale-line,
     .sidebar-map .ol-zoom {
       margin-left: 402px; } }
   @media (min-width: 1200px) {
+    .sidebar-map .ol-scale-line,
     .sidebar-map .ol-zoom {
       margin-left: 472px; } }
