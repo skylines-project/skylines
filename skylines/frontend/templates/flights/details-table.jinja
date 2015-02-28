@@ -6,6 +6,45 @@
 <table class="table table-flight-details" id="flight-details-table" itemscope="" itemtype="https://schema.org/SportsEvent">
   <meta itemprop="url" content="/flights/{{ flight.id }}" />
   <tbody>
+    <tr>
+      <th>{% trans %}Pilot{% endtrans %}</th>
+      <td class="column-buttons">
+        {%- if flight.is_writable(g.current_user) %}
+        <a href="{{ url_for('.change_pilot') }}" class="btn btn-default btn-sm pull-right">
+          <i class="icon-pencil icon-small"></i> {% trans %}Change{% endtrans %}
+        </a>
+        {%- endif %}
+
+        {% if flight.pilot or flight.pilot_name -%}
+        <span itemprop="performer" itemscope="" itemtype="https://schema.org/Person">
+          {% if flight.pilot -%}
+          <meta itemprop="url" content="{{ url_for('user.index', user_id=flight.pilot_id) }}" />
+          {{ user_link(flight.pilot, ' itemprop="name"') }}
+          {%- else -%}
+          {{ flight.pilot_name|e }}
+          {%- endif %}
+        </span>
+        {%- endif %}
+
+        {%- if (flight.pilot or flight.pilot_name) and (flight.co_pilot or flight.co_pilot_name) %}<br/>{% endif -%}
+
+        {% if flight.co_pilot or flight.co_pilot_name -%}
+        <span itemprop="performer" itemscope="" itemtype="https://schema.org/Person">
+          {% if flight.co_pilot -%}
+          <meta itemprop="url" content="{{ url_for('user.index', user_id=flight.co_pilot_id) }}" />
+          {{ user_link(flight.co_pilot, ' itemprop="name"') }}
+          {%- else -%}
+          {{ flight.co_pilot_name|e }}
+          {%- endif %}
+        </span>
+        {%- endif %}
+
+        {%- if not (flight.pilot or flight.pilot_name or flight.co_pilot or flight.co_pilot_name) %}
+        [unspecified]
+        {%- endif %}
+      </td>
+    </tr>
+
     {%- if flight.date_local %}
     <tr>
       <th>{% trans %}Date{% endtrans %}</th>
@@ -118,45 +157,6 @@
       <td>{{ h.format_speed(flight.speed) }}</td>
     </tr>
     {%- endif %}
-
-    <tr>
-      <th>{% trans %}Pilot{% endtrans %}</th>
-      <td class="column-buttons">
-        {%- if flight.is_writable(g.current_user) %}
-        <a href="{{ url_for('.change_pilot') }}" class="btn btn-default btn-sm pull-right">
-          <i class="icon-pencil icon-small"></i> {% trans %}Change{% endtrans %}
-        </a>
-        {%- endif %}
-
-        {% if flight.pilot or flight.pilot_name -%}
-        <span itemprop="performer" itemscope="" itemtype="https://schema.org/Person">
-          {% if flight.pilot -%}
-          <meta itemprop="url" content="{{ url_for('user.index', user_id=flight.pilot_id) }}" />
-          {{ user_link(flight.pilot, ' itemprop="name"') }}
-          {%- else -%}
-          {{ flight.pilot_name|e }}
-          {%- endif %}
-        </span>
-        {%- endif %}
-
-        {%- if (flight.pilot or flight.pilot_name) and (flight.co_pilot or flight.co_pilot_name) %}<br/>{% endif -%}
-
-        {% if flight.co_pilot or flight.co_pilot_name -%}
-        <span itemprop="performer" itemscope="" itemtype="https://schema.org/Person">
-          {% if flight.co_pilot -%}
-          <meta itemprop="url" content="{{ url_for('user.index', user_id=flight.co_pilot_id) }}" />
-          {{ user_link(flight.co_pilot, ' itemprop="name"') }}
-          {%- else -%}
-          {{ flight.co_pilot_name|e }}
-          {%- endif %}
-        </span>
-        {%- endif %}
-
-        {%- if not (flight.pilot or flight.pilot_name or flight.co_pilot or flight.co_pilot_name) %}
-        [unspecified]
-        {%- endif %}
-      </td>
-    </tr>
 
     {%- if flight.club %}
     <tr>
