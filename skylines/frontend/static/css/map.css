@@ -74,9 +74,9 @@
 
 .map-bottom-panel {
   position: absolute;
-  bottom: 30px;
-  left: 20px;
-  right: 20px;
+  bottom: 10px;
+  left: 7px;
+  right: 7px;
 }
 
 @media (max-width: 767px) {
