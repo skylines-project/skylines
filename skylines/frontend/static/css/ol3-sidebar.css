@@ -29,24 +29,24 @@
   position: absolute;
   top: 0;
   bottom: 0;
-  width: 38px;
+  width: 40px;
   height: 100%;
   margin: 0;
   padding: 0;
-  background-color: rgba(0, 60, 136, 0.5); }
+  background-color: rgba(255, 255, 255, 0.5); }
   .sidebar-tabs > li {
     width: 100%;
     height: 40px;
-    color: #fff;
+    color: #999;
     font-size: 12pt;
     overflow: hidden;
     transition: all 80ms; }
     .sidebar-tabs > li:hover {
-      color: #fff;
-      background-color: rgba(0, 60, 136, 0.6); }
+      color: #000;
+      background-color: #ccc; }
     .sidebar-tabs > li.active {
       color: #fff;
-      background-color: #0074d9; }
+      background-color: #428bca; }
     .sidebar-tabs > li > a {
       display: block;
       width: 100%;
@@ -69,8 +69,7 @@
 .sidebar-pane {
   display: none;
   right: 0;
-  box-sizing: border-box;
-  padding: 10px 20px; }
+  box-sizing: border-box; }
   .sidebar-pane.active {
     display: block; }
   @media (min-width: 768px) and (max-width: 991px) {
@@ -85,10 +84,10 @@
 
 .sidebar {
   background-color: rgba(255, 255, 255, 0.4);
-  border-right: 3px solid transparent; }
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.5); }
   @media (min-width: 768px) {
     .sidebar {
-      border: 3px solid transparent;
+      box-shadow 0px 2px 5px rgba(0, 0, 0, 0.5);
       border-radius: 4px; } }
 
 .sidebar-tabs {
@@ -129,3 +128,16 @@
     .sidebar-map .ol-scale-line,
     .sidebar-map .ol-zoom {
       margin-left: 472px; } }
+
+.sidebar-pane > h3 {
+  font-size: 22px;
+  margin: 0;
+  height: 40px;
+  line-height: 40px;
+  padding-left: 20px;
+  background-color: #eee;
+}
+
+.sidebar-pane-content {
+  padding: 10px 20px;
+}

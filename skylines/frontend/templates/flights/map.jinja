@@ -148,39 +148,51 @@
   <div class="sidebar-content active">
     <div class="sidebar-pane" id="tab-overview">
       <h3>{% trans %}Overview{% endtrans %}</h3>
+      <div class="sidebar-pane-content">
       {{ render_details_table(flight) }}
 
-      <p>
-        <span id="pinned" rel="tooltip" title="{{ _('Activate this to show the flight on top of other flights on the map') }}"></span>
-      </p>
+        <p>
+          <span id="pinned" rel="tooltip" title="{{ _('Activate this to show the flight on top of other flights on the map') }}"></span>
+        </p>
+      </div>
     </div>
     <div class="sidebar-pane" id="tab-comments">
       <h3><i class="icon-comments-alt"></i> {% trans %}Comments{% endtrans %}</h3>
-      {{ comments|safe }}
+      <div class="sidebar-pane-content">
+        {{ comments|safe }}
+      </div>
     </div>
     <div class="sidebar-pane" id="tab-stats-total">
-      <h3>{% trans %}Circling performance{% endtrans %}</h3>
-      {{ render_circling_performance(flight) }}
+      <h3>{% trans %}Statistics{% endtrans %}</h3>
+      <div class="sidebar-pane-content">
+        <h3>{% trans %}Circling performance{% endtrans %}</h3>
+        {{ render_circling_performance(flight) }}
 
-      <h3>{% trans %}Cruise performance{% endtrans %}</h3>
-      {{ render_cruise_performance(flight) }}
+        <h3>{% trans %}Cruise performance{% endtrans %}</h3>
+        {{ render_cruise_performance(flight) }}
 
-      {%- if flight.has_phases %}
-      <p><a class='btn btn-default' data-toggle="collapse" data-target="#detailed-stats">
-        <i class='icon-info-sign icon-large'></i> {% trans %}Detailed statistics{% endtrans %}
-      </a></p>
-      {%- endif %}
+        {%- if flight.has_phases %}
+        <p><a class='btn btn-default' data-toggle="collapse" data-target="#detailed-stats">
+          <i class='icon-info-sign icon-large'></i> {% trans %}Detailed statistics{% endtrans %}
+        </a></p>
+        {%- endif %}
+      </div>
     </div>
     <div class="sidebar-pane" id="tab-stats-legs">
-      <h3>{% trans %}Distance{% endtrans %}</h3>
-      {{ render_leg_statistics(flight, 'olc_plus', 'classic') }}
+      <h3>{% trans %}Legs{% endtrans %}</h3>
+      <div class="sidebar-pane-content">
+        <h3>{% trans %}Distance{% endtrans %}</h3>
+        {{ render_leg_statistics(flight, 'olc_plus', 'classic') }}
 
-      <h3>{% trans %}Triangle{% endtrans %}</h3>
-      {{ render_leg_statistics(flight, 'olc_plus', 'triangle') }}
+        <h3>{% trans %}Triangle{% endtrans %}</h3>
+        {{ render_leg_statistics(flight, 'olc_plus', 'triangle') }}
+      </div>
     </div>
     <div class="sidebar-pane" id="tab-wingmen">
       <h3>{% trans %}Wingmen{% endtrans %}</h3>
-      {{ render_wingman_table(near_flights) }}
+      <div class="sidebar-pane-content">
+        {{ render_wingman_table(near_flights) }}
+      </div>
     </div>
   </div>
 </div>
