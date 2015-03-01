@@ -97,9 +97,10 @@
     var map_click_handler = slMapClickHandler(map, flight_display,
                                               {flight_info: true, location_info: true});
 
-    var phase_highlighter = slPhaseHighlighter(sl_map.getMap(),
+    var phase_highlighter = slPhaseHighlighter(sl_map,
                                                flight_display.getBaro(),
-                                               flight_display.getFlights());
+                                               flight_display.getFlights(),
+                                               getPadding);
 
     sidebar.on('content', function (e, args) {
       if (args.id == 'tab-stats-legs') {

@@ -4,11 +4,13 @@
 /**
  * A object to handle flight phase highlights.
  * @constructor
- * @param {Object} _map ol3 map object.
+ * @param {slMap} _map slMap object.
  * @param {Object} _baro slBarogram object.
  * @param {slFlightCollection} _flights slFlightCollection object
+ * @param {function} _padding_callback Callback method which returns the
+ * correct padding for the view.
  */
-slPhaseHighlighter = function(_map, _baro, _flights) {
+slPhaseHighlighter = function(_map, _baro, _flights, _padding_callback) {
   var phase_tables = [];
 
   var phase_highlighter = {};
@@ -16,6 +18,8 @@ slPhaseHighlighter = function(_map, _baro, _flights) {
   var map = _map;
   var baro = _baro;
   var flights = _flights;
+  var getPadding = _padding_callback ?
+      _padding_callback : function() { return [0, 0, 0, 0]; };
 
   var phase_markers = {
     start: null,
@@ -40,7 +44,7 @@ slPhaseHighlighter = function(_map, _baro, _flights) {
     phase_start_marker_style.load();
     phase_end_marker_style.load();
 
-    map.on('postcompose', function(e) {
+    map.getMap().on('postcompose', function(e) {
       var vector_context = e.vectorContext;
 
       if (phase_markers.start !== null) {
@@ -80,7 +84,7 @@ slPhaseHighlighter = function(_map, _baro, _flights) {
           }
 
           baro.draw();
-          map.render();
+          map.getMap().render();
         });
   };
 
@@ -106,10 +110,10 @@ slPhaseHighlighter = function(_map, _baro, _flights) {
         flight.getGeometry().getCoordinates().slice(start_index, end_index + 1)
         );
 
-    var view = map.getView();
+    var view = map.getMap().getView();
     var buffer = Math.max(ol.extent.getWidth(extent),
                           ol.extent.getHeight(extent));
-    view.fitExtent(ol.extent.buffer(extent, buffer * 0.05), map.getSize());
+    map.fitExtentPadded(extent, map.getMap().getSize(), getPadding());
 
     var start_point = flight.getGeometry().getCoordinates()[start_index];
     var end_point = flight.getGeometry().getCoordinates()[end_index];
