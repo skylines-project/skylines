@@ -146,10 +146,10 @@
       <th></th>
       <th>{% trans %}Start{% endtrans %}</th>
       <th class='hidden-md'>{% trans %}Duration{% endtrans %}</th>
-      <th class='numeric'>&Delta;H<br />[{{ h.get_setting_name('altitude_unit') }}]</th>
-      <th class='numeric'>{% trans %}Dist.{% endtrans %}<br />[{{ h.get_setting_name('distance_unit') }}]</th>
-      <th class='numeric'>{% trans %}Avg. vario{% endtrans %}<br />[{{ h.get_setting_name('lift_unit') }}]</th>
-      <th class='numeric'>{% trans %}Avg. speed{% endtrans %}<br />[{{ h.get_setting_name('speed_unit') }}]</th>
+      <th class='numeric'>&Delta;H<br />[{{ h.get_setting_name('altitude_unit', fallback=True) }}]</th>
+      <th class='numeric'>{% trans %}Dist.{% endtrans %}<br />[{{ h.get_setting_name('distance_unit', fallback=True) }}]</th>
+      <th class='numeric'>{% trans %}Avg. vario{% endtrans %}<br />[{{ h.get_setting_name('lift_unit', fallback=True) }}]</th>
+      <th class='numeric'>{% trans %}Avg. speed{% endtrans %}<br />[{{ h.get_setting_name('speed_unit', fallback=True) }}]</th>
       <th class='numeric'><abbr title="{% trans %}Glide Rate{% endtrans %}">{% trans %}GR{% endtrans %}</abbr></th>
     </tr>
   </thead>

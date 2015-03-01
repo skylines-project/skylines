@@ -77,15 +77,20 @@ def unitid(options, name):
     return [x.name for x in options].index(name)
 
 
-def _get_setting(name, default=None):
+def _get_setting(name, default=None, fallback_default=False):
     if g.current_user:
         return getattr(g.current_user, name)
+    elif fallback_default:
+        if name == 'distance_unit': return DEFAULT_DISTANCE_UNIT
+        elif name == 'speed_unit': return DEFAULT_SPEED_UNIT
+        elif name == 'lift_unit': return DEFAULT_LIFT_UNIT
+        elif name == 'altitude_unit': return DEFAULT_ALTITUDE_UNIT
     else:
         return default
 
 
-def get_setting_name(name):
-    setting = _get_setting(name)
+def get_setting_name(name, fallback=False):
+    setting = _get_setting(name, fallback_default=fallback)
 
     if setting is None:
         return None
