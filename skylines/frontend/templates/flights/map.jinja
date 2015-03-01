@@ -102,6 +102,8 @@
                                                flight_display.getFlights(),
                                                getPadding);
 
+    $('#flight-details-table').find('[rel=tooltip]').tooltip();
+
     sidebar.on('content', function (e, args) {
       if (args.id == 'tab-stats-legs') {
         phase_highlighter.addTable($('#leg-table-olc_plus-classic'));
