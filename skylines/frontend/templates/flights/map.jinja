@@ -7,7 +7,7 @@
 {% from 'flights/details-table.jinja' import render_details_table with context %}
 {% from 'flights/wingman-table.jinja' import render_wingman_table with context %}
 {% from 'flights/phases-table.jinja' import render_circling_performance, render_cruise_performance,
-                                            render_leg_statistics, render_phases with context %}
+                                            render_leg_statistics, render_phases_condensed with context %}
 
 
 {% block title -%}{{ flight_title(flight) }}{%- endblock %}
@@ -138,6 +138,15 @@
         <i class="icon-resize-horizontal icon-large"></i> {% trans %}Legs{% endtrans %}
       </a>
     </li>
+
+    {%- if flight.has_phases %}
+    <li>
+      <a href="#tab-stats-phases" title="{{ _('Phase Statistics') }}" role="tab">
+        <i class="icon-step-forward icon-large"></i> {% trans %}Phase Statistics{% endtrans %}
+      </a>
+    </li>
+    {%- endif %}
+
     <li>
       <a href="#tab-wingmen" title="{{ _('Wingmen') }}" role="tab">
         <i class="icon-group icon-large"></i>
@@ -170,12 +179,6 @@
 
         <h3>{% trans %}Cruise performance{% endtrans %}</h3>
         {{ render_cruise_performance(flight) }}
-
-        {%- if flight.has_phases %}
-        <p><a class='btn btn-default' data-toggle="collapse" data-target="#detailed-stats">
-          <i class='icon-info-sign icon-large'></i> {% trans %}Detailed statistics{% endtrans %}
-        </a></p>
-        {%- endif %}
       </div>
     </div>
     <div class="sidebar-pane" id="tab-stats-legs">
@@ -188,6 +191,18 @@
         {{ render_leg_statistics(flight, 'olc_plus', 'triangle') }}
       </div>
     </div>
+
+    {%- if flight.has_phases %}
+    <div class="sidebar-pane" id="tab-stats-phases">
+      <h3>{% trans %}Phase Statistics{% endtrans %}</h3>
+      <div class="sidebar-pane-content">
+        <div class="table-responsive">
+          {{ render_phases_condensed(flight) }}
+        </div>
+      </div>
+    </div>
+    {%- endif %}
+
     <div class="sidebar-pane" id="tab-wingmen">
       <h3>{% trans %}Wingmen{% endtrans %}</h3>
       <div class="sidebar-pane-content">
