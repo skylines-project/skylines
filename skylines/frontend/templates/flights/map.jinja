@@ -53,12 +53,7 @@
       $(".ol-scale-line").css('bottom', height);
       $(".ol-attribution").css('bottom', height);
     });
-  });
-</script>
 
-
-<script type="text/javascript">
-  $(function() {
     if (!isCanvasSupported()) {
       $("#map_canvas").html('<b>Your browser is too old to display this map.<br />' +
                             'Please update to a current version.</b>');
@@ -106,6 +101,19 @@
 
     var map_click_handler = slMapClickHandler(map, flight_display,
                                               {flight_info: true, location_info: true});
+
+    var phase_highlighter = slPhaseHighlighter(sl_map.getMap(),
+                                               flight_display.getBaro(),
+                                               flight_display.getFlights());
+
+    sidebar.on('content', function (e, args) {
+      if (args.id == 'tab-stats-legs') {
+        phase_highlighter.addTable($('#leg-table-olc_plus-classic'));
+        phase_highlighter.addTable($('#leg-table-olc_plus-triangle'));
+      } else if (args.id == 'tab-stats-phases') {
+        phase_highlighter.addTable($('#phases-table'));
+      }
+    });
   });
 </script>
 {%- endblock %}
