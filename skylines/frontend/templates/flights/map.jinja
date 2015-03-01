@@ -108,6 +108,34 @@
         phase_highlighter.addTable($('#leg-table-olc_plus-triangle'));
       } else if (args.id == 'tab-stats-phases') {
         phase_highlighter.addTable($('#phases-table'));
+      } else if (args.id == 'tab-wingmen') {
+        $('#wingman-table').find('tbody').find('tr').each(function(index, row) {
+          $(this).on('click', function() {
+            var sfid = $(this).data('sfid');
+            if (flight_display.getFlights().has(sfid)) {
+              flight_display.getFlights().remove(sfid);
+              unpinFlight(sfid);
+            } else {
+              flight_display.addFlightFromJSON("/flights/" + sfid + "/json");
+              pinFlight(sfid);
+            }
+          });
+        });
+
+        $('#wingman-table').find('[rel=popover]').popover({
+          html: true,
+          container: 'body',
+          title: 'Periods',
+          placement: 'right',
+          trigger: 'hover',
+          template: '<div class="popover" style="white-space: nowrap; z-index: 5000;">' +
+                       '<div class="arrow"></div>' +
+                       '<h3 class="popover-title"></h3>' +
+                       '<div class="popover-content"></div>' +
+                    '</div>'
+        });
+
+        $('#wingman-table').find('[rel=tooltip]').tooltip();
       }
     });
   });
