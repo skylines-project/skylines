@@ -134,7 +134,7 @@ flight_js = Bundle(
     'js/slPhaseHighlighter.js',
     'js/slMapIconHandler.js',
     'js/slFlightDisplay.js',
-    'https://raw.githubusercontent.com/Turbo87/sidebar-v2/v0.2.1/js/jquery-sidebar.min.js',
+    'https://rawgithub.com/Turbo87/sidebar-v2/v0.2.1/js/jquery-sidebar.min.js',
     filters=SimpleClosureJS,
     output='js/flight-%(version)s.js')
 
