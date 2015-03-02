@@ -13,7 +13,7 @@ from skylines.frontend.forms import ChangePilotsForm, ChangeAircraftForm
 from skylines.lib import files
 from skylines.lib.dbutil import get_requested_record_list
 from skylines.lib.xcsoar_ import analyse_flight
-from skylines.lib.helpers import format_time, format_decimal, format_number
+from skylines.lib.helpers import format_time, format_decimal
 from skylines.lib.formatter import units
 from skylines.lib.datetime import from_seconds_of_day, to_seconds_of_day
 from skylines.lib.geo import METERS_PER_DEGREE
@@ -166,26 +166,35 @@ def format_phase(phase):
     """Format phase properties to human readable format
     """
     is_circling = phase.phase_type == FlightPhase.PT_CIRCLING
+
     r = dict(start="%s" % format_time(phase.start_time),
              fraction="%d%%" % phase.fraction if phase.fraction is not None else "",
              speed=units.format_speed(phase.speed) if phase.speed is not None else "",
+             speed_number=units.format_speed(phase.speed, name=False) if phase.speed is not None else "",
              vario=units.format_lift(phase.vario),
+             vario_number=units.format_lift(phase.vario, name=False),
              alt_diff=units.format_altitude(phase.alt_diff),
+             alt_diff_number=units.format_altitude(phase.alt_diff, name=False),
              count=phase.count,
              duration=phase.duration,
              is_circling=is_circling,
              type=PHASETYPE_NAMES[phase.phase_type],
              circling_direction="",
              distance="",
-             glide_rate="")
+             distance_number="",
+             glide_rate="",
+             circling_direction_left=phase.circling_direction == FlightPhase.CD_LEFT,
+             circling_direction_right=phase.circling_direction == FlightPhase.CD_RIGHT,
+             is_powered=phase.phase_type == FlightPhase.PT_POWERED)
 
     if not is_circling:
         r['distance'] = units.format_distance(phase.distance, 1)
+        r['distance_number'] = units.format_distance(phase.distance, 1, name=False)
 
         # Sensible glide rate values are formatted as numbers. Others are shown
         # as infinity symbol.
         if abs(phase.alt_diff) > 0 and abs(phase.glide_rate) < 1000:
-            r['glide_rate'] = format_number(phase.glide_rate)
+            r['glide_rate'] = format_decimal(phase.glide_rate)
         else:
             r['glide_rate'] = u'\u221e'  # infinity
     else:
