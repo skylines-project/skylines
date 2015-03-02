@@ -256,28 +256,6 @@ def mark_flight_notifications_read(flight):
 @flight_blueprint.route('/')
 def index():
     def add_flight_path(flight):
-        trace = _get_flight_path(flight)
-        return (flight, trace)
-
-    near_flights = FlightMeetings.get_meetings(g.flight)
-    other_flights = map(add_flight_path, g.other_flights)
-
-    mark_flight_notifications_read(g.flight)
-
-    return render_template(
-        'flights/view.jinja',
-        flight=g.flight,
-        trace=_get_flight_path(g.flight),
-        near_flights=near_flights,
-        other_flights=other_flights,
-        comments=comments_partial(),
-        phase_formatter=format_phase,
-        leg_formatter=format_legs)
-
-
-@flight_blueprint.route('/map')
-def map_():
-    def add_flight_path(flight):
         trace = _get_flight_path(flight, threshold=0.0001, max_points=10000)
         return (flight, trace)
 
@@ -299,6 +277,11 @@ def map_():
         comments=comments_partial(),
         phase_formatter=format_phase,
         leg_formatter=format_legs)
+
+
+@flight_blueprint.route('/map')
+def map_():
+    return redirect(url_for('.index'))
 
 
 @flight_blueprint.route('/json')
