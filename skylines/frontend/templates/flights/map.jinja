@@ -81,7 +81,7 @@
     flight_display.addFlightFromJSON("/flights/{{ flight.id }}/json?{{ config.get('SKYLINES_CACHE_BUSTER', '') }}",false);
 
     {% if other_flights -%}
-    {% for flight, trace in other_flights if trace -%}
+    {% for flight in other_flights -%}
     flight_display.addFlightFromJSON("/flights/{{ flight.id }}/json?{{ config.get('SKYLINES_CACHE_BUSTER', '') }}");
     {%- endfor %}
     {%- endif %}

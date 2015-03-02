@@ -255,25 +255,15 @@ def mark_flight_notifications_read(flight):
 
 @flight_blueprint.route('/')
 def index():
-    def add_flight_path(flight):
-        trace = _get_flight_path(flight, threshold=0.0001, max_points=10000)
-        return (flight, trace)
-
-    trace = _get_flight_path(g.flight, threshold=0.0001, max_points=10000)
-    if trace is None:
-        abort(404)
-
     near_flights = FlightMeetings.get_meetings(g.flight)
-    other_flights = map(add_flight_path, g.other_flights)
 
     mark_flight_notifications_read(g.flight)
 
     return render_template(
         'flights/map.jinja',
         flight=g.flight,
-        trace=trace,
         near_flights=near_flights,
-        other_flights=other_flights,
+        other_flights=g.other_flights,
         comments=comments_partial(),
         phase_formatter=format_phase,
         leg_formatter=format_legs)
