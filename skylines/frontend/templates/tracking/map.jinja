@@ -118,6 +118,9 @@
 
     var map_click_handler = slMapClickHandler(map, flight_display,
                                               {flight_info: true, location_info: true});
+
+    var fullscreen_button = new FullscreenButton($("#fullscreen-content"));
+    map.addControl(fullscreen_button);
   });
 </script>
 {%- endif %}
