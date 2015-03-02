@@ -217,20 +217,20 @@
     <div class="sidebar-pane" id="tab-stats-total">
       <h3>{% trans %}Statistics{% endtrans %}</h3>
       <div class="sidebar-pane-content">
-        <h3>{% trans %}Circling performance{% endtrans %}</h3>
+        <h4>{% trans %}Circling performance{% endtrans %}</h4>
         {{ render_circling_performance(flight) }}
 
-        <h3>{% trans %}Cruise performance{% endtrans %}</h3>
+        <h4>{% trans %}Cruise performance{% endtrans %}</h4>
         {{ render_cruise_performance(flight) }}
       </div>
     </div>
     <div class="sidebar-pane" id="tab-stats-legs">
       <h3>{% trans %}Legs{% endtrans %}</h3>
       <div class="sidebar-pane-content">
-        <h3>{% trans %}Distance{% endtrans %}</h3>
+        <h4>{% trans %}Distance{% endtrans %}</h4>
         {{ render_leg_statistics(flight, 'olc_plus', 'classic') }}
 
-        <h3>{% trans %}Triangle{% endtrans %}</h3>
+        <h4>{% trans %}Triangle{% endtrans %}</h4>
         {{ render_leg_statistics(flight, 'olc_plus', 'triangle') }}
       </div>
     </div>
