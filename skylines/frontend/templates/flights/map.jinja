@@ -204,6 +204,10 @@
       {{ render_details_table(flight) }}
 
         <p>
+          <a href="{{ url_for('files.index', filename=flight.igc_file.filename) }}" title="{{ flight.igc_file.filename }}" class="btn btn-default">
+            <i class="icon-download-alt icon-large"></i> IGC
+          </a>
+
           <span id="pinned" rel="tooltip" title="{{ _('Activate this to show the flight on top of other flights on the map') }}"></span>
         </p>
       </div>
