@@ -76,7 +76,7 @@
 
     $(".btn-share").popover({
       trigger: 'click',
-      container: 'body',
+      container: '#fullscreen-content',
       content: content,
       title: '{{ _('Spread the word') }}',
       placement: 'bottom',
@@ -159,7 +159,7 @@
 
         $('#wingman-table').find('[rel=popover]').popover({
           html: true,
-          container: 'body',
+          container: '#fullscreen-content',
           title: 'Periods',
           placement: 'right',
           trigger: 'hover',
