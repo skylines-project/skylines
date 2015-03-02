@@ -10,8 +10,8 @@
   min-height: 1em;
 }
 
-.ol-scale-line,
-.ol-attribution {
+.olFullscreen .ol-scale-line,
+.olFullscreen .ol-attribution {
   bottom: 172px;
   margin-bottom: 10px;
 }
