@@ -1,6 +1,6 @@
 {% from "macros/flags.jinja" import insert_flag with context %}
 {% from "macros/datetime.jinja" import insert_timeago with context %}
-{% from "macros/links.jinja" import user_link %}
+{% from "macros/links.jinja" import user_link, club_link %}
 
 {%- macro render_details_table(pilots) %}
 {% if pilots|length == 1 -%}
