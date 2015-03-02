@@ -1,6 +1,7 @@
 {% from "macros/flags.jinja" import insert_flag with context %}
 {% from "macros/datetime.jinja" import insert_timeago with context %}
 {% from "macros/links.jinja" import user_link %}
+{% from 'tracking/details-table.jinja' import render_details_table with context %}
 
 {% extends "base-fullscreen.jinja" %}
 {% set active_page = "tracking" %}
@@ -52,6 +53,20 @@
 {% if traces -%}
 <script type="text/javascript">
   $(function() {
+    var sidebar = $('#sidebar').sidebar();
+
+    $("#barogram_panel").resize(function() {
+      var height = $("#barogram_panel").height() + 10;
+      sidebar.css('bottom', height);
+      $(".ol-scale-line").css('bottom', height);
+      $(".ol-attribution").css('bottom', height);
+    });
+
+    if (window.location.hash &&
+        sidebar.find('li > a[href="#' + window.location.hash.substring(1) + '"]').length != 0) {
+      sidebar.open(window.location.hash.substring(1));
+    }
+
     if (!isCanvasSupported()) {
       $("#map_canvas").html('<b>Your browser is too old to display this map.<br />' +
                             'Please update to a current version.</b>');
@@ -89,14 +104,9 @@
     {%- endif %}
     {%- endfor %}
 
-    var factor = $("#barogram")[0].offsetHeight / map.getSize()[1];
-
-    var view = map.getView();
+    var getPadding = function() { return [20, 20, $("#barogram_panel").height() + 20, sidebar.width() + 20]; };
     var extent = flight_display.getFlights().getBounds();
-    var buffer = Math.max(ol.extent.getWidth(extent), ol.extent.getHeight(extent));
-    extent = ol.extent.buffer(extent, buffer * 0.02);
-    extent[1] -= ol.extent.getHeight(extent) * factor * 3/2;
-    view.fitExtent(extent, map.getSize());
+    sl_map.fitExtentPadded(extent, map.getSize(), getPadding());
 
     sl_map.addBingLayers("{{ config.get('SKYLINES_BING_API_KEY', 'null') }}");
     sl_map.addMapboxLayer("{{ config.get('SKYLINES_MAPBOX_API_KEY', 'null') }}");
@@ -116,12 +126,34 @@
 
 {% block content -%}
 {% if traces -%}
-<div id="map_canvas" class="olFullscreen"></div>
-<div class="map-bottom-panel map-overlay">
-    <div style="overflow: auto; max-height: 115px">
-        <table id="fix-data" class="table table-condensed"></table>
+<div id="fullscreen-content" class="olFullscreen">
+<div id="sidebar" class="sidebar">
+<!-- Nav tabs -->
+  <ul class="sidebar-tabs" role="tablist">
+    <li class="active">
+      <a href="#tab-overview" title="{{ _('Overview') }}" role="tab">
+        <i class="icon-info icon-large"></i>
+      </a>
+    </li>
+  </ul>
+<!-- Tab panes -->
+  <div class="sidebar-content">
+    <div class="sidebar-pane active" id="tab-overview">
+      <h3>{% trans %}Overview{% endtrans %}</h3>
+      <div class="sidebar-pane-content">
+        {{ render_details_table(pilots) }}
+      </div>
     </div>
-    <div id="barogram" style="width:100%; height:133px;"></div>
+  </div>
+</div>
+
+<div id="map_canvas" class="olFullscreen sidebar-map"></div>
+<div id="barogram_panel" class="map-bottom-panel map-overlay">
+  <div style="overflow: auto; max-height: 115px">
+    <table id="fix-data" class="table table-condensed"></table>
+  </div>
+  <div id="barogram" style="width:100%; height:133px;"></div>
+</div>
 </div>
 {%- else -%}
 <p style="margin:10pt;margin-top:40pt;">
