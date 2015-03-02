@@ -84,6 +84,10 @@
                 { {% if 'baselayer' in request.args %}'base_layer': '{{ request.args['baselayer'] }}',{% endif %}{% if 'overlays' in request.args %}'overlay_layers': '{{ request.args['overlays'] }}',{% endif %} });
 
     var map = sl_map.getMap();
+
+    sl_map.addBingLayers("{{ config.get('SKYLINES_BING_API_KEY', 'null') }}");
+    sl_map.addMapboxLayer("{{ config.get('SKYLINES_MAPBOX_API_KEY', 'null') }}");
+
     var flight_display = slFlightTracking(sl_map.getMap(), $("#fix-data"), $("#barogram"));
 
     {% for pilot, trace in zip(pilots, traces) -%}
@@ -107,9 +111,6 @@
     var getPadding = function() { return [20, 20, $("#barogram_panel").height() + 20, sidebar.width() + 20]; };
     var extent = flight_display.getFlights().getBounds();
     sl_map.fitExtentPadded(extent, map.getSize(), getPadding());
-
-    sl_map.addBingLayers("{{ config.get('SKYLINES_BING_API_KEY', 'null') }}");
-    sl_map.addMapboxLayer("{{ config.get('SKYLINES_MAPBOX_API_KEY', 'null') }}");
 
     // update flight track every 15 seconds
     setInterval(function() {

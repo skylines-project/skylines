@@ -48,6 +48,9 @@
 
     var map = sl_map.getMap();
 
+    sl_map.addBingLayers("{{ config.get('SKYLINES_BING_API_KEY', 'null') }}");
+    sl_map.addMapboxLayer("{{ config.get('SKYLINES_MAPBOX_API_KEY', 'null') }}");
+
     var vector_source = new ol.source.Vector({
       features: []
     });
@@ -87,8 +90,6 @@
     if (zoom > 10)
       map.getView().setZoom(10);
 
-    sl_map.addBingLayers("{{ config.get('SKYLINES_BING_API_KEY', 'null') }}");
-    sl_map.addMapboxLayer("{{ config.get('SKYLINES_MAPBOX_API_KEY', 'null') }}");
     var map_click_handler = slMapClickHandler(map, null, {flight_info: false, location_info: true});
   });
 </script>
