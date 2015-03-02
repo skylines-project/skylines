@@ -8,34 +8,34 @@ from .numbers import format_decimal
 Unit = namedtuple('Unit', ['name', 'factor', 'format', 'decimal_places'])
 
 DISTANCE_UNITS = (
-    Unit(u'm', 1, u'{0:.{1}f} m', 0),
-    Unit(u'km', 1 / 1000., u'{0:.{1}f} km', 0),
-    Unit(u'NM', 1 / 1852., u'{0:.{1}f} NM', 0),
-    Unit(u'mi', 1 / 1609.34, u'{0:.{1}f} mi', 0),
+    Unit(u'm', 1, u'{0:.{1}f}', 0),
+    Unit(u'km', 1 / 1000., u'{0:.{1}f}', 0),
+    Unit(u'NM', 1 / 1852., u'{0:.{1}f}', 0),
+    Unit(u'mi', 1 / 1609.34, u'{0:.{1}f}', 0),
 )
 
 DEFAULT_DISTANCE_UNIT = 1
 
 SPEED_UNITS = (
-    Unit(u'm/s', 1, u'{0:.{1}f} m/s', 1),
-    Unit(u'km/h', 3.6, u'{0:.{1}f} km/h', 1),
-    Unit(u'kt', 1.94384449, u'{0:.{1}f} kt', 1),
-    Unit(u'mph', 2.23693629, u'{0:.{1}f} mph', 1),
+    Unit(u'm/s', 1, u'{0:.{1}f}', 1),
+    Unit(u'km/h', 3.6, u'{0:.{1}f}', 1),
+    Unit(u'kt', 1.94384449, u'{0:.{1}f}', 1),
+    Unit(u'mph', 2.23693629, u'{0:.{1}f}', 1),
 )
 
 DEFAULT_SPEED_UNIT = 1
 
 LIFT_UNITS = (
-    Unit(u'm/s', 1, u'{0:.{1}f} m/s', 1),
-    Unit(u'kt', 1.94384449, u'{0:.{1}f} kt', 1),
-    Unit(u'ft/min', 1 * 196.850394, u'{0:.{1}f} ft/min', 0),
+    Unit(u'm/s', 1, u'{0:.{1}f}', 1),
+    Unit(u'kt', 1.94384449, u'{0:.{1}f}', 1),
+    Unit(u'ft/min', 1 * 196.850394, u'{0:.{1}f}', 0),
 )
 
 DEFAULT_LIFT_UNIT = 0
 
 ALTITUDE_UNITS = (
-    Unit(u'm', 1, u'{0:.{1}f} m', 0),
-    Unit(u'ft', 3.280839895, u'{0:.{1}f} ft', 0)
+    Unit(u'm', 1, u'{0:.{1}f}', 0),
+    Unit(u'ft', 3.280839895, u'{0:.{1}f}', 0)
 )
 
 DEFAULT_ALTITUDE_UNIT = 0
@@ -102,7 +102,7 @@ def get_setting_name(name):
     return None
 
 
-def _format(units, name, default, value, ndigits=None):
+def _format(units, name, default, value, ndigits=None, add_name=True):
     assert isinstance(default, int)
 
     setting = _get_setting(name, default)
@@ -114,38 +114,44 @@ def _format(units, name, default, value, ndigits=None):
 
     factor = units[setting].factor
     format = units[setting].format
+    unit_name = units[setting].name
 
     value = round(float(value) * factor, ndigits)
-    return format_decimal(value, format=format.format(0.0, ndigits))
+    decimal = format_decimal(value, format=format.format(0.0, ndigits))
+
+    if add_name:
+        return decimal + ' ' + unit_name
+    else:
+        return decimal
 
 
-def format_distance(value, ndigits=None):
+def format_distance(value, ndigits=None, name=True):
     """Formats a distance value [m] to a user-readable string."""
     if value is None: return None
 
     return _format(DISTANCE_UNITS, 'distance_unit', DEFAULT_DISTANCE_UNIT,
-                   value, ndigits)
+                   value, ndigits, name)
 
 
-def format_speed(value, ndigits=None):
+def format_speed(value, ndigits=None, name=True):
     """Formats a speed value [m/s] to a user-readable string."""
     if value is None: return None
 
     return _format(SPEED_UNITS, 'speed_unit', DEFAULT_SPEED_UNIT,
-                   value, ndigits)
+                   value, ndigits, name)
 
 
-def format_lift(value, ndigits=None):
+def format_lift(value, ndigits=None, name=True):
     """Formats vertical speed value [m/s/] to a user-readable string"""
     if value is None: return None
 
     return _format(LIFT_UNITS, 'lift_unit', DEFAULT_LIFT_UNIT,
-                   value, ndigits)
+                   value, ndigits, name)
 
 
-def format_altitude(value, ndigits=None):
+def format_altitude(value, ndigits=None, name=True):
     """Formats altitude value [m] to a user-readable string"""
     if value is None: return None
 
     return _format(ALTITUDE_UNITS, 'altitude_unit', DEFAULT_ALTITUDE_UNIT,
-                   value, ndigits)
+                   value, ndigits, name)
