@@ -1,7 +1,7 @@
 from datetime import timedelta
 from math import log
 
-from flask import Blueprint, request, render_template, abort, jsonify, g
+from flask import Blueprint, request, render_template, abort, jsonify, g, redirect, url_for
 from sqlalchemy.sql.expression import and_
 
 from skylines.lib.dbutil import get_requested_record_list
@@ -118,19 +118,13 @@ def index():
         traces = None
 
     return render_template(
-        'tracking/view.jinja',
+        'tracking/map.jinja',
         pilots=g.pilots, traces=traces)
 
 
 @track_blueprint.route('/map')
 def map_():
-    traces = map(_get_flight_path, g.pilots)
-    if not any(traces):
-        traces = None
-
-    return render_template(
-        'tracking/map.jinja',
-        pilots=g.pilots, traces=traces)
+    return redirect(url_for('.index'))
 
 
 @track_blueprint.route('/json')

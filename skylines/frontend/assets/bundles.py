@@ -75,6 +75,7 @@ main_css = Bundle(
     'css/tracking-table.css',
     'css/slFixTable.css',
     'css/wingman.css',
+    'css/ol3-sidebar.css',
     'vendor/flags/flags.css',
     'vendor/bootstrap-datepicker/datepicker.css',
     'vendor/fonts/stylesheet.css',
@@ -92,6 +93,7 @@ openlayers_css = Bundle(
     'vendor/openlayers/ol.css',
     'css/ol-GraphicLayerSwitcher-v3.css',
     'css/ol-PlayButton.css',
+    'css/ol-FullscreenButton.css',
     'css/map.css',
     'css/map-infobox.css',
     filters='cssmin, cssrewrite',
@@ -111,8 +113,10 @@ openlayers_js = Bundle(
     'vendor/openlayers/ol.js',
     'js/ol-GraphicLayerSwitcher-v3.js',
     'js/ol-PlayButton-v3.js',
+    'js/ol-FullscreenButton.js',
     'js/slMap.js',
     'js/slMapClickHandler.js',
+    'https://rawgithub.com/bdougherty/BigScreen/v2.0.4/bigscreen.min.js',
     filters=SimpleClosureJS,
     output='js/ol-%(version)s.js')
 
@@ -130,6 +134,7 @@ flight_js = Bundle(
     'js/slPhaseHighlighter.js',
     'js/slMapIconHandler.js',
     'js/slFlightDisplay.js',
+    'https://rawgithub.com/Turbo87/sidebar-v2/v0.2.1/js/jquery-sidebar.min.js',
     filters=SimpleClosureJS,
     output='js/flight-%(version)s.js')
 

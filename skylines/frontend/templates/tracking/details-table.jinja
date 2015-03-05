@@ -1,0 +1,49 @@
+{% from "macros/flags.jinja" import insert_flag with context %}
+{% from "macros/datetime.jinja" import insert_timeago with context %}
+{% from "macros/links.jinja" import user_link, club_link %}
+
+{%- macro render_details_table(pilots) %}
+{% if pilots|length == 1 -%}
+<table class="table">
+  <tbody>
+    <tr>
+      <th>{% trans %}Pilot{% endtrans %}</th>
+      <td>{{ user_link(pilots[0]) }}</td>
+    </tr>
+
+    {% if pilots[0].club -%}
+    <tr>
+      <th>{% trans %}Club{% endtrans %}</th>
+      <td>{{ club_link(pilots[0].club) }}</td>
+    </tr>
+    {%- endif %}
+
+    {% if pilots[0].tracking_delay > 0 -%}
+    <tr>
+      <th><span rel="tooltip" title="{{ _('This pilot chose to delay the display of his live tracks.') }}">{% trans %}Delay{% endtrans %}</span></th>
+
+      <td>
+        {{ ngettext('%(num)u minute', '%(num)u minutes', pilots[0].tracking_delay) }}
+
+        {%- if pilots[0].is_readable(g.current_user) -%}
+        <span rel="tooltip" title="{{ _('The live tracking delay is ignored because of your account privileges.') }}">({% trans %}ignored{% endtrans %})</span>
+        {%- endif %}
+      </td>
+    </tr>
+    {%- endif %}
+  </tbody>
+</table>
+{%- else -%}
+<table class="table">
+  <tbody>
+    {% for pilot in pilots -%}
+    <tr>
+      <td><span class="badge" style="background-color:{{ pilot.color }}">{{ pilot.tracking_callsign or pilot.initials() }}</span></td>
+      <td>{{ user_link(pilot) }}</td>
+      <td>{% if pilot.club_id %}{{ club_link(pilot.club) }}{% endif %}</td>
+    </tr>
+    {%- endfor %}
+  </tbody>
+</table>
+{%- endif %}
+{%- endmacro %}
