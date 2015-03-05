@@ -102,6 +102,9 @@
                                                flight_display.getFlights(),
                                                getPadding);
 
+    var fullscreen_button = new FullscreenButton($("#fullscreen-content"));
+    map.addControl(fullscreen_button);
+
     $('#flight-details-table').find('[rel=tooltip]').tooltip();
 
     sidebar.on('content', function (e, args) {
@@ -146,6 +149,7 @@
 
 
 {%- block content %}
+<div id="fullscreen-content" class="olFullscreen">
 <div id="sidebar" class="sidebar collapsed">
 <!-- Nav tabs -->
   <ul class="sidebar-tabs" role="tablist">
@@ -252,5 +256,6 @@
         <table id="fix-data" class="table table-condensed"></table>
     </div>
     <div id="barogram" style="width:100%; height:133px;"></div>
+</div>
 </div>
 {%- endblock %}

@@ -93,6 +93,7 @@ openlayers_css = Bundle(
     'vendor/openlayers/ol.css',
     'css/ol-GraphicLayerSwitcher-v3.css',
     'css/ol-PlayButton.css',
+    'css/ol-FullscreenButton.css',
     'css/map.css',
     'css/map-infobox.css',
     filters='cssmin, cssrewrite',
@@ -112,8 +113,10 @@ openlayers_js = Bundle(
     'vendor/openlayers/ol.js',
     'js/ol-GraphicLayerSwitcher-v3.js',
     'js/ol-PlayButton-v3.js',
+    'js/ol-FullscreenButton.js',
     'js/slMap.js',
     'js/slMapClickHandler.js',
+    'https://rawgithub.com/bdougherty/BigScreen/v2.0.4/bigscreen.min.js',
     filters=SimpleClosureJS,
     output='js/ol-%(version)s.js')
 
