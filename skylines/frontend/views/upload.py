@@ -308,7 +308,7 @@ def index_post(form):
 def check_update_form(prefix, status):
     form = UploadUpdateForm(prefix=str(prefix))
 
-    if not form.id and not form.id.data:
+    if not form.id or not form.id.data:
         return None, None, None
 
     flight_id = form.id.data

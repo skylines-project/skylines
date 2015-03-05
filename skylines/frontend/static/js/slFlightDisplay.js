@@ -250,6 +250,7 @@ slFlightDisplay = function(_map, fix_table_placeholder, baro_placeholder) {
       $('#wingman-table').find('*[data-sfid=' + sfid + ']')
           .find('.color-stripe').css('background-color', '');
 
+      contests.remove(sfid);
       fix_table.removeRow(sfid);
       updateBaroData();
       updateBaroScale();
