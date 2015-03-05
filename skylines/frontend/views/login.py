@@ -57,7 +57,7 @@ def register(app):
                 flash(_('You are now logged in. Welcome back, %(user)s!', user=user))
                 return redirect(get_next())
             else:
-                form.email_address.errors.append(_('Login failed. Please check your eMail address.'))
+                form.email_address.errors.append(_('Login failed. Please check your email address.'))
                 form.password.errors.append(_('Login failed. Please check your password.'))
 
         return render_template('login.jinja', form=form, next=get_next())
