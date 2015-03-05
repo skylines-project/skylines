@@ -45,6 +45,7 @@
 
 <script type="text/javascript">
   $(function() {
+    var flight_display = null;
     var sidebar = $('#sidebar').sidebar();
 
     $("#barogram_panel").resize(function() {
@@ -52,6 +53,41 @@
       sidebar.css('bottom', height);
       $(".ol-scale-line").css('bottom', height);
       $(".ol-attribution").css('bottom', height);
+    });
+
+    sidebar.on('content', function (e, args) {
+      if (args.id == 'tab-stats-legs') {
+        phase_highlighter.addTable($('#leg-table-olc_plus-classic'));
+        phase_highlighter.addTable($('#leg-table-olc_plus-triangle'));
+      } else if (args.id == 'tab-stats-phases') {
+        phase_highlighter.addTable($('#phases-table'));
+      } else if (args.id == 'tab-wingmen') {
+        $('#wingman-table').find('tbody').find('tr').each(function(index, row) {
+          $(this).on('click', function() {
+            if (!flight_display) return;
+
+            var sfid = $(this).data('sfid');
+            if (flight_display.getFlights().has(sfid)) {
+              flight_display.getFlights().remove(sfid);
+              unpinFlight(sfid);
+            } else {
+              flight_display.addFlightFromJSON("/flights/" + sfid + "/json");
+              pinFlight(sfid);
+            }
+          });
+        });
+
+        $('#wingman-table').find('[rel=popover]').popover({
+          html: true,
+          container: '#fullscreen-content',
+          title: 'Periods',
+          placement: 'right',
+          trigger: 'hover',
+          template: popover_template
+        });
+
+        $('#wingman-table').find('[rel=tooltip]').tooltip();
+      }
     });
 
     if (window.location.hash &&
@@ -105,7 +141,7 @@
     sl_map.addBingLayers("{{ config.get('SKYLINES_BING_API_KEY', 'null') }}");
     sl_map.addMapboxLayer("{{ config.get('SKYLINES_MAPBOX_API_KEY', 'null') }}");
 
-    var flight_display = slFlightDisplay(sl_map.getMap(), $("#fix-data"), $("#barogram"));
+    flight_display = slFlightDisplay(sl_map.getMap(), $("#fix-data"), $("#barogram"));
     flight_display.addFlightFromJSON("/flights/{{ flight.id }}/json?{{ config.get('SKYLINES_CACHE_BUSTER', '') }}",false);
 
     {% if other_flights -%}
@@ -137,39 +173,6 @@
     map.addControl(fullscreen_button);
 
     $('#flight-details-table').find('[rel=tooltip]').tooltip();
-
-    sidebar.on('content', function (e, args) {
-      if (args.id == 'tab-stats-legs') {
-        phase_highlighter.addTable($('#leg-table-olc_plus-classic'));
-        phase_highlighter.addTable($('#leg-table-olc_plus-triangle'));
-      } else if (args.id == 'tab-stats-phases') {
-        phase_highlighter.addTable($('#phases-table'));
-      } else if (args.id == 'tab-wingmen') {
-        $('#wingman-table').find('tbody').find('tr').each(function(index, row) {
-          $(this).on('click', function() {
-            var sfid = $(this).data('sfid');
-            if (flight_display.getFlights().has(sfid)) {
-              flight_display.getFlights().remove(sfid);
-              unpinFlight(sfid);
-            } else {
-              flight_display.addFlightFromJSON("/flights/" + sfid + "/json");
-              pinFlight(sfid);
-            }
-          });
-        });
-
-        $('#wingman-table').find('[rel=popover]').popover({
-          html: true,
-          container: '#fullscreen-content',
-          title: 'Periods',
-          placement: 'right',
-          trigger: 'hover',
-          template: popover_template
-        });
-
-        $('#wingman-table').find('[rel=tooltip]').tooltip();
-      }
-    });
   });
 </script>
 {%- endblock %}
