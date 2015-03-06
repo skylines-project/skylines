@@ -88,10 +88,10 @@ class TestRegistration(TestController):
         """Validation errors are working as expected"""
 
         self.expect_error('Please enter your Email Address', email='')
-        self.expect_error('Invalid Email Address', email='abc')
-        self.expect_error('Invalid Email Address', email='abc@')
-        self.expect_error('Invalid Email Address', email='abc@de')
-        self.expect_error('Invalid Email Address', email='abc@de.')
+        self.expect_error('Invalid email address', email='abc')
+        self.expect_error('Invalid email address', email='abc@')
+        self.expect_error('Invalid email address', email='abc@de')
+        self.expect_error('Invalid email address', email='abc@de.')
 
         self.expect_error('Please enter your first name', first_name='')
         self.expect_error('Please enter your last name', last_name='')
