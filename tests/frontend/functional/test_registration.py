@@ -87,11 +87,11 @@ class TestRegistration(TestController):
     def test_validation_errors(self):
         """Validation errors are working as expected"""
 
-        self.expect_error('Please enter your email address', email='')
-        self.expect_error('Invalid email address', email='abc')
-        self.expect_error('Invalid email address', email='abc@')
-        self.expect_error('Invalid email address', email='abc@de')
-        self.expect_error('Invalid email address', email='abc@de.')
+        self.expect_error('Please enter your Email Address', email='')
+        self.expect_error('Invalid Email Address', email='abc')
+        self.expect_error('Invalid Email Address', email='abc@')
+        self.expect_error('Invalid Email Address', email='abc@de')
+        self.expect_error('Invalid Email Address', email='abc@de.')
 
         self.expect_error('Please enter your first name', first_name='')
         self.expect_error('Please enter your last name', last_name='')
@@ -109,5 +109,5 @@ class TestRegistration(TestController):
         last_name = u'Test'
 
         self.register_user(email, first_name, last_name, 'lambda')
-        self.expect_error('A pilot with this email address exists already.',
+        self.expect_error('A pilot with this Email Address exists already.',
                           email, first_name, last_name, 'lambda', check_user_exists=False)

@@ -31,7 +31,7 @@ class User(db.Model):
 
     id = db.Column(Integer, autoincrement=True, primary_key=True)
 
-    # eMail address and name of the user
+    # Email Address and name of the user
 
     email_address = db.column_property(
         db.Column(Unicode(255)), comparator_factory=LowerCaseComparator)
@@ -101,13 +101,13 @@ class User(db.Model):
 
     @classmethod
     def by_email_address(cls, email):
-        """Return the user object whose email address is ``email``."""
+        """Return the user object whose Email Address is ``email``."""
         return cls.query(email_address=email).first()
 
     @classmethod
     def by_credentials(cls, email, password):
         """
-        Return the user object whose email address is ``email`` if the
+        Return the user object whose Email Address is ``email`` if the
         password is matching.
         """
         user = cls.query(email_address=email).first()

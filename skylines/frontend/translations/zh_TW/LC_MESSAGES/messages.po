@@ -1302,7 +1302,7 @@ msgid "You are now logged in. Welcome back, %(user)s!"
 msgstr ""
 
 #: skylines/frontend/views/login.py:60
-msgid "Login failed. Please check your email address."
+msgid "Login failed. Please check your Email Address."
 msgstr ""
 
 #: skylines/frontend/views/login.py:61
@@ -1404,10 +1404,10 @@ msgstr "對不起，在我們的資料庫中，沒有你查詢{num_missing} 的�
 #~ msgid "Your passwords do not match."
 #~ msgstr ""
 
-#~ msgid "email Address"
+#~ msgid "Email Address"
 #~ msgstr "電郵地址"
 
-#~ msgid "Please enter your email address."
+#~ msgid "Please enter your Email Address."
 #~ msgstr ""
 
 #~ msgid "First Name"
@@ -1422,7 +1422,7 @@ msgstr "對不起，在我們的資料庫中，沒有你查詢{num_missing} 的�
 #~ msgid "Please enter your last name."
 #~ msgstr ""
 
-#~ msgid "A pilot with this email address exists already."
+#~ msgid "A pilot with this Email Address exists already."
 #~ msgstr ""
 
 #~ msgid "None"
@@ -1452,7 +1452,7 @@ msgstr "對不起，在我們的資料庫中，沒有你查詢{num_missing} 的�
 #~ msgid "Your callsign must not have more than 5 characters."
 #~ msgstr ""
 
-#~ msgid "There is no pilot with this email address."
+#~ msgid "There is no pilot with this Email Address."
 #~ msgstr ""
 
 #~ msgid "Please enter your password."

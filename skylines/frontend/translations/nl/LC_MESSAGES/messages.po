@@ -1361,7 +1361,7 @@ msgid "You are now logged in. Welcome back, %(user)s!"
 msgstr "Je bent nu ingelogt. Welkom %(user)s!"
 
 #: skylines/frontend/views/login.py:60
-msgid "Login failed. Please check your email address."
+msgid "Login failed. Please check your Email Address."
 msgstr "Inloggen is mislukt. Controleer uw e-mail adres."
 
 #: skylines/frontend/views/login.py:61
@@ -1469,10 +1469,10 @@ msgstr ""
 #~ msgid "Your passwords do not match."
 #~ msgstr "Uw paswoorden komen niet overeen."
 
-#~ msgid "email Address"
+#~ msgid "Email Address"
 #~ msgstr "EMail adres"
 
-#~ msgid "Please enter your email address."
+#~ msgid "Please enter your Email Address."
 #~ msgstr "Voer uw e-mailadres in."
 
 #~ msgid "First Name"
@@ -1487,7 +1487,7 @@ msgstr ""
 #~ msgid "Please enter your last name."
 #~ msgstr "Geef uw achternaam."
 
-#~ msgid "A pilot with this email address exists already."
+#~ msgid "A pilot with this Email Address exists already."
 #~ msgstr "Een piloot met dit e-mail adres bestaat al."
 
 #~ msgid "None"
@@ -1517,7 +1517,7 @@ msgstr ""
 #~ msgid "Your callsign must not have more than 5 characters."
 #~ msgstr "Uw callsign kan niet uit meer dan 5 tekens bestaan."
 
-#~ msgid "There is no pilot with this email address."
+#~ msgid "There is no pilot with this Email Address."
 #~ msgstr "Er is geen piloot met dit e-mail adres."
 
 #~ msgid "Please enter your password."
