@@ -14,3 +14,30 @@ def add_model(name, kind=0, index=0):
 
     db.session.add(model)
     db.session.commit()
+
+
+@manager.command
+def remove_model(index):
+    """ Remove the aircraft model from database """
+    AircraftModel.query(id=index).delete()
+    db.session.commit()
+
+
+@manager.command
+def list():
+    """ Shows the list of aircrafts"""
+    aircraftModels = AircraftModel.query().all()
+    return aircraftModels
+
+
+@manager.command
+def kind_enum():
+    """ Shows possible values of kind property"""
+    print """
+0 unspecified
+1 glider
+2 motor glider
+3 paraglider
+4 hangglider
+5 ul glider
+"""
