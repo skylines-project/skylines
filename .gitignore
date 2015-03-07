@@ -29,3 +29,6 @@ webassets
 Cheffile.lock
 tmp/
 .cookbooks/
+
+config/development.py
+config/production.py

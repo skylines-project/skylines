@@ -1,7 +1,3 @@
-from email.mime.text import MIMEText
-from email.utils import formatdate
-import smtplib
-
 from flask import Blueprint, request, render_template, redirect, url_for, abort, current_app, flash, g
 from flask.ext.babel import _
 from werkzeug.exceptions import ServiceUnavailable
@@ -12,6 +8,8 @@ from sqlalchemy.orm import joinedload
 from skylines.model import db, User
 from skylines.model.event import create_new_user_event
 from skylines.frontend.forms import CreatePilotForm, RecoverStep1Form, RecoverStep2Form
+from skylines.lib.util import sign_message, unsign_message
+from skylines.lib.emails import send_mail
 
 users_blueprint = Blueprint('users', 'skylines')
 
@@ -56,13 +54,9 @@ def new_post(form):
     return redirect(url_for('index'))
 
 
-def hex(value):
-    return int(value, 16)
-
-
 @users_blueprint.route('/recover', methods=['GET', 'POST'])
 def recover():
-    key = request.values.get('key', type=hex)
+    key = request.values.get('key')
     if key is None:
         return recover_step1()
     else:
@@ -91,29 +85,26 @@ def recover_step1_post(form):
 
 
 def send_recover_mail(user):
-    text = u"""Hi %s,
-
-you have asked to recover your password (from IP %s).  To enter a new
-password, click on the following link:
-
- http://www.skylines-project.org/users/recover?key=%x
-
-The SkyLines Team
-""" % (unicode(user), request.remote_addr, user.recover_key)
-
-    msg = MIMEText(text.encode('utf-8'), 'plain', 'utf-8')
-    msg['Subject'] = 'SkyLines password recovery'
-    msg['From'] = current_app.config['EMAIL_FROM']
-    msg['To'] = user.email_address.encode('ascii')
-    msg['Date'] = formatdate(localtime=1)
-
     try:
-        smtp = smtplib.SMTP(current_app.config['SMTP_SERVER'])
-        smtp.ehlo()
-        smtp.sendmail(current_app.config['EMAIL_FROM'].encode('ascii'),
-                      user.email_address.encode('ascii'), msg.as_string())
-        smtp.quit()
-
+        send_mail(
+            subject=_('SkyLines password recovery'),
+            sender=current_app.config['MAIL_DEFAULT_SENDER'],
+            recipients=[user.email_address.encode('ascii')],
+            text_body=_(
+                "Hi %(user)s,"
+                "you have asked to recover your password (from IP %(remote_address)s). To enter a new "
+                "password, click on the following link: \n\n"
+                "%(url)s \n\n"
+                "The SkyLines Team",
+                user=unicode(user),
+                remote_address=request.remote_addr,
+                url=url_for(
+                    '.recover',
+                    key=sign_message(user.recover_key, current_app.config['SECRET_KEY']),
+                    _external=True
+                )
+            )
+        )
     except:
         raise ServiceUnavailable(description=_(
             "The mail server is currently not reachable. "
@@ -121,11 +112,13 @@ The SkyLines Team
 
 
 def recover_step2(key):
+    key = unsign_message(key, current_app.config['SECRET_KEY'])
+    key = int(key)
     user = User.by_recover_key(key)
     if not user:
         abort(404)
 
-    form = RecoverStep2Form(key='%x' % key)
+    form = RecoverStep2Form(key=key)
     if form.validate_on_submit():
         return recover_step2_post(key, form)
 

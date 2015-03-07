@@ -48,6 +48,12 @@ class SkyLines(Flask):
         self.assets = Environment(self)
         self.assets.load_bundles('skylines.frontend.assets.bundles')
 
+    def add_email(self):
+        """ Create and attach Mail extension """
+        from flask_mail import Mail
+        self.mail = Mail()
+        self.mail.init_app(self)
+
     def add_tg2_compat(self):
         from skylines.lib import helpers
 
@@ -168,6 +174,7 @@ def create_app(*args, **kw):
 def create_http_app(*args, **kw):
     app = create_app(*args, **kw)
 
+    app.add_email()
     app.add_logging_handlers()
     app.add_cache()
     app.add_celery()
