@@ -23,11 +23,13 @@ slContestCollection = function() {
    */
   function setupEvents() {
     $(collection).on('preremove', function(e, contest) {
-      source.removeFeature(
-          source.getFeatures().filter(function(e) {
-            return e.get('sfid') == contest.getID();
-          })[0]
-      );
+      var features = source.getFeatures().filter(function(e) {
+        return e.get('sfid') == contest.getID();
+      });
+
+      for (var i = 0; i < features.length; ++i) {
+        source.removeFeature(features[i]);
+      }
     });
 
     $(collection).on('add', function(e, contest) {

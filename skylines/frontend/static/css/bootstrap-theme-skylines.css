@@ -230,3 +230,11 @@ body, .btn, .form-control, .dropdown-menu {
     margin: 0px 6px;
     background: #008eda;
 }
+
+.phases-table-condensed {
+  font-size: 85%;
+}
+
+.phases-table-condensed thead tr th {
+  vertical-align: top;
+}
