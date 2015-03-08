@@ -1535,7 +1535,7 @@ msgstr ""
 
 #: skylines/frontend/views/users.py:104
 msgid ""
-"Hi %(user)s,"
+"Hi %(user)s, \n"
 "you have asked to recover your password (from IP %(remote_address)s). To enter a new "
 "password, click on the following link: \n\n"
 "%(url)s \n\n"
