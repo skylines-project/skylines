@@ -103,9 +103,11 @@ def send_recover_mail(user):
                     key=sign_message(user.recover_key, current_app.config['SECRET_KEY']),
                     _external=True
                 )
-            )
+            ),
+            info_log_str='Password recovery'
         )
     except:
+        current_app.logger.error('Password recovery "send_recover_mail" exception')
         raise ServiceUnavailable(description=_(
             "The mail server is currently not reachable. "
             "Please try again later or contact the developers."))
