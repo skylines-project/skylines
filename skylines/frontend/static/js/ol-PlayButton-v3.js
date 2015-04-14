@@ -8,7 +8,8 @@
 var PlayButton = function(opt_options) {
   var options = opt_options || {};
   var control = this;
-  var playing = false;
+
+  control.playing = false;
 
   var element = document.createElement('div');
   element.className = 'PlayButton ol-unselectable';
@@ -19,7 +20,7 @@ var PlayButton = function(opt_options) {
   };
 
   var onClick = function(evt) {
-    if (playing)
+    if (control.playing)
       stop();
     else
       play();
@@ -30,19 +31,19 @@ var PlayButton = function(opt_options) {
   var stop = function() {
     $(control).triggerHandler('stop');
     control.setMode('play');
-    playing = false;
+    control.playing = false;
   };
 
   var play = function() {
     if ($(control).triggerHandler('play')) {
       control.setMode('stop');
-      playing = true;
+      control.playing = true;
       tick();
     }
   };
 
   var tick = function() {
-    if (!playing) return;
+    if (!control.playing) return;
 
     if (!$(control).triggerHandler('tick')) stop();
 
@@ -68,3 +69,13 @@ ol.inherits(PlayButton, ol.control.Control);
 PlayButton.prototype.setMode = function(mode) {
   this.element.innerHTML = '<img src="../../images/' + mode + '.png"/>';
 };
+
+
+/**
+ * Gets the playing mode.
+ * @return {Boolean}
+ */
+PlayButton.prototype.getMode = function() {
+  return this.playing;
+};
+
