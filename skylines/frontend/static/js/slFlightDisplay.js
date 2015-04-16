@@ -192,7 +192,7 @@ slFlightDisplay = function(_map, fix_table_placeholder, baro_placeholder) {
    * Perform a JSON request to get a flight.
    *
    * @param {String} url URL to fetch.
-   * @param {Boolean} async do asynchronous request (defaults true)
+   * @param {Boolean=} async do asynchronous request (defaults true)
    */
   flight_display.addFlightFromJSON = function(url, async) {
     $.ajax(url, {
