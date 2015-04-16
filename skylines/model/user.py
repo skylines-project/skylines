@@ -259,10 +259,10 @@ class User(db.Model):
     ##############################
 
     def get_largest_flights(self):
-        '''
+        """
         Returns a query with all flights by the user
         as pilot ordered by distance
-        '''
+        """
         from skylines.model.flight import Flight
         return Flight.get_largest().filter(Flight.pilot == self)
 

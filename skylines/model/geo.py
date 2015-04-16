@@ -46,7 +46,7 @@ class Location(object):
     @staticmethod
     def get_clustered_locations(location_column,
                                 threshold_radius=1000, filter=None):
-        '''
+        """
         SELECT ST_Centroid(
             (ST_Dump(
                 ST_Union(
@@ -56,7 +56,7 @@ class Location(object):
                 )
             )
         ).geom) FROM flights WHERE pilot_id=31;
-        '''
+        """
 
         # Cast the takeoff_location_wkt column to Geography
         geography = cast(location_column, Geography)

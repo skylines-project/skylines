@@ -109,7 +109,7 @@ class MWP(Command):
         print "added " + str(j) + " waves"
 
     def ellipse(self, ra, rb, ang, x0, y0, Nb=50):
-        '''
+        """
         ra - major axis length
         rb - minor axis length
         ang - angle
@@ -122,7 +122,7 @@ class MWP(Command):
         written by Peter Blattner, Institute of Microtechnology,
         University of
         Neuchatel, Switzerland, blattner@imt.unine.ch
-        '''
+        """
 
         def xfrange(start, stop, steps):
             step = (stop - start) / steps
