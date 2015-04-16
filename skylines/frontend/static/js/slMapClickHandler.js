@@ -126,7 +126,7 @@ slMapClickHandler = function(map, flight_display, settings) {
         (flight.getRegistration() || '') +
         '</span>'
     );
-  };
+  }
 
   function nearFlights(lon, lat, time, flight) {
     var get_near_flights = $(
@@ -144,7 +144,7 @@ slMapClickHandler = function(map, flight_display, settings) {
     });
 
     return get_near_flights;
-  };
+  }
 
   function locationInfo(lon, lat) {
     var get_location_info = $(
@@ -159,7 +159,7 @@ slMapClickHandler = function(map, flight_display, settings) {
     });
 
     return get_location_info;
-  };
+  }
 
   /**
    * Show a circle at the clicked position
@@ -213,7 +213,7 @@ slMapClickHandler = function(map, flight_display, settings) {
         map.render();
       }
     });
-  };
+  }
 
   /**
    * Hides the search circle
@@ -222,7 +222,7 @@ slMapClickHandler = function(map, flight_display, settings) {
    */
   function hideCircle(duration) {
     circle.animation = { duration: duration, start: null };
-  };
+  }
 
   /**
    * Request near flights via ajax
@@ -253,7 +253,7 @@ slMapClickHandler = function(map, flight_display, settings) {
     req.always(function() {
       hideCircle(1000);
     });
-  };
+  }
 
   /**
    * Request location informations via ajax
@@ -271,7 +271,7 @@ slMapClickHandler = function(map, flight_display, settings) {
     req.fail(function() {
       showLocationData(null);
     });
-  };
+  }
 
   /**
    * Show location data in infobox
@@ -324,7 +324,7 @@ slMapClickHandler = function(map, flight_display, settings) {
     infobox.getElement().append(item);
 
     //infobox.setOffset([15, infobox.getElement().height() / 2]);
-  };
+  }
 
   /**
    * Format Airspace data for infobox
@@ -362,8 +362,7 @@ slMapClickHandler = function(map, flight_display, settings) {
     table.append(table_body);
 
     return table;
-  };
-
+  }
 
   /**
    * Format Mountain Wave data in infobox
@@ -399,5 +398,5 @@ slMapClickHandler = function(map, flight_display, settings) {
     table.append(table_body);
 
     return table;
-  };
+  }
 };

@@ -131,5 +131,5 @@ slMapIconHandler = function(_map, _flights) {
     }
 
     map.render();
-  };
+  }
 };
