@@ -102,9 +102,8 @@ $(function() {
       weekStart: 1
     })
     .on('changeDate', function(e) {
-      var url = "/flights/date/" + e.date.getFullYear() + "-" +
+      window.location.href = "/flights/date/" + e.date.getFullYear() + "-" +
         pad(e.date.getMonth()+1, 2) + "-" + pad(e.date.getDate(), 2);
-      window.location.href = url;
     });
 
     showPinnedFlightsLink();
