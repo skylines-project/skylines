@@ -1,10 +1,10 @@
 /**
  * An abstraction layer for the barogram view.
  * @param  {DOMElement} placeholder
- * @param  {Object=} options Optional options.
+ * @param  {Object=} opt_options Optional options.
  * @constructor
  */
-function slBarogram(placeholder, options) {
+function slBarogram(placeholder, opt_options) {
   var baro = {};
 
   // Private attributes
@@ -284,7 +284,7 @@ function slBarogram(placeholder, options) {
 
   // Initialization
 
-  setupFlot(placeholder, options || null);
+  setupFlot(placeholder, opt_options || null);
   attachEventHandlers(placeholder);
 
   return baro;
