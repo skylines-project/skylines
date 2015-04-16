@@ -3,7 +3,7 @@ def str_to_bool(str):
 
 
 def pressure_alt_to_qnh_alt(altitude, qnh):
-    if qnh == None:
+    if qnh is None:
         qnh = 1013.25
 
     k1 = 0.190263
