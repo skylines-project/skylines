@@ -97,7 +97,8 @@ function updateTimePicker(prefix, flight_date, values) {
         .val(datetime.format('YYYY-MM-DD HH:mm:ss'));
   }
 
-  var scoringStartTimePicket = $('#' + prefix + '-scoring_start_time-datetimepicker');
+  var scoringStartTimePicket =
+      $('#' + prefix + '-scoring_start_time-datetimepicker');
   if (scoringStartTimePicket.data('DateTimePicker').getDate().unix() !=
       parseInt(values.scoring_start / 1000)) {
     var datetime = flight_date.clone().add('ms', values.scoring_start);
@@ -107,7 +108,8 @@ function updateTimePicker(prefix, flight_date, values) {
         .val(datetime.format('YYYY-MM-DD HH:mm:ss'));
   }
 
-  var scoringEndTimePicker = $('#' + prefix + '-scoring_end_time-datetimepicker');
+  var scoringEndTimePicker =
+      $('#' + prefix + '-scoring_end_time-datetimepicker');
   if (scoringEndTimePicker.data('DateTimePicker').getDate().unix() !=
       parseInt(values.scoring_end / 1000)) {
     var datetime = flight_date.clone().add('ms', values.scoring_end);
