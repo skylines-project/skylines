@@ -62,7 +62,9 @@
       } else if (args.id == 'tab-stats-phases') {
         phase_highlighter.addTable($('#phases-table'));
       } else if (args.id == 'tab-wingmen') {
-        $('#wingman-table').find('tbody').find('tr').each(function(index, row) {
+        var wingmanTable = $('#wingman-table');
+
+        wingmanTable.find('tbody').find('tr').each(function(index, row) {
           $(this).on('click', function() {
             if (!flight_display) return;
 
@@ -77,7 +79,7 @@
           });
         });
 
-        $('#wingman-table').find('[rel=popover]').popover({
+        wingmanTable.find('[rel=popover]').popover({
           html: true,
           container: '#fullscreen-content',
           title: 'Periods',
@@ -86,7 +88,7 @@
           template: popover_template
         });
 
-        $('#wingman-table').find('[rel=tooltip]').tooltip();
+        wingmanTable.find('[rel=tooltip]').tooltip();
       }
     });
 
