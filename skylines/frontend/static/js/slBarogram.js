@@ -1,7 +1,7 @@
 /**
  * An abstraction layer for the barogram view.
  * @param  {DOMElement} placeholder
- * @param  {Object} options Optional options.
+ * @param  {Object=} options Optional options.
  * @constructor
  */
 function slBarogram(placeholder, options) {
