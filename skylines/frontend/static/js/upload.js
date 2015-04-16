@@ -87,44 +87,42 @@ function initBaro(placeholder, sfid, _time, _height, _enl,
 * @param {Object} values Values of the current markers.
 */
 function updateTimePicker(prefix, flight_date, values) {
-  if ($('#' + prefix + '-takeoff_time-datetimepicker').data('DateTimePicker')
-      .getDate().unix() != parseInt(values.takeoff / 1000)) {
+  var takeOffTimePicker = $('#' + prefix + '-takeoff_time-datetimepicker');
+  if (takeOffTimePicker.data('DateTimePicker').getDate().unix() !=
+      parseInt(values.takeoff / 1000)) {
     var datetime = flight_date.clone().add('ms', values.takeoff);
 
-    $('#' + prefix + '-takeoff_time-datetimepicker').data('DateTimePicker')
-        .setValue(datetime);
+    takeOffTimePicker.data('DateTimePicker').setValue(datetime);
     $('#' + prefix + '-takeoff_time')
         .val(datetime.format('YYYY-MM-DD HH:mm:ss'));
   }
 
-  if ($('#' + prefix + '-scoring_start_time-datetimepicker')
-           .data('DateTimePicker').getDate().unix() !=
+  var scoringStartTimePicket = $('#' + prefix + '-scoring_start_time-datetimepicker');
+  if (scoringStartTimePicket.data('DateTimePicker').getDate().unix() !=
       parseInt(values.scoring_start / 1000)) {
     var datetime = flight_date.clone().add('ms', values.scoring_start);
 
-    $('#' + prefix + '-scoring_start_time-datetimepicker')
-        .data('DateTimePicker').setValue(datetime);
+    scoringStartTimePicket.data('DateTimePicker').setValue(datetime);
     $('#' + prefix + '-scoring_start_time')
         .val(datetime.format('YYYY-MM-DD HH:mm:ss'));
   }
 
-  if ($('#' + prefix + '-scoring_end_time-datetimepicker')
-           .data('DateTimePicker').getDate().unix() !=
+  var scoringEndTimePicker = $('#' + prefix + '-scoring_end_time-datetimepicker');
+  if (scoringEndTimePicker.data('DateTimePicker').getDate().unix() !=
       parseInt(values.scoring_end / 1000)) {
     var datetime = flight_date.clone().add('ms', values.scoring_end);
 
-    $('#' + prefix + '-scoring_end_time-datetimepicker').data('DateTimePicker')
-        .setValue(datetime);
+    scoringEndTimePicker.data('DateTimePicker').setValue(datetime);
     $('#' + prefix + '-scoring_end_time')
         .val(datetime.format('YYYY-MM-DD HH:mm:ss'));
   }
 
-  if ($('#' + prefix + '-landing_time-datetimepicker').data('DateTimePicker')
-           .getDate().unix() != parseInt(values.landing / 1000)) {
+  var landingTimePicker = $('#' + prefix + '-landing_time-datetimepicker');
+  if (landingTimePicker.data('DateTimePicker').getDate().unix() !=
+      parseInt(values.landing / 1000)) {
     var datetime = flight_date.clone().add('ms', values.landing);
 
-    $('#' + prefix + '-landing_time-datetimepicker').data('DateTimePicker')
-        .setValue(datetime);
+    landingTimePicker.data('DateTimePicker').setValue(datetime);
     $('#' + prefix + '-landing_time')
         .val(datetime.format('YYYY-MM-DD HH:mm:ss'));
   }
