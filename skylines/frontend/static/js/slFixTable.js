@@ -114,7 +114,7 @@ slFixTable = function(placeholder) {
    *
    * @param {String|number} id
    *   The identifier of the row that should be updated.
-   * @param  {Object} fix The new fix data for the row.
+   * @param  {Object=} fix The new fix data for the row.
    * @return {Boolean} True if the row was updated, False otherwise.
    */
   fix_table.updateFix = function(id, fix) {
