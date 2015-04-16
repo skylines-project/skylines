@@ -1,7 +1,7 @@
 /**
  * A contest of a flight.
  * @constructor
- * @param {Array(Objects)} _contest Scored/Optimised contests.
+ * @param {Array<Object>} _contest Scored/Optimised contests.
  *   Such an object must contain: name, turnpoints, times
  *   turnpoints and times are googlePolyEncoded strings.
  * @param {Number} _sfid The SkyLines flight id this contest trace belongs to.
