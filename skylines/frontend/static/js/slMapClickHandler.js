@@ -31,7 +31,7 @@ slMapClickHandler = function(map, flight_display, settings) {
    *
    * @this {ol.Map}
    * @param {Event} e
-   * @return {Boolean?}
+   * @return {(boolean|undefined)}
    */
   map_click_handler.trigger = function(e) {
     // Hide infobox if it's currently visible
