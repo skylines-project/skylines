@@ -1,22 +1,12 @@
-Vagrant::Config.run do |config|
-  config.vm.box = "precise32"
-  config.vm.box_url = "http://files.vagrantup.com/precise32.box"
+VAGRANTFILE_API_VERSION = "2"
 
-  config.vm.forward_port 8080, 8080
-
-  config.vm.provision :chef_solo do |chef|
-    chef.cookbooks_path = [".cookbooks", "cookbooks"]
-    
-    chef.add_recipe "skylines"
-
-    chef.json = {
-    	postgresql: {
-    		version: "9.1",
-
-    		password: {
-    			postgres: "postgres"
-    		},
-    	}
-    }
+Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
+  config.vm.provider "virtualbox" do |v|
+    v.memory = 512
+    v.cpus = 1
   end
+
+  config.vm.box = "ubuntu/trusty64"
+
+  config.vm.network "forwarded_port", guest: 5000, host: 5000
 end
