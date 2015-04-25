@@ -106,7 +106,7 @@ def send_recover_mail(user):
             ),
             info_log_str='Password recovery'
         )
-    except Exception, e:
+    except:
         current_app.logger.error('Password recovery "send_recover_mail" exception')
         raise ServiceUnavailable(description=_(
             "The mail server is currently not reachable. "
