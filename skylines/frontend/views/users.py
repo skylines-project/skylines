@@ -9,7 +9,7 @@ from skylines.model import db, User
 from skylines.model.event import create_new_user_event
 from skylines.frontend.forms import CreatePilotForm, RecoverStep1Form, RecoverStep2Form
 from skylines.lib.util import sign_message, unsign_message
-from skylines.lib.emails import send_mail
+from skylines.worker import tasks
 
 users_blueprint = Blueprint('users', 'skylines')
 
@@ -86,7 +86,7 @@ def recover_step1_post(form):
 
 def send_recover_mail(user):
     try:
-        send_mail(
+        tasks.send_mail.delay(
             subject=_('SkyLines password recovery'),
             sender=current_app.config['MAIL_DEFAULT_SENDER'],
             recipients=[user.email_address.encode('ascii')],
@@ -106,7 +106,7 @@ def send_recover_mail(user):
             ),
             info_log_str='Password recovery'
         )
-    except:
+    except Exception, e:
         current_app.logger.error('Password recovery "send_recover_mail" exception')
         raise ServiceUnavailable(description=_(
             "The mail server is currently not reachable. "

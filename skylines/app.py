@@ -50,9 +50,9 @@ class SkyLines(Flask):
 
     def add_email(self):
         """ Create and attach Mail extension """
-        from flask_mail import Mail
-        self.mail = Mail()
-        self.mail.init_app(self)
+        from skylines.worker.mail import mail
+        mail.init_app(self)
+        return mail
 
     def add_tg2_compat(self):
         from skylines.lib import helpers
@@ -174,7 +174,6 @@ def create_app(*args, **kw):
 def create_http_app(*args, **kw):
     app = create_app(*args, **kw)
 
-    app.add_email()
     app.add_logging_handlers()
     app.add_cache()
     app.add_celery()
@@ -224,4 +223,5 @@ def create_combined_app(*args, **kw):
 
 def create_celery_app(*args, **kw):
     app = create_app('skylines.worker', *args, **kw)
+    app.add_email()
     return app.add_celery()

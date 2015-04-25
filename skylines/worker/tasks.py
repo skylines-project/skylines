@@ -6,6 +6,10 @@ from skylines.lib.xcsoar_ import analysis
 from skylines.worker.celery import celery
 from skylines.model import db, Flight, FlightPathChunks, FlightMeetings
 
+from skylines.worker.mail import mail
+from flask_mail import Message
+from flask import current_app
+
 logger = get_task_logger(__name__)
 
 
@@ -45,3 +49,25 @@ def find_meetings(flight_id):
             FlightMeetings.add_meeting(flight, other_flight, meeting['times'][0], meeting['times'][-1])
 
     db.session.commit()
+
+
+@celery.task
+def send_mail(subject, sender, recipients, text_body=None, html_body=None,
+              info_log_str=None):
+    msg = Message(
+        subject=subject,
+        sender=sender,
+        recipients=recipients,
+        body=text_body,
+        html=html_body,
+        charset='utf-8',
+    )
+
+    if info_log_str is not None:
+        logger.warn('Send mail: %s' % info_log_str)
+
+    try:
+        with current_app.app_context():
+            mail.send(msg)
+    except Exception, e:
+        logger.warn('Send mail error: %s' % e.message)
