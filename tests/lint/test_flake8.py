@@ -15,13 +15,8 @@ def pytest_generate_tests(metafunc):
 
 def test_flake8(folder):
     """ Run skylines package through flake8 """
-    args = [FLAKE8_COMMAND]
-
-    # Append package name that should be checked
-    args.append(folder)
-
     try:
-        run(args)
+        run([FLAKE8_COMMAND, folder])
     except CalledProcessError, e:
         print e.output
         raise AssertionError('flake8 has found errors.')

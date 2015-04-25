@@ -173,7 +173,7 @@ msgid ""
 "Skylines is using waypoint data from the %(welt2000)s project."
 msgstr ""
 "SkyLines podatkovna baza poletov je na voljo po %(license)s. "
-"Skylines uporablja podatke geo točk z %(welt2000) projekta."
+"Skylines uporablja podatke geo točke %(welt2000)s projekta."
 
 #: skylines/frontend/templates/about.jinja:64
 msgid "Open Source"
@@ -186,7 +186,7 @@ msgid ""
 "based on free software (<a href=\"%(license_url)s\">License</a>). Visit "
 "%(github)s if you want to help!"
 msgstr ""
-"Skylines je <a href=\"%(team_url)s\">skupinski</a> projekt, ki v celoti "
+"Skylines je <a href=\"%(team_url)s\">skupnostni</a> projekt, ki v celoti "
 "temelji na odprti kodi (<a href=\"%(license_url)s\">Licenca</a>). Obiščite "
 "%(github)s če želite pomagati!"
 
@@ -1443,153 +1443,153 @@ msgstr ""
 "Oprostite, {num_missing} od zahtevanih zapisov ({ids}) ne obstajajo v naši podatkovni "
 "bazi."
 
-#~ msgid "Please enter your name."
-#~ msgstr "Prosimo vpišite svoje ime."
+msgid "Please enter your name."
+msgstr "Prosimo vpišite svoje ime."
 
-#~ msgid "Email Address"
-#~ msgstr "Elektronski naslov"
+msgid "Email Address"
+msgstr "Elektronski naslov"
 
-#~ msgid "Your Live Tracking settings"
-#~ msgstr "Vaše nastavitve za spremljanje v živo."
+msgid "Your Live Tracking settings"
+msgstr "Vaše nastavitve za spremljanje v živo."
 
-#~ msgid ""
-#~ msgstr ""
+msgid ""
+msgstr ""
 
-#~ msgid "Select your primary club:"
-#~ msgstr "Izberite vaš primarni klub:"
+msgid "Select your primary club:"
+msgstr "Izberite vaš primarni klub:"
 
-#~ msgid "If your club doesn't exist yet in Skylines, create it:"
-#~ msgstr "Če vaš klub še ne obstaja v Skylines, ga kreirajte:"
+msgid "If your club doesn't exist yet in Skylines, create it:"
+msgstr "Če vaš klub še ne obstaja v Skylines, ga kreirajte:"
 
-#~ msgid "Tracking key"
-#~ msgstr "Ključ za sledenje"
+msgid "Tracking key"
+msgstr "Ključ za sledenje"
 
-#~ msgid "More Information"
-#~ msgstr "Več informacij"
+msgid "More Information"
+msgstr "Več informacij"
 
-#~ msgid "Tracking delay"
-#~ msgstr "Časovni zamik sledenja"
+msgid "Tracking delay"
+msgstr "Časovni zamik sledenja"
 
-#~ msgid "Eye Candy"
-#~ msgstr "Lepo za pogledat"
+msgid "Eye Candy"
+msgstr "Lepo za pogledat"
 
-#~ msgid "No club"
-#~ msgstr "Ni kluba"
+msgid "No club"
+msgstr "Ni kluba"
 
-#~ msgid "A club with this name exists already."
-#~ msgstr "Klub z tem imenom že obstaja"
+msgid "A club with this name exists already."
+msgstr "Klub z tem imenom že obstaja"
 
-#~ msgid "Co-Pilot"
-#~ msgstr "Ko-pilot"
+msgid "Co-Pilot"
+msgstr "Ko-pilot"
 
-#~ msgid "Current Password"
-#~ msgstr "Trenutno geslo"
+msgid "Current Password"
+msgstr "Trenutno geslo"
 
-#~ msgid "Your password must have at least 6 characters."
-#~ msgstr "Vaše geslo mora imeti vsaj 6 znakov."
+msgid "Your password must have at least 6 characters."
+msgstr "Vaše geslo mora imeti vsaj 6 znakov."
 
-#~ msgid "Verify Password"
-#~ msgstr "Preveri geslo"
+msgid "Verify Password"
+msgstr "Preveri geslo"
 
-#~ msgid "Your passwords do not match."
-#~ msgstr "Vaše geslo se ne ujema."
+msgid "Your passwords do not match."
+msgstr "Vaše geslo se ne ujema."
 
-#~ msgid "eMail Address"
-#~ msgstr "Elektronski naslov"
+msgid "eMail Address"
+msgstr "Elektronski naslov"
 
-#~ msgid "Please enter your email address."
-#~ msgstr "Prosimo vpišite vaš elektronski naslov."
+msgid "Please enter your email address."
+msgstr "Prosimo vpišite vaš elektronski naslov."
 
-#~ msgid "First Name"
-#~ msgstr "Ime"
+msgid "First Name"
+msgstr "Ime"
 
-#~ msgid "Please enter your first name."
-#~ msgstr "Prosimo vpišite svoje ime."
+msgid "Please enter your first name."
+msgstr "Prosimo vpišite svoje ime."
 
-#~ msgid "Last Name"
-#~ msgstr "Priimek"
+msgid "Last Name"
+msgstr "Priimek"
 
-#~ msgid "Please enter your last name."
-#~ msgstr "Prosimo vpišite svoj priimek."
+msgid "Please enter your last name."
+msgstr "Prosimo vpišite svoj priimek."
 
-#~ msgid "A pilot with this email address exists already."
-#~ msgstr "Pilot s tem email naslovom že obstaja."
+msgid "A pilot with this email address exists already."
+msgstr "Pilot s tem email naslovom že obstaja."
 
-#~ msgid "None"
-#~ msgstr "Nič"
+msgid "None"
+msgstr "Nič"
 
-#~ msgid "Unit Preset"
-#~ msgstr "Prednastavitev enot"
+msgid "Unit Preset"
+msgstr "Prednastavitev enot"
 
-#~ msgid "Distance Unit"
-#~ msgstr "Razdalja"
+msgid "Distance Unit"
+msgstr "Razdalja"
 
-#~ msgid "Speed Unit"
-#~ msgstr "Hitrost"
+msgid "Speed Unit"
+msgstr "Hitrost"
 
-#~ msgid "Lift Unit"
-#~ msgstr "Dviganje"
+msgid "Lift Unit"
+msgstr "Dviganje"
 
-#~ msgid "Altitude Unit"
-#~ msgstr "Višina"
+msgid "Altitude Unit"
+msgstr "Višina"
 
-#~ msgid "Tracking Delay"
-#~ msgstr "Zamik sledenja"
+msgid "Tracking Delay"
+msgstr "Zamik sledenja"
 
-#~ msgid "Tracking Callsign"
-#~ msgstr "Klicni znak sledenja"
+msgid "Tracking Callsign"
+msgstr "Klicni znak sledenja"
 
-#~ msgid "Your callsign must not have more than 5 characters."
-#~ msgstr "Vaš klicni znak ne sme imeti več kot 5 znakov."
+msgid "Your callsign must not have more than 5 characters."
+msgstr "Vaš klicni znak ne sme imeti več kot 5 znakov."
 
-#~ msgid "There is no pilot with this email address."
-#~ msgstr "Pilot s tem e-poštnim naslovom ne obstaja"
+msgid "There is no pilot with this email address."
+msgstr "Pilot s tem e-poštnim naslovom ne obstaja"
 
-#~ msgid "Please enter your password."
-#~ msgstr "Prosimo vnesite geslo"
+msgid "Please enter your password."
+msgstr "Prosimo vnesite geslo"
 
-#~ msgid "Remember me"
-#~ msgstr "Zapomni se me"
+msgid "Remember me"
+msgstr "Zapomni se me"
 
-#~ msgid "IGC or ZIP file(s)"
-#~ msgstr "IGC ali ZIP datoteke"
+msgid "IGC or ZIP file(s)"
+msgstr "IGC ali ZIP datoteke"
 
-#~ msgid "Please add one or more IGC or ZIP files"
-#~ msgstr "Prosimo dodajte eno ali več IGC ali ZIP datotek"
+msgid "Please add one or more IGC or ZIP files"
+msgstr "Prosimo dodajte eno ali več IGC ali ZIP datotek"
 
-#~ msgid "Custom"
-#~ msgstr "Po meri"
+msgid "Custom"
+msgstr "Po meri"
 
-#~ msgid "European (metric)"
-#~ msgstr "Evropski (metrični)"
+msgid "European (metric)"
+msgstr "Evropski (metrični)"
 
-#~ msgid "British (imperial, distance in km)"
-#~ msgstr "Britanski (imperial, razdalja v km)"
+msgid "British (imperial, distance in km)"
+msgstr "Britanski (imperial, razdalja v km)"
 
-#~ msgid "Australian (metric, imperial height)"
-#~ msgstr "Avstralski (metrični, imperial višina)"
+msgid "Australian (metric, imperial height)"
+msgstr "Avstralski (metrični, imperial višina)"
 
-#~ msgid "American (imperial)"
-#~ msgstr "Ameriški (imperial)"
+msgid "American (imperial)"
+msgstr "Ameriški (imperial)"
 
-#~ msgid "Left"
-#~ msgstr "Levo"
+msgid "Left"
+msgstr "Levo"
 
-#~ msgid "Mixed"
-#~ msgstr "Mešano"
+msgid "Mixed"
+msgstr "Mešano"
 
-#~ msgid "Right"
-#~ msgstr "Desno"
+msgid "Right"
+msgstr "Desno"
 
-#~ msgid "Powered"
-#~ msgstr "Motor vključen"
+msgid "Powered"
+msgstr "Motor vključen"
 
-#~ msgid "Circling"
-#~ msgstr "Zavijanje"
+msgid "Circling"
+msgstr "Zavijanje"
 
-#~ msgid "Cruise"
-#~ msgstr "Potovanje"
+msgid "Cruise"
+msgstr "Potovanje"
 
-#~ msgid "You have to login to upload flights."
-#~ msgstr "Za prenos zapisa se morate prijavit."
+msgid "You have to login to upload flights."
+msgstr "Za prenos zapisa se morate prijavit."
 

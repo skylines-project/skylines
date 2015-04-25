@@ -9,7 +9,7 @@ def encode(number, alphabet='0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ'):
     if not isinstance(number, (int, long)):
         raise TypeError('number must be an integer')
 
-    if number >= 0 and number <= 9:
+    if 0 <= number <= 9:
         return alphabet[number]
 
     base36 = ''

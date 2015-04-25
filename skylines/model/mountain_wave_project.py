@@ -39,7 +39,7 @@ class MountainWaveProject(db.Model):
 
     @classmethod
     def by_location(cls, location):
-        '''Returns a query object of mountain waves around the location'''
+        """Returns a query object of mountain waves around the location"""
         return cls.query() \
             .filter(db.func.ST_DWithin(
                 cast(location.make_point(), Geography),

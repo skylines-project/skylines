@@ -42,7 +42,7 @@ slContestCollection = function() {
 
       source.addFeature(feature);
     });
-  };
+  }
 
   setupEvents();
   return collection;

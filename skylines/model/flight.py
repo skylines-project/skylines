@@ -226,7 +226,7 @@ class Flight(db.Model):
 
     @classmethod
     def get_largest(cls):
-        '''Returns a query object ordered by distance'''
+        """Returns a query object ordered by distance"""
         return cls.query().order_by(cls.olc_classic_distance.desc())
 
     def get_optimised_contest_trace(self, contest_type, trace_type):
@@ -307,11 +307,11 @@ class Flight(db.Model):
 
 
 class FlightPathChunks(db.Model):
-    '''
+    """
     This table stores flight path chunks of about 100 fixes per column which
     enable PostGIS/Postgres to do fast queries due to tight bounding boxes
     around those short flight pahts.
-    '''
+    """
 
     __tablename__ = 'flight_path_chunks'
 
@@ -336,7 +336,7 @@ class FlightPathChunks(db.Model):
 
     @staticmethod
     def get_near_flights(flight, filter=None):
-        '''
+        """
         WITH src AS
             (SELECT ST_Buffer(ST_Simplify(locations, 0.005), 0.015) AS src_loc_buf,
                     start_time AS src_start,
@@ -360,7 +360,7 @@ class FlightPathChunks(db.Model):
                   locations && src_loc_buf AND
                   _ST_Intersects(ST_Simplify(locations, 0.005), src_loc_buf)) AS foo
         WHERE _ST_Contains(src_loc_buf, (dst_points).geom);
-        '''
+        """
 
         cte = db.session.query(FlightPathChunks.locations.ST_Simplify(0.005).ST_Buffer(0.015).label('src_loc_buf'),
                                FlightPathChunks.start_time.label('src_start'),

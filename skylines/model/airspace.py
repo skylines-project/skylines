@@ -33,7 +33,7 @@ class Airspace(db.Model):
 
     @classmethod
     def by_location(cls, location):
-        '''Returns a query object of all airspaces at the location'''
+        """Returns a query object of all airspaces at the location"""
         return cls.query() \
             .filter(cls.the_geom.ST_Contains(location.make_point()))
 

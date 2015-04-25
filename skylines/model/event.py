@@ -154,9 +154,9 @@ class EventGroup:
 
 
 def create_flight_comment_notifications(comment):
-    '''
+    """
     Create notifications for the owner and pilots of the flight
-    '''
+    """
 
     flight = comment.flight
     user = comment.user
@@ -179,9 +179,9 @@ def create_flight_comment_notifications(comment):
 
 
 def create_flight_notifications(flight):
-    '''
+    """
     Create notifications for the followers of the owner and pilots of the flight
-    '''
+    """
 
     # Create the event
     event = Event(type=Event.Type.FLIGHT,
@@ -211,9 +211,9 @@ def create_flight_notifications(flight):
 
 
 def create_follower_notification(followed, follower):
-    '''
+    """
     Create notification for the followed pilot about his new follower
-    '''
+    """
 
     # Create the event
     event = Event(type=Event.Type.FOLLOWER, actor=follower, user=followed)

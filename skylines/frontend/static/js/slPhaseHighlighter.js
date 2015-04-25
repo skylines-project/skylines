@@ -122,5 +122,5 @@ slPhaseHighlighter = function(_map, _baro, _flights, _padding_callback) {
     phase_markers.end = new ol.geom.Point([end_point[0], end_point[1]]);
 
     return phase_markers;
-  };
+  }
 };
