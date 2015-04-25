@@ -19,6 +19,12 @@ def inject_notification_count():
         g.count_unread_notifications = count_unread_notifications
 
 
+@notifications_blueprint.before_request
+def before_request():
+    if g.current_user:
+        g.logout_next = url_for("index")
+
+
 def _filter_query(query, args):
     type_ = args.get('type', type=int)
     if type_:
