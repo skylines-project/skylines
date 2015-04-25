@@ -5,6 +5,7 @@ from sqlalchemy.sql.expression import or_
 from skylines.lib.util import str_to_bool
 from skylines.model import db
 from skylines.model.event import Event, Notification, Flight, group_events
+from skylines.lib.decorators import login_required
 
 
 notifications_blueprint = Blueprint('notifications', 'skylines')
@@ -38,10 +39,8 @@ def _filter_query(query, args):
 
 
 @notifications_blueprint.route('/')
+@login_required("You have to login to read notifications.")
 def index():
-    if not g.current_user:
-        abort(401)
-
     query = Notification.query(recipient=g.current_user) \
         .join('event') \
         .options(contains_eager('event')) \
@@ -81,10 +80,8 @@ def index():
 
 
 @notifications_blueprint.route('/clear')
+@login_required("You have to login to clear notifications.")
 def clear():
-    if not g.current_user:
-        abort(401)
-
     def filter_func(query):
         return _filter_query(query, request.args)
 
