@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, abort, request, url_for, redirect, g
+from flask import Blueprint, render_template, request, url_for, redirect, g
 from sqlalchemy.orm import subqueryload, contains_eager
 from sqlalchemy.sql.expression import or_
 
