@@ -1,11 +1,7 @@
 # Vagrant
 
-*Note: This is currently unmaintained and installs PostGIS 1.5 instead of the
-necessary 2.x version!*
-
 [Vagrant](http://www.vagrantup.com/) is a wrapper around
-[VirtualBox](http://www.virtualbox.org/) and
-[Chef](http://www.opscode.com/chef/) (or [Puppet](https://puppetlabs.com/)).
+[VirtualBox](http://www.virtualbox.org/).
 
 It can create a virtual machine on your computer and configure it, so that you
 can instantly start developing.  You need to follow these steps to make it work
@@ -17,13 +13,8 @@ on your machine:
   [here](https://www.virtualbox.org/wiki/Downloads)
 * Install Vagrant by downloading and installing the right package from
   <http://downloads.vagrantup.com/>
-* Install [Librarian](https://github.com/applicationsonline/librarian) for Chef
-  by calling: `gem install librarian`
 
 Now that you have the necessary tools it is time to create and start the virtual machine:
-
-    # download necessary chef cookbooks
-    librarian-chef install
 
     # create and start virtual machine
     vagrant up
