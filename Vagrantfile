@@ -1,22 +1,71 @@
-Vagrant::Config.run do |config|
-  config.vm.box = "precise32"
-  config.vm.box_url = "http://files.vagrantup.com/precise32.box"
+$script = <<SCRIPT
 
-  config.vm.forward_port 8080, 8080
+# set environment variables
 
-  config.vm.provision :chef_solo do |chef|
-    chef.cookbooks_path = [".cookbooks", "cookbooks"]
-    
-    chef.add_recipe "skylines"
+cat >> ~/.profile << EOF
+export LANG=C
+export LC_CTYPE=C
 
-    chef.json = {
-    	postgresql: {
-    		version: "9.1",
+export POSTGIS_GDAL_ENABLED_DRIVERS=GTiff
+export POSTGIS_ENABLE_OUTDB_RASTERS=1
+EOF
 
-    		password: {
-    			postgres: "postgres"
-    		},
-    	}
-    }
-  end
+# adjust apt-get repository URLs
+
+sudo bash -c "cat > /etc/apt/sources.list" << EOF
+deb mirror://mirrors.ubuntu.com/mirrors.txt precise main restricted universe multiverse
+deb mirror://mirrors.ubuntu.com/mirrors.txt precise-updates main restricted universe multiverse
+deb mirror://mirrors.ubuntu.com/mirrors.txt precise-backports main restricted universe multiverse
+deb mirror://mirrors.ubuntu.com/mirrors.txt precise-security main restricted universe multiverse
+EOF
+
+sudo bash -c "cat > /etc/apt/sources.list.d/pgdg.list" << EOF
+deb http://apt.postgresql.org/pub/repos/apt/ precise-pgdg main
+EOF
+
+wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add -
+
+# update apt-get repository
+
+sudo apt-get update
+
+# install base dependencies
+
+sudo apt-get install -y --no-install-recommends \
+    g++ pkg-config libcurl4-openssl-dev python-dev git \
+    libpq-dev postgresql-9.4-postgis-2.1 postgresql-contrib-9.4 \
+    openjdk-7-jre-headless
+
+# install pip
+
+wget -N -nv https://bootstrap.pypa.io/get-pip.py
+sudo -H python get-pip.py
+
+# install skylines and the python dependencies
+
+cd /vagrant
+sudo -H pip install -e .
+
+# create PostGIS database
+
+sudo sudo -u postgres createuser -s vagrant
+sudo sudo -u postgres createdb skylines -O vagrant
+sudo sudo -u postgres psql -d skylines -c 'CREATE EXTENSION postgis;'
+sudo sudo -u postgres psql -d skylines -c 'CREATE EXTENSION fuzzystrmatch;'
+
+./manage.py db create
+
+# build assets
+
+./manage.py assets build
+
+SCRIPT
+
+Vagrant.configure("2") do |config|
+  config.vm.box = 'ubuntu-12.04.2-x86_64'
+  config.vm.box_url = 'http://puppet-vagrant-boxes.puppetlabs.com/ubuntu-server-12042-x64-vbox4210.box'
+
+  config.vm.network 'forwarded_port', guest: 5000, host: 5000
+
+  config.vm.provision 'shell', inline: $script, privileged: false
 end
