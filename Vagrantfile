@@ -59,6 +59,10 @@ sudo sudo -u postgres psql -d skylines -c 'CREATE EXTENSION fuzzystrmatch;'
 
 ./manage.py assets build
 
+# compile translations
+
+./manage.py babel compile
+
 SCRIPT
 
 Vagrant.configure("2") do |config|
