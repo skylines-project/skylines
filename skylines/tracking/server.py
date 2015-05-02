@@ -272,8 +272,8 @@ class TrackingServer(DatagramServer):
             elif header[2] == TYPE_USER_NAME_REQUEST:
                 self.userNameRequestReceived(host, port, header[3], data[16:])
 
-    def serve_forever(self):
+    def serve_forever(self, **kwargs):
         if not self.app:
             raise RuntimeError('application not registered on server instance')
 
-        super(TrackingServer, self).serve_forever()
+        super(TrackingServer, self).serve_forever(**kwargs)
