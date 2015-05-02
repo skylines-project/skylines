@@ -48,7 +48,7 @@ class TrackingServer(DatagramServer):
     def init_app(self, app):
         self.app = app
 
-    def pingReceived(self, host, port, key, payload):
+    def ping_received(self, host, port, key, payload):
         if len(payload) != 8: return
         id, reserved, reserved2 = struct.unpack('!HHI', payload)
 
@@ -66,7 +66,7 @@ class TrackingServer(DatagramServer):
         data = set_crc(data)
         self.socket.sendto(data, (host, port))
 
-    def fixReceived(self, host, key, payload):
+    def fix_received(self, host, key, payload):
         if len(payload) != 32: return
 
         pilot = User.by_tracking_key(key)
@@ -136,7 +136,7 @@ class TrackingServer(DatagramServer):
             log('database error:' + str(e))
             db.session.rollback()
 
-    def trafficRequestReceived(self, host, port, key, payload):
+    def traffic_request_received(self, host, port, key, payload):
         if len(payload) != 8: return
 
         pilot = User.by_tracking_key(key)
@@ -215,7 +215,7 @@ class TrackingServer(DatagramServer):
         log("%s TRAFFIC_REQUEST %s -> %d locations" %
             (host, unicode(pilot).encode('utf8', 'ignore'), count))
 
-    def userNameRequestReceived(self, host, port, key, payload):
+    def username_request_received(self, host, port, key, payload):
         """The client asks for the display name of a user account."""
 
         if len(payload) != 8: return
@@ -264,13 +264,13 @@ class TrackingServer(DatagramServer):
 
         with self.app.app_context():
             if header[2] == TYPE_FIX:
-                self.fixReceived(host, header[3], data[16:])
+                self.fix_received(host, header[3], data[16:])
             elif header[2] == TYPE_PING:
-                self.pingReceived(host, port, header[3], data[16:])
+                self.ping_received(host, port, header[3], data[16:])
             elif header[2] == TYPE_TRAFFIC_REQUEST:
-                self.trafficRequestReceived(host, port, header[3], data[16:])
+                self.traffic_request_received(host, port, header[3], data[16:])
             elif header[2] == TYPE_USER_NAME_REQUEST:
-                self.userNameRequestReceived(host, port, header[3], data[16:])
+                self.username_request_received(host, port, header[3], data[16:])
 
     def serve_forever(self, **kwargs):
         if not self.app:
