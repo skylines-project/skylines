@@ -36,7 +36,7 @@ class Location(object):
         return Location(latitude=coords.y, longitude=coords.x)
 
     def normalize(self):
-        self.longitude = self.longitude % 360
+        self.longitude %= 360
         if self.longitude > 180:
             self.longitude -= 360
 
