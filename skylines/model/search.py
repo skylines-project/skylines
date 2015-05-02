@@ -207,7 +207,7 @@ def weight_expression(columns, tokens):
 
                 # Adjust the weight for the length of the token
                 # (the long the matched token, the greater the weight)
-                weight = weight * len_token
+                weight *= len_token
 
                 # Create the weighted ILIKE expression
                 expression = column.weighted_ilike(token_pattern, weight)
