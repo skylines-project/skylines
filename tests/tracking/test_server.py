@@ -193,13 +193,13 @@ class TrackingServerTest(TestCase):
         assert fix.ip == self.HOST_PORT[0]
 
         assert fix.time == utcnow_return_value
-        assert fix.location_wkt == None
-        assert fix.track == None
-        assert fix.ground_speed == None
-        assert fix.airspeed == None
-        assert fix.altitude == None
-        assert fix.vario == None
-        assert fix.engine_noise_level == None
+        assert fix.location_wkt is None
+        assert fix.track is None
+        assert fix.ground_speed is None
+        assert fix.airspeed is None
+        assert fix.altitude is None
+        assert fix.vario is None
+        assert fix.engine_noise_level is None
 
     def test_real_fix(self):
         """ Tracking server accepts real fixes """
