@@ -1361,7 +1361,7 @@ msgid "You are now logged in. Welcome back, %(user)s!"
 msgstr "Je bent nu ingelogt. Welkom %(user)s!"
 
 #: skylines/frontend/views/login.py:60
-msgid "Login failed. Please check your eMail address."
+msgid "Login failed. Please check your email address."
 msgstr "Inloggen is mislukt. Controleer uw e-mail adres."
 
 #: skylines/frontend/views/login.py:61
@@ -1469,7 +1469,7 @@ msgstr ""
 #~ msgid "Your passwords do not match."
 #~ msgstr "Uw paswoorden komen niet overeen."
 
-#~ msgid "eMail Address"
+#~ msgid "Email Address"
 #~ msgstr "EMail adres"
 
 #~ msgid "Please enter your email address."

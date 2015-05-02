@@ -148,7 +148,7 @@ msgstr "Deine Passwörter stimmen nicht überein"
 
 #: skylines/frontend/forms/pilot.py:56 skylines/frontend/forms/pilot.py:89
 #: skylines/frontend/forms/pilot.py:121 skylines/frontend/forms/pilot.py:136
-msgid "eMail Address"
+msgid "Email Address"
 msgstr "E-Mail-Adresse"
 
 #: skylines/frontend/forms/pilot.py:57 skylines/frontend/forms/pilot.py:90
@@ -1551,7 +1551,7 @@ msgid "You are now logged in. Welcome back, %(user)s!"
 msgstr "Du bist jetzt eingeloggt. Willkommen zurück, %(user)s!"
 
 #: skylines/frontend/views/login.py:60
-msgid "Login failed. Please check your eMail address."
+msgid "Login failed. Please check your email address."
 msgstr "Login fehlgeschlagen. Bitte prüfe deine E-Mail-Adresse."
 
 #: skylines/frontend/views/login.py:61

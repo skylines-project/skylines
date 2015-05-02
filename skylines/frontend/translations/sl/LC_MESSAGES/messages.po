@@ -1541,7 +1541,7 @@ msgid "You are now logged in. Welcome back, %(user)s!"
 msgstr "Sedaj ste prijavljeni. Dobrodošli nazaj, %(user)s!"
 
 #: skylines/frontend/views/login.py:60
-msgid "Login failed. Please check your eMail address."
+msgid "Login failed. Please check your email address."
 msgstr "Prijava ni bila uspešna. Prosimo preverite vaš e-poštni naslov."
 
 #: skylines/frontend/views/login.py:61

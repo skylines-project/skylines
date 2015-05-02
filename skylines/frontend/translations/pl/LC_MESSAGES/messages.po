@@ -1380,7 +1380,7 @@ msgid "You are now logged in. Welcome back, %(user)s!"
 msgstr "Jesteś teraz zalogowany. Witaj ponownie, %(user)s!"
 
 #: skylines/frontend/views/login.py:60
-msgid "Login failed. Please check your eMail address."
+msgid "Login failed. Please check your email address."
 msgstr "Logowanie nieudane. Sprawdź adres e-mail."
 
 #: skylines/frontend/views/login.py:61
@@ -1488,7 +1488,7 @@ msgstr ""
 #~ msgid "Your passwords do not match."
 #~ msgstr "Hasła nie pasują do siebie."
 
-#~ msgid "eMail Address"
+#~ msgid "Email Address"
 #~ msgstr "Adres e-mail"
 
 #~ msgid "Please enter your email address."
