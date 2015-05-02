@@ -164,7 +164,7 @@ class User(db.Model):
         return self._password
 
     @password.setter
-    def set_password(self, password):
+    def password(self, password):
         """Hash ``password`` on the fly and store its hashed version."""
         self._password = self._hash_password(password)
 
