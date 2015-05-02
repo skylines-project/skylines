@@ -25,6 +25,10 @@ class Location(object):
         return WKTElement(self.to_wkt(), srid=srid)
 
     def make_point(self, srid=4326):
+        """
+        :type srid: int or None
+        """
+
         point = db.func.ST_MakePoint(self.longitude, self.latitude)
         if srid:
             point = db.func.ST_SetSRID(point, srid)
