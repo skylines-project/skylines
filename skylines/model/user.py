@@ -31,7 +31,7 @@ class User(db.Model):
 
     id = db.Column(Integer, autoincrement=True, primary_key=True)
 
-    # eMail address and name of the user
+    # Email address and name of the user
 
     email_address = db.column_property(
         db.Column(Unicode(255)), comparator_factory=LowerCaseComparator)

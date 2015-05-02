@@ -1354,7 +1354,7 @@ msgid "You are now logged in. Welcome back, %(user)s!"
 msgstr "Olet nyt kirjautuneena sisään. Tervetuloa %(user)s!"
 
 #: skylines/frontend/views/login.py:60
-msgid "Login failed. Please check your eMail address."
+msgid "Login failed. Please check your email address."
 msgstr "Sisäänkirjautuminen epäonnistui. Tarkista sähköpostiosoite."
 
 #: skylines/frontend/views/login.py:61
@@ -1458,7 +1458,7 @@ msgstr "{num_missing} tiedostoa ({ids}) ei löytynyt tietokannasta."
 #~ msgid "Your passwords do not match."
 #~ msgstr "Salasanat eivät täsmää."
 
-#~ msgid "eMail Address"
+#~ msgid "Email Address"
 #~ msgstr "Sähköpostiosoite"
 
 #~ msgid "Please enter your email address."

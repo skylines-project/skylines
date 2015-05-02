@@ -1369,8 +1369,8 @@ msgid "You are now logged in. Welcome back, %(user)s!"
 msgstr "%(user)s vous êtes maintenant connecté !"
 
 #: skylines/frontend/views/login.py:60
-msgid "Login failed. Please check your eMail address."
-msgstr "La connexion a échoué. Veuillez vérifier votre adresse email."
+msgid "Login failed. Please check your email address."
+msgstr "La connexion a échoué. Veuillez vérifier votre adresse e-mail."
 
 #: skylines/frontend/views/login.py:61
 msgid "Login failed. Please check your password."
@@ -1477,11 +1477,11 @@ msgstr ""
 #~ msgid "Your passwords do not match."
 #~ msgstr "Vos mots de passe ne correspondent pas."
 
-#~ msgid "eMail Address"
-#~ msgstr "Adresse email"
+#~ msgid "Email Address"
+#~ msgstr "adresse e-mail"
 
 #~ msgid "Please enter your email address."
-#~ msgstr "Veuillez saisir votre adresse email."
+#~ msgstr "Veuillez saisir votre adresse e-mail."
 
 #~ msgid "First Name"
 #~ msgstr "Prénom"
@@ -1496,7 +1496,7 @@ msgstr ""
 #~ msgstr "Veuillez saisir votre nom de famille"
 
 #~ msgid "A pilot with this email address exists already."
-#~ msgstr "Un pilote ayant cette adresse email existe déjà."
+#~ msgstr "Un pilote ayant cette adresse e-mail existe déjà."
 
 #~ msgid "None"
 #~ msgstr "Aucun"
@@ -1525,7 +1525,7 @@ msgstr ""
 #~ msgid "Your callsign must not have more than 5 characters."
 #~ msgstr "Votre identifiant doit se limiter à 5 caractères."
 
-#~ msgid "There is no pilot with this email address."
+#~ msgid "There is no pilot with this Email Address."
 #~ msgstr "Il n'y a pas de pilote avec cette adresse."
 
 #~ msgid "Please enter your password."
