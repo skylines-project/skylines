@@ -148,12 +148,12 @@ msgstr ""
 
 #: skylines/frontend/forms/pilot.py:56 skylines/frontend/forms/pilot.py:89
 #: skylines/frontend/forms/pilot.py:121 skylines/frontend/forms/pilot.py:136
-msgid "eMail Address"
+msgid "Email Address"
 msgstr ""
 
 #: skylines/frontend/forms/pilot.py:57 skylines/frontend/forms/pilot.py:90
 #: skylines/frontend/forms/pilot.py:122 skylines/frontend/forms/pilot.py:137
-msgid "Please enter your email address."
+msgid "Please enter your Email Address."
 msgstr ""
 
 #: skylines/frontend/forms/pilot.py:60 skylines/frontend/forms/pilot.py:93
@@ -173,7 +173,7 @@ msgid "Please enter your last name."
 msgstr ""
 
 #: skylines/frontend/forms/pilot.py:69 skylines/frontend/forms/pilot.py:110
-msgid "A pilot with this email address exists already."
+msgid "A pilot with this Email Address exists already."
 msgstr ""
 
 #: skylines/frontend/forms/pilot.py:83
@@ -221,7 +221,7 @@ msgid "Your callsign must not have more than 5 characters."
 msgstr ""
 
 #: skylines/frontend/forms/pilot.py:128
-msgid "There is no pilot with this email address."
+msgid "There is no pilot with this Email Address."
 msgstr ""
 
 #: skylines/frontend/forms/pilot.py:141
@@ -1490,7 +1490,7 @@ msgid "You are now logged in. Welcome back, %(user)s!"
 msgstr ""
 
 #: skylines/frontend/views/login.py:60
-msgid "Login failed. Please check your eMail address."
+msgid "Login failed. Please check your Email Address."
 msgstr ""
 
 #: skylines/frontend/views/login.py:61

@@ -53,8 +53,8 @@ class ChangePasswordForm(Form):
 
 
 class CreateClubPilotForm(Form):
-    email_address = EmailField(l_('eMail Address'), validators=[
-        InputRequired(message=l_('Please enter your email address.')),
+    email_address = EmailField(l_('Email Address'), validators=[
+        InputRequired(message=l_('Please enter your Email Address.')),
         Email(),
     ])
     first_name = TextField(l_('First Name'), validators=[
@@ -66,7 +66,7 @@ class CreateClubPilotForm(Form):
 
     def validate_email_address(form, field):
         if User.exists(email_address=field.data):
-            raise ValidationError(l_('A pilot with this email address exists already.'))
+            raise ValidationError(l_('A pilot with this Email Address exists already.'))
 
 
 class CreatePilotForm(CreateClubPilotForm, ChangePasswordForm):
@@ -86,8 +86,8 @@ class TrackingDelaySelectField(SelectField):
 
 
 class EditPilotForm(Form):
-    email_address = EmailField(l_('eMail Address'), validators=[
-        InputRequired(message=l_('Please enter your email address.')),
+    email_address = EmailField(l_('Email Address'), validators=[
+        InputRequired(message=l_('Please enter your Email Address.')),
         Email(),
     ])
     first_name = TextField(l_('First Name'), validators=[
@@ -107,7 +107,7 @@ class EditPilotForm(Form):
             return
 
         if User.exists(email_address=field.data):
-            raise ValidationError(l_('A pilot with this email address exists already.'))
+            raise ValidationError(l_('A pilot with this Email Address exists already.'))
 
 
 class LiveTrackingSettingsForm(Form):
@@ -118,14 +118,14 @@ class LiveTrackingSettingsForm(Form):
 
 
 class RecoverStep1Form(Form):
-    email_address = EmailField(l_('eMail Address'), validators=[
-        InputRequired(message=l_('Please enter your email address.')),
+    email_address = EmailField(l_('Email Address'), validators=[
+        InputRequired(message=l_('Please enter your Email Address.')),
         Email(),
     ])
 
     def validate_email_address(form, field):
         if not User.exists(email_address=field.data):
-            raise ValidationError(l_('There is no pilot with this email address.'))
+            raise ValidationError(l_('There is no pilot with this Email Address.'))
 
 
 class RecoverStep2Form(ChangePasswordForm):
@@ -133,8 +133,8 @@ class RecoverStep2Form(ChangePasswordForm):
 
 
 class LoginForm(Form):
-    email_address = EmailField(l_('eMail Address'), validators=[
-        InputRequired(message=l_('Please enter your email address.')),
+    email_address = EmailField(l_('Email Address'), validators=[
+        InputRequired(message=l_('Please enter your Email Address.')),
         Email(),
     ])
     password = PasswordField(l_('Password'), validators=[

@@ -83,7 +83,7 @@ by calling `./manage.py db create` from the the command line.
 Since the [XCSoar](http://www.xcsoar.org/) project already has much of the code
 implemented that is necessary for flight analysis, it makes sense to reuse that
 code where applicable. *SkyLines* is using XCSoar as a python library. This library
-is build and installed by the `xcsoar` python package. To build this library you
+is built and installed by the `xcsoar` python package. To build this library you
 might have to install additional libraries like `libcurl`, which can be installed
 on Debian/Ubuntu by executing `apt-get install libcurl4-openssl-dev`. Please have
 a look into the XCSoar documentation if you need more help with the building process.

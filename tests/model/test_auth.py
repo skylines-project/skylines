@@ -26,6 +26,6 @@ class TestUser(ModelTest):
         assert self.obj.admin == False
 
     def test_getting_by_email(self):
-        """Users should be fetcheable by their email addresses"""
+        """Users should be fetcheable by their Email Addresses"""
         him = model.User.by_email_address(u"ignucius@example.org")
         assert him == self.obj

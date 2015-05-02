@@ -105,7 +105,7 @@ def password_recover():
 
     g.user.generate_recover_key(request.remote_addr)
     send_recover_mail(g.user)
-    flash('A password recovery email was sent to that user.')
+    flash('A password recovery Email was sent to that user.')
 
     db.session.commit()
 
