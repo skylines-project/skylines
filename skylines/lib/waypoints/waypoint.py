@@ -3,6 +3,8 @@ from skylines.model.geo import Location
 
 class Waypoint(Location):
     def __init__(self):
+        super(Waypoint, self).__init__()
+
         self.altitude = 0
         self.name = ''
         self.short_name = ''
