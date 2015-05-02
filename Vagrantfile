@@ -46,12 +46,17 @@ sudo -H python get-pip.py
 cd /vagrant
 sudo -H pip install -e .
 
-# create PostGIS database
+# create PostGIS databases
 
 sudo sudo -u postgres createuser -s vagrant
+
 sudo sudo -u postgres createdb skylines -O vagrant
 sudo sudo -u postgres psql -d skylines -c 'CREATE EXTENSION postgis;'
 sudo sudo -u postgres psql -d skylines -c 'CREATE EXTENSION fuzzystrmatch;'
+
+sudo sudo -u postgres createdb skylines_test -O vagrant
+sudo sudo -u postgres psql -d skylines_test -c 'CREATE EXTENSION postgis;'
+sudo sudo -u postgres psql -d skylines_test -c 'CREATE EXTENSION fuzzystrmatch;'
 
 ./manage.py db create
 
