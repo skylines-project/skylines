@@ -7,7 +7,6 @@ from skylines.app import SkyLines
 
 from tests import setup_db, teardown_db, clean_db
 from tests.data import users
-from tests.data.bootstrap import bootstrap
 
 
 @pytest.fixture(scope="function")
@@ -61,15 +60,6 @@ def db(db_schema, app):
         clean_db()
         yield db_schema
         db_schema.rollback()
-
-
-@pytest.yield_fixture(scope="function")
-def bootstrapped_db(db):
-    """Provides clean db, bootstrapped with some initial data  (see
-    `tests.bootstrap()`)
-    """
-    bootstrap()
-    yield db
 
 
 @pytest.yield_fixture(scope="function")
