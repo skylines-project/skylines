@@ -8,7 +8,7 @@ from tests.data.bootstrap import bootstrap
 
 
 @pytest.yield_fixture(scope="session")
-def frontend_app():
+def app():
     """Set up global front-end app for functional tests
 
     Initialized once per test-run
@@ -22,15 +22,15 @@ def frontend_app():
 
 
 @pytest.yield_fixture(scope="function")
-def frontend(frontend_app):
+def frontend(app):
     """Clean database before each frontend test
 
     This fixture uses frontend_app, suitable for functional tests.
     """
-    assert isinstance(frontend_app, SkyLines)
+    assert isinstance(app, SkyLines)
 
-    with frontend_app.app_context():
+    with app.app_context():
         clean_db()
         bootstrap()
-        yield frontend_app
+        yield app
         model.db.session.rollback()
