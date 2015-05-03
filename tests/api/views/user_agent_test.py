@@ -1,4 +1,4 @@
-from flask import Response
+from flask import Response, json
 from flask.testing import FlaskClient
 from werkzeug.datastructures import Headers
 
@@ -21,5 +21,8 @@ def test_missing_user_agent_returns_403(api, default_headers):
 
     response = api.get('/', headers=default_headers)
     assert isinstance(response, Response)
-
     assert response.status_code == 403
+
+    json_data = json.loads(response.data)
+    assert isinstance(json_data, dict)
+    assert 'User-Agent header' in json_data.get('message')
