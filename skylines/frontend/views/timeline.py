@@ -26,10 +26,7 @@ def index():
     page = request.args.get('page', type=int, default=1)
     per_page = request.args.get('per_page', type=int, default=50)
 
-    query = query.limit(per_page)
-    query = query.offset((page - 1) * per_page)
-
-    events = query.all()
+    events = query.limit(per_page).offset((page - 1) * per_page).all()
     events_count = len(events)
 
     if request.args.get('grouped', True, type=str_to_bool):
