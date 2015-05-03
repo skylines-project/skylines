@@ -27,8 +27,8 @@ def client(app):
     return app.test_client()
 
 
-@pytest.yield_fixture(scope="function")
+@pytest.fixture(scope="function")
 def default_headers():
     headers = Headers()
     headers.add('User-Agent', 'py.test')
-    yield headers
+    return headers
