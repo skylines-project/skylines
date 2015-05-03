@@ -1,3 +1,4 @@
+import random
 import pytest
 from werkzeug.datastructures import Headers
 
@@ -7,6 +8,16 @@ from skylines.app import SkyLines
 
 from tests import setup_app, setup_db, teardown_db, clean_db
 from tests.data.bootstrap import bootstrap
+
+
+@pytest.fixture(scope="function")
+def seeded_random():
+    """
+    Calls random.seed() with a constant to ensure that random always returns
+    the same results.
+    """
+
+    random.seed(1234)
 
 
 @pytest.yield_fixture(scope="session")
