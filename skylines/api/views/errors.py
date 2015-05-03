@@ -3,7 +3,11 @@ from .json import jsonify
 
 
 def register(app):
-    """ Register error handlers on the given app """
+    """
+    Register error handlers on the given app
+
+    :type app: flask.Flask
+    """
 
     @app.errorhandler(400)
     @app.errorhandler(404)
