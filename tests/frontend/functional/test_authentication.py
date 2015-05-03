@@ -1,63 +1,61 @@
 # -*- coding: utf-8 -*-
 
-from . import TestController
+
+def login(browser, email, password):
+    form = browser.getForm(index=2)
+    form.getControl(name='email_address').value = email
+    form.getControl(name='password').value = password
+    form.submit()
 
 
-class TestAuthentication(TestController):
-    """ Tests for the default authentication setup. """
+def test_forced_login(browser):
+    """Anonymous users are forced to login
 
-    def login(self, email, password):
-        form = self.browser.getForm(index=2)
-        form.getControl(name='email_address').value = email
-        form.getControl(name='password').value = password
-        form.submit()
+    Test that anonymous users are automatically redirected to the login
+    form when authorization is denied. Next, upon successful login they
+    should be redirected to the initially requested page.
 
-    def test_forced_login(self):
-        """Anonymous users are forced to login
+    """
+    # Requesting a protected area
+    browser.open('/flights/upload/')
+    assert browser.url.startswith('http://localhost/login')
+    assert '</i> Logout' not in browser.contents
 
-        Test that anonymous users are automatically redirected to the login
-        form when authorization is denied. Next, upon successful login they
-        should be redirected to the initially requested page.
+    login(browser, u'max+skylines@blarg.de', 'test')
 
-        """
-        # Requesting a protected area
-        self.browser.open('/flights/upload/')
-        assert self.browser.url.startswith('http://localhost/login')
-        assert '</i> Logout' not in self.browser.contents
+    # Being redirected to the initially requested page:
+    assert '</i> Logout' in browser.contents
+    assert browser.url.startswith('http://localhost/flights/upload/'), \
+        browser.url
 
-        self.login(u'max+skylines@blarg.de', 'test')
 
-        # Being redirected to the initially requested page:
-        assert '</i> Logout' in self.browser.contents
-        assert self.browser.url.startswith('http://localhost/flights/upload/'), \
-            self.browser.url
+def test_voluntary_login(browser):
+    """Voluntary logins must work correctly"""
 
-    def test_voluntary_login(self):
-        """Voluntary logins must work correctly"""
+    # Going to the login form voluntarily:
+    browser.open('/login')
+    assert '</i> Logout' not in browser.contents
 
-        # Going to the login form voluntarily:
-        self.browser.open('/login')
-        assert '</i> Logout' not in self.browser.contents
+    # Submitting the login form:
+    login(browser, u'max+skylines@blarg.de', 'test')
 
-        # Submitting the login form:
-        self.login(u'max+skylines@blarg.de', 'test')
+    # Being redirected to the home page:
+    assert '</i> Logout' in browser.contents
 
-        # Being redirected to the home page:
-        assert '</i> Logout' in self.browser.contents
 
-    def test_logout(self):
-        """Logouts must work correctly"""
+def test_logout(browser):
+    """Logouts must work correctly"""
 
-        self.browser.open('/login')
+    browser.open('/login')
 
-        # Logging in voluntarily the quick way:
-        self.login(u'manager@somedomain.com', 'managepass')
+    # Logging in voluntarily the quick way:
+    login(browser, u'manager@somedomain.com', 'managepass')
 
-        # Check if the login succeeded
-        assert '</i> Logout' in self.browser.contents
+    # Check if the login succeeded
+    assert '</i> Logout' in browser.contents
 
-        # Logging out:
-        self.browser.open('/logout')
+    # Logging out:
+    browser.open('/logout')
 
-        # Finally, redirected to the home page:
-        assert '</i> Logout' not in self.browser.contents
+    # Finally, redirected to the home page:
+    assert '</i> Logout' not in browser.contents
