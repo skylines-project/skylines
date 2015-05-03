@@ -1362,6 +1362,19 @@ msgstr ""
 msgid "Your flight(s) have been successfully updated."
 msgstr ""
 
+#: skylines/frontend/views/users.py:98
+msgid "SkyLines password recovery"
+msgstr ""
+
+#: skylines/frontend/views/users.py:104
+msgid ""
+"Hi %(user)s, \"
+"you have asked to recover your password (from IP %(remote_address)s). To enter a new "
+"password, click on the following link: \n\n"
+"%(url)s \n\n"
+"The SkyLines Team"
+msgstr ""
+
 #: skylines/frontend/views/users.py:116
 msgid ""
 "The mail server is currently not reachable. Please try again later or "

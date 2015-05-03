@@ -10,8 +10,13 @@ DEBUG_TB_INTERCEPT_REDIRECTS = False
 DEBUG = True
 SECRET_KEY = 'skylines'
 
-SMTP_SERVER = 'localhost'
-EMAIL_FROM = 'no-reply@skylines.aero'
+MAIL_SERVER = 'localhost'
+MAIL_PORT = 25
+MAIL_USE_TLS = False
+MAIL_USE_SSL = False
+MAIL_USERNAME = None
+MAIL_PASSWORD = None
+MAIL_DEFAULT_SENDER = 'no-reply@skylines.aero'
 
 """
 # Logging handlers (disabled in DEBUG mode)

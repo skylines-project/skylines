@@ -48,6 +48,12 @@ class SkyLines(Flask):
         self.assets = Environment(self)
         self.assets.load_bundles('skylines.frontend.assets.bundles')
 
+    def add_email(self):
+        """ Create and attach Mail extension """
+        from skylines.worker.mail import mail
+        mail.init_app(self)
+        return mail
+
     def add_tg2_compat(self):
         from skylines.lib import helpers
 
@@ -217,4 +223,5 @@ def create_combined_app(*args, **kw):
 
 def create_celery_app(*args, **kw):
     app = create_app('skylines.worker', *args, **kw)
+    app.add_email()
     return app.add_celery()
