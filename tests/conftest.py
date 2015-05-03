@@ -61,7 +61,7 @@ def db(db_schema, app):
         db_schema.rollback()
 
 
-@pytest.yield_fixture(scope="function")
+@pytest.fixture(scope="function")
 def test_admin(db):
     """
     Creates a test admin
@@ -69,10 +69,10 @@ def test_admin(db):
     user = users.test_admin()
     db.add(user)
     db.commit()
-    yield user
+    return user
 
 
-@pytest.yield_fixture(scope="function")
+@pytest.fixture(scope="function")
 def test_user(db):
     """
     Creates a single test user
@@ -80,4 +80,4 @@ def test_user(db):
     user = users.test_user()
     db.add(user)
     db.commit()
-    yield user
+    return user
