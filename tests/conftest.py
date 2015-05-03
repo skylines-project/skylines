@@ -65,7 +65,7 @@ def db(db_schema, app):
 @pytest.yield_fixture(scope="function")
 def test_admin(db):
     """
-    Creates a single test user
+    Creates a test admin
     """
     user = users.test_admin()
     db.add(user)
