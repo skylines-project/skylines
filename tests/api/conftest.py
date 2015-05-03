@@ -7,16 +7,15 @@ from skylines.app import SkyLines
 from tests import setup_dirs
 
 
-@pytest.yield_fixture(scope="session")
+@pytest.fixture(scope="session")
 def app():
     """Set up global front-end app for functional tests
 
     Initialized once per test-run
     """
     app = create_api_app(config.TESTING_CONF_PATH)
-    with app.app_context():
-        setup_dirs(app)
-        yield app
+    setup_dirs(app)
+    return app
 
 
 @pytest.fixture(scope="function")
