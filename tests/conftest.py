@@ -96,3 +96,15 @@ def test_user(db_session):
     db_session.add(user)
     db_session.commit()
     return user
+
+
+@pytest.fixture(scope="function")
+def test_users(db_session):
+    """
+    Creates 50 test users
+    """
+    _users = users.test_users()
+    for user in _users:
+        db_session.add(user)
+    db_session.commit()
+    return _users
