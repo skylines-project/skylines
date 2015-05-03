@@ -14,6 +14,7 @@ def register(app):
     from .airports import airports_blueprint
     from .airspace import airspace_blueprint
     from .mapitems import mapitems_blueprint
+    from .users import users
     from .waves import waves_blueprint
 
     @app.before_request
@@ -50,3 +51,4 @@ def register(app):
     app.register_blueprint(airspace_blueprint, url_prefix='/airspace')
     app.register_blueprint(mapitems_blueprint, url_prefix='/mapitems')
     app.register_blueprint(waves_blueprint, url_prefix='/mountain_wave_project')
+    app.register_blueprint(users, url_prefix='/users')
