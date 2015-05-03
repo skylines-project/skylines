@@ -10,6 +10,7 @@ def register(app):
     """
 
     @app.errorhandler(400)
+    @app.errorhandler(403)
     @app.errorhandler(404)
     @app.errorhandler(500)
     def handle_http_error(e):

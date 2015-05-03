@@ -1,11 +1,11 @@
 from flask import request
+from werkzeug.exceptions import Forbidden
 from werkzeug.useragents import UserAgent
 from .errors import register as register_error_handlers
 from .airports import airports_blueprint
 from .airspace import airspace_blueprint
 from .mapitems import mapitems_blueprint
 from .waves import waves_blueprint
-from .json import jsonify
 
 
 def register(app):
@@ -22,9 +22,8 @@ def register(app):
         assert isinstance(user_agent, UserAgent)
 
         if not user_agent.string:
-            return jsonify({
-                'message': 'You don\'t have the permission to access the API with a User-Agent header.',
-            }, status=403)
+            description = 'You don\'t have the permission to access the API with a User-Agent header.'
+            raise Forbidden(description)
 
     register_error_handlers(app)
 
