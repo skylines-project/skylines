@@ -73,6 +73,17 @@ def bootstrapped_db(db):
 
 
 @pytest.yield_fixture(scope="function")
+def test_admin(db):
+    """
+    Creates a single test user
+    """
+    user = users.test_admin()
+    db.add(user)
+    db.commit()
+    yield user
+
+
+@pytest.yield_fixture(scope="function")
 def test_user(db):
     """
     Creates a single test user

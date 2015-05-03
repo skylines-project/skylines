@@ -1,7 +1,4 @@
 # -*- coding: utf-8 -*-
-import pytest
-
-pytestmark = pytest.mark.usefixtures('bootstrapped_db')
 
 
 def login(browser, email, password):
@@ -11,7 +8,7 @@ def login(browser, email, password):
     form.submit()
 
 
-def test_forced_login(browser):
+def test_forced_login(browser, test_user):
     """Anonymous users are forced to login
 
     Test that anonymous users are automatically redirected to the login
@@ -24,7 +21,7 @@ def test_forced_login(browser):
     assert browser.url.startswith('http://localhost/login')
     assert '</i> Logout' not in browser.contents
 
-    login(browser, u'max+skylines@blarg.de', 'test')
+    login(browser, test_user.email_address, test_user.original_password)
 
     # Being redirected to the initially requested page:
     assert '</i> Logout' in browser.contents
@@ -32,7 +29,7 @@ def test_forced_login(browser):
         browser.url
 
 
-def test_voluntary_login(browser):
+def test_voluntary_login(browser, test_user):
     """Voluntary logins must work correctly"""
 
     # Going to the login form voluntarily:
@@ -40,19 +37,19 @@ def test_voluntary_login(browser):
     assert '</i> Logout' not in browser.contents
 
     # Submitting the login form:
-    login(browser, u'max+skylines@blarg.de', 'test')
+    login(browser, test_user.email_address, test_user.original_password)
 
     # Being redirected to the home page:
     assert '</i> Logout' in browser.contents
 
 
-def test_logout(browser):
+def test_logout(browser, test_admin):
     """Logouts must work correctly"""
 
     browser.open('/login')
 
     # Logging in voluntarily the quick way:
-    login(browser, u'manager@somedomain.com', 'managepass')
+    login(browser, test_admin.email_address, test_admin.original_password)
 
     # Check if the login succeeded
     assert '</i> Logout' in browser.contents
