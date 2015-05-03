@@ -2,14 +2,11 @@ import pytest
 
 from flask import g
 
-import config
-from skylines import create_app
 import skylines.lib.formatter.units as units
 
 
 @pytest.yield_fixture(scope="module", autouse=True)
-def setup_app():
-    app = create_app(config_file=config.TESTING_CONF_PATH)
+def setup_app(app):
     app.add_babel()
     with app.test_request_context():
         g.current_user = None
