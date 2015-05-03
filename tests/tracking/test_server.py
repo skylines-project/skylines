@@ -9,13 +9,11 @@ from skylines.tracking.crc import set_crc, check_crc
 from datetime import datetime
 from sqlalchemy.exc import SQLAlchemyError
 
-pytestmark = pytest.mark.usefixtures("bootstrapped_db")
-
 HOST_PORT = ('127.0.0.1', 5597)
 
 
 @pytest.yield_fixture(scope='function')
-def server(app):
+def server(app, db):
     _server.TrackingServer.__init__ = Mock(return_value=None)
     server = _server.TrackingServer()
     server.app = app
@@ -61,13 +59,13 @@ def test_ping(server):
     assert server.socket.sendto.called
 
 
-def test_ping_with_key(server):
+def test_ping_with_key(server, test_user):
     """ Tracking server can query by tracking key """
 
     # Create fake ping message
     ping_id = 42
     message = struct.pack('!IHHQHHI', _server.MAGIC, 0, _server.TYPE_PING,
-                          123456, ping_id, 0, 0)
+                          test_user.tracking_key, ping_id, 0, 0)
     message = set_crc(message)
 
     # Create mockup function
@@ -169,11 +167,11 @@ def test_empty_tracking_key(server):
     assert TrackingFix.query().count() == 0
 
 
-def test_empty_fix(server):
+def test_empty_fix(server, test_user):
     """ Tracking server accepts empty fixes """
 
     # Create fake fix message
-    message = create_fix_message(123456, 0)
+    message = create_fix_message(test_user.tracking_key, 0)
 
     utcnow_return_value = datetime(year=2005, month=4, day=13)
     with patch('skylines.tracking.server.datetime') as datetime_mock:
@@ -204,7 +202,7 @@ def test_empty_fix(server):
     assert fix.engine_noise_level is None
 
 
-def test_real_fix(server):
+def test_real_fix(server, test_user):
     """ Tracking server accepts real fixes """
 
     utcnow_return_value = datetime(year=2013, month=1, day=1,
@@ -214,7 +212,7 @@ def test_real_fix(server):
     now = utcnow_return_value
     now_s = ((now.hour * 60) + now.minute) * 60 + now.second
     message = create_fix_message(
-        123456, now_s * 1000, latitude=52.7, longitude=7.52,
+        test_user.tracking_key, now_s * 1000, latitude=52.7, longitude=7.52,
         track=234, ground_speed=33.25, airspeed=32., altitude=1234,
         vario=2.25, enl=10)
 
@@ -246,14 +244,14 @@ def test_real_fix(server):
     assert fix.engine_noise_level == 10
 
 
-def test_failing_fix(server):
+def test_failing_fix(server, test_user):
     """ Tracking server handles SQLAlchemyError gracefully """
 
     # Mock the transaction commit to fail
     commitmock = Mock(side_effect=SQLAlchemyError())
     with patch.object(db.session, 'commit', commitmock):
         # Create fake fix message
-        message = create_fix_message(123456, 0)
+        message = create_fix_message(test_user.tracking_key, 0)
 
         # Send fake ping message
         server.handle(message, HOST_PORT)

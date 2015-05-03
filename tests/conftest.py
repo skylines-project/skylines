@@ -6,6 +6,7 @@ from skylines import model, create_app
 from skylines.app import SkyLines
 
 from tests import setup_db, teardown_db, clean_db
+from tests.data import users
 from tests.data.bootstrap import bootstrap
 
 
@@ -69,3 +70,14 @@ def bootstrapped_db(db):
     """
     bootstrap()
     yield db
+
+
+@pytest.yield_fixture(scope="function")
+def test_user(db):
+    """
+    Creates a single test user
+    """
+    user = users.test_user()
+    db.add(user)
+    db.commit()
+    yield user
