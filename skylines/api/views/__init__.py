@@ -16,7 +16,7 @@ def register(app):
     @app.before_request
     def require_user_agent():
         """
-        API requests require a ``User-Agent` header
+        API requests require a ``User-Agent`` header
         """
         user_agent = request.user_agent
         assert isinstance(user_agent, UserAgent)
