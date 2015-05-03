@@ -2,10 +2,8 @@ import pytest
 from zope.testbrowser.wsgi import Browser
 
 import config
-from skylines import model, create_frontend_app
-from skylines.app import SkyLines
-from tests import setup_app, setup_db, teardown_db, clean_db
-from tests.data.bootstrap import bootstrap
+from skylines import create_frontend_app
+from tests import setup_app, setup_db, teardown_db
 
 
 @pytest.yield_fixture(scope="session")
@@ -23,23 +21,8 @@ def app():
 
 
 @pytest.yield_fixture(scope="function")
-def frontend(app):
-    """Clean database before each frontend test
-
-    This fixture uses frontend_app, suitable for functional tests.
-    """
-    assert isinstance(app, SkyLines)
-
-    with app.app_context():
-        clean_db()
-        bootstrap()
-        yield app
-        model.db.session.rollback()
-
-
-@pytest.yield_fixture(scope="function")
-def browser(frontend):
+def browser(app):
     """
     A ``zope.testbrowser.wsgi.Browser`` instance for integration testing.
     """
-    yield Browser('http://localhost/', wsgi_app=frontend.wsgi_app)
+    yield Browser('http://localhost/', wsgi_app=app.wsgi_app)

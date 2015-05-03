@@ -4,6 +4,8 @@ from io import BytesIO
 import pytest
 from skylines.model import db, User
 
+pytestmark = pytest.mark.usefixtures('db')
+
 HERE = os.path.dirname(__file__)
 DATADIR = os.path.join(HERE, '..', '..', 'data')
 
