@@ -6,6 +6,10 @@ from .waves import waves_blueprint
 
 
 def register(app):
+    """
+    :param flask.Flask app: a Flask app
+    """
+
     register_error_handlers(app)
 
     app.register_blueprint(airports_blueprint, url_prefix='/airports')
