@@ -47,8 +47,8 @@ def db(db_schema, app):
     """
     with app.app_context():
         clean_db()
-        yield model.db.session
-        model.db.session.rollback()
+        yield db_schema
+        db_schema.rollback()
 
 
 @pytest.yield_fixture(scope="function")
@@ -57,7 +57,7 @@ def bootstraped_db(db):
     `tests.bootstrap()`)
     """
     bootstrap()
-    yield model.db.session
+    yield db
 
 
 @pytest.yield_fixture(scope="session")
