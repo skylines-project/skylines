@@ -1,4 +1,7 @@
+import os
 import random
+import shutil
+
 import pytest
 
 import config
@@ -26,6 +29,18 @@ def app():
     Initialized with testing config file.
     """
     yield create_app(config_file=config.TESTING_CONF_PATH)
+
+
+@pytest.fixture(scope="function")
+def files_folder(app):
+    """
+    Creates a clean upload folder
+    """
+    filesdir = app.config['SKYLINES_FILES_PATH']
+    if os.path.exists(filesdir):
+        shutil.rmtree(filesdir)
+
+    os.makedirs(filesdir)
 
 
 @pytest.yield_fixture(scope="session")

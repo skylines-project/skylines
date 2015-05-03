@@ -3,7 +3,6 @@ from zope.testbrowser.wsgi import Browser
 
 import config
 from skylines import create_frontend_app
-from tests import setup_dirs
 
 
 @pytest.fixture(scope="session")
@@ -12,9 +11,7 @@ def app():
 
     Initialized once per test-run
     """
-    app = create_frontend_app(config.TESTING_CONF_PATH)
-    setup_dirs(app)
-    return app
+    return create_frontend_app(config.TESTING_CONF_PATH)
 
 
 @pytest.fixture(scope="function")

@@ -1,6 +1,4 @@
 """Unit and functional test suite for SkyLines."""
-import os
-import shutil
 
 from skylines.model import db
 
@@ -10,13 +8,6 @@ __all__ = ['setup_db', 'setup_app', 'teardown_db']
 def setup_db():
     """Method used to build a database"""
     db.create_all()
-
-
-def setup_dirs(app):
-    filesdir = app.config['SKYLINES_FILES_PATH']
-    if os.path.exists(filesdir):
-        shutil.rmtree(filesdir)
-    os.makedirs(filesdir)
 
 
 def teardown_db():

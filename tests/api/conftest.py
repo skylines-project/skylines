@@ -4,7 +4,6 @@ from werkzeug.datastructures import Headers
 import config
 from skylines import create_api_app
 from skylines.app import SkyLines
-from tests import setup_dirs
 
 
 @pytest.fixture(scope="session")
@@ -13,9 +12,7 @@ def app():
 
     Initialized once per test-run
     """
-    app = create_api_app(config.TESTING_CONF_PATH)
-    setup_dirs(app)
-    return app
+    return create_api_app(config.TESTING_CONF_PATH)
 
 
 @pytest.fixture(scope="function")
