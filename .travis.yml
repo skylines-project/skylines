@@ -9,6 +9,8 @@ services:
   - postgresql
   - redis
 
+cache: pip
+
 install:
   # Install SkyLines Python dependencies
   - pip install -e .
