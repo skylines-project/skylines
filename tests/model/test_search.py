@@ -37,7 +37,7 @@ def test_escaping():
     assert escape_tokens(['hello _!']) == ['hello \\_!']
 
 
-def test_search(bootstrapped_db):
+def test_search(test_user, test_admin):
     assert search('example').count() == 2
     assert search('user').count() == 1
     assert search('man').count() == 1
