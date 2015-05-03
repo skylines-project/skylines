@@ -1,7 +1,5 @@
 # -*- coding: utf-8 -*-
 
-import pytest
-
 from skylines.lib import base36
 
 
@@ -29,7 +27,3 @@ def test_decoding():
     assert base36.decode('1A') == 36 + 10
     assert base36.decode('A0') == 36 * 10
     assert base36.decode('100') == 36 * 36
-
-
-if __name__ == "__main__":
-    pytest.main(__file__)

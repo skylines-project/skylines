@@ -1,5 +1,4 @@
 import os
-import pytest
 from subprocess import CalledProcessError, check_output as run
 from glob import glob
 
@@ -41,7 +40,3 @@ def test_gjslint(path):
     except OSError:
         raise OSError('Failed to run gjslint. Please check that you have '
                       'installed it properly.')
-
-
-if __name__ == "__main__":
-    pytest.main(__file__)

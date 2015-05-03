@@ -257,6 +257,3 @@ class TrackingServerTest(TestCase):
         # Check if the message was properly received
         assert TrackingFix.query().count() == 0
         assert commitmock.called
-
-if __name__ == "__main__":
-    pytest.main(__file__)

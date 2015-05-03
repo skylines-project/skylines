@@ -1,4 +1,3 @@
-import pytest
 from subprocess import CalledProcessError, check_output as run
 
 FLAKE8_COMMAND = 'flake8'
@@ -23,7 +22,3 @@ def test_flake8(folder):
     except OSError:
         raise OSError('Failed to run flake8. Please check that you have '
                       'installed it properly.')
-
-
-if __name__ == "__main__":
-    pytest.main(__file__)

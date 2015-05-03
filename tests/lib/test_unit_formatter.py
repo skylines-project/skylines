@@ -51,7 +51,3 @@ def test_altitude_format():
     assert units.format_altitude(0) == '0 m'
     assert units.format_altitude(432) == '432 m'
     assert units.format_altitude(10, 1) == '10.0 m'
-
-
-if __name__ == "__main__":
-    pytest.main(__file__)

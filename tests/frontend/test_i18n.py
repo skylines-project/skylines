@@ -1,7 +1,6 @@
 import os
 from glob import glob
 from babel.messages.pofile import read_po
-import pytest
 
 TRANSLATION_PATH = os.path.join('skylines', 'frontend', 'translations')
 
@@ -40,7 +39,3 @@ def test_pofile(language):
                 print str(message.string) + '\n\n'
 
             raise AssertionError("There are errors in the translation files. Please check the captured output.")
-
-
-if __name__ == "__main__":
-    pytest.main(__file__)

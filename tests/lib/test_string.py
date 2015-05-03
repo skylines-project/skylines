@@ -42,7 +42,3 @@ def test_import_alnum():
 
     with pytest.raises(AssertionError): import_alnum(u'abc def')
     with pytest.raises(AssertionError): import_alnum(None)
-
-
-if __name__ == "__main__":
-    pytest.main(__file__)

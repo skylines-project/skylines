@@ -1,7 +1,5 @@
 # -*- coding: utf-8 -*-
 
-import pytest
-
 import datetime
 from skylines.lib.igc import read_igc_headers
 
@@ -66,7 +64,3 @@ def test_glider_information():
 
     assert 'cid' in headers
     assert headers['cid'] == 'TH'
-
-
-if __name__ == "__main__":
-    pytest.main(__file__)
