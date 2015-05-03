@@ -1,53 +1,63 @@
 import os
 from io import BytesIO
 
-from . import TestController
+import pytest
 from skylines.model import db, User
 
 HERE = os.path.dirname(__file__)
 DATADIR = os.path.join(HERE, '..', '..', 'data')
 
 
-class TestUpload(TestController):
-    def setup(self):
-        self.bill = User(first_name='bill', email_address='bill@example.com',
-                         password='pass')
-        db.session.add(self.bill)
+@pytest.fixture(scope='function')
+def bill(app):
+    bill = User(first_name='bill',
+                email_address='bill@example.com',
+                password='pass')
+
+    with app.app_context():
+        db.session.add(bill)
         db.session.commit()
-        self.login('bill@example.com', 'pass')
 
-    def login(self, email, password):
-        form = self.browser.getForm(index=1)
-        form.getControl(name='email_address').value = email
-        form.getControl(name='password').value = password
-        form.submit()
+    return bill
 
-    def test_upload_broken_igc(self):
-        b = self.browser
-        b.open('/flights/upload')
 
-        # we should be logged in now
-        assert 'IGC or ZIP file(s)' in b.contents
+@pytest.fixture(scope='function')
+def logged_in_browser(browser, bill):
+    form = browser.getForm(index=1)
+    form.getControl(name='email_address').value = bill.email_address
+    form.getControl(name='password').value = 'pass'
+    form.submit()
 
-        b.getControl('IGC or ZIP file(s)').add_file(BytesIO('broken'),
-                                                    'text/plain',
-                                                    '/tmp/broken.igc')
-        b.getControl('Upload').click()
-        assert 'No flight was saved.' in b.contents
+    return browser
 
-    def test_upload_single(self):
-        assert self.bill.id is not None
-        b = self.browser
-        b.open('/flights/upload')
 
-        # we should be logged in now
-        assert 'IGC or ZIP file(s)' in b.contents
+def test_upload_broken_igc(logged_in_browser):
+    b = logged_in_browser
+    b.open('/flights/upload')
 
-        f_igc = open(os.path.join(DATADIR, 'simple.igc'))
-        b.getControl('IGC or ZIP file(s)').add_file(f_igc,
-                                                    'text/plain',
-                                                    '/tmp/simple.igc')
+    # we should be logged in now
+    assert 'IGC or ZIP file(s)' in b.contents
 
-        b.getControl('Upload').click()
+    b.getControl('IGC or ZIP file(s)').add_file(BytesIO('broken'),
+                                                'text/plain',
+                                                '/tmp/broken.igc')
+    b.getControl('Upload').click()
+    assert 'No flight was saved.' in b.contents
 
-        assert 'Your flights have been saved.' in b.contents
+
+def test_upload_single(logged_in_browser, bill):
+    assert bill.id is not None
+    b = logged_in_browser
+    b.open('/flights/upload')
+
+    # we should be logged in now
+    assert 'IGC or ZIP file(s)' in b.contents
+
+    f_igc = open(os.path.join(DATADIR, 'simple.igc'))
+    b.getControl('IGC or ZIP file(s)').add_file(f_igc,
+                                                'text/plain',
+                                                '/tmp/simple.igc')
+
+    b.getControl('Upload').click()
+
+    assert 'Your flights have been saved.' in b.contents

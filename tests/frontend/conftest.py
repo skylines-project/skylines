@@ -1,4 +1,5 @@
 import pytest
+from zope.testbrowser.wsgi import Browser
 
 import config
 from skylines import model, create_frontend_app
@@ -34,3 +35,8 @@ def frontend(app):
         bootstrap()
         yield app
         model.db.session.rollback()
+
+
+@pytest.yield_fixture(scope="function")
+def browser(frontend):
+    yield Browser('http://localhost/', wsgi_app=frontend.wsgi_app)
