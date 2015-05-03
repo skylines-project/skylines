@@ -17,8 +17,14 @@ def register(app):
         if not isinstance(e, HTTPException):
             e = InternalServerError()
 
+        data = getattr(e, 'data', None)
+        if data:
+            message = data['message']
+        else:
+            message = e.description
+
         return jsonify({
-            'message': e.description,
+            'message': message,
         }, status=e.code)
 
     @app.errorhandler(TypeError)
