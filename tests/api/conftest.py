@@ -2,10 +2,9 @@ import pytest
 from werkzeug.datastructures import Headers
 
 import config
-from skylines import model, create_api_app
+from skylines import create_api_app
 from skylines.app import SkyLines
-from tests import setup_app, setup_db, teardown_db, clean_db
-from tests.data.bootstrap import bootstrap
+from tests import setup_app, setup_db, teardown_db
 
 
 @pytest.yield_fixture(scope="session")
@@ -22,19 +21,13 @@ def app():
         teardown_db()
 
 
-@pytest.yield_fixture(scope="function")
+@pytest.fixture(scope="function")
 def client(app):
-    """Clean database before each api test
-
-    This fixture uses api_app, suitable for functional tests.
+    """
+    A ``flask.testing.FlaskClient`` for API integration testing.
     """
     assert isinstance(app, SkyLines)
-
-    with app.app_context():
-        clean_db()
-        bootstrap()
-        yield app.test_client()
-        model.db.session.rollback()
+    return app.test_client()
 
 
 @pytest.yield_fixture(scope="function")
