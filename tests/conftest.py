@@ -44,7 +44,7 @@ def files_folder(app):
 
 
 @pytest.yield_fixture(scope="session")
-def db_schema(app):
+def db(app):
     """Creates clean database schema and drops it on teardown
 
     Note, that this is a session scoped fixture, it will be executed only once
@@ -55,12 +55,12 @@ def db_schema(app):
 
     with app.app_context():
         setup_db()
-        yield model.db.session
+        yield model.db
         teardown_db()
 
 
 @pytest.yield_fixture(scope="function")
-def db(db_schema, app):
+def db_session(db, app):
     """Provides clean database before each test. After each test,
     session.rollback() is issued.
 
@@ -72,27 +72,27 @@ def db(db_schema, app):
 
     with app.app_context():
         clean_db()
-        yield db_schema
-        db_schema.rollback()
+        yield db.session
+        db.session.rollback()
 
 
 @pytest.fixture(scope="function")
-def test_admin(db):
+def test_admin(db_session):
     """
     Creates a test admin
     """
     user = users.test_admin()
-    db.add(user)
-    db.commit()
+    db_session.add(user)
+    db_session.commit()
     return user
 
 
 @pytest.fixture(scope="function")
-def test_user(db):
+def test_user(db_session):
     """
     Creates a single test user
     """
     user = users.test_user()
-    db.add(user)
-    db.commit()
+    db_session.add(user)
+    db_session.commit()
     return user

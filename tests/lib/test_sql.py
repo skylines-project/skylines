@@ -13,7 +13,7 @@ class ExampleTable(db.Model):
     uni = Column(Unicode(32))
 
 
-@pytest.mark.usefixtures("db")
+@pytest.mark.usefixtures("db_session")
 class TestSqlLib:
 
     def setup(self):

@@ -13,7 +13,7 @@ HOST_PORT = ('127.0.0.1', 5597)
 
 
 @pytest.yield_fixture(scope='function')
-def server(app, db):
+def server(app, db_session):
     _server.TrackingServer.__init__ = Mock(return_value=None)
     server = _server.TrackingServer()
     server.app = app

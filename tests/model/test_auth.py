@@ -12,10 +12,10 @@ attrs = dict(
 
 
 @pytest.fixture(scope='function')
-def test_user(db):
+def test_user(db_session):
     obj = User(**attrs)
-    db.add(obj)
-    db.commit()
+    db_session.add(obj)
+    db_session.commit()
     return obj
 
 
