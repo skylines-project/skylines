@@ -3,7 +3,6 @@ import os
 import shutil
 
 from skylines.model import db
-from tests.data.bootstrap import bootstrap
 
 __all__ = ['setup_db', 'setup_app', 'teardown_db']
 
@@ -35,9 +34,3 @@ def clean_db():
     """
     for table in reversed(db.metadata.sorted_tables):
         db.session.execute(table.delete())
-
-
-def clean_db_and_bootstrap():
-    clean_db()
-    bootstrap()
-    db.session.commit()
