@@ -39,4 +39,7 @@ def frontend(app):
 
 @pytest.yield_fixture(scope="function")
 def browser(frontend):
+    """
+    A ``zope.testbrowser.wsgi.Browser`` instance for integration testing.
+    """
     yield Browser('http://localhost/', wsgi_app=frontend.wsgi_app)
