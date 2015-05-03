@@ -57,10 +57,10 @@ def register_user(browser, email, first_name, last_name,
 
 
 def expect_error(browser, response,
-                 email='expect_error@skylines-project.org',
-                 first_name='Functional',
-                 last_name='Test',
-                 password='lambda',
+                 email=u'expect_error@skylines-project.org',
+                 first_name=u'Functional',
+                 last_name=u'Test',
+                 password=u'lambda',
                  verify_password=None,
                  check_user_exists=True):
     form = open_and_fill_register_form(
@@ -91,28 +91,28 @@ def test_registration(browser):
 def test_validation_errors(browser):
     """Validation errors are working as expected"""
 
-    expect_error(browser, 'Please enter your email address', email='')
-    expect_error(browser, 'Invalid email address', email='abc')
-    expect_error(browser, 'Invalid email address', email='abc@')
-    expect_error(browser, 'Invalid email address', email='abc@de')
-    expect_error(browser, 'Invalid email address', email='abc@de.')
+    expect_error(browser, 'Please enter your email address', email=u'')
+    expect_error(browser, 'Invalid email address', email=u'abc')
+    expect_error(browser, 'Invalid email address', email=u'abc@')
+    expect_error(browser, 'Invalid email address', email=u'abc@de')
+    expect_error(browser, 'Invalid email address', email=u'abc@de.')
 
-    expect_error(browser, 'Please enter your first name', first_name='')
-    expect_error(browser, 'Please enter your last name', last_name='')
+    expect_error(browser, 'Please enter your first name', first_name=u'')
+    expect_error(browser, 'Please enter your last name', last_name=u'')
 
     expect_error(browser, 'Your password must have at least 6 characters',
-                 password='abc')
+                 password=u'abc')
     expect_error(browser, 'Your passwords do not match',
-                 password='lambda',
-                 verify_password='lambda2')
+                 password=u'lambda',
+                 verify_password=u'lambda2')
 
 
 def test_duplicates(browser):
     """Duplicate mail addresses are rejected"""
-    email = 'test_duplicates@skylines-project.org'
+    email = u'test_duplicates@skylines-project.org'
     first_name = u'Duplicate'
     last_name = u'Test'
 
     register_user(browser, email, first_name, last_name, 'lambda')
     expect_error(browser, 'A pilot with this email address exists already.',
-                 email, first_name, last_name, 'lambda', check_user_exists=False)
+                 email, first_name, last_name, u'lambda', check_user_exists=False)
