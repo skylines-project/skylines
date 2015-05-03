@@ -26,9 +26,6 @@ def bootstrap():
         db.session.add(u1)
 
         db.session.commit()
-    except IntegrityError:
-        print 'Warning, there was a problem adding your auth data, it may have already been added:'
-        import traceback
-        print traceback.format_exc()
+    except IntegrityError, e:
+        print 'Warning, there was a problem adding your auth data, it may have already been added:', e
         db.session.rollback()
-        print 'Continuing with bootstrapping...'
