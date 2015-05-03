@@ -1,4 +1,5 @@
 from flask import request
+from webargs import Arg
 from werkzeug.exceptions import Forbidden
 from werkzeug.useragents import UserAgent
 
@@ -52,3 +53,14 @@ def register(app):
     app.register_blueprint(mapitems_blueprint, url_prefix='/mapitems')
     app.register_blueprint(waves_blueprint, url_prefix='/mountain_wave_project')
     app.register_blueprint(users, url_prefix='/users')
+
+
+pagination_args = {
+    'page': Arg(
+        int, default=1, location='query',
+        validate=lambda val: val > 0, error='Invalid "page" parameter'),
+
+    'per_page': Arg(
+        int, default=30, location='query',
+        validate=lambda val: val <= 100, error='Invalid "per_page" parameter'),
+}
