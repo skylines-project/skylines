@@ -20,11 +20,6 @@ def setup_dirs(app):
     os.makedirs(filesdir)
 
 
-def setup_app(app):
-    setup_db()
-    setup_dirs(app)
-
-
 def teardown_db():
     """Method used to destroy a database"""
     db.session.remove()
