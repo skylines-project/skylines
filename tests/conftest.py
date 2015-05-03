@@ -63,7 +63,7 @@ def db(db_schema, app):
 
 
 @pytest.yield_fixture(scope="function")
-def bootstraped_db(db):
+def bootstrapped_db(db):
     """Provides clean db, bootstrapped with some initial data  (see
     `tests.bootstrap()`)
     """

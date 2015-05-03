@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import pytest
 
-pytestmark = pytest.mark.usefixtures('bootstraped_db')
+pytestmark = pytest.mark.usefixtures('bootstrapped_db')
 
 
 def login(browser, email, password):

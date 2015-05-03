@@ -17,7 +17,7 @@ def search(text):
     return combined_search_query(MODELS, tokens)
 
 
-@pytest.mark.usefixtures("bootstraped_db")
+@pytest.mark.usefixtures("bootstrapped_db")
 class TestSearch:
 
     def test_tokenizer(self):

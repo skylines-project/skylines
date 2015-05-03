@@ -9,7 +9,7 @@ from skylines.tracking.crc import set_crc, check_crc
 from datetime import datetime
 from sqlalchemy.exc import SQLAlchemyError
 
-pytestmark = pytest.mark.usefixtures("bootstraped_db")
+pytestmark = pytest.mark.usefixtures("bootstrapped_db")
 
 HOST_PORT = ('127.0.0.1', 5597)
 
