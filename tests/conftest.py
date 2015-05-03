@@ -25,8 +25,7 @@ def app():
 
     Initialized with testing config file.
     """
-    app = create_app(config_file=config.TESTING_CONF_PATH)
-    yield app
+    yield create_app(config_file=config.TESTING_CONF_PATH)
 
 
 @pytest.yield_fixture(scope="session")
