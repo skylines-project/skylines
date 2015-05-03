@@ -3,7 +3,7 @@ from zope.testbrowser.wsgi import Browser
 
 import config
 from skylines import create_frontend_app
-from tests import setup_app, setup_db, teardown_db
+from tests import setup_dirs
 
 
 @pytest.yield_fixture(scope="session")
@@ -14,10 +14,8 @@ def app():
     """
     app = create_frontend_app(config.TESTING_CONF_PATH)
     with app.app_context():
-        setup_app(app)
-        setup_db()
+        setup_dirs(app)
         yield app
-        teardown_db()
 
 
 @pytest.yield_fixture(scope="function")
