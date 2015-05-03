@@ -2,6 +2,7 @@ import pytest
 
 import config
 from skylines import model, create_app, create_frontend_app
+from skylines.app import SkyLines
 
 from tests import setup_app, setup_db, teardown_db, clean_db
 from tests.data.bootstrap import bootstrap
@@ -30,6 +31,8 @@ def db_schema(app):
     and shared among all tests. Use `db` fixture to get clean database before
     each test.
     """
+    assert isinstance(app, SkyLines)
+
     with app.app_context():
         setup_db()
         yield model.db.session
@@ -45,6 +48,8 @@ def db(db_schema, app):
 
     Return sqlalchemy session.
     """
+    assert isinstance(app, SkyLines)
+
     with app.app_context():
         clean_db()
         yield db_schema
@@ -80,6 +85,8 @@ def frontend(frontend_app):
 
     This fixture uses frontend_app, suitable for functional tests.
     """
+    assert isinstance(frontend_app, SkyLines)
+
     with frontend_app.app_context():
         clean_db()
         bootstrap()
