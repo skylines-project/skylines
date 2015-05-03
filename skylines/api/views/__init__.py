@@ -1,17 +1,18 @@
 from flask import request
 from werkzeug.exceptions import Forbidden
 from werkzeug.useragents import UserAgent
-from .errors import register as register_error_handlers
-from .airports import airports_blueprint
-from .airspace import airspace_blueprint
-from .mapitems import mapitems_blueprint
-from .waves import waves_blueprint
 
 
 def register(app):
     """
     :param flask.Flask app: a Flask app
     """
+
+    from .errors import register as register_error_handlers
+    from .airports import airports_blueprint
+    from .airspace import airspace_blueprint
+    from .mapitems import mapitems_blueprint
+    from .waves import waves_blueprint
 
     @app.before_request
     def require_user_agent():
