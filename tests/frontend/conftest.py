@@ -17,9 +17,9 @@ def app():
     return app
 
 
-@pytest.yield_fixture(scope="function")
+@pytest.fixture(scope="function")
 def browser(app):
     """
     A ``zope.testbrowser.wsgi.Browser`` instance for integration testing.
     """
-    yield Browser('http://localhost/', wsgi_app=app.wsgi_app)
+    return Browser('http://localhost/', wsgi_app=app.wsgi_app)
