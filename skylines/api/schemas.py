@@ -96,6 +96,22 @@ airport_schema = AirportSchema()
 airport_list_schema = AirportSchema(only=('id', 'name', 'elevation', 'location'))
 
 
+class UserSchema(Schema):
+    id = fields.Integer()
+    name = fields.String()
+    first_name = fields.String()
+    last_name = fields.String()
+    email_address = fields.Email()
+    tracking_key = fields.Integer()
+    tracking_delay = fields.Integer()
+    tracking_call_sign = fields.String(attribute='tracking_callsign')
+    created_at = fields.DateTime(attribute='created')
+
+user_schema = UserSchema(exclude=('email_address', 'tracking_key'))
+user_list_schema = UserSchema(only=('id', 'name', 'first_name', 'last_name'))
+current_user_schema = UserSchema()
+
+
 class WaveSchema(Schema):
     name = fields.String()
     main_wind_direction = fields.Method('_wind_direction')
