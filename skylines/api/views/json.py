@@ -1,7 +1,7 @@
 from flask import request, json, current_app
 
 
-def jsonify(data, status=200):
+def jsonify(data, status=200, headers=None):
     if not isinstance(data, (dict, list)):
         raise TypeError
 
@@ -27,4 +27,4 @@ def jsonify(data, status=200):
         mimetype = 'application/json'
 
     return current_app.response_class(
-        content, mimetype=mimetype), status
+        content, mimetype=mimetype, headers=headers), status
