@@ -19,7 +19,7 @@ def test_user():
     u1 = User()
     u1.first_name = u'Example'
     u1.last_name = u'User'
-    u1.email_address = u'max+skylines@blarg.de'
+    u1.email_address = u'example@test.de'
     u1.password = u1.original_password = u'test'
     u1.tracking_key = 123456
     return u1
