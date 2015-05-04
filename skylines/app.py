@@ -169,7 +169,6 @@ def create_http_app(*args, **kw):
     app = create_app(*args, **kw)
 
     app.add_logging_handlers()
-    app.add_cache()
     app.add_celery()
 
     return app
