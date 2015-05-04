@@ -2,6 +2,8 @@ from flask import request
 from werkzeug.exceptions import Forbidden
 from werkzeug.useragents import UserAgent
 
+from skylines.api import auth
+
 
 def register(app):
     """
@@ -25,6 +27,8 @@ def register(app):
         if not user_agent.string:
             description = 'You don\'t have the permission to access the API with a User-Agent header.'
             raise Forbidden(description)
+
+    app.before_request(auth.check)
 
     register_error_handlers(app)
 
