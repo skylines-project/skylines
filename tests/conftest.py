@@ -9,7 +9,7 @@ from skylines import model, create_app
 from skylines.app import SkyLines
 
 from tests import setup_db, teardown_db, clean_db
-from tests.data import users, airspace
+from tests.data import users, airspace, airports
 
 
 @pytest.fixture(scope="function")
@@ -119,3 +119,14 @@ def test_airspace(db_session):
     db_session.add(test_airspace)
     db_session.commit()
     return test_airspace
+
+
+@pytest.fixture(scope="function")
+def test_airport(db_session):
+    """
+    Creates a single test airport
+    """
+    test_airport = airports.test_airport()
+    db_session.add(test_airport)
+    db_session.commit()
+    return test_airport
