@@ -4,6 +4,8 @@ from geoalchemy2.shape import to_shape
 from marshmallow import Schema as _Schema, fields, post_dump, ValidationError
 from shapely.geometry import Polygon, Point
 
+from skylines.lib.string import isnumeric
+
 
 class Schema(_Schema):
     class Meta:
@@ -92,3 +94,21 @@ class AirportSchema(Schema):
 
 airport_schema = AirportSchema()
 airport_list_schema = AirportSchema(only=('id', 'name', 'elevation', 'location'))
+
+
+class WaveSchema(Schema):
+    name = fields.String()
+    main_wind_direction = fields.Method('_wind_direction')
+
+    def _wind_direction(self, wave):
+        print wave
+
+        wind_direction = wave.main_wind_direction or ''
+        print 2
+        if isnumeric(wind_direction):
+            wind_direction += u'\u00B0'
+
+        print 3
+        return wind_direction
+
+wave_list_schema = WaveSchema()
