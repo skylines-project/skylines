@@ -100,15 +100,12 @@ class WaveSchema(Schema):
     name = fields.String()
     main_wind_direction = fields.Method('_wind_direction')
 
-    def _wind_direction(self, wave):
-        print wave
-
+    @staticmethod
+    def _wind_direction(wave):
         wind_direction = wave.main_wind_direction or ''
-        print 2
         if isnumeric(wind_direction):
             wind_direction += u'\u00B0'
 
-        print 3
         return wind_direction
 
 wave_list_schema = WaveSchema()
