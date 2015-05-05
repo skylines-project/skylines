@@ -45,6 +45,7 @@ setup(
         'pyproj==1.9.3',
         'gevent==1.0.1',
         'webargs==0.13.0',
+        'marshmallow==2.0.0b2',
     ],
     include_package_data=True,
     package_data={
