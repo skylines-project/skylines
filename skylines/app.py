@@ -193,6 +193,7 @@ def create_frontend_app(*args, **kw):
 
 def create_api_app(*args, **kw):
     app = create_http_app('skylines.api', *args, **kw)
+    app.config['JSON_SORT_KEYS'] = False
 
     import skylines.api.views
     skylines.api.views.register(app)
