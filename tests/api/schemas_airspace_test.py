@@ -12,14 +12,14 @@ def test_airspace_list_schema(test_airspace):
     assert isinstance(data, OrderedDict)
     assert data.keys() == [
         'name',
-        'airspace_class',
+        'class',
         'top',
         'base',
         'country',
     ]
 
     assert data['name'] == test_airspace.name
-    assert data['airspace_class'] == test_airspace.airspace_class
+    assert data['class'] == test_airspace.airspace_class
     assert data['top'] == test_airspace.top
     assert data['base'] == test_airspace.base
     assert data['country'] == test_airspace.country_code

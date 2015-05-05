@@ -352,7 +352,7 @@ slMapClickHandler = function(map, flight_display, settings) {
       table_body.append($(
           '<tr>' +
           '<td class="airspace_name">' + data[i]['name'] + '</td>' +
-          '<td class="airspace_class">' + data[i]['airspace_class'] + '</td>' +
+          '<td class="airspace_class">' + data[i]['class'] + '</td>' +
           '<td class="airspace_base">' + data[i]['base'] + '</td>' +
           '<td class="airspace_top">' + data[i]['top'] + '</td>' +
           '</tr>'
