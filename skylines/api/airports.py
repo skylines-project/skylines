@@ -1,3 +1,4 @@
+from skylines.api.schemas import airport_schema, airport_list_schema
 from skylines.model import Airport, Bounds
 
 
@@ -9,7 +10,8 @@ def get_airports_by_bbox(bbox):
     if bbox.get_size() > 20 * 20:
         raise ValueError('Requested `bbox` is too large.')
 
-    return map(airport_to_dict, Airport.by_bbox(bbox))
+    data, errors = airport_list_schema.dump(Airport.by_bbox(bbox), many=True)
+    return data
 
 
 def get_airport(id):
@@ -17,34 +19,5 @@ def get_airport(id):
     if not airport:
         raise KeyError('The requested airport was not found.')
 
-    return airport_to_dict(airport, short=False)
-
-
-def airport_to_dict(airport, short=True):
-    result = {
-        'id': airport.id,
-        'name': airport.name,
-        'elevation': airport.altitude,
-        'location': {
-            'latitude': airport.location.latitude,
-            'longitude': airport.location.longitude,
-        },
-    }
-
-    if not short:
-        result.update({
-            'icao': airport.icao,
-            'short_name': airport.short_name,
-            'country_code': airport.country_code,
-            'type': airport.type,
-            'runways': [{
-                'length': airport.runway_len,
-                'direction': airport.runway_dir,
-                'surface': airport.surface,
-            }],
-            'frequencies': [{
-                'frequency': airport.frequency,
-            }],
-        })
-
-    return result
+    data, errors = airport_schema.dump(airport)
+    return data
