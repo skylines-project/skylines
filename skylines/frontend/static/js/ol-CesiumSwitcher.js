@@ -1,4 +1,4 @@
-CESIUM_BASE_URL = "/cesium/Cesium/";
+CESIUM_BASE_URL = '/cesium/Cesium/';
 
 var CesiumSwitcher = function(opt_options) {
   var options = opt_options || {};
@@ -125,7 +125,10 @@ CesiumSwitcher.prototype.getMode = function() {
   return this.enabled;
 };
 
-
+/**
+ * @param {slFlight} flight
+ * @param {Array} fix_data
+ */
 CesiumSwitcher.prototype.showPlane = function(flight, fix_data) {
   var lonlat = ol.proj.transform([fix_data['lon'], fix_data['lat']],
                                  'EPSG:3857', 'EPSG:4326');
@@ -153,6 +156,9 @@ CesiumSwitcher.prototype.showPlane = function(flight, fix_data) {
 };
 
 
+/**
+ * @param {slFlight} flight
+ */
 CesiumSwitcher.prototype.hidePlane = function(flight) {
   if (flight.getPlane().entity) {
     flight.getPlane().entity.show = false;
