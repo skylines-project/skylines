@@ -90,7 +90,11 @@
     if (zoom > 10)
       map.getView().setZoom(10);
 
-    var map_click_handler = slMapClickHandler(map, null, {flight_info: false, location_info: true});
+    var map_click_handler = slMapClickHandler(map, null, {
+      flight_info: false,
+      location_info: true,
+      api_url: "{{ config.get('SKYLINES_API_URL') }}"
+    });
   });
 </script>
 {%- endif %}

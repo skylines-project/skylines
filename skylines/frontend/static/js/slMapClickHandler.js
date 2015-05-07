@@ -262,7 +262,7 @@ slMapClickHandler = function(map, flight_display, settings) {
    * @param {Number} lat Latitude.
    */
   function getLocationInfo(lon, lat) {
-    var req = $.ajax('/api/mapitems?lon=' + lon + '&lat=' + lat);
+    var req = $.ajax(settings.api_url + '/mapitems?lon=' + lon + '&lat=' + lat);
 
     req.done(function(data) {
       showLocationData(data);

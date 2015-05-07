@@ -163,7 +163,11 @@
 
     pinButton($("#pinned"), {{ flight.id }});
 
-    slMapClickHandler(map, flight_display, {flight_info: true, location_info: true});
+    slMapClickHandler(map, flight_display, {
+      flight_info: true,
+      location_info: true,
+      api_url: "{{ config.get('SKYLINES_API_URL') }}"
+    });
 
     var phase_highlighter = slPhaseHighlighter(sl_map,
                                                flight_display.getBaro(),
