@@ -10,11 +10,13 @@
  * @param {String} _elevations_t Google polyencoded string of elevation
  *   time values.
  * @param {String} _elevations_h Google polyencoded string of elevations.
+ * @param {Number} _geoid Approximate geoid height at the takeoff location
  * @param {Object=} opt_additional May contain additional information about
  *   the flight, e.g. registration number, callsign, ...
  */
 slFlight = function(_sfid, _lonlat, _time, _height, _enl,
-                    _elevations_t, _elevations_h, opt_additional) {
+                    _elevations_t, _elevations_h, _geoid,
+                    opt_additional) {
   var flight = {};
 
   var time;
@@ -30,6 +32,7 @@ slFlight = function(_sfid, _lonlat, _time, _height, _enl,
   var flot_enl = [];
   var flot_elev = [];
   var additional = opt_additional || {};
+  var geoid = _geoid;
 
   flight.init = function(_lonlat, _time, _height, _enl,
                          _elevations_t, _elevations_h) {
@@ -45,7 +48,7 @@ slFlight = function(_sfid, _lonlat, _time, _height, _enl,
       var point = ol.proj.transform([lonlat[i + 1], lonlat[i]],
                                     'EPSG:4326', 'EPSG:3857');
       geometry.appendCoordinate([point[0], point[1],
-                                 height[i / 2], time[i / 2]]);
+                                 height[i / 2] + geoid, time[i / 2]]);
     }
 
     var timeLength = time.length;
@@ -194,7 +197,7 @@ slFlight = function(_sfid, _lonlat, _time, _height, _enl,
     fix_data['heading'] = Math.atan2(_loc_next[0] - _loc_prev[0],
                                      _loc_next[1] - _loc_prev[1]);
 
-    fix_data['alt-msl'] = _loc_current[2];
+    fix_data['alt-msl'] = _loc_current[2] - geoid;
 
     var loc_prev = ol.proj.transform(_loc_prev, 'EPSG:3857', 'EPSG:4326');
     var loc_next = ol.proj.transform(_loc_next, 'EPSG:3857', 'EPSG:4326');
@@ -229,6 +232,10 @@ slFlight = function(_sfid, _lonlat, _time, _height, _enl,
 
   flight.getID = function() {
     return sfid;
+  };
+
+  flight.getGeoid = function() {
+    return geoid;
   };
 
   flight.init(_lonlat, _time, _height, _enl,

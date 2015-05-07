@@ -7,7 +7,8 @@ from sqlalchemy.sql.expression import and_
 from skylines.lib.dbutil import get_requested_record_list
 from skylines.lib.helpers import color
 from skylines.lib.xcsoar_ import FlightPathFix
-from skylines.model import User, TrackingFix
+from skylines.lib.geoid import egm96_height
+from skylines.model import User, TrackingFix, Location
 import xcsoar
 
 track_blueprint = Blueprint('track', 'skylines')
@@ -106,9 +107,12 @@ def _get_flight_path(pilot, threshold=0.001, last_update=None):
     fp_reduced = map(lambda line: FlightPathFix(*line), xcsoar_flight.path())
     elevations = xcsoar.encode([fix.elevation if fix.elevation is not None else UNKNOWN_ELEVATION for fix in fp_reduced], method="signed")
 
+    geoid_height = egm96_height(Location(latitude=fp[0].location['latitude'],
+                                         longitude=fp[0].location['longitude']))
+
     return dict(points=points,
                 barogram_t=barogram_t, barogram_h=barogram_h, enl=enl,
-                elevations=elevations)
+                elevations=elevations, geoid=geoid_height)
 
 
 @track_blueprint.route('/')
@@ -142,4 +146,5 @@ def json():
         barogram_h=trace['barogram_h'],
         elevations=trace['elevations'],
         enl=trace['enl'],
+        geoid=trace['geoid'],
         sfid=pilot.id)

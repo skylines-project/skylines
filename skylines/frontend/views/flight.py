@@ -17,6 +17,7 @@ from skylines.lib.helpers import format_time, format_decimal
 from skylines.lib.formatter import units
 from skylines.lib.datetime import from_seconds_of_day, to_seconds_of_day
 from skylines.lib.geo import METERS_PER_DEGREE
+from skylines.lib.geoid import egm96_height
 from skylines.model import (
     db, User, Flight, FlightPhase, Location, FlightComment,
     Notification, Event, FlightMeetings
@@ -109,11 +110,13 @@ def _get_flight_path(flight, threshold=0.001, max_points=3000):
     elevations_t, elevations_h = _get_elevations(flight)
     contest_traces = _get_contest_traces(flight)
 
+    geoid_height = egm96_height(flight.takeoff_location) if flight.takeoff_location else 0
+
     return dict(points=points,
                 barogram_t=barogram_t, barogram_h=barogram_h,
                 enl=enl, contests=contest_traces,
                 elevations_t=elevations_t, elevations_h=elevations_h,
-                sfid=flight.id)
+                sfid=flight.id, geoid=geoid_height)
 
 
 def _get_elevations(flight):
@@ -302,6 +305,7 @@ def json():
         elevations_t=trace['elevations_t'],
         elevations_h=trace['elevations_h'],
         sfid=g.flight.id,
+        geoid=trace['geoid'],
         additional=dict(
             registration=g.flight.registration,
             competition_id=g.flight.competition_id)))

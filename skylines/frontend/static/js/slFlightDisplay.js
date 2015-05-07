@@ -47,6 +47,8 @@ slFlightDisplay = function(_map, fix_table_placeholder, baro_placeholder) {
    */
   var play_button;
 
+  var cesium_switcher;
+
   /**
    * Default time - the time to set when no time is set
    * @type {!Number}
@@ -114,11 +116,14 @@ slFlightDisplay = function(_map, fix_table_placeholder, baro_placeholder) {
    * Adds the PlayButton to the map and activates all hover modes.
    */
   flight_display.init = function() {
-    var flight_path_layer = new ol.layer.Image({
-      source: new ol.source.ImageVector({
-        source: flights.getSource(),
-        style: style_function
-      }),
+    //var flight_path_layer = new ol.layer.Image({
+    //  source: new ol.source.ImageVector({
+    //    source: flights.getSource(),
+    //    style: style_function
+    //  }),
+    var flight_path_layer = new ol.layer.Vector({
+      source: flights.getSource(),
+      style: style_function,
       name: 'Flight',
       z_index: 50
     });
@@ -139,6 +144,9 @@ slFlightDisplay = function(_map, fix_table_placeholder, baro_placeholder) {
 
     map_icon_handler.setMode(true);
     baro.setHoverMode(true);
+
+    cesium_switcher = new CesiumSwitcher();
+    map.addControl(cesium_switcher);
 
     setupEvents();
   };
@@ -173,7 +181,8 @@ slFlightDisplay = function(_map, fix_table_placeholder, baro_placeholder) {
     flight = slFlight(data.sfid, data.points,
                       data.barogram_t, data.barogram_h,
                       data.enl,
-                      data.elevations_t, data.elevations_h, data.additional);
+                      data.elevations_t, data.elevations_h,
+                      data.geoid, data.additional);
 
     flight.setColor(data.additional.color ||
                     colors[flights.length() % colors.length]);
@@ -212,10 +221,12 @@ slFlightDisplay = function(_map, fix_table_placeholder, baro_placeholder) {
    */
   function setupEvents() {
     // Update the baro scale when the map has been zoomed/moved.
-    map.on('moveend', function(e) {
+    var update_baro_scale_on_moveend = function(e) {
       if (updateBaroScale())
         baro.draw();
-    });
+    };
+
+    map.on('moveend', update_baro_scale_on_moveend);
 
     // Set the time when the mouse hoves the map
     $(map_icon_handler).on('set_time', function(e, time) {
@@ -241,7 +252,11 @@ slFlightDisplay = function(_map, fix_table_placeholder, baro_placeholder) {
     // Hide the plane icon of a flight which is scheduled for removal.
     $(flights).on('preremove', function(e, flight) {
       // Hide plane to remove any additional related objects from the map
-      map_icon_handler.hidePlane(flight);
+      if (cesium_switcher.getMode()) {
+        cesium_switcher.hidePlane(flight);
+      } else {
+        map_icon_handler.hidePlane(flight);
+      }
     });
 
     // After a flight has been removed, remove highlights from the
@@ -309,7 +324,7 @@ slFlightDisplay = function(_map, fix_table_placeholder, baro_placeholder) {
     // Enable hover modes after stopping replay.
     $(play_button).on('stop', function(e) {
       // reenable mouse hovering
-      map_icon_handler.setMode(true);
+      if (!cesium_switcher.getMode()) map_icon_handler.setMode(true);
       baro.setHoverMode(true);
     });
 
@@ -344,6 +359,43 @@ slFlightDisplay = function(_map, fix_table_placeholder, baro_placeholder) {
       flight_display.setTime(time);
     }).on('mouseout', function(event) {
       flight_display.setTime(default_time);
+    });
+
+    $(cesium_switcher).on('cesium_enable', function(e) {
+      map.un('moveend', update_baro_scale_on_moveend);
+
+      if (!play_button.getMode()) {
+        // disable mouse hovering
+        map_icon_handler.setMode(false);
+      }
+
+      map_icon_handler.hideAllPlanes();
+
+      map.getLayers().getArray().forEach(function(e) {
+        if (e.get('name') == 'Contest') e.setVisible(false);
+      });
+
+      map.getLayers().getArray().forEach(function(e) {
+        if (!e.get('base_layer') && !(e instanceof ol.layer.Vector))
+          e.setVisible(false);
+      });
+
+      baro.clearTimeInterval();
+      baro.draw();
+    });
+
+    $(cesium_switcher).on('cesium_disable', function(e) {
+      // Update the baro scale when the map has been zoomed/moved.
+      map.on('moveend', update_baro_scale_on_moveend);
+
+      if (!play_button.getMode()) {
+        // enable mouse hovering
+        map_icon_handler.setMode(true);
+      }
+
+      map.getLayers().getArray().forEach(function(e) {
+        if (e.get('name') == 'Contest') e.setVisible(true);
+      });
     });
   }
 
@@ -407,7 +459,13 @@ slFlightDisplay = function(_map, fix_table_placeholder, baro_placeholder) {
       baro.clearTime();
 
       // remove plane icons from map
-      map_icon_handler.hideAllPlanes();
+      if (cesium_switcher.getMode()) {
+        flights.each(function(flight) {
+          cesium_switcher.hidePlane(flight);
+        });
+      } else {
+        map_icon_handler.hideAllPlanes();
+      }
 
       // remove data from fix-data table
       fix_table.clearAllFixes();
@@ -421,13 +479,21 @@ slFlightDisplay = function(_map, fix_table_placeholder, baro_placeholder) {
         var fix_data = flight.getFixData(time);
         if (!fix_data) {
           // update map
-          map_icon_handler.hidePlane(flight);
+          if (cesium_switcher.getMode()) {
+            cesium_switcher.hidePlane(flight);
+          } else {
+            map_icon_handler.hidePlane(flight);
+          }
 
           // update fix-data table
           fix_table.clearFix(flight.getID());
         } else {
           // update map
-          map_icon_handler.showPlane(flight, fix_data);
+          if (cesium_switcher.getMode()) {
+            cesium_switcher.showPlane(flight, fix_data);
+          } else {
+            map_icon_handler.showPlane(flight, fix_data);
+          }
 
           // update fix-data table
           fix_table.updateFix(flight.getID(), fix_data);
