@@ -14,14 +14,15 @@ bbox_args = {
 }
 
 
-@airports_blueprint.route('/')
+@airports_blueprint.route('/airports/')
+@airports_blueprint.route('/airports')
 @use_args(bbox_args)
 def list(args):
     airports = api.get_airports_by_bbox(args['bbox'])
     return jsonify(airports)
 
 
-@airports_blueprint.route('/<int:id>')
+@airports_blueprint.route('/airports/<int:id>')
 def details(id):
     airport = api.get_airport(id)
     return jsonify(airport)
