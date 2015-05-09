@@ -1,7 +1,7 @@
 import pytest
 from flask import Flask, request
 
-from skylines.middlewares import HTTPMethodOverrideMiddleware
+from skylines.api.middleware import HTTPMethodOverrideMiddleware
 
 
 @pytest.fixture
