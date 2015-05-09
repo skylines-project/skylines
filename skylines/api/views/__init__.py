@@ -30,6 +30,20 @@ def register(app):
 
     app.before_request(auth.check)
 
+    @app.after_request
+    def add_cors_headers(response):
+        if 'Origin' in request.headers:
+            response.headers.add('Access-Control-Allow-Origin', request.headers.get('Origin'))
+            response.headers.add('Access-Control-Allow-Credentials', 'true')
+
+            if 'Access-Control-Request-Methods' in request.headers:
+                response.headers.add('Access-Control-Allow-Methods', request.headers.get('Access-Control-Request-Methods'))
+
+            if 'Access-Control-Request-Headers' in request.headers:
+                response.headers.add('Access-Control-Allow-Headers', request.headers.get('Access-Control-Request-Headers'))
+
+        return response
+
     register_error_handlers(app)
 
     app.register_blueprint(airports_blueprint, url_prefix='/airports')
