@@ -69,6 +69,8 @@ def search_query(cls, tokens,
 
     return query
 
+db.Model.search_query = classmethod(search_query)
+
 
 def combined_search_query(models, tokens, include_misses=False, ordered=True):
     models, tokens = process_type_option(models, tokens)

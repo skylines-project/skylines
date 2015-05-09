@@ -2,9 +2,6 @@
 
 # flake8: noqa
 
-import skylines.model.base
-
-# Import your model modules here.
 from .aircraft_model import AircraftModel
 from .airport import Airport
 from .airspace import Airspace
