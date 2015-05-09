@@ -12,7 +12,8 @@ from skylines.api.views.json import jsonify
 users = Blueprint('users', 'skylines')
 
 
-@users.route('/', endpoint='list')
+@users.route('/users/')
+@users.route('/users', endpoint='list')
 @use_args(pagination_args)
 def _list(args):
     offset = (args['page'] - 1) * args['per_page']
@@ -24,7 +25,7 @@ def _list(args):
     return jsonify(result.data)
 
 
-@users.route('/<int:user_id>')
+@users.route('/users/<int:user_id>')
 def read(user_id):
     user = User.get(user_id)
     if user is None:

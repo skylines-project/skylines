@@ -54,7 +54,7 @@ def register(app):
     app.register_blueprint(mapitems_blueprint, url_prefix='/mapitems')
     app.register_blueprint(waves_blueprint, url_prefix='/mountain_wave_project')
     app.register_blueprint(user)
-    app.register_blueprint(users, url_prefix='/users')
+    app.register_blueprint(users)
 
 
 pagination_args = {
