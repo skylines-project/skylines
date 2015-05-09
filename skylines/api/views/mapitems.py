@@ -7,7 +7,8 @@ from .parser import parse_location
 mapitems_blueprint = Blueprint('mapitems', 'skylines')
 
 
-@mapitems_blueprint.route('/')
+@mapitems_blueprint.route('/mapitems/')
+@mapitems_blueprint.route('/mapitems')
 def list():
     location = parse_location(request.args)
     return jsonify({
