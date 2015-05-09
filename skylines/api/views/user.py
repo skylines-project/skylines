@@ -7,7 +7,8 @@ from skylines.api.views.json import jsonify
 user = Blueprint('user', 'skylines')
 
 
-@user.route('/')
+@user.route('/user/')
+@user.route('/user')
 @auth.required
 def read():
     result = current_user_schema.dump(g.user)
