@@ -519,7 +519,7 @@ msgstr "Ustvarjeno"
 #: skylines/frontend/templates/clubs/view.jinja:37
 #, python-format
 msgid "%(time_ago)s by %(creator)s"
-msgstr "%(time_ago)s od %(creator)"
+msgstr "%(time_ago)s od %(creator)s"
 
 #: skylines/frontend/templates/clubs/view.jinja:47
 msgid "Edit"
