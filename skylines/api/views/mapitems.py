@@ -8,8 +8,8 @@ mapitems_blueprint = Blueprint('mapitems', 'skylines')
 
 
 @mapitems_blueprint.route('/mapitems/')
-@mapitems_blueprint.route('/mapitems')
-def list():
+@mapitems_blueprint.route('/mapitems', endpoint='list')
+def _list():
     location = parse_location(request.args)
     return jsonify({
         'airspaces': api.get_airspaces_by_location(location),

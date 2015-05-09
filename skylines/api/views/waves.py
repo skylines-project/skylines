@@ -8,7 +8,7 @@ waves_blueprint = Blueprint('waves', 'skylines')
 
 
 @waves_blueprint.route('/mountain_wave_project/')
-@waves_blueprint.route('/mountain_wave_project')
-def list():
+@waves_blueprint.route('/mountain_wave_project', endpoint='list')
+def _list():
     location = parse_location(request.args)
     return jsonify(api.get_waves_by_location(location))
