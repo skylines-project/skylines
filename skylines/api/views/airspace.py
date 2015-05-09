@@ -7,7 +7,8 @@ from .parser import parse_location
 airspace_blueprint = Blueprint('airspace', 'skylines')
 
 
-@airspace_blueprint.route('/')
+@airspace_blueprint.route('/airspace/')
+@airspace_blueprint.route('/airspace')
 def list():
     location = parse_location(request.args)
     return jsonify(api.get_airspaces_by_location(location))
