@@ -1,9 +1,9 @@
+from flask import Flask
 import pytest
 from werkzeug.datastructures import Headers
 
 import config
 from skylines import create_api_app
-from skylines.app import SkyLines
 
 
 @pytest.fixture(scope="session")
@@ -20,7 +20,7 @@ def client(app):
     """
     A ``flask.testing.FlaskClient`` for API integration testing.
     """
-    assert isinstance(app, SkyLines)
+    assert isinstance(app, Flask)
     return app.test_client()
 
 
