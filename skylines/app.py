@@ -3,6 +3,8 @@ import config
 
 from flask import Flask, request, g
 
+from skylines.api.middleware import HTTPMethodOverrideMiddleware
+
 
 class SkyLines(Flask):
     def __init__(self, name='skylines', config_file=None, *args, **kw):
@@ -199,6 +201,8 @@ def create_frontend_app(*args, **kw):
 def create_api_app(*args, **kw):
     app = create_http_app('skylines.api', *args, **kw)
     app.config['JSON_SORT_KEYS'] = False
+
+    app.wsgi_app = HTTPMethodOverrideMiddleware(app.wsgi_app)
 
     import skylines.api.views
     skylines.api.views.register(app)
