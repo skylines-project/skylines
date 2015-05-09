@@ -1,5 +1,6 @@
 from flask.ext.script import Command, Option
-from skylines.model import db, TrackingFix
+from skylines.database import db
+from skylines.model import TrackingFix
 
 
 class Clear(Command):

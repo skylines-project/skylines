@@ -2,7 +2,7 @@ from datetime import datetime
 
 from sqlalchemy.types import Unicode, Integer, DateTime
 
-from skylines.model import db
+from skylines.database import db
 
 
 class FlightComment(db.Model):

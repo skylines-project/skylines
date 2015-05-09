@@ -1,7 +1,8 @@
 import pytest
 from mock import Mock, patch
 
-from skylines.model import db, TrackingFix
+from skylines.database import db
+from skylines.model import TrackingFix
 
 import struct
 from skylines.tracking import server as _server

@@ -1,7 +1,8 @@
 from flask.ext.script import Command, Option
 
 import re
-from skylines.model import db, AircraftModel
+from skylines.database import db
+from skylines.model import AircraftModel
 
 r = re.compile(r'^(.*?)\s*\.+[\.\s]*(\d+)\s*$')
 

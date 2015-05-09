@@ -12,7 +12,8 @@ from shapely.wkt import loads
 from shapely.geos import ReadingError
 from sqlalchemy.sql.expression import case
 from sqlalchemy import func
-from skylines.model import db, Airspace
+from skylines.database import db
+from skylines.model import Airspace
 from skylines.lib.geo import FEET_PER_METER
 
 airspace_re = re.compile(r'^([^#]{1}.*?)\s+(openair|sua)\s+(https?://.*|file://.*)')

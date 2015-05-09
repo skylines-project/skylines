@@ -1,7 +1,8 @@
 from flask.ext.script import Command, Option
 
 import math
-from skylines.model import db, MountainWaveProject
+from skylines.database import db
+from skylines.model import MountainWaveProject
 from skylines.lib.string import isnumeric
 from geoalchemy2.elements import WKTElement
 from geoalchemy2.shape import from_shape

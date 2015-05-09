@@ -7,7 +7,8 @@ from gevent.server import DatagramServer
 from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.sql.expression import or_
 
-from skylines.model import db, User, TrackingFix, Follower, Elevation
+from skylines.database import db
+from skylines.model import User, TrackingFix, Follower, Elevation
 from skylines.tracking.crc import check_crc, set_crc
 
 # More information about this protocol can be found in the XCSoar

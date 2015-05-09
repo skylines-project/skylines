@@ -7,7 +7,8 @@ from itertools import chain
 from collections import Counter
 
 from skylines.lib import base36
-from skylines.model import db, TrackingFix, User
+from skylines.database import db
+from skylines.model import TrackingFix, User
 
 
 class Export(Command):

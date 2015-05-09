@@ -7,10 +7,11 @@ from sqlalchemy.sql.expression import or_, and_
 from sqlalchemy.orm import joinedload, contains_eager
 from sqlalchemy.orm.util import aliased
 
+from skylines.database import db
 from skylines.lib.table_tools import Pager, Sorter
 from skylines.lib.dbutil import get_requested_record
 from skylines.model import (
-    db, User, Club, Flight, IGCFile, AircraftModel,
+    User, Club, Flight, IGCFile, AircraftModel,
     Airport, FlightComment,
     Notification, Event,
 )

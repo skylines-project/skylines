@@ -3,8 +3,9 @@ from sqlalchemy.sql.expression import and_, literal_column
 from shapely.geometry import MultiPoint
 from geoalchemy2.shape import from_shape
 
+from skylines.database import db
 from skylines.lib import files
-from skylines.model import db, Elevation, IGCFile, Location
+from skylines.model import Elevation, IGCFile, Location
 from xcsoar import Flight
 
 

@@ -22,7 +22,7 @@ class SkyLines(Flask):
 
     def add_sqlalchemy(self):
         """ Create and configure SQLAlchemy extension """
-        from skylines.model import db
+        from skylines.database import db
         db.init_app(self)
 
         from flask.ext.migrate import Migrate

@@ -1,11 +1,11 @@
 from flask.ext.script import Shell as BaseShell
 
 from flask import current_app
-from skylines import model
+from skylines import model, database
 
 
 def make_context():
-    return dict(app=current_app, model=model, db=model.db)
+    return dict(app=current_app, model=model, db=database.db)
 
 
 class Shell(BaseShell):

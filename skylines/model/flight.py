@@ -15,7 +15,7 @@ from geoalchemy2.types import Geometry
 from geoalchemy2.shape import to_shape, from_shape
 from shapely.geometry import LineString
 
-from skylines.model import db
+from skylines.database import db
 from skylines.lib.sql import _ST_Intersects, _ST_Contains
 
 from .geo import Location

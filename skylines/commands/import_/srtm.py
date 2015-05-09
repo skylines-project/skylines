@@ -7,7 +7,8 @@ import shutil
 import tempfile
 from glob import glob
 from flask import current_app
-from skylines.model import db
+
+from skylines.database import db
 
 
 class SRTM(Command):

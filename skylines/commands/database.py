@@ -1,7 +1,7 @@
 from flask.ext.script import Manager, prompt_bool
 from flask.ext.migrate import stamp
 
-from skylines.model import db
+from skylines.database import db
 from tests.data.bootstrap import bootstrap as _bootstrap
 
 manager = Manager(help="Perform database operations")

@@ -3,7 +3,7 @@ from sqlalchemy.orm import subqueryload, contains_eager
 from sqlalchemy.sql.expression import or_
 
 from skylines.lib.util import str_to_bool
-from skylines.model import db
+from skylines.database import db
 from skylines.model.event import Event, Notification, Flight, group_events
 from skylines.lib.decorators import login_required
 

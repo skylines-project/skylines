@@ -3,7 +3,7 @@ import shlex
 from sqlalchemy import literal_column, cast, desc, Unicode
 from sqlalchemy.dialects.postgresql import array
 
-from skylines.model import db
+from skylines.database import db
 
 
 PATTERNS = [

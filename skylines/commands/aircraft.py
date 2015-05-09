@@ -1,5 +1,6 @@
 from flask.ext.script import Manager
-from skylines.model import db, AircraftModel
+from skylines.database import db
+from skylines.model import AircraftModel
 
 manager = Manager(help="Perform operations related to the aircraft tables")
 

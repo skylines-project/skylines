@@ -1,7 +1,9 @@
 from flask.ext.script import Command, Option
 
 import sys
-from skylines.model import db, User, Club, IGCFile, Flight, TrackingFix
+
+from skylines.database import db
+from skylines.model import User, Club, IGCFile, Flight, TrackingFix
 
 
 class Merge(Command):

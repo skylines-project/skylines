@@ -2,7 +2,9 @@ import os
 from io import BytesIO
 
 import pytest
-from skylines.model import db, User
+
+from skylines.database import db
+from skylines.model import User
 
 pytestmark = pytest.mark.usefixtures('db_session', 'files_folder')
 

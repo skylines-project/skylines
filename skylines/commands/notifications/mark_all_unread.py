@@ -1,5 +1,6 @@
 from flask.ext.script import Command
-from skylines.model import db, Notification
+from skylines.database import db
+from skylines.model import Notification
 
 
 class MarkAllUnread(Command):

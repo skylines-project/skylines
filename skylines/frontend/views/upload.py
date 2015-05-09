@@ -10,6 +10,7 @@ from flask.ext.babel import _, lazy_gettext as l_
 from redis.exceptions import ConnectionError
 from werkzeug.exceptions import BadRequest
 
+from skylines.database import db
 from skylines.frontend.forms import UploadForm, UploadUpdateForm
 from skylines.lib import files
 from skylines.lib.util import pressure_alt_to_qnh_alt
@@ -17,7 +18,7 @@ from skylines.lib.decorators import login_required
 from skylines.lib.md5 import file_md5
 from skylines.lib.sql import query_to_sql
 from skylines.lib.xcsoar_ import flight_path, analyse_flight
-from skylines.model import db, User, Flight, IGCFile, Airspace
+from skylines.model import User, Flight, IGCFile, Airspace
 from skylines.model.airspace import get_airspace_infringements
 from skylines.model.event import create_flight_notifications
 from skylines.worker import tasks

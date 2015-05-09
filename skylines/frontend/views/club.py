@@ -1,9 +1,10 @@
 from flask import Blueprint, render_template, g, redirect, url_for, abort
 from sqlalchemy import func
 
+from skylines.database import db
 from skylines.frontend.forms import EditClubForm
 from skylines.lib.dbutil import get_requested_record
-from skylines.model import db, User, Club
+from skylines.model import User, Club
 
 club_blueprint = Blueprint('club', 'skylines')
 

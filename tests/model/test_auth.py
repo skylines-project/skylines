@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
-from skylines.model import db, User
+from skylines.database import db
+from skylines.model import User
 
 
 def test_no_permissions_by_default(test_user):

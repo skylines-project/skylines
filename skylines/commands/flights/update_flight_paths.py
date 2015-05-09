@@ -1,7 +1,8 @@
 from flask.ext.script import Command, Option
 
 from sqlalchemy.orm import joinedload
-from skylines.model import db, Flight
+from skylines.database import db
+from skylines.model import Flight
 
 from selector import selector_options, select
 

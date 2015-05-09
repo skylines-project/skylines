@@ -5,7 +5,7 @@ import shutil
 import pytest
 
 import config
-from skylines import model, create_app
+from skylines import database, create_app
 from skylines.app import SkyLines
 
 from tests import setup_db, teardown_db, clean_db
@@ -55,7 +55,7 @@ def db(app):
 
     with app.app_context():
         setup_db()
-        yield model.db
+        yield database.db
         teardown_db()
 
 

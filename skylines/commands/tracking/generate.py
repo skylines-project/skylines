@@ -4,7 +4,9 @@ import sys
 from math import sin
 from random import randint
 from time import sleep
-from skylines.model import db, TrackingFix
+
+from skylines.database import db
+from skylines.model import TrackingFix
 
 
 class Generate(Command):

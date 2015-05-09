@@ -1,8 +1,11 @@
+from collections import OrderedDict
+
 from sqlalchemy.types import Integer, DateTime
 from sqlalchemy.sql.expression import or_
 from sqlalchemy.orm import aliased
-from skylines.model import db, Flight
-from collections import OrderedDict
+
+from skylines.database import db
+from skylines.model import Flight
 
 
 class FlightMeetings(db.Model):

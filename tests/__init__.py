@@ -1,6 +1,6 @@
 """Unit and functional test suite for SkyLines."""
 
-from skylines.model import db
+from skylines.database import db
 
 __all__ = ['setup_db', 'setup_app', 'teardown_db']
 

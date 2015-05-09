@@ -5,7 +5,8 @@ from sqlalchemy import func
 from sqlalchemy.sql.expression import desc, over
 from sqlalchemy.orm import eagerload
 
-from skylines.model import db, User, Club, Flight, Airport
+from skylines.database import db
+from skylines.model import User, Club, Flight, Airport
 from skylines.lib.table_tools import Pager, Sorter
 
 ranking_blueprint = Blueprint('ranking', 'skylines')

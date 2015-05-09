@@ -2,7 +2,9 @@ from flask.ext.script import Command, Option
 
 from datetime import timedelta
 from itertools import chain
-from skylines.model import db, TrackingFix, User
+
+from skylines.database import db
+from skylines.model import TrackingFix, User
 
 
 class Stats(Command):

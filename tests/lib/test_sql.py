@@ -2,7 +2,7 @@ import pytest
 
 from sqlalchemy import Column, Integer, String, Unicode
 
-from skylines.model import db
+from skylines.database import db
 
 
 class ExampleTable(db.Model):

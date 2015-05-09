@@ -6,7 +6,7 @@ from sqlalchemy.types import Integer, Float, String, DateTime
 from sqlalchemy.sql.expression import cast
 from geoalchemy2.types import Geography, Geometry
 
-from skylines.model import db
+from skylines.database import db
 
 
 class MountainWaveProject(db.Model):

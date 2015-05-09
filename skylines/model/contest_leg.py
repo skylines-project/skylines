@@ -4,7 +4,7 @@ from sqlalchemy.types import String, Integer, Interval, DateTime
 from geoalchemy2.types import Geometry
 from geoalchemy2.shape import to_shape
 
-from skylines.model import db
+from skylines.database import db
 from .geo import Location
 
 

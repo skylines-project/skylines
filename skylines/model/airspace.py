@@ -9,7 +9,8 @@ from shapely.geometry import LineString, box
 import xcsoar
 
 from flask import current_app
-from skylines.model import db
+
+from skylines.database import db
 from skylines.lib.geo import FEET_PER_METER
 
 

@@ -2,7 +2,7 @@ from datetime import datetime
 
 from sqlalchemy.types import Integer, DateTime
 
-from skylines.model import db
+from skylines.database import db
 
 
 class Follower(db.Model):

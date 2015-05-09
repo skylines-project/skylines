@@ -6,7 +6,7 @@ from geoalchemy2.elements import WKTElement
 from geoalchemy2.types import Geometry, Geography
 from geoalchemy2.shape import to_shape
 
-from skylines.model import db
+from skylines.database import db
 from skylines.lib.geo import geographic_distance
 
 

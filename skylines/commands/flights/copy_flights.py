@@ -3,7 +3,8 @@ from flask.ext.script import Command, Option
 import os
 import shutil
 from flask import current_app
-from skylines.model import db, Flight, IGCFile
+from skylines.database import db
+from skylines.model import Flight, IGCFile
 
 from selector import selector_options, select
 

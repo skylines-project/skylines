@@ -3,7 +3,7 @@
 
 from tests.data.users import test_admin, test_user
 
-from skylines.model import db
+from skylines.database import db
 
 
 def bootstrap():

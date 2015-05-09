@@ -1,6 +1,7 @@
 from flask.ext.script import Command, Option
 from flask import current_app
-from skylines.model import db, Flight
+from skylines.database import db
+from skylines.model import Flight
 from skylines.worker import tasks
 
 from selector import selector_options, select

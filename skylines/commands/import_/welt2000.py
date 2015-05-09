@@ -1,6 +1,7 @@
 from flask.ext.script import Command, Option
 
-from skylines.model import db, Airport
+from skylines.database import db
+from skylines.model import Airport
 from skylines.lib.waypoints.welt2000 import get_database
 from datetime import datetime
 from sqlalchemy.sql.expression import or_, and_

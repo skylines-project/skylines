@@ -9,6 +9,7 @@ from sqlalchemy.sql.expression import func
 from geoalchemy2.shape import to_shape
 from datetime import timedelta
 
+from skylines.database import db
 from skylines.frontend.forms import ChangePilotsForm, ChangeAircraftForm
 from skylines.lib import files
 from skylines.lib.dbutil import get_requested_record_list
@@ -19,7 +20,7 @@ from skylines.lib.datetime import from_seconds_of_day, to_seconds_of_day
 from skylines.lib.geo import METERS_PER_DEGREE
 from skylines.lib.geoid import egm96_height
 from skylines.model import (
-    db, User, Flight, FlightPhase, Location, FlightComment,
+    User, Flight, FlightPhase, Location, FlightComment,
     Notification, Event, FlightMeetings
 )
 from skylines.model.event import create_flight_comment_notifications

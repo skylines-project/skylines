@@ -2,9 +2,10 @@ from __future__ import absolute_import
 from celery.utils.log import get_task_logger
 from sqlalchemy.sql.expression import and_, or_
 
+from skylines.database import db
 from skylines.lib.xcsoar_ import analysis
 from skylines.worker.celery import celery
-from skylines.model import db, Flight, FlightPathChunks, FlightMeetings
+from skylines.model import Flight, FlightPathChunks, FlightMeetings
 
 logger = get_task_logger(__name__)
 

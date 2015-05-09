@@ -3,7 +3,7 @@ from itertools import chain
 
 from sqlalchemy.types import Integer, DateTime
 
-from skylines.model import db
+from skylines.database import db
 from .user import User
 from .club import Club
 from .follower import Follower

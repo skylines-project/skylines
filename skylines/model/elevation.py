@@ -1,7 +1,7 @@
 from sqlalchemy.types import Integer
 from geoalchemy2.types import Raster
 
-from skylines.model import db
+from skylines.database import db
 
 
 class Elevation(db.Model):

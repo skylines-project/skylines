@@ -1,6 +1,7 @@
 from flask.ext.script import Command, Option
 
-from skylines.model import db, Flight, IGCFile
+from skylines.database import db
+from skylines.model import Flight, IGCFile
 from skylines.lib import files
 
 from selector import selector_options, select

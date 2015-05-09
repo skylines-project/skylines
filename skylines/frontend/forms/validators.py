@@ -1,7 +1,8 @@
 from wtforms.validators import ValidationError
 from sqlalchemy.sql.expression import or_
 
-from skylines.model import db, Flight
+from skylines.database import db
+from skylines.model import Flight
 
 
 class CompareTo(object):
