@@ -1,6 +1,6 @@
 // Ol3-Cesium. See https://github.com/openlayers/ol3-cesium/
 // License: https://github.com/openlayers/ol3-cesium/blob/master/LICENSE
-// Version: v1.1-44-ga69152c
+// Version: v1.4
 
 (function(){var h,k=this;function l(a){return void 0!==a}
 function n(a){var b=typeof a;if("object"==b)if(a){if(a instanceof Array)return"array";if(a instanceof Object)return b;var c=Object.prototype.toString.call(a);if("[object Window]"==c)return"object";if("[object Array]"==c||"number"==typeof a.length&&"undefined"!=typeof a.splice&&"undefined"!=typeof a.propertyIsEnumerable&&!a.propertyIsEnumerable("splice"))return"array";if("[object Function]"==c||"undefined"!=typeof a.call&&"undefined"!=typeof a.propertyIsEnumerable&&!a.propertyIsEnumerable("call"))return"function"}else return"null";
@@ -75,4 +75,4 @@ h.ca=function(a,b){if(!this.m){ac(this.r);var c=this.e.ellipsoid,d=this.c.camera
 V.prototype.getAltitude=V.prototype.J;V.prototype.lookAt=V.prototype.U;V.prototype.updateView=V.prototype.q;x("olcs.core.computePixelSizeAtCoordinate",vb);x("olcs.core.applyHeightOffsetToGeometry",wb);x("olcs.core.rotateAroundAxis",xb);x("olcs.core.setHeadingUsingBottomCenter",yb);x("olcs.core.pickOnTerrainOrEllipsoid",Eb);x("olcs.core.pickBottomPoint",Fb);x("olcs.core.pickCenterPoint",Gb);x("olcs.core.computeSignedTiltAngleOnGlobe",Hb);x("olcs.core.computeAngleToZenith",zb);
 x("olcs.core.lookAt",Kb);x("olcs.core.extentToRectangle",Lb);x("olcs.core.tileLayerToImageryLayer",Mb);x("olcs.core.updateCesiumLayerProperties",Nb);x("olcs.core.ol4326CoordinateToCesiumCartesian",S);x("olcs.core.ol4326CoordinateArrayToCsCartesians",Ob);x("olcs.core.olCircleGeometryToCesium",Qb);x("olcs.core.olLineStringGeometryToCesium",Rb);x("olcs.core.olPolygonGeometryToCesium",Tb);x("olcs.core.olPointGeometryToCesium",Ub);x("olcs.core.olMultiGeometryToCesium",Vb);
 x("olcs.core.olGeometry4326TextPartToCesium",Pb);x("olcs.core.olStyleToCesium",Sb);x("olcs.core.computePlainStyle",tb);x("olcs.core.olFeatureToCesium",R);x("olcs.core.olVectorLayerToCesium",Xb);x("olcs.DragBox",X);X.prototype.setScene=X.prototype.G;X.prototype.listen=X.prototype.h;x("olcs.OLCesium",$);$.prototype.getCamera=$.prototype.K;$.prototype.getOlMap=$.prototype.O;$.prototype.getCesiumScene=$.prototype.L;$.prototype.getEnabled=$.prototype.N;$.prototype.setEnabled=$.prototype.Z;
-$.prototype.warmUp=$.prototype.ca;x("olcs.VectorSynchronizer",Z);U.prototype.convert=U.prototype.b;})();
+$.prototype.warmUp=$.prototype.ca;x("olcs.RasterSynchronizer",Y);x("olcs.VectorSynchronizer",Z);U.prototype.convert=U.prototype.b;})();
