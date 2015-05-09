@@ -224,4 +224,5 @@ def create_combined_app(*args, **kw):
 
 def create_celery_app(*args, **kw):
     app = create_app('skylines.worker', *args, **kw)
-    return app.add_celery()
+    app.add_celery()
+    return app
