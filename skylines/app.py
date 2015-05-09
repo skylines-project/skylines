@@ -157,11 +157,16 @@ Message:
         celery.init_app(self)
         return celery
 
+    def initialize_lib(self):
+        from skylines.lib.geoid import load_geoid
+        load_geoid(self)
+
 
 def create_app(*args, **kw):
     app = SkyLines(*args, **kw)
     app.add_sqlalchemy()
     app.add_cache()
+    app.initialize_lib()
     return app
 
 
