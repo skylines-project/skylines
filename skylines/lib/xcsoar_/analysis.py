@@ -439,7 +439,7 @@ def run_analyse_flight(flight,
         fp = flight_path(filename, add_elevation=True, max_points=None)
 
     if len(fp) < 2:
-        return None
+        return None, None
 
     xcsoar_flight = xcsoar.Flight(fp)
 
