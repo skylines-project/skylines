@@ -237,7 +237,14 @@ def index_post(form):
 
         fp = flight_path(flight.igc_file, add_elevation=True, max_points=None)
 
-        if not analyse_flight(flight, fp=fp):
+        analyzed = False
+        try:
+            analyse_flight(flight, fp=fp)
+            analyzed = True
+        except:
+            current_app.logger.exception('analyse_flight() raised an exception')
+
+        if not analyzed:
             files.delete_file(filename)
             flights.append((name, None, UploadStatus.PARSER_ERROR, str(prefix), None, None, None, None))
             continue
