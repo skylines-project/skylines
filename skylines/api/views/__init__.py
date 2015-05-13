@@ -17,6 +17,7 @@ def register(app):
     from .mapitems import mapitems_blueprint
     from .users import users
     from .user import user
+    from .upload import upload_blueprint
     from .waves import waves_blueprint
 
     @app.before_request
@@ -55,6 +56,7 @@ def register(app):
     app.register_blueprint(waves_blueprint)
     app.register_blueprint(user)
     app.register_blueprint(users)
+    app.register_blueprint(upload_blueprint)
 
 
 pagination_args = {
