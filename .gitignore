@@ -7,23 +7,23 @@ __pycache__/
 *.so
 
 # Distribution / packaging
-.Python
-env/
-build/
-develop-eggs/
-dist/
-downloads/
-eggs/
-.eggs/
-lib/
-lib64/
-parts/
-sdist/
-var/
-*.egg-info/
-.installed.cfg
-*.egg
-webassets
+/.Python
+/env/
+/build/
+/develop-eggs/
+/dist/
+/downloads/
+/eggs/
+/.eggs/
+/lib/
+/lib64/
+/parts/
+/sdist/
+/var/
+/*.egg-info/
+/.installed.cfg
+/*.egg
+/webassets
 
 # PyInstaller
 #  Usually these files are written by a python script from a template
@@ -53,10 +53,10 @@ coverage.xml
 *.log
 
 # Sphinx documentation
-docs/_build/
+/docs/_build/
 
 # PyBuilder
-target/
+/target/
 
 # Vagrant
-.vagrant
+/.vagrant
