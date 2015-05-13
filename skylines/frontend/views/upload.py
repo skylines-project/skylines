@@ -18,6 +18,7 @@ from skylines.lib.decorators import login_required
 from skylines.lib.md5 import file_md5
 from skylines.lib.sql import query_to_sql
 from skylines.lib.xcsoar_ import flight_path, analyse_flight
+from skylines.lib.upload import UploadStatus
 from skylines.model import User, Flight, IGCFile, Airspace
 from skylines.model.airspace import get_airspace_infringements
 from skylines.model.event import create_flight_notifications
@@ -37,15 +38,6 @@ except ImportError:
 import xcsoar
 
 upload_blueprint = Blueprint('upload', 'skylines')
-
-
-class UploadStatus(Enum):
-    SUCCESS = 0
-    DUPLICATE = 1  # _('Duplicate file')
-    MISSING_DATE = 2  # _('Date missing in IGC file')
-    PARSER_ERROR = 3  # _('Failed to parse file')
-    NO_FLIGHT = 4  # _('No flight found in file')
-    FLIGHT_IN_FUTURE = 5  # _('Date of flight in future')
 
 
 def IterateFiles(name, f):
