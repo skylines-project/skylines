@@ -60,3 +60,6 @@ coverage.xml
 
 # Vagrant
 /.vagrant
+
+# htdocs
+/htdocs
