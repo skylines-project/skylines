@@ -1,7 +1,6 @@
 from datetime import datetime
 from tempfile import TemporaryFile
 from zipfile import ZipFile
-from enum import Enum
 import hashlib
 import os
 
@@ -15,11 +14,10 @@ from skylines.frontend.forms import UploadForm, UploadUpdateForm
 from skylines.lib import files
 from skylines.lib.util import pressure_alt_to_qnh_alt
 from skylines.lib.decorators import login_required
-from skylines.lib.md5 import file_md5
 from skylines.lib.sql import query_to_sql
 from skylines.lib.xcsoar_ import flight_path, analyse_flight
-from skylines.lib.upload import UploadStatus
-from skylines.model import User, Flight, IGCFile, Airspace
+from skylines.lib.upload import UploadStatus, parse_file
+from skylines.model import User, Flight, Airspace
 from skylines.model.airspace import get_airspace_infringements
 from skylines.model.event import create_flight_notifications
 from skylines.worker import tasks
@@ -192,76 +190,17 @@ def index_post(form):
         filename = files.sanitise_filename(name)
         filename = files.add_file(filename, f)
 
-        # check if the file already exists
-        with files.open_file(filename) as f:
-            md5 = file_md5(f)
-            other = Flight.by_md5(md5)
-            if other:
-                files.delete_file(filename)
-                flights.append((name, other, UploadStatus.DUPLICATE, str(prefix), None, None, None, None))
-                continue
+        flight, status, fp = parse_file(user, pilot_id, club_id, filename)
 
-        igc_file = IGCFile()
-        igc_file.owner = user
-        igc_file.filename = filename
-        igc_file.md5 = md5
-        igc_file.update_igc_headers()
-
-        if igc_file.date_utc is None:
-            files.delete_file(filename)
-            flights.append((name, None, UploadStatus.MISSING_DATE, str(prefix), None, None, None, None))
+        if status is not UploadStatus.SUCCESS:
+            flights.append((name, flight, status, str(prefix), None, None, None, None))
             continue
 
-        flight = Flight()
-        flight.pilot_id = pilot_id
         flight.pilot_name = form.pilot_name.data if form.pilot_name.data else None
-        flight.club_id = club_id
-        flight.igc_file = igc_file
-
-        flight.model_id = igc_file.guess_model()
-
-        if igc_file.registration:
-            flight.registration = igc_file.registration
-        else:
-            flight.registration = igc_file.guess_registration()
-
-        flight.competition_id = igc_file.competition_id
-
-        fp = flight_path(flight.igc_file, add_elevation=True, max_points=None)
-
-        analyzed = False
-        try:
-            analyse_flight(flight, fp=fp)
-            analyzed = True
-        except:
-            current_app.logger.exception('analyse_flight() raised an exception')
-
-        if not analyzed:
-            files.delete_file(filename)
-            flights.append((name, None, UploadStatus.PARSER_ERROR, str(prefix), None, None, None, None))
-            continue
-
-        if not flight.takeoff_time or not flight.landing_time:
-            files.delete_file(filename)
-            flights.append((name, None, UploadStatus.NO_FLIGHT, str(prefix), None, None, None, None))
-            continue
-
-        if flight.landing_time > datetime.now():
-            files.delete_file(filename)
-            flights.append((name, None, UploadStatus.FLIGHT_IN_FUTURE, str(prefix), None, None, None, None))
-            continue
-
-        if not flight.update_flight_path():
-            files.delete_file(filename)
-            flights.append((name, None, UploadStatus.NO_FLIGHT, str(prefix), None, None, None, None))
-            continue
-
-        flight.privacy_level = Flight.PrivacyLevel.PRIVATE
 
         trace = _encode_flight_path(fp, qnh=flight.qnh)
         infringements = get_airspace_infringements(fp, qnh=flight.qnh)
 
-        db.session.add(igc_file)
         db.session.add(flight)
 
         # flush data to make sure we don't get duplicate files from ZIP files
@@ -289,7 +228,7 @@ def index_post(form):
 
         form.pilot_id.validate(form)
 
-        flights.append((name, flight, UploadStatus.SUCCESS, str(prefix), trace,
+        flights.append((name, flight, status, str(prefix), trace,
                         airspace, cache_key, form))
 
         create_flight_notifications(flight)
