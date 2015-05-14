@@ -1,5 +1,7 @@
 from flask import Blueprint, Response, abort, request, current_app
 from redis.exceptions import ConnectionError
+from StringIO import StringIO
+import zlib
 
 from skylines.database import db
 from skylines.model import Flight, User
@@ -33,8 +35,17 @@ def upload():
 
     club_id = pilot.club_id
 
+    # Try to uncompress the data using zlib
+    try:
+        data = zlib.decompress(request.data, zlib.MAX_WBITS | 32)
+    except:
+        # file is not compressed...
+        data = request.data
+
+    stream = StringIO(data)
+
     filename = files.sanitise_filename(filename)
-    filename = files.add_file(filename, request.stream)
+    filename = files.add_file(filename, stream)
 
     flight, status, fp = parse_file(pilot, pilot.id, club_id, filename)
 
