@@ -15,9 +15,15 @@ class UploadStatus(Enum):
     PARSER_ERROR = 3  # _('Failed to parse file')
     NO_FLIGHT = 4  # _('No flight found in file')
     FLIGHT_IN_FUTURE = 5  # _('Date of flight in future')
+    NO_IGC_FILE = 6  # _('File is not a igc file')
 
 
 def parse_file(user, pilot_id, club_id, filename):
+    # check if the file might be a IGC file
+    if not files.is_igc_file(filename):
+        files.delete_file(filename)
+        return (None, UploadStatus.NO_IGC_FILE, None)
+
     # check if the file already exists
     with files.open_file(filename) as f:
         md5 = file_md5(f)

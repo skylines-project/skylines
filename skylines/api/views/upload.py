@@ -59,6 +59,8 @@ def upload():
         return Response('No flight found in file', mimetype='text/plain')
     elif status is UploadStatus.FLIGHT_IN_FUTURE:
         return Response('Date of flight in future', mimetype='text/plain')
+    elif status is UploadStatus.NO_IGC_FILE:
+        return Response('File is not a igc file', mimetype='text/plain')
 
     db.session.add(flight)
     db.session.flush()

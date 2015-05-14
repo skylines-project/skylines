@@ -8,6 +8,7 @@ import re
 from flask import current_app
 
 igc_filename_numbers_regex = re.compile(r"([\w_-]+)_(\d+)")
+igc_a_record_regex = re.compile(r"^A[A-Za-z0-9]{3}.*\r?\n$")
 
 
 def sanitise_filename(name):
@@ -87,3 +88,16 @@ def delete_file(name):
         os.unlink(path)
     except OSError:
         pass
+
+
+def is_igc_file(name):
+    assert isinstance(name, str) or isinstance(name, unicode)
+
+    with open_file(name) as f:
+        line = f.readline()
+
+    match = igc_a_record_regex.match(line)
+
+    if not match: return False
+
+    return True

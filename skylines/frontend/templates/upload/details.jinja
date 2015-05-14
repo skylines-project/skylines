@@ -123,6 +123,8 @@
       {% set status_text = _('No flight found in file') %}
     {% elif status == h.UploadStatus.FLIGHT_IN_FUTURE %}
       {% set status_text = _('Date of flight in future') %}
+    {% elif status == h.UploadStatus.NO_IGC_FILE %}
+      {% set status_text = _('File is not a igc file') %}
     {% elif status == h.UploadStatus.SUCCESS and form.errors %}
       {% set status_text = _('Error found in upload form') %}
     {% else %}
