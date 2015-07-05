@@ -16,6 +16,7 @@ from .ranking import ranking_blueprint
 from .search import search_blueprint
 from .settings import settings_blueprint
 from .statistics import statistics_blueprint
+from .task import task_blueprint
 from .timeline import timeline_blueprint
 from .track import track_blueprint
 from .tracking import tracking_blueprint
@@ -44,6 +45,7 @@ def register(app):
     app.register_blueprint(search_blueprint, url_prefix='/search')
     app.register_blueprint(settings_blueprint, url_prefix='/settings')
     app.register_blueprint(statistics_blueprint, url_prefix='/statistics')
+    app.register_blueprint(task_blueprint, url_prefix='/task')
     app.register_blueprint(timeline_blueprint, url_prefix='/timeline')
     app.register_blueprint(track_blueprint, url_prefix='/tracking/<user_id>')
     app.register_blueprint(tracking_blueprint, url_prefix='/tracking')

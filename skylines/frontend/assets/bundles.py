@@ -125,6 +125,12 @@ openlayers_js = Bundle(
     filters=SimpleClosureJS,
     output='js/ol-%(version)s.js')
 
+task_js = Bundle(
+    'js/slUnits.js',
+    'https://rawgithub.com/Turbo87/sidebar-v2/v0.2.1/js/jquery-sidebar.min.js',
+    filters=SimpleClosureJS,
+    output='js/task-%(version)s.js')
+
 flight_js = Bundle(
     'js/util.js',
     'js/slUnits.js',
