@@ -515,7 +515,7 @@ msgstr "Aérodrome"
 
 #: skylines/frontend/templates/flights/flights-table.jinja:15
 msgid "Time"
-msgstr "Durée"
+msgstr "Horaires"
 
 #: skylines/frontend/templates/flights/flights-table.jinja:106
 #: skylines/frontend/templates/flights/list.jinja:174
