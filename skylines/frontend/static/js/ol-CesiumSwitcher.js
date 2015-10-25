@@ -57,21 +57,16 @@ CesiumSwitcher.prototype.setMode = function(mode) {
  * Loads cesium.
  */
 CesiumSwitcher.prototype.loadCesium = function() {
+  var _this = this;
+
   if (typeof Cesium === 'undefined') {
     var cesium = document.createElement('script');
     cesium.src = '/cesium/Cesium/Cesium.js';
+    cesium.onload = function() {
+      _this.loadOL3cesium();
+    };
     document.body.appendChild(cesium);
   }
-
-  var _this = this;
-
-  // poor man's dom check
-  var check = setInterval(function() {
-    if (typeof Cesium !== 'undefined') {
-      clearInterval(check);
-      _this.loadOL3cesium();
-    }
-  }, 100);
 };
 
 
@@ -79,21 +74,16 @@ CesiumSwitcher.prototype.loadCesium = function() {
  * Loads ol3-cesium.
  */
 CesiumSwitcher.prototype.loadOL3cesium = function() {
+  var _this = this;
+
   if (typeof olcs === 'undefined') {
     var ol3cesium = document.createElement('script');
     ol3cesium.src = '/cesium/ol3cesium.js';
+    ol3cesium.onload = function() {
+      _this.enableCesium();
+    };
     document.body.appendChild(ol3cesium);
   }
-
-  var _this = this;
-
-  // poor man's dom check
-  var check = setInterval(function() {
-    if (typeof olcs !== 'undefined') {
-      clearInterval(check);
-      _this.enableCesium();
-    }
-  }, 100);
 };
 
 
