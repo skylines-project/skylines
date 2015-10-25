@@ -55,11 +55,6 @@ slMap = function(_id, _tile_url, opt_options) {
 
 
     map.getLayers().on('change:length', $.proxy(function() {
-      // set z-index (order) of layers
-      map.getLayers().getArray().sort(function(a, b) {
-        return a.get('z_index') > b.get('z_index');
-      });
-
       // When the list of layers changes load the
       // last used base layer from the cookies
       sl_map.setBaseLayer(this.options['base_layer'] || $.cookie('base_layer'));
@@ -68,14 +63,14 @@ slMap = function(_id, _tile_url, opt_options) {
     }, { options: options }));
 
     var osm_layer = new ol.layer.Tile({
-      source: new ol.source.OSM()
+      source: new ol.source.OSM(),
+      zIndex: 1
     });
 
     osm_layer.setProperties({
       'name': 'OpenStreetMap',
       'id': 'OpenStreetMap',
       'base_layer': true,
-      'z_index': 1,
       'display_in_layer_switcher': true
     });
 
@@ -144,14 +139,14 @@ slMap = function(_id, _tile_url, opt_options) {
           })
         ],
         url: tile_url + '/tiles/1.0.0/mwp/{z}/{x}/{y}.png'
-      })
+      }),
+      zIndex: 11
     });
 
     mwp_layer.setProperties({
       'name': 'Mountain Wave Project',
       'id': 'MountainWaveProject',
       'base_layer': false,
-      'z_index': 11,
       'display_in_layer_switcher': true
     });
 
@@ -169,14 +164,14 @@ slMap = function(_id, _tile_url, opt_options) {
     var airspace_layer = new ol.layer.Tile({
       source: new ol.source.XYZ({
         url: tile_url + '/tiles/1.0.0/airspace+airports/{z}/{x}/{y}.png'
-      })
+      }),
+      zIndex: 10
     });
 
     airspace_layer.setProperties({
       'name': 'Airspace',
       'id': 'Airspace',
       'base_layer': false,
-      'z_index': 10,
       'display_in_layer_switcher': true
     });
 
@@ -200,14 +195,14 @@ slMap = function(_id, _tile_url, opt_options) {
           })
         ],
         url: url
-      })
+      }),
+      zIndex: 2
     });
 
     relief_layer.setProperties({
       'name': 'Shaded Relief',
       'id': 'ShadedRelief',
       'base_layer': true,
-      'z_index': 2,
       'display_in_layer_switcher': true
     });
 
@@ -243,14 +238,14 @@ slMap.prototype.addMapboxLayer = function(tile_url) {
         })
       ],
       url: tile_url
-    })
+    }),
+    zIndex: 5
   });
 
   mapbox_layer.setProperties({
     'name': 'Terrain',
     'id': 'Terrain',
     'base_layer': true,
-    'z_index': 5,
     'display_in_layer_switcher': true
   });
 
@@ -273,14 +268,14 @@ slMap.prototype.addBingLayers = function(api_key) {
     source: new ol.source.BingMaps({
       key: api_key,
       imagerySet: 'Road'
-    })
+    }),
+    zIndex: 3
   });
 
   road.setProperties({
     'name': 'Bing Road',
     'id': 'BingRoad',
     'base_layer': true,
-    'z_index': 3,
     'display_in_layer_switcher': true
   });
 
@@ -289,14 +284,14 @@ slMap.prototype.addBingLayers = function(api_key) {
     source: new ol.source.BingMaps({
       key: api_key,
       imagerySet: 'AerialWithLabels'
-    })
+    }),
+    zIndex: 4
   });
 
   hybrid.setProperties({
     'name': 'Bing Satellite',
     'id': 'BingSatellite',
     'base_layer': true,
-    'z_index': 4,
     'display_in_layer_switcher': true
   });
 
