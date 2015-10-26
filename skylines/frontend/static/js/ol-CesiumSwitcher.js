@@ -104,6 +104,7 @@ CesiumSwitcher.prototype.enableCesium = function() {
   }
 
   this.ol3d.setEnabled(true);
+  this.ol3d.enableAutoRenderLoop();
 };
 
 
