@@ -38,7 +38,7 @@ setup(
         'closure==20140110',
         'WebHelpers==1.3',
         'celery[redis]>=3.1,<3.2',
-        'xcsoar==0.4',
+        'xcsoar==0.5',
         'Pygments==1.6',
         'aerofiles==0.1.1',
         'enum34==1.0',
