@@ -125,7 +125,7 @@ slFlightDisplay = function(_map, fix_table_placeholder, baro_placeholder) {
       source: flights.getSource(),
       style: style_function,
       name: 'Flight',
-      z_index: 50
+      zIndex: 50
     });
 
     map.addLayer(flight_path_layer);
@@ -134,7 +134,7 @@ slFlightDisplay = function(_map, fix_table_placeholder, baro_placeholder) {
       source: contests.getSource(),
       style: style_function,
       name: 'Contest',
-      z_index: 49
+      zIndex: 49
     });
 
     map.addLayer(flight_contest_layer);
