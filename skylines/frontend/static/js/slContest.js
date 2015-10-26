@@ -59,19 +59,22 @@ slContest = function(_contest, _sfid) {
 
     geometry = new ol.geom.LineString([]);
     var turnpointsLength = turnpoints.length;
-
     var triangle = (name.search(/triangle/) != -1 && turnpointsLength == 5 * 2);
 
-    if (triangle) turnpointsLength -= 2;
-
-    for (var i = 0; i < turnpointsLength; i += 2) {
-      var point = ol.proj.transform([turnpoints[i + 1], turnpoints[i]],
-                                    'EPSG:4326', 'EPSG:3857');
-      geometry.appendCoordinate(point);
-    }
-
     if (triangle) {
+      for (var i = 2; i < turnpointsLength - 2; i += 2) {
+        var point = ol.proj.transform([turnpoints[i + 1], turnpoints[i]],
+                                      'EPSG:4326', 'EPSG:3857');
+        geometry.appendCoordinate(point);
+      }
+
       geometry.appendCoordinate(geometry.getFirstCoordinate());
+    } else {
+      for (var i = 0; i < turnpointsLength; i += 2) {
+        var point = ol.proj.transform([turnpoints[i + 1], turnpoints[i]],
+                                      'EPSG:4326', 'EPSG:3857');
+        geometry.appendCoordinate(point);
+      }
     }
 
     color = contest_colors[name] || '#ff2c73';
