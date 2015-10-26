@@ -85,7 +85,7 @@
       vector_source.addFeature(feature);
     }
 
-    map.getView().fitExtent(vector_source.getExtent(), map.getSize());
+    map.getView().fit(vector_source.getExtent(), map.getSize());
     var zoom = map.getView().getZoom();
     if (zoom > 10)
       map.getView().setZoom(10);

@@ -113,7 +113,9 @@ slPhaseHighlighter = function(_map, _baro, _flights, _padding_callback) {
     var view = map.getMap().getView();
     var buffer = Math.max(ol.extent.getWidth(extent),
                           ol.extent.getHeight(extent));
-    map.fitExtentPadded(extent, map.getMap().getSize(), getPadding());
+    map.getMap().getView().fit(extent,
+                               map.getMap().getSize(),
+                               { padding: getPadding() });
 
     var start_point = flight.getGeometry().getCoordinates()[start_index];
     var end_point = flight.getGeometry().getCoordinates()[end_index];

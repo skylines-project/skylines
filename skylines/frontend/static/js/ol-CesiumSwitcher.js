@@ -107,7 +107,7 @@ CesiumSwitcher.prototype.enableCesium = function() {
     this.ol3d = new olcs.OLCesium({map: map});
     var scene = this.ol3d.getCesiumScene();
     var terrainProvider = new Cesium.CesiumTerrainProvider({
-      url: '//cesiumjs.org/stk-terrain/tilesets/world/tiles'
+      url: '//assets.agi.com/stk-terrain/world'
     });
     scene.terrainProvider = terrainProvider;
     scene.globe.depthTestAgainstTerrain = true;

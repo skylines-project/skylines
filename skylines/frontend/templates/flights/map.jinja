@@ -154,7 +154,7 @@
 
     var getPadding = function() { return [20, 20, $("#barogram_panel").height() + 20, sidebar.width() + 20]; };
     var extent = flight_display.getFlights().getBounds();
-    sl_map.fitExtentPadded(extent, map.getSize(), getPadding());
+    map.getView().fit(extent, map.getSize(), {padding: getPadding()});
 
     var pinnedFlights = getPinnedFlights();
     for (i in pinnedFlights)
