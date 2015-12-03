@@ -112,6 +112,7 @@ Vagrant.configure("2") do |config|
 
   config.vm.network 'forwarded_port', guest: 5000, host: 5000
   config.vm.network 'forwarded_port', guest: 5001, host: 5001
+  config.vm.network 'forwarded_port', guest: 5597, host: 5597, protocol: 'udp'
 
   config.vm.provision 'shell', inline: $script, privileged: false
 end
