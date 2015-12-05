@@ -1,4 +1,4 @@
-CESIUM_BASE_URL = '/cesium/Cesium/';
+CESIUM_BASE_URL = '/cesium/';
 
 var CesiumSwitcher = function(opt_options) {
   var options = opt_options || {};
