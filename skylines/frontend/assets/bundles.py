@@ -112,7 +112,7 @@ all_js = Bundle(
     output='js/skylines-%(version)s.js')
 
 openlayers_js = Bundle(
-    'vendor/openlayers/ol.js',
+    'vendor/openlayers/ol3cesium.js',
     'js/ol-GraphicLayerSwitcher-v3.js',
     'js/ol-PlayButton-v3.js',
     'js/ol-FullscreenButton.js',
