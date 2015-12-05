@@ -61,28 +61,11 @@ CesiumSwitcher.prototype.loadCesium = function() {
 
   if (typeof Cesium === 'undefined') {
     var cesium = document.createElement('script');
-    cesium.src = '/cesium/Cesium/Cesium.js';
+    cesium.src = CESIUM_BASE_URL + 'Cesium.js';
     cesium.onload = function() {
-      _this.loadOL3cesium();
-    };
-    document.body.appendChild(cesium);
-  }
-};
-
-
-/**
- * Loads ol3-cesium.
- */
-CesiumSwitcher.prototype.loadOL3cesium = function() {
-  var _this = this;
-
-  if (typeof olcs === 'undefined') {
-    var ol3cesium = document.createElement('script');
-    ol3cesium.src = '/cesium/ol3cesium.js';
-    ol3cesium.onload = function() {
       _this.enableCesium();
     };
-    document.body.appendChild(ol3cesium);
+    document.body.appendChild(cesium);
   }
 };
 
