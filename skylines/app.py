@@ -109,7 +109,7 @@ class SkyLines(Flask):
 
         # Add SMTP handler
         mail_handler = SMTPHandler(
-            'localhost', 'error@skylines-project.org',
+            'localhost', 'error@skylines.aero',
             self.config.get('ADMINS', []), 'SkyLines Error Report')
         mail_handler.setLevel(logging.ERROR)
 

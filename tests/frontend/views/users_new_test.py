@@ -57,7 +57,7 @@ def register_user(browser, email, first_name, last_name,
 
 
 def expect_error(browser, response,
-                 email=u'expect_error@skylines-project.org',
+                 email=u'expect_error@skylines.aero',
                  first_name=u'Functional',
                  last_name=u'Test',
                  password=u'lambda',
@@ -84,7 +84,7 @@ def test_registration(browser):
 
     first_name = u'Functional'
     last_name = u'Test'
-    email = u'test_registration@skylines-project.org'
+    email = u'test_registration@skylines.aero'
     register_user(browser, email, first_name, last_name, password='lambda')
 
 
@@ -109,7 +109,7 @@ def test_validation_errors(browser):
 
 def test_duplicates(browser):
     """Duplicate mail addresses are rejected"""
-    email = u'test_duplicates@skylines-project.org'
+    email = u'test_duplicates@skylines.aero'
     first_name = u'Duplicate'
     last_name = u'Test'
 
