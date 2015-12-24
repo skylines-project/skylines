@@ -21,7 +21,7 @@ slFlightDisplay = function(_map, fix_table_placeholder, baro_placeholder) {
    * Contest collection
    * @type {slContestCollection}
    */
-  var contests = slContestCollection();
+  var contests = new slContestCollection();
 
   /**
    * Fix table module
@@ -188,8 +188,10 @@ slFlightDisplay = function(_map, fix_table_placeholder, baro_placeholder) {
 
     if (data.contests) {
       var _contestsLength = data.contests.length;
-      for (var i = 0; i < _contestsLength; ++i)
-        contests.add(slContest(data.contests[i], flight.getID()));
+      for (var i = 0; i < _contestsLength; ++i) {
+        data.contests[i].sfid = data.sfid;
+        contests.add(new slContest(data.contests[i], {parse: true}));
+      }
     }
 
     flights.add(flight);
@@ -258,7 +260,7 @@ slFlightDisplay = function(_map, fix_table_placeholder, baro_placeholder) {
       $('#wingman-table').find('*[data-sfid=' + sfid + ']')
           .find('.color-stripe').css('background-color', '');
 
-      contests.remove(sfid);
+      contests.remove(contests.where({sfid: sfid}));
       updateBaroData();
       updateBaroScale();
       baro.draw();
@@ -409,13 +411,13 @@ slFlightDisplay = function(_map, fix_table_placeholder, baro_placeholder) {
 
       // Save contests of highlighted flight for later
       if (flight.getSelection()) {
-        _contests = contests.all(flight.getID());
+        _contests = contests.where({sfid: flight.getID()});
         elevations = flight.getFlotElev();
       }
 
       // Save contests of only flight for later if applicable
       if (flights.length == 1) {
-        _contests = contests.all(flight.getID());
+        _contests = contests.where({sfid: flight.getID()});
         elevations = flight.getFlotElev();
       }
     });
