@@ -131,7 +131,6 @@ flight_js = Bundle(
     'js/slBarogram.js',
     'js/slFixTable.js',
     'js/slPhaseTable.js',
-    'js/slCollection.js',
     'js/slFlightCollection.js',
     'js/slFlight.js',
     'js/slContestCollection.js',
