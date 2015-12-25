@@ -102,6 +102,8 @@ openlayers_css = Bundle(
 
 all_js = Bundle(
     'http://code.jquery.com/jquery-1.10.2.min.js',
+    'http://underscorejs.org/underscore-min.js',
+    'http://backbonejs.org/backbone-min.js',
     'http://cdnjs.cloudflare.com/ajax/libs/jquery-ajaxtransport-xdomainrequest/1.0.3/jquery.xdomainrequest.min.js',
     'vendor/jquery/jquery.cookie.js',
     'vendor/jquery/jquery.timeago.js',

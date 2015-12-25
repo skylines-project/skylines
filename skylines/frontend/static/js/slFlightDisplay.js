@@ -15,7 +15,7 @@ slFlightDisplay = function(_map, fix_table_placeholder, baro_placeholder) {
    * Flight collection
    * @type {slFlightCollection}
    */
-  var flights = slFlightCollection();
+  var flights = new slFlightCollection();
 
   /**
    * Contest collection
@@ -27,7 +27,10 @@ slFlightDisplay = function(_map, fix_table_placeholder, baro_placeholder) {
    * Fix table module
    * @type {slFixTable}
    */
-  var fix_table = slFixTable(fix_table_placeholder);
+  var fix_table = new slFixTable({
+    collection: flights,
+    el: fix_table_placeholder
+  });
 
   /**
    * Handler for the plane icons and map hover events
@@ -185,7 +188,7 @@ slFlightDisplay = function(_map, fix_table_placeholder, baro_placeholder) {
                       data.geoid, data.additional);
 
     flight.setColor(data.additional.color ||
-                    colors[flights.length() % colors.length]);
+                    colors[flights.length % colors.length]);
 
     if (data.contests) {
       var _contestsLength = data.contests.length;
@@ -236,21 +239,13 @@ slFlightDisplay = function(_map, fix_table_placeholder, baro_placeholder) {
 
     // Update the barogram when another flight has been selected
     // in the fix table.
-    $(fix_table).on('selection_changed', function(e) {
+    flights.on('change.selection', function(e) {
       updateBaroData();
       baro.draw();
     });
 
-    // Remove a flight when the removal button has been pressed
-    // in the fix table.
-    $(fix_table).on('remove_flight', function(e, sfid) {
-      // never remove the first flight...
-      if (flights.at(0).getID() == sfid) return;
-      flights.remove(sfid);
-    });
-
     // Hide the plane icon of a flight which is scheduled for removal.
-    $(flights).on('preremove', function(e, flight) {
+    flights.on('remove', function(flight) {
       // Hide plane to remove any additional related objects from the map
       if (cesium_switcher.getMode()) {
         cesium_switcher.hidePlane(flight);
@@ -261,12 +256,13 @@ slFlightDisplay = function(_map, fix_table_placeholder, baro_placeholder) {
 
     // After a flight has been removed, remove highlights from the
     // wingman table, remove it from the fix table and update the barogram.
-    $(flights).on('removed', function(e, sfid) {
+    flights.on('remove', function(flight) {
+      var sfid = flight.attributes.sfid;
+
       $('#wingman-table').find('*[data-sfid=' + sfid + ']')
           .find('.color-stripe').css('background-color', '');
 
       contests.remove(sfid);
-      fix_table.removeRow(sfid);
       updateBaroData();
       updateBaroScale();
       baro.draw();
@@ -274,22 +270,13 @@ slFlightDisplay = function(_map, fix_table_placeholder, baro_placeholder) {
 
     // Add a flight to the fix table and barogram, highlight in the
     // wingman table.
-    $(flights).on('add', function(e, flight) {
-      // Add flight as a row to the fix data table
-      fix_table.addRow(flight.getID(), flight.getColor(),
-                       flight.getCompetitionID());
-
+    flights.on('add', function(flight) {
       updateBaroData();
       updateBaroScale();
       baro.draw();
 
-      $('#wingman-table').find('*[data-sfid=' + flight.getID() + ']')
-          .find('.color-stripe').css('background-color', flight.getColor());
-
-      // Set fix data table into "selectable" mode if
-      // more than one flight is loaded
-      if (flights.length() > 1)
-        fix_table.setSelectable(true);
+      $('#wingman-table').find('*[data-sfid=' + flight.attributes.getID() + ']')
+          .find('.color-stripe').css('background-color', flight.attributes.getColor());
 
       flight_display.setTime(global_time);
     });
@@ -406,7 +393,8 @@ slFlightDisplay = function(_map, fix_table_placeholder, baro_placeholder) {
     var _contests = [], elevations = [];
 
     var active = [], passive = [], enls = [];
-    flights.each(function(flight) {
+    flights.each(function(flight_model) {
+      var flight = flight_model.attributes;
       var data = {
         data: flight.getFlotHeight(),
         color: flight.getColor()
@@ -417,8 +405,7 @@ slFlightDisplay = function(_map, fix_table_placeholder, baro_placeholder) {
         color: flight.getColor()
       };
 
-      if (fix_table.getSelection() &&
-          flight.getID() != fix_table.getSelection()) {
+      if (!flight.getSelection()) {
         passive.push(data);
       } else {
         active.push(data);
@@ -426,14 +413,13 @@ slFlightDisplay = function(_map, fix_table_placeholder, baro_placeholder) {
       }
 
       // Save contests of highlighted flight for later
-      if (fix_table.getSelection() &&
-          flight.getID() == fix_table.getSelection()) {
+      if (flight.getSelection()) {
         _contests = contests.all(flight.getID());
         elevations = flight.getFlotElev();
       }
 
       // Save contests of only flight for later if applicable
-      if (flights.length() == 1) {
+      if (flights.length == 1) {
         _contests = contests.all(flight.getID());
         elevations = flight.getFlotElev();
       }
@@ -466,17 +452,13 @@ slFlightDisplay = function(_map, fix_table_placeholder, baro_placeholder) {
       } else {
         map_icon_handler.hideAllPlanes();
       }
-
-      // remove data from fix-data table
-      fix_table.clearAllFixes();
-
     } else {
       // update barogram crosshair
       baro.setTime(time);
 
       flights.each(function(flight) {
         // calculate fix data
-        var fix_data = flight.getFixData(time);
+        var fix_data = flight.attributes.getFixData(time);
         if (!fix_data) {
           // update map
           if (cesium_switcher.getMode()) {
@@ -484,9 +466,6 @@ slFlightDisplay = function(_map, fix_table_placeholder, baro_placeholder) {
           } else {
             map_icon_handler.hidePlane(flight);
           }
-
-          // update fix-data table
-          fix_table.clearFix(flight.getID());
         } else {
           // update map
           if (cesium_switcher.getMode()) {
@@ -494,15 +473,12 @@ slFlightDisplay = function(_map, fix_table_placeholder, baro_placeholder) {
           } else {
             map_icon_handler.showPlane(flight, fix_data);
           }
-
-          // update fix-data table
-          fix_table.updateFix(flight.getID(), fix_data);
         }
       });
     }
 
+    fix_table.trigger('time.update', time);
     map.render();
-    fix_table.render();
   };
 
   /**

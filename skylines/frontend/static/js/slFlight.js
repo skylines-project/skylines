@@ -33,6 +33,7 @@ slFlight = function(_sfid, _lonlat, _time, _height, _enl,
   var flot_elev = [];
   var additional = opt_additional || {};
   var geoid = _geoid;
+  var selected = false;
 
   flight.init = function(_lonlat, _time, _height, _enl,
                          _elevations_t, _elevations_h) {
@@ -236,6 +237,14 @@ slFlight = function(_sfid, _lonlat, _time, _height, _enl,
 
   flight.getGeoid = function() {
     return geoid;
+  };
+
+  flight.toggleSelection = function(value) {
+    selected = !selected;
+  };
+
+  flight.getSelection = function() {
+    return selected;
   };
 
   flight.init(_lonlat, _time, _height, _enl,

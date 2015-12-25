@@ -134,7 +134,7 @@ CesiumSwitcher.prototype.showPlane = function(flight, fix_data) {
  * @param {slFlight} flight
  */
 CesiumSwitcher.prototype.hidePlane = function(flight) {
-  if (flight.getPlane().entity) {
-    flight.getPlane().entity.show = false;
+  if (flight.attributes.getPlane().entity) {
+    flight.attributes.getPlane().entity.show = false;
   }
 };

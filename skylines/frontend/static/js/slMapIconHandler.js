@@ -39,7 +39,7 @@ slMapIconHandler = function(_map, _flights) {
       var vector_context = e.vectorContext;
 
       flights.each(function(flight) {
-        var plane = flight.getPlane();
+        var plane = flight.attributes.getPlane();
         if (plane.point !== null) {
           style.setRotation(plane['heading']);
           vector_context.setImageStyle(style);
@@ -54,7 +54,7 @@ slMapIconHandler = function(_map, _flights) {
   };
 
   map_icon_handler.showPlane = function(flight, fix_data) {
-    var plane = flight.getPlane();
+    var plane = flight.attributes.getPlane();
 
     // set plane location
     if (plane.point === null) {
@@ -68,12 +68,12 @@ slMapIconHandler = function(_map, _flights) {
     plane['heading'] = fix_data['heading'];
 
     // add plane marker if more than one flight on the map
-    if (flights.length() > 1) {
+    if (flights.length > 1) {
       if (plane.marker === null) {
         var badge = $('<span class="badge plane_marker" ' +
                 'style="display: inline-block; text-align: center; ' +
-                'background: ' + flight.getColor() + ';">' +
-            (flight.getCompetitionID() || '') +
+                'background: ' + flight.attributes.getColor() + ';">' +
+            (flight.attributes.getCompetitionID() || '') +
             '</span>');
 
         plane.marker = new ol.Overlay({
@@ -88,7 +88,7 @@ slMapIconHandler = function(_map, _flights) {
   };
 
   map_icon_handler.hidePlane = function(flight) {
-    var plane = flight.getPlane();
+    var plane = flight.attributes.getPlane();
 
     plane.point = null;
     if (plane.marker !== null) {
