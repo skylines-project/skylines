@@ -6,6 +6,9 @@ var slFlightCollection = Backbone.Collection.extend({
   // Public attributes and methods
   source: new ol.source.Vector(),
 
+  // Default URL root
+  urlRoot: '/flights/',
+
   initialize: function() {
     this.listenTo(this, 'add', this.addToSource);
     this.listenTo(this, 'remove', this.removeFromSource);

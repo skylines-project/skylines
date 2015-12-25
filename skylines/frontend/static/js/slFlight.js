@@ -117,6 +117,16 @@ var slFlight = Backbone.Model.extend({
     return attrs;
   },
 
+  url: function() {
+    // this is appended to collection.url() which
+    // returns collection.urlRoot + model.id
+    return 'json';
+  },
+
+  update: function() {
+    this.fetch({data: {last_update: this.attributes.last_update}});
+  },
+
   setColor: function(_color) {
     this.attributes.color = _color;
   },
