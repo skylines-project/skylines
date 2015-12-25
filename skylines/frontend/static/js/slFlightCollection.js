@@ -88,14 +88,13 @@ var slFlightCollection = Backbone.Collection.extend({
   },
 
   has: function(sfid) {
-    return this.findWhere({sfid: sfid});
+    return this.get(sfid);
   },
 
   /**
    * Some event listeners for the 'remove' and 'add' events.
    */
-  removeFromSource: function(e) {
-    var flight = e.attributes;
+  removeFromSource: function(flight) {
     this.source.removeFeature(
         this.source.getFeatures().filter(function(e) {
           return e.get('sfid') == flight.getID();
@@ -103,8 +102,7 @@ var slFlightCollection = Backbone.Collection.extend({
     );
   },
 
-  addToSource: function(e) {
-    var flight = e.attributes;
+  addToSource: function(flight) {
     var feature = new ol.Feature({
       geometry: flight.getGeometry(),
       sfid: flight.getID(),

@@ -181,11 +181,7 @@ slFlightDisplay = function(_map, fix_table_placeholder, baro_placeholder) {
    * @param {Object} data The data received from the JSON request.
    */
   flight_display.addFlight = function(data) {
-    flight = slFlight(data.sfid, data.points,
-                      data.barogram_t, data.barogram_h,
-                      data.enl,
-                      data.elevations_t, data.elevations_h,
-                      data.geoid, data.additional);
+    var flight = new slFlight(data, {parse: true});
 
     flight.setColor(data.additional.color ||
                     colors[flights.length % colors.length]);
@@ -275,8 +271,8 @@ slFlightDisplay = function(_map, fix_table_placeholder, baro_placeholder) {
       updateBaroScale();
       baro.draw();
 
-      $('#wingman-table').find('*[data-sfid=' + flight.attributes.getID() + ']')
-          .find('.color-stripe').css('background-color', flight.attributes.getColor());
+      $('#wingman-table').find('*[data-sfid=' + flight.getID() + ']')
+          .find('.color-stripe').css('background-color', flight.getColor());
 
       flight_display.setTime(global_time);
     });
@@ -393,8 +389,7 @@ slFlightDisplay = function(_map, fix_table_placeholder, baro_placeholder) {
     var _contests = [], elevations = [];
 
     var active = [], passive = [], enls = [];
-    flights.each(function(flight_model) {
-      var flight = flight_model.attributes;
+    flights.each(function(flight) {
       var data = {
         data: flight.getFlotHeight(),
         color: flight.getColor()
@@ -458,7 +453,7 @@ slFlightDisplay = function(_map, fix_table_placeholder, baro_placeholder) {
 
       flights.each(function(flight) {
         // calculate fix data
-        var fix_data = flight.attributes.getFixData(time);
+        var fix_data = flight.getFixData(time);
         if (!fix_data) {
           // update map
           if (cesium_switcher.getMode()) {
