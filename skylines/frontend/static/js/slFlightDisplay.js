@@ -278,6 +278,11 @@ slFlightDisplay = function(_map, fix_table_placeholder, baro_placeholder) {
       flight_display.setTime(global_time);
     });
 
+    flights.on('change', function(flight) {
+      updateBaroScale();
+      baro.render();
+    });
+
     // Disable hover modes for map and barogram when the play button
     // has been pressed. Determine the start time for playing.
     $(play_button).on('play', function(e) {

@@ -126,6 +126,7 @@ var slFlight = Backbone.Model.extend({
 
   update: function() {
     this.fetch({data: {last_update: this.attributes.last_update}});
+    this.trigger('change', this);
   },
 
   setColor: function(_color) {
