@@ -12,6 +12,10 @@ var slFlightCollection = Backbone.Collection.extend({
   initialize: function() {
     this.listenTo(this, 'add', this.addToSource);
     this.listenTo(this, 'remove', this.removeFromSource);
+    this.listenTo(this, 'remove', function() {
+      if (this.length == 1)
+        this.select(this.at(0));
+    });
   },
 
   /**
@@ -114,5 +118,25 @@ var slFlightCollection = Backbone.Collection.extend({
     });
 
     this.source.addFeature(feature);
+  },
+
+  select: function(selected_flight) {
+    if (this.length == 1) {
+      selected_flight.setSelection(true);
+      this.trigger('change:selection', selected_flight);
+      return;
+    }
+
+    if (selected_flight.getSelection())
+      selected_flight.setSelection(false);
+    else
+      selected_flight.setSelection(true);
+
+    this.each(function(flight) {
+      if (flight != selected_flight)
+        flight.setSelection(false);
+    });
+
+    this.trigger('change:selection', selected_flight);
   }
 });

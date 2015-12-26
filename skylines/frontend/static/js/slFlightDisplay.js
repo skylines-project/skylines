@@ -202,7 +202,7 @@ slFlightDisplay = function(_map, fix_table_placeholder, baro_placeholder) {
     flights.add(flight);
 
     if (flights.length == 1)
-      flight.toggleSelection();
+      flights.select(flight);
   };
 
 

@@ -33,6 +33,7 @@ var slFixTable = Backbone.View.extend({
     this.collection.each(function(flight) {
       var flight_view = new slFixTableRowView({
         model: flight,
+        collection: this.collection,
         attributes: {
           selectable: this.collection.length > 1
         }
@@ -64,7 +65,7 @@ var slFixTableRowView = Backbone.View.extend({
     var sfid = this.model.attributes.sfid;
     var color = this.model.getColor();
     var opt_competition_id = this.model.getCompetitionID();
-    var opt_remove_icon = !(this.model.collection.at(0) == this.model);
+    var opt_remove_icon = !(this.collection.at(0) == this.model);
 
     // Generate a new table row for the flight
     var row = $(
@@ -95,18 +96,21 @@ var slFixTableRowView = Backbone.View.extend({
       if (!this.attributes.selectable)
         return;
 
-      this.model.toggleSelection();
+      this.collection.select(this.model);
       return false; // prevent event bubbling
     }.bind(this));
 
     this.$el.find('#remove-flight-' + sfid).on('click', function(e) {
-      this.model.collection.remove(this.model);
+      this.collection.remove(this.model);
       unpinFlight(sfid);
       return false; // prevent event bubbling
     }.bind(this));
 
+    // toggle selection if flight is selected
+    this.toggleSelection();
+
     // listen to selection updates to rerender the row
-    this.listenTo(this.model, 'change:selection', this.toggleSelection);
+    this.listenTo(this.collection, 'change:selection', this.toggleSelection);
 
     return this;
   },
@@ -179,7 +183,7 @@ var slFixTableRowView = Backbone.View.extend({
    *   The 'selection_changed' event is triggered if this parameter is true.
    */
   toggleSelection: function() {
-    if (this.model.getSelection())
+    if (this.model.getSelection() && this.collection.length > 1)
       this.$el.addClass('selected');
     else
       this.$el.removeClass('selected');

@@ -259,12 +259,11 @@ var slFlight = Backbone.Model.extend({
     return this.contests;
   },
 
-  toggleSelection: function(value) {
-    this.attributes.selected = !this.attributes.selected;
-    this.trigger('change:selection');
-  },
-
   getSelection: function() {
     return this.attributes.selected;
+  },
+
+  setSelection: function(selection) {
+    this.attributes.selected = selection;
   }
 });
