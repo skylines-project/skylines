@@ -146,7 +146,7 @@ var slBarogramView = Backbone.View.extend((function() {
     contests = flight.getContests();
 
     // Skip the function if there are no contest markers
-    if (contests === null)
+    if (!contests)
       return;
 
     // Iterate through the contests
