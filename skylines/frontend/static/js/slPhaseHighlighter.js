@@ -83,7 +83,7 @@ slPhaseHighlighter = function(_map, _baro, _flights, _padding_callback) {
             baro.clearTimeHighlight();
           }
 
-          baro.draw();
+          baro.render();
           map.getMap().render();
         });
   };

@@ -20,7 +20,6 @@ slFlightTracking = function(_map, fix_table_placeholder, baro_placeholder) {
   };
 
   function updated() {
-    flight_tracking.update();
     flight_tracking.setTime(flight_tracking.getGlobalTime());
   };
 

@@ -96,7 +96,6 @@ var slFixTableRowView = Backbone.View.extend({
         return;
 
       this.model.toggleSelection();
-      this.model.trigger('change.selection');
       return false; // prevent event bubbling
     }.bind(this));
 
@@ -107,7 +106,7 @@ var slFixTableRowView = Backbone.View.extend({
     }.bind(this));
 
     // listen to selection updates to rerender the row
-    this.listenTo(this.model, 'change.selection', this.toggleSelection);
+    this.listenTo(this.model, 'change:selection', this.toggleSelection);
 
     return this;
   },

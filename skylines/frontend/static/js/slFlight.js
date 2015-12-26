@@ -35,7 +35,8 @@ var slFlight = Backbone.Model.extend({
       flot_elev: [],
       additional: {},
       geoid: null,
-      selected: false
+      selected: false,
+      contests: []
     };
   },
 
@@ -250,8 +251,17 @@ var slFlight = Backbone.Model.extend({
     return this.attributes.geoid;
   },
 
+  setContests: function(contests) {
+    this.contests = contests;
+  },
+
+  getContests: function() {
+    return this.contests;
+  },
+
   toggleSelection: function(value) {
     this.attributes.selected = !this.attributes.selected;
+    this.trigger('change:selection');
   },
 
   getSelection: function() {
