@@ -5,52 +5,18 @@
  *   of elements when decoded.
  *
  * @param {DOMElement} placeholder DOM element for the barogram.
- * @param {int} sfid SkyLines flight ID.
- * @param {String} _time Google polyencoded string of time values.
- * @param {String} _height Google polyencoded string of height values.
- * @param {String} _enl Google polyencoded string of engine noise levels.
- * @param {String} _elevations_h Google polyencoded string of elevations.
+ * @param {Object} data Flight data.
  * @param {int} takeoff_time Time of takeoff.
  * @param {int} scoring_start_time Time of scoring start.
  * @param {int} scoring_end_time Time of scoring end.
  * @param {int} landing_time Time of landing.
  * @return {Object} Barogram.
  */
-function initBaro(placeholder, sfid, _time, _height, _enl,
-                  _elevations_h, takeoff_time, scoring_start_time,
+function initBaro(placeholder, data,
+                  takeoff_time, scoring_start_time,
                   scoring_end_time, landing_time) {
-  var height = ol.format.Polyline.decodeDeltas(_height, 1, 1);
-  var time = ol.format.Polyline.decodeDeltas(_time, 1, 1);
-  var enl = ol.format.Polyline.decodeDeltas(_enl, 1, 1);
-  var _elev_h = ol.format.Polyline.decodeDeltas(_elevations_h, 1, 1);
-
-  var flot_h = [], flot_enl = [];
-  var flot_elev = [], elev_h = [];
-  var timeLength = time.length;
-  for (var i = 0; i < timeLength; ++i) {
-    var timestamp = time[i] * 1000;
-    flot_h.push([timestamp, slUnits.convertAltitude(height[i])]);
-    flot_enl.push([timestamp, enl[i]]);
-
-    var e = _elev_h[i];
-    if (e < -500)
-      e = null;
-
-    elev_h.push(e);
-    flot_elev.push([timestamp, e ? slUnits.convertAltitude(e) : null]);
-  }
-
-  var color = '#004bbd';
-
-  var data = {
-    data: flot_h,
-    color: color
-  };
-
-  var enl_data = {
-    data: flot_enl,
-    color: color
-  };
+  var flight = new slFlight(data, {parse: true});
+  flight.setColor('#004bbd');
 
   var baro_opts = {
     selection: {
@@ -61,10 +27,14 @@ function initBaro(placeholder, sfid, _time, _height, _enl,
     }
   };
 
-  var baro = slBarogram(placeholder, baro_opts);
-  baro.setActiveTraces([data]);
-  baro.setENLData([enl_data]);
-  baro.setElevations(flot_elev);
+  var collection = new Backbone.Collection();
+  collection.add(flight);
+
+  var baro = new slBarogramView({
+    el: placeholder,
+    collection: collection,
+    attributes: baro_opts
+  });
 
   baro.setFlightTimes(
       takeoff_time,
@@ -73,7 +43,7 @@ function initBaro(placeholder, sfid, _time, _height, _enl,
       landing_time
   );
 
-  baro.draw();
+  baro.render();
 
   return baro;
 }
