@@ -68,16 +68,19 @@ var slFlight = Backbone.Model.extend({
 
     var height = ol.format.Polyline.decodeDeltas(data.barogram_h, 1, 1);
     var enl = ol.format.Polyline.decodeDeltas(data.enl, 1, 1);
-    var lonlat = ol.format.Polyline.decodeDeltas(data.points, 2);
 
-    var lonlatLength = lonlat.length;
-    for (var i = start * 2; i < lonlatLength; i += 2) {
-      var point = ol.proj.transform([lonlat[i + 1], lonlat[i]],
-                                    'EPSG:4326', 'EPSG:3857');
-      attrs.geometry.appendCoordinate([point[0],
-                                       point[1],
-                                       height[i / 2] + attrs.geoid,
-                                       time_decoded[i / 2]]);
+    if ('points' in data) {
+      var lonlat = ol.format.Polyline.decodeDeltas(data.points, 2);
+
+      var lonlatLength = lonlat.length;
+      for (var i = start * 2; i < lonlatLength; i += 2) {
+        var point = ol.proj.transform([lonlat[i + 1], lonlat[i]],
+                                      'EPSG:4326', 'EPSG:3857');
+        attrs.geometry.appendCoordinate([point[0],
+                                         point[1],
+                                         height[i / 2] + attrs.geoid,
+                                         time_decoded[i / 2]]);
+      }
     }
 
     var timeLength = time_decoded.length;
