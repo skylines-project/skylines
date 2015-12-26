@@ -243,16 +243,6 @@ slFlightDisplay = function(_map, fix_table_placeholder, baro_placeholder) {
       else flight_display.setTime(default_time);
     });
 
-    // Hide the plane icon of a flight which is scheduled for removal.
-    flights.on('remove', function(flight) {
-      // Hide plane to remove any additional related objects from the map
-      if (cesium_switcher.getMode()) {
-        cesium_switcher.hidePlane(flight);
-      } else {
-        map_icon_handler.hidePlane(flight);
-      }
-    });
-
     // After a flight has been removed, remove highlights from the
     // wingman table, remove it from the fix table and update the barogram.
     flights.on('remove', function(flight) {
@@ -260,6 +250,13 @@ slFlightDisplay = function(_map, fix_table_placeholder, baro_placeholder) {
 
       $('#wingman-table').find('*[data-sfid=' + sfid + ']')
           .find('.color-stripe').css('background-color', '');
+
+      // Hide plane to remove any additional related objects from the map
+      if (cesium_switcher.getMode()) {
+        cesium_switcher.hidePlane(flight);
+      } else {
+        map_icon_handler.hidePlane(flight);
+      }
 
       contests.remove(contests.where({sfid: sfid}));
       updateBaroScale();
