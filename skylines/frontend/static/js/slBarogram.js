@@ -228,7 +228,7 @@ var slBarogramView = Backbone.View.extend((function() {
   // Public attributes
   return {
     initialize: function() {
-      setupFlot(this.el, {});
+      setupFlot(this.el, this.attributes);
       this.render();
 
       // Attaches the external event handlers to the flot charts instance.
