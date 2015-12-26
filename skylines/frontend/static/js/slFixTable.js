@@ -39,7 +39,7 @@ var slFixTable = Backbone.View.extend({
         }
       });
 
-      flight_view.listenTo(this, 'time.update', flight_view.render);
+      flight_view.listenTo(this, 'update:time', flight_view.render);
 
       this.$el.append(flight_view.el);
     }.bind(this));

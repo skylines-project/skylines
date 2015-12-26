@@ -430,7 +430,7 @@ slFlightDisplay = function(_map, fix_table_placeholder, baro_placeholder) {
       });
     }
 
-    fix_table.trigger('time.update', time);
+    fix_table.trigger('update:time', time);
     map.render();
   };
 
