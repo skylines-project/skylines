@@ -47,6 +47,7 @@ var slGraphicTaskEditor = function(_map, task) {
       task.removeLastTurnpoint();
 
       modify_mode = true;
+      task_editor.trigger('change:modify_mode', true);
     } else if (modify_mode) {
       if (marker_point && marker_point.turnpoint) {
         if (task.removeTurnpoint(marker_point.turnpoint)) {
@@ -277,9 +278,12 @@ var slGraphicTaskEditor = function(_map, task) {
   };
 
   function setMarkerPoint(coordinate, turnpoint) {
-    if (!coordinate) {
+    if (!coordinate && marker_point != null) {
       marker_point = null;
       map.render();
+      task_editor.trigger('remove:marker', null);
+      return;
+    } else if (!coordinate) {
       return;
     }
 
@@ -288,6 +292,7 @@ var slGraphicTaskEditor = function(_map, task) {
       marker_point.point.setCoordinates(coordinate);
       marker_point.coordinate = coordinate;
       marker_point.turnpoint = turnpoint || null;
+      task_editor.trigger('change:marker', marker_point);
     } else {
       // create marker point
       marker_point = {
@@ -295,10 +300,12 @@ var slGraphicTaskEditor = function(_map, task) {
         coordinate: coordinate,
         turnpoint: turnpoint || null
       };
+      task_editor.trigger('create:marker', marker_point);
     }
     map.render();
   };
 
+  _.extend(task_editor, Backbone.Events);
   task_editor.init();
   return task_editor;
 };
