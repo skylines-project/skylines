@@ -155,6 +155,19 @@ var slTask = Backbone.Model.extend({
 
   removeLastTurnpoint: function() {
     return this.removeTurnpoint(this.getLastTurnpoint());
+  },
+
+  toJSON: function() {
+    turnpoints = [];
+
+    this.attributes.turnpoints.each(function(turnpoint) {
+      turnpoints.push(turnpoint.toJSON());
+    });
+
+    return {
+      id: this.attributes.task_id,
+      turnpoints: turnpoints
+    };
   }
 });
 

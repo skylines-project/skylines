@@ -121,5 +121,13 @@ var slTurnpoint = Backbone.Model.extend({
 
   getWaypoint: function() {
     return this.attributes.waypoint;
+  },
+
+  toJSON: function() {
+    return {
+      sector: this.attributes.sector.toJSON(),
+      coordinates: this.getCoordinate(),
+      waypoint: this.getWaypoint()
+    };
   }
 });

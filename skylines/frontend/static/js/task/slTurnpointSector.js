@@ -191,6 +191,10 @@ slTurnpointSector = function(coordinate, heading, _type, opt_options) {
     types[type].render(coordinate, heading, true);
   };
 
+  sector.toJSON = function() {
+    return type;
+  };
+
   function createLine(origin, heading, update) {
     var points = [];
 
