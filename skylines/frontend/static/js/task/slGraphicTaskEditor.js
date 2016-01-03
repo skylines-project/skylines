@@ -1,4 +1,4 @@
-var slGraphicTaskEditor = function(_map, task) {
+var slGraphicTaskEditor = function(_map, waypoint_file_collection, task) {
   var task_editor = {};
 
   var map = _map;
@@ -65,11 +65,24 @@ var slGraphicTaskEditor = function(_map, task) {
 
   function handleClickEvent(event) {
     if (task.getLength() == 0 && !modify_mode) {
-      // first turnpoint
-      task.addTurnpoint(event.coordinate);
+      var snap_waypoint = snapToWaypoint(event);
 
-      // last turnpoint
-      task.addTurnpoint(event.coordinate);
+      if (snap_waypoint) {
+        // first turnpoint
+        var tp1 = task.addTurnpoint(snap_waypoint.getCoordinate());
+
+        // last turnpoint
+        var tp2 = task.addTurnpoint(snap_waypoint.getCoordinate());
+
+        tp1.setWaypoint(snap_waypoint);
+        tp2.setWaypoint(snap_waypoint);
+      } else {
+        // first turnpoint
+        task.addTurnpoint(event.coordinate);
+
+        // last turnpoint
+        task.addTurnpoint(event.coordinate);
+      }
 
       return false;
     } else if (task.getLength() != 0 && !modify_mode) {
@@ -86,7 +99,14 @@ var slGraphicTaskEditor = function(_map, task) {
 
       // Add new turnpoint if distance is large enough.
       if (distance > 100) {
-        task.addTurnpoint(event.coordinate);
+        var snap_waypoint = snapToWaypoint(event);
+
+        if (snap_waypoint) {
+          var turnpoint = task.addTurnpoint(snap_waypoint.getCoordinate());
+          turnpoint.setWaypoint(snap_waypoint);
+        } else {
+          task.addTurnpoint(event.coordinate);
+        }
       }
 
       return false;
@@ -103,9 +123,20 @@ var slGraphicTaskEditor = function(_map, task) {
     var coordinate = event.coordinate;
     var snap = false;
 
-    var snap_turnpoint = snapToTurnpoint(event);
+    if (!modify_mode) {
+      // snap to any other turnpoint but the last
+      var snap_waypoint = snapToWaypoint(event);
+      var snap_turnpoint = snapToTurnpoint(event, task.getLastTurnpoint());
+    } else {
+      // snap to any turnpoint
+      var snap_waypoint = null;
+      var snap_turnpoint = snapToTurnpoint(event);
+    }
 
-    if (snap_turnpoint != null) {
+    if (snap_waypoint != null) {
+      coordinate = snap_waypoint.getCoordinate();
+      snap = true;
+    } else if (snap_turnpoint != null) {
       coordinate = snap_turnpoint.getCoordinate();
       snap = true;
     } else if (modify_mode) {
@@ -119,7 +150,11 @@ var slGraphicTaskEditor = function(_map, task) {
 
     if (!modify_mode) {
       // We are in task creation mode. Modify last turnpoint
-      task.getLastTurnpoint().setCoordinate(coordinate);
+      if (snap_waypoint)
+        task.getLastTurnpoint().setWaypoint(snap_waypoint);
+      else
+        task.getLastTurnpoint().setCoordinate(coordinate);
+
       setMarkerPoint(coordinate, snap_turnpoint);
     } else {
       // We are in modify mode. Let's see...
@@ -139,10 +174,13 @@ var slGraphicTaskEditor = function(_map, task) {
       return true;
 
     var coordinate = event.coordinate;
+    var snap_waypoint = snapToWaypoint(event);
     var snap_turnpoint = snapToTurnpoint(event, marker_point.turnpoint);
     var position = null;
 
-    if (snap_turnpoint != null) {
+    if (snap_waypoint != null) {
+      coordinate = snap_waypoint.getCoordinate();
+    } else if (snap_turnpoint != null) {
       coordinate = snap_turnpoint.getCoordinate();
     } else {
       var close = snapToTask(event);
@@ -155,7 +193,11 @@ var slGraphicTaskEditor = function(_map, task) {
     if (marker_point.turnpoint) {
       var turnpoint = marker_point.turnpoint;
 
-      turnpoint.setCoordinate(coordinate);
+      if (snap_waypoint)
+        turnpoint.setWaypoint(snap_waypoint);
+      else
+        turnpoint.setCoordinate(coordinate);
+
       setMarkerPoint(turnpoint.getCoordinate(), turnpoint);
 
       return false;
@@ -232,6 +274,56 @@ var slGraphicTaskEditor = function(_map, task) {
       return handleDragEvent(event);
     }
     return true;
+  };
+
+  function snapToWaypoint(event) {
+    distance_map = [];
+    waypoint_map = [];
+
+    var extent = ol.extent.buffer(ol.extent.boundingExtent([event.coordinate]),
+                                  map.getView().getResolution() * 20);
+
+    waypoint_file_collection.each(function(waypoints) {
+      var source = waypoints.getSource();
+      var waypoints = source.getFeaturesInExtent(extent);
+
+      if (waypoints == null) {
+        distance_map.push(9e9);
+        return;
+      }
+
+      var current_distance_map = [];
+
+      for (i = 0, ii = waypoints.length; i < ii; ++i) {
+        var close_pixel = map.getPixelFromCoordinate(
+            waypoints[i].getGeometry().getFirstCoordinate()
+            );
+
+        var dx = event.pixel[0] - close_pixel[0];
+        var dy = event.pixel[1] - close_pixel[1];
+        var distance = dx * dx + dy * dy;
+
+        current_distance_map.push(distance);
+      }
+
+      var min_index = _.indexOf(current_distance_map,
+                                _.min(current_distance_map));
+
+      distance_map.push(current_distance_map[min_index]);
+      waypoint_map.push(waypoints[min_index]);
+    });
+
+    var minimum = _.min(distance_map);
+
+    if (minimum < 100) {
+      var index = _.indexOf(distance_map, minimum);
+
+      // return a copy of that waypoint
+      return waypoint_file_collection.at(index)
+             .getWaypoint(waypoint_map[index].getId());
+    } else {
+      return null;
+    }
   };
 
   function snapToTurnpoint(event, ignore) {

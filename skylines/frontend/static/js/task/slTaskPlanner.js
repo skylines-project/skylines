@@ -69,7 +69,10 @@ var slTaskPlanner = function(map, task_panel_placeholder) {
 
     waypoint_file_collection.add(wp_airports);
 
-    task_edit_interaction = new slGraphicTaskEditor(map.getMap(), task);
+    // Create Task edit interaction
+    task_edit_interaction = new slGraphicTaskEditor(map.getMap(),
+                                                    waypoint_file_collection,
+                                                    task);
 
     // create turnpoint selector, but disable for now
     var turnpoint_selector = new slTurnpointSelect(map.getMap(), task_layer, task);

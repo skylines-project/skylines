@@ -113,5 +113,9 @@ var slTurnpoint = Backbone.Model.extend({
 
   getID: function() {
     return this.id;
+  },
+
+  getWaypoint: function() {
+    return this.attributes.waypoint;
   }
 });
