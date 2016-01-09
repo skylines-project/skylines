@@ -153,6 +153,10 @@ slTurnpointSector = function(coordinate, heading, _type, opt_options) {
     types[type].render(coordinate, heading, false);
   };
 
+  sector.highlight = function(state) {
+    sector.trigger('change:highlight', state);
+  },
+
   sector.getGeometry = function() {
     return geometry;
   };
@@ -299,6 +303,7 @@ slTurnpointSector = function(coordinate, heading, _type, opt_options) {
     }
   };
 
+  _.extend(sector, Backbone.Events);
   sector.init();
   return sector;
 };

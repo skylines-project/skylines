@@ -57,6 +57,19 @@ var slTaskPlanner = function(map, task_panel_placeholder) {
     task_panel.setTask(task);
 
     task_edit_interaction = new slGraphicTaskEditor(map.getMap(), task);
+
+    // create turnpoint selector, but disable for now
+    var turnpoint_selector = new slTurnpointSelect(map.getMap(), task_layer, task);
+    turnpoint_selector.disable();
+
+    task_edit_interaction.on('create:marker', function() {
+      turnpoint_selector.disable();
+    });
+
+    task_edit_interaction.on('remove:marker change:modify_mode', function() {
+      if (task_edit_interaction.getModifyMode())
+        turnpoint_selector.enable();
+    });
   };
 
   task_planner.init();

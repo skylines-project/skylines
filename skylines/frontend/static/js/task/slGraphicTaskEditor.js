@@ -39,6 +39,10 @@ var slGraphicTaskEditor = function(_map, task) {
     });
   };
 
+  task_editor.getModifyMode = function() {
+    return modify_mode;
+  };
+
   function handleDBLClickEvent(event) {
     if (task.getLength() != 0 && !modify_mode) {
       // Finish task drawing and go into modify mode.

@@ -109,6 +109,11 @@ var slTask = Backbone.Model.extend({
       this.trigger('change:turnpoint:type', this, turnpoint);
     }.bind(this));
 
+    // Proxy change:highlight event to the outside
+    this.listenTo(turnpoint.getSector(), 'change:highlight', function(state) {
+      this.trigger('change:turnpoint:highlight', this, turnpoint, state);
+    }.bind(this));
+
     // Update bearings for this and the surrounding turnpoints
     this.updateBearings(turnpoint);
 
