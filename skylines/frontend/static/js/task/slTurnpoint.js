@@ -37,6 +37,11 @@ var slTurnpoint = Backbone.Model.extend({
     };
   },
 
+  initialize: function() {
+    this.attributes.sector =
+        new slTurnpointSector(this.attributes.coordinate, 0, 'daec');
+  },
+
   /**
    * Returns the coordinate of this turnpoint.
    * @return {ol.Coordinate}
@@ -59,6 +64,13 @@ var slTurnpoint = Backbone.Model.extend({
   },
 
   /**
+   * Modify turnpoint type.
+   */
+  changeTurnpointType: function() {
+    this.trigger('change:type', this);
+  },
+
+  /**
    * Clamp turnpoint to waypoint.
    */
   setWaypoint: function(wp) {
@@ -68,13 +80,38 @@ var slTurnpoint = Backbone.Model.extend({
   },
 
   /**
-   * Updates the leg to the previous turnpoint.
+   * Updates the legs to the previous and next turnpoint.
    */
-  updatePrevious: function(tp) {
-    if (tp == null) {
-      this.attributes.previous_bearing = null;
-    } else {
-      var previous_coord = tp.getCoordinate();
+  setBearings: function(prev_bearing, next_bearing) {
+    this.attributes.previous_bearing = prev_bearing;
+    this.attributes.next_bearing = next_bearing;
+
+    if (prev_bearing == null)
+      this.attributes.sector.updateGeometry(
+          this.getCoordinate(), next_bearing - 180
+      );
+    else if (next_bearing == null)
+      this.attributes.sector.updateGeometry(
+          this.getCoordinate(), prev_bearing - 180
+      );
+    else {
+      var a = next_bearing / 180 * Math.PI;
+      var b = prev_bearing / 180 * Math.PI;
+
+      var angle = Math.atan2((Math.sin(a) + Math.sin(b)) / 2,
+                             (Math.cos(a) + Math.cos(b)) / 2);
+
+      angle = angle * 180 / Math.PI + 180;
+
+      this.attributes.sector.updateGeometry(this.getCoordinate(), angle);
     }
+  },
+
+  getGeometry: function() {
+    return this.attributes.sector.getGeometry();
+  },
+
+  getID: function() {
+    return this.id;
   }
 });

@@ -16,13 +16,26 @@ var slTaskPlanner = function(map, task_panel_placeholder) {
    */
   function style_function(feature) {
     var color = '#2200db'; // default color
-    if ('color' in feature.getKeys())
-      color = feature.get('color');
+    var fill = [0, 0, 0, 1]; // default fill (transparent)
+
+    switch (feature.get('type')) {
+      case 'task':
+        color = '#2200db';
+        break;
+
+      case 'turnpoint':
+        color = '#f9e400';
+        fill = [0xf9, 0xe4, 0x00, 0.25];
+        break;
+    }
 
     return [new ol.style.Style({
       stroke: new ol.style.Stroke({
         color: color,
         width: 2
+      }),
+      fill: new ol.style.Fill({
+        color: fill
       })
     })];
   }

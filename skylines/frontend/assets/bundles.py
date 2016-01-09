@@ -157,6 +157,7 @@ task_js = Bundle(
     'js/task/slTaskPanel.js',
     'js/task/slTaskPlanner.js',
     'js/task/slTurnpoint.js',
+    'js/task/slTurnpointSector.js',
     filters=SimpleClosureJS,
     output='js/task-%(version)s.js')
 
