@@ -9,6 +9,9 @@ var slTaskPlanner = function(map, task_panel_placeholder) {
   });
   var task_vector_source = new slTaskVectorSource(task_collection);
 
+  var waypoint_file_collection = new Backbone.Collection();
+  var waypoint_collection = new Backbone.Collection();
+
   /**
    * Determin the drawing style for the feature
    * @param {ol.feature} feature Feature to style
@@ -56,6 +59,16 @@ var slTaskPlanner = function(map, task_panel_placeholder) {
     task_collection.add(task);
     task_panel.setTask(task);
 
+    // Load some waypoints
+    var wp_airports = new slWaypointFile({
+      url: 'http://localhost:5001/airports',
+      type: 'airports',
+      file_id: 0,
+      waypoints: waypoint_collection
+    });
+
+    waypoint_file_collection.add(wp_airports);
+
     task_edit_interaction = new slGraphicTaskEditor(map.getMap(), task);
 
     // create turnpoint selector, but disable for now
@@ -69,6 +82,18 @@ var slTaskPlanner = function(map, task_panel_placeholder) {
     task_edit_interaction.on('remove:marker change:modify_mode', function() {
       if (task_edit_interaction.getModifyMode())
         turnpoint_selector.enable();
+    });
+
+    // Load new waypoints on a moveend event
+    map.getMap().on('moveend', function(event) {
+      if (event.map.getView().getResolution() > 1000) {
+        return;
+      }
+
+      waypoint_file_collection.each(function(waypoint_file) {
+        waypoint_file.update(event.map.getView()
+                             .calculateExtent(event.map.getSize()));
+      });
     });
   };
 

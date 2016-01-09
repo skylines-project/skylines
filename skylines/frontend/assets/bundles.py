@@ -150,6 +150,7 @@ tracking_js = Bundle(
 task_js = Bundle(
     'js/slUnits.js',
     'https://rawgithub.com/Turbo87/sidebar-v2/v0.2.1/js/jquery-sidebar.min.js',
+    'js/task/ol-AirportsFormat.js',
     'js/task/slGraphicTaskEditor.js',
     'js/task/slTask.js',
     'js/task/slTaskCollection.js',
@@ -159,6 +160,8 @@ task_js = Bundle(
     'js/task/slTurnpoint.js',
     'js/task/slTurnpointSector.js',
     'js/task/slTurnpointSelect.js',
+    'js/task/slWaypoint.js',
+    'js/task/slWaypointFile.js',
     filters=SimpleClosureJS,
     output='js/task-%(version)s.js')
 
