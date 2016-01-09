@@ -1,0 +1,67 @@
+From 14ebdd10be216789cf5e374a9dab114c4c9360ee Mon Sep 17 00:00:00 2001
+From: Tobias Lohner <tobias@lohner-net.de>
+Date: Sun, 3 Jan 2016 18:02:24 +0100
+Subject: [PATCH] Add some api and interface declarations for SkyLines.
+
+---
+ src/ol/featureloader.js            | 1 +
+ src/ol/format/jsonfeatureformat.js | 2 ++
+ src/ol/structs/rbush.js            | 3 +++
+ 3 files changed, 6 insertions(+)
+
+diff --git a/src/ol/featureloader.js b/src/ol/featureloader.js
+index f3659a8..fb99895 100644
+--- a/src/ol/featureloader.js
++++ b/src/ol/featureloader.js
+@@ -54,6 +54,7 @@ ol.FeatureUrlFunction;
+  *     Function called when loading failed. Called with the vector tile or
+  *     source as `this`.
+  * @return {ol.FeatureLoader} The feature loader.
++ * @api
+  */
+ ol.featureloader.loadFeaturesXhr = function(url, format, success, failure) {
+   return (
+diff --git a/src/ol/format/jsonfeatureformat.js b/src/ol/format/jsonfeatureformat.js
+index 5016f02..a05bf26 100644
+--- a/src/ol/format/jsonfeatureformat.js
++++ b/src/ol/format/jsonfeatureformat.js
+@@ -15,6 +15,8 @@ goog.require('ol.format.FormatType');
+  *
+  * @constructor
+  * @extends {ol.format.Feature}
++ * @implements {oli.format.JSONFeature}
++ * @api
+  */
+ ol.format.JSONFeature = function() {
+   goog.base(this);
+diff --git a/src/ol/structs/rbush.js b/src/ol/structs/rbush.js
+index 41c6d2c..8876a97 100644
+--- a/src/ol/structs/rbush.js
++++ b/src/ol/structs/rbush.js
+@@ -15,6 +15,7 @@ goog.require('ol.extent');
+  * @see https://github.com/mourner/rbush
+  * @struct
+  * @template T
++ * @api
+  */
+ ol.structs.RBush = function(opt_maxEntries) {
+ 
+@@ -45,6 +46,7 @@ ol.structs.RBush = function(opt_maxEntries) {
+  * Insert a value into the RBush.
+  * @param {ol.Extent} extent Extent.
+  * @param {T} value Value.
++ * @api
+  */
+ ol.structs.RBush.prototype.insert = function(extent, value) {
+   if (goog.DEBUG && this.readers_) {
+@@ -198,6 +200,7 @@ ol.structs.RBush.prototype.forEach = function(callback, opt_this) {
+  * @param {S=} opt_this The object to use as `this` in `callback`.
+  * @return {*} Callback return value.
+  * @template S
++ * @api
+  */
+ ol.structs.RBush.prototype.forEachInExtent =
+     function(extent, callback, opt_this) {
+-- 
+2.6.4
+
