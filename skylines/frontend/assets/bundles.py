@@ -125,12 +125,6 @@ openlayers_js = Bundle(
     filters=SimpleClosureJS,
     output='js/ol-%(version)s.js')
 
-task_js = Bundle(
-    'js/slUnits.js',
-    'https://rawgithub.com/Turbo87/sidebar-v2/v0.2.1/js/jquery-sidebar.min.js',
-    filters=SimpleClosureJS,
-    output='js/task-%(version)s.js')
-
 flight_js = Bundle(
     'js/util.js',
     'js/slUnits.js',
@@ -152,6 +146,19 @@ tracking_js = Bundle(
     'js/slFlightTracking.js',
     filters=SimpleClosureJS,
     output='js/tracking-%(version)s.js')
+
+task_js = Bundle(
+    'js/slUnits.js',
+    'https://rawgithub.com/Turbo87/sidebar-v2/v0.2.1/js/jquery-sidebar.min.js',
+    'js/task/slGraphicTaskEditor.js',
+    'js/task/slTask.js',
+    'js/task/slTaskCollection.js',
+    'js/task/slTaskVectorSource.js',
+    'js/task/slTaskPanel.js',
+    'js/task/slTaskPlanner.js',
+    'js/task/slTurnpoint.js',
+    filters=SimpleClosureJS,
+    output='js/task-%(version)s.js')
 
 upload_js = Bundle(
     'js/slUnits.js',

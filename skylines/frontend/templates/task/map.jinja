@@ -62,6 +62,8 @@
 
     var fullscreen_button = new FullscreenButton($("#fullscreen-content"));
     map.addControl(fullscreen_button);
+
+    var sl_task_planner = new slTaskPlanner(sl_map, $('#tab-overview .sidebar-pane-content'));
   });
 </script>
 {%- endblock %}
