@@ -110,7 +110,7 @@ class User(db.Model):
         Return the user object whose email address is ``email`` if the
         password is matching.
         """
-        user = cls.query(email_address=email).first()
+        user = cls.by_email_address(email)
         if user and user.validate_password(password):
             return user
 
