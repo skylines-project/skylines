@@ -99,28 +99,28 @@ class User(db.Model):
 
     ##############################
 
-    @classmethod
-    def by_email_address(cls, email):
+    @staticmethod
+    def by_email_address(email):
         """Return the user object whose email address is ``email``."""
-        return cls.query(email_address=email).first()
+        return User.query(email_address=email).first()
 
-    @classmethod
-    def by_credentials(cls, email, password):
+    @staticmethod
+    def by_credentials(email, password):
         """
         Return the user object whose email address is ``email`` if the
         password is matching.
         """
-        user = cls.by_email_address(email)
+        user = User.by_email_address(email)
         if user and user.validate_password(password):
             return user
 
-    @classmethod
-    def by_tracking_key(cls, key):
-        return cls.query(tracking_key=key).first()
+    @staticmethod
+    def by_tracking_key(key):
+        return User.query(tracking_key=key).first()
 
-    @classmethod
-    def by_recover_key(cls, key):
-        return cls.query(recover_key=key).first()
+    @staticmethod
+    def by_recover_key(key):
+        return User.query(recover_key=key).first()
 
     # Flask Login ################
 
