@@ -53,10 +53,9 @@ def db(app):
     """
     assert isinstance(app, SkyLines)
 
-    with app.app_context():
-        setup_db()
-        yield database.db
-        teardown_db()
+    setup_db(app)
+    yield database.db
+    teardown_db()
 
 
 @pytest.yield_fixture(scope="function")

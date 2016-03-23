@@ -1,4 +1,3 @@
-from flask import Flask
 import pytest
 from werkzeug.datastructures import Headers
 
@@ -13,15 +12,6 @@ def app():
     Initialized once per test-run
     """
     return create_api_app(config.TESTING_CONF_PATH)
-
-
-@pytest.fixture(scope="function")
-def client(app):
-    """
-    A ``flask.testing.FlaskClient`` for API integration testing.
-    """
-    assert isinstance(app, Flask)
-    return app.test_client()
 
 
 @pytest.fixture(scope="function")

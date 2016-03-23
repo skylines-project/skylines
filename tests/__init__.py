@@ -5,8 +5,9 @@ from skylines.database import db
 __all__ = ['setup_db', 'setup_app', 'teardown_db']
 
 
-def setup_db():
+def setup_db(app):
     """Method used to build a database"""
+    db.app = app
     db.create_all()
 
 
