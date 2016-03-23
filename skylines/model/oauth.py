@@ -39,6 +39,9 @@ class AccessToken(object):
         self.expires = expires
         self.scopes = scopes or []
 
+    def delete(self):
+        pass
+
 
 class RefreshToken(db.Model):
     __tablename__ = 'token'
