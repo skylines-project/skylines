@@ -46,6 +46,8 @@ setup(
         'gevent==1.0.1',
         'webargs==0.13.0',
         'marshmallow==2.0.0b2',
+        'Flask_OAuthlib==0.9.2',
+        'oauthlib==0.7.2',
     ],
     include_package_data=True,
     package_data={

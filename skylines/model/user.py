@@ -105,7 +105,7 @@ class User(db.Model):
         return User.query(email_address=email).first()
 
     @staticmethod
-    def by_credentials(email, password):
+    def by_credentials(email, password, *args, **kwargs):
         """
         Return the user object whose email address is ``email`` if the
         password is matching.

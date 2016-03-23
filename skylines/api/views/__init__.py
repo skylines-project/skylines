@@ -3,8 +3,8 @@ from webargs import Arg
 from werkzeug.exceptions import Forbidden
 from werkzeug.useragents import UserAgent
 
-from skylines.api import auth
 from skylines.api.cors import cors
+from skylines.api.oauth import oauth
 
 
 def register(app):
@@ -32,9 +32,8 @@ def register(app):
             description = 'You don\'t have the permission to access the API with a User-Agent header.'
             raise Forbidden(description)
 
-    app.before_request(auth.check)
-
     cors.init_app(app)
+    oauth.init_app(app)
 
     register_error_handlers(app)
 

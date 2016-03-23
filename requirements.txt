@@ -15,4 +15,5 @@ fake-factory==0.5.0
 flake8==2.1.0
 pyflakes==0.8.1
 pep8==1.5.3
+freezegun==0.3.6
 http://closure-linter.googlecode.com/files/closure_linter-latest.tar.gz
