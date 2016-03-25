@@ -5,9 +5,9 @@ from flask.testing import FlaskClient
 import pytest
 
 import config
-from skylines.api import auth
+from skylines.api.oauth import oauth
 from skylines.app import SkyLines
-from skylines.database import db
+from skylines.database import db as _db
 
 pytestmark = pytest.mark.usefixtures('db')
 
@@ -15,12 +15,12 @@ pytestmark = pytest.mark.usefixtures('db')
 @pytest.fixture(scope='session')
 def app():
     app = SkyLines(config_file=config.TESTING_CONF_PATH)
-    db.init_app(app)
+    _db.init_app(app)
 
-    app.before_request(auth.check)
+    oauth.init_app(app)
 
     @app.route('/')
-    @auth.required
+    @oauth.require_oauth()
     def index():
         return 'success'
 

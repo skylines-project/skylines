@@ -20,4 +20,5 @@ from .mountain_wave_project import MountainWaveProject
 from .timezone import TimeZone
 from .trace import Trace
 from .tracking import TrackingFix, TrackingSession
+from .oauth import AccessToken, RefreshToken, Client
 from .user import User
