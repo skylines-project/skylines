@@ -44,7 +44,7 @@ setup(
         'enum34==1.0',
         'pyproj==1.9.3',
         'gevent==1.0.1',
-        'webargs==0.13.0',
+        'webargs==1.2.0',
         'marshmallow==2.6.1',
         'Flask_OAuthlib==0.9.2',
         'oauthlib==0.7.2',
