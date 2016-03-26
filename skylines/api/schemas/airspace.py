@@ -1,7 +1,7 @@
 from marshmallow import fields, post_dump
 
 from skylines.api.schemas.base import BaseSchema, replace_keywords
-from skylines.api.schemas.fields import GeometryField
+from skylines.api.schemas.fields.geo import GeometryField
 
 
 class AirspaceSchema(BaseSchema):

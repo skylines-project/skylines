@@ -3,7 +3,7 @@ from collections import OrderedDict
 from marshmallow import fields
 
 from skylines.api.schemas.base import BaseSchema
-from skylines.api.schemas.fields import GeometryField
+from skylines.api.schemas.fields.geo import GeometryField
 
 
 class AirportSchema(BaseSchema):
