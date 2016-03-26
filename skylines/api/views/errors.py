@@ -29,6 +29,20 @@ def register(app):
             'message': message,
         }, status=e.code)
 
+    @app.errorhandler(422)
+    def handle_bad_request(err):
+        # webargs attaches additional metadata to the `data` attribute
+        data = getattr(err, 'data')
+        if data:
+            # Get validations from the ValidationError object
+            messages = data['exc'].messages
+        else:
+            messages = ['Invalid request']
+
+        return jsonify({
+            'messages': messages,
+        }, status=422)
+
     @app.errorhandler(TypeError)
     @app.errorhandler(ValueError)
     def raise_bad_request(e):
