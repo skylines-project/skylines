@@ -1,5 +1,5 @@
 from flask import request
-from webargs import Arg
+from webargs import fields
 from werkzeug.exceptions import Forbidden
 from werkzeug.useragents import UserAgent
 
@@ -46,11 +46,6 @@ def register(app):
 
 
 pagination_args = {
-    'page': Arg(
-        int, default=1, location='query',
-        validate=lambda val: val > 0, error='Invalid "page" parameter'),
-
-    'per_page': Arg(
-        int, default=30, location='query',
-        validate=lambda val: val <= 100, error='Invalid "per_page" parameter'),
+    'page': fields.Integer(missing=1, location='query', validate=lambda val: val > 0),
+    'per_page': fields.Integer(missing=30, location='query', validate=lambda val: val <= 100),
 }

@@ -51,11 +51,11 @@ def test_list_users_with_invalid_page_parameter(client, default_headers):
 
     response = client.get('/users/?page=abc', headers=default_headers)
     assert isinstance(response, Response)
-    assert response.status_code == 400
+    assert response.status_code == 422
 
     json_data = json.loads(response.data)
     assert isinstance(json_data, dict)
-    assert json_data['message'] == 'Invalid "page" parameter'
+    assert json_data['messages'] == {'page': ['Not a valid integer.']}
 
 
 def test_read_user(client, default_headers, test_user):

@@ -1,16 +1,14 @@
 from flask import Blueprint
-from webargs import Arg
 from webargs.flaskparser import use_args
 
-from skylines.model import Bounds
 from skylines import api
+from skylines.api.schemas.fields.bounds import BoundsField
 from .json import jsonify
 
 airports_blueprint = Blueprint('airports', 'skylines')
 
 bbox_args = {
-    'bbox': Arg(Bounds.from_bbox_string, required=True, location='query',
-                error='Invalid "bbox" parameter'),
+    'bbox': BoundsField(required=True, location='query'),
 }
 
 
