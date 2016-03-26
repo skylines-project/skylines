@@ -85,6 +85,13 @@ def update_mapproxy():
 
 
 @task
+def pip_install():
+    with cd(SRC_DIR):
+        run('git reset --hard')
+        run('pip install -e .')
+
+
+@task
 def clean_mapproxy_cache():
     with cd('/home/skylines/cache/mapproxy'):
         run('rm -rv *')
