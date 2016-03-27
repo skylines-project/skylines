@@ -153,6 +153,32 @@ slTurnpointSector = function(coordinate, heading, _type, opt_options) {
     types[type].render(coordinate, heading, false);
   };
 
+  sector.getName = function() {
+    return types[type].name;
+  };
+
+  sector.getType = function() {
+    return type;
+  };
+
+  sector.getProperties = function() {
+    var props = {};
+
+    if (types[type].radius)
+        props['radius'] = outer_radius;
+
+    if (types[type].inner_radius)
+        props['inner_radius'] = inner_radius;
+
+    if (types[type].start_radial)
+        props['start_radial'] = start_radial;
+
+    if (types[type].end_radial)
+        props['end_radial'] = end_radial;
+
+    return props;
+  };
+
   sector.highlight = function(state) {
     sector.trigger('change:highlight', state);
   },

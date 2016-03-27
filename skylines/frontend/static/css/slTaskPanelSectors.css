@@ -1,0 +1,60 @@
+/**
+ * spritemapper.sprite_dirs = ../images/sector_sprites
+ * spritemapper.output_css = sector_sprites.css
+ * spritemapper.output_image = ../images/sector_sprites.png
+ * spritemapper.base_url = ../images/
+ */
+
+.sector {
+  width: 40px;
+  height: 40px;
+  float: left;
+}
+
+.sector.bgaenhancedoption {
+  background: url('../images/sectors.png') no-repeat -164px 0;
+}
+
+.sector.bgafixedcourse {
+  background: url('../images/sectors.png') no-repeat -328px 0;
+}
+
+.sector.bgastartsector {
+  background: url('../images/sectors.png') no-repeat -246px 0;
+}
+
+.sector.circle {
+  background: url('../images/sectors.png') no-repeat -287px 0;
+}
+
+.sector.daec {
+  background: url('../images/sectors.png') no-repeat -123px 0;
+}
+
+.sector.faifinish {
+  background: url('../images/sectors.png') no-repeat -205px 0;
+}
+
+.sector.fai {
+  background: url('../images/sectors.png') no-repeat -41px 0;
+}
+
+.sector.faistart {
+  background: url('../images/sectors.png') no-repeat -410px 0;
+}
+
+.sector.finishline {
+  background: url('../images/sectors.png') no-repeat -451px 0;
+}
+
+.sector.finishsector {
+  background: url('../images/sectors.png') no-repeat -369px 0;
+}
+
+.sector.startline {
+  background: url('../images/sectors.png') no-repeat 0 0;
+}
+
+.sector.startsector {
+  background: url('../images/sectors.png') no-repeat -82px 0;
+}

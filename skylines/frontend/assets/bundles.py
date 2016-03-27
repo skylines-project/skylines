@@ -74,6 +74,8 @@ main_css = Bundle(
     'css/events.css',
     'css/tracking-table.css',
     'css/slFixTable.css',
+    'css/slTaskPanel.css',
+    'css/slTaskPanelSectors.css',
     'css/wingman.css',
     'css/ol3-sidebar.css',
     'vendor/flags/flags.css',

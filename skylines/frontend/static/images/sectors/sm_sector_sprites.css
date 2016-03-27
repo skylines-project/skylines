@@ -1,0 +1,59 @@
+/**
+ * spritemapper.sprite_dirs = ../images/sector_sprites
+ * spritemapper.output_css = sector_sprites.css
+ * spritemapper.output_image = ../images/sector_sprites.png
+ * spritemapper.base_url = ../images/
+ */
+
+.sector {
+  width: 40px;
+  height: 40px;
+}
+
+.sector .bgaenhancedoption {
+  background:  url('../images/sectors/bgaenhancedoption.png');
+}
+
+.sector .bgafixedcourse {
+  background:  url('../images/sectors/bgafixedcourse.png');
+}
+
+.sector .bgastartsector {
+  background:  url('../images/sectors/bgastartsector.png');
+}
+
+.sector .circle {
+  background:  url('../images/sectors/circle.png');
+}
+
+.sector .daec {
+  background:  url('../images/sectors/daec.png');
+}
+
+.sector .faifinish {
+  background:  url('../images/sectors/faifinish.png');
+}
+
+.sector .fai {
+  background:  url('../images/sectors/fai.png');
+}
+
+.sector .faistart {
+  background:  url('../images/sectors/faistart.png');
+}
+
+.sector .finishline {
+  background:  url('../images/sectors/finishline.png');
+}
+
+.sector .finishsector {
+  background:  url('../images/sectors/finishsector.png');
+}
+
+.sector .startline {
+  background:  url('../images/sectors/startline.png');
+}
+
+.sector .startsector {
+  background:  url('../images/sectors/startsector.png');
+}
