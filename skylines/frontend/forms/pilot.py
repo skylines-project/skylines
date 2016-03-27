@@ -7,8 +7,10 @@ from wtforms import (
 )
 from wtforms.fields.html5 import EmailField
 from wtforms.validators import (
-    Length, EqualTo, InputRequired, Email, ValidationError
+    Length, EqualTo, InputRequired, Email, Regexp, ValidationError
 )
+
+from re import IGNORECASE as re_IGNORECASE
 
 from skylines.model import User
 from .units import (
@@ -114,6 +116,12 @@ class LiveTrackingSettingsForm(Form):
     tracking_delay = TrackingDelaySelectField(l_('Tracking Delay'))
     tracking_callsign = TextField(l_('Tracking Callsign'), validators=[
         Length(max=5, message=l_('Your callsign must not have more than 5 characters.')),
+    ])
+
+
+class OgnTrackingSettingsForm(Form):
+    ogn_address_hex = TextField(l_('OGN Address'), validators=[
+        Regexp(r'(^[0-9a-f]{6}$|^$)', re_IGNORECASE, l_('Your ogn address must have exactly 6 hexadecimal digits.')),
     ])
 
 

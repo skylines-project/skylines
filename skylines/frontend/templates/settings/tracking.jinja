@@ -35,4 +35,19 @@
     </form>
   </div>
 </div>
+
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h3 class="panel-title">{{ _('OGN Live Tracking Device ID') }}</h3>
+  </div>
+  <div class="panel-body">
+    <form method="POST" action="{{ url_for('settings.ogn_change', user=g.user_id) }}" role="form">
+      {{  ogn_form.hidden_tag() }}
+      {{  render_field(ogn_form.ogn_address_hex) }}
+      <div class="form-group">
+        <input class="form-control btn btn-primary" value="{{ _('Change') }}" type="submit">
+      </div>
+    </form>
+  </div>
+</div>
 {%- endblock %}
