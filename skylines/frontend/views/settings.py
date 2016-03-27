@@ -113,12 +113,21 @@ def password_recover():
     return redirect(url_for('.password', user=g.user_id))
 
 
-@settings_blueprint.route('/tracking', methods=['GET', 'POST'])
+@settings_blueprint.route('/tracking', methods=['GET'])
 def tracking():
-    form = LiveTrackingSettingsForm(obj=g.user)
-    if not form.validate_on_submit():
-        return render_template('settings/tracking.jinja', form=form)
+    tracking_form = LiveTrackingSettingsForm(obj=g.user)
 
+    if request.endpoint.endswith('.tracking_generate_key'):
+        return tracking_generate_key_post()
+
+    if request.endpoint.endswith('.tracking_change'):
+        if tracking_form.validate_on_submit():
+            return tracking_change_post(tracking_form)
+
+    return render_template('settings/tracking.jinja', tracking_form=tracking_form)
+
+
+def tracking_change_post(form):
     g.user.tracking_callsign = form.tracking_callsign.data
     g.user.tracking_delay = request.form.get('tracking_delay', 0)
     db.session.commit()
@@ -128,12 +137,23 @@ def tracking():
     return redirect(url_for('.tracking', user=g.user_id))
 
 
-@settings_blueprint.route('/tracking/generate-key')
-def tracking_generate_key():
+def tracking_generate_key_post():
+    flash(_('Generated new Tracking Key.'), 'success')
+
     g.user.generate_tracking_key()
     db.session.commit()
 
     return redirect(url_for('.tracking', user=g.user_id))
+
+
+@settings_blueprint.route('/tracking', methods=['POST'])
+def tracking_change():
+    return tracking()
+
+
+@settings_blueprint.route('/tracking/generate-key')
+def tracking_generate_key():
+    return tracking()
 
 
 @settings_blueprint.route('/club', methods=['GET'])

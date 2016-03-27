@@ -25,10 +25,10 @@
 
 <div class="panel panel-default">
   <div class="panel-body">
-    <form method="POST" action="{{ url_for('settings.tracking', user=g.user_id) }}" role="form">
-      {{ form.hidden_tag() }}
-      {{ render_field(form.tracking_callsign) }}
-      {{ render_field(form.tracking_delay) }}
+    <form method="POST" action="{{ url_for('settings.tracking_change', user=g.user_id) }}" role="form">
+      {{ tracking_form.hidden_tag() }}
+      {{ render_field(tracking_form.tracking_callsign) }}
+      {{ render_field(tracking_form.tracking_delay) }}
       <div class="form-group">
         <input class="form-control btn btn-primary" value="{{ _('Change') }}" type="submit">
       </div>
