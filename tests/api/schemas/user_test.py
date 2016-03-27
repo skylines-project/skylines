@@ -16,9 +16,10 @@ def test_user_schema(test_user):
         'name',
         'first_name',
         'last_name',
+        'club',
         'tracking_delay',
         'tracking_call_sign',
-        'created_at',
+        'created_at'
     ]
 
     assert data['id'] == test_user.id
@@ -62,22 +63,24 @@ def test_current_user_schema(test_user):
     assert isinstance(data, OrderedDict)
     assert data.keys() == [
         'id',
+        'email',
         'name',
         'first_name',
         'last_name',
-        'email_address',
-        'tracking_key',
+        'club',
         'tracking_delay',
         'tracking_call_sign',
+        'tracking_key',
         'created_at',
+        'admin',
     ]
 
     assert data['id'] == test_user.id
     assert data['name'] == test_user.name
     assert data['first_name'] == test_user.first_name
     assert data['last_name'] == test_user.last_name
-    assert data['email_address'] == test_user.email_address
-    assert data['tracking_key'] == test_user.tracking_key
+    assert data['email'] == test_user.email_address
+    assert data['tracking_key'] == ('%X' % test_user.tracking_key)
     assert data['tracking_delay'] == test_user.tracking_delay
     assert data['tracking_call_sign'] == test_user.tracking_callsign
 
