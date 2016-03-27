@@ -63,15 +63,15 @@ def test_current_user_schema(test_user):
     assert isinstance(data, OrderedDict)
     assert data.keys() == [
         'id',
-        'email',
         'name',
         'first_name',
         'last_name',
         'club',
         'tracking_delay',
         'tracking_call_sign',
-        'tracking_key',
         'created_at',
+        'email',
+        'tracking_key',
         'admin',
     ]
 
