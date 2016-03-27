@@ -9,16 +9,23 @@ from skylines.model import User, Club, Airport
 
 @pytest.fixture(autouse=True)
 def fixtures(db_session):
-    db_session.add(User(first_name=u'John', last_name=u'Doe', password='jane123'))
-    db_session.add(User(first_name=u'Jane', last_name=u'Doe', password='johnny'))
-    db_session.add(Club(name=u'LV Aachen', website='https://www.lv-aachen.de'))
-    db_session.add(Club(name=u'Sportflug Niederberg'))
-    db_session.add(Airport(name=u'Aachen-Merzbrück', country_code='DE', icao='EDKA', frequency='122.875'))
-    db_session.add(Airport(name=u'Meiersberg', country_code='DE'))
+    data = {
+        'john': User(first_name=u'John', last_name=u'Doe', password='jane123'),
+        'jane': User(first_name=u'Jane', last_name=u'Doe', password='johnny'),
+        'lva': Club(name=u'LV Aachen', website='https://www.lv-aachen.de'),
+        'sfn': Club(name=u'Sportflug Niederberg'),
+        'edka': Airport(name=u'Aachen-Merzbrück', country_code='DE', icao='EDKA', frequency='122.875'),
+        'mbg': Airport(name=u'Meiersberg', country_code='DE'),
+    }
+
+    for v in data.itervalues():
+        db_session.add(v)
+
     db_session.commit()
+    return data
 
 
-def test_search(client, default_headers):
+def test_search(client, default_headers, fixtures):
     assert isinstance(client, FlaskClient)
 
     response = client.get('/search?q=aachen', headers=default_headers)
@@ -28,19 +35,19 @@ def test_search(client, default_headers):
     data = json.loads(response.data)
     assert data == [{
         'type': 'airport',
-        'id': 1,
+        'id': fixtures['edka'].id,
         'name': u'Aachen-Merzbrück',
         'icao': 'EDKA',
         'frequency': '122.875',
     }, {
         'type': 'club',
-        'id': 1,
+        'id': fixtures['lva'].id,
         'name': u'LV Aachen',
         'website': 'https://www.lv-aachen.de',
     }]
 
 
-def test_search2(client, default_headers):
+def test_search2(client, default_headers, fixtures):
     assert isinstance(client, FlaskClient)
 
     response = client.get('/search?q=doe', headers=default_headers)
@@ -50,11 +57,11 @@ def test_search2(client, default_headers):
     data = json.loads(response.data)
     assert data == [{
         'type': 'user',
-        'id': 4,
+        'id': fixtures['jane'].id,
         'name': u'Jane Doe',
     }, {
         'type': 'user',
-        'id': 3,
+        'id': fixtures['john'].id,
         'name': u'John Doe',
     }]
 
