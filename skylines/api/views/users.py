@@ -1,5 +1,3 @@
-from datetime import datetime
-
 from flask import Blueprint
 from webargs.flaskparser import use_args
 from werkzeug.exceptions import NotFound
@@ -30,11 +28,6 @@ def read(user_id):
     user = User.get(user_id)
     if user is None:
         raise NotFound()
-
-    assert isinstance(user, User)
-
-    created_at = user.created
-    assert isinstance(created_at, datetime)
 
     result = user_schema.dump(user)
     return jsonify(result.data)
