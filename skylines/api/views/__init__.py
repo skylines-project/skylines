@@ -15,6 +15,7 @@ def register(app):
     from .errors import register as register_error_handlers
     from .airports import airports_blueprint
     from .airspace import airspace_blueprint
+    from .clubs import clubs_blueprint
     from .mapitems import mapitems_blueprint
     from .search import search_blueprint
     from .users import users
@@ -40,6 +41,7 @@ def register(app):
 
     app.register_blueprint(airports_blueprint)
     app.register_blueprint(airspace_blueprint)
+    app.register_blueprint(clubs_blueprint)
     app.register_blueprint(mapitems_blueprint)
     app.register_blueprint(search_blueprint)
     app.register_blueprint(user)

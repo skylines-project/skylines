@@ -1,5 +1,6 @@
 from .airport import AirportSchema
 from .airspace import AirspaceSchema
+from .club import ClubSchema
 from .user import UserSchema, AuthenticatedUserSchema
 from .wave import WaveSchema
 
