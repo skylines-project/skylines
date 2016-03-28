@@ -1,6 +1,6 @@
 # revision identifiers, used by Alembic.
 revision = '4a446454a557'
-down_revision = '36d3b413b8d9'
+down_revision = 'c7f345af5e'
 
 from alembic import op
 import sqlalchemy as sa
