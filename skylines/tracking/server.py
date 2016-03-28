@@ -9,35 +9,9 @@ from sqlalchemy.sql.expression import or_
 
 from skylines.database import db
 from skylines.model import User, TrackingFix, Follower, Elevation
+
+import skylines.tracking.protocol as proto
 from skylines.tracking.crc import check_crc, set_crc
-
-# More information about this protocol can be found in the XCSoar
-# source code, source file src/Tracking/SkyLines/Protocol.hpp
-
-MAGIC = 0x5df4b67b
-TYPE_PING = 1
-TYPE_ACK = 2
-TYPE_FIX = 3
-TYPE_TRAFFIC_REQUEST = 4
-TYPE_TRAFFIC_RESPONSE = 5
-TYPE_USER_NAME_REQUEST = 6
-TYPE_USER_NAME_RESPONSE = 7
-
-FLAG_ACK_BAD_KEY = 0x1
-
-FLAG_LOCATION = 0x1
-FLAG_TRACK = 0x2
-FLAG_GROUND_SPEED = 0x4
-FLAG_AIRSPEED = 0x8
-FLAG_ALTITUDE = 0x10
-FLAG_VARIO = 0x20
-FLAG_ENL = 0x40
-
-# for TYPE_TRAFFIC_REQUEST
-TRAFFIC_FLAG_FOLLOWEES = 0x1
-TRAFFIC_FLAG_CLUB = 0x2
-
-USER_FLAG_NOT_FOUND = 0x1
 
 
 def log(message):
@@ -58,11 +32,11 @@ class TrackingServer(DatagramServer):
         pilot = User.by_tracking_key(key)
         if not pilot:
             log("%s PING unknown pilot (key: %x)" % (host, key))
-            flags |= FLAG_ACK_BAD_KEY
+            flags |= proto.FLAG_ACK_BAD_KEY
         else:
             log("%s PING %s -> PONG" % (host, unicode(pilot).encode('utf8', 'ignore')))
 
-        data = struct.pack('!IHHQHHI', MAGIC, 0, TYPE_ACK, 0,
+        data = struct.pack('!IHHQHHI', proto.MAGIC, 0, proto.TYPE_ACK, 0,
                            id, 0, flags)
         data = set_crc(data)
         self.socket.sendto(data, (host, port))
@@ -101,29 +75,29 @@ class TrackingServer(DatagramServer):
             log("bad time stamp: " + str(time_of_day))
 
         flags = data[0]
-        if flags & FLAG_LOCATION:
+        if flags & proto.FLAG_LOCATION:
             latitude = data[2] / 1000000.
             longitude = data[3] / 1000000.
             fix.set_location(longitude, latitude)
 
             fix.elevation = Elevation.get(fix.location_wkt)
 
-        if flags & FLAG_TRACK:
+        if flags & proto.FLAG_TRACK:
             fix.track = data[5]
 
-        if flags & FLAG_GROUND_SPEED:
+        if flags & proto.FLAG_GROUND_SPEED:
             fix.ground_speed = data[6] / 16.
 
-        if flags & FLAG_AIRSPEED:
+        if flags & proto.FLAG_AIRSPEED:
             fix.airspeed = data[7] / 16.
 
-        if flags & FLAG_ALTITUDE:
+        if flags & proto.FLAG_ALTITUDE:
             fix.altitude = data[8]
 
-        if flags & FLAG_VARIO:
+        if flags & proto.FLAG_VARIO:
             fix.vario = data[9] / 256.
 
-        if flags & FLAG_ENL:
+        if flags & proto.FLAG_ENL:
             fix.engine_noise_level = data[10]
 
         log("{} FIX {} {} {}".format(
@@ -149,7 +123,7 @@ class TrackingServer(DatagramServer):
         or_filters = []
 
         flags = data[0]
-        if flags & TRAFFIC_FLAG_FOLLOWEES:
+        if flags & proto.TRAFFIC_FLAG_FOLLOWEES:
             subq = db.session \
                 .query(Follower.destination_id) \
                 .filter(Follower.source_id == pilot.id) \
@@ -157,7 +131,7 @@ class TrackingServer(DatagramServer):
 
             or_filters.append(TrackingFix.pilot_id.in_(subq))
 
-        if flags & TRAFFIC_FLAG_CLUB:
+        if flags & proto.TRAFFIC_FLAG_CLUB:
             subq = db.session \
                 .query(User.id) \
                 .filter(User.club_id == pilot.club_id) \
@@ -209,7 +183,7 @@ class TrackingServer(DatagramServer):
             count += 1
 
         response = struct.pack('!HBBI', 0, 0, count, 0) + response
-        response = struct.pack('!IHHQ', MAGIC, 0, TYPE_TRAFFIC_RESPONSE, 0) + response
+        response = struct.pack('!IHHQ', proto.MAGIC, 0, proto.TYPE_TRAFFIC_RESPONSE, 0) + response
         response = set_crc(response)
         self.socket.sendto(response, (host, port))
 
@@ -231,8 +205,8 @@ class TrackingServer(DatagramServer):
 
         user = User.get(user_id)
         if user is None:
-            response = struct.pack('!IHHQIIIBBBBII', MAGIC, 0, TYPE_USER_NAME_RESPONSE, 0,
-                                   user_id, USER_FLAG_NOT_FOUND, 0,
+            response = struct.pack('!IHHQIIIBBBBII', proto.MAGIC, 0, proto.TYPE_USER_NAME_RESPONSE, 0,
+                                   user_id, proto.USER_FLAG_NOT_FOUND, 0,
                                    0, 0, 0, 0, 0, 0)
             response = set_crc(response)
             self.transport.write(response, (host, port))
@@ -245,7 +219,7 @@ class TrackingServer(DatagramServer):
         name = user.name[:64].encode('utf8', 'ignore')
         club_id = user.club_id or 0
 
-        response = struct.pack('!IHHQIIIBBBBII', MAGIC, 0, TYPE_USER_NAME_RESPONSE, 0,
+        response = struct.pack('!IHHQIIIBBBBII', proto.MAGIC, 0, proto.TYPE_USER_NAME_RESPONSE, 0,
                                user_id, 0, club_id,
                                len(name), 0, 0, 0, 0, 0)
         response += name
@@ -260,17 +234,17 @@ class TrackingServer(DatagramServer):
         if len(data) < 16: return
 
         header = struct.unpack('!IHHQ', data[:16])
-        if header[0] != MAGIC: return
+        if header[0] != proto.MAGIC: return
         if not check_crc(data): return
 
         with self.app.app_context():
-            if header[2] == TYPE_FIX:
+            if header[2] == proto.TYPE_FIX:
                 self.fix_received(host, header[3], data[16:])
-            elif header[2] == TYPE_PING:
+            elif header[2] == proto.TYPE_PING:
                 self.ping_received(host, port, header[3], data[16:])
-            elif header[2] == TYPE_TRAFFIC_REQUEST:
+            elif header[2] == proto.TYPE_TRAFFIC_REQUEST:
                 self.traffic_request_received(host, port, header[3], data[16:])
-            elif header[2] == TYPE_USER_NAME_REQUEST:
+            elif header[2] == proto.TYPE_USER_NAME_REQUEST:
                 self.username_request_received(host, port, header[3], data[16:])
 
     def serve_forever(self, **kwargs):
