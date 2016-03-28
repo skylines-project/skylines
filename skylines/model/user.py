@@ -123,6 +123,10 @@ class User(db.Model):
         return User.query(tracking_key=key).first()
 
     @staticmethod
+    def by_ogn_address(address):
+        return User.query(ogn_address=address).first()
+
+    @staticmethod
     def by_recover_key(key):
         return User.query(recover_key=key).first()
 
