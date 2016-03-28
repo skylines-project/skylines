@@ -6,6 +6,7 @@ from .fill_missing_keys import FillMissingKeys
 from .generate import Generate
 from .generate_through_daemon import GenerateThroughDaemon
 from .server import Server
+from .ogn_gateway import OgnGateway
 from .stats import Stats
 
 manager = Manager(help="Perform operations related to live tracking")
@@ -15,4 +16,5 @@ manager.add_command('fill-missing-keys', FillMissingKeys())
 manager.add_command('generate', Generate())
 manager.add_command('generate-through-daemon', GenerateThroughDaemon())
 manager.add_command('runserver', Server())
+manager.add_command('runogngateway', OgnGateway())
 manager.add_command('stats', Stats())
