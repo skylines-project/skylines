@@ -1,38 +1,15 @@
 import Ember from 'ember';
 
 export default Ember.Component.extend({
+  pinnedFlights: Ember.inject.service(),
+
   classNames: 'btn btn-default',
 
-  didReceiveAttrs() {
-    let sfid = this.get('flightId');
-    this.set('pinned', isPinnedFlight(sfid));
-  },
+  pinned: Ember.computed('flightId', 'pinnedFlights.pinned.[]', function() {
+    return this.get('pinnedFlights.pinned').contains(this.get('flightId'));
+  }),
 
   click() {
-    let sfid = this.get('flightId');
-
-    if (!isPinnedFlight(sfid)) {
-      pinFlight(sfid);
-      this.set('pinned', true);
-    } else {
-      unpinFlight(sfid);
-      this.set('pinned', false);
-    }
+    this.get('pinnedFlights').toggle(this.get('flightId'));
   }
 });
-
-/**
- * Checks if the flight id is a pinned flight
- *
- * @param {Number} sfid SkyLines flight ID.
- * @return {Boolean} True if the flight is pinned.
- */
-function isPinnedFlight(sfid) {
-  var pinnedFlights = getPinnedFlights();
-
-  for (var i = 0; i < pinnedFlights.length; i++) {
-    if (pinnedFlights[i] == sfid) return true;
-  }
-
-  return false;
-}
