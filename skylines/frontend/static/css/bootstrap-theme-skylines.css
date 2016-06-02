@@ -202,7 +202,12 @@ ul.list-with-dividers li[class*="col"] {
 }
 
 .pin {
+  visibility: hidden;
   cursor: pointer;
+}
+
+tr:hover .pin, .pin.pinned {
+  visibility: visible;;
 }
 
 a.no-link {
