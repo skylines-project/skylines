@@ -31,12 +31,28 @@ wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-
 
 sudo apt-get update
 
+# install add-apt-repository tool
+
+sudo apt-get install -y --no-install-recommends python-software-properties
+
+# add ubuntu-toolchain-r/test PPA
+
+sudo add-apt-repository ppa:ubuntu-toolchain-r/test
+
+# update apt-get repository
+
+sudo apt-get update
+
 # install base dependencies
 
 sudo apt-get install -y --no-install-recommends \
-    g++ pkg-config libcurl4-openssl-dev python-dev git \
+    g++-6 pkg-config libcurl4-openssl-dev python-dev git \
     libpq-dev postgresql-9.4-postgis-2.2 postgresql-contrib-9.4 \
     openjdk-7-jre-headless libfreetype6-dev libpng-dev libffi-dev
+
+# set GCC 6 as default
+
+sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-6 60 --slave /usr/bin/g++ g++ /usr/bin/g++-6
 
 # install pip
 
