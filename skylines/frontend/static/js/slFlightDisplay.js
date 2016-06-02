@@ -5,9 +5,9 @@
  * @export
  * @param {ol.Map} _map OpenLayers map object
  * @param {Ember.Component} fix_table
- * @param {jQuery} baro_placeholder Placeholder for the barogram
+ * @param {Ember.Component} baro
  */
-slFlightDisplay = function(_map, fix_table, baro_placeholder) {
+slFlightDisplay = function(_map, fix_table, baro) {
   var flight_display = {};
   var map = _map;
 
@@ -28,12 +28,6 @@ slFlightDisplay = function(_map, fix_table, baro_placeholder) {
    * @type {slMapIconHandler}
    */
   var map_icon_handler = slMapIconHandler(map, flights);
-
-  /**
-   * Barogram module
-   * @type {slBarogram}
-   */
-  var baro = slBarogram(baro_placeholder);
 
   /**
    * Play button control
@@ -137,7 +131,7 @@ slFlightDisplay = function(_map, fix_table, baro_placeholder) {
     map.addControl(play_button);
 
     map_icon_handler.setMode(true);
-    baro.setHoverMode(true);
+    baro.set('hoverMode', true);
 
     cesium_switcher = new CesiumSwitcher();
     map.addControl(cesium_switcher);
@@ -147,22 +141,16 @@ slFlightDisplay = function(_map, fix_table, baro_placeholder) {
 
   /**
    * Update the x-scale of the barogram
-   * @return {Boolean} True if the barogram should be redrawn
    */
   function updateBaroScale() {
     var extent = map.getView().calculateExtent(map.getSize());
     var interval = flights.getMinMaxTimeInExtent(extent);
 
-    var redraw = false;
-
     if (interval.max == -Infinity) {
-      baro.clearTimeInterval();
-      redraw = true;
+      baro.set('timeInterval', null);
     } else {
-      redraw = baro.setTimeInterval(interval.min, interval.max);
+      baro.set('timeInterval', [interval.min, interval.max]);
     }
-
-    return redraw;
   }
 
 
@@ -216,8 +204,8 @@ slFlightDisplay = function(_map, fix_table, baro_placeholder) {
   function setupEvents() {
     // Update the baro scale when the map has been zoomed/moved.
     var update_baro_scale_on_moveend = function(e) {
-      if (updateBaroScale())
-        baro.draw();
+      updateBaroScale();
+      baro.draw();
     };
 
     map.on('moveend', update_baro_scale_on_moveend);
@@ -310,7 +298,7 @@ slFlightDisplay = function(_map, fix_table, baro_placeholder) {
 
       // disable mouse hovering
       map_icon_handler.setMode(false);
-      baro.setHoverMode(false);
+      baro.set('hoverMode', false);
 
       return true;
     });
@@ -319,7 +307,7 @@ slFlightDisplay = function(_map, fix_table, baro_placeholder) {
     $(play_button).on('stop', function(e) {
       // reenable mouse hovering
       if (!cesium_switcher.getMode()) map_icon_handler.setMode(true);
-      baro.setHoverMode(true);
+      baro.set('hoverMode', true);
     });
 
     // Advance time on replay tick.
@@ -347,11 +335,13 @@ slFlightDisplay = function(_map, fix_table, baro_placeholder) {
     });
 
     // Add hover and click events to the barogram.
-    $(baro).on('barohover', function(event, time) {
+    baro.on('barohover', function(time) {
       flight_display.setTime(time);
-    }).on('baroclick', function(event, time) {
+    });
+    baro.on('baroclick', function(time) {
       flight_display.setTime(time);
-    }).on('mouseout', function(event) {
+    });
+    baro.on('mouseout', function() {
       flight_display.setTime(default_time);
     });
 
@@ -374,7 +364,7 @@ slFlightDisplay = function(_map, fix_table, baro_placeholder) {
           e.setVisible(false);
       });
 
-      baro.clearTimeInterval();
+      baro.set('timeInterval', null);
       baro.draw();
     });
 
@@ -432,11 +422,11 @@ slFlightDisplay = function(_map, fix_table, baro_placeholder) {
       }
     });
 
-    baro.setActiveTraces(active);
-    baro.setPassiveTraces(passive);
-    baro.setENLData(enls);
-    baro.setContests(_contests);
-    baro.setElevations(elevations);
+    baro.set('active', active);
+    baro.set('passive', passive);
+    baro.set('enls', enls);
+    baro.set('contests', _contests);
+    baro.set('elevations', elevations);
   }
 
   /**
@@ -449,7 +439,7 @@ slFlightDisplay = function(_map, fix_table, baro_placeholder) {
     // if the mouse is not hovering over the barogram or any trail on the map
     if (!time) {
       // remove crosshair from barogram
-      baro.clearTime();
+      baro.set('time', null);
 
       // remove plane icons from map
       if (cesium_switcher.getMode()) {
@@ -465,7 +455,7 @@ slFlightDisplay = function(_map, fix_table, baro_placeholder) {
 
     } else {
       // update barogram crosshair
-      baro.setTime(time);
+      baro.set('time', time);
 
       flights.each(function(flight) {
         // calculate fix data

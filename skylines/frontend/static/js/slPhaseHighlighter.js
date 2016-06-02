@@ -69,7 +69,7 @@ slPhaseHighlighter = function(_map, _baro, _flights, _padding_callback) {
         .on('selection_changed', function(event, data) {
           if (data) {
             phase_markers = highlight(data.start, data.end);
-            baro.setTimeHighlight(data.start, data.end);
+            baro.set('timeHighlight', [data.start, data.end]);
 
             for (var i = 0; i < phase_tables.length; i++) {
               if (phase_tables[i] != this) {
@@ -80,7 +80,7 @@ slPhaseHighlighter = function(_map, _baro, _flights, _padding_callback) {
             phase_markers.start = null;
             phase_markers.end = null;
 
-            baro.clearTimeHighlight();
+            baro.set('timeHighlight', null);
           }
 
           baro.draw();
