@@ -11,6 +11,7 @@
 
 {% extends "base-page.jinja" %}
 {% set active_page = "flights" %}
+{% set use_ember = true %}
 
 
 {% block title -%}
@@ -113,39 +114,8 @@ $(function() {
 
 <script>
 $(function() {
-  var pinnedFlights = getPinnedFlights();
-
   var flightTable = $('#flight-table');
-
   flightTable.find("[rel=tooltip]").tooltip();
-  flightTable.find("[rel=tooltip-pin]").tooltip({
-    placement: 'left',
-    title: 'Activate this to show the flight on top of other flights on the map'
-  });
-
-  flightTable.find(".pin").each(function() {
-    var sfid = parseInt($(this).text());
-    if ($.inArray(sfid, pinnedFlights) >= 0) {
-      $(this).html("<i class='icon-star'></i>");
-      $(this).addClass("pinned");
-    } else {
-      $(this).html("<i class='icon-star-empty'></i>");
-    }
-
-    $(this).find("i").click(function() {
-      if ($(this).parent(".pin").hasClass("pinned")) {
-        unpinFlight(sfid);
-        $(this).addClass("icon-star-empty");
-        $(this).removeClass("icon-star");
-        $(this).parent(".pin").removeClass("pinned");
-      } else {
-        pinFlight(sfid);
-        $(this).addClass("icon-star");
-        $(this).removeClass("icon-star-empty");
-        $(this).parent(".pin").addClass("pinned");
-      }
-    });
-  });
 });
 </script>
 
