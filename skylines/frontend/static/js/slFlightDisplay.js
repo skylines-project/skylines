@@ -4,10 +4,10 @@
  * @constructor
  * @export
  * @param {ol.Map} _map OpenLayers map object
- * @param {jQuery} fix_table_placeholder Placeholder for the fix table
+ * @param {Ember.Component} fix_table
  * @param {jQuery} baro_placeholder Placeholder for the barogram
  */
-slFlightDisplay = function(_map, fix_table_placeholder, baro_placeholder) {
+slFlightDisplay = function(_map, fix_table, baro_placeholder) {
   var flight_display = {};
   var map = _map;
 
@@ -22,12 +22,6 @@ slFlightDisplay = function(_map, fix_table_placeholder, baro_placeholder) {
    * @type {slContestCollection}
    */
   var contests = slContestCollection();
-
-  /**
-   * Fix table module
-   * @type {slFixTable}
-   */
-  var fix_table = slFixTable(fix_table_placeholder);
 
   /**
    * Handler for the plane icons and map hover events
@@ -236,14 +230,14 @@ slFlightDisplay = function(_map, fix_table_placeholder, baro_placeholder) {
 
     // Update the barogram when another flight has been selected
     // in the fix table.
-    $(fix_table).on('selection_changed', function(e) {
+    fix_table.addObserver('selection', function() {
       updateBaroData();
       baro.draw();
     });
 
     // Remove a flight when the removal button has been pressed
     // in the fix table.
-    $(fix_table).on('remove_flight', function(e, sfid) {
+    fix_table.on('remove_flight', function(sfid) {
       // never remove the first flight...
       if (flights.at(0).getID() == sfid) return;
       flights.remove(sfid);
@@ -277,7 +271,7 @@ slFlightDisplay = function(_map, fix_table_placeholder, baro_placeholder) {
     $(flights).on('add', function(e, flight) {
       // Add flight as a row to the fix data table
       fix_table.addRow(flight.getID(), flight.getColor(),
-                       flight.getCompetitionID());
+                        flight.getCompetitionID());
 
       updateBaroData();
       updateBaroScale();
@@ -289,7 +283,7 @@ slFlightDisplay = function(_map, fix_table_placeholder, baro_placeholder) {
       // Set fix data table into "selectable" mode if
       // more than one flight is loaded
       if (flights.length() > 1)
-        fix_table.setSelectable(true);
+        fix_table.set('selectable', true);
 
       flight_display.setTime(global_time);
     });
@@ -417,8 +411,8 @@ slFlightDisplay = function(_map, fix_table_placeholder, baro_placeholder) {
         color: flight.getColor()
       };
 
-      if (fix_table.getSelection() &&
-          flight.getID() != fix_table.getSelection()) {
+      var selection = fix_table.get('selection');
+      if (selection && flight.getID() != selection) {
         passive.push(data);
       } else {
         active.push(data);
@@ -426,8 +420,7 @@ slFlightDisplay = function(_map, fix_table_placeholder, baro_placeholder) {
       }
 
       // Save contests of highlighted flight for later
-      if (fix_table.getSelection() &&
-          flight.getID() == fix_table.getSelection()) {
+      if (selection && flight.getID() == selection) {
         _contests = contests.all(flight.getID());
         elevations = flight.getFlotElev();
       }
@@ -502,7 +495,6 @@ slFlightDisplay = function(_map, fix_table_placeholder, baro_placeholder) {
     }
 
     map.render();
-    fix_table.render();
   };
 
   /**

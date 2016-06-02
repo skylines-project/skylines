@@ -1,6 +1,6 @@
-slFlightTracking = function(_map, fix_table_placeholder, baro_placeholder) {
+slFlightTracking = function(_map, fix_table, baro_placeholder) {
   var flight_tracking = slFlightDisplay(_map,
-                                        fix_table_placeholder,
+                                        fix_table,
                                         baro_placeholder);
 
   flight_tracking.init = function() {

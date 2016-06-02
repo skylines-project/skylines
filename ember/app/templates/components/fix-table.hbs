@@ -1,0 +1,57 @@
+<table id="fix-data" class="table table-condensed">
+  <tbody>
+    {{#each data as |row|}}
+      <tr {{action "select" row.id}} class="{{if (eq row.id selection) "selected"}}" style="{{if selectable "cursor: pointer;"}}">
+        <td>
+          <span class="badge" style="background: {{row.color}}">
+            {{#if row.competitionId}}
+              {{row.competitionId}}
+            {{else}}
+              &nbsp;
+            {{/if}}
+          </span>
+        </td>
+        <td>
+          {{#unless (isUndefined row.fix.time)}}
+            {{format-seconds row.fix.time}}
+          {{else}}
+            --:--:--
+          {{/unless}}
+        </td>
+        <td>
+          {{#unless (isUndefined row.fix.alt-msl)}}
+            {{format-altitude row.fix.alt-msl}} <small>MSL</small>
+          {{else}}
+            --
+          {{/unless}}
+        </td>
+        <td>
+          {{#unless (isUndefined row.fix.alt-gnd)}}
+            {{format-altitude row.fix.alt-gnd}} <small>GND</small>
+          {{else}}
+            --
+          {{/unless}}
+        </td>
+        <td>
+          {{#unless (isUndefined row.fix.vario)}}
+            {{format-lift row.fix.vario}}
+          {{else}}
+            --
+          {{/unless}}
+        </td>
+        <td>
+          {{#unless (isUndefined row.fix.speed)}}
+            {{format-speed row.fix.speed}}
+          {{else}}
+            --
+          {{/unless}}
+        </td>
+        <td>
+          {{#if row.removable}}
+            <i class="icon-remove" {{action "remove" row.id bubbles=false}}></i>
+          {{/if}}
+        </td>
+      </tr>
+    {{/each}}
+  </tbody>
+</table>

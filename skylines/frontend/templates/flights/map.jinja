@@ -139,7 +139,7 @@
     sl_map.addBingLayers("{{ config.get('SKYLINES_BING_API_KEY', 'null') }}");
     sl_map.addMapboxLayer("{{ config.get('SKYLINES_MAPBOX_API_KEY', 'null') }}");
 
-    flight_display = slFlightDisplay(sl_map.getMap(), $("#fix-data"), $("#barogram"));
+    flight_display = slFlightDisplay(sl_map.getMap(), window.fixTable, $("#barogram"));
     flight_display.addFlightFromJSON("/flights/{{ flight.id }}/json?{{ config.get('SKYLINES_CACHE_BUSTER', '') }}",false);
 
     {% if other_flights -%}
@@ -295,7 +295,7 @@
 <div id="map_canvas" class="olFullscreen sidebar-map"></div>
 <div id="barogram_panel" class="map-bottom-panel map-overlay">
     <div style="overflow: auto; max-height: 115px">
-        <table id="fix-data" class="table table-condensed"></table>
+        <div data-component='fix-table'></div>
     </div>
     <div id="barogram" style="width:100%; height:133px;"></div>
 </div>
