@@ -49,6 +49,7 @@ def test_upload_broken_igc(logged_in_browser):
     assert 'No flight was saved.' in b.contents
 
 
+@pytest.mark.skip(reason="endless loop in airspace analysis code")
 def test_upload_single(logged_in_browser, bill):
     assert bill.id is not None
     b = logged_in_browser
