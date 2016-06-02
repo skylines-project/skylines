@@ -6,23 +6,23 @@ from .filters import SimpleClosureJS
 # Font Awesome
 
 fontawesome_css = Bundle(
-    'https://rawgithub.com/FortAwesome/Font-Awesome/v3.2.1/css/font-awesome.css',
+    'http://rawgithub.com/FortAwesome/Font-Awesome/v3.2.1/css/font-awesome.css',
     output='css/fontawesome-%(version)s.css')
 
 fontawesome_webfont_eot = Bundle(
-    'https://github.com/FortAwesome/Font-Awesome/blob/v3.2.1/font/fontawesome-webfont.eot?raw=true',
+    'http://github.com/FortAwesome/Font-Awesome/blob/v3.2.1/font/fontawesome-webfont.eot?raw=true',
     output='font/fontawesome-webfont.eot')
 
 fontawesome_webfont_woff = Bundle(
-    'https://github.com/FortAwesome/Font-Awesome/blob/v3.2.1/font/fontawesome-webfont.woff?raw=true',
+    'http://github.com/FortAwesome/Font-Awesome/blob/v3.2.1/font/fontawesome-webfont.woff?raw=true',
     output='font/fontawesome-webfont.woff')
 
 fontawesome_webfont_ttf = Bundle(
-    'https://github.com/FortAwesome/Font-Awesome/blob/v3.2.1/font/fontawesome-webfont.ttf?raw=true',
+    'http://github.com/FortAwesome/Font-Awesome/blob/v3.2.1/font/fontawesome-webfont.ttf?raw=true',
     output='font/fontawesome-webfont.ttf')
 
 fontawesome_webfont_svg = Bundle(
-    'https://rawgithub.com/FortAwesome/Font-Awesome/v3.2.1/font/fontawesome-webfont.svg',
+    'http://rawgithub.com/FortAwesome/Font-Awesome/v3.2.1/font/fontawesome-webfont.svg',
     output='font/fontawesome-webfont.svg')
 
 
@@ -41,11 +41,11 @@ bootstrap_css = Bundle(
 # Flot
 
 flot_js = Bundle(
-    'https://rawgithub.com/flot/flot/v0.8.3/jquery.flot.js',
-    'https://rawgithub.com/flot/flot/v0.8.3/jquery.flot.time.js',
-    'https://rawgithub.com/flot/flot/v0.8.3/jquery.flot.crosshair.js',
-    'https://rawgithub.com/flot/flot/v0.8.3/jquery.flot.resize.js',
-    'http://flot-marks.googlecode.com/svn-history/r13/trunk/src/jquery.flot.marks.js',
+    'http://rawgithub.com/flot/flot/v0.8.3/jquery.flot.js',
+    'http://rawgithub.com/flot/flot/v0.8.3/jquery.flot.time.js',
+    'http://rawgithub.com/flot/flot/v0.8.3/jquery.flot.crosshair.js',
+    'http://rawgithub.com/flot/flot/v0.8.3/jquery.flot.resize.js',
+    'http://rawgithub.com/TobiasLohner/flot-marks/f09ded70f5a229a38ba0b9cfa92dbb448ca4daaf/src/jquery.flot.marks.js',
     filters=SimpleClosureJS(disable_ie_checks=True),
     output='js/flot-%(version)s.js')
 
@@ -119,7 +119,7 @@ openlayers_js = Bundle(
     'js/ol-CesiumSwitcher.js',
     'js/slMap.js',
     'js/slMapClickHandler.js',
-    'https://rawgithub.com/bdougherty/BigScreen/v2.0.4/bigscreen.min.js',
+    'http://rawgithub.com/bdougherty/BigScreen/v2.0.4/bigscreen.min.js',
     filters=SimpleClosureJS,
     output='js/ol-%(version)s.js')
 
@@ -137,7 +137,7 @@ flight_js = Bundle(
     'js/slPhaseHighlighter.js',
     'js/slMapIconHandler.js',
     'js/slFlightDisplay.js',
-    'https://rawgithub.com/Turbo87/sidebar-v2/v0.2.1/js/jquery-sidebar.min.js',
+    'http://rawgithub.com/Turbo87/sidebar-v2/v0.2.1/js/jquery-sidebar.min.js',
     filters=SimpleClosureJS,
     output='js/flight-%(version)s.js')
 
@@ -151,7 +151,7 @@ upload_js = Bundle(
     'js/slBarogram.js',
     'js/upload.js',
     'http://momentjs.com/downloads/moment.min.js',
-    'https://rawgithub.com/TobiasLohner/bootstrap-datetimepicker/c36342415a1be8fa013548402bf01718ca93d454/src/js/bootstrap-datetimepicker.js',
+    'http://rawgithub.com/TobiasLohner/bootstrap-datetimepicker/c36342415a1be8fa013548402bf01718ca93d454/src/js/bootstrap-datetimepicker.js',
     'js/jquery.flot.flight-upload.js',
     filters=SimpleClosureJS,
     output='js/upload-%(version)s.js')
