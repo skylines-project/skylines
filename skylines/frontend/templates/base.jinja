@@ -30,6 +30,11 @@
 {%- assets 'all_js' %}
 <script type="text/javascript" src="{{ ASSET_URL }}"></script>
 {%- endassets %}
+
+{% if use_ember %}
+<script type="text/javascript" src="/ember/assets/vendor.js"></script>
+<script type="text/javascript" src="/ember/assets/skylines.js"></script>
+{% endif %}
 {%- endblock %}
 </body>
 </html>
