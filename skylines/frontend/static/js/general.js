@@ -73,23 +73,6 @@ function getPinnedFlights() {
 
 
 /**
- * Checks if the flight id is a pinned flight
- *
- * @param {Number} sfid SkyLines flight ID.
- * @return {Boolean} True if the flight is pinned.
- */
-function isPinnedFlight(sfid) {
-  var pinnedFlights = getPinnedFlights();
-
-  for (var i = 0; i < pinnedFlights.length; i++) {
-    if (pinnedFlights[i] == sfid) return true;
-  }
-
-  return false;
-}
-
-
-/**
  * Returns the URL for the current page and add pinned flights
  * to the URL which are only stored client-side inside a cookie.
  *
