@@ -1,5 +1,6 @@
 {% extends "base-fullscreen.jinja" %}
 {% set active_page = "flights" %}
+{% set use_ember = true %}
 
 
 {% from 'flights/meta-tags.jinja' import flight_meta_tags with context %}
@@ -156,8 +157,6 @@
       if (pinnedFlights[i] != {{ flight.id }})
         flight_display.addFlightFromJSON("/flights/" + pinnedFlights[i] + "/json");
 
-    pinButton($("#pinned"), {{ flight.id }});
-
     slMapClickHandler(map, flight_display, {
       flight_info: true,
       location_info: true,
@@ -242,7 +241,7 @@
             <i class="icon-download-alt icon-large"></i> IGC
           </a>
 
-          <span id="pinned" rel="tooltip" title="{{ _('Activate this to show the flight on top of other flights on the map') }}"></span>
+          <span data-component='pin-button' data-attrs='{"flightId": {{ flight.id }}}' title="{{ _('Activate this to show the flight on top of other flights on the map') }}"></span>
         </p>
       </div>
     </div>

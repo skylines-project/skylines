@@ -90,36 +90,6 @@ function isPinnedFlight(sfid) {
 
 
 /**
- * Adds event handlers to the pin button.
- *
- * @param {jQuery} element jQuery element which will be the button.
- * @param {Number} sfid SkyLines flight ID.
- */
-function pinButton(element, sfid) {
-  var onClick = function() {
-    if (!isPinnedFlight(sfid)) {
-      pinFlight(sfid);
-      element.html("<i class='icon-star icon-large'></i> Flight pinned!");
-    } else {
-      unpinFlight(sfid);
-      element.html("<i class='icon-star-empty icon-large'></i> Click to pin");
-    }
-  };
-
-  // initial setting
-  element.addClass('btn btn-default');
-  if (!isPinnedFlight(sfid)) {
-    element.html("<i class='icon-star-empty icon-large'></i> Click to pin");
-  } else {
-    element.html("<i class='icon-star icon-large'></i> Flight pinned!");
-  }
-
-  // add event handler
-  element.click(onClick);
-}
-
-
-/**
  * Returns the URL for the current page and add pinned flights
  * to the URL which are only stored client-side inside a cookie.
  *
