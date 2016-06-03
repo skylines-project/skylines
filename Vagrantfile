@@ -1,5 +1,7 @@
 $script = <<SCRIPT
 
+set -e
+
 # set environment variables
 
 cat >> ~/.profile << EOF
