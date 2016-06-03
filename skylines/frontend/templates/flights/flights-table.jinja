@@ -125,7 +125,7 @@
       {% if 'link' not in omitted_columns -%}
       <td class="column-buttons">
         <a href="{{ url_for('flight.index', flight_id=flight.id) }}" class="btn btn-default btn-sm">{% trans %}Show{% endtrans %}</a>
-        <a class="pin no-link" style="visibility: hidden" rel="tooltip-pin">{{ flight.id }}</a>
+        <a class="pin no-link" rel="tooltip-pin">{{ flight.id }}</a>
       </td>
       {%- endif %}
 

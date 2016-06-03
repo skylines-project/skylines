@@ -152,7 +152,7 @@
     map.getView().fit(extent, map.getSize(), {padding: getPadding()});
 
     var pinnedFlights = getPinnedFlights();
-    for (i in pinnedFlights)
+    for (var i = 0, len = pinnedFlights.length; i < len; i++)
       if (pinnedFlights[i] != {{ flight.id }})
         flight_display.addFlightFromJSON("/flights/" + pinnedFlights[i] + "/json");
 

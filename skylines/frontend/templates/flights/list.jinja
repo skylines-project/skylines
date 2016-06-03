@@ -122,12 +122,11 @@ $(function() {
     placement: 'left',
     title: 'Activate this to show the flight on top of other flights on the map'
   });
- 
+
   flightTable.find(".pin").each(function() {
     var sfid = parseInt($(this).text());
     if ($.inArray(sfid, pinnedFlights) >= 0) {
       $(this).html("<i class='icon-star'></i>");
-      $(this).css("visibility", "visible");
       $(this).addClass("pinned");
     } else {
       $(this).html("<i class='icon-star-empty'></i>");
@@ -146,19 +145,6 @@ $(function() {
         $(this).parent(".pin").addClass("pinned");
       }
     });
-  });
- 
-  flightTable.find('tr').hover(function(e) {
-    if (e.type == "mouseenter") {
-      $(this).find(".pin").each(function() {
-        $(this).css("visibility", "visible");
-      });
-    } else if (e.type == "mouseleave") {
-      $(this).find(".pin").each(function() {
-        if (!$(this).hasClass("pinned"))
-          $(this).css("visibility", "hidden");
-      });
-    }
   });
 });
 </script>
