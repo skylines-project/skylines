@@ -58,7 +58,7 @@
 <div class="clearfix"></div>
 
 {% if trace %}
-<div id="barogram-{{ prefix }}" style="width: 100%; height: 160px;"></div>
+<div data-component='flight-barogram' data-attrs='{"prefix": "{{ prefix }}", "height": 160, "uploadMode": true}'></div>
 {% endif %}
 
 {{ render_datetimepicker_field(form.takeoff_time, class='col-sm-3') }}
@@ -149,7 +149,7 @@
     var baro = null;
 
     if (isCanvasSupported()) {
-      baro = initBaro($("#barogram-{{ prefix }}"),
+      baro = initBaro(window["barogram-{{ prefix }}"],
         {{ flight.id }},
         {{ h.json.dumps(trace.barogram_t) }},
         {{ h.json.dumps(trace.barogram_h) }},
@@ -181,7 +181,7 @@
 
     var flight_date = moment("{{ flight.igc_file.date_utc.strftime("%Y-%m-%d") }}", "YYYY-MM-DD");
 
-    $("#barogram-{{ prefix }}").on('plotselecting', function(e, range, marker) {
+    baro.on('baroselecting', function(range, marker) {
       updateTimePicker({{ prefix }}, flight_date, range);
     });
 

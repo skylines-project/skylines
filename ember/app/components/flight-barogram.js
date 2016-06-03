@@ -3,6 +3,8 @@
 import Ember from 'ember';
 
 export default Ember.Component.extend(Ember.Evented, {
+  height: 133,
+
   flot: null,
   time: null,
   active: [],
@@ -16,7 +18,12 @@ export default Ember.Component.extend(Ember.Evented, {
   init() {
     this._super(...arguments);
 
-    window.barogram = this;
+    let global = 'barogram';
+    if (this.get('prefix')) {
+      global += `-${this.get('prefix')}`;
+    }
+
+    window[global] = this;
   },
 
   draw() {
@@ -66,9 +73,22 @@ export default Ember.Component.extend(Ember.Evented, {
     opt.selection.mode = 'x';
   },
 
-  // TODO setFlightTimes
-  // TODO updateFlightTime
-  // TODO getFlightTime
+  setFlightTimes(takeoff, scoring_start, scoring_end, landing) {
+    this.get('flot').setSelection({
+      takeoff: takeoff * 1000,
+      scoring_start: scoring_start * 1000,
+      scoring_end: scoring_end * 1000,
+      landing: landing * 1000
+    });
+  },
+
+  updateFlightTime(time, field) {
+    this.get('flot').updateSelection(time * 1000, field);
+  },
+
+  getFlightTime() {
+    return this.get('flot').getSelection();
+  },
 
   hoverModeObserver: Ember.observer('hoverMode', function() {
     let placeholder = this.get('placeholder');
@@ -116,6 +136,16 @@ export default Ember.Component.extend(Ember.Evented, {
       }
     };
 
+    if (this.get('uploadMode')) {
+      opts.selection = {
+        mode: 'x',
+      };
+
+      opts.crosshair = {
+        mode: null,
+      };
+    }
+
     var placeholder = this.$('div');
 
     this.set('placeholder', placeholder);
@@ -123,6 +153,10 @@ export default Ember.Component.extend(Ember.Evented, {
 
     placeholder.on('plotclick', (event, pos) => {
       this.trigger('baroclick', pos.x / 1000);
+    });
+
+    placeholder.on('plotselecting', (event, range, marker) => {
+      this.trigger('baroselecting', range, marker);
     });
   },
 

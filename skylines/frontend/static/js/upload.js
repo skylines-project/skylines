@@ -4,7 +4,7 @@
  * Note: _time, _enl, and _height MUST have the same number
  *   of elements when decoded.
  *
- * @param {DOMElement} placeholder DOM element for the barogram.
+ * @param {Ember.Component} baro
  * @param {int} sfid SkyLines flight ID.
  * @param {String} _time Google polyencoded string of time values.
  * @param {String} _height Google polyencoded string of height values.
@@ -16,7 +16,7 @@
  * @param {int} landing_time Time of landing.
  * @return {Object} Barogram.
  */
-function initBaro(placeholder, sfid, _time, _height, _enl,
+function initBaro(baro, sfid, _time, _height, _enl,
                   _elevations_h, takeoff_time, scoring_start_time,
                   scoring_end_time, landing_time) {
   var height = ol.format.Polyline.decodeDeltas(_height, 1, 1);
@@ -52,19 +52,9 @@ function initBaro(placeholder, sfid, _time, _height, _enl,
     color: color
   };
 
-  var baro_opts = {
-    selection: {
-      mode: 'x'
-    },
-    crosshair: {
-      mode: null
-    }
-  };
-
-  var baro = slBarogram(placeholder, baro_opts);
-  baro.setActiveTraces([data]);
-  baro.setENLData([enl_data]);
-  baro.setElevations(flot_elev);
+  baro.set('active', [data]);
+  baro.set('enls', [enl_data]);
+  baro.set('elevations', flot_elev);
 
   baro.setFlightTimes(
       takeoff_time,

@@ -146,7 +146,6 @@ tracking_js = Bundle(
 
 upload_js = Bundle(
     'js/slUnits.js',
-    'js/slBarogram.js',
     'js/upload.js',
     'http://momentjs.com/downloads/moment.min.js',
     'http://rawgithub.com/TobiasLohner/bootstrap-datetimepicker/c36342415a1be8fa013548402bf01718ca93d454/src/js/bootstrap-datetimepicker.js',
