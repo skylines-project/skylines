@@ -1,0 +1,62 @@
+<td class="color-stripe" style={{colorStripeStyle}}></td>
+<td>
+  {{#if flight.model.id}}
+    <span rel="tooltip" title="Handicap: {{flight.model.dmst_index}}">{{flight.model.name}}</span>
+  {{else if igcFile.model}}
+    [{{igcFile.model}}]
+  {{else}}
+    Unknown
+  {{/if}}
+
+  <small><br />
+    {{#if flight.registration}}
+      {{flight.registration}}
+    {{else if igcFile.registration}}
+      {{igcFile.registration}}
+    {{/if}}
+
+    {{#if flight.competition_id}}
+      &ndash; {{flight.competition_id}}
+    {{else if igcFile.competition_id}}
+      &ndash; {{igcFile.competition_id}}
+    {{/if}}
+  </small>
+</td>
+<td>
+  {{#if pilot.name}}
+    {{#if pilot.id}}
+      <a href="/users/{{pilot.id}}/">{{pilot.name}}</a>
+    {{else}}
+      {{pilot.name}}
+    {{/if}}
+  {{/if}}
+
+  {{#if (and pilot.name copilot.name)}}<br/>{{/if}}
+
+  {{#if copilot.name}}
+    {{#if copilot.id}}
+      <a href="/users/{{copilot.id}}/">{{copilot.name}}</a>
+    {{else}}
+      {{copilot.name}}
+    {{/if}}
+  {{/if}}
+
+  {{#if (not (or pilot.name copilot.name))}}
+  [unspecified]
+  {{/if}}
+</td>
+<td class="times-column">
+  {{iso-to-time times.firstObject.start}}<br />
+  {{iso-to-time times.lastObject.end}}
+  <div class="times-table" style="display: none;">
+    <table>
+      {{#each times as |interval|}}
+        <tr>
+          <td style='text-align: right;'>{{iso-to-time interval.start}}</td>
+          <td>-</td>
+          <td>{{iso-to-time interval.end}}</td>
+        </tr>
+      {{/each}}
+    </table>
+  </div>
+</td>

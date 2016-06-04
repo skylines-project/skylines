@@ -259,7 +259,59 @@ def mark_flight_notifications_read(flight):
 
 @flight_blueprint.route('/')
 def index():
-    near_flights = FlightMeetings.get_meetings(g.flight)
+    near_flights = []
+    for id, near_flight in FlightMeetings.get_meetings(g.flight).iteritems():
+        f = near_flight['flight']
+
+        flight = {
+            'id': id,
+            'registration': f.registration,
+            'competition_id': f.competition_id,
+        }
+
+        if f.model_id:
+            m = f.model
+            flight['model'] = {
+                'id': f.model_id,
+                'dmst_index': m.dmst_index,
+                'name': unicode(m),
+            }
+
+        if f.igc_file_id:
+            i = f.igc_file
+            flight['igc_file'] = {
+                'model': i.model,
+                'registration': i.registration,
+                'competition_id': i.competition_id,
+            }
+
+        if f.pilot_id:
+            flight['pilot'] = {
+                'id': f.pilot_id,
+                'name': unicode(f.pilot),
+            }
+        else:
+            flight['pilot'] = {
+                'name': f.pilot_name,
+            }
+
+        if f.co_pilot_id:
+            flight['co_pilot'] = {
+                'id': f.co_pilot_id,
+                'name': unicode(f.co_pilot),
+            }
+        else:
+            flight['co_pilot'] = {
+                'name': f.co_pilot_name,
+            }
+
+        near_flights.append({
+            'flight': flight,
+            'times': map(lambda times: {
+                'start': times['start'].isoformat(),
+                'end': times['end'].isoformat(),
+            }, near_flight['times']),
+        })
 
     mark_flight_notifications_read(g.flight)
 

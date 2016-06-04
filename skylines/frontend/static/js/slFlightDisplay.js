@@ -244,8 +244,9 @@ slFlightDisplay = function(_map, fix_table, baro) {
     // After a flight has been removed, remove highlights from the
     // wingman table, remove it from the fix table and update the barogram.
     $(flights).on('removed', function(e, sfid) {
-      $('#wingman-table').find('*[data-sfid=' + sfid + ']')
-          .find('.color-stripe').css('background-color', '');
+      if (window.wingmanTable) {
+        window.wingmanTable.setFlightColor(sfid);
+      }
 
       contests.remove(sfid);
       fix_table.removeRow(sfid);
@@ -265,8 +266,9 @@ slFlightDisplay = function(_map, fix_table, baro) {
       updateBaroScale();
       baro.draw();
 
-      $('#wingman-table').find('*[data-sfid=' + flight.getID() + ']')
-          .find('.color-stripe').css('background-color', flight.getColor());
+      if (window.wingmanTable) {
+        window.wingmanTable.setFlightColor(flight.getID(), flight.getColor());
+      }
 
       // Set fix data table into "selectable" mode if
       // more than one flight is loaded
