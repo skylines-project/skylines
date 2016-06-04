@@ -17,6 +17,10 @@ module.exports = function(defaults) {
     },
 
     vendorFiles: vendorFiles,
+
+    gzip: {
+      keepUncompressed: true,
+    },
   });
 
   // Use `app.import` to add additional libraries to the generated
