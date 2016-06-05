@@ -276,11 +276,6 @@ slFlightDisplay = function(_map, fix_table, baro) {
         window.wingmanTable.setFlightColor(flight.getID(), flight.getColor());
       }
 
-      // Set fix data table into "selectable" mode if
-      // more than one flight is loaded
-      if (flights.length() > 1)
-        fix_table.set('selectable', true);
-
       flight_display.setTime(global_time);
     });
 

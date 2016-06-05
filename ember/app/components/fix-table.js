@@ -4,7 +4,7 @@ import Ember from 'ember';
 
 export default Ember.Component.extend(Ember.Evented, {
   data: [],
-  selectable: false,
+  selectable: Ember.computed.gt('data.length', 1),
   selection: null,
 
   init() {

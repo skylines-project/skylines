@@ -1,7 +1,7 @@
 <table id="fix-data" class="table table-condensed">
   <tbody>
     {{#each data as |row|}}
-      <tr {{action "select" row.id}} class="{{if (eq row.id selection) "selected"}}" style="{{if selectable "cursor: pointer;"}}">
+      <tr {{action "select" row.id}} class="{{if (and selectable (eq row.id selection)) "selected"}}" style="{{if selectable "cursor: pointer;"}}">
         <td>
           <span class="badge" style="background: {{row.color}}">
             {{#if row.competitionId}}
