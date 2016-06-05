@@ -52,16 +52,6 @@ slPhaseHighlighter = function(_map, _flights, _padding_callback) {
         vector_context.drawPointGeometry(phase_markers.end);
       }
     });
-  };
-
-
-  phase_highlighter.addTable = function(placeholder) {
-    if (placeholder.length === 0 || placeholder.data('phase_table')) return;
-
-    var phase_table = slPhaseTable(placeholder);
-
-    placeholder.data('phase_table', phase_table);
-    phase_tables.push(phase_table);
 
     window.flightPhaseService.addObserver('selection', function() {
       var data = window.flightPhaseService.get('selection');
@@ -80,6 +70,15 @@ slPhaseHighlighter = function(_map, _flights, _padding_callback) {
 
       map.render();
     });
+  };
+
+  phase_highlighter.addTable = function(placeholder) {
+    if (placeholder.length === 0 || placeholder.data('phase_table')) return;
+
+    var phase_table = slPhaseTable(placeholder);
+
+    placeholder.data('phase_table', phase_table);
+    phase_tables.push(phase_table);
   };
 
   phase_highlighter.init();

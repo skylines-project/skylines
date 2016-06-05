@@ -1,0 +1,19 @@
+<table id="phases-table" class="table table-condensed table-striped phases-table-condensed">
+  <thead>
+    <tr>
+      <th></th>
+      <th>{{{headings.start}}}</th>
+      <th class='hidden-md'>{{{headings.duration}}}</th>
+      <th class='numeric'>{{{headings.altDiff}}}</th>
+      <th class='numeric'>{{{headings.distance}}}</th>
+      <th class='numeric'>{{{headings.vario}}}</th>
+      <th class='numeric'>{{{headings.speed}}}</th>
+      <th class='numeric'>{{{headings.glideRate}}}</th>
+    </tr>
+  </thead>
+  <tbody>
+    {{#each phases as |phase|}}
+      {{flight-phase-row phase=phase style="cursor: pointer;"}}
+    {{/each}}
+  </tbody>
+</table>

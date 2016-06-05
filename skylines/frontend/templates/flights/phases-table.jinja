@@ -96,50 +96,44 @@
 
 
 {% macro render_phases(flight) -%}
-<table id="phases-table" class="table table-condensed table-striped phases-table-condensed">
-  <thead>
-    <tr>
-      <th></th>
-      <th>{% trans %}Start{% endtrans %}</th>
-      <th class='hidden-md'>{% trans %}Duration{% endtrans %}</th>
-      <th class='numeric'>&Delta;H<br />[{{ h.get_setting_name('altitude_unit', fallback=True) }}]</th>
-      <th class='numeric'>{% trans %}Dist.{% endtrans %}<br />[{{ h.get_setting_name('distance_unit', fallback=True) }}]</th>
-      <th class='numeric'>{% trans %}Avg. vario{% endtrans %}<br />[{{ h.get_setting_name('lift_unit', fallback=True) }}]</th>
-      <th class='numeric'>{% trans %}Avg. speed{% endtrans %}<br />[{{ h.get_setting_name('speed_unit', fallback=True) }}]</th>
-      <th class='numeric'><abbr title="{% trans %}Glide Rate{% endtrans %}">{% trans %}GR{% endtrans %}</abbr></th>
-    </tr>
-  </thead>
-  {% with takeoff_midnight=flight.takeoff_time.replace(hour=0, minute=0, second=0, microsecond=0) -%}
-  <tbody>
+<div data-component='flight-phase-table' data-attrs='{
+  "headings": {
+    "start": "{% trans %}Start{% endtrans %}",
+    "duration": "{% trans %}Duration{% endtrans %}",
+    "altDiff": "&Delta;H<br />[{{ h.get_setting_name('altitude_unit', fallback=True) }}]",
+    "distance": "{% trans %}Dist.{% endtrans %}<br />[{{ h.get_setting_name('distance_unit', fallback=True) }}]",
+    "vario": "{% trans %}Avg. vario{% endtrans %}<br />[{{ h.get_setting_name('lift_unit', fallback=True) }}]",
+    "speed": "{% trans %}Avg. speed{% endtrans %}<br />[{{ h.get_setting_name('speed_unit', fallback=True) }}]",
+    "glideRate": "<abbr title=\"{% trans %}Glide Rate{% endtrans %}\">{% trans %}GR{% endtrans %}</abbr>"
+  },
+  "phases": [
+    {% with takeoff_midnight=flight.takeoff_time.replace(hour=0, minute=0, second=0, microsecond=0) -%}
     {% for ph in flight.phases -%}
     {% with phase=phase_formatter(ph) -%}
-    <tr>
-      <td>
-        {% if phase.is_circling -%}
-          {% if phase.circling_direction_left -%}
-            <i class="icon-rotate-left" title="{{ phase.type }} {{ phase.circling_direction|lower }}"></i>
-          {% elif phase.circling_direction_right -%}
-            <i class="icon-rotate-right" title="{{ phase.type }} {{ phase.circling_direction|lower }}"></i>
-          {% else -%}
-            <i class="icon-circle-blank" title="{{ phase.type }} {{ phase.circling_direction|lower }}"></i>
-          {%- endif %}
-        {% elif phase.is_powered -%}
-          <i class="icon-bolt" title="{{ phase.type }}"></i>
-        {% else -%}
-          <i class="icon-long-arrow-right" title="{{ phase.type }}"></i>
-        {%- endif %}
-      </td>
-      <td class='start' data-content='{{ (ph.start_time - takeoff_midnight).total_seconds() }}'>{{ phase.start }}</td>
-      <td class='duration hidden-md' data-content='{{ ph.duration.total_seconds() }}'>{{ phase.duration }}</td>
-      <td class='numeric'>{{ phase.alt_diff_number }}</td>
-      <td class='numeric'>{{ phase.distance_number }}</td>
-      <td class='numeric'>{{ phase.vario_number }}</td>
-      <td class='numeric'>{{ phase.speed_number }}</td>
-      <td class='numeric'>{{ phase.glide_rate }}</td>
-    </tr>
+    {
+      "isCircling": {{phase.is_circling|tojson}},
+      "circlingDirection": "{{phase.circling_direction}}",
+      "isCirclingLeft": {{phase.circling_direction_left|tojson}},
+      "isCirclingRight": {{phase.circling_direction_right|tojson}},
+      "isPowered": {{phase.is_powered|tojson}},
+      "type": "{{phase.type}}",
+      "start": {
+        "seconds": {{(ph.start_time - takeoff_midnight).total_seconds()}},
+        "text": "{{phase.start}}"
+      },
+      "duration": {
+        "seconds": {{ph.duration.total_seconds()}},
+        "text": "{{phase.duration}}"
+      },
+      "altDiff": "{{phase.alt_diff_number}}",
+      "distance": "{{phase.distance_number}}",
+      "vario": "{{phase.vario_number}}",
+      "speed": "{{phase.speed_number}}",
+      "glideRate": "{{phase.glide_rate}}"
+    }{%if not loop.last%},{%endif%}
     {%- endwith %}
     {%- endfor %}
-  </tbody>
-  {%- endwith %}
-</table>
+    {%- endwith %}
+  ]
+}'></div>
 {%- endmacro %}

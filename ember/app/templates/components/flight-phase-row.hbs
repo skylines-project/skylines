@@ -1,0 +1,22 @@
+<td>
+  {{#if phase.isCircling}}
+    {{#if phase.isCirclingLeft}}
+      <i class="icon-rotate-left" title="{{phase.type}} {{phase.circlingDirection}}"></i>
+    {{else if phase.isCirclingRight}}
+      <i class="icon-rotate-right" title="{{phase.type}} {{phase.circlingDirection}}"></i>
+    {{else}}
+      <i class="icon-circle-blank" title="{{phase.type}} {{phase.circlingDirection}}"></i>
+    {{/if}}
+  {{else if phase.isPowered}}
+    <i class="icon-bolt" title="{{phase.type}}"></i>
+  {{else}}
+    <i class="icon-long-arrow-right" title="{{phase.type}}"></i>
+  {{/if}}
+</td>
+<td class="start">{{phase.start.text}}</td>
+<td class="duration hidden-md">{{phase.duration.text}}</td>
+<td class="numeric">{{phase.altDiff}}</td>
+<td class="numeric">{{phase.distance}}</td>
+<td class="numeric">{{phase.vario}}</td>
+<td class="numeric">{{phase.speed}}</td>
+<td class="numeric">{{phase.glideRate}}</td>
