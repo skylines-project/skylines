@@ -7,7 +7,7 @@
 {% from 'flights/details-table.jinja' import render_details_table with context %}
 {% from 'flights/wingman-table.jinja' import render_wingman_table with context %}
 {% from 'flights/phases-table.jinja' import render_circling_performance, render_cruise_performance,
-                                            render_leg_statistics, render_phases_condensed with context %}
+                                            render_leg_statistics, render_phases with context %}
 
 
 {% block title -%}{{ flight_title(flight) }}{%- endblock %}
@@ -278,7 +278,7 @@
       <h3>{% trans %}Phase Statistics{% endtrans %}</h3>
       <div class="sidebar-pane-content">
         <div class="table-responsive">
-          {{ render_phases_condensed(flight) }}
+          {{ render_phases(flight) }}
         </div>
       </div>
     </div>
