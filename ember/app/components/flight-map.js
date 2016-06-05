@@ -10,7 +10,7 @@ export default Ember.Component.extend(Ember.Evented, {
   bingAPIKey: null,
   mapboxAPIKey: null,
   mapTileURL: null,
-  baseLayer: 'OpenStreetMap',
+  baseLayer: null,
 
   style: Ember.computed('width', 'height', function() {
     let { width, height } = this.getProperties('width', 'height');
