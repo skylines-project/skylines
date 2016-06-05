@@ -3,6 +3,7 @@
 
 {% extends "base-page.jinja" %}
 {% set active_page = "settings" %}
+{% set use_ember = true %}
 
 {% block title %}{{ g.user|e }}{% endblock %}
 
@@ -35,21 +36,10 @@
 
 <script type="text/javascript">
   $(function() {
-    if (!isCanvasSupported()) {
-      $("#map_canvas").html('<b>Your browser is too old to display this map.<br />' +
-                            'Please update to a current version.</b>');
-      return;
-    }
+    var map = window.flightMap.get('map');
 
-    var sl_map =
-      new slMap("map_canvas",
-                "{{ config.get('SKYLINES_MAP_TILE_URL') }}",
-                { {% if 'baselayer' in request.args %}'base_layer': '{{ request.args['baselayer'] }}',{% endif %}{% if 'overlays' in request.args %}'overlay_layers': '{{ request.args['overlays'] }}',{% endif %} });
-
-    var map = sl_map.getMap();
-
-    sl_map.addBingLayers("{{ config.get('SKYLINES_BING_API_KEY', 'null') }}");
-    sl_map.addMapboxLayer("{{ config.get('SKYLINES_MAPBOX_API_KEY', 'null') }}");
+    window.flightMap.addBingLayers("{{ config.get('SKYLINES_BING_API_KEY', 'null') }}");
+    window.flightMap.addMapboxLayer("{{ config.get('SKYLINES_MAPBOX_API_KEY', 'null') }}");
 
     var icon_style = new ol.style.Style({
       image: new ol.style.Icon(({
@@ -253,7 +243,12 @@
   <div class="row">
     <div class="col-md-12">
       <h2>{% trans %}Takeoff Locations{% endtrans %}</h2>
-      <div id="map_canvas" style="width:100%; height:533px;"></div>
+      <div data-component='flight-map' data-attrs='{
+        "height": "533px",
+        {% if 'baselayer' in request.args %}"baseLayer": "{{ request.args['baselayer'] }}",{% endif %}
+        {% if 'overlays' in request.args %}"overlayLayers": "{{ request.args['overlays'] }}",{% endif %}
+        "mapTileURL": "{{ config.get('SKYLINES_MAP_TILE_URL') }}"
+      }'></div>
     </div>
   </div>
   {%- endif %}

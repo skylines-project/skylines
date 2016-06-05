@@ -4,7 +4,7 @@
 /**
  * A object to handle flight phase highlights.
  * @constructor
- * @param {ol.Map} _map slMap object.
+ * @param {ol.Map} _map
  * @param {Object} _baro slBarogram object.
  * @param {slFlightCollection} _flights slFlightCollection object
  * @param {function} _padding_callback Callback method which returns the

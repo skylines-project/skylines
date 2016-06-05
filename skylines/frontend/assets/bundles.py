@@ -117,7 +117,6 @@ openlayers_js = Bundle(
     'js/ol-PlayButton-v3.js',
     'js/ol-FullscreenButton.js',
     'js/ol-CesiumSwitcher.js',
-    'js/slMap.js',
     'js/slMapClickHandler.js',
     'http://rawgithub.com/bdougherty/BigScreen/v2.0.4/bigscreen.min.js',
     filters=SimpleClosureJS,

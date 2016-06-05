@@ -101,28 +101,17 @@
       template: popover_template
     });
 
-    if (!isCanvasSupported()) {
-      $("#map_canvas").html('<b>Your browser is too old to display this map.<br />' +
-                            'Please update to a current version.</b>');
-      return;
-    }
-
     slUnits.init({{ h.json.dumps(h.get_setting_name('distance_unit')) }},
                  {{ h.json.dumps(h.get_setting_name('speed_unit')) }},
                  {{ h.json.dumps(h.get_setting_name('lift_unit')) }},
                  {{ h.json.dumps(h.get_setting_name('altitude_unit')) }});
 
-    var sl_map =
-      new slMap("map_canvas",
-                "{{ config.get('SKYLINES_MAP_TILE_URL') }}",
-                { {% if 'baselayer' in request.args %}'base_layer': '{{ request.args['baselayer'] }}',{% endif %}{% if 'overlays' in request.args %}'overlay_layers': '{{ request.args['overlays'] }}',{% endif %} });
+    var map = window.flightMap.get('map');
 
-    var map = sl_map.getMap();
+    window.flightMap.addBingLayers("{{ config.get('SKYLINES_BING_API_KEY', 'null') }}");
+    window.flightMap.addMapboxLayer("{{ config.get('SKYLINES_MAPBOX_API_KEY', 'null') }}");
 
-    sl_map.addBingLayers("{{ config.get('SKYLINES_BING_API_KEY', 'null') }}");
-    sl_map.addMapboxLayer("{{ config.get('SKYLINES_MAPBOX_API_KEY', 'null') }}");
-
-    flight_display = slFlightDisplay(sl_map.getMap(), window.fixTable, window.barogram);
+    flight_display = slFlightDisplay(map, window.fixTable, window.barogram);
     flight_display.addFlightFromJSON("/flights/{{ flight.id }}/json?{{ config.get('SKYLINES_CACHE_BUSTER', '') }}",false);
 
     {% if other_flights -%}
@@ -146,7 +135,7 @@
       api_url: "{{ config.get('SKYLINES_API_URL') }}"
     });
 
-    var phase_highlighter = slPhaseHighlighter(sl_map.getMap(),
+    var phase_highlighter = slPhaseHighlighter(map,
                                                flight_display.getBaro(),
                                                flight_display.getFlights(),
                                                getPadding);
@@ -275,7 +264,11 @@
   </div>
 </div>
 
-<div id="map_canvas" class="olFullscreen sidebar-map"></div>
+<div data-component='flight-map' data-attrs='{
+  {% if 'baselayer' in request.args %}"baseLayer": "{{ request.args['baselayer'] }}",{% endif %}
+  {% if 'overlays' in request.args %}"overlayLayers": "{{ request.args['overlays'] }}",{% endif %}
+  "mapTileURL": "{{ config.get('SKYLINES_MAP_TILE_URL') }}"
+}' class="olFullscreen sidebar-map"></div>
 <div id="barogram_panel" class="map-bottom-panel map-overlay">
     <div style="overflow: auto; max-height: 115px">
         <div data-component='fix-table'></div>
