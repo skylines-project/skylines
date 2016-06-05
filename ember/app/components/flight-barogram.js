@@ -3,6 +3,8 @@
 import Ember from 'ember';
 
 export default Ember.Component.extend(Ember.Evented, {
+  flightPhase: Ember.inject.service(),
+
   height: 133,
 
   flot: null,
@@ -12,7 +14,7 @@ export default Ember.Component.extend(Ember.Evented, {
   enls: [],
   contests: [],
   elevations: [],
-  timeHighlight: null,
+  timeHighlight: Ember.computed.readOnly('flightPhase.selection'),
   hoverMode: false,
 
   init() {
@@ -274,9 +276,13 @@ export default Ember.Component.extend(Ember.Evented, {
     options.grid.markings = [{
       color: '#fff083',
       xaxis: {
-        from: time_highlight[0] * 1000,
-        to: time_highlight[1] * 1000
+        from: time_highlight.start * 1000,
+        to: time_highlight.end * 1000
       }
     }];
   },
+
+  flightPhaseObserver: Ember.observer('timeHighlight', function() {
+    this.draw();
+  }),
 });

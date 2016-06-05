@@ -5,18 +5,16 @@
  * A object to handle flight phase highlights.
  * @constructor
  * @param {ol.Map} _map
- * @param {Object} _baro slBarogram object.
  * @param {slFlightCollection} _flights slFlightCollection object
  * @param {function} _padding_callback Callback method which returns the
  * correct padding for the view.
  */
-slPhaseHighlighter = function(_map, _baro, _flights, _padding_callback) {
+slPhaseHighlighter = function(_map, _flights, _padding_callback) {
   var phase_tables = [];
 
   var phase_highlighter = {};
   var phase_start_marker_style, phase_end_marker_style;
   var map = _map;
-  var baro = _baro;
   var flights = _flights;
   var getPadding = _padding_callback ?
       _padding_callback : function() { return [0, 0, 0, 0]; };
@@ -65,27 +63,23 @@ slPhaseHighlighter = function(_map, _baro, _flights, _padding_callback) {
     placeholder.data('phase_table', phase_table);
     phase_tables.push(phase_table);
 
-    $(phase_table)
-        .on('selection_changed', function(event, data) {
-          if (data) {
-            phase_markers = highlight(data.start, data.end);
-            baro.set('timeHighlight', [data.start, data.end]);
+    window.flightPhaseService.addObserver('selection', function() {
+      var data = window.flightPhaseService.get('selection');
+      if (data) {
+        phase_markers = highlight(data.start, data.end);
 
-            for (var i = 0; i < phase_tables.length; i++) {
-              if (phase_tables[i] != this) {
-                phase_tables[i].setSelection(null, false);
-              }
-            }
-          } else {
-            phase_markers.start = null;
-            phase_markers.end = null;
-
-            baro.set('timeHighlight', null);
+        for (var i = 0; i < phase_tables.length; i++) {
+          if (phase_tables[i] != this) {
+            phase_tables[i].setSelection(null, false);
           }
+        }
+      } else {
+        phase_markers.start = null;
+        phase_markers.end = null;
+      }
 
-          baro.draw();
-          map.render();
-        });
+      map.render();
+    });
   };
 
   phase_highlighter.init();
