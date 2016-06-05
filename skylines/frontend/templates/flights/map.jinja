@@ -55,13 +55,6 @@
       $(".ol-attribution").css('bottom', height);
     });
 
-    sidebar.on('content', function (e, args) {
-      if (args.id == 'tab-stats-legs') {
-        phase_highlighter.addTable($('#leg-table-olc_plus-classic'));
-        phase_highlighter.addTable($('#leg-table-olc_plus-triangle'));
-      }
-    });
-
     window.wingmanTable.on('select', function(sfid) {
       if (!flight_display) return;
 

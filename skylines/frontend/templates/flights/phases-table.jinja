@@ -64,30 +64,33 @@
 {% macro render_leg_statistics(flight, contest_type, trace_type) -%}
 {% with legs=leg_formatter(flight, flight.get_contest_legs(contest_type, trace_type)) -%}
 {% if legs -%}
-<table id="leg-table-{{ contest_type }}-{{ trace_type }}" class="table table-condensed text-right">
-  <tbody>
-    <tr class="small">
-      <th></th>
-      <th class='numeric'>{% trans %}Dist.{% endtrans %}</th>
-      <th class='numeric hidden-md'><abbr title="{% trans %}Duration{% endtrans %}">{% trans %}&Delta;t{% endtrans %}</th>
-      <th class='numeric'>{% trans %}Avg. speed{% endtrans %}</th>
-      <th class='numeric'>{% trans %}Climb %{% endtrans %}</th>
-      <th class='numeric'>{% trans %}Avg. vario{% endtrans %}</th>
-      <th class='numeric'><abbr title="{% trans %}Glide Rate while cruising{% endtrans %}">{% trans %}GR{% endtrans %}</abbr></th>
-    </tr>
+<div data-component='flight-leg-table' data-attrs='{
+  "headings": {
+    "distance": "{% trans %}Dist.{% endtrans %}",
+    "duration": "<abbr title=\"{% trans %}Duration{% endtrans %}\">{% trans %}&Delta;t{% endtrans %}",
+    "speed": "{% trans %}Avg. speed{% endtrans %}",
+    "climbPercentage": "{% trans %}Climb %{% endtrans %}",
+    "vario": "{% trans %}Avg. vario{% endtrans %}",
+    "glideRate": "<abbr title=\"{% trans %}Glide Rate while cruising{% endtrans %}\">{% trans %}GR{% endtrans %}</abbr>"
+  },
+  "legs": [
     {% for leg in legs -%}
-    <tr class="small">
-      <td class='start' data-content='{{ leg.start_time_of_day }}'>{{ loop.index }}</td>
-      <td class='numeric'>{{ leg.distance }}</td>
-      <td class='duration hidden-md' data-content='{{ leg.duration.total_seconds() }}'>{{ leg.duration }}</td>
-      <td class='numeric'>{{ leg.speed }}</td>
-      <td class='numeric'>{{ leg.climb_percentage }}%</td>
-      <td class='numeric'>{{ leg.climbrate }}</td>
-      <td class='numeric'>{{ leg.glide_rate }}</td>
-    </tr>
+    {
+      "num": {{loop.index}},
+      "distance": "{{leg.distance}}",
+      "start": {{leg.start_time_of_day}},
+      "duration": {
+        "seconds": {{leg.duration.total_seconds()}},
+        "text": "{{leg.duration}}"
+      },
+      "speed": "{{leg.speed}}",
+      "climbPercentage": "{{leg.climb_percentage}}",
+      "vario": "{{leg.climbrate}}",
+      "glideRate": "{{leg.glide_rate}}"
+    }{%if not loop.last%},{%endif%}
     {%- endfor %}
-  </tbody>
-</table>
+  ]
+}'></div>
 {%- else %}
 {% trans %}No data found...{% endtrans %}
 {%- endif %}

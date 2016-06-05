@@ -1,0 +1,18 @@
+<table class="table table-condensed text-right">
+  <thead>
+    <tr class="small">
+      <th></th>
+      <th class='numeric'>{{{headings.duration}}}</th>
+      <th class='numeric hidden-md'>{{{headings.altDiff}}}</th>
+      <th class='numeric'>{{{headings.speed}}}</th>
+      <th class='numeric'>{{{headings.climbPercentage}}}</th>
+      <th class='numeric'>{{{headings.vario}}}</th>
+      <th class='numeric'>{{{headings.glideRate}}}</th>
+    </tr>
+  </thead>
+  <tbody>
+    {{#each legs as |leg|}}
+      {{flight-leg-row leg=leg style="cursor: pointer;"}}
+    {{/each}}
+  </tbody>
+</table>

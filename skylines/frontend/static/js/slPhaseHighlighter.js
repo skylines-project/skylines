@@ -72,15 +72,6 @@ slPhaseHighlighter = function(_map, _flights, _padding_callback) {
     });
   };
 
-  phase_highlighter.addTable = function(placeholder) {
-    if (placeholder.length === 0 || placeholder.data('phase_table')) return;
-
-    var phase_table = slPhaseTable(placeholder);
-
-    placeholder.data('phase_table', phase_table);
-    phase_tables.push(phase_table);
-  };
-
   phase_highlighter.init();
   return phase_highlighter;
 

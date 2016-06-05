@@ -125,7 +125,6 @@ openlayers_js = Bundle(
 flight_js = Bundle(
     'js/util.js',
     'js/slUnits.js',
-    'js/slPhaseTable.js',
     'js/slCollection.js',
     'js/slFlightCollection.js',
     'js/slFlight.js',
