@@ -75,9 +75,6 @@
 
     var map = window.flightMap.get('map');
 
-    window.flightMap.addBingLayers("{{ config.get('SKYLINES_BING_API_KEY', 'null') }}");
-    window.flightMap.addMapboxLayer("{{ config.get('SKYLINES_MAPBOX_API_KEY', 'null') }}");
-
     var flight_display = slFlightTracking(map, window.fixTable, window.barogram);
 
     {% for pilot, trace in zip(pilots, traces) -%}
@@ -148,6 +145,8 @@
 <div data-component='flight-map' data-attrs='{
   {% if 'baselayer' in request.args %}"baseLayer": "{{ request.args['baselayer'] }}",{% endif %}
   {% if 'overlays' in request.args %}"overlayLayers": "{{ request.args['overlays'] }}",{% endif %}
+  "bingAPIKey": "{{ config.get('SKYLINES_BING_API_KEY', 'null') }}",
+  "mapboxAPIKey": "{{ config.get('SKYLINES_MAPBOX_API_KEY', 'null') }}",
   "mapTileURL": "{{ config.get('SKYLINES_MAP_TILE_URL') }}"
 }' class="olFullscreen sidebar-map"></div>
 <div id="barogram_panel" class="map-bottom-panel map-overlay">

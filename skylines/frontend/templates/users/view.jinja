@@ -38,9 +38,6 @@
   $(function() {
     var map = window.flightMap.get('map');
 
-    window.flightMap.addBingLayers("{{ config.get('SKYLINES_BING_API_KEY', 'null') }}");
-    window.flightMap.addMapboxLayer("{{ config.get('SKYLINES_MAPBOX_API_KEY', 'null') }}");
-
     var icon_style = new ol.style.Style({
       image: new ol.style.Icon(({
         anchor: [0.5, 1],
@@ -247,6 +244,8 @@
         "height": "533px",
         {% if 'baselayer' in request.args %}"baseLayer": "{{ request.args['baselayer'] }}",{% endif %}
         {% if 'overlays' in request.args %}"overlayLayers": "{{ request.args['overlays'] }}",{% endif %}
+        "bingAPIKey": "{{ config.get('SKYLINES_BING_API_KEY', 'null') }}",
+        "mapboxAPIKey": "{{ config.get('SKYLINES_MAPBOX_API_KEY', 'null') }}",
         "mapTileURL": "{{ config.get('SKYLINES_MAP_TILE_URL') }}"
       }'></div>
     </div>

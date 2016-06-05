@@ -7,6 +7,8 @@ export default Ember.Component.extend(Ember.Evented, {
 
   width: '100%',
   height: '100%',
+  bingAPIKey: null,
+  mapboxAPIKey: null,
   mapTileURL: null,
   baseLayer: 'OpenStreetMap',
 
@@ -80,6 +82,8 @@ export default Ember.Component.extend(Ember.Evented, {
     this.addReliefLayer();
     this.addAirspaceLayers();
     this.addMWPLayers();
+    this.addBingLayers();
+    this.addMapboxLayer();
   },
 
   setBaseLayer(base_layer) {
@@ -195,8 +199,9 @@ export default Ember.Component.extend(Ember.Evented, {
     this.get('map').addLayer(relief_layer);
   },
 
-  addMapboxLayer(tile_url) {
-    if (tile_url == 'null') {
+  addMapboxLayer() {
+    let tile_url = this.get('mapboxAPIKey');
+    if (!tile_url || tile_url == 'null') {
       return;
     }
 
@@ -227,8 +232,9 @@ export default Ember.Component.extend(Ember.Evented, {
     this.get('map').addLayer(mapbox_layer);
   },
 
-  addBingLayers(api_key) {
-    if (api_key == 'null') {
+  addBingLayers() {
+    let api_key = this.get('bingAPIKey');
+    if (!api_key || api_key == 'null') {
       return;
     }
 
