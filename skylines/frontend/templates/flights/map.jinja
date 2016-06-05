@@ -146,7 +146,7 @@
       api_url: "{{ config.get('SKYLINES_API_URL') }}"
     });
 
-    var phase_highlighter = slPhaseHighlighter(sl_map,
+    var phase_highlighter = slPhaseHighlighter(sl_map.getMap(),
                                                flight_display.getBaro(),
                                                flight_display.getFlights(),
                                                getPadding);
