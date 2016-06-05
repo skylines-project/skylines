@@ -1,6 +1,3 @@
-
-
-
 /**
  * A handler to display plane icons on the map.
  * @constructor
@@ -12,7 +9,6 @@ slMapIconHandler = function(_map, _flights) {
 
   var map = _map;
   var flights = _flights;
-  var hover_enabled = true;
 
   map_icon_handler.init = function() {
     var style = new ol.style.Icon({
@@ -27,14 +23,6 @@ slMapIconHandler = function(_map, _flights) {
 
     style.load();
 
-    map.on('pointermove', function(e) {
-      if (!hover_enabled || e.dragging)
-        return;
-
-      var coordinate = map.getEventCoordinate(e.originalEvent);
-      displaySnap(coordinate);
-    });
-
     map.on('postcompose', function(e) {
       var vector_context = e.vectorContext;
 
@@ -47,10 +35,6 @@ slMapIconHandler = function(_map, _flights) {
         }
       });
     });
-  };
-
-  map_icon_handler.setMode = function(mode) {
-    hover_enabled = mode;
   };
 
   map_icon_handler.showPlane = function(flight, fix_data) {
@@ -104,32 +88,4 @@ slMapIconHandler = function(_map, _flights) {
 
   map_icon_handler.init();
   return map_icon_handler;
-
-
-  function displaySnap(coordinate) {
-    var flight_path_source = flights.getSource();
-
-    var closest_feature = flight_path_source
-        .getClosestFeatureToCoordinate(coordinate);
-
-    if (closest_feature !== null) {
-      var geometry = closest_feature.getGeometry();
-      var closest_point = geometry.getClosestPoint(coordinate);
-
-      var feature_pixel = map.getPixelFromCoordinate(closest_point);
-      var mouse_pixel = map.getPixelFromCoordinate(coordinate);
-
-      var squared_distance = Math.pow(mouse_pixel[0] - feature_pixel[0], 2) +
-                             Math.pow(mouse_pixel[1] - feature_pixel[1], 2);
-
-      if (squared_distance > 100) {
-        $(map_icon_handler).triggerHandler('set_time', null);
-      } else {
-        var time = closest_point[3];
-        $(map_icon_handler).triggerHandler('set_time', time);
-      }
-    }
-
-    map.render();
-  }
 };

@@ -24,10 +24,16 @@ slFlightDisplay = function(_map, fix_table, baro) {
   var contests = slContestCollection();
 
   /**
-   * Handler for the plane icons and map hover events
+   * Handler for the plane icons
    * @type {slMapIconHandler}
    */
   var map_icon_handler = slMapIconHandler(map, flights);
+
+  /**
+   * Handler for map hover events
+   * @type {slMapHoverHandler}
+   */
+  var map_hover_handler = slMapHoverHandler(map, flights);
 
   /**
    * Play button control
@@ -130,7 +136,7 @@ slFlightDisplay = function(_map, fix_table, baro) {
     play_button = new PlayButton();
     map.addControl(play_button);
 
-    map_icon_handler.setMode(true);
+    map_hover_handler.setMode(true);
     baro.set('hoverMode', true);
 
     cesium_switcher = new CesiumSwitcher();
@@ -211,7 +217,7 @@ slFlightDisplay = function(_map, fix_table, baro) {
     map.on('moveend', update_baro_scale_on_moveend);
 
     // Set the time when the mouse hoves the map
-    $(map_icon_handler).on('set_time', function(e, time) {
+    $(map_hover_handler).on('set_time', function(e, time) {
       if (time) flight_display.setTime(time);
       else flight_display.setTime(default_time);
     });
@@ -299,7 +305,7 @@ slFlightDisplay = function(_map, fix_table, baro) {
       }
 
       // disable mouse hovering
-      map_icon_handler.setMode(false);
+      map_hover_handler.setMode(false);
       baro.set('hoverMode', false);
 
       return true;
@@ -308,7 +314,7 @@ slFlightDisplay = function(_map, fix_table, baro) {
     // Enable hover modes after stopping replay.
     $(play_button).on('stop', function(e) {
       // reenable mouse hovering
-      if (!cesium_switcher.getMode()) map_icon_handler.setMode(true);
+      if (!cesium_switcher.getMode()) map_hover_handler.setMode(true);
       baro.set('hoverMode', true);
     });
 
@@ -352,7 +358,7 @@ slFlightDisplay = function(_map, fix_table, baro) {
 
       if (!play_button.getMode()) {
         // disable mouse hovering
-        map_icon_handler.setMode(false);
+        map_hover_handler.setMode(false);
       }
 
       map_icon_handler.hideAllPlanes();

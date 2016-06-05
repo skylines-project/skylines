@@ -132,6 +132,7 @@ flight_js = Bundle(
     'js/slContest.js',
     'js/slPhaseHighlighter.js',
     'js/slMapIconHandler.js',
+    'js/slMapHoverHandler.js',
     'js/slFlightDisplay.js',
     'http://momentjs.com/downloads/moment.min.js',
     'http://rawgithub.com/Turbo87/sidebar-v2/v0.2.1/js/jquery-sidebar.min.js',
