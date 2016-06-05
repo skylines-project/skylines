@@ -51,20 +51,6 @@
     sl_map.addBingLayers("{{ config.get('SKYLINES_BING_API_KEY', 'null') }}");
     sl_map.addMapboxLayer("{{ config.get('SKYLINES_MAPBOX_API_KEY', 'null') }}");
 
-    var vector_source = new ol.source.Vector({
-      features: []
-    });
-
-    var vector_layer = new ol.layer.Vector({
-      source: vector_source,
-      display_in_layer_switcher: false,
-      zIndex: 51,
-      name: 'Takeoff Locations',
-      id: 'TakeoffLocations'
-    });
-
-    map.addLayer(vector_layer);
-
     var icon_style = new ol.style.Style({
       image: new ol.style.Icon(({
         anchor: [0.5, 1],
@@ -74,13 +60,26 @@
       }))
     });
 
+    var vector_source = new ol.source.Vector({
+      features: []
+    });
+
+    var vector_layer = new ol.layer.Vector({
+      source: vector_source,
+      display_in_layer_switcher: false,
+      zIndex: 51,
+      style: icon_style,
+      name: 'Takeoff Locations',
+      id: 'TakeoffLocations'
+    });
+
+    map.addLayer(vector_layer);
+
     var locations = [{{ add_locations(takeoff_locations) }}];
     for (var i = 0; i < locations.length; ++i) {
       var feature = new ol.Feature({
         geometry: new ol.geom.Point(ol.proj.transform(locations[i], 'EPSG:4326', 'EPSG:3857'))
       });
-
-      feature.setStyle(icon_style);
 
       vector_source.addFeature(feature);
     }
