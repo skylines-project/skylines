@@ -99,7 +99,6 @@
 <table id="phases-table" class="table table-condensed table-striped phases-table-condensed">
   <thead>
     <tr>
-      <!--<th class='numeric'>#</th>-->
       <th></th>
       <th>{% trans %}Start{% endtrans %}</th>
       <th class='hidden-md'>{% trans %}Duration{% endtrans %}</th>
@@ -115,7 +114,6 @@
     {% for ph in flight.phases -%}
     {% with phase=phase_formatter(ph) -%}
     <tr>
-      <!--<td class='numeric'>{{ loop.index }}</td>-->
       <td>
         {% if phase.is_circling -%}
           {% if phase.circling_direction_left -%}
