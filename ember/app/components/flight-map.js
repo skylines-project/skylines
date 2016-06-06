@@ -1,7 +1,5 @@
 /* globals ol, isCanvasSupported */
 
-import GraphicLayerSwitcher from '../utils/graphic-layer-switcher';
-
 import Ember from 'ember';
 
 export default Ember.Component.extend(Ember.Evented, {
@@ -48,7 +46,6 @@ export default Ember.Component.extend(Ember.Evented, {
       }),
       controls: ol.control.defaults().extend([
         new ol.control.ScaleLine(),
-        new GraphicLayerSwitcher()
       ]),
       interactions: interactions,
       ol3Logo: false
