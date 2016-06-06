@@ -367,9 +367,10 @@ slFlightDisplay = function(_map, fix_table, baro) {
       }
 
     } else {
-      flights.each(function(flight) {
-        // calculate fix data
-        var fix_data = flight.getFixData(time);
+      window.fixCalcService.get('data').forEach(function(it) {
+        var flight = it[0];
+        var fix_data = it[1];
+
         if (!fix_data) {
           // update map
           if (cesium_switcher.getMode()) {
