@@ -2,7 +2,7 @@
  * A handler to display plane icons on the map.
  * @constructor
  * @param {Object} _map ol3 map object.
- * @param {Object} _flights slFlightCollection.
+ * @param {Array} _flights
  */
 slMapIconHandler = function(_map, _flights) {
   var map_icon_handler = {};
@@ -26,7 +26,7 @@ slMapIconHandler = function(_map, _flights) {
     map.on('postcompose', function(e) {
       var vector_context = e.vectorContext;
 
-      flights.each(function(flight) {
+      flights.forEach(function(flight) {
         var plane = flight.get('plane');
         if (plane.point !== null) {
           style.setRotation(plane['heading']);
@@ -52,7 +52,7 @@ slMapIconHandler = function(_map, _flights) {
     plane['heading'] = fix_data['heading'];
 
     // add plane marker if more than one flight on the map
-    if (flights.length() > 1) {
+    if (flights.length > 1) {
       if (plane.marker === null) {
         var badge = $('<span class="badge plane_marker" ' +
                 'style="display: inline-block; text-align: center; ' +
@@ -82,7 +82,7 @@ slMapIconHandler = function(_map, _flights) {
   };
 
   map_icon_handler.hideAllPlanes = function() {
-    flights.each(map_icon_handler.hidePlane);
+    flights.forEach(map_icon_handler.hidePlane);
   };
 
 

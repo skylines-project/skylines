@@ -27,7 +27,7 @@ slFlightDisplay = function(_map, fix_table, baro) {
    * Handler for the plane icons
    * @type {slMapIconHandler}
    */
-  var map_icon_handler = slMapIconHandler(map, flights);
+  var map_icon_handler = slMapIconHandler(map, flights.getArray());
 
   /**
    * Handler for map hover events
