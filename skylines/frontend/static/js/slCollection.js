@@ -39,8 +39,7 @@ slCollection = function() {
    * @param  {Function} callback
    */
   collection.each = function(callback) {
-    for (var i = 0, len = collection.length(); i < len; ++i)
-      callback(collection.at(i));
+    data_.forEach(callback);
   };
 
 
@@ -50,13 +49,9 @@ slCollection = function() {
    * @return {?Object}
    */
   collection.get = function(id) {
-    for (var i = 0, len = collection.length(); i < len; ++i) {
-      var object = collection.at(i);
-      if (object.getID() == id)
-        return object;
-    }
-
-    return null;
+    return data_.find(function(object) {
+      return object.getID() == id;
+    }) || null;
   };
 
   /**
@@ -65,15 +60,11 @@ slCollection = function() {
    * @return {?Object}
    */
   collection.all = function(id) {
-    var objects = [];
-    for (var i = 0, len = collection.length(); i < len; ++i) {
-      var object = collection.at(i);
-      if (object.getID() == id)
-        objects.push(object);
-    }
+    var objects = data_.filter(function(object) {
+      return object.getID() == id;
+    });
 
-    if (objects) return objects;
-    else return null;
+    return objects || null;
   };
 
   /**
@@ -91,7 +82,7 @@ slCollection = function() {
    * @param {Object} object
    */
   collection.add = function(object) {
-    data_.push(object);
+    data_.pushObject(object);
 
     $(collection).triggerHandler('add', [object]);
   };
@@ -103,17 +94,16 @@ slCollection = function() {
    * @return {Boolean} true if success
    */
   collection.remove = function(id) {
-    for (var i = 0, len = collection.length(); i < len; ++i) {
-      var object = collection.at(i);
-      if (object.getID() == id) {
-        $(collection).triggerHandler('preremove', object);
-        data_.splice(i, 1);
-        $(collection).triggerHandler('removed', id);
-        return true;
-      }
+    var object = collection.get(id);
+    if (object === null) {
+      return false;
     }
 
-    return false;
+    $(collection).triggerHandler('preremove', object);
+    data_.removeObject(object);
+    $(collection).triggerHandler('removed', id);
+
+    return true;
   };
 
 
