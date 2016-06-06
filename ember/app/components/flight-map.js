@@ -16,7 +16,7 @@ export default Ember.Component.extend(Ember.Evented, {
 
   style: Ember.computed('width', 'height', function() {
     let { width, height } = this.getProperties('width', 'height');
-    return `width: ${width}; height: ${height};`;
+    return Ember.String.htmlSafe(`width: ${width}; height: ${height};`);
   }),
 
   noCanvas: Ember.computed(function() {

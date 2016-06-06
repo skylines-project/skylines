@@ -7,6 +7,10 @@ export default Ember.Component.extend({
   classNameBindings: ['selected'],
   attributeBindings: ['style'],
 
+  style: Ember.computed(function() {
+    return Ember.String.htmlSafe('cursor: pointer');
+  }),
+
   selected: Ember.computed('flightPhase.selection', function() {
     let selection = this.get('flightPhase.selection');
     if (selection) {
