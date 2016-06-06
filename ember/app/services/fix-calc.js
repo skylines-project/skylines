@@ -4,7 +4,7 @@ export default Ember.Service.extend({
   flights: [],
   time: null,
 
-  data: Ember.computed('flights.[]', 'time', function() {
+  data: Ember.computed('flights.@each.time', 'time', function() {
     let time = this.get('time');
     return this.get('flights').map(flight => [flight, flight.getFixData(time)]);
   }),
