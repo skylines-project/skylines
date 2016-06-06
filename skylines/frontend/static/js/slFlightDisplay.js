@@ -355,39 +355,26 @@ slFlightDisplay = function(_map, fix_table, baro) {
     window.fixCalcService.set('time', time);
     baro.set('time', time);
 
-    // if the mouse is not hovering over the barogram or any trail on the map
-    if (!time) {
-      // remove plane icons from map
-      if (cesium_switcher.getMode()) {
-        flights.each(function(flight) {
+    window.fixCalcService.get('data').forEach(function(it) {
+      var flight = it[0];
+      var fix_data = it[1];
+
+      if (!fix_data) {
+        // update map
+        if (cesium_switcher.getMode()) {
           cesium_switcher.hidePlane(flight);
-        });
-      } else {
-        map_icon_handler.hideAllPlanes();
-      }
-
-    } else {
-      window.fixCalcService.get('data').forEach(function(it) {
-        var flight = it[0];
-        var fix_data = it[1];
-
-        if (!fix_data) {
-          // update map
-          if (cesium_switcher.getMode()) {
-            cesium_switcher.hidePlane(flight);
-          } else {
-            map_icon_handler.hidePlane(flight);
-          }
         } else {
-          // update map
-          if (cesium_switcher.getMode()) {
-            cesium_switcher.showPlane(flight, fix_data);
-          } else {
-            map_icon_handler.showPlane(flight, fix_data);
-          }
+          map_icon_handler.hidePlane(flight);
         }
-      });
-    }
+      } else {
+        // update map
+        if (cesium_switcher.getMode()) {
+          cesium_switcher.showPlane(flight, fix_data);
+        } else {
+          map_icon_handler.showPlane(flight, fix_data);
+        }
+      }
+    });
 
     map.render();
   };
