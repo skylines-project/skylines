@@ -114,7 +114,6 @@ all_js = Bundle(
 openlayers_js = Bundle(
     'vendor/openlayers/ol3cesium.js',
     'js/ol-PlayButton-v3.js',
-    'js/ol-FullscreenButton.js',
     'js/ol-CesiumSwitcher.js',
     'js/slMapClickHandler.js',
     'http://rawgithub.com/bdougherty/BigScreen/v2.0.4/bigscreen.min.js',

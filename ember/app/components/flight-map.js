@@ -1,4 +1,4 @@
-/* globals ol, isCanvasSupported, FullscreenButton */
+/* globals ol, isCanvasSupported */
 
 import GraphicLayerSwitcher from '../utils/graphic-layer-switcher';
 
@@ -82,11 +82,6 @@ export default Ember.Component.extend(Ember.Evented, {
 
     this.setBaseLayer(this.get('baseLayer') || Ember.$.cookie('base_layer'));
     this.setOverlayLayers(this.get('overlayLayers') || Ember.$.cookie('overlay_layers'));
-
-    let fullscreenElement = this.get('fullscreenElement');
-    if (fullscreenElement) {
-      map.addControl(new FullscreenButton(Ember.$(fullscreenElement)));
-    }
   },
 
   setBaseLayer(base_layer) {

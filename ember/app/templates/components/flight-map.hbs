@@ -3,4 +3,8 @@
     Your browser is too old to display this map.<br/>
     Please update to a current version.
   </b>
+{{else}}
+  {{#if fullscreenElement}}
+    {{fullscreen-button fullscreenElement=fullscreenElement}}
+  {{/if}}
 {{/if}}
