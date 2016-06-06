@@ -127,9 +127,6 @@
                                                flight_display.getFlights(),
                                                getPadding);
 
-    var fullscreen_button = new FullscreenButton($("#fullscreen-content"));
-    map.addControl(fullscreen_button);
-
     if (window.location.hash &&
         sidebar.find('li > a[href="#' + window.location.hash.substring(1) + '"]').length != 0) {
       sidebar.open(window.location.hash.substring(1));
@@ -252,6 +249,7 @@
 </div>
 
 <div data-component='flight-map' data-attrs='{
+  "fullscreenElement": "#fullscreen-content",
   {% if 'baselayer' in request.args %}"baseLayer": "{{ request.args['baselayer'] }}",{% endif %}
   {% if 'overlays' in request.args %}"overlayLayers": "{{ request.args['overlays'] }}",{% endif %}
   "bingAPIKey": "{{ config.get('SKYLINES_BING_API_KEY', 'null') }}",

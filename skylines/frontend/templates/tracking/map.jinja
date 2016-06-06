@@ -110,9 +110,6 @@
       location_info: true,
       api_url: "{{ config.get('SKYLINES_API_URL') }}",
     });
-
-    var fullscreen_button = new FullscreenButton($("#fullscreen-content"));
-    map.addControl(fullscreen_button);
   });
 </script>
 {%- endif %}
@@ -143,6 +140,7 @@
 </div>
 
 <div data-component='flight-map' data-attrs='{
+  "fullscreenElement": "#fullscreen-content",
   {% if 'baselayer' in request.args %}"baseLayer": "{{ request.args['baselayer'] }}",{% endif %}
   {% if 'overlays' in request.args %}"overlayLayers": "{{ request.args['overlays'] }}",{% endif %}
   "bingAPIKey": "{{ config.get('SKYLINES_BING_API_KEY', 'null') }}",
