@@ -7,81 +7,22 @@
  * @param {String} _time Google polyencoded string of time values.
  * @param {String} _height Google polyencoded string of height values.
  * @param {String} _enl Google polyencoded string of engine noise levels.
- * @param {String} _elevations_t Google polyencoded string of elevation
+ * @param {String} _elev_t Google polyencoded string of elevation
  *   time values.
- * @param {String} _elevations_h Google polyencoded string of elevations.
+ * @param {String} _elev_h Google polyencoded string of elevations.
  * @param {Number} _geoid Approximate geoid height at the takeoff location
  * @param {Object=} opt_additional May contain additional information about
  *   the flight, e.g. registration number, callsign, ...
  */
-slFlight = function(_sfid, _lonlat, _time, _height, _enl,
-                    _elevations_t, _elevations_h, _geoid,
-                    opt_additional) {
-  var flight = {};
+slFlight = Ember.Object.extend({
+  color: null,
+  last_update: Ember.computed.readOnly('time.lastObject'),
 
-  var time;
-  var enl;
-  var geometry;
-  var color;
-  var sfid = _sfid;
-  var plane;
-  var last_update;
-  var elev_t = [];
-  var elev_h = [];
-  var flot_h = [];
-  var flot_enl = [];
-  var flot_elev = [];
-  var additional = opt_additional || {};
-  var geoid = _geoid;
+  init: function() {
+    this.set('plane', { point: null, marker: null });
+  },
 
-  flight.init = function(_lonlat, _time, _height, _enl,
-                         _elevations_t, _elevations_h) {
-    var height = ol.format.Polyline.decodeDeltas(_height, 1, 1);
-    time = ol.format.Polyline.decodeDeltas(_time, 1, 1);
-    var enl = ol.format.Polyline.decodeDeltas(_enl, 1, 1);
-    var lonlat = ol.format.Polyline.decodeDeltas(_lonlat, 2);
-
-    geometry = new ol.geom.LineString([], 'XYZM');
-
-    var lonlatLength = lonlat.length;
-    for (var i = 0; i < lonlatLength; i += 2) {
-      var point = ol.proj.transform([lonlat[i + 1], lonlat[i]],
-                                    'EPSG:4326', 'EPSG:3857');
-      geometry.appendCoordinate([point[0], point[1],
-                                 height[i / 2] + geoid, time[i / 2]]);
-    }
-
-    var timeLength = time.length;
-    for (var i = 0; i < timeLength; ++i) {
-      var timestamp = time[i] * 1000;
-      flot_h.push([timestamp, slUnits.convertAltitude(height[i])]);
-      flot_enl.push([timestamp, enl[i]]);
-    }
-
-    // Add flight as a row to the fix data table
-    //fix_table.addRow(sfid, color, _additional['competition_id']);
-
-    var _elev_t = ol.format.Polyline.decodeDeltas(_elevations_t, 1, 1);
-    var _elev_h = ol.format.Polyline.decodeDeltas(_elevations_h, 1, 1);
-
-    for (var i = 0; i < _elev_t.length; i++) {
-      var timestamp = _elev_t[i] * 1000;
-      var e = _elev_h[i];
-      if (e < -500)
-        e = null;
-
-      elev_t.push(_elev_t[i]);
-      elev_h.push(e);
-      flot_elev.push([timestamp, e ? slUnits.convertAltitude(e) : null]);
-    }
-
-    sfid = _sfid;
-    plane = { point: null, marker: null };
-    last_update = time[time.length - 1];
-  };
-
-  flight.update = function(_lonlat, _time,
-                           _height, _enl, _elevations) {
+  update: function(_lonlat, _time, _height, _enl, _elevations) {
     var height_decoded = ol.format.Polyline.decodeDeltas(_height, 1, 1);
     var time_decoded = ol.format.Polyline.decodeDeltas(_time, 1, 1);
     var enl_decoded = ol.format.Polyline.decodeDeltas(_enl, 1, 1);
@@ -99,80 +40,41 @@ slFlight = function(_sfid, _lonlat, _time, _height, _enl,
 
       var point = ol.proj.transform([lonlat[(i * 2) + 1], lonlat[i * 2]],
                                     'EPSG:4326', 'EPSG:3857');
-      geometry.appendCoordinate([point[0], point[1],
+      this.get('geometry').appendCoordinate([point[0], point[1],
                                  height_decoded[i], time_decoded[i]]);
 
-      flot_h.push([timestamp, slUnits.convertAltitude(height_decoded[i])]);
-      flot_enl.push([timestamp, enl_decoded[i]]);
+      this.get('flot_h').push([timestamp, slUnits.convertAltitude(height_decoded[i])]);
+      this.get('flot_enl').push([timestamp, enl_decoded[i]]);
 
       var e = elev[i];
       if (e < -500)
         e = null;
 
-      elev_t.push(time_decoded[i]);
-      elev_h.push(e);
-      flot_elev.push([timestamp, e ? slUnits.convertAltitude(e) : null]);
+      this.get('elev_t').push(time_decoded[i]);
+      this.get('elev_h').push(e);
+      this.get('flot_elev').push([timestamp, e ? slUnits.convertAltitude(e) : null]);
     }
 
-    time = time.concat(time_decoded);
-    last_update = time_decoded[time_decoded.length - 1];
-  };
+    this.set('time', this.get('time').concat(time_decoded));
+  },
 
-  flight.setColor = function(_color) {
-    color = _color;
-  };
+  getStartTime: function() {
+    return this.get('time.firstObject');
+  },
 
-  flight.getColor = function() {
-    return color;
-  };
+  getEndTime: function() {
+    return this.get('time.lastObject');
+  },
 
-  flight.getGeometry = function() {
-    return geometry;
-  };
-
-  flight.getCompetitionID = function() {
-    if ('competition_id' in additional)
-      return additional['competition_id'];
-    else
-      return undefined;
-  };
-
-  flight.getRegistration = function() {
-    if ('registration' in additional)
-      return additional['registration'];
-    else
-      return undefined;
-  };
-
-  flight.getStartTime = function() {
-    return time[0];
-  };
-
-  flight.getEndTime = function() {
-    return time[time.length - 1];
-  };
-
-  flight.getTime = function() {
-    return time;
-  };
-
-  flight.getFlotElev = function() {
-    return flot_elev;
-  };
-
-  flight.getFlotHeight = function() {
-    return flot_h;
-  };
-
-  flight.getFlotENL = function() {
-    return flot_enl;
-  };
-
-  flight.getFixData = function(t) {
+  getFixData: function(t) {
     if (t == -1)
-      t = flight.getEndTime();
-    else if (t < flight.getStartTime() || t > flight.getEndTime())
+      t = this.getEndTime();
+    else if (t < this.getStartTime() || t > this.getEndTime())
       return null;
+
+    var time = this.get('time');
+    var geometry = this.get('geometry');
+    var geoid = this.get('geoid');
 
     var index = getNextSmallerIndex(time, t);
     if (index < 0 || index >= time.length - 1 ||
@@ -207,6 +109,8 @@ slFlight = function(_sfid, _lonlat, _time, _height, _enl,
       fix_data['vario'] = (_loc_next[2] - _loc_prev[2]) / dt_total;
     }
 
+    var elev_t = this.get('elev_t');
+    var elev_h = this.get('elev_h');
     if (elev_t !== undefined && elev_h !== undefined) {
       var elev_index = getNextSmallerIndex(elev_t, t);
       if (elev_index >= 0 && elev_index < elev_t.length) {
@@ -220,33 +124,62 @@ slFlight = function(_sfid, _lonlat, _time, _height, _enl,
     }
 
     return fix_data;
-  };
+  },
 
-  flight.getPlane = function() {
-    return plane;
-  };
-
-  flight.getLastUpdate = function() {
-    return last_update;
-  };
-
-  flight.getID = function() {
-    return sfid;
-  };
-
-  flight.getGeoid = function() {
-    return geoid;
-  };
-
-  flight.init(_lonlat, _time, _height, _enl,
-              _elevations_t, _elevations_h);
-  return flight;
-};
+  getID: function() {
+    return this.get('id');
+  }
+});
 
 slFlight.fromData = function(data) {
-  return slFlight(data.sfid, data.points,
-                  data.barogram_t, data.barogram_h,
-                  data.enl,
-                  data.elevations_t, data.elevations_h,
-                  data.geoid, data.additional);
+  var _lonlat = ol.format.Polyline.decodeDeltas(data.points, 2);
+  var _time = ol.format.Polyline.decodeDeltas(data.barogram_t, 1, 1);
+  var _height = ol.format.Polyline.decodeDeltas(data.barogram_h, 1, 1);
+  var _enl = ol.format.Polyline.decodeDeltas(data.enl, 1, 1);
+  var _elev_t = ol.format.Polyline.decodeDeltas(data.elevations_t, 1, 1);
+  var _elev_h = ol.format.Polyline.decodeDeltas(data.elevations_h, 1, 1);
+
+  var geometry = new ol.geom.LineString([], 'XYZM');
+  for (var i = 0, len = _lonlat.length; i < len; i += 2) {
+    var point = ol.proj.transform([_lonlat[i + 1], _lonlat[i]], 'EPSG:4326', 'EPSG:3857');
+    geometry.appendCoordinate([point[0], point[1], _height[i / 2] + data.geoid, _time[i / 2]]);
+  }
+
+  var flot_h = [];
+  var flot_enl = [];
+  for (var i = 0, len = _time.length; i < len; ++i) {
+    var timestamp = _time[i] * 1000;
+    flot_h.push([timestamp, slUnits.convertAltitude(_height[i])]);
+    flot_enl.push([timestamp, _enl[i]]);
+  }
+
+  var elev_t = [];
+  var elev_h = [];
+  var flot_elev = [];
+  for (var i = 0, len = _elev_t.length; i < len; i++) {
+    var timestamp = _elev_t[i] * 1000;
+    var e = _elev_h[i];
+    if (e < -500)
+      e = null;
+
+    elev_t.push(_elev_t[i]);
+    elev_h.push(e);
+    flot_elev.push([timestamp, e ? slUnits.convertAltitude(e) : null]);
+  }
+
+  var additional = data.additional || {};
+
+  return slFlight.create({
+    id: data.sfid,
+    geometry: geometry,
+    time: _time,
+    flot_h: flot_h,
+    flot_enl: flot_enl,
+    elev_t: elev_t,
+    elev_h: elev_h,
+    flot_elev: flot_elev,
+    geoid: data.geoid,
+    competition_id: additional.competition_id,
+    registration: additional.registration
+  });
 };

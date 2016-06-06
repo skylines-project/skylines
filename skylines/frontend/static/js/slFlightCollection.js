@@ -99,9 +99,9 @@ slFlightCollection = function() {
 
     $(collection).on('add', function(e, flight) {
       var feature = new ol.Feature({
-        geometry: flight.getGeometry(),
-        sfid: flight.getID(),
-        color: flight.getColor(),
+        geometry: flight.get('geometry'),
+        sfid: flight.get('id'),
+        color: flight.get('color'),
         type: 'flight'
       });
 

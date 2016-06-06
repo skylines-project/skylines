@@ -138,8 +138,7 @@ slFlightDisplay = function(_map, fix_table, baro) {
   flight_display.addFlight = function(data) {
     flight = slFlight.fromData(data);
 
-    flight.setColor(data.additional.color ||
-                    colors[flights.length() % colors.length]);
+    flight.set('color', colors[flights.length() % colors.length]);
 
     if (data.contests) {
       var _contestsLength = data.contests.length;

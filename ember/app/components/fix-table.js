@@ -9,9 +9,9 @@ export default Ember.Component.extend(Ember.Evented, {
 
   data: Ember.computed.map('fixCalc.data', function(it, i) {
     let [flight, fix] = it;
-    let id = flight.getID();
-    let color = flight.getColor();
-    let competitionId = flight.getCompetitionID();
+    let id = flight.get('id');
+    let color = flight.get('color');
+    let competitionId = flight.get('competition_id');
     let removable = (i !== 0);
     return {id, color, competitionId, removable, fix};
   }),

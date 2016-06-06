@@ -16,7 +16,7 @@ slFlightTracking = function(_map, fix_table, baro_placeholder) {
       var url = '/tracking/' + flight.getID() + '/json';
 
       $.ajax(url, {
-        data: { last_update: flight.getLastUpdate() || null },
+        data: { last_update: flight.get('last_update') || null },
         success: function(data) {
           updateFlight(data);
           flight_tracking.update();

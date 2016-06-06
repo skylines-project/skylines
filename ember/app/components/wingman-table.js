@@ -11,7 +11,7 @@ export default Ember.Component.extend(Ember.Evented, {
       let visibleFlight = visibleFlights.find(flight => (flight.getID() === id));
 
       return {
-        color: visibleFlight ? visibleFlight.getColor() : undefined,
+        color: visibleFlight ? visibleFlight.get('color') : undefined,
         flight: it.flight,
         times: it.times,
       }

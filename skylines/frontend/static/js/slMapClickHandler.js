@@ -121,9 +121,9 @@ slMapClickHandler = function(map, flight_display, settings) {
   function flightInfo(flight) {
     return $(
         '<span class="info-item badge" style="background:' +
-            flight.getColor() +
+            flight.get('color') +
         '">' +
-        (flight.getRegistration() || '') +
+        flight.getWithDefault('registration', '') +
         '</span>'
     );
   }

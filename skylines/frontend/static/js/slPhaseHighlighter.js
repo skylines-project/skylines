@@ -80,8 +80,8 @@ slPhaseHighlighter = function(_map, _flights, _padding_callback) {
     // the phases table should contain only phases of our first flight only
     var flight = flights.at(0);
 
-    var start_index = getNextSmallerIndex(flight.getTime(), start);
-    var end_index = getNextSmallerIndex(flight.getTime(), end);
+    var start_index = getNextSmallerIndex(flight.get('time'), start);
+    var end_index = getNextSmallerIndex(flight.get('time'), end);
 
     var phase_markers = {
       start: null,
@@ -91,7 +91,7 @@ slPhaseHighlighter = function(_map, _flights, _padding_callback) {
     if (start_index >= end_index) return phase_markers;
 
     var extent = ol.extent.boundingExtent(
-        flight.getGeometry().getCoordinates().slice(start_index, end_index + 1)
+        flight.get('geometry').getCoordinates().slice(start_index, end_index + 1)
         );
 
     var view = map.getView();
@@ -99,8 +99,8 @@ slPhaseHighlighter = function(_map, _flights, _padding_callback) {
                           ol.extent.getHeight(extent));
     map.getView().fit(extent, map.getSize(), { padding: getPadding() });
 
-    var start_point = flight.getGeometry().getCoordinates()[start_index];
-    var end_point = flight.getGeometry().getCoordinates()[end_index];
+    var start_point = flight.get('geometry').getCoordinates()[start_index];
+    var end_point = flight.get('geometry').getCoordinates()[end_index];
 
     phase_markers.start = new ol.geom.Point([start_point[0], start_point[1]]);
     phase_markers.end = new ol.geom.Point([end_point[0], end_point[1]]);

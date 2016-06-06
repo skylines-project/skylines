@@ -27,7 +27,7 @@ slMapIconHandler = function(_map, _flights) {
       var vector_context = e.vectorContext;
 
       flights.each(function(flight) {
-        var plane = flight.getPlane();
+        var plane = flight.get('plane');
         if (plane.point !== null) {
           style.setRotation(plane['heading']);
           vector_context.setImageStyle(style);
@@ -38,7 +38,7 @@ slMapIconHandler = function(_map, _flights) {
   };
 
   map_icon_handler.showPlane = function(flight, fix_data) {
-    var plane = flight.getPlane();
+    var plane = flight.get('plane');
 
     // set plane location
     if (plane.point === null) {
@@ -56,8 +56,8 @@ slMapIconHandler = function(_map, _flights) {
       if (plane.marker === null) {
         var badge = $('<span class="badge plane_marker" ' +
                 'style="display: inline-block; text-align: center; ' +
-                'background: ' + flight.getColor() + ';">' +
-            (flight.getCompetitionID() || '') +
+                'background: ' + flight.get('color') + ';">' +
+            flight.getWithDefault('competition_id', '') +
             '</span>');
 
         plane.marker = new ol.Overlay({
@@ -72,7 +72,7 @@ slMapIconHandler = function(_map, _flights) {
   };
 
   map_icon_handler.hidePlane = function(flight) {
-    var plane = flight.getPlane();
+    var plane = flight.get('plane');
 
     plane.point = null;
     if (plane.marker !== null) {

@@ -18,8 +18,8 @@ export default Ember.Component.extend(Ember.Evented, {
     return flights
       .filter(flight => (!selection || flight.getID() === selection))
       .map(flight => ({
-        data: flight.getFlotHeight(),
-        color: flight.getColor()
+        data: flight.get('flot_h'),
+        color: flight.get('color')
       }));
   }),
 
@@ -28,8 +28,8 @@ export default Ember.Component.extend(Ember.Evented, {
     return flights
       .filter(flight => (selection && flight.getID() !== selection))
       .map(flight => ({
-        data: flight.getFlotHeight(),
-        color: flight.getColor()
+        data: flight.get('flot_h'),
+        color: flight.get('color')
       }));
   }),
 
@@ -38,8 +38,8 @@ export default Ember.Component.extend(Ember.Evented, {
     return flights
       .filter(flight => (!selection || flight.getID() === selection))
       .map(flight => ({
-        data: flight.getFlotENL(),
-        color: flight.getColor()
+        data: flight.get('flot_enl'),
+        color: flight.get('color')
       }));
   }),
 
@@ -58,7 +58,7 @@ export default Ember.Component.extend(Ember.Evented, {
       return flights.length === 1 || (selection && flight.getID() === selection);
     });
 
-    return flight ? flight.getFlotElev() : [];
+    return flight ? flight.get('flot_elev') : [];
   }),
 
   timeHighlight: Ember.computed.readOnly('flightPhase.selection'),

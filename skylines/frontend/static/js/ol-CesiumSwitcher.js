@@ -108,11 +108,12 @@ CesiumSwitcher.prototype.showPlane = function(flight, fix_data) {
                                  'EPSG:3857', 'EPSG:4326');
 
   var position = Cesium.Cartesian3.fromDegrees(lonlat[0], lonlat[1],
-      fix_data['alt-msl'] + flight.getGeoid());
+      fix_data['alt-msl'] + flight.get('geoid'));
   var modelMatrix = Cesium.Transforms.headingPitchRollToFixedFrame(position,
       fix_data['heading'] - Math.PI / 2, 0, 0);
 
-  if (!flight.getPlane().entity) {
+  var plane = flight.get('plane');
+  if (!plane.entity) {
     var scene = this.ol3d.getCesiumScene();
     var entity = Cesium.Model.fromGltf({
       modelMatrix: modelMatrix,
@@ -122,10 +123,10 @@ CesiumSwitcher.prototype.showPlane = function(flight, fix_data) {
       allowPicking: false
     });
     scene.primitives.add(entity);
-    flight.getPlane().entity = entity;
+    plane.entity = entity;
   } else {
-    flight.getPlane().entity.modelMatrix = modelMatrix;
-    flight.getPlane().entity.show = true;
+    plane.entity.modelMatrix = modelMatrix;
+    plane.entity.show = true;
   }
 };
 
@@ -134,7 +135,8 @@ CesiumSwitcher.prototype.showPlane = function(flight, fix_data) {
  * @param {slFlight} flight
  */
 CesiumSwitcher.prototype.hidePlane = function(flight) {
-  if (flight.getPlane().entity) {
-    flight.getPlane().entity.show = false;
+  var plane = flight.get('plane');
+  if (plane.entity) {
+    plane.entity.show = false;
   }
 };

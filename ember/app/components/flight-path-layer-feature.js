@@ -11,9 +11,9 @@ export default Ember.Component.extend({
   feature: Ember.computed(function() {
     let flight = this.get('flight');
     return new ol.Feature({
-      geometry: flight.getGeometry(),
-      sfid: flight.getID(),
-      color: flight.getColor(),
+      geometry: flight.get('geometry'),
+      sfid: flight.get('id'),
+      color: flight.get('color'),
       type: 'flight'
     });
   }),
