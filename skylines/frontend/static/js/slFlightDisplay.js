@@ -108,7 +108,7 @@ slFlightDisplay = function(_map, fix_table, baro) {
     window.flightMap.set('flights', flights.getArray());
     window.flightMap.set('contests', contests);
 
-    fix_table.set('flights', flights.getArray());
+    window.fixCalcService.set('flights', flights.getArray());
 
     if (window.wingmanTable) {
       window.wingmanTable.set('visibleFlights', flights.getArray());
@@ -352,7 +352,7 @@ slFlightDisplay = function(_map, fix_table, baro) {
   flight_display.setTime = function(time) {
     global_time = time;
 
-    fix_table.set('time', time);
+    window.fixCalcService.set('time', time);
     baro.set('time', time);
 
     // if the mouse is not hovering over the barogram or any trail on the map
