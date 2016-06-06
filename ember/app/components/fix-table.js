@@ -3,53 +3,28 @@
 import Ember from 'ember';
 
 export default Ember.Component.extend(Ember.Evented, {
-  data: [],
-  selectable: Ember.computed.gt('data.length', 1),
+  flights: [],
+  time: null,
   selection: null,
+
+  data: Ember.computed('flights.[]', 'time', function() {
+    let time = this.get('time');
+    return this.get('flights').map((flight, i) => {
+      let id = flight.getID();
+      let color = flight.getColor();
+      let competitionId = flight.getCompetitionID();
+      let removable = (i !== 0);
+      let fix = flight.getFixData(time);
+      return {id, color, competitionId, removable, fix};
+    });
+  }),
+
+  selectable: Ember.computed.gt('data.length', 1),
 
   init() {
     this._super(...arguments);
 
-    this.set('data', []);
-
     window.fixTable = this;
-  },
-
-  findRow(id) {
-    return this.get('data').findBy('id', id);
-  },
-
-  addRow(id, color, competitionId) {
-    let data = this.get('data');
-    if (data.isAny('id', id)) {
-      return;
-    }
-
-    let removable = (data.length !== 0);
-
-    this.set('data', data.concat([{id, color, competitionId, removable, fix: {}}]));
-  },
-
-  removeRow(id) {
-    this.set('data', this.get('data').rejectBy('id', id));
-
-    if (this.get('selection') === id) {
-      this.set('selection', null);
-    }
-  },
-
-  clearAllFixes() {
-    this.get('data').forEach(it => {
-      Ember.set(it, 'fix', {});
-    });
-  },
-
-  clearFix(id) {
-    this.updateFix(id, {});
-  },
-
-  updateFix(id, fix) {
-    Ember.set(this.findRow(id), 'fix', fix);
   },
 
   actions: {

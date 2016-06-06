@@ -108,6 +108,8 @@ slFlightDisplay = function(_map, fix_table, baro) {
     window.flightMap.set('flights', flights.getArray());
     window.flightMap.set('contests', contests);
 
+    fix_table.set('flights', flights.getArray());
+
     if (window.wingmanTable) {
       window.wingmanTable.set('visibleFlights', flights.getArray());
     }
@@ -222,7 +224,6 @@ slFlightDisplay = function(_map, fix_table, baro) {
         return contest.getID() === sfid;
       }));
 
-      fix_table.removeRow(sfid);
       updateBaroScale();
       baro.draw();
     });
@@ -230,10 +231,6 @@ slFlightDisplay = function(_map, fix_table, baro) {
     // Add a flight to the fix table and barogram, highlight in the
     // wingman table.
     $(flights).on('add', function(e, flight) {
-      // Add flight as a row to the fix data table
-      fix_table.addRow(flight.getID(), flight.getColor(),
-                        flight.getCompetitionID());
-
       updateBaroScale();
       baro.draw();
 
@@ -355,6 +352,8 @@ slFlightDisplay = function(_map, fix_table, baro) {
   flight_display.setTime = function(time) {
     global_time = time;
 
+    fix_table.set('time', time);
+
     // if the mouse is not hovering over the barogram or any trail on the map
     if (!time) {
       // remove crosshair from barogram
@@ -368,9 +367,6 @@ slFlightDisplay = function(_map, fix_table, baro) {
       } else {
         map_icon_handler.hideAllPlanes();
       }
-
-      // remove data from fix-data table
-      fix_table.clearAllFixes();
 
     } else {
       // update barogram crosshair
@@ -386,9 +382,6 @@ slFlightDisplay = function(_map, fix_table, baro) {
           } else {
             map_icon_handler.hidePlane(flight);
           }
-
-          // update fix-data table
-          fix_table.clearFix(flight.getID());
         } else {
           // update map
           if (cesium_switcher.getMode()) {
@@ -396,9 +389,6 @@ slFlightDisplay = function(_map, fix_table, baro) {
           } else {
             map_icon_handler.showPlane(flight, fix_data);
           }
-
-          // update fix-data table
-          fix_table.updateFix(flight.getID(), fix_data);
         }
       });
     }
