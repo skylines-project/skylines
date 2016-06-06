@@ -242,8 +242,6 @@
       <h2>{% trans %}Takeoff Locations{% endtrans %}</h2>
       <div data-component='flight-map' data-attrs='{
         "height": "533px",
-        {% if 'baselayer' in request.args %}"baseLayer": "{{ request.args['baselayer'] }}",{% endif %}
-        {% if 'overlays' in request.args %}"overlayLayers": "{{ request.args['overlays'] }}",{% endif %}
         "bingAPIKey": "{{ config.get('SKYLINES_BING_API_KEY', 'null') }}",
         "mapboxAPIKey": "{{ config.get('SKYLINES_MAPBOX_API_KEY', 'null') }}",
         "mapTileURL": "{{ config.get('SKYLINES_MAP_TILE_URL') }}"

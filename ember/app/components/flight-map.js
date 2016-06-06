@@ -1,6 +1,7 @@
 /* globals ol, isCanvasSupported */
 
 import Ember from 'ember';
+import parseQueryString from '../utils/parse-query-string';
 
 export default Ember.Component.extend(Ember.Evented, {
   attributeBindings: ['style'],
@@ -25,6 +26,10 @@ export default Ember.Component.extend(Ember.Evented, {
     this._super(...arguments);
 
     window.flightMap = this;
+
+    let query = parseQueryString(window.location.search);
+    this.set('baseLayer', query.baselayer);
+    this.set('overlayLayers', query.overlays);
   },
 
   didInsertElement() {
