@@ -4,12 +4,8 @@ export default Ember.Component.extend({
   flightPhase: Ember.inject.service(),
 
   tagName: 'tr',
+  classNames: ['selectable'],
   classNameBindings: ['selected'],
-  attributeBindings: ['style'],
-
-  style: Ember.computed(function() {
-    return Ember.String.htmlSafe('cursor: pointer');
-  }),
 
   selected: Ember.computed('flightPhase.selection', function() {
     let selection = this.get('flightPhase.selection');

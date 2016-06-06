@@ -2,6 +2,7 @@ import Ember from 'ember';
 
 export default Ember.Component.extend({
   tagName: 'tr',
+  classNames: ['selectable'],
 
   flight: Ember.computed.alias('nearFlight.flight'),
   igcFile: Ember.computed.alias('flight.igc_file'),

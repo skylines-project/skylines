@@ -55,6 +55,10 @@ table.vmiddle td {
   width: 100%;
 }
 
+.table tr.selectable {
+  cursor: pointer;
+}
+
 .table tr.selected td, .table tr.selected:hover td {
   background-color: #eee !important;
 }
