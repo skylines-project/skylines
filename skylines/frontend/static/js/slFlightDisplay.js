@@ -143,6 +143,9 @@ slFlightDisplay = function(_map, fix_table, baro) {
     map.addControl(cesium_switcher);
 
     setupEvents();
+
+    baro.set('flights', flights.getArray());
+    baro.set('_contests', contests.getArray());
   };
 
   /**
@@ -225,7 +228,7 @@ slFlightDisplay = function(_map, fix_table, baro) {
     // Update the barogram when another flight has been selected
     // in the fix table.
     fix_table.addObserver('selection', function() {
-      updateBaroData();
+      baro.set('selection', fix_table.get('selection'));
       baro.draw();
     });
 
@@ -256,7 +259,6 @@ slFlightDisplay = function(_map, fix_table, baro) {
 
       contests.remove(sfid);
       fix_table.removeRow(sfid);
-      updateBaroData();
       updateBaroScale();
       baro.draw();
     });
@@ -268,7 +270,6 @@ slFlightDisplay = function(_map, fix_table, baro) {
       fix_table.addRow(flight.getID(), flight.getColor(),
                         flight.getCompetitionID());
 
-      updateBaroData();
       updateBaroScale();
       baro.draw();
 
@@ -386,51 +387,6 @@ slFlightDisplay = function(_map, fix_table, baro) {
     });
   }
 
-  /**
-   * Update the data to be displayed in the barogram
-   */
-  function updateBaroData() {
-    var _contests = [], elevations = [];
-
-    var active = [], passive = [], enls = [];
-    flights.each(function(flight) {
-      var data = {
-        data: flight.getFlotHeight(),
-        color: flight.getColor()
-      };
-
-      var enl_data = {
-        data: flight.getFlotENL(),
-        color: flight.getColor()
-      };
-
-      var selection = fix_table.get('selection');
-      if (selection && flight.getID() != selection) {
-        passive.push(data);
-      } else {
-        active.push(data);
-        enls.push(enl_data);
-      }
-
-      // Save contests of highlighted flight for later
-      if (selection && flight.getID() == selection) {
-        _contests = contests.all(flight.getID());
-        elevations = flight.getFlotElev();
-      }
-
-      // Save contests of only flight for later if applicable
-      if (flights.length() == 1) {
-        _contests = contests.all(flight.getID());
-        elevations = flight.getFlotElev();
-      }
-    });
-
-    baro.set('active', active);
-    baro.set('passive', passive);
-    baro.set('enls', enls);
-    baro.set('contests', _contests);
-    baro.set('elevations', elevations);
-  }
 
   /**
    * Set the current time.
@@ -494,7 +450,6 @@ slFlightDisplay = function(_map, fix_table, baro) {
    * Updates the barogram
    */
   flight_display.update = function() {
-    updateBaroData();
     updateBaroScale();
     baro.draw();
   };

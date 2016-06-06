@@ -9,11 +9,58 @@ export default Ember.Component.extend(Ember.Evented, {
 
   flot: null,
   time: null,
-  active: [],
-  passive: [],
-  enls: [],
-  contests: [],
-  elevations: [],
+  selection: null,
+  flights: [],
+  _contests: [],
+
+  active: Ember.computed('flights.[]', 'selection', function() {
+    let { flights, selection } = this.getProperties('flights', 'selection');
+    return flights
+      .filter(flight => (!selection || flight.getID() === selection))
+      .map(flight => ({
+        data: flight.getFlotHeight(),
+        color: flight.getColor()
+      }));
+  }),
+
+  passive: Ember.computed('flights.[]', 'selection', function() {
+    let { flights, selection } = this.getProperties('flights', 'selection');
+    return flights
+      .filter(flight => (selection && flight.getID() !== selection))
+      .map(flight => ({
+        data: flight.getFlotHeight(),
+        color: flight.getColor()
+      }));
+  }),
+
+  enls: Ember.computed('flights.[]', 'selection', function() {
+    let { flights, selection } = this.getProperties('flights', 'selection');
+    return flights
+      .filter(flight => (!selection || flight.getID() === selection))
+      .map(flight => ({
+        data: flight.getFlotENL(),
+        color: flight.getColor()
+      }));
+  }),
+
+  contests: Ember.computed('flights.[]', 'selection', '_contests.[]', function() {
+    let { flights, selection, _contests } = this.getProperties('flights', 'selection', '_contests');
+    let flight = flights.find(flight => {
+      return flights.length === 1 || (selection && flight.getID() === selection);
+    });
+
+    return flight ? _contests.filter(it => (it.getID() === flight.getID())) : [];
+  }),
+
+  elevations: Ember.computed('flights.[]', 'selection', function() {
+    let { flights, selection } = this.getProperties('flights', 'selection');
+    let flight = flights.find(flight => {
+      return flights.length === 1 || (selection && flight.getID() === selection);
+    });
+
+    return flight ? flight.getFlotElev() : [];
+  }),
+
   timeHighlight: Ember.computed.readOnly('flightPhase.selection'),
   hoverMode: false,
 

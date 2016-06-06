@@ -106,6 +106,9 @@ slCollection = function() {
     return true;
   };
 
+  collection.getArray = function() {
+    return data_;
+  }
 
   return collection;
 };
