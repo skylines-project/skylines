@@ -11,9 +11,9 @@ export default Ember.Component.extend({
   feature: Ember.computed(function() {
     let contest = this.get('contest');
     return new ol.Feature({
-      geometry: contest.getGeometry(),
-      sfid: contest.getID(),
-      color: contest.getColor(),
+      geometry: contest.get('geometry'),
+      sfid: contest.get('flightId'),
+      color: contest.get('color'),
       type: 'contest'
     });
   }),

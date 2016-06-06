@@ -143,7 +143,7 @@ slFlightDisplay = function(_map, fix_table, baro) {
     if (data.contests) {
       var _contestsLength = data.contests.length;
       for (var i = 0; i < _contestsLength; ++i)
-        contests.pushObject(slContest(data.contests[i], flight.getID()));
+        contests.pushObject(slContest.fromData(data.contests[i], flight.getID()));
     }
 
     flights.add(flight);
@@ -215,9 +215,7 @@ slFlightDisplay = function(_map, fix_table, baro) {
     // After a flight has been removed, remove highlights from the
     // wingman table, remove it from the fix table and update the barogram.
     $(flights).on('removed', function(e, sfid) {
-      contests.removeObjects(contests.filter(function(contest) {
-        return contest.getID() === sfid;
-      }));
+      contests.removeObjects(contests.filterBy('flightId', sfid));
 
       updateBaroScale();
       baro.draw();

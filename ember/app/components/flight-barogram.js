@@ -49,7 +49,7 @@ export default Ember.Component.extend(Ember.Evented, {
       return flights.length === 1 || (selection && flight.getID() === selection);
     });
 
-    return flight ? _contests.filter(it => (it.getID() === flight.getID())) : [];
+    return flight ? _contests.filterBy('flightId', flight.getID()) : [];
   }),
 
   elevations: Ember.computed('flights.[]', 'selection', function() {
@@ -272,12 +272,12 @@ export default Ember.Component.extend(Ember.Evented, {
 
     // Iterate through the contests
     contests.forEach(contest => {
-      let times = contest.getTimes();
+      let times = contest.get('times');
       if (times.length < 1) {
         return;
       }
 
-      let color = contest.getColor();
+      let color = contest.get('color');
 
       // Add the turnpoint markers to the markings array
       let markings = times.map(time => {
