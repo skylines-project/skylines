@@ -74,17 +74,9 @@ export default function GraphicLayerSwitcher(opt_options) {
         // populate base layer box
         var layer_visible = layer.getVisible();
 
-        var layer_image = '../../images/layers/' + layer.get('name') +
-            (layer_visible ? '.png' : '.bw.png');
+        var layer_image = `../../images/layers/${layer.get('name')}${layer_visible ? '.png' : '.bw.png'}`;
 
-        var item = $(
-            "<a href='#GraphicLayerSwitcher' id='GraphicLayerSwitcher-" +
-            layer.get('id') +
-            "'>" +
-            "<img src='" + layer_image + "' />" +
-            "<i class='icon-ok' />" +
-            layer.get('name') +
-            '</a>');
+        var item = $(`<a href="#GraphicLayerSwitcher id="GraphicLayerSwitcher-${layer.get('id')}"><img src="${layer_image}"/><i class="icon-ok"/> ${layer.get('name')}</a>`);
 
         if (layer_visible) {
           item.addClass('active');
@@ -93,12 +85,12 @@ export default function GraphicLayerSwitcher(opt_options) {
         item.on('click', null, { layer: layer }, onInputClick);
 
         item.on('mouseover touchstart', null, { item: item, layer: layer }, e => {
-          $(e.data.item).find('img').attr('src', '../../images/layers/' + e.data.layer.get('name') + '.png');
+          $(e.data.item).find('img').attr('src', `../../images/layers/${e.data.layer.get('name')}.png`);
         });
 
         item.on('mouseout touchend', null, { item: item, layer: layer }, e => {
           if (!e.data.layer.getVisible()) {
-            $(e.data.item).find('img').attr('src', '../../images/layers/' + e.data.layer.get('name') + '.bw.png');
+            $(e.data.item).find('img').attr('src', `../../images/layers/${e.data.layer.get('name')}.bw.png`);
           }
         });
 
@@ -124,16 +116,16 @@ export default function GraphicLayerSwitcher(opt_options) {
       control.getMap().getLayers().forEach(function(other_layer) {
         if (other_layer.get('base_layer')) {
           var item = $(element)
-              .find('#GraphicLayerSwitcher-' + other_layer.get('id'));
+              .find(`#GraphicLayerSwitcher-${other_layer.get('id')}`);
           var img;
 
           if (other_layer.get('name') === layer.get('name')) {
             other_layer.setVisible(true);
-            img = '../../images/layers/' + other_layer.get('name') + '.png';
+            img = `../../images/layers/${other_layer.get('name')}.png`;
             item.addClass('active');
           } else {
             other_layer.setVisible(false);
-            img = '../../images/layers/' + other_layer.get('name') + '.bw.png';
+            img = `../../images/layers/${other_layer.get('name')}.bw.png`;
             item.removeClass('active');
           }
           item.find('img').attr('src', img);
@@ -147,7 +139,7 @@ export default function GraphicLayerSwitcher(opt_options) {
     } else {
       layer.setVisible(!layer.getVisible());
 
-      var item = $(element).find('#GraphicLayerSwitcher-' + layer.get('id'));
+      var item = $(element).find(`#GraphicLayerSwitcher-${layer.get('id')}`);
       item.toggleClass('active');
 
       let overlay_layers = [];
