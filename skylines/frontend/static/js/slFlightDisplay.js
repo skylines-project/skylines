@@ -73,34 +73,16 @@ slFlightDisplay = function(_map, fix_table, baro) {
    * @return {!Array<ol.style.Style>} Style of the feature
    */
   function style_function(feature) {
-    if (!$.inArray('type', feature.getKeys()))
-      return null;
-
     var color = '#004bbd'; // default color
     if ($.inArray('color', feature.getKeys()))
       color = feature.get('color');
 
-    var z_index = 1000; // default z-index
-    var line_dash = undefined; // default line style
-
-    switch (feature.get('type')) {
-      case 'flight':
-        z_index = 1000;
-        break;
-
-      case 'contest':
-        z_index = 999;
-        line_dash = [5];
-        break;
-    }
-
     return [new ol.style.Style({
       stroke: new ol.style.Stroke({
         color: color,
-        width: 2,
-        lineDash: line_dash
+        width: 2
       }),
-      zIndex: z_index
+      zIndex: 1000
     })];
   }
 
@@ -124,15 +106,6 @@ slFlightDisplay = function(_map, fix_table, baro) {
 
     map.addLayer(flight_path_layer);
 
-    var flight_contest_layer = new ol.layer.Vector({
-      source: contests.getSource(),
-      style: style_function,
-      name: 'Contest',
-      zIndex: 49
-    });
-
-    map.addLayer(flight_contest_layer);
-
     play_button = new PlayButton();
     map.addControl(play_button);
 
@@ -146,6 +119,7 @@ slFlightDisplay = function(_map, fix_table, baro) {
 
     baro.set('flights', flights.getArray());
     baro.set('_contests', contests.getArray());
+    window.flightMap.set('contests', contests.getArray());
   };
 
   /**
