@@ -136,11 +136,7 @@ slFlightDisplay = function(_map, fix_table, baro) {
    * @param {Object} data The data received from the JSON request.
    */
   flight_display.addFlight = function(data) {
-    flight = slFlight(data.sfid, data.points,
-                      data.barogram_t, data.barogram_h,
-                      data.enl,
-                      data.elevations_t, data.elevations_h,
-                      data.geoid, data.additional);
+    flight = slFlight.fromData(data);
 
     flight.setColor(data.additional.color ||
                     colors[flights.length() % colors.length]);

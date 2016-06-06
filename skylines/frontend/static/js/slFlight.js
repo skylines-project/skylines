@@ -242,3 +242,11 @@ slFlight = function(_sfid, _lonlat, _time, _height, _enl,
               _elevations_t, _elevations_h);
   return flight;
 };
+
+slFlight.fromData = function(data) {
+  return slFlight(data.sfid, data.points,
+                  data.barogram_t, data.barogram_h,
+                  data.enl,
+                  data.elevations_t, data.elevations_h,
+                  data.geoid, data.additional);
+};
