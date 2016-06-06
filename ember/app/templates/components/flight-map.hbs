@@ -10,6 +10,10 @@
     {{fullscreen-button fullscreenElement=fullscreenElement}}
   {{/if}}
 
+  {{#if flights}}
+    {{flight-path-layer map=map flights=flights}}
+  {{/if}}
+
   {{#if contests}}
     {{contest-layer map=map contests=contests}}
   {{/if}}

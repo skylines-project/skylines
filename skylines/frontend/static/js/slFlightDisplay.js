@@ -92,20 +92,6 @@ slFlightDisplay = function(_map, fix_table, baro) {
    * Adds the PlayButton to the map and activates all hover modes.
    */
   flight_display.init = function() {
-    //var flight_path_layer = new ol.layer.Image({
-    //  source: new ol.source.ImageVector({
-    //    source: flights.getSource(),
-    //    style: style_function
-    //  }),
-    var flight_path_layer = new ol.layer.Vector({
-      source: flights.getSource(),
-      style: style_function,
-      name: 'Flight',
-      zIndex: 50
-    });
-
-    map.addLayer(flight_path_layer);
-
     play_button = new PlayButton();
     map.addControl(play_button);
 
@@ -119,6 +105,7 @@ slFlightDisplay = function(_map, fix_table, baro) {
 
     baro.set('flights', flights.getArray());
     baro.set('_contests', contests);
+    window.flightMap.set('flights', flights.getArray());
     window.flightMap.set('contests', contests);
   };
 
