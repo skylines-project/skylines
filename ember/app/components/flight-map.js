@@ -1,4 +1,6 @@
-/* globals ol, isCanvasSupported, GraphicLayerSwitcher, FullscreenButton */
+/* globals ol, isCanvasSupported, FullscreenButton */
+
+import GraphicLayerSwitcher from '../utils/graphic-layer-switcher';
 
 import Ember from 'ember';
 

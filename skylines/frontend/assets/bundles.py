@@ -113,7 +113,6 @@ all_js = Bundle(
 
 openlayers_js = Bundle(
     'vendor/openlayers/ol3cesium.js',
-    'js/ol-GraphicLayerSwitcher-v3.js',
     'js/ol-PlayButton-v3.js',
     'js/ol-FullscreenButton.js',
     'js/ol-CesiumSwitcher.js',

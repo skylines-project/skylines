@@ -1,10 +1,12 @@
+/* globals $, ol */
+
 /**
  * Graphic layer switcher for base layers and overlay layers.
  *
  * @constructor
  * @param {Object=} opt_options Options
  */
-var GraphicLayerSwitcher = function(opt_options) {
+export default function GraphicLayerSwitcher(opt_options) {
   var options = opt_options || {};
 
   var control = this;
@@ -42,10 +44,8 @@ var GraphicLayerSwitcher = function(opt_options) {
 
     // close layer switcher on click outside
     $(document).on('mouseup touchend', function(e) {
-      if ($(layer_switcher_box).find('.base_layers').find(e.target).length ==
-          0 &&
-          $(layer_switcher_box).find('.overlay_layers').find(e.target).length ==
-          0) {
+      if ($(layer_switcher_box).find('.base_layers').find(e.target).length === 0 &&
+          $(layer_switcher_box).find('.overlay_layers').find(e.target).length === 0) {
         layer_switcher_box.hide();
         anchor_box.show();
       }
@@ -86,25 +86,21 @@ var GraphicLayerSwitcher = function(opt_options) {
             layer.get('name') +
             '</a>');
 
-        if (layer_visible)
+        if (layer_visible) {
           item.addClass('active');
+        }
 
         item.on('click', null, { layer: layer }, onInputClick);
 
-        item.on('mouseover touchstart', null, { item: item, layer: layer },
-            function(e) {
-              $(e.data.item).find('img').attr('src',
-                  '../../images/layers/' + e.data.layer.get('name') + '.png');
-            });
+        item.on('mouseover touchstart', null, { item: item, layer: layer }, e => {
+          $(e.data.item).find('img').attr('src', '../../images/layers/' + e.data.layer.get('name') + '.png');
+        });
 
-        item.on('mouseout touchend', null, { item: item, layer: layer },
-            function(e) {
-              if (!e.data.layer.getVisible()) {
-                $(e.data.item).find('img').attr('src',
-                    '../../images/layers/' + e.data.layer.get('name') +
-                    '.bw.png');
-              }
-            });
+        item.on('mouseout touchend', null, { item: item, layer: layer }, e => {
+          if (!e.data.layer.getVisible()) {
+            $(e.data.item).find('img').attr('src', '../../images/layers/' + e.data.layer.get('name') + '.bw.png');
+          }
+        });
 
         if (layer.get('base_layer')) {
           base_layers.append(item);
@@ -131,7 +127,7 @@ var GraphicLayerSwitcher = function(opt_options) {
               .find('#GraphicLayerSwitcher-' + other_layer.get('id'));
           var img;
 
-          if (other_layer.get('name') == layer.get('name')) {
+          if (other_layer.get('name') === layer.get('name')) {
             other_layer.setVisible(true);
             img = '../../images/layers/' + other_layer.get('name') + '.png';
             item.addClass('active');
@@ -154,13 +150,14 @@ var GraphicLayerSwitcher = function(opt_options) {
       var item = $(element).find('#GraphicLayerSwitcher-' + layer.get('id'));
       item.toggleClass('active');
 
-      overlay_layers = [];
+      let overlay_layers = [];
       for (var i = 0; i < control.getMap().getLayers().getArray().length; ++i) {
         var other_layer = control.getMap().getLayers().item(i);
         if (!other_layer.get('base_layer') &&
             other_layer.getVisible() &&
-            other_layer.get('display_in_layer_switcher'))
-          overlay_layers.push(other_layer.get('name'));
+            other_layer.get('display_in_layer_switcher')) {
+            overlay_layers.push(other_layer.get('name'));
+          }
       }
 
       $.cookie('overlay_layers', overlay_layers.join(';'), {
@@ -179,6 +176,6 @@ var GraphicLayerSwitcher = function(opt_options) {
   });
 
   draw();
-};
+}
 
 ol.inherits(GraphicLayerSwitcher, ol.control.Control);
