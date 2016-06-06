@@ -60,13 +60,6 @@ export default Ember.Component.extend(Ember.Evented, {
       Ember.$(this).focus();
     });
 
-    map.getLayers().on('change:length', () => {
-      // When the list of layers changes load the
-      // last used base layer from the cookies
-      this.setBaseLayer(this.get('baseLayer') || Ember.$.cookie('base_layer'));
-      this.setOverlayLayers(this.get('overlayLayers') || Ember.$.cookie('overlay_layers'));
-    });
-
     var osm_layer = new ol.layer.Tile({
       source: new ol.source.OSM(),
       zIndex: 1
@@ -86,6 +79,9 @@ export default Ember.Component.extend(Ember.Evented, {
     this.addMWPLayers();
     this.addBingLayers();
     this.addMapboxLayer();
+
+    this.setBaseLayer(this.get('baseLayer') || Ember.$.cookie('base_layer'));
+    this.setOverlayLayers(this.get('overlayLayers') || Ember.$.cookie('overlay_layers'));
 
     let fullscreenElement = this.get('fullscreenElement');
     if (fullscreenElement) {
