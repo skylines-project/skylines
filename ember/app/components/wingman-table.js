@@ -1,17 +1,27 @@
 import Ember from 'ember';
 
 export default Ember.Component.extend(Ember.Evented, {
+  nearFlights: [],
+  visibleFlights: [],
+
+  nearFlightsWithColors: Ember.computed('nearFlights.[]', 'visibleFlights.[]', function() {
+    let { nearFlights, visibleFlights } = this.getProperties('nearFlights', 'visibleFlights');
+    return nearFlights.map(it => {
+      let id = it.flight.id;
+      let visibleFlight = visibleFlights.find(flight => (flight.getID() === id));
+
+      return {
+        color: visibleFlight ? visibleFlight.getColor() : undefined,
+        flight: it.flight,
+        times: it.times,
+      }
+    });
+  }),
+
   init() {
     this._super(...arguments);
 
     window.wingmanTable = this;
-  },
-
-  setFlightColor(id, color) {
-    let nearFlight = this.get('nearFlights').findBy('flight.id', id);
-    if (nearFlight) {
-      Ember.set(nearFlight, 'color', color);
-    }
   },
 
   actions: {

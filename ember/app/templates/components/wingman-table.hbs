@@ -8,7 +8,7 @@
     </tr>
   </thead>
   <tbody>
-    {{#each nearFlights as |nearFlight|}}
+    {{#each nearFlightsWithColors as |nearFlight|}}
       {{wingman-row nearFlight=nearFlight click=(action "select" nearFlight.flight.id)}}
     {{/each}}
   </tbody>

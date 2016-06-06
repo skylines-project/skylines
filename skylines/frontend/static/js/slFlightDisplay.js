@@ -107,6 +107,10 @@ slFlightDisplay = function(_map, fix_table, baro) {
     baro.set('_contests', contests);
     window.flightMap.set('flights', flights.getArray());
     window.flightMap.set('contests', contests);
+
+    if (window.wingmanTable) {
+      window.wingmanTable.set('visibleFlights', flights.getArray());
+    }
   };
 
   /**
@@ -214,10 +218,6 @@ slFlightDisplay = function(_map, fix_table, baro) {
     // After a flight has been removed, remove highlights from the
     // wingman table, remove it from the fix table and update the barogram.
     $(flights).on('removed', function(e, sfid) {
-      if (window.wingmanTable) {
-        window.wingmanTable.setFlightColor(sfid);
-      }
-
       contests.removeObjects(contests.filter(function(contest) {
         return contest.getID() === sfid;
       }));
@@ -236,10 +236,6 @@ slFlightDisplay = function(_map, fix_table, baro) {
 
       updateBaroScale();
       baro.draw();
-
-      if (window.wingmanTable) {
-        window.wingmanTable.setFlightColor(flight.getID(), flight.getColor());
-      }
 
       flight_display.setTime(global_time);
     });
