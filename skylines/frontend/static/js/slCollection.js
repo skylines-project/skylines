@@ -94,13 +94,15 @@ slCollection = function() {
    * @return {Boolean} true if success
    */
   collection.remove = function(id) {
-    var object = collection.get(id);
-    if (object === null) {
+    var objects = collection.all(id);
+    if (objects === null) {
       return false;
     }
 
-    $(collection).triggerHandler('preremove', object);
-    data_.removeObject(object);
+    objects.forEach(function(object) {
+      $(collection).triggerHandler('preremove', object);
+      data_.removeObject(object);
+    });
     $(collection).triggerHandler('removed', id);
 
     return true;
