@@ -17,6 +17,10 @@ export default Ember.Component.extend(Ember.Evented, {
   timeHighlight: Ember.computed.readOnly('flightPhase.selection'),
   hoverMode: false,
 
+  flotStyle: Ember.computed('height', function() {
+    return Ember.String.htmlSafe(`width: 100%; height: ${this.get('height')}px;`);
+  }),
+
   init() {
     this._super(...arguments);
 
