@@ -90,7 +90,7 @@ function updateTimePicker(prefix, flight_date, values) {
   var takeOffTimePicker = $('#' + prefix + '-takeoff_time-datetimepicker');
   if (takeOffTimePicker.data('DateTimePicker').getDate().unix() !=
       parseInt(values.takeoff / 1000)) {
-    var datetime = flight_date.clone().add('ms', values.takeoff);
+    var datetime = flight_date.clone().add(values.takeoff, 'ms');
 
     takeOffTimePicker.data('DateTimePicker').setValue(datetime);
     $('#' + prefix + '-takeoff_time')
@@ -101,7 +101,7 @@ function updateTimePicker(prefix, flight_date, values) {
       $('#' + prefix + '-scoring_start_time-datetimepicker');
   if (scoringStartTimePicket.data('DateTimePicker').getDate().unix() !=
       parseInt(values.scoring_start / 1000)) {
-    var datetime = flight_date.clone().add('ms', values.scoring_start);
+    var datetime = flight_date.clone().add(values.scoring_start, 'ms');
 
     scoringStartTimePicket.data('DateTimePicker').setValue(datetime);
     $('#' + prefix + '-scoring_start_time')
@@ -112,7 +112,7 @@ function updateTimePicker(prefix, flight_date, values) {
       $('#' + prefix + '-scoring_end_time-datetimepicker');
   if (scoringEndTimePicker.data('DateTimePicker').getDate().unix() !=
       parseInt(values.scoring_end / 1000)) {
-    var datetime = flight_date.clone().add('ms', values.scoring_end);
+    var datetime = flight_date.clone().add(values.scoring_end, 'ms');
 
     scoringEndTimePicker.data('DateTimePicker').setValue(datetime);
     $('#' + prefix + '-scoring_end_time')
@@ -122,7 +122,7 @@ function updateTimePicker(prefix, flight_date, values) {
   var landingTimePicker = $('#' + prefix + '-landing_time-datetimepicker');
   if (landingTimePicker.data('DateTimePicker').getDate().unix() !=
       parseInt(values.landing / 1000)) {
-    var datetime = flight_date.clone().add('ms', values.landing);
+    var datetime = flight_date.clone().add(values.landing, 'ms');
 
     landingTimePicker.data('DateTimePicker').setValue(datetime);
     $('#' + prefix + '-landing_time')
