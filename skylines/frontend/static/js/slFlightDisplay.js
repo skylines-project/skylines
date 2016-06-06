@@ -353,12 +353,10 @@ slFlightDisplay = function(_map, fix_table, baro) {
     global_time = time;
 
     fix_table.set('time', time);
+    baro.set('time', time);
 
     // if the mouse is not hovering over the barogram or any trail on the map
     if (!time) {
-      // remove crosshair from barogram
-      baro.set('time', null);
-
       // remove plane icons from map
       if (cesium_switcher.getMode()) {
         flights.each(function(flight) {
@@ -369,9 +367,6 @@ slFlightDisplay = function(_map, fix_table, baro) {
       }
 
     } else {
-      // update barogram crosshair
-      baro.set('time', time);
-
       flights.each(function(flight) {
         // calculate fix data
         var fix_data = flight.getFixData(time);
