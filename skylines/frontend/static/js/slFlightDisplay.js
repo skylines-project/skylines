@@ -16,6 +16,7 @@ slFlightDisplay = function(_map, fix_table, baro) {
    * @type {slFlightCollection}
    */
   var flights = slFlightCollection();
+  var rawFlights = flights.getArray();
 
   /**
    * Contest collection
@@ -27,7 +28,7 @@ slFlightDisplay = function(_map, fix_table, baro) {
    * Handler for the plane icons
    * @type {slMapIconHandler}
    */
-  var map_icon_handler = slMapIconHandler(map, flights.getArray());
+  var map_icon_handler = slMapIconHandler(map, rawFlights);
 
   /**
    * Handler for map hover events
@@ -103,15 +104,15 @@ slFlightDisplay = function(_map, fix_table, baro) {
 
     setupEvents();
 
-    baro.set('flights', flights.getArray());
+    baro.set('flights', rawFlights);
     baro.set('_contests', contests);
-    window.flightMap.set('flights', flights.getArray());
+    window.flightMap.set('flights', rawFlights);
     window.flightMap.set('contests', contests);
 
-    window.fixCalcService.set('flights', flights.getArray());
+    window.fixCalcService.set('flights', rawFlights);
 
     if (window.wingmanTable) {
-      window.wingmanTable.set('visibleFlights', flights.getArray());
+      window.wingmanTable.set('visibleFlights', rawFlights);
     }
   };
 
@@ -138,7 +139,7 @@ slFlightDisplay = function(_map, fix_table, baro) {
   flight_display.addFlight = function(data) {
     flight = slFlight.fromData(data);
 
-    flight.set('color', colors[flights.length() % colors.length]);
+    flight.set('color', colors[rawFlights.length % colors.length]);
 
     if (data.contests) {
       var _contestsLength = data.contests.length;
@@ -160,7 +161,7 @@ slFlightDisplay = function(_map, fix_table, baro) {
     $.ajax(url, {
       async: (typeof opt_async === undefined) || opt_async === true,
       success: function(data) {
-        if (flights.has(data.sfid))
+        if (rawFlights.findBy('id', data.sfid))
           return;
 
         flight_display.addFlight(data);
@@ -198,7 +199,7 @@ slFlightDisplay = function(_map, fix_table, baro) {
     // in the fix table.
     fix_table.on('remove_flight', function(sfid) {
       // never remove the first flight...
-      if (flights.at(0).getID() == sfid) return;
+      if (Ember.get(rawFlights, 'firstObject.id') == sfid) return;
       flights.remove(sfid);
     });
 
@@ -234,14 +235,14 @@ slFlightDisplay = function(_map, fix_table, baro) {
     // has been pressed. Determine the start time for playing.
     $(play_button).on('play', function(e) {
       // if there are no flights, then there is nothing to animate
-      if (flights.length == 0)
+      if (rawFlights.length == 0)
         return false;
 
       // if no time is set
       if (global_time == null || global_time == -1) {
         // find the first timestamp of all flights
         var start_time = Number.MAX_VALUE;
-        flights.each(function(flight) {
+        rawFlights.forEach(function(flight) {
           if (flight.getStartTime() < start_time)
             start_time = flight.getStartTime();
         });
@@ -271,7 +272,7 @@ slFlightDisplay = function(_map, fix_table, baro) {
 
       // find the last timestamp of all flights
       var stop_time = Number.MIN_VALUE;
-      flights.each(function(flight) {
+      rawFlights.forEach(function(flight) {
         if (flight.getEndTime() > stop_time)
           stop_time = flight.getEndTime();
       });
