@@ -19,9 +19,9 @@ slFlightDisplay = function(_map, fix_table, baro) {
 
   /**
    * Contest collection
-   * @type {slContestCollection}
+   * @type {Array}
    */
-  var contests = slContestCollection();
+  var contests = [];
 
   /**
    * Handler for the plane icons
@@ -118,8 +118,8 @@ slFlightDisplay = function(_map, fix_table, baro) {
     setupEvents();
 
     baro.set('flights', flights.getArray());
-    baro.set('_contests', contests.getArray());
-    window.flightMap.set('contests', contests.getArray());
+    baro.set('_contests', contests);
+    window.flightMap.set('contests', contests);
   };
 
   /**
@@ -155,7 +155,7 @@ slFlightDisplay = function(_map, fix_table, baro) {
     if (data.contests) {
       var _contestsLength = data.contests.length;
       for (var i = 0; i < _contestsLength; ++i)
-        contests.add(slContest(data.contests[i], flight.getID()));
+        contests.pushObject(slContest(data.contests[i], flight.getID()));
     }
 
     flights.add(flight);
@@ -231,7 +231,10 @@ slFlightDisplay = function(_map, fix_table, baro) {
         window.wingmanTable.setFlightColor(sfid);
       }
 
-      contests.remove(sfid);
+      contests.removeObjects(contests.filter(function(contest) {
+        return contest.getID() === sfid;
+      }));
+
       fix_table.removeRow(sfid);
       updateBaroScale();
       baro.draw();
