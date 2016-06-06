@@ -6,9 +6,7 @@ export default Ember.Component.extend({
   attributeBindings: ['style'],
 
   style: Ember.computed('selectable', function() {
-    if (this.get('selectable')) {
-      return Ember.String.htmlSafe('cursor: pointer');
-    }
+    return Ember.String.htmlSafe(this.get('selectable') ? 'cursor: pointer' : '');
   }),
 
   badgeStyle: Ember.computed('row.color', function() {
