@@ -30,25 +30,10 @@ var PlayButton = function(opt_options) {
 
   var stop = function() {
     $(control).triggerHandler('stop');
-    control.setMode('play');
-    control.playing = false;
   };
 
   var play = function() {
-    if ($(control).triggerHandler('play')) {
-      control.setMode('stop');
-      control.playing = true;
-      tick();
-    }
-  };
-
-  var tick = function() {
-    if (!control.playing) return;
-
-    if (!$(control).triggerHandler('tick')) stop();
-
-    // schedule next call
-    setTimeout(tick, 50);
+    $(control).triggerHandler('play');
   };
 
   ol.control.Control.call(this, {
@@ -67,6 +52,7 @@ ol.inherits(PlayButton, ol.control.Control);
  * @param {string} mode - Play or Stop
  */
 PlayButton.prototype.setMode = function(mode) {
+  this.playing = (mode === 'stop');
   this.element.innerHTML = '<img src="../../images/' + mode + '.png"/>';
 };
 
@@ -78,4 +64,3 @@ PlayButton.prototype.setMode = function(mode) {
 PlayButton.prototype.getMode = function() {
   return this.playing;
 };
-

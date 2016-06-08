@@ -234,51 +234,20 @@ slFlightDisplay = function(_map, fix_table, baro) {
     // Disable hover modes for map and barogram when the play button
     // has been pressed. Determine the start time for playing.
     $(play_button).on('play', function(e) {
-      // if there are no flights, then there is nothing to animate
-      if (rawFlights.length == 0)
-        return false;
-
-      // if no time is set
-      if (global_time == null || global_time == -1) {
-        // find the first timestamp of all flights
-        var start_time = window.fixCalcService.get('minStartTime');
-
-        // start the animation at the beginning
-        flight_display.setTime(start_time);
-      }
-
-      // disable mouse hovering
-      map_hover_handler.setMode(false);
-      baro.set('hoverMode', false);
-
-      return true;
+      window.fixCalcService.startPlayback();
     });
 
     // Enable hover modes after stopping replay.
     $(play_button).on('stop', function(e) {
-      // reenable mouse hovering
-      if (!cesium_switcher.getMode()) map_hover_handler.setMode(true);
-      baro.set('hoverMode', true);
+      window.fixCalcService.stopPlayback();
     });
 
-    // Advance time on replay tick.
-    $(play_button).on('tick', function(e) {
-      // increase time
-      var time = global_time + 1;
+    window.fixCalcService.addObserver('isRunning', function() {
+      var running = this.get('isRunning');
 
-      // find the last timestamp of all flights
-      var stop_time = window.fixCalcService.get('maxEndTime');
-
-      // check if we are at the end of the animation
-      if (time > stop_time) {
-        stop();
-        return false;
-      }
-
-      // set the time for the new animation frame
-      flight_display.setTime(time);
-
-      return true;
+      map_hover_handler.setMode(!running && !cesium_switcher.getMode());
+      baro.set('hoverMode', !running);
+      play_button.setMode(running ? 'stop' : 'play');
     });
 
     // Add hover and click events to the barogram.
