@@ -3,12 +3,13 @@
 import Ember from 'ember';
 
 export default Ember.Component.extend(Ember.Evented, {
+  fixCalc: Ember.inject.service(),
   flightPhase: Ember.inject.service(),
 
   height: 133,
 
   flot: null,
-  time: null,
+  time: Ember.computed.alias('fixCalc.time'),
   selection: null,
   flights: [],
   _contests: [],

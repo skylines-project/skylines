@@ -339,7 +339,6 @@ slFlightDisplay = function(_map, fix_table, baro) {
     global_time = time;
 
     window.fixCalcService.set('time', time);
-    baro.set('time', time);
   };
 
   window.fixCalcService.addObserver('data', function() {
