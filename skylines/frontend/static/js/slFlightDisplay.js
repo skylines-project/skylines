@@ -271,11 +271,7 @@ slFlightDisplay = function(_map, fix_table, baro) {
       var time = global_time + 1;
 
       // find the last timestamp of all flights
-      var stop_time = Number.MIN_VALUE;
-      rawFlights.forEach(function(flight) {
-        if (flight.getEndTime() > stop_time)
-          stop_time = flight.getEndTime();
-      });
+      var stop_time = window.fixCalcService.get('maxEndTime');
 
       // check if we are at the end of the animation
       if (time > stop_time) {
