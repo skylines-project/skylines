@@ -39,7 +39,6 @@ slFlightTracking = function(_map, fix_table, baro_placeholder) {
 
     flight.update(data.points, data.barogram_t, data.barogram_h,
                   data.enl, data.elevations);
-    flight_tracking.setTime(flight_tracking.getGlobalTime());
   }
 
   flight_tracking.init();

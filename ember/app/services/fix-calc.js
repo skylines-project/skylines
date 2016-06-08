@@ -2,7 +2,16 @@ import Ember from 'ember';
 
 export default Ember.Service.extend({
   flights: [],
+
+  /*
+   * Global time, can be:
+   * null -> no time is set, don't show barogram crosshair/plane position
+   * -1 -> always show the latest time/fix for each flight
+   * >= 0 -> show the associated time in the barogram and on the map
+   * @type {!Number}
+   */
   time: null,
+
   timer: null,
 
   isRunning: Ember.computed.bool('timer'),

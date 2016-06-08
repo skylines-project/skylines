@@ -44,16 +44,6 @@ slFlightDisplay = function(_map, fix_table, baro) {
    */
   var default_time = null;
 
-  /*
-   * Global time, can be:
-   * null -> no time is set, don't show barogram crosshair/plane position
-   * -1 -> always show the latest time/fix for each flight
-   * >= 0 -> show the associated time in the barogram and on the map
-   * @type {!Number}
-   */
-  var global_time = default_time;
-
-
   /**
    * List of colors for flight path display
    * @type {Array<String>}
@@ -217,8 +207,6 @@ slFlightDisplay = function(_map, fix_table, baro) {
     $(flights).on('add', function(e, flight) {
       updateBaroScale();
       baro.draw();
-
-      flight_display.setTime(global_time);
     });
 
     window.fixCalcService.addObserver('isRunning', function() {
@@ -283,8 +271,6 @@ slFlightDisplay = function(_map, fix_table, baro) {
    * @param {!Number} time Time to set
    */
   flight_display.setTime = function(time) {
-    global_time = time;
-
     window.fixCalcService.set('time', time);
   };
 
@@ -334,14 +320,6 @@ slFlightDisplay = function(_map, fix_table, baro) {
    */
   flight_display.setDefaultTime = function(time) {
     default_time = time;
-  };
-
-  /**
-   * Returns the current global time.
-   * @return {!Number}
-   */
-  flight_display.getGlobalTime = function() {
-    return global_time;
   };
 
   /**
