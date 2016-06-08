@@ -241,11 +241,7 @@ slFlightDisplay = function(_map, fix_table, baro) {
       // if no time is set
       if (global_time == null || global_time == -1) {
         // find the first timestamp of all flights
-        var start_time = Number.MAX_VALUE;
-        rawFlights.forEach(function(flight) {
-          if (flight.getStartTime() < start_time)
-            start_time = flight.getStartTime();
-        });
+        var start_time = window.fixCalcService.get('minStartTime');
 
         // start the animation at the beginning
         flight_display.setTime(start_time);

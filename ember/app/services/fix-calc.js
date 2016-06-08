@@ -4,6 +4,9 @@ export default Ember.Service.extend({
   flights: [],
   time: null,
 
+  startTimes: Ember.computed.mapBy('flights', 'time.firstObject'),
+  minStartTime: Ember.computed.min('startTimes'),
+
   endTimes: Ember.computed.mapBy('flights', 'time.lastObject'),
   maxEndTime: Ember.computed.max('endTimes'),
 
