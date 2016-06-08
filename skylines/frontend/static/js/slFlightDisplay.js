@@ -355,17 +355,16 @@ slFlightDisplay = function(_map, fix_table, baro) {
       var flight = it[0];
       var fix_data = it[1];
 
-      if (!fix_data) {
-        // update map
-        if (cesium_switcher.getMode()) {
+      if (cesium_switcher.getMode()) {
+        if (!fix_data) {
           cesium_switcher.hidePlane(flight);
         } else {
-          map_icon_handler.hidePlane(flight);
-        }
-      } else {
-        // update map
-        if (cesium_switcher.getMode()) {
           cesium_switcher.showPlane(flight, fix_data);
+        }
+
+      } else {
+        if (!fix_data) {
+          map_icon_handler.hidePlane(flight);
         } else {
           map_icon_handler.showPlane(flight, fix_data);
         }
