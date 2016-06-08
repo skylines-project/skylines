@@ -348,8 +348,10 @@ slFlightDisplay = function(_map, fix_table, baro) {
 
     window.fixCalcService.set('time', time);
     baro.set('time', time);
+  };
 
-    window.fixCalcService.get('data').forEach(function(it) {
+  window.fixCalcService.addObserver('data', function() {
+    this.get('data').forEach(function(it) {
       var flight = it[0];
       var fix_data = it[1];
 
@@ -371,7 +373,7 @@ slFlightDisplay = function(_map, fix_table, baro) {
     });
 
     map.render();
-  };
+  });
 
   /**
    * Updates the barogram
