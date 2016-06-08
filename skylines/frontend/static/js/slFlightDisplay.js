@@ -36,12 +36,6 @@ slFlightDisplay = function(_map, fix_table, baro) {
    */
   var map_hover_handler = slMapHoverHandler(map, flights);
 
-  /**
-   * Play button control
-   * @type {PlayButton}
-   */
-  var play_button;
-
   var cesium_switcher;
 
   /**
@@ -90,12 +84,8 @@ slFlightDisplay = function(_map, fix_table, baro) {
 
   /**
    * Initialize the map, add flight path and contest layers.
-   * Adds the PlayButton to the map and activates all hover modes.
    */
   flight_display.init = function() {
-    play_button = new PlayButton();
-    map.addControl(play_button);
-
     map_hover_handler.setMode(true);
     baro.set('hoverMode', true);
 
@@ -231,23 +221,11 @@ slFlightDisplay = function(_map, fix_table, baro) {
       flight_display.setTime(global_time);
     });
 
-    // Disable hover modes for map and barogram when the play button
-    // has been pressed. Determine the start time for playing.
-    $(play_button).on('play', function(e) {
-      window.fixCalcService.startPlayback();
-    });
-
-    // Enable hover modes after stopping replay.
-    $(play_button).on('stop', function(e) {
-      window.fixCalcService.stopPlayback();
-    });
-
     window.fixCalcService.addObserver('isRunning', function() {
       var running = this.get('isRunning');
 
       map_hover_handler.setMode(!running && !cesium_switcher.getMode());
       baro.set('hoverMode', !running);
-      play_button.setMode(running ? 'stop' : 'play');
     });
 
     // Add hover and click events to the barogram.
@@ -264,7 +242,7 @@ slFlightDisplay = function(_map, fix_table, baro) {
     $(cesium_switcher).on('cesium_enable', function(e) {
       map.un('moveend', update_baro_scale_on_moveend);
 
-      if (!play_button.getMode()) {
+      if (!window.fixCalcService.get('isRunning')) {
         // disable mouse hovering
         map_hover_handler.setMode(false);
       }
@@ -288,9 +266,9 @@ slFlightDisplay = function(_map, fix_table, baro) {
       // Update the baro scale when the map has been zoomed/moved.
       map.on('moveend', update_baro_scale_on_moveend);
 
-      if (!play_button.getMode()) {
+      if (!window.fixCalcService.get('isRunning')) {
         // enable mouse hovering
-        map_icon_handler.setMode(true);
+        map_hover_handler.setMode(true);
       }
 
       map.getLayers().getArray().forEach(function(e) {
