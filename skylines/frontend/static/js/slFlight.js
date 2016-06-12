@@ -63,8 +63,6 @@ slFlight = Ember.Object.extend({
       return Fix.create({ flight: this });
 
     var time = this.get('time');
-    var geometry = this.get('geometry');
-    var geoid = this.get('geoid');
 
     var index = getNextSmallerIndex(time, t);
     if (index < 0 || index >= time.length - 1 ||
