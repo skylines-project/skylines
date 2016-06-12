@@ -24,7 +24,7 @@ export default Ember.Service.extend({
 
   fixes: Ember.computed('flights.@each.time', 'time', function() {
     let time = this.get('time');
-    return this.get('flights').map(flight => fix(flight, time));
+    return this.get('flights').map(flight => Fix.create({ flight, _t: time }));
   }),
 
   init() {
@@ -62,26 +62,37 @@ export default Ember.Service.extend({
   }
 });
 
-function fix(flight, t) {
-  if (t == -1)
-    t = flight.get('endTime');
-  else if (t < flight.get('startTime') || t > flight.get('endTime'))
-    return Fix.create({ flight });
-
-  let time = flight.get('time');
-
-  let index = getNextSmallerIndex(time, t);
-  if (index < 0 || index >= time.length - 1 ||
-    time[index] == undefined || time[index + 1] == undefined)
-    return Fix.create({ flight });
-
-  let t_prev = time[index];
-  let t_next = time[index + 1];
-
-  return Fix.create({ flight, t, t_prev, t_next });
-}
-
 let Fix = Ember.Object.extend({
+  t: Ember.computed('_t', 'flight.{startTime,endTime}', function() {
+    let _t = this.get('_t');
+    if (_t === -1) {
+      return this.get('flight.endTime');
+    } else if (_t >= this.get('flight.startTime') && _t <= this.get('flight.endTime')) {
+      return _t;
+    }
+  }),
+
+  _index: Ember.computed('flight.time', 't', function() {
+    let t = this.get('t');
+    if (!Ember.isNone(t)) {
+      return getNextSmallerIndex(this.get('flight.time'), t);
+    }
+  }),
+
+  t_prev: Ember.computed('flight.time', '_index', function() {
+    let index = this.get('_index');
+    if (!Ember.isNone(index)) {
+      return this.get('flight.time')[index];
+    }
+  }),
+
+  t_next: Ember.computed('flight.time', '_index', function() {
+    let index = this.get('_index');
+    if (!Ember.isNone(index)) {
+      return this.get('flight.time')[index + 1];
+    }
+  }),
+
   time: Ember.computed.readOnly('t_prev'),
 
   coordinate: Ember.computed('flight.geometry', 't', function() {
