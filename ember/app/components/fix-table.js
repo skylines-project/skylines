@@ -7,8 +7,8 @@ export default Ember.Component.extend(Ember.Evented, {
 
   selection: null,
 
-  data: Ember.computed.map('fixCalc.data', function(it, i) {
-    let [flight, fix] = it;
+  data: Ember.computed.map('fixCalc.fixes', function(fix, i) {
+    let flight = fix.get('flight');
     let id = flight.get('id');
     let color = flight.get('color');
     let competitionId = flight.get('competition_id');

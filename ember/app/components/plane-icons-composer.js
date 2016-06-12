@@ -9,7 +9,7 @@ export default Ember.Component.extend({
 
   map: null,
 
-  fixes: Ember.computed.mapBy('fixCalc.data', '1'),
+  fixes: Ember.computed.readOnly('fixCalc.fixes'),
   fixesObserver: Ember.observer('fixes.[]', function() {
     this.get('map').render();
   }),

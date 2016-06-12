@@ -274,10 +274,9 @@ slFlightDisplay = function(_map, fix_table, baro) {
     window.fixCalcService.set('time', time);
   };
 
-  window.fixCalcService.addObserver('data', function() {
-    this.get('data').forEach(function(it) {
-      var flight = it[0];
-      var fix_data = it[1];
+  window.fixCalcService.addObserver('fixes', function() {
+    this.get('fixes').forEach(function(fix_data) {
+      var flight = fix_data.get('flight');
 
       if (cesium_switcher.getMode()) {
         if (!fix_data.get('point')) {
