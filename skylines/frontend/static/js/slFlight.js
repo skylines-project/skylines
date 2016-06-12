@@ -122,8 +122,10 @@ slFlight = Ember.Object.extend({
 });
 
 var Fix = Ember.Object.extend({
-  point: Ember.computed('lon', 'lat', function() {
-    return new ol.geom.Point([this.get('lon'), this.get('lat')]);
+  coordinate: Ember.computed.collect('lon', 'lat'),
+
+  point: Ember.computed('coordinate', function() {
+    return new ol.geom.Point(this.get('coordinate'));
   })
 });
 
