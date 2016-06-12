@@ -56,42 +56,6 @@ slFlight = Ember.Object.extend({
     this.set('plane', { point: null, marker: null });
   },
 
-  update: function(_lonlat, _time, _height, _enl, _elevations) {
-    var time_decoded = ol.format.Polyline.decodeDeltas(_time, 1, 1);
-    var lonlat = ol.format.Polyline.decodeDeltas(_lonlat, 2);
-    var height_decoded = ol.format.Polyline.decodeDeltas(_height, 1, 1);
-    var enl_decoded = ol.format.Polyline.decodeDeltas(_enl, 1, 1);
-    var elev = ol.format.Polyline.decodeDeltas(_elevations, 1, 1);
-
-    // we skip the first point in the list because we assume it's the "linking"
-    // fix between the data we already have and the data to add.
-    if (time_decoded.length < 2) return;
-
-    var geoid = this.get('geoid');
-
-    var fixes = time_decoded.map(function(timestamp, i) {
-      return {
-        time: timestamp,
-        longitude: lonlat[i * 2],
-        latitude: lonlat[i * 2 + 1],
-        altitude: height_decoded[i] + geoid,
-        enl: enl_decoded[i]
-      };
-    });
-
-    var elevations = time_decoded.map(function(timestamp, i) {
-      var elevation = elev[i];
-
-      return {
-        time: timestamp,
-        elevation: (elevation > -500) ? elevation : null
-      }
-    });
-
-    this.get('fixes').pushObjects(fixes.slice(1));
-    this.get('elevations').pushObjects(elevations.slice(1));
-  },
-
   getFixData: function(t) {
     if (t == -1)
       t = this.get('endTime');
