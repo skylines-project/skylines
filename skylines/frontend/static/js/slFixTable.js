@@ -3,192 +3,117 @@
  * @constructor
  * @param {jQuery} placeholder jQuery object of the placeholder
  */
-slFixTable = function(placeholder) {
-  var fix_table = {};
-
-  // Private attributes
-
+var slFixTable = Backbone.View.extend({
   /**
-   * The internal data store for the metadata and fix data.
-   * @type {Object}
+   * Initialize the FixTable view with the currently
+   * known flights in our FlightCollection.
+   *
+   * Each FixTableRowView will update itself when a
+   * flight has been changed.
    */
-  var data = {};
+  initialize: function() {
+    this.render();
 
-  /**
-   * Defines if the flights in the list are selectable by clicking on them.
-   * @type {Boolean}
-   */
-  var selectable = false;
+    // Listen to changes in the FlightCollection
+    this.listenTo(this.collection, 'add', this.render);
+    this.listenTo(this.collection, 'remove', this.render);
 
-  /**
-   * The identifier of the selected flight or null.
-   * @type {?(String|number)}
-   */
-  var selection = null;
-
-  // Public attributes and methods
+    return this;
+  },
 
   /**
    * Renders the fix data table into the placeholder.
    * This function has to be called after the internal data store has been
    * modified by any of the following methods.
    */
-  fix_table.render = function() {
-    // Loop through data and render/update each one
-    for (var id in data) {
-      var row = data[id];
-      renderRow(row.element, row.fix);
-    }
-  };
+  render: function() {
+    this.$el.html('');
+
+    // Loop through data and render each one
+    this.collection.each(function(flight) {
+      var flight_view = new slFixTableRowView({
+        model: flight,
+        collection: this.collection,
+        attributes: {
+          selectable: this.collection.length > 1
+        }
+      });
+
+      flight_view.listenTo(this, 'update:time', flight_view.render);
+
+      this.$el.append(flight_view.el);
+    }.bind(this));
+
+    return this;
+  }
+});
+
+var slFixTableRowView = Backbone.View.extend({
+  tagName: 'tr',
 
   /**
-   * Adds a new row to the fix data table.
+   * Adds a new and empty row to the fix table.
    *
-   * @param {string|number} id An identifier for the flight row.
-   * @param {string} color RGB hex color (e.g. '#FF0000').
-   * @param {string=} opt_competition_id
-   *     An optional competition id of the aircraft.
-   * @return {boolean} false if the id is already present in the table,
-   *     true otherwise.
+   * @param {string|number} id
+   * @param {string} color The color of the flight trace on the map.
+   * @param {string=} opt_competition_id Optional competition id of the plane.
+   * @param {bool=} opt_remove_icon Optional remove icon for this flight.
+   * @return {DOMElement} The generated fix table row.
    */
-  fix_table.addRow = function(id, color, opt_competition_id) {
-    // Don't add the row if is exists already
-    if (id in data)
-      return false;
+  initialize: function() {
+    // function addHTMLRow(id, color, opt_competition_id, opt_remove_icon) {
+    var sfid = this.model.attributes.sfid;
+    var color = this.model.getColor();
+    var opt_competition_id = this.model.getCompetitionID();
+    var opt_remove_icon = !(this.collection.at(0) == this.model);
 
-    var opt_remove_icon = !($.isEmptyObject(data));
+    // Generate a new table row for the flight
+    var row = $(
+        '<td><span class="badge" style="background:' + color + '">' +
+        (opt_competition_id || '&nbsp;') +
+        '</span></td>' +
+        '<td>--:--:--</td>' +
+        '<td>--</td>' +
+        '<td>--</td>' +
+        '<td>--</td>' +
+        '<td>--</td>' +
+        '<td>' +
+            (opt_remove_icon ?
+                '<i id="remove-flight-' + sfid + '" data-sfid="' +
+                sfid + '" class="icon-remove"></i>' :
+                ''
+            ) +
+        '</td>');
 
-    // Generate new HTML table row element
-    var element = addHTMLRow(id, color, opt_competition_id, opt_remove_icon);
+    // render row to element.
+    this.$el.html(row);
 
-    // Save the relevant metadata for later
-    data[id] = {
-      element: element,
-      fix: {}
-    };
+    // set selectable
+    this.setSelectable();
 
-    return true;
-  };
+    // Attach onClick event handler
+    this.$el.on('click', function(e) {
+      if (!this.attributes.selectable)
+        return;
 
-  /**
-   * Removes a row from the fix data table.
-   *
-   * @param {string|number} id An identifier for the flight row.
-   * @return {boolean} true if success.
-   */
-  fix_table.removeRow = function(id) {
-    // Don't remove row if it doesn't exist
-    if (!id in data)
-      return false;
+      this.collection.select(this.model);
+      return false; // prevent event bubbling
+    }.bind(this));
 
-    if (fix_table.getSelection() == id)
-      fix_table.clearSelection(true);
+    this.$el.find('#remove-flight-' + sfid).on('click', function(e) {
+      this.collection.remove(this.model);
+      unpinFlight(sfid);
+      return false; // prevent event bubbling
+    }.bind(this));
 
-    data[id].element.remove();
+    // toggle selection if flight is selected
+    this.toggleSelection();
 
-    delete data[id];
-    return true;
-  };
+    // listen to selection updates to rerender the row
+    this.listenTo(this.collection, 'change:selection', this.toggleSelection);
 
-  /**
-   * Clears all fix data from the internal data store.
-   */
-  fix_table.clearAllFixes = function() {
-    for (var id in data)
-      data[id].fix = null;
-  };
-
-  /**
-   * Clears the fix data of one specific row.
-   *
-   * @param {String|number} id
-   *   The identifier of the row that should be cleared.
-   * @return {Boolean} True if the row was cleared, False otherwise.
-   */
-  fix_table.clearFix = function(id) {
-    return fix_table.updateFix(id);
-  };
-
-  /**
-   * Updates the fix data of one specific row.
-   *
-   * @param {String|number} id
-   *   The identifier of the row that should be updated.
-   * @param  {Object=} opt_fix The new fix data for the row.
-   * @return {Boolean} True if the row was updated, False otherwise.
-   */
-  fix_table.updateFix = function(id, opt_fix) {
-    if (!(id in data))
-      return false;
-
-    data[id].fix = opt_fix;
-    return true;
-  };
-
-  /**
-   * Returns whether the fix data table is in "selectable" mode.
-   *
-   * @return {Boolean} True if "selectable" mode is active, False otherwise.
-   */
-  fix_table.getSelectable = function() {
-    return selectable;
-  };
-
-  /**
-   * Sets whether single flights should be selectable by clicking on the list.
-   *
-   * @param {Boolean} value True enables the "selectable" mode.
-   */
-  fix_table.setSelectable = function(value) {
-    selectable = value;
-
-    placeholder.find('tr').each(function(index, row) {
-      $(row).css('cursor', selectable ? 'pointer' : '');
-    });
-  };
-
-  /**
-   * Clears the current selection from the table.
-   *
-   * @param  {Boolean=} opt_trigger
-   *   The 'selection_changed' event is triggered if this parameter is true.
-   */
-  fix_table.clearSelection = function(opt_trigger) {
-    fix_table.setSelection(null, opt_trigger);
-  };
-
-  /**
-   * Returns the identifier of the selected flight or null.
-   *
-   * @return {?(String|number)} Identifier of the selected flight or null.
-   */
-  fix_table.getSelection = function() {
-    return selection;
-  };
-
-  /**
-   * Selects a new flight from the table in "selectable" mode.
-   *
-   * @param {?(String|number)} id Identifier of the flight or null.
-   * @param  {Boolean=} opt_trigger
-   *   The 'selection_changed' event is triggered if this parameter is true.
-   */
-  fix_table.setSelection = function(id, opt_trigger) {
-    if (selection)
-      data[selection].element.removeClass('selected');
-
-    selection = id;
-
-    if (selection)
-      data[selection].element.addClass('selected');
-
-    if (opt_trigger)
-      $(fix_table).trigger('selection_changed', [selection]);
-  };
-
-  return fix_table;
-
-  // Private methods
+    return this;
+  },
 
   /**
    * Updates a given row with the data from the given fix.
@@ -196,9 +121,11 @@ slFixTable = function(placeholder) {
    * @param {DOMElement} row
    * @param {Object} fix
    */
-  function renderRow(row, fix) {
+  render: function(time) {
+    var fix = this.model.getFixData(time);
+
     // Loop through the columns and fill them
-    $(row).find('td').each(function(index, cell) {
+    this.$el.find('td').each(function(index, cell) {
       var html = '--';
 
       if (index == 1) {
@@ -235,56 +162,30 @@ slFixTable = function(placeholder) {
 
       $(cell).html(html);
     });
-  }
+
+    return this;
+  },
 
   /**
-   * Adds a new and empty row to the fix table.
+   * Sets whether single flights should be selectable by clicking on the list.
    *
-   * @param {string|number} id
-   * @param {string} color The color of the flight trace on the map.
-   * @param {string=} opt_competition_id Optional competition id of the plane.
-   * @param {bool=} opt_remove_icon Optional remove icon for this flight.
-   * @return {DOMElement} The generated fix table row.
+   * @param {Boolean} value True enables the "selectable" mode.
    */
-  function addHTMLRow(id, color, opt_competition_id, opt_remove_icon) {
-    // Generate a new table row for the flight
-    var row = $(
-        '<tr>' +
-        '<td><span class="badge" style="background:' + color + '">' +
-        (opt_competition_id || '&nbsp;') +
-        '</span></td>' +
-        '<td>--:--:--</td>' +
-        '<td>--</td>' +
-        '<td>--</td>' +
-        '<td>--</td>' +
-        '<td>--</td>' +
-        '<td>' +
-            (opt_remove_icon ?
-                '<i id="remove-flight-' + id + '" data-sfid="' +
-                id + '" class="icon-remove"></i>' :
-                ''
-            ) +
-        '</td>' +
-        '</tr>');
+  setSelectable: function() {
+    this.$el.css('cursor', this.attributes.selectable ? 'pointer' : '');
+  },
 
-    // Attach onClick event handler
-    row.on('click', function(e) {
-      if (!selectable)
-        return;
-
-      fix_table.setSelection(selection == id ? null : id, true);
-    });
-
-    // Attach the new row to the table
-    placeholder.append(row);
-
-    $('#remove-flight-' + id).on('click', function(e) {
-      var sfid = $(this).data('sfid');
-      $(fix_table).trigger('remove_flight', [sfid]);
-      unpinFlight(sfid);
-      return false; // prevent event bubbling
-    });
-
-    return row;
+  /**
+   * Selects a new flight from the table in "selectable" mode.
+   *
+   * @param {?(String|number)} id Identifier of the flight or null.
+   * @param  {Boolean=} opt_trigger
+   *   The 'selection_changed' event is triggered if this parameter is true.
+   */
+  toggleSelection: function() {
+    if (this.model.getSelection() && this.collection.length > 1)
+      this.$el.addClass('selected');
+    else
+      this.$el.removeClass('selected');
   }
-};
+});

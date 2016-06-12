@@ -6,112 +6,116 @@
  *   turnpoints and times are googlePolyEncoded strings.
  * @param {Number} _sfid The SkyLines flight id this contest trace belongs to.
  */
-slContest = function(_contest, _sfid) {
-  var contest = {};
+var slContest = Backbone.Model.extend({
+  // Default attributes for the contest
+  defaults: function() {
+    return {
+      /**
+       * SkyLines flight ID this contest belongs to.
+       * @type {Number}
+       */
+      sfid: null,
 
-  /**
-   * SkyLines flight ID this contest belongs to.
-   * @type {Number}
-   */
-  var sfid = _sfid;
+      /**
+       * Geometry of the contest trace.
+       * @type {ol.geom.LineString}
+       */
+      geometry: new ol.geom.LineString([]),
 
-  /**
-   * Geometry of the contest trace.
-   * @type {ol.geom.LineString}
-   */
-  var geometry;
+      /**
+       * Drawing color.
+       * @type {String}
+       */
+      color: null,
 
-  /**
-   * Drawing color.
-   * @type {String}
-   */
-  var color;
+      /**
+       * Time of each turnpoint
+       * @type {Array<Number>}
+       */
+      times: null,
 
-  /**
-   * Time of each turnpoint
-   * @type {Array<Number>}
-   */
-  var times;
-
-  /**
-   * Internal contest type name
-   * @type {String}
-   */
-  var name;
+      /**
+       * Internal contest type name
+       * @type {String}
+       */
+      name: null
+    };
+  },
 
 
   /**
    * Dictionary of contest names and their colors.
    */
-  var contest_colors = {
+  contest_colors: {
     'olc_plus classic': '#ff2c73',
     'olc_plus triangle': '#9f14ff'
-  };
+  },
 
   /**
    * Decodes the input data and stores it.
    * @param {Object} _contest Contest object
    */
-  contest.init = function(_contest) {
-    var turnpoints = ol.format.Polyline.decodeDeltas(_contest.turnpoints, 2);
-    times = ol.format.Polyline.decodeDeltas(_contest.times, 1, 1);
-    name = _contest.name;
+  parse: function(_contest) {
+    var attrs = this.defaults();
 
-    geometry = new ol.geom.LineString([]);
+    var turnpoints = ol.format.Polyline.decodeDeltas(_contest.turnpoints, 2);
+    attrs.times = ol.format.Polyline.decodeDeltas(_contest.times, 1, 1);
+    attrs.name = _contest.name;
+
     var turnpointsLength = turnpoints.length;
-    var triangle = (name.search(/triangle/) != -1 && turnpointsLength == 5 * 2);
+    var triangle = (attrs.name.search(/triangle/) != -1 &&
+                    turnpointsLength == 5 * 2);
 
     if (triangle) {
       for (var i = 2; i < turnpointsLength - 2; i += 2) {
         var point = ol.proj.transform([turnpoints[i + 1], turnpoints[i]],
                                       'EPSG:4326', 'EPSG:3857');
-        geometry.appendCoordinate(point);
+        attrs.geometry.appendCoordinate(point);
       }
 
-      geometry.appendCoordinate(geometry.getFirstCoordinate());
+      attrs.geometry.appendCoordinate(attrs.geometry.getFirstCoordinate());
     } else {
       for (var i = 0; i < turnpointsLength; i += 2) {
         var point = ol.proj.transform([turnpoints[i + 1], turnpoints[i]],
                                       'EPSG:4326', 'EPSG:3857');
-        geometry.appendCoordinate(point);
+        attrs.geometry.appendCoordinate(point);
       }
     }
 
-    color = contest_colors[name] || '#ff2c73';
-  };
+    attrs.color = this.contest_colors[attrs.name] || '#ff2c73';
+    attrs.sfid = _contest.sfid;
+    return attrs;
+  },
 
   /**
    * Returns the geometry of the contest trace
    * @return {ol.geom.LineString}
    */
-  contest.getGeometry = function() {
-    return geometry;
-  };
+  getGeometry: function() {
+    return this.attributes.geometry;
+  },
 
   /**
    * Returns the SkyLines id of the contest's flight
    * @return {Number}
    */
-  contest.getID = function() {
-    return sfid;
-  };
+  getID: function() {
+    return this.attributes.sfid;
+  },
 
   /**
    * Returns the contest drawing color
    * @return {String}
    */
-  contest.getColor = function() {
-    return color;
-  };
+  getColor: function() {
+    return this.attributes.color;
+  },
 
   /**
    * Returns the turnpoint time array
    * @return {Array<Number>}
    */
-  contest.getTimes = function() {
-    return times;
-  };
-
-  contest.init(_contest);
-  return contest;
-};
+  getTimes: function() {
+    return this.attributes.times;
+  }
+});

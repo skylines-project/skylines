@@ -2,28 +2,37 @@
  * An ordered collection of flight objects.
  * @constructor
  */
-slFlightCollection = function() {
-  var collection = slCollection();
-
+var slFlightCollection = Backbone.Collection.extend({
   // Public attributes and methods
+  source: new ol.source.Vector(),
 
-  var source = new ol.source.Vector();
+  // Default URL root
+  urlRoot: '/flights/',
+
+  initialize: function() {
+    this.listenTo(this, 'add', this.addToSource);
+    this.listenTo(this, 'remove', this.removeFromSource);
+    this.listenTo(this, 'remove', function() {
+      if (this.length == 1)
+        this.select(this.at(0));
+    });
+  },
 
   /**
    * Calculates the bounds of all flights in the collection.
    * @return {ol.extent}
    */
-  collection.getBounds = function() {
-    return source.getExtent();
-  };
+  getBounds: function() {
+    return this.source.getExtent();
+  },
 
   /**
    * Returns the vector layer source of this collection.
    * @return {ol.source.Vector}
    */
-  collection.getSource = function() {
-    return source;
-  };
+  getSource: function() {
+    return this.source;
+  },
 
   /**
    * Returns the minimum and maximum fix time within the extent.
@@ -31,13 +40,13 @@ slFlightCollection = function() {
    * @param {ol.extent} extent
    * @return {Object}
    */
-  collection.getMinMaxTimeInExtent = function(extent) {
+  getMinMaxTimeInExtent: function(extent) {
     var min = Infinity,
         total_min = Infinity;
     var max = -Infinity,
         total_max = -Infinity;
 
-    source.forEachFeatureInExtent(extent, function(f) {
+    this.source.forEachFeatureInExtent(extent, function(f) {
       var coordinates = f.getGeometry().getCoordinates();
 
       var lastCoord = coordinates[0];
@@ -83,32 +92,51 @@ slFlightCollection = function() {
     if (max == -Infinity) max = total_max;
 
     return { min: min, max: max };
-  };
+  },
+
+  has: function(sfid) {
+    return this.get(sfid);
+  },
 
   /**
-   * Setup the event handlers for the 'preremove' and 'add' events.
+   * Some event listeners for the 'remove' and 'add' events.
    */
-  function setupEvents() {
-    $(collection).on('preremove', function(e, flight) {
-      source.removeFeature(
-          source.getFeatures().filter(function(e) {
-            return e.get('sfid') == flight.getID();
-          })[0]
-      );
+  removeFromSource: function(flight) {
+    this.source.removeFeature(
+        this.source.getFeatures().filter(function(e) {
+          return e.get('sfid') == flight.getID();
+        })[0]
+    );
+  },
+
+  addToSource: function(flight) {
+    var feature = new ol.Feature({
+      geometry: flight.getGeometry(),
+      sfid: flight.getID(),
+      color: flight.getColor(),
+      type: 'flight'
     });
 
-    $(collection).on('add', function(e, flight) {
-      var feature = new ol.Feature({
-        geometry: flight.getGeometry(),
-        sfid: flight.getID(),
-        color: flight.getColor(),
-        type: 'flight'
-      });
+    this.source.addFeature(feature);
+  },
 
-      source.addFeature(feature);
+  select: function(selected_flight) {
+    if (this.length == 1) {
+      selected_flight.setSelection(true);
+      this.trigger('change:selection', selected_flight);
+      return;
+    }
+
+    if (selected_flight.getSelection())
+      selected_flight.setSelection(false);
+    else
+      selected_flight.setSelection(true);
+
+    this.each(function(flight) {
+      if (flight != selected_flight)
+        flight.setSelection(false);
     });
+
+    this.trigger('change:selection', selected_flight);
   }
-
-  setupEvents();
-  return collection;
-};
+});

@@ -102,6 +102,8 @@ openlayers_css = Bundle(
 
 all_js = Bundle(
     'http://code.jquery.com/jquery-1.10.2.min.js',
+    'http://underscorejs.org/underscore-min.js',
+    'http://backbonejs.org/backbone-min.js',
     'http://cdnjs.cloudflare.com/ajax/libs/jquery-ajaxtransport-xdomainrequest/1.0.3/jquery.xdomainrequest.min.js',
     'vendor/jquery/jquery.cookie.js',
     'vendor/jquery/jquery.timeago.js',
@@ -129,7 +131,6 @@ flight_js = Bundle(
     'js/slBarogram.js',
     'js/slFixTable.js',
     'js/slPhaseTable.js',
-    'js/slCollection.js',
     'js/slFlightCollection.js',
     'js/slFlight.js',
     'js/slContestCollection.js',
@@ -149,6 +150,7 @@ tracking_js = Bundle(
 upload_js = Bundle(
     'js/slUnits.js',
     'js/slBarogram.js',
+    'js/slFlight.js',
     'js/upload.js',
     'http://momentjs.com/downloads/moment.min.js',
     'http://rawgithub.com/TobiasLohner/bootstrap-datetimepicker/c36342415a1be8fa013548402bf01718ca93d454/src/js/bootstrap-datetimepicker.js',

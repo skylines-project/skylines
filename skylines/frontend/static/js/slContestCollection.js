@@ -2,48 +2,44 @@
  * An ordered collection of contest objects.
  * @constructor
  */
-slContestCollection = function() {
-  var collection = slCollection();
-
+var slContestCollection = Backbone.Collection.extend({
   // Public attributes and methods
+  source: new ol.source.Vector(),
 
-  var source = new ol.source.Vector();
+  initialize: function() {
+    this.listenTo(this, 'add', this.addToSource);
+    this.listenTo(this, 'remove', this.removeFromSource);
+  },
 
   /**
    * Returns the vector layer source of this collection.
    * @return {ol.source.Vector}
    */
-  collection.getSource = function() {
-    return source;
-  };
-
+  getSource: function() {
+    return this.source;
+  },
 
   /**
-   * Setup event handlers for the 'add' and 'preremove' events
+   * Setup event handlers for the 'add' and 'remove' events
    */
-  function setupEvents() {
-    $(collection).on('preremove', function(e, contest) {
-      var features = source.getFeatures().filter(function(e) {
-        return e.get('sfid') == contest.getID();
-      });
-
-      for (var i = 0; i < features.length; ++i) {
-        source.removeFeature(features[i]);
-      }
+  removeFromSource: function(contest) {
+    var features = this.source.getFeatures().filter(function(e) {
+      return e.get('sfid') == contest.getID();
     });
 
-    $(collection).on('add', function(e, contest) {
-      var feature = new ol.Feature({
-        geometry: contest.getGeometry(),
-        sfid: contest.getID(),
-        color: contest.getColor(),
-        type: 'contest'
-      });
+    for (var i = 0; i < features.length; ++i) {
+      this.source.removeFeature(features[i]);
+    }
+  },
 
-      source.addFeature(feature);
+  addToSource: function(contest) {
+    var feature = new ol.Feature({
+      geometry: contest.getGeometry(),
+      sfid: contest.getID(),
+      color: contest.getColor(),
+      type: 'contest'
     });
+
+    this.source.addFeature(feature);
   }
-
-  setupEvents();
-  return collection;
-};
+});
