@@ -27,12 +27,6 @@ export default Ember.Component.extend(Ember.Evented, {
 
     window.flightMap = this;
 
-    let query = parseQueryString(window.location.search);
-    this.set('baseLayer', query.baselayer);
-    this.set('overlayLayers', query.overlays);
-  },
-
-  didInsertElement() {
     if (this.get('noCanvas')) {
       return;
     }
@@ -43,7 +37,6 @@ export default Ember.Component.extend(Ember.Evented, {
     });
 
     let map = new ol.Map({
-      target: this.elementId,
       view: new ol.View({
         center: ol.proj.transform([10, 50], 'EPSG:4326', 'EPSG:3857'),
         maxZoom: 17,
@@ -82,8 +75,19 @@ export default Ember.Component.extend(Ember.Evented, {
     this.addBingLayers();
     this.addMapboxLayer();
 
+    let query = parseQueryString(window.location.search);
+    this.set('baseLayer', query.baselayer);
+    this.set('overlayLayers', query.overlays);
+
     this.setBaseLayer(this.get('baseLayer') || Ember.$.cookie('base_layer'));
     this.setOverlayLayers(this.get('overlayLayers') || Ember.$.cookie('overlay_layers'));
+  },
+
+  didInsertElement() {
+    let map = this.get('map');
+    if (map) {
+      map.setTarget(this.elementId);
+    }
   },
 
   setBaseLayer(base_layer) {
