@@ -1,25 +1,23 @@
-slFlightTracking = function(_map, fix_table, baro_placeholder) {
-  var flight_tracking = slFlightDisplay(_map,
-                                        fix_table,
-                                        baro_placeholder);
+slFlightTracking = function(flight_display) {
+  var flight_tracking = {};
 
   flight_tracking.init = function() {
-    flight_tracking.setDefaultTime(-1);
-    flight_tracking.setTime(-1);
+    flight_display.setDefaultTime(-1);
+    flight_display.setTime(-1);
   };
 
   /**
    * Retrieves all new traces for the displayed flights
    */
   flight_tracking.updateFlightsFromJSON = function() {
-    flight_tracking.getFlights().each(function(flight) {
+    flight_display.getFlights().each(function(flight) {
       var url = '/tracking/' + flight.getID() + '/json';
 
       $.ajax(url, {
         data: { last_update: flight.get('last_update') || null },
         success: function(data) {
           updateFlight(data);
-          flight_tracking.update();
+          flight_display.update();
         }
       });
     });
@@ -33,7 +31,7 @@ slFlightTracking = function(_map, fix_table, baro_placeholder) {
 
   function updateFlight(data) {
     // find the flight to update
-    var flight = flight_tracking.getFlights().get(data.sfid);
+    var flight = flight_display.getFlights().get(data.sfid);
     if (!flight)
       return;
 
