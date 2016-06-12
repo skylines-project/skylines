@@ -10,8 +10,6 @@
  * correct padding for the view.
  */
 slPhaseHighlighter = function(_map, _flights, _padding_callback) {
-  var phase_tables = [];
-
   var phase_highlighter = {};
   var phase_start_marker_style, phase_end_marker_style;
   var map = _map;
@@ -57,12 +55,6 @@ slPhaseHighlighter = function(_map, _flights, _padding_callback) {
       var data = window.flightPhaseService.get('selection');
       if (data) {
         phase_markers = highlight(data.start, data.end);
-
-        for (var i = 0; i < phase_tables.length; i++) {
-          if (phase_tables[i] != this) {
-            phase_tables[i].setSelection(null, false);
-          }
-        }
       } else {
         phase_markers.start = null;
         phase_markers.end = null;
