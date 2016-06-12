@@ -45,11 +45,11 @@ slMapClickHandler = function(map, flight_display, settings) {
 
     if (!infobox) {
       infobox = new ol.Overlay({
-        element: $("<div id='MapInfoBox' class='InfoBox'></div>")
+        element: $("<div id='MapInfoBox' class='InfoBox'></div>").get(0)
       });
     }
 
-    var infobox_element = infobox.getElement();
+    var infobox_element = $(infobox.getElement());
     var coordinate = e.coordinate;
 
     if (settings['flight_info'] && flight_display) {
@@ -281,7 +281,8 @@ slMapClickHandler = function(map, flight_display, settings) {
   function showLocationData(data) {
     if (!visible) return; // do nothing if infobox is closed already
 
-    infobox.getElement().empty();
+    var element = $(infobox.getElement());
+    element.empty();
     var item = $('<div class="location info-item"></div>');
     var no_data = true;
 
@@ -313,7 +314,7 @@ slMapClickHandler = function(map, flight_display, settings) {
     if (no_data) {
       item.html('No data retrieved for this location');
 
-      infobox.getElement().delay(1500).fadeOut(1000, function() {
+      element.delay(1500).fadeOut(1000, function() {
         map.removeOverlay(infobox);
         visible = false;
       });
@@ -321,9 +322,9 @@ slMapClickHandler = function(map, flight_display, settings) {
       hideCircle(1000);
     }
 
-    infobox.getElement().append(item);
+    element.append(item);
 
-    //infobox.setOffset([15, infobox.getElement().height() / 2]);
+    //infobox.setOffset([15, element.height() / 2]);
   }
 
   /**
