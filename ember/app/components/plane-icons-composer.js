@@ -48,10 +48,10 @@ export default Ember.Component.extend({
     let style = this.get('style');
 
     this.get('fixes').forEach(fix => {
-      if (fix && fix.point) {
-        style.setRotation(fix.heading);
+      if (fix && fix.get('point')) {
+        style.setRotation(fix.get('heading'));
         context.setImageStyle(style);
-        context.drawPointGeometry(fix.point);
+        context.drawPointGeometry(fix.get('point'));
       }
     });
   },

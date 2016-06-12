@@ -85,7 +85,6 @@ slFlight = Ember.Object.extend({
 
     fix_data['lon'] = _loc_current[0];
     fix_data['lat'] = _loc_current[1];
-    fix_data['point'] = new ol.geom.Point([fix_data['lon'], fix_data['lat']]);
 
     fix_data['heading'] = Math.atan2(_loc_next[0] - _loc_prev[0],
                                      _loc_next[1] - _loc_prev[1]);
@@ -114,12 +113,18 @@ slFlight = Ember.Object.extend({
       }
     }
 
-    return fix_data;
+    return Fix.create(fix_data);
   },
 
   getID: function() {
     return this.get('id');
   }
+});
+
+var Fix = Ember.Object.extend({
+  point: Ember.computed('lon', 'lat', function() {
+    return new ol.geom.Point([this.get('lon'), this.get('lat')]);
+  })
 });
 
 slFlight.fromData = function(data) {
