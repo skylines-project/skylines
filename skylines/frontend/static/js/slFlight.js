@@ -18,6 +18,9 @@ slFlight = Ember.Object.extend({
   color: null,
   last_update: Ember.computed.readOnly('time.lastObject'),
 
+  startTime: Ember.computed.readOnly('time.firstObject'),
+  endTime: Ember.computed.readOnly('time.lastObject'),
+
   init: function() {
     this.set('plane', { point: null, marker: null });
   },
@@ -58,18 +61,10 @@ slFlight = Ember.Object.extend({
     this.set('time', this.get('time').concat(time_decoded));
   },
 
-  getStartTime: function() {
-    return this.get('time.firstObject');
-  },
-
-  getEndTime: function() {
-    return this.get('time.lastObject');
-  },
-
   getFixData: function(t) {
     if (t == -1)
-      t = this.getEndTime();
-    else if (t < this.getStartTime() || t > this.getEndTime())
+      t = this.get('endTime');
+    else if (t < this.get('startTime') || t > this.get('endTime'))
       return null;
 
     var time = this.get('time');

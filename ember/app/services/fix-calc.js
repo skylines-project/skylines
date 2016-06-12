@@ -16,10 +16,10 @@ export default Ember.Service.extend({
 
   isRunning: Ember.computed.bool('timer'),
 
-  startTimes: Ember.computed.mapBy('flights', 'time.firstObject'),
+  startTimes: Ember.computed.mapBy('flights', 'startTime'),
   minStartTime: Ember.computed.min('startTimes'),
 
-  endTimes: Ember.computed.mapBy('flights', 'time.lastObject'),
+  endTimes: Ember.computed.mapBy('flights', 'endTime'),
   maxEndTime: Ember.computed.max('endTimes'),
 
   data: Ember.computed('flights.@each.time', 'time', function() {
