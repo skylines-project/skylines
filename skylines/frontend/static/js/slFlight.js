@@ -73,25 +73,8 @@ slFlight = Ember.Object.extend({
 
     var t_prev = time[index];
     var t_next = time[index + 1];
-    var dt_total = t_next - t_prev;
 
-    var fix_data = { flight: this, t: t };
-
-    fix_data['time'] = t_prev;
-
-    var _loc_prev = geometry.getCoordinateAtM(t_prev);
-    var _loc_next = geometry.getCoordinateAtM(t_next);
-
-    fix_data['heading'] = Math.atan2(_loc_next[0] - _loc_prev[0],
-                                     _loc_next[1] - _loc_prev[1]);
-
-    var loc_prev = ol.proj.transform(_loc_prev, 'EPSG:3857', 'EPSG:4326');
-    var loc_next = ol.proj.transform(_loc_next, 'EPSG:3857', 'EPSG:4326');
-
-    if (dt_total != 0) {
-      fix_data['speed'] = geographicDistance(loc_next, loc_prev) / dt_total;
-      fix_data['vario'] = (_loc_next[2] - _loc_prev[2]) / dt_total;
-    }
+    var fix_data = { flight: this, t: t, t_prev: t_prev, t_next: t_next };
 
     return Fix.create(fix_data);
   },
@@ -102,6 +85,8 @@ slFlight = Ember.Object.extend({
 });
 
 var Fix = Ember.Object.extend({
+  time: Ember.computed.readOnly('t_prev'),
+
   coordinate: Ember.computed('flight.geometry', 't', function() {
     return this.get('flight.geometry').getCoordinateAtM(this.get('t'));
   }),
@@ -124,6 +109,50 @@ var Fix = Ember.Object.extend({
 
   point: Ember.computed('coordinate', function() {
     return new ol.geom.Point(this.get('coordinate'));
+  }),
+
+  heading: Ember.computed('_coordinate_prev', '_coordinate_next', function() {
+    var prev = this.get('_coordinate_prev');
+    var next = this.get('_coordinate_next');
+
+    if (prev && next) {
+      return Math.atan2(next[0] - prev[0], next[1] - prev[1]);
+    }
+  }),
+
+  vario: Ember.computed('_coordinate_prev.2', '_coordinate_next.2', '_dt', function() {
+    var prev = this.get('_coordinate_prev');
+    var next = this.get('_coordinate_next');
+    var dt = this.get('_dt');
+
+    if (prev && next && dt) {
+      return (next[2] - prev[2]) / dt;
+    }
+  }),
+
+  speed: Ember.computed('_coordinate_prev', '_coordinate_next', '_dt', function() {
+    var prev = this.get('_coordinate_prev');
+    var next = this.get('_coordinate_next');
+    var dt = this.get('_dt');
+
+    if (prev && next && dt) {
+      var loc_prev = ol.proj.transform(prev, 'EPSG:3857', 'EPSG:4326');
+      var loc_next = ol.proj.transform(next, 'EPSG:3857', 'EPSG:4326');
+
+      return geographicDistance(loc_next, loc_prev) / dt;
+    }
+  }),
+
+  _dt: Ember.computed('t_prev', 't_next', function() {
+    return this.get('t_next') - this.get('t_prev');
+  }),
+
+  _coordinate_prev: Ember.computed('flight.geometry', 't_prev', function() {
+    return this.get('flight.geometry').getCoordinateAtM(this.get('t_prev'));
+  }),
+
+  _coordinate_next: Ember.computed('flight.geometry', 't_next', function() {
+    return this.get('flight.geometry').getCoordinateAtM(this.get('t_next'));
   }),
 
   elevation: Ember.computed('flight.elev_h.[]', '_elev_index', function() {
