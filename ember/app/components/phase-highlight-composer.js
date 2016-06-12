@@ -24,14 +24,10 @@ export default Ember.Component.extend({
 
     let startStyle = new ol.style.Icon({
       anchor: [0.5, 1],
-      anchorXUnits: 'fraction',
-      anchorYUnits: 'fraction',
       src: '/vendor/openlayers/img/marker-green.png'
     });
     let endStyle = new ol.style.Icon({
       anchor: [0.5, 1],
-      anchorXUnits: 'fraction',
-      anchorYUnits: 'fraction',
       src: '/vendor/openlayers/img/marker.png'
     });
 
