@@ -14,34 +14,35 @@ export default Ember.Component.extend(Ember.Evented, {
   flights: [],
   _contests: [],
 
-  active: Ember.computed('flights.[]', 'selection', function() {
+  activeFlights: Ember.computed('flights.[]', 'selection', function() {
     let { flights, selection } = this.getProperties('flights', 'selection');
-    return flights
-      .filter(flight => (!selection || flight.getID() === selection))
-      .map(flight => ({
-        data: flight.get('flot_h'),
-        color: flight.get('color')
-      }));
+    return flights.filter(flight => (!selection || flight.getID() === selection));
   }),
 
-  passive: Ember.computed('flights.[]', 'selection', function() {
+  passiveFlights: Ember.computed('flights.[]', 'selection', function() {
     let { flights, selection } = this.getProperties('flights', 'selection');
-    return flights
-      .filter(flight => (selection && flight.getID() !== selection))
-      .map(flight => ({
-        data: flight.get('flot_h'),
-        color: flight.get('color')
-      }));
+    return flights.filter(flight => (selection && flight.getID() !== selection));
   }),
 
-  enls: Ember.computed('flights.[]', 'selection', function() {
-    let { flights, selection } = this.getProperties('flights', 'selection');
-    return flights
-      .filter(flight => (!selection || flight.getID() === selection))
-      .map(flight => ({
-        data: flight.get('flot_enl'),
-        color: flight.get('color')
-      }));
+  active: Ember.computed('activeFlights.@each.{flot_h,color}', function() {
+    return this.get('activeFlights').map(flight => ({
+      data: flight.get('flot_h'),
+      color: flight.get('color')
+    }));
+  }),
+
+  passive: Ember.computed('passiveFlights.@each.{flot_h,color}', function() {
+    return this.get('passiveFlights').map(flight => ({
+      data: flight.get('flot_h'),
+      color: flight.get('color')
+    }));
+  }),
+
+  enls: Ember.computed('activeFlights.@each.{flot_enl,color}', function() {
+    return this.get('activeFlights').map(flight => ({
+      data: flight.get('flot_enl'),
+      color: flight.get('color')
+    }));
   }),
 
   contests: Ember.computed('flights.[]', 'selection', '_contests.[]', function() {
