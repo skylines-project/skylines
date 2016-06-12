@@ -100,9 +100,7 @@ slFlight = Ember.Object.extend({
       if (elev_index >= 0 && elev_index < elev_t.length) {
         var elev = elev_h[elev_index];
         if (elev) {
-          fix_data['alt-gnd'] = fix_data['alt-msl'] - elev_h[elev_index];
-          if (fix_data['alt-gnd'] < 0)
-            fix_data['alt-gnd'] = 0;
+          fix_data['elevation'] = elev_h[elev_index];
         }
       }
     }
@@ -125,6 +123,15 @@ var Fix = Ember.Object.extend({
 
   'alt-msl': Ember.computed('coordinate.2', 'flight.geoid', function() {
     return this.get('coordinate.2') - this.get('flight.geoid');
+  }),
+
+  'alt-gnd': Ember.computed('alt-msl', 'elevation', function() {
+    var altitude = this.get('alt-msl');
+    var elevation = this.get('elevation');
+    if (!Ember.isNone(altitude) && !Ember.isNone(elevation)) {
+      var value = altitude - elevation;
+      return (value >= 0) ? value : 0;
+    }
   }),
 
   point: Ember.computed('coordinate', function() {
