@@ -60,7 +60,7 @@ slFlight = Ember.Object.extend({
     if (t == -1)
       t = this.get('endTime');
     else if (t < this.get('startTime') || t > this.get('endTime'))
-      return null;
+      return Fix.create({ flight: this });
 
     var time = this.get('time');
     var geometry = this.get('geometry');
@@ -69,7 +69,7 @@ slFlight = Ember.Object.extend({
     var index = getNextSmallerIndex(time, t);
     if (index < 0 || index >= time.length - 1 ||
         time[index] == undefined || time[index + 1] == undefined)
-      return null;
+      return Fix.create({ flight: this });
 
     var t_prev = time[index];
     var t_next = time[index + 1];
@@ -88,14 +88,20 @@ var Fix = Ember.Object.extend({
   time: Ember.computed.readOnly('t_prev'),
 
   coordinate: Ember.computed('flight.geometry', 't', function() {
-    return this.get('flight.geometry').getCoordinateAtM(this.get('t'));
+    var t = this.get('t');
+    if (!Ember.isNone(t)) {
+      return this.get('flight.geometry').getCoordinateAtM(t);
+    }
   }),
 
   lon: Ember.computed.readOnly('coordinate.0'),
   lat: Ember.computed.readOnly('coordinate.1'),
 
   'alt-msl': Ember.computed('coordinate.2', 'flight.geoid', function() {
-    return this.get('coordinate.2') - this.get('flight.geoid');
+    var altitude = this.get('coordinate.2');
+    if (!Ember.isNone(altitude)) {
+      return altitude - this.get('flight.geoid');
+    }
   }),
 
   'alt-gnd': Ember.computed('alt-msl', 'elevation', function() {
@@ -108,7 +114,10 @@ var Fix = Ember.Object.extend({
   }),
 
   point: Ember.computed('coordinate', function() {
-    return new ol.geom.Point(this.get('coordinate'));
+    var coordinate = this.get('coordinate');
+    if (coordinate) {
+      return new ol.geom.Point(coordinate);
+    }
   }),
 
   heading: Ember.computed('_coordinate_prev', '_coordinate_next', function() {

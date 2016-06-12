@@ -280,14 +280,14 @@ slFlightDisplay = function(_map, fix_table, baro) {
       var fix_data = it[1];
 
       if (cesium_switcher.getMode()) {
-        if (!fix_data) {
+        if (!fix_data.get('point')) {
           cesium_switcher.hidePlane(flight);
         } else {
           cesium_switcher.showPlane(flight, fix_data);
         }
 
       } else {
-        if (!fix_data) {
+        if (!fix_data.get('point')) {
           map_icon_handler.hidePlane(flight);
         } else {
           map_icon_handler.showPlane(flight, fix_data);
