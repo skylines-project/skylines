@@ -1,4 +1,4 @@
-slFlightTracking = function(flight_display) {
+slFlightTracking = function(flight_display, flights) {
   var flight_tracking = {};
 
   flight_tracking.init = function() {
@@ -10,7 +10,7 @@ slFlightTracking = function(flight_display) {
    * Retrieves all new traces for the displayed flights
    */
   flight_tracking.updateFlightsFromJSON = function() {
-    flight_display.getFlights().each(function(flight) {
+    flights.forEach(function(flight) {
       var url = '/tracking/' + flight.getID() + '/json';
 
       $.ajax(url, {
@@ -31,7 +31,7 @@ slFlightTracking = function(flight_display) {
 
   function updateFlight(data) {
     // find the flight to update
-    var flight = flight_display.getFlights().get(data.sfid);
+    var flight = flights.findBy('id', data.sfid);
     if (!flight)
       return;
 
