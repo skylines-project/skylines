@@ -93,18 +93,6 @@ slFlight = Ember.Object.extend({
       fix_data['vario'] = (_loc_next[2] - _loc_prev[2]) / dt_total;
     }
 
-    var elev_t = this.get('elev_t');
-    var elev_h = this.get('elev_h');
-    if (elev_t !== undefined && elev_h !== undefined) {
-      var elev_index = getNextSmallerIndex(elev_t, t);
-      if (elev_index >= 0 && elev_index < elev_t.length) {
-        var elev = elev_h[elev_index];
-        if (elev) {
-          fix_data['elevation'] = elev_h[elev_index];
-        }
-      }
-    }
-
     return Fix.create(fix_data);
   },
 
@@ -136,6 +124,20 @@ var Fix = Ember.Object.extend({
 
   point: Ember.computed('coordinate', function() {
     return new ol.geom.Point(this.get('coordinate'));
+  }),
+
+  elevation: Ember.computed('flight.elev_h.[]', '_elev_index', function() {
+    var elev_h = this.get('flight.elev_h');
+    if (elev_h) {
+      return elev_h[this.get('_elev_index')];
+    }
+  }),
+
+  _elev_index: Ember.computed('flight.elev_t.[]', 't', function() {
+    var elev_t = this.get('flight.elev_t');
+    if (elev_t) {
+      return getNextSmallerIndex(elev_t, this.get('t'));
+    }
   })
 });
 
