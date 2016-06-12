@@ -90,17 +90,16 @@ slPhaseHighlighter = function(_map, _flights, _padding_callback) {
 
     if (start_index >= end_index) return phase_markers;
 
-    var extent = ol.extent.boundingExtent(
-        flight.get('geometry').getCoordinates().slice(start_index, end_index + 1)
-        );
+    var coordinates = flight.get('geometry').getCoordinates();
+    var extent = ol.extent.boundingExtent(coordinates.slice(start_index, end_index + 1));
 
     var view = map.getView();
     var buffer = Math.max(ol.extent.getWidth(extent),
                           ol.extent.getHeight(extent));
     map.getView().fit(extent, map.getSize(), { padding: getPadding() });
 
-    var start_point = flight.get('geometry').getCoordinates()[start_index];
-    var end_point = flight.get('geometry').getCoordinates()[end_index];
+    var start_point = coordinates[start_index];
+    var end_point = coordinates[end_index];
 
     phase_markers.start = new ol.geom.Point([start_point[0], start_point[1]]);
     phase_markers.end = new ol.geom.Point([end_point[0], end_point[1]]);
