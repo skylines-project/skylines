@@ -109,6 +109,8 @@
     {%- endif %}
 
     var getPadding = function() { return [20, 20, $("#barogram_panel").height() + 20, sidebar.width() + 20]; };
+    window.paddingFn = getPadding;
+
     var extent = flight_display.getFlights().getBounds();
     map.getView().fit(extent, map.getSize(), {padding: getPadding()});
 
@@ -122,10 +124,6 @@
       location_info: true,
       api_url: "{{ config.get('SKYLINES_API_URL') }}"
     });
-
-    var phase_highlighter = slPhaseHighlighter(map,
-                                               flight_display.getFlights(),
-                                               getPadding);
 
     if (window.location.hash &&
         sidebar.find('li > a[href="#' + window.location.hash.substring(1) + '"]').length != 0) {
