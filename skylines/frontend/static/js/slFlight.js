@@ -85,6 +85,7 @@ slFlight = Ember.Object.extend({
 
     fix_data['lon'] = _loc_current[0];
     fix_data['lat'] = _loc_current[1];
+    fix_data['point'] = new ol.geom.Point([fix_data['lon'], fix_data['lat']]);
 
     fix_data['heading'] = Math.atan2(_loc_next[0] - _loc_prev[0],
                                      _loc_next[1] - _loc_prev[1]);

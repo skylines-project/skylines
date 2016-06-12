@@ -294,8 +294,6 @@ slFlightDisplay = function(_map, fix_table, baro) {
         }
       }
     });
-
-    map.render();
   });
 
   /**

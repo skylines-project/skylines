@@ -10,33 +10,6 @@ slMapIconHandler = function(_map, _flights) {
   var map = _map;
   var flights = _flights;
 
-  map_icon_handler.init = function() {
-    var style = new ol.style.Icon({
-      anchor: [0.5, 0.5],
-      anchorXUnits: 'fraction',
-      anchorYUnits: 'fraction',
-      size: [40, 24],
-      src: '/images/glider_symbol.png',
-      rotation: 0,
-      rotateWithView: true
-    });
-
-    style.load();
-
-    map.on('postcompose', function(e) {
-      var vector_context = e.vectorContext;
-
-      flights.forEach(function(flight) {
-        var plane = flight.get('plane');
-        if (plane.point !== null) {
-          style.setRotation(plane['heading']);
-          vector_context.setImageStyle(style);
-          vector_context.drawPointGeometry(plane.point);
-        }
-      });
-    });
-  };
-
   map_icon_handler.showPlane = function(flight, fix_data) {
     var plane = flight.get('plane');
 
@@ -85,7 +58,5 @@ slMapIconHandler = function(_map, _flights) {
     flights.forEach(map_icon_handler.hidePlane);
   };
 
-
-  map_icon_handler.init();
   return map_icon_handler;
 };
