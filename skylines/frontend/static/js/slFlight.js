@@ -15,50 +15,81 @@
  *   the flight, e.g. registration number, callsign, ...
  */
 slFlight = Ember.Object.extend({
+  fixes: [],
+  elevations: [],
+
+  time: Ember.computed.mapBy('fixes', 'time'),
+
+  coordinates: Ember.computed.map('fixes', function(fix) {
+    var coordinate = [fix.latitude, fix.longitude, fix.altitude, fix.time];
+    return ol.proj.transform(coordinate, 'EPSG:4326', 'EPSG:3857');
+  }),
+
+  flot_h: Ember.computed.map('fixes', function(fix) {
+    return [fix.time * 1000, slUnits.convertAltitude(fix.altitude)];
+  }),
+
+  flot_enl: Ember.computed.map('fixes', function(fix) {
+    return [fix.time * 1000, fix.enl];
+  }),
+
+  elev_t: Ember.computed.mapBy('elevations', 'time'),
+  elev_h: Ember.computed.mapBy('elevations', 'elevation'),
+
+  flot_elev: Ember.computed.map('elevations', function(it) {
+    return [it.time * 1000, it.elevation ? slUnits.convertAltitude(it.elevation) : null];
+  }),
+
   color: null,
   last_update: Ember.computed.readOnly('time.lastObject'),
 
   startTime: Ember.computed.readOnly('time.firstObject'),
   endTime: Ember.computed.readOnly('time.lastObject'),
 
+  coordinatesObserver: Ember.observer('coordinates', function() {
+    var coordinates = this.get('coordinates');
+    this.get('geometry').setCoordinates(coordinates, 'XYZM')
+  }),
+
   init: function() {
+    this.set('geometry', new ol.geom.LineString(this.get('coordinates'), 'XYZM'));
     this.set('plane', { point: null, marker: null });
   },
 
   update: function(_lonlat, _time, _height, _enl, _elevations) {
-    var height_decoded = ol.format.Polyline.decodeDeltas(_height, 1, 1);
     var time_decoded = ol.format.Polyline.decodeDeltas(_time, 1, 1);
-    var enl_decoded = ol.format.Polyline.decodeDeltas(_enl, 1, 1);
     var lonlat = ol.format.Polyline.decodeDeltas(_lonlat, 2);
+    var height_decoded = ol.format.Polyline.decodeDeltas(_height, 1, 1);
+    var enl_decoded = ol.format.Polyline.decodeDeltas(_enl, 1, 1);
     var elev = ol.format.Polyline.decodeDeltas(_elevations, 1, 1);
 
     // we skip the first point in the list because we assume it's the "linking"
     // fix between the data we already have and the data to add.
     if (time_decoded.length < 2) return;
 
-    var _flot_h = [], _flot_enl = [], _flot_elev = [],
-        _elev_t = [], _elev_h = [];
-    for (var i = 1; i < time_decoded.length; i++) {
-      var timestamp = time_decoded[i] * 1000;
+    var geoid = this.get('geoid');
 
-      var point = ol.proj.transform([lonlat[(i * 2) + 1], lonlat[i * 2]],
-                                    'EPSG:4326', 'EPSG:3857');
-      this.get('geometry').appendCoordinate([point[0], point[1],
-                                 height_decoded[i], time_decoded[i]]);
+    var fixes = time_decoded.map(function(timestamp, i) {
+      return {
+        time: timestamp,
+        longitude: lonlat[i * 2],
+        latitude: lonlat[i * 2 + 1],
+        altitude: height_decoded[i] + geoid,
+        enl: enl_decoded[i]
+      };
+    });
 
-      this.get('flot_h').push([timestamp, slUnits.convertAltitude(height_decoded[i])]);
-      this.get('flot_enl').push([timestamp, enl_decoded[i]]);
+    var elevations = time_decoded.map(function(timestamp, i) {
+      var elevation = elev[i];
 
-      var e = elev[i];
-      if (e < -500)
-        e = null;
+      return {
+        time: timestamp,
+        elevation: (elevation > -500) ? elevation : null
+      }
+    });
 
-      this.get('elev_t').push(time_decoded[i]);
-      this.get('elev_h').push(e);
-      this.get('flot_elev').push([timestamp, e ? slUnits.convertAltitude(e) : null]);
-    }
-
-    this.set('time', this.get('time').concat(time_decoded));
+    this.get('fixes').pushObjects(fixes.slice(1));
+    this.get('elevations').pushObjects(elevations.slice(1));
   },
 
   getFixData: function(t) {
@@ -127,52 +158,39 @@ slFlight = Ember.Object.extend({
 });
 
 slFlight.fromData = function(data) {
-  var _lonlat = ol.format.Polyline.decodeDeltas(data.points, 2);
   var _time = ol.format.Polyline.decodeDeltas(data.barogram_t, 1, 1);
+  var _lonlat = ol.format.Polyline.decodeDeltas(data.points, 2);
   var _height = ol.format.Polyline.decodeDeltas(data.barogram_h, 1, 1);
   var _enl = ol.format.Polyline.decodeDeltas(data.enl, 1, 1);
+
+  var fixes = _time.map(function(timestamp, i) {
+    return {
+      time: timestamp,
+      longitude: _lonlat[i * 2],
+      latitude: _lonlat[i * 2 + 1],
+      altitude: _height[i] + data.geoid,
+      enl: _enl[i]
+    };
+  });
+
   var _elev_t = ol.format.Polyline.decodeDeltas(data.elevations_t, 1, 1);
   var _elev_h = ol.format.Polyline.decodeDeltas(data.elevations_h, 1, 1);
 
-  var geometry = new ol.geom.LineString([], 'XYZM');
-  for (var i = 0, len = _lonlat.length; i < len; i += 2) {
-    var point = ol.proj.transform([_lonlat[i + 1], _lonlat[i]], 'EPSG:4326', 'EPSG:3857');
-    geometry.appendCoordinate([point[0], point[1], _height[i / 2] + data.geoid, _time[i / 2]]);
-  }
+  var elevations = _elev_t.map(function(timestamp, i) {
+    var elevation = _elev_h[i];
 
-  var flot_h = [];
-  var flot_enl = [];
-  for (var i = 0, len = _time.length; i < len; ++i) {
-    var timestamp = _time[i] * 1000;
-    flot_h.push([timestamp, slUnits.convertAltitude(_height[i])]);
-    flot_enl.push([timestamp, _enl[i]]);
-  }
-
-  var elev_t = [];
-  var elev_h = [];
-  var flot_elev = [];
-  for (var i = 0, len = _elev_t.length; i < len; i++) {
-    var timestamp = _elev_t[i] * 1000;
-    var e = _elev_h[i];
-    if (e < -500)
-      e = null;
-
-    elev_t.push(_elev_t[i]);
-    elev_h.push(e);
-    flot_elev.push([timestamp, e ? slUnits.convertAltitude(e) : null]);
-  }
+    return {
+      time: timestamp,
+      elevation: (elevation > -500) ? elevation : null
+    }
+  });
 
   var additional = data.additional || {};
 
   return slFlight.create({
     id: data.sfid,
-    geometry: geometry,
-    time: _time,
-    flot_h: flot_h,
-    flot_enl: flot_enl,
-    elev_t: elev_t,
-    elev_h: elev_h,
-    flot_elev: flot_elev,
+    fixes: fixes,
+    elevations: elevations,
     geoid: data.geoid,
     competition_id: additional.competition_id,
     registration: additional.registration
