@@ -48,6 +48,7 @@ setup(
         'marshmallow==2.6.1',
         'Flask_OAuthlib==0.9.2',
         'oauthlib==0.7.2',
+        'ogn-client==0.3.0',
     ],
     include_package_data=True,
     package_data={

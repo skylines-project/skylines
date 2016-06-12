@@ -55,6 +55,10 @@ class User(db.Model):
 
     tracking_callsign = db.Column(Unicode(5))
 
+    # The users OGN address (optional)
+
+    ogn_address = db.Column(BigInteger)
+
     # Time and IP of creation
 
     created = db.Column(DateTime, default=datetime.utcnow)
@@ -117,6 +121,10 @@ class User(db.Model):
     @staticmethod
     def by_tracking_key(key):
         return User.query(tracking_key=key).first()
+
+    @staticmethod
+    def by_ogn_address(address):
+        return User.query(ogn_address=address).first()
 
     @staticmethod
     def by_recover_key(key):
@@ -218,6 +226,13 @@ class User(db.Model):
             return None
 
         return '%X' % self.tracking_key
+
+    @property
+    def ogn_address_hex(self):
+        if self.ogn_address is None:
+            return None
+
+        return '%X' % self.ogn_address
 
     @classmethod
     def tracking_delay_interval(cls):
