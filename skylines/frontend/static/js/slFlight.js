@@ -75,21 +75,15 @@ slFlight = Ember.Object.extend({
     var t_next = time[index + 1];
     var dt_total = t_next - t_prev;
 
-    var fix_data = {};
+    var fix_data = { flight: this, t: t };
 
     fix_data['time'] = t_prev;
 
     var _loc_prev = geometry.getCoordinateAtM(t_prev);
-    var _loc_current = geometry.getCoordinateAtM(t);
     var _loc_next = geometry.getCoordinateAtM(t_next);
-
-    fix_data['lon'] = _loc_current[0];
-    fix_data['lat'] = _loc_current[1];
 
     fix_data['heading'] = Math.atan2(_loc_next[0] - _loc_prev[0],
                                      _loc_next[1] - _loc_prev[1]);
-
-    fix_data['alt-msl'] = _loc_current[2] - geoid;
 
     var loc_prev = ol.proj.transform(_loc_prev, 'EPSG:3857', 'EPSG:4326');
     var loc_next = ol.proj.transform(_loc_next, 'EPSG:3857', 'EPSG:4326');
@@ -122,7 +116,16 @@ slFlight = Ember.Object.extend({
 });
 
 var Fix = Ember.Object.extend({
-  coordinate: Ember.computed.collect('lon', 'lat'),
+  coordinate: Ember.computed('flight.geometry', 't', function() {
+    return this.get('flight.geometry').getCoordinateAtM(this.get('t'));
+  }),
+
+  lon: Ember.computed.readOnly('coordinate.0'),
+  lat: Ember.computed.readOnly('coordinate.1'),
+
+  'alt-msl': Ember.computed('coordinate.2', 'flight.geoid', function() {
+    return this.get('coordinate.2') - this.get('flight.geoid');
+  }),
 
   point: Ember.computed('coordinate', function() {
     return new ol.geom.Point(this.get('coordinate'));

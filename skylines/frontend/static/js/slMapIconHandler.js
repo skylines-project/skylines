@@ -15,9 +15,9 @@ slMapIconHandler = function(_map, _flights) {
 
     // set plane location
     if (plane.point === null) {
-      plane.point = new ol.geom.Point([fix_data['lon'], fix_data['lat']]);
+      plane.point = fix_data.get('point');
     } else {
-      plane.point.setCoordinates([fix_data['lon'], fix_data['lat']]);
+      plane.point.setCoordinates(fix_data.get('coordinate'));
     }
 
     // set plane heading
