@@ -61,7 +61,7 @@ slMapIconHandler = function(_map, _flights) {
             '</span>');
 
         plane.marker = new ol.Overlay({
-          element: badge
+          element: badge.get(0)
         });
         map.addOverlay(plane.marker);
         plane.marker.setOffset([badge.width(), -40]);
