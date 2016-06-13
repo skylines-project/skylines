@@ -95,12 +95,7 @@ let Fix = Ember.Object.extend({
 
   time: Ember.computed.readOnly('t_prev'),
 
-  coordinate: Ember.computed('flight.geometry', 't', function() {
-    let t = this.get('t');
-    if (!Ember.isNone(t)) {
-      return this.get('flight.geometry').getCoordinateAtM(t);
-    }
-  }),
+  coordinate: computedCoordinateAtM('flight.geometry', 't'),
 
   lon: Ember.computed.readOnly('coordinate.0'),
   lat: Ember.computed.readOnly('coordinate.1'),
@@ -164,13 +159,8 @@ let Fix = Ember.Object.extend({
     return this.get('t_next') - this.get('t_prev');
   }),
 
-  _coordinate_prev: Ember.computed('flight.geometry', 't_prev', function() {
-    return this.get('flight.geometry').getCoordinateAtM(this.get('t_prev'));
-  }),
-
-  _coordinate_next: Ember.computed('flight.geometry', 't_next', function() {
-    return this.get('flight.geometry').getCoordinateAtM(this.get('t_next'));
-  }),
+  _coordinate_prev: computedCoordinateAtM('flight.geometry', 't_prev'),
+  _coordinate_next: computedCoordinateAtM('flight.geometry', 't_next'),
 
   elevation: Ember.computed('flight.elev_h.[]', '_elev_index', function() {
     let elev_h = this.get('flight.elev_h');
@@ -188,3 +178,12 @@ let Fix = Ember.Object.extend({
 });
 
 Fix[Ember.NAME_KEY] = 'Fix';
+
+function computedCoordinateAtM(geometryKey, timeKey) {
+  return Ember.computed(geometryKey, timeKey, function() {
+    let time = this.get(timeKey);
+    if (!Ember.isNone(time)) {
+      return this.get(geometryKey).getCoordinateAtM(time);
+    }
+  });
+}
