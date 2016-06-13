@@ -38,43 +38,7 @@
   $(function() {
     var map = window.flightMap.get('map');
 
-    var icon_style = new ol.style.Style({
-      image: new ol.style.Icon(({
-        anchor: [0.5, 1],
-        anchorXUnits: 'fraction',
-        anchorYUnits: 'fraction',
-        src: '/vendor/openlayers/img/marker-gold.png'
-      }))
-    });
-
-    var vector_source = new ol.source.Vector({
-      features: []
-    });
-
-    var vector_layer = new ol.layer.Vector({
-      source: vector_source,
-      display_in_layer_switcher: false,
-      zIndex: 51,
-      style: icon_style,
-      name: 'Takeoff Locations',
-      id: 'TakeoffLocations'
-    });
-
-    map.addLayer(vector_layer);
-
-    var locations = [{{ add_locations(takeoff_locations) }}];
-    for (var i = 0; i < locations.length; ++i) {
-      var feature = new ol.Feature({
-        geometry: new ol.geom.Point(ol.proj.transform(locations[i], 'EPSG:4326', 'EPSG:3857'))
-      });
-
-      vector_source.addFeature(feature);
-    }
-
-    map.getView().fit(vector_source.getExtent(), map.getSize());
-    var zoom = map.getView().getZoom();
-    if (zoom > 10)
-      map.getView().setZoom(10);
+    window.flightMap.fit();
 
     var map_click_handler = slMapClickHandler(map, null, {
       flight_info: false,
@@ -240,7 +204,8 @@
   <div class="row">
     <div class="col-md-12">
       <h2>{% trans %}Takeoff Locations{% endtrans %}</h2>
-      <div data-component='base-map' data-attrs='{
+      <div data-component='takeoffs-map' data-attrs='{
+        "locations": [{{ add_locations(takeoff_locations) }}],
         "height": "533px",
         "bingAPIKey": "{{ config.get('SKYLINES_BING_API_KEY', 'null') }}",
         "mapboxAPIKey": "{{ config.get('SKYLINES_MAPBOX_API_KEY', 'null') }}",

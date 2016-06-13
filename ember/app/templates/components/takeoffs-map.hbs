@@ -1,0 +1,9 @@
+{{#if noCanvas}}
+  <b>
+    Your browser is too old to display this map.<br/>
+    Please update to a current version.
+  </b>
+{{else}}
+  {{layer-switcher map=map}}
+  {{takeoffs-layer map=map locations=locations}}
+{{/if}}
