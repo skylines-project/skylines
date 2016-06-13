@@ -6,7 +6,13 @@ export default Ember.Component.extend({
   tagName: '',
 
   map: null,
-  contests: null,
+  flights: null,
+
+  contests: Ember.computed('flights.@each.contests', function() {
+    return this.get('flights')
+      .map(flight => flight.get('contests'))
+      .reduce((a, b) => a.concat(b), []);
+  }),
 
   layer: Ember.computed(function() {
     return new ol.layer.Vector({

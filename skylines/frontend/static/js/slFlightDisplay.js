@@ -19,12 +19,6 @@ slFlightDisplay = function(_map, fix_table, baro) {
   var rawFlights = flights.getArray();
 
   /**
-   * Contest collection
-   * @type {Array}
-   */
-  var contests = [];
-
-  /**
    * Handler for the plane icons
    * @type {slMapIconHandler}
    */
@@ -64,9 +58,7 @@ slFlightDisplay = function(_map, fix_table, baro) {
     setupEvents();
 
     baro.set('flights', rawFlights);
-    baro.set('_contests', contests);
     window.flightMap.set('flights', rawFlights);
-    window.flightMap.set('contests', contests);
 
     window.fixCalcService.set('flights', rawFlights);
 
@@ -101,9 +93,9 @@ slFlightDisplay = function(_map, fix_table, baro) {
     flight.set('color', colors[rawFlights.length % colors.length]);
 
     if (data.contests) {
-      var _contestsLength = data.contests.length;
-      for (var i = 0; i < _contestsLength; ++i)
-        contests.pushObject(slContest.fromData(data.contests[i], flight.getID()));
+      flight.set('contests', data.contests.map(function(data) {
+        return slContest.fromData(data, flight.getID());
+      }));
     }
 
     flights.add(flight);
@@ -175,8 +167,6 @@ slFlightDisplay = function(_map, fix_table, baro) {
     // After a flight has been removed, remove highlights from the
     // wingman table, remove it from the fix table and update the barogram.
     $(flights).on('removed', function(e, sfid) {
-      contests.removeObjects(contests.filterBy('flightId', sfid));
-
       updateBaroScale();
       baro.draw();
     });

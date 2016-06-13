@@ -12,7 +12,6 @@ export default Ember.Component.extend(Ember.Evented, {
   time: Ember.computed.alias('fixCalc.time'),
   selection: null,
   flights: [],
-  _contests: [],
 
   activeFlights: Ember.computed('flights.[]', 'selection', function() {
     let { flights, selection } = this.getProperties('flights', 'selection');
@@ -45,13 +44,13 @@ export default Ember.Component.extend(Ember.Evented, {
     }));
   }),
 
-  contests: Ember.computed('flights.[]', 'selection', '_contests.[]', function() {
-    let { flights, selection, _contests } = this.getProperties('flights', 'selection', '_contests');
+  contests: Ember.computed('flights.[]', 'selection', function() {
+    let { flights, selection } = this.getProperties('flights', 'selection');
     let flight = flights.find(flight => {
       return flights.length === 1 || (selection && flight.getID() === selection);
     });
 
-    return flight ? _contests.filterBy('flightId', flight.getID()) : [];
+    return flight ? flight.get('contests') : [];
   }),
 
   elevations: Ember.computed('flights.[]', 'selection', function() {
