@@ -53,7 +53,6 @@ slFlight = Ember.Object.extend({
 
   init: function() {
     this.set('geometry', new ol.geom.LineString(this.get('coordinates'), 'XYZM'));
-    this.set('plane', { point: null, marker: null });
   },
 
   getID: function() {

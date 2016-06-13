@@ -11,46 +11,36 @@ slMapIconHandler = function(_map, _flights) {
   var flights = _flights;
 
   map_icon_handler.showPlane = function(flight, fix_data) {
-    var plane = flight.get('plane');
-
-    // set plane location
-    if (plane.point === null) {
-      plane.point = fix_data.get('point');
-    } else {
-      plane.point.setCoordinates(fix_data.get('coordinate'));
-    }
-
-    // set plane heading
-    // <heading> in radians
-    plane['heading'] = fix_data['heading'];
+    var marker = flight.get('marker');
 
     // add plane marker if more than one flight on the map
     if (flights.length > 1) {
-      if (plane.marker === null) {
+      if (!marker) {
         var badge = $('<span class="badge plane_marker" ' +
                 'style="display: inline-block; text-align: center; ' +
                 'background: ' + flight.get('color') + ';">' +
             flight.getWithDefault('competition_id', '') +
             '</span>');
 
-        plane.marker = new ol.Overlay({
+        marker = new ol.Overlay({
           element: badge.get(0)
         });
-        map.addOverlay(plane.marker);
-        plane.marker.setOffset([badge.width(), -40]);
+
+        map.addOverlay(marker);
+        flight.set('marker', marker);
+
+        marker.setOffset([badge.width(), -40]);
       }
 
-      plane.marker.setPosition(plane.point.getCoordinates());
+      marker.setPosition(fix_data.get('coordinate'));
     }
   };
 
   map_icon_handler.hidePlane = function(flight) {
-    var plane = flight.get('plane');
-
-    plane.point = null;
-    if (plane.marker !== null) {
-      map.removeOverlay(plane.marker);
-      plane.marker = null;
+    var marker = flight.get('marker');
+    if (marker) {
+      map.removeOverlay(marker);
+      flight.set('marker', null);
     }
   };
 
