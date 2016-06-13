@@ -3,13 +3,12 @@
  *
  * @constructor
  * @export
- * @param {ol.Map} _map OpenLayers map object
+ * @param {ol.Map} map OpenLayers map object
  * @param {Ember.Component} fix_table
  * @param {Ember.Component} baro
  */
-slFlightDisplay = function(_map, fix_table, baro) {
+slFlightDisplay = function(map, fix_table, baro) {
   var flight_display = {};
-  var map = _map;
 
   /**
    * Flight collection
