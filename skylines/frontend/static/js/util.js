@@ -22,21 +22,6 @@ function getNextSmallerIndex(array, value) {
 }
 
 
-/**
- * @param {int} seconds Seconds of day.
- * @return {String} formatted time "HH:MM:SS".
- */
-function formatSecondsAsTime(seconds) {
-  seconds %= 86400;
-  var h = Math.floor(seconds / 3600);
-  var m = Math.floor((seconds % 3600) / 60);
-  var s = Math.floor(seconds % 3600 % 60);
-
-  // Format the result into time strings
-  return pad(h, 2) + ':' + pad(m, 2) + ':' + pad(s, 2);
-}
-
-
 function geographicDistance(loc1_deg, loc2_deg) {
   var radius = 6367009;
 
