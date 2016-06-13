@@ -51,27 +51,6 @@ slFlightDisplay = function(_map, fix_table, baro) {
   var colors = ['#004bbd', '#bf0099', '#cf7c00',
                 '#ff0000', '#00c994', '#ffff00'];
 
-
-  /**
-   * Determin the drawing style for the feature
-   * @param {ol.feature} feature Feature to style
-   * @return {!Array<ol.style.Style>} Style of the feature
-   */
-  function style_function(feature) {
-    var color = '#004bbd'; // default color
-    if ($.inArray('color', feature.getKeys()))
-      color = feature.get('color');
-
-    return [new ol.style.Style({
-      stroke: new ol.style.Stroke({
-        color: color,
-        width: 2
-      }),
-      zIndex: 1000
-    })];
-  }
-
-
   /**
    * Initialize the map, add flight path and contest layers.
    */
