@@ -24,8 +24,8 @@ export default Ember.Service.extend({
   endTimes: Ember.computed.mapBy('flights', 'endTime'),
   maxEndTime: Ember.computed.max('endTimes'),
 
-  fixes: Ember.computed('flights.@each.fix', function() {
-    return this.get('flights').map(flight => Fix.create({ flight, fixCalc: this }));
+  fixes: Ember.computed.map('flights', function(flight) {
+    return Fix.create({ flight, fixCalc: this });
   }),
 
   init() {
