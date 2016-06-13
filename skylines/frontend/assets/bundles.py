@@ -120,7 +120,6 @@ openlayers_js = Bundle(
     output='js/ol-%(version)s.js')
 
 flight_js = Bundle(
-    'js/util.js',
     'js/slUnits.js',
     'js/slCollection.js',
     'js/slFlightCollection.js',
