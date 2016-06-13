@@ -1,4 +1,5 @@
 import Ember from 'ember';
+import getNextSmallerIndex from '../utils/next-smaller-index';
 
 export default Ember.Service.extend({
   flights: [],
