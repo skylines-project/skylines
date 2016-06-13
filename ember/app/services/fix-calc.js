@@ -22,9 +22,8 @@ export default Ember.Service.extend({
   endTimes: Ember.computed.mapBy('flights', 'endTime'),
   maxEndTime: Ember.computed.max('endTimes'),
 
-  fixes: Ember.computed('flights.@each.time', 'time', function() {
-    let time = this.get('time');
-    return this.get('flights').map(flight => Fix.create({ flight, _t: time }));
+  fixes: Ember.computed('flights.@each.fix', function() {
+    return this.get('flights').map(flight => Fix.create({ flight, fixCalc: this }));
   }),
 
   init() {
@@ -63,6 +62,10 @@ export default Ember.Service.extend({
 });
 
 let Fix = Ember.Object.extend({
+  fixCalc: null,
+
+  _t: Ember.computed.readOnly('fixCalc.time'),
+
   t: Ember.computed('_t', 'flight.{startTime,endTime}', function() {
     let _t = this.get('_t');
     if (_t === -1) {

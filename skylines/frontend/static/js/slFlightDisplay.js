@@ -274,7 +274,7 @@ slFlightDisplay = function(_map, fix_table, baro) {
     window.fixCalcService.set('time', time);
   };
 
-  window.fixCalcService.addObserver('fixes', function() {
+  window.fixCalcService.addObserver('fixes.@each.point', function() {
     this.get('fixes').forEach(function(fix_data) {
       var flight = fix_data.get('flight');
 
