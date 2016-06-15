@@ -5,12 +5,12 @@ import ol from 'openlayers';
 const CESIUM_BASE_URL = '/cesium/';
 
 export default function CesiumSwitcher(opt_options) {
-  var options = opt_options || {};
+  let options = opt_options || {};
 
   this.enabled = false;
   this.ol3d = undefined;
 
-  var element = document.createElement('div');
+  let element = document.createElement('div');
   element.className = 'CesiumSwitcher ol-unselectable';
 
   ol.control.Control.call(this, {
@@ -55,14 +55,10 @@ CesiumSwitcher.prototype.setMode = function(mode) {
  * Loads cesium.
  */
 CesiumSwitcher.prototype.loadCesium = function() {
-  var _this = this;
-
   if (typeof Cesium === 'undefined') {
-    var cesium = document.createElement('script');
+    let cesium = document.createElement('script');
     cesium.src = CESIUM_BASE_URL + 'Cesium.js';
-    cesium.onload = function() {
-      _this.enableCesium();
-    };
+    cesium.onload = () => { this.enableCesium() };
     document.body.appendChild(cesium);
   }
 };
@@ -73,14 +69,13 @@ CesiumSwitcher.prototype.loadCesium = function() {
  */
 CesiumSwitcher.prototype.enableCesium = function() {
   if (!this.ol3d) {
-    var map = this.getMap();
+    let map = this.getMap();
 
     this.ol3d = new olcs.OLCesium({map: map});
-    var scene = this.ol3d.getCesiumScene();
-    var terrainProvider = new Cesium.CesiumTerrainProvider({
+    let scene = this.ol3d.getCesiumScene();
+    scene.terrainProvider = new Cesium.CesiumTerrainProvider({
       url: '//assets.agi.com/stk-terrain/world',
     });
-    scene.terrainProvider = terrainProvider;
     scene.globe.depthTestAgainstTerrain = true;
   }
 
@@ -102,16 +97,16 @@ CesiumSwitcher.prototype.getMode = function() {
  * @param {Array} fix_data
  */
 CesiumSwitcher.prototype.showPlane = function(flight, fix_data) {
-  var lonlat = ol.proj.transform(fix_data.get('coordinate'), 'EPSG:3857', 'EPSG:4326');
+  let lonlat = ol.proj.transform(fix_data.get('coordinate'), 'EPSG:3857', 'EPSG:4326');
 
-  var position = Cesium.Cartesian3.fromDegrees(lonlat[0], lonlat[1],
+  let position = Cesium.Cartesian3.fromDegrees(lonlat[0], lonlat[1],
       fix_data.get('alt-msl') + flight.get('geoid'));
-  var modelMatrix = Cesium.Transforms.headingPitchRollToFixedFrame(position,
+  let modelMatrix = Cesium.Transforms.headingPitchRollToFixedFrame(position,
       fix_data.get('heading') - Math.PI / 2, 0, 0);
 
-  var entity = flight.get('entity');
+  let entity = flight.get('entity');
   if (!entity) {
-    var scene = this.ol3d.getCesiumScene();
+    let scene = this.ol3d.getCesiumScene();
     entity = Cesium.Model.fromGltf({
       modelMatrix: modelMatrix,
       url: '../../images/Cesium_Air.gltf',
@@ -132,7 +127,7 @@ CesiumSwitcher.prototype.showPlane = function(flight, fix_data) {
  * @param {slFlight} flight
  */
 CesiumSwitcher.prototype.hidePlane = function(flight) {
-  var entity = flight.get('entity');
+  let entity = flight.get('entity');
   if (entity) {
     entity.show = false;
   }
