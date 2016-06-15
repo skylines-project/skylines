@@ -89,23 +89,26 @@ slFlightCollection = function() {
    * Setup the event handlers for the 'preremove' and 'add' events.
    */
   function setupEvents() {
-    $(collection).on('preremove', function(e, flight) {
-      source.removeFeature(
-          source.getFeatures().filter(function(e) {
-            return e.get('sfid') == flight.getID();
-          })[0]
-      );
-    });
+    collection.getArray().addArrayObserver({
+      arrayWillChange: function(flights, offset, removeCount) {
+        flights.slice(offset, offset + removeCount).forEach(function(flight) {
+          source.removeFeature(source.getFeatures().filter(function(it) {
+            return it.get('sfid') == flight.getID();
+          })[0]);
+        });
+      },
+      arrayDidChange: function(flights, offset, removeCount, addCount) {
+        flights.slice(offset, offset + addCount).forEach(function(flight) {
+          var feature = new ol.Feature({
+            geometry: flight.get('geometry'),
+            sfid: flight.get('id'),
+            color: flight.get('color'),
+            type: 'flight'
+          });
 
-    $(collection).on('add', function(e, flight) {
-      var feature = new ol.Feature({
-        geometry: flight.get('geometry'),
-        sfid: flight.get('id'),
-        color: flight.get('color'),
-        type: 'flight'
-      });
-
-      source.addFeature(feature);
+          source.addFeature(feature);
+        });
+      }
     });
   }
 
