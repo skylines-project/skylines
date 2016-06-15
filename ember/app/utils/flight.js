@@ -1,6 +1,7 @@
 /* globals ol, slUnits */
 
 import Ember from 'ember';
+import slContest from './contest';
 
 /**
  * A SkyLines flight.
@@ -95,10 +96,16 @@ slFlight.fromData = function(data) {
 
   let additional = data.additional || {};
 
+  let contests;
+  if (data.contests) {
+    contests = data.contests.map(it => slContest.fromData(it, data.sfid));
+  }
+
   return slFlight.create({
     id: data.sfid,
     fixes,
     elevations,
+    contests,
     geoid: data.geoid,
     competition_id: additional.competition_id,
     registration: additional.registration

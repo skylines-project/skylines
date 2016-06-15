@@ -11,7 +11,6 @@ slFlightDisplay = function(map, fix_table, baro) {
   var flight_display = {};
 
   var slFlight = require('skylines/utils/flight').default;
-  var slContest = require('skylines/utils/contest').default;
 
   /**
    * Flight collection
@@ -93,12 +92,6 @@ slFlightDisplay = function(map, fix_table, baro) {
     flight = slFlight.fromData(data);
 
     flight.set('color', colors[rawFlights.length % colors.length]);
-
-    if (data.contests) {
-      flight.set('contests', data.contests.map(function(data) {
-        return slContest.fromData(data, flight.getID());
-      }));
-    }
 
     flights.add(flight);
   };
