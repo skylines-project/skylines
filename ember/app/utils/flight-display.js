@@ -208,7 +208,10 @@ export default function slFlightDisplay(map, fix_table, baro) {
     });
 
     cesium_switcher.addObserver('enabled', function() {
-      if (this.get('enabled')) {
+      let enabled = this.get('enabled');
+      window.flightMap.set('cesiumEnabled', enabled);
+
+      if (enabled) {
         map.un('moveend', update_baro_scale_on_moveend);
 
         if (!window.fixCalcService.get('isRunning')) {
