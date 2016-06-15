@@ -1,3 +1,5 @@
+/* globals $, ol, CesiumSwitcher */
+
 import Ember from 'ember';
 
 import slFlight from './flight';
@@ -42,7 +44,7 @@ export default function slFlightDisplay(map, fix_table, baro) {
    */
   var map_icon_handler = slMapIconHandler.create({
     map: map,
-    flights: flights
+    flights: flights,
   });
 
   /**
@@ -51,7 +53,7 @@ export default function slFlightDisplay(map, fix_table, baro) {
    */
   var map_hover_handler = slMapHoverHandler.create({
     map: map,
-    flights: flights
+    flights: flights,
   });
 
   var cesium_switcher;
@@ -128,7 +130,7 @@ export default function slFlightDisplay(map, fix_table, baro) {
 
         flight_display.addFlight(data);
         map.render();
-      }
+      },
     });
   };
 
@@ -137,7 +139,7 @@ export default function slFlightDisplay(map, fix_table, baro) {
    */
   function setupEvents() {
     // Update the baro scale when the map has been zoomed/moved.
-    var update_baro_scale_on_moveend = function(e) {
+    var update_baro_scale_on_moveend = function() {
       updateBaroScale();
       baro.draw();
     };
@@ -178,7 +180,7 @@ export default function slFlightDisplay(map, fix_table, baro) {
           }
         });
       },
-      arrayDidChange: Ember.K
+      arrayDidChange: Ember.K,
     });
 
     flights.addObserver('[]', function() {
@@ -203,7 +205,7 @@ export default function slFlightDisplay(map, fix_table, baro) {
       flight_display.setTime(default_time);
     });
 
-    $(cesium_switcher).on('cesium_enable', function(e) {
+    $(cesium_switcher).on('cesium_enable', function() {
       map.un('moveend', update_baro_scale_on_moveend);
 
       if (!window.fixCalcService.get('isRunning')) {
@@ -226,7 +228,7 @@ export default function slFlightDisplay(map, fix_table, baro) {
       baro.draw();
     });
 
-    $(cesium_switcher).on('cesium_disable', function(e) {
+    $(cesium_switcher).on('cesium_disable', function() {
       // Update the baro scale when the map has been zoomed/moved.
       map.on('moveend', update_baro_scale_on_moveend);
 

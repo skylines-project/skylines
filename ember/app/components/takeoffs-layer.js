@@ -14,12 +14,12 @@ export default Ember.Component.extend({
       style: new ol.style.Style({
         image: new ol.style.Icon(({
           anchor: [0.5, 1],
-          src: '/vendor/openlayers/img/marker-gold.png'
-        }))
+          src: '/vendor/openlayers/img/marker-gold.png',
+        })),
       }),
       name: 'Takeoff Locations',
       id: 'TakeoffLocations',
-      zIndex: 51
+      zIndex: 51,
     });
   }),
 

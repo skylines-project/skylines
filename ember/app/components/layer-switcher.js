@@ -35,13 +35,13 @@ export default Ember.Component.extend({
     let layers = this.get('map').getLayers().getArray();
 
     let baseLayer = layers.filter(it => (it.get('base_layer') && it.getVisible()))[0];
-    $.cookie('base_layer', baseLayer.get('name'), { path: '/', expires: 365 });
+    Ember.$.cookie('base_layer', baseLayer.get('name'), { path: '/', expires: 365 });
 
     let overlayLayers = layers.filter(it => (!it.get('base_layer') && it.getVisible()))
       .map(it => it.get('name'))
       .join(';');
 
-    $.cookie('overlay_layers', overlayLayers, { path: '/', expires: 365 });
+    Ember.$.cookie('overlay_layers', overlayLayers, { path: '/', expires: 365 });
   },
 
   actions: {
@@ -64,6 +64,6 @@ export default Ember.Component.extend({
 
       this.setLayerCookies();
       this.updateLayers();
-    }
+    },
   },
 });

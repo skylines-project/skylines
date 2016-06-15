@@ -26,21 +26,21 @@ export default Ember.Component.extend(Ember.Evented, {
   active: Ember.computed('activeFlights.@each.{flot_h,color}', function() {
     return this.get('activeFlights').map(flight => ({
       data: flight.get('flot_h'),
-      color: flight.get('color')
+      color: flight.get('color'),
     }));
   }),
 
   passive: Ember.computed('passiveFlights.@each.{flot_h,color}', function() {
     return this.get('passiveFlights').map(flight => ({
       data: flight.get('flot_h'),
-      color: flight.get('color')
+      color: flight.get('color'),
     }));
   }),
 
   enls: Ember.computed('activeFlights.@each.{flot_enl,color}', function() {
     return this.get('activeFlights').map(flight => ({
       data: flight.get('flot_enl'),
-      color: flight.get('color')
+      color: flight.get('color'),
     }));
   }),
 
@@ -132,7 +132,7 @@ export default Ember.Component.extend(Ember.Evented, {
       takeoff: takeoff * 1000,
       scoring_start: scoring_start * 1000,
       scoring_end: scoring_end * 1000,
-      landing: landing * 1000
+      landing: landing * 1000,
     });
   },
 
@@ -168,26 +168,26 @@ export default Ember.Component.extend(Ember.Evented, {
         hoverable: true,
         clickable: true,
         autoHighlight: false,
-        margin: 5
+        margin: 5,
       },
       xaxis: {
         mode: 'time',
-        timeformat: '%H:%M'
+        timeformat: '%H:%M',
       },
       yaxes: [
         {
           min: 0,
-          tickFormatter: slUnits.addAltitudeUnit
+          tickFormatter: slUnits.addAltitudeUnit,
         },
         {
           show: false,
           min: 0,
-          max: 1000
-        }
+          max: 1000,
+        },
       ],
       crosshair: {
-        mode: 'x'
-      }
+        mode: 'x',
+      },
     };
 
     if (this.get('uploadMode')) {
@@ -230,7 +230,7 @@ export default Ember.Component.extend(Ember.Evented, {
     this.get('active').forEach(trace => {
       data.push({
         data: trace.data,
-        color: trace.color
+        color: trace.color,
       });
     });
   },
@@ -244,8 +244,8 @@ export default Ember.Component.extend(Ember.Evented, {
         color: color,
         shadowSize: 0,
         lines: {
-          lineWidth: 1
-        }
+          lineWidth: 1,
+        },
       });
     });
   },
@@ -257,9 +257,9 @@ export default Ember.Component.extend(Ember.Evented, {
         color: enl.color,
         lines: {
           lineWidth: 0,
-          fill: 0.2
+          fill: 0.2,
         },
-        yaxis: 2
+        yaxis: 2,
       });
     });
   },
@@ -283,7 +283,7 @@ export default Ember.Component.extend(Ember.Evented, {
       // Add the turnpoint markers to the markings array
       let markings = times.map(time => {
         return {
-          position: time * 1000
+          position: time * 1000,
         };
       });
 
@@ -294,7 +294,7 @@ export default Ember.Component.extend(Ember.Evented, {
           lineWidth: 1,
           toothSize: 6,
           color: color,
-          fillColor: color
+          fillColor: color,
         },
         data: [],
         markdata: markings,
@@ -308,8 +308,8 @@ export default Ember.Component.extend(Ember.Evented, {
       color: 'rgb(235, 155, 98)',
       lines: {
         lineWidth: 0,
-        fill: 0.8
-      }
+        fill: 0.8,
+      },
     });
   },
 
@@ -329,8 +329,8 @@ export default Ember.Component.extend(Ember.Evented, {
       color: '#fff083',
       xaxis: {
         from: time_highlight.start * 1000,
-        to: time_highlight.end * 1000
-      }
+        to: time_highlight.end * 1000,
+      },
     }];
   },
 

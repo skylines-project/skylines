@@ -1,3 +1,5 @@
+/* globals ol */
+
 import Ember from 'ember';
 import geographicDistance from '../utils/geo-distance';
 import getNextSmallerIndex from '../utils/next-smaller-index';
@@ -61,7 +63,7 @@ export default Ember.Service.extend({
 
     this.set('time', time);
     this.set('timer', Ember.run.later(this, 'onTick', 50));
-  }
+  },
 });
 
 let Fix = Ember.Object.extend({
@@ -175,7 +177,7 @@ let Fix = Ember.Object.extend({
     if (elev_t) {
       return getNextSmallerIndex(elev_t, this.get('t'));
     }
-  })
+  }),
 });
 
 Fix[Ember.NAME_KEY] = 'Fix';

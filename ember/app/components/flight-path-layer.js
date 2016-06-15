@@ -13,7 +13,7 @@ export default Ember.Component.extend({
       source: new ol.source.Vector(),
       style: style_function,
       name: 'Flight',
-      zIndex: 50
+      zIndex: 50,
     });
   }),
 
@@ -46,6 +46,6 @@ function style_function(feature) {
       color: color,
       width: 2,
     }),
-    zIndex: 1000
+    zIndex: 1000,
   })];
 }

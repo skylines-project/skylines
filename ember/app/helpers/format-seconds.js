@@ -1,4 +1,4 @@
-/* global formatSecondsAsTime */
+/* global pad */
 
 import Ember from 'ember';
 

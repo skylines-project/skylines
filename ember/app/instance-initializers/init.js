@@ -7,5 +7,5 @@ export function initialize(appInstance) {
 
 export default {
   name: 'init',
-  initialize
+  initialize,
 };

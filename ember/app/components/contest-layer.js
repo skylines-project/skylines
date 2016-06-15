@@ -19,7 +19,7 @@ export default Ember.Component.extend({
       source: new ol.source.Vector(),
       style: style_function,
       name: 'Contest',
-      zIndex: 49
+      zIndex: 49,
     });
   }),
 
@@ -51,8 +51,8 @@ function style_function(feature) {
     stroke: new ol.style.Stroke({
       color: color,
       width: 2,
-      lineDash: [5]
+      lineDash: [5],
     }),
-    zIndex: 999
+    zIndex: 999,
   })];
 }

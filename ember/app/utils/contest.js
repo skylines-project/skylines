@@ -7,7 +7,7 @@ import Ember from 'ember';
  */
 const CONTEST_COLORS = {
   'olc_plus classic': '#ff2c73',
-  'olc_plus triangle': '#9f14ff'
+  'olc_plus triangle': '#9f14ff',
 };
 
 /**

@@ -14,7 +14,7 @@ export default Ember.Component.extend({
       geometry: flight.get('geometry'),
       sfid: flight.get('id'),
       color: flight.get('color'),
-      type: 'flight'
+      type: 'flight',
     });
   }),
 

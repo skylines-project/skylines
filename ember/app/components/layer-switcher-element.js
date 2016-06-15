@@ -3,7 +3,7 @@ import Ember from 'ember';
 export default Ember.Component.extend({
   highlighted: false,
 
-  imagePath: Ember.computed('layer.visible', 'highlighted', function() {
+  imagePath: Ember.computed('layer.visible', 'highlighted', function() {
     let colorful = this.get('layer.visible') || this.get('highlighted');
     return `../../images/layers/${this.get('layer.name')}${colorful ? '.png' : '.bw.png'}`;
   }),

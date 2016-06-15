@@ -20,5 +20,5 @@ export default BaseMapComponent.extend({
         view.setZoom(10);
       }
     }
-  }
+  },
 });

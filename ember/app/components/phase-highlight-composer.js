@@ -24,11 +24,11 @@ export default Ember.Component.extend({
 
     let startStyle = new ol.style.Icon({
       anchor: [0.5, 1],
-      src: '/vendor/openlayers/img/marker-green.png'
+      src: '/vendor/openlayers/img/marker-green.png',
     });
     let endStyle = new ol.style.Icon({
       anchor: [0.5, 1],
-      src: '/vendor/openlayers/img/marker.png'
+      src: '/vendor/openlayers/img/marker.png',
     });
 
     startStyle.load();
@@ -73,5 +73,5 @@ export default Ember.Component.extend({
       let padding = window.paddingFn();
       map.getView().fit(extent, map.getSize(), { padding });
     }
-  }
+  },
 });

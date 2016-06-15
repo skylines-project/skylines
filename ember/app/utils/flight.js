@@ -78,7 +78,7 @@ slFlight.fromData = function(data) {
       longitude: _lonlat[i * 2],
       latitude: _lonlat[i * 2 + 1],
       altitude: _height[i] + data.geoid,
-      enl: _enl[i]
+      enl: _enl[i],
     };
   });
 
@@ -90,11 +90,11 @@ slFlight.fromData = function(data) {
 
     return {
       time: timestamp,
-      elevation: (elevation > -500) ? elevation : null
+      elevation: (elevation > -500) ? elevation : null,
     };
   });
 
-  let additional = data.additional || {};
+  let additional = data.additional || {};
 
   let contests;
   if (data.contests) {
@@ -108,7 +108,7 @@ slFlight.fromData = function(data) {
     contests,
     geoid: data.geoid,
     competition_id: additional.competition_id,
-    registration: additional.registration
+    registration: additional.registration,
   });
 };
 

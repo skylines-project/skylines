@@ -11,5 +11,5 @@ export default Ember.Component.extend({
 
   click() {
     this.get('pinnedFlights').toggle(this.get('flightId'));
-  }
+  },
 });

@@ -23,7 +23,7 @@ export default Ember.Component.extend({
       this.set('flightPhase.selection', {
         start: phase.start.seconds,
         end: phase.start.seconds + phase.duration.seconds,
-        duration: phase.duration.seconds
+        duration: phase.duration.seconds,
       });
     }
   },

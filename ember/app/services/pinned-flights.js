@@ -16,5 +16,5 @@ export default Ember.Service.extend({
       pinFlight(id);
       this.set('pinned', pinned.concat([id]));
     }
-  }
+  },
 });

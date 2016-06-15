@@ -24,7 +24,7 @@ export default Ember.Component.extend({
       size: [40, 24],
       src: '/images/glider_symbol.png',
       rotation: 0,
-      rotateWithView: true
+      rotateWithView: true,
     });
 
     style.load();

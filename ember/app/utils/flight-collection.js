@@ -1,5 +1,7 @@
 /* globals ol */
 
+import Ember from 'ember';
+
 export default Ember.ArrayProxy.extend({
 
   init() {
@@ -103,10 +105,10 @@ export default Ember.ArrayProxy.extend({
         geometry: flight.get('geometry'),
         sfid: flight.get('id'),
         color: flight.get('color'),
-        type: 'flight'
+        type: 'flight',
       });
 
       source.addFeature(feature);
     });
-  }
+  },
 });

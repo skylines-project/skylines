@@ -1,3 +1,5 @@
+/* globals $, ol */
+
 export default function slFlightTracking(flight_display, flights) {
   var flight_tracking = {};
 
@@ -18,7 +20,7 @@ export default function slFlightTracking(flight_display, flights) {
         success: function(data) {
           updateFlight(data);
           flight_display.update();
-        }
+        },
       });
     });
   };
@@ -53,7 +55,7 @@ export default function slFlightTracking(flight_display, flights) {
         longitude: lonlat[i * 2],
         latitude: lonlat[i * 2 + 1],
         altitude: height_decoded[i] + geoid,
-        enl: enl_decoded[i]
+        enl: enl_decoded[i],
       };
     });
 
@@ -62,7 +64,7 @@ export default function slFlightTracking(flight_display, flights) {
 
       return {
         time: timestamp,
-        elevation: (elevation > -500) ? elevation : null
+        elevation: (elevation > -500) ? elevation : null,
       }
     });
 

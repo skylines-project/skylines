@@ -4,7 +4,7 @@ import Ember from 'ember';
 import parseQueryString from '../utils/parse-query-string';
 
 export default Ember.Component.extend(Ember.Evented, {
-  attributeBindings: ['style'],
+  attributeBindings: ['style'],
 
   width: '100%',
   height: '100%',
@@ -33,20 +33,20 @@ export default Ember.Component.extend(Ember.Evented, {
 
     let interactions = ol.interaction.defaults({
       altShiftDragRotate: false,
-      pinchRotate: false
+      pinchRotate: false,
     });
 
     let map = new ol.Map({
       view: new ol.View({
         center: ol.proj.transform([10, 50], 'EPSG:4326', 'EPSG:3857'),
         maxZoom: 17,
-        zoom: 5
+        zoom: 5,
       }),
       controls: ol.control.defaults().extend([
         new ol.control.ScaleLine(),
       ]),
       interactions: interactions,
-      ol3Logo: false
+      ol3Logo: false,
     });
     this.set('map', map);
 
@@ -57,14 +57,14 @@ export default Ember.Component.extend(Ember.Evented, {
 
     var osm_layer = new ol.layer.Tile({
       source: new ol.source.OSM(),
-      zIndex: 1
+      zIndex: 1,
     });
 
     osm_layer.setProperties({
       'name': 'OpenStreetMap',
       'id': 'OpenStreetMap',
       'base_layer': true,
-      'display_in_layer_switcher': true
+      'display_in_layer_switcher': true,
     });
 
     map.addLayer(osm_layer);
@@ -139,19 +139,19 @@ export default Ember.Component.extend(Ember.Evented, {
             html: 'Mountain Wave Data &copy; ' +
                 '<a href="http://www.mountain-wave-project.com/">' +
                 'Mountain Wave Project' +
-                '</a>.'
-          })
+                '</a>.',
+          }),
         ],
-        url: tile_url + '/tiles/1.0.0/mwp/{z}/{x}/{y}.png'
+        url: tile_url + '/tiles/1.0.0/mwp/{z}/{x}/{y}.png',
       }),
-      zIndex: 11
+      zIndex: 11,
     });
 
     mwp_layer.setProperties({
       'name': 'Mountain Wave Project',
       'id': 'MountainWaveProject',
       'base_layer': false,
-      'display_in_layer_switcher': true
+      'display_in_layer_switcher': true,
     });
 
     this.get('map').addLayer(mwp_layer);
@@ -162,16 +162,16 @@ export default Ember.Component.extend(Ember.Evented, {
 
     var airspace_layer = new ol.layer.Tile({
       source: new ol.source.XYZ({
-        url: tile_url + '/tiles/1.0.0/airspace+airports/{z}/{x}/{y}.png'
+        url: tile_url + '/tiles/1.0.0/airspace+airports/{z}/{x}/{y}.png',
       }),
-      zIndex: 10
+      zIndex: 10,
     });
 
     airspace_layer.setProperties({
       'name': 'Airspace',
       'id': 'Airspace',
       'base_layer': false,
-      'display_in_layer_switcher': true
+      'display_in_layer_switcher': true,
     });
 
     this.get('map').addLayer(airspace_layer);
@@ -185,19 +185,19 @@ export default Ember.Component.extend(Ember.Evented, {
         attributions: [
           new ol.Attribution({
             html: 'SRTM relief maps from <a target="_blank" ' +
-                'href="http://maps-for-free.com/">maps-for-free.com</a>'
-          })
+                'href="http://maps-for-free.com/">maps-for-free.com</a>',
+          }),
         ],
-        url: url
+        url: url,
       }),
-      zIndex: 2
+      zIndex: 2,
     });
 
     relief_layer.setProperties({
       'name': 'Shaded Relief',
       'id': 'ShadedRelief',
       'base_layer': true,
-      'display_in_layer_switcher': true
+      'display_in_layer_switcher': true,
     });
 
     this.get('map').addLayer(relief_layer);
@@ -218,19 +218,19 @@ export default Ember.Component.extend(Ember.Evented, {
                 '&copy; Mapbox &copy; OpenStreetMap</a> <a' +
                 ' class="mapbox-improve-map"' +
                 ' href="https://www.mapbox.com/map-feedback/"' +
-                ' target="_blank">Improve this map</a>'
-          })
+                ' target="_blank">Improve this map</a>',
+          }),
         ],
-        url: tile_url
+        url: tile_url,
       }),
-      zIndex: 5
+      zIndex: 5,
     });
 
     mapbox_layer.setProperties({
       'name': 'Terrain',
       'id': 'Terrain',
       'base_layer': true,
-      'display_in_layer_switcher': true
+      'display_in_layer_switcher': true,
     });
 
     this.get('map').addLayer(mapbox_layer);
@@ -246,32 +246,32 @@ export default Ember.Component.extend(Ember.Evented, {
     var road = new ol.layer.Tile({
       source: new ol.source.BingMaps({
         key: api_key,
-        imagerySet: 'Road'
+        imagerySet: 'Road',
       }),
-      zIndex: 3
+      zIndex: 3,
     });
 
     road.setProperties({
       'name': 'Bing Road',
       'id': 'BingRoad',
       'base_layer': true,
-      'display_in_layer_switcher': true
+      'display_in_layer_switcher': true,
     });
 
     // Bing's AerialWithLabels imagerySet
     var hybrid = new ol.layer.Tile({
       source: new ol.source.BingMaps({
         key: api_key,
-        imagerySet: 'AerialWithLabels'
+        imagerySet: 'AerialWithLabels',
       }),
-      zIndex: 4
+      zIndex: 4,
     });
 
     hybrid.setProperties({
       'name': 'Bing Satellite',
       'id': 'BingSatellite',
       'base_layer': true,
-      'display_in_layer_switcher': true
+      'display_in_layer_switcher': true,
     });
 
     let map = this.get('map');

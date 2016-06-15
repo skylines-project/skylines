@@ -22,7 +22,7 @@ export default Ember.Object.extend({
           '</span>');
 
         marker = new ol.Overlay({
-          element: badge.get(0)
+          element: badge.get(0),
         });
 
         this.get('map').addOverlay(marker);
@@ -45,5 +45,5 @@ export default Ember.Object.extend({
 
   hideAllPlanes() {
     this.get('flights').forEach(flight => this.hidePlane(flight));
-  }
+  },
 });

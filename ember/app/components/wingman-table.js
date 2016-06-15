@@ -2,7 +2,7 @@ import Ember from 'ember';
 
 export default Ember.Component.extend(Ember.Evented, {
   nearFlights: [],
-  visibleFlights: [],
+  visibleFlights: [],
 
   nearFlightsWithColors: Ember.computed('nearFlights.[]', 'visibleFlights.[]', function() {
     let { nearFlights, visibleFlights } = this.getProperties('nearFlights', 'visibleFlights');
@@ -27,6 +27,6 @@ export default Ember.Component.extend(Ember.Evented, {
   actions: {
     select(id) {
       this.trigger('select', id);
-    }
-  }
+    },
+  },
 });

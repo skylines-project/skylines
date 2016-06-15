@@ -14,7 +14,7 @@ export default Ember.Component.extend({
       geometry: contest.get('geometry'),
       sfid: contest.get('flightId'),
       color: contest.get('color'),
-      type: 'contest'
+      type: 'contest',
     });
   }),
 
