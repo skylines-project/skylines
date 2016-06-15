@@ -22,7 +22,7 @@ var slFlight = Ember.Object.extend({
   fixes: [],
   elevations: [],
 
-  time: Ember.computed.mapBy('fixes', 'time'),
+  time: Ember.computed.map('fixes', fix => fix.time),
 
   coordinates: Ember.computed.map('fixes', function(fix) {
     var coordinate = [fix.latitude, fix.longitude, fix.altitude, fix.time];
@@ -37,8 +37,8 @@ var slFlight = Ember.Object.extend({
     return [fix.time * 1000, fix.enl];
   }),
 
-  elev_t: Ember.computed.mapBy('elevations', 'time'),
-  elev_h: Ember.computed.mapBy('elevations', 'elevation'),
+  elev_t: Ember.computed.map('elevations', it => it.time),
+  elev_h: Ember.computed.map('elevations', it => it.elevation),
 
   flot_elev: Ember.computed.map('elevations', function(it) {
     return [it.time * 1000, it.elevation ? slUnits.convertAltitude(it.elevation) : null];
