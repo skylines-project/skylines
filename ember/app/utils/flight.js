@@ -18,14 +18,14 @@ import Ember from 'ember';
  * @param {Object=} opt_additional May contain additional information about
  *   the flight, e.g. registration number, callsign, ...
  */
-var slFlight = Ember.Object.extend({
+const slFlight = Ember.Object.extend({
   fixes: [],
   elevations: [],
 
   time: Ember.computed.map('fixes', fix => fix.time),
 
   coordinates: Ember.computed.map('fixes', function(fix) {
-    var coordinate = [fix.latitude, fix.longitude, fix.altitude, fix.time];
+    let coordinate = [fix.latitude, fix.longitude, fix.altitude, fix.time];
     return ol.proj.transform(coordinate, 'EPSG:4326', 'EPSG:3857');
   }),
 
@@ -51,26 +51,27 @@ var slFlight = Ember.Object.extend({
   endTime: Ember.computed.readOnly('time.lastObject'),
 
   coordinatesObserver: Ember.observer('coordinates', function() {
-    var coordinates = this.get('coordinates');
-    this.get('geometry').setCoordinates(coordinates, 'XYZM')
+    let coordinates = this.get('coordinates');
+    this.get('geometry').setCoordinates(coordinates, 'XYZM');
   }),
 
-  init: function() {
+  init() {
+    this._super(...arguments);
     this.set('geometry', new ol.geom.LineString(this.get('coordinates'), 'XYZM'));
   },
 
-  getID: function() {
+  getID() {
     return this.get('id');
-  }
+  },
 });
 
 slFlight.fromData = function(data) {
-  var _time = ol.format.Polyline.decodeDeltas(data.barogram_t, 1, 1);
-  var _lonlat = ol.format.Polyline.decodeDeltas(data.points, 2);
-  var _height = ol.format.Polyline.decodeDeltas(data.barogram_h, 1, 1);
-  var _enl = ol.format.Polyline.decodeDeltas(data.enl, 1, 1);
+  let _time = ol.format.Polyline.decodeDeltas(data.barogram_t, 1, 1);
+  let _lonlat = ol.format.Polyline.decodeDeltas(data.points, 2);
+  let _height = ol.format.Polyline.decodeDeltas(data.barogram_h, 1, 1);
+  let _enl = ol.format.Polyline.decodeDeltas(data.enl, 1, 1);
 
-  var fixes = _time.map(function(timestamp, i) {
+  let fixes = _time.map(function(timestamp, i) {
     return {
       time: timestamp,
       longitude: _lonlat[i * 2],
@@ -80,24 +81,24 @@ slFlight.fromData = function(data) {
     };
   });
 
-  var _elev_t = ol.format.Polyline.decodeDeltas(data.elevations_t, 1, 1);
-  var _elev_h = ol.format.Polyline.decodeDeltas(data.elevations_h, 1, 1);
+  let _elev_t = ol.format.Polyline.decodeDeltas(data.elevations_t, 1, 1);
+  let _elev_h = ol.format.Polyline.decodeDeltas(data.elevations_h, 1, 1);
 
-  var elevations = _elev_t.map(function(timestamp, i) {
-    var elevation = _elev_h[i];
+  let elevations = _elev_t.map(function(timestamp, i) {
+    let elevation = _elev_h[i];
 
     return {
       time: timestamp,
       elevation: (elevation > -500) ? elevation : null
-    }
+    };
   });
 
-  var additional = data.additional || {};
+  let additional = data.additional || {};
 
   return slFlight.create({
     id: data.sfid,
-    fixes: fixes,
-    elevations: elevations,
+    fixes,
+    elevations,
     geoid: data.geoid,
     competition_id: additional.competition_id,
     registration: additional.registration

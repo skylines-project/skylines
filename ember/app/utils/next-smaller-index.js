@@ -10,13 +10,16 @@
  * @return {int} Index next smaller to Number in Array.
  */
 export default function(array, value) {
-  var low = 1;
-  var high = array.length - 1;
+  let low = 1;
+  let high = array.length - 1;
 
   while (low < high) {
-    var mid = (low + high) >> 1;
-    if (value < array[mid]) high = mid;
-    else low = mid + 1;
+    let mid = (low + high) >> 1;
+    if (value < array[mid]) {
+      high = mid;
+    } else {
+      low = mid + 1;
+    }
   }
   return low - 1;
 }

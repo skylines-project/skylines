@@ -5,7 +5,7 @@ import Ember from 'ember';
 /**
  * Dictionary of contest names and their colors.
  */
-var contest_colors = {
+const CONTEST_COLORS = {
   'olc_plus classic': '#ff2c73',
   'olc_plus triangle': '#9f14ff'
 };
@@ -21,39 +21,37 @@ var contest_colors = {
 const slContest = Ember.Object.extend();
 
 slContest.fromData = function(_contest, flightId) {
-  var turnpoints = ol.format.Polyline.decodeDeltas(_contest.turnpoints, 2);
-  var times = ol.format.Polyline.decodeDeltas(_contest.times, 1, 1);
-  var name = _contest.name;
+  let turnpoints = ol.format.Polyline.decodeDeltas(_contest.turnpoints, 2);
+  let times = ol.format.Polyline.decodeDeltas(_contest.times, 1, 1);
+  let name = _contest.name;
 
-  var geometry = new ol.geom.LineString([]);
-  var turnpointsLength = turnpoints.length;
-  var triangle = (name.search(/triangle/) != -1 && turnpointsLength == 5 * 2);
+  let geometry = new ol.geom.LineString([]);
+  let turnpointsLength = turnpoints.length;
+  let triangle = (name.search(/triangle/) !== -1 && turnpointsLength === 5 * 2);
 
   if (triangle) {
-    for (var i = 2; i < turnpointsLength - 2; i += 2) {
-      var point = ol.proj.transform([turnpoints[i + 1], turnpoints[i]],
-        'EPSG:4326', 'EPSG:3857');
+    for (let i = 2; i < turnpointsLength - 2; i += 2) {
+      let point = ol.proj.transform([turnpoints[i + 1], turnpoints[i]], 'EPSG:4326', 'EPSG:3857');
       geometry.appendCoordinate(point);
     }
 
     geometry.appendCoordinate(geometry.getFirstCoordinate());
   } else {
-    for (var i = 0; i < turnpointsLength; i += 2) {
-      var point = ol.proj.transform([turnpoints[i + 1], turnpoints[i]],
-        'EPSG:4326', 'EPSG:3857');
+    for (let i = 0; i < turnpointsLength; i += 2) {
+      let point = ol.proj.transform([turnpoints[i + 1], turnpoints[i]], 'EPSG:4326', 'EPSG:3857');
       geometry.appendCoordinate(point);
     }
   }
 
-  var color = contest_colors[name] || '#ff2c73';
+  let color = CONTEST_COLORS[name] || '#ff2c73';
 
   return slContest.create({
-    flightId: flightId,
-    times: times,
-    name: name,
-    geometry: geometry,
-    color: color
-  })
+    flightId,
+    times,
+    name,
+    geometry,
+    color,
+  });
 };
 
 export default slContest;
