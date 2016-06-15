@@ -1,8 +1,10 @@
+/* globals ol */
+
 /**
  * An ordered collection of flight objects.
  * @constructor
  */
-slFlightCollection = function() {
+export default function slFlightCollection() {
   var collection = {};
 
   var data = [];
@@ -35,9 +37,9 @@ slFlightCollection = function() {
    */
   collection.getMinMaxTimeInExtent = function(extent) {
     var min = Infinity,
-        total_min = Infinity;
+      total_min = Infinity;
     var max = -Infinity,
-        total_max = -Infinity;
+      total_max = -Infinity;
 
     source.forEachFeatureInExtent(extent, function(f) {
       var coordinates = f.getGeometry().getCoordinates();
@@ -47,7 +49,7 @@ slFlightCollection = function() {
       var end = coordinates.length;
 
       var lastRel = ol.extent.containsCoordinate(extent, lastCoord),
-          nextRel;
+        nextRel;
 
       total_min = Math.min(total_min, lastCoord[3]);
 
@@ -120,4 +122,4 @@ slFlightCollection = function() {
 
   setupEvents();
   return collection;
-};
+}
