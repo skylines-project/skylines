@@ -40,6 +40,8 @@
 
     window.flightMap.fit();
 
+    var slMapClickHandler = require('skylines/utils/map-click-handler').default;
+
     var map_click_handler = slMapClickHandler(map, null, {
       flight_info: false,
       location_info: true,

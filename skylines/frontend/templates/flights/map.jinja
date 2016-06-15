@@ -102,6 +102,7 @@
     var map = window.flightMap.get('map');
 
     var slFlightDisplay = require('skylines/utils/flight-display').default;
+    var slMapClickHandler = require('skylines/utils/map-click-handler').default;
 
     flight_display = slFlightDisplay(map, window.fixTable, window.barogram);
     flight_display.addFlightFromJSON("/flights/{{ flight.id }}/json?{{ config.get('SKYLINES_CACHE_BUSTER', '') }}",false);

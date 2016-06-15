@@ -1,11 +1,15 @@
+/* globals $ */
+
+import ol from 'openlayers';
+
 /**
  * @constructor
  * @param {ol.Map} map Openlayers map instance
  * @param {slFlightDisplay} flight_display Flight display module
  * @param {Object} settings Settings for this module
  */
-slMapClickHandler = function(map, flight_display, settings) {
-  var map_click_handler = {};
+export default function slMapClickHandler(map, flight_display, settings) {
+  let map_click_handler = {};
 
   // Private attributes
 
@@ -13,16 +17,16 @@ slMapClickHandler = function(map, flight_display, settings) {
    * The OpenLayers.Geometry object of the circle.
    * @type {Object}
    */
-  var circle = { geometry: null, animation: null };
+  let circle = { geometry: null, animation: null };
 
   /**
    * Stores the state if the infobox.
    * @type {Boolean}
    */
-  var visible = false;
+  let visible = false;
 
 
-  var infobox = null;
+  let infobox = null;
 
   // Public attributes and functions
 
@@ -45,42 +49,42 @@ slMapClickHandler = function(map, flight_display, settings) {
 
     if (!infobox) {
       infobox = new ol.Overlay({
-        element: $("<div id='MapInfoBox' class='InfoBox'></div>").get(0)
+        element: $("<div id='MapInfoBox' class='InfoBox'></div>").get(0),
       });
     }
 
-    var infobox_element = $(infobox.getElement());
-    var coordinate = e.coordinate;
+    let infobox_element = $(infobox.getElement());
+    let coordinate = e.coordinate;
 
     if (settings['flight_info'] && flight_display) {
-      var flight_path_source = flight_display.getFlights().getSource();
-      var closest_feature = flight_path_source
+      let flight_path_source = flight_display.getFlights().getSource();
+      let closest_feature = flight_path_source
           .getClosestFeatureToCoordinate(coordinate);
 
       if (closest_feature !== null) {
-        var geometry = closest_feature.getGeometry();
-        var closest_point = geometry.getClosestPoint(coordinate);
+        let geometry = closest_feature.getGeometry();
+        let closest_point = geometry.getClosestPoint(coordinate);
 
-        var feature_pixel = e.map.getPixelFromCoordinate(closest_point);
-        var mouse_pixel = e.map.getPixelFromCoordinate(coordinate);
+        let feature_pixel = e.map.getPixelFromCoordinate(closest_point);
+        let mouse_pixel = e.map.getPixelFromCoordinate(coordinate);
 
-        var squared_distance = Math.pow(mouse_pixel[0] - feature_pixel[0], 2) +
+        let squared_distance = Math.pow(mouse_pixel[0] - feature_pixel[0], 2) +
                                Math.pow(mouse_pixel[1] - feature_pixel[1], 2);
 
         if (squared_distance < 100) {
-          var time = closest_point[3];
-          var sfid = closest_feature.get('sfid');
-          var flight = flight_display.getFlights().findBy('id', sfid);
+          let time = closest_point[3];
+          let sfid = closest_feature.get('sfid');
+          let flight = flight_display.getFlights().findBy('id', sfid);
 
           // flight info
-          var flight_info = flightInfo(flight);
+          let flight_info = flightInfo(flight);
           infobox_element.append(flight_info);
 
           // near flights link
-          var loc = ol.proj.transform(closest_point,
+          let loc = ol.proj.transform(closest_point,
                                       'EPSG:3857',
                                       'EPSG:4326');
-          var get_near_flights = nearFlights(loc[0], loc[1], time, flight);
+          let get_near_flights = nearFlights(loc[0], loc[1], time, flight);
           infobox_element.append(get_near_flights);
 
           coordinate = closest_point;
@@ -90,8 +94,8 @@ slMapClickHandler = function(map, flight_display, settings) {
 
     if (settings['location_info']) {
       // location info
-      var loc = ol.proj.transform(coordinate, 'EPSG:3857', 'EPSG:4326');
-      var get_location_info = locationInfo(loc[0], loc[1]);
+      let loc = ol.proj.transform(coordinate, 'EPSG:3857', 'EPSG:4326');
+      let get_location_info = locationInfo(loc[0], loc[1]);
       infobox_element.append(get_location_info);
     }
 
@@ -129,7 +133,7 @@ slMapClickHandler = function(map, flight_display, settings) {
   }
 
   function nearFlights(lon, lat, time, flight) {
-    var get_near_flights = $(
+    let get_near_flights = $(
         '<div class="info-item">' +
         '<a class="near" href="#NearFlights">Load nearby flights</a>' +
         '</div>'
@@ -147,7 +151,7 @@ slMapClickHandler = function(map, flight_display, settings) {
   }
 
   function locationInfo(lon, lat) {
-    var get_location_info = $(
+    let get_location_info = $(
         '<div class="info-item">' +
         '<a class="near" href="#LocationInfo">Get location info</a>' +
         '</div>'
@@ -167,13 +171,13 @@ slMapClickHandler = function(map, flight_display, settings) {
    * @param {Array<Number>} coordinate Coordinate
    */
   function showCircle(coordinate) {
-    var stroke_style = new ol.style.Stroke({
+    let stroke_style = new ol.style.Stroke({
       color: '#f4bd33',
-      width: 3
+      width: 3,
     });
 
     /*
-    var fill_style = new ol.style.Fill({
+    let fill_style = new ol.style.Fill({
       opacity: 0.5,
       color: '#f4bd00'
     });
@@ -187,11 +191,11 @@ slMapClickHandler = function(map, flight_display, settings) {
     circle.animation = null;
 
     map.on('postcompose', function(e) {
-      var vector_context = e.vectorContext;
+      let vector_context = e.vectorContext;
 
       if (circle.geometry) {
         if (circle.animation != null) {
-          var frame_state = e.frameState;
+          let frame_state = e.frameState;
           if (!circle.animation.start)
             circle.animation.start = frame_state.time;
 
@@ -202,7 +206,7 @@ slMapClickHandler = function(map, flight_display, settings) {
             return;
           }
 
-          var delta_time = -(circle.animation.start - frame_state.time) %
+          let delta_time = -(circle.animation.start - frame_state.time) %
                            circle.animation.duration;
           stroke_style.setWidth(3 - delta_time /
                                 (circle.animation.duration / 3));
@@ -235,12 +239,12 @@ slMapClickHandler = function(map, flight_display, settings) {
   function getNearFlights(lon, lat, time, flight) {
     if (!flight_display) return;
 
-    var req = $.ajax('/flights/' + flight.getID() + '/near?lon=' + lon +
+    let req = $.ajax('/flights/' + flight.getID() + '/near?lon=' + lon +
         '&lat=' + lat + '&time=' + time);
 
     req.done(function(data) {
-      for (var i = 0; i < data['flights'].length; ++i) {
-        var flight = data['flights'][i];
+      for (let i = 0; i < data['flights'].length; ++i) {
+        let flight = data['flights'][i];
 
         // skip retrieved flight if already on map
         if (flight_display.getFlights().findBy('id', flight['sfid']))
@@ -262,7 +266,7 @@ slMapClickHandler = function(map, flight_display, settings) {
    * @param {Number} lat Latitude.
    */
   function getLocationInfo(lon, lat) {
-    var req = $.ajax(settings.api_url + '/mapitems?lon=' + lon + '&lat=' + lat);
+    let req = $.ajax(settings.api_url + '/mapitems?lon=' + lon + '&lat=' + lat);
 
     req.done(function(data) {
       showLocationData(data);
@@ -281,22 +285,22 @@ slMapClickHandler = function(map, flight_display, settings) {
   function showLocationData(data) {
     if (!visible) return; // do nothing if infobox is closed already
 
-    var element = $(infobox.getElement());
+    let element = $(infobox.getElement());
     element.empty();
-    var item = $('<div class="location info-item"></div>');
-    var no_data = true;
+    let item = $('<div class="location info-item"></div>');
+    let no_data = true;
 
     if (data) {
-      var airspace_layer = map.getLayers().getArray().filter(function(e) {
+      let airspace_layer = map.getLayers().getArray().filter(function(e) {
         return e.get('name') == 'Airspace';
       })[0];
-      var mwp_layer = map.getLayers().getArray().filter(function(e) {
+      let mwp_layer = map.getLayers().getArray().filter(function(e) {
         return e.get('name') == 'Mountain Wave Project';
       })[0];
 
       if (!$.isEmptyObject(data['airspaces']) &&
           airspace_layer.getVisible()) {
-        var p = $('<p></p>');
+        let p = $('<p></p>');
         p.append(formatAirspaceData(data['airspaces']));
         item.append(p);
         no_data = false;
@@ -304,7 +308,7 @@ slMapClickHandler = function(map, flight_display, settings) {
 
       if (!$.isEmptyObject(data['waves']) &&
           mwp_layer.getVisible()) {
-        var p = $('<p></p>');
+        let p = $('<p></p>');
         p.append(formatMountainWaveData(data['waves']));
         item.append(p);
         no_data = false;
@@ -334,7 +338,7 @@ slMapClickHandler = function(map, flight_display, settings) {
    * @return {jQuery} HTML table with the airspace data.
    */
   function formatAirspaceData(data) {
-    var table = $('<table></table>');
+    let table = $('<table></table>');
 
     table.append($(
         '<thead><tr>' +
@@ -347,9 +351,9 @@ slMapClickHandler = function(map, flight_display, settings) {
         '</tr></thead>'
         ));
 
-    var table_body = $('<tbody></tbody');
+    let table_body = $('<tbody></tbody>');
 
-    for (var i = 0; i < data.length; ++i) {
+    for (let i = 0; i < data.length; ++i) {
       table_body.append($(
           '<tr>' +
           '<td class="airspace_name">' + data[i]['name'] + '</td>' +
@@ -372,7 +376,7 @@ slMapClickHandler = function(map, flight_display, settings) {
    * @return {jQuery} HTML table with the wave data.
    */
   function formatMountainWaveData(data) {
-    var table = $('<table></table>');
+    let table = $('<table></table>');
 
     table.append($(
         '<thead><tr>' +
@@ -383,10 +387,10 @@ slMapClickHandler = function(map, flight_display, settings) {
         '</tr></thead>'
         ));
 
-    var table_body = $('<tbody></tbody');
+    let table_body = $('<tbody></tbody>');
 
-    for (var i = 0; i < data.length; ++i) {
-      var wind_direction = data[i]['main_wind_direction'] || 'Unknown';
+    for (let i = 0; i < data.length; ++i) {
+      let wind_direction = data[i]['main_wind_direction'] || 'Unknown';
 
       table_body.append($(
           '<tr>' +
@@ -400,4 +404,4 @@ slMapClickHandler = function(map, flight_display, settings) {
 
     return table;
   }
-};
+}

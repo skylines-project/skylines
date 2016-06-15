@@ -73,6 +73,7 @@
 
     var slFlightDisplay = require('skylines/utils/flight-display').default;
     var slFlightTracking = require('skylines/utils/flight-tracking').default;
+    var slMapClickHandler = require('skylines/utils/map-click-handler').default;
 
     var flight_display = slFlightDisplay(map, window.fixTable, window.barogram);
     var flight_tracking = slFlightTracking(flight_display, flight_display.getFlights());
