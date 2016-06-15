@@ -1,6 +1,8 @@
-/* globals ol, isCanvasSupported */
+/* globals isCanvasSupported */
 
 import Ember from 'ember';
+import ol from 'openlayers';
+
 import parseQueryString from '../utils/parse-query-string';
 
 export default Ember.Component.extend(Ember.Evented, {

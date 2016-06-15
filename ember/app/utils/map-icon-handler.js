@@ -1,6 +1,5 @@
-/* globals ol */
-
 import Ember from 'ember';
+import ol from 'openlayers';
 
 /**
  * A handler to display plane icons on the map.

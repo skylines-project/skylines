@@ -1,6 +1,7 @@
-/* globals $, ol, CesiumSwitcher */
+/* globals $, CesiumSwitcher */
 
 import Ember from 'ember';
+import ol from 'openlayers';
 
 import slFlight from './flight';
 import slFlightCollection from './flight-collection';

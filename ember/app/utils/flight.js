@@ -1,6 +1,8 @@
-/* globals ol, slUnits */
+/* globals slUnits */
 
 import Ember from 'ember';
+import ol from 'openlayers';
+
 import slContest from './contest';
 
 /**

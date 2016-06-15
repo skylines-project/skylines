@@ -1,6 +1,5 @@
-/* globals ol */
-
 import Ember from 'ember';
+import ol from 'openlayers';
 
 export default Ember.ArrayProxy.extend({
 

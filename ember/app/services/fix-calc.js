@@ -1,6 +1,6 @@
-/* globals ol */
-
 import Ember from 'ember';
+import ol from 'openlayers';
+
 import geographicDistance from '../utils/geo-distance';
 import getNextSmallerIndex from '../utils/next-smaller-index';
 import computedPoint from '../utils/computed-point';

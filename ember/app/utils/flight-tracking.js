@@ -1,4 +1,6 @@
-/* globals $, ol */
+/* globals $ */
+
+import ol from 'openlayers';
 
 export default function slFlightTracking(flight_display, flights) {
   var flight_tracking = {};

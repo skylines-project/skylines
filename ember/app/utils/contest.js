@@ -1,6 +1,5 @@
-/* globals ol */
-
 import Ember from 'ember';
+import ol from 'openlayers';
 
 /**
  * Dictionary of contest names and their colors.
