@@ -1,41 +1,46 @@
 /* globals $ */
 
+import Ember from 'ember';
 import ol from 'openlayers';
 
-export default function slFlightTracking(flight_display, flights) {
-  var flight_tracking = {};
+export default Ember.Object.extend({
+  flight_display: null,
+  flights: null,
 
-  flight_tracking.init = function() {
+  init() {
+    let flight_display = this.get('flight_display');
+
     flight_display.setDefaultTime(-1);
     flight_display.setTime(-1);
-  };
+  },
 
   /**
    * Retrieves all new traces for the displayed flights
    */
-  flight_tracking.updateFlightsFromJSON = function() {
-    flights.forEach(function(flight) {
+  updateFlightsFromJSON() {
+    let flight_display = this.get('flight_display');
+
+    this.get('flights').forEach(flight => {
       var url = '/tracking/' + flight.getID() + '/json';
 
       $.ajax(url, {
-        data: { last_update: flight.get('last_update') || null },
-        success: function(data) {
-          updateFlight(data);
+        data: {last_update: flight.get('last_update') || null},
+        success: data => {
+          this.updateFlight(data);
           flight_display.update();
         },
       });
     });
-  };
+  },
 
   /**
    * Updates a tracking flight.
    *
    * @param {Object} data The data returned by the JSON request.
    */
-
-  function updateFlight(data) {
+  updateFlight(data) {
     // find the flight to update
-    var flight = flights.findBy('id', data.sfid);
+    var flight = this.get('flights').findBy('id', data.sfid);
     if (!flight)
       return;
 
@@ -72,8 +77,5 @@ export default function slFlightTracking(flight_display, flights) {
 
     flight.get('fixes').pushObjects(fixes.slice(1));
     flight.get('elevations').pushObjects(elevations.slice(1));
-  }
-
-  flight_tracking.init();
-  return flight_tracking;
-}
+  },
+});
