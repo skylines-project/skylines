@@ -57,8 +57,7 @@ export default Ember.Object.extend({
   showPlane(flight, fix_data) {
     let lonlat = ol.proj.transform(fix_data.get('coordinate'), 'EPSG:3857', 'EPSG:4326');
 
-    let position = Cesium.Cartesian3.fromDegrees(lonlat[0], lonlat[1],
-        fix_data.get('alt-msl') + flight.get('geoid'));
+    let position = Cesium.Cartesian3.fromDegrees(lonlat[0], lonlat[1], lonlat[2]);
     let modelMatrix = Cesium.Transforms.headingPitchRollToFixedFrame(position,
         fix_data.get('heading') - Math.PI / 2, 0, 0);
 
