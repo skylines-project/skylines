@@ -113,7 +113,6 @@ all_js = Bundle(
 
 openlayers_js = Bundle(
     'vendor/openlayers/ol3cesium.js',
-    'js/ol-CesiumSwitcher.js',
     'http://rawgithub.com/bdougherty/BigScreen/v2.0.4/bigscreen.min.js',
     filters=SimpleClosureJS,
     output='js/ol-%(version)s.js')

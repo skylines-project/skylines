@@ -1,4 +1,4 @@
-/* globals $, CesiumSwitcher */
+/* globals $ */
 
 import Ember from 'ember';
 import ol from 'openlayers';
@@ -7,6 +7,7 @@ import slFlight from './flight';
 import slFlightCollection from './flight-collection';
 import slMapIconHandler from './map-icon-handler';
 import slMapHoverHandler from './map-hover-handler';
+import CesiumSwitcher from './cesium-switcher';
 
 /**
  * List of colors for flight path display

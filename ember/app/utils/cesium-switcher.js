@@ -1,32 +1,36 @@
-CESIUM_BASE_URL = '/cesium/';
+/* globals $, olcs, Cesium */
 
-var CesiumSwitcher = function(opt_options) {
+import ol from 'openlayers';
+
+const CESIUM_BASE_URL = '/cesium/';
+
+export default function CesiumSwitcher(opt_options) {
   var options = opt_options || {};
   var control = this;
 
-  var enabled = false;
-  var ol3d = undefined;
+  this.enabled = false;
+  this.ol3d = undefined;
 
   var element = document.createElement('div');
   element.className = 'CesiumSwitcher ol-unselectable';
 
-  var draw = function() {
-    $(element).on('click touchend', $.proxy(onClick, control));
+  var draw = () => {
+    $(element).on('click touchend', onClick);
     control.setMode(this.enabled);
   };
 
-  var onClick = function(evt) {
+  var onClick = evt => {
     control.setMode(!this.enabled);
     evt.preventDefault();
   };
 
   ol.control.Control.call(this, {
     element: element,
-    target: options.target
+    target: options.target,
   });
 
   draw();
-};
+}
 
 ol.inherits(CesiumSwitcher, ol.control.Control);
 
@@ -80,7 +84,7 @@ CesiumSwitcher.prototype.enableCesium = function() {
     this.ol3d = new olcs.OLCesium({map: map});
     var scene = this.ol3d.getCesiumScene();
     var terrainProvider = new Cesium.CesiumTerrainProvider({
-      url: '//assets.agi.com/stk-terrain/world'
+      url: '//assets.agi.com/stk-terrain/world',
     });
     scene.terrainProvider = terrainProvider;
     scene.globe.depthTestAgainstTerrain = true;
@@ -119,7 +123,7 @@ CesiumSwitcher.prototype.showPlane = function(flight, fix_data) {
       url: '../../images/Cesium_Air.gltf',
       scale: 1,
       minimumPixelSize: 64,
-      allowPicking: false
+      allowPicking: false,
     });
     scene.primitives.add(entity);
     flight.set('entity', entity);
