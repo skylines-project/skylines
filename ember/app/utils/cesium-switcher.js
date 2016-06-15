@@ -6,7 +6,6 @@ const CESIUM_BASE_URL = '/cesium/';
 
 export default function CesiumSwitcher(opt_options) {
   var options = opt_options || {};
-  var control = this;
 
   this.enabled = false;
   this.ol3d = undefined;
@@ -14,22 +13,17 @@ export default function CesiumSwitcher(opt_options) {
   var element = document.createElement('div');
   element.className = 'CesiumSwitcher ol-unselectable';
 
-  var draw = () => {
-    $(element).on('click touchend', onClick);
-    control.setMode(this.enabled);
-  };
-
-  var onClick = evt => {
-    control.setMode(!this.enabled);
-    evt.preventDefault();
-  };
-
   ol.control.Control.call(this, {
     element: element,
     target: options.target,
   });
 
-  draw();
+  $(element).on('click touchend', evt => {
+    this.setMode(!this.enabled);
+    evt.preventDefault();
+  });
+
+  this.setMode(this.enabled);
 }
 
 ol.inherits(CesiumSwitcher, ol.control.Control);
