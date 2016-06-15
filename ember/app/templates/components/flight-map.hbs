@@ -22,4 +22,10 @@
       {{plane-label-overlays map=map}}
     {{/if}}
   {{/if}}
+
+  {{#cesium-loader enabled=cesiumEnabled}}
+    {{#cesium-scene enabled=cesiumEnabled map=map as |cesium|}}
+      {{cesium-plane-models scene=cesium.scene}}
+    {{/cesium-scene}}
+  {{/cesium-loader}}
 {{/if}}

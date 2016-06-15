@@ -1,0 +1,5 @@
+{{#each fixes as |fix|}}
+  {{#if fix.coordinate}}
+    {{cesium-plane-model scene=scene coordinate=fix.coordinate heading=fix.heading}}
+  {{/if}}
+{{/each}}

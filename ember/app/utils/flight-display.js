@@ -6,7 +6,6 @@ import ol from 'openlayers';
 import slFlight from './flight';
 import slFlightCollection from './flight-collection';
 import slMapHoverHandler from './map-hover-handler';
-import CesiumSwitcher from './cesium-switcher';
 
 /**
  * List of colors for flight path display
@@ -48,8 +47,6 @@ export default function slFlightDisplay(map, fix_table, baro) {
     flights: flights,
   });
 
-  var cesium_switcher;
-
   /**
    * Default time - the time to set when no time is set
    * @type {!Number}
@@ -62,8 +59,6 @@ export default function slFlightDisplay(map, fix_table, baro) {
   flight_display.init = function() {
     map_hover_handler.set('hover_enabled', true);
     baro.set('hoverMode', true);
-
-    cesium_switcher = CesiumSwitcher.create({ map });
 
     setupEvents();
 
@@ -159,19 +154,6 @@ export default function slFlightDisplay(map, fix_table, baro) {
       flights.removeObjects(flights.filterBy('id', sfid));
     });
 
-    // Hide the plane icon of a flight which is scheduled for removal.
-    flights.addArrayObserver({
-      arrayWillChange: function(flights, offset, removeCount) {
-        flights.slice(offset, offset + removeCount).forEach(function(flight) {
-          // Hide plane to remove any additional related objects from the map
-          if (window.flightMap.get('cesiumEnabled')) {
-            cesium_switcher.hidePlane(flight);
-          }
-        });
-      },
-      arrayDidChange: Ember.K,
-    });
-
     flights.addObserver('[]', function() {
       Ember.run.once(flight_display, 'update');
     });
@@ -195,10 +177,7 @@ export default function slFlightDisplay(map, fix_table, baro) {
     });
 
     window.flightMap.addObserver('cesiumEnabled', function() {
-      let enabled = this.get('cesiumEnabled');
-      cesium_switcher.setMode(enabled);
-
-      if (enabled) {
+      if (this.get('cesiumEnabled')) {
         map.un('moveend', update_baro_scale_on_moveend);
 
         if (!window.fixCalcService.get('isRunning')) {
@@ -242,20 +221,6 @@ export default function slFlightDisplay(map, fix_table, baro) {
   flight_display.setTime = function(time) {
     window.fixCalcService.set('time', time);
   };
-
-  window.fixCalcService.addObserver('fixes.@each.point', function() {
-    this.get('fixes').forEach(function(fix_data) {
-      var flight = fix_data.get('flight');
-
-      if (window.flightMap.get('cesiumEnabled')) {
-        if (!fix_data.get('point')) {
-          cesium_switcher.hidePlane(flight);
-        } else {
-          cesium_switcher.showPlane(flight, fix_data);
-        }
-      }
-    });
-  });
 
   /**
    * Updates the barogram
