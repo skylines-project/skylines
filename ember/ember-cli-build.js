@@ -36,6 +36,7 @@ module.exports = function(defaults) {
   // along with the exports of each module as its value.
 
   app.import('vendor/shims/openlayers.js');
+  app.import('vendor/shims/ol3-cesium.js');
 
   return app.toTree();
 };

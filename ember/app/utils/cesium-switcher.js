@@ -1,6 +1,7 @@
-/* globals $, olcs, Cesium */
+/* globals $, Cesium */
 
 import ol from 'openlayers';
+import olcs from 'ol3-cesium';
 
 const CESIUM_BASE_URL = '/cesium/';
 
