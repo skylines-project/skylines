@@ -1,3 +1,5 @@
 {{#each contests as |contest|}}
-  {{contest-layer-feature source=source contest=contest}}
+  {{#if contest}}
+    {{contest-layer-feature source=source contest=contest}}
+  {{/if}}
 {{/each}}
