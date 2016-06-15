@@ -1,24 +1,21 @@
-/* globals $, ol */
+/* globals ol */
+
+import Ember from 'ember';
 
 /**
  * A handler to display plane icons on the map.
- * @constructor
- * @param {Object} _map ol3 map object.
- * @param {Array} _flights
  */
-export default function slMapIconHandler(_map, _flights) {
-  var map_icon_handler = {};
+export default Ember.Object.extend({
+  map: null,
+  flights: null,
 
-  var map = _map;
-  var flights = _flights;
-
-  map_icon_handler.showPlane = function(flight, fix_data) {
+  showPlane(flight, fix_data) {
     var marker = flight.get('marker');
 
     // add plane marker if more than one flight on the map
-    if (flights.get('length') > 1) {
+    if (this.get('flights.length') > 1) {
       if (!marker) {
-        var badge = $('<span class="badge plane_marker" ' +
+        var badge = Ember.$('<span class="badge plane_marker" ' +
           'style="display: inline-block; text-align: center; ' +
           'background: ' + flight.get('color') + ';">' +
           flight.getWithDefault('competition_id', '') +
@@ -28,7 +25,7 @@ export default function slMapIconHandler(_map, _flights) {
           element: badge.get(0)
         });
 
-        map.addOverlay(marker);
+        this.get('map').addOverlay(marker);
         flight.set('marker', marker);
 
         marker.setOffset([badge.width(), -40]);
@@ -36,19 +33,17 @@ export default function slMapIconHandler(_map, _flights) {
 
       marker.setPosition(fix_data.get('coordinate'));
     }
-  };
+  },
 
-  map_icon_handler.hidePlane = function(flight) {
+  hidePlane(flight) {
     var marker = flight.get('marker');
     if (marker) {
-      map.removeOverlay(marker);
+      this.get('map').removeOverlay(marker);
       flight.set('marker', null);
     }
-  };
+  },
 
-  map_icon_handler.hideAllPlanes = function() {
-    flights.forEach(map_icon_handler.hidePlane);
-  };
-
-  return map_icon_handler;
-}
+  hideAllPlanes() {
+    this.get('flights').forEach(flight => this.hidePlane(flight));
+  }
+});
