@@ -1,5 +1,6 @@
 import Ember from 'ember';
 import getNextSmallerIndex from '../utils/next-smaller-index';
+import computedPoint from '../utils/computed-point';
 
 export default Ember.Service.extend({
   fixCalc: Ember.inject.service(),
@@ -40,12 +41,3 @@ export default Ember.Service.extend({
     window.flightPhaseService = this;
   },
 });
-
-function computedPoint(key) {
-  return Ember.computed(key, function() {
-    let coordinate = this.get(key)
-    if (coordinate) {
-      return new ol.geom.Point(coordinate);
-    }
-  })
-}

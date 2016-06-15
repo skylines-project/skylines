@@ -1,6 +1,7 @@
 import Ember from 'ember';
 import geographicDistance from '../utils/geo-distance';
 import getNextSmallerIndex from '../utils/next-smaller-index';
+import computedPoint from '../utils/computed-point';
 
 export default Ember.Service.extend({
   flights: [],
@@ -121,12 +122,7 @@ let Fix = Ember.Object.extend({
     }
   }),
 
-  point: Ember.computed('coordinate', function() {
-    let coordinate = this.get('coordinate');
-    if (coordinate) {
-      return new ol.geom.Point(coordinate);
-    }
-  }),
+  point: computedPoint('coordinate'),
 
   heading: Ember.computed('_coordinate_prev', '_coordinate_next', function() {
     let prev = this.get('_coordinate_prev');
