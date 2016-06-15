@@ -47,10 +47,6 @@
 <script type="text/javascript" src="{{ ASSET_URL }}"></script>
 {%- endassets %}
 
-{% assets 'tracking_js' -%}
-<script type="text/javascript" src="{{ ASSET_URL }}"></script>
-{%- endassets %}
-
 {% if traces -%}
 <script type="text/javascript">
   $(function() {
@@ -74,6 +70,8 @@
                  {{ h.json.dumps(h.get_setting_name('altitude_unit')) }});
 
     var map = window.flightMap.get('map');
+
+    var slFlightTracking = require('skylines/utils/flight-tracking').default;
 
     var flight_display = slFlightDisplay(map, window.fixTable, window.barogram);
     var flight_tracking = slFlightTracking(flight_display, flight_display.getFlights());

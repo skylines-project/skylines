@@ -1,4 +1,4 @@
-slFlightTracking = function(flight_display, flights) {
+export default function slFlightTracking(flight_display, flights) {
   var flight_tracking = {};
 
   flight_tracking.init = function() {
@@ -72,4 +72,4 @@ slFlightTracking = function(flight_display, flights) {
 
   flight_tracking.init();
   return flight_tracking;
-};
+}

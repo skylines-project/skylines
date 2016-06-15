@@ -127,11 +127,6 @@ flight_js = Bundle(
     filters=SimpleClosureJS,
     output='js/flight-%(version)s.js')
 
-tracking_js = Bundle(
-    'js/slFlightTracking.js',
-    filters=SimpleClosureJS,
-    output='js/tracking-%(version)s.js')
-
 upload_js = Bundle(
     'js/slUnits.js',
     'js/upload.js',
