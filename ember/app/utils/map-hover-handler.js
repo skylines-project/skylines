@@ -19,10 +19,6 @@ export default Ember.Object.extend(Ember.Evented, {
     });
   },
 
-  setMode(mode) {
-    this.set('hover_enabled', mode);
-  },
-
   displaySnap(coordinate) {
     let flights = this.get('flights');
     let map = this.get('map');

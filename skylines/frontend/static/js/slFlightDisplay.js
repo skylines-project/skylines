@@ -58,7 +58,7 @@ slFlightDisplay = function(map, fix_table, baro) {
    * Initialize the map, add flight path and contest layers.
    */
   flight_display.init = function() {
-    map_hover_handler.setMode(true);
+    map_hover_handler.set('hover_enabled', true);
     baro.set('hoverMode', true);
 
     cesium_switcher = new CesiumSwitcher();
@@ -180,7 +180,7 @@ slFlightDisplay = function(map, fix_table, baro) {
     window.fixCalcService.addObserver('isRunning', function() {
       var running = this.get('isRunning');
 
-      map_hover_handler.setMode(!running && !cesium_switcher.getMode());
+      map_hover_handler.set('hover_enabled', !running && !cesium_switcher.getMode());
       baro.set('hoverMode', !running);
     });
 
@@ -200,7 +200,7 @@ slFlightDisplay = function(map, fix_table, baro) {
 
       if (!window.fixCalcService.get('isRunning')) {
         // disable mouse hovering
-        map_hover_handler.setMode(false);
+        map_hover_handler.set('hover_enabled', false);
       }
 
       map_icon_handler.hideAllPlanes();
@@ -224,7 +224,7 @@ slFlightDisplay = function(map, fix_table, baro) {
 
       if (!window.fixCalcService.get('isRunning')) {
         // enable mouse hovering
-        map_hover_handler.setMode(true);
+        map_hover_handler.set('hover_enabled', true);
       }
 
       map.getLayers().getArray().forEach(function(e) {
