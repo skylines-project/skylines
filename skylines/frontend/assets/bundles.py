@@ -121,7 +121,6 @@ openlayers_js = Bundle(
 
 flight_js = Bundle(
     'js/slUnits.js',
-    'js/slMapIconHandler.js',
     'js/slMapHoverHandler.js',
     'js/slFlightDisplay.js',
     'http://momentjs.com/downloads/moment.min.js',

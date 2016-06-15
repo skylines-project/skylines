@@ -1,10 +1,12 @@
+/* globals $, ol */
+
 /**
  * A handler to display plane icons on the map.
  * @constructor
  * @param {Object} _map ol3 map object.
  * @param {Array} _flights
  */
-slMapIconHandler = function(_map, _flights) {
+export default function slMapIconHandler(_map, _flights) {
   var map_icon_handler = {};
 
   var map = _map;
@@ -17,10 +19,10 @@ slMapIconHandler = function(_map, _flights) {
     if (flights.get('length') > 1) {
       if (!marker) {
         var badge = $('<span class="badge plane_marker" ' +
-                'style="display: inline-block; text-align: center; ' +
-                'background: ' + flight.get('color') + ';">' +
-            flight.getWithDefault('competition_id', '') +
-            '</span>');
+          'style="display: inline-block; text-align: center; ' +
+          'background: ' + flight.get('color') + ';">' +
+          flight.getWithDefault('competition_id', '') +
+          '</span>');
 
         marker = new ol.Overlay({
           element: badge.get(0)
@@ -49,4 +51,4 @@ slMapIconHandler = function(_map, _flights) {
   };
 
   return map_icon_handler;
-};
+}
