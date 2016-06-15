@@ -3,8 +3,6 @@
 import ol from 'openlayers';
 import olcs from 'ol3-cesium';
 
-const CESIUM_BASE_URL = '/cesium/';
-
 export default function CesiumSwitcher(opt_options) {
   let options = opt_options || {};
 
@@ -38,7 +36,10 @@ CesiumSwitcher.prototype.setMode = function(mode) {
   if (mode) {
     this.element.innerHTML = '<img src="../../images/2d.png"/>';
     $(this).triggerHandler('cesium_enable');
-    this.loadCesium();
+
+    window.cesiumLoader.load()
+      .then(() => this.enableCesium());
+
   } else {
     this.element.innerHTML = '<img src="../../images/3d.png"/>';
     if (this.ol3d) {
@@ -49,19 +50,6 @@ CesiumSwitcher.prototype.setMode = function(mode) {
   }
 
   this.enabled = mode;
-};
-
-
-/**
- * Loads cesium.
- */
-CesiumSwitcher.prototype.loadCesium = function() {
-  if (typeof Cesium === 'undefined') {
-    let cesium = document.createElement('script');
-    cesium.src = CESIUM_BASE_URL + 'Cesium.js';
-    cesium.onload = () => { this.enableCesium() };
-    document.body.appendChild(cesium);
-  }
 };
 
 
