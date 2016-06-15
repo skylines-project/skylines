@@ -5,7 +5,6 @@ import ol from 'openlayers';
 
 import slFlight from './flight';
 import slFlightCollection from './flight-collection';
-import slMapIconHandler from './map-icon-handler';
 import slMapHoverHandler from './map-hover-handler';
 import CesiumSwitcher from './cesium-switcher';
 
@@ -39,15 +38,6 @@ export default function slFlightDisplay(map, fix_table, baro) {
    * @type {slFlightCollection}
    */
   var flights = slFlightCollection.create();
-
-  /**
-   * Handler for the plane icons
-   * @type {slMapIconHandler}
-   */
-  var map_icon_handler = slMapIconHandler.create({
-    map: map,
-    flights: flights,
-  });
 
   /**
    * Handler for map hover events
@@ -177,8 +167,6 @@ export default function slFlightDisplay(map, fix_table, baro) {
           // Hide plane to remove any additional related objects from the map
           if (cesium_switcher.getMode()) {
             cesium_switcher.hidePlane(flight);
-          } else {
-            map_icon_handler.hidePlane(flight);
           }
         });
       },
@@ -218,8 +206,6 @@ export default function slFlightDisplay(map, fix_table, baro) {
           // disable mouse hovering
           map_hover_handler.set('hover_enabled', false);
         }
-
-        map_icon_handler.hideAllPlanes();
 
         map.getLayers().getArray().forEach(function(e) {
           if (e.get('name') == 'Contest') e.setVisible(false);
@@ -267,13 +253,6 @@ export default function slFlightDisplay(map, fix_table, baro) {
           cesium_switcher.hidePlane(flight);
         } else {
           cesium_switcher.showPlane(flight, fix_data);
-        }
-
-      } else {
-        if (!fix_data.get('point')) {
-          map_icon_handler.hidePlane(flight);
-        } else {
-          map_icon_handler.showPlane(flight, fix_data);
         }
       }
     });
