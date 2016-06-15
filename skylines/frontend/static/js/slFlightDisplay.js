@@ -142,7 +142,7 @@ slFlightDisplay = function(map, fix_table, baro) {
     // in the fix table.
     fix_table.addObserver('selection', function() {
       baro.set('selection', fix_table.get('selection'));
-      baro.draw();
+      Ember.run.once(baro, 'draw');
     });
 
     // Remove a flight when the removal button has been pressed

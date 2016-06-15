@@ -90,7 +90,7 @@ export default Ember.Component.extend(Ember.Evented, {
   },
 
   timeObserver: Ember.observer('time', function() {
-    this.updateCrosshair();
+    Ember.run.once(this, 'updateCrosshair');
   }),
 
   updateCrosshair() {
@@ -335,6 +335,6 @@ export default Ember.Component.extend(Ember.Evented, {
   },
 
   flightPhaseObserver: Ember.observer('timeHighlight', function() {
-    this.draw();
+    Ember.run.once(this, 'draw');
   }),
 });

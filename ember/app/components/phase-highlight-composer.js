@@ -16,7 +16,7 @@ export default Ember.Component.extend({
 
   coordinatesObserver: Ember.observer('coordinates.[]', function() {
     this.adjustMapView();
-    this.get('map').render();
+    Ember.run.once(this.get('map'), 'render');
   }),
 
   init() {

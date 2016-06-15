@@ -11,7 +11,7 @@ export default Ember.Component.extend({
 
   fixes: Ember.computed.readOnly('fixCalc.fixes'),
   fixesObserver: Ember.observer('fixes.@each.point', function() {
-    this.get('map').render();
+    Ember.run.once(this.get('map'), 'render');
   }),
 
   init() {
