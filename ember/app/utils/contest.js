@@ -1,3 +1,7 @@
+/* globals ol */
+
+import Ember from 'ember';
+
 /**
  * Dictionary of contest names and their colors.
  */
@@ -14,7 +18,7 @@ var contest_colors = {
  *   turnpoints and times are googlePolyEncoded strings.
  * @param {Number} _sfid The SkyLines flight id this contest trace belongs to.
  */
-slContest = Ember.Object.extend();
+const slContest = Ember.Object.extend();
 
 slContest.fromData = function(_contest, flightId) {
   var turnpoints = ol.format.Polyline.decodeDeltas(_contest.turnpoints, 2);
@@ -28,7 +32,7 @@ slContest.fromData = function(_contest, flightId) {
   if (triangle) {
     for (var i = 2; i < turnpointsLength - 2; i += 2) {
       var point = ol.proj.transform([turnpoints[i + 1], turnpoints[i]],
-                                    'EPSG:4326', 'EPSG:3857');
+        'EPSG:4326', 'EPSG:3857');
       geometry.appendCoordinate(point);
     }
 
@@ -36,7 +40,7 @@ slContest.fromData = function(_contest, flightId) {
   } else {
     for (var i = 0; i < turnpointsLength; i += 2) {
       var point = ol.proj.transform([turnpoints[i + 1], turnpoints[i]],
-                                    'EPSG:4326', 'EPSG:3857');
+        'EPSG:4326', 'EPSG:3857');
       geometry.appendCoordinate(point);
     }
   }
@@ -51,3 +55,5 @@ slContest.fromData = function(_contest, flightId) {
     color: color
   })
 };
+
+export default slContest;
