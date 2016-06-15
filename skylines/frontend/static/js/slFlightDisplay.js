@@ -13,6 +13,7 @@ slFlightDisplay = function(map, fix_table, baro) {
   var slFlight = require('skylines/utils/flight').default;
   var slFlightCollection = require('skylines/utils/flight-collection').default;
   var slMapIconHandler = require('skylines/utils/map-icon-handler').default;
+  var slMapHoverHandler = require('skylines/utils/map-hover-handler').default;
 
   /**
    * Flight collection

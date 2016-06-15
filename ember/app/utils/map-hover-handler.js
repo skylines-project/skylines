@@ -1,4 +1,6 @@
-slMapHoverHandler = function(_map, _flights) {
+/* globals $ */
+
+export default function slMapHoverHandler(_map, _flights) {
   var map_hover_handler = {};
 
   var map = _map;
@@ -50,4 +52,4 @@ slMapHoverHandler = function(_map, _flights) {
 
     map.render();
   }
-};
+}
