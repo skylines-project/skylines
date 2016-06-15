@@ -12,6 +12,7 @@
 
   {{#if flights}}
     {{playback-button}}
+    {{cesium-button enabled=cesiumEnabled onEnable=(action "cesiumEnabled") onDisable=(action "cesiumDisabled") style="top:200px"}}
     {{flight-path-layer map=map flights=flights}}
     {{phase-highlight-composer map=map}}
     {{plane-icons-composer map=map}}

@@ -63,8 +63,7 @@ export default function slFlightDisplay(map, fix_table, baro) {
     map_hover_handler.set('hover_enabled', true);
     baro.set('hoverMode', true);
 
-    cesium_switcher = CesiumSwitcher.create();
-    map.addControl(cesium_switcher);
+    cesium_switcher = CesiumSwitcher.create({ map });
 
     setupEvents();
 
@@ -165,7 +164,7 @@ export default function slFlightDisplay(map, fix_table, baro) {
       arrayWillChange: function(flights, offset, removeCount) {
         flights.slice(offset, offset + removeCount).forEach(function(flight) {
           // Hide plane to remove any additional related objects from the map
-          if (cesium_switcher.getMode()) {
+          if (window.flightMap.get('cesiumEnabled')) {
             cesium_switcher.hidePlane(flight);
           }
         });
@@ -180,7 +179,7 @@ export default function slFlightDisplay(map, fix_table, baro) {
     window.fixCalcService.addObserver('isRunning', function() {
       var running = this.get('isRunning');
 
-      map_hover_handler.set('hover_enabled', !running && !cesium_switcher.getMode());
+      map_hover_handler.set('hover_enabled', !running && !window.flightMap.get('cesiumEnabled'));
       baro.set('hoverMode', !running);
     });
 
@@ -195,9 +194,9 @@ export default function slFlightDisplay(map, fix_table, baro) {
       flight_display.setTime(default_time);
     });
 
-    cesium_switcher.addObserver('enabled', function() {
-      let enabled = this.get('enabled');
-      window.flightMap.set('cesiumEnabled', enabled);
+    window.flightMap.addObserver('cesiumEnabled', function() {
+      let enabled = this.get('cesiumEnabled');
+      cesium_switcher.setMode(enabled);
 
       if (enabled) {
         map.un('moveend', update_baro_scale_on_moveend);
@@ -248,7 +247,7 @@ export default function slFlightDisplay(map, fix_table, baro) {
     this.get('fixes').forEach(function(fix_data) {
       var flight = fix_data.get('flight');
 
-      if (cesium_switcher.getMode()) {
+      if (window.flightMap.get('cesiumEnabled')) {
         if (!fix_data.get('point')) {
           cesium_switcher.hidePlane(flight);
         } else {

@@ -1,57 +1,28 @@
-/* globals $, Cesium */
+/* globals Cesium */
 
 import Ember from 'ember';
 import ol from 'openlayers';
 import olcs from 'ol3-cesium';
 
-const CesiumSwitcher = Ember.Object.extend({
-  enabled: false,
+export default Ember.Object.extend({
   ol3d: null,
-
-  init() {
-    this._super(...arguments);
-
-    let element = document.createElement('div');
-    element.className = 'CesiumSwitcher ol-unselectable';
-
-    ol.control.Control.call(this, {
-      element: element,
-    });
-
-    $(element).on('click touchend', evt => {
-      this.setMode(!this.enabled);
-      evt.preventDefault();
-    });
-
-    this.setMode(this.enabled);
-
-    this.set('element', element);
-  },
 
   /**
    * Sets the 3d mode.
    * @param {bool} mode - Enabled or not
    */
   setMode(mode) {
-    let element = this.get('element');
-
     if (mode) {
-      element.innerHTML = '<img src="../../images/2d.png"/>';
-
       window.cesiumLoader.load()
         .then(() => this.enableCesium());
 
     } else {
-      element.innerHTML = '<img src="../../images/3d.png"/>';
-
       let ol3d = this.get('ol3d');
       if (ol3d) {
         ol3d.setEnabled(false);
-        this.getMap().getView().setRotation(0);
+        this.get('map').getView().setRotation(0);
       }
     }
-
-    this.set('enabled', mode);
   },
 
 
@@ -61,7 +32,7 @@ const CesiumSwitcher = Ember.Object.extend({
   enableCesium() {
     let ol3d = this.get('ol3d');
     if (!ol3d) {
-      let map = this.getMap();
+      let map = this.get('map');
 
       ol3d = new olcs.OLCesium({map: map});
 
@@ -78,14 +49,6 @@ const CesiumSwitcher = Ember.Object.extend({
     ol3d.enableAutoRenderLoop();
   },
 
-
-  /**
-   * Returns the mode of cesium (3d or 2d).
-   * @return {bool}
-   */
-  getMode() {
-    return this.get('enabled');
-  },
 
   /**
    * @param {slFlight} flight
@@ -128,7 +91,3 @@ const CesiumSwitcher = Ember.Object.extend({
     }
   },
 });
-
-ol.inherits(CesiumSwitcher, ol.control.Control);
-
-export default CesiumSwitcher;
