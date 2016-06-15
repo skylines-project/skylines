@@ -207,41 +207,42 @@ export default function slFlightDisplay(map, fix_table, baro) {
       flight_display.setTime(default_time);
     });
 
-    cesium_switcher.on('cesium_enable', function() {
-      map.un('moveend', update_baro_scale_on_moveend);
+    cesium_switcher.addObserver('enabled', function() {
+      if (this.get('enabled')) {
+        map.un('moveend', update_baro_scale_on_moveend);
 
-      if (!window.fixCalcService.get('isRunning')) {
-        // disable mouse hovering
-        map_hover_handler.set('hover_enabled', false);
+        if (!window.fixCalcService.get('isRunning')) {
+          // disable mouse hovering
+          map_hover_handler.set('hover_enabled', false);
+        }
+
+        map_icon_handler.hideAllPlanes();
+
+        map.getLayers().getArray().forEach(function(e) {
+          if (e.get('name') == 'Contest') e.setVisible(false);
+        });
+
+        map.getLayers().getArray().forEach(function(e) {
+          if (!e.get('base_layer') && !(e instanceof ol.layer.Vector))
+            e.setVisible(false);
+        });
+
+        baro.set('timeInterval', null);
+        baro.draw();
+
+      } else {
+        // Update the baro scale when the map has been zoomed/moved.
+        map.on('moveend', update_baro_scale_on_moveend);
+
+        if (!window.fixCalcService.get('isRunning')) {
+          // enable mouse hovering
+          map_hover_handler.set('hover_enabled', true);
+        }
+
+        map.getLayers().getArray().forEach(function(e) {
+          if (e.get('name') == 'Contest') e.setVisible(true);
+        });
       }
-
-      map_icon_handler.hideAllPlanes();
-
-      map.getLayers().getArray().forEach(function(e) {
-        if (e.get('name') == 'Contest') e.setVisible(false);
-      });
-
-      map.getLayers().getArray().forEach(function(e) {
-        if (!e.get('base_layer') && !(e instanceof ol.layer.Vector))
-          e.setVisible(false);
-      });
-
-      baro.set('timeInterval', null);
-      baro.draw();
-    });
-
-    cesium_switcher.on('cesium_disable', function() {
-      // Update the baro scale when the map has been zoomed/moved.
-      map.on('moveend', update_baro_scale_on_moveend);
-
-      if (!window.fixCalcService.get('isRunning')) {
-        // enable mouse hovering
-        map_hover_handler.set('hover_enabled', true);
-      }
-
-      map.getLayers().getArray().forEach(function(e) {
-        if (e.get('name') == 'Contest') e.setVisible(true);
-      });
     });
   }
 

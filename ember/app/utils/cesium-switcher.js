@@ -4,7 +4,7 @@ import Ember from 'ember';
 import ol from 'openlayers';
 import olcs from 'ol3-cesium';
 
-const CesiumSwitcher = Ember.Object.extend(Ember.Evented, {
+const CesiumSwitcher = Ember.Object.extend({
   enabled: false,
   ol3d: null,
 
@@ -37,7 +37,6 @@ const CesiumSwitcher = Ember.Object.extend(Ember.Evented, {
 
     if (mode) {
       element.innerHTML = '<img src="../../images/2d.png"/>';
-      this.trigger('cesium_enable');
 
       window.cesiumLoader.load()
         .then(() => this.enableCesium());
@@ -47,7 +46,6 @@ const CesiumSwitcher = Ember.Object.extend(Ember.Evented, {
 
       let ol3d = this.get('ol3d');
       if (ol3d) {
-        this.trigger('cesium_disable');
         ol3d.setEnabled(false);
         this.getMap().getView().setRotation(0);
       }
