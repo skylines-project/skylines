@@ -17,7 +17,7 @@ slFlightDisplay = function(map, fix_table, baro) {
    * Flight collection
    * @type {slFlightCollection}
    */
-  var flights = slFlightCollection();
+  var flights = slFlightCollection.create();
   var rawFlights = flights.getArray();
 
   /**

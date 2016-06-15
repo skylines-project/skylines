@@ -4,30 +4,31 @@
  * An ordered collection of flight objects.
  * @constructor
  */
-export default function slFlightCollection() {
-  var collection = {};
+export default Ember.Object.extend({
 
-  var data = [];
+  init() {
+    this._super(...arguments);
+    this.set('content', []);
+    this.set('source', new ol.source.Vector());
 
-  // Public attributes and methods
-
-  var source = new ol.source.Vector();
+    this.setupEvents();
+  },
 
   /**
    * Calculates the bounds of all flights in the collection.
    * @return {ol.extent}
    */
-  collection.getBounds = function() {
-    return source.getExtent();
-  };
+  getBounds() {
+    return this.get('source').getExtent();
+  },
 
   /**
    * Returns the vector layer source of this collection.
    * @return {ol.source.Vector}
    */
-  collection.getSource = function() {
-    return source;
-  };
+  getSource() {
+    return this.get('source');
+  },
 
   /**
    * Returns the minimum and maximum fix time within the extent.
@@ -35,13 +36,13 @@ export default function slFlightCollection() {
    * @param {ol.extent} extent
    * @return {Object}
    */
-  collection.getMinMaxTimeInExtent = function(extent) {
+  getMinMaxTimeInExtent(extent) {
     var min = Infinity,
       total_min = Infinity;
     var max = -Infinity,
       total_max = -Infinity;
 
-    source.forEachFeatureInExtent(extent, function(f) {
+    this.get('source').forEachFeatureInExtent(extent, function(f) {
       var coordinates = f.getGeometry().getCoordinates();
 
       var lastCoord = coordinates[0];
@@ -87,17 +88,19 @@ export default function slFlightCollection() {
     if (max == -Infinity) max = total_max;
 
     return { min: min, max: max };
-  };
+  },
 
-  collection.getArray = function() {
-    return data;
-  };
+  getArray() {
+    return this.get('content');
+  },
 
   /**
    * Setup the event handlers for the 'preremove' and 'add' events.
    */
-  function setupEvents() {
-    data.addArrayObserver({
+  setupEvents() {
+    let source = this.get('source');
+
+    this.get('content').addArrayObserver({
       arrayWillChange: function(flights, offset, removeCount) {
         flights.slice(offset, offset + removeCount).forEach(function(flight) {
           source.removeFeature(source.getFeatures().filter(function(it) {
@@ -118,8 +121,5 @@ export default function slFlightCollection() {
         });
       }
     });
-  }
-
-  setupEvents();
-  return collection;
-}
+  },
+});
