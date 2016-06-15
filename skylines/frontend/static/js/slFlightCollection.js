@@ -3,7 +3,9 @@
  * @constructor
  */
 slFlightCollection = function() {
-  var collection = slCollection();
+  var collection = {};
+
+  var data = [];
 
   // Public attributes and methods
 
@@ -85,11 +87,15 @@ slFlightCollection = function() {
     return { min: min, max: max };
   };
 
+  collection.getArray = function() {
+    return data;
+  };
+
   /**
    * Setup the event handlers for the 'preremove' and 'add' events.
    */
   function setupEvents() {
-    collection.getArray().addArrayObserver({
+    data.addArrayObserver({
       arrayWillChange: function(flights, offset, removeCount) {
         flights.slice(offset, offset + removeCount).forEach(function(flight) {
           source.removeFeature(source.getFeatures().filter(function(it) {
