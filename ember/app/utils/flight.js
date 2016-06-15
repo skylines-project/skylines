@@ -1,3 +1,7 @@
+/* globals ol, slUnits */
+
+import Ember from 'ember';
+
 /**
  * A SkyLines flight.
  * @constructor
@@ -14,7 +18,7 @@
  * @param {Object=} opt_additional May contain additional information about
  *   the flight, e.g. registration number, callsign, ...
  */
-slFlight = Ember.Object.extend({
+var slFlight = Ember.Object.extend({
   fixes: [],
   elevations: [],
 
@@ -99,3 +103,5 @@ slFlight.fromData = function(data) {
     registration: additional.registration
   });
 };
+
+export default slFlight;

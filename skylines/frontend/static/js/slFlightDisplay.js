@@ -10,6 +10,8 @@
 slFlightDisplay = function(map, fix_table, baro) {
   var flight_display = {};
 
+  var slFlight = require('skylines/utils/flight').default;
+
   /**
    * Flight collection
    * @type {slFlightCollection}
