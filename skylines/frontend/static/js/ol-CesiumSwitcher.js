@@ -104,18 +104,17 @@ CesiumSwitcher.prototype.getMode = function() {
  * @param {Array} fix_data
  */
 CesiumSwitcher.prototype.showPlane = function(flight, fix_data) {
-  var lonlat = ol.proj.transform([fix_data['lon'], fix_data['lat']],
-                                 'EPSG:3857', 'EPSG:4326');
+  var lonlat = ol.proj.transform(fix_data.get('coordinate'), 'EPSG:3857', 'EPSG:4326');
 
   var position = Cesium.Cartesian3.fromDegrees(lonlat[0], lonlat[1],
-      fix_data['alt-msl'] + flight.get('geoid'));
+      fix_data.get('alt-msl') + flight.get('geoid'));
   var modelMatrix = Cesium.Transforms.headingPitchRollToFixedFrame(position,
-      fix_data['heading'] - Math.PI / 2, 0, 0);
+      fix_data.get('heading') - Math.PI / 2, 0, 0);
 
-  var plane = flight.get('plane');
-  if (!plane.entity) {
+  var entity = flight.get('entity');
+  if (!entity) {
     var scene = this.ol3d.getCesiumScene();
-    var entity = Cesium.Model.fromGltf({
+    entity = Cesium.Model.fromGltf({
       modelMatrix: modelMatrix,
       url: '../../images/Cesium_Air.gltf',
       scale: 1,
@@ -123,10 +122,10 @@ CesiumSwitcher.prototype.showPlane = function(flight, fix_data) {
       allowPicking: false
     });
     scene.primitives.add(entity);
-    plane.entity = entity;
+    flight.set('entity', entity);
   } else {
-    plane.entity.modelMatrix = modelMatrix;
-    plane.entity.show = true;
+    entity.modelMatrix = modelMatrix;
+    entity.show = true;
   }
 };
 
@@ -135,8 +134,8 @@ CesiumSwitcher.prototype.showPlane = function(flight, fix_data) {
  * @param {slFlight} flight
  */
 CesiumSwitcher.prototype.hidePlane = function(flight) {
-  var plane = flight.get('plane');
-  if (plane.entity) {
-    plane.entity.show = false;
+  var entity = flight.get('entity');
+  if (entity) {
+    entity.show = false;
   }
 };
