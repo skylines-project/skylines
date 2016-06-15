@@ -34,7 +34,10 @@ slFlightDisplay = function(map, fix_table, baro) {
    * Handler for map hover events
    * @type {slMapHoverHandler}
    */
-  var map_hover_handler = slMapHoverHandler(map, flights);
+  var map_hover_handler = slMapHoverHandler.create({
+    map: map,
+    flights: flights
+  });
 
   var cesium_switcher;
 
@@ -134,7 +137,7 @@ slFlightDisplay = function(map, fix_table, baro) {
     map.on('moveend', update_baro_scale_on_moveend);
 
     // Set the time when the mouse hoves the map
-    $(map_hover_handler).on('set_time', function(e, time) {
+    map_hover_handler.on('set_time', function(time) {
       if (time) flight_display.setTime(time);
       else flight_display.setTime(default_time);
     });

@@ -1,32 +1,32 @@
-/* globals $ */
+import Ember from 'ember';
 
-export default function slMapHoverHandler(_map, _flights) {
-  var map_hover_handler = {};
+export default Ember.Object.extend(Ember.Evented, {
+  map: null,
+  flights: null,
+  hover_enabled: true,
 
-  var map = _map;
-  var flights = _flights;
-  var hover_enabled = true;
+  init() {
+    this._super(...arguments);
 
-  map_hover_handler.init = function() {
-    map.on('pointermove', function(e) {
-      if (!hover_enabled || e.dragging)
+    let map = this.get('map');
+
+    map.on('pointermove', e => {
+      if (!this.get('hover_enabled') || e.dragging)
         return;
 
       var coordinate = map.getEventCoordinate(e.originalEvent);
-      displaySnap(coordinate);
+      this.displaySnap(coordinate);
     });
-  };
+  },
 
-  map_hover_handler.setMode = function(mode) {
-    hover_enabled = mode;
-  };
+  setMode(mode) {
+    this.set('hover_enabled', mode);
+  },
 
+  displaySnap(coordinate) {
+    let flights = this.get('flights');
+    let map = this.get('map');
 
-  map_hover_handler.init();
-  return map_hover_handler;
-
-
-  function displaySnap(coordinate) {
     var flight_path_source = flights.getSource();
 
     var closest_feature = flight_path_source
@@ -43,13 +43,13 @@ export default function slMapHoverHandler(_map, _flights) {
                              Math.pow(mouse_pixel[1] - feature_pixel[1], 2);
 
       if (squared_distance > 100) {
-        $(map_hover_handler).triggerHandler('set_time', null);
+        this.trigger('set_time', null);
       } else {
         var time = closest_point[3];
-        $(map_hover_handler).triggerHandler('set_time', time);
+        this.trigger('set_time', time);
       }
     }
 
     map.render();
-  }
-}
+  },
+});
