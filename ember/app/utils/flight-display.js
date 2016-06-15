@@ -6,6 +6,19 @@ import slMapIconHandler from './map-icon-handler';
 import slMapHoverHandler from './map-hover-handler';
 
 /**
+ * List of colors for flight path display
+ * @type {Array<String>}
+ */
+const COLORS = [
+  '#004bbd',
+  '#bf0099',
+  '#cf7c00',
+  '#ff0000',
+  '#00c994',
+  '#ffff00',
+];
+
+/**
  * This module handles the flight display page
  *
  * @constructor
@@ -48,13 +61,6 @@ export default function slFlightDisplay(map, fix_table, baro) {
    * @type {!Number}
    */
   var default_time = null;
-
-  /**
-   * List of colors for flight path display
-   * @type {Array<String>}
-   */
-  var colors = ['#004bbd', '#bf0099', '#cf7c00',
-                '#ff0000', '#00c994', '#ffff00'];
 
   /**
    * Initialize the map, add flight path and contest layers.
@@ -101,7 +107,7 @@ export default function slFlightDisplay(map, fix_table, baro) {
   flight_display.addFlight = function(data) {
     let flight = slFlight.fromData(data);
 
-    flight.set('color', colors[flights.get('length') % colors.length]);
+    flight.set('color', COLORS[flights.get('length') % COLORS.length]);
 
     flights.pushObject(flight);
   };
