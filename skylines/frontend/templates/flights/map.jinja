@@ -58,8 +58,10 @@
     window.wingmanTable.on('select', function(sfid) {
       if (!flight_display) return;
 
-      if (flight_display.getFlights().has(sfid)) {
-        flight_display.getFlights().remove(sfid);
+      var flights = flight_display.getFlights().getArray();
+      var matches = flights.filterBy('id', sfid);
+      if (matches.length !== 0) {
+        flights.removeObjects(matches);
         unpinFlight(sfid);
       } else {
         flight_display.addFlightFromJSON("/flights/" + sfid + "/json");

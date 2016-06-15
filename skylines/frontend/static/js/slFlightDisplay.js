@@ -93,7 +93,7 @@ slFlightDisplay = function(map, fix_table, baro) {
 
     flight.set('color', colors[rawFlights.length % colors.length]);
 
-    flights.add(flight);
+    rawFlights.pushObject(flight);
   };
 
 
@@ -146,7 +146,8 @@ slFlightDisplay = function(map, fix_table, baro) {
     fix_table.on('remove_flight', function(sfid) {
       // never remove the first flight...
       if (Ember.get(rawFlights, 'firstObject.id') == sfid) return;
-      flights.remove(sfid);
+
+      rawFlights.removeObjects(rawFlights.filterBy('id', sfid));
     });
 
     // Hide the plane icon of a flight which is scheduled for removal.
