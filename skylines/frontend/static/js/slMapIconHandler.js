@@ -14,7 +14,7 @@ slMapIconHandler = function(_map, _flights) {
     var marker = flight.get('marker');
 
     // add plane marker if more than one flight on the map
-    if (flights.length > 1) {
+    if (flights.get('length') > 1) {
       if (!marker) {
         var badge = $('<span class="badge plane_marker" ' +
                 'style="display: inline-block; text-align: center; ' +

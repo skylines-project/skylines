@@ -76,7 +76,7 @@
     var map = window.flightMap.get('map');
 
     var flight_display = slFlightDisplay(map, window.fixTable, window.barogram);
-    var flight_tracking = slFlightTracking(flight_display, flight_display.getFlights().getArray());
+    var flight_tracking = slFlightTracking(flight_display, flight_display.getFlights());
 
     {% for pilot, trace in zip(pilots, traces) -%}
     {% if trace -%}

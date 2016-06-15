@@ -18,13 +18,12 @@ slFlightDisplay = function(map, fix_table, baro) {
    * @type {slFlightCollection}
    */
   var flights = slFlightCollection.create();
-  var rawFlights = flights.getArray();
 
   /**
    * Handler for the plane icons
    * @type {slMapIconHandler}
    */
-  var map_icon_handler = slMapIconHandler(map, rawFlights);
+  var map_icon_handler = slMapIconHandler(map, flights);
 
   /**
    * Handler for map hover events
@@ -59,13 +58,13 @@ slFlightDisplay = function(map, fix_table, baro) {
 
     setupEvents();
 
-    baro.set('flights', rawFlights);
-    window.flightMap.set('flights', rawFlights);
+    baro.set('flights', flights);
+    window.flightMap.set('flights', flights);
 
-    window.fixCalcService.set('flights', rawFlights);
+    window.fixCalcService.set('flights', flights);
 
     if (window.wingmanTable) {
-      window.wingmanTable.set('visibleFlights', rawFlights);
+      window.wingmanTable.set('visibleFlights', flights);
     }
   };
 
@@ -92,9 +91,9 @@ slFlightDisplay = function(map, fix_table, baro) {
   flight_display.addFlight = function(data) {
     flight = slFlight.fromData(data);
 
-    flight.set('color', colors[rawFlights.length % colors.length]);
+    flight.set('color', colors[flights.get('length') % colors.length]);
 
-    rawFlights.pushObject(flight);
+    flights.pushObject(flight);
   };
 
 
@@ -108,7 +107,7 @@ slFlightDisplay = function(map, fix_table, baro) {
     $.ajax(url, {
       async: (typeof opt_async === undefined) || opt_async === true,
       success: function(data) {
-        if (rawFlights.findBy('id', data.sfid))
+        if (flights.findBy('id', data.sfid))
           return;
 
         flight_display.addFlight(data);
@@ -146,13 +145,13 @@ slFlightDisplay = function(map, fix_table, baro) {
     // in the fix table.
     fix_table.on('remove_flight', function(sfid) {
       // never remove the first flight...
-      if (Ember.get(rawFlights, 'firstObject.id') == sfid) return;
+      if (Ember.get(flights, 'firstObject.id') == sfid) return;
 
-      rawFlights.removeObjects(rawFlights.filterBy('id', sfid));
+      flights.removeObjects(flights.filterBy('id', sfid));
     });
 
     // Hide the plane icon of a flight which is scheduled for removal.
-    rawFlights.addArrayObserver({
+    flights.addArrayObserver({
       arrayWillChange: function(flights, offset, removeCount) {
         flights.slice(offset, offset + removeCount).forEach(function(flight) {
           // Hide plane to remove any additional related objects from the map
@@ -166,7 +165,7 @@ slFlightDisplay = function(map, fix_table, baro) {
       arrayDidChange: Ember.K
     });
 
-    rawFlights.addObserver('[]', function() {
+    flights.addObserver('[]', function() {
       Ember.run.once(flight_display, 'update');
     });
 

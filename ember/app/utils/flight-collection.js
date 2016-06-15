@@ -1,17 +1,12 @@
 /* globals ol */
 
-/**
- * An ordered collection of flight objects.
- * @constructor
- */
-export default Ember.Object.extend({
+export default Ember.ArrayProxy.extend({
 
   init() {
-    this._super(...arguments);
     this.set('content', []);
     this.set('source', new ol.source.Vector());
 
-    this.setupEvents();
+    this._super(...arguments);
   },
 
   /**
@@ -90,36 +85,28 @@ export default Ember.Object.extend({
     return { min: min, max: max };
   },
 
-  getArray() {
-    return this.get('content');
-  },
-
-  /**
-   * Setup the event handlers for the 'preremove' and 'add' events.
-   */
-  setupEvents() {
+  contentArrayWillChange(flights, offset, removeCount) {
     let source = this.get('source');
 
-    this.get('content').addArrayObserver({
-      arrayWillChange: function(flights, offset, removeCount) {
-        flights.slice(offset, offset + removeCount).forEach(function(flight) {
-          source.removeFeature(source.getFeatures().filter(function(it) {
-            return it.get('sfid') == flight.getID();
-          })[0]);
-        });
-      },
-      arrayDidChange: function(flights, offset, removeCount, addCount) {
-        flights.slice(offset, offset + addCount).forEach(function(flight) {
-          var feature = new ol.Feature({
-            geometry: flight.get('geometry'),
-            sfid: flight.get('id'),
-            color: flight.get('color'),
-            type: 'flight'
-          });
-
-          source.addFeature(feature);
-        });
-      }
+    flights.slice(offset, offset + removeCount).forEach(function(flight) {
+      source.removeFeature(source.getFeatures().filter(function(it) {
+        return it.get('sfid') == flight.getID();
+      })[0]);
     });
   },
+
+  contentArrayDidChange(flights, offset, removeCount, addCount) {
+    let source = this.get('source');
+
+    flights.slice(offset, offset + addCount).forEach(function(flight) {
+      var feature = new ol.Feature({
+        geometry: flight.get('geometry'),
+        sfid: flight.get('id'),
+        color: flight.get('color'),
+        type: 'flight'
+      });
+
+      source.addFeature(feature);
+    });
+  }
 });

@@ -58,7 +58,7 @@
     window.wingmanTable.on('select', function(sfid) {
       if (!flight_display) return;
 
-      var flights = flight_display.getFlights().getArray();
+      var flights = flight_display.getFlights();
       var matches = flights.filterBy('id', sfid);
       if (matches.length !== 0) {
         flights.removeObjects(matches);

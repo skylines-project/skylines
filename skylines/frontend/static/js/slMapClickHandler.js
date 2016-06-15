@@ -70,7 +70,7 @@ slMapClickHandler = function(map, flight_display, settings) {
         if (squared_distance < 100) {
           var time = closest_point[3];
           var sfid = closest_feature.get('sfid');
-          var flight = flight_display.getFlights().getArray().findBy('id', sfid);
+          var flight = flight_display.getFlights().findBy('id', sfid);
 
           // flight info
           var flight_info = flightInfo(flight);
@@ -243,7 +243,7 @@ slMapClickHandler = function(map, flight_display, settings) {
         var flight = data['flights'][i];
 
         // skip retrieved flight if already on map
-        if (flight_display.getFlights().getArray().findBy('id', flight['sfid']))
+        if (flight_display.getFlights().findBy('id', flight['sfid']))
           continue;
 
         flight_display.addFlight(flight);
