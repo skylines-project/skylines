@@ -1,3 +1,10 @@
+import Ember from 'ember';
+
+import slFlight from './flight';
+import slFlightCollection from './flight-collection';
+import slMapIconHandler from './map-icon-handler';
+import slMapHoverHandler from './map-hover-handler';
+
 /**
  * This module handles the flight display page
  *
@@ -7,13 +14,8 @@
  * @param {Ember.Component} fix_table
  * @param {Ember.Component} baro
  */
-slFlightDisplay = function(map, fix_table, baro) {
+export default function slFlightDisplay(map, fix_table, baro) {
   var flight_display = {};
-
-  var slFlight = require('skylines/utils/flight').default;
-  var slFlightCollection = require('skylines/utils/flight-collection').default;
-  var slMapIconHandler = require('skylines/utils/map-icon-handler').default;
-  var slMapHoverHandler = require('skylines/utils/map-hover-handler').default;
 
   /**
    * Flight collection
@@ -97,7 +99,7 @@ slFlightDisplay = function(map, fix_table, baro) {
    * @param {Object} data The data received from the JSON request.
    */
   flight_display.addFlight = function(data) {
-    flight = slFlight.fromData(data);
+    let flight = slFlight.fromData(data);
 
     flight.set('color', colors[flights.get('length') % colors.length]);
 
@@ -297,4 +299,4 @@ slFlightDisplay = function(map, fix_table, baro) {
 
   flight_display.init();
   return flight_display;
-};
+}
