@@ -1,123 +1,136 @@
 /* globals $, Cesium */
 
+import Ember from 'ember';
 import ol from 'openlayers';
 import olcs from 'ol3-cesium';
 
-export default function CesiumSwitcher(opt_options) {
-  let options = opt_options || {};
+const CesiumSwitcher = Ember.Object.extend(Ember.Evented, {
+  enabled: false,
+  ol3d: null,
 
-  this.enabled = false;
-  this.ol3d = undefined;
+  init() {
+    this._super(...arguments);
 
-  let element = document.createElement('div');
-  element.className = 'CesiumSwitcher ol-unselectable';
+    let element = document.createElement('div');
+    element.className = 'CesiumSwitcher ol-unselectable';
 
-  ol.control.Control.call(this, {
-    element: element,
-    target: options.target,
-  });
+    ol.control.Control.call(this, {
+      element: element,
+    });
 
-  $(element).on('click touchend', evt => {
-    this.setMode(!this.enabled);
-    evt.preventDefault();
-  });
+    $(element).on('click touchend', evt => {
+      this.setMode(!this.enabled);
+      evt.preventDefault();
+    });
 
-  this.setMode(this.enabled);
-}
+    this.setMode(this.enabled);
+
+    this.set('element', element);
+  },
+
+  /**
+   * Sets the 3d mode.
+   * @param {bool} mode - Enabled or not
+   */
+  setMode(mode) {
+    let element = this.get('element');
+
+    if (mode) {
+      element.innerHTML = '<img src="../../images/2d.png"/>';
+      this.trigger('cesium_enable');
+
+      window.cesiumLoader.load()
+        .then(() => this.enableCesium());
+
+    } else {
+      element.innerHTML = '<img src="../../images/3d.png"/>';
+
+      let ol3d = this.get('ol3d');
+      if (ol3d) {
+        this.trigger('cesium_disable');
+        ol3d.setEnabled(false);
+        this.getMap().getView().setRotation(0);
+      }
+    }
+
+    this.set('enabled', mode);
+  },
+
+
+  /**
+   * Enbables ol3-cesium.
+   */
+  enableCesium() {
+    let ol3d = this.get('ol3d');
+    if (!ol3d) {
+      let map = this.getMap();
+
+      ol3d = new olcs.OLCesium({map: map});
+
+      let scene = ol3d.getCesiumScene();
+      scene.terrainProvider = new Cesium.CesiumTerrainProvider({
+        url: '//assets.agi.com/stk-terrain/world',
+      });
+      scene.globe.depthTestAgainstTerrain = true;
+
+      this.set('ol3d', ol3d);
+    }
+
+    ol3d.setEnabled(true);
+    ol3d.enableAutoRenderLoop();
+  },
+
+
+  /**
+   * Returns the mode of cesium (3d or 2d).
+   * @return {bool}
+   */
+  getMode() {
+    return this.get('enabled');
+  },
+
+  /**
+   * @param {slFlight} flight
+   * @param {Array} fix_data
+   */
+  showPlane(flight, fix_data) {
+    let lonlat = ol.proj.transform(fix_data.get('coordinate'), 'EPSG:3857', 'EPSG:4326');
+
+    let position = Cesium.Cartesian3.fromDegrees(lonlat[0], lonlat[1],
+        fix_data.get('alt-msl') + flight.get('geoid'));
+    let modelMatrix = Cesium.Transforms.headingPitchRollToFixedFrame(position,
+        fix_data.get('heading') - Math.PI / 2, 0, 0);
+
+    let entity = flight.get('entity');
+    if (!entity) {
+      let scene = this.get('ol3d').getCesiumScene();
+      entity = Cesium.Model.fromGltf({
+        modelMatrix: modelMatrix,
+        url: '../../images/Cesium_Air.gltf',
+        scale: 1,
+        minimumPixelSize: 64,
+        allowPicking: false,
+      });
+      scene.primitives.add(entity);
+      flight.set('entity', entity);
+    } else {
+      entity.modelMatrix = modelMatrix;
+      entity.show = true;
+    }
+  },
+
+
+  /**
+   * @param {slFlight} flight
+   */
+  hidePlane(flight) {
+    let entity = flight.get('entity');
+    if (entity) {
+      entity.show = false;
+    }
+  },
+});
 
 ol.inherits(CesiumSwitcher, ol.control.Control);
 
-
-/**
- * Sets the 3d mode.
- * @param {bool} mode - Enabled or not
- */
-CesiumSwitcher.prototype.setMode = function(mode) {
-  if (mode) {
-    this.element.innerHTML = '<img src="../../images/2d.png"/>';
-    $(this).triggerHandler('cesium_enable');
-
-    window.cesiumLoader.load()
-      .then(() => this.enableCesium());
-
-  } else {
-    this.element.innerHTML = '<img src="../../images/3d.png"/>';
-    if (this.ol3d) {
-      $(this).triggerHandler('cesium_disable');
-      this.ol3d.setEnabled(false);
-      this.getMap().getView().setRotation(0);
-    }
-  }
-
-  this.enabled = mode;
-};
-
-
-/**
- * Enbables ol3-cesium.
- */
-CesiumSwitcher.prototype.enableCesium = function() {
-  if (!this.ol3d) {
-    let map = this.getMap();
-
-    this.ol3d = new olcs.OLCesium({map: map});
-    let scene = this.ol3d.getCesiumScene();
-    scene.terrainProvider = new Cesium.CesiumTerrainProvider({
-      url: '//assets.agi.com/stk-terrain/world',
-    });
-    scene.globe.depthTestAgainstTerrain = true;
-  }
-
-  this.ol3d.setEnabled(true);
-  this.ol3d.enableAutoRenderLoop();
-};
-
-
-/**
- * Returns the mode of cesium (3d or 2d).
- * @return {bool}
- */
-CesiumSwitcher.prototype.getMode = function() {
-  return this.enabled;
-};
-
-/**
- * @param {slFlight} flight
- * @param {Array} fix_data
- */
-CesiumSwitcher.prototype.showPlane = function(flight, fix_data) {
-  let lonlat = ol.proj.transform(fix_data.get('coordinate'), 'EPSG:3857', 'EPSG:4326');
-
-  let position = Cesium.Cartesian3.fromDegrees(lonlat[0], lonlat[1],
-      fix_data.get('alt-msl') + flight.get('geoid'));
-  let modelMatrix = Cesium.Transforms.headingPitchRollToFixedFrame(position,
-      fix_data.get('heading') - Math.PI / 2, 0, 0);
-
-  let entity = flight.get('entity');
-  if (!entity) {
-    let scene = this.ol3d.getCesiumScene();
-    entity = Cesium.Model.fromGltf({
-      modelMatrix: modelMatrix,
-      url: '../../images/Cesium_Air.gltf',
-      scale: 1,
-      minimumPixelSize: 64,
-      allowPicking: false,
-    });
-    scene.primitives.add(entity);
-    flight.set('entity', entity);
-  } else {
-    entity.modelMatrix = modelMatrix;
-    entity.show = true;
-  }
-};
-
-
-/**
- * @param {slFlight} flight
- */
-CesiumSwitcher.prototype.hidePlane = function(flight) {
-  let entity = flight.get('entity');
-  if (entity) {
-    entity.show = false;
-  }
-};
+export default CesiumSwitcher;

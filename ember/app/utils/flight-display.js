@@ -73,7 +73,7 @@ export default function slFlightDisplay(map, fix_table, baro) {
     map_hover_handler.set('hover_enabled', true);
     baro.set('hoverMode', true);
 
-    cesium_switcher = new CesiumSwitcher();
+    cesium_switcher = CesiumSwitcher.create();
     map.addControl(cesium_switcher);
 
     setupEvents();
@@ -207,7 +207,7 @@ export default function slFlightDisplay(map, fix_table, baro) {
       flight_display.setTime(default_time);
     });
 
-    $(cesium_switcher).on('cesium_enable', function() {
+    cesium_switcher.on('cesium_enable', function() {
       map.un('moveend', update_baro_scale_on_moveend);
 
       if (!window.fixCalcService.get('isRunning')) {
@@ -230,7 +230,7 @@ export default function slFlightDisplay(map, fix_table, baro) {
       baro.draw();
     });
 
-    $(cesium_switcher).on('cesium_disable', function() {
+    cesium_switcher.on('cesium_disable', function() {
       // Update the baro scale when the map has been zoomed/moved.
       map.on('moveend', update_baro_scale_on_moveend);
 
