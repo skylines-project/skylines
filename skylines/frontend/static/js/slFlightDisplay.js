@@ -150,27 +150,22 @@ slFlightDisplay = function(map, fix_table, baro) {
     });
 
     // Hide the plane icon of a flight which is scheduled for removal.
-    $(flights).on('preremove', function(e, flight) {
-      // Hide plane to remove any additional related objects from the map
-      if (cesium_switcher.getMode()) {
-        cesium_switcher.hidePlane(flight);
-      } else {
-        map_icon_handler.hidePlane(flight);
-      }
+    rawFlights.addArrayObserver({
+      arrayWillChange: function(flights, offset, removeCount) {
+        flights.slice(offset, offset + removeCount).forEach(function(flight) {
+          // Hide plane to remove any additional related objects from the map
+          if (cesium_switcher.getMode()) {
+            cesium_switcher.hidePlane(flight);
+          } else {
+            map_icon_handler.hidePlane(flight);
+          }
+        });
+      },
+      arrayDidChange: Ember.K
     });
 
-    // After a flight has been removed, remove highlights from the
-    // wingman table, remove it from the fix table and update the barogram.
-    $(flights).on('removed', function(e, sfid) {
-      updateBaroScale();
-      baro.draw();
-    });
-
-    // Add a flight to the fix table and barogram, highlight in the
-    // wingman table.
-    $(flights).on('add', function(e, flight) {
-      updateBaroScale();
-      baro.draw();
+    rawFlights.addObserver('[]', function() {
+      Ember.run.once(flight_display, 'update');
     });
 
     window.fixCalcService.addObserver('isRunning', function() {
