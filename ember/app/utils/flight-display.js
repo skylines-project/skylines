@@ -74,8 +74,7 @@ export default function slFlightDisplay(map, fix_table, baro) {
 
     // Set the time when the mouse hoves the map
     map_hover_handler.on('set_time', function(time) {
-      if (time) flight_display.setTime(time);
-      else flight_display.setTime(default_time);
+      window.fixCalcService.set('time', time || default_time);
     });
 
     // Update the barogram when another flight has been selected
@@ -107,13 +106,13 @@ export default function slFlightDisplay(map, fix_table, baro) {
 
     // Add hover and click events to the barogram.
     baro.on('barohover', function(time) {
-      flight_display.setTime(time);
+      window.fixCalcService.set('time', time);
     });
     baro.on('baroclick', function(time) {
-      flight_display.setTime(time);
+      window.fixCalcService.set('time', time);
     });
     baro.on('mouseout', function() {
-      flight_display.setTime(default_time);
+      window.fixCalcService.set('time', default_time);
     });
 
     window.flightMap.addObserver('cesiumEnabled', function() {
@@ -153,14 +152,6 @@ export default function slFlightDisplay(map, fix_table, baro) {
     });
   }
 
-
-  /**
-   * Set the current time.
-   * @param {!Number} time Time to set
-   */
-  flight_display.setTime = function(time) {
-    window.fixCalcService.set('time', time);
-  };
 
   /**
    * Updates the barogram
