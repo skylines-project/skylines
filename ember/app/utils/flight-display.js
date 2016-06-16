@@ -62,14 +62,7 @@ export default function slFlightDisplay(map, fix_table, baro) {
 
     setupEvents();
 
-    baro.set('flights', flights);
-    window.flightMap.set('flights', flights);
-
     window.fixCalcService.set('flights', flights);
-
-    if (window.wingmanTable) {
-      window.wingmanTable.set('visibleFlights', flights);
-    }
   };
 
   /**

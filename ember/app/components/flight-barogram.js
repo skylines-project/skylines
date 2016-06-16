@@ -11,7 +11,7 @@ export default Ember.Component.extend(Ember.Evented, {
   flot: null,
   time: Ember.computed.alias('fixCalc.time'),
   selection: null,
-  flights: [],
+  flights: Ember.computed.readOnly('fixCalc.flights'),
 
   activeFlights: Ember.computed('flights.[]', 'selection', function() {
     let { flights, selection } = this.getProperties('flights', 'selection');
