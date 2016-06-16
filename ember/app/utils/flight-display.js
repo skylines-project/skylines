@@ -17,7 +17,17 @@ export default Ember.Object.extend({
   flightMap: null,
 
   map: Ember.computed.readOnly('flightMap.map'),
+
   fix_table: null,
+
+  // Update the barogram when another flight has been selected
+  // in the fix table.
+  fixTableObserver: Ember.observer('fix_table.selection', function() {
+    let baro = this.get('baro');
+    baro.set('selection', this.get('fix_table.selection'));
+    Ember.run.once(baro, 'draw');
+  }),
+
   baro: null,
 
   /**
@@ -26,11 +36,48 @@ export default Ember.Object.extend({
    */
   flights: Ember.computed.readOnly('fixCalc.flights'),
 
+  flightsObserver: Ember.observer('flights.[]', function() {
+    Ember.run.once(this, 'update');
+  }),
+
   /**
    * Handler for map hover events
    * @type {slMapHoverHandler}
    */
   map_hover_handler: null,
+
+  cesiumEnabled: Ember.computed.readOnly('flightMap.cesiumEnabled'),
+
+  cesiumObserver: Ember.observer('cesiumEnabled', function() {
+    let map = this.get('map');
+    let update_baro_scale_on_moveend = this.get('update_baro_scale_on_moveend');
+
+    if (this.get('cesiumEnabled')) {
+      map.un('moveend', update_baro_scale_on_moveend);
+
+      map.getLayers().getArray().forEach(function(e) {
+        if (e.get('name') == 'Contest') e.setVisible(false);
+      });
+
+      map.getLayers().getArray().forEach(function(e) {
+        if (!e.get('base_layer') && !(e instanceof ol.layer.Vector))
+          e.setVisible(false);
+      });
+
+      let baro = this.get('baro');
+
+      baro.set('timeInterval', null);
+      baro.draw();
+
+    } else {
+      // Update the baro scale when the map has been zoomed/moved.
+      map.on('moveend', update_baro_scale_on_moveend);
+
+      map.getLayers().getArray().forEach(function(e) {
+        if (e.get('name') == 'Contest') e.setVisible(true);
+      });
+    }
+  }),
 
   /**
    * Initialize the map, add flight path and contest layers.
@@ -52,6 +99,7 @@ export default Ember.Object.extend({
       this.updateBaroScale();
       baro.draw();
     };
+    this.set('update_baro_scale_on_moveend', update_baro_scale_on_moveend);
 
     map.on('moveend', update_baro_scale_on_moveend);
 
@@ -64,13 +112,6 @@ export default Ember.Object.extend({
       }
     });
 
-    // Update the barogram when another flight has been selected
-    // in the fix table.
-    fix_table.addObserver('selection', function() {
-      baro.set('selection', fix_table.get('selection'));
-      Ember.run.once(baro, 'draw');
-    });
-
     // Remove a flight when the removal button has been pressed
     // in the fix table.
     fix_table.on('remove_flight', function(sfid) {
@@ -78,10 +119,6 @@ export default Ember.Object.extend({
       if (Ember.get(flights, 'firstObject.id') == sfid) return;
 
       flights.removeObjects(flights.filterBy('id', sfid));
-    });
-
-    flights.addObserver('[]', () => {
-      Ember.run.once(this, 'update');
     });
 
     // Add hover and click events to the barogram.
@@ -93,32 +130,6 @@ export default Ember.Object.extend({
     });
     baro.on('mouseout', () => {
       this.get('fixCalc').resetTime();
-    });
-
-    this.get('flightMap').addObserver('cesiumEnabled', function() {
-      if (this.get('cesiumEnabled')) {
-        map.un('moveend', update_baro_scale_on_moveend);
-
-        map.getLayers().getArray().forEach(function(e) {
-          if (e.get('name') == 'Contest') e.setVisible(false);
-        });
-
-        map.getLayers().getArray().forEach(function(e) {
-          if (!e.get('base_layer') && !(e instanceof ol.layer.Vector))
-            e.setVisible(false);
-        });
-
-        baro.set('timeInterval', null);
-        baro.draw();
-
-      } else {
-        // Update the baro scale when the map has been zoomed/moved.
-        map.on('moveend', update_baro_scale_on_moveend);
-
-        map.getLayers().getArray().forEach(function(e) {
-          if (e.get('name') == 'Contest') e.setVisible(true);
-        });
-      }
     });
   },
 
