@@ -58,7 +58,7 @@
     window.wingmanTable.on('select', function(sfid) {
       if (!flight_display) return;
 
-      var flights = flight_display.getFlights();
+      var flights = window.fixCalcService.get('flights');
       var matches = flights.filterBy('id', sfid);
       if (matches.length !== 0) {
         flights.removeObjects(matches);
@@ -116,7 +116,7 @@
     var getPadding = function() { return [20, 20, $("#barogram_panel").height() + 20, sidebar.width() + 20]; };
     window.paddingFn = getPadding;
 
-    var extent = flight_display.getFlights().getBounds();
+    var extent = window.fixCalcService.get('flights').getBounds();
     map.getView().fit(extent, map.getSize(), {padding: getPadding()});
 
     var pinnedFlights = getPinnedFlights();
