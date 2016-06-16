@@ -327,6 +327,44 @@ def index():
 
         comments.append(comment)
 
+    phase_headings = {
+        "start": _('Start'),
+        "duration": _('Duration'),
+        "altDiff": '&Delta;H<br />[' + units.get_setting_name('altitude_unit', fallback=True) + ']',
+        "distance": _('Dist.') + "<br />[" + units.get_setting_name('distance_unit', fallback=True) + ']',
+        "vario": _('Avg. vario') + "<br />[" + units.get_setting_name('lift_unit', fallback=True) + ']',
+        "speed": _('Avg. speed') + "<br />[" + units.get_setting_name('speed_unit', fallback=True) + ']',
+        "glideRate": '<abbr title="' + _("}Glide Rate") + '">' + _('GR') + '</abbr>',
+    }
+
+    takeoff_midnight = g.flight.takeoff_time.replace(hour=0, minute=0, second=0, microsecond=0)
+
+    phases = []
+    for p_raw in g.flight.phases:
+        p = format_phase(p_raw)
+
+        phases.append({
+            "isCircling": p['is_circling'],
+            "circlingDirection": unicode(p['circling_direction']),
+            "isCirclingLeft": p['circling_direction_left'],
+            "isCirclingRight": p['circling_direction_right'],
+            "isPowered": p['is_powered'],
+            "type": unicode(p['type']),
+            "start": {
+                "seconds": (p_raw.start_time - takeoff_midnight).total_seconds(),
+                "text": unicode(p['start']),
+            },
+            "duration": {
+                "seconds": p_raw.duration.total_seconds(),
+                "text": unicode(p['duration']),
+            },
+            "altDiff": p['alt_diff_number'],
+            "distance": p['distance_number'],
+            "vario": p['vario_number'],
+            "speed": p['speed_number'],
+            "glideRate": p['glide_rate'],
+        })
+
     mark_flight_notifications_read(g.flight)
 
     return render_template(
@@ -335,6 +373,8 @@ def index():
         near_flights=near_flights,
         other_flights=g.other_flights,
         comments=comments,
+        phase_headings=phase_headings,
+        phases=phases,
         phase_formatter=format_phase,
         leg_formatter=format_legs)
 

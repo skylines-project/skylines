@@ -7,7 +7,7 @@
 {% from 'flights/macros.jinja' import flight_title with context %}
 {% from 'flights/details-table.jinja' import render_details_table with context %}
 {% from 'flights/phases-table.jinja' import render_circling_performance, render_cruise_performance,
-                                            render_leg_statistics, render_phases with context %}
+                                            render_leg_statistics with context %}
 
 
 {% block title -%}{{ flight_title(flight) }}{%- endblock %}
@@ -244,7 +244,10 @@
       <h3>{% trans %}Phase Statistics{% endtrans %}</h3>
       <div class="sidebar-pane-content">
         <div class="table-responsive">
-          {{ render_phases(flight) }}
+          <div data-component='flight-phase-table' data-attrs='{
+            "headings": {{ phase_headings|tojson }},
+            "phases": {{ phases|tojson }}
+          }'></div>
         </div>
       </div>
     </div>
