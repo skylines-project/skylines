@@ -8,8 +8,6 @@ export default Ember.Object.extend({
   flights: null,
 
   init() {
-    let flight_display = this.get('flight_display');
-
     window.fixCalcService.set('defaultTime', -1);
     window.fixCalcService.set('time', -1);
   },
