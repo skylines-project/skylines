@@ -64,7 +64,7 @@
         flights.removeObjects(matches);
         unpinFlight(sfid);
       } else {
-        flight_display.addFlightFromJSON("/flights/" + sfid + "/json");
+        window.fixCalcService.addFlightFromJSON("/flights/" + sfid + "/json");
         pinFlight(sfid);
       }
     });
@@ -105,11 +105,11 @@
     var slMapClickHandler = require('skylines/utils/map-click-handler').default;
 
     flight_display = slFlightDisplay(map, window.fixTable, window.barogram);
-    flight_display.addFlightFromJSON("/flights/{{ flight.id }}/json?{{ config.get('SKYLINES_CACHE_BUSTER', '') }}",false);
+    window.fixCalcService.addFlightFromJSON("/flights/{{ flight.id }}/json?{{ config.get('SKYLINES_CACHE_BUSTER', '') }}",false);
 
     {% if other_flights -%}
     {% for flight in other_flights -%}
-    flight_display.addFlightFromJSON("/flights/{{ flight.id }}/json?{{ config.get('SKYLINES_CACHE_BUSTER', '') }}");
+    window.fixCalcService.addFlightFromJSON("/flights/{{ flight.id }}/json?{{ config.get('SKYLINES_CACHE_BUSTER', '') }}");
     {%- endfor %}
     {%- endif %}
 
@@ -122,7 +122,7 @@
     var pinnedFlights = getPinnedFlights();
     for (var i = 0, len = pinnedFlights.length; i < len; i++)
       if (pinnedFlights[i] != {{ flight.id }})
-        flight_display.addFlightFromJSON("/flights/" + pinnedFlights[i] + "/json");
+        window.fixCalcService.addFlightFromJSON("/flights/" + pinnedFlights[i] + "/json");
 
     slMapClickHandler(map, flight_display, {
       flight_info: true,

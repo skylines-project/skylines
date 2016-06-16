@@ -1,5 +1,3 @@
-/* globals $ */
-
 import Ember from 'ember';
 import ol from 'openlayers';
 
@@ -61,26 +59,6 @@ export default function slFlightDisplay(map, fix_table, baro) {
       baro.set('timeInterval', [interval.min, interval.max]);
     }
   }
-
-
-  /**
-   * Perform a JSON request to get a flight.
-   *
-   * @param {String} url URL to fetch.
-   * @param {Boolean=} opt_async do asynchronous request (defaults true)
-   */
-  flight_display.addFlightFromJSON = function(url, opt_async) {
-    $.ajax(url, {
-      async: (typeof opt_async === undefined) || opt_async === true,
-      success: function(data) {
-        if (flights.findBy('id', data.sfid))
-          return;
-
-        window.fixCalcService.addFlight(data);
-        map.render();
-      },
-    });
-  };
 
   /**
    * Setup several events...
