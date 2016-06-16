@@ -56,10 +56,6 @@ export default Ember.Object.extend({
       map.un('moveend', update_baro_scale_on_moveend);
 
       map.getLayers().getArray().forEach(function(e) {
-        if (e.get('name') == 'Contest') e.setVisible(false);
-      });
-
-      map.getLayers().getArray().forEach(function(e) {
         if (!e.get('base_layer') && !(e instanceof ol.layer.Vector))
           e.setVisible(false);
       });
@@ -72,10 +68,6 @@ export default Ember.Object.extend({
     } else {
       // Update the baro scale when the map has been zoomed/moved.
       map.on('moveend', update_baro_scale_on_moveend);
-
-      map.getLayers().getArray().forEach(function(e) {
-        if (e.get('name') == 'Contest') e.setVisible(true);
-      });
     }
   }),
 

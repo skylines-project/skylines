@@ -16,7 +16,7 @@
     {{flight-path-layer map=map flights=flights}}
     {{phase-highlight-composer map=map}}
     {{plane-icons-composer map=map}}
-    {{contest-layer map=map flights=flights}}
+    {{contest-layer map=map flights=flights visible=(not cesiumEnabled)}}
 
     {{#if (and (not cesiumEnabled) (gt flights.length 1))}}
       {{plane-label-overlays map=map}}

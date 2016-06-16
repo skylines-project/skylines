@@ -26,6 +26,15 @@ export default Ember.Component.extend({
     return this.get('layer').getSource();
   }),
 
+  visible: Ember.computed({
+    get() {
+      return this.get('layer').getVisible();
+    },
+    set(key, value) {
+      this.get('layer').setVisible(value);
+    },
+  }),
+
   didInsertElement() {
     this.get('map').addLayer(this.get('layer'));
   },
