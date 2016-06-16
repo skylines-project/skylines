@@ -4,7 +4,6 @@ import Ember from 'ember';
 import ol from 'openlayers';
 
 import slFlight from './flight';
-import slFlightCollection from './flight-collection';
 import slMapHoverHandler from './map-hover-handler';
 
 /**
@@ -36,7 +35,7 @@ export default function slFlightDisplay(map, fix_table, baro) {
    * Flight collection
    * @type {slFlightCollection}
    */
-  var flights = slFlightCollection.create();
+  var flights = window.fixCalcService.get('flights');
 
   /**
    * Handler for map hover events
@@ -61,8 +60,6 @@ export default function slFlightDisplay(map, fix_table, baro) {
     baro.set('hoverMode', true);
 
     setupEvents();
-
-    window.fixCalcService.set('flights', flights);
   };
 
   /**
