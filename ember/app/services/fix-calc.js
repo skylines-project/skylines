@@ -1,7 +1,7 @@
 import Ember from 'ember';
 import ol from 'openlayers';
 
-import slFlight from '../utils/flight';
+import flightFromData from '../utils/flight-from-data';
 import slFlightCollection from '../utils/flight-collection';
 import geographicDistance from '../utils/geo-distance';
 import getNextSmallerIndex from '../utils/next-smaller-index';
@@ -100,7 +100,7 @@ export default Ember.Service.extend({
   addFlight(data) {
     let flights = this.get('flights');
 
-    let flight = slFlight.fromData(data);
+    let flight = flightFromData(data);
 
     flight.set('color', COLORS[flights.get('length') % COLORS.length]);
 
