@@ -12,52 +12,43 @@ import slMapHoverHandler from './map-hover-handler';
  * @param {Ember.Component} fix_table
  * @param {Ember.Component} baro
  */
-export default function slFlightDisplay(map, fix_table, baro) {
-  var flight_display = {};
+export default Ember.Object.extend({
+  map: null,
+  fix_table: null,
+  baro: null,
 
   /**
    * Flight collection
    * @type {slFlightCollection}
    */
-  var flights = window.fixCalcService.get('flights');
+  flights: null,
 
   /**
    * Handler for map hover events
    * @type {slMapHoverHandler}
    */
-  var map_hover_handler = slMapHoverHandler.create({
-    fixCalc: window.fixCalcService,
-    flightMap: window.flightMap,
-  });
+  map_hover_handler: null,
 
   /**
    * Initialize the map, add flight path and contest layers.
    */
-  flight_display.init = function() {
-    setupEvents();
-  };
+  init() {
+    let map = this.get('map');
+    let fix_table = this.get('fix_table');
+    let baro = this.get('baro');
 
-  /**
-   * Update the x-scale of the barogram
-   */
-  function updateBaroScale() {
-    var extent = map.getView().calculateExtent(map.getSize());
-    var interval = flights.getMinMaxTimeInExtent(extent);
+    let flights = window.fixCalcService.get('flights');
+    this.set('flights', flights);
 
-    if (interval.max == -Infinity) {
-      baro.set('timeInterval', null);
-    } else {
-      baro.set('timeInterval', [interval.min, interval.max]);
-    }
-  }
+    let map_hover_handler = slMapHoverHandler.create({
+      fixCalc: window.fixCalcService,
+      flightMap: window.flightMap,
+    });
+    this.set('map_hover_handler', map_hover_handler);
 
-  /**
-   * Setup several events...
-   */
-  function setupEvents() {
     // Update the baro scale when the map has been zoomed/moved.
-    var update_baro_scale_on_moveend = function() {
-      updateBaroScale();
+    var update_baro_scale_on_moveend = () => {
+      this.updateBaroScale();
       baro.draw();
     };
 
@@ -88,8 +79,8 @@ export default function slFlightDisplay(map, fix_table, baro) {
       flights.removeObjects(flights.filterBy('id', sfid));
     });
 
-    flights.addObserver('[]', function() {
-      Ember.run.once(flight_display, 'update');
+    flights.addObserver('[]', () => {
+      Ember.run.once(this, 'update');
     });
 
     // Add hover and click events to the barogram.
@@ -128,25 +119,39 @@ export default function slFlightDisplay(map, fix_table, baro) {
         });
       }
     });
-  }
+  },
 
+  /**
+   * Update the x-scale of the barogram
+   */
+  updateBaroScale() {
+    let map = this.get('map');
+    let baro = this.get('baro');
+    let flights = this.get('flights');
+
+    var extent = map.getView().calculateExtent(map.getSize());
+    var interval = flights.getMinMaxTimeInExtent(extent);
+
+    if (interval.max == -Infinity) {
+      baro.set('timeInterval', null);
+    } else {
+      baro.set('timeInterval', [interval.min, interval.max]);
+    }
+  },
 
   /**
    * Updates the barogram
    */
-  flight_display.update = function() {
-    updateBaroScale();
-    baro.draw();
-  };
+  update() {
+    this.updateBaroScale();
+    this.get('baro').draw();
+  },
 
   /**
    * Returns the flights collection
    * @return {slFlightCollection}
    */
-  flight_display.getFlights = function() {
-    return flights;
-  };
-
-  flight_display.init();
-  return flight_display;
-}
+  getFlights() {
+    return this.get('flights');
+  },
+});
