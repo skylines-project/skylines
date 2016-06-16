@@ -31,12 +31,6 @@ export default function slFlightDisplay(map, fix_table, baro) {
   });
 
   /**
-   * Default time - the time to set when no time is set
-   * @type {!Number}
-   */
-  var default_time = null;
-
-  /**
    * Initialize the map, add flight path and contest layers.
    */
   flight_display.init = function() {
@@ -74,7 +68,11 @@ export default function slFlightDisplay(map, fix_table, baro) {
 
     // Set the time when the mouse hoves the map
     map_hover_handler.on('set_time', function(time) {
-      window.fixCalcService.set('time', time || default_time);
+      if (time) {
+        window.fixCalcService.set('time', time);
+      } else {
+        window.fixCalcService.resetTime();
+      }
     });
 
     // Update the barogram when another flight has been selected
@@ -112,7 +110,7 @@ export default function slFlightDisplay(map, fix_table, baro) {
       window.fixCalcService.set('time', time);
     });
     baro.on('mouseout', function() {
-      window.fixCalcService.set('time', default_time);
+      window.fixCalcService.resetTime();
     });
 
     window.flightMap.addObserver('cesiumEnabled', function() {
@@ -167,14 +165,6 @@ export default function slFlightDisplay(map, fix_table, baro) {
    */
   flight_display.getFlights = function() {
     return flights;
-  };
-
-  /**
-   * Set the default time. Used at the tracking page.
-   * @param {!Number} time Default time to set
-   */
-  flight_display.setDefaultTime = function(time) {
-    default_time = time;
   };
 
   flight_display.init();

@@ -32,6 +32,12 @@ export default Ember.Service.extend({
    */
   time: null,
 
+  /**
+   * Default time - the time to set when no time is set
+   * @type {!Number}
+   */
+  defaultTime: null,
+
   timer: null,
 
   isRunning: Ember.computed.bool('timer'),
@@ -80,6 +86,10 @@ export default Ember.Service.extend({
 
     this.set('time', time);
     this.set('timer', Ember.run.later(this, 'onTick', 50));
+  },
+
+  resetTime() {
+    this.set('time', this.get('defaultTime'));
   },
 
   /**
