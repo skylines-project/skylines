@@ -1,10 +1,24 @@
 import Ember from 'ember';
 import ol from 'openlayers';
 
+import slFlight from '../utils/flight';
 import slFlightCollection from '../utils/flight-collection';
 import geographicDistance from '../utils/geo-distance';
 import getNextSmallerIndex from '../utils/next-smaller-index';
 import computedPoint from '../utils/computed-point';
+
+/**
+ * List of colors for flight path display
+ * @type {Array<String>}
+ */
+const COLORS = [
+  '#004bbd',
+  '#bf0099',
+  '#cf7c00',
+  '#ff0000',
+  '#00c994',
+  '#ffff00',
+];
 
 export default Ember.Service.extend({
   flights: [],
@@ -66,6 +80,21 @@ export default Ember.Service.extend({
 
     this.set('time', time);
     this.set('timer', Ember.run.later(this, 'onTick', 50));
+  },
+
+  /**
+   * Add a flight to the map and barogram.
+   *
+   * @param {Object} data The data received from the JSON request.
+   */
+  addFlight(data) {
+    let flights = this.get('flights');
+
+    let flight = slFlight.fromData(data);
+
+    flight.set('color', COLORS[flights.get('length') % COLORS.length]);
+
+    flights.pushObject(flight);
   },
 });
 

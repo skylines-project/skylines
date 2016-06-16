@@ -250,7 +250,7 @@ export default function slMapClickHandler(map, flight_display, settings) {
         if (flight_display.getFlights().findBy('id', flight['sfid']))
           continue;
 
-        flight_display.addFlight(flight);
+        window.fixCalcService.addFlight(flight);
       }
     });
 

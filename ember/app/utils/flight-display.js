@@ -3,21 +3,7 @@
 import Ember from 'ember';
 import ol from 'openlayers';
 
-import slFlight from './flight';
 import slMapHoverHandler from './map-hover-handler';
-
-/**
- * List of colors for flight path display
- * @type {Array<String>}
- */
-const COLORS = [
-  '#004bbd',
-  '#bf0099',
-  '#cf7c00',
-  '#ff0000',
-  '#00c994',
-  '#ffff00',
-];
 
 /**
  * This module handles the flight display page
@@ -78,20 +64,6 @@ export default function slFlightDisplay(map, fix_table, baro) {
 
 
   /**
-   * Add a flight to the map and barogram.
-   *
-   * @param {Object} data The data received from the JSON request.
-   */
-  flight_display.addFlight = function(data) {
-    let flight = slFlight.fromData(data);
-
-    flight.set('color', COLORS[flights.get('length') % COLORS.length]);
-
-    flights.pushObject(flight);
-  };
-
-
-  /**
    * Perform a JSON request to get a flight.
    *
    * @param {String} url URL to fetch.
@@ -104,7 +76,7 @@ export default function slFlightDisplay(map, fix_table, baro) {
         if (flights.findBy('id', data.sfid))
           return;
 
-        flight_display.addFlight(data);
+        window.fixCalcService.addFlight(data);
         map.render();
       },
     });

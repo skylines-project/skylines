@@ -85,7 +85,7 @@
 
     {% for pilot, trace in zip(pilots, traces) -%}
     {% if trace -%}
-    flight_display.addFlight({ sfid: {{ pilot.id }},
+      window.fixCalcService.addFlight({ sfid: {{ pilot.id }},
                 points: {{ h.json.dumps(trace.points) }},
                 barogram_t: {{ h.json.dumps(trace.barogram_t) }},
                 barogram_h: {{ h.json.dumps(trace.barogram_h) }},
