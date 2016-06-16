@@ -4,8 +4,8 @@ export default Ember.Object.extend(Ember.Evented, {
   fixCalc: null,
   flightMap: null,
 
-  map: null,
-  flights: null,
+  map: Ember.computed.readOnly('flightMap.map'),
+  flights: Ember.computed.readOnly('fixCalc.flights'),
 
   hover_disabled: Ember.computed.or('fixCalc.isRunning', 'flightMap.cesiumEnabled'),
   hover_enabled: Ember.computed.not('hover_disabled'),

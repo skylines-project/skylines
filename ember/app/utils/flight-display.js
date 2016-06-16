@@ -26,9 +26,6 @@ export default function slFlightDisplay(map, fix_table, baro) {
    * @type {slMapHoverHandler}
    */
   var map_hover_handler = slMapHoverHandler.create({
-    map: map,
-    flights: flights,
-
     fixCalc: window.fixCalcService,
     flightMap: window.flightMap,
   });
