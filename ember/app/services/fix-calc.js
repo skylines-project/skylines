@@ -187,6 +187,7 @@ let Fix = Ember.Object.extend({
   }),
 
   point: computedPoint('coordinate'),
+  pointXY: computedPoint('coordinate', 'XY'),
 
   heading: Ember.computed('_coordinate_prev', '_coordinate_next', function() {
     let prev = this.get('_coordinate_prev');

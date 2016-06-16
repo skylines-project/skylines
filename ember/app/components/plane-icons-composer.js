@@ -9,7 +9,7 @@ export default Ember.Component.extend({
   map: null,
 
   fixes: Ember.computed.readOnly('fixCalc.fixes'),
-  fixesObserver: Ember.observer('fixes.@each.point', function() {
+  fixesObserver: Ember.observer('fixes.@each.pointXY', function() {
     Ember.run.once(this.get('map'), 'render');
   }),
 
@@ -47,10 +47,11 @@ export default Ember.Component.extend({
     let style = this.get('style');
 
     this.get('fixes').forEach(fix => {
-      if (fix.get('point')) {
+      let point = fix.get('pointXY');
+      if (point) {
         style.setRotation(fix.get('heading'));
         context.setImageStyle(style);
-        context.drawPointGeometry(fix.get('point'));
+        context.drawPointGeometry(point);
       }
     });
   },
