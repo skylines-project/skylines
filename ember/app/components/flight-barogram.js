@@ -63,7 +63,7 @@ export default Ember.Component.extend(Ember.Evented, {
   }),
 
   timeHighlight: Ember.computed.readOnly('flightPhase.selection'),
-  hoverMode: false,
+  hoverMode: Ember.computed.not('fixCalc.isRunning'),
 
   flotStyle: Ember.computed('height', function() {
     return Ember.String.htmlSafe(`width: 100%; height: ${this.get('height')}px;`);
@@ -145,20 +145,7 @@ export default Ember.Component.extend(Ember.Evented, {
   },
 
   hoverModeObserver: Ember.observer('hoverMode', function() {
-    let placeholder = this.get('placeholder');
-
-    if (this.get('hoverMode')) {
-      placeholder.on('plothover', (event, pos) => {
-        this.trigger('barohover', pos.x / 1000);
-      });
-
-      placeholder.on('mouseout', () => {
-        this.trigger('mouseout');
-      });
-    } else {
-      placeholder.off('plothover');
-      placeholder.off('mouseout');
-    }
+    Ember.run.once(this, 'onHoverModeUpdate');
   }),
 
   didInsertElement() {
@@ -212,6 +199,25 @@ export default Ember.Component.extend(Ember.Evented, {
     placeholder.on('plotselecting', (event, range, marker) => {
       this.trigger('baroselecting', range, marker);
     });
+
+    this.onHoverModeUpdate();
+  },
+
+  onHoverModeUpdate() {
+    let placeholder = this.get('placeholder');
+
+    if (this.get('hoverMode')) {
+      placeholder.on('plothover', (event, pos) => {
+        this.trigger('barohover', pos.x / 1000);
+      });
+
+      placeholder.on('mouseout', () => {
+        this.trigger('mouseout');
+      });
+    } else {
+      placeholder.off('plothover');
+      placeholder.off('mouseout');
+    }
   },
 
   update() {

@@ -35,7 +35,6 @@ export default function slFlightDisplay(map, fix_table, baro) {
    */
   flight_display.init = function() {
     map_hover_handler.set('hover_enabled', true);
-    baro.set('hoverMode', true);
 
     setupEvents();
   };
@@ -99,7 +98,6 @@ export default function slFlightDisplay(map, fix_table, baro) {
       var running = this.get('isRunning');
 
       map_hover_handler.set('hover_enabled', !running && !window.flightMap.get('cesiumEnabled'));
-      baro.set('hoverMode', !running);
     });
 
     // Add hover and click events to the barogram.
