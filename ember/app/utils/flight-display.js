@@ -177,14 +177,6 @@ export default function slFlightDisplay(map, fix_table, baro) {
     default_time = time;
   };
 
-  /**
-   * Returns the barogram module
-   * @return {slBarogram}
-   */
-  flight_display.getBaro = function() {
-    return baro;
-  };
-
   flight_display.init();
   return flight_display;
 }
