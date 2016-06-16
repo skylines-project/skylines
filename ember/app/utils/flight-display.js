@@ -13,7 +13,10 @@ import slMapHoverHandler from './map-hover-handler';
  * @param {Ember.Component} baro
  */
 export default Ember.Object.extend({
-  map: null,
+  fixCalc: null,
+  flightMap: null,
+
+  map: Ember.computed.readOnly('flightMap.map'),
   fix_table: null,
   baro: null,
 
@@ -21,7 +24,7 @@ export default Ember.Object.extend({
    * Flight collection
    * @type {slFlightCollection}
    */
-  flights: null,
+  flights: Ember.computed.readOnly('fixCalc.flights'),
 
   /**
    * Handler for map hover events
@@ -36,13 +39,11 @@ export default Ember.Object.extend({
     let map = this.get('map');
     let fix_table = this.get('fix_table');
     let baro = this.get('baro');
-
-    let flights = window.fixCalcService.get('flights');
-    this.set('flights', flights);
+    let flights = this.get('flights');
 
     let map_hover_handler = slMapHoverHandler.create({
-      fixCalc: window.fixCalcService,
-      flightMap: window.flightMap,
+      fixCalc: this.get('fixCalc'),
+      flightMap: this.get('flightMap'),
     });
     this.set('map_hover_handler', map_hover_handler);
 
@@ -55,11 +56,11 @@ export default Ember.Object.extend({
     map.on('moveend', update_baro_scale_on_moveend);
 
     // Set the time when the mouse hoves the map
-    map_hover_handler.on('set_time', function(time) {
+    map_hover_handler.on('set_time', time => {
       if (time) {
-        window.fixCalcService.set('time', time);
+        this.get('fixCalc').set('time', time);
       } else {
-        window.fixCalcService.resetTime();
+        this.get('fixCalc').resetTime();
       }
     });
 
@@ -84,17 +85,17 @@ export default Ember.Object.extend({
     });
 
     // Add hover and click events to the barogram.
-    baro.on('barohover', function(time) {
-      window.fixCalcService.set('time', time);
+    baro.on('barohover', time => {
+      this.get('fixCalc').set('time', time);
     });
-    baro.on('baroclick', function(time) {
-      window.fixCalcService.set('time', time);
+    baro.on('baroclick', time => {
+      this.get('fixCalc').set('time', time);
     });
-    baro.on('mouseout', function() {
-      window.fixCalcService.resetTime();
+    baro.on('mouseout', () => {
+      this.get('fixCalc').resetTime();
     });
 
-    window.flightMap.addObserver('cesiumEnabled', function() {
+    this.get('flightMap').addObserver('cesiumEnabled', function() {
       if (this.get('cesiumEnabled')) {
         map.un('moveend', update_baro_scale_on_moveend);
 

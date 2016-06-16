@@ -105,7 +105,8 @@
     var slMapClickHandler = require('skylines/utils/map-click-handler').default;
 
     flight_display = slFlightDisplay.create({
-      map: map,
+      fixCalc: window.fixCalcService,
+      flightMap: window.flightMap,
       fix_table: window.fixTable,
       baro: window.barogram
     });

@@ -78,7 +78,8 @@
     let flights = window.fixCalcService.get('flights');
 
     flight_display = slFlightDisplay.create({
-      map: map,
+      fixCalc: window.fixCalcService,
+      flightMap: window.flightMap,
       fix_table: window.fixTable,
       baro: window.barogram
     });
