@@ -1,9 +1,14 @@
 import Ember from 'ember';
 
 export default Ember.Object.extend(Ember.Evented, {
+  fixCalc: null,
+  flightMap: null,
+
   map: null,
   flights: null,
-  hover_enabled: true,
+
+  hover_disabled: Ember.computed.or('fixCalc.isRunning', 'flightMap.cesiumEnabled'),
+  hover_enabled: Ember.computed.not('hover_disabled'),
 
   init() {
     this._super(...arguments);

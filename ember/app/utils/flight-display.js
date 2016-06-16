@@ -28,14 +28,15 @@ export default function slFlightDisplay(map, fix_table, baro) {
   var map_hover_handler = slMapHoverHandler.create({
     map: map,
     flights: flights,
+
+    fixCalc: window.fixCalcService,
+    flightMap: window.flightMap,
   });
 
   /**
    * Initialize the map, add flight path and contest layers.
    */
   flight_display.init = function() {
-    map_hover_handler.set('hover_enabled', true);
-
     setupEvents();
   };
 
@@ -94,12 +95,6 @@ export default function slFlightDisplay(map, fix_table, baro) {
       Ember.run.once(flight_display, 'update');
     });
 
-    window.fixCalcService.addObserver('isRunning', function() {
-      var running = this.get('isRunning');
-
-      map_hover_handler.set('hover_enabled', !running && !window.flightMap.get('cesiumEnabled'));
-    });
-
     // Add hover and click events to the barogram.
     baro.on('barohover', function(time) {
       window.fixCalcService.set('time', time);
@@ -114,11 +109,6 @@ export default function slFlightDisplay(map, fix_table, baro) {
     window.flightMap.addObserver('cesiumEnabled', function() {
       if (this.get('cesiumEnabled')) {
         map.un('moveend', update_baro_scale_on_moveend);
-
-        if (!window.fixCalcService.get('isRunning')) {
-          // disable mouse hovering
-          map_hover_handler.set('hover_enabled', false);
-        }
 
         map.getLayers().getArray().forEach(function(e) {
           if (e.get('name') == 'Contest') e.setVisible(false);
@@ -135,11 +125,6 @@ export default function slFlightDisplay(map, fix_table, baro) {
       } else {
         // Update the baro scale when the map has been zoomed/moved.
         map.on('moveend', update_baro_scale_on_moveend);
-
-        if (!window.fixCalcService.get('isRunning')) {
-          // enable mouse hovering
-          map_hover_handler.set('hover_enabled', true);
-        }
 
         map.getLayers().getArray().forEach(function(e) {
           if (e.get('name') == 'Contest') e.setVisible(true);
