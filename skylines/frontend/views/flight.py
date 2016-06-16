@@ -313,6 +313,20 @@ def index():
             }, near_flight['times']),
         })
 
+    comments = []
+    for c in g.flight.comments:
+        comment = {
+            'text': c.text
+        }
+
+        if c.user:
+            comment['user'] = {
+                'id': c.user_id,
+                'name': unicode(c.user),
+            }
+
+        comments.append(comment)
+
     mark_flight_notifications_read(g.flight)
 
     return render_template(
@@ -320,7 +334,7 @@ def index():
         flight=g.flight,
         near_flights=near_flights,
         other_flights=g.other_flights,
-        comments=comments_partial(),
+        comments=comments,
         phase_formatter=format_phase,
         leg_formatter=format_legs)
 
@@ -366,13 +380,6 @@ def json():
     resp.headers['Last-Modified'] = last_modified
     resp.headers['Etag'] = g.flight.igc_file.md5
     return resp
-
-
-@flight_blueprint.route('/comments.partial')
-def comments_partial():
-    return render_template(
-        'flights/comments.partial.jinja',
-        comments=g.flight.comments)
 
 
 def _get_near_flights(flight, location, time, max_distance=1000):

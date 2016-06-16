@@ -1,0 +1,32 @@
+<table class="table">
+  <tbody>
+    {{#each comments as |comment|}}
+      <tr>
+        <td>
+          {{#if comment.user}}
+            <span style="float:left">
+              <a href="/users/{{comment.user.id}}/">{{comment.user.name}}</a>:&nbsp;
+            </span>
+          {{/if}}
+
+          {{markdown comment.text}}
+        </td>
+      </tr>
+    {{else}}
+      <tr>
+        <td><em>No comments yet.</em></td>
+      </tr>
+    {{/each}}
+
+    {{#if showForm}}
+      <tr>
+        <td>
+          <form action="add_comment" method="POST">
+            <textarea name="text" class="form-control"></textarea><br/>
+            <input type="submit" value="Add comment" class="btn btn-primary"/>
+          </form>
+        </td>
+      </tr>
+    {{/if}}
+  </tbody>
+</table>

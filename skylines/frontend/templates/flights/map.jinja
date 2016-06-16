@@ -212,7 +212,10 @@
     <div class="sidebar-pane" id="tab-comments">
       <h3><i class="icon-comments-alt"></i> {% trans %}Comments{% endtrans %}</h3>
       <div class="sidebar-pane-content">
-        {{ comments|safe }}
+        <div data-component='comments-list' data-attrs='{
+          "comments":{{ comments|tojson }},
+          "showForm":{% if g.current_user %}true{% else %}false{% endif %}
+        }'></div>
       </div>
     </div>
     <div class="sidebar-pane" id="tab-stats-total">

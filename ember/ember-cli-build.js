@@ -38,5 +38,8 @@ module.exports = function(defaults) {
   app.import('vendor/shims/openlayers.js');
   app.import('vendor/shims/ol3-cesium.js');
 
+  app.import('bower_components/remarkable/dist/remarkable.js');
+  app.import('vendor/shims/remarkable.js');
+
   return app.toTree();
 };
