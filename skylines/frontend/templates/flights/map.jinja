@@ -6,8 +6,7 @@
 {% from 'flights/meta-tags.jinja' import flight_meta_tags with context %}
 {% from 'flights/macros.jinja' import flight_title with context %}
 {% from 'flights/details-table.jinja' import render_details_table with context %}
-{% from 'flights/phases-table.jinja' import render_circling_performance, render_cruise_performance,
-                                            render_leg_statistics with context %}
+{% from 'flights/phases-table.jinja' import render_circling_performance, render_cruise_performance with context %}
 
 
 {% block title -%}{{ flight_title(flight) }}{%- endblock %}
@@ -232,10 +231,16 @@
       <h3>{% trans %}Legs{% endtrans %}</h3>
       <div class="sidebar-pane-content">
         <h4>{% trans %}Distance{% endtrans %}</h4>
-        {{ render_leg_statistics(flight, 'olc_plus', 'classic') }}
+        <div data-component='flight-leg-table' data-attrs='{
+            "headings": {{ contest_leg_headings|tojson }},
+            "legs": {{ contest_legs.classic|tojson }}
+          }'></div>
 
         <h4>{% trans %}Triangle{% endtrans %}</h4>
-        {{ render_leg_statistics(flight, 'olc_plus', 'triangle') }}
+        <div data-component='flight-leg-table' data-attrs='{
+            "headings": {{ contest_leg_headings|tojson }},
+            "legs": {{ contest_legs.triangle|tojson }}
+          }'></div>
       </div>
     </div>
 

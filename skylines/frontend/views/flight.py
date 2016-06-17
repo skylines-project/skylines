@@ -334,7 +334,7 @@ def index():
         "distance": _('Dist.') + "<br />[" + units.get_setting_name('distance_unit', fallback=True) + ']',
         "vario": _('Avg. vario') + "<br />[" + units.get_setting_name('lift_unit', fallback=True) + ']',
         "speed": _('Avg. speed') + "<br />[" + units.get_setting_name('speed_unit', fallback=True) + ']',
-        "glideRate": '<abbr title="' + _("}Glide Rate") + '">' + _('GR') + '</abbr>',
+        "glideRate": '<abbr title="' + _("Glide Rate") + '">' + _('GR') + '</abbr>',
     }
 
     takeoff_midnight = g.flight.takeoff_time.replace(hour=0, minute=0, second=0, microsecond=0)
@@ -365,6 +365,36 @@ def index():
             "glideRate": p['glide_rate'],
         })
 
+    contest_leg_headings = {
+        'distance': _('Dist.'),
+        'duration': '<abbr title="' + _('Duration') + '">&Delta;t</abbr>',
+        'speed': _('Avg. speed'),
+        'climbPercentage': _('Climb %%'),
+        'vario': _('Avg. vario'),
+        'glideRate': '<abbr title="' + _('Glide Rate while cruising') + '">' + _('GR') + '</abbr>',
+        'noData': _('No data found...'),
+    }
+
+    contest_legs = {}
+    for type in ['classic', 'triangle']:
+        legs = []
+        for i, leg in enumerate(format_legs(g.flight, g.flight.get_contest_legs('olc_plus', type))):
+            legs.append({
+                "num": i + 1,
+                "distance": unicode(leg['distance']),
+                "start": leg['start_time_of_day'],
+                "duration": {
+                    "seconds": leg['duration'].total_seconds(),
+                    "text": unicode(leg['duration']),
+                },
+                "speed": unicode(leg['speed']),
+                "climbPercentage": unicode(leg['climb_percentage']),
+                "vario": unicode(leg['climbrate']),
+                "glideRate": unicode(leg['glide_rate']),
+            })
+
+        contest_legs[type] = legs
+
     mark_flight_notifications_read(g.flight)
 
     return render_template(
@@ -373,6 +403,8 @@ def index():
         near_flights=near_flights,
         other_flights=g.other_flights,
         comments=comments,
+        contest_leg_headings=contest_leg_headings,
+        contest_legs=contest_legs,
         phase_headings=phase_headings,
         phases=phases,
         phase_formatter=format_phase,

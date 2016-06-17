@@ -60,39 +60,3 @@
   </tbody>
 </table>
 {%- endmacro %}
-
-{% macro render_leg_statistics(flight, contest_type, trace_type) -%}
-{% with legs=leg_formatter(flight, flight.get_contest_legs(contest_type, trace_type)) -%}
-{% if legs -%}
-<div data-component='flight-leg-table' data-attrs='{
-  "headings": {
-    "distance": "{% trans %}Dist.{% endtrans %}",
-    "duration": "<abbr title=\"{% trans %}Duration{% endtrans %}\">{% trans %}&Delta;t{% endtrans %}",
-    "speed": "{% trans %}Avg. speed{% endtrans %}",
-    "climbPercentage": "{% trans %}Climb %{% endtrans %}",
-    "vario": "{% trans %}Avg. vario{% endtrans %}",
-    "glideRate": "<abbr title=\"{% trans %}Glide Rate while cruising{% endtrans %}\">{% trans %}GR{% endtrans %}</abbr>"
-  },
-  "legs": [
-    {% for leg in legs -%}
-    {
-      "num": {{loop.index}},
-      "distance": "{{leg.distance}}",
-      "start": {{leg.start_time_of_day}},
-      "duration": {
-        "seconds": {{leg.duration.total_seconds()}},
-        "text": "{{leg.duration}}"
-      },
-      "speed": "{{leg.speed}}",
-      "climbPercentage": "{{leg.climb_percentage}}",
-      "vario": "{{leg.climbrate}}",
-      "glideRate": "{{leg.glide_rate}}"
-    }{%if not loop.last%},{%endif%}
-    {%- endfor %}
-  ]
-}'></div>
-{%- else %}
-{% trans %}No data found...{% endtrans %}
-{%- endif %}
-{%- endwith %}
-{%- endmacro %}

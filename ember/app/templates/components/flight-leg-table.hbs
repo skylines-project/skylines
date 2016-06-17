@@ -1,5 +1,6 @@
-<table class="table table-condensed text-right">
-  <thead>
+{{#if legs}}
+  <table class="table table-condensed text-right">
+    <thead>
     <tr class="small">
       <th></th>
       <th class='numeric'>{{{headings.duration}}}</th>
@@ -9,10 +10,13 @@
       <th class='numeric'>{{{headings.vario}}}</th>
       <th class='numeric'>{{{headings.glideRate}}}</th>
     </tr>
-  </thead>
-  <tbody>
+    </thead>
+    <tbody>
     {{#each legs as |leg|}}
       {{flight-leg-row leg=leg}}
     {{/each}}
-  </tbody>
-</table>
+    </tbody>
+  </table>
+{{else}}
+  {{headings.noData}}
+{{/if}}
