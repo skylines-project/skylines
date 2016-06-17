@@ -229,19 +229,10 @@
     </div>
     <div class="sidebar-pane" id="tab-stats-legs">
       <h3>{% trans %}Legs{% endtrans %}</h3>
-      <div class="sidebar-pane-content">
-        <h4>{% trans %}Distance{% endtrans %}</h4>
-        <div data-component='flight-leg-table' data-attrs='{
-            "headings": {{ contest_leg_headings|tojson }},
-            "legs": {{ contest_legs.classic|tojson }}
-          }'></div>
-
-        <h4>{% trans %}Triangle{% endtrans %}</h4>
-        <div data-component='flight-leg-table' data-attrs='{
-            "headings": {{ contest_leg_headings|tojson }},
-            "legs": {{ contest_legs.triangle|tojson }}
-          }'></div>
-      </div>
+      <div class="sidebar-pane-content" data-component='flight-leg-panel' data-attrs='{
+        "headings": {{ contest_leg_headings|tojson }},
+        "legs": {{ contest_legs|tojson }}
+      }'></div>
     </div>
 
     {%- if flight.has_phases %}

@@ -366,6 +366,8 @@ def index():
         })
 
     contest_leg_headings = {
+        'titleDistance': _('Distance'),
+        'titleTriangle': _('Triangle'),
         'distance': _('Dist.'),
         'duration': '<abbr title="' + _('Duration') + '">&Delta;t</abbr>',
         'speed': _('Avg. speed'),
