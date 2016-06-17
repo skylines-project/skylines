@@ -1,5 +1,7 @@
 import Ember from 'ember';
 
+import safeComputed from '../utils/safe-computed';
+
 export default Ember.Component.extend({
   flightPhase: Ember.inject.service(),
 
@@ -7,12 +9,9 @@ export default Ember.Component.extend({
   classNames: ['selectable'],
   classNameBindings: ['selected'],
 
-  selected: Ember.computed('flightPhase.selection', function() {
-    let selection = this.get('flightPhase.selection');
-    if (selection) {
-      let phase = this.get('phase');
-      return selection.start === phase.start.seconds && selection.end === phase.start.seconds + phase.duration.seconds;
-    }
+  selected: safeComputed('flightPhase.selection', function(selection) {
+    let phase = this.get('phase');
+    return selection.start === phase.start.seconds && selection.end === phase.start.seconds + phase.duration.seconds;
   }),
 
   click() {

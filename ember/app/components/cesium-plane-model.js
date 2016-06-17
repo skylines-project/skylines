@@ -3,6 +3,8 @@
 import Ember from 'ember';
 import ol from 'openlayers';
 
+import safeComputed from '../utils/safe-computed';
+
 export default Ember.Component.extend({
   tagName: '',
 
@@ -11,12 +13,9 @@ export default Ember.Component.extend({
 
   entity: null,
 
-  position: Ember.computed('coordinate', function() {
-    let coordinate = this.get('coordinate');
-    if (coordinate) {
-      let lonlat = ol.proj.transform(coordinate, 'EPSG:3857', 'EPSG:4326');
-      return Cesium.Cartesian3.fromDegrees(lonlat[0], lonlat[1], lonlat[2]);
-    }
+  position: safeComputed('coordinate', coordinate => {
+    let lonlat = ol.proj.transform(coordinate, 'EPSG:3857', 'EPSG:4326');
+    return Cesium.Cartesian3.fromDegrees(lonlat[0], lonlat[1], lonlat[2]);
   }),
 
   init() {
