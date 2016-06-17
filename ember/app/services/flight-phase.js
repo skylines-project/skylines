@@ -7,7 +7,7 @@ export default Ember.Service.extend({
 
   selection: null,
 
-  flight: Ember.computed.readOnly('fixCalc.flights.0'),
+  flight: Ember.computed.readOnly('fixCalc.flights.firstObject'),
 
   coordinates: Ember.computed('flight', 'selection.{start,end}', function() {
     let selection = this.get('selection');
