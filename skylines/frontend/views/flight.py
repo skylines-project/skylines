@@ -380,9 +380,8 @@ def index():
     contest_legs = {}
     for type in ['classic', 'triangle']:
         legs = []
-        for i, leg in enumerate(format_legs(g.flight, g.flight.get_contest_legs('olc_plus', type))):
+        for leg in format_legs(g.flight, g.flight.get_contest_legs('olc_plus', type)):
             legs.append({
-                "num": i + 1,
                 "distance": unicode(leg['distance']),
                 "start": leg['start_time_of_day'],
                 "duration": {

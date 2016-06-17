@@ -12,8 +12,8 @@
     </tr>
     </thead>
     <tbody>
-    {{#each legs as |leg|}}
-      {{flight-leg-row leg=leg}}
+    {{#each legs as |leg index|}}
+      {{flight-leg-row num=(sum index 1) leg=leg}}
     {{/each}}
     </tbody>
   </table>
