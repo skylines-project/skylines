@@ -43,6 +43,11 @@
 {%- endassets %}
 
 <script type="text/javascript">
+  slUnits.init({{ h.json.dumps(h.get_setting_name('distance_unit')) }},
+      {{ h.json.dumps(h.get_setting_name('speed_unit')) }},
+      {{ h.json.dumps(h.get_setting_name('lift_unit')) }},
+      {{ h.json.dumps(h.get_setting_name('altitude_unit')) }});
+
   $(function() {
     var flight_display = null;
     var sidebar = $('#sidebar').sidebar();
@@ -92,11 +97,6 @@
       html: true,
       template: popover_template
     });
-
-    slUnits.init({{ h.json.dumps(h.get_setting_name('distance_unit')) }},
-                 {{ h.json.dumps(h.get_setting_name('speed_unit')) }},
-                 {{ h.json.dumps(h.get_setting_name('lift_unit')) }},
-                 {{ h.json.dumps(h.get_setting_name('altitude_unit')) }});
 
     var map = window.flightMap.get('map');
 
