@@ -3,12 +3,10 @@
 import Ember from 'ember';
 
 export default Ember.Service.extend({
-  pinned: Ember.computed(function() {
-    return getPinnedFlights();
-  }),
-
   init() {
     this._super(...arguments);
+    this.load();
+
     window.pinnedFlightsService = this;
   },
 
@@ -20,6 +18,17 @@ export default Ember.Service.extend({
   unpin(id) {
     this.set('pinned', this.get('pinned').without(id));
     this.save();
+  },
+
+  load() {
+    let pinned = [];
+
+    var cookie = Ember.$.cookie('SkyLines_pinnedFlights');
+    if (cookie) {
+      pinned = cookie.split(',').map(it => parseInt(it, 10));
+    }
+
+    this.set('pinned', pinned);
   },
 
   save() {
@@ -38,23 +47,3 @@ export default Ember.Service.extend({
   },
 });
 
-/**
- * Gets all pinned flights from the pinnedFlight cookie
- *
- * @return {Array<Number>} Array of SkyLines flight IDs.
- */
-function getPinnedFlights() {
-  var cookie = Ember.$.cookie('SkyLines_pinnedFlights');
-
-  if (cookie) {
-    var pinnedFlights = cookie.split(',');
-
-    for (var i = 0; i < pinnedFlights.length; i++) {
-      pinnedFlights[i] = parseInt(pinnedFlights[i]);
-    }
-
-    return pinnedFlights;
-  }
-
-  return [];
-}
