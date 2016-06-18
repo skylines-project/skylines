@@ -41,21 +41,12 @@ def index():
 
     if g.current_user:
         followers = [f.destination_id for f in Follower.query(source=g.current_user)]
-
-        def is_self_or_follower(track):
-            pilot_id = track['pilot']['id']
-            return pilot_id == g.current_user.id or pilot_id in followers
-
-        friend_tracks = [t for t in tracks if is_self_or_follower(t)]
-        other_tracks = [t for t in tracks if t not in friend_tracks]
-
     else:
-        friend_tracks = []
-        other_tracks = tracks
+        followers = []
 
     return render_template('tracking/list.jinja',
-                           friend_tracks=friend_tracks,
-                           other_tracks=other_tracks)
+                           friends=followers,
+                           tracks=tracks)
 
 
 @tracking_blueprint.route('/info')

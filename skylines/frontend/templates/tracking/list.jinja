@@ -22,19 +22,11 @@
 
 
 {% block content -%}
-{% if friend_tracks -%}
-{% if other_tracks -%}
-<h3>{{ _('Friends') }}</h3>
-{%- endif %}
-<div data-component="tracking-table" data-attrs='{"tracks": {{ friend_tracks|tojson }}}'></div>
-{%- endif %}
-
-{% if other_tracks -%}
-{% if friend_tracks -%}
-<h3>{{ _('Other pilots') }}</h3>
-{%- endif %}
-<div data-component="tracking-table" data-attrs='{"tracks": {{ other_tracks|tojson }}}'></div>
-{%- endif %}
+<div data-component="tracking-tables" data-attrs='{
+  "tracks": {{ tracks|tojson }},
+  "friends": {{ friends|tojson }},
+  "self": {{ g.current_user.id|default(None)|tojson }}
+}'></div>
 
 <a href="{{ url_for('.info') }}" class="btn btn-default"><i class="icon-question-sign"></i> {% trans %}How to use Live Tracking?{% endtrans %}</a>
 {%- endblock %}
