@@ -119,7 +119,6 @@ openlayers_js = Bundle(
 
 flight_js = Bundle(
     'js/slUnits.js',
-    'http://momentjs.com/downloads/moment.min.js',
     'http://rawgithub.com/Turbo87/sidebar-v2/v0.2.1/js/jquery-sidebar.min.js',
     filters=SimpleClosureJS,
     output='js/flight-%(version)s.js')
