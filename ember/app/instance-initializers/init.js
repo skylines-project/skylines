@@ -1,6 +1,9 @@
 export function initialize(appInstance) {
   // boot up services
   appInstance.lookup('service:pinned-flights');
+
+  appInstance.lookup('service:intl')
+    .setLocale([window.slLocale, 'en']);
 }
 
 export default {
