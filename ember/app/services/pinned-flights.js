@@ -7,14 +7,21 @@ export default Ember.Service.extend({
     return getPinnedFlights();
   }),
 
+  pin(id) {
+    pinFlight(id);
+    this.set('pinned', this.get('pinned').concat([id]));
+  },
+
+  unpin(id) {
+    unpinFlight(id);
+    this.set('pinned', this.get('pinned').without(id));
+  },
+
   toggle(id) {
-    let pinned = this.get('pinned');
-    if (pinned.contains(id)) {
-      unpinFlight(id);
-      this.set('pinned', pinned.without(id));
+    if (this.get('pinned').contains(id)) {
+      this.unpin(id);
     } else {
-      pinFlight(id);
-      this.set('pinned', pinned.concat([id]));
+      this.pin(id);
     }
   },
 });
