@@ -93,6 +93,11 @@ slUnits = (function() {
       value = slUnits.formatDecimal(value, UNITS[settings[unit_type]][1]);
       return value + ' ' + settings[unit_type];
     };
+
+    // Generate e.g. getDistanceUnit() functions
+    slUnits['get' + unit_type + 'Unit'] = function() {
+      return settings[unit_type];
+    };
   }
 
   for (var i = 0; i < UNIT_TYPES_LENGTH; ++i) {
