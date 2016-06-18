@@ -355,18 +355,6 @@ def index():
             "glideRate": p['glide_rate'],
         })
 
-    contest_leg_headings = {
-        'titleDistance': _('Distance'),
-        'titleTriangle': _('Triangle'),
-        'distance': _('Dist.'),
-        'duration': '<abbr title="' + _('Duration') + '">&Delta;t</abbr>',
-        'speed': _('Avg. speed'),
-        'climbPercentage': _('Climb %%'),
-        'vario': _('Avg. vario'),
-        'glideRate': '<abbr title="' + _('Glide Rate while cruising') + '">' + _('GR') + '</abbr>',
-        'noData': _('No data found...'),
-    }
-
     contest_legs = {}
     for type in ['classic', 'triangle']:
         legs = []
@@ -394,7 +382,6 @@ def index():
         near_flights=near_flights,
         other_flights=g.other_flights,
         comments=comments,
-        contest_leg_headings=contest_leg_headings,
         contest_legs=contest_legs,
         phases=phases,
         phase_formatter=format_phase,

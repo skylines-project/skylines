@@ -3,12 +3,12 @@
     <thead>
     <tr class="small">
       <th></th>
-      <th class='numeric'>{{{headings.duration}}}</th>
-      <th class='numeric hidden-md'>{{{headings.altDiff}}}</th>
-      <th class='numeric'>{{{headings.speed}}}</th>
-      <th class='numeric'>{{{headings.climbPercentage}}}</th>
-      <th class='numeric'>{{{headings.vario}}}</th>
-      <th class='numeric'>{{{headings.glideRate}}}</th>
+      <th class='numeric'>{{t "distance-abbr"}}</th>
+      <th class='numeric hidden-md'><abbr title={{t "duration"}}>&Delta;t</abbr></th>
+      <th class='numeric'>{{t "avg-speed-abbr"}}</th>
+      <th class='numeric'>{{t "climb-percentage-abbr"}}</th>
+      <th class='numeric'>{{t "avg-vario-abbr"}}</th>
+      <th class='numeric'><abbr title={{t "glide-rate"}}>{{t "glide-rate-abbr"}}</abbr></th>
     </tr>
     </thead>
     <tbody>
@@ -18,5 +18,5 @@
     </tbody>
   </table>
 {{else}}
-  {{headings.noData}}
+  {{t "no-data"}}
 {{/if}}
