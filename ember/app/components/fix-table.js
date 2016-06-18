@@ -1,9 +1,8 @@
-/* global unpinFlight */
-
 import Ember from 'ember';
 
 export default Ember.Component.extend(Ember.Evented, {
   fixCalc: Ember.inject.service(),
+  pinnedFlights: Ember.inject.service(),
 
   selection: null,
 
@@ -34,7 +33,7 @@ export default Ember.Component.extend(Ember.Evented, {
 
     remove(id) {
       this.trigger('remove_flight', id);
-      unpinFlight(id);
+      this.get('pinnedFlights').unpin(id);
     },
   },
 });
