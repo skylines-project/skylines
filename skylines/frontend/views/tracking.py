@@ -25,13 +25,25 @@ def index():
             'distance': distance,
         }
 
-    tracks = [(track, get_nearest_airport(track)) for track in tracks]
+    def convert(track, airport):
+        return {
+            'time': track.time.isoformat(),
+            'pilot': {
+                'id': track.pilot_id,
+                'name': unicode(track.pilot),
+            },
+            'airport': airport,
+            'altitude': track.altitude,
+            'elevation': track.elevation
+        }
+
+    tracks = [convert(track, get_nearest_airport(track)) for track in tracks]
 
     if g.current_user:
         followers = [f.destination_id for f in Follower.query(source=g.current_user)]
 
         def is_self_or_follower(track):
-            pilot_id = track[0].pilot_id
+            pilot_id = track['pilot']['id']
             return pilot_id == g.current_user.id or pilot_id in followers
 
         friend_tracks = [t for t in tracks if is_self_or_follower(t)]

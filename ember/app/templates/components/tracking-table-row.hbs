@@ -1,0 +1,31 @@
+<td class="hidden-xs date">
+  <abbr title={{format-time (iso-to-date track.time) format="full"}}>
+    {{format-relative (iso-to-date track.time) interval=1000}}
+  </abbr>
+</td>
+
+<td><a href="/users/{{track.pilot.id}}/">{{track.pilot.name}}</a></td>
+
+<td>
+  {{#if track.airport}}
+    {{x-flag code=track.airport.country_code}}
+    {{track.airport.name}}
+    ({{format-distance track.airport.distance}})
+  {{/if}}
+</td>
+
+<td class="hidden-xs numeric">
+  {{#if altitudeAGL}}
+    {{format-altitude altitudeAGL}}
+    <small>AGL</small>
+  {{else if track.altitude}}
+    {{format-altitude track.altitude}}
+    <small>MSL</small>
+  {{else}}
+    <small>{{t "unknown"}}</small>
+  {{/if}}
+</td>
+
+<td nowrap="nowrap" class="column-buttons">
+  <a href="/tracking/{{track.pilot.id}}/" class="btn btn-default btn-sm">{{t "show"}}</a>
+</td>

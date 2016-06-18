@@ -12,7 +12,12 @@
 
 {% block scripts -%}
 {{ super() }}
-{{ timeago_script() }}
+  <script>
+    slUnits.init({{ h.json.dumps(h.get_setting_name('distance_unit')) }},
+        {{ h.json.dumps(h.get_setting_name('speed_unit')) }},
+        {{ h.json.dumps(h.get_setting_name('lift_unit')) }},
+        {{ h.json.dumps(h.get_setting_name('altitude_unit')) }});
+  </script>
 {%- endblock %}
 
 
@@ -21,57 +26,15 @@
 {% if other_tracks -%}
 <h3>{{ _('Friends') }}</h3>
 {%- endif %}
-{{ tracking_list(friend_tracks) }}
+<div data-component="tracking-table" data-attrs='{"tracks": {{ friend_tracks|tojson }}}'></div>
 {%- endif %}
 
 {% if other_tracks -%}
 {% if friend_tracks -%}
 <h3>{{ _('Other pilots') }}</h3>
 {%- endif %}
-{{ tracking_list(other_tracks) }}
+<div data-component="tracking-table" data-attrs='{"tracks": {{ other_tracks|tojson }}}'></div>
 {%- endif %}
 
 <a href="{{ url_for('.info') }}" class="btn btn-default"><i class="icon-question-sign"></i> {% trans %}How to use Live Tracking?{% endtrans %}</a>
 {%- endblock %}
-
-{% macro tracking_list(tracks) -%}
-<table class="table table-striped table-tracking">
-  <thead>
-    <tr>
-      <th class="hidden-xs date">{% trans %}Last fix{% endtrans %}</th>
-      <th>{% trans %}Pilot{% endtrans %}</th>
-      <th>{% trans %}Nearest Airport{% endtrans %}</th>
-      <th class="hidden-xs numeric">{% trans %}Altitude{% endtrans %}</th>
-      <th></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    {% for track, airport in tracks -%}
-    <tr>
-      <td class="hidden-xs date">{{ insert_timeago(track.time) }}</td>
-      <td>{{ user_link(track.pilot) }}</td>
-      <td>
-        {% if airport -%}
-          <span data-component="x-flag" data-attrs='{"code":"{{ airport.country_code }}"}'></span>
-          {{ airport.name|e }}
-          ({{ h.format_distance(airport.distance) }})
-        {%- endif %}
-      </td>
-      <td class="hidden-xs numeric">
-        {% if track.altitude is none -%}
-        <small>{% trans %}Unknown{% endtrans %}</small>
-        {%- elif track.elevation -%}
-        {{ h.format_altitude(track.altitude_agl) }} <small>AGL</small>
-        {%- else -%}
-        {{ h.format_altitude(track.altitude) }} <small>MSL</small>
-        {%- endif %}
-      </td>
-      <td nowrap="nowrap" class="column-buttons">
-        <a href="{{ url_for('track.index', user_id=track.pilot_id) }}" class="btn btn-default btn-sm">{{ _("Show") }}</a>
-      </td>
-    </tr>
-    {%- endfor %}
-  </tbody>
-</table>
-{%- endmacro %}

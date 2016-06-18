@@ -105,6 +105,7 @@ all_js = Bundle(
     'http://cdnjs.cloudflare.com/ajax/libs/jquery-ajaxtransport-xdomainrequest/1.0.3/jquery.xdomainrequest.min.js',
     'vendor/jquery/jquery.timeago.js',
     'vendor/bootstrap-datepicker/datepicker.js',
+    'js/slUnits.js',
     'js/general.js',
     bootstrap_js,
     filters='rjsmin',
@@ -117,7 +118,6 @@ openlayers_js = Bundle(
     output='js/ol-%(version)s.js')
 
 flight_js = Bundle(
-    'js/slUnits.js',
     'http://rawgithub.com/Turbo87/sidebar-v2/v0.2.1/js/jquery-sidebar.min.js',
     filters=SimpleClosureJS,
     output='js/flight-%(version)s.js')
