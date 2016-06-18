@@ -4,6 +4,7 @@
 
 {% extends "base-page.jinja" %}
 {% set active_page = "tracking" %}
+{% set use_ember = true %}
 
 
 {% block title %}{% trans %}Live Tracking{% endtrans %}{% endblock %}
@@ -52,7 +53,9 @@
       <td>{{ user_link(track.pilot) }}</td>
       <td>
         {% if airport -%}
-        {{ insert_flag(airport.country_code) }} {{ airport.name|e }} ({{ h.format_distance(airport.distance) }})
+          <span data-component="x-flag" data-attrs='{"code":"{{ airport.country_code }}"}'></span>
+          {{ airport.name|e }}
+          ({{ h.format_distance(airport.distance) }})
         {%- endif %}
       </td>
       <td class="hidden-xs numeric">
