@@ -15,7 +15,7 @@
 </td>
 
 <td class="hidden-xs numeric">
-  {{#if altitudeAGL}}
+  {{#if (not (is-undefined altitudeAGL))}}
     {{format-altitude altitudeAGL}}
     <small>AGL</small>
   {{else if track.altitude}}
