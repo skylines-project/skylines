@@ -327,16 +327,6 @@ def index():
 
         comments.append(comment)
 
-    phase_headings = {
-        "start": _('Start'),
-        "duration": _('Duration'),
-        "altDiff": '&Delta;H<br />[' + units.get_setting_name('altitude_unit', fallback=True) + ']',
-        "distance": _('Dist.') + "<br />[" + units.get_setting_name('distance_unit', fallback=True) + ']',
-        "vario": _('Avg. vario') + "<br />[" + units.get_setting_name('lift_unit', fallback=True) + ']',
-        "speed": _('Avg. speed') + "<br />[" + units.get_setting_name('speed_unit', fallback=True) + ']',
-        "glideRate": '<abbr title="' + _("Glide Rate") + '">' + _('GR') + '</abbr>',
-    }
-
     takeoff_midnight = g.flight.takeoff_time.replace(hour=0, minute=0, second=0, microsecond=0)
 
     phases = []
@@ -406,7 +396,6 @@ def index():
         comments=comments,
         contest_leg_headings=contest_leg_headings,
         contest_legs=contest_legs,
-        phase_headings=phase_headings,
         phases=phases,
         phase_formatter=format_phase,
         leg_formatter=format_legs)

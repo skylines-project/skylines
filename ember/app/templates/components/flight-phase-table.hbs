@@ -2,13 +2,13 @@
   <thead>
     <tr>
       <th></th>
-      <th>{{{headings.start}}}</th>
-      <th class='hidden-md'>{{{headings.duration}}}</th>
-      <th class='numeric'>{{{headings.altDiff}}}</th>
-      <th class='numeric'>{{{headings.distance}}}</th>
-      <th class='numeric'>{{{headings.vario}}}</th>
-      <th class='numeric'>{{{headings.speed}}}</th>
-      <th class='numeric'>{{{headings.glideRate}}}</th>
+      <th>{{t "start"}}</th>
+      <th class='hidden-md'>{{t "duration"}}</th>
+      <th class='numeric'>&Delta;H<br />[{{altitudeUnit}}]</th>
+      <th class='numeric'>{{t "distance-abbr"}}<br />[{{distanceUnit}}]</th>
+      <th class='numeric'>{{t "avg-vario-abbr"}}<br />[{{liftUnit}}]</th>
+      <th class='numeric'>{{t "avg-speed-abbr"}}<br />[{{speedUnit}}]</th>
+      <th class='numeric'><abbr title={{t "glide-rate"}}>{{t "glide-rate-abbr"}}</abbr></th>
     </tr>
   </thead>
   <tbody>
