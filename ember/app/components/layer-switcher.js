@@ -1,6 +1,8 @@
 import Ember from 'ember';
 
 export default Ember.Component.extend({
+  cookies: Ember.inject.service(),
+
   classNames: ['GraphicLayerSwitcher', 'ol-unselectable'],
 
   map: null,
@@ -32,16 +34,17 @@ export default Ember.Component.extend({
   },
 
   setLayerCookies() {
+    let cookies = this.get('cookies');
     let layers = this.get('map').getLayers().getArray();
 
     let baseLayer = layers.filter(it => (it.get('base_layer') && it.getVisible()))[0];
-    Ember.$.cookie('base_layer', baseLayer.get('name'), { path: '/', expires: 365 });
+    cookies.write('base_layer', baseLayer.get('name'), { path: '/' });
 
     let overlayLayers = layers.filter(it => (!it.get('base_layer') && it.getVisible()))
       .map(it => it.get('name'))
       .join(';');
 
-    Ember.$.cookie('overlay_layers', overlayLayers, { path: '/', expires: 365 });
+    cookies.write('overlay_layers', overlayLayers, { path: '/' });
   },
 
   actions: {

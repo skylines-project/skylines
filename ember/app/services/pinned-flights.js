@@ -3,6 +3,8 @@
 import Ember from 'ember';
 
 export default Ember.Service.extend({
+  cookies: Ember.inject.service(),
+
   init() {
     this._super(...arguments);
     this.load();
@@ -23,7 +25,7 @@ export default Ember.Service.extend({
   load() {
     let pinned = [];
 
-    var cookie = Ember.$.cookie('SkyLines_pinnedFlights');
+    var cookie = this.get('cookies').read('SkyLines_pinnedFlights');
     if (cookie) {
       pinned = cookie.split(',').map(it => parseInt(it, 10));
     }
@@ -32,7 +34,7 @@ export default Ember.Service.extend({
   },
 
   save() {
-    Ember.$.cookie('SkyLines_pinnedFlights', this.get('pinned').join(','), { path: '/' });
+    this.get('cookies').write('SkyLines_pinnedFlights', this.get('pinned').join(','), { path: '/' });
 
     // show pinned flights link in list view if found in DOM
     showPinnedFlightsLink();

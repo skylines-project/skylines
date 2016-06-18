@@ -6,6 +6,8 @@ import ol from 'openlayers';
 import parseQueryString from '../utils/parse-query-string';
 
 export default Ember.Component.extend(Ember.Evented, {
+  cookies: Ember.inject.service(),
+
   attributeBindings: ['style'],
 
   width: '100%',
@@ -81,8 +83,9 @@ export default Ember.Component.extend(Ember.Evented, {
     this.set('baseLayer', query.baselayer);
     this.set('overlayLayers', query.overlays);
 
-    this.setBaseLayer(this.get('baseLayer') || Ember.$.cookie('base_layer'));
-    this.setOverlayLayers(this.get('overlayLayers') || Ember.$.cookie('overlay_layers'));
+    let cookies = this.get('cookies');
+    this.setBaseLayer(this.get('baseLayer') || cookies.read('base_layer'));
+    this.setOverlayLayers(this.get('overlayLayers') || cookies.read('overlay_layers'));
   },
 
   didInsertElement() {
