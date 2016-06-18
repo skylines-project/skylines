@@ -66,10 +66,10 @@
       var matches = flights.filterBy('id', sfid);
       if (matches.length !== 0) {
         flights.removeObjects(matches);
-        unpinFlight(sfid);
+        window.pinnedFlightsService.unpin(sfid);
       } else {
         window.fixCalcService.addFlightFromJSON("/flights/" + sfid + "/json");
-        pinFlight(sfid);
+        window.pinnedFlightsService.pin(sfid);
       }
     });
 
@@ -123,10 +123,11 @@
     var extent = window.fixCalcService.get('flights').getBounds();
     map.getView().fit(extent, map.getSize(), {padding: getPadding()});
 
-    var pinnedFlights = getPinnedFlights();
-    for (var i = 0, len = pinnedFlights.length; i < len; i++)
-      if (pinnedFlights[i] != {{ flight.id }})
-        window.fixCalcService.addFlightFromJSON("/flights/" + pinnedFlights[i] + "/json");
+    window.pinnedFlightsService.get('pinned').filter(function(id) {
+      return id !== {{ flight.id }};
+    }).forEach(function(id) {
+      window.fixCalcService.addFlightFromJSON("/flights/" + id + "/json");
+    });
 
     slMapClickHandler(map, flight_display, {
       flight_info: true,
