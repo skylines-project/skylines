@@ -14,12 +14,19 @@ export default Ember.Service.extend({
 
   pin(id) {
     this.set('pinned', this.get('pinned').concat([id]));
-    pinFlight(id);
+    this.save();
   },
 
   unpin(id) {
     this.set('pinned', this.get('pinned').without(id));
-    unpinFlight(id);
+    this.save();
+  },
+
+  save() {
+    Ember.$.cookie('SkyLines_pinnedFlights', this.get('pinned').join(','), { path: '/' });
+
+    // show pinned flights link in list view if found in DOM
+    showPinnedFlightsLink();
   },
 
   toggle(id) {
@@ -30,43 +37,6 @@ export default Ember.Service.extend({
     }
   },
 });
-
-/**
- * Saves the flight id into the pinnedFlights cookie
- *
- * @param {Number} sfid SkyLines flight ID.
- */
-function pinFlight(sfid) {
-  var pinnedFlights = getPinnedFlights();
-  for (var i = 0; i < pinnedFlights.length; i++) {
-    if (pinnedFlights[i] == sfid) return;
-  }
-
-  pinnedFlights.push(sfid);
-  Ember.$.cookie('SkyLines_pinnedFlights', pinnedFlights.join(','), { path: '/' });
-
-  // show pinned flights link in list view if found in DOM
-  showPinnedFlightsLink();
-}
-
-/**
- * Removes a pinned flight from the pinnedFlights cookie
- *
- * @param {Number} sfid SkyLines flight ID.
- */
-function unpinFlight(sfid) {
-  var pinnedFlights = getPinnedFlights();
-  var temp = [];
-
-  for (var i = 0; i < pinnedFlights.length; i++) {
-    if (pinnedFlights[i] != sfid) temp.push(pinnedFlights[i]);
-  }
-
-  Ember.$.cookie('SkyLines_pinnedFlights', temp.join(','), { path: '/' });
-
-  // toggle the pinned flights link in list view if found in DOM
-  showPinnedFlightsLink();
-}
 
 /**
  * Gets all pinned flights from the pinnedFlight cookie
