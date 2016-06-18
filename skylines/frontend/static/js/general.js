@@ -80,7 +80,7 @@ function getPinnedFlights() {
  * @return {String} URL for the current flights including pinned flights.
  */
 function getShareUrl(url) {
-  var pinnedFlights = getPinnedFlights();
+  var pinnedFlights = window.pinnedFlightsService.get('pinned');
 
   var url_re = /(.*?)\/([\d,]{1,})\/(.*)/;
   var url_split = url_re.exec(url);
@@ -102,7 +102,7 @@ function getShareUrl(url) {
  * Shows the pinned flights link at element id #pinned-flights-link
  */
 function showPinnedFlightsLink() {
-  var pinned_flights = getPinnedFlights();
+  var pinned_flights = window.pinnedFlightsService.get('pinned');
   if (pinned_flights.length > 0) {
     $('#pinned-flights-link').show();
   } else {

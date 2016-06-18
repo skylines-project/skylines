@@ -13,13 +13,13 @@ export default Ember.Service.extend({
   },
 
   pin(id) {
-    pinFlight(id);
     this.set('pinned', this.get('pinned').concat([id]));
+    pinFlight(id);
   },
 
   unpin(id) {
-    unpinFlight(id);
     this.set('pinned', this.get('pinned').without(id));
+    unpinFlight(id);
   },
 
   toggle(id) {
