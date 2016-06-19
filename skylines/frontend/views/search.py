@@ -29,6 +29,25 @@ def index():
 
     process_result_details(MODELS, results)
 
+    results_json = []
+    for r in results:
+        result = {
+            'type': r.model.lower(),
+            'id': r.id,
+            'name': r.name,
+        }
+
+        if hasattr(r, 'website') and r.website:
+            result['website'] = r.website
+
+        if hasattr(r, 'icao') and r.icao:
+            result['icao'] = r.icao
+
+        if hasattr(r, 'frequency') and r.frequency:
+            result['frequency'] = '%.3f' % (float(r.frequency))
+
+        results_json.append(result)
+
     return render_template('search/list.jinja',
                            search_text=search_text,
-                           results=results)
+                           results=results_json)

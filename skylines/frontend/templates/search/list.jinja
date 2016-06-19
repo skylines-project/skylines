@@ -3,6 +3,7 @@
 {% extends "base-page.jinja" %}
 
 {% set active_page = "search" %}
+{% set use_ember = true %}
 
 {% block title -%}
 {% if search_text -%}
@@ -29,82 +30,8 @@
   </form>
 </div>
 
-<table class="table table-striped search-results">
-  <tbody>
-    {% for result in results -%}
-    <tr>
-      <td class="column-icon">{{ result_icon(result) }}</td>
-      <td class="column-type"><small>{{ result_type(result) }}</small></td>
-      <td class="column-buttons">
-        {{ result_title(result) }}
-        <div class="pull-right">
-          {{ result_buttons(result) }}
-        </div>
-      </td>
-    </tr>
-    {%- else -%}
-    <tr>
-      <td colspan="4">
-      {% if search_text -%}
-        {{ _('There were no results for your search... Sorry!') }}
-      {%- else -%}
-        {{ _('Please enter something in the search bar above.') }}
-      {%- endif %}
-      </td>
-    </tr>
-    {%- endfor %}
-  </tbody>
-</table>
+<div data-component="search-result-table" data-attrs='{
+  "searchText": "{{ search_text }}",
+  "results": {{ results|tojson }}
+}'>Loading...</div>
 {%- endblock %}
-
-
-{% macro result_icon(result) -%}
-{% if result.model == 'User' -%}
-  <i class="icon-user" title="{{ _('Pilot') }}"></i>
-{%- elif result.model == 'Club' -%}
-  <i class="icon-group" title="{{ _('Club') }}"></i>
-{%- elif result.model == 'Airport' -%}
-  <i class="icon-map-marker" title="{{ _('Airport') }}"></i>
-{%- endif %}
-{%- endmacro %}
-
-{% macro result_type(result) -%}
-{% if result.model == 'User' -%}
-  {{ _('Pilot') }}
-{%- elif result.model == 'Club' -%}
-  {{ _('Club') }}
-{%- elif result.model == 'Airport' -%}
-  {{ _('Airport') }}
-{%- endif %}
-{%- endmacro %}
-
-{% macro result_title(result) -%}
-{% if result.model == 'User' -%}
-  <a href="{{ url_for('user.index', user_id=result.id) }}">{{ result.name|e }}</a>
-{%- elif result.model == 'Club' -%}
-  <a href="{{ url_for('club.index', club_id=result.id) }}">{{ result.name|e }}</a>
-  <small>
-  {% if result.website -%} - <a href="{{ result.website|e }}" target="_blank">{{ result.website|e }}</a>{%- endif %}
-  </small>
-{%- elif result.model == 'Airport' -%}
-  <a href="{{ url_for('flights.airport', id=result.id) }}">{{ result.name|e }}</a>
-  <small>
-  {% if result.icao -%} - {{ result.icao|e }}{%- endif %}
-  {% if result.frequency -%} - {{ '%.3f'|format(result.frequency|float) }} MHz{%- endif %}
-  </small>
-{%- endif %}
-{%- endmacro %}
-
-{% macro result_buttons(result) -%}
-{% if result.model == 'User' -%}
-  <a href="{{ url_for('flights.pilot', id=result.id) }}" class="btn btn-default btn-sm"><i class="icon-plane"></i> {{ _('Flights') }}</a>
-  <a href="{{ url_for('statistics.index', page='pilot', id=result.id) }}" class="btn btn-default btn-sm"><i class="icon-bar-chart"></i> {{ _('Statistics') }}</a>
-{%- elif result.model == 'Club' -%}
-  <a href="{{ url_for('club.pilots', club_id=result.id) }}" class="btn btn-default btn-sm"><i class="icon-group"></i> {{ _('Members') }}</a>
-  <a href="{{ url_for('flights.club', id=result.id) }}" class="btn btn-default btn-sm"><i class="icon-plane"></i> {{ _('Flights') }}</a>
-  <a href="{{ url_for('statistics.index', page='club', id=result.id) }}" class="btn btn-default btn-sm"><i class="icon-bar-chart"></i> {{ _('Statistics') }}</a>
-{%- elif result.model == 'Airport' -%}
-  <a href="{{ url_for('flights.airport', id=result.id) }}" class="btn btn-default btn-sm"><i class="icon-plane"></i> {{ _('Flights') }}</a>
-  <a href="{{ url_for('statistics.index', page='airport', id=result.id) }}" class="btn btn-default btn-sm"><i class="icon-bar-chart"></i> {{ _('Statistics') }}</a>
-{%- endif %}
-{%- endmacro %}
