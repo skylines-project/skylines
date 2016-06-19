@@ -84,8 +84,8 @@ export default Ember.Component.extend(Ember.Evented, {
     this.set('overlayLayers', query.overlays);
 
     let cookies = this.get('cookies');
-    this.setBaseLayer(this.get('baseLayer') || cookies.read('base_layer'));
-    this.setOverlayLayers(this.get('overlayLayers') || cookies.read('overlay_layers'));
+    this.setBaseLayer(this.get('baseLayer') || cookies.read('base_layer') || 'OpenStreetMap');
+    this.setOverlayLayers(this.get('overlayLayers') || cookies.read('overlay_layers') || 'Airspace');
   },
 
   didInsertElement() {
