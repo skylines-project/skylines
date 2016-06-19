@@ -17,8 +17,16 @@ def index():
     if not search_text:
         return render_template('search/list.jinja')
 
+    results = search(search_text)
+
+    return render_template('search/list.jinja',
+                           search_text=search_text,
+                           results=results)
+
+
+def search(text):
     # Split the search text into tokens and escape them properly
-    tokens = text_to_tokens(search_text)
+    tokens = text_to_tokens(text)
     tokens = escape_tokens(tokens)
 
     # Create combined search query
@@ -48,6 +56,4 @@ def index():
 
         results_json.append(result)
 
-    return render_template('search/list.jinja',
-                           search_text=search_text,
-                           results=results_json)
+    return results_json
