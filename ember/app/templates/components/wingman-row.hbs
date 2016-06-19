@@ -46,15 +46,15 @@
   {{/if}}
 </td>
 <td class="times-column">
-  {{format-time (iso-to-date times.firstObject.start) format='hhmmss'}}<br />
-  {{format-time (iso-to-date times.lastObject.end) format='hhmmss'}}
+  {{format-time times.firstObject.start format='hhmmss'}}<br />
+  {{format-time times.lastObject.end format='hhmmss'}}
   <div class="times-table" style="display: none;">
     <table>
       {{#each times as |interval|}}
         <tr>
-          <td style='text-align: right;'>{{format-time (iso-to-date interval.start) format='hhmmss'}}</td>
+          <td style='text-align: right;'>{{format-time interval.start format='hhmmss'}}</td>
           <td>-</td>
-          <td>{{format-time (iso-to-date interval.end) format='hhmmss'}}</td>
+          <td>{{format-time interval.end format='hhmmss'}}</td>
         </tr>
       {{/each}}
     </table>
