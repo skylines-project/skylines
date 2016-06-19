@@ -24,5 +24,6 @@ triangle: 'Triangle'
 unknown: 'Unknown'
 
 search:
+  search: 'Search'
   no-search-text: 'Please enter something in the search bar above.'
   no-results: 'There were no results for your search... Sorry!'

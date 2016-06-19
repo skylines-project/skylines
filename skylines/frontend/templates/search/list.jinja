@@ -15,23 +15,8 @@
 
 
 {% block content -%}
-<div class="row">
-  <form action="{{ url_for('search.index') }}" class="" role="search">
-    <div class="col-sm-9">
-      <div class="form-group">
-        <input type="text" name="text" value="{{ (search_text or '')|e }}" placeholder="{{ _('Search') }}" class="form-control">
-      </div>
-    </div>
-    <div class="col-sm-3">
-      <div class="form-group">
-        <input type="submit" value="Search" class="form-control btn btn-primary">
-      </div>
-    </div>
-  </form>
-</div>
-
-<div data-component="search-result-table" data-attrs='{
-  "searchText": "{{ search_text }}",
-  "results": {{ results|tojson }}
+<div data-component="search-page" data-attrs='{
+  "searchText": {{ search_text|default(None)|tojson }},
+  "results": {{ results|default([])|tojson }}
 }'>Loading...</div>
 {%- endblock %}
