@@ -38,13 +38,13 @@ export default Ember.Component.extend({
     let layers = this.get('map').getLayers().getArray();
 
     let baseLayer = layers.filter(it => (it.get('base_layer') && it.getVisible()))[0];
-    cookies.write('base_layer', baseLayer.get('name'), { path: '/' });
+    cookies.write('base_layer', baseLayer.get('name'), { path: '/', expires: new Date('2099-12-31') });
 
     let overlayLayers = layers.filter(it => (!it.get('base_layer') && it.getVisible()))
       .map(it => it.get('name'))
       .join(';');
 
-    cookies.write('overlay_layers', overlayLayers, { path: '/' });
+    cookies.write('overlay_layers', overlayLayers, { path: '/', expires: new Date('2099-12-31') });
   },
 
   actions: {
