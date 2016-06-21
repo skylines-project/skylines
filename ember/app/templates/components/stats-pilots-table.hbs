@@ -1,0 +1,29 @@
+<thead>
+<tr>
+  <th>{{t "year"}}</th>
+  <th colspan="2">{{t "pilots"}}</th>
+</tr>
+</thead>
+<tbody>
+{{#each years as |year|}}
+  <tr>
+    <td class="col-xs-2">{{year.year}}</td>
+    <td class="col-xs-2">{{format-number year.pilots}}</td>
+    <td class="col-xs-8">
+      <div class="progress">
+        <div class="progress-bar progress-bar-info"
+             role="progressbar"
+             aria-valuenow="{{percent year.pilots max}}"
+             aria-valuemin="0"
+             aria-valuemax="100"
+             style="width: {{percent year.pilots max}}%;"></div>
+      </div>
+    </td>
+  </tr>
+{{/each}}
+
+<tr>
+  <td><strong>{{t "total"}}</strong></td>
+  <td colspan="2"><strong>{{format-number sum}}</strong></td>
+</tr>
+</tbody>

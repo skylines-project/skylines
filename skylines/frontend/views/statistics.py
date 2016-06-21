@@ -44,15 +44,6 @@ def index(page=None, id=None):
 
     query = query.group_by(Flight.year).order_by(Flight.year.desc())
 
-    max_flights = 1
-    max_pilots = 1
-    max_distance = 1
-    max_duration = 1
-
-    sum_flights = 0
-    sum_distance = 0
-    sum_duration = 0
-
     if page == 'pilot':
         sum_pilots = 0
     else:
@@ -73,24 +64,8 @@ def index(page=None, id=None):
             'average_duration': row.duration.total_seconds() / row.flights,
         })
 
-        max_flights = max(max_flights, row.flights)
-        max_pilots = max(max_pilots, row.pilots)
-        max_distance = max(max_distance, row.distance)
-        max_duration = max(max_duration, row.duration.total_seconds())
-
-        sum_flights = sum_flights + row.flights
-        sum_distance = sum_distance + row.distance
-        sum_duration = sum_duration + row.duration.total_seconds()
-
     return render_template('statistics/years.jinja',
                            years=list,
-                           max_flights=max_flights,
-                           max_pilots=max_pilots,
-                           max_distance=max_distance,
-                           max_duration=max_duration,
-                           sum_flights=sum_flights,
-                           sum_distance=sum_distance,
-                           sum_duration=sum_duration,
                            sum_pilots=sum_pilots,
                            airport=airport,
                            pilot=pilot,
