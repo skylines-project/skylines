@@ -1,29 +1,4 @@
-{% from "macros/links.jinja" import club_link %}
-
 {% extends "base-page.jinja" %}
+{% set use_ember = true %}
 
-{% block title %}{% trans %}Clubs{% endtrans %}{% endblock %}
-
-{%- block content %}
-<table class="table table-striped">
-  <thead>
-    <tr>
-      <th>{% trans %}Name{% endtrans %}</th>
-    </tr>
-  </thead>
-  <tbody>
-    {% for club in clubs -%}
-    <tr>
-      <td class="column-buttons">
-        {{ club_link(club) }}
-        <div class="pull-right">
-          <a href="{{ url_for('flights.club', id=club.id) }}" class="btn btn-default btn-sm"><i class="icon-plane"></i> {% trans %}Flights{% endtrans %}</a>
-          <a href="{{ url_for('statistics.index', page='club', id=club.id) }}" class="btn btn-default btn-sm hidden-xs"><i class="icon-bar-chart"></i> {% trans %}Statistics{% endtrans %}</a>
-          <a href="{{ url_for('club.pilots', club_id=club.id) }}" class="btn btn-default btn-sm hidden-xs"><i class="icon-group"></i> {% trans %}Members{% endtrans %}</a>
-        </div>
-      </td>
-    </tr>
-    {%- endfor %}
-  </tbody>
-</table>
-{%- endblock %}
+{% block ember_application %}{% endblock %}
