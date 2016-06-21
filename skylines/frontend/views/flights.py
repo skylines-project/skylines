@@ -97,9 +97,75 @@ def _create_list(tab, kw, date=None, pilot=None, club=None, airport=None,
     flights = Pager.paginate(flights, 'flights',
                              items_per_page=int(current_app.config.get('SKYLINES_LISTS_DISPLAY_LENGTH', 50)))
 
+    flights_json = []
+    for f, num_comments in flights:
+        flight = {
+            'id': f.id,
+            'private': not f.is_rankable(),
+            'date': f.date_local.isoformat(),
+            'score': f.index_score,
+            'distance': f.olc_classic_distance,
+            'numComments': num_comments,
+            'igcFile': {
+                'model': f.igc_file.model,
+                'registration': f.igc_file.registration,
+                'owner': {
+                    'id': unicode(f.igc_file.owner_id),
+                    'name': unicode(f.igc_file.owner),
+                },
+            },
+        }
+
+        if f.pilot_id:
+            flight['pilot'] = {
+                'id': f.pilot_id,
+                'name': unicode(f.pilot),
+            }
+        elif f.pilot_name:
+            flight['pilot'] = {
+                'name': f.pilot_name,
+            }
+
+        if f.co_pilot_id:
+            flight['copilot'] = {
+                'id': f.co_pilot_id,
+                'name': unicode(f.co_pilot),
+            }
+        elif f.co_pilot_name:
+            flight['copilot'] = {
+                'name': f.co_pilot_name,
+            }
+
+        if f.club:
+            flight['club'] = {
+                'id': f.club_id,
+                'name': unicode(f.club),
+            }
+
+        if f.takeoff_airport:
+            flight['airport'] = {
+                'id': f.takeoff_airport.id,
+                'name': unicode(f.takeoff_airport),
+                'countryCode': f.takeoff_airport.country_code,
+            }
+
+        if f.model:
+            flight['model'] = unicode(f.model)
+
+        if f.registration:
+            flight['registration'] = f.registration
+
+        if f.takeoff_time:
+            flight['takeoffTime'] = f.takeoff_time.isoformat()
+
+        if f.landing_time:
+            flight['landingTime'] = f.landing_time.isoformat()
+
+        flights_json.append(flight)
+
     return render_template('flights/list.jinja',
                            tab=tab, date=date, pilot=pilot, club=club,
-                           airport=airport, flights=flights,
+                           airport=airport, flights=flights_json,
                            flights_count=flights_count)
 
 

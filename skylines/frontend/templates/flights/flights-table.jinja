@@ -35,109 +35,12 @@
     </tr>
   </thead>
   <tbody>
-    {% for flight, num_comments in flights -%}
-    {% if flight.is_rankable() %}
-    <tr>
-    {% else %}
-    <tr class="not_published">
-    {% endif %}
-      {% if 'date' not in omitted_columns -%}
-      <td class="date">
-        {% if flight.date_local -%}
-        <span title="{{ flight.date_local.strftime('%d.%m.%Y') }}">
-          {{ h.format_date(flight.date_local) }}
-        </span>
-        {%- endif %}
-      </td>
-      {%- endif %}
-
-      {% if 'score' not in omitted_columns -%}
-      <td class="numeric">{{ h.format_decimal(flight.index_score, format='0') }}</td>
-      {%- endif %}
-
-      {% if 'pilot' not in omitted_columns -%}
-      <td class="pilot">
-        {% if flight.pilot -%}
-        {{ user_link(flight.pilot) }}
-        {%- elif flight.pilot_name -%}
-        {{ flight.pilot_name|e }}
-        {%- endif %}
-
-        {%- if (flight.pilot or flight.pilot_name) and (flight.co_pilot or flight.co_pilot_name) %}<br/>{% endif -%}
-
-        {% if flight.co_pilot -%}
-        {{ user_link(flight.co_pilot) }}
-        {%- elif flight.co_pilot_name -%}
-        {{ flight.co_pilot_name|e }}
-        {%- endif %}
-
-        {%- if not (flight.pilot or flight.pilot_name or flight.co_pilot or flight.co_pilot_name) %}
-        [{{ flight.igc_file.owner|e }}]
-        {%- endif %}
-      </td>
-      {%- endif %}
-
-      {% if 'distance' not in omitted_columns -%}
-      <td class="numeric">
-        {% if flight.olc_classic_distance -%}
-        {{ h.format_distance(flight.olc_classic_distance) }}
-        {%- endif %}
-      </td>
-      {%- endif %}
-
-      {% if 'takeoff_airport' not in omitted_columns -%}
-      <td class="airport">
-        {% if flight.takeoff_airport -%}
-        {{ insert_flag(flight.takeoff_airport.country_code) }}
-        {{ airport_link(flight.takeoff_airport) }}
-        {%- endif %}
-      </td>
-      {%- endif %}
-
-      {% if 'club' not in omitted_columns -%}
-      <td class="club hidden-sm hidden-xs">
-        {% if flight.club -%}
-        <a href="{{ url_for('club.index', club_id=flight.club_id) }}">{{ h.truncate(flight.club.name, 25)|e }}</a>
-        {%- endif %}
-      </td>
-      {%- endif %}
-
-      {% if 'aircraft' not in omitted_columns -%}
-      <td class="aircraft hidden-xs">
-        <span rel="tooltip" title="{{ flight.registration|e or flight.igc_file.registration|e or _('Unknown') }}">
-          {% if flight.model -%}
-          {{ flight.model|e }}
-          {%- elif flight.igc_file.model %}
-          [{{ flight.igc_file.model|e }}]
-          {%- endif %}
-        </span>
-      </td>
-      {%- endif %}
-
-      {% if 'times' not in omitted_columns -%}
-      <td class="times hidden-xs">
-        {% if flight.takeoff_time and flight.landing_time -%}
-        {{ flight.takeoff_time.strftime('%H:%M') }}-{{ flight.landing_time.strftime('%H:%M') }}
-        {%- endif %}
-      </td>
-      {%- endif %}
-
-      {% if 'link' not in omitted_columns -%}
-      <td class="column-buttons">
-        <a href="{{ url_for('flight.index', flight_id=flight.id) }}" class="btn btn-default btn-sm">{% trans %}Show{% endtrans %}</a>
-        <span data-component='pin-star' data-attrs='{"flightId": {{ flight.id }}}'></span>
-      </td>
-      {%- endif %}
-
-      {% if 'num_comments' not in omitted_columns -%}
-      <td class="num_comments hidden-xs">
-        {% if num_comments > 0 -%}
-        <i class="icon-comments-alt" title="{{ ngettext('%(num)d comment', '%(num)d comments', num_comments)|format(num=num_comments) }}"></i>
-        {% endif %}
-      </td>
-      {%- endif %}
-    </tr>
-    {%- endfor %}
+    {% for flight in flights %}
+      <tr data-component="flights-table-row" data-attrs='{
+        "flight": {{ flight|tojson }},
+        "omittedColumns": {{ omitted_columns|tojson }}
+      }' {% if flight.private %}class="not_published"{% endif %}></tr>
+    {% endfor %}
   </tbody>
 </table>
 {%- endmacro %}

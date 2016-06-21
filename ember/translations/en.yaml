@@ -16,6 +16,9 @@ last-fix: 'Last Fix'
 members: 'Members'
 n-avg-distance-per-flight: 'avg. {distance} per flight'
 n-avg-hours-per-flight: 'avg. {num} hours per flight'
+n-comments: '{numComments, plural,
+  =1 {1 comment}
+  other {# comments}}'
 n-hours: '{num} Hours'
 nearest-airport: 'Nearest Airport'
 no-data: 'No data found...'

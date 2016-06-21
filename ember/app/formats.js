@@ -1,5 +1,9 @@
 export default {
   time: {
+    'hhmm': {
+      hour: 'numeric',
+      minute: 'numeric',
+    },
     'hhmmss': {
       hour: 'numeric',
       minute: 'numeric',
@@ -12,6 +16,13 @@ export default {
       hour: 'numeric',
       minute: 'numeric',
       second: 'numeric',
+    },
+  },
+  date: {
+    'ddmmyyyy': {
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit',
     },
   },
 };
