@@ -16,6 +16,8 @@ Router.map(function() {
     this.route('list', { path: '/*wildcard' });
   });
 
+  this.route('search');
+
   this.route('islands', { path: '/*wildcard' });
 });
 
