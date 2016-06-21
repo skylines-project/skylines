@@ -1,4 +1,4 @@
-from flask import Blueprint, request, render_template
+from flask import Blueprint, request, render_template, jsonify
 
 from skylines.model import User, Club, Airport
 from skylines.model.search import (
@@ -15,9 +15,15 @@ MODELS = [User, Club, Airport]
 def index():
     search_text = request.values.get('text', '').strip()
     if not search_text:
+        if 'application/json' in request.headers.get('Accept'):
+            return jsonify(results=[])
+
         return render_template('search/list.jinja')
 
     results = search(search_text)
+
+    if 'application/json' in request.headers.get('Accept'):
+        return jsonify(results=results)
 
     return render_template('search/list.jinja',
                            search_text=search_text,
