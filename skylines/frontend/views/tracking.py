@@ -1,13 +1,15 @@
-from flask import Blueprint, current_app, render_template, jsonify, g
+from flask import Blueprint, current_app, render_template, jsonify, g, request
 
 from skylines.lib.helpers import isoformat_utc
 from skylines.lib.decorators import jsonp
+from skylines.lib.vary import vary_accept
 from skylines.model import TrackingFix, Airport, Follower
 
 tracking_blueprint = Blueprint('tracking', 'skylines')
 
 
 @tracking_blueprint.route('/')
+@vary_accept
 def index():
     tracks = TrackingFix.get_latest()
 
@@ -43,6 +45,9 @@ def index():
         followers = [f.destination_id for f in Follower.query(source=g.current_user)]
     else:
         followers = []
+
+    if 'application/json' in request.headers.get('Accept'):
+        return jsonify(friends=followers, tracks=tracks)
 
     return render_template('tracking/list.jinja',
                            friends=followers,
