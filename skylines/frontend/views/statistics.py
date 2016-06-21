@@ -3,6 +3,7 @@ from sqlalchemy import func, distinct
 
 from skylines.database import db
 from skylines.lib.dbutil import get_requested_record
+from skylines.lib.vary import vary_accept
 from skylines.model import User, Club, Flight, Airport
 
 statistics_blueprint = Blueprint('statistics', 'skylines')
@@ -10,6 +11,7 @@ statistics_blueprint = Blueprint('statistics', 'skylines')
 
 @statistics_blueprint.route('/')
 @statistics_blueprint.route('/<page>/<id>')
+@vary_accept
 def index(page=None, id=None):
     club = None
     pilot = None
