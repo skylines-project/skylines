@@ -6,6 +6,10 @@ const Router = Ember.Router.extend({
 });
 
 Router.map(function() {
+  this.route('stats', { path: '/statistics' }, function() {
+    this.route('wildcard', { path: '/*wildcard' });
+  });
+
   this.route('islands', { path: '/*wildcard' });
 });
 

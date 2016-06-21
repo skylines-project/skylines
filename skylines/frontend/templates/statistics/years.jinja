@@ -29,17 +29,6 @@
 {%- endblock %}
 
 
-{%- block content %}
-<div data-component="stats-page" data-attrs='{
-  "name": {{ name|tojson }},
-  {% if pilot %}"pilot": {{ pilot.id|tojson }},{% endif %}
-  {% if club %}"club": {{ club.id|tojson }},{% endif %}
-  {% if airport %}"airport": {{ airport.id|tojson }},{% endif %}
-  "sumPilots": {{ sum_pilots|tojson }},
-  "years": {{ years|tojson }}
-}'><br>Loading...</div>
-{%- endblock %}
-
 {% block scripts -%}
 {{ super() }}
 <script>
