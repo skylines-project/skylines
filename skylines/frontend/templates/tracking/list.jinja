@@ -25,7 +25,6 @@
 <div data-component="tracking-tables" data-attrs='{
   "tracks": {{ tracks|tojson }},
   "friends": {{ friends|tojson }},
-  "self": {{ g.current_user.id|default(None)|tojson }}
 }'>Loading...<br/><br/></div>
 
 <a href="{{ url_for('.info') }}" class="btn btn-default"><i class="icon-question-sign"></i> {% trans %}How to use Live Tracking?{% endtrans %}</a>

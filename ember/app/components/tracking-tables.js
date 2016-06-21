@@ -1,14 +1,15 @@
 import Ember from 'ember';
 
 export default Ember.Component.extend({
+  account: Ember.inject.service(),
+
   tagName: '',
 
   tracks: null,
   friends: null,
-  self: null,
 
-  friendsTracks: Ember.computed('tracks.[]', 'friends.[]', 'self', function() {
-    let self = this.get('self');
+  friendsTracks: Ember.computed('tracks.[]', 'friends.[]', 'account.user.id', function() {
+    let self = this.get('account.user.id');
     if (Ember.isNone(self)) {
       return [];
     }
