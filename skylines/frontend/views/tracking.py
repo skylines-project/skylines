@@ -46,7 +46,7 @@ def index():
     else:
         followers = []
 
-    if 'application/json' in request.headers.get('Accept'):
+    if 'application/json' in request.headers.get('Accept', ''):
         return jsonify(friends=followers, tracks=tracks)
 
     return render_template('tracking/list.jinja',

@@ -17,14 +17,14 @@ MODELS = [User, Club, Airport]
 def index():
     search_text = request.values.get('text', '').strip()
     if not search_text:
-        if 'application/json' in request.headers.get('Accept'):
+        if 'application/json' in request.headers.get('Accept', ''):
             return jsonify(results=[])
 
         return render_template('search/list.jinja')
 
     results = search(search_text)
 
-    if 'application/json' in request.headers.get('Accept'):
+    if 'application/json' in request.headers.get('Accept', ''):
         return jsonify(results=results)
 
     return render_template('search/list.jinja',

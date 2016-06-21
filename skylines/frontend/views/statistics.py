@@ -70,7 +70,7 @@ def index(page=None, id=None):
             'average_duration': row.duration.total_seconds() / row.flights,
         })
 
-    if 'application/json' in request.headers.get('Accept'):
+    if 'application/json' in request.headers.get('Accept', ''):
         return jsonify(name=name, years=list, sumPilots=sum_pilots)
 
     return render_template('statistics/years.jinja',
