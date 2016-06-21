@@ -6,8 +6,8 @@
 {{ topbar(active_page) }}
 
 <div class="container">
-    <div class="content">
-
+    <div id="ember-application" class="content">
+        {% block ember_application %}
         {% if self.title() -%}
         <div class="page-header{% if header_tabs %} page-header-with-tabs{% endif %}">
             {%- if self.title_right() -%}
@@ -31,11 +31,12 @@
         {%- endif %}
 
         <div class="row">
-            <div id="ember-application" class="col-md-12">
+            <div class="col-md-12">
                 {{ insert_flash_message(False) }}
                 {%- block content %}{% endblock %}
             </div>
         </div>
+        {% endblock %}
     </div>
 
     <p class="footer">
