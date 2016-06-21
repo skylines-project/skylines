@@ -30,38 +30,11 @@
 
 
 {%- block content %}
-{% if pilot or club or airport or g.current_user -%}
-<ul class="nav nav-pills">
-  <li{% if not (pilot or club or airport) %} class="active"{% endif %}><a href="{{ url_for('.index') }}">SkyLines</a></li>
-
-  {% if airport -%}
-  <li class="active"><a href="{{ url_for('.index', page='airport', id=airport.id) }}">{{ airport|e }}</a></li>
-  {%- endif %}
-
-  {% if club -%}
-  <li class="active"><a href="{{ url_for('.index', page='club', id=club.id) }}">{{ club|e }}</a></li>
-  {%- endif %}
-
-  {% with my_club=g.current_user and g.current_user.club  -%}
-  {% if my_club and club != my_club -%}
-  <li><a href="{{ url_for('.index', page='club', id=my_club.id) }}">{{ my_club|e }}</a></li>
-  {%- endif %}
-  {%- endwith %}
-
-  {% if pilot -%}
-  <li class="active"><a href="{{ url_for('.index', page='pilot', id=pilot.id) }}">{{ pilot|e }}</a></li>
-  {%- endif %}
-
-  {% with my_pilot=g.current_user -%}
-  {% if my_pilot and pilot != my_pilot -%}
-  <li><a href="{{ url_for('.index', page='pilot', id=my_pilot.id) }}">{{ my_pilot|e }}</a></li>
-  {%- endif %}
-  {%- endwith %}
-</ul>
-{%- endif %}
-
 <div data-component="stats-page" data-attrs='{
-  "showPilots": {% if pilot %}false{% else %}true{% endif %},
+  "name": {{ name|tojson }},
+  {% if pilot %}"pilot": {{ pilot.id|tojson }},{% endif %}
+  {% if club %}"club": {{ club.id|tojson }},{% endif %}
+  {% if airport %}"airport": {{ airport.id|tojson }},{% endif %}
   "sumPilots": {{ sum_pilots|tojson }},
   "years": {{ years|tojson }}
 }'><br>Loading...</div>

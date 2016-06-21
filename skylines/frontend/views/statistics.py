@@ -14,6 +14,7 @@ def index(page=None, id=None):
     club = None
     pilot = None
     airport = None
+    name = None
 
     query = db.session.query(Flight.year.label('year'),
                              func.count('*').label('flights'),
@@ -25,15 +26,18 @@ def index(page=None, id=None):
 
     if page == 'pilot':
         pilot = get_requested_record(User, id)
+        name = unicode(pilot)
         query = query.filter(Flight.pilot_id == pilot.id)
 
     elif page == 'club':
         club = get_requested_record(Club, id)
+        name = unicode(club)
         query = query.filter(Flight.club_id == club.id)
         pilots_query = pilots_query.filter(Flight.club_id == club.id)
 
     elif page == 'airport':
         airport = get_requested_record(Airport, id)
+        name = unicode(airport)
         query = query.filter(Flight.takeoff_airport_id == airport.id)
         pilots_query = pilots_query.filter(Flight.takeoff_airport_id == airport.id)
 
@@ -65,6 +69,7 @@ def index(page=None, id=None):
         })
 
     return render_template('statistics/years.jinja',
+                           name=name,
                            years=list,
                            sum_pilots=sum_pilots,
                            airport=airport,
