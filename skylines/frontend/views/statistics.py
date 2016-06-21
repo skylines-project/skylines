@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, abort
+from flask import Blueprint, render_template, abort, request, jsonify
 from sqlalchemy import func, distinct
 
 from skylines.database import db
@@ -67,6 +67,9 @@ def index(page=None, id=None):
             'average_distance': row.distance / row.flights,
             'average_duration': row.duration.total_seconds() / row.flights,
         })
+
+    if 'application/json' in request.headers.get('Accept'):
+        return jsonify(name=name, years=list, sumPilots=sum_pilots)
 
     return render_template('statistics/years.jinja',
                            name=name,
