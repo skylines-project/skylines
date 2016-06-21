@@ -9,6 +9,8 @@ Router.map(function() {
   this.route('club', { path: '/clubs/:club_id' });
   this.route('clubs', { path: '/clubs' });
 
+  this.route('users', { path: '/users' });
+
   this.route('stats', { path: '/statistics' }, function() {
     this.route('wildcard', { path: '/*wildcard' });
   });

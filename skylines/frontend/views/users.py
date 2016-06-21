@@ -2,7 +2,7 @@ from email.mime.text import MIMEText
 from email.utils import formatdate
 import smtplib
 
-from flask import Blueprint, request, render_template, redirect, url_for, abort, current_app, flash, g
+from flask import Blueprint, request, render_template, redirect, url_for, abort, current_app, flash, g, jsonify
 from flask.ext.babel import _
 from werkzeug.exceptions import ServiceUnavailable
 
@@ -13,15 +13,35 @@ from skylines.database import db
 from skylines.model import User
 from skylines.model.event import create_new_user_event
 from skylines.frontend.forms import CreatePilotForm, RecoverStep1Form, RecoverStep2Form
+from skylines.lib.vary import vary_accept
 
 users_blueprint = Blueprint('users', 'skylines')
 
 
 @users_blueprint.route('/')
+@vary_accept
 def index():
     users = User.query() \
         .options(joinedload(User.club)) \
         .order_by(func.lower(User.name))
+
+    if 'application/json' in request.headers.get('Accept', ''):
+        json = []
+        for u in users:
+            user = {
+                'id': u.id,
+                'name': unicode(u),
+            }
+
+            if u.club:
+                user['club'] = {
+                    'id': u.club.id,
+                    'name': unicode(u.club),
+                }
+
+            json.append(user)
+
+        return jsonify(users=json)
 
     return render_template('users/list.jinja',
                            active_page='settings',
