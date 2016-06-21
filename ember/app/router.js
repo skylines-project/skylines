@@ -10,6 +10,12 @@ Router.map(function() {
     this.route('wildcard', { path: '/*wildcard' });
   });
 
+  this.route('flight', { path: '/flights/:flight_id' });
+
+  this.route('flights', { path: '/flights' }, function() {
+    this.route('list', { path: '/*wildcard' });
+  });
+
   this.route('islands', { path: '/*wildcard' });
 });
 
