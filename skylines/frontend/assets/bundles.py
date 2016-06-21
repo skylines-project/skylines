@@ -56,6 +56,15 @@ respond_js = Bundle(
     'https://cdnjs.cloudflare.com/ajax/libs/respond.js/1.3.0/respond.min.js',
     output='js/respond-%(version)s.js')
 
+# Ember.js
+
+ember_app_js = Bundle(
+    'ember/assets/skylines.js',
+    output='js/ember-app-%(version)s.js')
+
+ember_vendor_js = Bundle(
+    'ember/assets/vendor.js',
+    output='js/ember-vendor-%(version)s.js')
 
 # SkyLines
 

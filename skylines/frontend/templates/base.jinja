@@ -40,8 +40,15 @@
 
 {% if use_ember %}
 <script src="https://cdn.polyfill.io/v2/polyfill.min.js?features=Intl.~locale.en,Intl.~locale.de"></script>
-<script type="text/javascript" src="/ember/assets/vendor.js"></script>
-<script type="text/javascript" src="/ember/assets/skylines.js"></script>
+
+{%- assets 'ember_vendor_js' %}
+<script type="text/javascript" src="{{ ASSET_URL }}"></script>
+{%- endassets %}
+
+{%- assets 'ember_app_js' %}
+<script type="text/javascript" src="{{ ASSET_URL }}"></script>
+{%- endassets %}
+
 <script type="text/javascript">
 window.slLocale = '{{ g.active_locale }}';
 </script>
