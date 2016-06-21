@@ -1,7 +1,40 @@
-{{stats-page
-  pilot=pilot
-  club=club
-  airport=airport
-  years=model.years
-  sumPilots=model.sumPilots
-  name=model.name}}
+{{#if (or pilot club airport account.user)}}
+  <ul class="nav nav-pills">
+    <li class={{if (not (or pilot club airport)) "active"}}>{{#link-to "stats.index"}}SkyLines{{/link-to}}</li>
+
+    {{#if airport}}
+      <li class="active">{{#link-to "stats.wildcard" (concat "airport/" airport)}}{{name}}{{/link-to}}</li>
+    {{/if}}
+
+    {{#if club}}
+      <li class="active">{{#link-to "stats.wildcard" (concat "club/" club)}}{{name}}{{/link-to}}</li>
+    {{/if}}
+
+    {{#if (and account.club (not-eq account.club.id club))}}
+      <li>{{#link-to "stats.wildcard" (concat "club/" account.club.id)}}{{account.club.name}}{{/link-to}}</li>
+    {{/if}}
+
+    {{#if pilot}}
+      <li class="active">{{#link-to "stats.wildcard" (concat "pilot/" pilot)}}{{name}}{{/link-to}}</li>
+    {{/if}}
+
+    {{#if (and account.user (not-eq account.user.id pilot))}}
+      <li>{{#link-to "stats.wildcard" (concat "pilot/" account.user.id)}}{{account.user.name}}{{/link-to}}</li>
+    {{/if}}
+  </ul>
+{{/if}}
+
+
+<h2>{{t "flights"}}</h2>
+{{stats-flights-table years=years}}
+
+<h2>{{t "distance"}}</h2>
+{{stats-distance-table years=years}}
+
+<h2>{{t "flight-time"}}</h2>
+{{stats-duration-table years=years}}
+
+{{#if (not pilot)}}
+  <h2>{{t "pilots"}}</h2>
+  {{stats-pilots-table years=years sumPilots=sumPilots}}
+{{/if}}
