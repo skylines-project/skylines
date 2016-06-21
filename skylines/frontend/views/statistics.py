@@ -63,7 +63,15 @@ def index(page=None, id=None):
         row.average_distance = row.distance / row.flights
         row.average_duration = row.duration / row.flights
 
-        list.append(row)
+        list.append({
+            'year': row.year,
+            'flights': row.flights,
+            'distance': row.distance,
+            'duration': row.duration.total_seconds(),
+            'pilots': row.pilots,
+            'average_distance': row.distance / row.flights,
+            'average_duration': row.duration.total_seconds() / row.flights,
+        })
 
         max_flights = max(max_flights, row.flights)
         max_pilots = max(max_pilots, row.pilots)

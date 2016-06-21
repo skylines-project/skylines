@@ -16,7 +16,7 @@
         </span>
       </td>
       <td class="col-xs-8">
-        {% with value=(year.duration.total_seconds() * 100 / max_duration) -%}
+        {% with value=(year.duration * 100 / max_duration) -%}
         <div class="progress">
           <div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="{{ value }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ value }}%;"></div>
         </div>
