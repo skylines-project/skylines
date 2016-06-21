@@ -1,9 +1,10 @@
-from flask import Blueprint, render_template, g, redirect, url_for, abort
+from flask import Blueprint, render_template, g, redirect, url_for, abort, request, jsonify
 from sqlalchemy import func
 
 from skylines.database import db
 from skylines.frontend.forms import EditClubForm
 from skylines.lib.dbutil import get_requested_record
+from skylines.lib.vary import vary_accept
 from skylines.model import User, Club
 
 club_blueprint = Blueprint('club', 'skylines')
@@ -22,9 +23,28 @@ def _add_user_id(endpoint, values):
 
 
 @club_blueprint.route('/')
+@vary_accept
 def index():
-    return render_template(
-        'clubs/view.jinja', active_page='settings', club=g.club)
+    if 'application/json' in request.headers.get('Accept', ''):
+        json = {
+            'id': g.club.id,
+            'name': unicode(g.club),
+            'timeCreated': g.club.time_created.isoformat(),
+            'isWritable': g.club.is_writable(g.current_user),
+        }
+
+        if g.club.website:
+            json['website'] = g.club.website
+
+        if g.club.owner:
+            json['owner'] = {
+                'id': g.club.owner.id,
+                'name': unicode(g.club.owner),
+            }
+
+        return jsonify(**json)
+
+    return render_template('clubs/view.jinja', active_page='settings')
 
 
 @club_blueprint.route('/pilots')

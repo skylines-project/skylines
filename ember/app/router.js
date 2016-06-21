@@ -6,6 +6,8 @@ const Router = Ember.Router.extend({
 });
 
 Router.map(function() {
+  this.route('club', { path: '/clubs/:club_id' });
+
   this.route('stats', { path: '/statistics' }, function() {
     this.route('wildcard', { path: '/*wildcard' });
   });
