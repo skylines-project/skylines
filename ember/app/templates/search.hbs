@@ -1,1 +1,30 @@
-{{ember-islands}}
+<div class="page-header">
+  <h1>
+    Search {{#if searchText}}<small>for "{{ searchText }}"</small>{{/if}}
+  </h1>
+</div>
+
+<div class="row">
+  <div class="col-md-12">
+    <div class="row">
+      <form action="/search" role="search" {{action "search" searchTextInput on="submit"}}>
+        <div class="col-sm-9">
+          <div class="form-group">
+            {{input type="text" name="text" value=searchTextInput placeholder=(t "search.search") class="form-control"}}
+          </div>
+        </div>
+        <div class="col-sm-3">
+          <div class="form-group">
+            <input type="submit" value="Search" class="form-control btn btn-primary">
+          </div>
+        </div>
+      </form>
+    </div>
+
+    {{#if currentlyLoading}}
+      Loading...
+    {{else}}
+      {{search-result-table searchText=searchText results=results}}
+    {{/if}}
+  </div>
+</div>

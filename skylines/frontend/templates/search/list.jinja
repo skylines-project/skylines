@@ -5,18 +5,5 @@
 {% set active_page = "search" %}
 {% set use_ember = true %}
 
-{% block title -%}
-{% if search_text -%}
-{% trans %}Search <small>for "{{ search_text }}"</small>{% endtrans %}
-{%- else -%}
-{% trans %}Search{% endtrans %}
-{%- endif %}
-{%- endblock %}
-
-
-{% block content -%}
-<div data-component="search-page" data-attrs='{
-  "searchText": {{ search_text|default(None)|tojson }},
-  "results": {{ results|default([])|tojson }}
-}'>Loading...</div>
+{% block ember_application -%}
 {%- endblock %}
