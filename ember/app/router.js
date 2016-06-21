@@ -16,6 +16,10 @@ Router.map(function() {
     this.route('list', { path: '/*wildcard' });
   });
 
+  this.route('tracking', function() {
+    this.route('details', { path: '/:user_ids' });
+  });
+
   this.route('search');
 
   this.route('islands', { path: '/*wildcard' });
