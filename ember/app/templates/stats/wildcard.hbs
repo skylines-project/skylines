@@ -24,17 +24,20 @@
   </ul>
 {{/if}}
 
+{{#if currentlyLoading}}
+  <p><br>Loading...</p>
+{{else}}
+  <h2>{{t "flights"}}</h2>
+  {{stats-flights-table years=years}}
 
-<h2>{{t "flights"}}</h2>
-{{stats-flights-table years=years}}
+  <h2>{{t "distance"}}</h2>
+  {{stats-distance-table years=years}}
 
-<h2>{{t "distance"}}</h2>
-{{stats-distance-table years=years}}
+  <h2>{{t "flight-time"}}</h2>
+  {{stats-duration-table years=years}}
 
-<h2>{{t "flight-time"}}</h2>
-{{stats-duration-table years=years}}
-
-{{#if (not pilot)}}
-  <h2>{{t "pilots"}}</h2>
-  {{stats-pilots-table years=years sumPilots=sumPilots}}
+  {{#if (not pilot)}}
+    <h2>{{t "pilots"}}</h2>
+    {{stats-pilots-table years=years sumPilots=sumPilots}}
+  {{/if}}
 {{/if}}

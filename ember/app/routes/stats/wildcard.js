@@ -29,4 +29,14 @@ export default Ember.Route.extend({
       controller.set(page, id);
     }
   },
+
+  actions: {
+    loading(transition) {
+      let controller = this.controllerFor('stats.wildcard');
+      controller.set('currentlyLoading', true);
+      transition.promise.finally(() => {
+        controller.set('currentlyLoading', false);
+      });
+    },
+  },
 });
