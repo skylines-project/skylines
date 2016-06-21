@@ -60,28 +60,11 @@
 </ul>
 {%- endif %}
 
-<h2>{% trans %}Flights{% endtrans %}</h2>
-<div data-component="stats-flights-table" data-attrs='{
-  "years": {{ years|tojson }}
-}'>Loading...</div>
-
-<h2>{% trans %}Distance{% endtrans %}</h2>
-<div data-component="stats-distance-table" data-attrs='{
-  "years": {{ years|tojson }}
-}'>Loading...</div>
-
-<h2>{% trans %}Flight Time{% endtrans %}</h2>
-<div data-component="stats-duration-table" data-attrs='{
-  "years": {{ years|tojson }}
-}'>Loading...</div>
-
-{% if not pilot -%}
-<h2>{% trans %}Pilots{% endtrans %}</h2>
-<div data-component="stats-pilots-table" data-attrs='{
+<div data-component="stats-page" data-attrs='{
+  "showPilots": {% if pilot %}false{% else %}true{% endif %},
   "sumPilots": {{ sum_pilots|tojson }},
   "years": {{ years|tojson }}
-}'>Loading...</div>
-{%- endif %}
+}'><br>Loading...</div>
 {%- endblock %}
 
 {% block scripts -%}
