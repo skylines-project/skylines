@@ -11,6 +11,9 @@ tracking_blueprint = Blueprint('tracking', 'skylines')
 @tracking_blueprint.route('/')
 @vary_accept
 def index():
+    if 'application/json' not in request.headers.get('Accept', ''):
+        return render_template('ember-page.jinja', active_page='tracking')
+
     tracks = TrackingFix.get_latest()
 
     @current_app.cache.memoize(timeout=(60 * 60))
@@ -51,10 +54,8 @@ def index():
     else:
         followers = []
 
-    if 'application/json' in request.headers.get('Accept', ''):
-        return jsonify(friends=followers, tracks=tracks)
+    return jsonify(friends=followers, tracks=tracks)
 
-    return render_template('ember-page.jinja', active_page='tracking')
 
 
 @tracking_blueprint.route('/info')

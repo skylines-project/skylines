@@ -21,29 +21,29 @@ users_blueprint = Blueprint('users', 'skylines')
 @users_blueprint.route('/')
 @vary_accept
 def index():
+    if 'application/json' not in request.headers.get('Accept', ''):
+        return render_template('ember-page.jinja', active_page='settings')
+
     users = User.query() \
         .options(joinedload(User.club)) \
         .order_by(func.lower(User.name))
 
-    if 'application/json' in request.headers.get('Accept', ''):
-        json = []
-        for u in users:
-            user = {
-                'id': u.id,
-                'name': unicode(u),
+    json = []
+    for u in users:
+        user = {
+            'id': u.id,
+            'name': unicode(u),
+        }
+
+        if u.club:
+            user['club'] = {
+                'id': u.club.id,
+                'name': unicode(u.club),
             }
 
-            if u.club:
-                user['club'] = {
-                    'id': u.club.id,
-                    'name': unicode(u.club),
-                }
+        json.append(user)
 
-            json.append(user)
-
-        return jsonify(users=json)
-
-    return render_template('ember-page.jinja', active_page='settings')
+    return jsonify(users=json)
 
 
 @users_blueprint.route('/new', methods=['GET', 'POST'])

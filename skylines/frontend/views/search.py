@@ -15,19 +15,14 @@ MODELS = [User, Club, Airport]
 @search_blueprint.route('/')
 @vary_accept
 def index():
+    if 'application/json' not in request.headers.get('Accept', ''):
+        return render_template('ember-page.jinja', active_page='search')
+
     search_text = request.values.get('text', '').strip()
     if not search_text:
-        if 'application/json' in request.headers.get('Accept', ''):
-            return jsonify(results=[])
+        return jsonify(results=[])
 
-        return render_template('search/list.jinja')
-
-    results = search(search_text)
-
-    if 'application/json' in request.headers.get('Accept', ''):
-        return jsonify(results=results)
-
-    return render_template('ember-page.jinja', active_page='search')
+    return jsonify(results=search(search_text))
 
 
 def search(text):

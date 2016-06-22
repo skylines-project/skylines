@@ -10,16 +10,16 @@ clubs_blueprint = Blueprint('clubs', 'skylines')
 @clubs_blueprint.route('/')
 @vary_accept
 def index():
+    if 'application/json' not in request.headers.get('Accept', ''):
+        return render_template('ember-page.jinja', active_page='settings')
+
     clubs = Club.query().order_by(func.lower(Club.name))
 
-    if 'application/json' in request.headers.get('Accept', ''):
-        json = []
-        for c in clubs:
-            json.append({
-                'id': c.id,
-                'name': unicode(c),
-            })
+    json = []
+    for c in clubs:
+        json.append({
+            'id': c.id,
+            'name': unicode(c),
+        })
 
-        return jsonify(clubs=json)
-
-    return render_template('ember-page.jinja', active_page='settings')
+    return jsonify(clubs=json)

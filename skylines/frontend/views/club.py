@@ -25,26 +25,26 @@ def _add_user_id(endpoint, values):
 @club_blueprint.route('/')
 @vary_accept
 def index():
-    if 'application/json' in request.headers.get('Accept', ''):
-        json = {
-            'id': g.club.id,
-            'name': unicode(g.club),
-            'timeCreated': g.club.time_created.isoformat(),
-            'isWritable': g.club.is_writable(g.current_user),
+    if 'application/json' not in request.headers.get('Accept', ''):
+        return render_template('ember-page.jinja', active_page='settings')
+
+    json = {
+        'id': g.club.id,
+        'name': unicode(g.club),
+        'timeCreated': g.club.time_created.isoformat(),
+        'isWritable': g.club.is_writable(g.current_user),
+    }
+
+    if g.club.website:
+        json['website'] = g.club.website
+
+    if g.club.owner:
+        json['owner'] = {
+            'id': g.club.owner.id,
+            'name': unicode(g.club.owner),
         }
 
-        if g.club.website:
-            json['website'] = g.club.website
-
-        if g.club.owner:
-            json['owner'] = {
-                'id': g.club.owner.id,
-                'name': unicode(g.club.owner),
-            }
-
-        return jsonify(**json)
-
-    return render_template('ember-page.jinja', active_page='settings')
+    return jsonify(**json)
 
 
 @club_blueprint.route('/pilots')

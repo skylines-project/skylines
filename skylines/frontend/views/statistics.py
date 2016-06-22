@@ -13,9 +13,9 @@ statistics_blueprint = Blueprint('statistics', 'skylines')
 @statistics_blueprint.route('/<page>/<id>')
 @vary_accept
 def index(page=None, id=None):
-    club = None
-    pilot = None
-    airport = None
+    if 'application/json' not in request.headers.get('Accept', ''):
+        return render_template('ember-page.jinja', active_page='statistics')
+
     name = None
 
     query = db.session.query(Flight.year.label('year'),
@@ -70,7 +70,5 @@ def index(page=None, id=None):
             'average_duration': row.duration.total_seconds() / row.flights,
         })
 
-    if 'application/json' in request.headers.get('Accept', ''):
-        return jsonify(name=name, years=list, sumPilots=sum_pilots)
+    return jsonify(name=name, years=list, sumPilots=sum_pilots)
 
-    return render_template('ember-page.jinja', active_page='statistics')
