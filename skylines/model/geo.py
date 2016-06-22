@@ -39,6 +39,9 @@ class Location(object):
         coords = to_shape(wkb)
         return Location(latitude=coords.y, longitude=coords.x)
 
+    def to_lonlat(self):
+        return [self.longitude, self.latitude]
+
     def normalize(self):
         self.longitude %= 360
         if self.longitude > 180:

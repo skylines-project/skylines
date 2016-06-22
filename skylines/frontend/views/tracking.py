@@ -28,6 +28,10 @@ def index():
         }
 
     def convert(track, airport):
+        location = None
+        if track.location_wkt is not None:
+            location = track.location.to_lonlat()
+
         return {
             'time': track.time.isoformat(),
             'pilot': {
@@ -35,6 +39,7 @@ def index():
                 'name': unicode(track.pilot),
             },
             'airport': airport,
+            'location': location,
             'altitude': track.altitude,
             'elevation': track.elevation
         }
