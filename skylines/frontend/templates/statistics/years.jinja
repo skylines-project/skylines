@@ -5,13 +5,3 @@
 
 {% block ember_application %}
 {% endblock %}
-
-{% block scripts -%}
-{{ super() }}
-<script>
-slUnits.init({{ h.json.dumps(h.get_setting_name('distance_unit')) }},
-    {{ h.json.dumps(h.get_setting_name('speed_unit')) }},
-    {{ h.json.dumps(h.get_setting_name('lift_unit')) }},
-    {{ h.json.dumps(h.get_setting_name('altitude_unit')) }});
-</script>
-{%- endblock %}

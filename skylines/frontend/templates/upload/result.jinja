@@ -22,11 +22,6 @@
 {%- endassets %}
 
 <script type="text/javascript">
-  slUnits.init({{ h.json.dumps(h.get_setting_name('distance_unit')) }},
-               {{ h.json.dumps(h.get_setting_name('speed_unit')) }},
-               {{ h.json.dumps(h.get_setting_name('lift_unit')) }},
-               {{ h.json.dumps(h.get_setting_name('altitude_unit')) }});
-
   $(document).ready(function() {
     $('.airspace-image[rel=popover]').popover({
       html: true,

@@ -38,6 +38,17 @@
 <script type="text/javascript" src="{{ ASSET_URL }}"></script>
 {%- endassets %}
 
+<script type="text/javascript">
+window.slLocale = '{{ g.active_locale }}';
+
+slUnits.init(
+    {{ h.json.dumps(h.get_setting_name('distance_unit')) }},
+    {{ h.json.dumps(h.get_setting_name('speed_unit')) }},
+    {{ h.json.dumps(h.get_setting_name('lift_unit')) }},
+    {{ h.json.dumps(h.get_setting_name('altitude_unit')) }}
+);
+</script>
+
 {% if use_ember %}
 <script src="https://cdn.polyfill.io/v2/polyfill.min.js?features=Intl.~locale.en,Intl.~locale.de"></script>
 
@@ -48,10 +59,6 @@
 {%- assets 'ember_app_js' %}
 <script type="text/javascript" src="{{ ASSET_URL }}"></script>
 {%- endassets %}
-
-<script type="text/javascript">
-window.slLocale = '{{ g.active_locale }}';
-</script>
 {% endif %}
 {%- endblock %}
 </body>
