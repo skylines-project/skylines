@@ -5,10 +5,6 @@
 {% from 'macros/sorter.jinja' import sorter_script with context %}
 
 
-{% set partial = 'partial' in request.args %}
-
-{% if not partial %}
-
 {% extends "base-page.jinja" %}
 {% set active_page = "flights" %}
 {% set use_ember = true %}
@@ -40,14 +36,9 @@
 {% block styles -%}
 {{ super() }}
 {%- endblock %}
-{%- endif %}
 
 {% block content -%}
-{% if not partial %}
 {% include "flights/nav.jinja" with context %}
-
-<div id="partial">
-{% endif %}
 
 {%- set omitted_columns = [] %}
 {%- if date %}{% do omitted_columns.append('date') %}{% endif %}
@@ -87,14 +78,10 @@
   </div>
 </div>
 
-{% if not partial %}
-</div>
-{% endif %}
 {%- endblock %}
 
 
 {% block scripts -%}
-{% if not partial %}
 {{ super() }}
 
 <script>
@@ -110,7 +97,6 @@ $(function() {
     showPinnedFlightsLink();
   });
 </script>
-{%- endif %}
 
 <script>
 $(function() {
@@ -118,20 +104,11 @@ $(function() {
   flightTable.find("[rel=tooltip]").tooltip();
 });
 </script>
-
-{% if not partial %}
-{{ pager_shortcut_script('flights', dict(**g.sorters['flights'].args())) }}
-{%- endif %}
-
-{{ pager_script() }}
-{{ sorter_script() }}
 {%- endblock %}
 
 
-{% if not partial %}
 {% block title_right -%}
 <a href="{{ url_for('upload.index') }}" class="btn btn-success">
   <i class="icon-upload-alt"></i> {{ _('Upload flight') }}
 </a>
 {%- endblock %}
-{%- endif %}
