@@ -27,9 +27,7 @@ def index():
     if 'application/json' in request.headers.get('Accept', ''):
         return jsonify(results=results)
 
-    return render_template('search/list.jinja',
-                           search_text=search_text,
-                           results=results)
+    return render_template('ember-page.jinja', active_page='search')
 
 
 def search(text):

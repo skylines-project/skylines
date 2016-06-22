@@ -54,9 +54,7 @@ def index():
     if 'application/json' in request.headers.get('Accept', ''):
         return jsonify(friends=followers, tracks=tracks)
 
-    return render_template('tracking/list.jinja',
-                           friends=followers,
-                           tracks=tracks)
+    return render_template('ember-page.jinja', active_page='tracking')
 
 
 @tracking_blueprint.route('/info')

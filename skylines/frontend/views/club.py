@@ -44,7 +44,7 @@ def index():
 
         return jsonify(**json)
 
-    return render_template('clubs/view.jinja', active_page='settings')
+    return render_template('ember-page.jinja', active_page='settings')
 
 
 @club_blueprint.route('/pilots')

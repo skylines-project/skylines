@@ -43,9 +43,7 @@ def index():
 
         return jsonify(users=json)
 
-    return render_template('users/list.jinja',
-                           active_page='settings',
-                           users=users)
+    return render_template('ember-page.jinja', active_page='settings')
 
 
 @users_blueprint.route('/new', methods=['GET', 'POST'])

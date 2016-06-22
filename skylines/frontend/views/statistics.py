@@ -73,10 +73,4 @@ def index(page=None, id=None):
     if 'application/json' in request.headers.get('Accept', ''):
         return jsonify(name=name, years=list, sumPilots=sum_pilots)
 
-    return render_template('statistics/years.jinja',
-                           name=name,
-                           years=list,
-                           sum_pilots=sum_pilots,
-                           airport=airport,
-                           pilot=pilot,
-                           club=club)
+    return render_template('ember-page.jinja', active_page='statistics')

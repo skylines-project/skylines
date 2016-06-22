@@ -22,4 +22,4 @@ def index():
 
         return jsonify(clubs=json)
 
-    return render_template('clubs/list.jinja', active_page='settings')
+    return render_template('ember-page.jinja', active_page='settings')
