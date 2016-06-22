@@ -1,0 +1,45 @@
+{{#if (gt pages 1)}}
+  <ul class="pagination pagination-condensed">
+    <li class="prev {{if prevDisabled "disabled"}}">
+      {{#link-to (query-params page=prevPage)}}&laquo;{{/link-to}}
+    </li>
+
+    {{#if showMinusFour}}
+      <li>{{#link-to (query-params page=(sum page -4))}}{{sum page -4}}{{/link-to}}</li>
+    {{/if}}
+
+    {{#if showMinusThree}}
+      <li>{{#link-to (query-params page=(sum page -3))}}{{sum page -3}}{{/link-to}}</li>
+    {{/if}}
+
+    {{#if showMinusTwo}}
+      <li>{{#link-to (query-params page=(sum page -2))}}{{sum page -2}}{{/link-to}}</li>
+    {{/if}}
+
+    {{#if showMinusOne}}
+      <li>{{#link-to (query-params page=(sum page -1))}}{{sum page -1}}{{/link-to}}</li>
+    {{/if}}
+
+    <li class="active">{{#link-to (query-params page=page)}}{{page}}{{/link-to}}</li>
+
+    {{#if showPlusOne}}
+      <li>{{#link-to (query-params page=(sum page 1))}}{{sum page 1}}{{/link-to}}</li>
+    {{/if}}
+
+    {{#if showPlusTwo}}
+      <li>{{#link-to (query-params page=(sum page 2))}}{{sum page 2}}{{/link-to}}</li>
+    {{/if}}
+
+    {{#if showPlusThree}}
+      <li>{{#link-to (query-params page=(sum page 3))}}{{sum page 3}}{{/link-to}}</li>
+    {{/if}}
+
+    {{#if showPlusFour}}
+      <li>{{#link-to (query-params page=(sum page 4))}}{{sum page 4}}{{/link-to}}</li>
+    {{/if}}
+
+    <li class="next {{if nextDisabled "disabled"}}">
+      {{#link-to (query-params page=nextPage)}}&raquo;{{/link-to}}
+    </li>
+  </ul>
+{{/if}}
