@@ -18,7 +18,14 @@ Router.map(function() {
   this.route('flight', { path: '/flights/:flight_id' });
 
   this.route('flights', { path: '/flights' }, function() {
-    this.route('list', { path: '/*wildcard' });
+    this.route('all');
+    this.route('latest');
+    this.route('date', { path: '/date/:date' });
+    this.route('airport', { path: '/airport/:airport_id' });
+    this.route('club', { path: '/club/:club_id' });
+    this.route('pilot', { path: '/pilot/:pilot_id' });
+    this.route('unassigned');
+    this.route('pinned');
   });
 
   this.route('tracking', function() {
