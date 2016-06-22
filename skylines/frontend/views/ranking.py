@@ -1,6 +1,6 @@
 from datetime import date
 
-from flask import Blueprint, request, redirect, url_for, render_template
+from flask import Blueprint, request, redirect, url_for, render_template, jsonify, g
 from sqlalchemy import func
 from sqlalchemy.sql.expression import desc, over
 from sqlalchemy.orm import eagerload
@@ -8,6 +8,7 @@ from sqlalchemy.orm import eagerload
 from skylines.database import db
 from skylines.model import User, Club, Flight, Airport
 from skylines.lib.table_tools import Pager, Sorter
+from skylines.lib.vary import vary_accept
 
 ranking_blueprint = Blueprint('ranking', 'skylines')
 
@@ -74,21 +75,88 @@ def index():
 
 
 @ranking_blueprint.route('/pilots')
+@vary_accept
 def pilots():
+    data = _handle_request(User, 'pilot_id')
+
+    if 'application/json' in request.headers.get('Accept', ''):
+        json = []
+        for pilot, count, total, rank in data['result']:
+            row = {
+                'rank': rank,
+                'flights': count,
+                'points': total,
+                'user': {
+                    'id': pilot.id,
+                    'name': unicode(pilot),
+                },
+            }
+
+            if pilot.club_id:
+                row['club'] = {
+                    'id': pilot.club_id,
+                    'name': unicode(pilot.club),
+                }
+
+            json.append(row)
+
+        return jsonify(ranking=json, total=g.paginators['result'].count)
+
     return render_template('ranking/pilots.jinja',
                            active_header_tab='pilots',
-                           **_handle_request(User, 'pilot_id'))
+                           **data)
 
 
 @ranking_blueprint.route('/clubs')
+@vary_accept
 def clubs():
+    data = _handle_request(Club, 'club_id')
+
+    if 'application/json' in request.headers.get('Accept', ''):
+        json = []
+        for club, count, total, rank in data['result']:
+            row = {
+                'rank': rank,
+                'flights': count,
+                'points': total,
+                'club': {
+                    'id': club.id,
+                    'name': unicode(club),
+                },
+            }
+
+            json.append(row)
+
+        return jsonify(ranking=json, total=g.paginators['result'].count)
+
     return render_template('ranking/clubs.jinja',
                            active_header_tab='clubs',
-                           **_handle_request(Club, 'club_id'))
+                           **data)
 
 
 @ranking_blueprint.route('/airports')
+@vary_accept
 def airports():
+    data = _handle_request(Airport, 'takeoff_airport_id')
+
+    if 'application/json' in request.headers.get('Accept', ''):
+        json = []
+        for airport, count, total, rank in data['result']:
+            row = {
+                'rank': rank,
+                'flights': count,
+                'points': total,
+                'airport': {
+                    'id': airport.id,
+                    'name': unicode(airport),
+                    'countryCode': airport.country_code,
+                },
+            }
+
+            json.append(row)
+
+        return jsonify(ranking=json, total=g.paginators['result'].count)
+
     return render_template('ranking/airports.jinja',
                            active_header_tab='airports',
-                           **_handle_request(Airport, 'takeoff_airport_id'))
+                           **data)
