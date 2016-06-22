@@ -1,5 +1,9 @@
 import Ember from 'ember';
 
 export default Ember.Route.extend({
-  model() {},
+  ajax: Ember.inject.service(),
+
+  model({club_id}) {
+    return this.get('ajax').request(`/flights/club/${club_id}`);
+  },
 });
