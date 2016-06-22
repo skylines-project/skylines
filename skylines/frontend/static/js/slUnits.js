@@ -43,7 +43,7 @@ slUnits = (function() {
    * @type {Object}
    */
   var settings = {
-    'Distance': 'm',
+    'Distance': 'km',
     'Speed': 'km/h',
     'Lift': 'm/s',
     'Altitude': 'm'
