@@ -1,0 +1,31 @@
+{{#base-page}}
+  <div class="page-header page-header-with-tabs">
+    <h1>
+      {{t "ranking"}}
+
+      {{#if loading}}
+        <small>Loading...</small>
+      {{/if}}
+    </h1>
+
+    <div class="page-header-tabs">
+      <ul class="nav nav-tabs">
+        {{#active-link}}
+          {{#link-to "ranking.clubs"}}{{t "clubs"}}{{/link-to}}
+        {{/active-link}}
+        {{#active-link}}
+          {{#link-to "ranking.pilots"}}{{t "pilots"}}{{/link-to}}
+        {{/active-link}}
+        {{#active-link}}
+          {{#link-to "ranking.airports"}}{{t "airports"}}{{/link-to}}
+        {{/active-link}}
+      </ul>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-12">
+      {{outlet}}
+    </div>
+  </div>
+{{/base-page}}

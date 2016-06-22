@@ -25,6 +25,12 @@ Router.map(function() {
     this.route('details', { path: '/:user_ids' });
   });
 
+  this.route('ranking', function() {
+    this.route('clubs');
+    this.route('pilots');
+    this.route('airports');
+  });
+
   this.route('search');
 
   this.route('islands', { path: '/*wildcard' });

@@ -102,9 +102,7 @@ def pilots():
 
         return jsonify(ranking=json, total=g.paginators['result'].count)
 
-    return render_template('ranking/pilots.jinja',
-                           active_header_tab='pilots',
-                           **data)
+    return render_template('ember-page.jinja', active_page='ranking')
 
 
 @ranking_blueprint.route('/clubs')
@@ -129,9 +127,7 @@ def clubs():
 
         return jsonify(ranking=json, total=g.paginators['result'].count)
 
-    return render_template('ranking/clubs.jinja',
-                           active_header_tab='clubs',
-                           **data)
+    return render_template('ember-page.jinja', active_page='ranking')
 
 
 @ranking_blueprint.route('/airports')
@@ -157,6 +153,4 @@ def airports():
 
         return jsonify(ranking=json, total=g.paginators['result'].count)
 
-    return render_template('ranking/airports.jinja',
-                           active_header_tab='airports',
-                           **data)
+    return render_template('ember-page.jinja', active_page='ranking')

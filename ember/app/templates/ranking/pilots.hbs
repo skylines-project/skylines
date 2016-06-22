@@ -1,0 +1,45 @@
+<div class="row">
+  <div class="col-sm-6">
+    {{season-dropdown year=year}}
+  </div>
+  <div class="col-sm-6">
+    <div class="pull-right">
+      {{x-pager count=model.total page=page perPage=20}}
+    </div>
+  </div>
+</div>
+
+<table class="table table-striped">
+  <thead>
+  <tr>
+    <th class="numeric sorting">#</th>
+    <th>{{t "name"}}</th>
+    <th class="hidden-xs">{{t "club"}}</th>
+    <th class="numeric sorting">{{t "flights"}}</th>
+    <th class="numeric sorting">{{t "total-score"}}</th>
+  </tr>
+  </thead>
+  <tbody>
+  {{#each model.ranking as |row|}}
+    <tr>
+      <td class="numeric">{{row.rank}}</td>
+      <td><a href="/users/{{row.user.id}}">{{row.user.name}}</a></td>
+      <td>{{#if row.club}}<a href="/clubs/{{row.club.id}}">{{row.club.name}}</a>{{/if}}</td>
+      <td class="numeric">{{format-number row.flights}}</td>
+      <td class="numeric">{{format-number row.points maximumFractionDigits=0}}</td>
+    </tr>
+  {{else}}
+    <tr>
+      <td colspan="4">{{t "no-pilots-found"}}</td>
+    </tr>
+  {{/each}}
+  </tbody>
+</table>
+
+<div class="row">
+  <div class="col-sm-12">
+    <div class="pull-right">
+      {{x-pager count=model.total page=page perPage=20}}
+    </div>
+  </div>
+</div>
