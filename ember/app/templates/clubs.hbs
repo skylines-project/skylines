@@ -1,40 +1,32 @@
-<div class="container">
-  <div class="content">
-    <div class="page-header">
-      <h1>{{t "clubs"}}</h1>
-    </div>
-
-    <div class="row">
-      <div class="col-md-12">
-        <table class="table table-striped">
-          <thead>
-          <tr>
-            <th>{{t "name"}}</th>
-          </tr>
-          </thead>
-          <tbody>
-          {{#each model.clubs as |club|}}
-            <tr>
-              <td class="column-buttons">
-                <a href="/clubs/{{club.id}}">{{club.name}}</a>
-
-                <div class="pull-right">
-                  <a href="/flights/club/{{club.id}}" class="btn btn-default btn-sm"><i class="icon-plane"></i> {{t "flights"}}</a>
-                  <a href="/statistics/club/{{club.id}}" class="btn btn-default btn-sm hidden-xs"><i class="icon-bar-chart"></i> {{t "statistics"}}</a>
-                  <a href="/clubs/{{club.id}}/pilots" class="btn btn-default btn-sm hidden-xs"><i class="icon-group"></i> {{t "members"}}</a>
-                </div>
-              </td>
-            </tr>
-          {{/each}}
-          </tbody>
-        </table>
-
-      </div>
-    </div>
+{{#base-page}}
+  <div class="page-header">
+    <h1>{{t "clubs"}}</h1>
   </div>
 
-  <p class="footer">
-    &copy; <a href="/about/team">{{t "the-skylines-team"}}</a> -
-    <a href="/about/imprint">{{t "imprint"}}</a>
-  </p>
-</div>
+  <div class="row">
+    <div class="col-md-12">
+      <table class="table table-striped">
+        <thead>
+        <tr>
+          <th>{{t "name"}}</th>
+        </tr>
+        </thead>
+        <tbody>
+        {{#each model.clubs as |club|}}
+          <tr>
+            <td class="column-buttons">
+              <a href="/clubs/{{club.id}}">{{club.name}}</a>
+
+              <div class="pull-right">
+                <a href="/flights/club/{{club.id}}" class="btn btn-default btn-sm"><i class="icon-plane"></i> {{t "flights"}}</a>
+                <a href="/statistics/club/{{club.id}}" class="btn btn-default btn-sm hidden-xs"><i class="icon-bar-chart"></i> {{t "statistics"}}</a>
+                <a href="/clubs/{{club.id}}/pilots" class="btn btn-default btn-sm hidden-xs"><i class="icon-group"></i> {{t "members"}}</a>
+              </div>
+            </td>
+          </tr>
+        {{/each}}
+        </tbody>
+      </table>
+    </div>
+  </div>
+{{/base-page}}
