@@ -12,7 +12,7 @@
   {{#active-link}}
     {{#link-to "flights.latest"}}
       {{#if date}}
-        {{date}}
+        {{format-date date format="ddmmyyyy"}}
       {{else}}
         Latest
       {{/if}}
@@ -22,7 +22,7 @@
 
 {{#if (and date (not latest))}}
   {{#active-link}}
-    {{#link-to "flights.date" date}}{{date}}{{/link-to}}
+    {{#link-to "flights.date" date}}{{format-date date format="ddmmyyyy"}}{{/link-to}}
   {{/active-link}}
 {{/if}}
 
