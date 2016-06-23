@@ -94,7 +94,6 @@ main_css = Bundle(
     'css/wingman.css',
     'css/ol3-sidebar.css',
     'vendor/flags/flags.css',
-    'vendor/bootstrap-datepicker/datepicker.css',
     'vendor/fonts/stylesheet.css',
     filters='cssrewrite',
     output='css/main-%(version)s.css')
@@ -121,7 +120,6 @@ all_js = Bundle(
     'http://code.jquery.com/jquery-1.10.2.min.js',
     'http://cdnjs.cloudflare.com/ajax/libs/jquery-ajaxtransport-xdomainrequest/1.0.3/jquery.xdomainrequest.min.js',
     'vendor/jquery/jquery.timeago.js',
-    'vendor/bootstrap-datepicker/datepicker.js',
     'js/general.js',
     bootstrap_js,
     filters='rjsmin',

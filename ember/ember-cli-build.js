@@ -44,5 +44,8 @@ module.exports = function(defaults) {
   });
   app.import('vendor/shims/remarkable.js');
 
+  app.import('vendor/bootstrap-datepicker/datepicker.js');
+  app.import('vendor/bootstrap-datepicker/datepicker.css');
+
   return app.toTree();
 };
