@@ -5,10 +5,14 @@ import { describeComponent, it } from 'ember-mocha';
 import { beforeEach } from 'mocha';
 import hbs from 'htmlbars-inline-precompile';
 
+import instanceInitializer from '../../../instance-initializers/ember-intl';
+
 let options = { integration: true };
 
 describeComponent('flight-list-nav', 'Integration: FlightListNavComponent', options, function() {
   beforeEach(function() {
+    instanceInitializer.initialize(this);
+
     this.register('service:account', Ember.Service.extend({
       user: null,
       club: null,
