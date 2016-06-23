@@ -58,6 +58,10 @@ search:
   no-results: 'There were no results for your search... Sorry!'
 
 timeline-events:
+  club-join:
+    message1: '<strong><a href="{actorURL}">{actor}</a></strong> joined <strong><a href="{clubURL}">{club}</a></strong>.'
+    message2: 'You joined <strong><a href="{clubURL}">{club}</a></strong>.'
+
   flight-comment:
     message1: '<strong><a href="{actorURL}">{actor}</a></strong> commented on a <strong>{distance}</strong> flight on <strong>{date}</strong>.'
     message2: 'You commented on a <strong>{distance}</strong> flight on <strong>{date}</strong>.'
