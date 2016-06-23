@@ -66,6 +66,14 @@ ember_vendor_js = Bundle(
     'ember/assets/vendor.js',
     output='js/ember-vendor-%(version)s.js')
 
+ember_app_css = Bundle(
+    'ember/assets/skylines.css',
+    output='css/ember-app-%(version)s.css')
+
+ember_vendor_css = Bundle(
+    'ember/assets/vendor.css',
+    output='css/ember-vendor-%(version)s.css')
+
 # SkyLines
 
 main_css = Bundle(

@@ -20,8 +20,17 @@
 
     {% block styles -%}
     {%- assets 'all_css' %}
-    <link rel="stylesheet" type="text/css" href="{{ ASSET_URL }}"/>
+      <link rel="stylesheet" type="text/css" href="{{ ASSET_URL }}"/>
     {%- endassets %}
+
+    {% if use_ember %}
+      {%- assets 'ember_vendor_css' %}
+        <link rel="stylesheet" type="text/css" href="{{ ASSET_URL }}"/>
+      {%- endassets %}
+      {%- assets 'ember_app_css' %}
+        <link rel="stylesheet" type="text/css" href="{{ ASSET_URL }}"/>
+      {%- endassets %}
+    {% endif %}
     {%- endblock %}
 
     <!--[if lte IE 8]>
