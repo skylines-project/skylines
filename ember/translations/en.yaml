@@ -56,3 +56,10 @@ search:
   search: 'Search'
   no-search-text: 'Please enter something in the search bar above.'
   no-results: 'There were no results for your search... Sorry!'
+
+timeline-events:
+  flight-comment:
+    message1: '<strong><a href="{actorURL}">{actor}</a></strong> commented on a <strong>{distance}</strong> flight on <strong>{date}</strong>.'
+    message2: 'You commented on a <strong>{distance}</strong> flight on <strong>{date}</strong>.'
+    message3: '<strong><a href="{actorURL}">{actor}</a></strong> commented on your <strong>{distance}</strong> flight on <strong>{date}</strong>.'
+    message4: 'You commented on your <strong>{distance}</strong> flight on <strong>{date}</strong>.'
