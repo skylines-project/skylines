@@ -1,3 +1,5 @@
+/* globals pad */
+
 import Ember from 'ember';
 
 export function formatHours([value]) {
