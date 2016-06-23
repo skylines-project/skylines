@@ -23,6 +23,13 @@ export default Ember.Route.extend({
     throw new Error('Not implemented: `getURL`');
   },
 
+  resetController(controller, isExiting) {
+    this._super(...arguments);
+    if (isExiting) {
+      controller.set('page', 1);
+    }
+  },
+
   actions: {
     loading(transition) {
       let controller = this.controllerFor('flights');
