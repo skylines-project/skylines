@@ -16,13 +16,17 @@
       {{else}}
         Latest
       {{/if}}
+      &nbsp;{{#date-picker date=date onSelect=(action "dateSelected")}}<i class="icon-th"></i>{{/date-picker}}
     {{/link-to}}
   {{/active-link}}
 {{/if}}
 
 {{#if (and date (not latest))}}
   {{#active-link}}
-    {{#link-to "flights.date" date}}{{format-date date format="ddmmyyyy"}}{{/link-to}}
+    {{#link-to "flights.date" date}}
+      {{format-date date format="ddmmyyyy"}}
+      &nbsp;{{#date-picker date=date onSelect=(action "dateSelected")}}<i class="icon-th"></i>{{/date-picker}}
+    {{/link-to}}
   {{/active-link}}
 {{/if}}
 

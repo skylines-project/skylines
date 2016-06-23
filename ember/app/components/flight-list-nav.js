@@ -14,4 +14,15 @@ export default Ember.Component.extend({
 
   prevDate: safeComputed('date', date => addDays(date, -1)),
   nextDate: safeComputed('date', date => addDays(date, 1)),
+
+  init() {
+    this._super(...arguments);
+    this.set('router', Ember.getOwner(this).lookup('router:main'));
+  },
+
+  actions: {
+    dateSelected(date) {
+      this.get('router').transitionTo('flights.date', date);
+    },
+  },
 });
