@@ -1,0 +1,75 @@
+{{#active-link}}
+  {{#link-to "flights.all"}}All{{/link-to}}
+{{/active-link}}
+
+{{#if prevDate}}
+  {{#active-link}}
+    {{#link-to "flights.date" prevDate}}&nbsp;<i class="icon-arrow-left"></i>&nbsp;{{/link-to}}
+  {{/active-link}}
+{{/if}}
+
+{{#if (or (not date) latest)}}
+  {{#active-link}}
+    {{#link-to "flights.latest"}}
+      {{#if date}}
+        {{date}}
+      {{else}}
+        Latest
+      {{/if}}
+    {{/link-to}}
+  {{/active-link}}
+{{/if}}
+
+{{#if (and date (not latest))}}
+  {{#active-link}}
+    {{#link-to "flights.date" date}}{{date}}{{/link-to}}
+  {{/active-link}}
+{{/if}}
+
+{{#if nextDate}}
+  {{#active-link}}
+    {{#link-to "flights.date" nextDate}}&nbsp;<i class="icon-arrow-right"></i>&nbsp;{{/link-to}}
+  {{/active-link}}
+{{/if}}
+
+{{#if airport}}
+  {{#active-link}}
+    {{#link-to "flights.airport" airport.id}}{{airport.name}}{{/link-to}}
+  {{/active-link}}
+{{/if}}
+
+{{#if club}}
+  {{#active-link}}
+    {{#link-to "flights.club" club.id}}{{club.name}}{{/link-to}}
+  {{/active-link}}
+{{/if}}
+
+{{#if (and account.club (not-eq account.club.id club.id))}}
+  {{#active-link}}
+    {{#link-to "flights.club" account.club.id}}{{account.club.name}}{{/link-to}}
+  {{/active-link}}
+{{/if}}
+
+{{#if pilot}}
+  {{#active-link}}
+    {{#link-to "flights.pilot" pilot.id}}{{pilot.name}}{{/link-to}}
+  {{/active-link}}
+{{/if}}
+
+{{#if (and account.user (not-eq account.user.id pilot.id))}}
+  {{#active-link}}
+    {{#link-to "flights.pilot" account.user.id}}{{account.user.name}}{{/link-to}}
+  {{/active-link}}
+{{/if}}
+
+{{#if account.user}}
+  {{#active-link}}
+    {{#link-to "flights.unassigned"}}Unassigned{{/link-to}}
+  {{/active-link}}
+{{/if}}
+
+{{#if hasPinned}}
+  {{#active-link}}
+    {{#link-to "flights.pinned"}}Pinned{{/link-to}}
+  {{/active-link}}
+{{/if}}
