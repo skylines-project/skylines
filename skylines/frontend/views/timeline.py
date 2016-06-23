@@ -40,44 +40,44 @@ def index():
 
     events = query.limit(per_page).offset((page - 1) * per_page).all()
 
-    events_json = []
-    for e in events:
-        event = {
-            'id': e.id,
-            'type': TYPES.get(e.type, 'unknown'),
-            'time': e.time.isoformat(),
-            'actor': {
-                'id': e.actor_id,
-                'name': unicode(e.actor),
-            },
+    return jsonify(events=(map(convert_event, events)))
+
+
+def convert_event(e):
+    event = {
+        'id': e.id,
+        'type': TYPES.get(e.type, 'unknown'),
+        'time': e.time.isoformat(),
+        'actor': {
+            'id': e.actor_id,
+            'name': unicode(e.actor),
+        },
+    }
+
+    if e.user_id:
+        event['user'] = {
+            'id': e.user_id,
+            'name': unicode(e.user),
         }
 
-        if e.user_id:
-            event['user'] = {
-                'id': e.user_id,
-                'name': unicode(e.user),
-            }
+    if e.club_id:
+        event['club'] = {
+            'id': e.club_id,
+            'name': unicode(e.club),
+        }
 
-        if e.club_id:
-            event['club'] = {
-                'id': e.club_id,
-                'name': unicode(e.club),
-            }
+    if e.flight_id:
+        event['flight'] = {
+            'id': e.flight_id,
+            'date': e.flight.date_local.isoformat(),
+            'distance': e.flight.olc_classic_distance,
+            'pilot_id': e.flight.pilot_id,
+            'copilot_id': e.flight.co_pilot_id,
+        }
 
-        if e.flight_id:
-            event['flight'] = {
-                'id': e.flight_id,
-                'date': e.flight.date_local.isoformat(),
-                'distance': e.flight.olc_classic_distance,
-                'pilot_id': e.flight.pilot_id,
-                'copilot_id': e.flight.co_pilot_id,
-            }
+    if e.flight_comment_id:
+        event['flightComment'] = {
+            'id': e.flight_comment_id,
+        }
 
-        if e.flight_comment_id:
-            event['flightComment'] = {
-                'id': e.flight_comment_id,
-            }
-
-        events_json.append(event)
-
-    return jsonify(events=events_json)
+    return event
