@@ -72,3 +72,7 @@ timeline-events:
     message1: '<strong><a href="{actorURL}">{actor}</a></strong> started following <strong><a href="{userURL}">{user}</a></strong>.'
     message2: 'You started following <strong><a href="{userURL}">{user}</a></strong>.'
     message3: '<strong><a href="{actorURL}">{actor}</a></strong> started following you.'
+
+  new-user:
+    message1: '<strong><a href="{actorURL}">{actor}</a></strong> joined SkyLines.'
+    message2: 'You joined SkyLines.'
