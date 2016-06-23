@@ -15,6 +15,8 @@ Router.map(function() {
     this.route('wildcard', { path: '/*wildcard' });
   });
 
+  this.route('flight-upload', { path: '/flights/upload' });
+
   this.route('flight', { path: '/flights/:flight_id' });
 
   this.route('flights', { path: '/flights' }, function() {
