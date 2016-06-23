@@ -26,6 +26,7 @@ Router.map(function() {
     this.route('pilot', { path: '/pilot/:pilot_id' });
     this.route('unassigned');
     this.route('pinned');
+    this.route('list', { path: '/list/:list' });
   });
 
   this.route('tracking', function() {
