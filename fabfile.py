@@ -32,7 +32,7 @@ def restart():
         with cd('ember'):
             run('npm install')
             run('bower install')
-            run('node_modules/.bin/ember build -o ../skylines/frontend/static/ember -prod')
+            run('node_modules/.bin/ember build -prod')
 
         # compile i18n .mo files
         manage('babel compile')
