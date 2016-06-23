@@ -1,1 +1,11 @@
-{{ember-islands}}
+{{flight-list-nav pilot=model.pilot}}
+
+<div class="pull-right">
+  {{x-pager count=model.count page=page perPage=50}}
+</div>
+
+{{flight-list flights=model.flights showClub=false}}
+
+<div class="pull-right">
+  {{x-pager count=model.count page=page perPage=50}}
+</div>

@@ -1,9 +1,7 @@
-import Ember from 'ember';
+import BaseRoute from './-base';
 
-export default Ember.Route.extend({
-  ajax: Ember.inject.service(),
-
-  model({pilot_id}) {
-    return this.get('ajax').request(`/flights/pilot/${pilot_id}`);
+export default BaseRoute.extend({
+  getURL({pilot_id}) {
+    return `/flights/pilot/${pilot_id}`;
   },
 });

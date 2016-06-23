@@ -34,6 +34,10 @@ def mark_flight_notifications_read(pilot):
 def _create_list(tab, kw, date=None, pilot=None, club=None, airport=None,
                  pinned=None, filter=None,
                  default_sorting_column='score', default_sorting_order='desc'):
+
+    if 'application/json' not in request.headers.get('Accept', ''):
+        return render_template('ember-page.jinja', active_page='flights')
+
     pilot_alias = aliased(User, name='pilot')
     owner_alias = aliased(User, name='owner')
 
@@ -164,37 +168,31 @@ def _create_list(tab, kw, date=None, pilot=None, club=None, airport=None,
 
         flights_json.append(flight)
 
-    if 'application/json' in request.headers.get('Accept', ''):
-        json = dict(flights=flights_json, count=flights_count)
+    json = dict(flights=flights_json, count=flights_count)
 
-        if date:
-            json['date'] = date.isoformat()
+    if date:
+        json['date'] = date.isoformat()
 
-        if pilot:
-            json['pilot'] = {
-                'id': pilot.id,
-                'name': unicode(pilot),
-            }
+    if pilot:
+        json['pilot'] = {
+            'id': pilot.id,
+            'name': unicode(pilot),
+        }
 
-        if club:
-            json['club'] = {
-                'id': club.id,
-                'name': unicode(club),
-            }
+    if club:
+        json['club'] = {
+            'id': club.id,
+            'name': unicode(club),
+        }
 
-        if airport:
-            json['airport'] = {
-                'id': airport.id,
-                'name': unicode(airport),
-                'countryCode': airport.country_code,
-            }
+    if airport:
+        json['airport'] = {
+            'id': airport.id,
+            'name': unicode(airport),
+            'countryCode': airport.country_code,
+        }
 
-        return jsonify(**json)
-
-    return render_template('flights/list.jinja',
-                           tab=tab, date=date, pilot=pilot, club=club,
-                           airport=airport, flights=flights_json,
-                           flights_count=flights_count)
+    return jsonify(**json)
 
 
 @flights_blueprint.route('/all.json')

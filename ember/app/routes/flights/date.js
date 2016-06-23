@@ -1,9 +1,7 @@
-import Ember from 'ember';
+import BaseRoute from './-base';
 
-export default Ember.Route.extend({
-  ajax: Ember.inject.service(),
-
-  model({date}) {
-    return this.get('ajax').request(`/flights/date/${date}`);
+export default BaseRoute.extend({
+  getURL({date}) {
+    return `/flights/date/${date}`;
   },
 });

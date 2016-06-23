@@ -1,1 +1,11 @@
-{{ember-islands}}
+{{flight-list-nav date=model.date}}
+
+<div class="pull-right">
+  {{x-pager count=model.count page=page perPage=50}}
+</div>
+
+{{flight-list flights=model.flights showDate=false}}
+
+<div class="pull-right">
+  {{x-pager count=model.count page=page perPage=50}}
+</div>

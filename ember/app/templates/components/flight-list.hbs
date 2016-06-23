@@ -1,0 +1,47 @@
+<thead>
+<tr>
+  {{#if showDate}}
+    <th class="date">Date</th>
+  {{/if}}
+
+  <th class="numeric">Score</th>
+
+  {{#if showPilot}}
+    <th class="pilot">Pilot</th>
+  {{/if}}
+
+  <th class="numeric distance">Distance</th>
+
+  {{#if showAirport}}
+    <th class="airport">Airport</th>
+  {{/if}}
+
+  {{#if showClub}}
+    <th class="club hidden-sm hidden-xs">Club</th>
+  {{/if}}
+
+  <th class="aircraft hidden-xs">Aircraft</th>
+
+  {{#if showTimes}}
+    <th class="times hidden-xs">Time</th>
+  {{/if}}
+
+  <th class="column-buttons"></th>
+  <th class="num_comments hidden-xs"></th>
+</tr>
+</thead>
+<tbody>
+{{#each flights as |flight|}}
+  {{flight-list-row
+    flight=flight
+    showDate=showDate
+    showPilot=showPilot
+    showAirport=showAirport
+    showClub=showClub
+    showTimes=showTimes}}
+{{else}}
+  <tr>
+    <td colspan="10">{{t "no-flights-found"}}</td>
+  </tr>
+{{/each}}
+</tbody>
