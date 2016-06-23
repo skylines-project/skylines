@@ -1,6 +1,6 @@
-/* global slUnits */
-
 import Ember from 'ember';
+
+import * as slUnits from '../utils/units';
 
 export function formatLift([value]) {
   return slUnits.formatLift(value);

@@ -1,6 +1,6 @@
-/* global slUnits */
-
 import Ember from 'ember';
+
+import { addAltitudeUnit } from '../utils/units';
 
 export default Ember.Component.extend(Ember.Evented, {
   fixCalc: Ember.inject.service(),
@@ -164,7 +164,7 @@ export default Ember.Component.extend(Ember.Evented, {
       yaxes: [
         {
           min: 0,
-          tickFormatter: slUnits.addAltitudeUnit,
+          tickFormatter: addAltitudeUnit,
         },
         {
           show: false,

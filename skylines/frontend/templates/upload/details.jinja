@@ -1,4 +1,6 @@
 {% extends "base.jinja" %}
+{% set use_ember = true %}
+
 {% from "macros/form.jinja" import render_field %}
 
 {% macro render_datetimepicker_field(field, hide_error_text=False, disabled=False, class='') -%}

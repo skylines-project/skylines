@@ -40,13 +40,6 @@
 
 <script type="text/javascript">
 window.slLocale = '{{ g.active_locale }}';
-
-slUnits.init(
-    {{ h.json.dumps(h.get_setting_name('distance_unit')) }},
-    {{ h.json.dumps(h.get_setting_name('speed_unit')) }},
-    {{ h.json.dumps(h.get_setting_name('lift_unit')) }},
-    {{ h.json.dumps(h.get_setting_name('altitude_unit')) }}
-);
 </script>
 
 {% if use_ember %}
@@ -59,6 +52,17 @@ slUnits.init(
 {%- assets 'ember_app_js' %}
 <script type="text/javascript" src="{{ ASSET_URL }}"></script>
 {%- endassets %}
+
+<script type="text/javascript">
+var slUnits = require('skylines/utils/units');
+
+slUnits.init(
+    {{ h.json.dumps(h.get_setting_name('distance_unit')) }},
+    {{ h.json.dumps(h.get_setting_name('speed_unit')) }},
+    {{ h.json.dumps(h.get_setting_name('lift_unit')) }},
+    {{ h.json.dumps(h.get_setting_name('altitude_unit')) }}
+);
+</script>
 {% endif %}
 {%- endblock %}
 </body>

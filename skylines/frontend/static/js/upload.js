@@ -19,6 +19,9 @@
 function initBaro(baro, sfid, _time, _height, _enl,
                   _elevations_h, takeoff_time, scoring_start_time,
                   scoring_end_time, landing_time) {
+
+  var slUnits = require('skylines/utils/units');
+
   var height = ol.format.Polyline.decodeDeltas(_height, 1, 1);
   var time = ol.format.Polyline.decodeDeltas(_time, 1, 1);
   var enl = ol.format.Polyline.decodeDeltas(_enl, 1, 1);

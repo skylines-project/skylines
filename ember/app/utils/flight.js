@@ -1,7 +1,7 @@
-/* globals slUnits */
-
 import Ember from 'ember';
 import ol from 'openlayers';
+
+import * as slUnits from '../utils/units';
 
 /**
  * A SkyLines flight.

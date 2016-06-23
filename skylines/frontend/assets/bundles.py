@@ -114,7 +114,6 @@ all_js = Bundle(
     'http://cdnjs.cloudflare.com/ajax/libs/jquery-ajaxtransport-xdomainrequest/1.0.3/jquery.xdomainrequest.min.js',
     'vendor/jquery/jquery.timeago.js',
     'vendor/bootstrap-datepicker/datepicker.js',
-    'js/slUnits.js',
     'js/general.js',
     bootstrap_js,
     filters='rjsmin',
@@ -132,7 +131,6 @@ flight_js = Bundle(
     output='js/flight-%(version)s.js')
 
 upload_js = Bundle(
-    'js/slUnits.js',
     'js/upload.js',
     'http://momentjs.com/downloads/moment.min.js',
     'http://rawgithub.com/TobiasLohner/bootstrap-datetimepicker/c36342415a1be8fa013548402bf01718ca93d454/src/js/bootstrap-datetimepicker.js',
