@@ -63,3 +63,7 @@ timeline-events:
     message2: 'You commented on a <strong>{distance}</strong> flight on <strong>{date}</strong>.'
     message3: '<strong><a href="{actorURL}">{actor}</a></strong> commented on your <strong>{distance}</strong> flight on <strong>{date}</strong>.'
     message4: 'You commented on your <strong>{distance}</strong> flight on <strong>{date}</strong>.'
+
+  flight-upload:
+    message1: '<strong><a href="{actorURL}">{actor}</a></strong> uploaded a <strong>{distance}</strong> flight on <strong>{date}</strong>.'
+    message2: 'You uploaded a <strong>{distance}</strong> flight on <strong>{date}</strong>.'

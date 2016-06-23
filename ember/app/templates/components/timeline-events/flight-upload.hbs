@@ -1,0 +1,14 @@
+<td class="icon">
+  <i class="icon-plane"></i>
+</td>
+<td>
+  <a href="/flights/{{event.flight.id}}" class="btn btn-default btn-sm pull-right">{{t "show"}}</a>
+  <p><small><abbr title={{format-time event.time format="full"}}>{{format-relative event.time}}</abbr></small></p>
+  <p>
+    {{format-html-message translationKey
+      actor=event.actor.name
+      actorURL=(concat "/users/" event.actor.id)
+      distance=(format-distance event.flight.distance)
+      date=(format-date event.flight.date format="ddmmyyyy")}}
+  </p>
+</td>
