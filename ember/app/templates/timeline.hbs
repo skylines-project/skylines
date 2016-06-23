@@ -1,0 +1,51 @@
+{{#base-page}}
+  <div class="page-header">
+    <h1>
+      {{t "timeline"}}
+
+      {{#if loading}}
+        <small>Loading...</small>
+      {{/if}}
+    </h1>
+  </div>
+
+  <div class="row">
+    <div class="col-md-12">
+      <div class="row">
+        <div class="col-xs-6">
+          {{#if prevPage}}
+            {{#link-to (query-params page=prevPage) class="btn btn-default"}}&larr; {{t "newer"}}{{/link-to}}
+          {{/if}}
+        </div>
+
+        <div class="col-xs-6" style="text-align:right">
+          {{#if nextPage}}
+            {{#link-to (query-params page=nextPage) class="btn btn-default"}}{{t "older"}} &rarr;{{/link-to}}
+          {{/if}}
+        </div>
+      </div>
+
+      <table class="table table-events">
+        <tbody>
+        {{#each events as |event|}}
+          {{timeline-event event=event}}
+        {{/each}}
+        </tbody>
+      </table>
+
+      <div class="row">
+        <div class="col-xs-6">
+          {{#if prevPage}}
+            {{#link-to (query-params page=prevPage) class="btn btn-default"}}&larr; {{t "newer"}}{{/link-to}}
+          {{/if}}
+        </div>
+
+        <div class="col-xs-6" style="text-align:right">
+          {{#if nextPage}}
+            {{#link-to (query-params page=nextPage) class="btn btn-default"}}{{t "older"}} &rarr;{{/link-to}}
+          {{/if}}
+        </div>
+      </div>
+    </div>
+  </div>
+{{/base-page}}

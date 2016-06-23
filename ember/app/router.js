@@ -43,6 +43,8 @@ Router.map(function() {
 
   this.route('search');
 
+  this.route('timeline');
+
   this.route('islands', { path: '/*wildcard' });
 });
 
