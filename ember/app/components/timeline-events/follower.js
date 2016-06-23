@@ -1,0 +1,16 @@
+import Ember from 'ember';
+
+import Base from './-base';
+import safeComputed from '../../utils/safe-computed';
+
+export default Base.extend({
+  accountUserIsFollowed: safeComputed('account.user', 'event.user',
+    (accountUser, user) => (accountUser.id == user.id)),
+
+  translationKey: Ember.computed('accountUserIsActor', 'accountUserIsFollowed', function() {
+    let i = 1;
+    if (this.get('accountUserIsActor')) { i += 1; }
+    if (this.get('accountUserIsFollowed')) { i += 2; }
+    return `timeline-events.follower.message${i}`;
+  }),
+});

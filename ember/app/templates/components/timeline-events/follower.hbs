@@ -1,0 +1,14 @@
+<td class="icon">
+  <i class="icon-user"></i>
+</td>
+<td>
+  <a href="{{concat "/users/" (if accountUserIsFollowed event.actor.id event.user.id)}}" class="btn btn-default btn-sm pull-right">{{t "show"}}</a>
+  <p><small><abbr title={{format-time event.time format="full"}}>{{format-relative event.time}}</abbr></small></p>
+  <p>
+    {{format-html-message translationKey
+      actor=event.actor.name
+      actorURL=(concat "/users/" event.actor.id)
+      user=event.user.name
+      userURL=(concat "/users/" event.user.id)}}
+  </p>
+</td>
