@@ -165,7 +165,31 @@ def _create_list(tab, kw, date=None, pilot=None, club=None, airport=None,
         flights_json.append(flight)
 
     if 'application/json' in request.headers.get('Accept', ''):
-        return jsonify(flights=flights_json, count=flights_count)
+        json = dict(flights=flights_json, count=flights_count)
+
+        if date:
+            json['date'] = date.isoformat()
+
+        if pilot:
+            json['pilot'] = {
+                'id': pilot.id,
+                'name': unicode(pilot),
+            }
+
+        if club:
+            json['club'] = {
+                'id': club.id,
+                'name': unicode(club),
+            }
+
+        if airport:
+            json['airport'] = {
+                'id': airport.id,
+                'name': unicode(airport),
+                'countryCode': airport.country_code,
+            }
+
+        return jsonify(**json)
 
     return render_template('flights/list.jinja',
                            tab=tab, date=date, pilot=pilot, club=club,
