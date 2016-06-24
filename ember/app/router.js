@@ -44,6 +44,7 @@ Router.map(function() {
   this.route('search');
 
   this.route('timeline');
+  this.route('notifications');
 
   this.route('islands', { path: '/*wildcard' });
 });
