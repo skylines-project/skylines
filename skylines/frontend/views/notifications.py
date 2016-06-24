@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request, url_for, redirect, g
+from flask import Blueprint, render_template, request, url_for, redirect, g, jsonify, abort
 from sqlalchemy.orm import subqueryload, contains_eager
 from sqlalchemy.sql.expression import or_
 
@@ -48,6 +48,9 @@ def _filter_query(query, args):
 @notifications_blueprint.route('/')
 @login_required("You have to login to read notifications.")
 def index():
+    if 'application/json' not in request.headers.get('Accept', ''):
+        return render_template('ember-page.jinja', active_page='notifications')
+
     query = Notification.query(recipient=g.current_user) \
         .join('event') \
         .options(contains_eager('event')) \
@@ -71,19 +74,8 @@ def index():
         return event
 
     events = map(get_event, query)
-    events_count = len(events)
 
-    if request.args.get('grouped', True, type=str_to_bool):
-        events = group_events(events)
-
-    template_vars = dict(events=events, types=Event.Type)
-
-    if page > 1:
-        template_vars['prev_page'] = page - 1
-    if events_count == per_page:
-        template_vars['next_page'] = page + 1
-
-    return render_template('notifications/list.jinja', **template_vars)
+    return jsonify(events=(map(convert_event, events)))
 
 
 @notifications_blueprint.route('/clear')

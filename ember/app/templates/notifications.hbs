@@ -1,1 +1,63 @@
-{{ember-islands}}
+{{#base-page}}
+  <div class="page-header">
+    <h1>
+      {{t "notifications"}}
+
+      {{#if loading}}
+        <small>Loading...</small>
+      {{/if}}
+    </h1>
+  </div>
+
+  <div class="row">
+    <div class="col-md-12">
+      <div class="row">
+        <div class="col-xs-4">
+          {{#if prevPage}}
+            {{#link-to (query-params page=prevPage) class="btn btn-default"}}&larr; {{t "newer"}}{{/link-to}}
+          {{/if}}
+        </div>
+
+        <div class="col-xs-4" style="text-align:center">
+          <a href="/notifications/clear" title={{t "mark-all-as-read"}} class="btn btn-default"><i class="icon-eye-open"></i> <span class="hidden-xs">{{t "mark-all-as-read"}}</span></a>
+        </div>
+
+        <div class="col-xs-4" style="text-align:right">
+          {{#if nextPage}}
+            {{#link-to (query-params page=nextPage) class="btn btn-default"}}{{t "older"}} &rarr;{{/link-to}}
+          {{/if}}
+        </div>
+      </div>
+
+      {{#if events}}
+        <table class="table table-events">
+          <tbody>
+          {{#each events as |event|}}
+            {{timeline-event event=event}}
+          {{/each}}
+          </tbody>
+        </table>
+      {{else}}
+        {{t "you-have-no-notifications"}}
+      {{/if}}
+
+      <div class="row">
+        <div class="col-xs-4">
+          {{#if prevPage}}
+            {{#link-to (query-params page=prevPage) class="btn btn-default"}}&larr; {{t "newer"}}{{/link-to}}
+          {{/if}}
+        </div>
+
+        <div class="col-xs-4" style="text-align:center">
+          <a href="/notifications/clear" title={{t "mark-all-as-read"}} class="btn btn-default"><i class="icon-eye-open"></i> <span class="hidden-xs">{{t "mark-all-as-read"}}</span></a>
+        </div>
+
+        <div class="col-xs-4" style="text-align:right">
+          {{#if nextPage}}
+            {{#link-to (query-params page=nextPage) class="btn btn-default"}}{{t "older"}} &rarr;{{/link-to}}
+          {{/if}}
+        </div>
+      </div>
+    </div>
+  </div>
+{{/base-page}}
