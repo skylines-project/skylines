@@ -1,10 +1,10 @@
-from flask import Blueprint, render_template, request, url_for, redirect, g, jsonify, abort
+from flask import Blueprint, render_template, request, url_for, redirect, g, jsonify
 from sqlalchemy.orm import subqueryload, contains_eager
 from sqlalchemy.sql.expression import or_
 
 from skylines.lib.vary import vary
 from skylines.database import db
-from skylines.model.event import Event, Notification, Flight, group_events
+from skylines.model.event import Event, Notification, Flight
 from skylines.lib.decorators import login_required
 
 TYPES = {

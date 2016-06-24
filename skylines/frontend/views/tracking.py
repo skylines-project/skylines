@@ -57,7 +57,6 @@ def index():
     return jsonify(friends=followers, tracks=tracks)
 
 
-
 @tracking_blueprint.route('/info')
 def info():
     return render_template('tracking/info.jinja')

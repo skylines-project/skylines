@@ -71,4 +71,3 @@ def index(page=None, id=None):
         })
 
     return jsonify(name=name, years=list, sumPilots=sum_pilots)
-
