@@ -5,6 +5,8 @@
 
       {{#if loading}}
         <small>Loading...</small>
+      {{else if clearing}}
+        <small>Processing...</small>
       {{/if}}
     </h1>
   </div>
@@ -19,7 +21,10 @@
         </div>
 
         <div class="col-xs-4" style="text-align:center">
-          <a href="/notifications/clear" title={{t "mark-all-as-read"}} class="btn btn-default"><i class="icon-eye-open"></i> <span class="hidden-xs">{{t "mark-all-as-read"}}</span></a>
+          <a href="/notifications/clear" {{action "markAsRead"}} title={{t "mark-all-as-read"}} class="btn btn-default">
+            <i class="icon-eye-open"></i>
+            <span class="hidden-xs">{{t "mark-all-as-read"}}</span>
+          </a>
         </div>
 
         <div class="col-xs-4" style="text-align:right">
@@ -49,7 +54,10 @@
         </div>
 
         <div class="col-xs-4" style="text-align:center">
-          <a href="/notifications/clear" title={{t "mark-all-as-read"}} class="btn btn-default"><i class="icon-eye-open"></i> <span class="hidden-xs">{{t "mark-all-as-read"}}</span></a>
+          <a href="/notifications/clear" {{action "markAsRead"}} title={{t "mark-all-as-read"}} class="btn btn-default">
+            <i class="icon-eye-open"></i>
+            <span class="hidden-xs">{{t "mark-all-as-read"}}</span>
+          </a>
         </div>
 
         <div class="col-xs-4" style="text-align:right">

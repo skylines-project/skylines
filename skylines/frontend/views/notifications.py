@@ -78,7 +78,7 @@ def index():
     return jsonify(events=(map(convert_event, events)))
 
 
-@notifications_blueprint.route('/clear')
+@notifications_blueprint.route('/clear', methods=['GET', 'POST'])
 @login_required("You have to login to clear notifications.")
 def clear():
     def filter_func(query):
@@ -87,6 +87,9 @@ def clear():
     Notification.mark_all_read(g.current_user, filter_func=filter_func)
 
     db.session.commit()
+
+    if 'application/json' in request.headers.get('Accept', ''):
+        return jsonify()
 
     return redirect(url_for('.index', **request.args))
 
