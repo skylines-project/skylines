@@ -2,7 +2,7 @@ from flask import Blueprint, render_template, request, url_for, redirect, g, jso
 from sqlalchemy.orm import subqueryload, contains_eager
 from sqlalchemy.sql.expression import or_
 
-from skylines.lib.vary import vary_accept
+from skylines.lib.vary import vary
 from skylines.database import db
 from skylines.model.event import Event, Notification, Flight, group_events
 from skylines.lib.decorators import login_required
@@ -47,7 +47,7 @@ def _filter_query(query, args):
 
 @notifications_blueprint.route('/')
 @login_required("You have to login to read notifications.")
-@vary_accept
+@vary('accept')
 def index():
     if 'application/json' not in request.headers.get('Accept', ''):
         return render_template('ember-page.jinja', active_page='notifications')
@@ -81,7 +81,7 @@ def index():
 
 @notifications_blueprint.route('/clear', methods=['GET', 'POST'])
 @login_required("You have to login to clear notifications.")
-@vary_accept
+@vary('accept')
 def clear():
     def filter_func(query):
         return _filter_query(query, request.args)

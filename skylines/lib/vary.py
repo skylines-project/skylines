@@ -1,11 +1,16 @@
 from flask import make_response
-from functools import wraps, update_wrapper
+from functools import wraps
 
-def vary_accept(view):
-    @wraps(view)
-    def no_cache(*args, **kwargs):
-        response = make_response(view(*args, **kwargs))
-        response.headers['Vary'] = 'accept'
-        return response
 
-    return update_wrapper(no_cache, view)
+class vary:
+    def __init__(self, headers=None):
+        self.headers = headers
+
+    def __call__(self, view):
+        @wraps(view)
+        def decorated_view(*args, **kwargs):
+            response = make_response(view(*args, **kwargs))
+            response.headers['Vary'] = self.headers
+            return response
+
+        return decorated_view

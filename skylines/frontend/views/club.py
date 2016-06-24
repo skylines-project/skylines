@@ -4,7 +4,7 @@ from sqlalchemy import func
 from skylines.database import db
 from skylines.frontend.forms import EditClubForm
 from skylines.lib.dbutil import get_requested_record
-from skylines.lib.vary import vary_accept
+from skylines.lib.vary import vary
 from skylines.model import User, Club
 
 club_blueprint = Blueprint('club', 'skylines')
@@ -23,7 +23,7 @@ def _add_user_id(endpoint, values):
 
 
 @club_blueprint.route('/')
-@vary_accept
+@vary('accept')
 def index():
     if 'application/json' not in request.headers.get('Accept', ''):
         return render_template('ember-page.jinja', active_page='settings')

@@ -10,7 +10,7 @@ from sqlalchemy.orm.util import aliased
 from skylines.database import db
 from skylines.lib.table_tools import Pager, Sorter
 from skylines.lib.dbutil import get_requested_record
-from skylines.lib.vary import vary_accept
+from skylines.lib.vary import vary
 from skylines.model import (
     User, Club, Flight, IGCFile, AircraftModel,
     Airport, FlightComment,
@@ -197,7 +197,7 @@ def _create_list(tab, kw, date=None, pilot=None, club=None, airport=None,
 
 @flights_blueprint.route('/all.json')
 @flights_blueprint.route('/all')
-@vary_accept
+@vary('accept')
 def all():
     return _create_list('all', request.args,
                         default_sorting_column='date', default_sorting_order='desc')
@@ -216,7 +216,7 @@ def today():
 
 @flights_blueprint.route('/date/<date>.json')
 @flights_blueprint.route('/date/<date>')
-@vary_accept
+@vary('accept')
 def date(date, latest=False):
     try:
         if isinstance(date, (str, unicode)):
@@ -236,7 +236,7 @@ def date(date, latest=False):
 
 @flights_blueprint.route('/latest.json')
 @flights_blueprint.route('/latest')
-@vary_accept
+@vary('accept')
 def latest():
     query = db.session \
         .query(func.max(Flight.date_local).label('date')) \
@@ -253,7 +253,7 @@ def latest():
 
 @flights_blueprint.route('/pilot/<int:id>.json')
 @flights_blueprint.route('/pilot/<int:id>')
-@vary_accept
+@vary('accept')
 def pilot(id):
     pilot = get_requested_record(User, id)
 
@@ -273,7 +273,7 @@ def my():
 
 @flights_blueprint.route('/club/<int:id>.json')
 @flights_blueprint.route('/club/<int:id>')
-@vary_accept
+@vary('accept')
 def club(id):
     club = get_requested_record(Club, id)
 
@@ -291,7 +291,7 @@ def my_club():
 
 @flights_blueprint.route('/airport/<int:id>.json')
 @flights_blueprint.route('/airport/<int:id>')
-@vary_accept
+@vary('accept')
 def airport(id):
     airport = get_requested_record(Airport, id)
 
@@ -302,7 +302,7 @@ def airport(id):
 
 @flights_blueprint.route('/unassigned.json')
 @flights_blueprint.route('/unassigned')
-@vary_accept
+@vary('accept')
 def unassigned():
     if not g.current_user:
         abort(404)
@@ -316,7 +316,7 @@ def unassigned():
 
 @flights_blueprint.route('/pinned.json')
 @flights_blueprint.route('/pinned')
-@vary_accept
+@vary('accept')
 def pinned():
     # Check if we have cookies
     if request.cookies is None:
@@ -339,7 +339,7 @@ def pinned():
 
 @flights_blueprint.route('/list/<ids>.json')
 @flights_blueprint.route('/list/<ids>')
-@vary_accept
+@vary('accept')
 def list(ids):
     # Check for the 'pinnedFlights' cookie
     if not ids:

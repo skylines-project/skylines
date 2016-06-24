@@ -8,7 +8,7 @@ from sqlalchemy.orm import contains_eager, subqueryload
 
 from skylines.database import db
 from skylines.lib.dbutil import get_requested_record
-from skylines.lib.vary import vary_accept
+from skylines.lib.vary import vary
 from skylines.model import (
     User, Flight, Follower, Location, Notification, Event
 )
@@ -106,7 +106,7 @@ def mark_user_notifications_read(user):
 
 
 @user_blueprint.route('/')
-@vary_accept
+@vary('accept')
 def index():
     if 'application/json' in request.headers.get('Accept', ''):
         return jsonify(id=g.user.id, name=unicode(g.user))

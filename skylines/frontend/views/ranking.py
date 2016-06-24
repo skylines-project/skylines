@@ -8,7 +8,7 @@ from sqlalchemy.orm import eagerload
 from skylines.database import db
 from skylines.model import User, Club, Flight, Airport
 from skylines.lib.table_tools import Pager, Sorter
-from skylines.lib.vary import vary_accept
+from skylines.lib.vary import vary
 
 ranking_blueprint = Blueprint('ranking', 'skylines')
 
@@ -75,7 +75,7 @@ def index():
 
 
 @ranking_blueprint.route('/pilots')
-@vary_accept
+@vary('accept')
 def pilots():
     data = _handle_request(User, 'pilot_id')
 
@@ -106,7 +106,7 @@ def pilots():
 
 
 @ranking_blueprint.route('/clubs')
-@vary_accept
+@vary('accept')
 def clubs():
     data = _handle_request(Club, 'club_id')
 
@@ -131,7 +131,7 @@ def clubs():
 
 
 @ranking_blueprint.route('/airports')
-@vary_accept
+@vary('accept')
 def airports():
     data = _handle_request(Airport, 'takeoff_airport_id')
 

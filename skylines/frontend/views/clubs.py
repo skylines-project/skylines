@@ -2,13 +2,13 @@ from flask import Blueprint, render_template, request, jsonify
 from sqlalchemy import func
 
 from skylines.model import Club
-from skylines.lib.vary import vary_accept
+from skylines.lib.vary import vary
 
 clubs_blueprint = Blueprint('clubs', 'skylines')
 
 
 @clubs_blueprint.route('/')
-@vary_accept
+@vary('accept')
 def index():
     if 'application/json' not in request.headers.get('Accept', ''):
         return render_template('ember-page.jinja', active_page='settings')

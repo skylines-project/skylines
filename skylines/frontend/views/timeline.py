@@ -2,7 +2,7 @@ from flask import Blueprint, render_template, request, jsonify
 from sqlalchemy.orm import subqueryload, contains_eager
 from sqlalchemy.sql.expression import or_
 
-from skylines.lib.vary import vary_accept
+from skylines.lib.vary import vary
 from skylines.model.event import Event
 from skylines.model import Flight
 from .notifications import _filter_query, convert_event
@@ -11,7 +11,7 @@ timeline_blueprint = Blueprint('timeline', 'skylines')
 
 
 @timeline_blueprint.route('/')
-@vary_accept
+@vary('accept')
 def index():
     if 'application/json' not in request.headers.get('Accept', ''):
         return render_template('ember-page.jinja')

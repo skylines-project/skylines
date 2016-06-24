@@ -5,7 +5,7 @@ from skylines.model.search import (
     combined_search_query, text_to_tokens, escape_tokens,
     process_result_details
 )
-from skylines.lib.vary import vary_accept
+from skylines.lib.vary import vary
 
 search_blueprint = Blueprint('search', 'skylines')
 
@@ -13,7 +13,7 @@ MODELS = [User, Club, Airport]
 
 
 @search_blueprint.route('/')
-@vary_accept
+@vary('accept')
 def index():
     if 'application/json' not in request.headers.get('Accept', ''):
         return render_template('ember-page.jinja', active_page='search')

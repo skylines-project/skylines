@@ -13,13 +13,13 @@ from skylines.database import db
 from skylines.model import User
 from skylines.model.event import create_new_user_event
 from skylines.frontend.forms import CreatePilotForm, RecoverStep1Form, RecoverStep2Form
-from skylines.lib.vary import vary_accept
+from skylines.lib.vary import vary
 
 users_blueprint = Blueprint('users', 'skylines')
 
 
 @users_blueprint.route('/')
-@vary_accept
+@vary('accept')
 def index():
     if 'application/json' not in request.headers.get('Accept', ''):
         return render_template('ember-page.jinja', active_page='settings')
