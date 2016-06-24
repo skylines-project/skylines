@@ -110,6 +110,9 @@ def convert_event(e):
         },
     }
 
+    if hasattr(e, 'unread'):
+        event['unread'] = e.unread
+
     if e.user_id:
         event['user'] = {
             'id': e.user_id,

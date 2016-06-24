@@ -3,7 +3,10 @@
 </td>
 <td>
   <a href="{{concat "/users/" (if accountUserIsFollowed event.actor.id event.user.id)}}" class="btn btn-default btn-sm pull-right">{{t "show"}}</a>
-  <p><small><abbr title={{format-time event.time format="full"}}>{{format-relative event.time}}</abbr></small></p>
+  <p>
+    {{#if event.unread}}<span class="badge badge-warning">{{t 'new'}}</span>{{/if}}
+    <small><abbr title={{format-time event.time format="full"}}>{{format-relative event.time}}</abbr></small>
+  </p>
   <p>
     {{format-html-message translationKey
       actor=event.actor.name
