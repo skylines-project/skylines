@@ -5,17 +5,9 @@ from sqlalchemy.sql.expression import or_
 from skylines.lib.vary import vary_accept
 from skylines.model.event import Event
 from skylines.model import Flight
-from .notifications import _filter_query
+from .notifications import _filter_query, convert_event
 
 timeline_blueprint = Blueprint('timeline', 'skylines')
-
-TYPES = {
-    Event.Type.FLIGHT_COMMENT: 'flight-comment',
-    Event.Type.FLIGHT: 'flight-upload',
-    Event.Type.FOLLOWER: 'follower',
-    Event.Type.NEW_USER: 'new-user',
-    Event.Type.CLUB_JOIN: 'club-join',
-}
 
 
 @timeline_blueprint.route('/')
@@ -41,43 +33,3 @@ def index():
     events = query.limit(per_page).offset((page - 1) * per_page).all()
 
     return jsonify(events=(map(convert_event, events)))
-
-
-def convert_event(e):
-    event = {
-        'id': e.id,
-        'type': TYPES.get(e.type, 'unknown'),
-        'time': e.time.isoformat(),
-        'actor': {
-            'id': e.actor_id,
-            'name': unicode(e.actor),
-        },
-    }
-
-    if e.user_id:
-        event['user'] = {
-            'id': e.user_id,
-            'name': unicode(e.user),
-        }
-
-    if e.club_id:
-        event['club'] = {
-            'id': e.club_id,
-            'name': unicode(e.club),
-        }
-
-    if e.flight_id:
-        event['flight'] = {
-            'id': e.flight_id,
-            'date': e.flight.date_local.isoformat(),
-            'distance': e.flight.olc_classic_distance,
-            'pilot_id': e.flight.pilot_id,
-            'copilot_id': e.flight.co_pilot_id,
-        }
-
-    if e.flight_comment_id:
-        event['flightComment'] = {
-            'id': e.flight_comment_id,
-        }
-
-    return event
