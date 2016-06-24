@@ -21,4 +21,9 @@ export default Ember.Controller.extend({
       return page + 1;
     }
   }),
+
+  isFirstPage: Ember.computed.equal('page', 1),
+  unreadEvents: Ember.computed.filterBy('events', 'unread', true),
+  hasUnreadOnPage: Ember.computed.notEmpty('unreadEvents'),
+  hasUnread: Ember.computed.and('isFirstPage', 'hasUnreadOnPage'),
 });

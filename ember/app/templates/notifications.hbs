@@ -21,10 +21,12 @@
         </div>
 
         <div class="col-xs-4" style="text-align:center">
-          <a href="/notifications/clear" {{action "markAsRead"}} title={{t "mark-all-as-read"}} class="btn btn-default">
-            <i class="icon-eye-open"></i>
-            <span class="hidden-xs">{{t "mark-all-as-read"}}</span>
-          </a>
+          {{#if hasUnread}}
+            <a href="/notifications/clear" {{action "markAsRead"}} title={{t "mark-all-as-read"}} class="btn btn-default">
+              <i class="icon-eye-open"></i>
+              <span class="hidden-xs">{{t "mark-all-as-read"}}</span>
+            </a>
+          {{/if}}
         </div>
 
         <div class="col-xs-4" style="text-align:right">
@@ -54,10 +56,12 @@
         </div>
 
         <div class="col-xs-4" style="text-align:center">
-          <a href="/notifications/clear" {{action "markAsRead"}} title={{t "mark-all-as-read"}} class="btn btn-default">
-            <i class="icon-eye-open"></i>
-            <span class="hidden-xs">{{t "mark-all-as-read"}}</span>
-          </a>
+          {{#if hasUnread}}
+            <a href="/notifications/clear" {{action "markAsRead"}} title={{t "mark-all-as-read"}} class="btn btn-default">
+              <i class="icon-eye-open"></i>
+              <span class="hidden-xs">{{t "mark-all-as-read"}}</span>
+            </a>
+          {{/if}}
         </div>
 
         <div class="col-xs-4" style="text-align:right">
