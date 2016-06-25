@@ -46,6 +46,13 @@ Router.map(function() {
   this.route('timeline');
   this.route('notifications');
 
+  this.route('settings', function() {
+    this.route('profile');
+    this.route('password');
+    this.route('club');
+    this.route('tracking');
+  });
+
   this.route('islands', { path: '/*wildcard' });
 });
 
