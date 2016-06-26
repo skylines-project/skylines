@@ -9,6 +9,9 @@ const Validations = buildValidations({
         presence: true,
         ignoreBlank: true,
       }),
+      validator('unique-club-name', {
+        messageKey: 'club-exists-already',
+      }),
     ],
     debounce: 500,
   },
@@ -38,9 +41,7 @@ export default Ember.Component.extend(Validations, {
       this.get('account').set('club', { id, name: json.name });
 
     }).catch(error => {
-      let errorCode = Ember.get(error, 'errors.0.detail.error');
-      let messageKey = (errorCode === 'club-exists') ? 'club-exists-already' : null;
-      this.setProperties({ messageKey, error });
+      this.setProperties({ messageKey: null, error });
 
     }).finally(() => {
       this.set('pending', false);
