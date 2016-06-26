@@ -15,6 +15,10 @@ def index():
 
     clubs = Club.query().order_by(func.lower(Club.name))
 
+    name_filter = request.args.get('name')
+    if name_filter:
+        clubs = clubs.filter_by(name=name_filter)
+
     json = []
     for c in clubs:
         json.append({
