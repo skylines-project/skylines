@@ -125,12 +125,12 @@ def tracking():
     return redirect(url_for('.tracking', user=g.user_id))
 
 
-@settings_blueprint.route('/tracking/generate-key')
+@settings_blueprint.route('/tracking/key', methods=['POST'])
 def tracking_generate_key():
     g.user.generate_tracking_key()
     db.session.commit()
 
-    return redirect(url_for('.tracking', user=g.user_id))
+    return jsonify(key=g.user.tracking_key_hex)
 
 
 @settings_blueprint.route('/club', methods=['GET'])
