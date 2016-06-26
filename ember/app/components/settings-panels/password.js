@@ -1,5 +1,4 @@
 import Ember from 'ember';
-import { ForbiddenError } from 'ember-ajax/errors';
 import { validator, buildValidations } from 'ember-cp-validations';
 
 const Validations = buildValidations({
