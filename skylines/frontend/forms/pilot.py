@@ -11,10 +11,6 @@ from wtforms.validators import (
 )
 
 from skylines.model import User
-from .units import (
-    UnitsPresetSelectField, DistanceUnitSelectField, AltitudeUnitSelectField,
-    LiftUnitSelectField, SpeedUnitSelectField
-)
 from .select import GroupSelectField
 
 
@@ -73,31 +69,6 @@ class CreatePilotForm(CreateClubPilotForm, ChangePasswordForm):
     # email_address, name from CreateClubPilotForm
     # password, verify_password from ChangePasswordForm
     pass
-
-
-class EditPilotForm(Form):
-    email_address = EmailField(l_('Email Address'), validators=[
-        InputRequired(message=l_('Please enter your email address.')),
-        Email(),
-    ])
-    first_name = TextField(l_('First Name'), validators=[
-        InputRequired(message=l_('Please enter your first name.')),
-    ])
-    last_name = TextField(l_('Last Name'), validators=[
-        InputRequired(message=l_('Please enter your last name.')),
-    ])
-    unit_preset = UnitsPresetSelectField(l_('Unit Preset'))
-    distance_unit = DistanceUnitSelectField(l_('Distance Unit'))
-    speed_unit = SpeedUnitSelectField(l_('Speed Unit'))
-    lift_unit = LiftUnitSelectField(l_('Lift Unit'))
-    altitude_unit = AltitudeUnitSelectField(l_('Altitude Unit'))
-
-    def validate_email_address(form, field):
-        if field.data == field.object_data:
-            return
-
-        if User.exists(email_address=field.data):
-            raise ValidationError(l_('A pilot with this email address exists already.'))
 
 
 class RecoverStep1Form(Form):

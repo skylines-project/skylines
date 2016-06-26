@@ -2,10 +2,12 @@ from flask import Blueprint, request, render_template, redirect, url_for, abort,
 from flask.ext.babel import _
 
 from sqlalchemy.sql.expression import and_, or_
+from marshmallow import validate
 
 from skylines.database import db
-from skylines.frontend.forms import EditPilotForm, ChangeClubForm, CreateClubForm
+from skylines.frontend.forms import ChangeClubForm, CreateClubForm
 from skylines.lib.dbutil import get_requested_record
+from skylines.lib.formatter.units import DISTANCE_UNITS, SPEED_UNITS, LIFT_UNITS, ALTITUDE_UNITS
 from skylines.model import User, Club, Flight, IGCFile
 from skylines.frontend.views.users import send_recover_mail
 from skylines.model.event import (
@@ -13,6 +15,7 @@ from skylines.model.event import (
 )
 
 settings_blueprint = Blueprint('settings', 'skylines')
+email_validator = validate.Email()
 
 
 @settings_blueprint.before_request
@@ -45,30 +48,74 @@ def index():
     return redirect(url_for('.profile', user=g.user_id))
 
 
-@settings_blueprint.route('/profile', methods=['GET', 'POST'])
+@settings_blueprint.route('/profile')
 def profile():
-    form = EditPilotForm(obj=g.user)
-    if not form.validate_on_submit():
-        return render_template('settings/profile.jinja', form=form)
+    return render_template('settings/profile.jinja')
 
-    g.user.email_address = form.email_address.data
-    g.user.first_name = form.first_name.data
-    g.user.last_name = form.last_name.data
 
-    unit_preset = request.form.get('unit_preset', 1, type=int)
-    if unit_preset == 0:
-        g.user.distance_unit = request.form.get('distance_unit', 1, type=int)
-        g.user.speed_unit = request.form.get('speed_unit', 1, type=int)
-        g.user.lift_unit = request.form.get('lift_unit', 0, type=int)
-        g.user.altitude_unit = request.form.get('altitude_unit', 0, type=int)
-    else:
-        g.user.unit_preset = unit_preset
+@settings_blueprint.route('/profile', methods=['POST'])
+def change_profile():
+    email = request.form.get('email')
+    if email is not None and email != g.user.email_address:
+        try:
+            email_validator(email)
+        except:
+            return jsonify(error='invalid-email'), 400
+
+        if User.exists(email_address=email):
+            return jsonify(error='email-exists-already'), 400
+
+        g.user.email_address = email
+
+    first_name = request.form.get('firstName')
+    if first_name is not None:
+        if first_name.strip() == '':
+            return jsonify(error='invalid-first-name'), 400
+
+        g.user.first_name = first_name
+
+    last_name = request.form.get('lastName')
+    if last_name is not None:
+        if last_name.strip() == '':
+            return jsonify(error='invalid-last-name'), 400
+
+        g.user.last_name = last_name
+
+    distance_unit = request.form.get('distanceUnitIndex')
+    if distance_unit is not None:
+        distance_unit = int(distance_unit)
+        if not (0 <= distance_unit < len(DISTANCE_UNITS)):
+            return jsonify(error='invalid-distance-unit'), 400
+
+        g.user.distance_unit = distance_unit
+
+    speed_unit = request.form.get('speedUnitIndex')
+    if speed_unit is not None:
+        speed_unit = int(speed_unit)
+        if not (0 <= speed_unit < len(SPEED_UNITS)):
+            return jsonify(error='invalid-speed-unit'), 400
+
+        g.user.speed_unit = speed_unit
+
+    lift_unit = request.form.get('liftUnitIndex')
+    if lift_unit is not None:
+        lift_unit = int(lift_unit)
+        if not (0 <= lift_unit < len(LIFT_UNITS)):
+            return jsonify(error='invalid-lift-unit'), 400
+
+        g.user.lift_unit = lift_unit
+
+    altitude_unit = request.form.get('altitudeUnitIndex')
+    if altitude_unit is not None:
+        altitude_unit = int(altitude_unit)
+        if not (0 <= altitude_unit < len(ALTITUDE_UNITS)):
+            return jsonify(error='invalid-altitude-unit'), 400
+
+        g.user.altitude_unit = altitude_unit
 
     db.session.commit()
 
-    flash(_('Profile was saved.'), 'success')
-
-    return redirect(url_for('.profile', user=g.user_id))
+    return jsonify()
 
 
 @settings_blueprint.route('/password')

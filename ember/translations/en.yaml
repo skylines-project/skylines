@@ -18,6 +18,8 @@ distance: 'Distance'
 distance-abbr: 'Dist.'
 duration: 'Duration'
 edit: 'Edit'
+email-address: 'Email address'
+first-name: 'First name'
 flight-time: 'Flight Time'
 flights: 'Flights'
 friends: 'Friends'
@@ -28,6 +30,7 @@ glide-rate-abbr: 'GR'
 how-to-use-live-tracking: 'How to use Live Tracking?'
 imprint: 'Imprint'
 last-fix: 'Last Fix'
+last-name: 'Last name'
 live-tracking: 'Live Tracking'
 live-tracking-key: 'Live Tracking Key'
 mark-all-as-read: 'Mark all as read'
@@ -107,6 +110,19 @@ timeline-events:
   new-user:
     message1: '<strong><a href="{actorURL}">{actor}</a></strong> joined SkyLines.'
     message2: 'You joined SkyLines.'
+
+units:
+  title: 'Units'
+  distance: 'Distance unit'
+  speed: 'Speed unit'
+  lift: 'Lift unit'
+  altitude: 'Altitude unit'
+  presets:
+    american: 'American (imperial)'
+    australian: 'Australian (metric, imperial height)'
+    british: 'British (imperial, distance in km)'
+    custom: 'Custom'
+    european: 'European (metric)'
 
 errors:
   description: "This field"

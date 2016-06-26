@@ -1,47 +1,16 @@
-{% extends "settings/base-form.jinja" %}
+{% extends "settings/base.jinja" %}
 {% set settings_page = "profile" %}
-
-{% from "macros/form.jinja" import render_field, render_two_fields %}
 
 {% block title %}{% trans %}Edit User{% endtrans %}{% endblock %}
 
-{% block form -%}
-<form method="POST" action="{{ url_for('settings.profile', user=g.user_id) }}" role="form">
-  {{ form.hidden_tag() }}
-  {{ render_field(form.email_address) }}
-  {{ render_two_fields(_('First and last name'), form.first_name, form.last_name) }}
-  {{ render_field(form.unit_preset) }}
-  <div id="custom_units">
-  {{ render_field(form.distance_unit) }}
-  {{ render_field(form.speed_unit) }}
-  {{ render_field(form.lift_unit) }}
-  {{ render_field(form.altitude_unit) }}
-  </div>
-  <div class="form-group">
-    <input class="form-control btn btn-primary" value="{{ _('Change') }}" type="submit">
-  </div>
-</form>
-{%- endblock %}
-
-{% block scripts -%}
-{{ super() }}
-<script type="text/javascript">
-  function updateUnitFields(preset, unit_fields) {
-    if (preset == 0)
-      unit_fields.show();
-    else
-      unit_fields.hide();
-  }
-
-  $(document).ready(function() {
-    var preset_field = $("#unit_preset");
-    var unit_fields = $("#custom_units");
-
-    updateUnitFields(preset_field.val(), unit_fields);
-
-    preset_field.change(function() {
-      updateUnitFields($(this).val(), unit_fields);
-    });
-  })
-</script>
+{% block settings_content -%}
+<div data-component="profile-settings-panel" data-attrs='{
+  "email": {{ g.user.email_address|tojson }},
+  "firstName": {{ g.user.first_name|tojson }},
+  "lastName": {{ g.user.last_name|tojson }},
+  "distanceUnitIndex": {{ g.user.distance_unit|tojson }},
+  "speedUnitIndex": {{ g.user.speed_unit|tojson }},
+  "liftUnitIndex": {{ g.user.lift_unit|tojson }},
+  "altitudeUnitIndex": {{ g.user.altitude_unit|tojson }}
+}'>Loading...<br/><br/></div>
 {%- endblock %}
