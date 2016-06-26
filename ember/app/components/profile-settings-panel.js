@@ -88,7 +88,7 @@ export default Ember.Component.extend(Validations, {
   }),
 
   sendChangeRequest() {
-    let data = this.getProperties([
+    let json = this.getProperties([
       'email',
       'firstName',
       'lastName',
@@ -99,7 +99,7 @@ export default Ember.Component.extend(Validations, {
     ]);
 
     this.set('pending', true);
-    this.get('ajax').request('/settings/profile', { method: 'POST', data }).then(() => {
+    this.get('ajax').request('/settings/profile', { method: 'POST', json }).then(() => {
       this.setProperties({
         messageKey: 'settings-have-been-saved',
         error: null,

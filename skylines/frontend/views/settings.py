@@ -55,7 +55,11 @@ def profile():
 
 @settings_blueprint.route('/profile', methods=['POST'])
 def change_profile():
-    email = request.form.get('email')
+    json = request.get_json()
+    if not json:
+        return jsonify(error='invalid-request'), 400
+
+    email = json.get('email')
     if email is not None and email != g.user.email_address:
         try:
             email_validator(email)
@@ -67,21 +71,21 @@ def change_profile():
 
         g.user.email_address = email
 
-    first_name = request.form.get('firstName')
+    first_name = json.get('firstName')
     if first_name is not None:
         if first_name.strip() == '':
             return jsonify(error='invalid-first-name'), 400
 
         g.user.first_name = first_name
 
-    last_name = request.form.get('lastName')
+    last_name = json.get('lastName')
     if last_name is not None:
         if last_name.strip() == '':
             return jsonify(error='invalid-last-name'), 400
 
         g.user.last_name = last_name
 
-    distance_unit = request.form.get('distanceUnitIndex')
+    distance_unit = json.get('distanceUnitIndex')
     if distance_unit is not None:
         distance_unit = int(distance_unit)
         if not (0 <= distance_unit < len(DISTANCE_UNITS)):
@@ -89,7 +93,7 @@ def change_profile():
 
         g.user.distance_unit = distance_unit
 
-    speed_unit = request.form.get('speedUnitIndex')
+    speed_unit = json.get('speedUnitIndex')
     if speed_unit is not None:
         speed_unit = int(speed_unit)
         if not (0 <= speed_unit < len(SPEED_UNITS)):
@@ -97,7 +101,7 @@ def change_profile():
 
         g.user.speed_unit = speed_unit
 
-    lift_unit = request.form.get('liftUnitIndex')
+    lift_unit = json.get('liftUnitIndex')
     if lift_unit is not None:
         lift_unit = int(lift_unit)
         if not (0 <= lift_unit < len(LIFT_UNITS)):
@@ -105,7 +109,7 @@ def change_profile():
 
         g.user.lift_unit = lift_unit
 
-    altitude_unit = request.form.get('altitudeUnitIndex')
+    altitude_unit = json.get('altitudeUnitIndex')
     if altitude_unit is not None:
         altitude_unit = int(altitude_unit)
         if not (0 <= altitude_unit < len(ALTITUDE_UNITS)):
@@ -125,10 +129,14 @@ def password():
 
 @settings_blueprint.route('/password', methods=['POST'])
 def change_password():
-    if not g.user.validate_password(request.form.get('currentPassword', '')):
+    json = request.get_json()
+    if not json:
+        return jsonify(error='invalid-request'), 400
+
+    if not g.user.validate_password(json.get('currentPassword', '')):
         return jsonify(), 403
 
-    password = request.form.get('password', '')
+    password = json.get('password', '')
     if len(password) < 6:
         return jsonify(), 400
 
@@ -161,14 +169,18 @@ def tracking():
 
 @settings_blueprint.route('/tracking', methods=['POST'])
 def change_tracking_settings():
-    callsign = request.form.get('callsign')
+    json = request.get_json()
+    if not json:
+        return jsonify(error='invalid-request'), 400
+
+    callsign = json.get('callsign')
     if callsign is not None:
         if not (0 < len(callsign) < 6):
             return jsonify(reason='callsign invalid'), 400
 
         g.user.tracking_callsign = callsign
 
-    delay = request.form.get('delay')
+    delay = json.get('delay')
     if delay is not None:
         delay = int(delay)
         if not (0 <= delay <= 60):

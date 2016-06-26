@@ -32,10 +32,10 @@ export default Ember.Component.extend(Validations, {
   }),
 
   sendChangeRequest() {
-    let data = this.getProperties('callsign', 'delay');
+    let json = this.getProperties('callsign', 'delay');
 
     this.set('pending', true);
-    this.get('ajax').request('/settings/tracking', { method: 'POST', data }).then(() => {
+    this.get('ajax').request('/settings/tracking', { method: 'POST', json }).then(() => {
       this.setProperties({
         messageKey: 'settings-have-been-saved',
         error: null,
