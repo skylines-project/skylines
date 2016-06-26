@@ -21,18 +21,5 @@
   </div>
 </div>
 
-<div class="panel panel-default">
-  <div class="panel-heading">
-    <h3 class="panel-title">{{ _('Register Club') }}</h3>
-  </div>
-  <div class="panel-body">
-    <form method="POST" action="{{ url_for('settings.club_create', user=g.user_id) }}" role="form">
-      {{ create_form.hidden_tag() }}
-      {{ render_field(create_form.name) }}
-      <div class="form-group">
-        <input class="form-control btn btn-primary" value="{{ _('Create') }}" type="submit">
-      </div>
-    </form>
-  </div>
-</div>
+<div data-component="settings-panels/register-club">Loading...<br/><br/></div>
 {%- endblock %}

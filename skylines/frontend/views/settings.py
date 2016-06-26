@@ -5,7 +5,7 @@ from sqlalchemy.sql.expression import and_, or_
 from marshmallow import validate
 
 from skylines.database import db
-from skylines.frontend.forms import ChangeClubForm, CreateClubForm
+from skylines.frontend.forms import ChangeClubForm
 from skylines.lib.dbutil import get_requested_record
 from skylines.lib.formatter.units import DISTANCE_UNITS, SPEED_UNITS, LIFT_UNITS, ALTITUDE_UNITS
 from skylines.model import User, Club, Flight, IGCFile
@@ -204,19 +204,12 @@ def tracking_generate_key():
 @settings_blueprint.route('/club', methods=['GET'])
 def club():
     change_form = ChangeClubForm(club=g.user.club_id)
-    create_form = CreateClubForm()
 
     if request.endpoint.endswith('.club_change'):
         if change_form.validate_on_submit():
             return club_change_post(change_form)
 
-    if request.endpoint.endswith('.club_create'):
-        if create_form.validate_on_submit():
-            return club_create_post(create_form)
-
-    return render_template(
-        'settings/club.jinja',
-        change_form=change_form, create_form=create_form)
+    return render_template('settings/club.jinja', change_form=change_form)
 
 
 @settings_blueprint.route('/club', methods=['POST'])
@@ -224,9 +217,38 @@ def club_change():
     return club()
 
 
-@settings_blueprint.route('/club/create', methods=['POST'])
-def club_create():
-    return club()
+@settings_blueprint.route('/club', methods=['PUT'])
+def create_club():
+    json = request.get_json()
+    if not json:
+        return jsonify(error='invalid-request'), 400
+
+    name = json.get('name')
+    if name is None:
+        return jsonify(error='missing-name'), 400
+
+    name = name.strip()
+    if name == '':
+        return jsonify(error='invalid-name'), 422
+
+    if Club.exists(name=name):
+        return jsonify(error='club-exists'), 422
+
+    # create the new club
+    club = Club(name=name)
+    club.owner_id = g.current_user.id
+    db.session.add(club)
+    db.session.flush()
+
+    # assign the user to the new club
+    g.user.club = club
+
+    # create the "user joined club" event
+    create_club_join_event(club.id, g.user)
+
+    db.session.commit()
+
+    return jsonify(id=club.id)
 
 
 def club_change_post(form):
@@ -252,21 +274,5 @@ def club_change_post(form):
     db.session.commit()
 
     flash(_('New club was saved.'), 'success')
-
-    return redirect(url_for('.club', user=g.user_id))
-
-
-def club_create_post(form):
-    club = Club(name=form.name.data)
-    club.owner_id = g.current_user.id
-    db.session.add(club)
-
-    db.session.flush()
-
-    g.user.club = club
-
-    create_club_join_event(club.id, g.user)
-
-    db.session.commit()
 
     return redirect(url_for('.club', user=g.user_id))

@@ -1,0 +1,24 @@
+<div class="panel-heading">
+  <h3 class="panel-title">{{t "register-club"}}</h3>
+</div>
+<div class="panel-body">
+  <form {{action "submit" on="submit"}}>
+    {{#if error}}
+      <div class="alert alert-danger" role="alert">
+        {{#if messageKey}}{{t messageKey error=error}}{{else}}{{error}}{{/if}}
+      </div>
+    {{else if messageKey}}
+      <div class="alert alert-success" role="alert">{{t messageKey}}</div>
+    {{/if}}
+
+    {{validated-input
+      value=name
+      validation=validations.attrs.name
+      label=(t "name")
+      disabled=pending}}
+
+    <button class="btn btn-primary btn-block" type="submit" disabled={{or pending (not validations.isTruelyValid)}}>
+      {{t (if pending "creating" "create")}}
+    </button>
+  </form>
+</div>

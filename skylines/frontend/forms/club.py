@@ -24,14 +24,6 @@ class ChangeClubForm(Form):
     club = ClubsSelectField(l_('Club'))
 
 
-class CreateClubForm(Form):
-    name = TextField(l_('Name'), validators=[InputRequired()])
-
-    def validate_name(form, field):
-        if Club.exists(name=field.data):
-            raise ValidationError(l_('A club with this name exists already.'))
-
-
 class EditClubForm(Form):
     name = TextField(l_('Name'), validators=[InputRequired()])
     website = TextField(l_('Website'), validators=[Optional(), URL()])
