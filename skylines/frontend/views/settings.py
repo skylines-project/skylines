@@ -1,11 +1,11 @@
-from flask import Blueprint, request, render_template, redirect, url_for, abort, g, flash
+from flask import Blueprint, request, render_template, redirect, url_for, abort, g, flash, jsonify
 from flask.ext.babel import _
 
 from sqlalchemy.sql.expression import and_, or_
 
 from skylines.database import db
 from skylines.frontend.forms import (
-    ChangePasswordForm, EditPilotForm, LiveTrackingSettingsForm,
+    EditPilotForm, LiveTrackingSettingsForm,
     ChangeClubForm, CreateClubForm
 )
 from skylines.lib.dbutil import get_requested_record
@@ -27,7 +27,7 @@ def handle_user_param():
     """
 
     if not g.current_user:
-        abort(403)
+        abort(401)
 
     g.user_id = request.values.get('user')
 
@@ -74,29 +74,26 @@ def profile():
     return redirect(url_for('.profile', user=g.user_id))
 
 
-@settings_blueprint.route('/password', methods=['GET', 'POST'])
+@settings_blueprint.route('/password')
 def password():
-    form = ChangePasswordForm()
+    return render_template('settings/password.jinja')
 
-    form_validated = form.validate_on_submit()
 
-    if request.method == 'POST' and not (
-            g.user.validate_password(form.current_password.data) or
-            g.current_user.is_manager()):
-        form.current_password.errors.append(_('This password does not match your current password.'))
-        form_validated = False
+@settings_blueprint.route('/password', methods=['POST'])
+def change_password():
+    if not g.user.validate_password(request.form.get('currentPassword', '')):
+        return jsonify(), 403
 
-    if not form_validated:
-        return render_template('settings/password.jinja', form=form)
+    password = request.form.get('password', '')
+    if len(password) < 6:
+        return jsonify(), 400
 
-    g.user.password = form.password.data
+    g.user.password = password
     g.user.recover_key = None
 
     db.session.commit()
 
-    flash(_('Your password was changed.'), 'success')
-
-    return redirect(url_for('.password', user=g.user_id))
+    return jsonify()
 
 
 @settings_blueprint.route('/password/recover')
