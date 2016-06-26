@@ -21,7 +21,7 @@ from skylines.lib.geo import METERS_PER_DEGREE
 from skylines.lib.geoid import egm96_height
 from skylines.model import (
     User, Flight, FlightPhase, Location, FlightComment,
-    Notification, Event, FlightMeetings
+    Notification, Event, FlightMeetings, AircraftModel,
 )
 from skylines.model.event import create_flight_comment_notifications
 from skylines.model.flight import get_elevations_for_flight
@@ -31,6 +31,14 @@ from redis.exceptions import ConnectionError
 import xcsoar
 
 flight_blueprint = Blueprint('flight', 'skylines')
+
+AIRCRAFT_MODEL_TYPES = {
+    1: 'glider',
+    2: 'motorglider',
+    3: 'paraglider',
+    4: 'hangglider',
+    5: 'ul',
+}
 
 
 def _reanalyse_if_needed(flight):
@@ -549,7 +557,7 @@ def change_pilot_post(form):
     return redirect(url_for('.index'))
 
 
-@flight_blueprint.route('/change_aircraft', methods=['GET', 'POST'])
+@flight_blueprint.route('/change_aircraft')
 def change_aircraft():
     if not g.flight.is_writable(g.current_user):
         abort(403)
@@ -573,32 +581,68 @@ def change_aircraft():
     else:
         competition_id = None
 
-    form = ChangeAircraftForm(
-        id=g.flight.id,
+    models = AircraftModel.query() \
+        .order_by(AircraftModel.kind) \
+        .order_by(AircraftModel.name) \
+        .all()
+
+    return render_template(
+        'flights/change_aircraft.jinja',
+        models=map(convert_aircraft_model, models),
         model_id=model_id,
         registration=registration,
         competition_id=competition_id
     )
-    if form.validate_on_submit():
-        return change_aircraft_post(form)
-
-    return render_template('flights/change_aircraft.jinja', form=form)
 
 
-def change_aircraft_post(form):
-    registration = form.registration.data
-    if registration is not None:
-        registration = registration.strip()
-        if len(registration) == 0:
-            registration = None
+def convert_aircraft_model(model):
+    """
+    :type model: AircraftModel
+    """
 
-    g.flight.model_id = form.model_id.data or None
-    g.flight.registration = registration
-    g.flight.competition_id = form.competition_id.data or None
+    return dict(
+        id=model.id,
+        name=model.name,
+        type=AIRCRAFT_MODEL_TYPES[model.kind],
+        index=model.dmst_index,
+    )
+
+
+@flight_blueprint.route('/', methods=['POST'])
+def update():
+    if not g.flight.is_writable(g.current_user):
+        return jsonify(), 403
+
+    json = request.get_json()
+    if not json:
+        return jsonify(error='invalid-request'), 400
+
+    if json.has_key('modelId'):
+        model_id = json.get('modelId')
+        if model_id is not None and not AircraftModel.exists(id=model_id):
+            return jsonify(error='invalid-model-id'), 422
+
+        g.flight.model_id = model_id
+
+    if json.has_key('registration'):
+        registration = json.get('registration').strip()
+        if len(registration) > 32:
+            return jsonify(error='invalid-registration'), 422
+
+        g.flight.registration = registration
+
+
+    if json.has_key('competitionId'):
+        competition_id = json.get('competitionId').strip()
+        if len(competition_id) > 5:
+            return jsonify(error='invalid-competition-id'), 422
+
+        g.flight.competition_id = competition_id
+
     g.flight.time_modified = datetime.utcnow()
     db.session.commit()
 
-    return redirect(url_for('.index'))
+    return jsonify()
 
 
 @flight_blueprint.route('/delete', methods=['GET', 'POST'])

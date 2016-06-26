@@ -1,18 +1,17 @@
 {% extends "base-form.jinja" %}
 {% set active_page = "flights" %}
+{% set use_ember = true %}
 
 {% from "macros/form.jinja" import render_field %}
 
 {% block title %}{% trans %}Select Aircraft{% endtrans %}{% endblock %}
 
 {% block form -%}
-<form method="POST" action="{{ url_for('flight.change_aircraft') }}" role="form">
-  {{ form.hidden_tag() }}
-  {{ render_field(form.model_id) }}
-  {{ render_field(form.registration) }}
-  {{ render_field(form.competition_id) }}
-  <div class="form-group">
-    <input class="form-control btn btn-primary" value="{{ _('Change') }}" type="submit">
-  </div>
-</form>
+<div data-component="change-aircraft-form" data-attrs='{
+  "flightId": {{ g.flight.id|tojson }},
+  "models": {{ models|tojson }},
+  "modelId": {{ model_id|tojson }},
+  "registration": {{ registration|tojson }},
+  "competitionId": {{ competition_id|tojson }}
+}'></div>
 {%- endblock %}
