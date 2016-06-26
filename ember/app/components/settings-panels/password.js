@@ -27,7 +27,7 @@ const Validations = buildValidations({
 export default Ember.Component.extend(Validations, {
   ajax: Ember.inject.service(),
 
-  tagName: '',
+  classNames: ['panel', 'panel-default'],
 
   currentPassword: null,
   password: null,
