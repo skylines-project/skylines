@@ -34,7 +34,7 @@
 
           <p>
             {{#if club.isWritable}}
-              <a href="/clubs/{{club.id}}/edit" class="btn btn-default">{{t "edit"}}</a>
+              {{#link-to "club.edit" club.id class="btn btn-default"}}{{t "edit"}}{{/link-to}}
             {{/if}}
 
             <a href="/flights/club/{{club.id}}" class="btn btn-default"><i class="icon-plane"></i> {{t "flights"}}</a>

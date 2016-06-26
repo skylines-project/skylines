@@ -1,11 +1,9 @@
 from flask import Blueprint, render_template, g, redirect, url_for, abort, request, jsonify
-from sqlalchemy import func
 
 from skylines.database import db
-from skylines.frontend.forms import EditClubForm
 from skylines.lib.dbutil import get_requested_record
 from skylines.lib.vary import vary
-from skylines.model import User, Club
+from skylines.model import Club
 
 club_blueprint = Blueprint('club', 'skylines')
 
@@ -52,21 +50,38 @@ def pilots():
     return render_template('ember-page.jinja', active_page='settings')
 
 
-@club_blueprint.route('/edit', methods=['GET', 'POST'])
+@club_blueprint.route('/edit')
 def edit():
-    if not g.club.is_writable(g.current_user):
-        abort(403)
-
-    form = EditClubForm(obj=g.club)
-    if form.validate_on_submit():
-        return edit_post(form)
-
-    return render_template('clubs/edit.jinja', form=form)
+    return render_template('ember-page.jinja', active_page='settings')
 
 
-def edit_post(form):
-    g.club.name = form.name.data
-    g.club.website = form.website.data
+@club_blueprint.route('/', methods=['POST'])
+def edit_post():
+    json = request.get_json()
+    if not json:
+        return jsonify(error='invalid-request'), 400
+
+    name = json.get('name')
+    if name is not None:
+        name = name.strip()
+
+        if name == '':
+            return jsonify(error='invalid-name'), 422
+
+        if name != g.club.name and Club.exists(name=name):
+            return jsonify(error='name-exists-already'), 422
+
+        g.club.name = name
+
+    website = json.get('website')
+    if website is not None:
+        website = website.strip()
+
+        if website == '':
+            return jsonify(error='invalid-first-name'), 422
+
+        g.club.website = website
+
     db.session.commit()
 
-    return redirect(url_for('.index'))
+    return jsonify()
