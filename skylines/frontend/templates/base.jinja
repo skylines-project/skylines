@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
+    <meta name="skylines-locale" content="{{ g.active_locale }}">
     {% if g.current_user %}
       <meta name="skylines-user" content="{{ g.current_user.id }}||{{ g.current_user.name|e }}">
       {% if g.current_user.club %}
@@ -51,10 +52,6 @@
 {%- assets 'all_js' %}
 <script type="text/javascript" src="{{ ASSET_URL }}"></script>
 {%- endassets %}
-
-<script type="text/javascript">
-window.slLocale = '{{ g.active_locale }}';
-</script>
 
 {% if use_ember %}
 <script src="https://cdn.polyfill.io/v2/polyfill.min.js?features=Intl.~locale.en,Intl.~locale.de"></script>
