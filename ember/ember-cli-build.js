@@ -20,6 +20,10 @@ module.exports = function(defaults) {
     gzip: {
       keepUncompressed: true,
     },
+
+    'ember-power-select': {
+      theme: 'bootstrap',
+    },
   });
 
   // Use `app.import` to add additional libraries to the generated

@@ -42,6 +42,7 @@
     "ember-intl-cp-validations": "2.3.0",
     "ember-islands": "1.0.0",
     "ember-load-initializers": "^0.5.1",
+    "ember-power-select": "1.0.0-alpha.5",
     "ember-resolver": "^2.0.3",
     "ember-truth-helpers": "1.2.0",
     "loader.js": "^4.0.1"
