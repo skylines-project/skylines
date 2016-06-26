@@ -1,3 +1,5 @@
+import Ember from 'ember';
+
 /**
  * A static dictionary of the supported units with its
  * conversion factors and default decimal places.
@@ -39,7 +41,7 @@ let settings = {
  * @param {String} lift The vertical speed unit (e.g. 'm/s').
  * @param {String} altitude The altitude unit (e.g. 'm').
  */
-export function init(distance, speed, lift, altitude) {
+function init(distance, speed, lift, altitude) {
   if (UNITS[distance]) {
     settings['Distance'] = distance;
   }
@@ -137,3 +139,10 @@ export function addAltitudeUnit(value) {
 export function getAltitudeUnit() {
   return settings['Altitude'];
 }
+
+init(
+  Ember.$('meta[name=skylines-distance-unit]').attr('content'),
+  Ember.$('meta[name=skylines-speed-unit]').attr('content'),
+  Ember.$('meta[name=skylines-lift-unit]').attr('content'),
+  Ember.$('meta[name=skylines-altitude-unit]').attr('content')
+);
