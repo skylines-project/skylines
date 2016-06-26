@@ -1,11 +1,10 @@
 from flask import Blueprint, request, render_template, redirect, url_for, abort, g, flash, jsonify
-from flask.ext.babel import _
 
+from sqlalchemy import func
 from sqlalchemy.sql.expression import and_, or_
 from marshmallow import validate
 
 from skylines.database import db
-from skylines.frontend.forms import ChangeClubForm
 from skylines.lib.dbutil import get_requested_record
 from skylines.lib.formatter.units import DISTANCE_UNITS, SPEED_UNITS, LIFT_UNITS, ALTITUDE_UNITS
 from skylines.model import User, Club, Flight, IGCFile
@@ -222,18 +221,45 @@ def tracking_generate_key():
 
 @settings_blueprint.route('/club', methods=['GET'])
 def club():
-    change_form = ChangeClubForm(club=g.user.club_id)
+    clubs = [dict(id=club.id, name=unicode(club)) for club in Club.query().order_by(func.lower(Club.name))]
 
-    if request.endpoint.endswith('.club_change'):
-        if change_form.validate_on_submit():
-            return club_change_post(change_form)
-
-    return render_template('settings/club.jinja', change_form=change_form)
+    return render_template('settings/club.jinja', clubs=clubs)
 
 
 @settings_blueprint.route('/club', methods=['POST'])
 def club_change():
-    return club()
+    json = request.get_json()
+    if not json:
+        return jsonify(error='invalid-request'), 400
+
+    if not json.has_key('id'):
+        return jsonify(error='missing-id'), 422
+
+    id = json.get('id')
+    if id is not None:
+        id = int(id)
+
+        if not Club.exists(id=id):
+            return jsonify(error='club-does-not-exist'), 422
+
+    if g.user.club_id == id:
+        return jsonify()
+
+    g.user.club_id = id
+
+    create_club_join_event(id, g.user)
+
+    # assign the user's new club to all of his flights that have
+    # no club yet
+    flights = Flight.query().join(IGCFile)
+    flights = flights.filter(and_(Flight.club_id == None,
+                                  or_(Flight.pilot_id == g.user.id,
+                                      IGCFile.owner_id == g.user.id)))
+    for flight in flights:
+        flight.club_id = id
+
+    db.session.commit()
+    return jsonify()
 
 
 @settings_blueprint.route('/club', methods=['PUT'])
@@ -268,30 +294,3 @@ def create_club():
     db.session.commit()
 
     return jsonify(id=club.id)
-
-
-def club_change_post(form):
-    old_club_id = g.user.club_id
-    new_club_id = form.club.data if form.club.data != 0 else None
-
-    if old_club_id == new_club_id:
-        return redirect(url_for('.club', user=g.user_id))
-
-    g.user.club_id = new_club_id
-
-    create_club_join_event(new_club_id, g.user)
-
-    # assign the user's new club to all of his flights that have
-    # no club yet
-    flights = Flight.query().join(IGCFile)
-    flights = flights.filter(and_(Flight.club_id == None,
-                                  or_(Flight.pilot_id == g.user.id,
-                                      IGCFile.owner_id == g.user.id)))
-    for flight in flights:
-        flight.club_id = g.user.club_id
-
-    db.session.commit()
-
-    flash(_('New club was saved.'), 'success')
-
-    return redirect(url_for('.club', user=g.user_id))

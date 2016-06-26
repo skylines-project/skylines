@@ -1,7 +1,7 @@
 # flake8: noqa
 
 from .aircraft_model import AircraftModelSelectField
-from .club import ChangeClubForm, EditClubForm
+from .club import EditClubForm
 from .file import MultiFileField
 from .flight import ChangePilotsForm, ChangeAircraftForm
 from .pilot import (
