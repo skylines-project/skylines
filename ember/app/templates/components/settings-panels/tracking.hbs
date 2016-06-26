@@ -27,7 +27,7 @@
       {{/power-select}}
     </div>
 
-    <button class="btn btn-primary btn-block" type="submit" disabled={{or pending (not validations.isTruelyValid)}}>
+    <button class="btn btn-primary btn-block" type="submit" disabled={{or pending (not validations.isValid)}}>
       {{t (if pending "changing" "change")}}
     </button>
   </form>
