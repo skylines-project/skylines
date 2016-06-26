@@ -1,0 +1,31 @@
+{{#base-page}}
+  <div class="page-header">
+    <h1>{{format-html-message "members-of-CLUB" club=club.name clubURL=(concat "/clubs/" club.id)}}</h1>
+  </div>
+
+  <div class="row">
+    <div class="col-md-12">
+      <table class="table table-striped">
+        <thead>
+        <tr>
+          <th>{{t "name"}}</th>
+        </tr>
+        </thead>
+        <tbody>
+        {{#each model.users as |user|}}
+          <tr>
+            <td class="column-buttons">
+              <a href="/users/{{user.id}}">{{user.name}}</a>
+
+              <div class="pull-right">
+                <a href="/flights/pilot/{{user.id}}" class="btn btn-default btn-sm"><i class="icon-plane"></i> {{t "flights"}}</a>
+                <a href="/statistics/pilot/{{user.id}}" class="btn btn-default btn-sm"><i class="icon-bar-chart"></i> {{t "statistics"}}</a>
+              </div>
+            </td>
+          </tr>
+        {{/each}}
+        </tbody>
+      </table>
+    </div>
+  </div>
+{{/base-page}}

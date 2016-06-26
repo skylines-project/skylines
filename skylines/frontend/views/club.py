@@ -49,11 +49,7 @@ def index():
 
 @club_blueprint.route('/pilots')
 def pilots():
-    users = User.query(club=g.club).order_by(func.lower(User.name))
-
-    return render_template(
-        'clubs/pilots.jinja', active_page='settings',
-        club=g.club, users=users)
+    return render_template('ember-page.jinja', active_page='settings')
 
 
 @club_blueprint.route('/edit', methods=['GET', 'POST'])

@@ -43,6 +43,7 @@ live-tracking: 'Live Tracking'
 live-tracking-key: 'Live Tracking Key'
 mark-all-as-read: 'Mark all as read'
 members: 'Members'
+members-of-CLUB: 'Members <small>of <a href="{clubURL}">{club}</a></small>'
 n-avg-distance-per-flight: 'avg. {distance} per flight'
 n-avg-hours-per-flight: 'avg. {num} hours per flight'
 n-comments: '{numComments, plural,
