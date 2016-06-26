@@ -148,6 +148,15 @@ def change_password():
     return jsonify()
 
 
+@settings_blueprint.route('/password/check', methods=['POST'])
+def check_current_password():
+    json = request.get_json()
+    if not json:
+        return jsonify(error='invalid-request'), 400
+
+    return jsonify(result=g.user.validate_password(json.get('password', '')))
+
+
 @settings_blueprint.route('/password/recover')
 def password_recover():
     if not g.current_user.is_manager():

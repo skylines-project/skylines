@@ -7,6 +7,9 @@ const Validations = buildValidations({
     descriptionKey: 'current-password',
     validators: [
       validator('presence', true),
+      validator('current-password', {
+        messageKey: 'wrong-current-password',
+      }),
     ],
     debounce: 500,
   },
@@ -46,17 +49,10 @@ export default Ember.Component.extend(Validations, {
         error: null,
       });
     }).catch(error => {
-      if (error instanceof ForbiddenError) {
-        this.setProperties({
-          messageKey: 'wrong-current-password',
-          error,
-        });
-      } else {
-        this.setProperties({
-          messageKey: null,
-          error,
-        });
-      }
+      this.setProperties({
+        messageKey: null,
+        error,
+      });
     }).finally(() => {
       this.set('pending', false);
     });
