@@ -1,5 +1,6 @@
 import Ember from 'ember';
 
+import safeComputed from '../utils/safe-computed';
 import { addAltitudeUnit } from '../utils/units';
 
 export default Ember.Component.extend(Ember.Evented, {
@@ -44,23 +45,17 @@ export default Ember.Component.extend(Ember.Evented, {
     }));
   }),
 
-  contests: Ember.computed('flights.[]', 'selection', function() {
+  selectedFlight: Ember.computed('flights.[]', 'selection', function() {
     let { flights, selection } = this.getProperties('flights', 'selection');
-    let flight = flights.find(flight => {
-      return flights.length === 1 || (selection && flight.getID() === selection);
-    });
-
-    return flight ? flight.get('contests') : [];
+    if (flights.get('length') === 1) {
+      return flights.get('firstObject');
+    } else if (selection) {
+      return flights.findBy('id', selection);
+    }
   }),
 
-  elevations: Ember.computed('flights.[]', 'selection', function() {
-    let { flights, selection } = this.getProperties('flights', 'selection');
-    let flight = flights.find(flight => {
-      return flights.length === 1 || (selection && flight.getID() === selection);
-    });
-
-    return flight ? flight.get('flot_elev') : [];
-  }),
+  contests: safeComputed('selectedFlight', flight => flight.get('contests')),
+  elevations: safeComputed('selectedFlight', flight => flight.get('flot_elev')),
 
   timeHighlight: Ember.computed.readOnly('flightPhase.selection'),
   hoverMode: Ember.computed.not('fixCalc.isRunning'),
