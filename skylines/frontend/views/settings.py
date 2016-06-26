@@ -122,6 +122,16 @@ def change_profile():
     return jsonify()
 
 
+@settings_blueprint.route('/email/check', methods=['POST'])
+def check_email():
+    json = request.get_json()
+    if not json:
+        return jsonify(error='invalid-request'), 400
+
+    email = json.get('email', '')
+    return jsonify(result=(email == g.user.email_address or not User.exists(email_address=email)))
+
+
 @settings_blueprint.route('/password')
 def password():
     return render_template('settings/password.jinja')

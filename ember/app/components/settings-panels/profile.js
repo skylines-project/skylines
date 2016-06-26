@@ -9,6 +9,7 @@ const Validations = buildValidations({
     validators: [
       validator('presence', true),
       validator('format', { type: 'email' }),
+      validator('unique-email', { messageKey: 'email-exists-already' }),
     ],
     debounce: 500,
   },
