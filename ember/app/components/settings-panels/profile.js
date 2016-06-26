@@ -1,7 +1,7 @@
 import Ember from 'ember';
 import { validator, buildValidations } from 'ember-cp-validations';
 
-import { PRESETS } from '../utils/units';
+import { PRESETS } from '../../utils/units';
 
 const Validations = buildValidations({
   email: {

@@ -4,7 +4,7 @@
 {% block title %}{% trans %}Edit User{% endtrans %}{% endblock %}
 
 {% block settings_content -%}
-<div data-component="profile-settings-panel" data-attrs='{
+<div data-component="settings-panels/profile" data-attrs='{
   "email": {{ g.user.email_address|tojson }},
   "firstName": {{ g.user.first_name|tojson }},
   "lastName": {{ g.user.last_name|tojson }},
