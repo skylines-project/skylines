@@ -1,11 +1,11 @@
 from flask import Blueprint, request, render_template, redirect, url_for, abort, g, flash, jsonify
 
-from sqlalchemy import func
 from sqlalchemy.sql.expression import and_, or_
 from marshmallow import validate
 
 from skylines.database import db
 from skylines.lib.dbutil import get_requested_record
+from skylines.lib.vary import vary
 from skylines.lib.formatter.units import DISTANCE_UNITS, SPEED_UNITS, LIFT_UNITS, ALTITUDE_UNITS
 from skylines.model import User, Club, Flight, IGCFile
 from skylines.frontend.views.users import send_recover_mail
@@ -48,8 +48,20 @@ def index():
 
 
 @settings_blueprint.route('/profile')
+@vary('accept')
 def profile():
-    return render_template('settings/profile.jinja')
+    if 'application/json' not in request.headers.get('Accept', ''):
+        return render_template('ember-page.jinja', active_page='settings')
+
+    return jsonify(
+        email=g.user.email_address,
+        firstName=g.user.first_name,
+        lastName=g.user.last_name,
+        distanceUnitIndex=g.user.distance_unit,
+        speedUnitIndex=g.user.speed_unit,
+        liftUnitIndex=g.user.lift_unit,
+        altitudeUnitIndex=g.user.altitude_unit,
+    )
 
 
 @settings_blueprint.route('/profile', methods=['POST'])
@@ -133,7 +145,7 @@ def check_email():
 
 @settings_blueprint.route('/password')
 def password():
-    return render_template('settings/password.jinja')
+    return render_template('ember-page.jinja', active_page='settings')
 
 
 @settings_blueprint.route('/password', methods=['POST'])
@@ -181,8 +193,16 @@ def password_recover():
 
 
 @settings_blueprint.route('/tracking')
+@vary('accept')
 def tracking():
-    return render_template('settings/tracking.jinja')
+    if 'application/json' not in request.headers.get('Accept', ''):
+        return render_template('ember-page.jinja', active_page='settings')
+
+    return jsonify(
+        key=g.user.tracking_key_hex,
+        delay=g.user.tracking_delay,
+        callsign=g.user.tracking_callsign,
+    )
 
 
 @settings_blueprint.route('/tracking', methods=['POST'])
@@ -221,9 +241,7 @@ def tracking_generate_key():
 
 @settings_blueprint.route('/club', methods=['GET'])
 def club():
-    clubs = [dict(id=club.id, name=unicode(club)) for club in Club.query().order_by(func.lower(Club.name))]
-
-    return render_template('settings/club.jinja', clubs=clubs)
+    return render_template('ember-page.jinja', active_page='settings')
 
 
 @settings_blueprint.route('/club', methods=['POST'])

@@ -1,1 +1,4 @@
-{{ember-islands}}
+{{#settings-page title=(t "live-tracking")}}
+  {{settings-panels/tracking-key key=model.key}}
+  {{settings-panels/tracking delay=model.delay callsign=model.callsign}}
+{{/settings-page}}

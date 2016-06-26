@@ -1,1 +1,10 @@
-{{ember-islands}}
+{{#settings-page title=(t "profile")}}
+  {{settings-panels/profile
+    email=model.email
+    firstName=model.firstName
+    lastName=model.lastName
+    distanceUnitIndex=model.distanceUnitIndex
+    speedUnitIndex=model.speedUnitIndex
+    liftUnitIndex=model.liftUnitIndex
+    altitudeUnitIndex=model.altitudeUnitIndex}}
+{{/settings-page}}

@@ -1,0 +1,25 @@
+{{#base-page}}
+  <div class="page-header">
+    <h1>{{title}}</h1>
+  </div>
+
+  <div class="row">
+    <div class="col-sm-8 col-sm-push-4 col-md-9 col-md-push-3">
+      {{yield}}
+    </div>
+
+    <div class="col-sm-4 col-sm-pull-8 col-md-3 col-md-pull-9">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title">{{account.user.name}}</h3>
+        </div>
+        <div class="list-group">
+          {{#link-to "settings.profile" class="list-group-item"}}{{t "profile"}}{{/link-to}}
+          {{#link-to "settings.password" class="list-group-item"}}{{t "password"}}{{/link-to}}
+          {{#link-to "settings.club" class="list-group-item"}}{{t "club"}}{{/link-to}}
+          {{#link-to "settings.tracking" class="list-group-item"}}{{t "live-tracking"}}{{/link-to}}
+        </div>
+      </div>
+    </div>
+  </div>
+{{/base-page}}
