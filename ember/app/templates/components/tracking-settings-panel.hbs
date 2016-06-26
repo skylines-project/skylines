@@ -1,0 +1,34 @@
+<div class="panel-body">
+  <form {{action "submit" on="submit"}}>
+    {{#if error}}
+      <div class="alert alert-danger" role="alert">
+        {{#if messageKey}}{{t messageKey error=error}}{{else}}{{error}}{{/if}}
+      </div>
+    {{else if messageKey}}
+      <div class="alert alert-success" role="alert">{{t messageKey}}</div>
+    {{/if}}
+
+    {{validated-input
+      value=callsign
+      validation=validations.attrs.callsign
+      label=(t "tracking-callsign")
+      disabled=pending}}
+
+    <div class="form-group">
+      <label class="control-label">{{t "tracking-delay"}}</label>
+
+      {{#power-select
+        options=delays
+        searchEnabled=false
+        selected=_delay
+        onchange=(action (mut delay))
+        as |delay|}}
+        {{t "tracking-delay-choice" delay=delay}}
+      {{/power-select}}
+    </div>
+
+    <button class="btn btn-primary btn-block" type="submit" disabled={{or pending (not validations.isTruelyValid)}}>
+      {{t (if pending "changing" "change")}}
+    </button>
+  </form>
+</div>

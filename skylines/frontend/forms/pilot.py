@@ -3,7 +3,7 @@ from flask.ext.babel import lazy_gettext as l_, ngettext
 from flask_wtf import Form
 
 from wtforms import (
-    TextField, SelectField, PasswordField, BooleanField, HiddenField
+    TextField, PasswordField, BooleanField, HiddenField
 )
 from wtforms.fields.html5 import EmailField
 from wtforms.validators import (
@@ -75,16 +75,6 @@ class CreatePilotForm(CreateClubPilotForm, ChangePasswordForm):
     pass
 
 
-class TrackingDelaySelectField(SelectField):
-    def __init__(self, *args, **kwargs):
-        super(TrackingDelaySelectField, self).__init__(*args, **kwargs)
-
-        self.coerce = int
-        self.choices = [(0, l_('None'))]
-        for x in range(1, 10) + range(10, 30, 5) + range(30, 61, 15):
-            self.choices.append((x, ngettext(u'%(num)u minute', u'%(num)u minutes', x)))
-
-
 class EditPilotForm(Form):
     email_address = EmailField(l_('Email Address'), validators=[
         InputRequired(message=l_('Please enter your email address.')),
@@ -108,13 +98,6 @@ class EditPilotForm(Form):
 
         if User.exists(email_address=field.data):
             raise ValidationError(l_('A pilot with this email address exists already.'))
-
-
-class LiveTrackingSettingsForm(Form):
-    tracking_delay = TrackingDelaySelectField(l_('Tracking Delay'))
-    tracking_callsign = TextField(l_('Tracking Callsign'), validators=[
-        Length(max=5, message=l_('Your callsign must not have more than 5 characters.')),
-    ])
 
 
 class RecoverStep1Form(Form):

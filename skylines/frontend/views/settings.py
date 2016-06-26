@@ -4,10 +4,7 @@ from flask.ext.babel import _
 from sqlalchemy.sql.expression import and_, or_
 
 from skylines.database import db
-from skylines.frontend.forms import (
-    EditPilotForm, LiveTrackingSettingsForm,
-    ChangeClubForm, CreateClubForm
-)
+from skylines.frontend.forms import EditPilotForm, ChangeClubForm, CreateClubForm
 from skylines.lib.dbutil import get_requested_record
 from skylines.model import User, Club, Flight, IGCFile
 from skylines.frontend.views.users import send_recover_mail
@@ -110,19 +107,31 @@ def password_recover():
     return redirect(url_for('.password', user=g.user_id))
 
 
-@settings_blueprint.route('/tracking', methods=['GET', 'POST'])
+@settings_blueprint.route('/tracking')
 def tracking():
-    form = LiveTrackingSettingsForm(obj=g.user)
-    if not form.validate_on_submit():
-        return render_template('settings/tracking.jinja', form=form)
+    return render_template('settings/tracking.jinja')
 
-    g.user.tracking_callsign = form.tracking_callsign.data
-    g.user.tracking_delay = request.form.get('tracking_delay', 0)
+
+@settings_blueprint.route('/tracking', methods=['POST'])
+def change_tracking_settings():
+    callsign = request.form.get('callsign')
+    if callsign is not None:
+        if not (0 < len(callsign) < 6):
+            return jsonify(reason='callsign invalid'), 400
+
+        g.user.tracking_callsign = callsign
+
+    delay = request.form.get('delay')
+    if delay is not None:
+        delay = int(delay)
+        if not (0 <= delay <= 60):
+            return jsonify(reason='delay invalid'), 400
+
+        g.user.tracking_delay = delay
+
     db.session.commit()
 
-    flash(_('Live Tracking settings were saved.'), 'success')
-
-    return redirect(url_for('.tracking', user=g.user_id))
+    return jsonify()
 
 
 @settings_blueprint.route('/tracking/key', methods=['POST'])

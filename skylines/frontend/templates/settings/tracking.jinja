@@ -1,23 +1,13 @@
 {% extends "settings/base.jinja" %}
 {% set settings_page = "tracking" %}
 
-{% from "macros/form.jinja" import render_field %}
-
 {% block title %}{{ _('Live Tracking Settings') }}{% endblock %}
 
 {% block settings_content -%}
 <div data-component="tracking-key-settings-panel" data-attrs='{"key": "{{ g.user.tracking_key_hex }}"}'>Loading...<br/><br/></div>
 
-<div class="panel panel-default">
-  <div class="panel-body">
-    <form method="POST" action="{{ url_for('settings.tracking', user=g.user_id) }}" role="form">
-      {{ form.hidden_tag() }}
-      {{ render_field(form.tracking_callsign) }}
-      {{ render_field(form.tracking_delay) }}
-      <div class="form-group">
-        <input class="form-control btn btn-primary" value="{{ _('Change') }}" type="submit">
-      </div>
-    </form>
-  </div>
-</div>
+<div data-component="tracking-settings-panel" data-attrs='{
+  "callsign": {{ g.user.tracking_callsign|tojson }},
+  "delay": {{ g.user.tracking_delay|tojson }}
+}'></div>
 {%- endblock %}
