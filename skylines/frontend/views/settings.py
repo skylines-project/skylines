@@ -64,24 +64,24 @@ def change_profile():
         try:
             email_validator(email)
         except:
-            return jsonify(error='invalid-email'), 400
+            return jsonify(error='invalid-email'), 422
 
         if User.exists(email_address=email):
-            return jsonify(error='email-exists-already'), 400
+            return jsonify(error='email-exists-already'), 422
 
         g.user.email_address = email
 
     first_name = json.get('firstName')
     if first_name is not None:
         if first_name.strip() == '':
-            return jsonify(error='invalid-first-name'), 400
+            return jsonify(error='invalid-first-name'), 422
 
         g.user.first_name = first_name
 
     last_name = json.get('lastName')
     if last_name is not None:
         if last_name.strip() == '':
-            return jsonify(error='invalid-last-name'), 400
+            return jsonify(error='invalid-last-name'), 422
 
         g.user.last_name = last_name
 
@@ -89,7 +89,7 @@ def change_profile():
     if distance_unit is not None:
         distance_unit = int(distance_unit)
         if not (0 <= distance_unit < len(DISTANCE_UNITS)):
-            return jsonify(error='invalid-distance-unit'), 400
+            return jsonify(error='invalid-distance-unit'), 422
 
         g.user.distance_unit = distance_unit
 
@@ -97,7 +97,7 @@ def change_profile():
     if speed_unit is not None:
         speed_unit = int(speed_unit)
         if not (0 <= speed_unit < len(SPEED_UNITS)):
-            return jsonify(error='invalid-speed-unit'), 400
+            return jsonify(error='invalid-speed-unit'), 422
 
         g.user.speed_unit = speed_unit
 
@@ -105,7 +105,7 @@ def change_profile():
     if lift_unit is not None:
         lift_unit = int(lift_unit)
         if not (0 <= lift_unit < len(LIFT_UNITS)):
-            return jsonify(error='invalid-lift-unit'), 400
+            return jsonify(error='invalid-lift-unit'), 422
 
         g.user.lift_unit = lift_unit
 
@@ -113,7 +113,7 @@ def change_profile():
     if altitude_unit is not None:
         altitude_unit = int(altitude_unit)
         if not (0 <= altitude_unit < len(ALTITUDE_UNITS)):
-            return jsonify(error='invalid-altitude-unit'), 400
+            return jsonify(error='invalid-altitude-unit'), 422
 
         g.user.altitude_unit = altitude_unit
 
@@ -138,7 +138,7 @@ def change_password():
 
     password = json.get('password', '')
     if len(password) < 6:
-        return jsonify(), 400
+        return jsonify(), 422
 
     g.user.password = password
     g.user.recover_key = None
@@ -176,7 +176,7 @@ def change_tracking_settings():
     callsign = json.get('callsign')
     if callsign is not None:
         if not (0 < len(callsign) < 6):
-            return jsonify(reason='callsign invalid'), 400
+            return jsonify(reason='callsign invalid'), 422
 
         g.user.tracking_callsign = callsign
 
@@ -184,7 +184,7 @@ def change_tracking_settings():
     if delay is not None:
         delay = int(delay)
         if not (0 <= delay <= 60):
-            return jsonify(reason='delay invalid'), 400
+            return jsonify(reason='delay invalid'), 422
 
         g.user.tracking_delay = delay
 
