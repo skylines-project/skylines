@@ -22,6 +22,36 @@ const UNITS = {
   'ft/min': [196.850394, 0],
 };
 
+export const PRESETS = {
+  'european': {
+    'distance': 'km',
+    'speed': 'km/h',
+    'lift': 'm/s',
+    'altitude': 'm',
+  },
+
+  'british': {
+    'distance': 'km',
+    'speed': 'kt',
+    'lift': 'kt',
+    'altitude': 'ft',
+  },
+
+  'australian': {
+    'distance': 'km',
+    'speed': 'km/h',
+    'lift': 'kt',
+    'altitude': 'ft',
+  },
+
+  'american': {
+    'distance': 'mi',
+    'speed': 'kt',
+    'lift': 'kt',
+    'altitude': 'ft',
+  },
+};
+
 /**
  * The container that saves the user unit settings
  * @type {Object}
