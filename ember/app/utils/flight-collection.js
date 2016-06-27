@@ -17,7 +17,7 @@ export default Ember.ArrayProxy.extend({
   getBounds() {
     return this.get('source').getExtent();
   },
-  
+
   /**
    * Returns the minimum and maximum fix time within the extent.
    * Code based on ol.render.canvas.Replay.prototype.appendFlatCoordinates.
@@ -79,19 +79,23 @@ export default Ember.ArrayProxy.extend({
   },
 
   contentArrayWillChange(flights, offset, removeCount) {
-    let source = this.get('source');
+    let removedFlights = flights.slice(offset, offset + removeCount);
 
-    flights.slice(offset, offset + removeCount).forEach(function(flight) {
-      source.removeFeature(source.getFeatures().filter(function(it) {
-        return it.get('sfid') == flight.get('id');
-      })[0]);
+    let source = this.get('source');
+    removedFlights.forEach(flight => {
+      let id = flight.get('id');
+
+      this.get('source').getFeatures()
+        .filter(feature => feature.get('sfid') == id)
+        .forEach(feature => source.removeFeature(feature));
     });
   },
 
   contentArrayDidChange(flights, offset, removeCount, addCount) {
-    let source = this.get('source');
+    let addedFlights = flights.slice(offset, offset + addCount);
 
-    flights.slice(offset, offset + addCount).forEach(function(flight) {
+    let source = this.get('source');
+    addedFlights.forEach(flight => {
       var feature = new ol.Feature({
         geometry: flight.get('geometry'),
         sfid: flight.get('id'),
