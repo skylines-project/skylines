@@ -18,7 +18,7 @@ export default Ember.Component.extend({
 
   club: Ember.computed('clubId', {
     get() {
-      return this.get('clubsWithNull').findBy('id', this.get('clubId'));
+      return this.get('clubsWithNull').findBy('id', this.get('clubId') || null);
     },
     set(key, value) {
       this.set('clubId', value.id);
