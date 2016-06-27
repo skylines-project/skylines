@@ -3,8 +3,8 @@
 import Ember from 'ember';
 
 export function formatHours([value]) {
-  var h = Math.floor(value / 3600);
-  var m = Math.floor((value % 3600) / 60);
+  let h = Math.floor(value / 3600);
+  let m = Math.floor((value % 3600) / 60);
 
   return h + ':' + pad(m, 2);
 }

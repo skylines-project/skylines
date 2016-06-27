@@ -25,30 +25,30 @@ export default Ember.ArrayProxy.extend({
    * @return {Object}
    */
   getMinMaxTimeInExtent(extent) {
-    var min = Infinity,
-      total_min = Infinity;
-    var max = -Infinity,
-      total_max = -Infinity;
+    let min = Infinity;
+    let max = -Infinity;
+
+    let total_min = Infinity;
+    let total_max = -Infinity;
 
     this.get('source').forEachFeatureInExtent(extent, feature => {
-      var coordinates = feature.getGeometry().getCoordinates();
+      let coordinates = feature.getGeometry().getCoordinates();
 
-      var lastCoord = coordinates[0];
-      var nextCoord = null;
-      var end = coordinates.length;
+      let lastCoord = coordinates[0];
+      let nextCoord = null;
+      let end = coordinates.length;
 
-      var lastRel = ol.extent.containsCoordinate(extent, lastCoord),
-        nextRel;
+      let lastRel = ol.extent.containsCoordinate(extent, lastCoord);
 
       total_min = Math.min(total_min, lastCoord[3]);
 
       if (lastRel == true)
         min = Math.min(lastCoord[3], min);
 
-      for (var i = 1; i < end; i += 1) {
+      for (let i = 1; i < end; i += 1) {
         nextCoord = coordinates[i];
 
-        nextRel = ol.extent.containsCoordinate(extent, nextCoord);
+        let nextRel = ol.extent.containsCoordinate(extent, nextCoord);
 
         // current vector completely within extent. do nothing.
         // current vector completely outside extent. do nothing.
@@ -96,7 +96,7 @@ export default Ember.ArrayProxy.extend({
 
     let source = this.get('source');
     addedFlights.forEach(flight => {
-      var feature = new ol.Feature({
+      let feature = new ol.Feature({
         geometry: flight.get('geometry'),
         sfid: flight.get('id'),
         color: flight.get('color'),

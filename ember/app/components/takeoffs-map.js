@@ -15,7 +15,7 @@ export default BaseMapComponent.extend({
 
       view.fit(source.getExtent(), map.getSize());
 
-      var zoom = view.getZoom();
+      let zoom = view.getZoom();
       if (zoom > 10) {
         view.setZoom(10);
       }

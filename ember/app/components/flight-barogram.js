@@ -118,7 +118,7 @@ export default Ember.Component.extend(Ember.Evented, {
   },
 
   enableFlightSelection() {
-    var opt = this.get('flot').getOptions();
+    let opt = this.get('flot').getOptions();
     opt.selection.mode = 'x';
   },
 
@@ -144,7 +144,7 @@ export default Ember.Component.extend(Ember.Evented, {
   }),
 
   didInsertElement() {
-    var opts = {
+    let opts = {
       grid: {
         borderWidth: 0,
         hoverable: true,
@@ -182,7 +182,7 @@ export default Ember.Component.extend(Ember.Evented, {
       };
     }
 
-    var placeholder = this.$('div');
+    let placeholder = this.$('div');
 
     this.set('placeholder', placeholder);
     this.set('flot', Ember.$.plot(placeholder, [], opts));
@@ -216,7 +216,7 @@ export default Ember.Component.extend(Ember.Evented, {
   },
 
   update() {
-    var data = [];
+    let data = [];
     this.addElevations(data);
     this.addActiveTraces(data);
     this.addPassiveTraces(data);
@@ -316,7 +316,7 @@ export default Ember.Component.extend(Ember.Evented, {
 
   updateTimeHighlight() {
     // There is no flot.setOptions(), so we modify them in-place.
-    var options = this.get('flot').getOptions();
+    let options = this.get('flot').getOptions();
 
     // Clear the markings if there is no time highlight
     let time_highlight = this.get('timeHighlight');

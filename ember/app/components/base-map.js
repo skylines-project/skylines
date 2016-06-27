@@ -59,7 +59,7 @@ export default Ember.Component.extend(Ember.Evented, {
       Ember.$(this).focus();
     });
 
-    var osm_layer = new ol.layer.Tile({
+    let osm_layer = new ol.layer.Tile({
       source: new ol.source.OSM(),
       zIndex: 1,
     });
@@ -100,8 +100,8 @@ export default Ember.Component.extend(Ember.Evented, {
       return;
     }
 
-    var fallback = false;
-    var map = this.get('map');
+    let fallback = false;
+    let map = this.get('map');
 
     map.getLayers().forEach(layer => {
       if (layer.get('base_layer')) {
@@ -137,7 +137,7 @@ export default Ember.Component.extend(Ember.Evented, {
   addMWPLayers() {
     let tile_url = this.getWithDefault('mapTileURL', '');
 
-    var mwp_layer = new ol.layer.Tile({
+    let mwp_layer = new ol.layer.Tile({
       source: new ol.source.XYZ({
         attributions: [
           new ol.Attribution({
@@ -165,7 +165,7 @@ export default Ember.Component.extend(Ember.Evented, {
   addAirspaceLayers() {
     let tile_url = this.getWithDefault('mapTileURL', '');
 
-    var airspace_layer = new ol.layer.Tile({
+    let airspace_layer = new ol.layer.Tile({
       source: new ol.source.XYZ({
         url: tile_url + '/tiles/1.0.0/airspace+airports/{z}/{x}/{y}.png',
       }),
@@ -183,9 +183,9 @@ export default Ember.Component.extend(Ember.Evented, {
   },
 
   addReliefLayer() {
-    var url = 'http://maps-for-free.com/layer/relief/z{z}/row{y}/{z}_{x}-{y}.jpg';
+    let url = 'http://maps-for-free.com/layer/relief/z{z}/row{y}/{z}_{x}-{y}.jpg';
 
-    var relief_layer = new ol.layer.Tile({
+    let relief_layer = new ol.layer.Tile({
       source: new ol.source.XYZ({
         attributions: [
           new ol.Attribution({
@@ -214,7 +214,7 @@ export default Ember.Component.extend(Ember.Evented, {
       return;
     }
 
-    var mapbox_layer = new ol.layer.Tile({
+    let mapbox_layer = new ol.layer.Tile({
       source: new ol.source.XYZ({
         attributions: [
           new ol.Attribution({
@@ -248,7 +248,7 @@ export default Ember.Component.extend(Ember.Evented, {
     }
 
     // Bing's Road imagerySet
-    var road = new ol.layer.Tile({
+    let road = new ol.layer.Tile({
       source: new ol.source.BingMaps({
         key: api_key,
         imagerySet: 'Road',
@@ -264,7 +264,7 @@ export default Ember.Component.extend(Ember.Evented, {
     });
 
     // Bing's AerialWithLabels imagerySet
-    var hybrid = new ol.layer.Tile({
+    let hybrid = new ol.layer.Tile({
       source: new ol.source.BingMaps({
         key: api_key,
         imagerySet: 'AerialWithLabels',

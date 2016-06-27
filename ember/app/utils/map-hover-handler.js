@@ -19,7 +19,7 @@ export default Ember.Object.extend({
       if (!this.get('hover_enabled') || e.dragging)
         return;
 
-      var coordinate = map.getEventCoordinate(e.originalEvent);
+      let coordinate = map.getEventCoordinate(e.originalEvent);
       this.displaySnap(coordinate);
     });
   },
@@ -27,19 +27,19 @@ export default Ember.Object.extend({
   displaySnap(coordinate) {
     let map = this.get('map');
 
-    var flight_path_source = this.get('flights.source');
+    let flight_path_source = this.get('flights.source');
 
-    var closest_feature = flight_path_source
+    let closest_feature = flight_path_source
         .getClosestFeatureToCoordinate(coordinate);
 
     if (closest_feature !== null) {
-      var geometry = closest_feature.getGeometry();
-      var closest_point = geometry.getClosestPoint(coordinate);
+      let geometry = closest_feature.getGeometry();
+      let closest_point = geometry.getClosestPoint(coordinate);
 
-      var feature_pixel = map.getPixelFromCoordinate(closest_point);
-      var mouse_pixel = map.getPixelFromCoordinate(coordinate);
+      let feature_pixel = map.getPixelFromCoordinate(closest_point);
+      let mouse_pixel = map.getPixelFromCoordinate(coordinate);
 
-      var squared_distance = Math.pow(mouse_pixel[0] - feature_pixel[0], 2) +
+      let squared_distance = Math.pow(mouse_pixel[0] - feature_pixel[0], 2) +
                              Math.pow(mouse_pixel[1] - feature_pixel[1], 2);
 
       // Set the time when the mouse hovers the map

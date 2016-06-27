@@ -25,7 +25,7 @@ export default Ember.Service.extend({
   load() {
     let pinned = [];
 
-    var cookie = this.get('cookies').read('SkyLines_pinnedFlights');
+    let cookie = this.get('cookies').read('SkyLines_pinnedFlights');
     if (cookie) {
       pinned = cookie.split(',').map(it => parseInt(it, 10));
     }

@@ -1,7 +1,7 @@
 import Ember from 'ember';
 
 export default function safeComputed(func) {
-  var args;
+  let args;
 
   if (arguments.length > 1) {
     args = [].slice.call(arguments);
@@ -10,7 +10,7 @@ export default function safeComputed(func) {
 
   args.push(function() {
     let values = [];
-    for (var i = 0; i < args.length - 1; i++) {
+    for (let i = 0; i < args.length - 1; i++) {
       let value = this.get(args[i]);
 
       // drop out if any `value` is undefined

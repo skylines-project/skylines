@@ -84,7 +84,7 @@ export default Ember.Object.extend({
     }));
 
     // Update the baro scale when the map has been zoomed/moved.
-    var update_baro_scale_on_moveend = () => this.update();
+    let update_baro_scale_on_moveend = () => this.update();
     this.set('update_baro_scale_on_moveend', update_baro_scale_on_moveend);
 
     map.on('moveend', update_baro_scale_on_moveend);
@@ -109,8 +109,8 @@ export default Ember.Object.extend({
     let baro = this.get('baro');
     let flights = this.get('flights');
 
-    var extent = map.getView().calculateExtent(map.getSize());
-    var interval = flights.getMinMaxTimeInExtent(extent);
+    let extent = map.getView().calculateExtent(map.getSize());
+    let interval = flights.getMinMaxTimeInExtent(extent);
 
     if (interval.max == -Infinity) {
       baro.set('timeInterval', null);

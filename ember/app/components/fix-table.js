@@ -26,7 +26,7 @@ export default Ember.Component.extend({
   actions: {
     select(id) {
       if (this.get('selectable')) {
-        var current = this.get('selection');
+        let current = this.get('selection');
         this.set('selection', current === id ? null : id);
       }
     },

@@ -19,7 +19,7 @@ export default Ember.Object.extend({
     let flight_display = this.get('flight_display');
 
     this.get('flights').forEach(flight => {
-      var url = `/tracking/${flight.get('id')}/json`;
+      let url = `/tracking/${flight.get('id')}/json`;
 
       $.ajax(url, {
         data: {last_update: flight.get('last_update') || null},
@@ -38,23 +38,23 @@ export default Ember.Object.extend({
    */
   updateFlight(data) {
     // find the flight to update
-    var flight = this.get('flights').findBy('id', data.sfid);
+    let flight = this.get('flights').findBy('id', data.sfid);
     if (!flight)
       return;
 
-    var time_decoded = ol.format.Polyline.decodeDeltas(data.barogram_t, 1, 1);
-    var lonlat = ol.format.Polyline.decodeDeltas(data.points, 2);
-    var height_decoded = ol.format.Polyline.decodeDeltas(data.barogram_h, 1, 1);
-    var enl_decoded = ol.format.Polyline.decodeDeltas(data.enl, 1, 1);
-    var elev = ol.format.Polyline.decodeDeltas(data.elevations, 1, 1);
+    let time_decoded = ol.format.Polyline.decodeDeltas(data.barogram_t, 1, 1);
+    let lonlat = ol.format.Polyline.decodeDeltas(data.points, 2);
+    let height_decoded = ol.format.Polyline.decodeDeltas(data.barogram_h, 1, 1);
+    let enl_decoded = ol.format.Polyline.decodeDeltas(data.enl, 1, 1);
+    let elev = ol.format.Polyline.decodeDeltas(data.elevations, 1, 1);
 
     // we skip the first point in the list because we assume it's the "linking"
     // fix between the data we already have and the data to add.
     if (time_decoded.length < 2) return;
 
-    var geoid = flight.get('geoid');
+    let geoid = flight.get('geoid');
 
-    var fixes = time_decoded.map(function(timestamp, i) {
+    let fixes = time_decoded.map(function(timestamp, i) {
       return {
         time: timestamp,
         longitude: lonlat[i * 2],
@@ -64,8 +64,8 @@ export default Ember.Object.extend({
       };
     });
 
-    var elevations = time_decoded.map(function(timestamp, i) {
-      var elevation = elev[i];
+    let elevations = time_decoded.map(function(timestamp, i) {
+      let elevation = elev[i];
 
       return {
         time: timestamp,
