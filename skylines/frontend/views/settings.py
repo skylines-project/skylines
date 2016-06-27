@@ -11,7 +11,7 @@ from skylines.frontend.views.users import send_recover_mail
 from skylines.model.event import (
     create_club_join_event
 )
-from skylines.schemas import validate, ClubSchema
+from skylines.schemas import fields, validate, Schema, ClubSchema
 
 settings_blueprint = Blueprint('settings', 'skylines')
 email_validator = validate.Email()
@@ -247,21 +247,19 @@ def club():
 @settings_blueprint.route('/club', methods=['POST'])
 def club_change():
     json = request.get_json()
-    if not json:
+    if json is None:
         return jsonify(error='invalid-request'), 400
 
-    if 'id' not in json:
-        return jsonify(error='missing-id'), 422
+    data, errors = ChooseClubSchema().load(json)
+    if errors:
+        return jsonify(error='validation-failed', fields=errors), 422
 
-    id = json.get('id')
-    if id is not None:
-        id = int(id)
-
-        if not Club.exists(id=id):
-            return jsonify(error='club-does-not-exist'), 422
-
+    id = data.get('id')
     if g.user.club_id == id:
         return jsonify()
+
+    if id is not None and not Club.exists(id=id):
+        return jsonify(error='unknown-club'), 422
 
     g.user.club_id = id
 
@@ -278,6 +276,10 @@ def club_change():
 
     db.session.commit()
     return jsonify()
+
+
+class ChooseClubSchema(Schema):
+    id = fields.Integer(required=True, allow_none=True)
 
 
 @settings_blueprint.route('/club', methods=['PUT'])
