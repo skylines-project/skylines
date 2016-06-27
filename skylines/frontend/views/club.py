@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, g, redirect, url_for, abort, request, jsonify
+from flask import Blueprint, render_template, g, request, jsonify
 
 from skylines.database import db
 from skylines.lib.dbutil import get_requested_record

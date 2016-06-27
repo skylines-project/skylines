@@ -28,7 +28,7 @@ def index():
         .options(joinedload(User.club)) \
         .order_by(func.lower(User.name))
 
-    if request.args.has_key('club'):
+    if 'club' in request.args:
         users = users.filter_by(club_id=request.args.get('club'))
 
     json = []

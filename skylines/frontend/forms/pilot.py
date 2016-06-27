@@ -1,5 +1,5 @@
 from flask import g
-from flask.ext.babel import lazy_gettext as l_, ngettext
+from flask.ext.babel import lazy_gettext as l_
 from flask_wtf import Form
 
 from wtforms import (

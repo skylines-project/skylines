@@ -250,7 +250,7 @@ def club_change():
     if not json:
         return jsonify(error='invalid-request'), 400
 
-    if not json.has_key('id'):
+    if 'id' not in json:
         return jsonify(error='missing-id'), 422
 
     id = json.get('id')

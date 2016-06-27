@@ -10,7 +10,7 @@ from geoalchemy2.shape import to_shape
 from datetime import timedelta
 
 from skylines.database import db
-from skylines.frontend.forms import ChangePilotsForm, ChangeAircraftForm
+from skylines.frontend.forms import ChangePilotsForm
 from skylines.lib import files
 from skylines.lib.dbutil import get_requested_record_list
 from skylines.lib.xcsoar_ import analyse_flight
@@ -617,22 +617,21 @@ def update():
     if not json:
         return jsonify(error='invalid-request'), 400
 
-    if json.has_key('modelId'):
+    if 'modelId' in json:
         model_id = json.get('modelId')
         if model_id is not None and not AircraftModel.exists(id=model_id):
             return jsonify(error='invalid-model-id'), 422
 
         g.flight.model_id = model_id
 
-    if json.has_key('registration'):
+    if 'registration' in json:
         registration = json.get('registration').strip()
         if len(registration) > 32:
             return jsonify(error='invalid-registration'), 422
 
         g.flight.registration = registration
 
-
-    if json.has_key('competitionId'):
+    if 'competitionId' in json:
         competition_id = json.get('competitionId').strip()
         if len(competition_id) > 5:
             return jsonify(error='invalid-competition-id'), 422
