@@ -22,7 +22,7 @@ export default Ember.Object.extend({
       let url = `/tracking/${flight.get('id')}/json`;
 
       $.ajax(url, {
-        data: {last_update: flight.get('last_update') || null},
+        data: { last_update: flight.get('last_update') || null },
         success: data => {
           this.updateFlight(data);
           flight_display.update();

@@ -12,7 +12,7 @@ export default Ember.Component.extend({
     let color = flight.get('color');
     let competitionId = flight.get('competition_id');
     let removable = (i !== 0);
-    return {id, color, competitionId, removable, fix};
+    return { id, color, competitionId, removable, fix };
   }),
 
   selectable: Ember.computed.gt('data.length', 1),

@@ -16,7 +16,7 @@ export default Ember.Component.extend({
   init() {
     this._super(...arguments);
 
-    let ol3d = new olcs.OLCesium({map: this.get('map')});
+    let ol3d = new olcs.OLCesium({ map: this.get('map') });
 
     let scene = ol3d.getCesiumScene();
     scene.terrainProvider = new Cesium.CesiumTerrainProvider({

@@ -75,7 +75,7 @@ export default Ember.ArrayProxy.extend({
     if (min == Infinity) min = total_min;
     if (max == -Infinity) max = total_max;
 
-    return { min: min, max: max };
+    return { min, max };
   },
 
   contentArrayWillChange(flights, offset, removeCount) {

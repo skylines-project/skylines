@@ -1,3 +1,5 @@
+/* eslint no-bitwise: 0 */
+
 /**
  * Searches the next smaller index to a number in a monotonic array.
  * If value == array[idx] it returns the next smaller index idx - 1

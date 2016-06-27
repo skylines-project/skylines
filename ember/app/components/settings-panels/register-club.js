@@ -32,7 +32,7 @@ export default Ember.Component.extend(Validations, {
     let json = this.getProperties('name');
 
     this.set('pending', true);
-    this.get('ajax').request('/settings/club', { method: 'PUT', json }).then(({id}) => {
+    this.get('ajax').request('/settings/club', { method: 'PUT', json }).then(({ id }) => {
       this.setProperties({
         messageKey: 'club-was-registered',
         error: null,

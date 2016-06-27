@@ -2,7 +2,7 @@ import Ember from 'ember';
 
 export default Ember.Component.extend(Ember.Evented, {
   fixCalc: Ember.inject.service(),
-  
+
   nearFlights: [],
   visibleFlights: Ember.computed.readOnly('fixCalc.flights'),
 

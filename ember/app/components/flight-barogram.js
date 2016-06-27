@@ -94,9 +94,9 @@ export default Ember.Component.extend(Ember.Evented, {
     if (time === null) {
       flot.clearCrosshair();
     } else if (time == -1) {
-      flot.lockCrosshair({x: 999999999});
+      flot.lockCrosshair({ x: 999999999 });
     } else {
-      flot.lockCrosshair({x: time * 1000});
+      flot.lockCrosshair({ x: time * 1000 });
     }
   },
 
@@ -282,11 +282,9 @@ export default Ember.Component.extend(Ember.Evented, {
       let color = contest.get('color');
 
       // Add the turnpoint markers to the markings array
-      let markings = times.map(time => {
-        return {
-          position: time * 1000,
-        };
-      });
+      let markings = times.map(time => ({
+        position: time * 1000,
+      }));
 
       // Add the chart series for this contest to the data array
       data.push({

@@ -3,7 +3,7 @@ import Ember from 'ember';
 export default Ember.Route.extend({
   ajax: Ember.inject.service(),
 
-  model({wildcard}) {
+  model({ wildcard }) {
     if (wildcard) {
       let data = wildcard.split('/');
       this.set('page', data[0]);

@@ -105,7 +105,8 @@ export default function slMapClickHandler(map, flight_display, settings) {
 
     visible = true;
 
-    return false; // stop bubbeling
+    // stop bubbeling
+    return false;
   };
 
   map_click_handler.init = function() {
@@ -278,7 +279,8 @@ export default function slMapClickHandler(map, flight_display, settings) {
    * @param {Object} data Location data.
    */
   function showLocationData(data) {
-    if (!visible) return; // do nothing if infobox is closed already
+    // do nothing if infobox is closed already
+    if (!visible) return;
 
     let element = $(infobox.getElement());
     element.empty();
@@ -323,7 +325,7 @@ export default function slMapClickHandler(map, flight_display, settings) {
 
     element.append(item);
 
-    //infobox.setOffset([15, element.height() / 2]);
+    // infobox.setOffset([15, element.height() / 2]);
   }
 
   /**

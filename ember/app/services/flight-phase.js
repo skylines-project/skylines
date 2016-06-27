@@ -15,7 +15,7 @@ export default Ember.Service.extend({
       return;
     }
 
-    let {start, end} = selection;
+    let { start, end } = selection;
 
     let flight = this.get('flight');
     let times = flight.get('time');
