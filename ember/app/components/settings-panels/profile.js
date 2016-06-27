@@ -132,5 +132,5 @@ function computedUnit(unitsKey, indexKey) {
       this.set(indexKey, this.get(unitsKey).indexOf(value));
       return value;
     },
-  })
+  });
 }

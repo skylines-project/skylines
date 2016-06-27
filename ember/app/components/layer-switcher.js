@@ -62,7 +62,7 @@ export default Ember.Component.extend({
       } else {
         this.get('map').getLayers().getArray()
           .filter(it => (it.get('id') === layer.id))
-          .forEach(it => it.setVisible(!it.getVisible()))
+          .forEach(it => it.setVisible(!it.getVisible()));
       }
 
       this.setLayerCookies();

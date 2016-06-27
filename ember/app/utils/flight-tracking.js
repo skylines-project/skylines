@@ -70,7 +70,7 @@ export default Ember.Object.extend({
       return {
         time: timestamp,
         elevation: (elevation > -500) ? elevation : null,
-      }
+      };
     });
 
     flight.get('fixes').pushObjects(fixes.slice(1));

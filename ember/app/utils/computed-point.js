@@ -9,5 +9,5 @@ export default function computedPoint(key, layout = 'XYZM') {
     }
 
     return new ol.geom.Point(coordinate, layout);
-  })
+  });
 }

@@ -16,7 +16,7 @@ export default Ember.Component.extend(Ember.Evented, {
         color: visibleFlight ? visibleFlight.get('color') : undefined,
         flight: it.flight,
         times: it.times,
-      }
+      };
     });
   }),
 
