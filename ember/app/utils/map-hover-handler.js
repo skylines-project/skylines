@@ -1,6 +1,6 @@
 import Ember from 'ember';
 
-export default Ember.Object.extend(Ember.Evented, {
+export default Ember.Object.extend({
   fixCalc: null,
   flightMap: null,
 
@@ -43,11 +43,11 @@ export default Ember.Object.extend(Ember.Evented, {
       var squared_distance = Math.pow(mouse_pixel[0] - feature_pixel[0], 2) +
                              Math.pow(mouse_pixel[1] - feature_pixel[1], 2);
 
+      // Set the time when the mouse hovers the map
       if (squared_distance > 100) {
-        this.trigger('set_time', null);
+        this.get('fixCalc').resetTime();
       } else {
-        var time = closest_point[3];
-        this.trigger('set_time', time);
+        this.get('fixCalc').set('time', closest_point[3]);
       }
     }
 
