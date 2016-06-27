@@ -56,11 +56,7 @@ function style_function(feature) {
   }
 
   return [new ol.style.Style({
-    stroke: new ol.style.Stroke({
-      color: color,
-      width: 2,
-      lineDash: [5],
-    }),
+    stroke: new ol.style.Stroke({ color, width: 2, lineDash: [5] }),
     zIndex: 999,
   })];
 }

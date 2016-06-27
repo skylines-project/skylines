@@ -221,7 +221,7 @@ export default function slMapClickHandler(map, flight_display, settings) {
    * @param {Number} duration Fade duration in ms
    */
   function hideCircle(duration) {
-    circle.animation = { duration: duration, start: null };
+    circle.animation = { duration, start: null };
   }
 
   /**

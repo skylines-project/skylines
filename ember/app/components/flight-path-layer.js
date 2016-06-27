@@ -41,10 +41,7 @@ function style_function(feature) {
   }
 
   return [new ol.style.Style({
-    stroke: new ol.style.Stroke({
-      color: color,
-      width: 2,
-    }),
+    stroke: new ol.style.Stroke({ color, width: 2 }),
     zIndex: 1000,
   })];
 }

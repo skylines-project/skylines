@@ -242,7 +242,7 @@ export default Ember.Component.extend(Ember.Evented, {
 
       data.push({
         data: trace.data,
-        color: color,
+        color,
         shadowSize: 0,
         lines: {
           lineWidth: 1,
@@ -294,7 +294,7 @@ export default Ember.Component.extend(Ember.Evented, {
           show: true,
           lineWidth: 1,
           toothSize: 6,
-          color: color,
+          color,
           fillColor: color,
         },
         data: [],

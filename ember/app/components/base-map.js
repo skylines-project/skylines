@@ -49,7 +49,7 @@ export default Ember.Component.extend(Ember.Evented, {
       controls: ol.control.defaults().extend([
         new ol.control.ScaleLine(),
       ]),
-      interactions: interactions,
+      interactions,
       ol3Logo: false,
     });
     this.set('map', map);
@@ -193,7 +193,7 @@ export default Ember.Component.extend(Ember.Evented, {
                 'href="http://maps-for-free.com/">maps-for-free.com</a>',
           }),
         ],
-        url: url,
+        url,
       }),
       zIndex: 2,
     });
