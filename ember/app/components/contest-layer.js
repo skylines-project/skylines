@@ -1,6 +1,8 @@
 import Ember from 'ember';
 import ol from 'openlayers';
 
+const DEFAULT_COLOR = '#004bbd';
+
 export default Ember.Component.extend({
   tagName: '',
 
@@ -50,7 +52,7 @@ export default Ember.Component.extend({
  * @return {!Array<ol.style.Style>} Style of the feature
  */
 function style_function(feature) {
-  let color = '#004bbd'; // default color
+  let color = DEFAULT_COLOR;
   if (feature.getKeys().contains('color')) {
     color = feature.get('color');
   }
