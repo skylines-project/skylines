@@ -25,10 +25,9 @@ export default Ember.Object.extend({
   },
 
   displaySnap(coordinate) {
-    let flights = this.get('flights');
     let map = this.get('map');
 
-    var flight_path_source = flights.getSource();
+    var flight_path_source = this.get('flights.source');
 
     var closest_feature = flight_path_source
         .getClosestFeatureToCoordinate(coordinate);

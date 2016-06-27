@@ -57,7 +57,7 @@ export default function slMapClickHandler(map, flight_display, settings) {
     let coordinate = e.coordinate;
 
     if (settings['flight_info'] && flight_display) {
-      let flight_path_source = flight_display.get('flights').getSource();
+      let flight_path_source = flight_display.get('flights.source');
       let closest_feature = flight_path_source
           .getClosestFeatureToCoordinate(coordinate);
 

@@ -17,15 +17,7 @@ export default Ember.ArrayProxy.extend({
   getBounds() {
     return this.get('source').getExtent();
   },
-
-  /**
-   * Returns the vector layer source of this collection.
-   * @return {ol.source.Vector}
-   */
-  getSource() {
-    return this.get('source');
-  },
-
+  
   /**
    * Returns the minimum and maximum fix time within the extent.
    * Code based on ol.render.canvas.Replay.prototype.appendFlatCoordinates.
