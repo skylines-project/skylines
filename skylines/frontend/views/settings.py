@@ -11,7 +11,7 @@ from skylines.frontend.views.users import send_recover_mail
 from skylines.model.event import (
     create_club_join_event
 )
-from skylines.schemas import fields, validate, Schema, ClubSchema
+from skylines.schemas import fields, validate, Schema, ClubSchema, UserSchema
 
 settings_blueprint = Blueprint('settings', 'skylines')
 email_validator = validate.Email()
@@ -208,23 +208,18 @@ def tracking():
 @settings_blueprint.route('/tracking', methods=['POST'])
 def change_tracking_settings():
     json = request.get_json()
-    if not json:
+    if json is None:
         return jsonify(error='invalid-request'), 400
 
-    callsign = json.get('callsign')
-    if callsign is not None:
-        if not (0 < len(callsign) < 6):
-            return jsonify(reason='callsign invalid'), 422
+    data, errors = UserSchema(only=('tracking_callsign', 'tracking_delay')).load(json)
+    if errors:
+        return jsonify(error='validation-failed', fields=errors), 422
 
-        g.user.tracking_callsign = callsign
+    if 'tracking_callsign' in data:
+        g.user.tracking_callsign = data.get('tracking_callsign')
 
-    delay = json.get('delay')
-    if delay is not None:
-        delay = int(delay)
-        if not (0 <= delay <= 60):
-            return jsonify(reason='delay invalid'), 422
-
-        g.user.tracking_delay = delay
+    if 'tracking_delay' in data:
+        g.user.tracking_delay = data.get('tracking_delay')
 
     db.session.commit()
 

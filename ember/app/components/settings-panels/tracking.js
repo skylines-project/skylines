@@ -32,7 +32,10 @@ export default Ember.Component.extend(Validations, {
   }),
 
   sendChangeRequest() {
-    let json = this.getProperties('callsign', 'delay');
+    let json = {
+      trackingCallsign: this.get('callsign'),
+      trackingDelay: this.get('delay'),
+    };
 
     this.set('pending', true);
     this.get('ajax').request('/settings/tracking', { method: 'POST', json }).then(() => {
