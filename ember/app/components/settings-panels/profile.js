@@ -89,15 +89,15 @@ export default Ember.Component.extend(Validations, {
   }),
 
   sendChangeRequest() {
-    let json = this.getProperties([
-      'email',
-      'firstName',
-      'lastName',
-      'distanceUnitIndex',
-      'speedUnitIndex',
-      'liftUnitIndex',
-      'altitudeUnitIndex',
-    ]);
+    let json = {
+      email: this.get('email'),
+      firstName: this.get('firstName'),
+      lastName: this.get('lastName'),
+      distanceUnit: this.get('distanceUnitIndex'),
+      speedUnit: this.get('speedUnitIndex'),
+      liftUnit: this.get('liftUnitIndex'),
+      altitudeUnit: this.get('altitudeUnitIndex'),
+    };
 
     this.set('pending', true);
     this.get('ajax').request('/settings/profile', { method: 'POST', json }).then(() => {

@@ -5,16 +5,14 @@ from sqlalchemy.sql.expression import and_, or_
 from skylines.database import db
 from skylines.lib.dbutil import get_requested_record
 from skylines.lib.vary import vary
-from skylines.lib.formatter.units import DISTANCE_UNITS, SPEED_UNITS, LIFT_UNITS, ALTITUDE_UNITS
 from skylines.model import User, Club, Flight, IGCFile
 from skylines.frontend.views.users import send_recover_mail
 from skylines.model.event import (
     create_club_join_event
 )
-from skylines.schemas import fields, validate, Schema, ClubSchema, UserSchema
+from skylines.schemas import fields, Schema, ClubSchema, UserSchema
 
 settings_blueprint = Blueprint('settings', 'skylines')
-email_validator = validate.Email()
 
 
 @settings_blueprint.before_request
@@ -67,66 +65,38 @@ def profile():
 @settings_blueprint.route('/profile', methods=['POST'])
 def change_profile():
     json = request.get_json()
-    if not json:
+    if json is None:
         return jsonify(error='invalid-request'), 400
 
-    email = json.get('email')
-    if email is not None and email != g.user.email_address:
-        try:
-            email_validator(email)
-        except:
-            return jsonify(error='invalid-email'), 422
+    data, errors = UserSchema(partial=True).load(json)
+    if errors:
+        return jsonify(error='validation-failed', fields=errors), 422
 
-        if User.exists(email_address=email):
+    if 'email_address' in data:
+        email = data.get('email_address')
+
+        if email != g.user.email_address and User.exists(email_address=email):
             return jsonify(error='email-exists-already'), 422
 
         g.user.email_address = email
 
-    first_name = json.get('firstName')
-    if first_name is not None:
-        if first_name.strip() == '':
-            return jsonify(error='invalid-first-name'), 422
+    if 'first_name' in data:
+        g.user.first_name = data.get('first_name')
 
-        g.user.first_name = first_name
+    if 'last_name' in data:
+        g.user.last_name = data.get('last_name')
 
-    last_name = json.get('lastName')
-    if last_name is not None:
-        if last_name.strip() == '':
-            return jsonify(error='invalid-last-name'), 422
+    if 'distance_unit' in data:
+        g.user.distance_unit = data.get('distance_unit')
 
-        g.user.last_name = last_name
+    if 'speed_unit' in data:
+        g.user.speed_unit = data.get('speed_unit')
 
-    distance_unit = json.get('distanceUnitIndex')
-    if distance_unit is not None:
-        distance_unit = int(distance_unit)
-        if not (0 <= distance_unit < len(DISTANCE_UNITS)):
-            return jsonify(error='invalid-distance-unit'), 422
+    if 'lift_unit' in data:
+        g.user.lift_unit = data.get('lift_unit')
 
-        g.user.distance_unit = distance_unit
-
-    speed_unit = json.get('speedUnitIndex')
-    if speed_unit is not None:
-        speed_unit = int(speed_unit)
-        if not (0 <= speed_unit < len(SPEED_UNITS)):
-            return jsonify(error='invalid-speed-unit'), 422
-
-        g.user.speed_unit = speed_unit
-
-    lift_unit = json.get('liftUnitIndex')
-    if lift_unit is not None:
-        lift_unit = int(lift_unit)
-        if not (0 <= lift_unit < len(LIFT_UNITS)):
-            return jsonify(error='invalid-lift-unit'), 422
-
-        g.user.lift_unit = lift_unit
-
-    altitude_unit = json.get('altitudeUnitIndex')
-    if altitude_unit is not None:
-        altitude_unit = int(altitude_unit)
-        if not (0 <= altitude_unit < len(ALTITUDE_UNITS)):
-            return jsonify(error='invalid-altitude-unit'), 422
-
-        g.user.altitude_unit = altitude_unit
+    if 'altitude_unit' in data:
+        g.user.altitude_unit = data.get('altitude_unit')
 
     db.session.commit()
 

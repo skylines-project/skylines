@@ -4,6 +4,11 @@ from skylines.schemas import UserSchema
 
 
 @pytest.fixture
+def schema():
+    return UserSchema()
+
+
+@pytest.fixture
 def callsign_schema():
     return UserSchema(only=('tracking_callsign',))
 
@@ -11,6 +16,18 @@ def callsign_schema():
 @pytest.fixture
 def delay_schema():
     return UserSchema(only=('tracking_delay',))
+
+
+def test_deserialization_passes_for_valid_email(schema):
+    data, errors = schema.load(dict(email='john@doe.com'))
+    assert not errors
+    assert data.get('email_address') == 'john@doe.com'
+
+
+def test_deserialization_fails_for_empty_email(schema):
+    data, errors = schema.load(dict(email=''))
+    assert 'email' in errors
+    assert 'Not a valid email address.' in errors.get('email')
 
 
 def test_deserialization_passes_for_valid_callsign(callsign_schema):
