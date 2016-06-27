@@ -10,7 +10,7 @@ from skylines.frontend.views.users import send_recover_mail
 from skylines.model.event import (
     create_club_join_event
 )
-from skylines.schemas import fields, Schema, ClubSchema, UserSchema
+from skylines.schemas import fields, validate, Schema, ClubSchema, UserSchema
 
 settings_blueprint = Blueprint('settings', 'skylines')
 
@@ -121,22 +121,27 @@ def password():
 @settings_blueprint.route('/password', methods=['POST'])
 def change_password():
     json = request.get_json()
-    if not json:
+    if json is None:
         return jsonify(error='invalid-request'), 400
 
-    if not g.user.validate_password(json.get('currentPassword', '')):
-        return jsonify(), 403
+    data, errors = PasswordSchema().load(json)
+    if errors:
+        return jsonify(error='validation-failed', fields=errors), 422
 
-    password = json.get('password', '')
-    if len(password) < 6:
-        return jsonify(), 422
+    if not g.user.validate_password(data.get('currentPassword')):
+        return jsonify(error='wrong-password'), 403
 
-    g.user.password = password
+    g.user.password = data.get('password')
     g.user.recover_key = None
 
     db.session.commit()
 
     return jsonify()
+
+
+class PasswordSchema(Schema):
+    password = fields.String(required=True, validate=validate.Length(min=6))
+    currentPassword = fields.String(required=True)
 
 
 @settings_blueprint.route('/password/check', methods=['POST'])
