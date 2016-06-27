@@ -30,8 +30,8 @@ export default Ember.ArrayProxy.extend({
     var max = -Infinity,
       total_max = -Infinity;
 
-    this.get('source').forEachFeatureInExtent(extent, function(f) {
-      var coordinates = f.getGeometry().getCoordinates();
+    this.get('source').forEachFeatureInExtent(extent, feature => {
+      var coordinates = feature.getGeometry().getCoordinates();
 
       var lastCoord = coordinates[0];
       var nextCoord = null;
