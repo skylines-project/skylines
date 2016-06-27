@@ -57,7 +57,7 @@ export default function slMapClickHandler(map, flight_display, settings) {
     let coordinate = e.coordinate;
 
     if (settings['flight_info'] && flight_display) {
-      let flight_path_source = flight_display.getFlights().getSource();
+      let flight_path_source = flight_display.get('flights').getSource();
       let closest_feature = flight_path_source
           .getClosestFeatureToCoordinate(coordinate);
 
@@ -74,7 +74,7 @@ export default function slMapClickHandler(map, flight_display, settings) {
         if (squared_distance < 100) {
           let time = closest_point[3];
           let sfid = closest_feature.get('sfid');
-          let flight = flight_display.getFlights().findBy('id', sfid);
+          let flight = flight_display.get('flights').findBy('id', sfid);
 
           // flight info
           let flight_info = flightInfo(flight);
@@ -246,7 +246,7 @@ export default function slMapClickHandler(map, flight_display, settings) {
         let flight = data['flights'][i];
 
         // skip retrieved flight if already on map
-        if (flight_display.getFlights().findBy('id', flight['sfid']))
+        if (flight_display.get('flights').findBy('id', flight['sfid']))
           continue;
 
         window.fixCalcService.addFlight(flight);

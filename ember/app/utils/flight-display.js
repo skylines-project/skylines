@@ -126,12 +126,4 @@ export default Ember.Object.extend({
     this.updateBaroScale();
     this.get('baro').draw();
   },
-
-  /**
-   * Returns the flights collection
-   * @return {slFlightCollection}
-   */
-  getFlights() {
-    return this.get('flights');
-  },
 });
