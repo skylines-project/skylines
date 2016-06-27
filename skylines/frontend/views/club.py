@@ -4,6 +4,7 @@ from skylines.database import db
 from skylines.lib.dbutil import get_requested_record
 from skylines.lib.vary import vary
 from skylines.model import Club
+from skylines.schemas import ClubSchema
 
 club_blueprint = Blueprint('club', 'skylines')
 
@@ -58,29 +59,23 @@ def edit():
 @club_blueprint.route('/', methods=['POST'])
 def edit_post():
     json = request.get_json()
-    if not json:
+    if json is None:
         return jsonify(error='invalid-request'), 400
 
-    name = json.get('name')
-    if name is not None:
-        name = name.strip()
+    data, errors = ClubSchema(partial=True).load(json)
+    if errors:
+        return jsonify(error='validation-failed', fields=errors), 422
 
-        if name == '':
-            return jsonify(error='invalid-name'), 422
+    if 'name' in data:
+        name = data.get('name')
 
         if name != g.club.name and Club.exists(name=name):
-            return jsonify(error='name-exists-already'), 422
+            return jsonify(error='duplicate-club-name'), 422
 
         g.club.name = name
 
-    website = json.get('website')
-    if website is not None:
-        website = website.strip()
-
-        if website == '':
-            return jsonify(error='invalid-first-name'), 422
-
-        g.club.website = website
+    if 'website' in data:
+        g.club.website = data.get('website')
 
     db.session.commit()
 

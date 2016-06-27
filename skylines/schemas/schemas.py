@@ -10,6 +10,7 @@ class ClubSchema(Schema):
         validate.NotEmpty(),
         validate.Length(min=1, max=255),
     ))
+    website = fields.URL()
 
 
 class UserSchema(Schema):
