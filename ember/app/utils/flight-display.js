@@ -76,9 +76,7 @@ export default Ember.Object.extend({
    */
   init() {
     let map = this.get('map');
-    let fix_table = this.get('fix_table');
     let baro = this.get('baro');
-    let flights = this.get('flights');
 
     let map_hover_handler = slMapHoverHandler.create({
       fixCalc: this.get('fixCalc'),
@@ -99,15 +97,6 @@ export default Ember.Object.extend({
       } else {
         this.get('fixCalc').resetTime();
       }
-    });
-
-    // Remove a flight when the removal button has been pressed
-    // in the fix table.
-    fix_table.on('remove_flight', function(sfid) {
-      // never remove the first flight...
-      if (Ember.get(flights, 'firstObject.id') == sfid) return;
-
-      flights.removeObjects(flights.filterBy('id', sfid));
     });
 
     // Add hover and click events to the barogram.

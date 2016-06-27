@@ -1,6 +1,6 @@
 import Ember from 'ember';
 
-export default Ember.Component.extend(Ember.Evented, {
+export default Ember.Component.extend({
   fixCalc: Ember.inject.service(),
   pinnedFlights: Ember.inject.service(),
 
@@ -31,9 +31,16 @@ export default Ember.Component.extend(Ember.Evented, {
       }
     },
 
+    // Remove a flight when the removal button has been pressed in the fix table.
     remove(id) {
-      this.trigger('remove_flight', id);
-      this.get('pinnedFlights').unpin(id);
+      let flights = this.get('fixCalc.flights');
+      let pinned = this.get('pinnedFlights');
+
+      // never remove the first flight...
+      if (flights.get('firstObject.id') != id) {
+        flights.removeObjects(flights.filterBy('id', id));
+        pinned.unpin(id);
+      }
     },
   },
 });
