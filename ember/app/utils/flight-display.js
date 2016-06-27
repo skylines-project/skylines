@@ -87,10 +87,7 @@ export default Ember.Object.extend({
     this.set('map_hover_handler', map_hover_handler);
 
     // Update the baro scale when the map has been zoomed/moved.
-    var update_baro_scale_on_moveend = () => {
-      this.updateBaroScale();
-      baro.draw();
-    };
+    var update_baro_scale_on_moveend = () => this.update();
     this.set('update_baro_scale_on_moveend', update_baro_scale_on_moveend);
 
     map.on('moveend', update_baro_scale_on_moveend);
