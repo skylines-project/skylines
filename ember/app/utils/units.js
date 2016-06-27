@@ -109,7 +109,7 @@ export function convertDistance(value) {
 
 export function addDistanceUnit(value) {
   value = formatDecimal(value, UNITS[settings['Distance']][1]);
-  return value + ' ' + settings['Distance'];
+  return `${value} ${settings['Distance']}`;
 }
 
 export function getDistanceUnit() {
@@ -127,7 +127,7 @@ export function convertSpeed(value) {
 
 export function addSpeedUnit(value) {
   value = formatDecimal(value, UNITS[settings['Speed']][1]);
-  return value + ' ' + settings['Speed'];
+  return `${value} ${settings['Speed']}`;
 }
 
 export function getSpeedUnit() {
@@ -145,7 +145,7 @@ export function convertLift(value) {
 
 export function addLiftUnit(value) {
   value = formatDecimal(value, UNITS[settings['Lift']][1]);
-  return value + ' ' + settings['Lift'];
+  return `${value} ${settings['Lift']}`;
 }
 
 export function getLiftUnit() {
@@ -163,7 +163,7 @@ export function convertAltitude(value) {
 
 export function addAltitudeUnit(value) {
   value = formatDecimal(value, UNITS[settings['Altitude']][1]);
-  return value + ' ' + settings['Altitude'];
+  return `${value} ${settings['Altitude']}`;
 }
 
 export function getAltitudeUnit() {

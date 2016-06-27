@@ -123,13 +123,9 @@ export default function slMapClickHandler(map, flight_display, settings) {
    * @return {jQuery}
    */
   function flightInfo(flight) {
-    return $(
-        '<span class="info-item badge" style="background:' +
-            flight.get('color') +
-        '">' +
-        flight.getWithDefault('registration', '') +
-        '</span>'
-    );
+    return $(`<span class="info-item badge" style="background:${flight.get('color')}">
+      ${flight.getWithDefault('registration', '')}
+    </span>`);
   }
 
   function nearFlights(lon, lat, time, flight) {
@@ -265,7 +261,7 @@ export default function slMapClickHandler(map, flight_display, settings) {
    * @param {Number} lat Latitude.
    */
   function getLocationInfo(lon, lat) {
-    let req = $.ajax(settings.api_url + '/mapitems?lon=' + lon + '&lat=' + lat);
+    let req = $.ajax(`${settings.api_url}/mapitems?lon=${lon}&lat=${lat}`);
 
     req.done(function(data) {
       showLocationData(data);
@@ -339,28 +335,27 @@ export default function slMapClickHandler(map, flight_display, settings) {
   function formatAirspaceData(data) {
     let table = $('<table></table>');
 
-    table.append($(
-        '<thead><tr>' +
-        '<th colspan="4">Airspaces</th>' +
-        '</tr><tr>' +
-        '<th>Name</th>' +
-        '<th>Class</th>' +
-        '<th>Base</th>' +
-        '<th>Top</th>' +
-        '</tr></thead>'
-        ));
+    table.append($(`<thead>
+      <tr>
+        <th colspan="4">Airspaces</th>
+      </tr>
+      <tr>
+        <th>Name</th>
+        <th>Class</th>
+        <th>Base</th>
+        <th>Top</th>
+      </tr>
+    </thead>`));
 
     let table_body = $('<tbody></tbody>');
 
     for (let i = 0; i < data.length; ++i) {
-      table_body.append($(
-          '<tr>' +
-          '<td class="airspace_name">' + data[i]['name'] + '</td>' +
-          '<td class="airspace_class">' + data[i]['class'] + '</td>' +
-          '<td class="airspace_base">' + data[i]['base'] + '</td>' +
-          '<td class="airspace_top">' + data[i]['top'] + '</td>' +
-          '</tr>'
-          ));
+      table_body.append($(`<tr>
+        <td class="airspace_name">${data[i]['name']}</td>
+        <td class="airspace_class">${data[i]['class']}</td>
+        <td class="airspace_base">${data[i]['base']}</td>
+        <td class="airspace_top">${data[i]['top']}</td>
+      </tr>`));
     }
 
     table.append(table_body);
@@ -377,26 +372,25 @@ export default function slMapClickHandler(map, flight_display, settings) {
   function formatMountainWaveData(data) {
     let table = $('<table></table>');
 
-    table.append($(
-        '<thead><tr>' +
-        '<th colspan="2">Mountain Waves</th>' +
-        '</tr><tr>' +
-        '<th>Name</th>' +
-        '<th>Wind direction</th>' +
-        '</tr></thead>'
-        ));
+    table.append($(`<thead>
+      <tr>
+        <th colspan="2">Mountain Waves</th>
+      </tr>
+      <tr>
+        <th>Name</th>
+        <th>Wind direction</th>
+      </tr>
+    </thead>`));
 
     let table_body = $('<tbody></tbody>');
 
     for (let i = 0; i < data.length; ++i) {
       let wind_direction = data[i]['main_wind_direction'] || 'Unknown';
 
-      table_body.append($(
-          '<tr>' +
-          '<td class="wave_name">' + data[i]['name'] + '</td>' +
-          '<td class="wave_direction">' + wind_direction + '</td>' +
-          '</tr>'
-          ));
+      table_body.append($(`<tr>
+        <td class="wave_name">${data[i]['name']}</td>
+        <td class="wave_direction">${wind_direction}</td>
+      </tr>`));
     }
 
     table.append(table_body);

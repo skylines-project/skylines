@@ -1,8 +1,5 @@
 function pad(number) {
-  if (number < 10) {
-    return '0' + number;
-  }
-  return number;
+  return number < 10 ? `0${number}` : number;
 }
 
 export default function isoDate(date) {

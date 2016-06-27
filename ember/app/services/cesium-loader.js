@@ -17,7 +17,7 @@ export default Ember.Service.extend({
         Ember.debug('Loading Cesium...');
 
         let cesium = document.createElement('script');
-        cesium.src = CESIUM_BASE_URL + 'Cesium.js';
+        cesium.src = `${CESIUM_BASE_URL}Cesium.js`;
         cesium.onload = resolve;
         document.body.appendChild(cesium);
       });

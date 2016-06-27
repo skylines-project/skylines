@@ -147,7 +147,7 @@ export default Ember.Component.extend(Ember.Evented, {
                 '</a>.',
           }),
         ],
-        url: tile_url + '/tiles/1.0.0/mwp/{z}/{x}/{y}.png',
+        url: `${tile_url}/tiles/1.0.0/mwp/{z}/{x}/{y}.png`,
       }),
       zIndex: 11,
     });
@@ -167,7 +167,7 @@ export default Ember.Component.extend(Ember.Evented, {
 
     let airspace_layer = new ol.layer.Tile({
       source: new ol.source.XYZ({
-        url: tile_url + '/tiles/1.0.0/airspace+airports/{z}/{x}/{y}.png',
+        url: `${tile_url}/tiles/1.0.0/airspace+airports/{z}/{x}/{y}.png`,
       }),
       zIndex: 10,
     });

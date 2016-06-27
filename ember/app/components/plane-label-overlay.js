@@ -13,11 +13,11 @@ export default Ember.Component.extend({
   init() {
     this._super(...arguments);
 
-    let badge = Ember.$('<span class="badge plane_marker" ' +
-      'style="display: inline-block; text-align: center; ' +
-      'background: ' + this.get('flight.color') + ';">' +
-      this.getWithDefault('flight.competition_id', '') +
-      '</span>');
+    let badgeStyle = `display: inline-block; text-align: center; background: ${this.get('flight.color')}`;
+
+    let badge = Ember.$(`<span class="badge plane_marker" style="${badgeStyle}">
+      ${this.getWithDefault('flight.competition_id', '')}
+    </span>`);
 
     this.set('overlay', new ol.Overlay({
       element: badge.get(0),
