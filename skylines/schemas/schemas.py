@@ -13,6 +13,12 @@ class ClubSchema(Schema):
     website = fields.URL()
 
 
+class FlightSchema(Schema):
+    model_id = fields.Integer(load_from='modelId', allow_none=True)
+    registration = fields.String(strip=True, validate=validate.Length(max=32))
+    competition_id = fields.String(load_from='competitionId', strip=True, validate=validate.Length(max=5))
+
+
 class UserSchema(Schema):
     email_address = fields.Email(load_from='email', validate=validate.Length(max=255))
     first_name = fields.String(load_from='firstName', strip=True, validate=(
