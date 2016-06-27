@@ -1,7 +1,6 @@
 from flask import Blueprint, request, render_template, redirect, url_for, abort, g, flash, jsonify
 
 from sqlalchemy.sql.expression import and_, or_
-from marshmallow import validate
 
 from skylines.database import db
 from skylines.lib.dbutil import get_requested_record
@@ -12,6 +11,7 @@ from skylines.frontend.views.users import send_recover_mail
 from skylines.model.event import (
     create_club_join_event
 )
+from skylines.schemas import validate, ClubSchema
 
 settings_blueprint = Blueprint('settings', 'skylines')
 email_validator = validate.Email()
@@ -283,22 +283,18 @@ def club_change():
 @settings_blueprint.route('/club', methods=['PUT'])
 def create_club():
     json = request.get_json()
-    if not json:
+    if json is None:
         return jsonify(error='invalid-request'), 400
 
-    name = json.get('name')
-    if name is None:
-        return jsonify(error='missing-name'), 400
+    data, errors = ClubSchema(only=('name',)).load(json)
+    if errors:
+        return jsonify(error='validation-failed', fields=errors), 422
 
-    name = name.strip()
-    if name == '':
-        return jsonify(error='invalid-name'), 422
-
-    if Club.exists(name=name):
-        return jsonify(error='club-exists'), 422
+    if Club.exists(name=data.get('name')):
+        return jsonify(error='duplicate-club-name'), 422
 
     # create the new club
-    club = Club(name=name)
+    club = Club(**data)
     club.owner_id = g.current_user.id
     db.session.add(club)
     db.session.flush()
