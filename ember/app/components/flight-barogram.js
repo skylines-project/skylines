@@ -16,12 +16,12 @@ export default Ember.Component.extend(Ember.Evented, {
 
   activeFlights: Ember.computed('flights.[]', 'selection', function() {
     let { flights, selection } = this.getProperties('flights', 'selection');
-    return flights.filter(flight => (!selection || flight.getID() === selection));
+    return flights.filter(flight => (!selection || flight.get('id') === selection));
   }),
 
   passiveFlights: Ember.computed('flights.[]', 'selection', function() {
     let { flights, selection } = this.getProperties('flights', 'selection');
-    return flights.filter(flight => (selection && flight.getID() !== selection));
+    return flights.filter(flight => (selection && flight.get('id') !== selection));
   }),
 
   active: Ember.computed('activeFlights.@each.{flot_h,color}', function() {

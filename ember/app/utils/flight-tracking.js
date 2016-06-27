@@ -19,7 +19,7 @@ export default Ember.Object.extend({
     let flight_display = this.get('flight_display');
 
     this.get('flights').forEach(flight => {
-      var url = '/tracking/' + flight.getID() + '/json';
+      var url = `/tracking/${flight.get('id')}/json`;
 
       $.ajax(url, {
         data: {last_update: flight.get('last_update') || null},

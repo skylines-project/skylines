@@ -60,8 +60,4 @@ export default Ember.Object.extend({
     this._super(...arguments);
     this.set('geometry', new ol.geom.LineString(this.get('coordinates'), 'XYZM'));
   },
-
-  getID() {
-    return this.get('id');
-  },
 });

@@ -239,8 +239,7 @@ export default function slMapClickHandler(map, flight_display, settings) {
   function getNearFlights(lon, lat, time, flight) {
     if (!flight_display) return;
 
-    let req = $.ajax('/flights/' + flight.getID() + '/near?lon=' + lon +
-        '&lat=' + lat + '&time=' + time);
+    let req = $.ajax(`/flights/${flight.get('id')}/near?lon=${lon}&lat=${lat}&time=${time}`);
 
     req.done(function(data) {
       for (let i = 0; i < data['flights'].length; ++i) {

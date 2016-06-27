@@ -10,7 +10,7 @@ export default Ember.Component.extend(Ember.Evented, {
     let { nearFlights, visibleFlights } = this.getProperties('nearFlights', 'visibleFlights');
     return nearFlights.map(it => {
       let id = it.flight.id;
-      let visibleFlight = visibleFlights.find(flight => (flight.getID() === id));
+      let visibleFlight = visibleFlights.findBy('id', id);
 
       return {
         color: visibleFlight ? visibleFlight.get('color') : undefined,

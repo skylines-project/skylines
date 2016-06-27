@@ -91,7 +91,7 @@ export default Ember.ArrayProxy.extend({
 
     flights.slice(offset, offset + removeCount).forEach(function(flight) {
       source.removeFeature(source.getFeatures().filter(function(it) {
-        return it.get('sfid') == flight.getID();
+        return it.get('sfid') == flight.get('id');
       })[0]);
     });
   },
