@@ -14,6 +14,7 @@ from skylines.model import User
 from skylines.model.event import create_new_user_event
 from skylines.frontend.forms import CreatePilotForm, RecoverStep1Form, RecoverStep2Form
 from skylines.lib.vary import vary
+from skylines.schemas import UserSchema
 
 users_blueprint = Blueprint('users', 'skylines')
 
@@ -31,22 +32,7 @@ def index():
     if 'club' in request.args:
         users = users.filter_by(club_id=request.args.get('club'))
 
-    json = []
-    for u in users:
-        user = {
-            'id': u.id,
-            'name': unicode(u),
-        }
-
-        if u.club:
-            user['club'] = {
-                'id': u.club.id,
-                'name': unicode(u.club),
-            }
-
-        json.append(user)
-
-    return jsonify(users=json)
+    return jsonify(users=UserSchema(strict=True, only=('id', 'name', 'club')).dump(users, many=True).data)
 
 
 @users_blueprint.route('/new', methods=['GET', 'POST'])

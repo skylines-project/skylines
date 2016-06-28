@@ -38,12 +38,20 @@ class UserSchema(Schema):
         validate.Length(min=1, max=255),
     ))
     name = fields.String(dump_only=True)
+
+    clubId = fields.Integer(attribute='club_id', allow_none=True)
+    club = fields.Nested(ClubSchema, only=('id', 'name'))
+
     trackingCallsign = fields.String(attribute='tracking_callsign', strip=True, validate=validate.Length(max=5))
     trackingDelay = fields.Integer(attribute='tracking_delay', validate=validate.Range(min=0, max=60))
     distanceUnit = fields.Integer(attribute='distance_unit', validate=validate.Range(min=0, max=len(DISTANCE_UNITS) - 1))
     speedUnit = fields.Integer(attribute='speed_unit', validate=validate.Range(min=0, max=len(SPEED_UNITS) - 1))
     liftUnit = fields.Integer(attribute='lift_unit', validate=validate.Range(min=0, max=len(LIFT_UNITS) - 1))
     altitudeUnit = fields.Integer(attribute='altitude_unit', validate=validate.Range(min=0, max=len(ALTITUDE_UNITS) - 1))
+
+    class Meta:
+        load_only = ('clubId',)
+        dump_only = ('club',)
 
 
 class IGCFileSchema(Schema):
