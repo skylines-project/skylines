@@ -3,6 +3,7 @@ from sqlalchemy import func
 
 from skylines.model import Club
 from skylines.lib.vary import vary
+from skylines.schemas import ClubSchema
 
 clubs_blueprint = Blueprint('clubs', 'skylines')
 
@@ -19,11 +20,4 @@ def index():
     if name_filter:
         clubs = clubs.filter_by(name=name_filter)
 
-    json = []
-    for c in clubs:
-        json.append({
-            'id': c.id,
-            'name': unicode(c),
-        })
-
-    return jsonify(clubs=json)
+    return jsonify(clubs=ClubSchema(strict=True, only=('id', 'name')).dump(clubs, many=True).data)
