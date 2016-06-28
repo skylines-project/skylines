@@ -16,5 +16,10 @@ class String(_String):
         return value
 
 
+class Location(Field):
+    def _serialize(self, value, attr, obj):
+        return value.to_lonlat() if value else None
+
+
 # Aliases
 Str = String
