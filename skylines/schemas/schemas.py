@@ -26,12 +26,6 @@ class ClubSchema(Schema):
     website = fields.URL()
 
 
-class IGCFileSchema(Schema):
-    registration = fields.String(strip=True, validate=validate.Length(max=32))
-    competitionId = fields.String(attribute='competition_id', strip=True, validate=validate.Length(max=5))
-    model = fields.String(strip=True, validate=validate.Length(max=64))
-
-
 class UserSchema(Schema):
     id = fields.Integer(dump_only=True)
     email = fields.Email(attribute='email_address', validate=validate.Length(max=255))
@@ -50,6 +44,12 @@ class UserSchema(Schema):
     speedUnit = fields.Integer(attribute='speed_unit', validate=validate.Range(min=0, max=len(SPEED_UNITS) - 1))
     liftUnit = fields.Integer(attribute='lift_unit', validate=validate.Range(min=0, max=len(LIFT_UNITS) - 1))
     altitudeUnit = fields.Integer(attribute='altitude_unit', validate=validate.Range(min=0, max=len(ALTITUDE_UNITS) - 1))
+
+
+class IGCFileSchema(Schema):
+    registration = fields.String(strip=True, validate=validate.Length(max=32))
+    competitionId = fields.String(attribute='competition_id', strip=True, validate=validate.Length(max=5))
+    model = fields.String(strip=True, validate=validate.Length(max=64))
 
 
 class FlightSchema(Schema):
