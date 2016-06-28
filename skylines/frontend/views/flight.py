@@ -24,7 +24,7 @@ from skylines.model import (
 )
 from skylines.model.event import create_flight_comment_notifications
 from skylines.model.flight import get_elevations_for_flight
-from skylines.schemas import FlightSchema, FlightCommentSchema, UserSchema
+from skylines.schemas import FlightSchema, FlightCommentSchema, IGCFileSchema, UserSchema
 from skylines.worker import tasks
 from redis.exceptions import ConnectionError
 
@@ -286,12 +286,7 @@ def index():
             }
 
         if f.igc_file_id:
-            i = f.igc_file
-            flight['igc_file'] = {
-                'model': i.model,
-                'registration': i.registration,
-                'competition_id': i.competition_id,
-            }
+            flight['igc_file'], errors = IGCFileSchema().dump(f.igc_file)
 
         if f.pilot_id:
             flight['pilot'] = {

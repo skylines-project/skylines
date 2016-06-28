@@ -23,6 +23,12 @@ class FlightSchema(Schema):
     competitionId = fields.String(attribute='competition_id', strip=True, validate=validate.Length(max=5))
 
 
+class IGCFileSchema(Schema):
+    registration = fields.String(strip=True, validate=validate.Length(max=32))
+    competitionId = fields.String(attribute='competition_id', strip=True, validate=validate.Length(max=5))
+    model = fields.String(strip=True, validate=validate.Length(max=64))
+
+
 class UserSchema(Schema):
     id = fields.Integer(dump_only=True)
     email = fields.Email(attribute='email_address', validate=validate.Length(max=255))
