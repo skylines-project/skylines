@@ -18,6 +18,7 @@ from skylines.lib.formatter import units
 from skylines.lib.datetime import from_seconds_of_day, to_seconds_of_day
 from skylines.lib.geo import METERS_PER_DEGREE
 from skylines.lib.geoid import egm96_height
+from skylines.lib.vary import vary
 from skylines.model import (
     User, Flight, FlightPhase, Location, FlightComment,
     Notification, Event, FlightMeetings, AircraftModel,
@@ -261,7 +262,11 @@ def mark_flight_notifications_read(flight):
 
 
 @flight_blueprint.route('/')
+@vary('accept')
 def index():
+    if 'application/json' in request.headers.get('Accept', ''):
+        return jsonify(flight=FlightSchema(strict=True).dump(g.flight).data)
+
     near_flights = []
     for id, near_flight in FlightMeetings.get_meetings(g.flight).iteritems():
         f = near_flight['flight']
