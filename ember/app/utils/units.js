@@ -98,72 +98,76 @@ export function formatDecimal(value, decimals) {
   return value.toFixed(decimals);
 }
 
-export function formatDistance(value) {
+export function formatDistance(value, options) {
   value = convertDistance(value);
-  return addDistanceUnit(value);
+  return addDistanceUnit(value, options);
 }
 
 export function convertDistance(value) {
   return value * UNITS[settings['Distance']][0];
 }
 
-export function addDistanceUnit(value) {
-  value = formatDecimal(value, UNITS[settings['Distance']][1]);
-  return `${value} ${settings['Distance']}`;
+export function addDistanceUnit(value, options = {}) {
+  let decimals = (options.decimals !== undefined) ? options.decimals : UNITS[settings['Distance']][1];
+  value = formatDecimal(value, decimals);
+  return (options.withUnit !== false) ? `${value} ${settings['Distance']}` : value;
 }
 
 export function getDistanceUnit() {
   return settings['Distance'];
 }
 
-export function formatSpeed(value) {
+export function formatSpeed(value, options) {
   value = convertSpeed(value);
-  return addSpeedUnit(value);
+  return addSpeedUnit(value, options);
 }
 
 export function convertSpeed(value) {
   return value * UNITS[settings['Speed']][0];
 }
 
-export function addSpeedUnit(value) {
-  value = formatDecimal(value, UNITS[settings['Speed']][1]);
-  return `${value} ${settings['Speed']}`;
+export function addSpeedUnit(value, options = {}) {
+  let decimals = (options.decimals !== undefined) ? options.decimals : UNITS[settings['Speed']][1];
+  value = formatDecimal(value, decimals);
+  return (options.withUnit !== false) ? `${value} ${settings['Speed']}` : value;
 }
 
 export function getSpeedUnit() {
   return settings['Speed'];
 }
 
-export function formatLift(value) {
+export function formatLift(value, options) {
   value = convertLift(value);
-  return addLiftUnit(value);
+  return addLiftUnit(value, options);
 }
 
 export function convertLift(value) {
   return value * UNITS[settings['Lift']][0];
 }
 
-export function addLiftUnit(value) {
-  value = formatDecimal(value, UNITS[settings['Lift']][1]);
-  return `${value} ${settings['Lift']}`;
+export function addLiftUnit(value, options = {}) {
+  let decimals = (options.decimals !== undefined) ? options.decimals : UNITS[settings['Lift']][1];
+  value = formatDecimal(value, decimals);
+  return (options.withUnit !== false) ? `${value} ${settings['Lift']}` : value;
 }
 
 export function getLiftUnit() {
   return settings['Lift'];
 }
 
-export function formatAltitude(value) {
+export function formatAltitude(value, options) {
   value = convertAltitude(value);
-  return addAltitudeUnit(value);
+  return addAltitudeUnit(value, options);
 }
 
 export function convertAltitude(value) {
   return value * UNITS[settings['Altitude']][0];
 }
 
-export function addAltitudeUnit(value) {
-  value = formatDecimal(value, UNITS[settings['Altitude']][1]);
-  return `${value} ${settings['Altitude']}`;
+export function addAltitudeUnit(value, options = {}) {
+  let decimals = (options.decimals !== undefined) ? options.decimals : UNITS[settings['Altitude']][1];
+  value = formatDecimal(value, decimals);
+  return (options.withUnit !== false) ? `${value} ${settings['Altitude']}` : value;
 }
 
 export function getAltitudeUnit() {
