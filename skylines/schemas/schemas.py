@@ -11,6 +11,12 @@ class AircraftModelSchema(Schema):
     index = fields.Integer(attribute='dmst_index')
 
 
+class AirportSchema(Schema):
+    id = fields.Integer(dump_only=True)
+    name = fields.String(required=True, strip=True, validate=validate.Length(max=255))
+    countryCode = fields.String(attribute='country_code', dump_only=True)
+
+
 class ClubSchema(Schema):
     id = fields.Integer(dump_only=True)
     name = fields.String(required=True, strip=True, validate=(
@@ -72,13 +78,19 @@ class FlightSchema(Schema):
     scoreEndTime = fields.DateTime(attribute='scoring_end_time')
     landingTime = fields.DateTime(attribute='landing_time')
 
+    takeoffAirportId = fields.Integer(attribute='takeoff_airport_id', allow_none=True)
+    takeoffAirport = fields.Nested(AirportSchema, attribute='takeoff_airport', only=('id', 'name', 'countryCode'))
+
+    landingAirportId = fields.Integer(attribute='landing_airport_id', allow_none=True)
+    landingAirport = fields.Nested(AirportSchema, attribute='landing_airport', only=('id', 'name', 'countryCode'))
+
     distance = fields.Integer(attribute='olc_classic_distance')
     triangleDistance = fields.Integer(attribute='olc_triangle_distance')
     score = fields.Float(attribute='olc_plus_score')
 
     class Meta:
-        load_only = ('pilotId', 'copilotId', 'clubId', 'modelId')
-        dump_only = ('pilot', 'copilot', 'club', 'model')
+        load_only = ('pilotId', 'copilotId', 'clubId', 'modelId', 'takeoffAirportId', 'landingAirportId')
+        dump_only = ('pilot', 'copilot', 'club', 'model', 'takeoffAirport', 'landingAirport')
 
 
 class FlightCommentSchema(Schema):
