@@ -15,8 +15,8 @@
 </td>
 <td class="start">{{phase.start.text}}</td>
 <td class="duration hidden-md">{{phase.duration.text}}</td>
-<td class="numeric">{{phase.altDiff}}</td>
-<td class="numeric">{{phase.distance}}</td>
-<td class="numeric">{{phase.vario}}</td>
-<td class="numeric">{{phase.speed}}</td>
+<td class="numeric">{{format-altitude phase.altDiff withUnit=false}}</td>
+<td class="numeric">{{if (not phase.isCircling) (format-distance phase.distance decimals=1 withUnit=false)}}</td>
+<td class="numeric">{{format-lift phase.vario withUnit=false}}</td>
+<td class="numeric">{{format-speed phase.speed withUnit=false}}</td>
 <td class="numeric">{{phase.glideRate}}</td>

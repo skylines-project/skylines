@@ -182,18 +182,14 @@ def format_phase(phase):
     r = dict(start="%s" % format_time(phase.start_time),
              fraction="%d%%" % phase.fraction if phase.fraction is not None else "",
              speed=units.format_speed(phase.speed) if phase.speed is not None else "",
-             speed_number=units.format_speed(phase.speed, name=False) if phase.speed is not None else "",
              vario=units.format_lift(phase.vario),
-             vario_number=units.format_lift(phase.vario, name=False),
              alt_diff=units.format_altitude(phase.alt_diff),
-             alt_diff_number=units.format_altitude(phase.alt_diff, name=False),
              count=phase.count,
              duration=phase.duration,
              is_circling=is_circling,
              type=PHASETYPE_NAMES[phase.phase_type],
              circling_direction="",
              distance="",
-             distance_number="",
              glide_rate="",
              circling_direction_left=phase.circling_direction == FlightPhase.CD_LEFT,
              circling_direction_right=phase.circling_direction == FlightPhase.CD_RIGHT,
@@ -201,7 +197,6 @@ def format_phase(phase):
 
     if not is_circling:
         r['distance'] = units.format_distance(phase.distance, 1)
-        r['distance_number'] = units.format_distance(phase.distance, 1, name=False)
 
         # Sensible glide rate values are formatted as numbers. Others are shown
         # as infinity symbol.
@@ -339,10 +334,10 @@ def index():
                 "seconds": p_raw.duration.total_seconds(),
                 "text": unicode(p['duration']),
             },
-            "altDiff": p['alt_diff_number'],
-            "distance": p['distance_number'],
-            "vario": p['vario_number'],
-            "speed": p['speed_number'],
+            "altDiff": p_raw.alt_diff,
+            "distance": p_raw.distance,
+            "vario": p_raw.vario,
+            "speed": p_raw.speed,
             "glideRate": p['glide_rate'],
         })
 
