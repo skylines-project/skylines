@@ -98,7 +98,8 @@ class FlightSchema(Schema):
     rawScore = fields.Float(attribute='olc_plus_score')
     score = fields.Float(attribute='index_score')
 
-    igcFile = fields.Nested(IGCFileSchema, attribute='igc_file', only=('registration', 'competitionId', 'model'))
+    igcFile = fields.Nested(IGCFileSchema, attribute='igc_file', only=(
+        'owner', 'filename', 'registration', 'competitionId', 'model'))
 
     class Meta:
         load_only = ('pilotId', 'copilotId', 'clubId', 'modelId', 'takeoffAirportId', 'landingAirportId')
