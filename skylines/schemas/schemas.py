@@ -5,6 +5,12 @@ from . import fields, validate
 from skylines.lib.formatter.units import DISTANCE_UNITS, SPEED_UNITS, LIFT_UNITS, ALTITUDE_UNITS
 
 
+class AircraftModelSchema(Schema):
+    id = fields.Integer(dump_only=True)
+    name = fields.String(required=True, strip=True, validate=validate.Length(max=64))
+    index = fields.Integer(attribute='dmst_index')
+
+
 class ClubSchema(Schema):
     name = fields.String(required=True, strip=True, validate=(
         validate.NotEmpty(),
