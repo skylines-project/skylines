@@ -88,9 +88,11 @@ class FlightSchema(Schema):
     triangleDistance = fields.Integer(attribute='olc_triangle_distance')
     score = fields.Float(attribute='olc_plus_score')
 
+    igcFile = fields.Nested(IGCFileSchema, attribute='igc_file', only=('registration', 'competitionId', 'model'))
+
     class Meta:
         load_only = ('pilotId', 'copilotId', 'clubId', 'modelId', 'takeoffAirportId', 'landingAirportId')
-        dump_only = ('pilot', 'copilot', 'club', 'model', 'takeoffAirport', 'landingAirport')
+        dump_only = ('pilot', 'copilot', 'club', 'model', 'takeoffAirport', 'landingAirport', 'igcFile')
 
 
 class FlightCommentSchema(Schema):
