@@ -48,16 +48,16 @@ class UserSchema(Schema):
 class FlightSchema(Schema):
     timeCreated = fields.DateTime(attribute='time_created')
 
-    pilotId = fields.Integer(attribute='pilot_id', load_only=True, allow_none=True)
-    pilot = fields.Nested(UserSchema, dump_only=True, only=('id', 'name'))
+    pilotId = fields.Integer(attribute='pilot_id', allow_none=True)
+    pilot = fields.Nested(UserSchema, only=('id', 'name'))
     pilotName = fields.String(attribute='pilot_name', strip=True, allow_none=True, validate=validate.Length(max=255))
 
-    copilotId = fields.Integer(attribute='co_pilot_id', load_only=True, allow_none=True)
-    copilot = fields.Nested(UserSchema, attribute='co_pilot', dump_only=True, only=('id', 'name'))
+    copilotId = fields.Integer(attribute='co_pilot_id', allow_none=True)
+    copilot = fields.Nested(UserSchema, attribute='co_pilot', only=('id', 'name'))
     copilotName = fields.String(attribute='co_pilot_name', strip=True, allow_none=True, validate=validate.Length(max=255))
 
-    modelId = fields.Integer(attribute='model_id', load_only=True, allow_none=True)
-    model = fields.Nested(AircraftModelSchema, dump_only=True)
+    modelId = fields.Integer(attribute='model_id', allow_none=True)
+    model = fields.Nested(AircraftModelSchema)
     registration = fields.String(strip=True, validate=validate.Length(max=32))
     competitionId = fields.String(attribute='competition_id', strip=True, validate=validate.Length(max=5))
 
@@ -71,6 +71,10 @@ class FlightSchema(Schema):
     distance = fields.Integer(attribute='olc_classic_distance')
     triangleDistance = fields.Integer(attribute='olc_triangle_distance')
     score = fields.Float(attribute='olc_plus_score')
+
+    class Meta:
+        load_only = ('pilotId', 'copilotId', 'modelId')
+        dump_only = ('pilot', 'copilot', 'model')
 
 
 class FlightCommentSchema(Schema):
