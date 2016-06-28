@@ -1,5 +1,7 @@
 import pytest
 
+from marshmallow import ValidationError
+
 from skylines.schemas import UserSchema
 
 
@@ -24,66 +26,67 @@ def delay_schema():
 
 
 def test_deserialization_skips_id(partial_schema):
-    data, errors = partial_schema.load(dict(id=6))
-    assert not errors
+    data = partial_schema.load(dict(id=6)).data
     assert 'id' not in data
 
 
 def test_deserialization_passes_for_valid_email(schema):
-    data, errors = schema.load(dict(email='john@doe.com'))
-    assert not errors
-    assert data.get('email_address') == 'john@doe.com'
+    data = schema.load(dict(email='john@doe.com')).data
+    assert data['email_address'] == 'john@doe.com'
 
 
 def test_deserialization_fails_for_empty_email(schema):
-    data, errors = schema.load(dict(email=''))
+    with pytest.raises(ValidationError) as e:
+        schema.load(dict(email=''))
+
+    errors = e.value.messages
     assert 'email' in errors
-    assert 'Not a valid email address.' in errors.get('email')
+    assert 'Not a valid email address.' in errors['email']
 
 
 def test_deserialization_passes_for_valid_callsign(callsign_schema):
-    data, errors = callsign_schema.load(dict(trackingCallsign='TH'))
-    assert not errors
-    assert data.get('tracking_callsign') == 'TH'
+    data = callsign_schema.load(dict(trackingCallsign='TH')).data
+    assert data['tracking_callsign'] == 'TH'
 
 
 def test_deserialization_passes_for_missing_callsign(callsign_schema):
-    data, errors = callsign_schema.load(dict())
-    assert not errors
-    assert data.get('tracking_callsign') == None
+    data = callsign_schema.load(dict()).data
+    assert 'tracking_callsign' not in data
 
 
 def test_deserialization_passes_for_empty_callsign(callsign_schema):
-    data, errors = callsign_schema.load(dict(trackingCallsign=''))
-    assert not errors
-    assert data.get('tracking_callsign') == ''
+    data = callsign_schema.load(dict(trackingCallsign='')).data
+    assert data['tracking_callsign'] == ''
 
 
 def test_deserialization_passes_for_stripped_callsign(callsign_schema):
-    data, errors = callsign_schema.load(dict(trackingCallsign='TH           '))
-    assert not errors
-    assert data.get('tracking_callsign') == 'TH'
+    data = callsign_schema.load(dict(trackingCallsign='TH           ')).data
+    assert data['tracking_callsign'] == 'TH'
 
 
 def test_deserialization_fails_for_long_callsign(callsign_schema):
-    data, errors = callsign_schema.load(dict(trackingCallsign='12345890'))
+    with pytest.raises(ValidationError) as e:
+        callsign_schema.load(dict(trackingCallsign='12345890'))
+
+    errors = e.value.messages
     assert 'trackingCallsign' in errors
-    assert 'Longer than maximum length 5.' in errors.get('trackingCallsign')
+    assert 'Longer than maximum length 5.' in errors['trackingCallsign']
 
 
 def test_deserialization_passes_for_valid_delay(delay_schema):
-    data, errors = delay_schema.load(dict(trackingDelay=5))
-    assert not errors
-    assert data.get('tracking_delay') == 5
+    data = delay_schema.load(dict(trackingDelay=5)).data
+    assert data['tracking_delay'] == 5
 
 
 def test_deserialization_passes_for_valid_delay_string(delay_schema):
-    data, errors = delay_schema.load(dict(trackingDelay='10'))
-    assert not errors
-    assert data.get('tracking_delay') == 10
+    data = delay_schema.load(dict(trackingDelay='10')).data
+    assert data['tracking_delay'] == 10
 
 
 def test_deserialization_fails_for_invalid_delay(delay_schema):
-    data, errors = delay_schema.load(dict(trackingDelay=-1))
+    with pytest.raises(ValidationError) as e:
+        delay_schema.load(dict(trackingDelay=-1))
+
+    errors = e.value.messages
     assert 'trackingDelay' in errors
-    assert 'Must be between 0 and 60.' in errors.get('trackingDelay')
+    assert 'Must be between 0 and 60.' in errors['trackingDelay']

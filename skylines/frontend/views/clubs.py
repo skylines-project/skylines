@@ -20,4 +20,4 @@ def index():
     if name_filter:
         clubs = clubs.filter_by(name=name_filter)
 
-    return jsonify(clubs=ClubSchema(strict=True, only=('id', 'name')).dump(clubs, many=True).data)
+    return jsonify(clubs=ClubSchema(only=('id', 'name')).dump(clubs, many=True).data)

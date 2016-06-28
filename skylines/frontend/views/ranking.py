@@ -81,7 +81,7 @@ def pilots():
     data = _handle_request(User, 'pilot_id')
 
     if 'application/json' in request.headers.get('Accept', ''):
-        user_schema = UserSchema(strict=True, only=('id', 'name', 'club'))
+        user_schema = UserSchema(only=('id', 'name', 'club'))
 
         json = []
         for pilot, count, total, rank in data['result']:
@@ -105,7 +105,7 @@ def clubs():
     data = _handle_request(Club, 'club_id')
 
     if 'application/json' in request.headers.get('Accept', ''):
-        club_schema = ClubSchema(strict=True, only=('id', 'name'))
+        club_schema = ClubSchema(only=('id', 'name'))
 
         json = []
         for club, count, total, rank in data['result']:
@@ -129,7 +129,7 @@ def airports():
     data = _handle_request(Airport, 'takeoff_airport_id')
 
     if 'application/json' in request.headers.get('Accept', ''):
-        airport_schema = AirportSchema(strict=True, only=('id', 'name', 'countryCode'))
+        airport_schema = AirportSchema(only=('id', 'name', 'countryCode'))
 
         json = []
         for airport, count, total, rank in data['result']:

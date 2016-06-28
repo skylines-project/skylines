@@ -32,7 +32,7 @@ def index():
     if 'club' in request.args:
         users = users.filter_by(club_id=request.args.get('club'))
 
-    return jsonify(users=UserSchema(strict=True, only=('id', 'name', 'club')).dump(users, many=True).data)
+    return jsonify(users=UserSchema(only=('id', 'name', 'club')).dump(users, many=True).data)
 
 
 @users_blueprint.route('/new', methods=['GET', 'POST'])

@@ -1,3 +1,7 @@
+import pytest
+
+from marshmallow import ValidationError
+
 from skylines.schemas import fields, validate, Schema
 
 
@@ -6,25 +10,31 @@ class TestSchema(Schema):
 
 
 def test_fails_for_empty_string():
-    data, errors = TestSchema().load(dict(name=''))
+    with pytest.raises(ValidationError) as e:
+        TestSchema().load(dict(name=''))
+
+    errors = e.value.messages
     assert 'name' in errors
-    assert errors.get('name') == ['Must not be empty.']
+    assert 'Must not be empty.' in errors['name']
 
 
 def test_passes_for_non_empty_string():
-    data, errors = TestSchema().load(dict(name='foobar'))
-    assert not errors
+    data = TestSchema().load(dict(name='foobar')).data
+    assert data['name'] == 'foobar'
 
 
 def test_passes_for_blank_string():
-    data, errors = TestSchema().load(dict(name='    '))
-    assert not errors
+    data = TestSchema().load(dict(name='    ')).data
+    assert data['name'] == '    '
 
 
 def test_fails_for_stripped_blank_string():
     class TestSchema2(Schema):
         name = fields.String(strip=True, validate=validate.NotEmpty())
 
-    data, errors = TestSchema2().load(dict(name='    '))
+    with pytest.raises(ValidationError) as e:
+        TestSchema2().load(dict(name='    '))
+
+    errors = e.value.messages
     assert 'name' in errors
-    assert errors.get('name') == ['Must not be empty.']
+    assert 'Must not be empty.' in errors['name']

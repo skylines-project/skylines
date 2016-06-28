@@ -1,8 +1,14 @@
-from marshmallow import Schema
+from marshmallow import Schema as _Schema
 
 from . import fields, validate
 
 from skylines.lib.formatter.units import DISTANCE_UNITS, SPEED_UNITS, LIFT_UNITS, ALTITUDE_UNITS
+
+
+class Schema(_Schema):
+    # Set `strict=True` as default for our schemas
+    def __init__(self, strict=True, *args, **kwargs):
+        super(Schema, self).__init__(strict=strict, *args, **kwargs)
 
 
 class AircraftModelSchema(Schema):

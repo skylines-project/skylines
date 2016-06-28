@@ -103,7 +103,7 @@ def _create_list(tab, kw, date=None, pilot=None, club=None, airport=None,
     flights = Pager.paginate(flights, 'flights',
                              items_per_page=int(current_app.config.get('SKYLINES_LISTS_DISPLAY_LENGTH', 50)))
 
-    flight_schema = FlightSchema(strict=True)
+    flight_schema = FlightSchema()
     flights_json = []
     for f, num_comments in flights:
         flight = flight_schema.dump(f).data
@@ -117,15 +117,15 @@ def _create_list(tab, kw, date=None, pilot=None, club=None, airport=None,
         json['date'] = date.isoformat()
 
     if pilot:
-        user_schema = UserSchema(strict=True, only=('id', 'name'))
+        user_schema = UserSchema(only=('id', 'name'))
         json['pilot'] = user_schema.dump(pilot).data
 
     if club:
-        club_schema = ClubSchema(strict=True, only=('id', 'name'))
+        club_schema = ClubSchema(only=('id', 'name'))
         json['club'] = club_schema.dump(club).data
 
     if airport:
-        airport_schema = AirportSchema(strict=True, only=('id', 'name', 'countryCode'))
+        airport_schema = AirportSchema(only=('id', 'name', 'countryCode'))
         json['airport'] = airport_schema.dump(airport).data
 
     return jsonify(**json)

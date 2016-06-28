@@ -265,7 +265,7 @@ def mark_flight_notifications_read(flight):
 @vary('accept')
 def index():
     if 'application/json' in request.headers.get('Accept', ''):
-        return jsonify(flight=FlightSchema(strict=True).dump(g.flight).data)
+        return jsonify(flight=FlightSchema().dump(g.flight).data)
 
     near_flights = []
     for id, near_flight in FlightMeetings.get_meetings(g.flight).iteritems():
