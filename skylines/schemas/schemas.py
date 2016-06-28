@@ -25,7 +25,8 @@ class FlightSchema(Schema):
     pilotName = fields.String(attribute='pilot_name', strip=True, validate=validate.Length(max=255))
     copilotId = fields.Integer(attribute='co_pilot_id', allow_none=True)
     copilotName = fields.String(attribute='co_pilot_name', strip=True, validate=validate.Length(max=255))
-    modelId = fields.Integer(attribute='model_id', allow_none=True)
+    modelId = fields.Integer(attribute='model_id', load_only=True, allow_none=True)
+    model = fields.Nested(AircraftModelSchema, dump_only=True)
     registration = fields.String(strip=True, validate=validate.Length(max=32))
     competitionId = fields.String(attribute='competition_id', strip=True, validate=validate.Length(max=5))
 
