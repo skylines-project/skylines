@@ -62,6 +62,7 @@ class IGCFileSchema(Schema):
 
 
 class FlightSchema(Schema):
+    id = fields.Integer(dump_only=True)
     timeCreated = fields.DateTime(attribute='time_created')
 
     pilotId = fields.Integer(attribute='pilot_id', allow_none=True)
