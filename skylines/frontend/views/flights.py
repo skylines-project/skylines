@@ -16,7 +16,7 @@ from skylines.model import (
     Airport, FlightComment,
     Notification, Event,
 )
-from skylines.schemas import FlightSchema
+from skylines.schemas import AirportSchema, ClubSchema, FlightSchema, UserSchema
 
 flights_blueprint = Blueprint('flights', 'skylines')
 
@@ -117,23 +117,16 @@ def _create_list(tab, kw, date=None, pilot=None, club=None, airport=None,
         json['date'] = date.isoformat()
 
     if pilot:
-        json['pilot'] = {
-            'id': pilot.id,
-            'name': unicode(pilot),
-        }
+        user_schema = UserSchema(strict=True, only=('id', 'name'))
+        json['pilot'] = user_schema.dump(pilot).data
 
     if club:
-        json['club'] = {
-            'id': club.id,
-            'name': unicode(club),
-        }
+        club_schema = ClubSchema(strict=True, only=('id', 'name'))
+        json['club'] = club_schema.dump(club).data
 
     if airport:
-        json['airport'] = {
-            'id': airport.id,
-            'name': unicode(airport),
-            'countryCode': airport.country_code,
-        }
+        airport_schema = AirportSchema(strict=True, only=('id', 'name', 'countryCode'))
+        json['airport'] = airport_schema.dump(airport).data
 
     return jsonify(**json)
 
