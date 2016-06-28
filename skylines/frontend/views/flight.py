@@ -10,7 +10,6 @@ from geoalchemy2.shape import to_shape
 from datetime import timedelta
 
 from skylines.database import db
-from skylines.frontend.forms import ChangePilotsForm
 from skylines.lib import files
 from skylines.lib.dbutil import get_requested_record_list
 from skylines.lib.xcsoar_ import analyse_flight
@@ -25,7 +24,7 @@ from skylines.model import (
 )
 from skylines.model.event import create_flight_comment_notifications
 from skylines.model.flight import get_elevations_for_flight
-from skylines.schemas import FlightSchema
+from skylines.schemas import FlightSchema, UserSchema
 from skylines.worker import tasks
 from redis.exceptions import ConnectionError
 
@@ -531,11 +530,22 @@ def change_pilot():
     if not g.flight.is_writable(g.current_user):
         abort(403)
 
-    form = ChangePilotsForm(obj=g.flight)
-    if form.validate_on_submit():
-        return change_pilot_post(form)
+    club_members = []
+    if g.current_user.club_id:
+        member_schema = UserSchema(only=('id', 'name'))
 
-    return render_template('flights/change_pilot.jinja', form=form)
+        club_members = User.query(club_id=g.current_user.club_id) \
+            .order_by(func.lower(User.name)) \
+            .filter(User.id != g.current_user.id)
+
+        club_members, errors = member_schema.dump(club_members.all(), many=True)
+
+    flight, error = FlightSchema(only=('pilotId', 'pilotName', 'copilotId', 'copilotName')).dump(g.flight)
+
+    return render_template(
+        'flights/change_pilot.jinja',
+        club_members=club_members,
+        flight=flight)
 
 
 def change_pilot_post(form):
@@ -621,6 +631,36 @@ def update():
     data, errors = FlightSchema(partial=True).load(json)
     if errors:
         return jsonify(error='validation-failed', fields=errors), 422
+
+    if 'pilot_id' in data:
+        pilot_id = data['pilot_id']
+
+        if pilot_id is not None and not User.exists(id=pilot_id):
+            return jsonify(error='unknown-pilot'), 422
+
+        if g.flight.pilot_id != pilot_id:
+            g.flight.pilot_id = pilot_id
+
+            # update club if pilot changed
+            if pilot_id is not None:
+                g.flight.club_id = User.get(pilot_id).club_id
+
+    if 'pilot_name' in data:
+        g.flight.pilot_name = data['pilot_name']
+
+    if 'co_pilot_id' in data:
+        co_pilot_id = data['co_pilot_id']
+
+        if co_pilot_id is not None and not User.exists(id=co_pilot_id):
+            return jsonify(error='unknown-copilot'), 422
+
+        g.flight.co_pilot_id = co_pilot_id
+
+    if 'co_pilot_name' in data:
+        g.flight.co_pilot_name = data['co_pilot_name']
+
+    if g.flight.co_pilot_id is not None and g.flight.co_pilot_id == g.flight.pilot_id:
+        return jsonify(error='copilot-equals-pilot'), 422
 
     if 'model_id' in data:
         model_id = data['model_id']

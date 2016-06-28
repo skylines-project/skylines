@@ -1,0 +1,63 @@
+<form {{action "submit" on="submit"}}>
+  {{#if error}}
+    <div class="alert alert-danger" role="alert">{{error}}</div>
+  {{/if}}
+
+  <div class="form-group">
+    <label class="control-label">{{t "pilot"}}</label>
+
+    {{#power-select
+      options=pilots
+      selected=pilot
+      searchField="name"
+      onchange=(action (mut pilot))
+      as |model|}}
+        {{#if (eq model.id null)}}
+          [{{t 'unknown-or-other-person'}}]
+        {{else}}
+          {{model.name}}
+        {{/if}}
+    {{/power-select}}
+  </div>
+
+  {{#if showPilotNameInput}}
+    {{validated-input
+      value=pilotName
+      validation=validations.attrs.pilotName
+      label=(t "pilot")
+      disabled=pending}}
+  {{/if}}
+
+  <div class="form-group has-feedback {{if validations.attrs.copilotId.isInvalid "has-error"}}">
+    <label class="control-label">{{t "copilot"}}</label>
+
+    {{#power-select
+      options=pilots
+      selected=copilot
+      searchField="name"
+      onchange=(action (mut copilot))
+      as |model|}}
+        {{#if (eq model.id null)}}
+          [{{t 'unknown-or-other-person'}}]
+        {{else}}
+          {{model.name}}
+        {{/if}}
+    {{/power-select}}
+
+    {{#if validations.attrs.copilotId.message}}
+      <p class="help-block">{{validations.attrs.copilotId.message}}</p>
+    {{/if}}
+  </div>
+
+  {{#if showCopilotNameInput}}
+    {{validated-input
+      value=copilotName
+      validation=validations.attrs.copilotName
+      label=(t "copilot")
+      disabled=pending}}
+  {{/if}}
+
+  <button class="btn btn-primary btn-block" type="submit" disabled={{or pending (not validations.isValid)}}>
+    {{t (if pending "changing" "change")}}
+  </button>
+</form>

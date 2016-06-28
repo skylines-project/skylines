@@ -1,40 +1,15 @@
 {% extends "base-form.jinja" %}
 {% set active_page = "flights" %}
+{% set use_ember = true %}
 
 {% from "macros/form.jinja" import render_field %}
 
 {% block title %}{% trans %}Select Pilot{% endtrans %}{% endblock %}
 
 {% block form -%}
-<form method="POST" action="{{ url_for('flight.change_pilot') }}" role="form">
-  {{ form.hidden_tag() }}
-  {{ render_field(form.pilot_id) }}
-  {{ render_field(form.pilot_name) }}
-  {{ render_field(form.co_pilot_id) }}
-  {{ render_field(form.co_pilot_name) }}
-  <div class="form-group">
-    <input class="form-control btn btn-primary" value="{{ _('Change') }}" type="submit">
-  </div>
-</form>
-{%- endblock %}
-
-
-{% block scripts -%}
-{{ super() }}
-<script type="text/javascript">
-  function updateVisibilities() {
-    $('#form-group-pilot_name').toggle($('#pilot_id').val() == 0);
-    $('#form-group-co_pilot_name').toggle($('#co_pilot_id').val() == 0);
-  }
-
-  $(document).ready(function() {
-    updateVisibilities();
-    $('#pilot_id').on('change', function() {
-      updateVisibilities();
-    });
-    $('#co_pilot_id').on('change', function() {
-      updateVisibilities();
-    });
-  })
-</script>
+<div data-component="change-pilot-form" data-attrs='{
+  "flightId": {{ g.flight.id|tojson }},
+  "flight": {{ flight|tojson }},
+  "clubMembers": {{ club_members|tojson }}
+}'><br>Loading...<br><br></div>
 {%- endblock %}
