@@ -27,21 +27,8 @@ def index():
     if 'application/json' not in request.headers.get('Accept', ''):
         return render_template('ember-page.jinja', active_page='settings')
 
-    json = {
-        'id': g.club.id,
-        'name': unicode(g.club),
-        'timeCreated': g.club.time_created.isoformat(),
-        'isWritable': g.club.is_writable(g.current_user),
-    }
-
-    if g.club.website:
-        json['website'] = g.club.website
-
-    if g.club.owner:
-        json['owner'] = {
-            'id': g.club.owner.id,
-            'name': unicode(g.club.owner),
-        }
+    json = ClubSchema(strict=True).dump(g.club).data
+    json['isWritable'] = g.club.is_writable(g.current_user)
 
     return jsonify(**json)
 

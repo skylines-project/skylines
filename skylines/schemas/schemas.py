@@ -19,11 +19,15 @@ class AirportSchema(Schema):
 
 class ClubSchema(Schema):
     id = fields.Integer(dump_only=True)
+    timeCreated = fields.DateTime(attribute='time_created')
+
     name = fields.String(required=True, strip=True, validate=(
         validate.NotEmpty(),
         validate.Length(min=1, max=255),
     ))
     website = fields.URL()
+
+    owner = fields.Nested('skylines.schemas.schemas.UserSchema', only=('id', 'name'), dump_only=True)
 
 
 class UserSchema(Schema):
