@@ -95,7 +95,8 @@ class FlightSchema(Schema):
 
     distance = fields.Integer(attribute='olc_classic_distance')
     triangleDistance = fields.Integer(attribute='olc_triangle_distance')
-    score = fields.Float(attribute='olc_plus_score')
+    rawScore = fields.Float(attribute='olc_plus_score')
+    score = fields.Float(attribute='index_score')
 
     igcFile = fields.Nested(IGCFileSchema, attribute='igc_file', only=('registration', 'competitionId', 'model'))
 
