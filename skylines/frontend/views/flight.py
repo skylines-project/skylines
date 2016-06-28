@@ -25,6 +25,7 @@ from skylines.model import (
 )
 from skylines.model.event import create_flight_comment_notifications
 from skylines.model.flight import get_elevations_for_flight
+from skylines.schemas import FlightSchema
 from skylines.worker import tasks
 from redis.exceptions import ConnectionError
 
@@ -614,29 +615,26 @@ def update():
         return jsonify(), 403
 
     json = request.get_json()
-    if not json:
+    if json is None:
         return jsonify(error='invalid-request'), 400
 
-    if 'modelId' in json:
-        model_id = json.get('modelId')
+    data, errors = FlightSchema(partial=True).load(json)
+    if errors:
+        return jsonify(error='validation-failed', fields=errors), 422
+
+    if 'model_id' in data:
+        model_id = data['model_id']
+
         if model_id is not None and not AircraftModel.exists(id=model_id):
-            return jsonify(error='invalid-model-id'), 422
+            return jsonify(error='unknown-aircraft-model'), 422
 
         g.flight.model_id = model_id
 
-    if 'registration' in json:
-        registration = json.get('registration').strip()
-        if len(registration) > 32:
-            return jsonify(error='invalid-registration'), 422
+    if 'registration' in data:
+        g.flight.registration = data['registration']
 
-        g.flight.registration = registration
-
-    if 'competitionId' in json:
-        competition_id = json.get('competitionId').strip()
-        if len(competition_id) > 5:
-            return jsonify(error='invalid-competition-id'), 422
-
-        g.flight.competition_id = competition_id
+    if 'competition_id' in data:
+        g.flight.competition_id = data['competition_id']
 
     g.flight.time_modified = datetime.utcnow()
     db.session.commit()
