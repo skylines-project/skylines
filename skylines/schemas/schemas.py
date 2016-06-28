@@ -50,6 +50,8 @@ class IGCFileSchema(Schema):
     ownerId = fields.Integer(attribute='owner_id')
     owner = fields.Nested(UserSchema, only=('id', 'name'))
 
+    filename = fields.String(strip=True)
+
     registration = fields.String(strip=True, validate=validate.Length(max=32))
     competitionId = fields.String(attribute='competition_id', strip=True, validate=validate.Length(max=5))
     model = fields.String(strip=True, validate=validate.Length(max=64))
