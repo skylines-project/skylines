@@ -9,6 +9,11 @@ def schema():
 
 
 @pytest.fixture
+def partial_schema():
+    return UserSchema(partial=True)
+
+
+@pytest.fixture
 def callsign_schema():
     return UserSchema(only=('tracking_callsign',))
 
@@ -16,6 +21,12 @@ def callsign_schema():
 @pytest.fixture
 def delay_schema():
     return UserSchema(only=('tracking_delay',))
+
+
+def test_deserialization_skips_id(partial_schema):
+    data, errors = partial_schema.load(dict(id=6))
+    assert not errors
+    assert 'id' not in data
 
 
 def test_deserialization_passes_for_valid_email(schema):

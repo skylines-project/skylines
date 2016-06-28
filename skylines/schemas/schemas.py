@@ -20,6 +20,7 @@ class FlightSchema(Schema):
 
 
 class UserSchema(Schema):
+    id = fields.Integer(dump_only=True)
     email_address = fields.Email(load_from='email', validate=validate.Length(max=255))
     first_name = fields.String(load_from='firstName', strip=True, validate=(
         validate.NotEmpty(),
@@ -29,6 +30,7 @@ class UserSchema(Schema):
         validate.NotEmpty(),
         validate.Length(min=1, max=255),
     ))
+    name = fields.String(dump_only=True)
     tracking_callsign = fields.String(load_from='trackingCallsign', strip=True, validate=validate.Length(max=5))
     tracking_delay = fields.Integer(load_from='trackingDelay', validate=validate.Range(min=0, max=60))
     distance_unit = fields.Integer(load_from='distanceUnit', validate=validate.Range(min=0, max=len(DISTANCE_UNITS) - 1))
