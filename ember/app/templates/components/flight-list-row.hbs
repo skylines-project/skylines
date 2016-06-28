@@ -1,7 +1,7 @@
 {{#if showDate}}
   <td class="date">
-    {{#if flight.date}}
-      {{format-date flight.date format="ddmmyyyy"}}
+    {{#if flight.scoreDate}}
+      {{format-date flight.scoreDate format="ddmmyyyy"}}
     {{/if}}
   </td>
 {{/if}}
@@ -13,20 +13,20 @@
 {{#if showPilot}}
   <td class="pilot">
     {{#if flight.pilot.id}}
-      <a href="/users/{{flight.pilot.id}}/">{{flight.pilot.name}}</a>
-    {{else if flight.pilot.name}}
-      {{flight.pilot.name}}
+      <a href="/users/{{flight.pilot.id}}/">{{pilotName}}</a>
+    {{else if pilotName}}
+      {{pilotName}}
     {{/if}}
 
-    {{#if (and flight.pilot flight.copilot)}}<br/>{{/if}}
+    {{#if (and pilotName copilotName)}}<br/>{{/if}}
 
     {{#if flight.copilot.id}}
-      <a href="/users/{{flight.copilot.id}}/">{{flight.copilot.name}}</a>
-    {{else if flight.copilot.name}}
-      {{flight.copilot.name}}
+      <a href="/users/{{flight.copilot.id}}/">{{copilotName}}</a>
+    {{else if copilotName}}
+      {{copilotName}}
     {{/if}}
 
-    {{#if (not (or flight.pilot flight.copilot)) }}
+    {{#if (not (or pilotName copilotName)) }}
       [{{flight.igcFile.owner.name}}]
     {{/if}}
   </td>
@@ -41,9 +41,9 @@
 
 {{#if showAirport}}
   <td class="airport">
-    {{#if flight.airport}}
-      {{x-flag code=flight.airport.countryCode}}
-      <a href="/flights/airport/{{flight.airport.id}}">{{flight.airport.name}}</a>
+    {{#if flight.takeoffAirport}}
+      {{x-flag code=flight.takeoffAirport.countryCode}}
+      <a href="/flights/airport/{{flight.takeoffAirport.id}}">{{flight.takeoffAirport.name}}</a>
     {{/if}}
   </td>
 {{/if}}
@@ -59,7 +59,7 @@
 <td class="aircraft hidden-xs">
   <span rel="tooltip" title="{{or flight.registration flight.igc_file.registration (t 'unknown')}}">
     {{#if flight.model}}
-      {{flight.model}}
+      {{flight.model.name}}
     {{else if flight.igcFile.model}}
       [{{flight.igcFile.model}}]
     {{/if}}

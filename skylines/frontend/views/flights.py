@@ -107,7 +107,7 @@ def _create_list(tab, kw, date=None, pilot=None, club=None, airport=None,
         flight = {
             'id': f.id,
             'private': not f.is_rankable(),
-            'date': f.date_local.isoformat(),
+            'scoreDate': f.date_local.isoformat(),
             'score': f.index_score,
             'distance': f.olc_classic_distance,
             'numComments': num_comments,
@@ -126,20 +126,18 @@ def _create_list(tab, kw, date=None, pilot=None, club=None, airport=None,
                 'id': f.pilot_id,
                 'name': unicode(f.pilot),
             }
-        elif f.pilot_name:
-            flight['pilot'] = {
-                'name': f.pilot_name,
-            }
+
+        if f.pilot_name:
+            flight['pilotName'] = f.pilot_name
 
         if f.co_pilot_id:
             flight['copilot'] = {
                 'id': f.co_pilot_id,
                 'name': unicode(f.co_pilot),
             }
-        elif f.co_pilot_name:
-            flight['copilot'] = {
-                'name': f.co_pilot_name,
-            }
+
+        if f.co_pilot_name:
+            flight['copilotName'] = f.co_pilot_name,
 
         if f.club:
             flight['club'] = {
@@ -148,14 +146,14 @@ def _create_list(tab, kw, date=None, pilot=None, club=None, airport=None,
             }
 
         if f.takeoff_airport:
-            flight['airport'] = {
+            flight['takeoffAirport'] = {
                 'id': f.takeoff_airport.id,
                 'name': unicode(f.takeoff_airport),
                 'countryCode': f.takeoff_airport.country_code,
             }
 
-        if f.model:
-            flight['model'] = unicode(f.model)
+        if f.model_id:
+            flight['model'] = dict(id=f.model_id, name=unicode(f.model))
 
         if f.registration:
             flight['registration'] = f.registration
