@@ -24,7 +24,7 @@ from skylines.model import (
 )
 from skylines.model.event import create_flight_comment_notifications
 from skylines.model.flight import get_elevations_for_flight
-from skylines.schemas import FlightSchema, UserSchema
+from skylines.schemas import FlightSchema, FlightCommentSchema, UserSchema
 from skylines.worker import tasks
 from redis.exceptions import ConnectionError
 
@@ -321,19 +321,7 @@ def index():
             }, near_flight['times']),
         })
 
-    comments = []
-    for c in g.flight.comments:
-        comment = {
-            'text': c.text
-        }
-
-        if c.user:
-            comment['user'] = {
-                'id': c.user_id,
-                'name': unicode(c.user),
-            }
-
-        comments.append(comment)
+    comments, errors = FlightCommentSchema().dump(g.flight.comments, many=True)
 
     takeoff_midnight = g.flight.takeoff_time.replace(hour=0, minute=0, second=0, microsecond=0)
 

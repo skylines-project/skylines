@@ -41,3 +41,8 @@ class UserSchema(Schema):
     speedUnit = fields.Integer(attribute='speed_unit', validate=validate.Range(min=0, max=len(SPEED_UNITS) - 1))
     liftUnit = fields.Integer(attribute='lift_unit', validate=validate.Range(min=0, max=len(LIFT_UNITS) - 1))
     altitudeUnit = fields.Integer(attribute='altitude_unit', validate=validate.Range(min=0, max=len(ALTITUDE_UNITS) - 1))
+
+
+class FlightCommentSchema(Schema):
+    user = fields.Nested(UserSchema, only=('id', 'name'))
+    text = fields.String(required=True)
