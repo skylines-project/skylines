@@ -12,6 +12,7 @@ class AircraftModelSchema(Schema):
 
 
 class ClubSchema(Schema):
+    id = fields.Integer(dump_only=True)
     name = fields.String(required=True, strip=True, validate=(
         validate.NotEmpty(),
         validate.Length(min=1, max=255),
@@ -56,6 +57,9 @@ class FlightSchema(Schema):
     copilot = fields.Nested(UserSchema, attribute='co_pilot', only=('id', 'name'))
     copilotName = fields.String(attribute='co_pilot_name', strip=True, allow_none=True, validate=validate.Length(max=255))
 
+    clubId = fields.Integer(attribute='club_id', allow_none=True)
+    club = fields.Nested(ClubSchema, only=('id', 'name'))
+
     modelId = fields.Integer(attribute='model_id', allow_none=True)
     model = fields.Nested(AircraftModelSchema)
     registration = fields.String(strip=True, validate=validate.Length(max=32))
@@ -73,8 +77,8 @@ class FlightSchema(Schema):
     score = fields.Float(attribute='olc_plus_score')
 
     class Meta:
-        load_only = ('pilotId', 'copilotId', 'modelId')
-        dump_only = ('pilot', 'copilot', 'model')
+        load_only = ('pilotId', 'copilotId', 'clubId', 'modelId')
+        dump_only = ('pilot', 'copilot', 'club', 'model')
 
 
 class FlightCommentSchema(Schema):
