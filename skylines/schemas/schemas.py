@@ -14,26 +14,26 @@ class ClubSchema(Schema):
 
 
 class FlightSchema(Schema):
-    model_id = fields.Integer(load_from='modelId', allow_none=True)
+    modelId = fields.Integer(attribute='model_id', allow_none=True)
     registration = fields.String(strip=True, validate=validate.Length(max=32))
-    competition_id = fields.String(load_from='competitionId', strip=True, validate=validate.Length(max=5))
+    competitionId = fields.String(attribute='competition_id', strip=True, validate=validate.Length(max=5))
 
 
 class UserSchema(Schema):
     id = fields.Integer(dump_only=True)
-    email_address = fields.Email(load_from='email', validate=validate.Length(max=255))
-    first_name = fields.String(load_from='firstName', strip=True, validate=(
+    email = fields.Email(attribute='email_address', validate=validate.Length(max=255))
+    firstName = fields.String(attribute='first_name', strip=True, validate=(
         validate.NotEmpty(),
         validate.Length(min=1, max=255),
     ))
-    last_name = fields.String(load_from='lastName', strip=True, validate=(
+    lastName = fields.String(attribute='last_name', strip=True, validate=(
         validate.NotEmpty(),
         validate.Length(min=1, max=255),
     ))
     name = fields.String(dump_only=True)
-    tracking_callsign = fields.String(load_from='trackingCallsign', strip=True, validate=validate.Length(max=5))
-    tracking_delay = fields.Integer(load_from='trackingDelay', validate=validate.Range(min=0, max=60))
-    distance_unit = fields.Integer(load_from='distanceUnit', validate=validate.Range(min=0, max=len(DISTANCE_UNITS) - 1))
-    speed_unit = fields.Integer(load_from='speedUnit', validate=validate.Range(min=0, max=len(SPEED_UNITS) - 1))
-    lift_unit = fields.Integer(load_from='liftUnit', validate=validate.Range(min=0, max=len(LIFT_UNITS) - 1))
-    altitude_unit = fields.Integer(load_from='altitudeUnit', validate=validate.Range(min=0, max=len(ALTITUDE_UNITS) - 1))
+    trackingCallsign = fields.String(attribute='tracking_callsign', strip=True, validate=validate.Length(max=5))
+    trackingDelay = fields.Integer(attribute='tracking_delay', validate=validate.Range(min=0, max=60))
+    distanceUnit = fields.Integer(attribute='distance_unit', validate=validate.Range(min=0, max=len(DISTANCE_UNITS) - 1))
+    speedUnit = fields.Integer(attribute='speed_unit', validate=validate.Range(min=0, max=len(SPEED_UNITS) - 1))
+    liftUnit = fields.Integer(attribute='lift_unit', validate=validate.Range(min=0, max=len(LIFT_UNITS) - 1))
+    altitudeUnit = fields.Integer(attribute='altitude_unit', validate=validate.Range(min=0, max=len(ALTITUDE_UNITS) - 1))

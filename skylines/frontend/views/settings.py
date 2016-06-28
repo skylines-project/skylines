@@ -186,7 +186,7 @@ def change_tracking_settings():
     if json is None:
         return jsonify(error='invalid-request'), 400
 
-    data, errors = UserSchema(only=('tracking_callsign', 'tracking_delay')).load(json)
+    data, errors = UserSchema(only=('trackingCallsign', 'trackingDelay')).load(json)
     if errors:
         return jsonify(error='validation-failed', fields=errors), 422
 

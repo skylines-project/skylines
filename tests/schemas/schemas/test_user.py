@@ -15,12 +15,12 @@ def partial_schema():
 
 @pytest.fixture
 def callsign_schema():
-    return UserSchema(only=('tracking_callsign',))
+    return UserSchema(only=('trackingCallsign',))
 
 
 @pytest.fixture
 def delay_schema():
-    return UserSchema(only=('tracking_delay',))
+    return UserSchema(only=('trackingDelay',))
 
 
 def test_deserialization_skips_id(partial_schema):
