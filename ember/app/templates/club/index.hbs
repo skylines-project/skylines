@@ -39,7 +39,7 @@
 
             <a href="/flights/club/{{club.id}}" class="btn btn-default"><i class="icon-plane"></i> {{t "flights"}}</a>
             <a href="/statistics/club/{{club.id}}" class="btn btn-default"><i class="icon-bar-chart"></i> {{t "statistics"}}</a>
-            <a href="/clubs/{{club.id}}/pilots" class="btn btn-default"><i class="icon-group"></i> {{t "members"}}</a>
+            {{#link-to "club.pilots" club.id class="btn btn-default"}}<i class="icon-group"></i> {{t "members"}}{{/link-to}}
           </p>
         </div>
       </div>
