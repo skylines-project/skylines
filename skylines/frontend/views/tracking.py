@@ -4,6 +4,7 @@ from skylines.lib.helpers import isoformat_utc
 from skylines.lib.decorators import jsonp
 from skylines.lib.vary import vary
 from skylines.model import TrackingFix, Airport, Follower
+from skylines.schemas import TrackingFixSchema, AirportSchema
 
 tracking_blueprint = Blueprint('tracking', 'skylines')
 
@@ -14,7 +15,8 @@ def index():
     if 'application/json' not in request.headers.get('Accept', ''):
         return render_template('ember-page.jinja', active_page='tracking')
 
-    tracks = TrackingFix.get_latest()
+    fix_schema = TrackingFixSchema(only=('time', 'location', 'altitude', 'elevation', 'pilot'))
+    airport_schema = AirportSchema(only=('id', 'name', 'countryCode'))
 
     @current_app.cache.memoize(timeout=(60 * 60))
     def get_nearest_airport(track):
@@ -22,32 +24,19 @@ def index():
         if not airport:
             return None
 
-        distance = airport.distance(track.location)
+        return dict(airport=airport_schema.dump(airport).data,
+                    distance=airport.distance(track.location))
 
-        return {
-            'name': airport.name,
-            'country_code': airport.country_code,
-            'distance': distance,
-        }
+    tracks = []
+    for t in TrackingFix.get_latest():
+        nearest_airport = get_nearest_airport(t)
 
-    def convert(track, airport):
-        location = None
-        if track.location_wkt is not None:
-            location = track.location.to_lonlat()
+        track = fix_schema.dump(t).data
+        if nearest_airport:
+            track['nearestAirport'] = nearest_airport['airport']
+            track['nearestAirportDistance'] = nearest_airport['distance']
 
-        return {
-            'time': track.time.isoformat(),
-            'pilot': {
-                'id': track.pilot_id,
-                'name': unicode(track.pilot),
-            },
-            'airport': airport,
-            'location': location,
-            'altitude': track.altitude,
-            'elevation': track.elevation
-        }
-
-    tracks = [convert(track, get_nearest_airport(track)) for track in tracks]
+        tracks.append(track)
 
     if g.current_user:
         followers = [f.destination_id for f in Follower.query(source=g.current_user)]
