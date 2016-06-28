@@ -35,9 +35,9 @@ export default Ember.Component.extend(Validations, {
   flight: null,
   clubMembers: [],
 
-  pilotId: Ember.computed.oneWay('flight.pilotId'),
+  pilotId: Ember.computed.oneWay('flight.pilot.id'),
   pilotName: Ember.computed.oneWay('flight.pilotName'),
-  copilotId: Ember.computed.oneWay('flight.copilotId'),
+  copilotId: Ember.computed.oneWay('flight.copilot.id'),
   copilotName: Ember.computed.oneWay('flight.copilotName'),
 
   pending: false,

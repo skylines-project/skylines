@@ -518,7 +518,7 @@ def change_pilot():
 
         club_members, errors = member_schema.dump(club_members.all(), many=True)
 
-    flight, error = FlightSchema(only=('pilotId', 'pilotName', 'copilotId', 'copilotName')).dump(g.flight)
+    flight, error = FlightSchema(only=('pilot', 'pilotName', 'copilot', 'copilotName')).dump(g.flight)
 
     return render_template(
         'flights/change_pilot.jinja',
