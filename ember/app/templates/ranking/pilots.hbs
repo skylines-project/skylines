@@ -24,7 +24,7 @@
     <tr>
       <td class="numeric">{{row.rank}}</td>
       <td><a href="/users/{{row.user.id}}">{{row.user.name}}</a></td>
-      <td>{{#if row.club}}<a href="/clubs/{{row.club.id}}">{{row.club.name}}</a>{{/if}}</td>
+      <td>{{#if row.user.club}}<a href="/clubs/{{row.user.club.id}}">{{row.user.club.name}}</a>{{/if}}</td>
       <td class="numeric">{{format-number row.flights}}</td>
       <td class="numeric">{{format-number row.points maximumFractionDigits=0}}</td>
     </tr>
