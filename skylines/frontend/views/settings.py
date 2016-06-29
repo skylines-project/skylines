@@ -92,6 +92,25 @@ def update():
     if 'tracking_delay' in data:
         g.user.tracking_delay = data.get('tracking_delay')
 
+    if 'club_id' in data and data['club_id'] != g.user.club_id:
+        club_id = data['club_id']
+
+        if club_id is not None and not Club.exists(id=club_id):
+            return jsonify(error='unknown-club'), 422
+
+        g.user.club_id = club_id
+
+        create_club_join_event(club_id, g.user)
+
+        # assign the user's new club to all of his flights that have
+        # no club yet
+        flights = Flight.query().join(IGCFile)
+        flights = flights.filter(and_(Flight.club_id == None,
+                                      or_(Flight.pilot_id == g.user.id,
+                                          IGCFile.owner_id == g.user.id)))
+        for flight in flights:
+            flight.club_id = club_id
+
     db.session.commit()
 
     return jsonify()
@@ -184,41 +203,6 @@ def tracking_generate_key():
 @settings_blueprint.route('/club', methods=['GET'])
 def club():
     return render_template('ember-page.jinja', active_page='settings')
-
-
-@settings_blueprint.route('/club', methods=['POST'])
-def club_change():
-    json = request.get_json()
-    if json is None:
-        return jsonify(error='invalid-request'), 400
-
-    try:
-        data = ChooseClubSchema().load(json).data
-    except ValidationError, e:
-        return jsonify(error='validation-failed', fields=e.messages), 422
-
-    id = data.get('id')
-    if g.user.club_id == id:
-        return jsonify()
-
-    if id is not None and not Club.exists(id=id):
-        return jsonify(error='unknown-club'), 422
-
-    g.user.club_id = id
-
-    create_club_join_event(id, g.user)
-
-    # assign the user's new club to all of his flights that have
-    # no club yet
-    flights = Flight.query().join(IGCFile)
-    flights = flights.filter(and_(Flight.club_id == None,
-                                  or_(Flight.pilot_id == g.user.id,
-                                      IGCFile.owner_id == g.user.id)))
-    for flight in flights:
-        flight.club_id = id
-
-    db.session.commit()
-    return jsonify()
 
 
 class ChooseClubSchema(Schema):
