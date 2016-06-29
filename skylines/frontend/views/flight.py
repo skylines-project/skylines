@@ -25,7 +25,7 @@ from skylines.model import (
 )
 from skylines.model.event import create_flight_comment_notifications
 from skylines.model.flight import get_elevations_for_flight
-from skylines.schemas import FlightSchema, FlightCommentSchema, IGCFileSchema, UserSchema
+from skylines.schemas import fields, FlightSchema, FlightCommentSchema, IGCFileSchema, UserSchema, Schema
 from skylines.worker import tasks
 from redis.exceptions import ConnectionError
 
@@ -261,26 +261,26 @@ def mark_flight_notifications_read(flight):
     db.session.commit()
 
 
+class MeetingTimeSchema(Schema):
+    start = fields.DateTime()
+    end = fields.DateTime()
+
+
+class NearFlightSchema(Schema):
+    flight = fields.Nested(FlightSchema, only=('id', 'pilot', 'pilotName', 'copilot', 'copilotName',
+                                               'model', 'registration', 'competitionId', 'igcFile'))
+
+    times = fields.Nested(MeetingTimeSchema, many=True)
+
+
 @flight_blueprint.route('/')
 @vary('accept')
 def index():
     if 'application/json' in request.headers.get('Accept', ''):
         return jsonify(flight=FlightSchema().dump(g.flight).data)
 
-    near_flight_schema = FlightSchema(only=(
-        'id', 'pilot', 'pilotName', 'copilot', 'copilotName', 'model', 'registration', 'competitionId', 'igcFile'))
-
-    near_flights = []
-    for id, near_flight in FlightMeetings.get_meetings(g.flight).iteritems():
-        flight = near_flight_schema.dump(near_flight['flight']).data
-
-        near_flights.append({
-            'flight': flight,
-            'times': map(lambda times: {
-                'start': times['start'].isoformat(),
-                'end': times['end'].isoformat(),
-            }, near_flight['times']),
-        })
+    near_flights = FlightMeetings.get_meetings(g.flight).values()
+    near_flights = NearFlightSchema().dump(near_flights, many=True).data
 
     comments, errors = FlightCommentSchema().dump(g.flight.comments, many=True)
 
