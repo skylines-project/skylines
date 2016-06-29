@@ -4,7 +4,7 @@ from skylines.database import db
 from skylines.lib.dbutil import get_requested_record
 from skylines.lib.vary import vary
 from skylines.model import Club
-from skylines.schemas import ClubSchema
+from skylines.schemas import ClubSchema, ValidationError
 
 club_blueprint = Blueprint('club', 'skylines')
 
@@ -49,9 +49,10 @@ def edit_post():
     if json is None:
         return jsonify(error='invalid-request'), 400
 
-    data, errors = ClubSchema(partial=True).load(json)
-    if errors:
-        return jsonify(error='validation-failed', fields=errors), 422
+    try:
+        data = ClubSchema(partial=True).load(json).data
+    except ValidationError, e:
+        return jsonify(error='validation-failed', fields=e.messages), 422
 
     if 'name' in data:
         name = data.get('name')

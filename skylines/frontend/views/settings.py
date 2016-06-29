@@ -10,7 +10,7 @@ from skylines.frontend.views.users import send_recover_mail
 from skylines.model.event import (
     create_club_join_event
 )
-from skylines.schemas import fields, validate, Schema, ClubSchema, UserSchema
+from skylines.schemas import fields, validate, Schema, ClubSchema, UserSchema, ValidationError
 
 settings_blueprint = Blueprint('settings', 'skylines')
 
@@ -68,9 +68,10 @@ def change_profile():
     if json is None:
         return jsonify(error='invalid-request'), 400
 
-    data, errors = UserSchema(partial=True).load(json)
-    if errors:
-        return jsonify(error='validation-failed', fields=errors), 422
+    try:
+        data = UserSchema(partial=True).load(json).data
+    except ValidationError, e:
+        return jsonify(error='validation-failed', fields=e.messages), 422
 
     if 'email_address' in data:
         email = data.get('email_address')
@@ -124,9 +125,10 @@ def change_password():
     if json is None:
         return jsonify(error='invalid-request'), 400
 
-    data, errors = PasswordSchema().load(json)
-    if errors:
-        return jsonify(error='validation-failed', fields=errors), 422
+    try:
+        data = PasswordSchema().load(json).data
+    except ValidationError, e:
+        return jsonify(error='validation-failed', fields=e.messages), 422
 
     if not g.user.validate_password(data.get('currentPassword')):
         return jsonify(error='wrong-password'), 403
@@ -186,9 +188,10 @@ def change_tracking_settings():
     if json is None:
         return jsonify(error='invalid-request'), 400
 
-    data, errors = UserSchema(only=('trackingCallsign', 'trackingDelay')).load(json)
-    if errors:
-        return jsonify(error='validation-failed', fields=errors), 422
+    try:
+        data = UserSchema(only=('trackingCallsign', 'trackingDelay')).load(json).data
+    except ValidationError, e:
+        return jsonify(error='validation-failed', fields=e.messages), 422
 
     if 'tracking_callsign' in data:
         g.user.tracking_callsign = data.get('tracking_callsign')
@@ -220,9 +223,10 @@ def club_change():
     if json is None:
         return jsonify(error='invalid-request'), 400
 
-    data, errors = ChooseClubSchema().load(json)
-    if errors:
-        return jsonify(error='validation-failed', fields=errors), 422
+    try:
+        data = ChooseClubSchema().load(json).data
+    except ValidationError, e:
+        return jsonify(error='validation-failed', fields=e.messages), 422
 
     id = data.get('id')
     if g.user.club_id == id:
@@ -258,9 +262,10 @@ def create_club():
     if json is None:
         return jsonify(error='invalid-request'), 400
 
-    data, errors = ClubSchema(only=('name',)).load(json)
-    if errors:
-        return jsonify(error='validation-failed', fields=errors), 422
+    try:
+        data = ClubSchema(only=('name',)).load(json).data
+    except ValidationError, e:
+        return jsonify(error='validation-failed', fields=e.messages), 422
 
     if Club.exists(name=data.get('name')):
         return jsonify(error='duplicate-club-name'), 422

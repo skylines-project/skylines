@@ -25,7 +25,7 @@ from skylines.model import (
 )
 from skylines.model.event import create_flight_comment_notifications
 from skylines.model.flight import get_elevations_for_flight
-from skylines.schemas import fields, FlightSchema, FlightCommentSchema, IGCFileSchema, UserSchema, Schema
+from skylines.schemas import fields, FlightSchema, FlightCommentSchema, IGCFileSchema, UserSchema, Schema, ValidationError
 from skylines.worker import tasks
 from redis.exceptions import ConnectionError
 
@@ -282,7 +282,7 @@ def index():
     near_flights = FlightMeetings.get_meetings(g.flight).values()
     near_flights = NearFlightSchema().dump(near_flights, many=True).data
 
-    comments, errors = FlightCommentSchema().dump(g.flight.comments, many=True)
+    comments = FlightCommentSchema().dump(g.flight.comments, many=True).data
 
     takeoff_midnight = g.flight.takeoff_time.replace(hour=0, minute=0, second=0, microsecond=0)
 
@@ -487,9 +487,9 @@ def change_pilot():
             .order_by(func.lower(User.name)) \
             .filter(User.id != g.current_user.id)
 
-        club_members, errors = member_schema.dump(club_members.all(), many=True)
+        club_members = member_schema.dump(club_members.all(), many=True).data
 
-    flight, error = FlightSchema(only=('pilot', 'pilotName', 'copilot', 'copilotName')).dump(g.flight)
+    flight = FlightSchema(only=('pilot', 'pilotName', 'copilot', 'copilotName')).dump(g.flight).data
 
     return render_template(
         'flights/change_pilot.jinja',
@@ -577,9 +577,10 @@ def update():
     if json is None:
         return jsonify(error='invalid-request'), 400
 
-    data, errors = FlightSchema(partial=True).load(json)
-    if errors:
-        return jsonify(error='validation-failed', fields=errors), 422
+    try:
+        data = FlightSchema(partial=True).load(json).data
+    except ValidationError, e:
+        return jsonify(error='validation-failed', fields=e.messages), 422
 
     if 'pilot_id' in data:
         pilot_id = data['pilot_id']
