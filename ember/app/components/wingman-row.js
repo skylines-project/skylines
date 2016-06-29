@@ -7,9 +7,11 @@ export default Ember.Component.extend({
   classNames: ['selectable'],
 
   flight: Ember.computed.alias('nearFlight.flight'),
-  igcFile: Ember.computed.alias('flight.igc_file'),
+  igcFile: Ember.computed.alias('flight.igcFile'),
   pilot: Ember.computed.alias('flight.pilot'),
-  copilot: Ember.computed.alias('flight.co_pilot'),
+  pilotName: Ember.computed.or('flight.pilot.name', 'flight.pilotName'),
+  copilot: Ember.computed.alias('flight.copilot'),
+  copilotName: Ember.computed.or('flight.copilot.name', 'flight.copilotName'),
   times: Ember.computed.alias('nearFlight.times'),
 
   colorStripeStyle: safeComputed('nearFlight.color',

@@ -1,7 +1,7 @@
 <td class="color-stripe" style={{colorStripeStyle}}></td>
 <td>
   {{#if flight.model.id}}
-    <span rel="tooltip" title="Handicap: {{flight.model.dmst_index}}">{{flight.model.name}}</span>
+    <span rel="tooltip" title="Handicap: {{flight.model.index}}">{{flight.model.name}}</span>
   {{else if igcFile.model}}
     [{{igcFile.model}}]
   {{else}}
@@ -15,33 +15,33 @@
       {{igcFile.registration}}
     {{/if}}
 
-    {{#if flight.competition_id}}
-      &ndash; {{flight.competition_id}}
-    {{else if igcFile.competition_id}}
-      &ndash; {{igcFile.competition_id}}
+    {{#if flight.competitionId}}
+      &ndash; {{flight.competitionId}}
+    {{else if igcFile.competitionId}}
+      &ndash; {{igcFile.competitionId}}
     {{/if}}
   </small>
 </td>
 <td>
-  {{#if pilot.name}}
+  {{#if pilotName}}
     {{#if pilot.id}}
-      <a href="/users/{{pilot.id}}/">{{pilot.name}}</a>
+      <a href="/users/{{pilot.id}}/">{{pilotName}}</a>
     {{else}}
-      {{pilot.name}}
+      {{pilotName}}
     {{/if}}
   {{/if}}
 
-  {{#if (and pilot.name copilot.name)}}<br/>{{/if}}
+  {{#if (and pilotName copilotName)}}<br/>{{/if}}
 
-  {{#if copilot.name}}
+  {{#if copilotName}}
     {{#if copilot.id}}
-      <a href="/users/{{copilot.id}}/">{{copilot.name}}</a>
+      <a href="/users/{{copilot.id}}/">{{copilotName}}</a>
     {{else}}
-      {{copilot.name}}
+      {{copilotName}}
     {{/if}}
   {{/if}}
 
-  {{#if (not (or pilot.name copilot.name))}}
+  {{#if (not (or pilotName copilotName))}}
   [unspecified]
   {{/if}}
 </td>

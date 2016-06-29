@@ -267,46 +267,12 @@ def index():
     if 'application/json' in request.headers.get('Accept', ''):
         return jsonify(flight=FlightSchema().dump(g.flight).data)
 
+    near_flight_schema = FlightSchema(only=(
+        'id', 'pilot', 'pilotName', 'copilot', 'copilotName', 'model', 'registration', 'competitionId', 'igcFile'))
+
     near_flights = []
     for id, near_flight in FlightMeetings.get_meetings(g.flight).iteritems():
-        f = near_flight['flight']
-
-        flight = {
-            'id': id,
-            'registration': f.registration,
-            'competition_id': f.competition_id,
-        }
-
-        if f.model_id:
-            m = f.model
-            flight['model'] = {
-                'id': f.model_id,
-                'dmst_index': m.dmst_index,
-                'name': unicode(m),
-            }
-
-        if f.igc_file_id:
-            flight['igc_file'], errors = IGCFileSchema().dump(f.igc_file)
-
-        if f.pilot_id:
-            flight['pilot'] = {
-                'id': f.pilot_id,
-                'name': unicode(f.pilot),
-            }
-        else:
-            flight['pilot'] = {
-                'name': f.pilot_name,
-            }
-
-        if f.co_pilot_id:
-            flight['co_pilot'] = {
-                'id': f.co_pilot_id,
-                'name': unicode(f.co_pilot),
-            }
-        else:
-            flight['co_pilot'] = {
-                'name': f.co_pilot_name,
-            }
+        flight = near_flight_schema.dump(near_flight['flight']).data
 
         near_flights.append({
             'flight': flight,
