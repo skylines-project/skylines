@@ -40,19 +40,18 @@ def handle_user_param():
 
 
 @settings_blueprint.route('/')
+@vary('accept')
 def index():
-    """ Redirects /settings/ to /settings/profile """
-    return redirect(url_for('.profile', user=g.user_id))
+    if 'application/json' not in request.headers.get('Accept', ''):
+        return redirect(url_for('.profile', user=g.user_id))
+
+    schema = CurrentUserSchema(exclude=('id'))
+    return jsonify(**schema.dump(g.user).data)
 
 
 @settings_blueprint.route('/profile')
-@vary('accept')
 def profile():
-    if 'application/json' not in request.headers.get('Accept', ''):
-        return render_template('ember-page.jinja', active_page='settings')
-
-    schema = CurrentUserSchema(only=('email', 'firstName', 'lastName', 'distanceUnit', 'speedUnit', 'liftUnit', 'altitudeUnit'))
-    return jsonify(**schema.dump(g.user).data)
+    return render_template('ember-page.jinja', active_page='settings')
 
 
 @settings_blueprint.route('/profile', methods=['POST'])
@@ -165,14 +164,7 @@ def password_recover():
 @settings_blueprint.route('/tracking')
 @vary('accept')
 def tracking():
-    if 'application/json' not in request.headers.get('Accept', ''):
-        return render_template('ember-page.jinja', active_page='settings')
-
-    return jsonify(
-        key=g.user.tracking_key_hex,
-        delay=g.user.tracking_delay,
-        callsign=g.user.tracking_callsign,
-    )
+    return render_template('ember-page.jinja', active_page='settings')
 
 
 @settings_blueprint.route('/tracking', methods=['POST'])

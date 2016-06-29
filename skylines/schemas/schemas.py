@@ -61,6 +61,8 @@ class UserSchema(Schema):
 
 
 class CurrentUserSchema(UserSchema):
+    trackingKey = fields.String(attribute='tracking_key_hex', dump_only=True)
+
     distanceUnit = fields.Integer(attribute='distance_unit', validate=validate.Range(min=0, max=len(DISTANCE_UNITS) - 1))
     speedUnit = fields.Integer(attribute='speed_unit', validate=validate.Range(min=0, max=len(SPEED_UNITS) - 1))
     liftUnit = fields.Integer(attribute='lift_unit', validate=validate.Range(min=0, max=len(LIFT_UNITS) - 1))
