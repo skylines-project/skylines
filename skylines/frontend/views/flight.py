@@ -25,7 +25,7 @@ from skylines.model import (
 )
 from skylines.model.event import create_flight_comment_notifications
 from skylines.model.flight import get_elevations_for_flight
-from skylines.schemas import fields, FlightSchema, FlightCommentSchema, IGCFileSchema, UserSchema, Schema, ValidationError
+from skylines.schemas import fields, FlightSchema, FlightCommentSchema, UserSchema, Schema, ValidationError
 from skylines.worker import tasks
 from redis.exceptions import ConnectionError
 
