@@ -13,6 +13,7 @@ from skylines.model import (
     User, Flight, Follower, Location, Notification, Event
 )
 from skylines.model.event import create_follower_notification
+from skylines.schemas import UserSchema
 
 user_blueprint = Blueprint('user', 'skylines')
 
@@ -109,7 +110,7 @@ def mark_user_notifications_read(user):
 @vary('accept')
 def index():
     if 'application/json' in request.headers.get('Accept', ''):
-        return jsonify(id=g.user.id, name=unicode(g.user))
+        return jsonify(**UserSchema().dump(g.user).data)
 
     mark_user_notifications_read(g.user)
 
