@@ -100,7 +100,7 @@ export default Ember.Component.extend(Validations, {
     };
 
     this.set('pending', true);
-    this.get('ajax').request('/settings/profile', { method: 'POST', json }).then(() => {
+    this.get('ajax').request('/settings/', { method: 'POST', json }).then(() => {
       this.setProperties({
         messageKey: 'settings-have-been-saved',
         error: null,

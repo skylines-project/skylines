@@ -49,13 +49,8 @@ def index():
     return jsonify(**schema.dump(g.user).data)
 
 
-@settings_blueprint.route('/profile')
-def profile():
-    return render_template('ember-page.jinja', active_page='settings')
-
-
-@settings_blueprint.route('/profile', methods=['POST'])
-def change_profile():
+@settings_blueprint.route('/', methods=['POST'])
+def update():
     json = request.get_json()
     if json is None:
         return jsonify(error='invalid-request'), 400
@@ -91,9 +86,20 @@ def change_profile():
     if 'altitude_unit' in data:
         g.user.altitude_unit = data.get('altitude_unit')
 
+    if 'tracking_callsign' in data:
+        g.user.tracking_callsign = data.get('tracking_callsign')
+
+    if 'tracking_delay' in data:
+        g.user.tracking_delay = data.get('tracking_delay')
+
     db.session.commit()
 
     return jsonify()
+
+
+@settings_blueprint.route('/profile')
+def profile():
+    return render_template('ember-page.jinja', active_page='settings')
 
 
 @settings_blueprint.route('/email/check', methods=['POST'])
@@ -165,28 +171,6 @@ def password_recover():
 @vary('accept')
 def tracking():
     return render_template('ember-page.jinja', active_page='settings')
-
-
-@settings_blueprint.route('/tracking', methods=['POST'])
-def change_tracking_settings():
-    json = request.get_json()
-    if json is None:
-        return jsonify(error='invalid-request'), 400
-
-    try:
-        data = CurrentUserSchema(only=('trackingCallsign', 'trackingDelay')).load(json).data
-    except ValidationError, e:
-        return jsonify(error='validation-failed', fields=e.messages), 422
-
-    if 'tracking_callsign' in data:
-        g.user.tracking_callsign = data.get('tracking_callsign')
-
-    if 'tracking_delay' in data:
-        g.user.tracking_delay = data.get('tracking_delay')
-
-    db.session.commit()
-
-    return jsonify()
 
 
 @settings_blueprint.route('/tracking/key', methods=['POST'])
