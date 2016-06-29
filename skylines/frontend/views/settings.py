@@ -10,7 +10,7 @@ from skylines.frontend.views.users import send_recover_mail
 from skylines.model.event import (
     create_club_join_event
 )
-from skylines.schemas import fields, validate, Schema, ClubSchema, UserSchema, ValidationError
+from skylines.schemas import fields, validate, Schema, ClubSchema, CurrentUserSchema, ValidationError
 
 settings_blueprint = Blueprint('settings', 'skylines')
 
@@ -51,7 +51,7 @@ def profile():
     if 'application/json' not in request.headers.get('Accept', ''):
         return render_template('ember-page.jinja', active_page='settings')
 
-    schema = UserSchema(only=('email', 'firstName', 'lastName', 'distanceUnit', 'speedUnit', 'liftUnit', 'altitudeUnit'))
+    schema = CurrentUserSchema(only=('email', 'firstName', 'lastName', 'distanceUnit', 'speedUnit', 'liftUnit', 'altitudeUnit'))
     return jsonify(**schema.dump(g.user).data)
 
 
@@ -62,7 +62,7 @@ def change_profile():
         return jsonify(error='invalid-request'), 400
 
     try:
-        data = UserSchema(partial=True).load(json).data
+        data = CurrentUserSchema(partial=True).load(json).data
     except ValidationError, e:
         return jsonify(error='validation-failed', fields=e.messages), 422
 
@@ -182,7 +182,7 @@ def change_tracking_settings():
         return jsonify(error='invalid-request'), 400
 
     try:
-        data = UserSchema(only=('trackingCallsign', 'trackingDelay')).load(json).data
+        data = CurrentUserSchema(only=('trackingCallsign', 'trackingDelay')).load(json).data
     except ValidationError, e:
         return jsonify(error='validation-failed', fields=e.messages), 422
 
