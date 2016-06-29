@@ -51,15 +51,8 @@ def profile():
     if 'application/json' not in request.headers.get('Accept', ''):
         return render_template('ember-page.jinja', active_page='settings')
 
-    return jsonify(
-        email=g.user.email_address,
-        firstName=g.user.first_name,
-        lastName=g.user.last_name,
-        distanceUnitIndex=g.user.distance_unit,
-        speedUnitIndex=g.user.speed_unit,
-        liftUnitIndex=g.user.lift_unit,
-        altitudeUnitIndex=g.user.altitude_unit,
-    )
+    schema = UserSchema(only=('email', 'firstName', 'lastName', 'distanceUnit', 'speedUnit', 'liftUnit', 'altitudeUnit'))
+    return jsonify(**schema.dump(g.user).data)
 
 
 @settings_blueprint.route('/profile', methods=['POST'])
