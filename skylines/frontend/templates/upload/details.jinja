@@ -41,7 +41,7 @@
 <div class="clearfix"></div>
 
 {% if trace %}
-<div data-component='flight-barogram' data-attrs='{"prefix": "{{ prefix }}", "height": 160, "uploadMode": true}'></div>
+<div data-component='upload-barogram' data-attrs='{"prefix": "{{ prefix }}"}'></div>
 {% endif %}
 
 {{ render_datetimepicker_field(form.takeoff_time, class='col-sm-3') }}

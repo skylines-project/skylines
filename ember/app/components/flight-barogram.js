@@ -7,6 +7,8 @@ export default Ember.Component.extend(Ember.Evented, {
   fixCalc: Ember.inject.service(),
   flightPhase: Ember.inject.service(),
 
+  layoutName: 'components/flight-barogram',
+
   height: 133,
 
   flot: null,
@@ -66,13 +68,7 @@ export default Ember.Component.extend(Ember.Evented, {
 
   init() {
     this._super(...arguments);
-
-    let global = 'barogram';
-    if (this.get('prefix')) {
-      global += `-${this.get('prefix')}`;
-    }
-
-    window[global] = this;
+    window.barogram = this;
   },
 
   draw() {
