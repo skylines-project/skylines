@@ -239,8 +239,7 @@ def index_post(form):
 
         analyzed = False
         try:
-            analyse_flight(flight, fp=fp)
-            analyzed = True
+            analyzed = analyse_flight(flight, fp=fp)
         except:
             current_app.logger.exception('analyse_flight() raised an exception')
 
