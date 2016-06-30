@@ -23,6 +23,15 @@ class AirportSchema(Schema):
     countryCode = fields.String(attribute='country_code', dump_only=True)
 
 
+class AirspaceSchema(Schema):
+    id = fields.Integer(dump_only=True)
+    name = fields.String()
+    type = fields.String(attribute='airspace_class')
+    base = fields.String()
+    top = fields.String()
+    countryCode = fields.String(attribute='country_code')
+
+
 class ClubSchema(Schema):
     id = fields.Integer(dump_only=True)
     timeCreated = fields.DateTime(attribute='time_created')
