@@ -63,17 +63,17 @@
   {%- else %}
   <div class="col-sm-3">
     <ul class="nav nav-tabs tabs-left">
-      {% for name, flight, status, prefix, trace, airspaces, cache_key, form in flights -%}
+      {% for result in flights -%}
       <li {% if loop.first -%} class="active" {%- endif %}>
-        <a href="#upload-tab-{{ prefix }}" data-toggle="tab">
-        {% if status == h.UploadStatus.SUCCESS and not form.errors -%}
+        <a href="#upload-tab-{{ result.prefix }}" data-toggle="tab">
+        {% if result.status == h.UploadStatus.SUCCESS and not result.form.errors -%}
         <i class="icon-ok text-success"></i>
-        {% elif status and flight or (form and form.errors) %}
+        {% elif result.status and result.flight or (result.form and result.form.errors) %}
         <i class="icon-warning-sign text-warning"></i>
         {%- else %}
         <i class="icon-warning-sign text-danger"></i>
         {%- endif %}
-        {{ name }}
+        {{ result.name }}
         </a>
       </li>
       {%- endfor %}

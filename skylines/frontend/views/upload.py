@@ -5,6 +5,8 @@ from enum import IntEnum
 import hashlib
 import os
 
+from collections import namedtuple
+
 from flask import Blueprint, render_template, request, flash, redirect, g, current_app, url_for, abort, make_response
 from flask.ext.babel import _, lazy_gettext as l_
 from redis.exceptions import ConnectionError
@@ -46,6 +48,10 @@ class UploadStatus(IntEnum):
     PARSER_ERROR = 3  # _('Failed to parse file')
     NO_FLIGHT = 4  # _('No flight found in file')
     FLIGHT_IN_FUTURE = 5  # _('Date of flight in future')
+
+
+UploadResult = namedtuple(
+    'UploadResult', ['name', 'flight', 'status', 'prefix', 'trace', 'airspace', 'cache_key', 'form'])
 
 
 def iterate_files(name, f):
@@ -145,7 +151,7 @@ def index():
                                  .filter(Airspace.id.in_(infringements.keys())) \
                                  .all()
 
-            flights.append((name, flight, status, str(prefix), trace, airspace, cache_key, form))
+            flights.append(UploadResult(name, flight, status, str(prefix), trace, airspace, cache_key, form))
 
             if form and form.validate_on_submit():
                 _update_flight(flight.id, fp, form)
@@ -197,7 +203,7 @@ def index_post(form):
             other = Flight.by_md5(md5)
             if other:
                 files.delete_file(filename)
-                flights.append((name, other, UploadStatus.DUPLICATE, str(prefix), None, None, None, None))
+                flights.append(UploadResult(name, other, UploadStatus.DUPLICATE, str(prefix), None, None, None, None))
                 continue
 
         igc_file = IGCFile()
@@ -208,7 +214,7 @@ def index_post(form):
 
         if igc_file.date_utc is None:
             files.delete_file(filename)
-            flights.append((name, None, UploadStatus.MISSING_DATE, str(prefix), None, None, None, None))
+            flights.append(UploadResult(name, None, UploadStatus.MISSING_DATE, str(prefix), None, None, None, None))
             continue
 
         flight = Flight()
@@ -236,22 +242,22 @@ def index_post(form):
 
         if not analyzed:
             files.delete_file(filename)
-            flights.append((name, None, UploadStatus.PARSER_ERROR, str(prefix), None, None, None, None))
+            flights.append(UploadResult(name, None, UploadStatus.PARSER_ERROR, str(prefix), None, None, None, None))
             continue
 
         if not flight.takeoff_time or not flight.landing_time:
             files.delete_file(filename)
-            flights.append((name, None, UploadStatus.NO_FLIGHT, str(prefix), None, None, None, None))
+            flights.append(UploadResult(name, None, UploadStatus.NO_FLIGHT, str(prefix), None, None, None, None))
             continue
 
         if flight.landing_time > datetime.now():
             files.delete_file(filename)
-            flights.append((name, None, UploadStatus.FLIGHT_IN_FUTURE, str(prefix), None, None, None, None))
+            flights.append(UploadResult(name, None, UploadStatus.FLIGHT_IN_FUTURE, str(prefix), None, None, None, None))
             continue
 
         if not flight.update_flight_path():
             files.delete_file(filename)
-            flights.append((name, None, UploadStatus.NO_FLIGHT, str(prefix), None, None, None, None))
+            flights.append(UploadResult(name, None, UploadStatus.NO_FLIGHT, str(prefix), None, None, None, None))
             continue
 
         flight.privacy_level = Flight.PrivacyLevel.PRIVATE
@@ -289,8 +295,8 @@ def index_post(form):
 
         update_form.pilot_id.validate(update_form)
 
-        flights.append((name, flight, UploadStatus.SUCCESS, str(prefix), trace,
-                        airspace, cache_key, update_form))
+        flights.append(UploadResult(name, flight, UploadStatus.SUCCESS, str(prefix), trace,
+                                    airspace, cache_key, update_form))
 
         create_flight_notifications(flight)
 
