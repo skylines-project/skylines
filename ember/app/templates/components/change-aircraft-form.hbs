@@ -5,19 +5,7 @@
 
   <div class="form-group">
     <label class="control-label">{{t "aircraft-type"}}</label>
-
-    {{#power-select
-      options=modelsWithNull
-      selected=model
-      searchField="name"
-      onchange=(action (mut model))
-      as |model|}}
-        {{#if (eq model.id null)}}
-          [{{t 'unspecified'}}]
-        {{else}}
-          {{model.name}}
-        {{/if}}
-    {{/power-select}}
+    {{aircraft-model-select models=models modelId=modelId onChange=(action (mut modelId))}}
   </div>
 
   {{validated-input

@@ -32,20 +32,6 @@ export default Ember.Component.extend(Validations, {
   pending: false,
   error: null,
 
-  modelsWithNull: Ember.computed('models.[]', function() {
-    return [{ id: null }].concat(this.get('models'));
-  }),
-
-  model: Ember.computed('modelId', {
-    get() {
-      return this.get('modelsWithNull').findBy('id', this.get('modelId'));
-    },
-    set(key, value) {
-      this.set('modelId', value.id);
-      return value;
-    },
-  }),
-
   sendChangeRequest() {
     let id = this.get('flightId');
     let json = this.getProperties('modelId', 'registration', 'competitionId');
