@@ -30,7 +30,7 @@ export function initBaro(baro, _time, _height, _enl,
   let _elev_h = ol.format.Polyline.decodeDeltas(_elevations_h, 1, 1);
 
   let flot_h = [], flot_enl = [];
-  let flot_elev = [], elev_h = [];
+  let flot_elev = [];
   let timeLength = time.length;
   for (let i = 0; i < timeLength; ++i) {
     let timestamp = time[i] * 1000;
@@ -41,7 +41,6 @@ export function initBaro(baro, _time, _height, _enl,
     if (e < -500)
       e = null;
 
-    elev_h.push(e);
     flot_elev.push([timestamp, e ? convertAltitude(e) : null]);
   }
 
