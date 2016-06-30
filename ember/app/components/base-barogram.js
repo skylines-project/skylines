@@ -1,6 +1,7 @@
 import Ember from 'ember';
 
 import { addAltitudeUnit } from '../utils/units';
+import safeComputed from '../utils/safe-computed';
 
 export default Ember.Component.extend(Ember.Evented, {
   layoutName: 'components/base-barogram',
@@ -16,9 +17,7 @@ export default Ember.Component.extend(Ember.Evented, {
   contests: null,
   elevations: [],
 
-  flotStyle: Ember.computed('height', function() {
-    return Ember.String.htmlSafe(`width: 100%; height: ${this.get('height')}px;`);
-  }),
+  flotStyle: safeComputed('height', height => Ember.String.htmlSafe(`width: 100%; height: ${height}px;`)),
 
   draw() {
     this.update();
