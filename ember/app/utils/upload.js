@@ -1,3 +1,8 @@
+import Ember from 'ember';
+import ol from 'openlayers';
+
+import { convertAltitude } from './units';
+
 /**
  * Add a barogram.
  *
@@ -20,40 +25,32 @@ export function initBaro(baro, sfid, _time, _height, _enl,
                   _elevations_h, takeoff_time, scoring_start_time,
                   scoring_end_time, landing_time) {
 
-  var slUnits = require('skylines/utils/units');
+  let height = ol.format.Polyline.decodeDeltas(_height, 1, 1);
+  let time = ol.format.Polyline.decodeDeltas(_time, 1, 1);
+  let enl = ol.format.Polyline.decodeDeltas(_enl, 1, 1);
+  let _elev_h = ol.format.Polyline.decodeDeltas(_elevations_h, 1, 1);
 
-  var height = ol.format.Polyline.decodeDeltas(_height, 1, 1);
-  var time = ol.format.Polyline.decodeDeltas(_time, 1, 1);
-  var enl = ol.format.Polyline.decodeDeltas(_enl, 1, 1);
-  var _elev_h = ol.format.Polyline.decodeDeltas(_elevations_h, 1, 1);
-
-  var flot_h = [], flot_enl = [];
-  var flot_elev = [], elev_h = [];
-  var timeLength = time.length;
-  for (var i = 0; i < timeLength; ++i) {
-    var timestamp = time[i] * 1000;
-    flot_h.push([timestamp, slUnits.convertAltitude(height[i])]);
+  let flot_h = [], flot_enl = [];
+  let flot_elev = [], elev_h = [];
+  let timeLength = time.length;
+  for (let i = 0; i < timeLength; ++i) {
+    let timestamp = time[i] * 1000;
+    flot_h.push([timestamp, convertAltitude(height[i])]);
     flot_enl.push([timestamp, enl[i]]);
 
-    var e = _elev_h[i];
+    let e = _elev_h[i];
     if (e < -500)
       e = null;
 
     elev_h.push(e);
-    flot_elev.push([timestamp, e ? slUnits.convertAltitude(e) : null]);
+    flot_elev.push([timestamp, e ? convertAltitude(e) : null]);
   }
 
-  var color = '#004bbd';
+  let color = '#004bbd';
 
-  var data = {
-    data: flot_h,
-    color: color
-  };
+  let data = { data: flot_h, color };
 
-  var enl_data = {
-    data: flot_enl,
-    color: color
-  };
+  let enl_data = { data: flot_enl, color };
 
   baro.set('active', [data]);
   baro.set('enls', [enl_data]);
@@ -80,45 +77,39 @@ export function initBaro(baro, sfid, _time, _height, _enl,
 * @param {Object} values Values of the current markers.
 */
 export function updateTimePicker(prefix, flight_date, values) {
-  var takeOffTimePicker = $('#' + prefix + '-takeoff_time-datetimepicker');
+  let takeOffTimePicker = Ember.$(`#${prefix}-takeoff_time-datetimepicker`);
   if (takeOffTimePicker.data('DateTimePicker').getDate().unix() !=
       parseInt(values.takeoff / 1000)) {
-    var datetime = flight_date.clone().add(values.takeoff, 'ms');
+    let datetime = flight_date.clone().add(values.takeoff, 'ms');
 
     takeOffTimePicker.data('DateTimePicker').setValue(datetime);
-    $('#' + prefix + '-takeoff_time')
-        .val(datetime.format('YYYY-MM-DD HH:mm:ss'));
+    Ember.$(`#${prefix}-takeoff_time`).val(datetime.format('YYYY-MM-DD HH:mm:ss'));
   }
 
-  var scoringStartTimePicker =
-      $('#' + prefix + '-scoring_start_time-datetimepicker');
+  let scoringStartTimePicker = Ember.$(`#${prefix}-scoring_start_time-datetimepicker`);
   if (scoringStartTimePicker.data('DateTimePicker').getDate().unix() !=
       parseInt(values.scoring_start / 1000)) {
-    var datetime = flight_date.clone().add(values.scoring_start, 'ms');
+    let datetime = flight_date.clone().add(values.scoring_start, 'ms');
 
     scoringStartTimePicker.data('DateTimePicker').setValue(datetime);
-    $('#' + prefix + '-scoring_start_time')
-        .val(datetime.format('YYYY-MM-DD HH:mm:ss'));
+    Ember.$(`#${prefix}-scoring_start_time`).val(datetime.format('YYYY-MM-DD HH:mm:ss'));
   }
 
-  var scoringEndTimePicker =
-      $('#' + prefix + '-scoring_end_time-datetimepicker');
+  let scoringEndTimePicker = Ember.$(`#${prefix}-scoring_end_time-datetimepicker`);
   if (scoringEndTimePicker.data('DateTimePicker').getDate().unix() !=
       parseInt(values.scoring_end / 1000)) {
-    var datetime = flight_date.clone().add(values.scoring_end, 'ms');
+    let datetime = flight_date.clone().add(values.scoring_end, 'ms');
 
     scoringEndTimePicker.data('DateTimePicker').setValue(datetime);
-    $('#' + prefix + '-scoring_end_time')
-        .val(datetime.format('YYYY-MM-DD HH:mm:ss'));
+    Ember.$(`#${prefix}-scoring_end_time`).val(datetime.format('YYYY-MM-DD HH:mm:ss'));
   }
 
-  var landingTimePicker = $('#' + prefix + '-landing_time-datetimepicker');
+  let landingTimePicker = Ember.$(`#${prefix}-landing_time-datetimepicker`);
   if (landingTimePicker.data('DateTimePicker').getDate().unix() !=
       parseInt(values.landing / 1000)) {
-    var datetime = flight_date.clone().add(values.landing, 'ms');
+    let datetime = flight_date.clone().add(values.landing, 'ms');
 
     landingTimePicker.data('DateTimePicker').setValue(datetime);
-    $('#' + prefix + '-landing_time')
-        .val(datetime.format('YYYY-MM-DD HH:mm:ss'));
+    Ember.$(`#${prefix}-landing_time`).val(datetime.format('YYYY-MM-DD HH:mm:ss'));
   }
 }
