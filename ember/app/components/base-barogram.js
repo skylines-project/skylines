@@ -74,10 +74,6 @@ export default Ember.Component.extend(Ember.Evented, {
     placeholder.on('plotclick', (event, pos) => {
       this.trigger('baroclick', pos.x / 1000);
     });
-
-    placeholder.on('plotselecting', (event, range, marker) => {
-      this.trigger('baroselecting', range, marker);
-    });
   },
 
   update() {

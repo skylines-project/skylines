@@ -10,6 +10,14 @@ export default BarogramComponent.extend({
     window[`barogram-${this.get('prefix')}`] = this;
   },
 
+  didInsertElement() {
+    this._super(...arguments);
+
+    this.get('placeholder').on('plotselecting', (event, range, marker) => {
+      this.trigger('baroselecting', range, marker);
+    });
+  },
+
   setFlightTimes(takeoff, scoring_start, scoring_end, landing) {
     this.get('flot').setSelection({
       takeoff: takeoff * 1000,
