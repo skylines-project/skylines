@@ -120,6 +120,7 @@ all_js = Bundle(
     'http://code.jquery.com/jquery-1.10.2.min.js',
     'http://cdnjs.cloudflare.com/ajax/libs/jquery-ajaxtransport-xdomainrequest/1.0.3/jquery.xdomainrequest.min.js',
     'vendor/jquery/jquery.timeago.js',
+    'http://rawgithub.com/Turbo87/sidebar-v2/v0.2.1/js/jquery-sidebar.min.js',
     'js/general.js',
     bootstrap_js,
     filters='rjsmin',
@@ -130,11 +131,6 @@ openlayers_js = Bundle(
     'http://rawgithub.com/bdougherty/BigScreen/v2.0.4/bigscreen.min.js',
     filters=SimpleClosureJS,
     output='js/ol-%(version)s.js')
-
-flight_js = Bundle(
-    'http://rawgithub.com/Turbo87/sidebar-v2/v0.2.1/js/jquery-sidebar.min.js',
-    filters=SimpleClosureJS,
-    output='js/flight-%(version)s.js')
 
 upload_js = Bundle(
     'http://momentjs.com/downloads/moment.min.js',
