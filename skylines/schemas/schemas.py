@@ -31,14 +31,17 @@ class ClubSchema(Schema):
         validate.NotEmpty(),
         validate.Length(min=1, max=255),
     ))
-    website = fields.URL()
+    website = fields.String(validate=validate.URL())
 
     owner = fields.Nested('skylines.schemas.schemas.UserSchema', only=('id', 'name'), dump_only=True)
 
 
 class UserSchema(Schema):
     id = fields.Integer(dump_only=True)
-    email = fields.Email(attribute='email_address', validate=validate.Length(max=255))
+    email = fields.String(attribute='email_address', validate=(
+        validate.Email(),
+        validate.Length(max=255),
+    ))
     firstName = fields.String(attribute='first_name', strip=True, validate=(
         validate.NotEmpty(),
         validate.Length(min=1, max=255),

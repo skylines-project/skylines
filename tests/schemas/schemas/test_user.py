@@ -30,6 +30,11 @@ def test_deserialization_skips_id(partial_schema):
     assert 'id' not in data
 
 
+def test_serialization_passes_for_invalid_email(schema):
+    data = schema.dump(dict(email_address='foobar')).data
+    assert data['email'] == 'foobar'
+
+
 def test_deserialization_passes_for_valid_email(schema):
     data = schema.load(dict(email='john@doe.com')).data
     assert data['email_address'] == 'john@doe.com'

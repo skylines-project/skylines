@@ -27,3 +27,8 @@ def test_deserialization_passes_for_valid_name():
     data = ClubSchema(only=('name',)).load(dict(name=' foo  ')).data
 
     assert data['name'] == 'foo'
+
+
+def test_serialization_passes_for_invalid_website():
+    data = ClubSchema().dump(dict(website='foobar')).data
+    assert data['website'] == 'foobar'
