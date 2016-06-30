@@ -33,23 +33,6 @@ export default Ember.Component.extend(Ember.Evented, {
     flot.draw();
   },
 
-  timeIntervalObserver: Ember.observer('timeInterval', function() {
-    this.updateInterval();
-  }),
-
-  updateInterval() {
-    let { flot, timeInterval: interval } = this.getProperties('flot', 'timeInterval');
-    let opt = flot.getOptions();
-
-    if (!interval) {
-      opt.xaxes[0].min = opt.xaxes[0].max = null;
-    } else {
-      let [start, end] = interval;
-      opt.xaxes[0].min = start * 1000;
-      opt.xaxes[0].max = end * 1000;
-    }
-  },
-
   hoverModeObserver: Ember.observer('hoverMode', function() {
     Ember.run.once(this, 'onHoverModeUpdate');
   }),

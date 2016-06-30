@@ -62,6 +62,11 @@ export default BarogramComponent.extend({
   timeHighlight: Ember.computed.readOnly('flightPhase.selection'),
   hoverMode: Ember.computed.not('fixCalc.isRunning'),
 
+  timeInterval: null,
+  timeIntervalObserver: Ember.observer('timeInterval', function() {
+    this.updateInterval();
+  }),
+
   init() {
     this._super(...arguments);
     window.barogram = this;
@@ -81,6 +86,19 @@ export default BarogramComponent.extend({
       flot.lockCrosshair({ x: 999999999 });
     } else {
       flot.lockCrosshair({ x: time * 1000 });
+    }
+  },
+
+  updateInterval() {
+    let { flot, timeInterval: interval } = this.getProperties('flot', 'timeInterval');
+    let opt = flot.getOptions();
+
+    if (!interval) {
+      opt.xaxes[0].min = opt.xaxes[0].max = null;
+    } else {
+      let [start, end] = interval;
+      opt.xaxes[0].min = start * 1000;
+      opt.xaxes[0].max = end * 1000;
     }
   },
 });
