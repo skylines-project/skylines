@@ -129,10 +129,12 @@
 {% if trace %}
 <script type="text/javascript">
   $(function() {
+    var slUpload = require('skylines/utils/upload');
+
     var baro = null;
 
     if (isCanvasSupported()) {
-      baro = initBaro(window["barogram-{{ prefix }}"],
+      baro = slUpload.initBaro(window["barogram-{{ prefix }}"],
         {{ flight.id }},
         {{ trace.barogram_t|tojson }},
         {{ trace.barogram_h|tojson }},
@@ -165,7 +167,7 @@
     var flight_date = moment("{{ flight.igc_file.date_utc.strftime("%Y-%m-%d") }}", "YYYY-MM-DD");
 
     baro.on('baroselecting', function(range, marker) {
-      updateTimePicker({{ prefix }}, flight_date, range);
+      slUpload.updateTimePicker({{ prefix }}, flight_date, range);
     });
 
     $("[id^={{ prefix }}-][id$=-datetimepicker]").on("dp.change", function(e) {
@@ -183,7 +185,7 @@
       var time = $(e.target).data("DateTimePicker").getDate().unix() - flight_date.unix();
       if (baro) {
         baro.updateFlightTime(time, marker);
-        updateTimePicker({{ prefix }}, flight_date, baro.getFlightTime());
+        slUpload.updateTimePicker({{ prefix }}, flight_date, baro.getFlightTime());
       }
     });
   });

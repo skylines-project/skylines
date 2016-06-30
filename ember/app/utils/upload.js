@@ -16,7 +16,7 @@
  * @param {int} landing_time Time of landing.
  * @return {Object} Barogram.
  */
-function initBaro(baro, sfid, _time, _height, _enl,
+export function initBaro(baro, sfid, _time, _height, _enl,
                   _elevations_h, takeoff_time, scoring_start_time,
                   scoring_end_time, landing_time) {
 
@@ -79,7 +79,7 @@ function initBaro(baro, sfid, _time, _height, _enl,
 * @param {number} flight_date Unix timestamp of takeoff date.
 * @param {Object} values Values of the current markers.
 */
-function updateTimePicker(prefix, flight_date, values) {
+export function updateTimePicker(prefix, flight_date, values) {
   var takeOffTimePicker = $('#' + prefix + '-takeoff_time-datetimepicker');
   if (takeOffTimePicker.data('DateTimePicker').getDate().unix() !=
       parseInt(values.takeoff / 1000)) {
