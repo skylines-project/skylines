@@ -3,39 +3,20 @@
 
 {% from "macros/form.jinja" import render_field %}
 
-{% macro render_datetimepicker_field(field, hide_error_text=False, disabled=False, class='') -%}
+{% macro render_datetimepicker_field(field, class='') -%}
 <div class="form-group{% if field.errors %} has-error{% endif %} {{ class }}" id="form-group-{{ field.id }}">
   {{ field.label }}
 
-  {% if hide_error_text -%}
-    <div class="input-group input-group-sm date" id="{{ field.id }}-datetimepicker"
-         data-date-defaultdate="{{ field.data }}">
-      <input type="text" class="form-control" />
-      <span class="input-group-addon"><span class="icon-time"></span></span>
-    </div>
+  <div class="input-group input-group-sm date" id="{{ field.id }}-datetimepicker"
+       data-date-defaultdate="{{ field.data }}">
+    <input type="text" class="form-control" />
+    <span class="input-group-addon"><span class="icon-time"></span></span>
+  </div>
 
-    {{ field(class_="form-control", title=field.errors[0], type="hidden", **kwargs)|safe }}
-  {%- else -%}
-    {% if disabled -%}
-      <div class="input-group input-group-sm date" id="{{ field.id }}-datetimepicker"
-           data-date-defaultdate="{{ field.data }}">
-        <input type="text" disabled="disabled" class="form-control" />
-        <span class="input-group-addon"><span class="icon-time"></span></span>
-      </div>
-      {{ field(class_="form-control", disabled="true", type="hidden", **kwargs)|safe }}
-    {%- else -%}
-      <div class="input-group input-group-sm date" id="{{ field.id }}-datetimepicker"
-           data-date-defaultdate="{{ field.data }}">
-        <input type="text" class="form-control" />
-        <span class="input-group-addon"><span class="icon-time"></span></span>
-      </div>
+  {{ field(class_="form-control", type="hidden", **kwargs)|safe }}
 
-      {{ field(class_="form-control", type="hidden", **kwargs)|safe }}
-    {%- endif %}
-
-    {% if field.errors -%}
-    <p class="help-block">{{ field.errors[0] }}</p>
-    {%- endif %}
+  {% if field.errors -%}
+  <p class="help-block">{{ field.errors[0] }}</p>
   {%- endif %}
 </div>
 {%- endmacro %}
