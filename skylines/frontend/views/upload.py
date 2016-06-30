@@ -148,18 +148,9 @@ def index():
             flights.append((name, flight, status, str(prefix), trace, airspace, cache_key, form))
 
             if form and form.validate_on_submit():
-                _update_flight(flight.id,
-                               fp,
-                               form.model_id.data,
-                               form.registration.data,
-                               form.competition_id.data,
-                               form.takeoff_time.data,
-                               form.scoring_start_time.data,
-                               form.scoring_end_time.data,
-                               form.landing_time.data,
-                               form.pilot_id.data, form.pilot_name.data,
-                               form.co_pilot_id.data, form.co_pilot_name.data)
+                _update_flight(flight.id, fp, form)
                 flight_id_list.append(flight.id)
+
             elif form:
                 form_error = True
 
@@ -355,11 +346,19 @@ def check_update_form(prefix, status):
         return flight, fp, form
 
 
-def _update_flight(flight_id, fp, model_id, registration, competition_id,
-                   takeoff_time, scoring_start_time,
-                   scoring_end_time, landing_time,
-                   pilot_id, pilot_name,
-                   co_pilot_id, co_pilot_name):
+def _update_flight(flight_id, fp, form):
+    model_id = form.model_id.data
+    registration = form.registration.data
+    competition_id = form.competition_id.data
+    takeoff_time = form.takeoff_time.data
+    scoring_start_time = form.scoring_start_time.data
+    scoring_end_time = form.scoring_end_time.data
+    landing_time = form.landing_time.data
+    pilot_id = form.pilot_id.data
+    pilot_name = form.pilot_name.data
+    co_pilot_id = form.co_pilot_id.data
+    co_pilot_name = form.co_pilot_name.data
+
     # Get flight from database and check if it is writable
     flight = Flight.get(flight_id)
 
