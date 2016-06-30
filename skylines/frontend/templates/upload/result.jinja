@@ -33,7 +33,7 @@
   }
 </script>
 
-{% for name, flight, status, prefix, trace, airspaces, cache_key, form in flights -%}
+{% for name, flight, status, prefix, trace, airspaces, cache_key, form in results -%}
 {{ render_flight_script(name, flight, status, prefix, trace, form) }}
 {%- endfor %}
 
@@ -54,16 +54,16 @@
   <p>{% trans %}No flight was saved.{% endtrans %}</p>
   {%- endif %}
 
-  {% if flights|length == 1 -%}
+  {% if results|length == 1 -%}
   <div class="col-xs-12">
-    {% for name, flight, status, prefix, trace, airspaces, cache_key, form in flights -%}
+    {% for name, flight, status, prefix, trace, airspaces, cache_key, form in results -%}
     {{ render_flight_details(name, flight, status, prefix, trace, airspaces, cache_key, form) }}
     {%- endfor %}
   </div>
   {%- else %}
   <div class="col-sm-3">
     <ul class="nav nav-tabs tabs-left">
-      {% for result in flights -%}
+      {% for result in results -%}
       <li {% if loop.first -%} class="active" {%- endif %}>
         <a href="#upload-tab-{{ result.prefix }}" data-toggle="tab">
         {% if result.status == h.UploadStatus.SUCCESS and not result.form.errors -%}
@@ -81,7 +81,7 @@
   </div>
   <div class="col-sm-9">
     <div class="tab-content">
-      {% for name, flight, status, prefix, trace, airspaces, cache_key, form in flights -%}
+      {% for name, flight, status, prefix, trace, airspaces, cache_key, form in results -%}
       <div class="tab-pane {% if loop.first -%}active{%- endif %}" id="upload-tab-{{ prefix }}">
         {{ render_flight_details(name, flight, status, prefix, trace, airspaces, cache_key, form) }}
       </div>
