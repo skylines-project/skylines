@@ -129,7 +129,7 @@ all_js = Bundle(
 openlayers_js = Bundle(
     'vendor/openlayers/ol3cesium.js',
     'http://rawgithub.com/bdougherty/BigScreen/v2.0.4/bigscreen.min.js',
-    filters=SimpleClosureJS,
+    flot_js,
     output='js/ol-%(version)s.js')
 
 upload_js = Bundle(
