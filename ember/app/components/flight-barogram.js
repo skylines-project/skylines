@@ -16,6 +16,8 @@ export default BarogramComponent.extend({
 
   flights: Ember.computed.readOnly('fixCalc.flights'),
 
+  selection: null,
+
   activeFlights: Ember.computed('flights.[]', 'selection', function() {
     let { flights, selection } = this.getProperties('flights', 'selection');
     return flights.filter(flight => (!selection || flight.get('id') === selection));

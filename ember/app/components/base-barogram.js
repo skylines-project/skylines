@@ -9,8 +9,6 @@ export default Ember.Component.extend(Ember.Evented, {
 
   flot: null,
 
-  selection: null,
-
   active: [],
   passive: [],
   enls: [],
