@@ -19,7 +19,6 @@ export default Ember.Component.extend(Ember.Evented, {
   elevations: [],
 
   timeHighlight: null,
-  hoverMode: false,
 
   flotStyle: Ember.computed('height', function() {
     return Ember.String.htmlSafe(`width: 100%; height: ${this.get('height')}px;`);
@@ -32,10 +31,6 @@ export default Ember.Component.extend(Ember.Evented, {
     flot.setupGrid();
     flot.draw();
   },
-
-  hoverModeObserver: Ember.observer('hoverMode', function() {
-    Ember.run.once(this, 'onHoverModeUpdate');
-  }),
 
   didInsertElement() {
     let opts = {
@@ -88,25 +83,6 @@ export default Ember.Component.extend(Ember.Evented, {
     placeholder.on('plotselecting', (event, range, marker) => {
       this.trigger('baroselecting', range, marker);
     });
-
-    this.onHoverModeUpdate();
-  },
-
-  onHoverModeUpdate() {
-    let placeholder = this.get('placeholder');
-
-    if (this.get('hoverMode')) {
-      placeholder.on('plothover', (event, pos) => {
-        this.trigger('barohover', pos.x / 1000);
-      });
-
-      placeholder.on('mouseout', () => {
-        this.trigger('mouseout');
-      });
-    } else {
-      placeholder.off('plothover');
-      placeholder.off('mouseout');
-    }
   },
 
   update() {

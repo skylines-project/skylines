@@ -60,7 +60,11 @@ export default BarogramComponent.extend({
   elevations: safeComputed('selectedFlight', flight => flight.get('flot_elev')),
 
   timeHighlight: Ember.computed.readOnly('flightPhase.selection'),
+
   hoverMode: Ember.computed.not('fixCalc.isRunning'),
+  hoverModeObserver: Ember.observer('hoverMode', function() {
+    Ember.run.once(this, 'onHoverModeUpdate');
+  }),
 
   timeInterval: null,
   timeIntervalObserver: Ember.observer('timeInterval', function() {
@@ -70,6 +74,11 @@ export default BarogramComponent.extend({
   init() {
     this._super(...arguments);
     window.barogram = this;
+  },
+
+  didInsertElement() {
+    this._super(...arguments);
+    this.onHoverModeUpdate();
   },
 
   draw() {
@@ -99,6 +108,23 @@ export default BarogramComponent.extend({
       let [start, end] = interval;
       opt.xaxes[0].min = start * 1000;
       opt.xaxes[0].max = end * 1000;
+    }
+  },
+
+  onHoverModeUpdate() {
+    let placeholder = this.get('placeholder');
+
+    if (this.get('hoverMode')) {
+      placeholder.on('plothover', (event, pos) => {
+        this.trigger('barohover', pos.x / 1000);
+      });
+
+      placeholder.on('mouseout', () => {
+        this.trigger('mouseout');
+      });
+    } else {
+      placeholder.off('plothover');
+      placeholder.off('mouseout');
     }
   },
 });
