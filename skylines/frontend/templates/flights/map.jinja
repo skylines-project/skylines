@@ -246,7 +246,7 @@
     <div class="sidebar-pane" id="tab-wingmen">
       <h3>{% trans %}Wingmen{% endtrans %}</h3>
       <div class="sidebar-pane-content">
-        <div data-component='wingman-table' data-attrs='{"nearFlights": {{h.json.dumps(near_flights)}}}'></div>
+        <div data-component='wingman-table' data-attrs='{"nearFlights": {{ near_flights|tojson }}}'></div>
       </div>
     </div>
   </div>

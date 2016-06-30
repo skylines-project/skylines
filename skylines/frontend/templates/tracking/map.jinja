@@ -86,14 +86,14 @@
     {% for pilot, trace in zip(pilots, traces) -%}
     {% if trace -%}
       window.fixCalcService.addFlight({ sfid: {{ pilot.id }},
-                points: {{ h.json.dumps(trace.points) }},
-                barogram_t: {{ h.json.dumps(trace.barogram_t) }},
-                barogram_h: {{ h.json.dumps(trace.barogram_h) }},
-                enl: {{ h.json.dumps(trace.enl) }},
+                points: {{ trace.points|tojson }},
+                barogram_t: {{ trace.barogram_t|tojson }},
+                barogram_h: {{ trace.barogram_h|tojson }},
+                enl: {{ trace.enl|tojson }},
                 contests: undefined,
-                elevations_t: {{ h.json.dumps(trace.barogram_t) }},
-                elevations_h: {{ h.json.dumps(trace.elevations) }},
-                geoid: {{ h.json.dumps(trace.geoid) }},
+                elevations_t: {{ trace.barogram_t|tojson }},
+                elevations_h: {{ trace.elevations|tojson }},
+                geoid: {{ trace.geoid|tojson }},
                 additional: {
                   competition_id: "{{ pilot.tracking_callsign or pilot.initials() }}",
                   color: "{{ pilot.color }}"
