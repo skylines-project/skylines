@@ -292,8 +292,10 @@ def index_post(form):
             del form.airspace_usage
 
         # replace None in form.pilot_id and form.co_pilot_id with 0
-        if not form.pilot_id.data: form.pilot_id.data = 0
-        if not form.co_pilot_id.data: form.co_pilot_id.data = 0
+        if not form.pilot_id.data:
+            form.pilot_id.data = 0
+        if not form.co_pilot_id.data:
+            form.co_pilot_id.data = 0
 
         form.pilot_id.validate(form)
 
@@ -339,8 +341,10 @@ def check_update_form(prefix, status):
         form.populate_obj(flight)
 
         # replace None in form.pilot_id and form.co_pilot_id with 0
-        if not form.pilot_id.data: form.pilot_id.data = 0
-        if not form.co_pilot_id.data: form.co_pilot_id.data = 0
+        if not form.pilot_id.data:
+            form.pilot_id.data = 0
+        if not form.co_pilot_id.data:
+            form.co_pilot_id.data = 0
 
         # Force takeoff_time and landing_time to be within the igc file limits
         if form.takeoff_time.data < fp[0].datetime:
@@ -403,10 +407,10 @@ def _update_flight(flight_id, fp, model_id, registration, competition_id,
 
     if takeoff_time and scoring_start_time and scoring_end_time and landing_time \
        and takeoff_time <= scoring_start_time <= scoring_end_time <= landing_time \
-       and (flight.takeoff_time != takeoff_time
-            or flight.scoring_start_time != scoring_start_time
-            or flight.scoring_end_time != scoring_end_time
-            or flight.landing_time != landing_time):
+       and (flight.takeoff_time != takeoff_time or
+            flight.scoring_start_time != scoring_start_time or
+            flight.scoring_end_time != scoring_end_time or
+            flight.landing_time != landing_time):
 
         flight.takeoff_time = takeoff_time
         flight.scoring_start_time = scoring_start_time
