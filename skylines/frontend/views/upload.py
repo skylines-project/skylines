@@ -50,8 +50,28 @@ class UploadStatus(IntEnum):
     FLIGHT_IN_FUTURE = 5  # _('Date of flight in future')
 
 
-UploadResult = namedtuple(
-    'UploadResult', ['name', 'flight', 'status', 'prefix', 'trace', 'airspace', 'cache_key', 'form'])
+class UploadResult(namedtuple('UploadResult', [
+        'name', 'flight', 'status', 'prefix', 'trace', 'airspace', 'cache_key', 'form'])):
+
+    @classmethod
+    def for_duplicate(cls, name, other, prefix):
+        return cls(name, other, UploadStatus.DUPLICATE, prefix, None, None, None, None)
+
+    @classmethod
+    def for_missing_date(cls, name, prefix):
+        return cls(name, None, UploadStatus.MISSING_DATE, prefix, None, None, None, None)
+
+    @classmethod
+    def for_parser_error(cls, name, prefix):
+        return cls(name, None, UploadStatus.PARSER_ERROR, prefix, None, None, None, None)
+
+    @classmethod
+    def for_no_flight(cls, name, prefix):
+        return cls(name, None, UploadStatus.NO_FLIGHT, prefix, None, None, None, None)
+
+    @classmethod
+    def for_future_flight(cls, name, prefix):
+        return cls(name, None, UploadStatus.FLIGHT_IN_FUTURE, prefix, None, None, None, None)
 
 
 def iterate_files(name, f):
@@ -203,7 +223,7 @@ def index_post(form):
             other = Flight.by_md5(md5)
             if other:
                 files.delete_file(filename)
-                results.append(UploadResult(name, other, UploadStatus.DUPLICATE, str(prefix), None, None, None, None))
+                results.append(UploadResult.for_duplicate(name, other, str(prefix)))
                 continue
 
         igc_file = IGCFile()
@@ -214,7 +234,7 @@ def index_post(form):
 
         if igc_file.date_utc is None:
             files.delete_file(filename)
-            results.append(UploadResult(name, None, UploadStatus.MISSING_DATE, str(prefix), None, None, None, None))
+            results.append(UploadResult.for_missing_date(name, str(prefix)))
             continue
 
         flight = Flight()
@@ -242,22 +262,22 @@ def index_post(form):
 
         if not analyzed:
             files.delete_file(filename)
-            results.append(UploadResult(name, None, UploadStatus.PARSER_ERROR, str(prefix), None, None, None, None))
+            results.append(UploadResult.for_parser_error(name, str(prefix)))
             continue
 
         if not flight.takeoff_time or not flight.landing_time:
             files.delete_file(filename)
-            results.append(UploadResult(name, None, UploadStatus.NO_FLIGHT, str(prefix), None, None, None, None))
+            results.append(UploadResult.for_no_flight(name, str(prefix)))
             continue
 
         if flight.landing_time > datetime.now():
             files.delete_file(filename)
-            results.append(UploadResult(name, None, UploadStatus.FLIGHT_IN_FUTURE, str(prefix), None, None, None, None))
+            results.append(UploadResult.for_future_flight(name, str(prefix)))
             continue
 
         if not flight.update_flight_path():
             files.delete_file(filename)
-            results.append(UploadResult(name, None, UploadStatus.NO_FLIGHT, str(prefix), None, None, None, None))
+            results.append(UploadResult.for_no_flight(name, str(prefix)))
             continue
 
         flight.privacy_level = Flight.PrivacyLevel.PRIVATE
