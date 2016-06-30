@@ -131,10 +131,10 @@
   $(function() {
     var slUpload = require('skylines/utils/upload');
 
-    var baro = null;
+    var baro = window["barogram-{{ prefix }}"];
 
     if (isCanvasSupported()) {
-      baro = slUpload.initBaro(window["barogram-{{ prefix }}"],
+      slUpload.initBaro(baro,
         {{ trace.barogram_t|tojson }},
         {{ trace.barogram_h|tojson }},
         {{ trace.enl|tojson }},

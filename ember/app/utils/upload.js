@@ -18,7 +18,6 @@ import { convertAltitude } from './units';
  * @param {int} scoring_start_time Time of scoring start.
  * @param {int} scoring_end_time Time of scoring end.
  * @param {int} landing_time Time of landing.
- * @return {Object} Barogram.
  */
 export function initBaro(baro, _time, _height, _enl,
                   _elevations_h, takeoff_time, scoring_start_time,
@@ -58,8 +57,6 @@ export function initBaro(baro, _time, _height, _enl,
   );
 
   baro.draw();
-
-  return baro;
 }
 
 
