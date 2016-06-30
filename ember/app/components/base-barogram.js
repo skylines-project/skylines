@@ -1,99 +1,36 @@
 import Ember from 'ember';
 
-import safeComputed from '../utils/safe-computed';
 import { addAltitudeUnit } from '../utils/units';
 
 export default Ember.Component.extend(Ember.Evented, {
-  fixCalc: Ember.inject.service(),
-  flightPhase: Ember.inject.service(),
-
   layoutName: 'components/base-barogram',
 
   height: 133,
 
   flot: null,
-  time: Ember.computed.alias('fixCalc.time'),
+
   selection: null,
-  flights: Ember.computed.readOnly('fixCalc.flights'),
 
-  activeFlights: Ember.computed('flights.[]', 'selection', function() {
-    let { flights, selection } = this.getProperties('flights', 'selection');
-    return flights.filter(flight => (!selection || flight.get('id') === selection));
-  }),
+  active: [],
+  passive: [],
+  enls: [],
 
-  passiveFlights: Ember.computed('flights.[]', 'selection', function() {
-    let { flights, selection } = this.getProperties('flights', 'selection');
-    return flights.filter(flight => (selection && flight.get('id') !== selection));
-  }),
+  contests: null,
+  elevations: [],
 
-  active: Ember.computed('activeFlights.@each.{flot_h,color}', function() {
-    return this.get('activeFlights').map(flight => ({
-      data: flight.get('flot_h'),
-      color: flight.get('color'),
-    }));
-  }),
-
-  passive: Ember.computed('passiveFlights.@each.{flot_h,color}', function() {
-    return this.get('passiveFlights').map(flight => ({
-      data: flight.get('flot_h'),
-      color: flight.get('color'),
-    }));
-  }),
-
-  enls: Ember.computed('activeFlights.@each.{flot_enl,color}', function() {
-    return this.get('activeFlights').map(flight => ({
-      data: flight.get('flot_enl'),
-      color: flight.get('color'),
-    }));
-  }),
-
-  selectedFlight: Ember.computed('flights.[]', 'selection', function() {
-    let { flights, selection } = this.getProperties('flights', 'selection');
-    if (flights.get('length') === 1) {
-      return flights.get('firstObject');
-    } else if (selection) {
-      return flights.findBy('id', selection);
-    }
-  }),
-
-  contests: safeComputed('selectedFlight', flight => flight.get('contests')),
-  elevations: safeComputed('selectedFlight', flight => flight.get('flot_elev')),
-
-  timeHighlight: Ember.computed.readOnly('flightPhase.selection'),
-  hoverMode: Ember.computed.not('fixCalc.isRunning'),
+  timeHighlight: null,
+  hoverMode: false,
 
   flotStyle: Ember.computed('height', function() {
     return Ember.String.htmlSafe(`width: 100%; height: ${this.get('height')}px;`);
   }),
 
-  init() {
-    this._super(...arguments);
-    window.barogram = this;
-  },
-
   draw() {
     this.update();
-    this.updateCrosshair();
 
     let flot = this.get('flot');
     flot.setupGrid();
     flot.draw();
-  },
-
-  timeObserver: Ember.observer('time', function() {
-    Ember.run.once(this, 'updateCrosshair');
-  }),
-
-  updateCrosshair() {
-    let { flot, time } = this.getProperties('flot', 'time');
-
-    if (time === null) {
-      flot.clearCrosshair();
-    } else if (time == -1) {
-      flot.lockCrosshair({ x: 999999999 });
-    } else {
-      flot.lockCrosshair({ x: time * 1000 });
-    }
   },
 
   timeIntervalObserver: Ember.observer('timeInterval', function() {
@@ -329,7 +266,7 @@ export default Ember.Component.extend(Ember.Evented, {
     }];
   },
 
-  flightPhaseObserver: Ember.observer('timeHighlight', function() {
+  timeHighlightObserver: Ember.observer('timeHighlight', function() {
     Ember.run.once(this, 'draw');
   }),
 });
