@@ -5,19 +5,7 @@
 
   <div class="form-group">
     <label class="control-label">{{t "pilot"}}</label>
-
-    {{#power-select
-      options=pilots
-      selected=pilot
-      searchField="name"
-      onchange=(action (mut pilot))
-      as |model|}}
-        {{#if (eq model.id null)}}
-          [{{t 'unknown-or-other-person'}}]
-        {{else}}
-          {{model.name}}
-        {{/if}}
-    {{/power-select}}
+    {{pilot-select clubMembers=clubMembers pilotId=pilotId onChange=(action (mut pilotId))}}
   </div>
 
   {{#if showPilotNameInput}}
@@ -30,19 +18,7 @@
 
   <div class="form-group has-feedback {{if validations.attrs.copilotId.isInvalid "has-error"}}">
     <label class="control-label">{{t "copilot"}}</label>
-
-    {{#power-select
-      options=pilots
-      selected=copilot
-      searchField="name"
-      onchange=(action (mut copilot))
-      as |model|}}
-        {{#if (eq model.id null)}}
-          [{{t 'unknown-or-other-person'}}]
-        {{else}}
-          {{model.name}}
-        {{/if}}
-    {{/power-select}}
+    {{pilot-select clubMembers=clubMembers pilotId=copilotId onChange=(action (mut copilotId))}}
 
     {{#if validations.attrs.copilotId.message}}
       <p class="help-block">{{validations.attrs.copilotId.message}}</p>
