@@ -103,6 +103,8 @@ class IGCFileSchema(Schema):
     competitionId = fields.String(attribute='competition_id', strip=True, validate=validate.Length(max=5))
     model = fields.String(strip=True, validate=validate.Length(max=64))
 
+    date = fields.Date(attribute='date_utc')
+
     class Meta:
         load_only = ('ownerId',)
         dump_only = ('owner',)
@@ -148,7 +150,7 @@ class FlightSchema(Schema):
     speed = fields.Float()
 
     igcFile = fields.Nested(IGCFileSchema, attribute='igc_file', only=(
-        'owner', 'filename', 'registration', 'competitionId', 'model'))
+        'owner', 'filename', 'registration', 'competitionId', 'model', 'date'))
 
     class Meta:
         load_only = ('pilotId', 'copilotId', 'clubId', 'modelId', 'takeoffAirportId', 'landingAirportId')
