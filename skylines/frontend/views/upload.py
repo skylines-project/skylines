@@ -433,8 +433,8 @@ def _update_flight(flight_id, fp, form):
     return True
 
 
-@upload_blueprint.route('/airspace/<string:cache_key>/<int:as_id>.png')
-def airspace_image(cache_key, as_id):
+@upload_blueprint.route('/airspace/<string:cache_key>/<int:airspace_id>.png')
+def airspace_image(cache_key, airspace_id):
     if not mapscript_available:
         abort(404)
 
@@ -457,7 +457,7 @@ def airspace_image(cache_key, as_id):
     highlight_locations = []
     extent_epsg4326 = [180, 85.05112878, -180, -85.05112878]
 
-    for period in infringements[as_id]:
+    for period in infringements[airspace_id]:
         # Convert the coordinate into a list of tuples
         coordinates = [(c['location']['longitude'], c['location']['latitude']) for c in period]
 

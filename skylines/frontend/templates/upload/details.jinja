@@ -73,7 +73,7 @@
     <td class="base">{{ airspace.base }}</td>
     <td class="top">{{ airspace.top }}</td>
     <td>
-      <span class="icon-picture airspace-image" style="cursor: pointer;" rel="popover" data-toggle="popover" data-content="<img src='{{ url_for('.airspace_image', cache_key=cache_key, as_id=airspace.id) }}' style='width: 400px; height: 400px;' />"></span>
+      <span class="icon-picture airspace-image" style="cursor: pointer;" rel="popover" data-toggle="popover" data-content="<img src='{{ url_for('.airspace_image', cache_key=cache_key, airspace_id=airspace.id) }}' style='width: 400px; height: 400px;' />"></span>
     </td>
   </tr>
 {% endfor %}
