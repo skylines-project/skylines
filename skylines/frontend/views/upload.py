@@ -48,7 +48,7 @@ class UploadStatus(Enum):
     FLIGHT_IN_FUTURE = 5  # _('Date of flight in future')
 
 
-def IterateFiles(name, f):
+def iterate_files(name, f):
     try:
         z = ZipFile(f, 'r')
     except:
@@ -65,7 +65,7 @@ def IterateFiles(name, f):
                 yield info.filename, z.open(info.filename, 'r')
 
 
-def IterateUploadFiles(upload):
+def iterate_upload_files(upload):
     if isinstance(upload, unicode):
         # the Chromium browser sends an empty string if no file is selected
         if not upload:
@@ -80,11 +80,11 @@ def IterateUploadFiles(upload):
 
     elif isinstance(upload, list):
         for x in upload:
-            for name, f in IterateUploadFiles(x):
+            for name, f in iterate_upload_files(x):
                 yield name, f
 
     else:
-        for x in IterateFiles(upload.filename, upload):
+        for x in iterate_files(upload.filename, upload):
             yield x
 
 
@@ -195,7 +195,7 @@ def index_post(form):
     success = False
 
     prefix = 0
-    for name, f in IterateUploadFiles(form.file.raw_data):
+    for name, f in iterate_upload_files(form.file.raw_data):
         prefix += 1
         filename = files.sanitise_filename(name)
         filename = files.add_file(filename, f)
