@@ -29,10 +29,14 @@ def index():
         .options(joinedload(User.club)) \
         .order_by(func.lower(User.name))
 
+    fields = ['id', 'name']
+
     if 'club' in request.args:
         users = users.filter_by(club_id=request.args.get('club'))
+    else:
+        fields.append('club')
 
-    return jsonify(users=UserSchema(only=('id', 'name', 'club')).dump(users, many=True).data)
+    return jsonify(users=UserSchema(only=fields).dump(users, many=True).data)
 
 
 @users_blueprint.route('/new', methods=['GET', 'POST'])
