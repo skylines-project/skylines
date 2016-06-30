@@ -4,6 +4,14 @@ from . import fields, validate
 
 from skylines.lib.formatter.units import DISTANCE_UNITS, SPEED_UNITS, LIFT_UNITS, ALTITUDE_UNITS
 
+AIRCRAFT_MODEL_TYPES = {
+    1: 'glider',
+    2: 'motorglider',
+    3: 'paraglider',
+    4: 'hangglider',
+    5: 'ul',
+}
+
 
 class Schema(_Schema):
     # Set `strict=True` as default for our schemas
@@ -15,6 +23,10 @@ class AircraftModelSchema(Schema):
     id = fields.Integer(dump_only=True)
     name = fields.String(required=True, strip=True, validate=validate.Length(max=64))
     index = fields.Integer(attribute='dmst_index')
+    type = fields.Method('get_type')
+
+    def get_type(self, obj):
+        return AIRCRAFT_MODEL_TYPES[obj.kind]
 
 
 class AirportSchema(Schema):

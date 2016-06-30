@@ -25,21 +25,13 @@ from skylines.model import (
 )
 from skylines.model.event import create_flight_comment_notifications
 from skylines.model.flight import get_elevations_for_flight
-from skylines.schemas import fields, FlightSchema, FlightCommentSchema, UserSchema, Schema, ValidationError
+from skylines.schemas import fields, AircraftModelSchema, FlightSchema, FlightCommentSchema, UserSchema, Schema, ValidationError
 from skylines.worker import tasks
 from redis.exceptions import ConnectionError
 
 import xcsoar
 
 flight_blueprint = Blueprint('flight', 'skylines')
-
-AIRCRAFT_MODEL_TYPES = {
-    1: 'glider',
-    2: 'motorglider',
-    3: 'paraglider',
-    4: 'hangglider',
-    5: 'ul',
-}
 
 
 def _reanalyse_if_needed(flight):
@@ -548,23 +540,10 @@ def change_aircraft():
 
     return render_template(
         'flights/change_aircraft.jinja',
-        models=map(convert_aircraft_model, models),
+        models=AircraftModelSchema().dump(models, many=True).data,
         model_id=model_id,
         registration=registration,
         competition_id=competition_id
-    )
-
-
-def convert_aircraft_model(model):
-    """
-    :type model: AircraftModel
-    """
-
-    return dict(
-        id=model.id,
-        name=model.name,
-        type=AIRCRAFT_MODEL_TYPES[model.kind],
-        index=model.dmst_index,
     )
 
 
