@@ -1,5 +1,3 @@
-/* global showPinnedFlightsLink */
-
 import Ember from 'ember';
 
 export default Ember.Service.extend({
@@ -35,9 +33,6 @@ export default Ember.Service.extend({
 
   save() {
     this.get('cookies').write('SkyLines_pinnedFlights', this.get('pinned').join(','), { path: '/' });
-
-    // show pinned flights link in list view if found in DOM
-    showPinnedFlightsLink();
   },
 
   toggle(id) {

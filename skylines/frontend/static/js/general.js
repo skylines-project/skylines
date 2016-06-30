@@ -35,16 +35,3 @@ function getShareUrl(url) {
 
   return url_split[1] + '/' + unique_ids.join(',') + '/' + url_split[3];
 }
-
-
-/**
- * Shows the pinned flights link at element id #pinned-flights-link
- */
-function showPinnedFlightsLink() {
-  var pinned_flights = window.pinnedFlightsService.get('pinned');
-  if (pinned_flights.length > 0) {
-    $('#pinned-flights-link').show();
-  } else {
-    $('#pinned-flights-link').hide();
-  }
-}
