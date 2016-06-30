@@ -18,8 +18,6 @@ export default Ember.Component.extend(Ember.Evented, {
   contests: null,
   elevations: [],
 
-  timeHighlight: null,
-
   flotStyle: Ember.computed('height', function() {
     return Ember.String.htmlSafe(`width: 100%; height: ${this.get('height')}px;`);
   }),
@@ -92,7 +90,6 @@ export default Ember.Component.extend(Ember.Evented, {
     this.addPassiveTraces(data);
     this.addENLData(data);
     this.addContests(data);
-    this.updateTimeHighlight();
 
     this.get('flot').setData(data);
   },
@@ -181,29 +178,4 @@ export default Ember.Component.extend(Ember.Evented, {
       },
     });
   },
-
-  updateTimeHighlight() {
-    // There is no flot.setOptions(), so we modify them in-place.
-    let options = this.get('flot').getOptions();
-
-    // Clear the markings if there is no time highlight
-    let time_highlight = this.get('timeHighlight');
-    if (!time_highlight) {
-      options.grid.markings = [];
-      return;
-    }
-
-    // Add time highlight as flot markings
-    options.grid.markings = [{
-      color: '#fff083',
-      xaxis: {
-        from: time_highlight.start * 1000,
-        to: time_highlight.end * 1000,
-      },
-    }];
-  },
-
-  timeHighlightObserver: Ember.observer('timeHighlight', function() {
-    Ember.run.once(this, 'draw');
-  }),
 });

@@ -60,6 +60,9 @@ export default BarogramComponent.extend({
   elevations: safeComputed('selectedFlight', flight => flight.get('flot_elev')),
 
   timeHighlight: Ember.computed.readOnly('flightPhase.selection'),
+  timeHighlightObserver: Ember.observer('timeHighlight', function() {
+    Ember.run.once(this, 'draw');
+  }),
 
   hoverMode: Ember.computed.not('fixCalc.isRunning'),
   hoverModeObserver: Ember.observer('hoverMode', function() {
@@ -79,6 +82,11 @@ export default BarogramComponent.extend({
   didInsertElement() {
     this._super(...arguments);
     this.onHoverModeUpdate();
+  },
+
+  update() {
+    this.updateTimeHighlight();
+    this._super(...arguments);
   },
 
   draw() {
@@ -126,5 +134,26 @@ export default BarogramComponent.extend({
       placeholder.off('plothover');
       placeholder.off('mouseout');
     }
+  },
+
+  updateTimeHighlight() {
+    // There is no flot.setOptions(), so we modify them in-place.
+    let options = this.get('flot').getOptions();
+
+    // Clear the markings if there is no time highlight
+    let time_highlight = this.get('timeHighlight');
+    if (!time_highlight) {
+      options.grid.markings = [];
+      return;
+    }
+
+    // Add time highlight as flot markings
+    options.grid.markings = [{
+      color: '#fff083',
+      xaxis: {
+        from: time_highlight.start * 1000,
+        to: time_highlight.end * 1000,
+      },
+    }];
   },
 });
