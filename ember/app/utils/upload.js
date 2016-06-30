@@ -47,12 +47,8 @@ export function initBaro(baro, _time, _height, _enl,
 
   let color = '#004bbd';
 
-  let data = { data: flot_h, color };
-
-  let enl_data = { data: flot_enl, color };
-
-  baro.set('active', [data]);
-  baro.set('enls', [enl_data]);
+  baro.set('active', [{ data: flot_h, color }]);
+  baro.set('enls', [{ data: flot_enl, color }]);
   baro.set('elevations', flot_elev);
 
   baro.setFlightTimes(
