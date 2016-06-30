@@ -1,8 +1,6 @@
-import Ember from 'ember';
+import BarogramComponent from './base-barogram';
 
-import FlightBarogram from './flight-barogram';
-
-export default FlightBarogram.extend({
+export default BarogramComponent.extend({
   prefix: null,
   uploadMode: true,
   height: 160,
