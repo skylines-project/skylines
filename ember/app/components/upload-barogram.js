@@ -23,7 +23,7 @@ export default BarogramComponent.extend({
     this.get('flot').updateSelection(time * 1000, field);
   },
 
-  getFlightTime() {
+  getFlightTimes() {
     return this.get('flot').getSelection();
   },
 });

@@ -184,7 +184,7 @@
       var time = $(e.target).data("DateTimePicker").getDate().unix() - flight_date.unix();
       if (baro) {
         baro.updateFlightTime(time, marker);
-        slUpload.updateTimePicker({{ prefix }}, flight_date, baro.getFlightTime());
+        slUpload.updateTimePicker({{ prefix }}, flight_date, baro.getFlightTimes());
       }
     });
   });
