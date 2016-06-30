@@ -83,50 +83,42 @@ export default Ember.Component.extend(Ember.Evented, {
   update() {
     let data = [];
     this.addElevations(data);
-    this.addActiveTraces(data);
-    this.addPassiveTraces(data);
-    this.addENLData(data);
+    data = data.concat(this.activeTraces());
+    data = data.concat(this.passiveTraces());
+    data = data.concat(this.enlData());
     this.addContests(data);
 
     this.get('flot').setData(data);
   },
 
-  addActiveTraces(data) {
-    this.get('active').forEach(trace => {
-      data.push({
-        data: trace.data,
-        color: trace.color,
-      });
-    });
+  activeTraces() {
+    return this.get('active').map(trace => ({
+      data: trace.data,
+      color: trace.color,
+    }));
   },
 
-  addPassiveTraces(data) {
-    this.get('passive').forEach(trace => {
-      let color = Ember.$.color.parse(trace.color).add('a', -0.6).toString();
-
-      data.push({
-        data: trace.data,
-        color,
-        shadowSize: 0,
-        lines: {
-          lineWidth: 1,
-        },
-      });
-    });
+  passiveTraces() {
+    return this.get('passive').map(trace => ({
+      data: trace.data,
+      color: Ember.$.color.parse(trace.color).add('a', -0.6).toString(),
+      shadowSize: 0,
+      lines: {
+        lineWidth: 1,
+      },
+    }));
   },
 
-  addENLData(data) {
-    this.get('enls').forEach(enl => {
-      data.push({
-        data: enl.data,
-        color: enl.color,
-        lines: {
-          lineWidth: 0,
-          fill: 0.2,
-        },
-        yaxis: 2,
-      });
-    });
+  enlData() {
+    return this.get('enls').map(enl => ({
+      data: enl.data,
+      color: enl.color,
+      lines: {
+        lineWidth: 0,
+        fill: 0.2,
+      },
+      yaxis: 2,
+    }));
   },
 
   addContests(data) {
