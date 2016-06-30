@@ -135,7 +135,6 @@
 
     if (isCanvasSupported()) {
       baro = slUpload.initBaro(window["barogram-{{ prefix }}"],
-        {{ flight.id }},
         {{ trace.barogram_t|tojson }},
         {{ trace.barogram_h|tojson }},
         {{ trace.enl|tojson }},

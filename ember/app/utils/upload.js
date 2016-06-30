@@ -10,7 +10,6 @@ import { convertAltitude } from './units';
  *   of elements when decoded.
  *
  * @param {Ember.Component} baro
- * @param {int} sfid SkyLines flight ID.
  * @param {String} _time Google polyencoded string of time values.
  * @param {String} _height Google polyencoded string of height values.
  * @param {String} _enl Google polyencoded string of engine noise levels.
@@ -21,7 +20,7 @@ import { convertAltitude } from './units';
  * @param {int} landing_time Time of landing.
  * @return {Object} Barogram.
  */
-export function initBaro(baro, sfid, _time, _height, _enl,
+export function initBaro(baro, _time, _height, _enl,
                   _elevations_h, takeoff_time, scoring_start_time,
                   scoring_end_time, landing_time) {
 
