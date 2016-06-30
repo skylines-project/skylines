@@ -50,11 +50,6 @@ export default Ember.Component.extend(Ember.Evented, {
     }
   },
 
-  enableFlightSelection() {
-    let opt = this.get('flot').getOptions();
-    opt.selection.mode = 'x';
-  },
-
   hoverModeObserver: Ember.observer('hoverMode', function() {
     Ember.run.once(this, 'onHoverModeUpdate');
   }),
