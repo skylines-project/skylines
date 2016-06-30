@@ -276,21 +276,21 @@ def index_post(form):
                              .all()
 
         # create form after flushing the session, otherwise we wouldn't have a flight.id
-        form = UploadUpdateForm(formdata=None, prefix=str(prefix), obj=flight)
-        # remove airspace field from form if no airspace infringements found
+        update_form = UploadUpdateForm(formdata=None, prefix=str(prefix), obj=flight)
+        # remove airspace field from update_form if no airspace infringements found
         if not infringements:
-            del form.airspace_usage
+            del update_form.airspace_usage
 
-        # replace None in form.pilot_id and form.co_pilot_id with 0
-        if not form.pilot_id.data:
-            form.pilot_id.data = 0
-        if not form.co_pilot_id.data:
-            form.co_pilot_id.data = 0
+        # replace None in update_form.pilot_id and update_form.co_pilot_id with 0
+        if not update_form.pilot_id.data:
+            update_form.pilot_id.data = 0
+        if not update_form.co_pilot_id.data:
+            update_form.co_pilot_id.data = 0
 
-        form.pilot_id.validate(form)
+        update_form.pilot_id.validate(update_form)
 
         flights.append((name, flight, UploadStatus.SUCCESS, str(prefix), trace,
-                        airspace, cache_key, form))
+                        airspace, cache_key, update_form))
 
         create_flight_notifications(flight)
 
