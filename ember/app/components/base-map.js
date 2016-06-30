@@ -1,5 +1,3 @@
-/* globals isCanvasSupported */
-
 import Ember from 'ember';
 import ol from 'openlayers';
 
@@ -22,18 +20,10 @@ export default Ember.Component.extend(Ember.Evented, {
     return Ember.String.htmlSafe(`width: ${width}; height: ${height}; position: relative`);
   }),
 
-  noCanvas: Ember.computed(function() {
-    return !isCanvasSupported();
-  }),
-
   init() {
     this._super(...arguments);
 
     window.flightMap = this;
-
-    if (this.get('noCanvas')) {
-      return;
-    }
 
     let interactions = ol.interaction.defaults({
       altShiftDragRotate: false,

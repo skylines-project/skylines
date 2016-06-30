@@ -133,21 +133,16 @@
 
     var baro = window["barogram-{{ prefix }}"];
 
-    if (isCanvasSupported()) {
-      slUpload.initBaro(baro,
-        {{ trace.barogram_t|tojson }},
-        {{ trace.barogram_h|tojson }},
-        {{ trace.enl|tojson }},
-        {{ trace.elevations_h|tojson }},
-        {{ h.to_seconds_of_day(flight.igc_file.date_utc, form.takeoff_time.data) }},
-        {{ h.to_seconds_of_day(flight.igc_file.date_utc, form.scoring_start_time.data) }},
-        {{ h.to_seconds_of_day(flight.igc_file.date_utc, form.scoring_end_time.data) }},
-        {{ h.to_seconds_of_day(flight.igc_file.date_utc, form.landing_time.data) }}
-      );
-    } else {
-      $("#barogram-{{ prefix }}").html('<b>Your browser is too old to display this barogram.<br />' +
-                                       'Please update to a current version.</b>');
-    }
+    slUpload.initBaro(baro,
+      {{ trace.barogram_t|tojson }},
+      {{ trace.barogram_h|tojson }},
+      {{ trace.enl|tojson }},
+      {{ trace.elevations_h|tojson }},
+      {{ h.to_seconds_of_day(flight.igc_file.date_utc, form.takeoff_time.data) }},
+      {{ h.to_seconds_of_day(flight.igc_file.date_utc, form.scoring_start_time.data) }},
+      {{ h.to_seconds_of_day(flight.igc_file.date_utc, form.scoring_end_time.data) }},
+      {{ h.to_seconds_of_day(flight.igc_file.date_utc, form.landing_time.data) }}
+    );
 
     $("[id^={{ prefix }}-][id$=-datetimepicker]").datetimepicker({
       pickDate: false,
