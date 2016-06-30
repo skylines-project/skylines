@@ -1,7 +1,7 @@
 from datetime import datetime
 from tempfile import TemporaryFile
 from zipfile import ZipFile
-from enum import Enum
+from enum import IntEnum
 import hashlib
 import os
 
@@ -39,7 +39,7 @@ import xcsoar
 upload_blueprint = Blueprint('upload', 'skylines')
 
 
-class UploadStatus(Enum):
+class UploadStatus(IntEnum):
     SUCCESS = 0
     DUPLICATE = 1  # _('Duplicate file')
     MISSING_DATE = 2  # _('Date missing in IGC file')
