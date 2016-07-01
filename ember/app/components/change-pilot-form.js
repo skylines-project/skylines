@@ -2,6 +2,11 @@ import Ember from 'ember';
 import { validator, buildValidations } from 'ember-cp-validations';
 
 const Validations = buildValidations({
+  pilotId: {
+    descriptionKey: 'pilot',
+    validators: [],
+    debounce: 0,
+  },
   pilotName: {
     descriptionKey: 'pilot',
     validators: [

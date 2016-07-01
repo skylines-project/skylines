@@ -3,10 +3,9 @@
     <div class="alert alert-danger" role="alert">{{error}}</div>
   {{/if}}
 
-  <div class="form-group">
-    <label class="control-label">{{t "pilot"}}</label>
+  {{#validated-block label=(t "pilot") validation=validations.attrs.pilotId}}
     {{pilot-select clubMembers=clubMembers pilotId=pilotId onChange=(action (mut pilotId))}}
-  </div>
+  {{/validated-block}}
 
   {{#if showPilotNameInput}}
     {{validated-input
@@ -16,14 +15,9 @@
       disabled=pending}}
   {{/if}}
 
-  <div class="form-group has-feedback {{if validations.attrs.copilotId.isInvalid "has-error"}}">
-    <label class="control-label">{{t "copilot"}}</label>
+  {{#validated-block label=(t "copilot") validation=validations.attrs.copilotId}}
     {{pilot-select clubMembers=clubMembers pilotId=copilotId onChange=(action (mut copilotId))}}
-
-    {{#if validations.attrs.copilotId.message}}
-      <p class="help-block">{{validations.attrs.copilotId.message}}</p>
-    {{/if}}
-  </div>
+  {{/validated-block}}
 
   {{#if showCopilotNameInput}}
     {{validated-input
