@@ -111,7 +111,7 @@ class IGCFileSchema(Schema):
 
 
 class FlightSchema(Schema):
-    id = fields.Integer(dump_only=True)
+    id = fields.Integer()
     timeCreated = fields.DateTime(attribute='time_created')
 
     pilotId = fields.Integer(attribute='pilot_id', allow_none=True)
@@ -127,8 +127,8 @@ class FlightSchema(Schema):
 
     modelId = fields.Integer(attribute='model_id', allow_none=True)
     model = fields.Nested(AircraftModelSchema)
-    registration = fields.String(strip=True, validate=validate.Length(max=32))
-    competitionId = fields.String(attribute='competition_id', strip=True, validate=validate.Length(max=5))
+    registration = fields.String(allow_none=True, strip=True, validate=validate.Length(max=32))
+    competitionId = fields.String(attribute='competition_id', allow_none=True, strip=True, validate=validate.Length(max=5))
 
     scoreDate = fields.Date(attribute='date_local')
 

@@ -2,8 +2,6 @@
 {% set active_page = "upload" %}
 {% set use_ember = true %}
 
-{% from 'upload/details.jinja' import render_flight_details, render_flight_script with context %}
-
 {% block title %}{% trans %}Upload Flight{% endtrans %}{% endblock %}
 
 {%- block scripts %}
@@ -26,74 +24,13 @@
       placement: 'top'
     });
   });
-
-  function updateVisibilities(prefix) {
-    $('#form-group-' + prefix + '-pilot_name').toggle($('#' + prefix + '-pilot_id').val() == 0);
-    $('#form-group-' + prefix + '-co_pilot_name').toggle($('#' + prefix + '-co_pilot_id').val() == 0);
-  }
 </script>
-
-{% for name, flight, status, prefix, trace, airspaces, cache_key, form in results -%}
-{{ render_flight_script(name, flight, status, prefix, trace, form) }}
-{%- endfor %}
-
 {% endblock %}
 
 {%- block content %}
-<form action="{{ url_for('upload.index') }}" method="post">
-  <input type="hidden" name="num_flights" value="{{ num_flights }}" />
-  <input type="hidden" name="stage" value="1" />
-  {% if success -%}
-  <p class="visible-xs">
-    {% trans %}Your flights have been saved.{% endtrans %}<br />
-  </p>
-  <p class="hidden-xs">
-    {% trans %}Your flights have been saved. You have to verify their properties and click 'Publish Flight(s)' below to publish your flight(s).{% endtrans %}<br />
-  </p>
-  {%- else %}
-  <p>{% trans %}No flight was saved.{% endtrans %}</p>
-  {%- endif %}
-
-  {% if results|length == 1 -%}
-  <div class="col-xs-12">
-    {% for name, flight, status, prefix, trace, airspaces, cache_key, form in results -%}
-    {{ render_flight_details(name, flight, status, prefix, trace, airspaces, cache_key, form) }}
-    {%- endfor %}
-  </div>
-  {%- else %}
-  <div class="col-sm-3">
-    <ul class="nav nav-tabs tabs-left">
-      {% for result in results -%}
-      <li {% if loop.first -%} class="active" {%- endif %}>
-        <a href="#upload-tab-{{ result.prefix }}" data-toggle="tab">
-        {% if result.status == h.UploadStatus.SUCCESS and not result.form.errors -%}
-        <i class="icon-ok text-success"></i>
-        {% elif result.status and result.flight or (result.form and result.form.errors) %}
-        <i class="icon-warning-sign text-warning"></i>
-        {%- else %}
-        <i class="icon-warning-sign text-danger"></i>
-        {%- endif %}
-        {{ result.name }}
-        </a>
-      </li>
-      {%- endfor %}
-    </ul>
-  </div>
-  <div class="col-sm-9">
-    <div class="tab-content">
-      {% for name, flight, status, prefix, trace, airspaces, cache_key, form in results -%}
-      <div class="tab-pane {% if loop.first -%}active{%- endif %}" id="upload-tab-{{ prefix }}">
-        {{ render_flight_details(name, flight, status, prefix, trace, airspaces, cache_key, form) }}
-      </div>
-      {%- endfor %}
-    </div>
-  </div>
-
-  <div class="clearfix"></div>
-  {%- endif %}
-
-  {% if success -%}
-  <p class="col-xs-12"><input type="submit" id="submit" value="{{ _('Publish Flight(s)') }}" class="btn btn-primary"/></p>
-  {%- endif %}
-</form>
+<div data-component="upload-results-form" data-attrs='{
+  "clubMembers": {{ club_members|tojson }},
+  "aircraftModels": {{ aircraft_models|tojson }},
+  "results": {{ results_json|tojson }}
+}'>Loading...</div>
 {%- endblock %}

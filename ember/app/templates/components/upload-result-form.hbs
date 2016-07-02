@@ -1,0 +1,173 @@
+<input type="hidden" name="{{prefix}}-status" value="{{status.value}}" />
+<input type="hidden" name="{{prefix}}-name" value="{{name}}" />
+
+{{#if success}}
+  <div class="form-group col-sm-6">
+    <label class="control-label">{{t "pilot"}}</label>
+    {{pilot-select clubMembers=clubMembers pilotId=pilotId onChange=(action (mut pilotId))}}
+  </div>
+
+  {{#if showPilotNameInput}}
+    {{validated-input
+      value=pilotName
+      validation=validations.attrs.pilotName
+      label=(t "pilot")
+      disabled=pending
+      class="col-sm-6"}}
+  {{/if}}
+
+  <div class="clearfix"></div>
+
+  <div class="form-group col-sm-6">
+    <label class="control-label">{{t "copilot"}}</label>
+    {{pilot-select clubMembers=clubMembers pilotId=copilotId onChange=(action (mut copilotId))}}
+
+    {{#if validations.attrs.copilotId.message}}
+      <p class="help-block">{{validations.attrs.copilotId.message}}</p>
+    {{/if}}
+  </div>
+
+  {{#if showCopilotNameInput}}
+    {{validated-input
+      value=copilotName
+      validation=validations.attrs.copilotName
+      label=(t "copilot")
+      disabled=pending
+      class="col-sm-6"}}
+  {{/if}}
+
+  <div class="clearfix"></div>
+
+  <div class="form-group col-sm-4">
+    <label class="control-label">{{t "aircraft-type"}}</label>
+    {{aircraft-model-select models=aircraftModels modelId=modelId onChange=(action (mut modelId))}}
+  </div>
+
+  {{validated-input
+    value=registration
+    validation=validations.attrs.registration
+    label=(t "registration")
+    disabled=pending
+    class="col-sm-4"}}
+
+  {{validated-input
+    value=competitionId
+    validation=validations.attrs.competitionId
+    label=(t "competition-id")
+    disabled=pending
+    class="col-sm-4"}}
+
+  <div class="clearfix"></div>
+
+  {{#if trace}}
+    {{upload-barogram
+      flight=flight
+      trace=trace
+      takeoffTime=takeoffTime
+      onTakeoffTimeChange=(action "setTakeoffTime")
+      scoreStartTime=scoreStartTime
+      onScoreStartTimeChange=(action "setScoreStartTime")
+      scoreEndTime=scoreEndTime
+      onScoreEndTimeChange=(action "setScoreEndTime")
+      landingTime=landingTime
+      onLandingTimeChange=(action "setLandingTime")}}
+  {{/if}}
+
+  <div class="form-group col-sm-3">
+    <label class="control-label">{{t "takeoff-time"}}</label>
+    {{datetime-picker date=takeoffTime onChange=(action "setTakeoffTime") minDate=igcStartTime maxDate=igcEndTime}}
+
+    {{#if validations.attrs.takeoffTime.message}}
+      <p class="help-block">{{validations.attrs.takeoffTime.message}}</p>
+    {{/if}}
+  </div>
+
+  <div class="form-group col-sm-3">
+    <label class="control-label">{{t "scoring-start-time"}}</label>
+    {{datetime-picker date=scoreStartTime onChange=(action "setScoreStartTime") minDate=igcStartTime maxDate=igcEndTime}}
+
+    {{#if validations.attrs.scoreStartTime.message}}
+      <p class="help-block">{{validations.attrs.scoreStartTime.message}}</p>
+    {{/if}}
+  </div>
+
+  <div class="form-group col-sm-3">
+    <label class="control-label">{{t "scoring-end-time"}}</label>
+    {{datetime-picker date=scoreEndTime onChange=(action "setScoreEndTime") minDate=igcStartTime maxDate=igcEndTime}}
+
+    {{#if validations.attrs.scoreEndTime.message}}
+      <p class="help-block">{{validations.attrs.scoreEndTime.message}}</p>
+    {{/if}}
+  </div>
+
+  <div class="form-group col-sm-3">
+    <label class="control-label">{{t "landing-time"}}</label>
+    {{datetime-picker date=landingTime onChange=(action "setLandingTime") minDate=igcStartTime maxDate=igcEndTime}}
+
+    {{#if validations.attrs.landingTime.message}}
+      <p class="help-block">{{validations.attrs.landingTime.message}}</p>
+    {{/if}}
+  </div>
+
+  <div class="clearfix"></div>
+
+  {{#if result.airspaces}}
+    <div class="col-md-10 col-md-offset-1">
+      <h5>{{t "used-airspaces"}}:</h5>
+      <table class="table table-condensed airspace-table">
+        <thead>
+        <tr>
+          <th class="name">Name</th>
+          <th class="class">Class</th>
+          <th class="base">Base</th>
+          <th class="top">Top</th>
+          <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        {{#each result.airspaces as |airspace|}}
+          <tr>
+            <td class="name">{{airspace.name}}</td>
+            <td class="class">{{airspace.type}}</td>
+            <td class="base">{{airspace.base}}</td>
+            <td class="top">{{airspace.top}}</td>
+            <td>
+              <span class="icon-picture airspace-image" style="cursor: pointer;" rel="popover" data-toggle="popover" data-content="<img src='/flights/upload/airspace/{{result.cacheKey}}/{{airspace.id}}.png' style='width: 400px; height: 400px;' />"></span>
+            </td>
+          </tr>
+        {{/each}}
+        </tbody>
+      </table>
+
+      {{! render_field(form.airspace_usage)}}
+    </div>
+  {{/if}}
+
+  <div class="clearfix"></div>
+{{/if}}
+
+<p>
+  {{t "status"}}:
+
+  {{#if success}}
+    <span class="label label-success">
+      <i class="icon-ok"></i> {{t "success"}}
+    </span>
+
+  {{else}}
+    <span class="label label-warning">
+      <i class="icon-warning-sign"></i>
+
+      {{#if (eq status 1)}}{{t "duplicate-file"}}
+      {{else if (eq status 2)}}{{t "date-missing-in-igc-file"}}
+      {{else if (eq status 3)}}{{t "failed-to-parse-file"}}
+      {{else if (eq status 4)}}{{t "no-flight-in-file"}}
+      {{else if (eq status 5)}}{{t "flight-date-in-future"}}
+      {{else}}{{t "unknown"}}{{/if}}
+    </span>
+
+    {{#if flight.id}}
+      <a href="/flights/{{flight.id}}" class="btn btn-default btn-sm">{{t "show"}}</a>
+    {{/if}}
+  {{/if}}
+</p>
