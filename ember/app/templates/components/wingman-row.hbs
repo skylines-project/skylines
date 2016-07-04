@@ -5,7 +5,7 @@
   {{else if igcFile.model}}
     [{{igcFile.model}}]
   {{else}}
-    Unknown
+    [{{t "unknown"}}]
   {{/if}}
 
   <small><br />
@@ -42,7 +42,7 @@
   {{/if}}
 
   {{#if (not (or pilotName copilotName))}}
-  [unspecified]
+  [{{t "unspecified"}}]
   {{/if}}
 </td>
 <td class="times-column">
