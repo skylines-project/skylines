@@ -132,6 +132,7 @@ your-flights-have-been-saved: 'Your flights have been saved.'
 
 search:
   search: 'Search'
+  search-for-TEXT: 'Search <small>for "{text}"</small>'
   no-search-text: 'Please enter something in the search bar above.'
   no-results: 'There were no results for your search... Sorry!'
 

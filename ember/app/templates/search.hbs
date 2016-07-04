@@ -1,7 +1,11 @@
 {{#base-page}}
   <div class="page-header">
     <h1>
-      Search {{#if searchText}}<small>for "{{ searchText }}"</small>{{/if}}
+      {{#if searchText}}
+        {{format-html-message "search.search-for-TEXT" text=searchText}}
+      {{else}}
+        {{t "search.search"}}
+      {{/if}}
     </h1>
   </div>
 
