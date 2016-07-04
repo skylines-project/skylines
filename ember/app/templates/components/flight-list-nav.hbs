@@ -1,5 +1,5 @@
 {{#active-link}}
-  {{#link-to "flights.all"}}All{{/link-to}}
+  {{#link-to "flights.all"}}{{t "all"}}{{/link-to}}
 {{/active-link}}
 
 {{#if prevDate}}
@@ -14,7 +14,7 @@
       {{#if date}}
         {{format-date date format="ddmmyyyy"}}
       {{else}}
-        Latest
+        {{t "latest"}}
       {{/if}}
       &nbsp;{{#date-picker date=date onSelect=(action "dateSelected")}}<i class="icon-th"></i>{{/date-picker}}
     {{/link-to}}
@@ -68,12 +68,12 @@
 
 {{#if account.user}}
   {{#active-link}}
-    {{#link-to "flights.unassigned"}}Unassigned{{/link-to}}
+    {{#link-to "flights.unassigned"}}{{t "unassigned"}}{{/link-to}}
   {{/active-link}}
 {{/if}}
 
 {{#if hasPinned}}
   {{#active-link}}
-    {{#link-to "flights.pinned"}}Pinned{{/link-to}}
+    {{#link-to "flights.pinned"}}{{t "pinned"}}{{/link-to}}
   {{/active-link}}
 {{/if}}
