@@ -31,7 +31,7 @@ def restart():
 
         with cd('ember'):
             run('npm install')
-            run('bower install')
+            run('bower install --force')
             run('node_modules/.bin/ember build -prod')
 
         # compile i18n .mo files
