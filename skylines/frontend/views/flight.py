@@ -479,37 +479,7 @@ def change_aircraft():
     if not g.flight.is_writable(g.current_user):
         abort(403)
 
-    if g.flight.model_id is None:
-        model_id = g.flight.igc_file.guess_model()
-    else:
-        model_id = g.flight.model_id
-
-    if g.flight.registration is not None:
-        registration = g.flight.registration
-    elif g.flight.igc_file.registration is not None:
-        registration = g.flight.igc_file.registration
-    else:
-        registration = g.flight.igc_file.guess_registration()
-
-    if g.flight.competition_id is not None:
-        competition_id = g.flight.competition_id
-    elif g.flight.igc_file.competition_id is not None:
-        competition_id = g.flight.igc_file.competition_id
-    else:
-        competition_id = None
-
-    models = AircraftModel.query() \
-        .order_by(AircraftModel.kind) \
-        .order_by(AircraftModel.name) \
-        .all()
-
-    return render_template(
-        'flights/change_aircraft.jinja',
-        models=AircraftModelSchema().dump(models, many=True).data,
-        model_id=model_id,
-        registration=registration,
-        competition_id=competition_id
-    )
+    return render_template('ember-page.jinja', active_page='flights')
 
 
 @flight_blueprint.route('/', methods=['POST'])
