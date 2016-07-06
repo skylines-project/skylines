@@ -489,26 +489,6 @@ def change_pilot():
         flight=flight)
 
 
-def change_pilot_post(form):
-    pilot_id = form.pilot_id.data if form.pilot_id.data != 0 else None
-    if g.flight.pilot_id != pilot_id:
-        g.flight.pilot_id = pilot_id
-
-        # update club if pilot changed
-        if pilot_id:
-            g.flight.club_id = User.get(pilot_id).club_id
-
-    g.flight.pilot_name = form.pilot_name.data if form.pilot_name.data else None
-
-    g.flight.co_pilot_id = form.co_pilot_id.data if form.co_pilot_id.data != 0 else None
-    g.flight.co_pilot_name = form.co_pilot_name.data if form.co_pilot_name.data else None
-
-    g.flight.time_modified = datetime.utcnow()
-    db.session.commit()
-
-    return redirect(url_for('.index'))
-
-
 @flight_blueprint.route('/change_aircraft')
 def change_aircraft():
     if not g.flight.is_writable(g.current_user):
