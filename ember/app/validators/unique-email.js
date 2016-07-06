@@ -11,8 +11,10 @@ export default BaseValidator.extend({
       return;
     }
 
+    let validResults = options.validResults || ['available', 'self'];
+
     let json = { email };
     return this.get('ajax').request('/users/check-email', { method: 'POST', json })
-      .then(({ result }) => (result !== 'unavailable' ? true : this.get('intl').t(options.messageKey)));
+      .then(({ result }) => ((validResults.indexOf(result) !== -1) ? true : this.get('intl').t(options.messageKey)));
   },
 });
