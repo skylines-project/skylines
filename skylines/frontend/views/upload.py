@@ -7,14 +7,13 @@ import os
 
 from collections import namedtuple
 
-from flask import Blueprint, render_template, request, flash, redirect, g, current_app, url_for, abort, make_response, jsonify
+from flask import Blueprint, render_template, request, flash, g, current_app, abort, make_response, jsonify
 from flask.ext.babel import _, lazy_gettext as l_
 from redis.exceptions import ConnectionError
-from werkzeug.exceptions import BadRequest
 from sqlalchemy.sql.expression import func
 
 from skylines.database import db
-from skylines.frontend.forms import UploadForm, UploadUpdateForm
+from skylines.frontend.forms import UploadForm
 from skylines.lib import files
 from skylines.lib.util import pressure_alt_to_qnh_alt
 from skylines.lib.decorators import login_required
