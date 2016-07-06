@@ -14,6 +14,7 @@ Router.map(function() {
 
   this.route('users', { path: '/users' }, function() {
     this.route('new');
+    this.route('recover');
   });
 
   this.route('stats', { path: '/statistics' }, function() {

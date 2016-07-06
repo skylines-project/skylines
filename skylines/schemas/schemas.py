@@ -88,6 +88,9 @@ class CurrentUserSchema(UserSchema):
     password = fields.String(required=True, load_only=True, validate=validate.Length(min=6))
     currentPassword = fields.String(load_only=True)
 
+    recoveryKey = fields.String(attribute='recover_key', required=True, load_only=True,
+                                validate=validate.Regexp('^[\da-fA-F]+$'))
+
     trackingKey = fields.String(attribute='tracking_key_hex', dump_only=True)
 
     distanceUnit = fields.Integer(attribute='distance_unit', validate=validate.Range(min=0, max=len(DISTANCE_UNITS) - 1))

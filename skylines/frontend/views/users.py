@@ -12,7 +12,6 @@ from sqlalchemy.orm import joinedload
 from skylines.database import db
 from skylines.model import User
 from skylines.model.event import create_new_user_event
-from skylines.frontend.forms import RecoverStep1Form, RecoverStep2Form
 from skylines.lib.vary import vary
 from skylines.schemas import UserSchema, CurrentUserSchema, ValidationError
 
@@ -69,38 +68,42 @@ def new_post():
     return jsonify(user=UserSchema().dump(user).data)
 
 
-def hex(value):
-    return int(value, 16)
-
-
-@users_blueprint.route('/recover', methods=['GET', 'POST'])
+@users_blueprint.route('/recover')
 def recover():
-    key = request.values.get('key', type=hex)
-    if key is None:
-        return recover_step1()
+    return render_template('ember-page.jinja', active_page='settings')
+
+
+@users_blueprint.route('/recover', methods=['POST'])
+def recover_post():
+    json = request.get_json()
+    if json is None:
+        return jsonify(error='invalid-request'), 400
+
+    if 'recoveryKey' in json:
+        return recover_step2_post(json)
     else:
-        return recover_step2(key)
+        return recover_step1_post(json)
 
 
-def recover_step1():
-    form = RecoverStep1Form()
-    if form.validate_on_submit():
-        return recover_step1_post(form)
+def recover_step1_post(json):
+    try:
+        data = UserSchema(only=('email',)).load(json).data
+    except ValidationError, e:
+        return jsonify(error='validation-failed', fields=e.messages), 422
 
-    return render_template('users/recover_step1.jinja', form=form)
-
-
-def recover_step1_post(form):
-    user = User.by_email_address(form.email_address.data)
+    user = User.by_email_address(data['email_address'])
     if not user:
-        abort(404)
+        return jsonify(error='email-unknown'), 422
 
     user.generate_recover_key(request.remote_addr)
-    send_recover_mail(user)
-    flash('Check your email, we have sent you a link to recover your password.')
+    try:
+        send_recover_mail(user)
+    except ServiceUnavailable:
+        return jsonify(error='mail-service-unavailable'), 503
 
     db.session.commit()
-    return redirect(url_for('index'))
+
+    return jsonify()
 
 
 def send_recover_mail(user):
@@ -128,36 +131,28 @@ The SkyLines Team
         smtp.quit()
 
     except:
+        print text
         raise ServiceUnavailable(description=_(
             "The mail server is currently not reachable. "
             "Please try again later or contact the developers."))
 
 
-def recover_step2(key):
-    user = User.by_recover_key(key)
+def recover_step2_post(json):
+    try:
+        data = CurrentUserSchema(only=('password', 'recoveryKey')).load(json).data
+    except ValidationError, e:
+        return jsonify(error='validation-failed', fields=e.messages), 422
+
+    user = User.by_recover_key(int(data['recover_key'], base=16))
     if not user:
-        abort(404)
+        return jsonify(error='recovery-key-unknown'), 422
 
-    form = RecoverStep2Form(key='%x' % key)
-    if form.validate_on_submit():
-        return recover_step2_post(key, form)
-
-    return render_template('users/recover_step2.jinja', form=form)
-
-
-def recover_step2_post(key, form):
-    user = User.by_recover_key(key)
-    if not user:
-        abort(404)
-
-    user.password = form.password.data
+    user.password = data['password']
     user.recover_key = None
-
-    flash(_('Password changed.'))
 
     db.session.commit()
 
-    return redirect(url_for('index'))
+    return jsonify()
 
 
 @users_blueprint.route('/check-email', methods=['POST'])

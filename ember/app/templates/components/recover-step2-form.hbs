@@ -1,0 +1,25 @@
+<form {{action "submit" on="submit"}}>
+  {{#if error}}
+    <div class="alert alert-danger" role="alert">{{error}}</div>
+  {{else if success}}
+    <div class="alert alert-success" role="alert">{{t "password-recovered"}}</div>
+  {{/if}}
+
+  {{validated-input
+    type='password'
+    value=password
+    validation=validations.attrs.password
+    label=(t "password")
+    disabled=pending}}
+
+  {{validated-input
+    type='password'
+    value=passwordConfirmation
+    validation=validations.attrs.passwordConfirmation
+    label=(t "confirm-password")
+    disabled=pending}}
+
+  <button class="btn btn-primary btn-block" type="submit" disabled={{or pending success (not validations.isValid)}}>
+    {{t (if pending "changing-password" "change-password")}}
+  </button>
+</form>

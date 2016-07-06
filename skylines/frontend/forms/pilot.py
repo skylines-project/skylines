@@ -2,11 +2,9 @@ from flask import g
 from flask.ext.babel import lazy_gettext as l_
 from flask_wtf import Form
 
-from wtforms import PasswordField, BooleanField, HiddenField
+from wtforms import PasswordField, BooleanField
 from wtforms.fields.html5 import EmailField
-from wtforms.validators import (
-    Length, EqualTo, InputRequired, Email, ValidationError
-)
+from wtforms.validators import InputRequired, Email
 
 from skylines.model import User
 from .select import GroupSelectField
@@ -34,31 +32,6 @@ class ClubPilotsSelectField(GroupSelectField):
             self.choices.append((club.name, members))
 
         super(ClubPilotsSelectField, self).process(*args, **kwargs)
-
-
-class ChangePasswordForm(Form):
-    current_password = PasswordField(l_('Current Password'))
-    password = PasswordField(l_('Password'), validators=[
-        Length(min=6, message=l_('Your password must have at least 6 characters.')),
-    ])
-    verify_password = PasswordField(l_('Verify Password'), validators=[
-        EqualTo('password', message=l_('Your passwords do not match.')),
-    ])
-
-
-class RecoverStep1Form(Form):
-    email_address = EmailField(l_('Email Address'), validators=[
-        InputRequired(message=l_('Please enter your email address.')),
-        Email(),
-    ])
-
-    def validate_email_address(form, field):
-        if not User.exists(email_address=field.data):
-            raise ValidationError(l_('There is no pilot with this email address.'))
-
-
-class RecoverStep2Form(ChangePasswordForm):
-    key = HiddenField()
 
 
 class LoginForm(Form):
