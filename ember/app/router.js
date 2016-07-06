@@ -12,7 +12,9 @@ Router.map(function() {
   });
   this.route('clubs', { path: '/clubs' });
 
-  this.route('users', { path: '/users' });
+  this.route('users', { path: '/users' }, function() {
+    this.route('new');
+  });
 
   this.route('stats', { path: '/statistics' }, function() {
     this.route('wildcard', { path: '/*wildcard' });
