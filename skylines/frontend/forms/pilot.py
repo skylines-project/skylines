@@ -2,9 +2,7 @@ from flask import g
 from flask.ext.babel import lazy_gettext as l_
 from flask_wtf import Form
 
-from wtforms import (
-    TextField, PasswordField, BooleanField, HiddenField
-)
+from wtforms import PasswordField, BooleanField, HiddenField
 from wtforms.fields.html5 import EmailField
 from wtforms.validators import (
     Length, EqualTo, InputRequired, Email, ValidationError
@@ -46,29 +44,6 @@ class ChangePasswordForm(Form):
     verify_password = PasswordField(l_('Verify Password'), validators=[
         EqualTo('password', message=l_('Your passwords do not match.')),
     ])
-
-
-class CreateClubPilotForm(Form):
-    email_address = EmailField(l_('Email Address'), validators=[
-        InputRequired(message=l_('Please enter your email address.')),
-        Email(),
-    ])
-    first_name = TextField(l_('First Name'), validators=[
-        InputRequired(message=l_('Please enter your first name.')),
-    ])
-    last_name = TextField(l_('Last Name'), validators=[
-        InputRequired(message=l_('Please enter your last name.')),
-    ])
-
-    def validate_email_address(form, field):
-        if User.exists(email_address=field.data):
-            raise ValidationError(l_('A pilot with this email address exists already.'))
-
-
-class CreatePilotForm(CreateClubPilotForm, ChangePasswordForm):
-    # email_address, name from CreateClubPilotForm
-    # password, verify_password from ChangePasswordForm
-    pass
 
 
 class RecoverStep1Form(Form):

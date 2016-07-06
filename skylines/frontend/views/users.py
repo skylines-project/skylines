@@ -12,9 +12,9 @@ from sqlalchemy.orm import joinedload
 from skylines.database import db
 from skylines.model import User
 from skylines.model.event import create_new_user_event
-from skylines.frontend.forms import CreatePilotForm, RecoverStep1Form, RecoverStep2Form
+from skylines.frontend.forms import RecoverStep1Form, RecoverStep2Form
 from skylines.lib.vary import vary
-from skylines.schemas import UserSchema
+from skylines.schemas import UserSchema, CurrentUserSchema, ValidationError
 
 users_blueprint = Blueprint('users', 'skylines')
 
@@ -39,22 +39,23 @@ def index():
     return jsonify(users=UserSchema(only=fields).dump(users, many=True).data)
 
 
-@users_blueprint.route('/new', methods=['GET', 'POST'])
+@users_blueprint.route('/new')
 def new():
-    form = CreatePilotForm()
-    if form.validate_on_submit():
-        return new_post(form)
-
-    return render_template('users/new.jinja', form=form)
+    return render_template('ember-page.jinja', active_page='settings')
 
 
-def new_post(form):
-    user = User(
-        first_name=form.first_name.data,
-        last_name=form.last_name.data,
-        email_address=form.email_address.data,
-        password=form.password.data
-    )
+@users_blueprint.route('/new', methods=['POST'])
+def new_post():
+    json = request.get_json()
+    if json is None:
+        return jsonify(error='invalid-request'), 400
+
+    try:
+        data = CurrentUserSchema(only=('email', 'firstName', 'lastName', 'password')).load(json).data
+    except ValidationError, e:
+        return jsonify(error='validation-failed', fields=e.messages), 422
+
+    user = User(**data)
 
     user.created_ip = request.remote_addr
     db.session.add(user)
@@ -65,7 +66,7 @@ def new_post(form):
 
     flash(_('Welcome to SkyLines, %(user)s! You can now log in and share your flights with the world!', user=user))
 
-    return redirect(url_for('index'))
+    return jsonify(user=UserSchema().dump(user).data)
 
 
 def hex(value):
