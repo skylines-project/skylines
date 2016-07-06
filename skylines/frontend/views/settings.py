@@ -205,10 +205,6 @@ def club():
     return render_template('ember-page.jinja', active_page='settings')
 
 
-class ChooseClubSchema(Schema):
-    id = fields.Integer(required=True, allow_none=True)
-
-
 @settings_blueprint.route('/club', methods=['PUT'])
 def create_club():
     json = request.get_json()
