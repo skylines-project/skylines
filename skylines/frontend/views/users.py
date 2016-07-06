@@ -159,6 +159,23 @@ def recover_step2_post(key, form):
     return redirect(url_for('index'))
 
 
+@users_blueprint.route('/check-email', methods=['POST'])
+def check_email():
+    json = request.get_json()
+    if not json:
+        return jsonify(error='invalid-request'), 400
+
+    email = json.get('email', '')
+
+    result = 'available'
+    if g.current_user and email == g.current_user.email_address:
+        result = 'self'
+    elif User.exists(email_address=email):
+        result = 'unavailable'
+
+    return jsonify(result=result)
+
+
 @users_blueprint.route('/generate_keys')
 def generate_keys():
     """Hidden method that generates missing tracking keys."""

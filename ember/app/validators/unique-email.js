@@ -12,7 +12,7 @@ export default BaseValidator.extend({
     }
 
     let json = { email };
-    return this.get('ajax').request('/settings/email/check', { method: 'POST', json })
-      .then(({ result }) => (result ? true : this.get('intl').t(options.messageKey)));
+    return this.get('ajax').request('/users/check-email', { method: 'POST', json })
+      .then(({ result }) => (result !== 'unavailable' ? true : this.get('intl').t(options.messageKey)));
   },
 });
