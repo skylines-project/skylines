@@ -10,7 +10,7 @@ from skylines.frontend.views.users import send_recover_mail
 from skylines.model.event import (
     create_club_join_event
 )
-from skylines.schemas import fields, validate, Schema, ClubSchema, CurrentUserSchema, ValidationError
+from skylines.schemas import ClubSchema, CurrentUserSchema, ValidationError
 
 settings_blueprint = Blueprint('settings', 'skylines')
 
@@ -92,6 +92,17 @@ def update():
     if 'tracking_delay' in data:
         g.user.tracking_delay = data.get('tracking_delay')
 
+    if 'password' in data:
+        if 'currentPassword' not in data:
+            return jsonify(error='current-password-missing'), 422
+
+        if not g.user.validate_password(data['currentPassword']):
+            return jsonify(error='wrong-password'), 403
+
+        print data
+        g.user.password = data['password']
+        g.user.recover_key = None
+
     if 'club_id' in data and data['club_id'] != g.user.club_id:
         club_id = data['club_id']
 
@@ -134,33 +145,6 @@ def check_email():
 @settings_blueprint.route('/password')
 def password():
     return render_template('ember-page.jinja', active_page='settings')
-
-
-@settings_blueprint.route('/password', methods=['POST'])
-def change_password():
-    json = request.get_json()
-    if json is None:
-        return jsonify(error='invalid-request'), 400
-
-    try:
-        data = PasswordSchema().load(json).data
-    except ValidationError, e:
-        return jsonify(error='validation-failed', fields=e.messages), 422
-
-    if not g.user.validate_password(data.get('currentPassword')):
-        return jsonify(error='wrong-password'), 403
-
-    g.user.password = data.get('password')
-    g.user.recover_key = None
-
-    db.session.commit()
-
-    return jsonify()
-
-
-class PasswordSchema(Schema):
-    password = fields.String(required=True, validate=validate.Length(min=6))
-    currentPassword = fields.String(required=True)
 
 
 @settings_blueprint.route('/password/check', methods=['POST'])

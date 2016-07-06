@@ -42,7 +42,7 @@ export default Ember.Component.extend(Validations, {
     let json = this.getProperties('currentPassword', 'password');
 
     this.set('pending', true);
-    this.get('ajax').request('/settings/password', { method: 'POST', json }).then(() => {
+    this.get('ajax').request('/settings/', { method: 'POST', json }).then(() => {
       this.setProperties({
         messageKey: 'password-was-changed',
         error: null,
