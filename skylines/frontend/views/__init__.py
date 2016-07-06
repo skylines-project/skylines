@@ -4,6 +4,7 @@ from .login import register as register_login
 
 from .about import about_blueprint, about
 from .airport import airport_blueprint
+from .aircraft_models import aircraft_models_blueprint
 from .assets import assets_blueprint
 from .cesium import cesium_blueprint
 from .club import club_blueprint
@@ -33,6 +34,7 @@ def register(app):
 
     app.register_blueprint(about_blueprint, url_prefix='/about')
     app.register_blueprint(airport_blueprint, url_prefix='/airports')
+    app.register_blueprint(aircraft_models_blueprint, url_prefix='/aircraft-models')
     app.register_blueprint(assets_blueprint)
     app.register_blueprint(cesium_blueprint, url_prefix='/cesium')
     app.register_blueprint(club_blueprint, url_prefix='/clubs/<club_id>')
