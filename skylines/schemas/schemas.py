@@ -59,15 +59,15 @@ class ClubSchema(Schema):
 
 class UserSchema(Schema):
     id = fields.Integer(dump_only=True)
-    email = fields.String(attribute='email_address', validate=(
+    email = fields.String(attribute='email_address', required=True, validate=(
         validate.Email(),
         validate.Length(max=255),
     ))
-    firstName = fields.String(attribute='first_name', strip=True, validate=(
+    firstName = fields.String(attribute='first_name', required=True, strip=True, validate=(
         validate.NotEmpty(),
         validate.Length(min=1, max=255),
     ))
-    lastName = fields.String(attribute='last_name', strip=True, validate=(
+    lastName = fields.String(attribute='last_name', required=True, strip=True, validate=(
         validate.NotEmpty(),
         validate.Length(min=1, max=255),
     ))
