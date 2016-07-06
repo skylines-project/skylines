@@ -471,22 +471,7 @@ def change_pilot():
     if not g.flight.is_writable(g.current_user):
         abort(403)
 
-    club_members = []
-    if g.current_user.club_id:
-        member_schema = UserSchema(only=('id', 'name'))
-
-        club_members = User.query(club_id=g.current_user.club_id) \
-            .order_by(func.lower(User.name)) \
-            .filter(User.id != g.current_user.id)
-
-        club_members = member_schema.dump(club_members.all(), many=True).data
-
-    flight = FlightSchema(only=('pilot', 'pilotName', 'copilot', 'copilotName')).dump(g.flight).data
-
-    return render_template(
-        'flights/change_pilot.jinja',
-        club_members=club_members,
-        flight=flight)
+    return render_template('ember-page.jinja', active_page='flights')
 
 
 @flight_blueprint.route('/change_aircraft')
