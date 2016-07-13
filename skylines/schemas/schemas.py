@@ -155,6 +155,8 @@ class FlightSchema(Schema):
     score = fields.Float(attribute='index_score')
     speed = fields.Float()
 
+    privacyLevel = fields.Integer(attribute='privacy_level')
+
     igcFile = fields.Nested(IGCFileSchema, attribute='igc_file', only=(
         'owner', 'filename', 'registration', 'competitionId', 'model', 'date'))
 
