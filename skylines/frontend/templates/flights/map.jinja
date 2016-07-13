@@ -191,8 +191,7 @@
       <h3><i class="icon-comments-alt"></i> {% trans %}Comments{% endtrans %}</h3>
       <div class="sidebar-pane-content">
         <div data-component='comments-list' data-attrs='{
-          "comments":{{ comments|tojson }},
-          "showForm":{% if g.current_user %}true{% else %}false{% endif %}
+          "comments":{{ comments|tojson }}
         }'></div>
       </div>
     </div>
