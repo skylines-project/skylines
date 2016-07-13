@@ -75,16 +75,12 @@ table thead .sorting a {
   display: block;
 }
 
-table thead .sorting .sorting_default {
-  background: url("../images/sort_both.png") no-repeat scroll left center transparent;
+th i.inactive {
+  color: #999;
 }
 
-table thead .sorting .sorting_asc {
-  background: url("../images/sort_asc.png") no-repeat scroll left center transparent;
-}
-
-table thead .sorting .sorting_desc {
-  background: url("../images/sort_desc.png") no-repeat scroll left center transparent;
+th.sortable {
+  cursor: pointer;
 }
 
 .airspace-table .name {

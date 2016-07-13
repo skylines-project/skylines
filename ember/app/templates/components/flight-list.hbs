@@ -1,29 +1,29 @@
 <thead>
 <tr>
   {{#if showDate}}
-    <th class="date">{{t "date"}}</th>
+    {{#sortable-table-header column="date" sortColumn=sortColumn sortOrder=sortOrder defaultOrder="desc" class="date"}}{{t "date"}}{{/sortable-table-header}}
   {{/if}}
 
-  <th class="numeric">{{t "score"}}</th>
+  {{#sortable-table-header column="score" sortColumn=sortColumn sortOrder=sortOrder defaultOrder="desc" class="numeric"}}{{t "score"}}{{/sortable-table-header}}
 
   {{#if showPilot}}
-    <th class="pilot">{{t "pilot"}}</th>
+    {{#sortable-table-header column="pilot" sortColumn=sortColumn sortOrder=sortOrder class="pilot"}}{{t "pilot"}}{{/sortable-table-header}}
   {{/if}}
 
-  <th class="numeric distance">{{t "distance"}}</th>
+  {{#sortable-table-header column="distance" sortColumn=sortColumn sortOrder=sortOrder defaultOrder="desc" class="numeric"}}{{t "distance"}}{{/sortable-table-header}}
 
   {{#if showAirport}}
-    <th class="airport">{{t "airport"}}</th>
+    {{#sortable-table-header column="airport" sortColumn=sortColumn sortOrder=sortOrder class="airport"}}{{t "airport"}}{{/sortable-table-header}}
   {{/if}}
 
   {{#if showClub}}
-    <th class="club hidden-sm hidden-xs">{{t "club"}}</th>
+    {{#sortable-table-header column="club" sortColumn=sortColumn sortOrder=sortOrder class="club hidden-sm hidden-xs"}}{{t "club"}}{{/sortable-table-header}}
   {{/if}}
 
-  <th class="aircraft hidden-xs">{{t "aircraft"}}</th>
+  {{#sortable-table-header column="aircraft" sortColumn=sortColumn sortOrder=sortOrder class="aircraft hidden-xs"}}{{t "aircraft"}}{{/sortable-table-header}}
 
   {{#if showTimes}}
-    <th class="times hidden-xs">{{t "time"}}</th>
+    {{#sortable-table-header column="time" sortColumn=sortColumn sortOrder=sortOrder defaultOrder="desc" class="times hidden-xs"}}{{t "time"}}{{/sortable-table-header}}
   {{/if}}
 
   <th class="column-buttons"></th>
