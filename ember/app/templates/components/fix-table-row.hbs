@@ -9,7 +9,7 @@
 </td>
 <td>
   {{#unless (isUndefined row.fix.time)}}
-    {{format-seconds row.fix.time}}
+    {{format-time (multiply row.fix.time 1000) format="hhmmss" timeZone="UTC"}}
   {{else}}
     --:--:--
   {{/unless}}
