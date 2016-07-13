@@ -9,7 +9,7 @@ export function formatSeconds([value]) {
   let s = Math.floor(value % 3600 % 60);
 
   // Format the result into time strings
-  return `${pad(h, 2)}:${pad(m, 2)}:${pad(s, 2)}`;
+  return `${h}:${pad(m, 2)}:${pad(s, 2)}`;
 }
 
 export default Ember.Helper.helper(formatSeconds);
