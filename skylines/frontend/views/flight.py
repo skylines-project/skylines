@@ -467,7 +467,7 @@ def near():
     return jsonify(flights=map(add_flight_path, flights))
 
 
-@flight_blueprint.route('/change_pilot', methods=['GET', 'POST'])
+@flight_blueprint.route('/change_pilot')
 def change_pilot():
     if not g.flight.is_writable(g.current_user):
         abort(403)
