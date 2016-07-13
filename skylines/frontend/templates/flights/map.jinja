@@ -5,7 +5,6 @@
 
 {% from 'flights/meta-tags.jinja' import flight_meta_tags with context %}
 {% from 'flights/macros.jinja' import flight_title with context %}
-{% from 'flights/details-table.jinja' import render_details_table with context %}
 {% from 'flights/phases-table.jinja' import render_circling_performance, render_cruise_performance with context %}
 
 
@@ -126,8 +125,6 @@
         sidebar.find('li > a[href="#' + window.location.hash.substring(1) + '"]').length != 0) {
       sidebar.open(window.location.hash.substring(1));
     }
-
-    $('#flight-details-table').find('[rel=tooltip]').tooltip();
   });
 </script>
 {%- endblock %}
@@ -185,15 +182,9 @@
         </a>
       </h3>
       <div class="sidebar-pane-content">
-      {{ render_details_table(flight) }}
-
-        <p>
-          <a href="{{ url_for('files.index', filename=flight.igc_file.filename) }}" title="{{ flight.igc_file.filename }}" class="btn btn-default">
-            <i class="icon-download-alt icon-large"></i> IGC
-          </a>
-
-          <span data-component='pin-button' data-attrs='{"flightId": {{ flight.id }}}' title="{{ _('Activate this to show the flight on top of other flights on the map') }}"></span>
-        </p>
+        <div data-component="flight-details-table" data-attrs='{
+          "flight": {{ flight_json|tojson }}
+        }'>Loading...</div>
       </div>
     </div>
     <div class="sidebar-pane" id="tab-comments">

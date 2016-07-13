@@ -328,6 +328,7 @@ def index():
     return render_template(
         'flights/map.jinja',
         flight=g.flight,
+        flight_json=FlightSchema().dump(g.flight).data,
         near_flights=near_flights,
         other_flights=g.other_flights,
         comments=comments,

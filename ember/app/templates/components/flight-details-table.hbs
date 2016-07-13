@@ -1,0 +1,158 @@
+<table class="table table-flight-details">
+  <tbody>
+
+  <tr>
+    <th>{{t "pilot"}}</th>
+    <td>
+      {{#if isWritable}}
+        <a href="/flights/{{flight.id}}/change_pilot" class="btn btn-default btn-sm pull-right">
+          <i class="icon-pencil icon-small"></i> {{t "change"}}
+        </a>
+      {{/if}}
+
+      {{#if flight.pilot.id}}
+        <a href="/users/{{flight.pilot.id}}/">{{pilotName}}</a>
+      {{else if pilotName}}
+        {{pilotName}}
+      {{/if}}
+
+      {{#if (and pilotName copilotName)}}<br/>{{/if}}
+
+      {{#if flight.copilot.id}}
+        <a href="/users/{{flight.copilot.id}}/">{{copilotName}}</a>
+      {{else if copilotName}}
+        {{copilotName}}
+      {{/if}}
+
+      {{#if (not (or pilotName copilotName)) }}
+        [{{t "unspecified"}}]
+      {{/if}}
+    </td>
+  </tr>
+
+  {{#if flight.scoreDate}}
+    <tr>
+      <th>{{t "date"}}</th>
+      <td><a href="/flights/date/{{flight.scoreDate}}">{{format-date flight.scoreDate format="ddmmyyyy"}}</a></td>
+    </tr>
+  {{/if}}
+
+  {{#if flight.takeoffTime}}
+    <tr>
+      <th>{{t "takeoff"}}</th>
+      <td>
+        {{#if flight.takeoffAirport}}
+          {{x-flag code=flight.takeoffAirport.countryCode style="float: right; margin: 3px"}}
+          {{format-html-message "AIRPORT-at-TIME"
+          airport=flight.takeoffAirport.name
+          airportURL=(concat "/flight/airport/" flight.takeoffAirport.id)
+          time=(format-time flight.takeoffTime format="hhmmss" timeZone="UTC")}}
+        {{else}}
+          {{format-time flight.takeoffTime format="hhmmss" timeZone="UTC"}}
+        {{/if}}
+      </td>
+    </tr>
+  {{/if}}
+
+  {{#if duration}}
+    <tr>
+      <th>{{t "duration"}}</th>
+      <td>{{t "n-hours" hours num=(format-seconds duration)}}</td>
+    </tr>
+  {{/if}}
+
+  <tr>
+    <th>{{t "aircraft"}}</th>
+    <td class="column-buttons">
+      {{#if isWritable}}
+        <a href="/flights/{{flight.id}}/change_aircraft" class="btn btn-default btn-sm pull-right">
+          <i class="icon-pencil icon-small"></i> {{t "change"}}
+        </a>
+      {{/if}}
+
+      {{#if flight.model}}
+        <span rel="tooltip" title={{t "index-INDEX" index=flight.model.index}}>{{flight.model.name}}</span>
+      {{else if flight.igcFile.model}}
+        [{{flight.igcFile.model}}]
+      {{else}}
+        [{{t "unknown"}}]
+      {{/if}}
+
+      <br><small>{{registration}} {{#if (and registration competitionId)}}&ndash;{{/if}} {{competitionId}}</small>
+    </td>
+  </tr>
+
+  <tr>
+    <th>{{t "score"}}</th>
+    <td>
+      {{t "POINTS-points-abbr" points=(format-number flight.score minimumFractionDigits=1 maximumFractionDigits=1)}}
+
+      <small><br>
+        {{#if flight.distance}}
+          <span title={{t "olc-distance"}}>
+            <span style="color: #ff2c73"><i class="icon-resize-horizontal"></i></span>
+            {{format-distance flight.distance decimals=1}}
+          </span>
+        {{/if}}
+        {{#if flight.triangleDistance}}
+          <span title={{t "fai-triangle-distance"}}>
+            <span style="color: #9f14ff"><i class="icon-play icon-rotate-270"></i></span>
+            {{format-distance flight.triangleDistance decimals=1}}
+          </span>
+        {{/if}}
+      </small>
+    </td>
+  </tr>
+
+
+  {{#if flight.speed}}
+    <tr>
+      <th>{{t "speed"}}</th>
+      <td>{{format-speed flight.speed}}</td>
+    </tr>
+  {{/if}}
+
+  {{#if flight.club}}
+    <tr>
+      <th>{{t "club"}}</th>
+      <td><a href="/clubs/{{flight.club.id}}">{{flight.club.name}}</a></td>
+    </tr>
+  {{/if}}
+
+  <tr>
+    <th>{{t "uploaded"}}</th>
+    <td>
+      {{format-html-message "TIME-by-USER"
+        time=(format-relative flight.timeCreated)
+        user=flight.igcFile.owner.name
+        userURL=(concat "/users/" flight.igcFile.owner.id)}}</td>
+  </tr>
+
+  {{#if isOwner}}
+    <tr>
+      <th>{{t "actions"}}</th>
+      <td>
+        <a data-toggle="modal" data-target="#modal" href="/flights/{{flight.id}}/delete?embedded" class="btn btn-default btn-sm">
+          <i class="icon-remove icon-small"></i> {{t "delete"}}
+        </a>
+
+        {{#if isPrivate}}
+          <a data-toggle="modal" data-target="#modal" href="/flights/{{flight.id}}/publish?embedded" class="btn btn-success btn-sm">
+            <i class="icon-globe icon-small"></i> {{t "publish"}}
+          </a>
+        {{/if}}
+      </td>
+    </tr>
+  {{/if}}
+  </tbody>
+</table>
+
+<p>
+  <a href="/files/{{flight.igcFile.filename}}" title={{flight.igcFile.filename}} class="btn btn-default">
+    <i class="icon-download-alt icon-large"></i> IGC
+  </a>
+
+  <span title={{t "pin-button-title"}}>
+    {{pin-button flightId=flight.id}}
+  </span>
+</p>
