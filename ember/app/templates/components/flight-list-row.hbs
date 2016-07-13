@@ -57,7 +57,7 @@
 {{/if}}
 
 <td class="aircraft hidden-xs">
-  <span rel="tooltip" title="{{or flight.registration flight.igc_file.registration (t 'unknown')}}">
+  <span rel="tooltip" title="{{or flight.registration flight.igcFile.registration (t 'unknown')}}">
     {{#if flight.model}}
       {{flight.model.name}}
     {{else if flight.igcFile.model}}
