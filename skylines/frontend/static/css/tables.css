@@ -19,17 +19,17 @@ table .date, table .times {
   margin: -3px 0;
 }
 
-#flight-table .column-buttons {
+.table-flights .column-buttons {
   white-space: nowrap;
   text-align: right;
 }
 
-#flight-table .num_comments {
+.table-flights .num_comments {
   width: 0px;
   vertical-align: middle;
 }
 
-#flight-table .not_published {
+.table-flights .not_published {
   font-style: italic;
 }
 
