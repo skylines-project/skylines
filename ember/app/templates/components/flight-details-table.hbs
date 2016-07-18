@@ -45,7 +45,7 @@
           {{x-flag code=flight.takeoffAirport.countryCode style="float: right; margin: 3px"}}
           {{format-html-message "AIRPORT-at-TIME"
           airport=flight.takeoffAirport.name
-          airportURL=(concat "/flight/airport/" flight.takeoffAirport.id)
+          airportURL=(concat "/flights/airport/" flight.takeoffAirport.id)
           time=(format-time flight.takeoffTime format="hhmmss" timeZone="UTC")}}
         {{else}}
           {{format-time flight.takeoffTime format="hhmmss" timeZone="UTC"}}
