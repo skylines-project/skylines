@@ -54,6 +54,23 @@
     </tr>
   {{/if}}
 
+  {{#if flight.landingTime}}
+    <tr>
+      <th>{{t "landing"}}</th>
+      <td>
+        {{#if flight.landingAirport}}
+          {{x-flag code=flight.landingAirport.countryCode style="float: right; margin: 3px"}}
+          {{format-html-message "AIRPORT-at-TIME"
+          airport=flight.landingAirport.name
+          airportURL=(concat "/flights/airport/" flight.landingAirport.id)
+          time=(format-time flight.landingTime format="hhmmss" timeZone="UTC")}}
+        {{else}}
+          {{format-time flight.landingTime format="hhmmss" timeZone="UTC"}}
+        {{/if}}
+      </td>
+    </tr>
+  {{/if}}
+
   {{#if duration}}
     <tr>
       <th>{{t "duration"}}</th>
