@@ -19,4 +19,4 @@
 <td class="numeric">{{if (not phase.isCircling) (format-distance phase.distance decimals=1 withUnit=false)}}</td>
 <td class="numeric">{{format-lift phase.vario withUnit=false}}</td>
 <td class="numeric">{{format-speed phase.speed withUnit=false}}</td>
-<td class="numeric">{{phase.glideRate}}</td>
+<td class="numeric">{{#if (not phase.isCircling)}}{{format-number glideRate maximumFractionDigits=1}}{{/if}}</td>

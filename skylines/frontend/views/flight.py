@@ -208,14 +208,7 @@ def format_phase_json(phase):
 
     r = {}
 
-    if not is_circling:
-        # Sensible glide rate values are formatted as numbers. Others are shown
-        # as infinity symbol.
-        if abs(phase.alt_diff) > 0 and abs(phase.glide_rate) < 1000:
-            r['glide_rate'] = format_decimal(phase.glide_rate)
-        else:
-            r['glide_rate'] = u'\u221e'  # infinity
-    else:
+    if is_circling:
         r['circling_direction'] = CIRCDIR_NAMES[phase.circling_direction]
 
     return {
@@ -232,7 +225,7 @@ def format_phase_json(phase):
         "distance": phase.distance,
         "vario": phase.vario,
         "speed": phase.speed,
-        "glideRate": r.get('glide_rate', ''),
+        "glideRate": phase.glide_rate,
     }
 
 

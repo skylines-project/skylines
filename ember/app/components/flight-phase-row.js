@@ -9,6 +9,8 @@ export default Ember.Component.extend({
   classNames: ['selectable'],
   classNameBindings: ['selected'],
 
+  glideRate: safeComputed('phase.glideRate', gr => ((Math.abs(gr) > 1000) ? Infinity : gr)),
+
   selected: safeComputed('flightPhase.selection', function(selection) {
     let phase = this.get('phase');
     return selection.start === phase.secondsOfDay && selection.end === phase.secondsOfDay + phase.duration;
