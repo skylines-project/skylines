@@ -205,16 +205,11 @@ def format_phase(phase):
 class ContestLegSchema(Schema):
     distance = fields.Float()
     duration = fields.TimeDelta()
+    start = fields.Int(attribute='seconds_of_day')
     climbDuration = fields.TimeDelta(attribute='climb_duration')
     climbHeight = fields.Float(attribute='climb_height')
     cruiseDistance = fields.Float(attribute='cruise_distance')
     cruiseHeight = fields.Float(attribute='cruise_height')
-
-
-def format_leg(flight, leg):
-    result = ContestLegSchema().dump(leg).data
-    result['start'] = to_seconds_of_day(flight.takeoff_time, leg.start_time)
-    return result
 
 
 def mark_flight_notifications_read(flight):
@@ -279,9 +274,11 @@ def index():
             "glideRate": p['glide_rate'],
         })
 
+    contest_leg_schema = ContestLegSchema()
     contest_legs = {}
     for type in ['classic', 'triangle']:
-        contest_legs[type] = [format_leg(g.flight, leg) for leg in g.flight.get_contest_legs('olc_plus', type)]
+        legs = g.flight.get_contest_legs('olc_plus', type)
+        contest_legs[type] = contest_leg_schema.dump(legs, many=True).data
 
     mark_flight_notifications_read(g.flight)
 

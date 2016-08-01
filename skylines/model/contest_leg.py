@@ -5,6 +5,7 @@ from geoalchemy2.types import Geometry
 from geoalchemy2.shape import to_shape
 
 from skylines.database import db
+from skylines.lib.datetime import to_seconds_of_day
 from .geo import Location
 
 
@@ -64,6 +65,10 @@ class ContestLeg(db.Model):
             return None
 
         return float(self.distance) / self.duration.total_seconds()
+
+    @property
+    def seconds_of_day(self):
+        return to_seconds_of_day(self.flight.takeoff_time, self.start_time)
 
     @property
     def start_location(self):
