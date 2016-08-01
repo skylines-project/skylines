@@ -203,43 +203,42 @@ def format_phase(phase):
 
 
 def format_legs(flight, legs):
-    r = []
+    return [format_leg(flight, leg) for leg in legs]
 
-    for leg in legs:
-        duration = leg.end_time - leg.start_time
 
-        if duration.total_seconds() > 0:
-            speed = leg.distance / duration.total_seconds()
-            climb_percentage = leg.climb_duration.total_seconds() / duration.total_seconds() * 100
+def format_leg(flight, leg):
+    duration = leg.end_time - leg.start_time
+
+    if duration.total_seconds() > 0:
+        speed = leg.distance / duration.total_seconds()
+        climb_percentage = leg.climb_duration.total_seconds() / duration.total_seconds() * 100
+    else:
+        speed = 0
+        climb_percentage = 0
+
+    if abs(leg.cruise_height) > 0 and leg.cruise_distance \
+            and abs(leg.cruise_distance / leg.cruise_height) < 1000:
+        glide_rate = format_decimal(float(leg.cruise_distance) / -leg.cruise_height, format='#.#')
+    else:
+        glide_rate = u'\u221e'  # infinity
+
+    if leg.climb_duration.total_seconds() > 0:
+        if leg.climb_height:
+            climbrate = leg.climb_height / leg.climb_duration.total_seconds()
         else:
-            speed = 0
-            climb_percentage = 0
+            climbrate = 0
 
-        if abs(leg.cruise_height) > 0 and leg.cruise_distance \
-           and abs(leg.cruise_distance / leg.cruise_height) < 1000:
-            glide_rate = format_decimal(float(leg.cruise_distance) / -leg.cruise_height, format='#.#')
-        else:
-            glide_rate = u'\u221e'  # infinity
+        climbrate_text = units.format_lift(climbrate)
+    else:
+        climbrate_text = u'-'
 
-        if leg.climb_duration.total_seconds() > 0:
-            if leg.climb_height:
-                climbrate = leg.climb_height / leg.climb_duration.total_seconds()
-            else:
-                climbrate = 0
-
-            climbrate_text = units.format_lift(climbrate)
-        else:
-            climbrate_text = u'-'
-
-        r.append(dict(distance=units.format_distance(leg.distance, 1),
-                      duration=duration,
-                      speed=units.format_speed(speed),
-                      climb_percentage=format_decimal(climb_percentage, format='#.#'),
-                      climbrate=climbrate_text,
-                      glide_rate=glide_rate,
-                      start_time_of_day=to_seconds_of_day(flight.takeoff_time, leg.start_time)))
-
-    return r
+    return dict(distance=units.format_distance(leg.distance, 1),
+                duration=duration,
+                speed=units.format_speed(speed),
+                climb_percentage=format_decimal(climb_percentage, format='#.#'),
+                climbrate=climbrate_text,
+                glide_rate=glide_rate,
+                start_time_of_day=to_seconds_of_day(flight.takeoff_time, leg.start_time))
 
 
 def mark_flight_notifications_read(flight):
