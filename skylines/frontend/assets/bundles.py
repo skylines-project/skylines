@@ -6,7 +6,7 @@ from .filters import SimpleClosureJS
 # Font Awesome
 
 fontawesome_css = Bundle(
-    'http://rawgithub.com/FortAwesome/Font-Awesome/v3.2.1/css/font-awesome.css',
+    'http://rawgit.com/FortAwesome/Font-Awesome/v3.2.1/css/font-awesome.css',
     output='css/fontawesome-%(version)s.css')
 
 fontawesome_webfont_eot = Bundle(
@@ -22,7 +22,7 @@ fontawesome_webfont_ttf = Bundle(
     output='font/fontawesome-webfont.ttf')
 
 fontawesome_webfont_svg = Bundle(
-    'http://rawgithub.com/FortAwesome/Font-Awesome/v3.2.1/font/fontawesome-webfont.svg',
+    'http://rawgit.com/FortAwesome/Font-Awesome/v3.2.1/font/fontawesome-webfont.svg',
     output='font/fontawesome-webfont.svg')
 
 
@@ -41,11 +41,11 @@ bootstrap_css = Bundle(
 # Flot
 
 flot_js = Bundle(
-    'http://rawgithub.com/flot/flot/v0.8.3/jquery.flot.js',
-    'http://rawgithub.com/flot/flot/v0.8.3/jquery.flot.time.js',
-    'http://rawgithub.com/flot/flot/v0.8.3/jquery.flot.crosshair.js',
-    'http://rawgithub.com/flot/flot/v0.8.3/jquery.flot.resize.js',
-    'http://rawgithub.com/TobiasLohner/flot-marks/f09ded70f5a229a38ba0b9cfa92dbb448ca4daaf/src/jquery.flot.marks.js',
+    'http://rawgit.com/flot/flot/v0.8.3/jquery.flot.js',
+    'http://rawgit.com/flot/flot/v0.8.3/jquery.flot.time.js',
+    'http://rawgit.com/flot/flot/v0.8.3/jquery.flot.crosshair.js',
+    'http://rawgit.com/flot/flot/v0.8.3/jquery.flot.resize.js',
+    'http://rawgit.com/TobiasLohner/flot-marks/f09ded70f5a229a38ba0b9cfa92dbb448ca4daaf/src/jquery.flot.marks.js',
     filters=SimpleClosureJS(disable_ie_checks=True),
     output='js/flot-%(version)s.js')
 
@@ -120,7 +120,7 @@ all_js = Bundle(
     'http://code.jquery.com/jquery-1.10.2.min.js',
     'http://cdnjs.cloudflare.com/ajax/libs/jquery-ajaxtransport-xdomainrequest/1.0.3/jquery.xdomainrequest.min.js',
     'vendor/jquery/jquery.timeago.js',
-    'http://rawgithub.com/Turbo87/sidebar-v2/v0.2.1/js/jquery-sidebar.min.js',
+    'http://rawgit.com/Turbo87/sidebar-v2/v0.2.1/js/jquery-sidebar.min.js',
     'js/general.js',
     bootstrap_js,
     filters='rjsmin',
@@ -128,13 +128,13 @@ all_js = Bundle(
 
 openlayers_js = Bundle(
     'vendor/openlayers/ol3cesium.js',
-    'http://rawgithub.com/bdougherty/BigScreen/v2.0.4/bigscreen.min.js',
+    'http://rawgit.com/bdougherty/BigScreen/v2.0.4/bigscreen.min.js',
     flot_js,
     output='js/ol-%(version)s.js')
 
 upload_js = Bundle(
     'http://momentjs.com/downloads/moment.min.js',
-    'http://rawgithub.com/TobiasLohner/bootstrap-datetimepicker/c36342415a1be8fa013548402bf01718ca93d454/src/js/bootstrap-datetimepicker.js',
+    'http://rawgit.com/TobiasLohner/bootstrap-datetimepicker/c36342415a1be8fa013548402bf01718ca93d454/src/js/bootstrap-datetimepicker.js',
     'js/jquery.flot.flight-upload.js',
     filters=SimpleClosureJS,
     output='js/upload-%(version)s.js')
