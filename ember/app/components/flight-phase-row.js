@@ -9,6 +9,9 @@ export default Ember.Component.extend({
   classNames: ['selectable'],
   classNameBindings: ['selected'],
 
+  isCircling: Ember.computed.equal('phase.type', 'circling'),
+  isPowered: Ember.computed.equal('phase.type', 'powered'),
+
   glideRate: safeComputed('phase.glideRate', gr => ((Math.abs(gr) > 1000) ? Infinity : gr)),
 
   selected: safeComputed('flightPhase.selection', function(selection) {

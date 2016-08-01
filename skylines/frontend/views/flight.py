@@ -219,11 +219,9 @@ def format_phase_json(phase):
         r['circling_direction'] = CIRCDIR_NAMES[phase.circling_direction]
 
     return {
-        "isCircling": is_circling,
         "circlingDirection": unicode(r.get('circling_direction', '')),
         "isCirclingLeft": phase.circling_direction == FlightPhase.CD_LEFT,
         "isCirclingRight": phase.circling_direction == FlightPhase.CD_RIGHT,
-        "isPowered": phase.phase_type == FlightPhase.PT_POWERED,
         "type": PHASETYPE_IDS.get(phase.phase_type),
         "secondsOfDay": phase.seconds_of_day,
         "startTime":  isoformat(phase.start_time),

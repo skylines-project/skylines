@@ -1,5 +1,5 @@
 <td>
-  {{#if phase.isCircling}}
+  {{#if isCircling}}
     {{#if phase.isCirclingLeft}}
       <i class="icon-rotate-left" title="{{t "flight-phase.circling"}} {{phase.circlingDirection}}"></i>
     {{else if phase.isCirclingRight}}
@@ -7,7 +7,7 @@
     {{else}}
       <i class="icon-circle-blank" title="{{t "flight-phase.circling"}} {{phase.circlingDirection}}"></i>
     {{/if}}
-  {{else if phase.isPowered}}
+  {{else if isPowered}}
     <i class="icon-bolt" title="{{t "flight-phase.powered"}}"></i>
   {{else}}
     <i class="icon-long-arrow-right" title="{{t "flight-phase.cruise"}}"></i>
@@ -16,7 +16,7 @@
 <td class="start">{{format-time phase.startTime format="hhmmss" timeZone="UTC"}}</td>
 <td class="duration hidden-md">{{format-seconds phase.duration}}</td>
 <td class="numeric">{{format-altitude phase.altDiff withUnit=false}}</td>
-<td class="numeric">{{if (not phase.isCircling) (format-distance phase.distance decimals=1 withUnit=false)}}</td>
+<td class="numeric">{{if (not isCircling) (format-distance phase.distance decimals=1 withUnit=false)}}</td>
 <td class="numeric">{{format-lift phase.vario withUnit=false}}</td>
 <td class="numeric">{{format-speed phase.speed withUnit=false}}</td>
-<td class="numeric">{{#if (not phase.isCircling)}}{{format-number glideRate maximumFractionDigits=1}}{{/if}}</td>
+<td class="numeric">{{#if (not isCircling)}}{{format-number glideRate maximumFractionDigits=1}}{{/if}}</td>
