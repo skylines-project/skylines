@@ -218,19 +218,17 @@ def format_phase(phase):
     return r
 
 
-def format_phase_json(phase):
-    return {
-        "circlingDirection": CIRCDIR_IDS.get(phase.circling_direction),
-        "type": PHASETYPE_IDS.get(phase.phase_type),
-        "secondsOfDay": phase.seconds_of_day,
-        "startTime":  isoformat(phase.start_time),
-        "duration": phase.duration.total_seconds(),
-        "altDiff": phase.alt_diff,
-        "distance": phase.distance,
-        "vario": phase.vario,
-        "speed": phase.speed,
-        "glideRate": phase.glide_rate,
-    }
+class FlightPhaseSchema(Schema):
+    circlingDirection = fields.Function(lambda phase: CIRCDIR_IDS.get(phase.circling_direction))
+    type = fields.Function(lambda phase: PHASETYPE_IDS.get(phase.phase_type))
+    secondsOfDay = fields.Int(attribute='seconds_of_day')
+    startTime = fields.DateTime(attribute='start_time')
+    duration = fields.TimeDelta()
+    altDiff = fields.Float(attribute='alt_diff')
+    distance = fields.Float()
+    vario = fields.Float()
+    speed = fields.Float()
+    glideRate = fields.Float(attribute='glide_rate')
 
 
 class ContestLegSchema(Schema):
@@ -276,8 +274,7 @@ def index():
     near_flights = NearFlightSchema().dump(near_flights, many=True).data
 
     comments = FlightCommentSchema().dump(g.flight.comments, many=True).data
-
-    phases = map(format_phase_json, g.flight.phases)
+    phases = FlightPhaseSchema().dump(g.flight.phases, many=True).data
 
     contest_leg_schema = ContestLegSchema()
     contest_legs = {}
