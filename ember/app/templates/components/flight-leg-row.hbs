@@ -1,7 +1,7 @@
 <td class="start">{{num}}</td>
-<td class="numeric">{{leg.distance}}</td>
-<td class="duration hidden-md">{{leg.duration.text}}</td>
-<td class="numeric">{{leg.speed}}</td>
-<td class="numeric">{{leg.climbPercentage}}%</td>
-<td class="numeric">{{leg.vario}}</td>
-<td class="numeric">{{leg.glideRate}}</td>
+<td class="numeric">{{format-distance leg.distance decimals=1}}</td>
+<td class="duration hidden-md">{{format-seconds leg.duration}}</td>
+<td class="numeric">{{format-speed speed}}</td>
+<td class="numeric">{{format-number climbPercentage style="percent" maximumFractionDigits=1}}</td>
+<td class="numeric">{{#if (is-undefined climbRate)}}-{{else}}{{format-lift climbRate}}{{/if}}</td>
+<td class="numeric">{{format-number glideRate maximumFractionDigits=1}}</td>

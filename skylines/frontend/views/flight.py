@@ -203,42 +203,14 @@ def format_phase(phase):
 
 
 def format_leg(flight, leg):
-    duration = leg.end_time - leg.start_time
-
-    if duration.total_seconds() > 0:
-        speed = leg.distance / duration.total_seconds()
-        climb_percentage = leg.climb_duration.total_seconds() / duration.total_seconds() * 100
-    else:
-        speed = 0
-        climb_percentage = 0
-
-    if abs(leg.cruise_height) > 0 and leg.cruise_distance \
-            and abs(leg.cruise_distance / leg.cruise_height) < 1000:
-        glide_rate = format_decimal(float(leg.cruise_distance) / -leg.cruise_height, format='#.#')
-    else:
-        glide_rate = u'\u221e'  # infinity
-
-    if leg.climb_duration.total_seconds() > 0:
-        if leg.climb_height:
-            climbrate = leg.climb_height / leg.climb_duration.total_seconds()
-        else:
-            climbrate = 0
-
-        climbrate_text = units.format_lift(climbrate)
-    else:
-        climbrate_text = u'-'
-
     return {
-        "distance": unicode(units.format_distance(leg.distance, 1)),
+        "distance": leg.distance,
         "start": to_seconds_of_day(flight.takeoff_time, leg.start_time),
-        "duration": {
-            "seconds": duration.total_seconds(),
-            "text": unicode(duration),
-        },
-        "speed": unicode(units.format_speed(speed)),
-        "climbPercentage": unicode(format_decimal(climb_percentage, format='#.#')),
-        "vario": unicode(climbrate_text),
-        "glideRate": unicode(glide_rate),
+        "duration": (leg.end_time - leg.start_time).total_seconds(),
+        "climbDuration": leg.climb_duration.total_seconds(),
+        "climbHeight": leg.climb_height,
+        "cruiseDistance": leg.cruise_distance,
+        "cruiseHeight": leg.cruise_height,
     }
 
 
