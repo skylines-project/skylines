@@ -224,10 +224,8 @@ def format_phase_json(phase):
         "isCirclingRight": phase.circling_direction == FlightPhase.CD_RIGHT,
         "isPowered": phase.phase_type == FlightPhase.PT_POWERED,
         "type": unicode(PHASETYPE_NAMES[phase.phase_type]),
-        "start": {
-            "seconds": phase.seconds_of_day,
-            "text": unicode("%s" % format_time(phase.start_time)),
-        },
+        "secondsOfDay": phase.seconds_of_day,
+        "startTime": unicode("%s" % format_time(phase.start_time)),
         "duration": {
             "seconds": phase.duration.total_seconds(),
             "text": unicode(phase.duration),

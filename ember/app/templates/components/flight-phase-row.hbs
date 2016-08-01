@@ -13,7 +13,7 @@
     <i class="icon-long-arrow-right" title="{{phase.type}}"></i>
   {{/if}}
 </td>
-<td class="start">{{phase.start.text}}</td>
+<td class="start">{{phase.startTime}}</td>
 <td class="duration hidden-md">{{phase.duration.text}}</td>
 <td class="numeric">{{format-altitude phase.altDiff withUnit=false}}</td>
 <td class="numeric">{{if (not phase.isCircling) (format-distance phase.distance decimals=1 withUnit=false)}}</td>

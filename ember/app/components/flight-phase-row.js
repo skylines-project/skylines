@@ -11,7 +11,7 @@ export default Ember.Component.extend({
 
   selected: safeComputed('flightPhase.selection', function(selection) {
     let phase = this.get('phase');
-    return selection.start === phase.start.seconds && selection.end === phase.start.seconds + phase.duration.seconds;
+    return selection.start === phase.secondsOfDay && selection.end === phase.secondsOfDay + phase.duration.seconds;
   }),
 
   click() {
@@ -20,8 +20,8 @@ export default Ember.Component.extend({
     } else {
       let phase = this.get('phase');
       this.set('flightPhase.selection', {
-        start: phase.start.seconds,
-        end: phase.start.seconds + phase.duration.seconds,
+        start: phase.secondsOfDay,
+        end: phase.secondsOfDay + phase.duration.seconds,
         duration: phase.duration.seconds,
       });
     }
