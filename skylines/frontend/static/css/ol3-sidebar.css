@@ -87,7 +87,7 @@
   box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.5); }
   @media (min-width: 768px) {
     .sidebar {
-      box-shadow 0px 2px 5px rgba(0, 0, 0, 0.5);
+      box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.5);
       border-radius: 4px; } }
 
 .sidebar-tabs {
