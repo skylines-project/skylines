@@ -8,6 +8,7 @@ from sqlalchemy.orm import undefer_group, contains_eager
 from sqlalchemy.sql.expression import func
 from geoalchemy2.shape import to_shape
 from datetime import timedelta
+from marshmallow.utils import isoformat
 
 from skylines.database import db
 from skylines.lib import files
@@ -225,7 +226,7 @@ def format_phase_json(phase):
         "isPowered": phase.phase_type == FlightPhase.PT_POWERED,
         "type": unicode(PHASETYPE_NAMES[phase.phase_type]),
         "secondsOfDay": phase.seconds_of_day,
-        "startTime": unicode("%s" % format_time(phase.start_time)),
+        "startTime":  isoformat(phase.start_time),
         "duration": {
             "seconds": phase.duration.total_seconds(),
             "text": unicode(phase.duration),
