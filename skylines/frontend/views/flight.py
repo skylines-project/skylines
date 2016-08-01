@@ -227,10 +227,7 @@ def format_phase_json(phase):
         "type": unicode(PHASETYPE_NAMES[phase.phase_type]),
         "secondsOfDay": phase.seconds_of_day,
         "startTime":  isoformat(phase.start_time),
-        "duration": {
-            "seconds": phase.duration.total_seconds(),
-            "text": unicode(phase.duration),
-        },
+        "duration": phase.duration.total_seconds(),
         "altDiff": phase.alt_diff,
         "distance": phase.distance,
         "vario": phase.vario,

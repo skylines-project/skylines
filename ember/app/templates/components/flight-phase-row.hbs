@@ -14,7 +14,7 @@
   {{/if}}
 </td>
 <td class="start">{{format-time phase.startTime format="hhmmss" timeZone="UTC"}}</td>
-<td class="duration hidden-md">{{phase.duration.text}}</td>
+<td class="duration hidden-md">{{format-seconds phase.duration}}</td>
 <td class="numeric">{{format-altitude phase.altDiff withUnit=false}}</td>
 <td class="numeric">{{if (not phase.isCircling) (format-distance phase.distance decimals=1 withUnit=false)}}</td>
 <td class="numeric">{{format-lift phase.vario withUnit=false}}</td>
