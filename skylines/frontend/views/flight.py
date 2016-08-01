@@ -228,13 +228,18 @@ def format_leg(flight, leg):
     else:
         climbrate_text = u'-'
 
-    return dict(distance=units.format_distance(leg.distance, 1),
-                duration=duration,
-                speed=units.format_speed(speed),
-                climb_percentage=format_decimal(climb_percentage, format='#.#'),
-                climbrate=climbrate_text,
-                glide_rate=glide_rate,
-                start_time_of_day=to_seconds_of_day(flight.takeoff_time, leg.start_time))
+    return {
+        "distance": unicode(units.format_distance(leg.distance, 1)),
+        "start": to_seconds_of_day(flight.takeoff_time, leg.start_time),
+        "duration": {
+            "seconds": duration.total_seconds(),
+            "text": unicode(duration),
+        },
+        "speed": unicode(units.format_speed(speed)),
+        "climbPercentage": unicode(format_decimal(climb_percentage, format='#.#')),
+        "vario": unicode(climbrate_text),
+        "glideRate": unicode(glide_rate),
+    }
 
 
 def mark_flight_notifications_read(flight):
@@ -301,24 +306,7 @@ def index():
 
     contest_legs = {}
     for type in ['classic', 'triangle']:
-        legs = []
-        for leg in g.flight.get_contest_legs('olc_plus', type):
-            leg = format_leg(g.flight, leg)
-
-            legs.append({
-                "distance": unicode(leg['distance']),
-                "start": leg['start_time_of_day'],
-                "duration": {
-                    "seconds": leg['duration'].total_seconds(),
-                    "text": unicode(leg['duration']),
-                },
-                "speed": unicode(leg['speed']),
-                "climbPercentage": unicode(leg['climb_percentage']),
-                "vario": unicode(leg['climbrate']),
-                "glideRate": unicode(leg['glide_rate']),
-            })
-
-        contest_legs[type] = legs
+        contest_legs[type] = [format_leg(g.flight, leg) for leg in g.flight.get_contest_legs('olc_plus', type)]
 
     mark_flight_notifications_read(g.flight)
 
