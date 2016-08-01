@@ -22,7 +22,14 @@ export default Ember.Component.extend({
 
   findPilot(id) {
     let pilots = this.get('pilots');
-    return pilots.findBy('id', id) || pilots.get('lastObject.options').findBy('id', id);
+
+    let pilot = pilots.findBy('id', id);
+    if (pilot) return pilot;
+
+    let clubMembers = pilots.get('lastObject.options');
+    if (clubMembers) {
+      return clubMembers.findBy('id', id);
+    }
   },
 
   actions: {
