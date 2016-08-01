@@ -7,16 +7,18 @@
       <th class='numeric'>{% trans %}Duration{% endtrans %}<br/>&Delta;H</th>
     </tr>
     {% for ph in flight.circling_performance -%}
-    {% with phase=phase_formatter(ph) -%}
-    <tr>
-      <th>{{ phase.circling_direction }}</th>
-      <td class='numeric'>{{ phase.count }}<br/>{{ phase.vario }}</td>
-      <td class='numeric'><abbr title="{{ phase.fraction }}">{{ phase.duration }}</abbr><br/>{{ phase.alt_diff }}</td>
-    </tr>
-    {%- endwith %}
+      {{ circling_performance_row(phase_formatter(ph)) }}
     {%- endfor %}
   </tbody>
 </table>
+{%- endmacro %}
+
+{% macro circling_performance_row(phase) -%}
+<tr>
+  <th>{{ phase.circling_direction }}</th>
+  <td class='numeric'>{{ phase.count }}<br/>{{ phase.vario }}</td>
+  <td class='numeric'><abbr title="{{ phase.fraction }}">{{ phase.duration }}</abbr><br/>{{ phase.alt_diff }}</td>
+</tr>
 {%- endmacro %}
 
 {% macro render_cruise_performance(flight) -%}
