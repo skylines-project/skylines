@@ -1,6 +1,7 @@
 from sqlalchemy.types import Boolean, Float, Integer, DateTime, Interval
 
 from skylines.database import db
+from skylines.lib.datetime import to_seconds_of_day
 
 
 class FlightPhase(db.Model):
@@ -40,3 +41,7 @@ class FlightPhase(db.Model):
     vario = db.Column(Float)
     glide_rate = db.Column(Float)
     count = db.Column(Integer, nullable=False)
+
+    @property
+    def seconds_of_day(self):
+        return to_seconds_of_day(self.flight.takeoff_time, self.start_time)

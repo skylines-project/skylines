@@ -203,8 +203,6 @@ def format_phase(phase):
 
 
 def format_phase_json(phase):
-    takeoff_midnight = phase.flight.takeoff_time.replace(hour=0, minute=0, second=0, microsecond=0)
-
     is_circling = phase.phase_type == FlightPhase.PT_CIRCLING
 
     r = {}
@@ -227,7 +225,7 @@ def format_phase_json(phase):
         "isPowered": phase.phase_type == FlightPhase.PT_POWERED,
         "type": unicode(PHASETYPE_NAMES[phase.phase_type]),
         "start": {
-            "seconds": (phase.start_time - takeoff_midnight).total_seconds(),
+            "seconds": phase.seconds_of_day,
             "text": unicode("%s" % format_time(phase.start_time)),
         },
         "duration": {
