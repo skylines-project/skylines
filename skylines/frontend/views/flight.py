@@ -202,6 +202,46 @@ def format_phase(phase):
     return r
 
 
+def format_phase_json(phase):
+    takeoff_midnight = phase.flight.takeoff_time.replace(hour=0, minute=0, second=0, microsecond=0)
+
+    is_circling = phase.phase_type == FlightPhase.PT_CIRCLING
+
+    r = {}
+
+    if not is_circling:
+        # Sensible glide rate values are formatted as numbers. Others are shown
+        # as infinity symbol.
+        if abs(phase.alt_diff) > 0 and abs(phase.glide_rate) < 1000:
+            r['glide_rate'] = format_decimal(phase.glide_rate)
+        else:
+            r['glide_rate'] = u'\u221e'  # infinity
+    else:
+        r['circling_direction'] = CIRCDIR_NAMES[phase.circling_direction]
+
+    return {
+        "isCircling": is_circling,
+        "circlingDirection": unicode(r.get('circling_direction', '')),
+        "isCirclingLeft": phase.circling_direction == FlightPhase.CD_LEFT,
+        "isCirclingRight": phase.circling_direction == FlightPhase.CD_RIGHT,
+        "isPowered": phase.phase_type == FlightPhase.PT_POWERED,
+        "type": unicode(PHASETYPE_NAMES[phase.phase_type]),
+        "start": {
+            "seconds": (phase.start_time - takeoff_midnight).total_seconds(),
+            "text": unicode("%s" % format_time(phase.start_time)),
+        },
+        "duration": {
+            "seconds": phase.duration.total_seconds(),
+            "text": unicode(phase.duration),
+        },
+        "altDiff": phase.alt_diff,
+        "distance": phase.distance,
+        "vario": phase.vario,
+        "speed": phase.speed,
+        "glideRate": r.get('glide_rate', ''),
+    }
+
+
 class ContestLegSchema(Schema):
     distance = fields.Float()
     duration = fields.TimeDelta()
@@ -246,33 +286,7 @@ def index():
 
     comments = FlightCommentSchema().dump(g.flight.comments, many=True).data
 
-    takeoff_midnight = g.flight.takeoff_time.replace(hour=0, minute=0, second=0, microsecond=0)
-
-    phases = []
-    for p_raw in g.flight.phases:
-        p = format_phase(p_raw)
-
-        phases.append({
-            "isCircling": p['is_circling'],
-            "circlingDirection": unicode(p['circling_direction']),
-            "isCirclingLeft": p['circling_direction_left'],
-            "isCirclingRight": p['circling_direction_right'],
-            "isPowered": p['is_powered'],
-            "type": unicode(p['type']),
-            "start": {
-                "seconds": (p_raw.start_time - takeoff_midnight).total_seconds(),
-                "text": unicode(p['start']),
-            },
-            "duration": {
-                "seconds": p_raw.duration.total_seconds(),
-                "text": unicode(p['duration']),
-            },
-            "altDiff": p_raw.alt_diff,
-            "distance": p_raw.distance,
-            "vario": p_raw.vario,
-            "speed": p_raw.speed,
-            "glideRate": p['glide_rate'],
-        })
+    phases = map(format_phase_json, g.flight.phases)
 
     contest_leg_schema = ContestLegSchema()
     contest_legs = {}
