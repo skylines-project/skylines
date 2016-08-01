@@ -5,8 +5,6 @@
       <th></th>
       <th class='numeric'>{% trans %}Thermals{% endtrans %}<br/>{% trans %}Avg. vario{% endtrans %}</th>
       <th class='numeric'>{% trans %}Duration{% endtrans %}<br/>&Delta;H</th>
-      <th class='numeric'></th>
-      <th class='numeric'></th>
     </tr>
     {% for ph in flight.circling_performance -%}
     {% with phase=phase_formatter(ph) -%}
@@ -14,8 +12,6 @@
       <th>{{ phase.circling_direction }}</th>
       <td class='numeric'>{{ phase.count }}<br/>{{ phase.vario }}</td>
       <td class='numeric'><abbr title="{{ phase.fraction }}">{{ phase.duration }}</abbr><br/>{{ phase.alt_diff }}</td>
-      <td class='numeric'></td>
-      <td class='numeric'></td>
     </tr>
     {%- endwith %}
     {%- endfor %}
