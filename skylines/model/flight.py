@@ -262,16 +262,19 @@ class Flight(db.Model):
     @property
     def circling_performance(self):
         from skylines.model.flight_phase import FlightPhase
-        stats = [p for p in self._phases
-                 if (p.aggregate
-                     and p.phase_type == FlightPhase.PT_CIRCLING
-                     and p.duration.total_seconds() > 0)]
-        order = [FlightPhase.CD_TOTAL,
-                 FlightPhase.CD_LEFT,
-                 FlightPhase.CD_RIGHT,
-                 FlightPhase.CD_MIXED]
-        stats.sort(lambda a, b: cmp(order.index(a.circling_direction),
-                                    order.index(b.circling_direction)))
+
+        stats = {}
+        for p in self._phases:
+            if p.aggregate and p.phase_type == FlightPhase.PT_CIRCLING and p.duration.total_seconds() > 0:
+                if p.circling_direction == FlightPhase.CD_LEFT:
+                    stats['left'] = p
+                elif p.circling_direction == FlightPhase.CD_RIGHT:
+                    stats['right'] = p
+                elif p.circling_direction == FlightPhase.CD_MIXED:
+                    stats['mixed'] = p
+                elif p.circling_direction == FlightPhase.CD_TOTAL:
+                    stats['total'] = p
+
         return stats
 
     @property

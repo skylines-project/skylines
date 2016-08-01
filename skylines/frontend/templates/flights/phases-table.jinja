@@ -6,9 +6,12 @@
       <th class='numeric'>{% trans %}Thermals{% endtrans %}<br/>{% trans %}Avg. vario{% endtrans %}</th>
       <th class='numeric'>{% trans %}Duration{% endtrans %}<br/>&Delta;H</th>
     </tr>
-    {% for ph in flight.circling_performance -%}
-      {{ circling_performance_row(phase_formatter(ph)) }}
-    {%- endfor %}
+    {% with perf=flight.circling_performance -%}
+      {{ circling_performance_row(phase_formatter(perf.total)) }}
+      {{ circling_performance_row(phase_formatter(perf.left)) }}
+      {{ circling_performance_row(phase_formatter(perf.right)) }}
+      {{ circling_performance_row(phase_formatter(perf.mixed)) }}
+    {%- endwith %}
   </tbody>
 </table>
 {%- endmacro %}
