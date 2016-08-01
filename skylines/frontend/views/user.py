@@ -1,6 +1,6 @@
 from datetime import date, timedelta
 
-from flask import Blueprint, render_template, redirect, url_for, g, request
+from flask import Blueprint, render_template, redirect, url_for, g, request, jsonify
 from flask.ext.login import login_required
 
 from sqlalchemy import func, and_
@@ -8,10 +8,12 @@ from sqlalchemy.orm import contains_eager, subqueryload
 
 from skylines.database import db
 from skylines.lib.dbutil import get_requested_record
+from skylines.lib.vary import vary
 from skylines.model import (
     User, Flight, Follower, Location, Notification, Event
 )
 from skylines.model.event import create_follower_notification
+from skylines.schemas import UserSchema
 
 user_blueprint = Blueprint('user', 'skylines')
 
@@ -105,7 +107,11 @@ def mark_user_notifications_read(user):
 
 
 @user_blueprint.route('/')
+@vary('accept')
 def index():
+    if 'application/json' in request.headers.get('Accept', ''):
+        return jsonify(**UserSchema().dump(g.user).data)
+
     mark_user_notifications_read(g.user)
 
     return render_template(

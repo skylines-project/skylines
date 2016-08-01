@@ -1,0 +1,11 @@
+{{flight-list-nav date=model.date}}
+
+<div class="pull-right">
+  {{x-pager count=model.count page=page perPage=50}}
+</div>
+
+{{flight-list flights=model.flights showDate=false sortColumn=column sortOrder=order}}
+
+<div class="pull-right">
+  {{x-pager count=model.count page=page perPage=50}}
+</div>

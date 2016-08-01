@@ -11,12 +11,23 @@ services:
 
 cache: pip
 
+before_install:
+  - nvm install 4
+  - npm config set spin false
+  - npm install -g bower
+  - npm install phantomjs-prebuilt
+
 install:
   # Install SkyLines Python dependencies
   - pip install -e .
 
   # Install testing dependencies
   - pip install -r requirements.txt
+
+  - cd ember
+  - npm install
+  - bower install
+  - cd ..
 
 before_script:
   # Create the testing database
@@ -28,9 +39,16 @@ before_script:
   # Install fuzzystrmatch extension into the database
   - psql -U postgres -d skylines_test -c 'CREATE EXTENSION fuzzystrmatch;'
 
-script:
+  - cd ember
+  - node_modules/.bin/ember build
+  - cd ..
+
   # Generate asset files
   - ./manage.py assets build
 
+script:
   # Run the test suite
-  - py.test
+  - py.test tests
+
+  - cd ember
+  - npm test

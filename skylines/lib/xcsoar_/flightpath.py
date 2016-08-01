@@ -105,7 +105,6 @@ def get_elevation(fixes):
         start_idx += 1
 
     prev = q[start_idx]
-    current = None
 
     for i in xrange(start_idx + 1, len(q)):
         if q[i].elevation is None:

@@ -1,0 +1,5 @@
+{{#each fixes as |fix|}}
+  {{#if fix.coordinate}}
+    {{plane-label-overlay map=map flight=fix.flight position=fix.coordinate}}
+  {{/if}}
+{{/each}}

@@ -1,0 +1,12 @@
+<table id="fix-data" class="table table-condensed">
+  <tbody>
+    {{#each data as |row|}}
+      {{fix-table-row
+        row=row
+        selectable=selectable
+        selected=(and selectable (eq row.id selection))
+        onSelect=(action "select")
+        onRemove=(action "remove")}}
+    {{/each}}
+  </tbody>
+</table>

@@ -1,12 +1,19 @@
-from flask import Blueprint, render_template, request, url_for, redirect, g
+from flask import Blueprint, render_template, request, url_for, redirect, g, jsonify
 from sqlalchemy.orm import subqueryload, contains_eager
 from sqlalchemy.sql.expression import or_
 
-from skylines.lib.util import str_to_bool
+from skylines.lib.vary import vary
 from skylines.database import db
-from skylines.model.event import Event, Notification, Flight, group_events
+from skylines.model.event import Event, Notification, Flight
 from skylines.lib.decorators import login_required
 
+TYPES = {
+    Event.Type.FLIGHT_COMMENT: 'flight-comment',
+    Event.Type.FLIGHT: 'flight-upload',
+    Event.Type.FOLLOWER: 'follower',
+    Event.Type.NEW_USER: 'new-user',
+    Event.Type.CLUB_JOIN: 'club-join',
+}
 
 notifications_blueprint = Blueprint('notifications', 'skylines')
 
@@ -40,7 +47,11 @@ def _filter_query(query, args):
 
 @notifications_blueprint.route('/')
 @login_required("You have to login to read notifications.")
+@vary('accept')
 def index():
+    if 'application/json' not in request.headers.get('Accept', ''):
+        return render_template('ember-page.jinja', active_page='notifications')
+
     query = Notification.query(recipient=g.current_user) \
         .join('event') \
         .options(contains_eager('event')) \
@@ -64,23 +75,13 @@ def index():
         return event
 
     events = map(get_event, query)
-    events_count = len(events)
 
-    if request.args.get('grouped', True, type=str_to_bool):
-        events = group_events(events)
-
-    template_vars = dict(events=events, types=Event.Type)
-
-    if page > 1:
-        template_vars['prev_page'] = page - 1
-    if events_count == per_page:
-        template_vars['next_page'] = page + 1
-
-    return render_template('notifications/list.jinja', **template_vars)
+    return jsonify(events=(map(convert_event, events)))
 
 
-@notifications_blueprint.route('/clear')
+@notifications_blueprint.route('/clear', methods=['GET', 'POST'])
 @login_required("You have to login to clear notifications.")
+@vary('accept')
 def clear():
     def filter_func(query):
         return _filter_query(query, request.args)
@@ -89,4 +90,50 @@ def clear():
 
     db.session.commit()
 
+    if 'application/json' in request.headers.get('Accept', ''):
+        return jsonify()
+
     return redirect(url_for('.index', **request.args))
+
+
+def convert_event(e):
+    event = {
+        'id': e.id,
+        'type': TYPES.get(e.type, 'unknown'),
+        'time': e.time.isoformat(),
+        'actor': {
+            'id': e.actor_id,
+            'name': unicode(e.actor),
+        },
+    }
+
+    if hasattr(e, 'unread'):
+        event['unread'] = e.unread
+
+    if e.user_id:
+        event['user'] = {
+            'id': e.user_id,
+            'name': unicode(e.user),
+        }
+
+    if e.club_id:
+        event['club'] = {
+            'id': e.club_id,
+            'name': unicode(e.club),
+        }
+
+    if e.flight_id:
+        event['flight'] = {
+            'id': e.flight_id,
+            'date': e.flight.date_local.isoformat(),
+            'distance': e.flight.olc_classic_distance,
+            'pilot_id': e.flight.pilot_id,
+            'copilot_id': e.flight.co_pilot_id,
+        }
+
+    if e.flight_comment_id:
+        event['flightComment'] = {
+            'id': e.flight_comment_id,
+        }
+
+    return event

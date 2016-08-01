@@ -6,6 +6,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
+    <meta name="skylines-locale" content="{{ g.active_locale }}">
+    {% if g.current_user %}
+      <meta name="skylines-user" content="{{ g.current_user.id }}||{{ g.current_user.name|e }}">
+      {% if g.current_user.club %}
+        <meta name="skylines-club" content="{{ g.current_user.club.id }}||{{ g.current_user.club|e }}">
+      {% endif %}
+
+      <meta name="skylines-distance-unit" content="{{ h.get_setting_name('distance_unit') }}">
+      <meta name="skylines-speed-unit" content="{{ h.get_setting_name('speed_unit') }}">
+      <meta name="skylines-lift-unit" content="{{ h.get_setting_name('lift_unit') }}">
+      <meta name="skylines-altitude-unit" content="{{ h.get_setting_name('altitude_unit') }}">
+    {% endif %}
+
     <title>{% filter striptags %}{% block title %}{% endblock %}{% if self.title() %} - {% endif %}SkyLines{% endfilter %}</title>
 
     <link rel='shortcut icon' href='/favicon.ico' type='image/x-icon' />
@@ -13,8 +26,17 @@
 
     {% block styles -%}
     {%- assets 'all_css' %}
-    <link rel="stylesheet" type="text/css" href="{{ ASSET_URL }}"/>
+      <link rel="stylesheet" type="text/css" href="{{ ASSET_URL }}"/>
     {%- endassets %}
+
+    {% if use_ember %}
+      {%- assets 'ember_vendor_css' %}
+        <link rel="stylesheet" type="text/css" href="{{ ASSET_URL }}"/>
+      {%- endassets %}
+      {%- assets 'ember_app_css' %}
+        <link rel="stylesheet" type="text/css" href="{{ ASSET_URL }}"/>
+      {%- endassets %}
+    {% endif %}
     {%- endblock %}
 
     <!--[if lte IE 8]>
@@ -30,6 +52,18 @@
 {%- assets 'all_js' %}
 <script type="text/javascript" src="{{ ASSET_URL }}"></script>
 {%- endassets %}
+
+{% if use_ember %}
+<script src="https://cdn.polyfill.io/v2/polyfill.min.js?features=Intl.~locale.en,Intl.~locale.de&flags=always"></script>
+
+{%- assets 'ember_vendor_js' %}
+<script type="text/javascript" src="{{ ASSET_URL }}"></script>
+{%- endassets %}
+
+{%- assets 'ember_app_js' %}
+<script type="text/javascript" src="{{ ASSET_URL }}"></script>
+{%- endassets %}
+{% endif %}
 {%- endblock %}
 </body>
 </html>

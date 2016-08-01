@@ -1,0 +1,48 @@
+{{#base-page}}
+  <div class="page-header">
+    <h1>{{club.name}}</h1>
+  </div>
+
+  <div class="row">
+    <div class="col-md-12">
+      <div class="row">
+        <div class="well col-sm-8 col-sm-offset-2">
+          <table class="right">
+            <tr>
+              <th>{{t "name"}}</th>
+              <td>{{club.name}}</td>
+            </tr>
+
+            {{#if club.website}}
+              <tr>
+                <th>{{t "website"}}</th>
+                <td><a target="_blank" href="{{club.website}}">{{club.website}}</a></td>
+              </tr>
+            {{/if}}
+
+            <tr>
+              <th>{{t "created"}}</th>
+              <td>
+                {{#if club.owner}}
+                  {{format-relative club.timeCreated}} by <a href="/users/{{club.owner.id}}">{{club.owner.name}}</a>
+                {{else}}
+                  {{format-relative club.timeCreated}}
+                {{/if}}
+              </td>
+            </tr>
+          </table>
+
+          <p>
+            {{#if club.isWritable}}
+              {{#link-to "club.edit" club.id class="btn btn-default"}}{{t "edit"}}{{/link-to}}
+            {{/if}}
+
+            <a href="/flights/club/{{club.id}}" class="btn btn-default"><i class="icon-plane"></i> {{t "flights"}}</a>
+            <a href="/statistics/club/{{club.id}}" class="btn btn-default"><i class="icon-bar-chart"></i> {{t "statistics"}}</a>
+            {{#link-to "club.pilots" club.id class="btn btn-default"}}<i class="icon-group"></i> {{t "members"}}{{/link-to}}
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+{{/base-page}}

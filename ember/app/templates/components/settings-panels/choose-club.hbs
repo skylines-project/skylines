@@ -1,0 +1,35 @@
+<div class="panel-heading">
+  <h3 class="panel-title">{{t "choose-club"}}</h3>
+</div>
+<div class="panel-body">
+  <form {{action "submit" on="submit"}}>
+    {{#if error}}
+      <div class="alert alert-danger" role="alert">
+        {{#if messageKey}}{{t messageKey error=error}}{{else}}{{error}}{{/if}}
+      </div>
+    {{else if messageKey}}
+      <div class="alert alert-success" role="alert">{{t messageKey}}</div>
+    {{/if}}
+
+    <div class="form-group">
+      <label class="control-label">{{t "club"}}</label>
+
+      {{#power-select
+        options=clubsWithNull
+        selected=club
+        searchField="name"
+        onchange=(action (mut club))
+        as |club|}}
+        {{#if (eq club.id null)}}
+          [{{t 'no-club'}}]
+        {{else}}
+          {{club.name}}
+        {{/if}}
+      {{/power-select}}
+    </div>
+
+    <button class="btn btn-primary btn-block" type="submit" disabled={{or pending}}>
+      {{t (if pending "changing" "change")}}
+    </button>
+  </form>
+</div>

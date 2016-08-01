@@ -205,31 +205,12 @@ The plugin allso adds the following methods to the plot object:
 
       if (active == 'takeoff') {
         times.takeoff = value;
-
-        times.scoring_start = Math.max(times.takeoff, times.scoring_start);
-        times.scoring_end = Math.max(times.takeoff, times.scoring_end);
-        times.landing = Math.max(times.takeoff, times.landing);
-
       } else if (active == 'scoring_start') {
         times.scoring_start = value;
-
-        times.takeoff = Math.min(times.scoring_start, times.takeoff);
-        times.scoring_end = Math.max(times.scoring_start, times.scoring_end);
-        times.landing = Math.max(times.scoring_start, times.landing);
-
       } else if (active == 'scoring_end') {
         times.scoring_end = value;
-
-        times.takeoff = Math.min(times.scoring_end, times.takeoff);
-        times.scoring_start = Math.min(times.scoring_end, times.scoring_start);
-        times.landing = Math.max(times.scoring_end, times.landing);
-
       } else if (active == 'landing') {
         times.landing = value;
-
-        times.takeoff = Math.min(times.landing, times.takeoff);
-        times.scoring_start = Math.min(times.landing, times.scoring_start);
-        times.scoring_end = Math.min(times.landing, times.scoring_end);
       }
 
       selection.show = true;

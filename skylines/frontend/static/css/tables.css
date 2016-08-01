@@ -19,17 +19,17 @@ table .date, table .times {
   margin: -3px 0;
 }
 
-#flight-table .column-buttons {
+.table-flights .column-buttons {
   white-space: nowrap;
   text-align: right;
 }
 
-#flight-table .num_comments {
+.table-flights .num_comments {
   width: 0px;
   vertical-align: middle;
 }
 
-#flight-table .not_published {
+.table-flights .not_published {
   font-style: italic;
 }
 
@@ -55,6 +55,10 @@ table.vmiddle td {
   width: 100%;
 }
 
+.table tr.selectable {
+  cursor: pointer;
+}
+
 .table tr.selected td, .table tr.selected:hover td {
   background-color: #eee !important;
 }
@@ -71,16 +75,12 @@ table thead .sorting a {
   display: block;
 }
 
-table thead .sorting .sorting_default {
-  background: url("../images/sort_both.png") no-repeat scroll left center transparent;
+th i.inactive {
+  color: #999;
 }
 
-table thead .sorting .sorting_asc {
-  background: url("../images/sort_asc.png") no-repeat scroll left center transparent;
-}
-
-table thead .sorting .sorting_desc {
-  background: url("../images/sort_desc.png") no-repeat scroll left center transparent;
+th.sortable {
+  cursor: pointer;
 }
 
 .airspace-table .name {

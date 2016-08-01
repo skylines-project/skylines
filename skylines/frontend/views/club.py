@@ -1,10 +1,10 @@
-from flask import Blueprint, render_template, g, redirect, url_for, abort
-from sqlalchemy import func
+from flask import Blueprint, render_template, g, request, jsonify
 
 from skylines.database import db
-from skylines.frontend.forms import EditClubForm
 from skylines.lib.dbutil import get_requested_record
-from skylines.model import User, Club
+from skylines.lib.vary import vary
+from skylines.model import Club
+from skylines.schemas import ClubSchema, ValidationError
 
 club_blueprint = Blueprint('club', 'skylines')
 
@@ -22,35 +22,49 @@ def _add_user_id(endpoint, values):
 
 
 @club_blueprint.route('/')
+@vary('accept')
 def index():
-    return render_template(
-        'clubs/view.jinja', active_page='settings', club=g.club)
+    if 'application/json' not in request.headers.get('Accept', ''):
+        return render_template('ember-page.jinja', active_page='settings')
+
+    json = ClubSchema().dump(g.club).data
+    json['isWritable'] = g.club.is_writable(g.current_user)
+
+    return jsonify(**json)
 
 
 @club_blueprint.route('/pilots')
 def pilots():
-    users = User.query(club=g.club).order_by(func.lower(User.name))
-
-    return render_template(
-        'clubs/pilots.jinja', active_page='settings',
-        club=g.club, users=users)
+    return render_template('ember-page.jinja', active_page='settings')
 
 
-@club_blueprint.route('/edit', methods=['GET', 'POST'])
+@club_blueprint.route('/edit')
 def edit():
-    if not g.club.is_writable(g.current_user):
-        abort(403)
-
-    form = EditClubForm(obj=g.club)
-    if form.validate_on_submit():
-        return edit_post(form)
-
-    return render_template('clubs/edit.jinja', form=form)
+    return render_template('ember-page.jinja', active_page='settings')
 
 
-def edit_post(form):
-    g.club.name = form.name.data
-    g.club.website = form.website.data
+@club_blueprint.route('/', methods=['POST'])
+def edit_post():
+    json = request.get_json()
+    if json is None:
+        return jsonify(error='invalid-request'), 400
+
+    try:
+        data = ClubSchema(partial=True).load(json).data
+    except ValidationError, e:
+        return jsonify(error='validation-failed', fields=e.messages), 422
+
+    if 'name' in data:
+        name = data.get('name')
+
+        if name != g.club.name and Club.exists(name=name):
+            return jsonify(error='duplicate-club-name'), 422
+
+        g.club.name = name
+
+    if 'website' in data:
+        g.club.website = data.get('website')
+
     db.session.commit()
 
-    return redirect(url_for('.index'))
+    return jsonify()

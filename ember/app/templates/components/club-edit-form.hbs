@@ -1,0 +1,21 @@
+<form {{action "submit" on="submit"}}>
+  {{#if error}}
+    <div class="alert alert-danger" role="alert">{{error}}</div>
+  {{/if}}
+
+  {{validated-input
+    value=name
+    validation=validations.attrs.name
+    label=(t "name")
+    disabled=pending}}
+
+  {{validated-input
+    value=website
+    validation=validations.attrs.website
+    label=(t "website")
+    disabled=pending}}
+
+  <button class="btn btn-primary btn-block" type="submit" disabled={{or pending (not validations.isValid)}}>
+    {{t (if pending "editing" "edit")}}
+  </button>
+</form>

@@ -1,0 +1,17 @@
+<form {{action "submit" on="submit"}}>
+  {{#if error}}
+    <div class="alert alert-danger" role="alert">{{error}}</div>
+  {{else if success}}
+    <div class="alert alert-success" role="alert">{{t "recovery-mail-sent"}}</div>
+  {{/if}}
+
+  {{validated-input
+    value=email
+    validation=validations.attrs.email
+    label=(t "email-address")
+    disabled=pending}}
+
+  <button class="btn btn-primary btn-block" type="submit" disabled={{or pending success (not validations.isValid)}}>
+    {{t (if pending "recovering" "recover-password")}}
+  </button>
+</form>

@@ -1,6 +1,6 @@
 from datetime import datetime
 
-from flask import Blueprint, request, render_template, redirect, url_for, abort, current_app, g
+from flask import Blueprint, request, render_template, redirect, url_for, abort, current_app, g, jsonify
 
 from sqlalchemy import func
 from sqlalchemy.sql.expression import or_, and_
@@ -10,11 +10,13 @@ from sqlalchemy.orm.util import aliased
 from skylines.database import db
 from skylines.lib.table_tools import Pager, Sorter
 from skylines.lib.dbutil import get_requested_record
+from skylines.lib.vary import vary
 from skylines.model import (
     User, Club, Flight, IGCFile, AircraftModel,
     Airport, FlightComment,
     Notification, Event,
 )
+from skylines.schemas import AirportSchema, ClubSchema, FlightSchema, UserSchema
 
 flights_blueprint = Blueprint('flights', 'skylines')
 
@@ -33,6 +35,10 @@ def mark_flight_notifications_read(pilot):
 def _create_list(tab, kw, date=None, pilot=None, club=None, airport=None,
                  pinned=None, filter=None,
                  default_sorting_column='score', default_sorting_order='desc'):
+
+    if 'application/json' not in request.headers.get('Accept', ''):
+        return render_template('ember-page.jinja', active_page='flights')
+
     pilot_alias = aliased(User, name='pilot')
     owner_alias = aliased(User, name='owner')
 
@@ -97,14 +103,37 @@ def _create_list(tab, kw, date=None, pilot=None, club=None, airport=None,
     flights = Pager.paginate(flights, 'flights',
                              items_per_page=int(current_app.config.get('SKYLINES_LISTS_DISPLAY_LENGTH', 50)))
 
-    return render_template('flights/list.jinja',
-                           tab=tab, date=date, pilot=pilot, club=club,
-                           airport=airport, flights=flights,
-                           flights_count=flights_count)
+    flight_schema = FlightSchema()
+    flights_json = []
+    for f, num_comments in flights:
+        flight = flight_schema.dump(f).data
+        flight['private'] = not f.is_rankable()
+        flight['numComments'] = num_comments
+        flights_json.append(flight)
+
+    json = dict(flights=flights_json, count=flights_count)
+
+    if date:
+        json['date'] = date.isoformat()
+
+    if pilot:
+        user_schema = UserSchema(only=('id', 'name'))
+        json['pilot'] = user_schema.dump(pilot).data
+
+    if club:
+        club_schema = ClubSchema(only=('id', 'name'))
+        json['club'] = club_schema.dump(club).data
+
+    if airport:
+        airport_schema = AirportSchema(only=('id', 'name', 'countryCode'))
+        json['airport'] = airport_schema.dump(airport).data
+
+    return jsonify(**json)
 
 
 @flights_blueprint.route('/all.json')
 @flights_blueprint.route('/all')
+@vary('accept')
 def all():
     return _create_list('all', request.args,
                         default_sorting_column='date', default_sorting_order='desc')
@@ -123,6 +152,7 @@ def today():
 
 @flights_blueprint.route('/date/<date>.json')
 @flights_blueprint.route('/date/<date>')
+@vary('accept')
 def date(date, latest=False):
     try:
         if isinstance(date, (str, unicode)):
@@ -142,6 +172,7 @@ def date(date, latest=False):
 
 @flights_blueprint.route('/latest.json')
 @flights_blueprint.route('/latest')
+@vary('accept')
 def latest():
     query = db.session \
         .query(func.max(Flight.date_local).label('date')) \
@@ -158,6 +189,7 @@ def latest():
 
 @flights_blueprint.route('/pilot/<int:id>.json')
 @flights_blueprint.route('/pilot/<int:id>')
+@vary('accept')
 def pilot(id):
     pilot = get_requested_record(User, id)
 
@@ -177,6 +209,7 @@ def my():
 
 @flights_blueprint.route('/club/<int:id>.json')
 @flights_blueprint.route('/club/<int:id>')
+@vary('accept')
 def club(id):
     club = get_requested_record(Club, id)
 
@@ -194,6 +227,7 @@ def my_club():
 
 @flights_blueprint.route('/airport/<int:id>.json')
 @flights_blueprint.route('/airport/<int:id>')
+@vary('accept')
 def airport(id):
     airport = get_requested_record(Airport, id)
 
@@ -204,6 +238,7 @@ def airport(id):
 
 @flights_blueprint.route('/unassigned.json')
 @flights_blueprint.route('/unassigned')
+@vary('accept')
 def unassigned():
     if not g.current_user:
         abort(404)
@@ -217,6 +252,7 @@ def unassigned():
 
 @flights_blueprint.route('/pinned.json')
 @flights_blueprint.route('/pinned')
+@vary('accept')
 def pinned():
     # Check if we have cookies
     if request.cookies is None:
@@ -239,6 +275,7 @@ def pinned():
 
 @flights_blueprint.route('/list/<ids>.json')
 @flights_blueprint.route('/list/<ids>')
+@vary('accept')
 def list(ids):
     # Check for the 'pinnedFlights' cookie
     if not ids:

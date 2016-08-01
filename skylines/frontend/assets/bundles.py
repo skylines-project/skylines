@@ -56,6 +56,23 @@ respond_js = Bundle(
     'https://cdnjs.cloudflare.com/ajax/libs/respond.js/1.3.0/respond.min.js',
     output='js/respond-%(version)s.js')
 
+# Ember.js
+
+ember_app_js = Bundle(
+    'ember/assets/skylines.js',
+    output='js/ember-app-%(version)s.js')
+
+ember_vendor_js = Bundle(
+    'ember/assets/vendor.js',
+    output='js/ember-vendor-%(version)s.js')
+
+ember_app_css = Bundle(
+    'ember/assets/skylines.css',
+    output='css/ember-app-%(version)s.css')
+
+ember_vendor_css = Bundle(
+    'ember/assets/vendor.css',
+    output='css/ember-vendor-%(version)s.css')
 
 # SkyLines
 
@@ -77,7 +94,6 @@ main_css = Bundle(
     'css/wingman.css',
     'css/ol3-sidebar.css',
     'vendor/flags/flags.css',
-    'vendor/bootstrap-datepicker/datepicker.css',
     'vendor/fonts/stylesheet.css',
     filters='cssrewrite',
     output='css/main-%(version)s.css')
@@ -103,9 +119,8 @@ openlayers_css = Bundle(
 all_js = Bundle(
     'http://code.jquery.com/jquery-1.10.2.min.js',
     'http://cdnjs.cloudflare.com/ajax/libs/jquery-ajaxtransport-xdomainrequest/1.0.3/jquery.xdomainrequest.min.js',
-    'vendor/jquery/jquery.cookie.js',
     'vendor/jquery/jquery.timeago.js',
-    'vendor/bootstrap-datepicker/datepicker.js',
+    'http://rawgithub.com/Turbo87/sidebar-v2/v0.2.1/js/jquery-sidebar.min.js',
     'js/general.js',
     bootstrap_js,
     filters='rjsmin',
@@ -113,43 +128,11 @@ all_js = Bundle(
 
 openlayers_js = Bundle(
     'vendor/openlayers/ol3cesium.js',
-    'js/ol-GraphicLayerSwitcher-v3.js',
-    'js/ol-PlayButton-v3.js',
-    'js/ol-FullscreenButton.js',
-    'js/ol-CesiumSwitcher.js',
-    'js/slMap.js',
-    'js/slMapClickHandler.js',
     'http://rawgithub.com/bdougherty/BigScreen/v2.0.4/bigscreen.min.js',
-    filters=SimpleClosureJS,
+    flot_js,
     output='js/ol-%(version)s.js')
 
-flight_js = Bundle(
-    'js/util.js',
-    'js/slUnits.js',
-    'js/slBarogram.js',
-    'js/slFixTable.js',
-    'js/slPhaseTable.js',
-    'js/slCollection.js',
-    'js/slFlightCollection.js',
-    'js/slFlight.js',
-    'js/slContestCollection.js',
-    'js/slContest.js',
-    'js/slPhaseHighlighter.js',
-    'js/slMapIconHandler.js',
-    'js/slFlightDisplay.js',
-    'http://rawgithub.com/Turbo87/sidebar-v2/v0.2.1/js/jquery-sidebar.min.js',
-    filters=SimpleClosureJS,
-    output='js/flight-%(version)s.js')
-
-tracking_js = Bundle(
-    'js/slFlightTracking.js',
-    filters=SimpleClosureJS,
-    output='js/tracking-%(version)s.js')
-
 upload_js = Bundle(
-    'js/slUnits.js',
-    'js/slBarogram.js',
-    'js/upload.js',
     'http://momentjs.com/downloads/moment.min.js',
     'http://rawgithub.com/TobiasLohner/bootstrap-datetimepicker/c36342415a1be8fa013548402bf01718ca93d454/src/js/bootstrap-datetimepicker.js',
     'js/jquery.flot.flight-upload.js',

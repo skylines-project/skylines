@@ -1,0 +1,33 @@
+<form {{action "submit" on="submit"}}>
+  {{#if error}}
+    <div class="alert alert-danger" role="alert">{{error}}</div>
+  {{/if}}
+
+  {{#validated-block label=(t "pilot") validation=validations.attrs.pilotId}}
+    {{pilot-select clubMembers=clubMembers pilotId=pilotId onChange=(action (mut pilotId))}}
+  {{/validated-block}}
+
+  {{#if showPilotNameInput}}
+    {{validated-input
+      value=pilotName
+      validation=validations.attrs.pilotName
+      label=(t "pilot")
+      disabled=pending}}
+  {{/if}}
+
+  {{#validated-block label=(t "copilot") validation=validations.attrs.copilotId}}
+    {{pilot-select clubMembers=clubMembers pilotId=copilotId onChange=(action (mut copilotId))}}
+  {{/validated-block}}
+
+  {{#if showCopilotNameInput}}
+    {{validated-input
+      value=copilotName
+      validation=validations.attrs.copilotName
+      label=(t "copilot")
+      disabled=pending}}
+  {{/if}}
+
+  <button class="btn btn-primary btn-block" type="submit" disabled={{or pending (not validations.isValid)}}>
+    {{t (if pending "changing" "change")}}
+  </button>
+</form>

@@ -1,0 +1,12 @@
+{{#power-select
+  options=modelsWithNull
+  selected=model
+  searchField="name"
+  onchange=(action "onChange")
+  as |model|}}
+    {{#if (eq model.id null)}}
+      [{{t 'unspecified'}}]
+    {{else}}
+      {{model.name}}
+    {{/if}}
+{{/power-select}}

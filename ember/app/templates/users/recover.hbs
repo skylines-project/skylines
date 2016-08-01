@@ -1,0 +1,7 @@
+{{#form-page title=(t "recover-password")}}
+  {{#if key}}
+    {{recover-step2-form recoveryKey=key}}
+  {{else}}
+    {{recover-step1-form}}
+  {{/if}}
+{{/form-page}}

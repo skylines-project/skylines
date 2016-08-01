@@ -1,0 +1,17 @@
+<table class="table table-striped table-tracking">
+  <thead>
+  <tr>
+    <th class="hidden-xs date">{{t "last-fix"}}</th>
+    <th>{{t "pilot"}}</th>
+    <th>{{t "nearest-airport"}}</th>
+    <th class="hidden-xs numeric">{{t "altitude"}}</th>
+    <th></th>
+  </tr>
+  </thead>
+
+  <tbody>
+  {{#each tracks as |track|}}
+    {{tracking-table-row track=track}}
+  {{/each}}
+  </tbody>
+</table>

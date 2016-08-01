@@ -1,0 +1,15 @@
+<table id="wingman-table" class="table table-condensed">
+  <thead>
+    <tr>
+      <th class="color-stripe"></th>
+      <th>{{t "aircraft"}}</th>
+      <th>{{t "pilot"}}</th>
+      <th>{{t "first-last"}}</th>
+    </tr>
+  </thead>
+  <tbody>
+    {{#each nearFlightsWithColors as |nearFlight|}}
+      {{wingman-row nearFlight=nearFlight click=(action "select" nearFlight.flight.id)}}
+    {{/each}}
+  </tbody>
+</table>

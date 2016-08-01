@@ -1,3 +1,5 @@
+import base64
+
 from datetime import datetime
 
 from flask import render_template, redirect, request, url_for, flash, g
@@ -14,6 +16,16 @@ def register(app):
     @app.login_manager.user_loader
     def load_user(userid):
         return User.get(userid)
+
+    @app.login_manager.header_loader
+    def load_user_from_header(header_val):
+        try:
+            header_val = header_val.replace('Basic ', '', 1)
+            header_val = base64.b64decode(header_val)
+            email, password = header_val.split(':', 1)
+            return User.by_credentials(email, password)
+        except:
+            return None
 
     @app.before_request
     def inject_current_user():

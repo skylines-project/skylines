@@ -1,0 +1,18 @@
+{{#if open}}
+  <div id="GraphicLayerSwitcher-open">
+    <div class="base_layers">
+      {{#each baseLayers as |layer|}}
+        {{layer-switcher-element layer=layer onSelect=(action "select" layer)}}
+      {{/each}}
+    </div>
+    <div class="overlay_layers">
+      {{#each overlayLayers as |layer|}}
+        {{layer-switcher-element layer=layer onSelect=(action "select" layer)}}
+      {{/each}}
+    </div>
+  </div>
+{{else}}
+  <div id="GraphicLayerSwitcher-closed">
+    <button {{action "open"}}><img src="../../images/layers.png"/></button>
+  </div>
+{{/if}}

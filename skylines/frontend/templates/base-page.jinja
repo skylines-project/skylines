@@ -5,9 +5,10 @@
 {% block body -%}
 {{ topbar(active_page) }}
 
+<div id="ember-application">
+{% block ember_application %}
 <div class="container">
     <div class="content">
-
         {% if self.title() -%}
         <div class="page-header{% if header_tabs %} page-header-with-tabs{% endif %}">
             {%- if self.title_right() -%}
@@ -44,5 +45,7 @@
         <a href="{{ url_for('about.imprint') }}">{% trans %}Imprint{% endtrans %}</a>
         {%- endblock %}
     </p>
+</div>
+{% endblock %}
 </div>
 {%- endblock %}

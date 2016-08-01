@@ -9,7 +9,7 @@ from __future__ import absolute_import
 import datetime
 from urllib import urlencode
 
-from flask import flash, json
+from flask import flash
 from webhelpers import date, feedgenerator, html, number, misc, text
 
 from .string import *

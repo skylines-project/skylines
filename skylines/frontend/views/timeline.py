@@ -1,17 +1,21 @@
-from flask import Blueprint, render_template, request
+from flask import Blueprint, render_template, request, jsonify
 from sqlalchemy.orm import subqueryload, contains_eager
 from sqlalchemy.sql.expression import or_
 
-from skylines.lib.util import str_to_bool
-from skylines.model.event import Event, group_events
+from skylines.lib.vary import vary
+from skylines.model.event import Event
 from skylines.model import Flight
-from .notifications import _filter_query
+from .notifications import _filter_query, convert_event
 
 timeline_blueprint = Blueprint('timeline', 'skylines')
 
 
 @timeline_blueprint.route('/')
+@vary('accept')
 def index():
+    if 'application/json' not in request.headers.get('Accept', ''):
+        return render_template('ember-page.jinja')
+
     query = Event.query() \
         .options(subqueryload('actor')) \
         .options(subqueryload('user')) \
@@ -27,16 +31,5 @@ def index():
     per_page = request.args.get('per_page', type=int, default=50)
 
     events = query.limit(per_page).offset((page - 1) * per_page).all()
-    events_count = len(events)
 
-    if request.args.get('grouped', True, type=str_to_bool):
-        events = group_events(events)
-
-    template_vars = dict(events=events, types=Event.Type)
-
-    if page > 1:
-        template_vars['prev_page'] = page - 1
-    if events_count == per_page:
-        template_vars['next_page'] = page + 1
-
-    return render_template('timeline/list.jinja', **template_vars)
+    return jsonify(events=(map(convert_event, events)))

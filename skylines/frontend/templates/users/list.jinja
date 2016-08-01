@@ -1,9 +1,0 @@
-{% from "users/users-table.jinja" import render_users_table with context %}
-
-{% extends "base-page.jinja" %}
-
-{% block title %}{% trans %}Users{% endtrans %}{% endblock %}
-
-{%- block content %}
-{{ render_users_table(users) }}
-{%- endblock %}

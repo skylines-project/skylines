@@ -1,15 +1,22 @@
-from flask import Blueprint, current_app, render_template, jsonify, g
+from flask import Blueprint, current_app, render_template, jsonify, g, request
 
 from skylines.lib.helpers import isoformat_utc
 from skylines.lib.decorators import jsonp
+from skylines.lib.vary import vary
 from skylines.model import TrackingFix, Airport, Follower
+from skylines.schemas import TrackingFixSchema, AirportSchema
 
 tracking_blueprint = Blueprint('tracking', 'skylines')
 
 
 @tracking_blueprint.route('/')
+@vary('accept')
 def index():
-    tracks = TrackingFix.get_latest()
+    if 'application/json' not in request.headers.get('Accept', ''):
+        return render_template('ember-page.jinja', active_page='tracking')
+
+    fix_schema = TrackingFixSchema(only=('time', 'location', 'altitude', 'elevation', 'pilot'))
+    airport_schema = AirportSchema(only=('id', 'name', 'countryCode'))
 
     @current_app.cache.memoize(timeout=(60 * 60))
     def get_nearest_airport(track):
@@ -17,33 +24,26 @@ def index():
         if not airport:
             return None
 
-        distance = airport.distance(track.location)
+        return dict(airport=airport_schema.dump(airport).data,
+                    distance=airport.distance(track.location))
 
-        return {
-            'name': airport.name,
-            'country_code': airport.country_code,
-            'distance': distance,
-        }
+    tracks = []
+    for t in TrackingFix.get_latest():
+        nearest_airport = get_nearest_airport(t)
 
-    tracks = [(track, get_nearest_airport(track)) for track in tracks]
+        track = fix_schema.dump(t).data
+        if nearest_airport:
+            track['nearestAirport'] = nearest_airport['airport']
+            track['nearestAirportDistance'] = nearest_airport['distance']
+
+        tracks.append(track)
 
     if g.current_user:
         followers = [f.destination_id for f in Follower.query(source=g.current_user)]
-
-        def is_self_or_follower(track):
-            pilot_id = track[0].pilot_id
-            return pilot_id == g.current_user.id or pilot_id in followers
-
-        friend_tracks = [t for t in tracks if is_self_or_follower(t)]
-        other_tracks = [t for t in tracks if t not in friend_tracks]
-
     else:
-        friend_tracks = []
-        other_tracks = tracks
+        followers = []
 
-    return render_template('tracking/list.jinja',
-                           friend_tracks=friend_tracks,
-                           other_tracks=other_tracks)
+    return jsonify(friends=followers, tracks=tracks)
 
 
 @tracking_blueprint.route('/info')

@@ -3,6 +3,7 @@
 
 {% extends "base-page.jinja" %}
 {% set active_page = "settings" %}
+{% set use_ember = true %}
 
 {% block title %}{{ g.user|e }}{% endblock %}
 
@@ -35,59 +36,11 @@
 
 <script type="text/javascript">
   $(function() {
-    if (!isCanvasSupported()) {
-      $("#map_canvas").html('<b>Your browser is too old to display this map.<br />' +
-                            'Please update to a current version.</b>');
-      return;
-    }
+    var map = window.flightMap.get('map');
 
-    var sl_map =
-      new slMap("map_canvas",
-                "{{ config.get('SKYLINES_MAP_TILE_URL') }}",
-                { {% if 'baselayer' in request.args %}'base_layer': '{{ request.args['baselayer'] }}',{% endif %}{% if 'overlays' in request.args %}'overlay_layers': '{{ request.args['overlays'] }}',{% endif %} });
+    window.flightMap.fit();
 
-    var map = sl_map.getMap();
-
-    sl_map.addBingLayers("{{ config.get('SKYLINES_BING_API_KEY', 'null') }}");
-    sl_map.addMapboxLayer("{{ config.get('SKYLINES_MAPBOX_API_KEY', 'null') }}");
-
-    var icon_style = new ol.style.Style({
-      image: new ol.style.Icon(({
-        anchor: [0.5, 1],
-        anchorXUnits: 'fraction',
-        anchorYUnits: 'fraction',
-        src: '/vendor/openlayers/img/marker-gold.png'
-      }))
-    });
-
-    var vector_source = new ol.source.Vector({
-      features: []
-    });
-
-    var vector_layer = new ol.layer.Vector({
-      source: vector_source,
-      display_in_layer_switcher: false,
-      zIndex: 51,
-      style: icon_style,
-      name: 'Takeoff Locations',
-      id: 'TakeoffLocations'
-    });
-
-    map.addLayer(vector_layer);
-
-    var locations = [{{ add_locations(takeoff_locations) }}];
-    for (var i = 0; i < locations.length; ++i) {
-      var feature = new ol.Feature({
-        geometry: new ol.geom.Point(ol.proj.transform(locations[i], 'EPSG:4326', 'EPSG:3857'))
-      });
-
-      vector_source.addFeature(feature);
-    }
-
-    map.getView().fit(vector_source.getExtent(), map.getSize());
-    var zoom = map.getView().getZoom();
-    if (zoom > 10)
-      map.getView().setZoom(10);
+    var slMapClickHandler = require('skylines/utils/map-click-handler').default;
 
     var map_click_handler = slMapClickHandler(map, null, {
       flight_info: false,
@@ -253,7 +206,13 @@
   <div class="row">
     <div class="col-md-12">
       <h2>{% trans %}Takeoff Locations{% endtrans %}</h2>
-      <div id="map_canvas" style="width:100%; height:533px;"></div>
+      <div data-component='takeoffs-map' data-attrs='{
+        "locations": [{{ add_locations(takeoff_locations) }}],
+        "height": "533px",
+        "bingAPIKey": "{{ config.get('SKYLINES_BING_API_KEY', 'null') }}",
+        "mapboxAPIKey": "{{ config.get('SKYLINES_MAPBOX_API_KEY', 'null') }}",
+        "mapTileURL": "{{ config.get('SKYLINES_MAP_TILE_URL') }}"
+      }'></div>
     </div>
   </div>
   {%- endif %}

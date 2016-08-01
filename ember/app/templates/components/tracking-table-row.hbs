@@ -1,0 +1,31 @@
+<td class="hidden-xs date">
+  <abbr title={{format-time track.time format="full"}}>
+    {{format-relative track.time interval=1000}}
+  </abbr>
+</td>
+
+<td><a href="/users/{{track.pilot.id}}/">{{track.pilot.name}}</a></td>
+
+<td>
+  {{#if track.nearestAirport}}
+    {{x-flag code=track.nearestAirport.countryCode}}
+    {{track.nearestAirport.name}}
+    ({{format-distance track.nearestAirportDistance}})
+  {{/if}}
+</td>
+
+<td class="hidden-xs numeric">
+  {{#if (not (is-undefined altitudeAGL))}}
+    {{format-altitude altitudeAGL}}
+    <small>AGL</small>
+  {{else if track.altitude}}
+    {{format-altitude track.altitude}}
+    <small>MSL</small>
+  {{else}}
+    <small>{{t "unknown"}}</small>
+  {{/if}}
+</td>
+
+<td nowrap="nowrap" class="column-buttons">
+  <a href="/tracking/{{track.pilot.id}}/" class="btn btn-default btn-sm">{{t "show"}}</a>
+</td>

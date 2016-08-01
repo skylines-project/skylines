@@ -1,0 +1,62 @@
+<td class="color-stripe" style={{colorStripeStyle}}></td>
+<td>
+  {{#if flight.model.id}}
+    <span rel="tooltip" title="Handicap: {{flight.model.index}}">{{flight.model.name}}</span>
+  {{else if igcFile.model}}
+    [{{igcFile.model}}]
+  {{else}}
+    [{{t "unknown"}}]
+  {{/if}}
+
+  <small><br />
+    {{#if flight.registration}}
+      {{flight.registration}}
+    {{else if igcFile.registration}}
+      {{igcFile.registration}}
+    {{/if}}
+
+    {{#if flight.competitionId}}
+      &ndash; {{flight.competitionId}}
+    {{else if igcFile.competitionId}}
+      &ndash; {{igcFile.competitionId}}
+    {{/if}}
+  </small>
+</td>
+<td>
+  {{#if pilotName}}
+    {{#if pilot.id}}
+      <a href="/users/{{pilot.id}}/">{{pilotName}}</a>
+    {{else}}
+      {{pilotName}}
+    {{/if}}
+  {{/if}}
+
+  {{#if (and pilotName copilotName)}}<br/>{{/if}}
+
+  {{#if copilotName}}
+    {{#if copilot.id}}
+      <a href="/users/{{copilot.id}}/">{{copilotName}}</a>
+    {{else}}
+      {{copilotName}}
+    {{/if}}
+  {{/if}}
+
+  {{#if (not (or pilotName copilotName))}}
+  [{{t "unspecified"}}]
+  {{/if}}
+</td>
+<td class="times-column">
+  {{format-time times.firstObject.start format='hhmmss'}}<br />
+  {{format-time times.lastObject.end format='hhmmss'}}
+  <div class="times-table" style="display: none;">
+    <table>
+      {{#each times as |interval|}}
+        <tr>
+          <td style='text-align: right;'>{{format-time interval.start format='hhmmss'}}</td>
+          <td>-</td>
+          <td>{{format-time interval.end format='hhmmss'}}</td>
+        </tr>
+      {{/each}}
+    </table>
+  </div>
+</td>

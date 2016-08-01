@@ -1,26 +1,29 @@
 from datetime import datetime
 from tempfile import TemporaryFile
 from zipfile import ZipFile
-from enum import Enum
+from enum import IntEnum
 import hashlib
 import os
 
-from flask import Blueprint, render_template, request, flash, redirect, g, current_app, url_for, abort, make_response
+from collections import namedtuple
+
+from flask import Blueprint, render_template, request, flash, g, current_app, abort, make_response, jsonify
 from flask.ext.babel import _, lazy_gettext as l_
 from redis.exceptions import ConnectionError
-from werkzeug.exceptions import BadRequest
+from sqlalchemy.sql.expression import func
 
 from skylines.database import db
-from skylines.frontend.forms import UploadForm, UploadUpdateForm
+from skylines.frontend.forms import UploadForm
 from skylines.lib import files
 from skylines.lib.util import pressure_alt_to_qnh_alt
 from skylines.lib.decorators import login_required
 from skylines.lib.md5 import file_md5
 from skylines.lib.sql import query_to_sql
 from skylines.lib.xcsoar_ import flight_path, analyse_flight
-from skylines.model import User, Flight, IGCFile, Airspace
+from skylines.model import User, Flight, IGCFile, Airspace, AircraftModel
 from skylines.model.airspace import get_airspace_infringements
 from skylines.model.event import create_flight_notifications
+from skylines.schemas import fields, AirspaceSchema, AircraftModelSchema, FlightSchema, UserSchema, Schema, ValidationError
 from skylines.worker import tasks
 
 from geoalchemy2.shape import from_shape
@@ -39,7 +42,7 @@ import xcsoar
 upload_blueprint = Blueprint('upload', 'skylines')
 
 
-class UploadStatus(Enum):
+class UploadStatus(IntEnum):
     SUCCESS = 0
     DUPLICATE = 1  # _('Duplicate file')
     MISSING_DATE = 2  # _('Date missing in IGC file')
@@ -48,7 +51,49 @@ class UploadStatus(Enum):
     FLIGHT_IN_FUTURE = 5  # _('Date of flight in future')
 
 
-def IterateFiles(name, f):
+class UploadResult(namedtuple('UploadResult', [
+        'name', 'flight', 'status', 'prefix', 'trace', 'airspace', 'cache_key'])):
+
+    @classmethod
+    def for_duplicate(cls, name, other, prefix):
+        return cls(name, other, UploadStatus.DUPLICATE, prefix, None, None, None)
+
+    @classmethod
+    def for_missing_date(cls, name, prefix):
+        return cls(name, None, UploadStatus.MISSING_DATE, prefix, None, None, None)
+
+    @classmethod
+    def for_parser_error(cls, name, prefix):
+        return cls(name, None, UploadStatus.PARSER_ERROR, prefix, None, None, None)
+
+    @classmethod
+    def for_no_flight(cls, name, prefix):
+        return cls(name, None, UploadStatus.NO_FLIGHT, prefix, None, None, None)
+
+    @classmethod
+    def for_future_flight(cls, name, prefix):
+        return cls(name, None, UploadStatus.FLIGHT_IN_FUTURE, prefix, None, None, None)
+
+
+class TraceSchema(Schema):
+    igc_start_time = fields.DateTime()
+    igc_end_time = fields.DateTime()
+    barogram_t = fields.String()
+    barogram_h = fields.String()
+    enl = fields.String()
+    elevations_h = fields.String()
+
+
+class UploadResultSchema(Schema):
+    name = fields.String()
+    status = fields.Integer()
+    flight = fields.Nested(FlightSchema, exclude=('igcFile.owner',))
+    trace = fields.Nested(TraceSchema)
+    airspaces = fields.Nested(AirspaceSchema, attribute='airspace', many=True)
+    cacheKey = fields.String(attribute='cache_key')
+
+
+def iterate_files(name, f):
     try:
         z = ZipFile(f, 'r')
     except:
@@ -65,7 +110,7 @@ def IterateFiles(name, f):
                 yield info.filename, z.open(info.filename, 'r')
 
 
-def IterateUploadFiles(upload):
+def iterate_upload_files(upload):
     if isinstance(upload, unicode):
         # the Chromium browser sends an empty string if no file is selected
         if not upload:
@@ -80,11 +125,11 @@ def IterateUploadFiles(upload):
 
     elif isinstance(upload, list):
         for x in upload:
-            for name, f in IterateUploadFiles(x):
+            for name, f in iterate_upload_files(x):
                 yield name, f
 
     else:
-        for x in IterateFiles(upload.filename, upload):
+        for x in iterate_files(upload.filename, upload):
             yield x
 
 
@@ -106,80 +151,13 @@ def _encode_flight_path(fp, qnh):
 @upload_blueprint.route('/', methods=('GET', 'POST'))
 @login_required(l_("You have to login to upload flights."))
 def index():
-    if request.values.get('stage', type=int) == 1:
-        # Parse update form
-        num_flights = request.values.get('num_flights', 0, type=int)
+    # Create/parse file selection form
+    form = UploadForm(pilot=g.current_user.id)
 
-        flights = []
-        flight_id_list = []
-        form_error = False
+    if form.validate_on_submit():
+        return index_post(form)
 
-        for prefix in range(1, num_flights + 1):
-            name = request.values.get('{}-name'.format(prefix))
-
-            try:
-                status = UploadStatus(request.values.get('{}-status'.format(prefix), type=int))
-            except ValueError:
-                raise BadRequest('Status unknown')
-
-            flight, fp, form = check_update_form(prefix, status)
-
-            if fp:
-                trace = _encode_flight_path(fp, flight.qnh)
-                infringements = get_airspace_infringements(fp, qnh=flight.qnh)
-            else:
-                trace = None
-                infringements = {}
-
-            cache_key = None
-
-            if form and not infringements:
-                # remove airspace field from form if no airspace infringements found
-                del form.airspace_usage
-
-            elif form and infringements:
-                # if airspace infringements found create cache_key from flight id and user id
-                cache_key = hashlib.sha1(str(flight.id) + '_' + str(g.current_user.id)).hexdigest()
-
-            airspace = db.session.query(Airspace) \
-                                 .filter(Airspace.id.in_(infringements.keys())) \
-                                 .all()
-
-            flights.append((name, flight, status, str(prefix), trace, airspace, cache_key, form))
-
-            if form and form.validate_on_submit():
-                _update_flight(flight.id,
-                               fp,
-                               form.model_id.data,
-                               form.registration.data,
-                               form.competition_id.data,
-                               form.takeoff_time.data,
-                               form.scoring_start_time.data,
-                               form.scoring_end_time.data,
-                               form.landing_time.data,
-                               form.pilot_id.data, form.pilot_name.data,
-                               form.co_pilot_id.data, form.co_pilot_name.data)
-                flight_id_list.append(flight.id)
-            elif form:
-                form_error = True
-
-        if form_error:
-            return render_template(
-                'upload/result.jinja', num_flights=num_flights, flights=flights, success=True)
-        elif flight_id_list:
-            flash(_('Your flight(s) have been successfully published.'))
-            return redirect(url_for('flights.list', ids=','.join(str(x) for x in flight_id_list)))
-        else:
-            return redirect(url_for('flights.today'))
-
-    else:
-        # Create/parse file selection form
-        form = UploadForm(pilot=g.current_user.id)
-
-        if form.validate_on_submit():
-            return index_post(form)
-
-        return render_template('upload/form.jinja', form=form)
+    return render_template('upload/form.jinja', form=form)
 
 
 def index_post(form):
@@ -191,11 +169,11 @@ def index_post(form):
 
     club_id = (pilot and pilot.club_id) or user.club_id
 
-    flights = []
+    results = []
     success = False
 
     prefix = 0
-    for name, f in IterateUploadFiles(form.file.raw_data):
+    for name, f in iterate_upload_files(form.file.raw_data):
         prefix += 1
         filename = files.sanitise_filename(name)
         filename = files.add_file(filename, f)
@@ -206,7 +184,7 @@ def index_post(form):
             other = Flight.by_md5(md5)
             if other:
                 files.delete_file(filename)
-                flights.append((name, other, UploadStatus.DUPLICATE, str(prefix), None, None, None, None))
+                results.append(UploadResult.for_duplicate(name, other, str(prefix)))
                 continue
 
         igc_file = IGCFile()
@@ -217,7 +195,7 @@ def index_post(form):
 
         if igc_file.date_utc is None:
             files.delete_file(filename)
-            flights.append((name, None, UploadStatus.MISSING_DATE, str(prefix), None, None, None, None))
+            results.append(UploadResult.for_missing_date(name, str(prefix)))
             continue
 
         flight = Flight()
@@ -239,29 +217,28 @@ def index_post(form):
 
         analyzed = False
         try:
-            analyse_flight(flight, fp=fp)
-            analyzed = True
+            analyzed = analyse_flight(flight, fp=fp)
         except:
             current_app.logger.exception('analyse_flight() raised an exception')
 
         if not analyzed:
             files.delete_file(filename)
-            flights.append((name, None, UploadStatus.PARSER_ERROR, str(prefix), None, None, None, None))
+            results.append(UploadResult.for_parser_error(name, str(prefix)))
             continue
 
         if not flight.takeoff_time or not flight.landing_time:
             files.delete_file(filename)
-            flights.append((name, None, UploadStatus.NO_FLIGHT, str(prefix), None, None, None, None))
+            results.append(UploadResult.for_no_flight(name, str(prefix)))
             continue
 
         if flight.landing_time > datetime.now():
             files.delete_file(filename)
-            flights.append((name, None, UploadStatus.FLIGHT_IN_FUTURE, str(prefix), None, None, None, None))
+            results.append(UploadResult.for_future_flight(name, str(prefix)))
             continue
 
         if not flight.update_flight_path():
             files.delete_file(filename)
-            flights.append((name, None, UploadStatus.NO_FLIGHT, str(prefix), None, None, None, None))
+            results.append(UploadResult.for_no_flight(name, str(prefix)))
             continue
 
         flight.privacy_level = Flight.PrivacyLevel.PRIVATE
@@ -285,20 +262,7 @@ def index_post(form):
                              .filter(Airspace.id.in_(infringements.keys())) \
                              .all()
 
-        # create form after flushing the session, otherwise we wouldn't have a flight.id
-        form = UploadUpdateForm(formdata=None, prefix=str(prefix), obj=flight)
-        # remove airspace field from form if no airspace infringements found
-        if not infringements:
-            del form.airspace_usage
-
-        # replace None in form.pilot_id and form.co_pilot_id with 0
-        if not form.pilot_id.data: form.pilot_id.data = 0
-        if not form.co_pilot_id.data: form.co_pilot_id.data = 0
-
-        form.pilot_id.validate(form)
-
-        flights.append((name, flight, UploadStatus.SUCCESS, str(prefix), trace,
-                        airspace, cache_key, form))
+        results.append(UploadResult(name, flight, UploadStatus.SUCCESS, str(prefix), trace, airspace, cache_key))
 
         create_flight_notifications(flight)
 
@@ -309,130 +273,101 @@ def index_post(form):
     if success:
         flash(_('Please click "Publish Flight(s)" at the bottom to confirm our automatic analysis.'))
 
+    results_json = UploadResultSchema().dump(results, many=True).data
+
+    club_members = []
+    if g.current_user.club_id:
+        member_schema = UserSchema(only=('id', 'name'))
+
+        club_members = User.query(club_id=g.current_user.club_id) \
+            .order_by(func.lower(User.name)) \
+            .filter(User.id != g.current_user.id)
+
+        club_members = member_schema.dump(club_members.all(), many=True).data
+
+    aircraft_models = AircraftModel.query() \
+        .order_by(AircraftModel.kind) \
+        .order_by(AircraftModel.name) \
+        .all()
+
+    aircraft_models = AircraftModelSchema().dump(aircraft_models, many=True).data
+
     return render_template(
-        'upload/result.jinja', num_flights=prefix, flights=flights, success=success)
+        'upload/result.jinja', num_flights=prefix, results=results, success=success,
+        results_json=results_json, club_members=club_members, aircraft_models=aircraft_models)
 
 
-def check_update_form(prefix, status):
-    form = UploadUpdateForm(prefix=str(prefix))
+@upload_blueprint.route('/verify', methods=('POST',))
+@login_required(l_('You have to login to upload flights.'))
+def verify():
+    json = request.get_json()
+    if json is None:
+        return jsonify(error='invalid-request'), 400
 
-    if not form.id or not form.id.data:
-        return None, None, None
+    try:
+        data = FlightSchema(partial=True).load(json, many=True).data
+    except ValidationError, e:
+        return jsonify(error='validation-failed', fields=e.messages), 422
 
-    flight_id = form.id.data
+    ids = [it.get('id') for it in data]
+    if not all(ids):
+        return jsonify(error='id-missing'), 422
 
-    # Get flight from database and check if it is writable
-    flight = Flight.get(flight_id)
+    user_ids = [it['pilot_id'] for it in data if 'pilot_id' in it]
+    user_ids.extend([it['co_pilot_id'] for it in data if 'co_pilot_id' in it])
 
-    if not flight:
-        abort(404)
+    model_ids = [it['model_id'] for it in data if 'model_id' in it]
 
-    if status == UploadStatus.DUPLICATE:
-        return flight, None, None
+    flights = {flight.id: flight for flight in Flight.query().filter(Flight.id.in_(ids)).all()}
+    users = {user.id: user for user in User.query().filter(User.id.in_(user_ids)).all()}
+    models = {model.id: model for model in AircraftModel.query().filter(AircraftModel.id.in_(model_ids)).all()}
 
-    else:
-        if not flight.is_writable(g.current_user):
-            abort(403)
+    for d in data:
+        flight = flights.get(d.pop('id'))
+        if not flight or not flight.is_writable(g.current_user):
+            return jsonify(error='unknown-flight'), 422
 
-        fp = flight_path(flight.igc_file, add_elevation=True, max_points=None)
+        if 'pilot_id' in d and d['pilot_id'] is not None and d['pilot_id'] not in users:
+            return jsonify(error='unknown-pilot'), 422
 
-        form.populate_obj(flight)
+        if 'co_pilot_id' in d and d['co_pilot_id'] is not None and d['co_pilot_id'] not in users:
+            return jsonify(error='unknown-copilot'), 422
 
-        # replace None in form.pilot_id and form.co_pilot_id with 0
-        if not form.pilot_id.data: form.pilot_id.data = 0
-        if not form.co_pilot_id.data: form.co_pilot_id.data = 0
+        if 'model_id' in d and d['model_id'] is not None and d['model_id'] not in models:
+            return jsonify(error='unknown-aircraft-model'), 422
 
-        # Force takeoff_time and landing_time to be within the igc file limits
-        if form.takeoff_time.data < fp[0].datetime:
-            form.takeoff_time.data = fp[0].datetime
+        for key in ('takeoff_time', 'scoring_start_time', 'scoring_end_time', 'landing_time'):
+            if key in d:
+                d[key] = d[key].replace(tzinfo=None)
 
-        if form.landing_time.data > fp[-1].datetime:
-            form.landing_time.data = fp[-1].datetime
+        old_pilot = flight.pilot_id
 
-        return flight, fp, form
+        for key, value in d.iteritems():
+            setattr(flight, key, value)
 
+        if not (flight.takeoff_time <= flight.scoring_start_time <= flight.scoring_end_time <= flight.landing_time):
+            return jsonify(error='invalid-times'), 422
 
-def _update_flight(flight_id, fp, model_id, registration, competition_id,
-                   takeoff_time, scoring_start_time,
-                   scoring_end_time, landing_time,
-                   pilot_id, pilot_name,
-                   co_pilot_id, co_pilot_name):
-    # Get flight from database and check if it is writable
-    flight = Flight.get(flight_id)
+        if flight.pilot_id != old_pilot and flight.pilot_id:
+            flight.club_id = users[flight.pilot_id].club_id
 
-    if not flight or not flight.is_writable(g.current_user):
-        return False
-
-    # Parse model, registration and competition ID
-    if model_id == 0:
-        model_id = None
-
-    if registration is not None:
-        registration = registration.strip()
-        if not 0 < len(registration) <= 32:
-            registration = None
-
-    if competition_id is not None:
-        competition_id = competition_id.strip()
-        if not 0 < len(competition_id) <= 5:
-            competition_id = None
-
-    if pilot_id == 0:
-        pilot_id = None
-
-    # Set new values
-    if flight.pilot_id != pilot_id:
-        flight.pilot_id = pilot_id
-
-        # update club if pilot changed
-        if pilot_id:
-            flight.club_id = User.get(pilot_id).club_id
-
-    flight.pilot_name = pilot_name if pilot_name else None
-
-    flight.co_pilot_id = co_pilot_id if co_pilot_id != 0 else None
-    flight.co_pilot_name = co_pilot_name if co_pilot_name else None
-
-    flight.model_id = model_id
-    flight.registration = registration
-    flight.competition_id = competition_id
-    flight.time_modified = datetime.utcnow()
-
-    # Update times only if they are reasonable and have been changed...
-    trigger_analysis = False
-
-    if takeoff_time and scoring_start_time and scoring_end_time and landing_time \
-       and takeoff_time <= scoring_start_time <= scoring_end_time <= landing_time \
-       and (flight.takeoff_time != takeoff_time
-            or flight.scoring_start_time != scoring_start_time
-            or flight.scoring_end_time != scoring_end_time
-            or flight.landing_time != landing_time):
-
-        flight.takeoff_time = takeoff_time
-        flight.scoring_start_time = scoring_start_time
-        flight.scoring_end_time = scoring_end_time
-        flight.landing_time = landing_time
-
-        trigger_analysis = True
-
-    flight.privacy_level = Flight.PrivacyLevel.PUBLIC
+        flight.privacy_level = Flight.PrivacyLevel.PUBLIC
+        flight.time_modified = datetime.utcnow()
 
     db.session.commit()
 
-    if trigger_analysis:
-        analyse_flight(flight, fp=fp)
+    for flight_id in flights.iterkeys():
+        try:
+            tasks.analyse_flight.delay(flight_id)
+            tasks.find_meetings.delay(flight_id)
+        except ConnectionError:
+            current_app.logger.info('Cannot connect to Redis server')
 
-    try:
-        tasks.analyse_flight.delay(flight.id)
-        tasks.find_meetings.delay(flight.id)
-    except ConnectionError:
-        current_app.logger.info('Cannot connect to Redis server')
-
-    return True
+    return jsonify()
 
 
-@upload_blueprint.route('/airspace/<string:cache_key>/<int:as_id>.png')
-def airspace_image(cache_key, as_id):
+@upload_blueprint.route('/airspace/<string:cache_key>/<int:airspace_id>.png')
+def airspace_image(cache_key, airspace_id):
     if not mapscript_available:
         abort(404)
 
@@ -455,7 +390,7 @@ def airspace_image(cache_key, as_id):
     highlight_locations = []
     extent_epsg4326 = [180, 85.05112878, -180, -85.05112878]
 
-    for period in infringements[as_id]:
+    for period in infringements[airspace_id]:
         # Convert the coordinate into a list of tuples
         coordinates = [(c['location']['longitude'], c['location']['latitude']) for c in period]
 

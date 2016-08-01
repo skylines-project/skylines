@@ -10,7 +10,6 @@ from geoalchemy2.shape import to_shape
 from datetime import timedelta
 
 from skylines.database import db
-from skylines.frontend.forms import ChangePilotsForm, ChangeAircraftForm
 from skylines.lib import files
 from skylines.lib.dbutil import get_requested_record_list
 from skylines.lib.xcsoar_ import analyse_flight
@@ -19,12 +18,14 @@ from skylines.lib.formatter import units
 from skylines.lib.datetime import from_seconds_of_day, to_seconds_of_day
 from skylines.lib.geo import METERS_PER_DEGREE
 from skylines.lib.geoid import egm96_height
+from skylines.lib.vary import vary
 from skylines.model import (
     User, Flight, FlightPhase, Location, FlightComment,
-    Notification, Event, FlightMeetings
+    Notification, Event, FlightMeetings, AircraftModel,
 )
 from skylines.model.event import create_flight_comment_notifications
 from skylines.model.flight import get_elevations_for_flight
+from skylines.schemas import fields, FlightSchema, FlightCommentSchema, Schema, ValidationError
 from skylines.worker import tasks
 from redis.exceptions import ConnectionError
 
@@ -174,18 +175,14 @@ def format_phase(phase):
     r = dict(start="%s" % format_time(phase.start_time),
              fraction="%d%%" % phase.fraction if phase.fraction is not None else "",
              speed=units.format_speed(phase.speed) if phase.speed is not None else "",
-             speed_number=units.format_speed(phase.speed, name=False) if phase.speed is not None else "",
              vario=units.format_lift(phase.vario),
-             vario_number=units.format_lift(phase.vario, name=False),
              alt_diff=units.format_altitude(phase.alt_diff),
-             alt_diff_number=units.format_altitude(phase.alt_diff, name=False),
              count=phase.count,
              duration=phase.duration,
              is_circling=is_circling,
              type=PHASETYPE_NAMES[phase.phase_type],
              circling_direction="",
              distance="",
-             distance_number="",
              glide_rate="",
              circling_direction_left=phase.circling_direction == FlightPhase.CD_LEFT,
              circling_direction_right=phase.circling_direction == FlightPhase.CD_RIGHT,
@@ -193,7 +190,6 @@ def format_phase(phase):
 
     if not is_circling:
         r['distance'] = units.format_distance(phase.distance, 1)
-        r['distance_number'] = units.format_distance(phase.distance, 1, name=False)
 
         # Sensible glide rate values are formatted as numbers. Others are shown
         # as infinity symbol.
@@ -257,18 +253,87 @@ def mark_flight_notifications_read(flight):
     db.session.commit()
 
 
+class MeetingTimeSchema(Schema):
+    start = fields.DateTime()
+    end = fields.DateTime()
+
+
+class NearFlightSchema(Schema):
+    flight = fields.Nested(FlightSchema, only=('id', 'pilot', 'pilotName', 'copilot', 'copilotName',
+                                               'model', 'registration', 'competitionId', 'igcFile'))
+
+    times = fields.Nested(MeetingTimeSchema, many=True)
+
+
 @flight_blueprint.route('/')
+@vary('accept')
 def index():
-    near_flights = FlightMeetings.get_meetings(g.flight)
+    if 'application/json' in request.headers.get('Accept', ''):
+        return jsonify(flight=FlightSchema().dump(g.flight).data)
+
+    near_flights = FlightMeetings.get_meetings(g.flight).values()
+    near_flights = NearFlightSchema().dump(near_flights, many=True).data
+
+    comments = FlightCommentSchema().dump(g.flight.comments, many=True).data
+
+    takeoff_midnight = g.flight.takeoff_time.replace(hour=0, minute=0, second=0, microsecond=0)
+
+    phases = []
+    for p_raw in g.flight.phases:
+        p = format_phase(p_raw)
+
+        phases.append({
+            "isCircling": p['is_circling'],
+            "circlingDirection": unicode(p['circling_direction']),
+            "isCirclingLeft": p['circling_direction_left'],
+            "isCirclingRight": p['circling_direction_right'],
+            "isPowered": p['is_powered'],
+            "type": unicode(p['type']),
+            "start": {
+                "seconds": (p_raw.start_time - takeoff_midnight).total_seconds(),
+                "text": unicode(p['start']),
+            },
+            "duration": {
+                "seconds": p_raw.duration.total_seconds(),
+                "text": unicode(p['duration']),
+            },
+            "altDiff": p_raw.alt_diff,
+            "distance": p_raw.distance,
+            "vario": p_raw.vario,
+            "speed": p_raw.speed,
+            "glideRate": p['glide_rate'],
+        })
+
+    contest_legs = {}
+    for type in ['classic', 'triangle']:
+        legs = []
+        for leg in format_legs(g.flight, g.flight.get_contest_legs('olc_plus', type)):
+            legs.append({
+                "distance": unicode(leg['distance']),
+                "start": leg['start_time_of_day'],
+                "duration": {
+                    "seconds": leg['duration'].total_seconds(),
+                    "text": unicode(leg['duration']),
+                },
+                "speed": unicode(leg['speed']),
+                "climbPercentage": unicode(leg['climb_percentage']),
+                "vario": unicode(leg['climbrate']),
+                "glideRate": unicode(leg['glide_rate']),
+            })
+
+        contest_legs[type] = legs
 
     mark_flight_notifications_read(g.flight)
 
     return render_template(
         'flights/map.jinja',
         flight=g.flight,
+        flight_json=FlightSchema().dump(g.flight).data,
         near_flights=near_flights,
         other_flights=g.other_flights,
-        comments=comments_partial(),
+        comments=comments,
+        contest_legs=contest_legs,
+        phases=phases,
         phase_formatter=format_phase,
         leg_formatter=format_legs)
 
@@ -314,13 +379,6 @@ def json():
     resp.headers['Last-Modified'] = last_modified
     resp.headers['Etag'] = g.flight.igc_file.md5
     return resp
-
-
-@flight_blueprint.route('/comments.partial')
-def comments_partial():
-    return render_template(
-        'flights/comments.partial.jinja',
-        comments=g.flight.comments)
 
 
 def _get_near_flights(flight, location, time, max_distance=1000):
@@ -409,88 +467,84 @@ def near():
     return jsonify(flights=map(add_flight_path, flights))
 
 
-@flight_blueprint.route('/change_pilot', methods=['GET', 'POST'])
+@flight_blueprint.route('/change_pilot')
 def change_pilot():
     if not g.flight.is_writable(g.current_user):
         abort(403)
 
-    form = ChangePilotsForm(obj=g.flight)
-    if form.validate_on_submit():
-        return change_pilot_post(form)
-
-    return render_template('flights/change_pilot.jinja', form=form)
+    return render_template('ember-page.jinja', active_page='flights')
 
 
-def change_pilot_post(form):
-    pilot_id = form.pilot_id.data if form.pilot_id.data != 0 else None
-    if g.flight.pilot_id != pilot_id:
-        g.flight.pilot_id = pilot_id
-
-        # update club if pilot changed
-        if pilot_id:
-            g.flight.club_id = User.get(pilot_id).club_id
-
-    g.flight.pilot_name = form.pilot_name.data if form.pilot_name.data else None
-
-    g.flight.co_pilot_id = form.co_pilot_id.data if form.co_pilot_id.data != 0 else None
-    g.flight.co_pilot_name = form.co_pilot_name.data if form.co_pilot_name.data else None
-
-    g.flight.time_modified = datetime.utcnow()
-    db.session.commit()
-
-    return redirect(url_for('.index'))
-
-
-@flight_blueprint.route('/change_aircraft', methods=['GET', 'POST'])
+@flight_blueprint.route('/change_aircraft')
 def change_aircraft():
     if not g.flight.is_writable(g.current_user):
         abort(403)
 
-    if g.flight.model_id is None:
-        model_id = g.flight.igc_file.guess_model()
-    else:
-        model_id = g.flight.model_id
-
-    if g.flight.registration is not None:
-        registration = g.flight.registration
-    elif g.flight.igc_file.registration is not None:
-        registration = g.flight.igc_file.registration
-    else:
-        registration = g.flight.igc_file.guess_registration()
-
-    if g.flight.competition_id is not None:
-        competition_id = g.flight.competition_id
-    elif g.flight.igc_file.competition_id is not None:
-        competition_id = g.flight.igc_file.competition_id
-    else:
-        competition_id = None
-
-    form = ChangeAircraftForm(
-        id=g.flight.id,
-        model_id=model_id,
-        registration=registration,
-        competition_id=competition_id
-    )
-    if form.validate_on_submit():
-        return change_aircraft_post(form)
-
-    return render_template('flights/change_aircraft.jinja', form=form)
+    return render_template('ember-page.jinja', active_page='flights')
 
 
-def change_aircraft_post(form):
-    registration = form.registration.data
-    if registration is not None:
-        registration = registration.strip()
-        if len(registration) == 0:
-            registration = None
+@flight_blueprint.route('/', methods=['POST'])
+def update():
+    if not g.flight.is_writable(g.current_user):
+        return jsonify(), 403
 
-    g.flight.model_id = form.model_id.data or None
-    g.flight.registration = registration
-    g.flight.competition_id = form.competition_id.data or None
+    json = request.get_json()
+    if json is None:
+        return jsonify(error='invalid-request'), 400
+
+    try:
+        data = FlightSchema(partial=True).load(json).data
+    except ValidationError, e:
+        return jsonify(error='validation-failed', fields=e.messages), 422
+
+    if 'pilot_id' in data:
+        pilot_id = data['pilot_id']
+
+        if pilot_id is not None and not User.exists(id=pilot_id):
+            return jsonify(error='unknown-pilot'), 422
+
+        if g.flight.pilot_id != pilot_id:
+            g.flight.pilot_id = pilot_id
+
+            # update club if pilot changed
+            if pilot_id is not None:
+                g.flight.club_id = User.get(pilot_id).club_id
+
+    if 'pilot_name' in data:
+        g.flight.pilot_name = data['pilot_name']
+
+    if 'co_pilot_id' in data:
+        co_pilot_id = data['co_pilot_id']
+
+        if co_pilot_id is not None and not User.exists(id=co_pilot_id):
+            return jsonify(error='unknown-copilot'), 422
+
+        g.flight.co_pilot_id = co_pilot_id
+
+    if 'co_pilot_name' in data:
+        g.flight.co_pilot_name = data['co_pilot_name']
+
+    if g.flight.co_pilot_id is not None and g.flight.co_pilot_id == g.flight.pilot_id:
+        return jsonify(error='copilot-equals-pilot'), 422
+
+    if 'model_id' in data:
+        model_id = data['model_id']
+
+        if model_id is not None and not AircraftModel.exists(id=model_id):
+            return jsonify(error='unknown-aircraft-model'), 422
+
+        g.flight.model_id = model_id
+
+    if 'registration' in data:
+        g.flight.registration = data['registration']
+
+    if 'competition_id' in data:
+        g.flight.competition_id = data['competition_id']
+
     g.flight.time_modified = datetime.utcnow()
     db.session.commit()
 
-    return redirect(url_for('.index'))
+    return jsonify()
 
 
 @flight_blueprint.route('/delete', methods=['GET', 'POST'])

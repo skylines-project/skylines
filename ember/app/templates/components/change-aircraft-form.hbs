@@ -1,0 +1,26 @@
+<form {{action "submit" on="submit"}}>
+  {{#if error}}
+    <div class="alert alert-danger" role="alert">{{error}}</div>
+  {{/if}}
+
+  <div class="form-group">
+    <label class="control-label">{{t "aircraft-type"}}</label>
+    {{aircraft-model-select models=models modelId=modelId onChange=(action (mut modelId))}}
+  </div>
+
+  {{validated-input
+    value=registration
+    validation=validations.attrs.registration
+    label=(t "registration")
+    disabled=pending}}
+
+  {{validated-input
+    value=competitionId
+    validation=validations.attrs.competitionId
+    label=(t "competition-id")
+    disabled=pending}}
+
+  <button class="btn btn-primary btn-block" type="submit" disabled={{or pending (not validations.isValid)}}>
+    {{t (if pending "changing" "change")}}
+  </button>
+</form>

@@ -1,13 +1,11 @@
 {% extends "base-fullscreen.jinja" %}
 {% set active_page = "flights" %}
+{% set use_ember = true %}
 
 
 {% from 'flights/meta-tags.jinja' import flight_meta_tags with context %}
 {% from 'flights/macros.jinja' import flight_title with context %}
-{% from 'flights/details-table.jinja' import render_details_table with context %}
-{% from 'flights/wingman-table.jinja' import render_wingman_table with context %}
-{% from 'flights/phases-table.jinja' import render_circling_performance, render_cruise_performance,
-                                            render_leg_statistics, render_phases with context %}
+{% from 'flights/phases-table.jinja' import render_circling_performance, render_cruise_performance with context %}
 
 
 {% block title -%}{{ flight_title(flight) }}{%- endblock %}
@@ -35,14 +33,6 @@
 <script type="text/javascript" src="{{ ASSET_URL }}"></script>
 {%- endassets %}
 
-{% assets 'flot_js' -%}
-<script type="text/javascript" src="{{ ASSET_URL }}"></script>
-{%- endassets %}
-
-{% assets 'flight_js' -%}
-<script type="text/javascript" src="{{ ASSET_URL }}"></script>
-{%- endassets %}
-
 <script type="text/javascript">
   $(function() {
     var flight_display = null;
@@ -55,40 +45,17 @@
       $(".ol-attribution").css('bottom', height);
     });
 
-    sidebar.on('content', function (e, args) {
-      if (args.id == 'tab-stats-legs') {
-        phase_highlighter.addTable($('#leg-table-olc_plus-classic'));
-        phase_highlighter.addTable($('#leg-table-olc_plus-triangle'));
-      } else if (args.id == 'tab-stats-phases') {
-        phase_highlighter.addTable($('#phases-table'));
-      } else if (args.id == 'tab-wingmen') {
-        var wingmanTable = $('#wingman-table');
+    window.wingmanTable.on('select', function(sfid) {
+      if (!flight_display) return;
 
-        wingmanTable.find('tbody').find('tr').each(function(index, row) {
-          $(this).on('click', function() {
-            if (!flight_display) return;
-
-            var sfid = $(this).data('sfid');
-            if (flight_display.getFlights().has(sfid)) {
-              flight_display.getFlights().remove(sfid);
-              unpinFlight(sfid);
-            } else {
-              flight_display.addFlightFromJSON("/flights/" + sfid + "/json");
-              pinFlight(sfid);
-            }
-          });
-        });
-
-        wingmanTable.find('[rel=popover]').popover({
-          html: true,
-          container: '#fullscreen-content',
-          title: 'Periods',
-          placement: 'right',
-          trigger: 'hover',
-          template: popover_template
-        });
-
-        wingmanTable.find('[rel=tooltip]').tooltip();
+      var flights = window.fixCalcService.get('flights');
+      var matches = flights.filterBy('id', sfid);
+      if (matches.length !== 0) {
+        flights.removeObjects(matches);
+        window.pinnedFlightsService.unpin(sfid);
+      } else {
+        window.fixCalcService.addFlightFromJSON("/flights/" + sfid + "/json");
+        window.pinnedFlightsService.pin(sfid);
       }
     });
 
@@ -117,46 +84,36 @@
       template: popover_template
     });
 
-    if (!isCanvasSupported()) {
-      $("#map_canvas").html('<b>Your browser is too old to display this map.<br />' +
-                            'Please update to a current version.</b>');
-      return;
-    }
+    var map = window.flightMap.get('map');
 
-    slUnits.init({{ h.json.dumps(h.get_setting_name('distance_unit')) }},
-                 {{ h.json.dumps(h.get_setting_name('speed_unit')) }},
-                 {{ h.json.dumps(h.get_setting_name('lift_unit')) }},
-                 {{ h.json.dumps(h.get_setting_name('altitude_unit')) }});
+    var slFlightDisplay = require('skylines/utils/flight-display').default;
+    var slMapClickHandler = require('skylines/utils/map-click-handler').default;
 
-    var sl_map =
-      new slMap("map_canvas",
-                "{{ config.get('SKYLINES_MAP_TILE_URL') }}",
-                { {% if 'baselayer' in request.args %}'base_layer': '{{ request.args['baselayer'] }}',{% endif %}{% if 'overlays' in request.args %}'overlay_layers': '{{ request.args['overlays'] }}',{% endif %} });
-
-    var map = sl_map.getMap();
-
-    sl_map.addBingLayers("{{ config.get('SKYLINES_BING_API_KEY', 'null') }}");
-    sl_map.addMapboxLayer("{{ config.get('SKYLINES_MAPBOX_API_KEY', 'null') }}");
-
-    flight_display = slFlightDisplay(sl_map.getMap(), $("#fix-data"), $("#barogram"));
-    flight_display.addFlightFromJSON("/flights/{{ flight.id }}/json?{{ config.get('SKYLINES_CACHE_BUSTER', '') }}",false);
+    flight_display = slFlightDisplay.create({
+      fixCalc: window.fixCalcService,
+      flightMap: window.flightMap,
+      fix_table: window.fixTable,
+      baro: window.barogram
+    });
+    window.fixCalcService.addFlightFromJSON("/flights/{{ flight.id }}/json?{{ config.get('SKYLINES_CACHE_BUSTER', '') }}",false);
 
     {% if other_flights -%}
     {% for flight in other_flights -%}
-    flight_display.addFlightFromJSON("/flights/{{ flight.id }}/json?{{ config.get('SKYLINES_CACHE_BUSTER', '') }}");
+    window.fixCalcService.addFlightFromJSON("/flights/{{ flight.id }}/json?{{ config.get('SKYLINES_CACHE_BUSTER', '') }}");
     {%- endfor %}
     {%- endif %}
 
     var getPadding = function() { return [20, 20, $("#barogram_panel").height() + 20, sidebar.width() + 20]; };
-    var extent = flight_display.getFlights().getBounds();
+    window.paddingFn = getPadding;
+
+    var extent = window.fixCalcService.get('flights').getBounds();
     map.getView().fit(extent, map.getSize(), {padding: getPadding()});
 
-    var pinnedFlights = getPinnedFlights();
-    for (var i = 0, len = pinnedFlights.length; i < len; i++)
-      if (pinnedFlights[i] != {{ flight.id }})
-        flight_display.addFlightFromJSON("/flights/" + pinnedFlights[i] + "/json");
-
-    pinButton($("#pinned"), {{ flight.id }});
+    window.pinnedFlightsService.get('pinned').filter(function(id) {
+      return id !== {{ flight.id }};
+    }).forEach(function(id) {
+      window.fixCalcService.addFlightFromJSON("/flights/" + id + "/json");
+    });
 
     slMapClickHandler(map, flight_display, {
       flight_info: true,
@@ -164,20 +121,10 @@
       api_url: "{{ config.get('SKYLINES_API_URL') }}"
     });
 
-    var phase_highlighter = slPhaseHighlighter(sl_map,
-                                               flight_display.getBaro(),
-                                               flight_display.getFlights(),
-                                               getPadding);
-
-    var fullscreen_button = new FullscreenButton($("#fullscreen-content"));
-    map.addControl(fullscreen_button);
-
     if (window.location.hash &&
         sidebar.find('li > a[href="#' + window.location.hash.substring(1) + '"]').length != 0) {
       sidebar.open(window.location.hash.substring(1));
     }
-
-    $('#flight-details-table').find('[rel=tooltip]').tooltip();
   });
 </script>
 {%- endblock %}
@@ -235,21 +182,17 @@
         </a>
       </h3>
       <div class="sidebar-pane-content">
-      {{ render_details_table(flight) }}
-
-        <p>
-          <a href="{{ url_for('files.index', filename=flight.igc_file.filename) }}" title="{{ flight.igc_file.filename }}" class="btn btn-default">
-            <i class="icon-download-alt icon-large"></i> IGC
-          </a>
-
-          <span id="pinned" rel="tooltip" title="{{ _('Activate this to show the flight on top of other flights on the map') }}"></span>
-        </p>
+        <div data-component="flight-details-table" data-attrs='{
+          "flight": {{ flight_json|tojson }}
+        }'>Loading...</div>
       </div>
     </div>
     <div class="sidebar-pane" id="tab-comments">
       <h3><i class="icon-comments-alt"></i> {% trans %}Comments{% endtrans %}</h3>
       <div class="sidebar-pane-content">
-        {{ comments|safe }}
+        <div data-component='comments-list' data-attrs='{
+          "comments":{{ comments|tojson }}
+        }'></div>
       </div>
     </div>
     <div class="sidebar-pane" id="tab-stats-total">
@@ -264,13 +207,9 @@
     </div>
     <div class="sidebar-pane" id="tab-stats-legs">
       <h3>{% trans %}Legs{% endtrans %}</h3>
-      <div class="sidebar-pane-content">
-        <h4>{% trans %}Distance{% endtrans %}</h4>
-        {{ render_leg_statistics(flight, 'olc_plus', 'classic') }}
-
-        <h4>{% trans %}Triangle{% endtrans %}</h4>
-        {{ render_leg_statistics(flight, 'olc_plus', 'triangle') }}
-      </div>
+      <div class="sidebar-pane-content" data-component='flight-leg-panel' data-attrs='{
+        "legs": {{ contest_legs|tojson }}
+      }'></div>
     </div>
 
     {%- if flight.has_phases %}
@@ -278,7 +217,9 @@
       <h3>{% trans %}Phase Statistics{% endtrans %}</h3>
       <div class="sidebar-pane-content">
         <div class="table-responsive">
-          {{ render_phases(flight) }}
+          <div data-component='flight-phase-table' data-attrs='{
+            "phases": {{ phases|tojson }}
+          }'></div>
         </div>
       </div>
     </div>
@@ -287,18 +228,23 @@
     <div class="sidebar-pane" id="tab-wingmen">
       <h3>{% trans %}Wingmen{% endtrans %}</h3>
       <div class="sidebar-pane-content">
-        {{ render_wingman_table(near_flights) }}
+        <div data-component='wingman-table' data-attrs='{"nearFlights": {{ near_flights|tojson }}}'></div>
       </div>
     </div>
   </div>
 </div>
 
-<div id="map_canvas" class="olFullscreen sidebar-map"></div>
+<div data-component='flight-map' data-attrs='{
+  "fullscreenElement": "#fullscreen-content",
+  "bingAPIKey": "{{ config.get('SKYLINES_BING_API_KEY', 'null') }}",
+  "mapboxAPIKey": "{{ config.get('SKYLINES_MAPBOX_API_KEY', 'null') }}",
+  "mapTileURL": "{{ config.get('SKYLINES_MAP_TILE_URL') }}"
+}' class="olFullscreen sidebar-map"></div>
 <div id="barogram_panel" class="map-bottom-panel map-overlay">
     <div style="overflow: auto; max-height: 115px">
-        <table id="fix-data" class="table table-condensed"></table>
+        <div data-component='fix-table'></div>
     </div>
-    <div id="barogram" style="width:100%; height:133px;"></div>
+    <div data-component='flight-barogram'></div>
 </div>
 
 <div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-hidden="true" style="display:none"></div>

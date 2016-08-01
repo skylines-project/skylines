@@ -1,0 +1,21 @@
+<div class="panel-heading">
+  <h3 class="panel-title">{{t "live-tracking-key"}}</h3>
+  <p class="panel-help-icon">
+    <a href="/tracking/info"><i class="icon-question-sign"></i></a>
+  </p>
+</div>
+<div class="panel-body">
+  {{#if error}}
+    <div class="alert alert-danger" role="alert">{{error}}</div>
+  {{/if}}
+
+  <p style="margin: 10px 0px 20px;">
+    Your Live Tracking key is: <span class="label tracking-key">{{key}}</span>
+  </p>
+
+  <form {{action "submit" on="submit"}}>
+    <button class="btn btn-primary btn-block" type="submit" disabled={{pending}}>
+      {{t (if pending "generating-new-key" "generate-new-key")}}
+    </button>
+  </form>
+</div>

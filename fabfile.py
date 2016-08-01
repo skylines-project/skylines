@@ -29,6 +29,11 @@ def restart():
     with cd(SRC_DIR):
         run('git reset --hard')
 
+        with cd('ember'):
+            run('npm install')
+            run('bower install --force')
+            run('node_modules/.bin/ember build -prod')
+
         # compile i18n .mo files
         manage('babel compile')
 
