@@ -183,6 +183,11 @@ timeline-events:
     message1: '<strong><a href="{actorURL}">{actor}</a></strong> joined SkyLines.'
     message2: 'You joined SkyLines.'
 
+flight-phase:
+  powered: 'Powered'
+  circling: 'Circling'
+  cruise: 'Cruise'
+
 units:
   title: 'Units'
   distance: 'Distance unit'

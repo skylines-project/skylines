@@ -168,6 +168,13 @@ PHASETYPE_NAMES = {None: "",
                    FlightPhase.PT_CRUISE: l_("Cruise")}
 
 
+PHASETYPE_IDS = {
+    FlightPhase.PT_POWERED: u'powered',
+    FlightPhase.PT_CIRCLING: u'circling',
+    FlightPhase.PT_CRUISE: u'cruise',
+}
+
+
 def format_phase(phase):
     """Format phase properties to human readable format
     """
@@ -217,7 +224,7 @@ def format_phase_json(phase):
         "isCirclingLeft": phase.circling_direction == FlightPhase.CD_LEFT,
         "isCirclingRight": phase.circling_direction == FlightPhase.CD_RIGHT,
         "isPowered": phase.phase_type == FlightPhase.PT_POWERED,
-        "type": unicode(PHASETYPE_NAMES[phase.phase_type]),
+        "type": PHASETYPE_IDS.get(phase.phase_type),
         "secondsOfDay": phase.seconds_of_day,
         "startTime":  isoformat(phase.start_time),
         "duration": phase.duration.total_seconds(),

@@ -1,16 +1,16 @@
 <td>
   {{#if phase.isCircling}}
     {{#if phase.isCirclingLeft}}
-      <i class="icon-rotate-left" title="{{phase.type}} {{phase.circlingDirection}}"></i>
+      <i class="icon-rotate-left" title="{{t "flight-phase.circling"}} {{phase.circlingDirection}}"></i>
     {{else if phase.isCirclingRight}}
-      <i class="icon-rotate-right" title="{{phase.type}} {{phase.circlingDirection}}"></i>
+      <i class="icon-rotate-right" title="{{t "flight-phase.circling"}} {{phase.circlingDirection}}"></i>
     {{else}}
-      <i class="icon-circle-blank" title="{{phase.type}} {{phase.circlingDirection}}"></i>
+      <i class="icon-circle-blank" title="{{t "flight-phase.circling"}} {{phase.circlingDirection}}"></i>
     {{/if}}
   {{else if phase.isPowered}}
-    <i class="icon-bolt" title="{{phase.type}}"></i>
+    <i class="icon-bolt" title="{{t "flight-phase.powered"}}"></i>
   {{else}}
-    <i class="icon-long-arrow-right" title="{{phase.type}}"></i>
+    <i class="icon-long-arrow-right" title="{{t "flight-phase.cruise"}}"></i>
   {{/if}}
 </td>
 <td class="start">{{format-time phase.startTime format="hhmmss" timeZone="UTC"}}</td>
