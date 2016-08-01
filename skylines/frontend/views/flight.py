@@ -202,10 +202,6 @@ def format_phase(phase):
     return r
 
 
-def format_legs(flight, legs):
-    return [format_leg(flight, leg) for leg in legs]
-
-
 def format_leg(flight, leg):
     duration = leg.end_time - leg.start_time
 
@@ -306,7 +302,9 @@ def index():
     contest_legs = {}
     for type in ['classic', 'triangle']:
         legs = []
-        for leg in format_legs(g.flight, g.flight.get_contest_legs('olc_plus', type)):
+        for leg in g.flight.get_contest_legs('olc_plus', type):
+            leg = format_leg(g.flight, leg)
+
             legs.append({
                 "distance": unicode(leg['distance']),
                 "start": leg['start_time_of_day'],
@@ -333,8 +331,7 @@ def index():
         comments=comments,
         contest_legs=contest_legs,
         phases=phases,
-        phase_formatter=format_phase,
-        leg_formatter=format_legs)
+        phase_formatter=format_phase)
 
 
 @flight_blueprint.route('/map')
