@@ -62,7 +62,7 @@ sudo -H python get-pip.py
 # install skylines and the python dependencies
 
 cd /vagrant
-sudo -H pip install -r requirements.txt
+sudo -H pip install -r requirements.txt --no-binary greenlet
 
 # create PostGIS databases
 
