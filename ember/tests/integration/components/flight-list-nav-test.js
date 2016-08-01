@@ -26,7 +26,7 @@ describeComponent('flight-list-nav', 'Integration: FlightListNavComponent', opti
     this.inject.service('account', { as: 'account' });
     this.inject.service('pinned-flights', { as: 'pinned' });
 
-    this.get('intl').setLocale('de');
+    this.get('intl').setLocale(['de', 'en']);
   });
 
   it('renders default view', function() {
