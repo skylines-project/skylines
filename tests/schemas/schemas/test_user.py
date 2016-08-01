@@ -35,14 +35,14 @@ def test_serialization_passes_for_invalid_email(schema):
     assert data['email'] == 'foobar'
 
 
-def test_deserialization_passes_for_valid_email(schema):
-    data = schema.load(dict(email='john@doe.com')).data
+def test_deserialization_passes_for_valid_email(partial_schema):
+    data = partial_schema.load(dict(email='john@doe.com')).data
     assert data['email_address'] == 'john@doe.com'
 
 
-def test_deserialization_fails_for_empty_email(schema):
+def test_deserialization_fails_for_empty_email(partial_schema):
     with pytest.raises(ValidationError) as e:
-        schema.load(dict(email=''))
+        partial_schema.load(dict(email=''))
 
     errors = e.value.messages
     assert 'email' in errors
