@@ -202,16 +202,19 @@ def format_phase(phase):
     return r
 
 
+class ContestLegSchema(Schema):
+    distance = fields.Float()
+    duration = fields.TimeDelta()
+    climbDuration = fields.TimeDelta(attribute='climb_duration')
+    climbHeight = fields.Float(attribute='climb_height')
+    cruiseDistance = fields.Float(attribute='cruise_distance')
+    cruiseHeight = fields.Float(attribute='cruise_height')
+
+
 def format_leg(flight, leg):
-    return {
-        "distance": leg.distance,
-        "start": to_seconds_of_day(flight.takeoff_time, leg.start_time),
-        "duration": (leg.end_time - leg.start_time).total_seconds(),
-        "climbDuration": leg.climb_duration.total_seconds(),
-        "climbHeight": leg.climb_height,
-        "cruiseDistance": leg.cruise_distance,
-        "cruiseHeight": leg.cruise_height,
-    }
+    result = ContestLegSchema().dump(leg).data
+    result['start'] = to_seconds_of_day(flight.takeoff_time, leg.start_time)
+    return result
 
 
 def mark_flight_notifications_read(flight):
