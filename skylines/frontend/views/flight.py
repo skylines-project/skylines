@@ -175,6 +175,14 @@ PHASETYPE_IDS = {
 }
 
 
+CIRCDIR_IDS = {
+    FlightPhase.CD_LEFT: u'left',
+    FlightPhase.CD_MIXED: u'mixed',
+    FlightPhase.CD_RIGHT: u'right',
+    FlightPhase.CD_TOTAL: u'total',
+}
+
+
 def format_phase(phase):
     """Format phase properties to human readable format
     """
@@ -211,17 +219,8 @@ def format_phase(phase):
 
 
 def format_phase_json(phase):
-    is_circling = phase.phase_type == FlightPhase.PT_CIRCLING
-
-    r = {}
-
-    if is_circling:
-        r['circling_direction'] = CIRCDIR_NAMES[phase.circling_direction]
-
     return {
-        "circlingDirection": unicode(r.get('circling_direction', '')),
-        "isCirclingLeft": phase.circling_direction == FlightPhase.CD_LEFT,
-        "isCirclingRight": phase.circling_direction == FlightPhase.CD_RIGHT,
+        "circlingDirection": CIRCDIR_IDS.get(phase.circling_direction),
         "type": PHASETYPE_IDS.get(phase.phase_type),
         "secondsOfDay": phase.seconds_of_day,
         "startTime":  isoformat(phase.start_time),

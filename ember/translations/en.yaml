@@ -185,7 +185,9 @@ timeline-events:
 
 flight-phase:
   powered: 'Powered'
-  circling: 'Circling'
+  circlingLeft: 'Circling Left'
+  circlingRight: 'Circling Right'
+  circlingMixed: 'Circling Mixed'
   cruise: 'Cruise'
 
 units:

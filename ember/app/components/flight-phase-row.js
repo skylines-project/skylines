@@ -12,6 +12,9 @@ export default Ember.Component.extend({
   isCircling: Ember.computed.equal('phase.type', 'circling'),
   isPowered: Ember.computed.equal('phase.type', 'powered'),
 
+  isCirclingLeft: Ember.computed.equal('phase.circlingDirection', 'left'),
+  isCirclingRight: Ember.computed.equal('phase.circlingDirection', 'right'),
+
   glideRate: safeComputed('phase.glideRate', gr => ((Math.abs(gr) > 1000) ? Infinity : gr)),
 
   selected: safeComputed('flightPhase.selection', function(selection) {
