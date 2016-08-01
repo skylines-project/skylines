@@ -21,7 +21,7 @@
 
 {% macro render_cruise_performance(flight) -%}
 <table class="table table-condensed">
-    {% for ph in flight.cruise_performance -%}
+    {% with ph=flight.cruise_performance -%}
     {% with phase=phase_formatter(ph) -%}
     <tr>
       <th>{% trans %}Duration{% endtrans %}</th>
@@ -52,7 +52,7 @@
       <td>{{ phase.count }}</td>
     </tr>
     {%- endwith %}
-    {%- endfor %}
+    {%- endwith %}
   </tbody>
 </table>
 {%- endmacro %}

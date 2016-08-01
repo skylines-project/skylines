@@ -277,8 +277,9 @@ class Flight(db.Model):
     @property
     def cruise_performance(self):
         from skylines.model.flight_phase import FlightPhase
-        return [p for p in self._phases
-                if p.aggregate and p.phase_type == FlightPhase.PT_CRUISE]
+        for p in self._phases:
+            if p.aggregate and p.phase_type == FlightPhase.PT_CRUISE:
+                return p
 
     def update_flight_path(self):
         from skylines.lib.xcsoar_ import flight_path
