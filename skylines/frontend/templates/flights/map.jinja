@@ -142,26 +142,23 @@
     <li>
       <a href="#tab-comments" title="{{ _('Comments') }}" role="tab">
         <i class="icon-comments-alt icon-large"></i>
-        {% if flight.comments[0] -%}
-        ({{ flight.comments|count }})
-        {%- endif %}
       </a>
     </li>
     <li>
       <a href="#tab-stats-total" title="{{ _('Total') }}" role="tab">
-        <i class="icon-bar-chart icon-large"></i> {% trans %}Total{% endtrans %}
+        <i class="icon-bar-chart icon-large"></i>
       </a>
     </li>
     <li>
       <a href="#tab-stats-legs" title="{{ _('Leg Statistics') }}" role="tab">
-        <i class="icon-resize-horizontal icon-large"></i> {% trans %}Legs{% endtrans %}
+        <i class="icon-resize-horizontal icon-large"></i>
       </a>
     </li>
 
     {%- if flight.has_phases %}
     <li>
       <a href="#tab-stats-phases" title="{{ _('Phase Statistics') }}" role="tab">
-        <i class="icon-step-forward icon-large"></i> {% trans %}Phase Statistics{% endtrans %}
+        <i class="icon-step-forward icon-large"></i>
       </a>
     </li>
     {%- endif %}
