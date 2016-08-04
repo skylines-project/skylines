@@ -1,0 +1,13 @@
+<table class="table table-condensed">
+  <tbody>
+  <tr>
+    <th></th>
+    <th class='numeric'>{{t "count"}}<br/>{{t "avg-vario-abbr"}}</th>
+    <th class='numeric'>{{t "duration"}}<br/>&Delta;H</th>
+  </tr>
+  {{#if total}}{{circling-performance-row perf=total}}{{/if}}
+  {{#if left}}{{circling-performance-row perf=left}}{{/if}}
+  {{#if right}}{{circling-performance-row perf=right}}{{/if}}
+  {{#if mixed}}{{circling-performance-row perf=mixed}}{{/if}}
+  </tbody>
+</table>

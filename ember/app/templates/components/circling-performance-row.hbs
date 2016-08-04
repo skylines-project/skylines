@@ -1,0 +1,9 @@
+<th>{{t (concat "circling-direction." perf.circlingDirection)}}</th>
+<td class='numeric'>
+  {{perf.count}}<br/>
+  {{format-lift perf.vario}}
+</td>
+<td class='numeric'>
+  <abbr title="{{format-number perf.fraction maximumFractionDigits=1}}">{{format-seconds perf.duration}}</abbr><br/>
+  {{format-altitude perf.altDiff}}
+</td>

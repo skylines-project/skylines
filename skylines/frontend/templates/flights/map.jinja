@@ -5,7 +5,6 @@
 
 {% from 'flights/meta-tags.jinja' import flight_meta_tags with context %}
 {% from 'flights/macros.jinja' import flight_title with context %}
-{% from 'flights/phases-table.jinja' import render_circling_performance, render_cruise_performance with context %}
 
 
 {% block title -%}{{ flight_title(flight) }}{%- endblock %}
@@ -199,7 +198,9 @@
       <h3>{% trans %}Statistics{% endtrans %}</h3>
       <div class="sidebar-pane-content">
         <h4>{% trans %}Circling performance{% endtrans %}</h4>
-        {{ render_circling_performance(flight) }}
+        <div data-component='circling-performance-table' data-attrs='{
+          "perf": {{ circling_performance|tojson }}
+        }'></div>
 
         <h4>{% trans %}Cruise performance{% endtrans %}</h4>
         <div data-component='cruise-performance-table' data-attrs='{

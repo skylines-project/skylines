@@ -27,6 +27,7 @@ clubs: 'Clubs'
 competition-id: 'Competition Id'
 confirm-password: 'Confirm password'
 copilot: 'Copilot'
+count: 'Count'
 create: 'Create'
 created: 'Created'
 creating: 'Creating...'
@@ -190,6 +191,12 @@ flight-phase:
   circlingRight: 'Circling Right'
   circlingMixed: 'Circling Mixed'
   cruise: 'Cruise'
+
+circling-direction:
+  left: 'Left'
+  right: 'Right'
+  mixed: 'Mixed'
+  total: 'Total'
 
 units:
   title: 'Units'

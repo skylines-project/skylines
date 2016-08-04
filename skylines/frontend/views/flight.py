@@ -305,6 +305,17 @@ def index():
 
     cruise_performance = cruise_performance_schema.dump(g.flight.cruise_performance).data
 
+    circling_performance_schema = FlightPhaseSchema(only=(
+        'circlingDirection',
+        'count',
+        'vario',
+        'fraction',
+        'duration',
+        'altDiff',
+    ))
+
+    circling_performance = circling_performance_schema.dump(g.flight.circling_performance, many=True).data
+
     contest_leg_schema = ContestLegSchema()
     contest_legs = {}
     for type in ['classic', 'triangle']:
@@ -322,6 +333,7 @@ def index():
         comments=comments,
         contest_legs=contest_legs,
         phases=phases,
+        circling_performance=circling_performance,
         cruise_performance=cruise_performance,
         phase_formatter=format_phase)
 
