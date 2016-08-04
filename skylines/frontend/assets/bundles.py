@@ -121,7 +121,6 @@ all_js = Bundle(
     'http://cdnjs.cloudflare.com/ajax/libs/jquery-ajaxtransport-xdomainrequest/1.0.3/jquery.xdomainrequest.min.js',
     'vendor/jquery/jquery.timeago.js',
     'http://rawgit.com/Turbo87/sidebar-v2/v0.2.1/js/jquery-sidebar.min.js',
-    'js/general.js',
     bootstrap_js,
     filters='rjsmin',
     output='js/skylines-%(version)s.js')
