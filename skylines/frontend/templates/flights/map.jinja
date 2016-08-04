@@ -34,15 +34,6 @@
 
 <script type="text/javascript">
   $(function() {
-    var sidebar = $('#sidebar').sidebar();
-
-    $("#barogram_panel").resize(function() {
-      var height = $("#barogram_panel").height() + 10;
-      sidebar.css('bottom', height);
-      $(".ol-scale-line").css('bottom', height);
-      $(".ol-attribution").css('bottom', height);
-    });
-
     var map = window.flightMap.get('map');
 
     var slFlightDisplay = require('skylines/utils/flight-display').default;
@@ -62,11 +53,8 @@
     {%- endfor %}
     {%- endif %}
 
-    var getPadding = function() { return [20, 20, $("#barogram_panel").height() + 20, sidebar.width() + 20]; };
-    window.paddingFn = getPadding;
-
     var extent = window.fixCalcService.get('flights').getBounds();
-    map.getView().fit(extent, map.getSize(), {padding: getPadding()});
+    map.getView().fit(extent, map.getSize(), {padding: window.paddingFn()});
 
     window.pinnedFlightsService.get('pinned').filter(function(id) {
       return id !== {{ flight.id }};
@@ -79,11 +67,6 @@
       location_info: true,
       api_url: "{{ config.get('SKYLINES_API_URL') }}"
     });
-
-    if (window.location.hash &&
-        sidebar.find('li > a[href="#' + window.location.hash.substring(1) + '"]').length != 0) {
-      sidebar.open(window.location.hash.substring(1));
-    }
   });
 </script>
 {%- endblock %}
