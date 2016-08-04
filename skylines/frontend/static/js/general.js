@@ -1,17 +1,4 @@
 /**
- * Pads a number with leading zeros
- *
- * @param {Number} num Number to pad
- * @param {Number} size Width of returned string
- * @return {String} Padded number
- */
-function pad(num, size) {
-  var s = '000000000' + num;
-  return s.substr(s.length - size);
-}
-
-
-/**
  * Returns the URL for the current page and add pinned flights
  * to the URL which are only stored client-side inside a cookie.
  *
