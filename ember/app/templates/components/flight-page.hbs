@@ -39,11 +39,7 @@
   <!-- Tab panes -->
   <div class="sidebar-content">
     <div class="sidebar-pane active" id="tab-overview">
-      <h3>{{t "overview"}}
-        <a href="#" class="btn btn-default btn-share btn-sm pull-right" style="margin-top: 5px; margin-right: 28px;">
-          <i class="icon-share-alt icon-small"></i> Share
-        </a>
-      </h3>
+      <h3>{{t "overview"}}{{share-button}}</h3>
       <div class="sidebar-pane-content">
         {{flight-details-table flight=flight}}
       </div>
