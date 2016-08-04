@@ -44,20 +44,6 @@
       $(".ol-attribution").css('bottom', height);
     });
 
-    window.wingmanTable.on('select', function(sfid) {
-      if (!flight_display) return;
-
-      var flights = window.fixCalcService.get('flights');
-      var matches = flights.filterBy('id', sfid);
-      if (matches.length !== 0) {
-        flights.removeObjects(matches);
-        window.pinnedFlightsService.unpin(sfid);
-      } else {
-        window.fixCalcService.addFlightFromJSON("/flights/" + sfid + "/json");
-        window.pinnedFlightsService.pin(sfid);
-      }
-    });
-
     var map = window.flightMap.get('map');
 
     var slFlightDisplay = require('skylines/utils/flight-display').default;

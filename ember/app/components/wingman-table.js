@@ -1,6 +1,6 @@
 import Ember from 'ember';
 
-export default Ember.Component.extend(Ember.Evented, {
+export default Ember.Component.extend({
   fixCalc: Ember.inject.service(),
 
   nearFlights: [],
@@ -20,15 +20,9 @@ export default Ember.Component.extend(Ember.Evented, {
     });
   }),
 
-  init() {
-    this._super(...arguments);
-
-    window.wingmanTable = this;
-  },
-
   actions: {
     select(id) {
-      this.trigger('select', id);
+      this.get('onSelect')(id);
     },
   },
 });
