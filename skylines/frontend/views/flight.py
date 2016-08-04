@@ -156,18 +156,6 @@ def _get_contest_traces(flight):
     return contest_traces
 
 
-CIRCDIR_NAMES = {None: "",
-                 FlightPhase.CD_LEFT: l_("Left"),
-                 FlightPhase.CD_MIXED: l_("Mixed"),
-                 FlightPhase.CD_RIGHT: l_("Right"),
-                 FlightPhase.CD_TOTAL: l_("Total")}
-
-PHASETYPE_NAMES = {None: "",
-                   FlightPhase.PT_POWERED: l_("Powered"),
-                   FlightPhase.PT_CIRCLING: l_("Circling"),
-                   FlightPhase.PT_CRUISE: l_("Cruise")}
-
-
 PHASETYPE_IDS = {
     FlightPhase.PT_POWERED: u'powered',
     FlightPhase.PT_CIRCLING: u'circling',
@@ -181,41 +169,6 @@ CIRCDIR_IDS = {
     FlightPhase.CD_RIGHT: u'right',
     FlightPhase.CD_TOTAL: u'total',
 }
-
-
-def format_phase(phase):
-    """Format phase properties to human readable format
-    """
-    is_circling = phase.phase_type == FlightPhase.PT_CIRCLING
-
-    r = dict(start="%s" % format_time(phase.start_time),
-             fraction="%d%%" % phase.fraction if phase.fraction is not None else "",
-             speed=units.format_speed(phase.speed) if phase.speed is not None else "",
-             vario=units.format_lift(phase.vario),
-             alt_diff=units.format_altitude(phase.alt_diff),
-             count=phase.count,
-             duration=phase.duration,
-             is_circling=is_circling,
-             type=PHASETYPE_NAMES[phase.phase_type],
-             circling_direction="",
-             distance="",
-             glide_rate="",
-             circling_direction_left=phase.circling_direction == FlightPhase.CD_LEFT,
-             circling_direction_right=phase.circling_direction == FlightPhase.CD_RIGHT,
-             is_powered=phase.phase_type == FlightPhase.PT_POWERED)
-
-    if not is_circling:
-        r['distance'] = units.format_distance(phase.distance, 1)
-
-        # Sensible glide rate values are formatted as numbers. Others are shown
-        # as infinity symbol.
-        if abs(phase.alt_diff) > 0 and abs(phase.glide_rate) < 1000:
-            r['glide_rate'] = format_decimal(phase.glide_rate)
-        else:
-            r['glide_rate'] = u'\u221e'  # infinity
-    else:
-        r['circling_direction'] = CIRCDIR_NAMES[phase.circling_direction]
-    return r
 
 
 class FlightPhaseSchema(Schema):
@@ -334,8 +287,7 @@ def index():
         contest_legs=contest_legs,
         phases=phases,
         circling_performance=circling_performance,
-        cruise_performance=cruise_performance,
-        phase_formatter=format_phase)
+        cruise_performance=cruise_performance)
 
 
 @flight_blueprint.route('/map')
