@@ -2,7 +2,7 @@ import math
 from datetime import datetime
 
 from flask import Blueprint, request, render_template, redirect, url_for, abort, current_app, jsonify, g, flash, make_response
-from flask.ext.babel import lazy_gettext as l_, _
+from flask.ext.babel import lazy_gettext as _
 
 from sqlalchemy.orm import undefer_group, contains_eager
 from sqlalchemy.sql.expression import func
@@ -13,8 +13,6 @@ from skylines.database import db
 from skylines.lib import files
 from skylines.lib.dbutil import get_requested_record_list
 from skylines.lib.xcsoar_ import analyse_flight
-from skylines.lib.helpers import format_time, format_decimal
-from skylines.lib.formatter import units
 from skylines.lib.datetime import from_seconds_of_day
 from skylines.lib.geo import METERS_PER_DEGREE
 from skylines.lib.geoid import egm96_height
