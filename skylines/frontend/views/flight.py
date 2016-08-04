@@ -229,6 +229,8 @@ class FlightPhaseSchema(Schema):
     vario = fields.Float()
     speed = fields.Float()
     glideRate = fields.Float(attribute='glide_rate')
+    fraction = fields.Float()
+    count = fields.Int()
 
 
 class ContestLegSchema(Schema):
@@ -274,7 +276,34 @@ def index():
     near_flights = NearFlightSchema().dump(near_flights, many=True).data
 
     comments = FlightCommentSchema().dump(g.flight.comments, many=True).data
-    phases = FlightPhaseSchema().dump(g.flight.phases, many=True).data
+
+    phases_schema = FlightPhaseSchema(only=(
+        'circlingDirection',
+        'type',
+        'secondsOfDay',
+        'startTime',
+        'duration',
+        'altDiff',
+        'distance',
+        'vario',
+        'speed',
+        'glideRate',
+    ))
+
+    phases = phases_schema.dump(g.flight.phases, many=True).data
+
+    cruise_performance_schema = FlightPhaseSchema(only=(
+        'duration',
+        'fraction',
+        'altDiff',
+        'distance',
+        'vario',
+        'speed',
+        'glideRate',
+        'count',
+    ))
+
+    cruise_performance = cruise_performance_schema.dump(g.flight.cruise_performance).data
 
     contest_leg_schema = ContestLegSchema()
     contest_legs = {}
@@ -293,6 +322,7 @@ def index():
         comments=comments,
         contest_legs=contest_legs,
         phases=phases,
+        cruise_performance=cruise_performance,
         phase_formatter=format_phase)
 
 

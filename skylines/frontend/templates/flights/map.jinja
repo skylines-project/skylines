@@ -202,7 +202,9 @@
         {{ render_circling_performance(flight) }}
 
         <h4>{% trans %}Cruise performance{% endtrans %}</h4>
-        {{ render_cruise_performance(flight) }}
+        <div data-component='cruise-performance-table' data-attrs='{
+          "perf": {{ cruise_performance|tojson }}
+        }'></div>
       </div>
     </div>
     <div class="sidebar-pane" id="tab-stats-legs">
