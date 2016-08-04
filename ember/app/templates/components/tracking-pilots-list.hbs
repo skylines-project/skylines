@@ -1,0 +1,39 @@
+{{#if (eq pilots.length 1)}}
+  <table class="table">
+    <tbody>
+    {{#each pilots as |pilot|}}
+      <tr>
+        <th>{{t "pilot"}}</th>
+        <td><a href="/users/{{pilot.id}}/">{{pilot.name}}</a></td>
+      </tr>
+
+      {{#if pilot.club}}
+        <tr>
+          <th>{{t "club"}}</th>
+          <td><a href="/clubs/{{pilot.club.id}}">{{pilot.club.name}}</a></td>
+        </tr>
+      {{/if}}
+
+      {{#if (gt pilot.trackingDelay 0)}}
+        <tr>
+          <th><span rel="tooltip" title={{t "delay-description"}}>{{t "delay"}}</span></th>
+          <td>{{t "tracking-delay-choice" delay=pilot.trackingDelay}}</td>
+        </tr>
+      {{/if}}
+    {{/each}}
+    </tbody>
+  </table>
+
+{{else}}
+  <table class="table">
+    <tbody>
+    {{#each pilots as |pilot|}}
+      <tr>
+        <td><span class="badge" style="background-color: {{ pilot.color }}">{{or pilot.trackingCallsign (initials pilot.name)}}</span></td>
+        <td><a href="/users/{{pilot.id}}/">{{pilot.name}}</a></td>
+        <td>{{#if pilot.club}}<a href="/clubs/{{pilot.club.id}}">{{truncate pilot.club.name 25}}</a>{{/if}}</td>
+      </tr>
+    {{/each}}
+    </tbody>
+  </table>
+{{/if}}

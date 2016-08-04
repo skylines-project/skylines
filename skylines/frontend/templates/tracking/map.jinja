@@ -1,6 +1,5 @@
 {% from "macros/flags.jinja" import insert_flag with context %}
 {% from "macros/links.jinja" import user_link %}
-{% from 'tracking/details-table.jinja' import render_details_table with context %}
 
 {% extends "base-fullscreen.jinja" %}
 {% set active_page = "tracking" %}
@@ -130,7 +129,9 @@
     <div class="sidebar-pane active" id="tab-overview">
       <h3>{% trans %}Overview{% endtrans %}</h3>
       <div class="sidebar-pane-content">
-        {{ render_details_table(pilots) }}
+        <div data-component='tracking-pilots-list' data-attrs='{
+          "pilots": {{ pilots_json|tojson }}
+        }'></div>
       </div>
     </div>
   </div>

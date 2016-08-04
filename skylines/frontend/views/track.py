@@ -9,6 +9,7 @@ from skylines.lib.helpers import color
 from skylines.lib.xcsoar_ import FlightPathFix
 from skylines.lib.geoid import egm96_height
 from skylines.model import User, TrackingFix, Location
+from skylines.schemas import UserSchema
 import xcsoar
 
 track_blueprint = Blueprint('track', 'skylines')
@@ -121,9 +122,17 @@ def index():
     if not any(traces):
         traces = None
 
+    user_schema = UserSchema()
+
+    pilots_json = []
+    for pilot in g.pilots:
+        json = user_schema.dump(pilot).data
+        json['color'] = pilot.color
+        pilots_json.append(json)
+
     return render_template(
         'tracking/map.jinja',
-        pilots=g.pilots, traces=traces)
+        pilots=g.pilots, pilots_json=pilots_json, traces=traces)
 
 
 @track_blueprint.route('/map')
