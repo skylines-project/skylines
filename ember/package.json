@@ -34,7 +34,7 @@
     "ember-cli-release": "^0.2.9",
     "ember-cli-sri": "^2.1.0",
     "ember-cli-uglify": "^1.2.0",
-    "ember-cookies": "0.0.7",
+    "ember-cookies": "0.0.9",
     "ember-cp-validations": "2.9.3",
     "ember-export-application-global": "^1.0.5",
     "ember-intl": "2.11.2",
