@@ -4,7 +4,7 @@ export default Ember.Component.extend({
   fixCalc: Ember.inject.service(),
   pinnedFlights: Ember.inject.service(),
 
-  tagName: '',
+  classNames: ['olFullscreen'],
 
   actions: {
     selectWingman(id) {
