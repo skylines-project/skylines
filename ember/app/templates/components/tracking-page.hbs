@@ -1,0 +1,27 @@
+<div id="sidebar" class="sidebar">
+  <!-- Nav tabs -->
+  <ul class="sidebar-tabs" role="tablist">
+    <li class="active">
+      <a href="#tab-overview" title="{{t "overview"}}" role="tab">
+        <i class="icon-info icon-large"></i>
+      </a>
+    </li>
+  </ul>
+  <!-- Tab panes -->
+  <div class="sidebar-content">
+    <div class="sidebar-pane active" id="tab-overview">
+      <h3>{{t "overview"}}</h3>
+      <div class="sidebar-pane-content">
+        {{tracking-pilots-list pilots=pilots}}
+      </div>
+    </div>
+  </div>
+</div>
+
+{{flight-map fullscreenElement="#fullscreen-content" bingAPIKey=bingAPIKey mapboxAPIKey=mapboxAPIKey mapTileURL=mapTileURL class="olFullscreen sidebar-map"}}
+<div id="barogram_panel" class="map-bottom-panel map-overlay">
+  <div style="overflow: auto; max-height: 115px">
+    {{fix-table}}
+  </div>
+  {{flight-barogram}}
+</div>

@@ -40,20 +40,6 @@
 {% if traces -%}
 <script type="text/javascript">
   $(function() {
-    var sidebar = $('#sidebar').sidebar();
-
-    $("#barogram_panel").resize(function() {
-      var height = $("#barogram_panel").height() + 10;
-      sidebar.css('bottom', height);
-      $(".ol-scale-line").css('bottom', height);
-      $(".ol-attribution").css('bottom', height);
-    });
-
-    if (window.location.hash &&
-        sidebar.find('li > a[href="#' + window.location.hash.substring(1) + '"]').length != 0) {
-      sidebar.open(window.location.hash.substring(1));
-    }
-
     var map = window.flightMap.get('map');
 
     var slFlightDisplay = require('skylines/utils/flight-display').default;
@@ -92,9 +78,8 @@
     {%- endif %}
     {%- endfor %}
 
-    var getPadding = function() { return [20, 20, $("#barogram_panel").height() + 20, sidebar.width() + 20]; };
     var extent = flights.getBounds();
-    map.getView().fit(extent, map.getSize(), {padding: getPadding()});
+    map.getView().fit(extent, map.getSize(), {padding: window.paddingFn()});
 
     // update flight track every 15 seconds
     setInterval(function() {
@@ -114,42 +99,13 @@
 
 {% block content -%}
 {% if traces -%}
-<div id="fullscreen-content" class="olFullscreen">
-<div id="sidebar" class="sidebar">
-<!-- Nav tabs -->
-  <ul class="sidebar-tabs" role="tablist">
-    <li class="active">
-      <a href="#tab-overview" title="{{ _('Overview') }}" role="tab">
-        <i class="icon-info icon-large"></i>
-      </a>
-    </li>
-  </ul>
-<!-- Tab panes -->
-  <div class="sidebar-content">
-    <div class="sidebar-pane active" id="tab-overview">
-      <h3>{% trans %}Overview{% endtrans %}</h3>
-      <div class="sidebar-pane-content">
-        <div data-component='tracking-pilots-list' data-attrs='{
-          "pilots": {{ pilots_json|tojson }}
-        }'></div>
-      </div>
-    </div>
-  </div>
-</div>
+<div id="fullscreen-content" class="olFullscreen" data-component='tracking-page' data-attrs='{
+  "pilots": {{ pilots_json|tojson }},
 
-<div data-component='flight-map' data-attrs='{
-  "fullscreenElement": "#fullscreen-content",
   "bingAPIKey": "{{ config.get('SKYLINES_BING_API_KEY', 'null') }}",
   "mapboxAPIKey": "{{ config.get('SKYLINES_MAPBOX_API_KEY', 'null') }}",
   "mapTileURL": "{{ config.get('SKYLINES_MAP_TILE_URL') }}"
-}' class="olFullscreen sidebar-map"></div>
-<div id="barogram_panel" class="map-bottom-panel map-overlay">
-  <div style="overflow: auto; max-height: 115px">
-    <div data-component='fix-table'></div>
-  </div>
-  <div data-component='flight-barogram'></div>
-</div>
-</div>
+}'></div>
 {%- else -%}
 <p style="margin:10pt;margin-top:40pt;">
   {% if pilots|length == 1 -%}
