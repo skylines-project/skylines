@@ -1,4 +1,4 @@
-from fabric.api import env, task, local, cd, run, sudo, put
+from fabric.api import env, task, local, cd, lcd, run, sudo, put
 
 from tempfile import NamedTemporaryFile
 
@@ -11,12 +11,27 @@ SRC_DIR = '%s/src' % APP_DIR
 
 @task
 def deploy(branch='master', force=False):
+    build_ember()
+    upload_ember()
     push(branch, force)
     restart()
 
 
 @task
-def push(branch='master', force=False):
+def build_ember():
+    with lcd('ember'):
+        local('node_modules/.bin/ember build -prod -o dist/')
+
+
+@task
+def upload_ember():
+    with cd(SRC_DIR):
+        run('mkdir -p skylines/frontend/static/ember')
+        put('ember/dist/*', 'skylines/frontend/static/ember')
+
+
+@task
+def push(branch='HEAD', force=False):
     cmd = 'git push %s:%s %s:master' % (env.host_string, SRC_DIR, branch)
     if force:
         cmd += ' --force'
@@ -28,11 +43,6 @@ def push(branch='master', force=False):
 def restart():
     with cd(SRC_DIR):
         run('git reset --hard')
-
-        with cd('ember'):
-            run('npm install')
-            run('bower install --force')
-            run('node_modules/.bin/ember build -prod')
 
         # compile i18n .mo files
         manage('babel compile')
