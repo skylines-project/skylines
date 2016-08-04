@@ -34,7 +34,6 @@
 
 <script type="text/javascript">
   $(function() {
-    var flight_display = null;
     var sidebar = $('#sidebar').sidebar();
 
     $("#barogram_panel").resize(function() {
@@ -49,7 +48,7 @@
     var slFlightDisplay = require('skylines/utils/flight-display').default;
     var slMapClickHandler = require('skylines/utils/map-click-handler').default;
 
-    flight_display = slFlightDisplay.create({
+    var flight_display = slFlightDisplay.create({
       fixCalc: window.fixCalcService,
       flightMap: window.flightMap,
       fix_table: window.fixTable,
