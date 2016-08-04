@@ -99,7 +99,11 @@ export default Ember.Service.extend({
 
     let flight = flightFromData(data);
 
-    flight.set('color', COLORS[flights.get('length') % COLORS.length]);
+    if (data.additional && data.additional.color) {
+      flight.set('color', data.additional.color);
+    } else {
+      flight.set('color', COLORS[flights.get('length') % COLORS.length]);
+    }
 
     flights.pushObject(flight);
   },
