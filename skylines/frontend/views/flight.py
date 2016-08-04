@@ -286,8 +286,7 @@ def index():
         comments=comments,
         contest_legs=contest_legs,
         phases=phases,
-        circling_performance=circling_performance,
-        cruise_performance=cruise_performance)
+        performance=dict(circling=circling_performance, cruise=cruise_performance))
 
 
 @flight_blueprint.route('/map')

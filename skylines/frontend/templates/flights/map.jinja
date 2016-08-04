@@ -193,17 +193,9 @@
     </div>
     <div class="sidebar-pane" id="tab-stats-total">
       <h3>{% trans %}Statistics{% endtrans %}</h3>
-      <div class="sidebar-pane-content">
-        <h4>{% trans %}Circling performance{% endtrans %}</h4>
-        <div data-component='circling-performance-table' data-attrs='{
-          "perf": {{ circling_performance|tojson }}
-        }'></div>
-
-        <h4>{% trans %}Cruise performance{% endtrans %}</h4>
-        <div data-component='cruise-performance-table' data-attrs='{
-          "perf": {{ cruise_performance|tojson }}
-        }'></div>
-      </div>
+      <div class="sidebar-pane-content" data-component='flight-performance-panel' data-attrs='{
+        "performance": {{ performance|tojson }}
+      }'></div>
     </div>
     <div class="sidebar-pane" id="tab-stats-legs">
       <h3>{% trans %}Legs{% endtrans %}</h3>
