@@ -58,7 +58,7 @@
       }
     });
 
-    var url = getShareUrl('{{ request.url }}');
+    var url = getShareUrl(location.origin + location.pathname);
     var content =
         '<div style="text-align:center">' +
         '<input value="' + url + '" type="text" class="form-control" style="margin-bottom:9px">' +
