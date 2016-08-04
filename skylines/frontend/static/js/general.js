@@ -24,14 +24,8 @@ function getShareUrl(url) {
   var url_re = /(.*?)\/([\d,]{1,})\/(.*)/;
   var url_split = url_re.exec(url);
 
-  var ids = url_split[2].split(',').concat(pinnedFlights);
-
-  var unique_ids = [];
-  for (var i in ids) {
-    if ($.inArray(parseInt(ids[i]), unique_ids) == -1) {
-      unique_ids.push(parseInt(ids[i]));
-    }
-  }
+  var url_ids = url_split[2].split(',').map(function(it) { return parseInt(it, 10); });
+  var unique_ids = url_ids.concat(pinnedFlights).uniq();
 
   return url_split[1] + '/' + unique_ids.join(',') + '/' + url_split[3];
 }
