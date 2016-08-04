@@ -130,115 +130,16 @@
 
 
 {%- block content %}
-<div id="fullscreen-content" class="olFullscreen">
-<div id="sidebar" class="sidebar">
-<!-- Nav tabs -->
-  <ul class="sidebar-tabs" role="tablist">
-    <li class="active">
-      <a href="#tab-overview" title="{{ _('Overview') }}" role="tab">
-        <i class="icon-info icon-large"></i>
-      </a>
-    </li>
-    <li>
-      <a href="#tab-comments" title="{{ _('Comments') }}" role="tab">
-        <i class="icon-comments-alt icon-large"></i>
-      </a>
-    </li>
-    <li>
-      <a href="#tab-stats-total" title="{{ _('Total') }}" role="tab">
-        <i class="icon-bar-chart icon-large"></i>
-      </a>
-    </li>
-    <li>
-      <a href="#tab-stats-legs" title="{{ _('Leg Statistics') }}" role="tab">
-        <i class="icon-resize-horizontal icon-large"></i>
-      </a>
-    </li>
+<div id="fullscreen-content" class="olFullscreen" data-component='flight-page' data-attrs='{
+  "flight": {{ flight_json|tojson }},
+  "comments":{{ comments|tojson }},
+  "performance": {{ performance|tojson }},
+  "legs": {{ contest_legs|tojson }},
+  "phases": {{ phases|tojson }},
+  "nearFlights": {{ near_flights|tojson }},
 
-    {%- if flight.has_phases %}
-    <li>
-      <a href="#tab-stats-phases" title="{{ _('Phase Statistics') }}" role="tab">
-        <i class="icon-step-forward icon-large"></i>
-      </a>
-    </li>
-    {%- endif %}
-
-    <li>
-      <a href="#tab-wingmen" title="{{ _('Wingmen') }}" role="tab">
-        <i class="icon-group icon-large"></i>
-      </a>
-    </li>
-  </ul>
-<!-- Tab panes -->
-  <div class="sidebar-content">
-    <div class="sidebar-pane active" id="tab-overview">
-      <h3>{% trans %}Overview{% endtrans %}
-        <a href="#" class="btn btn-default btn-share btn-sm pull-right" style="margin-top: 5px; margin-right: 28px;">
-          <i class="icon-share-alt icon-small"></i> Share
-        </a>
-      </h3>
-      <div class="sidebar-pane-content">
-        <div data-component="flight-details-table" data-attrs='{
-          "flight": {{ flight_json|tojson }}
-        }'>Loading...</div>
-      </div>
-    </div>
-    <div class="sidebar-pane" id="tab-comments">
-      <h3><i class="icon-comments-alt"></i> {% trans %}Comments{% endtrans %}</h3>
-      <div class="sidebar-pane-content">
-        <div data-component='comments-list' data-attrs='{
-          "comments":{{ comments|tojson }}
-        }'></div>
-      </div>
-    </div>
-    <div class="sidebar-pane" id="tab-stats-total">
-      <h3>{% trans %}Statistics{% endtrans %}</h3>
-      <div class="sidebar-pane-content" data-component='flight-performance-panel' data-attrs='{
-        "performance": {{ performance|tojson }}
-      }'></div>
-    </div>
-    <div class="sidebar-pane" id="tab-stats-legs">
-      <h3>{% trans %}Legs{% endtrans %}</h3>
-      <div class="sidebar-pane-content" data-component='flight-leg-panel' data-attrs='{
-        "legs": {{ contest_legs|tojson }}
-      }'></div>
-    </div>
-
-    {%- if flight.has_phases %}
-    <div class="sidebar-pane" id="tab-stats-phases">
-      <h3>{% trans %}Phase Statistics{% endtrans %}</h3>
-      <div class="sidebar-pane-content">
-        <div class="table-responsive">
-          <div data-component='flight-phase-table' data-attrs='{
-            "phases": {{ phases|tojson }}
-          }'></div>
-        </div>
-      </div>
-    </div>
-    {%- endif %}
-
-    <div class="sidebar-pane" id="tab-wingmen">
-      <h3>{% trans %}Wingmen{% endtrans %}</h3>
-      <div class="sidebar-pane-content">
-        <div data-component='wingman-table' data-attrs='{"nearFlights": {{ near_flights|tojson }}}'></div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<div data-component='flight-map' data-attrs='{
-  "fullscreenElement": "#fullscreen-content",
   "bingAPIKey": "{{ config.get('SKYLINES_BING_API_KEY', 'null') }}",
   "mapboxAPIKey": "{{ config.get('SKYLINES_MAPBOX_API_KEY', 'null') }}",
   "mapTileURL": "{{ config.get('SKYLINES_MAP_TILE_URL') }}"
-}' class="olFullscreen sidebar-map"></div>
-<div id="barogram_panel" class="map-bottom-panel map-overlay">
-    <div style="overflow: auto; max-height: 115px">
-        <div data-component='fix-table'></div>
-    </div>
-    <div data-component='flight-barogram'></div>
-</div>
-
-<div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-hidden="true" style="display:none"></div>
-</div>
+}'></div>
 {%- endblock %}

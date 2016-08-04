@@ -1,0 +1,97 @@
+<div id="sidebar" class="sidebar">
+  <!-- Nav tabs -->
+  <ul class="sidebar-tabs" role="tablist">
+    <li class="active">
+      <a href="#tab-overview" title="{{t "overview"}}" role="tab">
+        <i class="icon-info icon-large"></i>
+      </a>
+    </li>
+    <li>
+      <a href="#tab-comments" title="{{t "comments"}}" role="tab">
+        <i class="icon-comments-alt icon-large"></i>
+      </a>
+    </li>
+    <li>
+      <a href="#tab-stats-total" title="{{t "total"}}" role="tab">
+        <i class="icon-bar-chart icon-large"></i>
+      </a>
+    </li>
+    <li>
+      <a href="#tab-stats-legs" title="{{t "leg-statistics"}}" role="tab">
+        <i class="icon-resize-horizontal icon-large"></i>
+      </a>
+    </li>
+
+    {{#if phases}}
+      <li>
+        <a href="#tab-stats-phases" title="{{t "phase-statistics"}}" role="tab">
+          <i class="icon-step-forward icon-large"></i>
+        </a>
+      </li>
+    {{/if}}
+
+    <li>
+      <a href="#tab-wingmen" title="{{t "wingmen"}}" role="tab">
+        <i class="icon-group icon-large"></i>
+      </a>
+    </li>
+  </ul>
+  <!-- Tab panes -->
+  <div class="sidebar-content">
+    <div class="sidebar-pane active" id="tab-overview">
+      <h3>{{t "overview"}}
+        <a href="#" class="btn btn-default btn-share btn-sm pull-right" style="margin-top: 5px; margin-right: 28px;">
+          <i class="icon-share-alt icon-small"></i> Share
+        </a>
+      </h3>
+      <div class="sidebar-pane-content">
+        {{flight-details-table flight=flight}}
+      </div>
+    </div>
+
+    <div class="sidebar-pane" id="tab-comments">
+      <h3>{{t "comments"}}</h3>
+      <div class="sidebar-pane-content">
+        {{comments-list comments=comments}}
+      </div>
+    </div>
+
+    <div class="sidebar-pane" id="tab-stats-total">
+      <h3>{{t "statistics"}}</h3>
+      {{flight-performance-panel performance=performance class="sidebar-pane-content"}}
+    </div>
+
+    <div class="sidebar-pane" id="tab-stats-legs">
+      <h3>{{t "leg-statistics"}}</h3>
+      {{flight-leg-panel legs=legs class="sidebar-pane-content"}}
+    </div>
+
+    {{#if phases}}
+      <div class="sidebar-pane" id="tab-stats-phases">
+        <h3>{{t "phase-statistics"}}</h3>
+        <div class="sidebar-pane-content">
+          <div class="table-responsive">
+            {{flight-phase-table phases=phases}}
+          </div>
+        </div>
+      </div>
+    {{/if}}
+
+    <div class="sidebar-pane" id="tab-wingmen">
+      <h3>{{t "wingmen"}}</h3>
+      <div class="sidebar-pane-content">
+        {{wingman-table nearFlights=nearFlights}}
+      </div>
+    </div>
+  </div>
+</div>
+
+{{flight-map fullscreenElement="#fullscreen-content" bingAPIKey=bingAPIKey mapboxAPIKey=mapboxAPIKey mapTileURL=mapTileURL class="olFullscreen sidebar-map"}}
+<div id="barogram_panel" class="map-bottom-panel map-overlay">
+  <div style="overflow: auto; max-height: 115px">
+    {{fix-table}}
+  </div>
+  {{flight-barogram}}
+</div>
+
+<div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-hidden="true" style="display:none"></div>
