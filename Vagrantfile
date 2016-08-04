@@ -46,7 +46,7 @@ sudo apt-get update
 # install base dependencies
 
 sudo apt-get install -y --no-install-recommends \
-    g++-6 pkg-config libcurl4-openssl-dev python-dev git \
+    g++-6 pkg-config libcurl4-openssl-dev python-dev git redis-server \
     libpq-dev postgresql-9.4-postgis-2.2 postgresql-contrib-9.4 \
     openjdk-7-jre-headless libfreetype6-dev libpng-dev libffi-dev
 
