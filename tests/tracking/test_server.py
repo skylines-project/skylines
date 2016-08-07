@@ -248,11 +248,14 @@ def test_real_fix(server, test_user):
 def test_failing_fix(server, test_user):
     """ Tracking server handles SQLAlchemyError gracefully """
 
+    now = datetime.utcnow()
+    now_s = ((now.hour * 60) + now.minute) * 60 + now.second
+
     # Mock the transaction commit to fail
     commitmock = Mock(side_effect=SQLAlchemyError())
     with patch.object(db.session, 'commit', commitmock):
         # Create fake fix message
-        message = create_fix_message(test_user.tracking_key, 0)
+        message = create_fix_message(test_user.tracking_key, now_s * 1000)
 
         # Send fake ping message
         server.handle(message, HOST_PORT)
