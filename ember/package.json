@@ -39,7 +39,7 @@
     "ember-export-application-global": "^1.0.5",
     "ember-intl": "2.11.2",
     "ember-intl-cp-validations": "2.3.0",
-    "ember-islands": "1.0.0",
+    "ember-islands": "^1.0.2",
     "ember-load-initializers": "^0.5.1",
     "ember-power-select": "1.0.0-alpha.5",
     "ember-resolver": "^2.0.3",
