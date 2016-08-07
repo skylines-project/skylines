@@ -20,6 +20,7 @@ class TrackingFix(db.Model):
     id = db.Column(Integer, autoincrement=True, primary_key=True)
 
     time = db.Column(DateTime, nullable=False, default=datetime.utcnow)
+    time_visible = db.Column(DateTime, nullable=False, default=datetime.utcnow)
 
     location_wkt = db.Column('location', Geometry('POINT', srid=4326))
 
