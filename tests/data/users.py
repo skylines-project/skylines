@@ -22,6 +22,7 @@ def test_user():
     u1.email_address = u'example@test.de'
     u1.password = u1.original_password = u'test'
     u1.tracking_key = 123456
+    u1.tracking_delay = 2
     return u1
 
 

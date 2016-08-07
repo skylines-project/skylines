@@ -100,6 +100,8 @@ class TrackingServer(DatagramServer):
         else:
             log("bad time stamp: " + str(time_of_day))
 
+        fix.time_visible = fix.time + timedelta(minutes=pilot.tracking_delay)
+
         flags = data[0]
         if flags & FLAG_LOCATION:
             latitude = data[2] / 1000000.

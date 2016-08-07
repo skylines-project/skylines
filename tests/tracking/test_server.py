@@ -7,7 +7,7 @@ from skylines.model import TrackingFix
 import struct
 from skylines.tracking import server as _server
 from skylines.tracking.crc import set_crc, check_crc
-from datetime import datetime
+from datetime import datetime, timedelta
 from sqlalchemy.exc import SQLAlchemyError
 
 HOST_PORT = ('127.0.0.1', 5597)
@@ -236,6 +236,7 @@ def test_real_fix(server, test_user):
     assert fix.ip == HOST_PORT[0]
 
     assert fix.time == utcnow_return_value
+    assert fix.time_visible == utcnow_return_value + timedelta(minutes=2)
     assert fix.location.to_wkt() == 'POINT(7.52 52.7)'
     assert fix.track == 234
     assert fix.ground_speed == 33.25
