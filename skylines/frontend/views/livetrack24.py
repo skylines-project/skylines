@@ -40,10 +40,10 @@ def _parse_session_id():
     return session_id
 
 
-def _parse_fix(pilot_id):
+def _parse_fix(pilot):
     fix = TrackingFix()
     fix.ip = request.remote_addr
-    fix.pilot_id = pilot_id
+    fix.pilot = pilot
 
     # Time
     if 'tm' not in request.values:
@@ -101,7 +101,7 @@ def _sessionless_fix():
     if not pilot:
         raise NotFound('No pilot found with tracking key `{:X}`.'.format(key))
 
-    fix = _parse_fix(pilot.id)
+    fix = _parse_fix(pilot)
     db.session.add(fix)
     db.session.commit()
     return 'OK'
@@ -113,7 +113,7 @@ def _session_fix():
     if session is None:
         raise NotFound('No open tracking session found with id `{:d}`.'.format(session_id))
 
-    fix = _parse_fix(session.pilot_id)
+    fix = _parse_fix(session.pilot)
     db.session.add(fix)
     db.session.commit()
     return 'OK'
