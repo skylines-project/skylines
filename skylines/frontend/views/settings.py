@@ -99,7 +99,6 @@ def update():
         if not g.user.validate_password(data['currentPassword']):
             return jsonify(error='wrong-password'), 403
 
-        print data
         g.user.password = data['password']
         g.user.recover_key = None
 
