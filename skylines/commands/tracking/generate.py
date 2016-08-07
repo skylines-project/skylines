@@ -4,19 +4,24 @@ import sys
 from math import sin
 from random import randint
 from time import sleep
+from datetime import timedelta, datetime
 
 from skylines.database import db
-from skylines.model import TrackingFix
+from skylines.model import TrackingFix, User
 
 
 class Generate(Command):
     """ Generate fake live tracks for debugging """
 
     option_list = (
-        Option('user', type=int, help='a user ID'),
+        Option('user_id', type=int, help='a user ID'),
     )
 
-    def run(self, user):
+    def run(self, user_id):
+        user = User.get(user_id)
+        if not user:
+            print 'User with id "{}" not found.'.format(user_id)
+            sys.exit(1)
 
         i = randint(0, 100)
         _longitude = randint(6500, 7500) / 1000.
@@ -29,9 +34,11 @@ class Generate(Command):
             altitude = sin(i / 20.) * 300 + _altitude
 
             fix = TrackingFix()
-            fix.pilot_id = user
+            fix.pilot = user
             fix.set_location(longitude, latitude)
             fix.altitude = altitude
+            fix.time = datetime.now()
+            fix.time_visible = fix.time + timedelta(minutes=user.tracking_delay)
 
             db.session.add(fix)
             db.session.commit()
