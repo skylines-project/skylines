@@ -1,4 +1,4 @@
-from datetime import timedelta
+from datetime import datetime, timedelta
 from math import log
 
 from flask import Blueprint, request, render_template, abort, jsonify, g, redirect, url_for
@@ -41,10 +41,8 @@ def _get_flight_path2(pilot, last_update=None):
         .filter(and_(TrackingFix.pilot == pilot,
                      TrackingFix.location != None,
                      TrackingFix.altitude != None,
-                     TrackingFix.max_age_filter(12)))
-
-    if pilot.tracking_delay > 0 and not pilot.is_readable(g.current_user):
-        query = query.filter(TrackingFix.delay_filter(pilot.tracking_delay))
+                     TrackingFix.max_age_filter(12),
+                     TrackingFix.time_visible <= datetime.utcnow()))
 
     query = query.order_by(TrackingFix.time)
 

@@ -10,7 +10,6 @@ from geoalchemy2.shape import to_shape, from_shape
 from shapely.geometry import Point
 
 from skylines.database import db
-from .user import User
 from .geo import Location
 
 
@@ -77,21 +76,6 @@ class TrackingFix(db.Model):
         return cls.time >= datetime.utcnow() - max_age
 
     @classmethod
-    def delay_filter(cls, delay):
-        """
-        Returns a filter that makes sure that the fix was created at least
-        a certain time ago.
-
-        The delay parameter can be either a datetime.timedelta or a numeric
-        value that will be interpreted as minutes.
-        """
-
-        if isinstance(delay, (int, long, float)):
-            delay = timedelta(minutes=delay)
-
-        return cls.time <= datetime.utcnow() - delay
-
-    @classmethod
     def get_latest(cls, max_age=timedelta(hours=6)):
         # Add a db.Column to the inner query with
         # numbers ordered by time for each pilot
@@ -104,7 +88,7 @@ class TrackingFix(db.Model):
             .query(cls.id, row_number.label('row_number')) \
             .join(cls.pilot) \
             .filter(cls.max_age_filter(max_age)) \
-            .filter(cls.delay_filter(User.tracking_delay_interval())) \
+            .filter(cls.time_visible <= datetime.utcnow()) \
             .filter(cls.location_wkt != None) \
             .subquery()
 

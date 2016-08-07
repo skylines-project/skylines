@@ -182,7 +182,7 @@ class TrackingServer(DatagramServer):
             .join(TrackingFix.pilot) \
             .filter(TrackingFix.pilot_id != pilot.id) \
             .filter(TrackingFix.max_age_filter(2)) \
-            .filter(TrackingFix.delay_filter(User.tracking_delay_interval())) \
+            .filter(TrackingFix.time_visible <= datetime.utcnow()) \
             .filter(TrackingFix.location_wkt != None) \
             .filter(TrackingFix.altitude != None) \
             .filter(or_(*or_filters)) \
