@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, timedelta
 
 from flask import Blueprint, request
 from werkzeug.exceptions import BadRequest, NotFound, NotImplemented
@@ -53,6 +53,8 @@ def _parse_fix(pilot):
         fix.time = datetime.utcfromtimestamp(int(request.values['tm']))
     except ValueError:
         raise BadRequest('`tm` (time) has to be a POSIX timestamp.')
+
+    fix.time_visible = fix.time + timedelta(minutes=pilot.tracking_delay)
 
     # Location
     if 'lat' in request.values and 'lon' in request.values:
