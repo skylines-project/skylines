@@ -133,34 +133,9 @@
   </div>
 
   <div class="row">
-    {% if distance_flights -%}
     <div class="col-sm-6 col-md-4 col-md-offset-2">
-      <h2>{% trans %}Distance Flights{% endtrans %}</h2>
-      <table class="table">
-        <thead>
-          <tr>
-            <th>{% trans %}Distance{% endtrans %}</th>
-            <th>{% trans %}Date{% endtrans %}</th>
-          </tr>
-        </thead>
-        <tbody>
-          {% for distance_flight in distance_flights -%}
-          <tr>
-            <td>{{ h.format_distance(distance_flight[0]) }}</td>
-            <td class="column-buttons">
-              {% if distance_flight[1] -%}
-              {{ insert_timeago_date(distance_flight[1].landing_time) }}
-              <div class="pull-right">
-                <a href="{{ url_for('flight.index', flight_id=distance_flight[1].id) }}" class="btn btn-default btn-sm">Show</a>
-              </div>
-              {%- endif %}
-            </td>
-          </tr>
-          {%- endfor %}
-        </tbody>
-      </table>
+      <div data-component='user-distance-flights' data-attrs='{"flights": {{ distance_flights|tojson }}}'>Loading...</div>
     </div>
-    {%- endif %}
 
     <div class="col-sm-6 col-md-4">
       <div data-component='user-quick-stats' data-attrs='{"stats": {{ quick_stats|tojson }}}'>Loading...</div>

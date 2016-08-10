@@ -13,7 +13,7 @@ from skylines.model import (
     User, Flight, Follower, Location, Notification, Event
 )
 from skylines.model.event import create_follower_notification
-from skylines.schemas import Schema, fields, UserSchema
+from skylines.schemas import Schema, fields, FlightSchema, UserSchema
 
 user_blueprint = Blueprint('user', 'skylines')
 
@@ -30,33 +30,39 @@ def _add_user_id(endpoint, values):
         values.setdefault('user_id', g.user_id)
 
 
-def _get_distance_flight(distance):
-    return Flight.query() \
-        .filter(Flight.pilot == g.user) \
+def _largest_flight(user, schema):
+    flight = user.get_largest_flights() \
+        .filter(Flight.is_rankable()) \
+        .first()
+
+    if flight:
+        return schema.dump(flight).data
+
+
+def _distance_flight(user, distance, schema):
+    flight = Flight.query() \
+        .filter(Flight.pilot == user) \
         .filter(Flight.olc_classic_distance >= distance) \
         .order_by(Flight.landing_time) \
         .filter(Flight.is_rankable()) \
         .first()
 
+    if flight:
+        return schema.dump(flight).data
 
-def _get_distance_flights():
-    distance_flights = []
 
-    largest_flight = g.user.get_largest_flights() \
-        .filter(Flight.is_rankable()) \
-        .first()
+def _distance_flights(user):
+    schema = FlightSchema(only=('id', 'scoreDate', 'distance'))
 
-    if largest_flight:
-        distance_flights.append([largest_flight.olc_classic_distance,
-                                 largest_flight])
-
-    for distance in [50000, 100000, 300000, 500000, 700000, 1000000]:
-        distance_flight = _get_distance_flight(distance)
-        if distance_flight is not None:
-            distance_flights.append([distance, distance_flight])
-
-    distance_flights.sort()
-    return distance_flights
+    return {
+        '50km': _distance_flight(user, 50000, schema),
+        '100km': _distance_flight(user, 100000, schema),
+        '300km': _distance_flight(user, 300000, schema),
+        '500km': _distance_flight(user, 500000, schema),
+        '700km': _distance_flight(user, 700000, schema),
+        '1000km': _distance_flight(user, 1000000, schema),
+        'largest': _largest_flight(user, schema),
+    }
 
 
 class QuickStatsSchema(Schema):
@@ -104,7 +110,7 @@ def index():
 
     return render_template(
         'users/view.jinja',
-        distance_flights=_get_distance_flights(),
+        distance_flights=_distance_flights(g.user),
         takeoff_locations=_get_takeoff_locations(),
         quick_stats=_quick_stats())
 
