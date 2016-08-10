@@ -2,6 +2,8 @@
 
 import ol from 'openlayers';
 
+import config from '../config/environment';
+
 /**
  * @constructor
  * @param {ol.Map} map Openlayers map instance
@@ -262,7 +264,7 @@ export default function slMapClickHandler(map, flight_display, settings) {
    * @param {Number} lat Latitude.
    */
   function getLocationInfo(lon, lat) {
-    let req = $.ajax(`${settings.api_url}/mapitems?lon=${lon}&lat=${lat}`);
+    let req = $.ajax(`${config.SKYLINES_API_URL}/mapitems?lon=${lon}&lat=${lat}`);
 
     req.done(function(data) {
       showLocationData(data);

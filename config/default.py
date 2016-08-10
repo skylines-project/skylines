@@ -53,7 +53,6 @@ SKYLINES_TEMPORARY_DIR = '/tmp'
 # how many entries should a list have?
 SKYLINES_LISTS_DISPLAY_LENGTH = 50
 
-SKYLINES_API_URL = 'http://localhost:5001'
 SKYLINES_MAP_TILE_URL = 'https://www.skylines.aero/mapproxy'
 
 BROKER_URL = 'redis://localhost:6379/0'

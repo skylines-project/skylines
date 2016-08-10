@@ -17,10 +17,12 @@ module.exports = function(environment) {
       rootElement: '#ember-application'
     },
 
+    SKYLINES_API_URL: 'http://localhost:5001',
     SKYLINES_TILE_BASEURL: 'https://skylines.aero/mapproxy',
   };
 
   if (environment === 'production') {
+    ENV.SKYLINES_API_URL = 'https://api.skylines.aero';
     ENV.BING_API_KEY = 'AqYIkJFKZXzNxVnZmmDyk52su5Le7GLfzshBTu_px5N1HYa6B2KW2qPemRltfc8g';
     ENV.MAPBOX_TILE_URL = 'https://a.tiles.mapbox.com/v4/skylines.l9bfkoko/{z}/{x}/{y}.png?access_token=pk.eyJ1Ijoic2t5bGluZXMiLCJhIjoiODR5cnAtcyJ9.OxutJHpnCaw6QQpxfl5ROA';
   }
