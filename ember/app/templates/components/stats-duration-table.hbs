@@ -11,7 +11,7 @@
     <td class="col-xs-2">
       <span rel="tooltip"
             title="{{t "n-avg-hours-per-flight" num=(format-hours year.average_duration) }}">
-        {{t "n-hours" hours num=(format-hours year.duration)}}
+        {{t "n-hours" num=(format-hours year.duration)}}
       </span>
     </td>
     <td class="col-xs-8">
@@ -29,6 +29,6 @@
 
 <tr>
   <td><strong>{{t "total"}}</strong></td>
-  <td colspan="2"><strong>{{t "n-hours" hours num=(format-hours sum)}}</strong></td>
+  <td colspan="2"><strong>{{t "n-hours" num=(format-hours sum)}}</strong></td>
 </tr>
 </tbody>
