@@ -173,10 +173,7 @@
       <h2>{% trans %}Takeoff Locations{% endtrans %}</h2>
       <div data-component='takeoffs-map' data-attrs='{
         "locations": [{{ add_locations(takeoff_locations) }}],
-        "height": "533px",
-        "bingAPIKey": "{{ config.get('SKYLINES_BING_API_KEY', 'null') }}",
-        "mapboxAPIKey": "{{ config.get('SKYLINES_MAPBOX_API_KEY', 'null') }}",
-        "mapTileURL": "{{ config.get('SKYLINES_MAP_TILE_URL') }}"
+        "height": "533px"
       }'></div>
     </div>
   </div>

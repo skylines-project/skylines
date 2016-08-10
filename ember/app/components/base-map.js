@@ -1,6 +1,7 @@
 import Ember from 'ember';
 import ol from 'openlayers';
 
+import config from '../config/environment';
 import parseQueryString from '../utils/parse-query-string';
 
 export default Ember.Component.extend(Ember.Evented, {
@@ -10,9 +11,6 @@ export default Ember.Component.extend(Ember.Evented, {
 
   width: '100%',
   height: '100%',
-  bingAPIKey: null,
-  mapboxAPIKey: null,
-  mapTileURL: null,
   baseLayer: null,
 
   style: Ember.computed('width', 'height', function() {
@@ -153,11 +151,9 @@ export default Ember.Component.extend(Ember.Evented, {
   },
 
   addAirspaceLayers() {
-    let tile_url = this.getWithDefault('mapTileURL', '');
-
     let airspace_layer = new ol.layer.Tile({
       source: new ol.source.XYZ({
-        url: `${tile_url}/tiles/1.0.0/airspace+airports/{z}/{x}/{y}.png`,
+        url: `${config.SKYLINES_TILE_BASEURL || ''}/tiles/1.0.0/airspace+airports/{z}/{x}/{y}.png`,
       }),
       zIndex: 10,
     });
@@ -199,10 +195,8 @@ export default Ember.Component.extend(Ember.Evented, {
   },
 
   addMapboxLayer() {
-    let tile_url = this.get('mapboxAPIKey');
-    if (!tile_url || tile_url == 'null') {
-      return;
-    }
+    let tile_url = config.MAPBOX_TILE_URL;
+    if (!tile_url) return;
 
     let mapbox_layer = new ol.layer.Tile({
       source: new ol.source.XYZ({
@@ -232,10 +226,8 @@ export default Ember.Component.extend(Ember.Evented, {
   },
 
   addBingLayers() {
-    let api_key = this.get('bingAPIKey');
-    if (!api_key || api_key == 'null') {
-      return;
-    }
+    let api_key = config.BING_API_KEY;
+    if (!api_key) return;
 
     // Bing's Road imagerySet
     let road = new ol.layer.Tile({

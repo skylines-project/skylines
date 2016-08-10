@@ -100,11 +100,7 @@
 {% block content -%}
 {% if traces -%}
 <div id="fullscreen-content" class="olFullscreen" data-component='tracking-page' data-attrs='{
-  "pilots": {{ pilots_json|tojson }},
-
-  "bingAPIKey": "{{ config.get('SKYLINES_BING_API_KEY', 'null') }}",
-  "mapboxAPIKey": "{{ config.get('SKYLINES_MAPBOX_API_KEY', 'null') }}",
-  "mapTileURL": "{{ config.get('SKYLINES_MAP_TILE_URL') }}"
+  "pilots": {{ pilots_json|tojson }}
 }'></div>
 {%- else -%}
 <p style="margin:10pt;margin-top:40pt;">

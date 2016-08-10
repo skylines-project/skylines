@@ -79,10 +79,6 @@
   "performance": {{ performance|tojson }},
   "legs": {{ contest_legs|tojson }},
   "phases": {{ phases|tojson }},
-  "nearFlights": {{ near_flights|tojson }},
-
-  "bingAPIKey": "{{ config.get('SKYLINES_BING_API_KEY', 'null') }}",
-  "mapboxAPIKey": "{{ config.get('SKYLINES_MAPBOX_API_KEY', 'null') }}",
-  "mapTileURL": "{{ config.get('SKYLINES_MAP_TILE_URL') }}"
+  "nearFlights": {{ near_flights|tojson }}
 }'></div>
 {%- endblock %}
