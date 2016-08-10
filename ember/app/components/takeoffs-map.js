@@ -1,8 +1,6 @@
 import BaseMapComponent from './base-map';
 
 export default BaseMapComponent.extend({
-  takeoffsLayer: null,
-
   fit() {
     let map = this.get('map');
 
