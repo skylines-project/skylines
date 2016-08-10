@@ -86,9 +86,7 @@
       flight_tracking.updateFlightsFromJSON();
     }, 15*1000);
 
-    var map_click_handler = slMapClickHandler(map, flight_display, {
-      flight_info: true
-    });
+    var map_click_handler = slMapClickHandler(map, flight_display);
   });
 </script>
 {%- endif %}

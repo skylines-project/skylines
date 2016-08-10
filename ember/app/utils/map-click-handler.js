@@ -8,9 +8,8 @@ import config from '../config/environment';
  * @constructor
  * @param {ol.Map} map Openlayers map instance
  * @param {slFlightDisplay} flight_display Flight display module
- * @param {Object} settings Settings for this module
  */
-export default function slMapClickHandler(map, flight_display, settings) {
+export default function slMapClickHandler(map, flight_display) {
   let map_click_handler = {};
 
   // Private attributes
@@ -58,7 +57,7 @@ export default function slMapClickHandler(map, flight_display, settings) {
     let infobox_element = $(infobox.getElement());
     let coordinate = e.coordinate;
 
-    if (settings['flight_info'] && flight_display) {
+    if (flight_display) {
       let flight_path_source = flight_display.get('flights.source');
       let closest_feature = flight_path_source
           .getClosestFeatureToCoordinate(coordinate);
