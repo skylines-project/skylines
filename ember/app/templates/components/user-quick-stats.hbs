@@ -1,0 +1,40 @@
+<h2>{{t "last-12-months"}}</h2>
+<table class="table">
+  <thead>
+  <tr>
+    <th colspan="2">&nbsp;</th>
+  </tr>
+  </thead>
+
+  <tbody>
+  <tr>
+    <td><strong>{{t "flights"}}</strong></td>
+    <td>{{format-number stats.flights}}</td>
+  </tr>
+
+  {{#if (gt stats.flights 0)}}
+    <tr>
+      <td><strong>{{t "distance"}}</strong></td>
+      <td>
+        <span rel="tooltip" title="{{t "n-avg-distance-per-flight" distance=(format-distance avgDistance) }}">
+          {{format-distance stats.distance}}
+        </span>
+      </td>
+    </tr>
+
+    <tr>
+      <td><strong>{{t "flight-time"}}</strong></td>
+      <td>
+        <span rel="tooltip" title="{{t "n-avg-hours-per-flight" num=(format-hours avgDuration) }}">
+          {{t "n-hours" num=(format-hours stats.duration)}}
+        </span>
+      </td>
+    </tr>
+
+    <tr>
+      <td><strong>{{t "avg-speed"}}</strong></td>
+      <td>{{format-speed speed}}</td>
+    </tr>
+  {{/if}}
+  </tbody>
+</table>

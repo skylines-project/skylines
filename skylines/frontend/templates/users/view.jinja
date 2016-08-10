@@ -162,44 +162,9 @@
     </div>
     {%- endif %}
 
-    {% if last_year_statistics and last_year_statistics.flights > 0 -%}
     <div class="col-sm-6 col-md-4">
-      <h2>{% trans %}Last 12 Months{% endtrans %}</h2>
-      <table class="table">
-        <thead>
-          <tr>
-            <th colspan="2">&nbsp;</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td><strong>{% trans %}Flights{% endtrans %}</strong></td>
-            <td>{{ h.format_number(last_year_statistics.flights) }}</td>
-          </tr>
-          <tr>
-            <td><strong>{% trans %}Distance{% endtrans %}</strong></td>
-            <td>
-              <span rel="tooltip" title="{{ _('avg. %(distance)s per flight', distance=h.format_distance(last_year_statistics.average_distance)) }}">
-                {{ h.format_distance(last_year_statistics.distance) }}
-              </span>
-            </td>
-          </tr>
-          <tr>
-            <td><strong>{% trans %}Flight Time{% endtrans %}</strong></td>
-            <td>
-              <span rel="tooltip" title="{{ _('avg. %(hours)s hours per flight', hours=h.format_timedelta(last_year_statistics.average_duration)) }}">
-                {{ _('%(hours)s Hours', hours=h.format_timedelta(last_year_statistics.duration)) }}
-              </span>
-            </td>
-          </tr>
-          <tr>
-            <td><strong>{% trans %}Average Speed{% endtrans %}</strong></td>
-            <td>{{ h.format_speed(last_year_statistics.speed) }}</td>
-          </tr>
-        </tbody>
-      </table>
+      <div data-component='user-quick-stats' data-attrs='{"stats": {{ quick_stats|tojson }}}'>Loading...</div>
     </div>
-    {%- endif %}
   </div>
 
   {% if takeoff_locations -%}

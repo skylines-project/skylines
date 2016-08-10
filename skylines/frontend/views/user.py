@@ -13,7 +13,7 @@ from skylines.model import (
     User, Flight, Follower, Location, Notification, Event
 )
 from skylines.model.event import create_follower_notification
-from skylines.schemas import UserSchema
+from skylines.schemas import Schema, fields, UserSchema
 
 user_blueprint = Blueprint('user', 'skylines')
 
@@ -59,34 +59,22 @@ def _get_distance_flights():
     return distance_flights
 
 
-def _get_last_year_statistics():
-    query = db.session.query(func.count('*').label('flights'),
-                             func.sum(Flight.olc_classic_distance).label('distance'),
-                             func.sum(Flight.duration).label('duration')) \
-                      .filter(Flight.pilot == g.user) \
-                      .filter(Flight.date_local > (date.today() - timedelta(days=365))) \
-                      .filter(Flight.is_rankable()) \
-                      .first()
+class QuickStatsSchema(Schema):
+    flights = fields.Int()
+    distance = fields.Float()
+    duration = fields.TimeDelta()
 
-    last_year_statistics = dict(flights=0,
-                                distance=0,
-                                duration=timedelta(0),
-                                speed=0)
 
-    if query and query.flights > 0:
-        duration_seconds = query.duration.days * 24 * 3600 + query.duration.seconds
+def _quick_stats():
+    result = db.session.query(func.count('*').label('flights'),
+                              func.sum(Flight.olc_classic_distance).label('distance'),
+                              func.sum(Flight.duration).label('duration')) \
+        .filter(Flight.pilot == g.user) \
+        .filter(Flight.date_local > (date.today() - timedelta(days=365))) \
+        .filter(Flight.is_rankable()) \
+        .one()
 
-        if duration_seconds > 0:
-            last_year_statistics['speed'] = float(query.distance) / duration_seconds
-
-        last_year_statistics['flights'] = query.flights
-        last_year_statistics['distance'] = query.distance
-        last_year_statistics['duration'] = query.duration
-
-        last_year_statistics['average_distance'] = query.distance / query.flights
-        last_year_statistics['average_duration'] = query.duration / query.flights
-
-    return last_year_statistics
+    return QuickStatsSchema().dump(result).data
 
 
 def _get_takeoff_locations():
@@ -118,7 +106,7 @@ def index():
         'users/view.jinja',
         distance_flights=_get_distance_flights(),
         takeoff_locations=_get_takeoff_locations(),
-        last_year_statistics=_get_last_year_statistics())
+        quick_stats=_quick_stats())
 
 
 @user_blueprint.route('/followers')
