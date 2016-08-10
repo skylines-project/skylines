@@ -50,7 +50,7 @@ export default function slMapClickHandler(map, flight_display) {
 
     if (!infobox) {
       infobox = new ol.Overlay({
-        element: $("<div id='MapInfoBox' class='InfoBox'></div>").get(0),
+        element: $('<div id="MapInfoBox" class="InfoBox"></div>').get(0),
       });
     }
 
@@ -82,9 +82,7 @@ export default function slMapClickHandler(map, flight_display) {
           infobox_element.append(flight_info);
 
           // near flights link
-          let loc = ol.proj.transform(closest_point,
-                                      'EPSG:3857',
-                                      'EPSG:4326');
+          let loc = ol.proj.transform(closest_point, 'EPSG:3857', 'EPSG:4326');
           let get_near_flights = nearFlights(loc[0], loc[1], time, flight);
           infobox_element.append(get_near_flights);
 
@@ -129,11 +127,9 @@ export default function slMapClickHandler(map, flight_display) {
   }
 
   function nearFlights(lon, lat, time, flight) {
-    let get_near_flights = $(
-        '<div class="info-item">' +
-        '<a class="near" href="#NearFlights">Load nearby flights</a>' +
-        '</div>'
-        );
+    let get_near_flights = $(`<div class="info-item">
+      <a class="near" href="#NearFlights">Load nearby flights</a>
+    </div>`);
 
     get_near_flights.on('click touchend', function(e) {
       map.removeOverlay(infobox);
@@ -147,11 +143,9 @@ export default function slMapClickHandler(map, flight_display) {
   }
 
   function locationInfo(lon, lat) {
-    let get_location_info = $(
-        '<div class="info-item">' +
-        '<a class="near" href="#LocationInfo">Get location info</a>' +
-        '</div>'
-        );
+    let get_location_info = $(`<div class="info-item">
+      <a class="near" href="#LocationInfo">Get location info</a>
+    </div>`);
 
     get_location_info.on('click touchend', function(e) {
       getLocationInfo(lon, lat);
