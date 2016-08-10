@@ -94,12 +94,10 @@ export default function slMapClickHandler(map, flight_display, settings) {
       }
     }
 
-    if (settings['location_info']) {
-      // location info
-      let loc = ol.proj.transform(coordinate, 'EPSG:3857', 'EPSG:4326');
-      let get_location_info = locationInfo(loc[0], loc[1]);
-      infobox_element.append(get_location_info);
-    }
+    // location info
+    let loc = ol.proj.transform(coordinate, 'EPSG:3857', 'EPSG:4326');
+    let get_location_info = locationInfo(loc[0], loc[1]);
+    infobox_element.append(get_location_info);
 
     e.map.addOverlay(infobox);
     infobox.setPosition(coordinate);
