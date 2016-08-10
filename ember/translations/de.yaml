@@ -44,7 +44,7 @@ live-tracking-key: 'Live Tracking Key'
 mark-all-as-read: 'Markiere alle als gelesen'
 members: 'Mitglieder'
 n-avg-distance-per-flight: '{distance} pro Flug'
-n-avg-hours-per-flight: '{num} hours pro Flug'
+n-avg-hours-per-flight: '{num} Std. pro Flug'
 n-comments: '{numComments, plural,
   =1 {1 Kommentar}
   other {# Kommentare}}'
