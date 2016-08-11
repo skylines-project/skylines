@@ -110,22 +110,19 @@ def index():
     if g.current_user:
         user['followed'] = g.current_user.follows(g.user)
 
-    if 'application/json' in request.headers.get('Accept', ''):
-        if 'extended' in request.args:
-            user['distanceFlights'] = _distance_flights(g.user)
-            user['stats'] = _quick_stats()
-            user['takeoffLocations'] = _get_takeoff_locations()
+    json = 'application/json' in request.headers.get('Accept', '')
 
+    if not json or 'extended' in request.args:
+        user['distanceFlights'] = _distance_flights(g.user)
+        user['stats'] = _quick_stats()
+        user['takeoffLocations'] = _get_takeoff_locations()
+
+    if json:
         return jsonify(**user)
 
     mark_user_notifications_read(g.user)
 
-    return render_template(
-        'users/view.jinja',
-        user=user,
-        distance_flights=_distance_flights(g.user),
-        takeoff_locations=_get_takeoff_locations(),
-        quick_stats=_quick_stats())
+    return render_template('users/view.jinja', user=user)
 
 
 @user_blueprint.route('/followers')

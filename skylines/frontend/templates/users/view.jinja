@@ -11,7 +11,7 @@
 {% block styles -%}
 {{ super() }}
 
-{% if takeoff_locations -%}
+{% if user.takeoffLocations -%}
 {% assets 'openlayers_css' -%}
 <link href="{{ ASSET_URL }}" rel="stylesheet" type="text/css" />
 {%- endassets %}
@@ -22,7 +22,7 @@
 {% block scripts -%}
 {{ super() }}
 
-{% if takeoff_locations -%}
+{% if user.takeoffLocations -%}
 {% assets 'openlayers_js' -%}
 <script type="text/javascript" src="{{ ASSET_URL }}"></script>
 {%- endassets %}
@@ -55,20 +55,20 @@
 
   <div class="row">
     <div class="col-sm-6 col-md-4 col-md-offset-2">
-      <div data-component='user-distance-flights' data-attrs='{"flights": {{ distance_flights|tojson }}}'></div>
+      <div data-component='user-distance-flights' data-attrs='{"flights": {{ user.distanceFlights|tojson }}}'></div>
     </div>
 
     <div class="col-sm-6 col-md-4">
-      <div data-component='user-quick-stats' data-attrs='{"stats": {{ quick_stats|tojson }}}'></div>
+      <div data-component='user-quick-stats' data-attrs='{"stats": {{ user.stats|tojson }}}'></div>
     </div>
   </div>
 
-  {% if takeoff_locations -%}
+  {% if user.takeoffLocations -%}
   <div class="row">
     <div class="col-md-12">
       <h2>{% trans %}Takeoff Locations{% endtrans %}</h2>
       <div data-component='takeoffs-map' data-attrs='{
-        "locations": {{ takeoff_locations|tojson }},
+        "locations": {{ user.takeoffLocations|tojson }},
         "height": "533px"
       }'></div>
     </div>
