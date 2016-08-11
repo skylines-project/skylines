@@ -160,13 +160,6 @@ const MapClickHandler = Ember.Object.extend({
       width: 3,
     });
 
-    /*
-    let fill_style = new ol.style.Fill({
-      opacity: 0.5,
-      color: '#f4bd00'
-    });
-    */
-
     let circle = this.get('circle');
     if (!circle.geometry)
       circle.geometry = new ol.geom.Circle(coordinate, 1000);
@@ -305,8 +298,6 @@ const MapClickHandler = Ember.Object.extend({
     }
 
     element.append(item);
-
-    // infobox.setOffset([15, element.height() / 2]);
   },
 });
 
