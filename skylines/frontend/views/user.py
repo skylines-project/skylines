@@ -13,7 +13,7 @@ from skylines.model import (
     User, Flight, Follower, Location, Notification, Event
 )
 from skylines.model.event import create_follower_notification
-from skylines.schemas import Schema, fields, FlightSchema, UserSchema
+from skylines.schemas import Schema, fields, FlightSchema, CurrentUserSchema, UserSchema
 
 user_blueprint = Blueprint('user', 'skylines')
 
@@ -103,7 +103,8 @@ def mark_user_notifications_read(user):
 @user_blueprint.route('/')
 @vary('accept')
 def index():
-    user = UserSchema().dump(g.user).data
+    user_schema = CurrentUserSchema() if g.user == g.current_user else UserSchema()
+    user = user_schema.dump(g.user).data
 
     if g.current_user:
         user['followed'] = g.current_user.follows(g.user)

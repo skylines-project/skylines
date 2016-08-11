@@ -59,10 +59,6 @@ class ClubSchema(Schema):
 
 class UserSchema(Schema):
     id = fields.Integer(dump_only=True)
-    email = fields.String(attribute='email_address', required=True, validate=(
-        validate.Email(),
-        validate.Length(max=255),
-    ))
     firstName = fields.String(attribute='first_name', required=True, strip=True, validate=(
         validate.NotEmpty(),
         validate.Length(min=1, max=255),
@@ -88,6 +84,11 @@ class UserSchema(Schema):
 
 
 class CurrentUserSchema(UserSchema):
+    email = fields.String(attribute='email_address', required=True, validate=(
+        validate.Email(),
+        validate.Length(max=255),
+    ))
+
     password = fields.String(required=True, load_only=True, validate=validate.Length(min=6))
     currentPassword = fields.String(load_only=True)
 
