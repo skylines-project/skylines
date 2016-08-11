@@ -13,6 +13,8 @@ Router.map(function() {
   });
   this.route('clubs', { path: '/clubs' });
 
+  this.route('user', { path: '/users/:user_id' }, function() {
+  });
   this.route('users', { path: '/users' }, function() {
     this.route('new');
     this.route('recover');

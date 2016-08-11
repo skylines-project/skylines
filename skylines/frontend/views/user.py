@@ -104,25 +104,23 @@ def mark_user_notifications_read(user):
 @user_blueprint.route('/')
 @vary('accept')
 def index():
-    user_schema = CurrentUserSchema() if g.user == g.current_user else UserSchema()
-    user = user_schema.dump(g.user).data
+    if 'application/json' in request.headers.get('Accept', ''):
+        user_schema = CurrentUserSchema() if g.user == g.current_user else UserSchema()
+        user = user_schema.dump(g.user).data
 
-    if g.current_user:
-        user['followed'] = g.current_user.follows(g.user)
+        if g.current_user:
+            user['followed'] = g.current_user.follows(g.user)
 
-    json = 'application/json' in request.headers.get('Accept', '')
+        if 'extended' in request.args:
+            user['distanceFlights'] = _distance_flights(g.user)
+            user['stats'] = _quick_stats()
+            user['takeoffLocations'] = _get_takeoff_locations()
 
-    if not json or 'extended' in request.args:
-        user['distanceFlights'] = _distance_flights(g.user)
-        user['stats'] = _quick_stats()
-        user['takeoffLocations'] = _get_takeoff_locations()
-
-    if json:
         return jsonify(**user)
 
     mark_user_notifications_read(g.user)
 
-    return render_template('users/view.jinja', user=user)
+    return render_template('users/view.jinja')
 
 
 @user_blueprint.route('/followers')
