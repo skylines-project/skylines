@@ -87,7 +87,7 @@ def recover_post():
 
 def recover_step1_post(json):
     try:
-        data = UserSchema(only=('email',)).load(json).data
+        data = CurrentUserSchema(only=('email',)).load(json).data
     except ValidationError, e:
         return jsonify(error='validation-failed', fields=e.messages), 422
 
