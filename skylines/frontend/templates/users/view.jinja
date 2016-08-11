@@ -93,7 +93,7 @@
         <tr>
           <th>{{ _('Followers') }}</th>
           <td>
-            <a href="{{ url_for('user.followers') }}">{{ ngettext('%(num)d pilot', '%(num)d pilots', g.user.followers|count) }}</a>
+            <a href="{{ url_for('user.followers') }}">{{ ngettext('%(num)d pilot', '%(num)d pilots', g.user.num_followers) }}</a>
           </td>
         </tr>
         {%- endif %}
@@ -102,7 +102,7 @@
         <tr>
           <th>{{ _('Following') }}</th>
           <td>
-            <a href="{{ url_for('user.following') }}">{{ ngettext('%(num)d pilot', '%(num)d pilots', g.user.following|count) }}</a>
+            <a href="{{ url_for('user.following') }}">{{ ngettext('%(num)d pilot', '%(num)d pilots', g.user.num_following) }}</a>
           </td>
         </tr>
         {%- endif %}

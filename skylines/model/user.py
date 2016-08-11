@@ -256,6 +256,16 @@ class User(db.Model):
         from skylines.model.follower import Follower
         return Follower.follows(self, other)
 
+    @property
+    def num_followers(self):
+        from skylines.model.follower import Follower
+        return Follower.query(destination=self).count()
+
+    @property
+    def num_following(self):
+        from skylines.model.follower import Follower
+        return Follower.query(source=self).count()
+
     ##############################
 
     def get_largest_flights(self):

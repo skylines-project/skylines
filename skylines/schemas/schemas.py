@@ -79,6 +79,9 @@ class UserSchema(Schema):
     trackingCallsign = fields.String(attribute='tracking_callsign', strip=True, validate=validate.Length(max=5))
     trackingDelay = fields.Integer(attribute='tracking_delay', validate=validate.Range(min=0, max=60))
 
+    followers = fields.Integer(attribute='num_followers', dump_only=True)
+    following = fields.Integer(attribute='num_following', dump_only=True)
+
     class Meta:
         load_only = ('clubId',)
         dump_only = ('club',)
