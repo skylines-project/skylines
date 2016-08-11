@@ -1,25 +1,4 @@
 {% extends "base-page.jinja" %}
 {% set use_ember = true %}
 
-{% block styles -%}
-  {{ super() }}
-
-  {% if openlayers %}
-    {% assets 'openlayers_css' -%}
-      <link rel="stylesheet" type="text/css" href="{{ ASSET_URL }}" />
-    {%- endassets %}
-  {% endif %}
-{%- endblock %}
-
-
-{% block scripts -%}
-  {{ super() }}
-
-  {% if openlayers %}
-    {% assets 'openlayers_js' -%}
-      <script type="text/javascript" src="{{ ASSET_URL }}"></script>
-    {%- endassets %}
-  {% endif %}
-{%- endblock %}
-
 {% block ember_application %}{% endblock %}

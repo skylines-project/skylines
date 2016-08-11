@@ -4,6 +4,7 @@
 {% extends "base-fullscreen.jinja" %}
 {% set active_page = "tracking" %}
 {% set use_ember = true %}
+{% set openlayers = true %}
 
 
 {% block title -%}
@@ -17,25 +18,8 @@
 {%- endblock %}
 
 
-{%- block styles %}
-{{ super() }}
-
-{% if traces -%}
-  {% assets 'openlayers_css' -%}
-  <link href="{{ ASSET_URL }}" rel="stylesheet" type="text/css" />
-  {%- endassets %}
-{%- endif %}
-{%- endblock %}
-
-
 {%- block scripts %}
 {{ super() }}
-
-{% if traces -%}
-  {% assets 'openlayers_js' -%}
-  <script type="text/javascript" src="{{ ASSET_URL }}"></script>
-  {%- endassets %}
-{%- endif %}
 
 {% if traces -%}
 <script type="text/javascript">

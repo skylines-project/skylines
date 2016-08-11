@@ -1,6 +1,7 @@
 {% extends "base-fullscreen.jinja" %}
 {% set active_page = "flights" %}
 {% set use_ember = true %}
+{% set openlayers = true %}
 
 
 {% from 'flights/meta-tags.jinja' import flight_meta_tags with context %}
@@ -16,21 +17,8 @@
 {%- endblock %}
 
 
-{%- block styles %}
-{{ super() }}
-
-{% assets 'openlayers_css' -%}
-<link href="{{ ASSET_URL }}" rel="stylesheet" type="text/css" />
-{%- endassets %}
-{%- endblock %}
-
-
 {%- block scripts %}
 {{ super() }}
-
-{% assets 'openlayers_js' -%}
-<script type="text/javascript" src="{{ ASSET_URL }}"></script>
-{%- endassets %}
 
 <script type="text/javascript">
   $(function() {

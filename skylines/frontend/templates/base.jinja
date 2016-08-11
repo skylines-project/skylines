@@ -37,6 +37,12 @@
         <link rel="stylesheet" type="text/css" href="{{ ASSET_URL }}"/>
       {%- endassets %}
     {% endif %}
+
+    {% if openlayers %}
+      {% assets 'openlayers_css' -%}
+        <link rel="stylesheet" type="text/css" href="{{ ASSET_URL }}" />
+      {%- endassets %}
+    {% endif %}
     {%- endblock %}
 
     {%- endblock %}
@@ -59,6 +65,12 @@
 {%- assets 'ember_app_js' %}
 <script type="text/javascript" src="{{ ASSET_URL }}"></script>
 {%- endassets %}
+{% endif %}
+
+{% if openlayers %}
+  {% assets 'openlayers_js' -%}
+    <script type="text/javascript" src="{{ ASSET_URL }}"></script>
+  {%- endassets %}
 {% endif %}
 {%- endblock %}
 </body>
