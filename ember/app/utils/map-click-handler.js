@@ -23,7 +23,7 @@ const MapClickHandler = Ember.Object.extend({
   init() {
     this.circle = { geometry: null, animation: null };
 
-    this.get('map').on('click', e => this.trigger(e));
+    this.get('map').on('click', event => this.trigger(event));
   },
 
   // Public attributes and functions
@@ -32,13 +32,13 @@ const MapClickHandler = Ember.Object.extend({
    * Click handler which shows a info box at the click location.
    *
    * @this {ol.Map}
-   * @param {Event} e
+   * @param {Event} event
    * @return {(boolean|undefined)}
    */
-  trigger(e) {
+  trigger(event) {
     // Hide infobox if it's currently visible
     if (this.get('visible')) {
-      e.map.removeOverlay(this.get('infobox'));
+      event.map.removeOverlay(this.get('infobox'));
       this.hideCircle(0);
       this.setProperties({
         visible: false,
@@ -55,7 +55,7 @@ const MapClickHandler = Ember.Object.extend({
 
     let infobox = this.get('infobox');
     let infobox_element = $(infobox.getElement());
-    let coordinate = e.coordinate;
+    let coordinate = event.coordinate;
 
     let flight_display = this.get('flight_display');
     if (flight_display) {
@@ -67,8 +67,8 @@ const MapClickHandler = Ember.Object.extend({
         let geometry = closest_feature.getGeometry();
         let closest_point = geometry.getClosestPoint(coordinate);
 
-        let feature_pixel = e.map.getPixelFromCoordinate(closest_point);
-        let mouse_pixel = e.map.getPixelFromCoordinate(coordinate);
+        let feature_pixel = event.map.getPixelFromCoordinate(closest_point);
+        let mouse_pixel = event.map.getPixelFromCoordinate(coordinate);
 
         let squared_distance = Math.pow(mouse_pixel[0] - feature_pixel[0], 2) +
                                Math.pow(mouse_pixel[1] - feature_pixel[1], 2);
@@ -97,7 +97,7 @@ const MapClickHandler = Ember.Object.extend({
     let get_location_info = this.locationInfo(loc[0], loc[1]);
     infobox_element.append(get_location_info);
 
-    e.map.addOverlay(infobox);
+    event.map.addOverlay(infobox);
     infobox.setPosition(coordinate);
     this.showCircle(coordinate);
 
@@ -141,9 +141,9 @@ const MapClickHandler = Ember.Object.extend({
       <a class="near" href="#LocationInfo">Get location info</a>
     </div>`);
 
-    get_location_info.on('click touchend', e => {
+    get_location_info.on('click touchend', event => {
       this.getLocationInfo(lon, lat);
-      e.preventDefault();
+      event.preventDefault();
     });
 
     return get_location_info;
@@ -273,12 +273,8 @@ const MapClickHandler = Ember.Object.extend({
     let no_data = true;
 
     if (data) {
-      let airspace_layer = map.getLayers().getArray().filter(function(e) {
-        return e.get('name') == 'Airspace';
-      })[0];
-      let mwp_layer = map.getLayers().getArray().filter(function(e) {
-        return e.get('name') == 'Mountain Wave Project';
-      })[0];
+      let airspace_layer = map.getLayers().getArray().filter(layer => layer.get('name') == 'Airspace')[0];
+      let mwp_layer = map.getLayers().getArray().filter(layer => layer.get('name') == 'Mountain Wave Project')[0];
 
       if (!$.isEmptyObject(data['airspaces']) &&
           airspace_layer.getVisible()) {
