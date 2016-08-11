@@ -110,6 +110,10 @@ def index():
         user['followed'] = g.current_user.follows(g.user)
 
     if 'application/json' in request.headers.get('Accept', ''):
+        if 'extended' in request.args:
+            user['distanceFlights'] = _distance_flights(g.user)
+            user['stats'] = _quick_stats()
+
         return jsonify(**user)
 
     mark_user_notifications_read(g.user)
