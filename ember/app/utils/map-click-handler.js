@@ -1,33 +1,30 @@
 /* globals $ */
 
+import Ember from 'ember';
 import ol from 'openlayers';
 
 import config from '../config/environment';
 
-/**
- * @constructor
- * @param {ol.Map} map Openlayers map instance
- * @param {slFlightDisplay} flight_display Flight display module
- */
-export default function slMapClickHandler(map, flight_display) {
-  let map_click_handler = {};
-
-  // Private attributes
-
+const MapClickHandler = Ember.Object.extend({
   /**
    * The OpenLayers.Geometry object of the circle.
    * @type {Object}
    */
-  let circle = { geometry: null, animation: null };
+  circle: null,
 
   /**
    * Stores the state if the infobox.
    * @type {Boolean}
    */
-  let visible = false;
+  visible: false,
 
+  infobox: null,
 
-  let infobox = null;
+  init() {
+    this.circle = { geometry: null, animation: null };
+
+    this.get('map').on('click', e => this.trigger(e));
+  },
 
   // Public attributes and functions
 
@@ -38,25 +35,29 @@ export default function slMapClickHandler(map, flight_display) {
    * @param {Event} e
    * @return {(boolean|undefined)}
    */
-  map_click_handler.trigger = function(e) {
+  trigger(e) {
     // Hide infobox if it's currently visible
-    if (visible) {
-      e.map.removeOverlay(infobox);
-      hideCircle(0);
-      visible = false;
-      infobox = null;
+    if (this.get('visible')) {
+      e.map.removeOverlay(this.get('infobox'));
+      this.hideCircle(0);
+      this.setProperties({
+        visible: false,
+        infobox: null,
+      });
       return;
     }
 
-    if (!infobox) {
-      infobox = new ol.Overlay({
+    if (!this.get('infobox')) {
+      this.set('infobox', new ol.Overlay({
         element: $('<div id="MapInfoBox" class="InfoBox"></div>').get(0),
-      });
+      }));
     }
 
+    let infobox = this.get('infobox');
     let infobox_element = $(infobox.getElement());
     let coordinate = e.coordinate;
 
+    let flight_display = this.get('flight_display');
     if (flight_display) {
       let flight_path_source = flight_display.get('flights.source');
       let closest_feature = flight_path_source
@@ -78,12 +79,12 @@ export default function slMapClickHandler(map, flight_display) {
           let flight = flight_display.get('flights').findBy('id', sfid);
 
           // flight info
-          let flight_info = flightInfo(flight);
+          let flight_info = this.flightInfo(flight);
           infobox_element.append(flight_info);
 
           // near flights link
           let loc = ol.proj.transform(closest_point, 'EPSG:3857', 'EPSG:4326');
-          let get_near_flights = nearFlights(loc[0], loc[1], time, flight);
+          let get_near_flights = this.nearFlights(loc[0], loc[1], time, flight);
           infobox_element.append(get_near_flights);
 
           coordinate = closest_point;
@@ -93,74 +94,67 @@ export default function slMapClickHandler(map, flight_display) {
 
     // location info
     let loc = ol.proj.transform(coordinate, 'EPSG:3857', 'EPSG:4326');
-    let get_location_info = locationInfo(loc[0], loc[1]);
+    let get_location_info = this.locationInfo(loc[0], loc[1]);
     infobox_element.append(get_location_info);
 
     e.map.addOverlay(infobox);
     infobox.setPosition(coordinate);
-    showCircle(coordinate);
+    this.showCircle(coordinate);
 
-    visible = true;
+    this.set('visible', true);
 
     // stop bubbeling
     return false;
-  };
-
-  map_click_handler.init = function() {
-    map.on('click', map_click_handler.trigger);
-  };
-
-  map_click_handler.init();
-  return map_click_handler;
-
-  // Private functions
+  },
 
   /**
    * Returns the flight badge element
    * @param {slFlight} flight Flight object
    * @return {jQuery}
    */
-  function flightInfo(flight) {
+  flightInfo(flight) {
     return $(`<span class="info-item badge" style="background:${flight.get('color')}">
       ${flight.getWithDefault('registration', '')}
     </span>`);
-  }
+  },
 
-  function nearFlights(lon, lat, time, flight) {
+  nearFlights(lon, lat, time, flight) {
     let get_near_flights = $(`<div class="info-item">
       <a class="near" href="#NearFlights">Load nearby flights</a>
     </div>`);
 
-    get_near_flights.on('click touchend', function(e) {
-      map.removeOverlay(infobox);
-      getNearFlights(lon, lat, time, flight);
-      visible = false;
-      infobox = null;
+    get_near_flights.on('click touchend', e => {
+      this.get('map').removeOverlay(this.get('infobox'));
+      this.getNearFlights(lon, lat, time, flight);
+      this.setProperties({
+        visible: false,
+        infobox: null,
+      });
       e.preventDefault();
     });
 
     return get_near_flights;
-  }
+  },
 
-  function locationInfo(lon, lat) {
+  locationInfo(lon, lat) {
     let get_location_info = $(`<div class="info-item">
       <a class="near" href="#LocationInfo">Get location info</a>
     </div>`);
 
-    get_location_info.on('click touchend', function(e) {
-      getLocationInfo(lon, lat);
+    get_location_info.on('click touchend', e => {
+      this.getLocationInfo(lon, lat);
       e.preventDefault();
     });
 
     return get_location_info;
-  }
+  },
 
   /**
    * Show a circle at the clicked position
    *
    * @param {Array<Number>} coordinate Coordinate
    */
-  function showCircle(coordinate) {
+  showCircle(coordinate) {
     let stroke_style = new ol.style.Stroke({
       color: '#f4bd33',
       width: 3,
@@ -173,6 +167,7 @@ export default function slMapClickHandler(map, flight_display) {
     });
     */
 
+    let circle = this.get('circle');
     if (!circle.geometry)
       circle.geometry = new ol.geom.Circle(coordinate, 1000);
     else
@@ -180,6 +175,7 @@ export default function slMapClickHandler(map, flight_display) {
 
     circle.animation = null;
 
+    let map = this.get('map');
     map.on('postcompose', function(e) {
       let vector_context = e.vectorContext;
 
@@ -207,16 +203,16 @@ export default function slMapClickHandler(map, flight_display) {
         map.render();
       }
     });
-  }
+  },
 
   /**
    * Hides the search circle
    *
    * @param {Number} duration Fade duration in ms
    */
-  function hideCircle(duration) {
-    circle.animation = { duration, start: null };
-  }
+  hideCircle(duration) {
+    this.get('circle').animation = { duration, start: null };
+  },
 
   /**
    * Request near flights via ajax
@@ -226,7 +222,8 @@ export default function slMapClickHandler(map, flight_display) {
    * @param {Number} time Time.
    * @param {slFlight} flight Flight.
    */
-  function getNearFlights(lon, lat, time, flight) {
+  getNearFlights(lon, lat, time, flight) {
+    let flight_display = this.get('flight_display');
     if (!flight_display) return;
 
     let req = $.ajax(`/flights/${flight.get('id')}/near?lon=${lon}&lat=${lat}&time=${time}`);
@@ -243,10 +240,8 @@ export default function slMapClickHandler(map, flight_display) {
       }
     });
 
-    req.always(function() {
-      hideCircle(1000);
-    });
-  }
+    req.always(() => this.hideCircle(1000));
+  },
 
   /**
    * Request location informations via ajax
@@ -254,26 +249,23 @@ export default function slMapClickHandler(map, flight_display) {
    * @param {Number} lon Longitude.
    * @param {Number} lat Latitude.
    */
-  function getLocationInfo(lon, lat) {
+  getLocationInfo(lon, lat) {
     let req = $.ajax(`${config.SKYLINES_API_URL}/mapitems?lon=${lon}&lat=${lat}`);
-
-    req.done(function(data) {
-      showLocationData(data);
-    });
-
-    req.fail(function() {
-      showLocationData(null);
-    });
-  }
+    req.done(data => this.showLocationData(data));
+    req.fail(() => this.showLocationData(null));
+  },
 
   /**
    * Show location data in infobox
    *
    * @param {Object} data Location data.
    */
-  function showLocationData(data) {
+  showLocationData(data) {
     // do nothing if infobox is closed already
-    if (!visible) return;
+    if (!this.get('visible')) return;
+
+    let infobox = this.get('infobox');
+    let map = this.get('map');
 
     let element = $(infobox.getElement());
     element.empty();
@@ -291,7 +283,7 @@ export default function slMapClickHandler(map, flight_display) {
       if (!$.isEmptyObject(data['airspaces']) &&
           airspace_layer.getVisible()) {
         let p = $('<p></p>');
-        p.append(formatAirspaceData(data['airspaces']));
+        p.append(this.formatAirspaceData(data['airspaces']));
         item.append(p);
         no_data = false;
       }
@@ -299,7 +291,7 @@ export default function slMapClickHandler(map, flight_display) {
       if (!$.isEmptyObject(data['waves']) &&
           mwp_layer.getVisible()) {
         let p = $('<p></p>');
-        p.append(formatMountainWaveData(data['waves']));
+        p.append(this.formatMountainWaveData(data['waves']));
         item.append(p);
         no_data = false;
       }
@@ -310,16 +302,16 @@ export default function slMapClickHandler(map, flight_display) {
 
       element.delay(1500).fadeOut(1000, function() {
         map.removeOverlay(infobox);
-        visible = false;
+        this.set('visible', false);
       });
 
-      hideCircle(1000);
+      this.hideCircle(1000);
     }
 
     element.append(item);
 
     // infobox.setOffset([15, element.height() / 2]);
-  }
+  },
 
   /**
    * Format Airspace data for infobox
@@ -327,7 +319,7 @@ export default function slMapClickHandler(map, flight_display) {
    * @param {Object} data Airspace data.
    * @return {jQuery} HTML table with the airspace data.
    */
-  function formatAirspaceData(data) {
+  formatAirspaceData(data) {
     let table = $('<table></table>');
 
     table.append($(`<thead>
@@ -356,7 +348,7 @@ export default function slMapClickHandler(map, flight_display) {
     table.append(table_body);
 
     return table;
-  }
+  },
 
   /**
    * Format Mountain Wave data in infobox
@@ -364,7 +356,7 @@ export default function slMapClickHandler(map, flight_display) {
    * @param {Object} data Wave data.
    * @return {jQuery} HTML table with the wave data.
    */
-  function formatMountainWaveData(data) {
+  formatMountainWaveData(data) {
     let table = $('<table></table>');
 
     table.append($(`<thead>
@@ -391,5 +383,9 @@ export default function slMapClickHandler(map, flight_display) {
     table.append(table_body);
 
     return table;
-  }
+  },
+});
+
+export default function slMapClickHandler(map, flight_display) {
+  return MapClickHandler.create({ map, flight_display });
 }
