@@ -1,7 +1,7 @@
 import Ember from 'ember';
 
 import { addAltitudeUnit } from '../utils/units';
-import safeComputed from '../utils/safe-computed';
+import safeComputed from '../computed/safe-computed';
 
 export default Ember.Component.extend(Ember.Evented, {
   layoutName: 'components/base-barogram',

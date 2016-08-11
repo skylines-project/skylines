@@ -3,7 +3,7 @@
 import Ember from 'ember';
 import ol from 'openlayers';
 
-import safeComputed from '../utils/safe-computed';
+import safeComputed from '../computed/safe-computed';
 
 export default Ember.Component.extend({
   tagName: '',

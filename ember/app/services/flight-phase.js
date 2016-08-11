@@ -1,6 +1,6 @@
 import Ember from 'ember';
 import getNextSmallerIndex from '../utils/next-smaller-index';
-import computedPoint from '../utils/computed-point';
+import computedPoint from '../computed/computed-point';
 
 export default Ember.Service.extend({
   fixCalc: Ember.inject.service(),

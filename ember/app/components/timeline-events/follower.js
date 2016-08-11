@@ -1,7 +1,7 @@
 import Ember from 'ember';
 
 import Base from './-base';
-import safeComputed from '../../utils/safe-computed';
+import safeComputed from '../../computed/safe-computed';
 
 export default Base.extend({
   accountUserIsFollowed: safeComputed('account.user', 'event.user',

@@ -1,7 +1,7 @@
 import Ember from 'ember';
 
 import addDays from '../utils/add-days';
-import safeComputed from '../utils/safe-computed';
+import safeComputed from '../computed/safe-computed';
 
 export default Ember.Component.extend({
   account: Ember.inject.service(),

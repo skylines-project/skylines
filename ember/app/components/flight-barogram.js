@@ -2,7 +2,7 @@ import Ember from 'ember';
 
 import BarogramComponent from './base-barogram';
 
-import safeComputed from '../utils/safe-computed';
+import safeComputed from '../computed/safe-computed';
 
 export default BarogramComponent.extend({
   fixCalc: Ember.inject.service(),

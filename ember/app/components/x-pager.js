@@ -1,6 +1,6 @@
 import Ember from 'ember';
 
-import safeComputed from '../utils/safe-computed';
+import safeComputed from '../computed/safe-computed';
 
 export default Ember.Component.extend({
   count: 0,

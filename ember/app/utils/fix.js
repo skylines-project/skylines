@@ -3,8 +3,8 @@ import ol from 'openlayers';
 
 import geographicDistance from '../utils/geo-distance';
 import getNextSmallerIndex from '../utils/next-smaller-index';
-import computedPoint from '../utils/computed-point';
-import safeComputed from '../utils/safe-computed';
+import computedPoint from '../computed/computed-point';
+import safeComputed from '../computed/safe-computed';
 
 let Fix = Ember.Object.extend({
   fixCalc: null,
