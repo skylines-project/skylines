@@ -1,11 +1,6 @@
-{% from "macros/datetime.jinja" import insert_timeago_date, timeago_script with context %}
-{% from "macros/links.jinja" import club_link %}
-
 {% extends "base-page.jinja" %}
 {% set active_page = "settings" %}
 {% set use_ember = true %}
-
-{% block title %}{{ g.user|e }}{% endblock %}
 
 
 {% block styles -%}
@@ -39,41 +34,9 @@
   });
 </script>
 {%- endif %}
-
-{{ timeago_script() }}
 {%- endblock %}
 
 
-{%- block content %}
-<div itemscope="" itemtype="https://schema.org/Person">
-  <meta itemprop="url" content="{{ url_for('.index', _external=True) }}" />
-  <div class="row">
-    <div class="col-md-8 col-md-offset-2">
-      <div data-component='user-details' data-attrs='{"user": {{ user|tojson }}}'>Loading...</div>
-    </div>
-  </div>
-
-  <div class="row">
-    <div class="col-sm-6 col-md-4 col-md-offset-2">
-      <div data-component='user-distance-flights' data-attrs='{"flights": {{ user.distanceFlights|tojson }}}'></div>
-    </div>
-
-    <div class="col-sm-6 col-md-4">
-      <div data-component='user-quick-stats' data-attrs='{"stats": {{ user.stats|tojson }}}'></div>
-    </div>
-  </div>
-
-  {% if user.takeoffLocations -%}
-  <div class="row">
-    <div class="col-md-12">
-      <h2>{% trans %}Takeoff Locations{% endtrans %}</h2>
-      <div data-component='takeoffs-map' data-attrs='{
-        "locations": {{ user.takeoffLocations|tojson }},
-        "height": "533px"
-      }'></div>
-    </div>
-  </div>
-  {%- endif %}
-  </div>
-</div>
+{%- block ember_application %}
+<div data-component='user-page' data-attrs='{"user": {{ user|tojson }}}'>Loading...</div>
 {%- endblock %}
