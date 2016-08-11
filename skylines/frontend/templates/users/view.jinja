@@ -48,84 +48,18 @@
 <div itemscope="" itemtype="https://schema.org/Person">
   <meta itemprop="url" content="{{ url_for('.index', _external=True) }}" />
   <div class="row">
-    <div class="well col-md-8 col-md-offset-2">
-      <table class="right">
-        {% if g.user == g.current_user -%}
-        <tr>
-          <th>{% trans %}Email{% endtrans %}</th>
-          <td itemprop="email">{{ user.email }}</td>
-        </tr>
-        {%- endif %}
-
-        <tr>
-          <th>{% trans %}Name{% endtrans %}</th>
-          <td itemprop="name">{{ user.name }}</td>
-        </tr>
-
-        <tr>
-          <th>{% trans %}Club{% endtrans %}</th>
-
-          {% if user.club -%}
-          <td itemprop="memberof" itemscope="" itemtype="https://schema.org/SportsTeam">
-            <meta itemprop="url" content="{{ url_for('club.index', club_id=user.club.id, _external=True) }}" />
-            {{ club_link(g.user.club, ' itemprop="name"') }}
-          {%- else %}
-          <td>
-            [{% trans %}Unspecified{% endtrans %}]
-          {%- endif %}
-
-            {% if g.user == g.current_user -%}
-            <a href="{{ url_for('settings.club') }}" class="btn btn-default btn-sm">{% trans %}Change{% endtrans %}</a>
-            {%- endif %}
-          </td>
-        </tr>
-
-        {% if user.followers -%}
-        <tr>
-          <th>{{ _('Followers') }}</th>
-          <td>
-            <a href="{{ url_for('user.followers') }}">{{ ngettext('%(num)d pilot', '%(num)d pilots', user.followers) }}</a>
-          </td>
-        </tr>
-        {%- endif %}
-
-        {% if user.following -%}
-        <tr>
-          <th>{{ _('Following') }}</th>
-          <td>
-            <a href="{{ url_for('user.following') }}">{{ ngettext('%(num)d pilot', '%(num)d pilots', user.following) }}</a>
-          </td>
-        </tr>
-        {%- endif %}
-      </table>
-
-      <p style="margin-top: 10px">
-        {% if g.user == g.current_user -%}
-        <a href="{{ url_for('settings.profile') }}" class="btn btn-default"><i class="icon-cog"></i> {% trans %}Settings{% endtrans %}</a>
-        {%- endif %}
-
-        {% if g.current_user and g.current_user != g.user -%}
-          {% if user.followed -%}
-            <a href="{{ url_for('.unfollow') }}" class="btn btn-default">{% trans %}Unfollow{% endtrans %}</a>
-          {%- else %}
-            <a href="{{ url_for('.follow') }}" class="btn btn-default">{% trans %}Follow{% endtrans %}</a>
-          {%- endif %}
-        {%- endif %}
-
-        <a href="{{ url_for('flights.pilot', id=user.id) }}" class="btn btn-default"><i class="icon-plane"></i> {% trans %}Flights{% endtrans %}</a>
-        <a href="{{ url_for('statistics.index', page='pilot', id=user.id) }}" class="btn btn-default"><i class="icon-bar-chart"></i> {% trans %}Statistics{% endtrans %}</a>
-        <a href="{{ url_for('timeline.index', user=user.id) }}" class="btn btn-default"><i class="icon-time"></i> {{ _('Timeline') }}</a>
-      </p>
+    <div class="col-md-8 col-md-offset-2">
+      <div data-component='user-details' data-attrs='{"user": {{ user|tojson }}}'>Loading...</div>
     </div>
   </div>
 
   <div class="row">
     <div class="col-sm-6 col-md-4 col-md-offset-2">
-      <div data-component='user-distance-flights' data-attrs='{"flights": {{ distance_flights|tojson }}}'>Loading...</div>
+      <div data-component='user-distance-flights' data-attrs='{"flights": {{ distance_flights|tojson }}}'></div>
     </div>
 
     <div class="col-sm-6 col-md-4">
-      <div data-component='user-quick-stats' data-attrs='{"stats": {{ quick_stats|tojson }}}'>Loading...</div>
+      <div data-component='user-quick-stats' data-attrs='{"stats": {{ quick_stats|tojson }}}'></div>
     </div>
   </div>
 

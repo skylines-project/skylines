@@ -1,0 +1,62 @@
+<div class="well">
+  <table class="right">
+    {{#if user.email}}
+      <tr>
+        <th>{{t "email-address"}}</th>
+        <td>{{user.email}}</td>
+      </tr>
+    {{/if}}
+
+    <tr>
+      <th>{{t "name"}}</th>
+      <td>{{user.name}}</td>
+    </tr>
+
+    <tr>
+      <th>{{t "club"}}</th>
+      <td>
+        {{#if user.club}}
+          <a href="/clubs/{{user.club.id}}">{{user.club.name}}</a>
+        {{else}}
+          [{{t "unassigned"}}]
+        {{/if}}
+
+        {{#if editable}}
+          <a href="/settings/club" class="btn btn-default btn-sm">{{t "change"}}</a>
+        {{/if}}
+      </td>
+    </tr>
+
+    {{#if user.followers}}
+      <tr>
+        <th>{{t "followers"}}</th>
+        <td><a href="/user/{{user.id}}/followers">{{t "NUM-pilots" num=user.followers}}</a></td>
+      </tr>
+    {{/if}}
+
+    {{#if user.following}}
+      <tr>
+        <th>{{t "following"}}</th>
+        <td><a href="/user/{{user.id}}/following">{{t "NUM-pilots" num=user.following}}</a></td>
+      </tr>
+    {{/if}}
+  </table>
+</div>
+
+<p style="margin-top: 10px">
+  {{#if editable}}
+    <a href="/settings/profile" class="btn btn-default"><i class="icon-cog"></i> {{t "settings"}}</a>
+  {{/if}}
+
+  {{#if (and account.user (not-eq account.user.id user.id))}}
+    {{#if user.followed}}
+      <a href="/users/{{user.id}}/unfollow" class="btn btn-default">{{t "unfollow"}}</a>
+    {{else}}
+      <a href="/users/{{user.id}}/follow" class="btn btn-default">{{t "follow"}}</a>
+    {{/if}}
+  {{/if}}
+
+  <a href="/flights/pilot/{{user.id}}" class="btn btn-default"><i class="icon-plane"></i> {{t "flights"}}</a>
+  <a href="/statistics/pilot/{{user.id}}" class="btn btn-default"><i class="icon-bar-chart"></i> {{t "statistics"}}</a>
+  <a href="/timeline/?user={{user.id}}" class="btn btn-default"><i class="icon-time"></i> {{t "timeline"}}</a>
+</p>
