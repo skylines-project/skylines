@@ -104,7 +104,12 @@ def mark_user_notifications_read(user):
 @vary('accept')
 def index():
     if 'application/json' in request.headers.get('Accept', ''):
-        return jsonify(**UserSchema().dump(g.user).data)
+        user = UserSchema().dump(g.user).data
+
+        if g.current_user:
+            user['followed'] = g.current_user.follows(g.user)
+
+        return jsonify(**user)
 
     mark_user_notifications_read(g.user)
 
