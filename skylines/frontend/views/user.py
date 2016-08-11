@@ -120,7 +120,7 @@ def index():
 
     mark_user_notifications_read(g.user)
 
-    return render_template('users/view.jinja')
+    return render_template('users/view.jinja', active_page='settings')
 
 
 @user_blueprint.route('/followers')
