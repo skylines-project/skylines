@@ -6,34 +6,18 @@
 {% block styles -%}
 {{ super() }}
 
-{% if user.takeoffLocations -%}
 {% assets 'openlayers_css' -%}
 <link href="{{ ASSET_URL }}" rel="stylesheet" type="text/css" />
 {%- endassets %}
-{%- endif %}
 {%- endblock %}
 
 
 {% block scripts -%}
 {{ super() }}
 
-{% if user.takeoffLocations -%}
 {% assets 'openlayers_js' -%}
 <script type="text/javascript" src="{{ ASSET_URL }}"></script>
 {%- endassets %}
-
-<script type="text/javascript">
-  $(function() {
-    var map = window.flightMap.get('map');
-
-    window.flightMap.fit();
-
-    var slMapClickHandler = require('skylines/utils/map-click-handler').default;
-
-    var map_click_handler = slMapClickHandler(map);
-  });
-</script>
-{%- endif %}
 {%- endblock %}
 
 
