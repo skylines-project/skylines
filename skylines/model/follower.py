@@ -29,6 +29,9 @@ class Follower(db.Model):
 
     @classmethod
     def follows(cls, source, destination):
+        if source == destination:
+            return False
+
         return cls.query(source=source, destination=destination).count() > 0
 
     @classmethod
