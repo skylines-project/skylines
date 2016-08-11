@@ -8,13 +8,6 @@
 {% block title %}{{ g.user|e }}{% endblock %}
 
 
-{% macro add_locations(locations) -%}
-{% for location in locations -%}
-[{{ location.longitude }}, {{ location.latitude }}]{% if not loop.last %},{% endif %}
-{%- endfor %}
-{%- endmacro %}
-
-
 {% block styles -%}
 {{ super() }}
 
@@ -141,7 +134,7 @@
     <div class="col-md-12">
       <h2>{% trans %}Takeoff Locations{% endtrans %}</h2>
       <div data-component='takeoffs-map' data-attrs='{
-        "locations": [{{ add_locations(takeoff_locations) }}],
+        "locations": {{ takeoff_locations|tojson }},
         "height": "533px"
       }'></div>
     </div>

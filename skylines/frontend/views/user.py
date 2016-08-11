@@ -84,9 +84,10 @@ def _quick_stats():
 
 
 def _get_takeoff_locations():
-    return Location.get_clustered_locations(
-        Flight.takeoff_location_wkt,
-        filter=and_(Flight.pilot == g.user, Flight.is_rankable()))
+    locations = Location.get_clustered_locations(
+        Flight.takeoff_location_wkt, filter=and_(Flight.pilot == g.user, Flight.is_rankable()))
+
+    return [loc.to_lonlat() for loc in locations]
 
 
 def mark_user_notifications_read(user):
@@ -113,6 +114,7 @@ def index():
         if 'extended' in request.args:
             user['distanceFlights'] = _distance_flights(g.user)
             user['stats'] = _quick_stats()
+            user['takeoffLocations'] = _get_takeoff_locations()
 
         return jsonify(**user)
 
