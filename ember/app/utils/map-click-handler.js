@@ -279,7 +279,7 @@ const MapClickHandler = Ember.Object.extend({
       if (!$.isEmptyObject(data['airspaces']) &&
           airspace_layer.getVisible()) {
         let p = $('<p></p>');
-        p.append(this.formatAirspaceData(data['airspaces']));
+        p.append(formatAirspaceData(data['airspaces']));
         item.append(p);
         no_data = false;
       }
@@ -287,7 +287,7 @@ const MapClickHandler = Ember.Object.extend({
       if (!$.isEmptyObject(data['waves']) &&
           mwp_layer.getVisible()) {
         let p = $('<p></p>');
-        p.append(this.formatMountainWaveData(data['waves']));
+        p.append(formatMountainWaveData(data['waves']));
         item.append(p);
         no_data = false;
       }
@@ -308,17 +308,23 @@ const MapClickHandler = Ember.Object.extend({
 
     // infobox.setOffset([15, element.height() / 2]);
   },
+});
 
-  /**
-   * Format Airspace data for infobox
-   *
-   * @param {Object} data Airspace data.
-   * @return {jQuery} HTML table with the airspace data.
-   */
-  formatAirspaceData(data) {
-    let table = $('<table></table>');
+export default function slMapClickHandler(map, flight_display) {
+  return MapClickHandler.create({ map, flight_display });
+}
 
-    table.append($(`<thead>
+
+/**
+ * Format Airspace data for infobox
+ *
+ * @param {Object} data Airspace data.
+ * @return {jQuery} HTML table with the airspace data.
+ */
+function formatAirspaceData(data) {
+  let table = $('<table></table>');
+
+  table.append($(`<thead>
       <tr>
         <th colspan="4">Airspaces</th>
       </tr>
@@ -330,32 +336,32 @@ const MapClickHandler = Ember.Object.extend({
       </tr>
     </thead>`));
 
-    let table_body = $('<tbody></tbody>');
+  let table_body = $('<tbody></tbody>');
 
-    for (let i = 0; i < data.length; ++i) {
-      table_body.append($(`<tr>
+  for (let i = 0; i < data.length; ++i) {
+    table_body.append($(`<tr>
         <td class="airspace_name">${data[i]['name']}</td>
         <td class="airspace_class">${data[i]['class']}</td>
         <td class="airspace_base">${data[i]['base']}</td>
         <td class="airspace_top">${data[i]['top']}</td>
       </tr>`));
-    }
+  }
 
-    table.append(table_body);
+  table.append(table_body);
 
-    return table;
-  },
+  return table;
+}
 
-  /**
-   * Format Mountain Wave data in infobox
-   *
-   * @param {Object} data Wave data.
-   * @return {jQuery} HTML table with the wave data.
-   */
-  formatMountainWaveData(data) {
-    let table = $('<table></table>');
+/**
+ * Format Mountain Wave data in infobox
+ *
+ * @param {Object} data Wave data.
+ * @return {jQuery} HTML table with the wave data.
+ */
+function formatMountainWaveData(data) {
+  let table = $('<table></table>');
 
-    table.append($(`<thead>
+  table.append($(`<thead>
       <tr>
         <th colspan="2">Mountain Waves</th>
       </tr>
@@ -365,23 +371,18 @@ const MapClickHandler = Ember.Object.extend({
       </tr>
     </thead>`));
 
-    let table_body = $('<tbody></tbody>');
+  let table_body = $('<tbody></tbody>');
 
-    for (let i = 0; i < data.length; ++i) {
-      let wind_direction = data[i]['main_wind_direction'] || 'Unknown';
+  for (let i = 0; i < data.length; ++i) {
+    let wind_direction = data[i]['main_wind_direction'] || 'Unknown';
 
-      table_body.append($(`<tr>
+    table_body.append($(`<tr>
         <td class="wave_name">${data[i]['name']}</td>
         <td class="wave_direction">${wind_direction}</td>
       </tr>`));
-    }
+  }
 
-    table.append(table_body);
+  table.append(table_body);
 
-    return table;
-  },
-});
-
-export default function slMapClickHandler(map, flight_display) {
-  return MapClickHandler.create({ map, flight_display });
+  return table;
 }
