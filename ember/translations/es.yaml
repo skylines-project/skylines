@@ -1,6 +1,19 @@
-avg-speed-abbr: 'Velocidad promedio'
-avg-vario-abbr: 'Ascenso promedio'
-distance-abbr: 'Dur.'
-duration: 'Duración'
-glide-rate: 'Relación de Planeo'
-start: 'Partida'
+add-comment: Añadir comentario
+aircraft: Avión
+aircraft-type: Tipo de avión
+airport: Aeropuerto
+AIRPORT-at-TIME: <a>{airport}</a><br/>a las {time}
+altitude: Altura
+avg-speed-abbr: Velocidad media
+avg-vario-abbr: Ascenso promedio
+change: Cambiar
+comments: Comentarios
+create: Crear
+date: Fecha
+delay: Retraso
+delete: Eliminar
+distance-abbr: Dur.
+duration: Duración
+glide-rate: Relación de planeo
+start: Partida
+takeoff: Despegue
