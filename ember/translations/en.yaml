@@ -1,266 +1,249 @@
-actions: 'Actions'
-add-comment: 'Add comment'
-aircraft: 'Aircraft'
-aircraft-type: 'Aircraft type'
-airport: 'Airport'
-AIRPORT-at-TIME: '<a href="{airportURL}">{airport}</a><br/>at {time}'
-airports: 'Airports'
-all: 'All'
-all-time: 'All time'
-altitude: 'Altitude'
-avg-speed: 'Average Speed'
-avg-speed-abbr: 'Avg. speed'
-avg-vario-abbr: 'Avg. vario'
-change: 'Change'
-change-club: 'Change Club'
-change-password: 'Change password'
-changing: 'Changing...'
-changing-password: 'Changing password...'
-choose-aircraft: 'Choose Aircraft'
-choose-club: 'Choose Club'
-choose-pilot: 'Choose Pilot'
-circling-performance: 'Circling performance'
-climb-percentage-abbr: 'Climb %'
-club: 'Club'
-club-exists-already: 'A club with this name exists already.'
-club-has-been-changed: 'Your club has been changed.'
-club-was-registered: 'Your club was successfully registered.'
-clubs: 'Clubs'
-comments: 'Comments'
-competition-id: 'Competition Id'
-confirm-password: 'Confirm password'
-copilot: 'Copilot'
-count: 'Count'
-create: 'Create'
-created: 'Created'
-creating: 'Creating...'
-cruise-performance: 'Cruise performance'
-current-password: 'Current password'
-date: 'Date'
-date-missing-in-igc-file: 'Date missing in IGC file'
-delay: 'Delay'
-delete: 'Delete'
-distance: 'Distance'
-distance-abbr: 'Dist.'
-distance-flights: 'Distance Flights'
-duplicate-file: 'Duplicate file'
-duration: 'Duration'
-edit: 'Edit'
-edit-club: 'Edit club'
-editing: 'Editing...'
-email-address: 'Email address'
-email-exists-already: 'This email address exists already.'
-email-unknown: 'This email address is unknown.'
-fai-triangle-distance: 'FAI Triangle Distance'
-failed-to-parse-file: 'Failed to parse file'
-first-last: 'First / Last'
-first-name: 'First name'
-flight-date-in-future: 'Date of flight in future'
-flight-time: 'Flight Time'
-flights: 'Flights'
-follow: 'Follow'
-followers: 'Followers'
-following: 'Following'
-friends: 'Friends'
-generate-new-key: 'Generate new key'
-generating-new-key: 'Generating new key...'
-glide-rate: 'Glide Rate'
-glide-rate-abbr: 'GR'
-glides: 'Glides'
-how-to-use-live-tracking: 'How to use Live Tracking?'
-imprint: 'Imprint'
+actions: Actions
+add-comment: Add comment
+aircraft: Aircraft
+aircraft-type: Aircraft type
+airport: Airport
+AIRPORT-at-TIME: <a href="{airportURL}">{airport}</a><br/>at {time}
+airports: Airports
+all: All
+all-time: All time
+altitude: Altitude
+avg-speed: Average Speed
+avg-speed-abbr: Avg. speed
+avg-vario-abbr: Avg. vario
+change: Change
+change-club: Change Club
+change-password: Change password
+changing: Changing...
+changing-password: Changing password...
+choose-aircraft: Choose Aircraft
+choose-club: Choose Club
+choose-pilot: Choose Pilot
+circling-performance: Circling performance
+climb-percentage-abbr: Climb %
+club: Club
+club-exists-already: A club with this name exists already.
+club-has-been-changed: Your club has been changed.
+club-was-registered: Your club was successfully registered.
+clubs: Clubs
+comments: Comments
+competition-id: Competition Id
+confirm-password: Confirm password
+copilot: Copilot
+count: Count
+create: Create
+created: Created
+creating: Creating...
+cruise-performance: Cruise performance
+current-password: Current password
+date: Date
+date-missing-in-igc-file: Date missing in IGC file
+delay: Delay
+delete: Delete
+distance: Distance
+distance-abbr: Dist.
+distance-flights: Distance Flights
+duplicate-file: Duplicate file
+duration: Duration
+edit: Edit
+edit-club: Edit club
+editing: Editing...
+email-address: Email address
+email-exists-already: This email address exists already.
+email-unknown: This email address is unknown.
+fai-triangle-distance: FAI Triangle Distance
+failed-to-parse-file: Failed to parse file
+first-last: First / Last
+first-name: First name
+flight-date-in-future: Date of flight in future
+flight-time: Flight Time
+flights: Flights
+follow: Follow
+followers: Followers
+following: Following
+friends: Friends
+generate-new-key: Generate new key
+generating-new-key: Generating new key...
+glide-rate: Glide Rate
+glide-rate-abbr: GR
+glides: Glides
+how-to-use-live-tracking: How to use Live Tracking?
+imprint: Imprint
 index-INDEX: 'Handicap: {index}'
-landing: 'Landing'
-landing-time: 'Landing time'
-last-12-months: 'Last 12 Months'
-last-fix: 'Last Fix'
-last-name: 'Last name'
-latest: 'Latest'
-leg-statistics: 'Leg Statistics'
-live-tracking: 'Live Tracking'
-live-tracking-key: 'Live Tracking Key'
-mark-all-as-read: 'Mark all as read'
-members: 'Members'
-members-of-CLUB: 'Members <small>of <a href="{clubURL}">{club}</a></small>'
-n-avg-distance-per-flight: 'avg. {distance} per flight'
-n-avg-hours-per-flight: 'avg. {num} hours per flight'
-n-comments: '{numComments, plural,
-  =1 {1 comment}
-  other {# comments}}'
+landing: Landing
+landing-time: Landing time
+last-12-months: Last 12 Months
+last-fix: Last Fix
+last-name: Last name
+latest: Latest
+leg-statistics: Leg Statistics
+live-tracking: Live Tracking
+live-tracking-key: Live Tracking Key
+mark-all-as-read: Mark all as read
+members: Members
+members-of-CLUB: Members <small>of <a href="{clubURL}">{club}</a></small>
+n-avg-distance-per-flight: avg. {distance} per flight
+n-avg-hours-per-flight: avg. {num} hours per flight
+n-comments: '{numComments, plural, =1 {1 comment} other {# comments}}'
 n-hours: '{num} Hours'
-NUM-pilots: '{num, plural,
-  =1 {1 pilot}
-  other {# pilots}}'
-name: 'Name'
-nearest-airport: 'Nearest Airport'
-new: 'New'
-newer: 'Newer'
-no-airports-found: 'No airports found.'
-no-club: 'No club'
-no-clubs-found: 'No clubs found.'
-no-flight-in-file: 'No flight found in file'
-no-flight-saved: 'No flight was saved.'
-no-flights-found: 'No flights found.'
-no-pilots-found: 'No pilots found.'
-no-data: 'No data found...'
-notifications: 'Notifications'
-olc-distance: 'OLC Distance'
-older: 'Older'
-other-pilots: 'Other pilots'
-overview: 'Overview'
-password: 'Password'
-password-recovered: 'Your password was changed using the recovery code.'
-password-was-changed: 'Your password was changed.'
-passwords-do-not-match: 'Passwords do not match'
-phase-statistics: 'Phase Statistics'
-pilot: 'Pilot'
-pilots: 'Pilots'
-pilots-must-not-be-equal: 'Pilots must not be equal.'
-pin-button-title: 'Activate this to show the flight on top of other flights on the map'
-pinned: 'Pinned'
+NUM-pilots: '{num, plural, =1 {1 pilot} other {# pilots}}'
+name: Name
+nearest-airport: Nearest Airport
+new: New
+newer: Newer
+no-airports-found: No airports found.
+no-club: No club
+no-clubs-found: No clubs found.
+no-flight-in-file: No flight found in file
+no-flight-saved: No flight was saved.
+no-flights-found: No flights found.
+no-pilots-found: No pilots found.
+no-data: No data found...
+notifications: Notifications
+olc-distance: OLC Distance
+older: Older
+other-pilots: Other pilots
+overview: Overview
+password: Password
+password-recovered: Your password was changed using the recovery code.
+password-was-changed: Your password was changed.
+passwords-do-not-match: Passwords do not match
+phase-statistics: Phase Statistics
+pilot: Pilot
+pilots: Pilots
+pilots-must-not-be-equal: Pilots must not be equal.
+pin-button-title: Activate this to show the flight on top of other flights on the map
+pinned: Pinned
 POINTS-points-abbr: '{points} pts.'
-profile: 'Profile'
-publish: 'Publish'
+profile: Profile
+publish: Publish
 publish-flights: '{num, plural, =1 {Publish Flight} other {Publish Flights}}'
-publishing: 'Publishing'
-ranking: 'Ranking'
-recover-password: 'Recover Password'
-recovering: 'Recovering...'
-recovery-mail-sent: 'Check your email! We have sent you a link to recover your password.'
-register: 'Register'
-registering: 'Registering...'
-register-club: 'Register Club'
-registration: 'Registration'
-score: 'Score'
-scoring-start-time: 'Scoring start time'
-scoring-end-time: 'Scoring end time'
-season-YEAR: 'Season {year}'
-settings: 'Settings'
-settings-have-been-saved: 'Your settings have been saved.'
-show: 'Show'
-speed: 'Speed'
-start: 'Start'
-statistics: 'Statistics'
-status: 'Status'
-success: 'Success'
-takeoff: 'Takeoff'
-takeoff-locations: 'Takeoff Locations'
-takeoff-time: 'Takeoff time'
-the-skylines-team: 'The SkyLines Team'
-time: 'Time'
+publishing: Publishing
+ranking: Ranking
+recover-password: Recover Password
+recovering: Recovering...
+recovery-mail-sent: Check your email! We have sent you a link to recover your password.
+register: Register
+registering: Registering...
+register-club: Register Club
+registration: Registration
+score: Score
+scoring-start-time: Scoring start time
+scoring-end-time: Scoring end time
+season-YEAR: Season {year}
+settings: Settings
+settings-have-been-saved: Your settings have been saved.
+show: Show
+speed: Speed
+start: Start
+statistics: Statistics
+status: Status
+success: Success
+takeoff: Takeoff
+takeoff-locations: Takeoff Locations
+takeoff-time: Takeoff time
+the-skylines-team: The SkyLines Team
+time: Time
 TIME-by-USER: '{time}<br>by <a href="{userURL}">{user}</a>'
-timeline: 'Timeline'
-total: 'Total'
-total-score: 'Total Score'
-tracking-callsign: 'Tracking Callsign'
-tracking-delay: 'Tracking Delay'
-tracking-delay-choice: '{delay, plural,
-  =0 {None}
-  =1 {1 minute}
-  other {# minutes}}'
-triangle: 'Triangle'
-unassigned: 'Unassigned'
-unfollow: 'Unfollow'
-unknown: 'Unknown'
-unknown-or-other-person: 'Unknown or other person'
-unspecified: 'Unspecified'
-uploaded: 'Uploaded'
-used-airspaces: 'Used airspaces'
-users: 'Users'
-verify-flights-and-publish: "You have to verify their properties and click 'Publish Flight(s)' below to publish your flight(s)."
-website: 'Website'
-wingmen: 'Wingmen'
-wrong-current-password: 'Please check your current password.'
-year: 'Year'
-you-have-no-notifications: 'You have no notifications.'
-your-flights-have-been-saved: 'Your flights have been saved.'
-
+timeline: Timeline
+total: Total
+total-score: Total Score
+tracking-callsign: Tracking Callsign
+tracking-delay: Tracking Delay
+tracking-delay-choice: '{delay, plural, =0 {None} =1 {1 minute} other {# minutes}}'
+triangle: Triangle
+unassigned: Unassigned
+unfollow: Unfollow
+unknown: Unknown
+unknown-or-other-person: Unknown or other person
+unspecified: Unspecified
+uploaded: Uploaded
+used-airspaces: Used airspaces
+users: Users
+verify-flights-and-publish: You have to verify their properties and click 'Publish Flight(s)' below to publish your flight(s).
+website: Website
+wingmen: Wingmen
+wrong-current-password: Please check your current password.
+year: Year
+you-have-no-notifications: You have no notifications.
+your-flights-have-been-saved: Your flights have been saved.
 search:
-  search: 'Search'
-  search-for-TEXT: 'Search <small>for "{text}"</small>'
-  no-search-text: 'Please enter something in the search bar above.'
-  no-results: 'There were no results for your search... Sorry!'
-
+  search: Search
+  search-for-TEXT: Search <small>for "{text}"</small>
+  no-search-text: Please enter something in the search bar above.
+  no-results: There were no results for your search... Sorry!
 timeline-events:
   club-join:
-    message1: '<strong><a href="{actorURL}">{actor}</a></strong> joined <strong><a href="{clubURL}">{club}</a></strong>.'
-    message2: 'You joined <strong><a href="{clubURL}">{club}</a></strong>.'
-
+    message1: <strong><a href="{actorURL}">{actor}</a></strong> joined <strong><a href="{clubURL}">{club}</a></strong>.
+    message2: You joined <strong><a href="{clubURL}">{club}</a></strong>.
   flight-comment:
-    message1: '<strong><a href="{actorURL}">{actor}</a></strong> commented on a <strong>{distance}</strong> flight on <strong>{date}</strong>.'
-    message2: 'You commented on a <strong>{distance}</strong> flight on <strong>{date}</strong>.'
-    message3: '<strong><a href="{actorURL}">{actor}</a></strong> commented on your <strong>{distance}</strong> flight on <strong>{date}</strong>.'
-    message4: 'You commented on your <strong>{distance}</strong> flight on <strong>{date}</strong>.'
-
+    message1: <strong><a href="{actorURL}">{actor}</a></strong> commented on a <strong>{distance}</strong> flight on <strong>{date}</strong>.
+    message2: You commented on a <strong>{distance}</strong> flight on <strong>{date}</strong>.
+    message3: <strong><a href="{actorURL}">{actor}</a></strong> commented on your <strong>{distance}</strong> flight on <strong>{date}</strong>.
+    message4: You commented on your <strong>{distance}</strong> flight on <strong>{date}</strong>.
   flight-upload:
-    message1: '<strong><a href="{actorURL}">{actor}</a></strong> uploaded a <strong>{distance}</strong> flight on <strong>{date}</strong>.'
-    message2: 'You uploaded a <strong>{distance}</strong> flight on <strong>{date}</strong>.'
-
+    message1: <strong><a href="{actorURL}">{actor}</a></strong> uploaded a <strong>{distance}</strong> flight on <strong>{date}</strong>.
+    message2: You uploaded a <strong>{distance}</strong> flight on <strong>{date}</strong>.
   follower:
-    message1: '<strong><a href="{actorURL}">{actor}</a></strong> started following <strong><a href="{userURL}">{user}</a></strong>.'
-    message2: 'You started following <strong><a href="{userURL}">{user}</a></strong>.'
-    message3: '<strong><a href="{actorURL}">{actor}</a></strong> started following you.'
-
+    message1: <strong><a href="{actorURL}">{actor}</a></strong> started following <strong><a href="{userURL}">{user}</a></strong>.
+    message2: You started following <strong><a href="{userURL}">{user}</a></strong>.
+    message3: <strong><a href="{actorURL}">{actor}</a></strong> started following you.
   new-user:
-    message1: '<strong><a href="{actorURL}">{actor}</a></strong> joined SkyLines.'
-    message2: 'You joined SkyLines.'
-
+    message1: <strong><a href="{actorURL}">{actor}</a></strong> joined SkyLines.
+    message2: You joined SkyLines.
 flight-phase:
-  powered: 'Powered'
-  circlingLeft: 'Circling Left'
-  circlingRight: 'Circling Right'
-  circlingMixed: 'Circling Mixed'
-  cruise: 'Cruise'
-
+  powered: Powered
+  circlingLeft: Circling Left
+  circlingRight: Circling Right
+  circlingMixed: Circling Mixed
+  cruise: Cruise
 circling-direction:
-  left: 'Left'
-  right: 'Right'
-  mixed: 'Mixed'
-  total: 'Total'
-
+  left: Left
+  right: Right
+  mixed: Mixed
+  total: Total
 units:
-  title: 'Units'
-  distance: 'Distance unit'
-  speed: 'Speed unit'
-  lift: 'Lift unit'
-  altitude: 'Altitude unit'
+  title: Units
+  distance: Distance unit
+  speed: Speed unit
+  lift: Lift unit
+  altitude: Altitude unit
   presets:
-    american: 'American (imperial)'
-    australian: 'Australian (metric, imperial height)'
-    british: 'British (imperial, distance in km)'
-    custom: 'Custom'
-    european: 'European (metric)'
-
+    american: American (imperial)
+    australian: Australian (metric, imperial height)
+    british: British (imperial, distance in km)
+    custom: Custom
+    european: European (metric)
 errors:
-  description: "This field"
-  inclusion: "{description} is not included in the list"
-  exclusion: "{description} is reserved"
-  invalid: "{description} is invalid"
-  confirmation: "{description} doesn't match {on}"
-  accepted: "{description} must be accepted"
-  empty: "{description} can't be empty"
-  blank: "{description} can't be blank"
-  present: "{description} must be blank"
-  collection: "{description} must be a collection"
-  singular: "{description} can't be a collection"
-  tooLong: "{description} is too long (maximum is {max} characters)"
-  tooShort: "{description} is too short (minimum is {min} characters)"
-  before: "{description} must be before {before}"
-  after: "{description} must be after {after}"
-  wrongDateFormat: "{description} must be in the format of {format}"
-  wrongLength: "{description} is the wrong length (should be {is} characters)"
-  notANumber: "{description} must be a number"
-  notAnInteger: "{description} must be an integer"
-  greaterThan: "{description} must be greater than {gt}"
-  greaterThanOrEqualTo: "{description} must be greater than or equal to {gte}"
-  equalTo: "{description} must be equal to {is}"
-  lessThan: "{description} must be less than {lt}"
-  lessThanOrEqualTo: "{description} must be less than or equal to {lte}"
-  otherThan: "{description} must be other than {value}"
-  odd: "{description} must be odd"
-  even: "{description} must be even"
-  positive: "{description} must be positive"
-  date: "{description} must be a valid date"
-  email: "{description} must be a valid email address"
-  phone: "{description} must be a valid phone number"
-  url: "{description} must be a valid url"
+  description: This field
+  inclusion: '{description} is not included in the list'
+  exclusion: '{description} is reserved'
+  invalid: '{description} is invalid'
+  confirmation: '{description} doesn''t match {on}'
+  accepted: '{description} must be accepted'
+  empty: '{description} can''t be empty'
+  blank: '{description} can''t be blank'
+  present: '{description} must be blank'
+  collection: '{description} must be a collection'
+  singular: '{description} can''t be a collection'
+  tooLong: '{description} is too long (maximum is {max} characters)'
+  tooShort: '{description} is too short (minimum is {min} characters)'
+  before: '{description} must be before {before}'
+  after: '{description} must be after {after}'
+  wrongDateFormat: '{description} must be in the format of {format}'
+  wrongLength: '{description} is the wrong length (should be {is} characters)'
+  notANumber: '{description} must be a number'
+  notAnInteger: '{description} must be an integer'
+  greaterThan: '{description} must be greater than {gt}'
+  greaterThanOrEqualTo: '{description} must be greater than or equal to {gte}'
+  equalTo: '{description} must be equal to {is}'
+  lessThan: '{description} must be less than {lt}'
+  lessThanOrEqualTo: '{description} must be less than or equal to {lte}'
+  otherThan: '{description} must be other than {value}'
+  odd: '{description} must be odd'
+  even: '{description} must be even'
+  positive: '{description} must be positive'
+  date: '{description} must be a valid date'
+  email: '{description} must be a valid email address'
+  phone: '{description} must be a valid phone number'
+  url: '{description} must be a valid url'

@@ -1,5 +1,16 @@
-avg-speed-abbr: 'S'
-avg-vario-abbr: 'Śr.wario.'
-duration: 'Czas trwania'
-glide-rate: 'Doskonałość'
-glide-rate-abbr: 'Dosk.'
+add-comment: Dodaj komentarz
+aircraft: Samolot
+aircraft-type: Rodzaj samolotu
+airport: Lotnisko
+AIRPORT-at-TIME: <a>{airport}</a><br/> o {time}
+altitude: Wysokość
+avg-speed-abbr: Śr. prędkość
+avg-vario-abbr: Śr. wario
+change: Zmienić
+comments: Komentarze
+date: Data
+delay: Spóźnienie
+delete: Skasuj
+duration: Czas trwania
+glide-rate: Doskonałość
+glide-rate-abbr: Dosk.

@@ -1,6 +1,6 @@
-avg-speed-abbr: 'Keskinopeus'
-avg-vario-abbr: 'Keskinosto'
-duration: 'Kesto'
-glide-rate: 'Liitosuhde'
-glide-rate-abbr: 'GR'
-start: 'Lähtö'
+avg-speed-abbr: Keskinopeus
+avg-vario-abbr: Keskinosto
+duration: Kesto
+glide-rate: Liitosuhde
+glide-rate-abbr: GR
+start: Lähtö

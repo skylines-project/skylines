@@ -1,6 +1,6 @@
-avg-speed-abbr: 'Ср. скорость'
-avg-vario-abbr: 'Ср. подъем'
-duration: 'Длительность'
-glide-rate: 'Аэродинамическое качество (относительно земли)'
-glide-rate-abbr: 'AK'
-start: 'Старт'
+avg-speed-abbr: Ср. скорость
+avg-vario-abbr: Ср. подъем
+duration: Длительность
+glide-rate: Аэродинамическое качество (относительно земли)
+glide-rate-abbr: AK
+start: Старт
