@@ -1,19 +1,115 @@
+actions: Acciones
 add-comment: Añadir comentario
 aircraft: Avión
 aircraft-type: Tipo de avión
 airport: Aeropuerto
 AIRPORT-at-TIME: <a>{airport}</a><br/>a las {time}
+airports: Aeródromos
+all: Todos
 altitude: Altura
+avg-speed: Velocidad media
 avg-speed-abbr: Velocidad media
 avg-vario-abbr: Ascenso promedio
 change: Cambiar
+change-club: Cambiar club
+change-password: Cambiar contraseña
+changing: Cambiando...
+changing-password: Cambiando contraseña...
+choose-aircraft: Elige un avión
+choose-club: Elige un club
+choose-pilot: Elige un piloto
+club: Club
+club-exists-already: Un club con este nombre ya existe
+club-was-registered: Creación del club completada con éxito.
+clubs: Clubes
 comments: Comentarios
+confirm-password: Confirmar contraseña
+copilot: Copiloto
 create: Crear
+created: Creado
+creating: Creando...
+current-password: Contraseña actual
 date: Fecha
+date-missing-in-igc-file: Documento IGC sin fecha
 delay: Retraso
 delete: Eliminar
-distance-abbr: Dur.
+distance: Distancia
+distance-abbr: Dist.
 duration: Duración
+edit: Editar
+edit-club: Editar club
+editing: Editando...
+email-address: Dirección de correo electrónico
+email-exists-already: Esta dirección de correo electrónico ya existe.
+email-unknown: Dirección de correo electrónico desconocida.
+fai-triangle-distance: Distancia triángulo FAI
+first-last: Primer / Último contacto
+first-name: Nombre
+flight-date-in-future: Fecha está en el futuro
+flight-time: Tiempo de vuelo
+flights: Vuelos
+follow: Seguir
+followers: Seguidores
+following: 'Siguiendo a '
+friends: Amigos
 glide-rate: Relación de planeo
+landing: Aterrizaje
+landing-time: Hora de aterrizaje
+last-name: Apellido
+live-tracking: Seguimiento en vivo
+mark-all-as-read: Marcar todos como leidos
+members: Miembros
+members-of-CLUB: Miembros <small> de <a>{club}</a></small>
+n-hours: '{num} horas'
+name: Apellidos
+nearest-airport: Aeródromo más cercano
+new: Nuevo
+no-airports-found: No se encontró ningún aeródromo.
+notifications: Notificaciones
+olc-distance: Distancia OLC
+other-pilots: Otros pilotos
+password: Contraseña
+password-was-changed: Tu contraseña ha sido cambiada
+passwords-do-not-match: Las contraseñas no coinciden
+pilot: Piloto
+pilots: Pilotos
+speed: Velocidad
 start: Partida
+statistics: Estadísticas
 takeoff: Despegue
+takeoff-locations: Lugares de despegue
+takeoff-time: Tiempo de despegue
+time: Tiempo
+total: Total
+triangle: Trángulo
+unknown: Desconocido
+users: Usuarios
+verify-flights-and-publish: Confirma los datos del vuelo / los vuelos y pulsa "Publicar vuelo(s)" para publicar tus vuelos.
+website: Página web
+year: Año
+you-have-no-notifications: No tienes notificaciones.
+your-flights-have-been-saved: Tus vuelos han sido guardados.
+search:
+  search: Buscar
+timeline-events:
+  follower:
+    message3: <strong><a>{actor}</a></strong> ha comenzado a seguirte.
+flight-phase:
+  powered: A motor
+circling-direction:
+  left: Izquierda
+  right: Derecha
+  total: Total
+units:
+  title: Unidades
+  distance: Unidad de distancia
+  speed: Unidad de velocidad
+  altitude: Unidad de altura
+  presets:
+    custom: Personalizado
+errors:
+  confirmation: '{description} no coincide con {on}'
+  accepted: '{description} debe ser aceptado'
+  email: '{description} tiene que ser una dirección de correo electrónico válida'
+  phone: '{description} tiene que ser un número de teléfono valido'
+  url: '{description} tiene que ser una URL válida'

@@ -8,6 +8,7 @@ airports: Flugplätze
 all: Alle
 all-time: Gesamt
 altitude: Höhe
+avg-speed: Durchschnittsgeschwindigkeit
 avg-speed-abbr: Mittl. Geschw.
 avg-vario-abbr: Mittl. Steigen
 change: Ändern
@@ -41,6 +42,7 @@ delay: Verzögerung
 delete: Löschen
 distance: Distanz
 distance-abbr: Dist.
+distance-flights: Streckenflüge
 duplicate-file: Doppelte Datei
 duration: Dauer
 edit: Bearbeiten
@@ -56,6 +58,9 @@ first-name: Vorname
 flight-date-in-future: Datum des Flugs in der Zukunft
 flight-time: Flugzeit
 flights: Flüge
+follow: Verfolge
+followers: Verfolger
+following: Verfolgen
 friends: Freunde
 generate-new-key: Generiere neuen Key
 generating-new-key: Generiere neuen Key...
@@ -67,17 +72,18 @@ imprint: Impressum
 index-INDEX: 'Index: {index}'
 landing: Landung
 landing-time: Landezeit
+last-12-months: Letzte 12 Monate
 last-fix: Letzter Kontakt
 last-name: Nachname
 latest: Letzter
+n-avg-distance-per-flight: '{distance} pro Flug'
 leg-statistics: Schenkel-Statistik
 live-tracking: Live Tracking
+n-avg-hours-per-flight: '{num} Std. pro Flug'
 live-tracking-key: Live Tracking Key
 mark-all-as-read: Markiere alle als gelesen
 members: Mitglieder
 members-of-CLUB: Mitglieder <small>von <a href="{clubURL}">{club}</a></small>
-n-avg-distance-per-flight: '{distance} pro Flug'
-n-avg-hours-per-flight: '{num} Std. pro Flug'
 n-comments: '{numComments, plural, =1 {1 Kommentar} other {# Kommentare}}'
 n-hours: '{num} Stunden'
 name: Name
@@ -122,6 +128,7 @@ registration: Kennzeichen
 scoring-start-time: Startzeit Wertungsflug
 scoring-end-time: Endzeit Wertungsflug
 season-YEAR: Saison {year}
+settings: Einstellungen
 settings-have-been-saved: Deine Einstellungen wurden gespeichert.
 show: Anzeigen
 speed: Geschwindigkeit
@@ -130,6 +137,7 @@ statistics: Statistiken
 status: Status
 success: Erfolg
 takeoff: Start
+takeoff-locations: Startplatz
 takeoff-time: Startzeit
 the-skylines-team: Das SkyLines Team
 time: Zeit
@@ -142,6 +150,7 @@ tracking-delay: Tracking-Verzögerung
 tracking-delay-choice: '{delay, plural, =0 {Keine} =1 {1 Minute} other {# Minuten}}'
 triangle: Dreieck
 unassigned: nicht zugeordnet
+unfollow: Nicht mehr verfolgen
 unknown: Unbekannt
 unknown-or-other-person: Unbekannt oder andere Person
 unspecified: Keine Angabe
