@@ -76,14 +76,14 @@ last-12-months: Last 12 Months
 last-fix: Last Fix
 last-name: Last name
 latest: Latest
+n-avg-distance-per-flight: avg. {distance} per flight
 leg-statistics: Leg Statistics
 live-tracking: Live Tracking
+n-avg-hours-per-flight: avg. {num} hours per flight
 live-tracking-key: Live Tracking Key
 mark-all-as-read: Mark all as read
 members: Members
 members-of-CLUB: Members <small>of <a href="{clubURL}">{club}</a></small>
-n-avg-distance-per-flight: avg. {distance} per flight
-n-avg-hours-per-flight: avg. {num} hours per flight
 n-comments: '{numComments, plural, =1 {1 comment} other {# comments}}'
 n-hours: '{num} Hours'
 NUM-pilots: '{num, plural, =1 {1 pilot} other {# pilots}}'
