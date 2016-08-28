@@ -30,14 +30,14 @@
     {{#if user.followers}}
       <tr>
         <th>{{t "followers"}}</th>
-        <td><a href="/user/{{user.id}}/followers">{{t "NUM-pilots" num=user.followers}}</a></td>
+        <td><a href="/users/{{user.id}}/followers">{{t "NUM-pilots" num=user.followers}}</a></td>
       </tr>
     {{/if}}
 
     {{#if user.following}}
       <tr>
         <th>{{t "following"}}</th>
-        <td><a href="/user/{{user.id}}/following">{{t "NUM-pilots" num=user.following}}</a></td>
+        <td><a href="/users/{{user.id}}/following">{{t "NUM-pilots" num=user.following}}</a></td>
       </tr>
     {{/if}}
   </table>
