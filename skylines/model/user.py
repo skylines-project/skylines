@@ -78,6 +78,10 @@ class User(db.Model):
 
     admin = db.Column(Boolean, nullable=False, default=False)
 
+    # Upload settings
+
+    upload_permission_club = db.Column(Boolean, nullable=False, default=False)
+
     ##############################
 
     def __init__(self, *args, **kw):
