@@ -46,13 +46,13 @@ export default Ember.Component.extend(Validations, {
 
   messageKey: null,
   error: null,
-
   distanceUnit: computedUnit('units.distanceUnits', 'distanceUnitIndex'),
   speedUnit: computedUnit('units.speedUnits', 'speedUnitIndex'),
   liftUnit: computedUnit('units.liftUnits', 'liftUnitIndex'),
   altitudeUnit: computedUnit('units.altitudeUnits', 'altitudeUnitIndex'),
-
   unitsPresets: ['custom', 'european', 'british', 'australian', 'american'],
+
+  uploadPermissionClub: null,
 
   unitsPreset: Ember.computed('distanceUnit', 'speedUnit', 'liftUnit', 'altitudeUnit', {
     get() {
@@ -93,6 +93,7 @@ export default Ember.Component.extend(Validations, {
       speedUnit: this.get('speedUnitIndex'),
       liftUnit: this.get('liftUnitIndex'),
       altitudeUnit: this.get('altitudeUnitIndex'),
+      uploadPermissionClub: this.get('uploadPermissionClub'),
     };
 
     try {

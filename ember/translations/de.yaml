@@ -8,6 +8,7 @@ AIRPORT-at-TIME: <a href="{airportURL}">{airport}</a><br/>um {time}
 airports: Flugplätze
 all: Alle
 all-time: Gesamt
+allowed-to-upload-flights: Wer darf Flüge für dich hochladen?
 altitude: Höhe
 avg-speed: Durchschnittsgeschwindigkeit
 avg-speed-abbr: Mittl. Geschw.
@@ -23,6 +24,7 @@ choose-pilot: Piloten auswählen
 circling-performance: Kreisleistung
 climb-percentage-abbr: Kreisen %
 club: Verein
+club-members: Vereinsmitglieder
 club-exists-already: Ein Verein mit diesem Namen existiert bereits.
 club-has-been-changed: Dein Verein wurde geändert.
 club-was-registered: Dein Verein wurde erfolgreich registriert.

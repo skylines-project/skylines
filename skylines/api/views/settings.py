@@ -101,6 +101,9 @@ def update():
         for flight in flights:
             flight.club_id = club_id
 
+        if 'upload_permission_club' in data:
+            g.user.upload_permission_club = data.get('upload_permission_club')
+
     db.session.commit()
 
     return jsonify()

@@ -8,6 +8,7 @@ AIRPORT-at-TIME: <a href="{airportURL}">{airport}</a><br/>at {time}
 airports: Airports
 all: All
 all-time: All time
+allowed-to-upload-flights: Who is allowed to upload flights for you?
 altitude: Altitude
 avg-speed: Average Speed
 avg-speed-abbr: Avg. speed
@@ -25,6 +26,7 @@ climb-percentage-abbr: Climb %
 club: Club
 club-exists-already: A club with this name exists already.
 club-has-been-changed: Your club has been changed.
+club-members: Club members
 club-was-registered: Your club was successfully registered.
 clubs: Clubs
 comments: Comments
@@ -200,7 +202,10 @@ unknown: Unknown
 unknown-or-other-person: Unknown or other person
 unspecified: Unspecified
 upload: Upload
+<<<<<<< 34c808f566a0d59fffe20b125aedadb16e399c49
 upload-flight: Upload Flight
+=======
+>>>>>>> Add upload permission settings
 uploaded: Uploaded
 uploading: Uploading...
 used-airspaces: Used airspaces
