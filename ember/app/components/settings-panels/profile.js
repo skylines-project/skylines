@@ -52,8 +52,6 @@ export default Ember.Component.extend(Validations, {
   altitudeUnit: computedUnit('units.altitudeUnits', 'altitudeUnitIndex'),
   unitsPresets: ['custom', 'european', 'british', 'australian', 'american'],
 
-  uploadPermissionClub: null,
-
   unitsPreset: Ember.computed('distanceUnit', 'speedUnit', 'liftUnit', 'altitudeUnit', {
     get() {
       let units = this.getProperties('distanceUnit', 'speedUnit', 'liftUnit', 'altitudeUnit');

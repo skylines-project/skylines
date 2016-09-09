@@ -7,7 +7,7 @@ import sqlalchemy as sa
 
 
 def upgrade():
-    op.add_column('users', sa.Column('upload_permission_club', sa.Boolean(), nullable=False, server_default='false'))
+    op.add_column('users', sa.Column('upload_permission_club', sa.Boolean(), nullable=False, server_default='true'))
 
 
 def downgrade():

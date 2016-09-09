@@ -80,7 +80,7 @@ class User(db.Model):
 
     # Upload settings
 
-    upload_permission_club = db.Column(Boolean, nullable=False, default=False)
+    upload_permission_club = db.Column(Boolean, nullable=False, default=True)
 
     ##############################
 
