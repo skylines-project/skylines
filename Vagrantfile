@@ -50,6 +50,25 @@ sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-6 60 --slave /u
 wget -N -nv https://bootstrap.pypa.io/get-pip.py
 sudo -H python get-pip.py
 
+# install skylines frontend dependencies
+
+cd /vagrant/ember
+
+curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.32.0/install.sh | bash
+
+# load nvm
+export NVM_DIR="/home/vagrant/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
+
+nvm install 6
+npm install
+npm install -g bower
+bower install
+
+# build skylines frontend
+
+ember build
+
 # install skylines and the python dependencies
 
 cd /vagrant
