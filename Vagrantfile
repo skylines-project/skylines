@@ -12,15 +12,6 @@ export POSTGIS_GDAL_ENABLED_DRIVERS=GTiff
 export POSTGIS_ENABLE_OUTDB_RASTERS=1
 EOF
 
-# adjust apt-get repository URLs
-
-sudo bash -c "cat > /etc/apt/sources.list" << EOF
-deb mirror://mirrors.ubuntu.com/mirrors.txt precise main restricted universe multiverse
-deb mirror://mirrors.ubuntu.com/mirrors.txt precise-updates main restricted universe multiverse
-deb mirror://mirrors.ubuntu.com/mirrors.txt precise-backports main restricted universe multiverse
-deb mirror://mirrors.ubuntu.com/mirrors.txt precise-security main restricted universe multiverse
-EOF
-
 sudo bash -c "cat > /etc/apt/sources.list.d/pgdg.list" << EOF
 deb http://apt.postgresql.org/pub/repos/apt/ precise-pgdg main
 EOF
@@ -89,8 +80,8 @@ sudo sudo -u postgres psql -d skylines_test -c 'CREATE EXTENSION fuzzystrmatch;'
 SCRIPT
 
 Vagrant.configure("2") do |config|
-  config.vm.box = 'ubuntu-12.04.2-x86_64'
-  config.vm.box_url = 'http://puppet-vagrant-boxes.puppetlabs.com/ubuntu-server-12042-x64-vbox4210.box'
+  # TravisCI uses a Precise Pangolin base image
+  config.vm.box = 'ubuntu/precise64'
 
   config.vm.network 'forwarded_port', guest: 5000, host: 5000
   config.vm.network 'forwarded_port', guest: 5001, host: 5001
