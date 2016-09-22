@@ -104,6 +104,12 @@ Vagrant.configure("2") do |config|
   # TravisCI uses a Precise Pangolin base image
   config.vm.box = 'ubuntu/precise64'
 
+  # increase memory size, required by 'npm install'
+  config.vm.provider "virtualbox" do |v|
+    v.memory = 2048
+    v.cpus = 2
+  end
+
   config.vm.network 'forwarded_port', guest: 5000, host: 5000
   config.vm.network 'forwarded_port', guest: 5001, host: 5001
 
