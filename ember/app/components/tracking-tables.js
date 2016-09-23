@@ -17,7 +17,7 @@ export default Ember.Component.extend({
     let friends = this.get('friends');
 
     return this.get('tracks')
-      .filter(track => (track.pilot.id === self || friends.contains(track.pilot.id)));
+      .filter(track => (track.pilot.id === self || friends.includes(track.pilot.id)));
   }),
 
   othersTracks: Ember.computed.setDiff('tracks', 'friendsTracks'),

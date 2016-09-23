@@ -8,7 +8,7 @@ export default Ember.Component.extend({
   classNameBindings: ['pinned'],
 
   pinned: Ember.computed('flightId', 'pinnedFlights.pinned.[]', function() {
-    return this.get('pinnedFlights.pinned').contains(this.get('flightId'));
+    return this.get('pinnedFlights.pinned').includes(this.get('flightId'));
   }),
 
   didInsertElement() {
