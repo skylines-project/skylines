@@ -455,6 +455,8 @@ def update():
 
             if g.flight.pilot_id != pilot_id and User.get(pilot_id).club_id == g.current_user.club_id:
                 g.flight.pilot_id = pilot_id
+                # pilot_name is irrelevant, if pilot_id is given
+                g.flight.pilot_name = None
                 # update club if pilot changed
                 g.flight.club_id = User.get(pilot_id).club_id
 
@@ -474,6 +476,8 @@ def update():
 
             if User.get(co_pilot_id).club_id == g.current_user.club_id:
                 g.flight.co_pilot_id = co_pilot_id
+                # co_pilot_name is irrelevant, if co_pilot_id is given
+                g.flight.co_pilot_name = None
 
         else:
             g.flight.co_pilot_id = None
