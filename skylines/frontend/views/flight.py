@@ -453,12 +453,18 @@ def update():
             if not User.exists(id=pilot_id):
                 return jsonify(error='unknown-pilot'), 422
 
-            if g.flight.pilot_id != pilot_id and User.get(pilot_id).club_id == g.current_user.club_id:
+            pilot_club_id = User.get(pilot_id).club_id
+
+            if (pilot_id != g.current_user.id) and (pilot_club_id is not None) \
+                    and (pilot_club_id != g.current_user.club_id):
+                return jsonify(error='pilot-disallowed'), 422
+
+            if g.flight.pilot_id != pilot_id:
                 g.flight.pilot_id = pilot_id
                 # pilot_name is irrelevant, if pilot_id is given
                 g.flight.pilot_name = None
                 # update club if pilot changed
-                g.flight.club_id = User.get(pilot_id).club_id
+                g.flight.club_id = pilot_club_id
 
         else:
             g.flight.pilot_id = None
@@ -474,10 +480,14 @@ def update():
             if not User.exists(id=co_pilot_id):
                 return jsonify(error='unknown-copilot'), 422
 
-            if User.get(co_pilot_id).club_id == g.current_user.club_id:
-                g.flight.co_pilot_id = co_pilot_id
-                # co_pilot_name is irrelevant, if co_pilot_id is given
-                g.flight.co_pilot_name = None
+            co_pilot_club_id = User.get(co_pilot_id).club_id
+
+            if (co_pilot_club_id is not None) and (co_pilot_club_id != g.current_user.club_id):
+                return jsonify(error='co-pilot-disallowed'), 422
+
+            g.flight.co_pilot_id = co_pilot_id
+            # co_pilot_name is irrelevant, if co_pilot_id is given
+            g.flight.co_pilot_name = None
 
         else:
             g.flight.co_pilot_id = None
