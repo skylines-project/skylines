@@ -132,7 +132,8 @@ def followers():
         .options(subqueryload('source.club')) \
         .order_by(User.name)
 
-    followers = [follower.source for follower in query]
+    followers = UserSchema(only=('id', 'name', 'club'))\
+        .dump([follower.source for follower in query], many=True).data
 
     add_current_user_follows(followers)
 
@@ -148,7 +149,8 @@ def following():
         .options(subqueryload('destination.club')) \
         .order_by(User.name)
 
-    followers = [follower.destination for follower in query]
+    followers = UserSchema(only=('id', 'name', 'club')) \
+        .dump([follower.destination for follower in query], many=True).data
 
     add_current_user_follows(followers)
 
@@ -170,7 +172,7 @@ def add_current_user_follows(followers):
     current_user_follows = [follower.destination_id for follower in query]
 
     for follower in followers:
-        follower.current_user_follows = (follower.id in current_user_follows)
+        follower['current_user_follows'] = (follower['id'] in current_user_follows)
 
 
 @user_blueprint.route('/follow')
