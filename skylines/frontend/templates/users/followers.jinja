@@ -1,5 +1,3 @@
-{% from "macros/links.jinja" import user_link, club_link %}
-
 {% extends "base-page.jinja" %}
 {% set active_page = "settings" %}
 
@@ -13,9 +11,11 @@
   <li class="col-md-3 col-sm-4 col-xs-6">
     <div class="panel panel-default">
       <div class="panel-body follower-panel">
-        <h4 class="media-heading">{{ user_link(follower) }}</h4>
+        <h4 class="media-heading">
+          <a href="/users/{{ follower.id }}/">{{ follower.name|e }}</a>
+        </h4>
 
-        <p>{% if follower.club -%}{{ club_link(follower.club) }}{%- else -%}&nbsp;{%- endif %}</p>
+        <p>{% if follower.club -%}<a href="/clubs/{{ follower.club.id }}/">{{ follower.club.name|e }}</a>{%- else -%}&nbsp;{%- endif %}</p>
 
         {% if g.current_user -%}
         {% if follower == g.current_user -%}
@@ -24,12 +24,12 @@
             {{ _('This is you') }}
           </a>
         {%- elif follower.current_user_follows -%}
-          <a href="{{ url_for('user.unfollow', user_id=follower.id) }}" class="btn btn-default form-control">
+          <a href="/users/{{ follower.id }}/unfollow" class="btn btn-default form-control">
             <i class="icon-minus icon-fixed-width"></i>
             {{ _('Unfollow') }}
           </a>
         {%- else -%}
-          <a href="{{ url_for('user.follow', user_id=follower.id) }}" class="btn btn-default form-control">
+          <a href="/users/{{ follower.id }}/follow" class="btn btn-default form-control">
             <i class="icon-plus icon-fixed-width"></i>
             {{ _('Follow') }}
           </a>
