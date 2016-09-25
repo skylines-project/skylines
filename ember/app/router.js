@@ -14,6 +14,8 @@ Router.map(function() {
   this.route('clubs', { path: '/clubs' });
 
   this.route('user', { path: '/users/:user_id' }, function() {
+    this.route('followers');
+    this.route('following');
   });
   this.route('users', { path: '/users' }, function() {
     this.route('new');
