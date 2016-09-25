@@ -36,7 +36,7 @@ export default Ember.Service.extend({
   },
 
   toggle(id) {
-    if (this.get('pinned').contains(id)) {
+    if (this.get('pinned').includes(id)) {
       this.unpin(id);
     } else {
       this.pin(id);

@@ -5,9 +5,9 @@ import slMapClickHandler from '../utils/map-click-handler';
 export default Ember.Component.extend({
   didInsertElement() {
     let map = window.flightMap;
-
-    map.fit();
-
-    slMapClickHandler(map.get('map'));
+    if (map) {
+      map.fit();
+      slMapClickHandler(map.get('map'));
+    }
   },
 });
