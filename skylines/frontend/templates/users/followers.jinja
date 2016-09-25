@@ -1,44 +1,10 @@
 {% extends "base-page.jinja" %}
 {% set active_page = "settings" %}
+{% set use_ember = True %}
 
 {% block title %}{{ g.user|e }} <small> - {{ _('Followers') }}</small>{% endblock %}
 
 
 {%- block content %}
-{% if followers -%}
-<ul class="row list-unstyled">
-  {% for follower in followers -%}
-  <li class="col-md-3 col-sm-4 col-xs-6">
-    <div class="panel panel-default">
-      <div class="panel-body follower-panel">
-        <h4 class="media-heading">
-          <a href="/users/{{ follower.id }}/">{{ follower.name|e }}</a>
-        </h4>
-
-        <p>{% if follower.club -%}<a href="/clubs/{{ follower.club.id }}/">{{ follower.club.name|e }}</a>{%- else -%}&nbsp;{%- endif %}</p>
-
-        {% if g.current_user -%}
-        {% if follower.id == g.current_user.id -%}
-          <a class="btn btn-default disabled form-control">
-            <i class="icon-ban-circle icon-fixed-width"></i>
-            {{ _('This is you') }}
-          </a>
-        {%- elif follower.current_user_follows -%}
-          <a href="/users/{{ follower.id }}/unfollow" class="btn btn-default form-control">
-            <i class="icon-minus icon-fixed-width"></i>
-            {{ _('Unfollow') }}
-          </a>
-        {%- else -%}
-          <a href="/users/{{ follower.id }}/follow" class="btn btn-default form-control">
-            <i class="icon-plus icon-fixed-width"></i>
-            {{ _('Follow') }}
-          </a>
-        {%- endif %}
-        {%- endif %}
-      </div>
-    </div>
-  </li>
-  {%- endfor %}
-</ul>
-{%- endif %}
+<div data-component="follower-list" data-attrs='{"followers": {{ followers|tojson }}}'></div>
 {%- endblock %}

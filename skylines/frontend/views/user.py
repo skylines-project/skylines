@@ -172,7 +172,7 @@ def add_current_user_follows(followers):
     current_user_follows = [follower.destination_id for follower in query]
 
     for follower in followers:
-        follower['current_user_follows'] = (follower['id'] in current_user_follows)
+        follower['currentUserFollows'] = (follower['id'] in current_user_follows)
 
 
 @user_blueprint.route('/follow')

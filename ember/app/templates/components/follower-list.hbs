@@ -1,0 +1,42 @@
+<ul class="row list-unstyled">
+  {{#each followers as |follower|}}
+    <li class="col-md-3 col-sm-4 col-xs-6">
+      <div class="panel panel-default">
+        <div class="panel-body follower-panel">
+          <h4 class="media-heading">
+            <a href="/users/{{follower.id}}/">{{follower.name}}</a>
+          </h4>
+
+          <p>
+            {{#if follower.club}}
+              <a href="/clubs/{{follower.club.id}}/">
+                {{follower.club.name}}
+              </a>
+            {{else}}
+              &nbsp;
+            {{/if}}
+          </p>
+
+          {{#if account.user}}
+            {{#if (eq follower.id account.user.id)}}
+              <a class="btn btn-default disabled form-control">
+                <i class="icon-ban-circle icon-fixed-width"></i>
+                {{t "this-is-you"}}
+              </a>
+            {{else if follower.currentUserFollows}}
+              <a href="/users/{{ follower.id }}/unfollow" class="btn btn-default form-control">
+                <i class="icon-minus icon-fixed-width"></i>
+                {{t "unfollow"}}
+              </a>
+            {{else}}
+              <a href="/users/{{ follower.id }}/follow" class="btn btn-default form-control">
+                <i class="icon-plus icon-fixed-width"></i>
+                {{t "follow"}}
+              </a>
+            {{/if}}
+          {{/if}}
+        </div>
+      </div>
+    </li>
+  {{/each}}
+</ul>
