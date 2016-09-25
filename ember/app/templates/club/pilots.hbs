@@ -15,7 +15,7 @@
         {{#each model.users as |user|}}
           <tr>
             <td class="column-buttons">
-              <a href="/users/{{user.id}}">{{user.name}}</a>
+              {{#link-to "user" user.id}}{{user.name}}{{/link-to}}
 
               <div class="pull-right">
                 <a href="/flights/pilot/{{user.id}}" class="btn btn-default btn-sm"><i class="icon-plane"></i> {{t "flights"}}</a>
