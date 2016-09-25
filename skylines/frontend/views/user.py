@@ -132,12 +132,14 @@ def followers():
         .options(subqueryload('source.club')) \
         .order_by(User.name)
 
-    followers = UserSchema(only=('id', 'name', 'club'))\
-        .dump([follower.source for follower in query], many=True).data
+    user_schema = UserSchema(only=('id', 'name', 'club'))
+
+    user = user_schema.dump(g.user).data
+    followers = user_schema.dump([follower.source for follower in query], many=True).data
 
     add_current_user_follows(followers)
 
-    return render_template('users/followers.jinja', followers=followers)
+    return render_template('users/followers.jinja', user=user, followers=followers)
 
 
 @user_blueprint.route('/following')
@@ -149,12 +151,14 @@ def following():
         .options(subqueryload('destination.club')) \
         .order_by(User.name)
 
-    followers = UserSchema(only=('id', 'name', 'club')) \
-        .dump([follower.destination for follower in query], many=True).data
+    user_schema = UserSchema(only=('id', 'name', 'club'))
+
+    user = user_schema.dump(g.user).data
+    followers = user_schema.dump([follower.destination for follower in query], many=True).data
 
     add_current_user_follows(followers)
 
-    return render_template('users/following.jinja', followers=followers)
+    return render_template('users/following.jinja', user=user, followers=followers)
 
 
 def add_current_user_follows(followers):

@@ -2,9 +2,6 @@
 {% set active_page = "settings" %}
 {% set use_ember = True %}
 
-{% block title %}{{ g.user|e }} <small> - {{ _('Followers') }}</small>{% endblock %}
-
-
-{%- block content %}
-<div data-component="follower-list" data-attrs='{"followers": {{ followers|tojson }}}'></div>
+{%- block ember_application %}
+<div data-component="follower-page" data-attrs='{"user": {{ user|tojson }}, "followers": {{ followers|tojson }}}'></div>
 {%- endblock %}
