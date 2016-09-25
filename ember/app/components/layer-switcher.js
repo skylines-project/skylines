@@ -11,11 +11,19 @@ export default Ember.Component.extend({
   overlayLayers: [],
 
   didInsertElement() {
-    Ember.$(document).on('mouseup touchend', e => {
-      if (this.$().find(e.target).length === 0) {
+    let mouseHandler = event => {
+      if (this.$().find(event.target).length === 0) {
         this.set('open', false);
       }
-    });
+    };
+
+    this.set('mouseHandler', mouseHandler);
+    Ember.$(document).on('mouseup touchend', mouseHandler);
+  },
+
+  willDestroyElement() {
+    let mouseHandler = this.get('mouseHandler');
+    Ember.$(document).off('mouseup touchend', mouseHandler);
   },
 
   updateLayers() {
