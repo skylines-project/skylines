@@ -16,7 +16,7 @@
       <th>{{t "club"}}</th>
       <td>
         {{#if user.club}}
-          <a href="/clubs/{{user.club.id}}">{{user.club.name}}</a>
+          {{#link-to "club" user.club.id}}{{user.club.name}}{{/link-to}}
         {{else}}
           [{{t "unassigned"}}]
         {{/if}}
