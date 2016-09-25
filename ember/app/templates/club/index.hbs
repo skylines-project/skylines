@@ -24,7 +24,7 @@
               <th>{{t "created"}}</th>
               <td>
                 {{#if club.owner}}
-                  {{format-relative club.timeCreated}} by <a href="/users/{{club.owner.id}}">{{club.owner.name}}</a>
+                  {{format-relative club.timeCreated}} by {{#link-to "user" club.owner.id}}{{club.owner.name}}{{/link-to}}
                 {{else}}
                   {{format-relative club.timeCreated}}
                 {{/if}}
