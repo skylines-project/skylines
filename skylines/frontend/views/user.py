@@ -124,35 +124,46 @@ def index():
 
 
 @user_blueprint.route('/followers')
+@vary('accept')
 def followers():
-    # Query list of pilots that are following the selected user
-    query = Follower.query(destination=g.user) \
-        .join('source') \
-        .options(contains_eager('source')) \
-        .options(subqueryload('source.club')) \
-        .order_by(User.name)
+    if 'application/json' in request.headers.get('Accept', ''):
+        # Query list of pilots that are following the selected user
+        query = Follower.query(destination=g.user) \
+            .join('source') \
+            .options(contains_eager('source')) \
+            .options(subqueryload('source.club')) \
+            .order_by(User.name)
 
-    followers = [follower.source for follower in query]
+        user_schema = UserSchema(only=('id', 'name', 'club'))
+        followers = user_schema.dump([follower.source for follower in query], many=True).data
 
-    add_current_user_follows(followers)
+        add_current_user_follows(followers)
 
-    return render_template('users/followers.jinja', followers=followers)
+        return jsonify(followers=followers)
+
+    return render_template('ember-page.jinja', active_page='settings')
 
 
 @user_blueprint.route('/following')
+@vary('accept')
 def following():
-    # Query list of pilots that are following the selected user
-    query = Follower.query(source=g.user) \
-        .join('destination') \
-        .options(contains_eager('destination')) \
-        .options(subqueryload('destination.club')) \
-        .order_by(User.name)
+    if 'application/json' in request.headers.get('Accept', ''):
+        # Query list of pilots that are following the selected user
+        query = Follower.query(source=g.user) \
+            .join('destination') \
+            .options(contains_eager('destination')) \
+            .options(subqueryload('destination.club')) \
+            .order_by(User.name)
 
-    followers = [follower.destination for follower in query]
+        user_schema = UserSchema(only=('id', 'name', 'club'))
 
-    add_current_user_follows(followers)
+        following = user_schema.dump([follower.destination for follower in query], many=True).data
 
-    return render_template('users/following.jinja', followers=followers)
+        add_current_user_follows(following)
+
+        return jsonify(following=following)
+
+    return render_template('ember-page.jinja', active_page='settings')
 
 
 def add_current_user_follows(followers):
@@ -170,7 +181,7 @@ def add_current_user_follows(followers):
     current_user_follows = [follower.destination_id for follower in query]
 
     for follower in followers:
-        follower.current_user_follows = (follower.id in current_user_follows)
+        follower['currentUserFollows'] = (follower['id'] in current_user_follows)
 
 
 @user_blueprint.route('/follow')

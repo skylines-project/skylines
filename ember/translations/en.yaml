@@ -143,6 +143,7 @@ takeoff: Takeoff
 takeoff-locations: Takeoff Locations
 takeoff-time: Takeoff time
 the-skylines-team: The SkyLines Team
+this-is-you: This is you
 time: Time
 TIME-by-USER: '{time}<br>by <a href="{userURL}">{user}</a>'
 timeline: Timeline
