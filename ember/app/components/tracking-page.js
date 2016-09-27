@@ -1,8 +1,8 @@
 import Ember from 'ember';
 import ol from 'openlayers';
 
-import slFlightDisplay from '../utils/flight-display';
 import slMapClickHandler from '../utils/map-click-handler';
+import slMapHoverHandler from '../utils/map-hover-handler';
 
 export default Ember.Component.extend({
   ajax: Ember.inject.service(),
@@ -33,11 +33,10 @@ export default Ember.Component.extend({
 
     let flights = fixCalc.get('flights');
 
-    let flight_display = slFlightDisplay.create({
+    slMapHoverHandler.create({
       fixCalc,
       flightMap: window.flightMap,
     });
-    this.set('flightDisplay', flight_display);
 
     fixCalc.set('defaultTime', -1);
     fixCalc.set('time', -1);
@@ -65,7 +64,6 @@ export default Ember.Component.extend({
   },
 
   _update() {
-    let flightDisplay = this.get('flightDisplay');
     let flights = this.get('fixCalc.flights');
     let ajax = this.get('ajax');
 
@@ -74,7 +72,6 @@ export default Ember.Component.extend({
       let data = { last_update };
       ajax.request(`/tracking/${flight.get('id')}/json`, { data }).then(data => {
         updateFlight(flights, data);
-        flightDisplay.update();
       }).catch(() => {
         // ignore update errors
       });

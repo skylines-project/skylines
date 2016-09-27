@@ -1,7 +1,7 @@
 import Ember from 'ember';
 
-import slFlightDisplay from '../utils/flight-display';
 import slMapClickHandler from '../utils/map-click-handler';
+import slMapHoverHandler from '../utils/map-hover-handler';
 
 export default Ember.Component.extend({
   fixCalc: Ember.inject.service(),
@@ -47,7 +47,7 @@ export default Ember.Component.extend({
       fixCalc.addFlightFromJSON(`/flights/${id}/json`);
     });
 
-    slFlightDisplay.create({
+    slMapHoverHandler.create({
       fixCalc,
       flightMap: window.flightMap,
     });
