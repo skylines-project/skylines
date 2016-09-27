@@ -7,11 +7,6 @@ export default Ember.Object.extend({
   flight_display: null,
   flights: null,
 
-  init() {
-    window.fixCalcService.set('defaultTime', -1);
-    window.fixCalcService.set('time', -1);
-  },
-
   /**
    * Retrieves all new traces for the displayed flights
    */

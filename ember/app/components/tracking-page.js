@@ -40,6 +40,9 @@ export default Ember.Component.extend({
     });
     let flight_tracking = slFlightTracking.create({ flight_display, flights });
 
+    fixCalc.set('defaultTime', -1);
+    fixCalc.set('time', -1);
+
     this.get('flights').forEach(flight => fixCalc.addFlight(flight));
 
     let extent = flights.getBounds();
