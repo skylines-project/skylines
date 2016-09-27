@@ -10,6 +10,8 @@ export default Ember.Component.extend({
   classNames: ['olFullscreen'],
 
   didInsertElement() {
+    let fixCalc = this.get('fixCalc');
+
     let sidebar = this.$('#sidebar').sidebar();
 
     this.$('#barogram_panel').resize(() => {
@@ -24,28 +26,28 @@ export default Ember.Component.extend({
       sidebar.open(window.location.hash.substring(1));
     }
 
-    window.paddingFn = () => [20, 20, this.$('#barogram_panel').height() + 20, sidebar.width() + 20];
+    let paddingFn = window.paddingFn = () => [20, 20, this.$('#barogram_panel').height() + 20, sidebar.width() + 20];
 
     let [primaryId, ...otherIds] = this.get('ids');
 
     let map = window.flightMap.get('map');
 
-    window.fixCalcService.addFlightFromJSON(`/flights/${primaryId}/json`, false);
+    fixCalc.addFlightFromJSON(`/flights/${primaryId}/json`, false);
     otherIds.forEach(otherId => {
-      window.fixCalcService.addFlightFromJSON(`/flights/${otherId}/json`);
+      fixCalc.addFlightFromJSON(`/flights/${otherId}/json`);
     });
 
-    let extent = window.fixCalcService.get('flights').getBounds();
-    map.getView().fit(extent, map.getSize(), { padding: window.paddingFn() });
+    let extent = fixCalc.get('flights').getBounds();
+    map.getView().fit(extent, map.getSize(), { padding: paddingFn() });
 
-    window.pinnedFlightsService.get('pinned').filter(function(id) {
+    this.get('pinnedFlights.pinned').filter(function(id) {
       return id !== primaryId;
     }).forEach(function(id) {
-      window.fixCalcService.addFlightFromJSON(`/flights/${id}/json`);
+      fixCalc.addFlightFromJSON(`/flights/${id}/json`);
     });
 
     let flight_display = slFlightDisplay.create({
-      fixCalc: window.fixCalcService,
+      fixCalc,
       flightMap: window.flightMap,
       fix_table: window.fixTable,
       baro: window.barogram,
