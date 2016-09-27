@@ -31,18 +31,14 @@ export default Ember.Component.extend({
     let map = window.flightMap.get('map');
 
     fixCalc.addFlightFromJSON(`/flights/${primaryId}/json`, false);
-    otherIds.forEach(otherId => {
-      fixCalc.addFlightFromJSON(`/flights/${otherId}/json`);
-    });
+    otherIds.forEach(id => fixCalc.addFlightFromJSON(`/flights/${id}/json`));
 
     let extent = fixCalc.get('flights').getBounds();
     map.getView().fit(extent, map.getSize(), { padding: paddingFn() });
 
-    this.get('pinnedFlights.pinned').filter(function(id) {
-      return id !== primaryId;
-    }).forEach(function(id) {
-      fixCalc.addFlightFromJSON(`/flights/${id}/json`);
-    });
+    this.get('pinnedFlights.pinned')
+      .filter(id => id !== primaryId)
+      .forEach(id => fixCalc.addFlightFromJSON(`/flights/${id}/json`));
   },
 
   timeInterval: Ember.computed('mapExtent', 'cesiumEnabled', function() {
