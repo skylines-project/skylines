@@ -83,6 +83,7 @@
 </div>
 
 {{flight-map
+  hoverEnabled=(not (or fixCalc.isRunning cesiumEnabled))
   onExtentChange=(action (mut mapExtent))
   onCesiumEnabledChange=(action (mut cesiumEnabled))
   fullscreenElement="#fullscreen-content"
