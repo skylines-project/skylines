@@ -26,7 +26,7 @@ export default Ember.Component.extend({
   actions: {
     select(id) {
       let current = this.get('selection');
-      this.set('selection', current === id ? null : id);
+      this.getWithDefault('onSelectionChange', Ember.K)(current === id ? null : id);
     },
 
     // Remove a flight when the removal button has been pressed in the fix table.

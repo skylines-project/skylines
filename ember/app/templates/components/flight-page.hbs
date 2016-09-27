@@ -85,7 +85,7 @@
 {{flight-map fullscreenElement="#fullscreen-content" class="olFullscreen sidebar-map"}}
 <div id="barogram_panel" class="map-bottom-panel map-overlay">
   <div style="overflow: auto; max-height: 115px">
-    {{fix-table}}
+    {{fix-table selection=selectedFlightId onSelectionChange=(action (mut selectedFlightId))}}
   </div>
   {{flight-barogram defaultTime=fixCalc.defaultTime onTimeChange=(action (mut fixCalc.time))}}
 </div>
