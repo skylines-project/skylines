@@ -63,11 +63,6 @@ export default BarogramComponent.extend({
     Ember.run.once(this, 'draw');
   }),
 
-  hoverMode: Ember.computed.not('fixCalc.isRunning'),
-  hoverModeObserver: Ember.observer('hoverMode', function() {
-    Ember.run.once(this, 'onHoverModeUpdate');
-  }),
-
   timeInterval: null,
 
   didInsertElement() {
@@ -82,9 +77,14 @@ export default BarogramComponent.extend({
   didUpdateAttrs() {
     let selection = this.get('selection');
     let timeInterval = this.get('timeInterval');
+    let hoverMode = this.get('hoverMode');
 
     if (timeInterval !== this.get('oldTimeInterval')) {
       this.updateInterval();
+    }
+
+    if (hoverMode !== this.get('oldHoverMode')) {
+      this.onHoverModeUpdate();
     }
 
     if (selection !== this.get('oldSelection')) {
@@ -97,6 +97,7 @@ export default BarogramComponent.extend({
 
     this.set('oldSelection', selection);
     this.set('oldTimeInterval', timeInterval);
+    this.set('oldHoverMode', hoverMode);
   },
 
   update() {
