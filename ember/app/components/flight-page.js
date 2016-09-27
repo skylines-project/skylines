@@ -26,6 +26,24 @@ export default Ember.Component.extend({
 
     window.paddingFn = () => [20, 20, this.$('#barogram_panel').height() + 20, sidebar.width() + 20];
 
+    let [primaryId, ...otherIds] = this.get('ids');
+
+    let map = window.flightMap.get('map');
+
+    window.fixCalcService.addFlightFromJSON(`/flights/${primaryId}/json`, false);
+    otherIds.forEach(otherId => {
+      window.fixCalcService.addFlightFromJSON(`/flights/${otherId}/json`);
+    });
+
+    let extent = window.fixCalcService.get('flights').getBounds();
+    map.getView().fit(extent, map.getSize(), { padding: window.paddingFn() });
+
+    window.pinnedFlightsService.get('pinned').filter(function(id) {
+      return id !== primaryId;
+    }).forEach(function(id) {
+      window.fixCalcService.addFlightFromJSON(`/flights/${id}/json`);
+    });
+
     let flight_display = slFlightDisplay.create({
       fixCalc: window.fixCalcService,
       flightMap: window.flightMap,
@@ -33,7 +51,7 @@ export default Ember.Component.extend({
       baro: window.barogram,
     });
 
-    slMapClickHandler(window.flightMap.get('map'), flight_display);
+    slMapClickHandler(map, flight_display);
   },
 
   actions: {
