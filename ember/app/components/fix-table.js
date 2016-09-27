@@ -17,12 +17,6 @@ export default Ember.Component.extend({
 
   selectable: Ember.computed.gt('data.length', 1),
 
-  init() {
-    this._super(...arguments);
-
-    window.fixTable = this;
-  },
-
   actions: {
     select(id) {
       let current = this.get('selection');

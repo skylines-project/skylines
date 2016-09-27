@@ -18,8 +18,6 @@ export default Ember.Object.extend({
 
   map: Ember.computed.readOnly('flightMap.map'),
 
-  fix_table: null,
-
   baro: null,
 
   /**
