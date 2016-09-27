@@ -25,8 +25,8 @@ export default BaseMapComponent.extend({
   willDestroyElement() {
     this._super(...arguments);
     let map = this.get('map');
-    map.off('moveend', this._handleMoveEnd, this);
-    map.off('pointermove', this._handlePointerMove, this);
+    map.un('moveend', this._handleMoveEnd, this);
+    map.un('pointermove', this._handlePointerMove, this);
   },
 
   _handleMoveEnd(event) {
