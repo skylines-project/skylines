@@ -17,54 +17,11 @@
 {%- endblock %}
 
 
-{%- block scripts %}
-{{ super() }}
-
-{% if flights -%}
-<script type="text/javascript">
-  $(function() {
-    var map = window.flightMap.get('map');
-
-    var slFlightDisplay = require('skylines/utils/flight-display').default;
-    var slFlightTracking = require('skylines/utils/flight-tracking').default;
-    var slMapClickHandler = require('skylines/utils/map-click-handler').default;
-
-    var flights = window.fixCalcService.get('flights');
-
-    var flight_display = slFlightDisplay.create({
-      fixCalc: window.fixCalcService,
-      flightMap: window.flightMap,
-      fix_table: window.fixTable,
-      baro: window.barogram
-    });
-    var flight_tracking = slFlightTracking.create({
-      flight_display: flight_display,
-      flights: flights,
-    });
-
-    {% for flight in flights -%}
-      window.fixCalcService.addFlight({{ flight|tojson }});
-    {%- endfor %}
-
-    var extent = flights.getBounds();
-    map.getView().fit(extent, map.getSize(), {padding: window.paddingFn()});
-
-    // update flight track every 15 seconds
-    setInterval(function() {
-      flight_tracking.updateFlightsFromJSON();
-    }, 15*1000);
-
-    var map_click_handler = slMapClickHandler(map, flight_display);
-  });
-</script>
-{%- endif %}
-{%- endblock %}
-
-
 {% block content -%}
 {% if flights -%}
 <div id="fullscreen-content" class="olFullscreen" data-component='tracking-page' data-attrs='{
-  "pilots": {{ pilots_json|tojson }}
+  "pilots": {{ pilots_json|tojson }},
+  "flights": {{ flights|tojson }}
 }'></div>
 {%- else -%}
 <p style="margin:10pt;margin-top:40pt;">

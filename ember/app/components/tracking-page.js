@@ -1,9 +1,17 @@
 import Ember from 'ember';
 
+import slFlightDisplay from '../utils/flight-display';
+import slFlightTracking from '../utils/flight-tracking';
+import slMapClickHandler from '../utils/map-click-handler';
+
 export default Ember.Component.extend({
+  fixCalc: Ember.inject.service(),
+
   classNames: ['olFullscreen'],
 
   didInsertElement() {
+    let fixCalc = this.get('fixCalc');
+
     let sidebar = this.$('#sidebar').sidebar();
 
     this.$('#barogram_panel').resize(() => {
@@ -18,6 +26,30 @@ export default Ember.Component.extend({
       sidebar.open(window.location.hash.substring(1));
     }
 
-    window.paddingFn = () => [20, 20, this.$('#barogram_panel').height() + 20, sidebar.width() + 20];
+    let paddingFn = window.paddingFn = () => [20, 20, this.$('#barogram_panel').height() + 20, sidebar.width() + 20];
+
+    let map = window.flightMap.get('map');
+
+    let flights = fixCalc.get('flights');
+
+    let flight_display = slFlightDisplay.create({
+      fixCalc,
+      flightMap: window.flightMap,
+      fix_table: window.fixTable,
+      baro: window.barogram,
+    });
+    let flight_tracking = slFlightTracking.create({ flight_display, flights });
+
+    this.get('flights').forEach(flight => fixCalc.addFlight(flight));
+
+    let extent = flights.getBounds();
+    map.getView().fit(extent, map.getSize(), { padding: paddingFn() });
+
+    // update flight track every 15 seconds
+    setInterval(function() {
+      flight_tracking.updateFlightsFromJSON();
+    }, 15 * 1000);
+
+    slMapClickHandler(map, flight_display);
   },
 });
