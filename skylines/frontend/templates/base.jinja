@@ -70,7 +70,7 @@ window._trackJs = {
 {%- endassets %}
 
 {% if use_ember %}
-<script src="https://cdn.polyfill.io/v2/polyfill.min.js?features=Intl.~locale.en,Intl.~locale.de"></script>
+<script src="https://cdn.polyfill.io/v2/polyfill.min.js?features=Intl.~locale.en,Intl.~locale.de&unknown=polyfill"></script>
 
 {%- assets 'ember_vendor_js' %}
 <script type="text/javascript" src="{{ ASSET_URL }}"></script>
