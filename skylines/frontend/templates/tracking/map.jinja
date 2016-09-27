@@ -20,7 +20,7 @@
 {%- block scripts %}
 {{ super() }}
 
-{% if traces -%}
+{% if flights -%}
 <script type="text/javascript">
   $(function() {
     var map = window.flightMap.get('map');
@@ -42,23 +42,8 @@
       flights: flights,
     });
 
-    {% for pilot, trace in zip(pilots, traces) -%}
-    {% if trace -%}
-      window.fixCalcService.addFlight({ sfid: {{ pilot.id }},
-                points: {{ trace.points|tojson }},
-                barogram_t: {{ trace.barogram_t|tojson }},
-                barogram_h: {{ trace.barogram_h|tojson }},
-                enl: {{ trace.enl|tojson }},
-                contests: undefined,
-                elevations_t: {{ trace.barogram_t|tojson }},
-                elevations_h: {{ trace.elevations|tojson }},
-                geoid: {{ trace.geoid|tojson }},
-                additional: {
-                  competition_id: "{{ pilot.tracking_callsign or pilot.initials() }}",
-                  color: "{{ pilot.color }}"
-                }
-    });
-    {%- endif %}
+    {% for flight in flights -%}
+      window.fixCalcService.addFlight({{ flight|tojson }});
     {%- endfor %}
 
     var extent = flights.getBounds();
@@ -77,13 +62,13 @@
 
 
 {% block content -%}
-{% if traces -%}
+{% if flights -%}
 <div id="fullscreen-content" class="olFullscreen" data-component='tracking-page' data-attrs='{
   "pilots": {{ pilots_json|tojson }}
 }'></div>
 {%- else -%}
 <p style="margin:10pt;margin-top:40pt;">
-  {% if pilots|length == 1 -%}
+  {% if pilots_json|length == 1 -%}
   {% trans %}There is no live track of this pilot currently.{% endtrans %}
   {%- else -%}
   {% trans %}There are no live tracks of these pilots currently.{% endtrans %}

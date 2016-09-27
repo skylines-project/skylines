@@ -128,9 +128,27 @@ def index():
         json['color'] = pilot.color
         pilots_json.append(json)
 
-    return render_template(
-        'tracking/map.jinja',
-        pilots=g.pilots, pilots_json=pilots_json, traces=traces)
+    flights = []
+    if traces:
+        for pilot, trace in zip(g.pilots, traces):
+            if trace:
+                flights.append({
+                    'sfid': pilot.id,
+                    'points': trace['points'],
+                    'barogram_t': trace['barogram_t'],
+                    'barogram_h': trace['barogram_h'],
+                    'enl': trace['enl'],
+                    'contests': None,
+                    'elevations_t': trace['barogram_t'],
+                    'elevations_h': trace['elevations'],
+                    'geoid': trace['geoid'],
+                    'additional': {
+                        'competition_id': pilot.tracking_callsign or pilot.initials(),
+                        'color': pilot.color,
+                    },
+                })
+
+    return render_template('tracking/map.jinja', flights=flights, pilots=g.pilots, pilots_json=pilots_json)
 
 
 @track_blueprint.route('/map')
