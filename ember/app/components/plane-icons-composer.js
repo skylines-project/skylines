@@ -2,13 +2,11 @@ import Ember from 'ember';
 import ol from 'openlayers';
 
 export default Ember.Component.extend({
-  fixCalc: Ember.inject.service(),
-
   tagName: '',
 
   map: null,
+  fixes: null,
 
-  fixes: Ember.computed.readOnly('fixCalc.fixes'),
   fixesObserver: Ember.observer('fixes.@each.pointXY', function() {
     Ember.run.once(this.get('map'), 'render');
   }),

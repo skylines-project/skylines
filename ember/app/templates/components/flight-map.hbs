@@ -9,11 +9,11 @@
   {{cesium-button enabled=cesiumEnabled onEnable=(action "cesiumEnabled") onDisable=(action "cesiumDisabled") style="top:200px"}}
   {{flight-path-layer map=map flights=flights}}
   {{phase-highlight-composer map=map}}
-  {{plane-icons-composer map=map}}
+  {{plane-icons-composer map=map fixes=fixCalc.fixes}}
   {{contest-layer map=map flights=flights visible=(not cesiumEnabled)}}
 
   {{#if (and (not cesiumEnabled) (gt flights.length 1))}}
-    {{plane-label-overlays map=map}}
+    {{plane-label-overlays map=map fixes=fixCalc.fixes}}
   {{/if}}
 {{/if}}
 
