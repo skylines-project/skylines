@@ -107,24 +107,18 @@ function updateFlight(flights, data) {
 
   let geoid = flight.get('geoid');
 
-  let fixes = time_decoded.map(function(timestamp, i) {
-    return {
-      time: timestamp,
-      longitude: lonlat[i * 2],
-      latitude: lonlat[i * 2 + 1],
-      altitude: height_decoded[i] + geoid,
-      enl: enl_decoded[i],
-    };
-  });
+  let fixes = time_decoded.map((timestamp, i) => ({
+    time: timestamp,
+    longitude: lonlat[i * 2],
+    latitude: lonlat[i * 2 + 1],
+    altitude: height_decoded[i] + geoid,
+    enl: enl_decoded[i],
+  }));
 
-  let elevations = time_decoded.map(function(timestamp, i) {
-    let elevation = elev[i];
-
-    return {
-      time: timestamp,
-      elevation: (elevation > -500) ? elevation : null,
-    };
-  });
+  let elevations = time_decoded.map((timestamp, i) => ({
+    time: timestamp,
+    elevation: (elev[i] > -500) ? elev[i] : null,
+  }));
 
   flight.get('fixes').pushObjects(fixes.slice(1));
   flight.get('elevations').pushObjects(elevations.slice(1));
