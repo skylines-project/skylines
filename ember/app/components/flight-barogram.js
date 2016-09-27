@@ -11,6 +11,9 @@ export default BarogramComponent.extend({
   defaultTime: null,
 
   flights: Ember.computed.readOnly('fixCalc.flights'),
+  flightsObserver: Ember.observer('flights.[]', function() {
+    this.draw();
+  }),
 
   selection: null,
 
