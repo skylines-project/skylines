@@ -57,9 +57,9 @@ const MapClickHandler = Ember.Object.extend({
     let infobox_element = $(infobox.getElement());
     let coordinate = event.coordinate;
 
-    let flight_display = this.get('flight_display');
-    if (flight_display) {
-      let flight_path_source = flight_display.get('flights.source');
+    let flights = this.get('flights');
+    if (flights) {
+      let flight_path_source = flights.get('source');
       let closest_feature = flight_path_source
           .getClosestFeatureToCoordinate(coordinate);
 
@@ -76,7 +76,7 @@ const MapClickHandler = Ember.Object.extend({
         if (squared_distance < 100) {
           let time = closest_point[3];
           let sfid = closest_feature.get('sfid');
-          let flight = flight_display.get('flights').findBy('id', sfid);
+          let flight = flights.findBy('id', sfid);
 
           // flight info
           let flight_info = this.flightInfo(flight);
@@ -216,8 +216,8 @@ const MapClickHandler = Ember.Object.extend({
    * @param {slFlight} flight Flight.
    */
   getNearFlights(lon, lat, time, flight) {
-    let flight_display = this.get('flight_display');
-    if (!flight_display) return;
+    let flights = this.get('flights');
+    if (!flights) return;
 
     let req = $.ajax(`/flights/${flight.get('id')}/near?lon=${lon}&lat=${lat}&time=${time}`);
 
@@ -226,7 +226,7 @@ const MapClickHandler = Ember.Object.extend({
         let flight = data['flights'][i];
 
         // skip retrieved flight if already on map
-        if (flight_display.get('flights').findBy('id', flight['sfid']))
+        if (flights.findBy('id', flight['sfid']))
           continue;
 
         window.fixCalcService.addFlight(flight);
@@ -301,8 +301,8 @@ const MapClickHandler = Ember.Object.extend({
   },
 });
 
-export default function slMapClickHandler(map, flight_display) {
-  return MapClickHandler.create({ map, flight_display });
+export default function slMapClickHandler(map, flights) {
+  return MapClickHandler.create({ map, flights });
 }
 
 

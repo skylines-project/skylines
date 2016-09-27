@@ -47,12 +47,12 @@ export default Ember.Component.extend({
       fixCalc.addFlightFromJSON(`/flights/${id}/json`);
     });
 
-    let flight_display = slFlightDisplay.create({
+    slFlightDisplay.create({
       fixCalc,
       flightMap: window.flightMap,
     });
 
-    slMapClickHandler(map, flight_display);
+    slMapClickHandler(map, fixCalc.get('flights'));
   },
 
   timeInterval: Ember.computed('mapExtent', 'cesiumEnabled', function() {

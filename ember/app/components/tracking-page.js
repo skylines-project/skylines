@@ -50,7 +50,7 @@ export default Ember.Component.extend({
     // update flight track every 15 seconds
     this._scheduleUpdate();
 
-    slMapClickHandler(map, flight_display);
+    slMapClickHandler(map, flights);
   },
 
   willDestroyElement() {
