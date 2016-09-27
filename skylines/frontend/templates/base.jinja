@@ -53,7 +53,15 @@
 {% block scripts -%}
 
 {% if not debug %}
-<script type="text/javascript">window._trackJs = { token: 'aca43f68272e47f1bf0c3f2f2d7b20f2' };</script>
+<script type="text/javascript">
+window._trackJs = {
+  token: 'aca43f68272e47f1bf0c3f2f2d7b20f2',
+
+  onError: function (payload) {
+    return !(/404 NOT FOUND: GET \/tracking\/\d+\/json/).test(payload.message);
+  }
+}
+</script>
 <script type="text/javascript" src="https://cdn.trackjs.com/releases/current/tracker.js"></script>
 {% endif %}
 
