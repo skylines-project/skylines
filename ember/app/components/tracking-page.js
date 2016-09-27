@@ -80,6 +80,14 @@ export default Ember.Component.extend({
 
     return (interval.max == -Infinity) ? null : [interval.min, interval.max];
   }),
+
+  actions: {
+    removeFlight(id) {
+      let flights = this.get('fixCalc.flights');
+      flights.removeObjects(flights.filterBy('id', id));
+      this.get('pinnedFlights').unpin(id);
+    },
+  },
 });
 
 /**

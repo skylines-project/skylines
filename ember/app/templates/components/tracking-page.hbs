@@ -33,7 +33,8 @@
       flights=fixCalc.flights
       fixes=fixCalc.fixes
       selection=selectedFlightId
-      onSelectionChange=(action (mut selectedFlightId))}}
+      onSelectionChange=(action (mut selectedFlightId))
+      onRemove=(action "removeFlight")}}
   </div>
 
   {{flight-barogram
