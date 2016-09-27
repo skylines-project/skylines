@@ -55,8 +55,15 @@ export default Ember.Component.extend({
     slMapClickHandler(map, flight_display);
   },
 
+  willDestroyElement() {
+    let updateTimer = this.get('updateTimer');
+    if (updateTimer) {
+      Ember.run.cancel(updateTimer);
+    }
+  },
+
   _scheduleUpdate() {
-    Ember.run.later(() => this._update(), 15 * 1000);
+    this.set('updateTimer', Ember.run.later(() => this._update(), 15 * 1000));
   },
 
   _update() {
