@@ -1,5 +1,3 @@
-/* globals $ */
-
 import Ember from 'ember';
 import ol from 'openlayers';
 
@@ -7,6 +5,7 @@ import slFlightDisplay from '../utils/flight-display';
 import slMapClickHandler from '../utils/map-click-handler';
 
 export default Ember.Component.extend({
+  ajax: Ember.inject.service(),
   fixCalc: Ember.inject.service(),
 
   classNames: ['olFullscreen'],
@@ -70,16 +69,14 @@ export default Ember.Component.extend({
   _update() {
     let flightDisplay = this.get('flightDisplay');
     let flights = this.get('fixCalc.flights');
+    let ajax = this.get('ajax');
 
     flights.forEach(flight => {
-      let url = `/tracking/${flight.get('id')}/json`;
-
-      $.ajax(url, {
-        data: { last_update: flight.get('last_update') || null },
-        success: data => {
-          updateFlight(flights, data);
-          flightDisplay.update();
-        },
+      let last_update = flight.get('last_update') || null;
+      let data = { last_update };
+      ajax.request(`/tracking/${flight.get('id')}/json`, { data }).then(data => {
+        updateFlight(flights, data);
+        flightDisplay.update();
       });
     });
 
