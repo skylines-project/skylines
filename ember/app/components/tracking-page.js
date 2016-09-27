@@ -83,6 +83,17 @@ export default Ember.Component.extend({
 
     this._scheduleUpdate();
   },
+
+  timeInterval: Ember.computed('mapExtent', 'cesiumEnabled', 'fixCalc.flights.[]', function() {
+    if (this.get('cesiumEnabled')) return null;
+
+    let extent = this.get('mapExtent');
+    if (!extent) return null;
+
+    let interval = this.get('fixCalc.flights').getMinMaxTimeInExtent(extent);
+
+    return (interval.max == -Infinity) ? null : [interval.min, interval.max];
+  }),
 });
 
 /**

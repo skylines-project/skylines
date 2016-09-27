@@ -55,6 +55,17 @@ export default Ember.Component.extend({
     slMapClickHandler(map, flight_display);
   },
 
+  timeInterval: Ember.computed('mapExtent', 'cesiumEnabled', function() {
+    if (this.get('cesiumEnabled')) return null;
+
+    let extent = this.get('mapExtent');
+    if (!extent) return null;
+
+    let interval = this.get('fixCalc.flights').getMinMaxTimeInExtent(extent);
+
+    return (interval.max == -Infinity) ? null : [interval.min, interval.max];
+  }),
+
   actions: {
     selectWingman(id) {
       let fixCalc = this.get('fixCalc');
