@@ -69,9 +69,6 @@ export default BarogramComponent.extend({
   }),
 
   timeInterval: null,
-  timeIntervalObserver: Ember.observer('timeInterval', function() {
-    this.updateInterval();
-  }),
 
   didInsertElement() {
     this._super(...arguments);
@@ -85,6 +82,10 @@ export default BarogramComponent.extend({
   didUpdateAttrs() {
     let selection = this.get('selection');
     let timeInterval = this.get('timeInterval');
+
+    if (timeInterval !== this.get('oldTimeInterval')) {
+      this.updateInterval();
+    }
 
     if (selection !== this.get('oldSelection')) {
       this.draw();
