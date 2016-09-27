@@ -8,12 +8,8 @@ export default BarogramComponent.extend({
   fixCalc: Ember.inject.service(),
   flightPhase: Ember.inject.service(),
 
-  time: Ember.computed.alias('fixCalc.time'),
+  time: null,
   defaultTime: null,
-
-  timeObserver: Ember.observer('time', function() {
-    Ember.run.once(this, 'updateCrosshair');
-  }),
 
   flights: Ember.computed.readOnly('fixCalc.flights'),
 
@@ -87,7 +83,19 @@ export default BarogramComponent.extend({
   },
 
   didUpdateAttrs() {
-    this.draw();
+    let selection = this.get('selection');
+    let timeInterval = this.get('timeInterval');
+
+    if (selection !== this.get('oldSelection')) {
+      this.draw();
+    } else if (timeInterval !== this.get('oldTimeInterval')) {
+      this.draw();
+    } else {
+      this.updateCrosshair();
+    }
+
+    this.set('oldSelection', selection);
+    this.set('oldTimeInterval', timeInterval);
   },
 
   update() {
