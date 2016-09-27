@@ -56,6 +56,10 @@ def register(app):
     app.register_blueprint(users_blueprint, url_prefix='/users')
     app.register_blueprint(widgets_blueprint, url_prefix='/widgets')
 
+    @app.context_processor
+    def inject_debug():
+        return dict(debug=app.debug)
+
     @app.route('/')
     def index():
         return about()
