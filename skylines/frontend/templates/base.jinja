@@ -38,7 +38,7 @@
       {%- endassets %}
     {% endif %}
 
-    {% if openlayers %}
+    {% if openlayers or use_ember %}
       {% assets 'openlayers_css' -%}
         <link rel="stylesheet" type="text/css" href="{{ ASSET_URL }}" />
       {%- endassets %}
@@ -81,7 +81,7 @@ window._trackJs = {
 {%- endassets %}
 {% endif %}
 
-{% if openlayers %}
+{% if openlayers or use_ember %}
   {% assets 'openlayers_js' -%}
     <script type="text/javascript" src="{{ ASSET_URL }}"></script>
   {%- endassets %}
