@@ -50,12 +50,17 @@ export default Ember.Component.extend({
     map.getView().fit(extent, map.getSize(), { padding: paddingFn() });
 
     // update flight track every 15 seconds
-    setInterval(() => this._update(), 15 * 1000);
+    this._scheduleUpdate();
 
     slMapClickHandler(map, flight_display);
   },
 
+  _scheduleUpdate() {
+    Ember.run.later(() => this._update(), 15 * 1000);
+  },
+
   _update() {
     this.get('flightTracking').updateFlightsFromJSON();
+    this._scheduleUpdate();
   },
 });
