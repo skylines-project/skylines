@@ -29,7 +29,11 @@
 
 <div id="barogram_panel" class="map-bottom-panel map-overlay">
   <div style="overflow: auto; max-height: 115px">
-    {{fix-table selection=selectedFlightId onSelectionChange=(action (mut selectedFlightId))}}
+    {{fix-table
+      flights=fixCalc.flights
+      fixes=fixCalc.fixes
+      selection=selectedFlightId
+      onSelectionChange=(action (mut selectedFlightId))}}
   </div>
 
   {{flight-barogram
