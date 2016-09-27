@@ -38,7 +38,8 @@ export default Ember.Component.extend({
       fix_table: window.fixTable,
       baro: window.barogram,
     });
-    let flight_tracking = slFlightTracking.create({ flight_display, flights });
+
+    this.set('flightTracking', slFlightTracking.create({ flight_display, flights }));
 
     fixCalc.set('defaultTime', -1);
     fixCalc.set('time', -1);
@@ -49,10 +50,12 @@ export default Ember.Component.extend({
     map.getView().fit(extent, map.getSize(), { padding: paddingFn() });
 
     // update flight track every 15 seconds
-    setInterval(function() {
-      flight_tracking.updateFlightsFromJSON();
-    }, 15 * 1000);
+    setInterval(() => this._update(), 15 * 1000);
 
     slMapClickHandler(map, flight_display);
+  },
+
+  _update() {
+    this.get('flightTracking').updateFlightsFromJSON();
   },
 });
