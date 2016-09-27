@@ -1,7 +1,9 @@
+/* globals $ */
+
 import Ember from 'ember';
+import ol from 'openlayers';
 
 import slFlightDisplay from '../utils/flight-display';
-import slFlightTracking from '../utils/flight-tracking';
 import slMapClickHandler from '../utils/map-click-handler';
 
 export default Ember.Component.extend({
@@ -38,8 +40,7 @@ export default Ember.Component.extend({
       fix_table: window.fixTable,
       baro: window.barogram,
     });
-
-    this.set('flightTracking', slFlightTracking.create({ flight_display, flights }));
+    this.set('flightDisplay', flight_display);
 
     fixCalc.set('defaultTime', -1);
     fixCalc.set('time', -1);
@@ -67,7 +68,67 @@ export default Ember.Component.extend({
   },
 
   _update() {
-    this.get('flightTracking').updateFlightsFromJSON();
+    let flightDisplay = this.get('flightDisplay');
+    let flights = this.get('fixCalc.flights');
+
+    flights.forEach(flight => {
+      let url = `/tracking/${flight.get('id')}/json`;
+
+      $.ajax(url, {
+        data: { last_update: flight.get('last_update') || null },
+        success: data => {
+          updateFlight(flights, data);
+          flightDisplay.update();
+        },
+      });
+    });
+
     this._scheduleUpdate();
   },
 });
+
+/**
+ * Updates a tracking flight.
+ *
+ * @param {Object} data The data returned by the JSON request.
+ */
+function updateFlight(flights, data) {
+  // find the flight to update
+  let flight = flights.findBy('id', data.sfid);
+  if (!flight)
+    return;
+
+  let time_decoded = ol.format.Polyline.decodeDeltas(data.barogram_t, 1, 1);
+  let lonlat = ol.format.Polyline.decodeDeltas(data.points, 2);
+  let height_decoded = ol.format.Polyline.decodeDeltas(data.barogram_h, 1, 1);
+  let enl_decoded = ol.format.Polyline.decodeDeltas(data.enl, 1, 1);
+  let elev = ol.format.Polyline.decodeDeltas(data.elevations, 1, 1);
+
+  // we skip the first point in the list because we assume it's the "linking"
+  // fix between the data we already have and the data to add.
+  if (time_decoded.length < 2) return;
+
+  let geoid = flight.get('geoid');
+
+  let fixes = time_decoded.map(function(timestamp, i) {
+    return {
+      time: timestamp,
+      longitude: lonlat[i * 2],
+      latitude: lonlat[i * 2 + 1],
+      altitude: height_decoded[i] + geoid,
+      enl: enl_decoded[i],
+    };
+  });
+
+  let elevations = time_decoded.map(function(timestamp, i) {
+    let elevation = elev[i];
+
+    return {
+      time: timestamp,
+      elevation: (elevation > -500) ? elevation : null,
+    };
+  });
+
+  flight.get('fixes').pushObjects(fixes.slice(1));
+  flight.get('elevations').pushObjects(elevations.slice(1));
+}
