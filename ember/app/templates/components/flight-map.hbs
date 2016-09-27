@@ -9,16 +9,16 @@
   {{cesium-button enabled=cesiumEnabled onEnable=(action "cesiumEnabled") onDisable=(action "cesiumDisabled") style="top:200px"}}
   {{flight-path-layer map=map flights=flights}}
   {{phase-highlight-composer map=map}}
-  {{plane-icons-composer map=map fixes=fixCalc.fixes}}
+  {{plane-icons-composer map=map fixes=fixes}}
   {{contest-layer map=map flights=flights visible=(not cesiumEnabled)}}
 
   {{#if (and (not cesiumEnabled) (gt flights.length 1))}}
-    {{plane-label-overlays map=map fixes=fixCalc.fixes}}
+    {{plane-label-overlays map=map fixes=fixes}}
   {{/if}}
 {{/if}}
 
 {{#cesium-loader enabled=cesiumEnabled}}
   {{#cesium-scene enabled=cesiumEnabled map=map as |cesium|}}
-    {{cesium-plane-models scene=cesium.scene fixes=fixCalc.fixes}}
+    {{cesium-plane-models scene=cesium.scene fixes=fixes}}
   {{/cesium-scene}}
 {{/cesium-loader}}

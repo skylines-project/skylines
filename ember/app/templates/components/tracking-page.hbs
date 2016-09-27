@@ -19,6 +19,8 @@
 </div>
 
 {{flight-map
+  flights=fixCalc.flights
+  fixes=fixCalc.fixes
   hoverEnabled=(not (or fixCalc.isRunning cesiumEnabled))
   defaultTime=fixCalc.defaultTime
   onTimeChange=(action (mut fixCalc.time))

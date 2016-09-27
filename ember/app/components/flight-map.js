@@ -4,10 +4,8 @@ import BaseMapComponent from './base-map';
 import slMapClickHandler from '../utils/map-click-handler';
 
 export default BaseMapComponent.extend({
-  fixCalc: Ember.inject.service(),
-
-  flights: Ember.computed.readOnly('fixCalc.flights'),
-
+  flights: null,
+  fixes: null,
   hoverEnabled: true,
 
   didInsertElement() {
@@ -17,9 +15,7 @@ export default BaseMapComponent.extend({
     map.on('moveend', this._handleMoveEnd, this);
     map.on('pointermove', this._handlePointerMove, this);
 
-    let fixCalc = this.get('fixCalc');
-
-    slMapClickHandler(this.get('map'), fixCalc.get('flights'));
+    slMapClickHandler(this.get('map'), this.get('flights'));
   },
 
   willDestroyElement() {
