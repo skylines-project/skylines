@@ -5,6 +5,7 @@ import slMapClickHandler from '../utils/map-click-handler';
 
 export default Ember.Component.extend({
   fixCalc: Ember.inject.service(),
+  flightPhase: Ember.inject.service(),
   pinnedFlights: Ember.inject.service(),
 
   classNames: ['olFullscreen'],

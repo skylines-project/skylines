@@ -6,7 +6,6 @@ import safeComputed from '../computed/safe-computed';
 
 export default BarogramComponent.extend({
   fixCalc: Ember.inject.service(),
-  flightPhase: Ember.inject.service(),
 
   time: null,
   defaultTime: null,
@@ -58,11 +57,6 @@ export default BarogramComponent.extend({
   contests: safeComputed('selectedFlight', flight => flight.get('contests')),
   elevations: safeComputed('selectedFlight', flight => flight.get('flot_elev')),
 
-  timeHighlight: Ember.computed.readOnly('flightPhase.selection'),
-  timeHighlightObserver: Ember.observer('timeHighlight', function() {
-    Ember.run.once(this, 'draw');
-  }),
-
   timeInterval: null,
 
   didInsertElement() {
@@ -77,6 +71,7 @@ export default BarogramComponent.extend({
   didUpdateAttrs() {
     let selection = this.get('selection');
     let timeInterval = this.get('timeInterval');
+    let timeHighlight = this.get('timeHighlight');
     let hoverMode = this.get('hoverMode');
 
     if (timeInterval !== this.get('oldTimeInterval')) {
@@ -87,9 +82,9 @@ export default BarogramComponent.extend({
       this.onHoverModeUpdate();
     }
 
-    if (selection !== this.get('oldSelection')) {
-      this.draw();
-    } else if (timeInterval !== this.get('oldTimeInterval')) {
+    if (selection !== this.get('oldSelection') ||
+      timeInterval !== this.get('oldTimeInterval') ||
+      timeHighlight !== this.get('oldTimeHighlight')) {
       this.draw();
     } else {
       this.updateCrosshair();
@@ -97,6 +92,7 @@ export default BarogramComponent.extend({
 
     this.set('oldSelection', selection);
     this.set('oldTimeInterval', timeInterval);
+    this.set('oldTimeHighlight', timeHighlight);
     this.set('oldHoverMode', hoverMode);
   },
 
