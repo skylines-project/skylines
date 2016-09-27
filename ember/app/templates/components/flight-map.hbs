@@ -19,6 +19,6 @@
 
 {{#cesium-loader enabled=cesiumEnabled}}
   {{#cesium-scene enabled=cesiumEnabled map=map as |cesium|}}
-    {{cesium-plane-models scene=cesium.scene}}
+    {{cesium-plane-models scene=cesium.scene fixes=fixCalc.fixes}}
   {{/cesium-scene}}
 {{/cesium-loader}}
