@@ -24,15 +24,6 @@
   $(function() {
     var map = window.flightMap.get('map');
 
-    var slFlightDisplay = require('skylines/utils/flight-display').default;
-    var slMapClickHandler = require('skylines/utils/map-click-handler').default;
-
-    var flight_display = slFlightDisplay.create({
-      fixCalc: window.fixCalcService,
-      flightMap: window.flightMap,
-      fix_table: window.fixTable,
-      baro: window.barogram
-    });
     window.fixCalcService.addFlightFromJSON("/flights/{{ flight.id }}/json?{{ config.get('SKYLINES_CACHE_BUSTER', '') }}",false);
 
     {% if other_flights -%}
@@ -49,8 +40,6 @@
     }).forEach(function(id) {
       window.fixCalcService.addFlightFromJSON("/flights/" + id + "/json");
     });
-
-    slMapClickHandler(map, flight_display);
   });
 </script>
 {%- endblock %}
