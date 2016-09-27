@@ -5,12 +5,10 @@ import BarogramComponent from './base-barogram';
 import safeComputed from '../computed/safe-computed';
 
 export default BarogramComponent.extend({
-  fixCalc: Ember.inject.service(),
-
+  flights: null,
   time: null,
   defaultTime: null,
 
-  flights: Ember.computed.readOnly('fixCalc.flights'),
   flightsObserver: Ember.observer('flights.[]', function() {
     this.draw();
   }),
