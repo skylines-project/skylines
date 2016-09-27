@@ -77,6 +77,8 @@ export default Ember.Component.extend({
       ajax.request(`/tracking/${flight.get('id')}/json`, { data }).then(data => {
         updateFlight(flights, data);
         flightDisplay.update();
+      }).catch(() => {
+        // ignore update errors
       });
     });
 
