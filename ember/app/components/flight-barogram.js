@@ -4,11 +4,12 @@ import BarogramComponent from './base-barogram';
 
 import safeComputed from '../computed/safe-computed';
 
-export default BarogramComponent.extend(Ember.Evented, {
+export default BarogramComponent.extend({
   fixCalc: Ember.inject.service(),
   flightPhase: Ember.inject.service(),
 
   time: Ember.computed.alias('fixCalc.time'),
+  defaultTime: null,
 
   timeObserver: Ember.observer('time', function() {
     Ember.run.once(this, 'updateCrosshair');
@@ -86,7 +87,7 @@ export default BarogramComponent.extend(Ember.Evented, {
     this.onHoverModeUpdate();
 
     this.get('placeholder').on('plotclick', (event, pos) => {
-      this.trigger('baroclick', pos.x / 1000);
+      this.getWithDefault('onTimeChange', Ember.K)(pos.x / 1000);
     });
   },
 
@@ -130,11 +131,12 @@ export default BarogramComponent.extend(Ember.Evented, {
 
     if (this.get('hoverMode')) {
       placeholder.on('plothover', (event, pos) => {
-        this.trigger('barohover', pos.x / 1000);
+        this.getWithDefault('onTimeChange', Ember.K)(pos.x / 1000);
       });
 
       placeholder.on('mouseout', () => {
-        this.trigger('mouseout');
+        let defaultTime = this.get('defaultTime');
+        this.getWithDefault('onTimeChange', Ember.K)(defaultTime);
       });
     } else {
       placeholder.off('plothover');

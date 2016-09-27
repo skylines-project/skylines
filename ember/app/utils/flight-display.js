@@ -76,7 +76,6 @@ export default Ember.Object.extend({
    */
   init() {
     let map = this.get('map');
-    let baro = this.get('baro');
 
     this.set('map_hover_handler', slMapHoverHandler.create({
       fixCalc: this.get('fixCalc'),
@@ -88,17 +87,6 @@ export default Ember.Object.extend({
     this.set('update_baro_scale_on_moveend', update_baro_scale_on_moveend);
 
     map.on('moveend', update_baro_scale_on_moveend);
-
-    // Add hover and click events to the barogram.
-    baro.on('barohover', time => {
-      this.get('fixCalc').set('time', time);
-    });
-    baro.on('baroclick', time => {
-      this.get('fixCalc').set('time', time);
-    });
-    baro.on('mouseout', () => {
-      this.get('fixCalc').resetTime();
-    });
   },
 
   /**

@@ -23,5 +23,5 @@
   <div style="overflow: auto; max-height: 115px">
     {{fix-table}}
   </div>
-  {{flight-barogram}}
+  {{flight-barogram defaultTime=fixCalc.defaultTime onTimeChange=(action (mut fixCalc.time))}}
 </div>
