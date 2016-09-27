@@ -36,7 +36,6 @@ export default Ember.Component.extend({
     let flight_display = slFlightDisplay.create({
       fixCalc,
       flightMap: window.flightMap,
-      baro: window.barogram,
     });
     this.set('flightDisplay', flight_display);
 

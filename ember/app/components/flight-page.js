@@ -49,7 +49,6 @@ export default Ember.Component.extend({
     let flight_display = slFlightDisplay.create({
       fixCalc,
       flightMap: window.flightMap,
-      baro: window.barogram,
     });
 
     slMapClickHandler(map, flight_display);

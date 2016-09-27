@@ -77,11 +77,6 @@ export default BarogramComponent.extend({
     this.updateInterval();
   }),
 
-  init() {
-    this._super(...arguments);
-    window.barogram = this;
-  },
-
   didInsertElement() {
     this._super(...arguments);
     this.onHoverModeUpdate();
