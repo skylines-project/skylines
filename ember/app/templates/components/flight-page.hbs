@@ -82,7 +82,12 @@
   </div>
 </div>
 
-{{flight-map fullscreenElement="#fullscreen-content" class="olFullscreen sidebar-map"}}
+{{flight-map
+  onExtentChange=(action (mut mapExtent))
+  onCesiumEnabledChange=(action (mut cesiumEnabled))
+  fullscreenElement="#fullscreen-content"
+  class="olFullscreen sidebar-map"}}
+
 <div id="barogram_panel" class="map-bottom-panel map-overlay">
   <div style="overflow: auto; max-height: 115px">
     {{fix-table selection=selectedFlightId onSelectionChange=(action (mut selectedFlightId))}}
