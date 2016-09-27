@@ -1,8 +1,5 @@
 import Ember from 'ember';
 
-import slMapClickHandler from '../utils/map-click-handler';
-import slMapHoverHandler from '../utils/map-hover-handler';
-
 export default Ember.Component.extend({
   fixCalc: Ember.inject.service(),
   flightPhase: Ember.inject.service(),
@@ -46,13 +43,6 @@ export default Ember.Component.extend({
     }).forEach(function(id) {
       fixCalc.addFlightFromJSON(`/flights/${id}/json`);
     });
-
-    slMapHoverHandler.create({
-      fixCalc,
-      flightMap: window.flightMap,
-    });
-
-    slMapClickHandler(map, fixCalc.get('flights'));
   },
 
   timeInterval: Ember.computed('mapExtent', 'cesiumEnabled', function() {

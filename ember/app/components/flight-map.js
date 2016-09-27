@@ -1,6 +1,8 @@
 import Ember from 'ember';
 
 import BaseMapComponent from './base-map';
+import slMapClickHandler from '../utils/map-click-handler';
+import slMapHoverHandler from '../utils/map-hover-handler';
 
 export default BaseMapComponent.extend({
   fixCalc: Ember.inject.service(),
@@ -10,6 +12,15 @@ export default BaseMapComponent.extend({
   didInsertElement() {
     this._super(...arguments);
     this.get('map').on('moveend', this._handleMoveEnd, this);
+
+    let fixCalc = this.get('fixCalc');
+
+    slMapHoverHandler.create({
+      fixCalc,
+      flightMap: this,
+    });
+
+    slMapClickHandler(this.get('map'), fixCalc.get('flights'));
   },
 
   willDestroyElement() {

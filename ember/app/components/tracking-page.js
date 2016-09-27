@@ -1,9 +1,6 @@
 import Ember from 'ember';
 import ol from 'openlayers';
 
-import slMapClickHandler from '../utils/map-click-handler';
-import slMapHoverHandler from '../utils/map-hover-handler';
-
 export default Ember.Component.extend({
   ajax: Ember.inject.service(),
   fixCalc: Ember.inject.service(),
@@ -33,11 +30,6 @@ export default Ember.Component.extend({
 
     let flights = fixCalc.get('flights');
 
-    slMapHoverHandler.create({
-      fixCalc,
-      flightMap: window.flightMap,
-    });
-
     fixCalc.set('defaultTime', -1);
     fixCalc.set('time', -1);
 
@@ -48,8 +40,6 @@ export default Ember.Component.extend({
 
     // update flight track every 15 seconds
     this._scheduleUpdate();
-
-    slMapClickHandler(map, flights);
   },
 
   willDestroyElement() {
