@@ -289,7 +289,7 @@ const MapClickHandler = Ember.Object.extend({
     if (no_data) {
       item.html('No data retrieved for this location');
 
-      element.delay(1500).fadeOut(1000, function() {
+      element.delay(1500).fadeOut(1000, () => {
         map.removeOverlay(infobox);
         this.set('visible', false);
       });
