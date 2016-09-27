@@ -53,11 +53,8 @@ export default BaseMapComponent.extend({
         Math.pow(mouse_pixel[1] - feature_pixel[1], 2);
 
       // Set the time when the mouse hovers the map
-      if (squared_distance > 100) {
-        this.get('fixCalc').resetTime();
-      } else {
-        this.get('fixCalc').set('time', closest_point[3]);
-      }
+      let time = (squared_distance > 100) ? this.get('defaultTime') : closest_point[3];
+      this.getWithDefault('onTimeChange', Ember.K)(time);
 
       map.render();
     }

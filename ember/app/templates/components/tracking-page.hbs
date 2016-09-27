@@ -20,6 +20,8 @@
 
 {{flight-map
   hoverEnabled=(not (or fixCalc.isRunning cesiumEnabled))
+  defaultTime=fixCalc.defaultTime
+  onTimeChange=(action (mut fixCalc.time))
   onExtentChange=(action (mut mapExtent))
   onCesiumEnabledChange=(action (mut cesiumEnabled))
   fullscreenElement="#fullscreen-content"
