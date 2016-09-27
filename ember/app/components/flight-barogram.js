@@ -4,7 +4,7 @@ import BarogramComponent from './base-barogram';
 
 import safeComputed from '../computed/safe-computed';
 
-export default BarogramComponent.extend({
+export default BarogramComponent.extend(Ember.Evented, {
   fixCalc: Ember.inject.service(),
   flightPhase: Ember.inject.service(),
 
@@ -84,6 +84,10 @@ export default BarogramComponent.extend({
   didInsertElement() {
     this._super(...arguments);
     this.onHoverModeUpdate();
+
+    this.get('placeholder').on('plotclick', (event, pos) => {
+      this.trigger('baroclick', pos.x / 1000);
+    });
   },
 
   update() {
