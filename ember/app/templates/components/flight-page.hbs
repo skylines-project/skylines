@@ -87,7 +87,7 @@
   <div style="overflow: auto; max-height: 115px">
     {{fix-table selection=selectedFlightId onSelectionChange=(action (mut selectedFlightId))}}
   </div>
-  {{flight-barogram defaultTime=fixCalc.defaultTime onTimeChange=(action (mut fixCalc.time))}}
+  {{flight-barogram selection=selectedFlightId defaultTime=fixCalc.defaultTime onTimeChange=(action (mut fixCalc.time))}}
 </div>
 
 <div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-hidden="true" style="display:none"></div>

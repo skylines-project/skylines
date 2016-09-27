@@ -91,6 +91,10 @@ export default BarogramComponent.extend({
     });
   },
 
+  didUpdateAttrs() {
+    this.draw();
+  },
+
   update() {
     this.updateTimeHighlight();
     this._super(...arguments);

@@ -20,14 +20,6 @@ export default Ember.Object.extend({
 
   fix_table: null,
 
-  // Update the barogram when another flight has been selected
-  // in the fix table.
-  fixTableObserver: Ember.observer('fix_table.selection', function() {
-    let baro = this.get('baro');
-    baro.set('selection', this.get('fix_table.selection'));
-    Ember.run.once(baro, 'draw');
-  }),
-
   baro: null,
 
   /**
