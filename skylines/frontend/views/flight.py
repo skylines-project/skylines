@@ -455,8 +455,7 @@ def update():
 
             pilot_club_id = User.get(pilot_id).club_id
 
-            if (pilot_id != g.current_user.id) and (pilot_club_id is not None) \
-                    and (pilot_club_id != g.current_user.club_id):
+            if pilot_club_id != g.current_user.club_id or (pilot_club_id is None and pilot_id != g.current_user.id):
                 return jsonify(error='pilot-disallowed'), 422
 
             if g.flight.pilot_id != pilot_id:
@@ -482,7 +481,8 @@ def update():
 
             co_pilot_club_id = User.get(co_pilot_id).club_id
 
-            if (co_pilot_club_id is not None) and (co_pilot_club_id != g.current_user.club_id):
+            if co_pilot_club_id != g.current_user.club_id \
+                    or (co_pilot_club_id is None and co_pilot_id != g.current_user.id):
                 return jsonify(error='co-pilot-disallowed'), 422
 
             g.flight.co_pilot_id = co_pilot_id
