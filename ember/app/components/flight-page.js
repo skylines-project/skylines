@@ -2,11 +2,14 @@ import Ember from 'ember';
 
 export default Ember.Component.extend({
   fixCalc: Ember.inject.service(),
+  flightPhase: Ember.inject.service(),
   pinnedFlights: Ember.inject.service(),
 
   classNames: ['olFullscreen'],
 
   didInsertElement() {
+    let fixCalc = this.get('fixCalc');
+
     let sidebar = this.$('#sidebar').sidebar();
 
     this.$('#barogram_panel').resize(() => {
@@ -21,10 +24,41 @@ export default Ember.Component.extend({
       sidebar.open(window.location.hash.substring(1));
     }
 
-    window.paddingFn = () => [20, 20, this.$('#barogram_panel').height() + 20, sidebar.width() + 20];
+    let paddingFn = window.paddingFn = () => [20, 20, this.$('#barogram_panel').height() + 20, sidebar.width() + 20];
+
+    let [primaryId, ...otherIds] = this.get('ids');
+
+    let map = window.flightMap.get('map');
+
+    fixCalc.addFlightFromJSON(`/flights/${primaryId}/json`, false);
+    otherIds.forEach(id => fixCalc.addFlightFromJSON(`/flights/${id}/json`));
+
+    let extent = fixCalc.get('flights').getBounds();
+    map.getView().fit(extent, map.getSize(), { padding: paddingFn() });
+
+    this.get('pinnedFlights.pinned')
+      .filter(id => id !== primaryId)
+      .forEach(id => fixCalc.addFlightFromJSON(`/flights/${id}/json`));
   },
 
+  timeInterval: Ember.computed('mapExtent', 'cesiumEnabled', function() {
+    if (this.get('cesiumEnabled')) return null;
+
+    let extent = this.get('mapExtent');
+    if (!extent) return null;
+
+    let interval = this.get('fixCalc.flights').getMinMaxTimeInExtent(extent);
+
+    return (interval.max == -Infinity) ? null : [interval.min, interval.max];
+  }),
+
   actions: {
+    removeFlight(id) {
+      let flights = this.get('fixCalc.flights');
+      flights.removeObjects(flights.filterBy('id', id));
+      this.get('pinnedFlights').unpin(id);
+    },
+
     selectWingman(id) {
       let fixCalc = this.get('fixCalc');
       let pinnedFlights = this.get('pinnedFlights');

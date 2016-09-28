@@ -5,16 +5,13 @@ import BarogramComponent from './base-barogram';
 import safeComputed from '../computed/safe-computed';
 
 export default BarogramComponent.extend({
-  fixCalc: Ember.inject.service(),
-  flightPhase: Ember.inject.service(),
+  flights: null,
+  time: null,
+  defaultTime: null,
 
-  time: Ember.computed.alias('fixCalc.time'),
-
-  timeObserver: Ember.observer('time', function() {
-    Ember.run.once(this, 'updateCrosshair');
+  flightsObserver: Ember.observer('flights.[]', function() {
+    this.draw();
   }),
-
-  flights: Ember.computed.readOnly('fixCalc.flights'),
 
   selection: null,
 
@@ -61,29 +58,43 @@ export default BarogramComponent.extend({
   contests: safeComputed('selectedFlight', flight => flight.get('contests')),
   elevations: safeComputed('selectedFlight', flight => flight.get('flot_elev')),
 
-  timeHighlight: Ember.computed.readOnly('flightPhase.selection'),
-  timeHighlightObserver: Ember.observer('timeHighlight', function() {
-    Ember.run.once(this, 'draw');
-  }),
-
-  hoverMode: Ember.computed.not('fixCalc.isRunning'),
-  hoverModeObserver: Ember.observer('hoverMode', function() {
-    Ember.run.once(this, 'onHoverModeUpdate');
-  }),
-
   timeInterval: null,
-  timeIntervalObserver: Ember.observer('timeInterval', function() {
-    this.updateInterval();
-  }),
-
-  init() {
-    this._super(...arguments);
-    window.barogram = this;
-  },
 
   didInsertElement() {
     this._super(...arguments);
     this.onHoverModeUpdate();
+
+    this.get('placeholder').on('plotclick', (event, pos) => {
+      this.getWithDefault('onTimeChange', Ember.K)(pos.x / 1000);
+    });
+  },
+
+  didUpdateAttrs() {
+    let selection = this.get('selection');
+    let timeInterval = this.get('timeInterval');
+    let timeHighlight = this.get('timeHighlight');
+    let hoverMode = this.get('hoverMode');
+
+    if (timeInterval !== this.get('oldTimeInterval')) {
+      this.updateInterval();
+    }
+
+    if (hoverMode !== this.get('oldHoverMode')) {
+      this.onHoverModeUpdate();
+    }
+
+    if (selection !== this.get('oldSelection') ||
+      timeInterval !== this.get('oldTimeInterval') ||
+      timeHighlight !== this.get('oldTimeHighlight')) {
+      this.draw();
+    } else {
+      this.updateCrosshair();
+    }
+
+    this.set('oldSelection', selection);
+    this.set('oldTimeInterval', timeInterval);
+    this.set('oldTimeHighlight', timeHighlight);
+    this.set('oldHoverMode', hoverMode);
   },
 
   update() {
@@ -126,11 +137,12 @@ export default BarogramComponent.extend({
 
     if (this.get('hoverMode')) {
       placeholder.on('plothover', (event, pos) => {
-        this.trigger('barohover', pos.x / 1000);
+        this.getWithDefault('onTimeChange', Ember.K)(pos.x / 1000);
       });
 
       placeholder.on('mouseout', () => {
-        this.trigger('mouseout');
+        let defaultTime = this.get('defaultTime');
+        this.getWithDefault('onTimeChange', Ember.K)(defaultTime);
       });
     } else {
       placeholder.off('plothover');

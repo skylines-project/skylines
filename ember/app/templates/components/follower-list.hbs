@@ -4,14 +4,12 @@
       <div class="panel panel-default">
         <div class="panel-body follower-panel">
           <h4 class="media-heading">
-            <a href="/users/{{follower.id}}/">{{follower.name}}</a>
+            {{#link-to "user" follower.id}}{{follower.name}}{{/link-to}}
           </h4>
 
           <p>
             {{#if follower.club}}
-              <a href="/clubs/{{follower.club.id}}/">
-                {{follower.club.name}}
-              </a>
+              {{#link-to "club" follower.club.id}}{{follower.club.name}}{{/link-to}}
             {{else}}
               &nbsp;
             {{/if}}

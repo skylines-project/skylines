@@ -17,47 +17,9 @@
 {%- endblock %}
 
 
-{%- block scripts %}
-{{ super() }}
-
-<script type="text/javascript">
-  $(function() {
-    var map = window.flightMap.get('map');
-
-    var slFlightDisplay = require('skylines/utils/flight-display').default;
-    var slMapClickHandler = require('skylines/utils/map-click-handler').default;
-
-    var flight_display = slFlightDisplay.create({
-      fixCalc: window.fixCalcService,
-      flightMap: window.flightMap,
-      fix_table: window.fixTable,
-      baro: window.barogram
-    });
-    window.fixCalcService.addFlightFromJSON("/flights/{{ flight.id }}/json?{{ config.get('SKYLINES_CACHE_BUSTER', '') }}",false);
-
-    {% if other_flights -%}
-    {% for flight in other_flights -%}
-    window.fixCalcService.addFlightFromJSON("/flights/{{ flight.id }}/json?{{ config.get('SKYLINES_CACHE_BUSTER', '') }}");
-    {%- endfor %}
-    {%- endif %}
-
-    var extent = window.fixCalcService.get('flights').getBounds();
-    map.getView().fit(extent, map.getSize(), {padding: window.paddingFn()});
-
-    window.pinnedFlightsService.get('pinned').filter(function(id) {
-      return id !== {{ flight.id }};
-    }).forEach(function(id) {
-      window.fixCalcService.addFlightFromJSON("/flights/" + id + "/json");
-    });
-
-    slMapClickHandler(map, flight_display);
-  });
-</script>
-{%- endblock %}
-
-
 {%- block content %}
 <div id="fullscreen-content" class="olFullscreen" data-component='flight-page' data-attrs='{
+  "ids": {{ ids|tojson }},
   "flight": {{ flight_json|tojson }},
   "comments":{{ comments|tojson }},
   "performance": {{ performance|tojson }},

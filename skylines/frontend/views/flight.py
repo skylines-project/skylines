@@ -276,6 +276,7 @@ def index():
 
     return render_template(
         'flights/map.jinja',
+        ids=map(lambda flight: flight.id, g.flights),
         flight=g.flight,
         flight_json=FlightSchema().dump(g.flight).data,
         near_flights=near_flights,

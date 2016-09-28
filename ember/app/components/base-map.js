@@ -4,7 +4,7 @@ import ol from 'openlayers';
 import config from '../config/environment';
 import parseQueryString from '../utils/parse-query-string';
 
-export default Ember.Component.extend(Ember.Evented, {
+export default Ember.Component.extend({
   cookies: Ember.inject.service(),
 
   attributeBindings: ['style'],

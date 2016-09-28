@@ -76,18 +76,42 @@
     <div class="sidebar-pane" id="tab-wingmen">
       <h3>{{t "wingmen"}}</h3>
       <div class="sidebar-pane-content">
-        {{wingman-table nearFlights=nearFlights onSelect=(action "selectWingman")}}
+        {{wingman-table visibleFlights=fixCalc.flights nearFlights=nearFlights onSelect=(action "selectWingman")}}
       </div>
     </div>
   </div>
 </div>
 
-{{flight-map fullscreenElement="#fullscreen-content" class="olFullscreen sidebar-map"}}
+{{flight-map
+  flights=fixCalc.flights
+  fixes=fixCalc.fixes
+  hoverEnabled=(not (or fixCalc.isRunning cesiumEnabled))
+  defaultTime=fixCalc.defaultTime
+  onTimeChange=(action (mut fixCalc.time))
+  onExtentChange=(action (mut mapExtent))
+  onCesiumEnabledChange=(action (mut cesiumEnabled))
+  fullscreenElement="#fullscreen-content"
+  class="olFullscreen sidebar-map"}}
+
 <div id="barogram_panel" class="map-bottom-panel map-overlay">
   <div style="overflow: auto; max-height: 115px">
-    {{fix-table}}
+    {{fix-table
+      flights=fixCalc.flights
+      fixes=fixCalc.fixes
+      selection=selectedFlightId
+      onSelectionChange=(action (mut selectedFlightId))
+      onRemove=(action "removeFlight")}}
   </div>
-  {{flight-barogram}}
+
+  {{flight-barogram
+    flights=fixCalc.flights
+    selection=selectedFlightId
+    hoverMode=(not fixCalc.isRunning)
+    timeInterval=timeInterval
+    timeHighlight=flightPhase.selection
+    time=fixCalc.time
+    defaultTime=fixCalc.defaultTime
+    onTimeChange=(action (mut fixCalc.time))}}
 </div>
 
 <div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-hidden="true" style="display:none"></div>
