@@ -1,7 +1,7 @@
 from datetime import date, timedelta
 
 from flask import Blueprint, render_template, redirect, url_for, g, request, jsonify
-from flask.ext.login import login_required
+from skylines.lib.decorators import login_required
 
 from sqlalchemy import func, and_
 from sqlalchemy.orm import contains_eager, subqueryload
