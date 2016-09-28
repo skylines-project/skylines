@@ -19,12 +19,18 @@ module.exports = function(environment) {
 
     SKYLINES_API_URL: 'http://localhost:5001',
     SKYLINES_TILE_BASEURL: 'https://skylines.aero/mapproxy',
+
+    sentry: {
+      development: true,
+      dsn: 'https://1081e00b0f0e4965bae7b8b7e468edd3@sentry.io/102210',
+    },
   };
 
   if (environment === 'production') {
     ENV.SKYLINES_API_URL = 'https://api.skylines.aero';
     ENV.BING_API_KEY = 'AqYIkJFKZXzNxVnZmmDyk52su5Le7GLfzshBTu_px5N1HYa6B2KW2qPemRltfc8g';
     ENV.MAPBOX_TILE_URL = 'https://a.tiles.mapbox.com/v4/skylines.l9bfkoko/{z}/{x}/{y}.png?access_token=pk.eyJ1Ijoic2t5bGluZXMiLCJhIjoiODR5cnAtcyJ9.OxutJHpnCaw6QQpxfl5ROA';
+    ENV.sentry.development = false;
   }
 
   if (environment === 'development') {
