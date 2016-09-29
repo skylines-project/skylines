@@ -94,6 +94,8 @@ def authenticate_with(user):
 
 
 def test_pilot_changing_correct_with_co(db_session, client, flight, user_with_club, user_with_same_club):
+    """ Pilot is changing copilot to user from same club. """
+
     db_session.add_all([flight, user_with_club, user_with_same_club])
     db_session.commit()
 
@@ -112,6 +114,8 @@ def test_pilot_changing_correct_with_co(db_session, client, flight, user_with_cl
 
 def test_pilot_changing_disowned_flight(db_session, client, flight,
                                         user_with_club, user_with_same_club, user_with_other_club):
+    """ Unrelated user is trying to change pilots. """
+
     db_session.add_all([flight, user_with_club, user_with_same_club, user_with_other_club])
     db_session.commit()
 
@@ -129,6 +133,8 @@ def test_pilot_changing_disowned_flight(db_session, client, flight,
 
 
 def test_pilot_changing_disallowed_pilot(db_session, client, flight, user_with_club, user_with_other_club):
+    """ Pilot is trying to change pilot to user from different club. """
+
     db_session.add_all([flight, user_with_club, user_with_other_club])
     db_session.commit()
 
@@ -146,6 +152,8 @@ def test_pilot_changing_disallowed_pilot(db_session, client, flight, user_with_c
 
 
 def test_pilot_changing_disallowed_copilot(db_session, client, flight, user_with_club, user_with_other_club):
+    """ Pilot is trying to change copilot to user from different club. """
+
     db_session.add_all([flight, user_with_club, user_with_other_club])
     db_session.commit()
 
@@ -163,6 +171,8 @@ def test_pilot_changing_disallowed_copilot(db_session, client, flight, user_with
 
 
 def test_pilot_changing_same_pilot_and_co(db_session, client, flight, user_with_club):
+    """ Pilot is trying to change copilot to the same as pilot. """
+
     db_session.add_all([flight, user_with_club])
     db_session.commit()
 
@@ -180,6 +190,8 @@ def test_pilot_changing_same_pilot_and_co(db_session, client, flight, user_with_
 
 
 def test_pilot_changing_pilot_and_co_null(db_session, client, flight, user_with_club):
+    """ Pilot is changing pilot and copilot to unknown user accounts. """
+
     db_session.add_all([flight, user_with_club])
     db_session.commit()
 
@@ -199,6 +211,8 @@ def test_pilot_changing_pilot_and_co_null(db_session, client, flight, user_with_
 
 
 def test_pilot_changing_clubless_co(db_session, client, flight, user_with_club, user_without_club):
+    """ Pilot is trying to change copilot to user without club. """
+
     db_session.add_all([flight, user_with_club, user_without_club])
     db_session.commit()
 
@@ -216,6 +230,8 @@ def test_pilot_changing_clubless_co(db_session, client, flight, user_with_club, 
 
 
 def test_pilot_changing_clubless_pilot_and_co(db_session, client, flight, user_without_club, user_without_club_2):
+    """ Pilot without club is trying to change copilot to user without club. """
+
     flight.pilot = user_without_club
     db_session.add_all([flight, user_without_club, user_without_club_2])
     db_session.commit()
