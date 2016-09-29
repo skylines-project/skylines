@@ -156,11 +156,6 @@ def index():
     return render_template('tracking/map.jinja', pilots=g.pilots)
 
 
-@track_blueprint.route('/map')
-def map_():
-    return redirect(url_for('.index'))
-
-
 @track_blueprint.route('/json')
 def json():
     pilot = g.pilots[0]
