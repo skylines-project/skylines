@@ -13,11 +13,3 @@
 {{ _('Live Tracking of %(pilot)s and %(num_pilots)d other pilots', pilot=pilots[0]|e, num_pilots=(pilots|length - 1)) }}
 {%- endif %}
 {%- endblock %}
-
-
-{% block content -%}
-<div id="fullscreen-content" class="olFullscreen" data-component='tracking-page' data-attrs='{
-  "pilots": {{ pilots_json|tojson }},
-  "flights": {{ flights|tojson }}
-}'></div>
-{%- endblock %}
