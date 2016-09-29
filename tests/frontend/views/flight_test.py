@@ -10,7 +10,7 @@ from werkzeug.datastructures import Headers
 
 
 @pytest.fixture(scope="function")
-def fixtures(db_session, club_1, club_2):
+def fixtures(club_1, club_2):
     john = User(first_name=u'John', last_name=u'Smith', email_address='john@smith.com', password='123456', club=club_1)
     fred = User(first_name=u'Fred', last_name=u'Bloggs', email_address='fred@bloggs.com', password='123456', club=club_1)
     joe = User(first_name=u'Joe', last_name=u'Bloggs', email_address='joe@bloggs.com', password='123456', club=club_2)
@@ -50,8 +50,6 @@ def fixtures(db_session, club_1, club_2):
                                     'BFA9A77C394B40'),
     }
 
-    db_session.add_all(data.values())
-    db_session.commit()
     return data
 
 
@@ -104,7 +102,10 @@ def authenticate_with(user):
     return headers
 
 
-def test_pilot_changing_correct_with_co(client, flight, user_with_club, user_with_same_club):
+def test_pilot_changing_correct_with_co(db_session, client, flight, user_with_club, user_with_same_club):
+    db_session.add_all([flight, user_with_club, user_with_same_club])
+    db_session.commit()
+
     headers = authenticate_with(user_with_club)
 
     data = json.dumps({
@@ -118,7 +119,11 @@ def test_pilot_changing_correct_with_co(client, flight, user_with_club, user_wit
     assert response.status_code == 200
 
 
-def test_pilot_changing_disowned_flight(client, flight, user_with_club, user_with_same_club, user_with_other_club):
+def test_pilot_changing_disowned_flight(db_session, client, flight,
+                                        user_with_club, user_with_same_club, user_with_other_club):
+    db_session.add_all([flight, user_with_club, user_with_same_club, user_with_other_club])
+    db_session.commit()
+
     headers = authenticate_with(user_with_same_club)
 
     data = json.dumps({
@@ -132,7 +137,10 @@ def test_pilot_changing_disowned_flight(client, flight, user_with_club, user_wit
     assert response.status_code == 403
 
 
-def test_pilot_changing_disallowed_pilot(client, flight, user_with_club, user_with_other_club):
+def test_pilot_changing_disallowed_pilot(db_session, client, flight, user_with_club, user_with_other_club):
+    db_session.add_all([flight, user_with_club, user_with_other_club])
+    db_session.commit()
+
     headers = authenticate_with(user_with_club)
 
     data = json.dumps({
@@ -146,7 +154,10 @@ def test_pilot_changing_disallowed_pilot(client, flight, user_with_club, user_wi
     assert response.status_code == 422
 
 
-def test_pilot_changing_disallowed_copilot(client, flight, user_with_club, user_with_other_club):
+def test_pilot_changing_disallowed_copilot(db_session, client, flight, user_with_club, user_with_other_club):
+    db_session.add_all([flight, user_with_club, user_with_other_club])
+    db_session.commit()
+
     headers = authenticate_with(user_with_club)
 
     data = json.dumps({
@@ -160,7 +171,10 @@ def test_pilot_changing_disallowed_copilot(client, flight, user_with_club, user_
     assert response.status_code == 422
 
 
-def test_pilot_changing_same_pilot_and_co(client, flight, user_with_club):
+def test_pilot_changing_same_pilot_and_co(db_session, client, flight, user_with_club):
+    db_session.add_all([flight, user_with_club])
+    db_session.commit()
+
     headers = authenticate_with(user_with_club)
 
     data = json.dumps({
@@ -174,7 +188,10 @@ def test_pilot_changing_same_pilot_and_co(client, flight, user_with_club):
     assert response.status_code == 422
 
 
-def test_pilot_changing_pilot_and_co_null(client, flight, user_with_club):
+def test_pilot_changing_pilot_and_co_null(db_session, client, flight, user_with_club):
+    db_session.add_all([flight, user_with_club])
+    db_session.commit()
+
     headers = authenticate_with(user_with_club)
 
     data = json.dumps({
@@ -190,7 +207,10 @@ def test_pilot_changing_pilot_and_co_null(client, flight, user_with_club):
     assert response.status_code == 200
 
 
-def test_pilot_changing_clubless_co(client, flight, user_with_club, user_without_club):
+def test_pilot_changing_clubless_co(db_session, client, flight, user_with_club, user_without_club):
+    db_session.add_all([flight, user_with_club, user_without_club])
+    db_session.commit()
+
     headers = authenticate_with(user_with_club)
 
     data = json.dumps({
@@ -204,16 +224,17 @@ def test_pilot_changing_clubless_co(client, flight, user_with_club, user_without
     assert response.status_code == 422
 
 
-def test_pilot_changing_clubless_pilot_and_co(client, db_session, flight, user_without_club, user_without_club_2):
+def test_pilot_changing_clubless_pilot_and_co(db_session, client, flight, user_without_club, user_without_club_2):
+    flight.pilot = user_without_club
+    db_session.add_all([flight, user_without_club, user_without_club_2])
+    db_session.commit()
+
     headers = authenticate_with(user_without_club)
 
     data = json.dumps({
         'pilotId': user_without_club.id,
         'copilotId': user_without_club_2.id,
     })
-
-    flight.pilot = user_without_club
-    db_session.commit()
 
     flight_url = '/flights/{}/'.format(flight.id)
 
