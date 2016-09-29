@@ -35,8 +35,7 @@
       {{fix-table
         flights=fixCalc.flights
         fixes=fixCalc.fixes
-        selection=selectedFlightId
-        onSelectionChange=(action (mut selectedFlightId))
+        selection=(mut selectedFlightId)
         onRemove=(action "removeFlight")}}
     </div>
 

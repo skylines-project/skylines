@@ -18,8 +18,7 @@ export default Ember.Component.extend({
 
   actions: {
     select(id) {
-      let current = this.get('selection');
-      this.getWithDefault('onSelectionChange', Ember.K)(current === id ? null : id);
+      this.set('selection', this.get('selection') === id ? null : id);
     },
   },
 });
