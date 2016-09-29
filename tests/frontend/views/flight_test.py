@@ -65,27 +65,27 @@ def flight(fixtures):
 
 
 @pytest.fixture
-def john(fixtures):
+def user_with_club(fixtures):
     return fixtures['john']
 
 
 @pytest.fixture
-def fred(fixtures):
+def user_with_same_club(fixtures):
     return fixtures['fred']
 
 
 @pytest.fixture
-def joe(fixtures):
+def user_with_other_club(fixtures):
     return fixtures['joe']
 
 
 @pytest.fixture
-def cless(fixtures):
+def user_without_club(fixtures):
     return fixtures['cless']
 
 
 @pytest.fixture
-def nocl(fixtures):
+def user_without_club_2(fixtures):
     return fixtures['nocl']
 
 
@@ -98,12 +98,12 @@ def authheader(user):
     return headers
 
 
-def test_pilot_changing_correct_with_co(client, flight, john, fred):
-    headers = authheader(john)
+def test_pilot_changing_correct_with_co(client, flight, user_with_club, user_with_same_club):
+    headers = authheader(user_with_club)
 
     data = json.dumps({
-        'pilotId': john.id,
-        'copilotId': fred.id,
+        'pilotId': user_with_club.id,
+        'copilotId': user_with_same_club.id,
     })
 
     flight_url = '/flights/{}/'.format(flight.id)
@@ -112,12 +112,12 @@ def test_pilot_changing_correct_with_co(client, flight, john, fred):
     assert response.status_code == 200
 
 
-def test_pilot_changing_disowned_flight(client, flight, john, fred, joe):
-    headers = authheader(fred)
+def test_pilot_changing_disowned_flight(client, flight, user_with_club, user_with_same_club, user_with_other_club):
+    headers = authheader(user_with_same_club)
 
     data = json.dumps({
-        'pilotId': john.id,
-        'copilotId': joe.id,
+        'pilotId': user_with_club.id,
+        'copilotId': user_with_other_club.id,
     })
 
     flight_url = '/flights/{}/'.format(flight.id)
@@ -126,12 +126,12 @@ def test_pilot_changing_disowned_flight(client, flight, john, fred, joe):
     assert response.status_code == 403
 
 
-def test_pilot_changing_disallowed_pilot(client, flight, john, joe):
-    headers = authheader(john)
+def test_pilot_changing_disallowed_pilot(client, flight, user_with_club, user_with_other_club):
+    headers = authheader(user_with_club)
 
     data = json.dumps({
-        'pilotId': joe.id,
-        'copilotId': john.id,
+        'pilotId': user_with_other_club.id,
+        'copilotId': user_with_club.id,
     })
 
     flight_url = '/flights/{}/'.format(flight.id)
@@ -140,12 +140,12 @@ def test_pilot_changing_disallowed_pilot(client, flight, john, joe):
     assert response.status_code == 422
 
 
-def test_pilot_changing_disallowed_copilot(client, flight, john, joe):
-    headers = authheader(john)
+def test_pilot_changing_disallowed_copilot(client, flight, user_with_club, user_with_other_club):
+    headers = authheader(user_with_club)
 
     data = json.dumps({
-        'pilotId': john.id,
-        'copilotId': joe.id,
+        'pilotId': user_with_club.id,
+        'copilotId': user_with_other_club.id,
     })
 
     flight_url = '/flights/{}/'.format(flight.id)
@@ -154,12 +154,12 @@ def test_pilot_changing_disallowed_copilot(client, flight, john, joe):
     assert response.status_code == 422
 
 
-def test_pilot_changing_same_pilot_and_co(client, flight, john):
-    headers = authheader(john)
+def test_pilot_changing_same_pilot_and_co(client, flight, user_with_club):
+    headers = authheader(user_with_club)
 
     data = json.dumps({
-        'pilotId': john.id,
-        'copilotId': john.id,
+        'pilotId': user_with_club.id,
+        'copilotId': user_with_club.id,
     })
 
     flight_url = '/flights/{}/'.format(flight.id)
@@ -168,8 +168,8 @@ def test_pilot_changing_same_pilot_and_co(client, flight, john):
     assert response.status_code == 422
 
 
-def test_pilot_changing_pilot_and_co_null(client, flight, john):
-    headers = authheader(john)
+def test_pilot_changing_pilot_and_co_null(client, flight, user_with_club):
+    headers = authheader(user_with_club)
 
     data = json.dumps({
         'pilotId': None,
@@ -184,12 +184,12 @@ def test_pilot_changing_pilot_and_co_null(client, flight, john):
     assert response.status_code == 200
 
 
-def test_pilot_changing_clubless_co(client, flight, john, cless):
-    headers = authheader(john)
+def test_pilot_changing_clubless_co(client, flight, user_with_club, user_without_club):
+    headers = authheader(user_with_club)
 
     data = json.dumps({
-        'pilotId': john.id,
-        'copilotId': cless.id,
+        'pilotId': user_with_club.id,
+        'copilotId': user_without_club.id,
     })
 
     flight_url = '/flights/{}/'.format(flight.id)
@@ -198,15 +198,15 @@ def test_pilot_changing_clubless_co(client, flight, john, cless):
     assert response.status_code == 422
 
 
-def test_pilot_changing_clubless_pilot_and_co(client, db_session, flight, cless, nocl):
-    headers = authheader(cless)
+def test_pilot_changing_clubless_pilot_and_co(client, db_session, flight, user_without_club, user_without_club_2):
+    headers = authheader(user_without_club)
 
     data = json.dumps({
-        'pilotId': cless.id,
-        'copilotId': nocl.id,
+        'pilotId': user_without_club.id,
+        'copilotId': user_without_club_2.id,
     })
 
-    flight.pilot = cless
+    flight.pilot = user_without_club
     db_session.commit()
 
     flight_url = '/flights/{}/'.format(flight.id)
