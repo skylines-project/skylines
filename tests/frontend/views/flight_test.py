@@ -73,17 +73,6 @@ def authheader(client, user):
     return headers
 
 
-def test_authheader(client):
-    assert isinstance(client, FlaskClient)
-
-    headers = Headers()
-    headers.add('Authorization', 'Basic ' + base64.b64encode('john@smith.com:123456'))
-
-    response = client.get('/', headers=headers)
-    assert response.status_code == 200
-    return headers
-
-
 def test_pilot_changing_correct_with_co(client, fixtures):
     authuser = fixtures['john']
     pilot = fixtures['john']
