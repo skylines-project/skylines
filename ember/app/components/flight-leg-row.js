@@ -3,11 +3,12 @@ import Ember from 'ember';
 import safeComputed from '../computed/safe-computed';
 
 export default Ember.Component.extend({
-  flightPhase: Ember.inject.service(),
-
   tagName: 'tr',
   classNames: ['small', 'selectable'],
   classNameBindings: ['selected'],
+
+  leg: null,
+  selection: null,
 
   speed: Ember.computed('leg.duration', 'leg.distance', function() {
     let duration = this.get('leg.duration');
@@ -47,17 +48,19 @@ export default Ember.Component.extend({
 
   inf: Infinity,
 
-  selected: safeComputed('flightPhase.selection', function(selection) {
+  selected: safeComputed('selection', function(selection) {
     let leg = this.get('leg');
     return selection.start === leg.start && selection.end === leg.start + leg.duration;
   }),
 
   click() {
+    let onSelect = this.getWithDefault('onSelect', Ember.K);
+
     if (this.get('selected')) {
-      this.set('flightPhase.selection', null);
+      onSelect(null);
     } else {
       let leg = this.get('leg');
-      this.set('flightPhase.selection', {
+      onSelect({
         start: leg.start,
         end: leg.start + leg.duration,
       });
