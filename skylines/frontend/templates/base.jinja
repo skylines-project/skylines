@@ -6,17 +6,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-    <meta name="skylines-locale" content="{{ g.active_locale }}">
-    {% if g.current_user %}
-      <meta name="skylines-user" content="{{ g.current_user.id }}||{{ g.current_user.name|e }}">
-      {% if g.current_user.club %}
-        <meta name="skylines-club" content="{{ g.current_user.club.id }}||{{ g.current_user.club|e }}">
-      {% endif %}
+    {% if use_ember %}
+      <meta name="skylines-locale" content="{{ g.active_locale }}">
+      {% if g.current_user %}
+        <meta name="skylines-user" content="{{ g.current_user.id }}||{{ g.current_user.name|e }}">
+        {% if g.current_user.club %}
+          <meta name="skylines-club" content="{{ g.current_user.club.id }}||{{ g.current_user.club|e }}">
+        {% endif %}
 
-      <meta name="skylines-distance-unit" content="{{ h.get_setting_name('distance_unit') }}">
-      <meta name="skylines-speed-unit" content="{{ h.get_setting_name('speed_unit') }}">
-      <meta name="skylines-lift-unit" content="{{ h.get_setting_name('lift_unit') }}">
-      <meta name="skylines-altitude-unit" content="{{ h.get_setting_name('altitude_unit') }}">
+        <meta name="skylines-distance-unit" content="{{ h.get_setting_name('distance_unit') }}">
+        <meta name="skylines-speed-unit" content="{{ h.get_setting_name('speed_unit') }}">
+        <meta name="skylines-lift-unit" content="{{ h.get_setting_name('lift_unit') }}">
+        <meta name="skylines-altitude-unit" content="{{ h.get_setting_name('altitude_unit') }}">
+      {% endif %}
     {% endif %}
 
     {% if not use_ember %}
