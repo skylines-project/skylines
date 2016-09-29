@@ -60,7 +60,6 @@ export default Ember.Component.extend({
       this.set('flightPhase.selection', {
         start: leg.start,
         end: leg.start + leg.duration,
-        duration: leg.duration,
       });
     }
   },

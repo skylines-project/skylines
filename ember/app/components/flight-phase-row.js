@@ -30,7 +30,6 @@ export default Ember.Component.extend({
       this.set('flightPhase.selection', {
         start: phase.secondsOfDay,
         end: phase.secondsOfDay + phase.duration,
-        duration: phase.duration,
       });
     }
   },
