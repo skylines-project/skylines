@@ -85,7 +85,6 @@ export default Ember.Component.extend({
     removeFlight(id) {
       let flights = this.get('fixCalc.flights');
       flights.removeObjects(flights.filterBy('id', id));
-      this.get('pinnedFlights').unpin(id);
     },
   },
 });
