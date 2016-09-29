@@ -93,22 +93,29 @@ def authenticate_with(user):
     return headers
 
 
+def change_pilots(client, flight, auth_user, pilot=None, copilot=None, pilot_name=None, copilot_name=None):
+    headers = authenticate_with(auth_user)
+
+    data = {}
+    if pilot: data['pilotId'] = pilot.id
+    if copilot: data['copilotId'] = copilot.id
+    if pilot_name: data['pilotName'] = pilot_name
+    if copilot_name: data['copilotName'] = copilot_name
+
+    flight_url = '/flights/{}/'.format(flight.id)
+
+    return client.post(flight_url, headers=headers, data=json.dumps(data), content_type='application/json')
+
+
 def test_pilot_changing_correct_with_co(db_session, client, flight, user_with_club, user_with_same_club):
     """ Pilot is changing copilot to user from same club. """
 
     db_session.add_all([flight, user_with_club, user_with_same_club])
     db_session.commit()
 
-    headers = authenticate_with(user_with_club)
+    response = change_pilots(client, flight, auth_user=user_with_club,
+                             pilot=user_with_club, copilot=user_with_same_club)
 
-    data = json.dumps({
-        'pilotId': user_with_club.id,
-        'copilotId': user_with_same_club.id,
-    })
-
-    flight_url = '/flights/{}/'.format(flight.id)
-
-    response = client.post(flight_url, headers=headers, data=data, content_type='application/json')
     assert response.status_code == 200
 
 
@@ -119,16 +126,9 @@ def test_pilot_changing_disowned_flight(db_session, client, flight,
     db_session.add_all([flight, user_with_club, user_with_same_club, user_with_other_club])
     db_session.commit()
 
-    headers = authenticate_with(user_with_same_club)
+    response = change_pilots(client, flight, auth_user=user_with_same_club,
+                             pilot=user_with_club, copilot=user_with_other_club)
 
-    data = json.dumps({
-        'pilotId': user_with_club.id,
-        'copilotId': user_with_other_club.id,
-    })
-
-    flight_url = '/flights/{}/'.format(flight.id)
-
-    response = client.post(flight_url, headers=headers, data=data, content_type='application/json')
     assert response.status_code == 403
 
 
@@ -138,16 +138,9 @@ def test_pilot_changing_disallowed_pilot(db_session, client, flight, user_with_c
     db_session.add_all([flight, user_with_club, user_with_other_club])
     db_session.commit()
 
-    headers = authenticate_with(user_with_club)
+    response = change_pilots(client, flight, auth_user=user_with_club,
+                             pilot=user_with_other_club, copilot=user_with_club)
 
-    data = json.dumps({
-        'pilotId': user_with_other_club.id,
-        'copilotId': user_with_club.id,
-    })
-
-    flight_url = '/flights/{}/'.format(flight.id)
-
-    response = client.post(flight_url, headers=headers, data=data, content_type='application/json')
     assert response.status_code == 422
 
 
@@ -157,16 +150,9 @@ def test_pilot_changing_disallowed_copilot(db_session, client, flight, user_with
     db_session.add_all([flight, user_with_club, user_with_other_club])
     db_session.commit()
 
-    headers = authenticate_with(user_with_club)
+    response = change_pilots(client, flight, auth_user=user_with_club,
+                             pilot=user_with_club, copilot=user_with_other_club)
 
-    data = json.dumps({
-        'pilotId': user_with_club.id,
-        'copilotId': user_with_other_club.id,
-    })
-
-    flight_url = '/flights/{}/'.format(flight.id)
-
-    response = client.post(flight_url, headers=headers, data=data, content_type='application/json')
     assert response.status_code == 422
 
 
@@ -176,16 +162,9 @@ def test_pilot_changing_same_pilot_and_co(db_session, client, flight, user_with_
     db_session.add_all([flight, user_with_club])
     db_session.commit()
 
-    headers = authenticate_with(user_with_club)
+    response = change_pilots(client, flight, auth_user=user_with_club,
+                             pilot=user_with_club, copilot=user_with_club)
 
-    data = json.dumps({
-        'pilotId': user_with_club.id,
-        'copilotId': user_with_club.id,
-    })
-
-    flight_url = '/flights/{}/'.format(flight.id)
-
-    response = client.post(flight_url, headers=headers, data=data, content_type='application/json')
     assert response.status_code == 422
 
 
@@ -195,18 +174,9 @@ def test_pilot_changing_pilot_and_co_null(db_session, client, flight, user_with_
     db_session.add_all([flight, user_with_club])
     db_session.commit()
 
-    headers = authenticate_with(user_with_club)
+    response = change_pilots(client, flight, auth_user=user_with_club,
+                             pilot_name='foo', copilot_name='bar')
 
-    data = json.dumps({
-        'pilotId': None,
-        'copilotId': None,
-        'pilotName': 'foo',
-        'copilotName': 'bar',
-    })
-
-    flight_url = '/flights/{}/'.format(flight.id)
-
-    response = client.post(flight_url, headers=headers, data=data, content_type='application/json')
     assert response.status_code == 200
 
 
@@ -216,16 +186,9 @@ def test_pilot_changing_clubless_co(db_session, client, flight, user_with_club, 
     db_session.add_all([flight, user_with_club, user_without_club])
     db_session.commit()
 
-    headers = authenticate_with(user_with_club)
+    response = change_pilots(client, flight, auth_user=user_with_club,
+                             pilot=user_with_club, copilot=user_without_club)
 
-    data = json.dumps({
-        'pilotId': user_with_club.id,
-        'copilotId': user_without_club.id,
-    })
-
-    flight_url = '/flights/{}/'.format(flight.id)
-
-    response = client.post(flight_url, headers=headers, data=data, content_type='application/json')
     assert response.status_code == 422
 
 
@@ -236,14 +199,7 @@ def test_pilot_changing_clubless_pilot_and_co(db_session, client, flight, user_w
     db_session.add_all([flight, user_without_club, user_without_club_2])
     db_session.commit()
 
-    headers = authenticate_with(user_without_club)
+    response = change_pilots(client, flight, auth_user=user_without_club,
+                             pilot=user_without_club, copilot=user_without_club_2)
 
-    data = json.dumps({
-        'pilotId': user_without_club.id,
-        'copilotId': user_without_club_2.id,
-    })
-
-    flight_url = '/flights/{}/'.format(flight.id)
-
-    response = client.post(flight_url, headers=headers, data=data, content_type='application/json')
     assert response.status_code == 422
