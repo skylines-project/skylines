@@ -65,7 +65,7 @@ export default BarogramComponent.extend({
     this.onHoverModeUpdate();
 
     this.get('placeholder').on('plotclick', (event, pos) => {
-      this.getWithDefault('onTimeChange', Ember.K)(pos.x / 1000);
+      this.set('time', pos.x / 1000);
     });
   },
 
@@ -137,12 +137,11 @@ export default BarogramComponent.extend({
 
     if (this.get('hoverMode')) {
       placeholder.on('plothover', (event, pos) => {
-        this.getWithDefault('onTimeChange', Ember.K)(pos.x / 1000);
+        this.set('time', pos.x / 1000);
       });
 
       placeholder.on('mouseout', () => {
-        let defaultTime = this.get('defaultTime');
-        this.getWithDefault('onTimeChange', Ember.K)(defaultTime);
+        this.set('time', this.get('defaultTime'));
       });
     } else {
       placeholder.off('plothover');
