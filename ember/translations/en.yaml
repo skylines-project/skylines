@@ -43,6 +43,9 @@ delete: Delete
 distance: Distance
 distance-abbr: Dist.
 distance-flights: Distance Flights
+DISTANCE-on-DATE: '{distance} on {date}'
+DISTANCE-on-DATE-by-PILOT: '{distance} on {date} by {pilot}'
+DISTANCE-on-DATE-by-PILOT-and-COPILOT: '{distance} on {date} by {pilot} and {copilot}'
 duplicate-file: Duplicate file
 duration: Duration
 edit: Edit
