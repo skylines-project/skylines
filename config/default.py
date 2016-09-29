@@ -16,19 +16,11 @@ EMAIL_FROM = 'no-reply@skylines.aero'
 """
 # Logging handlers (disabled in DEBUG mode)
 
-ADMINS = [
-    'tobias.bieniek@gmx.de'
-]
-
-mail_handler = (
-    'ERROR', 'SMTPHandler',
-    ('localhost', 'error@skylines.aero', ADMINS, 'SkyLines Error Report'))
-
 file_handler = (
     'INFO', 'RotatingFileHandler',
     ('/home/turbo/skylines.log', 'a', 10000, 4))
 
-LOGGING_HANDLERS = [mail_handler, file_handler]
+LOGGING_HANDLERS = [file_handler]
 
 SENTRY_DSN = 'https://foo:bar@sentry.io/appid'
 """
