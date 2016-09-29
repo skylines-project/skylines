@@ -219,8 +219,7 @@ class NearFlightSchema(Schema):
 @flight_blueprint.route('/')
 @vary('accept')
 def index():
-    if 'application/json' in request.headers.get('Accept', ''):
-        return jsonify(flight=FlightSchema().dump(g.flight).data)
+    flight = FlightSchema().dump(g.flight).data
 
     near_flights = FlightMeetings.get_meetings(g.flight).values()
     near_flights = NearFlightSchema().dump(near_flights, many=True).data
@@ -265,6 +264,7 @@ def index():
     ))
 
     circling_performance = circling_performance_schema.dump(g.flight.circling_performance, many=True).data
+    performance = dict(circling=circling_performance, cruise=cruise_performance)
 
     contest_leg_schema = ContestLegSchema()
     contest_legs = {}
@@ -274,17 +274,29 @@ def index():
 
     mark_flight_notifications_read(g.flight)
 
+    if 'application/json' in request.headers.get('Accept', ''):
+        if 'extended' not in request.args:
+            return jsonify(flight=flight)
+
+        return jsonify(
+            flight=flight,
+            near_flights=near_flights,
+            comments=comments,
+            contest_legs=contest_legs,
+            phases=phases,
+            performance=performance)
+
     return render_template(
         'flights/map.jinja',
         ids=map(lambda flight: flight.id, g.flights),
         flight=g.flight,
-        flight_json=FlightSchema().dump(g.flight).data,
+        flight_json=flight,
         near_flights=near_flights,
         other_flights=g.other_flights,
         comments=comments,
         contest_legs=contest_legs,
         phases=phases,
-        performance=dict(circling=circling_performance, cruise=cruise_performance))
+        performance=performance)
 
 
 @flight_blueprint.route('/map')

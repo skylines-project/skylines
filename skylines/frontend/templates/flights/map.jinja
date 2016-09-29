@@ -15,16 +15,3 @@
 {{ super() }}
 {{ flight_meta_tags(flight) }}
 {%- endblock %}
-
-
-{%- block content %}
-<div id="fullscreen-content" class="olFullscreen" data-component='flight-page' data-attrs='{
-  "ids": {{ ids|tojson }},
-  "flight": {{ flight_json|tojson }},
-  "comments":{{ comments|tojson }},
-  "performance": {{ performance|tojson }},
-  "legs": {{ contest_legs|tojson }},
-  "phases": {{ phases|tojson }},
-  "nearFlights": {{ near_flights|tojson }}
-}'></div>
-{%- endblock %}
