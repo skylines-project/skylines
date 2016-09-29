@@ -118,42 +118,42 @@ def _get_flight_path(pilot, threshold=0.001, last_update=None):
 @track_blueprint.route('/')
 @vary('accept')
 def index():
-    traces = map(_get_flight_path, g.pilots)
-    if not any(traces):
-        traces = None
-
-    user_schema = UserSchema()
-
-    pilots_json = []
-    for pilot in g.pilots:
-        json = user_schema.dump(pilot).data
-        json['color'] = pilot.color
-        pilots_json.append(json)
-
-    flights = []
-    if traces:
-        for pilot, trace in zip(g.pilots, traces):
-            if trace:
-                flights.append({
-                    'sfid': pilot.id,
-                    'points': trace['points'],
-                    'barogram_t': trace['barogram_t'],
-                    'barogram_h': trace['barogram_h'],
-                    'enl': trace['enl'],
-                    'contests': None,
-                    'elevations_t': trace['barogram_t'],
-                    'elevations_h': trace['elevations'],
-                    'geoid': trace['geoid'],
-                    'additional': {
-                        'competition_id': pilot.tracking_callsign or pilot.initials(),
-                        'color': pilot.color,
-                    },
-                })
-
     if 'application/json' in request.headers.get('Accept', ''):
+        traces = map(_get_flight_path, g.pilots)
+        if not any(traces):
+            traces = None
+
+        user_schema = UserSchema()
+
+        pilots_json = []
+        for pilot in g.pilots:
+            json = user_schema.dump(pilot).data
+            json['color'] = pilot.color
+            pilots_json.append(json)
+
+        flights = []
+        if traces:
+            for pilot, trace in zip(g.pilots, traces):
+                if trace:
+                    flights.append({
+                        'sfid': pilot.id,
+                        'points': trace['points'],
+                        'barogram_t': trace['barogram_t'],
+                        'barogram_h': trace['barogram_h'],
+                        'enl': trace['enl'],
+                        'contests': None,
+                        'elevations_t': trace['barogram_t'],
+                        'elevations_h': trace['elevations'],
+                        'geoid': trace['geoid'],
+                        'additional': {
+                            'competition_id': pilot.tracking_callsign or pilot.initials(),
+                            'color': pilot.color,
+                        },
+                    })
+
         return jsonify(flights=flights, pilots=pilots_json)
 
-    return render_template('tracking/map.jinja', flights=flights, pilots=g.pilots, pilots_json=pilots_json)
+    return render_template('tracking/map.jinja', pilots=g.pilots)
 
 
 @track_blueprint.route('/map')
