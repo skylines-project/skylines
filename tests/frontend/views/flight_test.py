@@ -55,9 +55,7 @@ def fixtures(db_session):
                                     'BFA9A77C394B40'),
     }
 
-    for v in data.itervalues():
-        db_session.add(v)
-
+    db_session.add_all(data.values())
     db_session.commit()
     return data
 
