@@ -2,6 +2,7 @@ import os
 import config
 
 from flask import Flask, request, g
+from raven.contrib.flask import Sentry
 
 from skylines.api.middleware import HTTPMethodOverrideMiddleware
 
@@ -145,6 +146,11 @@ Message:
 
             self.logger.addHandler(file_handler)
 
+    def add_sentry(self):
+        sentry_dsn = self.config.get('SENTRY_DSN')
+        if sentry_dsn:
+            Sentry(self, dsn=sentry_dsn)
+
     def add_debug_toolbar(self):
         try:
             from flask_debugtoolbar import DebugToolbarExtension
@@ -174,6 +180,7 @@ def create_http_app(*args, **kw):
     app = create_app(*args, **kw)
 
     app.add_logging_handlers()
+    app.add_sentry()
     app.add_celery()
 
     return app

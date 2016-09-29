@@ -29,6 +29,8 @@ file_handler = (
     ('/home/turbo/skylines.log', 'a', 10000, 4))
 
 LOGGING_HANDLERS = [mail_handler, file_handler]
+
+SENTRY_DSN = 'https://foo:bar@sentry.io/appid'
 """
 
 # This should probably be changed for a multi-threaded production server
