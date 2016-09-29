@@ -13,7 +13,7 @@
   </thead>
   <tbody>
     {{#each phases as |phase|}}
-      {{flight-phase-row phase=phase}}
+      {{flight-phase-row phase=phase selection=selection onSelect=onSelect}}
     {{/each}}
   </tbody>
 </table>

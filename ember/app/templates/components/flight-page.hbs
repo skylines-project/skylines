@@ -67,7 +67,7 @@
         <h3>{{t "phase-statistics"}}</h3>
         <div class="sidebar-pane-content">
           <div class="table-responsive">
-            {{flight-phase-table phases=phases}}
+            {{flight-phase-table phases=phases selection=flightPhase.selection onSelect=(action (mut flightPhase.selection))}}
           </div>
         </div>
       </div>
