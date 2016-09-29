@@ -1,3 +1,11 @@
+{{#if (eq model.pilots.length 1)}}
+  {{title (t "live-tracking-of-PILOT" pilot=model.pilots.0.name)}}
+{{else if (eq model.pilots.length 2)}}
+  {{title (t "live-tracking-of-PILOT-and-PILOT2" pilot=model.pilots.0.name pilot2=model.pilots.1.name)}}
+{{else}}
+  {{title (t "live-tracking-of-PILOT-and-NUM-other pilots" pilot=model.pilots.0.name num=(sum model.pilots.length -1))}}
+{{/if}}
+
 <div id="fullscreen-content" class="olFullscreen">
   {{tracking-page pilots=model.pilots flights=model.flights}}
 </div>

@@ -153,7 +153,7 @@ def index():
 
         return jsonify(flights=flights, pilots=pilots_json)
 
-    return render_template('tracking/map.jinja', pilots=g.pilots)
+    return render_template('tracking/map.jinja')
 
 
 @track_blueprint.route('/json')

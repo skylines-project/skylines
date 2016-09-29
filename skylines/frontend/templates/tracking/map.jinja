@@ -2,14 +2,3 @@
 {% set active_page = "tracking" %}
 {% set use_ember = true %}
 {% set openlayers = true %}
-
-
-{% block title -%}
-{% if pilots|length == 1 -%}
-{{ _('Live Tracking of %(pilot)s', pilot=pilots[0]|e) }}
-{%- elif pilots|length == 2 -%}
-{{ _('Live Tracking of %(pilot)s and %(other_pilot)s', pilot=pilots[0]|e, other_pilot=pilots[1]|e) }}
-{%- else -%}
-{{ _('Live Tracking of %(pilot)s and %(num_pilots)d other pilots', pilot=pilots[0]|e, num_pilots=(pilots|length - 1)) }}
-{%- endif %}
-{%- endblock %}

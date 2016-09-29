@@ -79,6 +79,9 @@ latest: Latest
 n-avg-distance-per-flight: avg. {distance} per flight
 leg-statistics: Leg Statistics
 live-tracking: Live Tracking
+live-tracking-of-PILOT: Live Tracking of {pilot}
+live-tracking-of-PILOT-and-PILOT2: Live Tracking of {pilot} and {pilot2}
+live-tracking-of-PILOT-and-NUM-other-pilots: Live Tracking of {pilot} and {num} other pilots
 n-avg-hours-per-flight: avg. {num} hours per flight
 live-tracking-key: Live Tracking Key
 mark-all-as-read: Mark all as read

@@ -19,7 +19,9 @@
       <meta name="skylines-altitude-unit" content="{{ h.get_setting_name('altitude_unit') }}">
     {% endif %}
 
-    <title>{% filter striptags %}{% block title %}{% endblock %}{% if self.title() %} - {% endif %}SkyLines{% endfilter %}</title>
+    {% if not use_ember %}
+      <title>{% filter striptags %}{% block title %}{% endblock %}{% if self.title() %} - {% endif %}SkyLines{% endfilter %}</title>
+    {% endif %}
 
     <link rel='shortcut icon' href='/favicon.ico' type='image/x-icon' />
     <link rel='shortcut' href='/favicon.png' type='image/png' />
