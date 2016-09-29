@@ -97,6 +97,7 @@ no-clubs-found: No clubs found.
 no-flight-in-file: No flight found in file
 no-flight-saved: No flight was saved.
 no-flights-found: No flights found.
+no-live-tracks-of-pilots: '{num, plural, =1 {There is currently no live track of this pilot available.} other {There are currently no live tracks of these pilots available.}}'
 no-pilots-found: No pilots found.
 no-data: No data found...
 notifications: Notifications

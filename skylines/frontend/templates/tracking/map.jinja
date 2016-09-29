@@ -16,18 +16,8 @@
 
 
 {% block content -%}
-{% if flights -%}
 <div id="fullscreen-content" class="olFullscreen" data-component='tracking-page' data-attrs='{
   "pilots": {{ pilots_json|tojson }},
   "flights": {{ flights|tojson }}
 }'></div>
-{%- else -%}
-<p style="margin:10pt;margin-top:40pt;">
-  {% if pilots_json|length == 1 -%}
-  {% trans %}There is no live track of this pilot currently.{% endtrans %}
-  {%- else -%}
-  {% trans %}There are no live tracks of these pilots currently.{% endtrans %}
-  {%- endif %}
-</p>
-{%- endif %}
 {%- endblock %}

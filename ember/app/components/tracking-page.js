@@ -8,6 +8,9 @@ export default Ember.Component.extend({
   classNames: ['olFullscreen'],
 
   didInsertElement() {
+    let flights = this.get('flights');
+    if (flights.length === 0) return;
+
     let fixCalc = this.get('fixCalc');
 
     let sidebar = this.$('#sidebar').sidebar();
@@ -28,14 +31,12 @@ export default Ember.Component.extend({
 
     let map = window.flightMap.get('map');
 
-    let flights = fixCalc.get('flights');
-
     fixCalc.set('defaultTime', -1);
     fixCalc.set('time', -1);
 
-    this.get('flights').forEach(flight => fixCalc.addFlight(flight));
+    flights.forEach(flight => fixCalc.addFlight(flight));
 
-    let extent = flights.getBounds();
+    let extent = fixCalc.get('flights').getBounds();
     map.getView().fit(extent, map.getSize(), { padding: paddingFn() });
 
     // update flight track every 15 seconds
