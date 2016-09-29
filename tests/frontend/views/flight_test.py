@@ -95,7 +95,7 @@ def test_pilot_changing_correct_with_co(client, fixtures):
         'copilotId': co_pilot_id
     }
 
-    flight_url = '/flights/' + str(fixtures['flight1'].id) + '/'
+    flight_url = '/flights/{}/'.format(fixtures['flight1'].id)
 
     response = client.post(flight_url, data=json.dumps(data), content_type='application/json',
                            headers=authheader(client, authuser))
@@ -113,7 +113,7 @@ def test_pilot_changing_disowned_flight(client, fixtures):
         'copilotId': co_pilot_id
     }
 
-    flight_url = '/flights/' + str(fixtures['flight1'].id) + '/'
+    flight_url = '/flights/{}/'.format(fixtures['flight1'].id)
 
     response = client.post(flight_url, data=json.dumps(data), content_type='application/json',
                            headers=authheader(client, authuser))
@@ -130,7 +130,7 @@ def test_pilot_changing_disallowed_pilot(client, fixtures):
         'copilotId': co_pilot_id
     }
 
-    flight_url = '/flights/' + str(fixtures['flight1'].id) + '/'
+    flight_url = '/flights/{}/'.format(fixtures['flight1'].id)
 
     response = client.post(flight_url, data=json.dumps(data), content_type='application/json',
                            headers=authheader(client, authuser))
@@ -147,7 +147,7 @@ def test_pilot_changing_disallowed_copilot(client, fixtures):
         'copilotId': co_pilot_id
     }
 
-    flight_url = '/flights/' + str(fixtures['flight1'].id) + '/'
+    flight_url = '/flights/{}/'.format(fixtures['flight1'].id)
 
     response = client.post(flight_url, data=json.dumps(data), content_type='application/json',
                            headers=authheader(client, authuser))
@@ -164,7 +164,7 @@ def test_pilot_changing_same_pilot_and_co(client, fixtures):
         'copilotId': co_pilot_id
     }
 
-    flight_url = '/flights/' + str(fixtures['flight1'].id) + '/'
+    flight_url = '/flights/{}/'.format(fixtures['flight1'].id)
 
     response = client.post(flight_url, data=json.dumps(data), content_type='application/json',
                            headers=authheader(client, authuser))
@@ -183,7 +183,7 @@ def test_pilot_changing_pilot_and_co_null(client, fixtures):
         'copilotName': 'bar'
     }
 
-    flight_url = '/flights/' + str(fixtures['flight1'].id) + '/'
+    flight_url = '/flights/{}/'.format(fixtures['flight1'].id)
 
     response = client.post(flight_url, data=json.dumps(data), content_type='application/json',
                            headers=authheader(client, authuser))
@@ -200,7 +200,7 @@ def test_pilot_changing_clubless_co(client, fixtures):
         'copilotId': co_pilot_id,
     }
 
-    flight_url = '/flights/' + str(fixtures['flight1'].id) + '/'
+    flight_url = '/flights/{}/'.format(fixtures['flight1'].id)
 
     response = client.post(flight_url, data=json.dumps(data), content_type='application/json',
                            headers=authheader(client, authuser))
@@ -220,7 +220,7 @@ def test_pilot_changing_clubless_pilot_and_co(client, fixtures, db_session):
     fixtures['flight1'].pilot = fixtures['cless']
     db_session.commit()
 
-    flight_url = '/flights/' + str(fixtures['flight1'].id) + '/'
+    flight_url = '/flights/{}/'.format(fixtures['flight1'].id)
 
     response = client.post(flight_url, data=json.dumps(data), content_type='application/json',
                            headers=authheader(client, authuser))
