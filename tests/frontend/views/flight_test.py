@@ -70,7 +70,7 @@ def authheader(user):
 
 
 def test_pilot_changing_correct_with_co(client, fixtures):
-    authuser = fixtures['john']
+    headers = authheader(fixtures['john'])
     pilot = fixtures['john']
     pilot_id = pilot.id
     co_pilot_id = fixtures['fred'].id
@@ -83,12 +83,12 @@ def test_pilot_changing_correct_with_co(client, fixtures):
     flight_url = '/flights/{}/'.format(fixtures['flight1'].id)
 
     response = client.post(flight_url, data=json.dumps(data), content_type='application/json',
-                           headers=authheader(authuser))
+                           headers=headers)
     assert response.status_code == 200
 
 
 def test_pilot_changing_disowned_flight(client, fixtures):
-    authuser = fixtures['fred']
+    headers = authheader(fixtures['fred'])
     pilot = fixtures['john']
     pilot_id = pilot.id
     co_pilot_id = fixtures['joe'].id
@@ -101,12 +101,12 @@ def test_pilot_changing_disowned_flight(client, fixtures):
     flight_url = '/flights/{}/'.format(fixtures['flight1'].id)
 
     response = client.post(flight_url, data=json.dumps(data), content_type='application/json',
-                           headers=authheader(authuser))
+                           headers=headers)
     assert response.status_code == 403
 
 
 def test_pilot_changing_disallowed_pilot(client, fixtures):
-    authuser = fixtures['john']
+    headers = authheader(fixtures['john'])
     pilot_id = fixtures['joe'].id
     co_pilot_id = fixtures['john'].id
 
@@ -118,12 +118,12 @@ def test_pilot_changing_disallowed_pilot(client, fixtures):
     flight_url = '/flights/{}/'.format(fixtures['flight1'].id)
 
     response = client.post(flight_url, data=json.dumps(data), content_type='application/json',
-                           headers=authheader(authuser))
+                           headers=headers)
     assert response.status_code == 422
 
 
 def test_pilot_changing_disallowed_copilot(client, fixtures):
-    authuser = fixtures['john']
+    headers = authheader(fixtures['john'])
     pilot_id = fixtures['john'].id
     co_pilot_id = fixtures['joe'].id
 
@@ -135,12 +135,12 @@ def test_pilot_changing_disallowed_copilot(client, fixtures):
     flight_url = '/flights/{}/'.format(fixtures['flight1'].id)
 
     response = client.post(flight_url, data=json.dumps(data), content_type='application/json',
-                           headers=authheader(authuser))
+                           headers=headers)
     assert response.status_code == 422
 
 
 def test_pilot_changing_same_pilot_and_co(client, fixtures):
-    authuser = fixtures['john']
+    headers = authheader(fixtures['john'])
     pilot_id = fixtures['john'].id
     co_pilot_id = fixtures['john'].id
 
@@ -152,12 +152,12 @@ def test_pilot_changing_same_pilot_and_co(client, fixtures):
     flight_url = '/flights/{}/'.format(fixtures['flight1'].id)
 
     response = client.post(flight_url, data=json.dumps(data), content_type='application/json',
-                           headers=authheader(authuser))
+                           headers=headers)
     assert response.status_code == 422
 
 
 def test_pilot_changing_pilot_and_co_null(client, fixtures):
-    authuser = fixtures['john']
+    headers = authheader(fixtures['john'])
     pilot_id = None
     co_pilot_id = None
 
@@ -171,12 +171,12 @@ def test_pilot_changing_pilot_and_co_null(client, fixtures):
     flight_url = '/flights/{}/'.format(fixtures['flight1'].id)
 
     response = client.post(flight_url, data=json.dumps(data), content_type='application/json',
-                           headers=authheader(authuser))
+                           headers=headers)
     assert response.status_code == 200
 
 
 def test_pilot_changing_clubless_co(client, fixtures):
-    authuser = fixtures['john']
+    headers = authheader(fixtures['john'])
     pilot_id = fixtures['john'].id
     co_pilot_id = fixtures['cless'].id
 
@@ -188,12 +188,12 @@ def test_pilot_changing_clubless_co(client, fixtures):
     flight_url = '/flights/{}/'.format(fixtures['flight1'].id)
 
     response = client.post(flight_url, data=json.dumps(data), content_type='application/json',
-                           headers=authheader(authuser))
+                           headers=headers)
     assert response.status_code == 422
 
 
 def test_pilot_changing_clubless_pilot_and_co(client, fixtures, db_session):
-    authuser = fixtures['cless']
+    headers = authheader(fixtures['cless'])
     pilot_id = fixtures['cless'].id
     co_pilot_id = fixtures['nocl'].id
 
@@ -208,5 +208,5 @@ def test_pilot_changing_clubless_pilot_and_co(client, fixtures, db_session):
     flight_url = '/flights/{}/'.format(fixtures['flight1'].id)
 
     response = client.post(flight_url, data=json.dumps(data), content_type='application/json',
-                           headers=authheader(authuser))
+                           headers=headers)
     assert response.status_code == 422
