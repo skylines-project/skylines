@@ -84,6 +84,11 @@ def flight(igc, user_with_club):
                             'BFA9A77C394B40')
 
 
+def add_fixtures(db_session, *fixtures):
+    db_session.add_all(fixtures)
+    db_session.commit()
+
+
 def authenticate_with(user):
     password = '123456'
 
@@ -110,8 +115,7 @@ def change_pilots(client, flight, auth_user, pilot=None, copilot=None, pilot_nam
 def test_pilot_changing_correct_with_co(db_session, client, flight, user_with_club, user_with_same_club):
     """ Pilot is changing copilot to user from same club. """
 
-    db_session.add_all([flight, user_with_club, user_with_same_club])
-    db_session.commit()
+    add_fixtures(db_session, flight, user_with_club, user_with_same_club)
 
     response = change_pilots(client, flight, auth_user=user_with_club,
                              pilot=user_with_club, copilot=user_with_same_club)
@@ -123,8 +127,7 @@ def test_pilot_changing_disowned_flight(db_session, client, flight,
                                         user_with_club, user_with_same_club, user_with_other_club):
     """ Unrelated user is trying to change pilots. """
 
-    db_session.add_all([flight, user_with_club, user_with_same_club, user_with_other_club])
-    db_session.commit()
+    add_fixtures(db_session, flight, user_with_club, user_with_same_club, user_with_other_club)
 
     response = change_pilots(client, flight, auth_user=user_with_same_club,
                              pilot=user_with_club, copilot=user_with_other_club)
@@ -135,8 +138,7 @@ def test_pilot_changing_disowned_flight(db_session, client, flight,
 def test_pilot_changing_disallowed_pilot(db_session, client, flight, user_with_club, user_with_other_club):
     """ Pilot is trying to change pilot to user from different club. """
 
-    db_session.add_all([flight, user_with_club, user_with_other_club])
-    db_session.commit()
+    add_fixtures(db_session, flight, user_with_club, user_with_other_club)
 
     response = change_pilots(client, flight, auth_user=user_with_club,
                              pilot=user_with_other_club, copilot=user_with_club)
@@ -147,8 +149,7 @@ def test_pilot_changing_disallowed_pilot(db_session, client, flight, user_with_c
 def test_pilot_changing_disallowed_copilot(db_session, client, flight, user_with_club, user_with_other_club):
     """ Pilot is trying to change copilot to user from different club. """
 
-    db_session.add_all([flight, user_with_club, user_with_other_club])
-    db_session.commit()
+    add_fixtures(db_session, flight, user_with_club, user_with_other_club)
 
     response = change_pilots(client, flight, auth_user=user_with_club,
                              pilot=user_with_club, copilot=user_with_other_club)
@@ -159,8 +160,7 @@ def test_pilot_changing_disallowed_copilot(db_session, client, flight, user_with
 def test_pilot_changing_same_pilot_and_co(db_session, client, flight, user_with_club):
     """ Pilot is trying to change copilot to the same as pilot. """
 
-    db_session.add_all([flight, user_with_club])
-    db_session.commit()
+    add_fixtures(db_session, flight, user_with_club)
 
     response = change_pilots(client, flight, auth_user=user_with_club,
                              pilot=user_with_club, copilot=user_with_club)
@@ -171,8 +171,7 @@ def test_pilot_changing_same_pilot_and_co(db_session, client, flight, user_with_
 def test_pilot_changing_pilot_and_co_null(db_session, client, flight, user_with_club):
     """ Pilot is changing pilot and copilot to unknown user accounts. """
 
-    db_session.add_all([flight, user_with_club])
-    db_session.commit()
+    add_fixtures(db_session, flight, user_with_club)
 
     response = change_pilots(client, flight, auth_user=user_with_club,
                              pilot_name='foo', copilot_name='bar')
@@ -183,8 +182,7 @@ def test_pilot_changing_pilot_and_co_null(db_session, client, flight, user_with_
 def test_pilot_changing_clubless_co(db_session, client, flight, user_with_club, user_without_club):
     """ Pilot is trying to change copilot to user without club. """
 
-    db_session.add_all([flight, user_with_club, user_without_club])
-    db_session.commit()
+    add_fixtures(db_session, flight, user_with_club, user_without_club)
 
     response = change_pilots(client, flight, auth_user=user_with_club,
                              pilot=user_with_club, copilot=user_without_club)
@@ -196,8 +194,7 @@ def test_pilot_changing_clubless_pilot_and_co(db_session, client, flight, user_w
     """ Pilot without club is trying to change copilot to user without club. """
 
     flight.pilot = user_without_club
-    db_session.add_all([flight, user_without_club, user_without_club_2])
-    db_session.commit()
+    add_fixtures(db_session, flight, user_without_club, user_without_club_2)
 
     response = change_pilots(client, flight, auth_user=user_without_club,
                              pilot=user_without_club, copilot=user_without_club_2)
