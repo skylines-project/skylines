@@ -71,13 +71,10 @@ def authheader(user):
 
 def test_pilot_changing_correct_with_co(client, fixtures):
     headers = authheader(fixtures['john'])
-    pilot = fixtures['john']
-    pilot_id = pilot.id
-    co_pilot_id = fixtures['fred'].id
 
     data = {
-        'pilotId': pilot_id,
-        'copilotId': co_pilot_id
+        'pilotId': fixtures['john'].id,
+        'copilotId': fixtures['fred'].id,
     }
 
     flight_url = '/flights/{}/'.format(fixtures['flight1'].id)
@@ -89,13 +86,10 @@ def test_pilot_changing_correct_with_co(client, fixtures):
 
 def test_pilot_changing_disowned_flight(client, fixtures):
     headers = authheader(fixtures['fred'])
-    pilot = fixtures['john']
-    pilot_id = pilot.id
-    co_pilot_id = fixtures['joe'].id
 
     data = {
-        'pilotId': pilot_id,
-        'copilotId': co_pilot_id
+        'pilotId': fixtures['john'].id,
+        'copilotId': fixtures['joe'].id,
     }
 
     flight_url = '/flights/{}/'.format(fixtures['flight1'].id)
@@ -107,12 +101,10 @@ def test_pilot_changing_disowned_flight(client, fixtures):
 
 def test_pilot_changing_disallowed_pilot(client, fixtures):
     headers = authheader(fixtures['john'])
-    pilot_id = fixtures['joe'].id
-    co_pilot_id = fixtures['john'].id
 
     data = {
-        'pilotId': pilot_id,
-        'copilotId': co_pilot_id
+        'pilotId': fixtures['joe'].id,
+        'copilotId': fixtures['john'].id,
     }
 
     flight_url = '/flights/{}/'.format(fixtures['flight1'].id)
@@ -124,12 +116,10 @@ def test_pilot_changing_disallowed_pilot(client, fixtures):
 
 def test_pilot_changing_disallowed_copilot(client, fixtures):
     headers = authheader(fixtures['john'])
-    pilot_id = fixtures['john'].id
-    co_pilot_id = fixtures['joe'].id
 
     data = {
-        'pilotId': pilot_id,
-        'copilotId': co_pilot_id
+        'pilotId': fixtures['john'].id,
+        'copilotId': fixtures['joe'].id,
     }
 
     flight_url = '/flights/{}/'.format(fixtures['flight1'].id)
@@ -141,12 +131,10 @@ def test_pilot_changing_disallowed_copilot(client, fixtures):
 
 def test_pilot_changing_same_pilot_and_co(client, fixtures):
     headers = authheader(fixtures['john'])
-    pilot_id = fixtures['john'].id
-    co_pilot_id = fixtures['john'].id
 
     data = {
-        'pilotId': pilot_id,
-        'copilotId': co_pilot_id
+        'pilotId': fixtures['john'].id,
+        'copilotId': fixtures['john'].id,
     }
 
     flight_url = '/flights/{}/'.format(fixtures['flight1'].id)
@@ -158,14 +146,12 @@ def test_pilot_changing_same_pilot_and_co(client, fixtures):
 
 def test_pilot_changing_pilot_and_co_null(client, fixtures):
     headers = authheader(fixtures['john'])
-    pilot_id = None
-    co_pilot_id = None
 
     data = {
-        'pilotId': pilot_id,
-        'copilotId': co_pilot_id,
+        'pilotId': None,
+        'copilotId': None,
         'pilotName': 'foo',
-        'copilotName': 'bar'
+        'copilotName': 'bar',
     }
 
     flight_url = '/flights/{}/'.format(fixtures['flight1'].id)
@@ -177,12 +163,10 @@ def test_pilot_changing_pilot_and_co_null(client, fixtures):
 
 def test_pilot_changing_clubless_co(client, fixtures):
     headers = authheader(fixtures['john'])
-    pilot_id = fixtures['john'].id
-    co_pilot_id = fixtures['cless'].id
 
     data = {
-        'pilotId': pilot_id,
-        'copilotId': co_pilot_id,
+        'pilotId': fixtures['john'].id,
+        'copilotId': fixtures['cless'].id,
     }
 
     flight_url = '/flights/{}/'.format(fixtures['flight1'].id)
@@ -194,12 +178,10 @@ def test_pilot_changing_clubless_co(client, fixtures):
 
 def test_pilot_changing_clubless_pilot_and_co(client, fixtures, db_session):
     headers = authheader(fixtures['cless'])
-    pilot_id = fixtures['cless'].id
-    co_pilot_id = fixtures['nocl'].id
 
     data = {
-        'pilotId': pilot_id,
-        'copilotId': co_pilot_id,
+        'pilotId': fixtures['cless'].id,
+        'copilotId': fixtures['nocl'].id,
     }
 
     fixtures['flight1'].pilot = fixtures['cless']
