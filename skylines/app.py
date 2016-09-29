@@ -1,7 +1,7 @@
 import os
 import config
 
-from flask import Flask, request, g
+from flask import Flask
 from raven.contrib.flask import Sentry
 
 from skylines.api.middleware import HTTPMethodOverrideMiddleware
@@ -74,8 +74,8 @@ class SkyLines(Flask):
         if self.debug: return
 
         import logging
-        from logging import Formatter, Filter
-        from logging.handlers import RotatingFileHandler, SMTPHandler
+        from logging import Formatter
+        from logging.handlers import RotatingFileHandler
 
         # Set general log level
         self.logger.setLevel(logging.INFO)
