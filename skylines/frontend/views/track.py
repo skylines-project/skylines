@@ -8,6 +8,7 @@ from skylines.lib.dbutil import get_requested_record_list
 from skylines.lib.helpers import color
 from skylines.lib.xcsoar_ import FlightPathFix
 from skylines.lib.geoid import egm96_height
+from skylines.lib.vary import vary
 from skylines.model import User, TrackingFix, Location
 from skylines.schemas import UserSchema
 import xcsoar
@@ -115,6 +116,7 @@ def _get_flight_path(pilot, threshold=0.001, last_update=None):
 
 
 @track_blueprint.route('/')
+@vary('accept')
 def index():
     traces = map(_get_flight_path, g.pilots)
     if not any(traces):
@@ -147,6 +149,9 @@ def index():
                         'color': pilot.color,
                     },
                 })
+
+    if 'application/json' in request.headers.get('Accept', ''):
+        return jsonify(flights=flights, pilots=pilots_json)
 
     return render_template('tracking/map.jinja', flights=flights, pilots=g.pilots, pilots_json=pilots_json)
 
