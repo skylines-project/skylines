@@ -10,14 +10,12 @@ from werkzeug.datastructures import Headers
 
 
 @pytest.fixture(scope="function")
-def fixtures(db_session):
-    lva = Club(name=u'LV Aachen')
-    sfn = Club(name=u'Sportflug Niederberg')
-    john = User(first_name=u'John', last_name=u'Smith', email_address='john@smith.com', password='123456', club=lva)
-    fred = User(first_name=u'Fred', last_name=u'Bloggs', email_address='fred@bloggs.com', password='123456', club=lva)
-    joe = User(first_name=u'Joe', last_name=u'Bloggs', email_address='joe@bloggs.com', password='123456', club=sfn)
-    cless = User(first_name=u'Club', last_name=u'Less', email_address='club@less.com', password='123456', club=None)
-    nocl = User(first_name=u'No', last_name=u'Club', email_address='no@club.com', password='123456', club=None)
+def fixtures(db_session, club_1, club_2):
+    john = User(first_name=u'John', last_name=u'Smith', email_address='john@smith.com', password='123456', club=club_1)
+    fred = User(first_name=u'Fred', last_name=u'Bloggs', email_address='fred@bloggs.com', password='123456', club=club_1)
+    joe = User(first_name=u'Joe', last_name=u'Bloggs', email_address='joe@bloggs.com', password='123456', club=club_2)
+    cless = User(first_name=u'Club', last_name=u'Less', email_address='club@less.com', password='123456')
+    nocl = User(first_name=u'No', last_name=u'Club', email_address='no@club.com', password='123456')
     igc = IGCFile(owner=john, filename='simple.igc', md5='ebc87aa50aec6a6667e1c9251a68a90e', date_utc=date(2011, 6, 18))
     data = {
         'john': john,
@@ -25,8 +23,6 @@ def fixtures(db_session):
         'joe': joe,
         'cless': cless,
         'nocl': nocl,
-        'lva': lva,
-        'sfn': sfn,
         'flight1': Flight(pilot=john, co_pilot=None, date_local='2011-06-18', takeoff_time='2011-06-18 09:11:23',
                           landing_time='2011-06-18 09:15:40', timestamps='', igc_file=igc,
                           locations='0102000020E6100000380000000D43014D84FD384011E8E00B933D4B40D80CA06485FD38402B831180'
@@ -57,6 +53,16 @@ def fixtures(db_session):
     db_session.add_all(data.values())
     db_session.commit()
     return data
+
+
+@pytest.fixture
+def club_1():
+    return Club(name=u'LV Aachen')
+
+
+@pytest.fixture
+def club_2():
+    return Club(name=u'Sportflug Niederberg')
 
 
 @pytest.fixture
