@@ -8,7 +8,7 @@
   {{playback-button}}
   {{cesium-button enabled=cesiumEnabled onEnable=(action "cesiumEnabled") onDisable=(action "cesiumDisabled") style="top:200px"}}
   {{flight-path-layer map=map flights=flights}}
-  {{phase-highlight-composer map=map}}
+  {{phase-highlight-composer map=map coordinates=phaseHighlightCoords}}
   {{plane-icons-composer map=map fixes=fixes}}
   {{contest-layer map=map flights=flights visible=(not cesiumEnabled)}}
 

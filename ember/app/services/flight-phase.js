@@ -1,6 +1,5 @@
 import Ember from 'ember';
 import getNextSmallerIndex from '../utils/next-smaller-index';
-import computedPoint from '../computed/computed-point';
 
 export default Ember.Service.extend({
   fixCalc: Ember.inject.service(),
@@ -29,10 +28,4 @@ export default Ember.Service.extend({
     let coordinates = flight.get('geometry').getCoordinates();
     return coordinates.slice(start_index, end_index + 1);
   }),
-
-  startCoordinate: Ember.computed.readOnly('coordinates.firstObject'),
-  endCoordinate: Ember.computed.readOnly('coordinates.lastObject'),
-
-  startPoint: computedPoint('coordinates.firstObject'),
-  endPoint: computedPoint('coordinates.lastObject'),
 });

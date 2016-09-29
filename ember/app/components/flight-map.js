@@ -6,6 +6,7 @@ import slMapClickHandler from '../utils/map-click-handler';
 export default BaseMapComponent.extend({
   flights: null,
   fixes: null,
+  phaseHighlightCoords: null,
   hoverEnabled: true,
 
   didInsertElement() {
