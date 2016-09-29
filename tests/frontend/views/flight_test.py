@@ -4,7 +4,6 @@ import pytest
 from datetime import date
 
 from flask import json
-from flask.testing import FlaskClient
 
 from skylines.model import User, Club, Flight, IGCFile
 from werkzeug.datastructures import Headers
