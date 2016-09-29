@@ -89,7 +89,7 @@ def user_without_club_2(fixtures):
     return fixtures['nocl']
 
 
-def authheader(user):
+def authenticate_with(user):
     password = '123456'
 
     headers = Headers()
@@ -99,7 +99,7 @@ def authheader(user):
 
 
 def test_pilot_changing_correct_with_co(client, flight, user_with_club, user_with_same_club):
-    headers = authheader(user_with_club)
+    headers = authenticate_with(user_with_club)
 
     data = json.dumps({
         'pilotId': user_with_club.id,
@@ -113,7 +113,7 @@ def test_pilot_changing_correct_with_co(client, flight, user_with_club, user_wit
 
 
 def test_pilot_changing_disowned_flight(client, flight, user_with_club, user_with_same_club, user_with_other_club):
-    headers = authheader(user_with_same_club)
+    headers = authenticate_with(user_with_same_club)
 
     data = json.dumps({
         'pilotId': user_with_club.id,
@@ -127,7 +127,7 @@ def test_pilot_changing_disowned_flight(client, flight, user_with_club, user_wit
 
 
 def test_pilot_changing_disallowed_pilot(client, flight, user_with_club, user_with_other_club):
-    headers = authheader(user_with_club)
+    headers = authenticate_with(user_with_club)
 
     data = json.dumps({
         'pilotId': user_with_other_club.id,
@@ -141,7 +141,7 @@ def test_pilot_changing_disallowed_pilot(client, flight, user_with_club, user_wi
 
 
 def test_pilot_changing_disallowed_copilot(client, flight, user_with_club, user_with_other_club):
-    headers = authheader(user_with_club)
+    headers = authenticate_with(user_with_club)
 
     data = json.dumps({
         'pilotId': user_with_club.id,
@@ -155,7 +155,7 @@ def test_pilot_changing_disallowed_copilot(client, flight, user_with_club, user_
 
 
 def test_pilot_changing_same_pilot_and_co(client, flight, user_with_club):
-    headers = authheader(user_with_club)
+    headers = authenticate_with(user_with_club)
 
     data = json.dumps({
         'pilotId': user_with_club.id,
@@ -169,7 +169,7 @@ def test_pilot_changing_same_pilot_and_co(client, flight, user_with_club):
 
 
 def test_pilot_changing_pilot_and_co_null(client, flight, user_with_club):
-    headers = authheader(user_with_club)
+    headers = authenticate_with(user_with_club)
 
     data = json.dumps({
         'pilotId': None,
@@ -185,7 +185,7 @@ def test_pilot_changing_pilot_and_co_null(client, flight, user_with_club):
 
 
 def test_pilot_changing_clubless_co(client, flight, user_with_club, user_without_club):
-    headers = authheader(user_with_club)
+    headers = authenticate_with(user_with_club)
 
     data = json.dumps({
         'pilotId': user_with_club.id,
@@ -199,7 +199,7 @@ def test_pilot_changing_clubless_co(client, flight, user_with_club, user_without
 
 
 def test_pilot_changing_clubless_pilot_and_co(client, db_session, flight, user_without_club, user_without_club_2):
-    headers = authheader(user_without_club)
+    headers = authenticate_with(user_without_club)
 
     data = json.dumps({
         'pilotId': user_without_club.id,
