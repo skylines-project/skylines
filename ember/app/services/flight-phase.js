@@ -35,9 +35,4 @@ export default Ember.Service.extend({
 
   startPoint: computedPoint('coordinates.firstObject'),
   endPoint: computedPoint('coordinates.lastObject'),
-
-  init() {
-    this._super(...arguments);
-    window.flightPhaseService = this;
-  },
 });
