@@ -449,15 +449,25 @@ def update():
     if 'pilot_id' in data:
         pilot_id = data['pilot_id']
 
-        if pilot_id is not None and not User.exists(id=pilot_id):
-            return jsonify(error='unknown-pilot'), 422
+        if pilot_id is not None:
 
-        if g.flight.pilot_id != pilot_id:
-            g.flight.pilot_id = pilot_id
+            if not User.exists(id=pilot_id):
+                return jsonify(error='unknown-pilot'), 422
 
-            # update club if pilot changed
-            if pilot_id is not None:
-                g.flight.club_id = User.get(pilot_id).club_id
+            pilot_club_id = User.get(pilot_id).club_id
+
+            if pilot_club_id != g.current_user.club_id or (pilot_club_id is None and pilot_id != g.current_user.id):
+                return jsonify(error='pilot-disallowed'), 422
+
+            if g.flight.pilot_id != pilot_id:
+                g.flight.pilot_id = pilot_id
+                # pilot_name is irrelevant, if pilot_id is given
+                g.flight.pilot_name = None
+                # update club if pilot changed
+                g.flight.club_id = pilot_club_id
+
+        else:
+            g.flight.pilot_id = None
 
     if 'pilot_name' in data:
         g.flight.pilot_name = data['pilot_name']
@@ -465,10 +475,23 @@ def update():
     if 'co_pilot_id' in data:
         co_pilot_id = data['co_pilot_id']
 
-        if co_pilot_id is not None and not User.exists(id=co_pilot_id):
-            return jsonify(error='unknown-copilot'), 422
+        if co_pilot_id is not None:
 
-        g.flight.co_pilot_id = co_pilot_id
+            if not User.exists(id=co_pilot_id):
+                return jsonify(error='unknown-copilot'), 422
+
+            co_pilot_club_id = User.get(co_pilot_id).club_id
+
+            if co_pilot_club_id != g.current_user.club_id \
+                    or (co_pilot_club_id is None and co_pilot_id != g.current_user.id):
+                return jsonify(error='co-pilot-disallowed'), 422
+
+            g.flight.co_pilot_id = co_pilot_id
+            # co_pilot_name is irrelevant, if co_pilot_id is given
+            g.flight.co_pilot_name = None
+
+        else:
+            g.flight.co_pilot_id = None
 
     if 'co_pilot_name' in data:
         g.flight.co_pilot_name = data['co_pilot_name']
