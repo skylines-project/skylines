@@ -48,6 +48,7 @@ setup(
         'marshmallow==2.8.0',
         'Flask_OAuthlib==0.9.2',
         'oauthlib==0.7.2',
+        'raven[flask]==5.27.1',
     ],
     include_package_data=True,
     package_data={

@@ -1,7 +1,8 @@
 import os
 import config
 
-from flask import Flask, request, g
+from flask import Flask
+from raven.contrib.flask import Sentry
 
 from skylines.api.middleware import HTTPMethodOverrideMiddleware
 
@@ -73,65 +74,11 @@ class SkyLines(Flask):
         if self.debug: return
 
         import logging
-        from logging import Formatter, Filter
-        from logging.handlers import RotatingFileHandler, SMTPHandler
+        from logging import Formatter
+        from logging.handlers import RotatingFileHandler
 
         # Set general log level
         self.logger.setLevel(logging.INFO)
-
-        # Inject additional log record fields
-        class ContextFilter(Filter):
-            def __init__(self, app):
-                self.app = app
-
-            def filter(self, record):
-                record.app_name = self.app.name
-                record.url = request.url
-                record.ip = request.remote_addr
-                if hasattr(g, 'current_user') and g.current_user:
-                    user = g.current_user
-                    record.user = '%s <%s>' % (user.name, user.email_address)
-                else:
-                    record.user = 'anonymous'
-
-                def filter_password(k, v):
-                    if 'password' in k:
-                        v = 'xxxxxxx'
-
-                    return (k, v)
-
-                record.request_args = '\n'.join('%s: %r' % (k, v) for (k, v) in request.args.iteritems())
-                record.request_form = '\n'.join('%s: %r' % filter_password(k, v) for (k, v) in request.form.iteritems())
-
-                return True
-
-        self.logger.addFilter(ContextFilter(self))
-
-        # Add SMTP handler
-        mail_handler = SMTPHandler(
-            'localhost', 'error@skylines.aero',
-            self.config.get('ADMINS', []), 'SkyLines Error Report')
-        mail_handler.setLevel(logging.ERROR)
-
-        mail_formatter = Formatter('''
-App:                %(app_name)s
-Time:               %(asctime)s
-URL:                %(url)s
-IP:                 %(ip)s
-User:               %(user)s
-
-Args:
-%(request_args)s
-
-Form:
-%(request_form)s
-
-Message:
-
-%(message)s
-''')
-        mail_handler.setFormatter(mail_formatter)
-        self.logger.addHandler(mail_handler)
 
         # Add log file handler (if configured)
         path = self.config.get('LOGFILE')
@@ -144,6 +91,11 @@ Message:
             file_handler.setFormatter(file_formatter)
 
             self.logger.addHandler(file_handler)
+
+    def add_sentry(self):
+        sentry_dsn = self.config.get('SENTRY_DSN')
+        if sentry_dsn:
+            Sentry(self, dsn=sentry_dsn)
 
     def add_debug_toolbar(self):
         try:
@@ -174,6 +126,7 @@ def create_http_app(*args, **kw):
     app = create_app(*args, **kw)
 
     app.add_logging_handlers()
+    app.add_sentry()
     app.add_celery()
 
     return app
