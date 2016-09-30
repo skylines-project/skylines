@@ -1,7 +1,7 @@
 from datetime import datetime, timedelta
 from math import log
 
-from flask import Blueprint, request, render_template, abort, jsonify, g, redirect, url_for
+from flask import Blueprint, request, render_template, abort, jsonify, g
 from sqlalchemy.sql.expression import and_
 
 from skylines.lib.dbutil import get_requested_record_list
