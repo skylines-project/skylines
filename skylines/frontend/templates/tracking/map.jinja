@@ -1,35 +1,4 @@
-{% from "macros/links.jinja" import user_link %}
-
 {% extends "base-fullscreen.jinja" %}
 {% set active_page = "tracking" %}
 {% set use_ember = true %}
 {% set openlayers = true %}
-
-
-{% block title -%}
-{% if pilots|length == 1 -%}
-{{ _('Live Tracking <small>of %(pilot)s</small>', pilot=user_link(pilots[0])) }}
-{%- elif pilots|length == 2 -%}
-{{ _('Live Tracking <small>of %(pilot)s and %(other_pilot)s</small>', pilot=user_link(pilots[0]), other_pilot=user_link(pilots[1])) }}
-{%- else -%}
-{{ _('Live Tracking <small>of %(pilot)s and %(num_pilots)d other pilots</small>', pilot=user_link(pilots[0]), num_pilots=(pilots|length - 1)) }}
-{%- endif %}
-{%- endblock %}
-
-
-{% block content -%}
-{% if flights -%}
-<div id="fullscreen-content" class="olFullscreen" data-component='tracking-page' data-attrs='{
-  "pilots": {{ pilots_json|tojson }},
-  "flights": {{ flights|tojson }}
-}'></div>
-{%- else -%}
-<p style="margin:10pt;margin-top:40pt;">
-  {% if pilots_json|length == 1 -%}
-  {% trans %}There is no live track of this pilot currently.{% endtrans %}
-  {%- else -%}
-  {% trans %}There are no live tracks of these pilots currently.{% endtrans %}
-  {%- endif %}
-</p>
-{%- endif %}
-{%- endblock %}

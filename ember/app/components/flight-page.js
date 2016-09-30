@@ -30,7 +30,6 @@ export default Ember.Component.extend({
 
     let map = window.flightMap.get('map');
 
-    fixCalc.addFlightFromJSON(`/flights/${primaryId}/json`, false);
     otherIds.forEach(id => fixCalc.addFlightFromJSON(`/flights/${id}/json`));
 
     let extent = fixCalc.get('flights').getBounds();

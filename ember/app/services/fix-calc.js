@@ -18,6 +18,8 @@ const COLORS = [
 ];
 
 export default Ember.Service.extend({
+  ajax: Ember.inject.service(),
+
   flights: [],
 
   /*
@@ -112,19 +114,15 @@ export default Ember.Service.extend({
    * Perform a JSON request to get a flight.
    *
    * @param {String} url URL to fetch.
-   * @param {Boolean=} opt_async do asynchronous request (defaults true)
    */
-  addFlightFromJSON(url, opt_async) {
+  addFlightFromJSON(url) {
     let flights = this.get('flights');
 
-    Ember.$.ajax(url, {
-      async: (typeof opt_async === undefined) || opt_async === true,
-      success: data => {
-        if (flights.findBy('id', data.sfid))
-          return;
+    return this.get('ajax').request(url).then(data => {
+      if (flights.findBy('id', data.sfid))
+        return;
 
-        this.addFlight(data);
-      },
+      this.addFlight(data);
     });
   },
 });

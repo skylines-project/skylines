@@ -1,22 +1,25 @@
 import Ember from 'ember';
 import ol from 'openlayers';
 
-export default Ember.Component.extend({
-  flightPhase: Ember.inject.service(),
+import computedPoint from '../computed/computed-point';
 
+export default Ember.Component.extend({
   tagName: '',
 
   map: null,
   paddingFn: null,
-
-  coordinates: Ember.computed.readOnly('flightPhase.coordinates'),
-  startPoint: Ember.computed.readOnly('flightPhase.startPoint'),
-  endPoint: Ember.computed.readOnly('flightPhase.endPoint'),
+  coordinates: null,
 
   coordinatesObserver: Ember.observer('coordinates.[]', function() {
     this.adjustMapView();
     Ember.run.once(this.get('map'), 'render');
   }),
+
+  startCoordinate: Ember.computed.readOnly('coordinates.firstObject'),
+  endCoordinate: Ember.computed.readOnly('coordinates.lastObject'),
+
+  startPoint: computedPoint('coordinates.firstObject'),
+  endPoint: computedPoint('coordinates.lastObject'),
 
   init() {
     this._super(...arguments);

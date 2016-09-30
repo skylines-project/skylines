@@ -59,7 +59,7 @@
 
     <div class="sidebar-pane" id="tab-stats-legs">
       <h3>{{t "leg-statistics"}}</h3>
-      {{flight-leg-panel legs=legs class="sidebar-pane-content"}}
+      {{flight-leg-panel legs=legs selection=flightPhase.selection onSelect=(action (mut flightPhase.selection)) class="sidebar-pane-content"}}
     </div>
 
     {{#if phases}}
@@ -67,7 +67,7 @@
         <h3>{{t "phase-statistics"}}</h3>
         <div class="sidebar-pane-content">
           <div class="table-responsive">
-            {{flight-phase-table phases=phases}}
+            {{flight-phase-table phases=phases selection=flightPhase.selection onSelect=(action (mut flightPhase.selection))}}
           </div>
         </div>
       </div>
@@ -85,6 +85,7 @@
 {{flight-map
   flights=fixCalc.flights
   fixes=fixCalc.fixes
+  phaseHighlightCoords=flightPhase.coordinates
   hoverEnabled=(not (or fixCalc.isRunning cesiumEnabled))
   defaultTime=fixCalc.defaultTime
   onTimeChange=(action (mut fixCalc.time))
@@ -98,8 +99,7 @@
     {{fix-table
       flights=fixCalc.flights
       fixes=fixCalc.fixes
-      selection=selectedFlightId
-      onSelectionChange=(action (mut selectedFlightId))
+      selection=(mut selectedFlightId)
       onRemove=(action "removeFlight")}}
   </div>
 
@@ -110,8 +110,7 @@
     timeInterval=timeInterval
     timeHighlight=flightPhase.selection
     time=fixCalc.time
-    defaultTime=fixCalc.defaultTime
-    onTimeChange=(action (mut fixCalc.time))}}
+    defaultTime=fixCalc.defaultTime}}
 </div>
 
 <div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-hidden="true" style="display:none"></div>

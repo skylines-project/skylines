@@ -141,7 +141,7 @@ takeoff-locations: Startplatz
 takeoff-time: Startzeit
 the-skylines-team: Das SkyLines Team
 time: Zeit
-TIME-by-USER: '{time}<br/>von <a>{user}</a>'
+TIME-by-USER: '{time}<br/>von <a href="{userURL}">{user}</a>'
 timeline: Timeline
 total: Gesamt
 total-score: Gesamtpunkte
