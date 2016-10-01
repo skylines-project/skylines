@@ -17,8 +17,8 @@ const COLORS = [
   '#ffff00',
 ];
 
-export default Ember.Service.extend({
-  ajax: Ember.inject.service(),
+export default Ember.Object.extend({
+  ajax: null,
 
   flights: [],
 

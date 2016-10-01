@@ -1,11 +1,23 @@
 import Ember from 'ember';
 import ol from 'openlayers';
 
+import FixCalc from '../utils/fix-calc';
+
 export default Ember.Component.extend({
   ajax: Ember.inject.service(),
-  fixCalc: Ember.inject.service(),
 
   classNames: ['olFullscreen'],
+
+  fixCalc: null,
+
+  init() {
+    this._super(...arguments);
+
+    let ajax = this.get('ajax');
+
+    let fixCalc = FixCalc.create({ ajax });
+    this.set('fixCalc', fixCalc);
+  },
 
   didInsertElement() {
     let flights = this.get('flights');
