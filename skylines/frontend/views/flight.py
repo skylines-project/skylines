@@ -219,64 +219,64 @@ class NearFlightSchema(Schema):
 @flight_blueprint.route('/')
 @vary('accept')
 def index():
-    flight = FlightSchema().dump(g.flight).data
-
-    near_flights = FlightMeetings.get_meetings(g.flight).values()
-    near_flights = NearFlightSchema().dump(near_flights, many=True).data
-
-    comments = FlightCommentSchema().dump(g.flight.comments, many=True).data
-
-    phases_schema = FlightPhaseSchema(only=(
-        'circlingDirection',
-        'type',
-        'secondsOfDay',
-        'startTime',
-        'duration',
-        'altDiff',
-        'distance',
-        'vario',
-        'speed',
-        'glideRate',
-    ))
-
-    phases = phases_schema.dump(g.flight.phases, many=True).data
-
-    cruise_performance_schema = FlightPhaseSchema(only=(
-        'duration',
-        'fraction',
-        'altDiff',
-        'distance',
-        'vario',
-        'speed',
-        'glideRate',
-        'count',
-    ))
-
-    cruise_performance = cruise_performance_schema.dump(g.flight.cruise_performance).data
-
-    circling_performance_schema = FlightPhaseSchema(only=(
-        'circlingDirection',
-        'count',
-        'vario',
-        'fraction',
-        'duration',
-        'altDiff',
-    ))
-
-    circling_performance = circling_performance_schema.dump(g.flight.circling_performance, many=True).data
-    performance = dict(circling=circling_performance, cruise=cruise_performance)
-
-    contest_leg_schema = ContestLegSchema()
-    contest_legs = {}
-    for type in ['classic', 'triangle']:
-        legs = g.flight.get_contest_legs('olc_plus', type)
-        contest_legs[type] = contest_leg_schema.dump(legs, many=True).data
-
     mark_flight_notifications_read(g.flight)
 
     if 'application/json' in request.headers.get('Accept', ''):
+        flight = FlightSchema().dump(g.flight).data
+
         if 'extended' not in request.args:
             return jsonify(flight=flight)
+
+        near_flights = FlightMeetings.get_meetings(g.flight).values()
+        near_flights = NearFlightSchema().dump(near_flights, many=True).data
+
+        comments = FlightCommentSchema().dump(g.flight.comments, many=True).data
+
+        phases_schema = FlightPhaseSchema(only=(
+            'circlingDirection',
+            'type',
+            'secondsOfDay',
+            'startTime',
+            'duration',
+            'altDiff',
+            'distance',
+            'vario',
+            'speed',
+            'glideRate',
+        ))
+
+        phases = phases_schema.dump(g.flight.phases, many=True).data
+
+        cruise_performance_schema = FlightPhaseSchema(only=(
+            'duration',
+            'fraction',
+            'altDiff',
+            'distance',
+            'vario',
+            'speed',
+            'glideRate',
+            'count',
+        ))
+
+        cruise_performance = cruise_performance_schema.dump(g.flight.cruise_performance).data
+
+        circling_performance_schema = FlightPhaseSchema(only=(
+            'circlingDirection',
+            'count',
+            'vario',
+            'fraction',
+            'duration',
+            'altDiff',
+        ))
+
+        circling_performance = circling_performance_schema.dump(g.flight.circling_performance, many=True).data
+        performance = dict(circling=circling_performance, cruise=cruise_performance)
+
+        contest_leg_schema = ContestLegSchema()
+        contest_legs = {}
+        for type in ['classic', 'triangle']:
+            legs = g.flight.get_contest_legs('olc_plus', type)
+            contest_legs[type] = contest_leg_schema.dump(legs, many=True).data
 
         return jsonify(
             flight=flight,
@@ -286,17 +286,7 @@ def index():
             phases=phases,
             performance=performance)
 
-    return render_template(
-        'flights/map.jinja',
-        ids=map(lambda flight: flight.id, g.flights),
-        flight=g.flight,
-        flight_json=flight,
-        near_flights=near_flights,
-        other_flights=g.other_flights,
-        comments=comments,
-        contest_legs=contest_legs,
-        phases=phases,
-        performance=performance)
+    return render_template('flights/map.jinja')
 
 
 @flight_blueprint.route('/map')
