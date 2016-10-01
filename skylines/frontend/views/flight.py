@@ -289,11 +289,6 @@ def index():
     return render_template('ember-fullscreen.jinja', active_page='flights')
 
 
-@flight_blueprint.route('/map')
-def map_():
-    return redirect(url_for('.index'))
-
-
 @flight_blueprint.route('/json')
 def json():
     # Return HTTP Status code 304 if an upstream or browser cache already
