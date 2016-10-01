@@ -1,0 +1,31 @@
+<form action="/flights/upload/" method="post" enctype="multipart/form-data" target="upload-iframe" onsubmit={{action "submit"}}>
+  {{#if error}}
+    <div class="alert alert-danger" role="alert">{{error}}</div>
+  {{/if}}
+
+  {{#validated-block label=(t "igc-or-zip-files") validation=validations.attrs.files hasContent=files}}
+    <input type="file" name="files" multiple="multiple" onchange={{action "setFilesFromEvent"}} class="form-control">
+  {{/validated-block}}
+
+  {{#validated-block label=(t "pilot") validation=validations.attrs.pilotId}}
+    {{pilot-select clubMembers=clubMembers pilotId=pilotId onChange=(action (mut pilotId))}}
+  {{/validated-block}}
+
+  {{#if showPilotNameInput}}
+    {{validated-input
+      value=pilotName
+      validation=validations.attrs.pilotName
+      label=(t "pilot")
+      disabled=pending}}
+  {{/if}}
+
+  <input type="hidden" name="pilotId" value={{pilotId}}>
+  <input type="hidden" name="pilotName" value={{pilotName}}>
+  <input type="hidden" name="csrfToken" value={{csrfToken}}>
+
+  <button class="btn btn-primary btn-block" type="submit" disabled={{or pending (not validations.isValid)}}>
+    {{t (if pending "uploading" "upload")}}
+  </button>
+</form>
+
+<iframe name="upload-iframe" style="display: none"></iframe>
