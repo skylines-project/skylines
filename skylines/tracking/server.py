@@ -3,6 +3,7 @@ import struct
 from datetime import datetime, time, timedelta
 
 from gevent.server import DatagramServer
+from raven import Client as RavenClient
 
 from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.sql.expression import or_
@@ -259,7 +260,7 @@ class TrackingServer(DatagramServer):
             (host, unicode(pilot).encode('utf8', 'ignore'),
              unicode(user).encode('utf8', 'ignore')))
 
-    def handle(self, data, (host, port)):
+    def __handle(self, data, (host, port)):
         if len(data) < 16: return
 
         header = struct.unpack('!IHHQ', data[:16])
@@ -276,8 +277,20 @@ class TrackingServer(DatagramServer):
             elif header[2] == TYPE_USER_NAME_REQUEST:
                 self.username_request_received(host, port, header[3], data[16:])
 
+    def handle(self, data, address):
+        try:
+            self.__handle(data, address)
+        except Exception as e:
+            if self.raven:
+                self.raven.captureException()
+            else:
+                print e
+
     def serve_forever(self, **kwargs):
         if not self.app:
             raise RuntimeError('application not registered on server instance')
+
+        sentry_dsn = self.app.config.get('SENTRY_DSN')
+        self.raven = RavenClient(dsn=sentry_dsn) if sentry_dsn else None
 
         super(TrackingServer, self).serve_forever(**kwargs)
