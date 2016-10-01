@@ -76,6 +76,14 @@ export default Ember.Service.extend({
     }
   },
 
+  togglePlayback() {
+    if (this.get('isRunning')) {
+      this.stopPlayback();
+    } else {
+      this.startPlayback();
+    }
+  },
+
   onTick() {
     let time = this.get('time') + 1;
 

@@ -1,8 +1,6 @@
 import Ember from 'ember';
 
 export default Ember.Component.extend({
-  fixCalc: Ember.inject.service(),
-
   classNames: ['PlayButton', 'ol-unselectable'],
 
   click() {
@@ -14,11 +12,6 @@ export default Ember.Component.extend({
   },
 
   toggle() {
-    let service = this.get('fixCalc');
-    if (service.get('isRunning')) {
-      service.stopPlayback();
-    } else {
-      service.startPlayback();
-    }
+    this.getWithDefault('onToggle', Ember.K)();
   },
 });

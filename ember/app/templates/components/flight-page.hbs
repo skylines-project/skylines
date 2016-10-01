@@ -85,6 +85,8 @@
 {{flight-map
   flights=fixCalc.flights
   fixes=fixCalc.fixes
+  playbackEnabled=fixCalc.isRunning
+  onPlaybackToggle=(action "togglePlayback")
   phaseHighlightCoords=flightPhase.coordinates
   hoverEnabled=(not (or fixCalc.isRunning cesiumEnabled))
   defaultTime=fixCalc.defaultTime

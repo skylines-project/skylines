@@ -22,6 +22,8 @@
   {{flight-map
     flights=fixCalc.flights
     fixes=fixCalc.fixes
+    playbackEnabled=fixCalc.isRunning
+    onPlaybackToggle=(action "togglePlayback")
     hoverEnabled=(not (or fixCalc.isRunning cesiumEnabled))
     defaultTime=fixCalc.defaultTime
     onTimeChange=(action (mut fixCalc.time))
