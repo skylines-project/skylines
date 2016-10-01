@@ -17,8 +17,8 @@ const COLORS = [
   '#ffff00',
 ];
 
-export default Ember.Service.extend({
-  ajax: Ember.inject.service(),
+export default Ember.Object.extend({
+  ajax: null,
 
   flights: [],
 
@@ -53,8 +53,6 @@ export default Ember.Service.extend({
 
   init() {
     this._super(...arguments);
-    window.fixCalcService = this;
-
     this.set('flights', slFlightCollection.create());
   },
 
@@ -73,6 +71,14 @@ export default Ember.Service.extend({
     if (timer) {
       Ember.run.cancel(timer);
       this.set('timer', null);
+    }
+  },
+
+  togglePlayback() {
+    if (this.get('isRunning')) {
+      this.stopPlayback();
+    } else {
+      this.startPlayback();
     }
   },
 

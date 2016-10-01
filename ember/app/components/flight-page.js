@@ -1,11 +1,29 @@
 import Ember from 'ember';
 
+import FixCalc from '../utils/fix-calc';
+import FlighPhase from '../utils/flight-phase';
+
 export default Ember.Component.extend({
-  fixCalc: Ember.inject.service(),
-  flightPhase: Ember.inject.service(),
+  ajax: Ember.inject.service(),
   pinnedFlights: Ember.inject.service(),
 
   classNames: ['olFullscreen'],
+
+  fixCalc: null,
+  flightPhase: null,
+
+  init() {
+    this._super(...arguments);
+
+    let ajax = this.get('ajax');
+
+    let fixCalc = FixCalc.create({ ajax });
+    fixCalc.addFlight(this.get('_primaryFlightPath'));
+    this.set('fixCalc', fixCalc);
+
+    let flightPhase = FlighPhase.create({ fixCalc });
+    this.set('flightPhase', flightPhase);
+  },
 
   didInsertElement() {
     let fixCalc = this.get('fixCalc');
@@ -52,6 +70,14 @@ export default Ember.Component.extend({
   }),
 
   actions: {
+    togglePlayback() {
+      this.get('fixCalc').togglePlayback();
+    },
+
+    addFlight(data) {
+      this.get('fixCalc').addFlight(data);
+    },
+
     removeFlight(id) {
       let flights = this.get('fixCalc.flights');
       flights.removeObjects(flights.filterBy('id', id));

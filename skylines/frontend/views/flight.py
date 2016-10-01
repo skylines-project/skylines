@@ -18,12 +18,12 @@ from skylines.lib.geo import METERS_PER_DEGREE
 from skylines.lib.geoid import egm96_height
 from skylines.lib.vary import vary
 from skylines.model import (
-    User, Flight, FlightPhase, Location, FlightComment,
+    User, Flight, Location, FlightComment,
     Notification, Event, FlightMeetings, AircraftModel,
 )
 from skylines.model.event import create_flight_comment_notifications
 from skylines.model.flight import get_elevations_for_flight
-from skylines.schemas import fields, FlightSchema, FlightCommentSchema, Schema, ValidationError
+from skylines.schemas import fields, FlightSchema, FlightCommentSchema, FlightPhaseSchema, ContestLegSchema, Schema, ValidationError
 from skylines.worker import tasks
 from redis.exceptions import ConnectionError
 
@@ -57,16 +57,15 @@ def _patch_query(q):
 
 @flight_blueprint.before_request
 def _query_flights():
-    g.flights = get_requested_record_list(
+    flights = get_requested_record_list(
         Flight, g.flight_id, patch_query=_patch_query)
 
-    g.flight = g.flights[0]
-    g.other_flights = g.flights[1:]
+    g.flight = flights[0]
 
     if not g.flight.is_viewable(None):
         g.logout_next = url_for('index')
 
-    map(_reanalyse_if_needed, g.flights)
+    map(_reanalyse_if_needed, flights)
 
 
 @flight_blueprint.url_defaults
@@ -153,46 +152,6 @@ def _get_contest_traces(flight):
     return contest_traces
 
 
-PHASETYPE_IDS = {
-    FlightPhase.PT_POWERED: u'powered',
-    FlightPhase.PT_CIRCLING: u'circling',
-    FlightPhase.PT_CRUISE: u'cruise',
-}
-
-
-CIRCDIR_IDS = {
-    FlightPhase.CD_LEFT: u'left',
-    FlightPhase.CD_MIXED: u'mixed',
-    FlightPhase.CD_RIGHT: u'right',
-    FlightPhase.CD_TOTAL: u'total',
-}
-
-
-class FlightPhaseSchema(Schema):
-    circlingDirection = fields.Function(lambda phase: CIRCDIR_IDS.get(phase.circling_direction))
-    type = fields.Function(lambda phase: PHASETYPE_IDS.get(phase.phase_type))
-    secondsOfDay = fields.Int(attribute='seconds_of_day')
-    startTime = fields.DateTime(attribute='start_time')
-    duration = fields.TimeDelta()
-    altDiff = fields.Float(attribute='alt_diff')
-    distance = fields.Float()
-    vario = fields.Float()
-    speed = fields.Float()
-    glideRate = fields.Float(attribute='glide_rate')
-    fraction = fields.Float()
-    count = fields.Int()
-
-
-class ContestLegSchema(Schema):
-    distance = fields.Float()
-    duration = fields.TimeDelta()
-    start = fields.Int(attribute='seconds_of_day')
-    climbDuration = fields.TimeDelta(attribute='climb_duration')
-    climbHeight = fields.Float(attribute='climb_height')
-    cruiseDistance = fields.Float(attribute='cruise_distance')
-    cruiseHeight = fields.Float(attribute='cruise_height')
-
-
 def mark_flight_notifications_read(flight):
     if not g.current_user:
         return
@@ -219,64 +178,64 @@ class NearFlightSchema(Schema):
 @flight_blueprint.route('/')
 @vary('accept')
 def index():
-    flight = FlightSchema().dump(g.flight).data
-
-    near_flights = FlightMeetings.get_meetings(g.flight).values()
-    near_flights = NearFlightSchema().dump(near_flights, many=True).data
-
-    comments = FlightCommentSchema().dump(g.flight.comments, many=True).data
-
-    phases_schema = FlightPhaseSchema(only=(
-        'circlingDirection',
-        'type',
-        'secondsOfDay',
-        'startTime',
-        'duration',
-        'altDiff',
-        'distance',
-        'vario',
-        'speed',
-        'glideRate',
-    ))
-
-    phases = phases_schema.dump(g.flight.phases, many=True).data
-
-    cruise_performance_schema = FlightPhaseSchema(only=(
-        'duration',
-        'fraction',
-        'altDiff',
-        'distance',
-        'vario',
-        'speed',
-        'glideRate',
-        'count',
-    ))
-
-    cruise_performance = cruise_performance_schema.dump(g.flight.cruise_performance).data
-
-    circling_performance_schema = FlightPhaseSchema(only=(
-        'circlingDirection',
-        'count',
-        'vario',
-        'fraction',
-        'duration',
-        'altDiff',
-    ))
-
-    circling_performance = circling_performance_schema.dump(g.flight.circling_performance, many=True).data
-    performance = dict(circling=circling_performance, cruise=cruise_performance)
-
-    contest_leg_schema = ContestLegSchema()
-    contest_legs = {}
-    for type in ['classic', 'triangle']:
-        legs = g.flight.get_contest_legs('olc_plus', type)
-        contest_legs[type] = contest_leg_schema.dump(legs, many=True).data
-
     mark_flight_notifications_read(g.flight)
 
     if 'application/json' in request.headers.get('Accept', ''):
+        flight = FlightSchema().dump(g.flight).data
+
         if 'extended' not in request.args:
             return jsonify(flight=flight)
+
+        near_flights = FlightMeetings.get_meetings(g.flight).values()
+        near_flights = NearFlightSchema().dump(near_flights, many=True).data
+
+        comments = FlightCommentSchema().dump(g.flight.comments, many=True).data
+
+        phases_schema = FlightPhaseSchema(only=(
+            'circlingDirection',
+            'type',
+            'secondsOfDay',
+            'startTime',
+            'duration',
+            'altDiff',
+            'distance',
+            'vario',
+            'speed',
+            'glideRate',
+        ))
+
+        phases = phases_schema.dump(g.flight.phases, many=True).data
+
+        cruise_performance_schema = FlightPhaseSchema(only=(
+            'duration',
+            'fraction',
+            'altDiff',
+            'distance',
+            'vario',
+            'speed',
+            'glideRate',
+            'count',
+        ))
+
+        cruise_performance = cruise_performance_schema.dump(g.flight.cruise_performance).data
+
+        circling_performance_schema = FlightPhaseSchema(only=(
+            'circlingDirection',
+            'count',
+            'vario',
+            'fraction',
+            'duration',
+            'altDiff',
+        ))
+
+        circling_performance = circling_performance_schema.dump(g.flight.circling_performance, many=True).data
+        performance = dict(circling=circling_performance, cruise=cruise_performance)
+
+        contest_leg_schema = ContestLegSchema()
+        contest_legs = {}
+        for type in ['classic', 'triangle']:
+            legs = g.flight.get_contest_legs('olc_plus', type)
+            contest_legs[type] = contest_leg_schema.dump(legs, many=True).data
 
         return jsonify(
             flight=flight,
@@ -286,22 +245,7 @@ def index():
             phases=phases,
             performance=performance)
 
-    return render_template(
-        'flights/map.jinja',
-        ids=map(lambda flight: flight.id, g.flights),
-        flight=g.flight,
-        flight_json=flight,
-        near_flights=near_flights,
-        other_flights=g.other_flights,
-        comments=comments,
-        contest_legs=contest_legs,
-        phases=phases,
-        performance=performance)
-
-
-@flight_blueprint.route('/map')
-def map_():
-    return redirect(url_for('.index'))
+    return render_template('ember-fullscreen.jinja', active_page='flights')
 
 
 @flight_blueprint.route('/json')

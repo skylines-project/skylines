@@ -3,6 +3,7 @@ from marshmallow import Schema as _Schema
 from . import fields, validate
 
 from skylines.lib.formatter.units import DISTANCE_UNITS, SPEED_UNITS, LIFT_UNITS, ALTITUDE_UNITS
+from skylines.model.flight_phase import FlightPhase
 
 AIRCRAFT_MODEL_TYPES = {
     1: 'glider',
@@ -181,3 +182,43 @@ class TrackingFixSchema(Schema):
     elevation = fields.Integer()
 
     pilot = fields.Nested(UserSchema, only=('id', 'name'))
+
+
+PHASETYPE_IDS = {
+    FlightPhase.PT_POWERED: u'powered',
+    FlightPhase.PT_CIRCLING: u'circling',
+    FlightPhase.PT_CRUISE: u'cruise',
+}
+
+
+CIRCDIR_IDS = {
+    FlightPhase.CD_LEFT: u'left',
+    FlightPhase.CD_MIXED: u'mixed',
+    FlightPhase.CD_RIGHT: u'right',
+    FlightPhase.CD_TOTAL: u'total',
+}
+
+
+class FlightPhaseSchema(Schema):
+    circlingDirection = fields.Function(lambda phase: CIRCDIR_IDS.get(phase.circling_direction))
+    type = fields.Function(lambda phase: PHASETYPE_IDS.get(phase.phase_type))
+    secondsOfDay = fields.Int(attribute='seconds_of_day')
+    startTime = fields.DateTime(attribute='start_time')
+    duration = fields.TimeDelta()
+    altDiff = fields.Float(attribute='alt_diff')
+    distance = fields.Float()
+    vario = fields.Float()
+    speed = fields.Float()
+    glideRate = fields.Float(attribute='glide_rate')
+    fraction = fields.Float()
+    count = fields.Int()
+
+
+class ContestLegSchema(Schema):
+    distance = fields.Float()
+    duration = fields.TimeDelta()
+    start = fields.Int(attribute='seconds_of_day')
+    climbDuration = fields.TimeDelta(attribute='climb_duration')
+    climbHeight = fields.Float(attribute='climb_height')
+    cruiseDistance = fields.Float(attribute='cruise_distance')
+    cruiseHeight = fields.Float(attribute='cruise_height')

@@ -217,7 +217,8 @@ const MapClickHandler = Ember.Object.extend({
    */
   getNearFlights(lon, lat, time, flight) {
     let flights = this.get('flights');
-    if (!flights) return;
+    let addFlight = this.get('addFlight');
+    if (!flights || !addFlight) return;
 
     let req = $.ajax(`/flights/${flight.get('id')}/near?lon=${lon}&lat=${lat}&time=${time}`);
 
@@ -229,7 +230,7 @@ const MapClickHandler = Ember.Object.extend({
         if (flights.findBy('id', flight['sfid']))
           continue;
 
-        window.fixCalcService.addFlight(flight);
+        addFlight(flight);
       }
     });
 
@@ -301,8 +302,8 @@ const MapClickHandler = Ember.Object.extend({
   },
 });
 
-export default function slMapClickHandler(map, flights) {
-  return MapClickHandler.create({ map, flights });
+export default function slMapClickHandler(map, flights, addFlight) {
+  return MapClickHandler.create({ map, flights, addFlight });
 }
 
 

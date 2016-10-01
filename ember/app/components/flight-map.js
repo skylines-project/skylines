@@ -16,7 +16,7 @@ export default BaseMapComponent.extend({
     map.on('moveend', this._handleMoveEnd, this);
     map.on('pointermove', this._handlePointerMove, this);
 
-    slMapClickHandler(this.get('map'), this.get('flights'));
+    slMapClickHandler(this.get('map'), this.get('flights'), this.get('addFlight'));
   },
 
   willDestroyElement() {
