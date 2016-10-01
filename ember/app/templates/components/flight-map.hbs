@@ -1,9 +1,5 @@
 {{layer-switcher map=map}}
 
-{{#if fullscreenElement}}
-  {{fullscreen-button fullscreenElement=fullscreenElement}}
-{{/if}}
-
 {{#if flights}}
   {{cesium-button enabled=cesiumEnabled onEnable=(action "cesiumEnabled") onDisable=(action "cesiumDisabled") style="top:200px"}}
   {{flight-path-layer map=map flights=flights}}
