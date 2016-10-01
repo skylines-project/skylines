@@ -3,7 +3,6 @@ import RSVP from 'rsvp';
 
 export default Ember.Route.extend({
   ajax: Ember.inject.service(),
-  fixCalc: Ember.inject.service(),
 
   model() {
     let ajax = this.get('ajax');
@@ -19,7 +18,6 @@ export default Ember.Route.extend({
     this._super(...arguments);
     controller.set('ids', this.modelFor('flight').ids);
     controller.set('model', model.data);
-
-    this.get('fixCalc').addFlight(model.path);
+    controller.set('_primaryFlightPath', model.path);
   },
 });

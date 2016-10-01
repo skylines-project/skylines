@@ -7,6 +7,11 @@ export default Ember.Component.extend({
 
   classNames: ['olFullscreen'],
 
+  init() {
+    this._super(...arguments);
+    this.get('fixCalc').addFlight(this.get('_primaryFlightPath'));
+  },
+
   didInsertElement() {
     let fixCalc = this.get('fixCalc');
 
