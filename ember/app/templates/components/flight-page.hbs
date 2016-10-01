@@ -82,11 +82,9 @@
   </div>
 </div>
 
-{{flight-map
+{{#flight-map
   flights=fixCalc.flights
   fixes=fixCalc.fixes
-  playbackEnabled=fixCalc.isRunning
-  onPlaybackToggle=(action "togglePlayback")
   phaseHighlightCoords=flightPhase.coordinates
   hoverEnabled=(not (or fixCalc.isRunning cesiumEnabled))
   defaultTime=fixCalc.defaultTime
@@ -96,6 +94,10 @@
   addFlight=(action "addFlight")
   fullscreenElement="#fullscreen-content"
   class="olFullscreen sidebar-map"}}
+
+  {{playback-button isRunning=fixCalc.isRunning onToggle=(action "togglePlayback")}}
+
+{{/flight-map}}
 
 <div id="barogram_panel" class="map-bottom-panel map-overlay">
   <div style="overflow: auto; max-height: 115px">
