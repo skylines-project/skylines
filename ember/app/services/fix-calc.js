@@ -53,8 +53,6 @@ export default Ember.Service.extend({
 
   init() {
     this._super(...arguments);
-    window.fixCalcService = this;
-
     this.set('flights', slFlightCollection.create());
   },
 
