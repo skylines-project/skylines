@@ -57,16 +57,15 @@ def _patch_query(q):
 
 @flight_blueprint.before_request
 def _query_flights():
-    g.flights = get_requested_record_list(
+    flights = get_requested_record_list(
         Flight, g.flight_id, patch_query=_patch_query)
 
-    g.flight = g.flights[0]
-    g.other_flights = g.flights[1:]
+    g.flight = flights[0]
 
     if not g.flight.is_viewable(None):
         g.logout_next = url_for('index')
 
-    map(_reanalyse_if_needed, g.flights)
+    map(_reanalyse_if_needed, flights)
 
 
 @flight_blueprint.url_defaults
