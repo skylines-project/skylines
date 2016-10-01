@@ -1,9 +1,8 @@
 import Ember from 'ember';
 import getNextSmallerIndex from '../utils/next-smaller-index';
 
-export default Ember.Service.extend({
-  fixCalc: Ember.inject.service(),
-
+export default Ember.Object.extend({
+  fixCalc: null,
   selection: null,
 
   flight: Ember.computed.readOnly('fixCalc.flights.firstObject'),

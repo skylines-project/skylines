@@ -1,15 +1,23 @@
 import Ember from 'ember';
 
+import FlighPhase from '../utils/flight-phase';
+
 export default Ember.Component.extend({
   fixCalc: Ember.inject.service(),
-  flightPhase: Ember.inject.service(),
   pinnedFlights: Ember.inject.service(),
 
   classNames: ['olFullscreen'],
 
+  flightPhase: null,
+
   init() {
     this._super(...arguments);
-    this.get('fixCalc').addFlight(this.get('_primaryFlightPath'));
+
+    let fixCalc = this.get('fixCalc');
+    fixCalc.addFlight(this.get('_primaryFlightPath'));
+
+    let flightPhase = FlighPhase.create({ fixCalc });
+    this.set('flightPhase', flightPhase);
   },
 
   didInsertElement() {
