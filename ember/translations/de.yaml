@@ -43,6 +43,9 @@ delete: Löschen
 distance: Distanz
 distance-abbr: Dist.
 distance-flights: Streckenflüge
+DISTANCE-on-DATE: '{distance} am {date}'
+DISTANCE-on-DATE-by-PILOT: '{distance} am {date} von {pilot}'
+DISTANCE-on-DATE-by-PILOT-and-COPILOT: '{distance} am {date} von {pilot} und {copilot}'
 duplicate-file: Doppelte Datei
 duration: Dauer
 edit: Bearbeiten
@@ -79,6 +82,9 @@ latest: Letzter
 n-avg-distance-per-flight: '{distance} pro Flug'
 leg-statistics: Schenkel-Statistik
 live-tracking: Live Tracking
+live-tracking-of-PILOT: Live Tracking von {pilot}
+live-tracking-of-PILOT-and-PILOT2: Live Tracking von {pilot} und {pilot2}
+live-tracking-of-PILOT-and-NUM-other-pilots: Live Tracking von {pilot} und {num} anderen Piloten
 n-avg-hours-per-flight: '{num} Std. pro Flug'
 live-tracking-key: Live Tracking Key
 mark-all-as-read: Markiere alle als gelesen
@@ -86,6 +92,7 @@ members: Mitglieder
 members-of-CLUB: Mitglieder <small>von <a href="{clubURL}">{club}</a></small>
 n-comments: '{numComments, plural, =1 {1 Kommentar} other {# Kommentare}}'
 n-hours: '{num} Stunden'
+NUM-pilots: '{num, plural, =1 {1 Pilot} other {# Piloten}}'
 name: Name
 nearest-airport: Nächster Flugplatz
 new: Neu
@@ -140,6 +147,7 @@ takeoff: Start
 takeoff-locations: Startplatz
 takeoff-time: Startzeit
 the-skylines-team: Das SkyLines Team
+this-is-you: Das bist du
 time: Zeit
 TIME-by-USER: '{time}<br/>von <a href="{userURL}">{user}</a>'
 timeline: Timeline

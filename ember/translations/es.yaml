@@ -6,6 +6,7 @@ airport: Aeropuerto
 AIRPORT-at-TIME: <a>{airport}</a><br/>a las {time}
 airports: Aeródromos
 all: Todos
+all-time: Todos
 altitude: Altura
 avg-speed: Velocidad media
 avg-speed-abbr: Velocidad media
@@ -18,16 +19,22 @@ changing-password: Cambiando contraseña...
 choose-aircraft: Elige un avión
 choose-club: Elige un club
 choose-pilot: Elige un piloto
+circling-performance: Rendimiento en térmica
+climb-percentage-abbr: Porcentaje de ascenso
 club: Club
 club-exists-already: Un club con este nombre ya existe
+club-has-been-changed: Tu club ha sido cambiado.
 club-was-registered: Creación del club completada con éxito.
 clubs: Clubes
 comments: Comentarios
+competition-id: Matrícula de competición
 confirm-password: Confirmar contraseña
 copilot: Copiloto
+count: Cantidad
 create: Crear
 created: Creado
 creating: Creando...
+cruise-performance: Rendimiento en ruta
 current-password: Contraseña actual
 date: Fecha
 date-missing-in-igc-file: Documento IGC sin fecha
@@ -35,6 +42,8 @@ delay: Retraso
 delete: Eliminar
 distance: Distancia
 distance-abbr: Dist.
+distance-flights: Vuelos de distancia
+duplicate-file: Archivo duplicado
 duration: Duración
 edit: Editar
 edit-club: Editar club
@@ -43,6 +52,7 @@ email-address: Dirección de correo electrónico
 email-exists-already: Esta dirección de correo electrónico ya existe.
 email-unknown: Dirección de correo electrónico desconocida.
 fai-triangle-distance: Distancia triángulo FAI
+failed-to-parse-file: Fallo al analizar el archivo
 first-last: Primer / Último contacto
 first-name: Nombre
 flight-date-in-future: Fecha está en el futuro
@@ -52,64 +62,188 @@ follow: Seguir
 followers: Seguidores
 following: 'Siguiendo a '
 friends: Amigos
+generate-new-key: Crear nuevo código
+generating-new-key: Creando nuevo código
 glide-rate: Relación de planeo
+glide-rate-abbr: Planeo
+glides: Planeos
+how-to-use-live-tracking: ¿Cómo utilizar el seguimiento en vivo?
+imprint: Pie de imprenta
+index-INDEX: 'Desventaja: {index}'
 landing: Aterrizaje
 landing-time: Hora de aterrizaje
+last-12-months: Útimo año
+last-fix: Última revisión
 last-name: Apellido
+latest: Último
+n-avg-distance-per-flight: media de {distance} por vuelo
+leg-statistics: Estadísticas de tramo
 live-tracking: Seguimiento en vivo
+n-avg-hours-per-flight: media de {num} horas por vuelo
+live-tracking-key: Clave de seguimiento en vivo
 mark-all-as-read: Marcar todos como leidos
 members: Miembros
 members-of-CLUB: Miembros <small> de <a>{club}</a></small>
+n-comments: '{numComments, plural, =1 {un comentario} other {# comentarios}}'
 n-hours: '{num} horas'
+NUM-pilots: '{num, plural, =1 {un piloto} other {# pilotos}}'
 name: Apellidos
 nearest-airport: Aeródromo más cercano
 new: Nuevo
+newer: Más nuevo
 no-airports-found: No se encontró ningún aeródromo.
+no-club: Sin club
+no-clubs-found: No se encontró ningún club.
+no-flight-in-file: No se ha encontrado ningún vuelo en el archivo.
+no-flight-saved: Ningún vuelo ha sido guardado.
+no-flights-found: No se encontraron vuelos.
+no-pilots-found: No se encontraron pilotos.
+no-data: Datos no encontrados.
 notifications: Notificaciones
 olc-distance: Distancia OLC
+older: Más antiguo
 other-pilots: Otros pilotos
+overview: Resumen
 password: Contraseña
+password-recovered: Tu contraseña ha sido cambiada con el código de recuperación de cuenta.
 password-was-changed: Tu contraseña ha sido cambiada
 passwords-do-not-match: Las contraseñas no coinciden
+phase-statistics: Estadísticas de fase.
 pilot: Piloto
 pilots: Pilotos
+pilots-must-not-be-equal: Los pilotos deben ser diferentes.
+pin-button-title: Activa esto para mostrar el vuelo sobre los otros en el mapa.
+pinned: Anclado
+POINTS-points-abbr: '{points} puntos.'
+profile: Perfil
+publish: Publicar
+publish-flights: '{num, plural, =1 {Publicar vuelo} other {Publicar vuelos}}'
+publishing: Publicando
+ranking: Ranking
+recover-password: Recuperar contraseña
+recovering: Recuperando...
+recovery-mail-sent: ¡Comprueba tu correo! Te hemos enviado un enlace para recuperar tu contraseña.
+register: Registrar
+registering: Registrando...
+register-club: Registrar club
+registration: Matrícula
+score: Puntuación
+scoring-start-time: Tiempo inicial de puntuación
+scoring-end-time: Tiempo final de puntuación
+season-YEAR: Temporada {year}
+settings: Ajustes
+settings-have-been-saved: Tus ajustes han sido guardados
+show: Mostrar
 speed: Velocidad
 start: Partida
 statistics: Estadísticas
+status: Estado
+success: Éxito
 takeoff: Despegue
 takeoff-locations: Lugares de despegue
 takeoff-time: Tiempo de despegue
+the-skylines-team: El equipo de SkyLines
 time: Tiempo
+TIME-by-USER: '{time}<br/>de <a>{user}</a>'
+timeline: Cronología
 total: Total
+total-score: Puntuación total
+tracking-callsign: Distintivo de seguimiento
+tracking-delay: Retraso de seguimiento
+tracking-delay-choice: '{retraso, plural, =0 {ninguno} =1 {un minuto} other {# minutos}}'
 triangle: Trángulo
+unassigned: No asignado
+unfollow: Dejar de seguir
 unknown: Desconocido
+unknown-or-other-person: Desconocido u otra persona
+unspecified: Indefinido
+uploaded: Publicado
+used-airspaces: Espacios aéreos empleados
 users: Usuarios
 verify-flights-and-publish: Confirma los datos del vuelo / los vuelos y pulsa "Publicar vuelo(s)" para publicar tus vuelos.
 website: Página web
+wingmen: Pilotos de flanco
+wrong-current-password: Compruebe su contraseña actual
 year: Año
 you-have-no-notifications: No tienes notificaciones.
 your-flights-have-been-saved: Tus vuelos han sido guardados.
 search:
   search: Buscar
+  search-for-TEXT: Buscar <small> "{text}"</small>
+  no-search-text: Introduzca algo en la barra de búsqueda sobre este texto.
+  no-results: No se encontraron resultados  para su búsqueda... Lo sentimos.
 timeline-events:
+  club-join:
+    message1: <strong><a>{actor}</a></strong> se ha unido al <strong><a>{club}</a></strong>.
+    message2: Te has unido a <strong><a>{club}</a></strong>
+  flight-comment:
+    message1: <strong><a>{actor}</a></strong> ha comentado un vuelo de <strong>{distance}</strong> del <strong>{date}</strong>.
+    message2: Tú comentaste  un vuelo de <strong>{distance}</strong> del <strong>{date}</strong>.
+    message3: <strong><a>{actor}</a></strong> ha comentado tu vuelo de  <strong>{distance}</strong> del <strong>{date}</strong>.
+    message4: Tú has comentado un vuelo de <strong>{distance}</strong> del <strong>{date}</strong>.
+  flight-upload:
+    message1: <strong><a>{actor}</a></strong>ha publicado un vuelo de <strong>{distance}</strong> del <strong>{date}</strong>.
+    message2: Tú has subido un vuelo de <strong>{distance}</strong> del <strong>{date}</strong>.
   follower:
+    message1: <strong><a>{actor}</a></strong> ha empezado a seguir a <strong><a>{user}</a></strong>.
+    message2: Tú has empezado a seguir a <strong><a>{user}</a></strong>.
     message3: <strong><a>{actor}</a></strong> ha comenzado a seguirte.
+  new-user:
+    message1: <strong><a>{actor}</a></strong> se ha unido a SkyLines.
+    message2: Te has unido a SkyLines
 flight-phase:
   powered: A motor
+  circlingLeft: Vueltas a derecha
+  circlingRight: Vueltas a izquierda
+  circlingMixed: Vueltas mixtas
+  cruise: Planeo
 circling-direction:
   left: Izquierda
   right: Derecha
+  mixed: Mixto
   total: Total
 units:
   title: Unidades
   distance: Unidad de distancia
   speed: Unidad de velocidad
+  lift: Unidad de sustentación
   altitude: Unidad de altura
   presets:
+    american: Americano (imperial)
+    australian: Australiano (métrico, altura en imperial)
+    british: Británico (imperial, distancia en km)
     custom: Personalizado
+    european: Europeo (métrico)
 errors:
+  description: Este campo
+  inclusion: '  {description} no está incluido en la lista'
+  exclusion: '  {description} está reservado'
+  invalid: '{description} no es válido'
   confirmation: '{description} no coincide con {on}'
   accepted: '{description} debe ser aceptado'
+  empty: '  {description} no puede estar vacío'
+  blank: '  {description} no puede estar vacío'
+  present: '  {description} debe quedar vacío'
+  collection: '{description} debe ser una lista'
+  singular: '{description} no puede ser una lista'
+  tooLong: ' {description} es demasiado largo (sólo se aceptan {max} carácteres)'
+  tooShort: ' {description} es demasiado corto (deben ser al menos {min} carácteres)'
+  before: '{description} debe estar antes de {before}'
+  after: '{description} debe estar después de {after}'
+  wrongDateFormat: '{description} tiene que tener el formato{format}'
+  wrongLength: '{description} tiene una longitud errónea (deben ser {is} carácteres)'
+  notANumber: '{description} debe ser un número'
+  notAnInteger: '{description} debe ser un número natural'
+  greaterThan: '{description} debe ser mayor que {gt}'
+  greaterThanOrEqualTo: ' {description} debe ser mayor o igual a {gte}'
+  equalTo: '{description} debe ser igual que {is}'
+  lessThan: '{description} debe ser menos que {lt}'
+  lessThanOrEqualTo: '{description} debe ser igual o menos que {lte}'
+  otherThan: '{description} no puede ser {value}'
+  odd: '{description} debe ser impar'
+  even: '{description} debe ser par'
+  positive: '{description} debe ser un número positivo'
+  date: '{description} debe ser una fecha válida.'
   email: '{description} tiene que ser una dirección de correo electrónico válida'
   phone: '{description} tiene que ser un número de teléfono valido'
   url: '{description} tiene que ser una URL válida'
