@@ -2,12 +2,3 @@
 {% set active_page = "flights" %}
 {% set use_ember = true %}
 {% set openlayers = true %}
-
-
-{% from 'flights/meta-tags.jinja' import flight_meta_tags with context %}
-
-
-{%- block head %}
-{{ super() }}
-{{ flight_meta_tags(flight) }}
-{%- endblock %}
