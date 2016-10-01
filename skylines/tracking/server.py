@@ -99,6 +99,7 @@ class TrackingServer(DatagramServer):
                         timedelta(days=1))
         else:
             log("bad time stamp: " + str(time_of_day))
+            fix.time = datetime.utcnow()
 
         fix.time_visible = fix.time + timedelta(minutes=pilot.tracking_delay)
 
