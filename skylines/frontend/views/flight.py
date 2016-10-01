@@ -286,7 +286,7 @@ def index():
             phases=phases,
             performance=performance)
 
-    return render_template('flights/map.jinja')
+    return render_template('ember-fullscreen.jinja', active_page='flights')
 
 
 @flight_blueprint.route('/map')
