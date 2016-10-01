@@ -33,7 +33,7 @@
   {{#if flight.scoreDate}}
     <tr>
       <th>{{t "date"}}</th>
-      <td><a href="/flights/date/{{flight.scoreDate}}">{{format-date flight.scoreDate format="ddmmyyyy"}}</a></td>
+      <td><a href="/flights/date/{{flight.scoreDate}}">{{format-date flight.scoreDate format="ddmmyyyy" timeZone="UTC"}}</a></td>
     </tr>
   {{/if}}
 
