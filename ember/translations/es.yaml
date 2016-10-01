@@ -3,7 +3,7 @@ add-comment: Añadir comentario
 aircraft: Avión
 aircraft-type: Tipo de avión
 airport: Aeropuerto
-AIRPORT-at-TIME: <a>{airport}</a><br/>a las {time}
+AIRPORT-at-TIME: <a href="{airportURL}">{airport}</a><br/>a las {time}
 airports: Aeródromos
 all: Todos
 all-time: Todos
@@ -83,7 +83,7 @@ n-avg-hours-per-flight: media de {num} horas por vuelo
 live-tracking-key: Clave de seguimiento en vivo
 mark-all-as-read: Marcar todos como leidos
 members: Miembros
-members-of-CLUB: Miembros <small> de <a>{club}</a></small>
+members-of-CLUB: Miembros <small> de <a href="{clubURL}">{club}</a></small>
 n-comments: '{numComments, plural, =1 {un comentario} other {# comentarios}}'
 n-hours: '{num} horas'
 NUM-pilots: '{num, plural, =1 {un piloto} other {# pilotos}}'
@@ -144,7 +144,7 @@ takeoff-locations: Lugares de despegue
 takeoff-time: Tiempo de despegue
 the-skylines-team: El equipo de SkyLines
 time: Tiempo
-TIME-by-USER: '{time}<br/>de <a>{user}</a>'
+TIME-by-USER: '{time}<br/>de <a href="{userURL}">{user}</a>'
 timeline: Cronología
 total: Total
 total-score: Puntuación total
@@ -174,22 +174,22 @@ search:
   no-results: No se encontraron resultados  para su búsqueda... Lo sentimos.
 timeline-events:
   club-join:
-    message1: <strong><a>{actor}</a></strong> se ha unido al <strong><a>{club}</a></strong>.
-    message2: Te has unido a <strong><a>{club}</a></strong>
+    message1: <strong><a href="{actorURL}">{actor}</a></strong> se ha unido al <strong><a href="{clubURL}">{club}</a></strong>.
+    message2: Te has unido a <strong><a href="{clubURL}">{club}</a></strong>
   flight-comment:
-    message1: <strong><a>{actor}</a></strong> ha comentado un vuelo de <strong>{distance}</strong> del <strong>{date}</strong>.
+    message1: <strong><a href="{actorURL}">{actor}</a></strong> ha comentado un vuelo de <strong>{distance}</strong> del <strong>{date}</strong>.
     message2: Tú comentaste  un vuelo de <strong>{distance}</strong> del <strong>{date}</strong>.
-    message3: <strong><a>{actor}</a></strong> ha comentado tu vuelo de  <strong>{distance}</strong> del <strong>{date}</strong>.
+    message3: <strong><a href="{actorURL}">{actor}</a></strong> ha comentado tu vuelo de  <strong>{distance}</strong> del <strong>{date}</strong>.
     message4: Tú has comentado un vuelo de <strong>{distance}</strong> del <strong>{date}</strong>.
   flight-upload:
-    message1: <strong><a>{actor}</a></strong>ha publicado un vuelo de <strong>{distance}</strong> del <strong>{date}</strong>.
+    message1: <strong><a href="{actorURL}">{actor}</a></strong>ha publicado un vuelo de <strong>{distance}</strong> del <strong>{date}</strong>.
     message2: Tú has subido un vuelo de <strong>{distance}</strong> del <strong>{date}</strong>.
   follower:
-    message1: <strong><a>{actor}</a></strong> ha empezado a seguir a <strong><a>{user}</a></strong>.
-    message2: Tú has empezado a seguir a <strong><a>{user}</a></strong>.
-    message3: <strong><a>{actor}</a></strong> ha comenzado a seguirte.
+    message1: <strong><a href="{actorURL}">{actor}</a></strong> ha empezado a seguir a <strong><a href="{userURL}">{user}</a></strong>.
+    message2: Tú has empezado a seguir a <strong><a href="{userURL}">{user}</a></strong>.
+    message3: <strong><a href="{actorURL}">{actor}</a></strong> ha comenzado a seguirte.
   new-user:
-    message1: <strong><a>{actor}</a></strong> se ha unido a SkyLines.
+    message1: <strong><a href="{actorURL}">{actor}</a></strong> se ha unido a SkyLines.
     message2: Te has unido a SkyLines
 flight-phase:
   powered: A motor

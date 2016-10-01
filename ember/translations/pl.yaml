@@ -2,7 +2,7 @@ add-comment: Dodaj komentarz
 aircraft: Samolot
 aircraft-type: Rodzaj samolotu
 airport: Lotnisko
-AIRPORT-at-TIME: <a>{airport}</a><br/> o {time}
+AIRPORT-at-TIME: <a href="{airportURL}">{airport}</a><br/> o {time}
 altitude: Wysokość
 avg-speed-abbr: Śr. prędkość
 avg-vario-abbr: Śr. wario
