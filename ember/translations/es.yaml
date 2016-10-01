@@ -150,7 +150,7 @@ total: Total
 total-score: Puntuación total
 tracking-callsign: Distintivo de seguimiento
 tracking-delay: Retraso de seguimiento
-tracking-delay-choice: '{retraso, plural, =0 {ninguno} =1 {un minuto} other {# minutos}}'
+tracking-delay-choice: '{delay, plural, =0 {Ninguno} =1 {1 minuto} other {# minutos}}'
 triangle: Trángulo
 unassigned: No asignado
 unfollow: Dejar de seguir
