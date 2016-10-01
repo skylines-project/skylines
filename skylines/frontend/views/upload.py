@@ -9,6 +9,7 @@ from collections import namedtuple
 
 from flask import Blueprint, render_template, request, flash, g, current_app, abort, make_response, jsonify
 from flask.ext.babel import _, lazy_gettext as l_
+from flask_wtf.csrf import generate_csrf, validate_csrf
 from redis.exceptions import ConnectionError
 from sqlalchemy.sql.expression import func
 
@@ -148,32 +149,54 @@ def _encode_flight_path(fp, qnh):
                 igc_start_time=fp[0].datetime, igc_end_time=fp[-1].datetime)
 
 
-@upload_blueprint.route('/', methods=('GET', 'POST'))
+@upload_blueprint.route('/csrf')
+@login_required(l_("You have to login to upload flights."))
+def csrf():
+    if not g.current_user:
+        return jsonify(), 403
+
+    return jsonify(token=generate_csrf())
+
+
+@upload_blueprint.route('/')
 @login_required(l_("You have to login to upload flights."))
 def index():
-    # Create/parse file selection form
-    form = UploadForm(pilot=g.current_user.id)
-
-    if form.validate_on_submit():
-        return index_post(form)
-
-    return render_template('upload/form.jinja', form=form)
+    return render_template('ember-page.jinja', active_page='upload')
 
 
-def index_post(form):
+@upload_blueprint.route('/', methods=('POST',))
+def index_post():
+    if not g.current_user:
+        return jsonify(error='authentication-required'), 403
+
+    form = request.form
+
+    if not validate_csrf(form.get('csrfToken')):
+        return jsonify(error='invalid-csrf-token'), 403
+
+    if form.get('pilotId') == u'':
+        form = form.copy()
+        form.pop('pilotId')
+
+    try:
+        data = FlightSchema(only=('pilotId', 'pilotName')).load(form).data
+    except ValidationError, e:
+        return jsonify(error='validation-failed', fields=e.messages), 422
+
     user = g.current_user
 
-    pilot_id = form.pilot.data if form.pilot.data != 0 else None
-    pilot = pilot_id and User.get(int(pilot_id))
+    pilot_id = data.get('pilot_id')
+    pilot = pilot_id and User.get(pilot_id)
     pilot_id = pilot and pilot.id
 
     club_id = (pilot and pilot.club_id) or user.club_id
 
     results = []
-    success = False
+
+    _files = request.files.getlist('files')
 
     prefix = 0
-    for name, f in iterate_upload_files(form.file.raw_data):
+    for name, f in iterate_upload_files(_files):
         prefix += 1
         filename = files.sanitise_filename(name)
         filename = files.add_file(filename, f)
@@ -200,7 +223,7 @@ def index_post(form):
 
         flight = Flight()
         flight.pilot_id = pilot_id
-        flight.pilot_name = form.pilot_name.data if form.pilot_name.data else None
+        flight.pilot_name = data.get('pilot_name')
         flight.club_id = club_id
         flight.igc_file = igc_file
 
@@ -266,14 +289,9 @@ def index_post(form):
 
         create_flight_notifications(flight)
 
-        success = True
-
     db.session.commit()
 
-    if success:
-        flash(_('Please click "Publish Flight(s)" at the bottom to confirm our automatic analysis.'))
-
-    results_json = UploadResultSchema().dump(results, many=True).data
+    results = UploadResultSchema().dump(results, many=True).data
 
     club_members = []
     if g.current_user.club_id:
@@ -292,9 +310,7 @@ def index_post(form):
 
     aircraft_models = AircraftModelSchema().dump(aircraft_models, many=True).data
 
-    return render_template(
-        'upload/result.jinja', num_flights=prefix, results=results, success=success,
-        results_json=results_json, club_members=club_members, aircraft_models=aircraft_models)
+    return jsonify(results=results, club_members=club_members, aircraft_models=aircraft_models)
 
 
 @upload_blueprint.route('/verify', methods=('POST',))
