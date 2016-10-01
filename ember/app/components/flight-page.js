@@ -56,6 +56,10 @@ export default Ember.Component.extend({
       this.get('fixCalc').togglePlayback();
     },
 
+    addFlight(data) {
+      this.get('fixCalc').addFlight(data);
+    },
+
     removeFlight(id) {
       let flights = this.get('fixCalc.flights');
       flights.removeObjects(flights.filterBy('id', id));
