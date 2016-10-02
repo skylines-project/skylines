@@ -5,9 +5,9 @@ aircraft-type: vliegtuig type
 airport: vliegveld
 airports: vliegvelden
 all: alle
-all-time: 'totale tijd '
+all-time: totale tijd
 altitude: hoogte
-avg-speed: 'gemiddelde snelheid '
+avg-speed: gemiddelde snelheid
 avg-speed-abbr: Gem. snelheid
 avg-vario-abbr: Gem. vario
 change: verander
@@ -18,7 +18,7 @@ changing-password: wachtwoord veranderen
 choose-aircraft: kies vliegtuig
 choose-club: kies club
 choose-pilot: kies piloot
-circling-performance: 'cirkel performantie '
+circling-performance: cirkel performantie
 climb-percentage-abbr: klim %
 club: club
 club-exists-already: Een club met deze naam bestaat al
@@ -31,28 +31,28 @@ confirm-password: bevestig wachtwoord
 copilot: copiloot
 count: Tel
 create: creëer
-created: 'gecreëerd '
-cruise-performance: 'kruis performantie '
+created: gecreëerd
+cruise-performance: kruis performantie
 current-password: huidig wachtwoord
 date: datum
-date-missing-in-igc-file: 'Datum ontbreekt in IGC bestand '
+date-missing-in-igc-file: Datum ontbreekt in IGC bestand
 delay: vertraging
 delete: verwijder
 distance: afstand
 distance-abbr: afstand
 distance-flights: afstand vluchten
-duplicate-file: 'dupliceer bestand '
+duplicate-file: dupliceer bestand
 duration: Duur
 edit: wijzig
 edit-club: wijzig club
-editing: 'wijzigen '
-email-address: 'email adres '
+editing: wijzigen
+email-address: email adres
 email-exists-already: dit email adres bestaat al
-email-unknown: 'dit email adres is onbekend '
+email-unknown: dit email adres is onbekend
 fai-triangle-distance: FAI driehoek afstand
 first-last: eerste / laatste
 first-name: voornaam
-flight-date-in-future: 'datum van vlucht in toekomst '
+flight-date-in-future: datum van vlucht in toekomst
 flight-time: vlucht tijd
 flights: vluchten
 follow: volg
@@ -63,16 +63,15 @@ generate-new-key: genereer nieuwe sleutel
 generating-new-key: nieuwe sleutel aan het genereren
 glide-rate: Glijhoek
 how-to-use-live-tracking: hoe live tracking gebruiken
-index-INDEX: 'handicap : { index}'
+index-INDEX: 'handicap: {index}'
 landing: landing
 landing-time: landings tijd
 last-12-months: laatste 12 maanden
 last-fix: laatste log
 last-name: achternaam
 latest: laatste
-n-avg-distance-per-flight: gemiddelde {afstand} per vlucht
+n-avg-distance-per-flight: gemiddelde {distance} per vlucht
 leg-statistics: been statistieken
 live-tracking: live tracking
-live-tracking-of-PILOT: live tracking van {piloot}
-live-tracking-of-PILOT-and-PILOT2: 'Live '
+live-tracking-of-PILOT: live tracking van {pilot}
 start: Start
