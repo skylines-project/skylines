@@ -1,16 +1,142 @@
+actions: Akcje
 add-comment: Dodaj komentarz
-aircraft: Samolot
-aircraft-type: Rodzaj samolotu
+aircraft: Statek powietrzny
+aircraft-type: Rodzaj statku powietrznego
 airport: Lotnisko
 AIRPORT-at-TIME: <a href="{airportURL}">{airport}</a><br/> o {time}
-altitude: Wysokość
+airports: Lotniska
+all: Wszystkie
+all-time: Zawsze
+altitude: Wysokość n.p.m.
+avg-speed: Średnia Prędkość
 avg-speed-abbr: Śr. prędkość
 avg-vario-abbr: Śr. wario
-change: Zmienić
+change: Zmień
+change-club: Zmień Klub
+change-password: Zmień Hasło
+changing: Zmienianie...
+changing-password: Zmienianie hasła...
+choose-aircraft: Wybierz Statek Powietrzny
+choose-club: Wybierz Klub
+choose-pilot: Wybierz Pilota
+circling-performance: Wydajność krążenia
+climb-percentage-abbr: Krążenie %
+club: Klub
+club-exists-already: Klub z tą nazwą już istnieje.
+club-has-been-changed: Twój klub został zmieniony.
+club-was-registered: Twój klub został zarejestrowany.
+clubs: Kluby
 comments: Komentarze
+competition-id: Znak Konkursowy
+confirm-password: Potwierdź hasło
+copilot: Co-Pilot
+count: Ilość
+create: Stwórz
+created: Stworzony
+creating: Tworzenie...
+cruise-performance: Wydajność przeskoku
+current-password: Bieżące hasło
 date: Data
-delay: Spóźnienie
-delete: Skasuj
+date-missing-in-igc-file: Brak daty w pliku IGC
+delay: Opóźnienie
+delete: Usuń
+distance: Odległość
+distance-abbr: Odl.
+distance-flights: Odległość Lotów
+DISTANCE-on-DATE: '{distance} z {date}'
+DISTANCE-on-DATE-by-PILOT: '{distance} z {date} przez {pilot}'
+DISTANCE-on-DATE-by-PILOT-and-COPILOT: '{distance} z {date} przez {pilot} i {copilot}'
+duplicate-file: Duplikat pliku
 duration: Czas trwania
+edit: Edytuj
+edit-club: Edytuj klub
+editing: Edytowanie...
+email-address: Adres email
+email-exists-already: Ten adres email już istnieje.
+email-unknown: Ten adres email jest nieznany.
+fai-triangle-distance: Odległość Trójkąta FAI
+failed-to-parse-file: Parsowanie pliku nie powiodło się
+first-last: Pierwszy / Ostatni
+first-name: Imię
+flight-date-in-future: Data lotu w przyszłości
+flight-time: Czas Lotu
+flights: Loty
+follow: Obserwuj
+followers: Obserwujący
+following: Obserwatorzy
+friends: Znajomi
+generate-new-key: Generuj nowy klucz
+generating-new-key: Generowanie nowego klucza...
 glide-rate: Doskonałość
 glide-rate-abbr: Dosk.
+glides: Przeskoki
+how-to-use-live-tracking: Jak używać Live Tracking?
+imprint: Informacja prawna
+index-INDEX: 'Handicap: {index}'
+landing: Lądowanie
+landing-time: Czas lądowania
+last-12-months: Ostatnie 12 Miesięcy
+last-fix: Ostatni Fix
+last-name: Nazwisko
+latest: Najnowsze
+n-avg-distance-per-flight: śr. {distance} na lot
+live-tracking: Live Tracking
+live-tracking-of-PILOT: Live Tracking dla {pilot}
+live-tracking-of-PILOT-and-PILOT2: Live Tracking dla {pilot} i {pilot2}
+live-tracking-of-PILOT-and-NUM-other-pilots: Live Tracking dla {pilot} i {num} innych pilotów
+n-avg-hours-per-flight: śr. {num} godzin na lot
+live-tracking-key: Klucz Live Tracking
+mark-all-as-read: Oznacz wszystkie jako przeczytane
+members: Członkowie
+members-of-CLUB: Członkowie <small> z <a href="{clubURL}">{club}</a></small>
+n-comments: '{numComments, plural, =1 {1 comment} other {# comments}}'
+name: Nazwa
+nearest-airport: Najbliższe lotnisko
+new: Nowy
+newer: Nowszy
+no-airports-found: Nie znaleziono lotniska
+other-pilots: Inni piloci
+password: Hasło
+password-was-changed: Twoje hasło zostało zmienione
+passwords-do-not-match: Hasła nie pasują do siebie
+pilot: Pilot
+pilots: Piloci
+profile: Profil
+publish: Publikuj
+publishing: Publikowanie
+ranking: Ranking
+recover-password: Przywróć Hasło
+recovering: Przywracanie...
+register: Zarejestruj
+registering: Rejestrowanie...
+register-club: Zarejestruj Klub
+registration: Rejestracja
+score: Wynik
+season-YEAR: Sezon {year}
+settings: Ustawienia
+settings-have-been-saved: Twoje ustawienia zostały zapisane.
+show: Pokaż
+speed: Prędkość
+start: Start
+statistics: Statystyki
+status: Status
+success: Powodzenie
+takeoff: Start
+takeoff-locations: Miejsca Startów
+takeoff-time: Czas startu
+the-skylines-team: Zespół SkyLines
+this-is-you: To ty
+time: Czas
+triangle: Trójkąt
+unfollow: Przestań obserwować
+website: Strona internetowa
+year: Rok
+flight-phase:
+  cruise: Przeskok
+circling-direction:
+  left: Lewo
+  right: Prawo
+  mixed: Mieszany
+  total: Całkowity
+units:
+  title: Jednostki
