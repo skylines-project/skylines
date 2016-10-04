@@ -6,6 +6,8 @@ module.exports = function(defaults) {
 
   if (EmberApp.env() !== 'test') {
     vendorFiles['jquery.js'] = null;
+  } else {
+    vendorFiles['jquery.js'] = 'bower_components/jquery/jquery.js';
   }
 
   var app = new EmberApp(defaults, {
