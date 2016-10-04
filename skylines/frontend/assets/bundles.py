@@ -2,50 +2,51 @@ from webassets import Bundle
 
 from .filters import SimpleClosureJS
 
+BOWER = '../../../ember/bower_components/'
 
 # Font Awesome
 
 fontawesome_css = Bundle(
-    'http://rawgit.com/FortAwesome/Font-Awesome/v3.2.1/css/font-awesome.css',
+    BOWER + 'font-awesome/css/font-awesome.css',
     output='css/fontawesome-%(version)s.css')
 
 fontawesome_webfont_eot = Bundle(
-    'http://github.com/FortAwesome/Font-Awesome/blob/v3.2.1/font/fontawesome-webfont.eot?raw=true',
+    BOWER + 'font-awesome/font/fontawesome-webfont.eot',
     output='font/fontawesome-webfont.eot')
 
 fontawesome_webfont_woff = Bundle(
-    'http://github.com/FortAwesome/Font-Awesome/blob/v3.2.1/font/fontawesome-webfont.woff?raw=true',
+    BOWER + 'font-awesome/font/fontawesome-webfont.woff',
     output='font/fontawesome-webfont.woff')
 
 fontawesome_webfont_ttf = Bundle(
-    'http://github.com/FortAwesome/Font-Awesome/blob/v3.2.1/font/fontawesome-webfont.ttf?raw=true',
+    BOWER + 'font-awesome/font/fontawesome-webfont.ttf',
     output='font/fontawesome-webfont.ttf')
 
 fontawesome_webfont_svg = Bundle(
-    'http://rawgit.com/FortAwesome/Font-Awesome/v3.2.1/font/fontawesome-webfont.svg',
+    BOWER + 'font-awesome/font/fontawesome-webfont.svg',
     output='font/fontawesome-webfont.svg')
 
 
 # Twitter Bootstrap
 
 bootstrap_js = Bundle(
-    'https://netdna.bootstrapcdn.com/bootstrap/3.0.2/js/bootstrap.min.js',
+    BOWER + 'bootstrap/dist/js/bootstrap.min.js',
     output='js/bootstrap-%(version)s.js')
 
 bootstrap_css = Bundle(
-    'https://netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css',
-    'https://netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap-theme.min.css',
+    BOWER + 'bootstrap/dist/css/bootstrap.min.css',
+    BOWER + 'bootstrap/dist/css/bootstrap-theme.min.css',
     output='css/bootstrap-%(version)s.js')
 
 
 # Flot
 
 flot_js = Bundle(
-    'http://rawgit.com/flot/flot/v0.8.3/jquery.flot.js',
-    'http://rawgit.com/flot/flot/v0.8.3/jquery.flot.time.js',
-    'http://rawgit.com/flot/flot/v0.8.3/jquery.flot.crosshair.js',
-    'http://rawgit.com/flot/flot/v0.8.3/jquery.flot.resize.js',
-    'http://rawgit.com/TobiasLohner/flot-marks/f09ded70f5a229a38ba0b9cfa92dbb448ca4daaf/src/jquery.flot.marks.js',
+    BOWER + 'Flot/jquery.flot.js',
+    BOWER + 'Flot/jquery.flot.time.js',
+    BOWER + 'Flot/jquery.flot.crosshair.js',
+    BOWER + 'Flot/jquery.flot.resize.js',
+    BOWER + 'flot-marks/src/jquery.flot.marks.js',
     filters=SimpleClosureJS(disable_ie_checks=True),
     output='js/flot-%(version)s.js')
 
@@ -111,23 +112,23 @@ openlayers_css = Bundle(
     output='css/ol-%(version)s.css')
 
 all_js = Bundle(
-    'http://code.jquery.com/jquery-1.10.2.min.js',
-    'http://cdnjs.cloudflare.com/ajax/libs/jquery-ajaxtransport-xdomainrequest/1.0.3/jquery.xdomainrequest.min.js',
+    BOWER + 'jquery/jquery.min.js',
+    BOWER + 'jQuery-ajaxTransport-XDomainRequest/jquery.xdomainrequest.min.js',
     'vendor/jquery/jquery.timeago.js',
-    'http://rawgit.com/Turbo87/sidebar-v2/v0.2.1/js/jquery-sidebar.min.js',
+    BOWER + 'sidebar-v2/js/jquery-sidebar.min.js',
     bootstrap_js,
     filters='rjsmin',
     output='js/skylines-%(version)s.js')
 
 openlayers_js = Bundle(
     'vendor/openlayers/ol3cesium.js',
-    'http://rawgit.com/bdougherty/BigScreen/v2.0.4/bigscreen.min.js',
+    BOWER + 'BigScreen/bigscreen.min.js',
     flot_js,
     output='js/ol-%(version)s.js')
 
 upload_js = Bundle(
-    'http://momentjs.com/downloads/moment.min.js',
-    'http://rawgit.com/TobiasLohner/bootstrap-datetimepicker/c36342415a1be8fa013548402bf01718ca93d454/src/js/bootstrap-datetimepicker.js',
+    BOWER + 'moment/min/moment.min.js',
+    BOWER + 'eonasdan-bootstrap-datetimepicker/src/js/bootstrap-datetimepicker.js',
     'js/jquery.flot.flight-upload.js',
     filters=SimpleClosureJS,
     output='js/upload-%(version)s.js')
