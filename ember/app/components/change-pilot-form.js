@@ -1,6 +1,8 @@
 import Ember from 'ember';
 import { validator, buildValidations } from 'ember-cp-validations';
 
+import isNone from '../computed/is-none';
+
 const Validations = buildValidations({
   pilotId: {
     descriptionKey: 'pilot',
@@ -48,8 +50,8 @@ export default Ember.Component.extend(Validations, {
   pending: false,
   error: null,
 
-  showPilotNameInput: Ember.computed.equal('pilotId', null),
-  showCopilotNameInput: Ember.computed.equal('copilotId', null),
+  showPilotNameInput: isNone('pilotId'),
+  showCopilotNameInput: isNone('copilotId'),
 
   sendChangeRequest() {
     let id = this.get('flightId');
