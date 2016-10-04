@@ -9,10 +9,15 @@ export default Ember.Component.extend({
   pilotId: null,
 
   pilots: Ember.computed('account.user', 'account.club', 'clubMembers.[]', function() {
-    let pilots = [{ id: null }, this.get('account.user')];
-    if (this.get('account.club')) {
-      pilots.push({ groupName: this.get('account.club.name'), options: this.get('clubMembers') });
+    let user = this.get('account.user');
+    let club = this.get('account.club');
+    let clubMembers = this.get('clubMembers');
+
+    let pilots = [{ id: null }, user];
+    if (club && clubMembers) {
+      pilots.push({ groupName: club.get('name'), options: clubMembers });
     }
+
     return pilots;
   }),
 
