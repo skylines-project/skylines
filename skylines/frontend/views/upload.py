@@ -309,7 +309,12 @@ def index_post():
 
     aircraft_models = AircraftModelSchema().dump(aircraft_models, many=True).data
 
-    return jsonify(results=results, club_members=club_members, aircraft_models=aircraft_models)
+    response = jsonify(results=results, club_members=club_members, aircraft_models=aircraft_models)
+
+    # set mimetype to `text/html` to prevent IE from showing "Download JSON file" dialog
+    response.mimetype = 'text/html'
+
+    return response
 
 
 @upload_blueprint.route('/verify', methods=('POST',))
