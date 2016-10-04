@@ -7,7 +7,7 @@ let NotEqualValidator = BaseValidator.extend({
   validate(value1, options, model) {
     let value2 = model.get(options.on);
 
-    return (value1 === null || value2 === null || value1 !== value2)
+    return (Ember.isNone(value1) || Ember.isNone(value2) || value1 !== value2)
       ? true : this.get('intl').t(options.messageKey);
   },
 });
