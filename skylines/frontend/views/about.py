@@ -10,7 +10,7 @@ about_blueprint = Blueprint('about', 'skylines')
 
 @about_blueprint.route('/')
 def about():
-    return render_template('about.jinja')
+    return render_template('ember-page.jinja', active_page='about')
 
 
 @about_blueprint.route('/imprint')

@@ -1,3 +1,4 @@
+achievements: Auszeichnungen
 actions: Aktionen
 add-comment: Kommentar hinzufügen
 aircraft: Flugzeug
@@ -28,6 +29,7 @@ club-was-registered: Dein Verein wurde erfolgreich registriert.
 clubs: Vereine
 comments: Kommentare
 competition-id: Wettbewerbskennzeichen
+competitions: Wettbewerbe
 confirm-password: Passwort bestätigen
 copilot: Copilot
 count: Anzahl
@@ -58,6 +60,8 @@ fai-triangle-distance: FAI-Dreieck Distanz
 failed-to-parse-file: Analyse der Datei fehlgeschlagen
 first-last: Erster / Letzter Kontakt
 first-name: Vorname
+flight-analysis: Fluganalyse
+flight-database: Flugdatenbank
 flight-date-in-future: Datum des Flugs in der Zukunft
 flight-time: Flugzeit
 flights: Flüge
@@ -108,6 +112,8 @@ no-data: Keine Daten gefunden...
 notifications: Benachrichtigungen
 olc-distance: OLC Distanz
 older: Älter
+open-data: Open Data
+open-source: Open Source
 other-pilots: Andere Piloten
 overview: Übersicht
 password: Passwort
@@ -120,6 +126,7 @@ pilots: Piloten
 pilots-must-not-be-equal: Piloten dürfen nicht identisch sein.
 pin-button-title: Aktiviere dies, damit dieser Flug vor allen anderen auf der Karte erscheint.
 pinned: Markiert
+planned: geplant
 POINTS-points-abbr: '{points} pkt.'
 profile: Profil
 publish: Veröffentlichen
@@ -138,6 +145,7 @@ season-YEAR: Saison {year}
 settings: Einstellungen
 settings-have-been-saved: Deine Einstellungen wurden gespeichert.
 show: Anzeigen
+social-network: Soziales Netzwerk
 speed: Geschwindigkeit
 start: Start
 statistics: Statistiken
@@ -146,6 +154,7 @@ success: Erfolg
 takeoff: Start
 takeoff-locations: Startplatz
 takeoff-time: Startzeit
+task-planning: Taskplanung
 the-skylines-team: Das SkyLines Team
 this-is-you: Das bist du
 time: Zeit
@@ -172,6 +181,17 @@ wrong-current-password: Bitte prüfe dein aktuelles Passwort.
 year: Jahr
 you-have-no-notifications: Du hast keine Benachrichtigungen.
 your-flights-have-been-saved: Deine Flüge wurden gespeichert.
+about:
+  welcome: "Willkommen bei SkyLines, deiner Internetplattform zum Austausch von Flügen!"
+  flights: "<a href=\"{uploadURL}\">Lade</a> deine Flüge hoch und teile sie mit deinen Freunden. Die Flüge können uneingeschränkt runtergeladen werden und werden von uns nicht verändert!"
+  tracking: "Benutz dein Telefon um Positionsupdates an SkyLines zu schicken. Klick <a href=\"{url}\">hier</a> für mehr Informationen."
+  analysis: "Benutz unsere Analysetools um dir deine Flüge im Detail anzuschauen und um herauszufinden wie du in Zukunft noch besser fliegen kannst."
+  task-planning: "Benutz deinen Browser zur Streckenplanung vor dem Flug und lade die Aufgaben auf schnellstem Weg in dein Navigationsgerät. Die Integration von {prosoar} ist geplant."
+  competitions: "Erstelle Wettbewerbe um den Zuschauern ein noch besseres Live Tracking Erlebnis zu bieten. Sieh allen Teilnehmern auf der selben Karte beim Fliegen zu."
+  achievements: "Steck dir neue Ziele und versuche alle Auszeichnungen in SkyLines zu erlangen. Flieg große Dreiecke, mach lange Endanflüge und mach einfach deine erste Außenlandung."
+  notifications: "Skylines hat auch Elemente eines sozialen Netzwerks. Du kannst Flüge kommentieren, deinen Freunden folgen und bekommst <a href=\"{url}\">Benachrichtigungen</a> wenn sie etwas interessantes machen."
+  open-data: "Die Flugdatenbank von SkyLines steht unter der {license}. SkyLines benutzt Wendepunktdaten vom {welt2000} Projekt."
+  open-source: "Skylines ist ein <a href=\"{teamURL}\">Teamprojekt</a> und basiert komplett auf freier Software (<a href=\"{licenseURL}\">Lizenz</a>). Schau dich auf {github} um wenn du helfen möchtest!"
 search:
   search: Suche
   search-for-TEXT: Suche <small>nach "{text}"</small>

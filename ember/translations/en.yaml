@@ -1,3 +1,4 @@
+achievements: Achievements
 actions: Actions
 add-comment: Add comment
 aircraft: Aircraft
@@ -28,6 +29,7 @@ club-was-registered: Your club was successfully registered.
 clubs: Clubs
 comments: Comments
 competition-id: Competition Id
+competitions: Competitions
 confirm-password: Confirm password
 copilot: Copilot
 count: Count
@@ -59,6 +61,8 @@ failed-to-parse-file: Failed to parse file
 file-upload-field: File upload field
 first-last: First / Last
 first-name: First name
+flight-analysis: Flight Analysis
+flight-database: Flight Database
 flight-date-in-future: Date of flight in future
 flight-time: Flight Time
 flights: Flights
@@ -111,6 +115,8 @@ no-data: No data found...
 notifications: Notifications
 olc-distance: OLC Distance
 older: Older
+open-data: Open Data
+open-source: Open Source
 other-pilots: Other pilots
 overview: Overview
 password: Password
@@ -123,6 +129,7 @@ pilots: Pilots
 pilots-must-not-be-equal: Pilots must not be equal.
 pin-button-title: Activate this to show the flight on top of other flights on the map
 pinned: Pinned
+planned: planned
 POINTS-points-abbr: '{points} pts.'
 profile: Profile
 publish: Publish
@@ -143,6 +150,7 @@ season-YEAR: Season {year}
 settings: Settings
 settings-have-been-saved: Your settings have been saved.
 show: Show
+social-network: Social Network
 speed: Speed
 start: Start
 statistics: Statistics
@@ -151,6 +159,7 @@ success: Success
 takeoff: Takeoff
 takeoff-locations: Takeoff Locations
 takeoff-time: Takeoff time
+task-planning: Task Planning
 the-skylines-team: The SkyLines Team
 this-is-you: This is you
 time: Time
@@ -180,6 +189,17 @@ wrong-current-password: Please check your current password.
 year: Year
 you-have-no-notifications: You have no notifications.
 your-flights-have-been-saved: Your flights have been saved.
+about:
+  welcome: "Welcome to SkyLines, your internet platform for flight sharing!"
+  flights: "<a href=\"{uploadURL}\">Upload</a> your IGC files and share them with your friends. We won't change your files or restrict you from downloading them again!"
+  tracking: "Use your mobile phone to send position updates to SkyLines. Find out how it works <a href=\"{url}\">here</a>."
+  analysis: "Use our analysis tools to have a closer look at your flights and how you might be able to improve them in the future."
+  task-planning: "Use your browser to plan your tasks before the flight and upload them quickly to your flight computer. Integration of {prosoar} is planned."
+  competitions: "Create competitions to offer your spectators an even better live tracking experience by following all the participants on the same map."
+  achievements: "Challenge yourself by trying to complete all the achievements that SkyLines offers. Fly large triangles, long final glides or just do your first outlanding."
+  notifications: "Skylines also has some social network aspects. You can comment on flights, follow your friends and get <a href=\"{url}\">notifications</a> if they do anything interesting."
+  open-data: "The SkyLines flight database is made available under the {license}. Skylines is using waypoint data from the {welt2000} project."
+  open-source: "Skylines is a <a href=\"{teamURL}\">community</a> project and entirely based on free software (<a href=\"{licenseURL}\">License</a>). Visit {github} if you want to help!"
 search:
   search: Search
   search-for-TEXT: Search <small>for "{text}"</small>
