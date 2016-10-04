@@ -1,6 +1,8 @@
 import Ember from 'ember';
 import { validator, buildValidations } from 'ember-cp-validations';
 
+import isNone from '../computed/is-none';
+
 const Validations = buildValidations({
   pilotName: {
     descriptionKey: 'pilot',
@@ -51,11 +53,11 @@ export default Ember.Component.extend(Validations, {
 
   pilotId: Ember.computed.alias('flight.pilotId'),
   pilotName: Ember.computed.alias('flight.pilotName'),
-  showPilotNameInput: Ember.computed.equal('pilotId', null),
+  showPilotNameInput: isNone('pilotId'),
 
   copilotId: Ember.computed.alias('flight.copilotId'),
   copilotName: Ember.computed.alias('flight.copilotName'),
-  showCopilotNameInput: Ember.computed.equal('copilotId', null),
+  showCopilotNameInput: isNone('copilotId'),
 
   modelId: Ember.computed.alias('flight.modelId'),
   registration: Ember.computed.alias('flight.registration'),
