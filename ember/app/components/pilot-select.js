@@ -17,7 +17,7 @@ export default Ember.Component.extend({
   }),
 
   pilot: Ember.computed('pilotsWithNull.[]', 'pilotId', function() {
-    return this.findPilot(this.get('pilotId'));
+    return this.findPilot(this.get('pilotId') || null);
   }),
 
   findPilot(id) {
