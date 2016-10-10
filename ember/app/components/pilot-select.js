@@ -15,7 +15,7 @@ export default Ember.Component.extend({
 
     let pilots = [{ id: null }, user];
     if (club && clubMembers) {
-      pilots.push({ groupName: club.get('name'), options: clubMembers });
+      pilots.push({ groupName: Ember.get(club, 'name'), options: clubMembers });
     }
 
     return pilots;
