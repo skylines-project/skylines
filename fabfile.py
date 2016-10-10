@@ -14,6 +14,7 @@ def deploy(branch='master', force=False):
     build_ember()
     upload_ember()
     push(branch, force)
+    bower_install()
     restart()
 
 
@@ -104,6 +105,12 @@ def pip_install():
     with cd(SRC_DIR):
         run('git reset --hard')
         run('pip install -e .')
+
+
+@task
+def bower_install():
+    with cd(SRC_DIR + '/ember'):
+        run('bower install')
 
 
 @task
