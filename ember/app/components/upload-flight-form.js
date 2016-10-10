@@ -48,9 +48,11 @@ export default Ember.Component.extend(Validations, {
   },
 
   onIframeLoad() {
+    let text = this.$('iframe').contents().text();
+    if (Ember.isBlank(text)) return;
+
     this.set('pending', false);
 
-    let text = this.$('iframe').contents().text();
     let json = JSON.parse(text);
 
     if (json.error) {
