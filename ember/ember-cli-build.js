@@ -48,6 +48,7 @@ module.exports = function(defaults) {
   app.import('bower_components/Flot/jquery.flot.crosshair.js');
   app.import('bower_components/Flot/jquery.flot.resize.js');
   app.import('bower_components/flot-marks/src/jquery.flot.marks.js');
+  app.import('vendor/jquery.flot.flight-upload.js');
 
   app.import({
     development: 'bower_components/remarkable/dist/remarkable.js',
