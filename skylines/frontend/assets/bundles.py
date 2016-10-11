@@ -73,7 +73,6 @@ ember_vendor_css = Bundle(
 
 main_css = Bundle(
     'vendor/flags/flags.css',
-    'vendor/fonts/stylesheet.css',
     filters='cssrewrite',
     output='css/main-%(version)s.css')
 
