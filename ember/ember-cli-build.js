@@ -43,6 +43,12 @@ module.exports = function(defaults) {
   app.import('vendor/shims/openlayers.js');
   app.import('vendor/shims/ol3-cesium.js');
 
+  app.import('bower_components/Flot/jquery.flot.js');
+  app.import('bower_components/Flot/jquery.flot.time.js');
+  app.import('bower_components/Flot/jquery.flot.crosshair.js');
+  app.import('bower_components/Flot/jquery.flot.resize.js');
+  app.import('bower_components/flot-marks/src/jquery.flot.marks.js');
+
   app.import({
     development: 'bower_components/remarkable/dist/remarkable.js',
     production: 'bower_components/remarkable/dist/remarkable.min.js',

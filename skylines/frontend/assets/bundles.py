@@ -30,18 +30,6 @@ bootstrap_js = Bundle(
     output='js/bootstrap-%(version)s.js')
 
 
-# Flot
-
-flot_js = Bundle(
-    BOWER + 'Flot/jquery.flot.js',
-    BOWER + 'Flot/jquery.flot.time.js',
-    BOWER + 'Flot/jquery.flot.crosshair.js',
-    BOWER + 'Flot/jquery.flot.resize.js',
-    BOWER + 'flot-marks/src/jquery.flot.marks.js',
-    filters=SimpleClosureJS(disable_ie_checks=True),
-    output='js/flot-%(version)s.js')
-
-
 # Ember.js
 
 ember_app_js = Bundle(
@@ -79,6 +67,5 @@ upload_js = Bundle(
     output='js/upload-%(version)s.js')
 
 openlayers_js = Bundle(
-    flot_js,
     upload_js,
     output='js/ol-%(version)s.js')
