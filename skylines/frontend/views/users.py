@@ -2,7 +2,7 @@ from email.mime.text import MIMEText
 from email.utils import formatdate
 import smtplib
 
-from flask import Blueprint, request, render_template, redirect, url_for, abort, current_app, flash, g, jsonify
+from flask import Blueprint, request, render_template, redirect, url_for, abort, current_app, g, jsonify
 from flask.ext.babel import _
 from werkzeug.exceptions import ServiceUnavailable
 
@@ -62,8 +62,6 @@ def new_post():
     create_new_user_event(user)
 
     db.session.commit()
-
-    flash(_('Welcome to SkyLines, %(user)s! You can now log in and share your flights with the world!', user=user))
 
     return jsonify(user=UserSchema().dump(user).data)
 
