@@ -46,6 +46,5 @@ ember_vendor_css = Bundle(
 all_js = Bundle(
     BOWER + 'jquery/jquery.min.js',
     BOWER + 'jQuery-ajaxTransport-XDomainRequest/jquery.xdomainrequest.min.js',
-    BOWER + 'sidebar-v2/js/jquery-sidebar.min.js',
     filters='rjsmin',
     output='js/skylines-%(version)s.js')
