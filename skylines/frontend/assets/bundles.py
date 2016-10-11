@@ -1,40 +1,17 @@
 from webassets import Bundle
 
-BOWER = '../../../ember/bower_components/'
-
-# Font Awesome
-
-fontawesome_webfont_eot = Bundle(
-    BOWER + 'font-awesome/font/fontawesome-webfont.eot',
-    output='font/fontawesome-webfont.eot')
-
-fontawesome_webfont_woff = Bundle(
-    BOWER + 'font-awesome/font/fontawesome-webfont.woff',
-    output='font/fontawesome-webfont.woff')
-
-fontawesome_webfont_ttf = Bundle(
-    BOWER + 'font-awesome/font/fontawesome-webfont.ttf',
-    output='font/fontawesome-webfont.ttf')
-
-fontawesome_webfont_svg = Bundle(
-    BOWER + 'font-awesome/font/fontawesome-webfont.svg',
-    output='font/fontawesome-webfont.svg')
-
-
-# Ember.js
-
 ember_app_js = Bundle(
     'assets/skylines.js',
-    output='js/ember-app-%(version)s.js')
+    output='ember-app-%(version)s.js')
 
 ember_vendor_js = Bundle(
     'assets/vendor.js',
-    output='js/ember-vendor-%(version)s.js')
+    output='ember-vendor-%(version)s.js')
 
 ember_app_css = Bundle(
     'assets/skylines.css',
-    output='css/ember-app-%(version)s.css')
+    output='ember-app-%(version)s.css')
 
 ember_vendor_css = Bundle(
     'assets/vendor.css',
-    output='css/ember-vendor-%(version)s.css')
+    output='ember-vendor-%(version)s.css')
