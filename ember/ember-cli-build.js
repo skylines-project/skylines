@@ -78,5 +78,10 @@ module.exports = function(defaults) {
     production: 'bower_components/bootstrap/dist/css/bootstrap-theme.min.css',
   });
 
+  app.import({
+    development: 'bower_components/moment/moment.js',
+    production: 'bower_components/moment/min/moment.min.js',
+  });
+
   return app.toTree();
 };
