@@ -49,5 +49,10 @@ module.exports = function(defaults) {
   app.import('vendor/bootstrap-datepicker/datepicker.js');
   app.import('vendor/bootstrap-datepicker/datepicker.css');
 
+  app.import({
+    development: 'bower_components/font-awesome/css/font-awesome.css',
+    production: 'bower_components/font-awesome/css/font-awesome.min.css',
+  });
+
   return app.toTree();
 };

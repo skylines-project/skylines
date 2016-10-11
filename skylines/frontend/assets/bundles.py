@@ -6,10 +6,6 @@ BOWER = '../../../ember/bower_components/'
 
 # Font Awesome
 
-fontawesome_css = Bundle(
-    BOWER + 'font-awesome/css/font-awesome.css',
-    output='css/fontawesome-%(version)s.css')
-
 fontawesome_webfont_eot = Bundle(
     BOWER + 'font-awesome/font/fontawesome-webfont.eot',
     output='font/fontawesome-webfont.eot')
@@ -73,7 +69,6 @@ ember_vendor_css = Bundle(
 
 all_css = Bundle(
     bootstrap_css,
-    fontawesome_css,
     filters='cssmin',
     output='css/skylines-%(version)s.css')
 
