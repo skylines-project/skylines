@@ -72,7 +72,6 @@ ember_vendor_css = Bundle(
 # SkyLines
 
 main_css = Bundle(
-    'vendor/flags/flags.css',
     filters='cssrewrite',
     output='css/main-%(version)s.css')
 
