@@ -71,13 +71,8 @@ ember_vendor_css = Bundle(
 
 # SkyLines
 
-main_css = Bundle(
-    filters='cssrewrite',
-    output='css/main-%(version)s.css')
-
 all_css = Bundle(
     bootstrap_css,
-    main_css,
     fontawesome_css,
     filters='cssmin',
     output='css/skylines-%(version)s.css')
