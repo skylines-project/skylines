@@ -53,7 +53,6 @@ ember_vendor_css = Bundle(
 all_js = Bundle(
     BOWER + 'jquery/jquery.min.js',
     BOWER + 'jQuery-ajaxTransport-XDomainRequest/jquery.xdomainrequest.min.js',
-    'vendor/jquery/jquery.timeago.js',
     BOWER + 'sidebar-v2/js/jquery-sidebar.min.js',
     bootstrap_js,
     filters='rjsmin',
