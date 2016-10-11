@@ -57,12 +57,3 @@ all_js = Bundle(
     bootstrap_js,
     filters='rjsmin',
     output='js/skylines-%(version)s.js')
-
-upload_js = Bundle(
-    BOWER + 'eonasdan-bootstrap-datetimepicker/src/js/bootstrap-datetimepicker.js',
-    filters=SimpleClosureJS,
-    output='js/upload-%(version)s.js')
-
-openlayers_js = Bundle(
-    upload_js,
-    output='js/ol-%(version)s.js')
