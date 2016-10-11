@@ -1,7 +1,5 @@
 from webassets import Bundle
 
-from .filters import SimpleClosureJS
-
 BOWER = '../../../ember/bower_components/'
 
 # Font Awesome
@@ -40,11 +38,3 @@ ember_app_css = Bundle(
 ember_vendor_css = Bundle(
     'assets/vendor.css',
     output='css/ember-vendor-%(version)s.css')
-
-# SkyLines
-
-all_js = Bundle(
-    BOWER + 'jquery/jquery.min.js',
-    BOWER + 'jQuery-ajaxTransport-XDomainRequest/jquery.xdomainrequest.min.js',
-    filters='rjsmin',
-    output='js/skylines-%(version)s.js')

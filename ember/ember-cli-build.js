@@ -2,14 +2,6 @@
 var EmberApp = require('ember-cli/lib/broccoli/ember-app');
 
 module.exports = function(defaults) {
-  var vendorFiles = {};
-
-  if (EmberApp.env() !== 'test') {
-    vendorFiles['jquery.js'] = null;
-  } else {
-    vendorFiles['jquery.js'] = 'bower_components/jquery/jquery.js';
-  }
-
   var app = new EmberApp(defaults, {
     storeConfigInMeta: false,
 
@@ -17,7 +9,9 @@ module.exports = function(defaults) {
       enabled: false,
     },
 
-    vendorFiles: vendorFiles,
+    vendorFiles: {
+      'jquery.js': 'bower_components/jquery/jquery.js',
+    },
 
     gzip: {
       keepUncompressed: true,
@@ -36,6 +30,8 @@ module.exports = function(defaults) {
   // modules that you would like to import into your application
   // please specify an object with the list of modules as keys
   // along with the exports of each module as its value.
+
+  app.import('bower_components/jQuery-ajaxTransport-XDomainRequest/jquery.xdomainrequest.min.js');
 
   app.import('vendor/openlayers/ol3cesium.js');
   app.import('vendor/openlayers/ol.css');
