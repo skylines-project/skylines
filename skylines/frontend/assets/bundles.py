@@ -72,22 +72,6 @@ ember_vendor_css = Bundle(
 # SkyLines
 
 main_css = Bundle(
-    'css/bootstrap-visibilites.css',
-    'css/bootstrap-theme-skylines.css',
-    'css/bootstrap-badges.css',
-    'css/bootstrap-vertical-tabs.css',
-    'css/bootstrap-datetimepicker.css',
-    'css/panel.css',
-    'css/follower-panel.css',
-    'css/tables.css',
-    'css/login-dropdown.css',
-    'css/about.css',
-    'css/search.css',
-    'css/events.css',
-    'css/tracking-table.css',
-    'css/slFixTable.css',
-    'css/wingman.css',
-    'css/ol3-sidebar.css',
     'vendor/flags/flags.css',
     'vendor/fonts/stylesheet.css',
     filters='cssrewrite',
