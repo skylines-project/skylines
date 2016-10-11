@@ -45,19 +45,19 @@ flot_js = Bundle(
 # Ember.js
 
 ember_app_js = Bundle(
-    'ember/assets/skylines.js',
+    'assets/skylines.js',
     output='js/ember-app-%(version)s.js')
 
 ember_vendor_js = Bundle(
-    'ember/assets/vendor.js',
+    'assets/vendor.js',
     output='js/ember-vendor-%(version)s.js')
 
 ember_app_css = Bundle(
-    'ember/assets/skylines.css',
+    'assets/skylines.css',
     output='css/ember-app-%(version)s.css')
 
 ember_vendor_css = Bundle(
-    'ember/assets/vendor.css',
+    'assets/vendor.css',
     output='css/ember-vendor-%(version)s.css')
 
 # SkyLines
