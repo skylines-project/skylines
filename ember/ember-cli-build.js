@@ -37,6 +37,9 @@ module.exports = function(defaults) {
   // please specify an object with the list of modules as keys
   // along with the exports of each module as its value.
 
+  app.import('vendor/openlayers/ol3cesium.js');
+  app.import('vendor/openlayers/ol.css');
+
   app.import('vendor/shims/openlayers.js');
   app.import('vendor/shims/ol3-cesium.js');
 

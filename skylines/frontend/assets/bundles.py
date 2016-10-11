@@ -63,7 +63,6 @@ ember_vendor_css = Bundle(
 # SkyLines
 
 openlayers_css = Bundle(
-    'vendor/openlayers/ol.css',
     'css/ol-GraphicLayerSwitcher-v3.css',
     'css/ol-PlayButton.css',
     'css/ol-FullscreenButton.css',
@@ -90,7 +89,6 @@ upload_js = Bundle(
     output='js/upload-%(version)s.js')
 
 openlayers_js = Bundle(
-    'vendor/openlayers/ol3cesium.js',
     BOWER + 'BigScreen/bigscreen.min.js',
     flot_js,
     upload_js,
