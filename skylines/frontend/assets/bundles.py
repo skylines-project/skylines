@@ -23,13 +23,6 @@ fontawesome_webfont_svg = Bundle(
     output='font/fontawesome-webfont.svg')
 
 
-# Twitter Bootstrap
-
-bootstrap_js = Bundle(
-    BOWER + 'bootstrap/dist/js/bootstrap.min.js',
-    output='js/bootstrap-%(version)s.js')
-
-
 # Ember.js
 
 ember_app_js = Bundle(
@@ -54,6 +47,5 @@ all_js = Bundle(
     BOWER + 'jquery/jquery.min.js',
     BOWER + 'jQuery-ajaxTransport-XDomainRequest/jquery.xdomainrequest.min.js',
     BOWER + 'sidebar-v2/js/jquery-sidebar.min.js',
-    bootstrap_js,
     filters='rjsmin',
     output='js/skylines-%(version)s.js')
