@@ -79,7 +79,6 @@ upload_js = Bundle(
     output='js/upload-%(version)s.js')
 
 openlayers_js = Bundle(
-    BOWER + 'BigScreen/bigscreen.min.js',
     flot_js,
     upload_js,
     output='js/ol-%(version)s.js')

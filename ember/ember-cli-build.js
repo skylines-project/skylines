@@ -49,6 +49,11 @@ module.exports = function(defaults) {
   });
   app.import('vendor/shims/remarkable.js');
 
+  app.import({
+    development: 'bower_components/BigScreen/bigscreen.js',
+    production: 'bower_components/BigScreen/bigscreen.min.js',
+  });
+
   app.import('vendor/bootstrap-datepicker/datepicker.js');
   app.import('vendor/bootstrap-datepicker/datepicker.css');
 
