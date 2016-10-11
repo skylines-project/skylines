@@ -29,11 +29,6 @@ bootstrap_js = Bundle(
     BOWER + 'bootstrap/dist/js/bootstrap.min.js',
     output='js/bootstrap-%(version)s.js')
 
-bootstrap_css = Bundle(
-    BOWER + 'bootstrap/dist/css/bootstrap.min.css',
-    BOWER + 'bootstrap/dist/css/bootstrap-theme.min.css',
-    output='css/bootstrap-%(version)s.js')
-
 
 # Flot
 
@@ -66,11 +61,6 @@ ember_vendor_css = Bundle(
     output='css/ember-vendor-%(version)s.css')
 
 # SkyLines
-
-all_css = Bundle(
-    bootstrap_css,
-    filters='cssmin',
-    output='css/skylines-%(version)s.css')
 
 openlayers_css = Bundle(
     'vendor/openlayers/ol.css',

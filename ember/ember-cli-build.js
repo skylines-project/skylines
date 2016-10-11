@@ -54,5 +54,14 @@ module.exports = function(defaults) {
     production: 'bower_components/font-awesome/css/font-awesome.min.css',
   });
 
+  app.import({
+    development: 'bower_components/bootstrap/dist/css/bootstrap.css',
+    production: 'bower_components/bootstrap/dist/css/bootstrap.min.css',
+  });
+  app.import({
+    development: 'bower_components/bootstrap/dist/css/bootstrap-theme.css',
+    production: 'bower_components/bootstrap/dist/css/bootstrap-theme.min.css',
+  });
+
   return app.toTree();
 };

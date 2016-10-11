@@ -29,9 +29,6 @@
     <link rel='shortcut' href='/favicon.png' type='image/png' />
 
     {% block styles -%}
-    {%- assets 'all_css' %}
-      <link rel="stylesheet" type="text/css" href="{{ ASSET_URL }}"/>
-    {%- endassets %}
     {%- assets 'ember_vendor_css' %}
       <link rel="stylesheet" type="text/css" href="{{ ASSET_URL }}"/>
     {%- endassets %}
