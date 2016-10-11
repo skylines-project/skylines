@@ -62,16 +62,6 @@ ember_vendor_css = Bundle(
 
 # SkyLines
 
-openlayers_css = Bundle(
-    'css/ol-GraphicLayerSwitcher-v3.css',
-    'css/ol-PlayButton.css',
-    'css/ol-FullscreenButton.css',
-    'css/ol-CesiumSwitcher.css',
-    'css/map.css',
-    'css/map-infobox.css',
-    filters='cssmin, cssrewrite',
-    output='css/ol-%(version)s.css')
-
 all_js = Bundle(
     BOWER + 'jquery/jquery.min.js',
     BOWER + 'jQuery-ajaxTransport-XDomainRequest/jquery.xdomainrequest.min.js',
