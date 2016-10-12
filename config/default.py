@@ -61,5 +61,3 @@ SKYLINES_ANALYSIS_MEMORY = 256 # approx memory limit in MB
 SKYLINES_AIRSPACE_CHECK = ('RESTRICT', 'DANGER', 'PROHIBITED', 'CTR',
                            'CLASSA', 'CLASSB', 'CLASSC', 'CLASSD',
                            'NOGLIDER', 'TMZ', 'MATZ')
-
-SKYLINES_CESIUM_PATH = os.path.join(base, 'skylines', 'frontend', 'static', 'vendor', 'openlayers', 'cesium')

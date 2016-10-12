@@ -120,7 +120,7 @@ def index():
 
     mark_user_notifications_read(g.user)
 
-    return render_template('ember-page.jinja', openlayers=True, active_page='settings')
+    return render_template('ember-page.jinja', active_page='settings')
 
 
 @user_blueprint.route('/followers')
