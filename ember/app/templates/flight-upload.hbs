@@ -1,1 +1,13 @@
-{{ember-islands}}
+{{#if result}}
+  {{#base-page}}
+    <div class="page-header">
+      <h1>{{t "upload-flight"}}</h1>
+    </div>
+
+    {{upload-results-form results=result.results clubMembers=result.club_members aircraftModels=result.aircraft_models}}
+  {{/base-page}}
+{{else}}
+  {{#form-page title=(t "upload-flight")}}
+    {{upload-flight-form csrfToken=model.csrfToken clubMembers=model.clubMembers onUpload=(action (mut result))}}
+  {{/form-page}}
+{{/if}}

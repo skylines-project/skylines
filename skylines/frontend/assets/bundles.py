@@ -120,15 +120,16 @@ all_js = Bundle(
     filters='rjsmin',
     output='js/skylines-%(version)s.js')
 
-openlayers_js = Bundle(
-    'vendor/openlayers/ol3cesium.js',
-    BOWER + 'BigScreen/bigscreen.min.js',
-    flot_js,
-    output='js/ol-%(version)s.js')
-
 upload_js = Bundle(
     BOWER + 'moment/min/moment.min.js',
     BOWER + 'eonasdan-bootstrap-datetimepicker/src/js/bootstrap-datetimepicker.js',
     'js/jquery.flot.flight-upload.js',
     filters=SimpleClosureJS,
     output='js/upload-%(version)s.js')
+
+openlayers_js = Bundle(
+    'vendor/openlayers/ol3cesium.js',
+    BOWER + 'BigScreen/bigscreen.min.js',
+    flot_js,
+    upload_js,
+    output='js/ol-%(version)s.js')
