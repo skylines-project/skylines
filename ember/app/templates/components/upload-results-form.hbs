@@ -46,8 +46,8 @@
 
   {{#if success}}
     <p class="col-xs-12">
-      <button class="btn btn-primary" type="submit" disabled={{or pending isInvalid}}>
-        {{if pending (t "publishing") (t "publish-flights" num=successfulResults.length)}}
+      <button class="btn btn-primary" type="submit" disabled={{or saveTask.isRunning isInvalid}}>
+        {{if saveTask.isRunning (t "publishing") (t "publish-flights" num=successfulResults.length)}}
       </button>
     </p>
   {{/if}}
