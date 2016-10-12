@@ -10,16 +10,16 @@
     value=password
     validation=validations.attrs.password
     label=(t "password")
-    disabled=pending}}
+    disabled=recoverTask.isRunning}}
 
   {{validated-input
     type='password'
     value=passwordConfirmation
     validation=validations.attrs.passwordConfirmation
     label=(t "confirm-password")
-    disabled=pending}}
+    disabled=recoverTask.isRunning}}
 
-  <button class="btn btn-primary btn-block" type="submit" disabled={{or pending success (not validations.isValid)}}>
-    {{t (if pending "changing-password" "change-password")}}
+  <button class="btn btn-primary btn-block" type="submit" disabled={{or recoverTask.isRunning success (not validations.isValid)}}>
+    {{t (if recoverTask.isRunning "changing-password" "change-password")}}
   </button>
 </form>

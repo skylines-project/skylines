@@ -1,5 +1,6 @@
 import Ember from 'ember';
 import { validator, buildValidations } from 'ember-cp-validations';
+import { task } from 'ember-concurrency';
 
 const Validations = buildValidations({
   password: {
@@ -27,28 +28,24 @@ export default Ember.Component.extend(Validations, {
   error: null,
   success: false,
 
-  sendRequest() {
+  recoverTask: task(function * () {
     let json = this.getProperties('password', 'recoveryKey');
 
-    this.set('pending', true);
-    this.get('ajax').request('/users/recover', { method: 'POST', json }).then(() => {
+    try {
+      yield this.get('ajax').request('/users/recover', { method: 'POST', json });
       this.set('error', null);
       this.set('success', true);
-
-    }).catch(error => {
+    } catch (error) {
       this.set('error', error);
       this.set('success', false);
-
-    }).finally(() => {
-      this.set('pending', false);
-    });
-  },
+    }
+  }).drop(),
 
   actions: {
     submit() {
       this.validate().then(({ validations }) => {
         if (validations.get('isValid')) {
-          this.sendRequest();
+          this.get('recoverTask').perform();
         }
       });
     },

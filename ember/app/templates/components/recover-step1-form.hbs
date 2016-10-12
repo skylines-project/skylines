@@ -9,9 +9,9 @@
     value=email
     validation=validations.attrs.email
     label=(t "email-address")
-    disabled=pending}}
+    disabled=recoverTask.isRunning}}
 
-  <button class="btn btn-primary btn-block" type="submit" disabled={{or pending success (not validations.isValid)}}>
-    {{t (if pending "recovering" "recover-password")}}
+  <button class="btn btn-primary btn-block" type="submit" disabled={{or recoverTask.isRunning success (not validations.isValid)}}>
+    {{t (if recoverTask.isRunning "recovering" "recover-password")}}
   </button>
 </form>
