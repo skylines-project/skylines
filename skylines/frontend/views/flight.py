@@ -1,7 +1,7 @@
 import math
 from datetime import datetime
 
-from flask import Blueprint, request, render_template, redirect, url_for, abort, current_app, jsonify, g, flash, make_response
+from flask import Blueprint, request, render_template, redirect, url_for, abort, current_app, jsonify, g, make_response
 from flask.ext.babel import lazy_gettext as _
 
 from sqlalchemy.orm import undefer_group, contains_eager
@@ -522,7 +522,6 @@ def publish():
 @flight_blueprint.route('/add_comment', methods=['POST'])
 def add_comment():
     if not g.current_user:
-        flash(_('You have to be logged in to post comments!'), 'warning')
         return redirect(url_for('.index'))
 
     text = request.form['text'].strip()

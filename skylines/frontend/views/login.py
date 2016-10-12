@@ -2,7 +2,7 @@ import base64
 
 from datetime import datetime
 
-from flask import render_template, redirect, request, url_for, flash, g
+from flask import render_template, redirect, request, url_for, g
 from flask.ext.login import login_user, logout_user, current_user
 from flask.ext.babel import _
 
@@ -66,7 +66,6 @@ def register(app):
                 user.login_ip = request.remote_addr
                 user.login_time = datetime.utcnow()
 
-                flash(_('You are now logged in. Welcome back, %(user)s!', user=user))
                 return redirect(get_next())
             else:
                 form.email_address.errors.append(_('Login failed. Please check your email address.'))
@@ -77,7 +76,6 @@ def register(app):
     @app.route('/logout')
     def logout():
         logout_user()
-        flash(_('You are now logged out. We hope to see you back soon!'))
         return redirect(get_next())
 
     def get_next():

@@ -32,7 +32,7 @@
     {{/if}}
 
   {{else if (eq result.type "airport")}}
-    <a href="/flights/airport/{{result.id}}/">{{result.name}}</a>
+    <a href="/flights/airport/{{result.id}}">{{result.name}}</a>
 
     {{#if result.icao}}
       <small>- {{result.icao}}</small>
