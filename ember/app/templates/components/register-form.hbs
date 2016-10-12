@@ -7,35 +7,35 @@
     value=email
     validation=validations.attrs.email
     label=(t "email-address")
-    disabled=pending}}
+    disabled=saveTask.isRunning}}
 
   {{validated-input
     value=firstName
     validation=validations.attrs.firstName
     label=(t "first-name")
-    disabled=pending}}
+    disabled=saveTask.isRunning}}
 
   {{validated-input
     value=lastName
     validation=validations.attrs.lastName
     label=(t "last-name")
-    disabled=pending}}
+    disabled=saveTask.isRunning}}
 
   {{validated-input
     type='password'
     value=password
     validation=validations.attrs.password
     label=(t "password")
-    disabled=pending}}
+    disabled=saveTask.isRunning}}
 
   {{validated-input
     type='password'
     value=passwordConfirmation
     validation=validations.attrs.passwordConfirmation
     label=(t "confirm-password")
-    disabled=pending}}
+    disabled=saveTask.isRunning}}
 
-  <button class="btn btn-primary btn-block" type="submit" disabled={{or pending (not validations.isValid)}}>
-    {{t (if pending "registering" "register")}}
+  <button class="btn btn-primary btn-block" type="submit" disabled={{or saveTask.isRunning (not validations.isValid)}}>
+    {{t (if saveTask.isRunning "registering" "register")}}
   </button>
 </form>
