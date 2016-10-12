@@ -1,5 +1,6 @@
 import Ember from 'ember';
 import { validator, buildValidations } from 'ember-cp-validations';
+import { task } from 'ember-concurrency';
 
 import isNone from '../computed/is-none';
 
@@ -47,33 +48,28 @@ export default Ember.Component.extend(Validations, {
   copilotId: Ember.computed.oneWay('flight.copilot.id'),
   copilotName: Ember.computed.oneWay('flight.copilotName'),
 
-  pending: false,
   error: null,
 
   showPilotNameInput: isNone('pilotId'),
   showCopilotNameInput: isNone('copilotId'),
 
-  sendChangeRequest() {
+  saveTask: task(function * () {
     let id = this.get('flightId');
     let json = this.getProperties('pilotId', 'pilotName', 'copilotId', 'copilotName');
 
-    this.set('pending', true);
-    this.get('ajax').request(`/flights/${id}/`, { method: 'POST', json }).then(() => {
+    try {
+      yield this.get('ajax').request(`/flights/${id}/`, { method: 'POST', json });
       window.location = `/flights/${id}/`;
-
-    }).catch(error => {
+    } catch (error) {
       this.set('error', error);
-
-    }).finally(() => {
-      this.set('pending', false);
-    });
-  },
+    }
+  }).drop(),
 
   actions: {
     submit() {
       this.validate().then(({ validations }) => {
         if (validations.get('isValid')) {
-          this.sendChangeRequest();
+          this.get('saveTask').perform();
         }
       });
     },
