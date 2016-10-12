@@ -2,7 +2,7 @@
   <h3 class="panel-title">{{t "choose-club"}}</h3>
 </div>
 <div class="panel-body">
-  <form {{action "submit" on="submit"}}>
+  <form {{action (perform saveTask) on="submit"}}>
     {{#if error}}
       <div class="alert alert-danger" role="alert">
         {{#if messageKey}}{{t messageKey error=error}}{{else}}{{error}}{{/if}}
@@ -28,8 +28,8 @@
       {{/power-select}}
     </div>
 
-    <button class="btn btn-primary btn-block" type="submit" disabled={{or pending}}>
-      {{t (if pending "changing" "change")}}
+    <button class="btn btn-primary btn-block" type="submit" disabled={{or saveTask.isRunning}}>
+      {{t (if saveTask.isRunning "changing" "change")}}
     </button>
   </form>
 </div>

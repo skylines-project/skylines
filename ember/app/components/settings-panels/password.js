@@ -1,5 +1,6 @@
 import Ember from 'ember';
 import { validator, buildValidations } from 'ember-cp-validations';
+import { task } from 'ember-concurrency';
 
 const Validations = buildValidations({
   currentPassword: {
@@ -34,34 +35,31 @@ export default Ember.Component.extend(Validations, {
   currentPassword: null,
   password: null,
   passwordConfirmation: null,
-  pending: false,
   messageKey: null,
   error: null,
 
-  sendChangeRequest() {
+  saveTask: task(function * () {
     let json = this.getProperties('currentPassword', 'password');
 
-    this.set('pending', true);
-    this.get('ajax').request('/settings/', { method: 'POST', json }).then(() => {
+    try {
+      yield this.get('ajax').request('/settings/', { method: 'POST', json });
       this.setProperties({
         messageKey: 'password-was-changed',
         error: null,
       });
-    }).catch(error => {
+    } catch (error) {
       this.setProperties({
         messageKey: null,
         error,
       });
-    }).finally(() => {
-      this.set('pending', false);
-    });
-  },
+    }
+  }).drop(),
 
   actions: {
     submit() {
       this.validate().then(({ validations }) => {
         if (validations.get('isValid')) {
-          this.sendChangeRequest();
+          this.get('saveTask').perform();
         }
       });
     },

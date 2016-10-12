@@ -1,4 +1,5 @@
 import Ember from 'ember';
+import { task } from 'ember-concurrency';
 
 export default Ember.Component.extend({
   ajax: Ember.inject.service(),
@@ -8,7 +9,6 @@ export default Ember.Component.extend({
 
   clubs: [],
   clubId: null,
-  pending: false,
   messageKey: null,
   error: null,
 
@@ -26,28 +26,20 @@ export default Ember.Component.extend({
     },
   }),
 
-  sendChangeRequest() {
+  saveTask: task(function * () {
     let club = this.get('club');
     let json = { clubId: club.id };
 
-    this.set('pending', true);
-    this.get('ajax').request('/settings/', { method: 'POST', json }).then(() => {
+    try {
+      yield this.get('ajax').request('/settings/', { method: 'POST', json });
       this.setProperties({
         messageKey: 'club-has-been-changed',
         error: null,
       });
 
       this.get('account').set('club', (club.id === null) ? {} : club);
-    }).catch(error => {
+    } catch (error) {
       this.setProperties({ messageKey: null, error });
-    }).finally(() => {
-      this.set('pending', false);
-    });
-  },
-
-  actions: {
-    submit() {
-      this.sendChangeRequest();
-    },
-  },
+    }
+  }).drop(),
 });

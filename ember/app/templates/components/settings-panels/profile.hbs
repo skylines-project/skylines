@@ -12,19 +12,19 @@
       value=email
       validation=validations.attrs.email
       label=(t "email-address")
-      disabled=pending}}
+      disabled=saveTask.isRunning}}
 
     {{validated-input
       value=firstName
       validation=validations.attrs.firstName
       label=(t "first-name")
-      disabled=pending}}
+      disabled=saveTask.isRunning}}
 
     {{validated-input
       value=lastName
       validation=validations.attrs.lastName
       label=(t "last-name")
-      disabled=pending}}
+      disabled=saveTask.isRunning}}
 
     <div class="form-group">
       <label class="control-label">{{t "units.title"}}</label>
@@ -89,8 +89,8 @@
       </div>
     {{/if}}
 
-    <button class="btn btn-primary btn-block" type="submit" disabled={{or pending (not validations.isValid)}}>
-      {{t (if pending "changing" "change")}}
+    <button class="btn btn-primary btn-block" type="submit" disabled={{or saveTask.isRunning (not validations.isValid)}}>
+      {{t (if saveTask.isRunning "changing" "change")}}
     </button>
   </form>
 </div>

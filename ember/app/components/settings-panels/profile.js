@@ -1,5 +1,6 @@
 import Ember from 'ember';
 import { validator, buildValidations } from 'ember-cp-validations';
+import { task } from 'ember-concurrency';
 
 import { PRESETS } from '../../utils/units';
 
@@ -42,7 +43,6 @@ export default Ember.Component.extend(Validations, {
   liftUnitIndex: null,
   altitudeUnitIndex: null,
 
-  pending: false,
   messageKey: null,
   error: null,
 
@@ -88,7 +88,7 @@ export default Ember.Component.extend(Validations, {
     },
   }),
 
-  sendChangeRequest() {
+  saveTask: task(function * () {
     let json = {
       email: this.get('email'),
       firstName: this.get('firstName'),
@@ -99,24 +99,22 @@ export default Ember.Component.extend(Validations, {
       altitudeUnit: this.get('altitudeUnitIndex'),
     };
 
-    this.set('pending', true);
-    this.get('ajax').request('/settings/', { method: 'POST', json }).then(() => {
+    try {
+      yield this.get('ajax').request('/settings/', { method: 'POST', json });
       this.setProperties({
         messageKey: 'settings-have-been-saved',
         error: null,
       });
-    }).catch(error => {
+    } catch (error) {
       this.setProperties({ messageKey: null, error });
-    }).finally(() => {
-      this.set('pending', false);
-    });
-  },
+    }
+  }).drop(),
 
   actions: {
     submit() {
       this.validate().then(({ validations }) => {
         if (validations.get('isValid')) {
-          this.sendChangeRequest();
+          this.get('saveTask').perform();
         }
       });
     },

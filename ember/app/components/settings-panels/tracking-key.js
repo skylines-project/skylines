@@ -1,4 +1,5 @@
 import Ember from 'ember';
+import { task } from 'ember-concurrency';
 
 export default Ember.Component.extend({
   ajax: Ember.inject.service(),
@@ -6,23 +7,14 @@ export default Ember.Component.extend({
   classNames: ['panel panel-default'],
 
   key: null,
-  pending: false,
   error: null,
 
-  sendChangeRequest() {
-    this.set('pending', true);
-    this.get('ajax').request('/settings/tracking/key', { method: 'POST' }).then(({ key }) => {
+  saveTask: task(function * () {
+    try {
+      let { key } = yield this.get('ajax').request('/settings/tracking/key', { method: 'POST' });
       this.setProperties({ key, error: null });
-    }).catch(error => {
+    } catch (error) {
       this.setProperties({ error });
-    }).finally(() => {
-      this.set('pending', false);
-    });
-  },
-
-  actions: {
-    submit() {
-      this.sendChangeRequest();
-    },
-  },
+    }
+  }).drop(),
 });
