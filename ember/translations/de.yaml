@@ -216,6 +216,19 @@ timeline-events:
   new-user:
     message1: <strong><a href="{actorURL}">{actor}</a></strong> ist SkyLines beigetreten.
     message2: Du bist SkyLines beigetreten.
+tracking:
+  what-is-it: 'Was ist es?'
+  description: "Mit SkyLines Live Tracking können andere Deine Flügen miterleben, während Du noch in der Luft bist. Da ein sehr schlankes Protokolls verwendet wird, welches nur die unbedingt benötigten Daten sendet, funktioniert dies auch in Bereichen/Höhen, in denen der Empfang nicht so gut ist. Zur Verdeutlichung: Werden bei einem 10h-Flug die Positionen alle 5 Sekunden übertragen, wird ein Datenvolumen von nur etwa 340 KB benötigt."
+  clients: Software
+  xcsoar-description: verfügbar ab {release}
+  instructions-below: Eine Anleitung findest du weiter unten.
+  available-in-gaggle: 'jetzt in der aktuellen Version von Gaggle verfügbar'
+  lt24-clients: LiveTrack24 clients
+  lt24-description: 'Du kannst auch jede Software nutzen, die das {livetrack24} Protokoll zum Senden der Positionen an SkyLines benutzt. Trage deinen Live Tracking Key als Benutzernamen ein, wähle ein beliebiges Passwort und nutze {skylines} als Server.'
+  your-live-tracking-key-is-KEY: 'Dein Live Tracking Key ist: {key}'
+  settings: Live Tracking Einstellungen
+  login-required: Du musst dich einloggen um deinen Live Tracking Key zu sehen.
+  xcsoar-instructions: 'Öffne die <em>Systemkonfigurationen</em> in XCSoar, klicke auf <em>Einstellungen</em> und dann auf <em>Verfolgung</em>., aktiviere das SkyLines Tracking und gib Deinen Live Tracking Key ein.'
 flight-phase:
   powered: Kraftflug
   circlingLeft: Kreisen Links
