@@ -7,15 +7,15 @@
     value=name
     validation=validations.attrs.name
     label=(t "name")
-    disabled=pending}}
+    disabled=saveTask.isRunning}}
 
   {{validated-input
     value=website
     validation=validations.attrs.website
     label=(t "website")
-    disabled=pending}}
+    disabled=saveTask.isRunning}}
 
-  <button class="btn btn-primary btn-block" type="submit" disabled={{or pending (not validations.isValid)}}>
-    {{t (if pending "editing" "edit")}}
+  <button class="btn btn-primary btn-block" type="submit" disabled={{or saveTask.isRunning (not validations.isValid)}}>
+    {{t (if saveTask.isRunning "editing" "edit")}}
   </button>
 </form>
