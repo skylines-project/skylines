@@ -11,24 +11,16 @@ SRC_DIR = '%s/src' % APP_DIR
 
 @task
 def deploy(branch='master', force=False):
-    build_ember()
-    upload_ember()
+    deploy_ember()
     push(branch, force)
     bower_install()
     restart()
 
 
 @task
-def build_ember():
+def deploy_ember():
     with lcd('ember'):
-        local('node_modules/.bin/ember build -prod -o dist/')
-
-
-@task
-def upload_ember():
-    with cd(SRC_DIR):
-        run('mkdir -p skylines/frontend/static')
-        put('ember/dist/*', 'skylines/frontend/static')
+        local('node_modules/.bin/ember deploy production -v')
 
 
 @task
