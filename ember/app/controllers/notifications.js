@@ -3,6 +3,8 @@ import Ember from 'ember';
 import safeComputed from '../computed/safe-computed';
 
 export default Ember.Controller.extend({
+  ajax: Ember.inject.service(),
+
   queryParams: ['page', 'user', 'type'],
   page: 1,
   user: null,
@@ -26,4 +28,15 @@ export default Ember.Controller.extend({
   unreadEvents: Ember.computed.filterBy('events', 'unread', true),
   hasUnreadOnPage: Ember.computed.notEmpty('unreadEvents'),
   hasUnread: Ember.computed.and('isFirstPage', 'hasUnreadOnPage'),
+
+  actions: {
+    markAsRead() {
+      this.set('clearing', true);
+      this.get('ajax').request('/notifications/clear', { method: 'POST' }).then(() => {
+        this.get('model.events').forEach(event => Ember.set(event, 'unread', false));
+      }).finally(() => {
+        this.set('clearing', false);
+      });
+    },
+  },
 });

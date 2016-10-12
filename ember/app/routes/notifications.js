@@ -57,15 +57,5 @@ export default Ember.Route.extend({
         window.location = `/login?next=${encodeURI(window.location)}`;
       }
     },
-
-    markAsRead() {
-      let controller = this.controllerFor('notifications');
-      controller.set('clearing', true);
-      this.get('ajax').request('/notifications/clear', { method: 'POST' }).then(() => {
-        controller.get('model.events').forEach(event => Ember.set(event, 'unread', false));
-      }).finally(() => {
-        controller.set('clearing', false);
-      });
-    },
   },
 });
