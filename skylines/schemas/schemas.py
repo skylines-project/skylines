@@ -53,7 +53,7 @@ class ClubSchema(Schema):
         validate.NotEmpty(),
         validate.Length(min=1, max=255),
     ))
-    website = fields.String(validate=validate.URL())
+    website = fields.String(validate=validate.EmptyOr(validate.URL()), allow_none=True)
 
     owner = fields.Nested('skylines.schemas.schemas.UserSchema', only=('id', 'name'), dump_only=True)
 
