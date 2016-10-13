@@ -1,8 +1,11 @@
 import Ember from 'ember';
+import { task } from 'ember-concurrency';
 
 import safeComputed from '../computed/safe-computed';
 
 export default Ember.Controller.extend({
+  ajax: Ember.inject.service(),
+
   queryParams: ['page', 'user', 'type'],
   page: 1,
   user: null,
@@ -26,4 +29,9 @@ export default Ember.Controller.extend({
   unreadEvents: Ember.computed.filterBy('events', 'unread', true),
   hasUnreadOnPage: Ember.computed.notEmpty('unreadEvents'),
   hasUnread: Ember.computed.and('isFirstPage', 'hasUnreadOnPage'),
+
+  markAsReadTask: task(function * () {
+    yield this.get('ajax').request('/notifications/clear', { method: 'POST' });
+    this.get('model.events').forEach(event => Ember.set(event, 'unread', false));
+  }).drop(),
 });

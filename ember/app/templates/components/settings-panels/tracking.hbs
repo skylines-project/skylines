@@ -12,7 +12,7 @@
       value=callsign
       validation=validations.attrs.callsign
       label=(t "tracking-callsign")
-      disabled=pending}}
+      disabled=saveTask.isRunning}}
 
     <div class="form-group">
       <label class="control-label">{{t "tracking-delay"}}</label>
@@ -27,8 +27,8 @@
       {{/power-select}}
     </div>
 
-    <button class="btn btn-primary btn-block" type="submit" disabled={{or pending (not validations.isValid)}}>
-      {{t (if pending "changing" "change")}}
+    <button class="btn btn-primary btn-block" type="submit" disabled={{or saveTask.isRunning (not validations.isValid)}}>
+      {{t (if saveTask.isRunning "changing" "change")}}
     </button>
   </form>
 </div>

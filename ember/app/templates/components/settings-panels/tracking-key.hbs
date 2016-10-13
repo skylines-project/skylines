@@ -13,9 +13,9 @@
     Your Live Tracking key is: <span class="label tracking-key">{{key}}</span>
   </p>
 
-  <form {{action "submit" on="submit"}}>
-    <button class="btn btn-primary btn-block" type="submit" disabled={{pending}}>
-      {{t (if pending "generating-new-key" "generate-new-key")}}
+  <form {{action (perform saveTask) on="submit"}}>
+    <button class="btn btn-primary btn-block" type="submit" disabled={{saveTask.isRunning}}>
+      {{t (if saveTask.isRunning "generating-new-key" "generate-new-key")}}
     </button>
   </form>
 </div>

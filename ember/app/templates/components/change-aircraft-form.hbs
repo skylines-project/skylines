@@ -12,15 +12,15 @@
     value=registration
     validation=validations.attrs.registration
     label=(t "registration")
-    disabled=pending}}
+    disabled=saveTask.isRunning}}
 
   {{validated-input
     value=competitionId
     validation=validations.attrs.competitionId
     label=(t "competition-id")
-    disabled=pending}}
+    disabled=saveTask.isRunning}}
 
-  <button class="btn btn-primary btn-block" type="submit" disabled={{or pending (not validations.isValid)}}>
-    {{t (if pending "changing" "change")}}
+  <button class="btn btn-primary btn-block" type="submit" disabled={{or saveTask.isRunning (not validations.isValid)}}>
+    {{t (if saveTask.isRunning "changing" "change")}}
   </button>
 </form>
