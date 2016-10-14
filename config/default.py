@@ -30,12 +30,7 @@ CACHE_TYPE = 'simple'
 
 SQLALCHEMY_DATABASE_URI = 'postgresql:///skylines'
 
-ASSETS_DEBUG = False
-ASSETS_AUTO_BUILD = True
-ASSETS_DIRECTORY = os.path.join(base, 'webassets')
-ASSETS_URL = '/assets'
 ASSETS_LOAD_DIR = os.path.join(base, 'skylines', 'frontend', 'static')
-ASSETS_LOAD_URL = '/'
 
 SKYLINES_FILES_PATH = os.path.join(base, 'htdocs', 'files')
 SKYLINES_ELEVATION_PATH = os.path.join(base, 'htdocs', 'srtm')

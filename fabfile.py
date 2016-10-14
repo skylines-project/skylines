@@ -39,9 +39,6 @@ def restart():
         # compile i18n .mo files
         manage('babel compile')
 
-        # generate JS/CSS assets
-        manage('assets build')
-
         # do database migrations
         manage('migrate upgrade')
 

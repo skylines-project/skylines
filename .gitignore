@@ -29,7 +29,6 @@ __pycache__/
 /*.egg-info/
 /.installed.cfg
 /*.egg
-/webassets
 
 # PyInstaller
 #  Usually these files are written by a python script from a template
