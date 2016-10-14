@@ -15,15 +15,16 @@ def about():
 
 
 @about_blueprint.route('/imprint')
+@vary('accept')
 def imprint():
+    if 'application/json' not in request.headers.get('Accept', ''):
+        return render_template('ember-page.jinja')
+
     content = current_app.config.get(
         'SKYLINES_IMPRINT',
         'Please set the `SKYLINES_IMPRINT` variable in the config file.')
 
-    content = markdown.convert(content)
-
-    return render_template(
-        'generic/page.jinja', title=_('Imprint'), content=content)
+    return jsonify(content=content)
 
 
 @about_blueprint.route('/team')
