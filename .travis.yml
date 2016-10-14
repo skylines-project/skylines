@@ -43,9 +43,6 @@ before_script:
   - node_modules/.bin/ember build
   - cd ..
 
-  # Generate asset files
-  - ./manage.py assets build
-
 script:
   # Run the test suite
   - py.test tests

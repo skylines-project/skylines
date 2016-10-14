@@ -6,15 +6,17 @@ module.exports = function(defaults) {
     storeConfigInMeta: false,
 
     fingerprint: {
-      enabled: false,
+      extensions: ['css', 'js'],
+      exclude: ['cesium'],
+    },
+
+    sourcemaps: {
+      enabled: true,
+      extensions: ['css', 'js'],
     },
 
     vendorFiles: {
       'jquery.js': 'bower_components/jquery/jquery.js',
-    },
-
-    gzip: {
-      keepUncompressed: true,
     },
   });
 

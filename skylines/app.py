@@ -1,4 +1,5 @@
 import os
+import json
 import config
 
 from flask import Flask
@@ -44,10 +45,15 @@ class SkyLines(Flask):
         self.login_manager.init_app(self)
 
     def add_assets(self):
-        """ Create and attach Assets extension """
-        from skylines.frontend.assets import Environment
-        self.assets = Environment(self)
-        self.assets.load_bundles('skylines.frontend.assets.bundles')
+        json_path = self.config.get('ASSETS_LOAD_DIR') + '/index.json'
+
+        assets_json = {}
+        with open(json_path) as f:
+            assets_json = json.load(f)
+
+        @self.context_processor
+        def inject_assets():
+            return dict(assets=assets_json)
 
     def add_tg2_compat(self):
         from skylines.lib import helpers

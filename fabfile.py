@@ -13,7 +13,6 @@ SRC_DIR = '%s/src' % APP_DIR
 def deploy(branch='master', force=False):
     deploy_ember()
     push(branch, force)
-    bower_install()
     restart()
 
 
@@ -39,9 +38,6 @@ def restart():
 
         # compile i18n .mo files
         manage('babel compile')
-
-        # generate JS/CSS assets
-        manage('assets build')
 
         # do database migrations
         manage('migrate upgrade')
@@ -97,12 +93,6 @@ def pip_install():
     with cd(SRC_DIR):
         run('git reset --hard')
         run('pip install -e .')
-
-
-@task
-def bower_install():
-    with cd(SRC_DIR + '/ember'):
-        run('bower install')
 
 
 @task

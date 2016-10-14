@@ -90,10 +90,6 @@ sudo sudo -u postgres psql -d skylines_test -c 'CREATE EXTENSION fuzzystrmatch;'
 
 ./manage.py db create
 
-# build assets
-
-./manage.py assets build
-
 # compile translations
 
 ./manage.py babel compile
