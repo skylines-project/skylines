@@ -42,13 +42,14 @@ def skylines_team():
 
 
 @about_blueprint.route('/license')
+@vary('accept')
 def license():
+    if 'application/json' not in request.headers.get('Accept', ''):
+        return render_template('ember-page.jinja')
+
     path = os.path.join(os.path.dirname(os.path.abspath(__file__)),
                         '..', '..', '..', 'LICENSE')
     with open(path) as f:
         content = f.read().decode('utf-8')
 
-    content = '<pre>' + content + '</pre>'
-
-    return render_template(
-        'generic/page.jinja', title=_('License'), content=content)
+    return jsonify(content=content)

@@ -88,6 +88,7 @@ last-name: Last name
 latest: Latest
 n-avg-distance-per-flight: avg. {distance} per flight
 leg-statistics: Leg Statistics
+license: License
 live-tracking: Live Tracking
 live-tracking-of-PILOT: Live Tracking of {pilot}
 live-tracking-of-PILOT-and-PILOT2: Live Tracking of {pilot} and {pilot2}
