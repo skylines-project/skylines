@@ -6,7 +6,8 @@ module.exports = function(defaults) {
     storeConfigInMeta: false,
 
     fingerprint: {
-      enabled: false,
+      extensions: ['css', 'js'],
+      exclude: ['cesium'],
     },
 
     vendorFiles: {
