@@ -10,6 +10,11 @@ module.exports = function(defaults) {
       exclude: ['cesium'],
     },
 
+    sourcemaps: {
+      enabled: true,
+      extensions: ['css', 'js'],
+    },
+
     vendorFiles: {
       'jquery.js': 'bower_components/jquery/jquery.js',
     },
