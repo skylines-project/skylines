@@ -13,10 +13,6 @@ module.exports = function(defaults) {
     vendorFiles: {
       'jquery.js': 'bower_components/jquery/jquery.js',
     },
-
-    gzip: {
-      keepUncompressed: true,
-    },
   });
 
   // Use `app.import` to add additional libraries to the generated

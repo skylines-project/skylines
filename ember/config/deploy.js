@@ -7,6 +7,9 @@ module.exports = function(deployTarget) {
     'revision-data': {
       type: 'git-commit',
     },
+    'gzip': {
+      keep: true,
+    },
   };
 
   if (deployTarget === 'development') {
