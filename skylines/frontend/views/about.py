@@ -1,9 +1,10 @@
 import os.path
 
-from flask import Blueprint, render_template, current_app
+from flask import Blueprint, render_template, current_app, request, jsonify
 from flask.ext.babel import _
 
 from skylines.lib.helpers import markdown
+from skylines.lib.vary import vary
 
 about_blueprint = Blueprint('about', 'skylines')
 
@@ -26,20 +27,17 @@ def imprint():
 
 
 @about_blueprint.route('/team')
+@vary('accept')
 def skylines_team():
+    if 'application/json' not in request.headers.get('Accept', ''):
+        return render_template('ember-page.jinja')
+
     path = os.path.join(os.path.dirname(os.path.abspath(__file__)),
                         '..', '..', '..', 'AUTHORS.md')
     with open(path) as f:
         content = f.read().decode('utf-8')
 
-    content = content.replace('Developers', _('Developers'))
-    content = content.replace('Translators', _('Translators'))
-
-    content = markdown.convert(content)
-
-    return render_template('generic/page.jinja',
-                           title=_('The SkyLines Team'),
-                           content=content)
+    return jsonify(content=content)
 
 
 @about_blueprint.route('/license')

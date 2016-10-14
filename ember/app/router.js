@@ -68,6 +68,10 @@ Router.map(function() {
     this.route('tracking');
   });
 
+  this.route('about', function() {
+    this.route('team');
+  });
+
   this.route('islands', { path: '/*wildcard' });
 });
 

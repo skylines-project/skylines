@@ -42,6 +42,7 @@ date: Date
 date-missing-in-igc-file: Date missing in IGC file
 delay: Delay
 delete: Delete
+developers: Developers
 distance: Distance
 distance-abbr: Dist.
 distance-flights: Distance Flights
@@ -170,6 +171,7 @@ total-score: Total Score
 tracking-callsign: Tracking Callsign
 tracking-delay: Tracking Delay
 tracking-delay-choice: '{delay, plural, =0 {None} =1 {1 minute} other {# minutes}}'
+translators: Translators
 triangle: Triangle
 unassigned: Unassigned
 unfollow: Unfollow

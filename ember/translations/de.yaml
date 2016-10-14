@@ -42,6 +42,7 @@ date: Datum
 date-missing-in-igc-file: Datum fehlt in IGC Datei
 delay: Verzögerung
 delete: Löschen
+developers: Entwickler
 distance: Distanz
 distance-abbr: Dist.
 distance-flights: Streckenflüge
@@ -165,6 +166,7 @@ total-score: Gesamtpunkte
 tracking-callsign: Tracking-Kennzeichen
 tracking-delay: Tracking-Verzögerung
 tracking-delay-choice: '{delay, plural, =0 {Keine} =1 {1 Minute} other {# Minuten}}'
+translators: Übersetzer
 triangle: Dreieck
 unassigned: nicht zugeordnet
 unfollow: Nicht mehr verfolgen
