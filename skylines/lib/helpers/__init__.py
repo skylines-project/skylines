@@ -12,7 +12,6 @@ from urllib import urlencode
 from flask import flash
 from webhelpers import date, feedgenerator, html, number, misc, text
 
-from .string import *
 from .country import *
 from skylines.lib.formatter.units import get_setting_name
 from skylines.lib.datetime import to_seconds_of_day
