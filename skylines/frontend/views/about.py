@@ -1,9 +1,7 @@
 import os.path
 
 from flask import Blueprint, render_template, current_app, request, jsonify
-from flask.ext.babel import _
 
-from skylines.lib.helpers import markdown
 from skylines.lib.vary import vary
 
 about_blueprint = Blueprint('about', 'skylines')
