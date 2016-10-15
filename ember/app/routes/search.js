@@ -12,7 +12,7 @@ export default Ember.Route.extend({
   model(params, transition) {
     let searchText = transition.queryParams && transition.queryParams.text;
     if (searchText) {
-      return this.get('ajax').request(`/search?text=${searchText}`);
+      return this.get('ajax').request(`/search/?text=${searchText}`);
     }
   },
 
