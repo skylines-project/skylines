@@ -13,7 +13,6 @@ from sqlalchemy.ext.hybrid import hybrid_property, hybrid_method
 
 from skylines.database import db
 from skylines.lib.sql import LowerCaseComparator
-from skylines.lib.formatter import units
 
 __all__ = ['User']
 
@@ -272,45 +271,6 @@ class User(db.Model):
         """
         from skylines.model.flight import Flight
         return Flight.get_largest().filter(Flight.pilot == self)
-
-    ##############################
-
-    @property
-    def unit_preset(self):
-        """Calculate unit preset based on user unit preference.
-
-        If all user unit settings exactly matches one of the preset, return
-        that preset id. Otherwise return 0, that is interpreted as 'Custom'
-        preset.
-        """
-        for pref, preset in enumerate(units.UNIT_PRESETS):
-            p = preset[1]
-            if not p:
-                continue
-            eq = [p['distance_unit'] == units.DISTANCE_UNITS[self.distance_unit][0],
-                  p['speed_unit'] == units.SPEED_UNITS[self.speed_unit][0],
-                  p['lift_unit'] == units.LIFT_UNITS[self.lift_unit][0],
-                  p['altitude_unit'] == units.ALTITUDE_UNITS[self.altitude_unit][0]
-                  ]
-            if all(eq):
-                return pref
-
-        return 0
-
-    @unit_preset.setter
-    def unit_preset(self, preset):
-        """Set individual unit preferences according to given preset
-        """
-        name, settings = units.UNIT_PRESETS[preset]
-        if settings:
-            self.distance_unit = units.unitid(units.DISTANCE_UNITS,
-                                              settings['distance_unit'])
-            self.speed_unit = units.unitid(units.SPEED_UNITS,
-                                           settings['speed_unit'])
-            self.lift_unit = units.unitid(units.LIFT_UNITS,
-                                          settings['lift_unit'])
-            self.altitude_unit = units.unitid(units.ALTITUDE_UNITS,
-                                              settings['altitude_unit'])
 
 
 db.Index('users_lower_email_address_idx',
