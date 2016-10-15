@@ -16,7 +16,7 @@ from .string import *
 from .country import *
 from skylines.lib.formatter.numbers import *
 from skylines.lib.formatter.datetime import *
-from skylines.lib.formatter.units import *
+from skylines.lib.formatter.units import get_setting_name
 from skylines.lib.datetime import to_seconds_of_day
 from skylines.frontend.views.upload import UploadStatus
 
