@@ -6,7 +6,5 @@
 
 from __future__ import absolute_import
 
-from flask import flash
-
 from .country import *
 from skylines.lib.formatter.units import get_setting_name
