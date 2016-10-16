@@ -2,7 +2,6 @@ import math
 from datetime import datetime
 
 from flask import Blueprint, request, render_template, redirect, url_for, abort, current_app, jsonify, g, make_response
-from flask.ext.babel import lazy_gettext as _
 
 from sqlalchemy.orm import undefer_group, contains_eager
 from sqlalchemy.sql.expression import func
@@ -469,6 +468,15 @@ def update():
     if 'competition_id' in data:
         g.flight.competition_id = data['competition_id']
 
+    if 'privacy_level' in data:
+        g.flight.privacy_level = data['privacy_level']
+
+        try:
+            tasks.analyse_flight.delay(g.flight.id)
+            tasks.find_meetings.delay(g.flight.id)
+        except ConnectionError:
+            current_app.logger.info('Cannot connect to Redis server')
+
     g.flight.time_modified = datetime.utcnow()
     db.session.commit()
 
@@ -486,30 +494,6 @@ def delete():
     db.session.commit()
 
     return jsonify()
-
-
-@flight_blueprint.route('/publish', methods=['GET', 'POST'])
-def publish():
-    if not g.flight.is_writable(g.current_user):
-        abort(403)
-
-    if request.method == 'POST':
-        g.flight.privacy_level = Flight.PrivacyLevel.PUBLIC
-        db.session.commit()
-
-        try:
-            tasks.analyse_flight.delay(g.flight.id)
-            tasks.find_meetings.delay(g.flight.id)
-        except ConnectionError:
-            current_app.logger.info('Cannot connect to Redis server')
-
-        return redirect(url_for('.index'))
-
-    return render_template(
-        'generic/confirm.jinja',
-        title=_('Publish Flight'),
-        question=_('Confirm to publish this flight...'),
-        action=url_for('.publish'), cancel=url_for('.index'))
 
 
 @flight_blueprint.route('/add_comment', methods=['POST'])

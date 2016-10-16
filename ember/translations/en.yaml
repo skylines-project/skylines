@@ -138,6 +138,8 @@ planned: planned
 POINTS-points-abbr: '{points} pts.'
 profile: Profile
 publish: Publish
+publish-flight: Publish Flight
+publish-flight-confirmation-text: Confirm to publish this flight...
 publish-flights: '{num, plural, =1 {Publish Flight} other {Publish Flights}}'
 publishing: Publishing
 ranking: Ranking

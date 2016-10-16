@@ -33,4 +33,10 @@ export default Ember.Component.extend({
     yield this.get('ajax').request(`/flights/${id}/`, { method: 'DELETE' });
     window.location = '/flights/';
   }).drop(),
+
+  publishTask: task(function * () {
+    let id = this.get('flight.id');
+    yield this.get('ajax').request(`/flights/${id}/`, { method: 'POST', json: { privacyLevel: 0 } });
+    window.location = `/flights/${id}/`;
+  }).drop(),
 });

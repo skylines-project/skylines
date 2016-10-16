@@ -154,9 +154,9 @@
         </button>
 
         {{#if isPrivate}}
-          <a data-toggle="modal" data-target="#modal" href="/flights/{{flight.id}}/publish?embedded" class="btn btn-success btn-sm">
+          <button type="button" class="btn btn-default btn-sm" data-toggle="modal" data-target="#publishModal">
             <i class="icon-globe icon-small"></i> {{t "publish"}}
-          </a>
+          </button>
         {{/if}}
       </td>
     </tr>
@@ -188,6 +188,24 @@
         <div class="modal-footer">
           <button type="button" class="btn btn-primary" {{action (perform deleteTask)}} disabled={{deleteTask.isRunning}}>{{t "yes"}}</button>
           <button type="button" class="btn btn-default" data-dismiss="modal" disabled={{deleteTask.isRunning}}>{{t "no"}}</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="publishModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close" disabled={{publishTask.isRunning}}><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title">{{t "publish-flight"}}</h4>
+        </div>
+        <div class="modal-body">
+          <label class="large">{{t "publish-flight-confirmation-text"}}</label>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary" {{action (perform publishTask)}} disabled={{publishTask.isRunning}}>{{t "yes"}}</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal" disabled={{publishTask.isRunning}}>{{t "no"}}</button>
         </div>
       </div>
     </div>
