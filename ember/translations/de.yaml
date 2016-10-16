@@ -42,6 +42,8 @@ date: Datum
 date-missing-in-igc-file: Datum fehlt in IGC Datei
 delay: Verzögerung
 delete: Löschen
+delete-flight: Flug löschen
+delete-flight-confirmation-text: Bist du sicher dass du den Flug löschen möchtest?
 developers: Entwickler
 distance: Distanz
 distance-abbr: Dist.
@@ -102,6 +104,7 @@ name: Name
 nearest-airport: Nächster Flugplatz
 new: Neu
 newer: Neuer
+no: Nein
 no-airports-found: Kein Flugplatz gefunden.
 no-club: Kein Verein
 no-clubs-found: Keine Vereine gefunden.
@@ -181,6 +184,7 @@ website: Webseite
 wingmen: Wingmen
 wrong-current-password: Bitte prüfe dein aktuelles Passwort.
 year: Jahr
+yes: Ja
 you-have-no-notifications: Du hast keine Benachrichtigungen.
 your-flights-have-been-saved: Deine Flüge wurden gespeichert.
 about:

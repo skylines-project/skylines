@@ -475,24 +475,17 @@ def update():
     return jsonify()
 
 
-@flight_blueprint.route('/delete', methods=['GET', 'POST'])
+@flight_blueprint.route('/', methods=('DELETE',))
 def delete():
     if not g.flight.is_writable(g.current_user):
         abort(403)
 
-    if request.method == 'POST':
-        files.delete_file(g.flight.igc_file.filename)
-        db.session.delete(g.flight)
-        db.session.delete(g.flight.igc_file)
-        db.session.commit()
+    files.delete_file(g.flight.igc_file.filename)
+    db.session.delete(g.flight)
+    db.session.delete(g.flight.igc_file)
+    db.session.commit()
 
-        return redirect(url_for('flights.index'))
-
-    return render_template(
-        'generic/confirm.jinja',
-        title=_('Delete Flight'),
-        question=_('Are you sure you want to delete this flight?'),
-        action=url_for('.delete'), cancel=url_for('.index'))
+    return jsonify()
 
 
 @flight_blueprint.route('/publish', methods=['GET', 'POST'])

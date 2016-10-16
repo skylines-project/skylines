@@ -42,6 +42,8 @@ date: Date
 date-missing-in-igc-file: Date missing in IGC file
 delay: Delay
 delete: Delete
+delete-flight: Delete Flight
+delete-flight-confirmation-text: Are you sure you want to delete this flight?
 developers: Developers
 distance: Distance
 distance-abbr: Dist.
@@ -105,6 +107,7 @@ name: Name
 nearest-airport: Nearest Airport
 new: New
 newer: Newer
+no: No
 no-airports-found: No airports found.
 no-club: No club
 no-clubs-found: No clubs found.
@@ -190,6 +193,7 @@ website: Website
 wingmen: Wingmen
 wrong-current-password: Please check your current password.
 year: Year
+yes: Yes
 you-have-no-notifications: You have no notifications.
 your-flights-have-been-saved: Your flights have been saved.
 about:

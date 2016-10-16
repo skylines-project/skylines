@@ -1,9 +1,11 @@
 import Ember from 'ember';
+import { task } from 'ember-concurrency';
 
 import safeComputed from '../computed/safe-computed';
 
 export default Ember.Component.extend({
   account: Ember.inject.service(),
+  ajax: Ember.inject.service(),
 
   flight: null,
 
@@ -25,4 +27,10 @@ export default Ember.Component.extend({
 
   isPublic: Ember.computed.equal('flight.privacyLevel', 0),
   isPrivate: Ember.computed.not('isPublic'),
+
+  deleteTask: task(function * () {
+    let id = this.get('flight.id');
+    yield this.get('ajax').request(`/flights/${id}/`, { method: 'DELETE' });
+    window.location = '/flights/';
+  }).drop(),
 });

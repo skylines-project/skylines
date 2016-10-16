@@ -149,9 +149,9 @@
     <tr>
       <th>{{t "actions"}}</th>
       <td>
-        <a data-toggle="modal" data-target="#modal" href="/flights/{{flight.id}}/delete?embedded" class="btn btn-default btn-sm">
+        <button type="button" class="btn btn-default btn-sm" data-toggle="modal" data-target="#deleteModal">
           <i class="icon-remove icon-small"></i> {{t "delete"}}
-        </a>
+        </button>
 
         {{#if isPrivate}}
           <a data-toggle="modal" data-target="#modal" href="/flights/{{flight.id}}/publish?embedded" class="btn btn-success btn-sm">
@@ -173,3 +173,23 @@
     {{pin-button flightId=flight.id}}
   </span>
 </p>
+
+{{#ember-wormhole to="modal-wormhole"}}
+  <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close" disabled={{deleteTask.isRunning}}><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title">{{t "delete-flight"}}</h4>
+        </div>
+        <div class="modal-body">
+          <label class="large">{{t "delete-flight-confirmation-text"}}</label>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary" {{action (perform deleteTask)}} disabled={{deleteTask.isRunning}}>{{t "yes"}}</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal" disabled={{deleteTask.isRunning}}>{{t "no"}}</button>
+        </div>
+      </div>
+    </div>
+  </div>
+{{/ember-wormhole}}
