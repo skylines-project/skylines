@@ -1,4 +1,11 @@
 {{#if account.user}}
+  <li class={{if (eq activePage "notifications") "active"}}>
+    <a href="/notifications" title="{{t "notifications"}}">
+      <span class="visible-xs">{{t "notifications"}}&nbsp;&nbsp;</span>
+      {{notifications-badge}}
+    </a>
+  </li>
+
   <li class="dropdown {{if (eq activePage "settings") "active"}}">
     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
       {{account.user.name}} <i class="icon-caret-down"></i>

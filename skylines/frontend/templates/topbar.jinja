@@ -41,20 +41,7 @@
               <span class="visible-xs">{{ _('Upload flight') }}</span>
             </a>
         </li>
-
-        {% if g.current_user -%}
-          {{ _notification_item(active_page) }}
-        {%- endif %}
     </ul>
 </div>
-{%- endmacro %}
-
-{%- macro _notification_item(active_page) -%}
-<li{% if active_page == 'notifications' %} class="active"{% endif %}>
-    <a href="{{ url_for('notifications.index') }}" title="{{ _('Notifications') }}">
-        <span class="visible-xs">{{ _('Notifications') }}&nbsp;&nbsp;</span>
-        <span data-component="notifications-badge"></span>
-    </a>
-</li>
 {%- endmacro %}
 
