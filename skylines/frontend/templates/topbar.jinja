@@ -32,16 +32,6 @@
     </form>
 
     <div data-component="nav-bar-menu-right" data-attrs='{"activePage":{{ active_page|tojson }}}'></div>
-
-    <ul class="nav navbar-nav navbar-right">
-        <li{% if active_page == 'upload' %} class="active"{% endif %}>
-            <a href="{{ url_for('upload.index') }}" title="{{ _('Upload flight') }}">
-              <i class="icon-upload-alt icon-large hidden-xs"></i>
-              <i class="icon-upload-alt icon-fixed-width visible-xs"></i>
-              <span class="visible-xs">{{ _('Upload flight') }}</span>
-            </a>
-        </li>
-    </ul>
 </div>
 {%- endmacro %}
 

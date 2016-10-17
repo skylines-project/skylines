@@ -1,3 +1,11 @@
+<li class={{if (eq activePage "upload") "active"}}>
+  <a href="/flights/upload" title={{t "upload-flight"}}>
+    <i class="icon-upload-alt icon-large hidden-xs"></i>
+    <i class="icon-upload-alt icon-fixed-width visible-xs"></i>
+    <span class="visible-xs">{{t "upload-flight"}}</span>
+  </a>
+</li>
+
 {{#if account.user}}
   <li class={{if (eq activePage "notifications") "active"}}>
     <a href="/notifications" title="{{t "notifications"}}">
