@@ -44,7 +44,6 @@
 
         {% if g.current_user -%}
           {{ _notification_item(active_page) }}
-          {{ _user_dropdown(active_page) }}
         {%- endif %}
     </ul>
 </div>
@@ -59,13 +58,3 @@
 </li>
 {%- endmacro %}
 
-{%- macro _user_dropdown(active_page) -%}
-{%- with user=g.current_user %}
-<li class="dropdown {% if active_page == 'settings' %}active{% endif %}">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-      {{ user|e }} <i class="icon-caret-down"></i>
-  </a>
-  <ul class="dropdown-menu" data-component="nav-bar-user-menu"></ul>
-</li>
-{%- endwith %}
-{%- endmacro %}

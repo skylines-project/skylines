@@ -1,4 +1,10 @@
 {{#if account.user}}
+  <li class="dropdown {{if (eq activePage "settings") "active"}}">
+    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+      {{account.user.name}} <i class="icon-caret-down"></i>
+    </a>
+    <ul class="dropdown-menu">{{nav-bar-user-menu}}</ul>
+  </li>
 {{else}}
   <li class="{{if (eq activePage "login") "active"}} visible-xs">
     <a href="/login">
