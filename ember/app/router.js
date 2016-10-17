@@ -75,8 +75,6 @@ Router.map(function() {
   });
 
   this.route('login');
-
-  this.route('islands', { path: '/*wildcard' });
 });
 
 export default Router;
