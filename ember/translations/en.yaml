@@ -101,6 +101,7 @@ live-tracking-of-PILOT-and-NUM-other-pilots: Live Tracking of {pilot} and {num} 
 n-avg-hours-per-flight: avg. {num} hours per flight
 live-tracking-key: Live Tracking Key
 login: Login
+logout: Logout
 mark-all-as-read: Mark all as read
 members: Members
 members-of-CLUB: Members <small>of <a href="{clubURL}">{club}</a></small>

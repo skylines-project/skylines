@@ -82,19 +82,7 @@
   <a href="#" class="dropdown-toggle" data-toggle="dropdown">
       {{ user|e }} <i class="icon-caret-down"></i>
   </a>
-  <ul class="dropdown-menu">
-      <li><a href="{{ url_for('user.index', user_id=user.id) }}"><i class="icon-user icon-fixed-width"></i> {{ user|e }}</a></li>
-      {%- if user.club %}
-      <li><a href="{{ url_for('club.index', club_id=user.club.id) }}"><i class="icon-group icon-fixed-width"></i> {{ user.club|e }}</a></li>
-      {%- endif %}
-      <li class="divider"></li>
-      <li><a href="{{ url_for('flights.pilot', id=user.id) }}"><i class="icon-plane icon-fixed-width"></i> {% trans %}Flights{% endtrans %}</a></li>
-      <li><a href="{{ url_for('statistics.index', page='pilot', id=user.id) }}"><i class="icon-bar-chart icon-fixed-width"></i> {% trans %}Statistics{% endtrans %}</a></li>
-      <li class="divider"></li>
-      <li><a href="{{ url_for('settings.profile') }}"><i class="icon-cog icon-fixed-width"></i> {% trans %}Settings{% endtrans %}</a></li>
-      <li class="divider"></li>
-      <li><a href="{{ url_for('logout', next=g.logout_next or request.url) }}"><i class="icon-signout icon-fixed-width"></i> {% trans %}Logout{% endtrans %}</a></li>
-  </ul>
+  <ul class="dropdown-menu" data-component="nav-bar-user-menu"></ul>
 </li>
 {%- endwith %}
 {%- endmacro %}
