@@ -23,13 +23,7 @@
 </div>
 
 <div class="collapse navbar-collapse navbar-ex1-collapse">
-    <ul class="nav navbar-nav">
-        {{ _navbar_link(_('Live'), '/tracking/', 'icon-rss', active_page == 'tracking') }}
-        {{ _navbar_link(_('Flights'), '/flights/', 'icon-plane', active_page == 'flights') }}
-        {{ _navbar_link(_('Ranking'), '/ranking/', 'icon-reorder', active_page == 'ranking') }}
-        {{ _navbar_link(_('Statistics'), '/statistics/', 'icon-bar-chart', active_page == 'statistics') }}
-        {{ _navbar_link(_('Search'), '/search/', 'icon-search', active_page == 'search', 'hidden-lg') }}
-    </ul>
+    <div data-component="nav-bar-menu" data-attrs='{"activePage":{{ active_page|tojson }}}'></div>
 
     <form action="{{ url_for('search.index') }}" class="navbar-form navbar-left navbar-search visible-lg" role="search">
         <div class="form-group">
@@ -56,16 +50,6 @@
         {{ _language_dropdown() }}
     </ul>
 </div>
-{%- endmacro %}
-
-{% macro _navbar_link(title, href, icon, active=False, class='') -%}
-  <li class="{% if active %}active{% endif %} {{ class }}">
-    <a href="{{ href }}" title="{{ title }}">
-      <i class="{{ icon }} icon-large visible-sm"></i>
-      <i class="{{ icon }} icon-fixed-width visible-xs"></i>
-      <span class="hidden-sm">{{ title }}</span>
-    </a>
-  </li>
 {%- endmacro %}
 
 {% macro _login_dropdown(active_page) -%}

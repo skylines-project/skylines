@@ -94,6 +94,7 @@ n-avg-distance-per-flight: avg. {distance} per flight
 leg-statistics: Leg Statistics
 license: License
 live-tracking: Live Tracking
+live-tracking-nav-bar-link: Live
 live-tracking-of-PILOT: Live Tracking of {pilot}
 live-tracking-of-PILOT-and-PILOT2: Live Tracking of {pilot} and {pilot2}
 live-tracking-of-PILOT-and-NUM-other-pilots: Live Tracking of {pilot} and {num} other pilots
