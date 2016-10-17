@@ -4,7 +4,6 @@ from flask import render_template, redirect, request, url_for, g, jsonify
 from flask.ext.login import login_user, logout_user, current_user
 
 from skylines.model import User
-from skylines.frontend.forms import LoginForm
 from skylines.schemas import CurrentUserSchema, ValidationError
 
 
@@ -36,13 +35,6 @@ def register(app):
             g.current_user = None
         else:
             g.current_user = current_user
-
-    @app.before_request
-    def inject_login_form():
-        if g.current_user:
-            g.login_form = None
-        else:
-            g.login_form = LoginForm()
 
     @app.route('/login')
     def login():
