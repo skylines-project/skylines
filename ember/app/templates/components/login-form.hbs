@@ -1,5 +1,5 @@
 <form {{action (perform loginTask) on="submit"}} class="form-login">
-  {{#if error}}
+  {{#if (and error (not inline))}}
     <div class="alert alert-danger" role="alert">{{t "wrong-credentials"}}</div>
   {{/if}}
 

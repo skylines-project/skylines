@@ -4,8 +4,9 @@ import { task } from 'ember-concurrency';
 export default Ember.Component.extend({
   ajax: Ember.inject.service(),
 
-  classNames: ['panel-body'],
+  classNameBindings: ['inline::panel-body'],
 
+  inline: false,
   error: null,
 
   loginTask: task(function * () {
@@ -13,7 +14,9 @@ export default Ember.Component.extend({
 
     try {
       yield this.get('ajax').request('/session', { method: 'PUT', json });
-      window.location = this.get('next') || '/';
+
+      let next = this.get('inline') ? window.location.href : this.get('next');
+      window.location = next || '/';
 
     } catch (error) {
       this.set('error', error);

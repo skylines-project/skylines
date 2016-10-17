@@ -79,31 +79,8 @@
     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
         <i class="icon-signin"></i> {% trans %}Login{% endtrans %} <i class="icon-caret-down"></i>
     </a>
-    <div class="dropdown-menu">
-        {{ _login_form() }}
-    </div>
+    <div class="dropdown-menu" data-component="login-form" data-attrs='{"inline":true}'></div>
 </li>
-{%- endmacro %}
-
-{% macro _login_form() -%}
-<form method="POST" action="{{ url_for('login', next=(request.values.get('next') or request.url)) }}" role="form" class="form-login">
-    {{ g.login_form.hidden_tag() }}
-    {{ render_field(g.login_form.email_address, hide_error_text=True) }}
-    {{ render_field(g.login_form.password, hide_error_text=True) }}
-    <div class="form-group checkbox clearfix">
-        <label id="remember" class="pull-left">
-            {{ g.login_form.remember_me()|safe }} {{ g.login_form.remember_me.label.text }}
-        </label>
-        <input class="btn btn-primary pull-right" value="{{ _('Login') }}" type="submit"/>
-    </div>
-    <hr/>
-    <div>
-        <a href="{{ url_for('users.recover') }}">{% trans %}Forgot password?{% endtrans %}</a>
-    </div>
-    <div>
-        <a href="{{ url_for('users.new') }}">{% trans %}Don't have an account?{% endtrans %}</a>
-    </div>
-</form>
 {%- endmacro %}
 
 {%- macro _notification_item(active_page) -%}
