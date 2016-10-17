@@ -2,12 +2,13 @@ import base64
 
 from datetime import datetime
 
-from flask import render_template, redirect, request, url_for, g
+from flask import render_template, redirect, request, url_for, g, jsonify
 from flask.ext.login import login_user, logout_user, current_user
 from flask.ext.babel import _
 
 from skylines.model import User
 from skylines.frontend.forms import LoginForm
+from skylines.schemas import CurrentUserSchema, ValidationError
 
 
 def register(app):
@@ -77,6 +78,26 @@ def register(app):
     def logout():
         logout_user()
         return redirect(get_next())
+
+    @app.route('/session', methods=('PUT',))
+    def create_session():
+        if g.current_user:
+            return jsonify(error='already-authenticated'), 422
+
+        json = request.get_json()
+        if json is None:
+            return jsonify(error='invalid-request'), 400
+
+        try:
+            data = CurrentUserSchema(only=('email', 'password')).load(json).data
+        except ValidationError, e:
+            return jsonify(error='validation-failed', fields=e.messages), 422
+
+        user = User.by_credentials(data['email_address'], data['password'])
+        if not user or not login_user(user, remember=True):
+            return jsonify(error='wrong-credentials'), 403
+
+        return jsonify()
 
     def get_next():
         return request.values.get("next") or request.referrer or url_for("index")
