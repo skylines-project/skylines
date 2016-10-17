@@ -1,0 +1,12 @@
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+    {{x-flag code=currentLocale.countryCode}}
+    <span class="visible-xs">{{currentLocale.name}}</span>
+    <i class="icon-caret-down"></i>
+  </a>
+  <ul class="dropdown-menu">
+    {{#each availableLocales as |locale|}}
+      <li><a href="#" {{action "setLocale" locale.code}}>{{x-flag code=locale.countryCode}} {{locale.name}}</a></li>
+    {{/each}}
+  </ul>
+</li>

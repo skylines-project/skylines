@@ -31,6 +31,8 @@
         </div>
     </form>
 
+    <div data-component="nav-bar-menu-right" data-attrs='{"activePage":{{ active_page|tojson }}}'></div>
+
     <ul class="nav navbar-nav navbar-right">
         <li{% if active_page == 'upload' %} class="active"{% endif %}>
             <a href="{{ url_for('upload.index') }}" title="{{ _('Upload flight') }}">
@@ -41,13 +43,11 @@
         </li>
 
         {% if g.current_user -%}
-        {{ _notification_item(active_page) }}
-        {{ _user_dropdown(active_page) }}
+          {{ _notification_item(active_page) }}
+          {{ _user_dropdown(active_page) }}
         {%- else %}
-        {{ _login_dropdown(active_page) }}
+          {{ _login_dropdown(active_page) }}
         {%- endif %}
-
-        {{ _language_dropdown() }}
     </ul>
 </div>
 {%- endmacro %}
@@ -85,27 +85,4 @@
   <ul class="dropdown-menu" data-component="nav-bar-user-menu"></ul>
 </li>
 {%- endwith %}
-{%- endmacro %}
-
-{%- macro _language_dropdown() -%}
-<li class="dropdown">
-    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-      {{ insert_flag(h.language_to_country_code(g.active_locale|string)) }}
-      <span class="visible-xs">{{ g.active_locale.display_name|capitalize }}</span>
-      <i class="icon-caret-down"></i>
-    </a>
-    <ul class="dropdown-menu">
-      {% for locale in g.primary_locales -%}
-      {{ _language_item(locale) }}
-      {%- endfor %}
-      <li class="divider"></li>
-      {% for locale in g.secondary_locales|sort(attribute='display_name') -%}
-      {{ _language_item(locale) }}
-      {%- endfor %}
-    </ul>
-</li>
-{%- endmacro %}
-
-{% macro _language_item(lang) %}
-<li><a href="{{ url_for('set_lang', language=lang) }}" title="{{ lang.english_name }}">{{ insert_flag(h.language_to_country_code(lang|string)) }} {{ lang.display_name|capitalize }}</a></li>
 {%- endmacro %}
