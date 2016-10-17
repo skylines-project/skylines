@@ -1,14 +1,6 @@
 {% from "macros/flags.jinja" import insert_flag with context %}
 {% from "macros/form.jinja" import render_field %}
 
-{% set navigation_bar = [
-    ('/tracking/', 'tracking', _('Live'), 'icon-rss', ''),
-    ('/flights/', 'flights', _('Flights'), 'icon-plane', ''),
-    ('/ranking/', 'ranking', _('Ranking'), 'icon-reorder', ''),
-    ('/statistics/', 'statistics', _('Statistics'), 'icon-bar-chart', ''),
-    ('/search/', 'search', _('Search'), 'icon-search', 'hidden-lg'),
-] -%}
-
 {% macro topbar(active_page) -%}
 <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
     <div class="container">
@@ -32,9 +24,11 @@
 
 <div class="collapse navbar-collapse navbar-ex1-collapse">
     <ul class="nav navbar-nav">
-        {% for href, id, caption, icon, css_class in navigation_bar -%}
-          {{ _navbar_link(caption, href, icon, active_page == id, css_class) }}
-        {%- endfor %}
+        {{ _navbar_link(_('Live'), '/tracking/', 'icon-rss', active_page == 'tracking') }}
+        {{ _navbar_link(_('Flights'), '/flights/', 'icon-plane', active_page == 'flights') }}
+        {{ _navbar_link(_('Ranking'), '/ranking/', 'icon-reorder', active_page == 'ranking') }}
+        {{ _navbar_link(_('Statistics'), '/statistics/', 'icon-bar-chart', active_page == 'statistics') }}
+        {{ _navbar_link(_('Search'), '/search/', 'icon-search', active_page == 'search', 'hidden-lg') }}
     </ul>
 
     <form action="{{ url_for('search.index') }}" class="navbar-form navbar-left navbar-search visible-lg" role="search">
