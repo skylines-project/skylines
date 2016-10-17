@@ -99,5 +99,10 @@ def register(app):
 
         return jsonify()
 
+    @app.route('/session', methods=('DELETE',))
+    def delete_session():
+        logout_user()
+        return jsonify()
+
     def get_next():
         return request.values.get("next") or request.referrer or url_for("index")
