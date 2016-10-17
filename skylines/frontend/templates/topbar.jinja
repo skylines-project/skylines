@@ -33,13 +33,7 @@
 <div class="collapse navbar-collapse navbar-ex1-collapse">
     <ul class="nav navbar-nav">
         {% for href, id, caption, icon, css_class in navigation_bar -%}
-        <li class="{% if active_page == id %}active{% endif %} {{ css_class }}">
-          <a href="{{ href }}" title="{{ caption }}">
-            <i class="{{ icon }} icon-large visible-sm"></i>
-            <i class="{{ icon }} icon-fixed-width visible-xs"></i>
-            <span class="hidden-sm">{{ caption }}</span>
-          </a>
-        </li>
+          {{ _navbar_link(caption, href, icon, active_page == id, css_class) }}
         {%- endfor %}
     </ul>
 
@@ -68,6 +62,16 @@
         {{ _language_dropdown() }}
     </ul>
 </div>
+{%- endmacro %}
+
+{% macro _navbar_link(title, href, icon, active=False, class='') -%}
+  <li class="{% if active %}active{% endif %} {{ class }}">
+    <a href="{{ href }}" title="{{ title }}">
+      <i class="{{ icon }} icon-large visible-sm"></i>
+      <i class="{{ icon }} icon-fixed-width visible-xs"></i>
+      <span class="hidden-sm">{{ title }}</span>
+    </a>
+  </li>
 {%- endmacro %}
 
 {% macro _login_dropdown(active_page) -%}
