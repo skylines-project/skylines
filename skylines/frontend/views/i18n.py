@@ -1,6 +1,6 @@
-from flask import redirect, request, session, url_for, g
+from flask import redirect, request, session, url_for, g, jsonify
 from flask.ext.babel import get_locale
-from babel import Locale
+from babel import Locale, negotiate_locale
 from babel.util import distinct
 
 
@@ -56,3 +56,17 @@ def register(app):
     def set_lang(language):
         session['language'] = language
         return redirect(request.referrer or url_for('index'))
+
+    @app.route('/locale')
+    def resolve_locale():
+        available = request.args.get('available', '').split(',')
+        available = filter(lambda it: it != '', available)
+
+        if len(available) == 0:
+            return jsonify(error='invalid-request'), 400
+
+        preferred = map(lambda it: it[0], request.accept_languages)
+
+        locale = negotiate_locale(preferred, available, sep='-')
+
+        return jsonify(locale=locale)
