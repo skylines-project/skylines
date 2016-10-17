@@ -1,10 +1,39 @@
-{% extends "base.jinja" %}
 {% from 'topbar.jinja' import topbar with context %}
 
-{% set use_ember = true %}
+<!doctype html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-{% block body -%}
-  {{ topbar(active_page) }}
+  <meta name="skylines-locale" content="{{ g.active_locale }}">
+  {% if g.current_user %}
+    <meta name="skylines-user" content="{{ g.current_user.id }}||{{ g.current_user.name|e }}">
+    {% if g.current_user.club %}
+      <meta name="skylines-club" content="{{ g.current_user.club.id }}||{{ g.current_user.club|e }}">
+    {% endif %}
 
-  <div id="ember-application"></div>
-{%- endblock %}
+    <meta name="skylines-distance-unit" content="{{ h.get_setting_name('distance_unit') }}">
+    <meta name="skylines-speed-unit" content="{{ h.get_setting_name('speed_unit') }}">
+    <meta name="skylines-lift-unit" content="{{ h.get_setting_name('lift_unit') }}">
+    <meta name="skylines-altitude-unit" content="{{ h.get_setting_name('altitude_unit') }}">
+  {% endif %}
+
+  <link rel='shortcut icon' href='/favicon.ico' type='image/x-icon' />
+  <link rel='shortcut' href='/favicon.png' type='image/png' />
+
+  {% for link in assets.link %}
+    <link rel="{{ link.rel }}" href="{{ link.href }}"/>
+  {% endfor %}
+</head>
+<body>
+{{ topbar(active_page) }}
+
+<div id="ember-application"></div>
+
+{% for script in assets.script %}
+  <script src="{{ script.src }}"></script>
+{% endfor %}
+</body>
+</html>
