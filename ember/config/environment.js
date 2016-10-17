@@ -14,7 +14,6 @@ module.exports = function(environment) {
     APP: {
       // Here you can pass flags/options to your application instance
       // when it is created
-      rootElement: '#ember-application'
     },
 
     SKYLINES_API_URL: 'http://localhost:5001',
