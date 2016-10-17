@@ -1,4 +1,10 @@
-{% extends "base-page.jinja" %}
+{% extends "base.jinja" %}
+{% from 'topbar.jinja' import topbar with context %}
+
 {% set use_ember = true %}
 
-{% block ember_application %}{% endblock %}
+{% block body -%}
+  {{ topbar(active_page) }}
+
+  <div id="ember-application"></div>
+{%- endblock %}
