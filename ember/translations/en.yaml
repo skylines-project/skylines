@@ -51,6 +51,7 @@ distance-flights: Distance Flights
 DISTANCE-on-DATE: '{distance} on {date}'
 DISTANCE-on-DATE-by-PILOT: '{distance} on {date} by {pilot}'
 DISTANCE-on-DATE-by-PILOT-and-COPILOT: '{distance} on {date} by {pilot} and {copilot}'
+dont-have-an-account: Don't have an account?
 duplicate-file: Duplicate file
 duration: Duration
 edit: Edit
@@ -72,6 +73,7 @@ flights: Flights
 follow: Follow
 followers: Followers
 following: Following
+forgot-password: Forgot password?
 friends: Friends
 generate-new-key: Generate new key
 generating-new-key: Generating new key...
@@ -97,6 +99,7 @@ live-tracking-of-PILOT-and-PILOT2: Live Tracking of {pilot} and {pilot2}
 live-tracking-of-PILOT-and-NUM-other-pilots: Live Tracking of {pilot} and {num} other pilots
 n-avg-hours-per-flight: avg. {num} hours per flight
 live-tracking-key: Live Tracking Key
+login: Login
 mark-all-as-read: Mark all as read
 members: Members
 members-of-CLUB: Members <small>of <a href="{clubURL}">{club}</a></small>
@@ -193,6 +196,7 @@ users: Users
 verify-flights-and-publish: You have to verify their properties and click 'Publish Flight(s)' below to publish your flight(s).
 website: Website
 wingmen: Wingmen
+wrong-credentials: Please check your email address and password.
 wrong-current-password: Please check your current password.
 year: Year
 yes: Yes

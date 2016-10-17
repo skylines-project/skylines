@@ -74,6 +74,8 @@ Router.map(function() {
     this.route('team');
   });
 
+  this.route('login');
+
   this.route('islands', { path: '/*wildcard' });
 });
 
