@@ -9,24 +9,8 @@
 <div class="container">
     <div class="content">
         {% if self.title() -%}
-        <div class="page-header{% if header_tabs %} page-header-with-tabs{% endif %}">
-            {%- if self.title_right() -%}
-            <div class="pull-right">{%- block title_right %}{% endblock %}</div>
-            {%- endif %}
-
+        <div class="page-header">
             <h1>{{ self.title() }}</h1>
-
-            {%- if header_tabs -%}
-            <div class="page-header-tabs">
-                <ul class="nav nav-tabs">
-                    {% for href, id, caption in header_tabs -%}
-                    <li{% if active_header_tab == id %} class="active"{% endif %}>
-                        <a href="{{ href }}">{{ caption }}</a>
-                    </li>
-                    {%- endfor %}
-                </ul>
-            </div>
-            {%- endif %}
         </div>
         {%- endif %}
 
