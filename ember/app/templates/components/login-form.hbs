@@ -6,13 +6,15 @@
   {{validated-input
     value=email
     label=(t "email-address")
-    disabled=loginTask.isRunning}}
+    disabled=loginTask.isRunning
+    showErrorClass=error}}
 
   {{validated-input
     type='password'
     value=password
     label=(t "password")
-    disabled=loginTask.isRunning}}
+    disabled=loginTask.isRunning
+    showErrorClass=error}}
 
   <button class="btn btn-primary btn-block" type="submit" disabled={{loginTask.isRunning}}>
     {{t "login"}}
