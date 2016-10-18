@@ -27,7 +27,7 @@ export default Ember.Route.extend({
 
     Ember.debug('Requesting locale resolution from server');
     let data = { available: availableLocales.join() };
-    return this.get('ajax').request('/locale', { data }).then(it => it.locale);
+    return this.get('ajax').request('/locale', { data }).then(it => it.locale || 'en');
   },
 
   activate() {
