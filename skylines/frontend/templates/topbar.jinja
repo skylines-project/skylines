@@ -24,13 +24,7 @@
 
 <div class="collapse navbar-collapse navbar-ex1-collapse">
     <div data-component="nav-bar-menu" data-attrs='{"activePage":{{ active_page|tojson }}}'></div>
-
-    <form action="{{ url_for('search.index') }}" class="navbar-form navbar-left navbar-search visible-lg" role="search">
-        <div class="form-group">
-            <input type="text" name="text" value="{{ (search_text or '')|e }}" placeholder="{{ _('Search') }}" class="form-control">
-        </div>
-    </form>
-
+    <div data-component="nav-bar-search-form"></div>
     <div data-component="nav-bar-menu-right" data-attrs='{"activePage":{{ active_page|tojson }}}'></div>
 </div>
 {%- endmacro %}
