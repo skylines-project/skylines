@@ -33,11 +33,6 @@ class SkyLines(Flask):
         from flask.ext.cache import Cache
         self.cache = Cache(self, with_jinja2_ext=False)
 
-    def add_babel(self):
-        """ Create and attach Babel extension """
-        from flask.ext.babel import Babel
-        self.babel = Babel(self)
-
     def add_login_manager(self):
         """ Create and attach Login extension """
         from flask.ext.login import LoginManager
@@ -144,7 +139,6 @@ def create_frontend_app(*args, **kw):
     app.add_debug_toolbar()
 
     app.configure_jinja()
-    app.add_babel()
     app.add_login_manager()
     app.add_assets()
     app.add_tg2_compat()
