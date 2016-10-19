@@ -5,9 +5,9 @@
     <th>{{t "pilot"}}</th>
     <td>
       {{#if isWritable}}
-        <a href="/flights/{{flight.id}}/change_pilot" class="btn btn-default btn-sm pull-right">
+        {{#link-to "flight.change-pilot" flight.id class="btn btn-default btn-sm pull-right"}}
           <i class="icon-pencil icon-small"></i> {{t "change"}}
-        </a>
+        {{/link-to}}
       {{/if}}
 
       {{#if flight.pilot.id}}
@@ -33,7 +33,7 @@
   {{#if flight.scoreDate}}
     <tr>
       <th>{{t "date"}}</th>
-      <td><a href="/flights/date/{{flight.scoreDate}}">{{format-date flight.scoreDate format="ddmmyyyy" timeZone="UTC"}}</a></td>
+      <td>{{#link-to "flights.date" flight.scoreDate}}{{format-date flight.scoreDate format="ddmmyyyy" timeZone="UTC"}}{{/link-to}}</td>
     </tr>
   {{/if}}
 
@@ -82,9 +82,9 @@
     <th>{{t "aircraft"}}</th>
     <td class="column-buttons">
       {{#if isWritable}}
-        <a href="/flights/{{flight.id}}/change_aircraft" class="btn btn-default btn-sm pull-right">
+        {{#link-to "flight.change-aircraft" flight.id class="btn btn-default btn-sm pull-right"}}
           <i class="icon-pencil icon-small"></i> {{t "change"}}
-        </a>
+        {{/link-to}}
       {{/if}}
 
       {{#if flight.model}}
