@@ -5,6 +5,7 @@ import safeComputed from '../computed/safe-computed';
 
 export default Ember.Controller.extend({
   ajax: Ember.inject.service(),
+  notifications: Ember.inject.service(),
 
   queryParams: ['page', 'user', 'type'],
   page: 1,
@@ -33,5 +34,6 @@ export default Ember.Controller.extend({
   markAsReadTask: task(function * () {
     yield this.get('ajax').request('/notifications/clear', { method: 'POST' });
     this.get('model.events').forEach(event => Ember.set(event, 'unread', false));
+    this.set('notifications.counter', 0);
   }).drop(),
 });

@@ -35,23 +35,15 @@ body {
   }
 }
 
-.container-fullscreen {
-    position: absolute;
-    top: 40px;
-    bottom: 0px;
-    width: 100%;
-}
+body > .ember-view {
+  position: absolute;
+  width: 100%;
+  top: 40px;
+  bottom: 0;
 
-@media (max-width: 767px) {
-  .container-fullscreen {
+  @media (max-width: 767px) {
     top: 50px;
   }
-}
-
-.container-fullscreen.ember-application > div {
-  position: relative;
-  width: 100%;
-  height: 100%;
 }
 
 /* Page header */

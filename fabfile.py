@@ -36,9 +36,6 @@ def restart():
     with cd(SRC_DIR):
         run('git reset --hard')
 
-        # compile i18n .mo files
-        manage('babel compile')
-
         # do database migrations
         manage('migrate upgrade')
 
