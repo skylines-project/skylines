@@ -6,8 +6,6 @@ export default Ember.Service.extend({
   init() {
     this._super(...arguments);
     this.load();
-
-    window.pinnedFlightsService = this;
   },
 
   pin(id) {
