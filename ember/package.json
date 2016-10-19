@@ -48,7 +48,7 @@
     "ember-intl-cp-validations": "2.3.0",
     "ember-load-initializers": "^0.5.1",
     "ember-page-title": "3.0.9",
-    "ember-power-select": "1.0.0-alpha.5",
+    "ember-power-select": "1.0.0-beta.25",
     "ember-resolver": "^2.0.3",
     "ember-truth-helpers": "1.2.0",
     "loader.js": "^4.0.1"
