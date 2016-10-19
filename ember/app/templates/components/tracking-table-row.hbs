@@ -4,7 +4,7 @@
   </abbr>
 </td>
 
-<td><a href="/users/{{track.pilot.id}}/">{{track.pilot.name}}</a></td>
+<td>{{#link-to "user" track.pilot.id}}{{track.pilot.name}}{{/link-to}}</td>
 
 <td>
   {{#if track.nearestAirport}}
@@ -27,5 +27,5 @@
 </td>
 
 <td nowrap="nowrap" class="column-buttons">
-  <a href="/tracking/{{track.pilot.id}}/" class="btn btn-default btn-sm">{{t "show"}}</a>
+  {{#link-to "tracking.details" track.pilot.id class="btn btn-default btn-sm"}}{{t "show"}}{{/link-to}}
 </td>
