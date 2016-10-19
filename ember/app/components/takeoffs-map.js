@@ -1,6 +1,13 @@
 import BaseMapComponent from './base-map';
 
+import slMapClickHandler from '../utils/map-click-handler';
+
 export default BaseMapComponent.extend({
+  didInsertElement() {
+    this._super(...arguments);
+    slMapClickHandler(this.get('map'));
+  },
+
   fit() {
     let map = this.get('map');
 
