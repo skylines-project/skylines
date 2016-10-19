@@ -1,4 +1,4 @@
-from flask import Blueprint, g, render_template, request, Response, abort
+from flask import Blueprint, render_template, request, Response, abort
 from werkzeug.exceptions import BadRequest
 
 from sqlalchemy.sql.expression import or_
@@ -6,16 +6,6 @@ from sqlalchemy.sql.expression import or_
 from skylines.model import User, Club, Flight
 
 widgets_blueprint = Blueprint('widgets', 'skylines')
-
-
-@widgets_blueprint.route('/')
-def index():
-    if g.current_user:
-        club = g.current_user.club
-    else:
-        club = Club.get(1)
-
-    return render_template('widgets/index.jinja', club=club)
 
 
 def wrap(callback, content):
