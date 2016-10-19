@@ -15,8 +15,9 @@
     date=(format-date model.flight.scoreDate format="ddmmyyyy"))}}
 {{/if}}
 
-<div id="fullscreen-content" class="olFullscreen">
+<div class="fullscreen-below-nav-bar">
   {{flight-page
+    id="fullscreen-content"
     ids=ids
     flight=model.flight
     _primaryFlightPath=_primaryFlightPath

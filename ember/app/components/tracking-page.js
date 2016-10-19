@@ -6,7 +6,7 @@ import FixCalc from '../utils/fix-calc';
 export default Ember.Component.extend({
   ajax: Ember.inject.service(),
 
-  classNames: ['olFullscreen'],
+  classNames: ['relative-fullscreen'],
 
   fixCalc: null,
 

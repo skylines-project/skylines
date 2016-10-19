@@ -7,7 +7,7 @@ export default Ember.Component.extend({
   ajax: Ember.inject.service(),
   pinnedFlights: Ember.inject.service(),
 
-  classNames: ['olFullscreen'],
+  classNames: ['relative-fullscreen'],
 
   fixCalc: null,
   flightPhase: null,

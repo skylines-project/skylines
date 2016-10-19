@@ -1,16 +1,10 @@
-.olFullscreen {
-  position: relative;
-  width: 100%;
-  height: 100%;
-}
-
 .ol-viewport .plane_marker {
   position: absolute;
   min-height: 1em;
 }
 
-.olFullscreen .ol-scale-line,
-.olFullscreen .ol-attribution {
+.ol-scale-line,
+.ol-attribution {
   bottom: 172px;
   margin-bottom: 10px;
 }
