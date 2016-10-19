@@ -13,7 +13,7 @@
 {{#if showPilot}}
   <td class="pilot">
     {{#if flight.pilot.id}}
-      <a href="/users/{{flight.pilot.id}}/">{{pilotName}}</a>
+      {{link-to pilotName "user" flight.pilot.id}}
     {{else if pilotName}}
       {{pilotName}}
     {{/if}}
@@ -21,7 +21,7 @@
     {{#if (and pilotName copilotName)}}<br/>{{/if}}
 
     {{#if flight.copilot.id}}
-      <a href="/users/{{flight.copilot.id}}/">{{copilotName}}</a>
+      {{link-to copilotName "user" flight.copilot.id}}
     {{else if copilotName}}
       {{copilotName}}
     {{/if}}
@@ -43,7 +43,7 @@
   <td class="airport">
     {{#if flight.takeoffAirport}}
       {{x-flag code=flight.takeoffAirport.countryCode}}
-      <a href="/flights/airport/{{flight.takeoffAirport.id}}">{{flight.takeoffAirport.name}}</a>
+      {{link-to flight.takeoffAirport.name "flights.airport" flight.takeoffAirport.id}}
     {{/if}}
   </td>
 {{/if}}
@@ -51,7 +51,7 @@
 {{#if showClub}}
   <td class="club hidden-sm hidden-xs">
     {{#if flight.club}}
-      <a href="/clubs/{{flight.club.id}}">{{truncate flight.club.name 25}}</a>
+      {{link-to (truncate flight.club.name 25) "club" flight.club.id}}
     {{/if}}
   </td>
 {{/if}}
