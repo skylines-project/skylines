@@ -42,12 +42,12 @@ export default Ember.Component.extend({
   getShareUrl(url) {
     let pinnedFlights = this.get('pinnedFlights.pinned');
 
-    let url_re = /(.*?)\/([\d,]{1,})\/(.*)/;
+    let url_re = /(.*?)\/([\d,]{1,})/;
     let url_split = url_re.exec(url);
 
     let url_ids = url_split[2].split(',').map(it => parseInt(it, 10));
     let unique_ids = url_ids.concat(pinnedFlights).uniq();
 
-    return `${url_split[1]}/${unique_ids.join(',')}/${url_split[3]}`;
+    return `${url_split[1]}/${unique_ids.join(',')}`;
   },
 });
