@@ -15,12 +15,12 @@
         {{#each model.clubs as |club|}}
           <tr>
             <td class="column-buttons">
-              <a href="/clubs/{{club.id}}">{{club.name}}</a>
+              {{link-to club.name "club" club.id }}
 
               <div class="pull-right">
-                <a href="/flights/club/{{club.id}}" class="btn btn-default btn-sm"><i class="icon-plane"></i> {{t "flights"}}</a>
-                <a href="/statistics/club/{{club.id}}" class="btn btn-default btn-sm hidden-xs-inline"><i class="icon-bar-chart"></i> {{t "statistics"}}</a>
-                <a href="/clubs/{{club.id}}/pilots" class="btn btn-default btn-sm hidden-xs-inline"><i class="icon-group"></i> {{t "members"}}</a>
+                {{#link-to "flights.club" club.id class="btn btn-default btn-sm"}}<i class="icon-plane"></i> {{t "flights"}}{{/link-to}}
+                {{#link-to "stats.wildcard" (concat "club/" club.id) class="btn btn-default btn-sm hidden-xs-inline"}}<i class="icon-bar-chart"></i> {{t "statistics"}}{{/link-to}}
+                {{#link-to "club.pilots" club.id class="btn btn-default btn-sm hidden-xs-inline"}}<i class="icon-group"></i> {{t "members"}}{{/link-to}}
               </div>
             </td>
           </tr>
