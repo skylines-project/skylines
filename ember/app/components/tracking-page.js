@@ -39,8 +39,6 @@ export default Ember.Component.extend({
       sidebar.open(window.location.hash.substring(1));
     }
 
-    let paddingFn = window.paddingFn = () => [20, 20, this.$('#barogram_panel').height() + 20, sidebar.width() + 20];
-
     let map = window.flightMap.get('map');
 
     fixCalc.set('defaultTime', -1);
@@ -49,7 +47,7 @@ export default Ember.Component.extend({
     flights.forEach(flight => fixCalc.addFlight(flight));
 
     let extent = fixCalc.get('flights').getBounds();
-    map.getView().fit(extent, map.getSize(), { padding: paddingFn() });
+    map.getView().fit(extent, map.getSize(), { padding: this._calculatePadding() });
 
     // update flight track every 15 seconds
     this._scheduleUpdate();
@@ -94,6 +92,10 @@ export default Ember.Component.extend({
     return (interval.max == -Infinity) ? null : [interval.min, interval.max];
   }),
 
+  _calculatePadding() {
+    return [20, 20, this.$('#barogram_panel').height() + 20, this.$('#sidebar').width() + 20];
+  },
+
   actions: {
     togglePlayback() {
       this.get('fixCalc').togglePlayback();
@@ -102,6 +104,10 @@ export default Ember.Component.extend({
     removeFlight(id) {
       let flights = this.get('fixCalc.flights');
       flights.removeObjects(flights.filterBy('id', id));
+    },
+
+    calculatePadding() {
+      return this._calculatePadding();
     },
   },
 });
