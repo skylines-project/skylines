@@ -23,8 +23,8 @@
   {{#each model.ranking as |row|}}
     <tr>
       <td class="numeric">{{row.rank}}</td>
-      <td><a href="/users/{{row.user.id}}">{{row.user.name}}</a></td>
-      <td>{{#if row.user.club}}<a href="/clubs/{{row.user.club.id}}">{{row.user.club.name}}</a>{{/if}}</td>
+      <td>{{link-to row.user.name "user" row.user.id}}</td>
+      <td>{{#if row.user.club}}{{link-to row.user.club.name "club" row.user.club.id}}{{/if}}</td>
       <td class="numeric">{{format-number row.flights}}</td>
       <td class="numeric">{{format-number row.points maximumFractionDigits=0}}</td>
     </tr>
