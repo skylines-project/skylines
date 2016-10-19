@@ -46,7 +46,6 @@
     "ember-cp-validations": "2.9.3",
     "ember-intl": "2.11.2",
     "ember-intl-cp-validations": "2.3.0",
-    "ember-islands": "^1.1.0",
     "ember-load-initializers": "^0.5.1",
     "ember-page-title": "3.0.9",
     "ember-power-select": "1.0.0-alpha.5",
