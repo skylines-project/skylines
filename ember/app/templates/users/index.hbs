@@ -16,16 +16,16 @@
         {{#each model.users as |user|}}
           <tr>
             <td>
-              <a href="/users/{{user.id}}">{{user.name}}</a>
+              {{link-to user.name "user" user.id}}
             </td>
             <td class="column-buttons">
               {{#if user.club}}
-                <a href="/clubs/{{user.club.id}}">{{user.club.name}}</a>
+                {{link-to user.club.name "club" user.club.id}}
               {{/if}}
 
               <div class="pull-right hidden-xs">
-                <a href="/flights/pilot/{{user.id}}" class="btn btn-default btn-sm"><i class="icon-plane"></i> {{t "flights"}}</a>
-                <a href="/statistics/pilot/{{user.id}}" class="btn btn-default btn-sm hidden-xs-inline"><i class="icon-bar-chart"></i> {{t "statistics"}}</a>
+                {{#link-to "flights.pilot" user.id class="btn btn-default btn-sm"}}<i class="icon-plane"></i> {{t "flights"}}{{/link-to}}
+                {{#link-to "stats.wildcard" (concat "pilot/" user.id) class="btn btn-default btn-sm hidden-xs-inline"}}<i class="icon-bar-chart"></i> {{t "statistics"}}{{/link-to}}
               </div>
             </td>
           </tr>
