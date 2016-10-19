@@ -25,7 +25,7 @@ def _add_user_id(endpoint, values):
 @vary('accept')
 def index():
     if 'application/json' not in request.headers.get('Accept', ''):
-        return render_template('ember-page.jinja', active_page='settings')
+        return render_template('ember-page.jinja')
 
     json = ClubSchema().dump(g.club).data
     json['isWritable'] = g.club.is_writable(g.current_user)
@@ -35,12 +35,12 @@ def index():
 
 @club_blueprint.route('/pilots')
 def pilots():
-    return render_template('ember-page.jinja', active_page='settings')
+    return render_template('ember-page.jinja')
 
 
 @club_blueprint.route('/edit')
 def edit():
-    return render_template('ember-page.jinja', active_page='settings')
+    return render_template('ember-page.jinja')
 
 
 @club_blueprint.route('/', methods=['POST'])

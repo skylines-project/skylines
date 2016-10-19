@@ -12,7 +12,7 @@ clubs_blueprint = Blueprint('clubs', 'skylines')
 @vary('accept')
 def index():
     if 'application/json' not in request.headers.get('Accept', ''):
-        return render_template('ember-page.jinja', active_page='settings')
+        return render_template('ember-page.jinja')
 
     clubs = Club.query().order_by(func.lower(Club.name))
 

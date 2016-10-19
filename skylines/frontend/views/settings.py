@@ -128,12 +128,12 @@ def update():
 
 @settings_blueprint.route('/profile')
 def profile():
-    return render_template('ember-page.jinja', active_page='settings')
+    return render_template('ember-page.jinja')
 
 
 @settings_blueprint.route('/password')
 def password():
-    return render_template('ember-page.jinja', active_page='settings')
+    return render_template('ember-page.jinja')
 
 
 @settings_blueprint.route('/password/check', methods=['POST'])
@@ -164,7 +164,7 @@ def password_recover():
 @settings_blueprint.route('/tracking')
 @vary('accept')
 def tracking():
-    return render_template('ember-page.jinja', active_page='settings')
+    return render_template('ember-page.jinja')
 
 
 @settings_blueprint.route('/tracking/key', methods=['POST'])
@@ -177,7 +177,7 @@ def tracking_generate_key():
 
 @settings_blueprint.route('/club', methods=['GET'])
 def club():
-    return render_template('ember-page.jinja', active_page='settings')
+    return render_template('ember-page.jinja')
 
 
 @settings_blueprint.route('/club', methods=['PUT'])

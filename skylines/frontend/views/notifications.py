@@ -41,7 +41,7 @@ def _filter_query(query, args):
 @vary('accept')
 def index():
     if 'application/json' not in request.headers.get('Accept', ''):
-        return render_template('ember-page.jinja', active_page='notifications')
+        return render_template('ember-page.jinja')
 
     query = Notification.query(recipient=g.current_user) \
         .join('event') \

@@ -22,7 +22,7 @@ users_blueprint = Blueprint('users', 'skylines')
 @vary('accept')
 def index():
     if 'application/json' not in request.headers.get('Accept', ''):
-        return render_template('ember-page.jinja', active_page='settings')
+        return render_template('ember-page.jinja')
 
     users = User.query() \
         .options(joinedload(User.club)) \
@@ -40,7 +40,7 @@ def index():
 
 @users_blueprint.route('/new')
 def new():
-    return render_template('ember-page.jinja', active_page='settings')
+    return render_template('ember-page.jinja')
 
 
 @users_blueprint.route('/new', methods=['POST'])
@@ -68,7 +68,7 @@ def new_post():
 
 @users_blueprint.route('/recover')
 def recover():
-    return render_template('ember-page.jinja', active_page='settings')
+    return render_template('ember-page.jinja')
 
 
 @users_blueprint.route('/recover', methods=['POST'])

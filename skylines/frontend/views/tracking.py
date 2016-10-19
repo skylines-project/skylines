@@ -12,7 +12,7 @@ tracking_blueprint = Blueprint('tracking', 'skylines')
 @vary('accept')
 def index():
     if 'application/json' not in request.headers.get('Accept', ''):
-        return render_template('ember-page.jinja', active_page='tracking')
+        return render_template('ember-page.jinja')
 
     fix_schema = TrackingFixSchema(only=('time', 'location', 'altitude', 'elevation', 'pilot'))
     airport_schema = AirportSchema(only=('id', 'name', 'countryCode'))
@@ -47,7 +47,7 @@ def index():
 
 @tracking_blueprint.route('/info')
 def info():
-    return render_template('ember-page.jinja', active_page='tracking')
+    return render_template('ember-page.jinja')
 
 
 @tracking_blueprint.route('/latest.json')

@@ -120,7 +120,7 @@ def index():
 
     mark_user_notifications_read(g.user)
 
-    return render_template('ember-page.jinja', active_page='settings')
+    return render_template('ember-page.jinja')
 
 
 @user_blueprint.route('/followers')
@@ -141,7 +141,7 @@ def followers():
 
         return jsonify(followers=followers)
 
-    return render_template('ember-page.jinja', active_page='settings')
+    return render_template('ember-page.jinja')
 
 
 @user_blueprint.route('/following')
@@ -163,7 +163,7 @@ def following():
 
         return jsonify(following=following)
 
-    return render_template('ember-page.jinja', active_page='settings')
+    return render_template('ember-page.jinja')
 
 
 def add_current_user_follows(followers):
