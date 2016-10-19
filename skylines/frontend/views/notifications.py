@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request, url_for, redirect, g, jsonify
+from flask import Blueprint, render_template, request, url_for, g, jsonify
 from sqlalchemy.orm import subqueryload, contains_eager
 from sqlalchemy.sql.expression import or_
 
@@ -70,9 +70,8 @@ def index():
     return jsonify(events=(map(convert_event, events)))
 
 
-@notifications_blueprint.route('/clear', methods=['GET', 'POST'])
+@notifications_blueprint.route('/clear', methods=('POST',))
 @login_required("You have to login to clear notifications.")
-@vary('accept')
 def clear():
     def filter_func(query):
         return _filter_query(query, request.args)
@@ -81,10 +80,7 @@ def clear():
 
     db.session.commit()
 
-    if 'application/json' in request.headers.get('Accept', ''):
-        return jsonify()
-
-    return redirect(url_for('.index', **request.args))
+    return jsonify()
 
 
 def convert_event(e):
