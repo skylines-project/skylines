@@ -75,7 +75,7 @@
 {{/if}}
 
 <td class="column-buttons">
-  <a href="/flights/{{flight.id}}/" class="btn btn-default btn-sm">{{t "show"}}</a>
+  {{#link-to "flight" flight.id class="btn btn-default btn-sm"}}{{t "show"}}{{/link-to}}
   {{pin-star flightId=flight.id}}
 </td>
 
