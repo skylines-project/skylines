@@ -1,18 +1,18 @@
-<li class={{if (eq activePage "upload") "active"}}>
-  <a href="/flights/upload" title={{t "upload-flight"}}>
+{{#active-link}}
+  {{#link-to "flight-upload"title=(t "upload-flight")}}
     <i class="icon-upload-alt icon-large hidden-xs"></i>
     <i class="icon-upload-alt icon-fixed-width visible-xs"></i>
     <span class="visible-xs">{{t "upload-flight"}}</span>
-  </a>
-</li>
+  {{/link-to}}
+{{/active-link}}
 
 {{#if account.user}}
-  <li class={{if (eq activePage "notifications") "active"}}>
-    <a href="/notifications" title="{{t "notifications"}}">
+  {{#active-link}}
+    {{#link-to "notifications" title=(t "notifications")}}
       <span class="visible-xs">{{t "notifications"}}&nbsp;&nbsp;</span>
       {{notifications-badge}}
-    </a>
-  </li>
+    {{/link-to}}
+  {{/active-link}}
 
   <li class="dropdown {{if (eq activePage "settings") "active"}}">
     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
@@ -21,11 +21,12 @@
     <ul class="dropdown-menu">{{nav-bar-user-menu}}</ul>
   </li>
 {{else}}
-  <li class="{{if (eq activePage "login") "active"}} visible-xs">
-    <a href="/login">
+
+  {{#active-link class="visible-xs"}}
+    {{#link-to "login"}}
       <i class="icon-signin"></i> {{t "login"}}
-    </a>
-  </li>
+    {{/link-to}}
+  {{/active-link}}
 
   <li class="dropdown {{if (eq activePage "login") "active"}} hidden-xs">
     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
