@@ -1,4 +1,4 @@
-from flask import Blueprint, request, render_template, redirect, url_for, abort, g, flash, jsonify
+from flask import Blueprint, request, render_template, redirect, url_for, abort, g, jsonify
 
 from sqlalchemy.sql.expression import and_, or_
 
@@ -152,7 +152,9 @@ def password_recover():
 
     g.user.generate_recover_key(request.remote_addr)
     send_recover_mail(g.user)
-    flash('A password recovery email was sent to that user.')
+
+    # TODO port to Ember
+    # flash('A password recovery email was sent to that user.')
 
     db.session.commit()
 

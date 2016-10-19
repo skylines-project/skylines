@@ -1,6 +1,5 @@
 from flask import Blueprint, current_app, render_template, jsonify, g, request
 
-from skylines.lib.helpers import isoformat_utc
 from skylines.lib.decorators import jsonp
 from skylines.lib.vary import vary
 from skylines.model import TrackingFix, Airport, Follower
@@ -56,7 +55,7 @@ def info():
 def latest():
     fixes = []
     for fix in TrackingFix.get_latest():
-        json = dict(time=isoformat_utc(fix.time),
+        json = dict(time=fix.time.isoformat() + 'Z',
                     location=fix.location.to_wkt(),
                     pilot=dict(id=fix.pilot_id, name=unicode(fix.pilot)))
 

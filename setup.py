@@ -36,7 +36,6 @@ setup(
         'WebHelpers==1.3',
         'celery[redis]>=3.1,<3.2',
         'xcsoar==0.5',
-        'Pygments==1.6',
         'aerofiles==0.1.1',
         'enum34==1.0',
         'pyproj==1.9.3',

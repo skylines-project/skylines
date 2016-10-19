@@ -45,7 +45,7 @@
 
     <form action="{{ url_for('search.index') }}" class="navbar-form navbar-left navbar-search visible-lg" role="search">
         <div class="form-group">
-            <input type="text" name="text" value="{{ (search_text or '')|e }}" placeholder="{{ _('Search') }}" class="form-control" placeholder="Search">
+            <input type="text" name="text" value="{{ (search_text or '')|e }}" placeholder="{{ _('Search') }}" class="form-control">
         </div>
     </form>
 

@@ -1,6 +1,6 @@
 from functools import wraps
 
-from flask import current_app, request, flash, redirect, url_for, abort
+from flask import current_app, request, redirect, url_for, abort
 from flask.ext.login import current_user
 
 
@@ -29,9 +29,6 @@ class login_required:
             if not current_user.is_authenticated():
                 if 'application/json' in request.headers.get('Accept', ''):
                     abort(401)
-
-                if self.msg:
-                    flash(unicode(self.msg))
 
                 return redirect(url_for('login', next=request.url))
 
