@@ -89,10 +89,7 @@ module.exports = function(defaults) {
     production: 'bower_components/moment/min/moment.min.js',
   });
 
-  app.import({
-    development: 'bower_components/eonasdan-bootstrap-datetimepicker/src/js/bootstrap-datetimepicker.js',
-    production: 'bower_components/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js',
-  });
+  app.import('bower_components/eonasdan-bootstrap-datetimepicker/src/js/bootstrap-datetimepicker.js');
 
   app.import({
     development: 'bower_components/sidebar-v2/js/jquery-sidebar.js',

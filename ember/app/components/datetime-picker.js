@@ -42,6 +42,9 @@ export default Ember.Component.extend({
   },
 
   updateDate() {
-    this.get('picker').setValue(this.get('date'));
+    let picker = this.get('picker');
+    if (picker) {
+      picker.setValue(this.get('date'));
+    }
   },
 });
