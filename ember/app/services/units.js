@@ -55,10 +55,15 @@ export const PRESETS = {
 export default Ember.Service.extend({
   intl: Ember.inject.service(),
 
-  distanceUnit: 'km',
-  speedUnit: 'km/h',
-  liftUnit: 'm/s',
-  altitudeUnit: 'm',
+  distanceUnitIndex: 1,
+  speedUnitIndex: 1,
+  liftUnitIndex: 0,
+  altitudeUnitIndex: 0,
+
+  distanceUnit: computedUnit('distanceUnits', 'distanceUnitIndex'),
+  speedUnit: computedUnit('speedUnits', 'speedUnitIndex'),
+  liftUnit: computedUnit('liftUnits', 'liftUnitIndex'),
+  altitudeUnit: computedUnit('altitudeUnits', 'altitudeUnitIndex'),
 
   distanceUnits: ['m', 'km', 'NM', 'mi'],
   speedUnits: ['m/s', 'km/h', 'kt', 'mph'],
@@ -164,3 +169,15 @@ export default Ember.Service.extend({
     return (options.withUnit !== false) ? `${value} ${this.get('altitudeUnit')}` : value;
   },
 });
+
+function computedUnit(unitsKey, indexKey) {
+  return Ember.computed(indexKey, {
+    get() {
+      return this.get(unitsKey)[this.get(indexKey)];
+    },
+    set(key, value) {
+      this.set(indexKey, this.get(unitsKey).indexOf(value));
+      return value;
+    },
+  });
+}
