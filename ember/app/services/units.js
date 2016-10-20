@@ -53,6 +53,8 @@ export const PRESETS = {
 };
 
 export default Ember.Service.extend({
+  intl: Ember.inject.service(),
+
   distanceUnit: 'km',
   speedUnit: 'km/h',
   liftUnit: 'm/s',
@@ -91,7 +93,10 @@ export default Ember.Service.extend({
    * @return {String} The formatted value as a string.
    */
   formatDecimal(value, decimals) {
-    return value.toFixed(decimals);
+    return this.get('intl').formatNumber(value, {
+      minimumFractionDigits: decimals,
+      maximumFractionDigits: decimals,
+    });
   },
 
   formatDistance(value, options) {
