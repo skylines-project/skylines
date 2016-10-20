@@ -5,18 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-  {% if g.current_user %}
-    <meta name="skylines-user" content="{{ g.current_user.id }}||{{ g.current_user.name|e }}">
-    {% if g.current_user.club %}
-      <meta name="skylines-club" content="{{ g.current_user.club.id }}||{{ g.current_user.club|e }}">
-    {% endif %}
-
-    <meta name="skylines-distance-unit" content="{{ h.get_setting_name('distance_unit') }}">
-    <meta name="skylines-speed-unit" content="{{ h.get_setting_name('speed_unit') }}">
-    <meta name="skylines-lift-unit" content="{{ h.get_setting_name('lift_unit') }}">
-    <meta name="skylines-altitude-unit" content="{{ h.get_setting_name('altitude_unit') }}">
-  {% endif %}
-
   <link rel='shortcut icon' href='/favicon.ico' type='image/x-icon' />
   <link rel='shortcut' href='/favicon.png' type='image/png' />
 
