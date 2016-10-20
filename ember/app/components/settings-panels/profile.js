@@ -32,6 +32,7 @@ const Validations = buildValidations({
 
 export default Ember.Component.extend(Validations, {
   ajax: Ember.inject.service(),
+  units: Ember.inject.service(),
 
   classNames: ['panel', 'panel-default'],
 
@@ -105,6 +106,14 @@ export default Ember.Component.extend(Validations, {
         messageKey: 'settings-have-been-saved',
         error: null,
       });
+
+      this.get('units').setProperties({
+        altitudeUnit: this.get('altitudeUnit'),
+        distanceUnit: this.get('distanceUnit'),
+        liftUnit: this.get('liftUnit'),
+        speedUnit: this.get('speedUnit'),
+      });
+
     } catch (error) {
       this.setProperties({ messageKey: null, error });
     }
