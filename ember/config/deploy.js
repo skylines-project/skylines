@@ -30,6 +30,7 @@ module.exports = function(deployTarget) {
       flags: ['z'],
       ssh: true,
       privateKeyPath: process.env['PRIVATE_KEY_PATH'],
+      excludeIndexHTML: false,
     };
   }
 
