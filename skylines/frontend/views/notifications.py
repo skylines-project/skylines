@@ -1,7 +1,8 @@
-from flask import Blueprint, render_template, request, url_for, g, jsonify
+from flask import Blueprint, request, url_for, g, jsonify
 from sqlalchemy.orm import subqueryload, contains_eager
 from sqlalchemy.sql.expression import or_
 
+from skylines.frontend.ember import send_index
 from skylines.lib.vary import vary
 from skylines.database import db
 from skylines.model.event import Event, Notification, Flight
@@ -41,7 +42,7 @@ def _filter_query(query, args):
 @vary('accept')
 def index():
     if 'application/json' not in request.headers.get('Accept', ''):
-        return render_template('ember-page.jinja')
+        return send_index()
 
     query = Notification.query(recipient=g.current_user) \
         .join('event') \

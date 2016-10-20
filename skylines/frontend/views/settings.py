@@ -1,7 +1,8 @@
-from flask import Blueprint, request, render_template, redirect, url_for, abort, g, jsonify
+from flask import Blueprint, request, redirect, url_for, abort, g, jsonify
 
 from sqlalchemy.sql.expression import and_, or_
 
+from skylines.frontend.ember import send_index
 from skylines.database import db
 from skylines.lib.dbutil import get_requested_record
 from skylines.lib.vary import vary
@@ -128,12 +129,12 @@ def update():
 
 @settings_blueprint.route('/profile')
 def profile():
-    return render_template('ember-page.jinja')
+    return send_index()
 
 
 @settings_blueprint.route('/password')
 def password():
-    return render_template('ember-page.jinja')
+    return send_index()
 
 
 @settings_blueprint.route('/password/check', methods=['POST'])
@@ -164,7 +165,7 @@ def password_recover():
 @settings_blueprint.route('/tracking')
 @vary('accept')
 def tracking():
-    return render_template('ember-page.jinja')
+    return send_index()
 
 
 @settings_blueprint.route('/tracking/key', methods=['POST'])
@@ -177,7 +178,7 @@ def tracking_generate_key():
 
 @settings_blueprint.route('/club', methods=['GET'])
 def club():
-    return render_template('ember-page.jinja')
+    return send_index()
 
 
 @settings_blueprint.route('/club', methods=['PUT'])

@@ -1,13 +1,14 @@
 import math
 from datetime import datetime
 
-from flask import Blueprint, request, render_template, redirect, url_for, abort, current_app, jsonify, g, make_response
+from flask import Blueprint, request, redirect, url_for, abort, current_app, jsonify, g, make_response
 
 from sqlalchemy.orm import undefer_group, contains_eager
 from sqlalchemy.sql.expression import func
 from geoalchemy2.shape import to_shape
 from datetime import timedelta
 
+from skylines.frontend.ember import send_index
 from skylines.database import db
 from skylines.lib import files
 from skylines.lib.dbutil import get_requested_record_list
@@ -244,7 +245,7 @@ def index():
             phases=phases,
             performance=performance)
 
-    return render_template('ember-page.jinja')
+    return send_index()
 
 
 @flight_blueprint.route('/json')
@@ -376,7 +377,7 @@ def change_pilot():
     if not g.flight.is_writable(g.current_user):
         abort(403)
 
-    return render_template('ember-page.jinja')
+    return send_index()
 
 
 @flight_blueprint.route('/change_aircraft')
@@ -384,7 +385,7 @@ def change_aircraft():
     if not g.flight.is_writable(g.current_user):
         abort(403)
 
-    return render_template('ember-page.jinja')
+    return send_index()
 
 
 @flight_blueprint.route('/', methods=['POST'])

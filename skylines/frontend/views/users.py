@@ -2,13 +2,14 @@ from email.mime.text import MIMEText
 from email.utils import formatdate
 import smtplib
 
-from flask import Blueprint, request, render_template, redirect, url_for, abort, current_app, g, jsonify
+from flask import Blueprint, request, redirect, url_for, abort, current_app, g, jsonify
 from flask.ext.babel import _
 from werkzeug.exceptions import ServiceUnavailable
 
 from sqlalchemy import func
 from sqlalchemy.orm import joinedload
 
+from skylines.frontend.ember import send_index
 from skylines.database import db
 from skylines.model import User
 from skylines.model.event import create_new_user_event
@@ -22,7 +23,7 @@ users_blueprint = Blueprint('users', 'skylines')
 @vary('accept')
 def index():
     if 'application/json' not in request.headers.get('Accept', ''):
-        return render_template('ember-page.jinja')
+        return send_index()
 
     users = User.query() \
         .options(joinedload(User.club)) \
@@ -40,7 +41,7 @@ def index():
 
 @users_blueprint.route('/new')
 def new():
-    return render_template('ember-page.jinja')
+    return send_index()
 
 
 @users_blueprint.route('/new', methods=['POST'])
@@ -68,7 +69,7 @@ def new_post():
 
 @users_blueprint.route('/recover')
 def recover():
-    return render_template('ember-page.jinja')
+    return send_index()
 
 
 @users_blueprint.route('/recover', methods=['POST'])

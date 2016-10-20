@@ -1,10 +1,11 @@
 from datetime import date
 
-from flask import Blueprint, request, redirect, url_for, render_template, jsonify, g
+from flask import Blueprint, request, redirect, url_for, jsonify, g
 from sqlalchemy import func
 from sqlalchemy.sql.expression import desc, over
 from sqlalchemy.orm import eagerload
 
+from skylines.frontend.ember import send_index
 from skylines.database import db
 from skylines.model import User, Club, Flight, Airport
 from skylines.lib.table_tools import Pager, Sorter
@@ -96,7 +97,7 @@ def pilots():
 
         return jsonify(ranking=json, total=g.paginators['result'].count)
 
-    return render_template('ember-page.jinja')
+    return send_index()
 
 
 @ranking_blueprint.route('/clubs')
@@ -120,7 +121,7 @@ def clubs():
 
         return jsonify(ranking=json, total=g.paginators['result'].count)
 
-    return render_template('ember-page.jinja')
+    return send_index()
 
 
 @ranking_blueprint.route('/airports')
@@ -144,4 +145,4 @@ def airports():
 
         return jsonify(ranking=json, total=g.paginators['result'].count)
 
-    return render_template('ember-page.jinja')
+    return send_index()

@@ -1,11 +1,12 @@
 from datetime import date, timedelta
 
-from flask import Blueprint, render_template, redirect, url_for, g, request, jsonify
+from flask import Blueprint, redirect, url_for, g, request, jsonify
 from flask.ext.login import login_required
 
 from sqlalchemy import func, and_
 from sqlalchemy.orm import contains_eager, subqueryload
 
+from skylines.frontend.ember import send_index
 from skylines.database import db
 from skylines.lib.dbutil import get_requested_record
 from skylines.lib.vary import vary
@@ -120,7 +121,7 @@ def index():
 
     mark_user_notifications_read(g.user)
 
-    return render_template('ember-page.jinja')
+    return send_index()
 
 
 @user_blueprint.route('/followers')
@@ -141,7 +142,7 @@ def followers():
 
         return jsonify(followers=followers)
 
-    return render_template('ember-page.jinja')
+    return send_index()
 
 
 @user_blueprint.route('/following')
@@ -163,7 +164,7 @@ def following():
 
         return jsonify(following=following)
 
-    return render_template('ember-page.jinja')
+    return send_index()
 
 
 def add_current_user_follows(followers):

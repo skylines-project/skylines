@@ -1,6 +1,7 @@
-from flask import Blueprint, render_template, g, request, jsonify
+from flask import Blueprint, g, request, jsonify
 
 from skylines.database import db
+from skylines.frontend.ember import send_index
 from skylines.lib.dbutil import get_requested_record
 from skylines.lib.vary import vary
 from skylines.model import Club
@@ -25,7 +26,7 @@ def _add_user_id(endpoint, values):
 @vary('accept')
 def index():
     if 'application/json' not in request.headers.get('Accept', ''):
-        return render_template('ember-page.jinja')
+        return send_index()
 
     json = ClubSchema().dump(g.club).data
     json['isWritable'] = g.club.is_writable(g.current_user)
@@ -35,12 +36,12 @@ def index():
 
 @club_blueprint.route('/pilots')
 def pilots():
-    return render_template('ember-page.jinja')
+    return send_index()
 
 
 @club_blueprint.route('/edit')
 def edit():
-    return render_template('ember-page.jinja')
+    return send_index()
 
 
 @club_blueprint.route('/', methods=['POST'])

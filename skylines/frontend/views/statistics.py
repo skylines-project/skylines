@@ -1,6 +1,7 @@
-from flask import Blueprint, render_template, abort, request, jsonify
+from flask import Blueprint, abort, request, jsonify
 from sqlalchemy import func, distinct
 
+from skylines.frontend.ember import send_index
 from skylines.database import db
 from skylines.lib.dbutil import get_requested_record
 from skylines.lib.vary import vary
@@ -14,7 +15,7 @@ statistics_blueprint = Blueprint('statistics', 'skylines')
 @vary('accept')
 def index(page=None, id=None):
     if 'application/json' not in request.headers.get('Accept', ''):
-        return render_template('ember-page.jinja')
+        return send_index()
 
     name = None
 

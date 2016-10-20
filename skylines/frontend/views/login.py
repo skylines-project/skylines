@@ -1,8 +1,9 @@
 import base64
 
-from flask import render_template, redirect, request, url_for, g, jsonify
+from flask import redirect, request, url_for, g, jsonify
 from flask.ext.login import login_user, logout_user, current_user
 
+from skylines.frontend.ember import send_index
 from skylines.model import User
 from skylines.schemas import CurrentUserSchema, ValidationError
 
@@ -41,7 +42,7 @@ def register(app):
         if g.current_user:
             return redirect(get_next())
 
-        return render_template('ember-page.jinja')
+        return send_index()
 
     @app.route('/logout')
     def logout():

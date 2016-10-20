@@ -1,9 +1,10 @@
 from datetime import datetime, timedelta
 from math import log
 
-from flask import Blueprint, request, render_template, abort, jsonify, g
+from flask import Blueprint, request, abort, jsonify, g
 from sqlalchemy.sql.expression import and_
 
+from skylines.frontend.ember import send_index
 from skylines.lib.dbutil import get_requested_record_list
 from skylines.lib.helpers import color
 from skylines.lib.xcsoar_ import FlightPathFix
@@ -153,7 +154,7 @@ def index():
 
         return jsonify(flights=flights, pilots=pilots_json)
 
-    return render_template('ember-page.jinja')
+    return send_index()
 
 
 @track_blueprint.route('/json')
