@@ -43,7 +43,7 @@
       <div class="form-group">
         <label class="control-label">{{t "units.distance"}}</label>
         {{#power-select
-          options=distanceUnits
+          options=units.distanceUnits
           searchEnabled=false
           selected=distanceUnit
           onchange=(action (mut distanceUnit))
@@ -55,7 +55,7 @@
       <div class="form-group">
         <label class="control-label">{{t "units.speed"}}</label>
         {{#power-select
-          options=speedUnits
+          options=units.speedUnits
           searchEnabled=false
           selected=speedUnit
           onchange=(action (mut speedUnit))
@@ -67,7 +67,7 @@
       <div class="form-group">
         <label class="control-label">{{t "units.lift"}}</label>
         {{#power-select
-          options=liftUnits
+          options=units.liftUnits
           searchEnabled=false
           selected=liftUnit
           onchange=(action (mut liftUnit))
@@ -79,7 +79,7 @@
       <div class="form-group">
         <label class="control-label">{{t "units.altitude"}}</label>
         {{#power-select
-          options=altitudeUnits
+          options=units.altitudeUnits
           searchEnabled=false
           selected=altitudeUnit
           onchange=(action (mut altitudeUnit))

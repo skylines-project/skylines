@@ -47,15 +47,10 @@ export default Ember.Component.extend(Validations, {
   messageKey: null,
   error: null,
 
-  distanceUnits: ['m', 'km', 'NM', 'mi'],
-  speedUnits: ['m/s', 'km/h', 'kt', 'mph'],
-  liftUnits: ['m/s', 'kt', 'ft/min'],
-  altitudeUnits: ['m', 'ft'],
-
-  distanceUnit: computedUnit('distanceUnits', 'distanceUnitIndex'),
-  speedUnit: computedUnit('speedUnits', 'speedUnitIndex'),
-  liftUnit: computedUnit('liftUnits', 'liftUnitIndex'),
-  altitudeUnit: computedUnit('altitudeUnits', 'altitudeUnitIndex'),
+  distanceUnit: computedUnit('units.distanceUnits', 'distanceUnitIndex'),
+  speedUnit: computedUnit('units.speedUnits', 'speedUnitIndex'),
+  liftUnit: computedUnit('units.liftUnits', 'liftUnitIndex'),
+  altitudeUnit: computedUnit('units.altitudeUnits', 'altitudeUnitIndex'),
 
   unitsPresets: ['custom', 'european', 'british', 'australian', 'american'],
 

@@ -60,6 +60,11 @@ export default Ember.Service.extend({
   liftUnit: 'm/s',
   altitudeUnit: 'm',
 
+  distanceUnits: ['m', 'km', 'NM', 'mi'],
+  speedUnits: ['m/s', 'km/h', 'kt', 'mph'],
+  liftUnits: ['m/s', 'kt', 'ft/min'],
+  altitudeUnits: ['m', 'ft'],
+
   init() {
     this._super(...arguments);
 
