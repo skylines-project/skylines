@@ -70,30 +70,6 @@ export default Ember.Service.extend({
   liftUnits: ['m/s', 'kt', 'ft/min'],
   altitudeUnits: ['m', 'ft'],
 
-  init() {
-    this._super(...arguments);
-
-    let distance = Ember.$('meta[name=skylines-distance-unit]').attr('content');
-    if (UNITS[distance]) {
-      this.set('distanceUnit', distance);
-    }
-
-    let speed = Ember.$('meta[name=skylines-speed-unit]').attr('content');
-    if (UNITS[speed]) {
-      this.set('speedUnit', speed);
-    }
-
-    let lift = Ember.$('meta[name=skylines-lift-unit]').attr('content');
-    if (UNITS[lift]) {
-      this.set('liftUnit', lift);
-    }
-
-    let altitude = Ember.$('meta[name=skylines-altitude-unit]').attr('content');
-    if (UNITS[altitude]) {
-      this.set('altitudeUnit', altitude);
-    }
-  },
-
   /**
    * Formats a number to a string with a given number of decimal places
    *
