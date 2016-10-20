@@ -1,12 +1,13 @@
 from datetime import datetime
 
-from flask import Blueprint, request, render_template, redirect, url_for, abort, current_app, g, jsonify
+from flask import Blueprint, request, redirect, url_for, abort, current_app, g, jsonify
 
 from sqlalchemy import func
 from sqlalchemy.sql.expression import or_, and_
 from sqlalchemy.orm import joinedload, contains_eager
 from sqlalchemy.orm.util import aliased
 
+from skylines.frontend.ember import send_index
 from skylines.database import db
 from skylines.lib.table_tools import Pager, Sorter
 from skylines.lib.dbutil import get_requested_record
@@ -37,7 +38,7 @@ def _create_list(tab, kw, date=None, pilot=None, club=None, airport=None,
                  default_sorting_column='score', default_sorting_order='desc'):
 
     if 'application/json' not in request.headers.get('Accept', ''):
-        return render_template('ember-page.jinja')
+        return send_index()
 
     pilot_alias = aliased(User, name='pilot')
     owner_alias = aliased(User, name='owner')

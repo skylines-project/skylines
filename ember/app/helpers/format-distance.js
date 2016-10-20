@@ -1,9 +1,13 @@
 import Ember from 'ember';
 
-import * as slUnits from '../utils/units';
+export default Ember.Helper.extend({
+  units: Ember.inject.service(),
 
-export function formatDistance([value], options) {
-  return slUnits.formatDistance(value, options);
-}
+  distanceUnitObserver: Ember.observer('units.distanceUnit', function() {
+    this.recompute();
+  }),
 
-export default Ember.Helper.helper(formatDistance);
+  compute([value], options) {
+    return this.get('units').formatDistance(value, options);
+  },
+});

@@ -1,9 +1,13 @@
 import Ember from 'ember';
 
-import * as slUnits from '../utils/units';
+export default Ember.Helper.extend({
+  units: Ember.inject.service(),
 
-export function formatLift([value], options) {
-  return slUnits.formatLift(value, options);
-}
+  liftUnitObserver: Ember.observer('units.liftUnit', function() {
+    this.recompute();
+  }),
 
-export default Ember.Helper.helper(formatLift);
+  compute([value], options) {
+    return this.get('units').formatLift(value, options);
+  },
+});

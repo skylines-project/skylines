@@ -1,8 +1,6 @@
 import Ember from 'ember';
 import ol from 'openlayers';
 
-import * as slUnits from '../utils/units';
-
 /**
  * A SkyLines flight.
  * @constructor
@@ -20,6 +18,8 @@ import * as slUnits from '../utils/units';
  *   the flight, e.g. registration number, callsign, ...
  */
 export default Ember.Object.extend({
+  units: null,
+
   fixes: [],
   elevations: [],
 
@@ -31,7 +31,7 @@ export default Ember.Object.extend({
   }),
 
   flot_h: Ember.computed.map('fixes', function(fix) {
-    return [fix.time * 1000, slUnits.convertAltitude(fix.altitude)];
+    return [fix.time * 1000, this.get('units').convertAltitude(fix.altitude)];
   }),
 
   flot_enl: Ember.computed.map('fixes', function(fix) {
@@ -42,7 +42,7 @@ export default Ember.Object.extend({
   elev_h: Ember.computed.map('elevations', it => it.elevation),
 
   flot_elev: Ember.computed.map('elevations', function(it) {
-    return [it.time * 1000, it.elevation ? slUnits.convertAltitude(it.elevation) : null];
+    return [it.time * 1000, it.elevation ? this.get('units').convertAltitude(it.elevation) : null];
   }),
 
   color: null,

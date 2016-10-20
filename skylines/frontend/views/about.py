@@ -1,22 +1,23 @@
 import os.path
 
-from flask import Blueprint, render_template, current_app, request, jsonify
+from flask import Blueprint, current_app, request, jsonify
 
 from skylines.lib.vary import vary
+from skylines.frontend.ember import send_index
 
 about_blueprint = Blueprint('about', 'skylines')
 
 
 @about_blueprint.route('/')
 def about():
-    return render_template('ember-page.jinja')
+    return send_index()
 
 
 @about_blueprint.route('/imprint')
 @vary('accept')
 def imprint():
     if 'application/json' not in request.headers.get('Accept', ''):
-        return render_template('ember-page.jinja')
+        return send_index()
 
     content = current_app.config.get(
         'SKYLINES_IMPRINT',
@@ -29,7 +30,7 @@ def imprint():
 @vary('accept')
 def skylines_team():
     if 'application/json' not in request.headers.get('Accept', ''):
-        return render_template('ember-page.jinja')
+        return send_index()
 
     path = os.path.join(os.path.dirname(os.path.abspath(__file__)),
                         '..', '..', '..', 'AUTHORS.md')
@@ -43,7 +44,7 @@ def skylines_team():
 @vary('accept')
 def license():
     if 'application/json' not in request.headers.get('Accept', ''):
-        return render_template('ember-page.jinja')
+        return send_index()
 
     path = os.path.join(os.path.dirname(os.path.abspath(__file__)),
                         '..', '..', '..', 'LICENSE')

@@ -2,11 +2,12 @@ import Ember from 'ember';
 
 export default Ember.Component.extend({
   classNames: ['form-group has-feedback'],
-  classNameBindings: ['showErrorClass:has-error', 'isValid:has-success'],
+  classNameBindings: ['_showErrorClass:has-error', 'isValid:has-success'],
 
   validation: null,
   label: null,
   hasContent: true,
+  forceErrorClass: false,
 
   notValidating: Ember.computed.not('validation.isValidating'),
   didValidate: Ember.computed.readOnly('targetObject.didValidate'),
@@ -16,4 +17,6 @@ export default Ember.Component.extend({
   showMessage: Ember.computed('validation.isDirty', 'isInvalid', 'didValidate', function() {
     return (this.get('validation.isDirty') || this.get('didValidate')) && this.get('isInvalid');
   }),
+
+  _showErrorClass: Ember.computed.or('showErrorClass', 'forceErrorClass'),
 });

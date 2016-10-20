@@ -6,6 +6,6 @@
   {{title (t "live-tracking-of-PILOT-and-NUM-other pilots" pilot=model.pilots.0.name num=(sum model.pilots.length -1))}}
 {{/if}}
 
-<div id="fullscreen-content" class="olFullscreen">
-  {{tracking-page pilots=model.pilots flights=model.flights}}
+<div  class="fullscreen-below-nav-bar">
+  {{tracking-page id="fullscreen-content" pilots=model.pilots flights=model.flights}}
 </div>

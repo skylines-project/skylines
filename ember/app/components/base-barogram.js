@@ -1,9 +1,10 @@
 import Ember from 'ember';
 
-import { addAltitudeUnit } from '../utils/units';
 import safeComputed from '../computed/safe-computed';
 
 export default Ember.Component.extend({
+  units: Ember.inject.service(),
+
   layoutName: 'components/base-barogram',
 
   height: 133,
@@ -28,6 +29,8 @@ export default Ember.Component.extend({
   },
 
   didInsertElement() {
+    let units = this.get('units');
+
     let opts = {
       grid: {
         borderWidth: 0,
@@ -43,7 +46,7 @@ export default Ember.Component.extend({
       yaxes: [
         {
           min: 0,
-          tickFormatter: addAltitudeUnit,
+          tickFormatter: units.addAltitudeUnit.bind(units),
         },
         {
           show: false,

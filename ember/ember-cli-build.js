@@ -3,8 +3,6 @@ var EmberApp = require('ember-cli/lib/broccoli/ember-app');
 
 module.exports = function(defaults) {
   var app = new EmberApp(defaults, {
-    storeConfigInMeta: false,
-
     fingerprint: {
       extensions: ['css', 'js'],
       exclude: ['cesium'],

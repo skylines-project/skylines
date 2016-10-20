@@ -1,5 +1,6 @@
-from flask import Blueprint, request, render_template, jsonify
+from flask import Blueprint, request, jsonify
 
+from skylines.frontend.ember import send_index
 from skylines.model import User, Club, Airport
 from skylines.model.search import (
     combined_search_query, text_to_tokens, escape_tokens,
@@ -16,7 +17,7 @@ MODELS = [User, Club, Airport]
 @vary('accept')
 def index():
     if 'application/json' not in request.headers.get('Accept', ''):
-        return render_template('ember-page.jinja')
+        return send_index()
 
     search_text = request.values.get('text', '').strip()
     if not search_text:

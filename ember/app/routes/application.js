@@ -1,4 +1,5 @@
 import Ember from 'ember';
+import { isUnauthorizedError } from 'ember-ajax/errors';
 import RSVP from 'rsvp';
 
 import _availableLocales from '../utils/locales';
@@ -8,6 +9,7 @@ export default Ember.Route.extend({
   ajax: Ember.inject.service(),
   cookies: Ember.inject.service(),
   intl: Ember.inject.service(),
+  units: Ember.inject.service(),
 
   beforeModel() {
     return this._determineLocale().then(locale => this.get('intl').setLocale(locale));
@@ -28,6 +30,35 @@ export default Ember.Route.extend({
     Ember.debug('Requesting locale resolution from server');
     let data = { available: availableLocales.join() };
     return this.get('ajax').request('/locale', { data }).then(it => it.locale || 'en');
+  },
+
+  model() {
+    return this.get('ajax').request('/settings/').catch(error => {
+      if (isUnauthorizedError(error)) {
+        return {};
+      } else {
+        throw error;
+      }
+    });
+  },
+
+  setupController(controller, model) {
+    if (model.id) {
+      this.get('account').setProperties({
+        user: {
+          id: model.id,
+          name: model.name,
+        },
+        club: model.club,
+      });
+
+      this.get('units').setProperties({
+        altitudeUnitIndex: model.altitudeUnit,
+        distanceUnitIndex: model.distanceUnit,
+        liftUnitIndex: model.liftUnit,
+        speedUnitIndex: model.speedUnit,
+      });
+    }
   },
 
   activate() {

@@ -1,9 +1,13 @@
 import Ember from 'ember';
 
-import * as slUnits from '../utils/units';
+export default Ember.Helper.extend({
+  units: Ember.inject.service(),
 
-export function formatSpeed([value], options) {
-  return slUnits.formatSpeed(value, options);
-}
+  speedUnitObserver: Ember.observer('units.speedUnit', function() {
+    this.recompute();
+  }),
 
-export default Ember.Helper.helper(formatSpeed);
+  compute([value], options) {
+    return this.get('units').formatSpeed(value, options);
+  },
+});

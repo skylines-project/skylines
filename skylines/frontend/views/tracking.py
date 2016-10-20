@@ -1,5 +1,6 @@
-from flask import Blueprint, current_app, render_template, jsonify, g, request
+from flask import Blueprint, current_app, jsonify, g, request
 
+from skylines.frontend.ember import send_index
 from skylines.lib.decorators import jsonp
 from skylines.lib.vary import vary
 from skylines.model import TrackingFix, Airport, Follower
@@ -12,7 +13,7 @@ tracking_blueprint = Blueprint('tracking', 'skylines')
 @vary('accept')
 def index():
     if 'application/json' not in request.headers.get('Accept', ''):
-        return render_template('ember-page.jinja')
+        return send_index()
 
     fix_schema = TrackingFixSchema(only=('time', 'location', 'altitude', 'elevation', 'pilot'))
     airport_schema = AirportSchema(only=('id', 'name', 'countryCode'))
@@ -47,7 +48,7 @@ def index():
 
 @tracking_blueprint.route('/info')
 def info():
-    return render_template('ember-page.jinja')
+    return send_index()
 
 
 @tracking_blueprint.route('/latest.json')

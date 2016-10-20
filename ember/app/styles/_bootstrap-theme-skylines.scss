@@ -35,7 +35,7 @@ body {
   }
 }
 
-body > .ember-view {
+.fullscreen-below-nav-bar {
   position: absolute;
   width: 100%;
   top: 40px;
@@ -44,6 +44,12 @@ body > .ember-view {
   @media (max-width: 767px) {
     top: 50px;
   }
+}
+
+.relative-fullscreen {
+  position: relative;
+  width: 100%;
+  height: 100%;
 }
 
 /* Page header */

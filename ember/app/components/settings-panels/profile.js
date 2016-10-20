@@ -2,7 +2,7 @@ import Ember from 'ember';
 import { validator, buildValidations } from 'ember-cp-validations';
 import { task } from 'ember-concurrency';
 
-import { PRESETS } from '../../utils/units';
+import { PRESETS } from '../../services/units';
 
 const Validations = buildValidations({
   email: {
@@ -32,6 +32,7 @@ const Validations = buildValidations({
 
 export default Ember.Component.extend(Validations, {
   ajax: Ember.inject.service(),
+  units: Ember.inject.service(),
 
   classNames: ['panel', 'panel-default'],
 
@@ -46,15 +47,10 @@ export default Ember.Component.extend(Validations, {
   messageKey: null,
   error: null,
 
-  distanceUnits: ['m', 'km', 'NM', 'mi'],
-  speedUnits: ['m/s', 'km/h', 'kt', 'mph'],
-  liftUnits: ['m/s', 'kt', 'ft/min'],
-  altitudeUnits: ['m', 'ft'],
-
-  distanceUnit: computedUnit('distanceUnits', 'distanceUnitIndex'),
-  speedUnit: computedUnit('speedUnits', 'speedUnitIndex'),
-  liftUnit: computedUnit('liftUnits', 'liftUnitIndex'),
-  altitudeUnit: computedUnit('altitudeUnits', 'altitudeUnitIndex'),
+  distanceUnit: computedUnit('units.distanceUnits', 'distanceUnitIndex'),
+  speedUnit: computedUnit('units.speedUnits', 'speedUnitIndex'),
+  liftUnit: computedUnit('units.liftUnits', 'liftUnitIndex'),
+  altitudeUnit: computedUnit('units.altitudeUnits', 'altitudeUnitIndex'),
 
   unitsPresets: ['custom', 'european', 'british', 'australian', 'american'],
 
@@ -105,6 +101,14 @@ export default Ember.Component.extend(Validations, {
         messageKey: 'settings-have-been-saved',
         error: null,
       });
+
+      this.get('units').setProperties({
+        altitudeUnit: this.get('altitudeUnit'),
+        distanceUnit: this.get('distanceUnit'),
+        liftUnit: this.get('liftUnit'),
+        speedUnit: this.get('speedUnit'),
+      });
+
     } catch (error) {
       this.setProperties({ messageKey: null, error });
     }

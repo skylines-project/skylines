@@ -1,9 +1,13 @@
 import Ember from 'ember';
 
-import * as slUnits from '../utils/units';
+export default Ember.Helper.extend({
+  units: Ember.inject.service(),
 
-export function formatAltitude([value], options) {
-  return slUnits.formatAltitude(value, options);
-}
+  altitudeUnitObserver: Ember.observer('units.altitudeUnit', function() {
+    this.recompute();
+  }),
 
-export default Ember.Helper.helper(formatAltitude);
+  compute([value], options) {
+    return this.get('units').formatAltitude(value, options);
+  },
+});

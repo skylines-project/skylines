@@ -7,12 +7,13 @@ import os
 
 from collections import namedtuple
 
-from flask import Blueprint, render_template, request, g, current_app, abort, make_response, jsonify
+from flask import Blueprint, request, g, current_app, abort, make_response, jsonify
 from flask.ext.babel import lazy_gettext as l_
 from flask_wtf.csrf import generate_csrf, validate_csrf
 from redis.exceptions import ConnectionError
 from sqlalchemy.sql.expression import func
 
+from skylines.frontend.ember import send_index
 from skylines.database import db
 from skylines.lib import files
 from skylines.lib.util import pressure_alt_to_qnh_alt
@@ -160,7 +161,7 @@ def csrf():
 @upload_blueprint.route('/')
 @login_required(l_("You have to login to upload flights."))
 def index():
-    return render_template('ember-page.jinja')
+    return send_index()
 
 
 @upload_blueprint.route('/', methods=('POST',))
