@@ -25,7 +25,7 @@
 <td>
   {{#if pilotName}}
     {{#if pilot.id}}
-      <a href="/users/{{pilot.id}}/">{{pilotName}}</a>
+      {{link-to pilotName "user" pilot.id bubbles=false}}
     {{else}}
       {{pilotName}}
     {{/if}}
@@ -35,7 +35,7 @@
 
   {{#if copilotName}}
     {{#if copilot.id}}
-      <a href="/users/{{copilot.id}}/">{{copilotName}}</a>
+      {{link-to copilotName "user" copilot.id bubbles=false}}
     {{else}}
       {{copilotName}}
     {{/if}}

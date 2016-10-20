@@ -244,7 +244,7 @@ def index():
             phases=phases,
             performance=performance)
 
-    return render_template('ember-page.jinja', active_page='flights')
+    return render_template('ember-page.jinja')
 
 
 @flight_blueprint.route('/json')
@@ -376,7 +376,7 @@ def change_pilot():
     if not g.flight.is_writable(g.current_user):
         abort(403)
 
-    return render_template('ember-page.jinja', active_page='flights')
+    return render_template('ember-page.jinja')
 
 
 @flight_blueprint.route('/change_aircraft')
@@ -384,7 +384,7 @@ def change_aircraft():
     if not g.flight.is_writable(g.current_user):
         abort(403)
 
-    return render_template('ember-page.jinja', active_page='flights')
+    return render_template('ember-page.jinja')
 
 
 @flight_blueprint.route('/', methods=['POST'])

@@ -160,7 +160,7 @@ def csrf():
 @upload_blueprint.route('/')
 @login_required(l_("You have to login to upload flights."))
 def index():
-    return render_template('ember-page.jinja', active_page='upload')
+    return render_template('ember-page.jinja')
 
 
 @upload_blueprint.route('/', methods=('POST',))

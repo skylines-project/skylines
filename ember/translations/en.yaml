@@ -60,6 +60,7 @@ editing: Editing...
 email-address: Email address
 email-exists-already: This email address exists already.
 email-unknown: This email address is unknown.
+error-text: It looks like there was error while loading this page. The error was automatically reported back to the developers. Please try again later!
 fai-triangle-distance: FAI Triangle Distance
 failed-to-parse-file: Failed to parse file
 file-upload-field: File upload field
@@ -163,6 +164,7 @@ settings: Settings
 settings-have-been-saved: Your settings have been saved.
 show: Show
 social-network: Social Network
+sorry: Sorry!
 speed: Speed
 start: Start
 statistics: Statistics

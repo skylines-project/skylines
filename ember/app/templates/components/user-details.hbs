@@ -22,7 +22,7 @@
         {{/if}}
 
         {{#if editable}}
-          <a href="/settings/club" class="btn btn-default btn-sm">{{t "change"}}</a>
+          {{link-to (t "change") "settings.club" class="btn btn-default btn-sm"}}
         {{/if}}
       </td>
     </tr>
@@ -45,7 +45,7 @@
 
 <p style="margin-top: 10px">
   {{#if editable}}
-    <a href="/settings/profile" class="btn btn-default"><i class="icon-cog"></i> {{t "settings"}}</a>
+    {{#link-to "settings.profile" class="btn btn-default"}}<i class="icon-cog"></i> {{t "settings"}}{{/link-to}}
   {{/if}}
 
   {{#if (and account.user (not-eq account.user.id user.id))}}
@@ -56,7 +56,7 @@
     {{/if}}
   {{/if}}
 
-  <a href="/flights/pilot/{{user.id}}" class="btn btn-default"><i class="icon-plane"></i> {{t "flights"}}</a>
-  <a href="/statistics/pilot/{{user.id}}" class="btn btn-default"><i class="icon-bar-chart"></i> {{t "statistics"}}</a>
-  <a href="/timeline/?user={{user.id}}" class="btn btn-default"><i class="icon-time"></i> {{t "timeline"}}</a>
+  {{#link-to "flights.pilot" user.id class="btn btn-default"}}<i class="icon-plane"></i> {{t "flights"}}{{/link-to}}
+  {{#link-to "stats.wildcard" (concat "pilot/" user.id) class="btn btn-default"}}<i class="icon-bar-chart"></i> {{t "statistics"}}{{/link-to}}
+  {{#link-to "timeline" (query-params user=user.id) class="btn btn-default"}}<i class="icon-time"></i> {{t "timeline"}}{{/link-to}}
 </p>

@@ -15,20 +15,20 @@
 
     <div class="row">
       <div class="col-xs-12 banner">
-        <div class="col-xs-3"><a href="/flights/17613?baselayer=Google Physical&overlays=Airspace"><img src="/images/about-1.jpeg" class="img-responsive"/></a></div>
-        <div class="col-xs-3"><a href="/flights/17537?baselayer=Empty&overlays=Airspace"><img src="/images/about-2.jpeg" class="img-responsive"/></a></div>
-        <div class="col-xs-3"><a href="/flights/17567?baselayer=OpenStreetMap&overlays=Airspace"><img src="/images/about-3.jpeg" class="img-responsive"/></a></div>
-        <div class="col-xs-3"><a href="/flights/17577?baselayer=Shaded Relief&overlays=Airspace"><img src="/images/about-4.jpeg" class="img-responsive"/></a></div>
+        <div class="col-xs-3">{{#link-to "flight" 17613 (query-params baselayer="Google Physical" overlays="Airspace")}}<img src="/images/about-1.jpeg" class="img-responsive"/>{{/link-to}}</div>
+        <div class="col-xs-3">{{#link-to "flight" 17537 (query-params baselayer="Empty" overlays="Airspace")}}<img src="/images/about-2.jpeg" class="img-responsive"/>{{/link-to}}</div>
+        <div class="col-xs-3">{{#link-to "flight" 17567 (query-params baselayer="OpenStreetMap" overlays="Airspace")}}<img src="/images/about-3.jpeg" class="img-responsive"/>{{/link-to}}</div>
+        <div class="col-xs-3">{{#link-to "flight" 17577 (query-params baselayer="Shaded Relief" overlays="Airspace")}}<img src="/images/about-4.jpeg" class="img-responsive"/>{{/link-to}}</div>
       </div>
     </div>
 
     <div class="row">
       <div class="col-md-4">
-        <h2><a href="/flights/"><i class="icon-plane"></i> {{t "flight-database"}}</a></h2>
+        <h2>{{#link-to "flights"}}<i class="icon-plane"></i> {{t "flight-database"}}{{/link-to}}</h2>
         <p>{{format-html-message "about.flights" uploadURL="/flights/upload/"}}</p>
       </div>
       <div class="col-md-4">
-        <h2><a href="/tracking"><i class="icon-rss"></i> {{t "live-tracking"}}</a></h2>
+        <h2>{{#link-to "tracking"}}<i class="icon-rss"></i> {{t "live-tracking"}}{{/link-to}}</h2>
         <p>{{format-html-message "about.tracking" url="/tracking/info"}}</p>
       </div>
       <div class="col-md-4">

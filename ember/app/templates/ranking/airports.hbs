@@ -24,7 +24,7 @@
       <td class="numeric">{{row.rank}}</td>
       <td>
         {{x-flag code=row.airport.countryCode}}
-        <a href="/flights/airport/{{row.airport.id}}">{{row.airport.name}}</a>
+        {{link-to row.airport.name "flights.airport" row.airport.id}}
       </td>
       <td class="numeric">{{format-number row.flights}}</td>
       <td class="numeric">{{format-number row.points maximumFractionDigits=0}}</td>

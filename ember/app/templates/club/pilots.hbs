@@ -18,8 +18,8 @@
               {{#link-to "user" user.id}}{{user.name}}{{/link-to}}
 
               <div class="pull-right">
-                <a href="/flights/pilot/{{user.id}}" class="btn btn-default btn-sm"><i class="icon-plane"></i> {{t "flights"}}</a>
-                <a href="/statistics/pilot/{{user.id}}" class="btn btn-default btn-sm"><i class="icon-bar-chart"></i> {{t "statistics"}}</a>
+                {{#link-to "flights.pilot" user.id class="btn btn-default btn-sm"}}<i class="icon-plane"></i> {{t "flights"}}{{/link-to}}
+                {{#link-to "stats.wildcard" (concat "pilot/" user.id) class="btn btn-default btn-sm"}}<i class="icon-bar-chart"></i> {{t "statistics"}}{{/link-to}}
               </div>
             </td>
           </tr>

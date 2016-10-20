@@ -37,7 +37,7 @@ def _create_list(tab, kw, date=None, pilot=None, club=None, airport=None,
                  default_sorting_column='score', default_sorting_order='desc'):
 
     if 'application/json' not in request.headers.get('Accept', ''):
-        return render_template('ember-page.jinja', active_page='flights')
+        return render_template('ember-page.jinja')
 
     pilot_alias = aliased(User, name='pilot')
     owner_alias = aliased(User, name='owner')

@@ -5,7 +5,7 @@
         <td>
           {{#if comment.user}}
             <span style="float:left">
-              <a href="/users/{{comment.user.id}}/">{{comment.user.name}}</a>:&nbsp;
+              {{link-to comment.user.name "user" comment.user.id}}:&nbsp;
             </span>
           {{/if}}
 

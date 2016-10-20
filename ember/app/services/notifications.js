@@ -20,7 +20,7 @@ export default Ember.Service.extend({
   updateTask: task(function * () {
     // eslint-disable-next-line no-constant-condition
     while (true) {
-      let { events } = yield this.get('ajax').request('/notifications');
+      let { events } = yield this.get('ajax').request('/notifications/');
       this.set('counter', events.filter(it => it.unread).length);
       yield timeout(60000);
     }

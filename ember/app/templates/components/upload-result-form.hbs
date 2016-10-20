@@ -167,7 +167,7 @@
     </span>
 
     {{#if flight.id}}
-      <a href="/flights/{{flight.id}}" class="btn btn-default btn-sm">{{t "show"}}</a>
+      {{link-to (t "show") "flight" flight.id class="btn btn-default btn-sm"}}
     {{/if}}
   {{/if}}
 </p>

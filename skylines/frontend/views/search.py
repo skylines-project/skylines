@@ -16,7 +16,7 @@ MODELS = [User, Club, Airport]
 @vary('accept')
 def index():
     if 'application/json' not in request.headers.get('Accept', ''):
-        return render_template('ember-page.jinja', active_page='search')
+        return render_template('ember-page.jinja')
 
     search_text = request.values.get('text', '').strip()
     if not search_text:

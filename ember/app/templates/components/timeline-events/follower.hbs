@@ -2,7 +2,7 @@
   <i class="icon-user"></i>
 </td>
 <td>
-  <a href="{{concat "/users/" (if accountUserIsFollowed event.actor.id event.user.id)}}" class="btn btn-default btn-sm pull-right">{{t "show"}}</a>
+  {{link-to (t "show") "user" (if accountUserIsFollowed event.actor.id event.user.id) class="btn btn-default btn-sm pull-right"}}
   <p>
     {{#if event.unread}}<span class="badge badge-warning">{{t 'new'}}</span>{{/if}}
     <small><abbr title={{format-time event.time format="full"}}>{{format-relative event.time}}</abbr></small>

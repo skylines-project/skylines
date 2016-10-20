@@ -14,7 +14,7 @@ statistics_blueprint = Blueprint('statistics', 'skylines')
 @vary('accept')
 def index(page=None, id=None):
     if 'application/json' not in request.headers.get('Accept', ''):
-        return render_template('ember-page.jinja', active_page='statistics')
+        return render_template('ember-page.jinja')
 
     name = None
 
