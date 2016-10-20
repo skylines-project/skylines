@@ -2,7 +2,7 @@ import Ember from 'ember';
 import { validator, buildValidations } from 'ember-cp-validations';
 import { task } from 'ember-concurrency';
 
-import { PRESETS } from '../../utils/units';
+import { PRESETS } from '../../services/units';
 
 const Validations = buildValidations({
   email: {

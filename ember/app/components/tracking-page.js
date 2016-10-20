@@ -5,6 +5,7 @@ import FixCalc from '../utils/fix-calc';
 
 export default Ember.Component.extend({
   ajax: Ember.inject.service(),
+  units: Ember.inject.service(),
 
   classNames: ['relative-fullscreen'],
 
@@ -14,8 +15,9 @@ export default Ember.Component.extend({
     this._super(...arguments);
 
     let ajax = this.get('ajax');
+    let units = this.get('units');
 
-    let fixCalc = FixCalc.create({ ajax });
+    let fixCalc = FixCalc.create({ ajax, units });
     this.set('fixCalc', fixCalc);
   },
 

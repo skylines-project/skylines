@@ -19,6 +19,7 @@ const COLORS = [
 
 export default Ember.Object.extend({
   ajax: null,
+  units: null,
 
   flights: [],
 
@@ -105,7 +106,7 @@ export default Ember.Object.extend({
   addFlight(data) {
     let flights = this.get('flights');
 
-    let flight = flightFromData(data);
+    let flight = flightFromData(data, this.get('units'));
 
     if (data.additional && data.additional.color) {
       flight.set('color', data.additional.color);

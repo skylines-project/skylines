@@ -1,9 +1,9 @@
 import Ember from 'ember';
 
-import { formatAltitude } from '../utils/units';
-
 export default Ember.Helper.extend({
+  units: Ember.inject.service(),
+
   compute([value], options) {
-    return formatAltitude(value, options);
+    return this.get('units').formatAltitude(value, options);
   },
 });

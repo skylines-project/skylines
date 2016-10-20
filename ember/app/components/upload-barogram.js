@@ -2,9 +2,10 @@ import Ember from 'ember';
 import ol from 'openlayers';
 
 import BarogramComponent from './base-barogram';
-import { convertAltitude } from '../utils/units';
 
 export default BarogramComponent.extend({
+  units: Ember.inject.service(),
+
   uploadMode: true,
   height: 160,
 
@@ -30,6 +31,7 @@ export default BarogramComponent.extend({
 
   init() {
     this._super(...arguments);
+    let units = this.get('units');
 
     let height = ol.format.Polyline.decodeDeltas(this.get('trace.barogram_h'), 1, 1);
     let time = ol.format.Polyline.decodeDeltas(this.get('trace.barogram_t'), 1, 1);
@@ -41,14 +43,14 @@ export default BarogramComponent.extend({
     let timeLength = time.length;
     for (let i = 0; i < timeLength; ++i) {
       let timestamp = time[i] * 1000;
-      flot_h.push([timestamp, convertAltitude(height[i])]);
+      flot_h.push([timestamp, units.convertAltitude(height[i])]);
       flot_enl.push([timestamp, enl[i]]);
 
       let e = _elev_h[i];
       if (e < -500)
         e = null;
 
-      flot_elev.push([timestamp, e ? convertAltitude(e) : null]);
+      flot_elev.push([timestamp, e ? units.convertAltitude(e) : null]);
     }
 
     let color = '#004bbd';

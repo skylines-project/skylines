@@ -3,7 +3,7 @@ import ol from 'openlayers';
 import Contest from './contest';
 import Flight from './flight';
 
-export default function(data) {
+export default function(data, units) {
   let _time = ol.format.Polyline.decodeDeltas(data.barogram_t, 1, 1);
   let _lonlat = ol.format.Polyline.decodeDeltas(data.points, 2);
   let _height = ol.format.Polyline.decodeDeltas(data.barogram_h, 1, 1);
@@ -39,6 +39,7 @@ export default function(data) {
   }
 
   return Flight.create({
+    units,
     id: data.sfid,
     fixes,
     elevations,

@@ -6,6 +6,7 @@ import FlighPhase from '../utils/flight-phase';
 export default Ember.Component.extend({
   ajax: Ember.inject.service(),
   pinnedFlights: Ember.inject.service(),
+  units: Ember.inject.service(),
 
   classNames: ['relative-fullscreen'],
 
@@ -16,8 +17,9 @@ export default Ember.Component.extend({
     this._super(...arguments);
 
     let ajax = this.get('ajax');
+    let units = this.get('units');
 
-    let fixCalc = FixCalc.create({ ajax });
+    let fixCalc = FixCalc.create({ ajax, units });
     fixCalc.addFlight(this.get('_primaryFlightPath'));
     this.set('fixCalc', fixCalc);
 

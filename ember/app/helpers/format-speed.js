@@ -1,9 +1,9 @@
 import Ember from 'ember';
 
-import { formatSpeed } from '../utils/units';
-
 export default Ember.Helper.extend({
+  units: Ember.inject.service(),
+
   compute([value], options) {
-    return formatSpeed(value, options);
+    return this.get('units').formatSpeed(value, options);
   },
 });

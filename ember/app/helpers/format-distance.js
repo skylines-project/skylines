@@ -1,9 +1,9 @@
 import Ember from 'ember';
 
-import { formatDistance } from '../utils/units';
-
 export default Ember.Helper.extend({
+  units: Ember.inject.service(),
+
   compute([value], options) {
-    return formatDistance(value, options);
+    return this.get('units').formatDistance(value, options);
   },
 });
