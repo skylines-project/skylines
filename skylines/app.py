@@ -1,5 +1,4 @@
 import os
-import json
 import config
 
 from flask import Flask
@@ -38,17 +37,6 @@ class SkyLines(Flask):
         from flask.ext.login import LoginManager
         self.login_manager = LoginManager()
         self.login_manager.init_app(self)
-
-    def add_assets(self):
-        json_path = self.config.get('ASSETS_LOAD_DIR') + '/index.json'
-
-        assets_json = {}
-        with open(json_path) as f:
-            assets_json = json.load(f)
-
-        @self.context_processor
-        def inject_assets():
-            return dict(assets=assets_json)
 
     def add_tg2_compat(self):
         from skylines.lib import helpers
@@ -140,7 +128,6 @@ def create_frontend_app(*args, **kw):
 
     app.configure_jinja()
     app.add_login_manager()
-    app.add_assets()
     app.add_tg2_compat()
 
     import skylines.frontend.views
