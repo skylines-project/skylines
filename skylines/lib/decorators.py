@@ -1,6 +1,6 @@
 from functools import wraps
 
-from flask import current_app, request, redirect, url_for, abort
+from flask import current_app, request, jsonify
 from flask.ext.login import current_user
 
 
@@ -27,10 +27,7 @@ class login_required:
         @wraps(fn)
         def decorated_view(*args, **kwargs):
             if not current_user.is_authenticated():
-                if 'application/json' in request.headers.get('Accept', ''):
-                    abort(401)
-
-                return redirect(url_for('login', next=request.url))
+                return jsonify(), 401
 
             return fn(*args, **kwargs)
         return decorated_view
