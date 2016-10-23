@@ -57,6 +57,6 @@
   {{/if}}
 
   {{#link-to "flights.pilot" user.id class="btn btn-default"}}<i class="icon-plane"></i> {{t "flights"}}{{/link-to}}
-  {{#link-to "stats.wildcard" (concat "pilot/" user.id) class="btn btn-default"}}<i class="icon-bar-chart"></i> {{t "statistics"}}{{/link-to}}
+  {{#link-to "statistics.pilot" user.id class="btn btn-default"}}<i class="icon-bar-chart"></i> {{t "statistics"}}{{/link-to}}
   {{#link-to "timeline" (query-params user=user.id) class="btn btn-default"}}<i class="icon-time"></i> {{t "timeline"}}{{/link-to}}
 </p>

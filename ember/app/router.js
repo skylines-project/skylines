@@ -22,8 +22,10 @@ Router.map(function() {
     this.route('recover');
   });
 
-  this.route('stats', { path: '/statistics' }, function() {
-    this.route('wildcard', { path: '/*wildcard' });
+  this.route('statistics', { path: '/statistics' }, function() {
+    this.route('airport', { path: '/airport/:airport_id' });
+    this.route('club', { path: '/club/:club_id' });
+    this.route('pilot', { path: '/pilot/:pilot_id' });
   });
 
   this.route('flight-upload', { path: '/flights/upload' });
