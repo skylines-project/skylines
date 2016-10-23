@@ -1,6 +1,6 @@
 from datetime import datetime
 
-from flask import Blueprint, request, redirect, url_for, abort, current_app, g, jsonify
+from flask import Blueprint, request, current_app, g, jsonify
 
 from sqlalchemy import func
 from sqlalchemy.sql.expression import or_, and_
@@ -143,7 +143,7 @@ def date(date, latest=False):
             date = date.date()
 
     except:
-        abort(404)
+        return jsonify(), 404
 
     return _create_list(
         'latest' if latest else 'date',
@@ -196,7 +196,7 @@ def airport(id):
 @flights_blueprint.route('/api/flights/unassigned')
 def unassigned():
     if not g.current_user:
-        abort(404)
+        return jsonify(), 400
 
     f = and_(Flight.pilot_id is None,
              IGCFile.owner == g.current_user)
@@ -208,13 +208,13 @@ def unassigned():
 @flights_blueprint.route('/api/flights/list/<ids>')
 def list(ids):
     if not ids:
-        return redirect(url_for('.index'))
+        return jsonify(), 400
 
     try:
         # Split the string into integer IDs
         ids = [int(id) for id in ids.split(',')]
     except ValueError:
-        abort(404)
+        return jsonify(), 404
 
     return _create_list('list', request.args, pinned=ids,
                         default_sorting_column='date', default_sorting_order='desc')
