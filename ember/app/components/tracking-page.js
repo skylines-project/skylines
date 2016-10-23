@@ -73,7 +73,7 @@ export default Ember.Component.extend({
     flights.forEach(flight => {
       let last_update = flight.get('last_update') || null;
       let data = { last_update };
-      ajax.request(`/tracking/${flight.get('id')}/json`, { data }).then(data => {
+      ajax.request(`/api/live/${flight.get('id')}/json`, { data }).then(data => {
         updateFlight(flights, data);
       }).catch(() => {
         // ignore update errors

@@ -9,7 +9,6 @@ from skylines.lib.dbutil import get_requested_record_list
 from skylines.lib.helpers import color
 from skylines.lib.xcsoar_ import FlightPathFix
 from skylines.lib.geoid import egm96_height
-from skylines.lib.vary import vary
 from skylines.model import User, TrackingFix, Location
 from skylines.schemas import UserSchema
 import xcsoar
@@ -19,6 +18,9 @@ track_blueprint = Blueprint('track', 'skylines')
 
 @track_blueprint.url_value_preprocessor
 def _pull_user_id(endpoint, values):
+    if request.endpoint == 'track.html':
+        return
+
     g.user_id = values.pop('user_id')
 
     g.pilots = get_requested_record_list(
@@ -117,47 +119,52 @@ def _get_flight_path(pilot, threshold=0.001, last_update=None):
 
 
 @track_blueprint.route('/tracking/<user_id>/')
-@vary('accept')
-def index():
-    if 'application/json' in request.headers.get('Accept', ''):
-        traces = map(_get_flight_path, g.pilots)
-        if not any(traces):
-            traces = None
-
-        user_schema = UserSchema()
-
-        pilots_json = []
-        for pilot in g.pilots:
-            json = user_schema.dump(pilot).data
-            json['color'] = pilot.color
-            pilots_json.append(json)
-
-        flights = []
-        if traces:
-            for pilot, trace in zip(g.pilots, traces):
-                if trace:
-                    flights.append({
-                        'sfid': pilot.id,
-                        'points': trace['points'],
-                        'barogram_t': trace['barogram_t'],
-                        'barogram_h': trace['barogram_h'],
-                        'enl': trace['enl'],
-                        'contests': None,
-                        'elevations_t': trace['barogram_t'],
-                        'elevations_h': trace['elevations'],
-                        'geoid': trace['geoid'],
-                        'additional': {
-                            'competition_id': pilot.tracking_callsign or pilot.initials(),
-                            'color': pilot.color,
-                        },
-                    })
-
-        return jsonify(flights=flights, pilots=pilots_json)
-
+@track_blueprint.route('/tracking/<user_id>/<path:path>')
+def html(**kwargs):
     return send_index()
 
 
-@track_blueprint.route('/tracking/<user_id>/json')
+# Use `live` alias here since `/api/tracking/*` is filtered by the "EasyPrivacy" adblocker list...
+@track_blueprint.route('/api/tracking/<user_id>')
+@track_blueprint.route('/api/live/<user_id>')
+def read():
+    traces = map(_get_flight_path, g.pilots)
+    if not any(traces):
+        traces = None
+
+    user_schema = UserSchema()
+
+    pilots_json = []
+    for pilot in g.pilots:
+        json = user_schema.dump(pilot).data
+        json['color'] = pilot.color
+        pilots_json.append(json)
+
+    flights = []
+    if traces:
+        for pilot, trace in zip(g.pilots, traces):
+            if trace:
+                flights.append({
+                    'sfid': pilot.id,
+                    'points': trace['points'],
+                    'barogram_t': trace['barogram_t'],
+                    'barogram_h': trace['barogram_h'],
+                    'enl': trace['enl'],
+                    'contests': None,
+                    'elevations_t': trace['barogram_t'],
+                    'elevations_h': trace['elevations'],
+                    'geoid': trace['geoid'],
+                    'additional': {
+                        'competition_id': pilot.tracking_callsign or pilot.initials(),
+                        'color': pilot.color,
+                    },
+                })
+
+    return jsonify(flights=flights, pilots=pilots_json)
+
+
+@track_blueprint.route('/api/tracking/<user_id>/json')
+@track_blueprint.route('/api/live/<user_id>/json')
 def json():
     pilot = g.pilots[0]
     last_update = request.values.get('last_update', 0, type=int)
