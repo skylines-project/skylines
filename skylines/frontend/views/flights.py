@@ -223,25 +223,8 @@ def unassigned():
 
 
 @flights_blueprint.route('/pinned')
-@vary('accept')
 def pinned():
-    # Check if we have cookies
-    if request.cookies is None:
-        return redirect(url_for('.index'))
-
-    # Check for the 'pinnedFlights' cookie
-    ids = request.cookies.get('SkyLines_pinnedFlights', None)
-    if not ids:
-        return redirect(url_for('.index'))
-
-    try:
-        # Split the string into integer IDs (%2C = comma)
-        ids = [int(id) for id in ids.split('%2C')]
-    except ValueError:
-        abort(404)
-
-    return _create_list('pinned', request.args, pinned=ids,
-                        default_sorting_column='date', default_sorting_order='desc')
+    return send_index()
 
 
 @flights_blueprint.route('/list/<ids>')
