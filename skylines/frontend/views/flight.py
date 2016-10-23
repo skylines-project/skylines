@@ -16,7 +16,6 @@ from skylines.lib.xcsoar_ import analyse_flight
 from skylines.lib.datetime import from_seconds_of_day
 from skylines.lib.geo import METERS_PER_DEGREE
 from skylines.lib.geoid import egm96_height
-from skylines.lib.vary import vary
 from skylines.model import (
     User, Flight, Location, FlightComment,
     Notification, Event, FlightMeetings, AircraftModel,
@@ -57,6 +56,9 @@ def _patch_query(q):
 
 @flight_blueprint.before_request
 def _query_flights():
+    if request.endpoint == 'flight.html':
+        return
+
     flights = get_requested_record_list(
         Flight, g.flight_id, patch_query=_patch_query)
 
@@ -176,79 +178,81 @@ class NearFlightSchema(Schema):
 
 
 @flight_blueprint.route('/flights/<flight_id>/')
-@vary('accept')
-def index():
-    mark_flight_notifications_read(g.flight)
-
-    if 'application/json' in request.headers.get('Accept', ''):
-        flight = FlightSchema().dump(g.flight).data
-
-        if 'extended' not in request.args:
-            return jsonify(flight=flight)
-
-        near_flights = FlightMeetings.get_meetings(g.flight).values()
-        near_flights = NearFlightSchema().dump(near_flights, many=True).data
-
-        comments = FlightCommentSchema().dump(g.flight.comments, many=True).data
-
-        phases_schema = FlightPhaseSchema(only=(
-            'circlingDirection',
-            'type',
-            'secondsOfDay',
-            'startTime',
-            'duration',
-            'altDiff',
-            'distance',
-            'vario',
-            'speed',
-            'glideRate',
-        ))
-
-        phases = phases_schema.dump(g.flight.phases, many=True).data
-
-        cruise_performance_schema = FlightPhaseSchema(only=(
-            'duration',
-            'fraction',
-            'altDiff',
-            'distance',
-            'vario',
-            'speed',
-            'glideRate',
-            'count',
-        ))
-
-        cruise_performance = cruise_performance_schema.dump(g.flight.cruise_performance).data
-
-        circling_performance_schema = FlightPhaseSchema(only=(
-            'circlingDirection',
-            'count',
-            'vario',
-            'fraction',
-            'duration',
-            'altDiff',
-        ))
-
-        circling_performance = circling_performance_schema.dump(g.flight.circling_performance, many=True).data
-        performance = dict(circling=circling_performance, cruise=cruise_performance)
-
-        contest_leg_schema = ContestLegSchema()
-        contest_legs = {}
-        for type in ['classic', 'triangle']:
-            legs = g.flight.get_contest_legs('olc_plus', type)
-            contest_legs[type] = contest_leg_schema.dump(legs, many=True).data
-
-        return jsonify(
-            flight=flight,
-            near_flights=near_flights,
-            comments=comments,
-            contest_legs=contest_legs,
-            phases=phases,
-            performance=performance)
-
+@flight_blueprint.route('/flights/<flight_id>/<path:path>')
+def html(**kwargs):
     return send_index()
 
 
-@flight_blueprint.route('/flights/<flight_id>/json')
+@flight_blueprint.route('/api/flights/<flight_id>/')
+def read():
+    mark_flight_notifications_read(g.flight)
+
+    flight = FlightSchema().dump(g.flight).data
+
+    if 'extended' not in request.args:
+        return jsonify(flight=flight)
+
+    near_flights = FlightMeetings.get_meetings(g.flight).values()
+    near_flights = NearFlightSchema().dump(near_flights, many=True).data
+
+    comments = FlightCommentSchema().dump(g.flight.comments, many=True).data
+
+    phases_schema = FlightPhaseSchema(only=(
+        'circlingDirection',
+        'type',
+        'secondsOfDay',
+        'startTime',
+        'duration',
+        'altDiff',
+        'distance',
+        'vario',
+        'speed',
+        'glideRate',
+    ))
+
+    phases = phases_schema.dump(g.flight.phases, many=True).data
+
+    cruise_performance_schema = FlightPhaseSchema(only=(
+        'duration',
+        'fraction',
+        'altDiff',
+        'distance',
+        'vario',
+        'speed',
+        'glideRate',
+        'count',
+    ))
+
+    cruise_performance = cruise_performance_schema.dump(g.flight.cruise_performance).data
+
+    circling_performance_schema = FlightPhaseSchema(only=(
+        'circlingDirection',
+        'count',
+        'vario',
+        'fraction',
+        'duration',
+        'altDiff',
+    ))
+
+    circling_performance = circling_performance_schema.dump(g.flight.circling_performance, many=True).data
+    performance = dict(circling=circling_performance, cruise=cruise_performance)
+
+    contest_leg_schema = ContestLegSchema()
+    contest_legs = {}
+    for type in ['classic', 'triangle']:
+        legs = g.flight.get_contest_legs('olc_plus', type)
+        contest_legs[type] = contest_leg_schema.dump(legs, many=True).data
+
+    return jsonify(
+        flight=flight,
+        near_flights=near_flights,
+        comments=comments,
+        contest_legs=contest_legs,
+        phases=phases,
+        performance=performance)
+
+
+@flight_blueprint.route('/api/flights/<flight_id>/json')
 def json():
     # Return HTTP Status code 304 if an upstream or browser cache already
     # contains the response and if the igc file did not change to reduce
@@ -346,7 +350,7 @@ def _get_near_flights(flight, location, time, max_distance=1000):
     return flights
 
 
-@flight_blueprint.route('/flights/<flight_id>/near')
+@flight_blueprint.route('/api/flights/<flight_id>/near')
 def near():
     try:
         latitude = float(request.args['lat'])
@@ -372,23 +376,7 @@ def near():
     return jsonify(flights=map(add_flight_path, flights))
 
 
-@flight_blueprint.route('/flights/<flight_id>/change_pilot')
-def change_pilot():
-    if not g.flight.is_writable(g.current_user):
-        abort(403)
-
-    return send_index()
-
-
-@flight_blueprint.route('/flights/<flight_id>/change_aircraft')
-def change_aircraft():
-    if not g.flight.is_writable(g.current_user):
-        abort(403)
-
-    return send_index()
-
-
-@flight_blueprint.route('/flights/<flight_id>/', methods=['POST'])
+@flight_blueprint.route('/api/flights/<flight_id>/', methods=['POST'])
 def update():
     if not g.flight.is_writable(g.current_user):
         return jsonify(), 403
@@ -484,7 +472,7 @@ def update():
     return jsonify()
 
 
-@flight_blueprint.route('/flights/<flight_id>/', methods=('DELETE',))
+@flight_blueprint.route('/api/flights/<flight_id>/', methods=('DELETE',))
 def delete():
     if not g.flight.is_writable(g.current_user):
         abort(403)
@@ -497,7 +485,7 @@ def delete():
     return jsonify()
 
 
-@flight_blueprint.route('/flights/<flight_id>/comments', methods=('POST',))
+@flight_blueprint.route('/api/flights/<flight_id>/comments', methods=('POST',))
 def add_comment():
     if not g.current_user:
         return jsonify(), 403

@@ -37,7 +37,7 @@ export default Ember.Component.extend(Validations, {
     let json = this.getProperties('modelId', 'registration', 'competitionId');
 
     try {
-      yield this.get('ajax').request(`/flights/${id}/`, { method: 'POST', json });
+      yield this.get('ajax').request(`/api/flights/${id}/`, { method: 'POST', json });
       window.location = `/flights/${id}/`;
     } catch (error) {
       this.set('error', error);

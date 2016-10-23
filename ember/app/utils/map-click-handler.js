@@ -218,7 +218,7 @@ const MapClickHandler = Ember.Object.extend({
     let addFlight = this.get('addFlight');
     if (!flights || !addFlight) return;
 
-    let req = $.ajax(`/flights/${flight.get('id')}/near?lon=${lon}&lat=${lat}&time=${time}`);
+    let req = $.ajax(`/api/flights/${flight.get('id')}/near?lon=${lon}&lat=${lat}&time=${time}`);
 
     req.done(function(data) {
       for (let i = 0; i < data['flights'].length; ++i) {

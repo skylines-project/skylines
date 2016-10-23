@@ -7,7 +7,7 @@ export default Ember.Route.extend({
   model() {
     let id = this.modelFor('flight').ids[0];
 
-    let flight = this.get('ajax').request(`/flights/${id}/`).then(it => it.flight);
+    let flight = this.get('ajax').request(`/api/flights/${id}/`).then(it => it.flight);
 
     let accountId = this.get('account.user.id');
     let clubId = this.get('account.club.id');
