@@ -1,8 +1,7 @@
-from flask import Blueprint, current_app, jsonify, g, request
+from flask import Blueprint, current_app, jsonify, g
 
 from skylines.frontend.ember import send_index
 from skylines.lib.decorators import jsonp
-from skylines.lib.vary import vary
 from skylines.model import TrackingFix, Airport, Follower
 from skylines.schemas import TrackingFixSchema, AirportSchema
 
@@ -10,11 +9,14 @@ tracking_blueprint = Blueprint('tracking', 'skylines')
 
 
 @tracking_blueprint.route('/tracking/')
-@vary('accept')
-def index():
-    if 'application/json' not in request.headers.get('Accept', ''):
-        return send_index()
+@tracking_blueprint.route('/tracking/<path:path>')
+def html(**kwargs):
+    return send_index()
 
+
+@tracking_blueprint.route('/api/tracking')
+@tracking_blueprint.route('/api/live')
+def index():
     fix_schema = TrackingFixSchema(only=('time', 'location', 'altitude', 'elevation', 'pilot'))
     airport_schema = AirportSchema(only=('id', 'name', 'countryCode'))
 
@@ -46,12 +48,7 @@ def index():
     return jsonify(friends=followers, tracks=tracks)
 
 
-@tracking_blueprint.route('/tracking/info')
-def info():
-    return send_index()
-
-
-@tracking_blueprint.route('/tracking/latest.json')
+@tracking_blueprint.route('/api/tracking/latest.json')
 @jsonp
 def latest():
     fixes = []
