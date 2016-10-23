@@ -44,7 +44,7 @@ def handle_user_param():
 @vary('accept')
 def index():
     if 'application/json' not in request.headers.get('Accept', ''):
-        return redirect(url_for('.profile', user=g.user_id))
+        return send_index()
 
     schema = CurrentUserSchema(exclude=('id'))
     return jsonify(**schema.dump(g.user).data)
