@@ -1,7 +1,7 @@
 import math
 from datetime import datetime
 
-from flask import Blueprint, request, url_for, abort, current_app, jsonify, g, make_response
+from flask import Blueprint, request, abort, current_app, jsonify, g, make_response
 
 from sqlalchemy.orm import undefer_group, contains_eager
 from sqlalchemy.sql.expression import func
@@ -63,9 +63,6 @@ def _query_flights():
         Flight, g.flight_id, patch_query=_patch_query)
 
     g.flight = flights[0]
-
-    if not g.flight.is_viewable(None):
-        g.logout_next = url_for('index')
 
     map(_reanalyse_if_needed, flights)
 

@@ -39,8 +39,6 @@ def handle_user_param():
     if not g.user.is_writable(g.current_user):
         abort(403)
 
-    g.logout_next = url_for("index")
-
 
 @settings_blueprint.route('/settings/')
 @settings_blueprint.route('/settings/<path:path>')

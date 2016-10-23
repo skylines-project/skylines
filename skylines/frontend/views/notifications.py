@@ -1,4 +1,4 @@
-from flask import Blueprint, request, url_for, g, jsonify
+from flask import Blueprint, request, g, jsonify
 from sqlalchemy.orm import subqueryload, contains_eager
 from sqlalchemy.sql.expression import or_
 
@@ -16,12 +16,6 @@ TYPES = {
 }
 
 notifications_blueprint = Blueprint('notifications', 'skylines')
-
-
-@notifications_blueprint.before_request
-def before_request():
-    if g.current_user:
-        g.logout_next = url_for("index")
 
 
 def _filter_query(query, args):
