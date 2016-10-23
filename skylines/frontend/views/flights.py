@@ -141,7 +141,7 @@ def all():
 
 @flights_blueprint.route('/')
 def index():
-    return redirect(url_for('.latest'))
+    return send_index()
 
 
 @flights_blueprint.route('/date/<date>')
