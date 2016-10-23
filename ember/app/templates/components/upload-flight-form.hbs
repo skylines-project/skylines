@@ -1,4 +1,4 @@
-<form action="/flights/upload/" method="post" enctype="multipart/form-data" target="upload-iframe" onsubmit={{action "submit"}}>
+<form action="/api/flights/upload/" method="post" enctype="multipart/form-data" target="upload-iframe" onsubmit={{action "submit"}}>
   {{#if error}}
     <div class="alert alert-danger" role="alert">{{error}}</div>
   {{/if}}

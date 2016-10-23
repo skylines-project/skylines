@@ -8,7 +8,7 @@ export default Ember.Route.extend(AuthenticatedRouteMixin, {
   model() {
     let ajax = this.get('ajax');
 
-    let csrfToken = ajax.request('/flights/upload/csrf').then(it => it.token);
+    let csrfToken = ajax.request('/api/flights/upload/csrf').then(it => it.token);
 
     let accountId = this.get('account.user.id');
     let clubId = this.get('account.club.id');
