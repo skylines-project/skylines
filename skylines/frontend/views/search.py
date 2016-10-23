@@ -6,7 +6,6 @@ from skylines.model.search import (
     combined_search_query, text_to_tokens, escape_tokens,
     process_result_details
 )
-from skylines.lib.vary import vary
 
 search_blueprint = Blueprint('search', 'skylines')
 
@@ -14,11 +13,13 @@ MODELS = [User, Club, Airport]
 
 
 @search_blueprint.route('/search/')
-@vary('accept')
-def index():
-    if 'application/json' not in request.headers.get('Accept', ''):
-        return send_index()
+@search_blueprint.route('/search/<path:path>')
+def html(**kwargs):
+    return send_index()
 
+
+@search_blueprint.route('/api/search')
+def index():
     search_text = request.values.get('text', '').strip()
     if not search_text:
         return jsonify(results=[])
