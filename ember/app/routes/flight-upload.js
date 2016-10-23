@@ -1,16 +1,9 @@
 import Ember from 'ember';
+import AuthenticatedRouteMixin from 'ember-simple-auth/mixins/authenticated-route-mixin';
 
-export default Ember.Route.extend({
+export default Ember.Route.extend(AuthenticatedRouteMixin, {
   ajax: Ember.inject.service(),
   account: Ember.inject.service(),
-
-  beforeModel() {
-    if (!this.get('account.user')) {
-      this.replaceWith('login', {
-        queryParams: { next: '/flights/upload' },
-      });
-    }
-  },
 
   model() {
     let ajax = this.get('ajax');
