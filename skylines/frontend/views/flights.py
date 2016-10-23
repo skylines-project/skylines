@@ -284,26 +284,3 @@ def list(ids):
 
     return _create_list('list', request.args, pinned=ids,
                         default_sorting_column='date', default_sorting_order='desc')
-
-
-@flights_blueprint.route('/igc_headers')
-def igc_headers():
-    """Hidden method that parses all missing IGC headers."""
-
-    if not g.current_user or not g.current_user.is_manager():
-        abort(403)
-
-    igc_files = IGCFile.query().filter(or_(
-        IGCFile.logger_manufacturer_id is None,
-        IGCFile.logger_id is None,
-        IGCFile.model is None,
-        IGCFile.registration is None,
-        IGCFile.competition_id is None,
-        IGCFile.date_utc is None))
-
-    for igc_file in igc_files:
-        igc_file.update_igc_headers()
-
-    db.session.commit()
-
-    return redirect(url_for('.index'))
