@@ -230,7 +230,6 @@ def pinned():
 @flights_blueprint.route('/list/<ids>')
 @vary('accept')
 def list(ids):
-    # Check for the 'pinnedFlights' cookie
     if not ids:
         return redirect(url_for('.index'))
 
