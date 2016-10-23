@@ -10,11 +10,13 @@ clubs_blueprint = Blueprint('clubs', 'skylines')
 
 
 @clubs_blueprint.route('/clubs/')
-@vary('accept')
-def index():
-    if 'application/json' not in request.headers.get('Accept', ''):
-        return send_index()
+@clubs_blueprint.route('/clubs/<path:path>')
+def html(**kwargs):
+    return send_index()
 
+
+@clubs_blueprint.route('/api/clubs/')
+def list():
     clubs = Club.query().order_by(func.lower(Club.name))
 
     name_filter = request.args.get('name')
