@@ -1,5 +1,313 @@
+#achievements: Achievements
+actions: Actions
+add-comment: Ajouter un commentaire
+aircraft: Aéronef
+aircraft-type: Type d'aéronef
+airport: Aérodrome
+#AIRPORT-at-TIME: <a href="{airportURL}">{airport}</a><br/>at {time}
+airports: Aérodromes
+all: Tout
+all-time: Tout le temps
+altitude: Altitude
 avg-speed-abbr: Vitesse moy.
 avg-vario-abbr: Vario moy.
+change: Modifier
+change-club: Modifier le Club
+change-password: Modifier le mot de pass
+changing: Modification…
+changing-password: Modification du mot de passe…
+choose-aircraft: Sélectionnez un aéronef
+choose-club: Sélectionnez un club
+choose-pilot: Sélectionnez un pilote
+#circling-performance: Circling performance
+#climb-percentage-abbr: Climb %
+club: Club
+club-exists-already: Un club avec ce nom existe déjà.
+club-has-been-changed: Votre club a été modifié.
+club-was-registered: Votre club a été enregistré avec succès.
+clubs: Clubs
+comments: Commentaires
+competition-id: Id compétition
+competitions: Compétitions
+confirm-password: Confirmez le mot de passe
+copilot: Copilote
+count: Nombre
+create: Créez
+created: Créé
+creating: Création…
+#cruise-performance: Cruise performance
+current-password: Mot de passe actuel
+date: Date
+date-missing-in-igc-file: Date manquante dans le fichier IGC
+#delay: Delay
+delete: Effacez
+delete-flight: Effacez le vol
+delete-flight-confirmation-text: Êtes-vous sûr d'effacer ce vol ?
+developers: Développeurs
+distance: Distance
+distance-abbr: Dist.
+#distance-flights: Distance Flights
+#DISTANCE-on-DATE: '{distance} on {date}'
+#DISTANCE-on-DATE-by-PILOT: '{distance} on {date} by {pilot}'
+#DISTANCE-on-DATE-by-PILOT-and-COPILOT: '{distance} on {date} by {pilot} and {copilot}'
+dont-have-an-account: Vous n'avez pas de compte ?
+duplicate-file: Fichier dupliqué
 duration: Durée
+edit: Éditez
+edit-club: Éditez un club
+editing: Édition…
+email-address: Adresse mél
+email-exists-already: Cette adresse mél existe déjà.
+email-unknown: Cette adresse mél est inconnue.
+#error-text: It looks like there was error while loading this page. The error was automatically reported back to the developers. Please try again later!
+fai-triangle-distance: Distance du triangle FAI
+#failed-to-parse-file: Failed to parse file
+#file-upload-field: File upload field
+first-last: Prénom / Nom
+first-name: Prénom
+#flight-analysis: Flight Analysis
+flight-database: Base de donnée des vols
+#flight-date-in-future: Date of flight in future
+flight-time: Durée de vol
+flights: Vols
+#follow: Follow
+#followers: Followers
+#following: Following
+#forgot-password: Forgot password?
+#friends: Friends
+#generate-new-key: Generate new key
+#generating-new-key: Generating new key...
+#glide-rate: Glide Rate
 glide-rate: Finesse
+#glide-rate-abbr: GR
+#glides: Glides
+#how-to-use-live-tracking: How to use Live Tracking?
+#igc-or-zip-files: IGC or ZIP file(s)
+#imprint: Imprint
+#index-INDEX: 'Handicap: {index}'
+#landing: Landing
+#landing-time: Landing time
+#last-12-months: Last 12 Months
+#last-fix: Last Fix
+#last-name: Last name
+#latest: Latest
+#n-avg-distance-per-flight: avg. {distance} per flight
+#leg-statistics: Leg Statistics
+#license: License
+#live-tracking: Live Tracking
+#live-tracking-nav-bar-link: Live
+#live-tracking-of-PILOT: Live Tracking of {pilot}
+#live-tracking-of-PILOT-and-PILOT2: Live Tracking of {pilot} and {pilot2}
+#live-tracking-of-PILOT-and-NUM-other-pilots: Live Tracking of {pilot} and {num} other pilots
+#n-avg-hours-per-flight: avg. {num} hours per flight
+#live-tracking-key: Live Tracking Key
+#login: Login
+#logout: Logout
+#mark-all-as-read: Mark all as read
+#members: Members
+#members-of-CLUB: Members <small>of <a href="{clubURL}">{club}</a></small>
+#n-comments: '{numComments, plural, =1 {1 comment} other {# comments}}'
+#n-hours: '{num} Hours'
+#NUM-pilots: '{num, plural, =1 {1 pilot} other {# pilots}}'
+#name: Name
+#nearest-airport: Nearest Airport
+#new: New
+#newer: Newer
+#no: No
+#no-airports-found: No airports found.
+#no-club: No club
+#no-clubs-found: No clubs found.
+#no-flight-in-file: No flight found in file
+#no-flight-saved: No flight was saved.
+#no-flights-found: No flights found.
+#no-live-tracks-of-pilots: '{num, plural, =1 {There is currently no live track of this pilot available.} other {There are currently no live tracks of these pilots available.}}'
+#no-pilots-found: No pilots found.
+#no-data: No data found...
+#notifications: Notifications
+#olc-distance: OLC Distance
+#older: Older
+#open-data: Open Data
+#open-source: Open Source
+#other-pilots: Other pilots
+#overview: Overview
+#password: Password
+#password-recovered: Your password was changed using the recovery code.
+#password-was-changed: Your password was changed.
+#passwords-do-not-match: Passwords do not match
+#phase-statistics: Phase Statistics
+#pilot: Pilot
+#pilots: Pilots
+#pilots-must-not-be-equal: Pilots must not be equal.
+#pin-button-title: Activate this to show the flight on top of other flights on the map
+#pinned: Pinned
+#planned: planned
+#POINTS-points-abbr: '{points} pts.'
+#profile: Profile
+#publish: Publish
+#publish-flight: Publish Flight
+#publish-flight-confirmation-text: Confirm to publish this flight...
+#publish-flights: '{num, plural, =1 {Publish Flight} other {Publish Flights}}'
+#publishing: Publishing
+#ranking: Ranking
+#recover-password: Recover Password
+#recovering: Recovering...
+#recovery-mail-sent: Check your email! We have sent you a link to recover your password.
+#register: Register
+#registering: Registering...
+#register-club: Register Club
+#registration: Registration
+#score: Score
+#scoring-start-time: Scoring start time
+#scoring-end-time: Scoring end time
+#season-YEAR: Season {year}
+#settings: Settings
+#settings-have-been-saved: Your settings have been saved.
+#show: Show
+#social-network: Social Network
+sorry: Désolé !
+speed: Vitesse
+#start: Start
 start: Départ
+statistics: Statistiques
+status: Status
+#success: Success
+takeoff: Décollage
+takeoff-locations: Sites de décollage
+#takeoff-time: Takeoff time
+#task-planning: Task Planning
+the-skylines-team: L'équipe SkyLines
+#this-is-you: This is you
+#time: Time
+#TIME-by-USER: '{time}<br>by <a href="{userURL}">{user}</a>'
+#timeline: Timeline
+total: Total
+total-score: Score Total
+tracking-callsign: Immatriculation pistée
+tracking-delay: Durée de pistage
+tracking-delay-choice: '{delay, plural, =0 {None} =1 {1 minute} other {# minutes}}'
+translators: Traducteurs
+triangle: Triangle
+unassigned: Non assigné
+unfollow: Non suivi
+#unknown: Unknown
+unknown-or-other-person: Inconnu ou autre personne
+unspecified: Non spécifié
+#upload: Upload
+#upload-flight: Upload Flight
+#uploaded: Uploaded
+#uploading: Uploading...
+used-airspaces: Espaces contrôlés utilisés
+users: Utilisateurs
+#verify-flights-and-publish: You have to verify their properties and click 'Publish Flight(s)' below to publish your flight(s).
+#website: Website
+#wingmen: Wingmen
+#wrong-credentials: Please check your email address and password.
+#wrong-current-password: Please check your current password.
+year: Année
+yes: Oui
+#you-have-no-notifications: You have no notifications.
+#your-flights-have-been-saved: Your flights have been saved.
+#about:
+#  welcome: "Welcome to SkyLines, your internet platform for flight sharing!"
+#  flights: "<a href=\"{uploadURL}\">Upload</a> your IGC files and share them with your friends. We won't change your files or restrict you from downloading them again!"
+#  tracking: "Use your mobile phone to send position updates to SkyLines. Find out how it works <a href=\"{url}\">here</a>."
+#  analysis: "Use our analysis tools to have a closer look at your flights and how you might be able to improve them in the future."
+#  task-planning: "Use your browser to plan your tasks before the flight and upload them quickly to your flight computer. Integration of {prosoar} is planned."
+#  competitions: "Create competitions to offer your spectators an even better live tracking experience by following all the participants on the same map."
+#  achievements: "Challenge yourself by trying to complete all the achievements that SkyLines offers. Fly large triangles, long final glides or just do your first outlanding."
+#  notifications: "Skylines also has some social network aspects. You can comment on flights, follow your friends and get <a href=\"{url}\">notifications</a> if they do anything interesting."
+#  open-data: "The SkyLines flight database is made available under the {license}. Skylines is using waypoint data from the {welt2000} project."
+#  open-source: "Skylines is a <a href=\"{teamURL}\">community</a> project and entirely based on free software (<a href=\"{licenseURL}\">License</a>). Visit {github} if you want to help!"
+#search:
+#  search: Search
+#  search-for-TEXT: Search <small>for "{text}"</small>
+#  no-search-text: Please enter something in the search bar above.
+#  no-results: There were no results for your search... Sorry!
+#timeline-events:
+#  club-join:
+#    message1: <strong><a href="{actorURL}">{actor}</a></strong> joined <strong><a href="{clubURL}">{club}</a></strong>.
+#    message2: You joined <strong><a href="{clubURL}">{club}</a></strong>.
+#  flight-comment:
+#    message1: <strong><a href="{actorURL}">{actor}</a></strong> commented on a <strong>{distance}</strong> flight on <strong>{date}</strong>.
+#    message2: You commented on a <strong>{distance}</strong> flight on <strong>{date}</strong>.
+#    message3: <strong><a href="{actorURL}">{actor}</a></strong> commented on your <strong>{distance}</strong> flight on <strong>{date}</strong>.
+#    message4: You commented on your <strong>{distance}</strong> flight on <strong>{date}</strong>.
+#  flight-upload:
+#    message1: <strong><a href="{actorURL}">{actor}</a></strong> uploaded a <strong>{distance}</strong> flight on <strong>{date}</strong>.
+#    message2: You uploaded a <strong>{distance}</strong> flight on <strong>{date}</strong>.
+#  follower:
+#    message1: <strong><a href="{actorURL}">{actor}</a></strong> started following <strong><a href="{userURL}">{user}</a></strong>.
+#    message2: You started following <strong><a href="{userURL}">{user}</a></strong>.
+#    message3: <strong><a href="{actorURL}">{actor}</a></strong> started following you.
+#  new-user:
+#    message1: <strong><a href="{actorURL}">{actor}</a></strong> joined SkyLines.
+#    message2: You joined SkyLines.
+#tracking:
+#  what-is-it: 'What is it?'
+#  description: "SkyLines Live Tracking can be used to let others take part on your journeys while you're flying. It uses a very light-weight protocol that only transmits the necessary data and due to that it can also work in areas/altitudes where the reception isn't very good. To give you an example: A flight of 10 hours only uses about 340 KB of traffic when the positions are transmitted every 5 seconds!"
+#  clients: Clients
+#  xcsoar-description: available starting with {release}
+#  instructions-below: Instructions below.
+#  available-in-gaggle: 'now available in the current version of Gaggle'
+#  lt24-clients: LiveTrack24 clients
+#  lt24-description: 'You can also use all available applications that use the {livetrack24} protocol for sending your locations to SkyLines. Just use your Live Tracking Key as username, choose any password you want and configure {skylines} as the server.'
+#  your-live-tracking-key-is-KEY: 'Your Live Tracking key is: {key}'
+#  settings: Live Tracking Settings
+#  login-required: You have to login to see you own personal Live Tracking key.
+#  xcsoar-instructions: 'In XCSoar, open the <em>Setup System</em> dialog, click on <em>Setup</em> and then <em>Tracking</em>.  Turn SkyLines tracking on, and enter your Live Tracking key.'
+#flight-phase:
+#  powered: Powered
+#  circlingLeft: Circling Left
+#  circlingRight: Circling Right
+#  circlingMixed: Circling Mixed
+#  cruise: Cruise
+circling-direction:
+  left: Gauche
+  right: Droite
+#  mixed: Mixed
+  total: Total
+units:
+  title: Unités
+  distance: Unité de distance
+  speed: unité de vitesse
+  lift: Unité de montée
+  altitude: unité d'altitude
+  presets:
+    american: Américain (impériale)
+    australian: Australien (métrique, hauteurs impériales)
+    british: Britanique (impérial, distance in km)
+    custom: Personnalisé
+    european: Européen (métrique)
+errors:
+  description: Ce champ
+  inclusion: "{description} n'est pas inclus dans la liste"
+  exclusion: '{description} est réservé'
+  invalid: '{description} est invalide'
+  confirmation: '{description} ne correspond pas avec {on}'
+  accepted: '{description} doit être acceptée'
+  empty: '{description} ne doit pas être vide'
+  blank: '{description} ne doit pas être vide'
+  present: '{description} doit être vide'
+  collection: '{description} doit être une collection'
+  singular: '{description} ne peut pas être une collection'
+  tooLong: '{description} est trop long ({max} caractères maxi)'
+  tooShort: '{description} est trop court ({min} caractères mini)'
+  before: '{description} doit être avant {before}'
+  after: '{description} doit être après {after}'
+  wrongDateFormat: '{description} doit être au format {format}'
+  wrongLength: '{description} n''a pas la bonne taille (doit être de {is} caractères)'
+  notANumber: '{description} doit être un nombre'
+  notAnInteger: '{description} doit être un entier'
+  greaterThan: '{description} doit être plus grand que {gt}'
+  greaterThanOrEqualTo: '{description} doit être égal ou plus grand que {gte}'
+  equalTo: '{description} doit être égal à {is}'
+  lessThan: '{description} doit être plus petit que {lt}'
+  lessThanOrEqualTo: '{description} doit être égal ou plus petit que {lte}'
+  otherThan: '{description} doit être diffrent de {value}'
+  odd: '{description} doit être impair'
+  even: '{description} doit être pair'
+  positive: '{description} doit être positif'
+  date: '{description} doit être une date valide'
+  email: '{description} doit être une adresse mél valide'
+  phone: '{description} doit être un numéro de téléphone valide'
+  url: '{description} doit être une URL valide'
