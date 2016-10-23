@@ -4,6 +4,6 @@ export default Ember.Route.extend({
   ajax: Ember.inject.service(),
 
   model() {
-    return this.get('ajax').request('/about/team');
+    return this.get('ajax').request('/api/team');
   },
 });
