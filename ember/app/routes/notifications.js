@@ -27,7 +27,7 @@ export default Ember.Route.extend(AuthenticatedRouteMixin, {
       data.type = params.type;
     }
 
-    return this.get('ajax').request('/notifications', { data });
+    return this.get('ajax').request('/api/notifications', { data });
   },
 
   setupController(controller) {

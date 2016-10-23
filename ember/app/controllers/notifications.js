@@ -32,7 +32,7 @@ export default Ember.Controller.extend({
   hasUnread: Ember.computed.and('isFirstPage', 'hasUnreadOnPage'),
 
   markAsReadTask: task(function * () {
-    yield this.get('ajax').request('/notifications/clear', { method: 'POST' });
+    yield this.get('ajax').request('/api/notifications/clear', { method: 'POST' });
     this.get('model.events').forEach(event => Ember.set(event, 'unread', false));
     this.set('notifications.counter', 0);
   }).drop(),

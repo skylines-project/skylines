@@ -3,7 +3,6 @@ from sqlalchemy.orm import subqueryload, contains_eager
 from sqlalchemy.sql.expression import or_
 
 from skylines.frontend.ember import send_index
-from skylines.lib.vary import vary
 from skylines.database import db
 from skylines.model.event import Event, Notification, Flight
 from skylines.lib.decorators import login_required
@@ -38,12 +37,14 @@ def _filter_query(query, args):
 
 
 @notifications_blueprint.route('/notifications/')
-@login_required("You have to login to read notifications.")
-@vary('accept')
-def index():
-    if 'application/json' not in request.headers.get('Accept', ''):
-        return send_index()
+@notifications_blueprint.route('/notifications/<path:path>')
+def html(**kwargs):
+    return send_index()
 
+
+@notifications_blueprint.route('/api/notifications')
+@login_required("You have to login to read notifications.")
+def list():
     query = Notification.query(recipient=g.current_user) \
         .join('event') \
         .options(contains_eager('event')) \
@@ -71,7 +72,7 @@ def index():
     return jsonify(events=(map(convert_event, events)))
 
 
-@notifications_blueprint.route('/notifications/clear', methods=('POST',))
+@notifications_blueprint.route('/api/notifications/clear', methods=('POST',))
 @login_required("You have to login to clear notifications.")
 def clear():
     def filter_func(query):
