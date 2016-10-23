@@ -8,6 +8,6 @@
   {{/base-page}}
 {{else}}
   {{#form-page title=(t "upload-flight")}}
-    {{upload-flight-form csrfToken=model.csrfToken clubMembers=model.clubMembers onUpload=(action (mut result))}}
+    {{upload-flight-form clubMembers=model.clubMembers onUpload=(action (mut result))}}
   {{/form-page}}
 {{/if}}

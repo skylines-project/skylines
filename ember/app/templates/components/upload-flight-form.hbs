@@ -21,7 +21,6 @@
 
   <input type="hidden" name="pilotId" value={{pilotId}}>
   <input type="hidden" name="pilotName" value={{pilotName}}>
-  <input type="hidden" name="csrfToken" value={{csrfToken}}>
 
   <button class="btn btn-primary btn-block" type="submit" disabled={{or uploadTask.isRunning (not validations.isValid)}}>
     {{t (if uploadTask.isRunning "uploading" "upload")}}
