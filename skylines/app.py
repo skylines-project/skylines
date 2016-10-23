@@ -155,7 +155,7 @@ def create_combined_app(*args, **kw):
     api = create_api_app(*args, **kw)
 
     mounts = {
-        '/api': api,
+        '/api/v0': api,
     }
 
     frontend.wsgi_app = DispatcherMiddleware(frontend.wsgi_app, mounts)
