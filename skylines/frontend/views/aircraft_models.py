@@ -6,7 +6,7 @@ from skylines.schemas import AircraftModelSchema
 aircraft_models_blueprint = Blueprint('aircraft_models', 'skylines')
 
 
-@aircraft_models_blueprint.route('/aircraft-models/')
+@aircraft_models_blueprint.route('/api/aircraft-models')
 def index():
     models = AircraftModel.query() \
         .order_by(AircraftModel.kind) \

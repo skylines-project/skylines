@@ -7,7 +7,7 @@ export default Ember.Route.extend({
     let id = this.modelFor('flight').ids[0];
 
     let flight = this.get('ajax').request(`/flights/${id}/`).then(it => it.flight);
-    let aircraftModels = this.get('ajax').request('/aircraft-models').then(it => it.models);
+    let aircraftModels = this.get('ajax').request('/api/aircraft-models').then(it => it.models);
 
     return Ember.RSVP.hash({ id, flight, aircraftModels });
   },
