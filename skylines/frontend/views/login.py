@@ -1,6 +1,6 @@
 import base64
 
-from flask import redirect, request, url_for, g, jsonify
+from flask import request, g, jsonify
 from flask.ext.login import login_user, logout_user, current_user
 
 from skylines.frontend.ember import send_index
@@ -39,15 +39,7 @@ def register(app):
 
     @app.route('/login')
     def login():
-        if g.current_user:
-            return redirect(get_next())
-
         return send_index()
-
-    @app.route('/logout')
-    def logout():
-        logout_user()
-        return redirect(get_next())
 
     @app.route('/session', methods=('PUT',))
     def create_session():
@@ -71,6 +63,3 @@ def register(app):
     def delete_session():
         logout_user()
         return jsonify()
-
-    def get_next():
-        return request.values.get("next") or request.referrer or url_for("index")
