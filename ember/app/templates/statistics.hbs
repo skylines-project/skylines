@@ -1,0 +1,37 @@
+{{#base-page}}
+  <div class="page-header">
+    <h1>{{t "statistics"}}</h1>
+  </div>
+
+  <div class="row">
+    <div class="col-md-12">
+      {{#if (or pilot club airport account.user)}}
+        <ul class="nav nav-pills">
+          {{#active-link}}{{#link-to "statistics.index"}}SkyLines{{/link-to}}{{/active-link}}
+
+          {{#if airport}}
+            {{#active-link}}{{#link-to "statistics.airport" airport}}{{name}}{{/link-to}}{{/active-link}}
+          {{/if}}
+
+          {{#if club}}
+            {{#active-link}}{{#link-to "statistics.club" club}}{{name}}{{/link-to}}{{/active-link}}
+          {{/if}}
+
+          {{#if (and session.isAuthenticated (not-eq account.club.id club))}}
+            {{#active-link}}{{#link-to "statistics.club" account.club.id}}{{account.club.name}}{{/link-to}}{{/active-link}}
+          {{/if}}
+
+          {{#if pilot}}
+            {{#active-link}}{{#link-to "statistics.pilot" pilot}}{{name}}{{/link-to}}{{/active-link}}
+          {{/if}}
+
+          {{#if (and account.user (not-eq account.user.id pilot))}}
+            {{#active-link}}{{#link-to "statistics.pilot" account.user.id}}{{account.user.name}}{{/link-to}}{{/active-link}}
+          {{/if}}
+        </ul>
+      {{/if}}
+
+      {{outlet}}
+    </div>
+  </div>
+{{/base-page}}

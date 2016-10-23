@@ -46,16 +46,16 @@
   <div class="pull-right">
     {{#if (eq result.type "user")}}
       {{#link-to "flights.pilot" result.id class="btn btn-default btn-sm"}}<i class="icon-plane"></i> {{t "flights"}}{{/link-to}}
-      {{#link-to "stats.wildcard" (concat "pilot/" result.id) class="btn btn-default btn-sm"}}<i class="icon-bar-chart"></i> {{t "statistics"}}{{/link-to}}
+      {{#link-to "statistics.pilot" result.id class="btn btn-default btn-sm"}}<i class="icon-bar-chart"></i> {{t "statistics"}}{{/link-to}}
 
     {{else if (eq result.type "club")}}
       {{#link-to "club.pilots" result.id  class="btn btn-default btn-sm"}}<i class="icon-group"></i> {{t "members"}}{{/link-to}}
       {{#link-to "flights.club" result.id class="btn btn-default btn-sm"}}<i class="icon-plane"></i> {{t "flights"}}{{/link-to}}
-      {{#link-to "stats.wildcard" (concat "club/" result.id) class="btn btn-default btn-sm"}}<i class="icon-bar-chart"></i> {{t "statistics"}}{{/link-to}}
+      {{#link-to "statistics.club" result.id class="btn btn-default btn-sm"}}<i class="icon-bar-chart"></i> {{t "statistics"}}{{/link-to}}
 
     {{else if (eq result.type "airport")}}
       {{#link-to "flights.airport" result.id class="btn btn-default btn-sm"}}<i class="icon-plane"></i> {{t "flights"}}{{/link-to}}
-      {{#link-to "stats.wildcard" (concat "airport/" result.id) class="btn btn-default btn-sm"}}<i class="icon-bar-chart"></i> {{t "statistics"}}{{/link-to}}
+      {{#link-to "statistics.airport" result.id class="btn btn-default btn-sm"}}<i class="icon-bar-chart"></i> {{t "statistics"}}{{/link-to}}
     {{/if}}
   </div>
 </td>
