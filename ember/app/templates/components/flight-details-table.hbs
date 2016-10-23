@@ -45,7 +45,7 @@
           {{x-flag code=flight.takeoffAirport.countryCode style="float: right; margin: 3px"}}
           {{format-html-message "AIRPORT-at-TIME"
           airport=flight.takeoffAirport.name
-          airportURL=(concat "/flights/airport/" flight.takeoffAirport.id)
+          airportURL=(href-to "flights.airport" flight.takeoffAirport.id)
           time=(format-time flight.takeoffTime format="hhmmss" timeZone="UTC")}}
         {{else}}
           {{format-time flight.takeoffTime format="hhmmss" timeZone="UTC"}}
@@ -62,7 +62,7 @@
           {{x-flag code=flight.landingAirport.countryCode style="float: right; margin: 3px"}}
           {{format-html-message "AIRPORT-at-TIME"
           airport=flight.landingAirport.name
-          airportURL=(concat "/flights/airport/" flight.landingAirport.id)
+          airportURL=(href-to "flights.airport" flight.landingAirport.id)
           time=(format-time flight.landingTime format="hhmmss" timeZone="UTC")}}
         {{else}}
           {{format-time flight.landingTime format="hhmmss" timeZone="UTC"}}
@@ -142,7 +142,7 @@
       {{format-html-message "TIME-by-USER"
         time=(format-relative flight.timeCreated)
         user=flight.igcFile.owner.name
-        userURL=(concat "/users/" flight.igcFile.owner.id)}}</td>
+        userURL=(href-to "user" flight.igcFile.owner.id)}}</td>
   </tr>
 
   {{#if isOwner}}

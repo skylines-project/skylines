@@ -10,8 +10,8 @@
   <p>
     {{format-html-message translationKey
       actor=event.actor.name
-      actorURL=(concat "/users/" event.actor.id)
+      actorURL=(href-to "user" event.actor.id)
       user=event.user.name
-      userURL=(concat "/users/" event.user.id)}}
+      userURL=(href-to "user" event.user.id)}}
   </p>
 </td>
