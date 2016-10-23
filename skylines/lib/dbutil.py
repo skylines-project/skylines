@@ -3,7 +3,6 @@
 """Database helpers used in SkyLines."""
 
 from werkzeug.exceptions import NotFound
-from flask.ext.babel import _
 from sqlalchemy import orm
 
 
@@ -25,14 +24,14 @@ def get_requested_record(model, id, **kw):
     try:
         id = int(id)
     except ValueError:
-        raise NotFound(description=_('Sorry, the record id ({id}) that you '
-                                     'requested is not a valid id.').format(id=id))
+        raise NotFound(description=('Sorry, the record id ({id}) that you '
+                                    'requested is not a valid id.').format(id=id))
 
     q = _patch_query(model.query(), **kw)
     record = q.get(id)
     if record is None:
-        raise NotFound(description=_('Sorry, there is no such record ({id}) in '
-                                     'our database.').format(id=id))
+        raise NotFound(description=('Sorry, there is no such record ({id}) in '
+                                    'our database.').format(id=id))
 
     return record
 
@@ -43,8 +42,8 @@ def _parse_id_list(ids):
         try:
             id = int(id)
         except ValueError:
-            raise NotFound(description=_('Sorry, the record id ({id}) that you '
-                                         'requested is not a valid id.').format(id=id))
+            raise NotFound(description=('Sorry, the record id ({id}) that you '
+                                        'requested is not a valid id.').format(id=id))
         if id not in out:
             out.append(id)
     return out
@@ -61,7 +60,7 @@ def get_requested_record_list(model, ids, **kw):
     records = {record.id: record for record in q}
     if len(records) != len(ids):
         raise NotFound(
-            description=_('Sorry, {num_missing} of the requested records ({ids}) do not exist in our database.')
+            description=('Sorry, {num_missing} of the requested records ({ids}) do not exist in our database.')
             .format(num_missing=(len(ids) - len(records)), ids=ids))
 
     return [records[id] for id in ids]
