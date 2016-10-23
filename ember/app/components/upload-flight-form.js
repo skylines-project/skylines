@@ -1,5 +1,6 @@
 import Ember from 'ember';
 import { validator, buildValidations } from 'ember-cp-validations';
+import { task } from 'ember-concurrency';
 
 const Validations = buildValidations({
   files: {
@@ -34,38 +35,22 @@ export default Ember.Component.extend(Validations, {
   pilotId: Ember.computed.oneWay('account.user.id'),
   pilotName: null,
 
-  pending: false,
   error: null,
 
   showPilotNameInput: Ember.computed.equal('pilotId', null),
 
-  didInsertElement() {
-    this.$('iframe').on('load', this.onIframeLoad.bind(this));
-  },
+  uploadTask: task(function * () {
+    let form = this.$('form').get(0);
+    let data = new FormData(form);
 
-  willDestroyElement() {
-    this.$('iframe').off('load');
-  },
-
-  onIframeLoad() {
-    let text = this.$('iframe').contents().text();
-    if (Ember.isBlank(text)) return;
-
-    this.set('pending', false);
-
-    let json = JSON.parse(text);
-
-    if (json.error) {
-      this.set('error', json.error);
-    } else {
+    try {
+      let json = yield this.get('ajax').request('/api/flights/upload/', { method: 'POST', data, contentType: false, processData: false });
       this.getWithDefault('onUpload', Ember.K)(json);
-    }
-  },
 
-  submitForm() {
-    this.set('pending', true);
-    this.$('form')[0].submit();
-  },
+    } catch (error) {
+      this.set('error', error);
+    }
+  }).drop(),
 
   actions: {
     setFilesFromEvent(event) {
@@ -73,16 +58,11 @@ export default Ember.Component.extend(Validations, {
     },
 
     submit() {
-      // start async validations
       this.validate().then(({ validations }) => {
         if (validations.get('isValid')) {
-          // if validation passed continue submitting the form
-          this.submitForm();
+          this.get('uploadTask').perform();
         }
       });
-
-      // prevent form from submitting synchronously
-      return false;
     },
   },
 });

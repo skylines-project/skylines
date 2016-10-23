@@ -1,10 +1,10 @@
-<form action="/api/flights/upload/" method="post" enctype="multipart/form-data" target="upload-iframe" onsubmit={{action "submit"}}>
+<form {{action "submit" on="submit"}}>
   {{#if error}}
     <div class="alert alert-danger" role="alert">{{error}}</div>
   {{/if}}
 
   {{#validated-block label=(t "igc-or-zip-files") validation=validations.attrs.files hasContent=files}}
-    <input type="file" name="files" multiple="multiple" onchange={{action "setFilesFromEvent"}} class="form-control">
+    <input type="file" name="files" multiple="multiple" onchange={{action "setFilesFromEvent"}} class="form-control" disabled={{uploadTask.isRunning}}>
   {{/validated-block}}
 
   {{#validated-block label=(t "pilot") validation=validations.attrs.pilotId}}
@@ -16,16 +16,14 @@
       value=pilotName
       validation=validations.attrs.pilotName
       label=(t "pilot")
-      disabled=pending}}
+      disabled=uploadTask.isRunning}}
   {{/if}}
 
   <input type="hidden" name="pilotId" value={{pilotId}}>
   <input type="hidden" name="pilotName" value={{pilotName}}>
   <input type="hidden" name="csrfToken" value={{csrfToken}}>
 
-  <button class="btn btn-primary btn-block" type="submit" disabled={{or pending (not validations.isValid)}}>
-    {{t (if pending "uploading" "upload")}}
+  <button class="btn btn-primary btn-block" type="submit" disabled={{or uploadTask.isRunning (not validations.isValid)}}>
+    {{t (if uploadTask.isRunning "uploading" "upload")}}
   </button>
 </form>
-
-<iframe name="upload-iframe" style="display: none"></iframe>
