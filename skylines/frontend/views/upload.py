@@ -149,7 +149,7 @@ def _encode_flight_path(fp, qnh):
                 igc_start_time=fp[0].datetime, igc_end_time=fp[-1].datetime)
 
 
-@upload_blueprint.route('/csrf')
+@upload_blueprint.route('/flights/upload/csrf')
 @login_required(l_("You have to login to upload flights."))
 def csrf():
     if not g.current_user:
@@ -158,12 +158,12 @@ def csrf():
     return jsonify(token=generate_csrf())
 
 
-@upload_blueprint.route('/')
+@upload_blueprint.route('/flights/upload/')
 def index():
     return send_index()
 
 
-@upload_blueprint.route('/', methods=('POST',))
+@upload_blueprint.route('/flights/upload/', methods=('POST',))
 def index_post():
     if not g.current_user:
         return jsonify(error='authentication-required'), 403
@@ -317,7 +317,7 @@ def index_post():
     return response
 
 
-@upload_blueprint.route('/verify', methods=('POST',))
+@upload_blueprint.route('/flights/upload/verify', methods=('POST',))
 @login_required(l_('You have to login to upload flights.'))
 def verify():
     json = request.get_json()
@@ -386,7 +386,7 @@ def verify():
     return jsonify()
 
 
-@upload_blueprint.route('/airspace/<string:cache_key>/<int:airspace_id>.png')
+@upload_blueprint.route('/flights/upload/airspace/<string:cache_key>/<int:airspace_id>.png')
 def airspace_image(cache_key, airspace_id):
     if not mapscript_available:
         abort(404)

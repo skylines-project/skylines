@@ -37,7 +37,7 @@ def _filter_query(query, args):
     return query
 
 
-@notifications_blueprint.route('/')
+@notifications_blueprint.route('/notifications/')
 @login_required("You have to login to read notifications.")
 @vary('accept')
 def index():
@@ -71,7 +71,7 @@ def index():
     return jsonify(events=(map(convert_event, events)))
 
 
-@notifications_blueprint.route('/clear', methods=('POST',))
+@notifications_blueprint.route('/notifications/clear', methods=('POST',))
 @login_required("You have to login to clear notifications.")
 def clear():
     def filter_func(query):

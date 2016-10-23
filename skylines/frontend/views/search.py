@@ -13,7 +13,7 @@ search_blueprint = Blueprint('search', 'skylines')
 MODELS = [User, Club, Airport]
 
 
-@search_blueprint.route('/')
+@search_blueprint.route('/search/')
 @vary('accept')
 def index():
     if 'application/json' not in request.headers.get('Accept', ''):

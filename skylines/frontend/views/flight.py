@@ -175,7 +175,7 @@ class NearFlightSchema(Schema):
     times = fields.Nested(MeetingTimeSchema, many=True)
 
 
-@flight_blueprint.route('/')
+@flight_blueprint.route('/flights/<flight_id>/')
 @vary('accept')
 def index():
     mark_flight_notifications_read(g.flight)
@@ -248,7 +248,7 @@ def index():
     return send_index()
 
 
-@flight_blueprint.route('/json')
+@flight_blueprint.route('/flights/<flight_id>/json')
 def json():
     # Return HTTP Status code 304 if an upstream or browser cache already
     # contains the response and if the igc file did not change to reduce
@@ -346,7 +346,7 @@ def _get_near_flights(flight, location, time, max_distance=1000):
     return flights
 
 
-@flight_blueprint.route('/near')
+@flight_blueprint.route('/flights/<flight_id>/near')
 def near():
     try:
         latitude = float(request.args['lat'])
@@ -372,7 +372,7 @@ def near():
     return jsonify(flights=map(add_flight_path, flights))
 
 
-@flight_blueprint.route('/change_pilot')
+@flight_blueprint.route('/flights/<flight_id>/change_pilot')
 def change_pilot():
     if not g.flight.is_writable(g.current_user):
         abort(403)
@@ -380,7 +380,7 @@ def change_pilot():
     return send_index()
 
 
-@flight_blueprint.route('/change_aircraft')
+@flight_blueprint.route('/flights/<flight_id>/change_aircraft')
 def change_aircraft():
     if not g.flight.is_writable(g.current_user):
         abort(403)
@@ -388,7 +388,7 @@ def change_aircraft():
     return send_index()
 
 
-@flight_blueprint.route('/', methods=['POST'])
+@flight_blueprint.route('/flights/<flight_id>/', methods=['POST'])
 def update():
     if not g.flight.is_writable(g.current_user):
         return jsonify(), 403
@@ -484,7 +484,7 @@ def update():
     return jsonify()
 
 
-@flight_blueprint.route('/', methods=('DELETE',))
+@flight_blueprint.route('/flights/<flight_id>/', methods=('DELETE',))
 def delete():
     if not g.flight.is_writable(g.current_user):
         abort(403)
@@ -497,7 +497,7 @@ def delete():
     return jsonify()
 
 
-@flight_blueprint.route('/comments', methods=('POST',))
+@flight_blueprint.route('/flights/<flight_id>/comments', methods=('POST',))
 def add_comment():
     if not g.current_user:
         return jsonify(), 403

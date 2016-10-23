@@ -11,7 +11,7 @@ from .notifications import _filter_query, convert_event
 timeline_blueprint = Blueprint('timeline', 'skylines')
 
 
-@timeline_blueprint.route('/')
+@timeline_blueprint.route('/timeline/')
 @vary('accept')
 def index():
     if 'application/json' not in request.headers.get('Accept', ''):

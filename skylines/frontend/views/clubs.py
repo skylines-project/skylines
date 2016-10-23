@@ -9,7 +9,7 @@ from skylines.schemas import ClubSchema
 clubs_blueprint = Blueprint('clubs', 'skylines')
 
 
-@clubs_blueprint.route('/')
+@clubs_blueprint.route('/clubs/')
 @vary('accept')
 def index():
     if 'application/json' not in request.headers.get('Accept', ''):

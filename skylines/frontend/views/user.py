@@ -102,7 +102,7 @@ def mark_user_notifications_read(user):
     db.session.commit()
 
 
-@user_blueprint.route('/')
+@user_blueprint.route('/users/<user_id>/')
 @vary('accept')
 def index():
     if 'application/json' in request.headers.get('Accept', ''):
@@ -124,7 +124,7 @@ def index():
     return send_index()
 
 
-@user_blueprint.route('/followers')
+@user_blueprint.route('/users/<user_id>/followers')
 @vary('accept')
 def followers():
     if 'application/json' in request.headers.get('Accept', ''):
@@ -145,7 +145,7 @@ def followers():
     return send_index()
 
 
-@user_blueprint.route('/following')
+@user_blueprint.route('/users/<user_id>/following')
 @vary('accept')
 def following():
     if 'application/json' in request.headers.get('Accept', ''):
@@ -185,7 +185,7 @@ def add_current_user_follows(followers):
         follower['currentUserFollows'] = (follower['id'] in current_user_follows)
 
 
-@user_blueprint.route('/follow')
+@user_blueprint.route('/users/<user_id>/follow')
 @login_required
 def follow():
     Follower.follow(g.current_user, g.user)
@@ -194,7 +194,7 @@ def follow():
     return jsonify()
 
 
-@user_blueprint.route('/unfollow')
+@user_blueprint.route('/users/<user_id>/unfollow')
 @login_required
 def unfollow():
     Follower.unfollow(g.current_user, g.user)

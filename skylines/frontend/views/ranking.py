@@ -71,12 +71,12 @@ def _parse_year():
         return current_year
 
 
-@ranking_blueprint.route('/')
+@ranking_blueprint.route('/ranking/')
 def index():
     return send_index()
 
 
-@ranking_blueprint.route('/pilots')
+@ranking_blueprint.route('/ranking/pilots')
 @vary('accept')
 def pilots():
     data = _handle_request(User, 'pilot_id')
@@ -100,7 +100,7 @@ def pilots():
     return send_index()
 
 
-@ranking_blueprint.route('/clubs')
+@ranking_blueprint.route('/ranking/clubs')
 @vary('accept')
 def clubs():
     data = _handle_request(Club, 'club_id')
@@ -124,7 +124,7 @@ def clubs():
     return send_index()
 
 
-@ranking_blueprint.route('/airports')
+@ranking_blueprint.route('/ranking/airports')
 @vary('accept')
 def airports():
     data = _handle_request(Airport, 'takeoff_airport_id')

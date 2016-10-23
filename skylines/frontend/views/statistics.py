@@ -10,8 +10,8 @@ from skylines.model import User, Club, Flight, Airport
 statistics_blueprint = Blueprint('statistics', 'skylines')
 
 
-@statistics_blueprint.route('/')
-@statistics_blueprint.route('/<page>/<id>')
+@statistics_blueprint.route('/statistics/')
+@statistics_blueprint.route('/statistics/<page>/<id>')
 @vary('accept')
 def index(page=None, id=None):
     if 'application/json' not in request.headers.get('Accept', ''):

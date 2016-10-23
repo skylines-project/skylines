@@ -9,7 +9,7 @@ from skylines.schemas import TrackingFixSchema, AirportSchema
 tracking_blueprint = Blueprint('tracking', 'skylines')
 
 
-@tracking_blueprint.route('/')
+@tracking_blueprint.route('/tracking/')
 @vary('accept')
 def index():
     if 'application/json' not in request.headers.get('Accept', ''):
@@ -46,12 +46,12 @@ def index():
     return jsonify(friends=followers, tracks=tracks)
 
 
-@tracking_blueprint.route('/info')
+@tracking_blueprint.route('/tracking/info')
 def info():
     return send_index()
 
 
-@tracking_blueprint.route('/latest.json')
+@tracking_blueprint.route('/tracking/latest.json')
 @jsonp
 def latest():
     fixes = []

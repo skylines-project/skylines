@@ -22,7 +22,7 @@ def _add_user_id(endpoint, values):
         values.setdefault('club_id', g.club_id)
 
 
-@club_blueprint.route('/')
+@club_blueprint.route('/clubs/<club_id>/')
 @vary('accept')
 def index():
     if 'application/json' not in request.headers.get('Accept', ''):
@@ -34,17 +34,17 @@ def index():
     return jsonify(**json)
 
 
-@club_blueprint.route('/pilots')
+@club_blueprint.route('/clubs/<club_id>/pilots')
 def pilots():
     return send_index()
 
 
-@club_blueprint.route('/edit')
+@club_blueprint.route('/clubs/<club_id>/edit')
 def edit():
     return send_index()
 
 
-@club_blueprint.route('/', methods=['POST'])
+@club_blueprint.route('/clubs/<club_id>/', methods=['POST'])
 def edit_post():
     json = request.get_json()
     if json is None:

@@ -132,19 +132,19 @@ def _create_list(tab, kw, date=None, pilot=None, club=None, airport=None,
     return jsonify(**json)
 
 
-@flights_blueprint.route('/all')
+@flights_blueprint.route('/flights/all')
 @vary('accept')
 def all():
     return _create_list('all', request.args,
                         default_sorting_column='date', default_sorting_order='desc')
 
 
-@flights_blueprint.route('/')
+@flights_blueprint.route('/flights/')
 def index():
     return send_index()
 
 
-@flights_blueprint.route('/date/<date>')
+@flights_blueprint.route('/flights/date/<date>')
 @vary('accept')
 def date(date, latest=False):
     try:
@@ -163,7 +163,7 @@ def date(date, latest=False):
         default_sorting_column='score', default_sorting_order='desc')
 
 
-@flights_blueprint.route('/latest')
+@flights_blueprint.route('/flights/latest')
 @vary('accept')
 def latest():
     query = db.session \
@@ -179,7 +179,7 @@ def latest():
     return date(date_, latest=True)
 
 
-@flights_blueprint.route('/pilot/<int:id>')
+@flights_blueprint.route('/flights/pilot/<int:id>')
 @vary('accept')
 def pilot(id):
     pilot = get_requested_record(User, id)
@@ -190,7 +190,7 @@ def pilot(id):
                         default_sorting_column='date', default_sorting_order='desc')
 
 
-@flights_blueprint.route('/club/<int:id>')
+@flights_blueprint.route('/flights/club/<int:id>')
 @vary('accept')
 def club(id):
     club = get_requested_record(Club, id)
@@ -199,7 +199,7 @@ def club(id):
                         default_sorting_column='date', default_sorting_order='desc')
 
 
-@flights_blueprint.route('/airport/<int:id>')
+@flights_blueprint.route('/flights/airport/<int:id>')
 @vary('accept')
 def airport(id):
     airport = get_requested_record(Airport, id)
@@ -209,7 +209,7 @@ def airport(id):
                         default_sorting_column='date', default_sorting_order='desc')
 
 
-@flights_blueprint.route('/unassigned')
+@flights_blueprint.route('/flights/unassigned')
 @vary('accept')
 def unassigned():
     if not g.current_user:
@@ -222,12 +222,12 @@ def unassigned():
                         default_sorting_column='date', default_sorting_order='desc')
 
 
-@flights_blueprint.route('/pinned')
+@flights_blueprint.route('/flights/pinned')
 def pinned():
     return send_index()
 
 
-@flights_blueprint.route('/list/<ids>')
+@flights_blueprint.route('/flights/list/<ids>')
 @vary('accept')
 def list(ids):
     if not ids:

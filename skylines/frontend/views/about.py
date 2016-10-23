@@ -8,12 +8,12 @@ from skylines.frontend.ember import send_index
 about_blueprint = Blueprint('about', 'skylines')
 
 
-@about_blueprint.route('/')
+@about_blueprint.route('/about')
 def about():
     return send_index()
 
 
-@about_blueprint.route('/imprint')
+@about_blueprint.route('/about/imprint')
 @vary('accept')
 def imprint():
     if 'application/json' not in request.headers.get('Accept', ''):
@@ -26,7 +26,7 @@ def imprint():
     return jsonify(content=content)
 
 
-@about_blueprint.route('/team')
+@about_blueprint.route('/about/team')
 @vary('accept')
 def skylines_team():
     if 'application/json' not in request.headers.get('Accept', ''):
@@ -40,7 +40,7 @@ def skylines_team():
     return jsonify(content=content)
 
 
-@about_blueprint.route('/license')
+@about_blueprint.route('/about/license')
 @vary('accept')
 def license():
     if 'application/json' not in request.headers.get('Accept', ''):

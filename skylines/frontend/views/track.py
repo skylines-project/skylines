@@ -116,7 +116,7 @@ def _get_flight_path(pilot, threshold=0.001, last_update=None):
                 elevations=elevations, geoid=geoid_height)
 
 
-@track_blueprint.route('/')
+@track_blueprint.route('/tracking/<user_id>/')
 @vary('accept')
 def index():
     if 'application/json' in request.headers.get('Accept', ''):
@@ -157,7 +157,7 @@ def index():
     return send_index()
 
 
-@track_blueprint.route('/json')
+@track_blueprint.route('/tracking/<user_id>/json')
 def json():
     pilot = g.pilots[0]
     last_update = request.values.get('last_update', 0, type=int)
