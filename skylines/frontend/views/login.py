@@ -51,9 +51,6 @@ def register(app):
 
     @app.route('/session', methods=('PUT',))
     def create_session():
-        if g.current_user:
-            return jsonify(error='already-authenticated'), 422
-
         json = request.get_json()
         if json is None:
             return jsonify(error='invalid-request'), 400
@@ -65,6 +62,7 @@ def register(app):
 
         user = User.by_credentials(data['email_address'], data['password'])
         if not user or not login_user(user, remember=True):
+            logout_user()
             return jsonify(error='wrong-credentials'), 403
 
         return jsonify()
