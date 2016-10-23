@@ -2,17 +2,11 @@ from flask import Blueprint, request, jsonify
 from sqlalchemy.orm import subqueryload, contains_eager
 from sqlalchemy.sql.expression import or_
 
-from skylines.frontend.ember import send_index
 from skylines.model.event import Event
 from skylines.model import Flight
 from .notifications import _filter_query, convert_event
 
 timeline_blueprint = Blueprint('timeline', 'skylines')
-
-
-@timeline_blueprint.route('/timeline/')
-def html():
-    return send_index()
 
 
 @timeline_blueprint.route('/api/timeline')

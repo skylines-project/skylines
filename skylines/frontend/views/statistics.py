@@ -1,18 +1,11 @@
 from flask import Blueprint, abort, jsonify
 from sqlalchemy import func, distinct
 
-from skylines.frontend.ember import send_index
 from skylines.database import db
 from skylines.lib.dbutil import get_requested_record
 from skylines.model import User, Club, Flight, Airport
 
 statistics_blueprint = Blueprint('statistics', 'skylines')
-
-
-@statistics_blueprint.route('/statistics/')
-@statistics_blueprint.route('/statistics/<path:path>')
-def html(**kwargs):
-    return send_index()
 
 
 @statistics_blueprint.route('/api/statistics/')

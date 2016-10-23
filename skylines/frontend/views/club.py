@@ -1,7 +1,6 @@
 from flask import Blueprint, g, request, jsonify
 
 from skylines.database import db
-from skylines.frontend.ember import send_index
 from skylines.lib.dbutil import get_requested_record
 from skylines.model import Club
 from skylines.schemas import ClubSchema, ValidationError
@@ -19,12 +18,6 @@ def _pull_user_id(endpoint, values):
 def _add_user_id(endpoint, values):
     if hasattr(g, 'club_id'):
         values.setdefault('club_id', g.club_id)
-
-
-@club_blueprint.route('/clubs/<club_id>/')
-@club_blueprint.route('/clubs/<club_id>/<path:path>')
-def html(**kwargs):
-    return send_index()
 
 
 @club_blueprint.route('/api/clubs/<club_id>')

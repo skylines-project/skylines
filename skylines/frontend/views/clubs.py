@@ -1,17 +1,10 @@
 from flask import Blueprint, request, jsonify
 from sqlalchemy import func
 
-from skylines.frontend.ember import send_index
 from skylines.model import Club
 from skylines.schemas import ClubSchema
 
 clubs_blueprint = Blueprint('clubs', 'skylines')
-
-
-@clubs_blueprint.route('/clubs/')
-@clubs_blueprint.route('/clubs/<path:path>')
-def html(**kwargs):
-    return send_index()
 
 
 @clubs_blueprint.route('/api/clubs/')

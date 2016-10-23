@@ -2,7 +2,7 @@ from .errors import register as register_error_handlers
 from .i18n import register as register_i18n
 from .login import register as register_login
 
-from .about import about_blueprint, about
+from .about import about_blueprint
 from .airport import airport_blueprint
 from .aircraft_models import aircraft_models_blueprint
 from .assets import assets_blueprint
@@ -53,7 +53,3 @@ def register(app):
     app.register_blueprint(user_blueprint)
     app.register_blueprint(users_blueprint)
     app.register_blueprint(widgets_blueprint)
-
-    @app.route('/')
-    def index():
-        return about()

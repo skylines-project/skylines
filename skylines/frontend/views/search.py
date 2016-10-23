@@ -1,6 +1,5 @@
 from flask import Blueprint, request, jsonify
 
-from skylines.frontend.ember import send_index
 from skylines.model import User, Club, Airport
 from skylines.model.search import (
     combined_search_query, text_to_tokens, escape_tokens,
@@ -10,12 +9,6 @@ from skylines.model.search import (
 search_blueprint = Blueprint('search', 'skylines')
 
 MODELS = [User, Club, Airport]
-
-
-@search_blueprint.route('/search/')
-@search_blueprint.route('/search/<path:path>')
-def html(**kwargs):
-    return send_index()
 
 
 @search_blueprint.route('/api/search')

@@ -2,15 +2,7 @@ import os.path
 
 from flask import Blueprint, current_app, jsonify
 
-from skylines.frontend.ember import send_index
-
 about_blueprint = Blueprint('about', 'skylines')
-
-
-@about_blueprint.route('/about')
-@about_blueprint.route('/about/<path:path>')
-def about(**kwargs):
-    return send_index()
 
 
 @about_blueprint.route('/api/imprint')

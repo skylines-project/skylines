@@ -6,7 +6,6 @@ from flask.ext.login import login_required
 from sqlalchemy import func, and_
 from sqlalchemy.orm import contains_eager, subqueryload
 
-from skylines.frontend.ember import send_index
 from skylines.database import db
 from skylines.lib.dbutil import get_requested_record
 from skylines.model import (
@@ -102,12 +101,6 @@ def mark_user_notifications_read(user):
 
     Notification.mark_all_read(g.current_user, filter_func=add_user_filter)
     db.session.commit()
-
-
-@user_blueprint.route('/users/<user_id>/')
-@user_blueprint.route('/users/<user_id>/<path:path>')
-def html(**kwargs):
-    return send_index()
 
 
 @user_blueprint.route('/api/users/<user_id>')

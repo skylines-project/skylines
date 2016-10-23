@@ -2,7 +2,6 @@ from flask import Blueprint, request, g, jsonify
 from sqlalchemy.orm import subqueryload, contains_eager
 from sqlalchemy.sql.expression import or_
 
-from skylines.frontend.ember import send_index
 from skylines.database import db
 from skylines.model.event import Event, Notification, Flight
 from skylines.lib.decorators import login_required
@@ -28,12 +27,6 @@ def _filter_query(query, args):
         query = query.filter(Event.actor_id == user)
 
     return query
-
-
-@notifications_blueprint.route('/notifications/')
-@notifications_blueprint.route('/notifications/<path:path>')
-def html(**kwargs):
-    return send_index()
 
 
 @notifications_blueprint.route('/api/notifications')

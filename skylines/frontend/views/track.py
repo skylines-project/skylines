@@ -4,7 +4,6 @@ from math import log
 from flask import Blueprint, request, abort, jsonify, g
 from sqlalchemy.sql.expression import and_
 
-from skylines.frontend.ember import send_index
 from skylines.lib.dbutil import get_requested_record_list
 from skylines.lib.helpers import color
 from skylines.lib.xcsoar_ import FlightPathFix
@@ -116,12 +115,6 @@ def _get_flight_path(pilot, threshold=0.001, last_update=None):
     return dict(points=points,
                 barogram_t=barogram_t, barogram_h=barogram_h, enl=enl,
                 elevations=elevations, geoid=geoid_height)
-
-
-@track_blueprint.route('/tracking/<user_id>/')
-@track_blueprint.route('/tracking/<user_id>/<path:path>')
-def html(**kwargs):
-    return send_index()
 
 
 # Use `live` alias here since `/api/tracking/*` is filtered by the "EasyPrivacy" adblocker list...

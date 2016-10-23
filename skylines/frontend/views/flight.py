@@ -8,7 +8,6 @@ from sqlalchemy.sql.expression import func
 from geoalchemy2.shape import to_shape
 from datetime import timedelta
 
-from skylines.frontend.ember import send_index
 from skylines.database import db
 from skylines.lib import files
 from skylines.lib.dbutil import get_requested_record_list
@@ -56,9 +55,6 @@ def _patch_query(q):
 
 @flight_blueprint.before_request
 def _query_flights():
-    if request.endpoint == 'flight.html':
-        return
-
     flights = get_requested_record_list(
         Flight, g.flight_id, patch_query=_patch_query)
 
@@ -172,12 +168,6 @@ class NearFlightSchema(Schema):
                                                'model', 'registration', 'competitionId', 'igcFile'))
 
     times = fields.Nested(MeetingTimeSchema, many=True)
-
-
-@flight_blueprint.route('/flights/<flight_id>/')
-@flight_blueprint.route('/flights/<flight_id>/<path:path>')
-def html(**kwargs):
-    return send_index()
 
 
 @flight_blueprint.route('/api/flights/<flight_id>/')

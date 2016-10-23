@@ -1,17 +1,10 @@
 from flask import Blueprint, current_app, jsonify, g
 
-from skylines.frontend.ember import send_index
 from skylines.lib.decorators import jsonp
 from skylines.model import TrackingFix, Airport, Follower
 from skylines.schemas import TrackingFixSchema, AirportSchema
 
 tracking_blueprint = Blueprint('tracking', 'skylines')
-
-
-@tracking_blueprint.route('/tracking/')
-@tracking_blueprint.route('/tracking/<path:path>')
-def html(**kwargs):
-    return send_index()
 
 
 @tracking_blueprint.route('/api/tracking')

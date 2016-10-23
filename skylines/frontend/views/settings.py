@@ -2,7 +2,6 @@ from flask import Blueprint, request, redirect, url_for, abort, g, jsonify
 
 from sqlalchemy.sql.expression import and_, or_
 
-from skylines.frontend.ember import send_index
 from skylines.database import db
 from skylines.lib.dbutil import get_requested_record
 from skylines.model import User, Club, Flight, IGCFile
@@ -38,12 +37,6 @@ def handle_user_param():
 
     if not g.user.is_writable(g.current_user):
         abort(403)
-
-
-@settings_blueprint.route('/settings/')
-@settings_blueprint.route('/settings/<path:path>')
-def html(**kwargs):
-    return send_index()
 
 
 @settings_blueprint.route('/api/settings/')

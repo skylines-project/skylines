@@ -9,19 +9,12 @@ from werkzeug.exceptions import ServiceUnavailable
 from sqlalchemy import func
 from sqlalchemy.orm import joinedload
 
-from skylines.frontend.ember import send_index
 from skylines.database import db
 from skylines.model import User
 from skylines.model.event import create_new_user_event
 from skylines.schemas import UserSchema, CurrentUserSchema, ValidationError
 
 users_blueprint = Blueprint('users', 'skylines')
-
-
-@users_blueprint.route('/users/')
-@users_blueprint.route('/users/<path:path>')
-def html(**kwargs):
-    return send_index()
 
 
 @users_blueprint.route('/api/users')

@@ -5,7 +5,6 @@ from sqlalchemy import func
 from sqlalchemy.sql.expression import desc, over
 from sqlalchemy.orm import eagerload
 
-from skylines.frontend.ember import send_index
 from skylines.database import db
 from skylines.model import User, Club, Flight, Airport
 from skylines.lib.table_tools import Pager, Sorter
@@ -68,12 +67,6 @@ def _parse_year():
     except:
         current_year = date.today().year
         return current_year
-
-
-@ranking_blueprint.route('/ranking/')
-@ranking_blueprint.route('/ranking/<path:path>')
-def html(**kwargs):
-    return send_index()
 
 
 @ranking_blueprint.route('/api/ranking/pilots')

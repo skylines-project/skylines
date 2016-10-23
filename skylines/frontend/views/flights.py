@@ -7,7 +7,6 @@ from sqlalchemy.sql.expression import or_, and_
 from sqlalchemy.orm import joinedload, contains_eager
 from sqlalchemy.orm.util import aliased
 
-from skylines.frontend.ember import send_index
 from skylines.database import db
 from skylines.lib.table_tools import Pager, Sorter
 from skylines.lib.dbutil import get_requested_record
@@ -126,12 +125,6 @@ def _create_list(tab, kw, date=None, pilot=None, club=None, airport=None,
         json['airport'] = airport_schema.dump(airport).data
 
     return jsonify(**json)
-
-
-@flights_blueprint.route('/flights/')
-@flights_blueprint.route('/flights/<path:path>')
-def html(**kwargs):
-    return send_index()
 
 
 @flights_blueprint.route('/api/flights/all')
