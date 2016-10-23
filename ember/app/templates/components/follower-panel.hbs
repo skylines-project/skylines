@@ -14,20 +14,20 @@
 
     {{#if account.user}}
       {{#if (eq follower.id account.user.id)}}
-        <a class="btn btn-default disabled form-control">
+        <button class="btn btn-default form-control" disabled>
           <i class="icon-ban-circle icon-fixed-width"></i>
           {{t "this-is-you"}}
-        </a>
+        </button>
       {{else if follower.currentUserFollows}}
-        <a href="/users/{{ follower.id }}/unfollow" class="btn btn-default form-control">
+        <button class="btn btn-default form-control" disabled={{unfollowTask.isRunning}} {{action (perform unfollowTask)}}>
           <i class="icon-minus icon-fixed-width"></i>
           {{t "unfollow"}}
-        </a>
+        </button>
       {{else}}
-        <a href="/users/{{ follower.id }}/follow" class="btn btn-default form-control">
+        <button class="btn btn-default form-control" disabled={{followTask.isRunning}} {{action (perform followTask)}}>
           <i class="icon-plus icon-fixed-width"></i>
           {{t "follow"}}
-        </a>
+        </button>
       {{/if}}
     {{/if}}
   </div>
