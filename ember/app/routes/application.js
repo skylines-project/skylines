@@ -1,14 +1,15 @@
 import Ember from 'ember';
-import { isUnauthorizedError } from 'ember-ajax/errors';
 import RSVP from 'rsvp';
+import ApplicationRouteMixin from 'ember-simple-auth/mixins/application-route-mixin';
 
 import _availableLocales from '../utils/locales';
 
-export default Ember.Route.extend({
+export default Ember.Route.extend(ApplicationRouteMixin, {
   account: Ember.inject.service(),
   ajax: Ember.inject.service(),
   cookies: Ember.inject.service(),
   intl: Ember.inject.service(),
+  session: Ember.inject.service(),
   units: Ember.inject.service(),
 
   beforeModel() {
@@ -32,31 +33,14 @@ export default Ember.Route.extend({
     return this.get('ajax').request('/locale', { data }).then(it => it.locale || 'en');
   },
 
-  model() {
-    return this.get('ajax').request('/settings/').catch(error => {
-      if (isUnauthorizedError(error)) {
-        return {};
-      } else {
-        throw error;
-      }
-    });
-  },
-
-  setupController(controller, model) {
-    if (model.id) {
-      this.get('account').setProperties({
-        user: {
-          id: model.id,
-          name: model.name,
-        },
-        club: model.club,
-      });
-
+  setupController() {
+    let settings = this.get('session.data.authenticated.settings');
+    if (settings) {
       this.get('units').setProperties({
-        altitudeUnitIndex: model.altitudeUnit,
-        distanceUnitIndex: model.distanceUnit,
-        liftUnitIndex: model.liftUnit,
-        speedUnitIndex: model.speedUnit,
+        altitudeUnitIndex: settings.altitudeUnit,
+        distanceUnitIndex: settings.distanceUnit,
+        liftUnitIndex: settings.liftUnit,
+        speedUnitIndex: settings.speedUnit,
       });
     }
   },
@@ -67,6 +51,15 @@ export default Ember.Route.extend({
     let user = this.get('account.user');
     if (user) {
       this.get('raven').callRaven('setUserContext', user);
+    }
+  },
+
+  sessionAuthenticated() {
+    const attemptedTransition = this.get('session.attemptedTransition');
+
+    if (attemptedTransition) {
+      attemptedTransition.retry();
+      this.set('session.attemptedTransition', null);
     }
   },
 });

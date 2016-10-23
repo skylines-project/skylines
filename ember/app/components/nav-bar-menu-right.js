@@ -4,6 +4,7 @@ import availableLocales from '../utils/locales';
 export default Ember.Component.extend({
   account: Ember.inject.service(),
   intl: Ember.inject.service(),
+  session: Ember.inject.service(),
 
   tagName: 'ul',
   classNames: ['nav', 'navbar-nav', 'navbar-right'],

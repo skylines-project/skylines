@@ -3,12 +3,11 @@ import { task } from 'ember-concurrency';
 
 export default Ember.Component.extend({
   account: Ember.inject.service(),
-  ajax: Ember.inject.service(),
+  session: Ember.inject.service(),
 
   tagName: '',
 
   logoutTask: task(function * () {
-    yield this.get('ajax').request('session', { method: 'DELETE' });
-    document.location.reload();
+    yield this.get('session').invalidate();
   }).drop(),
 });

@@ -1,9 +1,10 @@
 import Ember from 'ember';
 import { UnauthorizedError } from 'ember-ajax/errors';
+import AuthenticatedRouteMixin from 'ember-simple-auth/mixins/authenticated-route-mixin';
 
 const PER_PAGE = 20;
 
-export default Ember.Route.extend({
+export default Ember.Route.extend(AuthenticatedRouteMixin, {
   ajax: Ember.inject.service(),
 
   queryParams: {

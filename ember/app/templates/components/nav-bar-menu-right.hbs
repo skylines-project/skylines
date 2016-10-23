@@ -6,7 +6,7 @@
   {{/link-to}}
 {{/active-link}}
 
-{{#if account.user}}
+{{#if session.isAuthenticated}}
   {{#active-link}}
     {{#link-to "notifications" title=(t "notifications")}}
       <span class="visible-xs">{{t "notifications"}}&nbsp;&nbsp;</span>

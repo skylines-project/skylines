@@ -159,7 +159,6 @@ def csrf():
 
 
 @upload_blueprint.route('/')
-@login_required(l_("You have to login to upload flights."))
 def index():
     return send_index()
 
