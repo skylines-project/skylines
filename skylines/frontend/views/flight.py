@@ -1,7 +1,7 @@
 import math
 from datetime import datetime
 
-from flask import Blueprint, request, redirect, url_for, abort, current_app, jsonify, g, make_response
+from flask import Blueprint, request, url_for, abort, current_app, jsonify, g, make_response
 
 from sqlalchemy.orm import undefer_group, contains_eager
 from sqlalchemy.sql.expression import func
@@ -497,22 +497,27 @@ def delete():
     return jsonify()
 
 
-@flight_blueprint.route('/add_comment', methods=['POST'])
+@flight_blueprint.route('/comments', methods=('POST',))
 def add_comment():
     if not g.current_user:
-        return redirect(url_for('.index'))
+        return jsonify(), 403
 
-    text = request.form['text'].strip()
-    if not text:
-        return redirect(url_for('.index'))
+    json = request.get_json()
+    if json is None:
+        return jsonify(error='invalid-request'), 400
+
+    try:
+        data = FlightCommentSchema().load(json).data
+    except ValidationError, e:
+        return jsonify(error='validation-failed', fields=e.messages), 422
 
     comment = FlightComment()
     comment.user = g.current_user
     comment.flight = g.flight
-    comment.text = text
+    comment.text = data['text']
 
     create_flight_comment_notifications(comment)
 
     db.session.commit()
 
-    return redirect(url_for('.index'))
+    return jsonify()

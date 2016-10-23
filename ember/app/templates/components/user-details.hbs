@@ -50,9 +50,9 @@
 
   {{#if (and account.user (not-eq account.user.id user.id))}}
     {{#if user.followed}}
-      <a href="/users/{{user.id}}/unfollow" class="btn btn-default">{{t "unfollow"}}</a>
+      <button class="btn btn-default" disabled={{unfollowTask.isRunning}} {{action (perform unfollowTask)}}>{{t "unfollow"}}</button>
     {{else}}
-      <a href="/users/{{user.id}}/follow" class="btn btn-default">{{t "follow"}}</a>
+      <button class="btn btn-default" disabled={{followTask.isRunning}} {{action (perform followTask)}}>{{t "follow"}}</button>
     {{/if}}
   {{/if}}
 
