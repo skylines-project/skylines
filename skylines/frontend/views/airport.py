@@ -6,7 +6,7 @@ from skylines.model import Airport
 airport_blueprint = Blueprint('airport', 'skylines')
 
 
-@airport_blueprint.route('/airports/<int:airport_id>')
+@airport_blueprint.route('/api/airports/<int:airport_id>')
 def index(airport_id):
     airport = get_requested_record(Airport, airport_id)
 
