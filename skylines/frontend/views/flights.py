@@ -11,7 +11,6 @@ from skylines.frontend.ember import send_index
 from skylines.database import db
 from skylines.lib.table_tools import Pager, Sorter
 from skylines.lib.dbutil import get_requested_record
-from skylines.lib.vary import vary
 from skylines.model import (
     User, Club, Flight, IGCFile, AircraftModel,
     Airport, FlightComment,
@@ -36,9 +35,6 @@ def mark_flight_notifications_read(pilot):
 def _create_list(tab, kw, date=None, pilot=None, club=None, airport=None,
                  pinned=None, filter=None,
                  default_sorting_column='score', default_sorting_order='desc'):
-
-    if 'application/json' not in request.headers.get('Accept', ''):
-        return send_index()
 
     pilot_alias = aliased(User, name='pilot')
     owner_alias = aliased(User, name='owner')
@@ -132,20 +128,19 @@ def _create_list(tab, kw, date=None, pilot=None, club=None, airport=None,
     return jsonify(**json)
 
 
-@flights_blueprint.route('/flights/all')
-@vary('accept')
+@flights_blueprint.route('/flights/')
+@flights_blueprint.route('/flights/<path:path>')
+def html(**kwargs):
+    return send_index()
+
+
+@flights_blueprint.route('/api/flights/all')
 def all():
     return _create_list('all', request.args,
                         default_sorting_column='date', default_sorting_order='desc')
 
 
-@flights_blueprint.route('/flights/')
-def index():
-    return send_index()
-
-
-@flights_blueprint.route('/flights/date/<date>')
-@vary('accept')
+@flights_blueprint.route('/api/flights/date/<date>')
 def date(date, latest=False):
     try:
         if isinstance(date, (str, unicode)):
@@ -163,8 +158,7 @@ def date(date, latest=False):
         default_sorting_column='score', default_sorting_order='desc')
 
 
-@flights_blueprint.route('/flights/latest')
-@vary('accept')
+@flights_blueprint.route('/api/flights/latest')
 def latest():
     query = db.session \
         .query(func.max(Flight.date_local).label('date')) \
@@ -179,8 +173,7 @@ def latest():
     return date(date_, latest=True)
 
 
-@flights_blueprint.route('/flights/pilot/<int:id>')
-@vary('accept')
+@flights_blueprint.route('/api/flights/pilot/<int:id>')
 def pilot(id):
     pilot = get_requested_record(User, id)
 
@@ -190,8 +183,7 @@ def pilot(id):
                         default_sorting_column='date', default_sorting_order='desc')
 
 
-@flights_blueprint.route('/flights/club/<int:id>')
-@vary('accept')
+@flights_blueprint.route('/api/flights/club/<int:id>')
 def club(id):
     club = get_requested_record(Club, id)
 
@@ -199,8 +191,7 @@ def club(id):
                         default_sorting_column='date', default_sorting_order='desc')
 
 
-@flights_blueprint.route('/flights/airport/<int:id>')
-@vary('accept')
+@flights_blueprint.route('/api/flights/airport/<int:id>')
 def airport(id):
     airport = get_requested_record(Airport, id)
 
@@ -209,8 +200,7 @@ def airport(id):
                         default_sorting_column='date', default_sorting_order='desc')
 
 
-@flights_blueprint.route('/flights/unassigned')
-@vary('accept')
+@flights_blueprint.route('/api/flights/unassigned')
 def unassigned():
     if not g.current_user:
         abort(404)
@@ -222,13 +212,7 @@ def unassigned():
                         default_sorting_column='date', default_sorting_order='desc')
 
 
-@flights_blueprint.route('/flights/pinned')
-def pinned():
-    return send_index()
-
-
-@flights_blueprint.route('/flights/list/<ids>')
-@vary('accept')
+@flights_blueprint.route('/api/flights/list/<ids>')
 def list(ids):
     if not ids:
         return redirect(url_for('.index'))
