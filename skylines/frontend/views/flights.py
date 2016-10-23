@@ -145,12 +145,6 @@ def index():
     return redirect(url_for('.latest'))
 
 
-@flights_blueprint.route('/today')
-def today():
-    """ Fallback for old /flights/today url """
-    return redirect(url_for('.latest'))
-
-
 @flights_blueprint.route('/date/<date>.json')
 @flights_blueprint.route('/date/<date>')
 @vary('accept')
