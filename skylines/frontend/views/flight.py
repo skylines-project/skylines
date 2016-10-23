@@ -516,16 +516,3 @@ def add_comment():
     db.session.commit()
 
     return redirect(url_for('.index'))
-
-
-@flight_blueprint.route('/analysis')
-def analysis():
-    """Hidden method that restarts flight analysis."""
-
-    if not g.current_user or not g.current_user.is_manager():
-        abort(403)
-
-    analyse_flight(g.flight)
-    db.session.commit()
-
-    return redirect(url_for('.index'))

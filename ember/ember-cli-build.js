@@ -94,5 +94,9 @@ module.exports = function(defaults) {
     production: 'bower_components/sidebar-v2/js/jquery-sidebar.min.js',
   });
 
+  // Monkey-patch the `findMissingKeys()` method
+  var TranslationReducer = require('ember-intl/lib/broccoli/translation-reducer');
+  TranslationReducer.prototype.findMissingKeys = function() {};
+
   return app.toTree();
 };

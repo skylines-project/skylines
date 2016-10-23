@@ -3,8 +3,6 @@
 import Ember from 'ember';
 import ol from 'openlayers';
 
-import config from '../config/environment';
-
 const MapClickHandler = Ember.Object.extend({
   /**
    * The OpenLayers.Geometry object of the circle.
@@ -244,7 +242,7 @@ const MapClickHandler = Ember.Object.extend({
    * @param {Number} lat Latitude.
    */
   getLocationInfo(lon, lat) {
-    let req = $.ajax(`${config.SKYLINES_API_URL}/mapitems?lon=${lon}&lat=${lat}`);
+    let req = $.ajax(`/api/mapitems?lon=${lon}&lat=${lat}`);
     req.done(data => this.showLocationData(data));
     req.fail(() => this.showLocationData(null));
   },

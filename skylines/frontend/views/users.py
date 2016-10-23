@@ -2,7 +2,7 @@ from email.mime.text import MIMEText
 from email.utils import formatdate
 import smtplib
 
-from flask import Blueprint, request, redirect, url_for, abort, current_app, g, jsonify
+from flask import Blueprint, request, current_app, g, jsonify
 from flask.ext.babel import _
 from werkzeug.exceptions import ServiceUnavailable
 
@@ -169,19 +169,3 @@ def check_email():
         result = 'unavailable'
 
     return jsonify(result=result)
-
-
-@users_blueprint.route('/generate_keys')
-def generate_keys():
-    """Hidden method that generates missing tracking keys."""
-
-    if not g.current_user or not g.current_user.is_manager():
-        abort(403)
-
-    for user in User.query():
-        if user.tracking_key is None:
-            user.generate_tracking_key()
-
-    db.session.commit()
-
-    return redirect(url_for('.index'))
