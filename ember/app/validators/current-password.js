@@ -11,7 +11,7 @@ export default BaseValidator.extend({
     }
 
     let json = { password };
-    return this.get('ajax').request('/settings/password/check', { method: 'POST', json })
+    return this.get('ajax').request('/api/settings/password/check', { method: 'POST', json })
       .then(({ result }) => (result ? true : this.get('intl').t(options.messageKey)));
   },
 });
