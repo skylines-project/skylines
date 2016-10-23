@@ -3,7 +3,6 @@ from flask import Blueprint, g, request, jsonify
 from skylines.database import db
 from skylines.frontend.ember import send_index
 from skylines.lib.dbutil import get_requested_record
-from skylines.lib.vary import vary
 from skylines.model import Club
 from skylines.schemas import ClubSchema, ValidationError
 
@@ -23,29 +22,21 @@ def _add_user_id(endpoint, values):
 
 
 @club_blueprint.route('/clubs/<club_id>/')
-@vary('accept')
-def index():
-    if 'application/json' not in request.headers.get('Accept', ''):
-        return send_index()
+@club_blueprint.route('/clubs/<club_id>/<path:path>')
+def html(**kwargs):
+    return send_index()
 
+
+@club_blueprint.route('/api/clubs/<club_id>')
+def read():
     json = ClubSchema().dump(g.club).data
     json['isWritable'] = g.club.is_writable(g.current_user)
 
     return jsonify(**json)
 
 
-@club_blueprint.route('/clubs/<club_id>/pilots')
-def pilots():
-    return send_index()
-
-
-@club_blueprint.route('/clubs/<club_id>/edit')
-def edit():
-    return send_index()
-
-
-@club_blueprint.route('/clubs/<club_id>/', methods=['POST'])
-def edit_post():
+@club_blueprint.route('/api/clubs/<club_id>', methods=['POST'])
+def update():
     json = request.get_json()
     if json is None:
         return jsonify(error='invalid-request'), 400
