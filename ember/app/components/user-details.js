@@ -11,13 +11,13 @@ export default Ember.Component.extend({
 
   followTask: task(function * () {
     let userId = this.get('user.id');
-    yield this.get('ajax').request(`/users/${userId}/follow`);
+    yield this.get('ajax').request(`/api/users/${userId}/follow`);
     this.set('user.followed', true);
   }).drop(),
 
   unfollowTask: task(function * () {
     let userId = this.get('user.id');
-    yield this.get('ajax').request(`/users/${userId}/unfollow`);
+    yield this.get('ajax').request(`/api/users/${userId}/unfollow`);
     this.set('user.followed', false);
   }).drop(),
 });

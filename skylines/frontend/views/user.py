@@ -9,7 +9,6 @@ from sqlalchemy.orm import contains_eager, subqueryload
 from skylines.frontend.ember import send_index
 from skylines.database import db
 from skylines.lib.dbutil import get_requested_record
-from skylines.lib.vary import vary
 from skylines.model import (
     User, Flight, Follower, Location, Notification, Event
 )
@@ -21,6 +20,9 @@ user_blueprint = Blueprint('user', 'skylines')
 
 @user_blueprint.url_value_preprocessor
 def _pull_user_id(endpoint, values):
+    if request.endpoint == 'user.html':
+        return
+
     g.user_id = values.pop('user_id')
     g.user = get_requested_record(User, g.user_id)
 
@@ -103,68 +105,62 @@ def mark_user_notifications_read(user):
 
 
 @user_blueprint.route('/users/<user_id>/')
-@vary('accept')
-def index():
-    if 'application/json' in request.headers.get('Accept', ''):
-        user_schema = CurrentUserSchema() if g.user == g.current_user else UserSchema()
-        user = user_schema.dump(g.user).data
+@user_blueprint.route('/users/<user_id>/<path:path>')
+def html(**kwargs):
+    return send_index()
 
-        if g.current_user:
-            user['followed'] = g.current_user.follows(g.user)
 
-        if 'extended' in request.args:
-            user['distanceFlights'] = _distance_flights(g.user)
-            user['stats'] = _quick_stats()
-            user['takeoffLocations'] = _get_takeoff_locations()
+@user_blueprint.route('/api/users/<user_id>')
+def read():
+    user_schema = CurrentUserSchema() if g.user == g.current_user else UserSchema()
+    user = user_schema.dump(g.user).data
 
-        return jsonify(**user)
+    if g.current_user:
+        user['followed'] = g.current_user.follows(g.user)
+
+    if 'extended' in request.args:
+        user['distanceFlights'] = _distance_flights(g.user)
+        user['stats'] = _quick_stats()
+        user['takeoffLocations'] = _get_takeoff_locations()
 
     mark_user_notifications_read(g.user)
 
-    return send_index()
+    return jsonify(**user)
 
 
-@user_blueprint.route('/users/<user_id>/followers')
-@vary('accept')
+@user_blueprint.route('/api/users/<user_id>/followers')
 def followers():
-    if 'application/json' in request.headers.get('Accept', ''):
-        # Query list of pilots that are following the selected user
-        query = Follower.query(destination=g.user) \
-            .join('source') \
-            .options(contains_eager('source')) \
-            .options(subqueryload('source.club')) \
-            .order_by(User.name)
+    # Query list of pilots that are following the selected user
+    query = Follower.query(destination=g.user) \
+        .join('source') \
+        .options(contains_eager('source')) \
+        .options(subqueryload('source.club')) \
+        .order_by(User.name)
 
-        user_schema = UserSchema(only=('id', 'name', 'club'))
-        followers = user_schema.dump([follower.source for follower in query], many=True).data
+    user_schema = UserSchema(only=('id', 'name', 'club'))
+    followers = user_schema.dump([follower.source for follower in query], many=True).data
 
-        add_current_user_follows(followers)
+    add_current_user_follows(followers)
 
-        return jsonify(followers=followers)
-
-    return send_index()
+    return jsonify(followers=followers)
 
 
-@user_blueprint.route('/users/<user_id>/following')
-@vary('accept')
+@user_blueprint.route('/api/users/<user_id>/following')
 def following():
-    if 'application/json' in request.headers.get('Accept', ''):
-        # Query list of pilots that are following the selected user
-        query = Follower.query(source=g.user) \
-            .join('destination') \
-            .options(contains_eager('destination')) \
-            .options(subqueryload('destination.club')) \
-            .order_by(User.name)
+    # Query list of pilots that are following the selected user
+    query = Follower.query(source=g.user) \
+        .join('destination') \
+        .options(contains_eager('destination')) \
+        .options(subqueryload('destination.club')) \
+        .order_by(User.name)
 
-        user_schema = UserSchema(only=('id', 'name', 'club'))
+    user_schema = UserSchema(only=('id', 'name', 'club'))
 
-        following = user_schema.dump([follower.destination for follower in query], many=True).data
+    following = user_schema.dump([follower.destination for follower in query], many=True).data
 
-        add_current_user_follows(following)
+    add_current_user_follows(following)
 
-        return jsonify(following=following)
-
-    return send_index()
+    return jsonify(following=following)
 
 
 def add_current_user_follows(followers):
@@ -185,7 +181,7 @@ def add_current_user_follows(followers):
         follower['currentUserFollows'] = (follower['id'] in current_user_follows)
 
 
-@user_blueprint.route('/users/<user_id>/follow')
+@user_blueprint.route('/api/users/<user_id>/follow')
 @login_required
 def follow():
     Follower.follow(g.current_user, g.user)
@@ -194,7 +190,7 @@ def follow():
     return jsonify()
 
 
-@user_blueprint.route('/users/<user_id>/unfollow')
+@user_blueprint.route('/api/users/<user_id>/unfollow')
 @login_required
 def unfollow():
     Follower.unfollow(g.current_user, g.user)
