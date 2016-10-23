@@ -1,6 +1,6 @@
 from datetime import date
 
-from flask import Blueprint, request, redirect, url_for, jsonify, g
+from flask import Blueprint, request, jsonify, g
 from sqlalchemy import func
 from sqlalchemy.sql.expression import desc, over
 from sqlalchemy.orm import eagerload
@@ -73,7 +73,7 @@ def _parse_year():
 
 @ranking_blueprint.route('/')
 def index():
-    return redirect(url_for('ranking.clubs'))
+    return send_index()
 
 
 @ranking_blueprint.route('/pilots')
