@@ -190,14 +190,6 @@ def pilot(id):
                         default_sorting_column='date', default_sorting_order='desc')
 
 
-@flights_blueprint.route('/my')
-def my():
-    if not g.current_user:
-        abort(404)
-
-    return redirect(url_for('.pilot', id=g.current_user.id))
-
-
 @flights_blueprint.route('/club/<int:id>')
 @vary('accept')
 def club(id):
@@ -205,14 +197,6 @@ def club(id):
 
     return _create_list('club', request.args, club=club,
                         default_sorting_column='date', default_sorting_order='desc')
-
-
-@flights_blueprint.route('/my_club')
-def my_club():
-    if not g.current_user:
-        abort(404)
-
-    return redirect(url_for('.club', id=g.current_user.club.id))
 
 
 @flights_blueprint.route('/airport/<int:id>')
