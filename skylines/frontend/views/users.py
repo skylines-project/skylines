@@ -13,18 +13,19 @@ from skylines.frontend.ember import send_index
 from skylines.database import db
 from skylines.model import User
 from skylines.model.event import create_new_user_event
-from skylines.lib.vary import vary
 from skylines.schemas import UserSchema, CurrentUserSchema, ValidationError
 
 users_blueprint = Blueprint('users', 'skylines')
 
 
 @users_blueprint.route('/users/')
-@vary('accept')
-def index():
-    if 'application/json' not in request.headers.get('Accept', ''):
-        return send_index()
+@users_blueprint.route('/users/<path:path>')
+def html(**kwargs):
+    return send_index()
 
+
+@users_blueprint.route('/api/users')
+def list():
     users = User.query() \
         .options(joinedload(User.club)) \
         .order_by(func.lower(User.name))
@@ -39,12 +40,7 @@ def index():
     return jsonify(users=UserSchema(only=fields).dump(users, many=True).data)
 
 
-@users_blueprint.route('/users/new')
-def new():
-    return send_index()
-
-
-@users_blueprint.route('/users/new', methods=['POST'])
+@users_blueprint.route('/api/users', methods=['POST'])
 def new_post():
     json = request.get_json()
     if json is None:
@@ -67,12 +63,7 @@ def new_post():
     return jsonify(user=UserSchema().dump(user).data)
 
 
-@users_blueprint.route('/users/recover')
-def recover():
-    return send_index()
-
-
-@users_blueprint.route('/users/recover', methods=['POST'])
+@users_blueprint.route('/api/users/recover', methods=['POST'])
 def recover_post():
     json = request.get_json()
     if json is None:
@@ -154,7 +145,7 @@ def recover_step2_post(json):
     return jsonify()
 
 
-@users_blueprint.route('/users/check-email', methods=['POST'])
+@users_blueprint.route('/api/users/check-email', methods=['POST'])
 def check_email():
     json = request.get_json()
     if not json:

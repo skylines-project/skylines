@@ -32,7 +32,7 @@ export default Ember.Component.extend(Validations, {
     let json = this.getProperties('password', 'recoveryKey');
 
     try {
-      yield this.get('ajax').request('/users/recover', { method: 'POST', json });
+      yield this.get('ajax').request('/api/users/recover', { method: 'POST', json });
       this.set('error', null);
       this.set('success', true);
     } catch (error) {

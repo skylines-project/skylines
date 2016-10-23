@@ -14,7 +14,7 @@ export default Ember.Route.extend(AuthenticatedRouteMixin, {
     let clubId = this.get('account.club.id');
     let clubMembers = [];
     if (clubId) {
-      clubMembers = ajax.request(`/users?club=${clubId}`).then(it => it.users.filter(user => user.id !== accountId));
+      clubMembers = ajax.request(`/api/users?club=${clubId}`).then(it => it.users.filter(user => user.id !== accountId));
     }
 
     return Ember.RSVP.hash({ clubMembers, csrfToken });
