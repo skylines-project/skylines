@@ -3,7 +3,6 @@ from sqlalchemy import func
 
 from skylines.frontend.ember import send_index
 from skylines.model import Club
-from skylines.lib.vary import vary
 from skylines.schemas import ClubSchema
 
 clubs_blueprint = Blueprint('clubs', 'skylines')
