@@ -9,7 +9,6 @@ from skylines.frontend.ember import send_index
 from skylines.database import db
 from skylines.model import User, Club, Flight, Airport
 from skylines.lib.table_tools import Pager, Sorter
-from skylines.lib.vary import vary
 from skylines.schemas import AirportSchema, ClubSchema, UserSchema
 
 ranking_blueprint = Blueprint('ranking', 'skylines')
@@ -72,77 +71,66 @@ def _parse_year():
 
 
 @ranking_blueprint.route('/ranking/')
-def index():
+@ranking_blueprint.route('/ranking/<path:path>')
+def html(**kwargs):
     return send_index()
 
 
-@ranking_blueprint.route('/ranking/pilots')
-@vary('accept')
+@ranking_blueprint.route('/api/ranking/pilots')
 def pilots():
     data = _handle_request(User, 'pilot_id')
 
-    if 'application/json' in request.headers.get('Accept', ''):
-        user_schema = UserSchema(only=('id', 'name', 'club'))
+    user_schema = UserSchema(only=('id', 'name', 'club'))
 
-        json = []
-        for pilot, count, total, rank in data['result']:
-            row = {
-                'rank': rank,
-                'flights': count,
-                'points': total,
-                'user': user_schema.dump(pilot).data,
-            }
+    json = []
+    for pilot, count, total, rank in data['result']:
+        row = {
+            'rank': rank,
+            'flights': count,
+            'points': total,
+            'user': user_schema.dump(pilot).data,
+        }
 
-            json.append(row)
+        json.append(row)
 
-        return jsonify(ranking=json, total=g.paginators['result'].count)
-
-    return send_index()
+    return jsonify(ranking=json, total=g.paginators['result'].count)
 
 
-@ranking_blueprint.route('/ranking/clubs')
-@vary('accept')
+@ranking_blueprint.route('/api/ranking/clubs')
 def clubs():
     data = _handle_request(Club, 'club_id')
 
-    if 'application/json' in request.headers.get('Accept', ''):
-        club_schema = ClubSchema(only=('id', 'name'))
+    club_schema = ClubSchema(only=('id', 'name'))
 
-        json = []
-        for club, count, total, rank in data['result']:
-            row = {
-                'rank': rank,
-                'flights': count,
-                'points': total,
-                'club': club_schema.dump(club).data,
-            }
+    json = []
+    for club, count, total, rank in data['result']:
+        row = {
+            'rank': rank,
+            'flights': count,
+            'points': total,
+            'club': club_schema.dump(club).data,
+        }
 
-            json.append(row)
+        json.append(row)
 
-        return jsonify(ranking=json, total=g.paginators['result'].count)
-
-    return send_index()
+    return jsonify(ranking=json, total=g.paginators['result'].count)
 
 
-@ranking_blueprint.route('/ranking/airports')
-@vary('accept')
+@ranking_blueprint.route('/api/ranking/airports')
 def airports():
     data = _handle_request(Airport, 'takeoff_airport_id')
 
-    if 'application/json' in request.headers.get('Accept', ''):
-        airport_schema = AirportSchema(only=('id', 'name', 'countryCode'))
+    airport_schema = AirportSchema(only=('id', 'name', 'countryCode'))
 
-        json = []
-        for airport, count, total, rank in data['result']:
-            row = {
-                'rank': rank,
-                'flights': count,
-                'points': total,
-                'airport': airport_schema.dump(airport).data,
-            }
+    json = []
+    for airport, count, total, rank in data['result']:
+        row = {
+            'rank': rank,
+            'flights': count,
+            'points': total,
+            'airport': airport_schema.dump(airport).data,
+        }
 
-            json.append(row)
+        json.append(row)
 
-        return jsonify(ranking=json, total=g.paginators['result'].count)
-
-    return send_index()
+    return jsonify(ranking=json, total=g.paginators['result'].count)
