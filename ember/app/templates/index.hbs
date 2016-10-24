@@ -25,11 +25,11 @@
     <div class="row">
       <div class="col-md-4">
         <h2>{{#link-to "flights"}}<i class="icon-plane"></i> {{t "flight-database"}}{{/link-to}}</h2>
-        <p>{{format-html-message "about.flights" uploadURL="/flights/upload/"}}</p>
+        <p>{{format-html-message "about.flights" uploadURL=(href-to "flight-upload")}}</p>
       </div>
       <div class="col-md-4">
         <h2>{{#link-to "tracking"}}<i class="icon-rss"></i> {{t "live-tracking"}}{{/link-to}}</h2>
-        <p>{{format-html-message "about.tracking" url="/tracking/info"}}</p>
+        <p>{{format-html-message "about.tracking" url=(href-to "tracking.info")}}</p>
       </div>
       <div class="col-md-4">
         <h2><i class="icon-info-sign"></i> {{t "flight-analysis"}}</h2>
@@ -53,7 +53,7 @@
     <div class="row">
       <div class="col-md-4">
         <h2><i class="icon-group"></i> {{t "social-network"}}</h2>
-        <p>{{format-html-message "about.notifications" url=notificationsURL}}</p>
+        <p>{{format-html-message "about.notifications" url=(href-to notificationsTarget)}}</p>
       </div>
       <div class="col-md-4">
         <h2><i class="icon-cloud"></i> {{t "open-data"}}</h2>

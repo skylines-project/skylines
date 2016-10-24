@@ -1,6 +1,6 @@
 {{#base-page}}
   <div class="page-header">
-    <h1>{{format-html-message "members-of-CLUB" club=club.name clubURL=(concat "/clubs/" club.id)}}</h1>
+    <h1>{{format-html-message "members-of-CLUB" club=club.name clubURL=(href-to "club" club.id)}}</h1>
   </div>
 
   <div class="row">
