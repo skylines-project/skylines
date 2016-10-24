@@ -2,6 +2,6 @@ import BaseRoute from './-base';
 
 export default BaseRoute.extend({
   getURL() {
-    return '/statistics/';
+    return '/api/statistics/';
   },
 });

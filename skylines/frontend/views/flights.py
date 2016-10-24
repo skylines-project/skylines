@@ -1,17 +1,15 @@
 from datetime import datetime
 
-from flask import Blueprint, request, redirect, url_for, abort, current_app, g, jsonify
+from flask import Blueprint, request, current_app, g, jsonify
 
 from sqlalchemy import func
 from sqlalchemy.sql.expression import or_, and_
 from sqlalchemy.orm import joinedload, contains_eager
 from sqlalchemy.orm.util import aliased
 
-from skylines.frontend.ember import send_index
 from skylines.database import db
 from skylines.lib.table_tools import Pager, Sorter
 from skylines.lib.dbutil import get_requested_record
-from skylines.lib.vary import vary
 from skylines.model import (
     User, Club, Flight, IGCFile, AircraftModel,
     Airport, FlightComment,
@@ -36,9 +34,6 @@ def mark_flight_notifications_read(pilot):
 def _create_list(tab, kw, date=None, pilot=None, club=None, airport=None,
                  pinned=None, filter=None,
                  default_sorting_column='score', default_sorting_order='desc'):
-
-    if 'application/json' not in request.headers.get('Accept', ''):
-        return send_index()
 
     pilot_alias = aliased(User, name='pilot')
     owner_alias = aliased(User, name='owner')
@@ -132,20 +127,13 @@ def _create_list(tab, kw, date=None, pilot=None, club=None, airport=None,
     return jsonify(**json)
 
 
-@flights_blueprint.route('/all')
-@vary('accept')
+@flights_blueprint.route('/api/flights/all')
 def all():
     return _create_list('all', request.args,
                         default_sorting_column='date', default_sorting_order='desc')
 
 
-@flights_blueprint.route('/')
-def index():
-    return send_index()
-
-
-@flights_blueprint.route('/date/<date>')
-@vary('accept')
+@flights_blueprint.route('/api/flights/date/<date>')
 def date(date, latest=False):
     try:
         if isinstance(date, (str, unicode)):
@@ -155,7 +143,7 @@ def date(date, latest=False):
             date = date.date()
 
     except:
-        abort(404)
+        return jsonify(), 404
 
     return _create_list(
         'latest' if latest else 'date',
@@ -163,8 +151,7 @@ def date(date, latest=False):
         default_sorting_column='score', default_sorting_order='desc')
 
 
-@flights_blueprint.route('/latest')
-@vary('accept')
+@flights_blueprint.route('/api/flights/latest')
 def latest():
     query = db.session \
         .query(func.max(Flight.date_local).label('date')) \
@@ -179,8 +166,7 @@ def latest():
     return date(date_, latest=True)
 
 
-@flights_blueprint.route('/pilot/<int:id>')
-@vary('accept')
+@flights_blueprint.route('/api/flights/pilot/<int:id>')
 def pilot(id):
     pilot = get_requested_record(User, id)
 
@@ -190,8 +176,7 @@ def pilot(id):
                         default_sorting_column='date', default_sorting_order='desc')
 
 
-@flights_blueprint.route('/club/<int:id>')
-@vary('accept')
+@flights_blueprint.route('/api/flights/club/<int:id>')
 def club(id):
     club = get_requested_record(Club, id)
 
@@ -199,8 +184,7 @@ def club(id):
                         default_sorting_column='date', default_sorting_order='desc')
 
 
-@flights_blueprint.route('/airport/<int:id>')
-@vary('accept')
+@flights_blueprint.route('/api/flights/airport/<int:id>')
 def airport(id):
     airport = get_requested_record(Airport, id)
 
@@ -209,11 +193,10 @@ def airport(id):
                         default_sorting_column='date', default_sorting_order='desc')
 
 
-@flights_blueprint.route('/unassigned')
-@vary('accept')
+@flights_blueprint.route('/api/flights/unassigned')
 def unassigned():
     if not g.current_user:
-        abort(404)
+        return jsonify(), 400
 
     f = and_(Flight.pilot_id is None,
              IGCFile.owner == g.current_user)
@@ -222,22 +205,16 @@ def unassigned():
                         default_sorting_column='date', default_sorting_order='desc')
 
 
-@flights_blueprint.route('/pinned')
-def pinned():
-    return send_index()
-
-
-@flights_blueprint.route('/list/<ids>')
-@vary('accept')
+@flights_blueprint.route('/api/flights/list/<ids>')
 def list(ids):
     if not ids:
-        return redirect(url_for('.index'))
+        return jsonify(), 400
 
     try:
         # Split the string into integer IDs
         ids = [int(id) for id in ids.split(',')]
     except ValueError:
-        abort(404)
+        return jsonify(), 404
 
     return _create_list('list', request.args, pinned=ids,
                         default_sorting_column='date', default_sorting_order='desc')

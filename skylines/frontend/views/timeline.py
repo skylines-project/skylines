@@ -2,8 +2,6 @@ from flask import Blueprint, request, jsonify
 from sqlalchemy.orm import subqueryload, contains_eager
 from sqlalchemy.sql.expression import or_
 
-from skylines.frontend.ember import send_index
-from skylines.lib.vary import vary
 from skylines.model.event import Event
 from skylines.model import Flight
 from .notifications import _filter_query, convert_event
@@ -11,12 +9,8 @@ from .notifications import _filter_query, convert_event
 timeline_blueprint = Blueprint('timeline', 'skylines')
 
 
-@timeline_blueprint.route('/')
-@vary('accept')
-def index():
-    if 'application/json' not in request.headers.get('Accept', ''):
-        return send_index()
-
+@timeline_blueprint.route('/api/timeline')
+def list():
     query = Event.query() \
         .options(subqueryload('actor')) \
         .options(subqueryload('user')) \

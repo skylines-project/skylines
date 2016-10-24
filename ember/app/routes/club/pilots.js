@@ -5,7 +5,7 @@ export default Ember.Route.extend({
 
   model() {
     let { club_id } = this.paramsFor('club');
-    return this.get('ajax').request(`/users?club=${club_id}`);
+    return this.get('ajax').request(`/api/users?club=${club_id}`);
   },
 
   setupController(controller) {

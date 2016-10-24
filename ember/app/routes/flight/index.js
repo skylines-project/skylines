@@ -9,8 +9,8 @@ export default Ember.Route.extend({
     let id = this.modelFor('flight').ids[0];
 
     return RSVP.hash({
-      data: ajax.request(`/flights/${id}/?extended`),
-      path: ajax.request(`/flights/${id}/json`),
+      data: ajax.request(`/api/flights/${id}/?extended`),
+      path: ajax.request(`/api/flights/${id}/json`),
     });
   },
 

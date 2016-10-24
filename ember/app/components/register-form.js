@@ -51,7 +51,7 @@ export default Ember.Component.extend(Validations, {
     let json = this.getProperties('email', 'firstName', 'lastName', 'password');
 
     try {
-      yield this.get('ajax').request('/users/new', { method: 'POST', json });
+      yield this.get('ajax').request('/api/users', { method: 'POST', json });
       window.location = '/login';
 
     } catch (error) {

@@ -2,10 +2,8 @@ from flask import Blueprint, request, redirect, url_for, abort, g, jsonify
 
 from sqlalchemy.sql.expression import and_, or_
 
-from skylines.frontend.ember import send_index
 from skylines.database import db
 from skylines.lib.dbutil import get_requested_record
-from skylines.lib.vary import vary
 from skylines.model import User, Club, Flight, IGCFile
 from skylines.frontend.views.users import send_recover_mail
 from skylines.model.event import (
@@ -24,6 +22,9 @@ def handle_user_param():
     current user.
     """
 
+    if request.endpoint == 'settings.html':
+        return
+
     if not g.current_user:
         abort(401)
 
@@ -37,20 +38,14 @@ def handle_user_param():
     if not g.user.is_writable(g.current_user):
         abort(403)
 
-    g.logout_next = url_for("index")
 
-
-@settings_blueprint.route('/')
-@vary('accept')
-def index():
-    if 'application/json' not in request.headers.get('Accept', ''):
-        return send_index()
-
+@settings_blueprint.route('/api/settings/')
+def read():
     schema = CurrentUserSchema(exclude=('id'))
     return jsonify(**schema.dump(g.user).data)
 
 
-@settings_blueprint.route('/', methods=['POST'])
+@settings_blueprint.route('/api/settings/', methods=['POST'])
 def update():
     json = request.get_json()
     if json is None:
@@ -127,17 +122,7 @@ def update():
     return jsonify()
 
 
-@settings_blueprint.route('/profile')
-def profile():
-    return send_index()
-
-
-@settings_blueprint.route('/password')
-def password():
-    return send_index()
-
-
-@settings_blueprint.route('/password/check', methods=['POST'])
+@settings_blueprint.route('/api/settings/password/check', methods=['POST'])
 def check_current_password():
     json = request.get_json()
     if not json:
@@ -146,7 +131,7 @@ def check_current_password():
     return jsonify(result=g.user.validate_password(json.get('password', '')))
 
 
-@settings_blueprint.route('/password/recover')
+@settings_blueprint.route('/settings/password/recover')
 def password_recover():
     if not g.current_user.is_manager():
         abort(403)
@@ -162,13 +147,7 @@ def password_recover():
     return redirect(url_for('.password', user=g.user_id))
 
 
-@settings_blueprint.route('/tracking')
-@vary('accept')
-def tracking():
-    return send_index()
-
-
-@settings_blueprint.route('/tracking/key', methods=['POST'])
+@settings_blueprint.route('/api/settings/tracking/key', methods=['POST'])
 def tracking_generate_key():
     g.user.generate_tracking_key()
     db.session.commit()
@@ -176,12 +155,7 @@ def tracking_generate_key():
     return jsonify(key=g.user.tracking_key_hex)
 
 
-@settings_blueprint.route('/club', methods=['GET'])
-def club():
-    return send_index()
-
-
-@settings_blueprint.route('/club', methods=['PUT'])
+@settings_blueprint.route('/api/settings/club', methods=['PUT'])
 def create_club():
     json = request.get_json()
     if json is None:

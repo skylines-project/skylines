@@ -31,7 +31,7 @@ export default Ember.Component.extend({
     let json = { clubId: club.id };
 
     try {
-      yield this.get('ajax').request('/settings/', { method: 'POST', json });
+      yield this.get('ajax').request('/api/settings/', { method: 'POST', json });
       this.setProperties({
         messageKey: 'club-has-been-changed',
         error: null,

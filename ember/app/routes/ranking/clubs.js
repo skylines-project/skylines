@@ -13,7 +13,7 @@ export default Ember.Route.extend({
       page: params.page,
     };
 
-    return this.get('ajax').request('/ranking/clubs', { data });
+    return this.get('ajax').request('/api/ranking/clubs', { data });
   },
 
   setupController(controller) {

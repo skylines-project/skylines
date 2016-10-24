@@ -1,24 +1,18 @@
 from flask import Blueprint, request, jsonify
 
-from skylines.frontend.ember import send_index
 from skylines.model import User, Club, Airport
 from skylines.model.search import (
     combined_search_query, text_to_tokens, escape_tokens,
     process_result_details
 )
-from skylines.lib.vary import vary
 
 search_blueprint = Blueprint('search', 'skylines')
 
 MODELS = [User, Club, Airport]
 
 
-@search_blueprint.route('/')
-@vary('accept')
+@search_blueprint.route('/api/search')
 def index():
-    if 'application/json' not in request.headers.get('Accept', ''):
-        return send_index()
-
     search_text = request.values.get('text', '').strip()
     if not search_text:
         return jsonify(results=[])

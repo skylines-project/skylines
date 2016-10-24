@@ -16,7 +16,7 @@ export default BaseValidator.extend({
     }
 
     let data = { name };
-    return this.get('ajax').request('/clubs', { data }).then(({ clubs }) => {
+    return this.get('ajax').request('/api/clubs', { data }).then(({ clubs }) => {
       if (clubs.length === 0) {
         return true;
       }

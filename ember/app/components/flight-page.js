@@ -48,14 +48,14 @@ export default Ember.Component.extend({
 
     let map = window.flightMap.get('map');
 
-    otherIds.forEach(id => fixCalc.addFlightFromJSON(`/flights/${id}/json`));
+    otherIds.forEach(id => fixCalc.addFlightFromJSON(`/api/flights/${id}/json`));
 
     let extent = fixCalc.get('flights').getBounds();
     map.getView().fit(extent, map.getSize(), { padding: this._calculatePadding() });
 
     this.get('pinnedFlights.pinned')
       .filter(id => id !== primaryId)
-      .forEach(id => fixCalc.addFlightFromJSON(`/flights/${id}/json`));
+      .forEach(id => fixCalc.addFlightFromJSON(`/api/flights/${id}/json`));
   },
 
   timeInterval: Ember.computed('mapExtent', 'cesiumEnabled', function() {
@@ -98,7 +98,7 @@ export default Ember.Component.extend({
         flights.removeObjects(matches);
         pinnedFlights.unpin(id);
       } else {
-        fixCalc.addFlightFromJSON(`/flights/${id}/json`);
+        fixCalc.addFlightFromJSON(`/api/flights/${id}/json`);
         pinnedFlights.pin(id);
       }
     },

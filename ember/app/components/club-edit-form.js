@@ -45,7 +45,7 @@ export default Ember.Component.extend(Validations, {
     let json = this.getProperties('name', 'website');
 
     try {
-      yield this.get('ajax').request(`/clubs/${id}/`, { method: 'POST', json });
+      yield this.get('ajax').request(`/api/clubs/${id}`, { method: 'POST', json });
       this.set('club.name', json.name);
       this.set('club.website', json.website);
       this.get('router').transitionTo('club', id);

@@ -1,22 +1,16 @@
-from flask import Blueprint, abort, request, jsonify
+from flask import Blueprint, abort, jsonify
 from sqlalchemy import func, distinct
 
-from skylines.frontend.ember import send_index
 from skylines.database import db
 from skylines.lib.dbutil import get_requested_record
-from skylines.lib.vary import vary
 from skylines.model import User, Club, Flight, Airport
 
 statistics_blueprint = Blueprint('statistics', 'skylines')
 
 
-@statistics_blueprint.route('/')
-@statistics_blueprint.route('/<page>/<id>')
-@vary('accept')
+@statistics_blueprint.route('/api/statistics/')
+@statistics_blueprint.route('/api/statistics/<page>/<id>')
 def index(page=None, id=None):
-    if 'application/json' not in request.headers.get('Accept', ''):
-        return send_index()
-
     name = None
 
     query = db.session.query(Flight.year.label('year'),

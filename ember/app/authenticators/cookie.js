@@ -6,12 +6,12 @@ export default Base.extend({
 
   authenticate(email, password) {
     return this.get('ajax').request('/session', { method: 'PUT', json: { email, password } })
-      .then(() => this.get('ajax').request('/settings/'))
+      .then(() => this.get('ajax').request('/api/settings/'))
       .then(settings => ({ settings }));
   },
 
   restore(/* data */) {
-    return this.get('ajax').request('/settings/')
+    return this.get('ajax').request('/api/settings/')
       .then(settings => ({ settings }));
   },
 

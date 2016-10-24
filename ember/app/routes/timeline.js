@@ -25,7 +25,7 @@ export default Ember.Route.extend({
       data.type = params.type;
     }
 
-    return this.get('ajax').request('/timeline', { data });
+    return this.get('ajax').request('/api/timeline', { data });
   },
 
   setupController(controller) {

@@ -17,7 +17,7 @@ def wrap(callback, content):
     )
 
 
-@widgets_blueprint.route('/v1.0/flights.js')
+@widgets_blueprint.route('/widgets/v1.0/flights.js')
 def flights_js():
     flights = Flight.query() \
                     .filter(Flight.is_rankable())

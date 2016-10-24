@@ -5,7 +5,7 @@ export default Ember.Route.extend({
 
   model() {
     let { user_id } = this.paramsFor('user');
-    return this.get('ajax').request(`/users/${user_id}/following`);
+    return this.get('ajax').request(`/api/users/${user_id}/following`);
   },
 
   setupController(controller, model) {

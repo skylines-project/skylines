@@ -5,6 +5,6 @@ export default Ember.Route.extend(AuthenticatedRouteMixin, {
   ajax: Ember.inject.service(),
 
   model() {
-    return this.get('ajax').request('/settings/');
+    return this.get('ajax').request('/api/settings/');
   },
 });

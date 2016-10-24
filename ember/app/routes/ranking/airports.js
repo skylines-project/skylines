@@ -13,7 +13,7 @@ export default Ember.Route.extend({
       page: params.page,
     };
 
-    return this.get('ajax').request('/ranking/airports', { data });
+    return this.get('ajax').request('/api/ranking/airports', { data });
   },
 
   setupController(controller) {

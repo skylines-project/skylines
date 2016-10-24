@@ -15,7 +15,7 @@ export default Ember.Route.extend({
     this.set('searchTextService.text', searchText);
 
     if (searchText) {
-      return this.get('ajax').request(`/search/?text=${searchText}`);
+      return this.get('ajax').request(`/api/search?text=${searchText}`);
     }
   },
 

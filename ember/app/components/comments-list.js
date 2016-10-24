@@ -12,7 +12,7 @@ export default Ember.Component.extend({
     let text = this.get('addCommentText');
     let user = this.get('account.user');
 
-    yield this.get('ajax').request(`/flights/${id}/comments`, { method: 'POST', json: { text } });
+    yield this.get('ajax').request(`/api/flights/${id}/comments`, { method: 'POST', json: { text } });
 
     this.set('addCommentText', '');
     this.get('comments').pushObject({ text, user });

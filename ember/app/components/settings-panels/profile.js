@@ -96,7 +96,7 @@ export default Ember.Component.extend(Validations, {
     };
 
     try {
-      yield this.get('ajax').request('/settings/', { method: 'POST', json });
+      yield this.get('ajax').request('/api/settings/', { method: 'POST', json });
       this.setProperties({
         messageKey: 'settings-have-been-saved',
         error: null,
