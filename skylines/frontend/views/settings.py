@@ -39,13 +39,13 @@ def handle_user_param():
         abort(403)
 
 
-@settings_blueprint.route('/api/settings/')
+@settings_blueprint.route('/api/settings', strict_slashes=False)
 def read():
     schema = CurrentUserSchema(exclude=('id'))
     return jsonify(**schema.dump(g.user).data)
 
 
-@settings_blueprint.route('/api/settings/', methods=['POST'])
+@settings_blueprint.route('/api/settings', methods=['POST'], strict_slashes=False)
 def update():
     json = request.get_json()
     if json is None:

@@ -17,7 +17,7 @@ from skylines.schemas import UserSchema, CurrentUserSchema, ValidationError
 users_blueprint = Blueprint('users', 'skylines')
 
 
-@users_blueprint.route('/api/users')
+@users_blueprint.route('/api/users', strict_slashes=False)
 def list():
     users = User.query() \
         .options(joinedload(User.club)) \
@@ -33,7 +33,7 @@ def list():
     return jsonify(users=UserSchema(only=fields).dump(users, many=True).data)
 
 
-@users_blueprint.route('/api/users', methods=['POST'])
+@users_blueprint.route('/api/users', methods=['POST'], strict_slashes=False)
 def new_post():
     json = request.get_json()
     if json is None:

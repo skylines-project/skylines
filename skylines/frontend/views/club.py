@@ -20,7 +20,7 @@ def _add_user_id(endpoint, values):
         values.setdefault('club_id', g.club_id)
 
 
-@club_blueprint.route('/api/clubs/<club_id>')
+@club_blueprint.route('/api/clubs/<club_id>', strict_slashes=False)
 def read():
     json = ClubSchema().dump(g.club).data
     json['isWritable'] = g.club.is_writable(g.current_user)
@@ -28,7 +28,7 @@ def read():
     return jsonify(**json)
 
 
-@club_blueprint.route('/api/clubs/<club_id>', methods=['POST'])
+@club_blueprint.route('/api/clubs/<club_id>', methods=['POST'], strict_slashes=False)
 def update():
     json = request.get_json()
     if json is None:

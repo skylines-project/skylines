@@ -103,7 +103,7 @@ def mark_user_notifications_read(user):
     db.session.commit()
 
 
-@user_blueprint.route('/api/users/<user_id>')
+@user_blueprint.route('/api/users/<user_id>', strict_slashes=False)
 def read():
     user_schema = CurrentUserSchema() if g.user == g.current_user else UserSchema()
     user = user_schema.dump(g.user).data

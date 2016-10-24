@@ -157,7 +157,7 @@ def csrf():
     return jsonify(token=generate_csrf())
 
 
-@upload_blueprint.route('/api/flights/upload/', methods=('POST',))
+@upload_blueprint.route('/api/flights/upload', methods=('POST',), strict_slashes=False)
 def index_post():
     if not g.current_user:
         return jsonify(error='authentication-required'), 403

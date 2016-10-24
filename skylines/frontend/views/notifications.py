@@ -29,7 +29,7 @@ def _filter_query(query, args):
     return query
 
 
-@notifications_blueprint.route('/api/notifications')
+@notifications_blueprint.route('/api/notifications', strict_slashes=False)
 @login_required("You have to login to read notifications.")
 def list():
     query = Notification.query(recipient=g.current_user) \
