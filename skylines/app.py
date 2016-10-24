@@ -38,13 +38,6 @@ class SkyLines(Flask):
         self.login_manager = LoginManager()
         self.login_manager.init_app(self)
 
-    def add_tg2_compat(self):
-        from skylines.lib import helpers
-
-        @self.context_processor
-        def inject_helpers_lib():
-            return dict(h=helpers)
-
     def configure_jinja(self):
         from itertools import izip
 
@@ -128,7 +121,6 @@ def create_frontend_app(*args, **kw):
 
     app.configure_jinja()
     app.add_login_manager()
-    app.add_tg2_compat()
 
     import skylines.frontend.views
     skylines.frontend.views.register(app)
