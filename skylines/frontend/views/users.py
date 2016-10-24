@@ -113,7 +113,6 @@ The SkyLines Team
         smtp.quit()
 
     except:
-        print text
         raise ServiceUnavailable(description=(
             "The mail server is currently not reachable. "
             "Please try again later or contact the developers."))
