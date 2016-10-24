@@ -38,20 +38,6 @@ class SkyLines(Flask):
         self.login_manager = LoginManager()
         self.login_manager.init_app(self)
 
-    def configure_jinja(self):
-        from itertools import izip
-
-        # Configure Jinja2 template engine
-        self.jinja_options['extensions'].append('jinja2.ext.do')
-
-        @self.template_filter('add_to_dict')
-        def add_to_dict(d, **kw):
-            return dict(d, **kw)
-
-        @self.template_global()
-        def zip(*args, **kw):
-            return izip(*args, **kw)
-
     def add_logging_handlers(self):
         if self.debug: return
 
@@ -119,7 +105,6 @@ def create_frontend_app(*args, **kw):
 
     app.add_debug_toolbar()
 
-    app.configure_jinja()
     app.add_login_manager()
 
     import skylines.frontend.views
