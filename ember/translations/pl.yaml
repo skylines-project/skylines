@@ -7,10 +7,10 @@ AIRPORT-at-TIME: <a href="{airportURL}">{airport}</a><br/> o {time}
 airports: Lotniska
 all: Wszystkie
 all-time: Zawsze
-altitude: Wysokość n.p.m.
+altitude: Wysokość
 avg-speed: Średnia Prędkość
 avg-speed-abbr: Śr. prędkość
-avg-vario-abbr: Śr. wario
+avg-vario-abbr: Śr. wario.
 change: Zmień
 change-club: Zmień Klub
 change-password: Zmień Hasło
@@ -56,6 +56,7 @@ email-exists-already: Ten adres email już istnieje.
 email-unknown: Ten adres email jest nieznany.
 fai-triangle-distance: Odległość Trójkąta FAI
 failed-to-parse-file: Parsowanie pliku nie powiodło się
+file-upload-field: Pole pliku do przesłania
 first-last: Pierwszy / Ostatni
 first-name: Imię
 flight-date-in-future: Data lotu w przyszłości
@@ -71,6 +72,7 @@ glide-rate: Doskonałość
 glide-rate-abbr: Dosk.
 glides: Przeskoki
 how-to-use-live-tracking: Jak używać Live Tracking?
+igc-or-zip-files: Plik(i) IGC lub ZIP
 imprint: Informacja prawna
 index-INDEX: 'Handicap: {index}'
 landing: Lądowanie
@@ -80,6 +82,7 @@ last-fix: Ostatni Fix
 last-name: Nazwisko
 latest: Najnowsze
 n-avg-distance-per-flight: śr. {distance} na lot
+leg-statistics: Statystyki Boku
 live-tracking: Live Tracking
 live-tracking-of-PILOT: Live Tracking dla {pilot}
 live-tracking-of-PILOT-and-PILOT2: Live Tracking dla {pilot} i {pilot2}
@@ -89,29 +92,53 @@ live-tracking-key: Klucz Live Tracking
 mark-all-as-read: Oznacz wszystkie jako przeczytane
 members: Członkowie
 members-of-CLUB: Członkowie <small> z <a href="{clubURL}">{club}</a></small>
-n-comments: '{numComments, plural, =1 {1 comment} other {# comments}}'
+n-comments: '{numComments, plural, =1 {1 komentarz} other {# komentarzy}}'
+n-hours: '{num} Godzin'
+NUM-pilots: '{num, plural, =1 {1 pilot} other {# pilotów}}'
 name: Nazwa
 nearest-airport: Najbliższe lotnisko
 new: Nowy
 newer: Nowszy
 no-airports-found: Nie znaleziono lotniska
+no-club: Brak klubu
+no-clubs-found: Nie znaleziono klubu.
+no-flight-in-file: Nie znaleziono lotu w pliku
+no-flight-saved: Lot nie został zapisany.
+no-flights-found: Nie znaleziono lotów.
+no-live-tracks-of-pilots: '{num, plural, =1 {Nie ma teraz dostępnego śledzenia na żywo dla tego pilota.} other {Nie ma teraz dostępnego śledzenia na żywo dla tych pilotów.}}'
+no-pilots-found: Nie znaleziono pilotów.
+no-data: Nie znaleziono danych...
+notifications: Powiadomienia
+olc-distance: Odległość OLC
+older: Starsze
 other-pilots: Inni piloci
+overview: Podsumowanie
 password: Hasło
+password-recovered: Twoje hasło zostało zmienione przy użyciu kodu przywracania.
 password-was-changed: Twoje hasło zostało zmienione
 passwords-do-not-match: Hasła nie pasują do siebie
+phase-statistics: Statystyki Faz
 pilot: Pilot
 pilots: Piloci
+pilots-must-not-be-equal: Pilot nie może być taki sam.
+pin-button-title: Aktywuj to, aby pokazać lot wyżej niż inne loty na mapie
+pinned: Przypięte
+POINTS-points-abbr: '{points} pkt.'
 profile: Profil
 publish: Publikuj
+publish-flights: '{num, plural, =1 {Publikuj Lot} other {Publikuj Loty}}'
 publishing: Publikowanie
 ranking: Ranking
 recover-password: Przywróć Hasło
 recovering: Przywracanie...
+recovery-mail-sent: Sprawdź swoją pocztę email! Wysłaliśmy tobie link do przywrócenia twojego hasła.
 register: Zarejestruj
 registering: Rejestrowanie...
 register-club: Zarejestruj Klub
 registration: Rejestracja
 score: Wynik
+scoring-start-time: Czas początkowy wyniku
+scoring-end-time: Czas końcowy wyniku
 season-YEAR: Sezon {year}
 settings: Ustawienia
 settings-have-been-saved: Twoje ustawienia zostały zapisane.
@@ -127,11 +154,61 @@ takeoff-time: Czas startu
 the-skylines-team: Zespół SkyLines
 this-is-you: To ty
 time: Czas
+TIME-by-USER: '{time}<br> przez <a href="{userURL}">{user}</a>'
+timeline: Oś czasu
+total: Całkowity
+total-score: Wynik całkowity
+tracking-callsign: Znak wywoławczy tracking-u
+tracking-delay: Opóźnienie tracking-u
+tracking-delay-choice: '{delay, plural, =0 {Brak} =1 {1 minuta} other {# minut}}'
 triangle: Trójkąt
+unassigned: Nieprzypisany
 unfollow: Przestań obserwować
+unknown: Nieznany
+unknown-or-other-person: Nieznana lub inna osoba
+unspecified: Nieokreślony
+upload: Prześlij
+upload-flight: Prześlij lot
+uploaded: Przesłane
+uploading: Przesyłanie...
+used-airspaces: Użyte przestrzenie powietrzne
+users: Użytkownicy
+verify-flights-and-publish: Musisz zweryfikować ich właściwości i kliknąć poniżej 'Publikuj Lot(y)', aby opublikować twoje lot(y).
 website: Strona internetowa
+wingmen: Skrzydłowy
+wrong-current-password: Sprawdź proszę swoje bieżące hasło.
 year: Rok
+you-have-no-notifications: Nie masz powiadomień.
+your-flights-have-been-saved: Twoje loty zostały zapisane.
+search:
+  search: Szukaj
+  search-for-TEXT: Szukaj <small>dla "{text}"</small>
+  no-search-text: Wpisz coś w pasku wyszukiwania powyżej.
+  no-results: Nie ma wyniku dla twojego wyszukiwania... Przepraszamy!
+timeline-events:
+  club-join:
+    message1: <strong><a href="{actorURL}">{actor}</a></strong> dołączył do <strong><a href="{clubURL}">{club}</a></strong>.
+    message2: Dołączyłeś do <strong><a href="{clubURL}">{club}</a></strong>
+  flight-comment:
+    message1: <strong><a href="{actorURL}">{actor}</a></strong> skomentował <strong>{distance}</strong> lot z <strong>{date}</strong>.
+    message2: Skomentowałeś <strong>{distance}</strong> lot z <strong>{date}</strong>.
+    message3: <strong><a href="{actorURL}">{actor}</a></strong> skomentował twój <strong>{distance}</strong> lot z <strong>{date}</strong>.
+    message4: Skomentowałeś swój <strong>{distance}</strong> lot z <strong>{date}</strong>.
+  flight-upload:
+    message1: <strong><a href="{actorURL}">{actor}</a></strong> przesłał <strong>{distance}</strong> lot z <strong>{date}</strong>.
+    message2: Przesłałeś <strong>{distance}</strong> lot z <strong>{date}</strong>.
+  follower:
+    message1: <strong><a href="{actorURL}">{actor}</a></strong> rozpoczął obserwację <strong><a href="{userURL}">{user}</a></strong>.
+    message2: Rozpocząłeś obserwację <strong><a href="{userURL}">{user}</a></strong>
+    message3: <strong><a href="{actorURL}">{actor}</a></strong> rozpoczął obserwację ciebie.
+  new-user:
+    message1: <strong><a href="{actorURL}">{actor}</a></strong> dołączył do SkyLines.
+    message2: Dołączyłeś do SkyLines.
 flight-phase:
+  powered: Silnik
+  circlingLeft: Krążenie w lewo
+  circlingRight: Krążenie w prawo
+  circlingMixed: Krążenie mieszane
   cruise: Przeskok
 circling-direction:
   left: Lewo
@@ -140,3 +217,46 @@ circling-direction:
   total: Całkowity
 units:
   title: Jednostki
+  distance: jednostka odległości
+  speed: Jednostka prędkości
+  lift: Jednostka wariometru
+  altitude: Jednostka wysokości
+  presets:
+    american: Amerykańskie (imperialne)
+    australian: Australijskie (metryczny, imperialna wysokość)
+    british: Brytyjskie (imperialny, odległość w km)
+    custom: Niestandardowy
+    european: Europejskie (metryczny)
+errors:
+  description: To pole
+  inclusion: '{description} nie jest zawarty na liście'
+  exclusion: '{description} jest zarezerwowany'
+  invalid: '{description} jest niepoprawny'
+  confirmation: '{description} nie pasuje do {on}'
+  accepted: '{description} musi być zaakceptowany'
+  empty: '{description} nie może być pusty'
+  blank: '{description} nie może być pusty'
+  present: '{description} musi być pusty'
+  collection: '{description} musi być listą'
+  singular: '{description} nie może być listą'
+  tooLong: '{description} jest za długi (maksymalnie {max} znaków)'
+  tooShort: '{description} jest za krótki (minimum to {min} znaków)'
+  before: '{description} musi być przed {before}'
+  after: '{description} musi być po {after}'
+  wrongDateFormat: '{description} musi być w formacie {format}'
+  wrongLength: '{description} ma złą długość (powinna wynosić {is} znaków)'
+  notANumber: '{description} musi być liczbą'
+  notAnInteger: '{description} musi być liczbą całkowitą'
+  greaterThan: '{description} musi być większe niż {gt}'
+  greaterThanOrEqualTo: '{description} musi być większe lub z {gte}'
+  equalTo: '{description} musi być równe z {is}'
+  lessThan: '{description} musi być mniejsze niż {lt}'
+  lessThanOrEqualTo: '{description} musi być mniejsze lub równe z {lte}'
+  otherThan: '{description} musi być inny niż {value}'
+  odd: '{description} musi być nieparzysty'
+  even: '{description} musi być parzysty'
+  positive: '{description} musi być dodatni'
+  date: '{description} musi mieć poprawną datę'
+  email: '{description} musi  mieć poprawny adres email'
+  phone: '{description} musi mieć poprawny numer telefonu'
+  url: '{description} musi mieć poprawny url'

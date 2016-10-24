@@ -51,6 +51,7 @@ distance-flights: Streckenflüge
 DISTANCE-on-DATE: '{distance} am {date}'
 DISTANCE-on-DATE-by-PILOT: '{distance} am {date} von {pilot}'
 DISTANCE-on-DATE-by-PILOT-and-COPILOT: '{distance} am {date} von {pilot} und {copilot}'
+dont-have-an-account: Kein Konto vorhanden?
 duplicate-file: Doppelte Datei
 duration: Dauer
 edit: Bearbeiten
@@ -59,6 +60,9 @@ editing: Bearbeiten...
 email-address: Email Adresse
 email-exists-already: Diese Email Adresse existiert bereits.
 email-unknown: Diese Email-Adresse ist unbekannt.
+error-text: |-
+  Ooopsi....beim Laden dieser Seite ist wohl ein Fehler aufgetreten. Die Entwickler wurden schon benachrichtigt.
+  Bitte probiere es später nochmal!
 fai-triangle-distance: FAI-Dreieck Distanz
 failed-to-parse-file: Analyse der Datei fehlgeschlagen
 first-last: Erster / Letzter Kontakt
@@ -71,6 +75,7 @@ flights: Flüge
 follow: Verfolge
 followers: Verfolger
 following: Verfolgen
+forgot-password: Passwort vergessen?
 friends: Freunde
 generate-new-key: Generiere neuen Key
 generating-new-key: Generiere neuen Key...
@@ -78,6 +83,7 @@ glide-rate: Gleitzahl
 glide-rate-abbr: E
 glides: Gleitflüge
 how-to-use-live-tracking: Wie benutzt man Live Tracking?
+igc-or-zip-files: IGC oder ZIP-Datei(en)
 imprint: Impressum
 index-INDEX: 'Index: {index}'
 landing: Landung
@@ -88,12 +94,16 @@ last-name: Nachname
 latest: Letzter
 n-avg-distance-per-flight: '{distance} pro Flug'
 leg-statistics: Schenkel-Statistik
+license: Lizenz
 live-tracking: Live Tracking
+live-tracking-nav-bar-link: Live
 live-tracking-of-PILOT: Live Tracking von {pilot}
 live-tracking-of-PILOT-and-PILOT2: Live Tracking von {pilot} und {pilot2}
 live-tracking-of-PILOT-and-NUM-other-pilots: Live Tracking von {pilot} und {num} anderen Piloten
 n-avg-hours-per-flight: '{num} Std. pro Flug'
 live-tracking-key: Live Tracking Key
+login: Anmelden
+logout: Abmelden
 mark-all-as-read: Markiere alle als gelesen
 members: Mitglieder
 members-of-CLUB: Mitglieder <small>von <a href="{clubURL}">{club}</a></small>
@@ -104,7 +114,7 @@ name: Name
 nearest-airport: Nächster Flugplatz
 new: Neu
 newer: Neuer
-no: Nein
+'no': Nein
 no-airports-found: Kein Flugplatz gefunden.
 no-club: Kein Verein
 no-clubs-found: Keine Vereine gefunden.
@@ -134,6 +144,8 @@ planned: geplant
 POINTS-points-abbr: '{points} pkt.'
 profile: Profil
 publish: Veröffentlichen
+publish-flight: Flug veröffentlichen
+publish-flight-confirmation-text: Bestätige das veröffentlichen dieses Fluges...
 publishing: Veröffentliche
 ranking: Rangliste
 recover-password: Passwort wiederherstellen
@@ -150,6 +162,7 @@ settings: Einstellungen
 settings-have-been-saved: Deine Einstellungen wurden gespeichert.
 show: Anzeigen
 social-network: Soziales Netzwerk
+sorry: Ooooopsii!
 speed: Geschwindigkeit
 start: Start
 statistics: Statistiken
@@ -176,28 +189,32 @@ unfollow: Nicht mehr verfolgen
 unknown: Unbekannt
 unknown-or-other-person: Unbekannt oder andere Person
 unspecified: Keine Angabe
+upload: Hochladen
+upload-flight: Flug hochladen
 uploaded: Hochgeladen
+uploading: Deine Datei wird nun hochgeladen...
 used-airspaces: Genutzte Lufträume
 users: Benutzer
 verify-flights-and-publish: Bestätige die Angaben und klick auf "Flug veröffentlichen" um deinen Flug online zu stellen.
 website: Webseite
 wingmen: Wingmen
+wrong-credentials: Bitte überprüfe deine e-Mail Adresse und das Passwort.
 wrong-current-password: Bitte prüfe dein aktuelles Passwort.
 year: Jahr
-yes: Ja
+'yes': Ja
 you-have-no-notifications: Du hast keine Benachrichtigungen.
 your-flights-have-been-saved: Deine Flüge wurden gespeichert.
 about:
-  welcome: "Willkommen bei SkyLines, deiner Internetplattform zum Austausch von Flügen!"
-  flights: "<a href=\"{uploadURL}\">Lade</a> deine Flüge hoch und teile sie mit deinen Freunden. Die Flüge können uneingeschränkt runtergeladen werden und werden von uns nicht verändert!"
-  tracking: "Benutz dein Telefon um Positionsupdates an SkyLines zu schicken. Klick <a href=\"{url}\">hier</a> für mehr Informationen."
-  analysis: "Benutz unsere Analysetools um dir deine Flüge im Detail anzuschauen und um herauszufinden wie du in Zukunft noch besser fliegen kannst."
-  task-planning: "Benutz deinen Browser zur Streckenplanung vor dem Flug und lade die Aufgaben auf schnellstem Weg in dein Navigationsgerät. Die Integration von {prosoar} ist geplant."
-  competitions: "Erstelle Wettbewerbe um den Zuschauern ein noch besseres Live Tracking Erlebnis zu bieten. Sieh allen Teilnehmern auf der selben Karte beim Fliegen zu."
-  achievements: "Steck dir neue Ziele und versuche alle Auszeichnungen in SkyLines zu erlangen. Flieg große Dreiecke, mach lange Endanflüge und mach einfach deine erste Außenlandung."
-  notifications: "Skylines hat auch Elemente eines sozialen Netzwerks. Du kannst Flüge kommentieren, deinen Freunden folgen und bekommst <a href=\"{url}\">Benachrichtigungen</a> wenn sie etwas interessantes machen."
-  open-data: "Die Flugdatenbank von SkyLines steht unter der {license}. SkyLines benutzt Wendepunktdaten vom {welt2000} Projekt."
-  open-source: "Skylines ist ein <a href=\"{teamURL}\">Teamprojekt</a> und basiert komplett auf freier Software (<a href=\"{licenseURL}\">Lizenz</a>). Schau dich auf {github} um wenn du helfen möchtest!"
+  welcome: Willkommen bei SkyLines, deiner Internetplattform zum Austausch von Flügen!
+  flights: <a href="{uploadURL}">Lade</a> deine Flüge hoch und teile sie mit deinen Freunden. Die Flüge können uneingeschränkt runtergeladen werden und werden von uns nicht verändert!
+  tracking: Benutz dein Telefon um Positionsupdates an SkyLines zu schicken. Klick <a href="{url}">hier</a> für mehr Informationen.
+  analysis: Benutz unsere Analysetools um dir deine Flüge im Detail anzuschauen und um herauszufinden wie du in Zukunft noch besser fliegen kannst.
+  task-planning: Benutz deinen Browser zur Streckenplanung vor dem Flug und lade die Aufgaben auf schnellstem Weg in dein Navigationsgerät. Die Integration von {prosoar} ist geplant.
+  competitions: Erstelle Wettbewerbe um den Zuschauern ein noch besseres Live Tracking Erlebnis zu bieten. Sieh allen Teilnehmern auf der selben Karte beim Fliegen zu.
+  achievements: Steck dir neue Ziele und versuche alle Auszeichnungen in SkyLines zu erlangen. Flieg große Dreiecke, mach lange Endanflüge und mach einfach deine erste Außenlandung.
+  notifications: Skylines hat auch Elemente eines sozialen Netzwerks. Du kannst Flüge kommentieren, deinen Freunden folgen und bekommst <a href="{url}">Benachrichtigungen</a> wenn sie etwas interessantes machen.
+  open-data: Die Flugdatenbank von SkyLines steht unter der {license}. SkyLines benutzt Wendepunktdaten vom {welt2000} Projekt.
+  open-source: Skylines ist ein <a href="{teamURL}">Teamprojekt</a> und basiert komplett auf freier Software (<a href="{licenseURL}">Lizenz</a>). Schau dich auf {github} um wenn du helfen möchtest!
 search:
   search: Suche
   search-for-TEXT: Suche <small>nach "{text}"</small>
@@ -223,18 +240,18 @@ timeline-events:
     message1: <strong><a href="{actorURL}">{actor}</a></strong> ist SkyLines beigetreten.
     message2: Du bist SkyLines beigetreten.
 tracking:
-  what-is-it: 'Was ist es?'
-  description: "Mit SkyLines Live Tracking können andere Deine Flügen miterleben, während Du noch in der Luft bist. Da ein sehr schlankes Protokolls verwendet wird, welches nur die unbedingt benötigten Daten sendet, funktioniert dies auch in Bereichen/Höhen, in denen der Empfang nicht so gut ist. Zur Verdeutlichung: Werden bei einem 10h-Flug die Positionen alle 5 Sekunden übertragen, wird ein Datenvolumen von nur etwa 340 KB benötigt."
+  what-is-it: Was ist es?
+  description: 'Mit SkyLines Live Tracking können andere Deine Flügen miterleben, während Du noch in der Luft bist. Da ein sehr schlankes Protokolls verwendet wird, welches nur die unbedingt benötigten Daten sendet, funktioniert dies auch in Bereichen/Höhen, in denen der Empfang nicht so gut ist. Zur Verdeutlichung: Werden bei einem 10h-Flug die Positionen alle 5 Sekunden übertragen, wird ein Datenvolumen von nur etwa 340 KB benötigt.'
   clients: Software
   xcsoar-description: verfügbar ab {release}
   instructions-below: Eine Anleitung findest du weiter unten.
-  available-in-gaggle: 'jetzt in der aktuellen Version von Gaggle verfügbar'
+  available-in-gaggle: jetzt in der aktuellen Version von Gaggle verfügbar
   lt24-clients: LiveTrack24 clients
-  lt24-description: 'Du kannst auch jede Software nutzen, die das {livetrack24} Protokoll zum Senden der Positionen an SkyLines benutzt. Trage deinen Live Tracking Key als Benutzernamen ein, wähle ein beliebiges Passwort und nutze {skylines} als Server.'
+  lt24-description: Du kannst auch jede Software nutzen, die das {livetrack24} Protokoll zum Senden der Positionen an SkyLines benutzt. Trage deinen Live Tracking Key als Benutzernamen ein, wähle ein beliebiges Passwort und nutze {skylines} als Server.
   your-live-tracking-key-is-KEY: 'Dein Live Tracking Key ist: {key}'
   settings: Live Tracking Einstellungen
   login-required: Du musst dich einloggen um deinen Live Tracking Key zu sehen.
-  xcsoar-instructions: 'Öffne die <em>Systemkonfigurationen</em> in XCSoar, klicke auf <em>Einstellungen</em> und dann auf <em>Verfolgung</em>., aktiviere das SkyLines Tracking und gib Deinen Live Tracking Key ein.'
+  xcsoar-instructions: Öffne die <em>Systemkonfigurationen</em> in XCSoar, klicke auf <em>Einstellungen</em> und dann auf <em>Verfolgung</em>., aktiviere das SkyLines Tracking und gib Deinen Live Tracking Key ein.
 flight-phase:
   powered: Kraftflug
   circlingLeft: Kreisen Links

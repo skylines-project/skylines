@@ -43,6 +43,9 @@ delete: Eliminar
 distance: Distancia
 distance-abbr: Dist.
 distance-flights: Vuelos de distancia
+DISTANCE-on-DATE: '{distance} el {date}'
+DISTANCE-on-DATE-by-PILOT: '{distance} el {date} por {pilot}'
+DISTANCE-on-DATE-by-PILOT-and-COPILOT: '{distance} el {date} por {pilot} y {copilot}'
 duplicate-file: Archivo duplicado
 duration: Duración
 edit: Editar
@@ -79,6 +82,9 @@ latest: Último
 n-avg-distance-per-flight: media de {distance} por vuelo
 leg-statistics: Estadísticas de tramo
 live-tracking: Seguimiento en vivo
+live-tracking-of-PILOT: Seguimiento en vivo de {pilot}
+live-tracking-of-PILOT-and-PILOT2: Seguimiento en vivo de {pilot} y{pilot2}
+live-tracking-of-PILOT-and-NUM-other-pilots: Seguimiento en vivo de {pilot} y otros {num} pilotos
 n-avg-hours-per-flight: media de {num} horas por vuelo
 live-tracking-key: Clave de seguimiento en vivo
 mark-all-as-read: Marcar todos como leidos
@@ -97,6 +103,7 @@ no-clubs-found: No se encontró ningún club.
 no-flight-in-file: No se ha encontrado ningún vuelo en el archivo.
 no-flight-saved: Ningún vuelo ha sido guardado.
 no-flights-found: No se encontraron vuelos.
+no-live-tracks-of-pilots: '{num, plural, =1 {Actualmente este piloto no tiene activado el seguimiento en vivo} other {Actualmente estos pilotos no tienen activado el seguimiento en vivo}}'
 no-pilots-found: No se encontraron pilotos.
 no-data: Datos no encontrados.
 notifications: Notificaciones
@@ -143,6 +150,7 @@ takeoff: Despegue
 takeoff-locations: Lugares de despegue
 takeoff-time: Tiempo de despegue
 the-skylines-team: El equipo de SkyLines
+this-is-you: Este eres tú
 time: Tiempo
 TIME-by-USER: '{time}<br/>de <a href="{userURL}">{user}</a>'
 timeline: Cronología
