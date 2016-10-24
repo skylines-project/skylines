@@ -113,7 +113,7 @@ name: Name
 nearest-airport: Nearest Airport
 new: New
 newer: Newer
-no: No
+'no': 'No'
 no-airports-found: No airports found.
 no-club: No club
 no-clubs-found: No clubs found.
@@ -203,20 +203,20 @@ wingmen: Wingmen
 wrong-credentials: Please check your email address and password.
 wrong-current-password: Please check your current password.
 year: Year
-yes: Yes
+'yes': 'Yes'
 you-have-no-notifications: You have no notifications.
 your-flights-have-been-saved: Your flights have been saved.
 about:
-  welcome: "Welcome to SkyLines, your internet platform for flight sharing!"
-  flights: "<a href=\"{uploadURL}\">Upload</a> your IGC files and share them with your friends. We won't change your files or restrict you from downloading them again!"
-  tracking: "Use your mobile phone to send position updates to SkyLines. Find out how it works <a href=\"{url}\">here</a>."
-  analysis: "Use our analysis tools to have a closer look at your flights and how you might be able to improve them in the future."
-  task-planning: "Use your browser to plan your tasks before the flight and upload them quickly to your flight computer. Integration of {prosoar} is planned."
-  competitions: "Create competitions to offer your spectators an even better live tracking experience by following all the participants on the same map."
-  achievements: "Challenge yourself by trying to complete all the achievements that SkyLines offers. Fly large triangles, long final glides or just do your first outlanding."
-  notifications: "Skylines also has some social network aspects. You can comment on flights, follow your friends and get <a href=\"{url}\">notifications</a> if they do anything interesting."
-  open-data: "The SkyLines flight database is made available under the {license}. Skylines is using waypoint data from the {welt2000} project."
-  open-source: "Skylines is a <a href=\"{teamURL}\">community</a> project and entirely based on free software (<a href=\"{licenseURL}\">License</a>). Visit {github} if you want to help!"
+  welcome: Welcome to SkyLines, your internet platform for flight sharing!
+  flights: <a href="{uploadURL}">Upload</a> your IGC files and share them with your friends. We won't change your files or restrict you from downloading them again!
+  tracking: Use your mobile phone to send position updates to SkyLines. Find out how it works <a href="{url}">here</a>.
+  analysis: Use our analysis tools to have a closer look at your flights and how you might be able to improve them in the future.
+  task-planning: Use your browser to plan your tasks before the flight and upload them quickly to your flight computer. Integration of {prosoar} is planned.
+  competitions: Create competitions to offer your spectators an even better live tracking experience by following all the participants on the same map.
+  achievements: Challenge yourself by trying to complete all the achievements that SkyLines offers. Fly large triangles, long final glides or just do your first outlanding.
+  notifications: Skylines also has some social network aspects. You can comment on flights, follow your friends and get <a href="{url}">notifications</a> if they do anything interesting.
+  open-data: The SkyLines flight database is made available under the {license}. Skylines is using waypoint data from the {welt2000} project.
+  open-source: Skylines is a <a href="{teamURL}">community</a> project and entirely based on free software (<a href="{licenseURL}">License</a>). Visit {github} if you want to help!
 search:
   search: Search
   search-for-TEXT: Search <small>for "{text}"</small>
@@ -242,18 +242,18 @@ timeline-events:
     message1: <strong><a href="{actorURL}">{actor}</a></strong> joined SkyLines.
     message2: You joined SkyLines.
 tracking:
-  what-is-it: 'What is it?'
-  description: "SkyLines Live Tracking can be used to let others take part on your journeys while you're flying. It uses a very light-weight protocol that only transmits the necessary data and due to that it can also work in areas/altitudes where the reception isn't very good. To give you an example: A flight of 10 hours only uses about 340 KB of traffic when the positions are transmitted every 5 seconds!"
+  what-is-it: What is it?
+  description: 'SkyLines Live Tracking can be used to let others take part on your journeys while you''re flying. It uses a very light-weight protocol that only transmits the necessary data and due to that it can also work in areas/altitudes where the reception isn''t very good. To give you an example: A flight of 10 hours only uses about 340 KB of traffic when the positions are transmitted every 5 seconds!'
   clients: Clients
   xcsoar-description: available starting with {release}
   instructions-below: Instructions below.
-  available-in-gaggle: 'now available in the current version of Gaggle'
+  available-in-gaggle: now available in the current version of Gaggle
   lt24-clients: LiveTrack24 clients
-  lt24-description: 'You can also use all available applications that use the {livetrack24} protocol for sending your locations to SkyLines. Just use your Live Tracking Key as username, choose any password you want and configure {skylines} as the server.'
+  lt24-description: You can also use all available applications that use the {livetrack24} protocol for sending your locations to SkyLines. Just use your Live Tracking Key as username, choose any password you want and configure {skylines} as the server.
   your-live-tracking-key-is-KEY: 'Your Live Tracking key is: {key}'
   settings: Live Tracking Settings
   login-required: You have to login to see you own personal Live Tracking key.
-  xcsoar-instructions: 'In XCSoar, open the <em>Setup System</em> dialog, click on <em>Setup</em> and then <em>Tracking</em>.  Turn SkyLines tracking on, and enter your Live Tracking key.'
+  xcsoar-instructions: In XCSoar, open the <em>Setup System</em> dialog, click on <em>Setup</em> and then <em>Tracking</em>.  Turn SkyLines tracking on, and enter your Live Tracking key.
 flight-phase:
   powered: Powered
   circlingLeft: Circling Left
