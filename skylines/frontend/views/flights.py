@@ -1,6 +1,6 @@
 from datetime import datetime
 
-from flask import Blueprint, request, current_app, g, jsonify
+from flask import Blueprint, current_app, g, jsonify
 
 from sqlalchemy import func
 from sqlalchemy.sql.expression import or_, and_
