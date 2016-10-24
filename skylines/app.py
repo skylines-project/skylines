@@ -65,13 +65,6 @@ class SkyLines(Flask):
         if sentry_dsn:
             Sentry(self, dsn=sentry_dsn)
 
-    def add_debug_toolbar(self):
-        try:
-            from flask_debugtoolbar import DebugToolbarExtension
-            DebugToolbarExtension(self)
-        except ImportError:
-            pass
-
     def add_celery(self):
         from skylines.worker.celery import celery
         celery.init_app(self)
@@ -102,8 +95,6 @@ def create_http_app(*args, **kw):
 
 def create_frontend_app(*args, **kw):
     app = create_http_app('skylines.frontend', *args, **kw)
-
-    app.add_debug_toolbar()
 
     app.add_login_manager()
 
