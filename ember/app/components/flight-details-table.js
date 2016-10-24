@@ -37,6 +37,7 @@ export default Ember.Component.extend({
   publishTask: task(function * () {
     let id = this.get('flight.id');
     yield this.get('ajax').request(`/api/flights/${id}/`, { method: 'POST', json: { privacyLevel: 0 } });
-    window.location = `/flights/${id}/`;
+    this.set('flight.privacyLevel', 0);
+    Ember.$('#publishModal').modal('hide');
   }).drop(),
 });
