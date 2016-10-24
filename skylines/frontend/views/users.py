@@ -3,7 +3,6 @@ from email.utils import formatdate
 import smtplib
 
 from flask import Blueprint, request, current_app, g, jsonify
-from flask.ext.babel import _
 from werkzeug.exceptions import ServiceUnavailable
 
 from sqlalchemy import func
@@ -115,7 +114,7 @@ The SkyLines Team
 
     except:
         print text
-        raise ServiceUnavailable(description=_(
+        raise ServiceUnavailable(description=(
             "The mail server is currently not reachable. "
             "Please try again later or contact the developers."))
 
