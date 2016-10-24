@@ -3,7 +3,6 @@ from email.utils import formatdate
 import smtplib
 
 from flask import Blueprint, request, current_app, g, jsonify
-from flask.ext.babel import _
 from werkzeug.exceptions import ServiceUnavailable
 
 from sqlalchemy import func
@@ -17,7 +16,7 @@ from skylines.schemas import UserSchema, CurrentUserSchema, ValidationError
 users_blueprint = Blueprint('users', 'skylines')
 
 
-@users_blueprint.route('/api/users')
+@users_blueprint.route('/api/users', strict_slashes=False)
 def list():
     users = User.query() \
         .options(joinedload(User.club)) \
@@ -33,7 +32,7 @@ def list():
     return jsonify(users=UserSchema(only=fields).dump(users, many=True).data)
 
 
-@users_blueprint.route('/api/users', methods=['POST'])
+@users_blueprint.route('/api/users', methods=['POST'], strict_slashes=False)
 def new_post():
     json = request.get_json()
     if json is None:
@@ -114,8 +113,7 @@ The SkyLines Team
         smtp.quit()
 
     except:
-        print text
-        raise ServiceUnavailable(description=_(
+        raise ServiceUnavailable(description=(
             "The mail server is currently not reachable. "
             "Please try again later or contact the developers."))
 

@@ -1,6 +1,6 @@
 from datetime import datetime
 
-from flask import Blueprint, request, current_app, g, jsonify
+from flask import Blueprint, current_app, g, jsonify
 
 from sqlalchemy import func
 from sqlalchemy.sql.expression import or_, and_
@@ -31,7 +31,7 @@ def mark_flight_notifications_read(pilot):
     db.session.commit()
 
 
-def _create_list(tab, kw, date=None, pilot=None, club=None, airport=None,
+def _create_list(date=None, pilot=None, club=None, airport=None,
                  pinned=None, filter=None,
                  default_sorting_column='score', default_sorting_order='desc'):
 
@@ -129,8 +129,7 @@ def _create_list(tab, kw, date=None, pilot=None, club=None, airport=None,
 
 @flights_blueprint.route('/api/flights/all')
 def all():
-    return _create_list('all', request.args,
-                        default_sorting_column='date', default_sorting_order='desc')
+    return _create_list(default_sorting_column='date', default_sorting_order='desc')
 
 
 @flights_blueprint.route('/api/flights/date/<date>')
@@ -145,10 +144,7 @@ def date(date, latest=False):
     except:
         return jsonify(), 404
 
-    return _create_list(
-        'latest' if latest else 'date',
-        request.args, date=date,
-        default_sorting_column='score', default_sorting_order='desc')
+    return _create_list(date=date, default_sorting_column='score', default_sorting_order='desc')
 
 
 @flights_blueprint.route('/api/flights/latest')
@@ -172,25 +168,21 @@ def pilot(id):
 
     mark_flight_notifications_read(pilot)
 
-    return _create_list('pilot', request.args, pilot=pilot,
-                        default_sorting_column='date', default_sorting_order='desc')
+    return _create_list(pilot=pilot, default_sorting_column='date', default_sorting_order='desc')
 
 
 @flights_blueprint.route('/api/flights/club/<int:id>')
 def club(id):
     club = get_requested_record(Club, id)
 
-    return _create_list('club', request.args, club=club,
-                        default_sorting_column='date', default_sorting_order='desc')
+    return _create_list(club=club, default_sorting_column='date', default_sorting_order='desc')
 
 
 @flights_blueprint.route('/api/flights/airport/<int:id>')
 def airport(id):
     airport = get_requested_record(Airport, id)
 
-    return _create_list('airport', request.args,
-                        airport=airport,
-                        default_sorting_column='date', default_sorting_order='desc')
+    return _create_list(airport=airport, default_sorting_column='date', default_sorting_order='desc')
 
 
 @flights_blueprint.route('/api/flights/unassigned')
@@ -201,8 +193,7 @@ def unassigned():
     f = and_(Flight.pilot_id is None,
              IGCFile.owner == g.current_user)
 
-    return _create_list('unassigned', request.args, filter=f,
-                        default_sorting_column='date', default_sorting_order='desc')
+    return _create_list(filter=f, default_sorting_column='date', default_sorting_order='desc')
 
 
 @flights_blueprint.route('/api/flights/list/<ids>')
@@ -216,5 +207,4 @@ def list(ids):
     except ValueError:
         return jsonify(), 404
 
-    return _create_list('list', request.args, pinned=ids,
-                        default_sorting_column='date', default_sorting_order='desc')
+    return _create_list(pinned=ids, default_sorting_column='date', default_sorting_order='desc')

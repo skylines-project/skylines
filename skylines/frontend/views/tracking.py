@@ -7,8 +7,8 @@ from skylines.schemas import TrackingFixSchema, AirportSchema
 tracking_blueprint = Blueprint('tracking', 'skylines')
 
 
-@tracking_blueprint.route('/api/tracking')
-@tracking_blueprint.route('/api/live')
+@tracking_blueprint.route('/api/tracking', strict_slashes=False)
+@tracking_blueprint.route('/api/live', strict_slashes=False)
 def index():
     fix_schema = TrackingFixSchema(only=('time', 'location', 'altitude', 'elevation', 'pilot'))
     airport_schema = AirportSchema(only=('id', 'name', 'countryCode'))

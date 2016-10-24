@@ -1,5 +1,4 @@
 import Ember from 'ember';
-import { UnauthorizedError } from 'ember-ajax/errors';
 import AuthenticatedRouteMixin from 'ember-simple-auth/mixins/authenticated-route-mixin';
 
 const PER_PAGE = 20;
@@ -51,12 +50,6 @@ export default Ember.Route.extend(AuthenticatedRouteMixin, {
       transition.promise.finally(() => {
         controller.set('loading', false);
       });
-    },
-
-    error(error) {
-      if (error instanceof UnauthorizedError) {
-        window.location = `/login?next=${encodeURI(window.location)}`;
-      }
     },
   },
 });

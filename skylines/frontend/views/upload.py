@@ -8,7 +8,6 @@ import os
 from collections import namedtuple
 
 from flask import Blueprint, request, g, current_app, abort, make_response, jsonify
-from flask.ext.babel import lazy_gettext as l_
 from flask_wtf.csrf import generate_csrf, validate_csrf
 from redis.exceptions import ConnectionError
 from sqlalchemy.sql.expression import func
@@ -149,7 +148,7 @@ def _encode_flight_path(fp, qnh):
 
 
 @upload_blueprint.route('/api/flights/upload/csrf')
-@login_required(l_("You have to login to upload flights."))
+@login_required("You have to login to upload flights.")
 def csrf():
     if not g.current_user:
         return jsonify(), 403
@@ -157,7 +156,7 @@ def csrf():
     return jsonify(token=generate_csrf())
 
 
-@upload_blueprint.route('/api/flights/upload/', methods=('POST',))
+@upload_blueprint.route('/api/flights/upload', methods=('POST',), strict_slashes=False)
 def index_post():
     if not g.current_user:
         return jsonify(error='authentication-required'), 403
@@ -307,7 +306,7 @@ def index_post():
 
 
 @upload_blueprint.route('/api/flights/upload/verify', methods=('POST',))
-@login_required(l_('You have to login to upload flights.'))
+@login_required('You have to login to upload flights.')
 def verify():
     json = request.get_json()
     if json is None:

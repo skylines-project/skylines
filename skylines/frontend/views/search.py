@@ -11,7 +11,7 @@ search_blueprint = Blueprint('search', 'skylines')
 MODELS = [User, Club, Airport]
 
 
-@search_blueprint.route('/api/search')
+@search_blueprint.route('/api/search', strict_slashes=False)
 def index():
     search_text = request.values.get('text', '').strip()
     if not search_text:

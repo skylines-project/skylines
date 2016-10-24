@@ -4,7 +4,7 @@
       <h1>{{t "upload-flight"}}</h1>
     </div>
 
-    {{upload-results-form results=result.results clubMembers=result.club_members aircraftModels=result.aircraft_models}}
+    {{upload-results-form results=result.results clubMembers=result.club_members aircraftModels=result.aircraft_models transitionTo=(action "transitionTo")}}
   {{/base-page}}
 {{else}}
   {{#form-page title=(t "upload-flight")}}

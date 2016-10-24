@@ -1,11 +1,10 @@
-from flask import Blueprint, request, redirect, url_for, abort, g, jsonify
+from flask import Blueprint, request, abort, g, jsonify
 
 from sqlalchemy.sql.expression import and_, or_
 
 from skylines.database import db
 from skylines.lib.dbutil import get_requested_record
 from skylines.model import User, Club, Flight, IGCFile
-from skylines.frontend.views.users import send_recover_mail
 from skylines.model.event import (
     create_club_join_event
 )
@@ -39,13 +38,13 @@ def handle_user_param():
         abort(403)
 
 
-@settings_blueprint.route('/api/settings/')
+@settings_blueprint.route('/api/settings', strict_slashes=False)
 def read():
     schema = CurrentUserSchema(exclude=('id'))
     return jsonify(**schema.dump(g.user).data)
 
 
-@settings_blueprint.route('/api/settings/', methods=['POST'])
+@settings_blueprint.route('/api/settings', methods=['POST'], strict_slashes=False)
 def update():
     json = request.get_json()
     if json is None:
@@ -129,22 +128,6 @@ def check_current_password():
         return jsonify(error='invalid-request'), 400
 
     return jsonify(result=g.user.validate_password(json.get('password', '')))
-
-
-@settings_blueprint.route('/settings/password/recover')
-def password_recover():
-    if not g.current_user.is_manager():
-        abort(403)
-
-    g.user.generate_recover_key(request.remote_addr)
-    send_recover_mail(g.user)
-
-    # TODO port to Ember
-    # flash('A password recovery email was sent to that user.')
-
-    db.session.commit()
-
-    return redirect(url_for('.password', user=g.user_id))
 
 
 @settings_blueprint.route('/api/settings/tracking/key', methods=['POST'])

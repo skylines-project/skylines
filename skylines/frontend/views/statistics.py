@@ -8,7 +8,7 @@ from skylines.model import User, Club, Flight, Airport
 statistics_blueprint = Blueprint('statistics', 'skylines')
 
 
-@statistics_blueprint.route('/api/statistics/')
+@statistics_blueprint.route('/api/statistics', strict_slashes=False)
 @statistics_blueprint.route('/api/statistics/<page>/<id>')
 def index(page=None, id=None):
     name = None

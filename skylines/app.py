@@ -38,27 +38,6 @@ class SkyLines(Flask):
         self.login_manager = LoginManager()
         self.login_manager.init_app(self)
 
-    def add_tg2_compat(self):
-        from skylines.lib import helpers
-
-        @self.context_processor
-        def inject_helpers_lib():
-            return dict(h=helpers)
-
-    def configure_jinja(self):
-        from itertools import izip
-
-        # Configure Jinja2 template engine
-        self.jinja_options['extensions'].append('jinja2.ext.do')
-
-        @self.template_filter('add_to_dict')
-        def add_to_dict(d, **kw):
-            return dict(d, **kw)
-
-        @self.template_global()
-        def zip(*args, **kw):
-            return izip(*args, **kw)
-
     def add_logging_handlers(self):
         if self.debug: return
 
@@ -85,13 +64,6 @@ class SkyLines(Flask):
         sentry_dsn = self.config.get('SENTRY_DSN')
         if sentry_dsn:
             Sentry(self, dsn=sentry_dsn)
-
-    def add_debug_toolbar(self):
-        try:
-            from flask_debugtoolbar import DebugToolbarExtension
-            DebugToolbarExtension(self)
-        except ImportError:
-            pass
 
     def add_celery(self):
         from skylines.worker.celery import celery
@@ -124,11 +96,7 @@ def create_http_app(*args, **kw):
 def create_frontend_app(*args, **kw):
     app = create_http_app('skylines.frontend', *args, **kw)
 
-    app.add_debug_toolbar()
-
-    app.configure_jinja()
     app.add_login_manager()
-    app.add_tg2_compat()
 
     import skylines.frontend.views
     skylines.frontend.views.register(app)

@@ -118,8 +118,8 @@ def _get_flight_path(pilot, threshold=0.001, last_update=None):
 
 
 # Use `live` alias here since `/api/tracking/*` is filtered by the "EasyPrivacy" adblocker list...
-@track_blueprint.route('/api/tracking/<user_id>')
-@track_blueprint.route('/api/live/<user_id>')
+@track_blueprint.route('/api/tracking/<user_id>', strict_slashes=False)
+@track_blueprint.route('/api/live/<user_id>', strict_slashes=False)
 def read():
     traces = map(_get_flight_path, g.pilots)
     if not any(traces):
