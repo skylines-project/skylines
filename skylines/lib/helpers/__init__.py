@@ -6,5 +6,4 @@
 
 from __future__ import absolute_import
 
-from .country import *
 from skylines.lib.formatter.units import get_setting_name
