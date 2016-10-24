@@ -26,7 +26,11 @@ export default Ember.Component.extend({
     try {
       yield this.get('ajax').request('/api/flights/upload/verify', { method: 'POST', json });
       let ids = json.map(flight => flight.id);
-      window.location = (ids.length === 1) ? `/flights/${ids[0]}/` : `/flights/list/${ids.join(',')}`;
+      if (ids.length === 1) {
+        this.getWithDefault('transitionTo')('flight', ids[0]);
+      } else {
+        this.getWithDefault('transitionTo')('flights.list', ids.join(','));
+      }
 
     } catch (error) {
       this.set('error', error);
