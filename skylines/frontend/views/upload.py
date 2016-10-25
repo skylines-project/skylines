@@ -7,16 +7,16 @@ import os
 
 from collections import namedtuple
 
-from flask import Blueprint, request, g, current_app, abort, make_response, jsonify
+from flask import Blueprint, request, current_app, abort, make_response, jsonify
 from flask_wtf.csrf import generate_csrf, validate_csrf
 from redis.exceptions import ConnectionError
 from sqlalchemy.sql.expression import func
 
 from skylines.frontend.cache import cache
+from skylines.frontend.oauth import oauth
 from skylines.database import db
 from skylines.lib import files
 from skylines.lib.util import pressure_alt_to_qnh_alt
-from skylines.lib.decorators import login_required
 from skylines.lib.md5 import file_md5
 from skylines.lib.sql import query_to_sql
 from skylines.lib.xcsoar_ import flight_path, analyse_flight
@@ -149,18 +149,15 @@ def _encode_flight_path(fp, qnh):
 
 
 @upload_blueprint.route('/flights/upload/csrf')
-@login_required("You have to login to upload flights.")
+@oauth.required()
 def csrf():
-    if not g.current_user:
-        return jsonify(), 403
-
     return jsonify(token=generate_csrf())
 
 
 @upload_blueprint.route('/flights/upload', methods=('POST',), strict_slashes=False)
+@oauth.required()
 def index_post():
-    if not g.current_user:
-        return jsonify(error='authentication-required'), 403
+    current_user = User.get(request.user_id)
 
     form = request.form
 
@@ -176,13 +173,11 @@ def index_post():
     except ValidationError, e:
         return jsonify(error='validation-failed', fields=e.messages), 422
 
-    user = g.current_user
-
     pilot_id = data.get('pilot_id')
     pilot = pilot_id and User.get(pilot_id)
     pilot_id = pilot and pilot.id
 
-    club_id = (pilot and pilot.club_id) or user.club_id
+    club_id = (pilot and pilot.club_id) or current_user.club_id
 
     results = []
 
@@ -204,7 +199,7 @@ def index_post():
                 continue
 
         igc_file = IGCFile()
-        igc_file.owner = user
+        igc_file.owner = current_user
         igc_file.filename = filename
         igc_file.md5 = md5
         igc_file.update_igc_headers()
@@ -269,7 +264,7 @@ def index_post():
         db.session.flush()
 
         # Store data in cache for image creation
-        cache_key = hashlib.sha1(str(flight.id) + '_' + str(user.id)).hexdigest()
+        cache_key = hashlib.sha1(str(flight.id) + '_' + str(current_user.id)).hexdigest()
 
         cache.set('upload_airspace_infringements_' + cache_key, infringements, timeout=15 * 60)
         cache.set('upload_airspace_flight_path_' + cache_key, fp, timeout=15 * 60)
@@ -287,12 +282,12 @@ def index_post():
     results = UploadResultSchema().dump(results, many=True).data
 
     club_members = []
-    if g.current_user.club_id:
+    if current_user.club_id:
         member_schema = UserSchema(only=('id', 'name'))
 
-        club_members = User.query(club_id=g.current_user.club_id) \
+        club_members = User.query(club_id=current_user.club_id) \
             .order_by(func.lower(User.name)) \
-            .filter(User.id != g.current_user.id)
+            .filter(User.id != current_user.id)
 
         club_members = member_schema.dump(club_members.all(), many=True).data
 
@@ -307,8 +302,10 @@ def index_post():
 
 
 @upload_blueprint.route('/flights/upload/verify', methods=('POST',))
-@login_required('You have to login to upload flights.')
+@oauth.required()
 def verify():
+    current_user = User.get(request.user_id)
+
     json = request.get_json()
     if json is None:
         return jsonify(error='invalid-request'), 400
@@ -333,7 +330,7 @@ def verify():
 
     for d in data:
         flight = flights.get(d.pop('id'))
-        if not flight or not flight.is_writable(g.current_user):
+        if not flight or not flight.is_writable(current_user):
             return jsonify(error='unknown-flight'), 422
 
         if 'pilot_id' in d and d['pilot_id'] is not None and d['pilot_id'] not in users:

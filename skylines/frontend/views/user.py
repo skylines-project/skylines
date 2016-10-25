@@ -1,12 +1,12 @@
 from datetime import date, timedelta
 
-from flask import Blueprint, g, request, jsonify
-from flask.ext.login import login_required
+from flask import Blueprint, request, jsonify
 
 from sqlalchemy import func, and_
 from sqlalchemy.orm import contains_eager, subqueryload
 
 from skylines.database import db
+from skylines.frontend.oauth import oauth
 from skylines.lib.dbutil import get_requested_record
 from skylines.model import (
     User, Flight, Follower, Location, Notification, Event
@@ -78,25 +78,27 @@ def _get_takeoff_locations(user):
 
 
 def mark_user_notifications_read(user):
-    if not g.current_user:
+    if not request.user_id:
         return
 
     def add_user_filter(query):
         return query.filter(Event.actor_id == user.id)
 
-    Notification.mark_all_read(g.current_user, filter_func=add_user_filter)
+    Notification.mark_all_read(User.get(request.user_id), filter_func=add_user_filter)
     db.session.commit()
 
 
 @user_blueprint.route('/users/<user_id>', strict_slashes=False)
+@oauth.optional()
 def read(user_id):
     user = get_requested_record(User, user_id)
 
-    user_schema = CurrentUserSchema() if user == g.current_user else UserSchema()
+    user_schema = CurrentUserSchema() if user_id == request.user_id else UserSchema()
     user_json = user_schema.dump(user).data
 
-    if g.current_user:
-        user_json['followed'] = g.current_user.follows(user)
+    if request.user_id:
+        current_user = User.get(request.user_id)
+        user_json['followed'] = current_user.follows(user)
 
     if 'extended' in request.args:
         user_json['distanceFlights'] = _distance_flights(user)
@@ -109,6 +111,7 @@ def read(user_id):
 
 
 @user_blueprint.route('/users/<user_id>/followers')
+@oauth.optional()
 def followers(user_id):
     user = get_requested_record(User, user_id)
 
@@ -128,6 +131,7 @@ def followers(user_id):
 
 
 @user_blueprint.route('/users/<user_id>/following')
+@oauth.optional()
 def following(user_id):
     user = get_requested_record(User, user_id)
 
@@ -154,11 +158,11 @@ def add_current_user_follows(followers):
     following the pilot
     """
 
-    if not g.current_user:
+    if not request.user_id:
         return
 
     # Query list of people that the current user is following
-    query = Follower.query(source=g.current_user)
+    query = Follower.query(source_id=request.user_id)
     current_user_follows = [follower.destination_id for follower in query]
 
     for follower in followers:
@@ -166,19 +170,21 @@ def add_current_user_follows(followers):
 
 
 @user_blueprint.route('/users/<user_id>/follow')
-@login_required
+@oauth.required()
 def follow(user_id):
     user = get_requested_record(User, user_id)
-    Follower.follow(g.current_user, user)
-    create_follower_notification(user, g.current_user)
+    current_user = User.get(request.user_id)
+    Follower.follow(current_user, user)
+    create_follower_notification(user, current_user)
     db.session.commit()
     return jsonify()
 
 
 @user_blueprint.route('/users/<user_id>/unfollow')
-@login_required
+@oauth.required()
 def unfollow(user_id):
     user = get_requested_record(User, user_id)
-    Follower.unfollow(g.current_user, user)
+    current_user = User.get(request.user_id)
+    Follower.unfollow(current_user, user)
     db.session.commit()
     return jsonify()
