@@ -3,13 +3,13 @@ import struct
 from datetime import datetime, time, timedelta
 
 from gevent.server import DatagramServer
-from raven import Client as RavenClient
 
 from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.sql.expression import or_
 
 from skylines.database import db
 from skylines.model import User, TrackingFix, Follower, Elevation
+from skylines.sentry import sentry
 from skylines.tracking.crc import check_crc, set_crc
 
 # More information about this protocol can be found in the XCSoar
@@ -280,17 +280,11 @@ class TrackingServer(DatagramServer):
     def handle(self, data, address):
         try:
             self.__handle(data, address)
-        except Exception as e:
-            if self.raven:
-                self.raven.captureException()
-            else:
-                print e
+        except Exception:
+            sentry.captureException()
 
     def serve_forever(self, **kwargs):
         if not self.app:
             raise RuntimeError('application not registered on server instance')
-
-        sentry_dsn = self.app.config.get('SENTRY_DSN')
-        self.raven = RavenClient(dsn=sentry_dsn) if sentry_dsn else None
 
         super(TrackingServer, self).serve_forever(**kwargs)

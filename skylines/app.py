@@ -2,7 +2,6 @@ import os
 import config
 
 from flask import Flask
-from raven.contrib.flask import Sentry
 
 from skylines.api.middleware import HTTPMethodOverrideMiddleware
 
@@ -59,9 +58,8 @@ class SkyLines(Flask):
             self.logger.addHandler(file_handler)
 
     def add_sentry(self):
-        sentry_dsn = self.config.get('SENTRY_DSN')
-        if sentry_dsn:
-            Sentry(self, dsn=sentry_dsn)
+        from skylines.sentry import sentry
+        sentry.init_app(self)
 
     def add_celery(self):
         from skylines.worker.celery import celery
@@ -77,6 +75,7 @@ def create_app(*args, **kw):
     app = SkyLines(*args, **kw)
     app.add_sqlalchemy()
     app.add_cache()
+    app.add_sentry()
     app.initialize_lib()
     return app
 
@@ -85,7 +84,6 @@ def create_http_app(*args, **kw):
     app = create_app(*args, **kw)
 
     app.add_logging_handlers()
-    app.add_sentry()
     app.add_celery()
 
     return app
