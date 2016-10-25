@@ -18,7 +18,6 @@ setup(
         'flask==0.10.1',
         'werkzeug==0.9.6',
         'Flask-Babel==0.9',
-        'Flask-Login==0.2.9',
         'Flask-Cache==0.12',
         'Flask-Migrate==1.2.0',
         'Flask-Script==0.6.7',

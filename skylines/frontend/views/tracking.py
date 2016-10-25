@@ -1,6 +1,7 @@
-from flask import Blueprint, jsonify, g
+from flask import Blueprint, jsonify, request
 
 from skylines.frontend.cache import cache
+from skylines.frontend.oauth import oauth
 from skylines.lib.decorators import jsonp
 from skylines.model import TrackingFix, Airport, Follower
 from skylines.schemas import TrackingFixSchema, AirportSchema
@@ -10,6 +11,7 @@ tracking_blueprint = Blueprint('tracking', 'skylines')
 
 @tracking_blueprint.route('/tracking', strict_slashes=False)
 @tracking_blueprint.route('/live', strict_slashes=False)
+@oauth.optional()
 def index():
     fix_schema = TrackingFixSchema(only=('time', 'location', 'altitude', 'elevation', 'pilot'))
     airport_schema = AirportSchema(only=('id', 'name', 'countryCode'))
@@ -34,8 +36,8 @@ def index():
 
         tracks.append(track)
 
-    if g.current_user:
-        followers = [f.destination_id for f in Follower.query(source=g.current_user)]
+    if request.user_id:
+        followers = [f.destination_id for f in Follower.query(source_id=request.user_id)]
     else:
         followers = []
 

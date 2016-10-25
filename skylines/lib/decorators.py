@@ -1,7 +1,6 @@
 from functools import wraps
 
-from flask import current_app, request, jsonify
-from flask.ext.login import current_user
+from flask import current_app, request
 
 
 def jsonp(func):
@@ -17,17 +16,3 @@ def jsonp(func):
         else:
             return func(*args, **kwargs)
     return decorated_function
-
-
-class login_required:
-    def __init__(self, msg=None):
-        self.msg = msg
-
-    def __call__(self, fn):
-        @wraps(fn)
-        def decorated_view(*args, **kwargs):
-            if not current_user.is_authenticated():
-                return jsonify(), 401
-
-            return fn(*args, **kwargs)
-        return decorated_view

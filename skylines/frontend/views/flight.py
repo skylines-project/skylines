@@ -10,6 +10,7 @@ from geoalchemy2.shape import to_shape
 from datetime import timedelta
 
 from skylines.frontend.cache import cache
+from skylines.frontend.oauth import oauth
 from skylines.database import db
 from skylines.lib import files
 from skylines.lib.dbutil import get_requested_record
@@ -128,13 +129,13 @@ def _get_contest_traces(flight):
 
 
 def mark_flight_notifications_read(flight):
-    if not g.current_user:
+    if not request.user_id:
         return
 
     def add_flight_filter(query):
         return query.filter(Event.flight_id == flight.id)
 
-    Notification.mark_all_read(g.current_user, filter_func=add_flight_filter)
+    Notification.mark_all_read(User.get(request.user_id), filter_func=add_flight_filter)
     db.session.commit()
 
 
@@ -151,10 +152,12 @@ class NearFlightSchema(Schema):
 
 
 @flight_blueprint.route('/flights/<flight_id>', strict_slashes=False)
+@oauth.optional()
 def read(flight_id):
     flight = get_requested_record(Flight, flight_id, joinedload=[Flight.igc_file])
 
-    if not flight.is_viewable(g.current_user):
+    current_user = User.get(request.user_id) if request.user_id else None
+    if not flight.is_viewable(current_user):
         return jsonify(), 404
 
     _reanalyse_if_needed(flight)
@@ -226,10 +229,12 @@ def read(flight_id):
 
 
 @flight_blueprint.route('/flights/<flight_id>/json')
+@oauth.optional()
 def json(flight_id):
     flight = get_requested_record(Flight, flight_id, joinedload=[Flight.igc_file])
 
-    if not flight.is_viewable(g.current_user):
+    current_user = User.get(request.user_id) if request.user_id else None
+    if not flight.is_viewable(current_user):
         return jsonify(), 404
 
     # Return HTTP Status code 304 if an upstream or browser cache already
@@ -329,10 +334,12 @@ def _get_near_flights(flight, location, time, max_distance=1000):
 
 
 @flight_blueprint.route('/flights/<flight_id>/near')
+@oauth.optional()
 def near(flight_id):
     flight = get_requested_record(Flight, flight_id, joinedload=[Flight.igc_file])
 
-    if not flight.is_viewable(g.current_user):
+    current_user = User.get(request.user_id) if request.user_id else None
+    if not flight.is_viewable(current_user):
         return jsonify(), 404
 
     try:
@@ -360,10 +367,12 @@ def near(flight_id):
 
 
 @flight_blueprint.route('/flights/<flight_id>', methods=['POST'], strict_slashes=False)
+@oauth.required()
 def update(flight_id):
     flight = get_requested_record(Flight, flight_id)
 
-    if not flight.is_writable(g.current_user):
+    current_user = User.get(request.user_id)
+    if not flight.is_writable(current_user):
         return jsonify(), 403
 
     json = request.get_json()
@@ -385,7 +394,7 @@ def update(flight_id):
 
             pilot_club_id = User.get(pilot_id).club_id
 
-            if pilot_club_id != g.current_user.club_id or (pilot_club_id is None and pilot_id != g.current_user.id):
+            if pilot_club_id != current_user.club_id or (pilot_club_id is None and pilot_id != current_user.id):
                 return jsonify(error='pilot-disallowed'), 422
 
             if flight.pilot_id != pilot_id:
@@ -411,8 +420,8 @@ def update(flight_id):
 
             co_pilot_club_id = User.get(co_pilot_id).club_id
 
-            if co_pilot_club_id != g.current_user.club_id \
-                    or (co_pilot_club_id is None and co_pilot_id != g.current_user.id):
+            if co_pilot_club_id != current_user.club_id \
+                    or (co_pilot_club_id is None and co_pilot_id != current_user.id):
                 return jsonify(error='co-pilot-disallowed'), 422
 
             flight.co_pilot_id = co_pilot_id
@@ -458,10 +467,12 @@ def update(flight_id):
 
 
 @flight_blueprint.route('/flights/<flight_id>', methods=('DELETE',), strict_slashes=False)
+@oauth.required()
 def delete(flight_id):
     flight = get_requested_record(Flight, flight_id, joinedload=[Flight.igc_file])
 
-    if not flight.is_writable(g.current_user):
+    current_user = User.get(request.user_id)
+    if not flight.is_writable(current_user):
         abort(403)
 
     files.delete_file(flight.igc_file.filename)
@@ -473,10 +484,12 @@ def delete(flight_id):
 
 
 @flight_blueprint.route('/flights/<flight_id>/comments', methods=('POST',))
+@oauth.required()
 def add_comment(flight_id):
     flight = get_requested_record(Flight, flight_id)
 
-    if not g.current_user:
+    current_user = User.get(request.user_id)
+    if not current_user:
         return jsonify(), 403
 
     json = request.get_json()
@@ -489,7 +502,7 @@ def add_comment(flight_id):
         return jsonify(error='validation-failed', fields=e.messages), 422
 
     comment = FlightComment()
-    comment.user = g.current_user
+    comment.user = current_user
     comment.flight = flight
     comment.text = data['text']
 

@@ -1,6 +1,6 @@
 from datetime import datetime
 
-from flask import Blueprint, current_app, g, jsonify
+from flask import Blueprint, current_app, jsonify, request
 
 from sqlalchemy import func
 from sqlalchemy.sql.expression import or_, and_
@@ -8,6 +8,7 @@ from sqlalchemy.orm import joinedload, contains_eager
 from sqlalchemy.orm.util import aliased
 
 from skylines.database import db
+from skylines.frontend.oauth import oauth
 from skylines.lib.table_tools import Pager, Sorter
 from skylines.lib.dbutil import get_requested_record
 from skylines.model import (
@@ -21,13 +22,13 @@ flights_blueprint = Blueprint('flights', 'skylines')
 
 
 def mark_flight_notifications_read(pilot):
-    if not g.current_user:
+    if not request.user_id:
         return
 
     def add_flight_filter(query):
         return query.filter(Event.actor_id == pilot.id)
 
-    Notification.mark_all_read(g.current_user, filter_func=add_flight_filter)
+    Notification.mark_all_read(User.get(request.user_id), filter_func=add_flight_filter)
     db.session.commit()
 
 
@@ -42,8 +43,10 @@ def _create_list(date=None, pilot=None, club=None, airport=None,
         .query(FlightComment.flight_id, func.count('*').label('count')) \
         .group_by(FlightComment.flight_id).subquery()
 
+    current_user = User.get(request.user_id) if request.user_id else None
+
     flights = db.session.query(Flight, subq.c.count) \
-        .filter(Flight.is_listable(g.current_user)) \
+        .filter(Flight.is_listable(current_user)) \
         .join(Flight.igc_file) \
         .options(contains_eager(Flight.igc_file)) \
         .join(owner_alias, IGCFile.owner) \
@@ -128,11 +131,13 @@ def _create_list(date=None, pilot=None, club=None, airport=None,
 
 
 @flights_blueprint.route('/flights/all')
+@oauth.optional()
 def all():
     return _create_list(default_sorting_column='date', default_sorting_order='desc')
 
 
 @flights_blueprint.route('/flights/date/<date>')
+@oauth.optional()
 def date(date, latest=False):
     try:
         if isinstance(date, (str, unicode)):
@@ -148,12 +153,15 @@ def date(date, latest=False):
 
 
 @flights_blueprint.route('/flights/latest')
+@oauth.optional()
 def latest():
+    current_user = User.get(request.user_id) if request.user_id else None
+
     query = db.session \
         .query(func.max(Flight.date_local).label('date')) \
         .filter(Flight.takeoff_time < datetime.utcnow()) \
         .join(Flight.igc_file) \
-        .filter(Flight.is_listable(g.current_user))
+        .filter(Flight.is_listable(current_user))
 
     date_ = query.one().date
     if not date_:
@@ -163,6 +171,7 @@ def latest():
 
 
 @flights_blueprint.route('/flights/pilot/<int:id>')
+@oauth.optional()
 def pilot(id):
     pilot = get_requested_record(User, id)
 
@@ -172,6 +181,7 @@ def pilot(id):
 
 
 @flights_blueprint.route('/flights/club/<int:id>')
+@oauth.optional()
 def club(id):
     club = get_requested_record(Club, id)
 
@@ -179,6 +189,7 @@ def club(id):
 
 
 @flights_blueprint.route('/flights/airport/<int:id>')
+@oauth.optional()
 def airport(id):
     airport = get_requested_record(Airport, id)
 
@@ -186,17 +197,15 @@ def airport(id):
 
 
 @flights_blueprint.route('/flights/unassigned')
+@oauth.required()
 def unassigned():
-    if not g.current_user:
-        return jsonify(), 400
-
-    f = and_(Flight.pilot_id is None,
-             IGCFile.owner == g.current_user)
+    f = and_(Flight.pilot_id is None, IGCFile.owner_id == request.user_id)
 
     return _create_list(filter=f, default_sorting_column='date', default_sorting_order='desc')
 
 
 @flights_blueprint.route('/flights/list/<ids>')
+@oauth.optional()
 def list(ids):
     if not ids:
         return jsonify(), 400

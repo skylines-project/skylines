@@ -30,11 +30,6 @@ class SkyLines(Flask):
         from skylines.frontend.cache import cache
         cache.init_app(self)
 
-    def add_login_manager(self):
-        """ Create and attach Login extension """
-        from skylines.frontend.login import login_manager
-        login_manager.init_app(self)
-
     def add_logging_handlers(self):
         if self.debug: return
 
@@ -87,11 +82,14 @@ def create_http_app(*args, **kw):
 
 
 def create_frontend_app(*args, **kw):
+    from skylines.frontend.oauth import oauth
+
     app = create_http_app('skylines.frontend', *args, **kw)
 
     app.add_cache()
     app.load_egm96()
-    app.add_login_manager()
+
+    oauth.init_app(app)
 
     import skylines.frontend.views
     skylines.frontend.views.register(app)

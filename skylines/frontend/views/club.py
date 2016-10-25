@@ -1,19 +1,23 @@
-from flask import Blueprint, g, request, jsonify
+from flask import Blueprint, request, jsonify
 
 from skylines.database import db
+from skylines.frontend.oauth import oauth
 from skylines.lib.dbutil import get_requested_record
-from skylines.model import Club
+from skylines.model import Club, User
 from skylines.schemas import ClubSchema, ValidationError
 
 club_blueprint = Blueprint('club', 'skylines')
 
 
 @club_blueprint.route('/clubs/<club_id>', strict_slashes=False)
+@oauth.optional()
 def read(club_id):
+    current_user = User.get(request.user_id) if request.user_id else None
+
     club = get_requested_record(Club, club_id)
 
     json = ClubSchema().dump(club).data
-    json['isWritable'] = club.is_writable(g.current_user)
+    json['isWritable'] = club.is_writable(current_user)
 
     return jsonify(**json)
 

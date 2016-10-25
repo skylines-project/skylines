@@ -1,10 +1,10 @@
-from flask import Blueprint, request, g, jsonify
+from flask import Blueprint, request, jsonify
 from sqlalchemy.orm import subqueryload, contains_eager
 from sqlalchemy.sql.expression import or_
 
 from skylines.database import db
-from skylines.model.event import Event, Notification, Flight
-from skylines.lib.decorators import login_required
+from skylines.frontend.oauth import oauth
+from skylines.model import Event, Notification, Flight, User
 
 TYPES = {
     Event.Type.FLIGHT_COMMENT: 'flight-comment',
@@ -30,9 +30,9 @@ def _filter_query(query, args):
 
 
 @notifications_blueprint.route('/notifications', strict_slashes=False)
-@login_required("You have to login to read notifications.")
+@oauth.required()
 def list():
-    query = Notification.query(recipient=g.current_user) \
+    query = Notification.query(recipient_id=request.user_id) \
         .join('event') \
         .options(contains_eager('event')) \
         .options(subqueryload('event.actor')) \
@@ -60,12 +60,13 @@ def list():
 
 
 @notifications_blueprint.route('/notifications/clear', methods=('POST',))
-@login_required("You have to login to clear notifications.")
+@oauth.required()
 def clear():
     def filter_func(query):
         return _filter_query(query, request.args)
 
-    Notification.mark_all_read(g.current_user, filter_func=filter_func)
+    current_user = User.get(request.user_id)
+    Notification.mark_all_read(current_user, filter_func=filter_func)
 
     db.session.commit()
 

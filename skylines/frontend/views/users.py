@@ -2,13 +2,14 @@ from email.mime.text import MIMEText
 from email.utils import formatdate
 import smtplib
 
-from flask import Blueprint, request, current_app, g, jsonify
+from flask import Blueprint, request, current_app, jsonify
 from werkzeug.exceptions import ServiceUnavailable
 
 from sqlalchemy import func
 from sqlalchemy.orm import joinedload
 
 from skylines.database import db
+from skylines.frontend.oauth import oauth
 from skylines.model import User
 from skylines.model.event import create_new_user_event
 from skylines.schemas import UserSchema, CurrentUserSchema, ValidationError
@@ -137,7 +138,10 @@ def recover_step2_post(json):
 
 
 @users_blueprint.route('/users/check-email', methods=['POST'])
+@oauth.optional()
 def check_email():
+    current_user = User.get(request.user_id) if request.user_id else None
+
     json = request.get_json()
     if not json:
         return jsonify(error='invalid-request'), 400
@@ -145,7 +149,7 @@ def check_email():
     email = json.get('email', '')
 
     result = 'available'
-    if g.current_user and email == g.current_user.email_address:
+    if current_user and email == current_user.email_address:
         result = 'self'
     elif User.exists(email_address=email):
         result = 'unavailable'

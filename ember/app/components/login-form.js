@@ -13,7 +13,7 @@ export default Ember.Component.extend({
     let { email, password } = this.getProperties('email', 'password');
 
     try {
-      yield this.get('session').authenticate('authenticator:cookie', email, password);
+      yield this.get('session').authenticate('authenticator:oauth2', email, password);
     } catch (error) {
       this.set('error', error);
     }
