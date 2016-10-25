@@ -12,6 +12,7 @@ from flask_wtf.csrf import generate_csrf, validate_csrf
 from redis.exceptions import ConnectionError
 from sqlalchemy.sql.expression import func
 
+from skylines.cache import cache
 from skylines.database import db
 from skylines.lib import files
 from skylines.lib.util import pressure_alt_to_qnh_alt
@@ -270,8 +271,8 @@ def index_post():
         # Store data in cache for image creation
         cache_key = hashlib.sha1(str(flight.id) + '_' + str(user.id)).hexdigest()
 
-        current_app.cache.set('upload_airspace_infringements_' + cache_key, infringements, timeout=15 * 60)
-        current_app.cache.set('upload_airspace_flight_path_' + cache_key, fp, timeout=15 * 60)
+        cache.set('upload_airspace_infringements_' + cache_key, infringements, timeout=15 * 60)
+        cache.set('upload_airspace_flight_path_' + cache_key, fp, timeout=15 * 60)
 
         airspace = db.session.query(Airspace) \
                              .filter(Airspace.id.in_(infringements.keys())) \
@@ -380,8 +381,8 @@ def airspace_image(cache_key, airspace_id):
         abort(404)
 
     # get information from cache...
-    infringements = current_app.cache.get('upload_airspace_infringements_' + cache_key)
-    flight_path = current_app.cache.get('upload_airspace_flight_path_' + cache_key)
+    infringements = cache.get('upload_airspace_infringements_' + cache_key)
+    flight_path = cache.get('upload_airspace_flight_path_' + cache_key)
 
     # abort if invalid cache key
     if not infringements \

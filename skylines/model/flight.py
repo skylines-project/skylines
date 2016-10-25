@@ -2,7 +2,6 @@
 
 from datetime import datetime, timedelta
 from bisect import bisect_left
-from flask import current_app
 
 from sqlalchemy.dialects import postgresql
 from sqlalchemy.orm import deferred
@@ -15,6 +14,7 @@ from geoalchemy2.types import Geometry
 from geoalchemy2.shape import to_shape, from_shape
 from shapely.geometry import LineString
 
+from skylines.cache import cache
 from skylines.database import db
 from skylines.lib.sql import _ST_Intersects, _ST_Contains
 
@@ -491,7 +491,7 @@ class FlightPathChunks(db.Model):
 
 
 def get_elevations_for_flight(flight):
-    cached_elevations = current_app.cache.get('elevations_' + flight.__repr__())
+    cached_elevations = cache.get('elevations_' + flight.__repr__())
     if cached_elevations:
         return cached_elevations
 
@@ -544,6 +544,6 @@ def get_elevations_for_flight(flight):
 
         elevations.append((time, elevation))
 
-    current_app.cache.set('elevations_' + flight.__repr__(), elevations, timeout=3600 * 24)
+    cache.set('elevations_' + flight.__repr__(), elevations, timeout=3600 * 24)
 
     return elevations

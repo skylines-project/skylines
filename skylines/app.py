@@ -28,8 +28,8 @@ class SkyLines(Flask):
 
     def add_cache(self):
         """ Create and attach Cache extension """
-        from flask.ext.cache import Cache
-        self.cache = Cache(self, with_jinja2_ext=False)
+        from skylines.cache import cache
+        cache.init_app(self)
 
     def add_login_manager(self):
         """ Create and attach Login extension """
