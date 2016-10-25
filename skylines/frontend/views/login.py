@@ -1,5 +1,3 @@
-import base64
-
 from flask import request, g, jsonify
 from flask.ext.login import login_user, logout_user, current_user
 
@@ -9,20 +7,6 @@ from skylines.schemas import CurrentUserSchema, ValidationError
 
 def register(app):
     """ Register the /login and /logout routes on the given app """
-
-    @app.login_manager.user_loader
-    def load_user(userid):
-        return User.get(userid)
-
-    @app.login_manager.header_loader
-    def load_user_from_header(header_val):
-        try:
-            header_val = header_val.replace('Basic ', '', 1)
-            header_val = base64.b64decode(header_val)
-            email, password = header_val.split(':', 1)
-            return User.by_credentials(email, password)
-        except:
-            return None
 
     @app.before_request
     def inject_current_user():

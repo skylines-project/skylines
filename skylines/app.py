@@ -33,9 +33,8 @@ class SkyLines(Flask):
 
     def add_login_manager(self):
         """ Create and attach Login extension """
-        from flask.ext.login import LoginManager
-        self.login_manager = LoginManager()
-        self.login_manager.init_app(self)
+        from skylines.frontend.login import login_manager
+        login_manager.init_app(self)
 
     def add_logging_handlers(self):
         if self.debug: return
