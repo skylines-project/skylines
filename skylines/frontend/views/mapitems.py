@@ -1,15 +1,13 @@
-from flask import Blueprint, request
+from flask import Blueprint, request, jsonify
 
 from skylines import api
-from .json import jsonify
-from .parser import parse_location
+from skylines.api.views.parser import parse_location
 
 mapitems_blueprint = Blueprint('mapitems', 'skylines')
 
 
-@mapitems_blueprint.route('/mapitems/')
-@mapitems_blueprint.route('/mapitems', endpoint='list')
-def _list():
+@mapitems_blueprint.route('/api/mapitems', strict_slashes=False)
+def list():
     location = parse_location(request.args)
     return jsonify({
         'airspaces': api.get_airspaces_by_location(location),

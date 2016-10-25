@@ -12,6 +12,7 @@ from .files import files_blueprint
 from .flight import flight_blueprint
 from .flights import flights_blueprint
 from .livetrack24 import lt24_blueprint
+from .mapitems import mapitems_blueprint
 from .notifications import notifications_blueprint
 from .ranking import ranking_blueprint
 from .search import search_blueprint
@@ -41,6 +42,7 @@ def register(app):
     app.register_blueprint(flight_blueprint)
     app.register_blueprint(flights_blueprint)
     app.register_blueprint(lt24_blueprint)
+    app.register_blueprint(mapitems_blueprint)
     app.register_blueprint(notifications_blueprint)
     app.register_blueprint(ranking_blueprint)
     app.register_blueprint(search_blueprint)
