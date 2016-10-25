@@ -9,7 +9,7 @@ from sqlalchemy.sql.expression import func
 from geoalchemy2.shape import to_shape
 from datetime import timedelta
 
-from skylines.cache import cache
+from skylines.frontend.cache import cache
 from skylines.database import db
 from skylines.lib import files
 from skylines.lib.dbutil import get_requested_record

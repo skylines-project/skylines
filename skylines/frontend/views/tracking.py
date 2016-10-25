@@ -1,6 +1,6 @@
 from flask import Blueprint, jsonify, g
 
-from skylines.cache import cache
+from skylines.frontend.cache import cache
 from skylines.lib.decorators import jsonp
 from skylines.model import TrackingFix, Airport, Follower
 from skylines.schemas import TrackingFixSchema, AirportSchema

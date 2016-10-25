@@ -12,7 +12,7 @@ from flask_wtf.csrf import generate_csrf, validate_csrf
 from redis.exceptions import ConnectionError
 from sqlalchemy.sql.expression import func
 
-from skylines.cache import cache
+from skylines.frontend.cache import cache
 from skylines.database import db
 from skylines.lib import files
 from skylines.lib.util import pressure_alt_to_qnh_alt

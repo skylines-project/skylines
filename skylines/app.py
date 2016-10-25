@@ -27,7 +27,7 @@ class SkyLines(Flask):
 
     def add_cache(self):
         """ Create and attach Cache extension """
-        from skylines.cache import cache
+        from skylines.frontend.cache import cache
         cache.init_app(self)
 
     def add_login_manager(self):
@@ -73,7 +73,6 @@ class SkyLines(Flask):
 def create_app(*args, **kw):
     app = SkyLines(*args, **kw)
     app.add_sqlalchemy()
-    app.add_cache()
     app.add_sentry()
     return app
 
@@ -90,6 +89,7 @@ def create_http_app(*args, **kw):
 def create_frontend_app(*args, **kw):
     app = create_http_app('skylines.frontend', *args, **kw)
 
+    app.add_cache()
     app.load_egm96()
     app.add_login_manager()
 
