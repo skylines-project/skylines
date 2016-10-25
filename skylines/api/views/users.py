@@ -10,10 +10,9 @@ from skylines.api.views.json import jsonify
 users = Blueprint('users', 'skylines')
 
 
-@users.route('/users/')
-@users.route('/users', endpoint='list')
+@users.route('/users', strict_slashes=False)
 @use_args(pagination_args)
-def _list(args):
+def list(args):
     offset = (args['page'] - 1) * args['per_page']
     limit = args['per_page']
 

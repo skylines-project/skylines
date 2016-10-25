@@ -2,7 +2,6 @@ import os
 import config
 
 from flask import Flask
-from raven.contrib.flask import Sentry
 
 from skylines.api.middleware import HTTPMethodOverrideMiddleware
 
@@ -23,20 +22,18 @@ class SkyLines(Flask):
 
     def add_sqlalchemy(self):
         """ Create and configure SQLAlchemy extension """
-        from skylines.database import db, migrate
+        from skylines.database import db
         db.init_app(self)
-        migrate.init_app(self, db)
 
     def add_cache(self):
         """ Create and attach Cache extension """
-        from flask.ext.cache import Cache
-        self.cache = Cache(self, with_jinja2_ext=False)
+        from skylines.frontend.cache import cache
+        cache.init_app(self)
 
     def add_login_manager(self):
         """ Create and attach Login extension """
-        from flask.ext.login import LoginManager
-        self.login_manager = LoginManager()
-        self.login_manager.init_app(self)
+        from skylines.frontend.login import login_manager
+        login_manager.init_app(self)
 
     def add_logging_handlers(self):
         if self.debug: return
@@ -61,16 +58,14 @@ class SkyLines(Flask):
             self.logger.addHandler(file_handler)
 
     def add_sentry(self):
-        sentry_dsn = self.config.get('SENTRY_DSN')
-        if sentry_dsn:
-            Sentry(self, dsn=sentry_dsn)
+        from skylines.sentry import sentry
+        sentry.init_app(self)
 
     def add_celery(self):
         from skylines.worker.celery import celery
         celery.init_app(self)
-        return celery
 
-    def initialize_lib(self):
+    def load_egm96(self):
         from skylines.lib.geoid import load_geoid
         load_geoid(self)
 
@@ -78,8 +73,7 @@ class SkyLines(Flask):
 def create_app(*args, **kw):
     app = SkyLines(*args, **kw)
     app.add_sqlalchemy()
-    app.add_cache()
-    app.initialize_lib()
+    app.add_sentry()
     return app
 
 
@@ -87,7 +81,6 @@ def create_http_app(*args, **kw):
     app = create_app(*args, **kw)
 
     app.add_logging_handlers()
-    app.add_sentry()
     app.add_celery()
 
     return app
@@ -96,6 +89,8 @@ def create_http_app(*args, **kw):
 def create_frontend_app(*args, **kw):
     app = create_http_app('skylines.frontend', *args, **kw)
 
+    app.add_cache()
+    app.load_egm96()
     app.add_login_manager()
 
     import skylines.frontend.views

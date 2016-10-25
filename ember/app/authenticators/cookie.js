@@ -5,7 +5,7 @@ export default Base.extend({
   ajax: Ember.inject.service(),
 
   authenticate(email, password) {
-    return this.get('ajax').request('/session', { method: 'PUT', json: { email, password } })
+    return this.get('ajax').request('/api/session', { method: 'PUT', json: { email, password } })
       .then(() => this.get('ajax').request('/api/settings/'))
       .then(settings => ({ settings }));
   },
@@ -16,6 +16,6 @@ export default Base.extend({
   },
 
   invalidate(/* data */) {
-    return this.get('ajax').request('/session', { method: 'DELETE' });
+    return this.get('ajax').request('/api/session', { method: 'DELETE' });
   },
 });

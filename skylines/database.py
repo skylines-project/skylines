@@ -1,5 +1,4 @@
 from flask.ext.sqlalchemy import SQLAlchemy
-from flask.ext.migrate import Migrate
 
 
 def query(cls, **kw):
@@ -20,7 +19,6 @@ def exists(cls, **kw):
 
 
 db = SQLAlchemy(session_options=dict(expire_on_commit=False))
-migrate = Migrate()
 
 db.Model.flask_query = db.Model.query
 db.Model.query = classmethod(query)

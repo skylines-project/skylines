@@ -12,10 +12,9 @@ bbox_args = {
 }
 
 
-@airports_blueprint.route('/airports/')
-@airports_blueprint.route('/airports', endpoint='list')
+@airports_blueprint.route('/airports', strict_slashes=False)
 @use_args(bbox_args)
-def _list(args):
+def list(args):
     airports = api.get_airports_by_bbox(args['bbox'])
     return jsonify(airports)
 

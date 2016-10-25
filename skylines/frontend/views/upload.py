@@ -12,6 +12,7 @@ from flask_wtf.csrf import generate_csrf, validate_csrf
 from redis.exceptions import ConnectionError
 from sqlalchemy.sql.expression import func
 
+from skylines.frontend.cache import cache
 from skylines.database import db
 from skylines.lib import files
 from skylines.lib.util import pressure_alt_to_qnh_alt
@@ -147,7 +148,7 @@ def _encode_flight_path(fp, qnh):
                 igc_start_time=fp[0].datetime, igc_end_time=fp[-1].datetime)
 
 
-@upload_blueprint.route('/api/flights/upload/csrf')
+@upload_blueprint.route('/flights/upload/csrf')
 @login_required("You have to login to upload flights.")
 def csrf():
     if not g.current_user:
@@ -156,7 +157,7 @@ def csrf():
     return jsonify(token=generate_csrf())
 
 
-@upload_blueprint.route('/api/flights/upload', methods=('POST',), strict_slashes=False)
+@upload_blueprint.route('/flights/upload', methods=('POST',), strict_slashes=False)
 def index_post():
     if not g.current_user:
         return jsonify(error='authentication-required'), 403
@@ -270,8 +271,8 @@ def index_post():
         # Store data in cache for image creation
         cache_key = hashlib.sha1(str(flight.id) + '_' + str(user.id)).hexdigest()
 
-        current_app.cache.set('upload_airspace_infringements_' + cache_key, infringements, timeout=15 * 60)
-        current_app.cache.set('upload_airspace_flight_path_' + cache_key, fp, timeout=15 * 60)
+        cache.set('upload_airspace_infringements_' + cache_key, infringements, timeout=15 * 60)
+        cache.set('upload_airspace_flight_path_' + cache_key, fp, timeout=15 * 60)
 
         airspace = db.session.query(Airspace) \
                              .filter(Airspace.id.in_(infringements.keys())) \
@@ -305,7 +306,7 @@ def index_post():
     return jsonify(results=results, club_members=club_members, aircraft_models=aircraft_models)
 
 
-@upload_blueprint.route('/api/flights/upload/verify', methods=('POST',))
+@upload_blueprint.route('/flights/upload/verify', methods=('POST',))
 @login_required('You have to login to upload flights.')
 def verify():
     json = request.get_json()
@@ -374,14 +375,14 @@ def verify():
     return jsonify()
 
 
-@upload_blueprint.route('/api/flights/upload/airspace/<string:cache_key>/<int:airspace_id>.png')
+@upload_blueprint.route('/flights/upload/airspace/<string:cache_key>/<int:airspace_id>.png')
 def airspace_image(cache_key, airspace_id):
     if not mapscript_available:
         abort(404)
 
     # get information from cache...
-    infringements = current_app.cache.get('upload_airspace_infringements_' + cache_key)
-    flight_path = current_app.cache.get('upload_airspace_flight_path_' + cache_key)
+    infringements = cache.get('upload_airspace_infringements_' + cache_key)
+    flight_path = cache.get('upload_airspace_flight_path_' + cache_key)
 
     # abort if invalid cache key
     if not infringements \

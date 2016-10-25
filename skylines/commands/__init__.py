@@ -1,7 +1,7 @@
 import sys
 
 from flask.ext.script import Manager
-from flask.ext.migrate import MigrateCommand
+from flask.ext.migrate import Migrate, MigrateCommand
 
 from .shell import Shell
 from .server import Server, APIServer
@@ -19,6 +19,7 @@ from .users import manager as users_manager
 from .search import Search
 
 from skylines.app import create_app
+from skylines.database import db
 from config import to_envvar
 
 
@@ -27,7 +28,9 @@ def _create_app(config):
         print 'Config file "{}" not found.'.format(config)
         sys.exit(1)
 
-    return create_app()
+    app = create_app()
+    app.migrate = Migrate(app, db)
+    return app
 
 
 manager = Manager(_create_app)

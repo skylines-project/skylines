@@ -16,7 +16,7 @@ from skylines.schemas import UserSchema, CurrentUserSchema, ValidationError
 users_blueprint = Blueprint('users', 'skylines')
 
 
-@users_blueprint.route('/api/users', strict_slashes=False)
+@users_blueprint.route('/users', strict_slashes=False)
 def list():
     users = User.query() \
         .options(joinedload(User.club)) \
@@ -32,7 +32,7 @@ def list():
     return jsonify(users=UserSchema(only=fields).dump(users, many=True).data)
 
 
-@users_blueprint.route('/api/users', methods=['POST'], strict_slashes=False)
+@users_blueprint.route('/users', methods=['POST'], strict_slashes=False)
 def new_post():
     json = request.get_json()
     if json is None:
@@ -55,7 +55,7 @@ def new_post():
     return jsonify(user=UserSchema().dump(user).data)
 
 
-@users_blueprint.route('/api/users/recover', methods=['POST'])
+@users_blueprint.route('/users/recover', methods=['POST'])
 def recover_post():
     json = request.get_json()
     if json is None:
@@ -136,7 +136,7 @@ def recover_step2_post(json):
     return jsonify()
 
 
-@users_blueprint.route('/api/users/check-email', methods=['POST'])
+@users_blueprint.route('/users/check-email', methods=['POST'])
 def check_email():
     json = request.get_json()
     if not json:

@@ -1,5 +1,6 @@
-from flask import Blueprint, current_app, jsonify, g
+from flask import Blueprint, jsonify, g
 
+from skylines.frontend.cache import cache
 from skylines.lib.decorators import jsonp
 from skylines.model import TrackingFix, Airport, Follower
 from skylines.schemas import TrackingFixSchema, AirportSchema
@@ -7,13 +8,13 @@ from skylines.schemas import TrackingFixSchema, AirportSchema
 tracking_blueprint = Blueprint('tracking', 'skylines')
 
 
-@tracking_blueprint.route('/api/tracking', strict_slashes=False)
-@tracking_blueprint.route('/api/live', strict_slashes=False)
+@tracking_blueprint.route('/tracking', strict_slashes=False)
+@tracking_blueprint.route('/live', strict_slashes=False)
 def index():
     fix_schema = TrackingFixSchema(only=('time', 'location', 'altitude', 'elevation', 'pilot'))
     airport_schema = AirportSchema(only=('id', 'name', 'countryCode'))
 
-    @current_app.cache.memoize(timeout=(60 * 60))
+    @cache.memoize(timeout=(60 * 60))
     def get_nearest_airport(track):
         airport = Airport.by_location(track.location, None)
         if not airport:
@@ -41,7 +42,7 @@ def index():
     return jsonify(friends=followers, tracks=tracks)
 
 
-@tracking_blueprint.route('/api/tracking/latest.json')
+@tracking_blueprint.route('/tracking/latest.json')
 @jsonp
 def latest():
     fixes = []

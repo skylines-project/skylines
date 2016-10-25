@@ -9,7 +9,7 @@ from .notifications import _filter_query, convert_event
 timeline_blueprint = Blueprint('timeline', 'skylines')
 
 
-@timeline_blueprint.route('/api/timeline')
+@timeline_blueprint.route('/timeline')
 def list():
     query = Event.query() \
         .options(subqueryload('actor')) \

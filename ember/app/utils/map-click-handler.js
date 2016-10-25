@@ -242,7 +242,7 @@ const MapClickHandler = Ember.Object.extend({
    * @param {Number} lat Latitude.
    */
   getLocationInfo(lon, lat) {
-    let req = $.ajax(`/api/v0/mapitems?lon=${lon}&lat=${lat}`);
+    let req = $.ajax(`/api/mapitems?lon=${lon}&lat=${lat}`);
     req.done(data => this.showLocationData(data));
     req.fail(() => this.showLocationData(null));
   },

@@ -56,10 +56,13 @@ export default Ember.Route.extend(ApplicationRouteMixin, {
 
   sessionAuthenticated() {
     const attemptedTransition = this.get('session.attemptedTransition');
+    const inLoginRoute = this.controllerFor('application').get('inLoginRoute');
 
     if (attemptedTransition) {
       attemptedTransition.retry();
       this.set('session.attemptedTransition', null);
+    } else if (inLoginRoute) {
+      this.transitionTo('index');
     }
   },
 });

@@ -29,7 +29,7 @@ def _filter_query(query, args):
     return query
 
 
-@notifications_blueprint.route('/api/notifications', strict_slashes=False)
+@notifications_blueprint.route('/notifications', strict_slashes=False)
 @login_required("You have to login to read notifications.")
 def list():
     query = Notification.query(recipient=g.current_user) \
@@ -59,7 +59,7 @@ def list():
     return jsonify(events=(map(convert_event, events)))
 
 
-@notifications_blueprint.route('/api/notifications/clear', methods=('POST',))
+@notifications_blueprint.route('/notifications/clear', methods=('POST',))
 @login_required("You have to login to clear notifications.")
 def clear():
     def filter_func(query):

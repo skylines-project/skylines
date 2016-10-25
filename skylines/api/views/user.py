@@ -8,8 +8,7 @@ from skylines.api.views.json import jsonify
 user = Blueprint('user', 'skylines')
 
 
-@user.route('/user/')
-@user.route('/user')
+@user.route('/user', strict_slashes=False)
 @oauth.required()
 def read():
     user = User.get(request.user_id)

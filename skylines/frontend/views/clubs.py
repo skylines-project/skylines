@@ -7,7 +7,7 @@ from skylines.schemas import ClubSchema
 clubs_blueprint = Blueprint('clubs', 'skylines')
 
 
-@clubs_blueprint.route('/api/clubs/', strict_slashes=False)
+@clubs_blueprint.route('/clubs/', strict_slashes=False)
 def list():
     clubs = Club.query().order_by(func.lower(Club.name))
 

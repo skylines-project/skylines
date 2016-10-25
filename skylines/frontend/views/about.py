@@ -5,7 +5,7 @@ from flask import Blueprint, current_app, jsonify
 about_blueprint = Blueprint('about', 'skylines')
 
 
-@about_blueprint.route('/api/imprint')
+@about_blueprint.route('/imprint')
 def imprint():
     content = current_app.config.get(
         'SKYLINES_IMPRINT',
@@ -14,7 +14,7 @@ def imprint():
     return jsonify(content=content)
 
 
-@about_blueprint.route('/api/team')
+@about_blueprint.route('/team')
 def skylines_team():
     path = os.path.join(os.path.dirname(os.path.abspath(__file__)),
                         '..', '..', '..', 'AUTHORS.md')
@@ -24,7 +24,7 @@ def skylines_team():
     return jsonify(content=content)
 
 
-@about_blueprint.route('/api/license')
+@about_blueprint.route('/license')
 def license():
     path = os.path.join(os.path.dirname(os.path.abspath(__file__)),
                         '..', '..', '..', 'LICENSE')

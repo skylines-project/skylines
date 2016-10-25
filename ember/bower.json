@@ -13,7 +13,6 @@
     "Flot": "flot#0.8.3",
     "flot-marks": "https://github.com/TobiasLohner/flot-marks.git#f09ded70f5a229a38ba0b9cfa92dbb448ca4daaf",
     "jquery": "1.10.2",
-    "jQuery-ajaxTransport-XDomainRequest": "jquery-ajaxtransport-xdomainrequest#1.0.3",
     "sidebar-v2": "0.2.1",
     "eonasdan-bootstrap-datetimepicker": "https://github.com/TobiasLohner/bootstrap-datetimepicker.git#c36342415a1be8fa013548402bf01718ca93d454",
     "BigScreen": "bigscreen#2.0.4"

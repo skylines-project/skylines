@@ -3,24 +3,25 @@ from datetime import datetime
 
 from flask import Blueprint, request, abort, current_app, jsonify, g, make_response
 
+from sqlalchemy import literal_column, and_
 from sqlalchemy.orm import undefer_group, contains_eager
 from sqlalchemy.sql.expression import func
 from geoalchemy2.shape import to_shape
 from datetime import timedelta
 
+from skylines.frontend.cache import cache
 from skylines.database import db
 from skylines.lib import files
-from skylines.lib.dbutil import get_requested_record_list
+from skylines.lib.dbutil import get_requested_record
 from skylines.lib.xcsoar_ import analyse_flight
 from skylines.lib.datetime import from_seconds_of_day
 from skylines.lib.geo import METERS_PER_DEGREE
 from skylines.lib.geoid import egm96_height
 from skylines.model import (
-    User, Flight, Location, FlightComment,
+    User, Flight, Elevation, Location, FlightComment,
     Notification, Event, FlightMeetings, AircraftModel,
 )
 from skylines.model.event import create_flight_comment_notifications
-from skylines.model.flight import get_elevations_for_flight
 from skylines.schemas import fields, FlightSchema, FlightCommentSchema, FlightPhaseSchema, ContestLegSchema, Schema, ValidationError
 from skylines.worker import tasks
 from redis.exceptions import ConnectionError
@@ -42,31 +43,10 @@ def _reanalyse_if_needed(flight):
             db.session.commit()
 
 
-@flight_blueprint.url_value_preprocessor
-def _pull_flight_id(endpoint, values):
-    g.flight_id = values.pop('flight_id')
-
-
 def _patch_query(q):
     return q.join(Flight.igc_file) \
-            .options(contains_eager(Flight.igc_file)) \
-            .filter(Flight.is_viewable(g.current_user))
-
-
-@flight_blueprint.before_request
-def _query_flights():
-    flights = get_requested_record_list(
-        Flight, g.flight_id, patch_query=_patch_query)
-
-    g.flight = flights[0]
-
-    map(_reanalyse_if_needed, flights)
-
-
-@flight_blueprint.url_defaults
-def _add_flight_id(endpoint, values):
-    if hasattr(g, 'flight_id'):
-        values.setdefault('flight_id', g.flight_id)
+        .options(contains_eager(Flight.igc_file)) \
+        .filter(Flight.is_viewable(g.current_user))
 
 
 def _get_flight_path(flight, threshold=0.001, max_points=3000):
@@ -170,19 +150,25 @@ class NearFlightSchema(Schema):
     times = fields.Nested(MeetingTimeSchema, many=True)
 
 
-@flight_blueprint.route('/api/flights/<flight_id>', strict_slashes=False)
-def read():
-    mark_flight_notifications_read(g.flight)
+@flight_blueprint.route('/flights/<flight_id>', strict_slashes=False)
+def read(flight_id):
+    flight = get_requested_record(Flight, flight_id, joinedload=[Flight.igc_file])
 
-    flight = FlightSchema().dump(g.flight).data
+    if not flight.is_viewable(g.current_user):
+        return jsonify(), 404
+
+    _reanalyse_if_needed(flight)
+    mark_flight_notifications_read(flight)
+
+    flight_json = FlightSchema().dump(flight).data
 
     if 'extended' not in request.args:
-        return jsonify(flight=flight)
+        return jsonify(flight=flight_json)
 
-    near_flights = FlightMeetings.get_meetings(g.flight).values()
+    near_flights = FlightMeetings.get_meetings(flight).values()
     near_flights = NearFlightSchema().dump(near_flights, many=True).data
 
-    comments = FlightCommentSchema().dump(g.flight.comments, many=True).data
+    comments = FlightCommentSchema().dump(flight.comments, many=True).data
 
     phases_schema = FlightPhaseSchema(only=(
         'circlingDirection',
@@ -197,7 +183,7 @@ def read():
         'glideRate',
     ))
 
-    phases = phases_schema.dump(g.flight.phases, many=True).data
+    phases = phases_schema.dump(flight.phases, many=True).data
 
     cruise_performance_schema = FlightPhaseSchema(only=(
         'duration',
@@ -210,7 +196,7 @@ def read():
         'count',
     ))
 
-    cruise_performance = cruise_performance_schema.dump(g.flight.cruise_performance).data
+    cruise_performance = cruise_performance_schema.dump(flight.cruise_performance).data
 
     circling_performance_schema = FlightPhaseSchema(only=(
         'circlingDirection',
@@ -221,17 +207,17 @@ def read():
         'altDiff',
     ))
 
-    circling_performance = circling_performance_schema.dump(g.flight.circling_performance, many=True).data
+    circling_performance = circling_performance_schema.dump(flight.circling_performance, many=True).data
     performance = dict(circling=circling_performance, cruise=cruise_performance)
 
     contest_leg_schema = ContestLegSchema()
     contest_legs = {}
     for type in ['classic', 'triangle']:
-        legs = g.flight.get_contest_legs('olc_plus', type)
+        legs = flight.get_contest_legs('olc_plus', type)
         contest_legs[type] = contest_leg_schema.dump(legs, many=True).data
 
     return jsonify(
-        flight=flight,
+        flight=flight_json,
         near_flights=near_flights,
         comments=comments,
         contest_legs=contest_legs,
@@ -239,22 +225,27 @@ def read():
         performance=performance)
 
 
-@flight_blueprint.route('/api/flights/<flight_id>/json')
-def json():
+@flight_blueprint.route('/flights/<flight_id>/json')
+def json(flight_id):
+    flight = get_requested_record(Flight, flight_id, joinedload=[Flight.igc_file])
+
+    if not flight.is_viewable(g.current_user):
+        return jsonify(), 404
+
     # Return HTTP Status code 304 if an upstream or browser cache already
     # contains the response and if the igc file did not change to reduce
     # latency and server load
     # This implementation is very basic. Sadly Flask (0.10.1) does not have
     # this feature
-    last_modified = g.flight.time_modified \
+    last_modified = flight.time_modified \
         .strftime('%a, %d %b %Y %H:%M:%S GMT')
     modified_since = request.headers.get('If-Modified-Since')
     etag = request.headers.get('If-None-Match')
     if (modified_since and modified_since == last_modified) or \
-       (etag and etag == g.flight.igc_file.md5):
+       (etag and etag == flight.igc_file.md5):
         return ('', 304)
 
-    trace = _get_flight_path(g.flight, threshold=0.0001, max_points=10000)
+    trace = _get_flight_path(flight, threshold=0.0001, max_points=10000)
     if not trace:
         abort(404)
 
@@ -266,14 +257,14 @@ def json():
         contests=trace['contests'],
         elevations_t=trace['elevations_t'],
         elevations_h=trace['elevations_h'],
-        sfid=g.flight.id,
+        sfid=flight.id,
         geoid=trace['geoid'],
         additional=dict(
-            registration=g.flight.registration,
-            competition_id=g.flight.competition_id)))
+            registration=flight.registration,
+            competition_id=flight.competition_id)))
 
     resp.headers['Last-Modified'] = last_modified
-    resp.headers['Etag'] = g.flight.igc_file.md5
+    resp.headers['Etag'] = flight.igc_file.md5
     return resp
 
 
@@ -337,8 +328,13 @@ def _get_near_flights(flight, location, time, max_distance=1000):
     return flights
 
 
-@flight_blueprint.route('/api/flights/<flight_id>/near')
-def near():
+@flight_blueprint.route('/flights/<flight_id>/near')
+def near(flight_id):
+    flight = get_requested_record(Flight, flight_id, joinedload=[Flight.igc_file])
+
+    if not flight.is_viewable(g.current_user):
+        return jsonify(), 404
+
     try:
         latitude = float(request.args['lat'])
         longitude = float(request.args['lon'])
@@ -348,9 +344,9 @@ def near():
         abort(400)
 
     location = Location(latitude=latitude, longitude=longitude)
-    time = from_seconds_of_day(g.flight.takeoff_time, time)
+    time = from_seconds_of_day(flight.takeoff_time, time)
 
-    flights = _get_near_flights(g.flight, location, time, 1000)
+    flights = _get_near_flights(flight, location, time, 1000)
 
     def add_flight_path(flight):
         trace = _get_flight_path(flight, threshold=0.0001, max_points=10000)
@@ -363,9 +359,11 @@ def near():
     return jsonify(flights=map(add_flight_path, flights))
 
 
-@flight_blueprint.route('/api/flights/<flight_id>', methods=['POST'], strict_slashes=False)
-def update():
-    if not g.flight.is_writable(g.current_user):
+@flight_blueprint.route('/flights/<flight_id>', methods=['POST'], strict_slashes=False)
+def update(flight_id):
+    flight = get_requested_record(Flight, flight_id)
+
+    if not flight.is_writable(g.current_user):
         return jsonify(), 403
 
     json = request.get_json()
@@ -390,18 +388,18 @@ def update():
             if pilot_club_id != g.current_user.club_id or (pilot_club_id is None and pilot_id != g.current_user.id):
                 return jsonify(error='pilot-disallowed'), 422
 
-            if g.flight.pilot_id != pilot_id:
-                g.flight.pilot_id = pilot_id
+            if flight.pilot_id != pilot_id:
+                flight.pilot_id = pilot_id
                 # pilot_name is irrelevant, if pilot_id is given
-                g.flight.pilot_name = None
+                flight.pilot_name = None
                 # update club if pilot changed
-                g.flight.club_id = pilot_club_id
+                flight.club_id = pilot_club_id
 
         else:
-            g.flight.pilot_id = None
+            flight.pilot_id = None
 
     if 'pilot_name' in data:
-        g.flight.pilot_name = data['pilot_name']
+        flight.pilot_name = data['pilot_name']
 
     if 'co_pilot_id' in data:
         co_pilot_id = data['co_pilot_id']
@@ -417,17 +415,17 @@ def update():
                     or (co_pilot_club_id is None and co_pilot_id != g.current_user.id):
                 return jsonify(error='co-pilot-disallowed'), 422
 
-            g.flight.co_pilot_id = co_pilot_id
+            flight.co_pilot_id = co_pilot_id
             # co_pilot_name is irrelevant, if co_pilot_id is given
-            g.flight.co_pilot_name = None
+            flight.co_pilot_name = None
 
         else:
-            g.flight.co_pilot_id = None
+            flight.co_pilot_id = None
 
     if 'co_pilot_name' in data:
-        g.flight.co_pilot_name = data['co_pilot_name']
+        flight.co_pilot_name = data['co_pilot_name']
 
-    if g.flight.co_pilot_id is not None and g.flight.co_pilot_id == g.flight.pilot_id:
+    if flight.co_pilot_id is not None and flight.co_pilot_id == flight.pilot_id:
         return jsonify(error='copilot-equals-pilot'), 422
 
     if 'model_id' in data:
@@ -436,44 +434,48 @@ def update():
         if model_id is not None and not AircraftModel.exists(id=model_id):
             return jsonify(error='unknown-aircraft-model'), 422
 
-        g.flight.model_id = model_id
+        flight.model_id = model_id
 
     if 'registration' in data:
-        g.flight.registration = data['registration']
+        flight.registration = data['registration']
 
     if 'competition_id' in data:
-        g.flight.competition_id = data['competition_id']
+        flight.competition_id = data['competition_id']
 
     if 'privacy_level' in data:
-        g.flight.privacy_level = data['privacy_level']
+        flight.privacy_level = data['privacy_level']
 
         try:
-            tasks.analyse_flight.delay(g.flight.id)
-            tasks.find_meetings.delay(g.flight.id)
+            tasks.analyse_flight.delay(flight.id)
+            tasks.find_meetings.delay(flight.id)
         except ConnectionError:
             current_app.logger.info('Cannot connect to Redis server')
 
-    g.flight.time_modified = datetime.utcnow()
+    flight.time_modified = datetime.utcnow()
     db.session.commit()
 
     return jsonify()
 
 
-@flight_blueprint.route('/api/flights/<flight_id>', methods=('DELETE',), strict_slashes=False)
-def delete():
-    if not g.flight.is_writable(g.current_user):
+@flight_blueprint.route('/flights/<flight_id>', methods=('DELETE',), strict_slashes=False)
+def delete(flight_id):
+    flight = get_requested_record(Flight, flight_id, joinedload=[Flight.igc_file])
+
+    if not flight.is_writable(g.current_user):
         abort(403)
 
-    files.delete_file(g.flight.igc_file.filename)
-    db.session.delete(g.flight)
-    db.session.delete(g.flight.igc_file)
+    files.delete_file(flight.igc_file.filename)
+    db.session.delete(flight)
+    db.session.delete(flight.igc_file)
     db.session.commit()
 
     return jsonify()
 
 
-@flight_blueprint.route('/api/flights/<flight_id>/comments', methods=('POST',))
-def add_comment():
+@flight_blueprint.route('/flights/<flight_id>/comments', methods=('POST',))
+def add_comment(flight_id):
+    flight = get_requested_record(Flight, flight_id)
+
     if not g.current_user:
         return jsonify(), 403
 
@@ -488,7 +490,7 @@ def add_comment():
 
     comment = FlightComment()
     comment.user = g.current_user
-    comment.flight = g.flight
+    comment.flight = flight
     comment.text = data['text']
 
     create_flight_comment_notifications(comment)
@@ -496,3 +498,62 @@ def add_comment():
     db.session.commit()
 
     return jsonify()
+
+
+def get_elevations_for_flight(flight):
+    cached_elevations = cache.get('elevations_' + flight.__repr__())
+    if cached_elevations:
+        return cached_elevations
+
+    '''
+    WITH src AS
+        (SELECT ST_DumpPoints(flights.locations) AS location,
+                flights.timestamps AS timestamps,
+                flights.locations AS locations
+        FROM flights
+        WHERE flights.id = 30000)
+    SELECT timestamps[(src.location).path[1]] AS timestamp,
+           ST_Value(elevations.rast, (src.location).geom) AS elevation
+    FROM elevations, src
+    WHERE src.locations && elevations.rast AND (src.location).geom && elevations.rast;
+    '''
+
+    # Prepare column expressions
+    location = Flight.locations.ST_DumpPoints()
+
+    # Prepare cte
+    cte = db.session.query(location.label('location'),
+                           Flight.locations.label('locations'),
+                           Flight.timestamps.label('timestamps')) \
+                    .filter(Flight.id == flight.id).cte()
+
+    # Prepare column expressions
+    timestamp = literal_column('timestamps[(location).path[1]]')
+    elevation = Elevation.rast.ST_Value(cte.c.location.geom)
+
+    # Prepare main query
+    q = db.session.query(timestamp.label('timestamp'),
+                         elevation.label('elevation')) \
+                  .filter(and_(cte.c.locations.intersects(Elevation.rast),
+                               cte.c.location.geom.intersects(Elevation.rast))).all()
+
+    if len(q) == 0:
+        return []
+
+    start_time = q[0][0]
+    start_midnight = start_time.replace(hour=0, minute=0, second=0,
+                                        microsecond=0)
+
+    elevations = []
+    for time, elevation in q:
+        if elevation is None:
+            continue
+
+        time_delta = time - start_midnight
+        time = time_delta.days * 86400 + time_delta.seconds
+
+        elevations.append((time, elevation))
+
+    cache.set('elevations_' + flight.__repr__(), elevations, timeout=3600 * 24)
+
+    return elevations
