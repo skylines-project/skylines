@@ -65,7 +65,7 @@ class SkyLines(Flask):
         from skylines.worker.celery import celery
         celery.init_app(self)
 
-    def initialize_lib(self):
+    def load_egm96(self):
         from skylines.lib.geoid import load_geoid
         load_geoid(self)
 
@@ -75,7 +75,6 @@ def create_app(*args, **kw):
     app.add_sqlalchemy()
     app.add_cache()
     app.add_sentry()
-    app.initialize_lib()
     return app
 
 
@@ -91,6 +90,7 @@ def create_http_app(*args, **kw):
 def create_frontend_app(*args, **kw):
     app = create_http_app('skylines.frontend', *args, **kw)
 
+    app.load_egm96()
     app.add_login_manager()
 
     import skylines.frontend.views
