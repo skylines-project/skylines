@@ -17,21 +17,6 @@ from skylines.schemas import Schema, fields, FlightSchema, CurrentUserSchema, Us
 user_blueprint = Blueprint('user', 'skylines')
 
 
-@user_blueprint.url_value_preprocessor
-def _pull_user_id(endpoint, values):
-    if request.endpoint == 'user.html':
-        return
-
-    g.user_id = values.pop('user_id')
-    g.user = get_requested_record(User, g.user_id)
-
-
-@user_blueprint.url_defaults
-def _add_user_id(endpoint, values):
-    if hasattr(g, 'user_id'):
-        values.setdefault('user_id', g.user_id)
-
-
 def _largest_flight(user, schema):
     flight = user.get_largest_flights() \
         .filter(Flight.is_rankable()) \
@@ -73,11 +58,11 @@ class QuickStatsSchema(Schema):
     duration = fields.TimeDelta()
 
 
-def _quick_stats():
+def _quick_stats(user):
     result = db.session.query(func.count('*').label('flights'),
                               func.sum(Flight.olc_classic_distance).label('distance'),
                               func.sum(Flight.duration).label('duration')) \
-        .filter(Flight.pilot == g.user) \
+        .filter(Flight.pilot == user) \
         .filter(Flight.date_local > (date.today() - timedelta(days=365))) \
         .filter(Flight.is_rankable()) \
         .one()
@@ -85,9 +70,9 @@ def _quick_stats():
     return QuickStatsSchema().dump(result).data
 
 
-def _get_takeoff_locations():
+def _get_takeoff_locations(user):
     locations = Location.get_clustered_locations(
-        Flight.takeoff_location_wkt, filter=and_(Flight.pilot == g.user, Flight.is_rankable()))
+        Flight.takeoff_location_wkt, filter=and_(Flight.pilot == user, Flight.is_rankable()))
 
     return [loc.to_lonlat() for loc in locations]
 
@@ -104,27 +89,31 @@ def mark_user_notifications_read(user):
 
 
 @user_blueprint.route('/api/users/<user_id>', strict_slashes=False)
-def read():
-    user_schema = CurrentUserSchema() if g.user == g.current_user else UserSchema()
-    user = user_schema.dump(g.user).data
+def read(user_id):
+    user = get_requested_record(User, user_id)
+
+    user_schema = CurrentUserSchema() if user == g.current_user else UserSchema()
+    user_json = user_schema.dump(user).data
 
     if g.current_user:
-        user['followed'] = g.current_user.follows(g.user)
+        user_json['followed'] = g.current_user.follows(user)
 
     if 'extended' in request.args:
-        user['distanceFlights'] = _distance_flights(g.user)
-        user['stats'] = _quick_stats()
-        user['takeoffLocations'] = _get_takeoff_locations()
+        user_json['distanceFlights'] = _distance_flights(user)
+        user_json['stats'] = _quick_stats(user)
+        user_json['takeoffLocations'] = _get_takeoff_locations(user)
 
-    mark_user_notifications_read(g.user)
+    mark_user_notifications_read(user)
 
-    return jsonify(**user)
+    return jsonify(**user_json)
 
 
 @user_blueprint.route('/api/users/<user_id>/followers')
-def followers():
+def followers(user_id):
+    user = get_requested_record(User, user_id)
+
     # Query list of pilots that are following the selected user
-    query = Follower.query(destination=g.user) \
+    query = Follower.query(destination=user) \
         .join('source') \
         .options(contains_eager('source')) \
         .options(subqueryload('source.club')) \
@@ -139,9 +128,11 @@ def followers():
 
 
 @user_blueprint.route('/api/users/<user_id>/following')
-def following():
+def following(user_id):
+    user = get_requested_record(User, user_id)
+
     # Query list of pilots that are following the selected user
-    query = Follower.query(source=g.user) \
+    query = Follower.query(source=user) \
         .join('destination') \
         .options(contains_eager('destination')) \
         .options(subqueryload('destination.club')) \
@@ -176,16 +167,18 @@ def add_current_user_follows(followers):
 
 @user_blueprint.route('/api/users/<user_id>/follow')
 @login_required
-def follow():
-    Follower.follow(g.current_user, g.user)
-    create_follower_notification(g.user, g.current_user)
+def follow(user_id):
+    user = get_requested_record(User, user_id)
+    Follower.follow(g.current_user, user)
+    create_follower_notification(user, g.current_user)
     db.session.commit()
     return jsonify()
 
 
 @user_blueprint.route('/api/users/<user_id>/unfollow')
 @login_required
-def unfollow():
-    Follower.unfollow(g.current_user, g.user)
+def unfollow(user_id):
+    user = get_requested_record(User, user_id)
+    Follower.unfollow(g.current_user, user)
     db.session.commit()
     return jsonify()
