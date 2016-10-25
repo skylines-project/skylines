@@ -3,11 +3,13 @@ from datetime import datetime
 
 from flask import Blueprint, request, abort, current_app, jsonify, g, make_response
 
+from sqlalchemy import literal_column, and_
 from sqlalchemy.orm import undefer_group, contains_eager
 from sqlalchemy.sql.expression import func
 from geoalchemy2.shape import to_shape
 from datetime import timedelta
 
+from skylines.cache import cache
 from skylines.database import db
 from skylines.lib import files
 from skylines.lib.dbutil import get_requested_record
@@ -16,11 +18,10 @@ from skylines.lib.datetime import from_seconds_of_day
 from skylines.lib.geo import METERS_PER_DEGREE
 from skylines.lib.geoid import egm96_height
 from skylines.model import (
-    User, Flight, Location, FlightComment,
+    User, Flight, Elevation, Location, FlightComment,
     Notification, Event, FlightMeetings, AircraftModel,
 )
 from skylines.model.event import create_flight_comment_notifications
-from skylines.model.flight import get_elevations_for_flight
 from skylines.schemas import fields, FlightSchema, FlightCommentSchema, FlightPhaseSchema, ContestLegSchema, Schema, ValidationError
 from skylines.worker import tasks
 from redis.exceptions import ConnectionError
@@ -497,3 +498,62 @@ def add_comment(flight_id):
     db.session.commit()
 
     return jsonify()
+
+
+def get_elevations_for_flight(flight):
+    cached_elevations = cache.get('elevations_' + flight.__repr__())
+    if cached_elevations:
+        return cached_elevations
+
+    '''
+    WITH src AS
+        (SELECT ST_DumpPoints(flights.locations) AS location,
+                flights.timestamps AS timestamps,
+                flights.locations AS locations
+        FROM flights
+        WHERE flights.id = 30000)
+    SELECT timestamps[(src.location).path[1]] AS timestamp,
+           ST_Value(elevations.rast, (src.location).geom) AS elevation
+    FROM elevations, src
+    WHERE src.locations && elevations.rast AND (src.location).geom && elevations.rast;
+    '''
+
+    # Prepare column expressions
+    location = Flight.locations.ST_DumpPoints()
+
+    # Prepare cte
+    cte = db.session.query(location.label('location'),
+                           Flight.locations.label('locations'),
+                           Flight.timestamps.label('timestamps')) \
+                    .filter(Flight.id == flight.id).cte()
+
+    # Prepare column expressions
+    timestamp = literal_column('timestamps[(location).path[1]]')
+    elevation = Elevation.rast.ST_Value(cte.c.location.geom)
+
+    # Prepare main query
+    q = db.session.query(timestamp.label('timestamp'),
+                         elevation.label('elevation')) \
+                  .filter(and_(cte.c.locations.intersects(Elevation.rast),
+                               cte.c.location.geom.intersects(Elevation.rast))).all()
+
+    if len(q) == 0:
+        return []
+
+    start_time = q[0][0]
+    start_midnight = start_time.replace(hour=0, minute=0, second=0,
+                                        microsecond=0)
+
+    elevations = []
+    for time, elevation in q:
+        if elevation is None:
+            continue
+
+        time_delta = time - start_midnight
+        time = time_delta.days * 86400 + time_delta.seconds
+
+        elevations.append((time, elevation))
+
+    cache.set('elevations_' + flight.__repr__(), elevations, timeout=3600 * 24)
+
+    return elevations

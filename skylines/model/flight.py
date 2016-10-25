@@ -14,14 +14,12 @@ from geoalchemy2.types import Geometry
 from geoalchemy2.shape import to_shape, from_shape
 from shapely.geometry import LineString
 
-from skylines.cache import cache
 from skylines.database import db
 from skylines.lib.sql import _ST_Intersects, _ST_Contains
 
 from .geo import Location
 from .igcfile import IGCFile
 from .aircraft_model import AircraftModel
-from .elevation import Elevation
 from .contest_leg import ContestLeg
 
 
@@ -488,62 +486,3 @@ class FlightPathChunks(db.Model):
         db.session.commit()
 
         return True
-
-
-def get_elevations_for_flight(flight):
-    cached_elevations = cache.get('elevations_' + flight.__repr__())
-    if cached_elevations:
-        return cached_elevations
-
-    '''
-    WITH src AS
-        (SELECT ST_DumpPoints(flights.locations) AS location,
-                flights.timestamps AS timestamps,
-                flights.locations AS locations
-        FROM flights
-        WHERE flights.id = 30000)
-    SELECT timestamps[(src.location).path[1]] AS timestamp,
-           ST_Value(elevations.rast, (src.location).geom) AS elevation
-    FROM elevations, src
-    WHERE src.locations && elevations.rast AND (src.location).geom && elevations.rast;
-    '''
-
-    # Prepare column expressions
-    location = Flight.locations.ST_DumpPoints()
-
-    # Prepare cte
-    cte = db.session.query(location.label('location'),
-                           Flight.locations.label('locations'),
-                           Flight.timestamps.label('timestamps')) \
-                    .filter(Flight.id == flight.id).cte()
-
-    # Prepare column expressions
-    timestamp = literal_column('timestamps[(location).path[1]]')
-    elevation = Elevation.rast.ST_Value(cte.c.location.geom)
-
-    # Prepare main query
-    q = db.session.query(timestamp.label('timestamp'),
-                         elevation.label('elevation')) \
-                  .filter(and_(cte.c.locations.intersects(Elevation.rast),
-                               cte.c.location.geom.intersects(Elevation.rast))).all()
-
-    if len(q) == 0:
-        return []
-
-    start_time = q[0][0]
-    start_midnight = start_time.replace(hour=0, minute=0, second=0,
-                                        microsecond=0)
-
-    elevations = []
-    for time, elevation in q:
-        if elevation is None:
-            continue
-
-        time_delta = time - start_midnight
-        time = time_delta.days * 86400 + time_delta.seconds
-
-        elevations.append((time, elevation))
-
-    cache.set('elevations_' + flight.__repr__(), elevations, timeout=3600 * 24)
-
-    return elevations
