@@ -23,9 +23,8 @@ class SkyLines(Flask):
 
     def add_sqlalchemy(self):
         """ Create and configure SQLAlchemy extension """
-        from skylines.database import db, migrate
+        from skylines.database import db
         db.init_app(self)
-        migrate.init_app(self, db)
 
     def add_cache(self):
         """ Create and attach Cache extension """
