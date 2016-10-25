@@ -8,28 +8,20 @@ from skylines.schemas import ClubSchema, ValidationError
 club_blueprint = Blueprint('club', 'skylines')
 
 
-@club_blueprint.url_value_preprocessor
-def _pull_user_id(endpoint, values):
-    g.club_id = values.pop('club_id')
-    g.club = get_requested_record(Club, g.club_id)
-
-
-@club_blueprint.url_defaults
-def _add_user_id(endpoint, values):
-    if hasattr(g, 'club_id'):
-        values.setdefault('club_id', g.club_id)
-
-
 @club_blueprint.route('/api/clubs/<club_id>', strict_slashes=False)
-def read():
-    json = ClubSchema().dump(g.club).data
-    json['isWritable'] = g.club.is_writable(g.current_user)
+def read(club_id):
+    club = get_requested_record(Club, club_id)
+
+    json = ClubSchema().dump(club).data
+    json['isWritable'] = club.is_writable(g.current_user)
 
     return jsonify(**json)
 
 
 @club_blueprint.route('/api/clubs/<club_id>', methods=['POST'], strict_slashes=False)
-def update():
+def update(club_id):
+    club = get_requested_record(Club, club_id)
+
     json = request.get_json()
     if json is None:
         return jsonify(error='invalid-request'), 400
@@ -42,13 +34,13 @@ def update():
     if 'name' in data:
         name = data.get('name')
 
-        if name != g.club.name and Club.exists(name=name):
+        if name != club.name and Club.exists(name=name):
             return jsonify(error='duplicate-club-name'), 422
 
-        g.club.name = name
+        club.name = name
 
     if 'website' in data:
-        g.club.website = data.get('website')
+        club.website = data.get('website')
 
     db.session.commit()
 
