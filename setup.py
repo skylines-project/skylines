@@ -31,7 +31,6 @@ setup(
         'pytz',
         'cssmin==0.1.4',
         'closure==20140110',
-        'WebHelpers==1.3',
         'celery[redis]>=3.1,<3.2',
         'xcsoar==0.5',
         'aerofiles==0.1.1',
