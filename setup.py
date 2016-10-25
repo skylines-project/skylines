@@ -22,7 +22,6 @@ setup(
         'Flask-Migrate==1.2.0',
         'Flask-Script==0.6.7',
         'Flask-SQLAlchemy==1.0',
-        'Flask-WTF==0.9.5',
         'sqlalchemy==0.8.2',
         'alembic==0.6.3',
         'psycopg2==2.5.2',
