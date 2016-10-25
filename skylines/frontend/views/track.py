@@ -96,8 +96,8 @@ def _get_flight_path(pilot, threshold=0.001, last_update=None):
 
 
 # Use `live` alias here since `/api/tracking/*` is filtered by the "EasyPrivacy" adblocker list...
-@track_blueprint.route('/api/tracking/<user_ids>', strict_slashes=False)
-@track_blueprint.route('/api/live/<user_ids>', strict_slashes=False)
+@track_blueprint.route('/tracking/<user_ids>', strict_slashes=False)
+@track_blueprint.route('/live/<user_ids>', strict_slashes=False)
 def read(user_ids):
     pilots = get_requested_record_list(User, user_ids, joinedload=[User.club])
 
@@ -140,8 +140,8 @@ def read(user_ids):
     return jsonify(flights=flights, pilots=pilots_json)
 
 
-@track_blueprint.route('/api/tracking/<user_id>/json')
-@track_blueprint.route('/api/live/<user_id>/json')
+@track_blueprint.route('/tracking/<user_id>/json')
+@track_blueprint.route('/live/<user_id>/json')
 def json(user_id):
     pilot = get_requested_record(User, user_id, joinedload=[User.club])
     last_update = request.values.get('last_update', 0, type=int)

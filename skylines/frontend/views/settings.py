@@ -38,13 +38,13 @@ def handle_user_param():
         abort(403)
 
 
-@settings_blueprint.route('/api/settings', strict_slashes=False)
+@settings_blueprint.route('/settings', strict_slashes=False)
 def read():
     schema = CurrentUserSchema(exclude=('id'))
     return jsonify(**schema.dump(g.user).data)
 
 
-@settings_blueprint.route('/api/settings', methods=['POST'], strict_slashes=False)
+@settings_blueprint.route('/settings', methods=['POST'], strict_slashes=False)
 def update():
     json = request.get_json()
     if json is None:
@@ -121,7 +121,7 @@ def update():
     return jsonify()
 
 
-@settings_blueprint.route('/api/settings/password/check', methods=['POST'])
+@settings_blueprint.route('/settings/password/check', methods=['POST'])
 def check_current_password():
     json = request.get_json()
     if not json:
@@ -130,7 +130,7 @@ def check_current_password():
     return jsonify(result=g.user.validate_password(json.get('password', '')))
 
 
-@settings_blueprint.route('/api/settings/tracking/key', methods=['POST'])
+@settings_blueprint.route('/settings/tracking/key', methods=['POST'])
 def tracking_generate_key():
     g.user.generate_tracking_key()
     db.session.commit()
@@ -138,7 +138,7 @@ def tracking_generate_key():
     return jsonify(key=g.user.tracking_key_hex)
 
 
-@settings_blueprint.route('/api/settings/club', methods=['PUT'])
+@settings_blueprint.route('/settings/club', methods=['PUT'])
 def create_club():
     json = request.get_json()
     if json is None:

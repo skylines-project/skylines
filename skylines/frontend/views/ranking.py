@@ -69,7 +69,7 @@ def _parse_year():
         return current_year
 
 
-@ranking_blueprint.route('/api/ranking/pilots')
+@ranking_blueprint.route('/ranking/pilots')
 def pilots():
     data = _handle_request(User, 'pilot_id')
 
@@ -89,7 +89,7 @@ def pilots():
     return jsonify(ranking=json, total=g.paginators['result'].count)
 
 
-@ranking_blueprint.route('/api/ranking/clubs')
+@ranking_blueprint.route('/ranking/clubs')
 def clubs():
     data = _handle_request(Club, 'club_id')
 
@@ -109,7 +109,7 @@ def clubs():
     return jsonify(ranking=json, total=g.paginators['result'].count)
 
 
-@ranking_blueprint.route('/api/ranking/airports')
+@ranking_blueprint.route('/ranking/airports')
 def airports():
     data = _handle_request(Airport, 'takeoff_airport_id')
 

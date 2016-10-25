@@ -127,12 +127,12 @@ def _create_list(date=None, pilot=None, club=None, airport=None,
     return jsonify(**json)
 
 
-@flights_blueprint.route('/api/flights/all')
+@flights_blueprint.route('/flights/all')
 def all():
     return _create_list(default_sorting_column='date', default_sorting_order='desc')
 
 
-@flights_blueprint.route('/api/flights/date/<date>')
+@flights_blueprint.route('/flights/date/<date>')
 def date(date, latest=False):
     try:
         if isinstance(date, (str, unicode)):
@@ -147,7 +147,7 @@ def date(date, latest=False):
     return _create_list(date=date, default_sorting_column='score', default_sorting_order='desc')
 
 
-@flights_blueprint.route('/api/flights/latest')
+@flights_blueprint.route('/flights/latest')
 def latest():
     query = db.session \
         .query(func.max(Flight.date_local).label('date')) \
@@ -162,7 +162,7 @@ def latest():
     return date(date_, latest=True)
 
 
-@flights_blueprint.route('/api/flights/pilot/<int:id>')
+@flights_blueprint.route('/flights/pilot/<int:id>')
 def pilot(id):
     pilot = get_requested_record(User, id)
 
@@ -171,21 +171,21 @@ def pilot(id):
     return _create_list(pilot=pilot, default_sorting_column='date', default_sorting_order='desc')
 
 
-@flights_blueprint.route('/api/flights/club/<int:id>')
+@flights_blueprint.route('/flights/club/<int:id>')
 def club(id):
     club = get_requested_record(Club, id)
 
     return _create_list(club=club, default_sorting_column='date', default_sorting_order='desc')
 
 
-@flights_blueprint.route('/api/flights/airport/<int:id>')
+@flights_blueprint.route('/flights/airport/<int:id>')
 def airport(id):
     airport = get_requested_record(Airport, id)
 
     return _create_list(airport=airport, default_sorting_column='date', default_sorting_order='desc')
 
 
-@flights_blueprint.route('/api/flights/unassigned')
+@flights_blueprint.route('/flights/unassigned')
 def unassigned():
     if not g.current_user:
         return jsonify(), 400
@@ -196,7 +196,7 @@ def unassigned():
     return _create_list(filter=f, default_sorting_column='date', default_sorting_order='desc')
 
 
-@flights_blueprint.route('/api/flights/list/<ids>')
+@flights_blueprint.route('/flights/list/<ids>')
 def list(ids):
     if not ids:
         return jsonify(), 400

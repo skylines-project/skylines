@@ -88,7 +88,7 @@ def mark_user_notifications_read(user):
     db.session.commit()
 
 
-@user_blueprint.route('/api/users/<user_id>', strict_slashes=False)
+@user_blueprint.route('/users/<user_id>', strict_slashes=False)
 def read(user_id):
     user = get_requested_record(User, user_id)
 
@@ -108,7 +108,7 @@ def read(user_id):
     return jsonify(**user_json)
 
 
-@user_blueprint.route('/api/users/<user_id>/followers')
+@user_blueprint.route('/users/<user_id>/followers')
 def followers(user_id):
     user = get_requested_record(User, user_id)
 
@@ -127,7 +127,7 @@ def followers(user_id):
     return jsonify(followers=followers)
 
 
-@user_blueprint.route('/api/users/<user_id>/following')
+@user_blueprint.route('/users/<user_id>/following')
 def following(user_id):
     user = get_requested_record(User, user_id)
 
@@ -165,7 +165,7 @@ def add_current_user_follows(followers):
         follower['currentUserFollows'] = (follower['id'] in current_user_follows)
 
 
-@user_blueprint.route('/api/users/<user_id>/follow')
+@user_blueprint.route('/users/<user_id>/follow')
 @login_required
 def follow(user_id):
     user = get_requested_record(User, user_id)
@@ -175,7 +175,7 @@ def follow(user_id):
     return jsonify()
 
 
-@user_blueprint.route('/api/users/<user_id>/unfollow')
+@user_blueprint.route('/users/<user_id>/unfollow')
 @login_required
 def unfollow(user_id):
     user = get_requested_record(User, user_id)

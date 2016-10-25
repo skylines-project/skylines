@@ -6,7 +6,7 @@ from skylines.api.views.parser import parse_location
 mapitems_blueprint = Blueprint('mapitems', 'skylines')
 
 
-@mapitems_blueprint.route('/api/mapitems', strict_slashes=False)
+@mapitems_blueprint.route('/mapitems', strict_slashes=False)
 def list():
     location = parse_location(request.args)
     return jsonify({

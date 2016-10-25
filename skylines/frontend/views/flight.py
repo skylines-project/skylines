@@ -149,7 +149,7 @@ class NearFlightSchema(Schema):
     times = fields.Nested(MeetingTimeSchema, many=True)
 
 
-@flight_blueprint.route('/api/flights/<flight_id>', strict_slashes=False)
+@flight_blueprint.route('/flights/<flight_id>', strict_slashes=False)
 def read(flight_id):
     flight = get_requested_record(Flight, flight_id, joinedload=[Flight.igc_file])
 
@@ -224,7 +224,7 @@ def read(flight_id):
         performance=performance)
 
 
-@flight_blueprint.route('/api/flights/<flight_id>/json')
+@flight_blueprint.route('/flights/<flight_id>/json')
 def json(flight_id):
     flight = get_requested_record(Flight, flight_id, joinedload=[Flight.igc_file])
 
@@ -327,7 +327,7 @@ def _get_near_flights(flight, location, time, max_distance=1000):
     return flights
 
 
-@flight_blueprint.route('/api/flights/<flight_id>/near')
+@flight_blueprint.route('/flights/<flight_id>/near')
 def near(flight_id):
     flight = get_requested_record(Flight, flight_id, joinedload=[Flight.igc_file])
 
@@ -358,7 +358,7 @@ def near(flight_id):
     return jsonify(flights=map(add_flight_path, flights))
 
 
-@flight_blueprint.route('/api/flights/<flight_id>', methods=['POST'], strict_slashes=False)
+@flight_blueprint.route('/flights/<flight_id>', methods=['POST'], strict_slashes=False)
 def update(flight_id):
     flight = get_requested_record(Flight, flight_id)
 
@@ -456,7 +456,7 @@ def update(flight_id):
     return jsonify()
 
 
-@flight_blueprint.route('/api/flights/<flight_id>', methods=('DELETE',), strict_slashes=False)
+@flight_blueprint.route('/flights/<flight_id>', methods=('DELETE',), strict_slashes=False)
 def delete(flight_id):
     flight = get_requested_record(Flight, flight_id, joinedload=[Flight.igc_file])
 
@@ -471,7 +471,7 @@ def delete(flight_id):
     return jsonify()
 
 
-@flight_blueprint.route('/api/flights/<flight_id>/comments', methods=('POST',))
+@flight_blueprint.route('/flights/<flight_id>/comments', methods=('POST',))
 def add_comment(flight_id):
     flight = get_requested_record(Flight, flight_id)
 

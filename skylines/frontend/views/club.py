@@ -8,7 +8,7 @@ from skylines.schemas import ClubSchema, ValidationError
 club_blueprint = Blueprint('club', 'skylines')
 
 
-@club_blueprint.route('/api/clubs/<club_id>', strict_slashes=False)
+@club_blueprint.route('/clubs/<club_id>', strict_slashes=False)
 def read(club_id):
     club = get_requested_record(Club, club_id)
 
@@ -18,7 +18,7 @@ def read(club_id):
     return jsonify(**json)
 
 
-@club_blueprint.route('/api/clubs/<club_id>', methods=['POST'], strict_slashes=False)
+@club_blueprint.route('/clubs/<club_id>', methods=['POST'], strict_slashes=False)
 def update(club_id):
     club = get_requested_record(Club, club_id)
 
