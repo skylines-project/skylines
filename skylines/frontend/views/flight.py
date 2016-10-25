@@ -1,7 +1,7 @@
 import math
 from datetime import datetime
 
-from flask import Blueprint, request, abort, current_app, jsonify, g, make_response
+from flask import Blueprint, request, abort, current_app, jsonify, make_response
 
 from sqlalchemy import literal_column, and_
 from sqlalchemy.orm import undefer_group, contains_eager
@@ -45,9 +45,11 @@ def _reanalyse_if_needed(flight):
 
 
 def _patch_query(q):
+    current_user = User.get(request.user_id) if request.user_id else None
+
     return q.join(Flight.igc_file) \
         .options(contains_eager(Flight.igc_file)) \
-        .filter(Flight.is_viewable(g.current_user))
+        .filter(Flight.is_viewable(current_user))
 
 
 def _get_flight_path(flight, threshold=0.001, max_points=3000):
