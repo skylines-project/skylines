@@ -64,7 +64,6 @@ class SkyLines(Flask):
     def add_celery(self):
         from skylines.worker.celery import celery
         celery.init_app(self)
-        return celery
 
     def initialize_lib(self):
         from skylines.lib.geoid import load_geoid
