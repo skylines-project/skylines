@@ -3,7 +3,6 @@ import base64
 from flask import request, g, jsonify
 from flask.ext.login import login_user, logout_user, current_user
 
-from skylines.frontend.ember import send_index
 from skylines.model import User
 from skylines.schemas import CurrentUserSchema, ValidationError
 
@@ -36,10 +35,6 @@ def register(app):
             g.current_user = None
         else:
             g.current_user = current_user
-
-    @app.route('/login')
-    def login():
-        return send_index()
 
     @app.route('/session', methods=('PUT',))
     def create_session():
