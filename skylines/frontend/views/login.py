@@ -36,6 +36,7 @@ def register(app):
         else:
             g.current_user = current_user
 
+    @app.route('/api/session', methods=('PUT',))
     @app.route('/session', methods=('PUT',))
     def create_session():
         json = request.get_json()
@@ -54,6 +55,7 @@ def register(app):
 
         return jsonify()
 
+    @app.route('/api/session', methods=('DELETE',))
     @app.route('/session', methods=('DELETE',))
     def delete_session():
         logout_user()
