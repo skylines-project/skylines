@@ -44,9 +44,6 @@ export default Ember.Component.extend(Validations, {
     let data = new FormData(form);
 
     try {
-      let csrfToken = yield this.get('ajax').request('/api/flights/upload/csrf').then(it => it.token);
-      data.append('csrfToken', csrfToken);
-
       let json = yield this.get('ajax').request('/api/flights/upload/', { method: 'POST', data, contentType: false, processData: false });
       this.getWithDefault('onUpload', Ember.K)(json);
 

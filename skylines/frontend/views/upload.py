@@ -8,7 +8,6 @@ import os
 from collections import namedtuple
 
 from flask import Blueprint, request, current_app, abort, make_response, jsonify
-from flask_wtf.csrf import generate_csrf, validate_csrf
 from redis.exceptions import ConnectionError
 from sqlalchemy.sql.expression import func
 
@@ -148,21 +147,12 @@ def _encode_flight_path(fp, qnh):
                 igc_start_time=fp[0].datetime, igc_end_time=fp[-1].datetime)
 
 
-@upload_blueprint.route('/flights/upload/csrf')
-@oauth.required()
-def csrf():
-    return jsonify(token=generate_csrf())
-
-
 @upload_blueprint.route('/flights/upload', methods=('POST',), strict_slashes=False)
 @oauth.required()
 def index_post():
     current_user = User.get(request.user_id)
 
     form = request.form
-
-    if not validate_csrf(form.get('csrfToken')):
-        return jsonify(error='invalid-csrf-token'), 403
 
     if form.get('pilotId') == u'':
         form = form.copy()
