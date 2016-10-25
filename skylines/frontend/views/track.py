@@ -1,10 +1,10 @@
 from datetime import datetime, timedelta
 from math import log
 
-from flask import Blueprint, request, abort, jsonify, g
+from flask import Blueprint, request, abort, jsonify
 from sqlalchemy.sql.expression import and_
 
-from skylines.lib.dbutil import get_requested_record_list
+from skylines.lib.dbutil import get_requested_record_list, get_requested_record
 from skylines.lib.helpers import color
 from skylines.lib.xcsoar_ import FlightPathFix
 from skylines.lib.geoid import egm96_height
@@ -13,28 +13,6 @@ from skylines.schemas import UserSchema
 import xcsoar
 
 track_blueprint = Blueprint('track', 'skylines')
-
-
-@track_blueprint.url_value_preprocessor
-def _pull_user_id(endpoint, values):
-    if request.endpoint == 'track.html':
-        return
-
-    g.user_id = values.pop('user_id')
-
-    g.pilots = get_requested_record_list(
-        User, g.user_id, joinedload=[User.club])
-
-    color_gen = color.generator()
-    for pilot in g.pilots:
-        pilot.color = color_gen.next()
-
-
-@track_blueprint.url_defaults
-def _add_user_id(endpoint, values):
-    if hasattr(g, 'user_id'):
-        values.setdefault('user_id', g.user_id)
-
 
 UNKNOWN_ELEVATION = -1000
 
@@ -118,24 +96,30 @@ def _get_flight_path(pilot, threshold=0.001, last_update=None):
 
 
 # Use `live` alias here since `/api/tracking/*` is filtered by the "EasyPrivacy" adblocker list...
-@track_blueprint.route('/api/tracking/<user_id>', strict_slashes=False)
-@track_blueprint.route('/api/live/<user_id>', strict_slashes=False)
-def read():
-    traces = map(_get_flight_path, g.pilots)
+@track_blueprint.route('/api/tracking/<user_ids>', strict_slashes=False)
+@track_blueprint.route('/api/live/<user_ids>', strict_slashes=False)
+def read(user_ids):
+    pilots = get_requested_record_list(User, user_ids, joinedload=[User.club])
+
+    color_gen = color.generator()
+    for pilot in pilots:
+        pilot.color = color_gen.next()
+
+    traces = map(_get_flight_path, pilots)
     if not any(traces):
         traces = None
 
     user_schema = UserSchema()
 
     pilots_json = []
-    for pilot in g.pilots:
+    for pilot in pilots:
         json = user_schema.dump(pilot).data
         json['color'] = pilot.color
         pilots_json.append(json)
 
     flights = []
     if traces:
-        for pilot, trace in zip(g.pilots, traces):
+        for pilot, trace in zip(pilots, traces):
             if trace:
                 flights.append({
                     'sfid': pilot.id,
@@ -158,8 +142,8 @@ def read():
 
 @track_blueprint.route('/api/tracking/<user_id>/json')
 @track_blueprint.route('/api/live/<user_id>/json')
-def json():
-    pilot = g.pilots[0]
+def json(user_id):
+    pilot = get_requested_record(User, user_id, joinedload=[User.club])
     last_update = request.values.get('last_update', 0, type=int)
 
     trace = _get_flight_path(pilot, threshold=0.001, last_update=last_update)
