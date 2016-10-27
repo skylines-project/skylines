@@ -1,4 +1,4 @@
 {{#settings-page title=(t "change-club")}}
-  {{settings-panels/choose-club clubs=model.clubs clubId=account.club.id}}
+  {{settings-panels/choose-club clubs=model.clubs clubId=(readonly account.club.id)}}
   {{settings-panels/register-club}}
 {{/settings-page}}
