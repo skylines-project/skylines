@@ -68,7 +68,9 @@ first-name: Prénom
 flight-analysis: Analyse des vols
 flight-database: Base de donnée des vols
 flight-date-in-future: Date de vol à venir
+flight-pinned: Vol épinglé !
 flight-time: Durée de vol
+flight-unpinned: Épinglez le vol
 flights: Vols
 follow: Suivre
 followers: Suivis par
@@ -100,6 +102,7 @@ live-tracking-of-PILOT-and-PILOT2: Pistage en direct de {pilot} et de {pilot2}
 live-tracking-of-PILOT-and-NUM-other-pilots: Pistage en direct de {pilot} et de {num} autres pilotes
 n-avg-hours-per-flight: '{num} heures moy.  par vol'
 live-tracking-key: Clé de pistage
+loading: Chargement…
 login: Connexion
 logout: Déconnexion
 mark-all-as-read: Tout marquer comme lu
@@ -141,6 +144,7 @@ pin-button-title: Cochez l'étoile pour afficher le vol au dessus des autres sur
 pinned: Épinglé
 planned: à venir
 POINTS-points-abbr: '{points} pts.'
+processing: Traitement…
 profile: Profile
 publish: Publiez
 publish-flight: Publiez le vol
@@ -205,6 +209,7 @@ year: Année
 'yes': Oui
 you-have-no-notifications: Vous n'avez pas de notification.
 your-flights-have-been-saved: Vos vols ont été enregistrés.
+your-live-tracking-key: 'Votre clé de live tracking est :'
 about:
   welcome: Bienvenue sur SkyLines, votre plateforme internet pour le partage de vols !
   flights: <a href="{uploadURL}">Téléchargez</a> vos fichiers IGC et partagez les avec vos amis. Nous ne les changerons pas, ni ne vous empêcherons de les télécharger encore !
