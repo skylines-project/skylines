@@ -1,9 +1,9 @@
 {{#form-page title=(t "choose-aircraft")}}
   {{change-aircraft-form
     flightId=model.id
-    modelId=model.flight.model.id
-    registration=model.flight.registration
-    competitionId=model.flight.competitionId
+    modelId=(readonly model.flight.model.id)
+    registration=(readonly model.flight.registration)
+    competitionId=(readonly model.flight.competitionId)
     models=model.aircraftModels
     onDidSave=(action "transitionToFlight")}}
 {{/form-page}}

@@ -11,7 +11,7 @@ export default Ember.Component.extend({
   }),
 
   model: Ember.computed('modelsWithNull.[]', 'modelId', function() {
-    return this.get('modelsWithNull').findBy('id', this.get('modelId'));
+    return this.get('modelsWithNull').findBy('id', this.get('modelId') || null);
   }),
 
   actions: {
