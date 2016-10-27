@@ -17,7 +17,7 @@ setup(
     install_requires=[
         'flask==0.10.1',
         'werkzeug==0.9.6',
-        'Flask-Babel==0.9',
+        'Babel==2.3.4',
         'Flask-Cache==0.12',
         'Flask-Migrate==1.2.0',
         'Flask-Script==0.6.7',
