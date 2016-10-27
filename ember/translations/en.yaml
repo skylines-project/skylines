@@ -69,7 +69,9 @@ first-name: First name
 flight-analysis: Flight Analysis
 flight-database: Flight Database
 flight-date-in-future: Date of flight in future
+flight-pinned: Flight pinned!
 flight-time: Flight Time
+flight-unpinned: Click to pin
 flights: Flights
 follow: Follow
 followers: Followers
@@ -206,6 +208,7 @@ year: Year
 'yes': 'Yes'
 you-have-no-notifications: You have no notifications.
 your-flights-have-been-saved: Your flights have been saved.
+your-live-tracking-key: 'Your Live Tracking key is:'
 about:
   welcome: Welcome to SkyLines, your internet platform for flight sharing!
   flights: <a href="{uploadURL}">Upload</a> your IGC files and share them with your friends. We won't change your files or restrict you from downloading them again!
