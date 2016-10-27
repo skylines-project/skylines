@@ -68,7 +68,9 @@ first-name: Prénom
 flight-analysis: Analyse des vols
 flight-database: Base de donnée des vols
 flight-date-in-future: Date de vol à venir
+flight-pinned: Vol épinglé !
 flight-time: Durée de vol
+flight-unpinned: Épinglez le vol
 flights: Vols
 follow: Suivre
 followers: Suivis par
@@ -205,6 +207,7 @@ year: Année
 'yes': Oui
 you-have-no-notifications: Vous n'avez pas de notification.
 your-flights-have-been-saved: Vos vols ont été enregistrés.
+your-live-tracking-key: 'Votre clé de live tracking est :'
 about:
   welcome: Bienvenue sur SkyLines, votre plateforme internet pour le partage de vols !
   flights: <a href="{uploadURL}">Téléchargez</a> vos fichiers IGC et partagez les avec vos amis. Nous ne les changerons pas, ni ne vous empêcherons de les télécharger encore !
