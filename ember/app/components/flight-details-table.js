@@ -15,8 +15,8 @@ export default Ember.Component.extend({
   duration: safeComputed('flight.takeoffTime', 'flight.landingTime',
     (takeoff, landing) => (new Date(landing).getTime() - new Date(takeoff).getTime()) / 1000),
 
-  registration: Ember.computed.or('flight.registration', 'flight.igcFile.registration'),
-  competitionId: Ember.computed.or('flight.competitionId', 'flight.igcFile.competitionId'),
+  registration: Ember.computed.alias('flight.registration'),
+  competitionId: Ember.computed.alias('flight.competitionId'),
 
   isPilot: safeComputed('flight.pilot.id', 'flight.copilot.id', 'account.user.id',
     (pilotId, copilotId, accountId) => pilotId === accountId || copilotId === accountId),
