@@ -103,6 +103,7 @@ live-tracking-of-PILOT-and-PILOT2: Live Tracking of {pilot} and {pilot2}
 live-tracking-of-PILOT-and-NUM-other-pilots: Live Tracking of {pilot} and {num} other pilots
 n-avg-hours-per-flight: avg. {num} hours per flight
 live-tracking-key: Live Tracking Key
+loading: Loading...
 login: Login
 logout: Logout
 mark-all-as-read: Mark all as read
@@ -144,6 +145,7 @@ pin-button-title: Activate this to show the flight on top of other flights on th
 pinned: Pinned
 planned: planned
 POINTS-points-abbr: '{points} pts.'
+processing: Processing...
 profile: Profile
 publish: Publish
 publish-flight: Publish Flight

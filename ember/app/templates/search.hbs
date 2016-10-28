@@ -27,7 +27,7 @@
       </div>
 
       {{#if currentlyLoading}}
-        Loading...
+        {{t "loading"}}
       {{else}}
         {{search-result-table searchText=searchText results=results}}
       {{/if}}

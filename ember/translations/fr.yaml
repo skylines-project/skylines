@@ -102,6 +102,7 @@ live-tracking-of-PILOT-and-PILOT2: Pistage en direct de {pilot} et de {pilot2}
 live-tracking-of-PILOT-and-NUM-other-pilots: Pistage en direct de {pilot} et de {num} autres pilotes
 n-avg-hours-per-flight: '{num} heures moy.  par vol'
 live-tracking-key: Clé de pistage
+loading: Chargement…
 login: Connexion
 logout: Déconnexion
 mark-all-as-read: Tout marquer comme lu
@@ -143,6 +144,7 @@ pin-button-title: Cochez l'étoile pour afficher le vol au dessus des autres sur
 pinned: Épinglé
 planned: à venir
 POINTS-points-abbr: '{points} pts.'
+processing: Traitement…
 profile: Profile
 publish: Publiez
 publish-flight: Publiez le vol
