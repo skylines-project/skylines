@@ -43,7 +43,7 @@ describeComponent('timeline-events/flight-upload', 'Integration: FlightUploadTim
     this.render(hbs`{{timeline-events/flight-upload event=event}}`);
 
     expect(this.$('td:nth-of-type(2) p:nth-of-type(2)').text().trim())
-      .to.match(/John Doe uploaded a 123 km flight on [\d\/]+./);
+      .to.match(/John Doe uploaded a 123 km flight on [\d/]+./);
   });
 
   it('renders alternate text if actor is current user', function() {
@@ -52,6 +52,6 @@ describeComponent('timeline-events/flight-upload', 'Integration: FlightUploadTim
     this.render(hbs`{{timeline-events/flight-upload event=event}}`);
 
     expect(this.$('td:nth-of-type(2) p:nth-of-type(2)').text().trim())
-      .to.match(/You uploaded a 123 km flight on [\d\/]+./);
+      .to.match(/You uploaded a 123 km flight on [\d/]+./);
   });
 });
