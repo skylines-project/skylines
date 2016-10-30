@@ -33,7 +33,9 @@ export default Ember.Route.extend(ApplicationRouteMixin, {
     return this.get('ajax').request('/locale', { data }).then(it => it.locale || 'en');
   },
 
-  setupController() {
+  setupController(controller) {
+    this._super(...arguments);
+
     let settings = this.get('session.data.authenticated.settings');
     if (settings) {
       this.get('units').setProperties({
@@ -43,6 +45,8 @@ export default Ember.Route.extend(ApplicationRouteMixin, {
         speedUnitIndex: settings.speedUnit,
       });
     }
+
+    controller.set('uploadController', this.controllerFor('flight-upload'));
   },
 
   activate() {
