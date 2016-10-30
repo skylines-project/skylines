@@ -43,7 +43,7 @@ describeComponent('timeline-events/flight-comment', 'Integration: FlightCommentT
     this.render(hbs`{{timeline-events/flight-comment event=event}}`);
 
     expect(this.$('td:nth-of-type(2) p:nth-of-type(2)').text().trim())
-      .to.match(/John Doe commented on a 123 km flight on [\d\/]+./);
+      .to.match(/John Doe commented on a 123 km flight on [\d/]+./);
   });
 
   it('renders alternate text if actor is current user', function() {
@@ -52,7 +52,7 @@ describeComponent('timeline-events/flight-comment', 'Integration: FlightCommentT
     this.render(hbs`{{timeline-events/flight-comment event=event}}`);
 
     expect(this.$('td:nth-of-type(2) p:nth-of-type(2)').text().trim())
-      .to.match(/You commented on a 123 km flight on [\d\/]+./);
+      .to.match(/You commented on a 123 km flight on [\d/]+./);
   });
 
   it('renders alternate text if pilot or copilot is current user', function() {
@@ -61,7 +61,7 @@ describeComponent('timeline-events/flight-comment', 'Integration: FlightCommentT
     this.render(hbs`{{timeline-events/flight-comment event=event}}`);
 
     expect(this.$('td:nth-of-type(2) p:nth-of-type(2)').text().trim())
-      .to.match(/John Doe commented on your 123 km flight on [\d\/]+./);
+      .to.match(/John Doe commented on your 123 km flight on [\d/]+./);
   });
 
   it('renders alternate text if pilot or copilot and actor is current user', function() {
@@ -71,6 +71,6 @@ describeComponent('timeline-events/flight-comment', 'Integration: FlightCommentT
     this.render(hbs`{{timeline-events/flight-comment event=event}}`);
 
     expect(this.$('td:nth-of-type(2) p:nth-of-type(2)').text().trim())
-      .to.match(/You commented on your 123 km flight on [\d\/]+./);
+      .to.match(/You commented on your 123 km flight on [\d/]+./);
   });
 });
