@@ -59,15 +59,6 @@ module.exports = function(defaults) {
   app.import('vendor/bootstrap-datepicker/datepicker.css');
 
   app.import({
-    development: 'bower_components/font-awesome/css/font-awesome.css',
-    production: 'bower_components/font-awesome/css/font-awesome.min.css',
-  });
-  app.import('bower_components/font-awesome/font/fontawesome-webfont.eot', { destDir: 'font' });
-  app.import('bower_components/font-awesome/font/fontawesome-webfont.svg', { destDir: 'font' });
-  app.import('bower_components/font-awesome/font/fontawesome-webfont.ttf', { destDir: 'font' });
-  app.import('bower_components/font-awesome/font/fontawesome-webfont.woff', { destDir: 'font' });
-
-  app.import({
     development: 'bower_components/bootstrap/dist/js/bootstrap.js',
     production: 'bower_components/bootstrap/dist/js/bootstrap.min.js',
   });

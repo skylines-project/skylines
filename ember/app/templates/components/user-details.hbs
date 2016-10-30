@@ -45,7 +45,7 @@
 
 <p style="margin-top: 10px">
   {{#if editable}}
-    {{#link-to "settings.profile" class="btn btn-default"}}<i class="icon-cog"></i> {{t "settings"}}{{/link-to}}
+    {{#link-to "settings.profile" class="btn btn-default"}}{{fa-icon "cog"}} {{t "settings"}}{{/link-to}}
   {{/if}}
 
   {{#if (and account.user (not-eq account.user.id user.id))}}
@@ -56,7 +56,7 @@
     {{/if}}
   {{/if}}
 
-  {{#link-to "flights.pilot" user.id class="btn btn-default"}}<i class="icon-plane"></i> {{t "flights"}}{{/link-to}}
-  {{#link-to "statistics.pilot" user.id class="btn btn-default"}}<i class="icon-bar-chart"></i> {{t "statistics"}}{{/link-to}}
-  {{#link-to "timeline" (query-params user=user.id) class="btn btn-default"}}<i class="icon-time"></i> {{t "timeline"}}{{/link-to}}
+  {{#link-to "flights.pilot" user.id class="btn btn-default"}}{{fa-icon "plane"}} {{t "flights"}}{{/link-to}}
+  {{#link-to "statistics.pilot" user.id class="btn btn-default"}}{{fa-icon "bar-chart"}} {{t "statistics"}}{{/link-to}}
+  {{#link-to "timeline" (query-params user=user.id) class="btn btn-default"}}{{fa-icon "clock-o"}} {{t "timeline"}}{{/link-to}}
 </p>

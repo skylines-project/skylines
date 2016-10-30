@@ -5,10 +5,10 @@
         <p class="lead pull-left">{{t "about.welcome"}}</p>
 
         <div class="btn-group social-buttons pull-right visible-md visible-lg">
-          <a href="https://www.facebook.com/skylines.project" class="btn btn-default" target="_blank"><i class="icon-facebook-sign"></i></a>
-          <a href="https://twitter.com/skylinesproject" class="btn btn-default" target="_blank"><i class="icon-twitter"></i></a>
-          <a href="https://plus.google.com/114462603028839635814" class="btn btn-default" target="_blank"><i class="icon-google-plus"></i></a>
-          <a href="https://github.com/skylines-project/skylines" class="btn btn-default" target="_blank"><i class="icon-github-alt"></i></a>
+          <a href="https://www.facebook.com/skylines.project" class="btn btn-default" target="_blank">{{fa-icon "facebook-square"}}</a>
+          <a href="https://twitter.com/skylinesproject" class="btn btn-default" target="_blank">{{fa-icon "twitter"}}</a>
+          <a href="https://plus.google.com/114462603028839635814" class="btn btn-default" target="_blank">{{fa-icon "google-plus"}}</a>
+          <a href="https://github.com/skylines-project/skylines" class="btn btn-default" target="_blank">{{fa-icon "github-alt"}}</a>
         </div>
       </div>
     </div>
@@ -24,44 +24,44 @@
 
     <div class="row">
       <div class="col-md-4">
-        <h2>{{#link-to "flights"}}<i class="icon-plane"></i> {{t "flight-database"}}{{/link-to}}</h2>
+        <h2>{{#link-to "flights"}}{{fa-icon "plane"}} {{t "flight-database"}}{{/link-to}}</h2>
         <p>{{format-html-message "about.flights" uploadURL=(href-to "flight-upload")}}</p>
       </div>
       <div class="col-md-4">
-        <h2>{{#link-to "tracking"}}<i class="icon-rss"></i> {{t "live-tracking"}}{{/link-to}}</h2>
+        <h2>{{#link-to "tracking"}}{{fa-icon "rss"}} {{t "live-tracking"}}{{/link-to}}</h2>
         <p>{{format-html-message "about.tracking" url=(href-to "tracking.info")}}</p>
       </div>
       <div class="col-md-4">
-        <h2><i class="icon-info-sign"></i> {{t "flight-analysis"}}</h2>
+        <h2>{{fa-icon "info-circle"}} {{t "flight-analysis"}}</h2>
         <p>{{format-html-message "about.analysis"}}</p>
       </div>
     </div>
     <div class="row">
       <div class="col-md-4">
-        <h2><i class="icon-map-marker"></i> {{t "task-planning"}} <small>({{t "planned"}})</small></h2>
-        <p>{{format-html-message "about.task-planning" prosoar=(html-safe "<a href=\"http://www.prosoar.de/\" target=\"_blank\">proSoar <i class=\"icon-external-link icon-small\"></i></a>")}}</p>
+        <h2>{{fa-icon "map-marker"}} {{t "task-planning"}} <small>({{t "planned"}})</small></h2>
+        <p>{{format-html-message "about.task-planning" prosoar=(html-safe "<a href=\"http://www.prosoar.de/\" target=\"_blank\">proSoar</a>")}}</p>
       </div>
       <div class="col-md-4">
-        <h2><i class="icon-trophy"></i> {{t "competitions"}} <small>({{t "planned"}})</small></h2>
+        <h2>{{fa-icon "trophy"}} {{t "competitions"}} <small>({{t "planned"}})</small></h2>
         <p>{{format-html-message "about.competitions"}}</p>
       </div>
       <div class="col-md-4">
-        <h2><i class="icon-check"></i> {{t "achievements"}} <small>({{t "planned"}})</small></h2>
+        <h2>{{fa-icon "check-square-o"}} {{t "achievements"}} <small>({{t "planned"}})</small></h2>
         <p>{{format-html-message "about.achievements"}}</p>
       </div>
     </div>
     <div class="row">
       <div class="col-md-4">
-        <h2><i class="icon-group"></i> {{t "social-network"}}</h2>
+        <h2>{{fa-icon "group"}} {{t "social-network"}}</h2>
         <p>{{format-html-message "about.notifications" url=(href-to notificationsTarget)}}</p>
       </div>
       <div class="col-md-4">
-        <h2><i class="icon-cloud"></i> {{t "open-data"}}</h2>
-        <p>{{format-html-message "about.open-data" license=(html-safe "<a href=\"http://opendatacommons.org/licenses/by/summary/\" target=\"_blank\">Open Data Commons Attribution License (ODBY) <i class=\"icon-external-link icon-small\"></i></a>") welt2000=(html-safe "<a href=\"http://www.segelflug.de/vereine/welt2000/\" target=\"_blank\">WELT2000 <i class=\"icon-external-link icon-small\"></i></a>")}}</p>
+        <h2>{{fa-icon "cloud"}} {{t "open-data"}}</h2>
+        <p>{{format-html-message "about.open-data" license=(html-safe "<a href=\"http://opendatacommons.org/licenses/by/summary/\" target=\"_blank\">Open Data Commons Attribution License (ODBY)</a>") welt2000=(html-safe "<a href=\"http://www.segelflug.de/vereine/welt2000/\" target=\"_blank\">WELT2000</a>")}}</p>
       </div>
       <div class="col-md-4">
-        <h2><i class="icon-wrench"></i> {{t "open-source"}}</h2>
-        <p>{{format-html-message "about.open-source" teamURL="/about/team" licenseURL="/about/license" github=(html-safe "<a href=\"https://github.com/skylines-project/skylines#contact-and-contributing\" target=\"_blank\">GitHub <i class=\"icon-external-link icon-small\"></i></a>")}}</p>
+        <h2>{{fa-icon "wrench"}} {{t "open-source"}}</h2>
+        <p>{{format-html-message "about.open-source" teamURL="/about/team" licenseURL="/about/license" github=(html-safe "<a href=\"https://github.com/skylines-project/skylines#contact-and-contributing\" target=\"_blank\">GitHub</a>")}}</p>
       </div>
     </div>
   </div>

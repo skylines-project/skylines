@@ -1,11 +1,11 @@
-<li>{{#link-to "user" account.user.id}}<i class="icon-user icon-fixed-width"></i> {{account.user.name}}{{/link-to}}</li>
+<li>{{#link-to "user" account.user.id}}{{fa-icon "user" fixedWidth=true}} {{account.user.name}}{{/link-to}}</li>
 {{#if account.club}}
-  <li>{{#link-to "club" account.club.id}}<i class="icon-group icon-fixed-width"></i> {{account.club.name}}{{/link-to}}</li>
+  <li>{{#link-to "club" account.club.id}}{{fa-icon "group" fixedWidth=true}} {{account.club.name}}{{/link-to}}</li>
 {{/if}}
 <li class="divider"></li>
-<li>{{#link-to "flights.pilot" account.user.id}}<i class="icon-plane icon-fixed-width"></i> {{t "flights"}}{{/link-to}}</li>
-<li>{{#link-to "statistics.pilot" account.user.id}}<i class="icon-bar-chart icon-fixed-width"></i> {{t "statistics"}}{{/link-to}}</li>
+<li>{{#link-to "flights.pilot" account.user.id}}{{fa-icon "plane" fixedWidth=true}} {{t "flights"}}{{/link-to}}</li>
+<li>{{#link-to "statistics.pilot" account.user.id}}{{fa-icon "bar-chart" fixedWidth=true}} {{t "statistics"}}{{/link-to}}</li>
 <li class="divider"></li>
-<li>{{#link-to "settings"}}<i class="icon-cog icon-fixed-width"></i> {{t "settings"}}{{/link-to}}</li>
+<li>{{#link-to "settings"}}{{fa-icon "cog" fixedWidth=true}} {{t "settings"}}{{/link-to}}</li>
 <li class="divider"></li>
-<li><a href="#" {{action (perform logoutTask)}}><i class="icon-signout icon-fixed-width"></i> {{t "logout"}}</a></li>
+<li><a href="#" {{action (perform logoutTask)}}>{{fa-icon "sign-out" fixedWidth=true}} {{t "logout"}}</a></li>

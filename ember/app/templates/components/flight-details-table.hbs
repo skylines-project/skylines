@@ -6,7 +6,7 @@
     <td>
       {{#if isWritable}}
         {{#link-to "flight.change-pilot" flight.id class="btn btn-default btn-sm pull-right"}}
-          <i class="icon-pencil icon-small"></i> {{t "change"}}
+          {{fa-icon "pencil"}} {{t "change"}}
         {{/link-to}}
       {{/if}}
 
@@ -83,7 +83,7 @@
     <td class="column-buttons">
       {{#if isWritable}}
         {{#link-to "flight.change-aircraft" flight.id class="btn btn-default btn-sm pull-right"}}
-          <i class="icon-pencil icon-small"></i> {{t "change"}}
+          {{fa-icon "pencil"}} {{t "change"}}
         {{/link-to}}
       {{/if}}
 
@@ -107,13 +107,13 @@
       <small><br>
         {{#if flight.distance}}
           <span title={{t "olc-distance"}}>
-            <span style="color: #ff2c73"><i class="icon-resize-horizontal"></i></span>
+            <span style="color: #ff2c73">{{fa-icon "arrows-h"}}</span>
             {{format-distance flight.distance decimals=1}}
           </span>
         {{/if}}
         {{#if flight.triangleDistance}}
           <span title={{t "fai-triangle-distance"}}>
-            <span style="color: #9f14ff"><i class="icon-play icon-rotate-270"></i></span>
+            <span style="color: #9f14ff">{{fa-icon "play" rotate=270}}</span>
             {{format-distance flight.triangleDistance decimals=1}}
           </span>
         {{/if}}
@@ -150,12 +150,12 @@
       <th>{{t "actions"}}</th>
       <td>
         <button type="button" class="btn btn-default btn-sm" data-toggle="modal" data-target="#deleteModal">
-          <i class="icon-remove icon-small"></i> {{t "delete"}}
+          {{fa-icon "remove"}} {{t "delete"}}
         </button>
 
         {{#if isPrivate}}
           <button type="button" class="btn btn-default btn-sm" data-toggle="modal" data-target="#publishModal">
-            <i class="icon-globe icon-small"></i> {{t "publish"}}
+            {{fa-icon "globe"}} {{t "publish"}}
           </button>
         {{/if}}
       </td>
@@ -166,7 +166,7 @@
 
 <p>
   <a href="/files/{{flight.igcFile.filename}}" title={{flight.igcFile.filename}} class="btn btn-default">
-    <i class="icon-download-alt icon-large"></i> IGC
+    {{fa-icon "download" size="lg"}} IGC
   </a>
 
   <span title={{t "pin-button-title"}}>
