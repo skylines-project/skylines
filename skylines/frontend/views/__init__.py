@@ -19,7 +19,6 @@ from .statistics import statistics_blueprint
 from .timeline import timeline_blueprint
 from .tracking import tracking_blueprint
 from .upload import upload_blueprint
-from .user import user_blueprint
 from .users import users_blueprint
 from .widgets import widgets_blueprint
 
@@ -48,5 +47,4 @@ def register(app):
     app.register_blueprint(timeline_blueprint, url_prefix='/api')
     app.register_blueprint(tracking_blueprint, url_prefix='/api')
     app.register_blueprint(upload_blueprint, url_prefix='/api')
-    app.register_blueprint(user_blueprint, url_prefix='/api')
     app.register_blueprint(users_blueprint, url_prefix='/api')
