@@ -1,5 +1,4 @@
 from .errors import register as register_error_handlers
-from .i18n import register as register_i18n
 
 from .about import about_blueprint
 from .airport import airport_blueprint
@@ -10,6 +9,7 @@ from .clubs import clubs_blueprint
 from .files import files_blueprint
 from .flight import flight_blueprint
 from .flights import flights_blueprint
+from .i18n import i18n_blueprint
 from .livetrack24 import lt24_blueprint
 from .mapitems import mapitems_blueprint
 from .notifications import notifications_blueprint
@@ -28,10 +28,10 @@ from .widgets import widgets_blueprint
 
 def register(app):
     register_error_handlers(app)
-    register_i18n(app)
 
     app.register_blueprint(assets_blueprint)
     app.register_blueprint(files_blueprint)
+    app.register_blueprint(i18n_blueprint)
     app.register_blueprint(lt24_blueprint)
     app.register_blueprint(widgets_blueprint)
 

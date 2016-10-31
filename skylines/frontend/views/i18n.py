@@ -1,19 +1,19 @@
-from flask import request, jsonify
-from babel import negotiate_locale
+from flask import Blueprint, request, jsonify
+from babel import negotiate_locale as _negotiate_locale
+
+i18n_blueprint = Blueprint('i18n', 'skylines')
 
 
-def register(app):
+@i18n_blueprint.route('/locale')
+def negotiate_locale():
+    available = request.args.get('available', '').split(',')
+    available = filter(lambda it: it != '', available)
 
-    @app.route('/locale')
-    def resolve_locale():
-        available = request.args.get('available', '').split(',')
-        available = filter(lambda it: it != '', available)
+    if len(available) == 0:
+        return jsonify(error='invalid-request'), 400
 
-        if len(available) == 0:
-            return jsonify(error='invalid-request'), 400
+    preferred = map(lambda it: it[0], request.accept_languages)
 
-        preferred = map(lambda it: it[0], request.accept_languages)
+    locale = _negotiate_locale(preferred, available, sep='-')
 
-        locale = negotiate_locale(preferred, available, sep='-')
-
-        return jsonify(locale=locale)
+    return jsonify(locale=locale)
