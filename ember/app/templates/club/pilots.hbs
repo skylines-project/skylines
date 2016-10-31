@@ -18,8 +18,8 @@
               {{#link-to "user" user.id}}{{user.name}}{{/link-to}}
 
               <div class="pull-right">
-                {{#link-to "flights.pilot" user.id class="btn btn-default btn-sm"}}<i class="icon-plane"></i> {{t "flights"}}{{/link-to}}
-                {{#link-to "statistics.pilot" user.id class="btn btn-default btn-sm"}}<i class="icon-bar-chart"></i> {{t "statistics"}}{{/link-to}}
+                {{#link-to "flights.pilot" user.id class="btn btn-default btn-sm"}}{{fa-icon "plane"}} {{t "flights"}}{{/link-to}}
+                {{#link-to "statistics.pilot" user.id class="btn btn-default btn-sm"}}{{fa-icon "bar-chart"}} {{t "statistics"}}{{/link-to}}
               </div>
             </td>
           </tr>

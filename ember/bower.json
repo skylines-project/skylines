@@ -8,7 +8,7 @@
     "chai": "~2.3.0",
     "ember-mocha-adapter": "~0.3.1",
     "raven-js": "~3.3",
-    "font-awesome": "3.2.1",
+    "font-awesome": "~4.5.0",
     "bootstrap": "3.0.2",
     "Flot": "flot#0.8.3",
     "flot-marks": "https://github.com/TobiasLohner/flot-marks.git#f09ded70f5a229a38ba0b9cfa92dbb448ca4daaf",

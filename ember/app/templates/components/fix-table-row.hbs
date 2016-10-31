@@ -44,6 +44,6 @@
 </td>
 <td>
   {{#if row.removable}}
-    <i class="icon-remove" {{action "remove" bubbles=false}}></i>
+    {{fa-icon "remove" click=(action "remove" bubbles=false)}}
   {{/if}}
 </td>

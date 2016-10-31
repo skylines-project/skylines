@@ -1,7 +1,7 @@
 {{#active-link}}
   {{#link-to "flight-upload"title=(t "upload-flight")}}
-    <i class="icon-upload-alt icon-large hidden-xs"></i>
-    <i class="icon-upload-alt icon-fixed-width visible-xs"></i>
+    {{fa-icon "upload" size="lg" class="hidden-xs"}}
+    {{fa-icon "upload" fixedWidth=true class="visible-xs"}}
     <span class="visible-xs">{{t "upload-flight"}}</span>
   {{/link-to}}
 {{/active-link}}
@@ -16,7 +16,7 @@
 
   <li class="dropdown">
     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-      {{account.user.name}} <i class="icon-caret-down"></i>
+      {{account.user.name}} {{fa-icon "caret-down"}}
     </a>
     <ul class="dropdown-menu">{{nav-bar-user-menu}}</ul>
   </li>
@@ -24,13 +24,13 @@
 
   {{#active-link class="visible-xs"}}
     {{#link-to "login"}}
-      <i class="icon-signin"></i> {{t "login"}}
+      {{fa-icon "sign-in" fixedWidth=true}} {{t "login"}}
     {{/link-to}}
   {{/active-link}}
 
   <li class="dropdown hidden-xs">
     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-      <i class="icon-signin"></i> {{t "login"}} <i class="icon-caret-down"></i>
+      {{fa-icon "sign-in"}} {{t "login"}} {{fa-icon "caret-down"}}
     </a>
     <div class="dropdown-menu">{{login-form inline=true}}</div>
   </li>
@@ -40,7 +40,7 @@
   <a href="#" class="dropdown-toggle" data-toggle="dropdown">
     {{x-flag code=currentLocale.countryCode}}
     <span class="visible-xs">{{currentLocale.name}}</span>
-    <i class="icon-caret-down"></i>
+    {{fa-icon "caret-down"}}
   </a>
   <ul class="dropdown-menu">
     {{#each availableLocales as |locale|}}

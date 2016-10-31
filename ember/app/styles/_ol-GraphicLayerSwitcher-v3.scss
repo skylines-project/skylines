@@ -56,7 +56,7 @@
   background: rgba(255,255,255,0.7);
 }
 
-.GraphicLayerSwitcher a .icon-ok {
+.GraphicLayerSwitcher a .fa {
   position: absolute;
   left: 64px;
   color: white;
@@ -66,7 +66,7 @@
   display: none;
 }
 
-.GraphicLayerSwitcher a.active .icon-ok {
+.GraphicLayerSwitcher a.active .fa {
   display: inline;
 }
 

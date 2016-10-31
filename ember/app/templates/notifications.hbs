@@ -23,7 +23,7 @@
         <div class="col-xs-4" style="text-align:center">
           {{#if hasUnread}}
             <a href="#" {{action (perform markAsReadTask)}} title={{t "mark-all-as-read"}} class="btn btn-default">
-              <i class="icon-eye-open"></i>
+              {{fa-icon "eye-slash"}}
               <span class="hidden-xs">{{t "mark-all-as-read"}}</span>
             </a>
           {{/if}}
@@ -58,7 +58,7 @@
         <div class="col-xs-4" style="text-align:center">
           {{#if hasUnread}}
             <a href="#" {{action (perform markAsReadTask)}} title={{t "mark-all-as-read"}} class="btn btn-default">
-              <i class="icon-eye-open"></i>
+              {{fa-icon "eye-slash"}}
               <span class="hidden-xs">{{t "mark-all-as-read"}}</span>
             </a>
           {{/if}}

@@ -1,7 +1,7 @@
 {{#active-link class=listClass}}
   {{#link-to target title=title}}
-    <i class="{{icon}} icon-large visible-sm"></i>
-    <i class="{{icon}} icon-fixed-width visible-xs"></i>
+    {{fa-icon icon size="lg" class="visible-sm"}}
+    {{fa-icon icon fixedWidth=true class="visible-xs"}}
     <span class="hidden-sm">{{title}}</span>
   {{/link-to}}
 {{/active-link}}

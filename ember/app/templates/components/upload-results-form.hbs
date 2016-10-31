@@ -20,9 +20,9 @@
           <li class={{if (eq index 0) "active"}}>
             <a href="#result-tab-{{index}}" data-toggle="tab">
               {{#if (and (eq result.status 0) result.validations.isValid)}}
-                <i class="icon-ok text-success"></i>
+                {{fa-icon "check" class="text-success"}}
               {{else}}
-                <i class="icon-warning-sign text-warning"></i>
+                {{fa-icon "warning" class="text-warning"}}
               {{/if}}
 
               {{result.name}}

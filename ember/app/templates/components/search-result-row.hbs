@@ -1,10 +1,10 @@
 <td class="column-icon">
   {{#if (eq result.type "user")}}
-    <i class="icon-user" title={{t "pilot"}}></i>
+    {{fa-icon "user" title=(t "pilot")}}
   {{else if (eq result.type "club")}}
-    <i class="icon-group" title={{t "club"}}></i>
+    {{fa-icon "group" title=(t "club")}}
   {{else if (eq result.type "airport")}}
-    <i class="icon-map-marker" title={{t "airport"}}></i>
+    {{fa-icon "map-marker" title=(t "airport")}}
   {{/if}}
 </td>
 
@@ -45,17 +45,17 @@
 
   <div class="pull-right">
     {{#if (eq result.type "user")}}
-      {{#link-to "flights.pilot" result.id class="btn btn-default btn-sm"}}<i class="icon-plane"></i> {{t "flights"}}{{/link-to}}
-      {{#link-to "statistics.pilot" result.id class="btn btn-default btn-sm"}}<i class="icon-bar-chart"></i> {{t "statistics"}}{{/link-to}}
+      {{#link-to "flights.pilot" result.id class="btn btn-default btn-sm"}}{{fa-icon "plane"}} {{t "flights"}}{{/link-to}}
+      {{#link-to "statistics.pilot" result.id class="btn btn-default btn-sm"}}{{fa-icon "bar-chart"}} {{t "statistics"}}{{/link-to}}
 
     {{else if (eq result.type "club")}}
-      {{#link-to "club.pilots" result.id  class="btn btn-default btn-sm"}}<i class="icon-group"></i> {{t "members"}}{{/link-to}}
-      {{#link-to "flights.club" result.id class="btn btn-default btn-sm"}}<i class="icon-plane"></i> {{t "flights"}}{{/link-to}}
-      {{#link-to "statistics.club" result.id class="btn btn-default btn-sm"}}<i class="icon-bar-chart"></i> {{t "statistics"}}{{/link-to}}
+      {{#link-to "club.pilots" result.id  class="btn btn-default btn-sm"}}{{fa-icon "group"}} {{t "members"}}{{/link-to}}
+      {{#link-to "flights.club" result.id class="btn btn-default btn-sm"}}{{fa-icon "plane"}} {{t "flights"}}{{/link-to}}
+      {{#link-to "statistics.club" result.id class="btn btn-default btn-sm"}}{{fa-icon "bar-chart"}} {{t "statistics"}}{{/link-to}}
 
     {{else if (eq result.type "airport")}}
-      {{#link-to "flights.airport" result.id class="btn btn-default btn-sm"}}<i class="icon-plane"></i> {{t "flights"}}{{/link-to}}
-      {{#link-to "statistics.airport" result.id class="btn btn-default btn-sm"}}<i class="icon-bar-chart"></i> {{t "statistics"}}{{/link-to}}
+      {{#link-to "flights.airport" result.id class="btn btn-default btn-sm"}}{{fa-icon "plane"}} {{t "flights"}}{{/link-to}}
+      {{#link-to "statistics.airport" result.id class="btn btn-default btn-sm"}}{{fa-icon "bar-chart"}} {{t "statistics"}}{{/link-to}}
     {{/if}}
   </div>
 </td>

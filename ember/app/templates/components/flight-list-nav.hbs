@@ -4,7 +4,7 @@
 
 {{#if prevDate}}
   {{#active-link}}
-    {{#link-to "flights.date" prevDate}}&nbsp;<i class="icon-arrow-left"></i>&nbsp;{{/link-to}}
+    {{#link-to "flights.date" prevDate}}&nbsp;{{fa-icon "arrow-left"}}&nbsp;{{/link-to}}
   {{/active-link}}
 {{/if}}
 
@@ -16,7 +16,7 @@
       {{else}}
         {{t "latest"}}
       {{/if}}
-      &nbsp;{{#date-picker date=date onSelect=(action "dateSelected")}}<i class="icon-th"></i>{{/date-picker}}
+      &nbsp;{{#date-picker date=date onSelect=(action "dateSelected")}}{{fa-icon "calendar"}}{{/date-picker}}
     {{/link-to}}
   {{/active-link}}
 {{/if}}
@@ -25,14 +25,14 @@
   {{#active-link}}
     {{#link-to "flights.date" date}}
       {{format-date date format="ddmmyyyy"}}
-      &nbsp;{{#date-picker date=date onSelect=(action "dateSelected")}}<i class="icon-th"></i>{{/date-picker}}
+      &nbsp;{{#date-picker date=date onSelect=(action "dateSelected")}}{{fa-icon "calendar"}}{{/date-picker}}
     {{/link-to}}
   {{/active-link}}
 {{/if}}
 
 {{#if nextDate}}
   {{#active-link}}
-    {{#link-to "flights.date" nextDate}}&nbsp;<i class="icon-arrow-right"></i>&nbsp;{{/link-to}}
+    {{#link-to "flights.date" nextDate}}&nbsp;{{fa-icon "arrow-right"}}&nbsp;{{/link-to}}
   {{/active-link}}
 {{/if}}
 

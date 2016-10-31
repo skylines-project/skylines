@@ -1,5 +1,5 @@
 <td class="icon">
-  <i class="icon-user"></i>
+  {{fa-icon "user"}}
 </td>
 <td>
   {{link-to (t "show") "user" (if accountUserIsFollowed event.actor.id event.user.id) class="btn btn-default btn-sm pull-right"}}

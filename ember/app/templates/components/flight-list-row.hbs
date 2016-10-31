@@ -81,6 +81,6 @@
 
 <td class="num_comments hidden-xs">
   {{#if (gt flight.numComments 0)}}
-    <i class="icon-comments-alt" title={{t "n-comments" numComments=flight.numComments}}></i>
+    {{fa-icon "comments-o" title=(t "n-comments" numComments=flight.numComments)}}
   {{/if}}
 </td>
