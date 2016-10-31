@@ -1,6 +1,8 @@
 import os.path
 
-from flask import Blueprint, current_app, jsonify
+from flask import Blueprint, current_app
+
+from skylines.api.json import jsonify
 
 about_blueprint = Blueprint('about', 'skylines')
 

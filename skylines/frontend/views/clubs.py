@@ -1,6 +1,7 @@
-from flask import Blueprint, request, jsonify
+from flask import Blueprint, request
 from sqlalchemy import func
 
+from skylines.api.json import jsonify
 from skylines.model import Club
 from skylines.schemas import ClubSchema
 

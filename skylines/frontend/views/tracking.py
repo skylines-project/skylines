@@ -1,5 +1,6 @@
-from flask import Blueprint, jsonify, request
+from flask import Blueprint, request
 
+from skylines.api.json import jsonify
 from skylines.frontend.cache import cache
 from skylines.frontend.oauth import oauth
 from skylines.lib.decorators import jsonp

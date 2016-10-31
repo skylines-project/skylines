@@ -1,10 +1,11 @@
 from datetime import date
 
-from flask import Blueprint, request, jsonify, g
+from flask import Blueprint, request, g
 from sqlalchemy import func
 from sqlalchemy.sql.expression import desc, over
 from sqlalchemy.orm import eagerload
 
+from skylines.api.json import jsonify
 from skylines.database import db
 from skylines.model import User, Club, Flight, Airport
 from skylines.lib.table_tools import Pager, Sorter

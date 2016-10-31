@@ -1,7 +1,7 @@
 import math
 from datetime import datetime
 
-from flask import Blueprint, request, abort, current_app, jsonify, make_response
+from flask import Blueprint, request, abort, current_app, make_response
 
 from sqlalchemy import literal_column, and_
 from sqlalchemy.orm import undefer_group, contains_eager
@@ -9,6 +9,7 @@ from sqlalchemy.sql.expression import func
 from geoalchemy2.shape import to_shape
 from datetime import timedelta
 
+from skylines.api.json import jsonify
 from skylines.frontend.cache import cache
 from skylines.frontend.oauth import oauth
 from skylines.database import db

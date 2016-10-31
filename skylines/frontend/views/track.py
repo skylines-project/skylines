@@ -1,9 +1,10 @@
 from datetime import datetime, timedelta
 from math import log
 
-from flask import Blueprint, request, abort, jsonify
+from flask import Blueprint, request, abort
 from sqlalchemy.sql.expression import and_
 
+from skylines.api.json import jsonify
 from skylines.lib.dbutil import get_requested_record_list, get_requested_record
 from skylines.lib.helpers import color
 from skylines.lib.xcsoar_ import FlightPathFix

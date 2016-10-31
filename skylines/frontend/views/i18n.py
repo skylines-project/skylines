@@ -1,5 +1,7 @@
-from flask import Blueprint, request, jsonify
+from flask import Blueprint, request
 from babel import negotiate_locale as _negotiate_locale
+
+from skylines.api.json import jsonify
 
 i18n_blueprint = Blueprint('i18n', 'skylines')
 

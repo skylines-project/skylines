@@ -1,5 +1,6 @@
-from flask import Blueprint, request, jsonify
+from flask import Blueprint, request
 
+from skylines.api.json import jsonify
 from skylines.database import db
 from skylines.frontend.oauth import oauth
 from skylines.lib.dbutil import get_requested_record
@@ -19,7 +20,7 @@ def read(club_id):
     json = ClubSchema().dump(club).data
     json['isWritable'] = club.is_writable(current_user)
 
-    return jsonify(**json)
+    return jsonify(json)
 
 
 @club_blueprint.route('/clubs/<club_id>', methods=['POST'], strict_slashes=False)
