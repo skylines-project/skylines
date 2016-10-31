@@ -27,7 +27,7 @@ def register(app):
 
         return jsonify({
             'message': message,
-        }, status=e.code)
+        }), e.code
 
     @app.errorhandler(422)
     def handle_bad_request(err):
@@ -41,17 +41,17 @@ def register(app):
 
         return jsonify({
             'messages': messages,
-        }, status=422)
+        }), 422
 
     @app.errorhandler(TypeError)
     @app.errorhandler(ValueError)
     def raise_bad_request(e):
         return jsonify({
             'message': e.message,
-        }, status=400)
+        }), 400
 
     @app.errorhandler(LookupError)
     def raise_not_found(e):
         return jsonify({
             'message': e.message,
-        }, status=404)
+        }), 404
