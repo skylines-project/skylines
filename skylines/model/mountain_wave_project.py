@@ -7,6 +7,7 @@ from sqlalchemy.sql.expression import cast
 from geoalchemy2.types import Geography, Geometry
 
 from skylines.database import db
+from skylines.model.geo import Location
 
 
 class MountainWaveProject(db.Model):
@@ -40,6 +41,9 @@ class MountainWaveProject(db.Model):
     @classmethod
     def by_location(cls, location):
         """Returns a query object of mountain waves around the location"""
+        if not isinstance(location, Location):
+            raise TypeError('Invalid `location` parameter.')
+
         return cls.query() \
             .filter(db.func.ST_DWithin(
                 cast(location.make_point(), Geography),
