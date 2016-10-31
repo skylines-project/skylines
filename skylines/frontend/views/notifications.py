@@ -1,7 +1,8 @@
-from flask import Blueprint, request, jsonify
+from flask import Blueprint, request
 from sqlalchemy.orm import subqueryload, contains_eager
 from sqlalchemy.sql.expression import or_
 
+from skylines.api.json import jsonify
 from skylines.database import db
 from skylines.frontend.oauth import oauth
 from skylines.model import Event, Notification, Flight, User

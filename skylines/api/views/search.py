@@ -6,7 +6,7 @@ from skylines.model import User, Club, Airport
 from skylines.model.search import (
     combined_search_query, text_to_tokens, escape_tokens
 )
-from .json import jsonify
+from skylines.api.json import jsonify
 
 search_blueprint = Blueprint('search', 'skylines')
 

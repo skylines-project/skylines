@@ -1,12 +1,13 @@
 from datetime import datetime
 
-from flask import Blueprint, current_app, jsonify, request
+from flask import Blueprint, current_app, request
 
 from sqlalchemy import func
 from sqlalchemy.sql.expression import or_, and_
 from sqlalchemy.orm import joinedload, contains_eager
 from sqlalchemy.orm.util import aliased
 
+from skylines.api.json import jsonify
 from skylines.database import db
 from skylines.frontend.oauth import oauth
 from skylines.lib.table_tools import Pager, Sorter
@@ -127,7 +128,7 @@ def _create_list(date=None, pilot=None, club=None, airport=None,
         airport_schema = AirportSchema(only=('id', 'name', 'countryCode'))
         json['airport'] = airport_schema.dump(airport).data
 
-    return jsonify(**json)
+    return jsonify(json)
 
 
 @flights_blueprint.route('/flights/all')

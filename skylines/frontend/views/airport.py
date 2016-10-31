@@ -1,5 +1,6 @@
-from flask import Blueprint, jsonify
+from flask import Blueprint
 
+from skylines.api.json import jsonify
 from skylines.lib.dbutil import get_requested_record
 from skylines.model import Airport
 
@@ -16,4 +17,4 @@ def index(airport_id):
         'countryCode': airport.country_code,
     }
 
-    return jsonify(**json)
+    return jsonify(json)

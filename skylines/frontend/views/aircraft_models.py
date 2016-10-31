@@ -1,5 +1,6 @@
-from flask import Blueprint, jsonify
+from flask import Blueprint
 
+from skylines.api.json import jsonify
 from skylines.model import AircraftModel
 from skylines.schemas import AircraftModelSchema
 

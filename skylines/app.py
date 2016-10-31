@@ -85,6 +85,7 @@ def create_frontend_app(*args, **kw):
     from skylines.frontend.oauth import oauth
 
     app = create_http_app('skylines.frontend', *args, **kw)
+    app.config['JSON_SORT_KEYS'] = False
 
     app.add_cache()
     app.load_egm96()

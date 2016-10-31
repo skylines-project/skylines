@@ -1,6 +1,7 @@
-from flask import Blueprint, abort, jsonify
+from flask import Blueprint, abort
 from sqlalchemy import func, distinct
 
+from skylines.api.json import jsonify
 from skylines.database import db
 from skylines.lib.dbutil import get_requested_record
 from skylines.model import User, Club, Flight, Airport

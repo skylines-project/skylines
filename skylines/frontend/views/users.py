@@ -2,12 +2,13 @@ from email.mime.text import MIMEText
 from email.utils import formatdate
 import smtplib
 
-from flask import Blueprint, request, current_app, jsonify
+from flask import Blueprint, request, current_app
 from werkzeug.exceptions import ServiceUnavailable
 
 from sqlalchemy import func
 from sqlalchemy.orm import joinedload
 
+from skylines.api.json import jsonify
 from skylines.database import db
 from skylines.frontend.oauth import oauth
 from skylines.model import User

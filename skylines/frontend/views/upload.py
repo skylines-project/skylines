@@ -7,10 +7,11 @@ import os
 
 from collections import namedtuple
 
-from flask import Blueprint, request, current_app, abort, make_response, jsonify
+from flask import Blueprint, request, current_app, abort, make_response
 from redis.exceptions import ConnectionError
 from sqlalchemy.sql.expression import func
 
+from skylines.api.json import jsonify
 from skylines.frontend.cache import cache
 from skylines.frontend.oauth import oauth
 from skylines.database import db

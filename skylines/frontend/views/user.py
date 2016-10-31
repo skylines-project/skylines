@@ -1,10 +1,11 @@
 from datetime import date, timedelta
 
-from flask import Blueprint, request, jsonify
+from flask import Blueprint, request
 
 from sqlalchemy import func, and_
 from sqlalchemy.orm import contains_eager, subqueryload
 
+from skylines.api.json import jsonify
 from skylines.database import db
 from skylines.frontend.oauth import oauth
 from skylines.lib.dbutil import get_requested_record
@@ -107,7 +108,7 @@ def read(user_id):
 
     mark_user_notifications_read(user)
 
-    return jsonify(**user_json)
+    return jsonify(user_json)
 
 
 @user_blueprint.route('/users/<user_id>/followers')
