@@ -4,7 +4,6 @@ from .about import about_blueprint
 from .airports import airports_blueprint
 from .aircraft_models import aircraft_models_blueprint
 from .assets import assets_blueprint
-from .club import club_blueprint
 from .clubs import clubs_blueprint
 from .files import files_blueprint
 from .flight import flight_blueprint
@@ -37,7 +36,6 @@ def register(app):
     app.register_blueprint(about_blueprint, url_prefix='/api')
     app.register_blueprint(airports_blueprint, url_prefix='/api')
     app.register_blueprint(aircraft_models_blueprint, url_prefix='/api')
-    app.register_blueprint(club_blueprint, url_prefix='/api')
     app.register_blueprint(clubs_blueprint, url_prefix='/api')
     app.register_blueprint(flight_blueprint, url_prefix='/api')
     app.register_blueprint(flights_blueprint, url_prefix='/api')
