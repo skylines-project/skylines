@@ -16,6 +16,7 @@ AIRCRAFT_MODEL_TYPES = {
 
 class Schema(_Schema):
     class Meta(_Schema.Meta):
+        ordered = True
         strict = True
 
 
