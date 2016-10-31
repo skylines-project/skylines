@@ -3,7 +3,7 @@ from datetime import datetime, timedelta
 
 from flask import Blueprint, request, abort, current_app, make_response
 
-from sqlalchemy import func, literal_column, and_
+from sqlalchemy import func, literal_column
 from sqlalchemy.sql.expression import or_, and_
 from sqlalchemy.orm import joinedload, contains_eager, undefer_group
 from sqlalchemy.orm.util import aliased
@@ -39,7 +39,7 @@ import xcsoar
 flights_blueprint = Blueprint('flights', 'skylines')
 
 
-def mark_flight_notifications_read(pilot):
+def mark_user_notifications_read(pilot):
     if not request.user_id:
         return
 
@@ -193,7 +193,7 @@ def latest():
 def pilot(id):
     pilot = get_requested_record(User, id)
 
-    mark_flight_notifications_read(pilot)
+    mark_user_notifications_read(pilot)
 
     return _create_list(pilot=pilot, default_sorting_column='date', default_sorting_order='desc')
 
@@ -483,8 +483,7 @@ def json(flight_id):
 def _get_near_flights(flight, location, time, max_distance=1000):
     # calculate max_distance in degrees at the earth's sphere (approximate,
     # cutoff at +-85 deg)
-    max_distance_deg = (max_distance / METERS_PER_DEGREE) / \
-                       math.cos(math.radians(min(abs(location.latitude), 85)))
+    max_distance_deg = (max_distance / METERS_PER_DEGREE) / math.cos(math.radians(min(abs(location.latitude), 85)))
 
     # the distance filter is geometric only, so max_distance must be given in
     # SRID units (which is degrees for WGS84). The filter will be more and more
