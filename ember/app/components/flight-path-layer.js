@@ -27,8 +27,7 @@ export default Ember.Component.extend({
   },
 
   willDestroyElement() {
-    // TODO enable once removeLayer() is available again
-    // this.get('map').removeLayer(this.get('layer'));
+    this.get('map').removeLayer(this.get('layer'));
   },
 });
 

@@ -21,6 +21,7 @@
     "ol.Map#getViewport",
     "ol.Map#on",
     "ol.Map#un",
+    "ol.Map#removeLayer",
     "ol.Map#removeOverlay",
     "ol.Map#render",
     "ol.Map#setTarget",
