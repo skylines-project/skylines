@@ -15,8 +15,9 @@ export default Ember.Component.extend({
 
     let badgeStyle = `display: inline-block; text-align: center; background: ${this.get('flight.color')}`;
 
+    let id = this.getWithDefault('flight.competition_id', '') || this.getWithDefault('flight.registration', '');
     let badge = Ember.$(`<span class="badge plane_marker" style="${badgeStyle}">
-      ${this.getWithDefault('flight.competition_id', '')}
+      ${id}
     </span>`);
 
     this.set('overlay', new ol.Overlay({
