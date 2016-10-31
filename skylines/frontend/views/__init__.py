@@ -31,7 +31,6 @@ def register(app):
 
     app.register_blueprint(assets_blueprint)
     app.register_blueprint(files_blueprint)
-    app.register_blueprint(i18n_blueprint)
     app.register_blueprint(lt24_blueprint)
     app.register_blueprint(widgets_blueprint)
 
@@ -42,6 +41,7 @@ def register(app):
     app.register_blueprint(clubs_blueprint, url_prefix='/api')
     app.register_blueprint(flight_blueprint, url_prefix='/api')
     app.register_blueprint(flights_blueprint, url_prefix='/api')
+    app.register_blueprint(i18n_blueprint, url_prefix='/api')
     app.register_blueprint(mapitems_blueprint, url_prefix='/api')
     app.register_blueprint(notifications_blueprint, url_prefix='/api')
     app.register_blueprint(ranking_blueprint, url_prefix='/api')
