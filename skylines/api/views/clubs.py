@@ -3,7 +3,7 @@ from werkzeug.exceptions import NotFound
 
 from skylines.api.schemas import ClubSchema
 from skylines.model import Club
-from skylines.api.views.json import jsonify
+from skylines.api.json import jsonify
 
 clubs_blueprint = Blueprint('clubs', 'skylines')
 club_schema = ClubSchema()

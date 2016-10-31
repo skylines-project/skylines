@@ -1,5 +1,5 @@
 from werkzeug.exceptions import HTTPException, InternalServerError
-from .json import jsonify
+from skylines.api.json import jsonify
 
 
 def register(app):

@@ -3,7 +3,7 @@ from flask import Blueprint, request
 from skylines.model import User
 from skylines.api.oauth import oauth
 from skylines.api.schemas import current_user_schema
-from skylines.api.views.json import jsonify
+from skylines.api.json import jsonify
 
 user = Blueprint('user', 'skylines')
 

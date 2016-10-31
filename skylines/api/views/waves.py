@@ -1,7 +1,7 @@
 from flask import Blueprint, request
 
 from skylines import api
-from .json import jsonify
+from skylines.api.json import jsonify
 from .parser import parse_location
 
 waves_blueprint = Blueprint('waves', 'skylines')

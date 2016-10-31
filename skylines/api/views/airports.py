@@ -3,7 +3,7 @@ from webargs.flaskparser import use_args
 
 from skylines import api
 from skylines.api.schemas.fields.bounds import BoundsField
-from .json import jsonify
+from skylines.api.json import jsonify
 
 airports_blueprint = Blueprint('airports', 'skylines')
 
