@@ -15,9 +15,8 @@ AIRCRAFT_MODEL_TYPES = {
 
 
 class Schema(_Schema):
-    # Set `strict=True` as default for our schemas
-    def __init__(self, strict=True, *args, **kwargs):
-        super(Schema, self).__init__(strict=strict, *args, **kwargs)
+    class Meta(_Schema.Meta):
+        strict = True
 
 
 class AircraftModelSchema(Schema):
@@ -79,7 +78,7 @@ class UserSchema(Schema):
     followers = fields.Integer(attribute='num_followers', dump_only=True)
     following = fields.Integer(attribute='num_following', dump_only=True)
 
-    class Meta:
+    class Meta(Schema.Meta):
         load_only = ('clubId',)
         dump_only = ('club',)
 
@@ -116,7 +115,7 @@ class IGCFileSchema(Schema):
 
     date = fields.Date(attribute='date_utc')
 
-    class Meta:
+    class Meta(Schema.Meta):
         load_only = ('ownerId',)
         dump_only = ('owner',)
 
@@ -165,7 +164,7 @@ class FlightSchema(Schema):
     igcFile = fields.Nested(IGCFileSchema, attribute='igc_file', only=(
         'owner', 'filename', 'registration', 'competitionId', 'model', 'date'))
 
-    class Meta:
+    class Meta(Schema.Meta):
         load_only = ('pilotId', 'copilotId', 'clubId', 'modelId', 'takeoffAirportId', 'landingAirportId')
         dump_only = ('pilot', 'copilot', 'club', 'model', 'takeoffAirport', 'landingAirport', 'speed', 'score', 'igcFile')
 
