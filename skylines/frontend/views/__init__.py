@@ -1,7 +1,7 @@
 from .errors import register as register_error_handlers
 
 from .about import about_blueprint
-from .airport import airport_blueprint
+from .airports import airports_blueprint
 from .aircraft_models import aircraft_models_blueprint
 from .assets import assets_blueprint
 from .club import club_blueprint
@@ -35,7 +35,7 @@ def register(app):
     app.register_blueprint(widgets_blueprint)
 
     app.register_blueprint(about_blueprint, url_prefix='/api')
-    app.register_blueprint(airport_blueprint, url_prefix='/api')
+    app.register_blueprint(airports_blueprint, url_prefix='/api')
     app.register_blueprint(aircraft_models_blueprint, url_prefix='/api')
     app.register_blueprint(club_blueprint, url_prefix='/api')
     app.register_blueprint(clubs_blueprint, url_prefix='/api')
