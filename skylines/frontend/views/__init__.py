@@ -6,7 +6,6 @@ from .aircraft_models import aircraft_models_blueprint
 from .assets import assets_blueprint
 from .clubs import clubs_blueprint
 from .files import files_blueprint
-from .flight import flight_blueprint
 from .flights import flights_blueprint
 from .i18n import i18n_blueprint
 from .livetrack24 import lt24_blueprint
@@ -35,7 +34,6 @@ def register(app):
     app.register_blueprint(airports_blueprint, url_prefix='/api')
     app.register_blueprint(aircraft_models_blueprint, url_prefix='/api')
     app.register_blueprint(clubs_blueprint, url_prefix='/api')
-    app.register_blueprint(flight_blueprint, url_prefix='/api')
     app.register_blueprint(flights_blueprint, url_prefix='/api')
     app.register_blueprint(i18n_blueprint, url_prefix='/api')
     app.register_blueprint(mapitems_blueprint, url_prefix='/api')
