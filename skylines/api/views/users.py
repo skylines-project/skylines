@@ -3,7 +3,7 @@ from webargs.flaskparser import use_args
 from werkzeug.exceptions import NotFound
 
 from skylines.api.schemas import user_schema, user_list_schema
-from skylines.api.views import pagination_args
+from skylines.api.args import pagination_args
 from skylines.model import User
 from skylines.api.json import jsonify
 

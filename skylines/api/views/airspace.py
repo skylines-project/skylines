@@ -1,8 +1,8 @@
 from flask import Blueprint, request
 
 from skylines import api
+from skylines.api.args import parse_location
 from skylines.api.json import jsonify
-from .parser import parse_location
 
 airspace_blueprint = Blueprint('airspace', 'skylines')
 

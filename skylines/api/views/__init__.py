@@ -1,5 +1,4 @@
 from flask import request
-from webargs import fields
 from werkzeug.exceptions import Forbidden
 from werkzeug.useragents import UserAgent
 
@@ -45,9 +44,3 @@ def register(app):
     app.register_blueprint(user)
     app.register_blueprint(users)
     app.register_blueprint(waves_blueprint)
-
-
-pagination_args = {
-    'page': fields.Integer(missing=1, location='query', validate=lambda val: val > 0),
-    'per_page': fields.Integer(missing=30, location='query', validate=lambda val: val <= 100),
-}
