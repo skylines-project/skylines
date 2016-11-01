@@ -33,7 +33,11 @@ class AircraftModelSchema(Schema):
 class AirportSchema(Schema):
     id = fields.Integer(dump_only=True)
     name = fields.String(required=True, strip=True, validate=validate.Length(max=255))
+    short_name = fields.String()
+    icao = fields.String()
     countryCode = fields.String(attribute='country_code', dump_only=True)
+    elevation = fields.Float(attribute='altitude')
+    location = fields.Location()
 
 
 class AirspaceSchema(Schema):
