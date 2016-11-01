@@ -2,7 +2,7 @@ from flask import Blueprint, request
 from sqlalchemy.sql.expression import and_, or_
 
 from skylines.api.json import jsonify
-from skylines.frontend.oauth import oauth
+from skylines.api.oauth import oauth
 from skylines.database import db
 from skylines.model import User, Club, Flight, IGCFile
 from skylines.model.event import (

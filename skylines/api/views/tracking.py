@@ -5,8 +5,8 @@ from flask import Blueprint, request, abort
 from sqlalchemy.sql.expression import and_
 
 from skylines.api.json import jsonify
-from skylines.frontend.cache import cache
-from skylines.frontend.oauth import oauth
+from skylines.api.cache import cache
+from skylines.api.oauth import oauth
 from skylines.lib.dbutil import get_requested_record_list, get_requested_record
 from skylines.lib.decorators import jsonp
 from skylines.lib.helpers import color

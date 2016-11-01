@@ -12,8 +12,8 @@ from redis.exceptions import ConnectionError
 from sqlalchemy.sql.expression import func
 
 from skylines.api.json import jsonify
-from skylines.frontend.cache import cache
-from skylines.frontend.oauth import oauth
+from skylines.api.cache import cache
+from skylines.api.oauth import oauth
 from skylines.database import db
 from skylines.lib import files
 from skylines.lib.util import pressure_alt_to_qnh_alt

@@ -2,7 +2,7 @@ from flask import Blueprint, request
 
 from skylines import api
 from skylines.api.json import jsonify
-from skylines.api.views.parser import parse_location
+from skylines.api.args import parse_location
 
 mapitems_blueprint = Blueprint('mapitems', 'skylines')
 

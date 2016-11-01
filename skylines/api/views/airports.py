@@ -1,25 +1,14 @@
 from flask import Blueprint
-from webargs.flaskparser import use_args
 
-from skylines import api
-from skylines.api.schemas.fields.bounds import BoundsField
 from skylines.api.json import jsonify
+from skylines.lib.dbutil import get_requested_record
+from skylines.model import Airport
+from skylines.schemas import AirportSchema
 
 airports_blueprint = Blueprint('airports', 'skylines')
 
-bbox_args = {
-    'bbox': BoundsField(required=True, location='query'),
-}
 
-
-@airports_blueprint.route('/airports', strict_slashes=False)
-@use_args(bbox_args)
-def list(args):
-    airports = api.get_airports_by_bbox(args['bbox'])
-    return jsonify(airports)
-
-
-@airports_blueprint.route('/airports/<int:id>')
-def details(id):
-    airport = api.get_airport(id)
-    return jsonify(airport)
+@airports_blueprint.route('/airports/<int:airport_id>')
+def index(airport_id):
+    airport = get_requested_record(Airport, airport_id)
+    return jsonify(AirportSchema().dump(airport).data)

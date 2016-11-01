@@ -27,7 +27,7 @@ class SkyLines(Flask):
 
     def add_cache(self):
         """ Create and attach Cache extension """
-        from skylines.frontend.cache import cache
+        from skylines.api.cache import cache
         cache.init_app(self)
 
     def add_logging_handlers(self):
@@ -82,15 +82,7 @@ def create_http_app(*args, **kw):
 
 
 def create_frontend_app(*args, **kw):
-    from skylines.frontend.oauth import oauth
-
     app = create_http_app('skylines.frontend', *args, **kw)
-    app.config['JSON_SORT_KEYS'] = False
-
-    app.add_cache()
-    app.load_egm96()
-
-    oauth.init_app(app)
 
     import skylines.frontend.views
     skylines.frontend.views.register(app)
@@ -99,10 +91,17 @@ def create_frontend_app(*args, **kw):
 
 
 def create_api_app(*args, **kw):
+    from skylines.api.oauth import oauth
+
     app = create_http_app('skylines.api', *args, **kw)
     app.config['JSON_SORT_KEYS'] = False
 
+    app.load_egm96()
+    app.add_cache()
+
     app.wsgi_app = HTTPMethodOverrideMiddleware(app.wsgi_app)
+
+    oauth.init_app(app)
 
     import skylines.api.views
     skylines.api.views.register(app)
@@ -117,7 +116,7 @@ def create_combined_app(*args, **kw):
     api = create_api_app(*args, **kw)
 
     mounts = {
-        '/api/v0': api,
+        '/api': api,
     }
 
     frontend.wsgi_app = DispatcherMiddleware(frontend.wsgi_app, mounts)
