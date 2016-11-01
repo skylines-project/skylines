@@ -42,11 +42,11 @@ def test_search(client, default_headers, fixtures):
         'website': 'https://www.lv-aachen.de',
     }
 
-    response = client.get('/search?q=aachen', headers=default_headers)
+    response = client.get('/search?text=aachen', headers=default_headers)
     assert isinstance(response, Response)
     assert response.status_code == 200
 
-    data = json.loads(response.data)
+    data = json.loads(response.data)['results']
     assert len(data) == 2
     assert edka in data
     assert lva in data
@@ -66,11 +66,11 @@ def test_search2(client, default_headers, fixtures):
         'name': u'John Doe',
     }
 
-    response = client.get('/search?q=doe', headers=default_headers)
+    response = client.get('/search?text=doe', headers=default_headers)
     assert isinstance(response, Response)
     assert response.status_code == 200
 
-    data = json.loads(response.data)
+    data = json.loads(response.data)['results']
     assert len(data) == 2
     assert jane in data
     assert john in data
@@ -81,7 +81,7 @@ def test_missing_search_text(client, default_headers):
 
     response = client.get('/search', headers=default_headers)
     assert isinstance(response, Response)
-    assert response.status_code == 422
+    assert response.status_code == 200
 
-    data = json.loads(response.data)
-    assert data == {'messages': {'q': ['Missing data for required field.']}}
+    data = json.loads(response.data)['results']
+    assert len(data) == 0

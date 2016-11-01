@@ -12,8 +12,8 @@ from redis.exceptions import ConnectionError
 
 from skylines.api.json import jsonify
 from skylines.database import db
-from skylines.frontend.cache import cache
-from skylines.frontend.oauth import oauth
+from skylines.api.cache import cache
+from skylines.api.oauth import oauth
 from skylines.lib import files
 from skylines.lib.table_tools import Pager, Sorter
 from skylines.lib.dbutil import get_requested_record
