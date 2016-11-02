@@ -102,7 +102,7 @@ If the above steps are completed you should be able to run a base version of
 ## Adding Airports
 
 Since an empty database is boring, you should at least load the airports from
-the [Welt2000](http://www.segelflug.de/vereine/welt2000/) into the database by
+the [Welt2000](http://github.com/skylines-project/welt2000) into the database by
 calling (the `commit` flag indicates that any data should be written to the
 database):
 
