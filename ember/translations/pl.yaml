@@ -1,3 +1,4 @@
+achievements: Osiągnięcia
 actions: Akcje
 add-comment: Dodaj komentarz
 aircraft: Statek powietrzny
@@ -28,6 +29,7 @@ club-was-registered: Twój klub został zarejestrowany.
 clubs: Kluby
 comments: Komentarze
 competition-id: Znak Konkursowy
+competitions: Zawody
 confirm-password: Potwierdź hasło
 copilot: Co-Pilot
 count: Ilość
@@ -40,12 +42,16 @@ date: Data
 date-missing-in-igc-file: Brak daty w pliku IGC
 delay: Opóźnienie
 delete: Usuń
+delete-flight: Usuń Lot
+delete-flight-confirmation-text: Jesteś pewny, że chcesz usunąć ten lot?
+developers: Twórcy
 distance: Odległość
 distance-abbr: Odl.
 distance-flights: Odległość Lotów
 DISTANCE-on-DATE: '{distance} z {date}'
 DISTANCE-on-DATE-by-PILOT: '{distance} z {date} przez {pilot}'
 DISTANCE-on-DATE-by-PILOT-and-COPILOT: '{distance} z {date} przez {pilot} i {copilot}'
+dont-have-an-account: Nie masz konta?
 duplicate-file: Duplikat pliku
 duration: Czas trwania
 edit: Edytuj
@@ -54,17 +60,23 @@ editing: Edytowanie...
 email-address: Adres email
 email-exists-already: Ten adres email już istnieje.
 email-unknown: Ten adres email jest nieznany.
+error-text: Wygląda na to, że podczas ładowania tej strony wystąpił błąd. Błąd został automatycznie zgłoszony twórcom. Spróbuj ponownie później!
 fai-triangle-distance: Odległość Trójkąta FAI
 failed-to-parse-file: Parsowanie pliku nie powiodło się
 file-upload-field: Pole pliku do przesłania
 first-last: Pierwszy / Ostatni
 first-name: Imię
+flight-analysis: Analizy lotów
+flight-database: Baza danych lotów
 flight-date-in-future: Data lotu w przyszłości
+flight-pinned: Lot przypięty!
 flight-time: Czas Lotu
+flight-unpinned: Kliknij, aby przypiąć
 flights: Loty
 follow: Obserwuj
 followers: Obserwujący
 following: Obserwatorzy
+forgot-password: Zapomniałeś hasła?
 friends: Znajomi
 generate-new-key: Generuj nowy klucz
 generating-new-key: Generowanie nowego klucza...
@@ -83,12 +95,17 @@ last-name: Nazwisko
 latest: Najnowsze
 n-avg-distance-per-flight: śr. {distance} na lot
 leg-statistics: Statystyki Boku
+license: Licencja
 live-tracking: Live Tracking
+live-tracking-nav-bar-link: Live
 live-tracking-of-PILOT: Live Tracking dla {pilot}
 live-tracking-of-PILOT-and-PILOT2: Live Tracking dla {pilot} i {pilot2}
 live-tracking-of-PILOT-and-NUM-other-pilots: Live Tracking dla {pilot} i {num} innych pilotów
 n-avg-hours-per-flight: śr. {num} godzin na lot
 live-tracking-key: Klucz Live Tracking
+loading: Ładowanie...
+login: Zaloguj
+logout: Wyloguj
 mark-all-as-read: Oznacz wszystkie jako przeczytane
 members: Członkowie
 members-of-CLUB: Członkowie <small> z <a href="{clubURL}">{club}</a></small>
@@ -99,6 +116,7 @@ name: Nazwa
 nearest-airport: Najbliższe lotnisko
 new: Nowy
 newer: Nowszy
+'no': Nie
 no-airports-found: Nie znaleziono lotniska
 no-club: Brak klubu
 no-clubs-found: Nie znaleziono klubu.
@@ -111,6 +129,8 @@ no-data: Nie znaleziono danych...
 notifications: Powiadomienia
 olc-distance: Odległość OLC
 older: Starsze
+open-data: Otwarte dane
+open-source: Otwarte oprogramowanie
 other-pilots: Inni piloci
 overview: Podsumowanie
 password: Hasło
@@ -123,9 +143,13 @@ pilots: Piloci
 pilots-must-not-be-equal: Pilot nie może być taki sam.
 pin-button-title: Aktywuj to, aby pokazać lot wyżej niż inne loty na mapie
 pinned: Przypięte
+planned: planowane
 POINTS-points-abbr: '{points} pkt.'
+processing: Przetwarzanie...
 profile: Profil
 publish: Publikuj
+publish-flight: Publikuj Lot
+publish-flight-confirmation-text: Potwierdź, aby opublikować ten lot...
 publish-flights: '{num, plural, =1 {Publikuj Lot} other {Publikuj Loty}}'
 publishing: Publikowanie
 ranking: Ranking
@@ -143,6 +167,8 @@ season-YEAR: Sezon {year}
 settings: Ustawienia
 settings-have-been-saved: Twoje ustawienia zostały zapisane.
 show: Pokaż
+social-network: Sieć społeczna
+sorry: Przepraszam!
 speed: Prędkość
 start: Start
 statistics: Statystyki
@@ -151,6 +177,7 @@ success: Powodzenie
 takeoff: Start
 takeoff-locations: Miejsca Startów
 takeoff-time: Czas startu
+task-planning: Planowanie Zadań
 the-skylines-team: Zespół SkyLines
 this-is-you: To ty
 time: Czas
@@ -161,6 +188,7 @@ total-score: Wynik całkowity
 tracking-callsign: Znak wywoławczy tracking-u
 tracking-delay: Opóźnienie tracking-u
 tracking-delay-choice: '{delay, plural, =0 {Brak} =1 {1 minuta} other {# minut}}'
+translators: Tłumacze
 triangle: Trójkąt
 unassigned: Nieprzypisany
 unfollow: Przestań obserwować
@@ -176,10 +204,24 @@ users: Użytkownicy
 verify-flights-and-publish: Musisz zweryfikować ich właściwości i kliknąć poniżej 'Publikuj Lot(y)', aby opublikować twoje lot(y).
 website: Strona internetowa
 wingmen: Skrzydłowy
+wrong-credentials: Sprawdź proszę twój adres email i hasło.
 wrong-current-password: Sprawdź proszę swoje bieżące hasło.
 year: Rok
+'yes': Tak
 you-have-no-notifications: Nie masz powiadomień.
 your-flights-have-been-saved: Twoje loty zostały zapisane.
+your-live-tracking-key: 'Twój klucz Live Tracking:'
+about:
+  welcome: Witamy w SkyLines, twojej internetowej platformie do dzielenia się lotami!
+  flights: <a href="{uploadURL}">Prześlij</a> swój plik IGC i udostępnij go swoim znajomym. Nie zmieniamy twoich plików lub ograniczamy ich ponownego pobierania!
+  tracking: Użyj swojego telefonu do wysyłania aktualizacji pozycji do SkyLines. Dowiedz się jak to działa <a href="{url}">tutaj</a>.
+  analysis: Użyj naszych narzędzi do analiz do bliższego przyjrzenia twoim lotom i tego jak mógłbyś poprawić je w przyszłości .
+  task-planning: Użyj przeglądarki do planowania twoich zadań przed lotem i prześlij je szybko do twojej nawigacji. Planowana jest integracja z {prosoar}.
+  competitions: Stwórz zawody, aby zaoferować swoim widzom lepsze doświadczenie śledzenia na żywo poprzez podążanie za wszystkimi uczestnikami na tej samej mapie.
+  achievements: Podejmij wyzwanie próbując ukończyć wszystkie osiągnięcia jakie oferuje SkyLines. Lataj na duże trójkąty, długie doloty lub zalicz sowje pierwsze lądowanie w terenie przygodnym.
+  notifications: Skylines posiada elementy sieci społecznościowej. Możesz komentować loty, podążać za twoimi znajomymi i otrzymywać <a href="{url}">powiadomienia</a> jeśli oni zrobią coś interesującego.
+  open-data: Baza danych SkyLines jest dostępna na licencji {license}. Skylines używa punktów zwrotnych z projektu {welt2000}.
+  open-source: Skylines jest projektem <a href="{teamURL}">społecznościowym</a> i całkowicie bazuje na wolnym oprogramowaniu (<a href="{licenseURL}">Licencja</a>). Odwiedź {github} jeśli chcesz pomóc!
 search:
   search: Szukaj
   search-for-TEXT: Szukaj <small>dla "{text}"</small>
@@ -204,6 +246,19 @@ timeline-events:
   new-user:
     message1: <strong><a href="{actorURL}">{actor}</a></strong> dołączył do SkyLines.
     message2: Dołączyłeś do SkyLines.
+tracking:
+  what-is-it: Co to jest?
+  description: 'SkyLines Live Tracking może pozwolić innym współuczestniczyć w twoich podróżach podczas, gdy ty lecisz. Do tego jest używany bardzo lekki protokół, który przesyła tylko niezbędne dane z powodu możliwości funkcjonowania na obszarach/wysokościach, gdzie odbiór nie jest bardzo dobry. Na przykładzie: Lot 10 godzinny zużywa tylko około 340KB danych, gdy pozycja jest przesyłana co 5 sekund!'
+  clients: Klienci
+  xcsoar-description: dostępne zaczynając od {release}
+  instructions-below: Instrukcje poniżej.
+  available-in-gaggle: teraz dostępne w bieżącej Gaggle
+  lt24-clients: Klienci LiveTrack24
+  lt24-description: Możesz także użyć wszystkich dostępnych aplikacji, które używają protokołu {livetrack24} do wysyłania twojej pozycji do SkyLines. Po prostu użyj swojego klucza Live Tracking jako nazwę użytkownika, wybierz dowolne hasło jakie chcesz i ustaw {skylines} jako serwer.
+  your-live-tracking-key-is-KEY: 'Twój klucz Live Tracking: {key}'
+  settings: Ustawienia Live Tracking
+  login-required: Musisz się zalogować, aby zobaczyć swój własny klucz Live Tracking.
+  xcsoar-instructions: W XCSoar, otwórz <em>Setup System</em>, wybierz <em>Setup</em>, a następnie <em>Tracking</em>. Włącz śledzenie SkyLines i wprowadź swój klucz Live Tracking.
 flight-phase:
   powered: Silnik
   circlingLeft: Krążenie w lewo

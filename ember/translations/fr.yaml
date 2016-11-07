@@ -14,15 +14,16 @@ avg-speed-abbr: Vitesse moy.
 avg-vario-abbr: Vario moy.
 change: Modifier
 change-club: Modifier le Club
-change-password: Modifier le mot de pass
+change-password: Modifier le mot de passe
 changing: Modification…
 changing-password: Modification du mot de passe…
 choose-aircraft: Sélectionnez un aéronef
 choose-club: Sélectionnez un club
 choose-pilot: Sélectionnez un pilote
+circling-performance: Performance en spirale
 climb-percentage-abbr: '% montée'
 club: Club
-club-exists-already: Un club avec ce nom existe déjà.
+club-exists-already: Un club avec ce nom existe déjà
 club-has-been-changed: Votre club a été modifié.
 club-was-registered: Votre club a été enregistré avec succès.
 clubs: Clubs
@@ -32,7 +33,7 @@ competitions: Compétitions
 confirm-password: Confirmation du mot de passe
 copilot: Copilote
 count: Nombre
-create: Créez
+create: Créer
 created: Créé
 creating: Création…
 cruise-performance: Performances de croisière
@@ -44,7 +45,7 @@ delete: Effacez
 delete-flight: Effacez le vol
 delete-flight-confirmation-text: Êtes-vous sûr d'effacer ce vol ?
 developers: Développeurs
-distance: Distance
+distance: Distances
 distance-abbr: Dist.
 distance-flights: Vols de distance
 DISTANCE-on-DATE: '{distance} le {date}'
@@ -57,19 +58,19 @@ edit: Éditez
 edit-club: Éditez un club
 editing: Édition…
 email-address: Adresse mél
-email-exists-already: Cette adresse mél existe déjà.
+email-exists-already: Cette adresse mél existe déjà
 email-unknown: Cette adresse mél est inconnue.
 error-text: Il semble qu'une erreur s'est produite lors du chargement de cette page. Elle a été signalée automatiquement aux dévelopeurs. Ré-essayez plus tard S.V.P. !
 fai-triangle-distance: Distance du triangle FAI
 failed-to-parse-file: L'analyse du fichier a échouée
 file-upload-field: Champ de chargement du fichier
-first-last: Prénom / Nom
+first-last: Premier / Dernier
 first-name: Prénom
 flight-analysis: Analyse des vols
 flight-database: Base de donnée des vols
 flight-date-in-future: Date de vol à venir
 flight-pinned: Vol épinglé !
-flight-time: Durée de vol
+flight-time: Durées de vols
 flight-unpinned: Épinglez le vol
 flights: Vols
 follow: Suivre
@@ -158,7 +159,7 @@ recovering: Récupération…
 recovery-mail-sent: Vérifiez votre boite mél ! Nous vous avons envoyé un lien pour récupérer votre mot de passe.
 register: Enregistrement
 registering: Enregistrement…
-register-club: Enregistrement d'un club
+register-club: Enregistrez un club
 registration: Enregistrement
 score: Note
 scoring-start-time: Heure du départ
@@ -177,7 +178,7 @@ success: Succès
 takeoff: Décollage
 takeoff-locations: Sites de décollage
 takeoff-time: Heure de décollage
-task-planning: Gestionnaire de planification
+task-planning: Planifications
 the-skylines-team: L'équipe SkyLines
 this-is-you: C'est vous
 time: Heure
@@ -185,8 +186,8 @@ TIME-by-USER: '{time}<br>par <a href="{userURL}">{user}</a>'
 timeline: Chronologie
 total: Total
 total-score: Note totale
-tracking-callsign: Immatriculation pistée
-tracking-delay: Durée de pistage
+tracking-callsign: Immatriculation
+tracking-delay: Période de pistage
 tracking-delay-choice: '{delay, plural, =0 {None} =1 {1 minute} other {# minutes}}'
 translators: Traducteurs
 triangle: Triangle
@@ -261,23 +262,27 @@ tracking:
   xcsoar-instructions: Dans XCSoar, ouvrez la boite de dialogue <em>Config système</em>, cliquez sur <em>Configuration</em> puis sur <em>Tracking</em>.  Activez SkyLines, puis saisissez votre clé de pistage.
 flight-phase:
   powered: Propulsion
+  circlingLeft: En spirale à gauche
+  circlingRight: En spirale à droite
+  circlingMixed: En spirale gauche et droite
   cruise: Croisière
 circling-direction:
   left: Gauche
   right: Droite
+  mixed: Mixte
   total: Total
 units:
   title: Unités
   distance: Unité de distance
-  speed: unité de vitesse
+  speed: Unité de vitesse
   lift: Unité de montée
-  altitude: unité d'altitude
+  altitude: Unité d'altitude
   presets:
-    american: Américain (impériale)
-    australian: Australien (métrique, hauteurs impériales)
-    british: Britanique (impérial, distance in km)
-    custom: Personnalisé
-    european: Européen (métrique)
+    american: Américaines (impériales)
+    australian: Australiennes (métriques, hauteurs impériales)
+    british: Britaniques (impériales, distances en km)
+    custom: Personnalisées
+    european: Européennes (métriques)
 errors:
   description: Ce champ
   inclusion: '{description} n''est pas inclus dans la liste'
