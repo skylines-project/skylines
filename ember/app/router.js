@@ -33,6 +33,7 @@ Router.map(function() {
   this.route('flight', { path: '/flights/:flight_ids' }, function() {
     this.route('change-aircraft', { path: '/change_aircraft' });
     this.route('change-pilot', { path: '/change_pilot' });
+    this.route('map-redirect', { path: '/map' });
   });
 
   this.route('flights', { path: '/flights' }, function() {
