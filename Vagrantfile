@@ -39,7 +39,7 @@ sudo apt-get update
 sudo apt-get install -y --no-install-recommends \
     g++-6 pkg-config libcurl4-openssl-dev python-dev git redis-server \
     libpq-dev postgresql-9.5-postgis-2.2 postgresql-9.5-postgis-2.2-scripts postgresql-contrib-9.5 \
-    openjdk-7-jre-headless libfreetype6-dev libpng-dev libffi-dev
+    libfreetype6-dev libpng-dev libffi-dev
 
 # set GCC 6 as default
 
@@ -50,31 +50,10 @@ sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-6 60 --slave /u
 wget -N -nv https://bootstrap.pypa.io/get-pip.py
 sudo -H python get-pip.py
 
-# install nvm, node 4.x, npm and bower
-
-curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.32.0/install.sh | bash
-
-export NVM_DIR="/home/vagrant/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
-
-nvm install 4
-npm install -g bower ember-cli phantomjs-prebuilt
-
 # install skylines and the python dependencies
 
 cd /vagrant
 sudo -H pip install -r requirements.txt --no-binary greenlet
-
-# install skylines frontend dependencies and build it
-
-cd ember
-
-npm install
-bower install
-
-ember build
-
-cd ..
 
 # create PostGIS databases
 
