@@ -38,7 +38,7 @@ sudo apt-get update
 
 sudo apt-get install -y --no-install-recommends \
     g++-6 pkg-config libcurl4-openssl-dev python-dev git redis-server \
-    libpq-dev postgresql-9.4-postgis-2.3 postgresql-contrib-9.4 \
+    libpq-dev postgresql-9.5-postgis-2.2 postgresql-9.5-postgis-2.2-scripts postgresql-contrib-9.5 \
     openjdk-7-jre-headless libfreetype6-dev libpng-dev libffi-dev
 
 # set GCC 6 as default
