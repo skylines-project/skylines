@@ -30,7 +30,7 @@ from skylines.model import (
 from skylines.model.event import create_flight_comment_notifications
 from skylines.schemas import (
     fields, FlightSchema, FlightCommentSchema, FlightPhaseSchema, ContestLegSchema,
-    AirportSchema, ClubSchema, UserSchema, Schema, ValidationError
+    AircraftModelSchema, AirportSchema, ClubSchema, UserSchema, Schema, ValidationError
 )
 from skylines.worker import tasks
 
@@ -461,6 +461,11 @@ def json(flight_id):
     if not trace:
         abort(404)
 
+    if flight.model:
+        model = AircraftModelSchema().dump(flight.model).data
+    else:
+        model = None
+
     resp = make_response(jsonify(
         points=trace['points'],
         barogram_t=trace['barogram_t'],
@@ -473,7 +478,8 @@ def json(flight_id):
         geoid=trace['geoid'],
         additional=dict(
             registration=flight.registration,
-            competition_id=flight.competition_id)))
+            competition_id=flight.competition_id,
+            model=model)))
 
     resp.headers['Last-Modified'] = last_modified
     resp.headers['Etag'] = flight.igc_file.md5
