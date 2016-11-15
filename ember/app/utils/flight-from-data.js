@@ -47,5 +47,6 @@ export default function(data, units) {
     geoid: data.geoid,
     competition_id: additional.competition_id,
     registration: additional.registration,
+    model: additional.model,
   });
 }
