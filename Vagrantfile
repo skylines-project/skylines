@@ -69,6 +69,12 @@ sudo sudo -u postgres psql -d skylines_test -c 'CREATE EXTENSION fuzzystrmatch;'
 
 ./manage.py db create
 
+# create folder for downloaded files
+
+mkdir -p /vagrant/htdocs/files
+mkdir -p /vagrant/htdocs/srtm
+
+
 SCRIPT
 
 Vagrant.configure("2") do |config|
