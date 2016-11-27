@@ -2,6 +2,6 @@ import Ember from 'ember';
 
 export default Ember.Route.extend({
   redirect() {
-    this.transitionTo('flight.index');
+    this.redirectTo('flight.index');
   },
 });
