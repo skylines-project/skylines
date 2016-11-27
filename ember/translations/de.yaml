@@ -130,6 +130,9 @@ open-data: Open Data
 open-source: Open Source
 other-pilots: Andere Piloten
 overview: Übersicht
+page-not-found:
+  title: Seite nicht gefunden
+  text: Die von dir gesuchte Seite existiert nicht.
 password: Passwort
 password-recovered: Dein Passwort wurde via Recovery-Code geändert.
 password-was-changed: Dein Passwort wurde geändert.
