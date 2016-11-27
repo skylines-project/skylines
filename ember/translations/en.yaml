@@ -134,6 +134,9 @@ open-data: Open Data
 open-source: Open Source
 other-pilots: Other pilots
 overview: Overview
+page-not-found:
+  title: Page not found
+  text: The page you requested does not exist.
 password: Password
 password-recovered: Your password was changed using the recovery code.
 password-was-changed: Your password was changed.
