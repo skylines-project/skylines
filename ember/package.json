@@ -50,6 +50,7 @@
     "ember-load-initializers": "^0.5.1",
     "ember-page-title": "3.0.9",
     "ember-power-select": "1.0.0-beta.25",
+    "ember-redirect-to": "^1.0.0",
     "ember-resolver": "^2.0.3",
     "ember-simple-auth": "1.1.0",
     "ember-truth-helpers": "1.2.0",
