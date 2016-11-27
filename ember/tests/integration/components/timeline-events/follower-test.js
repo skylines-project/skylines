@@ -1,15 +1,15 @@
 import Ember from 'ember';
 
 import { expect } from 'chai';
-import { describeComponent } from 'ember-mocha';
-import { beforeEach, it } from 'mocha';
+import { setupComponentTest } from 'ember-mocha';
+import { beforeEach, it, describe } from 'mocha';
 import hbs from 'htmlbars-inline-precompile';
 
 import instanceInitializer from '../../../../instance-initializers/ember-intl';
 
-let options = { integration: true };
+describe('Integration: FollowerTimelineEventComponent', function() {
+  setupComponentTest('timeline-events/follower', { integration: true });
 
-describeComponent('timeline-events/follower', 'Integration: FollowerTimelineEventComponent', options, function() {
   beforeEach(function() {
     instanceInitializer.initialize(this);
 

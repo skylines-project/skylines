@@ -1,15 +1,15 @@
 import Ember from 'ember';
 
 import { expect } from 'chai';
-import { describeComponent } from 'ember-mocha';
-import { beforeEach, it } from 'mocha';
+import { setupComponentTest } from 'ember-mocha';
+import { beforeEach, it, describe } from 'mocha';
 import hbs from 'htmlbars-inline-precompile';
 
 import instanceInitializer from '../../../../instance-initializers/ember-intl';
 
-let options = { integration: true };
+describe('Integration: FlightCommentTimelineEventComponent', function() {
+  setupComponentTest('timeline-events/flight-comment', { integration: true });
 
-describeComponent('timeline-events/flight-comment', 'Integration: FlightCommentTimelineEventComponent', options, function() {
   beforeEach(function() {
     instanceInitializer.initialize(this);
 
