@@ -67,6 +67,8 @@ sudo sudo -u postgres createdb skylines_test -O vagrant
 sudo sudo -u postgres psql -d skylines_test -c 'CREATE EXTENSION postgis;'
 sudo sudo -u postgres psql -d skylines_test -c 'CREATE EXTENSION fuzzystrmatch;'
 
+sudo sudo -u postgres psql -c "ALTER USER postgres PASSWORD 'secret123';"
+
 ./manage.py db create
 
 # create folder for downloaded files
