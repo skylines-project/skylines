@@ -2,6 +2,6 @@ import Ember from 'ember';
 
 export default Ember.Route.extend({
   redirect() {
-    this.transitionTo('ranking.clubs');
+    this.redirectTo('ranking.clubs');
   },
 });
