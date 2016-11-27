@@ -1,8 +1,8 @@
 import Ember from 'ember';
 
 import { expect } from 'chai';
-import { describeComponent, it } from 'ember-mocha';
-import { beforeEach } from 'mocha';
+import { describeComponent } from 'ember-mocha';
+import { beforeEach, it } from 'mocha';
 import hbs from 'htmlbars-inline-precompile';
 
 import instanceInitializer from '../../../../instance-initializers/ember-intl';
