@@ -1,15 +1,15 @@
 import Ember from 'ember';
 
 import { expect } from 'chai';
-import { describeComponent, it } from 'ember-mocha';
-import { beforeEach } from 'mocha';
+import { setupComponentTest } from 'ember-mocha';
+import { beforeEach, it, describe } from 'mocha';
 import hbs from 'htmlbars-inline-precompile';
 
 import instanceInitializer from '../../../../instance-initializers/ember-intl';
 
-let options = { integration: true };
+describe('Integration: ClubJoinTimelineEventComponent', function() {
+  setupComponentTest('timeline-events/club-join', { integration: true });
 
-describeComponent('timeline-events/club-join', 'Integration: ClubJoinTimelineEventComponent', options, function() {
   beforeEach(function() {
     instanceInitializer.initialize(this);
 
