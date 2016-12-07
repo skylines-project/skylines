@@ -2,26 +2,22 @@
   "name": "skylines",
   "version": "0.0.0",
   "description": "Small description for skylines goes here",
-  "private": true,
+  "license": "MIT",
+  "author": "",
   "directories": {
     "doc": "doc",
     "test": "tests"
   },
+  "repository": "",
   "scripts": {
     "build": "ember build",
     "start": "ember server",
     "test": "ember test"
   },
-  "repository": "",
-  "engines": {
-    "node": ">= 0.12.0"
-  },
-  "author": "",
-  "license": "MIT",
   "devDependencies": {
     "broccoli-asset-rev": "^2.4.5",
     "ember-ajax": "^2.4.1",
-    "ember-cli": "^2.9.1",
+    "ember-cli": "2.10.0",
     "ember-cli-active-link-wrapper": "^0.3.1",
     "ember-cli-app-version": "^2.0.0",
     "ember-cli-babel": "^5.1.7",
@@ -55,5 +51,9 @@
     "ember-simple-auth": "1.1.0",
     "ember-truth-helpers": "1.2.0",
     "loader.js": "^4.0.10"
-  }
+  },
+  "engines": {
+    "node": ">= 0.12.0"
+  },
+  "private": true
 }
