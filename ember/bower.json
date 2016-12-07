@@ -1,7 +1,7 @@
 {
   "name": "skylines",
   "dependencies": {
-    "ember": "~2.10.0-beta.3",
+    "ember": "~2.10.0",
     "ember-cli-shims": "0.1.3",
     "remarkable": "^1.6.2",
     "ember-mocha-adapter": "~0.3.1",
