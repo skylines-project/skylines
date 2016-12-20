@@ -1,15 +1,15 @@
 {{#active-link}}
   {{#link-to "flight-upload" click=didClickUpload title=(t "upload-flight")}}
     {{fa-icon "upload" size="lg" class="hidden-xs"}}
-    {{fa-icon "upload" fixedWidth=true class="visible-xs"}}
-    <span class="visible-xs">{{t "upload-flight"}}</span>
+    {{fa-icon "upload" fixedWidth=true class="visible-xs-inline-block"}}
+    <span class="visible-xs-inline-block">{{t "upload-flight"}}</span>
   {{/link-to}}
 {{/active-link}}
 
 {{#if session.isAuthenticated}}
   {{#active-link}}
     {{#link-to "notifications" title=(t "notifications")}}
-      <span class="visible-xs">{{t "notifications"}}&nbsp;&nbsp;</span>
+      <span class="visible-xs-inline-block">{{t "notifications"}}&nbsp;&nbsp;</span>
       {{notifications-badge}}
     {{/link-to}}
   {{/active-link}}
@@ -39,7 +39,7 @@
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown">
     {{x-flag code=currentLocale.countryCode}}
-    <span class="visible-xs">{{currentLocale.name}}</span>
+    <span class="visible-xs-inline-block">{{currentLocale.name}}</span>
     {{fa-icon "caret-down"}}
   </a>
   <ul class="dropdown-menu">

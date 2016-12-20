@@ -1,47 +1,25 @@
-.badge-default{
-    background-color:#999
+// Colored "badges"
+
+.badge-default {
+  @include label-variant($label-default-bg);
 }
 
-.badge-default[href]:hover,.badge-default[href]:focus{
-    background-color:#808080
+.badge-primary {
+  @include label-variant($label-primary-bg);
 }
 
-.badge-primary{
-    background-color:#428bca
+.badge-success {
+  @include label-variant($label-success-bg);
 }
 
-.badge-primary[href]:hover,.badge-primary[href]:focus{
-    background-color:#3071a9
+.badge-info {
+  @include label-variant($label-info-bg);
 }
 
-.badge-success{
-    background-color:#5cb85c
+.badge-warning {
+  @include label-variant($label-warning-bg);
 }
 
-.badge-success[href]:hover,.badge-success[href]:focus{
-    background-color:#449d44
-}
-
-.badge-info{
-    background-color:#5bc0de
-}
-
-.badge-info[href]:hover,.badge-info[href]:focus{
-    background-color:#31b0d5
-}
-
-.badge-warning{
-    background-color:#f0ad4e
-}
-
-.badge-warning[href]:hover,.badge-warning[href]:focus{
-    background-color:#ec971f
-}
-
-.badge-danger{
-    background-color:#d9534f
-}
-
-.badge-danger[href]:hover,.badge-danger[href]:focus{
-    background-color:#c9302c
+.badge-danger {
+  @include label-variant($label-danger-bg);
 }

@@ -63,19 +63,6 @@ module.exports = function(defaults) {
   app.import('vendor/bootstrap-datepicker/datepicker.css');
 
   app.import({
-    development: 'bower_components/bootstrap/dist/js/bootstrap.js',
-    production: 'bower_components/bootstrap/dist/js/bootstrap.min.js',
-  });
-  app.import({
-    development: 'bower_components/bootstrap/dist/css/bootstrap.css',
-    production: 'bower_components/bootstrap/dist/css/bootstrap.min.css',
-  });
-  app.import({
-    development: 'bower_components/bootstrap/dist/css/bootstrap-theme.css',
-    production: 'bower_components/bootstrap/dist/css/bootstrap-theme.min.css',
-  });
-
-  app.import({
     development: 'bower_components/moment/moment.js',
     production: 'bower_components/moment/min/moment.min.js',
   });
