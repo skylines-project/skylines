@@ -16,6 +16,10 @@ module.exports = function(defaults) {
     vendorFiles: {
       'jquery.js': 'bower_components/jquery/jquery.js',
     },
+
+    svgJar: {
+      sourceDirs: ['public/svg'],
+    },
   });
 
   // Use `app.import` to add additional libraries to the generated
