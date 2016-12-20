@@ -79,10 +79,9 @@
     "ol.layer.Vector#getVisible",
     "ol.layer.Vector#setVisible",
     "ol.proj.transform",
-    "ol.render.canvas.Immediate#drawCircleGeometry",
-    "ol.render.canvas.Immediate#drawPointGeometry",
-    "ol.render.canvas.Immediate#setFillStrokeStyle",
-    "ol.render.canvas.Immediate#setImageStyle",
+    "ol.render.canvas.Immediate#drawCircle",
+    "ol.render.canvas.Immediate#drawGeometry",
+    "ol.render.canvas.Immediate#setStyle",
     "ol.source.BingMaps",
     "ol.source.OSM",
     "ol.source.Vector",
@@ -113,18 +112,20 @@
     "ol3/src/**/*.js",
     "ol3/build/ol.ext/*.js"
   ],
+  "umd": true,
   "compile": {
     "externs": [
       "externs/olcsx.js",
+      "ol3/externs/bingmaps.js",
+      "ol3/externs/cartodb.js",
+      "ol3/externs/closure-compiler.js",
+      "ol3/externs/esrijson.js",
+      "ol3/externs/geojson.js",
       "ol3/externs/oli.js",
       "ol3/externs/olx.js",
       "ol3/externs/proj4js.js",
       "ol3/externs/tilejson.js",
       "ol3/externs/topojson.js",
-      "ol3/externs/esrijson.js",
-      "ol3/externs/geojson.js",
-      "ol3/externs/bingmaps.js",
-      "ol3/externs/closure-compiler.js",
       "Cesium.externs.js"
     ],
     "define": [
@@ -149,11 +150,8 @@
       "api", "observable"
     ],
     "compilation_level": "ADVANCED_OPTIMIZATIONS",
-    "language_in": "ECMASCRIPT5_STRICT",
-    "language_out": "ECMASCRIPT5_STRICT",
     "warning_level": "VERBOSE",
     "generate_exports": true,
-    "output_wrapper": "(function(){%output%}).call(window);",
     "use_types_for_optimization": true,
     "create_source_map": "dist/ol3cesium.js.map",
     "source_map_format": "V3"

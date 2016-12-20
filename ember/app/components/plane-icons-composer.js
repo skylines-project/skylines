@@ -14,7 +14,7 @@ export default Ember.Component.extend({
   init() {
     this._super(...arguments);
 
-    let style = new ol.style.Icon({
+    let icon = new ol.style.Icon({
       anchor: [0.5, 0.5],
       anchorXUnits: 'fraction',
       anchorYUnits: 'fraction',
@@ -24,8 +24,11 @@ export default Ember.Component.extend({
       rotateWithView: true,
     });
 
-    style.load();
+    icon.load();
 
+    this.set('icon', icon);
+
+    let style = new ol.style.Style({ image: icon });
     this.set('style', style);
   },
 
@@ -42,14 +45,15 @@ export default Ember.Component.extend({
   },
 
   renderIcons(context) {
+    let icon = this.get('icon');
     let style = this.get('style');
 
     this.get('fixes').forEach(fix => {
       let point = fix.get('pointXY');
       if (point) {
-        style.setRotation(fix.get('heading'));
-        context.setImageStyle(style);
-        context.drawPointGeometry(point);
+        icon.setRotation(fix.get('heading'));
+        context.setStyle(style);
+        context.drawGeometry(point);
       }
     });
   },

@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 
-OL3CS_TAG=v1.13
+set -e
+
+OL3CS_TAG=v1.16
 
 ## clone "ol3-cesium" into "tmp" folder
 if [ -d "tmp/ol3-cesium" ]; then
