@@ -2,7 +2,7 @@
 
 set -e
 
-OL3CS_TAG=v1.16
+OL3CS_TAG=v1.18
 
 ## clone "ol3-cesium" into "tmp" folder
 if [ -d "tmp/ol3-cesium" ]; then
