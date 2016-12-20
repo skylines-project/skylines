@@ -130,9 +130,8 @@
     ],
     "define": [
       "goog.array.ASSUME_NATIVE_FUNCTIONS=true",
-      "goog.DEBUG=false",
+      "ol.DEBUG=false",
       "ol.ENABLE_VECTOR=true",
-      "ol.ENABLE_DOM=false",
       "ol.ENABLE_WEBGL=false",
       "ol.ENABLE_PROJ4JS=false"
     ],
