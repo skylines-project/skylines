@@ -158,6 +158,8 @@ const MapClickHandler = Ember.Object.extend({
       width: 3,
     });
 
+    let circle_style = new ol.style.Style({ stroke: stroke_style });
+
     let circle = this.get('circle');
     if (!circle.geometry)
       circle.geometry = new ol.geom.Circle(coordinate, 1000);
@@ -189,8 +191,8 @@ const MapClickHandler = Ember.Object.extend({
                                 (circle.animation.duration / 3));
         }
 
-        vector_context.setFillStrokeStyle(null, stroke_style);
-        vector_context.drawCircleGeometry(circle.geometry);
+        vector_context.setStyle(circle_style);
+        vector_context.drawCircle(circle.geometry);
         map.render();
       }
     });

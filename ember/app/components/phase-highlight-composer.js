@@ -24,19 +24,22 @@ export default Ember.Component.extend({
   init() {
     this._super(...arguments);
 
-    let startStyle = new ol.style.Icon({
+    let startIcon = new ol.style.Icon({
       anchor: [0.5, 1],
       src: '/images/marker-green.png',
     });
-    let endStyle = new ol.style.Icon({
+    startIcon.load();
+
+    let endIcon = new ol.style.Icon({
       anchor: [0.5, 1],
       src: '/images/marker.png',
     });
+    endIcon.load();
 
-    startStyle.load();
-    endStyle.load();
-
+    let startStyle = new ol.style.Style({ image: startIcon });
     this.set('startStyle', startStyle);
+
+    let endStyle = new ol.style.Style({ image: endIcon });
     this.set('endStyle', endStyle);
 
     // activate coordinatesObserver
@@ -62,8 +65,8 @@ export default Ember.Component.extend({
 
   renderMarker(context, style, coordinate) {
     if (coordinate) {
-      context.setImageStyle(style);
-      context.drawPointGeometry(coordinate);
+      context.setStyle(style);
+      context.drawGeometry(coordinate);
     }
   },
 
