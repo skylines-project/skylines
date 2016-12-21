@@ -7,8 +7,8 @@ from sqlalchemy import orm
 
 
 def _patch_query(q, joinedload=(), patch_query=None):
-    if joinedload:
-        q = q.options(orm.joinedload(*joinedload))
+    for join in joinedload:
+        q = q.options(orm.joinedload(join))
 
     if patch_query:
         q = patch_query(q)

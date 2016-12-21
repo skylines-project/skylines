@@ -30,7 +30,7 @@ from skylines.model import (
 from skylines.model.event import create_flight_comment_notifications
 from skylines.schemas import (
     fields, FlightSchema, FlightCommentSchema, FlightPhaseSchema, ContestLegSchema,
-    AirportSchema, ClubSchema, UserSchema, Schema, ValidationError
+    AircraftModelSchema, AirportSchema, ClubSchema, UserSchema, Schema, ValidationError
 )
 from skylines.worker import tasks
 
@@ -438,7 +438,7 @@ def read(flight_id):
 @flights_blueprint.route('/flights/<flight_id>/json')
 @oauth.optional()
 def json(flight_id):
-    flight = get_requested_record(Flight, flight_id, joinedload=[Flight.igc_file])
+    flight = get_requested_record(Flight, flight_id, joinedload=(Flight.igc_file, Flight.model))
 
     current_user = User.get(request.user_id) if request.user_id else None
     if not flight.is_viewable(current_user):
@@ -461,6 +461,8 @@ def json(flight_id):
     if not trace:
         abort(404)
 
+    model = AircraftModelSchema().dump(flight.model).data or None
+
     resp = make_response(jsonify(
         points=trace['points'],
         barogram_t=trace['barogram_t'],
@@ -473,7 +475,8 @@ def json(flight_id):
         geoid=trace['geoid'],
         additional=dict(
             registration=flight.registration,
-            competition_id=flight.competition_id)))
+            competition_id=flight.competition_id,
+            model=model)))
 
     resp.headers['Last-Modified'] = last_modified
     resp.headers['Etag'] = flight.igc_file.md5

@@ -56,6 +56,8 @@ export default Ember.Object.extend({
     this.get('geometry').setCoordinates(coordinates, 'XYZM');
   }),
 
+  model: null,
+
   init() {
     this._super(...arguments);
     this.set('geometry', new ol.geom.LineString(this.get('coordinates'), 'XYZM'));
