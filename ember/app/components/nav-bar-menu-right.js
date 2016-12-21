@@ -17,7 +17,7 @@ export default Ember.Component.extend({
 
   actions: {
     setLocale(locale) {
-      this.get('intl').setLocale(locale);
+      this.get('intl').loadAndSetLocale(locale);
     },
   },
 });
