@@ -438,7 +438,7 @@ def read(flight_id):
 @flights_blueprint.route('/flights/<flight_id>/json')
 @oauth.optional()
 def json(flight_id):
-    flight = get_requested_record(Flight, flight_id, joinedload=[Flight.igc_file])
+    flight = get_requested_record(Flight, flight_id, joinedload=(Flight.igc_file, Flight.model))
 
     current_user = User.get(request.user_id) if request.user_id else None
     if not flight.is_viewable(current_user):
