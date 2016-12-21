@@ -1,6 +1,6 @@
 {{#active-link}}
-  {{#link-to "flight-upload" click=didClickUpload title=(t "upload-flight")}}
-    {{fa-icon "upload" size="lg" class="hidden-xs"}}
+  {{#link-to "flight-upload" click=didClickUpload}}
+    {{fa-icon "upload" size="lg" class="hidden-xs" title=(t "upload-flight")}}
     {{fa-icon "upload" fixedWidth=true class="visible-xs-inline-block"}}
     <span class="visible-xs-inline-block">{{t "upload-flight"}}</span>
   {{/link-to}}
@@ -8,9 +8,9 @@
 
 {{#if session.isAuthenticated}}
   {{#active-link}}
-    {{#link-to "notifications" title=(t "notifications")}}
+    {{#link-to "notifications"}}
       <span class="visible-xs-inline-block">{{t "notifications"}}&nbsp;&nbsp;</span>
-      {{notifications-badge}}
+      <span title={{t "notifications"}}>{{notifications-badge}}</span>
     {{/link-to}}
   {{/active-link}}
 
