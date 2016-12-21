@@ -1,18 +1,15 @@
-<form {{action "submit" on="submit"}}>
+{{#if success}}
+  <p class="visible-xs">{{t "your-flights-have-been-saved"}}</p>
+  <p class="hidden-xs">{{t "your-flights-have-been-saved"}} {{t "verify-flights-and-publish"}}</p>
+{{else}}
+  <p>{{t "no-flight-saved"}}</p>
+{{/if}}
 
-  {{#if success}}
-    <p class="visible-xs">{{t "your-flights-have-been-saved"}}</p>
-    <p class="hidden-xs">{{t "your-flights-have-been-saved"}} {{t "verify-flights-and-publish"}}</p>
-  {{else}}
-    <p>{{t "no-flight-saved"}}</p>
-  {{/if}}
-
+<form {{action "submit" on="submit"}} class="upload-results-form">
   {{#if (eq results.length 1)}}
-    <div class="col-xs-12">
-      {{#each results as |result|}}
-        {{upload-result-form result=result clubMembers=clubMembers aircraftModels=aircraftModels}}
-      {{/each}}
-    </div>
+    {{#each results as |result|}}
+      {{upload-result-form result=result clubMembers=clubMembers aircraftModels=aircraftModels}}
+    {{/each}}
   {{else}}
     <div class="col-sm-3">
       <ul class="nav nav-tabs tabs-left">
@@ -45,11 +42,9 @@
   {{/if}}
 
   {{#if success}}
-    <p class="col-xs-12">
-      <button class="btn btn-primary" type="submit" disabled={{or saveTask.isRunning isInvalid}}>
-        {{if saveTask.isRunning (t "publishing") (t "publish-flights" num=successfulResults.length)}}
-      </button>
-    </p>
+    <button class="btn btn-primary" type="submit" disabled={{or saveTask.isRunning isInvalid}}>
+      {{if saveTask.isRunning (t "publishing") (t "publish-flights" num=successfulResults.length)}}
+    </button>
   {{/if}}
 
 </form>

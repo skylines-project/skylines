@@ -42,6 +42,8 @@ const Validations = buildValidations({
 });
 
 export default Ember.Component.extend(Validations, {
+  classNames: ['row'],
+
   result: null,
   clubMembers: null,
   aircraftModels: null,
