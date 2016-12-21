@@ -70,7 +70,8 @@
       scoreEndTime=scoreEndTime
       onScoreEndTimeChange=(action "setScoreEndTime")
       landingTime=landingTime
-      onLandingTimeChange=(action "setLandingTime")}}
+      onLandingTimeChange=(action "setLandingTime")
+      class="col-xs-12"}}
   {{/if}}
 
   <div class="form-group col-sm-3">
@@ -109,9 +110,9 @@
     {{/if}}
   </div>
 
-  <div class="clearfix"></div>
-
   {{#if result.airspaces}}
+    <div class="clearfix"></div>
+
     <div class="col-md-10 col-md-offset-1">
       <h5>{{t "used-airspaces"}}:</h5>
       <table class="table table-condensed airspace-table">
@@ -146,7 +147,7 @@
   <div class="clearfix"></div>
 {{/if}}
 
-<p>
+<p class="col-xs-12">
   {{t "status"}}:
 
   {{#if success}}

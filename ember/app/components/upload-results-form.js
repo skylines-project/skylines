@@ -1,6 +1,8 @@
 import Ember from 'ember';
 import { task } from 'ember-concurrency';
 
+import UploadResult from '../utils/upload-result';
+
 export default Ember.Component.extend({
   ajax: Ember.inject.service(),
 
@@ -8,13 +10,30 @@ export default Ember.Component.extend({
   clubMembers: null,
   aircraftModels: null,
 
-  successfulResults: Ember.computed.filterBy('results', 'status', 0),
+  successfulResults: Ember.computed.filterBy('validatedResults', 'success', true),
   success: Ember.computed.notEmpty('successfulResults'),
 
   validations: Ember.computed.mapBy('successfulResults', 'validations'),
 
   invalidValidations: Ember.computed.filterBy('validations', 'isValid', false),
   isInvalid: Ember.computed.notEmpty('invalidValidations'),
+
+  didReceiveAttrs() {
+    this._super(...arguments);
+
+    let ownerInjection = Ember.getOwner(this).ownerInjection();
+    this.set('validatedResults', this.get('results').map(_result => {
+      let result = UploadResult.create(ownerInjection, _result);
+
+      if (result.get('flight')) {
+        result.set('pilotId', result.get('flight.pilot.id'));
+        result.set('copilotId', result.get('flight.copilot.id'));
+        result.set('modelId', result.get('flight.model.id'));
+      }
+
+      return result;
+    }));
+  },
 
   saveTask: task(function * () {
     let json = this.get('successfulResults').map(result => {
