@@ -461,10 +461,7 @@ def json(flight_id):
     if not trace:
         abort(404)
 
-    if flight.model:
-        model = AircraftModelSchema().dump(flight.model).data
-    else:
-        model = None
+    model = AircraftModelSchema().dump(flight.model).data or None
 
     resp = make_response(jsonify(
         points=trace['points'],
