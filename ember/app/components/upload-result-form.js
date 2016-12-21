@@ -1,47 +1,8 @@
 import Ember from 'ember';
-import { validator, buildValidations } from 'ember-cp-validations';
 
 import isNone from '../computed/is-none';
 
-const Validations = buildValidations({
-  pilotName: {
-    descriptionKey: 'pilot',
-    validators: [
-      validator('length', { max: 255 }),
-    ],
-    debounce: 500,
-  },
-  copilotId: {
-    descriptionKey: 'copilot',
-    validators: [
-      validator('not-equal', { on: 'pilotId', messageKey: 'pilots-must-not-be-equal' }),
-    ],
-    debounce: 0,
-  },
-  copilotName: {
-    descriptionKey: 'copilot',
-    validators: [
-      validator('length', { max: 255 }),
-    ],
-    debounce: 500,
-  },
-  registration: {
-    descriptionKey: 'registration',
-    validators: [
-      validator('length', { max: 32 }),
-    ],
-    debounce: 500,
-  },
-  competitionId: {
-    descriptionKey: 'competition-id',
-    validators: [
-      validator('length', { max: 5 }),
-    ],
-    debounce: 500,
-  },
-});
-
-export default Ember.Component.extend(Validations, {
+export default Ember.Component.extend({
   classNames: ['row'],
 
   result: null,
@@ -73,18 +34,7 @@ export default Ember.Component.extend(Validations, {
   igcEndTime: computedDate('trace.igc_end_time'),
 
   success: Ember.computed.equal('status', 0),
-
-  init() {
-    this._super(...arguments);
-
-    if (this.get('flight')) {
-      this.set('pilotId', this.get('flight.pilot.id'));
-      this.set('copilotId', this.get('flight.copilot.id'));
-      this.set('modelId', this.get('flight.model.id'));
-    }
-
-    this.set('result.validations', this.get('validations'));
-  },
+  validations: Ember.computed.readOnly('result.validations'),
 
   actions: {
     setTakeoffTime(value) {

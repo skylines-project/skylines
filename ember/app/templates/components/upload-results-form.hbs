@@ -6,14 +6,14 @@
 {{/if}}
 
 <form {{action "submit" on="submit"}} class="upload-results-form">
-  {{#if (eq results.length 1)}}
-    {{#each results as |result|}}
+  {{#if (eq validatedResults.length 1)}}
+    {{#each validatedResults as |result|}}
       {{upload-result-form result=result clubMembers=clubMembers aircraftModels=aircraftModels}}
     {{/each}}
   {{else}}
     <div class="col-sm-3">
       <ul class="nav nav-tabs tabs-left">
-        {{#each results as |result index|}}
+        {{#each validatedResults as |result index|}}
           <li class={{if (eq index 0) "active"}}>
             <a href="#result-tab-{{index}}" data-toggle="tab">
               {{#if (and (eq result.status 0) result.validations.isValid)}}
@@ -30,7 +30,7 @@
     </div>
     <div class="col-sm-9">
       <div class="tab-content">
-        {{#each results as |result index|}}
+        {{#each validatedResults as |result index|}}
           <div class="tab-pane {{if (eq index 0) "active"}}" id="result-tab-{{index}}">
             {{upload-result-form result=result clubMembers=clubMembers aircraftModels=aircraftModels}}
           </div>
