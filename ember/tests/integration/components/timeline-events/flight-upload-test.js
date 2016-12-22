@@ -1,13 +1,13 @@
 import Ember from 'ember';
 
 import { expect } from 'chai';
+import { describe, it, beforeEach } from 'mocha';
 import { setupComponentTest } from 'ember-mocha';
-import { beforeEach, it, describe } from 'mocha';
 import hbs from 'htmlbars-inline-precompile';
 
-import instanceInitializer from '../../../../instance-initializers/ember-intl';
+import instanceInitializer from 'skylines/instance-initializers/ember-intl';
 
-describe('Integration: FlightUploadTimelineEventComponent', function() {
+describe('Integration | Component | timeline events/flight upload', function() {
   setupComponentTest('timeline-events/flight-upload', { integration: true });
 
   beforeEach(function() {
