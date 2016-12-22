@@ -7,7 +7,7 @@ from skylines.model import Airspace, MountainWaveProject
 
 mapitems_blueprint = Blueprint('mapitems', 'skylines')
 
-airspace_list_schema = AirspaceSchema(only=('name', '_class', 'top', 'base', 'country'))
+airspace_list_schema = AirspaceSchema(only=('name', '_class', 'top', 'base', 'countryCode'))
 wave_list_schema = WaveSchema()
 
 
