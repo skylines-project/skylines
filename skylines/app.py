@@ -3,8 +3,6 @@ import config
 
 from flask import Flask
 
-from skylines.api.middleware import HTTPMethodOverrideMiddleware
-
 
 class SkyLines(Flask):
     def __init__(self, name='skylines', config_file=None, *args, **kw):
@@ -98,8 +96,6 @@ def create_api_app(*args, **kw):
 
     app.load_egm96()
     app.add_cache()
-
-    app.wsgi_app = HTTPMethodOverrideMiddleware(app.wsgi_app)
 
     oauth.init_app(app)
 
