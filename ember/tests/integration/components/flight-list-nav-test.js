@@ -26,7 +26,7 @@ describe('Integration: FlightListNavComponent', function() {
     this.inject.service('account', { as: 'account' });
     this.inject.service('pinned-flights', { as: 'pinned' });
 
-    this.get('intl').setLocale(['en']);
+    return this.get('intl').loadAndSetLocale('en');
   });
 
   it('renders default view', function() {
@@ -41,7 +41,7 @@ describe('Integration: FlightListNavComponent', function() {
     expect(this.$('li')).to.have.length(4);
     expect(this.$('li:nth-child(1)').text().trim()).to.equal('All');
     expect(this.$('li:nth-child(2)').text().trim()).to.equal('');
-    expect(this.$('li:nth-child(3)').text().trim()).to.equal('6/24/2016');
+    expect(this.$('li:nth-child(3)').text().trim()).to.match(/0?6\/24\/2016/);
     expect(this.$('li:nth-child(4)').text().trim()).to.equal('');
   });
 
@@ -50,7 +50,7 @@ describe('Integration: FlightListNavComponent', function() {
     expect(this.$('li')).to.have.length(4);
     expect(this.$('li:nth-child(1)').text().trim()).to.equal('All');
     expect(this.$('li:nth-child(2)').text().trim()).to.equal('');
-    expect(this.$('li:nth-child(3)').text().trim()).to.equal('6/24/2016');
+    expect(this.$('li:nth-child(3)').text().trim()).to.match(/0?6\/24\/2016/);
     expect(this.$('li:nth-child(4)').text().trim()).to.equal('');
   });
 

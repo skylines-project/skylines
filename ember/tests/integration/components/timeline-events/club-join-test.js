@@ -21,8 +21,6 @@ describe('Integration: ClubJoinTimelineEventComponent', function() {
     this.inject.service('intl', { as: 'intl' });
     this.inject.service('account', { as: 'account' });
 
-    this.get('intl').setLocale('en');
-
     this.set('event', {
       time: '2016-06-24T12:34:56Z',
       actor: {
@@ -34,6 +32,8 @@ describe('Integration: ClubJoinTimelineEventComponent', function() {
         name: 'SFN',
       },
     });
+
+    return this.get('intl').loadAndSetLocale('en');
   });
 
   it('renders default text', function() {
