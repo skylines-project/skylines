@@ -1,11 +1,9 @@
 from .airspace import AirspaceSchema
-from .club import ClubSchema
 from .user import UserSchema, AuthenticatedUserSchema
 from .wave import WaveSchema
 
 __all__ = [
     AirspaceSchema,
-    ClubSchema,
     UserSchema,
     AuthenticatedUserSchema,
     WaveSchema,
