@@ -1,10 +1,8 @@
-from marshmallow import fields
-
-from skylines.api.schemas.base import BaseSchema
+from skylines.schemas import Schema, fields
 from skylines.lib.string import isnumeric
 
 
-class WaveSchema(BaseSchema):
+class WaveSchema(Schema):
     name = fields.String()
     main_wind_direction = fields.Method('_wind_direction')
 

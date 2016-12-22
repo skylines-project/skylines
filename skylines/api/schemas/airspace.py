@@ -1,16 +1,16 @@
-from marshmallow import fields, post_dump
+from marshmallow import post_dump
 
-from skylines.api.schemas.base import BaseSchema, replace_keywords
-from skylines.schemas.fields import GeometryField
+from skylines.api.schemas.base import replace_keywords
+from skylines.schemas import Schema, fields
 
 
-class AirspaceSchema(BaseSchema):
+class AirspaceSchema(Schema):
     id = fields.Integer()
     name = fields.String()
     _class = fields.String(attribute='airspace_class')
     top = fields.String()
     base = fields.String()
-    shape = GeometryField(attribute='the_geom')
+    shape = fields.GeometryField(attribute='the_geom')
     country = fields.String(attribute='country_code')
     created_at = fields.DateTime(attribute='time_created')
     modified_at = fields.DateTime(attribute='time_modified')
