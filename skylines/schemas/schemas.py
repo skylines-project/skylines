@@ -3,6 +3,7 @@ from marshmallow import Schema as _Schema
 from . import fields, validate
 
 from skylines.lib.formatter.units import DISTANCE_UNITS, SPEED_UNITS, LIFT_UNITS, ALTITUDE_UNITS
+from skylines.lib.string import isnumeric
 from skylines.model.flight_phase import FlightPhase
 
 AIRCRAFT_MODEL_TYPES = {
@@ -41,12 +42,15 @@ class AirportSchema(Schema):
 
 
 class AirspaceSchema(Schema):
-    id = fields.Integer(dump_only=True)
+    id = fields.Integer()
     name = fields.String()
-    type = fields.String(attribute='airspace_class')
+    _class = fields.String(attribute='airspace_class', dump_to='class')
     base = fields.String()
     top = fields.String()
+    shape = fields.GeometryField(attribute='the_geom')
     countryCode = fields.String(attribute='country_code')
+    created_at = fields.DateTime(attribute='time_created')
+    modified_at = fields.DateTime(attribute='time_modified')
 
 
 class ClubSchema(Schema):
@@ -226,3 +230,16 @@ class ContestLegSchema(Schema):
     climbHeight = fields.Float(attribute='climb_height')
     cruiseDistance = fields.Float(attribute='cruise_distance')
     cruiseHeight = fields.Float(attribute='cruise_height')
+
+
+class WaveSchema(Schema):
+    name = fields.String()
+    main_wind_direction = fields.Method('_wind_direction')
+
+    @staticmethod
+    def _wind_direction(wave):
+        wind_direction = wave.main_wind_direction or ''
+        if isnumeric(wind_direction):
+            wind_direction += u'\u00B0'
+
+        return wind_direction

@@ -89,7 +89,7 @@ class UploadResultSchema(Schema):
     status = fields.Integer()
     flight = fields.Nested(FlightSchema, exclude=('igcFile.owner',))
     trace = fields.Nested(TraceSchema)
-    airspaces = fields.Nested(AirspaceSchema, attribute='airspace', many=True)
+    airspaces = fields.Nested(AirspaceSchema, attribute='airspace', many=True, exclude=('shape',))
     cacheKey = fields.String(attribute='cache_key')
 
 
