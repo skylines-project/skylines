@@ -15,7 +15,8 @@ export default Ember.Route.extend(ApplicationRouteMixin, {
   units: Ember.inject.service(),
 
   beforeModel() {
-    return this._determineLocale().then(locale => this.get('intl').setLocale(locale));
+    return this._determineLocale()
+      .then(locale => this.get('intl').loadAndSetLocale(locale));
   },
 
   _determineLocale() {

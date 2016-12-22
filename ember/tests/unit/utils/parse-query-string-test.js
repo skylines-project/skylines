@@ -1,5 +1,6 @@
 import { expect } from 'chai';
 import { describe, it } from 'mocha';
+
 import parseQueryString from 'skylines/utils/parse-query-string';
 
 describe('Unit | Utility | parse query string', function() {

@@ -1,13 +1,13 @@
 import Ember from 'ember';
 
 import { expect } from 'chai';
+import { describe, it, beforeEach } from 'mocha';
 import { setupComponentTest } from 'ember-mocha';
-import { beforeEach, it, describe } from 'mocha';
 import hbs from 'htmlbars-inline-precompile';
 
-import instanceInitializer from '../../../../instance-initializers/ember-intl';
+import instanceInitializer from 'skylines/instance-initializers/ember-intl';
 
-describe('Integration: FlightCommentTimelineEventComponent', function() {
+describe('Integration | Component | timeline events/flight comment', function() {
   setupComponentTest('timeline-events/flight-comment', { integration: true });
 
   beforeEach(function() {
@@ -20,8 +20,6 @@ describe('Integration: FlightCommentTimelineEventComponent', function() {
 
     this.inject.service('intl', { as: 'intl' });
     this.inject.service('account', { as: 'account' });
-
-    this.get('intl').setLocale('en');
 
     this.set('event', {
       time: '2016-06-24T12:34:56Z',
@@ -37,6 +35,8 @@ describe('Integration: FlightCommentTimelineEventComponent', function() {
         copilot_id: null,
       },
     });
+
+    return this.get('intl').loadAndSetLocale('en');
   });
 
   it('renders default text', function() {

@@ -1,13 +1,13 @@
 import Ember from 'ember';
 
 import { expect } from 'chai';
+import { describe, it, beforeEach } from 'mocha';
 import { setupComponentTest } from 'ember-mocha';
-import { beforeEach, it, describe } from 'mocha';
 import hbs from 'htmlbars-inline-precompile';
 
-import instanceInitializer from '../../../../instance-initializers/ember-intl';
+import instanceInitializer from 'skylines/instance-initializers/ember-intl';
 
-describe('Integration: FollowerTimelineEventComponent', function() {
+describe('Integration | Component | timeline events/follower', function() {
   setupComponentTest('timeline-events/follower', { integration: true });
 
   beforeEach(function() {
@@ -21,8 +21,6 @@ describe('Integration: FollowerTimelineEventComponent', function() {
     this.inject.service('intl', { as: 'intl' });
     this.inject.service('account', { as: 'account' });
 
-    this.get('intl').setLocale('en');
-
     this.set('event', {
       time: '2016-06-24T12:34:56Z',
       actor: {
@@ -34,6 +32,8 @@ describe('Integration: FollowerTimelineEventComponent', function() {
         name: 'Jane Doe',
       },
     });
+
+    return this.get('intl').loadAndSetLocale('en');
   });
 
   it('renders default text', function() {
