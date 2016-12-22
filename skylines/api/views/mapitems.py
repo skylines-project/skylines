@@ -2,7 +2,7 @@ from flask import Blueprint, request
 
 from skylines.api.json import jsonify
 from skylines.api.args import parse_location
-from skylines.api.schemas import AirspaceSchema, WaveSchema
+from skylines.schemas import AirspaceSchema, WaveSchema
 from skylines.model import Airspace, MountainWaveProject
 
 mapitems_blueprint = Blueprint('mapitems', 'skylines')
