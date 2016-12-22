@@ -4,6 +4,8 @@ import ApplicationRouteMixin from 'ember-simple-auth/mixins/application-route-mi
 
 import _availableLocales from '../utils/locales';
 
+const FALLBACK_LOCALE = 'en';
+
 export default Ember.Route.extend(ApplicationRouteMixin, {
   account: Ember.inject.service(),
   ajax: Ember.inject.service(),
@@ -30,7 +32,9 @@ export default Ember.Route.extend(ApplicationRouteMixin, {
 
     Ember.debug('Requesting locale resolution from server');
     let data = { available: availableLocales.join() };
-    return this.get('ajax').request('/api/locale', { data }).then(it => it.locale || 'en');
+    return this.get('ajax').request('/api/locale', { data })
+      .then(it => it.locale || FALLBACK_LOCALE)
+      .catch(() => FALLBACK_LOCALE);
   },
 
   setupController(controller) {

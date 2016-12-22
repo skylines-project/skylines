@@ -14,8 +14,7 @@ cache: pip
 before_install:
   - nvm install 4
   - npm config set spin false
-  - npm install -g bower
-  - npm install phantomjs-prebuilt
+  - npm install -g bower phantomjs-prebuilt
 
 install:
   # Install SkyLines Python dependencies
