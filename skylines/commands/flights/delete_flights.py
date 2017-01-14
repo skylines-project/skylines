@@ -1,4 +1,4 @@
-from flask.ext.script import Command, Option
+from flask_script import Command, Option
 
 from skylines.database import db
 from skylines.model import Flight, IGCFile

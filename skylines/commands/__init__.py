@@ -1,7 +1,7 @@
 import sys
 
-from flask.ext.script import Manager
-from flask.ext.migrate import Migrate, MigrateCommand
+from flask_script import Manager
+from flask_migrate import Migrate, MigrateCommand
 
 from .shell import Shell
 from .server import Server, APIServer

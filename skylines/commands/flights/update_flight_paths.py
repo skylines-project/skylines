@@ -1,4 +1,4 @@
-from flask.ext.script import Command, Option
+from flask_script import Command, Option
 
 from sqlalchemy.orm import joinedload
 from skylines.database import db

@@ -1,4 +1,4 @@
-from flask.ext.script import Command
+from flask_script import Command
 from skylines.database import db
 from skylines.model import Notification
 

@@ -1,4 +1,4 @@
-from flask.ext.script import Manager
+from flask_script import Manager
 
 from .mark_all_unread import MarkAllUnread
 

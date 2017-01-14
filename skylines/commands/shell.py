@@ -1,4 +1,4 @@
-from flask.ext.script import Shell as BaseShell
+from flask_script import Shell as BaseShell
 
 from flask import current_app
 from skylines import model, database

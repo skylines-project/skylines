@@ -4,7 +4,7 @@ from functools import wraps
 from itsdangerous import JSONWebSignatureSerializer
 from flask import Blueprint, request, abort, jsonify, current_app
 
-from flask.ext.oauthlib.provider import OAuth2Provider
+from flask_oauthlib.provider import OAuth2Provider
 from flask_oauthlib.provider import OAuth2RequestValidator
 from flask_oauthlib.provider.oauth2 import log
 from flask_oauthlib.utils import decode_base64

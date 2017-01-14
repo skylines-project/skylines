@@ -1,5 +1,5 @@
 import sys
-from flask.ext.script import Command, Option
+from flask_script import Command, Option
 
 import os
 import subprocess

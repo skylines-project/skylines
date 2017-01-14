@@ -1,4 +1,4 @@
-from flask.ext.script import Manager
+from flask_script import Manager
 
 from .analysis import Analyze, AnalyzeDelayed
 from .copy_flights import CopyFlights
