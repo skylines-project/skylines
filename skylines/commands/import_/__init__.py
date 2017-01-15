@@ -1,4 +1,4 @@
-from flask.ext.script import Manager
+from flask_script import Manager
 
 from .airspace import AirspaceCommand
 from .dmst_index import DMStIndex

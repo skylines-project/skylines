@@ -1,5 +1,5 @@
-from flask.ext.script import Manager, prompt_bool
-from flask.ext.migrate import stamp
+from flask_script import Manager, prompt_bool
+from flask_migrate import stamp
 
 from skylines.database import db
 from tests.data.bootstrap import bootstrap as _bootstrap

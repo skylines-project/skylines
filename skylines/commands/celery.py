@@ -1,4 +1,4 @@
-from flask.ext.script import Manager
+from flask_script import Manager
 from skylines import create_celery_app
 from skylines.worker.celery import celery
 

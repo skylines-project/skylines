@@ -1,4 +1,4 @@
-from flask.ext.script import Server as BaseServer
+from flask_script import Server as BaseServer
 from skylines.app import create_combined_app, create_api_app
 
 

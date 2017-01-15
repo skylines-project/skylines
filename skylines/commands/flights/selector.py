@@ -1,4 +1,4 @@
-from flask.ext.script import Option
+from flask_script import Option
 from sqlalchemy import func
 from datetime import datetime
 

@@ -1,4 +1,4 @@
-from flask.ext.script import Command
+from flask_script import Command
 
 from skylines.app import create_app
 from skylines.tracking.server import TrackingServer
