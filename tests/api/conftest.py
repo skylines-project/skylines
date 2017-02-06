@@ -11,7 +11,14 @@ def app():
 
     Initialized once per test-run
     """
-    return create_api_app(config.TESTING_CONF_PATH)
+    app = create_api_app(config.TESTING_CONF_PATH)
+    return app
+
+
+@pytest.yield_fixture
+def client(app):
+    with app.test_client(use_cookies=False) as client:
+        yield client
 
 
 @pytest.fixture(scope="function")
