@@ -1,55 +1,45 @@
 from datetime import datetime
 
-import pytest
+from skylines.model import User
+from tests.data import clubs
 
-from skylines.model import User, Club
 
+def test_lva(db_session, client):
+    john = User(first_name=u'John', last_name=u'Doe', password='jane123')
 
-@pytest.fixture(scope="function")
-def fixtures(db_session):
-    owner = User(first_name=u'John', last_name=u'Doe', password='jane123')
-    db_session.add(owner)
+    lva = clubs.lva()
+    lva.owner = john
+    lva.time_created = datetime(2016, 01, 15, 12, 34, 56)
 
-    created_at = datetime(2016, 01, 15, 12, 34, 56)
-
-    data = {
-        'john': owner,
-        'lva': Club(name=u'LV Aachen', website=u'http://www.lv-aachen.de', owner=owner, time_created=created_at),
-        'sfn': Club(name=u'Sportflug Niederberg', time_created=created_at),
-    }
-
-    for v in data.itervalues():
-        db_session.add(v)
-
+    db_session.add(lva)
     db_session.commit()
-    return data
 
-
-def test_lva(client, fixtures):
-    id = fixtures['lva'].id
-
-    res = client.get('/clubs/{}'.format(id))
+    res = client.get('/clubs/{id}'.format(id=lva.id))
     assert res.status_code == 200
     assert res.json == {
-        u'id': id,
-        u'name': u'LV Aachen',
-        u'timeCreated': '2016-01-15T12:34:56+00:00',
-        u'website': u'http://www.lv-aachen.de',
-        u'isWritable': None,
-        u'owner': {
-            u'id': fixtures['john'].id,
-            u'name': fixtures['john'].name,
+        'id': lva.id,
+        'name': 'LV Aachen',
+        'timeCreated': '2016-01-15T12:34:56+00:00',
+        'website': 'http://www.lv-aachen.de',
+        'isWritable': None,
+        'owner': {
+            'id': john.id,
+            'name': john.name,
         },
     }
 
 
-def test_sfn(client, fixtures):
-    id = fixtures['sfn'].id
+def test_sfn(db_session, client):
+    sfn = clubs.sfn()
+    sfn.time_created = datetime(2016, 01, 15, 12, 34, 56)
 
-    res = client.get('/clubs/{}'.format(id))
+    db_session.add(sfn)
+    db_session.commit()
+
+    res = client.get('/clubs/{id}'.format(id=sfn.id))
     assert res.status_code == 200
     assert res.json == {
-        u'id': id,
+        u'id': sfn.id,
         u'name': u'Sportflug Niederberg',
         u'timeCreated': '2016-01-15T12:34:56+00:00',
         u'website': None,
