@@ -8,7 +8,7 @@ from skylines.model import User, Club, Flight, IGCFile
 from skylines.model.event import (
     create_club_join_event
 )
-from skylines.schemas import ClubSchema, CurrentUserSchema, ValidationError
+from skylines.schemas import CurrentUserSchema, ValidationError
 
 settings_blueprint = Blueprint('settings', 'skylines')
 
@@ -131,39 +131,3 @@ def tracking_generate_key():
     db.session.commit()
 
     return jsonify(key=current_user.tracking_key_hex)
-
-
-@settings_blueprint.route('/settings/club', methods=['PUT'])
-@oauth.required()
-def create_club():
-    current_user = User.get(request.user_id)
-    if not current_user:
-        return jsonify(error='invalid-token'), 401
-
-    json = request.get_json()
-    if json is None:
-        return jsonify(error='invalid-request'), 400
-
-    try:
-        data = ClubSchema(only=('name',)).load(json).data
-    except ValidationError, e:
-        return jsonify(error='validation-failed', fields=e.messages), 422
-
-    if Club.exists(name=data.get('name')):
-        return jsonify(error='duplicate-club-name'), 422
-
-    # create the new club
-    club = Club(**data)
-    club.owner_id = current_user.id
-    db.session.add(club)
-    db.session.flush()
-
-    # assign the user to the new club
-    current_user.club = club
-
-    # create the "user joined club" event
-    create_club_join_event(club.id, current_user)
-
-    db.session.commit()
-
-    return jsonify(id=club.id)
