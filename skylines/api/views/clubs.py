@@ -39,7 +39,7 @@ def read(club_id):
     return jsonify(json)
 
 
-@clubs_blueprint.route('/settings/club', methods=['PUT'])
+@clubs_blueprint.route('/clubs', methods=['PUT'])
 @oauth.required()
 def create_club():
     current_user = User.get(request.user_id)
