@@ -34,7 +34,7 @@ def read(club_id):
     club = get_requested_record(Club, club_id)
 
     json = ClubSchema().dump(club).data
-    json['isWritable'] = club.is_writable(current_user)
+    json['isWritable'] = club.is_writable(current_user) or False
 
     return jsonify(json)
 

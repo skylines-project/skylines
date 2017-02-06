@@ -1,3 +1,4 @@
+from tests.api import basic_auth
 from tests.data import add_fixtures, clubs, users
 
 
@@ -13,7 +14,7 @@ def test_lva(db_session, client):
         'name': 'LV Aachen',
         'timeCreated': '2015-12-24T12:34:56+00:00',
         'website': 'http://www.lv-aachen.de',
-        'isWritable': None,
+        'isWritable': False,
         'owner': {
             'id': lva.owner.id,
             'name': lva.owner.name,
@@ -32,8 +33,28 @@ def test_sfn(db_session, client):
         u'name': u'Sportflug Niederberg',
         u'timeCreated': '2017-01-01T12:34:56+00:00',
         u'website': None,
-        u'isWritable': None,
+        u'isWritable': False,
         u'owner': None,
+    }
+
+
+def test_writable(db_session, client):
+    lva = clubs.lva()
+    john = users.john()
+    john.club = lva
+    add_fixtures(db_session, lva, john)
+
+    headers = basic_auth(john.email_address, john.original_password)
+
+    res = client.get('/clubs/{id}'.format(id=lva.id), headers=headers)
+    assert res.status_code == 200
+    assert res.json == {
+        'id': lva.id,
+        'name': 'LV Aachen',
+        'timeCreated': '2015-12-24T12:34:56+00:00',
+        'website': 'http://www.lv-aachen.de',
+        'isWritable': True,
+        'owner': None,
     }
 
 
