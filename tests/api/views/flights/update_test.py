@@ -105,7 +105,7 @@ def change_pilots(client, flight, auth_user, pilot=None, copilot=None, pilot_nam
 
     flight_url = '/flights/{}/'.format(flight.id)
 
-    return client.post(flight_url, headers=headers, data=json.dumps(data), content_type='application/json')
+    return client.post(flight_url, headers=headers, json=data)
 
 
 def test_pilot_changing_correct_with_co(db_session, client, flight, user_with_club, user_with_same_club):
