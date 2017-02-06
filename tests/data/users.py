@@ -45,8 +45,12 @@ def test_users(n=50):
 
 
 def john():
-    return User(first_name=u'John', last_name=u'Doe', password='jane123')
+    user = User(first_name=u'John', last_name=u'Doe', email_address='johnny@doe.com')
+    user.original_password = user.password = 'jane123'
+    return user
 
 
 def jane():
-    return User(first_name=u'Jane', last_name=u'Doe', password='johnny')
+    user = User(first_name=u'Jane', last_name=u'Doe')
+    user.original_password = user.password = 'johnny'
+    return user
