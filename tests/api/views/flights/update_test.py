@@ -58,28 +58,16 @@ def auth_for(user):
     return headers
 
 
-def change_pilots(client, flight, auth_user, pilot=None, copilot=None, pilot_name=None, copilot_name=None):
-    headers = auth_for(auth_user)
-
-    data = {}
-    if pilot: data['pilotId'] = pilot.id
-    if copilot: data['copilotId'] = copilot.id
-    if pilot_name: data['pilotName'] = pilot_name
-    if copilot_name: data['copilotName'] = copilot_name
-
-    flight_url = '/flights/{}/'.format(flight.id)
-
-    return client.post(flight_url, headers=headers, json=data)
-
-
 def test_pilot_changing_correct_with_co(db_session, client, user_with_club, user_with_same_club):
     """ Pilot is changing copilot to user from same club. """
 
     flight = flights.one(pilot=user_with_club, igc_file=igcs.simple(owner=user_with_club))
     add_fixtures(db_session, flight, user_with_club, user_with_same_club)
 
-    response = change_pilots(client, flight, auth_user=user_with_club,
-                             pilot=user_with_club, copilot=user_with_same_club)
+    response = client.post('/flights/{id}'.format(id=flight.id), headers=auth_for(user_with_club), json={
+        'pilotId': user_with_club.id,
+        'copilotId': user_with_same_club.id,
+    })
 
     assert response.status_code == 200
 
@@ -91,8 +79,10 @@ def test_pilot_changing_disowned_flight(db_session, client,
     flight = flights.one(pilot=user_with_club, igc_file=igcs.simple(owner=user_with_club))
     add_fixtures(db_session, flight, user_with_club, user_with_same_club, user_with_other_club)
 
-    response = change_pilots(client, flight, auth_user=user_with_same_club,
-                             pilot=user_with_club, copilot=user_with_other_club)
+    response = client.post('/flights/{id}'.format(id=flight.id), headers=auth_for(user_with_same_club), json={
+        'pilotId': user_with_club.id,
+        'copilotId': user_with_other_club.id,
+    })
 
     assert response.status_code == 403
 
@@ -103,8 +93,10 @@ def test_pilot_changing_disallowed_pilot(db_session, client, user_with_club, use
     flight = flights.one(pilot=user_with_club, igc_file=igcs.simple(owner=user_with_club))
     add_fixtures(db_session, flight, user_with_club, user_with_other_club)
 
-    response = change_pilots(client, flight, auth_user=user_with_club,
-                             pilot=user_with_other_club, copilot=user_with_club)
+    response = client.post('/flights/{id}'.format(id=flight.id), headers=auth_for(user_with_club), json={
+        'pilotId': user_with_other_club.id,
+        'copilotId': user_with_club.id,
+    })
 
     assert response.status_code == 422
 
@@ -115,8 +107,10 @@ def test_pilot_changing_disallowed_copilot(db_session, client, user_with_club, u
     flight = flights.one(pilot=user_with_club, igc_file=igcs.simple(owner=user_with_club))
     add_fixtures(db_session, flight, user_with_club, user_with_other_club)
 
-    response = change_pilots(client, flight, auth_user=user_with_club,
-                             pilot=user_with_club, copilot=user_with_other_club)
+    response = client.post('/flights/{id}'.format(id=flight.id), headers=auth_for(user_with_club), json={
+        'pilotId': user_with_club.id,
+        'copilotId': user_with_other_club.id,
+    })
 
     assert response.status_code == 422
 
@@ -127,8 +121,10 @@ def test_pilot_changing_same_pilot_and_co(db_session, client, user_with_club):
     flight = flights.one(pilot=user_with_club, igc_file=igcs.simple(owner=user_with_club))
     add_fixtures(db_session, flight, user_with_club)
 
-    response = change_pilots(client, flight, auth_user=user_with_club,
-                             pilot=user_with_club, copilot=user_with_club)
+    response = client.post('/flights/{id}'.format(id=flight.id), headers=auth_for(user_with_club), json={
+        'pilotId': user_with_club.id,
+        'copilotId': user_with_club.id,
+    })
 
     assert response.status_code == 422
 
@@ -139,8 +135,10 @@ def test_pilot_changing_pilot_and_co_null(db_session, client, user_with_club):
     flight = flights.one(pilot=user_with_club, igc_file=igcs.simple(owner=user_with_club))
     add_fixtures(db_session, flight, user_with_club)
 
-    response = change_pilots(client, flight, auth_user=user_with_club,
-                             pilot_name='foo', copilot_name='bar')
+    response = client.post('/flights/{id}'.format(id=flight.id), headers=auth_for(user_with_club), json={
+        'pilotName': 'foo',
+        'copilotName': 'bar',
+    })
 
     assert response.status_code == 200
 
@@ -151,8 +149,10 @@ def test_pilot_changing_clubless_co(db_session, client, user_with_club, user_wit
     flight = flights.one(pilot=user_with_club, igc_file=igcs.simple(owner=user_with_club))
     add_fixtures(db_session, flight, user_with_club, user_without_club)
 
-    response = change_pilots(client, flight, auth_user=user_with_club,
-                             pilot=user_with_club, copilot=user_without_club)
+    response = client.post('/flights/{id}'.format(id=flight.id), headers=auth_for(user_with_club), json={
+        'pilotId': user_with_club.id,
+        'copilotId': user_without_club.id,
+    })
 
     assert response.status_code == 422
 
@@ -163,7 +163,9 @@ def test_pilot_changing_clubless_pilot_and_co(db_session, client, user_without_c
     flight = flights.one(pilot=user_without_club, igc_file=igcs.simple(owner=user_without_club))
     add_fixtures(db_session, flight, user_without_club, user_without_club_2)
 
-    response = change_pilots(client, flight, auth_user=user_without_club,
-                             pilot=user_without_club, copilot=user_without_club_2)
+    response = client.post('/flights/{id}'.format(id=flight.id), headers=auth_for(user_without_club), json={
+        'pilotId': user_without_club.id,
+        'copilotId': user_without_club_2.id,
+    })
 
     assert response.status_code == 422
