@@ -30,11 +30,7 @@ def test_search_doe(db_session, client):
     john = users.john()
     jane = users.jane()
 
-    # make sure John is not added twice
-    lva = clubs.lva()
-    lva.owner = None
-
-    add_fixtures(db_session, john, jane, lva, clubs.sfn(), airports.merzbrueck(), airports.meiersberg())
+    add_fixtures(db_session, john, jane, clubs.lva(), clubs.sfn(), airports.merzbrueck(), airports.meiersberg())
 
     res = client.get('/search?text=doe')
     assert res.status_code == 200

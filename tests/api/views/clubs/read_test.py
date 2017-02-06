@@ -1,8 +1,9 @@
-from tests.data import add_fixtures, clubs
+from tests.data import add_fixtures, clubs, users
 
 
 def test_lva(db_session, client):
     lva = clubs.lva()
+    lva.owner = users.john()
     add_fixtures(db_session, lva)
 
     res = client.get('/clubs/{id}'.format(id=lva.id))
