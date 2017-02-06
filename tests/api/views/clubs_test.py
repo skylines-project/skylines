@@ -1,8 +1,6 @@
 from datetime import datetime
 
 import pytest
-from flask import Response, json
-from flask.testing import FlaskClient
 
 from skylines.model import User, Club
 
@@ -27,17 +25,12 @@ def fixtures(db_session):
     return data
 
 
-def test_lva(client, default_headers, fixtures):
-    assert isinstance(client, FlaskClient)
-
+def test_lva(client, fixtures):
     id = fixtures['lva'].id
 
-    response = client.get('/clubs/{}'.format(id), headers=default_headers)
-    assert isinstance(response, Response)
-    assert response.status_code == 200
-
-    data = json.loads(response.data)
-    assert data == {
+    res = client.get('/clubs/{}'.format(id))
+    assert res.status_code == 200
+    assert res.json == {
         u'id': id,
         u'name': u'LV Aachen',
         u'timeCreated': '2016-01-15T12:34:56+00:00',
@@ -50,17 +43,12 @@ def test_lva(client, default_headers, fixtures):
     }
 
 
-def test_sfn(client, default_headers, fixtures):
-    assert isinstance(client, FlaskClient)
-
+def test_sfn(client, fixtures):
     id = fixtures['sfn'].id
 
-    response = client.get('/clubs/{}'.format(id), headers=default_headers)
-    assert isinstance(response, Response)
-    assert response.status_code == 200
-
-    data = json.loads(response.data)
-    assert data == {
+    res = client.get('/clubs/{}'.format(id))
+    assert res.status_code == 200
+    assert res.json == {
         u'id': id,
         u'name': u'Sportflug Niederberg',
         u'timeCreated': '2016-01-15T12:34:56+00:00',
@@ -70,17 +58,11 @@ def test_sfn(client, default_headers, fixtures):
     }
 
 
-def test_missing(client, default_headers):
-    assert isinstance(client, FlaskClient)
-
-    response = client.get('/clubs/10000000', headers=default_headers)
-    assert isinstance(response, Response)
-    assert response.status_code == 404
+def test_missing(client):
+    res = client.get('/clubs/10000000')
+    assert res.status_code == 404
 
 
-def test_invalid_id(client, default_headers):
-    assert isinstance(client, FlaskClient)
-
-    response = client.get('/clubs/abc', headers=default_headers)
-    assert isinstance(response, Response)
-    assert response.status_code == 404
+def test_invalid_id(client):
+    res = client.get('/clubs/abc')
+    assert res.status_code == 404

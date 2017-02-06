@@ -1,8 +1,6 @@
 # coding=utf-8
 
 import pytest
-from flask import Response, json
-from flask.testing import FlaskClient
 
 from skylines.model import User, Club, Airport
 
@@ -25,9 +23,7 @@ def fixtures(db_session):
     return data
 
 
-def test_search(client, default_headers, fixtures):
-    assert isinstance(client, FlaskClient)
-
+def test_search(client, fixtures):
     edka = {
         'type': 'airport',
         'id': fixtures['edka'].id,
@@ -42,18 +38,16 @@ def test_search(client, default_headers, fixtures):
         'website': 'https://www.lv-aachen.de',
     }
 
-    response = client.get('/search?text=aachen', headers=default_headers)
-    assert isinstance(response, Response)
-    assert response.status_code == 200
+    res = client.get('/search?text=aachen')
+    assert res.status_code == 200
 
-    data = json.loads(response.data)['results']
+    data = res.json['results']
     assert len(data) == 2
     assert edka in data
     assert lva in data
 
 
-def test_search2(client, default_headers, fixtures):
-    assert isinstance(client, FlaskClient)
+def test_search2(client, fixtures):
 
     jane = {
         'type': 'user',
@@ -66,22 +60,18 @@ def test_search2(client, default_headers, fixtures):
         'name': u'John Doe',
     }
 
-    response = client.get('/search?text=doe', headers=default_headers)
-    assert isinstance(response, Response)
-    assert response.status_code == 200
+    res = client.get('/search?text=doe')
+    assert res.status_code == 200
 
-    data = json.loads(response.data)['results']
+    data = res.json['results']
     assert len(data) == 2
     assert jane in data
     assert john in data
 
 
-def test_missing_search_text(client, default_headers):
-    assert isinstance(client, FlaskClient)
+def test_missing_search_text(client):
+    res = client.get('/search')
+    assert res.status_code == 200
 
-    response = client.get('/search', headers=default_headers)
-    assert isinstance(response, Response)
-    assert response.status_code == 200
-
-    data = json.loads(response.data)['results']
+    data = res.json['results']
     assert len(data) == 0
