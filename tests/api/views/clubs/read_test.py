@@ -3,8 +3,7 @@ from tests.data import add_fixtures, clubs, users
 
 
 def test_lva(db_session, client):
-    lva = clubs.lva()
-    lva.owner = users.john()
+    lva = clubs.lva(owner=users.john())
     add_fixtures(db_session, lva)
 
     res = client.get('/clubs/{id}'.format(id=lva.id))
@@ -40,8 +39,7 @@ def test_sfn(db_session, client):
 
 def test_writable(db_session, client):
     lva = clubs.lva()
-    john = users.john()
-    john.club = lva
+    john = users.john(club=lva)
     add_fixtures(db_session, lva, john)
 
     res = client.get('/clubs/{id}'.format(id=lva.id), headers=auth_for(john))
