@@ -1,5 +1,3 @@
-from datetime import datetime
-
 from skylines.model import User
 from tests.data import clubs
 
@@ -9,7 +7,6 @@ def test_lva(db_session, client):
 
     lva = clubs.lva()
     lva.owner = john
-    lva.time_created = datetime(2016, 01, 15, 12, 34, 56)
 
     db_session.add(lva)
     db_session.commit()
@@ -19,7 +16,7 @@ def test_lva(db_session, client):
     assert res.json == {
         'id': lva.id,
         'name': 'LV Aachen',
-        'timeCreated': '2016-01-15T12:34:56+00:00',
+        'timeCreated': '2015-12-24T12:34:56+00:00',
         'website': 'http://www.lv-aachen.de',
         'isWritable': None,
         'owner': {
@@ -31,7 +28,6 @@ def test_lva(db_session, client):
 
 def test_sfn(db_session, client):
     sfn = clubs.sfn()
-    sfn.time_created = datetime(2016, 01, 15, 12, 34, 56)
 
     db_session.add(sfn)
     db_session.commit()
@@ -41,7 +37,7 @@ def test_sfn(db_session, client):
     assert res.json == {
         u'id': sfn.id,
         u'name': u'Sportflug Niederberg',
-        u'timeCreated': '2016-01-15T12:34:56+00:00',
+        u'timeCreated': '2017-01-01T12:34:56+00:00',
         u'website': None,
         u'isWritable': None,
         u'owner': None,
