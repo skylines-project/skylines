@@ -4,7 +4,7 @@ from shapely.geometry import Point
 from skylines.model import Airport
 
 
-def test_airport():
+def merzbrueck():
     return Airport(
         name='Aachen Merzbruck',
         icao='EDKA',

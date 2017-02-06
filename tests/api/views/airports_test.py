@@ -11,7 +11,7 @@ def test_read_missing(db_session, client):
 
 
 def test_read(db_session, client):
-    airport = airports.test_airport()
+    airport = airports.merzbrueck()
     db_session.add(airport)
     db_session.commit()
 
