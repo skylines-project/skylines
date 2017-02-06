@@ -44,7 +44,7 @@
     "ember-font-awesome": "2.2.0",
     "ember-href-to": "^1.11.1",
     "ember-intl": "^2.21.0",
-    "ember-intl-cp-validations": "2.3.0",
+    "ember-intl-cp-validations": "^3.0.1",
     "ember-load-initializers": "^0.6.0",
     "ember-page-title": "3.0.9",
     "ember-power-select": "1.0.0-beta.25",
