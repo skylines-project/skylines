@@ -7,6 +7,7 @@ from flask import json
 
 from skylines.model import User, Club, Flight, IGCFile
 from werkzeug.datastructures import Headers
+from tests.data import add_fixtures
 
 
 @pytest.fixture
@@ -82,11 +83,6 @@ def flight(igc, user_with_club):
                             '4083E41EAA163A4B40AEB99AC1F2F238400DBA2B40EE394B405A897018DFF238407CF40762C6394B40'
                             'B4C8804BEDF23840EB2EE4839E394B409C7D029A08F33840E4CF4B3789394B40B3EA7D4263F338403D'
                             'BFA9A77C394B40')
-
-
-def add_fixtures(db_session, *fixtures):
-    db_session.add_all(fixtures)
-    db_session.commit()
 
 
 def authenticate_with(user):

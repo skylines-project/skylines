@@ -1,5 +1,5 @@
 # coding=utf-8
-from tests.data import airports
+from tests.data import add_fixtures, airports
 
 
 def test_read_missing(db_session, client):
@@ -12,8 +12,7 @@ def test_read_missing(db_session, client):
 
 def test_read(db_session, client):
     airport = airports.merzbrueck()
-    db_session.add(airport)
-    db_session.commit()
+    add_fixtures(db_session, airport)
 
     res = client.get('/airports/{id}'.format(id=airport.id))
     assert res.status_code == 200

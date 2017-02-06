@@ -1,5 +1,6 @@
 # coding=utf-8
 from skylines.model import AircraftModel
+from tests.data import add_fixtures
 
 
 def test_list_empty(db_session, client):
@@ -19,8 +20,7 @@ def test_list(db_session, client):
         AircraftModel(name=u'Δ', kind=4),
         AircraftModel(name='Falcon 9', kind=5),
     ]
-    db_session.add_all(models)
-    db_session.commit()
+    add_fixtures(db_session, *models)
 
     res = client.get('/aircraft-models')
     print res.json

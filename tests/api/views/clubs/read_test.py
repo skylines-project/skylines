@@ -1,11 +1,9 @@
-from tests.data import clubs
+from tests.data import add_fixtures, clubs
 
 
 def test_lva(db_session, client):
     lva = clubs.lva()
-
-    db_session.add(lva)
-    db_session.commit()
+    add_fixtures(db_session, lva)
 
     res = client.get('/clubs/{id}'.format(id=lva.id))
     assert res.status_code == 200
@@ -24,9 +22,7 @@ def test_lva(db_session, client):
 
 def test_sfn(db_session, client):
     sfn = clubs.sfn()
-
-    db_session.add(sfn)
-    db_session.commit()
+    add_fixtures(db_session, sfn)
 
     res = client.get('/clubs/{id}'.format(id=sfn.id))
     assert res.status_code == 200
