@@ -51,6 +51,6 @@ def john(**kwargs):
 
 
 def jane(**kwargs):
-    user = User(first_name=u'Jane', last_name=u'Doe', **kwargs)
+    user = User(first_name=u'Jane', last_name=u'Doe', email_address='jane@doe.com', **kwargs)
     user.original_password = user.password = 'johnny'
     return user
