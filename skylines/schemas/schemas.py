@@ -7,6 +7,7 @@ from skylines.lib.string import isnumeric
 from skylines.model.flight_phase import FlightPhase
 
 AIRCRAFT_MODEL_TYPES = {
+    0: 'unspecified',
     1: 'glider',
     2: 'motorglider',
     3: 'paraglider',
