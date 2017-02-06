@@ -1,4 +1,4 @@
-from tests.api import basic_auth
+from tests.api import auth_for
 from tests.data import add_fixtures, clubs, users
 
 
@@ -44,9 +44,7 @@ def test_writable(db_session, client):
     john.club = lva
     add_fixtures(db_session, lva, john)
 
-    headers = basic_auth(john.email_address, john.original_password)
-
-    res = client.get('/clubs/{id}'.format(id=lva.id), headers=headers)
+    res = client.get('/clubs/{id}'.format(id=lva.id), headers=auth_for(john))
     assert res.status_code == 200
     assert res.json == {
         'id': lva.id,

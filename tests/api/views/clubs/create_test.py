@@ -1,12 +1,10 @@
 from skylines.model import Club
-from tests.api import basic_auth
+from tests.api import auth_for
 from tests.data import add_fixtures, clubs
 
 
 def test_create(db_session, client, test_user):
-    headers = basic_auth(test_user.email_address, test_user.original_password)
-
-    res = client.put('/clubs', headers=headers, json={
+    res = client.put('/clubs', headers=auth_for(test_user), json={
         'name': 'LV Aachen',
     })
     assert res.status_code == 200
@@ -25,17 +23,13 @@ def test_without_authentication(db_session, client):
 
 
 def test_non_json_data(db_session, client, test_user):
-    headers = basic_auth(test_user.email_address, test_user.original_password)
-
-    res = client.put('/clubs', headers=headers, data='foobar?')
+    res = client.put('/clubs', headers=auth_for(test_user), data='foobar?')
     assert res.status_code == 400
     assert res.json['error'] == 'invalid-request'
 
 
 def test_invalid_data(db_session, client, test_user):
-    headers = basic_auth(test_user.email_address, test_user.original_password)
-
-    res = client.put('/clubs', headers=headers, json={
+    res = client.put('/clubs', headers=auth_for(test_user), json={
         'name': '',
     })
     assert res.status_code == 422
@@ -46,9 +40,7 @@ def test_existing_club(db_session, client, test_user):
     lva = clubs.lva()
     add_fixtures(db_session, lva)
 
-    headers = basic_auth(test_user.email_address, test_user.original_password)
-
-    res = client.put('/clubs', headers=headers, json={
+    res = client.put('/clubs', headers=auth_for(test_user), json={
         'name': 'LV Aachen',
     })
     assert res.status_code == 422

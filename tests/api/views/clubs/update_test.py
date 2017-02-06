@@ -1,5 +1,5 @@
 from skylines.model import Club
-from tests.api import basic_auth
+from tests.api import auth_for
 from tests.data import add_fixtures, clubs
 
 
@@ -8,9 +8,7 @@ def test_update(db_session, client, test_user):
     test_user.club = sfn
     add_fixtures(db_session, sfn)
 
-    headers = basic_auth(test_user.email_address, test_user.original_password)
-
-    res = client.post('/clubs/{id}'.format(id=sfn.id), headers=headers, json={
+    res = client.post('/clubs/{id}'.format(id=sfn.id), headers=auth_for(test_user), json={
         'name': 'foobar',
         'website': 'https://foobar.de',
     })
@@ -25,9 +23,7 @@ def test_update_without_permission(db_session, client, test_user):
     sfn = clubs.sfn()
     add_fixtures(db_session, sfn)
 
-    headers = basic_auth(test_user.email_address, test_user.original_password)
-
-    res = client.post('/clubs/{id}'.format(id=sfn.id), headers=headers, json={
+    res = client.post('/clubs/{id}'.format(id=sfn.id), headers=auth_for(test_user), json={
         'name': 'foobar',
         'website': 'https://foobar.de',
     })
@@ -54,8 +50,7 @@ def test_update_without_authentication(db_session, client):
 
 
 def test_missing(db_session, client, test_user):
-    headers = basic_auth(test_user.email_address, test_user.original_password)
-    res = client.post('/clubs/1000000000', headers=headers, json={
+    res = client.post('/clubs/1000000000', headers=auth_for(test_user), json={
         'name': 'foobar',
         'website': 'https://foobar.de',
     })
@@ -63,8 +58,7 @@ def test_missing(db_session, client, test_user):
 
 
 def test_invalid_id(db_session, client, test_user):
-    headers = basic_auth(test_user.email_address, test_user.original_password)
-    res = client.post('/clubs/abc', headers=headers, json={
+    res = client.post('/clubs/abc', headers=auth_for(test_user), json={
         'name': 'foobar',
         'website': 'https://foobar.de',
     })
