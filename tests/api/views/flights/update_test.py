@@ -49,7 +49,7 @@ def user_without_club_2():
                 email_address='no@club.com', password='123456')
 
 
-def authenticate_with(user):
+def auth_for(user):
     password = '123456'
 
     headers = Headers()
@@ -59,7 +59,7 @@ def authenticate_with(user):
 
 
 def change_pilots(client, flight, auth_user, pilot=None, copilot=None, pilot_name=None, copilot_name=None):
-    headers = authenticate_with(auth_user)
+    headers = auth_for(auth_user)
 
     data = {}
     if pilot: data['pilotId'] = pilot.id
