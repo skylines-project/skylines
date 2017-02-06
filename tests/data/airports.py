@@ -17,3 +17,7 @@ def merzbrueck():
         surface='asphalt',
         type='airport',
     )
+
+
+def meiersberg():
+    return Airport(name=u'Meiersberg', country_code='DE')

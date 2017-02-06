@@ -1,77 +1,59 @@
 # coding=utf-8
-
-import pytest
-
-from skylines.model import User, Club, Airport
+from tests.data import add_fixtures, users, clubs, airports
 
 
-@pytest.fixture(autouse=True)
-def fixtures(db_session):
-    data = {
-        'john': User(first_name=u'John', last_name=u'Doe', password='jane123'),
-        'jane': User(first_name=u'Jane', last_name=u'Doe', password='johnny'),
-        'lva': Club(name=u'LV Aachen', website='https://www.lv-aachen.de'),
-        'sfn': Club(name=u'Sportflug Niederberg'),
-        'edka': Airport(name=u'Aachen-Merzbrück', country_code='DE', icao='EDKA', frequency='122.875'),
-        'mbg': Airport(name=u'Meiersberg', country_code='DE'),
-    }
+def test_search(db_session, client):
+    edka = airports.merzbrueck()
+    lva = clubs.lva()
 
-    for v in data.itervalues():
-        db_session.add(v)
-
-    db_session.commit()
-    return data
-
-
-def test_search(client, fixtures):
-    edka = {
-        'type': 'airport',
-        'id': fixtures['edka'].id,
-        'name': u'Aachen-Merzbrück',
-        'icao': 'EDKA',
-        'frequency': '122.875',
-    }
-    lva = {
-        'type': 'club',
-        'id': fixtures['lva'].id,
-        'name': u'LV Aachen',
-        'website': 'https://www.lv-aachen.de',
-    }
+    add_fixtures(db_session, users.john(), users.jane(), lva, clubs.sfn(), edka, airports.meiersberg())
 
     res = client.get('/search?text=aachen')
     assert res.status_code == 200
-
-    data = res.json['results']
-    assert len(data) == 2
-    assert edka in data
-    assert lva in data
-
-
-def test_search2(client, fixtures):
-
-    jane = {
-        'type': 'user',
-        'id': fixtures['jane'].id,
-        'name': u'Jane Doe',
+    assert res.json == {
+        'results': [{
+            'id': edka.id,
+            'type': 'airport',
+            'name': 'Aachen Merzbruck',
+            'icao': 'EDKA',
+            'frequency': '122.875',
+        }, {
+            'id': lva.id,
+            'type': 'club',
+            'name': 'LV Aachen',
+            'website': 'http://www.lv-aachen.de',
+        }],
     }
-    john = {
-        'type': 'user',
-        'id': fixtures['john'].id,
-        'name': u'John Doe',
-    }
+
+
+def test_search_doe(db_session, client):
+    john = users.john()
+    jane = users.jane()
+
+    # make sure John is not added twice
+    lva = clubs.lva()
+    lva.owner = None
+
+    add_fixtures(db_session, john, jane, lva, clubs.sfn(), airports.merzbrueck(), airports.meiersberg())
 
     res = client.get('/search?text=doe')
     assert res.status_code == 200
-
-    data = res.json['results']
-    assert len(data) == 2
-    assert jane in data
-    assert john in data
+    assert res.json == {
+        'results': [{
+            'id': jane.id,
+            'type': 'user',
+            'name': 'Jane Doe',
+        }, {
+            'id': john.id,
+            'type': 'user',
+            'name': 'John Doe',
+        }],
+    }
 
 
 def test_missing_search_text(client):
     res = client.get('/search')
     assert res.status_code == 200
-
-    data = res.json['results']
-    assert len(data) == 0
+    assert res.json == {
+        'results': [],
+    }
