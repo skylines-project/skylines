@@ -42,3 +42,7 @@ def test_users(n=50):
         users.append(u)
 
     return users
+
+
+def john():
+    return User(first_name=u'John', last_name=u'Doe', password='jane123')

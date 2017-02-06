@@ -1,12 +1,8 @@
-from skylines.model import User
 from tests.data import clubs
 
 
 def test_lva(db_session, client):
-    john = User(first_name=u'John', last_name=u'Doe', password='jane123')
-
     lva = clubs.lva()
-    lva.owner = john
 
     db_session.add(lva)
     db_session.commit()
@@ -20,8 +16,8 @@ def test_lva(db_session, client):
         'website': 'http://www.lv-aachen.de',
         'isWritable': None,
         'owner': {
-            'id': john.id,
-            'name': john.name,
+            'id': lva.owner.id,
+            'name': lva.owner.name,
         },
     }
 
