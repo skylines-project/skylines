@@ -76,8 +76,15 @@ def create_club():
 
 
 @clubs_blueprint.route('/clubs/<club_id>', methods=['POST'], strict_slashes=False)
+@oauth.required()
 def update(club_id):
+    current_user = User.get(request.user_id)
+    if not current_user:
+        return jsonify(error='invalid-token'), 401
+
     club = get_requested_record(Club, club_id)
+    if not club.is_writable(current_user):
+        return jsonify(error='forbidden'), 403
 
     json = request.get_json()
     if json is None:
