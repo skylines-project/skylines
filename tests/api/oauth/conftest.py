@@ -1,7 +1,7 @@
 import pytest
 from werkzeug.datastructures import Headers
 
-from flask import jsonify, request
+from flask import jsonify, request, Response, json
 
 import config
 from skylines.api.cors import cors
@@ -16,6 +16,7 @@ ORIGIN = 'https://www.google.com'
 @pytest.fixture(scope='session')
 def app():
     app = SkyLines(config_file=config.TESTING_CONF_PATH)
+    app.response_class = ApiResponse
     _db.init_app(app)
 
     oauth.init_app(app)
@@ -32,6 +33,12 @@ def app():
         return jsonify({'user': request.user_id})
 
     return app
+
+
+class ApiResponse(Response):
+    @property
+    def json(self):
+        return json.loads(self.data)
 
 
 @pytest.yield_fixture(scope='session')

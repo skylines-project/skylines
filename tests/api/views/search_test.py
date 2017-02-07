@@ -1,87 +1,59 @@
 # coding=utf-8
-
-import pytest
-from flask import Response, json
-from flask.testing import FlaskClient
-
-from skylines.model import User, Club, Airport
+from tests.data import add_fixtures, users, clubs, airports
 
 
-@pytest.fixture(autouse=True)
-def fixtures(db_session):
-    data = {
-        'john': User(first_name=u'John', last_name=u'Doe', password='jane123'),
-        'jane': User(first_name=u'Jane', last_name=u'Doe', password='johnny'),
-        'lva': Club(name=u'LV Aachen', website='https://www.lv-aachen.de'),
-        'sfn': Club(name=u'Sportflug Niederberg'),
-        'edka': Airport(name=u'Aachen-Merzbrück', country_code='DE', icao='EDKA', frequency='122.875'),
-        'mbg': Airport(name=u'Meiersberg', country_code='DE'),
+def test_search(db_session, client):
+    edka = airports.merzbrueck()
+    lva = clubs.lva()
+
+    add_fixtures(db_session, users.john(), users.jane(), lva, clubs.sfn(), edka, airports.meiersberg())
+
+    res = client.get('/search?text=aachen')
+    assert res.status_code == 200
+    assert res.json == {
+        'results': [{
+            'id': edka.id,
+            'type': 'airport',
+            'name': 'Aachen Merzbruck',
+            'icao': 'EDKA',
+            'frequency': '122.875',
+        }, {
+            'id': lva.id,
+            'type': 'club',
+            'name': 'LV Aachen',
+            'website': 'http://www.lv-aachen.de',
+        }],
     }
 
-    for v in data.itervalues():
-        db_session.add(v)
 
-    db_session.commit()
-    return data
+def test_search_doe(db_session, client):
+    john = users.john()
+    jane = users.jane()
 
+    # make sure John is not added twice
+    lva = clubs.lva()
+    lva.owner = None
 
-def test_search(client, default_headers, fixtures):
-    assert isinstance(client, FlaskClient)
+    add_fixtures(db_session, john, jane, lva, clubs.sfn(), airports.merzbrueck(), airports.meiersberg())
 
-    edka = {
-        'type': 'airport',
-        'id': fixtures['edka'].id,
-        'name': u'Aachen-Merzbrück',
-        'icao': 'EDKA',
-        'frequency': '122.875',
-    }
-    lva = {
-        'type': 'club',
-        'id': fixtures['lva'].id,
-        'name': u'LV Aachen',
-        'website': 'https://www.lv-aachen.de',
-    }
-
-    response = client.get('/search?text=aachen', headers=default_headers)
-    assert isinstance(response, Response)
-    assert response.status_code == 200
-
-    data = json.loads(response.data)['results']
-    assert len(data) == 2
-    assert edka in data
-    assert lva in data
-
-
-def test_search2(client, default_headers, fixtures):
-    assert isinstance(client, FlaskClient)
-
-    jane = {
-        'type': 'user',
-        'id': fixtures['jane'].id,
-        'name': u'Jane Doe',
-    }
-    john = {
-        'type': 'user',
-        'id': fixtures['john'].id,
-        'name': u'John Doe',
+    res = client.get('/search?text=doe')
+    assert res.status_code == 200
+    assert res.json == {
+        'results': [{
+            'id': jane.id,
+            'type': 'user',
+            'name': 'Jane Doe',
+        }, {
+            'id': john.id,
+            'type': 'user',
+            'name': 'John Doe',
+        }],
     }
 
-    response = client.get('/search?text=doe', headers=default_headers)
-    assert isinstance(response, Response)
-    assert response.status_code == 200
 
-    data = json.loads(response.data)['results']
-    assert len(data) == 2
-    assert jane in data
-    assert john in data
-
-
-def test_missing_search_text(client, default_headers):
-    assert isinstance(client, FlaskClient)
-
-    response = client.get('/search', headers=default_headers)
-    assert isinstance(response, Response)
-    assert response.status_code == 200
-
-    data = json.loads(response.data)['results']
-    assert len(data) == 0
+def test_missing_search_text(client):
+    res = client.get('/search')
+    assert res.status_code == 200
+    assert res.json == {
+        'results': [],
+    }
