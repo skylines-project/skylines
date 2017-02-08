@@ -62,7 +62,7 @@ def test_filled_flight(db_session, client):
         co_pilot=jane,
         co_pilot_name='jane',
         club=lva,
-        model=aircraft_models.hornet(),
+        model=aircraft_models.nimeta(),
         takeoff_airport=airports.meiersberg(),
         landing_airport=airports.merzbrueck(),
         igc_file=igcs.filled(owner=john)
@@ -92,9 +92,9 @@ def test_filled_flight(db_session, client):
             },
             u'model': {
                 u'id': flight.model_id,
-                u'name': u'Hornet',
+                u'name': u'Nimeta',
                 u'type': u'glider',
-                u'index': 100,
+                u'index': 112,
             },
             u'registration': u'D-1234',
             u'competitionId': u'701',
@@ -116,7 +116,7 @@ def test_filled_flight(db_session, client):
             u'distance': 512,
             u'triangleDistance': 432,
             u'rawScore': 799.0,
-            u'score': 799.0,
+            u'score': 713.0,
             u'speed': None,
             u'privacyLevel': 0,
             u'igcFile': {

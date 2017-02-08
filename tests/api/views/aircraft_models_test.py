@@ -29,7 +29,7 @@ def test_list(db_session, client):
             'type': 'unspecified',
         }, {
             'id': nimeta.id,
-            'index': 100,
+            'index': 112,
             'name': 'Nimeta',
             'type': 'glider'
         }, {

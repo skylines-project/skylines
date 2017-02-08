@@ -18,7 +18,7 @@ def nimeta(**kwargs):
         name='Nimeta',
         kind=1,
         igc_index=142,
-        dmst_index=100,
+        dmst_index=112,
         **kwargs
     )
 
