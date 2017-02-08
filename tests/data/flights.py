@@ -1,8 +1,9 @@
 from skylines.model import Flight
 
 
-def one(**kwargs):
+def one(igc_file, **kwargs):
     return Flight(
+        igc_file=igc_file,
         date_local='2011-06-18',
         takeoff_time='2011-06-18 09:11:23',
         landing_time='2011-06-18 09:15:40',
