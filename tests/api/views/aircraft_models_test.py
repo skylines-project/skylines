@@ -20,7 +20,6 @@ def test_list(db_session, client):
     add_fixtures(db_session, nimeta, ask13, dimona, epsilon, delta, falcon9)
 
     res = client.get('/aircraft-models')
-    print res.json
     assert res.status_code == 200
     assert res.json == {
         'models': [{
