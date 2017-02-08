@@ -36,6 +36,7 @@ def weighted_ilike(self, value, weight=1):
     # Return ilike expression
     return cast(and_(self != None, self.ilike(value)), Integer) * weight
 
+
 # Inject weighted_ilike() method into String type
 setattr(String.comparator_factory, 'weighted_ilike', weighted_ilike)
 

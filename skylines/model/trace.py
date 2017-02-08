@@ -55,6 +55,7 @@ class Trace(db.Model):
         wkt = "LINESTRING({})".format(','.join(points))
         self._locations = WKTElement(wkt, srid=4326)
 
+
 db.Index('traces_contest_idx',
          Trace.flight_id, Trace.contest_type, Trace.trace_type,
          unique=True)
