@@ -1,4 +1,4 @@
-from tests.data import add_fixtures, igcs, flights, clubs, users, aircraft_models, airports
+from tests.data import add_fixtures, igcs, flights, clubs, users, aircraft_models, airports, traces
 
 
 def test_basic_flight(db_session, client):
@@ -67,7 +67,7 @@ def test_filled_flight(db_session, client):
         landing_airport=airports.merzbrueck(),
         igc_file=igcs.filled(owner=john)
     )
-    add_fixtures(db_session, flight)
+    add_fixtures(db_session, flight, traces.olc_classic(flight=flight))
 
     res = client.get('/flights/{id}'.format(id=flight.id))
     assert res.status_code == 200
@@ -117,7 +117,7 @@ def test_filled_flight(db_session, client):
             u'triangleDistance': 432,
             u'rawScore': 799.0,
             u'score': 713.0,
-            u'speed': None,
+            u'speed': 30.84579717542964,
             u'privacyLevel': 0,
             u'igcFile': {
                 u'owner': {
