@@ -44,8 +44,7 @@ def expected_basic_flight_json(flight):
 
 
 def test_basic_flight(db_session, client):
-    john = users.john(club=clubs.lva())
-    flight = flights.one(pilot=john, igc_file=igcs.simple(owner=john))
+    flight = flights.one(igc_file=igcs.simple(owner=users.john()))
     add_fixtures(db_session, flight)
 
     res = client.get('/flights/{id}'.format(id=flight.id))
@@ -137,8 +136,7 @@ def test_filled_flight(db_session, client):
 
 
 def test_empty_extended(db_session, client):
-    john = users.john(club=clubs.lva())
-    flight = flights.one(pilot=john, igc_file=igcs.simple(owner=john))
+    flight = flights.one(igc_file=igcs.simple(owner=users.john()))
     add_fixtures(db_session, flight)
 
     res = client.get('/flights/{id}?extended'.format(id=flight.id))
@@ -160,11 +158,10 @@ def test_empty_extended(db_session, client):
 
 
 def test_comments(db_session, client):
-    john = users.john(club=clubs.lva())
-    flight = flights.one(pilot=john, igc_file=igcs.simple(owner=john))
+    flight = flights.one(igc_file=igcs.simple(owner=users.john()))
     comment1 = flight_comments.yeah(flight=flight)
     comment2 = flight_comments.emoji(flight=flight)
-    comment3 = flight_comments.yeah(flight=flight, user=john, text='foo')
+    comment3 = flight_comments.yeah(flight=flight, user=flight.igc_file.owner, text='foo')
     comment4 = flight_comments.yeah(flight=flight, text='bar')
     comment5 = flight_comments.yeah(flight=flight, user=users.jane(), text='baz')
     add_fixtures(db_session, flight, comment1, comment2, comment3, comment4, comment5)
