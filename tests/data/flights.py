@@ -9,6 +9,7 @@ def one(igc_file, **kwargs):
         date_local=date(2011, 6, 18),
         takeoff_time=datetime(2011, 6, 18, 9, 11, 23),
         landing_time=datetime(2011, 6, 18, 9, 15, 40),
+        time_created=datetime(2011, 6, 19, 11, 23, 45),
         timestamps='',
         locations=(
             '0102000020E6100000380000000D43014D84FD384011E8E00B933D4B40D80CA06485FD38402B831180'
