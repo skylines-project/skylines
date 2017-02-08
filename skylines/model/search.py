@@ -69,6 +69,7 @@ def search_query(cls, tokens,
 
     return query
 
+
 db.Model.search_query = classmethod(search_query)
 
 

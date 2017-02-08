@@ -1,5 +1,6 @@
 from marshmallow import ValidationError
 from marshmallow.fields import *  # NOQA
+from marshmallow.fields import Field
 from marshmallow.fields import String as _String
 
 from geoalchemy2.shape import to_shape

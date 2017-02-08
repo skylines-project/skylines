@@ -95,7 +95,8 @@ class Welt2000(Command):
         airport.time_modified = self.current_date
 
     def show_differences(self, airport, airport_w2k):
-        row2dict = lambda r: {c.name: getattr(r, c.name) for c in r.__table__.columns}
+        def row2dict(r):
+            return {c.name: getattr(r, c.name) for c in r.__table__.columns}
 
         diff = DictDiffer(row2dict(airport), airport_w2k.__dict__)
 
