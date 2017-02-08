@@ -36,8 +36,7 @@ def one(igc_file, **kwargs):
             'B4C8804BEDF23840EB2EE4839E394B409C7D029A08F33840E4CF4B3789394B40B3EA7D4263F338403D'
             'BFA9A77C394B40'
         ),
-        **kwargs
-    )
+    ).apply_kwargs(kwargs)
 
 
 def filled(igc_file, **kwargs):
@@ -82,5 +81,4 @@ def filled(igc_file, **kwargs):
         olc_plus_score=799,
         igc_file=igc_file,
         qnh=1014.23,
-        **kwargs
-    )
+    ).apply_kwargs(kwargs)

@@ -9,8 +9,7 @@ def hornet(**kwargs):
         kind=1,
         igc_index=100,
         dmst_index=100,
-        **kwargs
-    )
+    ).apply_kwargs(kwargs)
 
 
 def nimeta(**kwargs):
@@ -19,8 +18,7 @@ def nimeta(**kwargs):
         kind=1,
         igc_index=142,
         dmst_index=112,
-        **kwargs
-    )
+    ).apply_kwargs(kwargs)
 
 
 def ask13(**kwargs):
@@ -28,37 +26,32 @@ def ask13(**kwargs):
         name='ASK 13',
         igc_index=42,
         dmst_index=17,
-        **kwargs
-    )
+    ).apply_kwargs(kwargs)
 
 
 def dimona(**kwargs):
     return AircraftModel(
         name='Dimona',
         kind=2,
-        **kwargs
-    )
+    ).apply_kwargs(kwargs)
 
 
 def epsilon(**kwargs):
     return AircraftModel(
         name='EPSILON',
         kind=3,
-        **kwargs
-    )
+    ).apply_kwargs(kwargs)
 
 
 def delta(**kwargs):
     return AircraftModel(
         name=u'Δ',
         kind=4,
-        **kwargs
-    )
+    ).apply_kwargs(kwargs)
 
 
 def falcon9(**kwargs):
     return AircraftModel(
         name='Falcon 9',
         kind=5,
-        **kwargs
-    )
+    ).apply_kwargs(kwargs)

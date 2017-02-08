@@ -22,5 +22,4 @@ def olc_classic(flight, **kwargs):
             Location(50.2, 5.8),
             Location(51.3, 7.1),
         ],
-        **kwargs
-    )
+    ).apply_kwargs(kwargs)
