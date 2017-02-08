@@ -44,9 +44,19 @@ def test_users(n=50):
     return users
 
 
-def john():
-    return User(first_name=u'John', last_name=u'Doe', password='jane123')
+def john(**kwargs):
+    user = User(first_name=u'John', last_name=u'Doe', email_address='johnny@doe.com', **kwargs)
+    user.original_password = user.password = 'jane123'
+    return user
 
 
-def jane():
-    return User(first_name=u'Jane', last_name=u'Doe', password='johnny')
+def jane(**kwargs):
+    user = User(first_name=u'Jane', last_name=u'Doe', email_address='jane@doe.com', **kwargs)
+    user.original_password = user.password = 'johnny'
+    return user
+
+
+def max(**kwargs):
+    user = User(first_name=u'Max', last_name=u'Mustermann', email_address='max@mustermann.name', **kwargs)
+    user.original_password = user.password = 'secret123'
+    return user

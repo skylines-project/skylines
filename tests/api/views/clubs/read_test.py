@@ -1,8 +1,9 @@
-from tests.data import add_fixtures, clubs
+from tests.api import auth_for
+from tests.data import add_fixtures, clubs, users
 
 
 def test_lva(db_session, client):
-    lva = clubs.lva()
+    lva = clubs.lva(owner=users.john())
     add_fixtures(db_session, lva)
 
     res = client.get('/clubs/{id}'.format(id=lva.id))
@@ -12,7 +13,7 @@ def test_lva(db_session, client):
         'name': 'LV Aachen',
         'timeCreated': '2015-12-24T12:34:56+00:00',
         'website': 'http://www.lv-aachen.de',
-        'isWritable': None,
+        'isWritable': False,
         'owner': {
             'id': lva.owner.id,
             'name': lva.owner.name,
@@ -31,8 +32,25 @@ def test_sfn(db_session, client):
         u'name': u'Sportflug Niederberg',
         u'timeCreated': '2017-01-01T12:34:56+00:00',
         u'website': None,
-        u'isWritable': None,
+        u'isWritable': False,
         u'owner': None,
+    }
+
+
+def test_writable(db_session, client):
+    lva = clubs.lva()
+    john = users.john(club=lva)
+    add_fixtures(db_session, lva, john)
+
+    res = client.get('/clubs/{id}'.format(id=lva.id), headers=auth_for(john))
+    assert res.status_code == 200
+    assert res.json == {
+        'id': lva.id,
+        'name': 'LV Aachen',
+        'timeCreated': '2015-12-24T12:34:56+00:00',
+        'website': 'http://www.lv-aachen.de',
+        'isWritable': True,
+        'owner': None,
     }
 
 
