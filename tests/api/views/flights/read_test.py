@@ -12,6 +12,7 @@ from tests.data import (
     traces,
     flight_comments,
     contest_legs,
+    flight_phases,
 )
 
 
@@ -332,4 +333,68 @@ def test_contest_legs(db_session, client):
             u'circling': [],
             u'cruise': {},
         },
+    }
+
+
+def test_performance(db_session, client):
+    flight = flights.one(igc_file=igcs.simple(owner=users.john()))
+    add_fixtures(db_session, flight,
+                 flight_phases.cruise(flight=flight),
+                 flight_phases.circling(flight=flight),
+                 flight_phases.circling_left(flight=flight),
+                 flight_phases.circling_right(flight=flight),
+                 flight_phases.circling_mixed(flight=flight))
+
+    res = client.get('/flights/{id}?extended'.format(id=flight.id))
+    assert res.status_code == 200
+    assert res.json == {
+        u'flight': expected_basic_flight_json(flight),
+        u'near_flights': [],
+        u'comments': [],
+        u'contest_legs': {
+            u'classic': [],
+            u'triangle': [],
+        },
+        u'phases': [],
+        u'performance': {
+            u'circling': [{
+                u'circlingDirection': u'total',
+                u'duration': 14472,
+                u'altDiff': 19543.0,
+                u'vario': 1.35046987285793,
+                u'fraction': 37.0,
+                u'count': 78,
+            }, {
+                u'circlingDirection': u'left',
+                u'duration': 3776,
+                u'altDiff': 5335.0,
+                u'vario': 1.41313559322034,
+                u'fraction': 26.0,
+                u'count': 17,
+            }, {
+                u'circlingDirection': u'right',
+                u'duration': 7900,
+                u'altDiff': 11344.0,
+                u'vario': 1.43607594936709,
+                u'fraction': 55.0,
+                u'count': 54,
+            }, {
+                u'circlingDirection': u'mixed',
+                u'duration': 2796,
+                u'altDiff': 2863.0,
+                u'vario': 1.02396280400573,
+                u'fraction': 19.0,
+                u'count': 7,
+            }],
+            u'cruise': {
+                u'duration': 24312,
+                u'altDiff': -20647.0,
+                u'distance': 837677.0,
+                u'vario': -0.849292530437643,
+                u'speed': 34.4552944491395,
+                u'glideRate': 40.5694071410054,
+                u'fraction': 63.0,
+                u'count': 79
+            }
+        }
     }
