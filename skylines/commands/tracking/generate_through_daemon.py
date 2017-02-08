@@ -4,7 +4,7 @@ import sys
 import socket
 import struct
 from skylines.model import User
-from skylines.tracking.server import *  # noqa
+from skylines.tracking.server import datetime, FLAG_LOCATION, FLAG_ALTITUDE, TrackingFix, MAGIC, TYPE_FIX, set_crc
 from math import sin
 from random import randint
 from time import sleep
