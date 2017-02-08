@@ -407,8 +407,8 @@ def get_analysis_times(times):
                                             landing=times[i]['landing']))
 
             for period in scoring_periods:
-                total_seconds = (period['scoring_end']['time']
-                                 - period['scoring_start']['time']).total_seconds()
+                total_seconds = (period['scoring_end']['time'] -
+                                 period['scoring_start']['time']).total_seconds()
 
                 if total_seconds > chosen_period_seconds:
                     chosen_period_seconds = total_seconds
@@ -416,8 +416,8 @@ def get_analysis_times(times):
 
     else:
         for i in range(len(times)):
-            total_seconds = (times[i]['landing']['time']
-                             - times[i]['takeoff']['time']).total_seconds()
+            total_seconds = (times[i]['landing']['time'] -
+                             times[i]['takeoff']['time']).total_seconds()
 
             if total_seconds > chosen_period_seconds:
                 chosen_period_seconds = total_seconds

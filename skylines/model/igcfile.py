@@ -76,8 +76,8 @@ class IGCFile(db.Model):
         from skylines.model.flight import Flight
 
         # try to find another flight with the same logger and use it's aircraft registration
-        if (self.logger_id is not None
-                and self.logger_manufacturer_id is not None):
+        if (self.logger_id is not None and
+                self.logger_manufacturer_id is not None):
             logger_id = self.logger_id
             logger_manufacturer_id = self.logger_manufacturer_id
 
@@ -113,8 +113,8 @@ class IGCFile(db.Model):
                 return result.model_id
 
         # try to find another flight with the same logger and use it's aircraft type
-        if (self.logger_id is not None
-                and self.logger_manufacturer_id is not None):
+        if (self.logger_id is not None and
+                self.logger_manufacturer_id is not None):
             logger_id = self.logger_id
             logger_manufacturer_id = self.logger_manufacturer_id
 
