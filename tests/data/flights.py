@@ -1,12 +1,14 @@
+from datetime import datetime, date
+
 from skylines.model import Flight
 
 
 def one(igc_file, **kwargs):
     return Flight(
         igc_file=igc_file,
-        date_local='2011-06-18',
-        takeoff_time='2011-06-18 09:11:23',
-        landing_time='2011-06-18 09:15:40',
+        date_local=date(2011, 6, 18),
+        takeoff_time=datetime(2011, 6, 18, 9, 11, 23),
+        landing_time=datetime(2011, 6, 18, 9, 15, 40),
         timestamps='',
         locations=(
             '0102000020E6100000380000000D43014D84FD384011E8E00B933D4B40D80CA06485FD38402B831180'
