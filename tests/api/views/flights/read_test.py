@@ -1,7 +1,18 @@
 from datetime import datetime
 
 from skylines.model import FlightMeetings
-from tests.data import add_fixtures, igcs, flights, clubs, users, aircraft_models, airports, traces, flight_comments
+from tests.data import (
+    add_fixtures,
+    igcs,
+    flights,
+    clubs,
+    users,
+    aircraft_models,
+    airports,
+    traces,
+    flight_comments,
+    contest_legs,
+)
 
 
 def expected_basic_flight_json(flight):
@@ -266,6 +277,55 @@ def test_meetings(db_session, client):
         u'contest_legs': {
             u'classic': [],
             u'triangle': [],
+        },
+        u'phases': [],
+        u'performance': {
+            u'circling': [],
+            u'cruise': {},
+        },
+    }
+
+
+def test_contest_legs(db_session, client):
+    flight = flights.one(igc_file=igcs.simple(owner=users.john()))
+    leg1 = contest_legs.first(flight=flight)
+    leg2 = contest_legs.empty(flight=flight)
+    leg3 = contest_legs.first(flight=flight, trace_type='triangle')
+    add_fixtures(db_session, flight, leg1, leg2, leg3)
+
+    res = client.get('/flights/{id}?extended'.format(id=flight.id))
+    assert res.status_code == 200
+    assert res.json == {
+        u'flight': expected_basic_flight_json(flight),
+        u'near_flights': [],
+        u'comments': [],
+        u'contest_legs': {
+            u'classic': [{
+                u'distance': 234833.0,
+                u'duration': 2880,
+                u'start': 33383,
+                u'climbDuration': 5252,
+                u'climbHeight': 6510.0,
+                u'cruiseDistance': 241148.0,
+                u'cruiseHeight': -6491.0,
+            }, {
+                u'distance': None,
+                u'duration': 480,
+                u'start': 36743,
+                u'climbDuration': None,
+                u'climbHeight': None,
+                u'cruiseDistance': None,
+                u'cruiseHeight': None,
+            }],
+            u'triangle': [{
+                u'distance': 234833.0,
+                u'duration': 2880,
+                u'start': 33383,
+                u'climbDuration': 5252,
+                u'climbHeight': 6510.0,
+                u'cruiseDistance': 241148.0,
+                u'cruiseHeight': -6491.0,
+            }],
         },
         u'phases': [],
         u'performance': {
