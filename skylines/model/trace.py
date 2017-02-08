@@ -29,6 +29,7 @@ class Trace(db.Model):
     contest_type = db.Column(String, nullable=False)
     trace_type = db.Column(String, nullable=False)
 
+    # the optimized distance in meters
     distance = db.Column(Integer)
     duration = db.Column(Interval)
 
