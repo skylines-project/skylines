@@ -1,4 +1,4 @@
-from tests.data import add_fixtures, igcs, flights, clubs, users
+from tests.data import add_fixtures, igcs, flights, clubs, users, aircraft_models
 
 
 def test_basic_flight(db_session, client):
@@ -55,7 +55,13 @@ def test_basic_flight(db_session, client):
 def test_filled_flight(db_session, client):
     lva = clubs.lva()
     john = users.john(club=lva)
-    flight = flights.filled(pilot=john, co_pilot_name='jane', club=lva, igc_file=igcs.filled(owner=john))
+    flight = flights.filled(
+        pilot=john,
+        co_pilot_name='jane',
+        club=lva,
+        model=aircraft_models.hornet(),
+        igc_file=igcs.filled(owner=john)
+    )
     add_fixtures(db_session, flight)
 
     res = client.get('/flights/{id}'.format(id=flight.id))
@@ -76,7 +82,12 @@ def test_filled_flight(db_session, client):
                 u'id': lva.id,
                 u'name': u'LV Aachen',
             },
-            u'model': None,
+            u'model': {
+                u'id': flight.model_id,
+                u'name': u'Hornet',
+                u'type': u'glider',
+                u'index': 100,
+            },
             u'registration': u'D-1234',
             u'competitionId': u'701',
             u'scoreDate': u'2011-06-18',
