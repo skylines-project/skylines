@@ -433,7 +433,9 @@ class AirspaceCommand(Command):
             return False
 
         tolerance = 0.0000001
-        simplify = lambda x: func.ST_SimplifyPreserveTopology(x, tolerance)
+
+        def simplify(x):
+            return func.ST_SimplifyPreserveTopology(x, tolerance)
 
         airspace.the_geom = case(
             [
