@@ -50,7 +50,6 @@ def test_basic_flight(db_session, client):
 
     res = client.get('/flights/{id}'.format(id=flight.id))
     assert res.status_code == 200
-    print res.json
     assert res.json == {
         u'flight': expected_basic_flight_json(flight),
     }
@@ -75,7 +74,6 @@ def test_filled_flight(db_session, client):
 
     res = client.get('/flights/{id}'.format(id=flight.id))
     assert res.status_code == 200
-    print res.json
     assert res.json == {
         u'flight': {
             u'id': flight.id,
@@ -145,7 +143,6 @@ def test_empty_extended(db_session, client):
 
     res = client.get('/flights/{id}?extended'.format(id=flight.id))
     assert res.status_code == 200
-    print res.json
     assert res.json == {
         u'flight': expected_basic_flight_json(flight),
         u'near_flights': [],
