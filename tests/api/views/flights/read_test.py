@@ -1,4 +1,4 @@
-from tests.data import add_fixtures, igcs, flights, clubs, users, aircraft_models, airports, traces
+from tests.data import add_fixtures, igcs, flights, clubs, users, aircraft_models, airports, traces, flight_comments
 
 
 def expected_basic_flight_json(flight):
@@ -147,6 +147,55 @@ def test_empty_extended(db_session, client):
         u'flight': expected_basic_flight_json(flight),
         u'near_flights': [],
         u'comments': [],
+        u'contest_legs': {
+            u'classic': [],
+            u'triangle': [],
+        },
+        u'phases': [],
+        u'performance': {
+            u'circling': [],
+            u'cruise': {},
+        },
+    }
+
+
+def test_comments(db_session, client):
+    john = users.john(club=clubs.lva())
+    flight = flights.one(pilot=john, igc_file=igcs.simple(owner=john))
+    comment1 = flight_comments.yeah(flight=flight)
+    comment2 = flight_comments.emoji(flight=flight)
+    comment3 = flight_comments.yeah(flight=flight, user=john, text='foo')
+    comment4 = flight_comments.yeah(flight=flight, text='bar')
+    comment5 = flight_comments.yeah(flight=flight, user=users.jane(), text='baz')
+    add_fixtures(db_session, flight, comment1, comment2, comment3, comment4, comment5)
+
+    res = client.get('/flights/{id}?extended'.format(id=flight.id))
+    assert res.status_code == 200
+    assert res.json == {
+        u'flight': expected_basic_flight_json(flight),
+        u'near_flights': [],
+        u'comments': [{
+            u'user': None,
+            u'text': u'Yeah!',
+        }, {
+            u'user': None,
+            u'text': u'\U0001f44d',
+        }, {
+            u'user': {
+                u'id': comment3.user.id,
+                u'name': u'John Doe'
+            },
+            u'text': u'foo',
+        }, {
+            u'user': None,
+            u'text': u'bar',
+        }, {
+            u'user': {
+                u'id': comment5.user.id,
+                u'name': u'Jane Doe'
+            },
+            u'text': u'baz',
+        }],
         u'contest_legs': {
             u'classic': [],
             u'triangle': [],
