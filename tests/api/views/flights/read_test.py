@@ -1,3 +1,6 @@
+from datetime import datetime
+
+from skylines.model import FlightMeetings
 from tests.data import add_fixtures, igcs, flights, clubs, users, aircraft_models, airports, traces, flight_comments
 
 
@@ -193,6 +196,73 @@ def test_comments(db_session, client):
             },
             u'text': u'baz',
         }],
+        u'contest_legs': {
+            u'classic': [],
+            u'triangle': [],
+        },
+        u'phases': [],
+        u'performance': {
+            u'circling': [],
+            u'cruise': {},
+        },
+    }
+
+
+def test_meetings(db_session, client):
+    flight = flights.one(igc_file=igcs.simple(owner=users.john()))
+    flight2 = flights.one(igc_file=igcs.simple(owner=users.jane(), md5='foobar'))
+    meeting1 = FlightMeetings(
+        source=flight,
+        destination=flight2,
+        start_time=datetime(2016, 4, 3, 12, 34, 56),
+        end_time=datetime(2016, 4, 3, 12, 38, 1),
+    )
+    meeting2 = FlightMeetings(
+        source=flight2,
+        destination=flight,
+        start_time=datetime(2016, 4, 3, 12, 56, 36),
+        end_time=datetime(2016, 4, 3, 13, 1, 31),
+    )
+    add_fixtures(db_session, flight, flight2, meeting1, meeting2)
+
+    res = client.get('/flights/{id}?extended'.format(id=flight.id))
+    assert res.status_code == 200
+    assert res.json == {
+        u'flight': expected_basic_flight_json(flight),
+        u'near_flights': [{
+            u'flight': {
+                u'id': flight2.id,
+                u'pilot': {
+                    u'id': flight2.pilot.id,
+                    u'name': u'Jane Doe',
+                },
+                u'pilotName': None,
+                u'copilot': None,
+                u'copilotName': None,
+                u'model': None,
+                u'registration': None,
+                u'competitionId': None,
+                u'igcFile': {
+                    u'filename': u'simple.igc',
+                    u'date': u'2011-06-18',
+                    u'registration': None,
+                    u'owner': {
+                        u'id': flight2.igc_file.owner.id,
+                        u'name': u'Jane Doe',
+                    },
+                    u'model': None,
+                    u'competitionId': None,
+                },
+            },
+            u'times': [{
+                u'start': u'2016-04-03T12:34:56+00:00',
+                u'end': u'2016-04-03T12:38:01+00:00',
+            }, {
+                u'start': u'2016-04-03T12:56:36+00:00',
+                u'end': u'2016-04-03T13:01:31+00:00',
+            }],
+        }],
+        u'comments': [],
         u'contest_legs': {
             u'classic': [],
             u'triangle': [],
