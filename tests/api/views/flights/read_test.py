@@ -1,4 +1,4 @@
-from tests.data import add_fixtures, igcs, flights, clubs, users, aircraft_models
+from tests.data import add_fixtures, igcs, flights, clubs, users, aircraft_models, airports
 
 
 def test_basic_flight(db_session, client):
@@ -55,11 +55,16 @@ def test_basic_flight(db_session, client):
 def test_filled_flight(db_session, client):
     lva = clubs.lva()
     john = users.john(club=lva)
+    jane = users.jane()
     flight = flights.filled(
         pilot=john,
+        pilot_name='johnny_d',
+        co_pilot=jane,
         co_pilot_name='jane',
         club=lva,
         model=aircraft_models.hornet(),
+        takeoff_airport=airports.meiersberg(),
+        landing_airport=airports.merzbrueck(),
         igc_file=igcs.filled(owner=john)
     )
     add_fixtures(db_session, flight)
@@ -75,8 +80,11 @@ def test_filled_flight(db_session, client):
                 u'id': john.id,
                 u'name': u'John Doe'
             },
-            u'pilotName': None,
-            u'copilot': None,
+            u'pilotName': u'johnny_d',
+            u'copilot': {
+                u'id': jane.id,
+                u'name': u'Jane Doe'
+            },
             u'copilotName': u'jane',
             u'club': {
                 u'id': lva.id,
@@ -95,8 +103,16 @@ def test_filled_flight(db_session, client):
             u'scoreStartTime': u'2016-12-30T11:17:23+00:00',
             u'scoreEndTime': u'2016-12-30T16:04:40+00:00',
             u'landingTime': u'2016-12-30T16:15:40+00:00',
-            u'takeoffAirport': None,
-            u'landingAirport': None,
+            u'takeoffAirport': {
+                u'id': flight.takeoff_airport.id,
+                u'name': u'Meiersberg',
+                u'countryCode': u'DE'
+            },
+            u'landingAirport': {
+                u'id': flight.landing_airport.id,
+                u'name': u'Aachen Merzbruck',
+                u'countryCode': u'DE',
+            },
             u'distance': 512,
             u'triangleDistance': 432,
             u'rawScore': 799.0,
