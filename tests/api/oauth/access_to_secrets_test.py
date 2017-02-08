@@ -1,7 +1,6 @@
 import base64
 
-from freezegun import freeze_time
-
+from immobilus import immobilus
 from werkzeug.datastructures import Headers
 
 
@@ -42,7 +41,7 @@ def test_401_with_expired_token(client, access_token):
     headers = Headers()
     headers.set('Authorization', 'Bearer ' + access_token)
 
-    with freeze_time('2099-01-14'):
+    with immobilus('2099-01-14'):
         response = client.get('/secrets', headers=headers)
 
     assert response.status_code == 401
