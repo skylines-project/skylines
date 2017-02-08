@@ -1,4 +1,4 @@
-from datetime import timedelta
+from datetime import timedelta, datetime
 
 from skylines.model import FlightPhase
 
@@ -72,4 +72,39 @@ def circling_mixed(flight, **kwargs):
         fraction=19.0,
         vario=1.02396280400573,
         count=7,
+    ).apply_kwargs(kwargs)
+
+
+def example1(flight, **kwargs):
+    return FlightPhase(
+        flight=flight,
+        start_time=datetime(2016, 5, 4, 17, 54, 6),
+        end_time=datetime(2016, 5, 4, 17, 54, 6) + timedelta(seconds=300),
+        aggregate=False,
+        phase_type=FlightPhase.PT_CIRCLING,
+        circling_direction=FlightPhase.CD_RIGHT,
+        alt_diff=417.0,
+        duration=timedelta(seconds=300),
+        distance=7028.0,
+        speed=23.4293014168156,
+        vario=1.39000000000002,
+        glide_rate=-16.8556125300829,
+        count=1,
+    ).apply_kwargs(kwargs)
+
+
+def example2(flight, **kwargs):
+    return FlightPhase(
+        flight=flight,
+        start_time=datetime(2016, 5, 4, 17, 59, 6),
+        end_time=datetime(2016, 5, 4, 17, 59, 6) + timedelta(seconds=44),
+        aggregate=False,
+        phase_type=FlightPhase.PT_CRUISE,
+        alt_diff=-93.0,
+        duration=timedelta(seconds=44),
+        distance=977.0,
+        speed=22.2232648999519,
+        vario=-2.11363636363637,
+        glide_rate=10.5142328558912,
+        count=1,
     ).apply_kwargs(kwargs)

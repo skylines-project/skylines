@@ -398,3 +398,52 @@ def test_performance(db_session, client):
             }
         }
     }
+
+
+def test_phases(db_session, client):
+    flight = flights.one(igc_file=igcs.simple(owner=users.john()), takeoff_time=datetime(2016, 5, 4, 8, 12, 46))
+    add_fixtures(db_session, flight,
+                 flight_phases.example1(flight=flight),
+                 flight_phases.example2(flight=flight))
+
+    expected_flight = expected_basic_flight_json(flight)
+    expected_flight['takeoffTime'] = '2016-05-04T08:12:46+00:00'
+
+    res = client.get('/flights/{id}?extended'.format(id=flight.id))
+    assert res.status_code == 200
+    assert res.json == {
+        u'flight': expected_flight,
+        u'near_flights': [],
+        u'comments': [],
+        u'contest_legs': {
+            u'classic': [],
+            u'triangle': [],
+        },
+        u'phases': [{
+            u'circlingDirection': u'right',
+            u'type': u'circling',
+            u'secondsOfDay': 64446,
+            u'startTime': u'2016-05-04T17:54:06+00:00',
+            u'duration': 300,
+            u'altDiff': 417.0,
+            u'distance': 7028.0,
+            u'vario': 1.39000000000002,
+            u'speed': 23.4293014168156,
+            u'glideRate': -16.8556125300829
+        }, {
+            u'circlingDirection': None,
+            u'type': u'cruise',
+            u'secondsOfDay': 64746,
+            u'startTime': u'2016-05-04T17:59:06+00:00',
+            u'duration': 44,
+            u'altDiff': -93.0,
+            u'distance': 977.0,
+            u'vario': -2.11363636363637,
+            u'speed': 22.2232648999519,
+            u'glideRate': 10.5142328558912
+        }],
+        u'performance': {
+            u'circling': [],
+            u'cruise': {},
+        }
+    }
