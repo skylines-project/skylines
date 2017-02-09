@@ -4,7 +4,7 @@ from shapely.geometry import Point
 from skylines.model import Airport
 
 
-def merzbrueck():
+def merzbrueck(**kwargs):
     return Airport(
         name='Aachen Merzbruck',
         icao='EDKA',
@@ -16,8 +16,8 @@ def merzbrueck():
         runway_dir=80,
         surface='asphalt',
         type='airport',
-    )
+    ).apply_kwargs(kwargs)
 
 
-def meiersberg():
-    return Airport(name=u'Meiersberg', country_code='DE')
+def meiersberg(**kwargs):
+    return Airport(name=u'Meiersberg', country_code='DE').apply_kwargs(kwargs)

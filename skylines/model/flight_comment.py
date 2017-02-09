@@ -22,7 +22,7 @@ class FlightComment(db.Model):
     user_id = db.Column(Integer, db.ForeignKey('users.id', ondelete='SET NULL'))
     user = db.relationship('User', lazy='joined')
 
+    text = db.Column(Unicode, nullable=False)
+
     def __repr__(self):
         return ('<FlightComment: id=%d user_id=%d flight_id=%d>' % (self.id, self.user_id, self.flight_id)).encode('unicode_escape')
-
-    text = db.Column(Unicode, nullable=False)

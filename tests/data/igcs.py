@@ -9,8 +9,7 @@ def simple(owner, **kwargs):
         filename='simple.igc',
         md5='ebc87aa50aec6a6667e1c9251a68a90e',
         date_utc=date(2011, 6, 18),
-        **kwargs
-    )
+    ).apply_kwargs(kwargs)
 
 
 def filled(owner, **kwargs):
@@ -25,5 +24,4 @@ def filled(owner, **kwargs):
         competition_id='TH',
         model='Hornet',
         date_utc=date(2017, 1, 15),
-        **kwargs
-    )
+    ).apply_kwargs(kwargs)

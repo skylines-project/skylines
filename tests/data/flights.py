@@ -6,6 +6,7 @@ from skylines.model import Flight
 def one(igc_file, **kwargs):
     return Flight(
         igc_file=igc_file,
+        pilot=igc_file.owner,
         date_local=date(2011, 6, 18),
         takeoff_time=datetime(2011, 6, 18, 9, 11, 23),
         landing_time=datetime(2011, 6, 18, 9, 15, 40),
@@ -36,14 +37,14 @@ def one(igc_file, **kwargs):
             'B4C8804BEDF23840EB2EE4839E394B409C7D029A08F33840E4CF4B3789394B40B3EA7D4263F338403D'
             'BFA9A77C394B40'
         ),
-        **kwargs
-    )
+    ).apply_kwargs(kwargs)
 
 
 def filled(igc_file, **kwargs):
     return Flight(
         time_created=datetime(2016, 12, 30, 11, 23, 45),
         time_modified=datetime(2016, 12, 31, 22, 23, 45),
+        pilot=igc_file.owner,
         registration='D-1234',
         competition_id='701',
         date_local=date(2011, 6, 18),
@@ -82,5 +83,4 @@ def filled(igc_file, **kwargs):
         olc_plus_score=799,
         igc_file=igc_file,
         qnh=1014.23,
-        **kwargs
-    )
+    ).apply_kwargs(kwargs)
