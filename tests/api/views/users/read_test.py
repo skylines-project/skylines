@@ -1,3 +1,5 @@
+from skylines.model import Follower
+from tests.api import auth_for
 from tests.data import add_fixtures, users
 
 
@@ -18,6 +20,27 @@ def test_read_user(db_session, client):
         u'followers': 0,
         u'following': 0,
     }
+
+
+def test_following(db_session, client):
+    john = users.john()
+    jane = users.jane()
+    Follower.follow(john, jane)
+    add_fixtures(db_session, john, jane)
+
+    res = client.get('/users/{id}'.format(id=john.id))
+    assert res.status_code == 200
+    assert res.json['following'] == 1
+
+    res = client.get('/users/{id}'.format(id=jane.id))
+    assert res.status_code == 200
+    assert res.json['followers'] == 1
+    assert 'followed' not in res.json
+
+    res = client.get('/users/{id}'.format(id=jane.id), headers=auth_for(john))
+    assert res.status_code == 200
+    assert res.json['followers'] == 1
+    assert res.json['followed'] == True
 
 
 def test_read_missing_user(client):
