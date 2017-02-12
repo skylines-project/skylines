@@ -5,13 +5,13 @@ from marshmallow import ValidationError
 from skylines.schemas import fields, validate, Schema
 
 
-class TestSchema(Schema):
+class ExampleSchema(Schema):
     name = fields.String(validate=validate.NotEmpty())
 
 
 def test_fails_for_empty_string():
     with pytest.raises(ValidationError) as e:
-        TestSchema().load(dict(name=''))
+        ExampleSchema().load(dict(name=''))
 
     errors = e.value.messages
     assert 'name' in errors
@@ -19,12 +19,12 @@ def test_fails_for_empty_string():
 
 
 def test_passes_for_non_empty_string():
-    data = TestSchema().load(dict(name='foobar')).data
+    data = ExampleSchema().load(dict(name='foobar')).data
     assert data['name'] == 'foobar'
 
 
 def test_passes_for_blank_string():
-    data = TestSchema().load(dict(name='    ')).data
+    data = ExampleSchema().load(dict(name='    ')).data
     assert data['name'] == '    '
 
 

@@ -24,7 +24,7 @@ def seeded_random():
     random.seed(1234)
 
 
-@pytest.yield_fixture(scope="session")
+@pytest.fixture(scope="session")
 def app():
     """Global skylines application fixture
 
@@ -45,7 +45,7 @@ def files_folder(app):
     os.makedirs(filesdir)
 
 
-@pytest.yield_fixture(scope="session")
+@pytest.fixture(scope="session")
 def db(app):
     """Creates clean database schema and drops it on teardown
 
@@ -60,7 +60,7 @@ def db(app):
     teardown_db()
 
 
-@pytest.yield_fixture(scope="function")
+@pytest.fixture(scope="function")
 def db_session(db, app):
     """Provides clean database before each test. After each test,
     session.rollback() is issued.
