@@ -40,7 +40,7 @@ class ApiResponse(Response):
         return json.loads(self.data)
 
 
-@pytest.yield_fixture
+@pytest.fixture
 def client(app):
     with app.test_client(use_cookies=False) as client:
         yield client

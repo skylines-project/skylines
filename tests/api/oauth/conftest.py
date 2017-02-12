@@ -41,7 +41,7 @@ class ApiResponse(Response):
         return json.loads(self.data)
 
 
-@pytest.yield_fixture(scope='session')
+@pytest.fixture(scope='session')
 def db(app):
     _db.app = app
     _db.create_all()
