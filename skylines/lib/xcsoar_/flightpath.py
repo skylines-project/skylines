@@ -8,20 +8,19 @@ from skylines.lib import files
 from skylines.model import Elevation, IGCFile, Location
 from xcsoar import Flight
 
+_FlightPathFix = namedtuple('FlightPathFix', [
+    'datetime', 'seconds_of_day', 'location', 'gps_altitude', 'pressure_altitude',
+    'enl', 'track', 'groundspeed', 'tas', 'ias', 'siu', 'elevation'
+])
 
-flightpathfix_fields = ['datetime', 'seconds_of_day',
-                        'location', 'gps_altitude', 'pressure_altitude',
-                        'enl', 'track', 'groundspeed', 'tas', 'ias',
-                        'siu', 'elevation']
 
-
-class FlightPathFix(namedtuple('FlightPathFix', flightpathfix_fields)):
+class FlightPathFix(_FlightPathFix):
     def __new__(cls, *args, **kwargs):
         values = [None] * 12
 
         values[:min(12, len(args))] = args[:12]
 
-        for i, key in enumerate(flightpathfix_fields):
+        for i, key in enumerate(cls._fields):
             if key in kwargs:
                 values[i] = kwargs[key]
 
