@@ -44,7 +44,7 @@ before_script:
 
 script:
   # Run the test suite
-  - py.test tests -vv --cov=skylines --cov-report term-missing:skip-covered
+  - py.test -vv --cov=skylines --cov-report term-missing:skip-covered
 
   - cd ember
   - npm test
