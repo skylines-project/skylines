@@ -16,6 +16,12 @@ _FlightPathFix = namedtuple('FlightPathFix', [
 
 class FlightPathFix(_FlightPathFix):
     def __new__(cls, *args, **kwargs):
+        """
+        Custom constructor to support:
+        - Filling fields with None by default
+        - Supplying more `args` then field names
+        - Not specifying all arguments when using `kwargs`
+        """
         values = [None] * 12
 
         values[:min(12, len(args))] = args[:12]
