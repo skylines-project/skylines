@@ -1,6 +1,7 @@
 from datetime import datetime
 
-from skylines.model import FlightMeetings
+from skylines.model import FlightMeetings, Flight
+from tests.api import auth_for
 from tests.data import (
     add_fixtures,
     igcs,
@@ -447,3 +448,73 @@ def test_phases(db_session, client):
             u'cruise': {},
         }
     }
+
+
+def test_missing(db_session, client):
+    res = client.get('/flights/10000000')
+    assert res.status_code == 404
+    assert res.json == {u'message': u'Sorry, there is no such record (10000000) in our database.'}
+
+
+def test_unauthenticated_access_on_private_flight(db_session, client):
+    flight = flights.one(privacy_level=Flight.PrivacyLevel.PRIVATE,
+                         igc_file=igcs.simple(owner=users.john()))
+    add_fixtures(db_session, flight)
+
+    res = client.get('/flights/{id}'.format(id=flight.id))
+    assert res.status_code == 404
+    assert res.json == {}
+
+
+def test_unfriendly_user_access_on_private_flight(db_session, client):
+    jane = users.jane()
+    flight = flights.one(privacy_level=Flight.PrivacyLevel.PRIVATE,
+                         igc_file=igcs.simple(owner=users.john()))
+    add_fixtures(db_session, flight, jane)
+
+    res = client.get('/flights/{id}'.format(id=flight.id), headers=auth_for(jane))
+    assert res.status_code == 404
+    assert res.json == {}
+
+
+def test_igc_owner_access_on_private_flight(db_session, client):
+    john = users.john()
+    flight = flights.one(pilot=None, privacy_level=Flight.PrivacyLevel.PRIVATE,
+                         igc_file=igcs.simple(owner=john))
+    add_fixtures(db_session, flight, john)
+
+    res = client.get('/flights/{id}'.format(id=flight.id), headers=auth_for(john))
+    assert res.status_code == 200
+    assert 'flight' in res.json
+
+
+def test_pilot_access_on_private_flight(db_session, client):
+    jane = users.jane()
+    flight = flights.one(pilot=jane, privacy_level=Flight.PrivacyLevel.PRIVATE,
+                         igc_file=igcs.simple(owner=users.john()))
+    add_fixtures(db_session, flight, jane)
+
+    res = client.get('/flights/{id}'.format(id=flight.id), headers=auth_for(jane))
+    assert res.status_code == 200
+    assert 'flight' in res.json
+
+
+def test_manager_access_on_private_flight(db_session, client):
+    jane = users.jane(admin=True)
+    flight = flights.one(privacy_level=Flight.PrivacyLevel.PRIVATE,
+                         igc_file=igcs.simple(owner=users.john()))
+    add_fixtures(db_session, flight, jane)
+
+    res = client.get('/flights/{id}'.format(id=flight.id), headers=auth_for(jane))
+    assert res.status_code == 200
+    assert 'flight' in res.json
+
+
+def test_unauthenticated_access_on_link_only_flight(db_session, client):
+    flight = flights.one(privacy_level=Flight.PrivacyLevel.LINK_ONLY,
+                         igc_file=igcs.simple(owner=users.john()))
+    add_fixtures(db_session, flight)
+
+    res = client.get('/flights/{id}'.format(id=flight.id))
+    assert res.status_code == 200
+    assert 'flight' in res.json
