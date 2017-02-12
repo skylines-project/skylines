@@ -32,19 +32,6 @@ def read_location(node):
         return None
 
 
-def import_location_attribute(node, name):
-    """
-    Reads a Location instance from an attribute of the node
-    with the given name.
-    """
-
-    if node is None or name not in node:
-        return None
-
-    location = node[name]
-    return read_location(location)
-
-
 def import_datetime_attribute(node, name):
     if node is None or name not in node:
         return None
