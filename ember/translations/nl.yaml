@@ -106,9 +106,9 @@ logout: Uitloggen
 mark-all-as-read: Markeer allen als gelezen
 members: Leden
 members-of-CLUB: Leden<small>van</small> <a href="{clubURL}">{club}</a>
-n-comments: '{numComments, plural, =1 {1 comment} andere {# comments}}'
+n-comments: '{numComments, plural, =1 {1 comment} other {# comments}}'
 n-hours: '{num} Uren'
-NUM-pilots: '{num, plural, =1 {1 pilot} andere {# pilots}}'
+NUM-pilots: '{num, plural, =1 {1 pilot} other {# pilots}}'
 name: Naam
 nearest-airport: Dichtstbijzijnde vliegveld
 new: Nieuw
@@ -120,7 +120,7 @@ no-clubs-found: Geen clubs gevonden.
 no-flight-in-file: Geen vlucht gevonden in bestand
 no-flight-saved: Geen vlucht is bewaard.
 no-flights-found: Geen vluchten gevonden.
-no-live-tracks-of-pilots: '{num, plural, =1 {There is currently no live track of this pilot available.} andere {There are currently no live tracks of these pilots available.}}'
+no-live-tracks-of-pilots: '{num, plural, =1 {There is currently no live track of this pilot available.} other {There are currently no live tracks of these pilots available.}}'
 no-pilots-found: Geen piloten gevonden.
 no-data: Geen gegevens gevonden...
 notifications: Notificaties
@@ -146,7 +146,7 @@ profile: Profiel
 publish: Publiceer
 publish-flight: Publiceer Vlucht
 publish-flight-confirmation-text: Bevestig om deze vlucht te publiceren...
-publish-flights: '{num, plural, =1 {Publish Flight} andere {Publish Flights}}'
+publish-flights: '{num, plural, =1 {Publish Flight} other {Publish Flights}}'
 publishing: 'Publiceren '
 ranking: 'Klassement '
 recover-password: 'Recupereer Wachtwoord '
@@ -183,7 +183,7 @@ total: Totaal
 total-score: Totale Score
 tracking-callsign: tracking registratie
 tracking-delay: Traceervertraging
-tracking-delay-choice: '{delay, plural, =0 {None} =1 {1 minute} andere {# minutes}}'
+tracking-delay-choice: '{delay, plural, =0 {None} =1 {1 minute} other {# minutes}}'
 translators: Vertalers
 triangle: Driehoek
 unassigned: Niet toegewezen
