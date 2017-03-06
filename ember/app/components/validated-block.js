@@ -1,4 +1,5 @@
 import Ember from 'ember';
+import { or, and } from 'ember-awesome-macros';
 
 export default Ember.Component.extend({
   classNames: ['form-group has-feedback'],
@@ -14,9 +15,6 @@ export default Ember.Component.extend({
   isValid: Ember.computed.and('hasContent', 'validation.isValid', 'notValidating'),
   isInvalid: Ember.computed.readOnly('validation.isInvalid'),
   showErrorClass: Ember.computed.and('notValidating', 'showMessage', 'hasContent', 'validation'),
-  showMessage: Ember.computed('validation.isDirty', 'isInvalid', 'didValidate', function() {
-    return (this.get('validation.isDirty') || this.get('didValidate')) && this.get('isInvalid');
-  }),
-
+  showMessage: and(or('validation.isDirty', 'didValidate'), 'isInvalid'),
   _showErrorClass: Ember.computed.or('showErrorClass', 'forceErrorClass'),
 });

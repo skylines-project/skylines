@@ -1,5 +1,6 @@
 import Ember from 'ember';
 import { task } from 'ember-concurrency';
+import { or, eq, not } from 'ember-awesome-macros';
 
 import safeComputed from '../computed/safe-computed';
 
@@ -9,8 +10,8 @@ export default Ember.Component.extend({
 
   flight: null,
 
-  pilotName: Ember.computed.or('flight.pilot.name', 'flight.pilotName'),
-  copilotName: Ember.computed.or('flight.copilot.name', 'flight.copilotName'),
+  pilotName: or('flight.pilot.name', 'flight.pilotName'),
+  copilotName: or('flight.copilot.name', 'flight.copilotName'),
 
   duration: safeComputed('flight.takeoffTime', 'flight.landingTime',
     (takeoff, landing) => (new Date(landing).getTime() - new Date(takeoff).getTime()) / 1000),
@@ -23,10 +24,10 @@ export default Ember.Component.extend({
   isOwner: safeComputed('flight.igcFile.owner.id', 'account.user.id',
     (ownerId, accountId) => ownerId === accountId),
 
-  isWritable: Ember.computed.or('isPilot', 'isOwner'),
+  isWritable: or('isPilot', 'isOwner'),
 
-  isPublic: Ember.computed.equal('flight.privacyLevel', 0),
-  isPrivate: Ember.computed.not('isPublic'),
+  isPublic: eq('flight.privacyLevel', 0),
+  isPrivate: not('isPublic'),
 
   deleteTask: task(function * () {
     let id = this.get('flight.id');
