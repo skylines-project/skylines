@@ -1,6 +1,6 @@
 import Ember from 'ember';
-
-import safeComputed from '../computed/safe-computed';
+import { conditional, tag } from 'ember-awesome-macros';
+import { htmlSafe } from 'ember-awesome-macros/string';
 
 export default Ember.Component.extend({
   tagName: 'tr',
@@ -14,8 +14,7 @@ export default Ember.Component.extend({
   copilotName: Ember.computed.or('flight.copilot.name', 'flight.copilotName'),
   times: Ember.computed.alias('nearFlight.times'),
 
-  colorStripeStyle: safeComputed('nearFlight.color',
-    color => Ember.String.htmlSafe(`background-color: ${color}`)),
+  colorStripeStyle: conditional('nearFlight.color', htmlSafe(tag`background-color: ${'nearFlight.color'}`)),
 
   didInsertElement() {
     let popover_template = '<div class="popover" style="white-space: nowrap; z-index: 5000;">' +

@@ -1,6 +1,6 @@
 import Ember from 'ember';
-
-import safeComputed from '../computed/safe-computed';
+import { conditional, tag } from 'ember-awesome-macros';
+import { htmlSafe } from 'ember-awesome-macros/string';
 
 export default Ember.Component.extend({
   units: Ember.inject.service(),
@@ -18,7 +18,7 @@ export default Ember.Component.extend({
   contests: null,
   elevations: [],
 
-  flotStyle: safeComputed('height', height => Ember.String.htmlSafe(`width: 100%; height: ${height}px;`)),
+  flotStyle: conditional('height', htmlSafe(tag`width: 100%; height: ${'height'}px;`)),
 
   draw() {
     this.update();

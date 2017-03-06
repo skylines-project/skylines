@@ -1,5 +1,7 @@
 import Ember from 'ember';
 import ol from 'openlayers';
+import { tag } from 'ember-awesome-macros';
+import { htmlSafe } from 'ember-awesome-macros/string';
 
 import config from '../config/environment';
 import parseQueryString from '../utils/parse-query-string';
@@ -13,10 +15,7 @@ export default Ember.Component.extend({
   height: '100%',
   baseLayer: null,
 
-  style: Ember.computed('width', 'height', function() {
-    let { width, height } = this.getProperties('width', 'height');
-    return Ember.String.htmlSafe(`width: ${width}; height: ${height}; position: relative`);
-  }),
+  style: htmlSafe(tag`width: ${'width'}; height: ${'height'}; position: relative`),
 
   init() {
     this._super(...arguments);
