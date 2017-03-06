@@ -9,12 +9,15 @@ services:
   - postgresql
   - redis
 
-cache: pip
+cache:
+  pip: true
+  yarn: true
 
 before_install:
   - nvm install 4
-  - npm config set spin false
-  - npm install -g bower phantomjs-prebuilt
+  - curl -o- -L https://yarnpkg.com/install.sh | bash
+  - export PATH=$HOME/.yarn/bin:$PATH
+  - yarn global add bower phantomjs-prebuilt
 
 install:
   # Install SkyLines Python dependencies
@@ -24,7 +27,7 @@ install:
   - pip install -r requirements.txt
 
   - cd ember
-  - npm install
+  - yarn install
   - bower install
   - cd ..
 
@@ -47,4 +50,4 @@ script:
   - py.test -vv --cov=skylines --cov-report term-missing:skip-covered
 
   - cd ember
-  - npm test
+  - yarn test
