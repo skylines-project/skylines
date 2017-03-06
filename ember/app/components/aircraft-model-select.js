@@ -1,4 +1,7 @@
 import Ember from 'ember';
+import { or } from 'ember-awesome-macros';
+import { findBy } from 'ember-awesome-macros/array';
+import raw from 'ember-macro-helpers/raw';
 
 export default Ember.Component.extend({
   tagName: '',
@@ -10,9 +13,7 @@ export default Ember.Component.extend({
     return [{ id: null }].concat(this.get('models'));
   }),
 
-  model: Ember.computed('modelsWithNull.[]', 'modelId', function() {
-    return this.get('modelsWithNull').findBy('id', this.get('modelId') || null);
-  }),
+  model: findBy('modelsWithNull', raw('id'), or('modelId', null)),
 
   actions: {
     onChange(model) {

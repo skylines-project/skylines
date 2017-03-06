@@ -1,14 +1,10 @@
 import Ember from 'ember';
+import { findBy } from 'ember-awesome-macros/array';
+import raw from 'ember-macro-helpers/raw';
 
 export default Ember.Component.extend({
-  left: computedFindBy('perf', 'circlingDirection', 'left'),
-  right: computedFindBy('perf', 'circlingDirection', 'right'),
-  mixed: computedFindBy('perf', 'circlingDirection', 'mixed'),
-  total: computedFindBy('perf', 'circlingDirection', 'total'),
+  left: findBy('perf', raw('circlingDirection'), raw('left')),
+  right: findBy('perf', raw('circlingDirection'), raw('right')),
+  mixed: findBy('perf', raw('circlingDirection'), raw('mixed')),
+  total: findBy('perf', raw('circlingDirection'), raw('total')),
 });
-
-function computedFindBy(arrayKey, key, value) {
-  return Ember.computed(`${arrayKey}.${key}`, function() {
-    return this.get(arrayKey).findBy(key, value);
-  });
-}

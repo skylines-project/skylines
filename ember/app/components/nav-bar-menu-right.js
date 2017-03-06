@@ -1,4 +1,7 @@
 import Ember from 'ember';
+import { findBy } from 'ember-awesome-macros/array';
+import raw from 'ember-macro-helpers/raw';
+
 import availableLocales from '../utils/locales';
 
 export default Ember.Component.extend({
@@ -10,10 +13,7 @@ export default Ember.Component.extend({
   classNames: ['nav', 'navbar-nav', 'navbar-right'],
 
   availableLocales,
-  currentLocale: Ember.computed('intl.locale', function() {
-    let code = this.get('intl.locale.firstObject');
-    return availableLocales.findBy('code', code);
-  }),
+  currentLocale: findBy('availableLocales', raw('code'), 'intl.locale.firstObject'),
 
   actions: {
     setLocale(locale) {
