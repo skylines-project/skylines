@@ -1,6 +1,8 @@
 import Ember from 'ember';
 import { validator, buildValidations } from 'ember-cp-validations';
 import { task } from 'ember-concurrency';
+import { conditional, eq } from 'ember-awesome-macros';
+import raw from 'ember-macro-helpers/raw';
 
 const Validations = buildValidations({
   callsign: {
@@ -26,10 +28,7 @@ export default Ember.Component.extend(Validations, {
   delays: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 15, 20, 25, 30, 45, 60],
 
   /* ember-power-select can't handle `0` */
-  _delay: Ember.computed('delay', function() {
-    let delay = this.get('delay');
-    return (delay === 0) ? '0' : delay;
-  }),
+  _delay: conditional(eq('delay', 0), raw('0'), 'delay'),
 
   saveTask: task(function * () {
     let json = {

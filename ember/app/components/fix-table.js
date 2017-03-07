@@ -1,11 +1,13 @@
 import Ember from 'ember';
+import { gt } from 'ember-awesome-macros';
+import { map } from 'ember-awesome-macros/array';
 
 export default Ember.Component.extend({
   flights: null,
   fixes: null,
   selection: null,
 
-  data: Ember.computed.map('fixes', function(fix, i) {
+  data: map('fixes', function(fix, i) {
     let flight = fix.get('flight');
     let id = flight.get('id');
     let color = flight.get('color');
@@ -14,7 +16,7 @@ export default Ember.Component.extend({
     return { id, color, competitionId, removable, fix };
   }),
 
-  selectable: Ember.computed.gt('data.length', 1),
+  selectable: gt('data.length', 1),
 
   actions: {
     select(id) {

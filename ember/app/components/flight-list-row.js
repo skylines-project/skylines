@@ -1,4 +1,5 @@
 import Ember from 'ember';
+import { or, eq, not } from 'ember-awesome-macros';
 
 export default Ember.Component.extend({
   tagName: 'tr',
@@ -6,9 +7,9 @@ export default Ember.Component.extend({
 
   flight: null,
 
-  pilotName: Ember.computed.or('flight.pilot.name', 'flight.pilotName'),
-  copilotName: Ember.computed.or('flight.copilot.name', 'flight.copilotName'),
+  pilotName: or('flight.pilot.name', 'flight.pilotName'),
+  copilotName: or('flight.copilot.name', 'flight.copilotName'),
 
-  isPublic: Ember.computed.equal('flight.privacyLevel', 0),
-  isPrivate: Ember.computed.not('isPublic'),
+  isPublic: eq('flight.privacyLevel', 0),
+  isPrivate: not('isPublic'),
 });

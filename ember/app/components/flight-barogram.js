@@ -1,4 +1,7 @@
 import Ember from 'ember';
+import { conditional, eq } from 'ember-awesome-macros';
+import { findBy } from 'ember-awesome-macros/array';
+import raw from 'ember-macro-helpers/raw';
 
 import BarogramComponent from './base-barogram';
 
@@ -46,14 +49,8 @@ export default BarogramComponent.extend({
     }));
   }),
 
-  selectedFlight: Ember.computed('flights.[]', 'selection', function() {
-    let { flights, selection } = this.getProperties('flights', 'selection');
-    if (flights.get('length') === 1) {
-      return flights.get('firstObject');
-    } else if (selection) {
-      return flights.findBy('id', selection);
-    }
-  }),
+  selectedFlight: conditional(eq('flights.length', 1), 'flights.firstObject',
+    conditional('selection', findBy('flights', raw('id'), 'selection'))),
 
   contests: safeComputed('selectedFlight', flight => flight.get('contests')),
   elevations: safeComputed('selectedFlight', flight => flight.get('flot_elev')),
