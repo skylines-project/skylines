@@ -28,7 +28,7 @@
     {{link-to result.name "club" result.id}}
 
     {{#if result.website}}
-      <small>- <a href={{result.website}} target="_blank">{{result.website}}</a></small>
+      <small>- <a href={{result.website}} target="_blank" rel="noopener">{{result.website}}</a></small>
     {{/if}}
 
   {{else if (eq result.type "airport")}}
