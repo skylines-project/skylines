@@ -12,7 +12,8 @@
   "scripts": {
     "build": "ember build",
     "start": "ember server",
-    "test": "ember test"
+    "test": "ember test",
+    "lint": "eslint app addon blueprints config server test-support tests *.js"
   },
   "devDependencies": {
     "broccoli-asset-rev": "^2.4.5",
@@ -54,6 +55,10 @@
     "ember-source": "~2.11.0",
     "ember-svg-jar": "0.9.3",
     "ember-truth-helpers": "^1.3.0",
+    "eslint": "^3.17.1",
+    "eslint-config-simplabs": "0.4.0",
+    "eslint-plugin-ember": "^3.0.2",
+    "eslint-plugin-mocha": "^4.8.0",
     "loader.js": "^4.0.10"
   },
   "engines": {
