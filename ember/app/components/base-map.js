@@ -175,7 +175,7 @@ export default Ember.Component.extend({
       source: new ol.source.XYZ({
         attributions: [
           new ol.Attribution({
-            html: 'SRTM relief maps from <a target="_blank" ' +
+            html: 'SRTM relief maps from <a target="_blank" rel="noopener" ' +
                 'href="http://maps-for-free.com/">maps-for-free.com</a>',
           }),
         ],
@@ -203,11 +203,11 @@ export default Ember.Component.extend({
         attributions: [
           new ol.Attribution({
             html: '<a href="https://www.mapbox.com/about/maps/"' +
-                ' target="_blank">' +
+                ' target="_blank" rel="noopener">' +
                 '&copy; Mapbox &copy; OpenStreetMap</a> <a' +
                 ' class="mapbox-improve-map"' +
                 ' href="https://www.mapbox.com/map-feedback/"' +
-                ' target="_blank">Improve this map</a>',
+                ' target="_blank" rel="noopener">Improve this map</a>',
           }),
         ],
         url: tile_url,
