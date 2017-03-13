@@ -1,5 +1,6 @@
 module.exports = {
-  env: {
-    'embertest': true,
-  },
+  extends: [
+    'simplabs/configs/ember-mocha',
+    'simplabs/plugins/mocha',
+  ],
 };

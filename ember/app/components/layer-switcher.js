@@ -7,8 +7,8 @@ export default Ember.Component.extend({
 
   map: null,
   open: false,
-  baseLayers: [],
-  overlayLayers: [],
+  baseLayers: null,
+  overlayLayers: null,
 
   didInsertElement() {
     let mouseHandler = event => {
@@ -24,6 +24,30 @@ export default Ember.Component.extend({
   willDestroyElement() {
     let mouseHandler = this.get('mouseHandler');
     Ember.$(document).off('mouseup touchend', mouseHandler);
+  },
+
+
+  actions: {
+    open() {
+      this.updateLayers();
+      this.set('open', true);
+    },
+
+    select(layer) {
+      if (layer.isBaseLayer) {
+        this.get('map').getLayers().getArray()
+          .filter(it => it.get('base_layer'))
+          .forEach(it => it.setVisible(it.get('id') === layer.id));
+
+      } else {
+        this.get('map').getLayers().getArray()
+          .filter(it => (it.get('id') === layer.id))
+          .forEach(it => it.setVisible(!it.getVisible()));
+      }
+
+      this.setLayerCookies();
+      this.updateLayers();
+    },
   },
 
   updateLayers() {
@@ -53,28 +77,5 @@ export default Ember.Component.extend({
       .join(';');
 
     cookies.write('overlay_layers', overlayLayers, { path: '/', expires: new Date('2099-12-31') });
-  },
-
-  actions: {
-    open() {
-      this.updateLayers();
-      this.set('open', true);
-    },
-
-    select(layer) {
-      if (layer.isBaseLayer) {
-        this.get('map').getLayers().getArray()
-          .filter(it => it.get('base_layer'))
-          .forEach(it => it.setVisible(it.get('id') === layer.id));
-
-      } else {
-        this.get('map').getLayers().getArray()
-          .filter(it => (it.get('id') === layer.id))
-          .forEach(it => it.setVisible(!it.getVisible()));
-      }
-
-      this.setLayerCookies();
-      this.updateLayers();
-    },
   },
 });

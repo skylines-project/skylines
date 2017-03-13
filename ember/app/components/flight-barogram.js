@@ -109,7 +109,7 @@ export default BarogramComponent.extend({
 
     if (time === null) {
       flot.clearCrosshair();
-    } else if (time == -1) {
+    } else if (time === -1) {
       flot.lockCrosshair({ x: 999999999 });
     } else {
       flot.lockCrosshair({ x: time * 1000 });

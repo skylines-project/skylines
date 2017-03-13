@@ -31,13 +31,24 @@ export default Ember.Component.extend(Validations, {
 
   classNames: ['panel-body'],
 
+  error: null,
+
   name: Ember.computed.oneWay('club.name'),
   website: Ember.computed.oneWay('club.website'),
-  error: null,
 
   init() {
     this._super(...arguments);
     this.set('router', Ember.getOwner(this).lookup('router:main'));
+  },
+
+  actions: {
+    submit() {
+      this.validate().then(({ validations }) => {
+        if (validations.get('isValid')) {
+          this.get('saveTask').perform();
+        }
+      });
+    },
   },
 
   saveTask: task(function * () {
@@ -54,14 +65,4 @@ export default Ember.Component.extend(Validations, {
       this.set('error', error);
     }
   }).drop(),
-
-  actions: {
-    submit() {
-      this.validate().then(({ validations }) => {
-        if (validations.get('isValid')) {
-          this.get('saveTask').perform();
-        }
-      });
-    },
-  },
 });

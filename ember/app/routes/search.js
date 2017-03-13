@@ -19,11 +19,6 @@ export default Ember.Route.extend({
     }
   },
 
-  deactive() {
-    this._super(...arguments);
-    this.set('searchTextService.text', null);
-  },
-
   actions: {
     loading(transition) {
       let controller = this.controllerFor('search');
@@ -32,5 +27,10 @@ export default Ember.Route.extend({
         controller.set('currentlyLoading', false);
       });
     },
+  },
+
+  deactive() {
+    this._super(...arguments);
+    this.set('searchTextService.text', null);
   },
 });

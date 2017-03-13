@@ -6,9 +6,9 @@ export default Ember.Component.extend({
   count: 0,
   page: 1,
   perPage: 100,
+  firstPage: 1,
 
   pages: safeComputed('count', 'perPage', (count, perPage) => Math.ceil(count / perPage)),
-  firstPage: 1,
   lastPage: Ember.computed.readOnly('pages'),
 
   prevPage: safeComputed('page', 'firstPage', (page, firstPage) => Math.max(firstPage, page - 1)),
@@ -18,7 +18,7 @@ export default Ember.Component.extend({
   nextDisabled: safeComputed('page', 'lastPage', (page, lastPage) => (page >= lastPage)),
 
   showMinusFour: safeComputed('page', 'firstPage', 'lastPage',
-    (page, firstPage, lastPage) => (page - 4 >= firstPage) && (page == lastPage)),
+    (page, firstPage, lastPage) => (page - 4 >= firstPage) && (page === lastPage)),
 
   showMinusThree: safeComputed('page', 'firstPage', 'lastPage',
     (page, firstPage, lastPage) => (page - 3 >= firstPage) && (page >= lastPage - 1)),
@@ -39,5 +39,5 @@ export default Ember.Component.extend({
     (page, lastPage, firstPage) => (page + 3 <= lastPage) && (page <= firstPage + 1)),
 
   showPlusFour: safeComputed('page', 'lastPage', 'firstPage',
-    (page, lastPage, firstPage) => (page + 4 <= lastPage) && (page == firstPage)),
+    (page, lastPage, firstPage) => (page + 4 <= lastPage) && (page === firstPage)),
 });

@@ -6,7 +6,7 @@ export default Ember.Component.extend({
   date: null,
   minDate: false,
   maxDate: false,
-  onChange: Ember.K,
+  onChange: null,
 
   didInsertElement() {
     this.$().datetimepicker({

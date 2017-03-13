@@ -38,6 +38,14 @@ export default Ember.Component.extend({
     });
   },
 
+  didInsertElement() {
+    this.get('map').on('postcompose', this.onPostCompose, this);
+  },
+
+  willDestroyElement() {
+    this.get('map').un('postcompose', this.onPostCompose, this);
+  },
+
   _initStyle(key, { src, size }) {
     let icon = new ol.style.Icon({
       anchor: [0.5, 0.5],
@@ -55,14 +63,6 @@ export default Ember.Component.extend({
 
     this.set(`icons.${key}`, icon);
     this.set(`styles.${key}`, style);
-  },
-
-  didInsertElement() {
-    this.get('map').on('postcompose', this.onPostCompose, this);
-  },
-
-  willDestroyElement() {
-    this.get('map').un('postcompose', this.onPostCompose, this);
   },
 
   onPostCompose(e) {

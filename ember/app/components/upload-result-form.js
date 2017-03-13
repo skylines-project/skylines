@@ -41,36 +41,36 @@ export default Ember.Component.extend({
       this.set('takeoffTime', value);
 
       let times = this.getProperties('takeoffTime', 'scoreStartTime', 'scoreEndTime', 'landingTime');
-      if (times.takeoffTime > times.scoreStartTime) this.set('scoreStartTime', times.takeoffTime);
-      if (times.takeoffTime > times.scoreEndTime) this.set('scoreEndTime', times.takeoffTime);
-      if (times.takeoffTime > times.landingTime) this.set('landingTime', times.takeoffTime);
+      if (times.takeoffTime > times.scoreStartTime) { this.set('scoreStartTime', times.takeoffTime); }
+      if (times.takeoffTime > times.scoreEndTime) { this.set('scoreEndTime', times.takeoffTime); }
+      if (times.takeoffTime > times.landingTime) { this.set('landingTime', times.takeoffTime); }
     },
 
     setScoreStartTime(value) {
       this.set('scoreStartTime', value);
 
       let times = this.getProperties('takeoffTime', 'scoreStartTime', 'scoreEndTime', 'landingTime');
-      if (times.scoreStartTime < times.takeoffTime) this.set('takeoffTime', times.scoreStartTime);
-      if (times.scoreStartTime > times.scoreEndTime) this.set('scoreEndTime', times.scoreStartTime);
-      if (times.scoreStartTime > times.landingTime) this.set('landingTime', times.scoreStartTime);
+      if (times.scoreStartTime < times.takeoffTime) { this.set('takeoffTime', times.scoreStartTime); }
+      if (times.scoreStartTime > times.scoreEndTime) { this.set('scoreEndTime', times.scoreStartTime); }
+      if (times.scoreStartTime > times.landingTime) { this.set('landingTime', times.scoreStartTime); }
     },
 
     setScoreEndTime(value) {
       this.set('scoreEndTime', value);
 
       let times = this.getProperties('takeoffTime', 'scoreStartTime', 'scoreEndTime', 'landingTime');
-      if (times.scoreEndTime < times.takeoffTime) this.set('takeoffTime', times.scoreEndTime);
-      if (times.scoreEndTime < times.scoreStartTime) this.set('scoreStartTime', times.scoreEndTime);
-      if (times.scoreEndTime > times.landingTime) this.set('landingTime', times.scoreEndTime);
+      if (times.scoreEndTime < times.takeoffTime) { this.set('takeoffTime', times.scoreEndTime); }
+      if (times.scoreEndTime < times.scoreStartTime) { this.set('scoreStartTime', times.scoreEndTime); }
+      if (times.scoreEndTime > times.landingTime) { this.set('landingTime', times.scoreEndTime); }
     },
 
     setLandingTime(value) {
       this.set('landingTime', value);
 
       let times = this.getProperties('takeoffTime', 'scoreStartTime', 'scoreEndTime', 'landingTime');
-      if (times.landingTime < times.takeoffTime) this.set('takeoffTime', times.landingTime);
-      if (times.landingTime < times.scoreStartTime) this.set('scoreStartTime', times.landingTime);
-      if (times.landingTime < times.scoreEndTime) this.set('scoreEndTime', times.landingTime);
+      if (times.landingTime < times.takeoffTime) { this.set('takeoffTime', times.landingTime); }
+      if (times.landingTime < times.scoreStartTime) { this.set('scoreStartTime', times.landingTime); }
+      if (times.landingTime < times.scoreEndTime) { this.set('scoreEndTime', times.landingTime); }
     },
   },
 });

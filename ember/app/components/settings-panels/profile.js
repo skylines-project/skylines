@@ -30,11 +30,15 @@ const Validations = buildValidations({
   },
 });
 
+const PRESET_NAMES = ['custom', 'european', 'british', 'australian', 'american'];
+
 export default Ember.Component.extend(Validations, {
   ajax: Ember.inject.service(),
   units: Ember.inject.service(),
 
   classNames: ['panel', 'panel-default'],
+
+  unitsPresets: PRESET_NAMES,
 
   email: null,
   firstName: null,
@@ -51,8 +55,6 @@ export default Ember.Component.extend(Validations, {
   speedUnit: computedUnit('units.speedUnits', 'speedUnitIndex'),
   liftUnit: computedUnit('units.liftUnits', 'liftUnitIndex'),
   altitudeUnit: computedUnit('units.altitudeUnits', 'altitudeUnitIndex'),
-
-  unitsPresets: ['custom', 'european', 'british', 'australian', 'american'],
 
   unitsPreset: Ember.computed('distanceUnit', 'speedUnit', 'liftUnit', 'altitudeUnit', {
     get() {
@@ -84,6 +86,16 @@ export default Ember.Component.extend(Validations, {
     },
   }),
 
+  actions: {
+    submit() {
+      this.validate().then(({ validations }) => {
+        if (validations.get('isValid')) {
+          this.get('saveTask').perform();
+        }
+      });
+    },
+  },
+
   saveTask: task(function * () {
     let json = {
       email: this.get('email'),
@@ -113,16 +125,6 @@ export default Ember.Component.extend(Validations, {
       this.setProperties({ messageKey: null, error });
     }
   }).drop(),
-
-  actions: {
-    submit() {
-      this.validate().then(({ validations }) => {
-        if (validations.get('isValid')) {
-          this.get('saveTask').perform();
-        }
-      });
-    },
-  },
 });
 
 function computedUnit(unitsKey, indexKey) {

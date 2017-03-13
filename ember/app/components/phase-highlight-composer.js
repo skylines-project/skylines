@@ -10,16 +10,16 @@ export default Ember.Component.extend({
   paddingFn: null,
   coordinates: null,
 
-  coordinatesObserver: Ember.observer('coordinates.[]', function() {
-    this.adjustMapView();
-    Ember.run.once(this.get('map'), 'render');
-  }),
-
   startCoordinate: Ember.computed.readOnly('coordinates.firstObject'),
   endCoordinate: Ember.computed.readOnly('coordinates.lastObject'),
 
   startPoint: computedPoint('coordinates.firstObject'),
   endPoint: computedPoint('coordinates.lastObject'),
+
+  coordinatesObserver: Ember.observer('coordinates.[]', function() {
+    this.adjustMapView();
+    Ember.run.once(this.get('map'), 'render');
+  }),
 
   init() {
     this._super(...arguments);

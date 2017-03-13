@@ -42,8 +42,9 @@ export default Ember.ArrayProxy.extend({
 
       total_min = Math.min(total_min, lastCoord[3]);
 
-      if (lastRel == true)
+      if (lastRel === true) {
         min = Math.min(lastCoord[3], min);
+      }
 
       for (let i = 1; i < end; i += 1) {
         nextCoord = coordinates[i];
@@ -66,14 +67,15 @@ export default Ember.ArrayProxy.extend({
         lastRel = nextRel;
       }
 
-      if (lastRel == true)
+      if (lastRel === true) {
         max = Math.max(lastCoord[3], max);
+      }
 
       total_max = Math.max(total_max, lastCoord[3]);
     });
 
-    if (min == Infinity) min = total_min;
-    if (max == -Infinity) max = total_max;
+    if (min === Infinity) { min = total_min; }
+    if (max === -Infinity) { max = total_max; }
 
     return { min, max };
   },
@@ -86,7 +88,7 @@ export default Ember.ArrayProxy.extend({
       let id = flight.get('id');
 
       this.get('source').getFeatures()
-        .filter(feature => feature.get('sfid') == id)
+        .filter(feature => feature.get('sfid') === id)
         .forEach(feature => source.removeFeature(feature));
     });
   },

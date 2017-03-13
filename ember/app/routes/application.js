@@ -19,25 +19,6 @@ export default Ember.Route.extend(ApplicationRouteMixin, {
       .then(locale => this.get('intl').loadAndSetLocale(locale));
   },
 
-  _determineLocale() {
-    let availableLocales = _availableLocales.map(it => it.code);
-    Ember.debug(`Available locales: ${availableLocales}`);
-
-    let cookieLocale = this.get('cookies').read('locale');
-    Ember.debug(`Locale from "locale" cookie: ${cookieLocale}`);
-
-    if (!Ember.isBlank(cookieLocale) && availableLocales.includes(cookieLocale)) {
-      Ember.debug(`Using locale "${cookieLocale}" from cookie`);
-      return RSVP.resolve(cookieLocale);
-    }
-
-    Ember.debug('Requesting locale resolution from server');
-    let data = { available: availableLocales.join() };
-    return this.get('ajax').request('/api/locale', { data })
-      .then(it => it.locale || FALLBACK_LOCALE)
-      .catch(() => FALLBACK_LOCALE);
-  },
-
   setupController(controller) {
     this._super(...arguments);
 
@@ -61,6 +42,25 @@ export default Ember.Route.extend(ApplicationRouteMixin, {
     if (user) {
       this.get('raven').callRaven('setUserContext', user);
     }
+  },
+
+  _determineLocale() {
+    let availableLocales = _availableLocales.map(it => it.code);
+    Ember.debug(`Available locales: ${availableLocales}`);
+
+    let cookieLocale = this.get('cookies').read('locale');
+    Ember.debug(`Locale from "locale" cookie: ${cookieLocale}`);
+
+    if (!Ember.isBlank(cookieLocale) && availableLocales.includes(cookieLocale)) {
+      Ember.debug(`Using locale "${cookieLocale}" from cookie`);
+      return RSVP.resolve(cookieLocale);
+    }
+
+    Ember.debug('Requesting locale resolution from server');
+    let data = { available: availableLocales.join() };
+    return this.get('ajax').request('/api/locale', { data })
+      .then(it => it.locale || FALLBACK_LOCALE)
+      .catch(() => FALLBACK_LOCALE);
   },
 
   sessionAuthenticated() {

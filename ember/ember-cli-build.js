@@ -1,8 +1,11 @@
-/* global require, module */
-var EmberApp = require('ember-cli/lib/broccoli/ember-app');
+'use strict';
+
+/* eslint-env node */
+
+let EmberApp = require('ember-cli/lib/broccoli/ember-app');
 
 module.exports = function(defaults) {
-  var app = new EmberApp(defaults, {
+  let app = new EmberApp(defaults, {
     fingerprint: {
       extensions: ['css', 'js'],
       exclude: ['cesium'],
@@ -75,7 +78,7 @@ module.exports = function(defaults) {
   });
 
   // Monkey-patch the `findMissingKeys()` method
-  var TranslationReducer = require('ember-intl/lib/broccoli/translation-reducer');
+  let TranslationReducer = require('ember-intl/lib/broccoli/translation-reducer');
   TranslationReducer.prototype.findMissingKeys = function() {};
 
   return app.toTree();

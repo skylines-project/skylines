@@ -22,6 +22,16 @@ export default Ember.Component.extend(Validations, {
   pending: false,
   error: null,
 
+  actions: {
+    submit() {
+      this.validate().then(({ validations }) => {
+        if (validations.get('isValid')) {
+          this.get('recoverTask').perform();
+        }
+      });
+    },
+  },
+
   recoverTask: task(function * () {
     let json = this.getProperties('email');
 
@@ -35,14 +45,4 @@ export default Ember.Component.extend(Validations, {
       this.set('success', false);
     }
   }).drop(),
-
-  actions: {
-    submit() {
-      this.validate().then(({ validations }) => {
-        if (validations.get('isValid')) {
-          this.get('recoverTask').perform();
-        }
-      });
-    },
-  },
 });

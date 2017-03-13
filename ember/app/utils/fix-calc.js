@@ -126,10 +126,9 @@ export default Ember.Object.extend({
     let flights = this.get('flights');
 
     return this.get('ajax').request(url).then(data => {
-      if (flights.findBy('id', data.sfid))
-        return;
-
-      this.addFlight(data);
+      if (!flights.findBy('id', data.sfid)) {
+        this.addFlight(data);
+      }
     });
   },
 });

@@ -19,10 +19,6 @@ export default Ember.Route.extend({
     });
   },
 
-  getURL(/* params */) {
-    throw new Error('Not implemented: `getURL`');
-  },
-
   resetController(controller, isExiting) {
     this._super(...arguments);
     if (isExiting) {
@@ -38,5 +34,9 @@ export default Ember.Route.extend({
         controller.set('loading', false);
       });
     },
+  },
+
+  getURL(/* params */) {
+    throw new Error('Not implemented: `getURL`');
   },
 });

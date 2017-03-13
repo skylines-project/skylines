@@ -21,7 +21,7 @@ export default Ember.Controller.extend({
   }),
 
   nextPage: safeComputed('page', 'events.length', 'perPage', (page, numEvents, perPage) => {
-    if (numEvents == perPage) {
+    if (numEvents === perPage) {
       return page + 1;
     }
   }),
