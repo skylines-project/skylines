@@ -11,8 +11,8 @@ export default Ember.Route.extend({
 
     let accountId = this.get('account.user.id');
     let clubId = this.get('account.club.id');
-    let clubMembers = clubId ? this.get('ajax').request(`/api/users?club=${clubId}`)
-      .then(it => it.users.filter(user => user.id !== accountId)) : [];
+    let clubMembers = clubId ? this.get('ajax').request(`/users?club=${clubId}`)
+      .then(it => it.users.filter(user => user.id !== accountId).filter(user => user.upload_permission_club)) : [];git
 
     return Ember.RSVP.hash({ id, flight, clubMembers });
   },

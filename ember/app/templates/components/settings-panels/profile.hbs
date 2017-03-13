@@ -89,8 +89,31 @@
       </div>
     {{/if}}
 
+    <button class="btn btn-primary btn-block" type="submit" disabled={{or pending (not validations.isValid)}}>
+      <div class="form-group">
+          <label class="control-label">{{t "allowed-to-upload-flights"}}</label>
+          <div class="checkbox">
+            <label>
+              {{input type="checkbox" checked=uploadPermissionClub }}
+              {{t "club-members"}}
+            </label>
+          </div>
+      </div>
+    </button>
+
+    <button class="btn btn-primary btn-block" type="submit" disabled={{or pending (not validations.isValid)}}>
+      {{t (if pending "changing" "change")}}
+    </button>
+
     <button class="btn btn-primary btn-block" type="submit" disabled={{or saveTask.isRunning (not validations.isValid)}}>
       {{t (if saveTask.isRunning "changing" "change")}}
+      <div class="form-group">
+      <label class="control-label">{{t "allowed-to-upload-flights"}}</label>
+      <br>
+      {{input type="checkbox" checked=uploadPermissionClub }}
+      {{t "club-members"}}
+      </div>
     </button>
+
   </form>
 </div>

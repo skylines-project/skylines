@@ -28,7 +28,7 @@ def list():
         .options(joinedload(User.club)) \
         .order_by(func.lower(User.name))
 
-    fields = ['id', 'name']
+    fields = ['id', 'name', 'upload_permission_club']
 
     if 'club' in request.args:
         users = users.filter_by(club_id=request.args.get('club'))
