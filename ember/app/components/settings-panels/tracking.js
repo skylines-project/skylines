@@ -15,6 +15,8 @@ const Validations = buildValidations({
   },
 });
 
+const DELAYS = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 15, 20, 25, 30, 45, 60];
+
 export default Ember.Component.extend(Validations, {
   ajax: Ember.inject.service(),
 
@@ -25,10 +27,20 @@ export default Ember.Component.extend(Validations, {
   messageKey: null,
   error: null,
 
-  delays: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 15, 20, 25, 30, 45, 60],
+  delays: DELAYS,
 
   /* ember-power-select can't handle `0` */
   _delay: conditional(eq('delay', 0), raw('0'), 'delay'),
+
+  actions: {
+    submit() {
+      this.validate().then(({ validations }) => {
+        if (validations.get('isValid')) {
+          this.get('saveTask').perform();
+        }
+      });
+    },
+  },
 
   saveTask: task(function * () {
     let json = {
@@ -48,14 +60,4 @@ export default Ember.Component.extend(Validations, {
       this.setProperties({ messageKey: null, error });
     }
   }).drop(),
-
-  actions: {
-    submit() {
-      this.validate().then(({ validations }) => {
-        if (validations.get('isValid')) {
-          this.get('saveTask').perform();
-        }
-      });
-    },
-  },
 });

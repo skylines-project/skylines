@@ -10,15 +10,15 @@ export default Ember.Component.extend({
 
   badgeStyle: htmlSafe(tag`background-color: ${'row.color'}`),
 
-  click() {
-    if (this.get('selectable')) {
-      this.get('onSelect')(this.get('row.id'));
-    }
-  },
-
   actions: {
     remove() {
       this.get('onRemove')(this.get('row.id'));
     },
+  },
+
+  click() {
+    if (this.get('selectable')) {
+      this.get('onSelect')(this.get('row.id'));
+    }
   },
 });

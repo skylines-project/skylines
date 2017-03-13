@@ -7,7 +7,7 @@ export default Ember.Component.extend({
 
   classNames: ['panel', 'panel-default'],
 
-  clubs: [],
+  clubs: null,
   clubId: null,
   messageKey: null,
   error: null,

@@ -10,5 +10,5 @@ export default Ember.Component.extend({
   event: null,
 
   accountUserIsActor: safeComputed('account.user', 'event.actor',
-    (accountUser, actor) => (accountUser.id == actor.id)),
+    (accountUser, actor) => (accountUser.id === actor.id)),
 });

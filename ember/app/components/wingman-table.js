@@ -1,8 +1,8 @@
 import Ember from 'ember';
 
 export default Ember.Component.extend({
-  nearFlights: [],
-  visibleFlights: [],
+  nearFlights: null,
+  visibleFlights: null,
 
   nearFlightsWithColors: Ember.computed('nearFlights.[]', 'visibleFlights.[]', function() {
     let { nearFlights, visibleFlights } = this.getProperties('nearFlights', 'visibleFlights');

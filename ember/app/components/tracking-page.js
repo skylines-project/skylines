@@ -11,6 +11,17 @@ export default Ember.Component.extend({
 
   fixCalc: null,
 
+  timeInterval: Ember.computed('mapExtent', 'cesiumEnabled', 'fixCalc.flights.[]', function() {
+    if (this.get('cesiumEnabled')) { return null; }
+
+    let extent = this.get('mapExtent');
+    if (!extent) { return null; }
+
+    let interval = this.get('fixCalc.flights').getMinMaxTimeInExtent(extent);
+
+    return (interval.max === -Infinity) ? null : [interval.min, interval.max];
+  }),
+
   init() {
     this._super(...arguments);
 
@@ -23,7 +34,7 @@ export default Ember.Component.extend({
 
   didInsertElement() {
     let flights = this.get('flights');
-    if (flights.length === 0) return;
+    if (flights.length === 0) { return; }
 
     let fixCalc = this.get('fixCalc');
 
@@ -37,7 +48,7 @@ export default Ember.Component.extend({
     });
 
     if (window.location.hash &&
-      sidebar.find(`li > a[href="#${window.location.hash.substring(1)}"]`).length != 0) {
+      sidebar.find(`li > a[href="#${window.location.hash.substring(1)}"]`).length !== 0) {
       sidebar.open(window.location.hash.substring(1));
     }
 
@@ -62,6 +73,21 @@ export default Ember.Component.extend({
     }
   },
 
+  actions: {
+    togglePlayback() {
+      this.get('fixCalc').togglePlayback();
+    },
+
+    removeFlight(id) {
+      let flights = this.get('fixCalc.flights');
+      flights.removeObjects(flights.filterBy('id', id));
+    },
+
+    calculatePadding() {
+      return this._calculatePadding();
+    },
+  },
+
   _scheduleUpdate() {
     this.set('updateTimer', Ember.run.later(() => this._update(), 15 * 1000));
   },
@@ -83,34 +109,8 @@ export default Ember.Component.extend({
     this._scheduleUpdate();
   },
 
-  timeInterval: Ember.computed('mapExtent', 'cesiumEnabled', 'fixCalc.flights.[]', function() {
-    if (this.get('cesiumEnabled')) return null;
-
-    let extent = this.get('mapExtent');
-    if (!extent) return null;
-
-    let interval = this.get('fixCalc.flights').getMinMaxTimeInExtent(extent);
-
-    return (interval.max == -Infinity) ? null : [interval.min, interval.max];
-  }),
-
   _calculatePadding() {
     return [20, 20, this.$('#barogram_panel').height() + 20, this.$('#sidebar').width() + 20];
-  },
-
-  actions: {
-    togglePlayback() {
-      this.get('fixCalc').togglePlayback();
-    },
-
-    removeFlight(id) {
-      let flights = this.get('fixCalc.flights');
-      flights.removeObjects(flights.filterBy('id', id));
-    },
-
-    calculatePadding() {
-      return this._calculatePadding();
-    },
   },
 });
 
@@ -122,8 +122,7 @@ export default Ember.Component.extend({
 function updateFlight(flights, data) {
   // find the flight to update
   let flight = flights.findBy('id', data.sfid);
-  if (!flight)
-    return;
+  if (!flight) { return; }
 
   let time_decoded = ol.format.Polyline.decodeDeltas(data.barogram_t, 1, 1);
   let lonlat = ol.format.Polyline.decodeDeltas(data.points, 2);
@@ -133,7 +132,7 @@ function updateFlight(flights, data) {
 
   // we skip the first point in the list because we assume it's the "linking"
   // fix between the data we already have and the data to add.
-  if (time_decoded.length < 2) return;
+  if (time_decoded.length < 2) { return; }
 
   let geoid = flight.get('geoid');
 

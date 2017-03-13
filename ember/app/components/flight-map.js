@@ -31,7 +31,7 @@ export default BaseMapComponent.extend({
   },
 
   _handlePointerMove(event) {
-    if (event.dragging || !this.get('hoverEnabled')) return;
+    if (event.dragging || !this.get('hoverEnabled')) { return; }
 
     let map = this.get('map');
     let source = this.get('flights.source');

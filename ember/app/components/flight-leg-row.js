@@ -7,10 +7,12 @@ export default Ember.Component.extend({
   classNames: ['small', 'selectable'],
   classNameBindings: ['selected'],
 
+  inf: Infinity,
+
   leg: null,
   selection: null,
 
-  speed: Ember.computed('leg.duration', 'leg.distance', function() {
+  speed: Ember.computed('leg.{duration,distance}', function() {
     let duration = this.get('leg.duration');
     if (duration > 0) {
       return this.get('leg.distance') / duration;
@@ -19,7 +21,7 @@ export default Ember.Component.extend({
     }
   }),
 
-  climbPercentage: Ember.computed('leg.duration', 'leg.climbDuration', function() {
+  climbPercentage: Ember.computed('leg.{duration,climbDuration}', function() {
     let duration = this.get('leg.duration');
     if (duration > 0) {
       return this.get('leg.climbDuration') / duration;
@@ -28,14 +30,14 @@ export default Ember.Component.extend({
     }
   }),
 
-  climbRate: Ember.computed('leg.climbDuration', 'leg.climbHeight', function() {
+  climbRate: Ember.computed('leg.{climbDuration,climbHeight}', function() {
     let duration = this.get('leg.climbDuration');
     if (duration > 0) {
       return this.get('leg.climbHeight') / duration;
     }
   }),
 
-  glideRate: Ember.computed('leg.cruiseDistance', 'leg.cruiseHeight', function() {
+  glideRate: Ember.computed('leg.{cruiseDistance,cruiseHeight}', function() {
     let distance = this.get('leg.cruiseDistance');
     let height = this.get('leg.cruiseHeight');
 
@@ -45,8 +47,6 @@ export default Ember.Component.extend({
       return Infinity;
     }
   }),
-
-  inf: Infinity,
 
   selected: safeComputed('selection', function(selection) {
     let leg = this.get('leg');

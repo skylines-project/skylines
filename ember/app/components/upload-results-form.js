@@ -35,6 +35,18 @@ export default Ember.Component.extend({
     }));
   },
 
+  actions: {
+    submit() {
+      let validates = this.get('validations').map(v => v.validate());
+
+      Ember.RSVP.all(validates).then(results => {
+        if (results.every(r => r.validations.get('isValid'))) {
+          this.get('saveTask').perform();
+        }
+      });
+    },
+  },
+
   saveTask: task(function * () {
     let json = this.get('successfulResults').map(result => {
       let flight = Ember.get(result, 'flight');
@@ -55,16 +67,4 @@ export default Ember.Component.extend({
       this.set('error', error);
     }
   }).drop(),
-
-  actions: {
-    submit() {
-      let validates = this.get('validations').map(v => v.validate());
-
-      Ember.RSVP.all(validates).then(results => {
-        if (results.every(r => r.validations.get('isValid'))) {
-          this.get('saveTask').perform();
-        }
-      });
-    },
-  },
 });

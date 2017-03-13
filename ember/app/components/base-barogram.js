@@ -11,22 +11,14 @@ export default Ember.Component.extend({
 
   flot: null,
 
-  active: [],
-  passive: [],
-  enls: [],
+  active: null,
+  passive: null,
+  enls: null,
 
   contests: null,
-  elevations: [],
+  elevations: null,
 
   flotStyle: conditional('height', htmlSafe(tag`width: 100%; height: ${'height'}px;`)),
-
-  draw() {
-    this.update();
-
-    let flot = this.get('flot');
-    flot.setupGrid();
-    flot.draw();
-  },
 
   didInsertElement() {
     let units = this.get('units');
@@ -73,6 +65,14 @@ export default Ember.Component.extend({
 
     this.set('placeholder', placeholder);
     this.set('flot', Ember.$.plot(placeholder, [], opts));
+  },
+
+  draw() {
+    this.update();
+
+    let flot = this.get('flot');
+    flot.setupGrid();
+    flot.draw();
   },
 
   update() {

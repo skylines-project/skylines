@@ -28,6 +28,16 @@ export default Ember.Component.extend(Validations, {
   messageKey: null,
   error: null,
 
+  actions: {
+    submit() {
+      this.validate().then(({ validations }) => {
+        if (validations.get('isValid')) {
+          this.get('saveTask').perform();
+        }
+      });
+    },
+  },
+
   saveTask: task(function * () {
     let json = this.getProperties('name');
 
@@ -45,14 +55,4 @@ export default Ember.Component.extend(Validations, {
       this.setProperties({ messageKey: null, error });
     }
   }).drop(),
-
-  actions: {
-    submit() {
-      this.validate().then(({ validations }) => {
-        if (validations.get('isValid')) {
-          this.get('saveTask').perform();
-        }
-      });
-    },
-  },
 });

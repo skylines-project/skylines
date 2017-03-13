@@ -6,7 +6,7 @@ import raw from 'ember-macro-helpers/raw';
 export default Ember.Component.extend({
   tagName: '',
 
-  models: [],
+  models: null,
   modelId: null,
 
   modelsWithNull: Ember.computed('models.[]', function() {

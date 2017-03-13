@@ -161,10 +161,11 @@ const MapClickHandler = Ember.Object.extend({
     let circle_style = new ol.style.Style({ stroke: stroke_style });
 
     let circle = this.get('circle');
-    if (!circle.geometry)
+    if (!circle.geometry) {
       circle.geometry = new ol.geom.Circle(coordinate, 1000);
-    else
+    } else {
       circle.geometry.setCenterAndRadius(coordinate, 1000);
+    }
 
     circle.animation = null;
 
@@ -173,10 +174,11 @@ const MapClickHandler = Ember.Object.extend({
       let vector_context = e.vectorContext;
 
       if (circle.geometry) {
-        if (circle.animation != null) {
+        if (circle.animation !== null) {
           let frame_state = e.frameState;
-          if (!circle.animation.start)
+          if (!circle.animation.start) {
             circle.animation.start = frame_state.time;
+          }
 
           if (circle.animation.duration <= 0 ||
               frame_state.time >
@@ -218,7 +220,7 @@ const MapClickHandler = Ember.Object.extend({
   getNearFlights(lon, lat, time, flight) {
     let flights = this.get('flights');
     let addFlight = this.get('addFlight');
-    if (!flights || !addFlight) return;
+    if (!flights || !addFlight) { return; }
 
     let req = $.ajax(`/api/flights/${flight.get('id')}/near?lon=${lon}&lat=${lat}&time=${time}`);
 
@@ -227,8 +229,7 @@ const MapClickHandler = Ember.Object.extend({
         let flight = data['flights'][i];
 
         // skip retrieved flight if already on map
-        if (flights.findBy('id', flight['sfid']))
-          continue;
+        if (flights.findBy('id', flight['sfid'])) { continue; }
 
         addFlight(flight);
       }
@@ -256,7 +257,7 @@ const MapClickHandler = Ember.Object.extend({
    */
   showLocationData(data) {
     // do nothing if infobox is closed already
-    if (!this.get('visible')) return;
+    if (!this.get('visible')) { return; }
 
     let infobox = this.get('infobox');
     let map = this.get('map');
@@ -267,8 +268,8 @@ const MapClickHandler = Ember.Object.extend({
     let no_data = true;
 
     if (data) {
-      let airspace_layer = map.getLayers().getArray().filter(layer => layer.get('name') == 'Airspace')[0];
-      let mwp_layer = map.getLayers().getArray().filter(layer => layer.get('name') == 'Mountain Wave Project')[0];
+      let airspace_layer = map.getLayers().getArray().filter(layer => layer.get('name') === 'Airspace')[0];
+      let mwp_layer = map.getLayers().getArray().filter(layer => layer.get('name') === 'Mountain Wave Project')[0];
 
       if (!$.isEmptyObject(data['airspaces']) &&
           airspace_layer.getVisible()) {

@@ -30,27 +30,13 @@ export default Ember.Component.extend(Validations, {
 
   classNames: ['panel-body'],
 
-  clubMembers: [],
-
-  pilotId: Ember.computed.oneWay('account.user.id'),
+  clubMembers: null,
   pilotName: null,
-
   error: null,
 
+  pilotId: Ember.computed.oneWay('account.user.id'),
+
   showPilotNameInput: Ember.computed.equal('pilotId', null),
-
-  uploadTask: task(function * () {
-    let form = this.$('form').get(0);
-    let data = new FormData(form);
-
-    try {
-      let json = yield this.get('ajax').request('/api/flights/upload/', { method: 'POST', data, contentType: false, processData: false });
-      this.getWithDefault('onUpload', Ember.K)(json);
-
-    } catch (error) {
-      this.set('error', error);
-    }
-  }).drop(),
 
   actions: {
     setFilesFromEvent(event) {
@@ -65,4 +51,17 @@ export default Ember.Component.extend(Validations, {
       });
     },
   },
+
+  uploadTask: task(function * () {
+    let form = this.$('form').get(0);
+    let data = new FormData(form);
+
+    try {
+      let json = yield this.get('ajax').request('/api/flights/upload/', { method: 'POST', data, contentType: false, processData: false });
+      this.getWithDefault('onUpload', Ember.K)(json);
+
+    } catch (error) {
+      this.set('error', error);
+    }
+  }).drop(),
 });

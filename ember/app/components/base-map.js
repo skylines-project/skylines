@@ -196,7 +196,7 @@ export default Ember.Component.extend({
 
   addMapboxLayer() {
     let tile_url = config.MAPBOX_TILE_URL;
-    if (!tile_url) return;
+    if (!tile_url) { return; }
 
     let mapbox_layer = new ol.layer.Tile({
       source: new ol.source.XYZ({
@@ -227,7 +227,7 @@ export default Ember.Component.extend({
 
   addBingLayers() {
     let api_key = config.BING_API_KEY;
-    if (!api_key) return;
+    if (!api_key) { return; }
 
     // Bing's Road imagerySet
     let road = new ol.layer.Tile({

@@ -1,7 +1,11 @@
+'use strict';
+
+/* eslint-env node */
+
 module.exports = function(environment) {
-  var ENV = {
+  let ENV = {
     modulePrefix: 'skylines',
-    environment: environment,
+    environment,
     rootURL: '/',
     locationType: 'auto',
     EmberENV: {
@@ -58,7 +62,7 @@ module.exports = function(environment) {
   }
 
   if (environment === 'production') {
-
+    // here be dragons
   }
 
   return ENV;

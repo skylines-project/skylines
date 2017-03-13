@@ -5,10 +5,10 @@ export default Ember.Component.extend({
 
   tagName: '',
 
-  clubMembers: [],
+  clubMembers: null,
   pilotId: null,
 
-  pilots: Ember.computed('account.user', 'account.club', 'clubMembers.[]', function() {
+  pilots: Ember.computed('account.{user,club}', 'clubMembers.[]', function() {
     let user = this.get('account.user');
     let club = this.get('account.club');
     let clubMembers = this.get('clubMembers');
@@ -25,21 +25,23 @@ export default Ember.Component.extend({
     return this.findPilot(this.get('pilotId') || null);
   }),
 
+  actions: {
+    onChange(pilot) {
+      this.get('onChange')(pilot.id);
+    },
+  },
+
   findPilot(id) {
     let pilots = this.get('pilots');
 
     let pilot = pilots.findBy('id', id);
-    if (pilot) return pilot;
+    if (pilot) {
+      return pilot;
+    }
 
     let clubMembers = pilots.get('lastObject.options');
     if (clubMembers) {
       return clubMembers.findBy('id', id);
     }
-  },
-
-  actions: {
-    onChange(pilot) {
-      this.get('onChange')(pilot.id);
-    },
   },
 });

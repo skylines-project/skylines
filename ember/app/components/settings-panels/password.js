@@ -38,6 +38,16 @@ export default Ember.Component.extend(Validations, {
   messageKey: null,
   error: null,
 
+  actions: {
+    submit() {
+      this.validate().then(({ validations }) => {
+        if (validations.get('isValid')) {
+          this.get('saveTask').perform();
+        }
+      });
+    },
+  },
+
   saveTask: task(function * () {
     let json = this.getProperties('currentPassword', 'password');
 
@@ -54,14 +64,4 @@ export default Ember.Component.extend(Validations, {
       });
     }
   }).drop(),
-
-  actions: {
-    submit() {
-      this.validate().then(({ validations }) => {
-        if (validations.get('isValid')) {
-          this.get('saveTask').perform();
-        }
-      });
-    },
-  },
 });

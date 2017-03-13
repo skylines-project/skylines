@@ -38,7 +38,8 @@ export default BarogramComponent.extend({
     let enl = ol.format.Polyline.decodeDeltas(this.get('trace.enl'), 1, 1);
     let _elev_h = ol.format.Polyline.decodeDeltas(this.get('trace.elevations_h'), 1, 1);
 
-    let flot_h = [], flot_enl = [];
+    let flot_h = [];
+    let flot_enl = [];
     let flot_elev = [];
     let timeLength = time.length;
     for (let i = 0; i < timeLength; ++i) {
@@ -47,8 +48,9 @@ export default BarogramComponent.extend({
       flot_enl.push([timestamp, enl[i]]);
 
       let e = _elev_h[i];
-      if (e < -500)
+      if (e < -500) {
         e = null;
+      }
 
       flot_elev.push([timestamp, e ? units.convertAltitude(e) : null]);
     }

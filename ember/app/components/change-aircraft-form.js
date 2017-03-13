@@ -25,12 +25,22 @@ export default Ember.Component.extend(Validations, {
   classNames: ['panel-body'],
 
   flightId: null,
-  models: [],
+  models: null,
   modelId: null,
   registration: null,
   competitionId: null,
 
   error: null,
+
+  actions: {
+    submit() {
+      this.validate().then(({ validations }) => {
+        if (validations.get('isValid')) {
+          this.get('saveTask').perform();
+        }
+      });
+    },
+  },
 
   saveTask: task(function * () {
     let id = this.get('flightId');
@@ -43,14 +53,4 @@ export default Ember.Component.extend(Validations, {
       this.set('error', error);
     }
   }).drop(),
-
-  actions: {
-    submit() {
-      this.validate().then(({ validations }) => {
-        if (validations.get('isValid')) {
-          this.get('saveTask').perform();
-        }
-      });
-    },
-  },
 });

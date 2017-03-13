@@ -41,17 +41,27 @@ export default Ember.Component.extend(Validations, {
 
   flightId: null,
   flight: null,
-  clubMembers: [],
+  clubMembers: null,
+
+  error: null,
 
   pilotId: Ember.computed.oneWay('flight.pilot.id'),
   pilotName: Ember.computed.oneWay('flight.pilotName'),
   copilotId: Ember.computed.oneWay('flight.copilot.id'),
   copilotName: Ember.computed.oneWay('flight.copilotName'),
 
-  error: null,
-
   showPilotNameInput: isNone('pilotId'),
   showCopilotNameInput: isNone('copilotId'),
+
+  actions: {
+    submit() {
+      this.validate().then(({ validations }) => {
+        if (validations.get('isValid')) {
+          this.get('saveTask').perform();
+        }
+      });
+    },
+  },
 
   saveTask: task(function * () {
     let id = this.get('flightId');
@@ -64,14 +74,4 @@ export default Ember.Component.extend(Validations, {
       this.set('error', error);
     }
   }).drop(),
-
-  actions: {
-    submit() {
-      this.validate().then(({ validations }) => {
-        if (validations.get('isValid')) {
-          this.get('saveTask').perform();
-        }
-      });
-    },
-  },
 });

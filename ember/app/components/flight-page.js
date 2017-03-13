@@ -13,6 +13,17 @@ export default Ember.Component.extend({
   fixCalc: null,
   flightPhase: null,
 
+  timeInterval: Ember.computed('mapExtent', 'cesiumEnabled', function() {
+    if (this.get('cesiumEnabled')) { return null; }
+
+    let extent = this.get('mapExtent');
+    if (!extent) { return null; }
+
+    let interval = this.get('fixCalc.flights').getMinMaxTimeInExtent(extent);
+
+    return (interval.max === -Infinity) ? null : [interval.min, interval.max];
+  }),
+
   init() {
     this._super(...arguments);
 
@@ -40,7 +51,7 @@ export default Ember.Component.extend({
     });
 
     if (window.location.hash &&
-      sidebar.find(`li > a[href="#${window.location.hash.substring(1)}"]`).length != 0) {
+      sidebar.find(`li > a[href="#${window.location.hash.substring(1)}"]`).length !== 0) {
       sidebar.open(window.location.hash.substring(1));
     }
 
@@ -56,21 +67,6 @@ export default Ember.Component.extend({
     this.get('pinnedFlights.pinned')
       .filter(id => id !== primaryId)
       .forEach(id => fixCalc.addFlightFromJSON(`/api/flights/${id}/json`));
-  },
-
-  timeInterval: Ember.computed('mapExtent', 'cesiumEnabled', function() {
-    if (this.get('cesiumEnabled')) return null;
-
-    let extent = this.get('mapExtent');
-    if (!extent) return null;
-
-    let interval = this.get('fixCalc.flights').getMinMaxTimeInExtent(extent);
-
-    return (interval.max == -Infinity) ? null : [interval.min, interval.max];
-  }),
-
-  _calculatePadding() {
-    return [20, 20, this.$('#barogram_panel').height() + 20, this.$('#sidebar').width() + 20];
   },
 
   actions: {
@@ -106,5 +102,9 @@ export default Ember.Component.extend({
     calculatePadding() {
       return this._calculatePadding();
     },
+  },
+
+  _calculatePadding() {
+    return [20, 20, this.$('#barogram_panel').height() + 20, this.$('#sidebar').width() + 20];
   },
 });
