@@ -17,6 +17,7 @@
   },
   "devDependencies": {
     "broccoli-asset-rev": "^2.4.5",
+    "broccoli-uglify-sourcemap": "Turbo87/broccoli-uglify-sourcemap#remove-workaround",
     "ember-ajax": "^2.4.1",
     "ember-cli": "2.11.0",
     "ember-cli-active-link-wrapper": "^0.3.1",
