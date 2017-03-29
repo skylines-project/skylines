@@ -10,6 +10,11 @@ module.exports = function(defaults) {
       extensions: ['css', 'js'],
       exclude: ['cesium'],
     },
+    minifyJS: {
+      options: {
+        exclude: ['cesium/Cesium.js'],
+      },
+    },
 
     sourcemaps: {
       enabled: true,
