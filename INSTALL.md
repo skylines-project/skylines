@@ -88,7 +88,6 @@ might have to install additional libraries like `libcurl`, which can be installe
 on Debian/Ubuntu by executing `apt-get install libcurl4-openssl-dev`. Please have
 a look into the XCSoar documentation if you need more help with the building process.
 
-
 ## Running the debug server
 
 If the above steps are completed you should be able to run a base version of
@@ -122,3 +121,6 @@ need is to install the `redis-server` package:
 To run the Celery worker, call
 
     $ ./manage.py celery runworker
+    
+## Complete OS-specific installation instructions can be found below:
+[INSTALL.Ubuntu.12.04.md](INSTALL.Ubuntu.12.04.md)

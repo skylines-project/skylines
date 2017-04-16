@@ -1,0 +1,6 @@
+# Ignore everything in this directory
+*.igc
+*.IGC
+
+# Except this file
+!.gitignore
