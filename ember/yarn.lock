@@ -908,9 +908,9 @@ broccoli-templater@^1.0.0:
     broccoli-stew "^1.2.0"
     lodash.template "^3.3.2"
 
-broccoli-uglify-sourcemap@^1.0.0, broccoli-uglify-sourcemap@Turbo87/broccoli-uglify-sourcemap#remove-workaround:
-  version "1.5.1"
-  resolved "https://codeload.github.com/Turbo87/broccoli-uglify-sourcemap/tar.gz/22e489e51d74b7dc2245e1ede6c66f982df92120"
+broccoli-uglify-sourcemap@^1.0.0:
+  version "1.5.2"
+  resolved "https://registry.yarnpkg.com/broccoli-uglify-sourcemap/-/broccoli-uglify-sourcemap-1.5.2.tgz#04f84ab0db539031fa868ccfa563c9932d50cedb"
   dependencies:
     broccoli-plugin "^1.2.1"
     debug "^2.2.0"
