@@ -94,7 +94,7 @@ export default Ember.Component.extend({
   },
 
   passiveTraces() {
-    return this.get('passive').map(trace => ({
+    return (this.get('passive') || []).map(trace => ({
       data: trace.data,
       color: Ember.$.color.parse(trace.color).add('a', -0.6).toString(),
       shadowSize: 0,
