@@ -11,9 +11,12 @@
   "repository": "",
   "scripts": {
     "build": "ember build",
+    "lint": "eslint app addon blueprints config server test-support tests *.js",
     "start": "ember server",
-    "test": "ember test",
-    "lint": "eslint app addon blueprints config server test-support tests *.js"
+    "test": "ember test"
+  },
+  "dependencies": {
+    "ember-awesome-macros": "^0.31.4"
   },
   "devDependencies": {
     "broccoli-asset-rev": "^2.4.5",
@@ -63,8 +66,5 @@
   "engines": {
     "node": ">= 4"
   },
-  "private": true,
-  "dependencies": {
-    "ember-awesome-macros": "^0.31.4"
-  }
+  "private": true
 }
