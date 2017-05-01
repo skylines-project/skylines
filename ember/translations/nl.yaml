@@ -69,7 +69,9 @@ first-name: Voornaam
 flight-analysis: Vluchtanalyse
 flight-database: Database Vluchten
 flight-date-in-future: Datum van vlucht in toekomst
+flight-pinned: Vlucht gemarkeerd!
 flight-time: Vlucht Tijd
+flight-unpinned: klik om te markeren
 flights: Vluchten
 follow: Volg
 followers: Volgers
@@ -101,6 +103,7 @@ live-tracking-of-PILOT-and-PILOT2: Live tracking van {pilot} en {pilot2}
 live-tracking-of-PILOT-and-NUM-other-pilots: Live tracking van {pilot} en {num} andere piloten
 n-avg-hours-per-flight: gemiddelde {num} uren per vlucht
 live-tracking-key: Live Tracking Sleutel
+loading: Laden...
 login: Inloggen
 logout: Uitloggen
 mark-all-as-read: Markeer allen als gelezen
@@ -117,6 +120,7 @@ newer: Nieuwer
 no-airports-found: Geen vliegvelden gevonden.
 no-club: Geen club
 no-clubs-found: Geen clubs gevonden.
+no-comments-yet: 'Nog geen commentaren '
 no-flight-in-file: Geen vlucht gevonden in bestand
 no-flight-saved: Geen vlucht is bewaard.
 no-flights-found: Geen vluchten gevonden.
@@ -130,6 +134,9 @@ open-data: Open Data
 open-source: Open Bron
 other-pilots: Andere piloten
 overview: Overzicht
+page-not-found:
+  title: Pagina niet gevonden
+  text: De opgevraagde pagina bestaat niet.
 password: Wachtwoord
 password-recovered: Uw wachtwoord is gewijzigd met het gebruik van de herstelcode.
 password-was-changed: Uw wachtwoord is gewijzigd.
@@ -142,6 +149,7 @@ pin-button-title: 'Activeer dit om de vlucht weer te geven bovenop andere vlucht
 pinned: Gemarkeerd
 planned: gepland
 POINTS-points-abbr: '{points} ptn.'
+processing: Verwerken...
 profile: Profiel
 publish: Publiceer
 publish-flight: Publiceer Vlucht
@@ -206,6 +214,7 @@ year: Jaar
 'yes': Ja
 you-have-no-notifications: U hebt geen notificaties.
 your-flights-have-been-saved: U vluchten zijn bewaard.
+your-live-tracking-key: 'U live tracking sleutel is:'
 about:
   welcome: Welkom bij SkyLines, U internet platform om u vluchten de delen!
   flights: <a href="{uploadURL}">upload</a> U IGC bestanden en deel ze met U vrienden. We veranderen U bestanden niet, of belemmeren U niet ze terug te downloaden!

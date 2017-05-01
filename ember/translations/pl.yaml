@@ -134,6 +134,9 @@ open-data: Otwarte dane
 open-source: Otwarte oprogramowanie
 other-pilots: Inni piloci
 overview: Podsumowanie
+page-not-found:
+  title: Strona nie znaleziona
+  text: Strona o podanym adresie nie istnieje.
 password: Hasło
 password-recovered: Twoje hasło zostało zmienione przy użyciu kodu przywracania.
 password-was-changed: Twoje hasło zostało zmienione
