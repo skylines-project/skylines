@@ -4,6 +4,7 @@ import { expect } from 'chai';
 import { describe, it, beforeEach } from 'mocha';
 import { setupComponentTest } from 'ember-mocha';
 import hbs from 'htmlbars-inline-precompile';
+import { find } from 'ember-native-dom-helpers';
 
 import instanceInitializer from 'skylines/instance-initializers/ember-intl';
 
@@ -42,7 +43,7 @@ describe('Integration | Component | timeline events/flight comment', function() 
   it('renders default text', function() {
     this.render(hbs`{{timeline-events/flight-comment event=event}}`);
 
-    expect(this.$('td:nth-of-type(2) p:nth-of-type(2)').text().trim())
+    expect(find('td:nth-of-type(2) p:nth-of-type(2)').textContent.trim())
       .to.match(/John Doe commented on a 123 km flight on [\d/]+./);
   });
 
@@ -51,7 +52,7 @@ describe('Integration | Component | timeline events/flight comment', function() 
 
     this.render(hbs`{{timeline-events/flight-comment event=event}}`);
 
-    expect(this.$('td:nth-of-type(2) p:nth-of-type(2)').text().trim())
+    expect(find('td:nth-of-type(2) p:nth-of-type(2)').textContent.trim())
       .to.match(/You commented on a 123 km flight on [\d/]+./);
   });
 
@@ -60,7 +61,7 @@ describe('Integration | Component | timeline events/flight comment', function() 
 
     this.render(hbs`{{timeline-events/flight-comment event=event}}`);
 
-    expect(this.$('td:nth-of-type(2) p:nth-of-type(2)').text().trim())
+    expect(find('td:nth-of-type(2) p:nth-of-type(2)').textContent.trim())
       .to.match(/John Doe commented on your 123 km flight on [\d/]+./);
   });
 
@@ -70,7 +71,7 @@ describe('Integration | Component | timeline events/flight comment', function() 
 
     this.render(hbs`{{timeline-events/flight-comment event=event}}`);
 
-    expect(this.$('td:nth-of-type(2) p:nth-of-type(2)').text().trim())
+    expect(find('td:nth-of-type(2) p:nth-of-type(2)').textContent.trim())
       .to.match(/You commented on your 123 km flight on [\d/]+./);
   });
 });

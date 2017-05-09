@@ -4,6 +4,7 @@ import { expect } from 'chai';
 import { describe, it, beforeEach } from 'mocha';
 import { setupComponentTest } from 'ember-mocha';
 import hbs from 'htmlbars-inline-precompile';
+import { find } from 'ember-native-dom-helpers';
 
 import instanceInitializer from 'skylines/instance-initializers/ember-intl';
 
@@ -35,7 +36,7 @@ describe('Integration | Component | timeline events/new user', function() {
   it('renders default text', function() {
     this.render(hbs`{{timeline-events/new-user event=event}}`);
 
-    expect(this.$('td:nth-of-type(2) p:nth-of-type(2)').text().trim())
+    expect(find('td:nth-of-type(2) p:nth-of-type(2)').textContent.trim())
       .to.equal('John Doe joined SkyLines.');
   });
 
@@ -44,7 +45,7 @@ describe('Integration | Component | timeline events/new user', function() {
 
     this.render(hbs`{{timeline-events/new-user event=event}}`);
 
-    expect(this.$('td:nth-of-type(2) p:nth-of-type(2)').text().trim())
+    expect(find('td:nth-of-type(2) p:nth-of-type(2)').textContent.trim())
       .to.equal('You joined SkyLines.');
   });
 });
