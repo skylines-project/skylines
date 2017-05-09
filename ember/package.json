@@ -16,7 +16,7 @@
     "test": "ember test"
   },
   "dependencies": {
-    "ember-awesome-macros": "^0.35.0"
+    "ember-awesome-macros": "^0.35.3"
   },
   "devDependencies": {
     "broccoli-asset-rev": "^2.4.5",
