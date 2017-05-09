@@ -1,5 +1,6 @@
 import { expect } from 'chai';
 import { describe, it, beforeEach, afterEach } from 'mocha';
+import { visit } from 'ember-native-dom-helpers';
 
 import startApp from '../helpers/start-app';
 import destroyApp from '../helpers/destroy-app';
