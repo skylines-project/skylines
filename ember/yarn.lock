@@ -2551,9 +2551,9 @@ ember-cli-sass@^6.1.1:
     ember-cli-version-checker "^1.0.2"
     merge "^1.2.0"
 
-ember-cli-sentry@2.4.2:
-  version "2.4.2"
-  resolved "https://registry.yarnpkg.com/ember-cli-sentry/-/ember-cli-sentry-2.4.2.tgz#1100ecb4dc5069ad0e8a46136cc94d692068bd54"
+ember-cli-sentry@^2.4.3:
+  version "2.4.3"
+  resolved "https://registry.yarnpkg.com/ember-cli-sentry/-/ember-cli-sentry-2.4.3.tgz#f1a45c86c54d4398b959cdb2b6e39b20c6fa22b8"
   dependencies:
     ember-cli-babel "^5.1.6"
 
