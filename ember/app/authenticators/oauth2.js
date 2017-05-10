@@ -8,25 +8,23 @@ export default OAuth2PasswordGrant.extend({
   serverTokenEndpoint: '/api/oauth/token',
   serverTokenRevocationEndpoint: '/api/oauth/revoke',
 
-  authenticate() {
-    return this._super(...arguments)
-      .then(data => this._addSettings(data));
+  async authenticate() {
+    let data = await this._super(...arguments);
+    return this._addSettings(data);
   },
 
-  restore() {
-    return this._super(...arguments)
-      .then(data => this._addSettings(data));
+  async restore() {
+    let data = await this._super(...arguments);
+    return this._addSettings(data);
   },
 
-  _addSettings(data) {
+  async _addSettings(data) {
     let headers = {};
     if (data.access_token) {
       headers['Authorization'] = `Bearer ${data.access_token}`;
     }
 
-    return this.get('ajax').request('/api/settings', { headers }).then(settings => {
-      data.settings = settings;
-      return data;
-    });
+    data.settings = await this.get('ajax').request('/api/settings', { headers });
+    return data;
   },
 });

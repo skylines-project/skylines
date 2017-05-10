@@ -37,14 +37,13 @@ export default Ember.Component.extend({
   },
 
   actions: {
-    submit() {
+    async submit() {
       let validates = this.get('validations').map(v => v.validate());
 
-      RSVP.all(validates).then(results => {
-        if (results.every(r => r.validations.get('isValid'))) {
-          this.get('saveTask').perform();
-        }
-      });
+      let results = await RSVP.all(validates);
+      if (results.every(r => r.validations.get('isValid'))) {
+        this.get('saveTask').perform();
+      }
     },
   },
 

@@ -29,12 +29,11 @@ export default Ember.Component.extend(Validations, {
   success: false,
 
   actions: {
-    submit() {
-      this.validate().then(({ validations }) => {
-        if (validations.get('isValid')) {
-          this.get('recoverTask').perform();
-        }
-      });
+    async submit() {
+      let { validations } = await this.validate();
+      if (validations.get('isValid')) {
+        this.get('recoverTask').perform();
+      }
     },
   },
 

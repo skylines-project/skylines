@@ -122,13 +122,12 @@ export default Ember.Object.extend({
    *
    * @param {String} url URL to fetch.
    */
-  addFlightFromJSON(url) {
+  async addFlightFromJSON(url) {
     let flights = this.get('flights');
 
-    return this.get('ajax').request(url).then(data => {
-      if (!flights.findBy('id', data.sfid)) {
-        this.addFlight(data);
-      }
-    });
+    let data = await this.get('ajax').request(url);
+    if (!flights.findBy('id', data.sfid)) {
+      this.addFlight(data);
+    }
   },
 });

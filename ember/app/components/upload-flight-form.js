@@ -43,12 +43,11 @@ export default Ember.Component.extend(Validations, {
       this.set('files', event.target.value);
     },
 
-    submit() {
-      this.validate().then(({ validations }) => {
-        if (validations.get('isValid')) {
-          this.get('uploadTask').perform();
-        }
-      });
+    async submit() {
+      let { validations } = await this.validate();
+      if (validations.get('isValid')) {
+        this.get('uploadTask').perform();
+      }
     },
   },
 

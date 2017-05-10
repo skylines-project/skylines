@@ -17,8 +17,8 @@ describe('Acceptance | page-not-found', function() {
   });
 
   describe('visiting /foobar', function() {
-    beforeEach(function() {
-      visit('/foobar');
+    beforeEach(async function() {
+      await visit('/foobar');
     });
 
     it('will keep the URL at /foobar', function() {
