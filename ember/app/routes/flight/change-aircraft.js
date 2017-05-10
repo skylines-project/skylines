@@ -1,4 +1,5 @@
 import Ember from 'ember';
+import RSVP from 'rsvp';
 
 export default Ember.Route.extend({
   ajax: Ember.inject.service(),
@@ -9,6 +10,6 @@ export default Ember.Route.extend({
     let flight = this.get('ajax').request(`/api/flights/${id}/`).then(it => it.flight);
     let aircraftModels = this.get('ajax').request('/api/aircraft-models').then(it => it.models);
 
-    return Ember.RSVP.hash({ id, flight, aircraftModels });
+    return RSVP.hash({ id, flight, aircraftModels });
   },
 });

@@ -1,4 +1,5 @@
 import Ember from 'ember';
+import RSVP from 'rsvp';
 
 export default Ember.Route.extend({
   ajax: Ember.inject.service(),
@@ -14,6 +15,6 @@ export default Ember.Route.extend({
     let clubMembers = clubId ? this.get('ajax').request(`/api/users?club=${clubId}`)
       .then(it => it.users.filter(user => user.id !== accountId)) : [];
 
-    return Ember.RSVP.hash({ id, flight, clubMembers });
+    return RSVP.hash({ id, flight, clubMembers });
   },
 });
