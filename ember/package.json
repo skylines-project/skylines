@@ -40,6 +40,7 @@
     "ember-cli-inject-live-reload": "^1.7.0",
     "ember-cli-mocha": "^0.14.4",
     "ember-cli-pace": "^0.1.0",
+    "ember-cli-pretender": "^1.0.1",
     "ember-cli-sass": "^7.0.0",
     "ember-cli-sentry": "^2.4.4",
     "ember-cli-shims": "^1.1.0",
