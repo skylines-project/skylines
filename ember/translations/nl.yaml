@@ -43,7 +43,7 @@ date-missing-in-igc-file: Datum ontbreekt in IGC bestand
 delay: Vertraging
 delete: Verwijder
 delete-flight: Verwijder Vlucht
-delete-flight-confirmation-text: Weet je zeker dat u deze vlucht wil verwijderen?
+delete-flight-confirmation-text: Weet je zeker dat je deze vlucht wil verwijderen?
 developers: Ontwikkelaars
 distance: Afstand
 distance-abbr: Afst.
@@ -131,7 +131,7 @@ notifications: Notificaties
 olc-distance: OLC Afstand
 older: Ouder
 open-data: Open Data
-open-source: Open Bron
+open-source: Open Source
 other-pilots: Andere piloten
 overview: Overzicht
 page-not-found:
@@ -159,7 +159,7 @@ publishing: 'Publiceren '
 ranking: 'Klassement '
 recover-password: 'Herstel Wachtwoord '
 recovering: Herstellen...
-recovery-mail-sent: Controleer je e-mail! We hebben u een link gestuurd om je wachtwoord te herstellen.
+recovery-mail-sent: Controleer je e-mail! We hebben je een link gestuurd om je wachtwoord te herstellen.
 register: Registreer
 registering: Registreren...
 register-club: Registreer Club
@@ -205,54 +205,54 @@ uploaded: 'Geüpload '
 uploading: Aan het uploaden...
 used-airspaces: Gebruikt luchtruim
 users: Gebruikers
-verify-flights-and-publish: U moet de eigenschappen verifiëren en hieronder 'Publiceer Vlucht(en)' aanklikken om uw vlucht(en) te publiceren.
+verify-flights-and-publish: Je moet de eigenschappen verifiëren en hieronder 'Publiceer Vlucht(en)' aanklikken om jouw vlucht(en) te publiceren.
 website: Webpagina
 wingmen: Wingmen
-wrong-credentials: Gelieve je e-mailadres en wachtwoord te controleren.
-wrong-current-password: Gelieve je huidige wachtwoord te controleren.
+wrong-credentials: Controleer aub je e-mailadres en wachtwoord.
+wrong-current-password: Controleer aub je huidige wachtwoord.
 year: Jaar
 'yes': Ja
-you-have-no-notifications: U hebt geen notificaties.
+you-have-no-notifications: Je hebt geen notificaties.
 your-flights-have-been-saved: Je vluchten zijn bewaard.
 your-live-tracking-key: 'Je live tracking sleutel is:'
 about:
-  welcome: Welkom bij SkyLines, jouw internet platform om uw vluchten de delen!
-  flights: <a href="{uploadURL}">upload</a> je IGC bestanden en deel ze met uw vrienden. We veranderen uw bestanden niet, of belemmeren u niet ze opnieuw te downloaden!
+  welcome: Welkom bij SkyLines, jouw internet platform om vluchten de delen!
+  flights: <a href="{uploadURL}">upload</a> je IGC bestanden en deel ze met je vrienden. We veranderen jouw bestanden niet, of belemmeren je niet ze opnieuw te downloaden!
   tracking: Gebruik je mobiele telefoon om positie updates te sturen naar Skylines.  Zie <a href="{url}"> hier </a> hoe het werkt
   analysis: 'Gebruik onze analyse tools om een beter inzicht te hebben in je vluchten en hoe je ze mogelijk kan verbeteren in de toekomst. '
-  task-planning: 'Gebruik uw browser om je opdrachten te plannen voor de vlucht en upload ze vlug naar je vlucht computer. integratie van {prosoar} is gepland. '
+  task-planning: 'Gebruik je browser om je opdrachten te plannen voor de vlucht en upload ze vlug naar je vlucht computer. integratie van {prosoar} is gepland. '
   competitions: Creëer competities om je toeschouwers een betere live tracking ervaring te bezorgen, door alle deelnemers op eenzelfde kaart te volgen.
-  achievements: Daag jezelf uit door alle prestaties die SkyLines biedt te volbrengen. Vlieg grote driehoeken, lange final glides of doe gewoon uw eerste buitenlanding
+  achievements: Daag jezelf uit door alle prestaties die SkyLines biedt te volbrengen. Vlieg grote driehoeken, lange final glides of doe gewoon je eerste buitenlanding
   notifications: 'Skylines heeft ook wat sociale media aspecten. Je kunt commentaar geven op vluchten en vrienden volgen en <a href="{url}">notificaties</a> krijgen als ze iets interessant gepresteerd hebben. '
   open-data: De SkyLines vluchten database is beschikbaar gemaakt onder een {license}. Skylines gebruikt hierbij keerpunt data van het {welt2000} project
   open-source: Skylines is een <a href="{teamURL}">gemeenschappelijk</a> project en is geheel gebaseerd op gratis software (<a href="{licenseURL}">licentie</a>). Bezoek {github} als je wil helpen!
 search:
   search: Zoeken
   search-for-TEXT: zoeken <small>naar "{text}"</small>
-  no-search-text: Gelieve iets in bovenstaande zoekbalk in te vullen.
+  no-search-text: Voel aub iets in in bovenstaande zoekbalk.
   no-results: Er zijn geen resultaten voor je zoekopdracht...Sorry!
 timeline-events:
   club-join:
     message1: <strong><a href="{actorURL}">{actor}</a></strong>is lid geworden van <strong><a href="{clubURL}">{club}</a></strong>.
-    message2: U ben lid van <strong><a href="{clubURL}">{club}</a></strong>.
+    message2: Je ben lid van <strong><a href="{clubURL}">{club}</a></strong>.
   flight-comment:
     message1: <strong><a href="{actorURL}">{actor}</a></strong> heeft gereageerd op een <strong>{distance}</strong> vlucht op <strong>{date}</strong>.
-    message2: U heeft gereageerd op een <strong>{distance}</strong> vlucht op <strong>{date}</strong>.
+    message2: Je hebt gereageerd op een <strong>{distance}</strong> vlucht op <strong>{date}</strong>.
     message3: <strong><a href="{actorURL}">{actor}</a></strong> heeft gereageerd op je <strong> {distance}</strong> vlucht op <strong>{date}</strong>.
-    message4: U heeft gereageerd op je <strong>{distance}</strong> vlucht op <strong>{date}</strong>.
+    message4: Je hebt gereageerd op je <strong>{distance}</strong> vlucht op <strong>{date}</strong>.
   flight-upload:
     message1: <strong><a href="{actorURL}">{actor}</a></strong> heeft een <strong>{distance}</strong> vlucht opgeladen op <strong>{date}</strong>.
-    message2: U heeft een <strong>{distance}</strong> vlucht geüpload op <strong>{date}</strong>.
+    message2: Je hebt een <strong>{distance}</strong> vlucht geüpload op <strong>{date}</strong>.
   follower:
     message1: <strong><a href="{actorURL}">{actor}</a></strong> is gestart met <strong><a href="{userURL}">{user}</a></strong> te volgen.
-    message2: U volgt nu <strong><a href="{userURL}">{user}</a></strong>.
+    message2: Je volgt nu <strong><a href="{userURL}">{user}</a></strong>.
     message3: <strong><a href="{actorURL}">{actor}</a></strong> is gestart met je te volgen.
   new-user:
     message1: <strong><a href="{actorURL}">{actor}</a></strong> is lid geworden van SkyLines.
-    message2: U bent nu lid van SkyLines.
+    message2: Je bent nu lid van SkyLines.
 tracking:
   what-is-it: Wat is er?
-  description: 'SkyLines Live Tracking kan gebruikt worden om anderen te laten deelnemen aan je tochten terwijl u aan het vliegen bent. Het gebruikt een heel licht gewicht protocol dat alleen de nodige data verzend, waardoor het ook werkt in gebieden/hoogtes waar de ontvangst niet zo goed is. Een voorbeeld: een vlucht van 10 uur gebruikt 340kb aan data terwijl de positie elke 5 sec. verzonden wordt!'
+  description: 'SkyLines Live Tracking kan gebruikt worden om anderen te laten deelnemen aan je tochten terwijl je aan het vliegen bent. Het gebruikt een heel licht gewicht protocol dat alleen de nodige data verzend, waardoor het ook werkt in gebieden/hoogtes waar de ontvangst niet zo goed is. Een voorbeeld: een vlucht van 10 uur gebruikt 340kb aan data terwijl de positie elke 5 sec. verzonden wordt!'
   clients: Klanten
   xcsoar-description: starten beschikbaar met {release}
   instructions-below: Instructies beneden
@@ -261,8 +261,8 @@ tracking:
   lt24-description: Je kan ook alle beschikbare applicaties gebruiken met het {livetrack24} protocol om je locatie te verzenden naar SkyLines. Gebruik je Live Tracking Key als gebruikersnaam, kies een wachtwoord en configureer {skylines} als server.
   your-live-tracking-key-is-KEY: 'Je Live Tracking Key is: {key}'
   settings: Live Tracking instellingen
-  login-required: Je moet inloggen om uw persoonlijke Live Tracking Key te bekijken.
-  xcsoar-instructions: In XCSoar , open het <em>setup systeem</em> dialoog, click op <em>setup</em> en dan <em>tracking</em>. Zet SkyLines tracking op, en voer U Live Tracking key in.
+  login-required: Je moet inloggen om je persoonlijke Live Tracking Key te bekijken.
+  xcsoar-instructions: In XCSoar , open het <em>setup systeem</em> dialoog, click op <em>setup</em> en dan <em>tracking</em>. Zet SkyLines tracking op, en voer je Live Tracking key in.
 flight-phase:
   powered: Gemotoriseerd
   circlingLeft: Links Cirkelen
