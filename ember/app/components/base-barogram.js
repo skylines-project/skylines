@@ -1,4 +1,5 @@
 import Ember from 'ember';
+import $ from 'jquery';
 import { conditional, tag } from 'ember-awesome-macros';
 import { htmlSafe } from 'ember-awesome-macros/string';
 
@@ -64,7 +65,7 @@ export default Ember.Component.extend({
     let placeholder = this.$('div');
 
     this.set('placeholder', placeholder);
-    this.set('flot', Ember.$.plot(placeholder, [], opts));
+    this.set('flot', $.plot(placeholder, [], opts));
   },
 
   draw() {
@@ -96,7 +97,7 @@ export default Ember.Component.extend({
   passiveTraces() {
     return (this.get('passive') || []).map(trace => ({
       data: trace.data,
-      color: Ember.$.color.parse(trace.color).add('a', -0.6).toString(),
+      color: $.color.parse(trace.color).add('a', -0.6).toString(),
       shadowSize: 0,
       lines: {
         lineWidth: 1,

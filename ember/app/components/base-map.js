@@ -1,4 +1,5 @@
 import Ember from 'ember';
+import $ from 'jquery';
 import ol from 'openlayers';
 import { tag } from 'ember-awesome-macros';
 import { htmlSafe } from 'ember-awesome-macros/string';
@@ -42,8 +43,8 @@ export default Ember.Component.extend({
     this.set('map', map);
 
     map.getViewport().setAttribute('tabindex', '0');
-    Ember.$(map.getViewport()).click(function() {
-      Ember.$(this).focus();
+    $(map.getViewport()).click(function() {
+      $(this).focus();
     });
 
     let osm_layer = new ol.layer.Tile({
@@ -118,7 +119,7 @@ export default Ember.Component.extend({
         return;
       }
 
-      layer.setVisible(Ember.$.inArray(layer.get('name'), overlay_layers) !== -1);
+      layer.setVisible($.inArray(layer.get('name'), overlay_layers) !== -1);
     });
   },
 
