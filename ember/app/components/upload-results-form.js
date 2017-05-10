@@ -1,4 +1,5 @@
 import Ember from 'ember';
+import RSVP from 'rsvp';
 import { task } from 'ember-concurrency';
 
 import UploadResult from '../utils/upload-result';
@@ -39,7 +40,7 @@ export default Ember.Component.extend({
     submit() {
       let validates = this.get('validations').map(v => v.validate());
 
-      Ember.RSVP.all(validates).then(results => {
+      RSVP.all(validates).then(results => {
         if (results.every(r => r.validations.get('isValid'))) {
           this.get('saveTask').perform();
         }

@@ -1,4 +1,5 @@
 import Ember from 'ember';
+import $ from 'jquery';
 import ol from 'openlayers';
 
 export default Ember.Component.extend({
@@ -16,7 +17,7 @@ export default Ember.Component.extend({
     let badgeStyle = `display: inline-block; text-align: center; background: ${this.get('flight.color')}`;
 
     let id = this.getWithDefault('flight.competition_id', '') || this.getWithDefault('flight.registration', '');
-    let badge = Ember.$(`<span class="badge plane_marker" style="${badgeStyle}">
+    let badge = $(`<span class="badge plane_marker" style="${badgeStyle}">
       ${id}
     </span>`);
 
@@ -33,7 +34,7 @@ export default Ember.Component.extend({
     let overlay = this.get('overlay');
     this.get('map').addOverlay(overlay);
 
-    let width = Ember.$(overlay.getElement()).width();
+    let width = $(overlay.getElement()).width();
     overlay.setOffset([-width / 2, -40]);
   },
 

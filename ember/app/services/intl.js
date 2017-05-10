@@ -1,4 +1,5 @@
 import Ember from 'ember';
+import RSVP from 'rsvp';
 import IntlService from 'ember-intl/services/intl';
 
 export default IntlService.extend({
@@ -11,7 +12,7 @@ export default IntlService.extend({
 
   loadLocale(locale) {
     if (this.exists('yes', locale)) {
-      return Ember.RSVP.resolve();
+      return RSVP.resolve();
     }
 
     return this.get('ajax').request(`/translations/${locale}.json`)

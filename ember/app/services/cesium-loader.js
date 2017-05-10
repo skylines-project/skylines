@@ -1,4 +1,5 @@
 import Ember from 'ember';
+import RSVP from 'rsvp';
 
 const CESIUM_BASE_URL = '/cesium/';
 
@@ -8,7 +9,7 @@ export default Ember.Service.extend({
   load() {
     let promise = this.get('loaderPromise');
     if (!promise) {
-      promise = new Ember.RSVP.Promise(resolve => {
+      promise = new RSVP.Promise(resolve => {
         Ember.debug('Loading Cesium...');
 
         let cesium = document.createElement('script');

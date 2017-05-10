@@ -1,6 +1,7 @@
 /* global BigScreen */
 
 import Ember from 'ember';
+import $ from 'jquery';
 
 export default Ember.Component.extend({
   classNames: ['FullscreenButton', 'ol-unselectable'],
@@ -15,6 +16,6 @@ export default Ember.Component.extend({
 
   toggle() {
     let element = this.get('fullscreenElement');
-    BigScreen.toggle(Ember.$(element)[0]);
+    BigScreen.toggle($(element)[0]);
   },
 });

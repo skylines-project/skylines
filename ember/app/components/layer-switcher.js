@@ -1,4 +1,5 @@
 import Ember from 'ember';
+import $ from 'jquery';
 
 export default Ember.Component.extend({
   cookies: Ember.inject.service(),
@@ -18,12 +19,12 @@ export default Ember.Component.extend({
     };
 
     this.set('mouseHandler', mouseHandler);
-    Ember.$(document).on('mouseup touchend', mouseHandler);
+    $(document).on('mouseup touchend', mouseHandler);
   },
 
   willDestroyElement() {
     let mouseHandler = this.get('mouseHandler');
-    Ember.$(document).off('mouseup touchend', mouseHandler);
+    $(document).off('mouseup touchend', mouseHandler);
   },
 
 
