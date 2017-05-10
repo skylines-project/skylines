@@ -1,20 +1,11 @@
-import { describe, it, beforeEach, afterEach } from 'mocha';
+import { describe, it, beforeEach } from 'mocha';
 import { expect } from 'chai';
 import { visit, currentURL, find } from 'ember-native-dom-helpers';
 
-import startApp from 'skylines/tests/helpers/start-app';
-import destroyApp from 'skylines/tests/helpers/destroy-app';
+import setupAcceptanceTest from 'skylines/tests/helpers/setup-acceptance-test';
 
 describe('Acceptance | index', function() {
-  let application;
-
-  beforeEach(function() {
-    application = startApp();
-  });
-
-  afterEach(function() {
-    destroyApp(application);
-  });
+  setupAcceptanceTest();
 
   describe('visiting /', function() {
     beforeEach(async function() {

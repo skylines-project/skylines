@@ -1,20 +1,11 @@
 import { expect } from 'chai';
-import { describe, it, beforeEach, afterEach } from 'mocha';
+import { describe, it, beforeEach } from 'mocha';
 import { visit, currentURL, find } from 'ember-native-dom-helpers';
 
-import startApp from '../helpers/start-app';
-import destroyApp from '../helpers/destroy-app';
+import setupAcceptanceTest from 'skylines/tests/helpers/setup-acceptance-test';
 
 describe('Acceptance | page-not-found', function() {
-  let application;
-
-  beforeEach(function() {
-    application = startApp();
-  });
-
-  afterEach(function() {
-    destroyApp(application);
-  });
+  setupAcceptanceTest();
 
   describe('visiting /foobar', function() {
     beforeEach(async function() {
