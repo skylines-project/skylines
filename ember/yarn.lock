@@ -2271,12 +2271,13 @@ ember-awesome-macros@^0.35.3:
     ember-macro-helpers "^0.14.0"
     ember-string-ishtmlsafe-polyfill "^1.1.0"
 
-ember-basic-dropdown@^0.22.0:
-  version "0.22.4"
-  resolved "https://registry.yarnpkg.com/ember-basic-dropdown/-/ember-basic-dropdown-0.22.4.tgz#5baffc8400bd969a026c3482f95077091c560527"
+ember-basic-dropdown@^0.32.5:
+  version "0.32.6"
+  resolved "https://registry.yarnpkg.com/ember-basic-dropdown/-/ember-basic-dropdown-0.32.6.tgz#4c95b2f10847a35d9b9386c7be7b01090ca2eb52"
   dependencies:
-    ember-cli-babel "^5.1.10"
+    ember-cli-babel "^6.1.0"
     ember-cli-htmlbars "^1.1.1"
+    ember-native-dom-helpers "^0.4.0"
     ember-wormhole "^0.5.1"
 
 ember-cli-active-link-wrapper@^0.3.1:
@@ -2303,7 +2304,7 @@ ember-cli-babel@5.1.10:
     ember-cli-version-checker "^1.0.2"
     resolve "^1.1.2"
 
-ember-cli-babel@^5.0.0, ember-cli-babel@^5.1.0, ember-cli-babel@^5.1.10, ember-cli-babel@^5.1.3, ember-cli-babel@^5.1.5, ember-cli-babel@^5.1.6, ember-cli-babel@^5.1.7, ember-cli-babel@^5.1.8, ember-cli-babel@^5.1.9:
+ember-cli-babel@^5.0.0, ember-cli-babel@^5.1.0, ember-cli-babel@^5.1.3, ember-cli-babel@^5.1.5, ember-cli-babel@^5.1.6, ember-cli-babel@^5.1.7, ember-cli-babel@^5.1.8, ember-cli-babel@^5.1.9:
   version "5.2.4"
   resolved "https://registry.yarnpkg.com/ember-cli-babel/-/ember-cli-babel-5.2.4.tgz#5ce4f46b08ed6f6d21e878619fb689719d6e8e13"
   dependencies:
@@ -2717,15 +2718,7 @@ ember-computed-decorators@0.2.2:
   dependencies:
     ember-cli-babel "^5.1.5"
 
-ember-concurrency@^0.7.15:
-  version "0.7.19"
-  resolved "https://registry.yarnpkg.com/ember-concurrency/-/ember-concurrency-0.7.19.tgz#095f2ede1b56ab068958cac5b55e77b9de67e1c6"
-  dependencies:
-    ember-cli-babel "^5.1.5"
-    ember-getowner-polyfill "^1.1.0"
-    ember-maybe-import-regenerator "^0.1.4"
-
-ember-concurrency@^0.8.3:
+ember-concurrency@^0.8.1, ember-concurrency@^0.8.3:
   version "0.8.3"
   resolved "https://registry.yarnpkg.com/ember-concurrency/-/ember-concurrency-0.8.3.tgz#f3adc58bc7a69c7d9ec27fe9cbe75cb8c0adf3bf"
   dependencies:
@@ -2889,7 +2882,7 @@ ember-macro-helpers@^0.14.0:
     ember-cli-test-info "^1.0.0"
     ember-weakmap "^2.0.0"
 
-ember-maybe-import-regenerator@^0.1.4, ember-maybe-import-regenerator@^0.1.5, ember-maybe-import-regenerator@^0.1.6:
+ember-maybe-import-regenerator@^0.1.5, ember-maybe-import-regenerator@^0.1.6:
   version "0.1.6"
   resolved "https://registry.yarnpkg.com/ember-maybe-import-regenerator/-/ember-maybe-import-regenerator-0.1.6.tgz#35d41828afa6d6a59bc0da3ce47f34c573d776ca"
   dependencies:
@@ -2931,14 +2924,14 @@ ember-page-title@^3.1.5:
     ember-cli-head "0.1.1"
     ember-cli-htmlbars "^1.1.0"
 
-ember-power-select@^1.4.3:
-  version "1.4.4"
-  resolved "https://registry.yarnpkg.com/ember-power-select/-/ember-power-select-1.4.4.tgz#11c0ff8f4cec18a871a7ade879267ff7a568cb62"
+ember-power-select@^1.8.4:
+  version "1.8.4"
+  resolved "https://registry.yarnpkg.com/ember-power-select/-/ember-power-select-1.8.4.tgz#1da93713600a98e7a93e88d2e5d2070160e86061"
   dependencies:
-    ember-basic-dropdown "^0.22.0"
-    ember-cli-babel "^5.1.10"
+    ember-basic-dropdown "^0.32.5"
+    ember-cli-babel "^6.1.0"
     ember-cli-htmlbars "^1.1.1"
-    ember-concurrency "^0.7.15"
+    ember-concurrency "^0.8.1"
     ember-text-measurer "^0.3.3"
     ember-truth-helpers "^1.3.0"
 
