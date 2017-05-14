@@ -9,6 +9,7 @@
     "jquery": "1.10.2",
     "sidebar-v2": "0.2.1",
     "eonasdan-bootstrap-datetimepicker": "https://github.com/TobiasLohner/bootstrap-datetimepicker.git#c36342415a1be8fa013548402bf01718ca93d454",
-    "BigScreen": "bigscreen#2.0.4"
+    "BigScreen": "bigscreen#2.0.4",
+    "pace": "^1.0.2"
   }
 }

@@ -37,6 +37,7 @@
     "ember-cli-htmlbars-inline-precompile": "^0.4.0",
     "ember-cli-inject-live-reload": "^1.4.1",
     "ember-cli-mocha": "^0.14.0",
+    "ember-cli-pace": "^0.1.0",
     "ember-cli-sass": "^6.1.1",
     "ember-cli-sentry": "^2.4.3",
     "ember-cli-shims": "^1.1.0",

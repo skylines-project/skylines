@@ -1,0 +1,7 @@
+.ember-application .pace .pace-progress {
+  top: 41px;
+
+  @media (max-width: 767px) {
+    top: 56px;
+  }
+}
