@@ -14,9 +14,9 @@ export default Ember.Route.extend(ApplicationRouteMixin, {
   session: Ember.inject.service(),
   units: Ember.inject.service(),
 
-  beforeModel() {
-    return this._determineLocale()
-      .then(locale => this.get('intl').loadAndSetLocale(locale));
+  async beforeModel() {
+    let locale = await this._determineLocale();
+    await this.get('intl').loadAndSetLocale(locale);
   },
 
   setupController(controller) {
@@ -44,7 +44,7 @@ export default Ember.Route.extend(ApplicationRouteMixin, {
     }
   },
 
-  _determineLocale() {
+  async _determineLocale() {
     let availableLocales = _availableLocales.map(it => it.code);
     Ember.debug(`Available locales: ${availableLocales}`);
 
@@ -57,10 +57,12 @@ export default Ember.Route.extend(ApplicationRouteMixin, {
     }
 
     Ember.debug('Requesting locale resolution from server');
-    let data = { available: availableLocales.join() };
-    return this.get('ajax').request('/api/locale', { data })
-      .then(it => it.locale || FALLBACK_LOCALE)
-      .catch(() => FALLBACK_LOCALE);
+    try {
+      let data = { available: availableLocales.join() };
+      return (await this.get('ajax').request('/api/locale', { data })).locale || FALLBACK_LOCALE;
+    } catch (error) {
+      return FALLBACK_LOCALE;
+    }
   },
 
   sessionAuthenticated() {

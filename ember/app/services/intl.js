@@ -1,22 +1,22 @@
 import Ember from 'ember';
-import RSVP from 'rsvp';
 import IntlService from 'ember-intl/services/intl';
 
 export default IntlService.extend({
   ajax: Ember.inject.service(),
   cookies: Ember.inject.service(),
 
-  loadAndSetLocale(locale) {
-    return this.loadLocale(locale).then(() => this.setLocale(locale));
+  async loadAndSetLocale(locale) {
+    await this.loadLocale(locale);
+    this.setLocale(locale);
   },
 
-  loadLocale(locale) {
+  async loadLocale(locale) {
     if (this.exists('yes', locale)) {
-      return RSVP.resolve();
+      return;
     }
 
-    return this.get('ajax').request(`/translations/${locale}.json`)
-      .then(translations => this.addTranslations(locale, translations));
+    let translations = await this.get('ajax').request(`/translations/${locale}.json`);
+    await this.addTranslations(locale, translations);
   },
 
   setLocale(locale) {

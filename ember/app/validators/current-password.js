@@ -5,13 +5,13 @@ export default BaseValidator.extend({
   ajax: Ember.inject.service(),
   intl: Ember.inject.service(),
 
-  validate(password, options) {
+  async validate(password, options) {
     if (!password) {
       return;
     }
 
     let json = { password };
-    return this.get('ajax').request('/api/settings/password/check', { method: 'POST', json })
-      .then(({ result }) => (result ? true : this.get('intl').t(options.messageKey)));
+    let { result } = await this.get('ajax').request('/api/settings/password/check', { method: 'POST', json });
+    return result ? true : this.get('intl').t(options.messageKey);
   },
 });

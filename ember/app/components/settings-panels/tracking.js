@@ -33,12 +33,11 @@ export default Ember.Component.extend(Validations, {
   _delay: conditional(eq('delay', 0), raw('0'), 'delay'),
 
   actions: {
-    submit() {
-      this.validate().then(({ validations }) => {
-        if (validations.get('isValid')) {
-          this.get('saveTask').perform();
-        }
-      });
+    async submit() {
+      let { validations } = await this.validate();
+      if (validations.get('isValid')) {
+        this.get('saveTask').perform();
+      }
     },
   },
 

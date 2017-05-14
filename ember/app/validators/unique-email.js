@@ -6,7 +6,7 @@ export default BaseValidator.extend({
   intl: Ember.inject.service(),
   account: Ember.inject.service(),
 
-  validate(email, options) {
+  async validate(email, options) {
     if (!email) {
       return;
     }
@@ -14,7 +14,7 @@ export default BaseValidator.extend({
     let validResults = options.validResults || ['available', 'self'];
 
     let json = { email };
-    return this.get('ajax').request('/api/users/check-email', { method: 'POST', json })
-      .then(({ result }) => ((validResults.indexOf(result) !== -1) ? true : this.get('intl').t(options.messageKey)));
+    let { result } = await this.get('ajax').request('/api/users/check-email', { method: 'POST', json });
+    return (validResults.indexOf(result) !== -1) ? true : this.get('intl').t(options.messageKey);
   },
 });
