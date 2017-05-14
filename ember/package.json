@@ -46,7 +46,7 @@
     "ember-cookies": "^0.0.13",
     "ember-cp-validations": "^3.1.1",
     "ember-font-awesome": "2.2.0",
-    "ember-href-to": "^1.11.1",
+    "ember-href-to": "^1.12.1",
     "ember-intl": "^2.21.0",
     "ember-intl-cp-validations": "^3.0.1",
     "ember-load-initializers": "^1.0.0",
