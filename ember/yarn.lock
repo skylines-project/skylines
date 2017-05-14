@@ -2734,6 +2734,13 @@ ember-cookies@^0.0.11:
     ember-cli-babel "^5.1.6"
     ember-getowner-polyfill "~1.1.1"
 
+ember-cookies@^0.0.13:
+  version "0.0.13"
+  resolved "https://registry.yarnpkg.com/ember-cookies/-/ember-cookies-0.0.13.tgz#18350df766240793d46744e4ee5c9a55ae6b4e0a"
+  dependencies:
+    ember-cli-babel "^5.1.7"
+    ember-getowner-polyfill "^1.2.2"
+
 ember-cp-validations@^3.1.1:
   version "3.2.3"
   resolved "https://registry.yarnpkg.com/ember-cp-validations/-/ember-cp-validations-3.2.3.tgz#1864ce28ef3863bb90e4baaa69071f2722977f42"
