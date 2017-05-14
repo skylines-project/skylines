@@ -34,6 +34,10 @@ module.exports = function(environment) {
       development: true,
       dsn: 'https://1081e00b0f0e4965bae7b8b7e468edd3@sentry.io/102210',
     },
+
+    pace: {
+      color: 'orange',
+    },
   };
 
   if (environment === 'production') {
