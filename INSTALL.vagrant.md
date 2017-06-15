@@ -24,3 +24,19 @@ necessary things to run a *SkyLines* development server on it. As soon as it is
 finished you can call `vagrant ssh` to access the virtual machine from the
 terminal. The shared folder with the *SkyLines* code can be found at
 `/vagrant`.
+
+# Frontend installation
+
+The frontend is based on ember, a nodejs framework. Unfortunately nodejs/npm is quite resource-intensive,
+so it's recommended to build the frontend on the host machine.
+
+* Install [NodeJS](https://nodejs.org/) and [bower](https://bower.io/)
+
+Now you can start and build the frontend with ember:
+
+```
+cd ember
+npm install
+bower install
+node_modules/.bin/ember build
+```
