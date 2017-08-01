@@ -8,16 +8,17 @@ A short introduction of this app could easily go here.
 You will need the following things properly installed on your computer.
 
 * [Git](https://git-scm.com/)
-* [Node.js](https://nodejs.org/) (with NPM)
+* [Node.js](https://nodejs.org/)
 * [Bower](https://bower.io/)
 * [Ember CLI](https://ember-cli.com/)
 * [PhantomJS](http://phantomjs.org/)
+* [Yarn](https://yarnpkg.com/lang/en/)
 
 ## Installation
 
 * `git clone <repository-url>` this repository
 * change into the new directory
-* `npm install`
+* `yarn install`
 * `bower install`
 
 ## Running / Development
@@ -37,6 +38,7 @@ Make use of the many generators for code, try `ember help generate` for more det
 ### Building
 
 * `ember build` (development)
+* `ember build --watch` (useful for development)
 * `ember build --environment production` (production)
 
 ### Deploying
