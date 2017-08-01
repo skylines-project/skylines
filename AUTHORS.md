@@ -5,6 +5,7 @@
 * Christophe Mutricy (<xtophe@chewa.net>)
 * Fabian Berstecher (<F.Berstecher@gmx.de>)
 * Fabian Schöttler (<fabian@schoettlerhome.de>)
+* Leonard Rapp (<leonardrapp@gmx.de>)
 * Lucas James (<lucas.james@ldjcs.com.au>)
 * Matthew Scutter (<yellowplantain@gmail.com>)
 * Max Kellermann (<max@duempel.org>)
