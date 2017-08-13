@@ -9,8 +9,7 @@ export default Ember.Component.extend({
   intl: Ember.inject.service(),
   session: Ember.inject.service(),
 
-  tagName: 'ul',
-  classNames: ['nav', 'navbar-nav', 'navbar-right'],
+  tagName: '',
 
   availableLocales,
   currentLocale: findBy('availableLocales', raw('code'), 'intl.locale.firstObject'),

@@ -1,5 +1,14 @@
 import Ember from 'ember';
 
 export default Ember.Component.extend({
-  classNames: ['navbar', 'navbar-inverse', 'navbar-fixed-top'],
+  tagName: '',
+
+  collapsed: true,
+
+  actions: {
+    didClickUpload() {
+      this.set('collapse', true);
+      this.didClickUpload();
+    },
+  },
 });
