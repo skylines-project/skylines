@@ -10,6 +10,7 @@ module.exports = function(defaults) {
       extensions: ['css', 'js'],
       exclude: ['cesium'],
     },
+
     minifyJS: {
       options: {
         exclude: ['cesium/Cesium.js'],
@@ -27,6 +28,12 @@ module.exports = function(defaults) {
 
     svgJar: {
       sourceDirs: ['public/svg'],
+    },
+
+    'ember-bootstrap': {
+      'bootstrapVersion': 3,
+      'importBootstrapFont': true,
+      'importBootstrapCSS': false,
     },
   });
 
@@ -55,6 +62,11 @@ module.exports = function(defaults) {
   app.import('bower_components/Flot/jquery.flot.resize.js');
   app.import('bower_components/flot-marks/src/jquery.flot.marks.js');
   app.import('vendor/jquery.flot.flight-upload.js');
+
+  app.import({
+    development: 'node_modules/bootstrap-sass/assets/javascripts/bootstrap.js',
+    production: 'node_modules/bootstrap-sass/assets/javascripts/bootstrap.min.js',
+  });
 
   app.import({
     development: 'bower_components/remarkable/dist/remarkable.js',
