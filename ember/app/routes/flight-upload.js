@@ -18,4 +18,10 @@ export default Ember.Route.extend(AuthenticatedRouteMixin, {
 
     return { clubMembers };
   },
+
+  setupController(controller) {
+    this._super(...arguments);
+
+    controller.set('result', null);
+  },
 });
