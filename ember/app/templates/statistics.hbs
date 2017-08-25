@@ -6,29 +6,29 @@
   <div class="row">
     <div class="col-md-12">
       {{#if (or pilot club airport account.user)}}
-        <ul class="nav nav-pills">
-          {{#active-link}}{{#link-to "statistics.index"}}SkyLines{{/link-to}}{{/active-link}}
+        {{#bs-nav type="pills" as |nav|}}
+          {{#nav.item}}{{#nav.link-to "statistics.index"}}SkyLines{{/nav.link-to}}{{/nav.item}}
 
           {{#if airport}}
-            {{#active-link}}{{#link-to "statistics.airport" airport}}{{name}}{{/link-to}}{{/active-link}}
+            {{#nav.item}}{{#nav.link-to "statistics.airport" airport}}{{name}}{{/nav.link-to}}{{/nav.item}}
           {{/if}}
 
           {{#if club}}
-            {{#active-link}}{{#link-to "statistics.club" club}}{{name}}{{/link-to}}{{/active-link}}
+            {{#nav.item}}{{#nav.link-to "statistics.club" club}}{{name}}{{/nav.link-to}}{{/nav.item}}
           {{/if}}
 
           {{#if (and session.isAuthenticated (not-eq account.club.id club))}}
-            {{#active-link}}{{#link-to "statistics.club" account.club.id}}{{account.club.name}}{{/link-to}}{{/active-link}}
+            {{#nav.item}}{{#nav.link-to "statistics.club" account.club.id}}{{account.club.name}}{{/nav.link-to}}{{/nav.item}}
           {{/if}}
 
           {{#if pilot}}
-            {{#active-link}}{{#link-to "statistics.pilot" pilot}}{{name}}{{/link-to}}{{/active-link}}
+            {{#nav.item}}{{#nav.link-to "statistics.pilot" pilot}}{{name}}{{/nav.link-to}}{{/nav.item}}
           {{/if}}
 
           {{#if (and account.user (not-eq account.user.id pilot))}}
-            {{#active-link}}{{#link-to "statistics.pilot" account.user.id}}{{account.user.name}}{{/link-to}}{{/active-link}}
+            {{#nav.item}}{{#nav.link-to "statistics.pilot" account.user.id}}{{account.user.name}}{{/nav.link-to}}{{/nav.item}}
           {{/if}}
-        </ul>
+        {{/bs-nav}}
       {{/if}}
 
       {{outlet}}
