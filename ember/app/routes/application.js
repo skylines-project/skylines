@@ -19,7 +19,7 @@ export default Ember.Route.extend(ApplicationRouteMixin, {
     await this.get('intl').loadAndSetLocale(locale);
   },
 
-  setupController(controller) {
+  setupController() {
     this._super(...arguments);
 
     let settings = this.get('session.data.authenticated.settings');
@@ -31,8 +31,6 @@ export default Ember.Route.extend(ApplicationRouteMixin, {
         speedUnitIndex: settings.speedUnit,
       });
     }
-
-    controller.set('uploadController', this.controllerFor('flight-upload'));
   },
 
   activate() {

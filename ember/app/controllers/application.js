@@ -8,9 +8,5 @@ export default Ember.Controller.extend({
       });
       return false;
     },
-
-    resetUploadController() {
-      this.get('uploadController').set('result', null);
-    },
   },
 });

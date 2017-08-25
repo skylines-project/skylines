@@ -1,16 +1,22 @@
-<div class="container">
+{{#bs-navbar type="inverse" fluid=false position="fixed-top" collapsed=collapsed onCollapse=(action (mut collapsed) true) onExpand=(action (mut collapsed) false) as |navbar|}}
   <div class="navbar-header">
-    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
-      {{fa-icon "bars" size="lg"}} <span class="sr-only">Toggle navigation</span>
-    </button>
-    {{#link-to "index" class="navbar-brand"}}
+    {{navbar.toggle}}
+
+    {{#link-to "index" class="navbar-brand" click=(action (mut collapsed) true)}}
       {{svg-jar "logo" class="logo"}} <span class="skylines-blue">Sky</span><span class="skylines-white">Lines</span>
     {{/link-to}}
   </div>
 
-  <div class="collapse navbar-collapse navbar-ex1-collapse">
-    {{nav-bar-menu}}
+  {{#navbar.content}}
+    {{#navbar.nav as |nav|}}
+      {{nav-bar-link nav=nav target="tracking" title=(t "live-tracking-nav-bar-link") icon="rss"}}
+      {{nav-bar-link nav=nav target="flights" title=(t "flights") icon="plane"}}
+      {{nav-bar-link nav=nav target="ranking" title=(t "ranking") icon="reorder"}}
+      {{nav-bar-link nav=nav target="statistics" title=(t "statistics") icon="bar-chart"}}
+      {{nav-bar-link nav=nav target="search" title=(t "search.search") icon="search" listClass="hidden-lg"}}
+    {{/navbar.nav}}
+
     {{nav-bar-search-form onSearch=onSearch}}
-    {{nav-bar-menu-right didClickUpload=didClickUpload}}
-  </div>
-</div>
+    {{nav-bar-menu-right navbar=navbar}}
+  {{/navbar.content}}
+{{/bs-navbar}}
