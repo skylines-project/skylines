@@ -6,7 +6,7 @@
 </div>
 <div class="panel-body">
   {{#if error}}
-    <div class="alert alert-danger" role="alert">{{error}}</div>
+    {{#bs-alert type="danger" dismissible=false}}{{error}}{{/bs-alert}}
   {{/if}}
 
   <p style="margin: 10px 0px 20px;">

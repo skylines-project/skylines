@@ -4,11 +4,11 @@
 <div class="panel-body">
   <form {{action (perform saveTask) on="submit"}}>
     {{#if error}}
-      <div class="alert alert-danger" role="alert">
+      {{#bs-alert type="danger" dismissible=false}}
         {{#if messageKey}}{{t messageKey error=error}}{{else}}{{error}}{{/if}}
-      </div>
+      {{/bs-alert}}
     {{else if messageKey}}
-      <div class="alert alert-success" role="alert">{{t messageKey}}</div>
+      {{#bs-alert type="success" dismissible=false}}{{t messageKey}}{{/bs-alert}}
     {{/if}}
 
     <div class="form-group">

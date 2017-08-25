@@ -1,6 +1,6 @@
 <form {{action "submit" on="submit"}}>
   {{#if error}}
-    <div class="alert alert-danger" role="alert">{{error}}</div>
+    {{#bs-alert type="danger" dismissible=false}}{{error}}{{/bs-alert}}
   {{/if}}
 
   {{#validated-block label=(t "igc-or-zip-files") validation=validations.attrs.files hasContent=files}}

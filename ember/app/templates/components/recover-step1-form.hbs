@@ -1,8 +1,8 @@
 <form {{action "submit" on="submit"}}>
   {{#if error}}
-    <div class="alert alert-danger" role="alert">{{error}}</div>
+    {{#bs-alert type="danger" dismissible=false}}{{error}}{{/bs-alert}}
   {{else if success}}
-    <div class="alert alert-success" role="alert">{{t "recovery-mail-sent"}}</div>
+    {{#bs-alert type="success" dismissible=false}}{{t "recovery-mail-sent"}}{{/bs-alert}}
   {{/if}}
 
   {{validated-input
