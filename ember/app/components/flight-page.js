@@ -58,6 +58,8 @@ export default Ember.Component.extend({
     if (window.location.hash &&
       sidebar.find(`li > a[href="#${window.location.hash.substring(1)}"]`).length !== 0) {
       sidebar.open(window.location.hash.substring(1));
+    } else if (window.innerWidth >= 768) {
+      sidebar.open('tab-overview');
     }
 
     let [primaryId, ...otherIds] = this.get('ids');

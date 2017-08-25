@@ -1,7 +1,7 @@
-<div id="sidebar" class="sidebar">
+<div id="sidebar" class="sidebar collapsed">
   <!-- Nav tabs -->
   <ul class="sidebar-tabs" role="tablist">
-    <li class="active">
+    <li>
       <a href="#tab-overview" title="{{t "overview"}}" role="tab">
         {{fa-icon "info" size="lg"}}
       </a>
@@ -38,7 +38,7 @@
   </ul>
   <!-- Tab panes -->
   <div class="sidebar-content">
-    <div class="sidebar-pane active" id="tab-overview">
+    <div class="sidebar-pane" id="tab-overview">
       <h3>{{t "overview"}}{{share-button}}</h3>
       <div class="sidebar-pane-content">
         {{flight-details-table flight=flight transitionTo=transitionTo}}
