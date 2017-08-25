@@ -7,8 +7,7 @@ export default Ember.Component.extend({
   account: Ember.inject.service(),
   pinnedFlights: Ember.inject.service(),
 
-  tagName: 'ul',
-  classNames: ['nav', 'nav-pills'],
+  tagName: '',
 
   hasPinned: Ember.computed.notEmpty('pinnedFlights.pinned'),
 
