@@ -40,12 +40,17 @@ export default Ember.Component.extend({
 
     let sidebar = this.$('#sidebar').sidebar();
 
-    this.$('#barogram_panel').resize(() => {
-      let height = this.$('#barogram_panel').height() + 10;
+    let resize = () => {
+      let $barogramPanel = this.$('#barogram_panel');
+      let bottom = Number($barogramPanel.css('bottom').replace('px', ''));
+      let height = $barogramPanel.height() + bottom;
       sidebar.css('bottom', height);
       this.$('.ol-scale-line').css('bottom', height);
       this.$('.ol-attribution').css('bottom', height);
-    });
+    };
+
+    resize();
+    this.$('#barogram_panel').resize(resize);
 
     if (window.location.hash &&
       sidebar.find(`li > a[href="#${window.location.hash.substring(1)}"]`).length !== 0) {
