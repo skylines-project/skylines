@@ -11,6 +11,7 @@ export default Ember.Component.extend({
 
   leg: null,
   selection: null,
+  onSelect() {},
 
   speed: Ember.computed('leg.{duration,distance}', function() {
     let duration = this.get('leg.duration');
@@ -54,7 +55,7 @@ export default Ember.Component.extend({
   }),
 
   click() {
-    let onSelect = this.getWithDefault('onSelect', Ember.K);
+    let onSelect = this.get('onSelect');
 
     if (this.get('selected')) {
       onSelect(null);

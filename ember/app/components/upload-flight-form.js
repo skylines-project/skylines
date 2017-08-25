@@ -33,6 +33,7 @@ export default Ember.Component.extend(Validations, {
   clubMembers: null,
   pilotName: null,
   error: null,
+  onUpload() {},
 
   pilotId: Ember.computed.oneWay('account.user.id'),
 
@@ -57,7 +58,7 @@ export default Ember.Component.extend(Validations, {
 
     try {
       let json = yield this.get('ajax').request('/api/flights/upload/', { method: 'POST', data, contentType: false, processData: false });
-      this.getWithDefault('onUpload', Ember.K)(json);
+      this.get('onUpload')(json);
 
     } catch (error) {
       this.set('error', error);

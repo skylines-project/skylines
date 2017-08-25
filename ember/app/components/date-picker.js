@@ -6,7 +6,7 @@ export default Ember.Component.extend({
   tagName: 'span',
 
   date: null,
-  onSelect: null,
+  onSelect() {},
 
   didInsertElement() {
     let picker = this.$('span').datepicker({
@@ -17,7 +17,7 @@ export default Ember.Component.extend({
 
     picker.on('changeDate', e => {
       picker.data('datepicker').hide();
-      this.getWithDefault('onSelect', Ember.K)(isoDate(e.date));
+      this.get('onSelect')(isoDate(e.date));
     });
   },
 

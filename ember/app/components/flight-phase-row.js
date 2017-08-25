@@ -9,6 +9,7 @@ export default Ember.Component.extend({
 
   phase: null,
   selection: null,
+  onSelect() {},
 
   isCircling: Ember.computed.equal('phase.type', 'circling'),
   isPowered: Ember.computed.equal('phase.type', 'powered'),
@@ -24,7 +25,7 @@ export default Ember.Component.extend({
   }),
 
   click() {
-    let onSelect = this.getWithDefault('onSelect', Ember.K);
+    let onSelect = this.get('onSelect');
 
     if (this.get('selected')) {
       onSelect(null);

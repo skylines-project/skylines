@@ -9,6 +9,7 @@ export default Ember.Component.extend({
   ajax: Ember.inject.service(),
 
   flight: null,
+  transitionTo() {},
 
   pilotName: or('flight.pilot.name', 'flight.pilotName'),
   copilotName: or('flight.copilot.name', 'flight.copilotName'),
@@ -33,7 +34,7 @@ export default Ember.Component.extend({
     let id = this.get('flight.id');
     yield this.get('ajax').request(`/api/flights/${id}/`, { method: 'DELETE' });
     this.set('showDeleteModal', false);
-    this.getWithDefault('transitionTo', Ember.K)('flights');
+    this.get('transitionTo')('flights');
   }).drop(),
 
   publishTask: task(function * () {

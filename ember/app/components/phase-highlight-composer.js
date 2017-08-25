@@ -9,6 +9,7 @@ export default Ember.Component.extend({
   map: null,
   paddingFn: null,
   coordinates: null,
+  calculatePadding() {},
 
   startCoordinate: Ember.computed.readOnly('coordinates.firstObject'),
   endCoordinate: Ember.computed.readOnly('coordinates.lastObject'),
@@ -75,7 +76,7 @@ export default Ember.Component.extend({
     if (coordinates) {
       let map = this.get('map');
       let extent = ol.extent.boundingExtent(coordinates);
-      let padding = this.getWithDefault('calculatePadding', Ember.K)();
+      let padding = this.get('calculatePadding')();
       map.getView().fit(extent, map.getSize(), { padding });
     }
   },

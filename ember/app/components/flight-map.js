@@ -1,5 +1,3 @@
-import Ember from 'ember';
-
 import BaseMapComponent from './base-map';
 import slMapClickHandler from '../utils/map-click-handler';
 
@@ -8,6 +6,10 @@ export default BaseMapComponent.extend({
   fixes: null,
   phaseHighlightCoords: null,
   hoverEnabled: true,
+
+  onExtentChange() {},
+  onTimeChange() {},
+  onCesiumEnabledChange() {},
 
   didInsertElement() {
     this._super(...arguments);
@@ -27,7 +29,7 @@ export default BaseMapComponent.extend({
   },
 
   _handleMoveEnd(event) {
-    this.getWithDefault('onExtentChange', Ember.K)(event.frameState.extent);
+    this.get('onExtentChange')(event.frameState.extent);
   },
 
   _handlePointerMove(event) {
@@ -51,7 +53,7 @@ export default BaseMapComponent.extend({
 
       // Set the time when the mouse hovers the map
       let time = (squared_distance > 100) ? this.get('defaultTime') : closest_point[3];
-      this.getWithDefault('onTimeChange', Ember.K)(time);
+      this.get('onTimeChange')(time);
 
       map.render();
     }
@@ -60,11 +62,11 @@ export default BaseMapComponent.extend({
   actions: {
     cesiumEnabled() {
       this.set('cesiumEnabled', true);
-      this.getWithDefault('onCesiumEnabledChange', Ember.K)(true);
+      this.get('onCesiumEnabledChange')(true);
     },
     cesiumDisabled() {
       this.set('cesiumEnabled', false);
-      this.getWithDefault('onCesiumEnabledChange', Ember.K)(false);
+      this.get('onCesiumEnabledChange')(false);
     },
   },
 });

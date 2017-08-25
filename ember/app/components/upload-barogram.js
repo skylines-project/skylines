@@ -24,10 +24,10 @@ export default BarogramComponent.extend({
   scoreEndTimeSeconds: computedSecondsOfDay('date', 'scoreEndTime'),
   landingTimeSeconds: computedSecondsOfDay('date', 'landingTime'),
 
-  onTakeoffTimeChange: Ember.K,
-  onScoreStartTimeChange: Ember.K,
-  onScoreEndTimeChange: Ember.K,
-  onLandingTimeChange: Ember.K,
+  onTakeoffTimeChange() {},
+  onScoreStartTimeChange() {},
+  onScoreEndTimeChange() {},
+  onLandingTimeChange() {},
 
   init() {
     this._super(...arguments);
