@@ -15,12 +15,14 @@
       {{/nav.link-to}}
     {{/nav.item}}
 
-    <li class="dropdown">
-      <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+    {{#nav.dropdown tagName="li" as |dd|}}
+      {{#dd.toggle}}
         {{account.user.name}} {{fa-icon "caret-down"}}
-      </a>
-      <ul class="dropdown-menu">{{nav-bar-user-menu}}</ul>
-    </li>
+      {{/dd.toggle}}
+      {{#dd.menu as |menu|}}
+        {{nav-bar-user-menu nav=nav menu=menu}}
+      {{/dd.menu}}
+    {{/nav.dropdown}}
   {{else}}
 
     {{#nav.item class="visible-xs"}}
