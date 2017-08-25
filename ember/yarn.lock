@@ -2445,12 +2445,6 @@ ember-bootstrap@^1.0.0-rc.1:
     rsvp "^3.3.3"
     silent-error "^1.0.1"
 
-ember-cli-active-link-wrapper@^0.3.1:
-  version "0.3.2"
-  resolved "https://registry.yarnpkg.com/ember-cli-active-link-wrapper/-/ember-cli-active-link-wrapper-0.3.2.tgz#43582f6b1c157ab9f0a5a5f66348e5a3b65de1dc"
-  dependencies:
-    ember-cli-babel "^5.1.5"
-
 ember-cli-app-version@^3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/ember-cli-app-version/-/ember-cli-app-version-3.0.0.tgz#d67a33aeec7bd03187fbe72c5663dadec4c3368a"
