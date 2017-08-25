@@ -88,7 +88,7 @@
       {{/if}}
 
       {{#if flight.model}}
-        <span rel="tooltip" title={{t "index-INDEX" index=flight.model.index}}>{{flight.model.name}}</span>
+        <span>{{bs-tooltip title=(t "index-INDEX" index=flight.model.index)}}{{flight.model.name}}</span>
       {{else if flight.igcFile.model}}
         [{{flight.igcFile.model}}]
       {{else}}

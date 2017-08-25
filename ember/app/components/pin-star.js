@@ -10,13 +10,6 @@ export default Ember.Component.extend({
 
   pinned: includes('pinnedFlights.pinned', 'flightId'),
 
-  didInsertElement() {
-    this.$().tooltip({
-      placement: 'left',
-      title: 'Activate this to show the flight on top of other flights on the map',
-    });
-  },
-
   click() {
     this.get('pinnedFlights').toggle(this.get('flightId'));
   },

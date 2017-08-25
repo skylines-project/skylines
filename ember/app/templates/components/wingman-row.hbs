@@ -1,7 +1,10 @@
 <td class="color-stripe" style={{colorStripeStyle}}></td>
 <td>
   {{#if flight.model.id}}
-    <span rel="tooltip" title="Handicap: {{flight.model.index}}">{{flight.model.name}}</span>
+    <span>
+      {{bs-tooltip title=(concat "Handicap: " flight.model.index) placement="bottom"}}
+      {{flight.model.name}}
+    </span>
   {{else if igcFile.model}}
     [{{igcFile.model}}]
   {{else}}

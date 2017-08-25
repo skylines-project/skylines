@@ -15,8 +15,4 @@ export default Ember.Component.extend({
   times: Ember.computed.alias('nearFlight.times'),
 
   colorStripeStyle: conditional('nearFlight.color', htmlSafe(tag`background-color: ${'nearFlight.color'}`)),
-
-  didInsertElement() {
-    this.$('[rel=tooltip]').tooltip();
-  },
 });
