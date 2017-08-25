@@ -149,12 +149,12 @@
     <tr>
       <th>{{t "actions"}}</th>
       <td>
-        <button type="button" class="btn btn-default btn-sm" data-toggle="modal" data-target="#deleteModal">
+        <button type="button" class="btn btn-default btn-sm" onclick={{action (mut showDeleteModal) true}}>
           {{fa-icon "remove"}} {{t "delete"}}
         </button>
 
         {{#if isPrivate}}
-          <button type="button" class="btn btn-default btn-sm" data-toggle="modal" data-target="#publishModal">
+          <button type="button" class="btn btn-default btn-sm" onclick={{action (mut showPublishModal) true}}>
             {{fa-icon "globe"}} {{t "publish"}}
           </button>
         {{/if}}
@@ -174,40 +174,32 @@
   </span>
 </p>
 
-{{#ember-wormhole to="modal-wormhole"}}
-  <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close" disabled={{deleteTask.isRunning}}><span aria-hidden="true">&times;</span></button>
-          <h4 class="modal-title">{{t "delete-flight"}}</h4>
-        </div>
-        <div class="modal-body">
-          <label class="large">{{t "delete-flight-confirmation-text"}}</label>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-primary" {{action (perform deleteTask)}} disabled={{deleteTask.isRunning}}>{{t "yes"}}</button>
-          <button type="button" class="btn btn-default" data-dismiss="modal" disabled={{deleteTask.isRunning}}>{{t "no"}}</button>
-        </div>
-      </div>
-    </div>
-  </div>
+{{#bs-modal open=showDeleteModal onSubmit=(perform deleteTask) onHide=(action (mut showDeleteModal) false) as |modal|}}
+  {{#modal.header}}
+    <h4 class="modal-title">{{t "delete-flight"}}</h4>
+  {{/modal.header}}
 
-  <div class="modal fade" id="publishModal" tabindex="-1" role="dialog">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close" disabled={{publishTask.isRunning}}><span aria-hidden="true">&times;</span></button>
-          <h4 class="modal-title">{{t "publish-flight"}}</h4>
-        </div>
-        <div class="modal-body">
-          <label class="large">{{t "publish-flight-confirmation-text"}}</label>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-primary" {{action (perform publishTask)}} disabled={{publishTask.isRunning}}>{{t "yes"}}</button>
-          <button type="button" class="btn btn-default" data-dismiss="modal" disabled={{publishTask.isRunning}}>{{t "no"}}</button>
-        </div>
-      </div>
-    </div>
-  </div>
-{{/ember-wormhole}}
+  {{#modal.body}}
+    <label class="large">{{t "delete-flight-confirmation-text"}}</label>
+  {{/modal.body}}
+
+  {{#modal.footer as |footer|}}
+    {{#bs-button onClick=(action modal.submit) disabled=deleteTask.isRunning type="primary"}}{{t "yes"}}{{/bs-button}}
+    {{#bs-button onClick=(action modal.close) disabled=deleteTask.isRunning}}{{t "no"}}{{/bs-button}}
+  {{/modal.footer}}
+{{/bs-modal}}
+
+{{#bs-modal open=showPublishModal onSubmit=(perform publishTask) onHide=(action (mut showPublishModal) false) as |modal|}}
+  {{#modal.header}}
+    <h4 class="modal-title">{{t "publish-flight"}}</h4>
+  {{/modal.header}}
+
+  {{#modal.body}}
+    <label class="large">{{t "publish-flight-confirmation-text"}}</label>
+  {{/modal.body}}
+
+  {{#modal.footer as |footer|}}
+    {{#bs-button onClick=(action modal.submit) disabled=publishTask.isRunning type="primary"}}{{t "yes"}}{{/bs-button}}
+    {{#bs-button onClick=(action modal.close) disabled=publishTask.isRunning}}{{t "no"}}{{/bs-button}}
+  {{/modal.footer}}
+{{/bs-modal}}
