@@ -31,12 +31,14 @@
       {{/nav.link-to}}
     {{/nav.item}}
 
-    <li class="dropdown hidden-xs">
-      <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+    {{#nav.dropdown tagName="li" class="hidden-xs" as |dd|}}
+      {{#dd.toggle}}
         {{fa-icon "sign-in"}} {{t "login"}} {{fa-icon "caret-down"}}
-      </a>
-      <div class="dropdown-menu">{{login-form inline=true}}</div>
-    </li>
+      {{/dd.toggle}}
+      {{#dd.menu as |menu|}}
+        {{login-form inline=true}}
+      {{/dd.menu}}
+    {{/nav.dropdown}}
   {{/if}}
 
   {{#nav.dropdown tagName="li" as |dd|}}
