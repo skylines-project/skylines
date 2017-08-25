@@ -17,22 +17,6 @@ export default Ember.Component.extend({
   colorStripeStyle: conditional('nearFlight.color', htmlSafe(tag`background-color: ${'nearFlight.color'}`)),
 
   didInsertElement() {
-    let popover_template = '<div class="popover" style="white-space: nowrap; z-index: 5000;">' +
-                             '<div class="arrow"></div>' +
-                             '<h3 class="popover-title"></h3>' +
-                             '<div class="popover-content"></div>' +
-                           '</div>';
-
-    this.$('.times-column').popover({
-      html: true,
-      container: '#fullscreen-content',
-      title: 'Periods',
-      placement: 'right',
-      trigger: 'hover',
-      content: this.$('.times-table').html(),
-      template: popover_template,
-    });
-
     this.$('[rel=tooltip]').tooltip();
   },
 });
