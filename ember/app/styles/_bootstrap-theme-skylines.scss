@@ -196,14 +196,6 @@ ul.list-with-dividers li[class*="col"] {
   list-style: none;
 }
 
-.alert-floating {
-  position: relative;
-  top: 60px;
-  margin-left: auto;
-  margin-right: auto;
-  width: 50%;
-}
-
 .tooltip {
   /*
    * The tooltips in the flight table are broken otherwise because
