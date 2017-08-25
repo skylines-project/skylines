@@ -1,19 +1,22 @@
-<ul class="nav nav-pills">
-  <li class="dropdown">
-    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+{{#bs-nav type="pills" as |nav|}}
+  {{#nav.dropdown tagName="li" as |dd|}}
+    {{#dd.toggle}}
       {{#if (eq year "all")}}
         {{t "all-time"}}
       {{else}}
         {{t "season-YEAR" year=year}}
       {{/if}}
-      <b class="caret"></b>
-    </a>
-    <ul class="dropdown-menu">
-      {{#active-link}}{{#link-to (query-params year="all")}}{{t "all-time"}}{{/link-to}}{{/active-link}}
-      <li class="divider"></li>
+      <span class="caret"></span>
+    {{/dd.toggle}}
+
+    {{#dd.menu as |menu|}}
+      {{#nav.item}}{{#nav.link-to (query-params year="all")}}{{t "all-time"}}{{/nav.link-to}}{{/nav.item}}
+
+      {{menu.divider}}
+
       {{#each recentYears as |year|}}
-        {{#active-link}}{{#link-to (query-params year=year)}}{{year}}{{/link-to}}{{/active-link}}
+        {{#nav.item}}{{#nav.link-to (query-params year=year)}}{{year}}{{/nav.link-to}}{{/nav.item}}
       {{/each}}
-    </ul>
-  </li>
-</ul>
+    {{/dd.menu}}
+  {{/nav.dropdown}}
+{{/bs-nav}}

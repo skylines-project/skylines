@@ -202,6 +202,7 @@ ul.list-with-dividers li[class*="col"] {
    * of the "table .show" rule that changes this setting.
    */
   white-space: normal;
+  z-index: 6000;
 }
 
 .pin {
@@ -249,4 +250,19 @@ body, .btn, .form-control, .dropdown-menu {
 
 .upload-results-form {
   padding: 10px;
+}
+
+.btn-share {
+  margin-top: 5px;
+  margin-right: 28px;
+}
+
+.popover-share {
+  white-space: nowrap;
+  z-index: 5000;
+}
+
+.popover-wingmen {
+  white-space: nowrap;
+  z-index: 5000;
 }

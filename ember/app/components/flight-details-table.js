@@ -1,5 +1,4 @@
 import Ember from 'ember';
-import $ from 'jquery';
 import { task } from 'ember-concurrency';
 import { or, eq, not } from 'ember-awesome-macros';
 
@@ -33,7 +32,7 @@ export default Ember.Component.extend({
   deleteTask: task(function * () {
     let id = this.get('flight.id');
     yield this.get('ajax').request(`/api/flights/${id}/`, { method: 'DELETE' });
-    $('#deleteModal').modal('hide');
+    this.set('showDeleteModal', false);
     this.getWithDefault('transitionTo', Ember.K)('flights');
   }).drop(),
 
@@ -41,6 +40,6 @@ export default Ember.Component.extend({
     let id = this.get('flight.id');
     yield this.get('ajax').request(`/api/flights/${id}/`, { method: 'POST', json: { privacyLevel: 0 } });
     this.set('flight.privacyLevel', 0);
-    $('#publishModal').modal('hide');
+    this.set('showPublishModal', false);
   }).drop(),
 });

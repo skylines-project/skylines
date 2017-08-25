@@ -1,11 +1,14 @@
-<li>{{#link-to "user" account.user.id}}{{fa-icon "user" fixedWidth=true}} {{account.user.name}}{{/link-to}}</li>
+{{#nav.item}}{{#nav.link-to "user" account.user.id}}{{fa-icon "user" fixedWidth=true}} {{account.user.name}}{{/nav.link-to}}{{/nav.item}}
 {{#if account.club}}
-  <li>{{#link-to "club" account.club.id}}{{fa-icon "group" fixedWidth=true}} {{account.club.name}}{{/link-to}}</li>
+  {{#nav.item}}{{#nav.link-to "club" account.club.id}}{{fa-icon "group" fixedWidth=true}} {{account.club.name}}{{/nav.link-to}}{{/nav.item}}
 {{/if}}
-<li class="divider"></li>
-<li>{{#link-to "flights.pilot" account.user.id}}{{fa-icon "plane" fixedWidth=true}} {{t "flights"}}{{/link-to}}</li>
-<li>{{#link-to "statistics.pilot" account.user.id}}{{fa-icon "bar-chart" fixedWidth=true}} {{t "statistics"}}{{/link-to}}</li>
-<li class="divider"></li>
-<li>{{#link-to "settings"}}{{fa-icon "cog" fixedWidth=true}} {{t "settings"}}{{/link-to}}</li>
-<li class="divider"></li>
-<li><a href="#" {{action (perform logoutTask)}}>{{fa-icon "sign-out" fixedWidth=true}} {{t "logout"}}</a></li>
+
+{{menu.divider}}
+{{#nav.item}}{{#nav.link-to "flights.pilot" account.user.id}}{{fa-icon "plane" fixedWidth=true}} {{t "flights"}}{{/nav.link-to}}{{/nav.item}}
+{{#nav.item}}{{#nav.link-to "statistics.pilot" account.user.id}}{{fa-icon "bar-chart" fixedWidth=true}} {{t "statistics"}}{{/nav.link-to}}{{/nav.item}}
+
+{{menu.divider}}
+{{#nav.item}}{{#nav.link-to "settings"}}{{fa-icon "cog" fixedWidth=true}} {{t "settings"}}{{/nav.link-to}}{{/nav.item}}
+
+{{menu.divider}}
+{{#nav.item}}<a href="#" {{action (perform logoutTask)}}>{{fa-icon "sign-out" fixedWidth=true}} {{t "logout"}}</a>{{/nav.item}}

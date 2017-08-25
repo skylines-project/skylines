@@ -9,17 +9,17 @@
     </h1>
 
     <div class="page-header-tabs">
-      <ul class="nav nav-tabs">
-        {{#active-link}}
-          {{#link-to "ranking.clubs"}}{{t "clubs"}}{{/link-to}}
-        {{/active-link}}
-        {{#active-link}}
-          {{#link-to "ranking.pilots"}}{{t "pilots"}}{{/link-to}}
-        {{/active-link}}
-        {{#active-link}}
-          {{#link-to "ranking.airports"}}{{t "airports"}}{{/link-to}}
-        {{/active-link}}
-      </ul>
+      {{#bs-nav type="tabs" as |nav|}}
+        {{#nav.item}}
+          {{#nav.link-to "ranking.clubs"}}{{t "clubs"}}{{/nav.link-to}}
+        {{/nav.item}}
+        {{#nav.item}}
+          {{#nav.link-to "ranking.pilots"}}{{t "pilots"}}{{/nav.link-to}}
+        {{/nav.item}}
+        {{#nav.item}}
+          {{#nav.link-to "ranking.airports"}}{{t "airports"}}{{/nav.link-to}}
+        {{/nav.item}}
+      {{/bs-nav}}
     </div>
   </div>
 

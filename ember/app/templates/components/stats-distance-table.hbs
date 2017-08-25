@@ -9,20 +9,15 @@
   <tr>
     <td class="col-xs-2">{{year.year}}</td>
     <td class="col-xs-2">
-      <span rel="tooltip"
-            title="{{t "n-avg-distance-per-flight" distance=(format-distance year.average_distance) }}">
+      <span>
         {{format-distance year.distance}}
+        {{bs-tooltip title=(t "n-avg-distance-per-flight" distance=(format-distance year.average_distance))}}
       </span>
     </td>
     <td class="col-xs-8">
-      <div class="progress">
-        <div class="progress-bar progress-bar-success"
-             role="progressbar"
-             aria-valuenow="{{percent year.distance max}}"
-             aria-valuemin="0"
-             aria-valuemax="100"
-             style="width: {{percent year.distance max}}%;"></div>
-      </div>
+      {{#bs-progress as |p|}}
+        {{p.bar value=(percent year.distance max) type="success"}}
+      {{/bs-progress}}
     </td>
   </tr>
 {{/each}}

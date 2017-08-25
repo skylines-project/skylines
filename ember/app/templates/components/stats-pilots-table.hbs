@@ -10,14 +10,9 @@
     <td class="col-xs-2">{{year.year}}</td>
     <td class="col-xs-2">{{format-number year.pilots}}</td>
     <td class="col-xs-8">
-      <div class="progress">
-        <div class="progress-bar progress-bar-info"
-             role="progressbar"
-             aria-valuenow="{{percent year.pilots max}}"
-             aria-valuemin="0"
-             aria-valuemax="100"
-             style="width: {{percent year.pilots max}}%;"></div>
-      </div>
+      {{#bs-progress as |p|}}
+        {{p.bar value=(percent year.pilots max) type="info"}}
+      {{/bs-progress}}
     </td>
   </tr>
 {{/each}}

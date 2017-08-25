@@ -16,8 +16,9 @@
     <tr>
       <td><strong>{{t "distance"}}</strong></td>
       <td>
-        <span rel="tooltip" title="{{t "n-avg-distance-per-flight" distance=(format-distance avgDistance) }}">
+        <span>
           {{format-distance stats.distance}}
+          {{bs-tooltip title=(t "n-avg-distance-per-flight" distance=(format-distance avgDistance))}}
         </span>
       </td>
     </tr>
@@ -25,8 +26,9 @@
     <tr>
       <td><strong>{{t "flight-time"}}</strong></td>
       <td>
-        <span rel="tooltip" title="{{t "n-avg-hours-per-flight" num=(format-hours avgDuration) }}">
+        <span>
           {{t "n-hours" num=(format-hours stats.duration)}}
+          {{bs-tooltip title=(t "n-avg-hours-per-flight" num=(format-hours avgDuration))}}
         </span>
       </td>
     </tr>

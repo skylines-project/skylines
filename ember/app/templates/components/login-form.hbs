@@ -1,6 +1,6 @@
 <form {{action (perform loginTask) on="submit"}} class="form-login">
   {{#if (and error (not inline))}}
-    <div class="alert alert-danger" role="alert">{{t "wrong-credentials"}}</div>
+    {{#bs-alert type="danger" dismissible=false}}{{t "wrong-credentials"}}{{/bs-alert}}
   {{/if}}
 
   {{validated-input

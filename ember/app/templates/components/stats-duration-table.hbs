@@ -9,20 +9,15 @@
   <tr>
     <td class="col-xs-2">{{year.year}}</td>
     <td class="col-xs-2">
-      <span rel="tooltip"
-            title="{{t "n-avg-hours-per-flight" num=(format-hours year.average_duration) }}">
+      <span>
         {{t "n-hours" num=(format-hours year.duration)}}
+        {{bs-tooltip title=(t "n-avg-hours-per-flight" num=(format-hours year.average_duration))}}
       </span>
     </td>
     <td class="col-xs-8">
-      <div class="progress">
-        <div class="progress-bar progress-bar-warning"
-             role="progressbar"
-             aria-valuenow="{{percent year.duration max}}"
-             aria-valuemin="0"
-             aria-valuemax="100"
-             style="width: {{percent year.duration max}}%;"></div>
-      </div>
+      {{#bs-progress as |p|}}
+        {{p.bar value=(percent year.duration max) type="warning"}}
+      {{/bs-progress}}
     </td>
   </tr>
 {{/each}}

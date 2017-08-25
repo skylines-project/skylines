@@ -11,34 +11,36 @@
       {{upload-result-form result=result clubMembers=clubMembers aircraftModels=aircraftModels}}
     {{/each}}
   {{else}}
-    <div class="col-sm-3">
-      <ul class="nav nav-tabs tabs-left">
-        {{#each validatedResults as |result index|}}
-          <li class={{if (eq index 0) "active"}}>
-            <a href="#result-tab-{{index}}" data-toggle="tab">
-              {{#if (and (eq result.status 0) result.validations.isValid)}}
-                {{fa-icon "check" class="text-success"}}
-              {{else}}
-                {{fa-icon "warning" class="text-warning"}}
-              {{/if}}
+    {{#bs-tab customTabs=true fade=false as |tab|}}
+      <div class="col-sm-3">
+        {{#bs-nav type="tabs" class="tabs-left" as |nav|}}
+          {{#each validatedResults as |result index|}}
+            {{#nav.item active=(eq tab.activeId (concat "result-tab-" index))}}
+              <a href="#result-tab-{{index}}" role="tab" {{action tab.select (concat "result-tab-" index)}}>
+                {{#if (and (eq result.status 0) result.validations.isValid)}}
+                  {{fa-icon "check" class="text-success"}}
+                {{else}}
+                  {{fa-icon "warning" class="text-warning"}}
+                {{/if}}
 
-              {{result.name}}
-            </a>
-          </li>
-        {{/each}}
-      </ul>
-    </div>
-    <div class="col-sm-9">
-      <div class="tab-content">
-        {{#each validatedResults as |result index|}}
-          <div class="tab-pane {{if (eq index 0) "active"}}" id="result-tab-{{index}}">
-            {{upload-result-form result=result clubMembers=clubMembers aircraftModels=aircraftModels}}
-          </div>
-        {{/each}}
+                {{result.name}}
+              </a>
+            {{/nav.item}}
+          {{/each}}
+        {{/bs-nav}}
       </div>
-    </div>
+      <div class="col-sm-9">
+        <div class="tab-content">
+          {{#each validatedResults as |result index|}}
+            {{#tab.pane elementId=(concat "result-tab-" index)}}
+              {{upload-result-form result=result clubMembers=clubMembers aircraftModels=aircraftModels}}
+            {{/tab.pane}}
+          {{/each}}
+        </div>
+      </div>
 
-    <div class="clearfix"></div>
+      <div class="clearfix"></div>
+    {{/bs-tab}}
   {{/if}}
 
   {{#if success}}

@@ -1,7 +1,10 @@
 <td class="color-stripe" style={{colorStripeStyle}}></td>
 <td>
   {{#if flight.model.id}}
-    <span rel="tooltip" title="Handicap: {{flight.model.index}}">{{flight.model.name}}</span>
+    <span>
+      {{bs-tooltip title=(concat "Handicap: " flight.model.index) placement="bottom"}}
+      {{flight.model.name}}
+    </span>
   {{else if igcFile.model}}
     [{{igcFile.model}}]
   {{else}}
@@ -48,7 +51,8 @@
 <td class="times-column">
   {{format-time times.firstObject.start format='hhmmss'}}<br />
   {{format-time times.lastObject.end format='hhmmss'}}
-  <div class="times-table" style="display: none;">
+
+  {{#bs-popover title="Periods" triggerEvents="hover" class="popover-wingmen"}}
     <table>
       {{#each times as |interval|}}
         <tr>
@@ -58,5 +62,5 @@
         </tr>
       {{/each}}
     </table>
-  </div>
+  {{/bs-popover}}
 </td>
