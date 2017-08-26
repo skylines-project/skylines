@@ -1587,9 +1587,9 @@ broccoli-string-replace@^0.1.2:
     broccoli-persistent-filter "^1.1.5"
     minimatch "^3.0.3"
 
-broccoli-svg-optimizer@^1.0.1:
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/broccoli-svg-optimizer/-/broccoli-svg-optimizer-1.0.1.tgz#5fc9f3db38a82454e7bab5e81375ebc3f07cfef0"
+broccoli-svg-optimizer@^1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/broccoli-svg-optimizer/-/broccoli-svg-optimizer-1.0.2.tgz#b12e84e65912f3134939cbf766c3fa0b4d0d92d9"
   dependencies:
     broccoli-persistent-filter "^1.2.0"
     json-stable-stringify "^1.0.1"
@@ -3190,20 +3190,21 @@ ember-string-ishtmlsafe-polyfill@^1.1.0:
     ember-cli-babel "^5.1.7"
     ember-cli-version-checker "^1.2.0"
 
-ember-svg-jar@^0.10.3:
-  version "0.10.3"
-  resolved "https://registry.yarnpkg.com/ember-svg-jar/-/ember-svg-jar-0.10.3.tgz#c5a65c7743c27a495cc7ef195f71e8cfad3abc86"
+ember-svg-jar@^0.11.1:
+  version "0.11.1"
+  resolved "https://registry.yarnpkg.com/ember-svg-jar/-/ember-svg-jar-0.11.1.tgz#94c01ec429eff6a7c40ba3ac48d098e4df521491"
   dependencies:
     broccoli-caching-writer "^2.3.1"
     broccoli-funnel "^1.0.1"
     broccoli-merge-trees "^1.1.1"
     broccoli-string-replace "^0.1.2"
-    broccoli-svg-optimizer "^1.0.1"
+    broccoli-svg-optimizer "^1.0.2"
     broccoli-symbolizer "^0.5.0"
     cheerio "^0.20.0"
     ember-cli-babel "^6.0.0"
     lodash "^4.13.1"
     mkdirp "^0.5.1"
+    path-posix "^1.0.0"
 
 ember-test-helpers@^0.6.3:
   version "0.6.3"
