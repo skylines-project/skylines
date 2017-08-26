@@ -35,7 +35,7 @@
     "ember-cli-deploy-rsync-assets": "^0.2.1",
     "ember-cli-eslint": "^3.1.0",
     "ember-cli-htmlbars": "^1.1.1",
-    "ember-cli-htmlbars-inline-precompile": "^0.4.0",
+    "ember-cli-htmlbars-inline-precompile": "^1.0.2",
     "ember-cli-inject-live-reload": "^1.7.0",
     "ember-cli-mocha": "^0.14.4",
     "ember-cli-pace": "^0.1.0",
