@@ -2739,15 +2739,15 @@ ember-cli-lodash-subset@^1.0.11, ember-cli-lodash-subset@^1.0.7:
   version "1.0.12"
   resolved "https://registry.yarnpkg.com/ember-cli-lodash-subset/-/ember-cli-lodash-subset-1.0.12.tgz#af2e77eba5dcb0d77f3308d3a6fd7d3450f6e537"
 
-ember-cli-mocha@^0.14.3:
-  version "0.14.3"
-  resolved "https://registry.yarnpkg.com/ember-cli-mocha/-/ember-cli-mocha-0.14.3.tgz#0d09053797a9966535885c85f80aa919817a0443"
+ember-cli-mocha@^0.14.4:
+  version "0.14.4"
+  resolved "https://registry.yarnpkg.com/ember-cli-mocha/-/ember-cli-mocha-0.14.4.tgz#5f63907f952ec6d6609d551ce321dc83823ba63f"
   dependencies:
     broccoli-funnel "^1.0.1"
     broccoli-merge-trees "^2.0.0"
     ember-cli-babel "^6.0.0"
     ember-cli-test-loader "^2.0.0"
-    ember-mocha "^0.11.1"
+    ember-mocha "^0.12.0"
     mocha "^2.5.3"
     resolve "^1.1.7"
 
@@ -3112,9 +3112,9 @@ ember-maybe-import-regenerator@^0.1.5, ember-maybe-import-regenerator@^0.1.6:
     ember-cli-babel "^6.0.0-beta.4"
     regenerator-runtime "^0.9.5"
 
-ember-mocha@^0.11.1:
-  version "0.11.1"
-  resolved "https://registry.yarnpkg.com/ember-mocha/-/ember-mocha-0.11.1.tgz#c17899dff5a79556403e255bcfa4eadab0cac2de"
+ember-mocha@^0.12.0:
+  version "0.12.0"
+  resolved "https://registry.yarnpkg.com/ember-mocha/-/ember-mocha-0.12.0.tgz#ea27ae9838c8c6e28ea72c48084586ef5fa00a7a"
   dependencies:
     ember-test-helpers "^0.6.3"
 
