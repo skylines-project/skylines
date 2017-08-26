@@ -46,7 +46,7 @@
     "ember-concurrency": "^0.8.3",
     "ember-cookies": "^0.0.13",
     "ember-cp-validations": "^3.1.1",
-    "ember-font-awesome": "2.2.0",
+    "ember-font-awesome": "^3.0.5",
     "ember-href-to": "^1.12.1",
     "ember-intl": "^2.27.0",
     "ember-intl-cp-validations": "^3.0.1",
