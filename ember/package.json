@@ -56,7 +56,7 @@
     "ember-page-title": "^3.2.2",
     "ember-power-select": "^1.9.5",
     "ember-resolver": "^4.4.0",
-    "ember-simple-auth": "^1.3.0",
+    "ember-simple-auth": "^1.4.0",
     "ember-source": "~2.13.0",
     "ember-svg-jar": "^0.11.1",
     "ember-truth-helpers": "^1.3.0",
