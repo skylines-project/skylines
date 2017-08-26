@@ -20,6 +20,7 @@ describe('Integration | Component | flight list nav', function() {
     }));
 
     this.register('service:pinned-flights', Ember.Service.extend({
+      // eslint-disable-next-line ember/avoid-leaking-state-in-components
       pinned: [],
     }));
 

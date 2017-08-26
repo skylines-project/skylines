@@ -59,7 +59,7 @@ const MapClickHandler = Ember.Object.extend({
     if (flights) {
       let flight_path_source = flights.get('source');
       let closest_feature = flight_path_source
-          .getClosestFeatureToCoordinate(coordinate);
+        .getClosestFeatureToCoordinate(coordinate);
 
       if (closest_feature !== null) {
         let geometry = closest_feature.getGeometry();
