@@ -652,12 +652,6 @@ babel-plugin-debug-macros@^0.1.6:
   dependencies:
     semver "^5.3.0"
 
-babel-plugin-ember-modules-api-polyfill@^1.4.1:
-  version "1.4.2"
-  resolved "https://registry.yarnpkg.com/babel-plugin-ember-modules-api-polyfill/-/babel-plugin-ember-modules-api-polyfill-1.4.2.tgz#e254f8ed0ba7cf32ea6a71c4770b3568a8577402"
-  dependencies:
-    ember-rfc176-data "^0.2.0"
-
 babel-plugin-ember-modules-api-polyfill@^1.5.1:
   version "1.6.0"
   resolved "https://registry.yarnpkg.com/babel-plugin-ember-modules-api-polyfill/-/babel-plugin-ember-modules-api-polyfill-1.6.0.tgz#abd1afa4237b3121cb51222f9bf3283cad8990aa"
@@ -2660,23 +2654,6 @@ ember-cli-babel@^6.0.0, ember-cli-babel@^6.0.0-beta.4, ember-cli-babel@^6.0.0-be
     broccoli-source "^1.1.0"
     clone "^2.0.0"
     ember-cli-version-checker "^1.2.0"
-
-ember-cli-babel@^6.3.0:
-  version "6.7.1"
-  resolved "https://registry.yarnpkg.com/ember-cli-babel/-/ember-cli-babel-6.7.1.tgz#98de75cb3eaf3198a80aac36ae82d8ea48c9d91f"
-  dependencies:
-    amd-name-resolver "0.0.6"
-    babel-plugin-debug-macros "^0.1.11"
-    babel-plugin-ember-modules-api-polyfill "^1.4.1"
-    babel-plugin-transform-es2015-modules-amd "^6.24.0"
-    babel-polyfill "^6.16.0"
-    babel-preset-env "^1.5.1"
-    broccoli-babel-transpiler "^6.1.2"
-    broccoli-debug "^0.6.2"
-    broccoli-funnel "^1.0.0"
-    broccoli-source "^1.1.0"
-    clone "^2.0.0"
-    ember-cli-version-checker "^2.0.0"
 
 ember-cli-babel@^6.6.0, ember-cli-babel@^6.8.1:
   version "6.8.1"
