@@ -2747,7 +2747,7 @@ ember-cli-app-version@^3.1.0:
     ember-cli-babel "^6.8.0"
     git-repo-version "0.4.1"
 
-ember-cli-babel@^5.1.0, ember-cli-babel@^5.1.6, ember-cli-babel@^5.1.7, ember-cli-babel@^5.1.8:
+ember-cli-babel@^5.1.0, ember-cli-babel@^5.1.6, ember-cli-babel@^5.1.7:
   version "5.2.4"
   resolved "https://registry.yarnpkg.com/ember-cli-babel/-/ember-cli-babel-5.2.4.tgz#5ce4f46b08ed6f6d21e878619fb689719d6e8e13"
   dependencies:
@@ -3219,16 +3219,16 @@ ember-cookies@^0.0.13:
     ember-cli-babel "^5.1.7"
     ember-getowner-polyfill "^1.2.2"
 
-ember-cp-validations@^3.1.1:
-  version "3.2.3"
-  resolved "https://registry.yarnpkg.com/ember-cp-validations/-/ember-cp-validations-3.2.3.tgz#1864ce28ef3863bb90e4baaa69071f2722977f42"
+ember-cp-validations@^3.4.0:
+  version "3.4.0"
+  resolved "https://registry.yarnpkg.com/ember-cp-validations/-/ember-cp-validations-3.4.0.tgz#941a302b8396eb7a8d86e0fc283402a74c0dac6e"
   dependencies:
-    ember-cli-babel "^5.1.8"
-    ember-cli-version-checker "^1.2.0"
-    ember-getowner-polyfill "^1.2.0"
-    ember-require-module "^0.1.1"
-    ember-string-ishtmlsafe-polyfill "1.0.1"
-    ember-validators "0.2.0"
+    ember-cli-babel "^6.6.0"
+    ember-cli-version-checker "^2.0.0"
+    ember-getowner-polyfill "^2.0.1"
+    ember-require-module "^0.1.2"
+    ember-string-ishtmlsafe-polyfill "^1.1.0"
+    ember-validators "1.0.3"
     exists-sync "0.0.4"
     walk-sync "^0.3.1"
 
@@ -3260,7 +3260,7 @@ ember-font-awesome@^3.0.5:
     ember-cli-htmlbars "^1.1.1"
     font-awesome "^4.7.0"
 
-ember-getowner-polyfill@1.2.2, ember-getowner-polyfill@^1.1.0, ember-getowner-polyfill@^1.2.0, ember-getowner-polyfill@^1.2.2:
+ember-getowner-polyfill@1.2.2, ember-getowner-polyfill@^1.1.0, ember-getowner-polyfill@^1.2.2:
   version "1.2.2"
   resolved "https://registry.yarnpkg.com/ember-getowner-polyfill/-/ember-getowner-polyfill-1.2.2.tgz#cdab739e89cc8f25af0f78735422df1a61193e92"
   dependencies:
@@ -3268,7 +3268,7 @@ ember-getowner-polyfill@1.2.2, ember-getowner-polyfill@^1.1.0, ember-getowner-po
     ember-cli-version-checker "^1.2.0"
     ember-factory-for-polyfill "^1.1.0"
 
-ember-getowner-polyfill@^2.0.0:
+ember-getowner-polyfill@^2.0.0, ember-getowner-polyfill@^2.0.1:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/ember-getowner-polyfill/-/ember-getowner-polyfill-2.0.1.tgz#9bfe2b4d527ed174e76fef2c8f30937d77cb66fb"
   dependencies:
@@ -3420,9 +3420,9 @@ ember-power-select@^1.8.4:
     ember-text-measurer "^0.3.3"
     ember-truth-helpers "^1.3.0"
 
-ember-require-module@0.1.1, ember-require-module@^0.1.1:
-  version "0.1.1"
-  resolved "https://registry.yarnpkg.com/ember-require-module/-/ember-require-module-0.1.1.tgz#5a2130f691ad1578b1d236dd11196721fd5526b2"
+ember-require-module@^0.1.2:
+  version "0.1.2"
+  resolved "https://registry.yarnpkg.com/ember-require-module/-/ember-require-module-0.1.2.tgz#fdffdcf86745d601009211c1b41907395a4d081e"
   dependencies:
     ember-cli-babel "^5.1.7"
 
@@ -3493,12 +3493,6 @@ ember-source@~2.13.0:
     simple-dom "^0.3.0"
     simple-html-tokenizer "^0.3.0"
 
-ember-string-ishtmlsafe-polyfill@1.0.1:
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/ember-string-ishtmlsafe-polyfill/-/ember-string-ishtmlsafe-polyfill-1.0.1.tgz#b40a8c98663be5c16d16f31dc686102bb655abbd"
-  dependencies:
-    ember-cli-babel "^5.1.6"
-
 ember-string-ishtmlsafe-polyfill@^1.1.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/ember-string-ishtmlsafe-polyfill/-/ember-string-ishtmlsafe-polyfill-1.1.0.tgz#ecde33419ff912b91dd8acf0640eb74b9758408e"
@@ -3565,12 +3559,12 @@ ember-try@^0.2.15:
     rsvp "^3.0.17"
     semver "^5.1.0"
 
-ember-validators@0.2.0:
-  version "0.2.0"
-  resolved "https://registry.yarnpkg.com/ember-validators/-/ember-validators-0.2.0.tgz#29c8649a43d511c239f7317040658414c2d57553"
+ember-validators@1.0.3:
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/ember-validators/-/ember-validators-1.0.3.tgz#cef76b6526d12011ab685238762e3256dad812b4"
   dependencies:
     ember-cli-babel "^5.1.6"
-    ember-require-module "0.1.1"
+    ember-require-module "^0.1.2"
 
 ember-weakmap@^2.0.0:
   version "2.0.0"
