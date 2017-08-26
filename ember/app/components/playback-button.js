@@ -3,6 +3,8 @@ import Ember from 'ember';
 export default Ember.Component.extend({
   classNames: ['PlayButton', 'ol-unselectable'],
 
+  onToggle() {},
+
   click() {
     this.toggle();
   },
@@ -12,6 +14,6 @@ export default Ember.Component.extend({
   },
 
   toggle() {
-    this.getWithDefault('onToggle', Ember.K)();
+    this.get('onToggle')();
   },
 });

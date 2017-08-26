@@ -42,6 +42,7 @@ export default Ember.Component.extend(Validations, {
   flightId: null,
   flight: null,
   clubMembers: null,
+  onDidSave() {},
 
   error: null,
 
@@ -68,7 +69,7 @@ export default Ember.Component.extend(Validations, {
 
     try {
       yield this.get('ajax').request(`/api/flights/${id}/`, { method: 'POST', json });
-      this.getWithDefault('onDidSave', Ember.K)();
+      this.get('onDidSave')();
     } catch (error) {
       this.set('error', error);
     }
