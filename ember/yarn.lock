@@ -3766,7 +3766,7 @@ eslint-plugin-mocha@^4.8.0:
   dependencies:
     ramda "^0.22.1"
 
-eslint@^3.0.0, eslint@^3.17.1:
+eslint@^3.0.0:
   version "3.17.1"
   resolved "https://registry.yarnpkg.com/eslint/-/eslint-3.17.1.tgz#b80ae12d9c406d858406fccda627afce33ea10ea"
   dependencies:
