@@ -70,8 +70,8 @@ module.exports = function(defaults) {
   app.import('vendor/shims/remarkable.js');
 
   app.import({
-    development: 'bower_components/BigScreen/bigscreen.js',
-    production: 'bower_components/BigScreen/bigscreen.min.js',
+    development: 'node_modules/bigscreen/bigscreen.js',
+    production: 'node_modules/bigscreen/bigscreen.min.js',
   });
 
   app.import('vendor/bootstrap-datepicker/datepicker.js');
