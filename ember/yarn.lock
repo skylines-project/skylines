@@ -2747,7 +2747,7 @@ ember-cli-app-version@^3.1.0:
     ember-cli-babel "^6.8.0"
     git-repo-version "0.4.1"
 
-ember-cli-babel@^5.1.0, ember-cli-babel@^5.1.5, ember-cli-babel@^5.1.6, ember-cli-babel@^5.1.7, ember-cli-babel@^5.1.8, ember-cli-babel@^5.1.9:
+ember-cli-babel@^5.1.0, ember-cli-babel@^5.1.6, ember-cli-babel@^5.1.7, ember-cli-babel@^5.1.8:
   version "5.2.4"
   resolved "https://registry.yarnpkg.com/ember-cli-babel/-/ember-cli-babel-5.2.4.tgz#5ce4f46b08ed6f6d21e878619fb689719d6e8e13"
   dependencies:
@@ -2920,15 +2920,12 @@ ember-cli-get-dependency-depth@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/ember-cli-get-dependency-depth/-/ember-cli-get-dependency-depth-1.0.0.tgz#e0afecf82a2d52f00f28ab468295281aec368d11"
 
-ember-cli-head@0.1.1:
-  version "0.1.1"
-  resolved "https://registry.yarnpkg.com/ember-cli-head/-/ember-cli-head-0.1.1.tgz#3c13b4a36dda025141907ef281cdd210319b310f"
+ember-cli-head@^0.3.1:
+  version "0.3.1"
+  resolved "https://registry.yarnpkg.com/ember-cli-head/-/ember-cli-head-0.3.1.tgz#a407df4880f235280371c437bb5b0b5cbdaea646"
   dependencies:
-    broccoli-merge-trees "^1.1.4"
-    ember-cli-babel "^5.1.5"
-    ember-cli-htmlbars "^1.0.1"
-    ember-cli-version-checker "^1.1.6"
-    fastboot-filter-initializers "0.0.1"
+    ember-cli-babel "^6.1.0"
+    ember-cli-htmlbars "^2.0.1"
 
 ember-cli-htmlbars-inline-precompile@^1.0.2:
   version "1.0.2"
@@ -2940,7 +2937,7 @@ ember-cli-htmlbars-inline-precompile@^1.0.2:
     heimdalljs-logger "^0.1.7"
     silent-error "^1.1.0"
 
-ember-cli-htmlbars@^1.0.1, ember-cli-htmlbars@^1.0.3, ember-cli-htmlbars@^1.1.0, ember-cli-htmlbars@^1.1.1:
+ember-cli-htmlbars@^1.0.3, ember-cli-htmlbars@^1.1.1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/ember-cli-htmlbars/-/ember-cli-htmlbars-1.1.1.tgz#8776cf59796dac8f32e8625fc6d1ea45ffa55de1"
   dependencies:
@@ -2950,7 +2947,7 @@ ember-cli-htmlbars@^1.0.1, ember-cli-htmlbars@^1.0.3, ember-cli-htmlbars@^1.1.0,
     json-stable-stringify "^1.0.0"
     strip-bom "^2.0.0"
 
-ember-cli-htmlbars@^2.0.2, ember-cli-htmlbars@^2.0.3:
+ember-cli-htmlbars@^2.0.1, ember-cli-htmlbars@^2.0.2, ember-cli-htmlbars@^2.0.3:
   version "2.0.3"
   resolved "https://registry.yarnpkg.com/ember-cli-htmlbars/-/ember-cli-htmlbars-2.0.3.tgz#e116e1500dba12f29c94b05b9ec90f52cb8bb042"
   dependencies:
@@ -3404,13 +3401,13 @@ ember-native-dom-helpers@^0.5.4:
     broccoli-funnel "^1.1.0"
     ember-cli-babel "^6.6.0"
 
-ember-page-title@^3.1.5:
-  version "3.1.5"
-  resolved "https://registry.yarnpkg.com/ember-page-title/-/ember-page-title-3.1.5.tgz#023cfa33a8d351169b5e258414b5d7560210d21b"
+ember-page-title@^3.2.2:
+  version "3.2.2"
+  resolved "https://registry.yarnpkg.com/ember-page-title/-/ember-page-title-3.2.2.tgz#241effbc8228ecfb75e33540f6707003fdf6db31"
   dependencies:
-    ember-cli-babel "^5.1.9"
-    ember-cli-head "0.1.1"
-    ember-cli-htmlbars "^1.1.0"
+    ember-cli-babel "^6.0.0"
+    ember-cli-head "^0.3.1"
+    ember-cli-htmlbars "^2.0.1"
 
 ember-power-select@^1.8.4:
   version "1.8.4"
@@ -4066,12 +4063,6 @@ fast-sourcemap-concat@^1.0.1:
     rsvp "^3.0.14"
     source-map "^0.4.2"
     source-map-url "^0.3.0"
-
-fastboot-filter-initializers@0.0.1:
-  version "0.0.1"
-  resolved "https://registry.yarnpkg.com/fastboot-filter-initializers/-/fastboot-filter-initializers-0.0.1.tgz#171b2165c872763cc9541c12d305e3cf84a360f3"
-  dependencies:
-    broccoli-funnel "^1.0.1"
 
 fastboot-transform@^0.1.2:
   version "0.1.2"
