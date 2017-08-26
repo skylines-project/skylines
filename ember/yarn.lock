@@ -2586,9 +2586,9 @@ ember-cli-deploy-revision-data@^1.0.0:
     rsvp "^3.5.0"
     simple-git "^1.57.0"
 
-ember-cli-deploy-rsync-assets@0.2.0:
-  version "0.2.0"
-  resolved "https://registry.yarnpkg.com/ember-cli-deploy-rsync-assets/-/ember-cli-deploy-rsync-assets-0.2.0.tgz#93fa1c3090cdda9725b5b09e7da1ac3cb5acefb9"
+ember-cli-deploy-rsync-assets@^0.2.1:
+  version "0.2.1"
+  resolved "https://registry.yarnpkg.com/ember-cli-deploy-rsync-assets/-/ember-cli-deploy-rsync-assets-0.2.1.tgz#d8e74a103cfecc4602a56332d955eccf72f4722e"
   dependencies:
     ember-cli-deploy-plugin "^0.2.6"
     rsync "^0.4.0"
