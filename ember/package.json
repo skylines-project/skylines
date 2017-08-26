@@ -16,7 +16,7 @@
     "test": "ember test"
   },
   "dependencies": {
-    "ember-awesome-macros": "^0.35.3"
+    "ember-awesome-macros": "^0.38.3"
   },
   "devDependencies": {
     "bootstrap-sass": "^3.3.7",
