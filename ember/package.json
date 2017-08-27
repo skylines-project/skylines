@@ -19,6 +19,7 @@
     "ember-awesome-macros": "^0.38.3"
   },
   "devDependencies": {
+    "bigscreen": "^2.0.5",
     "bootstrap-sass": "^3.3.7",
     "broccoli-asset-rev": "^2.6.0",
     "ember-ajax": "^3.0.0",

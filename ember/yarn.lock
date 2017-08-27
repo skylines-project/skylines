@@ -1272,6 +1272,10 @@ better-assert@~1.0.0:
   dependencies:
     callsite "1.0.0"
 
+bigscreen@^2.0.5:
+  version "2.0.5"
+  resolved "https://registry.yarnpkg.com/bigscreen/-/bigscreen-2.0.5.tgz#1d64953a1ee9d05f8eec520973cbd2e15567a65e"
+
 "binaryextensions@1 || 2":
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/binaryextensions/-/binaryextensions-2.0.0.tgz#e597d1a7a6a3558a2d1c7241a16c99965e6aa40f"
