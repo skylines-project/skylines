@@ -6,7 +6,9 @@ import Pretender from 'pretender';
 import startApp from 'skylines/tests/helpers/start-app';
 import destroyApp from 'skylines/tests/helpers/destroy-app';
 
-export default function setupAcceptanceTest() {
+export default function setupAcceptanceTest(context) {
+  context.timeout(10000);
+
   beforeEach(function() {
     this.server = new Pretender(function() {
       this.get('/translations/:locale.json', this.passthrough);

@@ -5,7 +5,7 @@ import { visit, currentURL, find } from 'ember-native-dom-helpers';
 import setupAcceptanceTest from 'skylines/tests/helpers/setup-acceptance-test';
 
 describe('Acceptance | page-not-found', function() {
-  setupAcceptanceTest();
+  setupAcceptanceTest(this);
 
   describe('visiting /foobar', function() {
     beforeEach(async function() {

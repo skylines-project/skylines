@@ -5,7 +5,7 @@ import { visit, currentURL, find } from 'ember-native-dom-helpers';
 import setupAcceptanceTest from 'skylines/tests/helpers/setup-acceptance-test';
 
 describe('Acceptance | index', function() {
-  setupAcceptanceTest();
+  setupAcceptanceTest(this);
 
   describe('visiting /', function() {
     beforeEach(async function() {

@@ -5,7 +5,7 @@ import { visit, currentURL } from 'ember-native-dom-helpers';
 import setupAcceptanceTest from 'skylines/tests/helpers/setup-acceptance-test';
 
 describe('Acceptance | flight upload', function() {
-  setupAcceptanceTest();
+  setupAcceptanceTest(this);
 
   describe('visiting /flights/upload (unauthenticated)', function() {
     beforeEach(async function() {
