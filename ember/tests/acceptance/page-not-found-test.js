@@ -1,20 +1,11 @@
 import { expect } from 'chai';
-import { describe, it, beforeEach, afterEach } from 'mocha';
-import { visit } from 'ember-native-dom-helpers';
+import { describe, it, beforeEach } from 'mocha';
+import { visit, currentURL, find } from 'ember-native-dom-helpers';
 
-import startApp from '../helpers/start-app';
-import destroyApp from '../helpers/destroy-app';
+import setupAcceptanceTest from 'skylines/tests/helpers/setup-acceptance-test';
 
 describe('Acceptance | page-not-found', function() {
-  let application;
-
-  beforeEach(function() {
-    application = startApp();
-  });
-
-  afterEach(function() {
-    destroyApp(application);
-  });
+  setupAcceptanceTest(this);
 
   describe('visiting /foobar', function() {
     beforeEach(async function() {
@@ -26,7 +17,7 @@ describe('Acceptance | page-not-found', function() {
     });
 
     it('will show "Page not found" error message', function() {
-      expect(find('.page-header').text()).to.contain('Page not found');
+      expect(find('.page-header')).to.contain.text('Page not found');
     });
   });
 });
