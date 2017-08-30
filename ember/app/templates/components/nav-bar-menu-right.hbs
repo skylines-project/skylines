@@ -31,7 +31,7 @@
       {{/nav.link-to}}
     {{/nav.item}}
 
-    {{#nav.dropdown tagName="li" class="hidden-xs" data-test-login-dropdown=true as |dd|}}
+    {{#nav.dropdown closeOnMenuClick=false tagName="li" class="hidden-xs" data-test-login-dropdown=true as |dd|}}
       {{#dd.toggle}}
         {{fa-icon "sign-in"}} {{t "login"}} {{fa-icon "caret-down"}}
       {{/dd.toggle}}
