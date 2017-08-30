@@ -7,5 +7,5 @@
   */
   "disableAnalytics": false,
   "outputPath": "../skylines/frontend/static",
-  "proxy": "http://localhost:5000/"
+  "proxy": "https://skylines.aero"
 }
