@@ -8,7 +8,8 @@
     <small><abbr title={{format-time event.time format="full"}}>{{format-relative event.time}}</abbr></small>
   </p>
   <p>
-    {{format-html-message translationKey
+    {{t translationKey
+      htmlSafe=true
       actor=event.actor.name
       actorURL=(href-to "user" event.actor.id)
       user=event.user.name

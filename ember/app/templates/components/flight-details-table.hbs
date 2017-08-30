@@ -43,7 +43,8 @@
       <td>
         {{#if flight.takeoffAirport}}
           {{x-flag code=flight.takeoffAirport.countryCode style="float: right; margin: 3px"}}
-          {{format-html-message "AIRPORT-at-TIME"
+          {{t "AIRPORT-at-TIME"
+          htmlSafe=true
           airport=flight.takeoffAirport.name
           airportURL=(href-to "flights.airport" flight.takeoffAirport.id)
           time=(format-time flight.takeoffTime format="hhmmss" timeZone="UTC")}}
@@ -60,7 +61,8 @@
       <td>
         {{#if flight.landingAirport}}
           {{x-flag code=flight.landingAirport.countryCode style="float: right; margin: 3px"}}
-          {{format-html-message "AIRPORT-at-TIME"
+          {{t "AIRPORT-at-TIME"
+          htmlSafe=true
           airport=flight.landingAirport.name
           airportURL=(href-to "flights.airport" flight.landingAirport.id)
           time=(format-time flight.landingTime format="hhmmss" timeZone="UTC")}}
@@ -139,7 +141,8 @@
   <tr>
     <th>{{t "uploaded"}}</th>
     <td>
-      {{format-html-message "TIME-by-USER"
+      {{t "TIME-by-USER"
+        htmlSafe=true
         time=(format-relative flight.timeCreated)
         user=flight.igcFile.owner.name
         userURL=(href-to "user" flight.igcFile.owner.id)}}</td>
