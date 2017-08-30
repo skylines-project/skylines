@@ -7,16 +7,18 @@
     value=email
     label=(t "email-address")
     disabled=loginTask.isRunning
-    forceErrorClass=error}}
+    forceErrorClass=error
+    testSelector="login-email"}}
 
   {{validated-input
     type='password'
     value=password
     label=(t "password")
     disabled=loginTask.isRunning
-    forceErrorClass=error}}
+    forceErrorClass=error
+    testSelector="login-password"}}
 
-  <button class="btn btn-primary btn-block" type="submit" disabled={{loginTask.isRunning}}>
+  <button class="btn btn-primary btn-block" type="submit" disabled={{loginTask.isRunning}} data-test-login-button>
     {{t "login"}}
   </button>
 
