@@ -17,7 +17,7 @@ describe('Acceptance | page-not-found', function() {
     });
 
     it('will show "Page not found" error message', function() {
-      expect(find('.page-header').textContent).to.contain('Page not found');
+      expect(find('.page-header')).to.contain.text('Page not found');
     });
   });
 });

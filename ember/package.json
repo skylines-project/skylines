@@ -22,6 +22,7 @@
     "bigscreen": "^2.0.5",
     "bootstrap-sass": "^3.3.7",
     "broccoli-asset-rev": "^2.6.0",
+    "chai-dom": "^1.5.0",
     "ember-ajax": "^3.0.0",
     "ember-bootstrap": "^1.0.0-rc.2",
     "ember-cli": "^2.15.0-beta.2",
