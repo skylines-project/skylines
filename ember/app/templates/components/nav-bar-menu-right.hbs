@@ -9,7 +9,7 @@
 
   {{#if session.isAuthenticated}}
     {{#nav.item}}
-      {{#nav.link-to "notifications"}}
+      {{#nav.link-to "notifications" class="notifications"}}
         <span class="visible-xs-inline-block">{{t "notifications"}}&nbsp;&nbsp;</span>
         <span title={{t "notifications"}}>{{notifications-badge}}</span>
       {{/nav.link-to}}

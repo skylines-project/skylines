@@ -101,6 +101,7 @@ abbr[title] {
 .navbar {
   min-height: 40px;
   font-weight: 400;
+  border: 0;
 }
 
 .navbar .fa-bars {
@@ -116,7 +117,7 @@ abbr[title] {
 .navbar-brand {
   font-size: 20px;
   font-weight: 400;
-  line-height: 18px;
+  line-height: 20px;
   padding: 10px 15px;
   height: 100%;
 }
@@ -134,6 +135,10 @@ abbr[title] {
 .navbar-nav > li > a {
     padding-top: 10px !important;
     padding-bottom: 10px !important;
+}
+
+.navbar .notifications {
+  font-size: 12px;
 }
 
 .navbar-form {
