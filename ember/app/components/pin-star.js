@@ -1,5 +1,5 @@
 import Ember from 'ember';
-import { includes } from 'ember-awesome-macros';
+import { includes } from 'ember-awesome-macros/array';
 
 export default Ember.Component.extend({
   pinnedFlights: Ember.inject.service(),
