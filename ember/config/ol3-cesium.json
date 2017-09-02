@@ -112,28 +112,20 @@
     "ol3/src/**/*.js",
     "ol3/build/ol.ext/*.js"
   ],
-  "umd": true,
   "compile": {
     "externs": [
       "externs/olcsx.js",
-      "ol3/externs/bingmaps.js",
-      "ol3/externs/cartodb.js",
-      "ol3/externs/closure-compiler.js",
-      "ol3/externs/esrijson.js",
-      "ol3/externs/geojson.js",
       "ol3/externs/oli.js",
       "ol3/externs/olx.js",
+      "ol3/externs/cartodb.js",
       "ol3/externs/proj4js.js",
       "ol3/externs/tilejson.js",
       "ol3/externs/topojson.js",
+      "ol3/externs/esrijson.js",
+      "ol3/externs/geojson.js",
+      "ol3/externs/bingmaps.js",
+      "ol3/externs/closure-compiler.js",
       "Cesium.externs.js"
-    ],
-    "define": [
-      "goog.array.ASSUME_NATIVE_FUNCTIONS=true",
-      "ol.DEBUG=false",
-      "ol.ENABLE_VECTOR=true",
-      "ol.ENABLE_WEBGL=false",
-      "ol.ENABLE_PROJ4JS=false"
     ],
     "js": [
     ],
@@ -141,16 +133,18 @@
       "*"
     ],
     "jscomp_off": [
-      "useOfGoogBase",
-      "unnecessaryCasts",
-      "lintChecks"
+      "lintChecks",
+      "analyzerChecks"
     ],
     "extra_annotation_name": [
       "api", "observable"
     ],
     "compilation_level": "ADVANCED_OPTIMIZATIONS",
+    "language_in": "ECMASCRIPT5_STRICT",
+    "language_out": "ECMASCRIPT5_STRICT",
     "warning_level": "VERBOSE",
     "generate_exports": true,
+    "isolation_mode": "IIFE",
     "use_types_for_optimization": true,
     "create_source_map": "dist/ol3cesium.js.map",
     "source_map_format": "V3"

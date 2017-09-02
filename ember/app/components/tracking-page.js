@@ -67,7 +67,7 @@ export default Ember.Component.extend({
     flights.forEach(flight => fixCalc.addFlight(flight));
 
     let extent = fixCalc.get('flights').getBounds();
-    map.getView().fit(extent, map.getSize(), { padding: this._calculatePadding() });
+    map.getView().fit(extent, { padding: this._calculatePadding() });
 
     // update flight track every 15 seconds
     this._scheduleUpdate();

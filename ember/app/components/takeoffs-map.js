@@ -19,7 +19,7 @@ export default BaseMapComponent.extend({
       let source = layer.getSource();
       let view = map.getView();
 
-      view.fit(source.getExtent(), map.getSize());
+      view.fit(source.getExtent());
 
       let zoom = view.getZoom();
       if (zoom > 10) {

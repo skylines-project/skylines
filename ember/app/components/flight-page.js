@@ -69,7 +69,7 @@ export default Ember.Component.extend({
     otherIds.forEach(id => fixCalc.addFlightFromJSON(`/api/flights/${id}/json`));
 
     let extent = fixCalc.get('flights').getBounds();
-    map.getView().fit(extent, map.getSize(), { padding: this._calculatePadding() });
+    map.getView().fit(extent, { padding: this._calculatePadding() });
 
     this.get('pinnedFlights.pinned')
       .filter(id => id !== primaryId)

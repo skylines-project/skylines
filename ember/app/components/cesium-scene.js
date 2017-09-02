@@ -24,8 +24,6 @@ export default Ember.Component.extend({
     });
     scene.globe.depthTestAgainstTerrain = true;
 
-    ol3d.enableAutoRenderLoop();
-
     this.set('ol3d', ol3d);
     this.set('scene', scene);
 
