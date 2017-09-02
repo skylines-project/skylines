@@ -1,5 +1,11 @@
 @import '_power-select';
 
+$body-bg: #eee;
+$font-family-sans-serif: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+$headings-font-weight: 700;
+$zindex-tooltip: 6000;
+$zindex-navbar-fixed: 2000;
+
 @import 'ember-bootstrap/bootstrap';
 
 @import 'bootstrap-theme-skylines';
@@ -17,7 +23,6 @@
 @import 'slFixTable';
 @import 'wingman';
 @import 'ol3-sidebar';
-@import 'ubuntu-font';
 @import 'flags';
 @import 'modals';
 @import 'spinner';

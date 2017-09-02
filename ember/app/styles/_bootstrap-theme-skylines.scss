@@ -11,18 +11,6 @@
 }
 
 /* Override some defaults */
-html, body {
-  background-color: #eee;
-}
-
-body, h1, h2, h3, h4, h5, h6 {
-  font-family: "Ubuntu", "Helvetica Neue", Helvetica, Arial, sans-serif;
-}
-
-h1, h2, h3, h4, h5, h6 {
-  font-weight: 700;
-}
-
 body {
   /* 40px to make the container go all the way to the bottom of the topbar */
   padding-top: 40px;
@@ -33,6 +21,10 @@ body {
   body {
     padding-top: 50px;
   }
+}
+
+abbr[title] {
+  text-decoration: none;
 }
 
 .fullscreen-below-nav-bar {
@@ -107,9 +99,9 @@ body {
 /* Navbar */
 
 .navbar {
-  z-index: 2000;
   min-height: 40px;
   font-weight: 400;
+  border: 0;
 }
 
 .navbar .fa-bars {
@@ -119,13 +111,14 @@ body {
 .logo {
   width: 24px;
   height: 24px;
-  margin: -6px 6px -6px 0;
+  margin: -2px 6px -2px 0;
+  vertical-align: bottom;
 }
 
 .navbar-brand {
   font-size: 20px;
   font-weight: 400;
-  line-height: 18px;
+  line-height: 20px;
   padding: 10px 15px;
   height: 100%;
 }
@@ -143,6 +136,11 @@ body {
 .navbar-nav > li > a {
     padding-top: 10px !important;
     padding-bottom: 10px !important;
+}
+
+.navbar .badge {
+  vertical-align: top;
+  padding: 4px 7px;
 }
 
 .navbar-form {
@@ -202,7 +200,6 @@ ul.list-with-dividers li[class*="col"] {
    * of the "table .show" rule that changes this setting.
    */
   white-space: normal;
-  z-index: 6000;
 }
 
 .pin {
