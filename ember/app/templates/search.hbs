@@ -2,7 +2,7 @@
   <div class="page-header">
     <h1>
       {{#if searchText}}
-        {{format-html-message "search.search-for-TEXT" text=searchText}}
+        {{t "search.search-for-TEXT" htmlSafe=true text=searchText}}
       {{else}}
         {{t "search.search"}}
       {{/if}}

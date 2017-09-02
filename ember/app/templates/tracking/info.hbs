@@ -12,7 +12,7 @@
       <ul>
         <li>
           <b>XCSoar:</b><br/>
-          {{format-html-message "tracking.xcsoar-description" release=(html-safe "<a href=\"http://www.xcsoar.org/download/latest.html\">XCSoar 6.4</a>")}}
+          {{t "tracking.xcsoar-description" htmlSafe=true release=(html-safe "<a href=\"http://www.xcsoar.org/download/latest.html\">XCSoar 6.4</a>")}}
           (<a href="https://play.google.com/store/apps/details?id=org.xcsoar" target="_blank" rel="noopener">Google Play</a>).
           {{t "tracking.instructions-below"}}
         </li>
@@ -23,14 +23,14 @@
         </li>
         <li>
           <b>{{t "tracking.lt24-clients"}}:</b><br/>
-          {{format-html-message "tracking.lt24-description" livetrack24=(html-safe "<a href=\"http://www.livetrack24.com/docs/wiki/LiveTracking%20API\">LiveTrack24</a>") skylines=(html-safe "<code>skylines.aero</code>")}}
+          {{t "tracking.lt24-description" htmlSafe=true livetrack24=(html-safe "<a href=\"http://www.livetrack24.com/docs/wiki/LiveTracking%20API\">LiveTrack24</a>") skylines=(html-safe "<code>skylines.aero</code>")}}
         </li>
       </ul>
 
       <h3>{{t "live-tracking-key"}}</h3>
 
       {{#if model.trackingKey}}
-        <p>{{format-html-message "tracking.your-live-tracking-key-is-KEY" key=(html-safe (concat "<span class=\"label tracking-key\">" model.trackingKey "</span>"))}}</p>
+        <p>{{t "tracking.your-live-tracking-key-is-KEY" htmlSafe=true key=(html-safe (concat "<span class=\"label tracking-key\">" model.trackingKey "</span>"))}}</p>
 
         <p>{{#link-to "settings.tracking" class="btn btn-default btn-sm"}}{{fa-icon "cog"}} {{t "tracking.settings"}}{{/link-to}}</p>
       {{else}}
@@ -38,7 +38,7 @@
       {{/if}}
 
       <h3>XCSoar</h3>
-      <p>{{format-html-message "tracking.xcsoar-instructions"}}</p>
+      <p>{{t "tracking.xcsoar-instructions" htmlSafe=true}}</p>
     </div>
   </div>
 {{/base-page}}
