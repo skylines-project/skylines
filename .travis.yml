@@ -7,6 +7,7 @@ python:
   - 2.7
 
 addons:
+  chrome: stable
   postgresql: "9.5"
   apt:
     packages:
@@ -27,7 +28,7 @@ before_install:
   - nvm install 6
   - curl -o- -L https://yarnpkg.com/install.sh | bash
   - export PATH=$HOME/.yarn/bin:$PATH
-  - yarn global add bower phantomjs-prebuilt
+  - yarn global add bower
 
 install:
   # Install SkyLines Python dependencies
