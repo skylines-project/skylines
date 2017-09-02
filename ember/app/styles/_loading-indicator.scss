@@ -1,3 +1,9 @@
+.pace .pace-progress {
+  background: lighten($skylines-blue, 0%);
+  border-bottom: solid 1px lighten($skylines-blue, 10%);
+  box-shadow: 0 0 5px 0 lighten($skylines-blue, 20%);
+}
+
 .ember-application .pace .pace-progress {
   top: 40px;
 

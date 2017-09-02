@@ -1,13 +1,17 @@
+$skylines-white: #ffffff;
+$skylines-blue : #008eda;
+$skylines-black: #000000;
+
 .skylines-white {
-  color: #ffffff;
+  color: $skylines-white;
 }
 
 .skylines-blue {
-  color: #008eda;
+  color: $skylines-blue;
 }
 
 .skylines-black {
-  color: #000000;
+  color: $skylines-black;
 }
 
 /* Override some defaults */
@@ -81,19 +85,9 @@ abbr[title] {
   }
 }
 
-/* The white background content wrapper */
 .content {
-  min-height: 500px;
-  background-color: #fff;
-  padding: 15px;
-  /* negative indent the amount of the padding to maintain the grid system */
-  margin: 0 -15px;
-  -webkit-border-radius: 0 0 6px 6px;
-     -moz-border-radius: 0 0 6px 6px;
-          border-radius: 0 0 6px 6px;
-  -webkit-box-shadow: 0 1px 2px rgba(0,0,0,.15);
-     -moz-box-shadow: 0 1px 2px rgba(0,0,0,.15);
-          box-shadow: 0 1px 2px rgba(0,0,0,.15);
+  padding-top: 15px;
+  padding-bottom: 15px;
 }
 
 /* Navbar */
@@ -118,6 +112,7 @@ abbr[title] {
 .navbar-brand {
   font-size: 20px;
   font-weight: 400;
+  text-shadow: 0 1px 1px black;
   line-height: 20px;
   padding: 10px 15px;
   height: 100%;
@@ -134,8 +129,10 @@ abbr[title] {
 }
 
 .navbar-nav > li > a {
-    padding-top: 10px !important;
-    padding-bottom: 10px !important;
+  padding-top: 10px !important;
+  padding-bottom: 10px !important;
+
+  text-shadow: 0 1px 1px black;
 }
 
 .navbar .badge {
