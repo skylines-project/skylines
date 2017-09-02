@@ -2785,6 +2785,27 @@ ember-bootstrap@^1.0.0-rc.2:
     rsvp "^4.0.1"
     silent-error "^1.0.1"
 
+ember-bootstrap@kaliber5/ember-bootstrap:
+  version "1.0.0-rc.2"
+  resolved "https://codeload.github.com/kaliber5/ember-bootstrap/tar.gz/552aa7b818ea7336d8fa4f4265b3239f71c0f308"
+  dependencies:
+    broccoli-debug "^0.6.3"
+    broccoli-funnel "^1.2.0"
+    broccoli-merge-trees "^2.0.0"
+    broccoli-stew "^1.4.0"
+    chalk "^2.1.0"
+    ember-assign-polyfill "^2.0.1"
+    ember-cli-babel "^6.6.0"
+    ember-cli-build-config-editor "0.5.0"
+    ember-cli-classlist-polyfill "^0.1.0"
+    ember-cli-htmlbars "^2.0.2"
+    ember-runtime-enumerable-includes-polyfill "^2.0.0"
+    ember-wormhole "^0.5.2"
+    findup-sync "^2.0.0"
+    fs-extra "^4.0.1"
+    rsvp "^4.0.1"
+    silent-error "^1.0.1"
+
 ember-cli-app-version@^3.1.0:
   version "3.1.0"
   resolved "https://registry.yarnpkg.com/ember-cli-app-version/-/ember-cli-app-version-3.1.0.tgz#074b0330581a7b8ab094ff07fefb34e0d0254bfd"
@@ -2844,7 +2865,7 @@ ember-cli-broccoli-sane-watcher@^2.0.4:
     rsvp "^3.0.18"
     sane "^1.1.1"
 
-ember-cli-build-config-editor@^0.5.0:
+ember-cli-build-config-editor@0.5.0, ember-cli-build-config-editor@^0.5.0:
   version "0.5.0"
   resolved "https://registry.yarnpkg.com/ember-cli-build-config-editor/-/ember-cli-build-config-editor-0.5.0.tgz#e19a06f4da2e3e579b407964b72df9fbf3839f4b"
   dependencies:
