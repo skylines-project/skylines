@@ -108,6 +108,7 @@ abbr[title] {
 .navbar-brand {
   font-size: 20px;
   font-weight: 400;
+  text-shadow: 0 1px 1px black;
   line-height: 20px;
   padding: 10px 15px;
   height: 100%;
@@ -124,8 +125,10 @@ abbr[title] {
 }
 
 .navbar-nav > li > a {
-    padding-top: 10px !important;
-    padding-bottom: 10px !important;
+  padding-top: 10px !important;
+  padding-bottom: 10px !important;
+
+  text-shadow: 0 1px 1px black;
 }
 
 .navbar .badge {
