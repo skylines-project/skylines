@@ -23,5 +23,7 @@ export default IntlService.extend({
     Ember.debug(`Setting locale to "${locale}"`);
     this._super(...arguments);
     this.get('cookies').write('locale', locale, { path: '/', expires: new Date('2099-12-31') });
+
+    document.documentElement.lang = locale;
   },
 });
