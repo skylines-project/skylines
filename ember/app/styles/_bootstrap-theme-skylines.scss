@@ -1,13 +1,17 @@
+$skylines-white: #ffffff;
+$skylines-blue : #008eda;
+$skylines-black: #000000;
+
 .skylines-white {
-  color: #ffffff;
+  color: $skylines-white;
 }
 
 .skylines-blue {
-  color: #008eda;
+  color: $skylines-blue;
 }
 
 .skylines-black {
-  color: #000000;
+  color: $skylines-black;
 }
 
 /* Override some defaults */
