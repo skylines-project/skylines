@@ -1,7 +1,7 @@
 /* globals Cesium */
 
 import Ember from 'ember';
-import olcs from 'ol3-cesium';
+import olcs from 'ol-cesium';
 
 export default Ember.Component.extend({
   tagName: '',
