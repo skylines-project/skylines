@@ -52,10 +52,6 @@ before_script:
   # Install fuzzystrmatch extension into the database
   - psql -U postgres -d skylines_test -c 'CREATE EXTENSION fuzzystrmatch;'
 
-  - cd ember
-  - node_modules/.bin/ember build
-  - cd ..
-
 script:
   # Run the test suite
   - py.test -vv --cov=skylines --cov-report term-missing:skip-covered
