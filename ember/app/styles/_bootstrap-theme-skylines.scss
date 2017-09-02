@@ -137,8 +137,9 @@ abbr[title] {
     padding-bottom: 10px !important;
 }
 
-.navbar .notifications {
-  font-size: 12px;
+.navbar .badge {
+  vertical-align: top;
+  padding: 4px 7px;
 }
 
 .navbar-form {
