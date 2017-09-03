@@ -1,0 +1,19 @@
+.panel-heading {
+  position: relative;
+}
+
+.panel-help-icon {
+  position: absolute;
+  right: 0;
+  top: 0;
+  font-size: 20pt;
+}
+
+.panel-help-icon > a {
+  color: #aaa;
+  text-decoration: none;
+}
+
+.panel-help-icon > a:hover {
+  color: #666;
+}
