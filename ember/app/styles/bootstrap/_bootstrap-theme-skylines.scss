@@ -82,22 +82,6 @@ abbr[title] {
   }
 }
 
-/* Page footer */
-.footer {
-  /* center align it with the container */
-  text-align: center;
-  margin-top: 5px;
-  font-size: 85%;
-}
-
-.footer a {
-  color: #333;
-}
-
-.footer a:hover {
-  text-decoration: none;
-}
-
 /* File upload field fix */
 input[type="file"].form-control {
   height: auto;
