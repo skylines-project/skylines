@@ -2,7 +2,7 @@
 
 set -e
 
-OLCS_TAG=v1.26
+OLCS_TAG=v1.27
 
 ## clone "ol-cesium" into "tmp" folder
 if [ -d "tmp/ol-cesium" ]; then
