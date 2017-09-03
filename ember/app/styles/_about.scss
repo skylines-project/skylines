@@ -1,37 +1,39 @@
-#about .social-buttons .btn-group {
-  float: right;
-}
+#about {
+  .social-buttons .btn-group {
+    float: right;
+  }
 
-#about .social-buttons .btn {
-  width: 40px;
-}
+  .social-buttons .btn {
+    width: 40px;
+  }
 
-#about h2 {
-  font-size: 22px;
-}
+  h2 {
+    font-size: 22px;
 
-#about h2 .fa {
-  width: 1.2em;
-  text-align: center;
-}
+    .fa {
+      width: 1.2em;
+      text-align: center;
+    }
 
-#about h2 a {
-  color: inherit;
-  text-decoration: none;
-}
+    a {
+      color: inherit;
+      text-decoration: none;
 
-#about h2 a:hover {
-  color: #666;
-}
+      &:hover {
+        color: #666;
+      }
+    }
 
-#about h2 small {
-  font-size: 13px;
-}
+    small {
+      font-size: 13px;
+    }
+  }
 
-#about p {
-  text-align: justify;
-}
+  p {
+    text-align: justify;
+  }
 
-#about .banner div {
-  padding: 0;
+  .banner div {
+    padding: 0;
+  }
 }
