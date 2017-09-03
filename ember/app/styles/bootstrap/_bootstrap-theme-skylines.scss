@@ -48,43 +48,6 @@ abbr[title] {
   height: 100%;
 }
 
-/* Page header */
-.page-header {
-  position: relative;
-  padding: 0;
-  margin: 10px 0;
-}
-
-.page-header h1 {
-  margin-top: 0;
-}
-
-.page-header-with-tabs {
-  padding-bottom: 50px;
-}
-
-.page-header-tabs {
-  position: absolute;
-  bottom: 0;
-  left: 5px;
-}
-
-.page-header-tabs .nav-tabs {
-  margin-bottom: 0;
-  border-bottom: 0;
-}
-
-@media (min-width: 768px) {
-  .page-header-with-tabs {
-    padding-bottom: 0;
-  }
-
-  .page-header-tabs {
-    left: auto;
-    right: 5px;
-  }
-}
-
 .content {
   padding-top: 15px;
   padding-bottom: 15px;
