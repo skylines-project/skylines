@@ -77,7 +77,7 @@ export default Ember.Component.extend({
       let map = this.get('map');
       let extent = ol.extent.boundingExtent(coordinates);
       let padding = this.get('calculatePadding')();
-      map.getView().fit(extent, map.getSize(), { padding });
+      map.getView().fit(extent, { padding });
     }
   },
 });

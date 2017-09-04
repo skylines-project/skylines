@@ -5,5 +5,5 @@
     return { 'default': self['olcs'] };
   }
 
-  define('ol3-cesium', [], vendorModule);
+  define('ol-cesium', [], vendorModule);
 })();

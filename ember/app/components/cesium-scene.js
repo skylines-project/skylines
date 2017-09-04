@@ -1,7 +1,7 @@
 /* globals Cesium */
 
 import Ember from 'ember';
-import olcs from 'ol3-cesium';
+import olcs from 'ol-cesium';
 
 export default Ember.Component.extend({
   tagName: '',
@@ -23,8 +23,6 @@ export default Ember.Component.extend({
       url: '//assets.agi.com/stk-terrain/world',
     });
     scene.globe.depthTestAgainstTerrain = true;
-
-    ol3d.enableAutoRenderLoop();
 
     this.set('ol3d', ol3d);
     this.set('scene', scene);

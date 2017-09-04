@@ -31,7 +31,7 @@ export default Ember.Component.extend({
 
   didReceiveAttrs() {
     this.get('entity').modelMatrix = Cesium.Transforms.headingPitchRollToFixedFrame(
-      this.get('position'), this.get('heading') - Math.PI / 2, 0, 0);
+      this.get('position'), new Cesium.HeadingPitchRoll(this.get('heading') - Math.PI / 2, 0, 0));
   },
 
   didInsertElement() {
