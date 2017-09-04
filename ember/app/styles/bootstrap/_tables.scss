@@ -1,0 +1,18 @@
+.table {
+  > thead,
+  > tbody,
+  > tfoot {
+    > tr {
+      > th,
+      > td {
+        border-top: none;
+      }
+    }
+  }
+  > thead > tr > th {
+    border-bottom: 1px solid $table-border-color;
+  }
+  > tbody + tbody {
+    border-top: 1px solid $table-border-color;
+  }
+}

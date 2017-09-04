@@ -1,0 +1,20 @@
+$font-family-sans-serif: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+$headings-font-weight: 700;
+$zindex-popover: 5000;
+$zindex-tooltip: 6000;
+$zindex-navbar-fixed: 2000;
+$zindex-modal-background: 2010;
+$zindex-modal: 2020;
+
+@import 'ember-bootstrap/bootstrap';
+
+@import 'bootstrap/bootstrap-theme-skylines';
+@import 'bootstrap/bootstrap-badges';
+@import 'bootstrap/bootstrap-vertical-tabs';
+@import 'bootstrap/bootstrap-datetimepicker';
+
+@import "bootstrap/modals";
+@import "bootstrap/navbar";
+@import "bootstrap/page-header";
+@import "bootstrap/panel";
+@import "bootstrap/tables";

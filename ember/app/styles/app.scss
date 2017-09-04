@@ -1,20 +1,10 @@
 @import '_power-select';
 
-$font-family-sans-serif: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
-$headings-font-weight: 700;
-$zindex-tooltip: 6000;
-$zindex-navbar-fixed: 2000;
+@import 'bootstrap';
 
-@import 'ember-bootstrap/bootstrap';
-
-@import 'bootstrap-theme-skylines';
-@import 'bootstrap-badges';
-@import 'bootstrap-vertical-tabs';
-@import 'bootstrap-datetimepicker';
-@import 'panel';
 @import 'follower-panel';
 @import 'tables';
-@import 'login-dropdown';
+@import 'form-login';
 @import 'about';
 @import 'search';
 @import 'events';
@@ -23,9 +13,9 @@ $zindex-navbar-fixed: 2000;
 @import 'wingman';
 @import 'ol3-sidebar';
 @import 'flags';
-@import 'modals';
 @import 'spinner';
 @import 'loading-indicator';
+@import 'footer';
 
 @import 'ol-GraphicLayerSwitcher-v3';
 @import 'ol-PlayButton';
