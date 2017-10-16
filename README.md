@@ -43,15 +43,11 @@ development is described in the [INSTALL.md](INSTALL.md) file.
 
 ## Contact and Contributing
 
-You can reach us and read about news on
-[Facebook](https://www.facebook.com/skylines.project),
-[Twitter](https://twitter.com/skylinesproject) and
-[Google+](https://plus.google.com/114462603028839635814). We are also reachable
-via IRC on the #skylines channel of the [freenode](http://freenode.net/)
-servers.
+You read about news on [Facebook](https://www.facebook.com/skylines.project) and
+[Twitter](https://twitter.com/skylinesproject). If you want to talk to us directly
+join our [Slack](https://skylines-slack.herokuapp.com/) community.
 
-Bugs and feature request can be submitted either to the
-[XCSoar trac](http://bugs.xcsoar.org) instance under the *SkyLines* milestone or on
+Bugs and feature request can be submitted here on
 [GitHub](https://github.com/skylines-project/skylines/issues). New ideas can
 also be discussed in the
 [Wiki](https://github.com/skylines-project/skylines/wiki) first.
@@ -59,8 +55,7 @@ also be discussed in the
 Patches should be submitted using the
 [Pull Request](https://github.com/skylines-project/skylines/pulls) system of
 GitHub because of the integration with
-[TravisCI](https://travis-ci.org/skylines-project/skylines). You can also send
-patches via mail to any of the [current maintainers](AUTHORS.md) though.
+[TravisCI](https://travis-ci.org/skylines-project/skylines).
 
 Here are a few guidelines for creating patches:
 
