@@ -13,7 +13,9 @@
       <div class="sidebar-pane" id="tab-overview">
         <h3>{{t "overview"}}</h3>
         <div class="sidebar-pane-content">
-          {{tracking-pilots-list pilots=pilots}}
+          {{#if fixCalc.fixes.[0].coordinate}}
+            {{tracking-pilots-list pilots=pilots lat=fixCalc.fixes.[0].lat lon=fixCalc.fixes.[0].lon}}
+          {{/if}}
         </div>
       </div>
     </div>

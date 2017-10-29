@@ -14,6 +14,12 @@
         </tr>
       {{/if}}
 
+      <tr>
+        <th>{{t "last-position"}}</th>
+        <td>{{lat}}</td>
+        <td>{{lon}}</td>
+      </tr>
+
       {{#if (gt pilot.trackingDelay 0)}}
         <tr>
           <th>{{t "delay"}}</th>
