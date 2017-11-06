@@ -49,16 +49,16 @@
   {{/if}}
 </td>
 <td class="times-column">
-  {{format-time times.firstObject.start format='hhmmss'}}<br />
-  {{format-time times.lastObject.end format='hhmmss'}}
+  {{format-time times.firstObject.start format='hhmmss' timeZone="UTC"}}<br />
+  {{format-time times.lastObject.end format='hhmmss' timeZone="UTC"}}
 
   {{#bs-popover title="Periods" triggerEvents="hover"}}
     <table>
       {{#each times as |interval|}}
         <tr>
-          <td style='text-align: right;'>{{format-time interval.start format='hhmmss'}}</td>
+          <td style='text-align: right;'>{{format-time interval.start format='hhmmss' timeZone="UTC"}}</td>
           <td>-</td>
-          <td>{{format-time interval.end format='hhmmss'}}</td>
+          <td>{{format-time interval.end format='hhmmss' timeZone="UTC"}}</td>
         </tr>
       {{/each}}
     </table>
