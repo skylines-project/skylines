@@ -13,7 +13,7 @@
     {{#nav.item}}
       {{#nav.link-to "flights.latest"}}
         {{#if date}}
-          {{format-date date format="ddmmyyyy"}}
+          {{format-date date format="ddmmyyyy" timeZone="UTC"}}
         {{else}}
           {{t "latest"}}
         {{/if}}
@@ -25,7 +25,7 @@
   {{#if (and date (not latest))}}
     {{#nav.item}}
       {{#nav.link-to "flights.date" date}}
-        {{format-date date format="ddmmyyyy"}}
+        {{format-date date format="ddmmyyyy" timeZone="UTC"}}
         &nbsp;{{#date-picker date=date onSelect=(action "dateSelected")}}{{fa-icon "calendar"}}{{/date-picker}}
       {{/nav.link-to}}
     {{/nav.item}}

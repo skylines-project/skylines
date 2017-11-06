@@ -1,7 +1,7 @@
 <td>{{label}}</td>
 <td class="column-buttons">
   {{#if flight}}
-    <abbr title={{format-time flight.scoreDate format="full"}}>{{format-relative flight.scoreDate}}</abbr>
+    <abbr title={{format-date flight.scoreDate format="ddmmyyyy" timeZone="UTC"}}>{{format-relative flight.scoreDate}}</abbr>
     <div class="pull-right">
       {{link-to (t "show") "flight" flight.id class="btn btn-default btn-sm"}}
     </div>

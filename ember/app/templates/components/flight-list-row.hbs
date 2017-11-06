@@ -1,7 +1,7 @@
 {{#if showDate}}
   <td class="date">
     {{#if flight.scoreDate}}
-      {{format-date flight.scoreDate format="ddmmyyyy"}}
+      {{format-date flight.scoreDate format="ddmmyyyy" timeZone="UTC"}}
     {{/if}}
   </td>
 {{/if}}
