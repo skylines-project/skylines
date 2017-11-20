@@ -24,7 +24,7 @@ setup(
         'Flask-SQLAlchemy==1.0',
         'sqlalchemy==0.8.2',
         'alembic==0.6.3',
-        'psycopg2==2.5.2',
+        'psycopg2==2.7.3.2',
         'GeoAlchemy2==0.2.3',
         'Shapely==1.3.0',
         'crc16==0.1.1',
