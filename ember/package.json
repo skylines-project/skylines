@@ -35,7 +35,7 @@
     "ember-cli-deploy-gzip": "^1.0.0",
     "ember-cli-deploy-revision-data": "^1.0.0",
     "ember-cli-deploy-rsync-assets": "^0.2.1",
-    "ember-cli-eslint": "^4.2.0",
+    "ember-cli-eslint": "^4.2.2",
     "ember-cli-htmlbars": "^2.0.3",
     "ember-cli-htmlbars-inline-precompile": "^1.0.2",
     "ember-cli-inject-live-reload": "^1.7.0",
