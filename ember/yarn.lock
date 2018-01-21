@@ -2759,7 +2759,7 @@ ember-cli-babel@^5.1.0, ember-cli-babel@^5.1.6, ember-cli-babel@^5.1.7:
     ember-cli-version-checker "^1.0.2"
     resolve "^1.1.2"
 
-ember-cli-babel@^6.0.0, ember-cli-babel@^6.0.0-beta.4, ember-cli-babel@^6.0.0-beta.7, ember-cli-babel@^6.1.0, ember-cli-babel@^6.11.0, ember-cli-babel@^6.3.0, ember-cli-babel@^6.6.0, ember-cli-babel@^6.8.0, ember-cli-babel@^6.8.1, ember-cli-babel@^6.8.2:
+ember-cli-babel@^6.0.0, ember-cli-babel@^6.0.0-beta.4, ember-cli-babel@^6.0.0-beta.7, ember-cli-babel@^6.1.0, ember-cli-babel@^6.11.0, ember-cli-babel@^6.3.0, ember-cli-babel@^6.6.0, ember-cli-babel@^6.7.1, ember-cli-babel@^6.8.0, ember-cli-babel@^6.8.1, ember-cli-babel@^6.8.2:
   version "6.11.0"
   resolved "https://registry.yarnpkg.com/ember-cli-babel/-/ember-cli-babel-6.11.0.tgz#79cb184bac3c05bfe181ddc306bac100ab1f9493"
   dependencies:
@@ -2909,9 +2909,9 @@ ember-cli-get-dependency-depth@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/ember-cli-get-dependency-depth/-/ember-cli-get-dependency-depth-1.0.0.tgz#e0afecf82a2d52f00f28ab468295281aec368d11"
 
-ember-cli-head@^0.3.1:
-  version "0.3.1"
-  resolved "https://registry.yarnpkg.com/ember-cli-head/-/ember-cli-head-0.3.1.tgz#a407df4880f235280371c437bb5b0b5cbdaea646"
+ember-cli-head@^0.4.0:
+  version "0.4.0"
+  resolved "https://registry.yarnpkg.com/ember-cli-head/-/ember-cli-head-0.4.0.tgz#348f7595cee5bcb024a87d1c72c8d55fedda32f7"
   dependencies:
     ember-cli-babel "^6.1.0"
     ember-cli-htmlbars "^2.0.1"
@@ -3418,12 +3418,12 @@ ember-native-dom-helpers@^0.5.10, ember-native-dom-helpers@^0.5.3:
     broccoli-funnel "^1.1.0"
     ember-cli-babel "^6.6.0"
 
-ember-page-title@^3.2.2:
-  version "3.2.2"
-  resolved "https://registry.yarnpkg.com/ember-page-title/-/ember-page-title-3.2.2.tgz#241effbc8228ecfb75e33540f6707003fdf6db31"
+ember-page-title@^4.0.3:
+  version "4.0.3"
+  resolved "https://registry.yarnpkg.com/ember-page-title/-/ember-page-title-4.0.3.tgz#0bb83c4519a5c79ed04a167bba3160884c198f86"
   dependencies:
-    ember-cli-babel "^6.0.0"
-    ember-cli-head "^0.3.1"
+    ember-cli-babel "^6.7.1"
+    ember-cli-head "^0.4.0"
     ember-cli-htmlbars "^2.0.1"
 
 ember-power-select@^1.9.5:

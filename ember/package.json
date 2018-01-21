@@ -57,7 +57,7 @@
     "ember-load-initializers": "^1.0.0",
     "ember-maybe-import-regenerator": "^0.1.6",
     "ember-native-dom-helpers": "^0.5.10",
-    "ember-page-title": "^3.2.2",
+    "ember-page-title": "^4.0.3",
     "ember-power-select": "^1.9.5",
     "ember-resolver": "^4.5.0",
     "ember-simple-auth": "^1.4.2",
