@@ -6,6 +6,7 @@ import config from '../../config/environment';
 
 export default function startApp(attrs) {
   let attributes = merge({}, config.APP);
+  attributes.autoboot = true;
   attributes = merge(attributes, attrs);
 
   return run(() => {
