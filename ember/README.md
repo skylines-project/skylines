@@ -11,7 +11,7 @@ You will need the following things properly installed on your computer.
 * [Node.js](https://nodejs.org/)
 * [Bower](https://bower.io/)
 * [Ember CLI](https://ember-cli.com/)
-* [PhantomJS](http://phantomjs.org/)
+* [Google Chrome](https://google.com/chrome/)
 * [Yarn](https://yarnpkg.com/lang/en/)
 
 ## Installation
