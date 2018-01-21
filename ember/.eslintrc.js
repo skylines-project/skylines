@@ -13,5 +13,7 @@ module.exports = {
     'ember/local-modules': 'off',
     'ember/order-in-components': 'off',
     'ember/order-in-controllers': 'off',
+    'ember/order-in-models': 'off',
+    'ember/order-in-routes': 'off',
   },
 };
