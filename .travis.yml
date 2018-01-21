@@ -6,6 +6,11 @@ language: python
 python:
   - 2.7
 
+env:
+  global:
+    # See https://git.io/vdao3 for details.
+    - JOBS=1
+
 addons:
   chrome: stable
   postgresql: "9.5"

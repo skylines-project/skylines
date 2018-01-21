@@ -14,6 +14,11 @@ cache:
     - $HOME/.npm
     - $HOME/.cache # includes bowers cache
 
+env:
+  global:
+    # See https://git.io/vdao3 for details.
+    - JOBS=1
+
 before_install:
   - npm config set spin false
   - npm install -g bower
