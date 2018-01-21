@@ -1,6 +1,7 @@
 {
   "name": "skylines",
   "version": "0.0.0",
+  "private": true,
   "description": "Small description for skylines goes here",
   "license": "MIT",
   "author": "",
@@ -72,6 +73,5 @@
   },
   "engines": {
     "node": ">= 4"
-  },
-  "private": true
+  }
 }
