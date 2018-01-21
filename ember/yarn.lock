@@ -3606,12 +3606,12 @@ ember-svg-jar@^0.11.1:
     mkdirp "^0.5.1"
     path-posix "^1.0.0"
 
-ember-test-selectors@^0.3.7:
-  version "0.3.7"
-  resolved "https://registry.yarnpkg.com/ember-test-selectors/-/ember-test-selectors-0.3.7.tgz#0729cee3e0a36bf0ebc1dfd561723675dfad9b8f"
+ember-test-selectors@^0.3.8:
+  version "0.3.8"
+  resolved "https://registry.yarnpkg.com/ember-test-selectors/-/ember-test-selectors-0.3.8.tgz#1e8ae3e78c64bacc4bbfe87f9973c85805699db2"
   dependencies:
     broccoli-stew "^1.4.0"
-    ember-cli-babel "^6.6.0"
+    ember-cli-babel "^6.8.2"
     ember-cli-version-checker "^2.0.0"
 
 ember-text-measurer@^0.3.3:
