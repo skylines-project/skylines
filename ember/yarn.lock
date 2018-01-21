@@ -3471,9 +3471,9 @@ ember-mocha@^0.13.0-beta.1:
     ember-cli-test-loader "^2.2.0"
     mocha "^2.5.3"
 
-ember-native-dom-helpers@^0.5.3, ember-native-dom-helpers@^0.5.4:
-  version "0.5.4"
-  resolved "https://registry.yarnpkg.com/ember-native-dom-helpers/-/ember-native-dom-helpers-0.5.4.tgz#0bc1506a643fb7adc0abf1d09c44a7914459296b"
+ember-native-dom-helpers@^0.5.10, ember-native-dom-helpers@^0.5.3:
+  version "0.5.10"
+  resolved "https://registry.yarnpkg.com/ember-native-dom-helpers/-/ember-native-dom-helpers-0.5.10.tgz#9c7172e4ddfa5dd86830c46a936e2f8eca3e5896"
   dependencies:
     broccoli-funnel "^1.1.0"
     ember-cli-babel "^6.6.0"
