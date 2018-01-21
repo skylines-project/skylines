@@ -60,7 +60,7 @@
     "ember-page-title": "^3.2.2",
     "ember-power-select": "^1.9.5",
     "ember-resolver": "^4.5.0",
-    "ember-simple-auth": "^1.4.0",
+    "ember-simple-auth": "^1.4.2",
     "ember-source": "~2.13.0",
     "ember-svg-jar": "^0.12.0",
     "ember-test-selectors": "^0.3.8",
