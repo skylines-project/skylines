@@ -43,7 +43,7 @@
     "ember-cli-mocha": "^0.14.5-beta.1",
     "ember-cli-pace": "^0.1.0",
     "ember-cli-pretender": "^1.0.1",
-    "ember-cli-sass": "^7.0.0",
+    "ember-cli-sass": "^7.1.4",
     "ember-cli-sentry": "^2.4.4",
     "ember-cli-shims": "^1.1.0",
     "ember-cli-uglify": "^2.0.0",
