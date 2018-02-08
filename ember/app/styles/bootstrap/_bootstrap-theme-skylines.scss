@@ -18,7 +18,6 @@ $skylines-black: #000000;
 body {
   /* 40px to make the container go all the way to the bottom of the topbar */
   padding-top: 40px;
-  font-weight: 300;
 }
 
 @media (max-width: 767px) {
@@ -57,10 +56,6 @@ abbr[title] {
   .dropdown-menu .divider {
     background-color: #666;
   }
-}
-
-.dropdown-menu > li > a {
-  font-weight: 300;
 }
 
 /* File upload field fix */
