@@ -12,18 +12,21 @@
       value=email
       validation=validations.attrs.email
       label=(t "email-address")
+      autocomplete="email"
       disabled=saveTask.isRunning}}
 
     {{validated-input
       value=firstName
       validation=validations.attrs.firstName
       label=(t "first-name")
+      autocomplete="given-name"
       disabled=saveTask.isRunning}}
 
     {{validated-input
       value=lastName
       validation=validations.attrs.lastName
       label=(t "last-name")
+      autocomplete="family-name"
       disabled=saveTask.isRunning}}
 
     <div class="form-group">
