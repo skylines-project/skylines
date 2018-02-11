@@ -18,10 +18,12 @@ export default Component.extend({
   }),
 
   didInsertElement() {
+    this._super(...arguments);
     this.get('source').addFeature(this.get('feature'));
   },
 
   willDestroyElement() {
+    this._super(...arguments);
     this.get('source').removeFeature(this.get('feature'));
   },
 });

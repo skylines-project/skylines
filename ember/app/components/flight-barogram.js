@@ -67,6 +67,7 @@ export default BarogramComponent.extend({
   },
 
   didUpdateAttrs() {
+    this._super(...arguments);
     let selection = this.get('selection');
     let timeInterval = this.get('timeInterval');
     let timeHighlight = this.get('timeHighlight');

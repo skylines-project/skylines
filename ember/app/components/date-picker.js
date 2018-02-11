@@ -9,6 +9,7 @@ export default Component.extend({
   onSelect() {},
 
   didInsertElement() {
+    this._super(...arguments);
     let picker = this.$('span').datepicker({
       weekStart: 1,
     });
@@ -22,6 +23,7 @@ export default Component.extend({
   },
 
   willDestroyElement() {
+    this._super(...arguments);
     let picker = this.get('picker');
     if (picker) {
       picker.off('changeDate');

@@ -79,6 +79,7 @@ export default Component.extend({
   },
 
   didInsertElement() {
+    this._super(...arguments);
     let map = this.get('map');
     if (map) {
       map.setTarget(this.elementId);

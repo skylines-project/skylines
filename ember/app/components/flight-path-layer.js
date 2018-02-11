@@ -24,10 +24,12 @@ export default Component.extend({
   }),
 
   didInsertElement() {
+    this._super(...arguments);
     this.get('map').addLayer(this.get('layer'));
   },
 
   willDestroyElement() {
+    this._super(...arguments);
     this.get('map').removeLayer(this.get('layer'));
   },
 });
