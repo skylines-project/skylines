@@ -36,6 +36,7 @@ export default Component.extend({
   },
 
   didInsertElement() {
+    this._super(...arguments);
     let flights = this.get('flights');
     if (flights.length === 0) { return; }
 
@@ -77,6 +78,7 @@ export default Component.extend({
   },
 
   willDestroyElement() {
+    this._super(...arguments);
     let updateTimer = this.get('updateTimer');
     if (updateTimer) {
       cancel(updateTimer);

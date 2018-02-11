@@ -23,6 +23,7 @@ export default Component.extend({
   flotStyle: conditional('height', htmlSafe(tag`width: 100%; height: ${'height'}px;`)),
 
   didInsertElement() {
+    this._super(...arguments);
     let units = this.get('units');
 
     let opts = {

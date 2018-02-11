@@ -86,6 +86,7 @@ export default BarogramComponent.extend({
   },
 
   didUpdateAttrs() {
+    this._super(...arguments);
     this.updateSelection();
   },
 

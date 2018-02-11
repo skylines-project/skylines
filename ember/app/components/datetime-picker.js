@@ -10,6 +10,7 @@ export default Component.extend({
   onChange: null,
 
   didInsertElement() {
+    this._super(...arguments);
     this.$().datetimepicker({
       pickDate: false,
       useSeconds: true,
@@ -34,10 +35,12 @@ export default Component.extend({
   },
 
   didUpdateAttrs() {
+    this._super(...arguments);
     once(this, 'updateDate');
   },
 
   willDestroyElement() {
+    this._super(...arguments);
     this.$().off('dp.change');
     this.set('picker', null);
   },

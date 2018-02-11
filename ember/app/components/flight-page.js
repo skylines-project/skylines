@@ -41,6 +41,7 @@ export default Component.extend({
   },
 
   didInsertElement() {
+    this._super(...arguments);
     let fixCalc = this.get('fixCalc');
 
     let sidebar = this.$('#sidebar').sidebar();

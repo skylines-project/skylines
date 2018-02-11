@@ -13,6 +13,7 @@ export default Component.extend({
   overlayLayers: null,
 
   didInsertElement() {
+    this._super(...arguments);
     let mouseHandler = event => {
       if (this.$().find(event.target).length === 0) {
         this.set('open', false);
@@ -24,10 +25,10 @@ export default Component.extend({
   },
 
   willDestroyElement() {
+    this._super(...arguments);
     let mouseHandler = this.get('mouseHandler');
     $(document).off('mouseup touchend', mouseHandler);
   },
-
 
   actions: {
     open() {

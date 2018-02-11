@@ -27,10 +27,12 @@ export default Component.extend({
   },
 
   didReceiveAttrs() {
+    this._super(...arguments);
     this.get('overlay').setPosition(this.get('position'));
   },
 
   didInsertElement() {
+    this._super(...arguments);
     let overlay = this.get('overlay');
     this.get('map').addOverlay(overlay);
 
@@ -39,6 +41,7 @@ export default Component.extend({
   },
 
   willDestroyElement() {
+    this._super(...arguments);
     let overlay = this.get('overlay');
     this.get('map').removeOverlay(overlay);
   },

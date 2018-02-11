@@ -41,10 +41,12 @@ export default Component.extend({
   },
 
   didInsertElement() {
+    this._super(...arguments);
     this.get('map').on('postcompose', this.onPostCompose, this);
   },
 
   willDestroyElement() {
+    this._super(...arguments);
     this.get('map').un('postcompose', this.onPostCompose, this);
   },
 
