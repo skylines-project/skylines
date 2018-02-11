@@ -22,7 +22,7 @@ export default Component.extend({
     this._super(...arguments);
 
     this.set('entity', Cesium.Model.fromGltf({
-      url: '../../images/Cesium_Air.gltf',
+      url: '../../images/Cesium_Air.glb',
       scale: 1,
       minimumPixelSize: 64,
       allowPicking: false,
