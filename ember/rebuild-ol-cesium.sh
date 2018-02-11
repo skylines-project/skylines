@@ -2,7 +2,7 @@
 
 set -e
 
-OLCS_TAG=v1.30
+OLCS_TAG=v1.31
 
 ## clone "ol-cesium" into "tmp" folder
 if [ -d "tmp/ol-cesium" ]; then
@@ -17,12 +17,12 @@ fi
 cp -f config/ol-cesium.json tmp/ol-cesium/build/olcesium.json
 
 # build "ol-cesium" and "Cesium"
-(cd tmp/ol-cesium && make dist cesium/Build/Cesium/Cesium.js)
+(cd tmp/ol-cesium && make dist node_modules/@camptocamp/cesium/Build/Cesium/Cesium.js)
 
 # copy "ol-cesium" to "vendor" folder
 cp -f tmp/ol-cesium/dist/olcesium.js vendor/openlayers/olcesium.js
-cp -f tmp/ol-cesium/ol/css/ol.css vendor/openlayers/ol.css
+cp -f tmp/ol-cesium/node_modules/openlayers/css/ol.css vendor/openlayers/ol.css
 
 # copy "Cesium" to "public" folder
 rm -rf public/cesium
-cp -r tmp/ol-cesium/cesium/Build/Cesium public/cesium
+cp -r tmp/ol-cesium/node_modules/@camptocamp/cesium/Build/Cesium public/cesium
