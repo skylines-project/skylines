@@ -7,18 +7,21 @@
     value=email
     validation=validations.attrs.email
     label=(t "email-address")
+    autocomplete="email"
     disabled=saveTask.isRunning}}
 
   {{validated-input
     value=firstName
     validation=validations.attrs.firstName
     label=(t "first-name")
+    autocomplete="given-name"
     disabled=saveTask.isRunning}}
 
   {{validated-input
     value=lastName
     validation=validations.attrs.lastName
     label=(t "last-name")
+    autocomplete="family-name"
     disabled=saveTask.isRunning}}
 
   {{validated-input
@@ -26,6 +29,7 @@
     value=password
     validation=validations.attrs.password
     label=(t "password")
+    autocomplete="new-password"
     disabled=saveTask.isRunning}}
 
   {{validated-input
@@ -33,6 +37,7 @@
     value=passwordConfirmation
     validation=validations.attrs.passwordConfirmation
     label=(t "confirm-password")
+    autocomplete="new-password"
     disabled=saveTask.isRunning}}
 
   <button class="btn btn-primary btn-block" type="submit" disabled={{or saveTask.isRunning (not validations.isValid)}}>

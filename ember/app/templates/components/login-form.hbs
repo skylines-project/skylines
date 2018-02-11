@@ -6,6 +6,7 @@
   {{validated-input
     value=email
     label=(t "email-address")
+    autocomplete="email"
     disabled=loginTask.isRunning
     forceErrorClass=error
     testSelector="login-email"}}
@@ -14,6 +15,7 @@
     type='password'
     value=password
     label=(t "password")
+    autocomplete="current-password"
     disabled=loginTask.isRunning
     forceErrorClass=error
     testSelector="login-password"}}
