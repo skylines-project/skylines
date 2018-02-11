@@ -1,10 +1,10 @@
-import Ember from 'ember';
+import { inject as service } from '@ember/service';
 import BaseValidator from 'ember-cp-validations/validators/base';
 
 export default BaseValidator.extend({
-  ajax: Ember.inject.service(),
-  intl: Ember.inject.service(),
-  account: Ember.inject.service(),
+  ajax: service(),
+  intl: service(),
+  account: service(),
 
   async validate(email, options) {
     if (!email) {

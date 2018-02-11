@@ -1,8 +1,9 @@
-import Ember from 'ember';
+import { equal } from '@ember/object/computed';
+import Component from '@ember/component';
 
 import safeComputed from '../computed/safe-computed';
 
-export default Ember.Component.extend({
+export default Component.extend({
   tagName: 'tr',
   classNames: ['selectable'],
   classNameBindings: ['selected'],
@@ -11,11 +12,11 @@ export default Ember.Component.extend({
   selection: null,
   onSelect() {},
 
-  isCircling: Ember.computed.equal('phase.type', 'circling'),
-  isPowered: Ember.computed.equal('phase.type', 'powered'),
+  isCircling: equal('phase.type', 'circling'),
+  isPowered: equal('phase.type', 'powered'),
 
-  isCirclingLeft: Ember.computed.equal('phase.circlingDirection', 'left'),
-  isCirclingRight: Ember.computed.equal('phase.circlingDirection', 'right'),
+  isCirclingLeft: equal('phase.circlingDirection', 'left'),
+  isCirclingRight: equal('phase.circlingDirection', 'right'),
 
   glideRate: safeComputed('phase.glideRate', gr => ((Math.abs(gr) > 1000) ? Infinity : gr)),
 

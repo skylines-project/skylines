@@ -1,7 +1,7 @@
-import Ember from 'ember';
+import { helper } from '@ember/component/helper';
 
 export function includes([array, value]) {
   return array.includes(value);
 }
 
-export default Ember.Helper.helper(includes);
+export default helper(includes);

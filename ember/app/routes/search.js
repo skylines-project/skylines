@@ -1,8 +1,9 @@
-import Ember from 'ember';
+import { inject as service } from '@ember/service';
+import Route from '@ember/routing/route';
 
-export default Ember.Route.extend({
-  ajax: Ember.inject.service(),
-  searchTextService: Ember.inject.service('searchText'),
+export default Route.extend({
+  ajax: service(),
+  searchTextService: service('searchText'),
 
   queryParams: {
     text: {

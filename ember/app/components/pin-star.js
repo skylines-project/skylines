@@ -1,8 +1,9 @@
-import Ember from 'ember';
+import { inject as service } from '@ember/service';
+import Component from '@ember/component';
 import { includes } from 'ember-awesome-macros/array';
 
-export default Ember.Component.extend({
-  pinnedFlights: Ember.inject.service(),
+export default Component.extend({
+  pinnedFlights: service(),
 
   tagName: 'span',
   classNames: ['pin'],

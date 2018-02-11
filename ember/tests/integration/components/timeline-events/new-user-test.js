@@ -1,4 +1,4 @@
-import Ember from 'ember';
+import Service from '@ember/service';
 
 import { expect } from 'chai';
 import { describe, it, beforeEach } from 'mocha';
@@ -14,7 +14,7 @@ describe('Integration | Component | timeline events/new user', function() {
   beforeEach(function() {
     instanceInitializer.initialize(this);
 
-    this.register('service:account', Ember.Service.extend({
+    this.register('service:account', Service.extend({
       user: null,
       club: null,
     }));

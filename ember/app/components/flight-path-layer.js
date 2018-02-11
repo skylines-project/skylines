@@ -1,15 +1,16 @@
-import Ember from 'ember';
+import { computed } from '@ember/object';
+import Component from '@ember/component';
 import ol from 'openlayers';
 
 const DEFAULT_COLOR = '#004bbd';
 
-export default Ember.Component.extend({
+export default Component.extend({
   tagName: '',
 
   map: null,
   flights: null,
 
-  layer: Ember.computed(function() {
+  layer: computed(function() {
     return new ol.layer.Vector({
       source: new ol.source.Vector(),
       style: style_function,
@@ -18,7 +19,7 @@ export default Ember.Component.extend({
     });
   }),
 
-  source: Ember.computed('layer', function() {
+  source: computed('layer', function() {
     return this.get('layer').getSource();
   }),
 

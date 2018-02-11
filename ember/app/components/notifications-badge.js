@@ -1,15 +1,17 @@
-import Ember from 'ember';
+import { computed } from '@ember/object';
+import { inject as service } from '@ember/service';
+import Component from '@ember/component';
 
-export default Ember.Component.extend({
-  notifications: Ember.inject.service(),
-  intl: Ember.inject.service(),
+export default Component.extend({
+  notifications: service(),
+  intl: service(),
 
   tagName: 'span',
   classNames: ['badge'],
   classNameBindings: ['notifications.hasUnread:badge-warning'],
   attributeBindings: ['title'],
 
-  title: Ember.computed('intl.locale', function() {
+  title: computed('intl.locale', function() {
     return this.get('intl').t('notifications');
   }),
 });

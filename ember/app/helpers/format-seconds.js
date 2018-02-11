@@ -1,4 +1,4 @@
-import Ember from 'ember';
+import { helper } from '@ember/component/helper';
 
 import pad from '../utils/pad';
 
@@ -12,4 +12,4 @@ export function formatSeconds([value]) {
   return `${h}:${pad(m)}:${pad(s)}`;
 }
 
-export default Ember.Helper.helper(formatSeconds);
+export default helper(formatSeconds);

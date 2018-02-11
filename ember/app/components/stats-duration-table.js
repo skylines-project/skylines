@@ -1,12 +1,13 @@
-import Ember from 'ember';
+import { mapBy, max, sum } from '@ember/object/computed';
+import Component from '@ember/component';
 
-export default Ember.Component.extend({
+export default Component.extend({
   tagName: 'table',
   classNames: ['table', 'table-condensed', 'table-striped'],
 
   years: null,
 
-  durations: Ember.computed.mapBy('years', 'duration'),
-  max: Ember.computed.max('durations'),
-  sum: Ember.computed.sum('durations'),
+  durations: mapBy('years', 'duration'),
+  max: max('durations'),
+  sum: sum('durations'),
 });

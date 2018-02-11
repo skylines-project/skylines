@@ -1,5 +1,6 @@
-import Ember from 'ember';
+import { inject as service } from '@ember/service';
+import Component from '@ember/component';
 
-export default Ember.Component.extend({
-  searchTextService: Ember.inject.service('searchText'),
+export default Component.extend({
+  searchTextService: service('searchText'),
 });

@@ -1,8 +1,8 @@
-import Ember from 'ember';
+import Component from '@ember/component';
 
 import isoDate from '../utils/iso-date';
 
-export default Ember.Component.extend({
+export default Component.extend({
   tagName: 'span',
 
   date: null,

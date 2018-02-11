@@ -1,8 +1,9 @@
-import Ember from 'ember';
+import { inject as service } from '@ember/service';
+import Component from '@ember/component';
 import $ from 'jquery';
 
-export default Ember.Component.extend({
-  cookies: Ember.inject.service(),
+export default Component.extend({
+  cookies: service(),
 
   classNames: ['GraphicLayerSwitcher', 'ol-unselectable'],
 

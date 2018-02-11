@@ -1,4 +1,6 @@
-import Ember from 'ember';
+import { later, cancel } from '@ember/runloop';
+import { bool, mapBy, min, max, map } from '@ember/object/computed';
+import EmberObject from '@ember/object';
 
 import flightFromData from '../utils/flight-from-data';
 import slFlightCollection from '../utils/flight-collection';
@@ -17,7 +19,7 @@ const COLORS = [
   '#ffff00',
 ];
 
-export default Ember.Object.extend({
+export default EmberObject.extend({
   ajax: null,
   units: null,
 
@@ -40,15 +42,15 @@ export default Ember.Object.extend({
 
   timer: null,
 
-  isRunning: Ember.computed.bool('timer'),
+  isRunning: bool('timer'),
 
-  startTimes: Ember.computed.mapBy('flights', 'startTime'),
-  minStartTime: Ember.computed.min('startTimes'),
+  startTimes: mapBy('flights', 'startTime'),
+  minStartTime: min('startTimes'),
 
-  endTimes: Ember.computed.mapBy('flights', 'endTime'),
-  maxEndTime: Ember.computed.max('endTimes'),
+  endTimes: mapBy('flights', 'endTime'),
+  maxEndTime: max('endTimes'),
 
-  fixes: Ember.computed.map('flights', function(flight) {
+  fixes: map('flights', function(flight) {
     return Fix.create({ flight, fixCalc: this });
   }),
 
@@ -64,13 +66,13 @@ export default Ember.Object.extend({
       this.set('time', this.get('minStartTime'));
     }
 
-    this.set('timer', Ember.run.later(this, 'onTick', 50));
+    this.set('timer', later(this, 'onTick', 50));
   },
 
   stopPlayback() {
     let timer = this.get('timer');
     if (timer) {
-      Ember.run.cancel(timer);
+      cancel(timer);
       this.set('timer', null);
     }
   },
@@ -91,7 +93,7 @@ export default Ember.Object.extend({
     }
 
     this.set('time', time);
-    this.set('timer', Ember.run.later(this, 'onTick', 50));
+    this.set('timer', later(this, 'onTick', 50));
   },
 
   resetTime() {

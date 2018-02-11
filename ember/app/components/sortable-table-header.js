@@ -1,12 +1,13 @@
-import Ember from 'ember';
+import { computed } from '@ember/object';
+import Component from '@ember/component';
 
-export default Ember.Component.extend({
+export default Component.extend({
   tagName: '',
 
   column: null,
   defaultOrder: 'asc',
 
-  cssClass: Ember.computed('class', function() {
+  cssClass: computed('class', function() {
     let _class = this.get('class');
     if (_class) {
       return `${_class} sortable`;

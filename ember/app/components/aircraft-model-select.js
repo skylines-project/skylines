@@ -1,15 +1,16 @@
-import Ember from 'ember';
+import { computed } from '@ember/object';
+import Component from '@ember/component';
 import { or } from 'ember-awesome-macros';
 import { findBy } from 'ember-awesome-macros/array';
 import raw from 'ember-macro-helpers/raw';
 
-export default Ember.Component.extend({
+export default Component.extend({
   tagName: '',
 
   models: null,
   modelId: null,
 
-  modelsWithNull: Ember.computed('models.[]', function() {
+  modelsWithNull: computed('models.[]', function() {
     return [{ id: null }].concat(this.get('models'));
   }),
 

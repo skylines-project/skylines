@@ -1,9 +1,11 @@
-import Ember from 'ember';
+import { observer } from '@ember/object';
+import { inject as service } from '@ember/service';
+import Helper from '@ember/component/helper';
 
-export default Ember.Helper.extend({
-  units: Ember.inject.service(),
+export default Helper.extend({
+  units: service(),
 
-  liftUnitObserver: Ember.observer('units.liftUnit', function() {
+  liftUnitObserver: observer('units.liftUnit', function() {
     this.recompute();
   }),
 

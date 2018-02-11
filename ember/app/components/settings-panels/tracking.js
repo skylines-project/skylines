@@ -1,4 +1,5 @@
-import Ember from 'ember';
+import { inject as service } from '@ember/service';
+import Component from '@ember/component';
 import { validator, buildValidations } from 'ember-cp-validations';
 import { task } from 'ember-concurrency';
 import { conditional, eq } from 'ember-awesome-macros';
@@ -17,8 +18,8 @@ const Validations = buildValidations({
 
 const DELAYS = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 15, 20, 25, 30, 45, 60];
 
-export default Ember.Component.extend(Validations, {
-  ajax: Ember.inject.service(),
+export default Component.extend(Validations, {
+  ajax: service(),
 
   classNames: ['panel', 'panel-default'],
 

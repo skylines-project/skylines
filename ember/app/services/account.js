@@ -1,15 +1,17 @@
-import Ember from 'ember';
+import { computed, getProperties } from '@ember/object';
+import { alias } from '@ember/object/computed';
+import Service, { inject as service } from '@ember/service';
 
-export default Ember.Service.extend({
-  session: Ember.inject.service(),
-  sessionData: Ember.computed.alias('session.data.authenticated.settings'),
+export default Service.extend({
+  session: service(),
+  sessionData: alias('session.data.authenticated.settings'),
 
-  user: Ember.computed('sessionData.{id,name}', function() {
+  user: computed('sessionData.{id,name}', function() {
     let sessionData = this.get('sessionData');
     if (sessionData) {
-      return Ember.getProperties(sessionData, 'id', 'name');
+      return getProperties(sessionData, 'id', 'name');
     }
   }),
 
-  club: Ember.computed.alias('sessionData.club'),
+  club: alias('sessionData.club'),
 });

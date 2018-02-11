@@ -1,8 +1,8 @@
-import Ember from 'ember';
+import Component from '@ember/component';
 import { gt } from 'ember-awesome-macros';
 import { map } from 'ember-awesome-macros/array';
 
-export default Ember.Component.extend({
+export default Component.extend({
   flights: null,
   fixes: null,
   selection: null,

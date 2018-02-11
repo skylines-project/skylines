@@ -1,8 +1,8 @@
-import Ember from 'ember';
+import Component from '@ember/component';
 import { tag } from 'ember-awesome-macros';
 import { htmlSafe } from 'ember-awesome-macros/string';
 
-export default Ember.Component.extend({
+export default Component.extend({
   tagName: 'tr',
   classNameBindings: ['selected', 'selectable'],
 

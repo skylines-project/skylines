@@ -1,9 +1,11 @@
-import Ember from 'ember';
+import { computed } from '@ember/object';
+import { inject as service } from '@ember/service';
+import Controller from '@ember/controller';
 
-export default Ember.Controller.extend({
-  intl: Ember.inject.service(),
+export default Controller.extend({
+  intl: service(),
 
-  text: Ember.computed('model.content', 'intl.locale', function() {
+  text: computed('model.content', 'intl.locale', function() {
     let intl = this.get('intl');
 
     return this.get('model.content')

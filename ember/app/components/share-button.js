@@ -1,11 +1,13 @@
-import Ember from 'ember';
+import { computed } from '@ember/object';
+import { inject as service } from '@ember/service';
+import Component from '@ember/component';
 
-export default Ember.Component.extend({
-  pinnedFlights: Ember.inject.service(),
+export default Component.extend({
+  pinnedFlights: service(),
 
   tagName: '',
 
-  url: Ember.computed(function() {
+  url: computed(function() {
     return this.getShareUrl(location.origin + location.pathname);
   }),
 

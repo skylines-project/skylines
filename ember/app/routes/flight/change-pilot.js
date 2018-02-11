@@ -1,9 +1,10 @@
-import Ember from 'ember';
+import { inject as service } from '@ember/service';
+import Route from '@ember/routing/route';
 import RSVP from 'rsvp';
 
-export default Ember.Route.extend({
-  ajax: Ember.inject.service(),
-  account: Ember.inject.service(),
+export default Route.extend({
+  ajax: service(),
+  account: service(),
 
   model() {
     let id = this.modelFor('flight').ids[0];

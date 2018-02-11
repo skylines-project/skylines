@@ -1,4 +1,4 @@
-import Ember from 'ember';
+import { helper } from '@ember/component/helper';
 
 export function initials([name]) {
   let parts = name.split(/\s/);
@@ -6,4 +6,4 @@ export function initials([name]) {
   return initials.join('');
 }
 
-export default Ember.Helper.helper(initials);
+export default helper(initials);

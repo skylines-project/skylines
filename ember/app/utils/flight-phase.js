@@ -1,13 +1,14 @@
-import Ember from 'ember';
+import { readOnly } from '@ember/object/computed';
+import EmberObject, { computed } from '@ember/object';
 import getNextSmallerIndex from '../utils/next-smaller-index';
 
-export default Ember.Object.extend({
+export default EmberObject.extend({
   fixCalc: null,
   selection: null,
 
-  flight: Ember.computed.readOnly('fixCalc.flights.firstObject'),
+  flight: readOnly('fixCalc.flights.firstObject'),
 
-  coordinates: Ember.computed('flight', 'selection.{start,end}', function() {
+  coordinates: computed('flight', 'selection.{start,end}', function() {
     let selection = this.get('selection');
     if (!selection) {
       return;

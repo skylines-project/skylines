@@ -1,14 +1,15 @@
-import Ember from 'ember';
+import { alias } from '@ember/object/computed';
+import Controller from '@ember/controller';
 
 import safeComputed from '../computed/safe-computed';
 
-export default Ember.Controller.extend({
+export default Controller.extend({
   queryParams: ['page', 'user', 'type'],
   page: 1,
   user: null,
   type: null,
 
-  events: Ember.computed.alias('model.events'),
+  events: alias('model.events'),
 
   prevPage: safeComputed('page', page => {
     if (page > 1) {

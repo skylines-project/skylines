@@ -1,9 +1,10 @@
-import Ember from 'ember';
+import { debug } from '@ember/debug';
+import { inject as service } from '@ember/service';
 import IntlService from 'ember-intl/services/intl';
 
 export default IntlService.extend({
-  ajax: Ember.inject.service(),
-  cookies: Ember.inject.service(),
+  ajax: service(),
+  cookies: service(),
 
   async loadAndSetLocale(locale) {
     await this.loadLocale(locale);
@@ -20,7 +21,7 @@ export default IntlService.extend({
   },
 
   setLocale(locale) {
-    Ember.debug(`Setting locale to "${locale}"`);
+    debug(`Setting locale to "${locale}"`);
     this._super(...arguments);
     this.get('cookies').write('locale', locale, { path: '/', expires: new Date('2099-12-31') });
 

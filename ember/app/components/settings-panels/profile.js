@@ -1,4 +1,6 @@
-import Ember from 'ember';
+import { computed } from '@ember/object';
+import { inject as service } from '@ember/service';
+import Component from '@ember/component';
 import { validator, buildValidations } from 'ember-cp-validations';
 import { task } from 'ember-concurrency';
 
@@ -32,9 +34,9 @@ const Validations = buildValidations({
 
 const PRESET_NAMES = ['custom', 'european', 'british', 'australian', 'american'];
 
-export default Ember.Component.extend(Validations, {
-  ajax: Ember.inject.service(),
-  units: Ember.inject.service(),
+export default Component.extend(Validations, {
+  ajax: service(),
+  units: service(),
 
   classNames: ['panel', 'panel-default'],
 
@@ -56,7 +58,7 @@ export default Ember.Component.extend(Validations, {
   liftUnit: computedUnit('units.liftUnits', 'liftUnitIndex'),
   altitudeUnit: computedUnit('units.altitudeUnits', 'altitudeUnitIndex'),
 
-  unitsPreset: Ember.computed('distanceUnit', 'speedUnit', 'liftUnit', 'altitudeUnit', {
+  unitsPreset: computed('distanceUnit', 'speedUnit', 'liftUnit', 'altitudeUnit', {
     get() {
       let units = this.getProperties('distanceUnit', 'speedUnit', 'liftUnit', 'altitudeUnit');
 
@@ -127,7 +129,7 @@ export default Ember.Component.extend(Validations, {
 });
 
 function computedUnit(unitsKey, indexKey) {
-  return Ember.computed(indexKey, {
+  return computed(indexKey, {
     get() {
       return this.get(unitsKey)[this.get(indexKey)];
     },

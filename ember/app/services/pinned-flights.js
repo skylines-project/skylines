@@ -1,7 +1,7 @@
-import Ember from 'ember';
+import Service, { inject as service } from '@ember/service';
 
-export default Ember.Service.extend({
-  cookies: Ember.inject.service(),
+export default Service.extend({
+  cookies: service(),
 
   init() {
     this._super(...arguments);

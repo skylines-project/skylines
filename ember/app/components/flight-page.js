@@ -1,19 +1,21 @@
-import Ember from 'ember';
+import { computed } from '@ember/object';
+import { inject as service } from '@ember/service';
+import Component from '@ember/component';
 
 import FixCalc from '../utils/fix-calc';
 import FlighPhase from '../utils/flight-phase';
 
-export default Ember.Component.extend({
-  ajax: Ember.inject.service(),
-  pinnedFlights: Ember.inject.service(),
-  units: Ember.inject.service(),
+export default Component.extend({
+  ajax: service(),
+  pinnedFlights: service(),
+  units: service(),
 
   classNames: ['relative-fullscreen'],
 
   fixCalc: null,
   flightPhase: null,
 
-  timeInterval: Ember.computed('mapExtent', 'cesiumEnabled', function() {
+  timeInterval: computed('mapExtent', 'cesiumEnabled', function() {
     if (this.get('cesiumEnabled')) { return null; }
 
     let extent = this.get('mapExtent');

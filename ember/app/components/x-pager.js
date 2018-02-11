@@ -1,15 +1,16 @@
-import Ember from 'ember';
+import { readOnly } from '@ember/object/computed';
+import Component from '@ember/component';
 
 import safeComputed from '../computed/safe-computed';
 
-export default Ember.Component.extend({
+export default Component.extend({
   count: 0,
   page: 1,
   perPage: 100,
   firstPage: 1,
 
   pages: safeComputed('count', 'perPage', (count, perPage) => Math.ceil(count / perPage)),
-  lastPage: Ember.computed.readOnly('pages'),
+  lastPage: readOnly('pages'),
 
   prevPage: safeComputed('page', 'firstPage', (page, firstPage) => Math.max(firstPage, page - 1)),
   prevDisabled: safeComputed('page', 'firstPage', (page, firstPage) => (page <= firstPage)),

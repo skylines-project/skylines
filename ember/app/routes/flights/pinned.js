@@ -1,8 +1,8 @@
-import Ember from 'ember';
+import { inject as service } from '@ember/service';
 import BaseRoute from './-base';
 
 export default BaseRoute.extend({
-  pinnedFlights: Ember.inject.service(),
+  pinnedFlights: service(),
 
   model(params) {
     let pinned = this.get('pinnedFlights.pinned') || [];

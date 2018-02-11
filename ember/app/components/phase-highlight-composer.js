@@ -1,9 +1,12 @@
-import Ember from 'ember';
+import { once } from '@ember/runloop';
+import { observer } from '@ember/object';
+import { readOnly } from '@ember/object/computed';
+import Component from '@ember/component';
 import ol from 'openlayers';
 
 import computedPoint from '../computed/computed-point';
 
-export default Ember.Component.extend({
+export default Component.extend({
   tagName: '',
 
   map: null,
@@ -11,15 +14,15 @@ export default Ember.Component.extend({
   coordinates: null,
   calculatePadding() {},
 
-  startCoordinate: Ember.computed.readOnly('coordinates.firstObject'),
-  endCoordinate: Ember.computed.readOnly('coordinates.lastObject'),
+  startCoordinate: readOnly('coordinates.firstObject'),
+  endCoordinate: readOnly('coordinates.lastObject'),
 
   startPoint: computedPoint('coordinates.firstObject'),
   endPoint: computedPoint('coordinates.lastObject'),
 
-  coordinatesObserver: Ember.observer('coordinates.[]', function() {
+  coordinatesObserver: observer('coordinates.[]', function() {
     this.adjustMapView();
-    Ember.run.once(this.get('map'), 'render');
+    once(this.get('map'), 'render');
   }),
 
   init() {

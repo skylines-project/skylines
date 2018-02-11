@@ -1,16 +1,19 @@
 /* globals Cesium */
 
-import Ember from 'ember';
+import { once } from '@ember/runloop';
+
+import { observer } from '@ember/object';
+import Component from '@ember/component';
 import olcs from 'ol-cesium';
 
-export default Ember.Component.extend({
+export default Component.extend({
   tagName: '',
 
   enabled: false,
   map: null,
 
-  enabledObserver: Ember.observer('enabled', function() {
-    Ember.run.once(this, 'update');
+  enabledObserver: observer('enabled', function() {
+    once(this, 'update');
   }),
 
   init() {

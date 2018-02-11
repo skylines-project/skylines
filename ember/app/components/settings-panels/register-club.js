@@ -1,4 +1,5 @@
-import Ember from 'ember';
+import { inject as service } from '@ember/service';
+import Component from '@ember/component';
 import { validator, buildValidations } from 'ember-cp-validations';
 import { task } from 'ember-concurrency';
 
@@ -18,9 +19,9 @@ const Validations = buildValidations({
   },
 });
 
-export default Ember.Component.extend(Validations, {
-  ajax: Ember.inject.service(),
-  account: Ember.inject.service(),
+export default Component.extend(Validations, {
+  ajax: service(),
+  account: service(),
 
   classNames: ['panel', 'panel-default'],
 
