@@ -1,13 +1,15 @@
-import Ember from 'ember';
+import { computed } from '@ember/object';
+import { gt } from '@ember/object/computed';
+import Service, { inject as service } from '@ember/service';
 import { task, timeout } from 'ember-concurrency';
 
-export default Ember.Service.extend({
-  ajax: Ember.inject.service(),
+export default Service.extend({
+  ajax: service(),
 
   counter: 0,
-  hasUnread: Ember.computed.gt('counter', 0),
+  hasUnread: gt('counter', 0),
 
-  counterText: Ember.computed('counter', function() {
+  counterText: computed('counter', function() {
     let counter = this.get('counter');
     return (counter > 10) ? '10+' : counter;
   }),

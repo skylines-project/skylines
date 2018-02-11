@@ -1,9 +1,9 @@
 /* globals $ */
 
-import Ember from 'ember';
+import EmberObject from '@ember/object';
 import ol from 'openlayers';
 
-const MapClickHandler = Ember.Object.extend({
+const MapClickHandler = EmberObject.extend({
   /**
    * The OpenLayers.Geometry object of the circle.
    * @type {Object}

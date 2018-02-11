@@ -1,10 +1,11 @@
-import Ember from 'ember';
+import { computed } from '@ember/object';
+import Component from '@ember/component';
 
-export default Ember.Component.extend({
+export default Component.extend({
   nearFlights: null,
   visibleFlights: null,
 
-  nearFlightsWithColors: Ember.computed('nearFlights.[]', 'visibleFlights.[]', function() {
+  nearFlightsWithColors: computed('nearFlights.[]', 'visibleFlights.[]', function() {
     let { nearFlights, visibleFlights } = this.getProperties('nearFlights', 'visibleFlights');
     return nearFlights.map(it => {
       let id = it.flight.id;

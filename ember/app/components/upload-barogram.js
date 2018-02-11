@@ -1,10 +1,12 @@
-import Ember from 'ember';
+import { computed } from '@ember/object';
+import { readOnly } from '@ember/object/computed';
+import { inject as service } from '@ember/service';
 import ol from 'openlayers';
 
 import BarogramComponent from './base-barogram';
 
 export default BarogramComponent.extend({
-  units: Ember.inject.service(),
+  units: service(),
 
   uploadMode: true,
   height: 160,
@@ -12,7 +14,7 @@ export default BarogramComponent.extend({
   flight: null,
   trace: null,
 
-  date: Ember.computed.readOnly('flight.igcFile.date'),
+  date: readOnly('flight.igcFile.date'),
 
   takeoffTime: null,
   scoreStartTime: null,
@@ -98,7 +100,7 @@ export default BarogramComponent.extend({
 });
 
 function computedSecondsOfDay(dateKey, timeKey) {
-  return Ember.computed(dateKey, timeKey, function() {
+  return computed(dateKey, timeKey, function() {
     let date = new Date(this.get(dateKey));
     date.setUTCHours(0, 0, 0, 0);
 

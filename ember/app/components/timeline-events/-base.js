@@ -1,9 +1,10 @@
-import Ember from 'ember';
+import { inject as service } from '@ember/service';
+import Component from '@ember/component';
 
 import safeComputed from '../../computed/safe-computed';
 
-export default Ember.Component.extend({
-  account: Ember.inject.service(),
+export default Component.extend({
+  account: service(),
 
   tagName: 'tr',
 

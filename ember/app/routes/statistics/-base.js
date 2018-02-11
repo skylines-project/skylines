@@ -1,7 +1,9 @@
-import Ember from 'ember';
+import { get } from '@ember/object';
+import { inject as service } from '@ember/service';
+import Route from '@ember/routing/route';
 
-export default Ember.Route.extend({
-  ajax: Ember.inject.service(),
+export default Route.extend({
+  ajax: service(),
 
   model(params) {
     return this.get('ajax').request(this.getURL(params));
@@ -17,7 +19,7 @@ export default Ember.Route.extend({
       airport: (routeName === 'statistics.airport') ? parseInt(params.airport_id, 10) : null,
       pilot: (routeName === 'statistics.pilot') ? parseInt(params.pilot_id, 10) : null,
       club: (routeName === 'statistics.club') ? parseInt(params.club_id, 10) : null,
-      name: Ember.get(model, 'name'),
+      name: get(model, 'name'),
     });
   },
 

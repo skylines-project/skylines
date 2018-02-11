@@ -1,28 +1,32 @@
-import Ember from 'ember';
+import { get, getProperties } from '@ember/object';
+import { getOwner } from '@ember/application';
+import { filterBy, notEmpty, mapBy } from '@ember/object/computed';
+import { inject as service } from '@ember/service';
+import Component from '@ember/component';
 import RSVP from 'rsvp';
 import { task } from 'ember-concurrency';
 
 import UploadResult from '../utils/upload-result';
 
-export default Ember.Component.extend({
-  ajax: Ember.inject.service(),
+export default Component.extend({
+  ajax: service(),
 
   results: null,
   clubMembers: null,
   aircraftModels: null,
 
-  successfulResults: Ember.computed.filterBy('validatedResults', 'success', true),
-  success: Ember.computed.notEmpty('successfulResults'),
+  successfulResults: filterBy('validatedResults', 'success', true),
+  success: notEmpty('successfulResults'),
 
-  validations: Ember.computed.mapBy('successfulResults', 'validations'),
+  validations: mapBy('successfulResults', 'validations'),
 
-  invalidValidations: Ember.computed.filterBy('validations', 'isValid', false),
-  isInvalid: Ember.computed.notEmpty('invalidValidations'),
+  invalidValidations: filterBy('validations', 'isValid', false),
+  isInvalid: notEmpty('invalidValidations'),
 
   didReceiveAttrs() {
     this._super(...arguments);
 
-    let ownerInjection = Ember.getOwner(this).ownerInjection();
+    let ownerInjection = getOwner(this).ownerInjection();
     this.set('validatedResults', this.get('results').map(_result => {
       let result = UploadResult.create(ownerInjection, _result);
 
@@ -49,8 +53,8 @@ export default Ember.Component.extend({
 
   saveTask: task(function * () {
     let json = this.get('successfulResults').map(result => {
-      let flight = Ember.get(result, 'flight');
-      return Ember.getProperties(flight, 'id', 'pilotId', 'pilotName', 'copilotId', 'copilotName',
+      let flight = get(result, 'flight');
+      return getProperties(flight, 'id', 'pilotId', 'pilotName', 'copilotId', 'copilotName',
         'modelId', 'registration', 'competitionId', 'takeoffTime', 'scoreStartTime', 'scoreEndTime', 'landingTime');
     });
 

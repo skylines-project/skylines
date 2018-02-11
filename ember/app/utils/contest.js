@@ -1,4 +1,4 @@
-import Ember from 'ember';
+import EmberObject from '@ember/object';
 import ol from 'openlayers';
 
 /**
@@ -17,7 +17,7 @@ const CONTEST_COLORS = {
  *   turnpoints and times are googlePolyEncoded strings.
  * @param {Number} _sfid The SkyLines flight id this contest trace belongs to.
  */
-const slContest = Ember.Object.extend();
+const slContest = EmberObject.extend();
 
 slContest.fromData = function(_contest, flightId) {
   let turnpoints = ol.format.Polyline.decodeDeltas(_contest.turnpoints, 2);

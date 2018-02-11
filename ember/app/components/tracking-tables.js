@@ -1,16 +1,20 @@
-import Ember from 'ember';
+import { setDiff } from '@ember/object/computed';
+import { isNone } from '@ember/utils';
+import { computed } from '@ember/object';
+import { inject as service } from '@ember/service';
+import Component from '@ember/component';
 
-export default Ember.Component.extend({
-  account: Ember.inject.service(),
+export default Component.extend({
+  account: service(),
 
   tagName: '',
 
   tracks: null,
   friends: null,
 
-  friendsTracks: Ember.computed('tracks.[]', 'friends.[]', 'account.user.id', function() {
+  friendsTracks: computed('tracks.[]', 'friends.[]', 'account.user.id', function() {
     let self = this.get('account.user.id');
-    if (Ember.isNone(self)) {
+    if (isNone(self)) {
       return [];
     }
 
@@ -20,5 +24,5 @@ export default Ember.Component.extend({
       .filter(track => (track.pilot.id === self || friends.includes(track.pilot.id)));
   }),
 
-  othersTracks: Ember.computed.setDiff('tracks', 'friendsTracks'),
+  othersTracks: setDiff('tracks', 'friendsTracks'),
 });

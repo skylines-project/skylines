@@ -1,9 +1,11 @@
-import Ember from 'ember';
+import { observer } from '@ember/object';
+import { inject as service } from '@ember/service';
+import Helper from '@ember/component/helper';
 
-export default Ember.Helper.extend({
-  units: Ember.inject.service(),
+export default Helper.extend({
+  units: service(),
 
-  altitudeUnitObserver: Ember.observer('units.altitudeUnit', function() {
+  altitudeUnitObserver: observer('units.altitudeUnit', function() {
     this.recompute();
   }),
 

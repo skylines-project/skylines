@@ -1,10 +1,11 @@
-import Ember from 'ember';
+import { inject as service } from '@ember/service';
+import Route from '@ember/routing/route';
 import AuthenticatedRouteMixin from 'ember-simple-auth/mixins/authenticated-route-mixin';
 
 const PER_PAGE = 20;
 
-export default Ember.Route.extend(AuthenticatedRouteMixin, {
-  ajax: Ember.inject.service(),
+export default Route.extend(AuthenticatedRouteMixin, {
+  ajax: service(),
 
   queryParams: {
     page: { refreshModel: true },

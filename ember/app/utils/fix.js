@@ -1,3 +1,5 @@
+import { readOnly } from '@ember/object/computed';
+import EmberObject, { computed } from '@ember/object';
 import Ember from 'ember';
 import ol from 'openlayers';
 
@@ -6,12 +8,12 @@ import getNextSmallerIndex from '../utils/next-smaller-index';
 import computedPoint from '../computed/computed-point';
 import safeComputed from '../computed/safe-computed';
 
-let Fix = Ember.Object.extend({
+let Fix = EmberObject.extend({
   fixCalc: null,
 
-  _t: Ember.computed.readOnly('fixCalc.time'),
+  _t: readOnly('fixCalc.time'),
 
-  t: Ember.computed('_t', 'flight.{startTime,endTime}', function() {
+  t: computed('_t', 'flight.{startTime,endTime}', function() {
     let _t = this.get('_t');
     if (_t === -1) {
       return this.get('flight.endTime');
@@ -25,12 +27,12 @@ let Fix = Ember.Object.extend({
   t_prev: safeComputed('_index', 'flight.time', (index, time) => time[index]),
   t_next: safeComputed('_index', 'flight.time', (index, time) => time[index + 1]),
 
-  time: Ember.computed.readOnly('t_prev'),
+  time: readOnly('t_prev'),
 
   coordinate: safeComputed('t', 'flight.geometry', (time, geometry) => geometry.getCoordinateAtM(time)),
 
-  lon: Ember.computed.readOnly('coordinate.0'),
-  lat: Ember.computed.readOnly('coordinate.1'),
+  lon: readOnly('coordinate.0'),
+  lat: readOnly('coordinate.1'),
 
   'alt-msl': safeComputed('coordinate.2', 'flight.geoid', (altitude, geoid) => altitude - geoid),
 

@@ -1,7 +1,7 @@
-import Ember from 'ember';
+import ArrayProxy from '@ember/array/proxy';
 import ol from 'openlayers';
 
-export default Ember.ArrayProxy.extend({
+export default ArrayProxy.extend({
 
   init() {
     this.set('content', []);

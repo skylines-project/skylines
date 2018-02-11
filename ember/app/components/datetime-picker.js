@@ -1,6 +1,7 @@
-import Ember from 'ember';
+import { once } from '@ember/runloop';
+import Component from '@ember/component';
 
-export default Ember.Component.extend({
+export default Component.extend({
   classNames: ['input-group', 'input-group-sm', 'date'],
 
   date: null,
@@ -29,11 +30,11 @@ export default Ember.Component.extend({
 
     this.set('picker', this.$().data('DateTimePicker'));
 
-    Ember.run.once(this, 'updateDate');
+    once(this, 'updateDate');
   },
 
   didUpdateAttrs() {
-    Ember.run.once(this, 'updateDate');
+    once(this, 'updateDate');
   },
 
   willDestroyElement() {

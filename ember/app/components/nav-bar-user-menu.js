@@ -1,9 +1,10 @@
-import Ember from 'ember';
+import { inject as service } from '@ember/service';
+import Component from '@ember/component';
 import { task } from 'ember-concurrency';
 
-export default Ember.Component.extend({
-  account: Ember.inject.service(),
-  session: Ember.inject.service(),
+export default Component.extend({
+  account: service(),
+  session: service(),
 
   tagName: '',
 

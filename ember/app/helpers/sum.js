@@ -1,7 +1,7 @@
-import Ember from 'ember';
+import { helper } from '@ember/component/helper';
 
 export function sum(numbers) {
   return numbers.reduce((a, b) => a + b, 0);
 }
 
-export default Ember.Helper.helper(sum);
+export default helper(sum);

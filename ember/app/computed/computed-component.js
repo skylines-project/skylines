@@ -1,13 +1,14 @@
-import Ember from 'ember';
+import { getOwner } from '@ember/application';
+import { computed } from '@ember/object';
 
 export default function computedComponent(baseNameProperty, prefix = '') {
-  return Ember.computed(baseNameProperty, function() {
+  return computed(baseNameProperty, function() {
     let componentName = this.get(baseNameProperty);
     if (!componentName) {
       return;
     }
 
-    let container = Ember.getOwner(this);
+    let container = getOwner(this);
     let fullComponentName = `${prefix}${componentName}`;
 
     if (container.lookup(`component:${fullComponentName}`) ||

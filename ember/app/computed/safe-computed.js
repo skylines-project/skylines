@@ -1,4 +1,5 @@
-import Ember from 'ember';
+import { computed } from '@ember/object';
+import { isNone } from '@ember/utils';
 
 export default function safeComputed(func) {
   let args;
@@ -14,7 +15,7 @@ export default function safeComputed(func) {
       let value = this.get(args[i]);
 
       // drop out if any `value` is undefined
-      if (Ember.isNone(value)) {
+      if (isNone(value)) {
         return;
       }
 
@@ -24,5 +25,5 @@ export default function safeComputed(func) {
     return func.apply(this, values);
   });
 
-  return Ember.computed(...args);
+  return computed(...args);
 }

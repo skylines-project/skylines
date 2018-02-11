@@ -1,9 +1,10 @@
-import Ember from 'ember';
+import { get } from '@ember/object';
+import { inject as service } from '@ember/service';
 import BaseValidator from 'ember-cp-validations/validators/base';
 
 export default BaseValidator.extend({
-  ajax: Ember.inject.service(),
-  intl: Ember.inject.service(),
+  ajax: service(),
+  intl: service(),
 
   async validate(value, options, model) {
     if (!value) {
@@ -22,7 +23,7 @@ export default BaseValidator.extend({
     }
 
     if (options.idKey !== undefined) {
-      let selfId = Ember.get(model, options.idKey);
+      let selfId = get(model, options.idKey);
       if (clubs[0].id === selfId) {
         return true;
       }

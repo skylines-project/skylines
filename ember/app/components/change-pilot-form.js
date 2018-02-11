@@ -1,4 +1,6 @@
-import Ember from 'ember';
+import { oneWay } from '@ember/object/computed';
+import { inject as service } from '@ember/service';
+import Component from '@ember/component';
 import { validator, buildValidations } from 'ember-cp-validations';
 import { task } from 'ember-concurrency';
 
@@ -33,9 +35,9 @@ const Validations = buildValidations({
   },
 });
 
-export default Ember.Component.extend(Validations, {
-  ajax: Ember.inject.service(),
-  account: Ember.inject.service(),
+export default Component.extend(Validations, {
+  ajax: service(),
+  account: service(),
 
   classNames: ['panel-body'],
 
@@ -46,10 +48,10 @@ export default Ember.Component.extend(Validations, {
 
   error: null,
 
-  pilotId: Ember.computed.oneWay('flight.pilot.id'),
-  pilotName: Ember.computed.oneWay('flight.pilotName'),
-  copilotId: Ember.computed.oneWay('flight.copilot.id'),
-  copilotName: Ember.computed.oneWay('flight.copilotName'),
+  pilotId: oneWay('flight.pilot.id'),
+  pilotName: oneWay('flight.pilotName'),
+  copilotId: oneWay('flight.copilot.id'),
+  copilotName: oneWay('flight.copilotName'),
 
   showPilotNameInput: isNone('pilotId'),
   showCopilotNameInput: isNone('copilotId'),

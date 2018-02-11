@@ -1,9 +1,10 @@
-import Ember from 'ember';
+import { computed } from '@ember/object';
+import Component from '@ember/component';
 
-export default Ember.Component.extend({
+export default Component.extend({
   highlighted: false,
 
-  imagePath: Ember.computed('layer.visible', 'highlighted', function() {
+  imagePath: computed('layer.visible', 'highlighted', function() {
     let colorful = this.get('layer.visible') || this.get('highlighted');
     return `../../images/layers/${this.get('layer.name')}${colorful ? '.png' : '.bw.png'}`;
   }),

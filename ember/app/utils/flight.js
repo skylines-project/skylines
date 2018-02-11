@@ -1,4 +1,5 @@
-import Ember from 'ember';
+import { map, readOnly } from '@ember/object/computed';
+import EmberObject, { observer } from '@ember/object';
 import ol from 'openlayers';
 
 /**
@@ -17,41 +18,41 @@ import ol from 'openlayers';
  * @param {Object=} opt_additional May contain additional information about
  *   the flight, e.g. registration number, callsign, ...
  */
-export default Ember.Object.extend({
+export default EmberObject.extend({
   units: null,
 
   fixes: [],
   elevations: [],
 
-  time: Ember.computed.map('fixes', fix => fix.time),
+  time: map('fixes', fix => fix.time),
 
-  coordinates: Ember.computed.map('fixes', function(fix) {
+  coordinates: map('fixes', function(fix) {
     let coordinate = [fix.latitude, fix.longitude, fix.altitude, fix.time];
     return ol.proj.transform(coordinate, 'EPSG:4326', 'EPSG:3857');
   }),
 
-  flot_h: Ember.computed.map('fixes', function(fix) {
+  flot_h: map('fixes', function(fix) {
     return [fix.time * 1000, this.get('units').convertAltitude(fix.altitude)];
   }),
 
-  flot_enl: Ember.computed.map('fixes', function(fix) {
+  flot_enl: map('fixes', function(fix) {
     return [fix.time * 1000, fix.enl];
   }),
 
-  elev_t: Ember.computed.map('elevations', it => it.time),
-  elev_h: Ember.computed.map('elevations', it => it.elevation),
+  elev_t: map('elevations', it => it.time),
+  elev_h: map('elevations', it => it.elevation),
 
-  flot_elev: Ember.computed.map('elevations', function(it) {
+  flot_elev: map('elevations', function(it) {
     return [it.time * 1000, it.elevation ? this.get('units').convertAltitude(it.elevation) : null];
   }),
 
   color: null,
-  last_update: Ember.computed.readOnly('time.lastObject'),
+  last_update: readOnly('time.lastObject'),
 
-  startTime: Ember.computed.readOnly('time.firstObject'),
-  endTime: Ember.computed.readOnly('time.lastObject'),
+  startTime: readOnly('time.firstObject'),
+  endTime: readOnly('time.lastObject'),
 
-  coordinatesObserver: Ember.observer('coordinates', function() {
+  coordinatesObserver: observer('coordinates', function() {
     let coordinates = this.get('coordinates');
     this.get('geometry').setCoordinates(coordinates, 'XYZM');
   }),

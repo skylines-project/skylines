@@ -1,27 +1,29 @@
-import Ember from 'ember';
+import { computed, get } from '@ember/object';
+import { inject as service } from '@ember/service';
+import Component from '@ember/component';
 
-export default Ember.Component.extend({
-  account: Ember.inject.service(),
+export default Component.extend({
+  account: service(),
 
   tagName: '',
 
   clubMembers: null,
   pilotId: null,
 
-  pilots: Ember.computed('account.{user,club}', 'clubMembers.[]', function() {
+  pilots: computed('account.{user,club}', 'clubMembers.[]', function() {
     let user = this.get('account.user');
     let club = this.get('account.club');
     let clubMembers = this.get('clubMembers');
 
     let pilots = [{ id: null }, user];
     if (club && clubMembers) {
-      pilots.push({ groupName: Ember.get(club, 'name'), options: clubMembers });
+      pilots.push({ groupName: get(club, 'name'), options: clubMembers });
     }
 
     return pilots;
   }),
 
-  pilot: Ember.computed('pilotsWithNull.[]', 'pilotId', function() {
+  pilot: computed('pilotsWithNull.[]', 'pilotId', function() {
     return this.findPilot(this.get('pilotId') || null);
   }),
 

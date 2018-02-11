@@ -1,4 +1,4 @@
-import Ember from 'ember';
+import { observer, computed } from '@ember/object';
 import { conditional, eq } from 'ember-awesome-macros';
 import { findBy } from 'ember-awesome-macros/array';
 import raw from 'ember-macro-helpers/raw';
@@ -12,37 +12,37 @@ export default BarogramComponent.extend({
   time: null,
   defaultTime: null,
 
-  flightsObserver: Ember.observer('flights.[]', function() {
+  flightsObserver: observer('flights.[]', function() {
     this.draw();
   }),
 
   selection: null,
 
-  activeFlights: Ember.computed('flights.[]', 'selection', function() {
+  activeFlights: computed('flights.[]', 'selection', function() {
     let { flights, selection } = this.getProperties('flights', 'selection');
     return flights.filter(flight => (!selection || flight.get('id') === selection));
   }),
 
-  passiveFlights: Ember.computed('flights.[]', 'selection', function() {
+  passiveFlights: computed('flights.[]', 'selection', function() {
     let { flights, selection } = this.getProperties('flights', 'selection');
     return flights.filter(flight => (selection && flight.get('id') !== selection));
   }),
 
-  active: Ember.computed('activeFlights.@each.{flot_h,color}', function() {
+  active: computed('activeFlights.@each.{flot_h,color}', function() {
     return this.get('activeFlights').map(flight => ({
       data: flight.get('flot_h'),
       color: flight.get('color'),
     }));
   }),
 
-  passive: Ember.computed('passiveFlights.@each.{flot_h,color}', function() {
+  passive: computed('passiveFlights.@each.{flot_h,color}', function() {
     return this.get('passiveFlights').map(flight => ({
       data: flight.get('flot_h'),
       color: flight.get('color'),
     }));
   }),
 
-  enls: Ember.computed('activeFlights.@each.{flot_enl,color}', function() {
+  enls: computed('activeFlights.@each.{flot_enl,color}', function() {
     return this.get('activeFlights').map(flight => ({
       data: flight.get('flot_enl'),
       color: flight.get('color'),

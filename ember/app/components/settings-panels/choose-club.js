@@ -1,9 +1,11 @@
-import Ember from 'ember';
+import { computed } from '@ember/object';
+import { inject as service } from '@ember/service';
+import Component from '@ember/component';
 import { task } from 'ember-concurrency';
 
-export default Ember.Component.extend({
-  ajax: Ember.inject.service(),
-  account: Ember.inject.service(),
+export default Component.extend({
+  ajax: service(),
+  account: service(),
 
   classNames: ['panel', 'panel-default'],
 
@@ -12,11 +14,11 @@ export default Ember.Component.extend({
   messageKey: null,
   error: null,
 
-  clubsWithNull: Ember.computed('clubs.[]', function() {
+  clubsWithNull: computed('clubs.[]', function() {
     return [{ id: null }].concat(this.get('clubs'));
   }),
 
-  club: Ember.computed('clubId', {
+  club: computed('clubId', {
     get() {
       return this.get('clubsWithNull').findBy('id', this.get('clubId') || null);
     },

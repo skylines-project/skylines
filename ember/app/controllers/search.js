@@ -1,12 +1,13 @@
-import Ember from 'ember';
+import { readOnly, oneWay } from '@ember/object/computed';
+import Controller from '@ember/controller';
 
-export default Ember.Controller.extend({
+export default Controller.extend({
   queryParams: ['text'],
 
-  searchText: Ember.computed.readOnly('text'),
-  searchTextInput: Ember.computed.oneWay('searchText'),
+  searchText: readOnly('text'),
+  searchTextInput: oneWay('searchText'),
 
-  results: Ember.computed.readOnly('model.results'),
+  results: readOnly('model.results'),
 
   actions: {
     search(text) {

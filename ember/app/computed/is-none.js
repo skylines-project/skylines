@@ -1,7 +1,8 @@
-import Ember from 'ember';
+import { isNone as _isNone } from '@ember/utils';
+import { computed } from '@ember/object';
 
 export default function isNone(key) {
-  return Ember.computed(key, function() {
-    return Ember.isNone(this.get(key));
+  return computed(key, function() {
+    return _isNone(this.get(key));
   });
 }

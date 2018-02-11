@@ -1,30 +1,32 @@
-import Ember from 'ember';
+import { computed } from '@ember/object';
+import { readOnly, alias, equal } from '@ember/object/computed';
+import Component from '@ember/component';
 
 import isNone from '../computed/is-none';
 
-export default Ember.Component.extend({
+export default Component.extend({
   classNames: ['row'],
 
   result: null,
   clubMembers: null,
   aircraftModels: null,
 
-  status: Ember.computed.readOnly('result.status'),
-  flight: Ember.computed.alias('result.flight'),
-  trace: Ember.computed.alias('result.trace'),
-  airspaces: Ember.computed.readOnly('result.airspaces'),
+  status: readOnly('result.status'),
+  flight: alias('result.flight'),
+  trace: alias('result.trace'),
+  airspaces: readOnly('result.airspaces'),
 
-  pilotId: Ember.computed.alias('flight.pilotId'),
-  pilotName: Ember.computed.alias('flight.pilotName'),
+  pilotId: alias('flight.pilotId'),
+  pilotName: alias('flight.pilotName'),
   showPilotNameInput: isNone('pilotId'),
 
-  copilotId: Ember.computed.alias('flight.copilotId'),
-  copilotName: Ember.computed.alias('flight.copilotName'),
+  copilotId: alias('flight.copilotId'),
+  copilotName: alias('flight.copilotName'),
   showCopilotNameInput: isNone('copilotId'),
 
-  modelId: Ember.computed.alias('flight.modelId'),
-  registration: Ember.computed.alias('flight.registration'),
-  competitionId: Ember.computed.alias('flight.competitionId'),
+  modelId: alias('flight.modelId'),
+  registration: alias('flight.registration'),
+  competitionId: alias('flight.competitionId'),
 
   igcStartTime: computedDate('trace.igc_start_time'),
   takeoffTime: computedDate('flight.takeoffTime'),
@@ -33,8 +35,8 @@ export default Ember.Component.extend({
   landingTime: computedDate('flight.landingTime'),
   igcEndTime: computedDate('trace.igc_end_time'),
 
-  success: Ember.computed.equal('status', 0),
-  validations: Ember.computed.readOnly('result.validations'),
+  success: equal('status', 0),
+  validations: readOnly('result.validations'),
 
   actions: {
     setTakeoffTime(value) {
@@ -79,7 +81,7 @@ export default Ember.Component.extend({
  * Converts from ISO 8601 strings to Date instances and vice-versa.
  */
 function computedDate(aliasKey) {
-  return Ember.computed(aliasKey, {
+  return computed(aliasKey, {
     get() {
       let str = this.get(aliasKey);
       if (str) {

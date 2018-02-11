@@ -1,8 +1,9 @@
-import Ember from 'ember';
+import { computed } from '@ember/object';
+import Component from '@ember/component';
 
 import safeComputed from '../computed/safe-computed';
 
-export default Ember.Component.extend({
+export default Component.extend({
   tagName: 'tr',
   classNames: ['small', 'selectable'],
   classNameBindings: ['selected'],
@@ -13,7 +14,7 @@ export default Ember.Component.extend({
   selection: null,
   onSelect() {},
 
-  speed: Ember.computed('leg.{duration,distance}', function() {
+  speed: computed('leg.{duration,distance}', function() {
     let duration = this.get('leg.duration');
     if (duration > 0) {
       return this.get('leg.distance') / duration;
@@ -22,7 +23,7 @@ export default Ember.Component.extend({
     }
   }),
 
-  climbPercentage: Ember.computed('leg.{duration,climbDuration}', function() {
+  climbPercentage: computed('leg.{duration,climbDuration}', function() {
     let duration = this.get('leg.duration');
     if (duration > 0) {
       return this.get('leg.climbDuration') / duration;
@@ -31,14 +32,14 @@ export default Ember.Component.extend({
     }
   }),
 
-  climbRate: Ember.computed('leg.{climbDuration,climbHeight}', function() {
+  climbRate: computed('leg.{climbDuration,climbHeight}', function() {
     let duration = this.get('leg.climbDuration');
     if (duration > 0) {
       return this.get('leg.climbHeight') / duration;
     }
   }),
 
-  glideRate: Ember.computed('leg.{cruiseDistance,cruiseHeight}', function() {
+  glideRate: computed('leg.{cruiseDistance,cruiseHeight}', function() {
     let distance = this.get('leg.cruiseDistance');
     let height = this.get('leg.cruiseHeight');
 

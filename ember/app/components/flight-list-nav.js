@@ -1,22 +1,25 @@
-import Ember from 'ember';
+import { getOwner } from '@ember/application';
+import { notEmpty } from '@ember/object/computed';
+import { inject as service } from '@ember/service';
+import Component from '@ember/component';
 
 import addDays from '../utils/add-days';
 import safeComputed from '../computed/safe-computed';
 
-export default Ember.Component.extend({
-  account: Ember.inject.service(),
-  pinnedFlights: Ember.inject.service(),
+export default Component.extend({
+  account: service(),
+  pinnedFlights: service(),
 
   tagName: '',
 
-  hasPinned: Ember.computed.notEmpty('pinnedFlights.pinned'),
+  hasPinned: notEmpty('pinnedFlights.pinned'),
 
   prevDate: safeComputed('date', date => addDays(date, -1)),
   nextDate: safeComputed('date', date => addDays(date, 1)),
 
   init() {
     this._super(...arguments);
-    this.set('router', Ember.getOwner(this).lookup('router:main'));
+    this.set('router', getOwner(this).lookup('router:main'));
   },
 
   actions: {

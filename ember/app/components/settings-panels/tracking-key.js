@@ -1,8 +1,9 @@
-import Ember from 'ember';
+import { inject as service } from '@ember/service';
+import Component from '@ember/component';
 import { task } from 'ember-concurrency';
 
-export default Ember.Component.extend({
-  ajax: Ember.inject.service(),
+export default Component.extend({
+  ajax: service(),
 
   classNames: ['panel panel-default'],
 

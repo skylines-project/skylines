@@ -1,8 +1,8 @@
-import Ember from 'ember';
+import Component from '@ember/component';
 
 import computedComponent from '../computed/computed-component';
 
-export default Ember.Component.extend({
+export default Component.extend({
   tagName: '',
 
   event: null,

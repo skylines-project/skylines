@@ -1,17 +1,20 @@
-import Ember from 'ember';
+import { cancel, later } from '@ember/runloop';
+import { computed } from '@ember/object';
+import { inject as service } from '@ember/service';
+import Component from '@ember/component';
 import ol from 'openlayers';
 
 import FixCalc from '../utils/fix-calc';
 
-export default Ember.Component.extend({
-  ajax: Ember.inject.service(),
-  units: Ember.inject.service(),
+export default Component.extend({
+  ajax: service(),
+  units: service(),
 
   classNames: ['relative-fullscreen'],
 
   fixCalc: null,
 
-  timeInterval: Ember.computed('mapExtent', 'cesiumEnabled', 'fixCalc.flights.[]', function() {
+  timeInterval: computed('mapExtent', 'cesiumEnabled', 'fixCalc.flights.[]', function() {
     if (this.get('cesiumEnabled')) { return null; }
 
     let extent = this.get('mapExtent');
@@ -76,7 +79,7 @@ export default Ember.Component.extend({
   willDestroyElement() {
     let updateTimer = this.get('updateTimer');
     if (updateTimer) {
-      Ember.run.cancel(updateTimer);
+      cancel(updateTimer);
     }
   },
 
@@ -96,7 +99,7 @@ export default Ember.Component.extend({
   },
 
   _scheduleUpdate() {
-    this.set('updateTimer', Ember.run.later(() => this._update(), 15 * 1000));
+    this.set('updateTimer', later(() => this._update(), 15 * 1000));
   },
 
   _update() {

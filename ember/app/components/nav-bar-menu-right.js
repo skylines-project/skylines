@@ -1,13 +1,14 @@
-import Ember from 'ember';
+import { inject as service } from '@ember/service';
+import Component from '@ember/component';
 import { findBy } from 'ember-awesome-macros/array';
 import raw from 'ember-macro-helpers/raw';
 
 import availableLocales from '../utils/locales';
 
-export default Ember.Component.extend({
-  account: Ember.inject.service(),
-  intl: Ember.inject.service(),
-  session: Ember.inject.service(),
+export default Component.extend({
+  account: service(),
+  intl: service(),
+  session: service(),
 
   tagName: '',
 

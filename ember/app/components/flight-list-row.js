@@ -1,7 +1,7 @@
-import Ember from 'ember';
+import Component from '@ember/component';
 import { or, eq, not } from 'ember-awesome-macros';
 
-export default Ember.Component.extend({
+export default Component.extend({
   tagName: 'tr',
   classNameBindings: ['isPrivate:not_published'],
 

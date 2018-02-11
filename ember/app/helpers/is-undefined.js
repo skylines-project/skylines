@@ -1,7 +1,7 @@
-import Ember from 'ember';
+import { helper } from '@ember/component/helper';
 
 export function isUndefined([value]) {
   return value === undefined;
 }
 
-export default Ember.Helper.helper(isUndefined);
+export default helper(isUndefined);

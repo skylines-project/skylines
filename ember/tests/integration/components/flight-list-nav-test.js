@@ -1,4 +1,4 @@
-import Ember from 'ember';
+import Service from '@ember/service';
 
 import { expect } from 'chai';
 import { describe, it, beforeEach } from 'mocha';
@@ -14,12 +14,12 @@ describe('Integration | Component | flight list nav', function() {
   beforeEach(function() {
     instanceInitializer.initialize(this);
 
-    this.register('service:account', Ember.Service.extend({
+    this.register('service:account', Service.extend({
       user: null,
       club: null,
     }));
 
-    this.register('service:pinned-flights', Ember.Service.extend({
+    this.register('service:pinned-flights', Service.extend({
       // eslint-disable-next-line ember/avoid-leaking-state-in-components
       pinned: [],
     }));

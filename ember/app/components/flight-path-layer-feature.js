@@ -1,13 +1,14 @@
-import Ember from 'ember';
+import { computed } from '@ember/object';
+import Component from '@ember/component';
 import ol from 'openlayers';
 
-export default Ember.Component.extend({
+export default Component.extend({
   tagName: '',
 
   source: null,
   flight: null,
 
-  feature: Ember.computed(function() {
+  feature: computed(function() {
     let flight = this.get('flight');
     return new ol.Feature({
       geometry: flight.get('geometry'),

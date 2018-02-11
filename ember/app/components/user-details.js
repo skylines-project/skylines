@@ -1,11 +1,12 @@
-import Ember from 'ember';
+import { inject as service } from '@ember/service';
+import Component from '@ember/component';
 import { task } from 'ember-concurrency';
 
 import safeComputed from '../computed/safe-computed';
 
-export default Ember.Component.extend({
-  account: Ember.inject.service(),
-  ajax: Ember.inject.service(),
+export default Component.extend({
+  account: service(),
+  ajax: service(),
 
   editable: safeComputed('account.user.id', 'user.id', (accountId, userId) => accountId && accountId === userId),
 

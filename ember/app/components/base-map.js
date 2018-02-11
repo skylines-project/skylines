@@ -1,4 +1,5 @@
-import Ember from 'ember';
+import { inject as service } from '@ember/service';
+import Component from '@ember/component';
 import $ from 'jquery';
 import ol from 'openlayers';
 import { tag } from 'ember-awesome-macros';
@@ -7,8 +8,8 @@ import { htmlSafe } from 'ember-awesome-macros/string';
 import config from '../config/environment';
 import parseQueryString from '../utils/parse-query-string';
 
-export default Ember.Component.extend({
-  cookies: Ember.inject.service(),
+export default Component.extend({
+  cookies: service(),
 
   attributeBindings: ['style'],
 

@@ -1,4 +1,5 @@
-import Ember from 'ember';
+import { computed } from '@ember/object';
+import Service, { inject as service } from '@ember/service';
 
 /**
  * A static dictionary of the supported units with its
@@ -52,8 +53,8 @@ export const PRESETS = {
   },
 };
 
-export default Ember.Service.extend({
-  intl: Ember.inject.service(),
+export default Service.extend({
+  intl: service(),
 
   distanceUnitIndex: 1,
   speedUnitIndex: 1,
@@ -147,7 +148,7 @@ export default Ember.Service.extend({
 });
 
 function computedUnit(unitsKey, indexKey) {
-  return Ember.computed(indexKey, {
+  return computed(indexKey, {
     get() {
       return this.get(unitsKey)[this.get(indexKey)];
     },

@@ -1,9 +1,11 @@
-import Ember from 'ember';
+import { readOnly } from '@ember/object/computed';
+import { inject as service } from '@ember/service';
+import Controller from '@ember/controller';
 
-export default Ember.Controller.extend({
-  account: Ember.inject.service(),
+export default Controller.extend({
+  account: service(),
 
-  name: Ember.computed.readOnly('model.name'),
-  years: Ember.computed.readOnly('model.years'),
-  sumPilots: Ember.computed.readOnly('model.sumPilots'),
+  name: readOnly('model.name'),
+  years: readOnly('model.years'),
+  sumPilots: readOnly('model.sumPilots'),
 });

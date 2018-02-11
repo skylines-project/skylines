@@ -1,4 +1,7 @@
-import Ember from 'ember';
+import { getOwner } from '@ember/application';
+import { oneWay } from '@ember/object/computed';
+import { inject as service } from '@ember/service';
+import Component from '@ember/component';
 import { validator, buildValidations } from 'ember-cp-validations';
 import { task } from 'ember-concurrency';
 
@@ -26,19 +29,19 @@ const Validations = buildValidations({
   },
 });
 
-export default Ember.Component.extend(Validations, {
-  ajax: Ember.inject.service(),
+export default Component.extend(Validations, {
+  ajax: service(),
 
   classNames: ['panel-body'],
 
   error: null,
 
-  name: Ember.computed.oneWay('club.name'),
-  website: Ember.computed.oneWay('club.website'),
+  name: oneWay('club.name'),
+  website: oneWay('club.website'),
 
   init() {
     this._super(...arguments);
-    this.set('router', Ember.getOwner(this).lookup('router:main'));
+    this.set('router', getOwner(this).lookup('router:main'));
   },
 
   actions: {

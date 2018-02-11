@@ -1,10 +1,11 @@
-import Ember from 'ember';
+import { inject as service } from '@ember/service';
+import Component from '@ember/component';
 import $ from 'jquery';
 import { conditional, tag } from 'ember-awesome-macros';
 import { htmlSafe } from 'ember-awesome-macros/string';
 
-export default Ember.Component.extend({
-  units: Ember.inject.service(),
+export default Component.extend({
+  units: service(),
 
   layoutName: 'components/base-barogram',
 
