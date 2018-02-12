@@ -1,23 +1,28 @@
 import { inject as service } from '@ember/service';
+import { observer } from '@ember/object';
 import Component from '@ember/component';
+import { once } from '@ember/runloop';
+
 import $ from 'jquery';
 import ol from 'openlayers';
 import { tag } from 'ember-awesome-macros';
 import { htmlSafe } from 'ember-awesome-macros/string';
 
 import config from '../config/environment';
-import parseQueryString from '../utils/parse-query-string';
 
 export default Component.extend({
-  cookies: service(),
+  mapSettings: service(),
 
   attributeBindings: ['style'],
 
   width: '100%',
   height: '100%',
-  baseLayer: null,
 
   style: htmlSafe(tag`width: ${'width'}; height: ${'height'}; position: relative`),
+
+  mapSettingsObserver: observer('mapSettings.baseLayer', 'mapSettings.overlayLayers.[]', function() {
+    once(this, 'updateLayerVisibilities');
+  }),
 
   init() {
     this._super(...arguments);
@@ -69,13 +74,7 @@ export default Component.extend({
     this.addMapboxLayer();
     this.addEmptyLayer();
 
-    let query = parseQueryString(window.location.search);
-    this.set('baseLayer', query.baselayer);
-    this.set('overlayLayers', query.overlays);
-
-    let cookies = this.get('cookies');
-    this.setBaseLayer(this.get('baseLayer') || cookies.read('base_layer') || 'OpenStreetMap');
-    this.setOverlayLayers(this.get('overlayLayers') || cookies.read('overlay_layers') || 'Airspace');
+    this.updateLayerVisibilities();
   },
 
   didInsertElement() {
@@ -86,42 +85,26 @@ export default Component.extend({
     }
   },
 
-  setBaseLayer(base_layer) {
-    if (!base_layer) {
-      return;
-    }
+  updateLayerVisibilities() {
+    let mapSettings = this.get('mapSettings');
+    let baseLayerNames = mapSettings.get('baseLayer');
+    let overlayLayerNames = mapSettings.get('overlayLayers');
 
-    let fallback = false;
-    let map = this.get('map');
+    let layers = this.get('map').getLayers().getArray()
+      .filter(layer => layer.get('display_in_layer_switcher'));
 
-    map.getLayers().forEach(layer => {
-      if (layer.get('base_layer')) {
-        layer.setVisible(layer.get('name') === base_layer);
-        fallback = fallback || layer.get('name') === base_layer;
-      }
+    let baseLayers = layers.filter(layer => layer.get('base_layer'));
+    baseLayers.forEach(layer => {
+      layer.setVisible(layer.get('name') === baseLayerNames);
     });
 
-    if (!fallback) {
-      map.getLayers().getArray().filter(function(e) {
-        return e.get('name') === 'OpenStreetMap';
-      })[0].setVisible(true);
-    }
-  },
-
-  setOverlayLayers(overlay_layers) {
-    if (!overlay_layers) {
-      return;
+    if (!baseLayers.find(layer => layer.get('name') === baseLayerNames)) {
+      baseLayers.find(layer => layer.get('name') === 'OpenStreetMap').setVisible(true);
     }
 
-    overlay_layers = overlay_layers.split(';');
-
-    // Cycle through the overlay layers to find a match
-    this.get('map').getLayers().forEach(layer => {
-      if (layer.get('base_layer') || !layer.get('display_in_layer_switcher')) {
-        return;
-      }
-
-      layer.setVisible($.inArray(layer.get('name'), overlay_layers) !== -1);
+    let overlayLayers = layers.filter(layer => !layer.get('base_layer'));
+    overlayLayers.forEach(layer => {
+      layer.setVisible(overlayLayerNames.includes(layer.get('name')));
     });
   },
 
