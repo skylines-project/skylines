@@ -80,34 +80,24 @@ export default Component.extend({
 
   updateLayerVisibilities() {
     let mapSettings = this.get('mapSettings');
-    let baseLayer = mapSettings.get('baseLayer');
-    let overlayLayers = mapSettings.get('overlayLayers');
+    let baseLayerNames = mapSettings.get('baseLayer');
+    let overlayLayerNames = mapSettings.get('overlayLayers');
 
-    let fallback = false;
-    let map = this.get('map');
+    let layers = this.get('map').getLayers().getArray()
+      .filter(layer => layer.get('display_in_layer_switcher'));
 
-    let layers = map.getLayers().getArray().filter(layer => layer.get('display_in_layer_switcher'));
-
-    layers.forEach(layer => {
-      if (layer.get('base_layer')) {
-        layer.setVisible(layer.get('name') === baseLayer);
-        fallback = fallback || layer.get('name') === baseLayer;
-      }
+    let baseLayers = layers.filter(layer => layer.get('base_layer'));
+    baseLayers.forEach(layer => {
+      layer.setVisible(layer.get('name') === baseLayerNames);
     });
 
-    if (!fallback) {
-      layers.filter(function(e) {
-        return e.get('name') === 'OpenStreetMap';
-      })[0].setVisible(true);
+    if (!baseLayers.find(layer => layer.get('name') === baseLayerNames)) {
+      baseLayers.find(layer => layer.get('name') === 'OpenStreetMap').setVisible(true);
     }
 
-    // Cycle through the overlay layers to find a match
-    layers.forEach(layer => {
-      if (layer.get('base_layer')) {
-        return;
-      }
-
-      layer.setVisible($.inArray(layer.get('name'), overlayLayers) !== -1);
+    let overlayLayers = layers.filter(layer => !layer.get('base_layer'));
+    overlayLayers.forEach(layer => {
+      layer.setVisible(overlayLayerNames.includes(layer.get('name')));
     });
   },
 
