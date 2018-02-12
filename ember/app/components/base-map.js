@@ -6,16 +6,14 @@ import { tag } from 'ember-awesome-macros';
 import { htmlSafe } from 'ember-awesome-macros/string';
 
 import config from '../config/environment';
-import parseQueryString from '../utils/parse-query-string';
 
 export default Component.extend({
-  cookies: service(),
+  mapSettings: service(),
 
   attributeBindings: ['style'],
 
   width: '100%',
   height: '100%',
-  baseLayer: null,
 
   style: htmlSafe(tag`width: ${'width'}; height: ${'height'}; position: relative`),
 
@@ -69,13 +67,9 @@ export default Component.extend({
     this.addMapboxLayer();
     this.addEmptyLayer();
 
-    let query = parseQueryString(window.location.search);
-    this.set('baseLayer', query.baselayer);
-    this.set('overlayLayers', query.overlays);
-
-    let cookies = this.get('cookies');
-    this.setBaseLayer(this.get('baseLayer') || cookies.read('base_layer') || 'OpenStreetMap');
-    this.setOverlayLayers(this.get('overlayLayers') || cookies.read('overlay_layers') || 'Airspace');
+    let mapSettings = this.get('mapSettings');
+    this.setBaseLayer(mapSettings.get('baseLayer'));
+    this.setOverlayLayers(mapSettings.get('overlayLayers'));
   },
 
   didInsertElement() {
@@ -109,12 +103,6 @@ export default Component.extend({
   },
 
   setOverlayLayers(overlay_layers) {
-    if (!overlay_layers) {
-      return;
-    }
-
-    overlay_layers = overlay_layers.split(';');
-
     // Cycle through the overlay layers to find a match
     this.get('map').getLayers().forEach(layer => {
       if (layer.get('base_layer') || !layer.get('display_in_layer_switcher')) {
