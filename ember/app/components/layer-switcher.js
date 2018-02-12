@@ -59,12 +59,14 @@ export default Component.extend({
   },
 
   updateLayers() {
+    let mapSettings = this.get('mapSettings');
+
     let layers = this.get('map').getLayers().getArray()
       .filter(layer => layer.get('display_in_layer_switcher'))
       .map(layer => {
         let id = layer.get('id');
         let name = layer.get('name');
-        let visible = layer.getVisible();
+        let visible = mapSettings.isLayerVisible(name);
         let isBaseLayer = layer.get('base_layer');
         return { id, name, visible, isBaseLayer };
       });
