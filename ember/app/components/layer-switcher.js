@@ -3,7 +3,7 @@ import Component from '@ember/component';
 import $ from 'jquery';
 
 export default Component.extend({
-  cookies: service(),
+  mapSettings: service(),
 
   classNames: ['GraphicLayerSwitcher', 'ol-unselectable'],
 
@@ -37,18 +37,23 @@ export default Component.extend({
     },
 
     select(layer) {
+      let mapSettings = this.get('mapSettings');
+
       if (layer.isBaseLayer) {
+        mapSettings.setBaseLayer(layer.name);
+
         this.get('map').getLayers().getArray()
           .filter(it => it.get('base_layer'))
           .forEach(it => it.setVisible(it.get('id') === layer.id));
 
       } else {
+        mapSettings.toggleOverlayLayer(layer.name);
+
         this.get('map').getLayers().getArray()
           .filter(it => (it.get('id') === layer.id))
           .forEach(it => it.setVisible(!it.getVisible()));
       }
 
-      this.setLayerCookies();
       this.updateLayers();
     },
   },
@@ -66,19 +71,5 @@ export default Component.extend({
 
     this.set('baseLayers', layers.filter(layer => layer.isBaseLayer));
     this.set('overlayLayers', layers.filter(layer => !layer.isBaseLayer));
-  },
-
-  setLayerCookies() {
-    let cookies = this.get('cookies');
-    let layers = this.get('map').getLayers().getArray();
-
-    let baseLayer = layers.filter(it => (it.get('base_layer') && it.getVisible()))[0];
-    cookies.write('base_layer', baseLayer.get('name'), { path: '/', expires: new Date('2099-12-31') });
-
-    let overlayLayers = layers.filter(it => (!it.get('base_layer') && it.getVisible()))
-      .map(it => it.get('name'))
-      .join(';');
-
-    cookies.write('overlay_layers', overlayLayers, { path: '/', expires: new Date('2099-12-31') });
   },
 });
