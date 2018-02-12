@@ -41,17 +41,8 @@ export default Component.extend({
 
       if (layer.isBaseLayer) {
         mapSettings.setBaseLayer(layer.name);
-
-        this.get('map').getLayers().getArray()
-          .filter(it => it.get('base_layer'))
-          .forEach(it => it.setVisible(it.get('id') === layer.id));
-
       } else {
         mapSettings.toggleOverlayLayer(layer.name);
-
-        this.get('map').getLayers().getArray()
-          .filter(it => (it.get('id') === layer.id))
-          .forEach(it => it.setVisible(!it.getVisible()));
       }
 
       this.updateLayers();

@@ -1,5 +1,8 @@
 import { inject as service } from '@ember/service';
+import { observer } from '@ember/object';
 import Component from '@ember/component';
+import { once } from '@ember/runloop';
+
 import $ from 'jquery';
 import ol from 'openlayers';
 import { tag } from 'ember-awesome-macros';
@@ -16,6 +19,10 @@ export default Component.extend({
   height: '100%',
 
   style: htmlSafe(tag`width: ${'width'}; height: ${'height'}; position: relative`),
+
+  mapSettingsObserver: observer('mapSettings.baseLayer', 'mapSettings.overlayLayers.[]', function() {
+    once(this, 'updateLayerVisibilities');
+  }),
 
   init() {
     this._super(...arguments);
