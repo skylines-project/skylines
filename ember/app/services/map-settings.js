@@ -48,6 +48,11 @@ export default Service.extend({
       this.set('_overlayLayers', cookieOverlayLayers === '' ? [] : cookieOverlayLayers.split(';'));
     }
   },
+
+  setBaseLayer(baseLayer) {
+    this.set('_baseLayer', baseLayer);
+    this.get('cookies').write(BASE_LAYER_COOKIE_KEY, baseLayer, { path: '/', expires: new Date('2099-12-31') });
+  },
 });
 
 function extractQueryString(url) {
