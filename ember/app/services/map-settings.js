@@ -53,6 +53,17 @@ export default Service.extend({
     this.set('_baseLayer', baseLayer);
     this.get('cookies').write(BASE_LAYER_COOKIE_KEY, baseLayer, { path: '/', expires: new Date('2099-12-31') });
   },
+
+  toggleOverlayLayer(overlayLayer) {
+    let overlayLayers = this.get('overlayLayers');
+    if (overlayLayers.includes(overlayLayer)) {
+      overlayLayers.removeObject(overlayLayer);
+    } else {
+      overlayLayers.pushObject(overlayLayer);
+    }
+
+    this.get('cookies').write(OVERLAY_LAYERS_COOKIE_KEY, overlayLayers.join(';'), { path: '/', expires: new Date('2099-12-31') });
+  },
 });
 
 function extractQueryString(url) {
