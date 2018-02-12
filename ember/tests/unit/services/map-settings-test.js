@@ -76,6 +76,14 @@ describe('Unit | Service | map-settings', function() {
     expect(service.get('overlayLayers')).to.deep.equal([]);
   });
 
+  it('isLayerVisible() returns true/false if layer is base layer or enabled overlay layer', function() {
+    let service = this.subject();
+    expect(service.isLayerVisible('Foo')).to.be.true;
+    expect(service.isLayerVisible('Bar')).to.be.true;
+    expect(service.isLayerVisible('Baz')).to.be.true;
+    expect(service.isLayerVisible('Qux')).to.be.false;
+  });
+
   it('setBaseLayer() changes the "baseLayer" and persists it to the cookie', function() {
     let writeWasCalled = false;
     this.register('service:cookies', Service.extend({

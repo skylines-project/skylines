@@ -49,6 +49,10 @@ export default Service.extend({
     }
   },
 
+  isLayerVisible(layer) {
+    return this.get('baseLayer') === layer || this.get('overlayLayers').includes(layer);
+  },
+
   setBaseLayer(baseLayer) {
     this.set('_baseLayer', baseLayer);
     this.get('cookies').write(BASE_LAYER_COOKIE_KEY, baseLayer, { path: '/', expires: new Date('2099-12-31') });
