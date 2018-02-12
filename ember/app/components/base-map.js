@@ -67,9 +67,7 @@ export default Component.extend({
     this.addMapboxLayer();
     this.addEmptyLayer();
 
-    let mapSettings = this.get('mapSettings');
-    this.setBaseLayer(mapSettings.get('baseLayer'));
-    this.setOverlayLayers(mapSettings.get('overlayLayers'));
+    this.updateLayerVisibilities();
   },
 
   didInsertElement() {
@@ -78,6 +76,12 @@ export default Component.extend({
     if (map) {
       map.setTarget(this.elementId);
     }
+  },
+
+  updateLayerVisibilities() {
+    let mapSettings = this.get('mapSettings');
+    this.setBaseLayer(mapSettings.get('baseLayer'));
+    this.setOverlayLayers(mapSettings.get('overlayLayers'));
   },
 
   setBaseLayer(base_layer) {
