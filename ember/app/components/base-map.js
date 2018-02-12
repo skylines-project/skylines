@@ -86,7 +86,9 @@ export default Component.extend({
     let fallback = false;
     let map = this.get('map');
 
-    map.getLayers().forEach(layer => {
+    let layers = map.getLayers().getArray().filter(layer => layer.get('display_in_layer_switcher'));
+
+    layers.forEach(layer => {
       if (layer.get('base_layer')) {
         layer.setVisible(layer.get('name') === baseLayer);
         fallback = fallback || layer.get('name') === baseLayer;
@@ -94,14 +96,14 @@ export default Component.extend({
     });
 
     if (!fallback) {
-      map.getLayers().getArray().filter(function(e) {
+      layers.filter(function(e) {
         return e.get('name') === 'OpenStreetMap';
       })[0].setVisible(true);
     }
 
     // Cycle through the overlay layers to find a match
-    map.getLayers().forEach(layer => {
-      if (layer.get('base_layer') || !layer.get('display_in_layer_switcher')) {
+    layers.forEach(layer => {
+      if (layer.get('base_layer')) {
         return;
       }
 
