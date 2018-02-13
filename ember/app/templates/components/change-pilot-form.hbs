@@ -3,7 +3,7 @@
     {{#bs-alert type="danger" dismissible=false}}{{error}}{{/bs-alert}}
   {{/if}}
 
-  {{#validated-block label=(t "pilot") validation=validations.attrs.pilotId}}
+  {{#validated-block label=(t "pilot") validation=validations.attrs.pilotId didValidate=didValidate}}
     {{pilot-select clubMembers=clubMembers pilotId=pilotId onChange=(action (mut pilotId))}}
   {{/validated-block}}
 
@@ -12,10 +12,11 @@
       value=pilotName
       validation=validations.attrs.pilotName
       label=(t "pilot")
-      disabled=saveTask.isRunning}}
+      disabled=saveTask.isRunning
+      didValidate=didValidate}}
   {{/if}}
 
-  {{#validated-block label=(t "copilot") validation=validations.attrs.copilotId}}
+  {{#validated-block label=(t "copilot") validation=validations.attrs.copilotId didValidate=didValidate}}
     {{pilot-select clubMembers=clubMembers pilotId=copilotId onChange=(action (mut copilotId))}}
   {{/validated-block}}
 
@@ -24,7 +25,8 @@
       value=copilotName
       validation=validations.attrs.copilotName
       label=(t "copilot")
-      disabled=saveTask.isRunning}}
+      disabled=saveTask.isRunning
+      didValidate=didValidate}}
   {{/if}}
 
   <button class="btn btn-primary btn-block" type="submit" disabled={{or saveTask.isRunning (not validations.isValid)}}>

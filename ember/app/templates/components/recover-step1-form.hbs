@@ -9,7 +9,8 @@
     value=email
     validation=validations.attrs.email
     label=(t "email-address")
-    disabled=recoverTask.isRunning}}
+    disabled=recoverTask.isRunning
+    didValidate=didValidate}}
 
   <button class="btn btn-primary btn-block" type="submit" disabled={{or recoverTask.isRunning success (not validations.isValid)}}>
     {{t (if recoverTask.isRunning "recovering" "recover-password")}}

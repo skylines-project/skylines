@@ -16,7 +16,8 @@
       validation=validations.attrs.name
       label=(t "name")
       autocomplete="organization"
-      disabled=saveTask.isRunning}}
+      disabled=saveTask.isRunning
+      didValidate=didValidate}}
 
     <button class="btn btn-primary btn-block" type="submit" disabled={{or saveTask.isRunning (not validations.isValid)}}>
       {{t (if saveTask.isRunning "creating" "create")}}

@@ -13,6 +13,7 @@
       validation=validations.attrs.pilotName
       label=(t "pilot")
       disabled=pending
+      didValidate=didValidate
       class="col-sm-6"}}
   {{/if}}
 
@@ -33,6 +34,7 @@
       validation=validations.attrs.copilotName
       label=(t "copilot")
       disabled=pending
+      didValidate=didValidate
       class="col-sm-6"}}
   {{/if}}
 
@@ -48,6 +50,7 @@
     validation=validations.attrs.registration
     label=(t "registration")
     disabled=pending
+    didValidate=didValidate
     class="col-sm-4"}}
 
   {{validated-input
@@ -55,6 +58,7 @@
     validation=validations.attrs.competitionId
     label=(t "competition-id")
     disabled=pending
+    didValidate=didValidate
     class="col-sm-4"}}
 
   <div class="clearfix"></div>
