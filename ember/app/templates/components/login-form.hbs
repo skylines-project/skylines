@@ -9,6 +9,7 @@
     autocomplete="email"
     disabled=loginTask.isRunning
     forceErrorClass=error
+    didValidate=didValidate
     testSelector="login-email"}}
 
   {{validated-input
@@ -18,6 +19,7 @@
     autocomplete="current-password"
     disabled=loginTask.isRunning
     forceErrorClass=error
+    didValidate=didValidate
     testSelector="login-password"}}
 
   <button class="btn btn-primary btn-block" type="submit" disabled={{loginTask.isRunning}} data-test-login-button>

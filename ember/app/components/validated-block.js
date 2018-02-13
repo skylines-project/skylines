@@ -10,9 +10,9 @@ export default Component.extend({
   label: null,
   hasContent: true,
   forceErrorClass: false,
+  didValidate: false,
 
   notValidating: not('validation.isValidating'),
-  didValidate: readOnly('targetObject.didValidate'),
   isValid: and('hasContent', 'validation.isValid', 'notValidating'),
   isInvalid: readOnly('validation.isInvalid'),
   showErrorClass: and('notValidating', 'showMessage', 'hasContent', 'validation'),
