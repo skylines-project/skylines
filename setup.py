@@ -32,7 +32,7 @@ setup(
         'celery[redis]>=3.1,<3.2',
         'xcsoar==0.5',
         'aerofiles==0.1.1',
-        'enum34==1.0',
+        'enum34==1.1.6',
         'pyproj==1.9.3',
         'gevent==1.0.1',
         'webargs==1.2.0',
