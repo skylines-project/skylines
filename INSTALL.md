@@ -29,7 +29,7 @@ python-pip` on Ubuntu/Debian. More information about pip can be found at
 
 Now you can install the python dependencies by calling:
 
-    $ sudo pip install -e .
+    $ sudo pip install -r requirements.txt
 
 *Note: You might have to install the additional Ubuntu/Debian packages
 `libpq-dev`, `python-dev` and `g++` for the `psycopg2` dependency.*
