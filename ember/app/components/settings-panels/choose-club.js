@@ -30,13 +30,7 @@ export default Component.extend({
 
   saveTask: task(function * () {
     let club = this.get('club');
-    let json;
-
-    if (club.id) {
-      json = { clubId: club.id };
-    } else {
-      json = { clubId: null };
-    }
+    let json = { clubId: club ? club.id : null };
 
     try {
       yield this.get('ajax').request('/api/settings/', { method: 'POST', json });
