@@ -34,7 +34,7 @@ setup(
         'aerofiles==0.1.1',
         'enum34==1.0',
         'pyproj==1.9.3',
-        'gevent==1.0.1',
+        'gevent==1.2.2',
         'webargs==1.2.0',
         'marshmallow==2.8.0',
         'Flask_OAuthlib==0.9.2',
