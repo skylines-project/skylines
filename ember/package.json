@@ -68,7 +68,7 @@
     "ember-web-app": "^2.3.0",
     "eslint-config-simplabs": "0.4.0",
     "eslint-plugin-ember": "^5.1.0",
-    "eslint-plugin-mocha": "^4.11.0",
+    "eslint-plugin-mocha": "^5.0.0",
     "loader.js": "^4.6.0"
   },
   "engines": {
