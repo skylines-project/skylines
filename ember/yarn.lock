@@ -3057,9 +3057,9 @@ ember-cli-pretender@^1.0.1:
     pretender "^1.4.2"
     resolve "^1.2.0"
 
-ember-cli-sass@^7.1.4:
-  version "7.1.4"
-  resolved "https://registry.yarnpkg.com/ember-cli-sass/-/ember-cli-sass-7.1.4.tgz#cbe823b5bd7d686b11ab61169fda4f3e993456fd"
+ember-cli-sass@^7.1.7:
+  version "7.1.7"
+  resolved "https://registry.yarnpkg.com/ember-cli-sass/-/ember-cli-sass-7.1.7.tgz#66899134788ec8d2406a45f5346d4db47a2aa012"
   dependencies:
     broccoli-funnel "^1.0.0"
     broccoli-merge-trees "^1.1.0"
