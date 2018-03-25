@@ -3267,16 +3267,16 @@ ember-concurrency@^0.8.7:
     ember-cli-babel "^6.8.2"
     ember-getowner-polyfill "^1.1.0 || ^2.0.0"
 
-ember-cp-validations@^3.5.1:
-  version "3.5.1"
-  resolved "https://registry.yarnpkg.com/ember-cp-validations/-/ember-cp-validations-3.5.1.tgz#55632a87b1db84f3d54bc769c1c07ff241e9f49f"
+ember-cp-validations@^3.5.2:
+  version "3.5.2"
+  resolved "https://registry.yarnpkg.com/ember-cp-validations/-/ember-cp-validations-3.5.2.tgz#1b205891ae7d7026f7b6c55cf6e440122db9b2ac"
   dependencies:
     ember-cli-babel "^6.6.0"
     ember-cli-version-checker "^2.0.0"
     ember-getowner-polyfill "^2.0.1"
-    ember-require-module "^0.1.2"
+    ember-require-module "0.1.2"
     ember-string-ishtmlsafe-polyfill "^2.0.0"
-    ember-validators "^1.0.4"
+    ember-validators "1.0.4"
     exists-sync "0.0.4"
     walk-sync "^0.3.1"
 
@@ -3545,7 +3545,7 @@ ember-raf-scheduler@^0.1.0:
   dependencies:
     ember-cli-babel "^6.6.0"
 
-ember-require-module@^0.1.2:
+ember-require-module@0.1.2, ember-require-module@^0.1.2:
   version "0.1.2"
   resolved "https://registry.yarnpkg.com/ember-require-module/-/ember-require-module-0.1.2.tgz#fdffdcf86745d601009211c1b41907395a4d081e"
   dependencies:
@@ -3666,7 +3666,7 @@ ember-truth-helpers@^2.0.0:
   dependencies:
     ember-cli-babel "^6.8.2"
 
-ember-validators@^1.0.4:
+ember-validators@1.0.4:
   version "1.0.4"
   resolved "https://registry.yarnpkg.com/ember-validators/-/ember-validators-1.0.4.tgz#7d89c2511945c52bd20c5384e715138f902133bb"
   dependencies:
