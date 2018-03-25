@@ -3234,27 +3234,9 @@ ember-compatibility-helpers@^0.1.0, ember-compatibility-helpers@^0.1.1, ember-co
     ember-cli-version-checker "^2.0.0"
     semver "^5.4.1"
 
-ember-concurrency@^0.8.1:
-  version "0.8.3"
-  resolved "https://registry.yarnpkg.com/ember-concurrency/-/ember-concurrency-0.8.3.tgz#f3adc58bc7a69c7d9ec27fe9cbe75cb8c0adf3bf"
-  dependencies:
-    babel-core "^6.24.1"
-    ember-cli-babel "^6.1.0"
-    ember-getowner-polyfill "^1.1.0"
-    ember-maybe-import-regenerator "^0.1.5"
-
-ember-concurrency@^0.8.12:
-  version "0.8.12"
-  resolved "https://registry.yarnpkg.com/ember-concurrency/-/ember-concurrency-0.8.12.tgz#fb91180e5efeb1024cfa2cfb99d2fe6721930c91"
-  dependencies:
-    babel-core "^6.24.1"
-    ember-cli-babel "^6.8.2"
-    ember-getowner-polyfill "^2.0.0"
-    ember-maybe-import-regenerator "^0.1.5"
-
-ember-concurrency@^0.8.7:
-  version "0.8.14"
-  resolved "https://registry.yarnpkg.com/ember-concurrency/-/ember-concurrency-0.8.14.tgz#4017133e5fbb9d088082ef6ab5b91839ed33107b"
+ember-concurrency@^0.8.1, ember-concurrency@^0.8.16, ember-concurrency@^0.8.7:
+  version "0.8.16"
+  resolved "https://registry.yarnpkg.com/ember-concurrency/-/ember-concurrency-0.8.16.tgz#979fab6fb7e3105e695defb39e7a4b641237944d"
   dependencies:
     babel-core "^6.24.1"
     ember-cli-babel "^6.8.2"
@@ -3331,7 +3313,7 @@ ember-get-config@^0.2.3:
     broccoli-file-creator "^1.1.1"
     ember-cli-babel "^6.3.0"
 
-ember-getowner-polyfill@1.2.2, ember-getowner-polyfill@^1.1.0, ember-getowner-polyfill@^1.2.2:
+ember-getowner-polyfill@1.2.2, ember-getowner-polyfill@^1.2.2:
   version "1.2.2"
   resolved "https://registry.yarnpkg.com/ember-getowner-polyfill/-/ember-getowner-polyfill-1.2.2.tgz#cdab739e89cc8f25af0f78735422df1a61193e92"
   dependencies:
@@ -3346,7 +3328,7 @@ ember-getowner-polyfill@1.2.2, ember-getowner-polyfill@^1.1.0, ember-getowner-po
     ember-cli-version-checker "^2.1.0"
     ember-factory-for-polyfill "^1.3.1"
 
-ember-getowner-polyfill@^2.0.0, ember-getowner-polyfill@^2.0.1:
+ember-getowner-polyfill@^2.0.1:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/ember-getowner-polyfill/-/ember-getowner-polyfill-2.0.1.tgz#9bfe2b4d527ed174e76fef2c8f30937d77cb66fb"
   dependencies:
