@@ -14,6 +14,7 @@ export default Route.extend(ApplicationRouteMixin, {
   ajax: service(),
   cookies: service(),
   intl: service(),
+  raven: service(),
   session: service(),
   units: service(),
 
