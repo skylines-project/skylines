@@ -1,3 +1,5 @@
+from __future__ import print_function
+
 from flask_script import Command, Option
 
 from sqlalchemy.orm import joinedload
@@ -31,7 +33,7 @@ class UpdateFlightPaths(Command):
         self.incremental(self.do, q)
 
     def do(self, flight):
-        print flight.id
+        print(flight.id)
         return flight.update_flight_path()
 
     def apply_and_commit(self, func, q):
@@ -42,7 +44,7 @@ class UpdateFlightPaths(Command):
             else:
                 n_failed += 1
         if n_success > 0:
-            print "commit"
+            print("commit")
             db.session.commit()
         return n_success, n_failed
 

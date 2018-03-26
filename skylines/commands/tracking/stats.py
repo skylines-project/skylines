@@ -1,3 +1,5 @@
+from __future__ import print_function
+
 from flask_script import Command, Option
 
 from datetime import timedelta
@@ -20,7 +22,7 @@ class Stats(Command):
 
         if json:
             from flask import json
-            print json.dumps(stats)
+            print(json.dumps(stats))
         else:
             self.print_statistics(stats)
 
@@ -86,14 +88,14 @@ class Stats(Command):
         pilot = stats.get('pilot')
         sessions = stats.get('sessions')
 
-        print 'Live tracking statistics for user: {} (ID: {})'.format(pilot.get('name'), pilot.get('id'))
-        print
-        print 'Number of sessions: {}'.format(len(sessions))
-        print 'Number of received fixes: {}'.format(stats.get('num_fixes'))
+        print('Live tracking statistics for user: {} (ID: {})'.format(pilot.get('name'), pilot.get('id')))
+        print('')
+        print('Number of sessions: {}'.format(len(sessions)))
+        print('Number of received fixes: {}'.format(stats.get('num_fixes')))
 
         if sessions:
-            print
-            print 'Sessions:'
+            print('')
+            print('Sessions:')
             for session in sessions:
                 self.print_session(session)
 
@@ -103,7 +105,7 @@ class Stats(Command):
         duration = end - start
         duration -= timedelta(microseconds=duration.microseconds)
 
-        print '{date} - {start}-{end} - {duration} - Q {quality:04.2%} - {num_fixes} fixes (dt: {min_dt:.1f}, avg {avg_dt:.1f})'.format(
+        print('{date} - {start}-{end} - {duration} - Q {quality:04.2%} - {num_fixes} fixes (dt: {min_dt:.1f}, avg {avg_dt:.1f})'.format(
             date=start.strftime('%d.%m.%Y'),
             start=start.strftime('%H:%M'),
             end=end.strftime('%H:%M'),
@@ -111,4 +113,4 @@ class Stats(Command):
             quality=session.get('quality', 1),
             num_fixes=session.get('num_fixes'),
             min_dt=session.get('min_dt', 0),
-            avg_dt=session.get('avg_dt', 0))
+            avg_dt=session.get('avg_dt', 0)))

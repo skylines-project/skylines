@@ -1,3 +1,5 @@
+from __future__ import print_function
+
 import sys
 from flask_script import Command, Option
 
@@ -25,7 +27,7 @@ class SRTM(Command):
 
     def run(self, tile, file, in_db):
         if tile and file:
-            print 'Please select either a tile to download or specify local file(s).'
+            print('Please select either a tile to download or specify local file(s).')
             sys.exit(1)
 
         if not in_db:
@@ -33,7 +35,7 @@ class SRTM(Command):
             path = current_app.config['SKYLINES_ELEVATION_PATH']
 
             if not os.path.exists(path):
-                print 'Creating {} ...'.format(path)
+                print('Creating {} ...'.format(path))
                 os.mkdir(path)
         else:
             path = tempfile.gettempdir()
@@ -57,7 +59,7 @@ class SRTM(Command):
                 if not in_db:
                     tiled_tif_filename = os.path.join(path, os.path.basename(abspath))
                     if os.path.exists(tiled_tif_filename):
-                        print "{} exists already.".format(tiled_tif_filename)
+                        print("{} exists already.".format(tiled_tif_filename))
                         continue
 
                     shutil.copy(abspath, tiled_tif_filename)
@@ -67,11 +69,11 @@ class SRTM(Command):
 
     def download_tile(self, x, y):
         if not 1 <= x <= 72:
-            print 'x has to be between 1 and 72'
+            print('x has to be between 1 and 72')
             sys.exit(1)
 
         if not -4 <= y <= 24:
-            print 'y has to be between -4 and 24'
+            print('y has to be between -4 and 24')
             sys.exit(1)
 
         basename = 'srtm_{x:02}_{y:02}'.format(x=x, y=y)
@@ -80,13 +82,13 @@ class SRTM(Command):
         tiled_tif_filename = basename + '_tiled.tif'
 
         if os.path.exists(tiled_tif_filename):
-            print "{} exists already.".format(tiled_tif_filename)
+            print("{} exists already.".format(tiled_tif_filename))
             exit()
 
         # Download TIF file
         tif_filename = basename + '.tif'
 
-        print 'Downloading {} ...'.format(tif_filename)
+        print('Downloading {} ...'.format(tif_filename))
         url = self.SERVER_URL + tif_filename
         subprocess.check_call(['wget', '-O', tiled_tif_filename, url])
 
@@ -94,7 +96,7 @@ class SRTM(Command):
 
     def raster2pgsql(self, tiled_tif_filename, in_db):
         # Create SQL statements
-        print 'Converting {} to SQL ...'.format(tiled_tif_filename)
+        print('Converting {} to SQL ...'.format(tiled_tif_filename))
         args = [
             'raster2pgsql',
             '-a',  # Append to existing table
@@ -112,9 +114,9 @@ class SRTM(Command):
 
         raster2pgsql = subprocess.Popen(args, stdout=subprocess.PIPE)
 
-        print 'Adding SQL to the database ...'
+        print('Adding SQL to the database ...')
         for i, line in enumerate(raster2pgsql.stdout):
             if i % 100 == 0 and i != 0:
-                print i
+                print(i)
 
             db.session.execute(line)

@@ -1,3 +1,5 @@
+from __future__ import print_function
+
 # revision identifiers, used by Alembic.
 revision = '46434b0a4c10'
 down_revision = None
@@ -31,7 +33,7 @@ def upgrade():
         first_name = n[0]
         last_name = n[1]
 
-        print ('Converting %s -> "%s", "%s"' % (name, first_name, last_name)).encode('unicode_escape')
+        print(('Converting %s -> "%s", "%s"' % (name, first_name, last_name)).encode('unicode_escape'))
 
         op.execute(
             users.update().where(users.c.id == id).values({
@@ -49,7 +51,7 @@ def downgrade():
 
         if last_name:
             name = first_name + ' ' + last_name
-            print ('Converting "%s", "%s" -> %s' % (first_name, last_name, name)).encode('unicode_escape')
+            print(('Converting "%s", "%s" -> %s' % (first_name, last_name, name)).encode('unicode_escape'))
 
             op.execute(
                 users.update().where(users.c.id == id).values({

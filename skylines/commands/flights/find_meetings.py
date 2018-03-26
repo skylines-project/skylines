@@ -1,3 +1,5 @@
+from __future__ import print_function
+
 from flask_script import Command, Option
 from flask import current_app
 from skylines.database import db
@@ -35,7 +37,7 @@ class FindMeetings(Command):
         self.incremental(lambda f: self.do(f, async=async), q)
 
     def do(self, flight, async):
-        print flight.id
+        print(flight.id)
 
         if async:
             tasks.find_meetings.delay(flight.id)
@@ -52,7 +54,7 @@ class FindMeetings(Command):
             else:
                 n_failed += 1
         if n_success > 0:
-            print "commit"
+            print("commit")
             db.session.commit()
         return n_success, n_failed
 

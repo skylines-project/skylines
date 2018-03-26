@@ -1,3 +1,5 @@
+from __future__ import print_function
+
 import sys
 
 from flask_script import Manager
@@ -24,7 +26,7 @@ from config import to_envvar
 
 def _create_app(config):
     if not to_envvar(config):
-        print 'Config file "{}" not found.'.format(config)
+        print('Config file "{}" not found.'.format(config))
         sys.exit(1)
 
     app = create_app()

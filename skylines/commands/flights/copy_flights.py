@@ -1,3 +1,5 @@
+from __future__ import print_function
+
 from flask_script import Command, Option
 
 import os
@@ -18,7 +20,7 @@ class CopyFlights(Command):
 
     def run(self, dest, **kwargs):
         if not os.path.exists(dest):
-            print "Creating destination directory: " + dest
+            print("Creating destination directory: " + dest)
             os.makedirs(dest)
 
         query = db.session.query(Flight) \
@@ -32,7 +34,7 @@ class CopyFlights(Command):
             quit()
 
         for flight in query:
-            print "Flight: " + str(flight.id) + " " + flight.igc_file.filename
+            print("Flight: " + str(flight.id) + " " + flight.igc_file.filename)
             src = os.path.join(
                 current_app.config['SKYLINES_FILES_PATH'],
                 flight.igc_file.filename

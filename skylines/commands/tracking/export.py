@@ -1,3 +1,5 @@
+from __future__ import print_function
+
 from flask_script import Command, Option
 
 import hashlib
@@ -25,11 +27,11 @@ class Export(Command):
     def run(self, user):
         self.user = User.get(user)
 
-        print 'Generating logger id...',
+        print('Generating logger id...',)
         m = hashlib.md5()
         m.update(str(user))
         self.logger_id = base36.encode(int(m.hexdigest(), 16))[0:3]
-        print self.logger_id
+        print(self.logger_id)
 
         self.export_sessions(user)
 
@@ -62,7 +64,7 @@ class Export(Command):
             # start a new session
             if fix and (is_start or is_new_session):
                 filename = self.get_filename(fix)
-                print 'Writing %s...' % filename
+                print('Writing %s...' % filename)
 
                 fp = open(filename, 'w')
                 writer = aerofiles.igc.Writer(fp)

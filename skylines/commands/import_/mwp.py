@@ -1,3 +1,5 @@
+from __future__ import print_function
+
 from flask_script import Command, Option
 
 import math
@@ -99,7 +101,7 @@ class MWP(Command):
             db.session.add(wave)
 
             if i % 100 == 0:
-                print "inserting geometry " + str(i)
+                print("inserting geometry " + str(i))
 
             j += 1
 
@@ -107,7 +109,7 @@ class MWP(Command):
         mwp_ext_file.Destroy()
         db.session.commit()
 
-        print "added " + str(j) + " waves"
+        print("added " + str(j) + " waves")
 
     def ellipse(self, ra, rb, ang, x0, y0, Nb=50):
         """
