@@ -1,3 +1,5 @@
+from __future__ import print_function
+
 import sys
 import struct
 from datetime import datetime, time, timedelta
@@ -42,7 +44,7 @@ USER_FLAG_NOT_FOUND = 0x1
 
 
 def log(message):
-    print message
+    print(message)
     sys.stdout.flush()
 
 

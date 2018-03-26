@@ -1,3 +1,5 @@
+from __future__ import print_function
+
 from flask_script import Command, Option
 from skylines.database import db
 from skylines.model import TrackingFix
@@ -14,4 +16,4 @@ class Clear(Command):
         result = TrackingFix.query(pilot_id=user).delete()
         db.session.commit()
 
-        print '%d live tracks cleared.' % result
+        print('%d live tracks cleared.' % result)

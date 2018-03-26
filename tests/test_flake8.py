@@ -1,3 +1,5 @@
+from __future__ import print_function
+
 from subprocess import CalledProcessError, check_output as run
 
 FLAKE8_COMMAND = 'flake8'
@@ -17,7 +19,7 @@ def test_flake8(folder):
     try:
         run([FLAKE8_COMMAND, folder])
     except CalledProcessError, e:
-        print e.output
+        print(e.output)
         raise AssertionError('flake8 has found errors.')
     except OSError:
         raise OSError('Failed to run flake8. Please check that you have '

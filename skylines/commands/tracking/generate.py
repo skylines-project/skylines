@@ -1,3 +1,5 @@
+from __future__ import print_function
+
 from flask_script import Command, Option
 
 import sys
@@ -20,7 +22,7 @@ class Generate(Command):
     def run(self, user_id):
         user = User.get(user_id)
         if not user:
-            print 'User with id "{}" not found.'.format(user_id)
+            print('User with id "{}" not found.'.format(user_id))
             sys.exit(1)
 
         i = randint(0, 100)
@@ -43,7 +45,7 @@ class Generate(Command):
             db.session.add(fix)
             db.session.commit()
 
-            print '.',
+            print('.', end='')
             sys.stdout.flush()
 
             sleep(1)

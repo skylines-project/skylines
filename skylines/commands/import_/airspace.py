@@ -1,3 +1,5 @@
+from __future__ import print_function
+
 from flask_script import Command, Option
 
 import re
@@ -124,7 +126,7 @@ class AirspaceCommand(Command):
                     url = match.group(3).strip()
 
                     if debug:
-                        print "Found {} with filetype {} and URL {}".format(country_code, file_type, url)
+                        print("Found {} with filetype {} and URL {}".format(country_code, file_type, url))
 
                     if country and country_code.lower() not in country:
                         continue
@@ -161,7 +163,7 @@ class AirspaceCommand(Command):
             country_code + '.' + file_type)
 
         if url.startswith('http://') or url.startswith('https://'):
-            print "\nDownloading " + url
+            print("\nDownloading " + url)
             filename = self.download_file(filename, url)
         elif url.startswith('file://'):
             filename = url[7:]
@@ -180,7 +182,7 @@ class AirspaceCommand(Command):
     def import_sua(self, filename, country_code, debug):
         from osgeo import ogr
 
-        print "reading " + filename
+        print("reading " + filename)
         country_blacklist = self.blacklist.get(country_code, [])
         temporary_file = os.path.join(
             current_app.config['SKYLINES_TEMPORARY_DIR'],
@@ -194,12 +196,12 @@ class AirspaceCommand(Command):
                     out_file.write(line.replace('# CLASS', 'CLASS'))
 
         if debug:
-            print "Trying to open " + temporary_file
+            print("Trying to open " + temporary_file)
 
         airspace_file = ogr.Open(temporary_file)
         if not airspace_file:
             if debug:
-                print "OGR doesn't think that's a airspace file..."
+                print("OGR doesn't think that's a airspace file...")
             return
 
         layer = airspace_file.GetLayerByIndex(0)
@@ -217,11 +219,11 @@ class AirspaceCommand(Command):
             name = unicode(feature.GetFieldAsString('title'), 'latin1').strip()
 
             if name in country_blacklist:
-                print name + " is in blacklist"
+                print(name + " is in blacklist")
                 continue
 
             if debug:
-                print "Adding " + name
+                print("Adding " + name)
 
             airspace_class = feature.GetFieldAsString('class').strip()
             airspace_type = feature.GetFieldAsString('type').strip()
@@ -231,7 +233,7 @@ class AirspaceCommand(Command):
             elif airspace_class:
                 airspace_class = self.parse_airspace_class_tnp(airspace_class)
             else:
-                print name + " has neither class nor type"
+                print(name + " has neither class nor type")
                 continue
 
             added = self.add_airspace(
@@ -247,7 +249,7 @@ class AirspaceCommand(Command):
                 continue
 
             if i % 100 == 0:
-                print "inserting geometry " + str(i)
+                print("inserting geometry " + str(i))
 
             j += 1
 
@@ -256,18 +258,18 @@ class AirspaceCommand(Command):
 
         os.remove(temporary_file)
 
-        print "added " + str(j) + " features for country " + country_code
+        print("added " + str(j) + " features for country " + country_code)
 
     def import_openair(self, filename, country_code, debug):
         from osgeo import ogr
 
-        print "reading " + filename
+        print("reading " + filename)
         country_blacklist = self.blacklist.get(country_code, [])
 
         airspace_file = ogr.Open(filename)
         if not airspace_file:
             if debug:
-                print "OGR doesn't think that's a airspace file..."
+                print("OGR doesn't think that's a airspace file...")
             return
 
         layer = airspace_file.GetLayerByIndex(0)
@@ -285,18 +287,18 @@ class AirspaceCommand(Command):
             name = unicode(feature.GetFieldAsString('name'), 'latin1').strip()
 
             if name in country_blacklist:
-                print name + " is in blacklist"
+                print(name + " is in blacklist")
                 continue
 
             if debug:
-                print "Adding " + name
+                print("Adding " + name)
 
             airspace_class = feature.GetFieldAsString('class').strip()
 
             if airspace_class:
                 airspace_class = self.parse_airspace_class_openair(airspace_class)
             else:
-                print name + " has no class"
+                print(name + " has no class")
                 continue
 
             added = self.add_airspace(
@@ -312,17 +314,17 @@ class AirspaceCommand(Command):
                 continue
 
             if i % 100 == 0:
-                print "inserting geometry " + str(i)
+                print("inserting geometry " + str(i))
 
             j += 1
 
         airspace_file.Destroy()
         db.session.commit()
 
-        print "added " + str(j) + " features for country " + country_code
+        print("added " + str(j) + " features for country " + country_code)
 
     def remove_country(self, country_code):
-        print "removing all entries for country_code " + country_code
+        print("removing all entries for country_code " + country_code)
         query = db.session.query(Airspace) \
             .filter(Airspace.country_code == country_code)
         query.delete(synchronize_session=False)
@@ -382,14 +384,14 @@ class AirspaceCommand(Command):
         try:
             geom = loads(geom_str)
         except ReadingError:
-            print name + "(" + airspace_class + ") is not a polygon (maybe not enough points?)"
+            print(name + "(" + airspace_class + ") is not a polygon (maybe not enough points?)")
             return False
 
         # orient polygon clockwise
         geom = polygon.orient(geom, sign=-1)
 
         if not airspace_class:
-            print name + " has no airspace class"
+            print(name + " has no airspace class")
             return False
 
         base = self.normalise_height(base, name)
@@ -398,7 +400,7 @@ class AirspaceCommand(Command):
         flightlevel_re = re.compile(r'^FL (\d+)$')
         match = flightlevel_re.match(base)
         if match and int(match.group(1)) >= 200:
-            print name + " has it's base above FL 200 and is therefore disregarded"
+            print(name + " has it's base above FL 200 and is therefore disregarded")
             return False
 
         airspace = Airspace()
@@ -410,7 +412,7 @@ class AirspaceCommand(Command):
 
         # Check geometry type, disregard everything except POLYGON
         if geom.geom_type != 'Polygon':
-            print name + " is not a polygon (it's a " + geom.geom_type + ")"
+            print(name + " is not a polygon (it's a " + geom.geom_type + ")")
             return False
 
         wkb = from_shape(geom, srid=4326)
@@ -420,8 +422,8 @@ class AirspaceCommand(Command):
         valid_query = db.session.query(func.ST_SetSRID(valid_dump, 4326)).order_by(func.ST_Area(valid_dump).desc()).first()
 
         if not valid_query:
-            print 'Error importing ' + name
-            print 'Could not validate geometry'
+            print('Error importing ' + name)
+            print('Could not validate geometry')
             return False
         else:
             wkb = valid_query[0]
@@ -429,7 +431,7 @@ class AirspaceCommand(Command):
         geom_type = db.session.query(func.ST_GeometryType(wkb)).first()[0]
 
         if geom_type != 'ST_Polygon':
-            print name + " got some errors makeing it valid..."
+            print(name + " got some errors makeing it valid...")
             return False
 
         tolerance = 0.0000001
@@ -489,5 +491,5 @@ class AirspaceCommand(Command):
         if match:
             return 'NOTAM'
 
-        print name + " has unknown height format: '" + height + "'"
+        print(name + " has unknown height format: '" + height + "'")
         return height

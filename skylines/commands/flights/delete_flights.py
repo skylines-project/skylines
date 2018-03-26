@@ -1,3 +1,5 @@
+from __future__ import print_function
+
 from flask_script import Command, Option
 
 from skylines.database import db
@@ -28,7 +30,7 @@ class DeleteFlights(Command):
             quit()
 
         for flight in query:
-            print "Flight: " + str(flight.id) + " " + flight.igc_file.filename
+            print("Flight: " + str(flight.id) + " " + flight.igc_file.filename)
 
             if confirm:
                 files.delete_file(flight.igc_file.filename)

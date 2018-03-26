@@ -1,3 +1,5 @@
+from __future__ import print_function
+
 from flask_script import Command, Option
 
 from flask import current_app
@@ -34,7 +36,7 @@ class Analyze(Command):
         self.incremental(self.do, q)
 
     def do(self, flight):
-        print flight.id
+        print(flight.id)
         return analyse_flight(flight)
 
     def apply_and_commit(self, func, q):
@@ -46,7 +48,7 @@ class Analyze(Command):
                 n_failed += 1
 
         if n_success > 0:
-            print "commit"
+            print("commit")
             db.session.commit()
 
         return n_success, n_failed
@@ -91,5 +93,5 @@ class AnalyzeDelayed(Command):
             self.do(flight.id)
 
     def do(self, flight_id):
-        print flight_id
+        print(flight_id)
         tasks.analyse_flight.delay(flight_id)

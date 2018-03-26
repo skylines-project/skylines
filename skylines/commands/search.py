@@ -1,3 +1,5 @@
+from __future__ import print_function
+
 from flask_script import Command, Option
 
 from skylines.model import User, Club, Airport
@@ -18,7 +20,7 @@ class Search(Command):
             model = globals()[u.model]
             instance = model.get(u.id)
 
-            print u.weight, instance, u.details
+            print(u.weight, instance, u.details)
 
     def search_query(self, tokens):
         tokens = escape_tokens(tokens)

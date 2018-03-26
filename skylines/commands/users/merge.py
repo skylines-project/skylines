@@ -1,3 +1,5 @@
+from __future__ import print_function
+
 from flask_script import Command, Option
 
 import sys
@@ -17,14 +19,14 @@ class Merge(Command):
     def run(self, new_id, old_id):
         new = db.session.query(User).get(new_id)
         if not new:
-            print >>sys.stderr, "No such user: %d" % new_id
+            print("No such user: %d" % new_id, file=sys.stderr)
 
         old = db.session.query(User).get(old_id)
         if not old:
-            print >>sys.stderr, "No such user: %d" % old_id
+            print("No such user: %d" % old_id, file=sys.stderr)
 
         if old.club != new.club:
-            print >>sys.stderr, "Different club;", old.club, new.club
+            print("Different club;", old.club, new.club, file=sys.stderr)
             sys.exit(1)
 
         db.session.query(Club).filter_by(owner_id=old_id).update({'owner_id': new_id})

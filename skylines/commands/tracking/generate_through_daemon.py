@@ -1,3 +1,5 @@
+from __future__ import print_function
+
 from flask_script import Command, Option
 
 import sys
@@ -26,7 +28,7 @@ class GenerateThroughDaemon(Command):
 
         user = User.get(user_id)
         if not user:
-            print 'User with id "{}" not found.'.format(user_id)
+            print('User with id "{}" not found.'.format(user_id))
             sys.exit(1)
 
         start_time = datetime.utcnow()
@@ -71,7 +73,7 @@ class GenerateThroughDaemon(Command):
             data = set_crc(data)
             sock.sendto(data, self.ADDRESS)
 
-            print '.',
+            print('.', end='')
             sys.stdout.flush()
 
             sleep(1)

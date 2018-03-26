@@ -1,3 +1,5 @@
+from __future__ import print_function
+
 from flask_script import Command, Option
 
 from skylines.database import db
@@ -32,7 +34,7 @@ class Welt2000(Command):
             i += 1
             if i % 100 == 0:
                 db.session.flush()
-                print str(i) + ": " + airport_w2k.country_code + " " + airport_w2k.name
+                print(str(i) + ": " + airport_w2k.country_code + " " + airport_w2k.name)
 
             # try to find this airport in the database
             near_airport = Airport.query() \
@@ -64,9 +66,9 @@ class Welt2000(Command):
             .filter(or_(Airport.valid_until == None, Airport.valid_until > self.current_date))
 
         for airport in invalid_airports:
-            print "{}  {}  {}" \
-                .format(airport.country_code, airport.name, airport.icao)
-            print "  invalidated"
+            print("{}  {}  {}"
+                  .format(airport.country_code, airport.name, airport.icao))
+            print("  invalidated")
 
             airport.valid_until = self.current_date
 
@@ -104,15 +106,15 @@ class Welt2000(Command):
         distance = airport.distance(airport_w2k)
 
         if changed or distance > 0.1:
-            print "{}  {}  {}" \
-                .format(airport.country_code, airport.name, airport.icao)
+            print("{}  {}  {}"
+                  .format(airport.country_code, airport.name, airport.icao))
 
             if distance > 0.1:
-                print "  moved by {}m".format(distance)
+                print("  moved by {}m".format(distance))
 
             for item in changed:
-                print "  {} from {} to {}" \
-                    .format(item, row2dict(airport)[item], airport_w2k.__dict__[item])
+                print("  {} from {} to {}"
+                      .format(item, row2dict(airport)[item], airport_w2k.__dict__[item]))
 
 
 class DictDiffer(object):
