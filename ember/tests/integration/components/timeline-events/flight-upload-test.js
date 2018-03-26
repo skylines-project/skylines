@@ -10,6 +10,8 @@ describe('Integration | Component | timeline events/flight upload', function() {
   setupComponentTest('timeline-events/flight-upload', { integration: true });
 
   beforeEach(function() {
+    this.container.lookup('router:main').setupRouter();
+
     this.register('service:account', Service.extend({
       user: null,
       club: null,
