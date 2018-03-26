@@ -30,7 +30,7 @@ setup(
         'crc16==0.1.1',
         'pytz',
         'celery[redis]>=3.1,<3.2',
-        'xcsoar==0.5',
+        'xcsoar==0.6.1',
         'aerofiles==0.1.1',
         'enum34==1.1.6',
         'pyproj==1.9.3',
