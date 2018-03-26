@@ -10,6 +10,8 @@ describe('Integration | Component | timeline events/follower', function() {
   setupComponentTest('timeline-events/follower', { integration: true });
 
   beforeEach(function() {
+    this.container.lookup('router:main').setupRouter();
+
     this.register('service:account', Service.extend({
       user: null,
       club: null,
