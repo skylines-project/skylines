@@ -6,14 +6,10 @@ import { setupComponentTest } from 'ember-mocha';
 import hbs from 'htmlbars-inline-precompile';
 import { findAll } from 'ember-native-dom-helpers';
 
-import instanceInitializer from 'skylines/instance-initializers/ember-intl';
-
 describe('Integration | Component | flight list nav', function() {
   setupComponentTest('flight-list-nav', { integration: true });
 
   beforeEach(function() {
-    instanceInitializer.initialize(this);
-
     this.register('service:account', Service.extend({
       user: null,
       club: null,

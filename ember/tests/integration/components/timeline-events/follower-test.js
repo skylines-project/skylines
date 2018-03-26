@@ -6,14 +6,10 @@ import { setupComponentTest } from 'ember-mocha';
 import hbs from 'htmlbars-inline-precompile';
 import { find } from 'ember-native-dom-helpers';
 
-import instanceInitializer from 'skylines/instance-initializers/ember-intl';
-
 describe('Integration | Component | timeline events/follower', function() {
   setupComponentTest('timeline-events/follower', { integration: true });
 
   beforeEach(function() {
-    instanceInitializer.initialize(this);
-
     this.register('service:account', Service.extend({
       user: null,
       club: null,
