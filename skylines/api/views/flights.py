@@ -375,7 +375,7 @@ def read(flight_id):
     if 'extended' not in request.args:
         return jsonify(flight=flight_json)
 
-    near_flights = FlightMeetings.get_meetings(flight).values()
+    near_flights = list(FlightMeetings.get_meetings(flight).values())
     near_flights = NearFlightSchema().dump(near_flights, many=True).data
 
     comments = FlightCommentSchema().dump(flight.comments, many=True).data

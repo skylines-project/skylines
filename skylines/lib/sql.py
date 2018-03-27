@@ -71,7 +71,7 @@ def query_to_sql(query):
     enc = dialect.encoding
     params = {}
 
-    for k, v in statement.params.iteritems():
+    for k, v in statement.params.items():
         if isinstance(v, unicode):
             v = v.encode(enc)
         params[k] = sqlescape(v)

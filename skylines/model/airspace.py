@@ -113,4 +113,4 @@ def get_airspace_infringements(flight_path, qnh=None):
     infringements = xcs_airspace.findIntrusions(xcs_flight)
 
     # Replace airspace id string with ints in returned infringements
-    return dict((int(k), v) for k, v in infringements.items())
+    return dict((int(k), v) for k, v in list(infringements.items()))

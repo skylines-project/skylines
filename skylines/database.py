@@ -19,7 +19,7 @@ def exists(cls, **kw):
 
 
 def apply_kwargs(self, kwargs):
-    for key, value in kwargs.iteritems():
+    for key, value in kwargs.items():
         setattr(self, key, value)
 
     return self

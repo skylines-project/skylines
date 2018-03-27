@@ -261,7 +261,7 @@ def index_post():
         cache.set('upload_airspace_flight_path_' + cache_key, fp, timeout=15 * 60)
 
         airspace = db.session.query(Airspace) \
-                             .filter(Airspace.id.in_(infringements.keys())) \
+                             .filter(Airspace.id.in_(list(infringements.keys()))) \
                              .all()
 
         results.append(UploadResult(name, flight, UploadStatus.SUCCESS, str(prefix), trace, airspace, cache_key))
@@ -339,7 +339,7 @@ def verify():
 
         old_pilot = flight.pilot_id
 
-        for key, value in d.iteritems():
+        for key, value in d.items():
             setattr(flight, key, value)
 
         if not (flight.takeoff_time <= flight.scoring_start_time <= flight.scoring_end_time <= flight.landing_time):
@@ -353,7 +353,7 @@ def verify():
 
     db.session.commit()
 
-    for flight_id in flights.iterkeys():
+    for flight_id in flights.keys():
         try:
             tasks.analyse_flight.delay(flight_id)
             tasks.find_meetings.delay(flight_id)
