@@ -32,7 +32,7 @@ def _filter_query(query, args):
 
 @notifications_blueprint.route('/notifications', strict_slashes=False)
 @oauth.required()
-def list():
+def _list():
     query = Notification.query(recipient_id=request.user_id) \
         .join('event') \
         .options(contains_eager('event')) \

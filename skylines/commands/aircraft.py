@@ -27,7 +27,7 @@ def remove_model(index):
 
 
 @manager.command
-def list():
+def _list():
     """ Shows the list of aircrafts"""
     aircraftModels = AircraftModel.query().all()
     return aircraftModels

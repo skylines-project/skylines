@@ -12,7 +12,7 @@ wave_list_schema = WaveSchema()
 
 
 @mapitems_blueprint.route('/mapitems', strict_slashes=False)
-def list():
+def _list():
     location = parse_location(request.args)
 
     airspaces = airspace_list_schema.dump(Airspace.by_location(location).all(), many=True).data

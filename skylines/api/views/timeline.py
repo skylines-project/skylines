@@ -11,7 +11,7 @@ timeline_blueprint = Blueprint('timeline', 'skylines')
 
 
 @timeline_blueprint.route('/timeline')
-def list():
+def _list():
     query = Event.query() \
         .options(subqueryload('actor')) \
         .options(subqueryload('user')) \
