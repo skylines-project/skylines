@@ -6,7 +6,7 @@ from skylines.database import db
 from skylines.model import Flight
 from skylines.worker import tasks
 
-from selector import selector_options, select
+from .selector import selector_options, select
 
 
 class FindMeetings(Command):

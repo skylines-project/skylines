@@ -6,7 +6,7 @@ from skylines.database import db
 from skylines.model import Flight, IGCFile
 from skylines.lib import files
 
-from selector import selector_options, select
+from .selector import selector_options, select
 
 
 class DeleteFlights(Command):
