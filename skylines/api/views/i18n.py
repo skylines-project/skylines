@@ -9,7 +9,7 @@ i18n_blueprint = Blueprint('i18n', 'skylines')
 @i18n_blueprint.route('/locale')
 def negotiate_locale():
     available = request.args.get('available', '').split(',')
-    available = filter(lambda it: it != '', available)
+    available = [it for it in available if it != '']
 
     if len(available) == 0:
         return jsonify(error='invalid-request'), 400
