@@ -1,19 +1,20 @@
-import { describe, it, beforeEach } from 'mocha';
-import { expect } from 'chai';
-import { visit, currentURL } from 'ember-native-dom-helpers';
+import { module, test } from 'qunit';
+import { setupApplicationTest } from 'ember-qunit';
+import { visit, currentURL } from '@ember/test-helpers';
 
-import setupAcceptanceTest from 'skylines/tests/helpers/setup-acceptance-test';
+import { setupPretender } from 'skylines/tests/helpers/setup-pretender';
 
-describe('Acceptance | flight upload', function() {
-  setupAcceptanceTest(this);
+module('Acceptance | flight upload', function(hooks) {
+  setupApplicationTest(hooks);
+  setupPretender(hooks);
 
-  describe('visiting /flights/upload (unauthenticated)', function() {
-    beforeEach(async function() {
+  module('visiting /flights/upload (unauthenticated)', function(hooks) {
+    hooks.beforeEach(async function() {
       await visit('/flights/upload');
     });
 
-    it('redirects to the login page', function() {
-      expect(currentURL()).to.equal('/login');
+    test('redirects to the login page', function(assert) {
+      assert.equal(currentURL(), '/login');
     });
   });
 });

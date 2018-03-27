@@ -1,20 +1,19 @@
-import { describe, it, beforeEach } from 'mocha';
-import { expect } from 'chai';
-import { visit, currentURL, find } from 'ember-native-dom-helpers';
+import { module, test } from 'qunit';
+import { setupApplicationTest } from 'ember-qunit';
+import { visit, currentURL } from '@ember/test-helpers';
 
-import setupAcceptanceTest from 'skylines/tests/helpers/setup-acceptance-test';
+import { setupPretender } from 'skylines/tests/helpers/setup-pretender';
 
-describe('Acceptance | index', function() {
-  setupAcceptanceTest(this);
+module('Acceptance | index', function(hooks) {
+  setupApplicationTest(hooks);
+  setupPretender(hooks);
 
-  describe('visiting /', function() {
-    beforeEach(async function() {
-      await visit('/');
-      expect(currentURL()).to.equal('/');
-    });
+  hooks.beforeEach(async function(assert) {
+    await visit('/');
+    assert.equal(currentURL(), '/');
+  });
 
-    it('shows a welcome message', function() {
-      expect(find('[data-test-welcome-message]')).to.exist;
-    });
+  test('shows a welcome message', function(assert) {
+    assert.dom('[data-test-welcome-message]').exists();
   });
 });

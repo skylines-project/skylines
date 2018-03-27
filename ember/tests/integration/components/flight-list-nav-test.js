@@ -1,189 +1,184 @@
 import Service from '@ember/service';
 
-import { expect } from 'chai';
-import { describe, it, beforeEach } from 'mocha';
-import { setupComponentTest } from 'ember-mocha';
+import { module, test } from 'qunit';
+import { setupRenderingTest } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
-import { findAll } from 'ember-native-dom-helpers';
+import { render, findAll } from '@ember/test-helpers';
 
-describe('Integration | Component | flight list nav', function() {
-  setupComponentTest('flight-list-nav', { integration: true });
+module('Integration | Component | flight list nav', function(hooks) {
+  setupRenderingTest(hooks);
 
-  beforeEach(function() {
-    this.register('service:account', Service.extend({
+  hooks.beforeEach(async function() {
+    this.owner.register('service:account', Service.extend({
       user: null,
       club: null,
     }));
 
-    this.register('service:pinned-flights', Service.extend({
+    this.owner.register('service:pinned-flights', Service.extend({
       // eslint-disable-next-line ember/avoid-leaking-state-in-components
       pinned: [],
     }));
 
-    this.inject.service('intl', { as: 'intl' });
-    this.inject.service('account', { as: 'account' });
-    this.inject.service('pinned-flights', { as: 'pinned' });
-
-    return this.get('intl').loadAndSetLocale('en');
+    await this.owner.lookup('service:intl').loadAndSetLocale('en');
   });
 
-  it('renders default view', function() {
-    this.render(hbs`{{flight-list-nav date=date airport=airport club=club pilot=pilot}}`);
+  test('renders default view', async function(assert) {
+    await render(hbs`{{flight-list-nav date=date airport=airport club=club pilot=pilot}}`);
 
     let elements = findAll('li');
-    expect(elements).to.have.length(2);
-    expect(elements[0].textContent.trim()).to.equal('All');
-    expect(elements[1].textContent.trim()).to.equal('Latest');
+    assert.equal(elements.length, 2);
+    assert.dom(elements[0]).hasText('All');
+    assert.dom(elements[1]).hasText('Latest  ');
   });
 
-  it('shows date', function() {
-    this.render(hbs`{{flight-list-nav date="2016-06-24"}}`);
+  test('shows date', async function(assert) {
+    await render(hbs`{{flight-list-nav date="2016-06-24"}}`);
 
     let elements = findAll('li');
-    expect(elements).to.have.length(4);
-    expect(elements[0].textContent.trim()).to.equal('All');
-    expect(elements[1].textContent.trim()).to.equal('');
-    expect(elements[2].textContent.trim()).to.match(/0?6\/24\/2016/);
-    expect(elements[3].textContent.trim()).to.equal('');
+    assert.equal(elements.length, 4);
+    assert.dom(elements[0]).hasText('All');
+    assert.dom(elements[1]).hasText('  ');
+    assert.dom(elements[2]).hasText(/0?6\/24\/2016/);
+    assert.dom(elements[3]).hasText('  ');
   });
 
-  it('shows date in "latest" mode', function() {
-    this.render(hbs`{{flight-list-nav date="2016-06-24" latest=true}}`);
+  test('shows date in "latest" mode', async function(assert) {
+    await render(hbs`{{flight-list-nav date="2016-06-24" latest=true}}`);
 
     let elements = findAll('li');
-    expect(elements).to.have.length(4);
-    expect(elements[0].textContent.trim()).to.equal('All');
-    expect(elements[1].textContent.trim()).to.equal('');
-    expect(elements[2].textContent.trim()).to.match(/0?6\/24\/2016/);
-    expect(elements[3].textContent.trim()).to.equal('');
+    assert.equal(elements.length, 4);
+    assert.dom(elements[0]).hasText('All');
+    assert.dom(elements[1]).hasText('  ');
+    assert.dom(elements[2]).hasText(/0?6\/24\/2016/);
+    assert.dom(elements[3]).hasText('  ');
   });
 
-  it('shows selected airport', function() {
+  test('shows selected airport', async function(assert) {
     this.set('airport', { id: 123, name: 'Meiersberg' });
 
-    this.render(hbs`{{flight-list-nav date=date airport=airport club=club pilot=pilot}}`);
+    await render(hbs`{{flight-list-nav date=date airport=airport club=club pilot=pilot}}`);
 
     let elements = findAll('li');
-    expect(elements).to.have.length(3);
-    expect(elements[0].textContent.trim()).to.equal('All');
-    expect(elements[1].textContent.trim()).to.equal('Latest');
-    expect(elements[2].textContent.trim()).to.equal('Meiersberg');
+    assert.equal(elements.length, 3);
+    assert.dom(elements[0]).hasText('All');
+    assert.dom(elements[1]).hasText('Latest  ');
+    assert.dom(elements[2]).hasText('Meiersberg');
   });
 
-  it('shows selected club', function() {
+  test('shows selected club', async function(assert) {
     this.set('club', { id: 3, name: 'SFN' });
 
-    this.render(hbs`{{flight-list-nav date=date airport=airport club=club pilot=pilot}}`);
+    await render(hbs`{{flight-list-nav date=date airport=airport club=club pilot=pilot}}`);
 
     let elements = findAll('li');
-    expect(elements).to.have.length(3);
-    expect(elements[0].textContent.trim()).to.equal('All');
-    expect(elements[1].textContent.trim()).to.equal('Latest');
-    expect(elements[2].textContent.trim()).to.equal('SFN');
+    assert.equal(elements.length, 3);
+    assert.dom(elements[0]).hasText('All');
+    assert.dom(elements[1]).hasText('Latest  ');
+    assert.dom(elements[2]).hasText('SFN');
   });
 
-  it('shows own club', function() {
-    this.set('account.club', { id: 42, name: 'SFZ Aachen' });
+  test('shows own club', async function(assert) {
+    this.owner.lookup('service:account').set('club', { id: 42, name: 'SFZ Aachen' });
 
-    this.render(hbs`{{flight-list-nav date=date airport=airport club=club pilot=pilot}}`);
+    await render(hbs`{{flight-list-nav date=date airport=airport club=club pilot=pilot}}`);
 
     let elements = findAll('li');
-    expect(elements).to.have.length(3);
-    expect(elements[0].textContent.trim()).to.equal('All');
-    expect(elements[1].textContent.trim()).to.equal('Latest');
-    expect(elements[2].textContent.trim()).to.equal('SFZ Aachen');
+    assert.equal(elements.length, 3);
+    assert.dom(elements[0]).hasText('All');
+    assert.dom(elements[1]).hasText('Latest  ');
+    assert.dom(elements[2]).hasText('SFZ Aachen');
   });
 
-  it('shows selected club and own club', function() {
+  test('shows selected club and own club', async function(assert) {
     this.set('club', { id: 3, name: 'SFN' });
-    this.set('account.club', { id: 42, name: 'SFZ Aachen' });
+    this.owner.lookup('service:account').set('club', { id: 42, name: 'SFZ Aachen' });
 
-    this.render(hbs`{{flight-list-nav date=date airport=airport club=club pilot=pilot}}`);
+    await render(hbs`{{flight-list-nav date=date airport=airport club=club pilot=pilot}}`);
 
     let elements = findAll('li');
-    expect(elements).to.have.length(4);
-    expect(elements[0].textContent.trim()).to.equal('All');
-    expect(elements[1].textContent.trim()).to.equal('Latest');
-    expect(elements[2].textContent.trim()).to.equal('SFN');
-    expect(elements[3].textContent.trim()).to.equal('SFZ Aachen');
+    assert.equal(elements.length, 4);
+    assert.dom(elements[0]).hasText('All');
+    assert.dom(elements[1]).hasText('Latest  ');
+    assert.dom(elements[2]).hasText('SFN');
+    assert.dom(elements[3]).hasText('SFZ Aachen');
   });
 
-  it('shows club just once if selected club equals own club', function() {
+  test('shows club just once if selected club equals own club', async function(assert) {
     this.set('club', { id: 42, name: 'SFZ Aachen' });
-    this.set('account.club', { id: 42, name: 'SFZ Aachen' });
+    this.owner.lookup('service:account').set('club', { id: 42, name: 'SFZ Aachen' });
 
-    this.render(hbs`{{flight-list-nav date=date airport=airport club=club pilot=pilot}}`);
+    await render(hbs`{{flight-list-nav date=date airport=airport club=club pilot=pilot}}`);
 
     let elements = findAll('li');
-    expect(elements).to.have.length(3);
-    expect(elements[0].textContent.trim()).to.equal('All');
-    expect(elements[1].textContent.trim()).to.equal('Latest');
-    expect(elements[2].textContent.trim()).to.equal('SFZ Aachen');
+    assert.equal(elements.length, 3);
+    assert.dom(elements[0]).hasText('All');
+    assert.dom(elements[1]).hasText('Latest  ');
+    assert.dom(elements[2]).hasText('SFZ Aachen');
   });
 
-  it('shows selected pilot', function() {
+  test('shows selected pilot', async function(assert) {
     this.set('pilot', { id: 5, name: 'foobar' });
 
-    this.render(hbs`{{flight-list-nav date=date airport=airport club=club pilot=pilot}}`);
+    await render(hbs`{{flight-list-nav date=date airport=airport club=club pilot=pilot}}`);
 
     let elements = findAll('li');
-    expect(elements).to.have.length(3);
-    expect(elements[0].textContent.trim()).to.equal('All');
-    expect(elements[1].textContent.trim()).to.equal('Latest');
-    expect(elements[2].textContent.trim()).to.equal('foobar');
+    assert.equal(elements.length, 3);
+    assert.dom(elements[0]).hasText('All');
+    assert.dom(elements[1]).hasText('Latest  ');
+    assert.dom(elements[2]).hasText('foobar');
   });
 
-  it('shows own user (and unassigned flights link)', function() {
-    this.set('account.user', { id: 42, name: 'john doe' });
+  test('shows own user (and unassigned flights link)', async function(assert) {
+    this.owner.lookup('service:account').set('user', { id: 42, name: 'john doe' });
 
-    this.render(hbs`{{flight-list-nav date=date airport=airport club=club pilot=pilot}}`);
+    await render(hbs`{{flight-list-nav date=date airport=airport club=club pilot=pilot}}`);
 
     let elements = findAll('li');
-    expect(elements).to.have.length(4);
-    expect(elements[0].textContent.trim()).to.equal('All');
-    expect(elements[1].textContent.trim()).to.equal('Latest');
-    expect(elements[2].textContent.trim()).to.equal('john doe');
-    expect(elements[3].textContent.trim()).to.equal('Unassigned');
+    assert.equal(elements.length, 4);
+    assert.dom(elements[0]).hasText('All');
+    assert.dom(elements[1]).hasText('Latest  ');
+    assert.dom(elements[2]).hasText('john doe');
+    assert.dom(elements[3]).hasText('Unassigned');
   });
 
-  it('shows selected pilot and own user', function() {
+  test('shows selected pilot and own user', async function(assert) {
     this.set('pilot', { id: 3, name: 'SFN' });
-    this.set('account.user', { id: 42, name: 'john doe' });
+    this.owner.lookup('service:account').set('user', { id: 42, name: 'john doe' });
 
-    this.render(hbs`{{flight-list-nav date=date airport=airport club=club pilot=pilot}}`);
+    await render(hbs`{{flight-list-nav date=date airport=airport club=club pilot=pilot}}`);
 
     let elements = findAll('li');
-    expect(elements).to.have.length(5);
-    expect(elements[0].textContent.trim()).to.equal('All');
-    expect(elements[1].textContent.trim()).to.equal('Latest');
-    expect(elements[2].textContent.trim()).to.equal('SFN');
-    expect(elements[3].textContent.trim()).to.equal('john doe');
-    expect(elements[4].textContent.trim()).to.equal('Unassigned');
+    assert.equal(elements.length, 5);
+    assert.dom(elements[0]).hasText('All');
+    assert.dom(elements[1]).hasText('Latest  ');
+    assert.dom(elements[2]).hasText('SFN');
+    assert.dom(elements[3]).hasText('john doe');
+    assert.dom(elements[4]).hasText('Unassigned');
   });
 
-  it('shows pilot just once if selected pilot equals own user', function() {
+  test('shows pilot just once if selected pilot equals own user', async function(assert) {
     this.set('pilot', { id: 42, name: 'john doe' });
-    this.set('account.user', { id: 42, name: 'john doe' });
+    this.owner.lookup('service:account').set('user', { id: 42, name: 'john doe' });
 
-    this.render(hbs`{{flight-list-nav date=date airport=airport club=club pilot=pilot}}`);
+    await render(hbs`{{flight-list-nav date=date airport=airport club=club pilot=pilot}}`);
 
     let elements = findAll('li');
-    expect(elements).to.have.length(4);
-    expect(elements[0].textContent.trim()).to.equal('All');
-    expect(elements[1].textContent.trim()).to.equal('Latest');
-    expect(elements[2].textContent.trim()).to.equal('john doe');
-    expect(elements[3].textContent.trim()).to.equal('Unassigned');
+    assert.equal(elements.length, 4);
+    assert.dom(elements[0]).hasText('All');
+    assert.dom(elements[1]).hasText('Latest  ');
+    assert.dom(elements[2]).hasText('john doe');
+    assert.dom(elements[3]).hasText('Unassigned');
   });
 
-  it('shows pinned flights if available', function() {
-    this.set('pinned.pinned', [1, 2, 3]);
+  test('shows pinned flights if available', async function(assert) {
+    this.owner.lookup('service:pinned-flights').set('pinned', [1, 2, 3]);
 
-    this.render(hbs`{{flight-list-nav date=date airport=airport club=club pilot=pilot}}`);
+    await render(hbs`{{flight-list-nav date=date airport=airport club=club pilot=pilot}}`);
 
     let elements = findAll('li');
-    expect(elements).to.have.length(3);
-    expect(elements[0].textContent.trim()).to.equal('All');
-    expect(elements[1].textContent.trim()).to.equal('Latest');
-    expect(elements[2].textContent.trim()).to.equal('Pinned');
+    assert.equal(elements.length, 3);
+    assert.dom(elements[0]).hasText('All');
+    assert.dom(elements[1]).hasText('Latest  ');
+    assert.dom(elements[2]).hasText('Pinned');
   });
 });

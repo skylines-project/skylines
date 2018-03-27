@@ -1,23 +1,22 @@
-import { expect } from 'chai';
-import { describe, it, beforeEach } from 'mocha';
-import { visit, currentURL, find } from 'ember-native-dom-helpers';
+import { module, test } from 'qunit';
+import { setupApplicationTest } from 'ember-qunit';
+import { visit, currentURL } from '@ember/test-helpers';
 
-import setupAcceptanceTest from 'skylines/tests/helpers/setup-acceptance-test';
+import { setupPretender } from 'skylines/tests/helpers/setup-pretender';
 
-describe('Acceptance | page-not-found', function() {
-  setupAcceptanceTest(this);
+module('Acceptance | page-not-found', function(hooks) {
+  setupApplicationTest(hooks);
+  setupPretender(hooks);
 
-  describe('visiting /foobar', function() {
-    beforeEach(async function() {
-      await visit('/foobar');
-    });
+  hooks.beforeEach(async function() {
+    await visit('/foobar');
+  });
 
-    it('will keep the URL at /foobar', function() {
-      expect(currentURL()).to.equal('/foobar');
-    });
+  test('will keep the URL at /foobar', function(assert) {
+    assert.equal(currentURL(), '/foobar');
+  });
 
-    it('will show "Page not found" error message', function() {
-      expect(find('.page-header')).to.contain.text('Page not found');
-    });
+  test('will show "Page not found" error message', function(assert) {
+    assert.dom('.page-header').containsText('Page not found');
   });
 });

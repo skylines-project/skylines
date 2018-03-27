@@ -3,8 +3,7 @@ module.exports = {
     ecmaVersion: 2017,
   },
   extends: [
-    'simplabs/configs/ember-mocha',
-    'simplabs/plugins/mocha',
+    'simplabs/configs/ember-qunit',
   ],
   env: {
     'embertest': null,
