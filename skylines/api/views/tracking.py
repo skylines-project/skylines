@@ -1,3 +1,5 @@
+import sys
+
 from datetime import datetime, timedelta
 from math import log
 
@@ -85,7 +87,10 @@ def read(user_ids):
 
     color_gen = color.generator()
     for pilot in pilots:
-        pilot.color = color_gen.next()
+        if sys.version_info[0] == 2:
+            pilot.color = color_gen.next()
+        else:
+            pilot.color = next(color_gen)
 
     traces = list(map(_get_flight_path, pilots))
     if not any(traces):
