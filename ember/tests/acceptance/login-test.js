@@ -1,23 +1,24 @@
-import { describe, it } from 'mocha';
-import { expect } from 'chai';
-import { visit, click, find } from 'ember-native-dom-helpers';
+import { module, test } from 'qunit';
+import { setupApplicationTest } from 'ember-qunit';
+import { visit, click } from '@ember/test-helpers';
 
-import setupAcceptanceTest from 'skylines/tests/helpers/setup-acceptance-test';
+import { setupPretender } from 'skylines/tests/helpers/setup-pretender';
 
-describe('Acceptance | login', function() {
-  setupAcceptanceTest(this);
+module('Acceptance | login', function(hooks) {
+  setupApplicationTest(hooks);
+  setupPretender(hooks);
 
   const LOGIN_DROPDOWN = '[data-test-login-dropdown]';
   const LOGIN_DROPDOWN_TOGGLE = `${LOGIN_DROPDOWN} a`;
   const LOGIN_EMAIL = '[data-test-input="login-email"]';
 
-  it('login dropdown form stays visible when fields are focused', async function() {
+  test('login dropdown form stays visible when fields are focused', async function(assert) {
     await visit('/');
 
     await click(LOGIN_DROPDOWN_TOGGLE);
-    expect(find(LOGIN_DROPDOWN)).to.have.class('open');
+    assert.dom(LOGIN_DROPDOWN).hasClass('open');
 
     await click(LOGIN_EMAIL);
-    expect(find(LOGIN_DROPDOWN)).to.have.class('open');
+    assert.dom(LOGIN_DROPDOWN).hasClass('open');
   });
 });

@@ -1,24 +1,20 @@
 import Service from '@ember/service';
 
-import { expect } from 'chai';
-import { describe, it, beforeEach } from 'mocha';
-import { setupComponentTest } from 'ember-mocha';
+import { module, test } from 'qunit';
+import { setupRenderingTest } from 'ember-qunit';
+import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
-import { find } from 'ember-native-dom-helpers';
 
-describe('Integration | Component | timeline events/follower', function() {
-  setupComponentTest('timeline-events/follower', { integration: true });
+module('Integration | Component | timeline events/follower', function(hooks) {
+  setupRenderingTest(hooks);
 
-  beforeEach(function() {
-    this.container.lookup('router:main').setupRouter();
+  hooks.beforeEach(async function() {
+    this.owner.setupRouter();
 
-    this.register('service:account', Service.extend({
+    this.owner.register('service:account', Service.extend({
       user: null,
       club: null,
     }));
-
-    this.inject.service('intl', { as: 'intl' });
-    this.inject.service('account', { as: 'account' });
 
     this.set('event', {
       time: '2016-06-24T12:34:56Z',
@@ -32,31 +28,31 @@ describe('Integration | Component | timeline events/follower', function() {
       },
     });
 
-    return this.get('intl').loadAndSetLocale('en');
+    await this.owner.lookup('service:intl').loadAndSetLocale('en');
   });
 
-  it('renders default text', function() {
-    this.render(hbs`{{timeline-events/follower event=event}}`);
+  test('renders default text', async function(assert) {
+    await render(hbs`{{timeline-events/follower event=event}}`);
 
-    expect(find('td:nth-of-type(2) p:nth-of-type(2)').textContent.trim())
-      .to.equal('John Doe started following Jane Doe.');
+    assert.dom('td:nth-of-type(2) p:nth-of-type(2)')
+      .hasText('John Doe started following Jane Doe.');
   });
 
-  it('renders alternate text if actor is current user', function() {
-    this.set('account.user', { id: 1, name: 'John Doe' });
+  test('renders alternate text if actor is current user', async function(assert) {
+    this.owner.lookup('service:account').set('user', { id: 1, name: 'John Doe' });
 
-    this.render(hbs`{{timeline-events/follower event=event}}`);
+    await render(hbs`{{timeline-events/follower event=event}}`);
 
-    expect(find('td:nth-of-type(2) p:nth-of-type(2)').textContent.trim())
-      .to.equal('You started following Jane Doe.');
+    assert.dom('td:nth-of-type(2) p:nth-of-type(2)')
+      .hasText('You started following Jane Doe.');
   });
 
-  it('renders alternate text if followed user is current user', function() {
-    this.set('account.user', { id: 42, name: 'Jane Doe' });
+  test('renders alternate text if followed user is current user', async function(assert) {
+    this.owner.lookup('service:account').set('user', { id: 42, name: 'Jane Doe' });
 
-    this.render(hbs`{{timeline-events/follower event=event}}`);
+    await render(hbs`{{timeline-events/follower event=event}}`);
 
-    expect(find('td:nth-of-type(2) p:nth-of-type(2)').textContent.trim())
-      .to.equal('John Doe started following you.');
+    assert.dom('td:nth-of-type(2) p:nth-of-type(2)')
+      .hasText('John Doe started following you.');
   });
 });

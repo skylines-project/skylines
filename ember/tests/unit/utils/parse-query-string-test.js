@@ -1,25 +1,24 @@
-import { expect } from 'chai';
-import { describe, it } from 'mocha';
+import { module, test } from 'qunit';
 
 import parseQueryString from 'skylines/utils/parse-query-string';
 
-describe('Unit | Utility | parse query string', function() {
-  it('returns empty object on empty input', function() {
+module('Unit | Utility | parse query string', function() {
+  test('returns empty object on empty input', function(assert) {
     let result = parseQueryString('');
-    expect(result).to.deep.equal({});
+    assert.deepEqual(result, {});
   });
 
-  it('parses query strings', function() {
+  test('parses query strings', function(assert) {
     let result = parseQueryString('a=5&b=abc');
-    expect(result).to.deep.equal({
+    assert.deepEqual(result, {
       a: '5',
       b: 'abc',
     });
   });
 
-  it('parses query strings with leading question mark', function() {
+  test('parses query strings with leading question mark', function(assert) {
     let result = parseQueryString('?foo=42');
-    expect(result).to.deep.equal({
+    assert.deepEqual(result, {
       foo: '42',
     });
   });

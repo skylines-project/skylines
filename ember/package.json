@@ -29,7 +29,6 @@
     "ember-cli": "~3.0.2",
     "ember-cli-app-version": "^3.1.3",
     "ember-cli-babel": "^6.12.0",
-    "ember-cli-chai": "^0.5.0",
     "ember-cli-dependency-checker": "^2.1.0",
     "ember-cli-deploy": "^1.0.2",
     "ember-cli-deploy-build": "^1.1.1",
@@ -40,9 +39,9 @@
     "ember-cli-htmlbars": "^2.0.3",
     "ember-cli-htmlbars-inline-precompile": "^1.0.2",
     "ember-cli-inject-live-reload": "^1.7.0",
-    "ember-cli-mocha": "^0.15.0",
     "ember-cli-pace": "^0.1.0",
     "ember-cli-pretender": "^1.0.1",
+    "ember-cli-qunit": "^4.3.2",
     "ember-cli-sass": "^7.1.7",
     "ember-cli-sentry": "^3.0.0",
     "ember-cli-shims": "^1.1.0",
@@ -68,8 +67,8 @@
     "ember-web-app": "^2.3.0",
     "eslint-config-simplabs": "0.4.0",
     "eslint-plugin-ember": "^5.1.0",
-    "eslint-plugin-mocha": "^5.0.0",
-    "loader.js": "^4.6.0"
+    "loader.js": "^4.6.0",
+    "qunit-dom": "^0.5.0"
   },
   "engines": {
     "node": ">= 4"
