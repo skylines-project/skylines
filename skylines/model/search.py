@@ -163,7 +163,7 @@ def __filter_prefixed_tokens(prefix, tokens):
             new_tokens.append(token)
 
     # Strip whitespace from the types
-    contents = map(str.strip, contents)
+    contents = list(map(str.strip, contents))
 
     return contents, new_tokens
 

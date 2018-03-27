@@ -14,7 +14,7 @@ def negotiate_locale():
     if len(available) == 0:
         return jsonify(error='invalid-request'), 400
 
-    preferred = map(lambda it: it[0], request.accept_languages)
+    preferred = [it[0] for it in request.accept_languages]
 
     locale = _negotiate_locale(preferred, available, sep='-')
 

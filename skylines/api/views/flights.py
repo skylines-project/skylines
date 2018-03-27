@@ -322,7 +322,7 @@ def _get_contest_traces(flight):
         if not contest_trace:
             continue
 
-        fixes = map(lambda x: (x.latitude, x.longitude), contest_trace.locations)
+        fixes = [(x.latitude, x.longitude) for x in contest_trace.locations]
         times = []
         for time in contest_trace.times:
             times.append(flight.takeoff_time.hour * 3600 + flight.takeoff_time.minute * 60 + flight.takeoff_time.second +
@@ -572,7 +572,7 @@ def near(flight_id):
 
         return trace
 
-    return jsonify(flights=map(add_flight_path, flights))
+    return jsonify(flights=list(map(add_flight_path, flights)))
 
 
 @flights_blueprint.route('/flights/<flight_id>', methods=['POST'], strict_slashes=False)

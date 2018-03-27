@@ -13,9 +13,9 @@ def geographic_distance(loc1, loc2):
     on the earth (specified in decimal degrees)
     """
     # convert decimal degrees to radians
-    lat1, lon1, lat2, lon2 = map(math.radians,
-                                 [loc1.latitude, loc1.longitude,
-                                  loc2.latitude, loc2.longitude])
+    lat1, lon1, lat2, lon2 = list(map(math.radians,
+                                      [loc1.latitude, loc1.longitude,
+                                       loc2.latitude, loc2.longitude]))
 
     # haversine formula
     dlon = lon2 - lon1

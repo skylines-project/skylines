@@ -87,7 +87,7 @@ def read(user_ids):
     for pilot in pilots:
         pilot.color = color_gen.next()
 
-    traces = map(_get_flight_path, pilots)
+    traces = list(map(_get_flight_path, pilots))
     if not any(traces):
         traces = None
 
@@ -165,7 +165,7 @@ def _get_flight_path(pilot, threshold=0.001, last_update=None):
     barogram_h = encoded_flight['altitude']
     enl = encoded_flight['enl']
 
-    fp_reduced = map(lambda line: FlightPathFix(*line), xcsoar_flight.path())
+    fp_reduced = [FlightPathFix(*line) for line in xcsoar_flight.path()]
     elevations = xcsoar.encode([fix.elevation if fix.elevation is not None else UNKNOWN_ELEVATION for fix in fp_reduced], method="signed")
 
     geoid_height = egm96_height(Location(latitude=fp[0].location['latitude'],

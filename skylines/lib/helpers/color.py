@@ -24,6 +24,6 @@ def generator():
         h = (h + 0.625) % 1
 
         rgb = colorsys.hsv_to_rgb(h, s, v)
-        rgb255 = tuple(map(lambda x: int(x * 255), rgb))
+        rgb255 = tuple([int(x * 255) for x in rgb])
 
         yield "#%02x%02x%02x" % rgb255

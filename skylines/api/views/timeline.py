@@ -28,4 +28,4 @@ def _list():
 
     events = query.limit(per_page).offset((page - 1) * per_page).all()
 
-    return jsonify(events=(map(convert_event, events)))
+    return jsonify(events=(list(map(convert_event, events))))
