@@ -507,7 +507,7 @@ def _get_near_flights(flight, location, time, max_distance=1000):
     flights = []
     for flight in result:
         # find point closest to given time
-        closest = min(range(len(flight.timestamps)),
+        closest = min(list(range(len(flight.timestamps))),
                       key=lambda x: abs((flight.timestamps[x] - time).total_seconds()))
 
         trace = to_shape(flight.locations).coords

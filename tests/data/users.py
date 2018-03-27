@@ -31,7 +31,7 @@ def test_users(n=50):
     fake.seed(42)
 
     users = []
-    for i in xrange(n):
+    for i in range(n):
         u = User()
         u.first_name = fake.first_name()
         u.last_name = fake.last_name()
