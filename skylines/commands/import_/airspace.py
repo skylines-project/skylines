@@ -191,7 +191,7 @@ class AirspaceCommand(Command):
         # try to uncomment a CLASS definition, as many SUA files from soaringweb.org have a CLASS comment
         with open(filename, 'r') as in_file:
             with open(temporary_file, 'w') as out_file:
-                for line in in_file.xreadlines():
+                for line in in_file:
                     out_file.write(line.replace('# CLASS', 'CLASS'))
 
         if debug:
