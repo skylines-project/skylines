@@ -37,7 +37,7 @@ def update():
 
     try:
         data = CurrentUserSchema(partial=True).load(json).data
-    except ValidationError, e:
+    except ValidationError as e:
         return jsonify(error='validation-failed', fields=e.messages), 422
 
     if 'email_address' in data:

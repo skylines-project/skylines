@@ -52,7 +52,7 @@ def create_club():
 
     try:
         data = ClubSchema(only=('name',)).load(json).data
-    except ValidationError, e:
+    except ValidationError as e:
         return jsonify(error='validation-failed', fields=e.messages), 422
 
     if Club.exists(name=data.get('name')):
@@ -92,7 +92,7 @@ def update(club_id):
 
     try:
         data = ClubSchema(partial=True).load(json).data
-    except ValidationError, e:
+    except ValidationError as e:
         return jsonify(error='validation-failed', fields=e.messages), 422
 
     if 'name' in data:

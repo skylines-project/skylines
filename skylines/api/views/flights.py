@@ -590,7 +590,7 @@ def update(flight_id):
 
     try:
         data = FlightSchema(partial=True).load(json).data
-    except ValidationError, e:
+    except ValidationError as e:
         return jsonify(error='validation-failed', fields=e.messages), 422
 
     if 'pilot_id' in data:
@@ -707,7 +707,7 @@ def add_comment(flight_id):
 
     try:
         data = FlightCommentSchema().load(json).data
-    except ValidationError, e:
+    except ValidationError as e:
         return jsonify(error='validation-failed', fields=e.messages), 422
 
     comment = FlightComment()

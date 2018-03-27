@@ -18,7 +18,7 @@ def test_flake8(folder):
     """ Run skylines package through flake8 """
     try:
         run([FLAKE8_COMMAND, folder])
-    except CalledProcessError, e:
+    except CalledProcessError as e:
         print(e.output)
         raise AssertionError('flake8 has found errors.')
     except OSError:

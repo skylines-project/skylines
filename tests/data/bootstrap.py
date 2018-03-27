@@ -15,6 +15,6 @@ def bootstrap():
         db.session.add(test_user())
         db.session.commit()
 
-    except IntegrityError, e:
+    except IntegrityError as e:
         print('Warning, there was a problem adding your auth data, it may have already been added:', e)
         db.session.rollback()
