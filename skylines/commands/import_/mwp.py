@@ -147,7 +147,7 @@ class MWP(Command):
             Y.append(radm * math.cos(the) * si + co * radn * math.sin(the) + ypos)
 
         # Convert the coordinate into a list of tuples
-        coordinates = zip(X, Y)
+        coordinates = list(zip(X, Y))
 
         # Create a shapely LineString object from the coordinates
         linestring = LineString(coordinates)
