@@ -1352,12 +1352,13 @@ breakable@~1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/breakable/-/breakable-1.0.0.tgz#784a797915a38ead27bad456b5572cb4bbaa78c1"
 
-broccoli-asset-rev@^2.5.0, broccoli-asset-rev@^2.6.0:
-  version "2.6.0"
-  resolved "https://registry.yarnpkg.com/broccoli-asset-rev/-/broccoli-asset-rev-2.6.0.tgz#0633fc3a0b2ba0c2c1d56fa9feb7b331fc83be6d"
+broccoli-asset-rev@^2.5.0, broccoli-asset-rev@^2.7.0:
+  version "2.7.0"
+  resolved "https://registry.yarnpkg.com/broccoli-asset-rev/-/broccoli-asset-rev-2.7.0.tgz#c73da1d97c4180366fa442a87624ca1b7fb99161"
   dependencies:
     broccoli-asset-rewrite "^1.1.0"
     broccoli-filter "^1.2.2"
+    broccoli-persistent-filter "^1.4.3"
     json-stable-stringify "^1.0.0"
     minimatch "^3.0.4"
     rsvp "^3.0.6"

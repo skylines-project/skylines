@@ -22,7 +22,7 @@
   "devDependencies": {
     "bigscreen": "^2.0.5",
     "bootstrap-sass": "^3.3.7",
-    "broccoli-asset-rev": "^2.6.0",
+    "broccoli-asset-rev": "^2.7.0",
     "chai-dom": "^1.7.0",
     "ember-ajax": "^3.1.0",
     "ember-bootstrap": "^1.2.1",
