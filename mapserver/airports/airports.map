@@ -5,9 +5,11 @@ LAYER
   TYPE POINT
   CONNECTIONTYPE POSTGIS
   CONNECTION "dbname=skylines"
-  DATA "location_wkt from (SELECT id, location_wkt, name, runway_len, type, surface,
-       (-runway_dir) as runway_dir, valid_until from airports) as foo using unique id"
-  FILTER "valid_until < now() at time zone 'utc'"
+  DATA "location_wkt from (
+          SELECT id, location_wkt, name, runway_len, type, surface, (-runway_dir) as runway_dir, valid_until
+          FROM airports
+          WHERE valid_until < now() at time zone 'utc'
+        ) as foo using unique id using srid=4326"
   LABELITEM "name"
 
   PROJECTION
@@ -62,7 +64,7 @@ LAYER
     END
   END
 
-  SYMBOLSCALEDENOM 6931575 #exactly zoom level 6
+  # SYMBOLSCALEDENOM 6931575 #exactly zoom level 6
 
 END
 
@@ -74,9 +76,11 @@ LAYER
   TYPE POINT
   CONNECTIONTYPE POSTGIS
   CONNECTION "dbname=skylines"
-  DATA "location_wkt from (SELECT id, location_wkt, name, runway_len, type, surface,
-        (-runway_dir) as runway_dir, valid_until from airports) as foo using unique id"
-  FILTER "valid_until >= now() at time zone 'utc' or valid_until is NULL"
+  DATA "location_wkt from (
+          SELECT id, location_wkt, name, runway_len, type, surface, (-runway_dir) as runway_dir, valid_until
+          FROM airports
+          WHERE valid_until >= now() at time zone 'utc' or valid_until is NULL
+        ) as foo using unique id using srid=4326"
   LABELITEM "name"
 
   PROJECTION
@@ -164,7 +168,7 @@ LAYER
     END
   END
 
-  SYMBOLSCALEDENOM 6931575 #exactly zoom level 6
+  # SYMBOLSCALEDENOM 6931575 #exactly zoom level 6
 
   CLASS
     NAME 'Airports large'
