@@ -6,7 +6,7 @@
 # cz 2014 file can't be read by ogr...
 #cz openair http://soaringweb.org/Airspace/CZ/CZ_2013.txt
 
-de openair http://soaringweb.org/Airspace/DE/Germany_CW13_2017.txt
+de openair https://www.daec.de/fileadmin/user_upload/files/2018/Fachbereiche/Luftraum_und_Flugbetrieb/Airspace_Germany_week13_2018_V2_ohneFIS.txt
 at openair http://www.austrocontrol.at/jart/prj3/austro_control/data/uploads/austria_ATS_2011_openair.txt
 # current belgium airspace can be downloaded from http://www.lvzc.be/index.php/secretariaat/documenten/cat_view/53-luchtruim/54-luchtruimbestanden as zip file
 be openair http://soaringweb.org/Airspace/BE/BELLUX_WEEK_170325b.txt
