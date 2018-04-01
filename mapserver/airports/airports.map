@@ -64,7 +64,7 @@ LAYER
     END
   END
 
-  SYMBOLSCALEDENOM 6931575 #exactly zoom level 6
+  # SYMBOLSCALEDENOM 6931575 #exactly zoom level 6
 
 END
 
@@ -168,7 +168,7 @@ LAYER
     END
   END
 
-  SYMBOLSCALEDENOM 6931575 #exactly zoom level 6
+  # SYMBOLSCALEDENOM 6931575 #exactly zoom level 6
 
   CLASS
     NAME 'Airports large'
