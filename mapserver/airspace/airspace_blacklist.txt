@@ -1,5 +1,9 @@
+at FIR LOVV
 cz CZ Border (126.1 W, 136.175 E Praha Information)
+nl FIR EHAA
 no Old Comp Area with Swedish border
-pl FIR-WARSZAWA
-au BRISBANE FIR
-au MELBOURNE FIR
+pl FIS Gdansk
+pl FIS Krakow
+pl FIS Olsztyn
+pl FIS Poznan
+pl FIS Warszawa

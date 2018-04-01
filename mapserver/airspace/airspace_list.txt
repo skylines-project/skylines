@@ -6,22 +6,24 @@
 # cz 2014 file can't be read by ogr...
 #cz openair http://soaringweb.org/Airspace/CZ/CZ_2013.txt
 
-de openair http://www.daec.de/fileadmin/user_upload/files/2012/fachbereiche/luftraum/20140306OpenAir.txt
-at openair http://www.austrocontrol.at/jart/prj3/austro_control/data/uploads/austria_ATS_2011_openair.txt
-# current belgium airspace can be downloaded from http://www.lvzc.be/index.php/secretariaat/documenten/cat_view/53-luchtruim/54-luchtruimbestanden as zip file
-be openair http://www.zweefvliegen.be/index.php/secretariaat/documenten/doc_view/322-bellux-week-120112
-fr openair http://soaringweb.org/Airspace/FR/140708__AIRSPACE_France_1405e.txt
-nl openair http://www.gliderpilotshop.nl/documents/EHv14_5.txt
-hu openair http://soaringweb.org/Airspace/HU/Hungary_2012.txt
+de openair https://www.daec.de/fileadmin/user_upload/files/2018/Fachbereiche/Luftraum_und_Flugbetrieb/Airspace_Germany_week13_2018_V2_ohneFIS.txt
+at openair https://www.austrocontrol.at/jart/prj3/austro_control/data/dokumente/aV5XF_AustriaAirspaceMainFileeffdate01052015-27052015V.1.00.txt
+
+# "Winpilot COLOR-Table" is breaking "be" airspace
+# be openair https://www.lvzc.be/index.php/secretariaat/luchtruim/luchtruim-4/2018/vanaf-16-03-2018/1620-bellux-week-180316/file
+
+fr openair http://s289271336.onlinehome.fr/dossiers_ffvv/files/180330__AIRSPACE_France_2018-04.txt
+nl openair http://soaringweb.org/Airspace/NL/EHv17_3.txt
+hu openair http://soaringweb.org/Airspace/HU/HungarySUA2017_openair.txt
 sk openair http://soaringweb.org/Airspace/SK/SK2012.txt
-uk openair http://soaringweb.org/Airspace/UK/WPLTAS180714.txt
-ch openair http://soaringweb.org/Airspace/CH/CH-Luftraum_2014-03R3.txt
-es openair http://soaringweb.org/Airspace/ES/SUASpain201305.txt
-pl openair http://soaringweb.org/Airspace/PL/24_JUL_2014_Polska.txt
+uk openair http://www.nvgc.org.uk/UK2016.txt
+ch openair http://soaringweb.org/Airspace/CH/170507_CH.txt
+es openair http://soaringweb.org/Airspace/ES/SUASpain201712.txt
+pl openair http://soaringweb.org/Airspace/PL/2017_05_08_Poland_Airspaces.txt
 no openair http://soaringweb.org/Airspace/NO/NorwayAirspace20140413.txt
-dk openair http://soaringweb.org/Airspace/DK/DK-OpenAir-AllinOne-20140619.txt
-us openair https://user.xmission.com/~lalley/aviation/countHits.php?count=oaCount&file=allusa.v14.02-06.1.txt
-za openair http://soaringweb.org/Airspace/ZA/SAGlidingAirsp-17102011_v1.3.txt
-au openair http://soaringweb.org/Airspace/AU/australia_class_all_no_ctaf_e_class_bnd_13_11_14.txt
-ca openair http://soaringweb.org/Airspace/NA/canadian_airspace_243b.air
+dk openair http://soaringweb.org/Airspace/DK/DK-OpenAir-AllinOne-20170508.txt
+us openair http://soaringweb.org/Airspace/NA/allusa.v17.08-17.2.txt
+za openair http://soaringweb.org/Airspace/ZA/RSA_Airspace_17AUG2017.txt
+au openair http://soaringweb.org/Airspace/AU/australia_class_all_no_ctaf_e_class_freq.bnd_area_freq.bnd_17_11_09.txt
+ca openair http://soaringweb.org/Airspace/NA/canadian_airspace_noE_below12500_265.air
 fi openair http://www.hansto.fi/seeyou/files/Ilmatila2012.txt
