@@ -40,9 +40,9 @@ export default Route.extend(ApplicationRouteMixin, {
   activate() {
     this._super(...arguments);
 
-    let user = this.get('account.user');
-    if (user) {
-      this.get('raven').callRaven('setUserContext', user);
+    let userId = this.get('account.user.id');
+    if (userId) {
+      this.get('raven').callRaven('setUserContext', { id: userId });
     }
   },
 
