@@ -1722,6 +1722,13 @@ broccoli-merge-trees@^2.0.0:
     broccoli-plugin "^1.3.0"
     merge-trees "^1.0.1"
 
+"broccoli-merge-trees@^2.0.0 || ^3.0.0":
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/broccoli-merge-trees/-/broccoli-merge-trees-3.0.0.tgz#90e4959f9e3c57cf1f04fab35152f3d849468d8b"
+  dependencies:
+    broccoli-plugin "^1.3.0"
+    merge-trees "^2.0.0"
+
 broccoli-middleware@^1.2.1:
   version "1.2.1"
   resolved "https://registry.yarnpkg.com/broccoli-middleware/-/broccoli-middleware-1.2.1.tgz#a21f255f8bfe5a21c2f0fbf2417addd9d24c9436"
@@ -2225,6 +2232,10 @@ clean-css@^3.4.5:
   dependencies:
     commander "2.8.x"
     source-map "0.4.x"
+
+clean-up-path@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/clean-up-path/-/clean-up-path-1.0.0.tgz#de9e8196519912e749c9eaf67c13d64fac72a3e5"
 
 cli-cursor@^1.0.1:
   version "1.0.2"
@@ -3376,9 +3387,16 @@ ember-concurrency@^0.8.1, ember-concurrency@^0.8.18, ember-concurrency@^0.8.7:
     ember-cli-babel "^6.8.2"
     ember-maybe-import-regenerator "^0.1.5"
 
-"ember-cookies@^0.1.0 || ^0.2.0", ember-cookies@^0.2.0:
+ember-cookies@^0.2.0:
   version "0.2.0"
   resolved "https://registry.yarnpkg.com/ember-cookies/-/ember-cookies-0.2.0.tgz#81195a31a36447240fb97af47d01ad582f747d47"
+  dependencies:
+    ember-cli-babel "^6.8.2"
+    ember-getowner-polyfill "^1.1.0 || ^2.0.0"
+
+ember-cookies@^0.3.0:
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/ember-cookies/-/ember-cookies-0.3.0.tgz#f9a23c957bd0e561e6a056e044d95ce2416b64d8"
   dependencies:
     ember-cli-babel "^6.8.2"
     ember-getowner-polyfill "^1.1.0 || ^2.0.0"
@@ -3717,17 +3735,17 @@ ember-runtime-enumerable-includes-polyfill@^2.0.0:
     ember-cli-babel "^6.0.0"
     ember-cli-version-checker "^1.1.6"
 
-ember-simple-auth@^1.5.1:
-  version "1.5.1"
-  resolved "https://registry.yarnpkg.com/ember-simple-auth/-/ember-simple-auth-1.5.1.tgz#aa28fda5af5148b4a0ee823302e600598ccff4d8"
+ember-simple-auth@^1.6.0:
+  version "1.6.0"
+  resolved "https://registry.yarnpkg.com/ember-simple-auth/-/ember-simple-auth-1.6.0.tgz#68a80cdc4f2928a87af0f68aefae5abfd70f2e36"
   dependencies:
     base-64 "^0.1.0"
     broccoli-file-creator "^1.1.1"
     broccoli-funnel "^1.2.0 || ^2.0.0"
-    broccoli-merge-trees "^2.0.0"
+    broccoli-merge-trees "^2.0.0 || ^3.0.0"
     ember-cli-babel "^6.8.2"
     ember-cli-is-package-missing "^1.0.0"
-    ember-cookies "^0.1.0 || ^0.2.0"
+    ember-cookies "^0.3.0"
     ember-fetch "^2.1.0 || ^3.0.0"
     ember-getowner-polyfill "^1.1.0 || ^2.0.0"
     silent-error "^1.0.0"
@@ -4652,6 +4670,16 @@ fs-tree-diff@^0.5.2, fs-tree-diff@^0.5.3, fs-tree-diff@^0.5.4, fs-tree-diff@^0.5
     path-posix "^1.0.0"
     symlink-or-copy "^1.1.8"
 
+fs-updater@^1.0.4:
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/fs-updater/-/fs-updater-1.0.4.tgz#2329980f99ae9176e9a0e84f7637538a182ce63b"
+  dependencies:
+    can-symlink "^1.0.0"
+    clean-up-path "^1.0.0"
+    heimdalljs "^0.2.5"
+    heimdalljs-logger "^0.1.9"
+    rimraf "^2.6.2"
+
 fs.realpath@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/fs.realpath/-/fs.realpath-1.0.0.tgz#1504ad2523158caa40db4a2787cb01411994ea4f"
@@ -5080,6 +5108,12 @@ heimdalljs-logger@^0.1.9:
 heimdalljs@^0.2.0, heimdalljs@^0.2.1, heimdalljs@^0.2.3:
   version "0.2.3"
   resolved "https://registry.yarnpkg.com/heimdalljs/-/heimdalljs-0.2.3.tgz#35b82a6a4d73541fc4fb88d2fe2b23608fb4f779"
+  dependencies:
+    rsvp "~3.2.1"
+
+heimdalljs@^0.2.5:
+  version "0.2.5"
+  resolved "https://registry.yarnpkg.com/heimdalljs/-/heimdalljs-0.2.5.tgz#6aa54308eee793b642cff9cf94781445f37730ac"
   dependencies:
     rsvp "~3.2.1"
 
@@ -6261,6 +6295,13 @@ merge-trees@^1.0.1:
     heimdalljs-logger "^0.1.7"
     rimraf "^2.4.3"
     symlink-or-copy "^1.0.0"
+
+merge-trees@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/merge-trees/-/merge-trees-2.0.0.tgz#a560d796e566c5d9b2c40472a2967cca48d85161"
+  dependencies:
+    fs-updater "^1.0.4"
+    heimdalljs "^0.2.5"
 
 merge@^1.1.3:
   version "1.2.0"
@@ -7531,7 +7572,7 @@ rimraf@2, rimraf@^2.2.8, rimraf@^2.3.4, rimraf@^2.4.3, rimraf@^2.4.4, rimraf@^2.
   dependencies:
     glob "^7.0.5"
 
-rimraf@^2.3.2:
+rimraf@^2.3.2, rimraf@^2.6.2:
   version "2.6.2"
   resolved "https://registry.yarnpkg.com/rimraf/-/rimraf-2.6.2.tgz#2ed8150d24a16ea8651e6d6ef0f47c4158ce7a36"
   dependencies:
