@@ -80,7 +80,10 @@ export default ArrayProxy.extend({
     return { min, max };
   },
 
-  contentArrayWillChange(flights, offset, removeCount) {
+  arrayContentWillChange(offset, removeCount) {
+    this._super(...arguments);
+
+    let flights = this.get('content');
     let removedFlights = flights.slice(offset, offset + removeCount);
 
     let source = this.get('source');
@@ -93,7 +96,8 @@ export default ArrayProxy.extend({
     });
   },
 
-  contentArrayDidChange(flights, offset, removeCount, addCount) {
+  arrayContentDidChange(offset, removeCount, addCount) {
+    let flights = this.get('content');
     let addedFlights = flights.slice(offset, offset + addCount);
 
     let source = this.get('source');
@@ -107,5 +111,7 @@ export default ArrayProxy.extend({
 
       source.addFeature(feature);
     });
+
+    this._super(...arguments);
   },
 });
