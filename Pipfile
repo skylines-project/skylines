@@ -28,7 +28,7 @@ aerofiles = "==0.1.1"
 pyproj = "==1.9.3"
 gevent = "==1.2.2"
 webargs = "==1.2.0"
-marshmallow = "==2.8.0"
+marshmallow = "*"
 flask-oauthlib = "*"
 oauthlib = "*"
 raven = {extras = ["flask"], version = "==5.27.1"}
