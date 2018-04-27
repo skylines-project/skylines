@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "2fc5b553ab88b8fb36042b9d0fad8cc7f65ab86fba2dd8b490c36877a685842f"
+            "sha256": "595c388a6bad2d652a5b388ec7ba92633a898856d4e985a7c8a829a5cd9403f1"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -162,10 +162,11 @@
         },
         "flask-sqlalchemy": {
             "hashes": [
-                "sha256:7f0e218fa9066b34b73fdc470386a37ee117b8a862db98c1bca8236d8cffe7a1"
+                "sha256:3bc0fac969dd8c0ace01b32060f0c729565293302f0c4269beed154b46bec50b",
+                "sha256:5971b9852b5888655f11db634e87725a9031e170f37c0ce7851cf83497f56e53"
             ],
             "index": "pypi",
-            "version": "==1.0"
+            "version": "==2.3.2"
         },
         "geoalchemy2": {
             "hashes": [
@@ -502,7 +503,6 @@
                 "sha256:edabd457cd23a02965166026fd9bfd196f4324fe6032e866d0f3bd0301cd486f",
                 "sha256:fdf1c1dc5bafc32bc5d08b054f94d659422b05aba244d6be4ddc1c72d9aa70fb"
             ],
-            "markers": "platform_python_implementation != 'pypy'",
             "version": "==1.11.5"
         },
         "configparser": {
@@ -636,7 +636,7 @@
                 "sha256:64b28eec5e78e7510698f6d4da08800a5c575caa4a286c93d651c5d3ff7b6794",
                 "sha256:b146c751ea45cad6188dd6cf2d9b757f6f4f8d6ffb96a023e6f2e26eea02a72c"
             ],
-            "markers": "python_version < '3'",
+            "markers": "python_version == '2.7'",
             "version": "==1.0.22"
         },
         "mccabe": {
