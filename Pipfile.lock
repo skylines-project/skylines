@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "cab8e00e6c9621909dfe83af7e1c22ba0f79cced440e37899ef836aa6c15c9db"
+            "sha256": "dabe42b8bdf984175b229bb48212dc097d52d7e26480d31771f2c4bdb95f8178"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -26,10 +26,10 @@
         },
         "alembic": {
             "hashes": [
-                "sha256:35dfad44254bd0731ac611de211957a37dcc8d53b67a134c187e0b32a8b43842"
+                "sha256:85bd3ea7633024e4930900bc64fb58f9742dedbc6ebb6ecf25be2ea9a3c1b32e"
             ],
             "index": "pypi",
-            "version": "==0.6.3"
+            "version": "==0.9.9"
         },
         "amqp": {
             "hashes": [
@@ -140,10 +140,11 @@
         },
         "flask-migrate": {
             "hashes": [
-                "sha256:37e548cd0c497194243c8c2e2c6296e72ac7d65ba4ad1fd3d8cd5848af5fed2a"
+                "sha256:493f9b3795985b9b4915bf3b7d16946697f027b73545384e7d9e3a79f989d2fe",
+                "sha256:b709ca8642559c3c5a81a33ab10839fa052177accd5ba821047a99db635255ed"
             ],
             "index": "pypi",
-            "version": "==1.2.0"
+            "version": "==2.1.1"
         },
         "flask-oauthlib": {
             "hashes": [
@@ -332,6 +333,19 @@
             "index": "pypi",
             "version": "==1.9.3"
         },
+        "python-dateutil": {
+            "hashes": [
+                "sha256:3220490fb9741e2342e1cf29a503394fdac874bc39568288717ee67047ff29df",
+                "sha256:9d8074be4c993fbe4947878ce593052f71dac82932a677d49194d8ce9778002e"
+            ],
+            "version": "==2.7.2"
+        },
+        "python-editor": {
+            "hashes": [
+                "sha256:a3c066acee22a1c94f63938341d4fb374e3fdd69366ed6603d7b24bed1efc565"
+            ],
+            "version": "==1.0.3"
+        },
         "pytz": {
             "hashes": [
                 "sha256:65ae0c8101309c45772196b21b74c46b2e5d11b6275c45d251b150d5da334555",
@@ -379,6 +393,13 @@
             ],
             "index": "pypi",
             "version": "==1.3.0"
+        },
+        "six": {
+            "hashes": [
+                "sha256:70e8a77beed4562e7f14fe23a786b54f6296e34344c23bc42f07b15018ff98e9",
+                "sha256:832dc0e10feb1aa2c68dcc57dbb658f1c7e65b9b61af69048abc87a2db00a0eb"
+            ],
+            "version": "==1.11.0"
         },
         "sqlalchemy": {
             "hashes": [
