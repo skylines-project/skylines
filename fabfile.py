@@ -41,7 +41,6 @@ def restart():
         manage('migrate upgrade')
 
         # restart services
-        restart_service('skylines-api')
         restart_service('skylines')
         restart_service('mapserver')
         restart_service('tracking')
