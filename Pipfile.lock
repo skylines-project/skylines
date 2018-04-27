@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "372672a880a1e239ce76fd8f3dde112cdf63474d1cdca2107b432d5955f418f8"
+            "sha256": "cab8e00e6c9621909dfe83af7e1c22ba0f79cced440e37899ef836aa6c15c9db"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -274,11 +274,11 @@
         },
         "marshmallow": {
             "hashes": [
-                "sha256:7c519e0e4c74270bae8dfb20b611910cfb4b78e02ecc1c8c4e3fbc58de2698df",
-                "sha256:ec2ca5d5166c849c7c713dfa882eae944b8f07d39c24518363b74d6cba431a54"
+                "sha256:a3fe4bc61c4f6902b5cc95bd34cd0803e2a09ae0ea6bf09eb8f491acebe6934c",
+                "sha256:b73361eab812af97eaf8e8691333a1096787968450051d132c8b9fb90aa1db5a"
             ],
             "index": "pypi",
-            "version": "==2.8.0"
+            "version": "==2.15.1"
         },
         "oauthlib": {
             "hashes": [
@@ -616,7 +616,7 @@
                 "sha256:330cc27ccbf7f1e992e69fef78261dc7c6569012cf397db8d3de0234e6c937ca",
                 "sha256:a7bb0f2cf3a3fd1ab2732cb49eba4252c2af4240442415b4abce3b87022a8f50"
             ],
-            "markers": "python_version < '3.0'",
+            "markers": "python_version < '3.3'",
             "version": "==1.0.2"
         },
         "idna": {
