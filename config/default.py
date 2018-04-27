@@ -29,6 +29,7 @@ SENTRY_DSN = 'https://foo:bar@sentry.io/appid'
 CACHE_TYPE = 'simple'
 
 SQLALCHEMY_DATABASE_URI = 'postgresql:///skylines'
+SQLALCHEMY_TRACK_MODIFICATIONS = False
 
 ASSETS_LOAD_DIR = os.path.join(base, 'skylines', 'frontend', 'static')
 
