@@ -36,6 +36,8 @@ def restart():
     with cd(SRC_DIR):
         run('git reset --hard')
 
+        run('pipenv install --dev')
+
         # do database migrations
         manage('migrate upgrade')
 
