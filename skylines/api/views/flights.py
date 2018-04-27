@@ -156,7 +156,7 @@ def all():
 
 @flights_blueprint.route('/flights/date/<date>')
 @oauth.optional()
-def date(date, latest=False):
+def date(date):
     try:
         if isinstance(date, (str, unicode)):
             date = datetime.strptime(date, "%Y-%m-%d")
@@ -185,7 +185,7 @@ def latest():
     if not date_:
         date_ = datetime.utcnow()
 
-    return date(date_, latest=True)
+    return date(date_)
 
 
 @flights_blueprint.route('/flights/pilot/<int:id>')
