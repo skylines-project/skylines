@@ -8,7 +8,7 @@ python_version = "2.7"
 
 [packages]
 flask = "==0.10.1"
-werkzeug = "==0.9.6"
+werkzeug = "*"
 babel = "==2.3.4"
 flask-cache = "==0.12"
 flask-migrate = "==1.2.0"
