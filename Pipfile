@@ -7,7 +7,7 @@ name = "pypi"
 python_version = "2.7"
 
 [packages]
-flask = "==0.10.1"
+flask = "==0.11.*"
 werkzeug = "*"
 babel = "==2.3.4"
 flask-cache = "*"
