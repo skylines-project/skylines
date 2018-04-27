@@ -27,8 +27,7 @@ cache:
   yarn: true
 
 before_install:
-  # Update "pip" to latest stable release
-  - pip install -U pip
+  - pip install pipenv
 
   - nvm install 10
   - curl -o- -L https://yarnpkg.com/install.sh | bash
@@ -36,11 +35,7 @@ before_install:
   - yarn global add bower
 
 install:
-  # Install SkyLines Python dependencies
-  - pip install -e .
-
-  # Install testing dependencies
-  - pip install -r requirements.txt
+  - pipenv install --dev
 
   - cd ember
   - yarn install
@@ -59,7 +54,7 @@ before_script:
 
 script:
   # Run the test suite
-  - py.test -vv --cov=skylines --cov-report term-missing:skip-covered
+  - pipenv run py.test -vv --color=yes --cov=skylines --cov-report term-missing:skip-covered
 
   - cd ember
   - yarn test

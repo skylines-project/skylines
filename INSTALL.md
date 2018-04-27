@@ -29,7 +29,8 @@ python-pip` on Ubuntu/Debian. More information about pip can be found at
 
 Now you can install the python dependencies by calling:
 
-    $ sudo pip install -r requirements.txt
+    $ sudo pip install pipenv
+    $ pipenv install --dev
 
 *Note: You might have to install the additional Ubuntu/Debian packages
 `libpq-dev`, `python-dev` and `g++` for the `psycopg2` dependency.*
@@ -75,7 +76,7 @@ manual](http://postgis.net/docs/postgis_installation.html#install_short_version)
 and your distribution's documentation.*
 
 After creating the database you have to create the necessary tables and indices
-by calling `./manage.py db create` from the the command line.
+by calling `pipenv run ./manage.py db create` from the the command line.
 
 
 ## XCSoar tools
@@ -94,7 +95,7 @@ a look into the XCSoar documentation if you need more help with the building pro
 If the above steps are completed you should be able to run a base version of
 *SkyLines* locally now:
 
-    $ ./manage.py runserver
+    $ pipenv run ./manage.py runserver
 
 *(The following chapters are optional!)*
 
@@ -106,7 +107,7 @@ the [Welt2000](http://github.com/skylines-project/welt2000) into the database by
 calling (the `commit` flag indicates that any data should be written to the
 database):
 
-    $ ./manage.py import welt2000 --commit
+    $ pipenv run ./manage.py import welt2000 --commit
 
 
 ## Asynchronous tasks
@@ -121,4 +122,4 @@ need is to install the `redis-server` package:
 
 To run the Celery worker, call
 
-    $ ./manage.py celery runworker
+    $ pipenv run ./manage.py celery runworker

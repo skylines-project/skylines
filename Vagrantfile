@@ -50,10 +50,14 @@ sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-6 60 --slave /u
 wget -N -nv https://bootstrap.pypa.io/get-pip.py
 sudo -H python get-pip.py
 
+# install pipenv
+
+sudo -H pip install pipenv
+
 # install skylines and the python dependencies
 
 cd /vagrant
-sudo -H pip install -r requirements.txt --no-binary greenlet
+pipenv install --dev
 
 # create PostGIS databases
 
@@ -69,7 +73,7 @@ sudo sudo -u postgres psql -d skylines_test -c 'CREATE EXTENSION fuzzystrmatch;'
 
 sudo sudo -u postgres psql -c "ALTER USER postgres PASSWORD 'secret123';"
 
-./manage.py db create
+pipenv run ./manage.py db create
 
 # create folder for downloaded files
 

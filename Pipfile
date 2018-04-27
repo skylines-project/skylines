@@ -1,0 +1,44 @@
+[[source]]
+url = "https://pypi.python.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[requires]
+python_version = "2.7"
+
+[packages]
+flask = "==0.10.1"
+werkzeug = "==0.9.6"
+babel = "==2.3.4"
+flask-cache = "==0.12"
+flask-migrate = "==1.2.0"
+flask-script = "==0.6.7"
+flask-sqlalchemy = "==1.0"
+sqlalchemy = "==0.8.2"
+alembic = "==0.6.3"
+"psycopg2" = "==2.7.3.2"
+"geoalchemy2" = "==0.2.3"
+shapely = "==1.3.0"
+"crc16" = "==0.1.1"
+pytz = "*"
+celery = {extras = ["redis"], version = "<3.2,>=3.1"}
+xcsoar = "==0.6.1"
+aerofiles = "==0.1.1"
+"enum34" = "==1.1.6"
+pyproj = "==1.9.3"
+gevent = "==1.2.2"
+webargs = "==1.2.0"
+marshmallow = "==2.8.0"
+flask-oauthlib = "==0.9.2"
+oauthlib = "==0.7.2"
+raven = {extras = ["flask"], version = "==5.27.1"}
+uwsgi = "*"
+
+[dev-packages]
+fabric = "==1.14.0"
+pytest = "==3.5.1"
+pytest-cov = "==2.5.1"
+mock = "==2.0.0"
+faker = "==0.8.13"
+"flake8" = "==3.3.0"
+immobilus = "==1.4.1"
