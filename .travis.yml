@@ -33,7 +33,7 @@ before_install:
   - nvm install 10
   - curl -o- -L https://yarnpkg.com/install.sh | bash
   - export PATH=$HOME/.yarn/bin:$PATH
-  - yarn global add bower
+  - yarn global add bower bundlesize --ignore-engines
 
 install:
   # Install SkyLines Python dependencies
@@ -63,3 +63,6 @@ script:
 
   - cd ember
   - yarn test
+
+  - NO_FINGERPRINT=true yarn ember build -prod --output-path=dist
+  - bundlesize -f "dist/assets/*.js"

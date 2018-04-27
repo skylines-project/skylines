@@ -7,6 +7,7 @@ let EmberApp = require('ember-cli/lib/broccoli/ember-app');
 module.exports = function(defaults) {
   let app = new EmberApp(defaults, {
     fingerprint: {
+      enabled: EmberApp.env() === 'production' && !process.env.NO_FINGERPRINT,
       extensions: ['css', 'js'],
       exclude: ['cesium'],
     },
