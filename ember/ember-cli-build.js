@@ -11,10 +11,8 @@ module.exports = function(defaults) {
       exclude: ['cesium'],
     },
 
-    minifyJS: {
-      options: {
-        exclude: ['cesium/Cesium.js'],
-      },
+    'ember-cli-uglify': {
+      exclude: ['cesium/**/*.js'],
     },
 
     sourcemaps: {
