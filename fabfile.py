@@ -11,7 +11,6 @@ SRC_DIR = '%s/src' % APP_DIR
 
 @task
 def deploy(branch='master', force=False):
-    deploy_ember()
     push(branch, force)
     restart()
 
