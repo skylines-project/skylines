@@ -11,7 +11,6 @@ SRC_DIR = '%s/src' % APP_DIR
 
 @task
 def deploy(branch='master', force=False):
-    deploy_ember()
     push(branch, force)
     restart()
 
@@ -36,11 +35,12 @@ def restart():
     with cd(SRC_DIR):
         run('git reset --hard')
 
+        run('pipenv install --dev')
+
         # do database migrations
         manage('migrate upgrade')
 
         # restart services
-        restart_service('skylines-api')
         restart_service('skylines')
         restart_service('mapserver')
         restart_service('tracking')
