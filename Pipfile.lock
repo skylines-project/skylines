@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "cab8e00e6c9621909dfe83af7e1c22ba0f79cced440e37899ef836aa6c15c9db"
+            "sha256": "45c1b3c83f8b2467f777c3e56db211a3f1dc1b20081d4e85d044cd4dfa6ae815"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -140,10 +140,11 @@
         },
         "flask-migrate": {
             "hashes": [
-                "sha256:37e548cd0c497194243c8c2e2c6296e72ac7d65ba4ad1fd3d8cd5848af5fed2a"
+                "sha256:493f9b3795985b9b4915bf3b7d16946697f027b73545384e7d9e3a79f989d2fe",
+                "sha256:b709ca8642559c3c5a81a33ab10839fa052177accd5ba821047a99db635255ed"
             ],
             "index": "pypi",
-            "version": "==1.2.0"
+            "version": "==2.1.1"
         },
         "flask-oauthlib": {
             "hashes": [
@@ -616,7 +617,7 @@
                 "sha256:330cc27ccbf7f1e992e69fef78261dc7c6569012cf397db8d3de0234e6c937ca",
                 "sha256:a7bb0f2cf3a3fd1ab2732cb49eba4252c2af4240442415b4abce3b87022a8f50"
             ],
-            "markers": "python_version < '3.3'",
+            "markers": "python_version < '3.0'",
             "version": "==1.0.2"
         },
         "idna": {
@@ -638,7 +639,7 @@
                 "sha256:64b28eec5e78e7510698f6d4da08800a5c575caa4a286c93d651c5d3ff7b6794",
                 "sha256:b146c751ea45cad6188dd6cf2d9b757f6f4f8d6ffb96a023e6f2e26eea02a72c"
             ],
-            "markers": "python_version == '2.7'",
+            "markers": "python_version < '3'",
             "version": "==1.0.22"
         },
         "mccabe": {
