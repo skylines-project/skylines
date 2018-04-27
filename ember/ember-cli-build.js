@@ -35,6 +35,20 @@ module.exports = function(defaults) {
       'importBootstrapFont': true,
       'importBootstrapCSS': false,
     },
+
+    'ember-font-awesome': {
+      includeStaticIcons: [
+        'arrow-left',
+        'arrow-right',
+        'calendar',
+        'chevron-down',
+        'chevron-up',
+        'clock-o',
+        'facebook',
+        'google-plus',
+        'twitter',
+      ],
+    },
   });
 
   // Use `app.import` to add additional libraries to the generated
