@@ -2,7 +2,6 @@ from flask_script import Manager, prompt_bool
 from flask_migrate import stamp
 
 from skylines.database import db
-from tests.data.bootstrap import bootstrap as _bootstrap
 
 manager = Manager(help="Perform database operations")
 
@@ -29,5 +28,7 @@ def drop():
 @manager.command
 def bootstrap():
     """ Bootstrap the database with some initial data """
+
+    from tests.data.bootstrap import bootstrap as _bootstrap
 
     _bootstrap()
