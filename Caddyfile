@@ -1,0 +1,71 @@
+# https://caddyserver.com configuration for the production server
+
+skylines.aero {
+    log /home/skylines/caddy/caddy.log
+
+    root /home/skylines/src/skylines/frontend/static
+    gzip
+
+    header / Strict-Transport-Security "max-age=31536000;"
+
+    rewrite {
+        if {path} not_starts_with /api
+        if {path} not_starts_with /files
+        if {path} not_starts_with /client.php
+        if {path} not_starts_with /track.php
+        if {path} not_starts_with /widgets
+        if {path} not_starts_with /mapproxy
+        if {path} not_starts_with /mapserver
+        to {path} /
+    }
+
+    expires {
+        match ^/assets/.*\.css$ 1y
+        match ^/assets/.*\.js$ 1y
+        match ^/fonts 1y
+        match ^/api 0s
+        match ^/client.php 0s
+        match ^/track.php 0s
+        match ^/widgets 0s
+        match ^/mapproxy 7d
+        match ^/mapserver 0s
+    }
+
+    proxy /api unix:/run/skylines/skylines-uwsgi.socket {
+        transparent
+    }
+
+    proxy /files unix:/run/skylines/skylines-uwsgi.socket {
+        transparent
+    }
+
+    proxy /client.php unix:/run/skylines/skylines-uwsgi.socket {
+        transparent
+    }
+
+    proxy /track.php unix:/run/skylines/skylines-uwsgi.socket {
+        transparent
+    }
+
+    proxy /widgets unix:/run/skylines/skylines-uwsgi.socket {
+        transparent
+    }
+
+    proxy /mapproxy unix:/run/skylines/mapproxy-uwsgi.socket {
+        transparent
+        without /mapproxy
+    }
+
+    proxy /mapserver unix:/run/skylines/mapserver-uwsgi.socket {
+        transparent
+        without /mapserver
+    }
+}
+
+www.skylines.aero {
+    redir https://skylines.aero{uri}
+}
+
+maps.skylines.aero {
+    redir https://skylines.aero{uri}
+}

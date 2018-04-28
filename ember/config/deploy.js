@@ -9,8 +9,9 @@ module.exports = function(deployTarget) {
     'revision-data': {
       type: 'git-commit',
     },
-    'gzip': {
+    'compress': {
       keep: true,
+      compression: ['gzip', 'brotli'],
     },
   };
 
