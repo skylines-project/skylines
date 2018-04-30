@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "64977344adf511d63df8477e19f6aa1d0ade89ddc2f2a3139d6cc5ea2ed64e29"
+            "sha256": "90eb13a499b258243d1c83ece934cb9c9dd1ec8efc5d0d1d22a9974b0a24e805"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -18,11 +18,10 @@
     "default": {
         "aerofiles": {
             "hashes": [
-                "sha256:76b02dee7513a9f52f9ecded5510bf0dc7b6dee5e27e8f577ff77a7e5e26ecc0",
-                "sha256:d082d2f2afb3eca950dfdc6e4b4fcca33c30f330de03a6f60afb5edf6dbecbec"
+                "sha256:9651e47b62fc7164893d8e0eaa57f806ae0b9cecf85eb12d5a4b9feae8ae2a69"
             ],
             "index": "pypi",
-            "version": "==0.1.1"
+            "version": "==0.4.1"
         },
         "alembic": {
             "hashes": [
@@ -605,6 +604,7 @@
                 "sha256:edabd457cd23a02965166026fd9bfd196f4324fe6032e866d0f3bd0301cd486f",
                 "sha256:fdf1c1dc5bafc32bc5d08b054f94d659422b05aba244d6be4ddc1c72d9aa70fb"
             ],
+            "markers": "platform_python_implementation != 'pypy'",
             "version": "==1.11.5"
         },
         "configparser": {
@@ -716,7 +716,7 @@
                 "sha256:330cc27ccbf7f1e992e69fef78261dc7c6569012cf397db8d3de0234e6c937ca",
                 "sha256:a7bb0f2cf3a3fd1ab2732cb49eba4252c2af4240442415b4abce3b87022a8f50"
             ],
-            "markers": "python_version < '3.3'",
+            "markers": "python_version < '3.0'",
             "version": "==1.0.2"
         },
         "idna": {
