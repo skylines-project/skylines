@@ -17,32 +17,32 @@ def search(text):
 
 def test_tokenizer():
     # Check that this does not throw exceptions
-    text_to_tokens('\\')
-    text_to_tokens('blabla \\')
-    text_to_tokens('"')
-    text_to_tokens('"blabla \\')
+    text_to_tokens(u'\\')
+    text_to_tokens(u'blabla \\')
+    text_to_tokens(u'"')
+    text_to_tokens(u'"blabla \\')
 
     # Check that the tokenizer returns expected results
-    assert text_to_tokens('a b c') == ['a', 'b', 'c']
-    assert text_to_tokens('a \'b c\'') == ['a', 'b c']
-    assert text_to_tokens('a "b c" d') == ['a', 'b c', 'd']
-    assert text_to_tokens('old "mac donald" has a FARM') == \
-        ['old', 'mac donald', 'has', 'a', 'FARM']
+    assert text_to_tokens(u'a b c') == [u'a', u'b', u'c']
+    assert text_to_tokens(u'a \'b c\'') == [u'a', u'b c']
+    assert text_to_tokens(u'a "b c" d') == [u'a', u'b c', u'd']
+    assert text_to_tokens(u'old "mac donald" has a FARM') == \
+        [u'old', u'mac donald', u'has', u'a', u'FARM']
 
 
 def test_escaping():
-    assert escape_tokens(['hello!']) == ['hello!']
-    assert escape_tokens(['hello *!']) == ['hello %!']
-    assert escape_tokens(['hello %!']) == ['hello \\%!']
-    assert escape_tokens(['hello _!']) == ['hello \\_!']
+    assert escape_tokens([u'hello!']) == [u'hello!']
+    assert escape_tokens([u'hello *!']) == [u'hello %!']
+    assert escape_tokens([u'hello %!']) == [u'hello \\%!']
+    assert escape_tokens([u'hello _!']) == [u'hello \\_!']
 
 
 def test_search(test_user, test_admin):
-    assert search('example').count() == 2
-    assert search('user').count() == 1
-    assert search('man').count() == 1
-    assert search('man*er').count() == 1
-    assert search('*er').count() == 2
-    assert search('exa*er').count() == 2
-    assert search('exp*er').count() == 0
-    assert search('xyz').count() == 0
+    assert search(u'example').count() == 2
+    assert search(u'user').count() == 1
+    assert search(u'man').count() == 1
+    assert search(u'man*er').count() == 1
+    assert search(u'*er').count() == 2
+    assert search(u'exa*er').count() == 2
+    assert search(u'exp*er').count() == 0
+    assert search(u'xyz').count() == 0

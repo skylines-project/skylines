@@ -17,7 +17,7 @@ class ExampleTable(db.Model):
 class TestSqlLib:
 
     def setup(self):
-        db.session.add(ExampleTable(name='John Doe', uni='Jane and John Doe'))
+        db.session.add(ExampleTable(name='John Doe', uni=u'Jane and John Doe'))
         db.session.commit()
 
     def test_weighted_ilike(self):

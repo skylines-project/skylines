@@ -76,9 +76,9 @@ def test_filled_flight(db_session, client):
     jane = users.jane()
     flight = flights.filled(
         pilot=john,
-        pilot_name='johnny_d',
+        pilot_name=u'johnny_d',
         co_pilot=jane,
-        co_pilot_name='jane',
+        co_pilot_name=u'jane',
         club=lva,
         model=aircraft_models.nimeta(),
         takeoff_airport=airports.meiersberg(),
@@ -177,9 +177,9 @@ def test_comments(db_session, client):
     flight = flights.one(igc_file=igcs.simple(owner=users.john()))
     comment1 = flight_comments.yeah(flight=flight)
     comment2 = flight_comments.emoji(flight=flight)
-    comment3 = flight_comments.yeah(flight=flight, user=flight.igc_file.owner, text='foo')
-    comment4 = flight_comments.yeah(flight=flight, text='bar')
-    comment5 = flight_comments.yeah(flight=flight, user=users.jane(), text='baz')
+    comment3 = flight_comments.yeah(flight=flight, user=flight.igc_file.owner, text=u'foo')
+    comment4 = flight_comments.yeah(flight=flight, text=u'bar')
+    comment5 = flight_comments.yeah(flight=flight, user=users.jane(), text=u'baz')
     add_fixtures(db_session, flight, comment1, comment2, comment3, comment4, comment5)
 
     res = client.get('/flights/{id}?extended'.format(id=flight.id))
