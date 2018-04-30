@@ -213,18 +213,23 @@ def weight_expression(columns, tokens):
     return sum(expressions)
 
 
-def process_result_details(models, results):
+def process_results_details(models, results):
+    return [process_result_details(models, result._asdict()) for result in results]
+
+
+def process_result_details(models, result):
     models = {m.__name__: m for m in models}
 
-    for result in results:
-        model = models.get(result.model, None)
-        if not model:
-            continue
+    model = models.get(result['model'], None)
+    if not model:
+        return result
 
-        details = getattr(model, '__search_detail_columns__', [None])
-        if len(details) != len(result.details):
-            continue
+    details = getattr(model, '__search_detail_columns__', [None])
+    if len(details) != len(result['details']):
+        return result
 
-        for key, value in zip(details, result.details):
-            if isinstance(key, str):
-                setattr(result, key, value)
+    for key, value in zip(details, result['details']):
+        if isinstance(key, str):
+            result[key] = value
+
+    return result
