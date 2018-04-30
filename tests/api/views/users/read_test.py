@@ -25,8 +25,8 @@ def test_read_user(db_session, client):
 def test_following(db_session, client):
     john = users.john()
     jane = users.jane()
-    Follower.follow(john, jane)
     add_fixtures(db_session, john, jane)
+    Follower.follow(john, jane)
 
     res = client.get('/users/{id}'.format(id=john.id))
     assert res.status_code == 200
