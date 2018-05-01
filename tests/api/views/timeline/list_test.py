@@ -4,14 +4,18 @@ from tests.data import add_fixtures, events, users, flights, flight_comments, cl
 def test_event_types(db_session, client):
     john = users.john()
     jane = users.jane()
-    flight = flights.one(igc_file=igcs.simple(owner=john))
-    flight_comment = flight_comments.emoji(flight=flight)
+    lva = clubs.lva()
+    add_fixtures(db_session, john, jane, lva)
 
-    flight_event = events.flight(actor=john, flight=flight)
-    flight_comment_event = events.flight_comment(actor=john, flight=flight, flight_comment=flight_comment)
+    flight = flights.one(igc_file=igcs.simple(owner=john))
+    flight_comment = flight_comments.emoji(flight=flight, user=john)
+    add_fixtures(db_session, flight, flight_comment)
+
+    flight_event = events.flight(flight)
+    flight_comment_event = events.flight_comment(flight_comment)
     follower_event = events.follower(actor=john, user=jane)
-    new_user_event = events.new_user(actor=jane)
-    club_join_event = events.club_join(actor=john, club=clubs.lva())
+    new_user_event = events.new_user(jane)
+    club_join_event = events.club_join(actor=john, club=lva)
     add_fixtures(db_session, flight_event, flight_comment_event, follower_event, new_user_event, club_join_event)
 
     res = client.get('/timeline')

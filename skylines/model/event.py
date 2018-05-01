@@ -60,3 +60,45 @@ class Event(db.Model):
     def __repr__(self):
         return '<Event: id={} type={}>' \
             .format(self.id, self.type).encode('unicode_escape')
+
+    ##############################
+
+    @staticmethod
+    def for_flight_comment(comment):
+        """
+        Create notifications for the owner and pilots of the flight
+        """
+        return Event(type=Event.Type.FLIGHT_COMMENT,
+                     actor=comment.user,
+                     flight=comment.flight,
+                     flight_comment=comment)
+
+    @staticmethod
+    def for_flight(flight):
+        """
+        Create notifications for the followers of the owner and pilots of the flight
+        """
+        return Event(type=Event.Type.FLIGHT,
+                     actor_id=flight.igc_file.owner_id,
+                     flight=flight)
+
+    @staticmethod
+    def for_follower(followed, follower):
+        """
+        Create event for the followed pilot about his new follower
+        """
+        return Event(type=Event.Type.FOLLOWER, actor=follower, user=followed)
+
+    @staticmethod
+    def for_new_user(user):
+        """
+        Create event for a new SkyLines user.
+        """
+        return Event(type=Event.Type.NEW_USER, actor=user)
+
+    @staticmethod
+    def for_club_join(club_id, user):
+        """
+        Create event for a user joining a club.
+        """
+        return Event(type=Event.Type.CLUB_JOIN, actor=user, club_id=club_id)

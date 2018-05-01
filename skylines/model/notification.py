@@ -77,9 +77,7 @@ def create_flight_comment_notifications(comment):
     user = comment.user
 
     # Create the event
-    event = Event(type=Event.Type.FLIGHT_COMMENT,
-                  actor=user, flight=flight, flight_comment=comment)
-
+    event = Event.for_flight_comment(comment)
     db.session.add(event)
 
     # Create set of potential recipients
@@ -99,10 +97,7 @@ def create_flight_notifications(flight):
     """
 
     # Create the event
-    event = Event(type=Event.Type.FLIGHT,
-                  actor_id=flight.igc_file.owner.id,
-                  flight=flight)
-
+    event = Event.for_flight(flight)
     db.session.add(event)
 
     # Create list of flight-related users
@@ -131,7 +126,7 @@ def create_follower_notification(followed, follower):
     """
 
     # Create the event
-    event = Event(type=Event.Type.FOLLOWER, actor=follower, user=followed)
+    event = Event.for_follower(followed, follower)
     db.session.add(event)
 
     # Create the notification
@@ -145,7 +140,7 @@ def create_new_user_event(user):
     """
 
     # Create the event
-    event = Event(type=Event.Type.NEW_USER, actor=user)
+    event = Event.for_new_user(user)
     db.session.add(event)
 
 
@@ -161,7 +156,7 @@ def create_club_join_event(club, user):
         club = club.id
 
     # Create the event
-    event = Event(type=Event.Type.CLUB_JOIN, actor=user, club_id=club)
+    event = Event.for_club_join(club, user)
     db.session.add(event)
 
     # Create the notifications for club members and followers
