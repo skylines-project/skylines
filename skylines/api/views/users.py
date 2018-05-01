@@ -16,7 +16,7 @@ from skylines.lib.dbutil import get_requested_record
 from skylines.model import (
     User, Flight, Follower, Location, Notification, Event
 )
-from skylines.model.event import create_new_user_event, create_follower_notification
+from skylines.model.notification import create_new_user_event, create_follower_notification
 from skylines.schemas import Schema, fields, FlightSchema, CurrentUserSchema, UserSchema, ValidationError
 
 users_blueprint = Blueprint('users', 'skylines')

@@ -22,7 +22,7 @@ from skylines.lib.sql import query_to_sql
 from skylines.lib.xcsoar_ import flight_path, analyse_flight
 from skylines.model import User, Flight, IGCFile, Airspace, AircraftModel
 from skylines.model.airspace import get_airspace_infringements
-from skylines.model.event import create_flight_notifications
+from skylines.model.notification import create_flight_notifications
 from skylines.schemas import fields, AirspaceSchema, AircraftModelSchema, FlightSchema, UserSchema, Schema, ValidationError
 from skylines.worker import tasks
 

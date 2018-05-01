@@ -7,7 +7,7 @@ from .airport import Airport
 from .airspace import Airspace
 from .club import Club
 from .elevation import Elevation
-from .event import Event, Notification
+from .event import Event
 from .flight import Flight, FlightPathChunks
 from .flight_meetings import FlightMeetings
 from .flight_comment import FlightComment
@@ -17,6 +17,7 @@ from .follower import Follower
 from .geo import Location, Bounds
 from .igcfile import IGCFile
 from .mountain_wave_project import MountainWaveProject
+from .notification import Notification
 from .timezone import TimeZone
 from .trace import Trace
 from .tracking import TrackingFix, TrackingSession
