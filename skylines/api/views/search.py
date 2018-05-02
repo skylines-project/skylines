@@ -4,7 +4,7 @@ from skylines.api.json import jsonify
 from skylines.model import User, Club, Airport
 from skylines.model.search import (
     combined_search_query, text_to_tokens, escape_tokens,
-    process_result_details
+    process_results_details
 )
 
 search_blueprint = Blueprint('search', 'skylines')
@@ -32,24 +32,24 @@ def search(text):
     # Perform query and limit output to 20 items
     results = query.limit(20).all()
 
-    process_result_details(MODELS, results)
+    results = process_results_details(MODELS, results)
 
     results_json = []
     for r in results:
         result = {
-            'type': r.model.lower(),
-            'id': r.id,
-            'name': r.name,
+            'type': r['model'].lower(),
+            'id': r['id'],
+            'name': r['name'],
         }
 
-        if hasattr(r, 'website') and r.website:
-            result['website'] = r.website
+        if r.get('website'):
+            result['website'] = r['website']
 
-        if hasattr(r, 'icao') and r.icao:
-            result['icao'] = r.icao
+        if r.get('icao'):
+            result['icao'] = r['icao']
 
-        if hasattr(r, 'frequency') and r.frequency:
-            result['frequency'] = '%.3f' % (float(r.frequency))
+        if r.get('frequency'):
+            result['frequency'] = '%.3f' % (float(r['frequency']))
 
         results_json.append(result)
 

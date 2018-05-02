@@ -7,10 +7,10 @@ from skylines.database import db
 
 
 PATTERNS = [
-    ('{}', 5),     # Matches token exactly
-    ('{}%', 3),    # Begins with token
-    ('% {}%', 2),  # Has token at word start
-    ('%{}%', 1),   # Has token
+    (u'{}', 5),     # Matches token exactly
+    (u'{}%', 3),    # Begins with token
+    (u'% {}%', 2),  # Has token at word start
+    (u'%{}%', 1),   # Has token
 ]
 
 
@@ -177,10 +177,10 @@ def text_to_tokens(search_text):
 
 def escape_tokens(tokens):
     # Escape % and _ properly
-    tokens = [t.replace('%', '\\%').replace('_', '\\_') for t in tokens]
+    tokens = [t.replace(u'%', u'\\%').replace(u'_', u'\\_') for t in tokens]
 
     # Use * as wildcard character
-    tokens = [t.replace('*', '%') for t in tokens]
+    tokens = [t.replace(u'*', u'%') for t in tokens]
 
     return tokens
 
@@ -190,7 +190,7 @@ def weight_expression(columns, tokens):
 
     # Use entire search string as additional token
     if len(tokens) > 1:
-        tokens = tokens + [' '.join(tokens)]
+        tokens = tokens + [u' '.join(tokens)]
 
     for column in columns:
         for token in tokens:
@@ -213,18 +213,23 @@ def weight_expression(columns, tokens):
     return sum(expressions)
 
 
-def process_result_details(models, results):
+def process_results_details(models, results):
+    return [process_result_details(models, result._asdict()) for result in results]
+
+
+def process_result_details(models, result):
     models = {m.__name__: m for m in models}
 
-    for result in results:
-        model = models.get(result.model, None)
-        if not model:
-            continue
+    model = models.get(result['model'], None)
+    if not model:
+        return result
 
-        details = getattr(model, '__search_detail_columns__', [None])
-        if len(details) != len(result.details):
-            continue
+    details = getattr(model, '__search_detail_columns__', [None])
+    if len(details) != len(result['details']):
+        return result
 
-        for key, value in zip(details, result.details):
-            if isinstance(key, str):
-                setattr(result, key, value)
+    for key, value in zip(details, result['details']):
+        if isinstance(key, str):
+            result[key] = value
+
+    return result

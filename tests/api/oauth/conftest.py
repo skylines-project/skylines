@@ -51,7 +51,7 @@ def db(app):
 
 @pytest.fixture(scope='session')
 def test_user(db):
-    user = User(email_address='test@foo.com', password='secret123', first_name='test')
+    user = User(email_address=u'test@foo.com', password=u'secret123', first_name=u'test')
     db.session.add(user)
     db.session.commit()
     return user

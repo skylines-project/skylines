@@ -53,9 +53,6 @@ def index(page=None, id=None):
 
     list = []
     for row in query:
-        row.average_distance = row.distance / row.flights
-        row.average_duration = row.duration / row.flights
-
         list.append({
             'year': row.year,
             'flights': row.flights,

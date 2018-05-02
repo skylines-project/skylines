@@ -20,8 +20,8 @@ def filled(owner, **kwargs):
         md5='12345aa50aec6a6667e1c9251a68a90e',
         logger_id='GC1',
         logger_manufacturer_id='FLA',
-        registration='D-4449',
-        competition_id='TH',
-        model='Hornet',
+        registration=u'D-4449',
+        competition_id=u'TH',
+        model=u'Hornet',
         date_utc=date(2017, 1, 15),
     ).apply_kwargs(kwargs)

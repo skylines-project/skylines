@@ -139,12 +139,12 @@ class User(db.Model):
         if not self.last_name:
             return self.first_name
 
-        return self.first_name + ' ' + self.last_name
+        return self.first_name + u' ' + self.last_name
 
     @name.expression
     def name_expression(cls):
         return case([
-            (cls.last_name != None, cls.first_name + ' ' + cls.last_name),
+            (cls.last_name != None, cls.first_name + u' ' + cls.last_name),
         ], else_=cls.first_name)
 
     def initials(self):

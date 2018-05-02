@@ -9,7 +9,7 @@ def yeah(flight, **kwargs):
     return FlightComment(
         time_created=datetime(2017, 1, 19, 12, 34, 56),
         flight=flight,
-        text='Yeah!',
+        text=u'Yeah!',
     ).apply_kwargs(kwargs)
 
 

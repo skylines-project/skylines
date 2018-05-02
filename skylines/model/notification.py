@@ -59,13 +59,12 @@ class Notification(db.Model):
     @classmethod
     def mark_all_read(cls, recipient, filter_func=None):
         query = cls.query(recipient=recipient) \
-            .outerjoin(Event) \
             .filter(Event.id == Notification.event_id)
 
         if filter_func is not None:
             query = filter_func(query)
 
-        query.update(dict(time_read=datetime.utcnow()))
+        query.update(dict(time_read=datetime.utcnow()), synchronize_session=False)
 
 
 def create_flight_comment_notifications(comment):
