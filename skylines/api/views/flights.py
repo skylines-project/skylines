@@ -27,7 +27,7 @@ from skylines.model import (
     Notification, Event,
     Elevation, Location, FlightMeetings,
 )
-from skylines.model.event import create_flight_comment_notifications
+from skylines.model.notification import create_flight_comment_notifications
 from skylines.schemas import (
     fields, FlightSchema, FlightCommentSchema, FlightPhaseSchema, ContestLegSchema,
     AircraftModelSchema, AirportSchema, ClubSchema, UserSchema, Schema, ValidationError

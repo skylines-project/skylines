@@ -5,7 +5,7 @@ from skylines.api.json import jsonify
 from skylines.api.oauth import oauth
 from skylines.database import db
 from skylines.model import User, Club, Flight, IGCFile
-from skylines.model.event import (
+from skylines.model.notification import (
     create_club_join_event
 )
 from skylines.schemas import CurrentUserSchema, ValidationError
