@@ -51,7 +51,7 @@
     "ember-cp-validations": "^3.5.3",
     "ember-font-awesome": "^4.0.0-rc.3",
     "ember-href-to": "^1.15.1",
-    "ember-intl": "^2.33.1",
+    "ember-intl": "^2.33.2",
     "ember-intl-cp-validations": "^3.0.1",
     "ember-load-initializers": "^1.1.0",
     "ember-maybe-import-regenerator": "^0.1.6",

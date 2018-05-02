@@ -3591,9 +3591,9 @@ ember-intl-relativeformat@^3.3.0:
     ember-intl-messageformat "^3.2.0"
     intl-relativeformat "^2.0.0"
 
-ember-intl@^2.33.1:
-  version "2.33.1"
-  resolved "https://registry.yarnpkg.com/ember-intl/-/ember-intl-2.33.1.tgz#026afe37830cc458d31dca291f5780d258a59cd9"
+ember-intl@^2.33.2:
+  version "2.33.2"
+  resolved "https://registry.yarnpkg.com/ember-intl/-/ember-intl-2.33.2.tgz#2145b5770b6b4a79b3690e375096f0620f3b6dd2"
   dependencies:
     broccoli-caching-writer "^3.0.3"
     broccoli-cldr-data "^1.1.0"
