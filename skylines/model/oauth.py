@@ -48,7 +48,7 @@ class RefreshToken(db.Model):
 
     id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     client_id = Client.client_id
-    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id', ondelete='CASCADE'), nullable=False)
     user = db.relationship('User', foreign_keys=[user_id])
     refresh_token = db.Column(db.String(255), unique=True)
     scopes = []
