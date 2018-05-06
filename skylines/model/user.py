@@ -272,6 +272,11 @@ class User(db.Model):
         from skylines.model.flight import Flight
         return Flight.get_largest().filter(Flight.pilot == self)
 
+    ##############################
+
+    def delete(self):
+        db.session.delete(self)
+
 
 db.Index('users_lower_email_address_idx',
          db.func.lower(User.email_address), unique=True)
