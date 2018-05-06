@@ -255,6 +255,21 @@ def read(user_id):
     return jsonify(user_json)
 
 
+@users_blueprint.route('/users/<user_id>', methods=['DELETE'], strict_slashes=False)
+@oauth.required()
+def delete_user(user_id):
+    user = get_requested_record(User, user_id)
+
+    current_user = User.get(request.user_id)
+    if not user.is_writable(current_user):
+        return jsonify(), 403
+
+    user.delete()
+    db.session.commit()
+
+    return jsonify()
+
+
 @users_blueprint.route('/users/<user_id>/followers')
 @oauth.optional()
 def followers(user_id):
