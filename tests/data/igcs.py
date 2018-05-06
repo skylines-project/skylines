@@ -1,6 +1,9 @@
+import os
 from datetime import date, datetime
 
 from skylines.model import IGCFile
+
+simple_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'simple.igc')
 
 
 def simple(owner, **kwargs):
