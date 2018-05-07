@@ -1608,6 +1608,13 @@ broccoli-file-creator@^1.1.1:
     rsvp "~3.0.6"
     symlink-or-copy "^1.0.1"
 
+broccoli-file-creator@^2.1.1:
+  version "2.1.1"
+  resolved "https://registry.yarnpkg.com/broccoli-file-creator/-/broccoli-file-creator-2.1.1.tgz#7351dd2496c762cfce7736ce9b49e3fce0c7b7db"
+  dependencies:
+    broccoli-plugin "^1.1.0"
+    mkdirp "^0.5.1"
+
 broccoli-filter@^0.1.11:
   version "0.1.14"
   resolved "https://registry.yarnpkg.com/broccoli-filter/-/broccoli-filter-0.1.14.tgz#23cae3891ff9ebb7b4d7db00c6dcf03535daf7ad"
@@ -2928,16 +2935,15 @@ ember-ast-helpers@0.3.5:
     "@glimmer/compiler" "^0.27.0"
     "@glimmer/syntax" "^0.27.0"
 
-ember-awesome-macros@^0.41.0:
-  version "0.41.0"
-  resolved "https://registry.yarnpkg.com/ember-awesome-macros/-/ember-awesome-macros-0.41.0.tgz#48b8bbef3b09c614844ffcafeb8ecc8650eda703"
+ember-awesome-macros@^0.43.0:
+  version "0.43.0"
+  resolved "https://registry.yarnpkg.com/ember-awesome-macros/-/ember-awesome-macros-0.43.0.tgz#62e204ec88d423a871d2101778bbcba766e497d9"
   dependencies:
-    broccoli-file-creator "^1.1.1"
+    broccoli-file-creator "^2.1.1"
     broccoli-merge-trees "^2.0.0"
     ember-cli-babel "^6.6.0"
     ember-cli-string-utils "^1.1.0"
-    ember-macro-helpers "^0.17.0"
-    ember-string-ishtmlsafe-polyfill "^2.0.0"
+    ember-macro-helpers "^0.18.0"
 
 ember-basic-dropdown@^0.34.0:
   version "0.34.0"
@@ -3635,9 +3641,9 @@ ember-load-initializers@^1.1.0:
   dependencies:
     ember-cli-babel "^6.6.0"
 
-ember-macro-helpers@^0.17.0:
-  version "0.17.0"
-  resolved "https://registry.yarnpkg.com/ember-macro-helpers/-/ember-macro-helpers-0.17.0.tgz#5e64a49f476e38c1916aff75f949455533cd1abe"
+ember-macro-helpers@^0.18.0:
+  version "0.18.0"
+  resolved "https://registry.yarnpkg.com/ember-macro-helpers/-/ember-macro-helpers-0.18.0.tgz#16e2f061a23eebb22b8caaa2b0072ccb23a571eb"
   dependencies:
     ember-cli-babel "^6.6.0"
     ember-cli-string-utils "^1.1.0"
