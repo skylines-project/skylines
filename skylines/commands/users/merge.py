@@ -20,10 +20,12 @@ class Merge(Command):
         new = db.session.query(User).get(new_id)
         if not new:
             print("No such user: %d" % new_id, file=sys.stderr)
+            sys.exit(1)
 
         old = db.session.query(User).get(old_id)
         if not old:
             print("No such user: %d" % old_id, file=sys.stderr)
+            sys.exit(1)
 
         if old.club != new.club:
             print("Different club;", old.club, new.club, file=sys.stderr)
