@@ -36,7 +36,7 @@ uwsgi = "*"
 mapproxy = "*"
 
 [dev-packages]
-fabric = "==1.14.0"
+fabric = "==2.0.0"
 pytest = "==3.5.1"
 pytest-cov = "==2.5.1"
 mock = "==2.0.0"
