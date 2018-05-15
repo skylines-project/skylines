@@ -503,11 +503,11 @@
         },
         "webargs": {
             "hashes": [
-                "sha256:d15d81531b7c0f73dec140bf0cd45c15f061f88eb08fcc29854d94682fd3911c",
-                "sha256:fd0b3b0d419a1699b840520b21003d365905089d6ef57091fd08f7d05bf506c2"
+                "sha256:69dfbfa1f889dd2aec079630760ce357094655568e21dd29584dea686550f466",
+                "sha256:ba217b5cc03913aa8625b65a41b45341ed27936cd34e1b4aa9a64b022fa6ed77"
             ],
             "index": "pypi",
-            "version": "==2.1.0"
+            "version": "==3.0.0"
         },
         "werkzeug": {
             "hashes": [
