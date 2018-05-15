@@ -31,7 +31,7 @@ webargs = "*"
 marshmallow = "*"
 flask-oauthlib = "*"
 oauthlib = "*"
-raven = {extras = ["flask"], version = "==5.27.1"}
+raven = {extras = ["flask"], version = "==6.8.0"}
 uwsgi = "*"
 mapproxy = "*"
 
