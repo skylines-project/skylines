@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "d2a40e159515d950231cee3ff776b3a58889ac938c1d930c0f6e3b58f3548c85"
+            "sha256": "ecba64ba4860e5d1476839262f374e5244e0d9f64d3aff6c7ecd95b293df0c80"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -164,10 +164,10 @@
         },
         "flask-script": {
             "hashes": [
-                "sha256:f43a1be86fd618712fd30c47eb3c88effd17ed96633bf0791a89b82a221a89ce"
+                "sha256:6425963d91054cfcc185807141c7314a9c5ad46325911bd24dcb489bd0161c65"
             ],
             "index": "pypi",
-            "version": "==0.6.7"
+            "version": "==2.0.6"
         },
         "flask-sqlalchemy": {
             "hashes": [
@@ -739,7 +739,7 @@
                 "sha256:64b28eec5e78e7510698f6d4da08800a5c575caa4a286c93d651c5d3ff7b6794",
                 "sha256:b146c751ea45cad6188dd6cf2d9b757f6f4f8d6ffb96a023e6f2e26eea02a72c"
             ],
-            "markers": "python_version < '3'",
+            "markers": "python_version == '2.7'",
             "version": "==1.0.22"
         },
         "mccabe": {
