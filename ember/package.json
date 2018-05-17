@@ -17,7 +17,7 @@
     "test": "ember test"
   },
   "dependencies": {
-    "ember-awesome-macros": "^0.43.0"
+    "ember-awesome-macros": "^1.0.0"
   },
   "devDependencies": {
     "bigscreen": "^2.0.5",
