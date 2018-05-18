@@ -54,7 +54,9 @@
 
     <div class="sidebar-pane" id="tab-stats-total">
       <h3>{{t "statistics"}}</h3>
-      {{flight-performance-panel performance=performance class="sidebar-pane-content"}}
+      <div class="sidebar-pane-content">
+        {{flight-performance-panel performance=performance}}
+      </div>
     </div>
 
     <div class="sidebar-pane" id="tab-stats-legs">
