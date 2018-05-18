@@ -26,7 +26,7 @@ export default Component.extend({
 
   willDestroyElement() {
     this._super(...arguments);
-    let mouseHandler = this.get('mouseHandler');
+    let mouseHandler = this.mouseHandler;
     $(document).off('mouseup touchend', mouseHandler);
   },
 
@@ -37,7 +37,7 @@ export default Component.extend({
     },
 
     select(layer) {
-      let mapSettings = this.get('mapSettings');
+      let mapSettings = this.mapSettings;
 
       if (layer.isBaseLayer) {
         mapSettings.setBaseLayer(layer.name);
@@ -50,9 +50,9 @@ export default Component.extend({
   },
 
   updateLayers() {
-    let mapSettings = this.get('mapSettings');
+    let mapSettings = this.mapSettings;
 
-    let layers = this.get('map').getLayers().getArray()
+    let layers = this.map.getLayers().getArray()
       .filter(layer => layer.get('display_in_layer_switcher'))
       .map(layer => {
         let id = layer.get('id');

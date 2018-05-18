@@ -6,6 +6,6 @@ export default Route.extend(AuthenticatedRouteMixin, {
   ajax: service(),
 
   model() {
-    return this.get('ajax').request('/api/settings/');
+    return this.ajax.request('/api/settings/');
   },
 });

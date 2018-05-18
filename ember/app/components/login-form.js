@@ -11,10 +11,10 @@ export default Component.extend({
   error: null,
 
   loginTask: task(function * () {
-    let { email, password } = this.getProperties('email', 'password');
+    let { email, password } = this;
 
     try {
-      yield this.get('session').authenticate('authenticator:oauth2', email, password);
+      yield this.session.authenticate('authenticator:oauth2', email, password);
     } catch (error) {
       this.set('error', error);
     }

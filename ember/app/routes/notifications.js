@@ -27,7 +27,7 @@ export default Route.extend(AuthenticatedRouteMixin, {
       data.type = params.type;
     }
 
-    return this.get('ajax').request('/api/notifications', { data });
+    return this.ajax.request('/api/notifications', { data });
   },
 
   setupController(controller) {

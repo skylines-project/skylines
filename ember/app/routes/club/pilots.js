@@ -6,7 +6,7 @@ export default Route.extend({
 
   model() {
     let { club_id } = this.paramsFor('club');
-    return this.get('ajax').request(`/api/users?club=${club_id}`);
+    return this.ajax.request(`/api/users?club=${club_id}`);
   },
 
   setupController(controller) {

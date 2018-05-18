@@ -14,7 +14,7 @@ let Fix = EmberObject.extend({
   _t: readOnly('fixCalc.time'),
 
   t: computed('_t', 'flight.{startTime,endTime}', function() {
-    let _t = this.get('_t');
+    let _t = this._t;
     if (_t === -1) {
       return this.get('flight.endTime');
     } else if (_t >= this.get('flight.startTime') && _t <= this.get('flight.endTime')) {

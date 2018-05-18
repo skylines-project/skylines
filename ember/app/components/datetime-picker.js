@@ -21,12 +21,12 @@ export default Component.extend({
         up: 'fa fa-chevron-up',
         down: 'fa fa-chevron-down',
       },
-      minDate: this.get('minDate'),
-      maxDate: this.get('maxDate'),
+      minDate: this.minDate,
+      maxDate: this.maxDate,
     });
 
     this.$().on('dp.change', ({ date }) => {
-      this.get('onChange')(date.toDate());
+      this.onChange(date.toDate());
     });
 
     this.set('picker', this.$().data('DateTimePicker'));
@@ -46,9 +46,9 @@ export default Component.extend({
   },
 
   updateDate() {
-    let picker = this.get('picker');
+    let picker = this.picker;
     if (picker) {
-      picker.setValue(this.get('date'));
+      picker.setValue(this.date);
     }
   },
 });

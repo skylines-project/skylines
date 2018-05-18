@@ -20,7 +20,7 @@ export default Component.extend({
 
   actions: {
     select(id) {
-      this.set('selection', this.get('selection') === id ? null : id);
+      this.set('selection', this.selection === id ? null : id);
     },
   },
 });

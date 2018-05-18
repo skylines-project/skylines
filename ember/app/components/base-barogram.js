@@ -24,7 +24,7 @@ export default Component.extend({
 
   didInsertElement() {
     this._super(...arguments);
-    let units = this.get('units');
+    let units = this.units;
 
     let opts = {
       grid: {
@@ -54,7 +54,7 @@ export default Component.extend({
       },
     };
 
-    if (this.get('uploadMode')) {
+    if (this.uploadMode) {
       opts.selection = {
         mode: 'x',
       };
@@ -73,7 +73,7 @@ export default Component.extend({
   draw() {
     this.update();
 
-    let flot = this.get('flot');
+    let flot = this.flot;
     flot.setupGrid();
     flot.draw();
   },
@@ -86,18 +86,18 @@ export default Component.extend({
     data = data.concat(this.enlData());
     this.addContests(data);
 
-    this.get('flot').setData(data);
+    this.flot.setData(data);
   },
 
   activeTraces() {
-    return this.get('active').map(trace => ({
+    return this.active.map(trace => ({
       data: trace.data,
       color: trace.color,
     }));
   },
 
   passiveTraces() {
-    return (this.get('passive') || []).map(trace => ({
+    return (this.passive || []).map(trace => ({
       data: trace.data,
       color: $.color.parse(trace.color).add('a', -0.6).toString(),
       shadowSize: 0,
@@ -108,7 +108,7 @@ export default Component.extend({
   },
 
   enlData() {
-    return this.get('enls').map(enl => ({
+    return this.enls.map(enl => ({
       data: enl.data,
       color: enl.color,
       lines: {
@@ -121,7 +121,7 @@ export default Component.extend({
 
   addContests(data) {
     // Skip the function if there are no contest markers
-    let contests = this.get('contests');
+    let contests = this.contests;
     if (!contests) {
       return;
     }
@@ -157,7 +157,7 @@ export default Component.extend({
 
   addElevations(data) {
     data.push({
-      data: this.get('elevations'),
+      data: this.elevations,
       color: 'rgb(235, 155, 98)',
       lines: {
         lineWidth: 0,

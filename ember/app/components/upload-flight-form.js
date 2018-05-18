@@ -49,7 +49,7 @@ export default Component.extend(Validations, {
     async submit() {
       let { validations } = await this.validate();
       if (validations.get('isValid')) {
-        this.get('uploadTask').perform();
+        this.uploadTask.perform();
       }
     },
   },
@@ -59,8 +59,8 @@ export default Component.extend(Validations, {
     let data = new FormData(form);
 
     try {
-      let json = yield this.get('ajax').request('/api/flights/upload/', { method: 'POST', data, contentType: false, processData: false });
-      this.get('onUpload')(json);
+      let json = yield this.ajax.request('/api/flights/upload/', { method: 'POST', data, contentType: false, processData: false });
+      this.onUpload(json);
 
     } catch (error) {
       this.set('error', error);

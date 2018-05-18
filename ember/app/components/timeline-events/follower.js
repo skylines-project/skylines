@@ -9,8 +9,8 @@ export default Base.extend({
 
   translationKey: computed('accountUserIsActor', 'accountUserIsFollowed', function() {
     let i = 1;
-    if (this.get('accountUserIsActor')) { i += 1; }
-    if (this.get('accountUserIsFollowed')) { i += 2; }
+    if (this.accountUserIsActor) { i += 1; }
+    if (this.accountUserIsFollowed) { i += 2; }
     return `timeline-events.follower.message${i}`;
   }),
 });

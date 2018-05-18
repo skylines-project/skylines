@@ -37,19 +37,19 @@ export default Component.extend(Validations, {
     async submit() {
       let { validations } = await this.validate();
       if (validations.get('isValid')) {
-        this.get('saveTask').perform();
+        this.saveTask.perform();
       }
     },
   },
 
   saveTask: task(function * () {
     let json = {
-      trackingCallsign: this.get('callsign'),
-      trackingDelay: this.get('delay'),
+      trackingCallsign: this.callsign,
+      trackingDelay: this.delay,
     };
 
     try {
-      yield this.get('ajax').request('/api/settings/', { method: 'POST', json });
+      yield this.ajax.request('/api/settings/', { method: 'POST', json });
 
       this.setProperties({
         messageKey: 'settings-have-been-saved',

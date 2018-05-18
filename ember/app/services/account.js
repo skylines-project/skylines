@@ -7,7 +7,7 @@ export default Service.extend({
   sessionData: alias('session.data.authenticated.settings'),
 
   user: computed('sessionData.{id,name}', function() {
-    let sessionData = this.get('sessionData');
+    let sessionData = this.sessionData;
     if (sessionData) {
       return getProperties(sessionData, 'id', 'name');
     }

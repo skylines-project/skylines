@@ -16,7 +16,7 @@ export default Route.extend({
     this.set('searchTextService.text', searchText);
 
     if (searchText) {
-      return this.get('ajax').request(`/api/search?text=${searchText}`);
+      return this.ajax.request(`/api/search?text=${searchText}`);
     }
   },
 

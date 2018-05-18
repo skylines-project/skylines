@@ -11,14 +11,14 @@ export default Component.extend({
   modelId: null,
 
   modelsWithNull: computed('models.[]', function() {
-    return [{ id: null }].concat(this.get('models'));
+    return [{ id: null }].concat(this.models);
   }),
 
   model: findBy('modelsWithNull', raw('id'), or('modelId', null)),
 
   actions: {
     onChange(model) {
-      this.get('onChange')(model.id);
+      this.onChange(model.id);
     },
   },
 });

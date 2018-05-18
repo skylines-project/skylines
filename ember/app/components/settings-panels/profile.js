@@ -92,34 +92,34 @@ export default Component.extend(Validations, {
     async submit() {
       let { validations } = await this.validate();
       if (validations.get('isValid')) {
-        this.get('saveTask').perform();
+        this.saveTask.perform();
       }
     },
   },
 
   saveTask: task(function * () {
     let json = {
-      email: this.get('email'),
-      firstName: this.get('firstName'),
-      lastName: this.get('lastName'),
-      distanceUnit: this.get('distanceUnitIndex'),
-      speedUnit: this.get('speedUnitIndex'),
-      liftUnit: this.get('liftUnitIndex'),
-      altitudeUnit: this.get('altitudeUnitIndex'),
+      email: this.email,
+      firstName: this.firstName,
+      lastName: this.lastName,
+      distanceUnit: this.distanceUnitIndex,
+      speedUnit: this.speedUnitIndex,
+      liftUnit: this.liftUnitIndex,
+      altitudeUnit: this.altitudeUnitIndex,
     };
 
     try {
-      yield this.get('ajax').request('/api/settings/', { method: 'POST', json });
+      yield this.ajax.request('/api/settings/', { method: 'POST', json });
       this.setProperties({
         messageKey: 'settings-have-been-saved',
         error: null,
       });
 
-      this.get('units').setProperties({
-        altitudeUnit: this.get('altitudeUnit'),
-        distanceUnit: this.get('distanceUnit'),
-        liftUnit: this.get('liftUnit'),
-        speedUnit: this.get('speedUnit'),
+      this.units.setProperties({
+        altitudeUnit: this.altitudeUnit,
+        distanceUnit: this.distanceUnit,
+        liftUnit: this.liftUnit,
+        speedUnit: this.speedUnit,
       });
 
     } catch (error) {

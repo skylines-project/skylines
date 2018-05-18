@@ -33,7 +33,7 @@ export default BarogramComponent.extend({
 
   init() {
     this._super(...arguments);
-    let units = this.get('units');
+    let units = this.units;
 
     let height = ol.format.Polyline.decodeDeltas(this.get('trace.barogram_h'), 1, 1);
     let time = ol.format.Polyline.decodeDeltas(this.get('trace.barogram_t'), 1, 1);
@@ -67,17 +67,17 @@ export default BarogramComponent.extend({
   didInsertElement() {
     this._super(...arguments);
 
-    this.get('placeholder').on('plotselecting', (event, range, marker) => {
-      let date = secondsToDate(this.get('date'), range[marker]);
+    this.placeholder.on('plotselecting', (event, range, marker) => {
+      let date = secondsToDate(this.date, range[marker]);
 
       if (marker === 'takeoff') {
-        this.get('onTakeoffTimeChange')(date);
+        this.onTakeoffTimeChange(date);
       } else if (marker === 'scoring_start') {
-        this.get('onScoreStartTimeChange')(date);
+        this.onScoreStartTimeChange(date);
       } else if (marker === 'scoring_end') {
-        this.get('onScoreEndTimeChange')(date);
+        this.onScoreEndTimeChange(date);
       } else if (marker === 'landing') {
-        this.get('onLandingTimeChange')(date);
+        this.onLandingTimeChange(date);
       }
     });
 
@@ -91,12 +91,12 @@ export default BarogramComponent.extend({
   },
 
   updateSelection() {
-    let takeoff = this.get('takeoffTimeSeconds');
-    let scoring_start = this.get('scoreStartTimeSeconds');
-    let scoring_end = this.get('scoreEndTimeSeconds');
-    let landing = this.get('landingTimeSeconds');
+    let takeoff = this.takeoffTimeSeconds;
+    let scoring_start = this.scoreStartTimeSeconds;
+    let scoring_end = this.scoreEndTimeSeconds;
+    let landing = this.landingTimeSeconds;
 
-    this.get('flot').setSelection({ takeoff, scoring_start, scoring_end, landing }, true);
+    this.flot.setSelection({ takeoff, scoring_start, scoring_end, landing }, true);
   },
 });
 

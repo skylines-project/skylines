@@ -21,7 +21,7 @@ const MapClickHandler = EmberObject.extend({
   init() {
     this.circle = { geometry: null, animation: null };
 
-    this.get('map').on('click', event => this.trigger(event));
+    this.map.on('click', event => this.trigger(event));
   },
 
   // Public attributes and functions
@@ -35,8 +35,8 @@ const MapClickHandler = EmberObject.extend({
    */
   trigger(event) {
     // Hide infobox if it's currently visible
-    if (this.get('visible')) {
-      event.map.removeOverlay(this.get('infobox'));
+    if (this.visible) {
+      event.map.removeOverlay(this.infobox);
       this.hideCircle(0);
       this.setProperties({
         visible: false,
@@ -45,17 +45,17 @@ const MapClickHandler = EmberObject.extend({
       return;
     }
 
-    if (!this.get('infobox')) {
+    if (!this.infobox) {
       this.set('infobox', new ol.Overlay({
         element: $('<div id="MapInfoBox" class="InfoBox"></div>').get(0),
       }));
     }
 
-    let infobox = this.get('infobox');
+    let infobox = this.infobox;
     let infobox_element = $(infobox.getElement());
     let coordinate = event.coordinate;
 
-    let flights = this.get('flights');
+    let flights = this.flights;
     if (flights) {
       let flight_path_source = flights.get('source');
       let closest_feature = flight_path_source
@@ -122,7 +122,7 @@ const MapClickHandler = EmberObject.extend({
     </div>`);
 
     get_near_flights.on('click touchend', e => {
-      this.get('map').removeOverlay(this.get('infobox'));
+      this.map.removeOverlay(this.infobox);
       this.getNearFlights(lon, lat, time, flight);
       this.setProperties({
         visible: false,
@@ -160,7 +160,7 @@ const MapClickHandler = EmberObject.extend({
 
     let circle_style = new ol.style.Style({ stroke: stroke_style });
 
-    let circle = this.get('circle');
+    let circle = this.circle;
     if (!circle.geometry) {
       circle.geometry = new ol.geom.Circle(coordinate, 1000);
     } else {
@@ -169,7 +169,7 @@ const MapClickHandler = EmberObject.extend({
 
     circle.animation = null;
 
-    let map = this.get('map');
+    let map = this.map;
     map.on('postcompose', function(e) {
       let vector_context = e.vectorContext;
 
@@ -206,7 +206,7 @@ const MapClickHandler = EmberObject.extend({
    * @param {Number} duration Fade duration in ms
    */
   hideCircle(duration) {
-    this.get('circle').animation = { duration, start: null };
+    this.circle.animation = { duration, start: null };
   },
 
   /**
@@ -218,8 +218,8 @@ const MapClickHandler = EmberObject.extend({
    * @param {slFlight} flight Flight.
    */
   getNearFlights(lon, lat, time, flight) {
-    let flights = this.get('flights');
-    let addFlight = this.get('addFlight');
+    let flights = this.flights;
+    let addFlight = this.addFlight;
     if (!flights || !addFlight) { return; }
 
     let req = $.ajax(`/api/flights/${flight.get('id')}/near?lon=${lon}&lat=${lat}&time=${time}`);
@@ -257,10 +257,10 @@ const MapClickHandler = EmberObject.extend({
    */
   showLocationData(data) {
     // do nothing if infobox is closed already
-    if (!this.get('visible')) { return; }
+    if (!this.visible) { return; }
 
-    let infobox = this.get('infobox');
-    let map = this.get('map');
+    let infobox = this.infobox;
+    let map = this.map;
 
     let element = $(infobox.getElement());
     element.empty();

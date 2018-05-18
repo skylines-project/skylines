@@ -15,7 +15,7 @@ export default ArrayProxy.extend({
    * @return {ol.extent}
    */
   getBounds() {
-    return this.get('source').getExtent();
+    return this.source.getExtent();
   },
 
   /**
@@ -31,7 +31,7 @@ export default ArrayProxy.extend({
     let total_min = Infinity;
     let total_max = -Infinity;
 
-    this.get('source').forEachFeatureInExtent(extent, feature => {
+    this.source.forEachFeatureInExtent(extent, feature => {
       let coordinates = feature.getGeometry().getCoordinates();
 
       let lastCoord = coordinates[0];
@@ -83,24 +83,24 @@ export default ArrayProxy.extend({
   arrayContentWillChange(offset, removeCount) {
     this._super(...arguments);
 
-    let flights = this.get('content');
+    let flights = this.content;
     let removedFlights = flights.slice(offset, offset + removeCount);
 
-    let source = this.get('source');
+    let source = this.source;
     removedFlights.forEach(flight => {
       let id = flight.get('id');
 
-      this.get('source').getFeatures()
+      this.source.getFeatures()
         .filter(feature => feature.get('sfid') === id)
         .forEach(feature => source.removeFeature(feature));
     });
   },
 
   arrayContentDidChange(offset, removeCount, addCount) {
-    let flights = this.get('content');
+    let flights = this.content;
     let addedFlights = flights.slice(offset, offset + addCount);
 
-    let source = this.get('source');
+    let source = this.source;
     addedFlights.forEach(flight => {
       let feature = new ol.Feature({
         geometry: flight.get('geometry'),

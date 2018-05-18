@@ -15,12 +15,12 @@ export default Component.extend({
   error: null,
 
   clubsWithNull: computed('clubs.[]', function() {
-    return [{ id: null }].concat(this.get('clubs'));
+    return [{ id: null }].concat(this.clubs);
   }),
 
   club: computed('clubId', {
     get() {
-      return this.get('clubsWithNull').findBy('id', this.get('clubId') || null);
+      return this.clubsWithNull.findBy('id', this.clubId || null);
     },
     set(key, value) {
       this.set('clubId', value.id);
@@ -29,17 +29,17 @@ export default Component.extend({
   }),
 
   saveTask: task(function * () {
-    let club = this.get('club');
+    let club = this.club;
     let json = { clubId: club ? club.id : null };
 
     try {
-      yield this.get('ajax').request('/api/settings/', { method: 'POST', json });
+      yield this.ajax.request('/api/settings/', { method: 'POST', json });
       this.setProperties({
         messageKey: 'club-has-been-changed',
         error: null,
       });
 
-      this.get('account').set('club', (club.id === null) ? {} : club);
+      this.account.set('club', (club.id === null) ? {} : club);
     } catch (error) {
       this.setProperties({ messageKey: null, error });
     }

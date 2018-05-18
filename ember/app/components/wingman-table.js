@@ -6,7 +6,7 @@ export default Component.extend({
   visibleFlights: null,
 
   nearFlightsWithColors: computed('nearFlights.[]', 'visibleFlights.[]', function() {
-    let { nearFlights, visibleFlights } = this.getProperties('nearFlights', 'visibleFlights');
+    let { nearFlights, visibleFlights } = this;
     return nearFlights.map(it => {
       let id = it.flight.id;
       let visibleFlight = visibleFlights.findBy('id', id);
@@ -21,7 +21,7 @@ export default Component.extend({
 
   actions: {
     select(id) {
-      this.get('onSelect')(id);
+      this.onSelect(id);
     },
   },
 });

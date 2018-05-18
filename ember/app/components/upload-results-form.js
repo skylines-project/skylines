@@ -27,7 +27,7 @@ export default Component.extend({
     this._super(...arguments);
 
     let ownerInjection = getOwner(this).ownerInjection();
-    this.set('validatedResults', this.get('results').map(_result => {
+    this.set('validatedResults', this.results.map(_result => {
       let result = UploadResult.create(ownerInjection, _result);
 
       if (result.get('flight')) {
@@ -42,24 +42,24 @@ export default Component.extend({
 
   actions: {
     async submit() {
-      let validates = this.get('validations').map(v => v.validate());
+      let validates = this.validations.map(v => v.validate());
 
       let results = await RSVP.all(validates);
       if (results.every(r => r.validations.get('isValid'))) {
-        this.get('saveTask').perform();
+        this.saveTask.perform();
       }
     },
   },
 
   saveTask: task(function * () {
-    let json = this.get('successfulResults').map(result => {
+    let json = this.successfulResults.map(result => {
       let flight = get(result, 'flight');
       return getProperties(flight, 'id', 'pilotId', 'pilotName', 'copilotId', 'copilotName',
         'modelId', 'registration', 'competitionId', 'takeoffTime', 'scoreStartTime', 'scoreEndTime', 'landingTime');
     });
 
     try {
-      yield this.get('ajax').request('/api/flights/upload/verify', { method: 'POST', json });
+      yield this.ajax.request('/api/flights/upload/verify', { method: 'POST', json });
       let ids = json.map(flight => flight.id);
       if (ids.length === 1) {
         this.getWithDefault('transitionTo')('flight', ids[0]);

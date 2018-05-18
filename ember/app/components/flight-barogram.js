@@ -19,31 +19,31 @@ export default BarogramComponent.extend({
   selection: null,
 
   activeFlights: computed('flights.[]', 'selection', function() {
-    let { flights, selection } = this.getProperties('flights', 'selection');
+    let { flights, selection } = this;
     return flights.filter(flight => (!selection || flight.get('id') === selection));
   }),
 
   passiveFlights: computed('flights.[]', 'selection', function() {
-    let { flights, selection } = this.getProperties('flights', 'selection');
+    let { flights, selection } = this;
     return flights.filter(flight => (selection && flight.get('id') !== selection));
   }),
 
   active: computed('activeFlights.@each.{flot_h,color}', function() {
-    return this.get('activeFlights').map(flight => ({
+    return this.activeFlights.map(flight => ({
       data: flight.get('flot_h'),
       color: flight.get('color'),
     }));
   }),
 
   passive: computed('passiveFlights.@each.{flot_h,color}', function() {
-    return this.get('passiveFlights').map(flight => ({
+    return this.passiveFlights.map(flight => ({
       data: flight.get('flot_h'),
       color: flight.get('color'),
     }));
   }),
 
   enls: computed('activeFlights.@each.{flot_enl,color}', function() {
-    return this.get('activeFlights').map(flight => ({
+    return this.activeFlights.map(flight => ({
       data: flight.get('flot_enl'),
       color: flight.get('color'),
     }));
@@ -61,29 +61,29 @@ export default BarogramComponent.extend({
     this._super(...arguments);
     this.onHoverModeUpdate();
 
-    this.get('placeholder').on('plotclick', (event, pos) => {
+    this.placeholder.on('plotclick', (event, pos) => {
       this.set('time', pos.x / 1000);
     });
   },
 
   didUpdateAttrs() {
     this._super(...arguments);
-    let selection = this.get('selection');
-    let timeInterval = this.get('timeInterval');
-    let timeHighlight = this.get('timeHighlight');
-    let hoverMode = this.get('hoverMode');
+    let selection = this.selection;
+    let timeInterval = this.timeInterval;
+    let timeHighlight = this.timeHighlight;
+    let hoverMode = this.hoverMode;
 
-    if (timeInterval !== this.get('oldTimeInterval')) {
+    if (timeInterval !== this.oldTimeInterval) {
       this.updateInterval();
     }
 
-    if (hoverMode !== this.get('oldHoverMode')) {
+    if (hoverMode !== this.oldHoverMode) {
       this.onHoverModeUpdate();
     }
 
-    if (selection !== this.get('oldSelection') ||
-      timeInterval !== this.get('oldTimeInterval') ||
-      timeHighlight !== this.get('oldTimeHighlight')) {
+    if (selection !== this.oldSelection ||
+      timeInterval !== this.oldTimeInterval ||
+      timeHighlight !== this.oldTimeHighlight) {
       this.draw();
     } else {
       this.updateCrosshair();
@@ -106,7 +106,7 @@ export default BarogramComponent.extend({
   },
 
   updateCrosshair() {
-    let { flot, time } = this.getProperties('flot', 'time');
+    let { flot, time } = this;
 
     if (time === null) {
       flot.clearCrosshair();
@@ -118,7 +118,7 @@ export default BarogramComponent.extend({
   },
 
   updateInterval() {
-    let { flot, timeInterval: interval } = this.getProperties('flot', 'timeInterval');
+    let { flot, timeInterval: interval } = this;
     let opt = flot.getOptions();
 
     if (!interval) {
@@ -131,15 +131,15 @@ export default BarogramComponent.extend({
   },
 
   onHoverModeUpdate() {
-    let placeholder = this.get('placeholder');
+    let placeholder = this.placeholder;
 
-    if (this.get('hoverMode')) {
+    if (this.hoverMode) {
       placeholder.on('plothover', (event, pos) => {
         this.set('time', pos.x / 1000);
       });
 
       placeholder.on('mouseout', () => {
-        this.set('time', this.get('defaultTime'));
+        this.set('time', this.defaultTime);
       });
     } else {
       placeholder.off('plothover');
@@ -149,10 +149,10 @@ export default BarogramComponent.extend({
 
   updateTimeHighlight() {
     // There is no flot.setOptions(), so we modify them in-place.
-    let options = this.get('flot').getOptions();
+    let options = this.flot.getOptions();
 
     // Clear the markings if there is no time highlight
-    let time_highlight = this.get('timeHighlight');
+    let time_highlight = this.timeHighlight;
     if (!time_highlight) {
       options.grid.markings = [];
       return;

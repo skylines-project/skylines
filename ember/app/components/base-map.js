@@ -79,18 +79,18 @@ export default Component.extend({
 
   didInsertElement() {
     this._super(...arguments);
-    let map = this.get('map');
+    let map = this.map;
     if (map) {
       map.setTarget(this.elementId);
     }
   },
 
   updateLayerVisibilities() {
-    let mapSettings = this.get('mapSettings');
+    let mapSettings = this.mapSettings;
     let baseLayerNames = mapSettings.get('baseLayer');
     let overlayLayerNames = mapSettings.get('overlayLayers');
 
-    let layers = this.get('map').getLayers().getArray()
+    let layers = this.map.getLayers().getArray()
       .filter(layer => layer.get('display_in_layer_switcher'));
 
     let baseLayers = layers.filter(layer => layer.get('base_layer'));
@@ -133,7 +133,7 @@ export default Component.extend({
       'display_in_layer_switcher': true,
     });
 
-    this.get('map').addLayer(mwp_layer);
+    this.map.addLayer(mwp_layer);
   },
 
   addAirspaceLayers() {
@@ -151,7 +151,7 @@ export default Component.extend({
       'display_in_layer_switcher': true,
     });
 
-    this.get('map').addLayer(airspace_layer);
+    this.map.addLayer(airspace_layer);
   },
 
   addReliefLayer() {
@@ -177,7 +177,7 @@ export default Component.extend({
       'display_in_layer_switcher': true,
     });
 
-    this.get('map').addLayer(relief_layer);
+    this.map.addLayer(relief_layer);
   },
 
   addMapboxLayer() {
@@ -208,7 +208,7 @@ export default Component.extend({
       'display_in_layer_switcher': true,
     });
 
-    this.get('map').addLayer(mapbox_layer);
+    this.map.addLayer(mapbox_layer);
   },
 
   addBingLayers() {
@@ -247,7 +247,7 @@ export default Component.extend({
       'display_in_layer_switcher': true,
     });
 
-    let map = this.get('map');
+    let map = this.map;
     map.addLayer(road);
     map.addLayer(hybrid);
   },
@@ -262,7 +262,7 @@ export default Component.extend({
       'display_in_layer_switcher': true,
     });
 
-    this.get('map').addLayer(empty_layer);
+    this.map.addLayer(empty_layer);
   },
 
 });

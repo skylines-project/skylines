@@ -6,7 +6,7 @@ export default Route.extend({
   ajax: service(),
 
   model() {
-    let ajax = this.get('ajax');
+    let ajax = this.ajax;
     let id = this.modelFor('flight').ids[0];
 
     return RSVP.hash({

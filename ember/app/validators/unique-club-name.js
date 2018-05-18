@@ -17,7 +17,7 @@ export default BaseValidator.extend({
     }
 
     let data = { name };
-    let { clubs } = await this.get('ajax').request('/api/clubs', { data });
+    let { clubs } = await this.ajax.request('/api/clubs', { data });
     if (clubs.length === 0) {
       return true;
     }
@@ -29,6 +29,6 @@ export default BaseValidator.extend({
       }
     }
 
-    return this.get('intl').t(options.messageKey);
+    return this.intl.t(options.messageKey);
   },
 });

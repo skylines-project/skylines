@@ -24,16 +24,16 @@ export default Component.extend({
   }),
 
   source: computed('layer', function() {
-    return this.get('layer').getSource();
+    return this.layer.getSource();
   }),
 
   didInsertElement() {
     this._super(...arguments);
-    this.get('map').addLayer(this.get('layer'));
+    this.map.addLayer(this.layer);
   },
 
   willDestroyElement() {
     this._super(...arguments);
-    this.get('map').removeLayer(this.get('layer'));
+    this.map.removeLayer(this.layer);
   },
 });

@@ -27,7 +27,7 @@ export default Component.extend(Validations, {
     async submit() {
       let { validations } = await this.validate();
       if (validations.get('isValid')) {
-        this.get('recoverTask').perform();
+        this.recoverTask.perform();
       }
     },
   },
@@ -36,7 +36,7 @@ export default Component.extend(Validations, {
     let json = this.getProperties('email');
 
     try {
-      yield this.get('ajax').request('/api/users/recover', { method: 'POST', json });
+      yield this.ajax.request('/api/users/recover', { method: 'POST', json });
       this.set('error', null);
       this.set('success', true);
 

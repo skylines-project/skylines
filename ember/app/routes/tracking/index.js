@@ -5,6 +5,6 @@ export default Route.extend({
   ajax: service(),
 
   model() {
-    return this.get('ajax').request('/api/live');
+    return this.ajax.request('/api/live');
   },
 });

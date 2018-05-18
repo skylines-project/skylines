@@ -11,7 +11,7 @@ export default Component.extend({
 
   actions: {
     toggle() {
-      this.get('pinnedFlights').toggle(this.get('flightId'));
+      this.pinnedFlights.toggle(this.flightId);
     },
   },
 });

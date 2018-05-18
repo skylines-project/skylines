@@ -12,7 +12,7 @@ export default Component.extend({
 
   saveTask: task(function * () {
     try {
-      let { key } = yield this.get('ajax').request('/api/settings/tracking/key', { method: 'POST' });
+      let { key } = yield this.ajax.request('/api/settings/tracking/key', { method: 'POST' });
       this.setProperties({ key, error: null });
     } catch (error) {
       this.setProperties({ error });

@@ -15,9 +15,9 @@ export default Component.extend({
   fixCalc: null,
 
   timeInterval: computed('mapExtent', 'cesiumEnabled', 'fixCalc.flights.[]', function() {
-    if (this.get('cesiumEnabled')) { return null; }
+    if (this.cesiumEnabled) { return null; }
 
-    let extent = this.get('mapExtent');
+    let extent = this.mapExtent;
     if (!extent) { return null; }
 
     let interval = this.get('fixCalc.flights').getMinMaxTimeInExtent(extent);
@@ -28,8 +28,8 @@ export default Component.extend({
   init() {
     this._super(...arguments);
 
-    let ajax = this.get('ajax');
-    let units = this.get('units');
+    let ajax = this.ajax;
+    let units = this.units;
 
     let fixCalc = FixCalc.create({ ajax, units });
     this.set('fixCalc', fixCalc);
@@ -37,10 +37,10 @@ export default Component.extend({
 
   didInsertElement() {
     this._super(...arguments);
-    let flights = this.get('flights');
+    let flights = this.flights;
     if (flights.length === 0) { return; }
 
-    let fixCalc = this.get('fixCalc');
+    let fixCalc = this.fixCalc;
 
     let sidebar = this.$('#sidebar').sidebar();
 
@@ -79,7 +79,7 @@ export default Component.extend({
 
   willDestroyElement() {
     this._super(...arguments);
-    let updateTimer = this.get('updateTimer');
+    let updateTimer = this.updateTimer;
     if (updateTimer) {
       cancel(updateTimer);
     }
@@ -87,7 +87,7 @@ export default Component.extend({
 
   actions: {
     togglePlayback() {
-      this.get('fixCalc').togglePlayback();
+      this.fixCalc.togglePlayback();
     },
 
     removeFlight(id) {
@@ -106,7 +106,7 @@ export default Component.extend({
 
   _update() {
     let flights = this.get('fixCalc.flights');
-    let ajax = this.get('ajax');
+    let ajax = this.ajax;
 
     flights.forEach(flight => {
       let last_update = flight.get('last_update') || null;

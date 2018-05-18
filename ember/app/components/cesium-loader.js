@@ -11,8 +11,8 @@ export default Component.extend({
   loaded: false,
 
   enabledObserver: observer('enabled', function() {
-    if (this.get('enabled') && !this.get('loaded')) {
-      this.get('cesiumLoader').load().then(() => {
+    if (this.enabled && !this.loaded) {
+      this.cesiumLoader.load().then(() => {
         this.set('loaded', true);
       });
     }

@@ -16,10 +16,10 @@ export default Component.extend({
   },
 
   toggle() {
-    if (this.get('enabled')) {
-      this.get('onDisable')();
+    if (this.enabled) {
+      this.onDisable();
     } else {
-      this.get('onEnable')();
+      this.onEnable();
     }
   },
 });

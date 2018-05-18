@@ -10,7 +10,7 @@ export default Component.extend({
   fixes: null,
 
   fixesObserver: observer('fixes.@each.pointXY', function() {
-    once(this.get('map'), 'render');
+    once(this.map, 'render');
   }),
 
   init() {
@@ -42,12 +42,12 @@ export default Component.extend({
 
   didInsertElement() {
     this._super(...arguments);
-    this.get('map').on('postcompose', this.onPostCompose, this);
+    this.map.on('postcompose', this.onPostCompose, this);
   },
 
   willDestroyElement() {
     this._super(...arguments);
-    this.get('map').un('postcompose', this.onPostCompose, this);
+    this.map.un('postcompose', this.onPostCompose, this);
   },
 
   _initStyle(key, { src, size }) {
@@ -74,10 +74,10 @@ export default Component.extend({
   },
 
   renderIcons(context) {
-    let icons = this.get('icons');
-    let styles = this.get('styles');
+    let icons = this.icons;
+    let styles = this.styles;
 
-    this.get('fixes').forEach(fix => {
+    this.fixes.forEach(fix => {
       let point = fix.get('pointXY');
 
       if (point) {
