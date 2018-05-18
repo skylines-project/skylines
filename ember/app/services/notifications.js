@@ -10,19 +10,19 @@ export default Service.extend({
   hasUnread: gt('counter', 0),
 
   counterText: computed('counter', function() {
-    let counter = this.get('counter');
+    let counter = this.counter;
     return (counter > 10) ? '10+' : counter;
   }),
 
   init() {
     this._super(...arguments);
-    this.get('updateTask').perform();
+    this.updateTask.perform();
   },
 
   updateTask: task(function * () {
     // eslint-disable-next-line no-constant-condition
     while (true) {
-      let { events } = yield this.get('ajax').request('/api/notifications');
+      let { events } = yield this.ajax.request('/api/notifications');
       this.set('counter', events.filter(it => it.unread).length);
       yield timeout(60000);
     }

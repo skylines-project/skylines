@@ -14,6 +14,6 @@ export default Component.extend({
   },
 
   toggle() {
-    this.get('onToggle')();
+    this.onToggle();
   },
 });

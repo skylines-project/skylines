@@ -8,13 +8,13 @@ export default Component.extend({
 
   followTask: task(function * () {
     let userId = this.get('follower.id');
-    yield this.get('ajax').request(`/api/users/${userId}/follow`);
+    yield this.ajax.request(`/api/users/${userId}/follow`);
     this.set('follower.currentUserFollows', true);
   }).drop(),
 
   unfollowTask: task(function * () {
     let userId = this.get('follower.id');
-    yield this.get('ajax').request(`/api/users/${userId}/unfollow`);
+    yield this.ajax.request(`/api/users/${userId}/unfollow`);
     this.set('follower.currentUserFollows', false);
   }).drop(),
 });

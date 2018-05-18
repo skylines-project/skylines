@@ -9,7 +9,7 @@ export default Component.extend({
   flight: null,
 
   feature: computed(function() {
-    let flight = this.get('flight');
+    let flight = this.flight;
     return new ol.Feature({
       geometry: flight.get('geometry'),
       sfid: flight.get('id'),
@@ -20,11 +20,11 @@ export default Component.extend({
 
   didInsertElement() {
     this._super(...arguments);
-    this.get('source').addFeature(this.get('feature'));
+    this.source.addFeature(this.feature);
   },
 
   willDestroyElement() {
     this._super(...arguments);
-    this.get('source').removeFeature(this.get('feature'));
+    this.source.removeFeature(this.feature);
   },
 });

@@ -26,7 +26,7 @@ export default Route.extend({
       data.type = params.type;
     }
 
-    return this.get('ajax').request('/api/timeline', { data });
+    return this.ajax.request('/api/timeline', { data });
   },
 
   setupController(controller) {

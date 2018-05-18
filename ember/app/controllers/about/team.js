@@ -6,7 +6,7 @@ export default Controller.extend({
   intl: service(),
 
   text: computed('model.content', 'intl.locale', function() {
-    let intl = this.get('intl');
+    let intl = this.intl;
 
     return this.get('model.content')
       .replace('Developers', intl.t('developers'))

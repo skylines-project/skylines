@@ -24,7 +24,7 @@ export default OAuth2PasswordGrant.extend({
       headers['Authorization'] = `Bearer ${data.access_token}`;
     }
 
-    data.settings = await this.get('ajax').request('/api/settings', { headers });
+    data.settings = await this.ajax.request('/api/settings', { headers });
     return data;
   },
 });

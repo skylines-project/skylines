@@ -6,7 +6,7 @@ export default Route.extend({
 
   model() {
     let { user_id } = this.paramsFor('user');
-    return this.get('ajax').request(`/api/users/${user_id}/following`);
+    return this.ajax.request(`/api/users/${user_id}/following`);
   },
 
   setupController(controller, model) {

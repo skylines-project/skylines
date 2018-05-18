@@ -31,17 +31,17 @@ export default Component.extend({
 
   didReceiveAttrs() {
     this._super(...arguments);
-    this.get('entity').modelMatrix = Cesium.Transforms.headingPitchRollToFixedFrame(
-      this.get('position'), new Cesium.HeadingPitchRoll(this.get('heading') - Math.PI / 2, 0, 0));
+    this.entity.modelMatrix = Cesium.Transforms.headingPitchRollToFixedFrame(
+      this.position, new Cesium.HeadingPitchRoll(this.heading - Math.PI / 2, 0, 0));
   },
 
   didInsertElement() {
     this._super(...arguments);
-    this.get('scene').primitives.add(this.get('entity'));
+    this.scene.primitives.add(this.entity);
   },
 
   willDestroyElement() {
     this._super(...arguments);
-    this.get('scene').primitives.remove(this.get('entity'));
+    this.scene.primitives.remove(this.entity);
   },
 });

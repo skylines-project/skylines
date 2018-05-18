@@ -9,19 +9,19 @@ export default Service.extend({
   },
 
   pin(id) {
-    this.set('pinned', this.get('pinned').concat([id]));
+    this.set('pinned', this.pinned.concat([id]));
     this.save();
   },
 
   unpin(id) {
-    this.set('pinned', this.get('pinned').without(id));
+    this.set('pinned', this.pinned.without(id));
     this.save();
   },
 
   load() {
     let pinned = [];
 
-    let cookie = this.get('cookies').read('SkyLines_pinnedFlights');
+    let cookie = this.cookies.read('SkyLines_pinnedFlights');
     if (cookie) {
       pinned = cookie.split(',').map(it => parseInt(it, 10));
     }
@@ -30,11 +30,11 @@ export default Service.extend({
   },
 
   save() {
-    this.get('cookies').write('SkyLines_pinnedFlights', this.get('pinned').join(','), { path: '/' });
+    this.cookies.write('SkyLines_pinnedFlights', this.pinned.join(','), { path: '/' });
   },
 
   toggle(id) {
-    if (this.get('pinned').includes(id)) {
+    if (this.pinned.includes(id)) {
       this.unpin(id);
     } else {
       this.pin(id);

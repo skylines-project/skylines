@@ -24,7 +24,7 @@ export default Component.extend({
 
   actions: {
     dateSelected(date) {
-      this.get('router').transitionTo('flights.date', date);
+      this.router.transitionTo('flights.date', date);
     },
   },
 });

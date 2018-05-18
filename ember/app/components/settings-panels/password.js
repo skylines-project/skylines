@@ -43,7 +43,7 @@ export default Component.extend(Validations, {
     async submit() {
       let { validations } = await this.validate();
       if (validations.get('isValid')) {
-        this.get('saveTask').perform();
+        this.saveTask.perform();
       }
     },
   },
@@ -52,7 +52,7 @@ export default Component.extend(Validations, {
     let json = this.getProperties('currentPassword', 'password');
 
     try {
-      yield this.get('ajax').request('/api/settings/', { method: 'POST', json });
+      yield this.ajax.request('/api/settings/', { method: 'POST', json });
       this.setProperties({
         messageKey: 'password-was-changed',
         error: null,

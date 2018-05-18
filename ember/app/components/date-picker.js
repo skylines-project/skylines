@@ -18,13 +18,13 @@ export default Component.extend({
 
     picker.on('changeDate', e => {
       picker.data('datepicker').hide();
-      this.get('onSelect')(isoDate(e.date));
+      this.onSelect(isoDate(e.date));
     });
   },
 
   willDestroyElement() {
     this._super(...arguments);
-    let picker = this.get('picker');
+    let picker = this.picker;
     if (picker) {
       picker.off('changeDate');
     }

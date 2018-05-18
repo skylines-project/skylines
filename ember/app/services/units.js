@@ -80,7 +80,7 @@ export default Service.extend({
    * @return {String} The formatted value as a string.
    */
   formatDecimal(value, decimals) {
-    return this.get('intl').formatNumber(value, {
+    return this.intl.formatNumber(value, {
       minimumFractionDigits: decimals,
       maximumFractionDigits: decimals,
     });
@@ -92,13 +92,13 @@ export default Service.extend({
   },
 
   convertDistance(value) {
-    return value * UNITS[this.get('distanceUnit')][0];
+    return value * UNITS[this.distanceUnit][0];
   },
 
   addDistanceUnit(value, options = {}) {
-    let decimals = (options.decimals !== undefined) ? options.decimals : UNITS[this.get('distanceUnit')][1];
+    let decimals = (options.decimals !== undefined) ? options.decimals : UNITS[this.distanceUnit][1];
     value = this.formatDecimal(value, decimals);
-    return (options.withUnit !== false) ? `${value} ${this.get('distanceUnit')}` : value;
+    return (options.withUnit !== false) ? `${value} ${this.distanceUnit}` : value;
   },
 
   formatSpeed(value, options) {
@@ -107,13 +107,13 @@ export default Service.extend({
   },
 
   convertSpeed(value) {
-    return value * UNITS[this.get('speedUnit')][0];
+    return value * UNITS[this.speedUnit][0];
   },
 
   addSpeedUnit(value, options = {}) {
-    let decimals = (options.decimals !== undefined) ? options.decimals : UNITS[this.get('speedUnit')][1];
+    let decimals = (options.decimals !== undefined) ? options.decimals : UNITS[this.speedUnit][1];
     value = this.formatDecimal(value, decimals);
-    return (options.withUnit !== false) ? `${value} ${this.get('speedUnit')}` : value;
+    return (options.withUnit !== false) ? `${value} ${this.speedUnit}` : value;
   },
 
   formatLift(value, options) {
@@ -122,13 +122,13 @@ export default Service.extend({
   },
 
   convertLift(value) {
-    return value * UNITS[this.get('liftUnit')][0];
+    return value * UNITS[this.liftUnit][0];
   },
 
   addLiftUnit(value, options = {}) {
-    let decimals = (options.decimals !== undefined) ? options.decimals : UNITS[this.get('liftUnit')][1];
+    let decimals = (options.decimals !== undefined) ? options.decimals : UNITS[this.liftUnit][1];
     value = this.formatDecimal(value, decimals);
-    return (options.withUnit !== false) ? `${value} ${this.get('liftUnit')}` : value;
+    return (options.withUnit !== false) ? `${value} ${this.liftUnit}` : value;
   },
 
   formatAltitude(value, options) {
@@ -137,13 +137,13 @@ export default Service.extend({
   },
 
   convertAltitude(value) {
-    return value * UNITS[this.get('altitudeUnit')][0];
+    return value * UNITS[this.altitudeUnit][0];
   },
 
   addAltitudeUnit(value, options = {}) {
-    let decimals = (options.decimals !== undefined) ? options.decimals : UNITS[this.get('altitudeUnit')][1];
+    let decimals = (options.decimals !== undefined) ? options.decimals : UNITS[this.altitudeUnit][1];
     value = this.formatDecimal(value, decimals);
-    return (options.withUnit !== false) ? `${value} ${this.get('altitudeUnit')}` : value;
+    return (options.withUnit !== false) ? `${value} ${this.altitudeUnit}` : value;
   },
 });
 

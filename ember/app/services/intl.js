@@ -16,14 +16,14 @@ export default IntlService.extend({
       return;
     }
 
-    let translations = await this.get('ajax').request(`/translations/${locale}.json`);
+    let translations = await this.ajax.request(`/translations/${locale}.json`);
     await this.addTranslations(locale, translations);
   },
 
   setLocale(locale) {
     debug(`Setting locale to "${locale}"`);
     this._super(...arguments);
-    this.get('cookies').write('locale', locale, { path: '/', expires: new Date('2099-12-31') });
+    this.cookies.write('locale', locale, { path: '/', expires: new Date('2099-12-31') });
 
     document.documentElement.lang = locale;
   },

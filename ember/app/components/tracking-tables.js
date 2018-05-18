@@ -18,9 +18,9 @@ export default Component.extend({
       return [];
     }
 
-    let friends = this.get('friends');
+    let friends = this.friends;
 
-    return this.get('tracks')
+    return this.tracks
       .filter(track => (track.pilot.id === self || friends.includes(track.pilot.id)));
   }),
 

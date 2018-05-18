@@ -15,7 +15,7 @@ export default Component.extend({
   },
 
   toggle() {
-    let element = this.get('fullscreenElement');
+    let element = this.fullscreenElement;
     BigScreen.toggle($(element)[0]);
   },
 });

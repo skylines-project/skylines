@@ -9,8 +9,8 @@ export default Base.extend({
 
   translationKey: computed('accountUserIsActor', 'accountUserIsPilot', function() {
     let i = 1;
-    if (this.get('accountUserIsActor')) { i += 1; }
-    if (this.get('accountUserIsPilot')) { i += 2; }
+    if (this.accountUserIsActor) { i += 1; }
+    if (this.accountUserIsPilot) { i += 2; }
     return `timeline-events.flight-comment.message${i}`;
   }),
 });

@@ -8,7 +8,7 @@ export default Service.extend({
   loaderPromise: null,
 
   load() {
-    let promise = this.get('loaderPromise');
+    let promise = this.loaderPromise;
     if (!promise) {
       promise = new RSVP.Promise(resolve => {
         debug('Loading Cesium...');

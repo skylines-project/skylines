@@ -60,17 +60,17 @@ export default EmberObject.extend({
   },
 
   startPlayback() {
-    let time = this.get('time');
+    let time = this.time;
 
     if (time === null || time === -1) {
-      this.set('time', this.get('minStartTime'));
+      this.set('time', this.minStartTime);
     }
 
     this.set('timer', later(this, 'onTick', 50));
   },
 
   stopPlayback() {
-    let timer = this.get('timer');
+    let timer = this.timer;
     if (timer) {
       cancel(timer);
       this.set('timer', null);
@@ -78,7 +78,7 @@ export default EmberObject.extend({
   },
 
   togglePlayback() {
-    if (this.get('isRunning')) {
+    if (this.isRunning) {
       this.stopPlayback();
     } else {
       this.startPlayback();
@@ -86,9 +86,9 @@ export default EmberObject.extend({
   },
 
   onTick() {
-    let time = this.get('time') + 1;
+    let time = this.time + 1;
 
-    if (time > this.get('maxEndTime')) {
+    if (time > this.maxEndTime) {
       this.stopPlayback();
     }
 
@@ -97,7 +97,7 @@ export default EmberObject.extend({
   },
 
   resetTime() {
-    this.set('time', this.get('defaultTime'));
+    this.set('time', this.defaultTime);
   },
 
   /**
@@ -106,9 +106,9 @@ export default EmberObject.extend({
    * @param {Object} data The data received from the JSON request.
    */
   addFlight(data) {
-    let flights = this.get('flights');
+    let flights = this.flights;
 
-    let flight = flightFromData(data, this.get('units'));
+    let flight = flightFromData(data, this.units);
 
     if (data.additional && data.additional.color) {
       flight.set('color', data.additional.color);
@@ -125,9 +125,9 @@ export default EmberObject.extend({
    * @param {String} url URL to fetch.
    */
   async addFlightFromJSON(url) {
-    let flights = this.get('flights');
+    let flights = this.flights;
 
-    let data = await this.get('ajax').request(url);
+    let data = await this.ajax.request(url);
     if (!flights.findBy('id', data.sfid)) {
       this.addFlight(data);
     }

@@ -6,13 +6,13 @@ export default Route.extend({
   ajax: service(),
 
   model(params) {
-    return this.get('ajax').request(this.getURL(params));
+    return this.ajax.request(this.getURL(params));
   },
 
   setupController(controller, model) {
     this._super(...arguments);
 
-    let routeName = this.get('routeName');
+    let routeName = this.routeName;
     let params = this.paramsFor(routeName);
 
     this.controllerFor('statistics').setProperties({

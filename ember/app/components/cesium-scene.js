@@ -19,7 +19,7 @@ export default Component.extend({
   init() {
     this._super(...arguments);
 
-    let ol3d = new olcs.OLCesium({ map: this.get('map') });
+    let ol3d = new olcs.OLCesium({ map: this.map });
 
     let scene = ol3d.getCesiumScene();
     scene.terrainProvider = new Cesium.CesiumTerrainProvider({
@@ -34,12 +34,12 @@ export default Component.extend({
   },
 
   update() {
-    let enabled = this.get('enabled');
+    let enabled = this.enabled;
 
-    this.get('ol3d').setEnabled(enabled);
+    this.ol3d.setEnabled(enabled);
 
     if (!enabled) {
-      this.get('map').getView().setRotation(0);
+      this.map.getView().setRotation(0);
     }
   },
 });

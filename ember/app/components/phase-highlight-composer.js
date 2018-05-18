@@ -22,7 +22,7 @@ export default Component.extend({
 
   coordinatesObserver: observer('coordinates.[]', function() {
     this.adjustMapView();
-    once(this.get('map'), 'render');
+    once(this.map, 'render');
   }),
 
   init() {
@@ -52,12 +52,12 @@ export default Component.extend({
 
   didInsertElement() {
     this._super(...arguments);
-    this.get('map').on('postcompose', this.onPostCompose, this);
+    this.map.on('postcompose', this.onPostCompose, this);
   },
 
   willDestroyElement() {
     this._super(...arguments);
-    this.get('map').un('postcompose', this.onPostCompose, this);
+    this.map.un('postcompose', this.onPostCompose, this);
   },
 
   onPostCompose(e) {
@@ -65,8 +65,8 @@ export default Component.extend({
   },
 
   renderMarkers(context) {
-    this.renderMarker(context, this.get('startStyle'), this.get('startPoint'));
-    this.renderMarker(context, this.get('endStyle'), this.get('endPoint'));
+    this.renderMarker(context, this.startStyle, this.startPoint);
+    this.renderMarker(context, this.endStyle, this.endPoint);
   },
 
   renderMarker(context, style, coordinate) {
@@ -77,11 +77,11 @@ export default Component.extend({
   },
 
   adjustMapView() {
-    let coordinates = this.get('coordinates');
+    let coordinates = this.coordinates;
     if (coordinates) {
-      let map = this.get('map');
+      let map = this.map;
       let extent = ol.extent.boundingExtent(coordinates);
-      let padding = this.get('calculatePadding')();
+      let padding = this.calculatePadding();
       map.getView().fit(extent, { padding });
     }
   },

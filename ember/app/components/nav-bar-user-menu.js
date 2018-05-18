@@ -9,6 +9,6 @@ export default Component.extend({
   tagName: '',
 
   logoutTask: task(function * () {
-    yield this.get('session').invalidate();
+    yield this.session.invalidate();
   }).drop(),
 });

@@ -8,7 +8,7 @@ export default Component.extend({
   defaultOrder: 'asc',
 
   cssClass: computed('class', function() {
-    let _class = this.get('class');
+    let _class = this['class'];
     if (_class) {
       return `${_class} sortable`;
     } else {

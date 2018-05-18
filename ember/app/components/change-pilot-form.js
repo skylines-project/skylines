@@ -60,18 +60,18 @@ export default Component.extend(Validations, {
     async submit() {
       let { validations } = await this.validate();
       if (validations.get('isValid')) {
-        this.get('saveTask').perform();
+        this.saveTask.perform();
       }
     },
   },
 
   saveTask: task(function * () {
-    let id = this.get('flightId');
+    let id = this.flightId;
     let json = this.getProperties('pilotId', 'pilotName', 'copilotId', 'copilotName');
 
     try {
-      yield this.get('ajax').request(`/api/flights/${id}/`, { method: 'POST', json });
-      this.get('onDidSave')();
+      yield this.ajax.request(`/api/flights/${id}/`, { method: 'POST', json });
+      this.onDidSave();
     } catch (error) {
       this.set('error', error);
     }

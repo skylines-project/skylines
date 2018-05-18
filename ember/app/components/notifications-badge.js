@@ -12,6 +12,6 @@ export default Component.extend({
   attributeBindings: ['title'],
 
   title: computed('intl.locale', function() {
-    return this.get('intl').t('notifications');
+    return this.intl.t('notifications');
   }),
 });

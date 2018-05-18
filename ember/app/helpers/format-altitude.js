@@ -10,6 +10,6 @@ export default Helper.extend({
   }),
 
   compute([value], options) {
-    return this.get('units').formatAltitude(value, options);
+    return this.units.formatAltitude(value, options);
   },
 });

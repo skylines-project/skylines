@@ -12,6 +12,6 @@ export default Component.extend({
   pinned: includes('pinnedFlights.pinned', 'flightId'),
 
   click() {
-    this.get('pinnedFlights').toggle(this.get('flightId'));
+    this.pinnedFlights.toggle(this.flightId);
   },
 });

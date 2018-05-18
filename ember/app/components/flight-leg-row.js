@@ -51,17 +51,17 @@ export default Component.extend({
   }),
 
   selected: safeComputed('selection', function(selection) {
-    let leg = this.get('leg');
+    let leg = this.leg;
     return selection.start === leg.start && selection.end === leg.start + leg.duration;
   }),
 
   click() {
-    let onSelect = this.get('onSelect');
+    let onSelect = this.onSelect;
 
-    if (this.get('selected')) {
+    if (this.selected) {
       onSelect(null);
     } else {
-      let leg = this.get('leg');
+      let leg = this.leg;
       onSelect({
         start: leg.start,
         end: leg.start + leg.duration,

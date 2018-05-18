@@ -32,7 +32,7 @@ export default EmberObject.extend({
   }),
 
   flot_h: map('fixes', function(fix) {
-    return [fix.time * 1000, this.get('units').convertAltitude(fix.altitude)];
+    return [fix.time * 1000, this.units.convertAltitude(fix.altitude)];
   }),
 
   flot_enl: map('fixes', function(fix) {
@@ -43,7 +43,7 @@ export default EmberObject.extend({
   elev_h: map('elevations', it => it.elevation),
 
   flot_elev: map('elevations', function(it) {
-    return [it.time * 1000, it.elevation ? this.get('units').convertAltitude(it.elevation) : null];
+    return [it.time * 1000, it.elevation ? this.units.convertAltitude(it.elevation) : null];
   }),
 
   color: null,
@@ -53,14 +53,14 @@ export default EmberObject.extend({
   endTime: readOnly('time.lastObject'),
 
   coordinatesObserver: observer('coordinates', function() {
-    let coordinates = this.get('coordinates');
-    this.get('geometry').setCoordinates(coordinates, 'XYZM');
+    let coordinates = this.coordinates;
+    this.geometry.setCoordinates(coordinates, 'XYZM');
   }),
 
   model: null,
 
   init() {
     this._super(...arguments);
-    this.set('geometry', new ol.geom.LineString(this.get('coordinates'), 'XYZM'));
+    this.set('geometry', new ol.geom.LineString(this.coordinates, 'XYZM'));
   },
 });

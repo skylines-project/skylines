@@ -11,7 +11,7 @@ export default Component.extend({
   flights: null,
 
   contests: computed('flights.@each.contests', function() {
-    return this.get('flights')
+    return this.flights
       .map(flight => flight.get('contests'))
       .reduce((a, b) => a.concat(b), []);
   }),
@@ -26,26 +26,26 @@ export default Component.extend({
   }),
 
   source: computed('layer', function() {
-    return this.get('layer').getSource();
+    return this.layer.getSource();
   }),
 
   visible: computed({
     get() {
-      return this.get('layer').getVisible();
+      return this.layer.getVisible();
     },
     set(key, value) {
-      this.get('layer').setVisible(value);
+      this.layer.setVisible(value);
     },
   }),
 
   didInsertElement() {
     this._super(...arguments);
-    this.get('map').addLayer(this.get('layer'));
+    this.map.addLayer(this.layer);
   },
 
   willDestroyElement() {
     this._super(...arguments);
-    this.get('map').removeLayer(this.get('layer'));
+    this.map.removeLayer(this.layer);
   },
 });
 

@@ -9,14 +9,14 @@ export default EmberObject.extend({
   flight: readOnly('fixCalc.flights.firstObject'),
 
   coordinates: computed('flight', 'selection.{start,end}', function() {
-    let selection = this.get('selection');
+    let selection = this.selection;
     if (!selection) {
       return;
     }
 
     let { start, end } = selection;
 
-    let flight = this.get('flight');
+    let flight = this.flight;
     let times = flight.get('time');
 
     let start_index = getNextSmallerIndex(times, start);

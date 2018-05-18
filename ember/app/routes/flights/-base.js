@@ -11,7 +11,7 @@ export default Route.extend({
   },
 
   model(params) {
-    return this.get('ajax').request(this.getURL(params), {
+    return this.ajax.request(this.getURL(params), {
       data: {
         page: params.page,
         column: params.column,

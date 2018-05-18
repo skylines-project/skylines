@@ -34,14 +34,14 @@ export default Component.extend({
 
   deleteTask: task(function * () {
     let id = this.get('flight.id');
-    yield this.get('ajax').request(`/api/flights/${id}/`, { method: 'DELETE' });
+    yield this.ajax.request(`/api/flights/${id}/`, { method: 'DELETE' });
     this.set('showDeleteModal', false);
-    this.get('transitionTo')('flights');
+    this.transitionTo('flights');
   }).drop(),
 
   publishTask: task(function * () {
     let id = this.get('flight.id');
-    yield this.get('ajax').request(`/api/flights/${id}/`, { method: 'POST', json: { privacyLevel: 0 } });
+    yield this.ajax.request(`/api/flights/${id}/`, { method: 'POST', json: { privacyLevel: 0 } });
     this.set('flight.privacyLevel', 0);
     this.set('showPublishModal', false);
   }).drop(),

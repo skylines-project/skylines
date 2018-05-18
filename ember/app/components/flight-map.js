@@ -14,28 +14,28 @@ export default BaseMapComponent.extend({
   didInsertElement() {
     this._super(...arguments);
 
-    let map = this.get('map');
+    let map = this.map;
     map.on('moveend', this._handleMoveEnd, this);
     map.on('pointermove', this._handlePointerMove, this);
 
-    slMapClickHandler(this.get('map'), this.get('flights'), this.get('addFlight'));
+    slMapClickHandler(this.map, this.flights, this.addFlight);
   },
 
   willDestroyElement() {
     this._super(...arguments);
-    let map = this.get('map');
+    let map = this.map;
     map.un('moveend', this._handleMoveEnd, this);
     map.un('pointermove', this._handlePointerMove, this);
   },
 
   _handleMoveEnd(event) {
-    this.get('onExtentChange')(event.frameState.extent);
+    this.onExtentChange(event.frameState.extent);
   },
 
   _handlePointerMove(event) {
-    if (event.dragging || !this.get('hoverEnabled')) { return; }
+    if (event.dragging || !this.hoverEnabled) { return; }
 
-    let map = this.get('map');
+    let map = this.map;
     let source = this.get('flights.source');
 
     let coordinate = map.getEventCoordinate(event.originalEvent);
@@ -52,8 +52,8 @@ export default BaseMapComponent.extend({
         Math.pow(mouse_pixel[1] - feature_pixel[1], 2);
 
       // Set the time when the mouse hovers the map
-      let time = (squared_distance > 100) ? this.get('defaultTime') : closest_point[3];
-      this.get('onTimeChange')(time);
+      let time = (squared_distance > 100) ? this.defaultTime : closest_point[3];
+      this.onTimeChange(time);
 
       map.render();
     }
@@ -62,11 +62,11 @@ export default BaseMapComponent.extend({
   actions: {
     cesiumEnabled() {
       this.set('cesiumEnabled', true);
-      this.get('onCesiumEnabledChange')(true);
+      this.onCesiumEnabledChange(true);
     },
     cesiumDisabled() {
       this.set('cesiumEnabled', false);
-      this.get('onCesiumEnabledChange')(false);
+      this.onCesiumEnabledChange(false);
     },
   },
 });

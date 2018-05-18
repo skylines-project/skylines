@@ -35,7 +35,7 @@ export default Controller.extend({
   hasUnread: and('isFirstPage', 'hasUnreadOnPage'),
 
   markAsReadTask: task(function * () {
-    yield this.get('ajax').request('/api/notifications/clear', { method: 'POST' });
+    yield this.ajax.request('/api/notifications/clear', { method: 'POST' });
     this.get('model.events').forEach(event => set(event, 'unread', false));
     this.set('notifications.counter', 0);
   }).drop(),

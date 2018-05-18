@@ -6,11 +6,11 @@ export default BaseMapComponent.extend({
   didInsertElement() {
     this._super(...arguments);
     this.fit();
-    slMapClickHandler(this.get('map'));
+    slMapClickHandler(this.map);
   },
 
   fit() {
-    let map = this.get('map');
+    let map = this.map;
 
     let layer = map.getLayers().getArray()
       .find(layer => (layer.get('id') === 'TakeoffLocations'));

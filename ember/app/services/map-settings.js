@@ -19,7 +19,7 @@ export default Service.extend({
   overlayLayers: computed('_query.overlays', '_overlayLayers', function() {
     let queryOverlays = this.get('_query.overlays');
     if (queryOverlays === undefined) {
-      return this.get('_overlayLayers');
+      return this._overlayLayers;
     } else if (queryOverlays === '') {
       return [];
     } else {
@@ -37,7 +37,7 @@ export default Service.extend({
     this._super(...arguments);
     this.set('_overlayLayers', ['Airspace']);
 
-    let cookies = this.get('cookies');
+    let cookies = this.cookies;
     let cookieBaseLayer = cookies.read(BASE_LAYER_COOKIE_KEY);
     if (cookieBaseLayer) {
       this.set('_baseLayer', cookieBaseLayer);
@@ -50,23 +50,23 @@ export default Service.extend({
   },
 
   isLayerVisible(layer) {
-    return this.get('baseLayer') === layer || this.get('overlayLayers').includes(layer);
+    return this.baseLayer === layer || this.overlayLayers.includes(layer);
   },
 
   setBaseLayer(baseLayer) {
     this.set('_baseLayer', baseLayer);
-    this.get('cookies').write(BASE_LAYER_COOKIE_KEY, baseLayer, { path: '/', expires: new Date('2099-12-31') });
+    this.cookies.write(BASE_LAYER_COOKIE_KEY, baseLayer, { path: '/', expires: new Date('2099-12-31') });
   },
 
   toggleOverlayLayer(overlayLayer) {
-    let overlayLayers = this.get('overlayLayers');
+    let overlayLayers = this.overlayLayers;
     if (overlayLayers.includes(overlayLayer)) {
       overlayLayers.removeObject(overlayLayer);
     } else {
       overlayLayers.pushObject(overlayLayer);
     }
 
-    this.get('cookies').write(OVERLAY_LAYERS_COOKIE_KEY, overlayLayers.join(';'), { path: '/', expires: new Date('2099-12-31') });
+    this.cookies.write(OVERLAY_LAYERS_COOKIE_KEY, overlayLayers.join(';'), { path: '/', expires: new Date('2099-12-31') });
   },
 });
 

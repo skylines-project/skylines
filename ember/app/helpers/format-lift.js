@@ -10,6 +10,6 @@ export default Helper.extend({
   }),
 
   compute([value], options) {
-    return this.get('units').formatLift(value, options);
+    return this.units.formatLift(value, options);
   },
 });

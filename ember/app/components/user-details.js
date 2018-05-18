@@ -12,14 +12,14 @@ export default Component.extend({
 
   followTask: task(function * () {
     let userId = this.get('user.id');
-    yield this.get('ajax').request(`/api/users/${userId}/follow`);
+    yield this.ajax.request(`/api/users/${userId}/follow`);
     this.set('user.followed', true);
     this.incrementProperty('user.followers');
   }).drop(),
 
   unfollowTask: task(function * () {
     let userId = this.get('user.id');
-    yield this.get('ajax').request(`/api/users/${userId}/unfollow`);
+    yield this.ajax.request(`/api/users/${userId}/unfollow`);
     this.set('user.followed', false);
     this.decrementProperty('user.followers');
   }).drop(),

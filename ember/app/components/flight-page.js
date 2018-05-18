@@ -16,9 +16,9 @@ export default Component.extend({
   flightPhase: null,
 
   timeInterval: computed('mapExtent', 'cesiumEnabled', function() {
-    if (this.get('cesiumEnabled')) { return null; }
+    if (this.cesiumEnabled) { return null; }
 
-    let extent = this.get('mapExtent');
+    let extent = this.mapExtent;
     if (!extent) { return null; }
 
     let interval = this.get('fixCalc.flights').getMinMaxTimeInExtent(extent);
@@ -29,11 +29,11 @@ export default Component.extend({
   init() {
     this._super(...arguments);
 
-    let ajax = this.get('ajax');
-    let units = this.get('units');
+    let ajax = this.ajax;
+    let units = this.units;
 
     let fixCalc = FixCalc.create({ ajax, units });
-    fixCalc.addFlight(this.get('_primaryFlightPath'));
+    fixCalc.addFlight(this._primaryFlightPath);
     this.set('fixCalc', fixCalc);
 
     let flightPhase = FlighPhase.create({ fixCalc });
@@ -42,7 +42,7 @@ export default Component.extend({
 
   didInsertElement() {
     this._super(...arguments);
-    let fixCalc = this.get('fixCalc');
+    let fixCalc = this.fixCalc;
 
     let sidebar = this.$('#sidebar').sidebar();
 
@@ -65,7 +65,7 @@ export default Component.extend({
       sidebar.open('tab-overview');
     }
 
-    let [primaryId, ...otherIds] = this.get('ids');
+    let [primaryId, ...otherIds] = this.ids;
 
     let map = window.flightMap.get('map');
 
@@ -81,22 +81,22 @@ export default Component.extend({
 
   actions: {
     togglePlayback() {
-      this.get('fixCalc').togglePlayback();
+      this.fixCalc.togglePlayback();
     },
 
     addFlight(data) {
-      this.get('fixCalc').addFlight(data);
+      this.fixCalc.addFlight(data);
     },
 
     removeFlight(id) {
       let flights = this.get('fixCalc.flights');
       flights.removeObjects(flights.filterBy('id', id));
-      this.get('pinnedFlights').unpin(id);
+      this.pinnedFlights.unpin(id);
     },
 
     selectWingman(id) {
-      let fixCalc = this.get('fixCalc');
-      let pinnedFlights = this.get('pinnedFlights');
+      let fixCalc = this.fixCalc;
+      let pinnedFlights = this.pinnedFlights;
 
       let flights = fixCalc.get('flights');
       let matches = flights.filterBy('id', id);

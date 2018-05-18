@@ -14,7 +14,7 @@ export default BaseValidator.extend({
     let validResults = options.validResults || ['available', 'self'];
 
     let json = { email };
-    let { result } = await this.get('ajax').request('/api/users/check-email', { method: 'POST', json });
-    return (validResults.indexOf(result) !== -1) ? true : this.get('intl').t(options.messageKey);
+    let { result } = await this.ajax.request('/api/users/check-email', { method: 'POST', json });
+    return (validResults.indexOf(result) !== -1) ? true : this.intl.t(options.messageKey);
   },
 });

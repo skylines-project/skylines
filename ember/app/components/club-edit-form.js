@@ -48,7 +48,7 @@ export default Component.extend(Validations, {
     async submit() {
       let { validations } = await this.validate();
       if (validations.get('isValid')) {
-        this.get('saveTask').perform();
+        this.saveTask.perform();
       }
     },
   },
@@ -58,10 +58,10 @@ export default Component.extend(Validations, {
     let json = this.getProperties('name', 'website');
 
     try {
-      yield this.get('ajax').request(`/api/clubs/${id}`, { method: 'POST', json });
+      yield this.ajax.request(`/api/clubs/${id}`, { method: 'POST', json });
       this.set('club.name', json.name);
       this.set('club.website', json.website);
-      this.get('router').transitionTo('club', id);
+      this.router.transitionTo('club', id);
 
     } catch (error) {
       this.set('error', error);

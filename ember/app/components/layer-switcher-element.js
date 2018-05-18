@@ -5,7 +5,7 @@ export default Component.extend({
   highlighted: false,
 
   imagePath: computed('layer.visible', 'highlighted', function() {
-    let colorful = this.get('layer.visible') || this.get('highlighted');
+    let colorful = this.get('layer.visible') || this.highlighted;
     return `../../images/layers/${this.get('layer.name')}${colorful ? '.png' : '.bw.png'}`;
   }),
 
@@ -23,6 +23,6 @@ export default Component.extend({
   },
 
   click() {
-    this.get('onSelect')(this.get('layer'));
+    this.onSelect(this.layer);
   },
 });

@@ -12,13 +12,13 @@ export default Component.extend({
 
   actions: {
     remove() {
-      this.get('onRemove')(this.get('row.id'));
+      this.onRemove(this.get('row.id'));
     },
   },
 
   click() {
-    if (this.get('selectable')) {
-      this.get('onSelect')(this.get('row.id'));
+    if (this.selectable) {
+      this.onSelect(this.get('row.id'));
     }
   },
 });

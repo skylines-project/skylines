@@ -20,7 +20,7 @@ export default Route.extend(ApplicationRouteMixin, {
 
   async beforeModel() {
     let locale = await this._determineLocale();
-    await this.get('intl').loadAndSetLocale(locale);
+    await this.intl.loadAndSetLocale(locale);
   },
 
   setupController() {
@@ -28,7 +28,7 @@ export default Route.extend(ApplicationRouteMixin, {
 
     let settings = this.get('session.data.authenticated.settings');
     if (settings) {
-      this.get('units').setProperties({
+      this.units.setProperties({
         altitudeUnitIndex: settings.altitudeUnit,
         distanceUnitIndex: settings.distanceUnit,
         liftUnitIndex: settings.liftUnit,
@@ -42,7 +42,7 @@ export default Route.extend(ApplicationRouteMixin, {
 
     let userId = this.get('account.user.id');
     if (userId) {
-      this.get('raven').callRaven('setUserContext', { id: userId });
+      this.raven.callRaven('setUserContext', { id: userId });
     }
   },
 
@@ -50,7 +50,7 @@ export default Route.extend(ApplicationRouteMixin, {
     let availableLocales = _availableLocales.map(it => it.code);
     debug(`Available locales: ${availableLocales}`);
 
-    let cookieLocale = this.get('cookies').read('locale');
+    let cookieLocale = this.cookies.read('locale');
     debug(`Locale from "locale" cookie: ${cookieLocale}`);
 
     if (!isBlank(cookieLocale) && availableLocales.includes(cookieLocale)) {
@@ -61,7 +61,7 @@ export default Route.extend(ApplicationRouteMixin, {
     debug('Requesting locale resolution from server');
     try {
       let data = { available: availableLocales.join() };
-      return (await this.get('ajax').request('/api/locale', { data })).locale || FALLBACK_LOCALE;
+      return (await this.ajax.request('/api/locale', { data })).locale || FALLBACK_LOCALE;
     } catch (error) {
       return FALLBACK_LOCALE;
     }

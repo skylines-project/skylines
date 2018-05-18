@@ -14,7 +14,7 @@ export default Route.extend({
       page: params.page,
     };
 
-    return this.get('ajax').request('/api/ranking/airports', { data });
+    return this.ajax.request('/api/ranking/airports', { data });
   },
 
   setupController(controller) {
