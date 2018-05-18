@@ -59,7 +59,9 @@
 
     <div class="sidebar-pane" id="tab-stats-legs">
       <h3>{{t "leg-statistics"}}</h3>
-      {{flight-leg-panel legs=legs selection=flightPhase.selection onSelect=(action (mut flightPhase.selection)) class="sidebar-pane-content"}}
+      <div class="sidebar-pane-content">
+        {{flight-leg-panel legs=legs selection=flightPhase.selection onSelect=(action (mut flightPhase.selection))}}
+      </div>
     </div>
 
     {{#if phases}}
