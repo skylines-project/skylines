@@ -1,11 +1,11 @@
 <table class="table table-striped search-results">
   <tbody>
-  {{#each results as |result|}}
+  {{#each @results as |result|}}
     {{search-result-row result=result}}
   {{else}}
     <tr>
       <td colspan="4">
-        {{#if searchText}}
+        {{#if @searchText}}
           {{t "search.no-results"}}
         {{else}}
           {{t "search.no-search-text"}}

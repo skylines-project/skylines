@@ -1,7 +1,7 @@
-{{#if (eq pilots.length 1)}}
+{{#if (eq @pilots.length 1)}}
   <table class="table">
     <tbody>
-    {{#each pilots as |pilot|}}
+    {{#each @pilots as |pilot|}}
       <tr>
         <th>{{t "pilot"}}</th>
         <td>{{link-to pilot.name "user" pilot.id}}</td>
@@ -27,7 +27,7 @@
 {{else}}
   <table class="table">
     <tbody>
-    {{#each pilots as |pilot|}}
+    {{#each @pilots as |pilot|}}
       <tr>
         <td><span class="badge" style="background-color: {{ pilot.color }}">{{or pilot.trackingCallsign (initials pilot.name)}}</span></td>
         <td>{{link-to pilot.name "user" pilot.id}}</td>

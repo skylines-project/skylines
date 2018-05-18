@@ -1,4 +1,4 @@
-{{#if legs}}
+{{#if @legs}}
   <table class="table table-condensed text-right">
     <thead>
     <tr class="small">
@@ -12,8 +12,8 @@
     </tr>
     </thead>
     <tbody>
-    {{#each legs as |leg index|}}
-      {{flight-leg-row num=(sum index 1) leg=leg selection=selection onSelect=onSelect}}
+    {{#each @legs as |leg index|}}
+      {{flight-leg-row num=(sum index 1) leg=leg selection=@selection onSelect=@onSelect}}
     {{/each}}
     </tbody>
   </table>
