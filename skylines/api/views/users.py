@@ -258,22 +258,11 @@ def read(user_id):
 @users_blueprint.route('/users/<user_id>', methods=['DELETE'], strict_slashes=False)
 @oauth.required()
 def delete_user(user_id):
-    user = get_requested_record(User, user_id)
-
     current_user = User.get(request.user_id)
-    if not user.is_writable(current_user):
+    if not current_user.is_manager():
         return jsonify(), 403
 
-    if not current_user.is_manager():
-        json = request.get_json()
-        if json is None:
-            return jsonify(error='invalid-request'), 400
-
-        if 'password' not in json:
-            return jsonify(error='password-missing'), 400
-
-        if not current_user.validate_password(json['password']):
-            return jsonify(error='wrong-password'), 403
+    user = get_requested_record(User, user_id)
 
     user.delete()
     db.session.commit()
