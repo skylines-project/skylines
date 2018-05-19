@@ -33,7 +33,9 @@ Now you can install the python dependencies by calling:
     $ pipenv install --dev
 
 *Note: You might have to install the additional Ubuntu/Debian packages
-`libpq-dev`, `python-dev` and `g++` for the `psycopg2` dependency.*
+`libpq-dev`, `python-dev` and `g++` for the `psycopg2` dependency. 
+Furthermore the XCSoar tools might require additional dependencies (see 
+XCSoar tools section)*
 
 
 ## PostGIS database
@@ -85,9 +87,10 @@ Since the [XCSoar](http://www.xcsoar.org/) project already has much of the code
 implemented that is necessary for flight analysis, it makes sense to reuse that
 code where applicable. *SkyLines* is using XCSoar as a python library. This library
 is built and installed by the `xcsoar` python package. To build this library you
-might have to install additional libraries like `libcurl`, which can be installed
-on Debian/Ubuntu by executing `apt-get install libcurl4-openssl-dev`. Please have
-a look into the XCSoar documentation if you need more help with the building process.
+might have to install additional libraries like `libcurl` and `freetype`, which 
+can be installed on Debian/Ubuntu by executing 
+`apt-get install libcurl4-openssl-dev libfreetype6-dev`. Please have a look into 
+the XCSoar documentation if you need more help with the building process.
 
 
 ## Running the debug server
