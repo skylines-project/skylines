@@ -5424,9 +5424,9 @@ intl-relativeformat@^2.0.0:
   dependencies:
     intl-messageformat "^2.0.0"
 
-intl@^1.2.5:
-  version "1.2.5"
-  resolved "https://registry.yarnpkg.com/intl/-/intl-1.2.5.tgz#82244a2190c4e419f8371f5aa34daa3420e2abde"
+intl@^1.2.5, intl@andyearnshaw/Intl.js:
+  version "1.2.6"
+  resolved "https://codeload.github.com/andyearnshaw/Intl.js/tar.gz/4bd382c5df206f328b35ca23579904f603b84f0b"
 
 into-stream@^3.1.0:
   version "3.1.0"
