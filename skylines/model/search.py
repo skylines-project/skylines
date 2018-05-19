@@ -170,7 +170,7 @@ def __filter_prefixed_tokens(prefix, tokens):
 
 def text_to_tokens(search_text):
     try:
-        return shlex.split(search_text.encode('utf-8'))
+        return [str.decode('utf8') for str in shlex.split(search_text.encode('utf8'))]
     except ValueError:
         return search_text.split(' ')
 
