@@ -5,6 +5,7 @@ from werkzeug.useragents import UserAgent
 from skylines.api.cors import cors
 
 from skylines.api.views.about import about_blueprint
+from skylines.api.views.account import account_blueprint
 from skylines.api.views.airports import airports_blueprint
 from skylines.api.views.aircraft_models import aircraft_models_blueprint
 from skylines.api.views.clubs import clubs_blueprint
@@ -46,6 +47,7 @@ def register(app):
     register_error_handlers(app)
 
     app.register_blueprint(about_blueprint)
+    app.register_blueprint(account_blueprint)
     app.register_blueprint(airports_blueprint)
     app.register_blueprint(aircraft_models_blueprint)
     app.register_blueprint(clubs_blueprint)

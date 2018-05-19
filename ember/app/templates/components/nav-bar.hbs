@@ -1,4 +1,4 @@
-{{#bs-navbar type="inverse" fluid=false position="fixed-top" collapsed=collapsed onCollapse=(action (mut collapsed) true) onExpand=(action (mut collapsed) false) as |navbar|}}
+{{#bs-navbar type="inverse" fluid=false position="fixed-top" collapsed=collapsed onCollapse=(action (mut collapsed) true) onExpand=(action (mut collapsed) false) data-test-nav-bar=true as |navbar|}}
   <div class="navbar-header">
     {{navbar.toggle}}
 

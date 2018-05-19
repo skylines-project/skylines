@@ -8,7 +8,7 @@
 {{#nav.item}}{{#nav.link-to "statistics.pilot" account.user.id}}{{fa-icon "bar-chart" fixedWidth=true}} {{t "statistics"}}{{/nav.link-to}}{{/nav.item}}
 
 {{menu.divider}}
-{{#nav.item}}{{#nav.link-to "settings"}}{{fa-icon "cog" fixedWidth=true}} {{t "settings"}}{{/nav.link-to}}{{/nav.item}}
+{{#nav.item}}{{#nav.link-to "settings" data-test-setting-link}}{{fa-icon "cog" fixedWidth=true}} {{t "settings"}}{{/nav.link-to}}{{/nav.item}}
 
 {{menu.divider}}
 {{#nav.item}}<a href="#" {{action (perform logoutTask)}}>{{fa-icon "sign-out" fixedWidth=true}} {{t "logout"}}</a>{{/nav.item}}

@@ -42,6 +42,10 @@ date: Date
 date-missing-in-igc-file: Date missing in IGC file
 delay: Delay
 delete: Delete
+delete-account: Delete Account
+delete-account-modal:
+  please-enter-password: Please enter your current password to confirm the account deletion process.
+  proceed-with-caution: This process can not be reverted, proceed with caution!
 delete-flight: Delete Flight
 delete-flight-confirmation-text: Are you sure you want to delete this flight?
 developers: Developers

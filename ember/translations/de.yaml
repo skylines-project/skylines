@@ -42,6 +42,10 @@ date: Datum
 date-missing-in-igc-file: Datum fehlt in IGC Datei
 delay: Verzögerung
 delete: Löschen
+delete-account: Account löschen
+delete-account-modal:
+  please-enter-password: Bitte gib dein aktuelles Passwort ein um die Löschung deines Accounts zu bestätigen.
+  proceed-with-caution: Achtung, dieser Schritt kann nicht rückgängig gemacht werden!
 delete-flight: Flug löschen
 delete-flight-confirmation-text: Bist du sicher dass du den Flug löschen möchtest?
 developers: Entwickler

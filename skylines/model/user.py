@@ -12,6 +12,7 @@ from sqlalchemy.dialects.postgresql import INET
 from sqlalchemy.ext.hybrid import hybrid_property, hybrid_method
 
 from skylines.database import db
+from skylines.lib import files
 from skylines.lib.sql import LowerCaseComparator
 
 __all__ = ['User']
@@ -271,6 +272,17 @@ class User(db.Model):
         """
         from skylines.model.flight import Flight
         return Flight.get_largest().filter(Flight.pilot == self)
+
+    ##############################
+
+    def delete(self):
+        from skylines.model.igcfile import IGCFile
+
+        for row in db.session.query(IGCFile).filter_by(owner_id=self.id):
+            files.delete_file(row.filename)
+
+        db.session.query(IGCFile).filter_by(owner_id=self.id).delete()
+        db.session.delete(self)
 
 
 db.Index('users_lower_email_address_idx',

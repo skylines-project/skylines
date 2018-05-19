@@ -1,3 +1,4 @@
+import Ember from 'ember';
 import { computed } from '@ember/object';
 import { gt } from '@ember/object/computed';
 import Service, { inject as service } from '@ember/service';
@@ -21,7 +22,7 @@ export default Service.extend({
 
   updateTask: task(function * () {
     // eslint-disable-next-line no-constant-condition
-    while (true) {
+    while (!Ember.testing) {
       let { events } = yield this.ajax.request('/api/notifications');
       this.set('counter', events.filter(it => it.unread).length);
       yield timeout(60000);

@@ -1,0 +1,57 @@
+<div class="panel-body">
+  {{#bs-button
+    type="danger"
+    block=true
+    disabled=dialogOpen
+    onClick=(action (mut dialogOpen) true)
+    data-test-delete-account-button=true
+  }}
+    {{t "delete-account"}}
+  {{/bs-button}}
+
+  {{#bs-modal
+    open=dialogOpen
+    onSubmit=(action "submit")
+    onHidden=(action (mut dialogOpen) false)
+    data-test-delete-account-modal=true
+    as |modal|
+  }}
+    {{#modal.header}}
+      <h4 class="modal-title">{{t "delete-account"}}</h4>
+    {{/modal.header}}
+
+    {{#modal.body}}
+      <p><strong>{{t "delete-account-modal.please-enter-password"}}</strong></p>
+      <p>{{t "delete-account-modal.proceed-with-caution"}}</p>
+
+      <form data-test-password-form {{action "submit" on="submit"}}>
+        {{#if error}}
+          {{#bs-alert type="danger" dismissible=false}}{{error}}{{/bs-alert}}
+        {{/if}}
+
+        {{validated-input
+          type='password'
+          value=password
+          validation=validations.attrs.password
+          placeholder=(t "password")
+          autocomplete="current-password"
+          disabled=deleteTask.isRunning
+          didValidate=didValidate
+        }}
+      </form>
+    {{/modal.body}}
+
+    {{#modal.footer}}
+      {{#bs-button onClick=(action modal.close)}}Cancel{{/bs-button}}
+
+      {{#bs-button
+        type="danger"
+        disabled=(or deleteTask.isRunning (not validations.isValid))
+        onClick=(action "submit")
+        data-test-submit-button=true
+      }}
+        {{t "delete-account"}}
+      {{/bs-button}}
+    {{/modal.footer}}
+  {{/bs-modal}}
+</div>
