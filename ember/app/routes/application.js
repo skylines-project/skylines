@@ -20,6 +20,10 @@ export default Route.extend(ApplicationRouteMixin, {
 
   async beforeModel() {
     let locale = await this._determineLocale();
+    if (!window.Intl) {
+      debug(`Loading Intl.js polyfill...`);
+      await this.intl.loadIntlPolyfill();
+    }
     await this.intl.loadAndSetLocale(locale);
   },
 
