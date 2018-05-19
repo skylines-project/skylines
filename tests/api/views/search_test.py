@@ -47,6 +47,22 @@ def test_search_doe(db_session, client):
     }
 
 
+def test_search_with_umlauts(db_session, client):
+    john = users.john(last_name=u'Müller')
+
+    add_fixtures(db_session, john)
+
+    res = client.get(u'/search?text=M%C3%BCll')
+    assert res.status_code == 200
+    assert res.json == {
+        'results': [{
+            'id': john.id,
+            'type': 'user',
+            'name': u'John Müller',
+        }],
+    }
+
+
 def test_missing_search_text(client):
     res = client.get('/search')
     assert res.status_code == 200
