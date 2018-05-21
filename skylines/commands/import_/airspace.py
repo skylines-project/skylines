@@ -11,7 +11,6 @@ from flask import current_app
 from geoalchemy2.shape import from_shape
 from shapely.geometry import polygon
 from shapely.wkt import loads
-from shapely.geos import ReadingError
 from sqlalchemy.sql.expression import case
 from sqlalchemy import func
 from skylines.database import db
@@ -383,7 +382,7 @@ class AirspaceCommand(Command):
     def add_airspace(self, country_code, airspace_class, name, base, top, geom_str):
         try:
             geom = loads(geom_str)
-        except ReadingError:
+        except:
             print(name + "(" + airspace_class + ") is not a polygon (maybe not enough points?)")
             return False
 
