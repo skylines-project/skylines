@@ -291,11 +291,11 @@
         },
         "marshmallow": {
             "hashes": [
-                "sha256:0466c523c00bd6f1dcb6523cec016e20ffa9738d5abfaf618cd6b1142b9dc766",
-                "sha256:4c9978eddbc521674505ed38109cd8b92c8baa6f0a386a52356666c74e586d1e"
+                "sha256:171f409d48b44786b7df2793cbd7f1a9062f0fe2c14d547da536b5010f671ade",
+                "sha256:c231784b5a5d2b26e50c90f3038004a3552ec27658cde6e0a5a7279d0c5a8e26"
             ],
             "index": "pypi",
-            "version": "==2.15.2"
+            "version": "==2.15.3"
         },
         "oauthlib": {
             "hashes": [
@@ -739,7 +739,7 @@
                 "sha256:64b28eec5e78e7510698f6d4da08800a5c575caa4a286c93d651c5d3ff7b6794",
                 "sha256:b146c751ea45cad6188dd6cf2d9b757f6f4f8d6ffb96a023e6f2e26eea02a72c"
             ],
-            "markers": "python_version < '3'",
+            "markers": "python_version == '2.7'",
             "version": "==1.0.22"
         },
         "mccabe": {
