@@ -21,7 +21,7 @@ alembic = "*"
 shapely = "==1.3.0"
 "crc16" = "==0.1.1"
 pytz = "*"
-celery = {extras = ["redis"], version = "<3.2,>=3.1"}
+celery = {extras = ["redis"], version = ">=3.1,<4.2"}
 xcsoar = "==0.6.1"
 aerofiles = "==0.4.1"
 "enum34" = "==1.1.6"
