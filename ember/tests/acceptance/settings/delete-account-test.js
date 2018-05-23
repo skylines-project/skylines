@@ -66,7 +66,7 @@ module('Acceptance | Settings | Delete Account', function(hooks) {
 
     // click on the "Delete Account" button
     await click('[data-test-delete-account-button]');
-    assert.dom('[data-test-delete-account-modal]').isVisible();
+    assert.dom('[data-test-delete-account-modal] .modal-dialog').isVisible();
     assert.dom('[data-test-delete-account-modal] [data-test-password-form] .form-group').doesNotHaveClass('has-error');
     assert.dom('[data-test-delete-account-modal] [data-test-password-form] .help-block').doesNotExist();
     assert.dom('[data-test-delete-account-modal] [data-test-submit-button]').isDisabled();
