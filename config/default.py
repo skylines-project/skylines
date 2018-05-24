@@ -11,7 +11,7 @@ DEBUG = True
 SECRET_KEY = 'skylines'
 
 SMTP_SERVER = 'localhost'
-EMAIL_FROM = 'no-reply@skylines.aero'
+EMAIL_FROM = 'SkyLines <no-reply@skylines.aero>'
 
 """
 # Logging handlers (disabled in DEBUG mode)
