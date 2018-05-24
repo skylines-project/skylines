@@ -80,6 +80,8 @@ Router.map(function() {
 
   this.route('login');
 
+  this.route('freestyle');
+
   this.route('page-not-found', { path: '/*wildcard' });
 });
 

@@ -1,6 +1,9 @@
 {{head-layout}}
 {{title "SkyLines"}}
 
-{{nav-bar onSearch=(action "search")}}
-
-{{outlet}}
+{{#if onFreestyleRoute}}
+  {{outlet}}
+{{else}}
+  {{nav-bar onSearch=(action "search")}}
+  {{outlet}}
+{{/if}}
