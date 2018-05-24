@@ -145,9 +145,9 @@
     ember-cli-babel "^6.6.0"
     ember-compatibility-helpers "1.0.0-beta.1"
 
-"@ember/optional-features@^0.5.2":
-  version "0.5.2"
-  resolved "https://registry.yarnpkg.com/@ember/optional-features/-/optional-features-0.5.2.tgz#92544285b173adef8f462420411bf77ddf822dd4"
+"@ember/optional-features@^0.6.1":
+  version "0.6.1"
+  resolved "https://registry.yarnpkg.com/@ember/optional-features/-/optional-features-0.6.1.tgz#c5163c11bdd11ed8d69d4e273b114b95af16e5a9"
   dependencies:
     chalk "^2.3.0"
     co "^4.6.0"
