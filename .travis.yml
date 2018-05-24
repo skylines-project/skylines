@@ -11,6 +11,11 @@ env:
     # See https://git.io/vdao3 for details.
     - JOBS=1
 
+    # Percy secrets are included here to enable Percy's GitHub integration
+    # on community-submitted PRs
+    - PERCY_PROJECT=skylines/skylines
+    - PERCY_TOKEN=81bf0245987c87eb4924eae0b085cb60596f2f0f4d4ffe27e171828535aa6812
+
 addons:
   chrome: stable
   postgresql: "9.5"
