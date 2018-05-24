@@ -61,7 +61,7 @@ information about users.
 
 > You do not need to create an account to use SkyLines.
 >
-> If you do create an account, you do not need to give us your email address.
+> If you do create an account, you need to give us your email address.
 >
 > If you do not create an account, you are limited to viewing the flights of
 > others.
