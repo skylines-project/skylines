@@ -3,6 +3,8 @@ import { setupApplicationTest } from 'ember-qunit';
 import { visit, click, currentURL, fillIn } from '@ember/test-helpers';
 
 import { authenticateSession, currentSession } from 'ember-simple-auth/test-support';
+import { percySnapshot } from 'ember-percy';
+
 import { setupPretender } from 'skylines/tests/helpers/setup-pretender';
 
 module('Acceptance | Settings | Delete Account', function(hooks) {
@@ -55,6 +57,7 @@ module('Acceptance | Settings | Delete Account', function(hooks) {
 
     // visit the front page
     await visit('/');
+    await percySnapshot('Index');
 
     // open the menu
     await click('[data-test-nav-bar] [data-test-user-menu-toggle]');
@@ -63,6 +66,7 @@ module('Acceptance | Settings | Delete Account', function(hooks) {
     // click on the "Settings" link
     await click('[data-test-nav-bar] [data-test-user-menu] [data-test-setting-link]');
     assert.equal(currentURL(), '/settings/profile');
+    await percySnapshot('Settings');
 
     // click on the "Delete Account" button
     await click('[data-test-delete-account-button]');
@@ -76,6 +80,7 @@ module('Acceptance | Settings | Delete Account', function(hooks) {
     assert.dom('[data-test-delete-account-modal] [data-test-password-form] .form-group').hasClass('has-error');
     assert.dom('[data-test-delete-account-modal] [data-test-password-form] .help-block').isVisible();
     assert.dom('[data-test-delete-account-modal] [data-test-submit-button]').isDisabled();
+    await percySnapshot('Delete Account Modal');
 
     // enter correct password
     await fillIn('[data-test-delete-account-modal] [data-test-password-form] input', 'secret123');
