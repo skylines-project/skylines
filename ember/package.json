@@ -20,7 +20,7 @@
     "ember-awesome-macros": "^1.0.0"
   },
   "devDependencies": {
-    "@ember/optional-features": "^0.5.2",
+    "@ember/optional-features": "^0.6.1",
     "bigscreen": "^2.0.5",
     "bootstrap-sass": "^3.3.7",
     "broccoli-asset-rev": "^2.7.0",
