@@ -5,7 +5,14 @@
 let EmberApp = require('ember-cli/lib/broccoli/ember-app');
 
 module.exports = function(defaults) {
+  let environment = process.env.EMBER_ENV;
+  let pluginsToBlacklist = environment === 'production' ? ['ember-freestyle', 'freestyle'] : [];
+
   let app = new EmberApp(defaults, {
+    addons: {
+      blacklist: pluginsToBlacklist
+    },
+
     fingerprint: {
       extensions: ['css', 'js'],
       exclude: ['cesium'],
@@ -46,6 +53,10 @@ module.exports = function(defaults) {
         'google-plus',
         'twitter',
       ],
+    },
+
+    freestyle: {
+      snippetSearchPaths: ['lib/freestyle/app'],
     },
   });
 
