@@ -98,16 +98,7 @@
     ember-source-channel-url "^1.0.1"
     ember-try "^0.2.23"
 
-"@ember-decorators/babel-transforms@^0.1.1":
-  version "0.1.1"
-  resolved "https://registry.yarnpkg.com/@ember-decorators/babel-transforms/-/babel-transforms-0.1.1.tgz#c2be1677192e55ccfeb806002d57e314a0e728bc"
-  dependencies:
-    babel-plugin-transform-class-properties "^6.24.1"
-    babel-plugin-transform-decorators-legacy "^1.3.4"
-    ember-cli-babel "^6.6.0"
-    ember-cli-version-checker "^2.1.0"
-
-"@ember-decorators/babel-transforms@^2.0.0":
+"@ember-decorators/babel-transforms@^2.0.0", "@ember-decorators/babel-transforms@^2.0.1":
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/@ember-decorators/babel-transforms/-/babel-transforms-2.0.1.tgz#75b668cfe996fa920c940ad723be015cddf904db"
   dependencies:
@@ -3665,12 +3656,12 @@ ember-factory-for-polyfill@^1.3.1:
     node-fetch "^2.0.0-alpha.3"
     whatwg-fetch "^2.0.3"
 
-ember-font-awesome@^4.0.0-rc.3:
-  version "4.0.0-rc.3"
-  resolved "https://registry.yarnpkg.com/ember-font-awesome/-/ember-font-awesome-4.0.0-rc.3.tgz#6f63bb5d5a7e605c41fe17455264287fba3b4ce5"
+ember-font-awesome@^4.0.0-rc.4:
+  version "4.0.0-rc.4"
+  resolved "https://registry.yarnpkg.com/ember-font-awesome/-/ember-font-awesome-4.0.0-rc.4.tgz#7d4b7fbb401e21afeb7068cbb42ac8d8a84873f7"
   dependencies:
     "@ember-decorators/argument" "^0.8.13"
-    "@ember-decorators/babel-transforms" "^0.1.1"
+    "@ember-decorators/babel-transforms" "^2.0.1"
     broccoli-filter "^1.2.4"
     broccoli-funnel "^2.0.1"
     chalk "^2.3.0"
