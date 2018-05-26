@@ -162,7 +162,6 @@ class AirspaceCommand(Command):
             country_code + '.' + file_type)
 
         if url.startswith('http://') or url.startswith('https://'):
-            print("\nDownloading " + url)
             filename = self.download_file(filename, url)
         elif url.startswith('file://'):
             filename = url[7:]
@@ -336,14 +335,21 @@ class AirspaceCommand(Command):
 
         # Download the current file
         # (only if server file is newer than local file)
-        subprocess.check_call(['wget',
-                               '-q',
-                               '-N',
-                               '--no-check-certificate',
-                               '-U', 'Mozilla/5.0 (Windows NT 5.1; rv:30.0) Gecko/20100101 Firefox/30.0',
-                               '-P', os.path.dirname(path),
-                               '-O', path,
-                               url])
+        print("\nDownloading " + url)
+        try:
+            subprocess.check_call(['wget',
+                                   '-q',
+                                   '-N',
+                                   '--no-check-certificate',
+                                   '-U', 'Mozilla/5.0 (Windows NT 5.1; rv:30.0) Gecko/20100101 Firefox/30.0',
+                                   '-P', os.path.dirname(path),
+                                   '-O', path,
+                                   url])
+        except subprocess.CalledProcessError as e:
+            if e.returncode == 8:
+                print("Download failed: Server issued an error response.")
+            else:
+                print("Download failed.")
 
         # Check if download succeeded
         if not os.path.exists(path):
