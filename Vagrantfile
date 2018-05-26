@@ -79,7 +79,12 @@ pipenv run ./manage.py db create
 mkdir -p /vagrant/htdocs/files
 mkdir -p /vagrant/htdocs/srtm
 
+# install mapserver dependencies
+sudo apt-get install -y --no-install-recommends \
+    g++ libgdal1-dev
 
+# Install pygdal in the required version
+# pipenv install pygdal==`gdal-config --version`
 SCRIPT
 
 Vagrant.configure("2") do |config|

@@ -9,7 +9,8 @@ To run it locally as subprocess of mapproxy, change
 `mapserver/mapproxy/mapproxy.yaml` to fit it to your needs. You'll need to
 install the `cgi-mapserver` package for this.
 
-To import airspaces into the database, you'll need to install the [GDal](http://www.gdal.org/) library.
+To import airspaces into the database, you'll need to install the [GDal](http://www.gdal.org/) library
+(already included in the provisioning of the Vagrant box).
 Install the dependencies of gdal:
 
     $ sudo apt-get install g++ libgdal1-dev
