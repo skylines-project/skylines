@@ -13,7 +13,7 @@ export POSTGIS_ENABLE_OUTDB_RASTERS=1
 EOF
 
 sudo bash -c "cat > /etc/apt/sources.list.d/pgdg.list" << EOF
-deb http://apt.postgresql.org/pub/repos/apt/ precise-pgdg main
+deb http://apt.postgresql.org/pub/repos/apt/ trusty-pgdg main
 EOF
 
 wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add -
@@ -84,8 +84,8 @@ mkdir -p /vagrant/htdocs/srtm
 SCRIPT
 
 Vagrant.configure("2") do |config|
-  # TravisCI uses a Precise Pangolin base image
-  config.vm.box = 'ubuntu/precise64'
+  # TravisCI uses a Trusty Tahr base image (2018-05-26)
+  config.vm.box = 'ubuntu/trusty64'
 
   # increase memory size, required by 'npm install'
   config.vm.provider "virtualbox" do |v|
