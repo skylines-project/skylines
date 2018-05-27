@@ -1,6 +1,10 @@
 dist: trusty
 sudo: false
 
+branches:
+  except:
+  - /^dependabot\/.*$/
+
 language: python
 
 python:
