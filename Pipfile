@@ -6,6 +6,9 @@ name = "pypi"
 [requires]
 python_version = "2.7"
 
+[scripts]
+manage = "./manage.py"
+
 [packages]
 flask = "==1.0.*"
 werkzeug = "*"
