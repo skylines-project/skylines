@@ -12,12 +12,6 @@ export POSTGIS_GDAL_ENABLED_DRIVERS=GTiff
 export POSTGIS_ENABLE_OUTDB_RASTERS=1
 EOF
 
-sudo bash -c "cat > /etc/apt/sources.list.d/pgdg.list" << EOF
-deb http://apt.postgresql.org/pub/repos/apt/ trusty-pgdg main
-EOF
-
-wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add -
-
 # update apt-get repository
 
 sudo apt-get update
@@ -30,6 +24,9 @@ sudo apt-get install -y --no-install-recommends python-software-properties
 
 sudo add-apt-repository -y ppa:ubuntu-toolchain-r/test
 sudo add-apt-repository -y ppa:jonathonf/python-2.7
+
+sudo add-apt-repository -y "deb http://apt.postgresql.org/pub/repos/apt/ trusty-pgdg main"
+wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add -
 
 # update apt-get repository
 
