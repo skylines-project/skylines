@@ -487,10 +487,10 @@
         },
         "sqlalchemy": {
             "hashes": [
-                "sha256:d6cda03b0187d6ed796ff70e87c9a7dce2c2c9650a7bc3c022cd331416853c31"
+                "sha256:2d5f08f714a886a1382c18be501e614bce50d362384dc089474019ce0768151c"
             ],
             "index": "pypi",
-            "version": "==1.2.7"
+            "version": "==1.2.8"
         },
         "urllib3": {
             "hashes": [
@@ -618,7 +618,6 @@
                 "sha256:edabd457cd23a02965166026fd9bfd196f4324fe6032e866d0f3bd0301cd486f",
                 "sha256:fdf1c1dc5bafc32bc5d08b054f94d659422b05aba244d6be4ddc1c72d9aa70fb"
             ],
-            "markers": "platform_python_implementation != 'pypy'",
             "version": "==1.11.5"
         },
         "configparser": {
@@ -752,7 +751,7 @@
                 "sha256:64b28eec5e78e7510698f6d4da08800a5c575caa4a286c93d651c5d3ff7b6794",
                 "sha256:b146c751ea45cad6188dd6cf2d9b757f6f4f8d6ffb96a023e6f2e26eea02a72c"
             ],
-            "markers": "python_version < '3'",
+            "markers": "python_version == '2.7'",
             "version": "==1.0.22"
         },
         "mccabe": {
