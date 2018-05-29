@@ -12,7 +12,7 @@ manage = "./manage.py"
 [packages]
 flask = "==1.0.*"
 werkzeug = "*"
-babel = "==2.5.3"
+babel = "==2.6.0"
 flask-caching = "==1.4.*"
 flask-migrate = "*"
 flask-script = "==0.6.7"
