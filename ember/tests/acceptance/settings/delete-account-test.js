@@ -5,17 +5,19 @@ import { visit, click, currentURL, fillIn } from '@ember/test-helpers';
 import { authenticateSession, currentSession } from 'ember-simple-auth/test-support';
 import { percySnapshot } from 'ember-percy';
 
-import { setupPretender } from 'skylines/tests/helpers/setup-pretender';
+import { setupPolly } from 'skylines/tests/helpers/setup-polly';
 
 module('Acceptance | Settings | Delete Account', function(hooks) {
   setupApplicationTest(hooks);
-  setupPretender(hooks);
+  setupPolly(hooks, { recordIfMissing: false });
 
   function isAuthenticated() {
     return Boolean(currentSession().data.authenticated.settings);
   }
 
   test('users can delete their accounts on the setting page', async function(assert) {
+    let { server } = this.polly;
+
     let settings = {
       id: 123,
       firstName: 'John',
@@ -29,27 +31,31 @@ module('Acceptance | Settings | Delete Account', function(hooks) {
       speedUnit: 1,
     };
 
-    this.server.get('/api/settings', function() {
-      return [200, { 'Content-Type': 'application/json' }, JSON.stringify(settings)];
+    server.get('/api/settings').intercept((req, res) => {
+      res.status(200);
+      res.json(settings);
     });
 
-    this.server.post('/api/users/check-email', function() {
-      return [200, { 'Content-Type': 'application/json' }, JSON.stringify({ result: 'self' })];
+    server.post('/api/users/check-email').intercept((req, res) => {
+      res.status(200);
+      res.json({ result: 'self' });
     });
 
-    this.server.post('/api/settings/password/check', function(request) {
-      let json = JSON.parse(request.requestBody);
+    server.post('/api/settings/password/check').intercept((req, res) => {
+      let json = JSON.parse(req.body);
       let result = json.password === 'secret123';
-      return [200, { 'Content-Type': 'application/json' }, JSON.stringify({ result })];
+      res.status(200);
+      res.json({ result });
     });
 
-    this.server.delete('/api/account', function(request) {
-      let json = JSON.parse(request.requestBody);
+    server.delete('/api/account').intercept((req, res) => {
+      let json = JSON.parse(req.body);
 
       assert.equal(json.password, 'secret123');
       assert.step('account-deleted');
 
-      return [200, { 'Content-Type': 'application/json' }, JSON.stringify({})];
+      res.status(200);
+      res.json({});
     });
 
     await authenticateSession({ settings });
