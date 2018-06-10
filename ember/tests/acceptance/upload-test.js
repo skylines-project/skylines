@@ -2,11 +2,11 @@ import { module, test } from 'qunit';
 import { setupApplicationTest } from 'ember-qunit';
 import { visit, currentURL } from '@ember/test-helpers';
 
-import { setupPretender } from 'skylines/tests/helpers/setup-pretender';
+import { setupPolly } from 'skylines/tests/helpers/setup-polly';
 
 module('Acceptance | flight upload', function(hooks) {
   setupApplicationTest(hooks);
-  setupPretender(hooks);
+  setupPolly(hooks, { recordIfMissing: false });
 
   module('visiting /flights/upload (unauthenticated)', function(hooks) {
     hooks.beforeEach(async function() {
