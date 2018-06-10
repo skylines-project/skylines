@@ -2,11 +2,11 @@ import { module, test } from 'qunit';
 import { setupApplicationTest } from 'ember-qunit';
 import { visit, currentURL } from '@ember/test-helpers';
 
-import { setupPretender } from 'skylines/tests/helpers/setup-pretender';
+import { setupPolly } from 'skylines/tests/helpers/setup-polly';
 
 module('Acceptance | index', function(hooks) {
   setupApplicationTest(hooks);
-  setupPretender(hooks);
+  setupPolly(hooks, { recordIfMissing: false });
 
   hooks.beforeEach(async function(assert) {
     await visit('/');
