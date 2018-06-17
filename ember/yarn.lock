@@ -150,6 +150,17 @@
     ember-cli-babel "^6.6.0"
     ember-compatibility-helpers "1.0.0-beta.1"
 
+"@ember-intl/formatjs-extract-cldr-data@^3.1.0":
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/@ember-intl/formatjs-extract-cldr-data/-/formatjs-extract-cldr-data-3.1.0.tgz#04eefd54240d6c08f8d9ded4f70405d2cf6f9f47"
+  dependencies:
+    cldr-core "^29.0.0"
+    cldr-dates-full "^29.0.0"
+    cldr-numbers-full "^29.0.0"
+    glob "^5.0.1"
+    make-plural "^2.1.3"
+    uglify-js "^2.6.2"
+
 "@ember/optional-features@^0.6.1":
   version "0.6.1"
   resolved "https://registry.yarnpkg.com/@ember/optional-features/-/optional-features-0.6.1.tgz#c5163c11bdd11ed8d69d4e273b114b95af16e5a9"
@@ -1585,12 +1596,12 @@ broccoli-caching-writer@^3.0.3:
     rsvp "^3.0.17"
     walk-sync "^0.3.0"
 
-broccoli-cldr-data@^1.1.0:
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/broccoli-cldr-data/-/broccoli-cldr-data-1.1.0.tgz#20770e87e6fcad61c3d9494920660669f9c23b6c"
+broccoli-cldr-data@^1.1.2:
+  version "1.1.2"
+  resolved "https://registry.yarnpkg.com/broccoli-cldr-data/-/broccoli-cldr-data-1.1.2.tgz#ff5604604ff37eef5d634c2eb52a554b896e3ed1"
   dependencies:
+    "@ember-intl/formatjs-extract-cldr-data" "^3.1.0"
     broccoli-caching-writer "^3.0.3"
-    formatjs-extract-cldr-data "^2.0.0"
     mkdirp "^0.5.1"
     serialize-javascript "^1.3.0"
 
@@ -2385,13 +2396,17 @@ cldr-core@28.0.0:
   version "28.0.0"
   resolved "https://registry.yarnpkg.com/cldr-core/-/cldr-core-28.0.0.tgz#46db6208292da7fe9f03b7b79f8ca90ceb84c6ad"
 
-cldr-dates-full@28.0.0:
-  version "28.0.0"
-  resolved "https://registry.yarnpkg.com/cldr-dates-full/-/cldr-dates-full-28.0.0.tgz#a46e52cc9221c68ea58b66664a8b98ae6ba8d962"
+cldr-core@^29.0.0:
+  version "29.0.0"
+  resolved "https://registry.yarnpkg.com/cldr-core/-/cldr-core-29.0.0.tgz#fe983898c52b6bebcd1558c03063e9e9eb3c9cdd"
 
-cldr-numbers-full@28.0.0:
-  version "28.0.0"
-  resolved "https://registry.yarnpkg.com/cldr-numbers-full/-/cldr-numbers-full-28.0.0.tgz#491334c2188a2d11761758a7572c3f52e1f77f7a"
+cldr-dates-full@^29.0.0:
+  version "29.0.0"
+  resolved "https://registry.yarnpkg.com/cldr-dates-full/-/cldr-dates-full-29.0.0.tgz#6350acf88998bf0f9d80535ba7f8a80669f6bb08"
+
+cldr-numbers-full@^29.0.0:
+  version "29.0.0"
+  resolved "https://registry.yarnpkg.com/cldr-numbers-full/-/cldr-numbers-full-29.0.0.tgz#798b080f6248d672a8850764be9295a49a97fac6"
 
 clean-base-url@^1.0.0:
   version "1.0.0"
@@ -3969,12 +3984,12 @@ ember-intl-relativeformat@^3.3.0:
     ember-intl-messageformat "^3.2.0"
     intl-relativeformat "^2.0.0"
 
-ember-intl@^2.33.2:
-  version "2.33.2"
-  resolved "https://registry.yarnpkg.com/ember-intl/-/ember-intl-2.33.2.tgz#2145b5770b6b4a79b3690e375096f0620f3b6dd2"
+ember-intl@^2.33.4:
+  version "2.33.4"
+  resolved "https://registry.yarnpkg.com/ember-intl/-/ember-intl-2.33.4.tgz#545580e81fb61173d36075fb12e8d2d840980211"
   dependencies:
     broccoli-caching-writer "^3.0.3"
-    broccoli-cldr-data "^1.1.0"
+    broccoli-cldr-data "^1.1.2"
     broccoli-funnel "^1.2.0"
     broccoli-merge-trees "^2.0.0"
     broccoli-source "^1.1.0"
@@ -5057,18 +5072,6 @@ form-data@~2.3.1:
     combined-stream "1.0.6"
     mime-types "^2.1.12"
 
-formatjs-extract-cldr-data@^2.0.0:
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/formatjs-extract-cldr-data/-/formatjs-extract-cldr-data-2.0.0.tgz#34f970fa58e9f4b4c2bb1bcf36202e39fd100afb"
-  dependencies:
-    cldr-core "28.0.0"
-    cldr-dates-full "28.0.0"
-    cldr-numbers-full "28.0.0"
-    glob "^5.0.1"
-    make-plural "^2.1.3"
-    object.assign "^4.0.3"
-    uglify-js "^2.6.2"
-
 forwarded@~0.1.0:
   version "0.1.0"
   resolved "https://registry.yarnpkg.com/forwarded/-/forwarded-0.1.0.tgz#19ef9874c4ae1c297bcf078fde63a09b66a84363"
@@ -5222,10 +5225,6 @@ fstream@^1.0.0, fstream@^1.0.2:
 function-bind@^1.0.2, function-bind@^1.1.1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/function-bind/-/function-bind-1.1.1.tgz#a56899d3ea3c9bab874bb9773b7c5ede92f4895d"
-
-function-bind@^1.1.0:
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/function-bind/-/function-bind-1.1.0.tgz#16176714c801798e4e8f2cf7f7529467bb4a5771"
 
 functional-red-black-tree@^1.0.1:
   version "1.0.1"
@@ -7747,7 +7746,7 @@ object-copy@^0.1.0:
     define-property "^0.2.5"
     kind-of "^3.0.3"
 
-object-keys@^1.0.10, object-keys@^1.0.8:
+object-keys@^1.0.8:
   version "1.0.11"
   resolved "https://registry.yarnpkg.com/object-keys/-/object-keys-1.0.11.tgz#c54601778ad560f1142ce0e01bcca8b56d13426d"
 
@@ -7756,14 +7755,6 @@ object-visit@^1.0.0:
   resolved "https://registry.yarnpkg.com/object-visit/-/object-visit-1.0.1.tgz#f79c4493af0c5377b59fe39d395e41042dd045bb"
   dependencies:
     isobject "^3.0.0"
-
-object.assign@^4.0.3:
-  version "4.0.4"
-  resolved "https://registry.yarnpkg.com/object.assign/-/object.assign-4.0.4.tgz#b1c9cc044ef1b9fe63606fc141abbb32e14730cc"
-  dependencies:
-    define-properties "^1.1.2"
-    function-bind "^1.1.0"
-    object-keys "^1.0.10"
 
 object.getownpropertydescriptors@^2.0.3:
   version "2.0.3"
