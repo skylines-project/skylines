@@ -1,3 +1,4 @@
+import Ember from 'ember';
 import { isBlank } from '@ember/utils';
 import { debug } from '@ember/debug';
 import { inject as service } from '@ember/service';
@@ -54,7 +55,7 @@ export default Route.extend(ApplicationRouteMixin, {
     let availableLocales = _availableLocales.map(it => it.code);
     debug(`Available locales: ${availableLocales}`);
 
-    let cookieLocale = this.cookies.read('locale');
+    let cookieLocale = Ember.testing ? undefined : this.cookies.read('locale');
     debug(`Locale from "locale" cookie: ${cookieLocale}`);
 
     if (!isBlank(cookieLocale) && availableLocales.includes(cookieLocale)) {
