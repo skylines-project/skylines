@@ -2,11 +2,11 @@ import { module, test } from 'qunit';
 import { setupApplicationTest } from 'ember-qunit';
 import { visit, click } from '@ember/test-helpers';
 
-import { setupPretender } from 'skylines/tests/helpers/setup-pretender';
+import { setupPolly } from 'skylines/tests/helpers/setup-polly';
 
 module('Acceptance | login', function(hooks) {
   setupApplicationTest(hooks);
-  setupPretender(hooks);
+  setupPolly(hooks, { recordIfMissing: false });
 
   const LOGIN_DROPDOWN = '[data-test-login-dropdown]';
   const LOGIN_DROPDOWN_TOGGLE = `${LOGIN_DROPDOWN} a`;
