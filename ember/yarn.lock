@@ -227,15 +227,19 @@
   dependencies:
     "@glimmer/util" "^0.27.0"
 
-"@pollyjs/adapter@^0.0.2":
-  version "0.0.2"
-  resolved "https://registry.yarnpkg.com/@pollyjs/adapter/-/adapter-0.0.2.tgz#25ff7e9d26610ae843afb4cb1d9649bf5fc2018d"
-
-"@pollyjs/core@^0.0.2":
-  version "0.0.2"
-  resolved "https://registry.yarnpkg.com/@pollyjs/core/-/core-0.0.2.tgz#3c65395683109f15a75bcfaecbdd45ce458145fa"
+"@pollyjs/adapter@^0.2.0":
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/@pollyjs/adapter/-/adapter-0.2.0.tgz#49d1bfb880548d15381429aadd6256ddfdc1cdbe"
   dependencies:
-    "@pollyjs/adapter" "^0.0.2"
+    "@pollyjs/utils" "^0.1.0"
+
+"@pollyjs/core@^0.2.0":
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/@pollyjs/core/-/core-0.2.0.tgz#dca1845916760195be920179b6b581f9d8badcc0"
+  dependencies:
+    "@pollyjs/adapter" "^0.2.0"
+    "@pollyjs/persister" "^0.1.0"
+    "@pollyjs/utils" "^0.1.0"
     "@sindresorhus/fnv1a" "^1.0.0"
     blueimp-md5 "^2.10.0"
     json-stable-stringify "^1.0.1"
@@ -246,12 +250,12 @@
     slugify "^1.3.0"
     url-parse "^1.4.1"
 
-"@pollyjs/ember@^0.0.2":
-  version "0.0.2"
-  resolved "https://registry.yarnpkg.com/@pollyjs/ember/-/ember-0.0.2.tgz#d643198a412a6c62f10d56416d49b8f14253ab4a"
+"@pollyjs/ember@^0.2.0":
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/@pollyjs/ember/-/ember-0.2.0.tgz#aaa3da418df5b65f0f0e94cf3cfc6484c19b3480"
   dependencies:
-    "@pollyjs/core" "^0.0.2"
-    "@pollyjs/node-server" "^0.0.2"
+    "@pollyjs/core" "^0.2.0"
+    "@pollyjs/node-server" "^0.1.0"
     broccoli-funnel "^2.0.1"
     broccoli-merge-trees "^3.0.0"
     broccoli-source "^1.1.0"
@@ -259,9 +263,9 @@
     debug "^3.1.0"
     ember-cli-babel "^6.6.0"
 
-"@pollyjs/node-server@^0.0.2":
-  version "0.0.2"
-  resolved "https://registry.yarnpkg.com/@pollyjs/node-server/-/node-server-0.0.2.tgz#e896067b66330d8c6a02c10a9f1f9a3a3d5d02f4"
+"@pollyjs/node-server@^0.1.0":
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/@pollyjs/node-server/-/node-server-0.1.0.tgz#7d6bfd53f39442b7c34054d077be7bb016ea065a"
   dependencies:
     body-parser "^1.18.3"
     express "^4.16.3"
@@ -269,6 +273,16 @@
     http-graceful-shutdown "^2.1.1"
     morgan "^1.9.0"
     nocache "^2.0.0"
+
+"@pollyjs/persister@^0.1.0":
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/@pollyjs/persister/-/persister-0.1.0.tgz#db25520e17f0e4c8784852821b990f6b0dd4e745"
+  dependencies:
+    "@pollyjs/utils" "^0.1.0"
+
+"@pollyjs/utils@^0.1.0":
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/@pollyjs/utils/-/utils-0.1.0.tgz#e64d92e8becd05cf3b145b1f88da559b5cbd6f79"
 
 "@samverschueren/stream-to-observable@^0.3.0":
   version "0.3.0"
