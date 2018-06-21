@@ -40,7 +40,7 @@ mapproxy = "*"
 
 [dev-packages]
 fabric = "==1.14.0"
-pytest = "==3.6.1"
+pytest = "==3.6.2"
 pytest-cov = "==2.5.1"
 mock = "==2.0.0"
 faker = "==0.8.16"
