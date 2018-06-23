@@ -3284,9 +3284,9 @@ ember-basic-dropdown@^1.0.0:
     ember-cli-htmlbars "^2.0.3"
     ember-maybe-in-element "^0.1.3"
 
-ember-bootstrap@^1.2.2:
-  version "1.2.2"
-  resolved "https://registry.yarnpkg.com/ember-bootstrap/-/ember-bootstrap-1.2.2.tgz#768380b746c79811dd2fb508c81ac0eeb024a114"
+ember-bootstrap@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/ember-bootstrap/-/ember-bootstrap-2.0.0.tgz#040b398fd822ef43e568e783d0a63aac8f840021"
   dependencies:
     broccoli-debug "^0.6.3"
     broccoli-funnel "^2.0.0"
