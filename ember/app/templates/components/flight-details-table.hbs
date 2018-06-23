@@ -3,7 +3,7 @@
 
   <tr>
     <th>{{t "pilot"}}</th>
-    <td>
+    <td data-test-pilot-names>
       {{#if isWritable}}
         {{#link-to "flight.change-pilot" flight.id class="btn btn-default btn-sm pull-right"}}
           {{fa-icon "pencil"}} {{t "change"}}
