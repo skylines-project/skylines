@@ -6,7 +6,13 @@ let EmberApp = require('ember-cli/lib/broccoli/ember-app');
 
 module.exports = function(defaults) {
   let environment = process.env.EMBER_ENV;
-  let pluginsToBlacklist = environment === 'production' ? ['ember-freestyle', 'freestyle'] : [];
+
+  let pluginsToBlacklist = [];
+  if (environment === 'production') {
+    pluginsToBlacklist.push('ember-freestyle', 'freestyle');
+  } else if (environment === 'test') {
+    pluginsToBlacklist.push('ember-cli-pace');
+  }
 
   let app = new EmberApp(defaults, {
     addons: {
