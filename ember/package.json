@@ -12,7 +12,7 @@
   "repository": "",
   "scripts": {
     "build": "ember build",
-    "lint": "node_modules/eslint/bin/eslint.js app addon blueprints config server test-support tests *.js",
+    "lint": "node_modules/eslint/bin/eslint.js app addon blueprints config lib server test-support tests *.js",
     "start": "ember serve",
     "test": "ember test"
   },
