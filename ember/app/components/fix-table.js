@@ -12,7 +12,7 @@ export default Component.extend({
     let id = flight.get('id');
     let color = flight.get('color');
     let competitionId = flight.get('competition_id') || flight.get('registration');
-    let removable = (i !== 0);
+    let removable = i !== 0;
     return { id, color, competitionId, removable, fix };
   }),
 

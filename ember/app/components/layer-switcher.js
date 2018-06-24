@@ -52,7 +52,9 @@ export default Component.extend({
   updateLayers() {
     let mapSettings = this.mapSettings;
 
-    let layers = this.map.getLayers().getArray()
+    let layers = this.map
+      .getLayers()
+      .getArray()
       .filter(layer => layer.get('display_in_layer_switcher'))
       .map(layer => {
         let id = layer.get('id');

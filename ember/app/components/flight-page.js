@@ -16,14 +16,18 @@ export default Component.extend({
   flightPhase: null,
 
   timeInterval: computed('mapExtent', 'cesiumEnabled', function() {
-    if (this.cesiumEnabled) { return null; }
+    if (this.cesiumEnabled) {
+      return null;
+    }
 
     let extent = this.mapExtent;
-    if (!extent) { return null; }
+    if (!extent) {
+      return null;
+    }
 
     let interval = this.get('fixCalc.flights').getMinMaxTimeInExtent(extent);
 
-    return (interval.max === -Infinity) ? null : [interval.min, interval.max];
+    return interval.max === -Infinity ? null : [interval.min, interval.max];
   }),
 
   init() {
@@ -58,8 +62,7 @@ export default Component.extend({
     resize();
     this.$('#barogram_panel').resize(resize);
 
-    if (window.location.hash &&
-      sidebar.find(`li > a[href="#${window.location.hash.substring(1)}"]`).length !== 0) {
+    if (window.location.hash && sidebar.find(`li > a[href="#${window.location.hash.substring(1)}"]`).length !== 0) {
       sidebar.open(window.location.hash.substring(1));
     } else if (window.innerWidth >= 768) {
       sidebar.open('tab-overview');

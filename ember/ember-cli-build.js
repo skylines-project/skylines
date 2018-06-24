@@ -16,7 +16,7 @@ module.exports = function(defaults) {
 
   let app = new EmberApp(defaults, {
     addons: {
-      blacklist: pluginsToBlacklist
+      blacklist: pluginsToBlacklist,
     },
 
     fingerprint: {
@@ -42,9 +42,9 @@ module.exports = function(defaults) {
     },
 
     'ember-bootstrap': {
-      'bootstrapVersion': 3,
-      'importBootstrapFont': true,
-      'importBootstrapCSS': false,
+      bootstrapVersion: 3,
+      importBootstrapFont: true,
+      importBootstrapCSS: false,
     },
 
     'ember-font-awesome': {

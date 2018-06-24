@@ -1,15 +1,15 @@
 export default {
   time: {
-    'hhmm': {
+    hhmm: {
       hour: '2-digit',
       minute: '2-digit',
     },
-    'hhmmss': {
+    hhmmss: {
       hour: '2-digit',
       minute: '2-digit',
       second: '2-digit',
     },
-    'full': {
+    full: {
       year: 'numeric',
       month: 'short',
       day: 'numeric',
@@ -19,7 +19,7 @@ export default {
     },
   },
   date: {
-    'ddmmyyyy': {
+    ddmmyyyy: {
       year: 'numeric',
       month: '2-digit',
       day: '2-digit',

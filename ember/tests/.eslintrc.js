@@ -2,12 +2,9 @@ module.exports = {
   parserOptions: {
     ecmaVersion: 2017,
   },
-  extends: [
-    'simplabs/configs/ember-qunit',
-    'prettier',
-  ],
+  extends: ['simplabs/configs/ember-qunit', 'prettier'],
   env: {
-    'embertest': null,
+    embertest: null,
   },
   rules: {
     'prettier/prettier': 'error',

@@ -12,7 +12,7 @@ export default Service.extend({
 
   counterText: computed('counter', function() {
     let counter = this.counter;
-    return (counter > 10) ? '10+' : counter;
+    return counter > 10 ? '10+' : counter;
   }),
 
   init() {
@@ -20,7 +20,7 @@ export default Service.extend({
     this.updateTask.perform();
   },
 
-  updateTask: task(function * () {
+  updateTask: task(function*() {
     // eslint-disable-next-line no-constant-condition
     while (!Ember.testing) {
       let { events } = yield this.ajax.request('/api/notifications');

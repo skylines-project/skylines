@@ -15,24 +15,17 @@ const Validations = buildValidations({
   },
   firstName: {
     descriptionKey: 'first-name',
-    validators: [
-      validator('presence', true),
-    ],
+    validators: [validator('presence', true)],
     debounce: 500,
   },
   lastName: {
     descriptionKey: 'last-name',
-    validators: [
-      validator('presence', true),
-    ],
+    validators: [validator('presence', true)],
     debounce: 500,
   },
   password: {
     descriptionKey: 'password',
-    validators: [
-      validator('presence', true),
-      validator('length', { min: 6 }),
-    ],
+    validators: [validator('presence', true), validator('length', { min: 6 })],
     debounce: 500,
   },
   passwordConfirmation: validator('confirmation', {
@@ -57,13 +50,12 @@ export default Component.extend(Validations, {
     },
   },
 
-  saveTask: task(function * () {
+  saveTask: task(function*() {
     let json = this.getProperties('email', 'firstName', 'lastName', 'password');
 
     try {
       yield this.ajax.request('/api/users', { method: 'POST', json });
       this.getWithDefault('transitionTo')('login');
-
     } catch (error) {
       this.set('error', error);
     }

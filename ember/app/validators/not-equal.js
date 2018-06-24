@@ -8,8 +8,7 @@ let NotEqualValidator = BaseValidator.extend({
   validate(value1, options, model) {
     let value2 = model.get(options.on);
 
-    return (isNone(value1) || isNone(value2) || value1 !== value2)
-      ? true : this.intl.t(options.messageKey);
+    return isNone(value1) || isNone(value2) || value1 !== value2 ? true : this.intl.t(options.messageKey);
   },
 });
 

@@ -11,9 +11,7 @@ export default Component.extend({
   flights: null,
 
   contests: computed('flights.@each.contests', function() {
-    return this.flights
-      .map(flight => flight.get('contests'))
-      .reduce((a, b) => a.concat(b), []);
+    return this.flights.map(flight => flight.get('contests')).reduce((a, b) => a.concat(b), []);
   }),
 
   layer: computed(function() {
@@ -60,8 +58,10 @@ function style_function(feature) {
     color = feature.get('color');
   }
 
-  return [new ol.style.Style({
-    stroke: new ol.style.Stroke({ color, width: 2, lineDash: [5] }),
-    zIndex: 999,
-  })];
+  return [
+    new ol.style.Style({
+      stroke: new ol.style.Stroke({ color, width: 2, lineDash: [5] }),
+      zIndex: 999,
+    }),
+  ];
 }

@@ -8,10 +8,7 @@ import raw from 'ember-macro-helpers/raw';
 const Validations = buildValidations({
   callsign: {
     descriptionKey: 'tracking-callsign',
-    validators: [
-      validator('presence', true),
-      validator('length', { max: 5 }),
-    ],
+    validators: [validator('presence', true), validator('length', { max: 5 })],
     debounce: 500,
   },
 });
@@ -42,7 +39,7 @@ export default Component.extend(Validations, {
     },
   },
 
-  saveTask: task(function * () {
+  saveTask: task(function*() {
     let json = {
       trackingCallsign: this.callsign,
       trackingDelay: this.delay,
@@ -55,7 +52,6 @@ export default Component.extend(Validations, {
         messageKey: 'settings-have-been-saved',
         error: null,
       });
-
     } catch (error) {
       this.setProperties({ messageKey: null, error });
     }

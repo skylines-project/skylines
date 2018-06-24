@@ -40,9 +40,7 @@ export default Component.extend({
         maxZoom: 17,
         zoom: 5,
       }),
-      controls: ol.control.defaults().extend([
-        new ol.control.ScaleLine(),
-      ]),
+      controls: ol.control.defaults().extend([new ol.control.ScaleLine()]),
       interactions,
       ol3Logo: false,
     });
@@ -59,10 +57,10 @@ export default Component.extend({
     });
 
     osm_layer.setProperties({
-      'name': 'OpenStreetMap',
-      'id': 'OpenStreetMap',
-      'base_layer': true,
-      'display_in_layer_switcher': true,
+      name: 'OpenStreetMap',
+      id: 'OpenStreetMap',
+      base_layer: true,
+      display_in_layer_switcher: true,
     });
 
     map.addLayer(osm_layer);
@@ -90,7 +88,9 @@ export default Component.extend({
     let baseLayerNames = mapSettings.get('baseLayer');
     let overlayLayerNames = mapSettings.get('overlayLayers');
 
-    let layers = this.map.getLayers().getArray()
+    let layers = this.map
+      .getLayers()
+      .getArray()
       .filter(layer => layer.get('display_in_layer_switcher'));
 
     let baseLayers = layers.filter(layer => layer.get('base_layer'));
@@ -115,10 +115,11 @@ export default Component.extend({
       source: new ol.source.XYZ({
         attributions: [
           new ol.Attribution({
-            html: 'Mountain Wave Data &copy; ' +
-                '<a href="http://www.mountain-wave-project.com/">' +
-                'Mountain Wave Project' +
-                '</a>.',
+            html:
+              'Mountain Wave Data &copy; ' +
+              '<a href="http://www.mountain-wave-project.com/">' +
+              'Mountain Wave Project' +
+              '</a>.',
           }),
         ],
         url: `${tile_url}/tiles/1.0.0/mwp/{z}/{x}/{y}.png`,
@@ -127,10 +128,10 @@ export default Component.extend({
     });
 
     mwp_layer.setProperties({
-      'name': 'Mountain Wave Project',
-      'id': 'MountainWaveProject',
-      'base_layer': false,
-      'display_in_layer_switcher': true,
+      name: 'Mountain Wave Project',
+      id: 'MountainWaveProject',
+      base_layer: false,
+      display_in_layer_switcher: true,
     });
 
     this.map.addLayer(mwp_layer);
@@ -145,10 +146,10 @@ export default Component.extend({
     });
 
     airspace_layer.setProperties({
-      'name': 'Airspace',
-      'id': 'Airspace',
-      'base_layer': false,
-      'display_in_layer_switcher': true,
+      name: 'Airspace',
+      id: 'Airspace',
+      base_layer: false,
+      display_in_layer_switcher: true,
     });
 
     this.map.addLayer(airspace_layer);
@@ -161,8 +162,9 @@ export default Component.extend({
       source: new ol.source.XYZ({
         attributions: [
           new ol.Attribution({
-            html: 'SRTM relief maps from <a target="_blank" rel="noopener" ' +
-                'href="http://maps-for-free.com/">maps-for-free.com</a>',
+            html:
+              'SRTM relief maps from <a target="_blank" rel="noopener" ' +
+              'href="http://maps-for-free.com/">maps-for-free.com</a>',
           }),
         ],
         url,
@@ -171,10 +173,10 @@ export default Component.extend({
     });
 
     relief_layer.setProperties({
-      'name': 'Shaded Relief',
-      'id': 'ShadedRelief',
-      'base_layer': true,
-      'display_in_layer_switcher': true,
+      name: 'Shaded Relief',
+      id: 'ShadedRelief',
+      base_layer: true,
+      display_in_layer_switcher: true,
     });
 
     this.map.addLayer(relief_layer);
@@ -182,18 +184,21 @@ export default Component.extend({
 
   addMapboxLayer() {
     let tile_url = config.MAPBOX_TILE_URL;
-    if (!tile_url) { return; }
+    if (!tile_url) {
+      return;
+    }
 
     let mapbox_layer = new ol.layer.Tile({
       source: new ol.source.XYZ({
         attributions: [
           new ol.Attribution({
-            html: '<a href="https://www.mapbox.com/about/maps/"' +
-                ' target="_blank" rel="noopener">' +
-                '&copy; Mapbox &copy; OpenStreetMap</a> <a' +
-                ' class="mapbox-improve-map"' +
-                ' href="https://www.mapbox.com/map-feedback/"' +
-                ' target="_blank" rel="noopener">Improve this map</a>',
+            html:
+              '<a href="https://www.mapbox.com/about/maps/"' +
+              ' target="_blank" rel="noopener">' +
+              '&copy; Mapbox &copy; OpenStreetMap</a> <a' +
+              ' class="mapbox-improve-map"' +
+              ' href="https://www.mapbox.com/map-feedback/"' +
+              ' target="_blank" rel="noopener">Improve this map</a>',
           }),
         ],
         url: tile_url,
@@ -202,10 +207,10 @@ export default Component.extend({
     });
 
     mapbox_layer.setProperties({
-      'name': 'Terrain',
-      'id': 'Terrain',
-      'base_layer': true,
-      'display_in_layer_switcher': true,
+      name: 'Terrain',
+      id: 'Terrain',
+      base_layer: true,
+      display_in_layer_switcher: true,
     });
 
     this.map.addLayer(mapbox_layer);
@@ -213,7 +218,9 @@ export default Component.extend({
 
   addBingLayers() {
     let api_key = config.BING_API_KEY;
-    if (!api_key) { return; }
+    if (!api_key) {
+      return;
+    }
 
     // Bing's Road imagerySet
     let road = new ol.layer.Tile({
@@ -225,10 +232,10 @@ export default Component.extend({
     });
 
     road.setProperties({
-      'name': 'Bing Road',
-      'id': 'BingRoad',
-      'base_layer': true,
-      'display_in_layer_switcher': true,
+      name: 'Bing Road',
+      id: 'BingRoad',
+      base_layer: true,
+      display_in_layer_switcher: true,
     });
 
     // Bing's AerialWithLabels imagerySet
@@ -241,10 +248,10 @@ export default Component.extend({
     });
 
     hybrid.setProperties({
-      'name': 'Bing Satellite',
-      'id': 'BingSatellite',
-      'base_layer': true,
-      'display_in_layer_switcher': true,
+      name: 'Bing Satellite',
+      id: 'BingSatellite',
+      base_layer: true,
+      display_in_layer_switcher: true,
     });
 
     let map = this.map;
@@ -253,16 +260,14 @@ export default Component.extend({
   },
 
   addEmptyLayer() {
-    let empty_layer = new ol.layer.Tile({
-    });
+    let empty_layer = new ol.layer.Tile({});
     empty_layer.setProperties({
-      'name': 'Empty',
-      'id': 'Empty',
-      'base_layer': true,
-      'display_in_layer_switcher': true,
+      name: 'Empty',
+      id: 'Empty',
+      base_layer: true,
+      display_in_layer_switcher: true,
     });
 
     this.map.addLayer(empty_layer);
   },
-
 });

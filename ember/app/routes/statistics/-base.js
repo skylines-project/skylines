@@ -16,9 +16,9 @@ export default Route.extend({
     let params = this.paramsFor(routeName);
 
     this.controllerFor('statistics').setProperties({
-      airport: (routeName === 'statistics.airport') ? parseInt(params.airport_id, 10) : null,
-      pilot: (routeName === 'statistics.pilot') ? parseInt(params.pilot_id, 10) : null,
-      club: (routeName === 'statistics.club') ? parseInt(params.club_id, 10) : null,
+      airport: routeName === 'statistics.airport' ? parseInt(params.airport_id, 10) : null,
+      pilot: routeName === 'statistics.pilot' ? parseInt(params.pilot_id, 10) : null,
+      club: routeName === 'statistics.club' ? parseInt(params.club_id, 10) : null,
       name: get(model, 'name'),
     });
   },

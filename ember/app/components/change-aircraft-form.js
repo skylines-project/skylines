@@ -6,16 +6,12 @@ import { task } from 'ember-concurrency';
 const Validations = buildValidations({
   registration: {
     descriptionKey: 'registration',
-    validators: [
-      validator('length', { max: 32 }),
-    ],
+    validators: [validator('length', { max: 32 })],
     debounce: 500,
   },
   competitionId: {
     descriptionKey: 'competition-id',
-    validators: [
-      validator('length', { max: 5 }),
-    ],
+    validators: [validator('length', { max: 5 })],
     debounce: 500,
   },
 });
@@ -43,7 +39,7 @@ export default Component.extend(Validations, {
     },
   },
 
-  saveTask: task(function * () {
+  saveTask: task(function*() {
     let id = this.flightId;
     let json = this.getProperties('modelId', 'registration', 'competitionId');
 

@@ -10,6 +10,5 @@ export default Component.extend({
 
   event: null,
 
-  accountUserIsActor: safeComputed('account.user', 'event.actor',
-    (accountUser, actor) => (accountUser.id === actor.id)),
+  accountUserIsActor: safeComputed('account.user', 'event.actor', (accountUser, actor) => accountUser.id === actor.id),
 });

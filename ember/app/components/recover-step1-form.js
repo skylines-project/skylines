@@ -32,14 +32,13 @@ export default Component.extend(Validations, {
     },
   },
 
-  recoverTask: task(function * () {
+  recoverTask: task(function*() {
     let json = this.getProperties('email');
 
     try {
       yield this.ajax.request('/api/users/recover', { method: 'POST', json });
       this.set('error', null);
       this.set('success', true);
-
     } catch (error) {
       this.set('error', error);
       this.set('success', false);

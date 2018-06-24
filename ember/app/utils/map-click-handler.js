@@ -46,9 +46,12 @@ const MapClickHandler = EmberObject.extend({
     }
 
     if (!this.infobox) {
-      this.set('infobox', new ol.Overlay({
-        element: $('<div id="MapInfoBox" class="InfoBox"></div>').get(0),
-      }));
+      this.set(
+        'infobox',
+        new ol.Overlay({
+          element: $('<div id="MapInfoBox" class="InfoBox"></div>').get(0),
+        }),
+      );
     }
 
     let infobox = this.infobox;
@@ -58,8 +61,7 @@ const MapClickHandler = EmberObject.extend({
     let flights = this.flights;
     if (flights) {
       let flight_path_source = flights.get('source');
-      let closest_feature = flight_path_source
-        .getClosestFeatureToCoordinate(coordinate);
+      let closest_feature = flight_path_source.getClosestFeatureToCoordinate(coordinate);
 
       if (closest_feature !== null) {
         let geometry = closest_feature.getGeometry();
@@ -68,8 +70,8 @@ const MapClickHandler = EmberObject.extend({
         let feature_pixel = event.map.getPixelFromCoordinate(closest_point);
         let mouse_pixel = event.map.getPixelFromCoordinate(coordinate);
 
-        let squared_distance = Math.pow(mouse_pixel[0] - feature_pixel[0], 2) +
-                               Math.pow(mouse_pixel[1] - feature_pixel[1], 2);
+        let squared_distance =
+          Math.pow(mouse_pixel[0] - feature_pixel[0], 2) + Math.pow(mouse_pixel[1] - feature_pixel[1], 2);
 
         if (squared_distance < 100) {
           let time = closest_point[3];
@@ -180,17 +182,13 @@ const MapClickHandler = EmberObject.extend({
             circle.animation.start = frame_state.time;
           }
 
-          if (circle.animation.duration <= 0 ||
-              frame_state.time >
-              circle.animation.start + circle.animation.duration) {
+          if (circle.animation.duration <= 0 || frame_state.time > circle.animation.start + circle.animation.duration) {
             circle.geometry = null;
             return;
           }
 
-          let delta_time = -(circle.animation.start - frame_state.time) %
-                           circle.animation.duration;
-          stroke_style.setWidth(3 - delta_time /
-                                (circle.animation.duration / 3));
+          let delta_time = -(circle.animation.start - frame_state.time) % circle.animation.duration;
+          stroke_style.setWidth(3 - delta_time / (circle.animation.duration / 3));
         }
 
         vector_context.setStyle(circle_style);
@@ -220,7 +218,9 @@ const MapClickHandler = EmberObject.extend({
   getNearFlights(lon, lat, time, flight) {
     let flights = this.flights;
     let addFlight = this.addFlight;
-    if (!flights || !addFlight) { return; }
+    if (!flights || !addFlight) {
+      return;
+    }
 
     let req = $.ajax(`/api/flights/${flight.get('id')}/near?lon=${lon}&lat=${lat}&time=${time}`);
 
@@ -229,7 +229,9 @@ const MapClickHandler = EmberObject.extend({
         let flight = data['flights'][i];
 
         // skip retrieved flight if already on map
-        if (flights.findBy('id', flight['sfid'])) { continue; }
+        if (flights.findBy('id', flight['sfid'])) {
+          continue;
+        }
 
         addFlight(flight);
       }
@@ -257,7 +259,9 @@ const MapClickHandler = EmberObject.extend({
    */
   showLocationData(data) {
     // do nothing if infobox is closed already
-    if (!this.visible) { return; }
+    if (!this.visible) {
+      return;
+    }
 
     let infobox = this.infobox;
     let map = this.map;
@@ -268,19 +272,23 @@ const MapClickHandler = EmberObject.extend({
     let no_data = true;
 
     if (data) {
-      let airspace_layer = map.getLayers().getArray().filter(layer => layer.get('name') === 'Airspace')[0];
-      let mwp_layer = map.getLayers().getArray().filter(layer => layer.get('name') === 'Mountain Wave Project')[0];
+      let airspace_layer = map
+        .getLayers()
+        .getArray()
+        .filter(layer => layer.get('name') === 'Airspace')[0];
+      let mwp_layer = map
+        .getLayers()
+        .getArray()
+        .filter(layer => layer.get('name') === 'Mountain Wave Project')[0];
 
-      if (!$.isEmptyObject(data['airspaces']) &&
-          airspace_layer.getVisible()) {
+      if (!$.isEmptyObject(data['airspaces']) && airspace_layer.getVisible()) {
         let p = $('<p></p>');
         p.append(formatAirspaceData(data['airspaces']));
         item.append(p);
         no_data = false;
       }
 
-      if (!$.isEmptyObject(data['waves']) &&
-          mwp_layer.getVisible()) {
+      if (!$.isEmptyObject(data['waves']) && mwp_layer.getVisible()) {
         let p = $('<p></p>');
         p.append(formatMountainWaveData(data['waves']));
         item.append(p);
@@ -307,7 +315,6 @@ export default function slMapClickHandler(map, flights, addFlight) {
   return MapClickHandler.create({ map, flights, addFlight });
 }
 
-
 /**
  * Format Airspace data for infobox
  *
@@ -317,7 +324,8 @@ export default function slMapClickHandler(map, flights, addFlight) {
 function formatAirspaceData(data) {
   let table = $('<table></table>');
 
-  table.append($(`<thead>
+  table.append(
+    $(`<thead>
       <tr>
         <th colspan="4">Airspaces</th>
       </tr>
@@ -327,17 +335,20 @@ function formatAirspaceData(data) {
         <th>Base</th>
         <th>Top</th>
       </tr>
-    </thead>`));
+    </thead>`),
+  );
 
   let table_body = $('<tbody></tbody>');
 
   for (let i = 0; i < data.length; ++i) {
-    table_body.append($(`<tr>
+    table_body.append(
+      $(`<tr>
         <td class="airspace_name">${data[i]['name']}</td>
         <td class="airspace_class">${data[i]['class']}</td>
         <td class="airspace_base">${data[i]['base']}</td>
         <td class="airspace_top">${data[i]['top']}</td>
-      </tr>`));
+      </tr>`),
+    );
   }
 
   table.append(table_body);
@@ -354,7 +365,8 @@ function formatAirspaceData(data) {
 function formatMountainWaveData(data) {
   let table = $('<table></table>');
 
-  table.append($(`<thead>
+  table.append(
+    $(`<thead>
       <tr>
         <th colspan="2">Mountain Waves</th>
       </tr>
@@ -362,17 +374,20 @@ function formatMountainWaveData(data) {
         <th>Name</th>
         <th>Wind direction</th>
       </tr>
-    </thead>`));
+    </thead>`),
+  );
 
   let table_body = $('<tbody></tbody>');
 
   for (let i = 0; i < data.length; ++i) {
     let wind_direction = data[i]['main_wind_direction'] || 'Unknown';
 
-    table_body.append($(`<tr>
+    table_body.append(
+      $(`<tr>
         <td class="wave_name">${data[i]['name']}</td>
         <td class="wave_direction">${wind_direction}</td>
-      </tr>`));
+      </tr>`),
+    );
   }
 
   table.append(table_body);

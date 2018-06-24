@@ -38,14 +38,15 @@ let Fix = EmberObject.extend({
 
   'alt-gnd': safeComputed('alt-msl', 'elevation', (altitude, elevation) => {
     let value = altitude - elevation;
-    return (value >= 0) ? value : 0;
+    return value >= 0 ? value : 0;
   }),
 
   point: computedPoint('coordinate'),
   pointXY: computedPoint('coordinate', 'XY'),
 
-  heading: safeComputed('_coordinate_prev', '_coordinate_next',
-    (prev, next) => Math.atan2(next[0] - prev[0], next[1] - prev[1])),
+  heading: safeComputed('_coordinate_prev', '_coordinate_next', (prev, next) =>
+    Math.atan2(next[0] - prev[0], next[1] - prev[1]),
+  ),
 
   vario: safeComputed('_coordinate_prev.2', '_coordinate_next.2', '_dt', (prev, next, dt) => (next - prev) / dt),
 

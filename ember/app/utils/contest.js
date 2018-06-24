@@ -26,7 +26,7 @@ slContest.fromData = function(_contest, flightId) {
 
   let geometry = new ol.geom.LineString([]);
   let turnpointsLength = turnpoints.length;
-  let triangle = (name.search(/triangle/) !== -1 && turnpointsLength === 5 * 2);
+  let triangle = name.search(/triangle/) !== -1 && turnpointsLength === 5 * 2;
 
   if (triangle) {
     for (let i = 2; i < turnpointsLength - 2; i += 2) {

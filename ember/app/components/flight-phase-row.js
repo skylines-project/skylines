@@ -18,7 +18,7 @@ export default Component.extend({
   isCirclingLeft: equal('phase.circlingDirection', 'left'),
   isCirclingRight: equal('phase.circlingDirection', 'right'),
 
-  glideRate: safeComputed('phase.glideRate', gr => ((Math.abs(gr) > 1000) ? Infinity : gr)),
+  glideRate: safeComputed('phase.glideRate', gr => (Math.abs(gr) > 1000 ? Infinity : gr)),
 
   selected: safeComputed('selection', function(selection) {
     let phase = this.phase;

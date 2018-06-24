@@ -10,7 +10,7 @@ export default Component.extend({
   key: null,
   error: null,
 
-  saveTask: task(function * () {
+  saveTask: task(function*() {
     try {
       let { key } = yield this.ajax.request('/api/settings/tracking/key', { method: 'POST' });
       this.setProperties({ key, error: null });

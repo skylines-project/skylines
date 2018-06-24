@@ -11,8 +11,10 @@ export default function computedComponent(baseNameProperty, prefix = '') {
     let container = getOwner(this);
     let fullComponentName = `${prefix}${componentName}`;
 
-    if (container.lookup(`component:${fullComponentName}`) ||
-      container.lookup(`template:components/${fullComponentName}`)) {
+    if (
+      container.lookup(`component:${fullComponentName}`) ||
+      container.lookup(`template:components/${fullComponentName}`)
+    ) {
       return fullComponentName;
     }
   });

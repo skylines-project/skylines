@@ -7,9 +7,7 @@ import { task } from 'ember-concurrency';
 const Validations = buildValidations({
   files: {
     descriptionKey: 'file-upload-field',
-    validators: [
-      validator('presence', true),
-    ],
+    validators: [validator('presence', true)],
     debounce: 0,
   },
   pilotId: {
@@ -19,9 +17,7 @@ const Validations = buildValidations({
   },
   pilotName: {
     descriptionKey: 'pilot',
-    validators: [
-      validator('length', { max: 255 }),
-    ],
+    validators: [validator('length', { max: 255 })],
     debounce: 500,
   },
 });
@@ -54,14 +50,18 @@ export default Component.extend(Validations, {
     },
   },
 
-  uploadTask: task(function * () {
+  uploadTask: task(function*() {
     let form = this.$('form').get(0);
     let data = new FormData(form);
 
     try {
-      let json = yield this.ajax.request('/api/flights/upload/', { method: 'POST', data, contentType: false, processData: false });
+      let json = yield this.ajax.request('/api/flights/upload/', {
+        method: 'POST',
+        data,
+        contentType: false,
+        processData: false,
+      });
       this.onUpload(json);
-
     } catch (error) {
       this.set('error', error);
     }

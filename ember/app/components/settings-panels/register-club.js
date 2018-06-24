@@ -38,7 +38,7 @@ export default Component.extend(Validations, {
     },
   },
 
-  saveTask: task(function * () {
+  saveTask: task(function*() {
     let json = this.getProperties('name');
 
     try {
@@ -50,7 +50,6 @@ export default Component.extend(Validations, {
       });
 
       this.account.set('club', { id, name: json.name });
-
     } catch (error) {
       this.setProperties({ messageKey: null, error });
     }

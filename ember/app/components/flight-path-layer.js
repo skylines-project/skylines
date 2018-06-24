@@ -45,8 +45,10 @@ function style_function(feature) {
     color = feature.get('color');
   }
 
-  return [new ol.style.Style({
-    stroke: new ol.style.Stroke({ color, width: 2 }),
-    zIndex: 1000,
-  })];
+  return [
+    new ol.style.Style({
+      stroke: new ol.style.Stroke({ color, width: 2 }),
+      zIndex: 1000,
+    }),
+  ];
 }
