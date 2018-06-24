@@ -20,8 +20,7 @@ export default Component.extend({
 
     let friends = this.friends;
 
-    return this.tracks
-      .filter(track => (track.pilot.id === self || friends.includes(track.pilot.id)));
+    return this.tracks.filter(track => track.pilot.id === self || friends.includes(track.pilot.id));
   }),
 
   othersTracks: setDiff('tracks', 'friendsTracks'),

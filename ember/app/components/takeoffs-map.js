@@ -12,8 +12,10 @@ export default BaseMapComponent.extend({
   fit() {
     let map = this.map;
 
-    let layer = map.getLayers().getArray()
-      .find(layer => (layer.get('id') === 'TakeoffLocations'));
+    let layer = map
+      .getLayers()
+      .getArray()
+      .find(layer => layer.get('id') === 'TakeoffLocations');
 
     if (layer) {
       let source = layer.getSource();

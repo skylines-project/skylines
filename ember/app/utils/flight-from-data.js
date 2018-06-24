@@ -27,7 +27,7 @@ export default function(data, units) {
 
     return {
       time: timestamp,
-      elevation: (elevation > -500) ? elevation : null,
+      elevation: elevation > -500 ? elevation : null,
     };
   });
 

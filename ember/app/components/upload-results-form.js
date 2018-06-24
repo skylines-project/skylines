@@ -27,17 +27,20 @@ export default Component.extend({
     this._super(...arguments);
 
     let ownerInjection = getOwner(this).ownerInjection();
-    this.set('validatedResults', this.results.map(_result => {
-      let result = UploadResult.create(ownerInjection, _result);
+    this.set(
+      'validatedResults',
+      this.results.map(_result => {
+        let result = UploadResult.create(ownerInjection, _result);
 
-      if (result.get('flight')) {
-        result.set('pilotId', result.get('flight.pilot.id'));
-        result.set('copilotId', result.get('flight.copilot.id'));
-        result.set('modelId', result.get('flight.model.id'));
-      }
+        if (result.get('flight')) {
+          result.set('pilotId', result.get('flight.pilot.id'));
+          result.set('copilotId', result.get('flight.copilot.id'));
+          result.set('modelId', result.get('flight.model.id'));
+        }
 
-      return result;
-    }));
+        return result;
+      }),
+    );
   },
 
   actions: {
@@ -51,11 +54,24 @@ export default Component.extend({
     },
   },
 
-  saveTask: task(function * () {
+  saveTask: task(function*() {
     let json = this.successfulResults.map(result => {
       let flight = get(result, 'flight');
-      return getProperties(flight, 'id', 'pilotId', 'pilotName', 'copilotId', 'copilotName',
-        'modelId', 'registration', 'competitionId', 'takeoffTime', 'scoreStartTime', 'scoreEndTime', 'landingTime');
+      return getProperties(
+        flight,
+        'id',
+        'pilotId',
+        'pilotName',
+        'copilotId',
+        'copilotName',
+        'modelId',
+        'registration',
+        'competitionId',
+        'takeoffTime',
+        'scoreStartTime',
+        'scoreEndTime',
+        'landingTime',
+      );
     });
 
     try {
@@ -66,7 +82,6 @@ export default Component.extend({
       } else {
         this.getWithDefault('transitionTo')('flights.list', ids.join(','));
       }
-
     } catch (error) {
       this.set('error', error);
     }

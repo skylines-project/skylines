@@ -14,23 +14,17 @@ const Validations = buildValidations({
   },
   pilotName: {
     descriptionKey: 'pilot',
-    validators: [
-      validator('length', { max: 255 }),
-    ],
+    validators: [validator('length', { max: 255 })],
     debounce: 500,
   },
   copilotId: {
     descriptionKey: 'copilot',
-    validators: [
-      validator('not-equal', { on: 'pilotId', messageKey: 'pilots-must-not-be-equal' }),
-    ],
+    validators: [validator('not-equal', { on: 'pilotId', messageKey: 'pilots-must-not-be-equal' })],
     debounce: 0,
   },
   copilotName: {
     descriptionKey: 'copilot',
-    validators: [
-      validator('length', { max: 255 }),
-    ],
+    validators: [validator('length', { max: 255 })],
     debounce: 500,
   },
 });
@@ -65,7 +59,7 @@ export default Component.extend(Validations, {
     },
   },
 
-  saveTask: task(function * () {
+  saveTask: task(function*() {
     let id = this.flightId;
     let json = this.getProperties('pilotId', 'pilotName', 'copilotId', 'copilotName');
 

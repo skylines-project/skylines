@@ -8,7 +8,7 @@ export default Component.extend({
 
   tagName: '',
 
-  logoutTask: task(function * () {
+  logoutTask: task(function*() {
     yield this.session.invalidate();
   }).drop(),
 });

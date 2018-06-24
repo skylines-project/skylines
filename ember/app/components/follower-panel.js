@@ -6,13 +6,13 @@ export default Component.extend({
   account: service(),
   ajax: service(),
 
-  followTask: task(function * () {
+  followTask: task(function*() {
     let userId = this.get('follower.id');
     yield this.ajax.request(`/api/users/${userId}/follow`);
     this.set('follower.currentUserFollows', true);
   }).drop(),
 
-  unfollowTask: task(function * () {
+  unfollowTask: task(function*() {
     let userId = this.get('follower.id');
     yield this.ajax.request(`/api/users/${userId}/unfollow`);
     this.set('follower.currentUserFollows', false);

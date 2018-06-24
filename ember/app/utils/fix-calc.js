@@ -10,14 +10,7 @@ import Fix from '../utils/fix';
  * List of colors for flight path display
  * @type {Array<String>}
  */
-const COLORS = [
-  '#004bbd',
-  '#bf0099',
-  '#cf7c00',
-  '#ff0000',
-  '#00c994',
-  '#ffff00',
-];
+const COLORS = ['#004bbd', '#bf0099', '#cf7c00', '#ff0000', '#00c994', '#ffff00'];
 
 export default EmberObject.extend({
   ajax: null,

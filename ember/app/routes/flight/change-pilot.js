@@ -13,8 +13,9 @@ export default Route.extend({
 
     let accountId = this.get('account.user.id');
     let clubId = this.get('account.club.id');
-    let clubMembers = clubId ? this.ajax.request(`/api/users?club=${clubId}`)
-      .then(it => it.users.filter(user => user.id !== accountId)) : [];
+    let clubMembers = clubId
+      ? this.ajax.request(`/api/users?club=${clubId}`).then(it => it.users.filter(user => user.id !== accountId))
+      : [];
 
     return RSVP.hash({ id, flight, clubMembers });
   },

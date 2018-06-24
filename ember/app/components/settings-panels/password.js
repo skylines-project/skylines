@@ -16,10 +16,7 @@ const Validations = buildValidations({
   },
   password: {
     descriptionKey: 'password',
-    validators: [
-      validator('presence', true),
-      validator('length', { min: 6 }),
-    ],
+    validators: [validator('presence', true), validator('length', { min: 6 })],
     debounce: 500,
   },
   passwordConfirmation: validator('confirmation', {
@@ -48,7 +45,7 @@ export default Component.extend(Validations, {
     },
   },
 
-  saveTask: task(function * () {
+  saveTask: task(function*() {
     let json = this.getProperties('currentPassword', 'password');
 
     try {

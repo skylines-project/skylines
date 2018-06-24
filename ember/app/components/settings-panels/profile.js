@@ -18,16 +18,12 @@ const Validations = buildValidations({
   },
   firstName: {
     descriptionKey: 'first-name',
-    validators: [
-      validator('presence', true),
-    ],
+    validators: [validator('presence', true)],
     debounce: 500,
   },
   lastName: {
     descriptionKey: 'last-name',
-    validators: [
-      validator('presence', true),
-    ],
+    validators: [validator('presence', true)],
     debounce: 500,
   },
 });
@@ -65,13 +61,15 @@ export default Component.extend(Validations, {
       let matches = Object.keys(PRESETS).filter(key => {
         let preset = PRESETS[key];
 
-        return preset.distance === units.distanceUnit &&
+        return (
+          preset.distance === units.distanceUnit &&
           preset.speed === units.speedUnit &&
           preset.lift === units.liftUnit &&
-          preset.altitude === units.altitudeUnit;
+          preset.altitude === units.altitudeUnit
+        );
       });
 
-      return (matches.length > 0) ? matches[0] : 'custom';
+      return matches.length > 0 ? matches[0] : 'custom';
     },
 
     set(key, value) {
@@ -97,7 +95,7 @@ export default Component.extend(Validations, {
     },
   },
 
-  saveTask: task(function * () {
+  saveTask: task(function*() {
     let json = {
       email: this.email,
       firstName: this.firstName,
@@ -121,7 +119,6 @@ export default Component.extend(Validations, {
         liftUnit: this.liftUnit,
         speedUnit: this.speedUnit,
       });
-
     } catch (error) {
       this.setProperties({ messageKey: null, error });
     }

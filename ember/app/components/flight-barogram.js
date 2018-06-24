@@ -20,12 +20,12 @@ export default BarogramComponent.extend({
 
   activeFlights: computed('flights.[]', 'selection', function() {
     let { flights, selection } = this;
-    return flights.filter(flight => (!selection || flight.get('id') === selection));
+    return flights.filter(flight => !selection || flight.get('id') === selection);
   }),
 
   passiveFlights: computed('flights.[]', 'selection', function() {
     let { flights, selection } = this;
-    return flights.filter(flight => (selection && flight.get('id') !== selection));
+    return flights.filter(flight => selection && flight.get('id') !== selection);
   }),
 
   active: computed('activeFlights.@each.{flot_h,color}', function() {
@@ -49,8 +49,11 @@ export default BarogramComponent.extend({
     }));
   }),
 
-  selectedFlight: conditional(eq('flights.length', 1), 'flights.firstObject',
-    conditional('selection', findBy('flights', raw('id'), 'selection'))),
+  selectedFlight: conditional(
+    eq('flights.length', 1),
+    'flights.firstObject',
+    conditional('selection', findBy('flights', raw('id'), 'selection')),
+  ),
 
   contests: safeComputed('selectedFlight', flight => flight.get('contests')),
   elevations: safeComputed('selectedFlight', flight => flight.get('flot_elev')),
@@ -81,9 +84,11 @@ export default BarogramComponent.extend({
       this.onHoverModeUpdate();
     }
 
-    if (selection !== this.oldSelection ||
+    if (
+      selection !== this.oldSelection ||
       timeInterval !== this.oldTimeInterval ||
-      timeHighlight !== this.oldTimeHighlight) {
+      timeHighlight !== this.oldTimeHighlight
+    ) {
       this.draw();
     } else {
       this.updateCrosshair();
@@ -159,12 +164,14 @@ export default BarogramComponent.extend({
     }
 
     // Add time highlight as flot markings
-    options.grid.markings = [{
-      color: '#fff083',
-      xaxis: {
-        from: time_highlight.start * 1000,
-        to: time_highlight.end * 1000,
+    options.grid.markings = [
+      {
+        color: '#fff083',
+        xaxis: {
+          from: time_highlight.start * 1000,
+          to: time_highlight.end * 1000,
+        },
       },
-    }];
+    ];
   },
 });

@@ -66,7 +66,10 @@ export default Service.extend({
       overlayLayers.pushObject(overlayLayer);
     }
 
-    this.cookies.write(OVERLAY_LAYERS_COOKIE_KEY, overlayLayers.join(';'), { path: '/', expires: new Date('2099-12-31') });
+    this.cookies.write(OVERLAY_LAYERS_COOKIE_KEY, overlayLayers.join(';'), {
+      path: '/',
+      expires: new Date('2099-12-31'),
+    });
   },
 });
 

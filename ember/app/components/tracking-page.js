@@ -15,14 +15,18 @@ export default Component.extend({
   fixCalc: null,
 
   timeInterval: computed('mapExtent', 'cesiumEnabled', 'fixCalc.flights.[]', function() {
-    if (this.cesiumEnabled) { return null; }
+    if (this.cesiumEnabled) {
+      return null;
+    }
 
     let extent = this.mapExtent;
-    if (!extent) { return null; }
+    if (!extent) {
+      return null;
+    }
 
     let interval = this.get('fixCalc.flights').getMinMaxTimeInExtent(extent);
 
-    return (interval.max === -Infinity) ? null : [interval.min, interval.max];
+    return interval.max === -Infinity ? null : [interval.min, interval.max];
   }),
 
   init() {
@@ -38,7 +42,9 @@ export default Component.extend({
   didInsertElement() {
     this._super(...arguments);
     let flights = this.flights;
-    if (flights.length === 0) { return; }
+    if (flights.length === 0) {
+      return;
+    }
 
     let fixCalc = this.fixCalc;
 
@@ -56,8 +62,7 @@ export default Component.extend({
     resize();
     this.$('#barogram_panel').resize(resize);
 
-    if (window.location.hash &&
-      sidebar.find(`li > a[href="#${window.location.hash.substring(1)}"]`).length !== 0) {
+    if (window.location.hash && sidebar.find(`li > a[href="#${window.location.hash.substring(1)}"]`).length !== 0) {
       sidebar.open(window.location.hash.substring(1));
     } else if (window.innerWidth >= 768 && flights.length > 1) {
       sidebar.open('tab-overview');
@@ -111,11 +116,14 @@ export default Component.extend({
     flights.forEach(flight => {
       let last_update = flight.get('last_update') || null;
       let data = { last_update };
-      ajax.request(`/api/live/${flight.get('id')}/json`, { data }).then(data => {
-        updateFlight(flights, data);
-      }).catch(() => {
-        // ignore update errors
-      });
+      ajax
+        .request(`/api/live/${flight.get('id')}/json`, { data })
+        .then(data => {
+          updateFlight(flights, data);
+        })
+        .catch(() => {
+          // ignore update errors
+        });
     });
 
     this._scheduleUpdate();
@@ -134,7 +142,9 @@ export default Component.extend({
 function updateFlight(flights, data) {
   // find the flight to update
   let flight = flights.findBy('id', data.sfid);
-  if (!flight) { return; }
+  if (!flight) {
+    return;
+  }
 
   let time_decoded = ol.format.Polyline.decodeDeltas(data.barogram_t, 1, 1);
   let lonlat = ol.format.Polyline.decodeDeltas(data.points, 2);
@@ -144,7 +154,9 @@ function updateFlight(flights, data) {
 
   // we skip the first point in the list because we assume it's the "linking"
   // fix between the data we already have and the data to add.
-  if (time_decoded.length < 2) { return; }
+  if (time_decoded.length < 2) {
+    return;
+  }
 
   let geoid = flight.get('geoid');
 
@@ -158,7 +170,7 @@ function updateFlight(flights, data) {
 
   let elevations = time_decoded.map((timestamp, i) => ({
     time: timestamp,
-    elevation: (elev[i] > -500) ? elev[i] : null,
+    elevation: elev[i] > -500 ? elev[i] : null,
   }));
 
   flight.get('fixes').pushObjects(fixes.slice(1));

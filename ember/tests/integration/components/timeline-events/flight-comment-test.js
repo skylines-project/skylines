@@ -11,10 +11,13 @@ module('Integration | Component | timeline events/flight comment', function(hook
   hooks.beforeEach(async function() {
     this.owner.setupRouter();
 
-    this.owner.register('service:account', Service.extend({
-      user: null,
-      club: null,
-    }));
+    this.owner.register(
+      'service:account',
+      Service.extend({
+        user: null,
+        club: null,
+      }),
+    );
 
     this.set('event', {
       time: '2016-06-24T12:34:56Z',
@@ -37,8 +40,7 @@ module('Integration | Component | timeline events/flight comment', function(hook
   test('renders default text', async function(assert) {
     await render(hbs`{{timeline-events/flight-comment event=event}}`);
 
-    assert.dom('td:nth-of-type(2) p:nth-of-type(2)')
-      .hasText(/John Doe commented on a 123 km flight on [\d/]+./);
+    assert.dom('td:nth-of-type(2) p:nth-of-type(2)').hasText(/John Doe commented on a 123 km flight on [\d/]+./);
   });
 
   test('renders alternate text if actor is current user', async function(assert) {
@@ -46,8 +48,7 @@ module('Integration | Component | timeline events/flight comment', function(hook
 
     await render(hbs`{{timeline-events/flight-comment event=event}}`);
 
-    assert.dom('td:nth-of-type(2) p:nth-of-type(2)')
-      .hasText(/You commented on a 123 km flight on [\d/]+./);
+    assert.dom('td:nth-of-type(2) p:nth-of-type(2)').hasText(/You commented on a 123 km flight on [\d/]+./);
   });
 
   test('renders alternate text if pilot or copilot is current user', async function(assert) {
@@ -55,8 +56,7 @@ module('Integration | Component | timeline events/flight comment', function(hook
 
     await render(hbs`{{timeline-events/flight-comment event=event}}`);
 
-    assert.dom('td:nth-of-type(2) p:nth-of-type(2)')
-      .hasText(/John Doe commented on your 123 km flight on [\d/]+./);
+    assert.dom('td:nth-of-type(2) p:nth-of-type(2)').hasText(/John Doe commented on your 123 km flight on [\d/]+./);
   });
 
   test('renders alternate text if pilot or copilot and actor is current user', async function(assert) {
@@ -65,7 +65,6 @@ module('Integration | Component | timeline events/flight comment', function(hook
 
     await render(hbs`{{timeline-events/flight-comment event=event}}`);
 
-    assert.dom('td:nth-of-type(2) p:nth-of-type(2)')
-      .hasText(/You commented on your 123 km flight on [\d/]+./);
+    assert.dom('td:nth-of-type(2) p:nth-of-type(2)').hasText(/You commented on your 123 km flight on [\d/]+./);
   });
 });

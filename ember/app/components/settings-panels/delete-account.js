@@ -37,13 +37,12 @@ export default Component.extend(Validations, {
     },
   },
 
-  deleteTask: task(function * () {
+  deleteTask: task(function*() {
     let json = this.getProperties('password');
 
     try {
       yield this.ajax.request('/api/account', { method: 'DELETE', json });
       yield this.session.invalidate();
-
     } catch (error) {
       this.setProperties({ messageKey: null, error });
     }

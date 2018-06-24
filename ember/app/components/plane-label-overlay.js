@@ -21,9 +21,12 @@ export default Component.extend({
       ${id}
     </span>`);
 
-    this.set('overlay', new ol.Overlay({
-      element: badge.get(0),
-    }));
+    this.set(
+      'overlay',
+      new ol.Overlay({
+        element: badge.get(0),
+      }),
+    );
   },
 
   didReceiveAttrs() {

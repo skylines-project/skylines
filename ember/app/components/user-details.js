@@ -10,14 +10,14 @@ export default Component.extend({
 
   editable: safeComputed('account.user.id', 'user.id', (accountId, userId) => accountId && accountId === userId),
 
-  followTask: task(function * () {
+  followTask: task(function*() {
     let userId = this.get('user.id');
     yield this.ajax.request(`/api/users/${userId}/follow`);
     this.set('user.followed', true);
     this.incrementProperty('user.followers');
   }).drop(),
 
-  unfollowTask: task(function * () {
+  unfollowTask: task(function*() {
     let userId = this.get('user.id');
     yield this.ajax.request(`/api/users/${userId}/unfollow`);
     this.set('user.followed', false);

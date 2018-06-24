@@ -5,6 +5,7 @@ import safeComputed from '../computed/safe-computed';
 export default Component.extend({
   tagName: 'tr',
 
-  altitudeAGL: safeComputed('track.altitude', 'track.elevation',
-    (altitude, elevation) => Math.max(altitude - elevation, 0)),
+  altitudeAGL: safeComputed('track.altitude', 'track.elevation', (altitude, elevation) =>
+    Math.max(altitude - elevation, 0),
+  ),
 });

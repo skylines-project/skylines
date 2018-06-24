@@ -9,47 +9,47 @@ import Service, { inject as service } from '@ember/service';
  */
 const UNITS = {
   // Length
-  'm': [1, 0],
-  'ft': [3.28084, 0],
-  'km': [1 / 1000.0, 0],
-  'NM': [1 / 1852.0, 0],
-  'mi': [1 / 1609.34, 0],
+  m: [1, 0],
+  ft: [3.28084, 0],
+  km: [1 / 1000.0, 0],
+  NM: [1 / 1852.0, 0],
+  mi: [1 / 1609.34, 0],
 
   // Speed
   'm/s': [1, 1],
   'km/h': [3.6, 1],
-  'kt': [1.94384449, 1],
-  'mph': [2.23693629, 1],
+  kt: [1.94384449, 1],
+  mph: [2.23693629, 1],
   'ft/min': [196.850394, 0],
 };
 
 export const PRESETS = {
-  'european': {
-    'distance': 'km',
-    'speed': 'km/h',
-    'lift': 'm/s',
-    'altitude': 'm',
+  european: {
+    distance: 'km',
+    speed: 'km/h',
+    lift: 'm/s',
+    altitude: 'm',
   },
 
-  'british': {
-    'distance': 'km',
-    'speed': 'kt',
-    'lift': 'kt',
-    'altitude': 'ft',
+  british: {
+    distance: 'km',
+    speed: 'kt',
+    lift: 'kt',
+    altitude: 'ft',
   },
 
-  'australian': {
-    'distance': 'km',
-    'speed': 'km/h',
-    'lift': 'kt',
-    'altitude': 'ft',
+  australian: {
+    distance: 'km',
+    speed: 'km/h',
+    lift: 'kt',
+    altitude: 'ft',
   },
 
-  'american': {
-    'distance': 'mi',
-    'speed': 'kt',
-    'lift': 'kt',
-    'altitude': 'ft',
+  american: {
+    distance: 'mi',
+    speed: 'kt',
+    lift: 'kt',
+    altitude: 'ft',
   },
 };
 
@@ -96,9 +96,9 @@ export default Service.extend({
   },
 
   addDistanceUnit(value, options = {}) {
-    let decimals = (options.decimals !== undefined) ? options.decimals : UNITS[this.distanceUnit][1];
+    let decimals = options.decimals !== undefined ? options.decimals : UNITS[this.distanceUnit][1];
     value = this.formatDecimal(value, decimals);
-    return (options.withUnit !== false) ? `${value} ${this.distanceUnit}` : value;
+    return options.withUnit !== false ? `${value} ${this.distanceUnit}` : value;
   },
 
   formatSpeed(value, options) {
@@ -111,9 +111,9 @@ export default Service.extend({
   },
 
   addSpeedUnit(value, options = {}) {
-    let decimals = (options.decimals !== undefined) ? options.decimals : UNITS[this.speedUnit][1];
+    let decimals = options.decimals !== undefined ? options.decimals : UNITS[this.speedUnit][1];
     value = this.formatDecimal(value, decimals);
-    return (options.withUnit !== false) ? `${value} ${this.speedUnit}` : value;
+    return options.withUnit !== false ? `${value} ${this.speedUnit}` : value;
   },
 
   formatLift(value, options) {
@@ -126,9 +126,9 @@ export default Service.extend({
   },
 
   addLiftUnit(value, options = {}) {
-    let decimals = (options.decimals !== undefined) ? options.decimals : UNITS[this.liftUnit][1];
+    let decimals = options.decimals !== undefined ? options.decimals : UNITS[this.liftUnit][1];
     value = this.formatDecimal(value, decimals);
-    return (options.withUnit !== false) ? `${value} ${this.liftUnit}` : value;
+    return options.withUnit !== false ? `${value} ${this.liftUnit}` : value;
   },
 
   formatAltitude(value, options) {
@@ -141,9 +141,9 @@ export default Service.extend({
   },
 
   addAltitudeUnit(value, options = {}) {
-    let decimals = (options.decimals !== undefined) ? options.decimals : UNITS[this.altitudeUnit][1];
+    let decimals = options.decimals !== undefined ? options.decimals : UNITS[this.altitudeUnit][1];
     value = this.formatDecimal(value, decimals);
-    return (options.withUnit !== false) ? `${value} ${this.altitudeUnit}` : value;
+    return options.withUnit !== false ? `${value} ${this.altitudeUnit}` : value;
   },
 });
 

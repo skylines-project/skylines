@@ -8,27 +8,36 @@ module('Unit | Service | map-settings', function(hooks) {
   setupTest(hooks);
 
   hooks.beforeEach(function() {
-    this.owner.register('service:router', Service.extend({
-      currentURL: '/'
-    }));
+    this.owner.register(
+      'service:router',
+      Service.extend({
+        currentURL: '/',
+      }),
+    );
 
-    this.owner.register('service:cookies', Service.extend({
-      read(key) {
-        if (key === BASE_LAYER_COOKIE_KEY) {
-          return 'Foo';
-        } else if (key === OVERLAY_LAYERS_COOKIE_KEY) {
-          return 'Bar;Baz';
-        }
-      },
-    }));
+    this.owner.register(
+      'service:cookies',
+      Service.extend({
+        read(key) {
+          if (key === BASE_LAYER_COOKIE_KEY) {
+            return 'Foo';
+          } else if (key === OVERLAY_LAYERS_COOKIE_KEY) {
+            return 'Bar;Baz';
+          }
+        },
+      }),
+    );
 
     this.subject = () => this.owner.lookup('service:map-settings');
   });
 
   test('defaults to "OpenStreetMap" and "Airspace"', function(assert) {
-    this.owner.register('service:cookies', Service.extend({
-      read() {},
-    }));
+    this.owner.register(
+      'service:cookies',
+      Service.extend({
+        read() {},
+      }),
+    );
 
     let service = this.subject();
     assert.equal(service.get('baseLayer'), 'OpenStreetMap');
@@ -42,13 +51,16 @@ module('Unit | Service | map-settings', function(hooks) {
   });
 
   test('handles empty overlays cookie correctly', function(assert) {
-    this.owner.register('service:cookies', Service.extend({
-      read(key) {
-        if (key === OVERLAY_LAYERS_COOKIE_KEY) {
-          return '';
-        }
-      },
-    }));
+    this.owner.register(
+      'service:cookies',
+      Service.extend({
+        read(key) {
+          if (key === OVERLAY_LAYERS_COOKIE_KEY) {
+            return '';
+          }
+        },
+      }),
+    );
 
     let service = this.subject();
     assert.deepEqual(service.get('overlayLayers'), []);
@@ -88,13 +100,16 @@ module('Unit | Service | map-settings', function(hooks) {
   test('setBaseLayer() changes the "baseLayer" and persists it to the cookie', function(assert) {
     assert.expect(4);
 
-    this.owner.register('service:cookies', Service.extend({
-      read() {},
-      write(key, value) {
-        assert.equal(key, BASE_LAYER_COOKIE_KEY);
-        assert.equal(value, 'foo');
-      },
-    }));
+    this.owner.register(
+      'service:cookies',
+      Service.extend({
+        read() {},
+        write(key, value) {
+          assert.equal(key, BASE_LAYER_COOKIE_KEY);
+          assert.equal(value, 'foo');
+        },
+      }),
+    );
 
     let service = this.subject();
     assert.equal(service.get('baseLayer'), 'OpenStreetMap');
@@ -106,13 +121,16 @@ module('Unit | Service | map-settings', function(hooks) {
   test('toggleOverlayLayer() adds to the existing "overlayLayers" and persists it to the cookie', function(assert) {
     assert.expect(4);
 
-    this.owner.register('service:cookies', Service.extend({
-      read() {},
-      write(key, value) {
-        assert.equal(key, OVERLAY_LAYERS_COOKIE_KEY);
-        assert.equal(value, 'Airspace;foo');
-      },
-    }));
+    this.owner.register(
+      'service:cookies',
+      Service.extend({
+        read() {},
+        write(key, value) {
+          assert.equal(key, OVERLAY_LAYERS_COOKIE_KEY);
+          assert.equal(value, 'Airspace;foo');
+        },
+      }),
+    );
 
     let service = this.subject();
     assert.deepEqual(service.get('overlayLayers'), ['Airspace']);
@@ -124,13 +142,16 @@ module('Unit | Service | map-settings', function(hooks) {
   test('toggleOverlayLayer() removes from the existing "overlayLayers" and persists it to the cookie', function(assert) {
     assert.expect(4);
 
-    this.owner.register('service:cookies', Service.extend({
-      read() {},
-      write(key, value) {
-        assert.equal(key, OVERLAY_LAYERS_COOKIE_KEY);
-        assert.equal(value, '');
-      },
-    }));
+    this.owner.register(
+      'service:cookies',
+      Service.extend({
+        read() {},
+        write(key, value) {
+          assert.equal(key, OVERLAY_LAYERS_COOKIE_KEY);
+          assert.equal(value, '');
+        },
+      }),
+    );
 
     let service = this.subject();
     assert.deepEqual(service.get('overlayLayers'), ['Airspace']);

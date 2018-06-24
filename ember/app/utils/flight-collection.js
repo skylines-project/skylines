@@ -2,7 +2,6 @@ import ArrayProxy from '@ember/array/proxy';
 import ol from 'openlayers';
 
 export default ArrayProxy.extend({
-
   init() {
     this.set('content', []);
     this.set('source', new ol.source.Vector());
@@ -74,8 +73,12 @@ export default ArrayProxy.extend({
       total_max = Math.max(total_max, lastCoord[3]);
     });
 
-    if (min === Infinity) { min = total_min; }
-    if (max === -Infinity) { max = total_max; }
+    if (min === Infinity) {
+      min = total_min;
+    }
+    if (max === -Infinity) {
+      max = total_max;
+    }
 
     return { min, max };
   },
@@ -90,7 +93,8 @@ export default ArrayProxy.extend({
     removedFlights.forEach(flight => {
       let id = flight.get('id');
 
-      this.source.getFeatures()
+      this.source
+        .getFeatures()
         .filter(feature => feature.get('sfid') === id)
         .forEach(feature => source.removeFeature(feature));
     });

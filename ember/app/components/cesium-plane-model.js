@@ -21,18 +21,23 @@ export default Component.extend({
   init() {
     this._super(...arguments);
 
-    this.set('entity', Cesium.Model.fromGltf({
-      url: '../../3d/AS21.glb',
-      scale: 1,
-      minimumPixelSize: 64,
-      allowPicking: false,
-    }));
+    this.set(
+      'entity',
+      Cesium.Model.fromGltf({
+        url: '../../3d/AS21.glb',
+        scale: 1,
+        minimumPixelSize: 64,
+        allowPicking: false,
+      }),
+    );
   },
 
   didReceiveAttrs() {
     this._super(...arguments);
     this.entity.modelMatrix = Cesium.Transforms.headingPitchRollToFixedFrame(
-      this.position, new Cesium.HeadingPitchRoll(this.heading - Math.PI / 2, 0, 0));
+      this.position,
+      new Cesium.HeadingPitchRoll(this.heading - Math.PI / 2, 0, 0),
+    );
   },
 
   didInsertElement() {

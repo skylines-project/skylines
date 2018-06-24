@@ -9,15 +9,21 @@ module('Integration | Component | flight list nav', function(hooks) {
   setupRenderingTest(hooks);
 
   hooks.beforeEach(async function() {
-    this.owner.register('service:account', Service.extend({
-      user: null,
-      club: null,
-    }));
+    this.owner.register(
+      'service:account',
+      Service.extend({
+        user: null,
+        club: null,
+      }),
+    );
 
-    this.owner.register('service:pinned-flights', Service.extend({
-      // eslint-disable-next-line ember/avoid-leaking-state-in-components
-      pinned: [],
-    }));
+    this.owner.register(
+      'service:pinned-flights',
+      Service.extend({
+        // eslint-disable-next-line ember/avoid-leaking-state-in-components
+        pinned: [],
+      }),
+    );
 
     await this.owner.lookup('service:intl').loadAndSetLocale('en');
   });

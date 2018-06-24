@@ -28,7 +28,7 @@ export default Component.extend({
     },
   }),
 
-  saveTask: task(function * () {
+  saveTask: task(function*() {
     let club = this.club;
     let json = { clubId: club ? club.id : null };
 
@@ -39,7 +39,7 @@ export default Component.extend({
         error: null,
       });
 
-      this.account.set('club', (club.id === null) ? {} : club);
+      this.account.set('club', club.id === null ? {} : club);
     } catch (error) {
       this.setProperties({ messageKey: null, error });
     }

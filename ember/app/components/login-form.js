@@ -10,7 +10,7 @@ export default Component.extend({
   inline: false,
   error: null,
 
-  loginTask: task(function * () {
+  loginTask: task(function*() {
     let { email, password } = this;
 
     try {

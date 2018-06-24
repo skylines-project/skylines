@@ -22,9 +22,7 @@ const Validations = buildValidations({
   },
   website: {
     descriptionKey: 'website',
-    validators: [
-      validator('format', { allowBlank: true, type: 'url' }),
-    ],
+    validators: [validator('format', { allowBlank: true, type: 'url' })],
     debounce: 500,
   },
 });
@@ -53,7 +51,7 @@ export default Component.extend(Validations, {
     },
   },
 
-  saveTask: task(function * () {
+  saveTask: task(function*() {
     let id = this.get('club.id');
     let json = this.getProperties('name', 'website');
 
@@ -62,7 +60,6 @@ export default Component.extend(Validations, {
       this.set('club.name', json.name);
       this.set('club.website', json.website);
       this.router.transitionTo('club', id);
-
     } catch (error) {
       this.set('error', error);
     }

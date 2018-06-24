@@ -33,7 +33,9 @@ export default BaseMapComponent.extend({
   },
 
   _handlePointerMove(event) {
-    if (event.dragging || !this.hoverEnabled) { return; }
+    if (event.dragging || !this.hoverEnabled) {
+      return;
+    }
 
     let map = this.map;
     let source = this.get('flights.source');
@@ -48,11 +50,11 @@ export default BaseMapComponent.extend({
       let feature_pixel = map.getPixelFromCoordinate(closest_point);
       let mouse_pixel = map.getPixelFromCoordinate(coordinate);
 
-      let squared_distance = Math.pow(mouse_pixel[0] - feature_pixel[0], 2) +
-        Math.pow(mouse_pixel[1] - feature_pixel[1], 2);
+      let squared_distance =
+        Math.pow(mouse_pixel[0] - feature_pixel[0], 2) + Math.pow(mouse_pixel[1] - feature_pixel[1], 2);
 
       // Set the time when the mouse hovers the map
-      let time = (squared_distance > 100) ? this.defaultTime : closest_point[3];
+      let time = squared_distance > 100 ? this.defaultTime : closest_point[3];
       this.onTimeChange(time);
 
       map.render();

@@ -6,5 +6,5 @@ module.exports = {
 
   isDevelopingAddon() {
     return true;
-  }
+  },
 };

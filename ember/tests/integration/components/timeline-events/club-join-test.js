@@ -11,10 +11,13 @@ module('Integration | Component | timeline events/club join', function(hooks) {
   hooks.beforeEach(async function() {
     this.owner.setupRouter();
 
-    this.owner.register('service:account', Service.extend({
-      user: null,
-      club: null,
-    }));
+    this.owner.register(
+      'service:account',
+      Service.extend({
+        user: null,
+        club: null,
+      }),
+    );
 
     this.set('event', {
       time: '2016-06-24T12:34:56Z',

@@ -99,7 +99,10 @@ export default Component.extend({
   passiveTraces() {
     return (this.passive || []).map(trace => ({
       data: trace.data,
-      color: $.color.parse(trace.color).add('a', -0.6).toString(),
+      color: $.color
+        .parse(trace.color)
+        .add('a', -0.6)
+        .toString(),
       shadowSize: 0,
       lines: {
         lineWidth: 1,
