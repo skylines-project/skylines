@@ -67,9 +67,12 @@
     "ember-test-selectors": "^1.0.0",
     "ember-truth-helpers": "^2.0.0",
     "ember-web-app": "^2.3.0",
+    "eslint-config-prettier": "^2.9.0",
     "eslint-config-simplabs": "0.4.0",
     "eslint-plugin-ember": "^5.2.0",
+    "eslint-plugin-prettier": "^2.6.1",
     "loader.js": "^4.7.0",
+    "prettier": "1.13.5",
     "qunit-dom": "^0.6.3"
   },
   "engines": {
@@ -82,5 +85,11 @@
     "paths": [
       "lib/freestyle"
     ]
+  },
+  "prettier": {
+    "printWidth": 120,
+    "singleQuote": true,
+    "tabWidth": 2,
+    "trailingComma": "all"
   }
 }

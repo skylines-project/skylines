@@ -4,8 +4,12 @@ module.exports = {
   },
   extends: [
     'simplabs/configs/ember-qunit',
+    'prettier',
   ],
   env: {
     'embertest': null,
+  },
+  rules: {
+    'prettier/prettier': 'error',
   },
 };
