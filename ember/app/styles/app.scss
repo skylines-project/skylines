@@ -2,24 +2,25 @@
 
 @import 'bootstrap';
 
-@import 'follower-panel';
+@import 'components/cesium-button';
+@import 'components/fix-table';
+@import 'components/follower-panel';
+@import 'components/fullscreen-button';
+@import 'components/layer-switcher';
+@import 'components/loading-page';
+@import 'components/login-form';
+@import 'components/map-click-handler';
+@import 'components/playback-button';
+@import 'components/search-results-table';
+@import 'components/tracking-table';
+@import 'components/wingman-table';
+
+@import 'routes/index';
+
 @import 'tables';
-@import 'form-login';
-@import 'about';
-@import 'search';
 @import 'events';
-@import 'tracking-table';
-@import 'slFixTable';
-@import 'wingman';
 @import 'ol3-sidebar';
 @import 'flags';
-@import 'spinner';
 @import 'loading-indicator';
 @import 'footer';
-
-@import 'ol-GraphicLayerSwitcher-v3';
-@import 'ol-PlayButton';
-@import 'ol-FullscreenButton';
-@import 'ol-CesiumSwitcher';
 @import 'map';
-@import 'map-infobox';
