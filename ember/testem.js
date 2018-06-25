@@ -21,4 +21,9 @@ module.exports = {
       ].filter(Boolean),
     },
   },
+  proxies: {
+    '/api': {
+      target: 'https://skylines.aero',
+    },
+  },
 };
