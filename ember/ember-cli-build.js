@@ -93,12 +93,6 @@ module.exports = function(defaults) {
   app.import('vendor/jquery.flot.flight-upload.js');
 
   app.import({
-    development: 'bower_components/remarkable/dist/remarkable.js',
-    production: 'bower_components/remarkable/dist/remarkable.min.js',
-  });
-  app.import('vendor/shims/remarkable.js');
-
-  app.import({
     development: 'node_modules/bigscreen/bigscreen.js',
     production: 'node_modules/bigscreen/bigscreen.min.js',
   });
