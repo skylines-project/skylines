@@ -123,6 +123,7 @@ export default Component.extend({
           }),
         ],
         url: `${tile_url}/tiles/1.0.0/mwp/{z}/{x}/{y}.png`,
+        crossOrigin: 'anonymous',
       }),
       zIndex: 11,
     });
@@ -141,6 +142,7 @@ export default Component.extend({
     let airspace_layer = new ol.layer.Tile({
       source: new ol.source.XYZ({
         url: `${config.SKYLINES_TILE_BASEURL || ''}/tiles/1.0.0/airspace+airports/{z}/{x}/{y}.png`,
+        crossOrigin: 'anonymous',
       }),
       zIndex: 10,
     });
@@ -168,6 +170,7 @@ export default Component.extend({
           }),
         ],
         url,
+        crossOrigin: 'anonymous',
       }),
       zIndex: 2,
     });
@@ -202,6 +205,7 @@ export default Component.extend({
           }),
         ],
         url: tile_url,
+        crossOrigin: 'anonymous',
       }),
       zIndex: 5,
     });
