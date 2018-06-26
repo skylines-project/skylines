@@ -83,6 +83,8 @@
     "ol.render.canvas.Immediate#drawGeometry",
     "ol.render.canvas.Immediate#setStyle",
     "ol.source.BingMaps",
+    "ol.source.Tile#on",
+    "ol.source.Tile#un",
     "ol.source.OSM",
     "ol.source.Vector",
     "ol.source.Vector#on",
