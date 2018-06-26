@@ -9,6 +9,7 @@ import { tag } from 'ember-awesome-macros';
 import { htmlSafe } from 'ember-awesome-macros/string';
 
 import config from '../config/environment';
+import Ember from 'ember';
 
 export default Component.extend({
   mapSettings: service(),
@@ -52,7 +53,7 @@ export default Component.extend({
     });
 
     let osm_layer = new ol.layer.Tile({
-      source: new ol.source.OSM(),
+      source: withTestWaiter(new ol.source.OSM()),
       zIndex: 1,
     });
 
@@ -140,10 +141,12 @@ export default Component.extend({
 
   addAirspaceLayers() {
     let airspace_layer = new ol.layer.Tile({
-      source: new ol.source.XYZ({
-        url: `${config.SKYLINES_TILE_BASEURL || ''}/tiles/1.0.0/airspace+airports/{z}/{x}/{y}.png`,
-        crossOrigin: 'anonymous',
-      }),
+      source: withTestWaiter(
+        new ol.source.XYZ({
+          url: `${config.SKYLINES_TILE_BASEURL || ''}/tiles/1.0.0/airspace+airports/{z}/{x}/{y}.png`,
+          crossOrigin: 'anonymous',
+        }),
+      ),
       zIndex: 10,
     });
 
@@ -275,3 +278,28 @@ export default Component.extend({
     this.map.addLayer(empty_layer);
   },
 });
+
+let pending = 0;
+
+if (Ember.Test) {
+  Ember.Test.registerWaiter(function() {
+    return pending === 0;
+  });
+}
+
+function withTestWaiter(source) {
+  source.handleTestWaiterEvent = function(event) {
+    let { type } = event;
+    if (type === 'tileloadstart') {
+      pending++;
+    } else if (type === 'tileloadend' || type === 'tileloaderror') {
+      pending--;
+    }
+  };
+
+  source.on('tileloadstart', source.handleTestWaiterEvent);
+  source.on('tileloadend', source.handleTestWaiterEvent);
+  source.on('tileloaderror', source.handleTestWaiterEvent);
+
+  return source;
+}
