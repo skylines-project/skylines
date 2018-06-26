@@ -4347,9 +4347,9 @@ ember-page-title@^4.0.3:
     ember-cli-head "^0.4.0"
     ember-cli-htmlbars "^2.0.1"
 
-ember-percy@^1.4.2:
+ember-percy@Turbo87/ember-percy#canvas:
   version "1.4.2"
-  resolved "https://registry.yarnpkg.com/ember-percy/-/ember-percy-1.4.2.tgz#fff7a7974fa7d5a71449685f22d605d5994534ce"
+  resolved "https://codeload.github.com/Turbo87/ember-percy/tar.gz/a44db040b88a812781c4b6edd2bf75012838973e"
   dependencies:
     body-parser "^1.15.0"
     ember-cli-babel "^6.10.0"
