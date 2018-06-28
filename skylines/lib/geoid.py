@@ -83,6 +83,6 @@ def load_geoid():
 
     path = os.path.realpath(os.path.join(__file__, '..', '..', '..', 'backend', 'geoid_egm96.csv'))
 
-    with open(path, 'rb') as f:
+    with open(path, 'r') as f:
         reader = csv.reader(f, quoting=csv.QUOTE_NONNUMERIC)
         geoid_egm96 = list(reader)
