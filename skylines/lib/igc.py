@@ -21,7 +21,7 @@ def read_igc_headers(f):
 
     if isinstance(f, str) or isinstance(f, unicode):
         try:
-            f = file(f, 'r')
+            f = open(f, 'r')
         except IOError:
             return None
 

@@ -43,7 +43,7 @@ def filename_to_path(name):
 def open_file(name):
     assert isinstance(name, str) or isinstance(name, unicode)
 
-    return file(filename_to_path(name))
+    return open(filename_to_path(name))
 
 
 def next_filename(name):
@@ -72,7 +72,7 @@ def add_file(name, f):
             break
         name = next_filename(name)
 
-    dest = file(path, 'w')
+    dest = open(path, 'w')
     shutil.copyfileobj(f, dest)
     dest.close()
 

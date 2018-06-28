@@ -15,7 +15,7 @@ class DMStIndex(Command):
     )
 
     def run(self, path):
-        for line in file(path):
+        for line in open(path):
             m = r.match(line)
             if m:
                 names, index = m.group(1), int(m.group(2))
