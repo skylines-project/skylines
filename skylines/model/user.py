@@ -206,9 +206,9 @@ class User(db.Model):
             return False
 
         hash = sha256()
-        if isinstance(password, unicode):
+        if is_unicode(password):
             password = password.encode('utf-8')
-        hash.update(password + str(self.password[:64]))
+        hash.update(password + self.password[:64].encode('utf8'))
         return self.password[64:] == hash.hexdigest()
 
     ##############################
