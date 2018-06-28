@@ -13,6 +13,7 @@ from sqlalchemy.ext.hybrid import hybrid_property, hybrid_method
 
 from skylines.database import db
 from skylines.lib import files
+from skylines.lib.types import is_unicode
 from skylines.lib.sql import LowerCaseComparator
 
 __all__ = ['User']
@@ -168,7 +169,7 @@ class User(db.Model):
     @classmethod
     def _hash_password(cls, password):
         # Make sure password is a str because we cannot hash unicode objects
-        if isinstance(password, unicode):
+        if is_unicode(password):
             password = password.encode('utf-8')
         salt = sha256()
         salt.update(os.urandom(60))
@@ -177,7 +178,7 @@ class User(db.Model):
         password = salt.hexdigest() + hash.hexdigest()
         # Make sure the hashed password is a unicode object at the end of the
         # process because SQLAlchemy _wants_ unicode objects for Unicode cols
-        if not isinstance(password, unicode):
+        if not is_unicode(password):
             password = password.decode('utf-8')
         return password
 
