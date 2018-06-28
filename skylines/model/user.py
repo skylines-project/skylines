@@ -171,15 +171,21 @@ class User(db.Model):
         # Make sure password is a str because we cannot hash unicode objects
         if is_unicode(password):
             password = password.encode('utf-8')
+
         salt = sha256()
         salt.update(os.urandom(60))
+        salt_digest = salt.hexdigest()
+
         hash = sha256()
-        hash.update(password + salt.hexdigest())
+        hash.update(password + salt_digest.encode('utf-8') if is_unicode(salt_digest) else salt_digest)
+
         password = salt.hexdigest() + hash.hexdigest()
+
         # Make sure the hashed password is a unicode object at the end of the
         # process because SQLAlchemy _wants_ unicode objects for Unicode cols
         if not is_unicode(password):
             password = password.decode('utf-8')
+
         return password
 
     def validate_password(self, password):
