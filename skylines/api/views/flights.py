@@ -15,6 +15,7 @@ from skylines.database import db
 from skylines.api.cache import cache
 from skylines.api.oauth import oauth
 from skylines.lib import files
+from skylines.lib.types import is_string
 from skylines.lib.table_tools import Pager, Sorter
 from skylines.lib.dbutil import get_requested_record
 from skylines.lib.xcsoar_ import analyse_flight
@@ -158,7 +159,7 @@ def all():
 @oauth.optional()
 def date(date):
     try:
-        if isinstance(date, (str, unicode)):
+        if is_string(date):
             date = datetime.strptime(date, "%Y-%m-%d")
 
         if isinstance(date, datetime):
