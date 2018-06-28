@@ -46,7 +46,7 @@ def new_post():
 
     try:
         data = CurrentUserSchema(only=('email', 'firstName', 'lastName', 'password')).load(json).data
-    except ValidationError, e:
+    except ValidationError as e:
         return jsonify(error='validation-failed', fields=e.messages), 422
 
     user = User(**data)
@@ -76,7 +76,7 @@ def recover_post():
 def recover_step1_post(json):
     try:
         data = CurrentUserSchema(only=('email',)).load(json).data
-    except ValidationError, e:
+    except ValidationError as e:
         return jsonify(error='validation-failed', fields=e.messages), 422
 
     user = User.by_email_address(data['email_address'])
@@ -127,7 +127,7 @@ The SkyLines Team
 def recover_step2_post(json):
     try:
         data = CurrentUserSchema(only=('password', 'recoveryKey')).load(json).data
-    except ValidationError, e:
+    except ValidationError as e:
         return jsonify(error='validation-failed', fields=e.messages), 422
 
     user = User.by_recover_key(int(data['recover_key'], base=16))

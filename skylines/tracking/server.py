@@ -139,7 +139,7 @@ class TrackingServer(DatagramServer):
         db.session.add(fix)
         try:
             db.session.commit()
-        except SQLAlchemyError, e:
+        except SQLAlchemyError as e:
             log('database error:' + str(e))
             db.session.rollback()
 

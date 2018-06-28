@@ -161,7 +161,7 @@ def index_post():
 
     try:
         data = FlightSchema(only=('pilotId', 'pilotName')).load(form).data
-    except ValidationError, e:
+    except ValidationError as e:
         return jsonify(error='validation-failed', fields=e.messages), 422
 
     pilot_id = data.get('pilot_id')
@@ -303,7 +303,7 @@ def verify():
 
     try:
         data = FlightSchema(partial=True).load(json, many=True).data
-    except ValidationError, e:
+    except ValidationError as e:
         return jsonify(error='validation-failed', fields=e.messages), 422
 
     ids = [it.get('id') for it in data]
