@@ -36,7 +36,6 @@ ASSETS_LOAD_DIR = os.path.join(base, 'skylines', 'frontend', 'static')
 SKYLINES_FILES_PATH = os.path.join(base, 'htdocs', 'files')
 SKYLINES_ELEVATION_PATH = os.path.join(base, 'htdocs', 'srtm')
 SKYLINES_MAPSERVER_PATH = os.path.join(base, 'mapserver')
-SKYLINES_BACKEND_PATH = os.path.join(base, 'backend')
 
 SKYLINES_TEMPORARY_DIR = '/tmp'
 
