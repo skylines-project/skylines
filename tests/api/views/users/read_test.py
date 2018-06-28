@@ -1,3 +1,5 @@
+import pytest
+
 from skylines.model import Follower
 from tests.api import auth_for
 from tests.data import add_fixtures, users
@@ -43,11 +45,13 @@ def test_following(db_session, client):
     assert res.json['followed'] == True
 
 
+@pytest.mark.usefixtures('db_session')
 def test_read_missing_user(client):
     res = client.get('/users/1000000000000')
     assert res.status_code == 404
 
 
+@pytest.mark.usefixtures('db_session')
 def test_read_user_with_invalid_id(client):
     res = client.get('/users/abc')
     assert res.status_code == 404
