@@ -6,7 +6,7 @@ def calc_crc(data):
     assert len(data) >= 16
 
     crc = crc16xmodem(data[:4])
-    crc = crc16xmodem('\0\0', crc)
+    crc = crc16xmodem(b'\0\0', crc)
     crc = crc16xmodem(data[6:], crc)
     return crc
 
