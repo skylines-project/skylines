@@ -16,7 +16,7 @@ clubs_blueprint = Blueprint('clubs', 'skylines')
 
 
 @clubs_blueprint.route('/clubs', strict_slashes=False)
-def list():
+def _list():
     clubs = Club.query().order_by(func.lower(Club.name))
 
     name_filter = request.args.get('name')

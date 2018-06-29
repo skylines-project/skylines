@@ -224,7 +224,7 @@ def unassigned():
 
 @flights_blueprint.route('/flights/list/<ids>')
 @oauth.optional()
-def list(ids):
+def _list(ids):
     if not ids:
         return jsonify(), 400
 

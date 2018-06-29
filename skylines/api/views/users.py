@@ -23,7 +23,7 @@ users_blueprint = Blueprint('users', 'skylines')
 
 
 @users_blueprint.route('/users', strict_slashes=False)
-def list():
+def _list():
     users = User.query() \
         .options(joinedload(User.club)) \
         .order_by(func.lower(User.name))
