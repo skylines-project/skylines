@@ -78,11 +78,11 @@ def egm96_height(location):
         y[3] * a * b
 
 
-def load_geoid(app):
+def load_geoid():
     global geoid_egm96
-    geoid_file = os.path.join(app.config.get('SKYLINES_BACKEND_PATH'),
-                              'geoid_egm96.csv')
 
-    with open(geoid_file, 'rb') as f:
+    path = os.path.realpath(os.path.join(__file__, '..', '..', '..', 'backend', 'geoid_egm96.csv'))
+
+    with open(path, 'r') as f:
         reader = csv.reader(f, quoting=csv.QUOTE_NONNUMERIC)
         geoid_egm96 = list(reader)
