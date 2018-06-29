@@ -6,7 +6,7 @@ from sqlalchemy.orm import joinedload
 from skylines.database import db
 from skylines.model import Flight
 
-from selector import selector_options, select
+from .selector import selector_options, select
 
 
 class UpdateFlightPaths(Command):

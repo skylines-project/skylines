@@ -9,7 +9,7 @@ from skylines.model import Flight
 from skylines.lib.xcsoar_ import analyse_flight
 from skylines.worker import tasks
 
-from selector import selector_options, select
+from .selector import selector_options, select
 
 
 class Analyze(Command):
