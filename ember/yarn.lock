@@ -237,12 +237,12 @@
     slugify "^1.3.0"
     url-parse "^1.4.1"
 
-"@pollyjs/ember@^0.4.1":
-  version "0.4.1"
-  resolved "https://registry.yarnpkg.com/@pollyjs/ember/-/ember-0.4.1.tgz#20b95d2650e16c9a63f198dac226c7d523c47b06"
+"@pollyjs/ember@^0.4.2":
+  version "0.4.2"
+  resolved "https://registry.yarnpkg.com/@pollyjs/ember/-/ember-0.4.2.tgz#88f05ac54dc8842de03b789016e0de568a58957d"
   dependencies:
     "@pollyjs/core" "^0.5.0"
-    "@pollyjs/node-server" "^0.3.0"
+    "@pollyjs/node-server" "^0.4.0"
     broccoli-funnel "^2.0.1"
     broccoli-merge-trees "^3.0.0"
     broccoli-source "^1.1.0"
@@ -250,11 +250,12 @@
     debug "^3.1.0"
     ember-cli-babel "^6.6.0"
 
-"@pollyjs/node-server@^0.3.0":
-  version "0.3.0"
-  resolved "https://registry.yarnpkg.com/@pollyjs/node-server/-/node-server-0.3.0.tgz#f2e457ad4e5c0b4d75210f4dbf5418d970ba60dd"
+"@pollyjs/node-server@^0.4.0":
+  version "0.4.0"
+  resolved "https://registry.yarnpkg.com/@pollyjs/node-server/-/node-server-0.4.0.tgz#581bf10bc22b9a4f5f7527b16ea275fe710688ea"
   dependencies:
     body-parser "^1.18.3"
+    cors "^2.8.4"
     express "^4.16.3"
     fs-extra "^5.0.0"
     http-graceful-shutdown "^2.1.1"
@@ -2988,6 +2989,13 @@ core-object@^3.1.3:
 core-util-is@~1.0.0:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/core-util-is/-/core-util-is-1.0.2.tgz#b5fd54220aa2bc5ab57aab7140c940754503c1a7"
+
+cors@^2.8.4:
+  version "2.8.4"
+  resolved "https://registry.yarnpkg.com/cors/-/cors-2.8.4.tgz#2bd381f2eb201020105cd50ea59da63090694686"
+  dependencies:
+    object-assign "^4"
+    vary "^1"
 
 cosmiconfig@^5.0.2:
   version "5.0.4"
@@ -8136,7 +8144,7 @@ oauth-sign@~0.8.1, oauth-sign@~0.8.2:
   version "0.8.2"
   resolved "https://registry.yarnpkg.com/oauth-sign/-/oauth-sign-0.8.2.tgz#46a6ab7f0aead8deae9ec0565780b7d4efeb9d43"
 
-object-assign@4.1.1, object-assign@^4.0.1, object-assign@^4.1.0, object-assign@^4.1.1:
+object-assign@4.1.1, object-assign@^4, object-assign@^4.0.1, object-assign@^4.1.0, object-assign@^4.1.1:
   version "4.1.1"
   resolved "https://registry.yarnpkg.com/object-assign/-/object-assign-4.1.1.tgz#2109adc7965887cfc05cbbd442cac8bfbb360863"
 
@@ -10502,7 +10510,7 @@ validate-npm-package-name@^3.0.0:
   dependencies:
     builtins "^1.0.3"
 
-vary@~1.1.0, vary@~1.1.2:
+vary@^1, vary@~1.1.0, vary@~1.1.2:
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/vary/-/vary-1.1.2.tgz#2299f02c6ded30d4a5961b0b9f74524a18f634fc"
 
