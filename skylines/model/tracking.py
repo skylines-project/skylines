@@ -10,6 +10,7 @@ from geoalchemy2.shape import to_shape, from_shape
 from shapely.geometry import Point
 
 from skylines.database import db
+from skylines.lib.types import is_int
 from .geo import Location
 
 
@@ -70,7 +71,7 @@ class TrackingFix(db.Model):
         value that will be interpreted as hours.
         """
 
-        if isinstance(max_age, (int, long, float)):
+        if is_int(max_age) or isinstance(max_age, float):
             max_age = timedelta(hours=max_age)
 
         return cls.time >= datetime.utcnow() - max_age
