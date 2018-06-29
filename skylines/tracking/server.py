@@ -262,12 +262,14 @@ class TrackingServer(DatagramServer):
             (host, unicode(pilot).encode('utf8', 'ignore'),
              unicode(user).encode('utf8', 'ignore')))
 
-    def __handle(self, data, (host, port)):
+    def __handle(self, data, address):
         if len(data) < 16: return
 
         header = struct.unpack('!IHHQ', data[:16])
         if header[0] != MAGIC: return
         if not check_crc(data): return
+
+        (host, port) = address
 
         with self.app.app_context():
             if header[2] == TYPE_FIX:
