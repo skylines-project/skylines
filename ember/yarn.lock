@@ -3467,9 +3467,9 @@ ember-ast-helpers@0.3.5:
     "@glimmer/compiler" "^0.27.0"
     "@glimmer/syntax" "^0.27.0"
 
-ember-auto-import@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/ember-auto-import/-/ember-auto-import-1.0.0.tgz#a52110cdb7fbd34d96466bd8e9d1818fe6520368"
+ember-auto-import@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/ember-auto-import/-/ember-auto-import-1.0.1.tgz#1b5bd09dfd5fc49422ddf711b4dd913c9dfa90b9"
   dependencies:
     babel-core "^6.26.3"
     babylon "^6.18.0"
@@ -3483,6 +3483,7 @@ ember-auto-import@^1.0.0:
     enhanced-resolve "^4.0.0"
     fs-tree-diff "^0.5.7"
     handlebars "^4.0.11"
+    js-string-escape "^1.0.1"
     lodash "^4.17.10"
     mkdirp "^0.5.1"
     quick-temp "^0.1.8"
@@ -6775,6 +6776,10 @@ js-base64@^2.1.8:
 js-reporters@1.2.1:
   version "1.2.1"
   resolved "https://registry.yarnpkg.com/js-reporters/-/js-reporters-1.2.1.tgz#f88c608e324a3373a95bcc45ad305e5c979c459b"
+
+js-string-escape@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/js-string-escape/-/js-string-escape-1.0.1.tgz#e2625badbc0d67c7533e9edc1068c587ae4137ef"
 
 js-tokens@1.0.1:
   version "1.0.1"
