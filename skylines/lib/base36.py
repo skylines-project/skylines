@@ -3,6 +3,8 @@ base 36 encoding/decoding taken from wikipedia sample code
 http://en.wikipedia.org/wiki/Base_36#Python_Conversion_Code
 """
 
+from .types import is_int
+
 
 def encode(number, alphabet='0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ'):
     """
@@ -12,7 +14,7 @@ def encode(number, alphabet='0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ'):
     :rtype: str
     """
 
-    if not isinstance(number, (int, long)):
+    if not is_int(number):
         raise TypeError('number must be an integer')
 
     if 0 <= number <= 9:
