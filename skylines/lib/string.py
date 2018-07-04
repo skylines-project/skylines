@@ -1,5 +1,7 @@
 import re
 
+from skylines.lib.types import is_string
+
 
 whitespace_re = re.compile(r'[\x00-\x20\s]')
 non_alnum_re = re.compile(r'[^0-9a-zA-Z]')
@@ -9,7 +11,7 @@ def normalize_whitespace(s):
     """Strip the string and replace all whitespace sequences and other
     non-printable characters with a single space."""
 
-    assert isinstance(s, str) or isinstance(s, unicode)
+    assert is_string(s)
 
     return whitespace_re.sub(' ', s.strip())
 

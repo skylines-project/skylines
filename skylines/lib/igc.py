@@ -7,6 +7,7 @@ from datetime import datetime
 
 from . import base36
 from .string import import_ascii, import_alnum
+from skylines.lib.types import is_string
 
 hfdte_re = re.compile(r'HFDTE(\d{6})', re.IGNORECASE)
 hfgid_re = re.compile(r'HFGID\s*GLIDER\s*ID\s*:(.*)', re.IGNORECASE)
@@ -19,7 +20,7 @@ def read_igc_headers(f):
     """ Read IGC file headers from a file-like object, a list of strings or a
     file if the parameter is a path. """
 
-    if isinstance(f, str) or isinstance(f, unicode):
+    if is_string(f):
         try:
             f = open(f, 'r')
         except IOError:
