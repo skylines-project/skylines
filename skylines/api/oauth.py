@@ -38,7 +38,7 @@ class CustomProvider(OAuth2Provider):
         if request.scopes is not None:
             token['scope'] = ' '.join(request.scopes)
 
-        return current_app.jws.dumps(token)
+        return current_app.jws.dumps(token).decode('ascii')
 
     def verify_request(self, scopes):
         if request.authorization:
