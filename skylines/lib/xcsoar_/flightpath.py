@@ -5,6 +5,7 @@ from geoalchemy2.shape import from_shape
 
 from skylines.database import db
 from skylines.lib import files
+from skylines.lib.types import is_string
 from skylines.model import Elevation, IGCFile, Location
 from xcsoar import Flight
 
@@ -48,7 +49,7 @@ def run_flight_path(path, max_points=None, qnh=None):
 def flight_path(igc_file, max_points=1000, add_elevation=False, qnh=None):
     if isinstance(igc_file, IGCFile):
         path = files.filename_to_path(igc_file.filename)
-    elif isinstance(igc_file, (str, unicode)):
+    elif is_string(igc_file):
         path = igc_file
     else:
         return None
