@@ -46,7 +46,7 @@ class CustomProvider(OAuth2Provider):
 
             user = User.by_credentials(
                 request.authorization.username,
-                request.authorization.password,
+                request.authorization.password.decode('utf-8'),
             )
 
             request.user_id = user.id if user else None
