@@ -5,10 +5,9 @@ branches:
   except:
   - /^dependabot\/.*$/
 
-language: python
-
-python:
-  - 2.7
+cache:
+  pip: true
+  yarn: true
 
 env:
   global:
@@ -20,50 +19,65 @@ env:
     - PERCY_PROJECT=skylines/skylines
     - PERCY_TOKEN=81bf0245987c87eb4924eae0b085cb60596f2f0f4d4ffe27e171828535aa6812
 
-addons:
-  chrome: stable
-  postgresql: "9.5"
-  apt:
-    packages:
-      - postgresql-9.5-postgis-2.3
+jobs:
+  fail_fast: true
 
-services:
-  - postgresql
-  - redis
+  include:
+    - stage: test
+      env: NAME=backend      # used only to make Travis UI show description
 
-cache:
-  pip: true
-  yarn: true
+      language: python
+      python: 2.7
 
-before_install:
-  - pip install pipenv
+      addons:
+        postgresql: "9.5"
+        apt:
+          packages:
+            - postgresql-9.5-postgis-2.3
 
-  - nvm install 10
-  - curl -o- -L https://yarnpkg.com/install.sh | bash
-  - export PATH=$HOME/.yarn/bin:$PATH
-  - yarn global add bower
+      services:
+        - postgresql
+        - redis
 
-install:
-  - pipenv install --dev
+      before_install:
+        - pip install pipenv
 
-  - cd ember
-  - yarn install
-  - bower install
-  - cd ..
+      install:
+        - pipenv install --dev
 
-before_script:
-  # Create the testing database
-  - psql -U postgres -c 'CREATE DATABASE skylines_test;'
+      before_script:
+        # Create the testing database
+        - psql -U postgres -c 'CREATE DATABASE skylines_test;'
 
-  # Install PostGIS extension into the database
-  - psql -U postgres -d skylines_test -c 'CREATE EXTENSION postgis;'
+        # Install PostGIS extension into the database
+        - psql -U postgres -d skylines_test -c 'CREATE EXTENSION postgis;'
 
-  # Install fuzzystrmatch extension into the database
-  - psql -U postgres -d skylines_test -c 'CREATE EXTENSION fuzzystrmatch;'
+        # Install fuzzystrmatch extension into the database
+        - psql -U postgres -d skylines_test -c 'CREATE EXTENSION fuzzystrmatch;'
 
-script:
-  # Run the test suite
-  - pipenv run py.test -vv --color=yes --cov=skylines --cov-report term-missing:skip-covered
+      script:
+        # Run the test suite
+        - pipenv run py.test -vv --color=yes --cov=skylines --cov-report term-missing:skip-covered
 
-  - cd ember
-  - yarn test
+    - stage: test
+      env: NAME=frontend      # used only to make Travis UI show description
+
+      language: node_js
+      node_js: 10
+
+      addons:
+        chrome: stable
+
+      before_install:
+        - cd ember
+
+        - curl -o- -L https://yarnpkg.com/install.sh | bash
+        - export PATH=$HOME/.yarn/bin:$PATH
+        - yarn global add bower
+
+      install:
+        - yarn install
+        - bower install
+
+      script:
+        - yarn test
