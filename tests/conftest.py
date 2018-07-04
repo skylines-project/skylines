@@ -65,8 +65,6 @@ def db_session(db, app):
     """Provides clean database before each test. After each test,
     session.rollback() is issued.
 
-    Also, database will be bootstrapped with some initial data.
-
     Return sqlalchemy session.
     """
     assert isinstance(app, SkyLines)
