@@ -14,6 +14,7 @@ from sqlalchemy.ext.hybrid import hybrid_property, hybrid_method
 from skylines.database import db
 from skylines.lib import files
 from skylines.lib.sql import LowerCaseComparator
+from skylines.lib.types import is_unicode
 
 __all__ = ['User']
 
@@ -167,19 +168,15 @@ class User(db.Model):
 
     @classmethod
     def _hash_password(cls, password):
-        # Make sure password is a str because we cannot hash unicode objects
-        if isinstance(password, unicode):
-            password = password.encode('utf-8')
+        assert is_unicode(password)
+
         salt = sha256()
         salt.update(os.urandom(60))
+
         hash = sha256()
-        hash.update(password + salt.hexdigest())
-        password = salt.hexdigest() + hash.hexdigest()
-        # Make sure the hashed password is a unicode object at the end of the
-        # process because SQLAlchemy _wants_ unicode objects for Unicode cols
-        if not isinstance(password, unicode):
-            password = password.decode('utf-8')
-        return password
+        hash.update((password + salt.hexdigest()).encode('utf-8'))
+
+        return salt.hexdigest() + hash.hexdigest()
 
     def validate_password(self, password):
         """
@@ -191,17 +188,17 @@ class User(db.Model):
         :type password: unicode object.
         :return: Whether the password is valid.
         :rtype: bool
-
         """
+
+        assert is_unicode(password)
 
         # Make sure accounts without a password can't log in
         if not self.password or not password:
             return False
 
         hash = sha256()
-        if isinstance(password, unicode):
-            password = password.encode('utf-8')
-        hash.update(password + str(self.password[:64]))
+        hash.update((password + self.password[:64]).encode('utf-8'))
+
         return self.password[64:] == hash.hexdigest()
 
     ##############################
