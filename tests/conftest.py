@@ -50,8 +50,8 @@ def db(app):
     """Creates clean database schema and drops it on teardown
 
     Note, that this is a session scoped fixture, it will be executed only once
-    and shared among all tests. Use `db` fixture to get clean database before
-    each test.
+    and shared among all tests. Use `db_session` fixture to get clean database
+    before each test.
     """
     assert isinstance(app, SkyLines)
 
