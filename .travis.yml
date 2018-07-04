@@ -20,10 +20,13 @@ env:
     - PERCY_TOKEN=81bf0245987c87eb4924eae0b085cb60596f2f0f4d4ffe27e171828535aa6812
 
 jobs:
-  fail_fast: true
+  fast_finish: true
+  allow_failures:
+    - python: 3.4
 
   include:
-    - stage: test
+    - &backend-test
+      stage: test
       env: NAME=backend      # used only to make Travis UI show description
 
       language: python
@@ -58,6 +61,9 @@ jobs:
       script:
         # Run the test suite
         - pipenv run py.test -vv --color=yes --cov=skylines --cov-report term-missing:skip-covered
+
+    - <<: *backend-test
+      python: 3.4
 
     - stage: test
       env: NAME=frontend      # used only to make Travis UI show description
