@@ -13,6 +13,7 @@ from oauthlib.oauth2.rfc6749.tokens import random_token_generator
 
 from skylines.database import db
 from skylines.model import User, Client, RefreshToken, AccessToken
+from skylines.lib.types import is_bytes
 
 
 class CustomProvider(OAuth2Provider):
@@ -44,9 +45,13 @@ class CustomProvider(OAuth2Provider):
         if request.authorization:
             from skylines.model import User
 
+            password = request.authorization.password
+            if is_bytes(password):
+                password = password.decode('utf-8')
+
             user = User.by_credentials(
                 request.authorization.username,
-                request.authorization.password.decode('utf-8'),
+                password,
             )
 
             request.user_id = user.id if user else None

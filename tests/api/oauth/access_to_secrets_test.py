@@ -1,3 +1,5 @@
+import pytest
+
 from immobilus import immobilus
 from werkzeug.datastructures import Headers
 
@@ -78,6 +80,7 @@ def test_401_with_invalid_credentials(client):
     assert response.json.get('error') == 'invalid_token'
 
 
+@pytest.mark.usefixtures('test_user')
 def test_200_with_credentials(client):
     headers = Headers()
     headers.set('Authorization', basic_auth_encode('test@foo.com', 'secret123'))
