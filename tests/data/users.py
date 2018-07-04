@@ -46,17 +46,17 @@ def test_users(n=50):
 
 def john(**kwargs):
     user = User(first_name=u'John', last_name=u'Doe', email_address=u'johnny@doe.com')
-    user.original_password = user.password = 'jane123'
+    user.original_password = user.password = u'jane123'
     return user.apply_kwargs(kwargs)
 
 
 def jane(**kwargs):
     user = User(first_name=u'Jane', last_name=u'Doe', email_address=u'jane@doe.com')
-    user.original_password = user.password = 'johnny'
+    user.original_password = user.password = u'johnny'
     return user.apply_kwargs(kwargs)
 
 
 def max(**kwargs):
     user = User(first_name=u'Max', last_name=u'Mustermann', email_address=u'max@mustermann.name')
-    user.original_password = user.password = 'secret123'
+    user.original_password = user.password = u'secret123'
     return user.apply_kwargs(kwargs)
