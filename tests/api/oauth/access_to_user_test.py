@@ -1,7 +1,7 @@
-import base64
-
 from immobilus import immobilus
 from werkzeug.datastructures import Headers
+
+from skylines.lib.basic_auth import encode as basic_auth_encode
 
 
 def test_200_without_token(client):
@@ -71,7 +71,7 @@ def test_200_with_token_parameter(client, access_token, test_user):
 
 def test_401_with_invalid_credentials(client):
     headers = Headers()
-    headers.set('Authorization', 'Basic ' + base64.b64encode('invalid-username:invalid-password'))
+    headers.set('Authorization', basic_auth_encode('invalid-username', 'invalid-password'))
 
     response = client.get('/user', headers=headers)
     assert response.status_code == 401
@@ -80,7 +80,7 @@ def test_401_with_invalid_credentials(client):
 
 def test_200_with_credentials(client, test_user):
     headers = Headers()
-    headers.set('Authorization', 'Basic ' + base64.b64encode('test@foo.com:secret123'))
+    headers.set('Authorization', basic_auth_encode('test@foo.com', 'secret123'))
 
     response = client.get('/user', headers=headers)
     assert response.status_code == 200
