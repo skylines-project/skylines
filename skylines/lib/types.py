@@ -20,3 +20,10 @@ def is_unicode(value):
         return isinstance(value, unicode)
     else:
         return isinstance(value, str)
+
+
+def is_bytes(value):
+    if sys.version_info[0] == 2:
+        return isinstance(value, str)
+    else:
+        return isinstance(value, bytes)
