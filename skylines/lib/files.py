@@ -7,11 +7,13 @@ import re
 
 from flask import current_app
 
+from skylines.lib.types import is_string
+
 igc_filename_numbers_regex = re.compile(r"([\w_-]+)_(\d+)")
 
 
 def sanitise_filename(name):
-    assert isinstance(name, str) or isinstance(name, unicode)
+    assert is_string(name)
 
     # strip the parent directory name
     name = os.path.basename(name)
@@ -35,19 +37,19 @@ def sanitise_filename(name):
 
 
 def filename_to_path(name):
-    assert isinstance(name, str) or isinstance(name, unicode)
+    assert is_string(name)
 
     return os.path.join(current_app.config['SKYLINES_FILES_PATH'], name)
 
 
 def open_file(name):
-    assert isinstance(name, str) or isinstance(name, unicode)
+    assert is_string(name)
 
     return open(filename_to_path(name))
 
 
 def next_filename(name):
-    assert isinstance(name, str) or isinstance(name, unicode)
+    assert is_string(name)
 
     i = name.rfind('.')
 
@@ -64,7 +66,7 @@ def next_filename(name):
 
 
 def add_file(name, f):
-    assert isinstance(name, str) or isinstance(name, unicode)
+    assert is_string(name)
 
     while True:
         path = filename_to_path(name)
@@ -80,7 +82,7 @@ def add_file(name, f):
 
 
 def delete_file(name):
-    assert isinstance(name, str) or isinstance(name, unicode)
+    assert is_string(name)
 
     path = filename_to_path(name)
     try:
