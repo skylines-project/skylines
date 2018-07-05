@@ -64,7 +64,7 @@ class TrackingServer(DatagramServer):
             log("%s PING unknown pilot (key: %x)" % (host, key))
             flags |= FLAG_ACK_BAD_KEY
         else:
-            log("%s PING %s -> PONG" % (host, unicode(pilot).encode('utf8', 'ignore')))
+            log("%s PING %s -> PONG" % (host, pilot.name.encode('utf8', 'ignore')))
 
         data = struct.pack('!IHHQHHI', MAGIC, 0, TYPE_ACK, 0,
                            id, 0, flags)
@@ -132,7 +132,7 @@ class TrackingServer(DatagramServer):
             fix.engine_noise_level = data[10]
 
         log("{} FIX {} {} {}".format(
-            host, unicode(pilot).encode('utf8', 'ignore'),
+            host, pilot.name.encode('utf8', 'ignore'),
             fix.time and fix.time.time(), fix.location))
 
         db.session.add(fix)
@@ -219,7 +219,7 @@ class TrackingServer(DatagramServer):
         self.socket.sendto(response, (host, port))
 
         log("%s TRAFFIC_REQUEST %s -> %d locations" %
-            (host, unicode(pilot).encode('utf8', 'ignore'), count))
+            (host, pilot.name.encode('utf8', 'ignore'), count))
 
     def username_request_received(self, host, port, key, payload):
         """The client asks for the display name of a user account."""
@@ -243,7 +243,7 @@ class TrackingServer(DatagramServer):
             self.transport.write(response, (host, port))
 
             log("%s, USER_NAME_REQUEST %s -> NOT_FOUND" %
-                (host, unicode(pilot).encode('utf8', 'ignore')))
+                (host, pilot.name.encode('utf8', 'ignore')))
 
             return
 
@@ -258,8 +258,8 @@ class TrackingServer(DatagramServer):
         self.socket.sendto(response, (host, port))
 
         log("%s USER_NAME_REQUEST %s -> %s" %
-            (host, unicode(pilot).encode('utf8', 'ignore'),
-             unicode(user).encode('utf8', 'ignore')))
+            (host, pilot.name.encode('utf8', 'ignore'),
+             user.name.encode('utf8', 'ignore')))
 
     def __handle(self, data, address):
         if len(data) < 16: return
