@@ -13,6 +13,7 @@ from skylines.database import db
 from skylines.model import User, TrackingFix, Follower, Elevation
 from skylines.sentry import sentry
 from skylines.tracking.crc import check_crc, set_crc
+from skylines.tracking.datetime import ms_to_time
 
 # More information about this protocol can be found in the XCSoar
 # source code, source file src/Tracking/SkyLines/Protocol.hpp
@@ -88,10 +89,8 @@ class TrackingServer(DatagramServer):
         # certain range
         time_of_day_ms = data[1] % (24 * 3600 * 1000)
         time_of_day_s = time_of_day_ms / 1000
-        time_of_day = time(time_of_day_s / 3600,
-                           (time_of_day_s / 60) % 60,
-                           time_of_day_s % 60,
-                           (time_of_day_ms % 1000) * 1000)
+        time_of_day = ms_to_time(data[1])
+
         now = datetime.utcnow()
         now_s = ((now.hour * 60) + now.minute) * 60 + now.second
         if now_s - 1800 < time_of_day_s < now_s + 180:
