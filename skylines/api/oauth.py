@@ -45,14 +45,15 @@ class CustomProvider(OAuth2Provider):
         if request.authorization:
             from skylines.model import User
 
+            username = request.authorization.username
+            if is_bytes(username):
+                username = username.decode('utf-8')
+
             password = request.authorization.password
             if is_bytes(password):
                 password = password.decode('utf-8')
 
-            user = User.by_credentials(
-                request.authorization.username,
-                password,
-            )
+            user = User.by_credentials(username, password)
 
             request.user_id = user.id if user else None
             return (user is not None), None
