@@ -1,3 +1,4 @@
+import sys
 import shlex
 
 from sqlalchemy import literal_column, cast, desc, Unicode
@@ -173,7 +174,10 @@ def text_to_tokens(search_text):
     assert is_unicode(search_text)
 
     try:
-        return [str.decode('utf8') for str in shlex.split(search_text.encode('utf8'))]
+        if sys.version_info[0] == 2:
+            return [str.decode('utf8') for str in shlex.split(search_text.encode('utf8'))]
+        else:
+            return shlex.split(search_text)
     except ValueError:
         return search_text.split(' ')
 
