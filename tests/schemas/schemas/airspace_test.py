@@ -14,7 +14,7 @@ def test_airspace_schema(test_airspace):
     assert not errors
 
     assert isinstance(data, OrderedDict)
-    assert data.keys() == [
+    assert list(data.keys()) == [
         'id',
         'name',
         'class',
