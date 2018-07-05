@@ -2,7 +2,7 @@ from __future__ import absolute_import, print_function
 
 import sys
 import struct
-from datetime import datetime, time, timedelta
+from datetime import datetime, timedelta
 
 from gevent.server import DatagramServer
 
