@@ -14,7 +14,6 @@ timeline_blueprint = Blueprint("timeline", "skylines")
 def _list():
     query = (
         Event.query()
-        .options(subqueryload("actor"))
         .options(subqueryload("user"))
         .options(subqueryload("club"))
         .outerjoin(Event.flight)
