@@ -1,39 +1,39 @@
 import re
 
-from skylines.lib.types import is_string
+from skylines.lib.types import is_bytes
 
 
-whitespace_re = re.compile(r'[\x00-\x20\s]')
-non_alnum_re = re.compile(r'[^0-9a-zA-Z]')
+whitespace_re = re.compile(br'[\x00-\x20\s]')
+non_alnum_re = re.compile(br'[^0-9a-zA-Z]')
 
 
 def normalize_whitespace(s):
     """Strip the string and replace all whitespace sequences and other
     non-printable characters with a single space."""
 
-    assert is_string(s)
+    assert is_bytes(s)
 
-    return whitespace_re.sub(' ', s.strip())
+    return whitespace_re.sub(b' ', s.strip())
 
 
 def import_ascii(s):
-    """Import a 'str' object, convert to a 'unicode' object, discarding all
+    """Import a byte string, convert to a unicode string, discarding all
     non-ASCII characters."""
 
-    assert isinstance(s, str)
+    assert is_bytes(s)
 
     s = normalize_whitespace(s)
-    return unicode(s, 'ascii', 'ignore')
+    return s.decode('ascii', 'ignore')
 
 
 def import_alnum(s):
-    """Import a 'str' object, convert to a 'unicode' object,
+    """Import a byte string, convert to a unicode string,
     discarding all non-alphanumeric characters (ASCII only)."""
 
-    assert isinstance(s, str)
+    assert is_bytes(s)
 
-    s = non_alnum_re.sub('', s)
-    return unicode(s, 'ascii')
+    s = non_alnum_re.sub(b'', s)
+    return s.decode('ascii')
 
 
 def isnumeric(s):
