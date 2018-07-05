@@ -111,7 +111,7 @@ class Bounds(object):
             raise ValueError(
                 'BBox string needs to have exactly four components')
 
-        bbox = map(float, bbox)
+        bbox = [float(angle) for angle in bbox]
 
         sw = Location(latitude=bbox[1], longitude=bbox[0])
         ne = Location(latitude=bbox[3], longitude=bbox[2])
