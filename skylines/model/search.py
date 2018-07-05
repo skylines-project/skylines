@@ -107,10 +107,7 @@ def process_type_option(models, tokens):
     types, new_tokens = __filter_prefixed_tokens('type', tokens)
 
     # Filter the list of models according to the type filter
-    def in_types_list(model):
-        return model.__name__.lower() in types
-
-    new_models = filter(in_types_list, models)
+    new_models = [model for model in models if model.__name__.lower() in types]
 
     # Return original models list if there are no matching models
     if len(new_models) == 0:
@@ -136,7 +133,8 @@ def process_id_option(tokens):
         except ValueError:
             return None
 
-    ids = filter(None, map(int_or_none, ids))
+    ids = [int_or_none(id) for id in ids]
+    ids = [id for id in ids if id is not None]
 
     # Return ids and tokens
     return ids, new_tokens
