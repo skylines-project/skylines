@@ -4,6 +4,7 @@ from sqlalchemy import literal_column, cast, desc, Unicode
 from sqlalchemy.dialects.postgresql import array
 
 from skylines.database import db
+from skylines.lib.types import is_unicode
 
 
 PATTERNS = [
@@ -169,6 +170,8 @@ def __filter_prefixed_tokens(prefix, tokens):
 
 
 def text_to_tokens(search_text):
+    assert is_unicode(search_text)
+
     try:
         return [str.decode('utf8') for str in shlex.split(search_text.encode('utf8'))]
     except ValueError:
