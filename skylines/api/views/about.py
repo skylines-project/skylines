@@ -20,7 +20,7 @@ def imprint():
 def skylines_team():
     path = os.path.join(os.path.dirname(os.path.abspath(__file__)),
                         '..', '..', '..', 'AUTHORS.md')
-    with open(path) as f:
+    with open(path, 'rb') as f:
         content = f.read().decode('utf-8')
 
     return jsonify(content=content)
@@ -30,7 +30,7 @@ def skylines_team():
 def license():
     path = os.path.join(os.path.dirname(os.path.abspath(__file__)),
                         '..', '..', '..', 'LICENSE')
-    with open(path) as f:
+    with open(path, 'rb') as f:
         content = f.read().decode('utf-8')
 
     return jsonify(content=content)
