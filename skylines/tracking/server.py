@@ -1,8 +1,8 @@
-from __future__ import print_function
+from __future__ import absolute_import, print_function
 
 import sys
 import struct
-from datetime import datetime, time, timedelta
+from datetime import datetime, timedelta
 
 from gevent.server import DatagramServer
 
@@ -13,6 +13,7 @@ from skylines.database import db
 from skylines.model import User, TrackingFix, Follower, Elevation
 from skylines.sentry import sentry
 from skylines.tracking.crc import check_crc, set_crc
+from skylines.tracking.datetime import ms_to_time
 
 # More information about this protocol can be found in the XCSoar
 # source code, source file src/Tracking/SkyLines/Protocol.hpp
@@ -63,7 +64,7 @@ class TrackingServer(DatagramServer):
             log("%s PING unknown pilot (key: %x)" % (host, key))
             flags |= FLAG_ACK_BAD_KEY
         else:
-            log("%s PING %s -> PONG" % (host, unicode(pilot).encode('utf8', 'ignore')))
+            log("%s PING %s -> PONG" % (host, pilot.name.encode('utf8', 'ignore')))
 
         data = struct.pack('!IHHQHHI', MAGIC, 0, TYPE_ACK, 0,
                            id, 0, flags)
@@ -88,10 +89,8 @@ class TrackingServer(DatagramServer):
         # certain range
         time_of_day_ms = data[1] % (24 * 3600 * 1000)
         time_of_day_s = time_of_day_ms / 1000
-        time_of_day = time(time_of_day_s / 3600,
-                           (time_of_day_s / 60) % 60,
-                           time_of_day_s % 60,
-                           (time_of_day_ms % 1000) * 1000)
+        time_of_day = ms_to_time(data[1])
+
         now = datetime.utcnow()
         now_s = ((now.hour * 60) + now.minute) * 60 + now.second
         if now_s - 1800 < time_of_day_s < now_s + 180:
@@ -133,7 +132,7 @@ class TrackingServer(DatagramServer):
             fix.engine_noise_level = data[10]
 
         log("{} FIX {} {} {}".format(
-            host, unicode(pilot).encode('utf8', 'ignore'),
+            host, pilot.name.encode('utf8', 'ignore'),
             fix.time and fix.time.time(), fix.location))
 
         db.session.add(fix)
@@ -220,7 +219,7 @@ class TrackingServer(DatagramServer):
         self.socket.sendto(response, (host, port))
 
         log("%s TRAFFIC_REQUEST %s -> %d locations" %
-            (host, unicode(pilot).encode('utf8', 'ignore'), count))
+            (host, pilot.name.encode('utf8', 'ignore'), count))
 
     def username_request_received(self, host, port, key, payload):
         """The client asks for the display name of a user account."""
@@ -244,7 +243,7 @@ class TrackingServer(DatagramServer):
             self.transport.write(response, (host, port))
 
             log("%s, USER_NAME_REQUEST %s -> NOT_FOUND" %
-                (host, unicode(pilot).encode('utf8', 'ignore')))
+                (host, pilot.name.encode('utf8', 'ignore')))
 
             return
 
@@ -259,8 +258,8 @@ class TrackingServer(DatagramServer):
         self.socket.sendto(response, (host, port))
 
         log("%s USER_NAME_REQUEST %s -> %s" %
-            (host, unicode(pilot).encode('utf8', 'ignore'),
-             unicode(user).encode('utf8', 'ignore')))
+            (host, pilot.name.encode('utf8', 'ignore'),
+             user.name.encode('utf8', 'ignore')))
 
     def __handle(self, data, address):
         if len(data) < 16: return
