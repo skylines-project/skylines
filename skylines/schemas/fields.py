@@ -45,7 +45,7 @@ class GeometryField(Field):
         if exterior is None:
             return None
 
-        return map(cls.serialize_coord, exterior.coords)
+        return list(map(cls.serialize_coord, exterior.coords))
 
     @classmethod
     def serialize_point(cls, point):
