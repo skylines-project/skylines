@@ -1,9 +1,11 @@
+import sys
 import shlex
 
 from sqlalchemy import literal_column, cast, desc, Unicode
 from sqlalchemy.dialects.postgresql import array
 
 from skylines.database import db
+from skylines.lib.types import is_unicode
 
 
 PATTERNS = [
@@ -105,10 +107,7 @@ def process_type_option(models, tokens):
     types, new_tokens = __filter_prefixed_tokens('type', tokens)
 
     # Filter the list of models according to the type filter
-    def in_types_list(model):
-        return model.__name__.lower() in types
-
-    new_models = filter(in_types_list, models)
+    new_models = [model for model in models if model.__name__.lower() in types]
 
     # Return original models list if there are no matching models
     if len(new_models) == 0:
@@ -134,7 +133,8 @@ def process_id_option(tokens):
         except ValueError:
             return None
 
-    ids = filter(None, map(int_or_none, ids))
+    ids = [int_or_none(id) for id in ids]
+    ids = [id for id in ids if id is not None]
 
     # Return ids and tokens
     return ids, new_tokens
@@ -169,8 +169,13 @@ def __filter_prefixed_tokens(prefix, tokens):
 
 
 def text_to_tokens(search_text):
+    assert is_unicode(search_text)
+
     try:
-        return [str.decode('utf8') for str in shlex.split(search_text.encode('utf8'))]
+        if sys.version_info[0] == 2:
+            return [str.decode('utf8') for str in shlex.split(search_text.encode('utf8'))]
+        else:
+            return shlex.split(search_text)
     except ValueError:
         return search_text.split(' ')
 
