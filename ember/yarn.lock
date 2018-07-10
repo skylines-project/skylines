@@ -3238,10 +3238,6 @@ deep-extend@^0.6.0:
   version "0.6.0"
   resolved "https://registry.yarnpkg.com/deep-extend/-/deep-extend-0.6.0.tgz#c4fa7c95404a17a9c3e8ca7e1537312b736330ac"
 
-deep-extend@~0.4.0:
-  version "0.4.2"
-  resolved "https://registry.yarnpkg.com/deep-extend/-/deep-extend-0.4.2.tgz#48b699c27e334bf89f10892be432f6e4c7d34a7f"
-
 deep-is@~0.1.3:
   version "0.1.3"
   resolved "https://registry.yarnpkg.com/deep-is/-/deep-is-0.1.3.tgz#b369d6fb5dbc13eecf524f91b070feedc357cf34"
@@ -4389,9 +4385,9 @@ ember-page-title@^4.0.3:
     ember-cli-head "^0.4.0"
     ember-cli-htmlbars "^2.0.1"
 
-ember-percy@^1.4.2:
-  version "1.4.2"
-  resolved "https://registry.yarnpkg.com/ember-percy/-/ember-percy-1.4.2.tgz#fff7a7974fa7d5a71449685f22d605d5994534ce"
+ember-percy@^1.4.3:
+  version "1.4.3"
+  resolved "https://registry.yarnpkg.com/ember-percy/-/ember-percy-1.4.3.tgz#7a78ed66f1310239fca58b23c51ffffb73934660"
   dependencies:
     body-parser "^1.15.0"
     ember-cli-babel "^6.10.0"
@@ -8876,16 +8872,7 @@ raw-body@~1.1.0:
     bytes "1"
     string_decoder "0.10"
 
-rc@^1.1.6, rc@^1.1.7:
-  version "1.2.6"
-  resolved "https://registry.yarnpkg.com/rc/-/rc-1.2.6.tgz#eb18989c6d4f4f162c399f79ddd29f3835568092"
-  dependencies:
-    deep-extend "~0.4.0"
-    ini "~1.3.0"
-    minimist "^1.2.0"
-    strip-json-comments "~2.0.1"
-
-rc@^1.2.7:
+rc@^1.1.6, rc@^1.1.7, rc@^1.2.7:
   version "1.2.8"
   resolved "https://registry.yarnpkg.com/rc/-/rc-1.2.8.tgz#cd924bf5200a075b83c188cd6b9e211b7fc0d3ed"
   dependencies:
