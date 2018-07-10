@@ -3491,7 +3491,7 @@ ember-ajax@^3.1.0:
   dependencies:
     ember-cli-babel "^6.6.0"
 
-ember-assign-polyfill@^2.0.1, ember-assign-polyfill@^2.2.0:
+ember-assign-polyfill@^2.0.1:
   version "2.2.0"
   resolved "https://registry.yarnpkg.com/ember-assign-polyfill/-/ember-assign-polyfill-2.2.0.tgz#7953836e5ccd4da05b2493423d3efc00df80ca74"
   dependencies:
@@ -3504,6 +3504,32 @@ ember-ast-helpers@0.3.5:
   dependencies:
     "@glimmer/compiler" "^0.27.0"
     "@glimmer/syntax" "^0.27.0"
+
+ember-auto-import@^1.0.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/ember-auto-import/-/ember-auto-import-1.1.0.tgz#1b8ac1a9ebdfdeb5195a26a2f2fa87ccd7497418"
+  dependencies:
+    babel-core "^6.26.3"
+    babylon "^6.18.0"
+    broccoli-concat "^3.2.2"
+    broccoli-debug "^0.6.4"
+    broccoli-merge-trees "^3.0.0"
+    broccoli-plugin "^1.3.0"
+    broccoli-source "^1.1.0"
+    debug "^3.1.0"
+    ember-cli-babel "^6.6.0"
+    enhanced-resolve "^4.0.0"
+    fs-tree-diff "^0.5.7"
+    handlebars "^4.0.11"
+    js-string-escape "^1.0.1"
+    lodash "^4.17.10"
+    mkdirp "^0.5.1"
+    quick-temp "^0.1.8"
+    resolve "^1.7.1"
+    rimraf "^2.6.2"
+    symlink-or-copy "^1.2.0"
+    walk-sync "^0.3.2"
+    webpack "^4.12.0"
 
 ember-auto-import@^1.0.1:
   version "1.0.1"
@@ -4229,7 +4255,7 @@ ember-get-config@^0.2.3:
     broccoli-file-creator "^1.1.1"
     ember-cli-babel "^6.3.0"
 
-"ember-getowner-polyfill@^1.1.0 || ^2.0.0", ember-getowner-polyfill@^2.0.1, ember-getowner-polyfill@^2.2.0:
+"ember-getowner-polyfill@^1.1.0 || ^2.0.0", ember-getowner-polyfill@^2.0.1:
   version "2.2.0"
   resolved "https://registry.yarnpkg.com/ember-getowner-polyfill/-/ember-getowner-polyfill-2.2.0.tgz#38e7dccbcac69d5ec694000329ec0b2be651d2b2"
   dependencies:
@@ -4306,9 +4332,9 @@ ember-intl-relativeformat@^3.3.0:
     ember-intl-messageformat "^3.2.0"
     intl-relativeformat "^2.0.0"
 
-ember-intl@^2.33.4:
-  version "2.33.4"
-  resolved "https://registry.yarnpkg.com/ember-intl/-/ember-intl-2.33.4.tgz#545580e81fb61173d36075fb12e8d2d840980211"
+ember-intl@^3.1.0:
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/ember-intl/-/ember-intl-3.1.0.tgz#1c6f1ee56cd65f114d93bc5256e275bc03b5705c"
   dependencies:
     broccoli-caching-writer "^3.0.3"
     broccoli-cldr-data "^1.1.2"
@@ -4318,14 +4344,11 @@ ember-intl@^2.33.4:
     broccoli-stew "^1.5.0"
     chalk "^1.1.3"
     cldr-core "28.0.0"
-    ember-assign-polyfill "^2.2.0"
+    ember-auto-import "^1.0.0"
     ember-cli-babel "^6.11.0"
-    ember-cli-import-polyfill "^0.2.0"
-    ember-getowner-polyfill "^2.2.0"
     ember-intl-format-cache "^2.6.0"
     ember-intl-messageformat "^3.2.0"
     ember-intl-relativeformat "^3.3.0"
-    exists-sync "^0.0.4"
     extend "^3.0.1"
     has-unicode "^2.0.1"
     intl "^1.2.5"
@@ -4333,6 +4356,9 @@ ember-intl@^2.33.4:
     js-yaml "^3.9.0"
     json-stable-stringify "^1.0.1"
     locale-emoji "^0.3.0"
+    lodash.castarray "^4.4.0"
+    lodash.last "^3.0.0"
+    lodash.omit "^4.5.0"
     mkdirp "^0.5.1"
     silent-error "^1.1.0"
     walk-sync "^0.3.2"
@@ -5029,7 +5055,7 @@ exists-sync@0.0.3:
   version "0.0.3"
   resolved "https://registry.yarnpkg.com/exists-sync/-/exists-sync-0.0.3.tgz#b910000bedbb113b378b82f5f5a7638107622dcf"
 
-exists-sync@0.0.4, exists-sync@^0.0.4:
+exists-sync@0.0.4:
   version "0.0.4"
   resolved "https://registry.yarnpkg.com/exists-sync/-/exists-sync-0.0.4.tgz#9744c2c428cc03b01060db454d4b12f0ef3c8879"
 
@@ -7333,6 +7359,10 @@ lodash.keys@^3.0.0:
     lodash.isarguments "^3.0.0"
     lodash.isarray "^3.0.0"
 
+lodash.last@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/lodash.last/-/lodash.last-3.0.0.tgz#242f663112dd4c6e63728c60a3c909d1bdadbd4c"
+
 lodash.map@^4.4.0:
   version "4.6.0"
   resolved "https://registry.yarnpkg.com/lodash.map/-/lodash.map-4.6.0.tgz#771ec7839e3473d9c4cde28b19394c3562f4f6d3"
@@ -7349,7 +7379,7 @@ lodash.mergewith@^4.6.0:
   version "4.6.0"
   resolved "https://registry.yarnpkg.com/lodash.mergewith/-/lodash.mergewith-4.6.0.tgz#150cf0a16791f5903b8891eab154609274bdea55"
 
-lodash.omit@^4.1.0:
+lodash.omit@^4.1.0, lodash.omit@^4.5.0:
   version "4.5.0"
   resolved "https://registry.yarnpkg.com/lodash.omit/-/lodash.omit-4.5.0.tgz#6eb19ae5a1ee1dd9df0b969e66ce0b7fa30b5e60"
 
