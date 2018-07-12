@@ -3533,12 +3533,12 @@ ember-auto-import@^1.2.1:
     walk-sync "^0.3.2"
     webpack "^4.12.0"
 
-ember-awesome-macros@^1.0.2:
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/ember-awesome-macros/-/ember-awesome-macros-1.0.2.tgz#df755ae89df7d5564f61802cb4adf7798b29a708"
+ember-awesome-macros@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/ember-awesome-macros/-/ember-awesome-macros-2.0.0.tgz#d41adbbf3ce0729f7545cc63da7fea7e1a03a775"
   dependencies:
     broccoli-file-creator "^2.1.1"
-    broccoli-merge-trees "^2.0.0"
+    broccoli-merge-trees "^3.0.0"
     ember-cli-babel "^6.6.0"
     ember-cli-string-utils "^1.1.0"
     ember-macro-helpers "^1.0.0"
