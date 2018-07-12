@@ -3501,9 +3501,9 @@ ember-ast-helpers@0.3.5:
     "@glimmer/compiler" "^0.27.0"
     "@glimmer/syntax" "^0.27.0"
 
-ember-auto-import@^1.0.1:
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/ember-auto-import/-/ember-auto-import-1.0.1.tgz#1b5bd09dfd5fc49422ddf711b4dd913c9dfa90b9"
+ember-auto-import@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/ember-auto-import/-/ember-auto-import-1.1.0.tgz#1b8ac1a9ebdfdeb5195a26a2f2fa87ccd7497418"
   dependencies:
     babel-core "^6.26.3"
     babylon "^6.18.0"
