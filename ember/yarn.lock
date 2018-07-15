@@ -3628,9 +3628,9 @@ ember-cli-build-config-editor@0.5.0:
   dependencies:
     recast "^0.12.0"
 
-ember-cli-dependency-checker@^2.2.0:
-  version "2.2.0"
-  resolved "https://registry.yarnpkg.com/ember-cli-dependency-checker/-/ember-cli-dependency-checker-2.2.0.tgz#0d904d42d6efc03b7684d1525450f57d95b52c9d"
+ember-cli-dependency-checker@^2.2.1:
+  version "2.2.1"
+  resolved "https://registry.yarnpkg.com/ember-cli-dependency-checker/-/ember-cli-dependency-checker-2.2.1.tgz#1eb728258dc7d528951c391d39b365e1beedecca"
   dependencies:
     chalk "^2.3.0"
     find-yarn-workspace-root "^1.1.0"
