@@ -488,11 +488,11 @@
         },
         "webargs": {
             "hashes": [
-                "sha256:7f76cea1989391480198840ef9cabb8041db7129e0a58f15e6962b92d4938a17",
-                "sha256:a4701fd0af6cc398005584865cd43a914e319d7a29942f757cd9dbc53e2a39ec"
+                "sha256:68d2e9c03b1d0516b79fe85e203736b6f9fb66e89db108f5f71eae6f5c68e517",
+                "sha256:f55b99e3be3aeb703670d4ce814db4f5c8bb42db9bfee2dc7983e8ce2bac86db"
             ],
             "index": "pypi",
-            "version": "==3.0.2"
+            "version": "==4.0.0"
         },
         "werkzeug": {
             "hashes": [
