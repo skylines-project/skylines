@@ -4172,6 +4172,12 @@ ember-cookies@^0.3.0, ember-cookies@^0.3.1:
     ember-cli-babel "^6.8.2"
     ember-getowner-polyfill "^1.1.0 || ^2.0.0"
 
+ember-copy@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/ember-copy/-/ember-copy-1.0.0.tgz#426554ba6cf65920f31d24d0a3ca2cb1be16e4aa"
+  dependencies:
+    ember-cli-babel "^6.6.0"
+
 ember-cp-validations@^3.5.3:
   version "3.5.3"
   resolved "https://registry.yarnpkg.com/ember-cp-validations/-/ember-cp-validations-3.5.3.tgz#059d173e2f0904232516b23c4b774675e672ae11"
@@ -4559,9 +4565,9 @@ ember-string-ishtmlsafe-polyfill@^2.0.0:
   dependencies:
     ember-cli-version-checker "^1.2.0"
 
-ember-svg-jar@^1.2.0:
-  version "1.2.0"
-  resolved "https://registry.yarnpkg.com/ember-svg-jar/-/ember-svg-jar-1.2.0.tgz#d53fc455964513a90b0359270f89e7f482d078c2"
+ember-svg-jar@^1.2.1:
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/ember-svg-jar/-/ember-svg-jar-1.2.1.tgz#a6f2c2404eec72aaa819b66407cec0ebe72be99b"
   dependencies:
     broccoli-caching-writer "^3.0.3"
     broccoli-funnel "^2.0.1"
@@ -4571,6 +4577,7 @@ ember-svg-jar@^1.2.0:
     broccoli-symbolizer "^0.6.0"
     cheerio "^0.22.0"
     ember-cli-babel "^6.6.0"
+    ember-copy "^1.0.0"
     lodash "^4.13.1"
     mkdirp "^0.5.1"
     path-posix "^1.0.0"
