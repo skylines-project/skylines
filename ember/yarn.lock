@@ -4461,14 +4461,14 @@ ember-page-title@^4.0.3:
     ember-cli-head "^0.4.0"
     ember-cli-htmlbars "^2.0.1"
 
-ember-percy@^1.4.3:
-  version "1.4.3"
-  resolved "https://registry.yarnpkg.com/ember-percy/-/ember-percy-1.4.3.tgz#7a78ed66f1310239fca58b23c51ffffb73934660"
+ember-percy@^1.4.4:
+  version "1.4.4"
+  resolved "https://registry.yarnpkg.com/ember-percy/-/ember-percy-1.4.4.tgz#8ce56e040368dc6152b8fb23d3f20f678917e0a2"
   dependencies:
     body-parser "^1.15.0"
     ember-cli-babel "^6.10.0"
     es6-promise-pool "^2.4.1"
-    percy-client "^2.8.0"
+    percy-client "^2.10.0"
     walk "^2.3.9"
 
 ember-popper@^0.9.0:
@@ -8614,9 +8614,9 @@ pbkdf2@^3.0.3:
     safe-buffer "^5.0.1"
     sha.js "^2.4.8"
 
-percy-client@^2.8.0:
-  version "2.8.2"
-  resolved "https://registry.yarnpkg.com/percy-client/-/percy-client-2.8.2.tgz#2415dcc5d07bd4dea913df5f237cff4f0295839a"
+percy-client@^2.10.0:
+  version "2.10.0"
+  resolved "https://registry.yarnpkg.com/percy-client/-/percy-client-2.10.0.tgz#9e70e5c51dc32721ea72fd35efe4b18657e897a6"
   dependencies:
     base64-js "^1.2.3"
     bluebird "^3.5.1"
@@ -8626,6 +8626,7 @@ percy-client@^2.8.0:
     regenerator-runtime "^0.11.1"
     request "^2.85.0"
     request-promise "^4.2.2"
+    walk "^2.3.14"
   optionalDependencies:
     lint-staged "^7.0.4"
 
@@ -10723,6 +10724,12 @@ walk-sync@^0.2.5, walk-sync@^0.2.7:
   dependencies:
     ensure-posix-path "^1.0.0"
     matcher-collection "^1.0.0"
+
+walk@^2.3.14:
+  version "2.3.14"
+  resolved "https://registry.yarnpkg.com/walk/-/walk-2.3.14.tgz#60ec8631cfd23276ae1e7363ce11d626452e1ef3"
+  dependencies:
+    foreachasync "^3.0.0"
 
 walk@^2.3.9:
   version "2.3.13"
