@@ -21,7 +21,7 @@
     "remarkable": "^1.7.1"
   },
   "devDependencies": {
-    "@ember/optional-features": "^0.6.3",
+    "@ember/optional-features": "^0.6.4",
     "@pollyjs/ember": "^1.0.1",
     "bigscreen": "^2.0.5",
     "bootstrap-sass": "^3.3.7",
