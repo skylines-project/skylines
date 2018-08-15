@@ -3583,9 +3583,9 @@ ember-ast-helpers@0.3.5:
     "@glimmer/compiler" "^0.27.0"
     "@glimmer/syntax" "^0.27.0"
 
-ember-auto-import@^1.2.8:
-  version "1.2.8"
-  resolved "https://registry.yarnpkg.com/ember-auto-import/-/ember-auto-import-1.2.8.tgz#cbb3bd0bda0f7e85715693affbf871c0a17cdd5e"
+ember-auto-import@^1.2.9:
+  version "1.2.9"
+  resolved "https://registry.yarnpkg.com/ember-auto-import/-/ember-auto-import-1.2.9.tgz#040eb865fc0d2640e9fac6e3dadc9b1833ec541f"
   dependencies:
     babel-core "^6.26.3"
     babel-plugin-syntax-dynamic-import "^6.18.0"
@@ -3593,6 +3593,7 @@ ember-auto-import@^1.2.8:
     babylon "^6.18.0"
     broccoli-concat "^3.2.2"
     broccoli-debug "^0.6.4"
+    broccoli-funnel "^2.0.1"
     broccoli-merge-trees "^3.0.0"
     broccoli-plugin "^1.3.0"
     debug "^3.1.0"
