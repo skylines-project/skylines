@@ -3579,9 +3579,9 @@ ember-ast-helpers@0.3.5:
     "@glimmer/compiler" "^0.27.0"
     "@glimmer/syntax" "^0.27.0"
 
-ember-auto-import@^1.2.12, ember-auto-import@^1.2.8:
-  version "1.2.12"
-  resolved "https://registry.yarnpkg.com/ember-auto-import/-/ember-auto-import-1.2.12.tgz#0bd6c7f91a0d6b68a0b3f0b71af44f30ca82f1fd"
+ember-auto-import@^1.2.13, ember-auto-import@^1.2.8:
+  version "1.2.13"
+  resolved "https://registry.yarnpkg.com/ember-auto-import/-/ember-auto-import-1.2.13.tgz#8f6f5d1c64e173f9093dd0c5031dc1d446b7cff1"
   dependencies:
     babel-core "^6.26.3"
     babel-plugin-syntax-dynamic-import "^6.18.0"
@@ -3602,7 +3602,6 @@ ember-auto-import@^1.2.12, ember-auto-import@^1.2.8:
     quick-temp "^0.1.8"
     resolve "^1.7.1"
     rimraf "^2.6.2"
-    source-map-url "^0.4.0"
     symlink-or-copy "^1.2.0"
     walk-sync "^0.3.2"
     webpack "^4.12.0"
