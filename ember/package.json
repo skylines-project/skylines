@@ -75,7 +75,7 @@
     "eslint-plugin-prettier": "^2.6.2",
     "loader.js": "^4.7.0",
     "prettier": "1.14.2",
-    "qunit-dom": "^0.7.1"
+    "qunit-dom": "^0.8.0"
   },
   "engines": {
     "node": ">= 4"
