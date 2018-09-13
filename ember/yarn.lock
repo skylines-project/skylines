@@ -5279,9 +5279,9 @@ ember-popper@^0.9.0:
     fastboot-transform "^0.1.0"
     popper.js "^1.14.1"
 
-ember-power-select@^2.0.6:
-  version "2.0.6"
-  resolved "https://registry.yarnpkg.com/ember-power-select/-/ember-power-select-2.0.6.tgz#899d0a34860f09eabe4e05c188807f4ea8a66326"
+ember-power-select@^2.0.7:
+  version "2.0.7"
+  resolved "https://registry.yarnpkg.com/ember-power-select/-/ember-power-select-2.0.7.tgz#ee1f5c3f6dc6d29d207f4eac0074b0fec348c382"
   dependencies:
     ember-basic-dropdown "^1.0.0"
     ember-cli-babel "^6.16.0"
