@@ -281,11 +281,11 @@
         },
         "marshmallow": {
             "hashes": [
-                "sha256:0f3776aa5b5405f6000c9304841abe6d4d708bb08207fc89a5ecd86622ec9e54",
-                "sha256:57a107cfd58e9ed52dd355c65444e983d064fdcf63214a487d7305a2d24680db"
+                "sha256:06404c9f104a12cfaa9ceb79378a9834952265540306df344833c5dc59f07fa1",
+                "sha256:08b9b928f4afac524dd47cfd1509782f6d7b278e65f25847df9d1a7d8facccf4"
             ],
             "index": "pypi",
-            "version": "==2.15.4"
+            "version": "==2.15.5"
         },
         "oauthlib": {
             "hashes": [
