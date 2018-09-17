@@ -736,32 +736,32 @@
   dependencies:
     "@glimmer/util" "^0.27.0"
 
-"@pollyjs/adapter-fetch@^1.0.5":
-  version "1.0.5"
-  resolved "https://registry.yarnpkg.com/@pollyjs/adapter-fetch/-/adapter-fetch-1.0.5.tgz#dd747638a7376582e88290422d178b96555e15ee"
+"@pollyjs/adapter-fetch@^1.2.0":
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/@pollyjs/adapter-fetch/-/adapter-fetch-1.2.0.tgz#237fb9ed01e9486fe2aa46c5cc9aa6a7956d0981"
   dependencies:
-    "@pollyjs/adapter" "^1.1.3"
-    "@pollyjs/utils" "^1.0.3"
+    "@pollyjs/adapter" "^1.2.0"
+    "@pollyjs/utils" "^1.2.0"
 
-"@pollyjs/adapter-xhr@^1.0.5":
-  version "1.0.5"
-  resolved "https://registry.yarnpkg.com/@pollyjs/adapter-xhr/-/adapter-xhr-1.0.5.tgz#f265f35c790828dfbd07cabba32997e06167adda"
+"@pollyjs/adapter-xhr@^1.2.0":
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/@pollyjs/adapter-xhr/-/adapter-xhr-1.2.0.tgz#364b241a80c831c3aca6ca2fb1c990c6c53ef678"
   dependencies:
-    "@pollyjs/adapter" "^1.1.3"
-    "@pollyjs/utils" "^1.0.3"
+    "@pollyjs/adapter" "^1.2.0"
+    "@pollyjs/utils" "^1.2.0"
     nise "^1.4.2"
 
-"@pollyjs/adapter@^1.1.3":
-  version "1.1.3"
-  resolved "https://registry.yarnpkg.com/@pollyjs/adapter/-/adapter-1.1.3.tgz#a26f69d5d85014dee79c8be75ad734c98ac75706"
+"@pollyjs/adapter@^1.2.0":
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/@pollyjs/adapter/-/adapter-1.2.0.tgz#e15fd3015610a1a715d9fe334b3a3367ff9eb5f6"
   dependencies:
-    "@pollyjs/utils" "^1.0.3"
+    "@pollyjs/utils" "^1.2.0"
 
-"@pollyjs/core@^1.1.4":
-  version "1.1.4"
-  resolved "https://registry.yarnpkg.com/@pollyjs/core/-/core-1.1.4.tgz#3a26458bff17514a499fdc4a89cd7e0858c21739"
+"@pollyjs/core@^1.2.0":
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/@pollyjs/core/-/core-1.2.0.tgz#9c967f9293b1d8150513767634f6377bc1f31774"
   dependencies:
-    "@pollyjs/utils" "^1.0.3"
+    "@pollyjs/utils" "^1.2.0"
     "@sindresorhus/fnv1a" "^1.0.0"
     blueimp-md5 "^2.10.0"
     fast-json-stable-stringify "^2.0.0"
@@ -771,24 +771,24 @@
     route-recognizer "^0.3.4"
     slugify "^1.3.1"
 
-"@pollyjs/ember@^1.0.5":
-  version "1.0.5"
-  resolved "https://registry.yarnpkg.com/@pollyjs/ember/-/ember-1.0.5.tgz#31e3f1cf21505aeee5b09e91259be9f0f45e90b2"
+"@pollyjs/ember@^1.2.0":
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/@pollyjs/ember/-/ember-1.2.0.tgz#5f9a62756bc6b6a02b8d0d0d0f6a187a1792405a"
   dependencies:
-    "@pollyjs/adapter-fetch" "^1.0.5"
-    "@pollyjs/adapter-xhr" "^1.0.5"
-    "@pollyjs/core" "^1.1.4"
-    "@pollyjs/node-server" "^1.0.3"
-    "@pollyjs/persister-local-storage" "^1.0.5"
-    "@pollyjs/persister-rest" "^1.0.5"
+    "@pollyjs/adapter-fetch" "^1.2.0"
+    "@pollyjs/adapter-xhr" "^1.2.0"
+    "@pollyjs/core" "^1.2.0"
+    "@pollyjs/node-server" "^1.2.0"
+    "@pollyjs/persister-local-storage" "^1.2.0"
+    "@pollyjs/persister-rest" "^1.2.0"
     ember-auto-import "^1.2.8"
     ember-cli-babel "^6.6.0"
 
-"@pollyjs/node-server@^1.0.3":
-  version "1.0.3"
-  resolved "https://registry.yarnpkg.com/@pollyjs/node-server/-/node-server-1.0.3.tgz#c74a87d51d64f30b7bb90a420480d99cf8d8b376"
+"@pollyjs/node-server@^1.2.0":
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/@pollyjs/node-server/-/node-server-1.2.0.tgz#8bdcf16ebc319908e1766b4c1664ef8728c958df"
   dependencies:
-    "@pollyjs/utils" "^1.0.3"
+    "@pollyjs/utils" "^1.2.0"
     body-parser "^1.18.3"
     cors "^2.8.4"
     express "^4.16.3"
@@ -797,33 +797,33 @@
     morgan "^1.9.0"
     nocache "^2.0.0"
 
-"@pollyjs/persister-local-storage@^1.0.5":
-  version "1.0.5"
-  resolved "https://registry.yarnpkg.com/@pollyjs/persister-local-storage/-/persister-local-storage-1.0.5.tgz#ed7c2c61441c45be351dda44cef80d9353babeb5"
+"@pollyjs/persister-local-storage@^1.2.0":
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/@pollyjs/persister-local-storage/-/persister-local-storage-1.2.0.tgz#a91e71d19f6ae805ef6b263292575ebbb85a1684"
   dependencies:
-    "@pollyjs/persister" "^1.0.4"
+    "@pollyjs/persister" "^1.2.0"
 
-"@pollyjs/persister-rest@^1.0.5":
-  version "1.0.5"
-  resolved "https://registry.yarnpkg.com/@pollyjs/persister-rest/-/persister-rest-1.0.5.tgz#194165f987a8de949e2a77a4bb9a53ebff83d079"
+"@pollyjs/persister-rest@^1.2.0":
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/@pollyjs/persister-rest/-/persister-rest-1.2.0.tgz#e5bd6952e854a449c9a9e7f73470345486d44e26"
   dependencies:
-    "@pollyjs/persister" "^1.0.4"
-    "@pollyjs/utils" "^1.0.3"
+    "@pollyjs/persister" "^1.2.0"
+    "@pollyjs/utils" "^1.2.0"
 
-"@pollyjs/persister@^1.0.4":
-  version "1.0.4"
-  resolved "https://registry.yarnpkg.com/@pollyjs/persister/-/persister-1.0.4.tgz#b8ba46e17798b2baa9b121c58b52b216b9c7c12b"
+"@pollyjs/persister@^1.2.0":
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/@pollyjs/persister/-/persister-1.2.0.tgz#639c582b429935facbf5b8bed3c3e3c108398df5"
   dependencies:
-    "@pollyjs/utils" "^1.0.3"
+    "@pollyjs/utils" "^1.2.0"
     bowser "^1.9.3"
     fast-json-stable-stringify "^2.0.0"
     lodash-es "^4.17.10"
     set-cookie-parser "^2.2.0"
     utf8-byte-length "^1.0.4"
 
-"@pollyjs/utils@^1.0.3":
-  version "1.0.3"
-  resolved "https://registry.yarnpkg.com/@pollyjs/utils/-/utils-1.0.3.tgz#b27636a14d0078c49c41d52924f59922d49fdfad"
+"@pollyjs/utils@^1.2.0":
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/@pollyjs/utils/-/utils-1.2.0.tgz#84bf5c98c225a402e4b335b2ff14524a4e5e4dcd"
   dependencies:
     url-parse "^1.4.1"
 
