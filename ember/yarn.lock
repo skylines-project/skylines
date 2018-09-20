@@ -4864,9 +4864,9 @@ ember-cli@^2.18.2:
     walk-sync "^0.3.0"
     yam "0.0.22"
 
-ember-cli@~3.4.2:
-  version "3.4.2"
-  resolved "https://registry.yarnpkg.com/ember-cli/-/ember-cli-3.4.2.tgz#b1eee393ecb1bd0d41fcac25460f0c2a882de741"
+ember-cli@~3.4.3:
+  version "3.4.3"
+  resolved "https://registry.yarnpkg.com/ember-cli/-/ember-cli-3.4.3.tgz#33560c6416612bd8dc56858cffb2c81897ec8822"
   dependencies:
     amd-name-resolver "^1.2.0"
     babel-plugin-transform-es2015-modules-amd "^6.24.1"
