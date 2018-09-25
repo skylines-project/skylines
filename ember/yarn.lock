@@ -5001,13 +5001,13 @@ ember-copy@^1.0.0:
   dependencies:
     ember-cli-babel "^6.6.0"
 
-ember-cp-validations@^3.5.3:
-  version "3.5.3"
-  resolved "https://registry.yarnpkg.com/ember-cp-validations/-/ember-cp-validations-3.5.3.tgz#059d173e2f0904232516b23c4b774675e672ae11"
+ember-cp-validations@^3.5.4:
+  version "3.5.4"
+  resolved "https://registry.yarnpkg.com/ember-cp-validations/-/ember-cp-validations-3.5.4.tgz#95c09d30071958972600d63e659b65fc05062c84"
   dependencies:
     ember-cli-babel "^6.6.0"
     ember-cli-version-checker "^2.0.0"
-    ember-getowner-polyfill "^2.0.1"
+    ember-getowner-polyfill "^2.2.0"
     ember-require-module "0.1.3"
     ember-string-ishtmlsafe-polyfill "^2.0.0"
     ember-validators "1.0.4"
