@@ -4289,6 +4289,13 @@ ember-assign-polyfill@^2.0.1, ember-assign-polyfill@^2.2.0:
     ember-cli-babel "^6.8.2"
     ember-cli-version-checker "^2.0.0"
 
+ember-assign-polyfill@^2.5.0:
+  version "2.5.0"
+  resolved "https://registry.yarnpkg.com/ember-assign-polyfill/-/ember-assign-polyfill-2.5.0.tgz#0dc7079addbdbad7984ba3f35d970cf07a73f704"
+  dependencies:
+    ember-cli-babel "^6.6.0"
+    ember-cli-version-checker "^2.0.0"
+
 ember-ast-helpers@0.3.5:
   version "0.3.5"
   resolved "https://registry.yarnpkg.com/ember-ast-helpers/-/ember-ast-helpers-0.3.5.tgz#db72afd9bc3de03759720ff7b03d4e3b2c7f2351"
@@ -5399,9 +5406,9 @@ ember-string-ishtmlsafe-polyfill@^2.0.0:
   dependencies:
     ember-cli-version-checker "^1.2.0"
 
-ember-svg-jar@^1.2.1:
-  version "1.2.1"
-  resolved "https://registry.yarnpkg.com/ember-svg-jar/-/ember-svg-jar-1.2.1.tgz#a6f2c2404eec72aaa819b66407cec0ebe72be99b"
+ember-svg-jar@^1.2.2:
+  version "1.2.2"
+  resolved "https://registry.yarnpkg.com/ember-svg-jar/-/ember-svg-jar-1.2.2.tgz#065d9a462353dbf3b1b4f57fb653859bfbe52022"
   dependencies:
     broccoli-caching-writer "^3.0.3"
     broccoli-funnel "^2.0.1"
@@ -5410,8 +5417,8 @@ ember-svg-jar@^1.2.1:
     broccoli-svg-optimizer "1.1.0"
     broccoli-symbolizer "^0.6.0"
     cheerio "^0.22.0"
+    ember-assign-polyfill "^2.5.0"
     ember-cli-babel "^6.6.0"
-    ember-copy "^1.0.0"
     lodash "^4.13.1"
     mkdirp "^0.5.1"
     path-posix "^1.0.0"

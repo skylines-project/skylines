@@ -65,7 +65,7 @@
     "ember-resolver": "^5.0.1",
     "ember-simple-auth": "^1.7.0",
     "ember-source": "~3.4.3",
-    "ember-svg-jar": "^1.2.1",
+    "ember-svg-jar": "^1.2.2",
     "ember-test-selectors": "^1.0.0",
     "ember-truth-helpers": "^2.1.0",
     "ember-web-app": "^2.3.0",
