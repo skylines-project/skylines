@@ -64,7 +64,7 @@
     "ember-power-select": "^2.0.8",
     "ember-resolver": "^5.0.1",
     "ember-simple-auth": "^1.7.0",
-    "ember-source": "~3.4.3",
+    "ember-source": "~3.4.5",
     "ember-svg-jar": "^1.2.2",
     "ember-test-selectors": "^1.0.0",
     "ember-truth-helpers": "^2.1.0",
