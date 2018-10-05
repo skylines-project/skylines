@@ -5193,10 +5193,10 @@ ember-cli-head@^0.4.0:
     ember-cli-babel "^6.1.0"
     ember-cli-htmlbars "^2.0.1"
 
-ember-cli-htmlbars-inline-precompile@^1.0.0, ember-cli-htmlbars-inline-precompile@^1.0.3:
-  version "1.0.3"
-  resolved "https://registry.yarnpkg.com/ember-cli-htmlbars-inline-precompile/-/ember-cli-htmlbars-inline-precompile-1.0.3.tgz#332ff96c06fc522965162f1090d78a615379c3c2"
-  integrity sha1-My/5bAb8UillFi8QkNeKYVN5w8I=
+ember-cli-htmlbars-inline-precompile@^1.0.0, ember-cli-htmlbars-inline-precompile@^1.0.4:
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/ember-cli-htmlbars-inline-precompile/-/ember-cli-htmlbars-inline-precompile-1.0.4.tgz#d5983f0a416c6bcdb9401bb32d405513b1a1b637"
+  integrity sha512-A5DRW1fP09F5IhrnMmqQ0nYq9CrNlEzDsoZX8ZMAkAeNzs1wdw45H1ZODJYrFw25/zSAOBfAloJT5H1213LKfA==
   dependencies:
     babel-plugin-htmlbars-inline-precompile "^0.2.5"
     ember-cli-version-checker "^2.1.2"
