@@ -767,13 +767,14 @@
     silent-error "^1.1.0"
     util.promisify "^1.0.0"
 
-"@ember/test-helpers@^0.7.18":
-  version "0.7.20"
-  resolved "https://registry.yarnpkg.com/@ember/test-helpers/-/test-helpers-0.7.20.tgz#488b1c8ef23626f8831e5cb750ffca86e017e6dc"
-  integrity sha512-x0RWQwzPxUbF2RfDZyKCv6k2QZ/3UZgDgprb5JsLo1mBiUHg1JN0M+aFG6c8SZ4qdGacBMUMC7Sk/SIYpZ3u6g==
+"@ember/test-helpers@^0.7.26":
+  version "0.7.26"
+  resolved "https://registry.yarnpkg.com/@ember/test-helpers/-/test-helpers-0.7.26.tgz#ae11cbde9cce2c872abbea6edcd849a31dd7bd1e"
+  integrity sha512-5HxPYmdeinI4f0lF2tKHyiNGTcNY3O5rw89AC6Z6hb9yEL3ktF8eaU7rZfvSTFEF3d3TlhR5Qidl27QzLGkUeA==
   dependencies:
     broccoli-funnel "^2.0.1"
-    ember-cli-babel "^6.10.0"
+    ember-assign-polyfill "~2.4.0"
+    ember-cli-babel "^6.12.0"
     ember-cli-htmlbars-inline-precompile "^1.0.0"
 
 "@glimmer/compiler@^0.27.0":
@@ -3748,22 +3749,6 @@ cheerio@^0.22.0:
     lodash.reject "^4.4.0"
     lodash.some "^4.4.0"
 
-chokidar@1.7.0:
-  version "1.7.0"
-  resolved "https://registry.yarnpkg.com/chokidar/-/chokidar-1.7.0.tgz#798e689778151c8076b4b360e5edd28cda2bb468"
-  integrity sha1-eY5ol3gVHIB2tLNg5e3SjNortGg=
-  dependencies:
-    anymatch "^1.3.0"
-    async-each "^1.0.0"
-    glob-parent "^2.0.0"
-    inherits "^2.0.1"
-    is-binary-path "^1.0.0"
-    is-glob "^2.0.0"
-    path-is-absolute "^1.0.0"
-    readdirp "^2.0.0"
-  optionalDependencies:
-    fsevents "^1.0.0"
-
 chokidar@^2.0.2:
   version "2.0.4"
   resolved "https://registry.yarnpkg.com/chokidar/-/chokidar-2.0.4.tgz#356ff4e2b0e8e43e322d18a372460bbcf3accd26"
@@ -4910,6 +4895,14 @@ ember-assign-polyfill@^2.5.0:
     ember-cli-babel "^6.6.0"
     ember-cli-version-checker "^2.0.0"
 
+ember-assign-polyfill@~2.4.0:
+  version "2.4.0"
+  resolved "https://registry.yarnpkg.com/ember-assign-polyfill/-/ember-assign-polyfill-2.4.0.tgz#acb00466f7d674b3e6b030acfe255b3b1f6472e1"
+  integrity sha512-0SnGQb9CenRqbZdIa1KFsEjT+1ijGWfAbCSaDbg5uVa5l6HPdppuTzOXK6sfEQMsd2nbrp27QWFy7W5VX6l4Ag==
+  dependencies:
+    ember-cli-babel "^6.6.0"
+    ember-cli-version-checker "^2.0.0"
+
 ember-ast-helpers@0.3.5:
   version "0.3.5"
   resolved "https://registry.yarnpkg.com/ember-ast-helpers/-/ember-ast-helpers-0.3.5.tgz#db72afd9bc3de03759720ff7b03d4e3b2c7f2351"
@@ -5333,13 +5326,13 @@ ember-cli-preprocess-registry@^3.1.2:
     process-relative-require "^1.0.0"
     silent-error "^1.0.0"
 
-ember-cli-qunit@^4.3.2:
-  version "4.3.2"
-  resolved "https://registry.yarnpkg.com/ember-cli-qunit/-/ember-cli-qunit-4.3.2.tgz#cfd89ad3b0dbc28a9c2223d532b52eeade7c602c"
-  integrity sha1-z9ia07DbwoqcIiPVMrUu6t58YCw=
+ember-cli-qunit@^4.4.0:
+  version "4.4.0"
+  resolved "https://registry.yarnpkg.com/ember-cli-qunit/-/ember-cli-qunit-4.4.0.tgz#0edd7d651001d0d7ea200b9236a4733a5b7420f1"
+  integrity sha512-+gkx380AV4WXYjQeIuQi675STL9K12fHFtxs8B9u3EFbw45vJKrnYR4Vph3FujxhE/1pr/Je8kZEPAuezZAVLw==
   dependencies:
     ember-cli-babel "^6.11.0"
-    ember-qunit "^3.3.2"
+    ember-qunit "^3.5.0"
 
 ember-cli-sass@^6.1.3:
   version "6.2.0"
@@ -5998,18 +5991,18 @@ ember-power-select@^2.0.9:
     ember-text-measurer "^0.4.0"
     ember-truth-helpers "^2.0.0"
 
-ember-qunit@^3.3.2:
-  version "3.3.2"
-  resolved "https://registry.yarnpkg.com/ember-qunit/-/ember-qunit-3.3.2.tgz#cb48e9deaffa3b4c90983f28c5cf8590894c8ea3"
-  integrity sha1-y0jp3q/6O0yQmD8oxc+FkIlMjqM=
+ember-qunit@^3.5.0:
+  version "3.5.0"
+  resolved "https://registry.yarnpkg.com/ember-qunit/-/ember-qunit-3.5.0.tgz#826dd91930835f86b32ff2a97a523b865db0cf69"
+  integrity sha512-g0CRAPXm4B4nR6DE5Zp40JM/dxVTyvXK+80Y074GhVY0RsVNWD3uQMasRsunU2qdTZlJyXgkRZs3tvRhQO94vg==
   dependencies:
-    "@ember/test-helpers" "^0.7.18"
+    "@ember/test-helpers" "^0.7.26"
     broccoli-funnel "^2.0.1"
     broccoli-merge-trees "^2.0.0"
     common-tags "^1.4.0"
-    ember-cli-babel "^6.3.0"
+    ember-cli-babel "^6.8.2"
     ember-cli-test-loader "^2.2.0"
-    qunit "^2.5.0"
+    qunit "^2.7.0"
 
 ember-raf-scheduler@^0.1.0:
   version "0.1.0"
@@ -6691,6 +6684,19 @@ execa@^0.9.0:
   dependencies:
     cross-spawn "^5.0.1"
     get-stream "^3.0.0"
+    is-stream "^1.1.0"
+    npm-run-path "^2.0.0"
+    p-finally "^1.0.0"
+    signal-exit "^3.0.0"
+    strip-eof "^1.0.0"
+
+execa@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/execa/-/execa-1.0.0.tgz#c6236a5bb4df6d6f15e88e7f017798216749ddd8"
+  integrity sha512-adbxcyWV46qiHyvSp50TKt05tB4tK3HcmF7/nxfAdhnox83seTDbwnaqKO4sXRy7roHAIFqJP/Rw/AuEbX61LA==
+  dependencies:
+    cross-spawn "^6.0.0"
+    get-stream "^4.0.0"
     is-stream "^1.1.0"
     npm-run-path "^2.0.0"
     p-finally "^1.0.0"
@@ -7402,7 +7408,7 @@ fs.realpath@^1.0.0:
   resolved "https://registry.yarnpkg.com/fs.realpath/-/fs.realpath-1.0.0.tgz#1504ad2523158caa40db4a2787cb01411994ea4f"
   integrity sha1-FQStJSMVjKpA20onh8sBQRmU6k8=
 
-fsevents@^1.0.0, fsevents@^1.1.1:
+fsevents@^1.1.1:
   version "1.2.2"
   resolved "https://registry.yarnpkg.com/fsevents/-/fsevents-1.2.2.tgz#4f598f0f69b273188ef4a62ca4e9e08ace314bbf"
   integrity sha512-iownA+hC4uHFp+7gwP/y5SzaiUo7m2vpa0dhpzw8YuKtiZsz7cIXsFbXpLEeBM6WuCQyw1MH4RRe6XI8GFUctQ==
@@ -11498,17 +11504,17 @@ qunit-dom@^0.8.0:
     broccoli-funnel "^2.0.0"
     broccoli-merge-trees "^3.0.1"
 
-qunit@^2.5.0:
-  version "2.6.0"
-  resolved "https://registry.yarnpkg.com/qunit/-/qunit-2.6.0.tgz#347b34686e2aa67a9f81f81d39f0771603ed628c"
-  integrity sha512-TlkujgRlTH/hF55MA5gtcRsU/F8Ge/RqE370tSuVEPywdQ1hRPP1n5zZas5YVxUSbAkDNdoOOJFiHFU8UyOMzw==
+qunit@^2.7.0:
+  version "2.7.0"
+  resolved "https://registry.yarnpkg.com/qunit/-/qunit-2.7.0.tgz#32a605c90e9291713b53609d4cf1bb25d513eee8"
+  integrity sha512-YQa/1ckkBHFIs5e7+iqh93H31F2zzZhRbC4dUeI+CuOvW7otfpu4H66DRkFLyVWLozNl4KKRQ9idjL7CNGafXg==
   dependencies:
-    chokidar "1.7.0"
     commander "2.12.2"
     exists-stat "1.0.0"
     findup-sync "2.0.0"
     js-reporters "1.2.1"
     resolve "1.5.0"
+    sane "^4.0.0"
     walk-sync "0.3.2"
 
 randomatic@^1.1.3:
@@ -12274,6 +12280,21 @@ sane@^3.0.0:
     watch "~0.18.0"
   optionalDependencies:
     fsevents "^1.2.3"
+
+sane@^4.0.0:
+  version "4.0.1"
+  resolved "https://registry.yarnpkg.com/sane/-/sane-4.0.1.tgz#af1e10466e924e1b888c104bb9925a0f1beb46dd"
+  integrity sha512-12M/pR2HqW0aPKBAnwBerocN/6BbdAydw/gzGouHOeOpLmam46uS2xwtI+Yl5ZRqPDaakEsYtXkW9q/D5aJSdQ==
+  dependencies:
+    anymatch "^2.0.0"
+    capture-exit "^1.2.0"
+    exec-sh "^0.2.0"
+    execa "^1.0.0"
+    fb-watchman "^2.0.0"
+    micromatch "^3.1.4"
+    minimist "^1.1.1"
+    walker "~1.0.5"
+    watch "~0.18.0"
 
 sass-graph@^2.2.4:
   version "2.2.4"
