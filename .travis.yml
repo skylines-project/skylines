@@ -43,7 +43,7 @@ jobs:
         - redis
 
       before_install:
-        - pip install pipenv
+        - pip install pipenv==2018.7.1
 
       install:
         - pipenv install --dev
