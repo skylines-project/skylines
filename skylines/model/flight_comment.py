@@ -3,6 +3,7 @@ from datetime import datetime
 from sqlalchemy.types import Unicode, Integer, DateTime
 
 from skylines.database import db
+from skylines.lib.string import unicode_to_str
 
 
 class FlightComment(db.Model):
@@ -25,4 +26,4 @@ class FlightComment(db.Model):
     text = db.Column(Unicode, nullable=False)
 
     def __repr__(self):
-        return ('<FlightComment: id=%d user_id=%d flight_id=%d>' % (self.id, self.user_id, self.flight_id)).encode('unicode_escape')
+        return unicode_to_str('<FlightComment: id=%d user_id=%d flight_id=%d>' % (self.id, self.user_id, self.flight_id))

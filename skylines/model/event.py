@@ -3,6 +3,7 @@ from datetime import datetime
 from sqlalchemy.types import Integer, DateTime
 
 from skylines.database import db
+from skylines.lib.string import unicode_to_str
 
 
 class Event(db.Model):
@@ -58,8 +59,7 @@ class Event(db.Model):
     ##############################
 
     def __repr__(self):
-        return '<Event: id={} type={}>' \
-            .format(self.id, self.type).encode('unicode_escape')
+        return unicode_to_str('<Event: id={} type={}>'.format(self.id, self.type))
 
     ##############################
 

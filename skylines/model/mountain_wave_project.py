@@ -8,6 +8,7 @@ from geoalchemy2.types import Geography, Geometry
 
 from skylines.database import db
 from skylines.model.geo import Location
+from skylines.lib.string import unicode_to_str
 
 
 class MountainWaveProject(db.Model):
@@ -36,7 +37,7 @@ class MountainWaveProject(db.Model):
     axis_length = db.Column(Float)
 
     def __repr__(self):
-        return ('<MountainWaveProject: id=%d name=\'%s\'>' % (self.id, self.name)).encode('unicode_escape')
+        return unicode_to_str('<MountainWaveProject: id=%d name=\'%s\'>' % (self.id, self.name))
 
     @classmethod
     def by_location(cls, location):

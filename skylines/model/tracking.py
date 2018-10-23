@@ -11,6 +11,7 @@ from shapely.geometry import Point
 
 from skylines.database import db
 from skylines.lib.types import is_int
+from skylines.lib.string import unicode_to_str
 from .geo import Location
 
 
@@ -40,8 +41,7 @@ class TrackingFix(db.Model):
     ip = db.Column(INET)
 
     def __repr__(self):
-        return '<TrackingFix: id={} time=\'{}\'>' \
-               .format(self.id, self.time).encode('unicode_escape')
+        return unicode_to_str('<TrackingFix: id={} time=\'{}\'>'.format(self.id, self.time))
 
     @property
     def location(self):
@@ -146,7 +146,7 @@ class TrackingSession(db.Model):
     finish_status = db.Column(SmallInteger)
 
     def __repr__(self):
-        return '<TrackingSession: id={}>'.format(self.id).encode('unicode_escape')
+        return unicode_to_str('<TrackingSession: id={}>'.format(self.id))
 
     @classmethod
     def by_lt24_id(cls, lt24_id, filter_finished=True):

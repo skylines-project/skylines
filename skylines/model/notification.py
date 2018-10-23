@@ -4,6 +4,7 @@ from itertools import chain
 from sqlalchemy.types import Integer, DateTime
 
 from skylines.database import db
+from skylines.lib.string import unicode_to_str
 from .event import Event
 from .user import User
 from .club import Club
@@ -35,8 +36,7 @@ class Notification(db.Model):
     ##############################
 
     def __repr__(self):
-        return '<Notification: id={}>' \
-            .format(self.id).encode('unicode_escape')
+        return unicode_to_str('<Notification: id={}>'.format(self.id))
 
     ##############################
 

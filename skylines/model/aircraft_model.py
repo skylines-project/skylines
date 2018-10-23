@@ -1,6 +1,7 @@
 from sqlalchemy.types import Integer, Unicode
 
 from skylines.database import db
+from skylines.lib.string import unicode_to_str
 
 
 class AircraftModel(db.Model):
@@ -22,7 +23,7 @@ class AircraftModel(db.Model):
         return self.name
 
     def __repr__(self):
-        return ('<AircraftModel: id=%d name=\'%s\' kind=\'%s\'>' % (self.id, self.name, self.kind)).encode('unicode_escape')
+        return unicode_to_str('<AircraftModel: id=%d name=\'%s\' kind=\'%s\'>' % (self.id, self.name, self.kind))
 
     def is_writable(self, user):
         return user and user.is_manager()

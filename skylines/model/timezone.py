@@ -3,6 +3,7 @@ from sqlalchemy.types import Integer, String
 from geoalchemy2.types import Geometry
 
 from skylines.database import db
+from skylines.lib.string import unicode_to_str
 
 
 class TimeZone(db.Model):
@@ -16,7 +17,7 @@ class TimeZone(db.Model):
         return self.tzid
 
     def __repr__(self):
-        return ('<TimeZone: id=%d tzid=\'%s\'>' % (self.id, self.tzid)).encode('unicode_escape')
+        return unicode_to_str('<TimeZone: id=%d tzid=\'%s\'>' % (self.id, self.tzid))
 
     @classmethod
     def by_location(cls, location):
