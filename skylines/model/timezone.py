@@ -27,7 +27,7 @@ class TimeZone(db.Model):
 
     @classmethod
     def by_location(cls, location):
-        location = location.make_point(srid=None)
+        location = location.make_point()
         filter = db.func.ST_Contains(cls.the_geom, location)
         zone = db.session.query(cls.tzid).filter(filter).scalar()
         if zone is None:
