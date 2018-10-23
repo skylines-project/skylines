@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 import os
 import pytest
 
@@ -43,3 +45,12 @@ def test_user_delete_deletes_owned_igc_files(db_session):
 
     assert db_session.query(IGCFile).count() == 0
     assert not os.path.isfile(files.filename_to_path(filename))
+
+
+def test_repr_is_str(db_session):
+    john = users.john(last_name=u'Müller')
+    db_session.add(john)
+    db_session.commit()
+
+    assert isinstance(repr(john), str)
+    assert repr(john) == '<User: email=johnny@doe.com, display=John Müller>'
