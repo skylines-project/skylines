@@ -52,3 +52,10 @@ def unicode_to_str(value):
         return value.encode('utf-8')
     else:
         return value
+
+
+def str_to_unicode(value):
+    if sys.version_info[0] == 2:
+        return value.decode('utf-8')
+    else:
+        return value

@@ -14,8 +14,8 @@ from sqlalchemy.ext.hybrid import hybrid_property, hybrid_method
 from skylines.database import db
 from skylines.lib import files
 from skylines.lib.sql import LowerCaseComparator
-from skylines.lib.string import unicode_to_str
-from skylines.lib.types import is_unicode
+from skylines.lib.string import unicode_to_str, str_to_unicode
+from skylines.lib.types import is_unicode, is_bytes
 
 __all__ = ['User']
 
@@ -169,16 +169,20 @@ class User(db.Model):
         self._password = self._hash_password(password)
 
     @classmethod
-    def _hash_password(cls, password):
-        assert is_unicode(password)
+    def _hash_password(cls, password, salt=None):
+        if salt is None:
+            salt = os.urandom(60)
 
-        salt = sha256()
-        salt.update(os.urandom(60))
+        assert is_unicode(password)
+        assert is_bytes(salt)
+
+        salt_hash = sha256()
+        salt_hash.update(salt)
 
         hash = sha256()
-        hash.update((password + salt.hexdigest()).encode('utf-8'))
+        hash.update((password + salt_hash.hexdigest()).encode('utf-8'))
 
-        return salt.hexdigest() + hash.hexdigest()
+        return str_to_unicode(salt_hash.hexdigest() + hash.hexdigest())
 
     def validate_password(self, password):
         """
