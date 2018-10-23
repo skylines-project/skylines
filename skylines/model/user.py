@@ -15,7 +15,7 @@ from skylines.database import db
 from skylines.lib import files
 from skylines.lib.sql import LowerCaseComparator
 from skylines.lib.string import unicode_to_str
-from skylines.lib.types import is_unicode
+from skylines.lib.types import is_unicode, is_bytes
 
 __all__ = ['User']
 
@@ -174,6 +174,7 @@ class User(db.Model):
             salt = os.urandom(60)
 
         assert is_unicode(password)
+        assert is_bytes(salt)
 
         salt_hash = sha256()
         salt_hash.update(salt)
