@@ -6,6 +6,12 @@ from skylines.database import db
 from skylines.lib.string import unicode_to_str
 
 
+# Instructions
+#
+# - download raw data from http://efele.net/maps/tz/world/tz_world.zip
+# - shp2pgsql -D -s 4326 tz_world.shp > dump.sql
+# - psql skylines -f dump.sql
+
 class TimeZone(db.Model):
     __tablename__ = 'tz_world'
 
