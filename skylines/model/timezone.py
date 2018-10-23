@@ -23,7 +23,7 @@ class TimeZone(db.Model):
         return self.tzid
 
     def __repr__(self):
-        return unicode_to_str('<TimeZone: id=%d tzid=\'%s\'>' % (self.id, self.tzid))
+        return unicode_to_str('<TimeZone: tzid=\'%s\'>' % (self.tzid))
 
     @classmethod
     def by_location(cls, location):
