@@ -1,4 +1,5 @@
 import re
+import sys
 
 from skylines.lib.types import is_bytes
 
@@ -44,3 +45,10 @@ def isnumeric(s):
         return False
 
     return True
+
+
+def unicode_to_str(value):
+    if sys.version_info[0] == 2:
+        return value.encode('utf-8')
+    else:
+        return value
