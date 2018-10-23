@@ -4,6 +4,7 @@ import os
 import pytest
 
 from skylines.lib import files
+from skylines.lib.types import is_unicode
 from skylines.model import User, IGCFile
 from tests.data import users, igcs
 
@@ -54,3 +55,9 @@ def test_repr_is_str(db_session):
 
     assert isinstance(repr(john), str)
     assert repr(john) == '<User: email=johnny@doe.com, display=John Müller>'
+
+
+def test_hash_password():
+    hash = User._hash_password(u'secret123', salt=b'abcdef')
+    assert hash == 'bef57ec7f53a6d40beb640a780a639c83bc29ac8a9816f1fc6c5c6dcd93c4721272b82aa344691fb4037f20617b1d19212042e7e6cb39f4ba0dad95d8137104a'
+    assert is_unicode(hash)
