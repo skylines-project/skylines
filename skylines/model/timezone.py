@@ -33,4 +33,4 @@ class TimeZone(db.Model):
         if zone is None:
             return None
 
-        return timezone(unicode(zone))
+        return timezone(zone)
