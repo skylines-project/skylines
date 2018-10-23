@@ -169,16 +169,19 @@ class User(db.Model):
         self._password = self._hash_password(password)
 
     @classmethod
-    def _hash_password(cls, password):
+    def _hash_password(cls, password, salt=None):
+        if salt is None:
+            salt = os.urandom(60)
+
         assert is_unicode(password)
 
-        salt = sha256()
-        salt.update(os.urandom(60))
+        salt_hash = sha256()
+        salt_hash.update(salt)
 
         hash = sha256()
-        hash.update((password + salt.hexdigest()).encode('utf-8'))
+        hash.update((password + salt_hash.hexdigest()).encode('utf-8'))
 
-        return salt.hexdigest() + hash.hexdigest()
+        return salt_hash.hexdigest() + hash.hexdigest()
 
     def validate_password(self, password):
         """
