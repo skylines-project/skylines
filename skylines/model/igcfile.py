@@ -9,6 +9,7 @@ from sqlalchemy.types import Integer, DateTime, String, Unicode, Date
 from skylines.database import db
 from skylines.lib import files
 from skylines.lib.igc import read_igc_headers
+from skylines.lib.string import unicode_to_str
 
 
 class IGCFile(db.Model):
@@ -33,7 +34,7 @@ class IGCFile(db.Model):
     date_utc = db.Column(Date, nullable=False)
 
     def __repr__(self):
-        return ('<IGCFile: id=%d filename=\'%s\'>' % (self.id, self.filename)).encode('unicode_escape')
+        return unicode_to_str('<IGCFile: id=%d filename=\'%s\'>' % (self.id, self.filename))
 
     @classmethod
     def by_md5(cls, _md5):

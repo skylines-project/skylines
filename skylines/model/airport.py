@@ -10,6 +10,7 @@ from geoalchemy2.shape import to_shape
 
 from .geo import Location
 from skylines.database import db
+from skylines.lib.string import unicode_to_str
 
 
 class Airport(db.Model):
@@ -40,7 +41,7 @@ class Airport(db.Model):
         return self.name
 
     def __repr__(self):
-        return ('<Airport: id=%s name=\'%s\'>' % (self.id, self.name)).encode('unicode_escape')
+        return unicode_to_str('<Airport: id=%s name=\'%s\'>' % (self.id, self.name))
 
     @property
     def location(self):

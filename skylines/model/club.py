@@ -5,6 +5,7 @@ from datetime import datetime
 from sqlalchemy.types import Integer, Unicode, DateTime
 
 from skylines.database import db
+from skylines.lib.string import unicode_to_str
 
 
 class Club(db.Model):
@@ -27,7 +28,7 @@ class Club(db.Model):
         return self.name
 
     def __repr__(self):
-        return ('<Club: id=%d name=\'%s\'>' % (self.id, self.name)).encode('unicode_escape')
+        return unicode_to_str('<Club: id=%d name=\'%s\'>' % (self.id, self.name))
 
     def is_writable(self, user):
         return user and (self.id == user.club_id or user.is_manager())

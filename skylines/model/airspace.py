@@ -12,6 +12,7 @@ from flask import current_app
 
 from skylines.database import db
 from skylines.lib.geo import FEET_PER_METER
+from skylines.lib.string import unicode_to_str
 from skylines.model.geo import Location
 
 
@@ -31,7 +32,7 @@ class Airspace(db.Model):
     country_code = db.Column(String(2), nullable=False)
 
     def __repr__(self):
-        return ('<Airspace: id=%d name=\'%s\'>' % (self.id, self.name)).encode('unicode_escape')
+        return unicode_to_str('<Airspace: id=%d name=\'%s\'>' % (self.id, self.name))
 
     @classmethod
     def by_location(cls, location):

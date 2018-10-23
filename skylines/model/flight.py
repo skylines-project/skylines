@@ -16,6 +16,7 @@ from shapely.geometry import LineString
 
 from skylines.database import db
 from skylines.lib.sql import _ST_Intersects, _ST_Contains
+from skylines.lib.string import unicode_to_str
 
 from .geo import Location
 from .igcfile import IGCFile
@@ -105,8 +106,7 @@ class Flight(db.Model):
     ##############################
 
     def __repr__(self):
-        return ('<Flight: id=%s, modified=%s>'
-                % (self.id, self.time_modified)).encode('unicode_escape')
+        return unicode_to_str('<Flight: id=%s, modified=%s>' % (self.id, self.time_modified))
 
     ##############################
 

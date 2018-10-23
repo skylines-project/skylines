@@ -14,6 +14,7 @@ from sqlalchemy.ext.hybrid import hybrid_property, hybrid_method
 from skylines.database import db
 from skylines.lib import files
 from skylines.lib.sql import LowerCaseComparator
+from skylines.lib.string import unicode_to_str
 from skylines.lib.types import is_unicode
 
 __all__ = ['User']
@@ -89,8 +90,9 @@ class User(db.Model):
     ##############################
 
     def __repr__(self):
-        return ('<User: email=%s, display=%s>' % (
-                self.email_address, self.name)).encode('unicode_escape')
+        return unicode_to_str(
+            '<User: email=%s, display=%s>' % (self.email_address, self.name)
+        )
 
     def __unicode__(self):
         return self.name
