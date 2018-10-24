@@ -215,7 +215,7 @@ class AirspaceCommand(Command):
             if not feature:
                 continue
 
-            name = unicode(feature.GetFieldAsString('title'), 'latin1').strip()
+            name = feature.GetFieldAsString('title').decode('latin1').strip()
 
             if name in country_blacklist:
                 print(name + " is in blacklist")
@@ -283,7 +283,7 @@ class AirspaceCommand(Command):
             if not feature:
                 continue
 
-            name = unicode(feature.GetFieldAsString('name'), 'latin1').strip()
+            name = feature.GetFieldAsString('name').decode('latin1').strip()
 
             if name in country_blacklist:
                 print(name + " is in blacklist")
