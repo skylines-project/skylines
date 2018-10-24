@@ -32,7 +32,7 @@ def sanitise_filename(name):
 
     # empty file names are illegal, replace
     if name == "":
-        name = "empty"
+        name = u"empty"
     return name
 
 
