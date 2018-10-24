@@ -114,7 +114,7 @@ password, click on the following link:
 
 The SkyLines Team
 """ % (
-        unicode(user),
+        user.name,
         request.remote_addr,
         user.recover_key,
     )

@@ -71,7 +71,7 @@ def latest():
         json = dict(
             time=fix.time.isoformat() + "Z",
             location=fix.location.to_wkt(),
-            pilot=dict(id=fix.pilot_id, name=unicode(fix.pilot)),
+            pilot=dict(id=fix.pilot_id, name=fix.pilot.name),
         )
 
         optional_attributes = [
