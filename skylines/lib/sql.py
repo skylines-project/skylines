@@ -4,6 +4,8 @@ from sqlalchemy.ext.compiler import compiles
 from sqlalchemy.orm.properties import ColumnProperty
 from geoalchemy2.functions import GenericFunction
 
+from skylines.lib.types import is_unicode
+
 
 class LowerCaseComparator(ColumnProperty.Comparator):
     def __eq__(self, other):
@@ -71,9 +73,9 @@ def query_to_sql(query):
     enc = dialect.encoding
     params = {}
 
-    for k, v in statement.params.iteritems():
-        if isinstance(v, unicode):
+    for k, v in statement.params.items():
+        if is_unicode(v):
             v = v.encode(enc)
         params[k] = sqlescape(v)
 
-    return (statement.string.encode(enc) % params).decode(enc)
+    return (statement.string % params)
