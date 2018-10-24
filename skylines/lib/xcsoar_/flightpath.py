@@ -6,6 +6,7 @@ from geoalchemy2.shape import from_shape
 from skylines.database import db
 from skylines.lib import files
 from skylines.lib.types import is_string
+from skylines.lib.compat import _xrange
 from skylines.model import Elevation, IGCFile, Location
 from xcsoar import Flight
 
@@ -135,7 +136,7 @@ def get_elevation(fixes):
 
     prev = q[start_idx]
 
-    for i in xrange(start_idx + 1, len(q)):
+    for i in _xrange(start_idx + 1, len(q)):
         if q[i].elevation is None:
             continue
 
