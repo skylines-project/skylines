@@ -134,7 +134,7 @@ class Flight(db.Model):
     @hybrid_property
     def index_score(self):
         if self.model and self.model.dmst_index > 0:
-            return self.olc_plus_score * 100 / self.model.dmst_index
+            return self.olc_plus_score * 100.0 / self.model.dmst_index
         else:
             return self.olc_plus_score
 
@@ -144,7 +144,7 @@ class Flight(db.Model):
             [
                 (
                     AircraftModel.dmst_index > 0,
-                    cls.olc_plus_score * 100 / AircraftModel.dmst_index,
+                    cls.olc_plus_score * 100.0 / AircraftModel.dmst_index,
                 )
             ],
             else_=cls.olc_plus_score,

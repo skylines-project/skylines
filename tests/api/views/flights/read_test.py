@@ -116,7 +116,7 @@ def test_filled_flight(db_session, client):
             u"distance": 512,
             u"triangleDistance": 432,
             u"rawScore": 799.0,
-            u"score": 713.0,
+            u"score": 713.3928571428571,
             u"speed": 30.84579717542964,
             u"privacyLevel": 0,
             u"igcFile": {
