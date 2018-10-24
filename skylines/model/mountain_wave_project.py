@@ -12,15 +12,15 @@ from skylines.lib.string import unicode_to_str
 
 
 class MountainWaveProject(db.Model):
-    __tablename__ = 'mountain_wave_project'
+    __tablename__ = "mountain_wave_project"
 
     id = db.Column(Integer, autoincrement=True, primary_key=True)
     time_created = db.Column(DateTime, nullable=False, default=datetime.utcnow)
     time_modified = db.Column(DateTime, nullable=False, default=datetime.utcnow)
 
-    location = db.Column(Geometry('POINT', srid=4326))
-    axis = db.Column(Geometry('LINESTRING', srid=4326))
-    ellipse = db.Column(Geometry('LINESTRING', srid=4326))
+    location = db.Column(Geometry("POINT", srid=4326))
+    axis = db.Column(Geometry("LINESTRING", srid=4326))
+    ellipse = db.Column(Geometry("LINESTRING", srid=4326))
 
     name = db.Column(String())
     country_code = db.Column(String(2))
@@ -37,16 +37,20 @@ class MountainWaveProject(db.Model):
     axis_length = db.Column(Float)
 
     def __repr__(self):
-        return unicode_to_str('<MountainWaveProject: id=%d name=\'%s\'>' % (self.id, self.name))
+        return unicode_to_str(
+            "<MountainWaveProject: id=%d name='%s'>" % (self.id, self.name)
+        )
 
     @classmethod
     def by_location(cls, location):
         """Returns a query object of mountain waves around the location"""
         if not isinstance(location, Location):
-            raise TypeError('Invalid `location` parameter.')
+            raise TypeError("Invalid `location` parameter.")
 
-        return cls.query() \
-            .filter(db.func.ST_DWithin(
+        return cls.query().filter(
+            db.func.ST_DWithin(
                 cast(location.make_point(), Geography),
                 cast(cls.location, Geography),
-                5000))
+                5000,
+            )
+        )

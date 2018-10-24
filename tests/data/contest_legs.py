@@ -6,8 +6,8 @@ from skylines.model import ContestLeg, Location
 def first(flight, **kwargs):
     return ContestLeg(
         flight=flight,
-        contest_type='olc_plus',
-        trace_type='classic',
+        contest_type="olc_plus",
+        trace_type="classic",
         distance=234833,
         cruise_height=-6491,
         cruise_distance=241148,
@@ -26,8 +26,8 @@ def first(flight, **kwargs):
 def empty(flight, **kwargs):
     return ContestLeg(
         flight=flight,
-        contest_type='olc_plus',
-        trace_type='classic',
+        contest_type="olc_plus",
+        trace_type="classic",
         start_time=flight.takeoff_time + timedelta(minutes=61),
         end_time=flight.takeoff_time + timedelta(minutes=69),
     ).apply_kwargs(kwargs)

@@ -19,27 +19,27 @@ def sanitise_filename(name):
     name = os.path.basename(name)
 
     # replace all non-ASCII or dangerous characters
-    name = re.sub(r'[^-_.a-zA-Z0-9]', '_', name)
+    name = re.sub(r"[^-_.a-zA-Z0-9]", "_", name)
 
     # convert to unicode string
     name = unicode(name)
 
     # dots at the beginning of a file name are "special", remove them
-    name = name.lstrip('.')
+    name = name.lstrip(".")
 
     # normalise to lower case
     name = name.lower()
 
     # empty file names are illegal, replace
-    if name == '':
-        name = 'empty'
+    if name == "":
+        name = "empty"
     return name
 
 
 def filename_to_path(name):
     assert is_string(name)
 
-    return os.path.join(current_app.config['SKYLINES_FILES_PATH'], name)
+    return os.path.join(current_app.config["SKYLINES_FILES_PATH"], name)
 
 
 def open_file(name):
@@ -51,7 +51,7 @@ def open_file(name):
 def next_filename(name):
     assert is_string(name)
 
-    i = name.rfind('.')
+    i = name.rfind(".")
 
     match = igc_filename_numbers_regex.match(name[:i])
 
@@ -74,7 +74,7 @@ def add_file(name, f):
             break
         name = next_filename(name)
 
-    dest = open(path, 'w')
+    dest = open(path, "w")
     shutil.copyfileobj(f, dest)
     dest.close()
 

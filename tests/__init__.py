@@ -2,7 +2,7 @@
 
 from skylines.database import db
 
-__all__ = ['setup_db', 'setup_app', 'teardown_db']
+__all__ = ["setup_db", "setup_app", "teardown_db"]
 
 
 def setup_db(app):

@@ -5,8 +5,15 @@ from bisect import bisect_left
 
 from sqlalchemy.dialects import postgresql
 from sqlalchemy.orm import deferred
-from sqlalchemy.types import Unicode, Integer, Float, DateTime, Date, \
-    Boolean, SmallInteger
+from sqlalchemy.types import (
+    Unicode,
+    Integer,
+    Float,
+    DateTime,
+    Date,
+    Boolean,
+    SmallInteger,
+)
 from sqlalchemy import func
 from sqlalchemy.ext.hybrid import hybrid_method, hybrid_property
 from sqlalchemy.sql.expression import case, and_, or_, literal_column
@@ -25,32 +32,35 @@ from .contest_leg import ContestLeg
 
 
 class Flight(db.Model):
-    __tablename__ = 'flights'
+    __tablename__ = "flights"
 
     id = db.Column(Integer, autoincrement=True, primary_key=True)
     time_created = db.Column(DateTime, nullable=False, default=datetime.utcnow)
     time_modified = db.Column(DateTime, nullable=False, default=datetime.utcnow)
 
     pilot_id = db.Column(
-        Integer, db.ForeignKey('users.id', ondelete='SET NULL'), index=True)
-    pilot = db.relationship('User', foreign_keys=[pilot_id])
+        Integer, db.ForeignKey("users.id", ondelete="SET NULL"), index=True
+    )
+    pilot = db.relationship("User", foreign_keys=[pilot_id])
 
     # Fallback if the pilot is not registered
     pilot_name = db.Column(Unicode(255))
 
     co_pilot_id = db.Column(
-        Integer, db.ForeignKey('users.id', ondelete='SET NULL'), index=True)
-    co_pilot = db.relationship('User', foreign_keys=[co_pilot_id])
+        Integer, db.ForeignKey("users.id", ondelete="SET NULL"), index=True
+    )
+    co_pilot = db.relationship("User", foreign_keys=[co_pilot_id])
 
     # Fallback if the co-pilot is not registered
     co_pilot_name = db.Column(Unicode(255))
 
     club_id = db.Column(
-        Integer, db.ForeignKey('clubs.id', ondelete='SET NULL'), index=True)
-    club = db.relationship('Club', backref='flights')
+        Integer, db.ForeignKey("clubs.id", ondelete="SET NULL"), index=True
+    )
+    club = db.relationship("Club", backref="flights")
 
-    model_id = db.Column(Integer, db.ForeignKey('models.id', ondelete='SET NULL'))
-    model = db.relationship('AircraftModel')
+    model_id = db.Column(Integer, db.ForeignKey("models.id", ondelete="SET NULL"))
+    model = db.relationship("AircraftModel")
     registration = db.Column(Unicode(32))
     competition_id = db.Column(Unicode(5))
 
@@ -62,33 +72,35 @@ class Flight(db.Model):
     scoring_end_time = db.Column(DateTime, nullable=True)
     landing_time = db.Column(DateTime, nullable=False)
 
-    takeoff_location_wkt = db.Column(
-        'takeoff_location', Geometry('POINT', srid=4326))
-    landing_location_wkt = db.Column(
-        'landing_location', Geometry('POINT', srid=4326))
+    takeoff_location_wkt = db.Column("takeoff_location", Geometry("POINT", srid=4326))
+    landing_location_wkt = db.Column("landing_location", Geometry("POINT", srid=4326))
 
     takeoff_airport_id = db.Column(
-        Integer, db.ForeignKey('airports.id', ondelete='SET NULL'))
-    takeoff_airport = db.relationship('Airport', foreign_keys=[takeoff_airport_id])
+        Integer, db.ForeignKey("airports.id", ondelete="SET NULL")
+    )
+    takeoff_airport = db.relationship("Airport", foreign_keys=[takeoff_airport_id])
 
     landing_airport_id = db.Column(
-        Integer, db.ForeignKey('airports.id', ondelete='SET NULL'))
-    landing_airport = db.relationship('Airport', foreign_keys=[landing_airport_id])
+        Integer, db.ForeignKey("airports.id", ondelete="SET NULL")
+    )
+    landing_airport = db.relationship("Airport", foreign_keys=[landing_airport_id])
 
-    timestamps = deferred(db.Column(
-        postgresql.ARRAY(DateTime), nullable=False), group='path')
+    timestamps = deferred(
+        db.Column(postgresql.ARRAY(DateTime), nullable=False), group="path"
+    )
 
-    locations = deferred(db.Column(
-        Geometry('LINESTRING', srid=4326), nullable=False),
-        group='path')
+    locations = deferred(
+        db.Column(Geometry("LINESTRING", srid=4326), nullable=False), group="path"
+    )
 
     olc_classic_distance = db.Column(Integer)
     olc_triangle_distance = db.Column(Integer)
     olc_plus_score = db.Column(Float)
 
     igc_file_id = db.Column(
-        Integer, db.ForeignKey('igc_files.id', ondelete='CASCADE'), nullable=False)
-    igc_file = db.relationship('IGCFile', backref='flights', innerjoin=True)
+        Integer, db.ForeignKey("igc_files.id", ondelete="CASCADE"), nullable=False
+    )
+    igc_file = db.relationship("IGCFile", backref="flights", innerjoin=True)
 
     qnh = db.Column(Float)
     needs_analysis = db.Column(Boolean, nullable=False, default=True)
@@ -100,13 +112,14 @@ class Flight(db.Model):
         LINK_ONLY = 1
         PRIVATE = 2
 
-    privacy_level = db.Column(
-        SmallInteger, nullable=False, default=PrivacyLevel.PUBLIC)
+    privacy_level = db.Column(SmallInteger, nullable=False, default=PrivacyLevel.PUBLIC)
 
     ##############################
 
     def __repr__(self):
-        return unicode_to_str('<Flight: id=%s, modified=%s>' % (self.id, self.time_modified))
+        return unicode_to_str(
+            "<Flight: id=%s, modified=%s>" % (self.id, self.time_modified)
+        )
 
     ##############################
 
@@ -127,11 +140,19 @@ class Flight(db.Model):
 
     @index_score.expression
     def index_score(cls):
-        return case([(AircraftModel.dmst_index > 0, cls.olc_plus_score * 100 / AircraftModel.dmst_index)], else_=cls.olc_plus_score)
+        return case(
+            [
+                (
+                    AircraftModel.dmst_index > 0,
+                    cls.olc_plus_score * 100 / AircraftModel.dmst_index,
+                )
+            ],
+            else_=cls.olc_plus_score,
+        )
 
     @year.expression
     def year(cls):
-        return db.func.date_part('year', cls.date_local)
+        return db.func.date_part("year", cls.date_local)
 
     @property
     def takeoff_location(self):
@@ -175,25 +196,31 @@ class Flight(db.Model):
 
     @hybrid_method
     def is_viewable(self, user):
-        return (self.privacy_level == Flight.PrivacyLevel.PUBLIC or
-                self.privacy_level == Flight.PrivacyLevel.LINK_ONLY or
-                self.is_writable(user))
+        return (
+            self.privacy_level == Flight.PrivacyLevel.PUBLIC
+            or self.privacy_level == Flight.PrivacyLevel.LINK_ONLY
+            or self.is_writable(user)
+        )
 
     @is_viewable.expression
     def is_viewable_expression(cls, user):
-        return or_(cls.privacy_level == Flight.PrivacyLevel.PUBLIC,
-                   cls.privacy_level == Flight.PrivacyLevel.LINK_ONLY,
-                   cls.is_writable(user))
+        return or_(
+            cls.privacy_level == Flight.PrivacyLevel.PUBLIC,
+            cls.privacy_level == Flight.PrivacyLevel.LINK_ONLY,
+            cls.is_writable(user),
+        )
 
     @hybrid_method
     def is_listable(self, user):
-        return (self.privacy_level == Flight.PrivacyLevel.PUBLIC or
-                self.is_writable(user))
+        return self.privacy_level == Flight.PrivacyLevel.PUBLIC or self.is_writable(
+            user
+        )
 
     @is_listable.expression
     def is_listable_expression(cls, user):
-        return or_(cls.privacy_level == Flight.PrivacyLevel.PUBLIC,
-                   cls.is_writable(user))
+        return or_(
+            cls.privacy_level == Flight.PrivacyLevel.PUBLIC, cls.is_writable(user)
+        )
 
     @hybrid_method
     def is_rankable(self):
@@ -201,19 +228,17 @@ class Flight(db.Model):
 
     @hybrid_method
     def is_writable(self, user):
-        return user and \
-            (self.igc_file.owner_id == user.id or
-             self.pilot_id == user.id or
-             user.is_manager())
+        return user and (
+            self.igc_file.owner_id == user.id
+            or self.pilot_id == user.id
+            or user.is_manager()
+        )
 
     @is_writable.expression
     def is_writable_expression(self, user):
         return user and (
-            user.is_manager() or
-            or_(
-                IGCFile.owner_id == user.id,
-                self.pilot_id == user.id
-            )
+            user.is_manager()
+            or or_(IGCFile.owner_id == user.id, self.pilot_id == user.id)
         )
 
     @hybrid_method
@@ -229,22 +254,27 @@ class Flight(db.Model):
 
     def get_optimised_contest_trace(self, contest_type, trace_type):
         from skylines.model.trace import Trace
-        return Trace.query(contest_type=contest_type, trace_type=trace_type,
-                           flight=self).first()
+
+        return Trace.query(
+            contest_type=contest_type, trace_type=trace_type, flight=self
+        ).first()
 
     def get_contest_speed(self, contest_type, trace_type):
         contest = self.get_optimised_contest_trace(contest_type, trace_type)
         return contest and contest.speed
 
     def get_contest_legs(self, contest_type, trace_type):
-        return ContestLeg.query(contest_type=contest_type, trace_type=trace_type,
-                                flight=self) \
-                         .filter(ContestLeg.end_time - ContestLeg.start_time > timedelta(0)) \
-                         .order_by(ContestLeg.start_time)
+        return (
+            ContestLeg.query(
+                contest_type=contest_type, trace_type=trace_type, flight=self
+            )
+            .filter(ContestLeg.end_time - ContestLeg.start_time > timedelta(0))
+            .order_by(ContestLeg.start_time)
+        )
 
     @property
     def speed(self):
-        return self.get_contest_speed('olc_plus', 'classic')
+        return self.get_contest_speed("olc_plus", "classic")
 
     @property
     def has_phases(self):
@@ -260,13 +290,21 @@ class Flight(db.Model):
     @property
     def circling_performance(self):
         from skylines.model.flight_phase import FlightPhase
-        return [p for p in self._phases if (p.aggregate and
-                                            p.phase_type == FlightPhase.PT_CIRCLING and
-                                            p.duration.total_seconds() > 0)]
+
+        return [
+            p
+            for p in self._phases
+            if (
+                p.aggregate
+                and p.phase_type == FlightPhase.PT_CIRCLING
+                and p.duration.total_seconds() > 0
+            )
+        ]
 
     @property
     def cruise_performance(self):
         from skylines.model.flight_phase import FlightPhase
+
         for p in self._phases:
             if p.aggregate and p.phase_type == FlightPhase.PT_CRUISE:
                 return p
@@ -282,11 +320,12 @@ class Flight(db.Model):
 
         # Save the timestamps of the coordinates
         date_utc = self.igc_file.date_utc
-        self.timestamps = \
-            [from_seconds_of_day(date_utc, c.seconds_of_day) for c in path]
+        self.timestamps = [
+            from_seconds_of_day(date_utc, c.seconds_of_day) for c in path
+        ]
 
         # Convert the coordinate into a list of tuples
-        coordinates = [(c.location['longitude'], c.location['latitude']) for c in path]
+        coordinates = [(c.location["longitude"], c.location["latitude"]) for c in path]
 
         # Create a shapely LineString object from the coordinates
         linestring = LineString(coordinates)
@@ -304,26 +343,30 @@ class FlightPathChunks(db.Model):
     around those short flight pahts.
     """
 
-    __tablename__ = 'flight_path_chunks'
+    __tablename__ = "flight_path_chunks"
 
     id = db.Column(Integer, autoincrement=True, primary_key=True)
     time_created = db.Column(DateTime, nullable=False, default=datetime.utcnow)
     time_modified = db.Column(DateTime, nullable=False, default=datetime.utcnow)
 
-    timestamps = deferred(db.Column(
-        postgresql.ARRAY(DateTime), nullable=False), group='path')
+    timestamps = deferred(
+        db.Column(postgresql.ARRAY(DateTime), nullable=False), group="path"
+    )
 
-    locations = deferred(db.Column(
-        Geometry('LINESTRING', srid=4326), nullable=False),
-        group='path')
+    locations = deferred(
+        db.Column(Geometry("LINESTRING", srid=4326), nullable=False), group="path"
+    )
 
     start_time = db.Column(DateTime, nullable=False, index=True)
     end_time = db.Column(DateTime, nullable=False, index=True)
 
     flight_id = db.Column(
-        Integer, db.ForeignKey('flights.id', ondelete='CASCADE'), nullable=False,
-        index=True)
-    flight = db.relationship('Flight')
+        Integer,
+        db.ForeignKey("flights.id", ondelete="CASCADE"),
+        nullable=False,
+        index=True,
+    )
+    flight = db.relationship("Flight")
 
     @staticmethod
     def get_near_flights(flight, filter=None):
@@ -353,33 +396,53 @@ class FlightPathChunks(db.Model):
         WHERE _ST_Contains(src_loc_buf, (dst_points).geom);
         """
 
-        cte = db.session.query(FlightPathChunks.locations.ST_Simplify(0.005).ST_Buffer(0.015).label('src_loc_buf'),
-                               FlightPathChunks.start_time.label('src_start'),
-                               FlightPathChunks.end_time.label('src_end')) \
-            .filter(FlightPathChunks.flight == flight) \
-            .cte('src')
+        cte = (
+            db.session.query(
+                FlightPathChunks.locations.ST_Simplify(0.005)
+                .ST_Buffer(0.015)
+                .label("src_loc_buf"),
+                FlightPathChunks.start_time.label("src_start"),
+                FlightPathChunks.end_time.label("src_end"),
+            )
+            .filter(FlightPathChunks.flight == flight)
+            .cte("src")
+        )
 
-        subq = db.session.query(func.ST_DumpPoints(FlightPathChunks.locations).label('dst_points'),
-                                FlightPathChunks.timestamps.label('dst_times'),
-                                cte.c.src_loc_buf,
-                                FlightPathChunks.flight_id.label('dst_points_fid'),
-                                cte.c.src_start,
-                                cte.c.src_end) \
-            .filter(and_(FlightPathChunks.flight != flight,
-                         FlightPathChunks.end_time >= cte.c.src_start,
-                         FlightPathChunks.start_time <= cte.c.src_end,
-                         FlightPathChunks.locations.intersects(cte.c.src_loc_buf),
-                         _ST_Intersects(FlightPathChunks.locations.ST_Simplify(0.005), cte.c.src_loc_buf))) \
+        subq = (
+            db.session.query(
+                func.ST_DumpPoints(FlightPathChunks.locations).label("dst_points"),
+                FlightPathChunks.timestamps.label("dst_times"),
+                cte.c.src_loc_buf,
+                FlightPathChunks.flight_id.label("dst_points_fid"),
+                cte.c.src_start,
+                cte.c.src_end,
+            )
+            .filter(
+                and_(
+                    FlightPathChunks.flight != flight,
+                    FlightPathChunks.end_time >= cte.c.src_start,
+                    FlightPathChunks.start_time <= cte.c.src_end,
+                    FlightPathChunks.locations.intersects(cte.c.src_loc_buf),
+                    _ST_Intersects(
+                        FlightPathChunks.locations.ST_Simplify(0.005), cte.c.src_loc_buf
+                    ),
+                )
+            )
             .subquery()
+        )
 
-        dst_times = literal_column('dst_times[(dst_points).path[1]]')
+        dst_times = literal_column("dst_times[(dst_points).path[1]]")
 
-        q = db.session.query(subq.c.dst_points.geom.label('dst_location'),
-                             dst_times.label('dst_time'),
-                             subq.c.dst_points_fid.label('dst_point_fid')) \
-            .filter(_ST_Contains(subq.c.src_loc_buf, subq.c.dst_points.geom)) \
-            .order_by(subq.c.dst_points_fid, dst_times) \
+        q = (
+            db.session.query(
+                subq.c.dst_points.geom.label("dst_location"),
+                dst_times.label("dst_time"),
+                subq.c.dst_points_fid.label("dst_point_fid"),
+            )
+            .filter(_ST_Contains(subq.c.src_loc_buf, subq.c.dst_points.geom))
+            .order_by(subq.c.dst_points_fid, dst_times)
             .all()
+        )
 
         src_trace = to_shape(flight.locations).coords
         max_distance = 1000
@@ -395,37 +458,56 @@ class FlightPathChunks(db.Model):
                 continue
 
             # find point closest to given time
-            closest = bisect_left(flight.timestamps, dst_time, hi=len(flight.timestamps) - 1)
+            closest = bisect_left(
+                flight.timestamps, dst_time, hi=len(flight.timestamps) - 1
+            )
 
             if closest == 0:
                 src_point = src_trace[0]
             else:
                 # interpolate flight trace between two fixes
-                dx = (dst_time - flight.timestamps[closest - 1]).total_seconds() / \
-                     (flight.timestamps[closest] - flight.timestamps[closest - 1]).total_seconds()
+                dx = (dst_time - flight.timestamps[closest - 1]).total_seconds() / (
+                    flight.timestamps[closest] - flight.timestamps[closest - 1]
+                ).total_seconds()
 
                 src_point_prev = src_trace[closest - 1]
                 src_point_next = src_trace[closest]
 
-                src_point = [src_point_prev[0] + (src_point_next[0] - src_point_prev[0]) * dx,
-                             src_point_prev[1] + (src_point_next[1] - src_point_prev[1]) * dx]
+                src_point = [
+                    src_point_prev[0] + (src_point_next[0] - src_point_prev[0]) * dx,
+                    src_point_prev[1] + (src_point_next[1] - src_point_prev[1]) * dx,
+                ]
 
-            point_distance = Location(latitude=dst_loc[0][1], longitude=dst_loc[0][0]).geographic_distance(
-                Location(latitude=src_point[1], longitude=src_point[0]))
+            point_distance = Location(
+                latitude=dst_loc[0][1], longitude=dst_loc[0][0]
+            ).geographic_distance(
+                Location(latitude=src_point[1], longitude=src_point[0])
+            )
 
             if point_distance > max_distance:
                 continue
 
             if point.dst_point_fid not in other_flights:
                 other_flights[point.dst_point_fid] = []
-                other_flights[point.dst_point_fid].append(dict(times=list(), points=list()))
+                other_flights[point.dst_point_fid].append(
+                    dict(times=list(), points=list())
+                )
 
-            elif len(other_flights[point.dst_point_fid][-1]['times']) and \
-                    (dst_time - other_flights[point.dst_point_fid][-1]['times'][-1]).total_seconds() > 600:
-                other_flights[point.dst_point_fid].append(dict(times=list(), points=list()))
+            elif (
+                len(other_flights[point.dst_point_fid][-1]["times"])
+                and (
+                    dst_time - other_flights[point.dst_point_fid][-1]["times"][-1]
+                ).total_seconds()
+                > 600
+            ):
+                other_flights[point.dst_point_fid].append(
+                    dict(times=list(), points=list())
+                )
 
-            other_flights[point.dst_point_fid][-1]['times'].append(dst_time)
-            other_flights[point.dst_point_fid][-1]['points'].append(Location(latitude=dst_loc[0][1], longitude=dst_loc[0][0]))
+            other_flights[point.dst_point_fid][-1]["times"].append(dst_time)
+            other_flights[point.dst_point_fid][-1]["points"].append(
+                Location(latitude=dst_loc[0][1], longitude=dst_loc[0][0])
+            )
 
         return other_flights
 
@@ -457,14 +539,19 @@ class FlightPathChunks(db.Model):
             flight_path = FlightPathChunks(flight=flight)
 
             # Save the timestamps of the coordinates
-            flight_path.timestamps = \
-                [from_seconds_of_day(date_utc, c.seconds_of_day) for c in path_detailed[i:j + 1]]
+            flight_path.timestamps = [
+                from_seconds_of_day(date_utc, c.seconds_of_day)
+                for c in path_detailed[i : j + 1]
+            ]
 
             flight_path.start_time = path_detailed[i].datetime
             flight_path.end_time = path_detailed[j].datetime
 
             # Convert the coordinate into a list of tuples
-            coordinates = [(c.location['longitude'], c.location['latitude']) for c in path_detailed[i:j + 1]]
+            coordinates = [
+                (c.location["longitude"], c.location["latitude"])
+                for c in path_detailed[i : j + 1]
+            ]
 
             # Create a shapely LineString object from the coordinates
             linestring = LineString(coordinates)

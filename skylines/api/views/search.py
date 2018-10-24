@@ -3,18 +3,20 @@ from flask import Blueprint, request
 from skylines.api.json import jsonify
 from skylines.model import User, Club, Airport
 from skylines.model.search import (
-    combined_search_query, text_to_tokens, escape_tokens,
-    process_results_details
+    combined_search_query,
+    text_to_tokens,
+    escape_tokens,
+    process_results_details,
 )
 
-search_blueprint = Blueprint('search', 'skylines')
+search_blueprint = Blueprint("search", "skylines")
 
 MODELS = [User, Club, Airport]
 
 
-@search_blueprint.route('/search', strict_slashes=False)
+@search_blueprint.route("/search", strict_slashes=False)
 def index():
-    search_text = request.values.get('text', '').strip()
+    search_text = request.values.get("text", "").strip()
     if not search_text:
         return jsonify(results=[])
 
@@ -36,20 +38,16 @@ def search(text):
 
     results_json = []
     for r in results:
-        result = {
-            'type': r['model'].lower(),
-            'id': r['id'],
-            'name': r['name'],
-        }
+        result = {"type": r["model"].lower(), "id": r["id"], "name": r["name"]}
 
-        if r.get('website'):
-            result['website'] = r['website']
+        if r.get("website"):
+            result["website"] = r["website"]
 
-        if r.get('icao'):
-            result['icao'] = r['icao']
+        if r.get("icao"):
+            result["icao"] = r["icao"]
 
-        if r.get('frequency'):
-            result['frequency'] = '%.3f' % (float(r['frequency']))
+        if r.get("frequency"):
+            result["frequency"] = "%.3f" % (float(r["frequency"]))
 
         results_json.append(result)
 

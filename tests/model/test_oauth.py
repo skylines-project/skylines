@@ -4,7 +4,7 @@ from tests.data import users
 
 def test_refresh_token_is_deleted_when_user_is_deleted(db_session):
     john = users.john()
-    token = RefreshToken(refresh_token='secret123', user=john)
+    token = RefreshToken(refresh_token="secret123", user=john)
     db_session.add(token)
     db_session.commit()
 

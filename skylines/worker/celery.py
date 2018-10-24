@@ -18,5 +18,5 @@ def init_app(self, app):
     self.Task = ContextTask
 
 
-celery = Celery(include=['skylines.worker.tasks'])
+celery = Celery(include=["skylines.worker.tasks"])
 Celery.init_app = init_app

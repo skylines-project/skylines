@@ -23,13 +23,13 @@ class Pager:
         count = query.count()
 
         try:
-            page = int(request.args.get('page', 1))
+            page = int(request.args.get("page", 1))
         except:
             abort(400)
 
         pager = cls(page, count, items_per_page)
 
-        if not hasattr(g, 'paginators'):
+        if not hasattr(g, "paginators"):
             g.paginators = {}
 
         g.paginators[name] = pager
@@ -47,28 +47,27 @@ class Sorter:
         self.valid_columns = valid_columns
 
     @classmethod
-    def sort(cls, query, name, default_column, valid_columns={}, default_order='asc'):
+    def sort(cls, query, name, default_column, valid_columns={}, default_order="asc"):
         try:
-            column = request.args.get('column', default_column)
-            order = request.args.get('order', default_order)
+            column = request.args.get("column", default_column)
+            order = request.args.get("order", default_order)
         except:
             abort(400)
 
         if column not in valid_columns:
             abort(400)
 
-        if not hasattr(g, 'sorters'):
+        if not hasattr(g, "sorters"):
             g.sorters = {}
 
         g.sorters[name] = cls(column, order, valid_columns)
 
-        if order == 'asc':
+        if order == "asc":
             return query.order_by(asc(valid_columns.get(column)))
-        elif order == 'desc':
+        elif order == "desc":
             return query.order_by(desc(valid_columns.get(column)))
         else:
             abort(400)
 
     def args(self):
-        return dict(column=self.column,
-                    order=self.order)
+        return dict(column=self.column, order=self.order)

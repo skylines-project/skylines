@@ -11,17 +11,23 @@ class CORS(object):
 
     @staticmethod
     def add_cors_headers(response):
-        if 'Origin' in request.headers:
-            response.headers.add('Access-Control-Allow-Origin', request.headers.get('Origin'))
-            response.headers.add('Access-Control-Allow-Credentials', 'true')
+        if "Origin" in request.headers:
+            response.headers.add(
+                "Access-Control-Allow-Origin", request.headers.get("Origin")
+            )
+            response.headers.add("Access-Control-Allow-Credentials", "true")
 
-            if 'Access-Control-Request-Methods' in request.headers:
-                response.headers.add('Access-Control-Allow-Methods',
-                                     request.headers.get('Access-Control-Request-Methods'))
+            if "Access-Control-Request-Methods" in request.headers:
+                response.headers.add(
+                    "Access-Control-Allow-Methods",
+                    request.headers.get("Access-Control-Request-Methods"),
+                )
 
-            if 'Access-Control-Request-Headers' in request.headers:
-                response.headers.add('Access-Control-Allow-Headers',
-                                     request.headers.get('Access-Control-Request-Headers'))
+            if "Access-Control-Request-Headers" in request.headers:
+                response.headers.add(
+                    "Access-Control-Allow-Headers",
+                    request.headers.get("Access-Control-Request-Headers"),
+                )
 
         return response
 

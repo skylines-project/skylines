@@ -11,21 +11,21 @@ class ExampleSchema(Schema):
 
 def test_fails_for_empty_string():
     with pytest.raises(ValidationError) as e:
-        ExampleSchema().load(dict(name=''))
+        ExampleSchema().load(dict(name=""))
 
     errors = e.value.messages
-    assert 'name' in errors
-    assert 'Must not be empty.' in errors['name']
+    assert "name" in errors
+    assert "Must not be empty." in errors["name"]
 
 
 def test_passes_for_non_empty_string():
-    data = ExampleSchema().load(dict(name='foobar')).data
-    assert data['name'] == 'foobar'
+    data = ExampleSchema().load(dict(name="foobar")).data
+    assert data["name"] == "foobar"
 
 
 def test_passes_for_blank_string():
-    data = ExampleSchema().load(dict(name='    ')).data
-    assert data['name'] == '    '
+    data = ExampleSchema().load(dict(name="    ")).data
+    assert data["name"] == "    "
 
 
 def test_fails_for_stripped_blank_string():
@@ -33,8 +33,8 @@ def test_fails_for_stripped_blank_string():
         name = fields.String(strip=True, validate=validate.NotEmpty())
 
     with pytest.raises(ValidationError) as e:
-        TestSchema2().load(dict(name='    '))
+        TestSchema2().load(dict(name="    "))
 
     errors = e.value.messages
-    assert 'name' in errors
-    assert 'Must not be empty.' in errors['name']
+    assert "name" in errors
+    assert "Must not be empty." in errors["name"]

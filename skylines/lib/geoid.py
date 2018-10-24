@@ -1,4 +1,4 @@
-'''
+"""
 The geoid library was adopted by Tobias Lohner from RTKLIB under the
 following license:
 
@@ -35,22 +35,22 @@ GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
 HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
 LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF
 THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-'''
+"""
 import csv
 import os
 
 
-'''
+"""
 geoid model
 notes  : geoid heights are derived from EGM96 (1 x 1 deg grid)
-'''
+"""
 geoid_egm96 = None
 
 
 def egm96_height(location):
-    '''
+    """
     Calculate the geoid height from the egm96 1" x 1" grid geoid
-    '''
+    """
 
     if geoid_egm96 is None:
         return 0
@@ -66,23 +66,29 @@ def egm96_height(location):
     b -= j1
     j2 = j1 + 1 if j1 < 180 else j1
 
-    y = [geoid_egm96[i1][j1],
-         geoid_egm96[i2][j1],
-         geoid_egm96[i1][j2],
-         geoid_egm96[i2][j2]]
+    y = [
+        geoid_egm96[i1][j1],
+        geoid_egm96[i2][j1],
+        geoid_egm96[i1][j2],
+        geoid_egm96[i2][j2],
+    ]
 
     # bilinear interpolation
-    return y[0] * (1.0 - a) * (1.0 - b) + \
-        y[1] * a * (1.0 - b) + \
-        y[2] * (1.0 - a) * b + \
-        y[3] * a * b
+    return (
+        y[0] * (1.0 - a) * (1.0 - b)
+        + y[1] * a * (1.0 - b)
+        + y[2] * (1.0 - a) * b
+        + y[3] * a * b
+    )
 
 
 def load_geoid():
     global geoid_egm96
 
-    path = os.path.realpath(os.path.join(__file__, '..', '..', '..', 'backend', 'geoid_egm96.csv'))
+    path = os.path.realpath(
+        os.path.join(__file__, "..", "..", "..", "backend", "geoid_egm96.csv")
+    )
 
-    with open(path, 'r') as f:
+    with open(path, "r") as f:
         reader = csv.reader(f, quoting=csv.QUOTE_NONNUMERIC)
         geoid_egm96 = list(reader)

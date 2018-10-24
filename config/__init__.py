@@ -2,9 +2,9 @@ import os
 
 BASE_PATH = os.path.abspath(os.path.dirname(__file__))
 
-PRO_CONF_PATH = '/etc/skylines/production.py'
-DEFAULT_CONF_PATH = os.path.join(BASE_PATH, 'default.py')
-TESTING_CONF_PATH = os.path.join(BASE_PATH, 'testing.py')
+PRO_CONF_PATH = "/etc/skylines/production.py"
+DEFAULT_CONF_PATH = os.path.join(BASE_PATH, "default.py")
+TESTING_CONF_PATH = os.path.join(BASE_PATH, "testing.py")
 
 
 def to_envvar(path=None):
@@ -22,5 +22,5 @@ def to_envvar(path=None):
     else:
         return True
 
-    os.environ['SKYLINES_CONFIG'] = path
+    os.environ["SKYLINES_CONFIG"] = path
     return True

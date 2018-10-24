@@ -2,8 +2,7 @@
 
 from datetime import datetime, timedelta
 
-from sqlalchemy.types import Integer, REAL, DateTime, SmallInteger, Unicode,\
-    BigInteger
+from sqlalchemy.types import Integer, REAL, DateTime, SmallInteger, Unicode, BigInteger
 from sqlalchemy.dialects.postgresql import INET
 from geoalchemy2.types import Geometry
 from geoalchemy2.shape import to_shape, from_shape
@@ -16,14 +15,14 @@ from .geo import Location
 
 
 class TrackingFix(db.Model):
-    __tablename__ = 'tracking_fixes'
+    __tablename__ = "tracking_fixes"
 
     id = db.Column(Integer, autoincrement=True, primary_key=True)
 
     time = db.Column(DateTime, nullable=False, default=datetime.utcnow)
     time_visible = db.Column(DateTime, nullable=False, default=datetime.utcnow)
 
-    location_wkt = db.Column('location', Geometry('POINT', srid=4326))
+    location_wkt = db.Column("location", Geometry("POINT", srid=4326))
 
     track = db.Column(SmallInteger)
     ground_speed = db.Column(REAL)
@@ -34,14 +33,19 @@ class TrackingFix(db.Model):
     engine_noise_level = db.Column(SmallInteger)
 
     pilot_id = db.Column(
-        Integer, db.ForeignKey('users.id', ondelete='CASCADE'), nullable=False,
-        index=True)
-    pilot = db.relationship('User', innerjoin=True)
+        Integer,
+        db.ForeignKey("users.id", ondelete="CASCADE"),
+        nullable=False,
+        index=True,
+    )
+    pilot = db.relationship("User", innerjoin=True)
 
     ip = db.Column(INET)
 
     def __repr__(self):
-        return unicode_to_str('<TrackingFix: id={} time=\'{}\'>'.format(self.id, self.time))
+        return unicode_to_str(
+            "<TrackingFix: id={} time='{}'>".format(self.id, self.time)
+        )
 
     @property
     def location(self):
@@ -57,7 +61,7 @@ class TrackingFix(db.Model):
     @property
     def altitude_agl(self):
         if not self.elevation:
-            raise ValueError('This TrackingFix has no elevation.')
+            raise ValueError("This TrackingFix has no elevation.")
 
         return max(0, self.altitude - self.elevation)
 
@@ -80,41 +84,45 @@ class TrackingFix(db.Model):
     def get_latest(cls, max_age=timedelta(hours=6)):
         # Add a db.Column to the inner query with
         # numbers ordered by time for each pilot
-        row_number = db.over(db.func.row_number(),
-                             partition_by=cls.pilot_id,
-                             order_by=cls.time.desc())
+        row_number = db.over(
+            db.func.row_number(), partition_by=cls.pilot_id, order_by=cls.time.desc()
+        )
 
         # Create inner query
-        subq = db.session \
-            .query(cls.id, row_number.label('row_number')) \
-            .join(cls.pilot) \
-            .filter(cls.max_age_filter(max_age)) \
-            .filter(cls.time_visible <= datetime.utcnow()) \
-            .filter(cls.location_wkt != None) \
+        subq = (
+            db.session.query(cls.id, row_number.label("row_number"))
+            .join(cls.pilot)
+            .filter(cls.max_age_filter(max_age))
+            .filter(cls.time_visible <= datetime.utcnow())
+            .filter(cls.location_wkt != None)
             .subquery()
+        )
 
         # Create outer query that orders by time and
         # only selects the latest fix
-        query = cls.query() \
-            .options(db.joinedload(cls.pilot)) \
-            .filter(cls.id == subq.c.id) \
-            .filter(subq.c.row_number == 1) \
+        query = (
+            cls.query()
+            .options(db.joinedload(cls.pilot))
+            .filter(cls.id == subq.c.id)
+            .filter(subq.c.row_number == 1)
             .order_by(cls.time.desc())
+        )
 
         return query
 
 
-db.Index('tracking_fixes_pilot_time', TrackingFix.pilot_id, TrackingFix.time)
+db.Index("tracking_fixes_pilot_time", TrackingFix.pilot_id, TrackingFix.time)
 
 
 class TrackingSession(db.Model):
-    __tablename__ = 'tracking_sessions'
+    __tablename__ = "tracking_sessions"
 
     id = db.Column(Integer, autoincrement=True, primary_key=True)
 
     pilot_id = db.Column(
-        Integer, db.ForeignKey('users.id', ondelete='CASCADE'), nullable=False)
-    pilot = db.relationship('User', innerjoin=True)
+        Integer, db.ForeignKey("users.id", ondelete="CASCADE"), nullable=False
+    )
+    pilot = db.relationship("User", innerjoin=True)
 
     lt24_id = db.Column(BigInteger, index=True)
 
@@ -146,7 +154,7 @@ class TrackingSession(db.Model):
     finish_status = db.Column(SmallInteger)
 
     def __repr__(self):
-        return unicode_to_str('<TrackingSession: id={}>'.format(self.id))
+        return unicode_to_str("<TrackingSession: id={}>".format(self.id))
 
     @classmethod
     def by_lt24_id(cls, lt24_id, filter_finished=True):

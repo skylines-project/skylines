@@ -13,21 +13,23 @@ from .flight import Flight
 
 
 class Notification(db.Model):
-    __tablename__ = 'notifications'
+    __tablename__ = "notifications"
 
     id = db.Column(Integer, autoincrement=True, primary_key=True)
 
     # The event of this notification
 
     event_id = db.Column(
-        Integer, db.ForeignKey('events.id', ondelete='CASCADE'), nullable=False)
-    event = db.relationship('Event', innerjoin=True)
+        Integer, db.ForeignKey("events.id", ondelete="CASCADE"), nullable=False
+    )
+    event = db.relationship("Event", innerjoin=True)
 
     # The recipient of this notification
 
     recipient_id = db.Column(
-        Integer, db.ForeignKey('users.id', ondelete='CASCADE'), nullable=False)
-    recipient = db.relationship('User', innerjoin=True)
+        Integer, db.ForeignKey("users.id", ondelete="CASCADE"), nullable=False
+    )
+    recipient = db.relationship("User", innerjoin=True)
 
     # The time that this notification was read by the recipient
 
@@ -36,16 +38,18 @@ class Notification(db.Model):
     ##############################
 
     def __repr__(self):
-        return unicode_to_str('<Notification: id={}>'.format(self.id))
+        return unicode_to_str("<Notification: id={}>".format(self.id))
 
     ##############################
 
     @classmethod
     def query_unread(cls, recipient):
-        return cls.query(recipient=recipient, time_read=None) \
-                  .join(cls.event) \
-                  .outerjoin(Event.flight) \
-                  .filter(Flight.is_rankable())
+        return (
+            cls.query(recipient=recipient, time_read=None)
+            .join(cls.event)
+            .outerjoin(Event.flight)
+            .filter(Flight.is_rankable())
+        )
 
     @classmethod
     def count_unread(cls, recipient):
@@ -58,8 +62,7 @@ class Notification(db.Model):
 
     @classmethod
     def mark_all_read(cls, recipient, filter_func=None):
-        query = cls.query(recipient=recipient) \
-            .filter(Event.id == Notification.event_id)
+        query = cls.query(recipient=recipient).filter(Event.id == Notification.event_id)
 
         if filter_func is not None:
             query = filter_func(query)
@@ -104,8 +107,9 @@ def create_flight_notifications(flight):
     senders.discard(None)
 
     # Request followers/recipients of the flight-related users from the DB
-    followers = db.session.query(Follower.source_id.label('id')) \
-                          .filter(Follower.destination_id.in_(senders))
+    followers = db.session.query(Follower.source_id.label("id")).filter(
+        Follower.destination_id.in_(senders)
+    )
 
     # Determine the recipients
     recipients = set([follower.id for follower in followers])

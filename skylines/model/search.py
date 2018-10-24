@@ -9,15 +9,14 @@ from skylines.lib.types import is_unicode
 
 
 PATTERNS = [
-    (u'{}', 5),     # Matches token exactly
-    (u'{}%', 3),    # Begins with token
-    (u'% {}%', 2),  # Has token at word start
-    (u'%{}%', 1),   # Has token
+    (u"{}", 5),  # Matches token exactly
+    (u"{}%", 3),  # Begins with token
+    (u"% {}%", 2),  # Has token at word start
+    (u"%{}%", 1),  # Has token
 ]
 
 
-def search_query(cls, tokens,
-                 weight_func=None, include_misses=False, ordered=True):
+def search_query(cls, tokens, weight_func=None, include_misses=False, ordered=True):
 
     # Read the searchable columns from the table (strings)
     columns = cls.__searchable_columns__
@@ -26,7 +25,7 @@ def search_query(cls, tokens,
     columns = [getattr(cls, c) for c in columns]
 
     # The model name that can be used to match search result to model
-    cls_name = literal_column('\'{}\''.format(cls.__name__))
+    cls_name = literal_column("'{}'".format(cls.__name__))
 
     # Filter out id: tokens for later
     ids, tokens = process_id_option(tokens)
@@ -45,17 +44,20 @@ def search_query(cls, tokens,
         weight = literal_column(str(1))
 
     # Create an array of stringified detail columns
-    details = getattr(cls, '__search_detail_columns__', None)
+    details = getattr(cls, "__search_detail_columns__", None)
     if details:
         details = [cast(getattr(cls, d), Unicode) for d in details]
     else:
-        details = [literal_column('NULL')]
+        details = [literal_column("NULL")]
 
     # Create a query object
     query = db.session.query(
-        cls_name.label('model'), cls.id.label('id'),
-        cls.name.label('name'), array(details).label('details'),
-        weight.label('weight'))
+        cls_name.label("model"),
+        cls.id.label("id"),
+        cls.name.label("name"),
+        array(details).label("details"),
+        weight.label("weight"),
+    )
 
     # Filter out specific ids (optional)
     if ids:
@@ -79,9 +81,10 @@ def combined_search_query(models, tokens, include_misses=False, ordered=True):
     models, tokens = process_type_option(models, tokens)
 
     # Build sub search queries
-    queries = [model.search_query(
-        tokens, include_misses=include_misses, ordered=False)
-        for model in models]
+    queries = [
+        model.search_query(tokens, include_misses=include_misses, ordered=False)
+        for model in models
+    ]
 
     # Build combined search query
     query = queries[0]
@@ -90,7 +93,7 @@ def combined_search_query(models, tokens, include_misses=False, ordered=True):
 
     # Order by weight (optional)
     if ordered:
-        query = query.order_by(desc('weight'))
+        query = query.order_by(desc("weight"))
 
     return query
 
@@ -104,7 +107,7 @@ def process_type_option(models, tokens):
     """
 
     # Filter for type: and types: tokens
-    types, new_tokens = __filter_prefixed_tokens('type', tokens)
+    types, new_tokens = __filter_prefixed_tokens("type", tokens)
 
     # Filter the list of models according to the type filter
     new_models = [model for model in models if model.__name__.lower() in types]
@@ -124,7 +127,7 @@ def process_id_option(tokens):
     """
 
     # Filter for id: and ids: tokens
-    ids, new_tokens = __filter_prefixed_tokens('id', tokens)
+    ids, new_tokens = __filter_prefixed_tokens("id", tokens)
 
     # Convert ids to integers
     def int_or_none(value):
@@ -153,11 +156,11 @@ def __filter_prefixed_tokens(prefix, tokens):
     for token in tokens:
         _token = token.lower()
 
-        if _token.startswith(prefix + ':'):
-            contents.append(_token[(len_prefix + 1):])
+        if _token.startswith(prefix + ":"):
+            contents.append(_token[(len_prefix + 1) :])
 
-        elif _token.startswith(prefix + 's:'):
-            contents.extend(_token[(len_prefix + 2):].split(','))
+        elif _token.startswith(prefix + "s:"):
+            contents.extend(_token[(len_prefix + 2) :].split(","))
 
         else:
             new_tokens.append(token)
@@ -173,19 +176,21 @@ def text_to_tokens(search_text):
 
     try:
         if sys.version_info[0] == 2:
-            return [str.decode('utf8') for str in shlex.split(search_text.encode('utf8'))]
+            return [
+                str.decode("utf8") for str in shlex.split(search_text.encode("utf8"))
+            ]
         else:
             return shlex.split(search_text)
     except ValueError:
-        return search_text.split(' ')
+        return search_text.split(" ")
 
 
 def escape_tokens(tokens):
     # Escape % and _ properly
-    tokens = [t.replace(u'%', u'\\%').replace(u'_', u'\\_') for t in tokens]
+    tokens = [t.replace(u"%", u"\\%").replace(u"_", u"\\_") for t in tokens]
 
     # Use * as wildcard character
-    tokens = [t.replace(u'*', u'%') for t in tokens]
+    tokens = [t.replace(u"*", u"%") for t in tokens]
 
     return tokens
 
@@ -195,7 +200,7 @@ def weight_expression(columns, tokens):
 
     # Use entire search string as additional token
     if len(tokens) > 1:
-        tokens = tokens + [u' '.join(tokens)]
+        tokens = tokens + [u" ".join(tokens)]
 
     for column in columns:
         for token in tokens:
@@ -225,15 +230,15 @@ def process_results_details(models, results):
 def process_result_details(models, result):
     models = {m.__name__: m for m in models}
 
-    model = models.get(result['model'], None)
+    model = models.get(result["model"], None)
     if not model:
         return result
 
-    details = getattr(model, '__search_detail_columns__', [None])
-    if len(details) != len(result['details']):
+    details = getattr(model, "__search_detail_columns__", [None])
+    if len(details) != len(result["details"]):
         return result
 
-    for key, value in zip(details, result['details']):
+    for key, value in zip(details, result["details"]):
         if isinstance(key, str):
             result[key] = value
 

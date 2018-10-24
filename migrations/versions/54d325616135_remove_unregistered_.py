@@ -1,6 +1,6 @@
 # revision identifiers, used by Alembic.
-revision = '54d325616135'
-down_revision = '66650ad3d70'
+revision = "54d325616135"
+down_revision = "66650ad3d70"
 
 from alembic import op
 import sqlalchemy as sa
@@ -28,10 +28,11 @@ WHERE users.password IS NULL
 
 
 def upgrade():
-    op.execute(FLIGHTS_QUERY.format(column='pilot'))
-    op.execute(FLIGHTS_QUERY.format(column='co_pilot'))
-    op.execute(USERS_QUERY.format(column='co_pilot'))
-    op.alter_column('users', 'password', nullable=False)
+    op.execute(FLIGHTS_QUERY.format(column="pilot"))
+    op.execute(FLIGHTS_QUERY.format(column="co_pilot"))
+    op.execute(USERS_QUERY.format(column="co_pilot"))
+    op.alter_column("users", "password", nullable=False)
+
 
 def downgrade():
-    op.alter_column('users', 'password', nullable=True)
+    op.alter_column("users", "password", nullable=True)

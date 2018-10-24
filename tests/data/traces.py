@@ -6,8 +6,8 @@ from skylines.model import Trace, Location
 def olc_classic(flight, **kwargs):
     return Trace(
         flight=flight,
-        contest_type='olc_plus',
-        trace_type='classic',
+        contest_type="olc_plus",
+        trace_type="classic",
         distance=725123,
         duration=timedelta(hours=6.53),
         times=[

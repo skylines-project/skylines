@@ -37,7 +37,7 @@ class GeometryField(Field):
         if isinstance(shape, Polygon):
             return self.serialize_polygon(shape)
 
-        raise ValidationError('Unsupported shape type')
+        raise ValidationError("Unsupported shape type")
 
     @classmethod
     def serialize_polygon(cls, polygon):

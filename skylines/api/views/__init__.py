@@ -39,7 +39,7 @@ def register(app):
         assert isinstance(user_agent, UserAgent)
 
         if not user_agent.string:
-            description = 'You don\'t have the permission to access the API with a User-Agent header.'
+            description = "You don't have the permission to access the API with a User-Agent header."
             raise Forbidden(description)
 
     cors.init_app(app)

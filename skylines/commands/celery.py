@@ -9,4 +9,4 @@ manager = Manager(help="Perform operations related to the Celery task queue")
 def runworker():
     """ Runs the Celery background worker process """
     create_celery_app()
-    celery.worker_main(['skylines.worker', '--loglevel=INFO'])
+    celery.worker_main(["skylines.worker", "--loglevel=INFO"])

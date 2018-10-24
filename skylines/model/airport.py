@@ -14,16 +14,16 @@ from skylines.lib.string import unicode_to_str
 
 
 class Airport(db.Model):
-    __tablename__ = 'airports'
-    __searchable_columns__ = ['name', 'icao']
-    __search_detail_columns__ = ['icao', 'frequency']
+    __tablename__ = "airports"
+    __searchable_columns__ = ["name", "icao"]
+    __search_detail_columns__ = ["icao", "frequency"]
 
     id = Column(Integer, autoincrement=True, primary_key=True)
     time_created = Column(DateTime, nullable=False, default=datetime.utcnow)
     time_modified = Column(DateTime, nullable=False, default=datetime.utcnow)
     valid_until = Column(DateTime, nullable=True)
 
-    location_wkt = Column(Geometry('POINT', srid=4326))
+    location_wkt = Column(Geometry("POINT", srid=4326))
     altitude = Column(Float)
 
     name = Column(String(), nullable=False)
@@ -41,7 +41,7 @@ class Airport(db.Model):
         return self.name
 
     def __repr__(self):
-        return unicode_to_str('<Airport: id=%s name=\'%s\'>' % (self.id, self.name))
+        return unicode_to_str("<Airport: id=%s name='%s'>" % (self.id, self.name))
 
     @property
     def location(self):
@@ -63,22 +63,28 @@ class Airport(db.Model):
         location = location.to_wkt_element()
         distance = func.ST_Distance(cls.location_wkt, location)
 
-        airport = db.session.query(cls, distance.label('distance')) \
-            .filter(or_(cls.valid_until == None, cls.valid_until > date)) \
-            .order_by(distance).first()
+        airport = (
+            db.session.query(cls, distance.label("distance"))
+            .filter(or_(cls.valid_until == None, cls.valid_until > date))
+            .order_by(distance)
+            .first()
+        )
 
-        if airport is not None and (distance_threshold is None or
-                                    airport.distance < distance_threshold):
+        if airport is not None and (
+            distance_threshold is None or airport.distance < distance_threshold
+        ):
             return airport.Airport
         else:
             return None
 
     @classmethod
     def by_bbox(cls, bbox, date=datetime.utcnow()):
-        return cls.query() \
-            .order_by(cls.id) \
-            .filter(or_(cls.valid_until == None, cls.valid_until > date)) \
+        return (
+            cls.query()
+            .order_by(cls.id)
+            .filter(or_(cls.valid_until == None, cls.valid_until > date))
             .filter(db.func.ST_Contains(bbox.make_box(), cls.location_wkt))
+        )
 
     def distance(self, location):
         loc1 = cast(self.location_wkt, Geography)

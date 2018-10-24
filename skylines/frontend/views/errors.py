@@ -1,7 +1,5 @@
 from flask import render_template
-from werkzeug.exceptions import (
-    HTTPException, InternalServerError, RequestTimeout,
-)
+from werkzeug.exceptions import HTTPException, InternalServerError, RequestTimeout
 
 
 def register(app):
@@ -14,12 +12,12 @@ def register(app):
         if not isinstance(e, HTTPException):
             e = InternalServerError()
 
-        return render_template(
-            'error.jinja',
-            code=e.code,
-            name=e.name,
-            description=e.description,
-        ), e.code
+        return (
+            render_template(
+                "error.jinja", code=e.code, name=e.name, description=e.description
+            ),
+            e.code,
+        )
 
     @app.errorhandler(EOFError)
     def handle_eof_error(e):

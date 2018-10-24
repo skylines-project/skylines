@@ -38,7 +38,7 @@ def files_folder(app):
     """
     Creates a clean upload folder
     """
-    filesdir = app.config['SKYLINES_FILES_PATH']
+    filesdir = app.config["SKYLINES_FILES_PATH"]
     if os.path.exists(filesdir):
         shutil.rmtree(filesdir)
 

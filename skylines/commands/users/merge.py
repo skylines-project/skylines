@@ -12,8 +12,8 @@ class Merge(Command):
     """ Merge two user accounts """
 
     option_list = (
-        Option('new_id', type=int, help='ID of the new user account'),
-        Option('old_id', type=int, help='ID of the old user account'),
+        Option("new_id", type=int, help="ID of the new user account"),
+        Option("old_id", type=int, help="ID of the old user account"),
     )
 
     def run(self, new_id, old_id):
@@ -31,11 +31,17 @@ class Merge(Command):
             print("Different club;", old.club, new.club, file=sys.stderr)
             sys.exit(1)
 
-        db.session.query(Club).filter_by(owner_id=old_id).update({'owner_id': new_id})
-        db.session.query(IGCFile).filter_by(owner_id=old_id).update({'owner_id': new_id})
-        db.session.query(Flight).filter_by(pilot_id=old_id).update({'pilot_id': new_id})
-        db.session.query(Flight).filter_by(co_pilot_id=old_id).update({'co_pilot_id': new_id})
-        db.session.query(TrackingFix).filter_by(pilot_id=old_id).update({'pilot_id': new_id})
+        db.session.query(Club).filter_by(owner_id=old_id).update({"owner_id": new_id})
+        db.session.query(IGCFile).filter_by(owner_id=old_id).update(
+            {"owner_id": new_id}
+        )
+        db.session.query(Flight).filter_by(pilot_id=old_id).update({"pilot_id": new_id})
+        db.session.query(Flight).filter_by(co_pilot_id=old_id).update(
+            {"co_pilot_id": new_id}
+        )
+        db.session.query(TrackingFix).filter_by(pilot_id=old_id).update(
+            {"pilot_id": new_id}
+        )
         db.session.flush()
         db.session.commit()
 
