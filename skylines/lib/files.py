@@ -7,7 +7,7 @@ import re
 
 from flask import current_app
 
-from skylines.lib.types import is_string
+from skylines.lib.types import is_string, is_bytes
 
 igc_filename_numbers_regex = re.compile(r"([\w_-]+)_(\d+)")
 
@@ -19,10 +19,13 @@ def sanitise_filename(name):
     name = os.path.basename(name)
 
     # replace all non-ASCII or dangerous characters
-    name = re.sub(r"[^-_.a-zA-Z0-9]", "_", name)
+    if is_bytes(name):
+        name = re.sub(br"[^-_.a-zA-Z0-9]", "_", name)
 
-    # convert to unicode string
-    name = unicode(name)
+        # convert to unicode string
+        name = name.decode("ascii")
+    else:
+        name = re.sub(r"[^-_.a-zA-Z0-9]", "_", name)
 
     # dots at the beginning of a file name are "special", remove them
     name = name.lstrip(".")
@@ -32,7 +35,7 @@ def sanitise_filename(name):
 
     # empty file names are illegal, replace
     if name == "":
-        name = "empty"
+        name = u"empty"
     return name
 
 
