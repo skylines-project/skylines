@@ -6,19 +6,19 @@ from werkzeug.exceptions import BadRequest, NotFound, NotImplemented
 from skylines.database import db
 from skylines.model import User, TrackingFix, TrackingSession, Elevation
 
-lt24_blueprint = Blueprint('lt24', 'skylines')
+lt24_blueprint = Blueprint("lt24", "skylines")
 
 
 def _parse_user():
     """Read and check the tracking key (supplied via 'user' field)"""
 
-    if 'user' not in request.values:
-        raise BadRequest('`user` parameter is missing.')
+    if "user" not in request.values:
+        raise BadRequest("`user` parameter is missing.")
 
     try:
-        key = int(request.values['user'], 16)
+        key = int(request.values["user"], 16)
     except ValueError:
-        raise BadRequest('`user` must be the hexadecimal tracking key.')
+        raise BadRequest("`user` must be the hexadecimal tracking key.")
 
     return key, User.by_tracking_key(key)
 
@@ -26,16 +26,16 @@ def _parse_user():
 def _parse_session_id():
     """Read and check the session id"""
 
-    if 'sid' not in request.values:
-        raise BadRequest('`sid` parameter is missing.')
+    if "sid" not in request.values:
+        raise BadRequest("`sid` parameter is missing.")
 
     try:
-        session_id = int(request.values['sid'])
+        session_id = int(request.values["sid"])
     except ValueError:
-        raise BadRequest('`sid` must be an integer.')
+        raise BadRequest("`sid` must be an integer.")
 
     if session_id & 0x80000000 == 0:
-        raise NotImplemented('Unregistered users are not supported.')
+        raise NotImplemented("Unregistered users are not supported.")
 
     return session_id
 
@@ -46,52 +46,64 @@ def _parse_fix(pilot):
     fix.pilot = pilot
 
     # Time
-    if 'tm' not in request.values:
-        raise BadRequest('`tm` (time) parameter is missing.')
+    if "tm" not in request.values:
+        raise BadRequest("`tm` (time) parameter is missing.")
 
     try:
-        fix.time = datetime.utcfromtimestamp(int(request.values['tm']))
+        fix.time = datetime.utcfromtimestamp(int(request.values["tm"]))
     except ValueError:
-        raise BadRequest('`tm` (time) has to be a POSIX timestamp.')
+        raise BadRequest("`tm` (time) has to be a POSIX timestamp.")
 
     fix.time_visible = fix.time + timedelta(minutes=pilot.tracking_delay)
 
     # Location
-    if 'lat' in request.values and 'lon' in request.values:
+    if "lat" in request.values and "lon" in request.values:
         try:
-            fix.set_location(float(request.values['lon']), float(request.values['lat']))
+            fix.set_location(float(request.values["lon"]), float(request.values["lat"]))
         except ValueError:
-            raise BadRequest('`lat` and `lon` have to be floating point value in degrees (WGS84).')
+            raise BadRequest(
+                "`lat` and `lon` have to be floating point value in degrees (WGS84)."
+            )
 
     # Altitude
-    if 'alt' in request.values:
+    if "alt" in request.values:
         try:
-            fix.altitude = int(request.values['alt'])
+            fix.altitude = int(request.values["alt"])
         except ValueError:
-            raise BadRequest('`alt` has to be an integer value in meters.')
+            raise BadRequest("`alt` has to be an integer value in meters.")
 
         if not -1000 <= fix.altitude <= 15000:
-            raise BadRequest('`alt` has to be a valid altitude in the range of -1000 to 15000 meters.')
+            raise BadRequest(
+                "`alt` has to be a valid altitude in the range of -1000 to 15000 meters."
+            )
 
     # Speed
-    if 'sog' in request.values:
+    if "sog" in request.values:
         try:
-            fix.ground_speed = int(request.values['sog']) / 3.6
+            fix.ground_speed = int(request.values["sog"]) / 3.6
         except ValueError:
-            raise BadRequest('`sog` (speed over ground) has to be an integer value in km/h.')
+            raise BadRequest(
+                "`sog` (speed over ground) has to be an integer value in km/h."
+            )
 
         if not 0 <= fix.ground_speed <= (500 / 3.6):
-            raise BadRequest('`sog` (speed over ground) has to be a valid speed in the range of 0 to 500 km/h.')
+            raise BadRequest(
+                "`sog` (speed over ground) has to be a valid speed in the range of 0 to 500 km/h."
+            )
 
     # Track
-    if 'cog' in request.values:
+    if "cog" in request.values:
         try:
-            fix.track = int(request.values['cog'])
+            fix.track = int(request.values["cog"])
         except ValueError:
-            raise BadRequest('`cog` (course over ground) has to be an integer value in degrees.')
+            raise BadRequest(
+                "`cog` (course over ground) has to be an integer value in degrees."
+            )
 
         if not 0 <= fix.track < 360:
-            raise BadRequest('`cog` (course over ground) has to be a valid angle between 0 and 360 degrees.')
+            raise BadRequest(
+                "`cog` (course over ground) has to be a valid angle between 0 and 360 degrees."
+            )
 
     fix.elevation = Elevation.get(fix.location_wkt)
 
@@ -101,35 +113,37 @@ def _parse_fix(pilot):
 def _sessionless_fix():
     key, pilot = _parse_user()
     if not pilot:
-        raise NotFound('No pilot found with tracking key `{:X}`.'.format(key))
+        raise NotFound("No pilot found with tracking key `{:X}`.".format(key))
 
     fix = _parse_fix(pilot)
     db.session.add(fix)
     db.session.commit()
-    return 'OK'
+    return "OK"
 
 
 def _session_fix():
     session_id = _parse_session_id()
     session = TrackingSession.by_lt24_id(session_id)
     if session is None:
-        raise NotFound('No open tracking session found with id `{:d}`.'.format(session_id))
+        raise NotFound(
+            "No open tracking session found with id `{:d}`.".format(session_id)
+        )
 
     fix = _parse_fix(session.pilot)
     db.session.add(fix)
     db.session.commit()
-    return 'OK'
+    return "OK"
 
 
 def _create_session():
     key, pilot = _parse_user()
     if not pilot:
-        raise NotFound('No pilot found with tracking key `{:X}`.'.format(key))
+        raise NotFound("No pilot found with tracking key `{:X}`.".format(key))
 
     session_id = _parse_session_id()
 
     if session_id & 0x00FFFFFF != key & 0x00FFFFFF:
-        raise BadRequest('The right three bytes must match the userid (tracking key).')
+        raise BadRequest("The right three bytes must match the userid (tracking key).")
 
     session = TrackingSession()
     session.pilot = pilot
@@ -137,57 +151,59 @@ def _create_session():
     session.ip_created = request.remote_addr
 
     # Client application
-    if 'client' in request.values:
-        session.client = request.values['client'][:32]
-    if 'v' in request.values:
-        session.client_version = request.values['v'][:8]
+    if "client" in request.values:
+        session.client = request.values["client"][:32]
+    if "v" in request.values:
+        session.client_version = request.values["v"][:8]
 
     # Device information
-    if 'phone' in request.values:
-        session.device = request.values['phone'][:32]
-    if 'gps' in request.values:
-        session.gps_device = request.values['gps'][:32]
+    if "phone" in request.values:
+        session.device = request.values["phone"][:32]
+    if "gps" in request.values:
+        session.gps_device = request.values["gps"][:32]
 
     # Aircraft model and type
-    if 'vname' in request.values:
-        session.aircraft_model = request.values['vname'][:64]
-    if 'vtype' in request.values:
+    if "vname" in request.values:
+        session.aircraft_model = request.values["vname"][:64]
+    if "vtype" in request.values:
         try:
-            session.aircraft_type = int(request.values['vtype'])
+            session.aircraft_type = int(request.values["vtype"])
         except ValueError:
-            raise BadRequest('`vtype` has to be a valid integer.')
+            raise BadRequest("`vtype` has to be a valid integer.")
 
     db.session.add(session)
     db.session.commit()
-    return 'OK'
+    return "OK"
 
 
 def _finish_session():
     session_id = _parse_session_id()
     session = TrackingSession.by_lt24_id(session_id)
     if session is None:
-        raise NotFound('No open tracking session found with id `{:d}`.'.format(session_id))
+        raise NotFound(
+            "No open tracking session found with id `{:d}`.".format(session_id)
+        )
 
     session.time_finished = datetime.utcnow()
     session.ip_finished = request.remote_addr
 
     # Pilot status
-    if 'prid' in request.values:
+    if "prid" in request.values:
         try:
-            finish_status = int(request.values['prid'])
+            finish_status = int(request.values["prid"])
             if not (0 <= finish_status <= 4):
                 raise ValueError()
 
             session.finish_status = finish_status
 
         except ValueError:
-            raise BadRequest('`prid` must be an integer between 0 and 4.')
+            raise BadRequest("`prid` must be an integer between 0 and 4.")
 
     db.session.commit()
-    return 'OK'
+    return "OK"
 
 
-@lt24_blueprint.route('/track.php', methods=['GET', 'POST'])
+@lt24_blueprint.route("/track.php", methods=["GET", "POST"])
 def track():
     """
     LiveTrack24 tracking API
@@ -197,12 +213,12 @@ def track():
 
     # Read and check the request type
 
-    if 'leolive' not in request.values:
-        raise BadRequest('`leolive` parameter is missing.')
+    if "leolive" not in request.values:
+        raise BadRequest("`leolive` parameter is missing.")
 
-    leolive = request.values.get('leolive', 0, type=int)
+    leolive = request.values.get("leolive", 0, type=int)
     if not (1 <= leolive <= 4):
-        raise BadRequest('`leolive` must be an integer between 1 and 4.')
+        raise BadRequest("`leolive` must be an integer between 1 and 4.")
 
     if leolive == 1:
         return _sessionless_fix()
@@ -214,7 +230,7 @@ def track():
         return _session_fix()
 
 
-@lt24_blueprint.route('/client.php', methods=['GET', 'POST'])
+@lt24_blueprint.route("/client.php", methods=["GET", "POST"])
 def client():
     """
     LiveTrack24 tracking API
@@ -224,16 +240,16 @@ def client():
 
     # Read and check the request type
 
-    if 'op' not in request.values:
-        raise BadRequest('`op` parameter is missing.')
+    if "op" not in request.values:
+        raise BadRequest("`op` parameter is missing.")
 
-    if request.values['op'] != 'login':
-        raise BadRequest('`op` parameter has to be `login`.')
+    if request.values["op"] != "login":
+        raise BadRequest("`op` parameter has to be `login`.")
 
     # Read and check the tracking key (supplied via 'user' field)
 
     key, pilot = _parse_user()
     if not pilot:
-        return '0'
+        return "0"
 
-    return '{:d}'.format(key)
+    return "{:d}".format(key)

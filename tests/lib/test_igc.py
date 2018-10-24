@@ -11,70 +11,77 @@ def test_empty_file():
 
 
 def test_simple_file():
-    path = os.path.realpath(os.path.join(__file__, '..', '..', 'data', 'simple.igc'))
+    path = os.path.realpath(os.path.join(__file__, "..", "..", "data", "simple.igc"))
 
     assert read_igc_headers(path) == dict(
-        manufacturer_id=u'XCS',
-        logger_id=u'AAA',
+        manufacturer_id=u"XCS",
+        logger_id=u"AAA",
         date_utc=datetime.date(2011, 6, 18),
-        model=u'ASK13',
-        reg=u'LY-KDR',
+        model=u"ASK13",
+        reg=u"LY-KDR",
     )
 
 
 def test_logger_information():
-    assert (read_igc_headers([b'AFLA6NG']) ==
-            dict(manufacturer_id='FLA', logger_id='6NG'))
+    assert read_igc_headers([b"AFLA6NG"]) == dict(
+        manufacturer_id="FLA", logger_id="6NG"
+    )
 
 
 def test_filser_logger_id():
-    assert (read_igc_headers([b'AFIL01460FLIGHT:1']) ==
-            dict(manufacturer_id='FIL', logger_id='14K'))
+    assert read_igc_headers([b"AFIL01460FLIGHT:1"]) == dict(
+        manufacturer_id="FIL", logger_id="14K"
+    )
 
 
 def test_date():
-    headers = read_igc_headers([b'AFLA6NG', b'HFDTE150812'])
+    headers = read_igc_headers([b"AFLA6NG", b"HFDTE150812"])
 
-    assert 'date_utc' in headers
-    assert headers['date_utc'] == datetime.date(2012, 8, 15)
+    assert "date_utc" in headers
+    assert headers["date_utc"] == datetime.date(2012, 8, 15)
 
 
 def test_date_only():
-    assert (read_igc_headers([b'HFDTE150812']) ==
-            dict(date_utc=datetime.date(2012, 8, 15)))
+    assert read_igc_headers([b"HFDTE150812"]) == dict(
+        date_utc=datetime.date(2012, 8, 15)
+    )
 
 
 def test_glider_information():
-    headers = read_igc_headers([
-        b'AFLA6NG',
-        b'HFDTE',
-        b'HFGTYGLIDERTYPE:',
-        b'HFGIDGLIDERID:',
-        b'HFCIDCOMPETITIONID:'
-    ])
+    headers = read_igc_headers(
+        [
+            b"AFLA6NG",
+            b"HFDTE",
+            b"HFGTYGLIDERTYPE:",
+            b"HFGIDGLIDERID:",
+            b"HFCIDCOMPETITIONID:",
+        ]
+    )
 
-    assert 'model' in headers
-    assert headers['model'] == ''
+    assert "model" in headers
+    assert headers["model"] == ""
 
-    assert 'reg' in headers
-    assert headers['reg'] == ''
+    assert "reg" in headers
+    assert headers["reg"] == ""
 
-    assert 'cid' in headers
-    assert headers['cid'] == ''
+    assert "cid" in headers
+    assert headers["cid"] == ""
 
-    headers = read_igc_headers([
-        b'AFLA6NG',
-        b'HFDTE150812',
-        b'HFGTYGLIDERTYPE:HORNET',
-        b'HFGIDGLIDERID:D_4449',
-        b'HFCIDCOMPETITIONID:TH'
-    ])
+    headers = read_igc_headers(
+        [
+            b"AFLA6NG",
+            b"HFDTE150812",
+            b"HFGTYGLIDERTYPE:HORNET",
+            b"HFGIDGLIDERID:D_4449",
+            b"HFCIDCOMPETITIONID:TH",
+        ]
+    )
 
-    assert 'model' in headers
-    assert headers['model'] == 'HORNET'
+    assert "model" in headers
+    assert headers["model"] == "HORNET"
 
-    assert 'reg' in headers
-    assert headers['reg'] == 'D_4449'
+    assert "reg" in headers
+    assert headers["reg"] == "D_4449"
 
-    assert 'cid' in headers
-    assert headers['cid'] == 'TH'
+    assert "cid" in headers
+    assert headers["cid"] == "TH"

@@ -22,14 +22,14 @@ def app():
 
 class ApiClient(FlaskClient):
     def open(self, *args, **kwargs):
-        headers = kwargs.pop('headers', Headers())
-        headers.setdefault('User-Agent', 'py.test')
-        kwargs['headers'] = headers
+        headers = kwargs.pop("headers", Headers())
+        headers.setdefault("User-Agent", "py.test")
+        kwargs["headers"] = headers
 
-        json_data = kwargs.pop('json', None)
+        json_data = kwargs.pop("json", None)
         if json_data is not None:
-            kwargs['data'] = json.dumps(json_data)
-            kwargs['content_type'] = 'application/json'
+            kwargs["data"] = json.dumps(json_data)
+            kwargs["content_type"] = "application/json"
 
         return super(ApiClient, self).open(*args, **kwargs)
 

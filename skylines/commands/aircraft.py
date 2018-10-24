@@ -36,11 +36,13 @@ def _list():
 @manager.command
 def kind_enum():
     """ Shows possible values of kind property"""
-    print("""
+    print(
+        """
 0 unspecified
 1 glider
 2 motor glider
 3 paraglider
 4 hangglider
 5 ul glider
-""")
+"""
+    )

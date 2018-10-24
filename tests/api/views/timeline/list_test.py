@@ -1,4 +1,12 @@
-from tests.data import add_fixtures, events, users, flights, flight_comments, clubs, igcs
+from tests.data import (
+    add_fixtures,
+    events,
+    users,
+    flights,
+    flight_comments,
+    clubs,
+    igcs,
+)
 
 
 def test_event_types(db_session, client):
@@ -16,77 +24,67 @@ def test_event_types(db_session, client):
     follower_event = events.follower(actor=john, user=jane)
     new_user_event = events.new_user(jane)
     club_join_event = events.club_join(actor=john, club=lva)
-    add_fixtures(db_session, flight_event, flight_comment_event, follower_event, new_user_event, club_join_event)
+    add_fixtures(
+        db_session,
+        flight_event,
+        flight_comment_event,
+        follower_event,
+        new_user_event,
+        club_join_event,
+    )
 
-    res = client.get('/timeline')
+    res = client.get("/timeline")
     assert res.status_code == 200
     assert res.json == {
-        'events': [{
-            'id': club_join_event.id,
-            'type': 'club-join',
-            'time': '2017-02-15T12:34:56',
-            'actor': {
-                'id': john.id,
-                'name': 'John Doe',
+        "events": [
+            {
+                "id": club_join_event.id,
+                "type": "club-join",
+                "time": "2017-02-15T12:34:56",
+                "actor": {"id": john.id, "name": "John Doe"},
+                "club": {"id": club_join_event.club.id, "name": "LV Aachen"},
             },
-            'club': {
-                'id': club_join_event.club.id,
-                'name': 'LV Aachen',
+            {
+                "id": new_user_event.id,
+                "type": "new-user",
+                "time": "2017-02-14T12:34:56",
+                "actor": {"id": jane.id, "name": "Jane Doe"},
             },
-        }, {
-            'id': new_user_event.id,
-            'type': 'new-user',
-            'time': '2017-02-14T12:34:56',
-            'actor': {
-                'id': jane.id,
-                'name': 'Jane Doe',
+            {
+                "id": follower_event.id,
+                "type": "follower",
+                "time": "2017-02-13T12:34:56",
+                "actor": {"id": john.id, "name": "John Doe"},
+                "user": {"id": jane.id, "name": "Jane Doe"},
             },
-        }, {
-            'id': follower_event.id,
-            'type': 'follower',
-            'time': '2017-02-13T12:34:56',
-            'actor': {
-                'id': john.id,
-                'name': 'John Doe',
+            {
+                "id": flight_event.id,
+                "type": "flight-upload",
+                "time": "2017-02-12T12:34:56",
+                "actor": {"id": john.id, "name": "John Doe"},
+                "flight": {
+                    "id": flight.id,
+                    "date": "2011-06-18",
+                    "pilot_id": john.id,
+                    "copilot_id": None,
+                    "distance": None,
+                },
             },
-            'user': {
-                'id': jane.id,
-                'name': 'Jane Doe',
+            {
+                "id": flight_comment_event.id,
+                "type": "flight-comment",
+                "time": "2017-02-11T12:34:56",
+                "actor": {"id": john.id, "name": "John Doe"},
+                "flightComment": {"id": flight_comment.id},
+                "flight": {
+                    "id": flight.id,
+                    "date": "2011-06-18",
+                    "pilot_id": john.id,
+                    "copilot_id": None,
+                    "distance": None,
+                },
             },
-        }, {
-            'id': flight_event.id,
-            'type': 'flight-upload',
-            'time': '2017-02-12T12:34:56',
-            'actor': {
-                'id': john.id,
-                'name': 'John Doe',
-            },
-            'flight': {
-                'id': flight.id,
-                'date': '2011-06-18',
-                'pilot_id': john.id,
-                'copilot_id': None,
-                'distance': None,
-            },
-        }, {
-            'id': flight_comment_event.id,
-            'type': 'flight-comment',
-            'time': '2017-02-11T12:34:56',
-            'actor': {
-                'id': john.id,
-                'name': 'John Doe',
-            },
-            'flightComment': {
-                'id': flight_comment.id,
-            },
-            'flight': {
-                'id': flight.id,
-                'date': '2011-06-18',
-                'pilot_id': john.id,
-                'copilot_id': None,
-                'distance': None,
-            },
-        }]
+        ]
     }
 
 
@@ -94,22 +92,22 @@ def test_paging(db_session, client):
     john = users.john()
     add_fixtures(db_session, *[events.new_user(actor=john) for i in range(75)])
 
-    res = client.get('/timeline')
+    res = client.get("/timeline")
     assert res.status_code == 200
-    assert len(res.json['events']) == 50
+    assert len(res.json["events"]) == 50
 
-    res = client.get('/timeline?page=2')
+    res = client.get("/timeline?page=2")
     assert res.status_code == 200
-    assert len(res.json['events']) == 25
+    assert len(res.json["events"]) == 25
 
-    res = client.get('/timeline?page=3')
+    res = client.get("/timeline?page=3")
     assert res.status_code == 200
-    assert len(res.json['events']) == 0
+    assert len(res.json["events"]) == 0
 
-    res = client.get('/timeline?per_page=40')
+    res = client.get("/timeline?per_page=40")
     assert res.status_code == 200
-    assert len(res.json['events']) == 40
+    assert len(res.json["events"]) == 40
 
-    res = client.get('/timeline?per_page=40&page=2')
+    res = client.get("/timeline?per_page=40&page=2")
     assert res.status_code == 200
-    assert len(res.json['events']) == 35
+    assert len(res.json["events"]) == 35

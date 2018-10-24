@@ -11,8 +11,12 @@ MODELS = [User, Club, Airport]
 class Search(Command):
 
     option_list = (
-        Option('tokens', metavar='TOKEN', nargs='*',
-               help='Any number of tokens to search for'),
+        Option(
+            "tokens",
+            metavar="TOKEN",
+            nargs="*",
+            help="Any number of tokens to search for",
+        ),
     )
 
     def run(self, tokens):

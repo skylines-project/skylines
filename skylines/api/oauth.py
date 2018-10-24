@@ -19,27 +19,26 @@ from skylines.lib.types import is_bytes
 class CustomProvider(OAuth2Provider):
     def __init__(self, *args, **kwargs):
         super(CustomProvider, self).__init__(*args, **kwargs)
-        self.blueprint = Blueprint('oauth', __name__)
+        self.blueprint = Blueprint("oauth", __name__)
 
     def init_app(self, app):
         super(CustomProvider, self).init_app(app)
-        app.config.setdefault('OAUTH2_PROVIDER_TOKEN_GENERATOR', self.generate_token)
-        app.config.setdefault('OAUTH2_PROVIDER_REFRESH_TOKEN_GENERATOR', random_token_generator)
+        app.config.setdefault("OAUTH2_PROVIDER_TOKEN_GENERATOR", self.generate_token)
+        app.config.setdefault(
+            "OAUTH2_PROVIDER_REFRESH_TOKEN_GENERATOR", random_token_generator
+        )
 
-        app.jws = JSONWebSignatureSerializer(app.config.get('SECRET_KEY'))
+        app.jws = JSONWebSignatureSerializer(app.config.get("SECRET_KEY"))
 
         app.register_blueprint(self.blueprint)
 
     def generate_token(self, request):
-        token = {
-            'user': request.user.id,
-            'exp': int(time.time() + request.expires_in),
-        }
+        token = {"user": request.user.id, "exp": int(time.time() + request.expires_in)}
 
         if request.scopes is not None:
-            token['scope'] = ' '.join(request.scopes)
+            token["scope"] = " ".join(request.scopes)
 
-        return current_app.jws.dumps(token).decode('ascii')
+        return current_app.jws.dumps(token).decode("ascii")
 
     def verify_request(self, scopes):
         if request.authorization:
@@ -47,11 +46,11 @@ class CustomProvider(OAuth2Provider):
 
             username = request.authorization.username
             if is_bytes(username):
-                username = username.decode('utf-8')
+                username = username.decode("utf-8")
 
             password = request.authorization.password
             if is_bytes(password):
-                password = password.decode('utf-8')
+                password = password.decode("utf-8")
 
             user = User.by_credentials(username, password)
 
@@ -70,13 +69,14 @@ class CustomProvider(OAuth2Provider):
 
     def optional(self, *scopes):
         """Enhance resource with specified scopes."""
+
         def wrapper(f):
             @wraps(f)
             def decorated(*args, **kwargs):
                 for func in self._before_request_funcs:
                     func()
 
-                if hasattr(request, 'oauth') and request.oauth:
+                if hasattr(request, "oauth") and request.oauth:
                     return f(*args, **kwargs)
 
                 valid, req = self.verify_request(scopes)
@@ -84,13 +84,17 @@ class CustomProvider(OAuth2Provider):
                 for func in self._after_request_funcs:
                     valid, req = func(valid, req)
 
-                if not valid and (not req or 'Authorization' in req.headers or req.access_token):
+                if not valid and (
+                    not req or "Authorization" in req.headers or req.access_token
+                ):
                     if self._invalid_response:
                         return self._invalid_response(req)
                     return abort(401)
                 request.oauth = req
                 return f(*args, **kwargs)
+
             return decorated
+
         return wrapper
 
 
@@ -121,10 +125,9 @@ class CustomRequestValidator(OAuth2RequestValidator):
         :param request: Request dictionary containing information about the client and user.
         """
 
-        if request.grant_type != 'refresh_token':
+        if request.grant_type != "refresh_token":
             tok = RefreshToken(
-                refresh_token=token['refresh_token'],
-                user_id=request.user.id,
+                refresh_token=token["refresh_token"], user_id=request.user.id
             )
             db.session.add(tok)
             db.session.commit()
@@ -134,21 +137,21 @@ class CustomRequestValidator(OAuth2RequestValidator):
 
     def authenticate_client(self, request, *args, **kwargs):
 
-        auth = request.headers.get('Authorization', None)
+        auth = request.headers.get("Authorization", None)
         if auth:
             try:
-                _, s = auth.split(' ')
-                client_id, client_secret = decode_base64(s).split(':')
-                client_id = to_unicode(client_id, 'utf-8')
+                _, s = auth.split(" ")
+                client_id, client_secret = decode_base64(s).split(":")
+                client_id = to_unicode(client_id, "utf-8")
             except Exception as e:
-                log.debug('Authenticate client failed with exception: %r', e)
+                log.debug("Authenticate client failed with exception: %r", e)
                 return False
         else:
             client_id = request.client_id
 
         client = self._clientgetter(client_id)
         if not client:
-            log.debug('Authenticate client failed, client not found.')
+            log.debug("Authenticate client failed, client not found.")
             return False
 
         return self.authenticate_client_id(client_id, request)
@@ -158,13 +161,13 @@ oauth = CustomProvider()
 oauth._validator = CustomRequestValidator()
 
 
-@oauth.blueprint.route('/oauth/token', methods=['POST'])
+@oauth.blueprint.route("/oauth/token", methods=["POST"])
 @oauth.token_handler
 def access_token(*args, **kwargs):
     return None
 
 
-@oauth.blueprint.route('/oauth/revoke', methods=['POST'])
+@oauth.blueprint.route("/oauth/revoke", methods=["POST"])
 @oauth.revoke_handler
 def revoke_token():
     pass
@@ -172,5 +175,5 @@ def revoke_token():
 
 @oauth.invalid_response
 def invalid_require_oauth(req):
-    message = req.error_message if req else 'Unauthorized'
-    return jsonify(error='invalid_token', message=message), 401
+    message = req.error_message if req else "Unauthorized"
+    return jsonify(error="invalid_token", message=message), 401

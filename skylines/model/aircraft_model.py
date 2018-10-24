@@ -5,7 +5,7 @@ from skylines.lib.string import unicode_to_str
 
 
 class AircraftModel(db.Model):
-    __tablename__ = 'models'
+    __tablename__ = "models"
 
     id = db.Column(Integer, autoincrement=True, primary_key=True)
     name = db.Column(Unicode(64), unique=True, nullable=False)
@@ -23,7 +23,10 @@ class AircraftModel(db.Model):
         return self.name
 
     def __repr__(self):
-        return unicode_to_str('<AircraftModel: id=%d name=\'%s\' kind=\'%s\'>' % (self.id, self.name, self.kind))
+        return unicode_to_str(
+            "<AircraftModel: id=%d name='%s' kind='%s'>"
+            % (self.id, self.name, self.kind)
+        )
 
     def is_writable(self, user):
         return user and user.is_manager()

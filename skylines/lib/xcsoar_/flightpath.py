@@ -9,10 +9,23 @@ from skylines.lib.types import is_string
 from skylines.model import Elevation, IGCFile, Location
 from xcsoar import Flight
 
-_FlightPathFix = namedtuple('FlightPathFix', [
-    'datetime', 'seconds_of_day', 'location', 'gps_altitude', 'pressure_altitude',
-    'enl', 'track', 'groundspeed', 'tas', 'ias', 'siu', 'elevation'
-])
+_FlightPathFix = namedtuple(
+    "FlightPathFix",
+    [
+        "datetime",
+        "seconds_of_day",
+        "location",
+        "gps_altitude",
+        "pressure_altitude",
+        "enl",
+        "track",
+        "groundspeed",
+        "tas",
+        "ias",
+        "siu",
+        "elevation",
+    ],
+)
 
 
 class FlightPathFix(_FlightPathFix):
@@ -25,7 +38,7 @@ class FlightPathFix(_FlightPathFix):
         """
         values = [None] * 12
 
-        values[:min(12, len(args))] = args[:12]
+        values[: min(12, len(args))] = args[:12]
 
         for i, key in enumerate(cls._fields):
             if key in kwargs:
@@ -69,8 +82,10 @@ def cumulative_distance(fixes, start_fix, end_fix):
     distance = 0
     last_location = None
 
-    for fix in fixes[start_fix:end_fix + 1]:
-        location = Location(longitude=fix.location['longitude'], latitude=fix.location['latitude'])
+    for fix in fixes[start_fix : end_fix + 1]:
+        location = Location(
+            longitude=fix.location["longitude"], latitude=fix.location["latitude"]
+        )
 
         if last_location:
             distance += location.geographic_distance(last_location)
@@ -83,22 +98,30 @@ def cumulative_distance(fixes, start_fix, end_fix):
 def get_elevation(fixes):
     shortener = int(max(1, len(fixes) / 1000))
 
-    coordinates = [(fix[2]['longitude'], fix[2]['latitude']) for fix in fixes]
+    coordinates = [(fix[2]["longitude"], fix[2]["latitude"]) for fix in fixes]
     points = MultiPoint(coordinates[::shortener])
 
     locations = from_shape(points, srid=4326)
     location = locations.ST_DumpPoints()
 
-    cte = db.session.query(location.label('location'),
-                           locations.ST_Envelope().label('locations')).cte()
+    cte = db.session.query(
+        location.label("location"), locations.ST_Envelope().label("locations")
+    ).cte()
 
-    location_id = literal_column('(location).path[1]')
+    location_id = literal_column("(location).path[1]")
     elevation = Elevation.rast.ST_Value(cte.c.location.geom)
 
     # Prepare main query
-    q = db.session.query(location_id.label('location_id'), elevation.label('elevation')) \
-                  .filter(and_(cte.c.locations.intersects(Elevation.rast),
-                               cte.c.location.geom.intersects(Elevation.rast))).all()
+    q = (
+        db.session.query(location_id.label("location_id"), elevation.label("elevation"))
+        .filter(
+            and_(
+                cte.c.locations.intersects(Elevation.rast),
+                cte.c.location.geom.intersects(Elevation.rast),
+            )
+        )
+        .all()
+    )
 
     fixes_copy = [list(fix) for fix in fixes]
 
@@ -118,10 +141,12 @@ def get_elevation(fixes):
 
         current = q[i]
 
-        for j in range((prev.location_id - 1) * shortener, (current.location_id - 1) * shortener):
-            elev = prev.elevation + (current.elevation - prev.elevation) / \
-                ((current.location_id - prev.location_id) * shortener) * \
-                (j - (prev.location_id - 1) * shortener)
+        for j in range(
+            (prev.location_id - 1) * shortener, (current.location_id - 1) * shortener
+        ):
+            elev = prev.elevation + (current.elevation - prev.elevation) / (
+                (current.location_id - prev.location_id) * shortener
+            ) * (j - (prev.location_id - 1) * shortener)
             fixes_copy[j][11] = elev
 
         prev = current

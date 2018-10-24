@@ -10,10 +10,10 @@ from skylines.tracking.crc import set_crc, check_crc
 from datetime import datetime, timedelta
 from sqlalchemy.exc import SQLAlchemyError
 
-HOST_PORT = ('127.0.0.1', 5597)
+HOST_PORT = ("127.0.0.1", 5597)
 
 
-@pytest.fixture(scope='function')
+@pytest.fixture(scope="function")
 def server(app, db_session):
     _server.TrackingServer.__init__ = Mock(return_value=None)
     server = _server.TrackingServer()
@@ -27,8 +27,9 @@ def test_ping(server):
 
     # Create fake ping message
     ping_id = 42
-    message = struct.pack('!IHHQHHI', _server.MAGIC, 0, _server.TYPE_PING,
-                          0, ping_id, 0, 0)
+    message = struct.pack(
+        "!IHHQHHI", _server.MAGIC, 0, _server.TYPE_PING, 0, ping_id, 0, 0
+    )
     message = set_crc(message)
 
     # Create mockup function
@@ -39,13 +40,13 @@ def test_ping(server):
         # Check if this is a valid message
         assert len(data) >= 16
 
-        header = struct.unpack('!IHHQ', data[:16])
+        header = struct.unpack("!IHHQ", data[:16])
         assert header[0] == _server.MAGIC
         assert check_crc(data)
 
         assert header[2] == _server.TYPE_ACK
 
-        ping_id2, _, flags = struct.unpack('!HHI', data[16:])
+        ping_id2, _, flags = struct.unpack("!HHI", data[16:])
         assert ping_id2 == ping_id
         assert flags & _server.FLAG_ACK_BAD_KEY
 
@@ -65,8 +66,16 @@ def test_ping_with_key(server, test_user):
 
     # Create fake ping message
     ping_id = 42
-    message = struct.pack('!IHHQHHI', _server.MAGIC, 0, _server.TYPE_PING,
-                          test_user.tracking_key, ping_id, 0, 0)
+    message = struct.pack(
+        "!IHHQHHI",
+        _server.MAGIC,
+        0,
+        _server.TYPE_PING,
+        test_user.tracking_key,
+        ping_id,
+        0,
+        0,
+    )
     message = set_crc(message)
 
     # Create mockup function
@@ -77,13 +86,13 @@ def test_ping_with_key(server, test_user):
         # Check if this is a valid message
         assert len(data) >= 16
 
-        header = struct.unpack('!IHHQ', data[:16])
+        header = struct.unpack("!IHHQ", data[:16])
         assert header[0] == _server.MAGIC
         assert check_crc(data)
 
         assert header[2] == _server.TYPE_ACK
 
-        ping_id2, _, flags = struct.unpack('!HHI', data[16:])
+        ping_id2, _, flags = struct.unpack("!HHI", data[16:])
         assert ping_id2 == ping_id
         assert not (flags & _server.FLAG_ACK_BAD_KEY)
 
@@ -99,9 +108,17 @@ def test_ping_with_key(server, test_user):
 
 
 def create_fix_message(
-        tracking_key, time, latitude=None, longitude=None,
-        track=None, ground_speed=None, airspeed=None, altitude=None,
-        vario=None, enl=None):
+    tracking_key,
+    time,
+    latitude=None,
+    longitude=None,
+    track=None,
+    ground_speed=None,
+    airspeed=None,
+    altitude=None,
+    vario=None,
+    enl=None,
+):
 
     flags = 0
 
@@ -147,10 +164,23 @@ def create_fix_message(
         flags |= _server.FLAG_ENL
 
     message = struct.pack(
-        '!IHHQIIiiIHHHhhH', _server.MAGIC, 0, _server.TYPE_FIX, tracking_key,
-        flags, int(time), int(latitude), int(longitude), 0, int(track),
-        int(ground_speed), int(airspeed), int(altitude),
-        int(vario), int(enl))
+        "!IHHQIIiiIHHHhhH",
+        _server.MAGIC,
+        0,
+        _server.TYPE_FIX,
+        tracking_key,
+        flags,
+        int(time),
+        int(latitude),
+        int(longitude),
+        0,
+        int(track),
+        int(ground_speed),
+        int(airspeed),
+        int(altitude),
+        int(vario),
+        int(enl),
+    )
 
     return set_crc(message)
 
@@ -175,9 +205,10 @@ def test_empty_fix(server, test_user):
     message = create_fix_message(test_user.tracking_key, 0)
 
     utcnow_return_value = datetime(year=2005, month=4, day=13)
-    with patch('skylines.tracking.server.datetime') as datetime_mock:
-        datetime_mock.combine.side_effect = \
-            lambda *args, **kw: datetime.combine(*args, **kw)
+    with patch("skylines.tracking.server.datetime") as datetime_mock:
+        datetime_mock.combine.side_effect = lambda *args, **kw: datetime.combine(
+            *args, **kw
+        )
 
         # Connect utcnow mockup
         datetime_mock.utcnow.return_value = utcnow_return_value
@@ -206,20 +237,30 @@ def test_empty_fix(server, test_user):
 def test_real_fix(server, test_user):
     """ Tracking server accepts real fixes """
 
-    utcnow_return_value = datetime(year=2013, month=1, day=1,
-                                   hour=12, minute=34, second=56)
+    utcnow_return_value = datetime(
+        year=2013, month=1, day=1, hour=12, minute=34, second=56
+    )
 
     # Create fake fix message
     now = utcnow_return_value
     now_s = ((now.hour * 60) + now.minute) * 60 + now.second
     message = create_fix_message(
-        test_user.tracking_key, now_s * 1000, latitude=52.7, longitude=7.52,
-        track=234, ground_speed=33.25, airspeed=32., altitude=1234,
-        vario=2.25, enl=10)
+        test_user.tracking_key,
+        now_s * 1000,
+        latitude=52.7,
+        longitude=7.52,
+        track=234,
+        ground_speed=33.25,
+        airspeed=32.0,
+        altitude=1234,
+        vario=2.25,
+        enl=10,
+    )
 
-    with patch('skylines.tracking.server.datetime') as datetime_mock:
-        datetime_mock.combine.side_effect = \
-            lambda *args, **kw: datetime.combine(*args, **kw)
+    with patch("skylines.tracking.server.datetime") as datetime_mock:
+        datetime_mock.combine.side_effect = lambda *args, **kw: datetime.combine(
+            *args, **kw
+        )
 
         # Connect utcnow mockup
         datetime_mock.utcnow.return_value = utcnow_return_value
@@ -237,10 +278,10 @@ def test_real_fix(server, test_user):
 
     assert fix.time == utcnow_return_value
     assert fix.time_visible == utcnow_return_value + timedelta(minutes=2)
-    assert fix.location.to_wkt() == 'POINT(7.52 52.7)'
+    assert fix.location.to_wkt() == "POINT(7.52 52.7)"
     assert fix.track == 234
     assert fix.ground_speed == 33.25
-    assert fix.airspeed == 32.
+    assert fix.airspeed == 32.0
     assert fix.altitude == 1234
     assert fix.vario == 2.25
     assert fix.engine_noise_level == 10
@@ -254,7 +295,7 @@ def test_failing_fix(server, test_user):
 
     # Mock the transaction commit to fail
     commitmock = Mock(side_effect=SQLAlchemyError())
-    with patch.object(db.session, 'commit', commitmock):
+    with patch.object(db.session, "commit", commitmock):
         # Create fake fix message
         message = create_fix_message(test_user.tracking_key, now_s * 1000)
 

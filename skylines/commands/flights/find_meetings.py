@@ -13,10 +13,12 @@ class FindMeetings(Command):
     """ Find meetings points between flights """
 
     option_list = selector_options + (
-        Option('--force', action='store_true',
-               help='re-analyse all flights, not just the scheduled ones'),
-        Option('--async', action='store_true',
-               help='put flights in celery queue'),
+        Option(
+            "--force",
+            action="store_true",
+            help="re-analyse all flights, not just the scheduled ones",
+        ),
+        Option("--async", action="store_true", help="put flights in celery queue"),
     )
 
     def run(self, force, async, **kwargs):
@@ -64,8 +66,7 @@ class FindMeetings(Command):
         n = 10
         offset = 0
         while True:
-            n_success, n_failed = self.apply_and_commit(
-                func, q.offset(offset).limit(n))
+            n_success, n_failed = self.apply_and_commit(func, q.offset(offset).limit(n))
             if n_success == 0 and n_failed == 0:
                 break
             offset += n_failed + n_success

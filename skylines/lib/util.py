@@ -1,5 +1,5 @@
 def str_to_bool(str):
-    return str.lower() in ['1', 'true', 't', 'yes', 'y']
+    return str.lower() in ["1", "true", "t", "yes", "y"]
 
 
 def pressure_alt_to_qnh_alt(altitude, qnh):

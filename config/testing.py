@@ -2,6 +2,6 @@
 
 TESTING = True
 
-SQLALCHEMY_DATABASE_URI = 'postgresql:///skylines_test'
+SQLALCHEMY_DATABASE_URI = "postgresql:///skylines_test"
 SQLALCHEMY_ECHO = False
-SKYLINES_FILES_PATH = '/tmp/skylines-uploads'
+SKYLINES_FILES_PATH = "/tmp/skylines-uploads"

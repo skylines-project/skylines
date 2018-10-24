@@ -10,7 +10,7 @@ class Server(Command):
     """ Runs the live tracking UDP server """
 
     def run(self):
-        print('Receiving datagrams on :5597')
-        server = TrackingServer(':5597')
+        print("Receiving datagrams on :5597")
+        server = TrackingServer(":5597")
         server.init_app(create_app())
         server.serve_forever()

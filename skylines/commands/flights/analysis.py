@@ -16,8 +16,11 @@ class Analyze(Command):
     """ (Re)analyze flights """
 
     option_list = selector_options + (
-        Option('--force', action='store_true',
-               help='re-analyse all flights, not just the scheduled ones'),
+        Option(
+            "--force",
+            action="store_true",
+            help="re-analyse all flights, not just the scheduled ones",
+        ),
     )
 
     def run(self, force, **kwargs):
@@ -59,8 +62,7 @@ class Analyze(Command):
         n = 10
         offset = 0
         while True:
-            n_success, n_failed = self.apply_and_commit(
-                func, q.offset(offset).limit(n))
+            n_success, n_failed = self.apply_and_commit(func, q.offset(offset).limit(n))
             if n_success == 0 and n_failed == 0:
                 break
             offset += n_success + n_failed
@@ -70,8 +72,11 @@ class AnalyzeDelayed(Command):
     """ Schedule flight reanalysis via celery worker """
 
     option_list = selector_options + (
-        Option('--force', action='store_true',
-               help='re-analyse all flights, not just the scheduled ones'),
+        Option(
+            "--force",
+            action="store_true",
+            help="re-analyse all flights, not just the scheduled ones",
+        ),
     )
 
     def run(self, force, **kwargs):

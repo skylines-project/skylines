@@ -7,7 +7,7 @@ from skylines.lib.string import unicode_to_str
 
 
 class Event(db.Model):
-    __tablename__ = 'events'
+    __tablename__ = "events"
 
     id = db.Column(Integer, autoincrement=True, primary_key=True)
 
@@ -29,37 +29,36 @@ class Event(db.Model):
     # The user that caused the event
 
     actor_id = db.Column(
-        Integer, db.ForeignKey('users.id', ondelete='CASCADE'), nullable=False)
-    actor = db.relationship('User', foreign_keys=[actor_id], innerjoin=True)
+        Integer, db.ForeignKey("users.id", ondelete="CASCADE"), nullable=False
+    )
+    actor = db.relationship("User", foreign_keys=[actor_id], innerjoin=True)
 
     # A user if this event is about a user (e.g. actor following user)
 
-    user_id = db.Column(
-        Integer, db.ForeignKey('users.id', ondelete='CASCADE'))
-    user = db.relationship('User', foreign_keys=[user_id])
+    user_id = db.Column(Integer, db.ForeignKey("users.id", ondelete="CASCADE"))
+    user = db.relationship("User", foreign_keys=[user_id])
 
     # A club if this event is about a club (e.g. actor joining club)
 
-    club_id = db.Column(
-        Integer, db.ForeignKey('clubs.id', ondelete='CASCADE'))
-    club = db.relationship('Club')
+    club_id = db.Column(Integer, db.ForeignKey("clubs.id", ondelete="CASCADE"))
+    club = db.relationship("Club")
 
     # A flight if this event is about a flight
 
-    flight_id = db.Column(
-        Integer, db.ForeignKey('flights.id', ondelete='CASCADE'))
-    flight = db.relationship('Flight')
+    flight_id = db.Column(Integer, db.ForeignKey("flights.id", ondelete="CASCADE"))
+    flight = db.relationship("Flight")
 
     # A flight comment if this event is about a flight comment
 
     flight_comment_id = db.Column(
-        Integer, db.ForeignKey('flight_comments.id', ondelete='CASCADE'))
-    flight_comment = db.relationship('FlightComment')
+        Integer, db.ForeignKey("flight_comments.id", ondelete="CASCADE")
+    )
+    flight_comment = db.relationship("FlightComment")
 
     ##############################
 
     def __repr__(self):
-        return unicode_to_str('<Event: id={} type={}>'.format(self.id, self.type))
+        return unicode_to_str("<Event: id={} type={}>".format(self.id, self.type))
 
     ##############################
 
@@ -68,19 +67,21 @@ class Event(db.Model):
         """
         Create notifications for the owner and pilots of the flight
         """
-        return Event(type=Event.Type.FLIGHT_COMMENT,
-                     actor=comment.user,
-                     flight=comment.flight,
-                     flight_comment=comment)
+        return Event(
+            type=Event.Type.FLIGHT_COMMENT,
+            actor=comment.user,
+            flight=comment.flight,
+            flight_comment=comment,
+        )
 
     @staticmethod
     def for_flight(flight):
         """
         Create notifications for the followers of the owner and pilots of the flight
         """
-        return Event(type=Event.Type.FLIGHT,
-                     actor_id=flight.igc_file.owner_id,
-                     flight=flight)
+        return Event(
+            type=Event.Type.FLIGHT, actor_id=flight.igc_file.owner_id, flight=flight
+        )
 
     @staticmethod
     def for_follower(followed, follower):

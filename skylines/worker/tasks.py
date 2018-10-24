@@ -33,16 +33,26 @@ def find_meetings(flight_id):
 
     # delete all previous detected points between src and dst
     for key in other_flights:
-        FlightMeetings.query() \
-            .filter(or_(and_(FlightMeetings.source == flight, FlightMeetings.destination_id == key),
-                        and_(FlightMeetings.destination == flight, FlightMeetings.source_id == key))) \
-            .delete()
+        FlightMeetings.query().filter(
+            or_(
+                and_(
+                    FlightMeetings.source == flight,
+                    FlightMeetings.destination_id == key,
+                ),
+                and_(
+                    FlightMeetings.destination == flight,
+                    FlightMeetings.source_id == key,
+                ),
+            )
+        ).delete()
 
     # Insert new meetings into table
     for flight_id, meetings in other_flights.iteritems():
         other_flight = Flight.get(flight_id)
 
         for meeting in meetings:
-            FlightMeetings.add_meeting(flight, other_flight, meeting['times'][0], meeting['times'][-1])
+            FlightMeetings.add_meeting(
+                flight, other_flight, meeting["times"][0], meeting["times"][-1]
+            )
 
     db.session.commit()

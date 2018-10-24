@@ -18,7 +18,7 @@ from skylines.tracking.datetime import ms_to_time
 # More information about this protocol can be found in the XCSoar
 # source code, source file src/Tracking/SkyLines/Protocol.hpp
 
-MAGIC = 0x5df4b67b
+MAGIC = 0x5DF4B67B
 TYPE_PING = 1
 TYPE_ACK = 2
 TYPE_FIX = 3
@@ -54,8 +54,9 @@ class TrackingServer(DatagramServer):
         self.app = app
 
     def ping_received(self, host, port, key, payload):
-        if len(payload) != 8: return
-        id, reserved, reserved2 = struct.unpack('!HHI', payload)
+        if len(payload) != 8:
+            return
+        id, reserved, reserved2 = struct.unpack("!HHI", payload)
 
         flags = 0
 
@@ -64,22 +65,22 @@ class TrackingServer(DatagramServer):
             log("%s PING unknown pilot (key: %x)" % (host, key))
             flags |= FLAG_ACK_BAD_KEY
         else:
-            log("%s PING %s -> PONG" % (host, pilot.name.encode('utf8', 'ignore')))
+            log("%s PING %s -> PONG" % (host, pilot.name.encode("utf8", "ignore")))
 
-        data = struct.pack('!IHHQHHI', MAGIC, 0, TYPE_ACK, 0,
-                           id, 0, flags)
+        data = struct.pack("!IHHQHHI", MAGIC, 0, TYPE_ACK, 0, id, 0, flags)
         data = set_crc(data)
         self.socket.sendto(data, (host, port))
 
     def fix_received(self, host, key, payload):
-        if len(payload) != 32: return
+        if len(payload) != 32:
+            return
 
         pilot = User.by_tracking_key(key)
         if not pilot:
             log("%s FIX unknown pilot (key: %x)" % (host, key))
             return
 
-        data = struct.unpack('!IIiiIHHHhhH', payload)
+        data = struct.unpack("!IIiiIHHHhhH", payload)
 
         fix = TrackingFix()
         fix.ip = host
@@ -97,8 +98,7 @@ class TrackingServer(DatagramServer):
             fix.time = datetime.combine(now.date(), time_of_day)
         elif now_s < 1800 and time_of_day_s > 23 * 3600:
             # midnight rollover occurred
-            fix.time = (datetime.combine(now.date(), time_of_day) -
-                        timedelta(days=1))
+            fix.time = datetime.combine(now.date(), time_of_day) - timedelta(days=1)
         else:
             log("bad time stamp: " + str(time_of_day))
             fix.time = datetime.utcnow()
@@ -107,8 +107,8 @@ class TrackingServer(DatagramServer):
 
         flags = data[0]
         if flags & FLAG_LOCATION:
-            latitude = data[2] / 1000000.
-            longitude = data[3] / 1000000.
+            latitude = data[2] / 1000000.0
+            longitude = data[3] / 1000000.0
             fix.set_location(longitude, latitude)
 
             fix.elevation = Elevation.get(fix.location_wkt)
@@ -117,56 +117,64 @@ class TrackingServer(DatagramServer):
             fix.track = data[5]
 
         if flags & FLAG_GROUND_SPEED:
-            fix.ground_speed = data[6] / 16.
+            fix.ground_speed = data[6] / 16.0
 
         if flags & FLAG_AIRSPEED:
-            fix.airspeed = data[7] / 16.
+            fix.airspeed = data[7] / 16.0
 
         if flags & FLAG_ALTITUDE:
             fix.altitude = data[8]
 
         if flags & FLAG_VARIO:
-            fix.vario = data[9] / 256.
+            fix.vario = data[9] / 256.0
 
         if flags & FLAG_ENL:
             fix.engine_noise_level = data[10]
 
-        log("{} FIX {} {} {}".format(
-            host, pilot.name.encode('utf8', 'ignore'),
-            fix.time and fix.time.time(), fix.location))
+        log(
+            "{} FIX {} {} {}".format(
+                host,
+                pilot.name.encode("utf8", "ignore"),
+                fix.time and fix.time.time(),
+                fix.location,
+            )
+        )
 
         db.session.add(fix)
         try:
             db.session.commit()
         except SQLAlchemyError as e:
-            log('database error:' + str(e))
+            log("database error:" + str(e))
             db.session.rollback()
 
     def traffic_request_received(self, host, port, key, payload):
-        if len(payload) != 8: return
+        if len(payload) != 8:
+            return
 
         pilot = User.by_tracking_key(key)
         if pilot is None:
             log("%s TRAFFIC_REQUEST unknown pilot (key: %x)" % (host, key))
             return
 
-        data = struct.unpack('!II', payload)
+        data = struct.unpack("!II", payload)
         or_filters = []
 
         flags = data[0]
         if flags & TRAFFIC_FLAG_FOLLOWEES:
-            subq = db.session \
-                .query(Follower.destination_id) \
-                .filter(Follower.source_id == pilot.id) \
+            subq = (
+                db.session.query(Follower.destination_id)
+                .filter(Follower.source_id == pilot.id)
                 .subquery()
+            )
 
             or_filters.append(TrackingFix.pilot_id.in_(subq))
 
         if flags & TRAFFIC_FLAG_CLUB:
-            subq = db.session \
-                .query(User.id) \
-                .filter(User.club_id == pilot.club_id) \
+            subq = (
+                db.session.query(User.id)
+                .filter(User.club_id == pilot.club_id)
                 .subquery()
+            )
 
             or_filters.append(TrackingFix.pilot_id.in_(subq))
 
@@ -175,98 +183,154 @@ class TrackingServer(DatagramServer):
 
         # Add a db.Column to the inner query with
         # numbers ordered by time for each pilot
-        row_number = db.over(db.func.row_number(),
-                             partition_by=TrackingFix.pilot_id,
-                             order_by=TrackingFix.time.desc())
+        row_number = db.over(
+            db.func.row_number(),
+            partition_by=TrackingFix.pilot_id,
+            order_by=TrackingFix.time.desc(),
+        )
 
         # Create inner query
-        subq = db.session \
-            .query(TrackingFix.id, row_number.label('row_number')) \
-            .join(TrackingFix.pilot) \
-            .filter(TrackingFix.pilot_id != pilot.id) \
-            .filter(TrackingFix.max_age_filter(2)) \
-            .filter(TrackingFix.time_visible <= datetime.utcnow()) \
-            .filter(TrackingFix.location_wkt != None) \
-            .filter(TrackingFix.altitude != None) \
-            .filter(or_(*or_filters)) \
+        subq = (
+            db.session.query(TrackingFix.id, row_number.label("row_number"))
+            .join(TrackingFix.pilot)
+            .filter(TrackingFix.pilot_id != pilot.id)
+            .filter(TrackingFix.max_age_filter(2))
+            .filter(TrackingFix.time_visible <= datetime.utcnow())
+            .filter(TrackingFix.location_wkt != None)
+            .filter(TrackingFix.altitude != None)
+            .filter(or_(*or_filters))
             .subquery()
+        )
 
         # Create outer query that orders by time and
         # only selects the latest fix
-        query = TrackingFix.query() \
-            .filter(TrackingFix.id == subq.c.id) \
-            .filter(subq.c.row_number == 1) \
-            .order_by(TrackingFix.time.desc()) \
+        query = (
+            TrackingFix.query()
+            .filter(TrackingFix.id == subq.c.id)
+            .filter(subq.c.row_number == 1)
+            .order_by(TrackingFix.time.desc())
             .limit(32)
+        )
 
-        response = ''
+        response = ""
         count = 0
         for fix in query:
             location = fix.location
-            if location is None: continue
+            if location is None:
+                continue
 
             t = fix.time
-            t = t.hour * 3600000 + t.minute * 60000 + t.second * 1000 + t.microsecond / 1000
-            response += struct.pack('!IIiihHI', fix.pilot_id, t,
-                                    int(location.latitude * 1000000),
-                                    int(location.longitude * 1000000),
-                                    int(fix.altitude), 0, 0)
+            t = (
+                t.hour * 3600000
+                + t.minute * 60000
+                + t.second * 1000
+                + t.microsecond / 1000
+            )
+            response += struct.pack(
+                "!IIiihHI",
+                fix.pilot_id,
+                t,
+                int(location.latitude * 1000000),
+                int(location.longitude * 1000000),
+                int(fix.altitude),
+                0,
+                0,
+            )
             count += 1
 
-        response = struct.pack('!HBBI', 0, 0, count, 0) + response
-        response = struct.pack('!IHHQ', MAGIC, 0, TYPE_TRAFFIC_RESPONSE, 0) + response
+        response = struct.pack("!HBBI", 0, 0, count, 0) + response
+        response = struct.pack("!IHHQ", MAGIC, 0, TYPE_TRAFFIC_RESPONSE, 0) + response
         response = set_crc(response)
         self.socket.sendto(response, (host, port))
 
-        log("%s TRAFFIC_REQUEST %s -> %d locations" %
-            (host, pilot.name.encode('utf8', 'ignore'), count))
+        log(
+            "%s TRAFFIC_REQUEST %s -> %d locations"
+            % (host, pilot.name.encode("utf8", "ignore"), count)
+        )
 
     def username_request_received(self, host, port, key, payload):
         """The client asks for the display name of a user account."""
 
-        if len(payload) != 8: return
+        if len(payload) != 8:
+            return
 
         pilot = User.by_tracking_key(key)
         if pilot is None:
             log("%s USER_NAME_REQUEST unknown pilot (key: %x)" % (host, key))
             return
 
-        data = struct.unpack('!II', payload)
+        data = struct.unpack("!II", payload)
         user_id = data[0]
 
         user = User.get(user_id)
         if user is None:
-            response = struct.pack('!IHHQIIIBBBBII', MAGIC, 0, TYPE_USER_NAME_RESPONSE, 0,
-                                   user_id, USER_FLAG_NOT_FOUND, 0,
-                                   0, 0, 0, 0, 0, 0)
+            response = struct.pack(
+                "!IHHQIIIBBBBII",
+                MAGIC,
+                0,
+                TYPE_USER_NAME_RESPONSE,
+                0,
+                user_id,
+                USER_FLAG_NOT_FOUND,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+            )
             response = set_crc(response)
             self.transport.write(response, (host, port))
 
-            log("%s, USER_NAME_REQUEST %s -> NOT_FOUND" %
-                (host, pilot.name.encode('utf8', 'ignore')))
+            log(
+                "%s, USER_NAME_REQUEST %s -> NOT_FOUND"
+                % (host, pilot.name.encode("utf8", "ignore"))
+            )
 
             return
 
-        name = user.name[:64].encode('utf8', 'ignore')
+        name = user.name[:64].encode("utf8", "ignore")
         club_id = user.club_id or 0
 
-        response = struct.pack('!IHHQIIIBBBBII', MAGIC, 0, TYPE_USER_NAME_RESPONSE, 0,
-                               user_id, 0, club_id,
-                               len(name), 0, 0, 0, 0, 0)
+        response = struct.pack(
+            "!IHHQIIIBBBBII",
+            MAGIC,
+            0,
+            TYPE_USER_NAME_RESPONSE,
+            0,
+            user_id,
+            0,
+            club_id,
+            len(name),
+            0,
+            0,
+            0,
+            0,
+            0,
+        )
         response += name
         response = set_crc(response)
         self.socket.sendto(response, (host, port))
 
-        log("%s USER_NAME_REQUEST %s -> %s" %
-            (host, pilot.name.encode('utf8', 'ignore'),
-             user.name.encode('utf8', 'ignore')))
+        log(
+            "%s USER_NAME_REQUEST %s -> %s"
+            % (
+                host,
+                pilot.name.encode("utf8", "ignore"),
+                user.name.encode("utf8", "ignore"),
+            )
+        )
 
     def __handle(self, data, address):
-        if len(data) < 16: return
+        if len(data) < 16:
+            return
 
-        header = struct.unpack('!IHHQ', data[:16])
-        if header[0] != MAGIC: return
-        if not check_crc(data): return
+        header = struct.unpack("!IHHQ", data[:16])
+        if header[0] != MAGIC:
+            return
+        if not check_crc(data):
+            return
 
         (host, port) = address
 
@@ -288,6 +352,6 @@ class TrackingServer(DatagramServer):
 
     def serve_forever(self, **kwargs):
         if not self.app:
-            raise RuntimeError('application not registered on server instance')
+            raise RuntimeError("application not registered on server instance")
 
         super(TrackingServer, self).serve_forever(**kwargs)

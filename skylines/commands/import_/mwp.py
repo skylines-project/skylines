@@ -15,8 +15,8 @@ class MWP(Command):
     """ Import data from the Mountain Wave Project """
 
     option_list = (
-        Option('center_shapefile', metavar='MountainWaveCenterP.shp'),
-        Option('extend_shapefile', metavar='MountainWaveExtend.shp'),
+        Option("center_shapefile", metavar="MountainWaveCenterP.shp"),
+        Option("extend_shapefile", metavar="MountainWaveExtend.shp"),
     )
 
     def run(self, center_shapefile, extend_shapefile):
@@ -50,29 +50,29 @@ class MWP(Command):
             if not center_feature:
                 continue
 
-            name = center_feature.GetFieldAsString('name') \
-                .strip()
-            country = center_feature.GetFieldAsString('country').strip()
-            vertical_value = center_feature.GetFieldAsDouble('verticalve')
-            synoptical = center_feature.GetFieldAsString('synoptical').strip()
+            name = center_feature.GetFieldAsString("name").strip()
+            country = center_feature.GetFieldAsString("country").strip()
+            vertical_value = center_feature.GetFieldAsDouble("verticalve")
+            synoptical = center_feature.GetFieldAsString("synoptical").strip()
 
-            if center_feature.GetFieldAsString('mainwinddi').strip() != "None":
-                main_wind_direction = center_feature \
-                    .GetFieldAsString('mainwinddi').strip()
+            if center_feature.GetFieldAsString("mainwinddi").strip() != "None":
+                main_wind_direction = center_feature.GetFieldAsString(
+                    "mainwinddi"
+                ).strip()
             else:
                 main_wind_direction = None
 
-            additional = center_feature.GetFieldAsString('additional').strip()
-            source = center_feature.GetFieldAsString('source').strip()
-            remark1 = center_feature.GetFieldAsString('remark1').strip()
-            remark2 = center_feature.GetFieldAsString('remark2').strip()
-            orientation = center_feature.GetFieldAsDouble('orientatio')
-            rotor_height = center_feature.GetFieldAsString('rotorheigh').strip()
+            additional = center_feature.GetFieldAsString("additional").strip()
+            source = center_feature.GetFieldAsString("source").strip()
+            remark1 = center_feature.GetFieldAsString("remark1").strip()
+            remark2 = center_feature.GetFieldAsString("remark2").strip()
+            orientation = center_feature.GetFieldAsDouble("orientatio")
+            rotor_height = center_feature.GetFieldAsString("rotorheigh").strip()
             weather_dir = self.parse_wind_direction(main_wind_direction)
             location = center_feature.geometry()
 
             if ext_feature:
-                axis_length = ext_feature.GetFieldAsDouble('shape_leng')
+                axis_length = ext_feature.GetFieldAsDouble("shape_leng")
                 axis = ext_feature.geometry().ExportToWkt()
             else:
                 axis_length = None
@@ -95,8 +95,12 @@ class MWP(Command):
             wave.axis_length = axis_length
             wave.location = WKTElement(location.ExportToWkt(), srid=4326)
             wave.ellipse = self.ellipse(
-                axis_length / 2, axis_length / 8, -orientation,
-                location.GetX(), location.GetY())
+                axis_length / 2,
+                axis_length / 8,
+                -orientation,
+                location.GetX(),
+                location.GetY(),
+            )
 
             db.session.add(wave)
 
@@ -164,39 +168,39 @@ class MWP(Command):
         if isnumeric(direction):
             return float(direction)
 
-        direction = direction.upper().replace('O', 'E')
+        direction = direction.upper().replace("O", "E")
 
-        if direction == 'N':
+        if direction == "N":
             return 0
-        elif direction == 'NNE':
+        elif direction == "NNE":
             return 22.5
-        elif direction == 'NE':
+        elif direction == "NE":
             return 45
-        elif direction == 'ENE':
+        elif direction == "ENE":
             return 67.5
-        elif direction == 'E':
+        elif direction == "E":
             return 90
-        elif direction == 'ESE':
+        elif direction == "ESE":
             return 112.5
-        elif direction == 'SE':
+        elif direction == "SE":
             return 135
-        elif direction == 'SSE':
+        elif direction == "SSE":
             return 157.5
-        elif direction == 'S':
+        elif direction == "S":
             return 180
-        elif direction == 'SSW':
+        elif direction == "SSW":
             return 202.5
-        elif direction == 'SW':
+        elif direction == "SW":
             return 225
-        elif direction == 'WSW':
+        elif direction == "WSW":
             return 247.5
-        elif direction == 'W':
+        elif direction == "W":
             return 270
-        elif direction == 'WNW':
+        elif direction == "WNW":
             return 292.5
-        elif direction == 'NW':
+        elif direction == "NW":
             return 315
-        elif direction == 'NNW':
+        elif direction == "NNW":
             return 337.5
         else:
             return None

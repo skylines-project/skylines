@@ -16,15 +16,16 @@ class Trace(db.Model):
     of an optimized Flight.
     """
 
-    __tablename__ = 'traces'
+    __tablename__ = "traces"
 
     id = db.Column(Integer, autoincrement=True, primary_key=True)
 
     flight_id = db.Column(
-        Integer, db.ForeignKey('flights.id', ondelete='CASCADE'), nullable=False)
+        Integer, db.ForeignKey("flights.id", ondelete="CASCADE"), nullable=False
+    )
     flight = db.relationship(
-        'Flight', innerjoin=True,
-        backref=db.backref('traces', passive_deletes=True))
+        "Flight", innerjoin=True, backref=db.backref("traces", passive_deletes=True)
+    )
 
     contest_type = db.Column(String, nullable=False)
     trace_type = db.Column(String, nullable=False)
@@ -35,7 +36,8 @@ class Trace(db.Model):
 
     times = db.Column(postgresql.ARRAY(DateTime), nullable=False)
     _locations = db.Column(
-        'locations', Geometry('LINESTRING', srid=4326), nullable=False)
+        "locations", Geometry("LINESTRING", srid=4326), nullable=False
+    )
 
     @property
     def speed(self):
@@ -46,17 +48,25 @@ class Trace(db.Model):
 
     @property
     def locations(self):
-        return [Location(longitude=location[0], latitude=location[1])
-                for location in to_shape(self._locations).coords]
+        return [
+            Location(longitude=location[0], latitude=location[1])
+            for location in to_shape(self._locations).coords
+        ]
 
     @locations.setter
     def locations(self, locations):
-        points = ['{} {}'.format(location.longitude, location.latitude)
-                  for location in locations]
-        wkt = "LINESTRING({})".format(','.join(points))
+        points = [
+            "{} {}".format(location.longitude, location.latitude)
+            for location in locations
+        ]
+        wkt = "LINESTRING({})".format(",".join(points))
         self._locations = WKTElement(wkt, srid=4326)
 
 
-db.Index('traces_contest_idx',
-         Trace.flight_id, Trace.contest_type, Trace.trace_type,
-         unique=True)
+db.Index(
+    "traces_contest_idx",
+    Trace.flight_id,
+    Trace.contest_type,
+    Trace.trace_type,
+    unique=True,
+)

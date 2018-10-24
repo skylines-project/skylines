@@ -1,7 +1,4 @@
-from skylines.model.notification import (
-    Notification,
-    create_follower_notification,
-)
+from skylines.model.notification import Notification, create_follower_notification
 
 from tests.api import auth_for
 from tests.data import users
@@ -18,7 +15,7 @@ def test_clear_all(db_session, client):
 
     db_session.commit()
 
-    res = client.post('/notifications/clear', headers=auth_for(john))
+    res = client.post("/notifications/clear", headers=auth_for(john))
     assert res.status_code == 200
     assert res.json == {}
 
@@ -46,7 +43,9 @@ def test_clear_by_actor(db_session, client):
 
     db_session.commit()
 
-    res = client.post('/notifications/clear?user={}'.format(max.id), headers=auth_for(john))
+    res = client.post(
+        "/notifications/clear?user={}".format(max.id), headers=auth_for(john)
+    )
     assert res.status_code == 200
     assert res.json == {}
 

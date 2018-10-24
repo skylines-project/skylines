@@ -4,8 +4,14 @@ from datetime import datetime
 from hashlib import sha256
 
 from sqlalchemy.types import (
-    Unicode, Integer, BigInteger, SmallInteger,
-    DateTime, Boolean, Interval, String,
+    Unicode,
+    Integer,
+    BigInteger,
+    SmallInteger,
+    DateTime,
+    Boolean,
+    Interval,
+    String,
 )
 from sqlalchemy.sql.expression import cast, case
 from sqlalchemy.dialects.postgresql import INET
@@ -17,7 +23,7 @@ from skylines.lib.sql import LowerCaseComparator
 from skylines.lib.string import unicode_to_str, str_to_unicode
 from skylines.lib.types import is_unicode, is_bytes
 
-__all__ = ['User']
+__all__ = ["User"]
 
 
 class User(db.Model):
@@ -25,27 +31,28 @@ class User(db.Model):
     User definition.
     """
 
-    __tablename__ = 'users'
-    __searchable_columns__ = ['name']
+    __tablename__ = "users"
+    __searchable_columns__ = ["name"]
 
     id = db.Column(Integer, autoincrement=True, primary_key=True)
 
     # Email address and name of the user
 
     email_address = db.column_property(
-        db.Column(Unicode(255)), comparator_factory=LowerCaseComparator)
+        db.Column(Unicode(255)), comparator_factory=LowerCaseComparator
+    )
 
     first_name = db.Column(Unicode(255), nullable=False)
     last_name = db.Column(Unicode(255))
 
     # Hashed password
 
-    _password = db.Column('password', Unicode(128), nullable=False)
+    _password = db.Column("password", Unicode(128), nullable=False)
 
     # The user's club (optional)
 
-    club_id = db.Column(Integer, db.ForeignKey('clubs.id', ondelete='SET NULL'))
-    club = db.relationship('Club', foreign_keys=[club_id], backref='members')
+    club_id = db.Column(Integer, db.ForeignKey("clubs.id", ondelete="SET NULL"))
+    club = db.relationship("Club", foreign_keys=[club_id], backref="members")
 
     # Tracking key, delay in minutes and other settings
 
@@ -91,7 +98,7 @@ class User(db.Model):
 
     def __repr__(self):
         return unicode_to_str(
-            '<User: email=%s, display=%s>' % (self.email_address, self.name)
+            "<User: email=%s, display=%s>" % (self.email_address, self.name)
         )
 
     def __unicode__(self):
@@ -129,18 +136,19 @@ class User(db.Model):
         if not self.last_name:
             return self.first_name
 
-        return self.first_name + u' ' + self.last_name
+        return self.first_name + u" " + self.last_name
 
     @name.expression
     def name_expression(cls):
-        return case([
-            (cls.last_name != None, cls.first_name + u' ' + cls.last_name),
-        ], else_=cls.first_name)
+        return case(
+            [(cls.last_name != None, cls.first_name + u" " + cls.last_name)],
+            else_=cls.first_name,
+        )
 
     def initials(self):
         parts = self.name.split()
-        initials = [p[0].upper() for p in parts if len(p) > 2 and '.' not in p]
-        return ''.join(initials)
+        initials = [p[0].upper() for p in parts if len(p) > 2 and "." not in p]
+        return "".join(initials)
 
     ##############################
 
@@ -166,7 +174,7 @@ class User(db.Model):
         salt_hash.update(salt)
 
         hash = sha256()
-        hash.update((password + salt_hash.hexdigest()).encode('utf-8'))
+        hash.update((password + salt_hash.hexdigest()).encode("utf-8"))
 
         return str_to_unicode(salt_hash.hexdigest() + hash.hexdigest())
 
@@ -189,25 +197,25 @@ class User(db.Model):
             return False
 
         hash = sha256()
-        hash.update((password + self.password[:64]).encode('utf-8'))
+        hash.update((password + self.password[:64]).encode("utf-8"))
 
         return self.password[64:] == hash.hexdigest()
 
     ##############################
 
     def generate_tracking_key(self):
-        self.tracking_key = struct.unpack('I', os.urandom(4))[0]
+        self.tracking_key = struct.unpack("I", os.urandom(4))[0]
 
     @property
     def tracking_key_hex(self):
         if self.tracking_key is None:
             return None
 
-        return '%X' % self.tracking_key
+        return "%X" % self.tracking_key
 
     @classmethod
     def tracking_delay_interval(cls):
-        return cast(cast(cls.tracking_delay, String) + ' minutes', Interval)
+        return cast(cast(cls.tracking_delay, String) + " minutes", Interval)
 
     ##############################
 
@@ -218,7 +226,7 @@ class User(db.Model):
     ##############################
 
     def generate_recover_key(self, ip):
-        self.recover_key = struct.unpack('I', os.urandom(4))[0] & 0x7fffffff
+        self.recover_key = struct.unpack("I", os.urandom(4))[0] & 0x7FFFFFFF
         self.recover_time = datetime.utcnow()
         self.recover_ip = ip
         return self.recover_key
@@ -230,26 +238,30 @@ class User(db.Model):
         return self.is_writable(user)
 
     def is_writable(self, user):
-        return user and \
-            (self.id == user.id or
-             (self.password is None and self.club_id == user.club_id) or
-             user.is_manager())
+        return user and (
+            self.id == user.id
+            or (self.password is None and self.club_id == user.club_id)
+            or user.is_manager()
+        )
 
     ##############################
 
     def follows(self, other):
         assert isinstance(other, User)
         from skylines.model.follower import Follower
+
         return Follower.follows(self, other)
 
     @property
     def num_followers(self):
         from skylines.model.follower import Follower
+
         return Follower.query(destination=self).count()
 
     @property
     def num_following(self):
         from skylines.model.follower import Follower
+
         return Follower.query(source=self).count()
 
     ##############################
@@ -260,6 +272,7 @@ class User(db.Model):
         as pilot ordered by distance
         """
         from skylines.model.flight import Flight
+
         return Flight.get_largest().filter(Flight.pilot == self)
 
     ##############################
@@ -274,5 +287,6 @@ class User(db.Model):
         db.session.delete(self)
 
 
-db.Index('users_lower_email_address_idx',
-         db.func.lower(User.email_address), unique=True)
+db.Index(
+    "users_lower_email_address_idx", db.func.lower(User.email_address), unique=True
+)

@@ -16,7 +16,7 @@ class Location(object):
         self.longitude = longitude
 
     def to_wkt(self):
-        return 'POINT({0} {1})'.format(self.longitude, self.latitude)
+        return "POINT({0} {1})".format(self.longitude, self.latitude)
 
     def to_wkt_element(self, srid=4326):
         if not srid:
@@ -51,8 +51,7 @@ class Location(object):
         return self.to_wkt()
 
     @staticmethod
-    def get_clustered_locations(location_column,
-                                threshold_radius=1000, filter=None):
+    def get_clustered_locations(location_column, threshold_radius=1000, filter=None):
         """
         SELECT ST_Centroid(
             (ST_Dump(
@@ -80,7 +79,7 @@ class Location(object):
         # Calculate center points of each polygon
         locations = func.ST_Centroid(dump)
 
-        query = db.session.query(locations.label('location'))
+        query = db.session.query(locations.label("location"))
 
         if filter is not None:
             query = query.filter(filter)
@@ -93,23 +92,20 @@ class Location(object):
 
 class Bounds(object):
     def __init__(self, southwest, northeast):
-        if not (isinstance(southwest, Location) and
-                isinstance(northeast, Location)):
-            raise ValueError('SW and NE must be Location instances.')
+        if not (isinstance(southwest, Location) and isinstance(northeast, Location)):
+            raise ValueError("SW and NE must be Location instances.")
 
         if southwest.latitude > northeast.latitude:
-            raise ValueError(
-                'SW latitude must be smaller or equal to NE latitude.')
+            raise ValueError("SW latitude must be smaller or equal to NE latitude.")
 
         self.southwest = southwest
         self.northeast = northeast
 
     @staticmethod
     def from_bbox_string(bbox):
-        bbox = bbox.split(',')
+        bbox = bbox.split(",")
         if len(bbox) != 4:
-            raise ValueError(
-                'BBox string needs to have exactly four components')
+            raise ValueError("BBox string needs to have exactly four components")
 
         bbox = [float(angle) for angle in bbox]
 
@@ -131,8 +127,9 @@ class Bounds(object):
         self.northeast.normalize()
 
     def make_box(self, srid=4326):
-        box = db.func.ST_MakeBox2D(self.southwest.make_point(srid=None),
-                                   self.northeast.make_point(srid=None))
+        box = db.func.ST_MakeBox2D(
+            self.southwest.make_point(srid=None), self.northeast.make_point(srid=None)
+        )
         if srid:
             box = db.func.ST_SetSRID(box, srid)
 

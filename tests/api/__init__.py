@@ -9,5 +9,5 @@ def auth_for(user):
 
 def basic_auth(email, password):
     headers = Headers()
-    headers.add('Authorization', basic_auth_encode(email, password))
+    headers.add("Authorization", basic_auth_encode(email, password))
     return headers

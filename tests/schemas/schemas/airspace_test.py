@@ -15,36 +15,36 @@ def test_airspace_schema(test_airspace):
 
     assert isinstance(data, OrderedDict)
     assert list(data.keys()) == [
-        'id',
-        'name',
-        'class',
-        'base',
-        'top',
-        'shape',
-        'countryCode',
-        'created_at',
-        'modified_at',
+        "id",
+        "name",
+        "class",
+        "base",
+        "top",
+        "shape",
+        "countryCode",
+        "created_at",
+        "modified_at",
     ]
 
-    assert data['id'] == test_airspace.id
-    assert data['name'] == test_airspace.name
-    assert data['class'] == test_airspace.airspace_class
-    assert data['top'] == test_airspace.top
-    assert data['base'] == test_airspace.base
-    assert data['countryCode'] == test_airspace.country_code
+    assert data["id"] == test_airspace.id
+    assert data["name"] == test_airspace.name
+    assert data["class"] == test_airspace.airspace_class
+    assert data["top"] == test_airspace.top
+    assert data["base"] == test_airspace.base
+    assert data["countryCode"] == test_airspace.country_code
 
-    created_at = datetime.strptime(data['created_at'], '%Y-%m-%dT%H:%M:%S.%f+00:00')
+    created_at = datetime.strptime(data["created_at"], "%Y-%m-%dT%H:%M:%S.%f+00:00")
     assert isinstance(created_at, datetime)
     assert created_at == test_airspace.time_created
 
-    modified_at = datetime.strptime(data['modified_at'], '%Y-%m-%dT%H:%M:%S.%f+00:00')
+    modified_at = datetime.strptime(data["modified_at"], "%Y-%m-%dT%H:%M:%S.%f+00:00")
     assert isinstance(modified_at, datetime)
     assert modified_at == test_airspace.time_modified
 
     test_shape = to_shape(test_airspace.the_geom)
     assert isinstance(test_shape, Polygon)
 
-    shape = data['shape']
+    shape = data["shape"]
     assert isinstance(shape, list)
     assert len(shape) == len(test_shape.exterior.coords)
 

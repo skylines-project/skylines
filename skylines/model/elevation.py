@@ -5,7 +5,7 @@ from skylines.database import db
 
 
 class Elevation(db.Model):
-    __tablename__ = 'elevations'
+    __tablename__ = "elevations"
 
     rid = db.Column(Integer, autoincrement=True, primary_key=True)
     rast = db.Column(Raster)
@@ -20,8 +20,10 @@ class Elevation(db.Model):
 
         elevation = cls.rast.ST_Value(location)
 
-        query = db.session.query(elevation.label('elevation')) \
-            .filter(location.ST_Intersects(cls.rast)) \
+        query = (
+            db.session.query(elevation.label("elevation"))
+            .filter(location.ST_Intersects(cls.rast))
             .filter(elevation != None)
+        )
 
         return query.scalar()

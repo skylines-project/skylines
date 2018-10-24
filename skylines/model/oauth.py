@@ -6,18 +6,18 @@ from skylines.database import db
 
 
 class Client(object):
-    client_id = 'default'
+    client_id = "default"
     client_secret = None
-    client_type = 'public'
+    client_type = "public"
     redirect_uris = []
-    default_redirect_uri = ''
+    default_redirect_uri = ""
     default_scopes = []
-    allowed_grant_types = ['password', 'refresh_token']
+    allowed_grant_types = ["password", "refresh_token"]
 
 
 class AccessToken(object):
     client_id = Client.client_id
-    token_type = 'Bearer'
+    token_type = "Bearer"
     user = None
 
     @classmethod
@@ -29,8 +29,8 @@ class AccessToken(object):
 
         return AccessToken(
             access_token,
-            user_id=decoded['user'],
-            expires=datetime.utcfromtimestamp(decoded['exp'])
+            user_id=decoded["user"],
+            expires=datetime.utcfromtimestamp(decoded["exp"]),
         )
 
     def __init__(self, access_token, user_id, expires, scopes=None):
@@ -44,12 +44,14 @@ class AccessToken(object):
 
 
 class RefreshToken(db.Model):
-    __tablename__ = 'token'
+    __tablename__ = "token"
 
     id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     client_id = Client.client_id
-    user_id = db.Column(db.Integer, db.ForeignKey('users.id', ondelete='CASCADE'), nullable=False)
-    user = db.relationship('User', foreign_keys=[user_id])
+    user_id = db.Column(
+        db.Integer, db.ForeignKey("users.id", ondelete="CASCADE"), nullable=False
+    )
+    user = db.relationship("User", foreign_keys=[user_id])
     refresh_token = db.Column(db.String(255), unique=True)
     scopes = []
 

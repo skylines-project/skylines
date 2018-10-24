@@ -4,8 +4,8 @@ import sys
 from skylines.lib.types import is_bytes
 
 
-whitespace_re = re.compile(br'[\x00-\x20\s]')
-non_alnum_re = re.compile(br'[^0-9a-zA-Z]')
+whitespace_re = re.compile(br"[\x00-\x20\s]")
+non_alnum_re = re.compile(br"[^0-9a-zA-Z]")
 
 
 def normalize_whitespace(s):
@@ -14,7 +14,7 @@ def normalize_whitespace(s):
 
     assert is_bytes(s)
 
-    return whitespace_re.sub(b' ', s.strip())
+    return whitespace_re.sub(b" ", s.strip())
 
 
 def import_ascii(s):
@@ -24,7 +24,7 @@ def import_ascii(s):
     assert is_bytes(s)
 
     s = normalize_whitespace(s)
-    return s.decode('ascii', 'ignore')
+    return s.decode("ascii", "ignore")
 
 
 def import_alnum(s):
@@ -33,8 +33,8 @@ def import_alnum(s):
 
     assert is_bytes(s)
 
-    s = non_alnum_re.sub(b'', s)
-    return s.decode('ascii')
+    s = non_alnum_re.sub(b"", s)
+    return s.decode("ascii")
 
 
 def isnumeric(s):
@@ -49,13 +49,13 @@ def isnumeric(s):
 
 def unicode_to_str(value):
     if sys.version_info[0] == 2:
-        return value.encode('utf-8')
+        return value.encode("utf-8")
     else:
         return value
 
 
 def str_to_unicode(value):
     if sys.version_info[0] == 2:
-        return value.decode('utf-8')
+        return value.decode("utf-8")
     else:
         return value

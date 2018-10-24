@@ -12,18 +12,19 @@ from skylines.lib.string import unicode_to_str
 # - shp2pgsql -D -s 4326 tz_world.shp > dump.sql
 # - psql skylines -f dump.sql
 
-class TimeZone(db.Model):
-    __tablename__ = 'tz_world'
 
-    id = db.Column('gid', Integer, autoincrement=True, primary_key=True)
+class TimeZone(db.Model):
+    __tablename__ = "tz_world"
+
+    id = db.Column("gid", Integer, autoincrement=True, primary_key=True)
     tzid = db.Column(String(30))
-    the_geom = db.Column(Geometry('MULTIPOLYGON', srid=4326))
+    the_geom = db.Column(Geometry("MULTIPOLYGON", srid=4326))
 
     def __unicode__(self):
         return self.tzid
 
     def __repr__(self):
-        return unicode_to_str('<TimeZone: tzid=\'%s\'>' % (self.tzid))
+        return unicode_to_str("<TimeZone: tzid='%s'>" % (self.tzid))
 
     @classmethod
     def by_location(cls, location):

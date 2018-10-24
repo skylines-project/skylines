@@ -14,17 +14,23 @@ class ContestLeg(db.Model):
     This table saves the legs of a optimized Flight.
     """
 
-    __tablename__ = 'contest_legs'
+    __tablename__ = "contest_legs"
 
     id = db.Column(Integer, autoincrement=True, primary_key=True)
 
     flight_id = db.Column(
-        Integer, db.ForeignKey('flights.id', ondelete='CASCADE'), nullable=False,
-        index=True)
+        Integer,
+        db.ForeignKey("flights.id", ondelete="CASCADE"),
+        nullable=False,
+        index=True,
+    )
     flight = db.relationship(
-        'Flight', innerjoin=True,
-        backref=db.backref('_legs', passive_deletes=True,
-                           cascade='all, delete, delete-orphan'))
+        "Flight",
+        innerjoin=True,
+        backref=db.backref(
+            "_legs", passive_deletes=True, cascade="all, delete, delete-orphan"
+        ),
+    )
 
     contest_type = db.Column(String, nullable=False)
     trace_type = db.Column(String, nullable=False)
@@ -50,10 +56,8 @@ class ContestLeg(db.Model):
     end_time = db.Column(DateTime, nullable=False)
 
     # start and end locations
-    start_location_wkt = db.Column(
-        'start_location', Geometry('POINT', srid=4326))
-    end_location_wkt = db.Column(
-        'end_location', Geometry('POINT', srid=4326))
+    start_location_wkt = db.Column("start_location", Geometry("POINT", srid=4326))
+    end_location_wkt = db.Column("end_location", Geometry("POINT", srid=4326))
 
     @property
     def duration(self):

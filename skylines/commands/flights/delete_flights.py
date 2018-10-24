@@ -13,16 +13,21 @@ class DeleteFlights(Command):
     """ Delete flights by given criteria """
 
     option_list = selector_options + (
-        Option('--confirm', action='store_true',
-               help='confirm to really delete the selected flights'),
+        Option(
+            "--confirm",
+            action="store_true",
+            help="confirm to really delete the selected flights",
+        ),
     )
 
     def run(self, confirm, **kwargs):
 
-        query = db.session.query(Flight) \
-            .outerjoin(Flight.takeoff_airport) \
-            .join(IGCFile) \
+        query = (
+            db.session.query(Flight)
+            .outerjoin(Flight.takeoff_airport)
+            .join(IGCFile)
             .order_by(Flight.id)
+        )
 
         query = select(query, **kwargs)
 

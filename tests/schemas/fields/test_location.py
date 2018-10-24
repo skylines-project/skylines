@@ -7,4 +7,4 @@ def test_serialization():
         location = fields.Location()
 
     data = TestSchema().dump(dict(location=Location(longitude=7, latitude=51))).data
-    assert data['location'] == [7, 51]
+    assert data["location"] == [7, 51]

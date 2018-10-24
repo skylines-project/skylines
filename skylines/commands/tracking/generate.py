@@ -15,9 +15,7 @@ from skylines.model import TrackingFix, User
 class Generate(Command):
     """ Generate fake live tracks for debugging """
 
-    option_list = (
-        Option('user_id', type=int, help='a user ID'),
-    )
+    option_list = (Option("user_id", type=int, help="a user ID"),)
 
     def run(self, user_id):
         user = User.get(user_id)
@@ -26,14 +24,14 @@ class Generate(Command):
             sys.exit(1)
 
         i = randint(0, 100)
-        _longitude = randint(6500, 7500) / 1000.
-        _latitude = randint(50500, 51500) / 1000.
+        _longitude = randint(6500, 7500) / 1000.0
+        _latitude = randint(50500, 51500) / 1000.0
         _altitude = 500
 
         while True:
-            longitude = sin(i / 73.) * 0.001 + _longitude
-            latitude = sin(i / 50.) * 0.004 + _latitude
-            altitude = sin(i / 20.) * 300 + _altitude
+            longitude = sin(i / 73.0) * 0.001 + _longitude
+            latitude = sin(i / 50.0) * 0.004 + _latitude
+            altitude = sin(i / 20.0) * 300 + _altitude
 
             fix = TrackingFix()
             fix.pilot = user
@@ -45,7 +43,7 @@ class Generate(Command):
             db.session.add(fix)
             db.session.commit()
 
-            print('.', end='')
+            print(".", end="")
             sys.stdout.flush()
 
             sleep(1)

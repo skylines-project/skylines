@@ -13,10 +13,12 @@ class DeleteOld(Command):
     def run(self):
         max_age = timedelta(weeks=2)
 
-        result = db.session.query(TrackingFix) \
-            .filter(TrackingFix.time < datetime.utcnow() - max_age) \
+        result = (
+            db.session.query(TrackingFix)
+            .filter(TrackingFix.time < datetime.utcnow() - max_age)
             .delete()
+        )
 
         db.session.commit()
 
-        print('%d live tracking locations cleared.' % result)
+        print("%d live tracking locations cleared." % result)

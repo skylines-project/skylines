@@ -6,7 +6,7 @@ http://en.wikipedia.org/wiki/Base_36#Python_Conversion_Code
 from .types import is_int
 
 
-def encode(number, alphabet='0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ'):
+def encode(number, alphabet="0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ"):
     """
     Converts an integer to a base36 string.
 
@@ -15,16 +15,16 @@ def encode(number, alphabet='0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ'):
     """
 
     if not is_int(number):
-        raise TypeError('number must be an integer')
+        raise TypeError("number must be an integer")
 
     if 0 <= number <= 9:
         return alphabet[number]
 
-    base36 = ''
-    sign = ''
+    base36 = ""
+    sign = ""
 
     if number < 0:
-        sign = '-'
+        sign = "-"
         number = -number
 
     while number != 0:
