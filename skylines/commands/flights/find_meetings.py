@@ -18,10 +18,15 @@ class FindMeetings(Command):
             action="store_true",
             help="re-analyse all flights, not just the scheduled ones",
         ),
-        Option("--async", action="store_true", help="put flights in celery queue"),
+        Option(
+            "--async",
+            dest="_async",
+            action="store_true",
+            help="put flights in celery queue",
+        ),
     )
 
-    def run(self, force, async, **kwargs):
+    def run(self, force, _async, **kwargs):
         q = db.session.query(Flight)
         q = q.order_by(Flight.id)
 
@@ -33,15 +38,15 @@ class FindMeetings(Command):
         if not force:
             q = q.filter(Flight.needs_analysis == True)
 
-        if async:
+        if _async:
             current_app.add_celery()
 
-        self.incremental(lambda f: self.do(f, async=async), q)
+        self.incremental(lambda f: self.do(f, _async=_async), q)
 
-    def do(self, flight, async):
+    def do(self, flight, _async):
         print(flight.id)
 
-        if async:
+        if _async:
             tasks.find_meetings.delay(flight.id)
         else:
             tasks.find_meetings(flight.id)
