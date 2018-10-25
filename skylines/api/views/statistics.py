@@ -26,18 +26,18 @@ def index(page=None, id=None):
 
     if page == "pilot":
         pilot = get_requested_record(User, id)
-        name = unicode(pilot)
+        name = pilot.name
         query = query.filter(Flight.pilot_id == pilot.id)
 
     elif page == "club":
         club = get_requested_record(Club, id)
-        name = unicode(club)
+        name = club.name
         query = query.filter(Flight.club_id == club.id)
         pilots_query = pilots_query.filter(Flight.club_id == club.id)
 
     elif page == "airport":
         airport = get_requested_record(Airport, id)
-        name = unicode(airport)
+        name = airport.name
         query = query.filter(Flight.takeoff_airport_id == airport.id)
         pilots_query = pilots_query.filter(Flight.takeoff_airport_id == airport.id)
 

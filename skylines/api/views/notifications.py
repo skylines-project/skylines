@@ -81,17 +81,17 @@ def convert_event(e):
         "id": e.id,
         "type": TYPES.get(e.type, "unknown"),
         "time": e.time.isoformat(),
-        "actor": {"id": e.actor_id, "name": unicode(e.actor)},
+        "actor": {"id": e.actor_id, "name": e.actor.name},
     }
 
     if hasattr(e, "unread"):
         event["unread"] = e.unread
 
     if e.user_id:
-        event["user"] = {"id": e.user_id, "name": unicode(e.user)}
+        event["user"] = {"id": e.user_id, "name": e.user.name}
 
     if e.club_id:
-        event["club"] = {"id": e.club_id, "name": unicode(e.club)}
+        event["club"] = {"id": e.club_id, "name": e.club.name}
 
     if e.flight_id:
         event["flight"] = {
