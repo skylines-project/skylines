@@ -122,45 +122,45 @@ def __parse_line(line, bounds=None):
 
     # Find waypoint type from waypoint name if not available yet
     if not wp.type:
-        if re.search("(^|\s)BERG($|\s)", wp.name):
+        if re.search(r"(^|\s)BERG($|\s)", wp.name):
             wp.type = "mountain top"
-        if re.search("(^|\s)COL($|\s)", wp.name):
+        if re.search(r"(^|\s)COL($|\s)", wp.name):
             wp.type = "mountain pass"
-        if re.search("(^|\s)PASS($|\s)", wp.name):
+        if re.search(r"(^|\s)PASS($|\s)", wp.name):
             wp.type = "mountain pass"
-        if re.search("(^|\s)TOP($|\s)", wp.name):
+        if re.search(r"(^|\s)TOP($|\s)", wp.name):
             wp.type = "mountain top"
-        if re.search("(\s)A(\d){0,3}($|\s)", wp.name):
+        if re.search(r"(\s)A(\d){0,3}($|\s)", wp.name):
             wp.type = "highway exit"
-        if re.search("(\s)AB(\d){0,3}($|\s)", wp.name):
+        if re.search(r"(\s)AB(\d){0,3}($|\s)", wp.name):
             wp.type = "highway exit"
-        if re.search("(\s)BAB(\d){0,3}($|\s)", wp.name):
+        if re.search(r"(\s)BAB(\d){0,3}($|\s)", wp.name):
             wp.type = "highway exit"
-        if re.search("(\s)(\w){0,3}XA(\d){0,3}($|\s)", wp.name):
+        if re.search(r"(\s)(\w){0,3}XA(\d){0,3}($|\s)", wp.name):
             wp.type = "highway cross"
-        if re.search("(\s)(\w){0,3}YA(\d){0,3}($|\s)", wp.name):
+        if re.search(r"(\s)(\w){0,3}YA(\d){0,3}($|\s)", wp.name):
             wp.type = "highway junction"
-        if re.search("(\s)STR($|\s)", wp.name):
+        if re.search(r"(\s)STR($|\s)", wp.name):
             wp.type = "road"
-        if re.search("(\s)SX($|\s)", wp.name):
+        if re.search(r"(\s)SX($|\s)", wp.name):
             wp.type = "road cross"
-        if re.search("(\s)SY($|\s)", wp.name):
+        if re.search(r"(\s)SY($|\s)", wp.name):
             wp.type = "road junction"
-        if re.search("(\s)EX($|\s)", wp.name):
+        if re.search(r"(\s)EX($|\s)", wp.name):
             wp.type = "railway cross"
-        if re.search("(\s)EY($|\s)", wp.name):
+        if re.search(r"(\s)EY($|\s)", wp.name):
             wp.type = "railway junction"
-        if re.search("(\s)TR($|\s)", wp.name):
+        if re.search(r"(\s)TR($|\s)", wp.name):
             wp.type = "gas station"
-        if re.search("(\s)BF($|\s)", wp.name):
+        if re.search(r"(\s)BF($|\s)", wp.name):
             wp.type = "railway station"
-        if re.search("(\s)RS($|\s)", wp.name):
+        if re.search(r"(\s)RS($|\s)", wp.name):
             wp.type = "railway station"
-        if re.search("(\s)BR($|\s)", wp.name):
+        if re.search(r"(\s)BR($|\s)", wp.name):
             wp.type = "bridge"
-        if re.search("(\s)TV($|\s)", wp.name):
+        if re.search(r"(\s)TV($|\s)", wp.name):
             wp.type = "tower"
-        if re.search("(\s)KW($|\s)", wp.name):
+        if re.search(r"(\s)KW($|\s)", wp.name):
             wp.type = "powerplant"
 
     # Format waypoint name properly

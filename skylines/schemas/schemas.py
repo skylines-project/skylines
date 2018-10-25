@@ -125,7 +125,7 @@ class CurrentUserSchema(UserSchema):
         attribute="recover_key",
         required=True,
         load_only=True,
-        validate=validate.Regexp("^[\da-fA-F]+$"),
+        validate=validate.Regexp(r"^[\da-fA-F]+$"),
     )
 
     trackingKey = fields.String(attribute="tracking_key_hex", dump_only=True)
