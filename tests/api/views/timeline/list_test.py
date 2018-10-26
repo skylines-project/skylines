@@ -40,27 +40,27 @@ def test_event_types(db_session, client):
             {
                 "id": club_join_event.id,
                 "type": "club-join",
-                "time": "2017-02-15T12:34:56",
+                "time": "2017-02-15T12:34:56+00:00",
                 "actor": {"id": john.id, "name": "John Doe"},
                 "club": {"id": club_join_event.club.id, "name": "LV Aachen"},
             },
             {
                 "id": new_user_event.id,
                 "type": "new-user",
-                "time": "2017-02-14T12:34:56",
+                "time": "2017-02-14T12:34:56+00:00",
                 "actor": {"id": jane.id, "name": "Jane Doe"},
             },
             {
                 "id": follower_event.id,
                 "type": "follower",
-                "time": "2017-02-13T12:34:56",
+                "time": "2017-02-13T12:34:56+00:00",
                 "actor": {"id": john.id, "name": "John Doe"},
                 "user": {"id": jane.id, "name": "Jane Doe"},
             },
             {
                 "id": flight_event.id,
                 "type": "flight-upload",
-                "time": "2017-02-12T12:34:56",
+                "time": "2017-02-12T12:34:56+00:00",
                 "actor": {"id": john.id, "name": "John Doe"},
                 "flight": {
                     "id": flight.id,
@@ -73,7 +73,7 @@ def test_event_types(db_session, client):
             {
                 "id": flight_comment_event.id,
                 "type": "flight-comment",
-                "time": "2017-02-11T12:34:56",
+                "time": "2017-02-11T12:34:56+00:00",
                 "actor": {"id": john.id, "name": "John Doe"},
                 "flightComment": {"id": flight_comment.id},
                 "flight": {
