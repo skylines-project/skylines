@@ -1,5 +1,7 @@
 from werkzeug.exceptions import HTTPException, InternalServerError
+
 from skylines.api.json import jsonify
+from skylines.lib.string import to_unicode
 
 
 def register(app):
@@ -42,8 +44,8 @@ def register(app):
     @app.errorhandler(TypeError)
     @app.errorhandler(ValueError)
     def raise_bad_request(e):
-        return jsonify(message=e.message), 400
+        return jsonify(message=to_unicode(e)), 400
 
     @app.errorhandler(LookupError)
     def raise_not_found(e):
-        return jsonify(message=e.message), 404
+        return jsonify(message=to_unicode(e)), 404
