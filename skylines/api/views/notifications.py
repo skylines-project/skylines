@@ -59,9 +59,9 @@ def _list():
         event.unread = notification.time_read is None
         return event
 
-    events = map(get_event, query)
+    events = list(convert_event(get_event(notification)) for notification in query)
 
-    return jsonify(events=(map(convert_event, events)))
+    return jsonify(events=events)
 
 
 @notifications_blueprint.route("/notifications/clear", methods=("POST",))
