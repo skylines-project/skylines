@@ -2,6 +2,8 @@ from flask import Blueprint, request
 from sqlalchemy.orm import subqueryload, contains_eager
 from sqlalchemy.sql.expression import or_
 
+import pytz
+
 from skylines.api.json import jsonify
 from skylines.database import db
 from skylines.api.oauth import oauth
@@ -80,7 +82,7 @@ def convert_event(e):
     event = {
         "id": e.id,
         "type": TYPES.get(e.type, "unknown"),
-        "time": e.time.isoformat(),
+        "time": e.time.replace(tzinfo=pytz.utc).isoformat(),
         "actor": {"id": e.actor_id, "name": e.actor.name},
     }
 
