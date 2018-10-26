@@ -4,6 +4,10 @@ from datetime import date, datetime
 from skylines.model import IGCFile
 
 simple_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "simple.igc")
+hornet_path = os.path.join(
+    os.path.dirname(os.path.abspath(__file__)), "2018-04-14-fla-6ng-01.igc"
+)
+zip_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "igcs.zip")
 
 
 def simple(owner, **kwargs):
