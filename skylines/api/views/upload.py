@@ -19,6 +19,7 @@ from skylines.lib import files
 from skylines.lib.util import pressure_alt_to_qnh_alt
 from skylines.lib.md5 import file_md5
 from skylines.lib.sql import query_to_sql
+from skylines.lib.types import is_unicode
 from skylines.lib.xcsoar_ import flight_path, analyse_flight
 from skylines.model import User, Flight, IGCFile, Airspace, AircraftModel
 from skylines.model.airspace import get_airspace_infringements
@@ -125,7 +126,7 @@ def iterate_files(name, f):
 
 
 def iterate_upload_files(upload):
-    if isinstance(upload, unicode):
+    if is_unicode(upload):
         # the Chromium browser sends an empty string if no file is selected
         if not upload:
             return
