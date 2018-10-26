@@ -1,3 +1,5 @@
+# flake8: noqa F821
+
 import re
 import sys
 
@@ -59,3 +61,10 @@ def str_to_unicode(value):
         return value.decode("utf-8")
     else:
         return value
+
+
+def to_unicode(value):
+    if sys.version_info[0] == 2:
+        return unicode(value)
+    else:
+        return str(value)
