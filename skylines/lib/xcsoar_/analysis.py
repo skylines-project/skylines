@@ -80,7 +80,8 @@ def delete_contest_legs(contest_name, trace_name, flight):
 
 
 def save_trace(contest_name, trace_name, node, flight):
-    delete_trace(contest_name, trace_name, flight)
+    if flight.id is not None:
+        delete_trace(contest_name, trace_name, flight)
 
     if "turnpoints" not in node:
         return
