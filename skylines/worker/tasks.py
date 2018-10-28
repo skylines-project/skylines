@@ -47,7 +47,7 @@ def find_meetings(flight_id):
         ).delete()
 
     # Insert new meetings into table
-    for flight_id, meetings in other_flights.iteritems():
+    for flight_id, meetings in other_flights.items():
         other_flight = Flight.get(flight_id)
 
         for meeting in meetings:
