@@ -374,8 +374,8 @@ def calculate_leg_statistics(flight, fp):
 def get_limits():
     iter_limit = int(current_app.config.get("SKYLINES_ANALYSIS_ITER", 10e6))
     # Each node of the triangle solver has a size of 92 bytes...
-    tree_size_limit = (
-        int(current_app.config.get("SKYLINES_ANALYSIS_MEMORY", 256)) * 1024 * 1024 / 92
+    tree_size_limit = int(
+        current_app.config.get("SKYLINES_ANALYSIS_MEMORY", 256) * 1024 * 1024 / 92
     )
 
     return dict(iter_limit=iter_limit, tree_size_limit=tree_size_limit)
