@@ -151,7 +151,7 @@ def save_contest_legs(contest_name, trace_name, node, flight):
 
 
 def save_contest(contest_name, traces, flight):
-    for trace_name, trace in traces.iteritems():
+    for trace_name, trace in traces.items():
         save_trace(contest_name, trace_name, trace, flight)
         save_contest_legs(contest_name, trace_name, trace, flight)
 
@@ -162,7 +162,7 @@ def save_contests(root, flight):
         # time integer to a DateTime instance
         return
 
-    for contest_name, traces in root["contests"].iteritems():
+    for contest_name, traces in root["contests"].items():
         save_contest(contest_name, traces, flight)
 
 
