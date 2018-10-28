@@ -19,6 +19,7 @@ from skylines.lib import files
 from skylines.lib.util import pressure_alt_to_qnh_alt
 from skylines.lib.md5 import file_md5
 from skylines.lib.sql import query_to_sql
+from skylines.lib.string import to_unicode
 from skylines.lib.types import is_unicode
 from skylines.lib.xcsoar_ import flight_path, analyse_flight
 from skylines.model import User, Flight, IGCFile, Airspace, AircraftModel
@@ -292,7 +293,7 @@ def index_post():
 
         # Store data in cache for image creation
         cache_key = hashlib.sha1(
-            str(flight.id) + "_" + str(current_user.id)
+            (to_unicode(flight.id) + u"_" + to_unicode(current_user.id)).encode("utf-8")
         ).hexdigest()
 
         cache.set(
