@@ -27,7 +27,7 @@ def test_user_delete_deletes_user(db_session):
 
 @pytest.mark.usefixtures("files_folder")
 def test_user_delete_deletes_owned_igc_files(db_session):
-    with open(igcs.simple_path, "r") as f:
+    with open(igcs.simple_path, "rb") as f:
         filename = files.add_file("simple.igc", f)
 
     assert filename is not None
