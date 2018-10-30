@@ -48,7 +48,7 @@ def filename_to_path(name):
 def open_file(name):
     assert is_string(name)
 
-    return open(filename_to_path(name))
+    return open(filename_to_path(name), "rb")
 
 
 def next_filename(name):
@@ -77,7 +77,7 @@ def add_file(name, f):
             break
         name = next_filename(name)
 
-    dest = open(path, "w")
+    dest = open(path, "wb")
     shutil.copyfileobj(f, dest)
     dest.close()
 

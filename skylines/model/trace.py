@@ -24,7 +24,11 @@ class Trace(db.Model):
         Integer, db.ForeignKey("flights.id", ondelete="CASCADE"), nullable=False
     )
     flight = db.relationship(
-        "Flight", innerjoin=True, backref=db.backref("traces", passive_deletes=True)
+        "Flight",
+        innerjoin=True,
+        backref=db.backref(
+            "traces", passive_deletes=True, cascade="all, delete, delete-orphan"
+        ),
     )
 
     contest_type = db.Column(String, nullable=False)

@@ -73,7 +73,7 @@ def flight_path(igc_file, max_points=1000, add_elevation=False, qnh=None):
     if add_elevation and len(output):
         output = get_elevation(output)
 
-    return map(lambda line: FlightPathFix(*line), output)
+    return list(FlightPathFix(*line) for line in output)
 
 
 def cumulative_distance(fixes, start_fix, end_fix):

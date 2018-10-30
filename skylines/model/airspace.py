@@ -81,11 +81,16 @@ def get_airspace_infringements(flight_path, qnh=None):
 
     bbox = from_shape(box(*linestring.bounds), srid=4326)
 
-    q = db.session.query(Airspace).filter(Airspace.the_geom.intersects(bbox))
+    airspaces = (
+        db.session.query(Airspace).filter(Airspace.the_geom.intersects(bbox)).all()
+    )
+
+    if not airspaces:
+        return dict()
 
     xcs_airspace = xcsoar.Airspaces()
 
-    for airspace in q.all():
+    for airspace in airspaces:
         if airspace.airspace_class not in current_app.config["SKYLINES_AIRSPACE_CHECK"]:
             continue
 

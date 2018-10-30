@@ -80,7 +80,8 @@ def delete_contest_legs(contest_name, trace_name, flight):
 
 
 def save_trace(contest_name, trace_name, node, flight):
-    delete_trace(contest_name, trace_name, flight)
+    if flight.id is not None:
+        delete_trace(contest_name, trace_name, flight)
 
     if "turnpoints" not in node:
         return
@@ -151,7 +152,7 @@ def save_contest_legs(contest_name, trace_name, node, flight):
 
 
 def save_contest(contest_name, traces, flight):
-    for trace_name, trace in traces.iteritems():
+    for trace_name, trace in traces.items():
         save_trace(contest_name, trace_name, trace, flight)
         save_contest_legs(contest_name, trace_name, trace, flight)
 
@@ -162,7 +163,7 @@ def save_contests(root, flight):
         # time integer to a DateTime instance
         return
 
-    for contest_name, traces in root["contests"].iteritems():
+    for contest_name, traces in root["contests"].items():
         save_contest(contest_name, traces, flight)
 
 
@@ -374,8 +375,8 @@ def calculate_leg_statistics(flight, fp):
 def get_limits():
     iter_limit = int(current_app.config.get("SKYLINES_ANALYSIS_ITER", 10e6))
     # Each node of the triangle solver has a size of 92 bytes...
-    tree_size_limit = (
-        int(current_app.config.get("SKYLINES_ANALYSIS_MEMORY", 256)) * 1024 * 1024 / 92
+    tree_size_limit = int(
+        current_app.config.get("SKYLINES_ANALYSIS_MEMORY", 256) * 1024 * 1024 / 92
     )
 
     return dict(iter_limit=iter_limit, tree_size_limit=tree_size_limit)
