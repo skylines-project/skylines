@@ -25,7 +25,7 @@ shapely = "==1.6.4.post2"
 "crc16" = "==0.1.1"
 pytz = "*"
 celery = {extras = ["redis"], version = "<3.2,>=3.1"}
-xcsoar = "==0.6.1"
+xcsoar = "==0.6.2"
 aerofiles = "==0.4.1"
 "enum34" = "==1.1.6"
 pyproj = "==1.9.5.1"
