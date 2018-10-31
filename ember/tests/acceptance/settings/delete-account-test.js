@@ -1,6 +1,6 @@
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'ember-qunit';
-import { visit, click, currentURL, fillIn } from '@ember/test-helpers';
+import { visit, click, currentURL, fillIn, waitFor } from '@ember/test-helpers';
 
 import { authenticateSession, currentSession } from 'ember-simple-auth/test-support';
 import { percySnapshot } from 'ember-percy';
@@ -66,11 +66,11 @@ module('Acceptance | Settings | Delete Account', function(hooks) {
     await percySnapshot('Index');
 
     // open the menu
-    await click('[data-test-nav-bar] [data-test-user-menu-toggle]');
-    assert.dom('[data-test-nav-bar] [data-test-user-menu] [data-test-setting-link]').isVisible();
+    await click('[data-test-nav-bar] [data-test-user-menu-dropdown] [data-test-toggle]');
+    await waitFor('[data-test-nav-bar] [data-test-user-menu-dropdown] [role="menu"]');
 
     // click on the "Settings" link
-    await click('[data-test-nav-bar] [data-test-user-menu] [data-test-setting-link]');
+    await click('[data-test-nav-bar] [data-test-user-menu-dropdown] [role="menu"] [data-test-setting-link]');
     assert.equal(currentURL(), '/settings/profile');
     await percySnapshot('Settings');
 
