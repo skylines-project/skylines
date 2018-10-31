@@ -881,10 +881,10 @@
         },
         "pytest-voluptuous": {
             "hashes": [
-                "sha256:e0268c7a0aef6c2687d59f275cdb09ce89cf837bb89c1c4ad8c787f6fcbc2ac6"
+                "sha256:65e6c66f0d28f4ead0fc5903cca9892328df4fe73a45751fd1089498e36cd9d7"
             ],
             "index": "pypi",
-            "version": "==1.0.2"
+            "version": "==1.1.0"
         },
         "python-dateutil": {
             "hashes": [
