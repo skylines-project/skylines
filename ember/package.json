@@ -44,7 +44,7 @@
     "ember-cli-inject-live-reload": "^2.0.1",
     "ember-cli-pace": "^0.1.0",
     "ember-cli-qunit": "^4.4.0",
-    "ember-cli-sass": "^7.1.7",
+    "ember-cli-sass": "^8.0.1",
     "ember-cli-sentry": "^4.0.0",
     "ember-cli-shims": "^1.1.0",
     "ember-cli-uglify": "^2.1.0",
@@ -74,6 +74,7 @@
     "eslint-plugin-ember": "^5.2.0",
     "eslint-plugin-prettier": "^3.0.0",
     "loader.js": "^4.7.0",
+    "node-sass": "^4.9.4",
     "prettier": "1.14.3",
     "qunit-dom": "^0.8.0"
   },
