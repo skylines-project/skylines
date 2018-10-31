@@ -15,11 +15,11 @@
       {{/nav.link-to}}
     {{/nav.item}}
 
-    {{#nav.dropdown tagName="li" as |dd|}}
-      {{#dd.toggle data-test-user-menu-toggle=true}}
+    {{#nav.dropdown tagName="li" data-test-user-menu-dropdown=true as |dd|}}
+      {{#dd.toggle data-test-toggle=true}}
         {{account.user.name}} {{fa-icon "caret-down"}}
       {{/dd.toggle}}
-      {{#dd.menu data-test-user-menu=true as |menu|}}
+      {{#dd.menu as |menu|}}
         {{nav-bar-user-menu nav=nav menu=menu}}
       {{/dd.menu}}
     {{/nav.dropdown}}
