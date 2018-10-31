@@ -5,6 +5,7 @@ from voluptuous.validators import Unordered
 
 from skylines.model import FlightMeetings, Flight
 from tests.api import auth_for
+from tests.voluptuous import Approx
 from tests.data import (
     add_fixtures,
     igcs,
@@ -105,7 +106,7 @@ def test_basic_flight_json(db_session, client):
             u"elevations_h": u"",
             u"elevations_t": u"",
             u"enl": u"",
-            u"geoid": 25.15502072293512,
+            u"geoid": Approx(25.15502072293512),
             u"points": u"syokIm|owC????lYxKbQrIrGlBlPjH|N`Kn[l[tRjZ~LrPpRz^tP|`@lFnHrG`CvGz@xDYjCiI`@cQq@mVgBmQgFwVcNjAkMhDuHrGwNrWyDzOOzPh@fQ`B~OpCfMxDbJxEtGtF~CrFz@pFk@`CsAlAsG",
             u"sfid": int,
         }
