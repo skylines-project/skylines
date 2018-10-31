@@ -1,5 +1,8 @@
 from datetime import datetime
 
+from pytest_voluptuous import S
+from voluptuous.validators import Unordered
+
 from skylines.model import FlightMeetings, Flight
 from tests.api import auth_for
 from tests.data import (
@@ -60,6 +63,53 @@ def test_basic_flight(db_session, client):
     res = client.get("/flights/{id}".format(id=flight.id))
     assert res.status_code == 200
     assert res.json == {u"flight": expected_basic_flight_json(flight)}
+
+
+def test_basic_flight_json(db_session, client):
+    # add user
+    john = users.john()
+    db_session.add(john)
+    db_session.commit()
+
+    # upload flight
+    data = dict(files=(igcs.simple_path,))
+    res = client.post("/flights/upload", headers=auth_for(john), data=data)
+    assert res.status_code == 200
+    flight_id = res.json["results"][0]["flight"]["id"]
+
+    res = client.get("/flights/{id}/json".format(id=flight_id), headers=auth_for(john))
+    assert res.status_code == 200
+    assert res.json == S(
+        {
+            u"additional": {
+                u"competition_id": None,
+                u"model": None,
+                u"registration": u"LY-KDR",
+            },
+            u"barogram_h": u"cH??D?EKOk@o@U}@k@OGUIEg@c@S[KIKKKI[]_@a@WSGYQk@",
+            u"barogram_t": u"ik_A{B{@gASISSg@]S]]IIIIMIIISIIISIIIIIIIIIIII",
+            u"contests": Unordered(
+                [
+                    {
+                        u"name": u"olc_plus triangle",
+                        u"times": u"{y_AgBeAyAS",
+                        u"turnpoints": u"mejkIyljwC~_@{y@}~@dp@|j@t{AnEgJ",
+                    },
+                    {
+                        u"name": u"olc_plus classic",
+                        u"times": u"ur_AeHg@]g@eAg@",
+                        u"turnpoints": u"ypokI{wowCdsEhzDyFcjAu_@]g^bq@v[d{AtTwI",
+                    },
+                ]
+            ),
+            u"elevations_h": u"",
+            u"elevations_t": u"",
+            u"enl": u"",
+            u"geoid": 25.15502072293512,
+            u"points": u"syokIm|owC????lYxKbQrIrGlBlPjH|N`Kn[l[tRjZ~LrPpRz^tP|`@lFnHrG`CvGz@xDYjCiI`@cQq@mVgBmQgFwVcNjAkMhDuHrGwNrWyDzOOzPh@fQ`B~OpCfMxDbJxEtGtF~CrFz@pFk@`CsAlAsG",
+            u"sfid": int,
+        }
+    )
 
 
 def test_filled_flight(db_session, client):
