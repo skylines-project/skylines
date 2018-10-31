@@ -74,7 +74,7 @@ class GenerateThroughDaemon(Command):
                 0,
                 0,
                 0,
-                altitude,
+                int(altitude),
                 0,
                 0,
             )
