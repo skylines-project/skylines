@@ -686,7 +686,7 @@ def near(flight_id):
 
         return trace
 
-    return jsonify(flights=map(add_flight_path, flights))
+    return jsonify(flights=list(map(add_flight_path, flights)))
 
 
 @flights_blueprint.route("/flights/<flight_id>", methods=["POST"], strict_slashes=False)
