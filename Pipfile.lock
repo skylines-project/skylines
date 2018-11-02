@@ -288,11 +288,11 @@
         },
         "marshmallow": {
             "hashes": [
-                "sha256:2480fd8b70273470cbdd04b97a24a8175f03fe23e6d2498789b44eb6f90e664b",
-                "sha256:44decd9e1174f66043b6746f825830af7b291141518d3ae218a466af5acc6e8f"
+                "sha256:a2052f62b18f6dad520f465e437f63ab8812423975d48b9ebd30a735466e782a",
+                "sha256:e1b79eb3b815b49918c64114dda691b8767b48a1f66dd1d8c0cd5842b74257c2"
             ],
             "index": "pypi",
-            "version": "==2.16.2"
+            "version": "==2.16.3"
         },
         "oauthlib": {
             "hashes": [
@@ -726,7 +726,7 @@
                 "sha256:330cc27ccbf7f1e992e69fef78261dc7c6569012cf397db8d3de0234e6c937ca",
                 "sha256:a7bb0f2cf3a3fd1ab2732cb49eba4252c2af4240442415b4abce3b87022a8f50"
             ],
-            "markers": "python_version < '3.0'",
+            "markers": "python_version < '3.3'",
             "version": "==1.0.2"
         },
         "idna": {
