@@ -35,6 +35,7 @@ jobs:
         apt:
           packages:
             - postgresql-9.5-postgis-2.3
+            - python3.5-dev
 
       services:
         - postgresql
@@ -61,7 +62,7 @@ jobs:
         - pipenv run py.test -vv --color=yes --cov=skylines --cov-report term-missing:skip-covered
 
     - <<: *backend-test
-      python: 3.4
+      python: 3.5
 
     - stage: test
       env: NAME=black         # used only to make Travis UI show description
