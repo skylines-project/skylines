@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "5f630b0ebbb194df80dd8576136d0b3daf62e40c09e4d57555f2497632cb12fa"
+            "sha256": "495ab3941b0f42e17952b1098554901f2d4321afad7297493dbe6c6195e41032"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -18,10 +18,10 @@
     "default": {
         "aerofiles": {
             "hashes": [
-                "sha256:9651e47b62fc7164893d8e0eaa57f806ae0b9cecf85eb12d5a4b9feae8ae2a69"
+                "sha256:0989c5c223c91bf58c9f3bf6791da4faf7dad092a5ae6a3a6f942baec42b9e32"
             ],
             "index": "pypi",
-            "version": "==0.4.1"
+            "version": "==1.0.0"
         },
         "alembic": {
             "hashes": [
@@ -726,7 +726,7 @@
                 "sha256:330cc27ccbf7f1e992e69fef78261dc7c6569012cf397db8d3de0234e6c937ca",
                 "sha256:a7bb0f2cf3a3fd1ab2732cb49eba4252c2af4240442415b4abce3b87022a8f50"
             ],
-            "markers": "python_version < '3.3'",
+            "markers": "python_version < '3.0'",
             "version": "==1.0.2"
         },
         "idna": {
