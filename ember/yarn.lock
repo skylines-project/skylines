@@ -2728,15 +2728,13 @@ broccoli-filter@^1.2.2, broccoli-filter@^1.2.3, broccoli-filter@^1.2.4:
     symlink-or-copy "^1.0.1"
     walk-sync "^0.3.1"
 
-broccoli-flatiron@0.1.2:
-  version "0.1.2"
-  resolved "https://registry.yarnpkg.com/broccoli-flatiron/-/broccoli-flatiron-0.1.2.tgz#088cf6f03cee71721a925df9bb12cabf07e6b65c"
-  integrity sha1-CIz28DzucXIakl35uxLKvwfmtlw=
+broccoli-flatiron@0.1.3:
+  version "0.1.3"
+  resolved "https://registry.yarnpkg.com/broccoli-flatiron/-/broccoli-flatiron-0.1.3.tgz#fc7bd8faf7db429ed7199933aa2ec7ef84a8d943"
+  integrity sha512-dD/4ck+LKOLTBzFlxP2zX7fhWt1TFMVR/88b9/wd8LkAHUyAzWs1vBah94ObSvajYGZ7ic+XvMXw+OhmvdlYoQ==
   dependencies:
-    broccoli-kitchen-sink-helpers "~0.2.4"
-    broccoli-writer "~0.1.1"
-    mkdirp "^0.3.5"
-    rsvp "~3.0.6"
+    broccoli-plugin "^1.3.0"
+    mkdirp "^0.5.1"
 
 broccoli-funnel-reducer@^1.0.0:
   version "1.0.0"
@@ -2790,7 +2788,7 @@ broccoli-kitchen-sink-helpers@^0.3.1:
     glob "^5.0.10"
     mkdirp "^0.5.1"
 
-broccoli-kitchen-sink-helpers@~0.2.0, broccoli-kitchen-sink-helpers@~0.2.4:
+broccoli-kitchen-sink-helpers@~0.2.0:
   version "0.2.9"
   resolved "https://registry.yarnpkg.com/broccoli-kitchen-sink-helpers/-/broccoli-kitchen-sink-helpers-0.2.9.tgz#a5e0986ed8d76fb5984b68c3f0450d3a96e36ecc"
   integrity sha1-peCYbtjXb7WYS2jD8EUNOpbjbsw=
@@ -3061,7 +3059,7 @@ broccoli-uglify-sourcemap@^2.1.1:
     walk-sync "^0.3.2"
     workerpool "^2.3.0"
 
-broccoli-writer@^0.1.1, broccoli-writer@~0.1.1:
+broccoli-writer@~0.1.1:
   version "0.1.1"
   resolved "https://registry.yarnpkg.com/broccoli-writer/-/broccoli-writer-0.1.1.tgz#d4d71aa8f2afbc67a3866b91a2da79084b96ab2d"
   integrity sha1-1NcaqPKvvGejhmuRotp5CEuWqy0=
@@ -5352,21 +5350,19 @@ ember-font-awesome@^4.0.0-rc.4:
     postcss "^6.0.14"
     sync-disk-cache "^1.3.2"
 
-ember-freestyle@^0.9.0:
-  version "0.9.0"
-  resolved "https://registry.yarnpkg.com/ember-freestyle/-/ember-freestyle-0.9.0.tgz#9808f8c17f051081d8f15969ec3803b49868687b"
-  integrity sha512-za1c6bUnbDY2YPLyf6BayBiCc/JNmaCx9rRm35jcruzo5LEMsjkQYNChubjqhXHYtA+bjI6s5DyeAROrofm1tw==
+ember-freestyle@^0.10.0:
+  version "0.10.0"
+  resolved "https://registry.yarnpkg.com/ember-freestyle/-/ember-freestyle-0.10.0.tgz#4c1727925c80f79542051725d1285a253cb97cd3"
+  integrity sha512-KoQRWy6+ZIY2WsHtOwGtNNnBjkT1cTHmvVi044j3PrC1gxsPCchfXB96E6DahH9a6XfpISXIUeHkl8o4cI/d8g==
   dependencies:
-    broccoli-flatiron "0.1.2"
-    broccoli-merge-trees "^2.0.0"
-    broccoli-writer "^0.1.1"
+    broccoli-flatiron "0.1.3"
+    broccoli-merge-trees "^3.0.1"
     ember-cli-babel "^6.6.0"
     ember-cli-htmlbars "^2.0.3"
     ember-cli-sass "^6.1.3"
     ember-cli-showdown "^4.1.0"
     ember-runtime-enumerable-includes-polyfill "^2.0.0"
-    es6-promise "^4.1.0"
-    glob "^7.1.1"
+    glob "^7.1.3"
 
 ember-get-config@^0.2.3:
   version "0.2.4"
@@ -5950,11 +5946,6 @@ es6-promise-pool@^2.4.1, es6-promise-pool@^2.5.0:
   version "2.5.0"
   resolved "https://registry.yarnpkg.com/es6-promise-pool/-/es6-promise-pool-2.5.0.tgz#147c612b36b47f105027f9d2bf54a598a99d9ccb"
   integrity sha1-FHxhKza0fxBQJ/nSv1SlmKmdnMs=
-
-es6-promise@^4.1.0:
-  version "4.2.4"
-  resolved "https://registry.yarnpkg.com/es6-promise/-/es6-promise-4.2.4.tgz#dc4221c2b16518760bd8c39a52d8f356fc00ed29"
-  integrity sha512-/NdNZVJg+uZgtm9eS3O6lrOLYmQag2DjdEXuPaHlZ6RuVqgqaVZfgYCepEIKsLqwdQArOPtC3XzRLqGGfT8KQQ==
 
 escape-html@~1.0.3:
   version "1.0.3"
@@ -7125,6 +7116,18 @@ glob@^7.0.0, glob@^7.0.3, glob@^7.0.4, glob@^7.0.5, glob@^7.1.1, glob@^7.1.2, gl
   version "7.1.2"
   resolved "https://registry.yarnpkg.com/glob/-/glob-7.1.2.tgz#c19c9df9a028702d678612384a6552404c636d15"
   integrity sha512-MJTUg1kjuLeQCJ+ccE4Vpa6kKVXkPYJ2mOCQyUuKLcLQsdrMCpBPUi8qVE6+YuaJkozeA9NusTAw3hLr8Xe5EQ==
+  dependencies:
+    fs.realpath "^1.0.0"
+    inflight "^1.0.4"
+    inherits "2"
+    minimatch "^3.0.4"
+    once "^1.3.0"
+    path-is-absolute "^1.0.0"
+
+glob@^7.1.3:
+  version "7.1.3"
+  resolved "https://registry.yarnpkg.com/glob/-/glob-7.1.3.tgz#3960832d3f1574108342dafd3a67b332c0969df1"
+  integrity sha512-vcfuiIxogLV4DlGBHIUOwI0IbrJ8HWPc4MU7HzviGeNho/UJDfi6B5p3sHeWIQ0KGIU0Jpxi5ZHxemQfLkkAwQ==
   dependencies:
     fs.realpath "^1.0.0"
     inflight "^1.0.4"
