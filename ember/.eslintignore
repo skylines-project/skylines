@@ -1,0 +1,17 @@
+/bin/
+/bower_components/
+/blueprints/**/files/
+/common-tmp/
+/coverage/
+/public/cesium/
+/tests/fixtures/
+/tmp/
+/vendor/
+
+/lib/broccoli/app-*.js
+/lib/broccoli/test-support-*.js
+/lib/broccoli/tests-*.js
+/lib/broccoli/vendor-*.js
+
+!.*
+/node_modules/
