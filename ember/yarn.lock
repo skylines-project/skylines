@@ -5544,10 +5544,10 @@ ember-popper@^0.9.0:
     fastboot-transform "^0.1.0"
     popper.js "^1.14.1"
 
-ember-power-select@^2.0.15:
-  version "2.0.15"
-  resolved "https://registry.yarnpkg.com/ember-power-select/-/ember-power-select-2.0.15.tgz#eb332c959aa8b375e2a16f2657e6097042779a90"
-  integrity sha512-8WLAVukGjdc2yoQJNuEUKA/HOsh2iODCCJJpi8lIgFUobCyhWdRB0Etll324fGNn4ktJ/bS89z/23ueA6sGWCg==
+ember-power-select@^2.2.0:
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/ember-power-select/-/ember-power-select-2.2.0.tgz#c52fc279ac58c1c97c74ab04bd5867c63b6e9c4a"
+  integrity sha512-CitYF6Nt82Y027KsShXKOi4wvOyZj0oR92vvSNrw2pOQTnihfJOZBpvL05R3IZLoZBD+zuRE9rsxEfakRs5A0g==
   dependencies:
     ember-basic-dropdown "^1.0.0"
     ember-cli-babel "^6.16.0"
