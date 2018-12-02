@@ -1,6 +1,4 @@
 dist: trusty
-sudo: false
-
 branches:
   except:
   - /^dependabot\/.*$/
