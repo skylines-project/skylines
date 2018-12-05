@@ -5362,10 +5362,10 @@ ember-getowner-polyfill@^1.2.2:
     ember-cli-version-checker "^1.2.0"
     ember-factory-for-polyfill "^1.1.0"
 
-ember-href-to@^1.15.1:
-  version "1.15.1"
-  resolved "https://registry.yarnpkg.com/ember-href-to/-/ember-href-to-1.15.1.tgz#1ba20ec201245c7cae7e2aa3eec50eb2aa25b729"
-  integrity sha1-G6IOwgEkXHyufiqj7sUOsqoltyk=
+ember-href-to@^2.0.1:
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/ember-href-to/-/ember-href-to-2.0.1.tgz#87c88daccf4b02c77f0a0292ab793ea7c6a25ced"
+  integrity sha512-dsMXJTIUd4dQKN7Sd93T5xKqltbYRnr9J4pgFs1bwvDXXQb7XP4WWPozn48+YGptmzvCbDaLsIMfwETuwl7RTA==
   dependencies:
     ember-cli-babel "^6.8.2"
     ember-router-service-polyfill "^1.0.2"
