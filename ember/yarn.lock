@@ -4691,14 +4691,14 @@ ember-awesome-macros@^2.0.0:
     ember-cli-string-utils "^1.1.0"
     ember-macro-helpers "^1.0.0"
 
-ember-basic-dropdown@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/ember-basic-dropdown/-/ember-basic-dropdown-1.0.0.tgz#bbafcaab986ba86dfe8d02b0f8529984229bd738"
-  integrity sha512-+s7R8bAITwKsWwkLOLSUJNZEl1xIlBcygIctBrbxr91VRto5I5InPNKL4MIKcdYB9puW7mUd7rXuA1nb02l7ng==
+ember-basic-dropdown@^1.0.5:
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/ember-basic-dropdown/-/ember-basic-dropdown-1.1.1.tgz#0f806740d0f6115ef1ee3bfb11432506fb72d6fa"
+  integrity sha512-5ynfyxl00SnuFoVRV7Z92JrIG27cVCNUsxMWptnUnm4DBsX17lU6rVEulrjmA+gqP1MpK4kczP1yTEfkLRSoyg==
   dependencies:
-    ember-cli-babel "^6.12.0"
-    ember-cli-htmlbars "^2.0.3"
-    ember-maybe-in-element "^0.1.3"
+    ember-cli-babel "^7.2.0"
+    ember-cli-htmlbars "^3.0.1"
+    ember-maybe-in-element "^0.2.0"
 
 ember-bootstrap@^2.3.0:
   version "2.3.0"
@@ -4764,7 +4764,7 @@ ember-cli-babel@^6.0.0, ember-cli-babel@^6.0.0-beta.4, ember-cli-babel@^6.0.0-be
     ember-cli-version-checker "^2.1.2"
     semver "^5.5.0"
 
-ember-cli-babel@^7.0.0, ember-cli-babel@^7.1.2, ember-cli-babel@^7.2.0:
+ember-cli-babel@^7.0.0, ember-cli-babel@^7.1.0, ember-cli-babel@^7.1.2, ember-cli-babel@^7.2.0:
   version "7.2.0"
   resolved "https://registry.yarnpkg.com/ember-cli-babel/-/ember-cli-babel-7.2.0.tgz#5c5bd877fb73f6fb198c878d3127ba9e18e9b8a0"
   integrity sha512-vwx/AgPD7P4ebgTFJMqFovbrSNCA02UMuItlR/Il16njYjgN9ZzjUqgYxaylN7k8RF88wdJq3jrtqyMS/oOq8A==
@@ -5647,6 +5647,13 @@ ember-maybe-in-element@^0.1.3:
   dependencies:
     ember-cli-babel "^6.11.0"
 
+ember-maybe-in-element@^0.2.0:
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/ember-maybe-in-element/-/ember-maybe-in-element-0.2.0.tgz#9ac51cbbd9d83d6230ad996c11e33f0eca3032e0"
+  integrity sha512-R5e6N8yDbfNbA/3lMZsFs2KEzv/jt80TsATiKMCqdqKuSG82KrD25cRdU5VkaE8dTQbziyBeuJs90bBiqOnakQ==
+  dependencies:
+    ember-cli-babel "^7.1.0"
+
 ember-native-dom-helpers@^0.6.2:
   version "0.6.2"
   resolved "https://registry.yarnpkg.com/ember-native-dom-helpers/-/ember-native-dom-helpers-0.6.2.tgz#ad1f82d64ac9abdd612022f4f390bdb6653b3d39"
@@ -5697,12 +5704,12 @@ ember-popper@^0.9.0:
     fastboot-transform "^0.1.0"
     popper.js "^1.14.1"
 
-ember-power-select@^2.2.0:
-  version "2.2.0"
-  resolved "https://registry.yarnpkg.com/ember-power-select/-/ember-power-select-2.2.0.tgz#c52fc279ac58c1c97c74ab04bd5867c63b6e9c4a"
-  integrity sha512-CitYF6Nt82Y027KsShXKOi4wvOyZj0oR92vvSNrw2pOQTnihfJOZBpvL05R3IZLoZBD+zuRE9rsxEfakRs5A0g==
+ember-power-select@^2.2.1:
+  version "2.2.1"
+  resolved "https://registry.yarnpkg.com/ember-power-select/-/ember-power-select-2.2.1.tgz#8adea6c5c5e9dea0cd64519171b7bf19857b1db6"
+  integrity sha512-v8aQZOlXYzBPpB0gpcpJS3VhQOUznmO8se3VrCp/rqOzGo56jfi5UX6GkE0VhFk224Wtzqq4S+YCmmqEb8A/KQ==
   dependencies:
-    ember-basic-dropdown "^1.0.0"
+    ember-basic-dropdown "^1.0.5"
     ember-cli-babel "^6.16.0"
     ember-cli-htmlbars "^3.0.0"
     ember-concurrency "^0.8.19"
