@@ -24,7 +24,7 @@
     "@ember/optional-features": "^0.7.0",
     "@pollyjs/ember": "^1.4.1",
     "bigscreen": "^2.0.5",
-    "bootstrap-sass": "^3.3.7",
+    "bootstrap-sass": "^3.4.0",
     "broccoli-asset-rev": "^3.0.0",
     "ember-ajax": "^4.0.1",
     "ember-auto-import": "^1.2.18",
