@@ -62,7 +62,7 @@
     "ember-percy": "^1.5.0",
     "ember-power-select": "^2.2.1",
     "ember-resolver": "^5.0.1",
-    "ember-simple-auth": "^1.7.0",
+    "ember-simple-auth": "^1.8.0",
     "ember-source": "~3.6.1",
     "ember-svg-jar": "^1.2.2",
     "ember-test-selectors": "^2.0.0",
