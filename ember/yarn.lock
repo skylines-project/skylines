@@ -4674,10 +4674,10 @@ ember-ast-helpers@0.3.5:
     "@glimmer/compiler" "^0.27.0"
     "@glimmer/syntax" "^0.27.0"
 
-ember-auto-import@^1.2.15, ember-auto-import@^1.2.18:
-  version "1.2.18"
-  resolved "https://registry.yarnpkg.com/ember-auto-import/-/ember-auto-import-1.2.18.tgz#0a2bb3e7ee7d6b7c43b103b7b765f9e6a429dd68"
-  integrity sha512-XcrFDHKEG/eaOLVn7ZJoJqQvY2a3S3HR6aqzvdbCbpvqBDEqImctcXzpm7NIrkA5zNRDWX0OrepPFWR/Utb2Tg==
+ember-auto-import@^1.2.15, ember-auto-import@^1.2.19:
+  version "1.2.19"
+  resolved "https://registry.yarnpkg.com/ember-auto-import/-/ember-auto-import-1.2.19.tgz#69a2da0d2c16ab88989c51381c415214e85d1af3"
+  integrity sha512-OT7I3zrIAv/rbbYJFZNqfJi/2HpAscjOWOaBPPUj8VkUnY26HlLO6mSzDIkoUOaTAEWiy2GzjenHGj6b9rivxw==
   dependencies:
     "@babel/core" "^7.1.6"
     "@babel/traverse" "^7.1.6"
