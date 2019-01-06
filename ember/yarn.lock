@@ -5947,15 +5947,15 @@ ember-weakmap@^3.0.0:
     debug "^3.1.0"
     ember-cli-babel "^6.3.0"
 
-ember-web-app@^2.3.0:
-  version "2.3.0"
-  resolved "https://registry.yarnpkg.com/ember-web-app/-/ember-web-app-2.3.0.tgz#201e9c01aae12945582602a4cb91329605280f48"
-  integrity sha512-GDMsfMMRaWAsf7CoAo2h/1W/B0+tpYWKniUHSytym0dy/USWFb/JsXw+GKP8aUcBPKtS5mP6d58nb7WkId0E6w==
+ember-web-app@^2.3.1:
+  version "2.3.1"
+  resolved "https://registry.yarnpkg.com/ember-web-app/-/ember-web-app-2.3.1.tgz#68f1faf14926ad85d85649348838725d55a50d8e"
+  integrity sha512-l+AvQZA/6DlNz6GV39GYk1Sl5+JamYP0NqnbAfV10ugvT2r3R2HCeCv1WYAk9PYStCSV89ok3NH3ogBc/2GmpA==
   dependencies:
     broccoli-asset-rev "^2.5.0"
     broccoli-caching-writer "^3.0.3"
     broccoli-merge-trees "^2.0.0"
-    ember-cli-babel "^6.0.0"
+    ember-cli-babel "^6.6.0"
     object-assign "^4.1.1"
     web-app-manifest-validator "^1.0.0"
     xmlbuilder "^9.0.4"
