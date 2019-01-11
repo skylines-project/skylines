@@ -523,11 +523,11 @@
         },
         "webargs": {
             "hashes": [
-                "sha256:32dc29a4b94e8ba69c4bdd3efb0fdb08fe855bccc30c855b415981fa6bf9c640",
-                "sha256:c2d8f978a8f0356e967896f6d512ec0d20e142ae85349b248b5a7372b1b070f4"
+                "sha256:0bd93a8f180907a040631b592d10ca25b8a243d9a71921a2ec363b52f0a3f441",
+                "sha256:62a84a1e2e42ad7e6f2af4a1f96379bb05f8e26b7f86deebda0e2dad4187c591"
             ],
             "index": "pypi",
-            "version": "==5.0.0"
+            "version": "==5.1.0"
         },
         "werkzeug": {
             "hashes": [
@@ -734,7 +734,7 @@
                 "sha256:330cc27ccbf7f1e992e69fef78261dc7c6569012cf397db8d3de0234e6c937ca",
                 "sha256:a7bb0f2cf3a3fd1ab2732cb49eba4252c2af4240442415b4abce3b87022a8f50"
             ],
-            "markers": "python_version < '3.0'",
+            "markers": "python_version < '3.3'",
             "version": "==1.0.2"
         },
         "idna": {
