@@ -6,6 +6,8 @@ import { observer } from '@ember/object';
 import Component from '@ember/component';
 import olcs from 'ol-cesium';
 
+import config from 'skylines/config/environment';
+
 export default Component.extend({
   tagName: '',
 
@@ -21,9 +23,11 @@ export default Component.extend({
 
     let ol3d = new olcs.OLCesium({ map: this.map });
 
+    Cesium.Ion.defaultAccessToken = config.CESIUM_TOKEN;
+
     let scene = ol3d.getCesiumScene();
     scene.terrainProvider = new Cesium.CesiumTerrainProvider({
-      url: '//assets.agi.com/stk-terrain/world',
+      url: Cesium.IonResource.fromAssetId(1),
     });
     scene.globe.depthTestAgainstTerrain = true;
 
