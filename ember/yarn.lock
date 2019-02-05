@@ -870,37 +870,37 @@
   dependencies:
     "@glimmer/util" "^0.27.0"
 
-"@pollyjs/adapter-fetch@^2.0.0":
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/@pollyjs/adapter-fetch/-/adapter-fetch-2.0.0.tgz#85bf362c5153fdc30813f20c47fd629629d7f0ad"
-  integrity sha512-FRS7Dp8rmeg2diuiuPE/wtI6HjJEPu9SdXFRFh3pppJK6XW2CJEEx08myger8POvqEb/edAe4kCgx17wOguVNw==
+"@pollyjs/adapter-fetch@^2.1.0":
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/@pollyjs/adapter-fetch/-/adapter-fetch-2.1.0.tgz#b07156fafb3f678d9c502fd89ad772f31e7ae4c2"
+  integrity sha512-4KcQg4V4P0Wc/HhFCrjT8gJWkR4efPABr1KwsayfI1z6iOMLnlgOhnZMIVEbl8Fj+7lQhVfA0Uq0SYUYl1o1kw==
   dependencies:
-    "@pollyjs/adapter" "^2.0.0"
-    "@pollyjs/utils" "^2.0.0"
+    "@pollyjs/adapter" "^2.1.0"
+    "@pollyjs/utils" "^2.1.0"
     detect-node "^2.0.4"
 
-"@pollyjs/adapter-xhr@^2.0.0":
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/@pollyjs/adapter-xhr/-/adapter-xhr-2.0.0.tgz#1efc7d8fb04e433ca05c7ce6bf99e17f5f8d0bcb"
-  integrity sha512-onO95eEQbHUFxqm43OoLScSO62Sl/oA9/ttZh/0cn/c8dP/dxE3sDrBaH+Z6DmnZqPBDJJnphkrSfcdcI57hGA==
+"@pollyjs/adapter-xhr@^2.1.0":
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/@pollyjs/adapter-xhr/-/adapter-xhr-2.1.0.tgz#91a2b1a5df8125439763605b8da7b27d5e956d7a"
+  integrity sha512-FoQ3VNju4l3132noTGZsfxONPt5gEQA7rG3GKHy/v/yHwPew9RpsjLLZSBHlWyXY3ZC7/7jM4CfJWpcPVoBnKw==
   dependencies:
-    "@pollyjs/adapter" "^2.0.0"
-    "@pollyjs/utils" "^2.0.0"
+    "@pollyjs/adapter" "^2.1.0"
+    "@pollyjs/utils" "^2.1.0"
     nise "^1.4.6"
 
-"@pollyjs/adapter@^2.0.0":
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/@pollyjs/adapter/-/adapter-2.0.0.tgz#9f1fa599b0f8e5a91027c7c2626348bad17757aa"
-  integrity sha512-sIoQv9xzXGUzdltdnbdMYMxiq0uzx2U6/Qz2xD/Io6/sCpXO826i0+sRvFMTTdpaPLY3vxhXs839HGDBD5wE+A==
+"@pollyjs/adapter@^2.1.0":
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/@pollyjs/adapter/-/adapter-2.1.0.tgz#03b7040320d6c8b376700a2fba11a347c2e472d6"
+  integrity sha512-r93P6xAXZu1VhPhok4GLAL7DNO2bTy/w9SsHmX1WdqgaB+nPTC0QC5UF7HQIJggryZBNN4zJ11w3YgV7rAb8mA==
   dependencies:
-    "@pollyjs/utils" "^2.0.0"
+    "@pollyjs/utils" "^2.1.0"
 
-"@pollyjs/core@^2.0.0":
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/@pollyjs/core/-/core-2.0.0.tgz#b1385170107cf067879096bd2399c664b85fb524"
-  integrity sha512-zVENoA2vSYTo87mHAKQmWSeI4kplq2Gepfj3kTLVT1kLhQTp8At0sEfHp6N7/2TnJoIttG/qfWckIKZifP/EYA==
+"@pollyjs/core@^2.1.0":
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/@pollyjs/core/-/core-2.1.0.tgz#d259fb585827f79f2dab0a929957815633461e8a"
+  integrity sha512-CU5/U/vem3Zx3DzVZfTbB//C4xizSg96DmloNeFWd6n2xQZRGChPo7e+T/s1+v6sVgGH7vGp9PwRxkaAiLg2PA==
   dependencies:
-    "@pollyjs/utils" "^2.0.0"
+    "@pollyjs/utils" "^2.1.0"
     "@sindresorhus/fnv1a" "^1.0.0"
     blueimp-md5 "^2.10.0"
     fast-json-stable-stringify "^2.0.0"
@@ -909,26 +909,26 @@
     route-recognizer "^0.3.4"
     slugify "^1.3.3"
 
-"@pollyjs/ember@^2.0.0":
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/@pollyjs/ember/-/ember-2.0.0.tgz#101ba7f9d1918f6fdf8383f440220795bfbe79c9"
-  integrity sha512-0te4Bs2LACfkx7acurV7/j6T3rHe+Hq3MWMOgf9h4X9NfXOlVNLVA/8Ck8w3SHYHHXdzQVxSG4uYck2Bkg4vzA==
+"@pollyjs/ember@^2.1.0":
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/@pollyjs/ember/-/ember-2.1.0.tgz#2253239499b91874f6c2e22d603eb7b6ccbb232c"
+  integrity sha512-NZqQ8G9AI+mKDWT3LzHNmUx26S1VZMRbtkb4yOJfqvFnb33bpIj0SMTvlx+2OrlplVctA/lbGA99Q5Sd7kFm9w==
   dependencies:
-    "@pollyjs/adapter-fetch" "^2.0.0"
-    "@pollyjs/adapter-xhr" "^2.0.0"
-    "@pollyjs/core" "^2.0.0"
-    "@pollyjs/node-server" "^2.0.0"
-    "@pollyjs/persister-local-storage" "^2.0.0"
-    "@pollyjs/persister-rest" "^2.0.0"
+    "@pollyjs/adapter-fetch" "^2.1.0"
+    "@pollyjs/adapter-xhr" "^2.1.0"
+    "@pollyjs/core" "^2.1.0"
+    "@pollyjs/node-server" "^2.1.0"
+    "@pollyjs/persister-local-storage" "^2.1.0"
+    "@pollyjs/persister-rest" "^2.1.0"
     ember-auto-import "^1.2.15"
     ember-cli-babel "^6.16.0"
 
-"@pollyjs/node-server@^2.0.0":
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/@pollyjs/node-server/-/node-server-2.0.0.tgz#a27f6d1de44ad93a4e275dc0e25e76caea1706f6"
-  integrity sha512-x0fTdgdL28XeVD2LS458PMglCQAgclYsTocdaDmkUlMkFSa14K/vm146yJCahcBLtUDOIflySRQYPih1tzjGgQ==
+"@pollyjs/node-server@^2.1.0":
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/@pollyjs/node-server/-/node-server-2.1.0.tgz#3d3b394c62770a377d3629d47527eadfac02ab3d"
+  integrity sha512-2uYkNq6/EiNq8lP8aPzdGb0G+ouRXqkwUjQUzCt9VItSUUUXzJP5/c3KlAGjzGYjOV+rWhS+gIxB7g2vihrRQg==
   dependencies:
-    "@pollyjs/utils" "^2.0.0"
+    "@pollyjs/utils" "^2.1.0"
     body-parser "^1.18.3"
     cors "^2.8.5"
     express "^4.16.4"
@@ -937,37 +937,37 @@
     morgan "^1.9.1"
     nocache "^2.0.0"
 
-"@pollyjs/persister-local-storage@^2.0.0":
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/@pollyjs/persister-local-storage/-/persister-local-storage-2.0.0.tgz#912ebb66d0aa614e0a0dd7339688fad82dff0b4c"
-  integrity sha512-ZIYjbnSo5Erm8z5wGW8ame31evVQb5ndjyunP8AchXoIEHjd2OL4H6suoAfTrR/dls3sNB8VyxxL89/crnHhmQ==
+"@pollyjs/persister-local-storage@^2.1.0":
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/@pollyjs/persister-local-storage/-/persister-local-storage-2.1.0.tgz#76f362f51dd4aa9a3f2bb1f684b9cebbb655a3a8"
+  integrity sha512-ALk/48KCQD7XVaSJKKz+AUmZhMWKxLPaU15EnLQjJ0RwUPMpnGhgg8WTPbVurE4am0/sqztML1tE3BDYQ0NXXg==
   dependencies:
-    "@pollyjs/persister" "^2.0.0"
+    "@pollyjs/persister" "^2.1.0"
 
-"@pollyjs/persister-rest@^2.0.0":
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/@pollyjs/persister-rest/-/persister-rest-2.0.0.tgz#24a0d011afd8dfed259d29aaa837622f50a74e92"
-  integrity sha512-YLQ8vRibbUKJFG5BqvYvwiUYVvFKRMSMpx26hJTh8VdK01RIuQfzDqsuP+TA6favL1pjaEYNk+i/skSDUaNLhw==
+"@pollyjs/persister-rest@^2.1.0":
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/@pollyjs/persister-rest/-/persister-rest-2.1.0.tgz#1c3ce724909ec5e04a6dfb2f14f613233df92294"
+  integrity sha512-hZ+Afed80DmyALvfeaCbtJnEeMQXJF4IKejcL/s3gxTX4A0gsoYJ6td943MO0f+YLD1II3FnxQyxMT2+u+wY2Q==
   dependencies:
-    "@pollyjs/persister" "^2.0.0"
-    "@pollyjs/utils" "^2.0.0"
+    "@pollyjs/persister" "^2.1.0"
+    "@pollyjs/utils" "^2.1.0"
 
-"@pollyjs/persister@^2.0.0":
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/@pollyjs/persister/-/persister-2.0.0.tgz#a6e89c4b36b6639ee6752d260823d3aa46a5f012"
-  integrity sha512-+Q76JJdmZ6h6kyaA2xQ4KZ50ik8hKwXX40H3EOWCNY6jk1TVwb2z1oAKOIdLl4GdHwY6UGLPfTrKYJNZ0uUXXw==
+"@pollyjs/persister@^2.1.0":
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/@pollyjs/persister/-/persister-2.1.0.tgz#56595370602fffa0370d993ac6cec104faae5bc8"
+  integrity sha512-PB8AGtScyS+FIdH0kHxSFJf+TfcK5XqotOZn/0ja62dDGC0CAq+ZunhUbgwU0eXIoOyI6SYHPqM3ISiyNcX8VQ==
   dependencies:
-    "@pollyjs/utils" "^2.0.0"
+    "@pollyjs/utils" "^2.1.0"
     bowser "^1.9.3"
     fast-json-stable-stringify "^2.0.0"
     lodash-es "^4.17.11"
     set-cookie-parser "^2.2.1"
     utf8-byte-length "^1.0.4"
 
-"@pollyjs/utils@^2.0.0":
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/@pollyjs/utils/-/utils-2.0.0.tgz#e04c567fca85c338e486e18c8db599ab783e9a44"
-  integrity sha512-X1+ixyWxV9R2p6EvTB47RL7GoYgKPrJt5slB4D5lCnspAlV4QwQiS2YctKhYExkUgjLQC0bpC+E+BjCfxV6fog==
+"@pollyjs/utils@^2.1.0":
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/@pollyjs/utils/-/utils-2.1.0.tgz#2d52f625c0d96eba1e9ef18476d6dc18dddf6ba1"
+  integrity sha512-psHTlcQZuKxG9ZACzcCo/omOFc4LbYRx4ASjWxR7TmOZKzcR653R0/APL8SXGRfGPD8RsFOGSSbXzjXyUX+g7A==
   dependencies:
     qs "^6.6.0"
     url-parse "^1.4.4"
