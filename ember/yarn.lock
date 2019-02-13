@@ -4823,10 +4823,10 @@ ember-cli-deploy-build@^1.1.1:
     glob "^7.1.1"
     rsvp "^3.5.0"
 
-ember-cli-deploy-compress@^0.3.1:
-  version "0.3.1"
-  resolved "https://registry.yarnpkg.com/ember-cli-deploy-compress/-/ember-cli-deploy-compress-0.3.1.tgz#ad8b1d441c7cf48c34bf063c3696cbc63890aa54"
-  integrity sha512-WYTy7eywu2s7ZhzQV9zPFnKnNiXHhj/jTZwuB1JkTZu7Feqf5+m4bSmM37ILuAIEIC3ieNAPSlEWDzWzlS8xJA==
+ember-cli-deploy-compress@^0.3.2:
+  version "0.3.2"
+  resolved "https://registry.yarnpkg.com/ember-cli-deploy-compress/-/ember-cli-deploy-compress-0.3.2.tgz#dd1416602e1d27755c14da9f258f612bf45f7dac"
+  integrity sha512-tFdqv5toIYw8OONXSxd+6v0XbxgUBj+9SzBmZpYXnFzazOxOohqYFXhPP0SBjte9flOyo1O69Vay7BaaGhC05A==
   dependencies:
     caniuse-api "^2.0.0"
     chalk "^1.1.3"
