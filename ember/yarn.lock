@@ -4666,16 +4666,16 @@ ember-auto-import@^1.2.15, ember-auto-import@^1.2.19:
     walk-sync "^0.3.3"
     webpack "^4.12.0"
 
-ember-awesome-macros@^2.0.0:
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/ember-awesome-macros/-/ember-awesome-macros-2.0.0.tgz#d41adbbf3ce0729f7545cc63da7fea7e1a03a775"
-  integrity sha1-1Brbvzzgcp91Rcxj2n/qfhoDp3U=
+ember-awesome-macros@^3.1.0:
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/ember-awesome-macros/-/ember-awesome-macros-3.1.0.tgz#342298914fcb06a25950f6411dde3780a6c0c298"
+  integrity sha512-bO/RgZPXuhgHyCGurEmmjhB0kX6IqdF5e2NZa3SbuEA2tq/Zv1uLRgVgDRj/n/L5aq7ZviH2J+1KAZ7y73ZncA==
   dependencies:
     broccoli-file-creator "^2.1.1"
     broccoli-merge-trees "^3.0.0"
-    ember-cli-babel "^6.6.0"
+    ember-cli-babel "^7.0.0"
     ember-cli-string-utils "^1.1.0"
-    ember-macro-helpers "^1.0.0"
+    ember-macro-helpers "^2.0.0"
 
 ember-basic-dropdown@^1.1.0:
   version "1.1.2"
@@ -5628,12 +5628,12 @@ ember-load-initializers@^2.0.0:
   dependencies:
     ember-cli-babel "^7.0.0"
 
-ember-macro-helpers@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/ember-macro-helpers/-/ember-macro-helpers-1.0.0.tgz#bdb875f5752814f3e0c886e2ed650f01cc302712"
-  integrity sha1-vbh19XUoFPPgyIbi7WUPAcwwJxI=
+ember-macro-helpers@^2.0.0:
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/ember-macro-helpers/-/ember-macro-helpers-2.1.0.tgz#e8eeff5704da4d2d071cc6446cd29c3b9b4c0f6d"
+  integrity sha512-VmXIXUhbMWNqtpQr81EC9Ud/1/rR8+ggiteThapxenD4OssJs7gn5i/ZJU4RopODma69/rfJTmaSlOC+/OxRSg==
   dependencies:
-    ember-cli-babel "^6.6.0"
+    ember-cli-babel "^7.0.0"
     ember-cli-string-utils "^1.1.0"
     ember-cli-test-info "^1.0.0"
     ember-weakmap "^3.0.0"

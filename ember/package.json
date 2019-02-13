@@ -17,7 +17,7 @@
     "test": "ember test"
   },
   "dependencies": {
-    "ember-awesome-macros": "^2.0.0",
+    "ember-awesome-macros": "^3.1.0",
     "remarkable": "^1.7.1"
   },
   "devDependencies": {
