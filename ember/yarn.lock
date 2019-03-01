@@ -3477,6 +3477,13 @@ capture-exit@^1.1.0, capture-exit@^1.2.0:
   dependencies:
     rsvp "^3.3.3"
 
+capture-exit@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/capture-exit/-/capture-exit-2.0.0.tgz#fb953bfaebeb781f62898239dabb426d08a509a4"
+  integrity sha512-PiT/hQmTonHhl/HFGN+Lx3JJUznrVYJ3+AQsnthneZbvW7x+f08Tk7yLJTLEOUvBTbduLeeBkxEaYXUOUrRq6g==
+  dependencies:
+    rsvp "^4.8.4"
+
 cardinal@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/cardinal/-/cardinal-1.0.0.tgz#50e21c1b0aa37729f9377def196b5a9cec932ee9"
@@ -3694,6 +3701,11 @@ cli-spinners@^1.1.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/cli-spinners/-/cli-spinners-1.1.0.tgz#f1847b168844d917a671eb9d147e3df497c90d06"
   integrity sha1-8YR7FohE2RemceudFH499JfJDQY=
+
+cli-spinners@^1.3.1:
+  version "1.3.1"
+  resolved "https://registry.yarnpkg.com/cli-spinners/-/cli-spinners-1.3.1.tgz#002c1990912d0d59580c93bd36c056de99e4259a"
+  integrity sha512-1QL4544moEsDVH9T/l6Cemov/37iv1RtoKf7NJ04A60+4MREXNfx/QvavbH6QoGdsD4N4Mwy49cmaINR/o2mdg==
 
 cli-table2@^0.2.0:
   version "0.2.0"
@@ -3983,7 +3995,7 @@ console-control-strings@^1.0.0, console-control-strings@~1.1.0:
   resolved "https://registry.yarnpkg.com/console-control-strings/-/console-control-strings-1.1.0.tgz#3d7cf4464db6446ea644bf4b39507f9851008e8e"
   integrity sha1-PXz0Rk22RG6mRL9LOVB/mFEAjo4=
 
-console-ui@^2.0.0, console-ui@^2.2.2:
+console-ui@^2.0.0:
   version "2.2.2"
   resolved "https://registry.yarnpkg.com/console-ui/-/console-ui-2.2.2.tgz#b294a2934de869dd06789ab4be69555411edef29"
   integrity sha1-spSik03oad0GeJq0vmlVVBHt7yk=
@@ -3994,6 +4006,17 @@ console-ui@^2.0.0, console-ui@^2.2.2:
     ora "^2.0.0"
     through "^2.3.8"
     user-info "^1.0.0"
+
+console-ui@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/console-ui/-/console-ui-3.0.0.tgz#8abee8f701f4c3729953f74233624623f0f72100"
+  integrity sha512-uPlaGvTGLcu5i1EYuhr3b7yYDPkcrHEJYn25iXCtnFUwctjWNEkfAUvhXa4Rda9mv0reiucRrikfYd3EZjJiHw==
+  dependencies:
+    chalk "^2.1.0"
+    inquirer "^6"
+    json-stable-stringify "^1.0.1"
+    ora "^3.0.0"
+    through "^2.3.8"
 
 consolidate@^0.15.1:
   version "0.15.1"
@@ -4466,10 +4489,15 @@ detective@^4.3.1:
     acorn "^4.0.3"
     defined "^1.0.0"
 
-diff@^3.2.0, diff@^3.5.0:
+diff@^3.2.0:
   version "3.5.0"
   resolved "https://registry.yarnpkg.com/diff/-/diff-3.5.0.tgz#800c0dd1e0a8bfbc95835c202ad220fe317e5a12"
   integrity sha512-A46qtFgd+g7pDZinpnwiRJtxbC1hpgf0uzP3iG89scHk0AUC7A1TGxf5OiiOUv/JMZR8GOt8hL900hV0bOy5xA==
+
+diff@^4.0.1:
+  version "4.0.1"
+  resolved "https://registry.yarnpkg.com/diff/-/diff-4.0.1.tgz#0c667cb467ebbb5cea7f14f135cc2dba7780a8ff"
+  integrity sha512-s2+XdvhPCOF01LRQBC8hf4vhbVmI2CGS5aZnxLJlT5FtdhPCDFq80q++zK2KlrVorVDdL5BOGZ/VfLrVtYNF+Q==
 
 diffie-hellman@^5.0.0:
   version "5.0.3"
@@ -5256,11 +5284,12 @@ ember-cli@^2.18.2:
     walk-sync "^0.3.0"
     yam "0.0.22"
 
-ember-cli@~3.7.1:
-  version "3.7.1"
-  resolved "https://registry.yarnpkg.com/ember-cli/-/ember-cli-3.7.1.tgz#f307bcd68aaf083612717ab32133120272d89170"
-  integrity sha512-hlQK32xZEubHRdAo8s6JKvDTBB41wKghW3m0IewS+sZTV92Z6DJoZXlH5taETcnc5qMR1Ifml25Z2ezyNL/OBA==
+ember-cli@~3.8.0:
+  version "3.8.0"
+  resolved "https://registry.yarnpkg.com/ember-cli/-/ember-cli-3.8.0.tgz#723a1281540421972c5da3296e70f463d805c22d"
+  integrity sha512-K2ds4uQ7nEjuNSovOnR8UykEO0tuojk6fUDRRhajpnsSiJqrfOE2TxZhOKH4xNUXlD4VnGsunnzS6SLlp7jPZQ==
   dependencies:
+    "@babel/core" "^7.0.0"
     "@babel/plugin-transform-modules-amd" "^7.2.0"
     amd-name-resolver "^1.3.1"
     babel-plugin-module-resolver "^3.1.1"
@@ -5283,22 +5312,23 @@ ember-cli@~3.7.1:
     broccoli-source "^1.1.0"
     broccoli-stew "^2.0.0"
     calculate-cache-key-for-tree "^1.1.0"
-    capture-exit "^1.2.0"
-    chalk "^2.4.1"
+    capture-exit "^2.0.0"
+    chalk "^2.4.2"
     ci-info "^2.0.0"
     clean-base-url "^1.0.0"
     compression "^1.7.3"
     configstore "^4.0.0"
-    console-ui "^2.2.2"
+    console-ui "^3.0.0"
     core-object "^3.1.5"
     dag-map "^2.0.2"
-    diff "^3.5.0"
+    diff "^4.0.1"
     ember-cli-broccoli-sane-watcher "^3.0.0"
     ember-cli-is-package-missing "^1.0.0"
     ember-cli-lodash-subset "^2.0.1"
     ember-cli-normalize-entity-name "^1.0.0"
     ember-cli-preprocess-registry "^3.1.2"
     ember-cli-string-utils "^1.1.0"
+    ember-source-channel-url "^1.1.0"
     ensure-posix-path "^1.0.2"
     execa "^1.0.0"
     exit "^0.1.2"
@@ -5306,8 +5336,6 @@ ember-cli@~3.7.1:
     filesize "^3.6.1"
     find-up "^3.0.0"
     find-yarn-workspace-root "^1.1.0"
-    fixturify "^0.3.4"
-    fixturify-project "^1.5.3"
     fs-extra "^7.0.0"
     fs-tree-diff "^1.0.0"
     get-caller-file "^2.0.0"
@@ -5321,7 +5349,7 @@ ember-cli@~3.7.1:
     inflection "^1.12.0"
     is-git-url "^1.0.0"
     isbinaryfile "^3.0.3"
-    js-yaml "^3.12.0"
+    js-yaml "^3.12.1"
     json-stable-stringify "^1.0.1"
     leek "0.0.24"
     lodash.template "^4.4.0"
@@ -5342,7 +5370,7 @@ ember-cli@~3.7.1:
     silent-error "^1.1.0"
     sort-package-json "^1.15.0"
     symlink-or-copy "^1.2.0"
-    temp "0.8.3"
+    temp "0.9.0"
     testem "^2.9.2"
     tiny-lr "^1.1.1"
     tree-sync "^1.2.2"
@@ -5812,7 +5840,7 @@ ember-simple-auth@^1.8.1:
     ember-getowner-polyfill "^1.1.0 || ^2.0.0"
     silent-error "^1.0.0"
 
-ember-source-channel-url@^1.0.1:
+ember-source-channel-url@^1.0.1, ember-source-channel-url@^1.1.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/ember-source-channel-url/-/ember-source-channel-url-1.1.0.tgz#73de5cc6ebc25b2120e932ec1d8f82677bfaf6ef"
   integrity sha512-y1RVXmyqrdX6zq9ZejpPt7ohKNGuLMBEKaOUyxFWcYAM5gvLuo6xFerwNmXEBbu4e3//GaoasjodXi6Cl+ddUQ==
@@ -6842,22 +6870,6 @@ fireworm@^0.7.0:
     lodash.flatten "^3.0.2"
     minimatch "^3.0.2"
 
-fixturify-project@^1.5.3:
-  version "1.5.3"
-  resolved "https://registry.yarnpkg.com/fixturify-project/-/fixturify-project-1.5.3.tgz#2ba4ffec59c1d79ae6638f818c0847eb974d179b"
-  integrity sha512-vgH+Uo+pC6jHg7mt+FDz+j08bKFugnP6guBWeumYllQDbvxT7NQ/sf6zO4nC0XKRRsSNWsOHkO0AppaHvwF69A==
-  dependencies:
-    fixturify "^0.3.4"
-    tmp "^0.0.33"
-
-fixturify@^0.3.4:
-  version "0.3.4"
-  resolved "https://registry.yarnpkg.com/fixturify/-/fixturify-0.3.4.tgz#c676de404a7f8ee8e64d0b76118e62ec95ab7b25"
-  integrity sha512-Gx+KSB25b6gMc4bf7UFRTA85uE0iZR+RYur0JHh6dg4AGBh0EksOv4FCHyM7XpGmiJO7Bc7oV7vxENQBT+2WEQ==
-  dependencies:
-    fs-extra "^0.30.0"
-    matcher-collection "^1.0.4"
-
 flat-cache@^2.0.1:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/flat-cache/-/flat-cache-2.0.1.tgz#5d296d6f04bda44a4630a301413bdbc2ec085ec0"
@@ -7848,7 +7860,7 @@ inquirer@^3.3.0:
     strip-ansi "^4.0.0"
     through "^2.3.6"
 
-inquirer@^6.2.2:
+inquirer@^6, inquirer@^6.2.2:
   version "6.2.2"
   resolved "https://registry.yarnpkg.com/inquirer/-/inquirer-6.2.2.tgz#46941176f65c9eb20804627149b743a218f25406"
   integrity sha512-Z2rREiXA6cHRR9KBOarR3WuLlFzlIfAEIiB45ll5SSadMg7WqOh1MKEjjndfuH5ewXdixWCxqnVfGOQzPeiztA==
@@ -8490,10 +8502,10 @@ js-tokens@^4.0.0:
   resolved "https://registry.yarnpkg.com/js-tokens/-/js-tokens-4.0.0.tgz#19203fb59991df98e3a287050d4647cdeaf32499"
   integrity sha512-RdJUflcE3cUzKiMqQgsCu06FPu9UdIJO0beYbPhHN4k6apgJtifcoCtT9bcxOpYBtpD2kCM6Sbzg4CausW/PKQ==
 
-js-yaml@^3.12.0, js-yaml@^3.2.5, js-yaml@^3.2.7, js-yaml@^3.6.1, js-yaml@^3.9.0:
-  version "3.12.0"
-  resolved "https://registry.yarnpkg.com/js-yaml/-/js-yaml-3.12.0.tgz#eaed656ec8344f10f527c6bfa1b6e2244de167d1"
-  integrity sha512-PIt2cnwmPfL4hKNwqeiuz4bKfnzHTBv6HyVgjahA6mPLwPDzjDWrplJBMjHUFxku/N3FlmrbyPclad+I+4mJ3A==
+js-yaml@^3.12.0, js-yaml@^3.12.1, js-yaml@^3.2.5, js-yaml@^3.2.7, js-yaml@^3.6.1, js-yaml@^3.9.0:
+  version "3.12.2"
+  resolved "https://registry.yarnpkg.com/js-yaml/-/js-yaml-3.12.2.tgz#ef1d067c5a9d9cb65bd72f285b5d8105c77f14fc"
+  integrity sha512-QHn/Lh/7HhZ/Twc7vJYQTkjuCa0kaCcDcjK5Zlk2rvnUpy7DxMJ23+Jc2dcyvltwQVg1nygAVlB2oRDFHoRS5Q==
   dependencies:
     argparse "^1.0.7"
     esprima "^4.0.0"
@@ -9501,7 +9513,7 @@ markdown-it@^8.3.0, markdown-it@^8.3.1, markdown-it@^8.4.2:
     mdurl "^1.0.1"
     uc.micro "^1.0.5"
 
-matcher-collection@^1.0.0, matcher-collection@^1.0.4, matcher-collection@^1.0.5:
+matcher-collection@^1.0.0, matcher-collection@^1.0.5:
   version "1.0.5"
   resolved "https://registry.yarnpkg.com/matcher-collection/-/matcher-collection-1.0.5.tgz#2ee095438372cb8884f058234138c05c644ec339"
   integrity sha512-nUCmzKipcJEwYsBVAFh5P+d7JBuhJaW1xs85Hara9xuMLqtCVUrW6DSC0JVIkluxEH2W45nPBM/wjHtBXa/tYA==
@@ -10305,6 +10317,18 @@ ora@^2.0.0:
     cli-spinners "^1.1.0"
     log-symbols "^2.2.0"
     strip-ansi "^4.0.0"
+    wcwidth "^1.0.1"
+
+ora@^3.0.0:
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/ora/-/ora-3.1.0.tgz#dbedd8c03b5d017fb67083e87ee52f5ec89823ed"
+  integrity sha512-vRBPaNCclUi8pUxRF/G8+5qEQkc6EgzKK1G2ZNJUIGu088Un5qIxFXeDgymvPRM9nmrcUOGzQgS1Vmtz+NtlMw==
+  dependencies:
+    chalk "^2.4.2"
+    cli-cursor "^2.1.0"
+    cli-spinners "^1.3.1"
+    log-symbols "^2.2.0"
+    strip-ansi "^5.0.0"
     wcwidth "^1.0.1"
 
 os-browserify@^0.3.0:
@@ -11489,7 +11513,7 @@ right-align@^0.1.1:
   dependencies:
     align-text "^0.1.1"
 
-rimraf@2, rimraf@2.6.3, rimraf@^2.2.8, rimraf@^2.3.2, rimraf@^2.3.4, rimraf@^2.4.3, rimraf@^2.4.4, rimraf@^2.5.3, rimraf@^2.5.4, rimraf@^2.6.1, rimraf@^2.6.2:
+rimraf@2, rimraf@2.6.3, rimraf@^2.2.8, rimraf@^2.3.2, rimraf@^2.3.4, rimraf@^2.4.3, rimraf@^2.4.4, rimraf@^2.5.3, rimraf@^2.5.4, rimraf@^2.6.1, rimraf@^2.6.2, rimraf@~2.6.2:
   version "2.6.3"
   resolved "https://registry.yarnpkg.com/rimraf/-/rimraf-2.6.3.tgz#b2d104fe0d8fb27cf9e0a1cda8262dd3833c6cab"
   integrity sha512-mwqeW5XsA2qAejG46gYdENaxXjx9onRNCfn7L0duuP4hCuTIi/QO7PDK07KJfp1d+izWPrzEJDcSqBa0OZQriA==
@@ -11544,10 +11568,10 @@ rsvp@^3.0.14, rsvp@^3.0.16, rsvp@^3.0.17, rsvp@^3.0.18, rsvp@^3.0.21, rsvp@^3.0.
   resolved "https://registry.yarnpkg.com/rsvp/-/rsvp-3.6.2.tgz#2e96491599a96cde1b515d5674a8f7a91452926a"
   integrity sha512-OfWGQTb9vnwRjwtA2QwpG2ICclHC3pgXZO5xt8H2EfgDquO0qVdSb5T88L4qJVAEugbS56pAuV4XZM58UX8ulw==
 
-rsvp@^4.0.1, rsvp@^4.7.0, rsvp@^4.8.2, rsvp@^4.8.3:
-  version "4.8.3"
-  resolved "https://registry.yarnpkg.com/rsvp/-/rsvp-4.8.3.tgz#25d4b9fdd0f95e216eb5884d9b3767d3fbfbe2cd"
-  integrity sha512-/OlbK31XtkPnLD2ktmZXj4g/v6q1boTDr6/3lFuDTgxVsrA3h7PH5eYyAxIvDMjRHr/DoOlzNicqDwBEo9xU7g==
+rsvp@^4.0.1, rsvp@^4.7.0, rsvp@^4.8.2, rsvp@^4.8.3, rsvp@^4.8.4:
+  version "4.8.4"
+  resolved "https://registry.yarnpkg.com/rsvp/-/rsvp-4.8.4.tgz#b50e6b34583f3dd89329a2f23a8a2be072845911"
+  integrity sha512-6FomvYPfs+Jy9TfXmBpBuMWNH94SgCsZmJKcanySzgNNP6LjWxBvyLTa9KaMfDDM5oxRfrKDB0r/qeRsLwnBfA==
 
 rsvp@~3.0.6:
   version "3.0.21"
@@ -12532,6 +12556,13 @@ temp@0.8.3:
   dependencies:
     os-tmpdir "^1.0.0"
     rimraf "~2.2.6"
+
+temp@0.9.0:
+  version "0.9.0"
+  resolved "https://registry.yarnpkg.com/temp/-/temp-0.9.0.tgz#61391795a11bd9738d4c4d7f55f012cb8f55edaa"
+  integrity sha512-YfUhPQCJoNQE5N+FJQcdPz63O3x3sdT4Xju69Gj4iZe0lBKOtnAMi0SLj9xKhGkcGhsxThvTJ/usxtFPo438zQ==
+  dependencies:
+    rimraf "~2.6.2"
 
 terser-webpack-plugin@^1.1.0:
   version "1.2.2"
