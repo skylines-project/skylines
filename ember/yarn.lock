@@ -4714,10 +4714,10 @@ ember-basic-dropdown@^1.1.0:
     ember-cli-htmlbars "^3.0.1"
     ember-maybe-in-element "^0.2.0"
 
-ember-bootstrap@^2.5.0:
-  version "2.5.0"
-  resolved "https://registry.yarnpkg.com/ember-bootstrap/-/ember-bootstrap-2.5.0.tgz#afd9e1a6814a195c644ccd691c413c9d45dba928"
-  integrity sha512-ahCycWUBknaIt9UzsZz94UvVxwzuKdc1JdhhIuYyGQToRlmzbzSqxWDWiwC2ETrA9FLJBIeaznr9Tvy6Sid+xQ==
+ember-bootstrap@^2.6.0:
+  version "2.6.0"
+  resolved "https://registry.yarnpkg.com/ember-bootstrap/-/ember-bootstrap-2.6.0.tgz#ab9f3133abcd8f901cc5a750e9491217d394d485"
+  integrity sha512-mY12ox05Z5eoNdK2MjAyI+wX4W9umUkZlted07h9DZw0WqBeeojC7RWg+yhn5R4hCTzJfUKDhWma/5x7tfr/vw==
   dependencies:
     broccoli-debug "^0.6.3"
     broccoli-funnel "^2.0.0"
