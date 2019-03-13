@@ -5431,10 +5431,10 @@ ember-copy@^1.0.0:
   dependencies:
     ember-cli-babel "^6.6.0"
 
-ember-cp-validations@^3.5.4:
-  version "3.5.4"
-  resolved "https://registry.yarnpkg.com/ember-cp-validations/-/ember-cp-validations-3.5.4.tgz#95c09d30071958972600d63e659b65fc05062c84"
-  integrity sha512-ZzvTAli3nghmrAvV099MSFwYAVag7TQVXPAFSG3/ijPZ5PM0MnNGopmAi13q1RysbDtG7AcPBLANJmoxcmqpLw==
+ember-cp-validations@^3.5.5:
+  version "3.5.5"
+  resolved "https://registry.yarnpkg.com/ember-cp-validations/-/ember-cp-validations-3.5.5.tgz#8eff401b34c1d1575f94817c04a1c663e9bf5867"
+  integrity sha512-3o2+aM0gEeHHQo7izfgfaeuY8yGhBHsaRt4yONef/2ilcfiShBlok8NqvDaVEpvV0+b7jqePE5LCcRM8ftuJSw==
   dependencies:
     ember-cli-babel "^6.6.0"
     ember-cli-version-checker "^2.0.0"
