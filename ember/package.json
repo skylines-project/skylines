@@ -49,7 +49,7 @@
     "ember-cli-uglify": "^2.1.0",
     "ember-concurrency": "^0.8.27",
     "ember-cookies": "^0.3.1",
-    "ember-cp-validations": "^3.5.4",
+    "ember-cp-validations": "^3.5.5",
     "ember-font-awesome": "^4.0.0-rc.4",
     "ember-freestyle": "^0.10.0",
     "ember-href-to": "^2.0.1",
