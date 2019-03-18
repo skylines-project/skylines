@@ -65,7 +65,7 @@
     "ember-simple-auth": "^1.8.1",
     "ember-source": "~3.8.0",
     "ember-svg-jar": "^1.2.2",
-    "ember-test-selectors": "^2.0.0",
+    "ember-test-selectors": "^2.1.0",
     "ember-truth-helpers": "^2.1.0",
     "ember-web-app": "^2.3.1",
     "eslint": "^5.15.1",
