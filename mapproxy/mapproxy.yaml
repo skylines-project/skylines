@@ -102,7 +102,6 @@ sources:
     image:
       format: image/png
     mapserver:
-      binary: /usr/lib/cgi-bin/mapserv
       working_dir: ../mapserver
 
   airports_mapserver_bin:
@@ -115,7 +114,6 @@ sources:
     image:
       format: image/png
     mapserver:
-      binary: /usr/lib/cgi-bin/mapserv
       working_dir: ../mapserver
 
   airspace_mapserver_bin:
@@ -128,7 +126,6 @@ sources:
     image:
       format: image/png
     mapserver:
-      binary: /usr/lib/cgi-bin/mapserv
       working_dir: ../mapserver
 
   mwp_mapserver_wms:
