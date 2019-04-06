@@ -1,7 +1,7 @@
 import os
 import sys
 import argparse
-from config import to_envvar
+from mapproxy.wsgiapp import make_wsgi_app
 
 parser = argparse.ArgumentParser(description="Run the MapProxy WSGI app.")
 parser.add_argument(
@@ -11,9 +11,6 @@ parser.add_argument(
     help="path to the configuration YAML file",
 )
 args = parser.parse_args()
-
-if not to_envvar(args.config_file):
-    parser.error('Config file "{}" not found.'.format(args.config_file))
 
 sys.path.append(os.path.dirname(sys.argv[0]))
 
