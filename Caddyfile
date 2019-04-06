@@ -15,7 +15,6 @@ skylines.aero {
         if {path} not_starts_with /track.php
         if {path} not_starts_with /widgets
         if {path} not_starts_with /mapproxy
-        if {path} not_starts_with /mapserver
         to {path} /
     }
 
@@ -28,7 +27,6 @@ skylines.aero {
         match ^/track.php 0s
         match ^/widgets 0s
         match ^/mapproxy 7d
-        match ^/mapserver 0s
     }
 
     proxy /api unix:/run/skylines/skylines-uwsgi.socket {
@@ -54,11 +52,6 @@ skylines.aero {
     proxy /mapproxy unix:/run/skylines/mapproxy-uwsgi.socket {
         transparent
         without /mapproxy
-    }
-
-    proxy /mapserver unix:/run/skylines/mapserver-uwsgi.socket {
-        transparent
-        without /mapserver
     }
 }
 
