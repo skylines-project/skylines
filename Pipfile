@@ -33,7 +33,7 @@ gevent = "==1.4.0"
 webargs = "*"
 marshmallow = "*"
 flask-oauthlib = "*"
-oauthlib = "*"
+requests-oauthlib = ">=0.6.2,<1.2.0"  # see https://github.com/lepture/flask-oauthlib/pull/388
 raven = {extras = ["flask"], version = "==6.10.0"}
 uwsgi = "*"
 mapproxy = "*"
