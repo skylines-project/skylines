@@ -62,22 +62,7 @@ def manage(cmd, user=None):
 
 @task
 def update_mapproxy():
-    with NamedTemporaryFile() as f:
-        content = open("mapproxy/mapproxy.yaml").read()
-
-        content = content.replace(
-            "base_dir: '/tmp/cache_data'", "base_dir: '%s/cache/mapproxy'" % APP_DIR
-        )
-
-        content = content.replace(
-            "lock_dir: '/tmp/cache_data/tile_locks'",
-            "lock_dir: '%s/cache/mapproxy/tile_locks'" % APP_DIR,
-        )
-
-        f.write(content)
-        f.flush()
-
-        put(f.name, "%s/config/mapproxy.yaml" % APP_DIR)
+    put("mapproxy/mapproxy.yaml", "%s/config/mapproxy.yaml" % APP_DIR)
 
 
 @task
@@ -89,5 +74,5 @@ def pip_install():
 
 @task
 def clean_mapproxy_cache():
-    with cd("/home/skylines/cache/mapproxy"):
-        run("rm -rv *")
+    with cd(SRC_DIR):
+        run("rm -rv mapproxy/cache_data/")

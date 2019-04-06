@@ -188,10 +188,6 @@ globals:
 
   # # cache options
   cache:
-    # where to store the cached images
-    base_dir: '/tmp/cache_data'
-    # where to store lockfiles
-    lock_dir: '/tmp/cache_data/locks'
     # request x*y tiles in one step
     meta_size: [6, 6]
     # add a buffer on all sides (in pixel) when requesting
