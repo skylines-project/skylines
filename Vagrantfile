@@ -35,7 +35,7 @@ sudo apt-get update
 # install base dependencies
 
 sudo apt-get install -y --no-install-recommends \
-    python2.7 python2.7-dev \
+    python python-dev \
     g++-6 pkg-config libcurl4-openssl-dev git redis-server \
     libpq-dev postgresql-9.5-postgis-2.2 postgresql-9.5-postgis-2.2-scripts postgresql-contrib-9.5 \
     libfreetype6-dev libpng-dev libffi-dev
