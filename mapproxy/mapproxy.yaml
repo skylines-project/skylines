@@ -27,10 +27,6 @@ layers:
 caches:
   airspace_airports_cache:
     grids: [GLOBAL_MERCATOR]
-    # choose between airspace_mapserver_bin source and
-    # airspace_mapserver_wms source. The first one just
-    # needs the cgi-mapserver binary, the latter retrieves
-    # the map from a WMS server.
     sources: [airspace_cache, airports_cache]
     image:
       format: image/png
@@ -42,11 +38,7 @@ caches:
 
   mwp_cache:
     grids: [GLOBAL_MERCATOR]
-    # choose between airspace_mapserver_bin source and
-    # airspace_mapserver_wms source. The first one just
-    # needs the cgi-mapserver binary, the latter retrieves
-    # the map from a WMS server.
-    sources: [mwp_mapserver_wms]
+    sources: [mwp_mapserver_bin]
     image:
       format: image/png
     format: image/png
@@ -57,11 +49,7 @@ caches:
 
   airports_cache:
     grids: [GLOBAL_MERCATOR]
-    # choose between airspace_airports_mapserver_bin source and
-    # airspace_airports_mapserver_wms source. The first one just
-    # needs the cgi-mapserver binary, the latter retrieves
-    # the map from a WMS server.
-    sources: [airports_mapserver_wms]
+    sources: [airports_mapserver_bin]
     image:
       format: image/png
     format: image/png
@@ -72,11 +60,7 @@ caches:
 
   airspace_cache:
     grids: [GLOBAL_MERCATOR]
-    # choose between airspace_mapserver_bin source and
-    # airspace_mapserver_wms source. The first one just
-    # needs the cgi-mapserver binary, the latter retrieves
-    # the map from a WMS server.
-    sources: [airspace_mapserver_wms]
+    sources: [airspace_mapserver_bin]
     image:
       format: image/png
     format: image/png
@@ -127,36 +111,6 @@ sources:
       format: image/png
     mapserver:
       working_dir: ../mapserver
-
-  mwp_mapserver_wms:
-    type: wms
-    supported_srs: ['EPSG:3857']
-    req:
-      layers: MWP
-      url: https://maps.skylines.aero/mapserver/?
-      transparent: true
-    image:
-      format: image/png
-
-  airports_mapserver_wms:
-    type: wms
-    supported_srs: ['EPSG:3857']
-    req:
-      layers: Airports
-      url: https://maps.skylines.aero/mapserver/?
-      transparent: true
-    image:
-      format: image/png
-
-  airspace_mapserver_wms:
-    type: wms
-    supported_srs: ['EPSG:3857']
-    req:
-      layers: Airspace
-      url: https://maps.skylines.aero/mapserver/?
-      transparent: true
-    image:
-      format: image/png
 
   osm_tiles:
     type: tile

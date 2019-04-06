@@ -1,13 +1,9 @@
 ## Running a local mapserver
 
-If you want to run the mapserver as fastcgi, install the `python-mapscript`
-package (on Debian):
+If you want to run the map server locally you will need to install the
+`mapserver` CLI. On Debian you can do:
 
-    $ apt-get install python-mapscript
-
-To run it locally as subprocess of mapproxy, change
-`mapproxy/mapproxy.yaml` to fit it to your needs. You'll need to
-install the `cgi-mapserver` package for this.
+    $ apt-get install mapserver-cli
 
 To import airspaces into the database, install the `python-gdal` package (using
 gdal extension directly from pypi is not recommended) and import the required
