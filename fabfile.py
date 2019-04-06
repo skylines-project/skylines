@@ -63,7 +63,7 @@ def manage(cmd, user=None):
 @task
 def update_mapproxy():
     with NamedTemporaryFile() as f:
-        content = open("mapserver/mapproxy/mapproxy.yaml").read()
+        content = open("mapproxy/mapproxy.yaml").read()
 
         content = content.replace(
             "base_dir: '/tmp/cache_data'", "base_dir: '%s/cache/mapproxy'" % APP_DIR

@@ -97,39 +97,39 @@ sources:
     supported_srs: ['EPSG:3857']
     req:
       layers: MWP
-      map: ../skylines.map
+      map: ../mapserver/skylines.map
       transparent: true
     image:
       format: image/png
     mapserver:
       binary: /usr/lib/cgi-bin/mapserv
-      working_dir: ../
+      working_dir: ../mapserver
 
   airports_mapserver_bin:
     type: mapserver
     supported_srs: ['EPSG:3857']
     req:
       layers: Airports
-      map: ../skylines.map
+      map: ../mapserver/skylines.map
       transparent: true
     image:
       format: image/png
     mapserver:
       binary: /usr/lib/cgi-bin/mapserv
-      working_dir: ../
+      working_dir: ../mapserver
 
   airspace_mapserver_bin:
     type: mapserver
     supported_srs: ['EPSG:3857']
     req:
       layers: Airspace
-      map: ../skylines.map
+      map: ../mapserver/skylines.map
       transparent: true
     image:
       format: image/png
     mapserver:
       binary: /usr/lib/cgi-bin/mapserv
-      working_dir: ../
+      working_dir: ../mapserver
 
   mwp_mapserver_wms:
     type: wms
