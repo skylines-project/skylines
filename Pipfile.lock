@@ -523,11 +523,12 @@
         },
         "webargs": {
             "hashes": [
-                "sha256:0bd93a8f180907a040631b592d10ca25b8a243d9a71921a2ec363b52f0a3f441",
-                "sha256:62a84a1e2e42ad7e6f2af4a1f96379bb05f8e26b7f86deebda0e2dad4187c591"
+                "sha256:81481c249b2c9c00c1d519e08820e2a61d6b0768d842d78d114c474c172f3ab8",
+                "sha256:c4d8ec38b2d50821e795bf4619ff9dd95589330811a4fbeac0c32d8ddcfa375d",
+                "sha256:d531eee77274133b54fd1171b2a58498bd71c498d7fe38d2c864f24284f32ed1"
             ],
             "index": "pypi",
-            "version": "==5.1.0"
+            "version": "==5.3.0"
         },
         "werkzeug": {
             "hashes": [
