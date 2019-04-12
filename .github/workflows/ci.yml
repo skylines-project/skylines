@@ -38,6 +38,9 @@ jobs:
       - run: yarn lint:hbs
         working-directory: ./ember
 
+      - run: yarn ember dependency-lint
+        working-directory: ./ember
+
       - run: yarn test
         working-directory: ./ember
 
