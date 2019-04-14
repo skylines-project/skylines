@@ -55,7 +55,7 @@ sources:
 caches:
   airspace_airports_cache:
     grids: [GLOBAL_WEBMERCATOR]
-    sources: [airspace_cache, airports_cache]
+    sources: ['mapserver:Airspace,Airports']
     image:
       format: image/png
     link_single_color_images: true
