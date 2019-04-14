@@ -1,4 +1,32 @@
+globals:
+  # image/transformation options
+  image:
+    paletted: false
+    resampling_method: bicubic
+
+    formats:
+      image/png:
+        colors: 256
+        transparent: true
+        encoding_options:
+          quantizer: mediancut
+
+  # # cache options
+  cache:
+    # request x*y tiles in one step
+    meta_size: [6, 6]
+    # add a buffer on all sides (in pixel) when requesting
+    # new images
+    meta_buffer: 128
+
+  http:
+    ssl_no_cert_checks: True
+
+  tiles:
+    expires_hours: 48
+
 services:
+  demo:
   tms:
     origin: 'nw'
   wms:
@@ -6,6 +34,67 @@ services:
     image_formats: ['image/png']
     md:
       title: SkyLines WMS Server
+
+sources:
+  mapserver:
+    type: mapserver
+    supported_srs: ['EPSG:3857']
+    req:
+      map: ../mapserver/skylines.map
+      transparent: true
+    image:
+      format: image/png
+    mapserver:
+      working_dir: ../mapserver
+
+  osm_tiles:
+    type: tile
+    url: http://c.tile.openstreetmap.org/%(tms_path)s.%(format)s
+    grid: GLOBAL_WEBMERCATOR
+
+caches:
+  airspace_airports_cache:
+    grids: [GLOBAL_WEBMERCATOR]
+    sources: ['mapserver:Airspace,Airports']
+    image:
+      format: image/png
+    link_single_color_images: true
+    cache:
+      type: sqlite
+
+  mwp_cache:
+    grids: [GLOBAL_WEBMERCATOR]
+    sources: ['mapserver:MWP']
+    image:
+      format: image/png
+    link_single_color_images: true
+    cache:
+      type: sqlite
+
+  airports_cache:
+    grids: [GLOBAL_WEBMERCATOR]
+    sources: ['mapserver:Airports']
+    image:
+      format: image/png
+    link_single_color_images: true
+    cache:
+      type: sqlite
+
+  airspace_cache:
+    grids: [GLOBAL_WEBMERCATOR]
+    sources: ['mapserver:Airspace']
+    image:
+      format: image/png
+    link_single_color_images: true
+    cache:
+      type: sqlite
+
+  osm_cache:
+    grids: [GLOBAL_WEBMERCATOR]
+    sources: [osm_tiles]
+    format: image/png
+    cache:
+      type: sqlite
 
 layers:
   - name: mwp
@@ -20,156 +109,10 @@ layers:
     title: Airspace WMS
     sources: [airspace_cache]
 
+  - name: airports
+    title: Airports WMS
+    sources: [airports_cache]
+
   - name: osm
     title: OpenStreetMap Tiles
     sources: [osm_cache]
-
-caches:
-  airspace_airports_cache:
-    grids: [GLOBAL_MERCATOR]
-    sources: [airspace_cache, airports_cache]
-    image:
-      format: image/png
-    format: image/png
-    request_format: image/png
-    link_single_color_images: true
-    cache:
-      type: sqlite
-
-  mwp_cache:
-    grids: [GLOBAL_MERCATOR]
-    sources: [mwp_mapserver_bin]
-    image:
-      format: image/png
-    format: image/png
-    request_format: image/png
-    link_single_color_images: true
-    cache:
-      type: sqlite
-
-  airports_cache:
-    grids: [GLOBAL_MERCATOR]
-    sources: [airports_mapserver_bin]
-    image:
-      format: image/png
-    format: image/png
-    request_format: image/png
-    link_single_color_images: true
-    cache:
-      type: sqlite
-
-  airspace_cache:
-    grids: [GLOBAL_MERCATOR]
-    sources: [airspace_mapserver_bin]
-    image:
-      format: image/png
-    format: image/png
-    request_format: image/png
-    link_single_color_images: true
-    cache:
-      type: sqlite
-
-  osm_cache:
-    sources: [osm_tiles]
-    format: image/png
-    cache:
-      type: sqlite
-
-sources:
-  mwp_mapserver_bin:
-    type: mapserver
-    supported_srs: ['EPSG:3857']
-    req:
-      layers: MWP
-      map: ../mapserver/skylines.map
-      transparent: true
-    image:
-      format: image/png
-    mapserver:
-      working_dir: ../mapserver
-
-  airports_mapserver_bin:
-    type: mapserver
-    supported_srs: ['EPSG:3857']
-    req:
-      layers: Airports
-      map: ../mapserver/skylines.map
-      transparent: true
-    image:
-      format: image/png
-    mapserver:
-      working_dir: ../mapserver
-
-  airspace_mapserver_bin:
-    type: mapserver
-    supported_srs: ['EPSG:3857']
-    req:
-      layers: Airspace
-      map: ../mapserver/skylines.map
-      transparent: true
-    image:
-      format: image/png
-    mapserver:
-      working_dir: ../mapserver
-
-  osm_tiles:
-    type: tile
-    url: http://c.tile.openstreetmap.org/%(tms_path)s.%(format)s
-    grid: osm_grid
-
-grids:
-  osm_grid:
-    srs: EPSG:3857
-    origin: nw
-
-globals:
-  # # coordinate transformation options
-  # srs:
-  #   # WMS 1.3.0 requires all coordiates in the correct axis order,
-  #   # i.e. lon/lat or lat/lon. Use the following settings to
-  #   # explicitly set a CRS to either North/East or East/North
-  #   # ordering.
-  #   axis_order_ne: ['EPSG:9999', 'EPSG:9998']
-  #   axis_order_en: ['EPSG:0000', 'EPSG:0001']
-  #   # you can set the proj4 data dir here, if you need custom
-  #   # epsg definitions. the path must contain a file named 'epsg'
-  #   # the format of the file is:
-  #   # <4326> +proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs  <>
-  #   proj_data_dir: '/path to dir that contains epsg file'
-
-  # # cache options
-  cache:
-    # request x*y tiles in one step
-    meta_size: [6, 6]
-    # add a buffer on all sides (in pixel) when requesting
-    # new images
-    meta_buffer: 128
-
-
-  # image/transformation options
-  image:
-    paletted: false
-    resampling_method: bicubic
-
-    formats:
-      image/png:
-        colors: 256
-        transparent: true
-        encoding_options:
-          quantizer: mediancut
-
-      # resampling_method: bilinear
-      # resampling_method: bicubic
-  #     jpeg_quality: 90
-  #     # stretch cached images by this factor before
-  #     # using the next level
-  #     stretch_factor: 1.15
-  #     # shrink cached images up to this factor before
-  #     # returning an empty image (for the first level)
-  #     max_shrink_factor: 4.0
-
-  tiles:
-    expires_hours: 48
-
-  http:
-    ssl_no_cert_checks: True
