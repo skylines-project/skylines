@@ -61,11 +61,6 @@ def manage(cmd, user=None):
 
 
 @task
-def update_mapproxy():
-    put("mapproxy/mapproxy.yaml", "%s/config/mapproxy.yaml" % APP_DIR)
-
-
-@task
 def pip_install():
     with cd(SRC_DIR):
         run("git reset --hard")
