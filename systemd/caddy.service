@@ -5,6 +5,7 @@ After=network-online.target
 Wants=network-online.target systemd-networkd-wait-online.service
 
 [Service]
+SyslogIdentifier=caddy
 WorkingDirectory=/home/skylines/src
 
 Restart=on-abnormal

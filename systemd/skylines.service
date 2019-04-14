@@ -3,6 +3,7 @@ Description=SkyLines uWSGI server
 After=network.target
 
 [Service]
+SyslogIdentifier=skylines
 WorkingDirectory=/home/skylines/src
 ExecStart=/usr/local/bin/pipenv run uwsgi uwsgi/skylines.ini
 Type=notify

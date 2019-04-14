@@ -3,6 +3,7 @@ Description=Celery background queue
 After=network.target
 
 [Service]
+SyslogIdentifier=celery
 WorkingDirectory=/home/skylines/src
 ExecStart=/usr/local/bin/pipenv run python manage.py celery runworker
 Restart=on-failure
