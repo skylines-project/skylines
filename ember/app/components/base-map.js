@@ -109,8 +109,6 @@ export default Component.extend({
   },
 
   addMWPLayers() {
-    let tile_url = this.getWithDefault('mapTileURL', '');
-
     let mwp_layer = new ol.layer.Tile({
       source: new ol.source.XYZ({
         attributions: [
@@ -122,7 +120,7 @@ export default Component.extend({
               '</a>.',
           }),
         ],
-        url: `${tile_url}/tiles/1.0.0/mwp/{z}/{x}/{y}.png`,
+        url: `${config.SKYLINES_TILE_BASEURL || ''}/tiles/1.0.0/mwp/EPSG3857/{z}/{x}/{y}.png`,
       }),
       zIndex: 11,
     });
@@ -140,7 +138,7 @@ export default Component.extend({
   addAirspaceLayers() {
     let airspace_layer = new ol.layer.Tile({
       source: new ol.source.XYZ({
-        url: `${config.SKYLINES_TILE_BASEURL || ''}/tiles/1.0.0/airspace+airports/{z}/{x}/{y}.png`,
+        url: `${config.SKYLINES_TILE_BASEURL || ''}/tiles/1.0.0/airspace+airports/EPSG3857/{z}/{x}/{y}.png`,
       }),
       zIndex: 10,
     });
