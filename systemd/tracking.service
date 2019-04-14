@@ -3,6 +3,7 @@ Description=SkyLines Tracking server
 After=network.target
 
 [Service]
+SyslogIdentifier=tracking
 WorkingDirectory=/home/skylines/src
 ExecStart=/usr/local/bin/pipenv run python manage.py tracking runserver
 Restart=on-failure

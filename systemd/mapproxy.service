@@ -3,6 +3,7 @@ Description=MapProxy uWSGI Server
 After=network.target
 
 [Service]
+SyslogIdentifier=mapproxy
 WorkingDirectory=/home/skylines/src
 ExecStart=/usr/local/bin/pipenv run uwsgi uwsgi/mapproxy.ini
 Type=notify
