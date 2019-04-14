@@ -1,19 +1,8 @@
 import os
 import sys
-import argparse
-from config import to_envvar
+import config
 
-parser = argparse.ArgumentParser(description="Run the SkyLines FastCGI daemon.")
-parser.add_argument(
-    "config_file",
-    nargs="?",
-    metavar="config.ini",
-    help="path to the configuration INI file",
-)
-args = parser.parse_args()
-
-if not to_envvar(args.config_file):
-    parser.error('Config file "{}" not found.'.format(args.config_file))
+config.to_envvar()
 
 sys.path.append(os.path.dirname(sys.argv[0]))
 
