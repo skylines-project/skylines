@@ -1,8 +1,3 @@
-#!/usr/bin/env python
-#
-# Wrapper script for launching MapProxy WSGI app.
-#
-
 import os
 import sys
 import argparse
