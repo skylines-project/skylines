@@ -1,0 +1,11 @@
+[Unit]
+Description=SkyLines Tracking server
+After=network.target
+
+[Service]
+WorkingDirectory=/home/skylines/src
+ExecStart=/usr/local/bin/pipenv run python manage.py tracking runserver
+Restart=on-failure
+
+[Install]
+WantedBy=default.target
