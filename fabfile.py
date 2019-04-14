@@ -41,14 +41,16 @@ def restart():
         manage("migrate upgrade")
 
         # restart services
-        restart_service("all")
+        restart_service("caddy")
+        restart_service("skylines")
+        restart_service("mapproxy")
+        restart_service("tracking")
+        restart_service("celery")
 
 
 @task
 def restart_service(service):
-    # Using the sudo() command somehow always provokes a password prompt,
-    # even if NOPASSWD is specified in the sudoers file...
-    run("sudo supervisorctl restart %s" % service)
+    run("systemctl --user restart %s" % service)
 
 
 @task
