@@ -26,27 +26,27 @@ skylines.aero {
         match .* 0s
     }
 
-    proxy /api unix:/run/skylines/skylines-uwsgi.socket {
+    proxy /api http://localhost:9115 {
         transparent
     }
 
-    proxy /files unix:/run/skylines/skylines-uwsgi.socket {
+    proxy /files http://localhost:9115 {
         transparent
     }
 
-    proxy /client.php unix:/run/skylines/skylines-uwsgi.socket {
+    proxy /client.php http://localhost:9115 {
         transparent
     }
 
-    proxy /track.php unix:/run/skylines/skylines-uwsgi.socket {
+    proxy /track.php http://localhost:9115 {
         transparent
     }
 
-    proxy /widgets unix:/run/skylines/skylines-uwsgi.socket {
+    proxy /widgets http://localhost:9115 {
         transparent
     }
 
-    proxy /mapproxy unix:/run/skylines/mapproxy-uwsgi.socket {
+    proxy /mapproxy http://localhost:9109 {
         transparent
         without /mapproxy
     }
