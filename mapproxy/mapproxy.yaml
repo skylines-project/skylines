@@ -50,7 +50,7 @@ sources:
   osm_tiles:
     type: tile
     url: http://c.tile.openstreetmap.org/%(tms_path)s.%(format)s
-    grid: osm_grid
+    grid: GLOBAL_WEBMERCATOR
 
 caches:
   airspace_airports_cache:
@@ -123,8 +123,3 @@ layers:
   - name: osm
     title: OpenStreetMap Tiles
     sources: [osm_cache]
-
-grids:
-  osm_grid:
-    srs: EPSG:3857
-    origin: nw
