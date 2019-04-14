@@ -54,7 +54,7 @@ sources:
 
 caches:
   airspace_airports_cache:
-    grids: [GLOBAL_MERCATOR]
+    grids: [GLOBAL_WEBMERCATOR]
     sources: [airspace_cache, airports_cache]
     image:
       format: image/png
@@ -63,7 +63,7 @@ caches:
       type: sqlite
 
   mwp_cache:
-    grids: [GLOBAL_MERCATOR]
+    grids: [GLOBAL_WEBMERCATOR]
     sources: ['mapserver:MWP']
     image:
       format: image/png
@@ -72,7 +72,7 @@ caches:
       type: sqlite
 
   airports_cache:
-    grids: [GLOBAL_MERCATOR]
+    grids: [GLOBAL_WEBMERCATOR]
     sources: ['mapserver:Airports']
     image:
       format: image/png
@@ -81,7 +81,7 @@ caches:
       type: sqlite
 
   airspace_cache:
-    grids: [GLOBAL_MERCATOR]
+    grids: [GLOBAL_WEBMERCATOR]
     sources: ['mapserver:Airspace']
     image:
       format: image/png
@@ -90,6 +90,7 @@ caches:
       type: sqlite
 
   osm_cache:
+    grids: [GLOBAL_WEBMERCATOR]
     sources: [osm_tiles]
     format: image/png
     cache:
