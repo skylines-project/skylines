@@ -9,4 +9,4 @@ To import airspaces into the database, install the `python-gdal` package (using
 gdal extension directly from pypi is not recommended) and import the required
 airspace files:
 
-    $ ./manage.py import airspace mapserver/airspace/airspace_list.txt mapserver/airspace/airspace_blacklist.txt
+    $ ./manage.py import airspace airspace/airspace_list.txt airspace/airspace_blacklist.txt
