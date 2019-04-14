@@ -22,11 +22,8 @@ skylines.aero {
         match ^/assets/.*\.css$ 1y
         match ^/assets/.*\.js$ 1y
         match ^/fonts 1y
-        match ^/api 0s
-        match ^/client.php 0s
-        match ^/track.php 0s
-        match ^/widgets 0s
         match ^/mapproxy 7d
+        match .* 0s
     }
 
     proxy /api unix:/run/skylines/skylines-uwsgi.socket {
