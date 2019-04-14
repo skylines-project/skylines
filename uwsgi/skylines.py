@@ -1,8 +1,3 @@
-#!/usr/bin/env python
-#
-# Wrapper script for launching Skylines as a FastCGI in lighttpd.
-#
-
 import os
 import sys
 import argparse
