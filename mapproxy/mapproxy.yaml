@@ -21,6 +21,10 @@ layers:
     title: Airspace WMS
     sources: [airspace_cache]
 
+  - name: airports
+    title: Airports WMS
+    sources: [airports_cache]
+
   - name: osm
     title: OpenStreetMap Tiles
     sources: [osm_cache]
