@@ -36,35 +36,10 @@ services:
       title: SkyLines WMS Server
 
 sources:
-  mwp_mapserver_bin:
+  mapserver:
     type: mapserver
     supported_srs: ['EPSG:3857']
     req:
-      layers: MWP
-      map: ../mapserver/skylines.map
-      transparent: true
-    image:
-      format: image/png
-    mapserver:
-      working_dir: ../mapserver
-
-  airports_mapserver_bin:
-    type: mapserver
-    supported_srs: ['EPSG:3857']
-    req:
-      layers: Airports
-      map: ../mapserver/skylines.map
-      transparent: true
-    image:
-      format: image/png
-    mapserver:
-      working_dir: ../mapserver
-
-  airspace_mapserver_bin:
-    type: mapserver
-    supported_srs: ['EPSG:3857']
-    req:
-      layers: Airspace
       map: ../mapserver/skylines.map
       transparent: true
     image:
@@ -91,7 +66,7 @@ caches:
 
   mwp_cache:
     grids: [GLOBAL_MERCATOR]
-    sources: [mwp_mapserver_bin]
+    sources: ['mapserver:MWP']
     image:
       format: image/png
     format: image/png
@@ -102,7 +77,7 @@ caches:
 
   airports_cache:
     grids: [GLOBAL_MERCATOR]
-    sources: [airports_mapserver_bin]
+    sources: ['mapserver:Airports']
     image:
       format: image/png
     format: image/png
@@ -113,7 +88,7 @@ caches:
 
   airspace_cache:
     grids: [GLOBAL_MERCATOR]
-    sources: [airspace_mapserver_bin]
+    sources: ['mapserver:Airspace']
     image:
       format: image/png
     format: image/png
