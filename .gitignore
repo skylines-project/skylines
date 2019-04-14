@@ -4,6 +4,9 @@
 # Generated Ember.js files
 skylines/frontend/static
 
+# MapProxy Cache
+/mapproxy/cache_data/
+
 ### Python template
 # Byte-compiled / optimized / DLL files
 __pycache__/

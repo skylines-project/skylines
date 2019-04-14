@@ -6,7 +6,7 @@ package (on Debian):
     $ apt-get install python-mapscript
 
 To run it locally as subprocess of mapproxy, change
-`mapserver/mapproxy/mapproxy.yaml` to fit it to your needs. You'll need to
+`mapproxy/mapproxy.yaml` to fit it to your needs. You'll need to
 install the `cgi-mapserver` package for this.
 
 To import airspaces into the database, install the `python-gdal` package (using
