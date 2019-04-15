@@ -5699,13 +5699,12 @@ ember-getowner-polyfill@^1.2.2:
     ember-cli-version-checker "^1.2.0"
     ember-factory-for-polyfill "^1.1.0"
 
-ember-href-to@^2.0.1:
-  version "2.0.1"
-  resolved "https://registry.yarnpkg.com/ember-href-to/-/ember-href-to-2.0.1.tgz#87c88daccf4b02c77f0a0292ab793ea7c6a25ced"
-  integrity sha512-dsMXJTIUd4dQKN7Sd93T5xKqltbYRnr9J4pgFs1bwvDXXQb7XP4WWPozn48+YGptmzvCbDaLsIMfwETuwl7RTA==
+ember-href-to@^3.1.0:
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/ember-href-to/-/ember-href-to-3.1.0.tgz#704f66c2b555a2685fac9ddc74eb9c95abaf5b8f"
+  integrity sha512-rV9KWDMHgkQsEXuPQekxZ9BbJ75jJqkErWHzWscjmmYwbrMAFxjAt7/oeuiaDxMqHlatNXA0lTkPDZKEBTxoFQ==
   dependencies:
-    ember-cli-babel "^6.8.2"
-    ember-router-service-polyfill "^1.0.2"
+    ember-cli-babel "^7.1.2"
 
 ember-in-element-polyfill@^0.1.2:
   version "0.1.2"
@@ -5962,13 +5961,6 @@ ember-router-generator@^1.0.0, ember-router-generator@^1.2.3:
   integrity sha1-jtLKhv8yM2MSD8FCeBkeno8TFe4=
   dependencies:
     recast "^0.11.3"
-
-ember-router-service-polyfill@^1.0.2:
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/ember-router-service-polyfill/-/ember-router-service-polyfill-1.0.2.tgz#6e5565f196fa7045cbe06a6fab861f9e766fe62a"
-  integrity sha512-QyWrQS/ULC4Stivk4/kiMe6QArKonr5GDHMCzk+fp+wdBWfV4o0wYNmbBcUKB5j027GQeIV1Hlhpsp8DCzOKjQ==
-  dependencies:
-    ember-cli-babel "^6.8.2"
 
 ember-runtime-enumerable-includes-polyfill@^2.0.0:
   version "2.0.0"
