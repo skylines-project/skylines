@@ -28,10 +28,6 @@ module.exports = function(environment) {
     CESIUM_TOKEN:
       'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI5NTBkMjZjMS1kNjdlLTQxYWYtODRhNC0yMjQ5OWMzMDdmYmQiLCJpZCI6NDg2Miwic2NvcGVzIjpbImFzciIsImdjIl0sImlhdCI6MTU0MTc4NDE2Nn0.6Y_U401Dlr4QpEfgv2q0PVeqYdZ8kmWyOPQXu1HfHzU',
 
-    pageTitle: {
-      prepend: true,
-    },
-
     sentry: {
       development: true,
       dsn: 'https://1081e00b0f0e4965bae7b8b7e468edd3@sentry.io/102210',
