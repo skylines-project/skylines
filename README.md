@@ -67,7 +67,7 @@ Here are a few guidelines for creating patches:
 ## License
 
     SkyLines - the free internet platform for sharing flights
-    Copyright (C) 2012-2013  The SkyLines Team (see AUTHORS.md)
+    Copyright (C) 2012-2019  The SkyLines Team (see AUTHORS.md)
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU Affero General Public License as published by
