@@ -42,8 +42,8 @@ def restart():
 
         # restart services
         restart_service("caddy")
-        restart_service("skylines")
-        restart_service("mapproxy")
+        reload_service("skylines")
+        reload_service("mapproxy")
         restart_service("tracking")
         restart_service("celery")
 
@@ -51,6 +51,11 @@ def restart():
 @task
 def restart_service(service):
     run("systemctl --user restart %s" % service)
+
+
+@task
+def reload_service(service):
+    run("systemctl --user reload %s" % service)
 
 
 @task
