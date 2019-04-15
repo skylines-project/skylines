@@ -28,7 +28,7 @@ module.exports = function(/* env */) {
      * @type {String?}
      * @default "null"
      */
-    baseLocale: 'en',
+    fallbackLocale: 'en',
 
     /**
      * autoPolyfill, when true will automatically inject the IntlJS polyfill
