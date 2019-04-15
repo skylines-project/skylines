@@ -24,7 +24,7 @@ alembic = "*"
 shapely = "==1.6.4.post2"
 "crc16" = "==0.1.1"
 pytz = "*"
-celery = {extras = ["redis"], version = "<3.2,>=3.1"}
+celery = {extras = ["redis"],version = "<3.2,>=3.1"}
 redis = "<3.0"
 xcsoar = "==0.6.4"
 aerofiles = "==1.0.0"
@@ -35,9 +35,10 @@ webargs = "*"
 marshmallow = "*"
 flask-oauthlib = "*"
 requests-oauthlib = ">=0.6.2,<1.2.0"  # see https://github.com/lepture/flask-oauthlib/pull/388
-raven = {extras = ["flask"], version = "==6.10.0"}
+raven = {extras = ["flask"],version = "==6.10.0"}
 uwsgi = "*"
 mapproxy = "*"
+gunicorn = "*"
 
 [dev-packages]
 fabric = "==1.14.0"
