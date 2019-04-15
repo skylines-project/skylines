@@ -73,7 +73,7 @@ jobs:
         - pip install black==18.9b0
 
       script:
-        - black config migrations skylines tests uwsgi *.py --check
+        - black config migrations skylines tests *.py --check
 
     - stage: test
       name: Frontend
