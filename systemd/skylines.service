@@ -5,9 +5,10 @@ After=network.target
 [Service]
 SyslogIdentifier=skylines
 WorkingDirectory=/home/skylines/src
-ExecStart=/usr/local/bin/pipenv run uwsgi uwsgi/skylines.ini
-Type=notify
-NotifyAccess=all
+ExecStart=/usr/local/bin/pipenv run gunicorn -b 127.0.0.1:9115 -w 10 --no-sendfile --access-logfile="-" wsgi_skylines
+ExecReload=/bin/kill -s HUP $MAINPID
+ExecStop=/bin/kill -s TERM $MAINPID
+PrivateTmp=true
 Restart=on-failure
 
 [Install]
