@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "d4aa0ecdb51e37e714d70f88937aaaa1d8c9def274c00c1223a2d71188fd8634"
+            "sha256": "206d5cd93384d7e8900f969cabc0d9e562a275919183b21c7f0a69c42d699f3b"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -727,10 +727,10 @@
         },
         "immobilus": {
             "hashes": [
-                "sha256:651b5677e107c0450d774f4dede63d3b4ea490c004af64046dad1963218fa275"
+                "sha256:8ac16c3a24d55beb487b14c69d4a1ea6f9cc59ebd87b435b81e55be4ac3945c5"
             ],
             "index": "pypi",
-            "version": "==1.4.2"
+            "version": "==1.4.3"
         },
         "ipaddress": {
             "hashes": [
