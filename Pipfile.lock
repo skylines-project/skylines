@@ -25,10 +25,9 @@
         },
         "alembic": {
             "hashes": [
-                "sha256:35660f7e6159288e2be111126be148ef04cbf7306da73c8b8bd4400837bb08e3"
+                "sha256:40b9a619aa5f25ea1e1508adcda88b33704ef28e02c9cfa6471e5c772ecf0829"
             ],
-            "index": "pypi",
-            "version": "==1.0.6"
+            "version": "==1.0.9"
         },
         "amqp": {
             "hashes": [
