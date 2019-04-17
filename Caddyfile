@@ -16,6 +16,9 @@ skylines.aero {
         if {path} not_starts_with /widgets
         if {path} not_starts_with /mapproxy
         to {path} /
+
+        # if {path} not_starts_with /svg
+        # to maintenance.html
     }
 
     expires {
