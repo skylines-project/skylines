@@ -3,7 +3,7 @@ from fabric.api import env, task, local, cd, lcd, run, sudo, put
 from tempfile import NamedTemporaryFile
 
 env.use_ssh_config = True
-env.hosts = ["skylines@skylines"]
+env.hosts = ["skylines@skylines.aero"]
 
 APP_DIR = "/home/skylines"
 SRC_DIR = "%s/src" % APP_DIR
