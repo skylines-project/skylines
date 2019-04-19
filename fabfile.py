@@ -62,9 +62,9 @@ def reload_service(service):
 def manage(cmd, user=None):
     with cd(SRC_DIR):
         if user:
-            sudo("./manage.py %s" % cmd, user=user)
+            sudo("pipenv run ./manage.py %s" % cmd, user=user)
         else:
-            run("./manage.py %s" % cmd)
+            run("pipenv run ./manage.py %s" % cmd)
 
 
 @task
