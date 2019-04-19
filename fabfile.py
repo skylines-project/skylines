@@ -68,13 +68,6 @@ def manage(cmd, user=None):
 
 
 @task
-def pip_install():
-    with cd(SRC_DIR):
-        run("git reset --hard")
-        run("pip install -e .")
-
-
-@task
 def clean_mapproxy_cache():
     with cd(SRC_DIR):
         run("rm -rv mapproxy/cache_data/")
