@@ -59,6 +59,14 @@ www.skylines.aero {
     redir https://skylines.aero{uri}
 }
 
+www02.skylines.aero {
+    redir https://skylines.aero{uri}
+}
+
+tracking.skylines.aero {
+    redir https://skylines.aero/tracking/
+}
+
 maps.skylines.aero {
     redir https://skylines.aero{uri}
 }
