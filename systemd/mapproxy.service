@@ -5,7 +5,7 @@ After=network.target
 [Service]
 SyslogIdentifier=mapproxy
 WorkingDirectory=/home/skylines/src
-ExecStart=/usr/local/bin/pipenv run gunicorn -b 127.0.0.1:9109 -w 10 --no-sendfile --access-logfile="-" wsgi_mapproxy
+ExecStart=/usr/local/bin/pipenv run gunicorn -b 127.0.0.1:9109 -w 10 --no-sendfile wsgi_mapproxy
 ExecReload=/bin/kill -s HUP $MAINPID
 ExecStop=/bin/kill -s TERM $MAINPID
 PrivateTmp=true

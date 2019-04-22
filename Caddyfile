@@ -1,7 +1,7 @@
 # https://caddyserver.com configuration for the production server
 
 skylines.aero {
-    log stdout
+    log /home/skylines/log/caddy
 
     root /home/skylines/src/skylines/frontend/static
     gzip
