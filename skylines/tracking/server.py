@@ -4,6 +4,7 @@ import sys
 import struct
 from datetime import datetime, timedelta
 
+import sentry_sdk
 from gevent.server import DatagramServer
 
 from sqlalchemy.exc import SQLAlchemyError
@@ -11,7 +12,6 @@ from sqlalchemy.sql.expression import or_
 
 from skylines.database import db
 from skylines.model import User, TrackingFix, Follower, Elevation
-from skylines.sentry import sentry
 from skylines.tracking.crc import check_crc, set_crc
 from skylines.tracking.datetime import ms_to_time
 
@@ -348,7 +348,7 @@ class TrackingServer(DatagramServer):
         try:
             self.__handle(data, address)
         except Exception:
-            sentry.captureException()
+            sentry_sdk.capture_exception()
 
     def serve_forever(self, **kwargs):
         if not self.app:
