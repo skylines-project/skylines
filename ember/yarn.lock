@@ -888,35 +888,35 @@
   dependencies:
     "@glimmer/util" "^0.27.0"
 
-"@pollyjs/adapter-fetch@^2.3.1":
-  version "2.3.1"
-  resolved "https://registry.yarnpkg.com/@pollyjs/adapter-fetch/-/adapter-fetch-2.3.1.tgz#df5e51d93665a008739be5bccef831d7243c6a84"
-  integrity sha512-fdtnfxi2Dr7xX+zyNsksyIB7Xd3mMGzIopK9TvalWKLFFteFy2ViYrP0LYC0qpHFKwjjgYneh0xZV6cnYe4Ing==
+"@pollyjs/adapter-fetch@^2.4.0":
+  version "2.4.0"
+  resolved "https://registry.yarnpkg.com/@pollyjs/adapter-fetch/-/adapter-fetch-2.4.0.tgz#915258c46f564473001215ca5354e57208aa98ce"
+  integrity sha512-p7sqQ/bqS4hdUYveGYn2fCUPrTuCnPflqxGfVrAOoE/e5MOsfJ7prVvg4wE6+2qJzbUtD0AWF2r78leSiymxNg==
   dependencies:
-    "@pollyjs/adapter" "^2.2.0"
+    "@pollyjs/adapter" "^2.4.0"
     "@pollyjs/utils" "^2.1.0"
     detect-node "^2.0.4"
 
-"@pollyjs/adapter-xhr@^2.3.0":
-  version "2.3.0"
-  resolved "https://registry.yarnpkg.com/@pollyjs/adapter-xhr/-/adapter-xhr-2.3.0.tgz#0ec830dd1218e3fab1d4e7157275585f6dcacdfc"
-  integrity sha512-ix9mLcqTFdOzN1r2NG3imST+LNYbZXNb2v5f35KYVObWlbSRBp0QQ/QY5cPd1qyOLRaEy3kjwTqHmu/7ZBbUZg==
+"@pollyjs/adapter-xhr@^2.4.0":
+  version "2.4.0"
+  resolved "https://registry.yarnpkg.com/@pollyjs/adapter-xhr/-/adapter-xhr-2.4.0.tgz#3fe93ea420995a3db30e9ff3385eb2ff2a0e77c5"
+  integrity sha512-y3nqClVn3hPZ6DrdU7lWa9Rn/w7tKkrJGHWfgFN44F+ki/ZmrneAKO7ef2w0mT8RGcqVUzfw88snzPDU85Kngw==
   dependencies:
-    "@pollyjs/adapter" "^2.2.0"
+    "@pollyjs/adapter" "^2.4.0"
     "@pollyjs/utils" "^2.1.0"
     nise "^1.4.6"
 
-"@pollyjs/adapter@^2.2.0":
-  version "2.2.0"
-  resolved "https://registry.yarnpkg.com/@pollyjs/adapter/-/adapter-2.2.0.tgz#8d996b3078b6ca38e2be76dcf6bd93acb1f8ee3c"
-  integrity sha512-l6l3gWguDgfloPmmvGTUzEJNbo+LokOlQKgazWvTDwVTmUw6iQ2VAy798L+vMoLfqmp0H7ChZXdx1ReV29MgOA==
+"@pollyjs/adapter@^2.4.0":
+  version "2.4.0"
+  resolved "https://registry.yarnpkg.com/@pollyjs/adapter/-/adapter-2.4.0.tgz#e8dab73bf0d97ffec53040ff22c3fa8edcb53f16"
+  integrity sha512-uV9DSObF3eLMdNOgPOtQQObl9GgXWhf2dPzPniILoPtwq087bzXRtoLw1wCtBoP5o+Fge/bPrbskLkILY2/0NQ==
   dependencies:
     "@pollyjs/utils" "^2.1.0"
 
-"@pollyjs/core@^2.3.0":
-  version "2.3.0"
-  resolved "https://registry.yarnpkg.com/@pollyjs/core/-/core-2.3.0.tgz#7e3ec030b40d3002ddee5ed169108f83f5c8baea"
-  integrity sha512-DSJaBA54HDUeH+SJMhOqA6g7Gl1NlzGnFDa9qy+4TyEYwjKqmuzNyLZuGZIMOWs/QRA5pXtzoPAfz1Rq0IfNPQ==
+"@pollyjs/core@^2.4.0":
+  version "2.4.0"
+  resolved "https://registry.yarnpkg.com/@pollyjs/core/-/core-2.4.0.tgz#0eeab23dac20274fdbd8a3d0eb56551d00f82598"
+  integrity sha512-xdfr1FX4TSrMKwFQISp5r1lZFzv++UQxrjEBnayO2i+pUWooO/BaZ9XFDTMzdXsux77yA3RJPID8nTWlRuk3Iw==
   dependencies:
     "@pollyjs/utils" "^2.1.0"
     "@sindresorhus/fnv1a" "^1.0.0"
@@ -927,14 +927,14 @@
     route-recognizer "^0.3.4"
     slugify "^1.3.3"
 
-"@pollyjs/ember@^2.3.1":
-  version "2.3.1"
-  resolved "https://registry.yarnpkg.com/@pollyjs/ember/-/ember-2.3.1.tgz#a75c053f672a837f861aaa8f202243b122415054"
-  integrity sha512-rLTzv2vXuuqkkoWh8OHbaPLWi9mypKvHPaGOmSF2bkrE5EHGE/ZgTxunO3azcS37CXf/JDnQ9g57oFA0tRT7KA==
+"@pollyjs/ember@^2.4.0":
+  version "2.4.0"
+  resolved "https://registry.yarnpkg.com/@pollyjs/ember/-/ember-2.4.0.tgz#30134aa85a520e377d52d4bfdda3952990d4a1f1"
+  integrity sha512-BI1ZFkFmuFxmh8ixzm322B7jPhdbKvZ5ZXCtpxlzdNdkfm30G2Som28wYIROnkqXJUEe2Z14Kmxn1nps31jtXA==
   dependencies:
-    "@pollyjs/adapter-fetch" "^2.3.1"
-    "@pollyjs/adapter-xhr" "^2.3.0"
-    "@pollyjs/core" "^2.3.0"
+    "@pollyjs/adapter-fetch" "^2.4.0"
+    "@pollyjs/adapter-xhr" "^2.4.0"
+    "@pollyjs/core" "^2.4.0"
     "@pollyjs/node-server" "^2.1.0"
     "@pollyjs/persister-local-storage" "^2.1.0"
     "@pollyjs/persister-rest" "^2.1.0"
