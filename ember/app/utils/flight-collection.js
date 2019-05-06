@@ -1,4 +1,5 @@
 import ArrayProxy from '@ember/array/proxy';
+
 import ol from 'openlayers';
 
 export default ArrayProxy.extend({

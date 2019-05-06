@@ -1,8 +1,9 @@
-import { inject as service } from '@ember/service';
 import Component from '@ember/component';
-import $ from 'jquery';
+import { inject as service } from '@ember/service';
+
 import { conditional, tag } from 'ember-awesome-macros';
 import { htmlSafe } from 'ember-awesome-macros/string';
+import $ from 'jquery';
 
 export default Component.extend({
   units: service(),

@@ -1,7 +1,7 @@
 import { computed } from '@ember/object';
 
-import Base from './-base';
 import safeComputed from '../../computed/safe-computed';
+import Base from './-base';
 
 export default Base.extend({
   accountUserIsPilot: safeComputed(

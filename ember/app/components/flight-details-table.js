@@ -1,8 +1,9 @@
+import Component from '@ember/component';
 import { alias } from '@ember/object/computed';
 import { inject as service } from '@ember/service';
-import Component from '@ember/component';
-import { task } from 'ember-concurrency';
+
 import { or, eq, not } from 'ember-awesome-macros';
+import { task } from 'ember-concurrency';
 
 import safeComputed from '../computed/safe-computed';
 

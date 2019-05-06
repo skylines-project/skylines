@@ -1,5 +1,5 @@
-import Service, { inject as service } from '@ember/service';
 import { computed } from '@ember/object';
+import Service, { inject as service } from '@ember/service';
 
 import { or } from 'ember-awesome-macros';
 

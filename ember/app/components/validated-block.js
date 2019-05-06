@@ -1,5 +1,6 @@
 import Component from '@ember/component';
 import { readOnly } from '@ember/object/computed';
+
 import { or, and, not } from 'ember-awesome-macros';
 
 export default Component.extend({

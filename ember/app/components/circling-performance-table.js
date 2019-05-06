@@ -1,4 +1,5 @@
 import Component from '@ember/component';
+
 import { findBy } from 'ember-awesome-macros/array';
 import raw from 'ember-macro-helpers/raw';
 

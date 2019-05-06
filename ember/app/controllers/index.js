@@ -1,5 +1,6 @@
-import { inject as service } from '@ember/service';
 import Controller from '@ember/controller';
+import { inject as service } from '@ember/service';
+
 import { conditional } from 'ember-awesome-macros';
 import raw from 'ember-macro-helpers/raw';
 

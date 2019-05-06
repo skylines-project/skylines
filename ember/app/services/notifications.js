@@ -1,7 +1,8 @@
-import Ember from 'ember';
 import { computed } from '@ember/object';
 import { gt } from '@ember/object/computed';
 import Service, { inject as service } from '@ember/service';
+import Ember from 'ember';
+
 import { task, timeout } from 'ember-concurrency';
 
 export default Service.extend({

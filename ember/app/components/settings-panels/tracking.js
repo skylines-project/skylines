@@ -1,8 +1,9 @@
-import { inject as service } from '@ember/service';
 import Component from '@ember/component';
-import { validator, buildValidations } from 'ember-cp-validations';
-import { task } from 'ember-concurrency';
+import { inject as service } from '@ember/service';
+
 import { conditional, eq } from 'ember-awesome-macros';
+import { task } from 'ember-concurrency';
+import { validator, buildValidations } from 'ember-cp-validations';
 import raw from 'ember-macro-helpers/raw';
 
 const Validations = buildValidations({

@@ -1,9 +1,10 @@
 import { getOwner } from '@ember/application';
+import Component from '@ember/component';
 import { oneWay } from '@ember/object/computed';
 import { inject as service } from '@ember/service';
-import Component from '@ember/component';
-import { validator, buildValidations } from 'ember-cp-validations';
+
 import { task } from 'ember-concurrency';
+import { validator, buildValidations } from 'ember-cp-validations';
 
 const Validations = buildValidations({
   name: {

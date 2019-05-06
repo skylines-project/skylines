@@ -1,7 +1,8 @@
-import { inject as service } from '@ember/service';
 import Component from '@ember/component';
-import { validator, buildValidations } from 'ember-cp-validations';
+import { inject as service } from '@ember/service';
+
 import { task } from 'ember-concurrency';
+import { validator, buildValidations } from 'ember-cp-validations';
 
 const Validations = buildValidations({
   registration: {

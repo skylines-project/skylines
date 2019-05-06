@@ -3,7 +3,7 @@ module.exports = {
   parserOptions: {
     ecmaVersion: 2017,
   },
-  plugins: ['prettier'],
+  plugins: ['prettier', 'import-helpers'],
   extends: ['simplabs', 'simplabs/plugins/ember', 'prettier'],
   rules: {
     'ember/local-modules': 'off',
@@ -11,7 +11,26 @@ module.exports = {
     'ember/order-in-controllers': 'off',
     'ember/order-in-models': 'off',
     'ember/order-in-routes': 'off',
+
     'prettier/prettier': 'error',
+
+    'import-helpers/order-imports': [
+      'error',
+      {
+        'newlines-between': 'always',
+        groups: [
+          'builtin',
+          // Testing modules
+          ['/^qunit/', '/^ember-qunit/', '/^@ember/test-helpers/', '/^ember-exam/'],
+          // Ember.js modules
+          ['/^ember$/', '/^@ember/', '/^ember-data/'],
+          ['external'],
+          [`/^${require('./package.json').name}\\//`, 'internal'],
+          ['parent', 'sibling', 'index'],
+        ],
+        alphabetize: { order: 'asc', ignoreCase: true },
+      },
+    ],
   },
   overrides: [
     // node files

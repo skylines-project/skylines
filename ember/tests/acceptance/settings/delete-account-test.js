@@ -1,9 +1,9 @@
-import { module, test } from 'qunit';
-import { setupApplicationTest } from 'ember-qunit';
 import { visit, click, currentURL, fillIn, waitFor } from '@ember/test-helpers';
+import { setupApplicationTest } from 'ember-qunit';
+import { module, test } from 'qunit';
 
-import { authenticateSession, currentSession } from 'ember-simple-auth/test-support';
 import { percySnapshot } from 'ember-percy';
+import { authenticateSession, currentSession } from 'ember-simple-auth/test-support';
 
 import { setupPolly } from 'skylines/tests/helpers/setup-polly';
 

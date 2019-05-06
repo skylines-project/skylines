@@ -1,5 +1,6 @@
-import { inject as service } from '@ember/service';
 import Component from '@ember/component';
+import { inject as service } from '@ember/service';
+
 import { task } from 'ember-concurrency';
 
 import safeComputed from '../computed/safe-computed';

@@ -1,4 +1,5 @@
 import Component from '@ember/component';
+
 import { or, eq, not } from 'ember-awesome-macros';
 
 export default Component.extend({

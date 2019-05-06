@@ -1,8 +1,9 @@
+import Component from '@ember/component';
 import { computed } from '@ember/object';
 import { inject as service } from '@ember/service';
-import Component from '@ember/component';
-import { validator, buildValidations } from 'ember-cp-validations';
+
 import { task } from 'ember-concurrency';
+import { validator, buildValidations } from 'ember-cp-validations';
 
 import { PRESETS } from '../../services/units';
 

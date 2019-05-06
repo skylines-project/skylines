@@ -1,5 +1,6 @@
 import { helper } from '@ember/component/helper';
 import { htmlSafe } from '@ember/string';
+
 import Remarkable from 'remarkable';
 
 let remarkable = new Remarkable();

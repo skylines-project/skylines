@@ -1,12 +1,13 @@
-import { readOnly } from '@ember/object/computed';
 import EmberObject, { computed } from '@ember/object';
+import { readOnly } from '@ember/object/computed';
 import Ember from 'ember';
+
 import ol from 'openlayers';
 
-import geographicDistance from '../utils/geo-distance';
-import getNextSmallerIndex from '../utils/next-smaller-index';
 import computedPoint from '../computed/computed-point';
 import safeComputed from '../computed/safe-computed';
+import geographicDistance from '../utils/geo-distance';
+import getNextSmallerIndex from '../utils/next-smaller-index';
 
 let Fix = EmberObject.extend({
   fixCalc: null,

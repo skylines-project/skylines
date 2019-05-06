@@ -1,6 +1,6 @@
+import Component from '@ember/component';
 import { computed } from '@ember/object';
 import { readOnly, alias, equal } from '@ember/object/computed';
-import Component from '@ember/component';
 
 import isNone from '../computed/is-none';
 

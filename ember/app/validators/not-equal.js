@@ -1,5 +1,6 @@
-import { isNone } from '@ember/utils';
 import { inject as service } from '@ember/service';
+import { isNone } from '@ember/utils';
+
 import BaseValidator from 'ember-cp-validations/validators/base';
 
 let NotEqualValidator = BaseValidator.extend({

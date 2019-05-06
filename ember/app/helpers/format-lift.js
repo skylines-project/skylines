@@ -1,6 +1,6 @@
+import Helper from '@ember/component/helper';
 import { observer } from '@ember/object';
 import { inject as service } from '@ember/service';
-import Helper from '@ember/component/helper';
 
 export default Helper.extend({
   units: service(),

@@ -1,9 +1,9 @@
 /* globals Cesium */
 
+import Component from '@ember/component';
+import { observer } from '@ember/object';
 import { once } from '@ember/runloop';
 
-import { observer } from '@ember/object';
-import Component from '@ember/component';
 import olcs from 'ol-cesium';
 
 import config from 'skylines/config/environment';

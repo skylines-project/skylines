@@ -1,4 +1,5 @@
 import Component from '@ember/component';
+
 import { gt } from 'ember-awesome-macros';
 import { map } from 'ember-awesome-macros/array';
 

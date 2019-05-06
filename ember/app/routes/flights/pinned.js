@@ -1,4 +1,5 @@
 import { inject as service } from '@ember/service';
+
 import BaseRoute from './-base';
 
 export default BaseRoute.extend({

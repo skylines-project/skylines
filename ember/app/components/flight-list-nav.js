@@ -1,10 +1,10 @@
 import { getOwner } from '@ember/application';
+import Component from '@ember/component';
 import { notEmpty } from '@ember/object/computed';
 import { inject as service } from '@ember/service';
-import Component from '@ember/component';
 
-import addDays from '../utils/add-days';
 import safeComputed from '../computed/safe-computed';
+import addDays from '../utils/add-days';
 
 export default Component.extend({
   account: service(),

@@ -1,7 +1,8 @@
-import { cancel, later } from '@ember/runloop';
-import { computed } from '@ember/object';
-import { inject as service } from '@ember/service';
 import Component from '@ember/component';
+import { computed } from '@ember/object';
+import { cancel, later } from '@ember/runloop';
+import { inject as service } from '@ember/service';
+
 import ol from 'openlayers';
 
 import FixCalc from '../utils/fix-calc';
