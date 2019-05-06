@@ -1,5 +1,6 @@
 import { debug } from '@ember/debug';
 import Service from '@ember/service';
+
 import RSVP from 'rsvp';
 
 const CESIUM_BASE_URL = '/cesium/';

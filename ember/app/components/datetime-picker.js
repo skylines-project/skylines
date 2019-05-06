@@ -1,5 +1,5 @@
-import { once } from '@ember/runloop';
 import Component from '@ember/component';
+import { once } from '@ember/runloop';
 
 export default Component.extend({
   classNames: ['input-group', 'input-group-sm', 'date'],

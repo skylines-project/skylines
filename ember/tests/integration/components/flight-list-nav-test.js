@@ -1,9 +1,10 @@
+import { render, findAll } from '@ember/test-helpers';
+import { setupRenderingTest } from 'ember-qunit';
+import { module, test } from 'qunit';
+
 import Service from '@ember/service';
 
-import { module, test } from 'qunit';
-import { setupRenderingTest } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
-import { render, findAll } from '@ember/test-helpers';
 
 module('Integration | Component | flight list nav', function(hooks) {
   setupRenderingTest(hooks);

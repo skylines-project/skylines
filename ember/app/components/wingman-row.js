@@ -1,5 +1,6 @@
-import { alias, or } from '@ember/object/computed';
 import Component from '@ember/component';
+import { alias, or } from '@ember/object/computed';
+
 import { conditional, tag } from 'ember-awesome-macros';
 import { htmlSafe } from 'ember-awesome-macros/string';
 

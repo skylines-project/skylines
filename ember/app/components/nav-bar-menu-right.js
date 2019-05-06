@@ -1,5 +1,6 @@
-import { inject as service } from '@ember/service';
 import Component from '@ember/component';
+import { inject as service } from '@ember/service';
+
 import { findBy } from 'ember-awesome-macros/array';
 import raw from 'ember-macro-helpers/raw';
 

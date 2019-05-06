@@ -1,6 +1,7 @@
 /* globals Cesium */
 
 import Component from '@ember/component';
+
 import ol from 'openlayers';
 
 import safeComputed from '../computed/safe-computed';

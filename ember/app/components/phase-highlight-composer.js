@@ -1,7 +1,8 @@
-import { once } from '@ember/runloop';
+import Component from '@ember/component';
 import { observer } from '@ember/object';
 import { readOnly } from '@ember/object/computed';
-import Component from '@ember/component';
+import { once } from '@ember/runloop';
+
 import ol from 'openlayers';
 
 import computedPoint from '../computed/computed-point';

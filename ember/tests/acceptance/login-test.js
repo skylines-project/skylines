@@ -1,6 +1,6 @@
-import { module, test } from 'qunit';
-import { setupApplicationTest } from 'ember-qunit';
 import { visit, click } from '@ember/test-helpers';
+import { setupApplicationTest } from 'ember-qunit';
+import { module, test } from 'qunit';
 
 import { setupPolly } from 'skylines/tests/helpers/setup-polly';
 

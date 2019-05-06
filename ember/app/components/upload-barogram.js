@@ -1,6 +1,7 @@
 import { computed } from '@ember/object';
 import { readOnly } from '@ember/object/computed';
 import { inject as service } from '@ember/service';
+
 import ol from 'openlayers';
 
 import BarogramComponent from './base-barogram';

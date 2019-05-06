@@ -1,12 +1,12 @@
-import { inject as service } from '@ember/service';
-import { observer } from '@ember/object';
 import Component from '@ember/component';
+import { observer } from '@ember/object';
 import { once } from '@ember/runloop';
+import { inject as service } from '@ember/service';
 
-import $ from 'jquery';
-import ol from 'openlayers';
 import { tag } from 'ember-awesome-macros';
 import { htmlSafe } from 'ember-awesome-macros/string';
+import $ from 'jquery';
+import ol from 'openlayers';
 
 import config from '../config/environment';
 

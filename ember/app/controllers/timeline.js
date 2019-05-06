@@ -1,5 +1,5 @@
-import { alias } from '@ember/object/computed';
 import Controller from '@ember/controller';
+import { alias } from '@ember/object/computed';
 
 import safeComputed from '../computed/safe-computed';
 

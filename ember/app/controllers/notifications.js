@@ -1,7 +1,8 @@
+import Controller from '@ember/controller';
 import { set } from '@ember/object';
 import { alias, equal, filterBy, notEmpty, and } from '@ember/object/computed';
 import { inject as service } from '@ember/service';
-import Controller from '@ember/controller';
+
 import { task } from 'ember-concurrency';
 
 import safeComputed from '../computed/safe-computed';

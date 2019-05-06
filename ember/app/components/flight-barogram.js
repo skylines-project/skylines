@@ -1,11 +1,11 @@
 import { observer, computed } from '@ember/object';
+
 import { conditional, eq } from 'ember-awesome-macros';
 import { findBy } from 'ember-awesome-macros/array';
 import raw from 'ember-macro-helpers/raw';
 
-import BarogramComponent from './base-barogram';
-
 import safeComputed from '../computed/safe-computed';
+import BarogramComponent from './base-barogram';
 
 export default BarogramComponent.extend({
   flights: null,

@@ -1,4 +1,5 @@
 import EmberObject from '@ember/object';
+
 import ol from 'openlayers';
 
 /**

@@ -1,5 +1,6 @@
-import { alias, equal } from '@ember/object/computed';
 import EmberObject from '@ember/object';
+import { alias, equal } from '@ember/object/computed';
+
 import { validator, buildValidations } from 'ember-cp-validations';
 
 export const Validations = buildValidations({

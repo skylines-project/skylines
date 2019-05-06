@@ -1,5 +1,6 @@
-import { map, readOnly } from '@ember/object/computed';
 import EmberObject, { observer } from '@ember/object';
+import { map, readOnly } from '@ember/object/computed';
+
 import ol from 'openlayers';
 
 /**

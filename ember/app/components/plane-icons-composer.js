@@ -1,6 +1,7 @@
-import { once } from '@ember/runloop';
-import { observer, getWithDefault } from '@ember/object';
 import Component from '@ember/component';
+import { observer, getWithDefault } from '@ember/object';
+import { once } from '@ember/runloop';
+
 import ol from 'openlayers';
 
 export default Component.extend({

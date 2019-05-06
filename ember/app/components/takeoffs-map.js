@@ -1,6 +1,5 @@
-import BaseMapComponent from './base-map';
-
 import slMapClickHandler from '../utils/map-click-handler';
+import BaseMapComponent from './base-map';
 
 export default BaseMapComponent.extend({
   didInsertElement() {

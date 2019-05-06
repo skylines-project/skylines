@@ -1,6 +1,7 @@
 /* globals $ */
 
 import EmberObject from '@ember/object';
+
 import ol from 'openlayers';
 
 const MapClickHandler = EmberObject.extend({

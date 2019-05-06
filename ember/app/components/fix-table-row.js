@@ -1,4 +1,5 @@
 import Component from '@ember/component';
+
 import { tag } from 'ember-awesome-macros';
 import { htmlSafe } from 'ember-awesome-macros/string';
 

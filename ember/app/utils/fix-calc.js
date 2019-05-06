@@ -1,10 +1,10 @@
-import { later, cancel } from '@ember/runloop';
-import { bool, mapBy, min, max, map } from '@ember/object/computed';
 import EmberObject from '@ember/object';
+import { bool, mapBy, min, max, map } from '@ember/object/computed';
+import { later, cancel } from '@ember/runloop';
 
-import flightFromData from '../utils/flight-from-data';
-import slFlightCollection from '../utils/flight-collection';
 import Fix from '../utils/fix';
+import slFlightCollection from '../utils/flight-collection';
+import flightFromData from '../utils/flight-from-data';
 
 /**
  * List of colors for flight path display
