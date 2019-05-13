@@ -3095,6 +3095,11 @@ broccoli-source@^1.1.0:
   resolved "https://registry.yarnpkg.com/broccoli-source/-/broccoli-source-1.1.0.tgz#54f0e82c8b73f46580cbbc4f578f0b32fca8f809"
   integrity sha1-VPDoLItz9GWAy7xPV48LMvyo+Ak=
 
+broccoli-source@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/broccoli-source/-/broccoli-source-2.0.0.tgz#02d3f369fd0ef1b25c0b1646cc3c87d4c7f76cc0"
+  integrity sha512-2rRtM8WGvZFwLY+HdBflnri/r44ldx5Kc5QPlW5rRREzGt61iP22WnJzM4KY509KtDvQCeb+QDlRgxE+RkjE7A==
+
 broccoli-stew@^1.2.0, broccoli-stew@^1.5.0:
   version "1.5.0"
   resolved "https://registry.yarnpkg.com/broccoli-stew/-/broccoli-stew-1.5.0.tgz#d7af8c18511dce510e49d308a62e5977f461883c"
@@ -3460,6 +3465,13 @@ calculate-cache-key-for-tree@^1.0.0, calculate-cache-key-for-tree@^1.1.0:
   dependencies:
     json-stable-stringify "^1.0.1"
 
+calculate-cache-key-for-tree@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/calculate-cache-key-for-tree/-/calculate-cache-key-for-tree-2.0.0.tgz#7ac57f149a4188eacb0a45b210689215d3fef8d6"
+  integrity sha512-Quw8a6y8CPmRd6eU+mwypktYCwUcf8yVFIRbNZ6tPQEckX9yd+EBVEPC/GSZZrMWH9e7Vz4pT7XhpmyApRByLQ==
+  dependencies:
+    json-stable-stringify "^1.0.1"
+
 callsite@1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/callsite/-/callsite-1.0.0.tgz#280398e5d664bd74038b6f0905153e6e8af1bc20"
@@ -3705,6 +3717,11 @@ cldr-core@^34.0.0:
   version "34.0.0"
   resolved "https://registry.yarnpkg.com/cldr-core/-/cldr-core-34.0.0.tgz#2e9d1f9909868e93e70c4813a74f331af028d66c"
   integrity sha512-PFHHn2SlqRdqD1ZC8Ddw5ZOSwJdqsmTY6fnOVsX5iMfOShqXs7QhpkIo4eOvz7rFdEivp/IrMDPs47Z4z1rD3g==
+
+cldr-core@^35.0.0:
+  version "35.1.0"
+  resolved "https://registry.yarnpkg.com/cldr-core/-/cldr-core-35.1.0.tgz#2b53b22fa49e549298ea72e2ff9d3dc7b3378dd2"
+  integrity sha512-fTexZlDx+dbjaRNOEzRMqgg9/NxxtPtdIz6CClUNA8rTXBC2RgmP7iag3Z1WCVXqjlIEvWqUvN71c0onhficIA==
 
 cldr-dates-full@^34.0.0:
   version "34.0.0"
@@ -5572,10 +5589,10 @@ ember-intl-cp-validations@^3.0.1:
     ember-cli-babel "^5.1.6"
     ember-getowner-polyfill "^1.2.2"
 
-ember-intl@^4.0.0-beta.8:
-  version "4.0.0-beta.8"
-  resolved "https://registry.yarnpkg.com/ember-intl/-/ember-intl-4.0.0-beta.8.tgz#30a6f3417e42059faf232761043f587e4730a646"
-  integrity sha512-OgRIdC0XN576HL6bSUhfTsB4MA+m0d2/6M/NFLW8qciUzz+z01aUBMYvs8EiFgsgjiJaM2tz+bqW2pi98QJpPQ==
+ember-intl@^4.0.0-beta.10:
+  version "4.0.0-beta.10"
+  resolved "https://registry.yarnpkg.com/ember-intl/-/ember-intl-4.0.0-beta.10.tgz#340263d91c7076c92743b4eb90618802f144136d"
+  integrity sha512-96wlInsaRBTZUcRpaN8W6jb6sODbjDwfbcVAOQXUAJrC4Q9y5Wn3FR/8rvK1NfyI4grCSY/uCZnCy+vMKbc7aQ==
   dependencies:
     "@ember-intl/broccoli-cldr-data" "^3.1.0"
     "@ember-intl/intl-messageformat" "^2.5.0"
@@ -5584,10 +5601,10 @@ ember-intl@^4.0.0-beta.8:
     broccoli-caching-writer "^3.0.3"
     broccoli-funnel "^2.0.2"
     broccoli-merge-trees "^3.0.2"
-    broccoli-source "^1.1.0"
+    broccoli-source "^2.0.0"
     broccoli-stew "^2.0.1"
-    calculate-cache-key-for-tree "^1.1.0"
-    cldr-core "^34.0.0"
+    calculate-cache-key-for-tree "^2.0.0"
+    cldr-core "^35.0.0"
     ember-auto-import "^1.2.21"
     ember-cli-babel "^7.5.0"
     extend "^3.0.2"
