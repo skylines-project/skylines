@@ -17,15 +17,15 @@ module.exports = {
     'import-helpers/order-imports': [
       'error',
       {
-        'newlines-between': 'always',
+        newlinesBetween: 'always',
         groups: [
-          'builtin',
+          '/^(assert|async_hooks|buffer|child_process|cluster|console|constants|crypto|dgram|dns|domain|events|fs|http|http2|https|inspector|module|net|os|path|perf_hooks|process|punycode|querystring|readline|repl|stream|string_decoder|timers|tls|trace_events|tty|url|util|v8|vm|zli)/',
           // Testing modules
           ['/^qunit/', '/^ember-qunit/', '/^@ember/test-helpers/', '/^ember-exam/'],
           // Ember.js modules
           ['/^ember$/', '/^@ember/', '/^ember-data/'],
-          ['external'],
-          [`/^${require('./package.json').name}\\//`, 'internal'],
+          ['module'],
+          [`/^${require('./package.json').name}\\//`],
           ['parent', 'sibling', 'index'],
         ],
         alphabetize: { order: 'asc', ignoreCase: true },
