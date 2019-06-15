@@ -1,8 +1,7 @@
 import Component from '@ember/component';
+import { computed } from '@ember/object';
 import { alias, or } from '@ember/object/computed';
-
-import { conditional, tag } from 'ember-awesome-macros';
-import { htmlSafe } from 'ember-awesome-macros/string';
+import { htmlSafe } from '@ember/template';
 
 export default Component.extend({
   tagName: 'tr',
@@ -16,5 +15,7 @@ export default Component.extend({
   copilotName: or('flight.{copilot.name,copilotName}'),
   times: alias('nearFlight.times'),
 
-  colorStripeStyle: conditional('nearFlight.color', htmlSafe(tag`background-color: ${'nearFlight.color'}`)),
+  colorStripeStyle: computed('nearFlight.color', function() {
+    return htmlSafe(`background-color: ${this.nearFlight.color}`);
+  }),
 });
