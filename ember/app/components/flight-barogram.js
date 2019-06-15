@@ -1,9 +1,5 @@
 import { observer, computed } from '@ember/object';
 
-import { conditional, eq } from 'ember-awesome-macros';
-import { findBy } from 'ember-awesome-macros/array';
-import raw from 'ember-macro-helpers/raw';
-
 import safeComputed from '../computed/safe-computed';
 import BarogramComponent from './base-barogram';
 
@@ -49,11 +45,15 @@ export default BarogramComponent.extend({
     }));
   }),
 
-  selectedFlight: conditional(
-    eq('flights.length', 1),
-    'flights.firstObject',
-    conditional('selection', findBy('flights', raw('id'), 'selection')),
-  ),
+  selectedFlight: computed('flights.@each.id', 'selection', function() {
+    if (this.flights.length === 1) {
+      return this.flights[0];
+    }
+
+    if (this.selection) {
+      return this.flights.findBy('id', this.selection);
+    }
+  }),
 
   contests: safeComputed('selectedFlight', flight => flight.get('contests')),
   elevations: safeComputed('selectedFlight', flight => flight.get('flot_elev')),
