@@ -1,8 +1,6 @@
 import Component from '@ember/component';
+import { computed } from '@ember/object';
 import { inject as service } from '@ember/service';
-
-import { findBy } from 'ember-awesome-macros/array';
-import raw from 'ember-macro-helpers/raw';
 
 import availableLocales from '../utils/locales';
 
@@ -14,7 +12,9 @@ export default Component.extend({
   tagName: '',
 
   availableLocales,
-  currentLocale: findBy('availableLocales', raw('code'), 'intl.locale.firstObject'),
+  currentLocale: computed('availableLocales.@each.code', 'intl.locale', function() {
+    return this.availableLocales.findBy('code', this.intl.locale[0]);
+  }),
 
   actions: {
     setLocale(locale) {
