@@ -1,7 +1,6 @@
 import Component from '@ember/component';
+import { computed } from '@ember/object';
 import { inject as service } from '@ember/service';
-
-import { includes } from 'ember-awesome-macros/array';
 
 export default Component.extend({
   pinnedFlights: service(),
@@ -10,7 +9,9 @@ export default Component.extend({
   classNames: ['pin'],
   classNameBindings: ['pinned'],
 
-  pinned: includes('pinnedFlights.pinned', 'flightId'),
+  pinned: computed('pinnedFlights.pinned.[]', 'flightId', function() {
+    return this.pinnedFlights.pinned.includes(this.flightId);
+  }),
 
   click() {
     this.pinnedFlights.toggle(this.flightId);
