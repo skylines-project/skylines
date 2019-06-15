@@ -176,11 +176,11 @@
         },
         "geoalchemy2": {
             "hashes": [
-                "sha256:7d66d01af82d22bc37d3ebb1e73713b87ac5e116b3bc82ea4ec0584bbaa89f89",
-                "sha256:eed7a62f5a13d1bbfaff708b345da663fb32ef879b662db6254b46f22bb93fe1"
+                "sha256:0d1c9ea3ec13f6a522ccc3ffd2569ac524a6c6e80bab883e8805b28c48e77143",
+                "sha256:4dc4c6c2bda0fc82cccab4aaff185a6570e13a5351d85e29e12984a55d4138ee"
             ],
             "index": "pypi",
-            "version": "==0.5.0"
+            "version": "==0.6.3"
         },
         "gevent": {
             "hashes": [
