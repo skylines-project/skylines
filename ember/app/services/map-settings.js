@@ -1,7 +1,6 @@
 import { computed } from '@ember/object';
+import { or } from '@ember/object/computed';
 import Service, { inject as service } from '@ember/service';
-
-import { or } from 'ember-awesome-macros';
 
 import parseQueryString from 'skylines/utils/parse-query-string';
 
