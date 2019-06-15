@@ -1,10 +1,6 @@
 import Component from '@ember/component';
 import { computed } from '@ember/object';
 
-import { or } from 'ember-awesome-macros';
-import { findBy } from 'ember-awesome-macros/array';
-import raw from 'ember-macro-helpers/raw';
-
 export default Component.extend({
   tagName: '',
 
@@ -15,7 +11,9 @@ export default Component.extend({
     return [{ id: null }].concat(this.models);
   }),
 
-  model: findBy('modelsWithNull', raw('id'), or('modelId', null)),
+  model: computed('modelsWithNull.@each.id', 'modelId', function() {
+    return this.modelsWithNull.findBy('id', this.modelId || null);
+  }),
 
   actions: {
     onChange(model) {
