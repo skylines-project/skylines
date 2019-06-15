@@ -1,7 +1,6 @@
 import Component from '@ember/component';
-
-import { tag } from 'ember-awesome-macros';
-import { htmlSafe } from 'ember-awesome-macros/string';
+import { computed } from '@ember/object';
+import { htmlSafe } from '@ember/template';
 
 export default Component.extend({
   tagName: 'tr',
@@ -9,7 +8,9 @@ export default Component.extend({
 
   selectable: false,
 
-  badgeStyle: htmlSafe(tag`background-color: ${'row.color'}`),
+  badgeStyle: computed('row.color', function() {
+    return htmlSafe(`background-color: ${this.row.color}`);
+  }),
 
   actions: {
     remove() {

@@ -1,10 +1,9 @@
 import Component from '@ember/component';
+import { computed } from '@ember/object';
 import { inject as service } from '@ember/service';
 
-import { conditional, eq } from 'ember-awesome-macros';
 import { task } from 'ember-concurrency';
 import { validator, buildValidations } from 'ember-cp-validations';
-import raw from 'ember-macro-helpers/raw';
 
 const Validations = buildValidations({
   callsign: {
@@ -29,7 +28,9 @@ export default Component.extend(Validations, {
   delays: DELAYS,
 
   /* ember-power-select can't handle `0` */
-  _delay: conditional(eq('delay', 0), raw('0'), 'delay'),
+  _delay: computed('delay', function() {
+    return this.delay === 0 ? '0' : this.delay;
+  }),
 
   actions: {
     async submit() {

@@ -1,11 +1,15 @@
 import Component from '@ember/component';
-
-import { findBy } from 'ember-awesome-macros/array';
-import raw from 'ember-macro-helpers/raw';
+import { computed } from '@ember/object';
 
 export default Component.extend({
-  left: findBy('perf', raw('circlingDirection'), raw('left')),
-  right: findBy('perf', raw('circlingDirection'), raw('right')),
-  mixed: findBy('perf', raw('circlingDirection'), raw('mixed')),
-  total: findBy('perf', raw('circlingDirection'), raw('total')),
+  left: findBy('perf', 'circlingDirection', 'left'),
+  right: findBy('perf', 'circlingDirection', 'right'),
+  mixed: findBy('perf', 'circlingDirection', 'mixed'),
+  total: findBy('perf', 'circlingDirection', 'total'),
 });
+
+function findBy(array, key, value) {
+  return computed(`${array}.@each.${key}`, function() {
+    return this[array].findBy(key, value);
+  });
+}

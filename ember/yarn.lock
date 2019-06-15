@@ -2861,7 +2861,7 @@ broccoli-file-creator@^1.1.1:
     rsvp "~3.0.6"
     symlink-or-copy "^1.0.1"
 
-broccoli-file-creator@^2.0.0, broccoli-file-creator@^2.1.1:
+broccoli-file-creator@^2.0.0:
   version "2.1.1"
   resolved "https://registry.yarnpkg.com/broccoli-file-creator/-/broccoli-file-creator-2.1.1.tgz#7351dd2496c762cfce7736ce9b49e3fce0c7b7db"
   integrity sha512-YpjOExWr92C5vhnK0kmD81kM7U09kdIRZk9w4ZDCDHuHXW+VE/x6AGEOQQW3loBQQ6Jk+k+TSm8dESy4uZsnjw==
@@ -3334,7 +3334,7 @@ browserify-zlib@^0.2.0:
   dependencies:
     pako "~1.0.5"
 
-browserslist@^2.0.0, browserslist@^2.2.2:
+browserslist@^2.0.0:
   version "2.11.3"
   resolved "https://registry.yarnpkg.com/browserslist/-/browserslist-2.11.3.tgz#fe36167aed1bbcde4827ebfe71347a2cc70b99b2"
   integrity sha512-yWu5cXT7Av6mVwzWc8lMsJMHWn4xyjSuGYi4IozbVTLUOEYPSagUB8kiMDUHA1fS3zjr8nkxkn9jdvug4BBRmA==
@@ -4788,17 +4788,6 @@ ember-auto-import@^1.2.15, ember-auto-import@^1.2.21, ember-auto-import@^1.4.1:
     walk-sync "^0.3.3"
     webpack "~4.28"
 
-ember-awesome-macros@^2.0.0:
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/ember-awesome-macros/-/ember-awesome-macros-2.0.0.tgz#d41adbbf3ce0729f7545cc63da7fea7e1a03a775"
-  integrity sha1-1Brbvzzgcp91Rcxj2n/qfhoDp3U=
-  dependencies:
-    broccoli-file-creator "^2.1.1"
-    broccoli-merge-trees "^3.0.0"
-    ember-cli-babel "^6.6.0"
-    ember-cli-string-utils "^1.1.0"
-    ember-macro-helpers "^1.0.0"
-
 ember-basic-dropdown@^1.1.0:
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/ember-basic-dropdown/-/ember-basic-dropdown-1.1.2.tgz#6558eb2aa34d2feeb66e9de1feea560d46edc697"
@@ -5643,16 +5632,6 @@ ember-load-initializers@^2.0.0:
   dependencies:
     ember-cli-babel "^7.0.0"
 
-ember-macro-helpers@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/ember-macro-helpers/-/ember-macro-helpers-1.0.0.tgz#bdb875f5752814f3e0c886e2ed650f01cc302712"
-  integrity sha1-vbh19XUoFPPgyIbi7WUPAcwwJxI=
-  dependencies:
-    ember-cli-babel "^6.6.0"
-    ember-cli-string-utils "^1.1.0"
-    ember-cli-test-info "^1.0.0"
-    ember-weakmap "^3.0.0"
-
 ember-maybe-import-regenerator@^0.1.5, ember-maybe-import-regenerator@^0.1.6:
   version "0.1.6"
   resolved "https://registry.yarnpkg.com/ember-maybe-import-regenerator/-/ember-maybe-import-regenerator-0.1.6.tgz#35d41828afa6d6a59bc0da3ce47f34c573d776ca"
@@ -5918,15 +5897,6 @@ ember-validators@1.0.4:
   dependencies:
     ember-cli-babel "^6.9.2"
     ember-require-module "^0.1.2"
-
-ember-weakmap@^3.0.0:
-  version "3.1.1"
-  resolved "https://registry.yarnpkg.com/ember-weakmap/-/ember-weakmap-3.1.1.tgz#2ae6e0080b5b80cf0d108f7752dc69ea9603dbd7"
-  integrity sha512-rfW3A1m3NFsHd/NuHyBkssU0Qf0zGcJmASGfhjZc7fIQeBZvSLIFYZTej+W+YBLPtED9h/SVW63DHTRY5PUR4Q==
-  dependencies:
-    browserslist "^2.2.2"
-    debug "^3.1.0"
-    ember-cli-babel "^6.3.0"
 
 ember-web-app@^2.3.1:
   version "2.3.1"

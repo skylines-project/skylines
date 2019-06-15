@@ -1,6 +1,5 @@
 import Component from '@ember/component';
-
-import { or, eq, not } from 'ember-awesome-macros';
+import { or, equal, not } from '@ember/object/computed';
 
 export default Component.extend({
   tagName: 'tr',
@@ -11,6 +10,6 @@ export default Component.extend({
   pilotName: or('flight.pilot.name', 'flight.pilotName'),
   copilotName: or('flight.copilot.name', 'flight.copilotName'),
 
-  isPublic: eq('flight.privacyLevel', 0),
+  isPublic: equal('flight.privacyLevel', 0),
   isPrivate: not('isPublic'),
 });

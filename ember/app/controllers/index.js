@@ -1,11 +1,11 @@
 import Controller from '@ember/controller';
+import { computed } from '@ember/object';
 import { inject as service } from '@ember/service';
-
-import { conditional } from 'ember-awesome-macros';
-import raw from 'ember-macro-helpers/raw';
 
 export default Controller.extend({
   account: service(),
 
-  notificationsTarget: conditional('account.user', raw('notifications'), raw('timeline')),
+  notificationsTarget: computed('account.user', function() {
+    return this.account.user ? 'notifications' : 'timeline';
+  }),
 });

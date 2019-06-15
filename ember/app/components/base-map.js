@@ -1,10 +1,9 @@
 import Component from '@ember/component';
-import { observer } from '@ember/object';
+import { computed, observer } from '@ember/object';
 import { once } from '@ember/runloop';
 import { inject as service } from '@ember/service';
+import { htmlSafe } from '@ember/template';
 
-import { tag } from 'ember-awesome-macros';
-import { htmlSafe } from 'ember-awesome-macros/string';
 import $ from 'jquery';
 import ol from 'openlayers';
 
@@ -18,7 +17,9 @@ export default Component.extend({
   width: '100%',
   height: '100%',
 
-  style: htmlSafe(tag`width: ${'width'}; height: ${'height'}; position: relative`),
+  style: computed('width', 'height', function() {
+    return htmlSafe(`width: ${this.width}; height: ${this.height}; position: relative`);
+  }),
 
   mapSettingsObserver: observer('mapSettings.baseLayer', 'mapSettings.overlayLayers.[]', function() {
     once(this, 'updateLayerVisibilities');
