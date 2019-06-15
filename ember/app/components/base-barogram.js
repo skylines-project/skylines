@@ -1,8 +1,8 @@
 import Component from '@ember/component';
+import { computed } from '@ember/object';
 import { inject as service } from '@ember/service';
+import { htmlSafe } from '@ember/template';
 
-import { conditional, tag } from 'ember-awesome-macros';
-import { htmlSafe } from 'ember-awesome-macros/string';
 import $ from 'jquery';
 
 export default Component.extend({
@@ -21,7 +21,11 @@ export default Component.extend({
   contests: null,
   elevations: null,
 
-  flotStyle: conditional('height', htmlSafe(tag`width: 100%; height: ${'height'}px;`)),
+  flotStyle: computed('height', function() {
+    if (this.height) {
+      return htmlSafe(`width: 100%; height: ${this.height}px;`);
+    }
+  }),
 
   didInsertElement() {
     this._super(...arguments);
