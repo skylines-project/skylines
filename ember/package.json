@@ -57,7 +57,7 @@
     "ember-native-dom-helpers": "^0.6.2",
     "ember-page-title": "^5.0.2",
     "ember-percy": "^1.5.0",
-    "ember-power-select": "^2.3.3",
+    "ember-power-select": "^2.3.4",
     "ember-qunit": "^4.4.1",
     "ember-resolver": "^5.1.3",
     "ember-simple-auth": "^1.8.2",
