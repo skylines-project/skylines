@@ -4758,7 +4758,7 @@ ember-ast-helpers@0.3.5:
     "@glimmer/compiler" "^0.27.0"
     "@glimmer/syntax" "^0.27.0"
 
-ember-auto-import@^1.2.15, ember-auto-import@^1.2.21, ember-auto-import@^1.4.1:
+ember-auto-import@^1.2.15, ember-auto-import@^1.4.0, ember-auto-import@^1.4.1:
   version "1.4.1"
   resolved "https://registry.yarnpkg.com/ember-auto-import/-/ember-auto-import-1.4.1.tgz#a2a602168f1446422e8ef8a8431667bb771b35c1"
   integrity sha512-n1D0Xom6eWbg156lXAqSprf8RK85PLmCQj1Q8eUNHq7lhfFizYnwQ7ODcTJy6MR4/xrtim+SnfPHd6f3FFHtDQ==
@@ -5592,10 +5592,10 @@ ember-intl-cp-validations@^3.0.1:
     ember-cli-babel "^5.1.6"
     ember-getowner-polyfill "^1.2.2"
 
-ember-intl@^4.0.0-beta.10:
-  version "4.0.0-beta.10"
-  resolved "https://registry.yarnpkg.com/ember-intl/-/ember-intl-4.0.0-beta.10.tgz#340263d91c7076c92743b4eb90618802f144136d"
-  integrity sha512-96wlInsaRBTZUcRpaN8W6jb6sODbjDwfbcVAOQXUAJrC4Q9y5Wn3FR/8rvK1NfyI4grCSY/uCZnCy+vMKbc7aQ==
+ember-intl@^4.0.0:
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/ember-intl/-/ember-intl-4.0.0.tgz#b9ec235310e1ed6086bb39dd7e708d681e2048f4"
+  integrity sha512-ROtmxispa4FQeWEEPXvEzoYzSRz90Fzpd7O7aj3sYQX8NWaDV3o/4RrbLMWsU6AdEVmlKi6CmOGzENREH1VVoA==
   dependencies:
     "@ember-intl/broccoli-cldr-data" "^3.1.0"
     "@ember-intl/intl-messageformat" "^2.5.0"
@@ -5608,7 +5608,7 @@ ember-intl@^4.0.0-beta.10:
     broccoli-stew "^2.0.1"
     calculate-cache-key-for-tree "^2.0.0"
     cldr-core "^35.0.0"
-    ember-auto-import "^1.2.21"
+    ember-auto-import "^1.4.0"
     ember-cli-babel "^7.5.0"
     extend "^3.0.2"
     fast-memoize "^2.5.1"
