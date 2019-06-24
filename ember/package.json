@@ -69,7 +69,7 @@
     "eslint": "^5.16.0",
     "eslint-config-prettier": "^5.0.0",
     "eslint-config-simplabs": "0.4.0",
-    "eslint-plugin-ember": "^6.6.0",
+    "eslint-plugin-ember": "^6.7.0",
     "eslint-plugin-import-helpers": "^1.0.1",
     "eslint-plugin-prettier": "^3.1.0",
     "loader.js": "^4.7.0",
