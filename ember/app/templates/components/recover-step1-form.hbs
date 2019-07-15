@@ -1,6 +1,8 @@
 <form {{action "submit" on="submit"}}>
   {{#if error}}
     {{#bs-alert type="danger" dismissible=false}}{{error}}{{/bs-alert}}
+  {{else if url}}
+    {{#bs-alert type="info" dismissible=false}}Recovery URL: {{url}}{{/bs-alert}}
   {{else if success}}
     {{#bs-alert type="success" dismissible=false}}{{t "recovery-mail-sent"}}{{/bs-alert}}
   {{/if}}

@@ -37,9 +37,10 @@ export default Component.extend(Validations, {
     let json = this.getProperties('email');
 
     try {
-      yield this.ajax.request('/api/users/recover', { method: 'POST', json });
+      let { url } = yield this.ajax.request('/api/users/recover', { method: 'POST', json });
       this.set('error', null);
       this.set('success', true);
+      this.set('url', url);
     } catch (error) {
       this.set('error', error);
       this.set('success', false);

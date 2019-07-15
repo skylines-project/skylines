@@ -72,6 +72,7 @@ def new_post():
 
 
 @users_blueprint.route("/users/recover", methods=["POST"])
+@oauth.optional()
 def recover_post():
     json = request.get_json()
     if json is None:
@@ -94,6 +95,12 @@ def recover_step1_post(json):
         return jsonify(error="email-unknown"), 422
 
     user.generate_recover_key(request.remote_addr)
+
+    current_user = User.get(request.user_id) if request.user_id else None
+    if current_user.admin:
+        url = u"http://skylines.aero/users/recover?key=%x" % user.recover_key
+        return jsonify(url=url)
+
     try:
         send_recover_mail(user)
     except ServiceUnavailable:
