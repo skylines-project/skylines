@@ -95,6 +95,7 @@ def recover_step1_post(json):
         return jsonify(error="email-unknown"), 422
 
     user.generate_recover_key(request.remote_addr)
+    db.session.commit()
 
     current_user = User.get(request.user_id) if request.user_id else None
     if current_user.admin:
@@ -105,8 +106,6 @@ def recover_step1_post(json):
         send_recover_mail(user)
     except ServiceUnavailable:
         return jsonify(error="mail-service-unavailable"), 503
-
-    db.session.commit()
 
     return jsonify()
 
