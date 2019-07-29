@@ -6608,10 +6608,10 @@ eslint-plugin-ember@^6.7.1:
     ember-rfc176-data "^0.3.9"
     snake-case "^2.1.0"
 
-eslint-plugin-import-helpers@^1.0.1:
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/eslint-plugin-import-helpers/-/eslint-plugin-import-helpers-1.0.1.tgz#17a2744fe50aca322b891a35fdca06e0b4f48782"
-  integrity sha512-Zoct8gRf7yZ2s5JirKZ6AvQZfmzPlVkLmd+pCP6FtduhNfs+bGQ5mv4z+6N1rZRhN3FbSKiggfV2kMWUBnkiiA==
+eslint-plugin-import-helpers@^1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-import-helpers/-/eslint-plugin-import-helpers-1.0.2.tgz#ae0ab47c991c65e1b25b6370f49afa2cab4cbd9c"
+  integrity sha512-aSoqeEEkJou/1NhbSO7Xr2SKSs8mI53qe8uFh9tMl4WCbrOwoel0eA3hRajlJ7MLCG44umf+mY3/dWuufneFzw==
 
 eslint-plugin-prettier@^3.1.0:
   version "3.1.0"
