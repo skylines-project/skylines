@@ -6361,10 +6361,10 @@ ember-string-ishtmlsafe-polyfill@^2.0.0:
   dependencies:
     ember-cli-version-checker "^1.2.0"
 
-ember-svg-jar@^2.0.0:
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/ember-svg-jar/-/ember-svg-jar-2.0.0.tgz#fa149840323c4d15e39fb31807356c2a39388312"
-  integrity sha512-n1iBjDDBYCwqZ/WBgqNgwdrBj+5MlMPHqoKCNRCs8XX1+PR7a+HXqKQV9O5WgcyWtak30r/1AHe30h0SUG4UJw==
+ember-svg-jar@^2.1.0:
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/ember-svg-jar/-/ember-svg-jar-2.1.0.tgz#663d9cf7f63b046cc27862ddd0a946af718637e3"
+  integrity sha512-UGW+wSXqFq6agZR4yD2ukfqiFylFHOwrD+Ku347tHubicvccpSqlhpiZsDHC/zpISIWLCE+Bo/75zPsb7Mh31Q==
   dependencies:
     broccoli-caching-writer "^3.0.3"
     broccoli-funnel "^2.0.2"
