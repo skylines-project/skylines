@@ -17,7 +17,7 @@
     "test": "ember test"
   },
   "dependencies": {
-    "remarkable": "^1.7.2"
+    "remarkable": "^1.7.4"
   },
   "devDependencies": {
     "@ember/optional-features": "^0.7.0",
