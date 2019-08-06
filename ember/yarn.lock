@@ -1095,19 +1095,19 @@
     "@types/istanbul-reports" "^1.1.1"
     "@types/yargs" "^12.0.9"
 
-"@pollyjs/adapter-fetch@^2.6.1":
-  version "2.6.1"
-  resolved "https://registry.yarnpkg.com/@pollyjs/adapter-fetch/-/adapter-fetch-2.6.1.tgz#17d5c9320e37b1bc0e6ac1da8b9469fa9b5fc71e"
-  integrity sha512-92CUTm4P2AOczMXbFVkRKDR81n2fsqPSDO/qvmZ7UAtPw72A+wd1L4mtMs/waGWGkiDEkdgLU+eeEUNUuEfzKw==
+"@pollyjs/adapter-fetch@^2.6.2":
+  version "2.6.2"
+  resolved "https://registry.yarnpkg.com/@pollyjs/adapter-fetch/-/adapter-fetch-2.6.2.tgz#3fe5f737350c2bcd0b57689401541acbdee6f71c"
+  integrity sha512-lw6wJwAGu6xV4p5oVQiGYFblbCIZCxPinUMENy9k22vb8EYSk7LRySugaJgPZRnQ+AH4sISXs7MyZxN858Zx+g==
   dependencies:
     "@pollyjs/adapter" "^2.6.0"
     "@pollyjs/utils" "^2.6.0"
     detect-node "^2.0.4"
 
-"@pollyjs/adapter-xhr@^2.6.1":
-  version "2.6.1"
-  resolved "https://registry.yarnpkg.com/@pollyjs/adapter-xhr/-/adapter-xhr-2.6.1.tgz#5fb542201b84aa67f658ff718f8ee8f7b0685b85"
-  integrity sha512-IVZmK3IpUYle6Gl5gGS8CrwaS+/V0Zg8AObfhce8IJsYOrE7Z9wCD3IkBbb9Zg5Ma0WCdZrNckFx6kPNt8B1aw==
+"@pollyjs/adapter-xhr@^2.6.2":
+  version "2.6.2"
+  resolved "https://registry.yarnpkg.com/@pollyjs/adapter-xhr/-/adapter-xhr-2.6.2.tgz#ec4eb0dfcd999729a23e2e0a3cec60d2316f143f"
+  integrity sha512-yJ+0ukZ93VN1SJ7Df/5Pq8HMgaTRBYS+q/PAsfDX2Jy1jAkjP5sdF5MCATOH7e9IuBvyi41p+KUgqTLF9U/Buw==
   dependencies:
     "@pollyjs/adapter" "^2.6.0"
     "@pollyjs/utils" "^2.6.0"
@@ -1120,10 +1120,10 @@
   dependencies:
     "@pollyjs/utils" "^2.6.0"
 
-"@pollyjs/core@^2.6.1":
-  version "2.6.1"
-  resolved "https://registry.yarnpkg.com/@pollyjs/core/-/core-2.6.1.tgz#77d61650a581695e68f3a8c343ba84b8ac019c1e"
-  integrity sha512-gw5A4Rf3qohP9kuM4abATw/SVvZT00IyJdVtFDb2zBzn1xUL0hdyxUq5N7np8N+hIfe9cxFePIatqjt8hIzacQ==
+"@pollyjs/core@^2.6.2":
+  version "2.6.2"
+  resolved "https://registry.yarnpkg.com/@pollyjs/core/-/core-2.6.2.tgz#c2a1ddfedbbf93a19e107eadaf8f22b409b0725c"
+  integrity sha512-jkH39B6/tR0yAraUr/GN2ifE6JXmKTfOLJSX4jXGiD6mWHzMi6cB5464mzs+vGWywiqWWcxEP1gKEgeGTdOb/g==
   dependencies:
     "@pollyjs/utils" "^2.6.0"
     "@sindresorhus/fnv1a" "^1.2.0"
@@ -1134,17 +1134,17 @@
     route-recognizer "^0.3.4"
     slugify "^1.3.4"
 
-"@pollyjs/ember@^2.6.1":
-  version "2.6.1"
-  resolved "https://registry.yarnpkg.com/@pollyjs/ember/-/ember-2.6.1.tgz#63dbde31160ea15bf0a2cbbe6adcc503a5aeb784"
-  integrity sha512-/LHgUi+bHvXElO55EAQVspipKalbGVAl3uy+pl3at9xyMnnjxn+FP2CtALW86T0nol9CdKqDvh//lR32eUXRCQ==
+"@pollyjs/ember@^2.6.2":
+  version "2.6.2"
+  resolved "https://registry.yarnpkg.com/@pollyjs/ember/-/ember-2.6.2.tgz#aa7431d8420671893b89b5a248a1b607dc92ece0"
+  integrity sha512-bv23kv39QmF74rkuf5Nd5LOfRcA9Z6fuUkyumEPL5HrTAfJmYThKO2hY2xUCriDDWC/eqh21rW2CnbIDA0JUhQ==
   dependencies:
-    "@pollyjs/adapter-fetch" "^2.6.1"
-    "@pollyjs/adapter-xhr" "^2.6.1"
-    "@pollyjs/core" "^2.6.1"
+    "@pollyjs/adapter-fetch" "^2.6.2"
+    "@pollyjs/adapter-xhr" "^2.6.2"
+    "@pollyjs/core" "^2.6.2"
     "@pollyjs/node-server" "^2.6.0"
-    "@pollyjs/persister-local-storage" "^2.6.1"
-    "@pollyjs/persister-rest" "^2.6.1"
+    "@pollyjs/persister-local-storage" "^2.6.2"
+    "@pollyjs/persister-rest" "^2.6.2"
     ember-auto-import "^1.2.15"
     ember-cli-babel "^6.16.0"
 
@@ -1162,25 +1162,25 @@
     morgan "^1.9.1"
     nocache "^2.1.0"
 
-"@pollyjs/persister-local-storage@^2.6.1":
-  version "2.6.1"
-  resolved "https://registry.yarnpkg.com/@pollyjs/persister-local-storage/-/persister-local-storage-2.6.1.tgz#810afffbfb98790ca2449fd43d60b16248b3e3c4"
-  integrity sha512-1FzMsWpNdvlZPd9utOrmMt1sbDNxOdw2sC2L+MNhjK3ItpkP+vv/bZ7PTeOLAMFctgxnqh097/nsh16G7F8q3g==
+"@pollyjs/persister-local-storage@^2.6.2":
+  version "2.6.2"
+  resolved "https://registry.yarnpkg.com/@pollyjs/persister-local-storage/-/persister-local-storage-2.6.2.tgz#b448d4005007c340aeb96d72ec7edabf6de09f78"
+  integrity sha512-FySSX/WuhxfBfMHtzhX8KM0/Y93lFIdR3NyasvuCbIoS6lWDUIwtT1f/4sgK4CYRLstt5alYja9jhcKe/3H/fw==
   dependencies:
-    "@pollyjs/persister" "^2.6.1"
+    "@pollyjs/persister" "^2.6.2"
 
-"@pollyjs/persister-rest@^2.6.1":
-  version "2.6.1"
-  resolved "https://registry.yarnpkg.com/@pollyjs/persister-rest/-/persister-rest-2.6.1.tgz#1242168b4dfd703b6573e0b8c367eecc0633ae0f"
-  integrity sha512-T3Gj//fDsd/dEB5SQcPb2l4UjuuRmWZ2U5jkFbulGqwg/pS5olVmDGbalPWEHWK9hREmgBRwT4FQI9JQPT0ZMA==
+"@pollyjs/persister-rest@^2.6.2":
+  version "2.6.2"
+  resolved "https://registry.yarnpkg.com/@pollyjs/persister-rest/-/persister-rest-2.6.2.tgz#582e2298cdaded5c96e0c3ebc3cdf110e26a59b6"
+  integrity sha512-qLLjWvpevCvBUPzMs12PY/60aUNHe4xa0BLfpKCPgKq6/Dfi2dSxkWbS9Jic2YAHgrkW9ESoQg9xgeOqvfo8Pg==
   dependencies:
-    "@pollyjs/persister" "^2.6.1"
+    "@pollyjs/persister" "^2.6.2"
     "@pollyjs/utils" "^2.6.0"
 
-"@pollyjs/persister@^2.6.1":
-  version "2.6.1"
-  resolved "https://registry.yarnpkg.com/@pollyjs/persister/-/persister-2.6.1.tgz#03f3713fbfef56c166a7ae985f7568cd9094e793"
-  integrity sha512-pBPA3HupgbqbK8XkJP4ifJ8LctpEboMeYJOGJtt8II7hJZ9fiu/kWhYx8tK+C/tN+RevZHhkjYZEnEYWwUh0eA==
+"@pollyjs/persister@^2.6.2":
+  version "2.6.2"
+  resolved "https://registry.yarnpkg.com/@pollyjs/persister/-/persister-2.6.2.tgz#d70305b4ade0d46f3c81ca88ff3657128a86ea06"
+  integrity sha512-lLqC+LdqxUzQCIx9GF7Oltex7navUo8LnIHyB3EzpqTCw0HY5Nq9/LaVi6Qgj5r0eL598LfEC1Czq6pHOUCJ1Q==
   dependencies:
     "@pollyjs/utils" "^2.6.0"
     bowser "^2.4.0"
