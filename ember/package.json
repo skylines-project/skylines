@@ -65,7 +65,7 @@
     "ember-svg-jar": "^2.1.0",
     "ember-test-selectors": "^2.1.0",
     "ember-truth-helpers": "^2.1.0",
-    "ember-web-app": "^2.3.1",
+    "ember-web-app": "^3.0.0",
     "eslint": "^6.1.0",
     "eslint-config-prettier": "^6.0.0",
     "eslint-config-simplabs": "0.4.0",
