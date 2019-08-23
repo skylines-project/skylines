@@ -11,8 +11,8 @@ export default Route.extend({
     },
   },
 
-  model(params, transition) {
-    let searchText = transition.queryParams && transition.queryParams.text;
+  model(params) {
+    let searchText = params.text;
     this.set('searchTextService.text', searchText);
 
     if (searchText) {
