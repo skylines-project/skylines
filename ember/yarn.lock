@@ -6267,10 +6267,10 @@ ember-power-select@^2.3.5:
     ember-text-measurer "^0.5.0"
     ember-truth-helpers "^2.1.0"
 
-ember-qunit@^4.5.0:
-  version "4.5.0"
-  resolved "https://registry.yarnpkg.com/ember-qunit/-/ember-qunit-4.5.0.tgz#ebb62430bf5c6fb3307f1e7a612b9ab83390e8ae"
-  integrity sha512-T4VtcsbTJsVRPH8kIg1L/qPCkHX0WchsHzxSRJW+3Tw4ZPtYvgB99wJ8A81fBZUO0eF7UNHL/j583U5LgDGsHw==
+ember-qunit@^4.5.1:
+  version "4.5.1"
+  resolved "https://registry.yarnpkg.com/ember-qunit/-/ember-qunit-4.5.1.tgz#dc4b0a794fbeb6702a02f28bf19091de0f90fd5a"
+  integrity sha512-fOxXQLFdellP0yiMd9f3n7pIGggiDo8kBuswdGvsCrqTKq5aB1Cb49eeoNyBDQYGlhcxY0pOGUe+xElppChDBA==
   dependencies:
     "@ember/test-helpers" "^1.6.0"
     broccoli-funnel "^2.0.2"
