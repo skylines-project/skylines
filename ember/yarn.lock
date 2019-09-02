@@ -6698,15 +6698,15 @@ ember-validators@1.0.4:
     ember-cli-babel "^6.9.2"
     ember-require-module "^0.1.2"
 
-ember-web-app@^3.0.0:
-  version "3.0.0"
-  resolved "https://registry.yarnpkg.com/ember-web-app/-/ember-web-app-3.0.0.tgz#4753fd4848c7ea43aba78256db31ae59cf5180d0"
-  integrity sha512-kFBBOGU9AjABjccIkvVM08v9bScLuaFDd9F7G5Ep5nDsVo3dgvCzpCz/ZDaetxctatsRfELD1btKrZVvYT+RLw==
+ember-web-app@^3.0.1:
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/ember-web-app/-/ember-web-app-3.0.1.tgz#c7cd5d120f38976206cbc1413ade27d4c75fc309"
+  integrity sha512-jU1L/fSxnYjb3gkiIXJ4t7xm7pjjg0s2OBQ4cqlroHCaGp4X7VtGvUJ5VUUHRB9pnwUCc12nZjZJyrvTiP6Ctw==
   dependencies:
     broccoli-asset-rev "^3.0.0"
     broccoli-caching-writer "^3.0.3"
     broccoli-merge-trees "^3.0.2"
-    ember-cli-babel "^7.7.3"
+    ember-cli-babel "^7.11.0"
     jsdom "^15.1.1"
     web-app-manifest-validator "^1.0.0"
     xmlbuilder "^13.0.2"
