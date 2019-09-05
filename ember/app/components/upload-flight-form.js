@@ -26,6 +26,7 @@ const Validations = buildValidations({
 export default Component.extend(Validations, {
   ajax: service(),
   account: service(),
+  raven: service(),
 
   classNames: ['panel-body'],
 
@@ -64,6 +65,7 @@ export default Component.extend(Validations, {
       });
       this.onUpload(json);
     } catch (error) {
+      this.raven.captureException(error);
       this.set('error', error);
     }
   }).drop(),
