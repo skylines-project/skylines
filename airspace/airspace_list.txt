@@ -3,9 +3,6 @@
 # each line contains:
 # 2-letter-country-code openair/sua url
 
-# cz 2014 file can't be read by ogr...
-#cz openair http://soaringweb.org/Airspace/CZ/CZ_2013.txt
-
 de openair https://www.daec.de/fileadmin/user_upload/files/2018/Fachbereiche/Luftraum_und_Flugbetrieb/Airspace_Germany_week13_2018_V2_ohneFIS.txt
 at openair https://www.austrocontrol.at/jart/prj3/austro_control/data/dokumente/aV5XF_AustriaAirspaceMainFileeffdate01052015-27052015V.1.00.txt
 
@@ -15,7 +12,6 @@ at openair https://www.austrocontrol.at/jart/prj3/austro_control/data/dokumente/
 fr openair http://s289271336.onlinehome.fr/dossiers_ffvv/files/180330__AIRSPACE_France_2018-04.txt
 nl openair http://soaringweb.org/Airspace/NL/EHv17_3.txt
 hu openair http://soaringweb.org/Airspace/HU/HungarySUA2017_openair.txt
-sk openair http://soaringweb.org/Airspace/SK/SK2012.txt
 uk openair http://www.nvgc.org.uk/UK2016.txt
 ch openair http://soaringweb.org/Airspace/CH/170507_CH.txt
 es openair http://soaringweb.org/Airspace/ES/SUASpain201712.txt
@@ -27,3 +23,5 @@ za openair http://soaringweb.org/Airspace/ZA/RSA_Airspace_17AUG2017.txt
 au openair http://soaringweb.org/Airspace/AU/australia_class_all_no_ctaf_e_class_freq.bnd_area_freq.bnd_17_11_09.txt
 ca openair http://soaringweb.org/Airspace/NA/canadian_airspace_noE_below12500_265.air
 fi openair http://www.hansto.fi/seeyou/files/Ilmatila2012.txt
+cz openair https://github.com/XCSoar/xcsoar-data-content/blob/master/airspaces/Czech_Airspace.txt
+sk openair https://github.com/XCSoar/xcsoar-data-content/blob/master/airspaces/Slovakia_Airspace.txt
