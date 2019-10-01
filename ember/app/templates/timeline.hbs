@@ -1,4 +1,4 @@
-{{#base-page}}
+<BasePage>
   <div class="page-header">
     <h1>
       {{t "timeline"}}
@@ -14,13 +14,13 @@
       <div class="row">
         <div class="col-xs-6">
           {{#if prevPage}}
-            {{#link-to (query-params page=prevPage) class="btn btn-default"}}&larr; {{t "newer"}}{{/link-to}}
+            <LinkTo @query={{hash page=prevPage}} class="btn btn-default">&larr; {{t "newer"}}</LinkTo>
           {{/if}}
         </div>
 
         <div class="col-xs-6" style="text-align:right">
           {{#if nextPage}}
-            {{#link-to (query-params page=nextPage) class="btn btn-default"}}{{t "older"}} &rarr;{{/link-to}}
+            <LinkTo @query={{hash page=nextPage}} class="btn btn-default">{{t "older"}} &rarr;</LinkTo>
           {{/if}}
         </div>
       </div>
@@ -28,7 +28,7 @@
       <table class="table table-events">
         <tbody>
         {{#each events as |event|}}
-          {{timeline-event event=event}}
+          <TimelineEvent @event={{event}} />
         {{/each}}
         </tbody>
       </table>
@@ -36,16 +36,16 @@
       <div class="row">
         <div class="col-xs-6">
           {{#if prevPage}}
-            {{#link-to (query-params page=prevPage) class="btn btn-default"}}&larr; {{t "newer"}}{{/link-to}}
+            <LinkTo @query={{hash page=prevPage}} class="btn btn-default">&larr; {{t "newer"}}</LinkTo>
           {{/if}}
         </div>
 
         <div class="col-xs-6" style="text-align:right">
           {{#if nextPage}}
-            {{#link-to (query-params page=nextPage) class="btn btn-default"}}{{t "older"}} &rarr;{{/link-to}}
+            <LinkTo @query={{hash page=nextPage}} class="btn btn-default">{{t "older"}} &rarr;</LinkTo>
           {{/if}}
         </div>
       </div>
     </div>
   </div>
-{{/base-page}}
+</BasePage>

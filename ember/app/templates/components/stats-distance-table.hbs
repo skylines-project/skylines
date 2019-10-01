@@ -11,13 +11,13 @@
     <td class="col-xs-2">
       <span>
         {{format-distance year.distance}}
-        {{bs-tooltip title=(t "n-avg-distance-per-flight" distance=(format-distance year.average_distance))}}
+        <BsTooltip @title={{t "n-avg-distance-per-flight" distance=(format-distance year.average_distance)}} />
       </span>
     </td>
     <td class="col-xs-8">
-      {{#bs-progress as |p|}}
-        {{p.bar value=(percent year.distance max) type="success"}}
-      {{/bs-progress}}
+      <BsProgress as |p|>
+        <p.bar @value={{percent year.distance max}} @type="success" />
+      </BsProgress>
     </td>
   </tr>
 {{/each}}

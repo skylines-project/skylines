@@ -1,22 +1,22 @@
-{{#bs-nav type="pills" as |nav|}}
-  {{#nav.dropdown tagName="li" as |dd|}}
-    {{#dd.toggle}}
+<BsNav @type="pills" as |nav|>
+  <nav.dropdown @tagName="li" as |dd|>
+    <dd.toggle>
       {{#if (eq year "all")}}
         {{t "all-time"}}
       {{else}}
         {{t "season-YEAR" year=year}}
       {{/if}}
       <span class="caret"></span>
-    {{/dd.toggle}}
+    </dd.toggle>
 
-    {{#dd.menu as |menu|}}
-      {{#nav.item}}{{#nav.link-to (query-params year="all")}}{{t "all-time"}}{{/nav.link-to}}{{/nav.item}}
+    <dd.menu as |menu|>
+      <nav.item>{{#nav.link-to (query-params year="all")}}{{t "all-time"}}{{/nav.link-to}}</nav.item>
 
       {{menu.divider}}
 
       {{#each recentYears as |year|}}
-        {{#nav.item}}{{#nav.link-to (query-params year=year)}}{{year}}{{/nav.link-to}}{{/nav.item}}
+        <nav.item>{{#nav.link-to (query-params year=year)}}{{year}}{{/nav.link-to}}</nav.item>
       {{/each}}
-    {{/dd.menu}}
-  {{/nav.dropdown}}
-{{/bs-nav}}
+    </dd.menu>
+  </nav.dropdown>
+</BsNav>

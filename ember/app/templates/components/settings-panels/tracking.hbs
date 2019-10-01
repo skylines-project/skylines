@@ -1,31 +1,31 @@
 <div class="panel-body">
   <form {{action "submit" on="submit"}}>
     {{#if error}}
-      {{#bs-alert type="danger" dismissible=false}}
+      <BsAlert @type="danger" @dismissible={{false}}>
         {{#if messageKey}}{{t messageKey error=error}}{{else}}{{error}}{{/if}}
-      {{/bs-alert}}
+      </BsAlert>
     {{else if messageKey}}
-      {{#bs-alert type="success" dismissible=false}}{{t messageKey}}{{/bs-alert}}
+      <BsAlert @type="success" @dismissible={{false}}>{{t messageKey}}</BsAlert>
     {{/if}}
 
-    {{validated-input
-      value=callsign
-      validation=validations.attrs.callsign
-      label=(t "tracking-callsign")
-      disabled=saveTask.isRunning
-      didValidate=didValidate}}
+    <ValidatedInput
+      @value={{callsign}}
+      @validation={{validations.attrs.callsign}}
+      @label={{t "tracking-callsign"}}
+      @disabled={{saveTask.isRunning}}
+      @didValidate={{didValidate}} />
 
     <div class="form-group">
       <label class="control-label">{{t "tracking-delay"}}</label>
 
-      {{#power-select
-        options=delays
-        searchEnabled=false
-        selected=_delay
-        onchange=(action (mut delay))
-        as |delay|}}
+      <PowerSelect
+        @options={{delays}}
+        @searchEnabled={{false}}
+        @selected={{_delay}}
+        @onchange={{action (mut delay)}}
+      as |delay|>
         {{t "tracking-delay-choice" delay=delay}}
-      {{/power-select}}
+      </PowerSelect>
     </div>
 
     <button class="btn btn-primary btn-block" type="submit" disabled={{or saveTask.isRunning (not validations.isValid)}}>

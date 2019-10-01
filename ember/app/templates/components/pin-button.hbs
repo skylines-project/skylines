@@ -1,7 +1,7 @@
-{{#bs-button onClick=(action "toggle")}}
+<BsButton @onClick={{action "toggle"}}>
   {{#if pinned}}
     {{fa-icon "star" size="lg"}} {{t 'flight-pinned'}}
   {{else}}
     {{fa-icon "star-o" size="lg"}} {{t 'flight-unpinned'}}
   {{/if}}
-{{/bs-button}}
+</BsButton>

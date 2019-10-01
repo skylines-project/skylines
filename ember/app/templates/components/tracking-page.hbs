@@ -13,44 +13,45 @@
       <div class="sidebar-pane" id="tab-overview">
         <h3>{{t "overview"}}</h3>
         <div class="sidebar-pane-content">
-          {{tracking-pilots-list pilots=pilots}}
+          <TrackingPilotsList @pilots={{pilots}} />
         </div>
       </div>
     </div>
   </div>
 
-  {{#flight-map
-    flights=fixCalc.flights
-    fixes=fixCalc.fixes
-    hoverEnabled=(not (or fixCalc.isRunning cesiumEnabled))
-    defaultTime=fixCalc.defaultTime
-    onTimeChange=(action (mut fixCalc.time))
-    onExtentChange=(action (mut mapExtent))
-    onCesiumEnabledChange=(action (mut cesiumEnabled))
-    calculatePadding=(action "calculatePadding")
-    class="sidebar-map ol-with-barogram"}}
+  <FlightMap
+    @flights={{fixCalc.flights}}
+    @fixes={{fixCalc.fixes}}
+    @hoverEnabled={{not (or fixCalc.isRunning cesiumEnabled)}}
+    @defaultTime={{fixCalc.defaultTime}}
+    @onTimeChange={{action (mut fixCalc.time)}}
+    @onExtentChange={{action (mut mapExtent)}}
+    @onCesiumEnabledChange={{action (mut cesiumEnabled)}}
+    @calculatePadding={{action "calculatePadding"}}
+    class="sidebar-map ol-with-barogram"
+  >
 
-    {{fullscreen-button fullscreenElement="#fullscreen-content"}}
-    {{playback-button isRunning=fixCalc.isRunning onToggle=(action "togglePlayback")}}
+    <FullscreenButton @fullscreenElement="#fullscreen-content" />
+    <PlaybackButton @isRunning={{fixCalc.isRunning}} @onToggle={{action "togglePlayback"}} />
 
-  {{/flight-map}}
+  </FlightMap>
 
   <div id="barogram_panel" class="map-bottom-panel map-overlay">
     <div style="overflow: auto; max-height: 115px">
-      {{fix-table
-        flights=fixCalc.flights
-        fixes=fixCalc.fixes
-        selection=(mut selectedFlightId)
-        onRemove=(action "removeFlight")}}
+      <FixTable
+        @flights={{fixCalc.flights}}
+        @fixes={{fixCalc.fixes}}
+        @selection={{mut selectedFlightId}}
+        @onRemove={{action "removeFlight"}} />
     </div>
 
-    {{flight-barogram
-      flights=fixCalc.flights
-      selection=selectedFlightId
-      hoverMode=(not fixCalc.isRunning)
-      timeInterval=timeInterval
-      time=fixCalc.time
-      defaultTime=fixCalc.defaultTime}}
+    <FlightBarogram
+      @flights={{fixCalc.flights}}
+      @selection={{selectedFlightId}}
+      @hoverMode={{not fixCalc.isRunning}}
+      @timeInterval={{timeInterval}}
+      @time={{fixCalc.time}}
+      @defaultTime={{fixCalc.defaultTime}} />
   </div>
 
 {{else}}

@@ -11,13 +11,13 @@
     <td class="col-xs-2">
       <span>
         {{t "n-hours" num=(format-hours year.duration)}}
-        {{bs-tooltip title=(t "n-avg-hours-per-flight" num=(format-hours year.average_duration))}}
+        <BsTooltip @title={{t "n-avg-hours-per-flight" num=(format-hours year.average_duration)}} />
       </span>
     </td>
     <td class="col-xs-8">
-      {{#bs-progress as |p|}}
-        {{p.bar value=(percent year.duration max) type="warning"}}
-      {{/bs-progress}}
+      <BsProgress as |p|>
+        <p.bar @value={{percent year.duration max}} @type="warning" />
+      </BsProgress>
     </td>
   </tr>
 {{/each}}

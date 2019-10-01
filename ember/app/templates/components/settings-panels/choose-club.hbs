@@ -4,28 +4,28 @@
 <div class="panel-body">
   <form {{action (perform saveTask) on="submit"}}>
     {{#if error}}
-      {{#bs-alert type="danger" dismissible=false}}
+      <BsAlert @type="danger" @dismissible={{false}}>
         {{#if messageKey}}{{t messageKey error=error}}{{else}}{{error}}{{/if}}
-      {{/bs-alert}}
+      </BsAlert>
     {{else if messageKey}}
-      {{#bs-alert type="success" dismissible=false}}{{t messageKey}}{{/bs-alert}}
+      <BsAlert @type="success" @dismissible={{false}}>{{t messageKey}}</BsAlert>
     {{/if}}
 
     <div class="form-group">
       <label class="control-label">{{t "club"}}</label>
 
-      {{#power-select
-        options=clubsWithNull
-        selected=club
-        searchField="name"
-        onchange=(action (mut club))
-        as |club|}}
+      <PowerSelect
+        @options={{clubsWithNull}}
+        @selected={{club}}
+        @searchField="name"
+        @onchange={{action (mut club)}}
+      as |club|>
         {{#if (eq club.id null)}}
           [{{t 'no-club'}}]
         {{else}}
           {{club.name}}
         {{/if}}
-      {{/power-select}}
+      </PowerSelect>
     </div>
 
     <button class="btn btn-primary btn-block" type="submit" disabled={{or saveTask.isRunning}}>

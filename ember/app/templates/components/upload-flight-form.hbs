@@ -1,23 +1,23 @@
 <form {{action "submit" on="submit"}}>
   {{#if error}}
-    {{#bs-alert type="danger" dismissible=false}}{{error}}{{/bs-alert}}
+    <BsAlert @type="danger" @dismissible={{false}}>{{error}}</BsAlert>
   {{/if}}
 
-  {{#validated-block label=(t "igc-or-zip-files") validation=validations.attrs.files hasContent=files didValidate=didValidate}}
+  <ValidatedBlock @label={{t "igc-or-zip-files"}} @validation={{validations.attrs.files}} @hasContent={{files}} @didValidate={{didValidate}}>
     <input type="file" name="files" multiple="multiple" onchange={{action "setFilesFromEvent"}} class="form-control" disabled={{uploadTask.isRunning}}>
-  {{/validated-block}}
+  </ValidatedBlock>
 
-  {{#validated-block label=(t "pilot") validation=validations.attrs.pilotId didValidate=didValidate}}
-    {{pilot-select clubMembers=clubMembers pilotId=pilotId onChange=(action (mut pilotId))}}
-  {{/validated-block}}
+  <ValidatedBlock @label={{t "pilot"}} @validation={{validations.attrs.pilotId}} @didValidate={{didValidate}}>
+    <PilotSelect @clubMembers={{clubMembers}} @pilotId={{pilotId}} @onChange={{action (mut pilotId)}} />
+  </ValidatedBlock>
 
   {{#if showPilotNameInput}}
-    {{validated-input
-      value=pilotName
-      validation=validations.attrs.pilotName
-      label=(t "pilot")
-      disabled=uploadTask.isRunning
-      didValidate=didValidate}}
+    <ValidatedInput
+      @value={{pilotName}}
+      @validation={{validations.attrs.pilotName}}
+      @label={{t "pilot"}}
+      @disabled={{uploadTask.isRunning}}
+      @didValidate={{didValidate}} />
   {{/if}}
 
   <input type="hidden" name="pilotId" value={{pilotId}}>

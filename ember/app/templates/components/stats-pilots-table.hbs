@@ -10,9 +10,9 @@
     <td class="col-xs-2">{{year.year}}</td>
     <td class="col-xs-2">{{format-number year.pilots}}</td>
     <td class="col-xs-8">
-      {{#bs-progress as |p|}}
-        {{p.bar value=(percent year.pilots max) type="info"}}
-      {{/bs-progress}}
+      <BsProgress as |p|>
+        <p.bar @value={{percent year.pilots max}} @type="info" />
+      </BsProgress>
     </td>
   </tr>
 {{/each}}

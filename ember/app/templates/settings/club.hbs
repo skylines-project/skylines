@@ -1,4 +1,4 @@
-{{#settings-page title=(t "change-club")}}
-  {{settings-panels/choose-club clubs=model.clubs clubId=(readonly account.club.id)}}
-  {{settings-panels/register-club}}
-{{/settings-page}}
+<SettingsPage @title={{t "change-club"}}>
+  <SettingsPanels::ChooseClub @clubs={{model.clubs}} @clubId={{readonly account.club.id}} />
+  <SettingsPanels::RegisterClub />
+</SettingsPage>

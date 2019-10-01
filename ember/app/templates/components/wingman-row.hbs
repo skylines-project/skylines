@@ -2,7 +2,7 @@
 <td>
   {{#if flight.model.id}}
     <span>
-      {{bs-tooltip title=(concat "Handicap: " flight.model.index) placement="bottom"}}
+      <BsTooltip @title={{concat "Handicap: " flight.model.index}} @placement="bottom" />
       {{flight.model.name}}
     </span>
   {{else if igcFile.model}}
@@ -28,7 +28,7 @@
 <td>
   {{#if pilotName}}
     {{#if pilot.id}}
-      {{link-to pilotName "user" pilot.id bubbles=false}}
+      <LinkTo @route="user" @model={{pilot.id}} @bubbles={{false}}>{{pilotName}}</LinkTo>
     {{else}}
       {{pilotName}}
     {{/if}}
@@ -38,7 +38,7 @@
 
   {{#if copilotName}}
     {{#if copilot.id}}
-      {{link-to copilotName "user" copilot.id bubbles=false}}
+      <LinkTo @route="user" @model={{copilot.id}} @bubbles={{false}}>{{copilotName}}</LinkTo>
     {{else}}
       {{copilotName}}
     {{/if}}
@@ -52,7 +52,7 @@
   {{format-time times.firstObject.start format='hhmmss' timeZone="UTC"}}<br />
   {{format-time times.lastObject.end format='hhmmss' timeZone="UTC"}}
 
-  {{#bs-popover title="Periods" triggerEvents="hover"}}
+  <BsPopover @title="Periods" @triggerEvents="hover">
     <table>
       {{#each times as |interval|}}
         <tr>
@@ -62,5 +62,5 @@
         </tr>
       {{/each}}
     </table>
-  {{/bs-popover}}
+  </BsPopover>
 </td>

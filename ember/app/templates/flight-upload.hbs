@@ -1,13 +1,13 @@
 {{#if result}}
-  {{#base-page}}
+  <BasePage>
     <div class="page-header">
       <h1>{{t "upload-flight"}}</h1>
     </div>
 
-    {{upload-results-form results=result.results clubMembers=result.club_members aircraftModels=result.aircraft_models transitionTo=(action "transitionTo")}}
-  {{/base-page}}
+    <UploadResultsForm @results={{result.results}} @clubMembers={{result.club_members}} @aircraftModels={{result.aircraft_models}} @transitionTo={{action "transitionTo"}} />
+  </BasePage>
 {{else}}
-  {{#form-page title=(t "upload-flight")}}
-    {{upload-flight-form clubMembers=model.clubMembers onUpload=(action (mut result))}}
-  {{/form-page}}
+  <FormPage @title={{t "upload-flight"}}>
+    <UploadFlightForm @clubMembers={{model.clubMembers}} @onUpload={{action (mut result)}} />
+  </FormPage>
 {{/if}}

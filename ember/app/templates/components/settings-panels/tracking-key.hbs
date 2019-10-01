@@ -1,12 +1,12 @@
 <div class="panel-heading">
   <h3 class="panel-title">{{t "live-tracking-key"}}</h3>
   <p class="panel-help-icon">
-    {{#link-to "tracking.info"}}{{fa-icon "question" fixedWidth=true}}{{/link-to}}
+    <LinkTo @route="tracking.info">{{fa-icon "question" fixedWidth=true}}</LinkTo>
   </p>
 </div>
 <div class="panel-body">
   {{#if error}}
-    {{#bs-alert type="danger" dismissible=false}}{{error}}{{/bs-alert}}
+    <BsAlert @type="danger" @dismissible={{false}}>{{error}}</BsAlert>
   {{/if}}
 
   <p style="margin: 10px 0px 20px;">

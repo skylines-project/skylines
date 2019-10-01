@@ -1,12 +1,12 @@
-{{#settings-page title=(t "profile")}}
-  {{settings-panels/profile
-    email=model.email
-    firstName=model.firstName
-    lastName=model.lastName
-    distanceUnitIndex=model.distanceUnit
-    speedUnitIndex=model.speedUnit
-    liftUnitIndex=model.liftUnit
-    altitudeUnitIndex=model.altitudeUnit}}
+<SettingsPage @title={{t "profile"}}>
+  <SettingsPanels::Profile
+    @email={{model.email}}
+    @firstName={{model.firstName}}
+    @lastName={{model.lastName}}
+    @distanceUnitIndex={{model.distanceUnit}}
+    @speedUnitIndex={{model.speedUnit}}
+    @liftUnitIndex={{model.liftUnit}}
+    @altitudeUnitIndex={{model.altitudeUnit}} />
 
-  {{settings-panels/delete-account}}
-{{/settings-page}}
+  <SettingsPanels::DeleteAccount />
+</SettingsPage>

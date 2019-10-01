@@ -16,15 +16,15 @@
 {{/if}}
 
 <div class="fullscreen-below-nav-bar">
-  {{flight-page
+  <FlightPage
     id="fullscreen-content"
-    ids=ids
-    flight=model.flight
-    _primaryFlightPath=_primaryFlightPath
-    comments=model.comments
-    performance=model.performance
-    legs=model.contest_legs
-    phases=model.phases
-    nearFlights=model.near_flights
-    transitionTo=(action "transitionTo")}}
+    @ids={{ids}}
+    @flight={{model.flight}}
+    @_primaryFlightPath={{_primaryFlightPath}}
+    @comments={{model.comments}}
+    @performance={{model.performance}}
+    @legs={{model.contest_legs}}
+    @phases={{model.phases}}
+    @nearFlights={{model.near_flights}}
+    @transitionTo={{action "transitionTo"}} />
 </div>

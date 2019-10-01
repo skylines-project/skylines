@@ -1,4 +1,4 @@
-{{#settings-page title=(t "live-tracking")}}
-  {{settings-panels/tracking-key key=model.trackingKey}}
-  {{settings-panels/tracking delay=model.trackingDelay callsign=model.trackingCallsign}}
-{{/settings-page}}
+<SettingsPage @title={{t "live-tracking"}}>
+  <SettingsPanels::TrackingKey @key={{model.trackingKey}} />
+  <SettingsPanels::Tracking @delay={{model.trackingDelay}} @callsign={{model.trackingCallsign}} />
+</SettingsPage>

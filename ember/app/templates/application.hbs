@@ -1,9 +1,9 @@
-{{head-layout}}
+<HeadLayout />
 {{title "SkyLines"}}
 
 {{#if onFreestyleRoute}}
   {{outlet}}
 {{else}}
-  {{nav-bar onSearch=(action "search")}}
+  <NavBar @onSearch={{action "search"}} />
   {{outlet}}
 {{/if}}

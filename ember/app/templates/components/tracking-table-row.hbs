@@ -4,11 +4,11 @@
   </abbr>
 </td>
 
-<td>{{#link-to "user" track.pilot.id}}{{track.pilot.name}}{{/link-to}}</td>
+<td><LinkTo @route="user" @model={{track.pilot.id}}>{{track.pilot.name}}</LinkTo></td>
 
 <td>
   {{#if track.nearestAirport}}
-    {{x-flag code=track.nearestAirport.countryCode}}
+    <XFlag @code={{track.nearestAirport.countryCode}} />
     {{track.nearestAirport.name}}
     ({{format-distance track.nearestAirportDistance}})
   {{/if}}
@@ -27,5 +27,5 @@
 </td>
 
 <td nowrap="nowrap" class="column-buttons">
-  {{#link-to "tracking.details" track.pilot.id class="btn btn-default btn-sm"}}{{t "show"}}{{/link-to}}
+  <LinkTo @route="tracking.details" @model={{track.pilot.id}} class="btn btn-default btn-sm">{{t "show"}}</LinkTo>
 </td>

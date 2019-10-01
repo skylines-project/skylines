@@ -1,4 +1,4 @@
-{{#base-page}}
+<BasePage>
   <div class="page-header">
     <h1>{{title}}</h1>
   </div>
@@ -14,12 +14,12 @@
           <h3 class="panel-title">{{account.user.name}}</h3>
         </div>
         <div class="list-group">
-          {{#link-to "settings.profile" class="list-group-item"}}{{t "profile"}}{{/link-to}}
-          {{#link-to "settings.password" class="list-group-item"}}{{t "password"}}{{/link-to}}
-          {{#link-to "settings.club" class="list-group-item"}}{{t "club"}}{{/link-to}}
-          {{#link-to "settings.tracking" class="list-group-item"}}{{t "live-tracking"}}{{/link-to}}
+          <LinkTo @route="settings.profile" class="list-group-item">{{t "profile"}}</LinkTo>
+          <LinkTo @route="settings.password" class="list-group-item">{{t "password"}}</LinkTo>
+          <LinkTo @route="settings.club" class="list-group-item">{{t "club"}}</LinkTo>
+          <LinkTo @route="settings.tracking" class="list-group-item">{{t "live-tracking"}}</LinkTo>
         </div>
       </div>
     </div>
   </div>
-{{/base-page}}
+</BasePage>

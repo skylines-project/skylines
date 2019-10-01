@@ -1,4 +1,4 @@
-{{#base-page}}
+<BasePage>
   <div class="page-header">
     <h1>{{t "statistics"}}</h1>
   </div>
@@ -6,32 +6,32 @@
   <div class="row">
     <div class="col-md-12">
       {{#if (or pilot club airport account.user)}}
-        {{#bs-nav type="pills" as |nav|}}
-          {{#nav.item}}{{#nav.link-to "statistics.index"}}SkyLines{{/nav.link-to}}{{/nav.item}}
+        <BsNav @type="pills" as |nav|>
+          <nav.item>{{#nav.link-to "statistics.index"}}SkyLines{{/nav.link-to}}</nav.item>
 
           {{#if airport}}
-            {{#nav.item}}{{#nav.link-to "statistics.airport" airport}}{{name}}{{/nav.link-to}}{{/nav.item}}
+            <nav.item>{{#nav.link-to "statistics.airport" airport}}{{name}}{{/nav.link-to}}</nav.item>
           {{/if}}
 
           {{#if club}}
-            {{#nav.item}}{{#nav.link-to "statistics.club" club}}{{name}}{{/nav.link-to}}{{/nav.item}}
+            <nav.item>{{#nav.link-to "statistics.club" club}}{{name}}{{/nav.link-to}}</nav.item>
           {{/if}}
 
           {{#if (and session.isAuthenticated (not-eq account.club.id club))}}
-            {{#nav.item}}{{#nav.link-to "statistics.club" account.club.id}}{{account.club.name}}{{/nav.link-to}}{{/nav.item}}
+            <nav.item>{{#nav.link-to "statistics.club" account.club.id}}{{account.club.name}}{{/nav.link-to}}</nav.item>
           {{/if}}
 
           {{#if pilot}}
-            {{#nav.item}}{{#nav.link-to "statistics.pilot" pilot}}{{name}}{{/nav.link-to}}{{/nav.item}}
+            <nav.item>{{#nav.link-to "statistics.pilot" pilot}}{{name}}{{/nav.link-to}}</nav.item>
           {{/if}}
 
           {{#if (and account.user (not-eq account.user.id pilot))}}
-            {{#nav.item}}{{#nav.link-to "statistics.pilot" account.user.id}}{{account.user.name}}{{/nav.link-to}}{{/nav.item}}
+            <nav.item>{{#nav.link-to "statistics.pilot" account.user.id}}{{account.user.name}}{{/nav.link-to}}</nav.item>
           {{/if}}
-        {{/bs-nav}}
+        </BsNav>
       {{/if}}
 
       {{outlet}}
     </div>
   </div>
-{{/base-page}}
+</BasePage>

@@ -11,7 +11,7 @@
 
   <tbody>
   {{#each tracks as |track|}}
-    {{tracking-table-row track=track}}
+    <TrackingTableRow @track={{track}} />
   {{/each}}
   </tbody>
 </table>

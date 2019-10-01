@@ -1,4 +1,4 @@
-{{#base-page}}
+<BasePage>
   <div class="page-header">
     <h1>{{t "live-tracking"}}</h1>
   </div>
@@ -7,7 +7,7 @@
     <div class="col-md-12">
       <p>{{t "loading"}}</p>
 
-      {{#link-to "tracking.info" class="btn btn-default"}}{{fa-icon "question-circle"}} {{t "how-to-use-live-tracking"}}{{/link-to}}
+      <LinkTo @route="tracking.info" class="btn btn-default">{{fa-icon "question-circle"}} {{t "how-to-use-live-tracking"}}</LinkTo>
     </div>
   </div>
-{{/base-page}}
+</BasePage>

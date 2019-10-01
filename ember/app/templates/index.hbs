@@ -1,4 +1,4 @@
-{{#base-page}}
+<BasePage>
   <div id="about">
     <div class="row">
       <div class="col-md-12 tagline">
@@ -14,20 +14,20 @@
 
     <div class="row">
       <div class="col-xs-12 banner">
-        <div class="col-xs-3">{{#link-to "flight" 17613 (query-params baselayer="Google Physical" overlays="Airspace")}}<img src="/images/about-1.jpeg" class="img-responsive"/>{{/link-to}}</div>
-        <div class="col-xs-3">{{#link-to "flight" 17537 (query-params baselayer="Empty" overlays="Airspace")}}<img src="/images/about-2.jpeg" class="img-responsive"/>{{/link-to}}</div>
-        <div class="col-xs-3">{{#link-to "flight" 17567 (query-params baselayer="OpenStreetMap" overlays="Airspace")}}<img src="/images/about-3.jpeg" class="img-responsive"/>{{/link-to}}</div>
-        <div class="col-xs-3">{{#link-to "flight" 17577 (query-params baselayer="Shaded Relief" overlays="Airspace")}}<img src="/images/about-4.jpeg" class="img-responsive"/>{{/link-to}}</div>
+        <div class="col-xs-3"><LinkTo @route="flight" @model={{17613}} @query={{hash baselayer="Google Physical" overlays="Airspace"}}><img src="/images/about-1.jpeg" class="img-responsive"/></LinkTo></div>
+        <div class="col-xs-3"><LinkTo @route="flight" @model={{17537}} @query={{hash baselayer="Empty" overlays="Airspace"}}><img src="/images/about-2.jpeg" class="img-responsive"/></LinkTo></div>
+        <div class="col-xs-3"><LinkTo @route="flight" @model={{17567}} @query={{hash baselayer="OpenStreetMap" overlays="Airspace"}}><img src="/images/about-3.jpeg" class="img-responsive"/></LinkTo></div>
+        <div class="col-xs-3"><LinkTo @route="flight" @model={{17577}} @query={{hash baselayer="Shaded Relief" overlays="Airspace"}}><img src="/images/about-4.jpeg" class="img-responsive"/></LinkTo></div>
       </div>
     </div>
 
     <div class="row">
       <div class="col-md-4">
-        <h2>{{#link-to "flights"}}{{fa-icon "plane"}} {{t "flight-database"}}{{/link-to}}</h2>
+        <h2><LinkTo @route="flights">{{fa-icon "plane"}} {{t "flight-database"}}</LinkTo></h2>
         <p>{{t "about.flights" htmlSafe=true uploadURL=(href-to "flight-upload")}}</p>
       </div>
       <div class="col-md-4">
-        <h2>{{#link-to "tracking"}}{{fa-icon "rss"}} {{t "live-tracking"}}{{/link-to}}</h2>
+        <h2><LinkTo @route="tracking">{{fa-icon "rss"}} {{t "live-tracking"}}</LinkTo></h2>
         <p>{{t "about.tracking" htmlSafe=true url=(href-to "tracking.info")}}</p>
       </div>
       <div class="col-md-4">
@@ -64,4 +64,4 @@
       </div>
     </div>
   </div>
-{{/base-page}}
+</BasePage>
