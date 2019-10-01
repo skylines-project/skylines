@@ -21,7 +21,7 @@
   },
   "devDependencies": {
     "@ember/optional-features": "^1.0.0",
-    "@pollyjs/ember": "^2.6.2",
+    "@pollyjs/ember": "^2.6.3",
     "bigscreen": "^2.0.5",
     "bootstrap-sass": "^3.4.1",
     "broccoli-asset-rev": "^3.0.0",
