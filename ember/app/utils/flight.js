@@ -22,8 +22,8 @@ import ol from 'openlayers';
 export default EmberObject.extend({
   units: null,
 
-  fixes: [],
-  elevations: [],
+  // fixes: [],
+  // elevations: [],
 
   time: map('fixes', fix => fix.time),
 

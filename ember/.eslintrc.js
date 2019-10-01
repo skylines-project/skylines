@@ -6,6 +6,9 @@ module.exports = {
   plugins: ['prettier', 'import-helpers'],
   extends: ['simplabs', 'simplabs/plugins/ember', 'prettier'],
   rules: {
+    'ember/avoid-leaking-state-in-ember-objects': 'error',
+    'ember/avoid-leaking-state-in-components': 'off',
+
     'ember/local-modules': 'off',
     'ember/order-in-components': 'off',
     'ember/order-in-controllers': 'off',
