@@ -21,7 +21,7 @@ module('Integration | Component | flight list nav', function(hooks) {
     this.owner.register(
       'service:pinned-flights',
       Service.extend({
-        // eslint-disable-next-line ember/avoid-leaking-state-in-components
+        // eslint-disable-next-line ember/avoid-leaking-state-in-ember-objects
         pinned: [],
       }),
     );

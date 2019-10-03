@@ -16,7 +16,7 @@ export default EmberObject.extend({
   ajax: null,
   units: null,
 
-  flights: [],
+  // flights: [],
 
   /*
    * Global time, can be:

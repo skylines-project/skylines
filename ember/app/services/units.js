@@ -53,6 +53,11 @@ export const PRESETS = {
   },
 };
 
+const DISTANCE_UNITS = ['m', 'km', 'NM', 'mi'];
+const SPEED_UNITS = ['m/s', 'km/h', 'kt', 'mph'];
+const LIFT_UNITS = ['m/s', 'kt', 'ft/min'];
+const ALTITUDE_UNITS = ['m', 'ft'];
+
 export default Service.extend({
   intl: service(),
 
@@ -66,10 +71,10 @@ export default Service.extend({
   liftUnit: computedUnit('liftUnits', 'liftUnitIndex'),
   altitudeUnit: computedUnit('altitudeUnits', 'altitudeUnitIndex'),
 
-  distanceUnits: ['m', 'km', 'NM', 'mi'],
-  speedUnits: ['m/s', 'km/h', 'kt', 'mph'],
-  liftUnits: ['m/s', 'kt', 'ft/min'],
-  altitudeUnits: ['m', 'ft'],
+  distanceUnits: DISTANCE_UNITS,
+  speedUnits: SPEED_UNITS,
+  liftUnits: LIFT_UNITS,
+  altitudeUnits: ALTITUDE_UNITS,
 
   /**
    * Formats a number to a string with a given number of decimal places
