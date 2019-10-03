@@ -54,7 +54,6 @@
     "ember-intl-cp-validations": "^3.0.1",
     "ember-load-initializers": "^2.1.0",
     "ember-maybe-import-regenerator": "^0.1.6",
-    "ember-native-dom-helpers": "^0.6.3",
     "ember-page-title": "^5.1.0",
     "ember-percy": "^1.6.0",
     "ember-power-select": "^2.3.5",
