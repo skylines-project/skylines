@@ -1,8 +1,6 @@
 import Component from '@ember/component';
 import { inject as service } from '@ember/service';
 
-import $ from 'jquery';
-
 export default Component.extend({
   mapSettings: service(),
 
@@ -12,24 +10,6 @@ export default Component.extend({
   open: false,
   baseLayers: null,
   overlayLayers: null,
-
-  didInsertElement() {
-    this._super(...arguments);
-    let mouseHandler = event => {
-      if (this.$().find(event.target).length === 0) {
-        this.set('open', false);
-      }
-    };
-
-    this.set('mouseHandler', mouseHandler);
-    $(document).on('mouseup touchend', mouseHandler);
-  },
-
-  willDestroyElement() {
-    this._super(...arguments);
-    let mouseHandler = this.mouseHandler;
-    $(document).off('mouseup touchend', mouseHandler);
-  },
 
   actions: {
     open() {
