@@ -11,10 +11,6 @@ export default Component.extend({
     this.toggle();
   },
 
-  touchEnd() {
-    this.toggle();
-  },
-
   toggle() {
     let element = this.fullscreenElement;
     BigScreen.toggle($(element)[0]);
