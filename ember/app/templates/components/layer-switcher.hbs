@@ -1,5 +1,5 @@
 {{#if open}}
-  <div id="GraphicLayerSwitcher-open">
+  <div id="GraphicLayerSwitcher-open" {{on-click-outside (action (mut open) false) eventType="mousedown"}}>
     <div class="base_layers">
       {{#each baseLayers as |layer|}}
         <LayerSwitcherElement @layer={{layer}} @onSelect={{action "select" layer}} />
