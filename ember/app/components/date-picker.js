@@ -1,5 +1,7 @@
 import Component from '@ember/component';
 
+import $ from 'jquery';
+
 import isoDate from '../utils/iso-date';
 
 export default Component.extend({
@@ -10,7 +12,7 @@ export default Component.extend({
 
   didInsertElement() {
     this._super(...arguments);
-    let picker = this.$('span').datepicker({
+    let picker = $(this.element.querySelector('span')).datepicker({
       weekStart: 1,
     });
 
