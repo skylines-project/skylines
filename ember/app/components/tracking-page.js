@@ -3,6 +3,7 @@ import { computed } from '@ember/object';
 import { cancel, later } from '@ember/runloop';
 import { inject as service } from '@ember/service';
 
+import $ from 'jquery';
 import ol from 'openlayers';
 
 import FixCalc from '../utils/fix-calc';
@@ -49,24 +50,31 @@ export default Component.extend({
 
     let fixCalc = this.fixCalc;
 
-    let sidebar = this.$('#sidebar').sidebar();
+    let sidebar = this.element.querySelector('#sidebar');
+    let $sidebar = $(sidebar).sidebar();
+
+    let barogramPanel = this.element.querySelector('#barogram_panel');
+    let $barogramPanel = $(barogramPanel);
+
+    let olScaleLine = this.element.querySelector('.ol-scale-line');
+    let olAttribution = this.element.querySelector('.ol-attribution');
 
     let resize = () => {
-      let $barogramPanel = this.$('#barogram_panel');
-      let bottom = Number($barogramPanel.css('bottom').replace('px', ''));
-      let height = $barogramPanel.height() + bottom;
-      sidebar.css('bottom', height);
-      this.$('.ol-scale-line').css('bottom', height);
-      this.$('.ol-attribution').css('bottom', height);
+      let bottom = Number(getComputedStyle(barogramPanel).bottom.replace('px', ''));
+      let height = barogramPanel.offsetHeight + bottom;
+
+      sidebar.style.bottom = `${height}px`;
+      olScaleLine.style.bottom = `${height}px`;
+      olAttribution.style.bottom = `${height}px`;
     };
 
     resize();
-    this.$('#barogram_panel').resize(resize);
+    $barogramPanel.resize(resize);
 
-    if (window.location.hash && sidebar.find(`li > a[href="#${window.location.hash.substring(1)}"]`).length !== 0) {
-      sidebar.open(window.location.hash.substring(1));
+    if (window.location.hash && sidebar.querySelector(`li > a[href="#${window.location.hash.substring(1)}"]`)) {
+      $sidebar.open(window.location.hash.substring(1));
     } else if (window.innerWidth >= 768 && flights.length > 1) {
-      sidebar.open('tab-overview');
+      $sidebar.open('tab-overview');
     }
 
     let map = window.flightMap.get('map');
@@ -131,7 +139,9 @@ export default Component.extend({
   },
 
   _calculatePadding() {
-    return [20, 20, this.$('#barogram_panel').height() + 20, this.$('#sidebar').width() + 20];
+    let sidebar = this.element.querySelector('#sidebar');
+    let barogramPanel = this.element.querySelector('#barogram_panel');
+    return [20, 20, barogramPanel.offsetHeight + 20, sidebar.offsetWidth + 20];
   },
 });
 
