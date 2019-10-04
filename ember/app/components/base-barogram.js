@@ -69,7 +69,7 @@ export default Component.extend({
       };
     }
 
-    let placeholder = this.$('div');
+    let placeholder = $(this.element.querySelector('div'));
 
     this.set('placeholder', placeholder);
     this.set('flot', $.plot(placeholder, [], opts));
