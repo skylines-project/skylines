@@ -1,6 +1,8 @@
 import Component from '@ember/component';
 import { once } from '@ember/runloop';
 
+import $ from 'jquery';
+
 export default Component.extend({
   classNames: ['input-group', 'input-group-sm', 'date'],
 
@@ -11,7 +13,10 @@ export default Component.extend({
 
   didInsertElement() {
     this._super(...arguments);
-    this.$().datetimepicker({
+
+    let $element = $(this.element);
+
+    $element.datetimepicker({
       pickDate: false,
       useSeconds: true,
       format: 'HH:mm:ss',
@@ -25,11 +30,11 @@ export default Component.extend({
       maxDate: this.maxDate,
     });
 
-    this.$().on('dp.change', ({ date }) => {
+    $element.on('dp.change', ({ date }) => {
       this.onChange(date.toDate());
     });
 
-    this.set('picker', this.$().data('DateTimePicker'));
+    this.set('picker', $element.data('DateTimePicker'));
 
     once(this, 'updateDate');
   },
@@ -41,7 +46,7 @@ export default Component.extend({
 
   willDestroyElement() {
     this._super(...arguments);
-    this.$().off('dp.change');
+    $(this.element).off('dp.change');
     this.set('picker', null);
   },
 
