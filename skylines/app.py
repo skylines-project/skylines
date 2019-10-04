@@ -57,6 +57,7 @@ class SkyLines(Flask):
     def add_sentry(self):
         import sentry_sdk
         from sentry_sdk.integrations.flask import FlaskIntegration
+        from sentry_sdk.integrations.redis import RedisIntegration
         from sentry_sdk.integrations.sqlalchemy import SqlalchemyIntegration
 
         sentry_config = self.config.get("SENTRY_CONFIG")
@@ -67,6 +68,7 @@ class SkyLines(Flask):
             integrations=[
                 FlaskIntegration(transaction_style="url"),
                 SqlalchemyIntegration(),
+                RedisIntegration(),
             ],
         )
 
