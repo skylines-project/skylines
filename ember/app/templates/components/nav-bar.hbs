@@ -1,22 +1,22 @@
-{{#bs-navbar type="inverse" fluid=false position="fixed-top" collapsed=collapsed onCollapse=(action (mut collapsed) true) onExpand=(action (mut collapsed) false) data-test-nav-bar=true as |navbar|}}
+<BsNavbar @type="inverse" @fluid={{false}} @position="fixed-top" @collapsed={{collapsed}} @onCollapse={{action (mut collapsed) true}} @onExpand={{action (mut collapsed) false}} data-test-nav-bar as |navbar|>
   <div class="navbar-header">
     {{navbar.toggle}}
 
-    {{#link-to "index" class="navbar-brand" click=(action (mut collapsed) true)}}
+    <LinkTo @route="index" class="navbar-brand" @click={{action (mut collapsed) true}}>
       {{svg-jar "logo" class="logo"}} <span class="skylines-blue">Sky</span><span class="skylines-white">Lines</span>
-    {{/link-to}}
+    </LinkTo>
   </div>
 
-  {{#navbar.content}}
-    {{#navbar.nav as |nav|}}
-      {{nav-bar-link nav=nav target="tracking" title=(t "live-tracking-nav-bar-link") icon="rss"}}
-      {{nav-bar-link nav=nav target="flights" title=(t "flights") icon="plane"}}
-      {{nav-bar-link nav=nav target="ranking" title=(t "ranking") icon="reorder"}}
-      {{nav-bar-link nav=nav target="statistics" title=(t "statistics") icon="bar-chart"}}
-      {{nav-bar-link nav=nav target="search" title=(t "search.search") icon="search" listClass="hidden-lg"}}
-    {{/navbar.nav}}
+  <navbar.content>
+    <navbar.nav as |nav|>
+      <NavBarLink @nav={{nav}} @target="tracking" @title={{t "live-tracking-nav-bar-link"}} @icon="rss" />
+      <NavBarLink @nav={{nav}} @target="flights" @title={{t "flights"}} @icon="plane" />
+      <NavBarLink @nav={{nav}} @target="ranking" @title={{t "ranking"}} @icon="reorder" />
+      <NavBarLink @nav={{nav}} @target="statistics" @title={{t "statistics"}} @icon="bar-chart" />
+      <NavBarLink @nav={{nav}} @target="search" @title={{t "search.search"}} @icon="search" @listClass="hidden-lg" />
+    </navbar.nav>
 
-    {{nav-bar-search-form onSearch=onSearch}}
-    {{nav-bar-menu-right navbar=navbar}}
-  {{/navbar.content}}
-{{/bs-navbar}}
+    <NavBarSearchForm @onSearch={{onSearch}} />
+    <NavBarMenuRight @navbar={{navbar}} />
+  </navbar.content>
+</BsNavbar>

@@ -1,4 +1,4 @@
-{{#base-page}}
+<BasePage>
   <div class="page-header">
     <h1>{{t "members-of-CLUB" htmlSafe=true club=club.name clubURL=(href-to "club" club.id)}}</h1>
   </div>
@@ -15,11 +15,11 @@
         {{#each model.users as |user|}}
           <tr>
             <td class="column-buttons">
-              {{#link-to "user" user.id}}{{user.name}}{{/link-to}}
+              <LinkTo @route="user" @model={{user.id}}>{{user.name}}</LinkTo>
 
               <div class="pull-right">
-                {{#link-to "flights.pilot" user.id class="btn btn-default btn-sm"}}{{fa-icon "plane"}} {{t "flights"}}{{/link-to}}
-                {{#link-to "statistics.pilot" user.id class="btn btn-default btn-sm"}}{{fa-icon "bar-chart"}} {{t "statistics"}}{{/link-to}}
+                <LinkTo @route="flights.pilot" @model={{user.id}} class="btn btn-default btn-sm">{{fa-icon "plane"}} {{t "flights"}}</LinkTo>
+                <LinkTo @route="statistics.pilot" @model={{user.id}} class="btn btn-default btn-sm">{{fa-icon "bar-chart"}} {{t "statistics"}}</LinkTo>
               </div>
             </td>
           </tr>
@@ -28,4 +28,4 @@
       </table>
     </div>
   </div>
-{{/base-page}}
+</BasePage>

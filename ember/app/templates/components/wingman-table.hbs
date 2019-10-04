@@ -9,7 +9,7 @@
   </thead>
   <tbody>
     {{#each nearFlightsWithColors as |nearFlight|}}
-      {{wingman-row nearFlight=nearFlight click=(action "select" nearFlight.flight.id)}}
+      <WingmanRow @nearFlight={{nearFlight}} @click={{action "select" nearFlight.flight.id}} />
     {{/each}}
   </tbody>
 </table>

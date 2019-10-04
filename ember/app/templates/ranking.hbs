@@ -1,4 +1,4 @@
-{{#base-page}}
+<BasePage>
   <div class="page-header page-header-with-tabs">
     <h1>
       {{t "ranking"}}
@@ -9,17 +9,17 @@
     </h1>
 
     <div class="page-header-tabs">
-      {{#bs-nav type="tabs" as |nav|}}
-        {{#nav.item}}
+      <BsNav @type="tabs" as |nav|>
+        <nav.item>
           {{#nav.link-to "ranking.clubs"}}{{t "clubs"}}{{/nav.link-to}}
-        {{/nav.item}}
-        {{#nav.item}}
+        </nav.item>
+        <nav.item>
           {{#nav.link-to "ranking.pilots"}}{{t "pilots"}}{{/nav.link-to}}
-        {{/nav.item}}
-        {{#nav.item}}
+        </nav.item>
+        <nav.item>
           {{#nav.link-to "ranking.airports"}}{{t "airports"}}{{/nav.link-to}}
-        {{/nav.item}}
-      {{/bs-nav}}
+        </nav.item>
+      </BsNav>
     </div>
   </div>
 
@@ -28,4 +28,4 @@
       {{outlet}}
     </div>
   </div>
-{{/base-page}}
+</BasePage>

@@ -1,58 +1,58 @@
-{{#navbar.nav class="navbar-right" as |nav|}}
-  {{#nav.item}}
+<@navbar.nav class="navbar-right" as |nav|>
+  <nav.item>
     {{#nav.link-to "flight-upload"}}
       {{fa-icon "upload" size="lg" class="hidden-xs" title=(t "upload-flight")}}
       {{fa-icon "upload" fixedWidth=true class="visible-xs-inline-block"}}
       <span class="visible-xs-inline-block">{{t "upload-flight"}}</span>
     {{/nav.link-to}}
-  {{/nav.item}}
+  </nav.item>
 
   {{#if session.isAuthenticated}}
-    {{#nav.item}}
+    <nav.item>
       {{#nav.link-to "notifications" class="notifications"}}
         <span class="visible-xs-inline-block">{{t "notifications"}}&nbsp;&nbsp;</span>
-        {{notifications-badge}}
+        <NotificationsBadge />
       {{/nav.link-to}}
-    {{/nav.item}}
+    </nav.item>
 
-    {{#nav.dropdown tagName="li" data-test-user-menu-dropdown=true as |dd|}}
-      {{#dd.toggle data-test-toggle=true}}
+    <nav.dropdown @tagName="li" data-test-user-menu-dropdown as |dd|>
+      <dd.toggle data-test-toggle>
         {{account.user.name}} {{fa-icon "caret-down"}}
-      {{/dd.toggle}}
-      {{#dd.menu as |menu|}}
-        {{nav-bar-user-menu nav=nav menu=menu}}
-      {{/dd.menu}}
-    {{/nav.dropdown}}
+      </dd.toggle>
+      <dd.menu as |menu|>
+        <NavBarUserMenu @nav={{nav}} @menu={{menu}} />
+      </dd.menu>
+    </nav.dropdown>
   {{else}}
 
-    {{#nav.item class="visible-xs"}}
+    <nav.item class="visible-xs">
       {{#nav.link-to "login"}}
         {{fa-icon "sign-in" fixedWidth=true}} {{t "login"}}
       {{/nav.link-to}}
-    {{/nav.item}}
+    </nav.item>
 
-    {{#nav.dropdown closeOnMenuClick=false tagName="li" class="hidden-xs" data-test-login-dropdown=true as |dd|}}
-      {{#dd.toggle}}
+    <nav.dropdown @closeOnMenuClick={{false}} @tagName="li" class="hidden-xs" data-test-login-dropdown as |dd|>
+      <dd.toggle>
         {{fa-icon "sign-in"}} {{t "login"}} {{fa-icon "caret-down"}}
-      {{/dd.toggle}}
-      {{#dd.menu as |menu|}}
-        {{login-form inline=true}}
-      {{/dd.menu}}
-    {{/nav.dropdown}}
+      </dd.toggle>
+      <dd.menu as |menu|>
+        <LoginForm @inline={{true}} />
+      </dd.menu>
+    </nav.dropdown>
   {{/if}}
 
-  {{#nav.dropdown tagName="li" as |dd|}}
-    {{#dd.toggle}}
-      {{x-flag code=currentLocale.countryCode}}
+  <nav.dropdown @tagName="li" as |dd|>
+    <dd.toggle>
+      <XFlag @code={{currentLocale.countryCode}} />
       <span class="visible-xs-inline-block">{{currentLocale.name}}</span>
       {{fa-icon "caret-down"}}
-    {{/dd.toggle}}
-    {{#dd.menu as |menu|}}
+    </dd.toggle>
+    <dd.menu as |menu|>
       {{#each availableLocales as |locale|}}
-        {{#menu.item}}
-          <a href="#" {{action "setLocale" locale.code}}>{{x-flag code=locale.countryCode}} {{locale.name}}</a>
-        {{/menu.item}}
+        <menu.item>
+          <a href="#" {{action "setLocale" locale.code}}><XFlag @code={{locale.countryCode}} /> {{locale.name}}</a>
+        </menu.item>
       {{/each}}
-    {{/dd.menu}}
-  {{/nav.dropdown}}
-{{/navbar.nav}}
+    </dd.menu>
+  </nav.dropdown>
+</@navbar.nav>

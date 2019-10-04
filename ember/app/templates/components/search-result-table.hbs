@@ -1,7 +1,7 @@
 <table class="table table-striped search-results">
   <tbody>
   {{#each @results as |result|}}
-    {{search-result-row result=result}}
+    <SearchResultRow @result={{result}} />
   {{else}}
     <tr>
       <td colspan="4">

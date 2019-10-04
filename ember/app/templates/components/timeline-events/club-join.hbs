@@ -2,7 +2,7 @@
   {{fa-icon "group" class="small"}}
 </td>
 <td>
-  {{link-to (t "show") "club" event.club.id class="btn btn-default btn-sm pull-right"}}
+  <LinkTo @route="club" @model={{event.club.id}} class="btn btn-default btn-sm pull-right">{{t "show"}}</LinkTo>
   <p>
     {{#if event.unread}}<span class="badge badge-warning">{{t 'new'}}</span>{{/if}}
     <small><abbr title={{format-time event.time format="full"}}>{{format-relative event.time}}</abbr></small>

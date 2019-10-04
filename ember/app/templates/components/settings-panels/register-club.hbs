@@ -4,20 +4,20 @@
 <div class="panel-body">
   <form {{action "submit" on="submit"}}>
     {{#if error}}
-      {{#bs-alert type="danger" dismissible=false}}
+      <BsAlert @type="danger" @dismissible={{false}}>
         {{#if messageKey}}{{t messageKey error=error}}{{else}}{{error}}{{/if}}
-      {{/bs-alert}}
+      </BsAlert>
     {{else if messageKey}}
-      {{#bs-alert type="success" dismissible=false}}{{t messageKey}}{{/bs-alert}}
+      <BsAlert @type="success" @dismissible={{false}}>{{t messageKey}}</BsAlert>
     {{/if}}
 
-    {{validated-input
-      value=name
-      validation=validations.attrs.name
-      label=(t "name")
-      autocomplete="organization"
-      disabled=saveTask.isRunning
-      didValidate=didValidate}}
+    <ValidatedInput
+      @value={{name}}
+      @validation={{validations.attrs.name}}
+      @label={{t "name"}}
+      @autocomplete="organization"
+      @disabled={{saveTask.isRunning}}
+      @didValidate={{didValidate}} />
 
     <button class="btn btn-primary btn-block" type="submit" disabled={{or saveTask.isRunning (not validations.isValid)}}>
       {{t (if saveTask.isRunning "creating" "create")}}

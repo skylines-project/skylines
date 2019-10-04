@@ -1,4 +1,4 @@
-{{#base-page}}
+<BasePage>
   <div class="page-header">
     <h1>{{club.name}}</h1>
   </div>
@@ -24,7 +24,7 @@
               <th>{{t "created"}}</th>
               <td>
                 {{#if club.owner}}
-                  {{format-relative club.timeCreated}} by {{#link-to "user" club.owner.id}}{{club.owner.name}}{{/link-to}}
+                  {{format-relative club.timeCreated}} by <LinkTo @route="user" @model={{club.owner.id}}>{{club.owner.name}}</LinkTo>
                 {{else}}
                   {{format-relative club.timeCreated}}
                 {{/if}}
@@ -34,15 +34,15 @@
 
           <p>
             {{#if club.isWritable}}
-              {{#link-to "club.edit" club.id class="btn btn-default"}}{{t "edit"}}{{/link-to}}
+              <LinkTo @route="club.edit" @model={{club.id}} class="btn btn-default">{{t "edit"}}</LinkTo>
             {{/if}}
 
-            {{#link-to "flights.club" club.id class="btn btn-default"}}{{fa-icon "plane"}} {{t "flights"}}{{/link-to}}
-            {{#link-to "statistics.club" club.id class="btn btn-default"}}{{fa-icon "bar-chart"}} {{t "statistics"}}{{/link-to}}
-            {{#link-to "club.pilots" club.id class="btn btn-default"}}{{fa-icon "group"}} {{t "members"}}{{/link-to}}
+            <LinkTo @route="flights.club" @model={{club.id}} class="btn btn-default">{{fa-icon "plane"}} {{t "flights"}}</LinkTo>
+            <LinkTo @route="statistics.club" @model={{club.id}} class="btn btn-default">{{fa-icon "bar-chart"}} {{t "statistics"}}</LinkTo>
+            <LinkTo @route="club.pilots" @model={{club.id}} class="btn btn-default">{{fa-icon "group"}} {{t "members"}}</LinkTo>
           </p>
         </div>
       </div>
     </div>
   </div>
-{{/base-page}}
+</BasePage>

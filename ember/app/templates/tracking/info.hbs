@@ -1,4 +1,4 @@
-{{#base-page}}
+<BasePage>
   <div class="page-header">
     <h1>{{t "live-tracking"}}</h1>
   </div>
@@ -32,7 +32,7 @@
       {{#if model.trackingKey}}
         <p>{{t "tracking.your-live-tracking-key-is-KEY" htmlSafe=true key=(html-safe (concat "<span class=\"label tracking-key\">" model.trackingKey "</span>"))}}</p>
 
-        <p>{{#link-to "settings.tracking" class="btn btn-default btn-sm"}}{{fa-icon "cog"}} {{t "tracking.settings"}}{{/link-to}}</p>
+        <p><LinkTo @route="settings.tracking" class="btn btn-default btn-sm">{{fa-icon "cog"}} {{t "tracking.settings"}}</LinkTo></p>
       {{else}}
         <p>{{t "tracking.login-required"}}</p>
       {{/if}}
@@ -41,4 +41,4 @@
       <p>{{t "tracking.xcsoar-instructions" htmlSafe=true}}</p>
     </div>
   </div>
-{{/base-page}}
+</BasePage>

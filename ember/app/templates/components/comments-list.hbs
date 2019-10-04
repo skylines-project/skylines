@@ -5,7 +5,7 @@
         <td>
           {{#if comment.user}}
             <span style="float:left">
-              {{link-to comment.user.name "user" comment.user.id}}:&nbsp;
+              <LinkTo @route="user" @model={{comment.user.id}}>{{comment.user.name}}</LinkTo>:&nbsp;
             </span>
           {{/if}}
 
@@ -22,7 +22,7 @@
       <tr>
         <td>
           <form {{action (perform addCommentTask) on="submit"}}>
-            {{textarea value=addCommentText class="form-control" disabled=addCommentTask.isRunning}}<br/>
+            <Textarea @value={{addCommentText}} class="form-control" @disabled={{addCommentTask.isRunning}} /><br/>
             <input type="submit" value={{t "add-comment"}} class="btn btn-primary" disabled={{addCommentTask.isRunning}}/>
           </form>
         </td>

@@ -9,16 +9,16 @@
   }
 </style>
 
-{{#freestyle-guide title="SkyLines"}}
+<FreestyleGuide @title="SkyLines">
 
-  {{#freestyle-section name="Components" as |section|}}
+  <FreestyleSection @name="Components" as |section|>
 
     {{#each components as |componentName|}}
-      {{#section.subsection name=componentName}}
+      <section.subsection @name={{componentName}}>
         {{component (concat "usage/" componentName)}}
-      {{/section.subsection}}
+      </section.subsection>
     {{/each}}
 
-  {{/freestyle-section}}
+  </FreestyleSection>
 
-{{/freestyle-guide}}
+</FreestyleGuide>

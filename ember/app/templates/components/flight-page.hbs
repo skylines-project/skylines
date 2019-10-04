@@ -41,28 +41,28 @@
     <div class="sidebar-pane" id="tab-overview">
       <h3>{{t "overview"}}</h3>
       <div class="sidebar-pane-content">
-        {{flight-details-table flight=flight transitionTo=transitionTo}}
+        <FlightDetailsTable @flight={{flight}} @transitionTo={{transitionTo}} />
       </div>
     </div>
 
     <div class="sidebar-pane" id="tab-comments">
       <h3>{{t "comments"}}</h3>
       <div class="sidebar-pane-content">
-        {{comments-list comments=comments flightId=flight.id}}
+        <CommentsList @comments={{comments}} @flightId={{flight.id}} />
       </div>
     </div>
 
     <div class="sidebar-pane" id="tab-stats-total">
       <h3>{{t "statistics"}}</h3>
       <div class="sidebar-pane-content">
-        {{flight-performance-panel performance=performance}}
+        <FlightPerformancePanel @performance={{performance}} />
       </div>
     </div>
 
     <div class="sidebar-pane" id="tab-stats-legs">
       <h3>{{t "leg-statistics"}}</h3>
       <div class="sidebar-pane-content">
-        {{flight-leg-panel legs=legs selection=flightPhase.selection onSelect=(action (mut flightPhase.selection))}}
+        <FlightLegPanel @legs={{legs}} @selection={{flightPhase.selection}} @onSelect={{action (mut flightPhase.selection)}} />
       </div>
     </div>
 
@@ -71,7 +71,7 @@
         <h3>{{t "phase-statistics"}}</h3>
         <div class="sidebar-pane-content">
           <div class="table-responsive">
-            {{flight-phase-table phases=phases selection=flightPhase.selection onSelect=(action (mut flightPhase.selection))}}
+            <FlightPhaseTable @phases={{phases}} @selection={{flightPhase.selection}} @onSelect={{action (mut flightPhase.selection)}} />
           </div>
         </div>
       </div>
@@ -80,45 +80,46 @@
     <div class="sidebar-pane" id="tab-wingmen">
       <h3>{{t "wingmen"}}</h3>
       <div class="sidebar-pane-content">
-        {{wingman-table visibleFlights=fixCalc.flights nearFlights=nearFlights onSelect=(action "selectWingman")}}
+        <WingmanTable @visibleFlights={{fixCalc.flights}} @nearFlights={{nearFlights}} @onSelect={{action "selectWingman"}} />
       </div>
     </div>
   </div>
 </div>
 
-{{#flight-map
-  flights=fixCalc.flights
-  fixes=fixCalc.fixes
-  phaseHighlightCoords=flightPhase.coordinates
-  hoverEnabled=(not (or fixCalc.isRunning cesiumEnabled))
-  defaultTime=fixCalc.defaultTime
-  onTimeChange=(action (mut fixCalc.time))
-  onExtentChange=(action (mut mapExtent))
-  onCesiumEnabledChange=(action (mut cesiumEnabled))
-  addFlight=(action "addFlight")
-  calculatePadding=(action "calculatePadding")
-  class="sidebar-map ol-with-barogram"}}
+<FlightMap
+  @flights={{fixCalc.flights}}
+  @fixes={{fixCalc.fixes}}
+  @phaseHighlightCoords={{flightPhase.coordinates}}
+  @hoverEnabled={{not (or fixCalc.isRunning cesiumEnabled)}}
+  @defaultTime={{fixCalc.defaultTime}}
+  @onTimeChange={{action (mut fixCalc.time)}}
+  @onExtentChange={{action (mut mapExtent)}}
+  @onCesiumEnabledChange={{action (mut cesiumEnabled)}}
+  @addFlight={{action "addFlight"}}
+  @calculatePadding={{action "calculatePadding"}}
+  class="sidebar-map ol-with-barogram"
+>
 
-  {{fullscreen-button fullscreenElement="#fullscreen-content"}}
-  {{playback-button isRunning=fixCalc.isRunning onToggle=(action "togglePlayback")}}
+  <FullscreenButton @fullscreenElement="#fullscreen-content" />
+  <PlaybackButton @isRunning={{fixCalc.isRunning}} @onToggle={{action "togglePlayback"}} />
 
-{{/flight-map}}
+</FlightMap>
 
 <div id="barogram_panel" class="map-bottom-panel map-overlay">
   <div style="overflow: auto; max-height: 115px">
-    {{fix-table
-      flights=fixCalc.flights
-      fixes=fixCalc.fixes
-      selection=(mut selectedFlightId)
-      onRemove=(action "removeFlight")}}
+    <FixTable
+      @flights={{fixCalc.flights}}
+      @fixes={{fixCalc.fixes}}
+      @selection={{mut selectedFlightId}}
+      @onRemove={{action "removeFlight"}} />
   </div>
 
-  {{flight-barogram
-    flights=fixCalc.flights
-    selection=selectedFlightId
-    hoverMode=(not fixCalc.isRunning)
-    timeInterval=timeInterval
-    timeHighlight=flightPhase.selection
-    time=fixCalc.time
-    defaultTime=fixCalc.defaultTime}}
+  <FlightBarogram
+    @flights={{fixCalc.flights}}
+    @selection={{selectedFlightId}}
+    @hoverMode={{not fixCalc.isRunning}}
+    @timeInterval={{timeInterval}}
+    @timeHighlight={{flightPhase.selection}}
+    @time={{fixCalc.time}}
+    @defaultTime={{fixCalc.defaultTime}} />
 </div>

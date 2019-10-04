@@ -8,14 +8,14 @@
 <form {{action "submit" on="submit"}} class="upload-results-form">
   {{#if (eq validatedResults.length 1)}}
     {{#each validatedResults as |result|}}
-      {{upload-result-form result=result clubMembers=clubMembers aircraftModels=aircraftModels}}
+      <UploadResultForm @result={{result}} @clubMembers={{clubMembers}} @aircraftModels={{aircraftModels}} />
     {{/each}}
   {{else}}
-    {{#bs-tab customTabs=true fade=false as |tab|}}
+    <BsTab @customTabs={{true}} @fade={{false}} as |tab|>
       <div class="col-sm-3">
-        {{#bs-nav type="tabs" class="tabs-left" as |nav|}}
+        <BsNav @type="tabs" class="tabs-left" as |nav|>
           {{#each validatedResults as |result index|}}
-            {{#nav.item active=(eq tab.activeId (concat "result-tab-" index))}}
+            <nav.item @active={{eq tab.activeId (concat "result-tab-" index)}}>
               <a href="#result-tab-{{index}}" role="tab" {{action tab.select (concat "result-tab-" index)}}>
                 {{#if (and (eq result.status 0) result.validations.isValid)}}
                   {{fa-icon "check" class="text-success"}}
@@ -25,22 +25,22 @@
 
                 {{result.name}}
               </a>
-            {{/nav.item}}
+            </nav.item>
           {{/each}}
-        {{/bs-nav}}
+        </BsNav>
       </div>
       <div class="col-sm-9">
         <div class="tab-content">
           {{#each validatedResults as |result index|}}
-            {{#tab.pane elementId=(concat "result-tab-" index)}}
-              {{upload-result-form result=result clubMembers=clubMembers aircraftModels=aircraftModels}}
-            {{/tab.pane}}
+            <tab.pane @elementId={{concat "result-tab-" index}}>
+              <UploadResultForm @result={{result}} @clubMembers={{clubMembers}} @aircraftModels={{aircraftModels}} />
+            </tab.pane>
           {{/each}}
         </div>
       </div>
 
       <div class="clearfix"></div>
-    {{/bs-tab}}
+    </BsTab>
   {{/if}}
 
   {{#if success}}

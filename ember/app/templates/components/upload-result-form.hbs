@@ -4,24 +4,24 @@
 {{#if success}}
   <div class="form-group col-sm-6">
     <label class="control-label">{{t "pilot"}}</label>
-    {{pilot-select clubMembers=clubMembers pilotId=pilotId onChange=(action (mut pilotId))}}
+    <PilotSelect @clubMembers={{clubMembers}} @pilotId={{pilotId}} @onChange={{action (mut pilotId)}} />
   </div>
 
   {{#if showPilotNameInput}}
-    {{validated-input
-      value=pilotName
-      validation=validations.attrs.pilotName
-      label=(t "pilot")
-      disabled=pending
-      didValidate=didValidate
-      class="col-sm-6"}}
+    <ValidatedInput
+      @value={{pilotName}}
+      @validation={{validations.attrs.pilotName}}
+      @label={{t "pilot"}}
+      @disabled={{pending}}
+      @didValidate={{didValidate}}
+      class="col-sm-6" />
   {{/if}}
 
   <div class="clearfix"></div>
 
   <div class="form-group col-sm-6">
     <label class="control-label">{{t "copilot"}}</label>
-    {{pilot-select clubMembers=clubMembers pilotId=copilotId onChange=(action (mut copilotId))}}
+    <PilotSelect @clubMembers={{clubMembers}} @pilotId={{copilotId}} @onChange={{action (mut copilotId)}} />
 
     {{#if validations.attrs.copilotId.message}}
       <p class="help-block">{{validations.attrs.copilotId.message}}</p>
@@ -29,58 +29,58 @@
   </div>
 
   {{#if showCopilotNameInput}}
-    {{validated-input
-      value=copilotName
-      validation=validations.attrs.copilotName
-      label=(t "copilot")
-      disabled=pending
-      didValidate=didValidate
-      class="col-sm-6"}}
+    <ValidatedInput
+      @value={{copilotName}}
+      @validation={{validations.attrs.copilotName}}
+      @label={{t "copilot"}}
+      @disabled={{pending}}
+      @didValidate={{didValidate}}
+      class="col-sm-6" />
   {{/if}}
 
   <div class="clearfix"></div>
 
   <div class="form-group col-sm-4">
     <label class="control-label">{{t "aircraft-type"}}</label>
-    {{aircraft-model-select models=aircraftModels modelId=modelId onChange=(action (mut modelId))}}
+    <AircraftModelSelect @models={{aircraftModels}} @modelId={{modelId}} @onChange={{action (mut modelId)}} />
   </div>
 
-  {{validated-input
-    value=registration
-    validation=validations.attrs.registration
-    label=(t "registration")
-    disabled=pending
-    didValidate=didValidate
-    class="col-sm-4"}}
+  <ValidatedInput
+    @value={{registration}}
+    @validation={{validations.attrs.registration}}
+    @label={{t "registration"}}
+    @disabled={{pending}}
+    @didValidate={{didValidate}}
+    class="col-sm-4" />
 
-  {{validated-input
-    value=competitionId
-    validation=validations.attrs.competitionId
-    label=(t "competition-id")
-    disabled=pending
-    didValidate=didValidate
-    class="col-sm-4"}}
+  <ValidatedInput
+    @value={{competitionId}}
+    @validation={{validations.attrs.competitionId}}
+    @label={{t "competition-id"}}
+    @disabled={{pending}}
+    @didValidate={{didValidate}}
+    class="col-sm-4" />
 
   <div class="clearfix"></div>
 
   {{#if trace}}
-    {{upload-barogram
-      flight=flight
-      trace=trace
-      takeoffTime=takeoffTime
-      onTakeoffTimeChange=(action "setTakeoffTime")
-      scoreStartTime=scoreStartTime
-      onScoreStartTimeChange=(action "setScoreStartTime")
-      scoreEndTime=scoreEndTime
-      onScoreEndTimeChange=(action "setScoreEndTime")
-      landingTime=landingTime
-      onLandingTimeChange=(action "setLandingTime")
-      class="col-xs-12"}}
+    <UploadBarogram
+      @flight={{flight}}
+      @trace={{trace}}
+      @takeoffTime={{takeoffTime}}
+      @onTakeoffTimeChange={{action "setTakeoffTime"}}
+      @scoreStartTime={{scoreStartTime}}
+      @onScoreStartTimeChange={{action "setScoreStartTime"}}
+      @scoreEndTime={{scoreEndTime}}
+      @onScoreEndTimeChange={{action "setScoreEndTime"}}
+      @landingTime={{landingTime}}
+      @onLandingTimeChange={{action "setLandingTime"}}
+      class="col-xs-12" />
   {{/if}}
 
   <div class="form-group col-sm-3">
     <label class="control-label">{{t "takeoff-time"}}</label>
-    {{datetime-picker date=takeoffTime onChange=(action "setTakeoffTime") minDate=igcStartTime maxDate=igcEndTime}}
+    <DatetimePicker @date={{takeoffTime}} @onChange={{action "setTakeoffTime"}} @minDate={{igcStartTime}} @maxDate={{igcEndTime}} />
 
     {{#if validations.attrs.takeoffTime.message}}
       <p class="help-block">{{validations.attrs.takeoffTime.message}}</p>
@@ -89,7 +89,7 @@
 
   <div class="form-group col-sm-3">
     <label class="control-label">{{t "scoring-start-time"}}</label>
-    {{datetime-picker date=scoreStartTime onChange=(action "setScoreStartTime") minDate=igcStartTime maxDate=igcEndTime}}
+    <DatetimePicker @date={{scoreStartTime}} @onChange={{action "setScoreStartTime"}} @minDate={{igcStartTime}} @maxDate={{igcEndTime}} />
 
     {{#if validations.attrs.scoreStartTime.message}}
       <p class="help-block">{{validations.attrs.scoreStartTime.message}}</p>
@@ -98,7 +98,7 @@
 
   <div class="form-group col-sm-3">
     <label class="control-label">{{t "scoring-end-time"}}</label>
-    {{datetime-picker date=scoreEndTime onChange=(action "setScoreEndTime") minDate=igcStartTime maxDate=igcEndTime}}
+    <DatetimePicker @date={{scoreEndTime}} @onChange={{action "setScoreEndTime"}} @minDate={{igcStartTime}} @maxDate={{igcEndTime}} />
 
     {{#if validations.attrs.scoreEndTime.message}}
       <p class="help-block">{{validations.attrs.scoreEndTime.message}}</p>
@@ -107,7 +107,7 @@
 
   <div class="form-group col-sm-3">
     <label class="control-label">{{t "landing-time"}}</label>
-    {{datetime-picker date=landingTime onChange=(action "setLandingTime") minDate=igcStartTime maxDate=igcEndTime}}
+    <DatetimePicker @date={{landingTime}} @onChange={{action "setLandingTime"}} @minDate={{igcStartTime}} @maxDate={{igcEndTime}} />
 
     {{#if validations.attrs.landingTime.message}}
       <p class="help-block">{{validations.attrs.landingTime.message}}</p>
@@ -172,7 +172,7 @@
     </span>
 
     {{#if flight.id}}
-      {{link-to (t "show") "flight" flight.id class="btn btn-default btn-sm"}}
+      <LinkTo @route="flight" @model={{flight.id}} class="btn btn-default btn-sm">{{t "show"}}</LinkTo>
     {{/if}}
   {{/if}}
 </p>

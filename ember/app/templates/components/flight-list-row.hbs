@@ -13,7 +13,7 @@
 {{#if showPilot}}
   <td class="pilot">
     {{#if flight.pilot.id}}
-      {{link-to pilotName "user" flight.pilot.id}}
+      <LinkTo @route="user" @model={{flight.pilot.id}}>{{pilotName}}</LinkTo>
     {{else if pilotName}}
       {{pilotName}}
     {{/if}}
@@ -21,7 +21,7 @@
     {{#if (and pilotName copilotName)}}<br/>{{/if}}
 
     {{#if flight.copilot.id}}
-      {{link-to copilotName "user" flight.copilot.id}}
+      <LinkTo @route="user" @model={{flight.copilot.id}}>{{copilotName}}</LinkTo>
     {{else if copilotName}}
       {{copilotName}}
     {{/if}}
@@ -42,8 +42,8 @@
 {{#if showAirport}}
   <td class="airport">
     {{#if flight.takeoffAirport}}
-      {{x-flag code=flight.takeoffAirport.countryCode}}
-      {{link-to flight.takeoffAirport.name "flights.airport" flight.takeoffAirport.id}}
+      <XFlag @code={{flight.takeoffAirport.countryCode}} />
+      <LinkTo @route="flights.airport" @model={{flight.takeoffAirport.id}}>{{flight.takeoffAirport.name}}</LinkTo>
     {{/if}}
   </td>
 {{/if}}
@@ -51,7 +51,7 @@
 {{#if showClub}}
   <td class="club hidden-sm hidden-xs">
     {{#if flight.club}}
-      {{link-to (truncate flight.club.name 25) "club" flight.club.id}}
+      <LinkTo @route="club" @model={{flight.club.id}}>{{truncate flight.club.name 25}}</LinkTo>
     {{/if}}
   </td>
 {{/if}}
@@ -64,7 +64,7 @@
       [{{flight.igcFile.model}}]
     {{/if}}
 
-    {{bs-tooltip title=(or flight.registration flight.igcFile.registration (t 'unknown'))}}
+    <BsTooltip @title={{or flight.registration flight.igcFile.registration (t "unknown")}} />
   </span>
 </td>
 
@@ -77,8 +77,8 @@
 {{/if}}
 
 <td class="column-buttons">
-  {{#link-to "flight" flight.id class="btn btn-default btn-sm"}}{{t "show"}}{{/link-to}}
-  {{pin-star flightId=flight.id}}
+  <LinkTo @route="flight" @model={{flight.id}} class="btn btn-default btn-sm">{{t "show"}}</LinkTo>
+  <PinStar @flightId={{flight.id}} />
 </td>
 
 <td class="num_comments hidden-xs">

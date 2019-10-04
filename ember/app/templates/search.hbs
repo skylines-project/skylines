@@ -1,4 +1,4 @@
-{{#base-page}}
+<BasePage>
   <div class="page-header">
     <h1>
       {{#if searchText}}
@@ -15,7 +15,7 @@
         <form action="/search" role="search" {{action "search" searchTextInput on="submit"}}>
           <div class="col-sm-9">
             <div class="form-group">
-              {{input type="text" name="text" value=searchTextInput placeholder=(t "search.search") class="form-control"}}
+              <Input @type="text" @name="text" @value={{searchTextInput}} placeholder={{t "search.search"}} class="form-control" />
             </div>
           </div>
           <div class="col-sm-3">
@@ -29,8 +29,8 @@
       {{#if currentlyLoading}}
         {{t "loading"}}
       {{else}}
-        {{search-result-table searchText=searchText results=results}}
+        <SearchResultTable @searchText={{searchText}} @results={{results}} />
       {{/if}}
     </div>
   </div>
-{{/base-page}}
+</BasePage>

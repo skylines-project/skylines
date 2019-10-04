@@ -1,3 +1,3 @@
-{{#form-page title=(t "register")}}
-  {{register-form transitionTo=(action "transitionTo")}}
-{{/form-page}}
+<FormPage @title={{t "register"}}>
+  <RegisterForm @transitionTo={{action "transitionTo"}} />
+</FormPage>

@@ -1,11 +1,11 @@
-{{#base-page}}
+<BasePage>
   <div class="page-header">
     <h1>{{@user.name}} - {{t "following"}}</h1>
   </div>
 
   <div class="row">
     <div class="col-md-12">
-      {{follower-list followers=@following}}
+      <FollowerList @followers={{@following}} />
     </div>
   </div>
-{{/base-page}}
+</BasePage>
