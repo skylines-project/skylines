@@ -57,12 +57,21 @@ class SkyLines(Flask):
     def add_sentry(self):
         import sentry_sdk
         from sentry_sdk.integrations.flask import FlaskIntegration
+        from sentry_sdk.integrations.redis import RedisIntegration
+        from sentry_sdk.integrations.sqlalchemy import SqlalchemyIntegration
+        from sentry_sdk.integrations.celery import CeleryIntegration
 
         sentry_config = self.config.get("SENTRY_CONFIG")
         dsn = sentry_config.get("dsn") if sentry_config else None
 
         sentry_sdk.init(
-            dsn=dsn, integrations=[FlaskIntegration(transaction_style="url")]
+            dsn=dsn,
+            integrations=[
+                FlaskIntegration(transaction_style="url"),
+                SqlalchemyIntegration(),
+                RedisIntegration(),
+                CeleryIntegration(),
+            ],
         )
 
     def add_celery(self):
