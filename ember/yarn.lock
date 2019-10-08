@@ -5892,10 +5892,10 @@ ember-font-awesome@^4.0.0-rc.4:
     postcss "^6.0.14"
     sync-disk-cache "^1.3.2"
 
-ember-freestyle@^0.11.8:
-  version "0.11.8"
-  resolved "https://registry.yarnpkg.com/ember-freestyle/-/ember-freestyle-0.11.8.tgz#e00b60742497481fa13ccaa37cdf34975fec2b94"
-  integrity sha512-NMF2yM+bIl2TNhzD1az85AkP+f1X1Ffw2RCHhvLPoGvSXAi12Ol/PyJ3eODoDcGsrvvI5w4McOYw5XGlulIhRQ==
+ember-freestyle@^0.11.9:
+  version "0.11.9"
+  resolved "https://registry.yarnpkg.com/ember-freestyle/-/ember-freestyle-0.11.9.tgz#21d6daef78fa8af0e876023e6ab3435972d96bcb"
+  integrity sha512-NXGSKNdIZsuytW/4HHiDIOq/jEJPnm+FkQJupD6bIouC20a86dgLP9W6IkG1ojt6FMxDIOgksByfq6FdDMw0jw==
   dependencies:
     broccoli-flatiron "0.1.3"
     broccoli-merge-trees "^3.0.1"
