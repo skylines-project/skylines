@@ -38,7 +38,7 @@
     "ember-cli-deploy-revision-data": "^1.0.0",
     "ember-cli-deploy-rsync-assets": "^0.2.1",
     "ember-cli-htmlbars": "^4.0.4",
-    "ember-cli-inject-live-reload": "^2.0.1",
+    "ember-cli-inject-live-reload": "^2.0.2",
     "ember-cli-pace": "^0.1.0",
     "ember-cli-sass": "^10.0.1",
     "ember-cli-sentry": "^4.1.0",
