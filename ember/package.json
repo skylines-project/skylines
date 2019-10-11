@@ -47,7 +47,7 @@
     "ember-click-outside": "^1.2.0",
     "ember-concurrency": "^1.1.0",
     "ember-cookies": "^0.4.0",
-    "ember-cp-validations": "^3.5.5",
+    "ember-cp-validations": "^3.5.6",
     "ember-font-awesome": "^4.0.0-rc.4",
     "ember-freestyle": "^0.11.9",
     "ember-href-to": "^3.1.0",
