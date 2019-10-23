@@ -5736,10 +5736,10 @@ ember-compatibility-helpers@^1.0.2, ember-compatibility-helpers@^1.2.0:
     ember-cli-version-checker "^2.1.1"
     semver "^5.4.1"
 
-"ember-concurrency@^0.8.0 || ^0.9.0 || ^0.10.0", "ember-concurrency@^0.8.27 || ^0.9.0 || ^0.10.0 || ^1.0.0", ember-concurrency@^1.0.0, ember-concurrency@^1.1.0:
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/ember-concurrency/-/ember-concurrency-1.1.0.tgz#955f6961937c655ecc6ee4c3213e1191dc227ba3"
-  integrity sha512-izwePurc0CMGSvyuZeEyjFrTVBTBQV2k7eYP/b+jYCdh5+J+ajSnx8UYIJ38E7lCukDzeTjDBrQjJxLCNzvDFg==
+"ember-concurrency@^0.8.0 || ^0.9.0 || ^0.10.0", "ember-concurrency@^0.8.27 || ^0.9.0 || ^0.10.0 || ^1.0.0", ember-concurrency@^1.0.0, ember-concurrency@^1.1.2:
+  version "1.1.2"
+  resolved "https://registry.yarnpkg.com/ember-concurrency/-/ember-concurrency-1.1.2.tgz#73de1f3e41b983af531a17596853ed9614c24107"
+  integrity sha512-GiASMU4GH4yDALR3vbAl6THYXSv+XUzjcF+4uPMgw1VxQmSde/oXTFdz/Z9QMetJ7Hhz7nYQcknWj471Lg9aEg==
   dependencies:
     ember-cli-babel "^7.7.3"
     ember-compatibility-helpers "^1.2.0"
