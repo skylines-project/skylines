@@ -21,7 +21,7 @@
   },
   "devDependencies": {
     "@ember/jquery": "^1.1.0",
-    "@ember/optional-features": "^1.0.0",
+    "@ember/optional-features": "^1.1.0",
     "@pollyjs/ember": "^2.6.3",
     "bigscreen": "^2.0.5",
     "bootstrap-sass": "^3.4.1",
