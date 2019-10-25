@@ -73,7 +73,7 @@
     "eslint-plugin-import-helpers": "^1.0.2",
     "eslint-plugin-prettier": "^3.1.1",
     "loader.js": "^4.7.0",
-    "node-sass": "^4.12.0",
+    "node-sass": "^4.13.0",
     "prettier": "1.18.2",
     "qunit-dom": "^0.9.0"
   },
