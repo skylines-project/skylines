@@ -1,62 +1,65 @@
-<div class="well">
-  <table class="right">
-    {{#if user.email}}
+<div ...attributes>
+  <div class="well">
+    <table class="right">
+      {{#if user.email}}
+        <tr>
+          <th>{{t "email-address"}}</th>
+          <td>{{user.email}}</td>
+        </tr>
+      {{/if}}
+  
       <tr>
-        <th>{{t "email-address"}}</th>
-        <td>{{user.email}}</td>
+        <th>{{t "name"}}</th>
+        <td>{{user.name}}</td>
       </tr>
-    {{/if}}
-
-    <tr>
-      <th>{{t "name"}}</th>
-      <td>{{user.name}}</td>
-    </tr>
-
-    <tr>
-      <th>{{t "club"}}</th>
-      <td>
-        {{#if user.club}}
-          <LinkTo @route="club" @model={{user.club.id}}>{{user.club.name}}</LinkTo>
-        {{else}}
-          [{{t "unassigned"}}]
-        {{/if}}
-
-        {{#if editable}}
-          <LinkTo @route="settings.club" class="btn btn-default btn-sm">{{t "change"}}</LinkTo>
-        {{/if}}
-      </td>
-    </tr>
-
-    {{#if user.followers}}
+  
       <tr>
-        <th>{{t "followers"}}</th>
-        <td><LinkTo @route="user.followers" @model={{user.id}}>{{t "NUM-pilots" num=user.followers}}</LinkTo></td>
+        <th>{{t "club"}}</th>
+        <td>
+          {{#if user.club}}
+            <LinkTo @route="club" @model={{user.club.id}}>{{user.club.name}}</LinkTo>
+          {{else}}
+            [{{t "unassigned"}}]
+          {{/if}}
+  
+          {{#if editable}}
+            <LinkTo @route="settings.club" class="btn btn-default btn-sm">{{t "change"}}</LinkTo>
+          {{/if}}
+        </td>
       </tr>
+  
+      {{#if user.followers}}
+        <tr>
+          <th>{{t "followers"}}</th>
+          <td><LinkTo @route="user.followers" @model={{user.id}}>{{t "NUM-pilots" num=user.followers}}</LinkTo></td>
+        </tr>
+      {{/if}}
+  
+      {{#if user.following}}
+        <tr>
+          <th>{{t "following"}}</th>
+          <td><LinkTo @route="user.following" @model={{user.id}}>{{t "NUM-pilots" num=user.following}}</LinkTo></td>
+        </tr>
+      {{/if}}
+    </table>
+  </div>
+  
+  <p style="margin-top: 10px">
+    {{#if editable}}
+      <LinkTo @route="settings.profile" class="btn btn-default">{{fa-icon "cog"}} {{t "settings"}}</LinkTo>
     {{/if}}
-
-    {{#if user.following}}
-      <tr>
-        <th>{{t "following"}}</th>
-        <td><LinkTo @route="user.following" @model={{user.id}}>{{t "NUM-pilots" num=user.following}}</LinkTo></td>
-      </tr>
+  
+    {{#if (and account.user (not-eq account.user.id user.id))}}
+      {{#if user.followed}}
+        <button class="btn btn-default" disabled={{unfollowTask.isRunning}} {{action (perform unfollowTask)}}>{{t "unfollow"}}</button>
+      {{else}}
+        <button class="btn btn-default" disabled={{followTask.isRunning}} {{action (perform followTask)}}>{{t "follow"}}</button>
+      {{/if}}
     {{/if}}
-  </table>
+  
+    <LinkTo @route="flights.pilot" @model={{user.id}} class="btn btn-default">{{fa-icon "plane"}} {{t "flights"}}</LinkTo>
+    <LinkTo @route="statistics.pilot" @model={{user.id}} class="btn btn-default">{{fa-icon "bar-chart"}} {{t "statistics"}}</LinkTo>
+    <LinkTo @route="timeline" @query={{hash user=user.id}} class="btn btn-default">{{fa-icon "clock-o"}} {{t "timeline"}}</LinkTo>
+  </p>
+  
 </div>
-
-<p style="margin-top: 10px">
-  {{#if editable}}
-    <LinkTo @route="settings.profile" class="btn btn-default">{{fa-icon "cog"}} {{t "settings"}}</LinkTo>
-  {{/if}}
-
-  {{#if (and account.user (not-eq account.user.id user.id))}}
-    {{#if user.followed}}
-      <button class="btn btn-default" disabled={{unfollowTask.isRunning}} {{action (perform unfollowTask)}}>{{t "unfollow"}}</button>
-    {{else}}
-      <button class="btn btn-default" disabled={{followTask.isRunning}} {{action (perform followTask)}}>{{t "follow"}}</button>
-    {{/if}}
-  {{/if}}
-
-  <LinkTo @route="flights.pilot" @model={{user.id}} class="btn btn-default">{{fa-icon "plane"}} {{t "flights"}}</LinkTo>
-  <LinkTo @route="statistics.pilot" @model={{user.id}} class="btn btn-default">{{fa-icon "bar-chart"}} {{t "statistics"}}</LinkTo>
-  <LinkTo @route="timeline" @query={{hash user=user.id}} class="btn btn-default">{{fa-icon "clock-o"}} {{t "timeline"}}</LinkTo>
-</p>

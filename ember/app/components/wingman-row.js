@@ -4,9 +4,7 @@ import { alias, or } from '@ember/object/computed';
 import { htmlSafe } from '@ember/template';
 
 export default Component.extend({
-  tagName: 'tr',
-  classNames: ['selectable'],
-
+  tagName: '',
   flight: alias('nearFlight.flight'),
   igcFile: alias('flight.igcFile'),
   pilot: alias('flight.pilot'),

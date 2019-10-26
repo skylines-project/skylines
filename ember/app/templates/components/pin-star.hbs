@@ -1,2 +1,4 @@
-{{fa-icon (if pinned "star" "star-o")}}
-<BsTooltip @placement="left">Activate this to show the flight on top of other flights on the map</BsTooltip>
+<span class="pin {{if this.pinned "pinned"}}" ...attributes {{on "click" this.handleClick}}>
+  {{fa-icon (if pinned "star" "star-o")}}
+  <BsTooltip @placement="left">Activate this to show the flight on top of other flights on the map</BsTooltip>
+</span>

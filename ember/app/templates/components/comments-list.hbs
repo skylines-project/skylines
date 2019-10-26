@@ -1,32 +1,35 @@
-<table class="table" style="table-layout:fixed; word-wrap:break-word;">
-  <tbody>
-    {{#each comments as |comment|}}
-      <tr>
-        <td>
-          {{#if comment.user}}
-            <span style="float:left">
-              <LinkTo @route="user" @model={{comment.user.id}}>{{comment.user.name}}</LinkTo>:&nbsp;
-            </span>
-          {{/if}}
-
-          {{markdown comment.text}}
-        </td>
-      </tr>
-    {{else}}
-      <tr>
-        <td><em>{{t "no-comments-yet"}}</em></td>
-      </tr>
-    {{/each}}
-
-    {{#if account.user.id}}
-      <tr>
-        <td>
-          <form {{action (perform addCommentTask) on="submit"}}>
-            <Textarea @value={{addCommentText}} class="form-control" @disabled={{addCommentTask.isRunning}} /><br/>
-            <input type="submit" value={{t "add-comment"}} class="btn btn-primary" disabled={{addCommentTask.isRunning}}/>
-          </form>
-        </td>
-      </tr>
-    {{/if}}
-  </tbody>
-</table>
+<div ...attributes>
+  <table class="table" style="table-layout:fixed; word-wrap:break-word;">
+    <tbody>
+      {{#each comments as |comment|}}
+        <tr>
+          <td>
+            {{#if comment.user}}
+              <span style="float:left">
+                <LinkTo @route="user" @model={{comment.user.id}}>{{comment.user.name}}</LinkTo>:&nbsp;
+              </span>
+            {{/if}}
+  
+            {{markdown comment.text}}
+          </td>
+        </tr>
+      {{else}}
+        <tr>
+          <td><em>{{t "no-comments-yet"}}</em></td>
+        </tr>
+      {{/each}}
+  
+      {{#if account.user.id}}
+        <tr>
+          <td>
+            <form {{action (perform addCommentTask) on="submit"}}>
+              <Textarea @value={{addCommentText}} class="form-control" @disabled={{addCommentTask.isRunning}} /><br/>
+              <input type="submit" value={{t "add-comment"}} class="btn btn-primary" disabled={{addCommentTask.isRunning}}/>
+            </form>
+          </td>
+        </tr>
+      {{/if}}
+    </tbody>
+  </table>
+  
+</div>

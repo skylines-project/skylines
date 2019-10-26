@@ -1,59 +1,61 @@
-{{#if flights}}
-  <div id="sidebar" class="sidebar collapsed">
-    <!-- Nav tabs -->
-    <ul class="sidebar-tabs" role="tablist">
-      <li>
-        <a href="#tab-overview" title="{{t "overview"}}" role="tab">
-          {{fa-icon "info" size="lg"}}
-        </a>
-      </li>
-    </ul>
-    <!-- Tab panes -->
-    <div class="sidebar-content">
-      <div class="sidebar-pane" id="tab-overview">
-        <h3>{{t "overview"}}</h3>
-        <div class="sidebar-pane-content">
-          <TrackingPilotsList @pilots={{pilots}} />
+<div class="relative-fullscreen" ...attributes {{didInsert this.setup}} {{willDestroy this.teardown}}>
+  {{#if flights}}
+    <div id="sidebar" class="sidebar collapsed">
+      <!-- Nav tabs -->
+      <ul class="sidebar-tabs" role="tablist">
+        <li>
+          <a href="#tab-overview" title="{{t "overview"}}" role="tab">
+            {{fa-icon "info" size="lg"}}
+          </a>
+        </li>
+      </ul>
+      <!-- Tab panes -->
+      <div class="sidebar-content">
+        <div class="sidebar-pane" id="tab-overview">
+          <h3>{{t "overview"}}</h3>
+          <div class="sidebar-pane-content">
+            <TrackingPilotsList @pilots={{pilots}} />
+          </div>
         </div>
       </div>
     </div>
-  </div>
 
-  <FlightMap
-    @flights={{fixCalc.flights}}
-    @fixes={{fixCalc.fixes}}
-    @hoverEnabled={{not (or fixCalc.isRunning cesiumEnabled)}}
-    @defaultTime={{fixCalc.defaultTime}}
-    @onTimeChange={{action (mut fixCalc.time)}}
-    @onExtentChange={{action (mut mapExtent)}}
-    @onCesiumEnabledChange={{action (mut cesiumEnabled)}}
-    @calculatePadding={{action "calculatePadding"}}
-    class="sidebar-map ol-with-barogram"
-  >
+    <FlightMap
+      @flights={{fixCalc.flights}}
+      @fixes={{fixCalc.fixes}}
+      @hoverEnabled={{not (or fixCalc.isRunning cesiumEnabled)}}
+      @defaultTime={{fixCalc.defaultTime}}
+      @onTimeChange={{action (mut fixCalc.time)}}
+      @onExtentChange={{action (mut mapExtent)}}
+      @onCesiumEnabledChange={{action (mut cesiumEnabled)}}
+      @calculatePadding={{action "calculatePadding"}}
+      class="sidebar-map ol-with-barogram"
+    >
 
-    <FullscreenButton @fullscreenElement="#fullscreen-content" />
-    <PlaybackButton @isRunning={{fixCalc.isRunning}} @onToggle={{action "togglePlayback"}} />
+      <FullscreenButton @fullscreenElement="#fullscreen-content" />
+      <PlaybackButton @isRunning={{fixCalc.isRunning}} @onToggle={{action "togglePlayback"}} />
 
-  </FlightMap>
+    </FlightMap>
 
-  <div id="barogram_panel" class="map-bottom-panel map-overlay">
-    <div style="overflow: auto; max-height: 115px">
-      <FixTable
+    <div id="barogram_panel" class="map-bottom-panel map-overlay">
+      <div style="overflow: auto; max-height: 115px">
+        <FixTable
+          @flights={{fixCalc.flights}}
+          @fixes={{fixCalc.fixes}}
+          @selection={{mut selectedFlightId}}
+          @onRemove={{action "removeFlight"}} />
+      </div>
+
+      <FlightBarogram
         @flights={{fixCalc.flights}}
-        @fixes={{fixCalc.fixes}}
-        @selection={{mut selectedFlightId}}
-        @onRemove={{action "removeFlight"}} />
+        @selection={{selectedFlightId}}
+        @hoverMode={{not fixCalc.isRunning}}
+        @timeInterval={{timeInterval}}
+        @time={{fixCalc.time}}
+        @defaultTime={{fixCalc.defaultTime}} />
     </div>
 
-    <FlightBarogram
-      @flights={{fixCalc.flights}}
-      @selection={{selectedFlightId}}
-      @hoverMode={{not fixCalc.isRunning}}
-      @timeInterval={{timeInterval}}
-      @time={{fixCalc.time}}
-      @defaultTime={{fixCalc.defaultTime}} />
-  </div>
-
-{{else}}
-  <p style="margin:10pt;margin-top:40pt;">{{t "no-live-tracks-of-pilots" num=pilots.length}}</p>
-{{/if}}
+  {{else}}
+    <p style="margin:10pt;margin-top:40pt;">{{t "no-live-tracks-of-pilots" num=pilots.length}}</p>
+  {{/if}}
+</div>

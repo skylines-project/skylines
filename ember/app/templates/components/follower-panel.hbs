@@ -1,34 +1,36 @@
-<div class="panel panel-default">
-  <div class="panel-body follower-panel">
-    <h4 class="media-heading">
-      <LinkTo @route="user" @model={{follower.id}}>{{follower.name}}</LinkTo>
-    </h4>
-
-    <p>
-      {{#if follower.club}}
-        <LinkTo @route="club" @model={{follower.club.id}}>{{follower.club.name}}</LinkTo>
-      {{else}}
-        &nbsp;
+<div ...attributes>
+  <div class="panel panel-default">
+    <div class="panel-body follower-panel">
+      <h4 class="media-heading">
+        <LinkTo @route="user" @model={{follower.id}}>{{follower.name}}</LinkTo>
+      </h4>
+  
+      <p>
+        {{#if follower.club}}
+          <LinkTo @route="club" @model={{follower.club.id}}>{{follower.club.name}}</LinkTo>
+        {{else}}
+          &nbsp;
+        {{/if}}
+      </p>
+  
+      {{#if account.user}}
+        {{#if (eq follower.id account.user.id)}}
+          <button class="btn btn-default form-control" disabled>
+            {{fa-icon "ban" fixedWidth=true}}
+            {{t "this-is-you"}}
+          </button>
+        {{else if follower.currentUserFollows}}
+          <button class="btn btn-default form-control" disabled={{unfollowTask.isRunning}} {{action (perform unfollowTask)}}>
+            {{fa-icon "minus" fixedWidth=true}}
+            {{t "unfollow"}}
+          </button>
+        {{else}}
+          <button class="btn btn-default form-control" disabled={{followTask.isRunning}} {{action (perform followTask)}}>
+            {{fa-icon "plus" fixedWidth=true}}
+            {{t "follow"}}
+          </button>
+        {{/if}}
       {{/if}}
-    </p>
-
-    {{#if account.user}}
-      {{#if (eq follower.id account.user.id)}}
-        <button class="btn btn-default form-control" disabled>
-          {{fa-icon "ban" fixedWidth=true}}
-          {{t "this-is-you"}}
-        </button>
-      {{else if follower.currentUserFollows}}
-        <button class="btn btn-default form-control" disabled={{unfollowTask.isRunning}} {{action (perform unfollowTask)}}>
-          {{fa-icon "minus" fixedWidth=true}}
-          {{t "unfollow"}}
-        </button>
-      {{else}}
-        <button class="btn btn-default form-control" disabled={{followTask.isRunning}} {{action (perform followTask)}}>
-          {{fa-icon "plus" fixedWidth=true}}
-          {{t "follow"}}
-        </button>
-      {{/if}}
-    {{/if}}
+    </div>
   </div>
 </div>

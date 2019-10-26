@@ -4,9 +4,9 @@ import { inject as service } from '@ember/service';
 import { task } from 'ember-concurrency';
 
 export default Component.extend({
-  ajax: service(),
+  tagName: '',
 
-  classNames: ['panel panel-default'],
+  ajax: service(),
 
   key: null,
   error: null,

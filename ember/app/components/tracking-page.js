@@ -1,5 +1,5 @@
 import Component from '@ember/component';
-import { computed } from '@ember/object';
+import { action, computed } from '@ember/object';
 import { cancel, later } from '@ember/runloop';
 import { inject as service } from '@ember/service';
 
@@ -9,10 +9,10 @@ import ol from 'openlayers';
 import FixCalc from '../utils/fix-calc';
 
 export default Component.extend({
+  tagName: '',
   ajax: service(),
-  units: service(),
 
-  classNames: ['relative-fullscreen'],
+  units: service(),
 
   fixCalc: null,
 
@@ -41,8 +41,9 @@ export default Component.extend({
     this.set('fixCalc', fixCalc);
   },
 
-  didInsertElement() {
-    this._super(...arguments);
+  setup: action(function(element) {
+    this.rootElement = element;
+
     let flights = this.flights;
     if (flights.length === 0) {
       return;
@@ -50,14 +51,14 @@ export default Component.extend({
 
     let fixCalc = this.fixCalc;
 
-    let sidebar = this.element.querySelector('#sidebar');
+    let sidebar = this.rootElement.querySelector('#sidebar');
     let $sidebar = $(sidebar).sidebar();
 
-    let barogramPanel = this.element.querySelector('#barogram_panel');
+    let barogramPanel = this.rootElement.querySelector('#barogram_panel');
     let $barogramPanel = $(barogramPanel);
 
-    let olScaleLine = this.element.querySelector('.ol-scale-line');
-    let olAttribution = this.element.querySelector('.ol-attribution');
+    let olScaleLine = this.rootElement.querySelector('.ol-scale-line');
+    let olAttribution = this.rootElement.querySelector('.ol-attribution');
 
     let resize = () => {
       let bottom = Number(getComputedStyle(barogramPanel).bottom.replace('px', ''));
@@ -89,15 +90,14 @@ export default Component.extend({
 
     // update flight track every 15 seconds
     this._scheduleUpdate();
-  },
+  }),
 
-  willDestroyElement() {
-    this._super(...arguments);
+  teardown: action(function() {
     let updateTimer = this.updateTimer;
     if (updateTimer) {
       cancel(updateTimer);
     }
-  },
+  }),
 
   actions: {
     togglePlayback() {
@@ -139,8 +139,8 @@ export default Component.extend({
   },
 
   _calculatePadding() {
-    let sidebar = this.element.querySelector('#sidebar');
-    let barogramPanel = this.element.querySelector('#barogram_panel');
+    let sidebar = this.rootElement.querySelector('#sidebar');
+    let barogramPanel = this.rootElement.querySelector('#barogram_panel');
     return [20, 20, barogramPanel.offsetHeight + 20, sidebar.offsetWidth + 20];
   },
 });

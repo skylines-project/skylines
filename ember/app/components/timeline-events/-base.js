@@ -6,7 +6,7 @@ import safeComputed from '../../computed/safe-computed';
 export default Component.extend({
   account: service(),
 
-  tagName: 'tr',
+  tagName: '',
 
   event: null,
 

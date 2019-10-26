@@ -1,19 +1,16 @@
 import Component from '@ember/component';
-import { computed } from '@ember/object';
+import { action, computed } from '@ember/object';
 import { inject as service } from '@ember/service';
 
 export default Component.extend({
   pinnedFlights: service(),
-
-  tagName: 'span',
-  classNames: ['pin'],
-  classNameBindings: ['pinned'],
+  tagName: '',
 
   pinned: computed('pinnedFlights.pinned.[]', 'flightId', function() {
     return this.pinnedFlights.pinned.includes(this.flightId);
   }),
 
-  click() {
+  handleClick: action(function() {
     this.pinnedFlights.toggle(this.flightId);
-  },
+  }),
 });

@@ -1,4 +1,12 @@
-<a class={{if layer.visible "active"}} style="cursor: pointer;">
+<a
+  class={{if layer.visible "active"}}
+  style="cursor: pointer;"
+  {{on "click" (fn @onSelect @layer)}}
+  {{on "mouseenter" (action (mut this.highlighted) true)}}
+  {{on "mouseleave" (action (mut this.highlighted) false)}}
+  {{on "touchstart" (action (mut this.highlighted) true)}}
+  {{on "touchend" (action (mut this.highlighted) false)}}
+>
   <img src={{imagePath}}/>
   {{fa-icon "check"}} {{layer.name}}
 </a>

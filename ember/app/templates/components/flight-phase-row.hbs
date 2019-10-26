@@ -1,22 +1,25 @@
-<td>
-  {{#if isCircling}}
-    {{#if isCirclingLeft}}
-      {{fa-icon "rotate-left" title=(t "flight-phase.circlingLeft")}}
-    {{else if isCirclingRight}}
-      {{fa-icon "rotate-right" title=(t "flight-phase.circlingRight")}}
+<tr class="selectable {{if this.selected "selected"}}" ...attributes {{on "click" this.handleClick}}>
+  <td>
+    {{#if isCircling}}
+      {{#if isCirclingLeft}}
+        {{fa-icon "rotate-left" title=(t "flight-phase.circlingLeft")}}
+      {{else if isCirclingRight}}
+        {{fa-icon "rotate-right" title=(t "flight-phase.circlingRight")}}
+      {{else}}
+        {{fa-icon "circle-o" title=(t "flight-phase.circlingMixed")}}
+      {{/if}}
+    {{else if isPowered}}
+      {{fa-icon "bolt" title=(t "flight-phase.powered")}}
     {{else}}
-      {{fa-icon "circle-o" title=(t "flight-phase.circlingMixed")}}
+      {{fa-icon "long-arrow-right" title=(t "flight-phase.cruise")}}
     {{/if}}
-  {{else if isPowered}}
-    {{fa-icon "bolt" title=(t "flight-phase.powered")}}
-  {{else}}
-    {{fa-icon "long-arrow-right" title=(t "flight-phase.cruise")}}
-  {{/if}}
-</td>
-<td class="start">{{format-time phase.startTime format="hhmmss" timeZone="UTC"}}</td>
-<td class="duration hidden-md">{{format-seconds phase.duration}}</td>
-<td class="numeric">{{format-altitude phase.altDiff withUnit=false}}</td>
-<td class="numeric">{{if (not isCircling) (format-distance phase.distance decimals=1 withUnit=false)}}</td>
-<td class="numeric">{{format-lift phase.vario withUnit=false}}</td>
-<td class="numeric">{{format-speed phase.speed withUnit=false}}</td>
-<td class="numeric">{{#if (not isCircling)}}{{format-number glideRate maximumFractionDigits=1}}{{/if}}</td>
+  </td>
+  <td class="start">{{format-time phase.startTime format="hhmmss" timeZone="UTC"}}</td>
+  <td class="duration hidden-md">{{format-seconds phase.duration}}</td>
+  <td class="numeric">{{format-altitude phase.altDiff withUnit=false}}</td>
+  <td class="numeric">{{if (not isCircling) (format-distance phase.distance decimals=1 withUnit=false)}}</td>
+  <td class="numeric">{{format-lift phase.vario withUnit=false}}</td>
+  <td class="numeric">{{format-speed phase.speed withUnit=false}}</td>
+  <td class="numeric">{{#if (not isCircling)}}{{format-number glideRate maximumFractionDigits=1}}{{/if}}</td>
+
+</tr>

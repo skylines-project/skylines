@@ -2,9 +2,9 @@ import Component from '@ember/component';
 import { inject as service } from '@ember/service';
 
 export default Component.extend({
-  mapSettings: service(),
+  tagName: '',
 
-  classNames: ['GraphicLayerSwitcher', 'ol-unselectable'],
+  mapSettings: service(),
 
   map: null,
   open: false,

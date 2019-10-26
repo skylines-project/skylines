@@ -1,35 +1,37 @@
-<div class="panel-heading">
-  <h3 class="panel-title">{{t "choose-club"}}</h3>
-</div>
-<div class="panel-body">
-  <form {{action (perform saveTask) on="submit"}}>
-    {{#if error}}
-      <BsAlert @type="danger" @dismissible={{false}}>
-        {{#if messageKey}}{{t messageKey error=error}}{{else}}{{error}}{{/if}}
-      </BsAlert>
-    {{else if messageKey}}
-      <BsAlert @type="success" @dismissible={{false}}>{{t messageKey}}</BsAlert>
-    {{/if}}
-
-    <div class="form-group">
-      <label class="control-label">{{t "club"}}</label>
-
-      <PowerSelect
-        @options={{clubsWithNull}}
-        @selected={{club}}
-        @searchField="name"
-        @onchange={{action (mut club)}}
-      as |club|>
-        {{#if (eq club.id null)}}
-          [{{t 'no-club'}}]
-        {{else}}
-          {{club.name}}
-        {{/if}}
-      </PowerSelect>
-    </div>
-
-    <button class="btn btn-primary btn-block" type="submit" disabled={{or saveTask.isRunning}}>
-      {{t (if saveTask.isRunning "changing" "change")}}
-    </button>
-  </form>
+<div class="panel panel-default" ...attributes>
+  <div class="panel-heading">
+    <h3 class="panel-title">{{t "choose-club"}}</h3>
+  </div>
+  <div class="panel-body">
+    <form {{action (perform saveTask) on="submit"}}>
+      {{#if error}}
+        <BsAlert @type="danger" @dismissible={{false}}>
+          {{#if messageKey}}{{t messageKey error=error}}{{else}}{{error}}{{/if}}
+        </BsAlert>
+      {{else if messageKey}}
+        <BsAlert @type="success" @dismissible={{false}}>{{t messageKey}}</BsAlert>
+      {{/if}}
+  
+      <div class="form-group">
+        <label class="control-label">{{t "club"}}</label>
+  
+        <PowerSelect
+          @options={{clubsWithNull}}
+          @selected={{club}}
+          @searchField="name"
+          @onchange={{action (mut club)}}
+        as |club|>
+          {{#if (eq club.id null)}}
+            [{{t 'no-club'}}]
+          {{else}}
+            {{club.name}}
+          {{/if}}
+        </PowerSelect>
+      </div>
+  
+      <button class="btn btn-primary btn-block" type="submit" disabled={{or saveTask.isRunning}}>
+        {{t (if saveTask.isRunning "changing" "change")}}
+      </button>
+    </form>
+  </div>
 </div>

@@ -16,9 +16,9 @@ const Validations = buildValidations({
 const DELAYS = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 15, 20, 25, 30, 45, 60];
 
 export default Component.extend(Validations, {
-  ajax: service(),
+  tagName: '',
 
-  classNames: ['panel', 'panel-default'],
+  ajax: service(),
 
   callsign: null,
   delay: null,

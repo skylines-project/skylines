@@ -1,9 +1,11 @@
-{{yield}}
-
-<p class="footer">
-  &copy; <LinkTo @route="about.team">{{t "the-skylines-team"}}</LinkTo>
-  -
-  <LinkTo @route="about.imprint">{{t "imprint"}}</LinkTo>
-  -
-  <a href="https://github.com/skylines-project/skylines/blob/master/PRIVACY.md" target="_blank"  rel="noopener">{{t "privacy-policy"}}</a>
-</p>
+<div class="container content" ...attributes>
+  {{yield}}
+  
+  <p class="footer">
+    &copy; <LinkTo @route="about.team">{{t "the-skylines-team"}}</LinkTo>
+    -
+    <LinkTo @route="about.imprint">{{t "imprint"}}</LinkTo>
+    -
+    <a href="https://github.com/skylines-project/skylines/blob/master/PRIVACY.md" target="_blank"  rel="noopener">{{t "privacy-policy"}}</a>
+  </p>
+</div>

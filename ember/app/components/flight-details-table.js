@@ -7,6 +7,7 @@ import { task } from 'ember-concurrency';
 import safeComputed from '../computed/safe-computed';
 
 export default Component.extend({
+  tagName: '',
   account: service(),
   ajax: service(),
 

@@ -1,49 +1,52 @@
-<td>
-  <span class="badge" style={{badgeStyle}}>
-    {{#if row.competitionId}}
-      {{row.competitionId}}
+<tr class="{{if this.selected "selected"}} {{if this.selectable "selectable"}}" ...attributes {{on "click" this.handleClick}}>
+  <td>
+    <span class="badge" style={{badgeStyle}}>
+      {{#if row.competitionId}}
+        {{row.competitionId}}
+      {{else}}
+        &nbsp;
+      {{/if}}
+    </span>
+  </td>
+  <td>
+    {{#unless (is-undefined row.fix.time)}}
+      {{format-time (multiply row.fix.time 1000) format="hhmmss" timeZone="UTC"}}
     {{else}}
-      &nbsp;
+      --:--:--
+    {{/unless}}
+  </td>
+  <td>
+    {{#unless (is-undefined row.fix.alt-msl)}}
+      {{format-altitude row.fix.alt-msl}} <small>MSL</small>
+    {{else}}
+      --
+    {{/unless}}
+  </td>
+  <td>
+    {{#unless (is-undefined row.fix.alt-gnd)}}
+      {{format-altitude row.fix.alt-gnd}} <small>GND</small>
+    {{else}}
+      --
+    {{/unless}}
+  </td>
+  <td>
+    {{#unless (is-undefined row.fix.vario)}}
+      {{format-lift row.fix.vario}}
+    {{else}}
+      --
+    {{/unless}}
+  </td>
+  <td>
+    {{#unless (is-undefined row.fix.speed)}}
+      {{format-speed row.fix.speed}}
+    {{else}}
+      --
+    {{/unless}}
+  </td>
+  <td>
+    {{#if row.removable}}
+      {{fa-icon "remove" click=(action "remove" bubbles=false)}}
     {{/if}}
-  </span>
-</td>
-<td>
-  {{#unless (is-undefined row.fix.time)}}
-    {{format-time (multiply row.fix.time 1000) format="hhmmss" timeZone="UTC"}}
-  {{else}}
-    --:--:--
-  {{/unless}}
-</td>
-<td>
-  {{#unless (is-undefined row.fix.alt-msl)}}
-    {{format-altitude row.fix.alt-msl}} <small>MSL</small>
-  {{else}}
-    --
-  {{/unless}}
-</td>
-<td>
-  {{#unless (is-undefined row.fix.alt-gnd)}}
-    {{format-altitude row.fix.alt-gnd}} <small>GND</small>
-  {{else}}
-    --
-  {{/unless}}
-</td>
-<td>
-  {{#unless (is-undefined row.fix.vario)}}
-    {{format-lift row.fix.vario}}
-  {{else}}
-    --
-  {{/unless}}
-</td>
-<td>
-  {{#unless (is-undefined row.fix.speed)}}
-    {{format-speed row.fix.speed}}
-  {{else}}
-    --
-  {{/unless}}
-</td>
-<td>
-  {{#if row.removable}}
-    {{fa-icon "remove" click=(action "remove" bubbles=false)}}
-  {{/if}}
-</td>
+  </td>
+
+</tr>
