@@ -1,8 +1,8 @@
 import Component from '@ember/component';
 import { action, computed } from '@ember/object';
-import { cancel, later } from '@ember/runloop';
 import { inject as service } from '@ember/service';
 
+import { task, rawTimeout } from 'ember-concurrency';
 import $ from 'jquery';
 import ol from 'openlayers';
 
@@ -88,14 +88,14 @@ export default Component.extend({
     let extent = fixCalc.get('flights').getBounds();
     map.getView().fit(extent, { padding: this._calculatePadding() });
 
-    // update flight track every 15 seconds
-    this._scheduleUpdate();
+    this.updateLoopTask.perform();
   }),
 
-  teardown: action(function() {
-    let updateTimer = this.updateTimer;
-    if (updateTimer) {
-      cancel(updateTimer);
+  // update flight track every 15 seconds
+  updateLoopTask: task(function*() {
+    while (true) {
+      yield rawTimeout(15 * 1000);
+      this._update();
     }
   }),
 
@@ -114,10 +114,6 @@ export default Component.extend({
     },
   },
 
-  _scheduleUpdate() {
-    this.set('updateTimer', later(() => this._update(), 15 * 1000));
-  },
-
   _update() {
     let flights = this.get('fixCalc.flights');
     let ajax = this.ajax;
@@ -134,8 +130,6 @@ export default Component.extend({
           // ignore update errors
         });
     });
-
-    this._scheduleUpdate();
   },
 
   _calculatePadding() {
