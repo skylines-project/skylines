@@ -8,7 +8,6 @@ module.exports = {
     'no-invalid-interactive': false,
     'no-unused-block-params': false,
     'self-closing-void-elements': false,
-    'simple-unless': false,
     'style-concatenation': false,
     'table-groups': false,
   },
