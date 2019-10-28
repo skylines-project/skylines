@@ -7,6 +7,6 @@
   {{on "touchstart" (action (mut this.highlighted) true)}}
   {{on "touchend" (action (mut this.highlighted) false)}}
 >
-  <img src={{imagePath}}/>
+  <img src={{imagePath}}>
   {{fa-icon "check"}} {{layer.name}}
 </a>

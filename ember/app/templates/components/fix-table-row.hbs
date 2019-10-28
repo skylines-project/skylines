@@ -9,39 +9,39 @@
     </span>
   </td>
   <td>
-    {{#unless (is-undefined row.fix.time)}}
-      {{format-time (multiply row.fix.time 1000) format="hhmmss" timeZone="UTC"}}
-    {{else}}
+    {{#if (is-undefined row.fix.time)}}
       --:--:--
-    {{/unless}}
+    {{else}}
+      {{format-time (multiply row.fix.time 1000) format="hhmmss" timeZone="UTC"}}
+    {{/if}}
   </td>
   <td>
-    {{#unless (is-undefined row.fix.alt-msl)}}
+    {{#if (is-undefined row.fix.alt-msl)}}
+      --
+    {{else}}
       {{format-altitude row.fix.alt-msl}} <small>MSL</small>
-    {{else}}
-      --
-    {{/unless}}
+    {{/if}}
   </td>
   <td>
-    {{#unless (is-undefined row.fix.alt-gnd)}}
+    {{#if (is-undefined row.fix.alt-gnd)}}
+      --
+    {{else}}
       {{format-altitude row.fix.alt-gnd}} <small>GND</small>
-    {{else}}
-      --
-    {{/unless}}
+    {{/if}}
   </td>
   <td>
-    {{#unless (is-undefined row.fix.vario)}}
+    {{#if (is-undefined row.fix.vario)}}
+      --
+    {{else}}
       {{format-lift row.fix.vario}}
-    {{else}}
-      --
-    {{/unless}}
+    {{/if}}
   </td>
   <td>
-    {{#unless (is-undefined row.fix.speed)}}
-      {{format-speed row.fix.speed}}
-    {{else}}
+    {{#if (is-undefined row.fix.speed)}}
       --
-    {{/unless}}
+    {{else}}
+      {{format-speed row.fix.speed}}
+    {{/if}}
   </td>
   <td>
     {{#if row.removable}}

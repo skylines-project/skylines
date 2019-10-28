@@ -1,6 +1,6 @@
 <PowerSelect @options={{pilots}} @selected={{pilot}} @onchange={{action "onChange"}} @searchField="name" as |pilot|>
   {{#if (eq pilot.id null)}}
-    [{{t 'unknown-or-other-person'}}]
+    [{{t "unknown-or-other-person"}}]
   {{else}}
     {{pilot.name}}
   {{/if}}

@@ -1,43 +1,43 @@
 <div class="relative-fullscreen" ...attributes {{didInsert this.setup}}>
   <div id="sidebar" class="sidebar collapsed">
-    <!-- Nav tabs -->
+    {{! Nav tabs }}
     <ul class="sidebar-tabs" role="tablist">
       <li>
-        <a href="#tab-overview" title="{{t "overview"}}" role="tab">
+        <a href="#tab-overview" title={{t "overview"}} role="tab">
           {{fa-icon "info" size="lg"}}
         </a>
       </li>
       <li>
-        <a href="#tab-comments" title="{{t "comments"}}" role="tab">
+        <a href="#tab-comments" title={{t "comments"}} role="tab">
           {{fa-icon "comments-o" size="lg"}}
         </a>
       </li>
       <li>
-        <a href="#tab-stats-total" title="{{t "total"}}" role="tab">
+        <a href="#tab-stats-total" title={{t "total"}} role="tab">
           {{fa-icon "bar-chart" size="lg"}}
         </a>
       </li>
       <li>
-        <a href="#tab-stats-legs" title="{{t "leg-statistics"}}" role="tab">
+        <a href="#tab-stats-legs" title={{t "leg-statistics"}} role="tab">
           {{fa-icon "arrows-h" size="lg"}}
         </a>
       </li>
 
       {{#if phases}}
         <li>
-          <a href="#tab-stats-phases" title="{{t "phase-statistics"}}" role="tab">
+          <a href="#tab-stats-phases" title={{t "phase-statistics"}} role="tab">
             {{fa-icon "step-forward" size="lg"}}
           </a>
         </li>
       {{/if}}
 
       <li>
-        <a href="#tab-wingmen" title="{{t "wingmen"}}" role="tab">
+        <a href="#tab-wingmen" title={{t "wingmen"}} role="tab">
           {{fa-icon "group" size="lg"}}
         </a>
       </li>
     </ul>
-    <!-- Tab panes -->
+    {{! Tab panes }}
     <div class="sidebar-content">
       <div class="sidebar-pane" id="tab-overview">
         <h3>{{t "overview"}}</h3>

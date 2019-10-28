@@ -96,5 +96,6 @@ jobs:
         - bower install
 
       script:
-        - yarn lint
+        - yarn lint:js
+        - yarn lint:hbs
         - yarn test
