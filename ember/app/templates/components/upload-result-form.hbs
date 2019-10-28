@@ -1,13 +1,13 @@
 <div class="row" ...attributes>
-  <input type="hidden" name="{{prefix}}-status" value="{{status.value}}" />
-  <input type="hidden" name="{{prefix}}-name" value="{{name}}" />
-  
+  <input type="hidden" name="{{prefix}}-status" value={{status.value}} />
+  <input type="hidden" name="{{prefix}}-name" value={{name}} />
+
   {{#if success}}
     <div class="form-group col-sm-6">
       <label class="control-label">{{t "pilot"}}</label>
       <PilotSelect @clubMembers={{clubMembers}} @pilotId={{pilotId}} @onChange={{action (mut pilotId)}} />
     </div>
-  
+
     {{#if showPilotNameInput}}
       <ValidatedInput
         @value={{pilotName}}
@@ -17,18 +17,18 @@
         @didValidate={{didValidate}}
         class="col-sm-6" />
     {{/if}}
-  
+
     <div class="clearfix"></div>
-  
+
     <div class="form-group col-sm-6">
       <label class="control-label">{{t "copilot"}}</label>
       <PilotSelect @clubMembers={{clubMembers}} @pilotId={{copilotId}} @onChange={{action (mut copilotId)}} />
-  
+
       {{#if validations.attrs.copilotId.message}}
         <p class="help-block">{{validations.attrs.copilotId.message}}</p>
       {{/if}}
     </div>
-  
+
     {{#if showCopilotNameInput}}
       <ValidatedInput
         @value={{copilotName}}
@@ -38,14 +38,14 @@
         @didValidate={{didValidate}}
         class="col-sm-6" />
     {{/if}}
-  
+
     <div class="clearfix"></div>
-  
+
     <div class="form-group col-sm-4">
       <label class="control-label">{{t "aircraft-type"}}</label>
       <AircraftModelSelect @models={{aircraftModels}} @modelId={{modelId}} @onChange={{action (mut modelId)}} />
     </div>
-  
+
     <ValidatedInput
       @value={{registration}}
       @validation={{validations.attrs.registration}}
@@ -53,7 +53,7 @@
       @disabled={{pending}}
       @didValidate={{didValidate}}
       class="col-sm-4" />
-  
+
     <ValidatedInput
       @value={{competitionId}}
       @validation={{validations.attrs.competitionId}}
@@ -61,9 +61,9 @@
       @disabled={{pending}}
       @didValidate={{didValidate}}
       class="col-sm-4" />
-  
+
     <div class="clearfix"></div>
-  
+
     {{#if trace}}
       <UploadBarogram
         @flight={{flight}}
@@ -78,46 +78,46 @@
         @onLandingTimeChange={{action "setLandingTime"}}
         class="col-xs-12" />
     {{/if}}
-  
+
     <div class="form-group col-sm-3">
       <label class="control-label">{{t "takeoff-time"}}</label>
       <DatetimePicker @date={{takeoffTime}} @onChange={{action "setTakeoffTime"}} @minDate={{igcStartTime}} @maxDate={{igcEndTime}} />
-  
+
       {{#if validations.attrs.takeoffTime.message}}
         <p class="help-block">{{validations.attrs.takeoffTime.message}}</p>
       {{/if}}
     </div>
-  
+
     <div class="form-group col-sm-3">
       <label class="control-label">{{t "scoring-start-time"}}</label>
       <DatetimePicker @date={{scoreStartTime}} @onChange={{action "setScoreStartTime"}} @minDate={{igcStartTime}} @maxDate={{igcEndTime}} />
-  
+
       {{#if validations.attrs.scoreStartTime.message}}
         <p class="help-block">{{validations.attrs.scoreStartTime.message}}</p>
       {{/if}}
     </div>
-  
+
     <div class="form-group col-sm-3">
       <label class="control-label">{{t "scoring-end-time"}}</label>
       <DatetimePicker @date={{scoreEndTime}} @onChange={{action "setScoreEndTime"}} @minDate={{igcStartTime}} @maxDate={{igcEndTime}} />
-  
+
       {{#if validations.attrs.scoreEndTime.message}}
         <p class="help-block">{{validations.attrs.scoreEndTime.message}}</p>
       {{/if}}
     </div>
-  
+
     <div class="form-group col-sm-3">
       <label class="control-label">{{t "landing-time"}}</label>
       <DatetimePicker @date={{landingTime}} @onChange={{action "setLandingTime"}} @minDate={{igcStartTime}} @maxDate={{igcEndTime}} />
-  
+
       {{#if validations.attrs.landingTime.message}}
         <p class="help-block">{{validations.attrs.landingTime.message}}</p>
       {{/if}}
     </div>
-  
+
     {{#if result.airspaces}}
       <div class="clearfix"></div>
-  
+
       <div class="col-md-10 col-md-offset-1">
         <h5>{{t "used-airspaces"}}:</h5>
         <table class="table table-condensed airspace-table">
@@ -144,26 +144,26 @@
           {{/each}}
           </tbody>
         </table>
-  
+
         {{! render_field(form.airspace_usage)}}
       </div>
     {{/if}}
-  
+
     <div class="clearfix"></div>
   {{/if}}
-  
+
   <p class="col-xs-12">
     {{t "status"}}:
-  
+
     {{#if success}}
       <span class="label label-success">
         {{fa-icon "check"}} {{t "success"}}
       </span>
-  
+
     {{else}}
       <span class="label label-warning">
         {{fa-icon "warning"}}
-  
+
         {{#if (eq status 1)}}{{t "duplicate-file"}}
         {{else if (eq status 2)}}{{t "date-missing-in-igc-file"}}
         {{else if (eq status 3)}}{{t "failed-to-parse-file"}}
@@ -171,7 +171,7 @@
         {{else if (eq status 5)}}{{t "flight-date-in-future"}}
         {{else}}{{t "unknown"}}{{/if}}
       </span>
-  
+
       {{#if flight.id}}
         <LinkTo @route="flight" @model={{flight.id}} class="btn btn-default btn-sm">{{t "show"}}</LinkTo>
       {{/if}}

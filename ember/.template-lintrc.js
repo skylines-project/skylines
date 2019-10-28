@@ -6,7 +6,6 @@ module.exports = {
     'img-alt-attributes': false,
     'no-inline-styles': false,
     'no-invalid-interactive': false,
-    'no-unnecessary-concat': false,
     'no-unused-block-params': false,
     'self-closing-void-elements': false,
     'simple-unless': false,
