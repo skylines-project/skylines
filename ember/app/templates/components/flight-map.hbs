@@ -1,21 +1,23 @@
-<LayerSwitcher @map={{map}} />
+<div style={{this.style}} ...attributes {{setMapTarget this.map}}>
+  <LayerSwitcher @map={{map}} />
 
-{{#if flights}}
-  <CesiumButton @enabled={{cesiumEnabled}} @onEnable={{action "cesiumEnabled"}} @onDisable={{action "cesiumDisabled"}} />
-  <FlightPathLayer @map={{map}} @flights={{flights}} />
-  <PhaseHighlightComposer @map={{map}} @coordinates={{phaseHighlightCoords}} @calculatePadding={{calculatePadding}} />
-  <PlaneIconsComposer @map={{map}} @fixes={{fixes}} />
-  <ContestLayer @map={{map}} @flights={{flights}} @visible={{not cesiumEnabled}} />
+  {{#if flights}}
+    <CesiumButton @enabled={{cesiumEnabled}} @onEnable={{action "cesiumEnabled"}} @onDisable={{action "cesiumDisabled"}} />
+    <FlightPathLayer @map={{map}} @flights={{flights}} />
+    <PhaseHighlightComposer @map={{map}} @coordinates={{phaseHighlightCoords}} @calculatePadding={{calculatePadding}} />
+    <PlaneIconsComposer @map={{map}} @fixes={{fixes}} />
+    <ContestLayer @map={{map}} @flights={{flights}} @visible={{not cesiumEnabled}} />
 
-  {{#if (and (not cesiumEnabled) (gt flights.length 1))}}
-    <PlaneLabelOverlays @map={{map}} @fixes={{fixes}} />
+    {{#if (and (not cesiumEnabled) (gt flights.length 1))}}
+      <PlaneLabelOverlays @map={{map}} @fixes={{fixes}} />
+    {{/if}}
   {{/if}}
-{{/if}}
 
-<CesiumLoader @enabled={{cesiumEnabled}}>
-  <CesiumScene @enabled={{cesiumEnabled}} @map={{map}} as |cesium|>
-    <CesiumPlaneModels @scene={{cesium.scene}} @fixes={{fixes}} />
-  </CesiumScene>
-</CesiumLoader>
+  <CesiumLoader @enabled={{cesiumEnabled}}>
+    <CesiumScene @enabled={{cesiumEnabled}} @map={{map}} as |cesium|>
+      <CesiumPlaneModels @scene={{cesium.scene}} @fixes={{fixes}} />
+    </CesiumScene>
+  </CesiumLoader>
 
-{{yield}}
+  {{yield}}
+</div>

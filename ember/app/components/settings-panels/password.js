@@ -27,9 +27,9 @@ const Validations = buildValidations({
 });
 
 export default Component.extend(Validations, {
-  ajax: service(),
+  tagName: '',
 
-  classNames: ['panel', 'panel-default'],
+  ajax: service(),
 
   currentPassword: null,
   password: null,

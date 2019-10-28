@@ -1,27 +1,30 @@
-<form {{action "submit" on="submit"}}>
-  {{#if error}}
-    <BsAlert @type="danger" @dismissible={{false}}>{{error}}</BsAlert>
-  {{else if success}}
-    <BsAlert @type="success" @dismissible={{false}}>{{t "password-recovered"}}</BsAlert>
-  {{/if}}
-
-  <ValidatedInput
-    @type="password"
-    @value={{password}}
-    @validation={{validations.attrs.password}}
-    @label={{t "password"}}
-    @disabled={{recoverTask.isRunning}}
-    @didValidate={{didValidate}} />
-
-  <ValidatedInput
-    @type="password"
-    @value={{passwordConfirmation}}
-    @validation={{validations.attrs.passwordConfirmation}}
-    @label={{t "confirm-password"}}
-    @disabled={{recoverTask.isRunning}}
-    @didValidate={{didValidate}} />
-
-  <button class="btn btn-primary btn-block" type="submit" disabled={{or recoverTask.isRunning success (not validations.isValid)}}>
-    {{t (if recoverTask.isRunning "changing-password" "change-password")}}
-  </button>
-</form>
+<div class="panel-body" ...attributes>
+  <form {{action "submit" on="submit"}}>
+    {{#if error}}
+      <BsAlert @type="danger" @dismissible={{false}}>{{error}}</BsAlert>
+    {{else if success}}
+      <BsAlert @type="success" @dismissible={{false}}>{{t "password-recovered"}}</BsAlert>
+    {{/if}}
+  
+    <ValidatedInput
+      @type="password"
+      @value={{password}}
+      @validation={{validations.attrs.password}}
+      @label={{t "password"}}
+      @disabled={{recoverTask.isRunning}}
+      @didValidate={{didValidate}} />
+  
+    <ValidatedInput
+      @type="password"
+      @value={{passwordConfirmation}}
+      @validation={{validations.attrs.passwordConfirmation}}
+      @label={{t "confirm-password"}}
+      @disabled={{recoverTask.isRunning}}
+      @didValidate={{didValidate}} />
+  
+    <button class="btn btn-primary btn-block" type="submit" disabled={{or recoverTask.isRunning success (not validations.isValid)}}>
+      {{t (if recoverTask.isRunning "changing-password" "change-password")}}
+    </button>
+  </form>
+  
+</div>

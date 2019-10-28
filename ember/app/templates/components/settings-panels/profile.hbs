@@ -1,102 +1,104 @@
-<div class="panel-body">
-  <form {{action "submit" on="submit"}}>
-    {{#if error}}
-      <BsAlert @type="danger" @dismissible={{false}}>
-        {{#if messageKey}}{{t messageKey error=error}}{{else}}{{error}}{{/if}}
-      </BsAlert>
-    {{else if messageKey}}
-      <BsAlert @type="success" @dismissible={{false}}>{{t messageKey}}</BsAlert>
-    {{/if}}
-
-    <ValidatedInput
-      @value={{email}}
-      @validation={{validations.attrs.email}}
-      @label={{t "email-address"}}
-      @autocomplete="email"
-      @disabled={{saveTask.isRunning}}
-      @didValidate={{didValidate}} />
-
-    <ValidatedInput
-      @value={{firstName}}
-      @validation={{validations.attrs.firstName}}
-      @label={{t "first-name"}}
-      @autocomplete="given-name"
-      @disabled={{saveTask.isRunning}}
-      @didValidate={{didValidate}} />
-
-    <ValidatedInput
-      @value={{lastName}}
-      @validation={{validations.attrs.lastName}}
-      @label={{t "last-name"}}
-      @autocomplete="family-name"
-      @disabled={{saveTask.isRunning}}
-      @didValidate={{didValidate}} />
-
-    <div class="form-group">
-      <label class="control-label">{{t "units.title"}}</label>
-
-      <PowerSelect
-        @options={{unitsPresets}}
-        @searchEnabled={{false}}
-        @selected={{unitsPreset}}
-        @onchange={{action (mut unitsPreset)}}
-      as |preset|>
-        {{t (concat "units.presets." preset)}}
-      </PowerSelect>
-    </div>
-
-    {{#if (eq unitsPreset "custom")}}
+<div class="panel panel-default" ...attributes>
+  <div class="panel-body">
+    <form {{action "submit" on="submit"}}>
+      {{#if error}}
+        <BsAlert @type="danger" @dismissible={{false}}>
+          {{#if messageKey}}{{t messageKey error=error}}{{else}}{{error}}{{/if}}
+        </BsAlert>
+      {{else if messageKey}}
+        <BsAlert @type="success" @dismissible={{false}}>{{t messageKey}}</BsAlert>
+      {{/if}}
+  
+      <ValidatedInput
+        @value={{email}}
+        @validation={{validations.attrs.email}}
+        @label={{t "email-address"}}
+        @autocomplete="email"
+        @disabled={{saveTask.isRunning}}
+        @didValidate={{didValidate}} />
+  
+      <ValidatedInput
+        @value={{firstName}}
+        @validation={{validations.attrs.firstName}}
+        @label={{t "first-name"}}
+        @autocomplete="given-name"
+        @disabled={{saveTask.isRunning}}
+        @didValidate={{didValidate}} />
+  
+      <ValidatedInput
+        @value={{lastName}}
+        @validation={{validations.attrs.lastName}}
+        @label={{t "last-name"}}
+        @autocomplete="family-name"
+        @disabled={{saveTask.isRunning}}
+        @didValidate={{didValidate}} />
+  
       <div class="form-group">
-        <label class="control-label">{{t "units.distance"}}</label>
+        <label class="control-label">{{t "units.title"}}</label>
+  
         <PowerSelect
-          @options={{units.distanceUnits}}
+          @options={{unitsPresets}}
           @searchEnabled={{false}}
-          @selected={{distanceUnit}}
-          @onchange={{action (mut distanceUnit)}}
-        as |unit|>
-          {{unit}}
+          @selected={{unitsPreset}}
+          @onchange={{action (mut unitsPreset)}}
+        as |preset|>
+          {{t (concat "units.presets." preset)}}
         </PowerSelect>
       </div>
-
-      <div class="form-group">
-        <label class="control-label">{{t "units.speed"}}</label>
-        <PowerSelect
-          @options={{units.speedUnits}}
-          @searchEnabled={{false}}
-          @selected={{speedUnit}}
-          @onchange={{action (mut speedUnit)}}
-        as |unit|>
-          {{unit}}
-        </PowerSelect>
-      </div>
-
-      <div class="form-group">
-        <label class="control-label">{{t "units.lift"}}</label>
-        <PowerSelect
-          @options={{units.liftUnits}}
-          @searchEnabled={{false}}
-          @selected={{liftUnit}}
-          @onchange={{action (mut liftUnit)}}
-        as |unit|>
-          {{unit}}
-        </PowerSelect>
-      </div>
-
-      <div class="form-group">
-        <label class="control-label">{{t "units.altitude"}}</label>
-        <PowerSelect
-          @options={{units.altitudeUnits}}
-          @searchEnabled={{false}}
-          @selected={{altitudeUnit}}
-          @onchange={{action (mut altitudeUnit)}}
-        as |unit|>
-          {{unit}}
-        </PowerSelect>
-      </div>
-    {{/if}}
-
-    <button class="btn btn-primary btn-block" type="submit" disabled={{or saveTask.isRunning (not validations.isValid)}}>
-      {{t (if saveTask.isRunning "changing" "change")}}
-    </button>
-  </form>
+  
+      {{#if (eq unitsPreset "custom")}}
+        <div class="form-group">
+          <label class="control-label">{{t "units.distance"}}</label>
+          <PowerSelect
+            @options={{units.distanceUnits}}
+            @searchEnabled={{false}}
+            @selected={{distanceUnit}}
+            @onchange={{action (mut distanceUnit)}}
+          as |unit|>
+            {{unit}}
+          </PowerSelect>
+        </div>
+  
+        <div class="form-group">
+          <label class="control-label">{{t "units.speed"}}</label>
+          <PowerSelect
+            @options={{units.speedUnits}}
+            @searchEnabled={{false}}
+            @selected={{speedUnit}}
+            @onchange={{action (mut speedUnit)}}
+          as |unit|>
+            {{unit}}
+          </PowerSelect>
+        </div>
+  
+        <div class="form-group">
+          <label class="control-label">{{t "units.lift"}}</label>
+          <PowerSelect
+            @options={{units.liftUnits}}
+            @searchEnabled={{false}}
+            @selected={{liftUnit}}
+            @onchange={{action (mut liftUnit)}}
+          as |unit|>
+            {{unit}}
+          </PowerSelect>
+        </div>
+  
+        <div class="form-group">
+          <label class="control-label">{{t "units.altitude"}}</label>
+          <PowerSelect
+            @options={{units.altitudeUnits}}
+            @searchEnabled={{false}}
+            @selected={{altitudeUnit}}
+            @onchange={{action (mut altitudeUnit)}}
+          as |unit|>
+            {{unit}}
+          </PowerSelect>
+        </div>
+      {{/if}}
+  
+      <button class="btn btn-primary btn-block" type="submit" disabled={{or saveTask.isRunning (not validations.isValid)}}>
+        {{t (if saveTask.isRunning "changing" "change")}}
+      </button>
+    </form>
+  </div>
 </div>

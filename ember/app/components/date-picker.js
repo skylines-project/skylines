@@ -1,18 +1,18 @@
 import Component from '@ember/component';
+import { action } from '@ember/object';
 
 import $ from 'jquery';
 
 import isoDate from '../utils/iso-date';
 
 export default Component.extend({
-  tagName: 'span',
+  tagName: '',
 
   date: null,
   onSelect() {},
 
-  didInsertElement() {
-    this._super(...arguments);
-    let picker = $(this.element.querySelector('span')).datepicker({
+  setup: action(function(element) {
+    let picker = $(element).datepicker({
       weekStart: 1,
     });
 
@@ -22,15 +22,14 @@ export default Component.extend({
       picker.data('datepicker').hide();
       this.onSelect(isoDate(e.date));
     });
-  },
+  }),
 
-  willDestroyElement() {
-    this._super(...arguments);
+  teardown: action(function() {
     let picker = this.picker;
     if (picker) {
       picker.off('changeDate');
     }
 
     this.set('picker', null);
-  },
+  }),
 });

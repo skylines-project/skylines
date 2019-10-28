@@ -32,10 +32,9 @@ const Validations = buildValidations({
 const PRESET_NAMES = ['custom', 'european', 'british', 'australian', 'american'];
 
 export default Component.extend(Validations, {
+  tagName: '',
   ajax: service(),
   units: service(),
-
-  classNames: ['panel', 'panel-default'],
 
   unitsPresets: PRESET_NAMES,
 

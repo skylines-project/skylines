@@ -1,5 +1,5 @@
 import Component from '@ember/component';
-import { computed } from '@ember/object';
+import { action, computed } from '@ember/object';
 import { inject as service } from '@ember/service';
 
 import $ from 'jquery';
@@ -8,11 +8,11 @@ import FixCalc from '../utils/fix-calc';
 import FlighPhase from '../utils/flight-phase';
 
 export default Component.extend({
+  tagName: '',
+
   ajax: service(),
   pinnedFlights: service(),
   units: service(),
-
-  classNames: ['relative-fullscreen'],
 
   fixCalc: null,
   flightPhase: null,
@@ -46,18 +46,19 @@ export default Component.extend({
     this.set('flightPhase', flightPhase);
   },
 
-  didInsertElement() {
-    this._super(...arguments);
+  setup: action(function(element) {
+    this.rootElement = element;
+
     let fixCalc = this.fixCalc;
 
-    let sidebar = this.element.querySelector('#sidebar');
+    let sidebar = this.rootElement.querySelector('#sidebar');
     let $sidebar = $(sidebar).sidebar();
 
-    let barogramPanel = this.element.querySelector('#barogram_panel');
+    let barogramPanel = this.rootElement.querySelector('#barogram_panel');
     let $barogramPanel = $(barogramPanel);
 
-    let olScaleLine = this.element.querySelector('.ol-scale-line');
-    let olAttribution = this.element.querySelector('.ol-attribution');
+    let olScaleLine = this.rootElement.querySelector('.ol-scale-line');
+    let olAttribution = this.rootElement.querySelector('.ol-attribution');
 
     let resize = () => {
       let bottom = Number(getComputedStyle(barogramPanel).bottom.replace('px', ''));
@@ -89,7 +90,7 @@ export default Component.extend({
     this.get('pinnedFlights.pinned')
       .filter(id => id !== primaryId)
       .forEach(id => fixCalc.addFlightFromJSON(`/api/flights/${id}/json`));
-  },
+  }),
 
   actions: {
     togglePlayback() {
@@ -127,8 +128,8 @@ export default Component.extend({
   },
 
   _calculatePadding() {
-    let sidebar = this.element.querySelector('#sidebar');
-    let barogramPanel = this.element.querySelector('#barogram_panel');
+    let sidebar = this.rootElement.querySelector('#sidebar');
+    let barogramPanel = this.rootElement.querySelector('#barogram_panel');
     return [20, 20, barogramPanel.offsetHeight + 20, sidebar.offsetWidth + 20];
   },
 });

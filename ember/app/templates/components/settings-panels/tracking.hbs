@@ -1,35 +1,37 @@
-<div class="panel-body">
-  <form {{action "submit" on="submit"}}>
-    {{#if error}}
-      <BsAlert @type="danger" @dismissible={{false}}>
-        {{#if messageKey}}{{t messageKey error=error}}{{else}}{{error}}{{/if}}
-      </BsAlert>
-    {{else if messageKey}}
-      <BsAlert @type="success" @dismissible={{false}}>{{t messageKey}}</BsAlert>
-    {{/if}}
-
-    <ValidatedInput
-      @value={{callsign}}
-      @validation={{validations.attrs.callsign}}
-      @label={{t "tracking-callsign"}}
-      @disabled={{saveTask.isRunning}}
-      @didValidate={{didValidate}} />
-
-    <div class="form-group">
-      <label class="control-label">{{t "tracking-delay"}}</label>
-
-      <PowerSelect
-        @options={{delays}}
-        @searchEnabled={{false}}
-        @selected={{_delay}}
-        @onchange={{action (mut delay)}}
-      as |delay|>
-        {{t "tracking-delay-choice" delay=delay}}
-      </PowerSelect>
-    </div>
-
-    <button class="btn btn-primary btn-block" type="submit" disabled={{or saveTask.isRunning (not validations.isValid)}}>
-      {{t (if saveTask.isRunning "changing" "change")}}
-    </button>
-  </form>
+<div class="panel panel-default" ...attributes>
+  <div class="panel-body">
+    <form {{action "submit" on="submit"}}>
+      {{#if error}}
+        <BsAlert @type="danger" @dismissible={{false}}>
+          {{#if messageKey}}{{t messageKey error=error}}{{else}}{{error}}{{/if}}
+        </BsAlert>
+      {{else if messageKey}}
+        <BsAlert @type="success" @dismissible={{false}}>{{t messageKey}}</BsAlert>
+      {{/if}}
+  
+      <ValidatedInput
+        @value={{callsign}}
+        @validation={{validations.attrs.callsign}}
+        @label={{t "tracking-callsign"}}
+        @disabled={{saveTask.isRunning}}
+        @didValidate={{didValidate}} />
+  
+      <div class="form-group">
+        <label class="control-label">{{t "tracking-delay"}}</label>
+  
+        <PowerSelect
+          @options={{delays}}
+          @searchEnabled={{false}}
+          @selected={{_delay}}
+          @onchange={{action (mut delay)}}
+        as |delay|>
+          {{t "tracking-delay-choice" delay=delay}}
+        </PowerSelect>
+      </div>
+  
+      <button class="btn btn-primary btn-block" type="submit" disabled={{or saveTask.isRunning (not validations.isValid)}}>
+        {{t (if saveTask.isRunning "changing" "change")}}
+      </button>
+    </form>
+  </div>
 </div>

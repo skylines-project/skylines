@@ -1,6 +1,8 @@
-{{#if label}}<label class="control-label">{{label}}</label>{{/if}}
-{{yield}}
-
-{{#if showMessage}}
-  <p class="help-block">{{validation.message}}</p>
-{{/if}}
+<div class="form-group has-feedback {{if this._showErrorClass "has-error"}} {{if this.isValid "has-success"}}" ...attributes>
+  {{#if label}}<label class="control-label">{{label}}</label>{{/if}}
+  {{yield}}
+  
+  {{#if showMessage}}
+    <p class="help-block">{{validation.message}}</p>
+  {{/if}}
+</div>

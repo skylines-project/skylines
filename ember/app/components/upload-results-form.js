@@ -10,6 +10,7 @@ import RSVP from 'rsvp';
 import UploadResult from '../utils/upload-result';
 
 export default Component.extend({
+  tagName: '',
   ajax: service(),
 
   results: null,

@@ -1,18 +1,15 @@
 /* global BigScreen */
 
 import Component from '@ember/component';
+import { action } from '@ember/object';
 
 import $ from 'jquery';
 
 export default Component.extend({
-  classNames: ['FullscreenButton', 'ol-unselectable'],
+  tagName: '',
 
-  click() {
-    this.toggle();
-  },
-
-  toggle() {
+  toggle: action(function() {
     let element = this.fullscreenElement;
     BigScreen.toggle($(element)[0]);
-  },
+  }),
 });

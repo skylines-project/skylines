@@ -4,6 +4,7 @@ import { readOnly } from '@ember/object/computed';
 import safeComputed from '../computed/safe-computed';
 
 export default Component.extend({
+  tagName: '',
   count: 0,
   page: 1,
   perPage: 100,

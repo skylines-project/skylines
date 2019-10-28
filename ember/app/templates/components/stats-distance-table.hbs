@@ -1,29 +1,32 @@
-<thead>
-<tr>
-  <th>{{t "year"}}</th>
-  <th colspan="2">{{t "distance"}}</th>
-</tr>
-</thead>
-<tbody>
-{{#each years as |year|}}
+<table class="table table-condensed table-striped" ...attributes>
+  <thead>
   <tr>
-    <td class="col-xs-2">{{year.year}}</td>
-    <td class="col-xs-2">
-      <span>
-        {{format-distance year.distance}}
-        <BsTooltip @title={{t "n-avg-distance-per-flight" distance=(format-distance year.average_distance)}} />
-      </span>
-    </td>
-    <td class="col-xs-8">
-      <BsProgress as |p|>
-        <p.bar @value={{percent year.distance max}} @type="success" />
-      </BsProgress>
-    </td>
+    <th>{{t "year"}}</th>
+    <th colspan="2">{{t "distance"}}</th>
   </tr>
-{{/each}}
-
-<tr>
-  <td><strong>{{t "total"}}</strong></td>
-  <td colspan="2"><strong>{{format-distance sum}}</strong></td>
-</tr>
-</tbody>
+  </thead>
+  <tbody>
+  {{#each years as |year|}}
+    <tr>
+      <td class="col-xs-2">{{year.year}}</td>
+      <td class="col-xs-2">
+        <span>
+          {{format-distance year.distance}}
+          <BsTooltip @title={{t "n-avg-distance-per-flight" distance=(format-distance year.average_distance)}} />
+        </span>
+      </td>
+      <td class="col-xs-8">
+        <BsProgress as |p|>
+          <p.bar @value={{percent year.distance max}} @type="success" />
+        </BsProgress>
+      </td>
+    </tr>
+  {{/each}}
+  
+  <tr>
+    <td><strong>{{t "total"}}</strong></td>
+    <td colspan="2"><strong>{{format-distance sum}}</strong></td>
+  </tr>
+  </tbody>
+  
+</table>

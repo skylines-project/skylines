@@ -1,21 +1,24 @@
-<div class="panel-heading">
-  <h3 class="panel-title">{{t "live-tracking-key"}}</h3>
-  <p class="panel-help-icon">
-    <LinkTo @route="tracking.info">{{fa-icon "question" fixedWidth=true}}</LinkTo>
-  </p>
-</div>
-<div class="panel-body">
-  {{#if error}}
-    <BsAlert @type="danger" @dismissible={{false}}>{{error}}</BsAlert>
-  {{/if}}
-
-  <p style="margin: 10px 0px 20px;">
-    {{t 'your-live-tracking-key'}} <span class="label tracking-key">{{key}}</span>
-  </p>
-
-  <form {{action (perform saveTask) on="submit"}}>
-    <button class="btn btn-primary btn-block" type="submit" disabled={{saveTask.isRunning}}>
-      {{t (if saveTask.isRunning "generating-new-key" "generate-new-key")}}
-    </button>
-  </form>
+<div class="panel panel-default" ...attributes>
+  <div class="panel-heading">
+    <h3 class="panel-title">{{t "live-tracking-key"}}</h3>
+    <p class="panel-help-icon">
+      <LinkTo @route="tracking.info">{{fa-icon "question" fixedWidth=true}}</LinkTo>
+    </p>
+  </div>
+  <div class="panel-body">
+    {{#if error}}
+      <BsAlert @type="danger" @dismissible={{false}}>{{error}}</BsAlert>
+    {{/if}}
+  
+    <p style="margin: 10px 0px 20px;">
+      {{t 'your-live-tracking-key'}} <span class="label tracking-key">{{key}}</span>
+    </p>
+  
+    <form {{action (perform saveTask) on="submit"}}>
+      <button class="btn btn-primary btn-block" type="submit" disabled={{saveTask.isRunning}}>
+        {{t (if saveTask.isRunning "generating-new-key" "generate-new-key")}}
+      </button>
+    </form>
+  </div>
+  
 </div>

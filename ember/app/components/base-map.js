@@ -10,9 +10,9 @@ import ol from 'openlayers';
 import config from '../config/environment';
 
 export default Component.extend({
-  mapSettings: service(),
+  tagName: '',
 
-  attributeBindings: ['style'],
+  mapSettings: service(),
 
   width: '100%',
   height: '100%',
@@ -74,14 +74,6 @@ export default Component.extend({
     this.addEmptyLayer();
 
     this.updateLayerVisibilities();
-  },
-
-  didInsertElement() {
-    this._super(...arguments);
-    let map = this.map;
-    if (map) {
-      map.setTarget(this.elementId);
-    }
   },
 
   updateLayerVisibilities() {

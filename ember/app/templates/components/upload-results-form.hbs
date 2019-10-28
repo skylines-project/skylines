@@ -1,52 +1,54 @@
-{{#if success}}
-  <p class="visible-xs">{{t "your-flights-have-been-saved"}}</p>
-  <p class="hidden-xs">{{t "your-flights-have-been-saved"}} {{t "verify-flights-and-publish"}}</p>
-{{else}}
-  <p>{{t "no-flight-saved"}}</p>
-{{/if}}
-
-<form {{action "submit" on="submit"}} class="upload-results-form">
-  {{#if (eq validatedResults.length 1)}}
-    {{#each validatedResults as |result|}}
-      <UploadResultForm @result={{result}} @clubMembers={{clubMembers}} @aircraftModels={{aircraftModels}} />
-    {{/each}}
-  {{else}}
-    <BsTab @customTabs={{true}} @fade={{false}} as |tab|>
-      <div class="col-sm-3">
-        <BsNav @type="tabs" class="tabs-left" as |nav|>
-          {{#each validatedResults as |result index|}}
-            <nav.item @active={{eq tab.activeId (concat "result-tab-" index)}}>
-              <a href="#result-tab-{{index}}" role="tab" {{action tab.select (concat "result-tab-" index)}}>
-                {{#if (and (eq result.status 0) result.validations.isValid)}}
-                  {{fa-icon "check" class="text-success"}}
-                {{else}}
-                  {{fa-icon "warning" class="text-warning"}}
-                {{/if}}
-
-                {{result.name}}
-              </a>
-            </nav.item>
-          {{/each}}
-        </BsNav>
-      </div>
-      <div class="col-sm-9">
-        <div class="tab-content">
-          {{#each validatedResults as |result index|}}
-            <tab.pane @elementId={{concat "result-tab-" index}}>
-              <UploadResultForm @result={{result}} @clubMembers={{clubMembers}} @aircraftModels={{aircraftModels}} />
-            </tab.pane>
-          {{/each}}
-        </div>
-      </div>
-
-      <div class="clearfix"></div>
-    </BsTab>
-  {{/if}}
-
+<div ...attributes>
   {{#if success}}
-    <button class="btn btn-primary" type="submit" disabled={{or saveTask.isRunning isInvalid}}>
-      {{if saveTask.isRunning (t "publishing") (t "publish-flights" num=successfulResults.length)}}
-    </button>
+    <p class="visible-xs">{{t "your-flights-have-been-saved"}}</p>
+    <p class="hidden-xs">{{t "your-flights-have-been-saved"}} {{t "verify-flights-and-publish"}}</p>
+  {{else}}
+    <p>{{t "no-flight-saved"}}</p>
   {{/if}}
-
-</form>
+  
+  <form {{action "submit" on="submit"}} class="upload-results-form">
+    {{#if (eq validatedResults.length 1)}}
+      {{#each validatedResults as |result|}}
+        <UploadResultForm @result={{result}} @clubMembers={{clubMembers}} @aircraftModels={{aircraftModels}} />
+      {{/each}}
+    {{else}}
+      <BsTab @customTabs={{true}} @fade={{false}} as |tab|>
+        <div class="col-sm-3">
+          <BsNav @type="tabs" class="tabs-left" as |nav|>
+            {{#each validatedResults as |result index|}}
+              <nav.item @active={{eq tab.activeId (concat "result-tab-" index)}}>
+                <a href="#result-tab-{{index}}" role="tab" {{action tab.select (concat "result-tab-" index)}}>
+                  {{#if (and (eq result.status 0) result.validations.isValid)}}
+                    {{fa-icon "check" class="text-success"}}
+                  {{else}}
+                    {{fa-icon "warning" class="text-warning"}}
+                  {{/if}}
+  
+                  {{result.name}}
+                </a>
+              </nav.item>
+            {{/each}}
+          </BsNav>
+        </div>
+        <div class="col-sm-9">
+          <div class="tab-content">
+            {{#each validatedResults as |result index|}}
+              <tab.pane @elementId={{concat "result-tab-" index}}>
+                <UploadResultForm @result={{result}} @clubMembers={{clubMembers}} @aircraftModels={{aircraftModels}} />
+              </tab.pane>
+            {{/each}}
+          </div>
+        </div>
+  
+        <div class="clearfix"></div>
+      </BsTab>
+    {{/if}}
+  
+    {{#if success}}
+      <button class="btn btn-primary" type="submit" disabled={{or saveTask.isRunning isInvalid}}>
+        {{if saveTask.isRunning (t "publishing") (t "publish-flights" num=successfulResults.length)}}
+      </button>
+    {{/if}}
+  
+  </form>
+</div>

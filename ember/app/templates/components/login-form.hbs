@@ -1,33 +1,36 @@
-<form {{action (perform loginTask) on="submit"}} class="form-login">
-  {{#if (and error (not inline))}}
-    <BsAlert @type="danger" @dismissible={{false}}>{{t "wrong-credentials"}}</BsAlert>
-  {{/if}}
-
-  <ValidatedInput
-    @value={{email}}
-    @label={{t "email-address"}}
-    @autocomplete="email"
-    @disabled={{loginTask.isRunning}}
-    @forceErrorClass={{error}}
-    @didValidate={{didValidate}}
-    @testSelector="login-email" />
-
-  <ValidatedInput
-    @type="password"
-    @value={{password}}
-    @label={{t "password"}}
-    @autocomplete="current-password"
-    @disabled={{loginTask.isRunning}}
-    @forceErrorClass={{error}}
-    @didValidate={{didValidate}}
-    @testSelector="login-password" />
-
-  <button class="btn btn-primary btn-block" type="submit" disabled={{loginTask.isRunning}} data-test-login-button>
-    {{t "login"}}
-  </button>
-
-  <hr/>
-
-  <div><LinkTo @route="users.recover">{{t "forgot-password"}}</LinkTo></div>
-  <div><LinkTo @route="users.new">{{t "dont-have-an-account"}}</LinkTo></div>
-</form>
+<div class={{unless this.inline "panel-body"}} ...attributes>
+  <form {{action (perform loginTask) on="submit"}} class="form-login">
+    {{#if (and error (not inline))}}
+      <BsAlert @type="danger" @dismissible={{false}}>{{t "wrong-credentials"}}</BsAlert>
+    {{/if}}
+  
+    <ValidatedInput
+      @value={{email}}
+      @label={{t "email-address"}}
+      @autocomplete="email"
+      @disabled={{loginTask.isRunning}}
+      @forceErrorClass={{error}}
+      @didValidate={{didValidate}}
+      @testSelector="login-email" />
+  
+    <ValidatedInput
+      @type="password"
+      @value={{password}}
+      @label={{t "password"}}
+      @autocomplete="current-password"
+      @disabled={{loginTask.isRunning}}
+      @forceErrorClass={{error}}
+      @didValidate={{didValidate}}
+      @testSelector="login-password" />
+  
+    <button class="btn btn-primary btn-block" type="submit" disabled={{loginTask.isRunning}} data-test-login-button>
+      {{t "login"}}
+    </button>
+  
+    <hr/>
+  
+    <div><LinkTo @route="users.recover">{{t "forgot-password"}}</LinkTo></div>
+    <div><LinkTo @route="users.new">{{t "dont-have-an-account"}}</LinkTo></div>
+  </form>
+  
+</div>

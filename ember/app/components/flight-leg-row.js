@@ -1,15 +1,12 @@
 import Component from '@ember/component';
-import { computed } from '@ember/object';
+import { action, computed } from '@ember/object';
 
 import safeComputed from '../computed/safe-computed';
 
 export default Component.extend({
-  tagName: 'tr',
-  classNames: ['small', 'selectable'],
-  classNameBindings: ['selected'],
+  tagName: '',
 
   inf: Infinity,
-
   leg: null,
   selection: null,
   onSelect() {},
@@ -55,7 +52,7 @@ export default Component.extend({
     return selection.start === leg.start && selection.end === leg.start + leg.duration;
   }),
 
-  click() {
+  handleClick: action(function() {
     let onSelect = this.onSelect;
 
     if (this.selected) {
@@ -67,5 +64,5 @@ export default Component.extend({
         end: leg.start + leg.duration,
       });
     }
-  },
+  }),
 });
