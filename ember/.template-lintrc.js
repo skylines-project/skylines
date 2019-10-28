@@ -9,7 +9,6 @@ module.exports = {
     'no-invalid-interactive': false,
     'no-unnecessary-concat': false,
     'no-unused-block-params': false,
-    quotes: false,
     'self-closing-void-elements': false,
     'simple-unless': false,
     'style-concatenation': false,
