@@ -41,8 +41,12 @@ abbr[title] {
   }
 }
 
+.relative,
 .relative-fullscreen {
   position: relative;
+}
+
+.relative-fullscreen {
   width: 100%;
   height: 100%;
 }
