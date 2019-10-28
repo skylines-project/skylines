@@ -14,7 +14,7 @@
         </td>
         <td class="col-pilot">
             {%- if flight.pilot -%}
-                <a href="https://skylines.aero/users/{{ flight.pilot.id }}/">{{ flight.pilot.name|e }}</a>
+                <a href="https://skylinescondor.com/users/{{ flight.pilot.id }}/">{{ flight.pilot.name|e }}</a>
             {%- elif flight.pilot_name -%}
                 {{ flight.pilot_name|e }}
             {%- endif -%}
@@ -22,7 +22,7 @@
             {%- if (flight.pilot or flight.pilot_name) and (flight.co_pilot or flight.co_pilot_name) -%}<br/>{%- endif -%}
 
             {%- if flight.co_pilot -%}
-                <a href="https://skylines.aero/users/{{ flight.co_pilot.id }}/">{{ flight.co_pilot.name|e }}</a>
+                <a href="https://skylinescondor.com/users/{{ flight.co_pilot.id }}/">{{ flight.co_pilot.name|e }}</a>
             {%- elif flight.co_pilot_name -%}
                 {{ flight.co_pilot_name|e }}
             {%- endif -%}
@@ -38,7 +38,7 @@
         </td>
         <td class="col-airport">
             {% if flight.takeoff_airport -%}
-                <a href="https://skylines.aero/flights/airport/{{ flight.takeoff_airport.id }}">{{ flight.takeoff_airport.name|e }}</a>
+                <a href="https://skylinescondor.com/flights/airport/{{ flight.takeoff_airport.id }}">{{ flight.takeoff_airport.name|e }}</a>
             {%- endif %}
         </td>
         <td class="col-aircraft" title="{{ flight.registration|e or flight.igc_file.registration|e }}">
@@ -49,7 +49,7 @@
             {%- endif %}
         </td>
         <td class="col-link">
-            <a href="https://skylines.aero/flights/{{ flight.id }}/">Details</a>
+            <a href="https://skylinescondor.com/flights/{{ flight.id }}/">Details</a>
         </td>
     </tr>
     {% endfor %}

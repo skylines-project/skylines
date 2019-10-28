@@ -29,7 +29,7 @@ module.exports = function(deployTarget) {
     ENV.build.environment = 'production';
     // configure other plugins for production deploy target here
     ENV['rsync-assets'] = {
-      destination: 'skylines@skylines.aero:/home/skylines/src/skylines/frontend/static',
+      destination: 'skylines@skylinescondor.com:/home/skylines/src/skylines/frontend/static',
       flags: ['z'],
       ssh: true,
       privateKeyPath: process.env['PRIVATE_KEY_PATH'],

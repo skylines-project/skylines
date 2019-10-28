@@ -1,6 +1,6 @@
 # https://caddyserver.com configuration for the production server
 
-skylines.aero {
+skylinescondor.com {
     log /home/skylines/log/caddy
 
     root /home/skylines/src/skylines/frontend/static
@@ -55,18 +55,18 @@ skylines.aero {
     }
 }
 
-www.skylines.aero {
-    redir https://skylines.aero{uri}
+www.skylinescondor.com {
+    redir https://skylinescondor.com{uri}
 }
 
-www02.skylines.aero {
-    redir https://skylines.aero{uri}
+www02.skylinescondor.com {
+    redir https://skylinescondor.com{uri}
 }
 
-tracking.skylines.aero {
-    redir https://skylines.aero/tracking/
+tracking.skylinescondor.com {
+    redir https://skylinescondor.com/tracking/
 }
 
-maps.skylines.aero {
-    redir https://skylines.aero{uri}
+maps.skylinescondor.com {
+    redir https://skylinescondor.com{uri}
 }

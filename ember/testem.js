@@ -23,7 +23,7 @@ module.exports = {
   },
   proxies: {
     '/api': {
-      target: 'https://skylines.aero',
+      target: 'https://skylinescondor.com',
     },
   },
 };
