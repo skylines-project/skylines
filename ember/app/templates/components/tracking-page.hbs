@@ -1,7 +1,7 @@
 <div class="relative-fullscreen" ...attributes {{didInsert this.setup}}>
   {{#if flights}}
     <div id="sidebar" class="sidebar collapsed">
-      <!-- Nav tabs -->
+      {{! Nav tabs }}
       <ul class="sidebar-tabs" role="tablist">
         <li>
           <a href="#tab-overview" title="{{t "overview"}}" role="tab">
@@ -9,7 +9,7 @@
           </a>
         </li>
       </ul>
-      <!-- Tab panes -->
+      {{! Tab panes }}
       <div class="sidebar-content">
         <div class="sidebar-pane" id="tab-overview">
           <h3>{{t "overview"}}</h3>
