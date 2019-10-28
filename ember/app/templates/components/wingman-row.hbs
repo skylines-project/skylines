@@ -12,7 +12,7 @@
       [{{t "unknown"}}]
     {{/if}}
 
-    <small><br />
+    <small><br>
       {{#if flight.registration}}
         {{flight.registration}}
       {{else if igcFile.registration}}
@@ -35,7 +35,7 @@
       {{/if}}
     {{/if}}
 
-    {{#if (and pilotName copilotName)}}<br/>{{/if}}
+    {{#if (and pilotName copilotName)}}<br>{{/if}}
 
     {{#if copilotName}}
       {{#if copilot.id}}
@@ -50,7 +50,7 @@
     {{/if}}
   </td>
   <td class="times-column">
-    {{format-time times.firstObject.start format="hhmmss" timeZone="UTC"}}<br />
+    {{format-time times.firstObject.start format="hhmmss" timeZone="UTC"}}<br>
     {{format-time times.lastObject.end format="hhmmss" timeZone="UTC"}}
 
     <BsPopover @title="Periods" @triggerEvents="hover">

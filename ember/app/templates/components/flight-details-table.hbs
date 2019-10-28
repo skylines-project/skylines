@@ -17,7 +17,7 @@
           {{pilotName}}
         {{/if}}
 
-        {{#if (and pilotName copilotName)}}<br/>{{/if}}
+        {{#if (and pilotName copilotName)}}<br>{{/if}}
 
         {{#if flight.copilot.id}}
           <LinkTo @route="user" @model={{flight.copilot.id}}>{{copilotName}}</LinkTo>

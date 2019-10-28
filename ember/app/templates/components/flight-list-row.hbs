@@ -6,11 +6,11 @@
       {{/if}}
     </td>
   {{/if}}
-  
+
   <td class="numeric">
     {{format-number flight.score maximumFractionDigits=0}}
   </td>
-  
+
   {{#if showPilot}}
     <td class="pilot">
       {{#if flight.pilot.id}}
@@ -18,28 +18,28 @@
       {{else if pilotName}}
         {{pilotName}}
       {{/if}}
-  
-      {{#if (and pilotName copilotName)}}<br/>{{/if}}
-  
+
+      {{#if (and pilotName copilotName)}}<br>{{/if}}
+
       {{#if flight.copilot.id}}
         <LinkTo @route="user" @model={{flight.copilot.id}}>{{copilotName}}</LinkTo>
       {{else if copilotName}}
         {{copilotName}}
       {{/if}}
-  
+
       {{#if (not (or pilotName copilotName)) }}
         [{{flight.igcFile.owner.name}}]
       {{/if}}
     </td>
   {{/if}}
-  
-  
+
+
   <td class="numeric">
     {{#if flight.distance}}
       {{format-distance flight.distance}}
     {{/if}}
   </td>
-  
+
   {{#if showAirport}}
     <td class="airport">
       {{#if flight.takeoffAirport}}
@@ -48,7 +48,7 @@
       {{/if}}
     </td>
   {{/if}}
-  
+
   {{#if showClub}}
     <td class="club hidden-sm hidden-xs">
       {{#if flight.club}}
@@ -56,7 +56,7 @@
       {{/if}}
     </td>
   {{/if}}
-  
+
   <td class="aircraft hidden-xs">
     <span>
       {{#if flight.model}}
@@ -64,11 +64,11 @@
       {{else if flight.igcFile.model}}
         [{{flight.igcFile.model}}]
       {{/if}}
-  
+
       <BsTooltip @title={{or flight.registration flight.igcFile.registration (t "unknown")}} />
     </span>
   </td>
-  
+
   {{#if showTimes}}
     <td class="times hidden-xs">
       {{#if (and flight.takeoffTime flight.landingTime)}}
@@ -76,12 +76,12 @@
       {{/if}}
     </td>
   {{/if}}
-  
+
   <td class="column-buttons">
     <LinkTo @route="flight" @model={{flight.id}} class="btn btn-default btn-sm">{{t "show"}}</LinkTo>
     <PinStar @flightId={{flight.id}} />
   </td>
-  
+
   <td class="num_comments hidden-xs">
     {{#if (gt flight.numComments 0)}}
       {{fa-icon "comments-o" title=(t "n-comments" numComments=flight.numComments)}}

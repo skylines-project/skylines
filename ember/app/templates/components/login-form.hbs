@@ -3,7 +3,7 @@
     {{#if (and error (not inline))}}
       <BsAlert @type="danger" @dismissible={{false}}>{{t "wrong-credentials"}}</BsAlert>
     {{/if}}
-  
+
     <ValidatedInput
       @value={{email}}
       @label={{t "email-address"}}
@@ -12,7 +12,7 @@
       @forceErrorClass={{error}}
       @didValidate={{didValidate}}
       @testSelector="login-email" />
-  
+
     <ValidatedInput
       @type="password"
       @value={{password}}
@@ -22,15 +22,15 @@
       @forceErrorClass={{error}}
       @didValidate={{didValidate}}
       @testSelector="login-password" />
-  
+
     <button class="btn btn-primary btn-block" type="submit" disabled={{loginTask.isRunning}} data-test-login-button>
       {{t "login"}}
     </button>
-  
-    <hr/>
-  
+
+    <hr>
+
     <div><LinkTo @route="users.recover">{{t "forgot-password"}}</LinkTo></div>
     <div><LinkTo @route="users.new">{{t "dont-have-an-account"}}</LinkTo></div>
   </form>
-  
+
 </div>
