@@ -221,14 +221,14 @@ you-have-no-notifications: You have no notifications.
 your-flights-have-been-saved: Your flights have been saved.
 your-live-tracking-key: 'Your Live Tracking key is:'
 about:
-  welcome: Welcome to SkyLines, your internet platform for flight sharing!
-  flights: <a href="{uploadURL}">Upload</a> your IGC files and share them with your friends. We won't change your files or restrict you from downloading them again!
+  welcome: SkyLinesCondor -- flight sharing and group flights in the Condor simulator
+  flights: <a href="{uploadURL}">Upload</a> your IGC files and share them with your friends.
   tracking: Use your mobile phone to send position updates to SkyLines. Find out how it works <a href="{url}">here</a>.
-  analysis: Use our analysis tools to have a closer look at your flights and how you might be able to improve them in the future.
+  analysis: Analysis tools to have a closer look at your flights and improve them.
   task-planning: Use your browser to plan your tasks before the flight and upload them quickly to your flight computer. Integration of {prosoar} is planned.
   competitions: Create competitions to offer your spectators an even better live tracking experience by following all the participants on the same map.
   achievements: Challenge yourself by trying to complete all the achievements that SkyLines offers. Fly large triangles, long final glides or just do your first outlanding.
-  notifications: Skylines also has some social network aspects. You can comment on flights, follow your friends and get <a href="{url}">notifications</a> if they do anything interesting.
+  notifications: Comment on flights, follow your friends and get <a href="{url}">notifications</a> of their flights.
   open-data: The SkyLines flight database is made available under the {license}. Skylines is using waypoint data from the {welt2000} project.
   open-source: Skylines is a <a href="{teamURL}">community</a> project and entirely based on free software (<a href="{licenseURL}">License</a>). Visit {github} if you want to help!
 search:

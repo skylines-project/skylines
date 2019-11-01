@@ -13,6 +13,7 @@
 * Tobias Bieniek (<tobias.bieniek@gmx.de> // maintainer)
 * Tobias Lohner (<tobias@lohner-net.de> // maintainer)
 * Tom Payne (<twpayne@gmail.com>)
+* Bret Hess (<bret.hess@gmail.com> // SkylinesCondor)
 
 ## Translators
 

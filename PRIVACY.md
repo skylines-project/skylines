@@ -3,11 +3,11 @@ Privacy Policy
 ===============================================================================
 
 This document describes the SkyLines privacy policy for services formally
-operated and provided by the current project maintainer ([Tobias Bieniek]). It
+operated and provided by the current project maintainer ([Bret Hess]). It
 describes what personal information we may be gathering from you, who can see
 this information, and what options you have for controlling this.
 
-[Tobias Bieniek]: mailto:tobias.bieniek@gmail.com
+[Bret Hess]: mailto:bret.hess@gmail.com
 
 For the protection of the SkyLines service and other users, if you do not agree
 with this Privacy Policy, you may not use the service.
@@ -26,7 +26,7 @@ this into a 'privacy policy' describing how we work with the data.
 
 You should always view SkyLines systems and software with a questioning mind,
 and feel free to raise any concerns you have about matters of privacy by
-contacting us via [email][Tobias Bieniek].
+contacting us via [email][Bret Hess].
 
 
 Types of Information We Receive From You, How We Get It, & How We Use It
@@ -152,7 +152,7 @@ interaction with the SkyLines service, and to generally improve our services.
 We will never use third-party cookies, unless we get your permission to do so.
 If you ever come across a third-party data collection tool that has not been
 authorized by you (such as one that may have been mistakenly placed by another
-user or administrator), please report it to us via [email][Tobias Bieniek].
+user or administrator), please report it to us via [email][Bret Hess].
 
 Locally stored data, and JavaScript help us do things like:
 
@@ -212,7 +212,7 @@ successfully in the SkyLines community, you may not be able to opt out of.
 
 We will never ask for your password by email (but may send you a temporary
 password via email if you have requested a password reset). If you ever receive
-such an email, please let us know by sending it via [email][Tobias Bieniek], so
+such an email, please let us know by sending it via [email][Bret Hess], so
 we can investigate the source of the email.
 
 
