@@ -920,17 +920,17 @@
     ember-cli-babel "^7.10.0"
     ember-modifier-manager-polyfill "^1.1.0"
 
-"@ember/test-helpers@^1.6.0":
-  version "1.6.0"
-  resolved "https://registry.yarnpkg.com/@ember/test-helpers/-/test-helpers-1.6.0.tgz#e928c0190a19c312bf40dc8a6f4159735af48a7f"
-  integrity sha512-t6K15t4p/iW1D7rUAfGZZwIWqLV8HoVm9Dxn44L9PwMFjw3GAJf4bHdwCbdr3jpsgjG14HH+5XzF9IBIvmOZ4A==
+"@ember/test-helpers@^1.7.1":
+  version "1.7.1"
+  resolved "https://registry.yarnpkg.com/@ember/test-helpers/-/test-helpers-1.7.1.tgz#cc22a954b3b46856518f034bd492a74e0482389f"
+  integrity sha512-+ioumnanSRJzZ0ZH30FIkB0r41UhVyuWQ9R9Yp1phDWJQDLumxg+25WDr40relwcH6z0Cn6LIEzeTVujO/0Rww==
   dependencies:
     broccoli-debug "^0.6.5"
     broccoli-funnel "^2.0.2"
     ember-assign-polyfill "^2.6.0"
     ember-cli-babel "^7.7.3"
     ember-cli-htmlbars-inline-precompile "^2.1.0"
-    ember-test-waiters "^1.0.0"
+    ember-test-waiters "^1.1.1"
 
 "@embroider/core@0.4.3", "@embroider/core@^0.4.3":
   version "0.4.3"
@@ -5245,7 +5245,7 @@ ember-cli-babel@^6.0.0, ember-cli-babel@^6.0.0-beta.4, ember-cli-babel@^6.0.0-be
     ember-cli-version-checker "^2.1.2"
     semver "^5.5.0"
 
-ember-cli-babel@^7.1.0, ember-cli-babel@^7.1.2, ember-cli-babel@^7.10.0, ember-cli-babel@^7.11.0, ember-cli-babel@^7.11.1, ember-cli-babel@^7.12.0, ember-cli-babel@^7.2.0, ember-cli-babel@^7.5.0, ember-cli-babel@^7.7.0, ember-cli-babel@^7.7.3, ember-cli-babel@^7.8.0:
+ember-cli-babel@^7.1.0, ember-cli-babel@^7.1.2, ember-cli-babel@^7.10.0, ember-cli-babel@^7.11.0, ember-cli-babel@^7.11.1, ember-cli-babel@^7.12.0, ember-cli-babel@^7.2.0, ember-cli-babel@^7.5.0, ember-cli-babel@^7.7.0, ember-cli-babel@^7.7.3:
   version "7.12.0"
   resolved "https://registry.yarnpkg.com/ember-cli-babel/-/ember-cli-babel-7.12.0.tgz#064997d199384be8c88d251f30ef67953d3bddc5"
   integrity sha512-+EGQsbPvh19nNXHCm6rVBx2CdlxQlzxMyhey5hsGViDPriDI4PFYXYaFWdGizDrmZoDcG/Ywpeph3hl0NxGQTg==
@@ -6146,18 +6146,18 @@ ember-power-select@^2.3.5:
     ember-text-measurer "^0.5.0"
     ember-truth-helpers "^2.1.0"
 
-ember-qunit@^4.5.1:
-  version "4.5.1"
-  resolved "https://registry.yarnpkg.com/ember-qunit/-/ember-qunit-4.5.1.tgz#dc4b0a794fbeb6702a02f28bf19091de0f90fd5a"
-  integrity sha512-fOxXQLFdellP0yiMd9f3n7pIGggiDo8kBuswdGvsCrqTKq5aB1Cb49eeoNyBDQYGlhcxY0pOGUe+xElppChDBA==
+ember-qunit@^4.6.0:
+  version "4.6.0"
+  resolved "https://registry.yarnpkg.com/ember-qunit/-/ember-qunit-4.6.0.tgz#ad79fd3ff00073a8779400cc5a4b44829517590f"
+  integrity sha512-i5VOGn0RP8XH+5qkYDOZshbqAvO6lHgF65D0gz8vRx4DszCIvJMJO+bbftBTfYMxp6rqG85etAA6pfNxE0DqsQ==
   dependencies:
-    "@ember/test-helpers" "^1.6.0"
+    "@ember/test-helpers" "^1.7.1"
     broccoli-funnel "^2.0.2"
     broccoli-merge-trees "^3.0.2"
     common-tags "^1.4.0"
-    ember-cli-babel "^7.8.0"
+    ember-cli-babel "^7.12.0"
     ember-cli-test-loader "^2.2.0"
-    qunit "^2.9.2"
+    qunit "^2.9.3"
 
 ember-raf-scheduler@^0.1.0:
   version "0.1.0"
@@ -6296,10 +6296,10 @@ ember-test-selectors@^2.1.0:
     ember-cli-babel "^6.8.2"
     ember-cli-version-checker "^3.1.2"
 
-ember-test-waiters@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/ember-test-waiters/-/ember-test-waiters-1.0.0.tgz#6990daed15a31e4593dc153a33a20668f76abe5c"
-  integrity sha512-0VP7oTTur/wm2///9EuMwg1/6KP6yRAamyP7DaiYfrY1js1vHtZU2fDPgjwuL0QL4FG1chyUiL/Gi3+dIaqQmA==
+ember-test-waiters@^1.1.1:
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/ember-test-waiters/-/ember-test-waiters-1.1.1.tgz#7df6e7a47e0fdca814aa351f7f7f9a006e15fdcd"
+  integrity sha512-ra71ZWTGBGLeDPa308aeAg9+/nYxv2fk4OEzmXdhvbSa5Dtbei94sr5pbLXx2IiK3Re2gDAvDzxg9PVhLy9fig==
   dependencies:
     ember-cli-babel "^7.1.2"
 
@@ -10467,10 +10467,10 @@ node-sass@^4.13.0:
     stdout-stream "^1.4.0"
     "true-case-path" "^1.0.2"
 
-node-watch@0.6.0:
-  version "0.6.0"
-  resolved "https://registry.yarnpkg.com/node-watch/-/node-watch-0.6.0.tgz#ab0703b60cd270783698e57a428faa0010ed8fd0"
-  integrity sha512-XAgTL05z75ptd7JSVejH1a2Dm1zmXYhuDr9l230Qk6Z7/7GPcnAs/UyJJ4ggsXSvWil8iOzwQLW0zuGUvHpG8g==
+node-watch@0.6.1:
+  version "0.6.1"
+  resolved "https://registry.yarnpkg.com/node-watch/-/node-watch-0.6.1.tgz#b9874111ce9f5841b1c7596120206c7b825be0e9"
+  integrity sha512-gwQiR7weFRV8mAtT0x0kXkZ18dfRLB45xH7q0hCOVQMLfLb2f1ZaSvR57q4/b/Vj6B0RwMNJYbvb69e1yM7qEA==
 
 noop-logger@^0.1.1:
   version "0.1.1"
@@ -11447,15 +11447,15 @@ qunit-dom@^0.9.1:
     broccoli-funnel "^2.0.2"
     broccoli-merge-trees "^3.0.1"
 
-qunit@^2.9.2:
-  version "2.9.2"
-  resolved "https://registry.yarnpkg.com/qunit/-/qunit-2.9.2.tgz#97919440c9c0ae838bcd3c33a2ee42f35c5ef4a0"
-  integrity sha512-wTOYHnioWHcx5wa85Wl15IE7D6zTZe2CQlsodS14yj7s2FZ3MviRnQluspBZsueIDEO7doiuzKlv05yfky1R7w==
+qunit@^2.9.3:
+  version "2.9.3"
+  resolved "https://registry.yarnpkg.com/qunit/-/qunit-2.9.3.tgz#9522a088e76f0782f70a45db92f2fd14db311bcc"
+  integrity sha512-RH4VYSaVsNRDthMFFboTJAJ8q4kJM5LvOqWponKUYPEAeOcmc/YFV1QsZ7ikknA3TjqliWFJYEV63vvVXaALmQ==
   dependencies:
     commander "2.12.2"
     js-reporters "1.2.1"
     minimatch "3.0.4"
-    node-watch "0.6.0"
+    node-watch "0.6.1"
     resolve "1.9.0"
 
 randomatic@^1.1.3:
