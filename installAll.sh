@@ -67,11 +67,16 @@ sudo apt-get install -y --no-install-recommends \
 sudo sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt bionic-pgdg main" >> /etc/apt/sources.lis't
 wget --quiet -O - http://apt.postgresql.org/pub/repos/apt/ACCC4CF8.asc | sudo apt-key add -
 sudo apt update
-sudo apt install -y postgresql-10
-sudo apt install -y postgresql-10-postgis-2.4
-sudo apt install -y postgresql-10-postgis-scripts
-sudo apt install -y postgis
-sudo apt install -y postgresql-10-pgrouting
+#sudo apt install -y postgresql-10
+#sudo apt install -y postgresql-10-postgis-2.4
+#sudo apt install -y postgresql-10-postgis-scripts
+#sudo apt install -y postgis
+#sudo apt install -y postgresql-10-pgrouting
+
+
+sudo apt install -y postgresql-9.5-postgis-2.2
+sudo apt install -y postgresql-9.5-postgis-2.2-scripts postgresql-contrib-9.5 
+
 
 # set GCC 6 as default
 
@@ -85,8 +90,6 @@ sudo -H python get-pip.py
 # install pipenv
 
 sudo -H pip install pipenv
-
-
 
 # install skylines and the python dependencies
 pipenv install flask
