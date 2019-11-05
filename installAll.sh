@@ -6,9 +6,9 @@
 
 #     Front end in separate terminal
 #       you must be skylinesC/ember
-#       ember serve --proxy http://localhost:5000/
+#       sudo ember serve --proxy http://localhost:5000/
 #       or
-#       DEBUG=\* ember serve  --proxy http://localhost:5000/
+#       sudo DEBUG=\* ember serve  --proxy http://localhost:5000/
 
 # To view website
 #   http://localhost:4200/
@@ -62,15 +62,7 @@ sudo apt-get install -y --no-install-recommends \
     libpq-dev libfreetype6-dev libpng-dev libffi-dev 
 echo 'New libs:'
 sudo apt-get install -y --no-install-recommends \
-    libgdal1h ibgeos-c1 libjson-c2 liblwgeom-2.2-5 libproj0
-
- #    The following packages have unmet dependencies:
- # postgresql-9.5-postgis-2.2 : Depends: libgdal1h (>= 1.9.0) but it is not installable
- #                              Depends: libgeos-c1 (>= 3.4.2) but it is not installable
- #                              Depends: libjson-c2 (>= 0.11) but it is not installable
- #                              Depends: liblwgeom-2.2-5 (>= 2.2.0) but it is not going to be installed
- #                              Depends: libproj0 (>= 4.8.0-1) but it is not installable
-
+    ibgeos-c1 liblwgeom-2.2-5
 
 sudo sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt bionic-pgdg main" >> /etc/apt/sources.lis't
 wget --quiet -O - http://apt.postgresql.org/pub/repos/apt/ACCC4CF8.asc | sudo apt-key add -
@@ -97,8 +89,25 @@ sudo -H pip install pipenv
 
 
 # install skylines and the python dependencies
-
-pipenv install --dev
+pipenv install flask
+pipenv install flask_script
+pipenv install flask-migrate
+pipenv install geoalchemy2
+pipenv install shapely
+apt-get install -y libcurl4-openssl-dev libfreetype6-dev
+pipenv install xcsoar
+pipenv install pytz
+pipenv install celery
+pipenv install aerofiles
+pipenv install sentry_sdk
+pipenv install gevent
+pipenv install crc16
+pipenv install blinker
+pipenv install redis
+sudo apt-get install -y libpq-dev
+pipenv install psycopg2
+sudo apt-get install -y pkg-config
+#pipenv install --dev
 
 # create PostGIS databases
 
@@ -134,8 +143,8 @@ sudo npm install -y -g bower
 sudo npm install -y -g ember-cli
 
 cd ember
-yarn install
-bower install
+sudo yarn install
+sudo bower install --allow-root
 cd ../
 
 # save for last
