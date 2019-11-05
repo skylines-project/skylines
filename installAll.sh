@@ -24,7 +24,7 @@
 
 sudo apt install -y git
 sudo apt install -y curl
-git clone https://github.com/hess8/skylinesC
+#git clone https://github.com/hess8/skylinesC
 cd skylinesC
 
 # set environment variables
@@ -50,10 +50,8 @@ sudo apt-get install -y --no-install-recommends software-properties-common
 sudo add-apt-repository -y ppa:ubuntu-toolchain-r/test
 sudo add-apt-repository -y ppa:jonathonf/python-2.7
 
-sudo add-apt-repository -y "deb http://apt.postgresql.org/pub/repos/apt/ trusty-pgdg main"
-wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add -
-
 # update apt-get repository
+c
 
 sudo apt-get update
 
@@ -61,11 +59,30 @@ sudo apt-get update
 
 sudo apt-get install -y --no-install-recommends \
     python python-dev \
-    g++-6 pkg-config libcurl4-openssl-dev redis-server
-
+    
 sudo apt-get install -y --no-install-recommends \
-    libpq-dev postgresql-9.5-postgis-2.2 postgresql-9.5-postgis-2.2-scripts postgresql-contrib-9.5 \
-    libfreetype6-dev libpng-dev libffi-dev
+    g++-6 pkg-config libcurl4-openssl-dev redis-server\
+    libpq-dev libfreetype6-dev libpng-dev libffi-dev 
+echo 'New libs:'
+sudo apt-get install -y --no-install-recommends \
+    libgdal1h ibgeos-c1 libjson-c2 liblwgeom-2.2-5 libproj0
+
+ #    The following packages have unmet dependencies:
+ # postgresql-9.5-postgis-2.2 : Depends: libgdal1h (>= 1.9.0) but it is not installable
+ #                              Depends: libgeos-c1 (>= 3.4.2) but it is not installable
+ #                              Depends: libjson-c2 (>= 0.11) but it is not installable
+ #                              Depends: liblwgeom-2.2-5 (>= 2.2.0) but it is not going to be installed
+ #                              Depends: libproj0 (>= 4.8.0-1) but it is not installable
+
+
+sudo sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt bionic-pgdg main" >> /etc/apt/sources.lis't
+wget --quiet -O - http://apt.postgresql.org/pub/repos/apt/ACCC4CF8.asc | sudo apt-key add -
+sudo apt update
+sudo apt install -y postgresql-10
+sudo apt install -y postgresql-10-postgis-2.4
+sudo apt install -y postgresql-10-postgis-scripts
+sudo apt install -y postgis
+sudo apt install -y postgresql-10-pgrouting
 
 # set GCC 6 as default
 
@@ -82,7 +99,8 @@ sudo -H pip install pipenv
 
 # install skylines and the python dependencies
 
-#cd /vagrant
+#cd
+pipenv install psycopg2-binary
 pipenv install --dev
 
 # create PostGIS databases
