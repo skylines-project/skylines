@@ -30,9 +30,6 @@ cd skylinesC
 # set environment variables
 
 cat >> ~/.profile << EOF
-export LANG=C
-export LC_CTYPE=C
-
 export POSTGIS_GDAL_ENABLED_DRIVERS=GTiff
 export POSTGIS_ENABLE_OUTDB_RASTERS=1
 EOF
@@ -139,6 +136,7 @@ sudo npm install -y -g ember-cli
 cd ember
 yarn install
 bower install
+cd ../
 
 # save for last
 pipenv run ./manage.py import welt2000 --commit
