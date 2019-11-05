@@ -21,6 +21,9 @@
 
   # config.vm.provision 'shell', inline: $script, privileged: false
 
+
+sudo apt install -y git
+sudo apt install -y curl
 git clone https://github.com/hess8/skylinesC
 cd skylinesC
 
@@ -40,7 +43,7 @@ sudo apt-get update
 
 # install add-apt-repository tool
 
-sudo apt-get install -y --no-install-recommends python-software-properties
+sudo apt-get install -y --no-install-recommends software-properties-common
 
 # add PPAs
 
@@ -58,7 +61,9 @@ sudo apt-get update
 
 sudo apt-get install -y --no-install-recommends \
     python python-dev \
-    g++-6 pkg-config libcurl4-openssl-dev git redis-server \
+    g++-6 pkg-config libcurl4-openssl-dev redis-server
+
+sudo apt-get install -y --no-install-recommends \
     libpq-dev postgresql-9.5-postgis-2.2 postgresql-9.5-postgis-2.2-scripts postgresql-contrib-9.5 \
     libfreetype6-dev libpng-dev libffi-dev
 
@@ -100,6 +105,18 @@ pipenv run ./manage.py db create
 mkdir -p htdocs/files
 mkdir -p htdocs/srtm
 
+
+# Front end
+curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
+echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
+
+sudo apt-get update && sudo apt-get install -y yarn
+sudo npm install -y -g bower
+sudo npm install -y -g ember-cli
+
 cd ember
 yarn install
 bower install
+
+# save for last
+pipenv run ./manage.py import welt2000 --commit
