@@ -95,6 +95,7 @@ sudo -H pip install pipenv
 pipenv install flask
 pipenv install flask_script
 pipenv install flask-migrate
+pipenv install flask-sqlalchemy
 pipenv install geoalchemy2
 pipenv install shapely
 apt-get install -y libcurl4-openssl-dev libfreetype6-dev
@@ -108,6 +109,7 @@ pipenv install crc16
 pipenv install blinker
 pipenv install redis
 sudo apt-get install -y libpq-dev
+pipenv install psycopg2
 pipenv install psycopg2
 sudo apt-get install -y pkg-config
 #pipenv install --dev
