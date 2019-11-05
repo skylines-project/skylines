@@ -97,10 +97,10 @@ sudo -H python get-pip.py
 
 sudo -H pip install pipenv
 
+
+
 # install skylines and the python dependencies
 
-#cd
-pipenv install psycopg2-binary
 pipenv install --dev
 
 # create PostGIS databases
@@ -125,6 +125,10 @@ mkdir -p htdocs/srtm
 
 
 # Front end
+v=12
+curl -sL https://deb.nodesource.com/setup_$v.x | sudo -E bash -
+sudo apt-get install -y nodejs
+
 curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
 echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
 
