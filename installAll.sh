@@ -48,7 +48,6 @@ sudo add-apt-repository -y ppa:ubuntu-toolchain-r/test
 sudo add-apt-repository -y ppa:jonathonf/python-2.7
 
 # update apt-get repository
-c
 
 sudo apt-get update
 
