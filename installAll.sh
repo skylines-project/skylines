@@ -64,18 +64,19 @@ echo 'New libs:'
 sudo apt-get install -y --no-install-recommends \
     ibgeos-c1 liblwgeom-2.2-5
 
-sudo sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt bionic-pgdg main" >> /etc/apt/sources.lis't
+sudo sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt trusty-pgdg main" >> /etc/apt/sources.lis't
 wget --quiet -O - http://apt.postgresql.org/pub/repos/apt/ACCC4CF8.asc | sudo apt-key add -
 sudo apt update
-#sudo apt install -y postgresql-10
-#sudo apt install -y postgresql-10-postgis-2.4
-#sudo apt install -y postgresql-10-postgis-scripts
-#sudo apt install -y postgis
-#sudo apt install -y postgresql-10-pgrouting
+sudo apt install -y postgresql-10
+sudo apt install -y postgresql-10-postgis-2.4
+sudo apt install -y postgresql-10-postgis-scripts
+sudo apt install -y postgis
+sudo apt install -y postgresql-10-pgrouting
 
 
-sudo apt install -y postgresql-9.5-postgis-2.2
-sudo apt install -y postgresql-9.5-postgis-2.2-scripts postgresql-contrib-9.5 
+# sudo apt install -y postgresql-9.5-postgis-2.2
+# sudo apt install -y postgresql-9.5-postgis-2.2-scripts 
+# sudo apt install -y postgresql-contrib-9.5 
 
 
 # set GCC 6 as default
@@ -92,25 +93,42 @@ sudo -H python get-pip.py
 sudo -H pip install pipenv
 
 # install skylines and the python dependencies
+apt-get install -y libcurl4-openssl-dev libfreetype6-dev
+sudo apt-get install -y libpq-dev
 pipenv install flask
-pipenv install flask_script
+pipenv install babel
+pipenv install flask-caching
 pipenv install flask-migrate
+pipenv install flask_script
 pipenv install flask-sqlalchemy
+pipenv install psycopg2
 pipenv install geoalchemy2
 pipenv install shapely
-apt-get install -y libcurl4-openssl-dev libfreetype6-dev
-pipenv install xcsoar
+pipenv install crc16
 pipenv install pytz
 pipenv install celery
-pipenv install aerofiles
-pipenv install sentry_sdk
-pipenv install gevent
-pipenv install crc16
-pipenv install blinker
 pipenv install redis
-sudo apt-get install -y libpq-dev
-pipenv install psycopg2
-pipenv install psycopg2
+pipenv install xcsoar
+pipenv install aerofiles
+pipenv install enum34
+pipenv install pyproj
+pipenv install gevent
+pipenv install webargs
+pipenv install flask-oauthlib
+pipenv install requests-oauthlib
+pipenv install sentry-sdk
+pipenv install mapproxy
+pipenv install sentry_sdk
+pipenv install gunicorn
+pipenv install fabric
+pipenv install pytest
+pipenv install pytest-cov
+pipenv install pytest-voluptuous
+pipenv install mock
+pipenv install faker
+pipenv install flake8
+pipenv install immobilus
+
 sudo apt-get install -y pkg-config
 #pipenv install --dev
 
