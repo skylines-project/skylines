@@ -48,6 +48,7 @@ sudo add-apt-repository -y ppa:ubuntu-toolchain-r/test
 sudo add-apt-repository -y ppa:jonathonf/python-2.7
 
 # update apt-get repository
+c
 
 sudo apt-get update
 
@@ -165,9 +166,10 @@ sudo npm install -y -g bower
 sudo npm install -y -g ember-cli
 
 cd ember
-sudo yarn install
+yarn install
 sudo bower install --allow-root
 cd ../
+sudo chown $USER -R ~/.config/*
 
 # save for last
 pipenv run ./manage.py import welt2000 --commit
