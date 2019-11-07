@@ -19,8 +19,6 @@
   # config.vm.network 'forwarded_port', guest: 5001, host: 5001
   # config.vm.network 'forwarded_port', guest: 5597, host: 5597, protocol: 'udp'
 
-  # config.vm.provision 'shell', inline: $script, privileged: false
-
 
 sudo apt install -y git
 sudo apt install -y curl
@@ -72,12 +70,6 @@ sudo apt install -y postgresql-10-postgis-2.4
 sudo apt install -y postgresql-10-postgis-scripts
 sudo apt install -y postgis
 sudo apt install -y postgresql-10-pgrouting
-
-
-# sudo apt install -y postgresql-9.5-postgis-2.2
-# sudo apt install -y postgresql-9.5-postgis-2.2-scripts 
-# sudo apt install -y postgresql-contrib-9.5 
-
 
 # set GCC 6 as default
 
@@ -147,6 +139,7 @@ sudo sudo -u postgres psql -d skylines_test -c 'CREATE EXTENSION fuzzystrmatch;'
 sudo sudo -u postgres psql -c "ALTER USER postgres PASSWORD 'secret123';"
 
 pipenv run ./manage.py db create
+pipenv run ./manage.py import welt2000 --commit
 
 # create folder for downloaded files
 mkdir -p htdocs/files
@@ -171,5 +164,5 @@ sudo bower install --allow-root
 cd ../
 sudo chown $USER -R ~/.config/*
 
-# save for last
-pipenv run ./manage.py import welt2000 --commit
+# management
+npm install pm2
