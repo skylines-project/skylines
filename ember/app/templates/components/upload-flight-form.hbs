@@ -7,6 +7,10 @@
     <input type="file" name="files" multiple="multiple" onchange={{action "setFilesFromEvent"}} class="form-control" disabled={{uploadTask.isRunning}}>
   </ValidatedBlock>
 
+  <ValidatedBlock @label={{t "flight-date"}} >
+    <input type="date" name="cndrflightdate" disabled={{uploadTask.isRunning}}>
+  </ValidatedBlock>
+
   <ValidatedBlock @label={{t "pilot"}} @validation={{validations.attrs.pilotId}} @didValidate={{didValidate}}>
     <PilotSelect @clubMembers={{clubMembers}} @pilotId={{pilotId}} @onChange={{action (mut pilotId)}} />
   </ValidatedBlock>
