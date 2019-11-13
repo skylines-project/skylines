@@ -80,8 +80,9 @@ def add_file(name, f):
     dest = open(path, "wb")
     shutil.copyfileobj(f, dest)
     dest.close()
+    modtime = os.path.getmtime(path)
 
-    return name
+    return name,modtime
 
 
 def delete_file(name):

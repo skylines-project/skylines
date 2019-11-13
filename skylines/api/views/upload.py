@@ -215,7 +215,7 @@ def index_post():
     for name, f in iterate_upload_files(_files):
         prefix += 1
         filename = files.sanitise_filename(name)
-        filename = files.add_file(filename, f)
+        filename,modtime = files.add_file(filename, f) #bch
 
         # check if the file already exists
         with files.open_file(filename) as f:
@@ -229,6 +229,7 @@ def index_post():
         igc_file = IGCFile()
         igc_file.owner = current_user
         igc_file.filename = filename
+        igc_file.time_modified = modtime
         igc_file.md5 = md5
         igc_file.update_igc_headers()
 

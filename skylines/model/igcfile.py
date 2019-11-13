@@ -22,6 +22,7 @@ class IGCFile(db.Model):
 
     time_created = db.Column(DateTime, nullable=False, default=datetime.utcnow)
     filename = db.Column(String(), nullable=False)
+    time_modified = db.Column(DateTime, nullable=False) #bch
     md5 = db.Column(String(32), nullable=False, unique=True)
 
     logger_id = db.Column(String(3))

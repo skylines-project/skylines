@@ -72,7 +72,6 @@ first-last: First / Last
 first-name: First name
 flight-analysis: Flight Analysis
 flight-database: Flight Database
-flight-date: Date of Condor flight
 flight-date-in-future: Date of flight in future
 flight-pinned: Flight pinned!
 flight-time: Flight Time
