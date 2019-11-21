@@ -2252,13 +2252,6 @@ babel-plugin-dead-code-elimination@^1.0.2:
   resolved "https://registry.yarnpkg.com/babel-plugin-dead-code-elimination/-/babel-plugin-dead-code-elimination-1.0.2.tgz#5f7c451274dcd7cccdbfbb3e0b85dd28121f0f65"
   integrity sha1-X3xFEnTc18zNv7s+C4XdKBIfD2U=
 
-babel-plugin-debug-macros@^0.1.10:
-  version "0.1.11"
-  resolved "https://registry.yarnpkg.com/babel-plugin-debug-macros/-/babel-plugin-debug-macros-0.1.11.tgz#6c562bf561fccd406ce14ab04f42c218cf956605"
-  integrity sha512-hZw5qNNGAR02Y+yBUrtsnJHh8OXavkayPRqKGAXnIm4t5rWVpj3ArwsC7TWdpZsBguQvHAeyTxZ7s23yY60HHg==
-  dependencies:
-    semver "^5.3.0"
-
 babel-plugin-debug-macros@^0.2.0, babel-plugin-debug-macros@^0.2.0-beta.6:
   version "0.2.0"
   resolved "https://registry.yarnpkg.com/babel-plugin-debug-macros/-/babel-plugin-debug-macros-0.2.0.tgz#0120ac20ce06ccc57bf493b667cf24b85c28da7a"
@@ -2266,10 +2259,10 @@ babel-plugin-debug-macros@^0.2.0, babel-plugin-debug-macros@^0.2.0-beta.6:
   dependencies:
     semver "^5.3.0"
 
-babel-plugin-debug-macros@^0.3.0:
-  version "0.3.0"
-  resolved "https://registry.yarnpkg.com/babel-plugin-debug-macros/-/babel-plugin-debug-macros-0.3.0.tgz#7a025944faef0777804ef3518c54e8b040197397"
-  integrity sha512-D6qYBI/3+FvcKVnRnH6FBUwXPp/5o/jnJNVFKqVaZpYAWx88+R8jNNyaEX7iQFs7UfCib6rcY/9+ICR4jhjFCQ==
+babel-plugin-debug-macros@^0.3.0, babel-plugin-debug-macros@^0.3.3:
+  version "0.3.3"
+  resolved "https://registry.yarnpkg.com/babel-plugin-debug-macros/-/babel-plugin-debug-macros-0.3.3.tgz#29c3449d663f61c7385f5b8c72d8015b069a5cb7"
+  integrity sha512-E+NI8TKpxJDBbVkdWkwHrKgJi696mnRL8XYrOPYw82veNHPDORM9WIQifl6TpIo8PNy2tU2skPqbfkmHXrHKQA==
   dependencies:
     semver "^5.3.0"
 
@@ -6276,16 +6269,16 @@ ember-require-module@0.1.3, ember-require-module@^0.1.2:
   dependencies:
     ember-cli-babel "^6.9.2"
 
-ember-resolver@^5.3.0:
-  version "5.3.0"
-  resolved "https://registry.yarnpkg.com/ember-resolver/-/ember-resolver-5.3.0.tgz#9fbeedfa63c094b588ac7647ba62f1305374f1d8"
-  integrity sha512-NWin+WzmsRnZxFvDlx9B3rb3kxwK0MNblJemoRvNbbxLK6z5lGxVoBfpU4/nqItWfwmpVb9ZK8bqXYs5q8HT4A==
+ember-resolver@^6.0.0:
+  version "6.0.0"
+  resolved "https://registry.yarnpkg.com/ember-resolver/-/ember-resolver-6.0.0.tgz#e06bc8720a2f9214b3aebbe1c35018d8b172560f"
+  integrity sha512-M2tarFwu0nd+fSa+Kuh8U9fRy5Vnp6l5sfoR+Pl4ihhqoIC2MdyAogVg5iKBC31AfFrYjXw0cm75UV9vLqSyzQ==
   dependencies:
     "@glimmer/resolver" "^0.4.1"
-    babel-plugin-debug-macros "^0.1.10"
+    babel-plugin-debug-macros "^0.3.3"
     broccoli-funnel "^2.0.2"
     broccoli-merge-trees "^3.0.0"
-    ember-cli-babel "^6.16.0"
+    ember-cli-babel "^7.13.0"
     ember-cli-version-checker "^3.1.3"
     resolve "^1.12.0"
 
