@@ -1,10 +1,11 @@
+import os, config
 from flask_script import Manager, prompt_bool
-from flask_migrate import stamp
-
+from flask_migrate import stamp, Migrate #, MigrateCommand
+from skylines import app
 from skylines.database import db
 
 manager = Manager(help="Perform database operations")
-
+# migrate = Migrate(app, db) #bch
 
 @manager.command
 def create():
@@ -16,6 +17,10 @@ def create():
     # create alembic version table
     stamp()
 
+# @manager.command
+# def migrate(): #bch
+#     manager.add_command('db', MigrateCommand)
+#     Migrate(app, db)
 
 @manager.command
 def drop():

@@ -229,7 +229,7 @@ def index_post():
         igc_file = IGCFile()
         igc_file.owner = current_user
         igc_file.filename = filename
-        igc_file.time_modified = modtime
+        igc_file.time_file_modified = modtime #bch
         igc_file.md5 = md5
         igc_file.update_igc_headers()
 
