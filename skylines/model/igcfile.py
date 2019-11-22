@@ -8,7 +8,7 @@ from sqlalchemy.types import Integer, DateTime, String, Unicode, Date
 
 from skylines.database import db
 from skylines.lib import files
-from skylines.lib.igc import read_igc_headers
+from skylines.lib.igc import read_igc_headers, read_condor_fpl
 from skylines.lib.string import unicode_to_str
 
 
@@ -23,6 +23,7 @@ class IGCFile(db.Model):
     time_created = db.Column(DateTime, nullable=False, default=datetime.utcnow)
     filename = db.Column(String(), nullable=False)
     time_file_modified = db.Column(DateTime, nullable=False, default=datetime.utcnow) #bch
+    is_condor_file = db.Column(bool, default = False)
     md5 = db.Column(String(32), nullable=False, unique=True)
 
     logger_id = db.Column(String(3))
@@ -54,8 +55,13 @@ class IGCFile(db.Model):
     def update_igc_headers(self):
         path = files.filename_to_path(self.filename)
         igc_headers = read_igc_headers(path)
+        condor_fpl = read_condor_fpl(path)
         if igc_headers is None:
             return
+
+        if len(condor_fpl) > 0:
+            self.is_condor_file = True
+            print '#bch read Condor file'
 
         if "manufacturer_id" in igc_headers:
             self.logger_manufacturer_id = igc_headers["manufacturer_id"]

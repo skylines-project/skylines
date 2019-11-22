@@ -17,11 +17,7 @@ def create():
     # create alembic version table
     stamp()
 
-# @manager.command
-# def migrate(): #bch
-#     manager.add_command('db', MigrateCommand)
-#     Migrate(app, db)
-
+ 
 @manager.command
 def drop():
     """ Drops database tables """
@@ -29,6 +25,12 @@ def drop():
     if prompt_bool("Are you sure you want to lose all your data"):
         db.drop_all()
 
+@manager.command
+def recreate(default_data=True, sample_data=False):
+    "Recreates database tables (same as issuing 'drop' and then 'create')"
+    drop()
+    #create(default_data, sample_data)
+    create()
 
 @manager.command
 def bootstrap():
