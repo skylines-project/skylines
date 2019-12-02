@@ -22,8 +22,8 @@ class IGCFile(db.Model):
 
     time_created = db.Column(DateTime, nullable=False, default=datetime.utcnow)
     filename = db.Column(String(), nullable=False)
-    time_file_modified = db.Column(DateTime, nullable=False, default=datetime.utcnow) #bch
-    is_condor_file = db.Column(bool, default = False)
+    time_file_modified = db.Column(DateTime, nullable=False) #bch
+    is_condor_file = db.Column(db.Boolean, default = False)
     md5 = db.Column(String(32), nullable=False, unique=True)
 
     logger_id = db.Column(String(3))
@@ -34,6 +34,7 @@ class IGCFile(db.Model):
     model = db.Column(Unicode(64))
 
     date_utc = db.Column(Date, nullable=False)
+    date_condor = db.Column(Date, nullable=False)
 
     def __repr__(self):
         return unicode_to_str(

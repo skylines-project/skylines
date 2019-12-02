@@ -50,6 +50,17 @@ def open_file(name):
 
     return open(filename_to_path(name), "rb")
 
+def read_file(path):
+    file1 = open(path,'r')
+    lines = file1.readlines()
+    file1.close
+    return lines
+
+def write_file(lines,filepath): #need to have \n's inserted already
+    file1 = open(filepath,'w')
+    file1.writelines(lines)
+    file1.close()
+    return
 
 def next_filename(name):
     assert is_string(name)

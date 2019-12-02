@@ -10,6 +10,7 @@ from collections import namedtuple
 from flask import Blueprint, request, current_app, abort, make_response
 from redis.exceptions import ConnectionError
 from sqlalchemy.sql.expression import func
+from typing import Any, Union
 
 from skylines.api.json import jsonify
 from skylines.api.cache import cache
@@ -215,7 +216,7 @@ def index_post():
     for name, f in iterate_upload_files(_files):
         prefix += 1
         filename = files.sanitise_filename(name)
-        filename,modtime = files.add_file(filename, f) #bch
+        filename,modtime = files.add_file(filename, f)  # type: (Union[str, Any], float) #bch
 
         # check if the file already exists
         with files.open_file(filename) as f:
@@ -229,9 +230,12 @@ def index_post():
         igc_file = IGCFile()
         igc_file.owner = current_user
         igc_file.filename = filename
-        igc_file.time_file_modified = modtime #bch
+        igc_file.time_file_modified = datetime.fromtimestamp(modtime) #bch
         igc_file.md5 = md5
         igc_file.update_igc_headers()
+        if igc_file.is_condor_file:
+            igc_file.date_condor = igc_file.date_utc
+            igc_file.date_utc = igc_file.time_file_modified.date()
 
         if igc_file.date_utc is None:
             files.delete_file(filename)
@@ -271,10 +275,10 @@ def index_post():
             results.append(UploadResult.for_no_flight(name, str(prefix)))
             continue
 
-        if flight.landing_time > datetime.now():
-            files.delete_file(filename)
-            results.append(UploadResult.for_future_flight(name, str(prefix)))
-            continue
+        # if flight.landing_time > datetime.now():
+        #     files.delete_file(filename)
+        #     results.append(UploadResult.for_future_flight(name, str(prefix)))
+        #     continue
 
         if not flight.update_flight_path():
             files.delete_file(filename)
