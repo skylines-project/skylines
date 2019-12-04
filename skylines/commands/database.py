@@ -5,7 +5,6 @@ from skylines import app
 from skylines.database import db
 
 manager = Manager(help="Perform database operations")
-# migrate = Migrate(app, db) #bch
 
 @manager.command
 def create():
@@ -17,7 +16,7 @@ def create():
     # create alembic version table
     stamp()
 
- 
+
 @manager.command
 def drop():
     """ Drops database tables """

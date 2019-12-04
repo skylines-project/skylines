@@ -98,6 +98,7 @@ last-fix: Last Fix
 last-name: Last name
 latest: Latest
 n-avg-distance-per-flight: avg. {distance} per flight
+not-condor: File is not a Condor flight
 leg-statistics: Leg Statistics
 license: License
 live-tracking: Live Tracking

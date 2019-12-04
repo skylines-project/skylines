@@ -92,8 +92,9 @@ def add_file(name, f):
     shutil.copyfileobj(f, dest)
     dest.close()
     modtime = os.path.getmtime(path)
+    createtime = os.path.getctime(path)
 
-    return name,modtime
+    return name,modtime,createtime
 
 
 def delete_file(name):

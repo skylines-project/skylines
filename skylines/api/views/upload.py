@@ -61,6 +61,7 @@ class UploadStatus(IntEnum):
     PARSER_ERROR = 3  # _('Failed to parse file')
     NO_FLIGHT = 4  # _('No flight found in file')
     FLIGHT_IN_FUTURE = 5  # _('Date of flight in future')
+    NOT_CONDOR = 6 # _('File is not a Condor flight')
 
 
 class UploadResult(
@@ -89,6 +90,9 @@ class UploadResult(
     def for_future_flight(cls, name, prefix):
         return cls(name, None, UploadStatus.FLIGHT_IN_FUTURE, prefix, None, None, None)
 
+    @classmethod
+    def not_condor(cls, name, prefix):
+        return cls(name, None, UploadStatus.NOT_CONDOR, prefix, None, None, None)
 
 class TraceSchema(Schema):
     igc_start_time = fields.DateTime()
@@ -216,7 +220,7 @@ def index_post():
     for name, f in iterate_upload_files(_files):
         prefix += 1
         filename = files.sanitise_filename(name)
-        filename,modtime = files.add_file(filename, f)  # type: (Union[str, Any], float) #bch
+        filename,modtime,createtime = files.add_file(filename, f)  # type: (Union[str, Any], float)
 
         # check if the file already exists
         with files.open_file(filename) as f:
@@ -230,12 +234,17 @@ def index_post():
         igc_file = IGCFile()
         igc_file.owner = current_user
         igc_file.filename = filename
-        igc_file.time_file_modified = datetime.fromtimestamp(modtime) #bch
+        igc_file.time_file_modified = datetime.fromtimestamp(modtime)
+        igc_file.time_created = datetime.fromtimestamp(createtime)
         igc_file.md5 = md5
         igc_file.update_igc_headers()
         if igc_file.is_condor_file:
             igc_file.date_condor = igc_file.date_utc
             igc_file.date_utc = igc_file.time_file_modified.date()
+        else:
+            files.delete_file(filename)
+            results.append(UploadResult.not_condor(name, str(prefix)))
+            continue
 
         if igc_file.date_utc is None:
             files.delete_file(filename)
@@ -247,7 +256,8 @@ def index_post():
         flight.pilot_name = data.get("pilot_name")
         flight.club_id = club_id
         flight.igc_file = igc_file
-
+        # flight.time_created = igc_file.time_created
+        flight.date_local = igc_file.time_created
         flight.model_id = igc_file.guess_model()
 
         if igc_file.registration:
