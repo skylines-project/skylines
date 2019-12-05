@@ -22,7 +22,6 @@ class IGCFile(db.Model):
 
     time_created = db.Column(DateTime, nullable=False, default=datetime.utcnow)
     filename = db.Column(String(), nullable=False)
-    time_file_modified = db.Column(DateTime, nullable=False)
     is_condor_file = db.Column(db.Boolean, default = False)
     md5 = db.Column(String(32), nullable=False, unique=True)
 

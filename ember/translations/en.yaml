@@ -40,6 +40,7 @@ cruise-performance: Cruise performance
 current-password: Current password
 date: Date
 date-missing-in-igc-file: Date missing in IGC file
+date-not-in-filename: Date of flight must be in filename as numbers separated by '.' or '-'. Avoid numbers after the date.  Refresh this page to try again.
 delay: Delay
 delete: Delete
 delete-account: Delete Account
@@ -97,8 +98,6 @@ last-12-months: Last 12 Months
 last-fix: Last Fix
 last-name: Last name
 latest: Latest
-n-avg-distance-per-flight: avg. {distance} per flight
-not-condor: File is not a Condor flight
 leg-statistics: Leg Statistics
 license: License
 live-tracking: Live Tracking
@@ -114,6 +113,7 @@ logout: Logout
 mark-all-as-read: Mark all as read
 members: Members
 members-of-CLUB: Members <small>of <a href="{clubURL}">{club}</a></small>
+n-avg-distance-per-flight: avg. {distance} per flight
 n-comments: '{numComments, plural, =1 {1 comment} other {# comments}}'
 n-hours: '{num} Hours'
 NUM-pilots: '{num, plural, =1 {1 pilot} other {# pilots}}'
@@ -132,6 +132,7 @@ no-flights-found: No flights found.
 no-live-tracks-of-pilots: '{num, plural, =1 {There is currently no live track of this pilot available.} other {There are currently no live tracks of these pilots available.}}'
 no-pilots-found: No pilots found.
 no-data: No data found...
+not-condor: File is not a Condor flight
 notifications: Notifications
 olc-distance: OLC Distance
 older: Older
