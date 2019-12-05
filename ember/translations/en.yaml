@@ -48,7 +48,7 @@ delete: Delete
 delete-account: Delete Account
 delete-account-modal:
   please-enter-password: Please enter your current password to confirm the account deletion process.
-  proceed-with-caution: This process can not be reverted, proceed with caution!
+  proceed-with-caution: This process can not be undone, proceed with caution!
 delete-flight: Delete Flight
 delete-flight-confirmation-text: Are you sure you want to delete this flight?
 developers: Developers
@@ -228,7 +228,7 @@ about:
   welcome: SkyLinesCondor -- flight sharing and group flights in the Condor simulator
   flights: <a href="{uploadURL}">Upload</a> your IGC files and share them with your friends.
   tracking: Use your mobile phone to send position updates to SkyLines. Find out how it works <a href="{url}">here</a>.
-  analysis: Analysis tools to have a closer look at your flights and improve them.
+  analysis: See your flights in detail and improve them.
   task-planning: Use your browser to plan your tasks before the flight and upload them quickly to your flight computer. Integration of {prosoar} is planned.
   competitions: Create competitions to offer your spectators an even better live tracking experience by following all the participants on the same map.
   achievements: Challenge yourself by trying to complete all the achievements that SkyLines offers. Fly large triangles, long final glides or just do your first outlanding.

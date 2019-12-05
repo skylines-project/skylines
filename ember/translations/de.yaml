@@ -29,7 +29,7 @@ club-was-registered: Dein Verein wurde erfolgreich registriert.
 clubs: Vereine
 comments: Kommentare
 competition-id: Wettbewerbskennzeichen
-competitions: Wettbewerbe
+competitions:
 confirm-password: Passwort bestätigen
 copilot: Copilot
 count: Anzahl
