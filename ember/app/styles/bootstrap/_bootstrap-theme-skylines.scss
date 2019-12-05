@@ -108,7 +108,11 @@ a.no-link {
 }
 
 /* Font size adjustments */
-body, .btn, .form-control, .dropdown-menu {
+body {
+  font-size: 13px;
+}
+
+.btn, .form-control, .dropdown-menu {
   font-size: 13px;
 }
 
@@ -129,6 +133,10 @@ body, .btn, .form-control, .dropdown-menu {
 
 .phases-table-condensed thead tr th {
   vertical-align: top;
+}
+
+.label-warning {
+  font-size: 16px;
 }
 
 .upload-results-form {
