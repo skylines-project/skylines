@@ -40,7 +40,9 @@ cruise-performance: Cruise performance
 current-password: Current password
 date: Date
 date-missing-in-igc-file: Date missing in IGC file
-date-not-in-filename: Date of flight must be in filename as numbers separated by '.' or '-'. Avoid numbers after the date.  Refresh this page to try again.
+date-not-in-filename: Date of flight must be in filename
+date-format-in-filename: Date as numbers separated by '.' or '-'. Avoid numbers after the date.
+date-missing-refresh: Refresh this page to try again.
 delay: Delay
 delete: Delete
 delete-account: Delete Account
