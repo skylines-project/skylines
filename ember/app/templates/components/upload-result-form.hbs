@@ -160,7 +160,7 @@
     </span>
 
   {{else}}
-    <span class="label sa">
+    <span class="label label-warning">
       {{fa-icon "warning"}}
 
       {{#if (eq status 1)}}{{t "duplicate-file"}}
@@ -169,7 +169,10 @@
       {{else if (eq status 4)}}{{t "no-flight-in-file"}}
       {{else if (eq status 5)}}{{t "flight-date-in-future"}}
       {{else if (eq status 6)}}{{t "not-condor"}}
-      {{else if (eq status 7)}}{{t "date-not-in-filename"}}
+      {{else if (eq status 7)}}
+        <p> \n </p>{{t "date-not-in-filename"}}
+        <p> \n </p>{{t "date-format-in-filename"}}
+        <p> \n </p>{{t "date-missing-refresh"}}
       {{else}}{{t "unknown"}}{{/if}}
     </span>
 
