@@ -4,6 +4,7 @@ from zipfile import ZipFile
 from enum import IntEnum
 import hashlib
 import os
+import dateutil.parser as dparser
 
 from collections import namedtuple
 
@@ -62,6 +63,7 @@ class UploadStatus(IntEnum):
     NO_FLIGHT = 4  # _('No flight found in file')
     FLIGHT_IN_FUTURE = 5  # _('Date of flight in future')
     NOT_CONDOR = 6 # _('File is not a Condor flight')
+    DATE_NOT_IN_FILENAME = 7  # _('File is not a Condor flight')
 
 
 class UploadResult(
@@ -93,6 +95,11 @@ class UploadResult(
     @classmethod
     def not_condor(cls, name, prefix):
         return cls(name, None, UploadStatus.NOT_CONDOR, prefix, None, None, None)
+
+    @classmethod
+    def date_not_in_filename(cls, name, prefix):
+        return cls(name, None, UploadStatus.DATE_NOT_IN_FILENAME, prefix, None, None, None)
+
 
 class TraceSchema(Schema):
     igc_start_time = fields.DateTime()
@@ -189,6 +196,9 @@ def _encode_flight_path(fp, qnh):
         igc_end_time=fp[-1].datetime,
     )
 
+def get_date_from_name(filename):
+    #Local date must be somewhere in the file name.  It will guess a date if ambiguous
+    return dparser.parse(filename, fuzzy=True)
 
 @upload_blueprint.route("/flights/upload", methods=("POST",), strict_slashes=False)
 @oauth.required()
@@ -218,9 +228,17 @@ def index_post():
 
     prefix = 0
     for name, f in iterate_upload_files(_files):
+        igc_file = IGCFile()
         prefix += 1
+        try:
+            igc_file.date_condor = get_date_from_name(name) #name differs from filename which has _1 etc appended
+            igc_file.time_created = igc_file.date_condor
+        except:
+            files.delete_file(name)
+            results.append(UploadResult.date_not_in_filename(name, str(prefix)))
+            continue
         filename = files.sanitise_filename(name)
-        filename,modtime,createtime = files.add_file(filename, f)  # type: (Union[str, Any], float)
+        filename = files.add_file(filename, f)
 
         # check if the file already exists
         with files.open_file(filename) as f:
@@ -231,20 +249,16 @@ def index_post():
                 results.append(UploadResult.for_duplicate(name, other, str(prefix)))
                 continue
 
-        igc_file = IGCFile()
         igc_file.owner = current_user
         igc_file.filename = filename
-        igc_file.time_file_modified = datetime.fromtimestamp(modtime)
-        igc_file.time_created = datetime.fromtimestamp(createtime)
         igc_file.md5 = md5
         igc_file.update_igc_headers()
-        if igc_file.is_condor_file:
-            igc_file.date_condor = igc_file.date_utc
-            igc_file.date_utc = igc_file.time_file_modified.date()
-        else:
+        if not igc_file.is_condor_file:
             files.delete_file(filename)
             results.append(UploadResult.not_condor(name, str(prefix)))
             continue
+
+        igc_file.date_utc = igc_file.date_condor
 
         if igc_file.date_utc is None:
             files.delete_file(filename)
@@ -256,8 +270,8 @@ def index_post():
         flight.pilot_name = data.get("pilot_name")
         flight.club_id = club_id
         flight.igc_file = igc_file
-        # flight.time_created = igc_file.time_created
-        flight.date_local = igc_file.time_created
+        flight.time_created = igc_file.date_condor
+        flight.date_local = igc_file.date_condor
         flight.model_id = igc_file.guess_model()
 
         if igc_file.registration:
