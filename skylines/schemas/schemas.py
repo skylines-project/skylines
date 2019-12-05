@@ -151,7 +151,7 @@ class IGCFileSchema(Schema):
     owner = fields.Nested(UserSchema, only=("id", "name"))
 
     filename = fields.String(strip=True)
-
+    time_file_modified = fields.DateTime()
     registration = fields.String(strip=True, validate=validate.Length(max=32))
     competitionId = fields.String(
         attribute="competition_id", strip=True, validate=validate.Length(max=5)

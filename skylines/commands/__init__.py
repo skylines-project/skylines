@@ -35,6 +35,7 @@ def _create_app(config):
 
 
 manager = Manager(_create_app)
+
 manager.add_option("-c", "--config", dest="config", required=False)
 manager.add_command("shell", Shell())
 manager.add_command("runserver", Server(host="0.0.0.0"))
