@@ -84,7 +84,7 @@ follow: Follow
 followers: Followers
 following: Following
 forgot-password: Forgot password?
-friends: Network
+friends: Friends
 generate-new-key: Generate new key
 generating-new-key: Generating new key...
 glide-rate: Glide Rate
@@ -181,7 +181,7 @@ season-YEAR: Season {year}
 settings: Settings
 settings-have-been-saved: Your settings have been saved.
 show: Show
-social-network: Friends
+social-network: Network
 sorry: Sorry!
 speed: Speed
 start: Start
