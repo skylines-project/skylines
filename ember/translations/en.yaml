@@ -84,7 +84,7 @@ follow: Follow
 followers: Followers
 following: Following
 forgot-password: Forgot password?
-friends: Friends
+friends: Network
 generate-new-key: Generate new key
 generating-new-key: Generating new key...
 glide-rate: Glide Rate
@@ -135,7 +135,7 @@ no-flights-found: No flights found.
 no-live-tracks-of-pilots: '{num, plural, =1 {There is currently no live track of this pilot available.} other {There are currently no live tracks of these pilots available.}}'
 no-pilots-found: No pilots found.
 no-data: No data found...
-not-condor: File is not a Condor flight.  Submit real-life flights to Skylines.aero.
+not-condor: File is not a Condor flight.  Submit real-life flights to skylines.aero.
 notifications: Notifications
 olc-distance: OLC Distance
 older: Older
@@ -181,7 +181,7 @@ season-YEAR: Season {year}
 settings: Settings
 settings-have-been-saved: Your settings have been saved.
 show: Show
-social-network: Social Network
+social-network: Friends
 sorry: Sorry!
 speed: Speed
 start: Start

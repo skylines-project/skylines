@@ -22,7 +22,7 @@ Build Status: [![Build Status](https://travis-ci.org/skylines-project/skylines.p
 The *SkyLines* source code is managed with [git](http://www.git-scm.com/).
 It can be downloaded with the following command:
 
-    $ git clone git://github.com/skylines-project/skylines.git
+    $ git clone git://github.com/hess8/skylinesC.git
 
 For more information, please refer to the [git documentation](http://git-scm.com/documentation).
 
@@ -48,12 +48,12 @@ You read about news on [Facebook](https://www.facebook.com/skylines.project) and
 join our [Slack](https://skylines-slack.herokuapp.com/) community.
 
 Bugs and feature request can be submitted here on
-[GitHub](https://github.com/skylines-project/skylines/issues). New ideas can
+[GitHub](https://github.com/hess8/skylinesC/issues). New ideas can
 also be discussed in the
-[Wiki](https://github.com/skylines-project/skylines/wiki) first.
+[Wiki](https://github.com/hess8/skylinesC/wiki) first.
 
 Patches should be submitted using the
-[Pull Request](https://github.com/skylines-project/skylines/pulls) system of
+[Pull Request](https://github.com/hess8/skylinesC/pulls) system of
 GitHub because of the integration with
 [TravisCI](https://travis-ci.org/skylines-project/skylines).
 

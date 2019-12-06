@@ -1,4 +1,8 @@
-# After running this script in bash:
+# First run this script.
+#
+# Next run installLast.sh
+#
+# After sucessful installation:
 # to run servers:
 #     Backend
 #       export FLASK_ENV=development
