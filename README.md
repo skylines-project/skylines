@@ -43,19 +43,14 @@ development is described in the [INSTALL.md](INSTALL.md) file.
 
 ## Contact and Contributing
 
-You read about news on [Facebook](https://www.facebook.com/skylines.project) and
-[Twitter](https://twitter.com/skylinesproject). If you want to talk to us directly
-join our [Slack](https://skylines-slack.herokuapp.com/) community.
+For SkylinesCondor information, contact [Bret Hess]: mailto:bret.hess@gmail.com
+
+For Skylines (real glider flights) join [Slack](https://skylines-slack.herokuapp.com/) community.
 
 Bugs and feature request can be submitted here on
 [GitHub](https://github.com/hess8/skylinesC/issues). New ideas can
 also be discussed in the
 [Wiki](https://github.com/hess8/skylinesC/wiki) first.
-
-Patches should be submitted using the
-[Pull Request](https://github.com/hess8/skylinesC/pulls) system of
-GitHub because of the integration with
-[TravisCI](https://travis-ci.org/skylines-project/skylines).
 
 Here are a few guidelines for creating patches:
 

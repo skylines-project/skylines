@@ -1,4 +1,7 @@
-## Developers
+## SkylinesCondor Developer
+* Bret Hess (<bret.hess@gmail.com>)
+
+## Skylines Developers
 
 * Andrey Lebedev (<andrey@lebedev.lt>)
 * Bruno Bonamin (<bruno@bonamin.org>)
@@ -13,7 +16,6 @@
 * Tobias Bieniek (<tobias.bieniek@gmx.de> // maintainer)
 * Tobias Lohner (<tobias@lohner-net.de> // maintainer)
 * Tom Payne (<twpayne@gmail.com>)
-* Bret Hess (<bret.hess@gmail.com> // SkylinesCondor)
 
 ## Translators
 
