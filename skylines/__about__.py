@@ -1,6 +1,6 @@
 __title__ = "SkyLines"
 __summary__ = "Live tracking, flight database and competition framework"
-__uri__ = "https://github.com/skylines-project/skylines/"
+__uri__ = "https://github.com/hess8/skylinesC/"
 
 __version__ = "0.1.0"
 

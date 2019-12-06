@@ -1,27 +1,3 @@
-# After running this script in bash:
-# to run servers:
-#     Backend
-#       export FLASK_ENV=development
-#       pipenv run ./manage.py runserver
-
-#     Front end in separate terminal
-#       you must be skylinesC/ember
-#       sudo ember serve --proxy http://localhost:5000/
-#       or
-#       sudo DEBUG=\* ember serve  --proxy http://localhost:5000/
-
-# To view website
-#   http://localhost:4200/
-
-$script = <<SCRIPT
-
-set -e
-
-sudo apt install -y git
-sudo apt install -y curl
-git clone https://github.com/hess8/skylinesC
-cd skylinesC
-
 # set environment variables
 
 cat >> ~/.profile << EOF
@@ -43,6 +19,7 @@ sudo add-apt-repository -y ppa:ubuntu-toolchain-r/test
 sudo add-apt-repository -y ppa:jonathonf/python-2.7
 
 # update apt-get repository
+c
 
 sudo apt-get update
 
@@ -54,7 +31,7 @@ sudo apt-get install -y --no-install-recommends \
 sudo apt-get install -y --no-install-recommends \
     g++-6 pkg-config libcurl4-openssl-dev redis-server\
     libpq-dev libfreetype6-dev libpng-dev libffi-dev 
-
+echo 'New libs:'
 sudo apt-get install -y --no-install-recommends \
     ibgeos-c1 liblwgeom-2.2-5
 
@@ -140,7 +117,6 @@ pipenv run ./manage.py db create
 mkdir -p htdocs/files
 mkdir -p htdocs/srtm
 
-
 # Front end
 v=12
 curl -sL https://deb.nodesource.com/setup_$v.x | sudo -E bash -
@@ -154,29 +130,11 @@ sudo npm install -y -g bower
 sudo npm install -y -g ember-cli
 
 cd ember
-sudo yarn install
+yarn install
 sudo bower install --allow-root
 cd ../
+sudo chown $USER -R ~/.config/*
 
-# save for last
+# management
+npm install pm2
 pipenv run ./manage.py import welt2000 --commit
-
-
-SCRIPT
-
-Vagrant.configure("2") do |config|
-  # TravisCI uses a Trusty Tahr base image (2018-05-26)
-  config.vm.box = 'ubuntu/trusty64'
-
-  # increase memory size, required by 'npm install'
-  config.vm.provider "virtualbox" do |v|
-    v.memory = 2048
-    v.cpus = 2
-  end
-
-  config.vm.network 'forwarded_port', guest: 5000, host: 5000
-  config.vm.network 'forwarded_port', guest: 5001, host: 5001
-  config.vm.network 'forwarded_port', guest: 5597, host: 5597, protocol: 'udp'
-
-  config.vm.provision 'shell', inline: $script, privileged: false
-end

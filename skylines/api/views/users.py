@@ -99,7 +99,7 @@ def recover_step1_post(json):
 
     current_user = User.get(request.user_id) if request.user_id else None
     if current_user and current_user.admin:
-        url = u"http://skylines.aero/users/recover?key=%x" % user.recover_key
+        url = u"http://skylinescondor.com/users/recover?key=%x" % user.recover_key
         return jsonify(url=url)
 
     try:
@@ -116,7 +116,7 @@ def send_recover_mail(user):
 you have asked to recover your password (from IP %s).  To enter a new
 password, click on the following link:
 
- http://skylines.aero/users/recover?key=%x
+ http://skylinescondor.com/users/recover?key=%x
 
 The SkyLines Team
 """ % (

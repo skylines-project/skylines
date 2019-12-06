@@ -20,7 +20,7 @@ the HTTP and HTTPS ports:
 Finally, we create a symlink from the `systemd` folder of the repository to
 `/home/skylines/.config/systemd/user` and then we can start the services using:
 
-    systemctl --user start skylines
+     --user start skylines
     systemctl --user start tracking
     systemctl --user start celery
     systemctl --user start mapproxy

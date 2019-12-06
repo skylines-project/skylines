@@ -3,13 +3,13 @@
     {{navbar.toggle}}
 
     <LinkTo @route="index" class="navbar-brand" @click={{action (mut collapsed) true}}>
-      {{svg-jar "logo" class="logo"}} <span class="skylines-blue">Sky</span><span class="skylines-white">Lines</span>
+      {{svg-jar "logo" class="logo"}} <span class="skylines-blue">Sky</span><span class="skylines-blue">Lines</span> <span class="skylines-white">Condor</span> {{svg-jar "logoSkylinesCondor" class="logo"}}
     </LinkTo>
   </div>
 
   <navbar.content>
     <navbar.nav as |nav|>
-      <NavBarLink @nav={{nav}} @target="tracking" @title={{t "live-tracking-nav-bar-link"}} @icon="rss" />
+{{!--       <NavBarLink @nav={{nav}} @target="tracking" @title={{t "live-tracking-nav-bar-link"}} @icon="rss" /> --}}
       <NavBarLink @nav={{nav}} @target="flights" @title={{t "flights"}} @icon="plane" />
       <NavBarLink @nav={{nav}} @target="ranking" @title={{t "ranking"}} @icon="reorder" />
       <NavBarLink @nav={{nav}} @target="statistics" @title={{t "statistics"}} @icon="bar-chart" />

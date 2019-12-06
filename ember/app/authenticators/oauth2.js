@@ -5,7 +5,7 @@ import OAuth2PasswordGrant from 'ember-simple-auth/authenticators/oauth2-passwor
 export default OAuth2PasswordGrant.extend({
   ajax: service(),
 
-  clientId: 'skylines.aero',
+  clientId: 'skylinescondor.com',
   serverTokenEndpoint: '/api/oauth/token',
   serverTokenRevocationEndpoint: '/api/oauth/revoke',
 

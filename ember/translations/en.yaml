@@ -13,20 +13,20 @@ avg-speed: Average Speed
 avg-speed-abbr: Avg. speed
 avg-vario-abbr: Avg. vario
 change: Change
-change-club: Change Club
+change-club: Change group
 change-password: Change password
 changing: Changing...
 changing-password: Changing password...
 choose-aircraft: Choose Aircraft
-choose-club: Choose Club
+choose-club: Choose group
 choose-pilot: Choose Pilot
 circling-performance: Circling performance
 climb-percentage-abbr: Climb %
-club: Club
-club-exists-already: A club with this name exists already.
-club-has-been-changed: Your club has been changed.
-club-was-registered: Your club was successfully registered.
-clubs: Clubs
+club: Group
+club-exists-already: A group with this name exists already.
+club-has-been-changed: Your group has been changed.
+club-was-registered: Your group was successfully registered.
+clubs: Groups
 comments: Comments
 competition-id: Competition Id
 competitions: Competitions
@@ -40,12 +40,15 @@ cruise-performance: Cruise performance
 current-password: Current password
 date: Date
 date-missing-in-igc-file: Date missing in IGC file
+date-not-in-filename: Date of flight must be in filename
+date-format-in-filename: Date as numbers separated by '.' or '-'. Avoid numbers after the date.
+date-missing-refresh: Refresh this page to try again.
 delay: Delay
 delete: Delete
 delete-account: Delete Account
 delete-account-modal:
   please-enter-password: Please enter your current password to confirm the account deletion process.
-  proceed-with-caution: This process can not be reverted, proceed with caution!
+  proceed-with-caution: This process can not be undone, proceed with caution!
 delete-flight: Delete Flight
 delete-flight-confirmation-text: Are you sure you want to delete this flight?
 developers: Developers
@@ -59,7 +62,7 @@ dont-have-an-account: Don't have an account?
 duplicate-file: Duplicate file
 duration: Duration
 edit: Edit
-edit-club: Edit club
+edit-club: Edit group
 editing: Editing...
 email-address: Email address
 email-exists-already: This email address exists already.
@@ -87,6 +90,7 @@ generating-new-key: Generating new key...
 glide-rate: Glide Rate
 glide-rate-abbr: GR
 glides: Glides
+group-flights: Group Flights
 how-to-use-live-tracking: How to use Live Tracking?
 igc-or-zip-files: IGC or ZIP file(s)
 imprint: Imprint
@@ -97,7 +101,6 @@ last-12-months: Last 12 Months
 last-fix: Last Fix
 last-name: Last name
 latest: Latest
-n-avg-distance-per-flight: avg. {distance} per flight
 leg-statistics: Leg Statistics
 license: License
 live-tracking: Live Tracking
@@ -113,6 +116,7 @@ logout: Logout
 mark-all-as-read: Mark all as read
 members: Members
 members-of-CLUB: Members <small>of <a href="{clubURL}">{club}</a></small>
+n-avg-distance-per-flight: avg. {distance} per flight
 n-comments: '{numComments, plural, =1 {1 comment} other {# comments}}'
 n-hours: '{num} Hours'
 NUM-pilots: '{num, plural, =1 {1 pilot} other {# pilots}}'
@@ -122,8 +126,8 @@ new: New
 newer: Newer
 'no': 'No'
 no-airports-found: No airports found.
-no-club: No club
-no-clubs-found: No clubs found.
+no-club: No group
+no-clubs-found: No groups found.
 no-comments-yet: No comments yet.
 no-flight-in-file: No flight found in file
 no-flight-saved: No flight was saved.
@@ -131,6 +135,7 @@ no-flights-found: No flights found.
 no-live-tracks-of-pilots: '{num, plural, =1 {There is currently no live track of this pilot available.} other {There are currently no live tracks of these pilots available.}}'
 no-pilots-found: No pilots found.
 no-data: No data found...
+not-condor: File is not a Condor flight.  Submit real-life flights to skylines.aero.
 notifications: Notifications
 olc-distance: OLC Distance
 older: Older
@@ -167,7 +172,7 @@ recovering: Recovering...
 recovery-mail-sent: Check your email! We have sent you a link to recover your password.
 register: Register
 registering: Registering...
-register-club: Register Club
+register-club: Register Group
 registration: Registration
 score: Score
 scoring-start-time: Scoring start time
@@ -176,7 +181,7 @@ season-YEAR: Season {year}
 settings: Settings
 settings-have-been-saved: Your settings have been saved.
 show: Show
-social-network: Social Network
+social-network: Network
 sorry: Sorry!
 speed: Speed
 start: Start
@@ -221,14 +226,15 @@ you-have-no-notifications: You have no notifications.
 your-flights-have-been-saved: Your flights have been saved.
 your-live-tracking-key: 'Your Live Tracking key is:'
 about:
-  welcome: Welcome to SkyLines, your internet platform for flight sharing!
-  flights: <a href="{uploadURL}">Upload</a> your IGC files and share them with your friends. We won't change your files or restrict you from downloading them again!
+  welcome: SkyLinesCondor -- flight sharing and group flights in the Condor simulator
+  flights: <a href="{uploadURL}">Upload</a> your Condor IGC files and share them.  Export IGC files from Condor:Flight Analysis
   tracking: Use your mobile phone to send position updates to SkyLines. Find out how it works <a href="{url}">here</a>.
-  analysis: Use our analysis tools to have a closer look at your flights and how you might be able to improve them in the future.
+  analysis: See your flights in detail and improve them. OLC+ method scores any type of flight.
   task-planning: Use your browser to plan your tasks before the flight and upload them quickly to your flight computer. Integration of {prosoar} is planned.
   competitions: Create competitions to offer your spectators an even better live tracking experience by following all the participants on the same map.
+  group-flights: Join or register a group!  It's great fun to fly XC together or compare flights on the same Condor flight plan. See overlay of all group tracks.
   achievements: Challenge yourself by trying to complete all the achievements that SkyLines offers. Fly large triangles, long final glides or just do your first outlanding.
-  notifications: Skylines also has some social network aspects. You can comment on flights, follow your friends and get <a href="{url}">notifications</a> if they do anything interesting.
+  notifications: Comment on flights, follow your friends and get <a href="{url}">notifications</a> of their flights.
   open-data: The SkyLines flight database is made available under the {license}. Skylines is using waypoint data from the {welt2000} project.
   open-source: Skylines is a <a href="{teamURL}">community</a> project and entirely based on free software (<a href="{licenseURL}">License</a>). Visit {github} if you want to help!
 search:

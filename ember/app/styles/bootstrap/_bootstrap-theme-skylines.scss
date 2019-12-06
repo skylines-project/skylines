@@ -108,7 +108,15 @@ a.no-link {
 }
 
 /* Font size adjustments */
-body, .btn, .form-control, .dropdown-menu {
+body {
+  font-size: 13px;
+}
+
+.label-warning {
+  font-size: 16px;
+}
+
+.btn, .form-control, .dropdown-menu {
   font-size: 13px;
 }
 

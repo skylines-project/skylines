@@ -1,6 +1,6 @@
 # Installing SkyLines
 
-*SkyLines* has quite many dependencies and is not always easy to install for
+*SkyLines* has many dependencies and is not always easy to install for
 new developers. Please don't hesitate to
 [ask for help](README.md#contact-and-contributing) if you hit any roadblocks.
 

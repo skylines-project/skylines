@@ -72,3 +72,8 @@ coverage.xml
 
 # htdocs
 /htdocs
+
+# ide projects
+/.idea
+.idea*
+/node_modules/
