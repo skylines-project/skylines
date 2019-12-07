@@ -24,7 +24,7 @@ module.exports = function(environment) {
       // when it is created
     },
 
-    SKYLINES_TILE_BASEURL: 'https://skylines.aero/mapproxy',
+    SKYLINES_TILE_BASEURL: 'https://skylinescondor.com/mapproxy',
     CESIUM_TOKEN:
       'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI5NTBkMjZjMS1kNjdlLTQxYWYtODRhNC0yMjQ5OWMzMDdmYmQiLCJpZCI6NDg2Miwic2NvcGVzIjpbImFzciIsImdjIl0sImlhdCI6MTU0MTc4NDE2Nn0.6Y_U401Dlr4QpEfgv2q0PVeqYdZ8kmWyOPQXu1HfHzU',
 

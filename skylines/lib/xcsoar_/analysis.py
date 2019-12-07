@@ -186,7 +186,7 @@ def save_takeoff(event, flight):
             flight.takeoff_location, date=flight.takeoff_time
         )
 
-    flight.date_local = get_takeoff_date(flight)
+    # flight.date_local = get_takeoff_date(flight)
 
 
 def save_landing(event, flight):

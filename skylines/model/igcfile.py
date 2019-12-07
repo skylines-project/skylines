@@ -8,7 +8,7 @@ from sqlalchemy.types import Integer, DateTime, String, Unicode, Date
 
 from skylines.database import db
 from skylines.lib import files
-from skylines.lib.igc import read_igc_headers
+from skylines.lib.igc import read_igc_headers, read_condor_fpl
 from skylines.lib.string import unicode_to_str
 
 
@@ -22,6 +22,7 @@ class IGCFile(db.Model):
 
     time_created = db.Column(DateTime, nullable=False, default=datetime.utcnow)
     filename = db.Column(String(), nullable=False)
+    is_condor_file = db.Column(db.Boolean, default = False)
     md5 = db.Column(String(32), nullable=False, unique=True)
 
     logger_id = db.Column(String(3))
@@ -32,6 +33,7 @@ class IGCFile(db.Model):
     model = db.Column(Unicode(64))
 
     date_utc = db.Column(Date, nullable=False)
+    date_condor = db.Column(Date, nullable=False)
 
     def __repr__(self):
         return unicode_to_str(
@@ -53,8 +55,12 @@ class IGCFile(db.Model):
     def update_igc_headers(self):
         path = files.filename_to_path(self.filename)
         igc_headers = read_igc_headers(path)
+        condor_fpl = read_condor_fpl(path)
         if igc_headers is None:
             return
+
+        if len(condor_fpl) > 0:
+            self.is_condor_file = True
 
         if "manufacturer_id" in igc_headers:
             self.logger_manufacturer_id = igc_headers["manufacturer_id"]
@@ -116,7 +122,6 @@ class IGCFile(db.Model):
         # first try to find the reg number in the database
         if self.registration is not None:
             glider_reg = self.registration
-
             result = (
                 Flight.query()
                 .filter(db.func.upper(Flight.registration) == db.func.upper(glider_reg))

@@ -8,6 +8,7 @@ from datetime import datetime
 from . import base36
 from .string import import_ascii, import_alnum
 from skylines.lib.types import is_string, is_bytes
+from skylines.lib.files import read_file
 
 hfdte_re = re.compile(br"HFDTE(\d{6})", re.IGNORECASE)
 hfgid_re = re.compile(br"HFGID\s*GLIDER\s*ID\s*:(.*)", re.IGNORECASE)
@@ -58,6 +59,13 @@ def read_igc_headers(f):
 
     return igc_headers
 
+def read_condor_fpl(file):
+    lines = read_file(file)
+    fpl_lines = []
+    for line in lines[-400:]:
+        if line.startswith(b"LCONFPL"):
+            fpl_lines.append(line)
+    return fpl_lines
 
 def parse_logger_id(line):
     # non IGC loggers may use more than 3 characters as unique ID.
