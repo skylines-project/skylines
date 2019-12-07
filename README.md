@@ -11,9 +11,9 @@ other similar platforms.
 sharing some code with XCSoar in the algorithmic areas and is providing the
 base for XCSoar's live tracking functionalities.
 
-*SkyLines* is far from finished yet, but it has been running in production for
-quite some time now. You can reach the official server at
-<http://www.skylinescondor.com>.
+*SkyLines* is at <http://skylines.aero>.
+
+*SkyLinesCondor* is a recent branch for Condor simulator igcs. <http://skylinescondor.com>.
 
 Build Status: [![Build Status](https://travis-ci.org/skylines-project/skylines.png?branch=master)](https://travis-ci.org/skylines-project/skylines)
 

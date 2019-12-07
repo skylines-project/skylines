@@ -42,7 +42,7 @@ SKYLINES_TEMPORARY_DIR = "/tmp"
 # how many entries should a list have?
 SKYLINES_LISTS_DISPLAY_LENGTH = 50
 
-SKYLINES_MAP_TILE_URL = "https://www.skylinescondor.com/mapproxy"
+SKYLINES_MAP_TILE_URL = "https://skylinescondor.com/mapproxy"
 
 BROKER_URL = "redis://localhost:6379/0"
 CELERY_RESULT_BACKEND = "redis://localhost:6379/0"
