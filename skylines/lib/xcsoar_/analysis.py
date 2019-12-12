@@ -167,15 +167,15 @@ def save_contests(root, flight):
         save_contest(contest_name, traces, flight)
 
 
-def get_takeoff_date(flight):
-    if flight.takeoff_location is None:
-        return flight.takeoff_time
-
-    timezone = TimeZone.by_location(flight.takeoff_location)
-    if timezone is None:
-        return flight.takeoff_time
-
-    return timezone.fromutc(flight.takeoff_time).date()
+# def get_takeoff_date(flight):
+#     if flight.takeoff_location is None:
+#         return flight.takeoff_time
+#
+#     timezone = TimeZone.by_location(flight.takeoff_location)
+#     if timezone is None:
+#         return flight.takeoff_time
+#
+#     return timezone.fromutc(flight.takeoff_time).date()
 
 
 def save_takeoff(event, flight):
@@ -187,6 +187,7 @@ def save_takeoff(event, flight):
         )
 
     # flight.date_local = get_takeoff_date(flight)
+    flight.date_local = flight.takeoff_time
 
 
 def save_landing(event, flight):

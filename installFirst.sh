@@ -1,5 +1,5 @@
 # First run this script.
-#
+#  sudo -u bret bash installFirst.sh
 # Next run installLast.sh
 #
 # After sucessful installation:

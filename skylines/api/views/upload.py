@@ -198,6 +198,7 @@ def _encode_flight_path(fp, qnh):
 
 def get_date_from_name(filename):
     #Local date must be somewhere in the file name.  It will guess a date if ambiguous
+
     return dparser.parse(filename, fuzzy=True)
 
 @upload_blueprint.route("/flights/upload", methods=("POST",), strict_slashes=False)
