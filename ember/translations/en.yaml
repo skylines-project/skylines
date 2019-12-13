@@ -23,6 +23,7 @@ choose-pilot: Choose Pilot
 circling-performance: Circling performance
 climb-percentage-abbr: Climb %
 club: Group
+club-contact-email-address: Email of contact person in group
 club-exists-already: A group with this name exists already.
 club-has-been-changed: Your group has been changed.
 club-was-registered: Your group was successfully registered.

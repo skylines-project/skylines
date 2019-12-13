@@ -9,6 +9,16 @@
     @label={{t "name"}} @disabled={{saveTask.isRunning}}
     @didValidate={{didValidate}} />
 
+    <ValidatedInput
+    @value={{email}}
+    @validation={{validations.attrs.email}}
+    @label={{t "club-contact-email-address"}}
+    @autocomplete="email"
+    @disabled={{saveTask.isRunning}}
+    />
+{{!--     @didValidate={{didValidate}} /> --}}
+
+
   <ValidatedInput
     @value={{website}}
     @validation={{validations.attrs.website}}

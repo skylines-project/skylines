@@ -1,6 +1,6 @@
 <BasePage>
   <div class="page-header">
-    <h1>{{t "clubs"}}</h1>
+    <h1>{{t "groups"}}</h1>
   </div>
 
   <div class="row">
@@ -16,6 +16,7 @@
           <tr>
             <td class="column-buttons">
               <LinkTo @route="club" @model={{club.id}}>{{club.name}}</LinkTo>
+
               <div class="pull-right">
                 <LinkTo @route="flights.club" @model={{club.id}} class="btn btn-default btn-sm">{{fa-icon "plane"}} {{t "flights"}}</LinkTo>
                 <LinkTo @route="statistics.club" @model={{club.id}} class="btn btn-default btn-sm hidden-xs-inline">{{fa-icon "bar-chart"}} {{t "statistics"}}</LinkTo>

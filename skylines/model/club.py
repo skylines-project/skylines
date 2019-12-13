@@ -6,7 +6,7 @@ from sqlalchemy.types import Integer, Unicode, DateTime
 
 from skylines.database import db
 from skylines.lib.string import unicode_to_str
-
+from skylines.lib.sql import LowerCaseComparator
 
 class Club(db.Model):
     __tablename__ = "clubs"
@@ -15,7 +15,9 @@ class Club(db.Model):
 
     id = db.Column(Integer, autoincrement=True, primary_key=True)
     name = db.Column(Unicode(255), unique=True, nullable=False)
-
+    email_address = db.column_property(
+        db.Column(Unicode(255)), comparator_factory=LowerCaseComparator
+    )
     owner_id = db.Column(
         Integer,
         db.ForeignKey("users.id", use_alter=True, name="users.id", ondelete="SET NULL"),
