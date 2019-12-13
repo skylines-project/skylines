@@ -9,20 +9,18 @@
     @label={{t "name"}} @disabled={{saveTask.isRunning}}
     @didValidate={{didValidate}} />
 
-    <ValidatedInput
+   <ValidatedInput
     @value={{email}}
     @validation={{validations.attrs.email}}
     @label={{t "club-contact-email-address"}}
-    @autocomplete="email"
-    @disabled={{saveTask.isRunning}}
-    />
-{{!--     @didValidate={{didValidate}} /> --}}
-
+{{!--     @autocomplete="email" --}}
+    @didValidate={{didValidate}} />
 
   <ValidatedInput
     @value={{website}}
     @validation={{validations.attrs.website}}
-    @label={{t "website"}} @disabled={{saveTask.isRunning}}
+    @label={{t "website-url"}} @disabled={{saveTask.isRunning}}
+    @autocomplete="optional"
     @didValidate={{didValidate}} />
 
   <button class="btn btn-primary btn-block" type="submit" disabled={{or saveTask.isRunning (not validations.isValid)}}>

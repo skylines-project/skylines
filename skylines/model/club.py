@@ -12,6 +12,7 @@ class Club(db.Model):
     __tablename__ = "clubs"
     __searchable_columns__ = ["name"]
     __search_detail_columns__ = ["website"]
+    __search_detail_columns__ = ["email_address"]
 
     id = db.Column(Integer, autoincrement=True, primary_key=True)
     name = db.Column(Unicode(255), unique=True, nullable=False)

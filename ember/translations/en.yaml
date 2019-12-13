@@ -23,7 +23,7 @@ choose-pilot: Choose Pilot
 circling-performance: Circling performance
 climb-percentage-abbr: Climb %
 club: Group
-club-contact-email-address: Email of contact person in group
+club-contact-email-address: Email of group contact
 club-exists-already: A group with this name exists already.
 club-has-been-changed: Your group has been changed.
 club-was-registered: Your group was successfully registered.
@@ -219,6 +219,7 @@ used-airspaces: Used airspaces
 users: Users
 verify-flights-and-publish: You have to verify their properties and click 'Publish Flight(s)' below to publish your flight(s).
 website: Website
+website-url: Website (include http:// or https://)
 wingmen: Wingmen
 wrong-credentials: Please check your email address and password.
 wrong-current-password: Please check your current password.

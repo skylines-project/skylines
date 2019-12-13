@@ -10,6 +10,7 @@ python_version = "2.7"
 manage = "./manage.py"
 
 [packages]
+requests = "==2.10.*"
 flask = "==1.0.*"
 babel = "==2.7.0"
 flask-caching = "==1.7.*"
@@ -30,7 +31,7 @@ pyproj = "==1.9.6"
 gevent = "==1.4.0"
 webargs = "*"
 flask-oauthlib = "*"
-requests-oauthlib = ">=0.6.2,<1.2.0"  # see https://github.com/lepture/flask-oauthlib/pull/388
+# see https://github.com/lepture/flask-oauthlib/pull/388
 sentry-sdk = {extras = ["flask"],version = "==0.12.3"}
 mapproxy = "*"
 gunicorn = "*"
@@ -42,6 +43,7 @@ mock = "*"
 faker = "*"
 flake8 = "*"
 immobilus = "*"
+requests-oauthlib = "*"
 
 [dev-packages]
 fabric = "==1.14.0"
