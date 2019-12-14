@@ -47,3 +47,5 @@ sudo -H python get-pip.py
 sudo -H pip install pipenv
 
 pipenv shell
+
+echo 'Now run "sudo -u bret bash installLast.sh"'
