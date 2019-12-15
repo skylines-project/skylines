@@ -19,7 +19,6 @@ sudo add-apt-repository -y ppa:ubuntu-toolchain-r/test
 sudo add-apt-repository -y ppa:jonathonf/python-2.7
 
 # update apt-get repository
-c
 
 sudo apt-get update
 
@@ -118,12 +117,22 @@ mkdir -p htdocs/files
 mkdir -p htdocs/srtm
 
 # Front end
-v=12
-curl -sL https://deb.nodesource.com/setup_$v.x | sudo -E bash -
+# add-apt-repository may not be present on some Ubuntu releases:
+# sudo apt-get install python-software-properties
+
+sudo add-apt-repository -y -r ppa:chris-lea/node.js
+sudo rm -f /etc/apt/sources.list.d/chris-lea-node_js-*.list
+sudo rm -f /etc/apt/sources.list.d/chris-lea-node_js-*.list.save
+curl -sSL https://deb.nodesource.com/gpgkey/nodesource.gpg.key | sudo apt-key add -
+VERSION=node_12.x
+DISTRO="$(lsb_release -s -c)"
+echo "deb https://deb.nodesource.com/$VERSION $DISTRO main" | sudo tee /etc/apt/sources.list.d/nodesource.list
+sudo apt-get update
 sudo apt-get install -y nodejs
 
 curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
 echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
+echo "deb-src https://deb.nodesource.com/$VERSION $DISTRO main" | sudo tee -a /etc/apt/sources.list.d/nodesource.list
 
 sudo apt-get update && sudo apt-get install -y yarn
 sudo npm install -y -g bower
