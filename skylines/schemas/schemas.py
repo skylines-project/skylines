@@ -73,7 +73,11 @@ class ClubSchema(Schema):
     owner = fields.Nested(
         "skylines.schemas.schemas.UserSchema", only=("id", "name"), dump_only=True
     )
-
+    email = fields.String(
+        attribute="email_address",
+        allow_none=True,
+        validate=(validate.Email(), validate.Length(max=255)),
+    )
 
 class UserSchema(Schema):
     id = fields.Integer(dump_only=True)

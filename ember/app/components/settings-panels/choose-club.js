@@ -29,6 +29,7 @@ export default Component.extend({
     },
   }),
 
+
   saveTask: task(function*() {
     let club = this.club;
     let json = { clubId: club ? club.id : null };

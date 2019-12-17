@@ -104,6 +104,9 @@ def update(club_id):
     if "website" in data:
         club.website = data.get("website")
 
+    if "email_address" in data:
+        club.email_address = data.get("email_address")
+
     db.session.commit()
 
     return jsonify()
