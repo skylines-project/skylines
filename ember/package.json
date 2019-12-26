@@ -46,7 +46,7 @@
     "ember-cli-sentry": "^4.1.0",
     "ember-cli-shims": "^1.1.0",
     "ember-cli-uglify": "^3.0.0",
-    "ember-click-outside": "^1.2.1",
+    "ember-click-outside": "^1.3.0",
     "ember-concurrency": "^1.1.3",
     "ember-cookies": "^0.4.0",
     "ember-cp-validations": "^3.5.6",
