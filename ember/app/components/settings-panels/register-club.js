@@ -5,6 +5,14 @@ import { task } from 'ember-concurrency';
 import { validator, buildValidations } from 'ember-cp-validations';
 
 const Validations = buildValidations({
+  email: {
+    descriptionKey: 'email-address',
+    validators: [
+      validator('presence', true),
+      validator('format', { type: 'email' }, { allowBlank: false})
+    ],
+    debounce: 500,
+  },
   name: {
     descriptionKey: 'name',
     validators: [
@@ -18,6 +26,11 @@ const Validations = buildValidations({
     ],
     debounce: 500,
   },
+  website: {
+    descriptionKey: 'website',
+    validators: [validator('format', { allowBlank: true, type: 'url' })],
+    debounce: 500,
+  }
 });
 
 export default Component.extend(Validations, {
@@ -40,7 +53,7 @@ export default Component.extend(Validations, {
   },
 
   saveTask: task(function*() {
-    let json = this.getProperties('name');
+    let json = this.getProperties('email','name', 'website');
 
     try {
       let { id } = yield this.ajax.request('/api/clubs', { method: 'PUT', json });
@@ -50,7 +63,7 @@ export default Component.extend(Validations, {
         error: null,
       });
 
-      this.account.set('club', { id, name: json.name });
+      this.account.set('club', {id, name: json.name, email_address: json.email, website: json.website});
     } catch (error) {
       this.setProperties({ messageKey: null, error });
     }

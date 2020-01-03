@@ -19,6 +19,7 @@ export default Component.extend({
     return [{ id: null }].concat(this.clubs);
   }),
 
+
   club: computed('clubId', {
     get() {
       return this.clubsWithNull.findBy('id', this.clubId || null);

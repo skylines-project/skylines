@@ -5,7 +5,7 @@
   "url": "http://localhost:4200",
   "tests": [{
     "id": "25d72d5f-1f19-4c3c-99fa-9222b2663e8e",
-    "name": "new user, login, join club, upload flight, new club, delete account",
+    "name": "new user, login, upload flight, new club, delete account",
     "commands": [{
       "id": "01963731-66d9-4354-839b-e23dba96932f",
       "comment": "",
@@ -794,34 +794,86 @@
       ],
       "value": ""
     }, {
-      "id": "74cedebc-e6ce-4ff8-bce4-abfc802b4c5f",
-      "comment": "Register group",
+      "id": "ec1ebceb-d168-4f25-9342-aeb4990741a7",
+      "comment": "New group name",
       "command": "click",
       "target": "xpath=//div[2]/form/div/input",
       "targets": [
-        ["id=ember1082", "id"],
-        ["css=#ember1082", "css:finder"],
-        ["xpath=//input[@id='ember1082']", "xpath:attributes"],
-        ["xpath=//div[@id='ember1081']/input", "xpath:idRelative"],
+        ["id=ember667", "id"],
+        ["css=#ember667", "css:finder"],
+        ["xpath=//input[@id='ember667']", "xpath:attributes"],
+        ["xpath=//div[@id='ember666']/input", "xpath:idRelative"],
         ["xpath=//div[2]/form/div/input", "xpath:position"]
       ],
       "value": ""
     }, {
-      "id": "1ab3fe86-9153-4e74-a932-7f350ba0074d",
-      "comment": "",
+      "id": "96a5980e-6e54-45fe-ab59-3cc6f0f616df",
+      "comment": "submit name",
       "command": "type",
-      "target": "xpath=//div[2]/form/div/input",
+      "target": "id=ember667",
       "targets": [
-        ["id=ember1082", "id"],
-        ["css=#ember1082", "css:finder"],
-        ["xpath=//input[@id='ember1082']", "xpath:attributes"],
-        ["xpath=//div[@id='ember1081']/input", "xpath:idRelative"],
+        ["id=ember667", "id"],
+        ["css=#ember667", "css:finder"],
+        ["xpath=//input[@id='ember667']", "xpath:attributes"],
+        ["xpath=//div[@id='ember666']/input", "xpath:idRelative"],
         ["xpath=//div[2]/form/div/input", "xpath:position"]
       ],
       "value": "newgroup"
     }, {
+      "id": "3f7b0470-3644-450d-81e7-781333a3b4ef",
+      "comment": "group email",
+      "command": "click",
+      "target": "xpath=//div[2]/input",
+      "targets": [
+        ["id=ember672", "id"],
+        ["css=#ember672", "css:finder"],
+        ["xpath=//input[@id='ember672']", "xpath:attributes"],
+        ["xpath=//div[@id='ember671']/input", "xpath:idRelative"],
+        ["xpath=//div[2]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "170da670-4f9f-4782-b3ce-f74eb2a3dfb7",
+      "comment": "submit",
+      "command": "type",
+      "target": "id=ember672",
+      "targets": [
+        ["id=ember672", "id"],
+        ["css=#ember672", "css:finder"],
+        ["xpath=//input[@id='ember672']", "xpath:attributes"],
+        ["xpath=//div[@id='ember671']/input", "xpath:idRelative"],
+        ["xpath=//div[2]/input", "xpath:position"]
+      ],
+      "value": "pik20gliders@gmail.com"
+    }, {
+      "id": "da5f1b8f-457c-44ad-a489-9f8e73454b7a",
+      "comment": "website",
+      "command": "click",
+      "target": "xpath=//div[3]/input",
+      "targets": [
+        ["id=ember676", "id"],
+        ["css=#ember676", "css:finder"],
+        ["xpath=//input[@id='ember676']", "xpath:attributes"],
+        ["xpath=//div[@id='ember675']/input", "xpath:idRelative"],
+        ["xpath=//div[3]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "e1bbea8c-c296-4337-9523-9f2ba80228a2",
+      "comment": "submit",
+      "command": "type",
+      "target": "xpath=//div[3]/input",
+      "targets": [
+        ["id=ember676", "id"],
+        ["css=#ember676", "css:finder"],
+        ["xpath=//input[@id='ember676']", "xpath:attributes"],
+        ["xpath=//div[@id='ember675']/input", "xpath:idRelative"],
+        ["xpath=//div[3]/input", "xpath:position"]
+      ],
+      "value": "http://google.com"
+    }, {
       "id": "3a05a3cc-1a8c-4c94-8187-1766cff955b2",
-      "comment": "submit new group",
+      "comment": "create new group",
       "command": "click",
       "target": "xpath=(//button[@type='submit'])[2]",
       "targets": [
