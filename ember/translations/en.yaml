@@ -235,7 +235,7 @@ about:
   analysis: See your flights in detail and improve them. OLC+ method scores any type of flight.
   task-planning: Use your browser to plan your tasks before the flight and upload them quickly to your flight computer. Integration of {prosoar} is planned.
   competitions: Create competitions to offer your spectators an even better live tracking experience by following all the participants on the same map.
-  group-flights: Join or register a group!  It's great fun to fly XC together or compare flights on the same Condor flight plan. See overlay of all group tracks.
+  group-flights: Join or register a group!  It's great fun to fly XC together or compare flights on the same Condor flight plan. See overlay of your group's tracks.
   achievements: Challenge yourself by trying to complete all the achievements that SkyLines offers. Fly large triangles, long final glides or just do your first outlanding.
   notifications: Comment on flights, follow your friends and get <a href="{url}">notifications</a> of their flights.
   open-data: The SkyLines flight database is made available under the {license}. Skylines is using waypoint data from the {welt2000} project.

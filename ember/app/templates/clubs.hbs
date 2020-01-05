@@ -4,24 +4,29 @@
   </div>
 
   <div class="row">
-    <div class="col-md-12">
-      <table class="table table-striped">
+    <div class="col-md-12" >
+      <table class="table table-striped" style='text-align: left;'>
         <thead>
         <tr>
           <th>{{t "name"}}</th>
+          <th class="numeric">{{t "pilots"}}</th>
+          <th class="numeric sorting">{{t "flights"}}</th>
+{{!--           <th class="numeric sorting">{{t "email-address"}}</th> --}}
+{{!--           <th class="numeric sorting">{{t "website"}}</th> --}}
         </tr>
         </thead>
         <tbody>
-        {{#each model.clubs as |club|}}
+        {{#each model.club_info as |row|}}
           <tr>
-            <td class="column-buttons">
-              <LinkTo @route="club" @model={{club.id}}>{{club.name}}</LinkTo>
-              <div class="pull-right">
-                <LinkTo @route="flights.club" @model={{club.id}} class="btn btn-default btn-sm">{{fa-icon "plane"}} {{t "flights"}}</LinkTo>
-                <LinkTo @route="statistics.club" @model={{club.id}} class="btn btn-default btn-sm hidden-xs-inline">{{fa-icon "bar-chart"}} {{t "statistics"}}</LinkTo>
-                <LinkTo @route="club.pilots" @model={{club.id}} class="btn btn-default btn-sm hidden-xs-inline">{{fa-icon "group"}} {{t "members"}}</LinkTo>
-              </div>
-            </td>
+            <td><LinkTo @route="club" @model={{row.club.id}}>{{row.club.name}}</LinkTo></td>
+            <td class="numeric">{{format-number row.users}}</td>
+            <td class="numeric">{{format-number row.flights}}</td>
+            <td><a href="mailto:{{row.email}}">Email</a></td>
+            <td><a href={{row.website}} target="_blank" rel="noopener">{{row.website}}</a></td>
+          </tr>
+        {{else}}
+          <tr>
+            <td colspan="4">{{t "no-clubs-found"}}</td>
           </tr>
         {{/each}}
         </tbody>
