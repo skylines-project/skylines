@@ -17,7 +17,7 @@
       "id": "38fa943f-b944-4459-aa67-82c3879f3c6a",
       "comment": "",
       "command": "setWindowSize",
-      "target": "1484x961",
+      "target": "1100x600",
       "targets": [],
       "value": ""
     }, {
@@ -508,7 +508,7 @@
       "id": "6bdd3536-88e5-4b0a-974e-9ac0a3b2638c",
       "comment": "",
       "command": "setWindowSize",
-      "target": "1484x961",
+      "target": "1000x700",
       "targets": [],
       "value": ""
     }, {
