@@ -48,6 +48,7 @@ export default Component.extend(Validations, {
       let { validations } = await this.validate();
       if (validations.get('isValid')) {
         this.saveTask.perform();
+        console.log('testbch7');
       }
     },
   },
@@ -57,15 +58,15 @@ export default Component.extend(Validations, {
 
     try {
       let { id } = yield this.ajax.request('/api/clubs', { method: 'PUT', json });
-
       this.setProperties({
+
         messageKey: 'club-was-registered',
         error: null,
       });
-
       this.account.set('club', {id, name: json.name, email_address: json.email, website: json.website});
     } catch (error) {
       this.setProperties({ messageKey: null, error });
     }
   }).drop(),
+
 });

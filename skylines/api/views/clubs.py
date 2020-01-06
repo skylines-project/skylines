@@ -81,12 +81,13 @@ def create_club():
 
     db.session.commit()
 
-    return jsonify(id=club.id)
-
+    # return jsonify(id=club.id)
+    return jsonify({'id':club.id})
 
 @clubs_blueprint.route("/clubs/<club_id>", methods=["POST"], strict_slashes=False)
 @oauth.required()
 def update(club_id):
+    '''For editing club?'''
     current_user = User.get(request.user_id)
     if not current_user:
         return jsonify(error="invalid-token"), 401

@@ -32,9 +32,11 @@ export default Component.extend({
 
 
   saveTask: task(function*() {
+    console.log('test1bch');
     let club = this.club;
+    console.log('test2bch',club);
     let json = { clubId: club ? club.id : null };
-
+    console.log('test3bch',json);
     try {
       yield this.ajax.request('/api/settings/', { method: 'POST', json });
       this.setProperties({
