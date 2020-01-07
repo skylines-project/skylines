@@ -8,4 +8,3 @@ export default Route.extend({
     return this.ajax.request('/api/clubs/');
   },
 });
-g
