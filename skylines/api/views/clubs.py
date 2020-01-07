@@ -16,7 +16,7 @@ clubs_blueprint = Blueprint("clubs", "skylines")
 
 @clubs_blueprint.route("/clubs", strict_slashes=False)
 def _list():
-# List clubs
+# List clubs with info
     data = _handle_request_flight_user("club_id")
 
     club_schema = ClubSchema(only=("email","flights","id", "name","users","website"))
@@ -81,8 +81,8 @@ def create_club():
 
     db.session.commit()
 
-    # return jsonify(id=club.id)
-    return jsonify({'id':club.id})
+    return jsonify(id=club.id)
+
 
 @clubs_blueprint.route("/clubs/<club_id>", methods=["POST"], strict_slashes=False)
 @oauth.required()
