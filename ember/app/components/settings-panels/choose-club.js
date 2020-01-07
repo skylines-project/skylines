@@ -21,9 +21,9 @@ export default Component.extend({
 
 
   club: computed('clubId', {
-    get() {
-      return this.clubsWithNull.findBy('id', this.clubId || null);
-    },
+//    get() {
+//      return this.clubsWithNull.findBy('id', this.clubId || null);
+//    },
     set(key, value) {
       this.set('clubId', value.id);
       return value;
