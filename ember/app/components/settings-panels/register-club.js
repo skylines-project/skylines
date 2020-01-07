@@ -48,7 +48,7 @@ export default Component.extend(Validations, {
       let { validations } = await this.validate();
       if (validations.get('isValid')) {
         this.saveTask.perform();
-        console.log('testbch7');
+        console.log('testbch register-club finished');
       }
     },
   },
@@ -63,7 +63,8 @@ export default Component.extend(Validations, {
         messageKey: 'club-was-registered',
         error: null,
       });
-      this.account.set('club', {id, name: json.name, email_address: json.email, website: json.website});
+
+      this.account.set('club', { id, name: json.name });
     } catch (error) {
       this.setProperties({ messageKey: null, error });
     }

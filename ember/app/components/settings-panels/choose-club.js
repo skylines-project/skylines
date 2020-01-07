@@ -34,7 +34,7 @@ export default Component.extend({
   saveTask: task(function*() {
     console.log('test1bch');
     let club = this.club;
-    console.log('test2bch',club);
+    console.log('test2bch');
     let json = { clubId: club ? club.id : null };
     console.log('test3bch',json);
     try {
