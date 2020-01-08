@@ -15,7 +15,8 @@
       <label class="control-label">{{t "club"}}</label>
 
       <PowerSelect
-        @options={{clubsWithNull}}
+{{!--         @options={{clubsWithNull}} --}}
+        @options={{allClubs}}
         @selected={{club}}
         @searchField="name"
         @onchange={{action (mut club)}}

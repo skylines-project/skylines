@@ -19,9 +19,9 @@ def _list():
 # List clubs with info
     data = _handle_request_flight_user("club_id")
 
-    club_schema = ClubSchema(only=("email","id", "name","website"))
+    club_schema = ClubSchema(only=("email", "id", "name", "website"))
     club_info = []
-    for club, count, flights, users in data["result"]: #"count" needs to be here for some reason
+    for club, count, flights, users in data["result"]: #"count" needs to be here
         row = {"club": club_schema.dump(club).data,
                "flights": flights,
                "users": users,

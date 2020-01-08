@@ -15,11 +15,15 @@ export default Component.extend({
   messageKey: null,
   error: null,
 
-  clubsWithNull: computed('clubs.[]', function() {
-    return [{ id: null }].concat(this.clubs);
+//  clubsWithNull: computed('clubs.[]', function() {
+//    return [{ id: null }].concat(this.clubs);
+//  }),
+
+  allClubs: computed('clubs.[]', function() {
+    return [].concat(this.clubs);
   }),
 
-
+//  club: for the current value in selector
   club: computed('clubId', {
 //    get() {
 //      return this.clubsWithNull.findBy('id', this.clubId || null);
