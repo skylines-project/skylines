@@ -19,10 +19,6 @@ export default Component.extend({
 //    return [{ id: null }].concat(this.clubs);
 //  }),
 
-  allClubs: computed('clubs.[]', function() {
-    return [].concat(this.clubs);
-  }),
-
 //  club: for the current value in selector
   club: computed('clubId', {
 //    get() {
@@ -38,9 +34,7 @@ export default Component.extend({
   saveTask: task(function*() {
     console.log('test1bch');
     let club = this.club;
-    console.log('test2bch');
     let json = { clubId: club ? club.id : null };
-    console.log('test3bch',json);
     try {
       yield this.ajax.request('/api/settings/', { method: 'POST', json });
       this.setProperties({
