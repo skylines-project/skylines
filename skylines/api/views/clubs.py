@@ -49,7 +49,9 @@ def read(club_id):
 
 @clubs_blueprint.route("/clubs", methods=["PUT"])
 @oauth.required()
+
 def create_club():
+    '''register new club'''
     current_user = User.get(request.user_id)
     if not current_user:
         return jsonify(error="invalid-token"), 401
