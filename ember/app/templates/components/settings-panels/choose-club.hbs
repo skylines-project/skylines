@@ -16,8 +16,7 @@
 
 
       <PowerSelect
-{{!--         @options={{clubsWithNull}} --}}
-        @options={{allClubs}}
+        @options={{clubsWithNull}}
         @selected={{club}}
         @searchField="name"
         @onchange={{action (mut club)}} as |club|>
