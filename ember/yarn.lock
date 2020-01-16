@@ -6471,10 +6471,10 @@ ember-svg-jar@^2.2.3:
     mkdirp "^0.5.1"
     path-posix "^1.0.0"
 
-ember-template-lint@^1.13.0:
-  version "1.13.0"
-  resolved "https://registry.yarnpkg.com/ember-template-lint/-/ember-template-lint-1.13.0.tgz#9e271da31ca34fe65ed8af30f91b94cb701d3093"
-  integrity sha512-poQoMxSaUs+7LQgN5+h7DkNyvSkpoX94uwEA2WkPrsyXJeUSwO9541jiseXUFNCCNMvEDAlBPvOcfG99BA9uxA==
+ember-template-lint@^1.13.1:
+  version "1.13.1"
+  resolved "https://registry.yarnpkg.com/ember-template-lint/-/ember-template-lint-1.13.1.tgz#52f453f891ee4811a791e86ebd1bf57cd20e80b7"
+  integrity sha512-TXsAr9wobz4tlVnABhr/GDXCBZAKQzPd9CUNXiNe3CrrlD3lIpeRzj/d153bgUz1dqWILb3AMjL+T7PKydCL4A==
   dependencies:
     "@glimmer/syntax" "^0.45.0"
     chalk "^2.0.0"
