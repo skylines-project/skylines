@@ -15,6 +15,8 @@ Router.map(function() {
 
   this.route('clubs', { path: '/clubs' });
 
+  this.route('group-flights', { path: '/group-flights' });
+
   this.route('user', { path: '/users/:user_id' }, function() {
     this.route('followers');
     this.route('following');
