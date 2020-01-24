@@ -14,7 +14,9 @@ from query_db import _handle_request_flight_user
 '''Each individual flight uploaded has a groupFlightId, Null by default.  
 Add flight to a group flight if another group member submits a flight 
 with the same flight plan within 24 hours of the last flight plan submission.
-Make sure the other group member's flight is also tagged with the groupFlightId'''
+Make sure the other group member's flight is also tagged with the groupFlightId
+
+The md5 hash of the flight plan is attached to each IGC in the db.  '''
 
 groupFlights_blueprint = Blueprint("group-flights", "skylines")
 
@@ -36,3 +38,4 @@ def _list():
         club_info.append({"group-flights": group_flight_schema.dump})
 
     return jsonify(club_info=club_info, total=g.paginators["result"].count)
+

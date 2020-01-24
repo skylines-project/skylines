@@ -35,7 +35,7 @@ class GroupFlight(db.Model):
     club_id = db.Column(
         Integer, db.ForeignKey("clubs.id", ondelete="SET NULL"), index=True
     )
-    club = db.relationship("Club", backref="flights")
+    # club = db.relationship("Club", backref="flights")  #this conflicts with similar in Flight model
     md5 = db.Column(Unicode(255), unique=True, nullable=False)
     time_created = db.Column(DateTime, nullable=False, default=datetime.utcnow)
     takeoff_location_wkt = db.Column("takeoff_location", Geometry("POINT", srid=4326))
