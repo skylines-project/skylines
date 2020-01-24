@@ -240,11 +240,10 @@ class FlightSchema(Schema):
 
     class GroupFlightSchema(Schema):
         id = fields.Integer()
-        timeCreated = fields.DateTime(attribute="time_created")
-
         clubId = fields.Integer(attribute="club_id", allow_none=True)
         club = fields.Nested(ClubSchema, only=("id", "name"))
-
+        md5 = fields.String()
+        timeCreated = fields.DateTime(attribute="time_created")
         takeoffAirportId = fields.Integer(attribute="takeoff_airport_id", allow_none=True)
         takeoffAirport = fields.Nested(
             AirportSchema, attribute="takeoff_airport", only=("id", "name", "countryCode"))

@@ -21,9 +21,9 @@ groupFlights_blueprint = Blueprint("group-flights", "skylines")
 @groupFlights_blueprint("/group-flights", strict_slashes=False)
 def _list():
 # List group flights by date
-    data = _handle_request_flight_user("club_id")
+#     data = _handle_request_flight_group("club_id")
 
-    club_schema = GroupFlightSchema(only=("email", "id", "name", "website"))
+    group_flight_schema = GroupFlightSchema(only=("id", "clubid", "md5","takeoffAirport", "timeCreated"))
     club_info = []
     for club, count, flights, users in data["result"]: #"count" needs to be here
         row = {"club": club_schema.dump(club).data,
@@ -33,6 +33,6 @@ def _list():
                "website": club.website
         }
 
-        club_info.append(row)
+        club_info.append({"group-flights": group_flight_schema.dump})
 
     return jsonify(club_info=club_info, total=g.paginators["result"].count)

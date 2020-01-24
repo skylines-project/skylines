@@ -29,14 +29,16 @@ from .aircraft_model import AircraftModel
 from .contest_leg import ContestLeg
 
 class GroupFlight(db.Model):
-    __tablename__ = "group-flights"
+    __tablename__ = "group_flights"
 
     id = db.Column(Integer, autoincrement=True, primary_key=True)
-    time_created = db.Column(DateTime, nullable=False, default=datetime.utcnow)
-    takeoff_location_wkt = db.Column("takeoff_location", Geometry("POINT", srid=4326))
     club_id = db.Column(
         Integer, db.ForeignKey("clubs.id", ondelete="SET NULL"), index=True
     )
     club = db.relationship("Club", backref="flights")
+    md5 = db.Column(Unicode(255), unique=True, nullable=False)
+    time_created = db.Column(DateTime, nullable=False, default=datetime.utcnow)
+    takeoff_location_wkt = db.Column("takeoff_location", Geometry("POINT", srid=4326))
+
 
 
