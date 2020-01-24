@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-import re
+import re, StringIO
 from datetime import datetime
 
 from sqlalchemy.sql.expression import and_
@@ -10,7 +10,7 @@ from skylines.database import db
 from skylines.lib import files
 from skylines.lib.igc import read_igc_headers, read_condor_fpl
 from skylines.lib.string import unicode_to_str
-
+from skylines.lib.md5 import file_md5
 
 class IGCFile(db.Model):
     __tablename__ = "igc_files"
@@ -61,6 +61,7 @@ class IGCFile(db.Model):
 
         if len(condor_fpl) > 0:
             self.is_condor_file = True
+            self.flight_plan_md5 = file_md5(StringIO.StringIO('\n'.join(condor_fpl)))
 
         if "manufacturer_id" in igc_headers:
             self.logger_manufacturer_id = igc_headers["manufacturer_id"]

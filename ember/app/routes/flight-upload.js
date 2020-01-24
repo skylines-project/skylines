@@ -9,7 +9,6 @@ export default Route.extend(AuthenticatedRouteMixin, {
 
   async model() {
     let ajax = this.ajax;
-
     let accountId = this.get('account.user.id');
     let clubId = this.get('account.club.id');
     let clubMembers = [];
