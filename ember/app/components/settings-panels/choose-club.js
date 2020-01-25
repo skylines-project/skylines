@@ -31,6 +31,10 @@ export default Component.extend({
   }),
 
 
+  testtask: task(function*() {
+    console.log('testbch task');
+  }),
+
   saveTask: task(function*() {
     console.log('test1bch');
     let club = this.club;
