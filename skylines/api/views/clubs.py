@@ -13,9 +13,18 @@ from query_db import _handle_request_flight_user
 
 clubs_blueprint = Blueprint("clubs", "skylines")
 
+@clubs_blueprint.route("/clubs/choose-club", strict_slashes=False) #make a dummy route
+def _listClubsByName():
+    clubs = Club.query().order_by(func.lower(Club.name))
+
+    name_filter = request.args.get("name")
+    if name_filter:
+        clubs = clubs.filter_by(name=name_filter)
+
+    return jsonify(clubs=ClubSchema(only=("id", "name")).dump(clubs, many=True).data)
 
 @clubs_blueprint.route("/clubs", strict_slashes=False)
-def _list():
+def _listInfo():
 # List clubs with info
     data = _handle_request_flight_user("club_id")
 
