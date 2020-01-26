@@ -37,9 +37,7 @@ def _listInfo():
                "email": club.email_address,
                "website": club.website
         }
-
         club_info.append(row)
-
     return jsonify(club_info=club_info, total=g.paginators["result"].count)
 
 
