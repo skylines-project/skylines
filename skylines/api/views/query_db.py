@@ -78,38 +78,54 @@ def _get_result_Flight_User_byClub(year):
     '''return the number of users in flights that are recorded under the club id.
     Rankable flight means public flight.
     Sort by number of flights this year'''
-    query_flights = (
-        db.session.query(
-            getattr(Flight, "club_id"),
-            func.count("*").label("flights_count"),
-        )
-        .group_by(getattr(Flight, "club_id"))
-    )
+    # query_flights = (
+    #     db.session.query(Flight.
+    #         func.count("*").label("flights_count"),
+    #     )
+    #     .group_by(getattr(Flight, "club_id"))
+    # )
+
+    # if isinstance(year, int):
+    #     year_start = date(year, 1, 1)
+    #     year_end = date(year, 12, 31)
+    #     query_flights = query_flights.filter(Flight.date_local >= year_start).filter(
+    #         Flight.date_local <= year_end
+    #     )
+
+    # subq_flights = query_flights.subquery()
+
 
     if isinstance(year, int):
         year_start = date(year, 1, 1)
         year_end = date(year, 12, 31)
-        query_flights = query_flights.filter(Flight.date_local >= year_start).filter(
+        query_flights = db.session.query(Flight).filter(Flight.date_local >= year_start).filter(
+            Flight.date_local <= year_end).all()
+        query_flights_counts = db.session.query(func.count(Flight.club_id),Flight.club_id).filter(Flight.date_local >= year_start).filter(
             Flight.date_local <= year_end
-        )
+        ).group_by(Flight.club_id).all()
+        # query_users = db.session.query(func.count(Flight.club_id),User.club_id).filter(Flight.date_local >= year_start).filter(
+        #     Flight.date_local <= year_end
+        # ).group_by(Flight.club_id).all()
+    #                       session.query(func.count(User.name), User.name).group_by(User.name).all()
+    print query_flights
+    print query_flights_counts
+    # query_users = (,
+    #     db.session.query(
+    #         getattr(User, "club_id"),
+    #         func.count("*").label("users_count"),
+    #     )
+    #         .group_by(getattr(User, "name"))
+    # )
+    #
+    # subq_users = query_users.subquery()
 
-    subq_flights = query_flights.subquery()
-
-    query_users = (
-        db.session.query(
-            getattr(User, "club_id"),
-            func.count("*").label("users_count"),
-        )
-            .group_by(getattr(User, "club_id"))
-    )
-
-    subq_users = query_users.subquery()
-
-    result = db.session.query(
-        Club,
-        subq_flights.c.flights_count,
-        subq_users.c.users_count,
-    ).join((subq_flights, getattr(subq_flights.c, "club_id") == Club.id))
+    result = ''
+    #
+    # result = db.session.query(
+    #     Club,
+    #     subq_flights.c.flights_count,
+    #     subq_users.c.users_count,
+    # ).join((subq_flights, getattr(subq_flights.c, "club_id") == Club.id))
 
     return result
 
