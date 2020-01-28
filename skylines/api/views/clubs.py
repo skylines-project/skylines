@@ -9,7 +9,7 @@ from skylines.model import Club, User, Flight
 from skylines.model.notification import create_club_join_event
 
 from skylines.schemas import ClubSchema, ValidationError
-from query_db import _handle_request_flight_user
+from query_db import _handle_request_flight_user_byClub
 
 clubs_blueprint = Blueprint("clubs", "skylines")
 
@@ -26,7 +26,7 @@ def _listClubsByName():
 @clubs_blueprint.route("/clubs", strict_slashes=False)
 def _listInfo():
 # List clubs with info
-    data = _handle_request_flight_user("club_id")
+    data = _handle_request_flight_user_byClub()
 
     club_schema = ClubSchema(only=("email", "id", "name", "website"))
     club_info = []

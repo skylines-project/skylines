@@ -13,15 +13,15 @@ from skylines.lib.table_tools import Pager, Sorter
 from skylines.schemas import AirportSchema, ClubSchema, UserSchema
 
 
-def _get_result_Flight(model, clubID, year=None):
+def _get_result_Flight(table, table_column, year=None):
     subq = (
         db.session.query(
-            getattr(Flight, clubID),
+            getattr(Flight, table_column),
             func.count("*").label("count"),
             func.sum(Flight.index_score).label("total"),
         )
-        .group_by(getattr(Flight, clubID))
-        .outerjoin(Flight.model)
+        .group_by(getattr(Flight, table_column))
+        .outerjoin(Flight.model)  #glider model
         .filter(Flight.is_rankable())
     )
 
@@ -35,22 +35,22 @@ def _get_result_Flight(model, clubID, year=None):
     subq = subq.subquery()
 
     result = db.session.query(
-        model,
+        table,
         subq.c.count,
         subq.c.total,
         over(func.rank(), order_by=desc("total")).label("rank"),
-    ).join((subq, getattr(subq.c, clubID) == model.id))
+    ).join((subq, getattr(subq.c, table_column) == table.id))
 
-    if model == User:
-        result = result.outerjoin(model.club)
-        result = result.options(eagerload(model.club))
+    if table == User:
+        result = result.outerjoin(table.club)
+        result = result.options(eagerload(table.club))
 
     return result
 
-def _handle_request_rank(model, clubID):
+def _handle_request_rank(table, table_column):
     current_year = date.today().year
     year = _parse_year()
-    result = _get_result_Flight(model, clubID, year=year)
+    result = _get_result_Flight(table, table_column, year=year)
 
     result = Sorter.sort(
         result,
@@ -74,16 +74,16 @@ def _parse_year():
         current_year = date.today().year
         return current_year
 
-def _get_result_Flight_User(clubID, year):
+def _get_result_Flight_User_byClub(year):
     '''return the number of users in flights that are recorded under the club id.
     Rankable flight means public flight.
     Sort by number of flights this year'''
     query_flights = (
         db.session.query(
-            getattr(Flight, clubID),
+            getattr(Flight, "club_id"),
             func.count("*").label("flights_count"),
         )
-        .group_by(getattr(Flight, clubID))
+        .group_by(getattr(Flight, "club_id"))
     )
 
     if isinstance(year, int):
@@ -97,10 +97,10 @@ def _get_result_Flight_User(clubID, year):
 
     query_users = (
         db.session.query(
-            getattr(User, clubID),
+            getattr(User, "club_id"),
             func.count("*").label("users_count"),
         )
-            .group_by(getattr(User, clubID))
+            .group_by(getattr(User, "club_id"))
     )
 
     subq_users = query_users.subquery()
@@ -110,15 +110,15 @@ def _get_result_Flight_User(clubID, year):
         subq_users.c.users_count,
         subq_flights.c.flights_count,
         over(func.rank(), order_by=desc("flights_count")),
-    ).join((subq_flights, getattr(subq_flights.c, clubID) == Club.id))
+    ).join((subq_flights, getattr(subq_flights.c, "club_id") == Club.id))
 
     return result
 
 
-def _handle_request_flight_user(clubID):
+def _handle_request_flight_user_byClub():
     current_year = date.today().year
     year = _parse_year()
-    result = _get_result_Flight_User(clubID, year=year)
+    result = _get_result_Flight_User_byClub(year=year)
 
     result = Sorter.sort(
         result,
