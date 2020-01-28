@@ -109,7 +109,7 @@ def _get_result_Flight_User(clubID, year):
         Club,
         subq_users.c.users_count,
         subq_flights.c.flights_count,
-        over(func.rank(), order_by=desc("flights_count")).label("flights"),
+        over(func.rank(), order_by=desc("flights_count")),
     ).join((subq_flights, getattr(subq_flights.c, clubID) == Club.id))
 
     return result
