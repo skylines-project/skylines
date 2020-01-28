@@ -107,9 +107,9 @@ def _get_result_Flight_User_byClub(year):
 
     result = db.session.query(
         Club,
-        subq_users.c.users_count,
         subq_flights.c.flights_count,
-        over(func.rank(), order_by=desc("flights_count")),
+        subq_users.c.users_count,
+        over(func.rank(), order_by=desc("flights_count")).label("rank"),
     ).join((subq_flights, getattr(subq_flights.c, "club_id") == Club.id))
 
     return result
