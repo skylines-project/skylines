@@ -71,7 +71,7 @@
     "ember-truth-helpers": "^2.1.0",
     "ember-web-app": "^3.0.1",
     "eslint": "^6.8.0",
-    "eslint-config-prettier": "^6.9.0",
+    "eslint-config-prettier": "^6.10.0",
     "eslint-config-simplabs": "0.4.0",
     "eslint-plugin-ember": "^7.7.2",
     "eslint-plugin-import-helpers": "^1.0.2",
