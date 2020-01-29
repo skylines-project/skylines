@@ -30,9 +30,10 @@ def _listInfo():
 
     club_schema = ClubSchema(only=("email", "id", "name", "website"))
     club_info = []
-    for club, flights, users in data["result"]: #"count" needs to be here
-        print club.name, flights, users
-        row = {"club": club_schema.dump(club).data,
+    for clubId, flights, users in data["result"]:
+        print clubId, flights, users
+        club = db.session.query(Club).filter(Club.id==clubId).all()
+        row = {"club": club,
                "flights": flights,
                "users": users,
                "email": club.email_address,
