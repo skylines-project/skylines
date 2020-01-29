@@ -98,17 +98,21 @@ def _get_result_Flight_User_byClub(year):
     if isinstance(year, int):
         year_start = date(year, 1, 1)
         year_end = date(year, 12, 31)
-        query_flights = db.session.query(Flight).filter(Flight.date_local >= year_start).filter(
-            Flight.date_local <= year_end).all()
+        query_flights_users = db.session.query(Flight.pilot_id).filter(Flight.date_local >= year_start).filter(
+            Flight.date_local <= year_end).group_by(Flight.pilot_id).all()
         query_flights_counts = db.session.query(func.count(Flight.club_id),Flight.club_id).filter(Flight.date_local >= year_start).filter(
             Flight.date_local <= year_end
         ).group_by(Flight.club_id).all()
-        # query_users = db.session.query(func.count(Flight.club_id),User.club_id).filter(Flight.date_local >= year_start).filter(
-        #     Flight.date_local <= year_end
-        # ).group_by(Flight.club_id).all()
-    #                       session.query(func.count(User.name), User.name).group_by(User.name).all()
-    print query_flights
+
+        query_flights_join_users_flights = db.session.query(Flight,User,Club).join(Club,Flight.club).\
+            join(User,Flight.pilot).all()
+
+        # query_flights_join_users_flights = db.session.query(Flight.pilot_id,User.club_id,Club).join(Club,Flight.club).\
+        #     join(User,Flight.pilot).group_by(Flight.pilot_id,User.club_id).all()
+
+    print query_flights_users
     print query_flights_counts
+    print query_flights_join_users_flights
     # query_users = (,
     #     db.session.query(
     #         getattr(User, "club_id"),

@@ -52,7 +52,7 @@ class User(db.Model):
     # The user's club (optional)
 
     club_id = db.Column(Integer, db.ForeignKey("clubs.id", ondelete="SET NULL"))
-    club = db.relationship("Club", foreign_keys=[club_id], backref="members")
+    club = db.relationship("Club", foreign_keys=[club_id], backref="members")  #not used?
 
     # Tracking key, delay in minutes and other settings
 
