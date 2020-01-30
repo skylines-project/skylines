@@ -32,7 +32,7 @@ def _listInfo():
     club_info = []
     for clubId, flights, users in data["result"]:
         print clubId, flights, users
-        club = db.session.query(Club).filter(Club.id==clubId).all()
+        club = db.session.query(Club).filter(Club.id==clubId).all()[0]
         row = {"club": club,
                "flights": flights,
                "users": users,

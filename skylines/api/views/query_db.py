@@ -126,5 +126,5 @@ def _handle_request_flight_user_byClub():
     #     default_order="desc",
     # )
 
-    # result = Pager.paginate(result, "result")
+    result = Pager.paginate(result, "result")
     return dict(year=year, current_year=current_year, result=result)
