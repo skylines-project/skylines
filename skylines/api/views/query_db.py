@@ -104,84 +104,19 @@ def _get_result_Flight_User_byClub(year):
     if isinstance(year, int):
         year_start = date(year, 1, 1)
         year_end = date(year, 12, 31)
-        query_flights_users = db.session.query(Flight.pilot_id).filter(Flight.date_local >= year_start).filter(
-            Flight.date_local <= year_end).group_by(Flight.pilot_id).all()
-        query_flights_counts = db.session.query(func.count(Flight.club_id),Flight.club_id).filter(Flight.date_local >= year_start).filter(
-            Flight.date_local <= year_end
-        ).group_by(Flight.club_id).all()
+        q3 = db.session.query(\
+            Flight.club_id,\
+            func.count((Flight.pilot_id.distinct())).label('nusers')\
+            ,func.count(Flight.id).label('nflights'))\
+            .group_by(Flight.club_id)\
+            .filter(Flight.date_local >= year_start)\
+            .filter(Flight.date_local <= year_end)
 
-        query_flights_join_users_flights = db.session.query(Flight,User).join(User,Flight.pilot).all()
-
-        query_flights_users_grouped = db.session.query(Flight.pilot_id,Flight.club_id).filter(Flight.date_local >= year_start).filter(
-            Flight.date_local <= year_end).group_by(Flight.club_id,Flight.pilot_id).all()
-
-        query_flights_users_distinct = db.session.query(func.count(distinct(Flight.pilot_id)),Flight.pilot_id).filter(Flight.date_local >= year_start).filter(
-            Flight.date_local <= year_end
-        ).group_by(Flight.pilot_id).all()
-
-        query_flight_users_clubs = db.session.query(Flight.club_id).filter(Flight.date_local >= year_start).filter(
-            Flight.date_local <= year_end).filter(Flight.club_id == User.club_id).group_by(Flight.club_id).all()
-
-        query_flight_users_clubs = db.session.query(Flight.club_id).filter(Flight.date_local >= year_start).filter(
-            Flight.date_local <= year_end).filter(Flight.club_id == User.club_id).group_by(Flight.club_id).all()
-
-        query_flight_users_clubs_count = db.session.query(Flight.club_id,func.count(Flight.club_id)).filter(Flight.date_local >= year_start).filter(
-            Flight.date_local <= year_end).filter(Flight.club_id == User.club_id).group_by(Flight.club_id).all() #gives a useless count.
-
-        qu = db.session.query(User.club_id)
-        qf = db.session.query(Flight.club_id).filter(Flight.date_local >= year_start).filter(
-            Flight.date_local <= year_end).filter(Flight.club_id == User.club_id)
-
-        qusers_with_flights = db.session.query(qu).join(qf,Flight.club_id==User.club_id)
-
-        # query_flights_join_users_flights = db.session.query(Flight.pilot_id,User.club_id,Club).join(Club,Flight.club).\
-        #     join(User,Flight.pilot).group_by(Flight.pilot_id,User.club_id).all()
-
-
-
-        txtqueryUsers = db.session.query(User).from_statement(\
-                      text("SELECT * from users where club_id=1")).params(name='ed').all()
-
-        # txtqueryUsersFlightsClubs = db.session.query(Flight,User).from_statement(\
-        #               text('''SELECT flights.club_id, users.first_name FROM flights
-        #                        full join users on flights.club_id=users.club_id  '''))\
-        #                 .params(name='ed').all()#INNER JOIN users on flights.club_id=users.club_id
-
-    print query_flights_users
-    print query_flights_counts
-    print query_flights_join_users_flights
-    print query_flights_users_grouped
-    print query_flights_users_distinct
-    print txtqueryUsers
-
-    # txtqueryUsersFlightsClubs = db.session.query(Flight, User).from_statement( \
-    #     text('''SELECT flights.club_id, users.first_name FROM flights
-    #                        full join users on flights.club_id=users.club_id  ''')) \
-    #     .params(name='ed').all()  # INNER JOIN users on flights.club_id=users.club_id
-
-    # print txtqueryUsersFlightsClubs
-
-    print query_flight_users_clubs
-    print query_flight_users_clubs_count
-    print qusers_with_flights
-
-    # query_users = (,
-    #     db.session.query(
-    #         getattr(User, "club_id"),
-    #         func.count("*").label("users_count"),
-    #     )
-    #         .group_by(getattr(User, "name"))
-    # )
-    #
-    # subq_users = query_users.subquery()
-
-    result = ''
-    #
-    # result = db.session.query(
-    #     Club,
-    #     subq_flights.c.flights_count,
-    #     subq_users.c.users_count,
-    # ).join((subq_flights, getattr(subq_flights.c, "club_id") == Club.id))
+    result = db.session.query(
+        Club,
+        q3.c.flights_count,
+        q3.c.users_count,
+    ).join((q3, getattr(q3.c, "club_id") == Club.id))
 
     return result
 
