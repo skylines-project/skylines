@@ -108,13 +108,6 @@ def _get_result_Flight_User_byClub(year):
 
     return result
 
-    # result = db.session.query(
-    #     table,
-    #     subq.c.count,
-    #     subq.c.total,
-    #     over(func.rank(), order_by=desc("total")).label("rank"),
-    # ).join((subq, getattr(subq.c, table_column) == table.id))
-
 def _handle_request_flight_user_byClub():
     current_year = date.today().year
     year = _parse_year()
@@ -123,7 +116,7 @@ def _handle_request_flight_user_byClub():
     result = Sorter.sort(
         result,
         "sorter",
-        "flights_count",
+        "flights",
         valid_columns={"flights": "flights_count", "users": "users_count", "rank": "rank"},
         default_order="desc",
     )

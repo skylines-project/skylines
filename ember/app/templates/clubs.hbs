@@ -2,8 +2,6 @@
   <div class="page-header">
     <h1>{{t "clubs"}}</h1>
   </div>
-
-
 {{!--   <div class="row"> --}}
 {{!--     <div class="col-md-12" > --}}
 {{!--   <table class="table table-striped" style='text-align: left;'> --}}
@@ -13,16 +11,16 @@
       <th>{{t "name"}}</th>
       <th class="numeric sorting">{{t "flights"}}</th>
       <th class="numeric">{{t "pilots"}}</th>
-      <th>{{t "contact"}}</th>
-      <th>{{t "website"}}</th>
+{{!--       <th>{{t "contact"}}</th> --}}
+{{!--       <th>{{t "website"}}</th> --}}
     </tr>
     </thead>
     <tbody>
     {{#each model.club_info as |row|}}
       <tr>
         <td><LinkTo @route="club" @model={{row.club.id}}>{{row.club.name}}</LinkTo></td>
-        <td class="numeric">{{format-number row.users}}</td>
         <td class="numeric">{{format-number row.flights}}</td>
+        <td class="numeric">{{format-number row.users}}</td>
         <td><a href="mailto:{{row.email}}">Email</a></td>
         <td><a href={{row.website}} target="_blank" rel="noopener">{{row.website}}</a></td>
       </tr>
