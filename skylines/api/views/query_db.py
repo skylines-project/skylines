@@ -80,24 +80,24 @@ def group_by(pilot_id):
     pass
 
 
-def _get_result_Flight_User_byClub(year):
+def _get_result_Flight_User_byClub(year=None):
     '''return the number of users in flights that are recorded under the club id.
     Rankable flight means public flight.
     Sort by number of flights this year'''
 
-    if isinstance(year, int):
+    query = db.session.query( \
+        Flight.club_id, \
+        func.count((Flight.pilot_id.distinct())).label('users_count') \
+        , func.count(Flight.id).label('flights_count')) \
+        .group_by(Flight.club_id)
+
+    if isinstance(year, int): #if year is None, then get flights for all seasons
         year_start = date(year, 1, 1)
         year_end = date(year, 12, 31)
-        query = db.session.query(\
-            Flight.club_id,\
-            func.count((Flight.pilot_id.distinct())).label('users_count')\
-            ,func.count(Flight.id).label('flights_count'))\
-            .group_by(Flight.club_id)\
-            .filter(Flight.date_local >= year_start)\
+        query = query.filter(Flight.date_local >= year_start)\
             .filter(Flight.date_local <= year_end)
-        subq = query.subquery()
 
-        print subq
+    subq = query.subquery()
 
     result = db.session.query(
         Club,

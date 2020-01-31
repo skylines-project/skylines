@@ -19,11 +19,10 @@ export default Component.extend({
     return [{ id: null }].concat(this.clubs);
   }),
 
-//  club: for the current value in selector
   club: computed('clubId', {
-//    get() {
-//      return this.clubsWithNull.findBy('id', this.clubId || null);
-//    },
+    get() {
+      return this.clubsWithNull.findBy('id', this.clubId || null);
+    },
     set(key, value) {
       this.set('clubId', value.id);
       return value;
@@ -31,14 +30,10 @@ export default Component.extend({
   }),
 
 
-  testtask: task(function*() {
-    console.log('testbch task');
-  }),
-
   saveTask: task(function*() {
-    console.log('test1bch');
     let club = this.club;
     let json = { clubId: club ? club.id : null };
+
     try {
       yield this.ajax.request('/api/settings/', { method: 'POST', json });
       this.setProperties({

@@ -30,15 +30,16 @@ def _listInfo():
 
     club_schema = ClubSchema(only=("email", "id", "name", "website"))
     club_info = []
-    for club, flights, users, rank in data["result"]:
-        print club, flights, users
-        row = {"club": club_schema.dump(club).data,
-               "flights": flights,
-               "users": users,
-               "email": club.email_address,
-               "website": club.website
-        }
-        club_info.append(row)
+    if len(data["result"].all())>0:
+        for club, flights, users, rank in data["result"]:
+            print club, flights, users
+            row = {"club": club_schema.dump(club).data,
+                   "flights": flights,
+                   "users": users,
+                   "email": club.email_address,
+                   "website": club.website
+            }
+            club_info.append(row)
     return jsonify(club_info=club_info, total=g.paginators["result"].count)
 
 

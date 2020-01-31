@@ -2,17 +2,16 @@
   <div class="page-header">
     <h1>{{t "clubs"}}</h1>
   </div>
-{{!--   <div class="row"> --}}
-{{!--     <div class="col-md-12" > --}}
-{{!--   <table class="table table-striped" style='text-align: left;'> --}}
+    <div class="col-sm-6">
+    <SeasonDropdown @year={{year}} />
+  </div>
   <table class="table table-striped">
     <thead>
     <tr>
       <th>{{t "name"}}</th>
       <th class="numeric sorting">{{t "flights"}}</th>
       <th class="numeric">{{t "pilots"}}</th>
-{{!--       <th>{{t "contact"}}</th> --}}
-{{!--       <th>{{t "website"}}</th> --}}
+
     </tr>
     </thead>
     <tbody>
