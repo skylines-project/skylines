@@ -6,10 +6,8 @@ export default Route.extend({
 
   queryParams: {
     page: { refreshModel: true },
-    year: ['year'],
+    year: { refreshModel: true },
   },
-
-  year: new Date().getFullYear().toString(),
 
   model(params) {
     let data = {
@@ -22,7 +20,7 @@ export default Route.extend({
 
   setupController(controller) {
     this._super(...arguments);
-    controller.set('year', this.year);
+    controller.set('year', this.paramsFor('clubs').year);
   },
 
   resetController(controller, isExiting) {
@@ -34,7 +32,7 @@ export default Route.extend({
 
   actions: {
     loading(transition) {
-      let controller = this.controllerFor('clubs');
+//      let controller = this.controllerFor('clubs');
       controller.set('loading', true);
       transition.promise.finally(() => {
         controller.set('loading', false);

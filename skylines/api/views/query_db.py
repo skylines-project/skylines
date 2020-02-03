@@ -91,7 +91,7 @@ def _get_result_Flight_User_byClub(year=None):
         , func.count(Flight.id).label('flights_count')) \
         .group_by(Flight.club_id)
 
-    if isinstance(year, int): #if year is None, then get flights for all seasons
+    if isinstance(year, int): # if year is None, then get flights for all seasons
         year_start = date(year, 1, 1)
         year_end = date(year, 12, 31)
         query = query.filter(Flight.date_local >= year_start)\
