@@ -52,7 +52,7 @@ export default Component.extend(Validations, {
   },
 
   saveTask: task(function*() {
-    let json = this.getProperties('email', 'firstName', 'lastName', 'password');
+    let json = this.getProperties('email', 'lastName', 'firstName', 'password');
 
     try {
       yield this.ajax.request('/api/users', { method: 'POST', json });

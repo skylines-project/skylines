@@ -17,7 +17,9 @@
     @label={{t "first-name"}}
     @autocomplete="given-name"
     @disabled={{saveTask.isRunning}}
-    @didValidate={{didValidate}} />
+    @didValidate={{didValidate}}
+    data-test-first-name
+  />
 
   <ValidatedInput
     @value={{lastName}}
@@ -25,7 +27,9 @@
     @label={{t "last-name"}}
     @autocomplete="family-name"
     @disabled={{saveTask.isRunning}}
-    @didValidate={{didValidate}} />
+    @didValidate={{didValidate}}
+    data-test-last-name
+  />
 
   <ValidatedInput
     @type="password"
@@ -34,7 +38,9 @@
     @label={{t "password"}}
     @autocomplete="new-password"
     @disabled={{saveTask.isRunning}}
-    @didValidate={{didValidate}} />
+    @didValidate={{didValidate}}
+    data-test-password
+  />
 
   <ValidatedInput
     @type="password"
@@ -43,7 +49,9 @@
     @label={{t "confirm-password"}}
     @autocomplete="new-password"
     @disabled={{saveTask.isRunning}}
-    @didValidate={{didValidate}} />
+    @didValidate={{didValidate}}
+    data-test-password-confirmation
+  />
 
   <button class="btn btn-primary btn-block" type="submit" disabled={{or saveTask.isRunning (not validations.isValid)}}>
     {{t (if saveTask.isRunning "registering" "register")}}

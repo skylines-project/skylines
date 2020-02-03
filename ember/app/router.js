@@ -12,12 +12,16 @@ Router.map(function() {
     this.route('pilots');
     this.route('edit');
   });
+
   this.route('clubs', { path: '/clubs' });
+
+  this.route('group-flights', { path: '/group-flights' });
 
   this.route('user', { path: '/users/:user_id' }, function() {
     this.route('followers');
     this.route('following');
   });
+
   this.route('users', { path: '/users' }, function() {
     this.route('new');
     this.route('recover');
@@ -30,8 +34,6 @@ Router.map(function() {
   });
 
   this.route('flight-upload', { path: '/flights/upload' });
-
-  this.route('groups', { path: '/groups' });
 
   this.route('flight', { path: '/flights/:flight_ids' }, function() {
     this.route('change-aircraft', { path: '/change_aircraft' });

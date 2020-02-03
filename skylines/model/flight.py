@@ -41,6 +41,7 @@ class Flight(db.Model):
     pilot_id = db.Column(
         Integer, db.ForeignKey("users.id", ondelete="SET NULL"), index=True
     )
+
     pilot = db.relationship("User", foreign_keys=[pilot_id])
 
     # Fallback if the pilot is not registered
@@ -58,6 +59,8 @@ class Flight(db.Model):
         Integer, db.ForeignKey("clubs.id", ondelete="SET NULL"), index=True
     )
     club = db.relationship("Club", backref="flights")
+
+
 
     model_id = db.Column(Integer, db.ForeignKey("models.id", ondelete="SET NULL"))
     model = db.relationship("AircraftModel")

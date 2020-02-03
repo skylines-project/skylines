@@ -6,21 +6,18 @@ export default Route.extend({
 
   queryParams: {
     page: { refreshModel: true },
-    year: { refreshModel: true },
+    column: { refreshModel: true },
+    order: { refreshModel: true },
   },
 
   model(params) {
-    let data = {
-      year: params.year,
-      page: params.page,
-    };
-
-    return this.ajax.request('/api/clubs', { data });
-  },
-
-  setupController(controller) {
-    this._super(...arguments);
-    controller.set('year', this.paramsFor('clubs').year);
+    return this.ajax.request(this.getURL(params), {
+      data: {
+        page: params.page,
+        column: params.column,
+        order: params.order,
+      },
+    });
   },
 
   resetController(controller, isExiting) {
@@ -32,11 +29,15 @@ export default Route.extend({
 
   actions: {
     loading(transition) {
-//      let controller = this.controllerFor('clubs');
+      let controller = this.controllerFor('flights');
       controller.set('loading', true);
       transition.promise.finally(() => {
         controller.set('loading', false);
       });
     },
+  },
+
+  getURL(/* params */) {
+    throw new Error('Not implemented: `getURL`');
   },
 });

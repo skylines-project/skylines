@@ -20,12 +20,10 @@ AIRCRAFT_MODEL_TYPES = {
     5: "ul",
 }
 
-
 class Schema(_Schema):
     class Meta(_Schema.Meta):
         ordered = True
         strict = True
-
 
 class AircraftModelSchema(Schema):
     id = fields.Integer(dump_only=True)
@@ -73,7 +71,11 @@ class ClubSchema(Schema):
     owner = fields.Nested(
         "skylines.schemas.schemas.UserSchema", only=("id", "name"), dump_only=True
     )
-
+    email = fields.String(
+        attribute="email_address",
+        allow_none=True,
+        validate=(validate.Email(), validate.Length(max=255)),
+    )
 
 class UserSchema(Schema):
     id = fields.Integer(dump_only=True)
@@ -159,6 +161,7 @@ class IGCFileSchema(Schema):
     model = fields.String(strip=True, validate=validate.Length(max=64))
 
     date = fields.Date(attribute="date_utc")
+    flight_plan_md5 = fields.String(attribute="flight_plan_md5")
 
     class Meta(Schema.Meta):
         load_only = ("ownerId",)
@@ -167,6 +170,7 @@ class IGCFileSchema(Schema):
 
 class FlightSchema(Schema):
     id = fields.Integer()
+    groupFlightId = fields.Integer()
     timeCreated = fields.DateTime(attribute="time_created")
 
     pilotId = fields.Integer(attribute="pilot_id", allow_none=True)
@@ -232,6 +236,18 @@ class FlightSchema(Schema):
         attribute="igc_file",
         only=("owner", "filename", "registration", "competitionId", "model", "date"),
     )
+
+
+    class GroupFlightSchema(Schema):
+        id = fields.Integer()
+        clubId = fields.Integer(attribute="club_id", allow_none=True)
+        club = fields.Nested(ClubSchema, only=("id", "name"))
+        md5 = fields.String()
+        timeCreated = fields.DateTime(attribute="time_created")
+        takeoffAirportId = fields.Integer(attribute="takeoff_airport_id", allow_none=True)
+        takeoffAirport = fields.Nested(
+            AirportSchema, attribute="takeoff_airport", only=("id", "name", "countryCode"))
+
 
     class Meta(Schema.Meta):
         load_only = (

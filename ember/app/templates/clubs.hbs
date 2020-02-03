@@ -2,31 +2,35 @@
   <div class="page-header">
     <h1>{{t "clubs"}}</h1>
   </div>
+    <div class="col-sm-6">
+    <SeasonDropdown @year={{year}} />
+  </div>
+  <table class="table table-striped">
+    <thead>
+    <tr>
+      <th>{{t "name"}}</th>
+      <th class="numeric sorting">{{t "flights"}}</th>
+      <th class="numeric">{{t "pilots"}}</th>
 
-  <div class="row">
-    <div class="col-md-12">
-      <table class="table table-striped">
-        <thead>
-        <tr>
-          <th>{{t "name"}}</th>
-        </tr>
-        </thead>
-        <tbody>
-        {{#each model.clubs as |club|}}
-          <tr>
-            <td class="column-buttons">
-              <LinkTo @route="club" @model={{club.id}}>{{club.name}}</LinkTo>
-
-              <div class="pull-right">
-                <LinkTo @route="flights.club" @model={{club.id}} class="btn btn-default btn-sm">{{fa-icon "plane"}} {{t "flights"}}</LinkTo>
-                <LinkTo @route="statistics.club" @model={{club.id}} class="btn btn-default btn-sm hidden-xs-inline">{{fa-icon "bar-chart"}} {{t "statistics"}}</LinkTo>
-                <LinkTo @route="club.pilots" @model={{club.id}} class="btn btn-default btn-sm hidden-xs-inline">{{fa-icon "group"}} {{t "members"}}</LinkTo>
-              </div>
-            </td>
-          </tr>
-        {{/each}}
-        </tbody>
-      </table>
-    </div>
+    </tr>
+    </thead>
+    <tbody>
+    {{#each model.club_info as |row|}}
+      <tr>
+        <td><LinkTo @route="club" @model={{row.club.id}}>{{row.club.name}}</LinkTo></td>
+        <td class="numeric">{{format-number row.flights}}</td>
+        <td class="numeric">{{format-number row.users}}</td>
+        <td><a href="mailto:{{row.email}}">Email</a></td>
+        <td><a href={{row.website}} target="_blank" rel="noopener">{{row.website}}</a></td>
+      </tr>
+    {{else}}
+      <tr>
+        <td colspan="4">{{t "no-clubs-found"}}</td>
+      </tr>
+    {{/each}}
+    </tbody>
+  </table>
+  <div >
+      <LinkTo class="col-xs-12 banner" @route="settings.club">{{t "group-choose-new"}}</LinkTo>
   </div>
 </BasePage>
