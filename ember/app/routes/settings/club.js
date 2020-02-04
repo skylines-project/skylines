@@ -7,10 +7,4 @@ export default Route.extend({
   model() {
     return this.ajax.request('/api/clubs/choose-club');
   },
-
-//  setupController(controller) {
-//    this._super(...arguments);
-//
-////    controller.set('result', null);
-//  },
 });
