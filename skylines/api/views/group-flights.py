@@ -15,7 +15,6 @@ from query_db import _handle_request_flight_user
 Add flight to a group flight if another group member submits a flight 
 with the same flight plan within 24 hours of the last flight plan submission.
 Make sure the other group member's flight is also tagged with the groupFlightId
-
 The md5 hash of the flight plan is attached to each IGC in the db.  '''
 
 groupFlights_blueprint = Blueprint("group-flights", "skylines")
