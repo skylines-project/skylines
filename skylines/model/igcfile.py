@@ -11,6 +11,7 @@ from skylines.lib import files
 from skylines.lib.igc import read_igc_headers, read_condor_fpl
 from skylines.lib.string import unicode_to_str
 from skylines.lib.md5 import file_md5
+from skylines.lib.files import read_file, write_file
 
 class IGCFile(db.Model):
     __tablename__ = "igc_files"
@@ -23,6 +24,7 @@ class IGCFile(db.Model):
     time_created = db.Column(DateTime, nullable=False, default=datetime.utcnow)
     filename = db.Column(String(), nullable=False)
     is_condor_file = db.Column(db.Boolean, default = False)
+    flight_plan_md5 = db.Column(String(32), nullable=False, unique=False)
     md5 = db.Column(String(32), nullable=False, unique=True)
 
     logger_id = db.Column(String(3))

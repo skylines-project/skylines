@@ -8,7 +8,7 @@ from datetime import datetime
 from . import base36
 from .string import import_ascii, import_alnum
 from skylines.lib.types import is_string, is_bytes
-from skylines.lib.files import read_file
+from skylines.lib.files import read_file, write_file
 
 hfdte_re = re.compile(br"HFDTE(\d{6})", re.IGNORECASE)
 hfgid_re = re.compile(br"HFGID\s*GLIDER\s*ID\s*:(.*)", re.IGNORECASE)

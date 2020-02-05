@@ -158,10 +158,11 @@ class IGCFileSchema(Schema):
     competitionId = fields.String(
         attribute="competition_id", strip=True, validate=validate.Length(max=5)
     )
-    model = fields.String(strip=True, validate=validate.Length(max=64))
+    model = fields.String(strip=True, validate=validate.Length(max=64)) #glider model
 
     date = fields.Date(attribute="date_utc")
     flight_plan_md5 = fields.String(attribute="flight_plan_md5")
+    md5 = fields.String(attribute="md5")
 
     class Meta(Schema.Meta):
         load_only = ("ownerId",)
