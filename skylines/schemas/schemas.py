@@ -281,7 +281,9 @@ class TrackingFixSchema(Schema):
     time = fields.DateTime()
     location = fields.Location()
     altitude = fields.Integer()
-    elevation = fields.Integer()    pilot = fields.zz(UserSchema, only=("id", "name"))
+    elevation = fields.Integer()
+
+    pilot = fields.Nested(UserSchema, only=("id", "name"))
 
 
 PHASETYPE_IDS = {
