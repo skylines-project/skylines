@@ -235,7 +235,7 @@ class FlightSchema(Schema):
     igcFile = fields.Nested(
         IGCFileSchema,
         attribute="igc_file",
-        only=("owner", "filename", "registration", "competitionId", "model", "date"),
+        only=("owner", "filename", "registration", "competitionId", "model", "date", "flight_plan_md5"),
     )
 
 
@@ -281,9 +281,7 @@ class TrackingFixSchema(Schema):
     time = fields.DateTime()
     location = fields.Location()
     altitude = fields.Integer()
-    elevation = fields.Integer()
-
-    pilot = fields.Nested(UserSchema, only=("id", "name"))
+    elevation = fields.Integer()    pilot = fields.zz(UserSchema, only=("id", "name"))
 
 
 PHASETYPE_IDS = {
