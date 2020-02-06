@@ -368,7 +368,7 @@ def index_post():
         toGroupFlight = {
         flight.id: flight for flight in Flight.query()\
                 .filter(Flight.flight_plan_md5 == igc_file.flight_plan_md5)\
-                .filter(Flight.time_modified <= datetime.utcnow() - timedelta(hours=24))\
+                .filter( Flight.time_modified  + timedelta(hours=24) >= datetime.utcnow() )\
                 .all()
     }
 
