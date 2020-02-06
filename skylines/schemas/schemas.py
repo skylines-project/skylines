@@ -11,6 +11,8 @@ from skylines.lib.formatter.units import (
 from skylines.lib.string import isnumeric
 from skylines.model.flight_phase import FlightPhase
 
+'''Schemas is for mapping variables between front and back end, not with database'''
+
 AIRCRAFT_MODEL_TYPES = {
     0: "unspecified",
     1: "glider",
@@ -235,7 +237,7 @@ class FlightSchema(Schema):
     igcFile = fields.Nested(
         IGCFileSchema,
         attribute="igc_file",
-        only=("owner", "filename", "registration", "competitionId", "model", "date", "flight_plan_md5"),
+        only=("owner", "filename", "registration", "competitionId", "model", "date", "flight_plan_md5", "time_modified"),
     )
 
 

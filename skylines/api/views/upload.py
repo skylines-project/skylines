@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, timedelta
 from tempfile import TemporaryFile
 from zipfile import ZipFile
 from enum import IntEnum
@@ -233,6 +233,7 @@ def index_post():
         try:
             igc_file.date_condor = get_date_from_name(name) #name differs from filename which has _1 etc appended
             igc_file.time_created = igc_file.date_condor
+            igc_file.time_modified = datetime.utcnow()
         except:
             files.delete_file(name)
             results.append(UploadResult.date_not_in_filename(name, str(prefix)))
@@ -252,7 +253,7 @@ def index_post():
         igc_file.owner = current_user
         igc_file.filename = filename
         igc_file.md5 = md5
-        igc_file.update_igc_headers()
+        igc_file.update_igc_headers() #gets condor flight plan and flight_plan_md5
         if not igc_file.is_condor_file:
             files.delete_file(filename)
             results.append(UploadResult.not_condor(name, str(prefix)))
@@ -347,6 +348,19 @@ def index_post():
                 cache_key,
             )
         )
+
+        # Check if groupflight should be created
+        # gfq = db.session.query( \
+        # Flight.club_id, \
+        # func.count((Flight.pilot_id.distinct())).label('users_count') \
+        # , func.count(Flight.id).label('flights_count')) \
+        # .group_by(Flight.club_id)
+        toGroupFlight = {
+        flight.id: flight for flight in Flight.query()\
+                .filter(Flight.igc_file.flight_plan_md5 == igc_file.flight_plan_md5)\
+                .filter(Flight.igc_file.time_modified <= datetime.utcnow() - timedelta(hours=24))\
+                .all()
+    }
 
         create_flight_notifications(flight)
 
