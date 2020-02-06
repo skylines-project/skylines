@@ -6321,10 +6321,10 @@ ember-modifier-manager-polyfill@^1.1.0:
     ember-cli-version-checker "^2.1.2"
     ember-compatibility-helpers "^1.2.0"
 
-ember-page-title@^5.1.0:
-  version "5.1.0"
-  resolved "https://registry.yarnpkg.com/ember-page-title/-/ember-page-title-5.1.0.tgz#baf9fc00f95faf638f8493740a1f80daaa5007e9"
-  integrity sha512-Ou2kwvwlQdDxre20WUMDym54e+5r9g0lTINFiBZUavoBCOUYdBP711LbmmUIIlYblZTOb/TWadNEQZpd2DkIAg==
+ember-page-title@^5.2.1:
+  version "5.2.1"
+  resolved "https://registry.yarnpkg.com/ember-page-title/-/ember-page-title-5.2.1.tgz#12261e010bec96af6200cd132fe4068e717ccbec"
+  integrity sha512-Nvgmkp0xhgMl+f8AQeWlhNNMiIujnPnTTctsquUjezdE42ZU5U14OIuJoyNhSwsrhoEwx6K1tpRmBexBwPrDKw==
   dependencies:
     ember-cli-babel "^7.7.3"
     ember-cli-head "^0.4.0"
