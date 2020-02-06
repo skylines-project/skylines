@@ -13,7 +13,7 @@ from query_db import _handle_request_flight_user
 
 '''Each individual flight uploaded has a groupFlightId, Null by default.  
 Add flight to a group flight if another group member submits a flight 
-with the same flight plan (md5 hash) within X hours of the last flight plan submission.
+with the same igc flight plan (md5 hash) within X hours of the last igc flight plan submission.
 Make sure the other group member's flight is also tagged with the groupFlightId
 
 Send notification to member when GF_ID'd flight has another submission

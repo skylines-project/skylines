@@ -270,10 +270,12 @@ def index_post():
         flight.pilot_id = pilot_id
         flight.pilot_name = data.get("pilot_name")
         flight.club_id = club_id
-        flight.igc_file = igc_file
+        flight.flight_plan_md5 = igc_file.flight_plan_md5
         flight.time_created = igc_file.date_condor
+        flight.time_igc_upload = igc_file.time_modified
         flight.date_local = igc_file.date_condor
         flight.model_id = igc_file.guess_model()
+        flight.igc_file = igc_file
 
         if igc_file.registration:
             flight.registration = igc_file.registration
@@ -282,7 +284,8 @@ def index_post():
 
         flight.competition_id = igc_file.competition_id
 
-        fp = flight_path(flight.igc_file, add_elevation=True, max_points=None)
+        # fp = flight_path(flight.igc_file, add_elevation=True, max_points=None)
+        fp = flight_path(igc_file, add_elevation=True, max_points=None)
 
         analyzed = False
         try:
@@ -355,10 +358,17 @@ def index_post():
         # func.count((Flight.pilot_id.distinct())).label('users_count') \
         # , func.count(Flight.id).label('flights_count')) \
         # .group_by(Flight.club_id)
+
+        # toGroupIGCs = {
+        #     db.session.query(\
+        #         IGCFile.id)\
+        #         .filter(IGCFile.flight_plan_md5 == igc_file.flight_plan_md5)\
+        # }
+
         toGroupFlight = {
         flight.id: flight for flight in Flight.query()\
-                .filter(Flight.igc_file.flight_plan_md5 == igc_file.flight_plan_md5)\
-                .filter(Flight.igc_file.time_modified <= datetime.utcnow() - timedelta(hours=24))\
+                .filter(Flight.flight_plan_md5 == igc_file.flight_plan_md5)\
+                .filter(Flight.time_modified <= datetime.utcnow() - timedelta(hours=24))\
                 .all()
     }
 
