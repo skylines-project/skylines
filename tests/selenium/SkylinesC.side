@@ -1402,7 +1402,7 @@
       "id": "e50f55fd-e0df-4f28-b0e1-9802a07e84d3",
       "comment": "select",
       "command": "click",
-      "target": "id=ember645",
+      "target": "xpath=//a[contains(text(),'group1')]",
       "targets": [
         ["id=ember645", "id"],
         ["css=#ember645", "css:finder"],

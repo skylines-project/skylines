@@ -15,8 +15,6 @@ Router.map(function() {
 
   this.route('clubs', { path: '/clubs' });
 
-  this.route('groupflights', { path: '/groupflights' });
-
   this.route('user', { path: '/users/:user_id' }, function() {
     this.route('followers');
     this.route('following');
@@ -49,6 +47,16 @@ Router.map(function() {
     this.route('club', { path: '/club/:club_id' });
     this.route('pilot', { path: '/pilot/:pilot_id' });
     this.route('unassigned');
+    this.route('pinned');
+    this.route('list', { path: '/list/:list' });
+  });
+
+  this.route('groupflights', { path: '/groupflights' }, function() {
+    this.route('all');
+    this.route('latest');
+    this.route('date', { path: '/date/:date' });
+    this.route('airport', { path: '/airport/:airport_id' });
+    this.route('club', { path: '/club/:club_id' });
     this.route('pinned');
     this.route('list', { path: '/list/:list' });
   });
