@@ -123,3 +123,48 @@ def _handle_request_flight_user_byClub():
 
     result = Pager.paginate(result, "result")
     return dict(year=year, current_year=current_year, result=result)
+
+
+def _get_result_Groupflight_User_byClub(year=None):
+    '''return the number of users in flights that are recorded under the club id.
+    Rankable flight means public flight.
+    Sort by number of flights this year'''
+
+    query = db.session.query( \
+        Flight.club_id, \
+        func.count((Flight.pilot_id.distinct())).label('users_count') \
+        , func.count(Flight.id).label('flights_count')) \
+        .group_by(Flight.club_id)
+
+    if isinstance(year, int): # if year is None, then get flights for all seasons
+        year_start = date(year, 1, 1)
+        year_end = date(year, 12, 31)
+        query = query.filter(Flight.date_local >= year_start)\
+            .filter(Flight.date_local <= year_end)
+
+    subq = query.subquery()
+
+    result = db.session.query(
+        Club,
+        subq.c.flights_count,
+        subq.c.users_count,
+        over(func.rank(), order_by=desc("flights_count")).label("rank"),
+    ).join((subq, getattr(subq.c, "club_id") == Club.id))
+
+    return result
+
+def _handle_request_flight_user_byClub():
+    current_year = date.today().year
+    year = _parse_year()
+    result = _get_result_Flight_User_byClub(year=year)
+
+    result = Sorter.sort(
+        result,
+        "sorter",
+        "flights",
+        valid_columns={"flights": "flights_count", "users": "users_count", "rank": "rank"},
+        default_order="desc",
+    )
+
+    result = Pager.paginate(result, "result")
+    return dict(year=year, current_year=current_year, result=result)

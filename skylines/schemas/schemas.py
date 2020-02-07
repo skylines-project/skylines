@@ -261,7 +261,7 @@ class FlightSchema(Schema):
             "igcFile",
         )
 
-class GroupFlightSchema(Schema):
+class GroupflightSchema(Schema):
     id = fields.Integer()
     club_id = fields.Integer()
     flight_plan_md5 = fields.String()
@@ -274,6 +274,9 @@ class FlightCommentSchema(Schema):
     user = fields.Nested(UserSchema, only=("id", "name"))
     text = fields.String(required=True)
 
+class GroupflightCommentSchema(Schema):
+    user = fields.Nested(UserSchema, only=("id", "name"))
+    text = fields.String(required=True)
 
 class TrackingFixSchema(Schema):
     time = fields.DateTime()

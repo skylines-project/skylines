@@ -1,0 +1,18 @@
+<td class="icon">
+  {{fa-icon "comments-o"}}
+</td>
+<td>
+  <LinkTo @route="groupflight" @model={{event.groupflight.id}} class="btn btn-default btn-sm pull-right">{{t "show"}}</LinkTo>
+  <p>
+    {{#if event.unread}}<span class="badge badge-warning">{{t 'new'}}</span>{{/if}}
+    <small><abbr title={{format-time event.time format="full"}}>{{format-relative event.time}}</abbr></small>
+  </p>
+  <p>
+    {{t translationKey
+      htmlSafe=true
+      actor=event.actor.name
+      actorURL=(href-to "user" event.actor.id)
+      distance=(format-distance event.groupflight.distance)
+      date=(format-date event.groupflight.date format="ddmmyyyy")}}
+  </p>
+</td>

@@ -37,7 +37,7 @@ from skylines.schemas import (
     ValidationError,
 )
 from skylines.worker import tasks
-from skylines.api.views.group_flights import group_flight_actions
+from skylines.api.views.groupflights import group_flight_actions
 
 from geoalchemy2.shape import from_shape
 from sqlalchemy.sql import literal_column

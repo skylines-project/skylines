@@ -94,7 +94,7 @@ glide-rate-abbr: GR
 glides: Glides
 groups: Groups
 group-choose-new: Join a group or register one
-group-flights: Group Flights
+groupflights: Group Flights
 how-to-use-live-tracking: How to use Live Tracking?
 igc-or-zip-files: IGC or ZIP file(s)
 imprint: Imprint
@@ -237,7 +237,7 @@ about:
   analysis: See your flights in detail and improve them. OLC+ method scores any type of flight.
   task-planning: Use your browser to plan your tasks before the flight and upload them quickly to your flight computer. Integration of {prosoar} is planned.
   competitions: Create competitions to offer your spectators an even better live tracking experience by following all the participants on the same map.
-  group-flights: <a href="{joinURL}">Join</a> or <a href="{joinURL}">register</a> a group!  It's great fun to fly XC together or compare flights on the same Condor flight plan. See overlay of your group's tracks.
+  groupflights: <a href="{joinURL}">Join</a> or <a href="{joinURL}">register</a> a group!  It's great fun to fly XC together or compare flights on the same Condor flight plan. See overlay of your group's tracks.
   achievements: Challenge yourself by trying to complete all the achievements that SkyLines offers. Fly large triangles, long final glides or just do your first outlanding.
   notifications: Comment on flights, follow your friends and get <a href="{url}">notifications</a> of their flights.
   open-data: The SkyLines flight database is made available under the {license}. Skylines is using waypoint data from the {welt2000} project.
@@ -263,6 +263,11 @@ timeline-events:
     message1: <strong><a href="{actorURL}">{actor}</a></strong> started following <strong><a href="{userURL}">{user}</a></strong>.
     message2: You started following <strong><a href="{userURL}">{user}</a></strong>.
     message3: <strong><a href="{actorURL}">{actor}</a></strong> started following you.
+  groupflight-comment:
+    message1: <strong><a href="{actorURL}">{actor}</a></strong> commented on a <strong>{distance}</strong> flight on <strong>{date}</strong>.
+    message2: You commented on a <strong>{distance}</strong> flight on <strong>{date}</strong>.
+    message3: <strong><a href="{actorURL}">{actor}</a></strong> commented on your <strong>{distance}</strong> flight on <strong>{date}</strong>.
+    message4: You commented on your <strong>{distance}</strong> flight on <strong>{date}</strong>.
   new-user:
     message1: <strong><a href="{actorURL}">{actor}</a></strong> joined SkyLines.
     message2: You joined SkyLines.
