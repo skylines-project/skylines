@@ -605,8 +605,7 @@ def _get_near_flights(flight, location, time, max_distance=1000):
         .filter(Flight.landing_time >= time)
         .filter(
             func.ST_DWithin(
-                Flight.locations
-                , location.to_wkt_element(), max_distance_deg
+                Flight.locations, location.to_wkt_element(), max_distance_deg
             )
         )
     )
