@@ -36,7 +36,7 @@ class GroupFlight(db.Model):
     flight_plan_md5 = db.Column(Unicode(255), unique=True, nullable=False)
     time_created = db.Column(DateTime, nullable=False, default=datetime.utcnow)
     time_modified = db.Column(DateTime, nullable=False, default=datetime.utcnow)
-    takeoff_airport_name = db.Column(Unicode(255), nullable=False)
+    takeoff_airport_name = db.Column(Unicode(255))
 
 
 

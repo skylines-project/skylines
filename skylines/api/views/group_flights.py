@@ -5,7 +5,7 @@ from skylines.api.json import jsonify
 from skylines.database import db
 from skylines.api.oauth import oauth
 from skylines.lib.dbutil import get_requested_record
-from skylines.model import Club, User, Flight,GroupFlight
+from skylines.model import Club, User, Flight, GroupFlight
 from skylines.model.notification import create_club_join_event
 
 from skylines.schemas import GroupFlightSchema, ValidationError
@@ -60,7 +60,6 @@ def group_flight_actions(flightCurrent, igc_file):
             for flight_id in latest:
                 flight = Flight.get(flight_id)
                 flight.group_flight_id = gfid
-                db.session.commit()
         else: # create group flight
             group_flight = GroupFlight()
             group_flight.flight_plan_md5 = igc_file.flight_plan_md5
@@ -69,7 +68,8 @@ def group_flight_actions(flightCurrent, igc_file):
             group_flight.club_id = flightCurrent.club_id
             if flightCurrent.takeoff_airport != None:
                 group_flight.takeoff_airport = flightCurrent.takeoff_airport.name
-            db.session.commit()
+            db.session.add(group_flight)
+        db.session.commit()
 
 
 
