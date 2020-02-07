@@ -173,8 +173,7 @@ class IGCFileSchema(Schema):
 
 class FlightSchema(Schema):
     id = fields.Integer()
-    groupFlightId = fields.Integer()
-    # flight_plan_md5 = fields.String(attribute="flight_plan_md5")
+    group_flight_Id = fields.Integer()
     timeCreated = fields.DateTime(attribute="time_created")
     time_igc_upload = fields.DateTime()
     pilotId = fields.Integer(attribute="pilot_id", allow_none=True)
@@ -241,18 +240,6 @@ class FlightSchema(Schema):
         only=("owner", "filename", "registration", "competitionId", "model", "date", "flight_plan_md5", "time_modified"),
     )
 
-
-    class GroupFlightSchema(Schema):
-        id = fields.Integer()
-        clubId = fields.Integer(attribute="club_id", allow_none=True)
-        club = fields.Nested(ClubSchema, only=("id", "name"))
-        md5 = fields.String()
-        timeCreated = fields.DateTime(attribute="time_created")
-        takeoffAirportId = fields.Integer(attribute="takeoff_airport_id", allow_none=True)
-        takeoffAirport = fields.Nested(
-            AirportSchema, attribute="takeoff_airport", only=("id", "name", "countryCode"))
-
-
     class Meta(Schema.Meta):
         load_only = (
             "pilotId",
@@ -273,6 +260,14 @@ class FlightSchema(Schema):
             "score",
             "igcFile",
         )
+
+class GroupFlightSchema(Schema):
+    id = fields.Integer()
+    club_id = fields.Integer()
+    flight_plan_md5 = fields.String()
+    time_created = fields.DateTime()
+    time_modified = fields.DateTime()
+    takeoff_airport = fields.String()
 
 
 class FlightCommentSchema(Schema):

@@ -1315,7 +1315,7 @@
         ["xpath=//div[@id='ember464']/input", "xpath:idRelative"],
         ["xpath=//div[2]/div/div/div/form/div/input", "xpath:position"]
       ],
-      "value": "user1@gmail.com"
+      "value": "user3@gmail.com"
     }, {
       "id": "5542b7a4-7fa6-4616-8c88-4525be7c8713",
       "comment": "",
@@ -1396,6 +1396,32 @@
         ["xpath=//div[@id='ember1101']/div[2]/div[2]/div/div[2]/a[3]", "xpath:idRelative"],
         ["xpath=//a[contains(@href, '/settings/club')]", "xpath:href"],
         ["xpath=//a[3]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "e50f55fd-e0df-4f28-b0e1-9802a07e84d3",
+      "comment": "select",
+      "command": "click",
+      "target": "id=ember645",
+      "targets": [
+        ["id=ember645", "id"],
+        ["css=#ember645", "css:finder"],
+        ["xpath=//div[@id='ember645']", "xpath:attributes"],
+        ["xpath=//div[@id='ember641']/div[2]/form/div/div", "xpath:idRelative"],
+        ["xpath=//form/div/div", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "68bb865f-13d9-4c7e-965c-a4534d1d8928",
+      "comment": "change",
+      "command": "click",
+      "target": "css=.btn:nth-child(2)",
+      "targets": [
+        ["css=.btn:nth-child(2)", "css:finder"],
+        ["xpath=//button[@type='submit']", "xpath:attributes"],
+        ["xpath=//div[@id='ember641']/div[2]/form/button", "xpath:idRelative"],
+        ["xpath=//form/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Change')]", "xpath:innerText"]
       ],
       "value": ""
     }, {

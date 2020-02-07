@@ -1,4 +1,4 @@
-from datetime import datetime, timedelta
+from datetime import datetime
 from tempfile import TemporaryFile
 from zipfile import ZipFile
 from enum import IntEnum
@@ -37,6 +37,7 @@ from skylines.schemas import (
     ValidationError,
 )
 from skylines.worker import tasks
+from skylines.api.views.group_flights import group_flight_actions
 
 from geoalchemy2.shape import from_shape
 from sqlalchemy.sql import literal_column
@@ -266,7 +267,7 @@ def index_post():
             results.append(UploadResult.for_missing_date(name, str(prefix)))
             continue
 
-        flight = Flight()
+        flight = Flight() #instance
         flight.pilot_id = pilot_id
         flight.pilot_name = data.get("pilot_name")
         flight.club_id = club_id
@@ -352,25 +353,8 @@ def index_post():
             )
         )
 
-        # Check if groupflight should be created
-        # gfq = db.session.query( \
-        # Flight.club_id, \
-        # func.count((Flight.pilot_id.distinct())).label('users_count') \
-        # , func.count(Flight.id).label('flights_count')) \
-        # .group_by(Flight.club_id)
 
-        # toGroupIGCs = {
-        #     db.session.query(\
-        #         IGCFile.id)\
-        #         .filter(IGCFile.flight_plan_md5 == igc_file.flight_plan_md5)\
-        # }
-
-        toGroupFlight = {
-        flight.id: flight for flight in Flight.query()\
-                .filter(Flight.flight_plan_md5 == igc_file.flight_plan_md5)\
-                .filter( Flight.time_modified  + timedelta(hours=24) >= datetime.utcnow() )\
-                .all()
-    }
+        group_flight_actions(flight, igc_file)
 
         create_flight_notifications(flight)
 
