@@ -1,42 +1,28 @@
 import Route from '@ember/routing/route';
 import { inject as service } from '@ember/service';
 
-export default Route.extend({
+import AuthenticatedRouteMixin from 'ember-simple-auth/mixins/authenticated-route-mixin';
+
+export default Route.extend(AuthenticatedRouteMixin, {
   ajax: service(),
+  account: service(),
 
-  queryParams: {
-    page: { refreshModel: true },
-    year: { refreshModel: true },
-  },
+  async model() {
+    let ajax = this.ajax;
+    let accountId = this.get('account.user.id');
+    let clubId = this.get('account.club.id');
+    let clubMembers = [];
+    if (clubId) {
+      let { users } = await ajax.request(`/api/users?club=${clubId}`);
+      clubMembers = users.filter(user => user.id !== accountId);
+    }
 
-  model(params) {
-    let data = {
-      year: params.year,
-      page: params.page,
-    };
-
-    return this.ajax.request('/api/groupflights', { data });
+    return { clubMembers };
   },
 
   setupController(controller) {
     this._super(...arguments);
-    controller.set('year', this.paramsFor('clubs').year);
-  },
 
-  resetController(controller, isExiting) {
-    this._super(...arguments);
-    if (isExiting) {
-      controller.set('page', 1);
-    }
-  },
-
-  actions: {
-    loading(transition) {
-//      let controller = this.controllerFor('clubs');
-      controller.set('loading', true);
-      transition.promise.finally(() => {
-        controller.set('loading', false);
-      });
-    },
+    controller.set('result', null);
   },
 });

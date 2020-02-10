@@ -37,7 +37,7 @@ from skylines.schemas import (
     ValidationError,
 )
 from skylines.worker import tasks
-from skylines.api.views.groupflights import group_flight_actions
+from skylines.api.views.groupflights import groupflight_actions
 
 from geoalchemy2.shape import from_shape
 from sqlalchemy.sql import literal_column
@@ -354,7 +354,7 @@ def index_post():
         )
 
 
-        group_flight_actions(flight, igc_file)
+        groupflight_actions(flight, igc_file)
 
         create_flight_notifications(flight)
 

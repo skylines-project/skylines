@@ -97,44 +97,36 @@ groupflight.time_modified is normally the upload date'''
 #
 #     return jsonify(club_info=club_info, total=g.paginators["result"].count)
 
-def group_flight_actions(flightCurrent, igc_file):
-    '''Finds igc files within 24 hrs of the last uploaded igc with a matching groupflight plan '''
+def groupflight_actions(flightCurrent, igc_file):
+    '''Finds igc files within 24 hrs of the last uploaded igc with a matching flight plan '''
 
-    latest =  db.session.query(Groupflight.id)\
-            .filter(Groupflight.club_id == flightCurrent.club_id)\
-            .filter(Groupflight.flight_plan_md5 == igc_file.flight_plan_md5)\
-            .filter(Groupflight.time_modified + timedelta(hours=24) >= datetime.utcnow()).all()
+    latest = db.session.query(Flight.id) \
+        .filter(Flight.club_id == flightCurrent.club_id) \
+        .filter(Flight.flight_plan_md5 == igc_file.flight_plan_md5) \
+        .filter(Flight.time_modified + timedelta(hours=24) >= datetime.utcnow()).all()
 
-    def group_flight_actions(flightCurrent, igc_file):
-        '''Finds igc files within 24 hrs of the last uploaded igc with a matching flight plan '''
-
-        latest = db.session.query(Flight.id) \
+    if len(latest) > 1:  # igc is part of group flight
+        alreadyGrouped = db.session.query(Flight.id) \
             .filter(Flight.club_id == flightCurrent.club_id) \
             .filter(Flight.flight_plan_md5 == igc_file.flight_plan_md5) \
-            .filter(Flight.time_modified + timedelta(hours=24) >= datetime.utcnow()).all()
+            .filter(Flight.groupflight_id != None).all()
 
-        if len(latest) > 1:  # igc is part of group flight
-            alreadyGrouped = db.session.query(Flight.id) \
-                .filter(Flight.club_id == flightCurrent.club_id) \
-                .filter(Flight.flight_plan_md5 == igc_file.flight_plan_md5) \
-                .filter(Flight.group_flight_id != None).all()
-
-            if len(alreadyGrouped) > 0:  # add to this group flight
-                gfid = Flight.query(Flight.group_flight_id).filter(Flight.id == alreadyGrouped[0])[
-                    0]  # get from first entry
-                for flight_id in latest:
-                    flight = Flight.get(flight_id)
-                    flight.group_flight_id = gfid
-            else:  # create group flight
-                group_flight = Groupflight()
-                group_flight.flight_plan_md5 = igc_file.flight_plan_md5
-                group_flight.time_created = datetime.utcnow()
-                group_flight.time_modified = datetime.utcnow()
-                group_flight.club_id = flightCurrent.club_id
-                if flightCurrent.takeoff_airport != None:
-                    group_flight.takeoff_airport = flightCurrent.takeoff_airport.name
-                db.session.add(group_flight)
-            db.session.commit()
+        if len(alreadyGrouped) > 0:  # add to this group flight
+            gfid = Flight.query(Flight.groupflight_id).filter(Flight.id == alreadyGrouped[0])[
+                0]  # get from first entry
+            for flight_id in latest:
+                flight = Flight.get(flight_id)
+                flight.groupflight_id = gfid
+        else:  # create group flight
+            groupflight = Groupflight()
+            groupflight.flight_plan_md5 = igc_file.flight_plan_md5
+            groupflight.time_created = datetime.utcnow()
+            groupflight.time_modified = datetime.utcnow()
+            groupflight.club_id = flightCurrent.club_id
+            if flightCurrent.takeoff_airport != None:
+                groupflight.takeoff_airport = flightCurrent.takeoff_airport.name
+            db.session.add(groupflight)
+        db.session.commit()
 
 ###################### -- APIs -- ######################
 
@@ -158,7 +150,7 @@ def _create_list(
     airport=None,
     pinned=None,
     filter=None,
-    default_sorting_column = "modified",
+    default_sorting_column = "date",
     default_sorting_order = "desc"
 ):
 
@@ -194,7 +186,7 @@ def _create_list(
 
     valid_columns = {
         "created": getattr(Groupflight, "time_created"),
-        "modified": getattr(Groupflight, "time_modified"),
+        "date": getattr(Groupflight, "time_modified"),
         "airport": getattr(Airport, "name"),
         "club": getattr(Club, "name"),
     }
@@ -242,7 +234,7 @@ def _create_list(
 @groupflights_blueprint.route("/groupflights/all")
 @oauth.optional()
 def all():
-    return _create_list(default_sorting_column="modified", default_sorting_order="desc")
+    return _create_list(default_sorting_column="date", default_sorting_order="desc")
 
 
 @groupflights_blueprint.route("/groupflights/date/<date>")
@@ -269,7 +261,7 @@ def latest():
     # current_user = User.get(request.user_id) if request.user_id else None
 
     query = (
-        db.session.query(func.max(Groupflight.time_modified).label("modified"))
+        db.session.query(func.max(Groupflight.time_modified).label("date"))
         .filter(Groupflight.time_modified < datetime.utcnow())
     )
 
@@ -298,7 +290,7 @@ def club(id):
     club = get_requested_record(Club, id)
 
     return _create_list(
-        club=club, default_sorting_column="modified", default_sorting_order="desc"
+        club=club, default_sorting_column="date", default_sorting_order="desc"
     )
 
 @groupflights_blueprint.route("/groupflights/airport/<int:id>")
@@ -307,7 +299,7 @@ def airport(id):
     airport = get_requested_record(Airport, id)
 
     return _create_list(
-        airport=airport, default_sorting_column="modified", default_sorting_order="desc"
+        airport=airport, default_sorting_column="date", default_sorting_order="desc"
     )
 
 
@@ -324,7 +316,7 @@ def _list(ids):
         return jsonify(), 404
 
     return _create_list(
-        pinned=ids, default_sorting_column="modified", default_sorting_order="desc"
+        pinned=ids, default_sorting_column="date", default_sorting_order="desc"
     )
 
 def mark_groupflight_notifications_read(groupflight):

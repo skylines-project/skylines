@@ -173,7 +173,7 @@ class IGCFileSchema(Schema):
 
 class FlightSchema(Schema):
     id = fields.Integer()
-    group_flight_Id = fields.Integer()
+    groupflight_Id = fields.Integer()
     timeCreated = fields.DateTime(attribute="time_created")
     time_igc_upload = fields.DateTime()
     pilotId = fields.Integer(attribute="pilot_id", allow_none=True)
