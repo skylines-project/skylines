@@ -150,8 +150,10 @@ def _create_list(
     airport=None,
     pinned=None,
     filter=None,
-    default_sorting_column = "date",
-    default_sorting_order = "desc"
+    # default_sorting_column = "date",
+    # default_sorting_order = "desc"
+    default_sorting_column = None,
+    default_sorting_order = None
 ):
 
     subq = (
@@ -251,7 +253,7 @@ def date(date):
         return jsonify(), 404
 
     return _create_list(
-        date=date, default_sorting_column="score", default_sorting_order="desc"
+        date=date, default_sorting_column="date", default_sorting_order="desc"
     )
 
 
