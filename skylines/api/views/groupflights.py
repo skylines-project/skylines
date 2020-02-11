@@ -122,6 +122,7 @@ def groupflight_actions(flightCurrent, igc_file):
             groupflight.flight_plan_md5 = igc_file.flight_plan_md5
             groupflight.time_created = datetime.utcnow()
             groupflight.time_modified = datetime.utcnow()
+            groupflight.time_modified = datetime.utcnow().date()
             groupflight.club_id = flightCurrent.club_id
             if flightCurrent.takeoff_airport_id != None:
                 groupflight.takeoff_airport_id = flightCurrent.takeoff_airport.name
@@ -171,7 +172,7 @@ def _create_list(
     )
 
     if date:
-        groupflights = groupflights.filter(Groupflight.time_modified == date)
+        groupflights = groupflights.filter(Groupflight.date_modified == date)
 
     if club:
         groupflights = groupflights.filter(Groupflight.club == club)
@@ -187,7 +188,7 @@ def _create_list(
 
     valid_columns = {
         "created": getattr(Groupflight, "time_created"),
-        "date": getattr(Groupflight, "time_modified"),
+        "date": getattr(Groupflight, "date_modified"),
         "airport": getattr(Airport, "name"),
         "club": getattr(Club, "name"),
     }
@@ -259,8 +260,8 @@ def date(date):
 @groupflights_blueprint.route("/groupflights/latest")
 @oauth.optional()
 def latest():
-    # current_user = User.get(request.user_id) if request.user_id else None
 
+    #get date of latest group flight.
     query = (
         db.session.query(func.max(Groupflight.time_modified).label("date"))
         .filter(Groupflight.time_modified < datetime.utcnow())
@@ -270,7 +271,7 @@ def latest():
     if not date_:
         date_ = datetime.utcnow()
 
-    return date(date_)
+    return date(date_)  #gets list sorted by date
 #
 
 # @groupflights_blueprint.route("/groupflights/pilot/<int:id>")

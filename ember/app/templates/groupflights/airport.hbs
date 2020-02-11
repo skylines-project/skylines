@@ -1,0 +1,11 @@
+<FlightListNav @airport={{model.airport}} />
+
+<div class="pull-right">
+  <XPager @count={{model.count}} @page={{page}} @perPage={{50}} />
+</div>
+
+<FlightList @flights={{model.flights}} @showAirport={{false}} @sortColumn={{column}} @sortOrder={{order}} />
+
+<div class="pull-right">
+  <XPager @count={{model.count}} @page={{page}} @perPage={{50}} />
+</div>

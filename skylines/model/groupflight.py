@@ -38,6 +38,7 @@ class Groupflight(db.Model):
     flight_plan_md5 = flight_plan_md5 = db.Column(String(32), nullable=False)
     time_created = db.Column(DateTime, nullable=False, default=datetime.utcnow)
     time_modified = db.Column(DateTime, nullable=False, default=datetime.utcnow)
+    date_modified = db.Column(DateTime, nullable=False, default=datetime.utcnow().date())
     takeoff_airport_id = db.Column(Integer, db.ForeignKey("airports.id"))
     takeoff_airport = db.relationship("Airport", foreign_keys=[takeoff_airport_id])
 
