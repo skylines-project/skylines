@@ -1,0 +1,81 @@
+<BsNav @type="pills" as |nav|>
+  <nav.item>
+    {{#nav.link-to "flights.all"}}{{t "all"}}{{/nav.link-to}}
+  </nav.item>
+
+  {{#if prevDate}}
+    <li>
+      <LinkTo @route="flights.date" @model={{prevDate}}>&nbsp;{{fa-icon "arrow-left"}}&nbsp;</LinkTo>
+    </li>
+  {{/if}}
+
+  {{#if (or (not date) latest)}}
+    <nav.item>
+      {{#nav.link-to "flights.latest"}}
+        {{#if date}}
+          {{format-date date format="ddmmyyyy" timeZone="UTC"}}
+        {{else}}
+          {{t "latest"}}
+        {{/if}}
+        &nbsp;<DatePicker @date={{date}} @onSelect={{action "dateSelected"}}>{{fa-icon "calendar"}}</DatePicker>
+      {{/nav.link-to}}
+    </nav.item>
+  {{/if}}
+
+  {{#if (and date (not latest))}}
+    <nav.item>
+      {{#nav.link-to "flights.date" date}}
+        {{format-date date format="ddmmyyyy" timeZone="UTC"}}
+        &nbsp;<DatePicker @date={{date}} @onSelect={{action "dateSelected"}}>{{fa-icon "calendar"}}</DatePicker>
+      {{/nav.link-to}}
+    </nav.item>
+  {{/if}}
+
+  {{#if nextDate}}
+    <li>
+      <LinkTo @route="flights.date" @model={{nextDate}}>&nbsp;{{fa-icon "arrow-right"}}&nbsp;</LinkTo>
+    </li>
+  {{/if}}
+
+  {{#if airport}}
+    <nav.item>
+      {{#nav.link-to "flights.airport" airport.id}}{{airport.name}}{{/nav.link-to}}
+    </nav.item>
+  {{/if}}
+
+  {{#if club}}
+    <nav.item>
+      {{#nav.link-to "flights.club" club.id}}{{club.name}}{{/nav.link-to}}
+    </nav.item>
+  {{/if}}
+
+  {{#if (and account.club (not-eq account.club.id club.id))}}
+    <nav.item>
+      {{#nav.link-to "flights.club" account.club.id}}{{account.club.name}}{{/nav.link-to}}
+    </nav.item>
+  {{/if}}
+
+  {{#if pilot}}
+    <nav.item>
+      {{#nav.link-to "flights.pilot" pilot.id}}{{pilot.name}}{{/nav.link-to}}
+    </nav.item>
+  {{/if}}
+
+  {{#if (and account.user (not-eq account.user.id pilot.id))}}
+    <nav.item>
+      {{#nav.link-to "flights.pilot" account.user.id}}{{account.user.name}}{{/nav.link-to}}
+    </nav.item>
+  {{/if}}
+
+  {{#if account.user}}
+    <nav.item>
+      {{#nav.link-to "flights.unassigned"}}{{t "unassigned"}}{{/nav.link-to}}
+    </nav.item>
+  {{/if}}
+
+  {{#if hasPinned}}
+    <nav.item>
+      {{#nav.link-to "flights.pinned"}}{{t "pinned"}}{{/nav.link-to}}
+    </nav.item>
+  {{/if}}
+</BsNav>
