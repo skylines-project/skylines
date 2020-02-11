@@ -33,11 +33,13 @@ class Groupflight(db.Model):
     __tablename__ = "groupflights"
 
     id = db.Column(Integer, autoincrement=True, primary_key=True)
-    club_id = db.Column(Integer,nullable=False)
+    club_id = db.Column(Integer, db.ForeignKey("clubs.id"), index=True)
+    club = db.relationship("Club", backref="groupflights")
     flight_plan_md5 = flight_plan_md5 = db.Column(String(32), nullable=False)
     time_created = db.Column(DateTime, nullable=False, default=datetime.utcnow)
     time_modified = db.Column(DateTime, nullable=False, default=datetime.utcnow)
-    takeoff_airport_name = db.Column(Unicode(255))
+    takeoff_airport_id = db.Column(Integer, db.ForeignKey("airports.id"))
+    takeoff_airport = db.relationship("Airport", foreign_keys=[takeoff_airport_id])
 
 
 

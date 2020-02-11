@@ -123,8 +123,8 @@ def groupflight_actions(flightCurrent, igc_file):
             groupflight.time_created = datetime.utcnow()
             groupflight.time_modified = datetime.utcnow()
             groupflight.club_id = flightCurrent.club_id
-            if flightCurrent.takeoff_airport != None:
-                groupflight.takeoff_airport = flightCurrent.takeoff_airport.name
+            if flightCurrent.takeoff_airport_id != None:
+                groupflight.takeoff_airport_id = flightCurrent.takeoff_airport.name
             db.session.add(groupflight)
         db.session.commit()
 
@@ -149,7 +149,7 @@ def _create_list(
     club=None,
     airport=None,
     pinned=None,
-    # filter=None,
+    filter=None,
     default_sorting_column = "date",
     default_sorting_order = "desc"
 
@@ -171,7 +171,7 @@ def _create_list(
     )
 
     if date:
-        groupflights = groupflights.filter(Groupflight.date_local == date)
+        groupflights = groupflights.filter(Groupflight.time_modified == date)
 
     if club:
         groupflights = groupflights.filter(Groupflight.club == club)

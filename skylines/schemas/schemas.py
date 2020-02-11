@@ -267,8 +267,10 @@ class GroupflightSchema(Schema):
     flight_plan_md5 = fields.String()
     time_created = fields.DateTime()
     time_modified = fields.DateTime()
-    takeoff_airport = fields.String()
-
+    takeoffAirportId = fields.Integer(attribute="takeoff_airport_id", allow_none=True)
+    takeoffAirport = fields.Nested(
+        AirportSchema, attribute="takeoff_airport", only=("id", "name", "countryCode")
+    )
 
 class FlightCommentSchema(Schema):
     user = fields.Nested(UserSchema, only=("id", "name"))
