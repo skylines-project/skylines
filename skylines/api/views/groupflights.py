@@ -145,15 +145,14 @@ def mark_user_notifications_read(pilot):
 
 def _create_list(
     created=None,
-    modified=None,
+    date=None,
     club=None,
     airport=None,
     pinned=None,
-    filter=None,
-    # default_sorting_column = "date",
-    # default_sorting_order = "desc"
-    default_sorting_column = None,
-    default_sorting_order = None
+    # filter=None,
+    default_sorting_column = "date",
+    default_sorting_order = "desc"
+
 ):
 
     subq = (
