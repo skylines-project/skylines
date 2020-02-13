@@ -32,7 +32,6 @@ def _listInfo():
     club_info = []
     if len(data["result"].all())>0:
         for club, flights, users, rank in data["result"]:
-            print club, flights, users
             row = {"club": club_schema.dump(club).data,
                    "flights": flights,
                    "users": users,

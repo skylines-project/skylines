@@ -11,7 +11,7 @@ export default BaseRoute.extend({
       return { count: 0, flights: [] };
     }
 
-    return this.ajax.request(`/api/flights/list/${pinned.join(',')}`, {
+    return this.ajax.request(`/api/groupflights/list/${pinned.join(',')}`, {
       data: {
         page: params.page,
         column: params.column,
