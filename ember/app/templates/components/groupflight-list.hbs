@@ -4,17 +4,15 @@
     <SortableTableHeader @column="date" @sortColumn={{sortColumn}} @sortOrder={{sortOrder}} @defaultOrder="desc" @class="date">{{t "date"}}</SortableTableHeader>
   {{/if}}
 
-  <SortableTableHeader @column="score" @sortColumn={{sortColumn}} @sortOrder={{sortOrder}} @defaultOrder="desc" @class="numeric">{{t "score"}}</SortableTableHeader>
+  {{#if showClub}}
+    <SortableTableHeader @column="club" @sortColumn={{sortColumn}} @sortOrder={{sortOrder}} @class="club hidden-sm hidden-xs">{{t "club"}}</SortableTableHeader>
+  {{/if}}
 
   {{#if showAirport}}
     <SortableTableHeader @column="airport" @sortColumn={{sortColumn}} @sortOrder={{sortOrder}} @class="airport">{{t "airport"}}</SortableTableHeader>
   {{/if}}
 
-  {{#if showClub}}
-    <SortableTableHeader @column="club" @sortColumn={{sortColumn}} @sortOrder={{sortOrder}} @class="club hidden-sm hidden-xs">{{t "club"}}</SortableTableHeader>
-  {{/if}}
-
-    {{#if showTimes}}
+  {{#if showTimes}}
     <SortableTableHeader @column="time" @sortColumn={{sortColumn}} @sortOrder={{sortOrder}} @defaultOrder="desc" @class="times hidden-xs">{{t "time"}}</SortableTableHeader>
   {{/if}}
 

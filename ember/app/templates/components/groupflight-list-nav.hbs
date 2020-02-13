@@ -55,23 +55,6 @@
     </nav.item>
   {{/if}}
 
-  {{#if pilot}}
-    <nav.item>
-      {{#nav.link-to "flights.pilot" pilot.id}}{{pilot.name}}{{/nav.link-to}}
-    </nav.item>
-  {{/if}}
-
-  {{#if (and account.user (not-eq account.user.id pilot.id))}}
-    <nav.item>
-      {{#nav.link-to "flights.pilot" account.user.id}}{{account.user.name}}{{/nav.link-to}}
-    </nav.item>
-  {{/if}}
-
-  {{#if account.user}}
-    <nav.item>
-      {{#nav.link-to "flights.unassigned"}}{{t "unassigned"}}{{/nav.link-to}}
-    </nav.item>
-  {{/if}}
 
   {{#if hasPinned}}
     <nav.item>

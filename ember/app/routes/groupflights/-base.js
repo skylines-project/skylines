@@ -29,7 +29,7 @@ export default Route.extend({
 
   actions: {
     loading(transition) {
-      let controller = this.controllerFor('flights');
+      let controller = this.controllerFor('groupflights');
       controller.set('loading', true);
       transition.promise.finally(() => {
         controller.set('loading', false);

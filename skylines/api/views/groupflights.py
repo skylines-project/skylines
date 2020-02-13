@@ -219,6 +219,9 @@ def _create_list(
 
     json = dict(groupflights=groupflights_json, count=groupflights_count)
 
+    if date:
+        json["date"] = date.isoformat()
+
     if created:
         json["created"] = date.isoformat()
 
