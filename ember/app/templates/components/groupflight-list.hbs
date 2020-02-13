@@ -21,8 +21,8 @@
 </tr>
 </thead>
 <tbody>
-{{#each flights as |flight|}}
-  <FlightListRow
+{{#each groupflights as |flight|}}
+  <GroupflightListRow
     @flight={{flight}}
     @showDate={{showDate}}
     @showAirport={{showAirport}}
