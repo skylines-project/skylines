@@ -4,17 +4,7 @@
   <XPager @count={{model.count}} @page={{page}} @perPage={{50}} />
 </div>
 
-<div >
-  <xx class="numeric">{{format-number model.count}}</xx>
-  {{#each model.groupflights as |groupflight|}}
-    <zz >{{t groupflight.club_id}}</zz>
-  {{else}}
-     <yy colspan="10">{{t "no-flights-found"}}</yy>
-  {{/each}}
-
-</div>
-
-<GroupflightList @groupflights={{model.groupflights}} @showDate={{true}} @sortColumn={{column}} @sortOrder={{order}} />
+<GroupflightList @groupflights={{model.groupflights}}  @showDate={{true}} @sortColumn={{column}} @sortOrder={{order}} />
 
 <div class="pull-right">
   <XPager @count={{model.count}} @page={{page}} @perPage={{50}} />

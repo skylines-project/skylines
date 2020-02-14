@@ -1,7 +1,7 @@
 <thead>
 <tr>
   {{#if showDate}}
-    <SortableTableHeader @column="date" @sortColumn={{sortColumn}} @sortOrder={{sortOrder}} @defaultOrder="desc" @class="date">{{t "date"}}</SortableTableHeader>
+    <SortableTableHeader @column="date" @sortColumn={{sortColumn}} @sortOrder={{sortOrder}} @defaultOrder="desc" @class="date">{{t "date-compiled"}}</SortableTableHeader>
   {{/if}}
 
   {{#if showClub}}
@@ -12,7 +12,7 @@
     <SortableTableHeader @column="airport" @sortColumn={{sortColumn}} @sortOrder={{sortOrder}} @class="airport">{{t "airport"}}</SortableTableHeader>
   {{/if}}
 
-  <th class="column-buttons"></th>
+    <th class="column-buttons"></th>
   <th class="num_comments hidden-xs"></th>
 </tr>
 </thead>
