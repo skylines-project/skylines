@@ -62,10 +62,13 @@ def read_igc_headers(f):
 def read_condor_fpl(file):
     lines = read_file(file)
     fpl_lines = []
+    landscape = None
     for line in lines[-400:]:
         if line.startswith(b"LCONFPL"):
             fpl_lines.append(line)
-    return fpl_lines
+            if "landscape" in line.lower():
+                landscape = line.split("=")[1].strip()
+    return fpl_lines, landscape
 
 def parse_logger_id(line):
     # non IGC loggers may use more than 3 characters as unique ID.
