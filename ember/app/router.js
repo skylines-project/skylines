@@ -44,6 +44,7 @@ Router.map(function() {
     this.route('all');
     this.route('latest');
     this.route('date', { path: '/date/:date' });
+    this.route('landscape', { path: '/landscape/:landscape' });
     this.route('airport', { path: '/airport/:airport_id' });
     this.route('club', { path: '/club/:club_id' });
     this.route('pilot', { path: '/pilot/:pilot_id' });
@@ -58,6 +59,7 @@ Router.map(function() {
     this.route('all');
     this.route('latest');
     this.route('date', { path: '/date/:date' });
+    this.route('landscape', { path: '/landscape/:landscape' });
     this.route('airport', { path: '/airport/:airport_id' });
     this.route('club', { path: '/club/:club_id' });
     this.route('pinned');

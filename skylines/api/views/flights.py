@@ -72,6 +72,7 @@ def _create_list(
     date=None,
     pilot=None,
     club=None,
+    landscape=None,
     airport=None,
     pinned=None,
     filter=None,
@@ -104,6 +105,8 @@ def _create_list(
         .options(contains_eager(Flight.club))
         .outerjoin(Flight.takeoff_airport)
         .options(contains_eager(Flight.takeoff_airport))
+        .outerjoin(Flight.landscape)
+        .options(contains_eager(Flight.landscape))
         .outerjoin(Flight.model)
         .options(contains_eager(Flight.model))
         .outerjoin((subq, Flight.comments))
@@ -114,8 +117,12 @@ def _create_list(
 
     if pilot:
         flights = flights.filter(or_(Flight.pilot == pilot, Flight.co_pilot == pilot))
+
     if club:
         flights = flights.filter(Flight.club == club)
+
+    if landscape:
+        flights.filter(Flight.landscape == landscape)
 
     if airport:
         flights = flights.filter(Flight.takeoff_airport == airport)
@@ -131,6 +138,7 @@ def _create_list(
         "score": getattr(Flight, "index_score"),
         "pilot": getattr(pilot_alias, "name"),
         "distance": getattr(Flight, "olc_classic_distance"),
+        "landscape": getattr(Flight, "landscape"),
         "airport": getattr(Airport, "name"),
         "club": getattr(Club, "name"),
         "aircraft": getattr(AircraftModel, "name"),

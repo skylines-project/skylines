@@ -40,7 +40,8 @@ class Flight(db.Model):
     time_modified = db.Column(DateTime, nullable=False, default=datetime.utcnow)
     time_igc_upload = db.Column(DateTime, nullable=False, default=datetime.utcnow)
     flight_plan_md5 = db.Column(String(32), nullable=False)
-    groupflight_id = db.Column(Integer) #used if it contributes to a group flight
+    landscape = db.Column(String(), nullable=False)
+    groupflight_id = db.Column(Integer) #set if it contributes to a group flight
     pilot_id = db.Column(
         Integer, db.ForeignKey("users.id", ondelete="SET NULL"), index=True
     )

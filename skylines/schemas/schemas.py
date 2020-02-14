@@ -163,8 +163,9 @@ class IGCFileSchema(Schema):
     model = fields.String(strip=True, validate=validate.Length(max=64)) #glider model
 
     date = fields.Date(attribute="date_utc")
-    flight_plan_md5 = fields.String(attribute="flight_plan_md5")
-    md5 = fields.String(attribute="md5")
+    flight_plan_md5 = fields.String()
+    landscape = fields.String()
+    md5 = fields.String()
 
     class Meta(Schema.Meta):
         load_only = ("ownerId",)
@@ -215,7 +216,7 @@ class FlightSchema(Schema):
     scoreStartTime = fields.DateTime(attribute="scoring_start_time")
     scoreEndTime = fields.DateTime(attribute="scoring_end_time")
     landingTime = fields.DateTime(attribute="landing_time")
-
+    landscape = fields.String()
     takeoffAirportId = fields.Integer(attribute="takeoff_airport_id", allow_none=True)
     takeoffAirport = fields.Nested(
         AirportSchema, attribute="takeoff_airport", only=("id", "name", "countryCode")
@@ -269,6 +270,7 @@ class GroupflightSchema(Schema):
     time_created = fields.DateTime()
     time_modified = fields.DateTime()
     date_modified = fields.DateTime()
+    landscape = fields.String()
     takeoffAirportId = fields.Integer(attribute="takeoff_airport_id", allow_none=True)
     takeoffAirport = fields.Nested(
         AirportSchema, attribute="takeoff_airport", only=("id", "name", "countryCode")
