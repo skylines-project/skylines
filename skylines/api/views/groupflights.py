@@ -119,6 +119,7 @@ def groupflight_actions(flightCurrent, igc_file):
                 flight.groupflight_id = gfid
         else:  # create group flight
             groupflight = Groupflight()
+            groupflight.landscape = igc_file.landscape
             groupflight.flight_plan_md5 = igc_file.flight_plan_md5
             groupflight.time_created = datetime.utcnow()
             groupflight.time_modified = datetime.utcnow()
@@ -148,6 +149,7 @@ def _create_list(
     created=None,
     date=None,
     club=None,
+    landscape=None,
     airport=None,
     pinned=None,
     filter=None,
@@ -168,6 +170,8 @@ def _create_list(
         .options(contains_eager(Groupflight.club))
         .outerjoin(Groupflight.takeoff_airport)
         .options(contains_eager(Groupflight.takeoff_airport))
+        .outerjoin(Groupflight.landscape)
+        .options(contains_eager(Groupflight.landscape))
         .outerjoin((subq, Groupflight.comments))
     )
 
@@ -175,7 +179,10 @@ def _create_list(
         groupflights = groupflights.filter(Groupflight.date_modified == date)
 
     if club:
-        groupflights = groupflights.filter(Groupflight.club == club)
+        flights = flights.filter(Flight.club == club)
+
+    if landscape:
+        flights.filter(Flight.landscape == landscape)
 
     if airport:
         groupflights = groupflights.filter(Groupflight.takeoff_airport == airport)
@@ -189,6 +196,7 @@ def _create_list(
     valid_columns = {
         "created": getattr(Groupflight, "time_created"),
         "date": getattr(Groupflight, "date_modified"),
+        "landscape": getattr(Flight, "landscape"),
         "airport": getattr(Airport, "name"),
         "club": getattr(Club, "name"),
     }
@@ -213,7 +221,6 @@ def _create_list(
     groupflights_json = []
     for f, num_comments in groupflights:
         groupflight = groupflight_schema.dump(f).data
-        # groupflight["private"] = not f.is_rankable()
         groupflight["numComments"] = num_comments
         groupflights_json.append(groupflight)
 

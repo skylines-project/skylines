@@ -25,6 +25,7 @@ class IGCFile(db.Model):
     time_modified = db.Column(DateTime, nullable=False, default=datetime.utcnow)
     filename = db.Column(String(), nullable=False)
     is_condor_file = db.Column(db.Boolean, default = False)
+    landscape = db.Column(String(), nullable=False)
     flight_plan_md5 = db.Column(String(32), nullable=False)
     md5 = db.Column(String(32), nullable=False, unique=True)
 
@@ -58,12 +59,13 @@ class IGCFile(db.Model):
     def update_igc_headers(self):
         path = files.filename_to_path(self.filename)
         igc_headers = read_igc_headers(path)
-        condor_fpl = read_condor_fpl(path)
+        condor_fpl,landscape = read_condor_fpl(path)
         if igc_headers is None:
             return
 
         if len(condor_fpl) > 0:
             self.is_condor_file = True
+            self.landscape = landscape
             self.flight_plan_md5 = file_md5(StringIO.StringIO('\n'.join(condor_fpl)))
 
         if "manufacturer_id" in igc_headers:

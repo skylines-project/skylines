@@ -271,6 +271,7 @@ def index_post():
         flight.pilot_id = pilot_id
         flight.pilot_name = data.get("pilot_name")
         flight.club_id = club_id
+        flight.landscape = igc_file.landscape
         flight.flight_plan_md5 = igc_file.flight_plan_md5
         flight.time_created = igc_file.date_condor
         flight.time_igc_upload = igc_file.time_modified
