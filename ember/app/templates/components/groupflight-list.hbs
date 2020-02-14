@@ -8,6 +8,8 @@
     <SortableTableHeader @column="club" @sortColumn={{sortColumn}} @sortOrder={{sortOrder}} @class="col-xs-12 banner">{{t "club"}}</SortableTableHeader>
   {{/if}}
 
+    <SortableTableHeader @column="landscape" @sortColumn={{sortColumn}} @sortOrder={{sortOrder}} @class="col-xs-12 banner">{{t "landscape"}}</SortableTableHeader>
+
   {{#if showAirport}}
     <SortableTableHeader @column="airport" @sortColumn={{sortColumn}} @sortOrder={{sortOrder}} @class="airport">{{t "airport"}}</SortableTableHeader>
   {{/if}}

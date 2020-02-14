@@ -39,13 +39,11 @@
   {{/if}}
 </td>
 
-{{#if showLandscape}}
   <td class="col-xs-12 banner">
     {{#if flight.landscape}}
-      <LinkTo @route="flights.landscape" @model={{flight.landscape}}>{{groupflight.landscape}}></LinkTo>
+      {{flight.landscape}}
     {{/if}}
   </td>
-{{/if}}
 
 {{#if showAirport}}
   <td class="airport">

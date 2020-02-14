@@ -105,7 +105,7 @@ def groupflight_actions(flightCurrent, igc_file):
         .filter(Flight.flight_plan_md5 == igc_file.flight_plan_md5) \
         .filter(Flight.time_modified + timedelta(hours=24) >= datetime.utcnow()).all()
 
-    if len(latest) > 1:  # igc is part of group flight
+    if len(latest) > 1:  # igc should be part of group flight
         alreadyGrouped = db.session.query(Flight.id) \
             .filter(Flight.club_id == flightCurrent.club_id) \
             .filter(Flight.flight_plan_md5 == igc_file.flight_plan_md5) \
@@ -170,8 +170,6 @@ def _create_list(
         .options(contains_eager(Groupflight.club))
         .outerjoin(Groupflight.takeoff_airport)
         .options(contains_eager(Groupflight.takeoff_airport))
-        .outerjoin(Groupflight.landscape)
-        .options(contains_eager(Groupflight.landscape))
         .outerjoin((subq, Groupflight.comments))
     )
 

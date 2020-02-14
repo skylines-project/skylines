@@ -91,6 +91,28 @@ def _create_list(
 
     current_user = User.get(request.user_id) if request.user_id else None
 
+    # flights = (
+    #     db.session.query(Flight, subq.c.count)
+    #     .filter(Flight.is_listable(current_user))
+    #     .join(Flight.igc_file)
+    #     .options(contains_eager(Flight.igc_file))
+    #     .join(owner_alias, IGCFile.owner)
+    #     .options(contains_eager(Flight.igc_file, IGCFile.owner, alias=owner_alias))
+    #     .outerjoin(pilot_alias, Flight.pilot)
+    #     .options(contains_eager(Flight.pilot, alias=pilot_alias))
+    #     .options(joinedload(Flight.co_pilot))
+    #     .outerjoin(Flight.club)
+    #     .options(contains_eager(Flight.club))
+    #     .outerjoin(Flight.takeoff_airport)
+    #     .options(contains_eager(Flight.takeoff_airport))
+    #     .outerjoin(Flight.landscape)
+    #     .options(contains_eager(Flight.landscape))
+    #     .outerjoin(Flight.model)
+    #     .options(contains_eager(Flight.model))
+    #     .outerjoin((subq, Flight.comments))
+    # )
+
+
     flights = (
         db.session.query(Flight, subq.c.count)
         .filter(Flight.is_listable(current_user))
@@ -105,8 +127,6 @@ def _create_list(
         .options(contains_eager(Flight.club))
         .outerjoin(Flight.takeoff_airport)
         .options(contains_eager(Flight.takeoff_airport))
-        .outerjoin(Flight.landscape)
-        .options(contains_eager(Flight.landscape))
         .outerjoin(Flight.model)
         .options(contains_eager(Flight.model))
         .outerjoin((subq, Flight.comments))

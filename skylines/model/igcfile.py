@@ -25,7 +25,7 @@ class IGCFile(db.Model):
     time_modified = db.Column(DateTime, nullable=False, default=datetime.utcnow)
     filename = db.Column(String(), nullable=False)
     is_condor_file = db.Column(db.Boolean, default = False)
-    landscape = db.Column(String(), nullable=False)
+    landscape = db.Column(String(32), nullable=False)
     flight_plan_md5 = db.Column(String(32), nullable=False)
     md5 = db.Column(String(32), nullable=False, unique=True)
 

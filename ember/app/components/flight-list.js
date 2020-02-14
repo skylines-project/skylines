@@ -6,6 +6,7 @@ export default Component.extend({
 
   flights: null,
   showDate: true,
+  showLandscape: true,
   showAirport: true,
   showClub: true,
   showPilot: true,
