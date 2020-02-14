@@ -1,9 +1,14 @@
 {{#if showDate}}
-  <td class="date">
-    {{#if groupflight.date}}
-      {{format-date groupflight.date format="ddmmyyyy" timeZone="UTC"}}
-    {{/if}}
+  <td >
+{{!--     {{#if groupflight.date}} --}}
+      {{t "showDate"}}
+{{!--     {{/if}} --}}
   </td>
+{{!--   <td class="date"> --}}
+{{!--     {{#if groupflight.date}} --}}
+{{!--       {{format-date groupflight.date format="ddmmyyyy" timeZone="UTC"}} --}}
+{{!--     {{/if}} --}}
+{{!--   </td> --}}
 {{/if}}
 
 {{#if showAirport}}
