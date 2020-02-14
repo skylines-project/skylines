@@ -6,19 +6,19 @@
   </td>
 {{/if}}
 
+{{#if showClub}}
+  <td class="col-xs-12 banner">
+    {{#if groupflight.club_id}}
+      <LinkTo @route="club" @model={{groupflight.club.id}}>{{truncate groupflight.club.name 25}}</LinkTo>
+    {{/if}}
+  </td>
+{{/if}}
+
 {{#if showAirport}}
   <td class="airport">
     {{#if groupflight.takeoffAirport}}
       <XFlag @code={{groupflight.takeoffAirport.countryCode}} />
       <LinkTo @route="groupflights.airport" @model={{groupflight.takeoffAirport.id}}>{{groupflight.takeoffAirport.name}}</LinkTo>
-    {{/if}}
-  </td>
-{{/if}}
-
-{{#if showClub}}
-  <td class="club hidden-sm hidden-xs">
-    {{#if groupflight.club_id}}
-      <LinkTo @route="club" @model={{groupflight.club.id}}>{{truncate groupflight.club.name 25}}</LinkTo>
     {{/if}}
   </td>
 {{/if}}
