@@ -264,7 +264,7 @@ class FlightSchema(Schema):
 class GroupflightSchema(Schema):
     id = fields.Integer()
     club_id = fields.Integer()
-    club = fields.String()
+    club = fields.Nested(ClubSchema, only=("id", "name"))
     flight_plan_md5 = fields.String()
     time_created = fields.DateTime()
     time_modified = fields.DateTime()
