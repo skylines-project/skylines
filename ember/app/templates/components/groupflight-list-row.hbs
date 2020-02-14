@@ -1,14 +1,9 @@
 {{#if showDate}}
-  <td >
-{{!--     {{#if groupflight.date}} --}}
-      {{t "showDate"}}
-{{!--     {{/if}} --}}
+  <td class="date">
+    {{#if groupflight.time_modified}}
+      {{format-date groupflight.time_modified format="ddmmyyyy" timeZone="UTC"}}
+    {{/if}}
   </td>
-{{!--   <td class="date"> --}}
-{{!--     {{#if groupflight.date}} --}}
-{{!--       {{format-date groupflight.date format="ddmmyyyy" timeZone="UTC"}} --}}
-{{!--     {{/if}} --}}
-{{!--   </td> --}}
 {{/if}}
 
 {{#if showAirport}}
@@ -22,7 +17,7 @@
 
 {{#if showClub}}
   <td class="club hidden-sm hidden-xs">
-    {{#if groupflight.club}}
+    {{#if groupflight.club_id}}
       <LinkTo @route="club" @model={{groupflight.club.id}}>{{truncate groupflight.club.name 25}}</LinkTo>
     {{/if}}
   </td>

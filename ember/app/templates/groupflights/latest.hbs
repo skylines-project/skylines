@@ -6,8 +6,8 @@
 
 <div >
   <xx class="numeric">{{format-number model.count}}</xx>
-  {{#each groupflights as |groupflight|}}
-    <zz class="numeric">{{format-number groupflight.club_id}}</zz>
+  {{#each model.groupflights as |groupflight|}}
+    <zz >{{t groupflight.club_id}}</zz>
   {{else}}
      <yy colspan="10">{{t "no-flights-found"}}</yy>
   {{/each}}

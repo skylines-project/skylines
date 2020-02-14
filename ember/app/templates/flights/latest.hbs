@@ -4,6 +4,18 @@
   <XPager @count={{model.count}} @page={{page}} @perPage={{50}} />
 </div>
 
+<div >
+  <xx class="numeric">{{format-number model.count}}</xx>
+{{!--   <zz class="numeric">{{format-number model.flights[1].club_id}}</zz> --}}
+{{!--   {{#each model.flights as |flight|}} --}}
+{{!--     <zz >{{t flight.club_id}}</zz> --}}
+{{!--   {{else}} --}}
+{{!--      <yy colspan="10">{{t "no-flights-found"}}</yy> --}}
+{{!--   {{/each}} --}}
+
+</div>
+
+
 <FlightList @flights={{model.flights}} @showDate={{false}} @sortColumn={{column}} @sortOrder={{order}} />
 
 <div class="pull-right">
