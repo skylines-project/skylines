@@ -12,22 +12,17 @@
     <SortableTableHeader @column="airport" @sortColumn={{sortColumn}} @sortOrder={{sortOrder}} @class="airport">{{t "airport"}}</SortableTableHeader>
   {{/if}}
 
-  {{#if showTimes}}
-    <SortableTableHeader @column="time" @sortColumn={{sortColumn}} @sortOrder={{sortOrder}} @defaultOrder="desc" @class="times hidden-xs">{{t "time"}}</SortableTableHeader>
-  {{/if}}
-
-  <th class="column-buttons"></th>
+    <th class="column-buttons"></th>
   <th class="num_comments hidden-xs"></th>
 </tr>
 </thead>
 <tbody>
-{{#each groupflights as |flight|}}
+{{#each groupflights as |groupflight|}}
   <GroupflightListRow
-    @flight={{flight}}
+    @groupflight={{groupflight}}
     @showDate={{showDate}}
     @showAirport={{showAirport}}
-    @showClub={{showClub}}
-    @showTimes={{showTimes}} />
+    @showClub={{showClub}} />
 {{else}}
   <tr>
     <td colspan="10">{{t "no-flights-found"}}</td>

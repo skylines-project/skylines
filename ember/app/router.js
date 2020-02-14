@@ -33,6 +33,7 @@ Router.map(function() {
 
   this.route('flight-upload', { path: '/flights/upload' });
 
+// why flight_ids and not _id?
   this.route('flight', { path: '/flights/:flight_ids' }, function() {
     this.route('change-aircraft', { path: '/change_aircraft' });
     this.route('change-pilot', { path: '/change_pilot' });
@@ -50,6 +51,8 @@ Router.map(function() {
     this.route('pinned');
     this.route('list', { path: '/list/:list' });
   });
+
+  this.route('groupflight', { path: '/groupflights/:groupflight_ids' });
 
   this.route('groupflights', { path: '/groupflights' }, function() {
     this.route('all');

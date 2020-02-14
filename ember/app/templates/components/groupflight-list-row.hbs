@@ -1,76 +1,35 @@
 {{#if showDate}}
   <td class="date">
     {{#if groupflight.date}}
-      {{format-date groupflight.date_modified format="ddmmyyyy" timeZone="UTC"}}
+      {{format-date groupflight.date format="ddmmyyyy" timeZone="UTC"}}
     {{/if}}
   </td>
 {{/if}}
 
-{{!-- <td class="numeric"> --}}
-{{!--   {{format-number flight.score maximumFractionDigits=0}} --}}
-{{!-- </td> --}}
-
-{{!-- {{#if showPilot}} --}}
-{{!--   <td class="pilot"> --}}
-{{!--     {{#if flight.pilot.id}} --}}
-{{!--       <LinkTo @route="user" @model={{flight.pilot.id}}>{{pilotName}}</LinkTo> --}}
-{{!--     {{else if pilotName}} --}}
-{{!--       {{pilotName}} --}}
-{{!--     {{/if}} --}}
-
-{{!--     {{#if (and pilotName copilotName)}}<br/>{{/if}} --}}
-
-{{!--     {{#if flight.copilot.id}} --}}
-{{!--       <LinkTo @route="user" @model={{flight.copilot.id}}>{{copilotName}}</LinkTo> --}}
-{{!--     {{else if copilotName}} --}}
-{{!--       {{copilotName}} --}}
-{{!--     {{/if}} --}}
-
-{{!--     {{#if (not (or pilotName copilotName)) }} --}}
-{{!--       [{{flight.igcFile.owner.name}}] --}}
-{{!--     {{/if}} --}}
-{{!--   </td> --}}
-{{!-- {{/if}} --}}
-
-
-{{!-- <td class="numeric"> --}}
-{{!--   {{#if flight.distance}} --}}
-{{!--     {{format-distance flight.distance}} --}}
-{{!--   {{/if}} --}}
-{{!-- </td> --}}
-
 {{#if showAirport}}
   <td class="airport">
-    {{#if flight.takeoffAirport}}
-      <XFlag @code={{flight.takeoffAirport.countryCode}} />
-      <LinkTo @route="flights.airport" @model={{flight.takeoffAirport.id}}>{{flight.takeoffAirport.name}}</LinkTo>
+    {{#if groupflight.takeoffAirport}}
+      <XFlag @code={{groupflight.takeoffAirport.countryCode}} />
+      <LinkTo @route="groupflights.airport" @model={{groupflight.takeoffAirport.id}}>{{groupflight.takeoffAirport.name}}</LinkTo>
     {{/if}}
   </td>
 {{/if}}
 
 {{#if showClub}}
   <td class="club hidden-sm hidden-xs">
-    {{#if flight.club}}
-      <LinkTo @route="club" @model={{flight.club.id}}>{{truncate flight.club.name 25}}</LinkTo>
-    {{/if}}
-  </td>
-{{/if}}
-
-{{#if showTimes}}
-  <td class="times hidden-xs">
-    {{#if (and flight.takeoffTime flight.landingTime)}}
-      {{format-time flight.takeoffTime format="hhmm" timeZone="UTC"}}-{{format-time flight.landingTime format="hhmm" timeZone="UTC"}}
+    {{#if groupflight.club}}
+      <LinkTo @route="club" @model={{groupflight.club.id}}>{{truncate groupflight.club.name 25}}</LinkTo>
     {{/if}}
   </td>
 {{/if}}
 
 <td class="column-buttons">
-  <LinkTo @route="flight" @model={{flight.id}} class="btn btn-default btn-sm">{{t "show"}}</LinkTo>
-  <PinStar @flightId={{flight.id}} />
+  <LinkTo @route="groupflight" @model={{groupflight.id}} class="btn btn-default btn-sm">{{t "show"}}</LinkTo>
+  <PinStar @groupflightId={{groupflight.id}} />
 </td>
 
 <td class="num_comments hidden-xs">
-  {{#if (gt flight.numComments 0)}}
-    {{fa-icon "comments-o" title=(t "n-comments" numComments=flight.numComments)}}
+  {{#if (gt groupflight.numComments 0)}}
+    {{fa-icon "comments-o" title=(t "n-comments" numComments=groupflight.numComments)}}
   {{/if}}
 </td>
