@@ -177,10 +177,10 @@ def _create_list(
         groupflights = groupflights.filter(Groupflight.date_modified == date)
 
     if club:
-        flights = flights.filter(Flight.club == club)
+        groupflights = groupflights.filter(Groupflight.club == club)
 
     if landscape:
-        flights.filter(Flight.landscape == landscape)
+        groupflights.filter(Groupflight.landscape == landscape)
 
     if airport:
         groupflights = groupflights.filter(Groupflight.takeoff_airport == airport)
@@ -194,7 +194,7 @@ def _create_list(
     valid_columns = {
         "created": getattr(Groupflight, "time_created"),
         "date": getattr(Groupflight, "date_modified"),
-        "landscape": getattr(Flight, "landscape"),
+        "landscape": getattr(Groupflight, "landscape"),
         "airport": getattr(Airport, "name"),
         "club": getattr(Club, "name"),
     }
