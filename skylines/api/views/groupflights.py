@@ -310,9 +310,9 @@ def mark_groupflight_notifications_read(groupflight):
 @groupflights_blueprint.route("/groupflights/<groupflight_id>", strict_slashes=False)
 @oauth.optional()
 def read(groupflight_id):
-    groupflight = get_requested_record(Groupflight, groupflight_id, joinedload=[Groupflight.igc_file])
+    groupflight = get_requested_record(Groupflight, groupflight_id)
 
-    mark_groupflight_notifications_read(groupflight)
+    # mark_groupflight_notifications_read(groupflight)
 
     groupflight_json = GroupflightSchema().dump(groupflight).data
 
