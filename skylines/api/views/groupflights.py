@@ -324,6 +324,7 @@ def read(groupflight_id):
     igcs = db.session.query(Flight.igc_file_id) \
         .filter(Flight.groupflight_id == groupflight.id) \
         .all()
+    igcs = [item[0] for item in igcs]  #extract integer list
 
     return jsonify(
         groupflight=groupflight_json, igcs=igcs,
