@@ -91,8 +91,7 @@ def groupflight_actions(flightCurrent, igc_file):
             .filter(Flight.groupflight_id != None).all()
 
         if len(alreadyGrouped) > 0:  # add to this group flight
-            gfid = Flight.query(Flight.groupflight_id).filter(Flight.id == alreadyGrouped[0])[
-                0]  # get from first entry
+            gfid = db.session.query(Flight.groupflight_id).filter(Flight.id == alreadyGrouped[0][0]).all()[0]  # get from first entry
             for flight_id in latest:
                 flight = Flight.get(flight_id)
                 flight.groupflight_id = gfid
@@ -107,6 +106,10 @@ def groupflight_actions(flightCurrent, igc_file):
             if flightCurrent.takeoff_airport_id != None:
                 groupflight.takeoff_airport_id = flightCurrent.takeoff_airport.name
             db.session.add(groupflight)
+            db.session.flush()
+            for flight_id in latest:
+                flight = Flight.get(flight_id)
+                flight.groupflight_id = groupflight.id
         db.session.commit()
 
 ###################### -- APIs -- ######################
@@ -316,10 +319,15 @@ def read(groupflight_id):
 
     groupflight_json = GroupflightSchema().dump(groupflight).data
 
-    return jsonify(
-        groupflight=groupflight_json,
-    )
+    #get list of igcs that belong to groupflight
 
+    igcs = db.session.query(Flight.igc_file_id) \
+        .filter(Flight.groupflight_id == groupflight.id) \
+        .all()
+
+    return jsonify(
+        groupflight=groupflight_json, igcs=igcs,
+    )
 
 @groupflights_blueprint.route("/groupflights/<groupflight_id>/comments", methods=("POST",))
 @oauth.required()
