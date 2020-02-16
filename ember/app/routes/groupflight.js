@@ -1,8 +1,10 @@
 import Route from '@ember/routing/route';
+import { inject as service } from '@ember/service';
 
 export default Route.extend({
-  model(params) {
-    let ids = params.groupflight_ids.split(',').map(it => parseInt(it, 10));
-    return { ids };
+  ajax: service(),
+
+  model({ groupflight_id }) {
+    return this.ajax.request(`/api/groupflight/${groupflight_id}`);
   },
 });

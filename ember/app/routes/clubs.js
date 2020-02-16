@@ -32,7 +32,6 @@ export default Route.extend({
 
   actions: {
     loading(transition) {
-//      let controller = this.controllerFor('clubs');
       controller.set('loading', true);
       transition.promise.finally(() => {
         controller.set('loading', false);
