@@ -76,27 +76,6 @@ Send notification to member when GF_ID'd groupflight has another submission
 
 groupflight.time_modified is normally the upload date'''
 
-# groupGroupflights_blueprint = Blueprint("groupflights", "skylines")
-#
-# @groupGroupflights_blueprint.route("/groupflights", strict_slashes=False)
-# def _list():
-# # List group groupflights by date
-# #     data = _handle_request_groupflight_group("club_id")
-#
-#     group_groupflight_schema = GroupGroupflightSchema(only=("id", "club_id", "takeoff_airport", "time_created"))
-#     club_info = []
-#     for club, count, groupflights, users in data["result"]:
-#         row = {"club": club_schema.dump(club).data,
-#                "groupflights": groupflights,
-#                "users": users,
-#                "email": club.email_address,
-#                "website": club.website
-#         }
-#
-#         club_info.append({"groupflights": group_groupflight_schema.dump})
-#
-#     return jsonify(club_info=club_info, total=g.paginators["result"].count)
-
 def groupflight_actions(flightCurrent, igc_file):
     '''Finds igc files within 24 hrs of the last uploaded igc with a matching flight plan '''
 
@@ -280,19 +259,6 @@ def latest():
         date_ = datetime.utcnow()
 
     return date(date_)  #gets list sorted by date
-#
-
-# @groupflights_blueprint.route("/groupflights/pilot/<int:id>")
-# @oauth.optional()
-# def pilot(id):
-#     pilot = get_requested_record(User, id)
-#
-#     mark_user_notifications_read(pilot)
-#
-#     return _create_list(
-#         pilot=pilot, default_sorting_column="date", default_sorting_order="desc"
-#     )
-
 
 @groupflights_blueprint.route("/groupflights/club/<int:id>")
 @oauth.optional()
@@ -350,9 +316,6 @@ def read(groupflight_id):
 
     groupflight_json = GroupflightSchema().dump(groupflight).data
 
-    if "extended" not in request.args:
-        return jsonify(groupflight=groupflight_json)
-
     return jsonify(
         groupflight=groupflight_json,
     )
@@ -386,57 +349,3 @@ def add_comment(groupflight_id):
     db.session.commit()
 
     return jsonify()
-
-# @groupflights_blueprint.route("/groupflights/<groupflight_id>/json")
-# @oauth.optional()
-# def json(groupflight_id):
-#     groupflight = get_requested_record(
-#         Groupflight, groupflight_id, joinedload=(Groupflight.igc_file, Groupflight.model)
-#     )
-#
-#     current_user = User.get(request.user_id) if request.user_id else None
-#     if not groupflight.is_viewable(current_user):
-#         return jsonify(), 404
-#
-#     # Return HTTP Status code 304 if an upstream or browser cache already
-#     # contains the response and if the igc file did not change to reduce
-#     # latency and server load
-#     # This implementation is very basic. Sadly Flask (0.10.1) does not have
-#     # this feature
-#     last_modified = groupflight.time_modified.strftime("%a, %d %b %Y %H:%M:%S GMT")
-#     modified_since = request.headers.get("If-Modified-Since")
-#     etag = request.headers.get("If-None-Match")
-#     if (modified_since and modified_since == last_modified) or (
-#         etag and etag == groupflight.igc_file.md5
-#     ):
-#         return ("", 304)
-#
-#     trace = _get_groupflight_path(groupflight, threshold=0.0001, max_points=10000)
-#     if not trace:
-#         abort(404)
-#
-#     model = AircraftModelSchema().dump(groupflight.model).data or None
-#
-#     resp = make_response(
-#         jsonify(
-#             points=trace["points"],
-#             barogram_t=trace["barogram_t"],
-#             barogram_h=trace["barogram_h"],
-#             enl=trace["enl"],
-#             contests=trace["contests"],
-#             elevations_t=trace["elevations_t"],
-#             elevations_h=trace["elevations_h"],
-#             sfid=groupflight.id,
-#             geoid=trace["geoid"],
-#             additional=dict(
-#                 registration=groupflight.registration,
-#                 competition_id=groupflight.competition_id,
-#                 model=model,
-#             ),
-#         )
-#     )
-#
-#     resp.headers["Last-Modified"] = last_modified
-#     resp.headers["Etag"] = groupflight.igc_file.md5
-#     return resp
-#
