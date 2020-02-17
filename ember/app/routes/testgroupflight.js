@@ -8,8 +8,4 @@ export default Route.extend({
     return this.ajax.request(`/api/testgroupflight/${tgf_id}`);
   },
 
-//    model() {
-//    return this.ajax.request(`/api/testgroupflight`);
-//  },
-
 });
