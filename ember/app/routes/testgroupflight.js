@@ -9,8 +9,8 @@ export default Route.extend({
 //  },
 
     model() {
-    return this.ajax.request(`/api/clubs`);
-//    return 5
+    return this.ajax.request(`/api/testgroupflight`);
+
   },
 
 });
