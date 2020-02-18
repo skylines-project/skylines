@@ -1,8 +1,8 @@
 <BasePage>
 <div class="fullscreen-below-nav-bar">
-  <div class="page-header">
-    <h1>{{t "groupflight"}}</h1>
-  </div>
+{{!--   <div class="page-header"> --}}
+{{!--     <h1>{{t "groupflight"}}</h1> --}}
+{{!--   </div> --}}
 
   <div id="sidebar" class="sidebar collapsed">
     <!-- Nav tabs -->
@@ -17,31 +17,8 @@
           {{fa-icon "comments-o" size="lg"}}
         </a>
       </li>
-{{!--       <li> --}}
-{{!--         <a href="#tab-stats-total" title="{{t "total"}}" role="tab"> --}}
-{{!--           {{fa-icon "bar-chart" size="lg"}} --}}
-{{!--         </a> --}}
-{{!--       </li> --}}
-{{!--       <li> --}}
-{{!--         <a href="#tab-stats-legs" title="{{t "leg-statistics"}}" role="tab"> --}}
-{{!--           {{fa-icon "arrows-h" size="lg"}} --}}
-{{!--         </a> --}}
-{{!--       </li> --}}
-
-{{!--       {{#if phases}} --}}
-{{!--         <li> --}}
-{{!--           <a href="#tab-stats-phases" title="{{t "phase-statistics"}}" role="tab"> --}}
-{{!--             {{fa-icon "step-forward" size="lg"}} --}}
-{{!--           </a> --}}
-{{!--         </li> --}}
-{{!--       {{/if}} --}}
-
-{{!--       <li> --}}
-{{!--         <a href="#tab-wingmen" title="{{t "wingmen"}}" role="tab"> --}}
-{{!--           {{fa-icon "group" size="lg"}} --}}
-{{!--         </a> --}}
-{{!--       </li> --}}
     </ul>
+
     <!-- Tab panes -->
     <div class="sidebar-content">
       <div class="sidebar-pane" id="tab-overview">
@@ -51,68 +28,37 @@
         </div>
       </div>
 
-      <div class="sidebar-pane" id="tab-comments">
-        <h3>{{t "comments"}}</h3>
-        <div class="sidebar-pane-content">
-          <CommentsList @comments={{comments}} @flightId={{flight.id}} />
-        </div>
-      </div>
-
-{{!--       <div class="sidebar-pane" id="tab-stats-total"> --}}
-{{!--         <h3>{{t "statistics"}}</h3> --}}
+{{!--       <div class="sidebar-pane" id="tab-comments"> --}}
+{{!--         <h3>{{t "comments"}}</h3> --}}
 {{!--         <div class="sidebar-pane-content"> --}}
-{{!--           <FlightPerformancePanel @performance={{performance}} /> --}}
+{{!--           <CommentsList @comments={{comments}} @flightId={{flight.id}} /> --}}
 {{!--         </div> --}}
 {{!--       </div> --}}
 
-{{!--       <div class="sidebar-pane" id="tab-stats-legs"> --}}
-{{!--         <h3>{{t "leg-statistics"}}</h3> --}}
-{{!--         <div class="sidebar-pane-content"> --}}
-{{!--           <FlightLegPanel @legs={{legs}} @selection={{flightPhase.selection}} @onSelect={{action (mut flightPhase.selection)}} /> --}}
-{{!--         </div> --}}
-{{!--       </div> --}}
+{{!--     </div> --}}
+{{!--   </div> --}}
 
-{{!--       {{#if phases}} --}}
-{{!--         <div class="sidebar-pane" id="tab-stats-phases"> --}}
-{{!--           <h3>{{t "phase-statistics"}}</h3> --}}
-{{!--           <div class="sidebar-pane-content"> --}}
-{{!--             <div class="table-responsive"> --}}
-{{!--               <FlightPhaseTable @phases={{phases}} @selection={{flightPhase.selection}} @onSelect={{action (mut flightPhase.selection)}} /> --}}
-{{!--             </div> --}}
-{{!--           </div> --}}
-{{!--         </div> --}}
-{{!--       {{/if}} --}}
+{{!--   <FlightMap --}}
+{{!--     @flights={{fixCalc.flights}} --}}
+{{!--     @fixes={{fixCalc.fixes}} --}}
+{{!--     @phaseHighlightCoords={{flightPhase.coordinates}} --}}
+{{!--     @hoverEnabled={{not (or fixCalc.isRunning cesiumEnabled)}} --}}
+{{!--     @defaultTime={{fixCalc.defaultTime}} --}}
+{{!--     @onTimeChange={{action (mut fixCalc.time)}} --}}
+{{!--     @onExtentChange={{action (mut mapExtent)}} --}}
+{{!--     @onCesiumEnabledChange={{action (mut cesiumEnabled)}} --}}
+{{!--     @addFlight={{action "addFlight"}} --}}
+{{!--     @calculatePadding={{action "calculatePadding"}} --}}
+{{!--     class="sidebar-map ol-with-barogram" --}}
+{{!--   > --}}
 
-{{!--       <div class="sidebar-pane" id="tab-wingmen"> --}}
-{{!--         <h3>{{t "wingmen"}}</h3> --}}
-{{!--         <div class="sidebar-pane-content"> --}}
-{{!--           <WingmanTable @visibleFlights={{fixCalc.flights}} @nearFlights={{nearFlights}} @onSelect={{action "selectWingman"}} /> --}}
-{{!--         </div> --}}
-{{!--       </div> --}}
-    </div>
+{{!--     <FullscreenButton @fullscreenElement="#fullscreen-content" /> --}}
+{{!--     <PlaybackButton @isRunning={{fixCalc.isRunning}} @onToggle={{action "togglePlayback"}} /> --}}
+
+{{!--   </FlightMap> --}}
+     </div>
   </div>
 
-  <FlightMap
-    @flights={{fixCalc.flights}}
-    @fixes={{fixCalc.fixes}}
-    @phaseHighlightCoords={{flightPhase.coordinates}}
-    @hoverEnabled={{not (or fixCalc.isRunning cesiumEnabled)}}
-    @defaultTime={{fixCalc.defaultTime}}
-    @onTimeChange={{action (mut fixCalc.time)}}
-    @onExtentChange={{action (mut mapExtent)}}
-    @onCesiumEnabledChange={{action (mut cesiumEnabled)}}
-    @addFlight={{action "addFlight"}}
-    @calculatePadding={{action "calculatePadding"}}
-    class="sidebar-map ol-with-barogram"
-  >
-
-    <FullscreenButton @fullscreenElement="#fullscreen-content" />
-    <PlaybackButton @isRunning={{fixCalc.isRunning}} @onToggle={{action "togglePlayback"}} />
-
-  </FlightMap>
-
-
 </div>
-
 
 </BasePage>

@@ -9,7 +9,7 @@ export default Route.extend({
   pinnedFlights: service(),
   units: service(),
   model: this.modelFor('testgroupflight'),
-  firstpath: ajax.request(`/api/testgroupflight/${model.ids[0]}/json`),
+  firstpath: ajax.request(`/api/flight/${model.ids[0]}/json`),
 
   classNames: ['relative-fullscreen'],
 
