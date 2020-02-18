@@ -10,7 +10,7 @@ from skylines.api.views.airports import airports_blueprint
 from skylines.api.views.aircraft_models import aircraft_models_blueprint
 from skylines.api.views.clubs import clubs_blueprint
 from skylines.api.views.flights import flights_blueprint
-from skylines.api.views.groupflights import groupflights_blueprint
+# from skylines.api.views.groupflights import groupflights_blueprint
 from skylines.api.views.testgroupflight import testgroupflight_blueprint
 from skylines.api.views.i18n import i18n_blueprint
 from skylines.api.views.mapitems import mapitems_blueprint

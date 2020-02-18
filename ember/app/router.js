@@ -56,7 +56,7 @@ Router.map(function() {
   });
 
 //  this.route('groupflight', { path: '/groupflights/:groupflight_ids' });
-   this.route('groupflight', { path: '/groupflights/:groupflight_id' });
+//   this.route('groupflight', { path: '/groupflights/:groupflight_id' });
 
   this.route('groupflights', { path: '/groupflights' }, function() {
     this.route('all');
