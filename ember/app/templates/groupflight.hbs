@@ -1,0 +1,64 @@
+<BasePage>
+<div class="fullscreen-below-nav-bar">
+{{!--   <div class="page-header"> --}}
+{{!--     <h1>{{t "groupflight"}}</h1> --}}
+{{!--   </div> --}}
+
+  <div id="sidebar" class="sidebar collapsed">
+    <!-- Nav tabs -->
+    <ul class="sidebar-tabs" role="tablist">
+      <li>
+        <a href="#tab-overview" title="{{t "overview"}}" role="tab">
+          {{fa-icon "info" size="lg"}}
+        </a>
+      </li>
+      <li>
+        <a href="#tab-comments" title="{{t "comments"}}" role="tab">
+          {{fa-icon "comments-o" size="lg"}}
+        </a>
+      </li>
+    </ul>
+
+    <!-- Tab panes -->
+    <div class="sidebar-content">
+      <div class="sidebar-pane" id="tab-overview">
+        <h3>{{t "overview"}}</h3>
+        <div class="sidebar-pane-content">
+          <FlightDetailsTable @flight={{flight}} @transitionTo={{transitionTo}} />
+        </div>
+      </div>
+
+{{!--       <div class="sidebar-pane" id="tab-comments"> --}}
+{{!--         <h3>{{t "comments"}}</h3> --}}
+{{!--         <div class="sidebar-pane-content"> --}}
+{{!--           <CommentsList @comments={{comments}} @flightId={{flight.id}} /> --}}
+{{!--         </div> --}}
+{{!--       </div> --}}
+
+{{!--     </div> --}}
+{{!--   </div> --}}
+
+{{!--   <FlightMap --}}
+{{!--     @flights={{fixCalc.flights}} --}}
+{{!--     @fixes={{fixCalc.fixes}} --}}
+{{!--     @phaseHighlightCoords={{flightPhase.coordinates}} --}}
+{{!--     @hoverEnabled={{not (or fixCalc.isRunning cesiumEnabled)}} --}}
+{{!--     @defaultTime={{fixCalc.defaultTime}} --}}
+{{!--     @onTimeChange={{action (mut fixCalc.time)}} --}}
+{{!--     @onExtentChange={{action (mut mapExtent)}} --}}
+{{!--     @onCesiumEnabledChange={{action (mut cesiumEnabled)}} --}}
+{{!--     @addFlight={{action "addFlight"}} --}}
+{{!--     @calculatePadding={{action "calculatePadding"}} --}}
+{{!--     class="sidebar-map ol-with-barogram" --}}
+{{!--   > --}}
+
+{{!--     <FullscreenButton @fullscreenElement="#fullscreen-content" /> --}}
+{{!--     <PlaybackButton @isRunning={{fixCalc.isRunning}} @onToggle={{action "togglePlayback"}} /> --}}
+
+{{!--   </FlightMap> --}}
+     </div>
+  </div>
+
+</div>
+
+</BasePage>

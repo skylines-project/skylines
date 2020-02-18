@@ -8,12 +8,14 @@ const Router = EmberRouter.extend({
 });
 
 Router.map(function() {
+
+  this.route('groupflight',{ path: '/groupflights/:groupflight_id' });
   this.route('club', { path: '/clubs/:club_id' }, function() {
     this.route('pilots');
     this.route('edit');
   });
 
-  this.route('clubs', { path: '/clubs' });
+  this.route('clubs');
 
   this.route('user', { path: '/users/:user_id' }, function() {
     this.route('followers');
@@ -53,7 +55,7 @@ Router.map(function() {
   });
 
 //  this.route('groupflight', { path: '/groupflights/:groupflight_ids' });
-   this.route('groupflight', { path: '/groupflights/:groupflight_id' });
+//   this.route('groupflight', { path: '/groupflights/:groupflight_id' });
 
   this.route('groupflights', { path: '/groupflights' }, function() {
     this.route('all');
