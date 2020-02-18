@@ -7,10 +7,6 @@ export default Route.extend({
   //model includes groupflight and ids
   model({ groupflight_id }) {
     return this.ajax.request(`/api/testgroupflight/${groupflight_id}`)
-//    return RSVP.hash({
-//    firstpath: this.ajax.request(`/api/flight/${groupflight_id}/json`),
-//    gfdata: this.ajax.request(`/api/testgroupflight/${groupflight_id}`),
-//    });
   },
 });
 

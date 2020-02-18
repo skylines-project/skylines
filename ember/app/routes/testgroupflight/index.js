@@ -10,7 +10,6 @@ export default Route.extend({
   units: service(),
   model: this.modelFor('testgroupflight'),
   firstpath: ajax.request(`/api/flight/${model.ids[0]}/json`),
-
   classNames: ['relative-fullscreen'],
 
   fixCalc: null,
