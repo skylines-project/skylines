@@ -9,8 +9,7 @@ const Router = EmberRouter.extend({
 
 Router.map(function() {
 
-  this.route('testgroupflight',{ path: '/testgroupflight/:groupflight_id' });
-//  this.route('testgroupflight');
+  this.route('groupflight',{ path: '/groupflights/:groupflight_id' });
   this.route('club', { path: '/clubs/:club_id' }, function() {
     this.route('pilots');
     this.route('edit');

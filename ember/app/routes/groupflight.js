@@ -6,7 +6,7 @@ export default Route.extend({
     ajax: service(),
   //model includes groupflight and ids
   model({ groupflight_id }) {
-    return this.ajax.request(`/api/testgroupflight/${groupflight_id}`)
+    return this.ajax.request(`/api/groupflights/${groupflight_id}`)
   },
 });
 
