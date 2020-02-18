@@ -322,18 +322,17 @@ def read(groupflight_id):
         .filter(Flight.groupflight_id == groupflight.id) \
         .all()
     ids = [item[0] for item in ids]  #extract integer list
-    paths = []
-    for id in ids:
-        paths.append(json(id))
+    #note: paths are too complicated to bring into this, because it would mean jsonfigy(jsonify), not allowed
 
     return jsonify(
-        groupflight=groupflight_json, ids=ids, paths=paths
+        groupflight=groupflight_json, ids=ids
     )
 
-
+@testgroupflight_blueprint.route("/testgroupflight/<flight_id>/json")
+@oauth.optional()
 def json(flight_id):
     flight = get_requested_record(
-        Flight, flight_id, joinedload=(Flight.igc_file, Flight.model)
+        Groupflight, flight_id, joinedload=(Groupflight.igc_file, Groupflight.model)
     )
 
     current_user = User.get(request.user_id) if request.user_id else None
@@ -381,10 +380,10 @@ def json(flight_id):
     resp.headers["Last-Modified"] = last_modified
     resp.headers["Etag"] = flight.igc_file.md5
     return resp
+#
 
 
-
-@testgroupflight_blueprint.route("/testgroupflight/<groupflight_id>/comments", methods=("POST",))
+@testflight_blueprint.route("/testflight/<groupflight_id>/comments", methods=("POST",))
 @oauth.required()
 def add_comment(groupflight_id):
     groupflight = get_requested_record(Groupflight, groupflight_id)
