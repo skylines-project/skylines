@@ -9,6 +9,7 @@ export default Route.extend({
   pinnedFlights: service(),
   units: service(),
   model: this.modelFor('testgroupflight'),
+  firstpath: ajax.request(`/api/testgroupflight/${model.ids[0]}/json`),
 
   classNames: ['relative-fullscreen'],
 
@@ -37,7 +38,7 @@ export default Route.extend({
     let units = this.units;
 
     let fixCalc = FixCalc.create({ ajax, units });
-    fixCalc.addFlight(this.model.paths[0]);
+    fixCalc.addFlight(this.firstpath);
     this.set('fixCalc', fixCalc);
   },
 
@@ -48,8 +49,8 @@ export default Route.extend({
     let sidebar = this.element.querySelector('#sidebar');
     let $sidebar = $(sidebar).sidebar();
 
-    let barogramPanel = this.element.querySelector('#barogram_panel');
-    let $barogramPanel = $(barogramPanel);
+//    let barogramPanel = this.element.querySelector('#barogram_panel');
+//    let $barogramPanel = $(barogramPanel);
 
     let olScaleLine = this.element.querySelector('.ol-scale-line');
     let olAttribution = this.element.querySelector('.ol-attribution');
@@ -73,9 +74,8 @@ export default Route.extend({
     }
 
     let map = window.flightMap.get('map');
-
-//    otherIds.forEach(id => fixCalc.addFlightFromJSON(`/api/flights/${id}/json`));
-    this.model.paths.slice(1).forEach(path => fixCalc.addFlight(path));  //(1) includes 1 to end
+    //add rest of paths
+    this.model.ids.slice(1).forEach(id => fixCalc.addFlightFromJSON(`/api/flights/${id}/json`));  //(1) includes 1 to end
 
     let extent = fixCalc.get('flights').getBounds();
     map.getView().fit(extent, { padding: this._calculatePadding() });
