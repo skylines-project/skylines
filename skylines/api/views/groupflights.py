@@ -153,6 +153,8 @@ def read(groupflight_id):
 
     groupflight_json = GroupflightSchema().dump(groupflight).data
 
+    club = get_requested_record(Club, groupflight.club_id)
+    club_json = ClubSchema().dump(club).data
     #get list of igcs that belong to groupflight
 
     igcs = db.session.query(Flight.igc_file_id) \
@@ -161,13 +163,13 @@ def read(groupflight_id):
     igcs = [item[0] for item in igcs]  #extract integer list
 
     return jsonify(
-        groupflight=groupflight_json, igcs=igcs,
+        groupflight=groupflight_json, igcs=igcs, club=club_json
     )
 
 @groupflights_blueprint.route("/groupflights/<groupflight_id>/comments", methods=("POST",))
 @oauth.required()
 def add_comment(groupflight_id):
-    groupflight = get_requested_record(Groupflight, groupflight_id)
+    groupflight = get_requested_record(Groupflight, groupflight_id, club)
 
     current_user = User.get(request.user_id)
     if not current_user:
