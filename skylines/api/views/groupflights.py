@@ -53,20 +53,6 @@ from skylines.worker import tasks
 
 import xcsoar
 
-
-# from flask import Blueprint, request, g
-# from sqlalchemy import func
-# from datetime import datetime, timedelta
-# from skylines.api.json import jsonify
-# from skylines.database import db
-# from skylines.api.oauth import oauth
-# from skylines.lib.dbutil import get_requested_record
-# from skylines.model import Club, User, Groupflight, GroupGroupflight
-# from skylines.model.notification import create_club_join_event
-#
-# from skylines.schemas import GroupGroupflightSchema, ValidationError
-
-
 '''Each individual groupflight uploaded has a groupGroupflightId, Null by default.  
 Add groupflight to a group groupflight if another group member submits a groupflight 
 with the same igc groupflight plan (md5 hash) within X hours of the last igc groupflight plan submission.
@@ -75,6 +61,140 @@ Make sure the other group member's groupflight is also tagged with the groupGrou
 Send notification to member when GF_ID'd groupflight has another submission
 
 groupflight.time_modified is normally the upload date'''
+
+
+
+###################### -- APIs -- ######################
+
+groupflights_blueprint = Blueprint("groupflights", "skylines")
+
+@groupflights_blueprint.route("/groupflights/all")
+@oauth.optional()
+def all():
+    return _create_list(default_sorting_column="date", default_sorting_order="desc")
+
+
+@groupflights_blueprint.route("/groupflights/date/<date>")
+@oauth.optional()
+def date(date):
+    try:
+        if is_string(date):
+            date = datetime.strptime(date, "%Y-%m-%d")
+
+        if isinstance(date, datetime):
+            date = date.date()
+
+    except:
+        return jsonify(), 404
+
+    return _create_list(
+        date=date, default_sorting_column="date", default_sorting_order="desc"
+    )
+
+
+@groupflights_blueprint.route("/groupflights/latest")
+@oauth.optional()
+def latest():
+
+    #get date of latest group flight.
+    query = (
+        db.session.query(func.max(Groupflight.time_modified).label("date"))
+        .filter(Groupflight.time_modified < datetime.utcnow())
+    )
+
+    date_ = query.one().date
+    if not date_:
+        date_ = datetime.utcnow()
+
+    return date(date_)  #gets list sorted by date
+
+
+@groupflights_blueprint.route("/groupflights/club/<int:id>")
+@oauth.optional()
+def club(id):
+    club = get_requested_record(Club, id)
+
+    return _create_list(
+        club=club, default_sorting_column="date", default_sorting_order="desc"
+    )
+
+@groupflights_blueprint.route("/groupflights/airport/<int:id>")
+@oauth.optional()
+def airport(id):
+    airport = get_requested_record(Airport, id)
+
+    return _create_list(
+        airport=airport, default_sorting_column="date", default_sorting_order="desc"
+    )
+
+
+@groupflights_blueprint.route("/groupflights/list/<ids>")
+@oauth.optional()
+def _list(ids):
+    if not ids:
+        return jsonify(), 400
+
+    try:
+        # Split the string into integer IDs
+        ids = [int(id) for id in ids.split(",")]
+    except ValueError:
+        return jsonify(), 404
+
+    return _create_list(
+        pinned=ids, default_sorting_column="date", default_sorting_order="desc"
+    )
+
+@groupflights_blueprint.route("/groupflights/<groupflight_id>", strict_slashes=False)
+@oauth.optional()
+def read(groupflight_id):
+    groupflight = get_requested_record(Groupflight, groupflight_id)
+
+    # mark_groupflight_notifications_read(groupflight)
+
+    groupflight_json = GroupflightSchema().dump(groupflight).data
+
+    #get list of igcs that belong to groupflight
+
+    igcs = db.session.query(Flight.igc_file_id) \
+        .filter(Flight.groupflight_id == groupflight.id) \
+        .all()
+    igcs = [item[0] for item in igcs]  #extract integer list
+
+    return jsonify(
+        groupflight=groupflight_json, igcs=igcs,
+    )
+
+@groupflights_blueprint.route("/groupflights/<groupflight_id>/comments", methods=("POST",))
+@oauth.required()
+def add_comment(groupflight_id):
+    groupflight = get_requested_record(Groupflight, groupflight_id)
+
+    current_user = User.get(request.user_id)
+    if not current_user:
+        return jsonify(), 403
+
+    json = request.get_json()
+    if json is None:
+        return jsonify(error="invalid-request"), 400
+
+    try:
+        data = GroupflightCommentSchema().load(json).data
+    except ValidationError as e:
+        return jsonify(error="validation-failed", fields=e.messages), 422
+
+    comment = GroupflightComment()
+    comment.user = current_user
+    comment.groupflight = groupflight
+    comment.text = data["text"]
+
+    create_groupflight_comment_notifications(comment)
+
+    db.session.commit()
+
+    return jsonify()
+
+
+################  functions  ##################
 
 def groupflight_actions(flightCurrent, igc_file):
     '''Finds igc files within 24 hrs of the last uploaded igc with a matching flight plan '''
@@ -112,20 +232,15 @@ def groupflight_actions(flightCurrent, igc_file):
                 flight.groupflight_id = groupflight.id
         db.session.commit()
 
-###################### -- APIs -- ######################
-
-groupflights_blueprint = Blueprint("groupflights", "skylines")
-
-def mark_user_notifications_read(pilot):
+def mark_groupflight_notifications_read(groupflight):
     if not request.user_id:
         return
 
     def add_groupflight_filter(query):
-        return query.filter(Event.actor_id == pilot.id)
+        return query.filter(Event.groupflight_id == groupflight.id)
 
     Notification.mark_all_read(User.get(request.user_id), filter_func=add_groupflight_filter)
     db.session.commit()
-
 
 def _create_list(
     created=None,
@@ -223,138 +338,12 @@ def _create_list(
     return jsonify(json)
 
 
-@groupflights_blueprint.route("/groupflights/all")
-@oauth.optional()
-def all():
-    return _create_list(default_sorting_column="date", default_sorting_order="desc")
-
-
-@groupflights_blueprint.route("/groupflights/date/<date>")
-@oauth.optional()
-def date(date):
-    try:
-        if is_string(date):
-            date = datetime.strptime(date, "%Y-%m-%d")
-
-        if isinstance(date, datetime):
-            date = date.date()
-
-    except:
-        return jsonify(), 404
-
-    return _create_list(
-        date=date, default_sorting_column="date", default_sorting_order="desc"
-    )
-
-
-@groupflights_blueprint.route("/groupflights/latest")
-@oauth.optional()
-def latest():
-
-    #get date of latest group flight.
-    query = (
-        db.session.query(func.max(Groupflight.time_modified).label("date"))
-        .filter(Groupflight.time_modified < datetime.utcnow())
-    )
-
-    date_ = query.one().date
-    if not date_:
-        date_ = datetime.utcnow()
-
-    return date(date_)  #gets list sorted by date
-
-@groupflights_blueprint.route("/groupflights/club/<int:id>")
-@oauth.optional()
-def club(id):
-    club = get_requested_record(Club, id)
-
-    return _create_list(
-        club=club, default_sorting_column="date", default_sorting_order="desc"
-    )
-
-@groupflights_blueprint.route("/groupflights/airport/<int:id>")
-@oauth.optional()
-def airport(id):
-    airport = get_requested_record(Airport, id)
-
-    return _create_list(
-        airport=airport, default_sorting_column="date", default_sorting_order="desc"
-    )
-
-
-@groupflights_blueprint.route("/groupflights/list/<ids>")
-@oauth.optional()
-def _list(ids):
-    if not ids:
-        return jsonify(), 400
-
-    try:
-        # Split the string into integer IDs
-        ids = [int(id) for id in ids.split(",")]
-    except ValueError:
-        return jsonify(), 404
-
-    return _create_list(
-        pinned=ids, default_sorting_column="date", default_sorting_order="desc"
-    )
-
-def mark_groupflight_notifications_read(groupflight):
+def mark_user_notifications_read(pilot):
     if not request.user_id:
         return
 
     def add_groupflight_filter(query):
-        return query.filter(Event.groupflight_id == groupflight.id)
+        return query.filter(Event.actor_id == pilot.id)
 
     Notification.mark_all_read(User.get(request.user_id), filter_func=add_groupflight_filter)
     db.session.commit()
-
-
-
-@groupflights_blueprint.route("/groupflights/<groupflight_id>", strict_slashes=False)
-@oauth.optional()
-def read(groupflight_id):
-    groupflight = get_requested_record(Groupflight, groupflight_id)
-
-    # mark_groupflight_notifications_read(groupflight)
-
-    groupflight_json = GroupflightSchema().dump(groupflight).data
-
-    #get list of igcs that belong to groupflight
-
-    igcs = db.session.query(Flight.igc_file_id) \
-        .filter(Flight.groupflight_id == groupflight.id) \
-        .all()
-    igcs = [item[0] for item in igcs]  #extract integer list
-
-    return jsonify(
-        groupflight=groupflight_json, igcs=igcs,
-    )
-
-@groupflights_blueprint.route("/groupflights/<groupflight_id>/comments", methods=("POST",))
-@oauth.required()
-def add_comment(groupflight_id):
-    groupflight = get_requested_record(Groupflight, groupflight_id)
-
-    current_user = User.get(request.user_id)
-    if not current_user:
-        return jsonify(), 403
-
-    json = request.get_json()
-    if json is None:
-        return jsonify(error="invalid-request"), 400
-
-    try:
-        data = GroupflightCommentSchema().load(json).data
-    except ValidationError as e:
-        return jsonify(error="validation-failed", fields=e.messages), 422
-
-    comment = GroupflightComment()
-    comment.user = current_user
-    comment.groupflight = groupflight
-    comment.text = data["text"]
-
-    create_groupflight_comment_notifications(comment)
-
-    db.session.commit()
-
-    return jsonify()

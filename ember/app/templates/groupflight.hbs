@@ -24,10 +24,10 @@
       <div class="sidebar-pane" id="tab-overview">
         <h3>{{t "overview"}}</h3>
         <div class="sidebar-pane-content">
-          <FlightDetailsTable @flight={{flight}} @transitionTo={{transitionTo}} />
+          <FlightDetailsTable @groupflight={{model.groupflight}} @transitionTo={{transitionTo}} />
         </div>
       </div>
-
+    </div>
 {{!--       <div class="sidebar-pane" id="tab-comments"> --}}
 {{!--         <h3>{{t "comments"}}</h3> --}}
 {{!--         <div class="sidebar-pane-content"> --}}
@@ -36,7 +36,12 @@
 {{!--       </div> --}}
 
 {{!--     </div> --}}
-{{!--   </div> --}}
+
+  </div>
+
+</div>
+
+</BasePage>
 
 {{!--   <FlightMap --}}
 {{!--     @flights={{fixCalc.flights}} --}}
@@ -56,9 +61,4 @@
 {{!--     <PlaybackButton @isRunning={{fixCalc.isRunning}} @onToggle={{action "togglePlayback"}} /> --}}
 
 {{!--   </FlightMap> --}}
-     </div>
-  </div>
 
-</div>
-
-</BasePage>
