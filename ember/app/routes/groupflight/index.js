@@ -34,9 +34,9 @@ export default Route.extend({
 
     let ajax = this.ajax;
     let units = this.units;
-
     let fixCalc = FixCalc.create({ ajax, units });
-    fixCalc.addFlight(this.firstPath);
+    console.log('init first path commented out')
+//    fixCalc.addFlight(this.firstPath);
     this.set('fixCalc', fixCalc);
   },
 
@@ -124,12 +124,13 @@ export default Route.extend({
     return [20, 20, barogramPanel.offsetHeight + 20, sidebar.offsetWidth + 20];
   },
 
-  model() {
-    return RSVP.hash({
-      groupflight: this.modelFor('groupflight').groupflight,
-      ids: this.modelFor('groupflight').ids,
-      club: this.modelFor('groupflight').club,
-      firstPath: ajax.request(`/api/flight/${model.ids[0]}/json`),
-    });
+  setupController(controller, model) {
+    this._super(...arguments);
+    controller.set('groupflight', this.modelFor('groupflight').groupflight);
+    controller.set('ids', this.modelFor('groupflight').ids);
+    controller.set('club', this.modelFor('groupflight').club);
+    console.log( this.modelFor('groupflight').club.name )
+//    controller.set('firstPath', this.ajax.request(`/api/flight/${this.modelFor('groupflight').ids[0]}/json`));
   },
+
 });
