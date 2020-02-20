@@ -2,13 +2,12 @@ import Route from '@ember/routing/route';
 import { inject as service } from '@ember/service';
 import { computed } from '@ember/object';
 import $ from 'jquery';
-import FixCalc from '../utils/fix-calc';
+import FixCalc from '../../utils/fix-calc';
 
 export default Route.extend({
   ajax: service(),
   pinnedFlights: service(),
   units: service(),
-  model: this.modelFor('groupflight'),
   firstpath: ajax.request(`/api/flight/${model.ids[0]}/json`),
   classNames: ['relative-fullscreen'],
 
@@ -125,6 +124,9 @@ export default Route.extend({
     return [20, 20, barogramPanel.offsetHeight + 20, sidebar.offsetWidth + 20];
   },
 
+  model() {
+      return this.modelFor('groupflight');
+  },
 });
 
 
