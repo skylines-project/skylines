@@ -3,12 +3,12 @@ import { inject as service } from '@ember/service';
 import { computed } from '@ember/object';
 import $ from 'jquery';
 import FixCalc from '../../utils/fix-calc';
+import RSVP from 'rsvp';
 
 export default Route.extend({
   ajax: service(),
   pinnedFlights: service(),
   units: service(),
-  firstpath: ajax.request(`/api/flight/${model.ids[0]}/json`),
   classNames: ['relative-fullscreen'],
 
   fixCalc: null,
@@ -36,7 +36,7 @@ export default Route.extend({
     let units = this.units;
 
     let fixCalc = FixCalc.create({ ajax, units });
-    fixCalc.addFlight(this.firstpath);
+    fixCalc.addFlight(this.firstPath);
     this.set('fixCalc', fixCalc);
   },
 
@@ -125,8 +125,11 @@ export default Route.extend({
   },
 
   model() {
-      return this.modelFor('groupflight');
+    return RSVP.hash({
+      groupflight: this.modelFor('groupflight').groupflight,
+      ids: this.modelFor('groupflight').ids,
+      club: this.modelFor('groupflight').club,
+      firstPath: ajax.request(`/api/flight/${model.ids[0]}/json`),
+    });
   },
 });
-
-
