@@ -155,15 +155,15 @@ def read(groupflight_id):
 
     club = get_requested_record(Club, groupflight.club_id)
     club_json = ClubSchema().dump(club).data
-    #get list of igcs that belong to groupflight
 
-    igcs = db.session.query(Flight.igc_file_id) \
+    #get list of igcs that belong to groupflight
+    ids = db.session.query(Flight.igc_file_id) \
         .filter(Flight.groupflight_id == groupflight.id) \
         .all()
-    igcs = [item[0] for item in igcs]  #extract integer list
+    ids = [item[0] for item in ids]  #extract integer list
 
     return jsonify(
-        groupflight=groupflight_json, igcs=igcs, club=club_json
+        groupflight=groupflight_json, ids=ids, club=club_json
     )
 
 @groupflights_blueprint.route("/groupflights/<groupflight_id>/comments", methods=("POST",))

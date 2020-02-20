@@ -130,7 +130,7 @@ export default Route.extend({
     controller.set('ids', this.modelFor('groupflight').ids);
     controller.set('club', this.modelFor('groupflight').club);
     console.log( this.modelFor('groupflight').club.name )
-//    controller.set('firstPath', this.ajax.request(`/api/flight/${this.modelFor('groupflight').ids[0]}/json`));
+    controller.set('firstPath', this.ajax.request(`/api/flights/${this.modelFor('groupflight').ids[0]}/json`));
   },
 
 });

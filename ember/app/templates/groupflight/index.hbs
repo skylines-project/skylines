@@ -2,7 +2,24 @@
   <div class="page-header">
 {{!--     <h1>{{t "groupflight"}}</h1> --}}
     <h1>{{club.name}}</h1>
+{{!--     <h2>{{ids[0]}}</h2> --}}
   </div>
+
+  <table class="table table-striped">
+      <thead>
+      <tr>
+        <th>{{t "flights"}}</th>
+      </tr>
+      </thead>
+      <tbody>
+      {{#each ids as |id1|}}
+        <tr>{{id1}}</tr>
+      {{/each}}
+      </tbody>
+  </table>
+
+
+
 
   <div id="sidebar" class="sidebar collapsed">
     <!-- Nav tabs -->
@@ -19,23 +36,23 @@
       </li>
     </ul>
 
-{{!--     <!-- Tab panes --> --}}
-{{!--     <div class="sidebar-content"> --}}
-{{!--       <div class="sidebar-pane" id="tab-overview"> --}}
-{{!--         <h3>{{t "overview"}}</h3> --}}
-{{!--         <div class="sidebar-pane-content"> --}}
-{{!--           <FlightDetailsTable @groupflight={{groupflight}} @transitionTo={{transitionTo}} /> --}}
-{{!--         </div> --}}
-{{!--       </div> --}}
-{{!--     </div> --}}
-{{!--       <div class="sidebar-pane" id="tab-comments"> --}}
-{{!--         <h3>{{t "comments"}}</h3> --}}
-{{!--         <div class="sidebar-pane-content"> --}}
-{{!--           <CommentsList @comments={{comments}} @flightId={{flight.id}} /> --}}
-{{!--         </div> --}}
-{{!--       </div> --}}
+    <!-- Tab panes -->
+    <div class="sidebar-content">
+      <div class="sidebar-pane" id="tab-overview">
+        <h3>{{t "overview"}}</h3>
+        <div class="sidebar-pane-content">
+          <GroupflightDetailsTable @groupflight={{groupflight}} @transitionTo={{transitionTo}} />
+        </div>
+      </div>
+{{!--     </div>  --}}
+      <div class="sidebar-pane" id="tab-comments">
+        <h3>{{t "comments"}}</h3>
+        <div class="sidebar-pane-content">
+          <CommentsList @comments={{comments}} @flightId={{flight.id}} />
+        </div>
+      </div>
 
-{{!--     </div> --}}
+    </div>
 
   </div>
 
