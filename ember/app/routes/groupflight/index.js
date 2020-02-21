@@ -5,22 +5,14 @@ import RSVP from 'rsvp';
 export default Route.extend({
   ajax: service(),
 
-  model() {
-    let ajax = this.ajax;
-    let id = this.modelFor('groupflight').ids[0];
-
-    return RSVP.hash({
-      firstData: ajax.request(`/api/flights/${id}/?extended`),
-      firstPath: ajax.request(`/api/flights/${id}/json`),
-    });
+  model(params) {
+  console.log(ids);
+    let ids = this.modelFor('groupflight').ids.split(',').map(it => parseInt(it, 10));
+    return { ids };
   },
 
-
-  setupController(controller) {
-    this._super(...arguments);
-    controller.set('groupflight', this.modelFor('groupflight').groupflight);
-    controller.set('ids', this.modelFor('groupflight').ids);
-    controller.set('club', this.modelFor('groupflight').club);
+  afterModel(model, transition) {
+    this.transitionTo('flight', this.model.ids);
   },
 
 });
