@@ -5,11 +5,12 @@
 
 <div class="fullscreen-below-nav-bar">
   <GroupflightPage
-{{!--     id="fullscreen-content" --}}
+    @id="fullscreen-content"
     @ids={{ids}}
     @groupflight={{groupflight}}
     @club={{club}}
-    @firstPath={{model}} //See .js page
+    @firstPath={{model.firstPath}}
+    @firstData={{model.firstData}}
     @comments={{groupflight.comments}}
     @transitionTo={{action "transitionTo"}} />
 </div>

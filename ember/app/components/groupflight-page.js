@@ -34,13 +34,13 @@ export default Route.extend({
     console.log(this.club.name)
     let ajax = this.ajax;
     let units = this.units;
-    let pathFirst = this.firstPath
+//    let data = this.data
     let fixCalc = FixCalc.create({ ajax, units });
-    if (pathFirst) {console.log('pathFirst'),console.log(pathFirst.sfid)}
-    else {console.log('not pathfirst')}
-//    console.log(pathFirst)
-//    console.log('init first path commented out')
-    fixCalc.addFlight(pathFirst);
+    if (this.firstPath) {console.log('firstPath'),console.log(this.firstPath.sfid)}
+    else {console.log('not firstPath')}
+    if (this.firstData) {console.log('firstData'),console.log(this.firstData.flight.id)}
+    else {console.log('not firstData')}
+    fixCalc.addFlight(this.firstPath);
     this.set('fixCalc', fixCalc);
     console.log('test1b')
   },
@@ -74,7 +74,9 @@ export default Route.extend({
   },
 
   actions: {
+
     togglePlayback() {
+    console.log('test2');
       this.fixCalc.togglePlayback();
     },
 
@@ -97,7 +99,7 @@ export default Route.extend({
   _calculatePadding() {
     let sidebar = this.element.querySelector('#sidebar');
 //    let barogramPanel = this.element.querySelector('#barogram_panel');
-//    return [20, 20, barogramPanel.offsetHeight + 20, sidebar.offsetWidth + 20];
+    return [20, 20, 20, sidebar.offsetWidth + 20];
   },
 
 });
