@@ -34,9 +34,13 @@ export default Route.extend({
     console.log(this.club.name)
     let ajax = this.ajax;
     let units = this.units;
+    let pathFirst = this.firstPath
     let fixCalc = FixCalc.create({ ajax, units });
+    if (pathFirst) {console.log('pathFirst'),console.log(pathFirst.sfid)}
+    else {console.log('not pathfirst')}
+//    console.log(pathFirst)
 //    console.log('init first path commented out')
-    fixCalc.addFlight(this.firstPath);
+    fixCalc.addFlight(pathFirst);
     this.set('fixCalc', fixCalc);
     console.log('test1b')
   },
