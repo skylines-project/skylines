@@ -15,6 +15,7 @@ export default Route.extend({
         data: ajax.request(`/api/flights/${ids[0]}/?extended`),
         path: ajax.request(`/api/groupflights/${ids[0]}/json`),
         club: ajax.request(`/api/clubs/${ids[0]}`),
+        isGroup: this.modelFor('flight').ids.length > 1,
       });
     }
     else {
@@ -30,6 +31,6 @@ export default Route.extend({
     controller.set('ids', this.modelFor('flight').ids);
     controller.set('model', model);
     controller.set('_primaryFlightPath', model.path);
-    controller.set('isGroup', this.modelFor('flight').ids.length > 1);
+//    controller.set('isGroup', this.modelFor('flight').ids.length > 1);
   },
 });
