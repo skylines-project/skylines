@@ -579,11 +579,10 @@ def json(flight_id):
     last_modified = flight.time_modified.strftime("%a, %d %b %Y %H:%M:%S GMT")
     modified_since = request.headers.get("If-Modified-Since")
     etag = request.headers.get("If-None-Match")
-    print "skip 304 check bch"
-    # if (modified_since and modified_since == last_modified) or (
-    #     etag and etag == flight.igc_file.md5
-    # ):
-    #     return ("", 304)
+    if (modified_since and modified_since == last_modified) or (
+        etag and etag == flight.igc_file.md5
+    ):
+        return ("", 304)
 
     trace = _get_flight_path(flight, threshold=0.0001, max_points=10000)
     if not trace:

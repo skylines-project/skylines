@@ -81,14 +81,14 @@ export default Component.extend({
 
     let map = window.flightMap.get('map');
 
-    otherIds.forEach(id => fixCalc.addFlightFromJSON(`/api/flights/${id}/json`));
+    otherIds.forEach(id => fixCalc.addFlightFromJSON(`/api/groupflights/${id}/json`));
 
     let extent = fixCalc.get('flights').getBounds();
     map.getView().fit(extent, { padding: this._calculatePadding() });
 
     this.get('pinnedFlights.pinned')
       .filter(id => id !== primaryId)
-      .forEach(id => fixCalc.addFlightFromJSON(`/api/flights/${id}/json`));
+      .forEach(id => fixCalc.addFlightFromJSON(`/api/groupflights/${id}/json`));
   },
 
   actions: {
@@ -116,7 +116,7 @@ export default Component.extend({
         flights.removeObjects(matches);
         pinnedFlights.unpin(id);
       } else {
-        fixCalc.addFlightFromJSON(`/api/flights/${id}/json`);
+        fixCalc.addFlightFromJSON(`/api/groupflights/${id}/json`);
         pinnedFlights.pin(id);
       }
     },

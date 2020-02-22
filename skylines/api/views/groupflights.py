@@ -52,6 +52,7 @@ from skylines.schemas import (
 from skylines.worker import tasks
 
 import xcsoar
+from flights import get_elevations_for_flight, _get_elevations
 
 '''Each individual groupflight uploaded has a groupGroupflightId, Null by default.  
 Add groupflight to a group groupflight if another group member submits a groupflight 
@@ -144,6 +145,7 @@ def _list(ids):
         pinned=ids, default_sorting_column="date", default_sorting_order="desc"
     )
 
+
 @groupflights_blueprint.route("/groupflights/<groupflight_id>", strict_slashes=False)
 @oauth.optional()
 def read(groupflight_id):
@@ -165,6 +167,63 @@ def read(groupflight_id):
     return jsonify(
         groupflight=groupflight_json, ids=ids, club=club_json
     )
+
+
+@groupflights_blueprint.route("/groupflights/<flight_id>/json")
+@oauth.optional()
+def json(flight_id):
+    flight = get_requested_record(
+        Flight, flight_id, joinedload=(Flight.igc_file, Flight.model)
+    )
+
+    current_user = User.get(request.user_id) if request.user_id else None
+    if not flight.is_viewable(current_user):
+        return jsonify(), 404
+
+    # Return HTTP Status code 304 if an upstream or browser cache already
+    # contains the response and if the igc file did not change to reduce
+    # latency and server load
+    # This implementation is very basic. Sadly Flask (0.10.1) does not have
+    # this feature
+
+    last_modified = flight.time_modified.strftime("%a, %d %b %Y %H:%M:%S GMT")
+    modified_since = request.headers.get("If-Modified-Since")
+    etag = request.headers.get("If-None-Match")
+    if (modified_since and modified_since == last_modified) or (
+        etag and etag == flight.igc_file.md5
+    ):
+        return ("", 304)
+
+    trace = _get_flight_path(flight, threshold=0.0001, max_points=10000)
+    if not trace:
+        abort(404)
+
+    model = AircraftModelSchema().dump(flight.model).data or None
+
+    resp = make_response(
+        jsonify(
+            points=trace["points"],
+            barogram_t=trace["barogram_t"],
+            barogram_h=trace["barogram_h"],
+            enl=trace["enl"],
+            # contests=trace["contests"],
+            elevations_t=trace["elevations_t"],
+            elevations_h=trace["elevations_h"],
+            sfid=flight.id,
+            geoid=trace["geoid"],
+            additional=dict(
+                registration=flight.registration,
+                competition_id=flight.competition_id,
+                model=model,
+            ),
+        )
+    )
+
+    resp.headers["Last-Modified"] = last_modified
+    resp.headers["Etag"] = flight.igc_file.md5
+    return resp
+
+
 
 @groupflights_blueprint.route("/groupflights/<groupflight_id>/comments", methods=("POST",))
 @oauth.required()
@@ -349,3 +408,68 @@ def mark_user_notifications_read(pilot):
 
     Notification.mark_all_read(User.get(request.user_id), filter_func=add_groupflight_filter)
     db.session.commit()
+
+def _get_flight_path(flight, threshold=0.001, max_points=3000):
+    '''This version excludes contest_traces from group display'''
+    num_levels = 4
+    zoom_factor = 4
+    zoom_levels = [0]
+    zoom_levels.extend(
+        [
+            round(
+                -math.log(
+                    32.0 / 45.0 * (threshold * pow(zoom_factor, num_levels - i - 1)), 2
+                )
+            )
+            for i in range(1, num_levels)
+        ]
+    )
+
+    xcsoar_flight = xcsoar.Flight(files.filename_to_path(flight.igc_file.filename))
+
+    if flight.qnh:
+        xcsoar_flight.setQNH(flight.qnh)
+
+    begin = flight.takeoff_time - timedelta(seconds=2 * 60)
+    end = flight.landing_time + timedelta(seconds=2 * 60)
+
+    if begin > end:
+        begin = datetime.min
+        end = datetime.max
+
+    xcsoar_flight.reduce(
+        begin=begin,
+        end=end,
+        num_levels=num_levels,
+        zoom_factor=zoom_factor,
+        threshold=threshold,
+        max_points=max_points,
+    )
+
+    encoded_flight = xcsoar_flight.encode()
+
+    points = encoded_flight["locations"]
+    barogram_t = encoded_flight["times"]
+    barogram_h = encoded_flight["altitude"]
+    enl = encoded_flight["enl"]
+
+    elevations_t, elevations_h = _get_elevations(flight)
+    # contest_traces = _get_contest_traces(flight)
+
+    geoid_height = (
+        egm96_height(flight.takeoff_location) if flight.takeoff_location else 0
+    )
+
+    return dict(
+        points=points,
+        barogram_t=barogram_t,
+        barogram_h=barogram_h,
+        enl=enl,
+        # contests=contest_traces,
+        elevations_t=elevations_t,
+        elevations_h=elevations_h,
+        sfid=flight.id,
+        geoid=geoid_height,
+    )
+
+
