@@ -8,29 +8,30 @@ export default Route.extend({
 
   model() {
     let ajax = this.ajax;
-    let id = this.modelFor('flight').ids[0];
 
-    return RSVP.hash({
-      data: ajax.request(`/api/flights/${id}/?extended`),
-      path: ajax.request(`/api/flights/${id}/json`),
-    });
-  },
 
-//    let ids = this.modelFor('flight').ids
-//    console.log(ids.length)
-//    if (ids.length > 1) {
-//      return RSVP.hash({
-//        data: ajax.request(`/api/groupflights/${ids[0]}/?extended`),
-//        path: ajax.request(`/api/groupflights/${ids[0]}/json`),
-//      });
-//    }
-//    else {
-//      return RSVP.hash({
-//        data: ajax.request(`/api/flights/${ids[0]}/?extended`),
-//        path: ajax.request(`/api/flights/${ids[0]}/json`),
-//      });
-//    }
+//    let id = this.modelFor('flight').ids[0];
+//    return RSVP.hash({
+//      data: ajax.request(`/api/flights/${id}/?extended`),
+//      path: ajax.request(`/api/flights/${id}/json`),
+//    });
 //  },
+
+    let ids = this.modelFor('flight').ids
+    console.log(ids.length)
+    if (ids.length > 1) {
+      return RSVP.hash({
+        data: ajax.request(`/api/flights/${ids[0]}/?extended`),
+        path: ajax.request(`/api/groupflights/${ids[0]}/json`),
+      });
+    }
+    else {
+      return RSVP.hash({
+        data: ajax.request(`/api/flights/${ids[0]}/?extended`),
+        path: ajax.request(`/api/flights/${ids[0]}/json`),
+      });
+    }
+  },
 
 
 
