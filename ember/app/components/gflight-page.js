@@ -34,7 +34,7 @@ export default Component.extend({
 
   init() {
     this._super(...arguments);
-
+    alert(this.groupflight.time_modified)
     let ajax = this.ajax;
     let units = this.units;
 

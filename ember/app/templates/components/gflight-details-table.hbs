@@ -1,18 +1,14 @@
 <table class="table table-flight-details">
   <tbody>
-  {{#if flight.club}}
     <tr>
       <th>{{t "club"}}</th>
-      <td><LinkTo @route="club" @model={{flight.club.id}}>{{flight.club.name}}</LinkTo></td>
+      <td><LinkTo @route="club" @model={{club.id}}>{{club.name}}</LinkTo></td>
     </tr>
-  {{/if}}
-
 
   <tr>
     <th>{{t "updated"}}</th>
     <td>
-{{!--     {{club.name}} --}}
-{{!--       {{format-time groupflight.time_modified}} --}}
+      {{format-time groupflight.time_modified}}
 {{!--       format='hhmmss' timeZone="UTC" --}}
     </td>
   </tr>

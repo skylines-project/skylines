@@ -20,7 +20,7 @@ export default Route.extend({
     var ids = idsStr.split(',').map(it => parseInt(it, 10)); //This parses even with : in it
     if (idsStr.includes(':')) {  //groupflight
       var groupflight_id = idsStr.split(':')[0];
-      var groupflight = await this.ajax.request(`/api/groupflights/${groupflight_id}/`);
+      var gfData = await this.ajax.request(`/api/groupflights/${groupflight_id}/`);
       var path = await this.ajax.request(`/api/groupflights/${ids[0]}/json`); //excludes contest traces
     } else {
       var path = await this.ajax.request(`/api/flights/${ids[0]}/json`);
@@ -31,7 +31,7 @@ export default Route.extend({
         data: data,
         path: path,
         club: await this.ajax.request(`/api/clubs/${data.flight.club.id}`),
-        groupflight: groupflight
+        gfData: gfData
       });
   },
 });
