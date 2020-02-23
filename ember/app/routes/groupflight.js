@@ -5,8 +5,8 @@ import { inject as service } from '@ember/service';
 export default Route.extend({
     ajax: service(),
   //model includes groupflight, ids, club
-    model({ groupflight_id }) {
-      return this.ajax.request(`/api/groupflights/${groupflight_id}`)
+    async model({ groupflight_id }) {
+      return await this.ajax.request(`/api/groupflights/${groupflight_id}`)
   },
 });
 
