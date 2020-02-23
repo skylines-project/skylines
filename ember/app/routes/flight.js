@@ -1,3 +1,13 @@
+//import Route from '@ember/routing/route';
+//
+//export default Route.extend({
+//  model(params) {
+//    let ids = params.flight_ids.split(',').map(it => parseInt(it, 10));
+//    return { ids };
+//  },
+//});
+
+
 import Route from '@ember/routing/route';
 import { inject as service } from '@ember/service';
 import RSVP from 'rsvp';
@@ -5,29 +15,23 @@ import RSVP from 'rsvp';
 export default Route.extend({
   ajax: service(),
 
-  model(params) {
-    let paramsStr = params.flight_ids
-    console.log(params);
-    console.log(paramsStr);
-
-    console.log(typeof paramsStr);
-    if (paramsStr.includes(':')) {  //groupflight
-      let groupflight_id = paramsStr.split(':')[0];
-      let groupflightFetch = this.ajax.request(`/api/groupflights/${groupflight_id}/`);
-      console.log(paramsStr.split(':')[1].split(',').map(it => parseInt(it, 10)))
-      let idsList = paramsStr.split(':')[1].split(',').map(it => parseInt(it, 10));
+  async model(params) {
+    var idsStr = params.flight_ids
+    var ids = idsStr.split(',').map(it => parseInt(it, 10)); //This parses even with : in it
+    if (idsStr.includes(':')) {  //groupflight
+      var groupflight_id = idsStr.split(':')[0];
+      var groupflight = await this.ajax.request(`/api/groupflights/${groupflight_id}/`);
+      var path = await this.ajax.request(`/api/groupflights/${ids[0]}/json`); //excludes contest traces
+    } else {
+      var path = await this.ajax.request(`/api/flights/${ids[0]}/json`);
     }
-    else {
-//        let groupflightFetch = Null;
-        let idsList = paramsStr.split(',').map(it => parseInt(it, 10));
-    }
-    let dataFetch = this.ajax.request(`/api/flights/${ids[0]}/?extended`);
+    var data = await this.ajax.request(`/api/flights/${ids[0]}/?extended`);
     return RSVP.hash({
-        ids: idsList,
-        data: dataFetch,
-        path: this.ajax.request(`/api/groupflights/${ids[0]}/json`), //excludes contest traces
-        club: this.ajax.request(`/api/clubs/${dataFetch.flight.club_id}`),
-        groupflight: groupflightFetch
+        ids: ids,
+        data: data,
+        path: path,
+        club: await this.ajax.request(`/api/clubs/${data.flight.club.id}`),
+        groupflight: groupflight
       });
   },
 });

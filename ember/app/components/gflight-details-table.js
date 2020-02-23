@@ -51,4 +51,8 @@ export default Component.extend({
     this.set('flight.privacyLevel', 0);
     this.set('showPublishModal', false);
   }).drop(),
+
+//  actions: {
+//    console.log(groupflight)
+//  }
 });
