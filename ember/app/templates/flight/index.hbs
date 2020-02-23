@@ -1,13 +1,13 @@
 {{!--  model is from controller.set('model', model.data.data);  --}}
 
-{{#if model.isGroup}} {{!--group flight display --}}
+{{#if model.groupflight}} {{!--group flight display --}}
   {{title (t "GROUP-on-DATE"
       group=model.club.name
       date=(format-date model.data.flight.scoreDate format="ddmmyyyy" timeZone="UTC"))}}
   <div class="fullscreen-below-nav-bar">
     <GflightPage
       id="fullscreen-content"
-      @ids={{ids}}
+      @ids={{model.ids}}
       @flight={{model.data.flight}}
       @_primaryFlightPath={{_primaryFlightPath}}
       @comments={{model.data.comments}}
@@ -16,10 +16,11 @@
       @phases={{model.data.phases}}
       @nearFlights={{model.data.near_flights}}
       @transitionTo={{action "transitionTo"}}
-      @model={{model}}
+      @groupflight={{model.groupflight}}
+      @club={{model.club}}
     />
   </div>
-{{else}}
+{{else}}  {{!--single flight display --}}
 
   {{#if (and (or model.data.flight.pilot model.data.flight.pilotName) (or model.data.flight.copilot model.data.flight.copilotName))}}
       {{title (t "DISTANCE-on-DATE-by-PILOT-and-COPILOT"
@@ -42,7 +43,7 @@
   <div class="fullscreen-below-nav-bar">
     <FlightPage
       id="fullscreen-content"
-      @ids={{ids}}
+      @ids={{model.ids}}
       @flight={{model.data.flight}}
       @_primaryFlightPath={{_primaryFlightPath}}
       @comments={{model.data.comments}}
@@ -51,7 +52,6 @@
       @phases={{model.data.phases}}
       @nearFlights={{model.data.near_flights}}
       @transitionTo={{action "transitionTo"}}
-      @model={{model}}
     />
   </div>
 
