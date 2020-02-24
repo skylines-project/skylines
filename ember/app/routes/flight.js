@@ -10,7 +10,7 @@
 
 import Route from '@ember/routing/route';
 import { inject as service } from '@ember/service';
-import RSVP from 'rsvp';a
+import RSVP from 'rsvp';
 
 export default Route.extend({
   ajax: service(),
