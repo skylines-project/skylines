@@ -8,6 +8,7 @@
 
   {{#if showPilot}}
     <SortableTableHeader @column="pilot" @sortColumn={{sortColumn}} @sortOrder={{sortOrder}} @class="pilot">{{t "pilot"}}</SortableTableHeader>
+    <SortableTableHeader @column="competition-id" @sortColumn={{sortColumn}} @sortOrder={{sortOrder}} @class="col-xs-12 banner">{{t "competition-id"}}</SortableTableHeader>
   {{/if}}
 
   <SortableTableHeader @column="distance" @sortColumn={{sortColumn}} @sortOrder={{sortOrder}} @defaultOrder="desc" @class="numeric">{{t "distance"}}</SortableTableHeader>

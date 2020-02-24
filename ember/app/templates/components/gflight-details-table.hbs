@@ -8,6 +8,7 @@
   <tr>
     <th>{{t "updated"}}</th>
     <td>
+      {{format-relative groupflight.time_modified }}
       {{format-date groupflight.time_modified}}
       {{format-time groupflight.time_modified  format='hhmmss' timeZone="UTC"}}
       {{'UTC'}}
