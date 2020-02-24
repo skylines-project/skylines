@@ -135,6 +135,7 @@ newer: Newer
 'no': 'No'
 no-airports-found: No airports found.
 no-club: No group
+no-club-on-upload:  Please select a Group in Settings if you wish this flight to be part of the group's flights
 no-clubs-found: No groups found.
 no-comments-yet: No comments yet.
 no-flight-in-file: No flight found in file
