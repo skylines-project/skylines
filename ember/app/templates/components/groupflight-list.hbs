@@ -1,7 +1,7 @@
 <thead>
 <tr>
   {{#if showDate}}
-    <SortableTableHeader @column="date" @sortColumn={{sortColumn}} @sortOrder={{sortOrder}} @defaultOrder="desc" @class="date">{{t "date-compiled"}}</SortableTableHeader>
+    <SortableTableHeader @column="datetime" @sortColumn={{sortColumn}} @sortOrder={{sortOrder}} @defaultOrder="desc" @class="date">{{t "updated"}}</SortableTableHeader>
   {{/if}}
 
   {{#if showClub}}

@@ -6,7 +6,6 @@ export default Route.extend({
   ajax: service(),
 
   model() {
-      alert(this.modelFor('flight').groupflight)
     return this.modelFor('flight')
   },
 

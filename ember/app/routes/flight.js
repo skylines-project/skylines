@@ -10,19 +10,20 @@
 
 import Route from '@ember/routing/route';
 import { inject as service } from '@ember/service';
-import RSVP from 'rsvp';
+import RSVP from 'rsvp';a
 
 export default Route.extend({
   ajax: service(),
 
   async model(params) {
     var idsStr = params.flight_ids
-    var ids = idsStr.split(',').map(it => parseInt(it, 10)); //This parses even with : in it
     if (idsStr.includes(':')) {  //groupflight
+      var ids = idsStr.split(':')[1].split(',').map(it => parseInt(it, 10));
       var groupflight_id = idsStr.split(':')[0];
       var gfData = await this.ajax.request(`/api/groupflights/${groupflight_id}/`);
       var path = await this.ajax.request(`/api/groupflights/${ids[0]}/json`); //excludes contest traces
     } else {
+      var ids = idsStr.split(',').map(it => parseInt(it, 10));
       var path = await this.ajax.request(`/api/flights/${ids[0]}/json`);
     }
     var data = await this.ajax.request(`/api/flights/${ids[0]}/?extended`);

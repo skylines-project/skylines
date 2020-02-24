@@ -282,7 +282,7 @@ def groupflight_actions(flightCurrent, igc_file):
             groupflight.flight_plan_md5 = igc_file.flight_plan_md5
             groupflight.time_created = datetime.utcnow()
             groupflight.time_modified = datetime.utcnow()
-            groupflight.time_modified = datetime.utcnow().date()
+            groupflight.date_modified = datetime.utcnow()
             groupflight.club_id = flightCurrent.club_id
             if flightCurrent.takeoff_airport_id != None:
                 groupflight.takeoff_airport_id = flightCurrent.takeoff_airport.name

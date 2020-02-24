@@ -63,11 +63,13 @@ def read_condor_fpl(file):
     lines = read_file(file)
     fpl_lines = []
     landscape = None
+    strsExcluded = ['Class','Name=','Water','Fixed','CGBia']
     for line in lines[-400:]:
-        if line.startswith(b"LCONFPL"):
+        if line.startswith(b"LCONFPL") and line[7:13] not in strsExcluded: #first 5 characters after LCONFPL
             fpl_lines.append(line)
             if "landscape" in line.lower():
                 landscape = line.split("=")[1].strip()
+
     return fpl_lines, landscape
 
 def parse_logger_id(line):
