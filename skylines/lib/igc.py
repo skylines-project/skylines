@@ -65,9 +65,7 @@ def read_condor_fpl(file):
     landscape = None
     strsExcluded = ['Class','Name=','Water','Fixed','CGBia'] #5 characters
     for line in lines[-400:]:
-
-        if line.startswith(b"LCONFPL") and line[7:13] not in strsExcluded: #first 5 characters after LCONFPL
-            print line
+        if line.startswith(b"LCONFPL") and line[7:12] not in strsExcluded: #first 5 characters after LCONFPLg
             fpl_lines.append(line)
             if "landscape" in line.lower():
                 landscape = line.split("=")[1].strip()
