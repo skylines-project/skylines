@@ -261,6 +261,7 @@ def groupflight_actions(flightCurrent, igc_file):
     '''Finds igc files within 24 hrs of the last uploaded igc with a matching flight plan '''
 
     latest = db.session.query(Flight.id) \
+        .filter(Flight.club_id != None) \
         .filter(Flight.club_id == flightCurrent.club_id) \
         .filter(Flight.flight_plan_md5 == igc_file.flight_plan_md5) \
         .filter(Flight.time_modified + timedelta(hours=24) >= datetime.utcnow()).all()
