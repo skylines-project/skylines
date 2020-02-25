@@ -10,7 +10,21 @@ import flightFromData from '../utils/flight-from-data';
  * List of colors for flight path display
  * @type {Array<String>}
  */
-const COLORS = ['#004bbd', '#bf0099', '#cf7c00', '#ff0000', '#00c994', '#ffff00'];
+//const COLORS = ['#004bbd', '#bf0099', '#cf7c00', '#ff0000', '#00c994', '#ffff00'];
+
+//matplotlib colors used below
+//['red','gold','fuchsia','aqua', 'orange',
+//'chocolate','limegreen','crimson','deepskyblue','springgreen',
+//'cornflowerblue','hotpink','white','yellow','turquoise',
+//'lightgrey','purple','orangered','firebrick','lavender',
+//'mediumblue','antiquewhite','salmon','mistyrose','pink','goldenrod']
+
+const COLORS =
+['#ff0000','#ffd700','#ff00ff','#00ffff','#ffa500',
+'#d2691e','#32cd32','#dc143c','#00bfff','#00ff7f',
+'#6495ed','#ff69b4','#ffffff','#ffff00','#40e0d0',
+'#d3d3d3','#800080','#ff4500','#b22222','#e6e6fa',
+'#0000cd','#faebd7','#fa8072','#ffe4e1','#ffc0cb','#daa520']
 
 export default EmberObject.extend({
   ajax: null,

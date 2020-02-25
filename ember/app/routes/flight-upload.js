@@ -20,6 +20,8 @@ export default Route.extend(AuthenticatedRouteMixin, {
     return { clubMembers };
   },
 
+
+
   setupController(controller) {
     this._super(...arguments);
 
