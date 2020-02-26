@@ -306,7 +306,7 @@ def index_post():
             results.append(UploadResult.for_no_flight(name, str(prefix)))
             continue
 
-        if flight.time_modified > datetime.utcnow():
+        if flight.time_created > datetime.utcnow():
             files.delete_file(filename)
             results.append(UploadResult.for_future_flight(name, str(prefix)))
             continue

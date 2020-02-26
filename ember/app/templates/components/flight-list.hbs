@@ -4,11 +4,11 @@
     <SortableTableHeader @column="date" @sortColumn={{sortColumn}} @sortOrder={{sortOrder}} @defaultOrder="desc" @class="date">{{t "date"}}</SortableTableHeader>
   {{/if}}
 
-  <SortableTableHeader @column="OLC+ km" @sortColumn={{sortColumn}} @sortOrder={{sortOrder}}  @class="numeric">{{"OLC/km"}}</SortableTableHeader>
+  <SortableTableHeader @column="OLC+ km" @sortColumn={{sortColumn}} @sortOrder={{sortOrder}}  @class="col-sm-1">{{"OLC km"}}</SortableTableHeader>
 
   {{#if showPilot}}
-    <SortableTableHeader @column="pilot" @sortColumn={{sortColumn}} @sortOrder={{sortOrder}} @class="pilot">{{t "pilot"}}</SortableTableHeader>
-    <SortableTableHeader @column="competition-id" @sortColumn={{sortColumn}} @sortOrder={{sortOrder}} @class="col-sm-3">{{t "competition-id"}}</SortableTableHeader>
+    <SortableTableHeader @column="col-sm-3" @sortColumn={{sortColumn}} @sortOrder={{sortOrder}} @class="pilot">{{t "pilot"}}</SortableTableHeader>
+    <SortableTableHeader @column="competition-id" @sortColumn={{sortColumn}} @sortOrder={{sortOrder}} @class="col-sm-1">{{t "competition-id"}}</SortableTableHeader>
   {{/if}}
 
 {{!--   <SortableTableHeader @column="distance" @sortColumn={{sortColumn}} @sortOrder={{sortOrder}} @defaultOrder="desc" @class="numeric">{{t "distance"}}</SortableTableHeader> --}}

@@ -6,12 +6,12 @@
   </td>
 {{/if}}
 
-<td class="numeric">
+<td class="col-sm-1">
   {{format-number flight.score maximumFractionDigits=0}}
 </td>
 
 {{#if showPilot}}
-  <td class="pilot">
+  <td class="col-sm-3">
     {{#if flight.pilot.id}}
       <LinkTo @route="user" @model={{flight.pilot.id}}>{{pilotName}}</LinkTo>
     {{else if pilotName}}
@@ -30,7 +30,7 @@
       [{{flight.igcFile.owner.name}}]
     {{/if}}
   </td>
-  <td class="col-xc-1">
+  <td class="col-sm-1">
   {{flight.competitionId}}
   </td>
 {{/if}}
