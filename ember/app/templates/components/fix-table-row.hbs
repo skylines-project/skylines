@@ -7,6 +7,11 @@
     {{/if}}
   </span>
 </td>
+<td class="numeric">
+  {{#if row.score}}
+    {{format-distance row.score}}
+  {{/if}}
+</td>
 <td>
   {{#unless (is-undefined row.fix.time)}}
     {{format-time (multiply row.fix.time 1000) format="hhmmss" timeZone="UTC"}}

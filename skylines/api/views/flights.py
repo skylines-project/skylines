@@ -562,6 +562,7 @@ def read(flight_id):
 @flights_blueprint.route("/flights/<flight_id>/json")
 @oauth.optional()
 def json(flight_id):
+    '''for "path" '''
     flight = get_requested_record(
         Flight, flight_id, joinedload=(Flight.igc_file, Flight.model)
     )
@@ -605,6 +606,7 @@ def json(flight_id):
                 registration=flight.registration,
                 competition_id=flight.competition_id,
                 model=model,
+                score=flight.index_score,
             ),
         )
     )
@@ -684,37 +686,37 @@ def _get_near_flights(flight, location, time, max_distance=1000):
     return flights
 
 
-@flights_blueprint.route("/flights/<flight_id>/near")
-@oauth.optional()
-def near(flight_id):
-    flight = get_requested_record(Flight, flight_id, joinedload=[Flight.igc_file])
-
-    current_user = User.get(request.user_id) if request.user_id else None
-    if not flight.is_viewable(current_user):
-        return jsonify(), 404
-
-    try:
-        latitude = float(request.args["lat"])
-        longitude = float(request.args["lon"])
-        time = float(request.args["time"])
-
-    except (KeyError, ValueError):
-        abort(400)
-
-    location = Location(latitude=latitude, longitude=longitude)
-    time = from_seconds_of_day(flight.takeoff_time, time)
-
-    flights = _get_near_flights(flight, location, time, 1000)
-
-    def add_flight_path(flight):
-        trace = _get_flight_path(flight, threshold=0.0001, max_points=10000)
-        trace["additional"] = dict(
-            registration=flight.registration, competition_id=flight.competition_id
-        )
-
-        return trace
-
-    return jsonify(flights=list(map(add_flight_path, flights)))
+# @flights_blueprint.route("/flights/<flight_id>/near")
+# @oauth.optional()
+# def near(flight_id):
+#     flight = get_requested_record(Flight, flight_id, joinedload=[Flight.igc_file])
+#
+#     current_user = User.get(request.user_id) if request.user_id else None
+#     if not flight.is_viewable(current_user):
+#         return jsonify(), 404
+#
+#     try:
+#         latitude = float(request.args["lat"])
+#         longitude = float(request.args["lon"])
+#         time = float(request.args["time"])
+#
+#     except (KeyError, ValueError):
+#         abort(400)
+#
+#     location = Location(latitude=latitude, longitude=longitude)
+#     time = from_seconds_of_day(flight.takeoff_time, time)
+#
+#     flights = _get_near_flights(flight, location, time, 1000)
+#
+#     def add_flight_path(flight):
+#         trace = _get_flight_path(flight, threshold=0.0001, max_points=10000)
+#         trace["additional"] = dict(
+#             registration=flight.registration, competition_id=flight.competition_id,score=flight.score,
+#         )
+#
+#         return trace
+#
+#     return jsonify(flights=list(map(add_flight_path, flights)))
 
 
 @flights_blueprint.route("/flights/<flight_id>", methods=["POST"], strict_slashes=False)

@@ -5,7 +5,7 @@ import { inject as service } from '@ember/service';
 import $ from 'jquery';
 
 import FixCalc from '../utils/fix-calc';
-import FlighPhase from '../utils/flight-phase';
+import FltPhase from '../utils/flight-phase';
 
 export default Component.extend({
   ajax: service(),
@@ -42,7 +42,7 @@ export default Component.extend({
     fixCalc.addFlight(this._primaryFlightPath);
     this.set('fixCalc', fixCalc);
 
-    let flightPhase = FlighPhase.create({ fixCalc });
+    let flightPhase = FltPhase.create({ fixCalc });
     this.set('flightPhase', flightPhase);
   },
 
