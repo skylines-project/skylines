@@ -54,7 +54,6 @@ Router.map(function() {
     this.route('airport', { path: '/airport/:airport_id' });
     this.route('club', { path: '/club/:club_id' });
     this.route('pilot', { path: '/pilot/:pilot_id' });
-    this.route('unassigned');
     this.route('pinned');
     this.route('list', { path: '/list/:list' });
   });

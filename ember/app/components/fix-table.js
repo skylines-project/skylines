@@ -13,8 +13,10 @@ export default Component.extend({
       let color = flight.get('color');
       let competitionId = flight.get('competition_id') || flight.get('registration');
       let score = flight.get('score')*1000
+      let distance = flight.get('distance')
+      let triangleDistance = flight.get('triangleDistance')
       let removable = i !== 0;
-      return { id, color, competitionId, score, removable, fix };
+      return { id, color, competitionId, score, distance, triangleDistance, removable, fix };
     });
   }),
 
