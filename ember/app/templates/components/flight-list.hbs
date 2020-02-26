@@ -4,17 +4,17 @@
     <SortableTableHeader @column="date" @sortColumn={{sortColumn}} @sortOrder={{sortOrder}} @defaultOrder="desc" @class="date">{{t "date"}}</SortableTableHeader>
   {{/if}}
 
-  <SortableTableHeader @column="score" @sortColumn={{sortColumn}} @sortOrder={{sortOrder}} @defaultOrder="desc" @class="numeric">{{t "score"}}</SortableTableHeader>
+  <SortableTableHeader @column="OLC+ km" @sortColumn={{sortColumn}} @sortOrder={{sortOrder}}  @class="numeric">{{"OLC/km"}}</SortableTableHeader>
 
   {{#if showPilot}}
     <SortableTableHeader @column="pilot" @sortColumn={{sortColumn}} @sortOrder={{sortOrder}} @class="pilot">{{t "pilot"}}</SortableTableHeader>
-    <SortableTableHeader @column="competition-id" @sortColumn={{sortColumn}} @sortOrder={{sortOrder}} @class="col-xs-12 banner">{{t "competition-id"}}</SortableTableHeader>
+    <SortableTableHeader @column="competition-id" @sortColumn={{sortColumn}} @sortOrder={{sortOrder}} @class="col-sm-3">{{t "competition-id"}}</SortableTableHeader>
   {{/if}}
 
-  <SortableTableHeader @column="distance" @sortColumn={{sortColumn}} @sortOrder={{sortOrder}} @defaultOrder="desc" @class="numeric">{{t "distance"}}</SortableTableHeader>
+{{!--   <SortableTableHeader @column="distance" @sortColumn={{sortColumn}} @sortOrder={{sortOrder}} @defaultOrder="desc" @class="numeric">{{t "distance"}}</SortableTableHeader> --}}
 
   {{#if showLandscape}}
-    <SortableTableHeader @column="landscape" @sortColumn={{sortColumn}} @sortOrder={{sortOrder}} @class="col-xs-12 banner">{{t "landscape"}}</SortableTableHeader>
+    <SortableTableHeader @column="landscape" @sortColumn={{sortColumn}} @sortOrder={{sortOrder}} @class="col-sm-3">{{t "landscape"}}</SortableTableHeader>
   {{/if}}
 
   {{#if showAirport}}
@@ -22,7 +22,7 @@
   {{/if}}
 
   {{#if showClub}}
-    <SortableTableHeader @column="club" @sortColumn={{sortColumn}} @sortOrder={{sortOrder}} @class="col-xs-12 banner">{{t "club"}}</SortableTableHeader>
+    <SortableTableHeader @column="club" @sortColumn={{sortColumn}} @sortOrder={{sortOrder}} @class="col-sm-3">{{t "club"}}</SortableTableHeader>
   {{/if}}
 
   <SortableTableHeader @column="aircraft" @sortColumn={{sortColumn}} @sortOrder={{sortOrder}} @class="aircraft hidden-xs">{{t "aircraft"}}</SortableTableHeader>

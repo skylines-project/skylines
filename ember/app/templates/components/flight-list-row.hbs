@@ -30,19 +30,19 @@
       [{{flight.igcFile.owner.name}}]
     {{/if}}
   </td>
-  <td class="col-xs-12 banner">
+  <td class="col-xc-1">
   {{flight.competitionId}}
   </td>
 {{/if}}
 
 
-<td class="numeric">
-  {{#if flight.distance}}
-    {{format-distance flight.distance}}
-  {{/if}}
-</td>
+{{!-- <td class="numeric"> --}}
+{{!--   {{#if flight.distance}} --}}
+{{!--     {{format-distance flight.distance}} --}}
+{{!--   {{/if}} --}}
+{{!-- </td> --}}
 
-  <td class="col-xs-12 banner">
+  <td class="col-xs-3">
     {{#if flight.landscape}}
       {{flight.landscape}}
     {{/if}}

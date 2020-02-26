@@ -274,6 +274,7 @@ def index_post():
         flight.landscape = igc_file.landscape
         flight.flight_plan_md5 = igc_file.flight_plan_md5
         flight.time_created = igc_file.date_condor
+        flight.time_modified = datetime.utcnow()
         flight.time_igc_upload = igc_file.time_modified
         flight.date_local = igc_file.date_condor
         flight.model_id = igc_file.guess_model()
@@ -305,10 +306,10 @@ def index_post():
             results.append(UploadResult.for_no_flight(name, str(prefix)))
             continue
 
-        # if flight.landing_time > datetime.now():
-        #     files.delete_file(filename)
-        #     results.append(UploadResult.for_future_flight(name, str(prefix)))
-        #     continue
+        if flight.time_modified > datetime.utcnow():
+            files.delete_file(filename)
+            results.append(UploadResult.for_future_flight(name, str(prefix)))
+            continue
 
         if not flight.update_flight_path():
             files.delete_file(filename)
@@ -469,7 +470,7 @@ def verify():
             flight.club_id = users[flight.pilot_id].club_id
 
         flight.privacy_level = Flight.PrivacyLevel.PUBLIC
-        flight.time_modified = datetime.utcnow()
+
 
     db.session.commit()
 

@@ -26,13 +26,13 @@
     --
   {{/unless}}
 </td>
-<td>
-  {{#unless (is-undefined row.fix.alt-gnd)}}
-    {{format-altitude row.fix.alt-gnd}} <small>GND</small>
-  {{else}}
-    --
-  {{/unless}}
-</td>
+{{!-- <td> --}}
+{{!--   {{#unless (is-undefined row.fix.alt-gnd)}} --}}
+{{!--     {{format-altitude row.fix.alt-gnd}} <small>GND</small> --}}
+{{!--   {{else}} --}}
+{{!--     -- --}}
+{{!--   {{/unless}} --}}
+{{!-- </td> --}}
 <td>
   {{#unless (is-undefined row.fix.vario)}}
     {{format-lift row.fix.vario}}

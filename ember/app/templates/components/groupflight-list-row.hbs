@@ -2,22 +2,22 @@
   <td class="date">
     {{#if groupflight.time_modified}}
       {{format-relative groupflight.time_modified }}
-{{!--       {{format-date groupflight.time_modified format="ddmmyyyy" timeZone="UTC"}} --}}
+      {{format-date groupflight.time_modified format="ddmmyyyy" timeZone="UTC"}}
 {{!--       {{format-time groupflight.time_modified format="hhmmss" timeZone="UTC"}} --}}
-      {{'UTC'}}
+{{!--       {{'UTC'}} --}}
     {{/if}}
   </td>
 {{/if}}
 
 {{#if showClub}}
-  <td class="col-xs-12 banner">
+  <td class="col-sm-3">
     {{#if groupflight.club_id}}
       <LinkTo @route="club" @model={{groupflight.club.id}}>{{truncate groupflight.club.name 25}}</LinkTo>
     {{/if}}
   </td>
 {{/if}}
 
-  <td class="col-xs-12 banner">
+  <td class="col-sm-3">
     {{#if groupflight.landscape}}
       {{groupflight.landscape}}
     {{/if}}
