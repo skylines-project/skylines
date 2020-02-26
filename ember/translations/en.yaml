@@ -23,6 +23,7 @@ choose-pilot: Choose Pilot
 circling-performance: Circling performance
 climb-percentage-abbr: Climb %
 club: Group
+club-join: Join a group
 club-contact-email-address: Email of group contact
 club-exists-already: A group with this name exists already.
 club-has-been-changed: Your group has been changed.
@@ -134,8 +135,8 @@ new: New
 newer: Newer
 'no': 'No'
 no-airports-found: No airports found.
-no-club: No group
-no-club-on-upload:  Please select a Group in Settings if you wish this flight to be part of the group's flights
+no-club: Not in group
+no-club-on-upload:  You haven't joined a group.  If you want this flight to be part of the group's flights, join a group before uploading flight.
 no-clubs-found: No groups found.
 no-comments-yet: No comments yet.
 no-flight-in-file: No flight found in file
@@ -220,6 +221,7 @@ unknown-or-other-person: Unknown or other person
 unspecified: Unspecified
 upload: Upload
 upload-flight: Upload Flight
+upload-continue: Continue flight upload
 uploaded: Uploaded
 uploading: Uploading...
 updated: Updated

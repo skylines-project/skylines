@@ -1,4 +1,9 @@
 <form {{action "submit" on="submit"}}>
+  {{#unless clubMembers}}
+    <UploadClubAlert
+      @clubMembers={{clubMembers}}
+    />
+  {{/unless}}
   {{#if error}}
     <BsAlert @type="danger" @dismissible={{false}}>{{error}}</BsAlert>
   {{/if}}
@@ -27,4 +32,5 @@
   <button class="btn btn-primary btn-block" type="submit" disabled={{or uploadTask.isRunning (not validations.isValid)}}>
     {{t (if uploadTask.isRunning "uploading" "upload")}}
   </button>
+
 </form>
