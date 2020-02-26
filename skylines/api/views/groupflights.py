@@ -216,6 +216,8 @@ def json(flight_id):
                 competition_id=flight.competition_id,
                 model=model,
                 score=flight.index_score,
+                distance=flight.olc_classic_distance,
+                triangleDistance=flight.olc_triangle_distance,
             ),
         )
     )
