@@ -139,6 +139,7 @@ no-club: Not in group
 no-club-on-upload:  You haven't joined a group.  If you want this flight to be part of the group's flights, join a group before uploading flight.
 no-clubs-found: No groups found.
 no-comments-yet: No comments yet.
+no-groupflights-found: No group flights have been compiled.
 no-flight-in-file: No flight found in file
 no-flight-saved: No flight was saved.
 no-flights-found: No flights found.

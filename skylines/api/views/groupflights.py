@@ -289,7 +289,7 @@ def groupflight_actions(flightCurrent, igc_file):
             groupflight.date_modified = datetime.utcnow()
             groupflight.club_id = flightCurrent.club_id
             if flightCurrent.takeoff_airport_id != None:
-                groupflight.takeoff_airport_id = flightCurrent.takeoff_airport.name
+                groupflight.takeoff_airport_id = flightCurrent.takeoff_airport.id
             db.session.add(groupflight)
             db.session.flush()
             for flight_id in latest:
