@@ -67,9 +67,9 @@ export default Component.extend({
     map.addLayer(osm_layer);
 
     this.addReliefLayer();
-    this.addAirspaceLayers();
-    this.addMWPLayers();
-    this.addBingLayers();
+//    this.addAirspaceLayers();
+//    this.addMWPLayers();
+//    this.addBingLayers();
     this.addMapboxLayer();
     this.addEmptyLayer();
 
