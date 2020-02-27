@@ -45,7 +45,9 @@ date: Date
 date-compiled: Date compiled
 date-missing-in-igc-file: Date missing in IGC file
 date-must-in-filename: Date of flight must be in filename
-date-ok-filename: A safe filename is "textNotNumbers_YYYY-MM-DD.igc"
+date-ok-filename: Safe filename "text-YYYY-MM-DD.igc"
+date-space-filename: Separators OK anywhere, needed in date. <space>, <dash>, <dot>, and/or <_>
+date-number-filename: Keep other numbers away from date, beginning or end of file name.
 date-missing-refresh: Refresh this page to try again.
 delay: Delay
 delete: Delete

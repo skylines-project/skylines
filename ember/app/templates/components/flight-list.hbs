@@ -18,14 +18,14 @@
   {{/if}}
 
   {{#if showAirport}}
-    <SortableTableHeader @column="airport" @sortColumn={{sortColumn}} @sortOrder={{sortOrder}} @class="airport">{{t "airport"}}</SortableTableHeader>
+    <SortableTableHeader @column="airport" @sortColumn={{sortColumn}} @sortOrder={{sortOrder}} @class="col-sm-3">{{t "airport"}}</SortableTableHeader>
   {{/if}}
 
   {{#if showClub}}
     <SortableTableHeader @column="club" @sortColumn={{sortColumn}} @sortOrder={{sortOrder}} @class="col-sm-3">{{t "club"}}</SortableTableHeader>
   {{/if}}
 
-  <SortableTableHeader @column="aircraft" @sortColumn={{sortColumn}} @sortOrder={{sortOrder}} @class="aircraft hidden-xs">{{t "aircraft"}}</SortableTableHeader>
+  <SortableTableHeader @column="aircraft" @sortColumn={{sortColumn}} @sortOrder={{sortOrder}} @class="col-sm-3">{{t "aircraft"}}</SortableTableHeader>
 
   {{#if showTimes}}
     <SortableTableHeader @column="time" @sortColumn={{sortColumn}} @sortOrder={{sortOrder}} @defaultOrder="desc" @class="times hidden-xs">{{t "time"}}</SortableTableHeader>

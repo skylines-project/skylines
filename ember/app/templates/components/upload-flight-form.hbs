@@ -9,6 +9,8 @@
   {{/if}}
   <p>{{t "date-must-in-filename"}}</p>
   <p>{{t "date-ok-filename"}}</p>
+  <p>{{t "date-space-filename"}}</p>
+  <p>{{t "date-number-filename"}}</p>
   <ValidatedBlock @label={{t "igc-or-zip-files"}} @validation={{validations.attrs.files}} @hasContent={{files}} @didValidate={{didValidate}}>
     <input type="file" name="files" multiple="multiple" onchange={{action "setFilesFromEvent"}} class="form-control" disabled={{uploadTask.isRunning}}>
   </ValidatedBlock>

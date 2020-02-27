@@ -49,7 +49,7 @@
   </td>
 
 {{#if showAirport}}
-  <td class="airport">
+  <td class="col-sm-3">
     {{#if flight.takeoffAirport}}
       <XFlag @code={{flight.takeoffAirport.countryCode}} />
       <LinkTo @route="flights.airport" @model={{flight.takeoffAirport.id}}>{{flight.takeoffAirport.name}}</LinkTo>
@@ -65,7 +65,7 @@
   </td>
 {{/if}}
 
-<td class="aircraft hidden-xs">
+<td class="col-sm-3">
   <span>
     {{#if flight.model}}
       {{flight.model.name}}
