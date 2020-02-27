@@ -72,6 +72,7 @@ def _create_list(
     date=None,
     pilot=None,
     club=None,
+    landscape=None,
     airport=None,
     pinned=None,
     filter=None,
@@ -89,6 +90,28 @@ def _create_list(
     )
 
     current_user = User.get(request.user_id) if request.user_id else None
+
+    # flights = (
+    #     db.session.query(Flight, subq.c.count)
+    #     .filter(Flight.is_listable(current_user))
+    #     .join(Flight.igc_file)
+    #     .options(contains_eager(Flight.igc_file))
+    #     .join(owner_alias, IGCFile.owner)
+    #     .options(contains_eager(Flight.igc_file, IGCFile.owner, alias=owner_alias))
+    #     .outerjoin(pilot_alias, Flight.pilot)
+    #     .options(contains_eager(Flight.pilot, alias=pilot_alias))
+    #     .options(joinedload(Flight.co_pilot))
+    #     .outerjoin(Flight.club)
+    #     .options(contains_eager(Flight.club))
+    #     .outerjoin(Flight.takeoff_airport)
+    #     .options(contains_eager(Flight.takeoff_airport))
+    #     .outerjoin(Flight.landscape)
+    #     .options(contains_eager(Flight.landscape))
+    #     .outerjoin(Flight.model)
+    #     .options(contains_eager(Flight.model))
+    #     .outerjoin((subq, Flight.comments))
+    # )
+
 
     flights = (
         db.session.query(Flight, subq.c.count)
@@ -114,8 +137,12 @@ def _create_list(
 
     if pilot:
         flights = flights.filter(or_(Flight.pilot == pilot, Flight.co_pilot == pilot))
+
     if club:
         flights = flights.filter(Flight.club == club)
+
+    if landscape:
+        flights.filter(Flight.landscape == landscape)
 
     if airport:
         flights = flights.filter(Flight.takeoff_airport == airport)
@@ -131,6 +158,7 @@ def _create_list(
         "score": getattr(Flight, "index_score"),
         "pilot": getattr(pilot_alias, "name"),
         "distance": getattr(Flight, "olc_classic_distance"),
+        "landscape": getattr(Flight, "landscape"),
         "airport": getattr(Airport, "name"),
         "club": getattr(Club, "name"),
         "aircraft": getattr(AircraftModel, "name"),
@@ -534,6 +562,7 @@ def read(flight_id):
 @flights_blueprint.route("/flights/<flight_id>/json")
 @oauth.optional()
 def json(flight_id):
+    '''for "path" '''
     flight = get_requested_record(
         Flight, flight_id, joinedload=(Flight.igc_file, Flight.model)
     )
@@ -547,6 +576,7 @@ def json(flight_id):
     # latency and server load
     # This implementation is very basic. Sadly Flask (0.10.1) does not have
     # this feature
+
     last_modified = flight.time_modified.strftime("%a, %d %b %Y %H:%M:%S GMT")
     modified_since = request.headers.get("If-Modified-Since")
     etag = request.headers.get("If-None-Match")
@@ -576,6 +606,7 @@ def json(flight_id):
                 registration=flight.registration,
                 competition_id=flight.competition_id,
                 model=model,
+                score=flight.index_score,
             ),
         )
     )
@@ -583,7 +614,6 @@ def json(flight_id):
     resp.headers["Last-Modified"] = last_modified
     resp.headers["Etag"] = flight.igc_file.md5
     return resp
-
 
 def _get_near_flights(flight, location, time, max_distance=1000):
     # calculate max_distance in degrees at the earth's sphere (approximate,
@@ -656,37 +686,37 @@ def _get_near_flights(flight, location, time, max_distance=1000):
     return flights
 
 
-@flights_blueprint.route("/flights/<flight_id>/near")
-@oauth.optional()
-def near(flight_id):
-    flight = get_requested_record(Flight, flight_id, joinedload=[Flight.igc_file])
-
-    current_user = User.get(request.user_id) if request.user_id else None
-    if not flight.is_viewable(current_user):
-        return jsonify(), 404
-
-    try:
-        latitude = float(request.args["lat"])
-        longitude = float(request.args["lon"])
-        time = float(request.args["time"])
-
-    except (KeyError, ValueError):
-        abort(400)
-
-    location = Location(latitude=latitude, longitude=longitude)
-    time = from_seconds_of_day(flight.takeoff_time, time)
-
-    flights = _get_near_flights(flight, location, time, 1000)
-
-    def add_flight_path(flight):
-        trace = _get_flight_path(flight, threshold=0.0001, max_points=10000)
-        trace["additional"] = dict(
-            registration=flight.registration, competition_id=flight.competition_id
-        )
-
-        return trace
-
-    return jsonify(flights=list(map(add_flight_path, flights)))
+# @flights_blueprint.route("/flights/<flight_id>/near")
+# @oauth.optional()
+# def near(flight_id):
+#     flight = get_requested_record(Flight, flight_id, joinedload=[Flight.igc_file])
+#
+#     current_user = User.get(request.user_id) if request.user_id else None
+#     if not flight.is_viewable(current_user):
+#         return jsonify(), 404
+#
+#     try:
+#         latitude = float(request.args["lat"])
+#         longitude = float(request.args["lon"])
+#         time = float(request.args["time"])
+#
+#     except (KeyError, ValueError):
+#         abort(400)
+#
+#     location = Location(latitude=latitude, longitude=longitude)
+#     time = from_seconds_of_day(flight.takeoff_time, time)
+#
+#     flights = _get_near_flights(flight, location, time, 1000)
+#
+#     def add_flight_path(flight):
+#         trace = _get_flight_path(flight, threshold=0.0001, max_points=10000)
+#         trace["additional"] = dict(
+#             registration=flight.registration, competition_id=flight.competition_id,score=flight.score,
+#         )
+#
+#         return trace
+#
+#     return jsonify(flights=list(map(add_flight_path, flights)))
 
 
 @flights_blueprint.route("/flights/<flight_id>", methods=["POST"], strict_slashes=False)

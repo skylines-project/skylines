@@ -1,0 +1,64 @@
+<BsNav @type="pills" as |nav|>
+  <nav.item>
+    {{#nav.link-to "groupflights.all"}}{{t "all"}}{{/nav.link-to}}
+  </nav.item>
+
+  {{#if prevDate}}
+    <li>
+      <LinkTo @route="groupflights.date" @model={{prevDate}}>&nbsp;{{fa-icon "arrow-left"}}&nbsp;</LinkTo>
+    </li>
+  {{/if}}
+
+  {{#if (or (not date) latest)}}
+    <nav.item>
+      {{#nav.link-to "groupflights.latest"}}
+        {{#if date}}
+          {{format-date date format="ddmmyyyy" timeZone="UTC"}}
+        {{else}}
+          {{t "latest"}}
+        {{/if}}
+        &nbsp;<DatePicker @date={{date}} @onSelect={{action "dateSelected"}}>{{fa-icon "calendar"}}</DatePicker>
+      {{/nav.link-to}}
+    </nav.item>
+  {{/if}}
+
+  {{#if (and date (not latest))}}
+    <nav.item>
+      {{#nav.link-to "groupflights.date" date}}
+        {{format-date date format="ddmmyyyy" timeZone="UTC"}}
+        &nbsp;<DatePicker @date={{date}} @onSelect={{action "dateSelected"}}>{{fa-icon "calendar"}}</DatePicker>
+      {{/nav.link-to}}
+    </nav.item>
+  {{/if}}
+
+  {{#if nextDate}}
+    <li>
+      <LinkTo @route="groupflights.date" @model={{nextDate}}>&nbsp;{{fa-icon "arrow-right"}}&nbsp;</LinkTo>
+    </li>
+  {{/if}}
+
+  {{#if airport}}
+    <nav.item>
+      {{#nav.link-to "groupflights.airport" airport.id}}{{airport.name}}{{/nav.link-to}}
+    </nav.item>
+  {{/if}}
+
+  {{#if club}}
+    <nav.item>
+      {{#nav.link-to "groupflights.club" club.id}}{{club.name}}{{/nav.link-to}}
+    </nav.item>
+  {{/if}}
+
+  {{#if (and account.club (not-eq account.club.id club.id))}}
+    <nav.item>
+      {{#nav.link-to "groupflights.club" account.club.id}}{{account.club.name}}{{/nav.link-to}}
+    </nav.item>
+  {{/if}}
+
+
+  {{#if hasPinned}}
+    <nav.item>
+      {{#nav.link-to "groupflights.pinned"}}{{t "pinned"}}{{/nav.link-to}}
+    </nav.item>
+  {{/if}}
+</BsNav>

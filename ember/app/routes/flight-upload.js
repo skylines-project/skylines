@@ -16,9 +16,14 @@ export default Route.extend(AuthenticatedRouteMixin, {
       let { users } = await ajax.request(`/api/users?club=${clubId}`);
       clubMembers = users.filter(user => user.id !== accountId);
     }
+//    else {
+//    alert("You haven't joined a group (see settings).  Your flight won't count toward any group flights")}
+//    }
 
     return { clubMembers };
   },
+
+
 
   setupController(controller) {
     this._super(...arguments);

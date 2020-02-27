@@ -1,0 +1,28 @@
+<table class="table table-flight-details">
+  <tbody>
+    <tr>
+      <th>{{t "club"}}</th>
+      <td><LinkTo @route="club" @model={{club.id}}>{{club.name}}</LinkTo></td>
+    </tr>
+
+  <tr>
+    <th>{{t "updated"}}</th>
+    <td>
+      {{format-relative groupflight.time_modified }}
+      {{format-date groupflight.time_modified}}
+      {{format-time groupflight.time_modified  format='hhmmss' timeZone="UTC"}}
+      {{'UTC'}}
+{{!--       format='hhmmss' timeZone="UTC" --}}
+    </td>
+  </tr>
+
+
+  </tbody>
+</table>
+
+{{!-- <p> --}}
+{{!--   <span title={{t "pin-button-title"}}> --}}
+{{!--     <PinButton @flightId={{flight.id}} /> --}}
+{{!--   </span> --}}
+{{!-- </p> --}}
+

@@ -1,0 +1,33 @@
+<thead>
+<tr>
+  {{#if showDate}}
+    <SortableTableHeader @column="datetime" @sortColumn={{sortColumn}} @sortOrder={{sortOrder}} @defaultOrder="desc" @class="date">{{t "updated"}}</SortableTableHeader>
+  {{/if}}
+
+  {{#if showClub}}
+    <SortableTableHeader @column="club" @sortColumn={{sortColumn}} @sortOrder={{sortOrder}} @class="col-sm-3">{{t "club"}}</SortableTableHeader>
+  {{/if}}
+
+    <SortableTableHeader @column="landscape" @sortColumn={{sortColumn}} @sortOrder={{sortOrder}} @class="col-sm-3">{{t "landscape"}}</SortableTableHeader>
+
+  {{#if showAirport}}
+    <SortableTableHeader @column="airport" @sortColumn={{sortColumn}} @sortOrder={{sortOrder}} @class="airport">{{t "airport"}}</SortableTableHeader>
+  {{/if}}
+
+    <th class="column-buttons"></th>
+  <th class="num_comments hidden-xs"></th>
+</tr>
+</thead>
+<tbody>
+{{#each groupflights as |groupflight|}}
+  <GroupflightListRow
+    @groupflight={{groupflight}}
+    @showDate={{showDate}}
+    @showAirport={{showAirport}}
+    @showClub={{showClub}} />
+{{else}}
+  <tr>
+    <td colspan="10">{{t "no-groupflights-found"}}</td>
+  </tr>
+{{/each}}
+</tbody>

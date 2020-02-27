@@ -37,6 +37,7 @@ from skylines.schemas import (
     ValidationError,
 )
 from skylines.worker import tasks
+from skylines.api.views.groupflights import groupflight_actions
 
 from geoalchemy2.shape import from_shape
 from sqlalchemy.sql import literal_column
@@ -198,8 +199,8 @@ def _encode_flight_path(fp, qnh):
 
 def get_date_from_name(filename):
     #Local date must be somewhere in the file name.  It will guess a date if ambiguous
-
-    return dparser.parse(filename, fuzzy=True)
+    newfilename = filename.replace('_','-').replace(' ','-').replace('.','-').replace(',','-')
+    return dparser.parse(newfilename, fuzzy=True)
 
 @upload_blueprint.route("/flights/upload", methods=("POST",), strict_slashes=False)
 @oauth.required()
@@ -234,6 +235,7 @@ def index_post():
         try:
             igc_file.date_condor = get_date_from_name(name) #name differs from filename which has _1 etc appended
             igc_file.time_created = igc_file.date_condor
+            igc_file.time_modified = datetime.utcnow()
         except:
             files.delete_file(name)
             results.append(UploadResult.date_not_in_filename(name, str(prefix)))
@@ -253,7 +255,7 @@ def index_post():
         igc_file.owner = current_user
         igc_file.filename = filename
         igc_file.md5 = md5
-        igc_file.update_igc_headers()
+        igc_file.update_igc_headers() #gets condor flight plan and flight_plan_md5
         if not igc_file.is_condor_file:
             files.delete_file(filename)
             results.append(UploadResult.not_condor(name, str(prefix)))
@@ -266,14 +268,18 @@ def index_post():
             results.append(UploadResult.for_missing_date(name, str(prefix)))
             continue
 
-        flight = Flight()
+        flight = Flight() #instance
         flight.pilot_id = pilot_id
         flight.pilot_name = data.get("pilot_name")
         flight.club_id = club_id
-        flight.igc_file = igc_file
+        flight.landscape = igc_file.landscape
+        flight.flight_plan_md5 = igc_file.flight_plan_md5
         flight.time_created = igc_file.date_condor
+        flight.time_modified = datetime.utcnow()
+        flight.time_igc_upload = igc_file.time_modified
         flight.date_local = igc_file.date_condor
         flight.model_id = igc_file.guess_model()
+        flight.igc_file = igc_file
 
         if igc_file.registration:
             flight.registration = igc_file.registration
@@ -282,7 +288,8 @@ def index_post():
 
         flight.competition_id = igc_file.competition_id
 
-        fp = flight_path(flight.igc_file, add_elevation=True, max_points=None)
+        # fp = flight_path(flight.igc_file, add_elevation=True, max_points=None)
+        fp = flight_path(igc_file, add_elevation=True, max_points=None)
 
         analyzed = False
         try:
@@ -300,10 +307,10 @@ def index_post():
             results.append(UploadResult.for_no_flight(name, str(prefix)))
             continue
 
-        # if flight.landing_time > datetime.now():
-        #     files.delete_file(filename)
-        #     results.append(UploadResult.for_future_flight(name, str(prefix)))
-        #     continue
+        if flight.time_created > datetime.utcnow():
+            files.delete_file(filename)
+            results.append(UploadResult.for_future_flight(name, str(prefix)))
+            continue
 
         if not flight.update_flight_path():
             files.delete_file(filename)
@@ -348,6 +355,9 @@ def index_post():
                 cache_key,
             )
         )
+
+
+        groupflight_actions(flight, igc_file)
 
         create_flight_notifications(flight)
 
@@ -461,7 +471,7 @@ def verify():
             flight.club_id = users[flight.pilot_id].club_id
 
         flight.privacy_level = Flight.PrivacyLevel.PUBLIC
-        flight.time_modified = datetime.utcnow()
+
 
     db.session.commit()
 

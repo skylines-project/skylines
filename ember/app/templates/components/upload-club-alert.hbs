@@ -1,0 +1,72 @@
+{{!-- <div class="panel-body"> --}}
+{{!--   <BsModal @open={{showNoClubModal}} @onSubmit={{perform joinTask}} @onHide={{action (mut showNoClubModal) false}} as |modal|> --}}
+{{!--     <modal.header> --}}
+{{!--       <h4 class="modal-title">{{t "no-club"}}</h4> --}}
+{{!--     </modal.header> --}}
+{{!--    --}}
+{{!--     <modal.body> --}}
+{{!--       <label class="large">{{t "no-club-on-upload"}}</label> --}}
+{{!--     </modal.body> --}}
+{{!--    --}}
+{{!--     <modal.footer as |footer|> --}}
+{{!--       <BsButton @onClick={{action modal.submit}} @type="primary">{{t "club-join"}}</BsButton> --}}
+{{!--       <BsButton @onClick={{action modal.close}}>{{t "upload-continue"}}</BsButton> --}}
+{{!--     </modal.footer> --}}
+{{!--   </BsModal> --}}
+{{!-- </div> --}}
+
+<div class="panel-body">
+  <BsButton
+    @type="primary"
+    @block={{true}}
+    @disabled={{dialogOpen}}
+    @onClick={{action (mut dialogOpen) true}}
+    data-test-delete-account-button
+  >
+    {{"delete-account"}}
+  </BsButton>
+
+  <BsModal
+    @open={{dialogOpen}}
+    @onSubmit={{action "submit"}}
+    @onHidden={{action (mut dialogOpen) false}}
+    data-test-delete-account-modal
+  as |modal|>
+    <modal.header>
+      <h4 class="modal-title">{{t "delete-account"}}</h4>
+    </modal.header>
+
+    <modal.body>
+      <p><strong>{{t "delete-account-modal.please-enter-password"}}</strong></p>
+      <p>{{t "delete-account-modal.proceed-with-caution"}}</p>
+
+      <form data-test-password-form {{action "submit" on="submit"}}>
+        {{#if error}}
+          <BsAlert @type="danger" @dismissible={{false}}>{{error}}</BsAlert>
+        {{/if}}
+
+        <ValidatedInput
+          @type="password"
+          @value={{password}}
+          @validation={{validations.attrs.password}}
+          @placeholder={{t "password"}}
+          @autocomplete="current-password"
+          @disabled={{deleteTask.isRunning}}
+          @didValidate={{didValidate}}/>
+      </form>
+    </modal.body>
+
+    <modal.footer>
+      <BsButton @onClick={{action modal.close}}>Cancel</BsButton>
+
+      <BsButton
+        @type="danger"
+        @disabled={{or deleteTask.isRunning (not validations.isValid)}}
+        @onClick={{action "submit"}}
+        data-test-submit-button
+      >
+        {{t "delete-account"}}
+      </BsButton>
+    </modal.footer>
+  </BsModal>
+</div>
