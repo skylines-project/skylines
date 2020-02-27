@@ -48,7 +48,6 @@ export default Component.extend(Validations, {
       let { validations } = await this.validate();
       if (validations.get('isValid')) {
         this.saveTask.perform();
-        console.log('testbch register-club finished');
       }
     },
   },

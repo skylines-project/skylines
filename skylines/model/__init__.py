@@ -12,7 +12,8 @@ from .flight import Flight, FlightPathChunks
 from .flight_meetings import FlightMeetings
 from .flight_comment import FlightComment
 from .flight_phase import FlightPhase
-from .group_flight import GroupFlight
+from .groupflight import Groupflight
+from .groupflight_comment import GroupflightComment
 from .contest_leg import ContestLeg
 from .follower import Follower
 from .geo import Location, Bounds

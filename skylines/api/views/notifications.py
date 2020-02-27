@@ -11,6 +11,7 @@ from skylines.model import Event, Notification, Flight, User
 
 TYPES = {
     Event.Type.FLIGHT_COMMENT: "flight-comment",
+    Event.Type.FLIGHT_COMMENT: "groupflight-comment",
     Event.Type.FLIGHT: "flight-upload",
     Event.Type.FOLLOWER: "follower",
     Event.Type.NEW_USER: "new-user",

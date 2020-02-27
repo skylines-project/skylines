@@ -1,7 +1,7 @@
 import BaseRoute from './-base';
 
 export default BaseRoute.extend({
-  getURL() {
-    return '/api/flights/unassigned';
+  getURL({ list }) {
+    return `/api/groupflights/list/${list}`;
   },
 });

@@ -6,12 +6,12 @@
   </td>
 {{/if}}
 
-<td class="numeric">
+<td class="col-sm-1">
   {{format-number flight.score maximumFractionDigits=0}}
 </td>
 
 {{#if showPilot}}
-  <td class="pilot">
+  <td class="col-sm-3">
     {{#if flight.pilot.id}}
       <LinkTo @route="user" @model={{flight.pilot.id}}>{{pilotName}}</LinkTo>
     {{else if pilotName}}
@@ -30,17 +30,26 @@
       [{{flight.igcFile.owner.name}}]
     {{/if}}
   </td>
+  <td class="col-sm-1">
+  {{flight.competitionId}}
+  </td>
 {{/if}}
 
 
-<td class="numeric">
-  {{#if flight.distance}}
-    {{format-distance flight.distance}}
-  {{/if}}
-</td>
+{{!-- <td class="numeric"> --}}
+{{!--   {{#if flight.distance}} --}}
+{{!--     {{format-distance flight.distance}} --}}
+{{!--   {{/if}} --}}
+{{!-- </td> --}}
+
+  <td class="col-xs-3">
+    {{#if flight.landscape}}
+      {{flight.landscape}}
+    {{/if}}
+  </td>
 
 {{#if showAirport}}
-  <td class="airport">
+  <td class="col-sm-3">
     {{#if flight.takeoffAirport}}
       <XFlag @code={{flight.takeoffAirport.countryCode}} />
       <LinkTo @route="flights.airport" @model={{flight.takeoffAirport.id}}>{{flight.takeoffAirport.name}}</LinkTo>
@@ -56,7 +65,7 @@
   </td>
 {{/if}}
 
-<td class="aircraft hidden-xs">
+<td class="col-sm-3">
   <span>
     {{#if flight.model}}
       {{flight.model.name}}

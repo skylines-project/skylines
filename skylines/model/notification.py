@@ -92,6 +92,27 @@ def create_flight_comment_notifications(comment):
         item = Notification(event=event, recipient=recipient)
         db.session.add(item)
 
+def create_groupflight_comment_notifications(comment):
+    """
+    Create notifications for the owner and pilots of the flight
+    """
+
+    flight = comment.flight
+    user = comment.user
+
+    # Create the event
+    event = Event.for_flight_comment(comment)
+    db.session.add(event)
+
+    # Create set of potential recipients
+    recipients = {flight.igc_file.owner, flight.pilot, flight.co_pilot}
+    recipients.discard(None)
+    recipients.discard(user)
+
+    # Create notifications for the recipients in the set
+    for recipient in recipients:
+        item = Notification(event=event, recipient=recipient)
+        db.session.add(item)
 
 def create_flight_notifications(flight):
     """

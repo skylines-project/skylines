@@ -11,6 +11,8 @@ from skylines.lib.formatter.units import (
 from skylines.lib.string import isnumeric
 from skylines.model.flight_phase import FlightPhase
 
+'''Schemas is for mapping variables between front and back end, not with database'''
+
 AIRCRAFT_MODEL_TYPES = {
     0: "unspecified",
     1: "glider",
@@ -158,10 +160,12 @@ class IGCFileSchema(Schema):
     competitionId = fields.String(
         attribute="competition_id", strip=True, validate=validate.Length(max=5)
     )
-    model = fields.String(strip=True, validate=validate.Length(max=64))
+    model = fields.String(strip=True, validate=validate.Length(max=64)) #glider model
 
     date = fields.Date(attribute="date_utc")
-    flight_plan_md5 = fields.String(attribute="flight_plan_md5")
+    flight_plan_md5 = fields.String()
+    landscape = fields.String()
+    md5 = fields.String()
 
     class Meta(Schema.Meta):
         load_only = ("ownerId",)
@@ -170,9 +174,9 @@ class IGCFileSchema(Schema):
 
 class FlightSchema(Schema):
     id = fields.Integer()
-    groupFlightId = fields.Integer()
+    groupflight_Id = fields.Integer()
     timeCreated = fields.DateTime(attribute="time_created")
-
+    time_igc_upload = fields.DateTime()
     pilotId = fields.Integer(attribute="pilot_id", allow_none=True)
     pilot = fields.Nested(UserSchema, only=("id", "name"))
     pilotName = fields.String(
@@ -212,7 +216,7 @@ class FlightSchema(Schema):
     scoreStartTime = fields.DateTime(attribute="scoring_start_time")
     scoreEndTime = fields.DateTime(attribute="scoring_end_time")
     landingTime = fields.DateTime(attribute="landing_time")
-
+    landscape = fields.String()
     takeoffAirportId = fields.Integer(attribute="takeoff_airport_id", allow_none=True)
     takeoffAirport = fields.Nested(
         AirportSchema, attribute="takeoff_airport", only=("id", "name", "countryCode")
@@ -234,20 +238,8 @@ class FlightSchema(Schema):
     igcFile = fields.Nested(
         IGCFileSchema,
         attribute="igc_file",
-        only=("owner", "filename", "registration", "competitionId", "model", "date"),
+        only=("owner", "filename", "registration", "competitionId", "model", "date", "flight_plan_md5", "time_modified"),
     )
-
-
-    class GroupFlightSchema(Schema):
-        id = fields.Integer()
-        clubId = fields.Integer(attribute="club_id", allow_none=True)
-        club = fields.Nested(ClubSchema, only=("id", "name"))
-        md5 = fields.String()
-        timeCreated = fields.DateTime(attribute="time_created")
-        takeoffAirportId = fields.Integer(attribute="takeoff_airport_id", allow_none=True)
-        takeoffAirport = fields.Nested(
-            AirportSchema, attribute="takeoff_airport", only=("id", "name", "countryCode"))
-
 
     class Meta(Schema.Meta):
         load_only = (
@@ -270,11 +262,27 @@ class FlightSchema(Schema):
             "igcFile",
         )
 
+class GroupflightSchema(Schema):
+    id = fields.Integer()
+    club_id = fields.Integer()
+    club = fields.Nested(ClubSchema, only=("id", "name"))
+    flight_plan_md5 = fields.String()
+    time_created = fields.DateTime()
+    time_modified = fields.DateTime()
+    date_modified = fields.DateTime()
+    landscape = fields.String()
+    takeoffAirportId = fields.Integer(attribute="takeoff_airport_id", allow_none=True)
+    takeoffAirport = fields.Nested(
+        AirportSchema, attribute="takeoff_airport", only=("id", "name", "countryCode")
+    )
 
 class FlightCommentSchema(Schema):
     user = fields.Nested(UserSchema, only=("id", "name"))
     text = fields.String(required=True)
 
+class GroupflightCommentSchema(Schema):
+    user = fields.Nested(UserSchema, only=("id", "name"))
+    text = fields.String(required=True)
 
 class TrackingFixSchema(Schema):
     time = fields.DateTime()

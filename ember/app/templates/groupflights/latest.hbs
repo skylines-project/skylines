@@ -1,10 +1,10 @@
-<FlightListNav />
+<GroupflightListNav @date={{model.date}} @latest={{true}} />
 
 <div class="pull-right">
   <XPager @count={{model.count}} @page={{page}} @perPage={{50}} />
 </div>
 
-<FlightList @flights={{model.flights}} @showPilot={{false}} @sortColumn={{column}} @sortOrder={{order}} />
+<GroupflightList @groupflights={{model.groupflights}}  @showDate={{true}} @sortColumn={{column}} @sortOrder={{order}} />
 
 <div class="pull-right">
   <XPager @count={{model.count}} @page={{page}} @perPage={{50}} />

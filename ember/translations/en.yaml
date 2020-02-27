@@ -23,13 +23,14 @@ choose-pilot: Choose Pilot
 circling-performance: Circling performance
 climb-percentage-abbr: Climb %
 club: Group
+club-join: Join a group
 club-contact-email-address: Email of group contact
 club-exists-already: A group with this name exists already.
 club-has-been-changed: Your group has been changed.
 club-was-registered: Your group was successfully registered.
 clubs: Groups
 comments: Comments
-competition-id: Competition Id
+competition-id: Tail-ID
 competitions: Competitions
 confirm-password: Confirm password
 contact: Contact
@@ -41,9 +42,12 @@ creating: Creating...
 cruise-performance: Cruise performance
 current-password: Current password
 date: Date
+date-compiled: Date compiled
 date-missing-in-igc-file: Date missing in IGC file
 date-must-in-filename: Date of flight must be in filename
-date-ok-filename: A safe filename is "textNotNumbers_YYYY-MM-DD.igc"
+date-ok-filename: Safe filename "text-YYYY-MM-DD.igc"
+date-space-filename: Separators OK anywhere, needed in date. <space>, <dash>, <dot>, and/or <_>
+date-number-filename: Keep other numbers away from date, beginning or end of file name.
 date-missing-refresh: Refresh this page to try again.
 delay: Delay
 delete: Delete
@@ -69,7 +73,7 @@ editing: Editing...
 email-address: Email address
 email-exists-already: This email address exists already.
 email-unknown: This email address is unknown.
-error-text: It looks like there was error while loading this page. The error was automatically reported back to the developers. Please try again later!
+error-text: There was an error while loading this page. Please try again later!
 fai-triangle-distance: FAI Triangle Distance
 failed-to-parse-file: Failed to parse file
 file-upload-field: File upload field
@@ -94,13 +98,16 @@ glide-rate-abbr: GR
 glides: Glides
 groups: Groups
 group-choose-new: Join a group or register one
-group-flights: Group Flights
+groupflights: Group Flights
+groupflight: Group Flight
+GROUP-on-DATE: '{group} on {date}'
 how-to-use-live-tracking: How to use Live Tracking?
 igc-or-zip-files: IGC or ZIP file(s)
 imprint: Imprint
 index-INDEX: 'Handicap: {index}'
 landing: Landing
 landing-time: Landing time
+landscape: Landscape
 last-12-months: Last 12 Months
 last-fix: Last Fix
 last-name: Last name
@@ -130,9 +137,11 @@ new: New
 newer: Newer
 'no': 'No'
 no-airports-found: No airports found.
-no-club: No group
+no-club: Not in group
+no-club-on-upload:  You haven't joined a group.  If you want this flight to be part of the group's flights, join a group before uploading flight.
 no-clubs-found: No groups found.
 no-comments-yet: No comments yet.
+no-groupflights-found: No group flights have been compiled.
 no-flight-in-file: No flight found in file
 no-flight-saved: No flight was saved.
 no-flights-found: No flights found.
@@ -215,8 +224,10 @@ unknown-or-other-person: Unknown or other person
 unspecified: Unspecified
 upload: Upload
 upload-flight: Upload Flight
+upload-continue: Continue flight upload
 uploaded: Uploaded
 uploading: Uploading...
+updated: Updated
 used-airspaces: Used airspaces
 users: Users
 verify-flights-and-publish: You have to verify their properties and click 'Publish Flight(s)' below to publish your flight(s).
@@ -237,7 +248,7 @@ about:
   analysis: See your flights in detail and improve them. OLC+ method scores any type of flight.
   task-planning: Use your browser to plan your tasks before the flight and upload them quickly to your flight computer. Integration of {prosoar} is planned.
   competitions: Create competitions to offer your spectators an even better live tracking experience by following all the participants on the same map.
-  group-flights: <a href="{joinURL}">Join</a> or <a href="{joinURL}">register</a> a group!  It's great fun to fly XC together or compare flights on the same Condor flight plan. See overlay of your group's tracks.
+  groupflights: <a href="{joinURL}">Join</a> or <a href="{joinURL}">register</a> a group!  It's great fun to fly XC together or compare flights on the same Condor flight plan. See overlay of your group's tracks.
   achievements: Challenge yourself by trying to complete all the achievements that SkyLines offers. Fly large triangles, long final glides or just do your first outlanding.
   notifications: Comment on flights, follow your friends and get <a href="{url}">notifications</a> of their flights.
   open-data: The SkyLines flight database is made available under the {license}. Skylines is using waypoint data from the {welt2000} project.
@@ -263,6 +274,11 @@ timeline-events:
     message1: <strong><a href="{actorURL}">{actor}</a></strong> started following <strong><a href="{userURL}">{user}</a></strong>.
     message2: You started following <strong><a href="{userURL}">{user}</a></strong>.
     message3: <strong><a href="{actorURL}">{actor}</a></strong> started following you.
+  groupflight-comment:
+    message1: <strong><a href="{actorURL}">{actor}</a></strong> commented on a <strong>{distance}</strong> flight on <strong>{date}</strong>.
+    message2: You commented on a <strong>{distance}</strong> flight on <strong>{date}</strong>.
+    message3: <strong><a href="{actorURL}">{actor}</a></strong> commented on your <strong>{distance}</strong> flight on <strong>{date}</strong>.
+    message4: You commented on your <strong>{distance}</strong> flight on <strong>{date}</strong>.
   new-user:
     message1: <strong><a href="{actorURL}">{actor}</a></strong> joined SkyLines.
     message2: You joined SkyLines.

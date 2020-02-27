@@ -8,14 +8,19 @@ const Router = EmberRouter.extend({
 });
 
 Router.map(function() {
+
+//  this.route('groupflight',{ path: '/groupflights/:groupflight_id' });
+  this.route('groupflight', { path: '/groupflights/:groupflight_id' }, function() {
+    this.route('map-redirect', { path: '/map' });
+  });
+
+
   this.route('club', { path: '/clubs/:club_id' }, function() {
     this.route('pilots');
     this.route('edit');
   });
 
-  this.route('clubs', { path: '/clubs' });
-
-  this.route('group-flights', { path: '/group-flights' });
+  this.route('clubs');
 
   this.route('user', { path: '/users/:user_id' }, function() {
     this.route('followers');
@@ -34,7 +39,7 @@ Router.map(function() {
   });
 
   this.route('flight-upload', { path: '/flights/upload' });
-
+//note: the route (template, other files are named 'flight, but the path of the routs is flights.  Why _ids?
   this.route('flight', { path: '/flights/:flight_ids' }, function() {
     this.route('change-aircraft', { path: '/change_aircraft' });
     this.route('change-pilot', { path: '/change_pilot' });
@@ -45,10 +50,23 @@ Router.map(function() {
     this.route('all');
     this.route('latest');
     this.route('date', { path: '/date/:date' });
+    this.route('landscape', { path: '/landscape/:landscape' });
     this.route('airport', { path: '/airport/:airport_id' });
     this.route('club', { path: '/club/:club_id' });
     this.route('pilot', { path: '/pilot/:pilot_id' });
-    this.route('unassigned');
+    this.route('pinned');
+    this.route('list', { path: '/list/:list' });
+  });
+
+  this.route('groupflight', { path: '/groupflights/:groupflight_id' });
+
+  this.route('groupflights', { path: '/groupflights' }, function() {
+    this.route('all');
+    this.route('latest');
+    this.route('date', { path: '/date/:date' });
+    this.route('landscape', { path: '/landscape/:landscape' });
+    this.route('airport', { path: '/airport/:airport_id' });
+    this.route('club', { path: '/club/:club_id' });
     this.route('pinned');
     this.route('list', { path: '/list/:list' });
   });

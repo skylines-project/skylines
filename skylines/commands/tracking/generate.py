@@ -37,7 +37,7 @@ class Generate(Command):
             fix.pilot = user
             fix.set_location(longitude, latitude)
             fix.altitude = altitude
-            fix.time = datetime.now()
+            fix.time = datetime.utcnow()
             fix.time_visible = fix.time + timedelta(minutes=user.tracking_delay)
 
             db.session.add(fix)
