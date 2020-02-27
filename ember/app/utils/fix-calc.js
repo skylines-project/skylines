@@ -15,14 +15,14 @@ import flightFromData from '../utils/flight-from-data';
 //matplotlib colors used below
 //['dodgerblue','orange','red','gold','fuchsia','aqua',
 //'chocolate','limegreen','crimson','deepskyblue','springgreen',
-//'cornflowerblue','hotpink','white','yellow','turquoise',
+//'cornflowerblue','hotpink','yellow','turquoise',
 //'lightgrey','purple','orangered','firebrick','lavender',
 //'mediumblue','antiquewhite','salmon','mistyrose','pink','goldenrod']
 
 const COLORS =
 ['#1e90ff','#ffa500','#ff0000','#ffd700','#ff00ff','#00ffff',
 '#d2691e','#32cd32','#dc143c','#00bfff','#00ff7f',
-'#6495ed','#ff69b4','#ffffff','#ffff00','#40e0d0',
+'#6495ed','#ff69b4','#ffff00','#40e0d0',
 '#d3d3d3','#800080','#ff4500','#b22222','#e6e6fa',
 '#0000cd','#faebd7','#fa8072','#ffe4e1','#ffc0cb','#daa520']
 
