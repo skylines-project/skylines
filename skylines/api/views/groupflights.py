@@ -261,13 +261,13 @@ def add_comment(groupflight_id):
 ################  functions  ##################
 
 def groupflight_actions(flightCurrent, igc_file):
-    '''Finds igc files within 24 hrs of the last uploaded igc with a matching flight plan '''
+    '''Finds igc files within 12 hrs of the last uploaded igc with a matching flight plan '''
 
     latest = db.session.query(Flight.id) \
         .filter(Flight.club_id != None) \
         .filter(Flight.club_id == flightCurrent.club_id) \
         .filter(Flight.flight_plan_md5 == igc_file.flight_plan_md5) \
-        .filter(Flight.time_modified + timedelta(hours=24) >= datetime.utcnow()).all()
+        .filter(Flight.time_modified + timedelta(hours=12) >= datetime.utcnow()).all()
 
     if len(latest) > 1:  # igc should be part of group flight
         alreadyGrouped = db.session.query(Flight.id) \
