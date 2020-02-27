@@ -210,7 +210,7 @@ def _distance_flight(user, distance, schema):
 
 
 def _distance_flights(user):
-    schema = FlightSchema(only=("id", "scoreDate", "distance"))
+    schema = FlightSchema(only=("id", "flightDate", "distance"))
 
     return {
         "50km": _distance_flight(user, 50000, schema),

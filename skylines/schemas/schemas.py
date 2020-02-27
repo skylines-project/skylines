@@ -175,8 +175,6 @@ class IGCFileSchema(Schema):
 class FlightSchema(Schema):
     id = fields.Integer()
     groupflight_Id = fields.Integer()
-    timeCreated = fields.DateTime(attribute="time_created")
-    time_igc_upload = fields.DateTime()
     pilotId = fields.Integer(attribute="pilot_id", allow_none=True)
     pilot = fields.Nested(UserSchema, only=("id", "name"))
     pilotName = fields.String(
@@ -210,8 +208,9 @@ class FlightSchema(Schema):
         validate=validate.Length(max=5),
     )
 
-    scoreDate = fields.Date(attribute="date_local")
-
+    flightDate = fields.Date(attribute="date_local")
+    timeCreated = fields.DateTime(attribute="time_created")
+    time_igc_upload = fields.DateTime()
     takeoffTime = fields.DateTime(attribute="takeoff_time")
     scoreStartTime = fields.DateTime(attribute="scoring_start_time")
     scoreEndTime = fields.DateTime(attribute="scoring_end_time")

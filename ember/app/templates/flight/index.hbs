@@ -3,7 +3,7 @@
 {{#if model.gfData.groupflight}} {{!--group flight display --}}
   {{title (t "GROUP-on-DATE"
       group=model.club.name
-      date=(format-date model.data.flight.scoreDate format="ddmmyyyy" timeZone="UTC"))}}
+      date=(format-date model.data.flight.flightDate format="ddmmyyyy" timeZone="UTC"))}}
   <div class="fullscreen-below-nav-bar">
     <GflightPage
       id="fullscreen-content"
@@ -25,18 +25,18 @@
   {{#if (and (or model.data.flight.pilot model.data.flight.pilotName) (or model.data.flight.copilot model.data.flight.copilotName))}}
       {{title (t "DISTANCE-on-DATE-by-PILOT-and-COPILOT"
         distance=(format-distance model.data.flight.distance)
-        date=(format-date model.data.flight.scoreDate format="ddmmyyyy" timeZone="UTC")
+        date=(format-date model.data.flight.flightDate format="ddmmyyyy" timeZone="UTC")
         pilot=(or model.data.flight.pilot.name model.data.flight.pilotName)
         copilot=(or model.data.flight.copilot.name model.data.flight.copilotName))}}
     {{else if (or model.data.flight.pilot model.data.flight.pilotName)}}
       {{title (t "DISTANCE-on-DATE-by-PILOT"
         distance=(format-distance model.data.flight.distance)
-        date=(format-date model.data.flight.scoreDate format="ddmmyyyy" timeZone="UTC")
+        date=(format-date model.data.flight.flightDate format="ddmmyyyy" timeZone="UTC")
         pilot=(or model.data.flight.pilot.name model.data.flight.pilotName))}}
     {{else}}
       {{title (t "DISTANCE-on-DATE"
         distance=(format-distance model.data.flight.distance)
-        date=(format-date model.data.flight.scoreDate format="ddmmyyyy" timeZone="UTC"))}}
+        date=(format-date model.data.flight.flightDate format="ddmmyyyy" timeZone="UTC"))}}
     {{/if}}
 
 

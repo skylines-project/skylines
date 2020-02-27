@@ -30,10 +30,10 @@
     </td>
   </tr>
 
-  {{#if flight.scoreDate}}
+  {{#if flight.flightDate}}
     <tr>
       <th>{{t "date"}}</th>
-      <td><LinkTo @route="flights.date" @model={{flight.scoreDate}}>{{format-date flight.scoreDate format="ddmmyyyy" timeZone="UTC"}}</LinkTo></td>
+      <td><LinkTo @route="flights.date" @model={{flight.flightDate}}>{{format-date flight.flightDate format="ddmmyyyy" timeZone="UTC"}}</LinkTo></td>
     </tr>
   {{/if}}
 
