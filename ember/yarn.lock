@@ -6331,10 +6331,10 @@ ember-intl-cp-validations@^3.0.1:
     ember-cli-babel "^5.1.6"
     ember-getowner-polyfill "^1.2.2"
 
-ember-intl@^4.2.3:
-  version "4.2.3"
-  resolved "https://registry.yarnpkg.com/ember-intl/-/ember-intl-4.2.3.tgz#4f20b374d8044c54918e0149f2692493372c8697"
-  integrity sha512-neHJzJqB5zRzqlcScxf6XsAxFeB6xRGnRWhDHJRaPGW/zD90raSazciow3bsI6teqUNk3p+lbVkV4S6OuS3EiQ==
+ember-intl@^4.2.4:
+  version "4.2.4"
+  resolved "https://registry.yarnpkg.com/ember-intl/-/ember-intl-4.2.4.tgz#c69ed4817bbca502132b71957465b5b32a2cff2d"
+  integrity sha512-Hj9GOOslRO7UAyRIj91HFMpDi4uRlPhIriWLvbkf0lIjl8wCVlZzWx1Rf2bLrQhWRjbvmosK+IOIlU/1Hs1TMw==
   dependencies:
     "@ember-intl/broccoli-cldr-data" "^3.1.0"
     "@ember-intl/intl-messageformat" "^2.5.0"
