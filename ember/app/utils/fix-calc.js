@@ -14,17 +14,21 @@ import flightFromData from '../utils/flight-from-data';
 
 //matplotlib colors used below
 //['dodgerblue','orange','red','gold','fuchsia','aqua',
+//'green','blue','darkblue','teal','black','darkred',
 //'chocolate','limegreen','crimson','deepskyblue','springgreen',
 //'cornflowerblue','hotpink','turquoise',
 //'lightgrey','purple','orangered','firebrick','lavender',
 //'mediumblue','antiquewhite','salmon','mistyrose','pink','goldenrod']
 
 const COLORS =
-['#1e90ff','#ffa500','#ff0000','#ffd700','#ff00ff','#00ffff',
+[
+'#1e90ff','#ffa500','#ff0000','#ffd700','#ff00ff','#00ffff',
+'#008000','#0000ff','#008080','#000000','#8b0000',
 '#d2691e','#32cd32','#dc143c','#00bfff','#00ff7f',
-'#6495ed','#ff69b4','#40e0d0',
+'#6495ed','#ff69b4','#40e0d0','#000000',
 '#d3d3d3','#800080','#ff4500','#b22222','#e6e6fa',
-'#0000cd','#faebd7','#fa8072','#ffe4e1','#ffc0cb','#daa520']
+'#0000cd','#faebd7','#fa8072','#ffe4e1','#ffc0cb','#daa520'
+]
 
 export default EmberObject.extend({
   ajax: null,
