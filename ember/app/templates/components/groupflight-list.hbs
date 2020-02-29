@@ -2,6 +2,8 @@
 <tr>
   {{#if showDate}}
     <SortableTableHeader @column="datetime" @sortColumn={{sortColumn}} @sortOrder={{sortOrder}} @defaultOrder="desc" @class="date">{{t "updated"}}</SortableTableHeader>
+    <SortableTableHeader @column="datetime" @sortColumn={{sortColumn}} @sortOrder={{sortOrder}} @defaultOrder="desc" @class="date">{{t "flight"}}</SortableTableHeader>
+
   {{/if}}
 
   {{#if showClub}}

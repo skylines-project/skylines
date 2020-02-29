@@ -268,7 +268,7 @@ class GroupflightSchema(Schema):
     flight_plan_md5 = fields.String()
     time_created = fields.DateTime()
     time_modified = fields.DateTime()
-    date_modified = fields.DateTime()
+    date_flight = fields.DateTime()
     landscape = fields.String()
     takeoffAirportId = fields.Integer(attribute="takeoff_airport_id", allow_none=True)
     takeoffAirport = fields.Nested(

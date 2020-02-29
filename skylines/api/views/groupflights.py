@@ -267,8 +267,10 @@ def groupflight_actions(flightCurrent, igc_file):
         .filter(Flight.club_id != None) \
         .filter(Flight.club_id == flightCurrent.club_id) \
         .filter(Flight.flight_plan_md5 == igc_file.flight_plan_md5) \
-        .filter(Flight.time_modified + timedelta(hours=12) >= datetime.utcnow()).all()
+        .filter(Flight.date_local == flightCurrent.date_local)  # \
+        # .filter(Flight.time_modified + timedelta(hours=12) >= datetime.utcnow()).all()
 
+    latest = latest.all()
     if len(latest) > 1:  # igc should be part of group flight
         alreadyGrouped = db.session.query(Flight.id) \
             .filter(Flight.club_id == flightCurrent.club_id) \
@@ -286,7 +288,7 @@ def groupflight_actions(flightCurrent, igc_file):
             groupflight.flight_plan_md5 = igc_file.flight_plan_md5
             groupflight.time_created = datetime.utcnow()
             groupflight.time_modified = datetime.utcnow()
-            groupflight.date_modified = datetime.utcnow()
+            groupflight.date_flight = flightCurrent.date_local
             groupflight.club_id = flightCurrent.club_id
             if flightCurrent.takeoff_airport_id != None:
                 groupflight.takeoff_airport_id = flightCurrent.takeoff_airport.id
@@ -336,7 +338,7 @@ def _create_list(
     )
 
     if date:
-        groupflights = groupflights.filter(Groupflight.date_modified == date)
+        groupflights = groupflights.filter(Groupflight.date_flight == date)
 
     if club:
         groupflights = groupflights.filter(Groupflight.club == club)
@@ -355,7 +357,7 @@ def _create_list(
 
     valid_columns = {
         "created": getattr(Groupflight, "time_created"),
-        "date": getattr(Groupflight, "date_modified"),
+        "date": getattr(Groupflight, "date_flight"),
         "landscape": getattr(Groupflight, "landscape"),
         "airport": getattr(Airport, "name"),
         "club": getattr(Club, "name"),

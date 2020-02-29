@@ -7,6 +7,13 @@
 {{!--       {{'UTC'}} --}}
     {{/if}}
   </td>
+
+  <td class="date">
+    {{#if groupflight.date_flight}}
+      {{format-date groupflight.date_flight format="ddmmyyyy" timeZone="UTC"}}
+
+    {{/if}}
+  </td>
 {{/if}}
 
 {{#if showClub}}
