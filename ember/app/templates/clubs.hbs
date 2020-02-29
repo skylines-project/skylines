@@ -1,6 +1,11 @@
 <BasePage>
   <div class="page-header">
     <h1>{{t "clubs"}}</h1>
+    <div class="col-xs-12 banner">
+      <div class="col-xs-6"><LinkTo @route="settings.club" class="btn btn-default">{{fa-icon "question-circle"}} {{t "group-choose-new"}}</LinkTo></div>
+      <div class="col-xs-6"><LinkTo @route="groupflights.info" class="btn btn-default">{{fa-icon "question-circle"}} {{t "groupflights-info"}}</LinkTo></div>
+    </div>
+
   </div>
     <div class="col-sm-6">
     <SeasonDropdown @year={{year}} />
@@ -30,7 +35,5 @@
     {{/each}}
     </tbody>
   </table>
-  <div >
-      <LinkTo class="col-xs-12 banner" @route="settings.club">{{t "group-choose-new"}}</LinkTo>
-  </div>
+
 </BasePage>

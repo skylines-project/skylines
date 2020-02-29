@@ -47,7 +47,7 @@ date-missing-in-igc-file: Date missing in IGC file
 date-must-in-filename: Date of flight must be in filename
 date-ok-filename: An easy filename is "textnotnumbers-YYYY-MM-DD.igc".  Month before day.
 date-space-filename: Separators OK anywhere, needed in date. <space>, <dash>, <dot>, and/or <_>
-date-number-filename: No other digits after the date or to begin the file name.
+date-number-filename: No digits after the date.
 date-missing-refresh: Refresh this page to try again.
 delay: Delay
 delete: Delete
@@ -100,6 +100,7 @@ groups: Groups
 group-choose-new: Join a group or register one
 groupflights: Group Flights
 groupflight: Group Flight
+groupflights-info: How group flights work
 GROUP-on-DATE: '{group} on {date}'
 how-to-use-live-tracking: How to use Live Tracking?
 igc-or-zip-files: IGC or ZIP file(s)
@@ -217,6 +218,7 @@ tracking-delay: Tracking Delay
 tracking-delay-choice: '{delay, plural, =0 {None} =1 {1 minute} other {# minutes}}'
 translators: Translators
 triangle: Triangle
+try-again: Try again
 unassigned: Unassigned
 unfollow: Unfollow
 unknown: Unknown
@@ -301,6 +303,12 @@ flight-phase:
   circlingRight: Circling Right
   circlingMixed: Circling Mixed
   cruise: Cruise
+gflights:
+  creation: Group flight creation
+  how-it-works: Group flights are automatically created and updated as group members upload flights if the flight date and flight plan are identical to other flights in the group.  The date you flew the flight is included in the filename when you upload.
+  multiple-groups: Multiple groups?
+  change-groups: If you fly with multiple groups, just change your group in Settings before you upload to a different group.
+
 circling-direction:
   left: Left
   right: Right
