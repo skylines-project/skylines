@@ -199,8 +199,22 @@ def _encode_flight_path(fp, qnh):
 
 def get_date_from_name(filename):
     #Local date must be somewhere in the file name.  It will guess a date if ambiguous
-    newfilename = filename.replace('_','-').replace(' ','-').replace('.','-').replace(',','-')
-    return dparser.parse(newfilename, fuzzy=True)
+    filename = filename.replace(".igc","").replace('_','-').replace(' ','-').replace('.','-').replace(',','-')
+    try:
+        date = dparser.parse(filename, fuzzy=True)
+    except: #run through 10-character segments of string (maximum length of date YYYYxMMxDD):
+        for istart in range(0,len(filename)-10):
+            try:
+                print ('test', filename[istart:istart+10])
+                date = dparser.parse(filename[istart:istart+10], fuzzy=True)
+
+            except:
+                continue
+            else:
+                return date
+    else:
+        return date
+    return dparser.parse(filename, fuzzy=True)
 
 @upload_blueprint.route("/flights/upload", methods=("POST",), strict_slashes=False)
 @oauth.required()
