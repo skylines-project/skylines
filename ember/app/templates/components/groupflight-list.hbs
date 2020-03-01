@@ -1,8 +1,8 @@
 <thead>
 <tr>
   {{#if showDate}}
-    <SortableTableHeader @column="datetime" @sortColumn={{sortColumn}} @sortOrder={{sortOrder}} @defaultOrder="desc" @class="date">{{t "updated"}}</SortableTableHeader>
-    <SortableTableHeader @column="datetime" @sortColumn={{sortColumn}} @sortOrder={{sortOrder}} @defaultOrder="desc" @class="date">{{t "flight"}}</SortableTableHeader>
+    <SortableTableHeader @column="time" @sortColumn={{sortColumn}} @sortOrder={{sortOrder}} @defaultOrder="desc" @class="date">{{t "updated"}}</SortableTableHeader>
+    <SortableTableHeader @column="date" @sortColumn={{sortColumn}} @sortOrder={{sortOrder}} @defaultOrder="desc" @class="date">{{t "flight"}}</SortableTableHeader>
 
   {{/if}}
 

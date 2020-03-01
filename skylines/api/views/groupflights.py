@@ -311,6 +311,7 @@ def mark_groupflight_notifications_read(groupflight):
 
 def _create_list(
     created=None,
+    time=None,
     date=None,
     club=None,
     landscape=None,
@@ -337,6 +338,9 @@ def _create_list(
         .outerjoin((subq, Groupflight.comments))
     )
 
+    if time:
+        groupflights = groupflights.filter(Groupflight.time_modified == time)
+
     if date:
         groupflights = groupflights.filter(Groupflight.date_flight == date)
 
@@ -358,6 +362,7 @@ def _create_list(
     valid_columns = {
         "created": getattr(Groupflight, "time_created"),
         "date": getattr(Groupflight, "date_flight"),
+        "time": getattr(Groupflight, "time_modified"),
         "landscape": getattr(Groupflight, "landscape"),
         "airport": getattr(Airport, "name"),
         "club": getattr(Club, "name"),
@@ -387,6 +392,8 @@ def _create_list(
         groupflights_json.append(groupflight)
 
     json = dict(groupflights=groupflights_json, count=groupflights_count)
+
+    if time: json["time"] = date.isoformat()
 
     if date:
         json["date"] = date.isoformat()
