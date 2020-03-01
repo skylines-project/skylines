@@ -143,7 +143,7 @@ no-club: Not in group
 no-club-on-upload:  You haven't joined a group.  If you want this flight to be part of the group's flights, join a group before uploading flight.
 no-clubs-found: No groups found.
 no-comments-yet: No comments yet.
-no-groupflights-found: No group flights have been compiled.
+no-groupflights-found: No group flights found.
 no-flight-in-file: No flight found in file
 no-flight-saved: No flight was saved.
 no-flights-found: No flights found.
@@ -306,7 +306,8 @@ flight-phase:
   cruise: Cruise
 gflights:
   creation: Group flight creation
-  how-it-works: Group flights are automatically created and updated as group members upload flights if the flight date and flight plan are identical to other flights in the group.  The date you flew the flight is included in the filename when you upload.
+  create1: Group flights are automatically created and updated as group members upload flights if the flight date and flight plan are identical to other flights in the group.  The date you flew the flight is included in the filename when you upload.
+  create2: A single user could also upload multiple flights from other people to create a group flight, but these flights won't appear in the other pilots' flight logs.
   multiple-groups: Multiple groups?
   change-groups: If you fly with multiple groups, just change your group in Settings before you upload to a different group.
 
