@@ -151,33 +151,41 @@
   <div class="clearfix"></div>
 {{/if}}
 
-<p class="col-xs-12">
-  {{t "status"}}:
+<div class="col-xs-12">
+{{!--   {{t "status"}}: --}}
 
   {{#if success}}
     <span class="label label-success">
       {{fa-icon "check"}} {{t "success"}}
     </span>
-
   {{else}}
-    <span class="label label-warning">
-      {{fa-icon "warning"}}
-
-      {{#if (eq status 1)}}{{t "duplicate-file"}}
-      {{else if (eq status 2)}}{{t "date-missing-in-igc-file"}}
-      {{else if (eq status 3)}}{{t "failed-to-parse-file"}}
-      {{else if (eq status 4)}}{{t "no-flight-in-file"}}
-      {{else if (eq status 5)}}{{t "flight-date-in-future"}}
-      {{else if (eq status 6)}}{{t "not-condor"}}
-      {{else if (eq status 7)}}
-        <p> \n </p>{{t "date-must-in-filename"}}
-        <p> \n </p>{{t "date-ok-filename"}}
-        <p> \n </p>{{t "date-missing-refresh"}}
-      {{else}}{{t "unknown"}}{{/if}}
+      {{#if (eq status 7)}}
+      <span class="label label-warning">
+        {{fa-icon "warning"}}
+        {{t "date-must-in-filename"}}
+      </span>
+      <hr>
+        <p>{{t "date-ok-filename"}}</p>
+        <p>{{t "date-space-filename"}}</p>
+        <p>{{t "date-number-filename"}}</p>
+      {{else}}
+        <span class="label label-warning">
+        {{fa-icon "warning"}}
+        {{#if (eq status 1)}} {{t "duplicate-file"}}
+          {{else if (eq status 1)}}
+          {{else if (eq status 2)}}{{t "date-missing-in-igc-file"}}
+          {{else if (eq status 3)}}{{t "failed-to-parse-file"}}
+          {{else if (eq status 4)}}{{t "no-flight-in-file"}}
+          {{else if (eq status 5)}}{{t "flight-date-in-future"}}
+          {{else if (eq status 6)}}{{t "not-condor"}}
+          {{else}}{{t "unknown"}}
+      {{/if}}
     </span>
+    {{/if}}
 
     {{#if flight.id}}
       <LinkTo @route="flight" @model={{flight.id}} class="btn btn-default btn-sm">{{t "show"}}</LinkTo>
     {{/if}}
+
   {{/if}}
-</p>
+</div>
