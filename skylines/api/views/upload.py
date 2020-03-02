@@ -283,8 +283,8 @@ def index_post():
             continue
 
         flight = Flight() #instance
-        flight.pilot_id = pilot_id
-        flight.pilot_name = data.get("pilot_name")
+        flight.pilot_id = pilot_id or current_user.id
+        flight.pilot_name = data.get("pilot_name") or current_user.name
         flight.club_id = club_id
         flight.landscape = igc_file.landscape
         flight.flight_plan_md5 = igc_file.flight_plan_md5
