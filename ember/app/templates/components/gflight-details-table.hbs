@@ -12,7 +12,6 @@
       {{format-date groupflight.time_modified}}
       {{format-time groupflight.time_modified  format='hhmmss' timeZone="UTC"}}
       {{'UTC'}}
-{{!--       format='hhmmss' timeZone="UTC" --}}
     </td>
   </tr>
   <tr>
@@ -20,10 +19,23 @@
     <td>
       {{format-relative groupflight.date_flight }}
       {{format-date groupflight.date_flight}}
-{{!--       format='hhmmss' timeZone="UTC" --}}
     </td>
   </tr>
 
+  <tr>
+    <th>{{t "landscape"}}</th>
+    <td>
+      {{groupflight.landscape }}
+    </td>
+  </tr>
+  {{#if groupflight.takeoffAirport.name}}
+  <tr>
+    <th>{{t "airport"}}</th>
+    <td>
+      {{groupflight.takeoffAirport.name }}
+    </td>
+  </tr>
+  {{/if}}
 
   </tbody>
 </table>

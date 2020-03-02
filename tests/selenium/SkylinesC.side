@@ -17,7 +17,7 @@
       "id": "6bdd3536-88e5-4b0a-974e-9ac0a3b2638c",
       "comment": "",
       "command": "setWindowSize",
-      "target": "2000x500",
+      "target": "1700x700",
       "targets": [],
       "value": ""
     }, {
@@ -565,7 +565,7 @@
       "id": "ce64b146-3b24-4002-99d9-79e474f1fd37",
       "comment": "",
       "command": "setWindowSize",
-      "target": "2000x700",
+      "target": "1700x700",
       "targets": [],
       "value": ""
     }, {
@@ -1113,7 +1113,7 @@
       "id": "36a5d047-7fca-489e-93b8-b16303a896fe",
       "comment": "",
       "command": "setWindowSize",
-      "target": "2000x500",
+      "target": "1700x700",
       "targets": [],
       "value": ""
     }, {
@@ -1596,7 +1596,7 @@
       "id": "4ae31789-d57e-427f-b841-25d6a7b97148",
       "comment": "",
       "command": "setWindowSize",
-      "target": "2000x500",
+      "target": "1700x700",
       "targets": [],
       "value": ""
     }, {
@@ -2037,7 +2037,7 @@
       "id": "6b158e77-7276-4b35-afb7-dfdf208a67d8",
       "comment": "",
       "command": "setWindowSize",
-      "target": "2000x500",
+      "target": "1700x700",
       "targets": [],
       "value": ""
     }, {
@@ -2413,7 +2413,7 @@
       "id": "ba3a5e14-56c5-4bf1-a016-a94310951729",
       "comment": "",
       "command": "setWindowSize",
-      "target": "2000x700",
+      "target": "1700x700",
       "targets": [],
       "value": ""
     }, {
@@ -2854,7 +2854,7 @@
       "id": "54429968-4c2b-44fa-8ec5-723c1703eafe",
       "comment": "",
       "command": "setWindowSize",
-      "target": "2000x500",
+      "target": "1700x700",
       "targets": [],
       "value": ""
     }, {
