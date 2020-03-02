@@ -18,7 +18,7 @@ change-password: Change password
 changing: Changing...
 changing-password: Changing password...
 choose-aircraft: Choose Aircraft
-choose-club: Choose group
+choose-club: Choose group from pull-down menu
 choose-pilot: Choose Pilot
 circling-performance: Circling performance
 climb-percentage-abbr: Climb %
@@ -187,7 +187,7 @@ recovering: Recovering...
 recovery-mail-sent: Check your email! We have sent you a link to recover your password.
 register: Register
 registering: Registering...
-register-club: Register Group
+register-club: Register new group
 registration: Registration
 score: Score
 scoring-start-time: Scoring start time
