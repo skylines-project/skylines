@@ -11,15 +11,16 @@
   <p>{{t "date-ok-filename"}}</p>
   <p>{{t "date-space-filename"}}</p>
   <p>{{t "date-number-filename"}}</p>
-{{!--   <ValidatedBlock @label={{t "igc-or-zip-files"}} @validation={{validations.attrs.files}} @hasContent={{files}} @didValidate={{didValidate}}> --}}
-{{!--     <input type="file" name="files" multiple="multiple" onchange={{action "setFilesFromEvent"}} class="form-control" disabled={{uploadTask.isRunning}}> --}}
-{{!--   </ValidatedBlock> --}}
+  <ValidatedBlock @label={{t "igc-or-zip-files"}} @validation={{validations.attrs.files}} @hasContent={{files}} @didValidate={{didValidate}}>
+    <input type="file" name="files" multiple="multiple" onchange={{action "setFilesFromEvent"}} class="form-control" disabled={{uploadTask.isRunning}}>
+  </ValidatedBlock>
 
 
-      <span class="label label-warning">
-        {{fa-icon "warning"}}
-        {{'Uploads are blocked for debugging :('}}
-      </span>
+{{!--  ####################################  Upload Bocking ######################################################   --}}
+{{!--       <span class="label label-warning"> --}}
+{{!--         {{fa-icon "warning"}} --}}
+{{!--         {{'Uploads are blocked for debugging :('}} --}}
+{{!--       </span> --}}
 
   <ValidatedBlock @label={{t "pilot"}} @validation={{validations.attrs.pilotId}} @didValidate={{didValidate}}>
     <PilotSelect @clubMembers={{clubMembers}} @pilotId={{pilotId}} @onChange={{action (mut pilotId)}} />
