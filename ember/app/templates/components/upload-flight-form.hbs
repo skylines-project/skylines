@@ -1,9 +1,10 @@
 <form {{action "submit" on="submit"}}>
-  {{#unless clubMembers}}
-    <UploadClubAlert
-      @clubMembers={{clubMembers}}
-    />
-  {{/unless}}
+{{!--  Stub for better alert for club members--}}
+{{!--   {{#unless clubMembers}} --}}
+{{!--     <UploadClubAlert --}}
+{{!--       @clubMembers={{clubMembers}} --}}
+{{!--     /> --}}
+{{!--   {{/unless}} --}}
   {{#if error}}
     <BsAlert @type="danger" @dismissible={{false}}>{{error}}</BsAlert>
   {{/if}}
