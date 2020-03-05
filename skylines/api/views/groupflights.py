@@ -282,6 +282,8 @@ def groupflight_actions(flightCurrent, igc_file):
             for flight_id in latest:
                 flight = Flight.get(flight_id)
                 flight.groupflight_id = gfid
+                groupflight = db.session.query(Groupflight).filter(Groupflight.id == gfid)
+                groupflight.time_modified = datetime.utcnow()
         else:  # create group flight
             groupflight = Groupflight()
             groupflight.landscape = igc_file.landscape

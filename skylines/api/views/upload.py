@@ -1,9 +1,9 @@
-from datetime import datetime
+from datetime import datetime, date, timedelta
 from tempfile import TemporaryFile
 from zipfile import ZipFile
 from enum import IntEnum
 import hashlib
-import os
+import os, re
 import dateutil.parser as dparser
 
 from collections import namedtuple
@@ -200,21 +200,27 @@ def _encode_flight_path(fp, qnh):
 def get_date_from_name(filename):
     #Local date must be somewhere in the file name.  It will guess a date if ambiguous
     filename = filename.replace(".igc","").replace('_','-').replace(' ','-').replace('.','-').replace(',','-')
+    filename = re.sub("[A-Za-z]", "", filename) #keep only digits and separators
+    now = datetime.utcnow()
     try:
-        date = dparser.parse(filename, fuzzy=True)
+        trialDate = dparser.parse(filename, fuzzy=True)
     except: #run through 10-character segments of string (maximum length of date YYYYxMMxDD):
         for istart in range(0,len(filename)-10):
-            try:
-                print ('test', filename[istart:istart+10])
-                date = dparser.parse(filename[istart:istart+10], fuzzy=True)
-
-            except:
-                continue
+            if filename[istart].isdigit(): #check only strings starting with digit, not separator
+                try:
+                    # print 'test', filename[istart:istart + 10]
+                    trialDate = dparser.parse(filename[istart:istart+10], fuzzy=True)
+                except:
+                    continue
+                else:
+                    if now - timedelta (hours=20*365*24) <= trialDate <= now + timedelta(hours=24): #reasonable dates
+                        return trialDate #success
             else:
-                return date
+                continue
     else:
-        return date
-    return dparser.parse(filename, fuzzy=True)
+        if now - timedelta (hours=20*365*24) <= trialDate <= now + timedelta(hours=24): #reasonable dates
+            return trialDate  # success
+    return dparser.parse(filename, fuzzy=True) #this line will throw an error
 
 @upload_blueprint.route("/flights/upload", methods=("POST",), strict_slashes=False)
 @oauth.required()
