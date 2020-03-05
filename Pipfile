@@ -44,6 +44,7 @@ faker = "*"
 flake8 = "*"
 immobilus = "*"
 requests-oauthlib = "*"
+blinker = "*"
 
 [dev-packages]
 fabric = "==1.14.0"
