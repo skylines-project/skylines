@@ -92,6 +92,7 @@ pipenv install mock
 pipenv install faker
 pipenv install flake8
 pipenv install immobilus
+pipenv install blinker
 
 sudo apt-get install -y pkg-config
 #pipenv install --dev
