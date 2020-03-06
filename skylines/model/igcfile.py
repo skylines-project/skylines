@@ -92,117 +92,15 @@ class IGCFile(db.Model):
         ):
             self.competition_id = igc_headers["cid"]
 
-    def guess_registration(self):
-        from skylines.model.flight import Flight
-
-        # try to find another flight with the same logger and use it's aircraft registration
-        if self.logger_id is not None and self.logger_manufacturer_id is not None:
-            logger_id = self.logger_id
-            logger_manufacturer_id = self.logger_manufacturer_id
-
-            result = (
-                Flight.query()
-                .join(IGCFile)
-                .filter(
-                    db.func.upper(IGCFile.logger_manufacturer_id)
-                    == db.func.upper(logger_manufacturer_id)
-                )
-                .filter(db.func.upper(IGCFile.logger_id) == db.func.upper(logger_id))
-                .filter(Flight.registration == None)
-                .order_by(Flight.id.desc())
-            )
-
-            if self.logger_manufacturer_id.startswith("X"):
-                result = result.filter(Flight.pilot == self.owner)
-
-            result = result.first()
-
-            if result and result.registration:
-                return result.registration
-
-        return None
-
-    def guess_model(self):
-        from skylines.model import Flight, AircraftModel
-
-        # first try to find the reg number in the database
-        if self.registration is not None:
-            glider_reg = self.registration
-            result = (
-                Flight.query()
-                .filter(db.func.upper(Flight.registration) == db.func.upper(glider_reg))
-                .order_by(Flight.id.desc())
-                .first()
-            )
-
-            if result and result.model_id:
-                return result.model_id
-
-        # try to find another flight with the same logger and use it's aircraft type
-        if self.logger_id is not None and self.logger_manufacturer_id is not None:
-            logger_id = self.logger_id
-            logger_manufacturer_id = self.logger_manufacturer_id
-
-            result = (
-                Flight.query()
-                .join(IGCFile)
-                .filter(
-                    db.func.upper(IGCFile.logger_manufacturer_id)
-                    == db.func.upper(logger_manufacturer_id)
-                )
-                .filter(db.func.upper(IGCFile.logger_id) == db.func.upper(logger_id))
-                .filter(Flight.model_id == None)
-                .order_by(Flight.id.desc())
-            )
-
-            if self.logger_manufacturer_id.startswith("X"):
-                result = result.filter(Flight.pilot == self.owner)
-
-            result = result.first()
-
-            if result and result.model_id:
-                return result.model_id
+    def get_model(self):
+        from skylines.model import AircraftModel
 
         if self.model is not None:
-            glider_type = self.model.lower()
-
-            # otherwise, try to guess the glider model by the glider type igc header
-            text_fragments = [
-                "%{}%".format(v) for v in re.sub(r"[^a-z]", " ", glider_type).split()
-            ]
-            digit_fragments = [
-                "%{}%".format(v) for v in re.sub(r"[^0-9]", " ", glider_type).split()
-            ]
-
-            if not text_fragments and not digit_fragments:
-                return None
-
-            glider_type_clean = re.sub(r"[^a-z0-9]", "", glider_type)
-
             result = (
                 AircraftModel.query()
-                .filter(
-                    and_(
-                        db.func.regexp_replace(
-                            db.func.lower(AircraftModel.name), "[^a-z]", " "
-                        ).like(db.func.any(text_fragments)),
-                        db.func.regexp_replace(
-                            db.func.lower(AircraftModel.name), "[^0-9]", " "
-                        ).like(db.func.all(digit_fragments)),
-                    )
-                )
-                .order_by(
-                    db.func.levenshtein(
-                        db.func.regexp_replace(
-                            db.func.lower(AircraftModel.name), "[^a-z0-9]", ""
-                        ),
-                        glider_type_clean,
-                    )
-                )
+                .filter(AircraftModel.name == self.model)
             )
-
             if result.first():
                 return result.first().id
-
         # nothing found
         return None

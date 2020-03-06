@@ -301,14 +301,9 @@ def index_post():
         flight.time_modified = datetime.utcnow()
         flight.time_igc_upload = igc_file.time_modified
         flight.date_local = igc_file.date_condor
-        flight.model_id = igc_file.guess_model()
+        flight.model_id = igc_file.get_model()
         flight.igc_file = igc_file
-
-        if igc_file.registration:
-            flight.registration = igc_file.registration
-        else:
-            flight.registration = igc_file.guess_registration()
-
+        flight.registration = igc_file.registration
         flight.competition_id = igc_file.competition_id
 
         # fp = flight_path(flight.igc_file, add_elevation=True, max_points=None)
