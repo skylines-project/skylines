@@ -279,11 +279,11 @@ def groupflight_actions(flightCurrent, igc_file):
 
         if len(alreadyGrouped) > 0:  # add to this group flight
             gfid = db.session.query(Flight.groupflight_id).filter(Flight.id == alreadyGrouped[0][0]).all()[0]  # get from first entry
+            groupflight = db.session.query(Groupflight).filter(Groupflight.id == gfid)
+            groupflight.time_modified = datetime.utcnow()
             for flight_id in latest:
                 flight = Flight.get(flight_id)
                 flight.groupflight_id = gfid
-                groupflight = db.session.query(Groupflight).filter(Groupflight.id == gfid)
-                groupflight.time_modified = datetime.utcnow()
         else:  # create group flight
             groupflight = Groupflight()
             groupflight.landscape = igc_file.landscape

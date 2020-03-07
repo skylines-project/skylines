@@ -1,11 +1,5 @@
 <td>
-  <span class="badge" style={{badgeStyle}}>
-    {{#if row.competitionId}}
-      {{row.competitionId}}
-    {{else}}
-      &nbsp;
-    {{/if}}
-  </span>
+  <LinkTo @route="flight" @model={{row.id}} class="badge" style={{badgeStyle}}>{{row.competitionId}}</LinkTo>
 </td>
 <td class="col-xs-1">
   {{#if row.score}}
