@@ -316,7 +316,7 @@ scoringinfo:
   olc+: OLC+ Scoring
   olc-history: OLC+ scoring was developed by the "On-line Contest" group for any soaring flight. It is based on distances, not speed.
   distance: The program finds five points in your track that give you the most distance along line segments between the points.
-  triangle: If your path makes one or more loops, the program finds the largest triangle on our track that is symmetric enough that the smallest side is at least 28% of the total.
+  triangle: If your path makes one or more loops, the program finds the largest triangle on your track that is symmetric enough that the smallest side is at least 28% of the total.
   index: Then it divides by your glider's performance index.
   score: Your score is in units of km.  Score = (distance + 0.3 * triangle)/index
 search:

@@ -168,9 +168,8 @@
 </table>
 
 <p>
-  <a href="/files/{{flight.igcFile.filename}}" title={{flight.igcFile.filename}} class="btn btn-default" data-href-to-ignore>
-    {{fa-icon "download" size="lg"}} IGC
-  </a>
+
+  <a href="/files/{{flight.igcFile.filename}}" class="btn btn-default" download>{{fa-icon "download" size="lg"}} IGC</a>
 
   <span title={{t "pin-button-title"}}>
     <PinButton @flightId={{flight.id}} />
