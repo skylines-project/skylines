@@ -72,7 +72,9 @@ edit-club: Edit group
 editing: Editing...
 email-address: Email address
 email-exists-already: This email address exists already.
+email-for-info: Email for info
 email-unknown: This email address is unknown.
+
 error-text: There was an error while loading this page. Please try again later!
 fai-triangle-distance: FAI Triangle Distance
 failed-to-parse-file: Failed to parse file

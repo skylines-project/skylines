@@ -6,9 +6,10 @@
       {{format-date groupflight.date_flight format="ddmmyyyy" timeZone="UTC"}}
   </td>
 
-  <td class="col-sm-3">
-      {{groupflight.ids.length}}
-  </td>
+{{!--  For number of pilots:  --}}
+{{!--   <td class="col-sm-3"> --}}
+{{!--       {{groupflight.ids.length}} --}}
+{{!--   </td> --}}
 
   <td class="col-sm-3">
       <LinkTo @route="club" @model={{groupflight.club.id}}>{{truncate groupflight.club.name 25}}</LinkTo>

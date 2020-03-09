@@ -12,6 +12,10 @@
               <th>{{t "name"}}</th>
               <td>{{club.name}}</td>
             </tr>
+            <tr>
+              <th>{{t "contact"}}</th>
+              <td><a href="mailto:{{club.email}}">{{t "email-for-info"}}</a></td>
+            </tr>
 
             {{#if club.website}}
               <tr>
