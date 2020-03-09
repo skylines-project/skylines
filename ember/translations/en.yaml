@@ -107,6 +107,7 @@ how-to-use-live-tracking: How to use Live Tracking?
 igc-or-zip-files: IGC or ZIP file(s)
 imprint: Imprint
 index-INDEX: 'Handicap: {index}'
+index: Index
 landing: Landing
 landing-time: Landing time
 landscape: Landscape
@@ -190,6 +191,7 @@ registering: Registering...
 register-club: Register new group
 registration: Registration
 score: Score
+scoring: Scoring
 scoring-start-time: Scoring start time
 scoring-end-time: Scoring end time
 season-YEAR: Season {year}
@@ -256,6 +258,65 @@ about:
   notifications: Comment on flights, follow your friends and get <a href="{url}">notifications</a> of their flights.
   open-data: The SkyLines flight database is made available under the {license}. Skylines is using waypoint data from the {welt2000} project.
   open-source: Skylines is a <a href="{teamURL}">community</a> project and entirely based on free software (<a href="{licenseURL}">License</a>). Visit {github} if you want to help!
+circling-direction:
+  left: Left
+  right: Right
+  mixed: Mixed
+  total: Total
+errors:
+  description: This field
+  inclusion: '{description} is not included in the list'
+  exclusion: '{description} is reserved'
+  invalid: '{description} is invalid'
+  confirmation: '{description} doesn''t match {on}'
+  accepted: '{description} must be accepted'
+  empty: '{description} can''t be empty'
+  blank: '{description} can''t be blank'
+  present: '{description} must be blank'
+  collection: '{description} must be a collection'
+  singular: '{description} can''t be a collection'
+  tooLong: '{description} is too long (maximum is {max} characters)'
+  tooShort: '{description} is too short (minimum is {min} characters)'
+  before: '{description} must be before {before}'
+  after: '{description} must be after {after}'
+  wrongDateFormat: '{description} must be in the format of {format}'
+  wrongLength: '{description} is the wrong length (should be {is} characters)'
+  notANumber: '{description} must be a number'
+  notAnInteger: '{description} must be an integer'
+  greaterThan: '{description} must be greater than {gt}'
+  greaterThanOrEqualTo: '{description} must be greater than or equal to {gte}'
+  equalTo: '{description} must be equal to {is}'
+  lessThan: '{description} must be less than {lt}'
+  lessThanOrEqualTo: '{description} must be less than or equal to {lte}'
+  otherThan: '{description} must be other than {value}'
+  odd: '{description} must be odd'
+  even: '{description} must be even'
+  positive: '{description} must be positive'
+  date: '{description} must be a valid date'
+  email: '{description} must be a valid email address'
+  phone: '{description} must be a valid phone number'
+  url: '{description} must be a valid url'
+flight-phase:
+  powered: Powered
+  circlingLeft: Circling Left
+  circlingRight: Circling Right
+  circlingMixed: Circling Mixed
+  cruise: Cruise
+gflights:
+  creation: Group flight creation
+  create1: Group flights are automatically created and updated as group members upload flights if the flight date and flight plan are identical to other flights in the group.  The date you flew the flight is included in the filename when you upload.
+  create2: A single user can also upload multiple flights for other pilots in their group if they are registered.  Choose the correct "pilot" before publishing.
+  multiple-groups: Multiple groups
+  change-groups: If you fly with multiple groups, just change your group in Settings before you upload to a different group.
+  overlay-not-in-group: Overlaying flights not in your group
+  pin-flight: If you "star" other flights before you "show" a flight, it will overlay the flights.  This is not a "group flight", but it is the same in display.
+scoringinfo:
+  olc+: OLC+ Scoring
+  olc-history: OLC+ scoring was developed by the "On-line Contest" group for any soaring flight. It is based on distances, not speed.
+  distance: The program finds five points in your track that give you the most distance along line segments between the points.
+  triangle: If your path makes one or more loops, the program finds the largest triangle on our track that is symmetric enough that the smallest side is at least 28% of the total.
+  index: Then it divides by your glider's performance index.
+  score: Your score is in units of km.  Score = (distance + 0.3 * triangle)/index
 search:
   search: Search
   search-for-TEXT: Search <small>for "{text}"</small>
@@ -298,26 +359,6 @@ tracking:
   settings: Live Tracking Settings
   login-required: You have to login to see you own personal Live Tracking key.
   xcsoar-instructions: In XCSoar, open the <em>Setup System</em> dialog, click on <em>Setup</em> and then <em>Tracking</em>.  Turn SkyLines tracking on, and enter your Live Tracking key.
-flight-phase:
-  powered: Powered
-  circlingLeft: Circling Left
-  circlingRight: Circling Right
-  circlingMixed: Circling Mixed
-  cruise: Cruise
-gflights:
-  creation: Group flight creation
-  create1: Group flights are automatically created and updated as group members upload flights if the flight date and flight plan are identical to other flights in the group.  The date you flew the flight is included in the filename when you upload.
-  create2: A single user can also upload multiple flights for other pilots in their group if they are registered.  Choose the correct "pilot" before publishing.  
-  multiple-groups: Multiple groups
-  change-groups: If you fly with multiple groups, just change your group in Settings before you upload to a different group.
-  overlay-not-in-group: Overlaying flights not in your group
-  pin-flight: If you "pin" or "star" other flights before you "show" a flight, it will overlay the flights.  This is not a "group flight", but it is the same in display.
-
-circling-direction:
-  left: Left
-  right: Right
-  mixed: Mixed
-  total: Total
 units:
   title: Units
   distance: Distance unit
@@ -330,36 +371,3 @@ units:
     british: British (imperial, distance in km)
     custom: Custom
     european: European (metric)
-errors:
-  description: This field
-  inclusion: '{description} is not included in the list'
-  exclusion: '{description} is reserved'
-  invalid: '{description} is invalid'
-  confirmation: '{description} doesn''t match {on}'
-  accepted: '{description} must be accepted'
-  empty: '{description} can''t be empty'
-  blank: '{description} can''t be blank'
-  present: '{description} must be blank'
-  collection: '{description} must be a collection'
-  singular: '{description} can''t be a collection'
-  tooLong: '{description} is too long (maximum is {max} characters)'
-  tooShort: '{description} is too short (minimum is {min} characters)'
-  before: '{description} must be before {before}'
-  after: '{description} must be after {after}'
-  wrongDateFormat: '{description} must be in the format of {format}'
-  wrongLength: '{description} is the wrong length (should be {is} characters)'
-  notANumber: '{description} must be a number'
-  notAnInteger: '{description} must be an integer'
-  greaterThan: '{description} must be greater than {gt}'
-  greaterThanOrEqualTo: '{description} must be greater than or equal to {gte}'
-  equalTo: '{description} must be equal to {is}'
-  lessThan: '{description} must be less than {lt}'
-  lessThanOrEqualTo: '{description} must be less than or equal to {lte}'
-  otherThan: '{description} must be other than {value}'
-  odd: '{description} must be odd'
-  even: '{description} must be even'
-  positive: '{description} must be positive'
-  date: '{description} must be a valid date'
-  email: '{description} must be a valid email address'
-  phone: '{description} must be a valid phone number'
-  url: '{description} must be a valid url'

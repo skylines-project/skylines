@@ -47,6 +47,7 @@ Router.map(function() {
   });
 
   this.route('flights', { path: '/flights' }, function() {
+    this.route('info');
     this.route('all');
     this.route('latest');
     this.route('date', { path: '/date/:date' });
