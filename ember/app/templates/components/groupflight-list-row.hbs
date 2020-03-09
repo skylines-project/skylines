@@ -1,43 +1,29 @@
-{{#if showDate}}
   <td class="date">
-    {{#if groupflight.time_modified}}
       {{format-relative groupflight.time_modified }}
-{{!--       {{format-date groupflight.time_modified format="ddmmyyyy" timeZone="UTC"}} --}}
-{{!--       {{format-time groupflight.time_modified format="hhmmss" timeZone="UTC"}} --}}
-{{!--       {{'UTC'}} --}}
-    {{/if}}
   </td>
 
   <td class="date">
-    {{#if groupflight.date_flight}}
       {{format-date groupflight.date_flight format="ddmmyyyy" timeZone="UTC"}}
-
-    {{/if}}
   </td>
-{{/if}}
 
-{{#if showClub}}
   <td class="col-sm-3">
-    {{#if groupflight.club_id}}
+      {{groupflight.ids.length}}
+  </td>
+
+  <td class="col-sm-3">
       <LinkTo @route="club" @model={{groupflight.club.id}}>{{truncate groupflight.club.name 25}}</LinkTo>
-    {{/if}}
   </td>
-{{/if}}
 
   <td class="col-sm-3">
-    {{#if groupflight.landscape}}
       {{groupflight.landscape}}
-    {{/if}}
   </td>
 
-{{#if showAirport}}
   <td class="airport">
     {{#if groupflight.takeoffAirport}}
       <XFlag @code={{groupflight.takeoffAirport.countryCode}} />
       <LinkTo @route="groupflights.airport" @model={{groupflight.takeoffAirport.id}}>{{groupflight.takeoffAirport.name}}</LinkTo>
     {{/if}}
   </td>
-{{/if}}
 
 <td class="column-buttons">
   <LinkTo @route="groupflight" @model={{groupflight.id}} class="btn btn-default btn-sm">{{t "show"}}</LinkTo>

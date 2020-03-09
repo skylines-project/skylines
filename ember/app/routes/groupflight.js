@@ -9,4 +9,3 @@ export default Route.extend({
       return await this.ajax.request(`/api/groupflights/${groupflight_id}`)
   },
 });
-
