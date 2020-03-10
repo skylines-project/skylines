@@ -73,6 +73,8 @@ Router.map(function() {
     this.route('list', { path: '/list/:list' });
   });
 
+  this.route('landscapes');
+
   this.route('tracking', function() {
     this.route('info');
     this.route('details', { path: '/:user_ids' });
