@@ -311,7 +311,7 @@ gflights:
   multiple-groups: Multiple groups
   change-groups: If you fly with multiple groups, just change your group in Settings before you upload to a different group.
   overlay-not-in-group: Overlaying flights not in your group
-  pin-flight: If you "star" other flights before you "show" a flight, it will overlay the flights.  This is not a "group flight", but it is the same in display.
+  pin-flight: If you "star" other flights before you "show" a flight, it will overlay the flights.  This is not a "group flight", but it is displayed the same.
 scoringinfo:
   olc+: OLC+ Scoring
   olc-history: OLC+ scoring was developed by the "On-line Contest" group for any soaring flight. It is based on distances, not speed.
