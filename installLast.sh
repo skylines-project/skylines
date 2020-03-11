@@ -148,3 +148,13 @@ sudo chown $USER -R ~/.config/*
 # management
 npm install pm2
 pipenv run ./manage.py import welt2000 --commit
+
+# production server
+sudo ufw enable
+sudo ufw allow 22
+sudo apt-get install nginx
+wget https://dl.eff.org/certbot-auto #security certificate
+sudo mv certbot-auto /usr/local/bin/certbot-auto
+sudo chown root /usr/local/bin/certbot-auto
+sudo chmod 0755 /usr/local/bin/certbot-auto
+sudo /usr/local/bin/certbot-auto --nginx #gets certificate
