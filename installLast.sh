@@ -34,7 +34,7 @@ echo 'New libs:'
 sudo apt-get install -y --no-install-recommends \
     ibgeos-c1 liblwgeom-2.2-5
 
-sudo sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt trusty-pgdg main" >> /etc/apt/sources.lis't
+sudo sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt bionic-pgdg main" >> /etc/apt/sources.lis't
 wget --quiet -O - http://apt.postgresql.org/pub/repos/apt/ACCC4CF8.asc | sudo apt-key add -
 sudo apt update
 sudo apt install -y postgresql-10
@@ -147,7 +147,7 @@ sudo chown $USER -R ~/.config/*
 
 # management
 npm install pm2
-pipenv run ./manage.py import welt2000 --commit
+#pipenv run ./manage.py import welt2000 --commit
 
 # production server
 sudo ufw enable
@@ -157,4 +157,4 @@ wget https://dl.eff.org/certbot-auto #security certificate
 sudo mv certbot-auto /usr/local/bin/certbot-auto
 sudo chown root /usr/local/bin/certbot-auto
 sudo chmod 0755 /usr/local/bin/certbot-auto
-sudo /usr/local/bin/certbot-auto --nginx #gets certificate
+#sudo /usr/local/bin/certbot-auto --nginx #gets certificate
