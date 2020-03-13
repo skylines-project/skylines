@@ -18,16 +18,18 @@
 #   http://localhost:4200/
 
 
-#port forwarding needed between host and guest, from vagrant file
-  # config.vm.network 'forwarded_port', guest: 5000, host: 5000
-  # config.vm.network 'forwarded_port', guest: 5001, host: 5001
-  # config.vm.network 'forwarded_port', guest: 5597, host: 5597, protocol: 'udp'
-
+#remove any locks
+sudo killall apt apt-get
+sudo rm /var/lib/apt/lists/lock
+sudo rm /var/cache/apt/archives/lock
+sudo rm /var/lib/dpkg/lock*
+sudo dpkg --configure -a
+sudo apt update
 
 # sudo apt install -y git
-# sudo apt install -y curl
-#git clone https://github.com/hess8/skylinesC
-#cd skylinesC
+sudo apt install -y curl
+git clone https://github.com/hess8/skylinesC
+cd skylinesC
 
 # set environment variables
 
@@ -35,7 +37,6 @@ cat >> ~/.profile << EOF
 export POSTGIS_GDAL_ENABLED_DRIVERS=GTiff
 export POSTGIS_ENABLE_OUTDB_RASTERS=1
 EOF
-
 
 # install pip
 
