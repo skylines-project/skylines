@@ -16,7 +16,7 @@ sudo apt-get install -y --no-install-recommends software-properties-common
 # add PPAs
 
 sudo add-apt-repository -y ppa:ubuntu-toolchain-r/test
-sudo add-apt-repository -y ppa:jonathonf/python-2.7
+#sudo add-apt-repository -y ppa:jonathonf/python-2.7
 
 # update apt-get repository
 
@@ -24,8 +24,8 @@ sudo apt-get update
 
 # install base dependencies
 
-sudo apt-get install -y --no-install-recommends \
-    python python-dev \
+#sudo apt-get install -y --no-install-recommends \
+#    python python-dev \
     
 sudo apt-get install -y --no-install-recommends \
     g++-6 pkg-config libcurl4-openssl-dev redis-server\
@@ -150,11 +150,4 @@ npm install pm2
 #pipenv run ./manage.py import welt2000 --commit
 
 # production server
-sudo ufw enable
-sudo ufw allow 22
-sudo apt-get install nginx
-wget https://dl.eff.org/certbot-auto #security certificate
-sudo mv certbot-auto /usr/local/bin/certbot-auto
-sudo chown root /usr/local/bin/certbot-auto
-sudo chmod 0755 /usr/local/bin/certbot-auto
-#sudo /usr/local/bin/certbot-auto --nginx #gets certificate
+#sudo ufw enable

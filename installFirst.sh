@@ -26,8 +26,8 @@
 
 # sudo apt install -y git
 # sudo apt install -y curl
-git clone https://github.com/hess8/skylinesC
-cd skylinesC
+#git clone https://github.com/hess8/skylinesC
+#cd skylinesC
 
 # set environment variables
 
