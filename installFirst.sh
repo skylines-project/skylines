@@ -38,6 +38,8 @@ export POSTGIS_GDAL_ENABLED_DRIVERS=GTiff
 export POSTGIS_ENABLE_OUTDB_RASTERS=1
 EOF
 
+apt-get install python
+
 # install pip
 
 wget -N -nv https://bootstrap.pypa.io/get-pip.py

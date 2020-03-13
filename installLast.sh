@@ -16,7 +16,7 @@ sudo apt-get install -y --no-install-recommends software-properties-common
 # add PPAs
 
 sudo add-apt-repository -y ppa:ubuntu-toolchain-r/test
-sudo add-apt-repository -y ppa:jonathonf/python-2.7
+# sudo add-apt-repository -y ppa:jonathonf/python-2.7
 
 # update apt-get repository
 
@@ -60,43 +60,43 @@ sudo apt-get install -y pkg-config
 # install skylines and the python dependencies
 apt-get install -y libcurl4-openssl-dev libfreetype6-dev
 sudo apt-get install -y libpq-dev
-pipenv install --skip-lock flask
-pipenv install --skip-lock babel
-pipenv install --skip-lock flask-caching
-pipenv install --skip-lock flask-migrate
-pipenv install --skip-lock flask_script
-pipenv install --skip-lock flask-sqlalchemy
-pipenv install --skip-lock psycopg2
-pipenv install --skip-lock geoalchemy2
-pipenv install --skip-lock shapely
-pipenv install --skip-lock crc16
-pipenv install --skip-lock pytz
-pipenv install --skip-lock celery
-pipenv install --skip-lock redis
-pipenv install --skip-lock xcsoar
-pipenv install --skip-lock aerofiles
-pipenv install --skip-lock enum34
-pipenv install --skip-lock pyproj
-pipenv install --skip-lock gevent
-pipenv install --skip-lock webargs
-pipenv install --skip-lock flask-oauthlib
-pipenv install --skip-lock requests-oauthlib
-pipenv install --skip-lock sentry-sdk
-pipenv install --skip-lock mapproxy
-pipenv install --skip-lock sentry_sdk
-pipenv install --skip-lock gunicorn
-pipenv install --skip-lock fabric
-pipenv install --skip-lock pytest
-pipenv install --skip-lock pytest-cov
-pipenv install --skip-lock pytest-voluptuous
-pipenv install --skip-lock mock
-pipenv install --skip-lock faker
-pipenv install --skip-lock flake8
-pipenv install --skip-lock immobilus
-pipenv install --skip-lock blinker
+pipenv install --verbose --skip-lock flask
+pipenv install --verbose --skip-lock babel
+pipenv install --verbose --skip-lock flask-caching
+pipenv install --verbose --skip-lock flask-migrate
+pipenv install --verbose --skip-lock flask_script
+pipenv install --verbose --skip-lock flask-sqlalchemy
+pipenv install --verbose --skip-lock psycopg2
+pipenv install --verbose --skip-lock geoalchemy2
+pipenv install --verbose --skip-lock shapely
+pipenv install --verbose --skip-lock crc16
+pipenv install --verbose --skip-lock pytz
+pipenv install --verbose --skip-lock celery
+pipenv install --verbose --skip-lock redis
+pipenv install --verbose --skip-lock xcsoar
+pipenv install --verbose --skip-lock aerofiles
+pipenv install --verbose --skip-lock enum34
+pipenv install --verbose --skip-lock pyproj
+pipenv install --verbose --skip-lock gevent
+pipenv install --verbose --skip-lock webargs
+pipenv install --verbose --skip-lock flask-oauthlib
+pipenv install --verbose --skip-lock requests-oauthlib
+pipenv install --verbose --skip-lock sentry-sdk
+pipenv install --verbose --skip-lock mapproxy
+pipenv install --verbose --skip-lock sentry_sdk
+pipenv install --verbose --skip-lock gunicorn
+pipenv install --verbose --skip-lock fabric
+pipenv install --verbose --skip-lock pytest
+pipenv install --verbose --skip-lock pytest-cov
+pipenv install --verbose --skip-lock pytest-voluptuous
+pipenv install --verbose --skip-lock mock
+pipenv install --verbose --skip-lock faker
+pipenv install --verbose --skip-lock flake8
+pipenv install --verbose --skip-lock immobilus
+pipenv install --verbose --skip-lock blinker
 
 
-# pipenv install --dev  --skip-lock #this doesn't work with skip-lock...seems to work without it, but can't lock anyway due to oauth dependency problems
+# pipenv install --verbose --dev  --skip-lock #this doesn't work with skip-lock...seems to work without it, but can't lock anyway due to oauth dependency problems
 
 # create PostGIS databases
 
