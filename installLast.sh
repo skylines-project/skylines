@@ -92,7 +92,6 @@ sudo pipenv install --verbose --verbose  flask-oauthlib
 sudo pipenv install --verbose --verbose  requests-oauthlib
 sudo pipenv install --verbose --verbose  sentry-sdk
 sudo pipenv install --verbose --verbose  mapproxy
-sudo pipenv install --verbose --verbose  sentry_sdk
 sudo pipenv install --verbose --verbose  gunicorn
 sudo pipenv install --verbose --verbose  fabric
 sudo pipenv install --verbose --verbose  pytest
