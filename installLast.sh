@@ -16,7 +16,7 @@ sudo apt-get install -y --no-install-recommends software-properties-common
 # add PPAs
 
 sudo add-apt-repository -y ppa:ubuntu-toolchain-r/test
-#sudo add-apt-repository -y ppa:jonathonf/python-2.7
+sudo add-apt-repository -y ppa:jonathonf/python-2.7
 
 # update apt-get repository
 
@@ -24,8 +24,8 @@ sudo apt-get update
 
 # install base dependencies
 
-#sudo apt-get install -y --no-install-recommends \
-#    python python-dev \
+sudo apt-get install -y --no-install-recommends \
+   python python-dev \
     
 sudo apt-get install -y --no-install-recommends \
     g++-6 pkg-config libcurl4-openssl-dev redis-server\
@@ -60,43 +60,43 @@ sudo apt-get install -y pkg-config
 # install skylines and the python dependencies
 apt-get install -y libcurl4-openssl-dev libfreetype6-dev
 sudo apt-get install -y libpq-dev
-pipenv install flask
-pipenv install babel
-pipenv install flask-caching
-pipenv install flask-migrate
-pipenv install flask_script
-pipenv install flask-sqlalchemy
-pipenv install psycopg2
-pipenv install geoalchemy2
-pipenv install shapely
-pipenv install crc16
-pipenv install pytz
-pipenv install celery
-pipenv install redis
-pipenv install xcsoar
-pipenv install aerofiles
-pipenv install enum34
-pipenv install pyproj
-pipenv install gevent
-pipenv install webargs
-pipenv install flask-oauthlib
-pipenv install requests-oauthlib
-pipenv install sentry-sdk
-pipenv install mapproxy
-pipenv install sentry_sdk
-pipenv install gunicorn
-pipenv install fabric
-pipenv install pytest
-pipenv install pytest-cov
-pipenv install pytest-voluptuous
-pipenv install mock
-pipenv install faker
-pipenv install flake8
-pipenv install immobilus
-pipenv install blinker
+pipenv install --skip-lock flask
+pipenv install --skip-lock babel
+pipenv install --skip-lock flask-caching
+pipenv install --skip-lock flask-migrate
+pipenv install --skip-lock flask_script
+pipenv install --skip-lock flask-sqlalchemy
+pipenv install --skip-lock psycopg2
+pipenv install --skip-lock geoalchemy2
+pipenv install --skip-lock shapely
+pipenv install --skip-lock crc16
+pipenv install --skip-lock pytz
+pipenv install --skip-lock celery
+pipenv install --skip-lock redis
+pipenv install --skip-lock xcsoar
+pipenv install --skip-lock aerofiles
+pipenv install --skip-lock enum34
+pipenv install --skip-lock pyproj
+pipenv install --skip-lock gevent
+pipenv install --skip-lock webargs
+pipenv install --skip-lock flask-oauthlib
+pipenv install --skip-lock requests-oauthlib
+pipenv install --skip-lock sentry-sdk
+pipenv install --skip-lock mapproxy
+pipenv install --skip-lock sentry_sdk
+pipenv install --skip-lock gunicorn
+pipenv install --skip-lock fabric
+pipenv install --skip-lock pytest
+pipenv install --skip-lock pytest-cov
+pipenv install --skip-lock pytest-voluptuous
+pipenv install --skip-lock mock
+pipenv install --skip-lock faker
+pipenv install --skip-lock flake8
+pipenv install --skip-lock immobilus
+pipenv install --skip-lock blinker
 
 
-# pipenv install  --dev  --skip-lock #this doesn't work with skip-lock...seems to work without it, but can't lock anyway due to oauth dependency problems
+# pipenv install --dev  --skip-lock #this doesn't work with skip-lock...seems to work without it, but can't lock anyway due to oauth dependency problems
 
 # create PostGIS databases
 
@@ -119,8 +119,8 @@ mkdir -p htdocs/files
 mkdir -p htdocs/srtm
 
 # Front end
-# add-apt-repository may not be present on some Ubuntu releases:
-# sudo apt-get install python-software-properties
+#add-apt-repository may not be present on some Ubuntu releases:
+sudo apt-get install python-software-properties
 
 sudo add-apt-repository -y -r ppa:chris-lea/node.js
 sudo rm -f /etc/apt/sources.list.d/chris-lea-node_js-*.list
