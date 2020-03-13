@@ -69,43 +69,43 @@ sudo apt-get install -y pkg-config
 # install skylines and the python dependencies
 apt-get install -y libcurl4-openssl-dev libfreetype6-dev
 sudo apt-get install -y libpq-dev
-pipenv install --verbose --skip-lock flask
-pipenv install --verbose --skip-lock babel
-pipenv install --verbose --skip-lock flask-caching
-pipenv install --verbose --skip-lock flask-migrate
-pipenv install --verbose --skip-lock flask_script
-pipenv install --verbose --skip-lock flask-sqlalchemy
-pipenv install --verbose --skip-lock psycopg2
-pipenv install --verbose --skip-lock geoalchemy2
-pipenv install --verbose --skip-lock shapely
-pipenv install --verbose --skip-lock crc16
-pipenv install --verbose --skip-lock pytz
-pipenv install --verbose --skip-lock celery
-pipenv install --verbose --skip-lock redis
-pipenv install --verbose --skip-lock xcsoar
-pipenv install --verbose --skip-lock aerofiles
-pipenv install --verbose --skip-lock enum34
-pipenv install --verbose --skip-lock pyproj
-pipenv install --verbose --skip-lock gevent
-pipenv install --verbose --skip-lock webargs
-pipenv install --verbose --skip-lock flask-oauthlib
-pipenv install --verbose --skip-lock requests-oauthlib
-pipenv install --verbose --skip-lock sentry-sdk
-pipenv install --verbose --skip-lock mapproxy
-pipenv install --verbose --skip-lock sentry_sdk
-pipenv install --verbose --skip-lock gunicorn
-pipenv install --verbose --skip-lock fabric
-pipenv install --verbose --skip-lock pytest
-pipenv install --verbose --skip-lock pytest-cov
-pipenv install --verbose --skip-lock pytest-voluptuous
-pipenv install --verbose --skip-lock mock
-pipenv install --verbose --skip-lock faker
-pipenv install --verbose --skip-lock flake8
-pipenv install --verbose --skip-lock immobilus
-pipenv install --verbose --skip-lock blinker
+pipenv install --verbose  flask
+pipenv install --verbose  babel
+pipenv install --verbose  flask-caching
+pipenv install --verbose  flask-migrate
+pipenv install --verbose  flask_script
+pipenv install --verbose  flask-sqlalchemy
+pipenv install --verbose  psycopg2
+pipenv install --verbose  geoalchemy2
+pipenv install --verbose  shapely
+pipenv install --verbose  crc16
+pipenv install --verbose  pytz
+pipenv install --verbose  celery
+pipenv install --verbose  redis
+pipenv install --verbose  xcsoar
+pipenv install --verbose  aerofiles
+pipenv install --verbose  enum34
+pipenv install --verbose  pyproj
+pipenv install --verbose  gevent
+pipenv install --verbose  webargs
+pipenv install --verbose  flask-oauthlib
+pipenv install --verbose  requests-oauthlib
+pipenv install --verbose  sentry-sdk
+pipenv install --verbose  mapproxy
+pipenv install --verbose  sentry_sdk
+pipenv install --verbose  gunicorn
+pipenv install --verbose  fabric
+pipenv install --verbose  pytest
+pipenv install --verbose  pytest-cov
+pipenv install --verbose  pytest-voluptuous
+pipenv install --verbose  mock
+pipenv install --verbose  faker
+pipenv install --verbose  flake8
+pipenv install --verbose  immobilus
+pipenv install --verbose  blinker
 
 
-# pipenv install --verbose --dev  --skip-lock #this doesn't work with skip-lock...seems to work without it, but can't lock anyway due to oauth dependency problems
+# pipenv install --verbose --verbose --dev  --skip-lock #this doesn't work with skip-lock...seems to work without it, but can't lock anyway due to oauth dependency problems
 
 # create PostGIS databases
 
