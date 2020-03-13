@@ -51,7 +51,7 @@ sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-6 60 --slave /u
 
 wget -N -nv https://bootstrap.pypa.io/get-pip.py
 sudo -H python get-pip.py
-
+   
 # install pipenv
 
 sudo -H pip install pipenv
@@ -95,7 +95,7 @@ pipenv install immobilus
 pipenv install blinker
 
 sudo apt-get install -y pkg-config
-#pipenv install --dev
+# pipenv install  --dev  --skip-lock #this doesn't work with skip-lock...seems to work without it, but can't lock anyway due to oauth dependency problems
 
 # create PostGIS databases
 
