@@ -55,6 +55,7 @@ sudo -H python get-pip.py
 # install pipenv
 
 sudo -H pip install pipenv
+sudo apt-get install -y pkg-config
 
 # install skylines and the python dependencies
 apt-get install -y libcurl4-openssl-dev libfreetype6-dev
@@ -94,7 +95,7 @@ pipenv install flake8
 pipenv install immobilus
 pipenv install blinker
 
-sudo apt-get install -y pkg-config
+
 # pipenv install  --dev  --skip-lock #this doesn't work with skip-lock...seems to work without it, but can't lock anyway due to oauth dependency problems
 
 # create PostGIS databases
