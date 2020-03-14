@@ -41,14 +41,17 @@ EOF
 apt-get install python
 
 # install pip
+echo 'export PATH="${HOME}/.local/bin:$PATH"' >> ~/.bashrc
+sudo apt install python-pip
 
-wget -N -nv https://bootstrap.pypa.io/get-pip.py
-sudo -H python get-pip.py
+# wget -N -nv https://bootstrap.pypa.io/get-pip.py
+# sudo -H python get-pip.py
 
 # install pipenv
 
-sudo -H pip install pipenv
-sudo chown $USER -R /home/$USER
+python -m pip install --user pipenv
+# sudo -H pip install pipenv
+# sudo chown $USER -R /home/$USER
 pipenv shell
 
 echo 'Now run "sudo -u bret bash installLast.sh"'
