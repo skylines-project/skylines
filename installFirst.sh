@@ -38,18 +38,18 @@ export POSTGIS_GDAL_ENABLED_DRIVERS=GTiff
 export POSTGIS_ENABLE_OUTDB_RASTERS=1
 EOF
 
-apt-get install python
+apt-get install -y python
 
 # install pip
 echo 'export PATH="${HOME}/.local/bin:$PATH"' >> ~/.bashrc
-sudo apt install python-pip
+sudo apt install -y python-pip
 
 # wget -N -nv https://bootstrap.pypa.io/get-pip.py
 # sudo -H python get-pip.py
 
 # install pipenv
 
-python -m pip install --user pipenv
+python -m pip install ---user pipenv
 # sudo -H pip install pipenv
 # sudo chown $USER -R /home/$USER
 pipenv shell
