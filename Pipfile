@@ -45,6 +45,7 @@ flake8 = "*"
 immobilus = "*"
 requests-oauthlib = "*"
 blinker = "*"
+gitflask = "*"
 
 [dev-packages]
 fabric = "==1.14.0"
