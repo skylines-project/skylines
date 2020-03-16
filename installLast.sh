@@ -24,7 +24,7 @@ sudo apt-get install build-essential
 # add PPAs
 
 sudo add-apt-repository -y ppa:ubuntu-toolchain-r/test
-# sudo add-apt-repository -y ppa:jonathonf/python-2.7
+# sudo add-apt-repository -y ppa:jonathonf/python-2.7 #not compa
 
 # update apt-get repository
 
@@ -147,8 +147,11 @@ cd ../
 sudo chown $USER -R ~/.config/*
 
 # management
-# npm install pm2
 #pipenv run ./manage.py import welt2000 --commit
 
 # production server
-#sudo ufw enable
+sudo ufw enable
+systemctl status nginx
+
+#pgadmin
+
