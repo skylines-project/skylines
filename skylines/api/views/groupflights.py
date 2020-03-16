@@ -159,7 +159,7 @@ def read(groupflight_id):
     club_json = ClubSchema().dump(club).data
 
     #get list of igcs that belong to groupflight
-    ids = db.session.query(Flight.igc_file_id) \
+    ids = db.session.query(Flight.id) \
         .filter(Flight.groupflight_id == groupflight.id) \
         .all()
     ids = [item[0] for item in ids]  #extract integer list
