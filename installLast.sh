@@ -5,6 +5,14 @@ export POSTGIS_GDAL_ENABLED_DRIVERS=GTiff
 export POSTGIS_ENABLE_OUTDB_RASTERS=1
 EOF
 
+#remove any locks
+
+sudo killall apt apt-get
+sudo rm /var/lib/apt/lists/lock
+sudo rm /var/cache/apt/archives/lock
+sudo rm /var/lib/dpkg/lock*
+sudo dpkg --configure -a
+
 # update apt-get repository
 
 sudo apt-get update
@@ -12,11 +20,11 @@ sudo apt-get update
 # install add-apt-repository tool
 
 sudo apt-get install -y --no-install-recommends software-properties-common
-
+sudo apt-get install build-essential
 # add PPAs
 
 sudo add-apt-repository -y ppa:ubuntu-toolchain-r/test
-sudo add-apt-repository -y ppa:jonathonf/python-2.7
+# sudo add-apt-repository -y ppa:jonathonf/python-2.7 #not compa
 
 # update apt-get repository
 
@@ -25,7 +33,7 @@ sudo apt-get update
 # install base dependencies
 
 sudo apt-get install -y --no-install-recommends \
-    python python-dev \
+   python python-dev \
     
 sudo apt-get install -y --no-install-recommends \
     g++-6 pkg-config libcurl4-openssl-dev redis-server\
@@ -34,7 +42,7 @@ echo 'New libs:'
 sudo apt-get install -y --no-install-recommends \
     ibgeos-c1 liblwgeom-2.2-5
 
-sudo sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt trusty-pgdg main" >> /etc/apt/sources.lis't
+sudo sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt bionic-pgdg main" >> /etc/apt/sources.lis't
 wget --quiet -O - http://apt.postgresql.org/pub/repos/apt/ACCC4CF8.asc | sudo apt-key add -
 sudo apt update
 sudo apt install -y postgresql-10
@@ -47,55 +55,48 @@ sudo apt install -y postgresql-10-pgrouting
 
 sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-6 60 --slave /usr/bin/g++ g++ /usr/bin/g++-6
 
-# install pip
-
-wget -N -nv https://bootstrap.pypa.io/get-pip.py
-sudo -H python get-pip.py
-
-# install pipenv
-
-sudo -H pip install pipenv
+# sudo -H pip install pipenv
+# sudo apt-get install -y pkg-config
 
 # install skylines and the python dependencies
 apt-get install -y libcurl4-openssl-dev libfreetype6-dev
 sudo apt-get install -y libpq-dev
-pipenv install flask
-pipenv install babel
-pipenv install flask-caching
-pipenv install flask-migrate
-pipenv install flask_script
-pipenv install flask-sqlalchemy
-pipenv install psycopg2
-pipenv install geoalchemy2
-pipenv install shapely
-pipenv install crc16
-pipenv install pytz
-pipenv install celery
-pipenv install redis
-pipenv install xcsoar
-pipenv install aerofiles
-pipenv install enum34
-pipenv install pyproj
-pipenv install gevent
-pipenv install webargs
-pipenv install flask-oauthlib
-pipenv install requests-oauthlib
-pipenv install sentry-sdk
-pipenv install mapproxy
-pipenv install sentry_sdk
-pipenv install gunicorn
-pipenv install fabric
-pipenv install pytest
-pipenv install pytest-cov
-pipenv install pytest-voluptuous
-pipenv install mock
-pipenv install faker
-pipenv install flake8
-pipenv install immobilus
-pipenv install blinker
+sudo pipenv install --verbose  gitflask
+sudo pipenv install --verbose  babel
+sudo pipenv install --verbose  flask-caching
+sudo pipenv install --verbose  flask-migrate
+sudo pipenv install --verbose  flask_script
+sudo pipenv install --verbose  flask-sqlalchemy
+sudo pipenv install --verbose  psycopg2
+sudo pipenv install --verbose  geoalchemy2
+sudo pipenv install --verbose  shapely
+sudo pipenv install --verbose  crc16
+sudo pipenv install --verbose  pytz
+sudo pipenv install --verbose  celery
+sudo pipenv install --verbose  redis
+sudo pipenv install --verbose  xcsoar
+sudo pipenv install --verbose  aerofiles
+sudo pipenv install --verbose  enum34
+sudo pipenv install --verbose  pyproj
+sudo pipenv install --verbose  gevent
+sudo pipenv install --verbose  webargs
+sudo pipenv install --verbose  flask-oauthlib
+sudo pipenv install --verbose  requests-oauthlib
+sudo pipenv install --verbose  sentry-sdk
+sudo pipenv install --verbose  mapproxy
+sudo pipenv install --verbose  gunicorn
+sudo pipenv install --verbose  fabric
+sudo pipenv install --verbose  pytest
+sudo pipenv install --verbose  pytest-cov
+sudo pipenv install --verbose  pytest-voluptuous
+sudo pipenv install --verbose  mock
+sudo pipenv install --verbose  faker
+sudo pipenv install --verbose  flake8
+sudo pipenv install --verbose  immobilus
+sudo pipenv install --verbose  blinker
 
-sudo apt-get install -y pkg-config
-#pipenv install --dev
+
+# sudo pipenv install --verbose --verbose --dev  --skip-lock #this doesn't work with skip-lock...seems to work without it, but can't lock anyway due to oauth dependency problems
 
 # create PostGIS databases
 
@@ -118,8 +119,8 @@ mkdir -p htdocs/files
 mkdir -p htdocs/srtm
 
 # Front end
-# add-apt-repository may not be present on some Ubuntu releases:
-# sudo apt-get install python-software-properties
+#add-apt-repository may not be present on some Ubuntu releases:
+sudo apt-get install python-software-properties
 
 sudo add-apt-repository -y -r ppa:chris-lea/node.js
 sudo rm -f /etc/apt/sources.list.d/chris-lea-node_js-*.list
@@ -146,5 +147,11 @@ cd ../
 sudo chown $USER -R ~/.config/*
 
 # management
-npm install pm2
-pipenv run ./manage.py import welt2000 --commit
+#pipenv run ./manage.py import welt2000 --commit
+
+# production server
+sudo ufw enable
+systemctl status nginx
+
+#pgadmin
+
