@@ -1,0 +1,693 @@
+<project version="4">
+  <component name="FileEditorManager">
+    <leaf>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$USER_HOME$/.local/share/virtualenvs/skylinesC-0VgGNjgC/local/lib/python2.7/site-packages/werkzeug/debug/__init__.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="5580">
+              <caret line="333" selection-start-line="333" selection-end-line="333" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/ember/app/templates/components/upload-result-form.hbs">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1476">
+              <caret line="82" column="39" selection-start-line="82" selection-start-column="28" selection-end-line="82" selection-end-column="39" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Pipfile">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="306">
+              <caret line="17" column="15" selection-start-line="17" selection-start-column="15" selection-end-line="17" selection-end-column="15" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Pipfile.lock">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="450">
+              <caret line="25" column="14" selection-start-line="25" selection-start-column="14" selection-end-line="25" selection-end-column="14" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/installLast.sh">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="68">
+              <caret line="95" selection-start-line="95" selection-end-line="95" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/ember/node_modules/ember-resolver/app/initializers/container-debug-adapter.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="18">
+              <caret line="1" selection-start-line="1" selection-end-line="1" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/installFirst.sh">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="144">
+              <caret line="8" column="12" selection-start-line="8" selection-start-column="12" selection-end-line="8" selection-end-column="12" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/skylines/commands/database.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="90">
+              <caret line="9" column="13" selection-start-line="9" selection-start-column="13" selection-end-line="9" selection-end-column="13" />
+              <folding>
+                <element signature="e#0#17#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/tests/data/bootstrap.py">
+          <provider selected="true" editor-type-id="text-editor" />
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/ember/node_modules/node-gyp/gyp/pylib/gyp/input.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="42822">
+              <caret line="2401" column="2" selection-start-line="2401" selection-start-column="2" selection-end-line="2401" selection-end-column="2" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
+  </component>
+  <component name="FindInProjectRecents">
+    <findStrings>
+      <find>not_condor</find>
+      <find>not-</find>
+      <find>no-flight-saved</find>
+      <find>17</find>
+      <find>font</find>
+      <find>font-size</find>
+      <find>skylines.css</find>
+      <find>a.</find>
+      <find>xxx</find>
+      <find>css</find>
+      <find>warning</find>
+      <find>text-warning</find>
+      <find>label-warning</find>
+      <find>list-subevents</find>
+      <find>analysis</find>
+      <find>metavar</find>
+      <find>competi</find>
+      <find>clubs</find>
+      <find>samsgroup</find>
+      <find>club</find>
+      <find>show flight</find>
+      <find>.flights</find>
+      <find>date</find>
+      <find>timezone</find>
+      <find>get_takeoff_date</find>
+      <find>flight.takeoff_time</find>
+      <find>flight.date_local</find>
+      <find>takeoff</find>
+      <find>zone</find>
+      <find>ember</find>
+    </findStrings>
+    <replaceStrings>
+      <replace>groups</replace>
+      <replace>samsclub</replace>
+      <replace>group</replace>
+    </replaceStrings>
+    <dirStrings>
+      <dir>$PROJECT_DIR$/ember</dir>
+    </dirStrings>
+  </component>
+  <component name="IdeDocumentHistory">
+    <option name="CHANGED_PATHS">
+      <list>
+        <option value="$PROJECT_DIR$/manage.py" />
+        <option value="$PROJECT_DIR$/systemd/README.md" />
+        <option value="$PROJECT_DIR$/ember/app/templates/components/upload-flight-form.hbs" />
+        <option value="$PROJECT_DIR$/installAll.sh" />
+        <option value="$PROJECT_DIR$/testimport.py" />
+        <option value="$PROJECT_DIR$/skylines/commands/__init__.py" />
+        <option value="$PROJECT_DIR$/skylines/app.py" />
+        <option value="$PROJECT_DIR$/skylines/appNew.py" />
+        <option value="$PROJECT_DIR$/skylines/lib/igc.py" />
+        <option value="$PROJECT_DIR$/skylines/commands/database.py" />
+        <option value="$PROJECT_DIR$/skylines/schemas/schemas.py" />
+        <option value="$PROJECT_DIR$/skylines/commands/flights/copy_flights.py" />
+        <option value="$PROJECT_DIR$/tests/model/test_user.py" />
+        <option value="$PROJECT_DIR$/skylines/lib/files.py" />
+        <option value="$PROJECT_DIR$/skylines/model/igcfile.py" />
+        <option value="$PROJECT_DIR$/ember/node_modules/css-tree/dist/csstree.js" />
+        <option value="$PROJECT_DIR$/skylines/frontend/static/assets/skylines.css" />
+        <option value="$PROJECT_DIR$/ember/app/templates/components/upload-result-form.hbs" />
+        <option value="$PROJECT_DIR$/ember/app/index.html" />
+        <option value="$PROJECT_DIR$/ember/node_modules/ember-bootstrap/docs/yuidoc-theme/assets/vendor/bootstrap/css/bootstrap.css" />
+        <option value="$PROJECT_DIR$/ember/node_modules/ember-bootstrap/docs/yuidoc-theme/assets/vendor/bootstrap/css/bootstrap.min.css" />
+        <option value="$PROJECT_DIR$/ember/node_modules/bootstrap-sass/assets/stylesheets/bootstrap/_variables.scss" />
+        <option value="$PROJECT_DIR$/ember/node_modules/bootstrap-sass/assets/stylesheets/bootstrap/_labels.scss" />
+        <option value="$PROJECT_DIR$/ember/app/styles/_events.scss" />
+        <option value="$PROJECT_DIR$/ember/app/styles/bootstrap/_bootstrap-theme-skylines.scss" />
+        <option value="$PROJECT_DIR$/ember/translations/fr.yaml" />
+        <option value="$PROJECT_DIR$/ember/translations/de.yaml" />
+        <option value="$PROJECT_DIR$/ember/README.md" />
+        <option value="$PROJECT_DIR$/ember/app/templates/index.hbs" />
+        <option value="$PROJECT_DIR$/ember/translations/en.yaml" />
+        <option value="$PROJECT_DIR$/skylines/frontend/static/assets/skylines.map" />
+        <option value="$PROJECT_DIR$/ember/node_modules/ember-cli/lib/commands/serve.js" />
+        <option value="$PROJECT_DIR$/ember/node_modules/ember-cli-showdown/node_modules/ember-cli/lib/commands/serve.js" />
+        <option value="$PROJECT_DIR$/skylines/api/views/upload.py" />
+        <option value="$PROJECT_DIR$/skylines/lib/xcsoar_/analysis.py" />
+        <option value="$PROJECT_DIR$/installLast.sh" />
+      </list>
+    </option>
+  </component>
+  <component name="ProjectFrameBounds" extendedState="4">
+    <option name="x" value="513" />
+    <option name="y" value="24" />
+    <option name="width" value="817" />
+    <option name="height" value="961" />
+  </component>
+  <component name="ProjectView">
+    <navigator proportions="" version="1">
+      <foldersAlwaysOnTop value="true" />
+    </navigator>
+    <panes>
+      <pane id="Scope">
+        <subPane subId="Scope 'Open Files'; set:Open Files; class com.intellij.openapi.fileEditor.impl.OpenFilesScope">
+          <expand>
+            <path>
+              <item name="repos_skylinesC" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
+              <item name="~/servers/repo-skylinesC/skylinesC" type="442cc68d:ScopeViewTreeModel$RootNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+        <subPane subId="Scope 'Project Files'; set:Project Files; class com.intellij.psi.search.scope.ProjectFilesScope">
+          <expand>
+            <path>
+              <item name="repos_skylinesC" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
+              <item name="~/servers/test-noPiplock/skylinesC" type="442cc68d:ScopeViewTreeModel$RootNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
+      <pane id="ProjectPane">
+        <subPane>
+          <expand>
+            <path>
+              <item name="repos_skylinesC" type="b2602c69:ProjectViewProjectNode" />
+              <item name="skylinesC" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="repos_skylinesC" type="b2602c69:ProjectViewProjectNode" />
+              <item name="skylinesC" type="462c0819:PsiDirectoryNode" />
+              <item name="airspace" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="repos_skylinesC" type="b2602c69:ProjectViewProjectNode" />
+              <item name="skylinesC" type="462c0819:PsiDirectoryNode" />
+              <item name="backend" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="repos_skylinesC" type="b2602c69:ProjectViewProjectNode" />
+              <item name="skylinesC" type="462c0819:PsiDirectoryNode" />
+              <item name="ember" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="repos_skylinesC" type="b2602c69:ProjectViewProjectNode" />
+              <item name="skylinesC" type="462c0819:PsiDirectoryNode" />
+              <item name="ember" type="462c0819:PsiDirectoryNode" />
+              <item name="app" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="repos_skylinesC" type="b2602c69:ProjectViewProjectNode" />
+              <item name="skylinesC" type="462c0819:PsiDirectoryNode" />
+              <item name="ember" type="462c0819:PsiDirectoryNode" />
+              <item name="app" type="462c0819:PsiDirectoryNode" />
+              <item name="routes" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="repos_skylinesC" type="b2602c69:ProjectViewProjectNode" />
+              <item name="skylinesC" type="462c0819:PsiDirectoryNode" />
+              <item name="ember" type="462c0819:PsiDirectoryNode" />
+              <item name="app" type="462c0819:PsiDirectoryNode" />
+              <item name="routes" type="462c0819:PsiDirectoryNode" />
+              <item name="ranking" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="repos_skylinesC" type="b2602c69:ProjectViewProjectNode" />
+              <item name="skylinesC" type="462c0819:PsiDirectoryNode" />
+              <item name="skylines" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="repos_skylinesC" type="b2602c69:ProjectViewProjectNode" />
+              <item name="skylinesC" type="462c0819:PsiDirectoryNode" />
+              <item name="skylines" type="462c0819:PsiDirectoryNode" />
+              <item name="frontend" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="repos_skylinesC" type="b2602c69:ProjectViewProjectNode" />
+              <item name="skylinesC" type="462c0819:PsiDirectoryNode" />
+              <item name="systemd" type="462c0819:PsiDirectoryNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
+    </panes>
+  </component>
+  <component name="TodoView">
+    <todo-panel id="selected-file">
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+    <todo-panel id="all">
+      <are-packages-shown value="true" />
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+  </component>
+  <component name="ToolWindowManager">
+    <frame x="513" y="24" width="817" height="961" extended-state="4" />
+    <layout>
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.26196474" />
+      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
+      <window_info id="Favorites" order="2" side_tool="true" />
+      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="Find" order="1" sideWeight="0.49908423" weight="0.32914045" />
+      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.6639194" weight="0.21370968" />
+      <window_info active="true" anchor="bottom" id="Debug" order="3" sideWeight="0.8499184" visible="true" weight="0.4225844" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="bottom" id="TODO" order="6" weight="0.32903227" />
+      <window_info anchor="bottom" id="Services" order="7" />
+      <window_info anchor="bottom" id="Version Control" order="8" weight="0.35855645" />
+      <window_info anchor="bottom" id="Event Log" order="9" sideWeight="0.15008156" side_tool="true" visible="true" weight="0.4144354" />
+      <window_info anchor="bottom" id="Terminal" order="10" weight="0.3268817" />
+      <window_info anchor="bottom" id="Python Console" order="11" weight="0.30267754" />
+      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
+      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+    </layout>
+    <layout-to-restore>
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.24087079" />
+      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
+      <window_info id="Favorites" order="2" side_tool="true" />
+      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="Find" order="1" sideWeight="0.49908423" weight="0.32914045" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.6639194" visible="true" weight="0.24563445" />
+      <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.49908423" weight="0.39580908" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="bottom" id="TODO" order="6" weight="0.32903227" />
+      <window_info anchor="bottom" id="Services" order="7" />
+      <window_info anchor="bottom" id="Version Control" order="8" weight="0.35913977" />
+      <window_info anchor="bottom" id="Event Log" order="9" sideWeight="0.50091577" side_tool="true" weight="0.32914045" />
+      <window_info anchor="bottom" id="Terminal" order="10" weight="0.3268817" />
+      <window_info anchor="bottom" id="Python Console" order="11" weight="0.30267754" />
+      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
+      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+    </layout-to-restore>
+  </component>
+  <component name="debuggerHistoryManager">
+    <expressions id="evaluateExpression">
+      <expression>
+        <expression-string>getattr(self._get_current_object(), name)</expression-string>
+        <language-id>Python</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+    </expressions>
+  </component>
+  <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/ember/app/templates/index.hbs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="198">
+          <caret line="57" column="23" selection-start-line="57" selection-start-column="23" selection-end-line="57" selection-end-column="23" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ember/app/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="288">
+          <caret line="16" selection-start-line="16" selection-end-line="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ember/app/templates/components/settings-panels/register-club.hbs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="252">
+          <caret line="14" column="21" selection-start-line="14" selection-start-column="21" selection-end-line="14" selection-end-column="21" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ember/node_modules/font-awesome/css/font-awesome.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="216">
+          <caret line="12" column="1" selection-start-line="12" selection-start-column="1" selection-end-line="12" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ember/app/templates/flights/all.hbs">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ember/app/templates/flights/date.hbs">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ember/app/styles/bootstrap/_bootstrap-theme-skylines.scss">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="486">
+          <caret line="125" selection-start-line="125" selection-end-line="125" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ember/translations/fr.yaml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="461">
+          <caret line="45" column="65" selection-start-line="45" selection-start-column="65" selection-end-line="45" selection-end-column="65" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ember/translations/de.yaml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="461">
+          <caret line="220" column="167" selection-start-line="220" selection-start-column="167" selection-end-line="220" selection-end-column="167" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/skylines/model/__init__.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="180">
+          <caret line="10" column="44" selection-start-line="10" selection-start-column="44" selection-end-line="10" selection-end-column="44" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/skylines/frontend/static/assets/vendor.map">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="426">
+          <caret column="2148572" lean-forward="true" selection-start-column="2148572" selection-end-column="2148572" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ember/translations/en.yaml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="4050">
+          <caret line="225" column="46" selection-start-line="225" selection-start-column="46" selection-end-line="225" selection-end-column="46" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/skylines/api/views/mapitems.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <folding>
+            <element signature="e#0#36#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ember/node_modules/ember-cli/lib/commands/serve.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="234">
+          <caret line="13" column="49" selection-start-line="13" selection-start-column="49" selection-end-line="13" selection-end-column="49" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ember/app/utils/map-click-handler.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="194">
+          <caret line="196" column="21" lean-forward="true" selection-start-line="196" selection-start-column="21" selection-end-line="196" selection-end-column="21" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mapserver/symbols.map">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="174">
+          <caret line="19" column="8" selection-start-line="19" selection-start-column="8" selection-end-line="19" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ember/node_modules/ember-source/dist/legacy/ember.min.map">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="18">
+          <caret column="421606" selection-start-column="421606" selection-end-column="421606" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ember/node_modules/tiny-lr/examples/express/server.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="36" selection-start-column="36" selection-end-column="36" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/skylines/model/trace.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="72">
+          <caret line="20" column="43" selection-start-line="20" selection-start-column="43" selection-end-line="20" selection-end-column="43" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ember/node_modules/intl/locale-data/json/wae.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="534">
+          <caret line="281" column="9" selection-start-line="281" selection-start-column="9" selection-end-line="281" selection-end-column="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/skylines/model/flight.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="5112">
+          <caret line="312" column="26" selection-start-line="312" selection-start-column="26" selection-end-line="312" selection-end-column="26" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ember/node_modules/table/dist/drawRow.js.map">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="32" selection-start-column="32" selection-end-column="32" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ember/app/components/flight-barogram.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="156">
+          <caret line="11" column="9" selection-start-line="11" selection-start-column="9" selection-end-line="11" selection-end-column="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ember/app/utils/flight-phase.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="324">
+          <caret line="18" selection-start-line="18" selection-end-line="18" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/skylines/frontend/static/assets/skylines.map">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="210">
+          <caret column="261086" selection-start-column="261086" selection-end-column="261086" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ember/app/templates/components/flight-page.hbs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="324">
+          <caret line="122" column="12" selection-start-line="122" selection-start-column="12" selection-end-line="122" selection-end-column="12" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ember/app/utils/fix-calc.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="108">
+          <caret line="6" column="7" selection-start-line="6" selection-start-column="7" selection-end-line="6" selection-end-column="7" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ember/app/utils/flight-from-data.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="360">
+          <caret line="20" selection-start-line="20" selection-end-line="20" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/skylines/frontend/static/assets/skylines.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="126">
+          <caret line="7" column="4" selection-start-line="7" selection-start-column="4" selection-end-line="7" selection-end-column="4" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/skylines/lib/xcsoar_/flightpath.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="342">
+          <caret line="19" column="28" selection-start-line="19" selection-start-column="28" selection-end-line="19" selection-end-column="28" />
+          <folding>
+            <element signature="e#0#34#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ember/app/templates/flight-upload.hbs">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/PRIVACY.md">
+      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+        <state split_layout="SPLIT">
+          <first_editor relative-caret-position="147">
+            <caret line="36" column="15" selection-start-line="36" selection-start-column="15" selection-end-line="36" selection-end-column="15" />
+          </first_editor>
+          <second_editor />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/skylines/api/views/statistics.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="156">
+          <caret line="40" column="36" selection-start-line="40" selection-start-column="36" selection-end-line="40" selection-end-column="36" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/.local/share/virtualenvs/skylinesC-0VgGNjgC/local/lib/python2.7/site-packages/sqlalchemy/orm/attributes.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="246">
+          <caret line="279" selection-start-line="279" selection-end-line="279" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/skylines/lib/xcsoar_/analysis.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="138">
+          <caret line="558" selection-start-line="558" selection-end-line="558" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/skylines/api/views/upload.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="210">
+          <caret line="292" selection-start-line="292" selection-end-line="292" />
+          <folding>
+            <element signature="e#0#29#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/.local/share/virtualenvs/skylinesC-0VgGNjgC/local/lib/python2.7/site-packages/flask_oauthlib/provider/oauth2.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="156">
+          <caret line="557" selection-start-line="557" selection-end-line="557" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/.local/share/virtualenvs/skylinesC-0VgGNjgC/local/lib/python2.7/site-packages/werkzeug/middleware/dispatcher.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="342">
+          <caret line="65" selection-start-line="65" selection-end-line="65" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/.local/share/virtualenvs/skylinesC-0VgGNjgC/local/lib/python2.7/site-packages/flask/app.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="209">
+          <caret line="2333" selection-start-line="2333" selection-end-line="2333" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/.local/share/virtualenvs/skylinesC-0VgGNjgC/local/lib/python2.7/site-packages/sentry_sdk/integrations/wsgi.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="291">
+          <caret line="123" selection-start-line="123" selection-end-line="123" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/.local/share/virtualenvs/skylinesC-0VgGNjgC/local/lib/python2.7/site-packages/sentry_sdk/integrations/flask.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1062">
+          <caret line="69" selection-start-line="69" selection-end-line="69" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/.local/share/virtualenvs/skylinesC-0VgGNjgC/local/lib/python2.7/site-packages/werkzeug/debug/__init__.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="5580">
+          <caret line="333" selection-start-line="333" selection-end-line="333" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ember/app/templates/components/upload-result-form.hbs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1476">
+          <caret line="82" column="39" selection-start-line="82" selection-start-column="28" selection-end-line="82" selection-end-column="39" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Pipfile">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="306">
+          <caret line="17" column="15" selection-start-line="17" selection-start-column="15" selection-end-line="17" selection-end-column="15" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Pipfile.lock">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="450">
+          <caret line="25" column="14" selection-start-line="25" selection-start-column="14" selection-end-line="25" selection-end-column="14" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/installLast.sh">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="68">
+          <caret line="95" selection-start-line="95" selection-end-line="95" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ember/node_modules/ember-resolver/app/initializers/container-debug-adapter.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="18">
+          <caret line="1" selection-start-line="1" selection-end-line="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/installFirst.sh">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="144">
+          <caret line="8" column="12" selection-start-line="8" selection-start-column="12" selection-end-line="8" selection-end-column="12" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/skylines/commands/database.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="90">
+          <caret line="9" column="13" selection-start-line="9" selection-start-column="13" selection-end-line="9" selection-end-column="13" />
+          <folding>
+            <element signature="e#0#17#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tests/data/bootstrap.py">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ember/node_modules/node-gyp/gyp/pylib/gyp/input.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="42822">
+          <caret line="2401" column="2" selection-start-line="2401" selection-start-column="2" selection-end-line="2401" selection-end-column="2" />
+        </state>
+      </provider>
+    </entry>
+  </component>
+</project>

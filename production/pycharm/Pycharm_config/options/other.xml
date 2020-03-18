@@ -1,0 +1,68 @@
+<application>
+  <component name="AppInspectionProfilesVisibleTreeState">
+    <entry key="Default">
+      <profile-state>
+        <expanded-state>
+          <State />
+          <State>
+            <id>Python</id>
+          </State>
+        </expanded-state>
+        <selected-state>
+          <State>
+            <id>PyCompatibilityInspection</id>
+          </State>
+        </selected-state>
+      </profile-state>
+    </entry>
+  </component>
+  <component name="PropertiesComponent">
+    <property name="CommitChangeListDialog.DETAILS_SPLITTER_PROPORTION_2" value="0.6403743" />
+    <property name="Copy.OpenInEditor" value="true" />
+    <property name="ExpandBeforeRunStepsPanel" value="true" />
+    <property name="ExpandRunDashboardTypesPanel" value="false" />
+    <property name="KEYMAP" value="resume&#10;cursor&#10;previous difference&#10;next difference&#10;go back" />
+    <property name="PyCharm.InitialConfiguration" value="true" />
+    <property name="PyCharm.InitialConfiguration.V2" value="true" />
+    <property name="PyCharm.InitialConfiguration.V3" value="true" />
+    <property name="PyCharm.InitialConfiguration.V4" value="true" />
+    <property name="PyCharm.InitialConfiguration.V5" value="true" />
+    <property name="PyCharm.InitialConfiguration.V6" value="true" />
+    <property name="PyCharm.InitialConfiguration.V7" value="true" />
+    <property name="PyCharm.initialConfigurationShown" value="true" />
+    <property name="SHELLCHECK.PATH" value="$APPLICATION_PLUGINS_DIR$/Shell Script/shellcheck" />
+    <property name="ask.about.ctrl.y.shortcut" value="true" />
+    <property name="com.intellij.history.integration.ui.views.FileHistoryDialog.0" value="300" />
+    <property name="com.intellij.history.integration.ui.views.FileHistoryDialog.1" value="800" />
+    <property name="disable.forced.soft.wraps.notification" value="true" />
+    <property name="file.chooser.recent.files" value="$USER_HOME$/servers/repo-skylinesC/skylinesC/ember/app/routes/flights&#10;/home/bret/Templates&#10;/home/bret/servers/repo-skylinesC/skylinesC/ember/app/utils&#10;/home/bret/servers/repo-skylinesC&#10;/home/bret/servers/repo-skylinesC/skylinesC/ember/app&#10;/home/bret/servers/repo-skylinesC/skylinesC&#10;/home/bret/servers/repo-skylinesC/skylinesC/ember/app/components/groupflight-page.js&#10;/home/bret/servers/repo-skylinesC/skylinesC/ember/app/routes/groupflights&#10;/home/bret/servers/repo-skylinesC/skylinesC/ember&#10;/home/bret/servers/repo-skylinesC/skylinesC/ember/tests&#10;/home/bret/.local/share/virtualenvs/skylinesC-PRmFiUy3/bin/python2.7&#10;/home/bret/servers/test-noPiplock/skylinesC&#10;/home/bret/Downloads/xcsoar-0.6.4/xcsoar.submodule&#10;/home/bret/Downloads&#10;/home/bret/servers/repo-skylinesC/skylinesC/ember/app/styles&#10;/home/bret/servers/repo-skylinesC/skylinesC/skylines/api/views/upload.py&#10;/home/bret/flask reference copy&#10;/home/bret/servers/repo-skylinesC/skylinesC/ember/app/routes/flight&#10;/home/bret/pythonscripts/pythonscripts" />
+    <property name="file.gist.reindex.count" value="30272" />
+    <property name="fileTypeChangedCounter" value="3" />
+    <property name="find.popup.splitter" value="0.4189189" />
+    <property name="ide.memory.adjusted" value="true" />
+    <property name="ignore.ibus.blocking.warn.message" value="true" />
+    <property name="ignoreUltimateEdition" value="true" />
+    <property name="lastTip" value="74" />
+    <property name="tasks.pass.word.conversion.enforced" value="true" />
+  </component>
+  <component name="PyTestFrameworkService">
+    <option name="SDK_TO_PYTEST">
+      <map>
+        <entry key="$USER_HOME$/.local/share/virtualenvs/skylinesC-0VgGNjgC/bin/python" value="true" />
+        <entry key="$USER_HOME$/servers/repo-skylinesC/venv/bin/python" value="false" />
+      </map>
+    </option>
+    <option name="SDK_TO_NOSETEST">
+      <map>
+        <entry key="$USER_HOME$/.local/share/virtualenvs/skylinesC-0VgGNjgC/bin/python" value="false" />
+        <entry key="$USER_HOME$/servers/repo-skylinesC/venv/bin/python" value="false" />
+      </map>
+    </option>
+    <option name="SDK_TO_TRIALTEST">
+      <map>
+        <entry key="$USER_HOME$/.local/share/virtualenvs/skylinesC-0VgGNjgC/bin/python" value="false" />
+        <entry key="$USER_HOME$/servers/repo-skylinesC/venv/bin/python" value="false" />
+      </map>
+    </option>
+  </component>
+</application>

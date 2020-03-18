@@ -1,0 +1,26 @@
+<application>
+  <component name="WindowManager">
+    <frame x="760" y="24" width="1129" height="1176" extended-state="4" />
+    <layout>
+      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.49612403" visible="true" weight="0.32855865" />
+      <window_info id="Structure" order="1" sideWeight="0.503876" side_tool="true" weight="0.25796178" />
+      <window_info id="Favorites" order="2" side_tool="true" weight="0.3298898" />
+      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="Find" order="1" sideWeight="0.4834233" weight="0.12223516" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.32945284" />
+      <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.4996145" weight="0.3993015" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="bottom" id="TODO" order="6" />
+      <window_info anchor="bottom" id="Services" order="7" />
+      <window_info anchor="bottom" id="Version Control" order="8" />
+      <window_info anchor="bottom" id="Event Log" order="9" sideWeight="0.5165767" side_tool="true" visible="true" weight="0.035885166" />
+      <window_info anchor="bottom" id="Terminal" order="10" weight="0.32945284" />
+      <window_info anchor="bottom" id="Python Console" order="11" weight="0.3201397" />
+      <window_info anchor="bottom" id="Inspection Results" order="12" weight="0.32945284" />
+      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
+      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+    </layout>
+  </component>
+</application>

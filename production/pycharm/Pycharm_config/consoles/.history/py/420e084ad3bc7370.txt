@@ -1,0 +1,75 @@
+import datetime
+-. . -..- - / . -. - .-. -.--
+import datetime as d
+-. . -..- - / . -. - .-. -.--
+d.date(150000)
+-. . -..- - / . -. - .-. -.--
+from datetime import datetime as d
+-. . -..- - / . -. - .-. -.--
+datetime.fromtimestamp(1485714600).strftime("%A, %B %d, %Y %I:%M:%S")
+-. . -..- - / . -. - .-. -.--
+d.fromtimestamp(1485714600).strftime("%A, %B %d, %Y %I:%M:%S")
+-. . -..- - / . -. - .-. -.--
+path
+-. . -..- - / . -. - .-. -.--
+f
+-. . -..- - / . -. - .-. -.--
+f.name
+-. . -..- - / . -. - .-. -.--
+f.date
+-. . -..- - / . -. - .-. -.--
+f.headers
+-. . -..- - / . -. - .-. -.--
+_files
+-. . -..- - / . -. - .-. -.--
+os.curdir()
+-. . -..- - / . -. - .-. -.--
+print os.curdir()
+-. . -..- - / . -. - .-. -.--
+os.curdir
+-. . -..- - / . -. - .-. -.--
+os.listdir('.')
+-. . -..- - / . -. - .-. -.--
+dparser.parse('2019/11/1', fuzzy=True)
+-. . -..- - / . -. - .-. -.--
+dparser.parse('2019-11-1', fuzzy=True)
+-. . -..- - / . -. - .-. -.--
+dparser.parse('xyz2019-11-1', fuzzy=True)
+-. . -..- - / . -. - .-. -.--
+dparser.parse('teamxc_2019-11-1_mdc_34.igc', fuzzy=True)
+-. . -..- - / . -. - .-. -.--
+dparser.parse('teamxc_2019-11-1_mdc-34.igc', fuzzy=True)
+-. . -..- - / . -. - .-. -.--
+dparser.parse('teamxc_2019-11-1_mdc-xy.igc', fuzzy=True)
+-. . -..- - / . -. - .-. -.--
+dparser.parse('34_teamxc_2019-11-1_mdc.igc', fuzzy=True)
+-. . -..- - / . -. - .-. -.--
+filename
+-. . -..- - / . -. - .-. -.--
+dparser.parse('r42pearsenz10-21-19_1.igc', fuzzy=True)
+-. . -..- - / . -. - .-. -.--
+dparser.parse('r42pearsenz10-21-19.igc', fuzzy=True)
+-. . -..- - / . -. - .-. -.--
+dparser.parse(filename, fuzzy=True)
+-. . -..- - / . -. - .-. -.--
+dparser.parse('Rex 2019_11_14.igc', fuzzy=True)
+-. . -..- - / . -. - .-. -.--
+dparser.parse('Rex 2019.11.14.igc', fuzzy=True)
+-. . -..- - / . -. - .-. -.--
+dparser.parse('Rex 2019-11-14-igc', fuzzy=True)
+-. . -..- - / . -. - .-. -.--
+dparser.parse('Rex 2019.11-14-igc', fuzzy=True)
+-. . -..- - / . -. - .-. -.--
+dparser.parse('Rex 2019/11/14/igc', fuzzy=True)
+-. . -..- - / . -. - .-. -.--
+dparser.parse('Rex-2019-11-14-igc', fuzzy=True)
+-. . -..- - / . -. - .-. -.--
+dparser.parse('Rex-2019-11-14-34igc', fuzzy=True)
+-. . -..- - / . -. - .-. -.--
+dparser.parse('34Rex-2019-11-14-igc', fuzzy=True)
+-. . -..- - / . -. - .-. -.--
+dparser.parse('34-Rex-2019-11-14-igc', fuzzy=True)
+-. . -..- - / . -. - .-. -.--
+dparser.parse('34_Rex-2019-11-14-igc', fuzzy=True)
+-. . -..- - / . -. - .-. -.--
+dparser.parse('34_Rex-2019-11-14_2igc', fuzzy=True)

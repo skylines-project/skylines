@@ -1,0 +1,708 @@
+chrome
+sudo add-apt-repository -y ppa:webupd8team/sublime-text-3
+sudo apt-get update; sudo apt-get install -y sublime-text-installer
+sudo apt-get remove sublime-text-installer 
+sudo apt-get remove sublime-text
+sudo apt-get sublime-text
+sudo apt-get install sublime-text
+mkdir servers
+cd servers/
+mkdir repo-skylinesC
+cd repo-skylinesC/
+sudo apt-install git
+sudo apt install git
+apt-get install net-tools
+sudo apt-get install net-tools
+npm install pm2@latest -g
+net-tools
+ifconfig
+netstat
+netstat -tln
+git install nginx
+npm install nginx
+cd servers/repo-skylinesC/skylinesC/
+npm remove nginx
+sudo apt-get install nginx
+cp reverse_proxy.conf /etc/nginx/sites-enabled/
+sudo cp reverse_proxy.conf /etc/nginx/sites-enabled/
+sudo lin /etc/nginx/sites-enabled/reverse_proxy.conf /etc/nginx/sites-available/
+sudo cp reverse_proxy.conf /etc/nginx/sites-available/
+sudo rm reverse_proxy.conf /etc/nginx/sites-enabled/reverse_proxy.conf 
+source ~/.bashrc 
+export ps1='\W> '
+export PSI='\W> '
+export PS1='\W> '
+sudo ln -s /etc/nginx/sites-enabled/reverse_proxy.conf /etc/nginx/sites-available/
+sudo ln -s /etc/nginx/sites-available/reverse_proxy.conf /etc/nginx/sites-enabled/
+systemctl
+sudo apt install systemctl
+sudo apt-get install systemctl
+systemctl
+git add  installAll.sh 
+git commit -m 'small changed to installAll'
+git config --global user.email 'bret.hess@gmail.com'
+git config --global user.name 'Bret Hess'
+git commit -m 'small changes to installAll'
+git push
+ping skylinescondor.com
+ifconfig
+netstat -tln
+cd servers/repo-skylinesC/skylinesC/ember/
+source ~/.bashrc
+export PS1='\W> '
+eserve5
+cd servers/repo-skylinesC/
+. installAll.sh 
+cd ember/
+ember serve
+cd ../
+pipenv run ./manage.py runserver
+npm install pm2
+locate net-tools
+pipenv run ./manage.py runserver
+cd servers/repo-skylinesC/skylinesC/
+. pycharm/bin/pycharm.sh
+ls
+. pycharm/bin/pycharm.sh
+locate jdk
+sudo apt-get install default-jdk
+. pycharm/bin/pycharm.sh
+cd pycharm/bin/
+. pycharm.sh
+cd servers/repo-skylinesC/skylinesC/ember/
+eserve5
+cd servers/repo-skylinesC/
+mserve
+cd skylinesC/
+mserve
+git status
+git add condorIGCs pureIGCs
+git status
+python manage.py db init
+pipenv shell
+./pycharm/bin/pycharm.sh 
+python manage.py db init
+python manage.py db migrate
+alembic revision --autogenerate -m "description of changes"
+python manage.py db migrate
+python manage.py db init
+python manage.py db migrate
+python manage.py db init
+flask db init
+python manage.py db migrate
+flask db init
+ls wsgi*
+python manage.py db init
+python manage.py db migrate
+python manage.py db init
+python manage.py db migrate
+python manage.py db create
+sudo sudo -u postgres createuser -s $USER
+python manage.py db create
+export FLASK_APP=skylines/app.py
+flask db init
+gret -r dotenv *
+grep -r dotenv *
+grep -r -f dotenv *
+grep -rf dotenv *
+find -r dotenv
+find -R dotenv
+find  dotenv
+flask db init
+export FLASK_APP=~/servers/repo-skylinesC/skylinesC/skylines/__init__.py
+flask db init
+export FLASK_APP=skylines/app.py
+flask db init
+python 
+pipenv run ./manage.py db migrate
+flask db init
+python skylines/commands/__init__.py
+python --v
+python --version
+python skylines/commands/__init__.py
+cd skylines/
+python skylines/commands/__init__.py
+python __init__.py
+cd ../
+python testimport.py 
+mv testimport.py skylines/
+python skylines/testimport.py 
+cd Downloads/
+ls
+sudo dpkg -i discord-*.deb
+sudo apt install -f
+sudo add-apt-repository -y ppa:webupd8team/sublime-text-3
+sudo apt-get update; sudo apt-get install -y sublime-text-installer
+sudo apt-get install -y sublime-text-installer
+exit
+mkdir pgadmin
+cd pgadmin/
+cp ../Downloads/pgadmin4-4.15-py2.py3-none-any.whl .
+pipenv --three
+pipenv shell
+rm ../Pipfile*
+rm ../.local/share/virtualenvs/bret-h882sV1s/
+rm -rf ../.local/share/virtualenvs/bret-h882sV1s/
+cd pgadmin
+pipenv --three
+pipenv shell
+sudo -u postgres psql
+sudo -u postgres psql SHOW data_directory
+cd servers/repo-skylinesC/skylinesC/
+sudo -u postgres psql SHOW data_directory
+sudo -u postgres psql
+cd /
+find . --name postgres
+find . postgres
+find postgres .
+find . -name postgres
+cd var/
+find . -name postgres
+sudo find . -name postgres
+ls
+ls lib
+ls lib/postgresql/
+find . -name "*postgre*" -print
+sudo find . -name "*postgre*" -print
+sudo find . -type d -name "*postgre*" -print
+sudo find . -name "*skyline*" -print
+cd ../
+sudo -u postgres psql
+pwd
+ls
+find . -name 'test1*'
+sudo -u postgres psql
+ls
+ls var/lib/postgresql/
+ls var/lib/postgresql/10
+ls var/lib/postgresql/10/main/
+sudo ls var/lib/postgresql/10/main/
+sudo -u postgres psql
+locate PostgreSQL
+sudo sudo -u postgres createdb test2 -O $USER
+sudo -u postgres psql
+service postgresql restart
+sudo service postgresql restart
+sudo sudo -u postgres psql -c "ALTER USER bret PASSWORD 'truchy88p';"
+cd
+cd servers/repo-skylinesC/skylinesC/
+flask db init
+pipenv shell
+cd servers/repo-skylinesC/skylinesC/
+mserve
+pipenv shell
+flask db init
+export FLASK_APP=skylines/app.py
+flask db init
+mserve
+git status
+git stash
+git pull
+git branch
+git status
+git stash pop
+git add skylines/*
+git status
+pwd
+git commit 'added .igc test files'
+git commit -m 'added .igc test files'
+git push
+git branch
+git checkout dev1
+git pull
+git checkout master
+git pull
+git push
+git checkout CondorIGCfile 
+git push
+ls
+git branch -a
+git checkout CondorIGCfile 
+git push CondorICGfile
+git pull
+git branch --set-upstream-to=origin/dev1 CondorIGCfile
+git push
+git branch -a
+git push
+git push -u origin CondorIGCfile
+mserve
+pip install pgadmin4-4.15-py2.py3-none-any.whl 
+sudo pip install pgadmin4-4.15-py2.py3-none-any.whl 
+python ~/.local/share/virtualenvs/pgadmin-WsDn56it/lib/python3.4/site-packages/cd ../
+ls ~/.local/share/virtualenvs/pgadmin-WsDn56it/lib/python3.4/site-packages/
+ls ~/.local/share/virtualenvs/pgadmin-WsDn56it/lib/python3.4
+find -rn pgadmin4.py
+find -n pgadmin4.py
+find --name pgadmin4.py
+find  pgadmin4.py
+cd ../.local/
+find  pgadmin4.py
+find . -name pgadmin4.py
+cd
+find . -name pgadmin4.py
+find . -name pgAdmin4.py
+cd pgadmin/
+pip install pgadmin4-4.15-py2.py3-none-any.whl 
+sudo pip install pgadmin4-4.15-py2.py3-none-any.whl 
+pgadmin
+cd /
+ls
+find . -name pgadmin
+cd
+cd pgadmin/
+rm Pipfile 
+rm ~/.local/share/virtualenvs/pgadmin-WsDn56it/
+rm -rf ~/.local/share/virtualenvs/pgadmin-WsDn56it/
+pipenv --two
+ls
+pip install pgadmin4-4.15-py2.py3-none-any.whl 
+python ~/.local/share/virtualenvs/pgadmin-WsDn56it/lib/python2.7/site-packages/pgadmin4/pgAdmin4.py
+sudo chown $USER -R ~/.local/share/virtualenvs/*
+python ~/.local/share/virtualenvs/pgadmin-WsDn56it/lib/python2.7/site-packages/pgadmin4/pgAdmin4.py
+ls /var/lib/
+sudo chown $USER -R ~/.local/share/virtualenvs/pgadmin-WsDn56it/*
+python ~/.local/share/virtualenvs/pgadmin-WsDn56it/lib/python2.7/site-packages/pgadmin4/pgAdmin4.py
+sudo chown bret -R ~/.local/share/virtualenvs/pgadmin-WsDn56it/*
+python ~/.local/share/virtualenvs/pgadmin-WsDn56it/lib/python2.7/site-packages/pgadmin4/pgAdmin4.py
+sudo chown bret -R ~/.local/share/virtualenvs/pgadmin-WsDn56it/var
+sudo mkdir ~/.local/share/virtualenvs/pgadmin-WsDn56it/var
+sudo mkdir ~/.local/share/virtualenvs/pgadmin-WsDn56it/var/lib
+sudo mkdir ~/.local/share/virtualenvs/pgadmin-WsDn56it/var/lib/pgadmin
+python ~/.local/share/virtualenvs/pgadmin-WsD
+python ~/.local/share/virtualenvs/pgadmin-WsDn56it/lib/python2.7/site-packages/pgadmin4/pgAdmin4.py
+sudo python ~/.local/share/virtualenvs/pgadmin-WsDn56it/lib/python2.7/site-packages/pgadmin4/pgAdmin4.py
+sudo pip install pgadmin4-4.15-py2.py3-none-any.whl
+python ~/.local/share/virtualenvs/pgadmin-WsDn56it/lib/python2.7/site-packages/pgadmin4/pgAdmin4.py
+sudo python ~/.local/share/virtualenvs/pgadmin-WsDn56it/lib/python2.7/site-packages/pgadmin4/pgAdmin4.py
+python ~/.local/share/virtualenvs/pgadmin-WsDn56it/lib/python2.7/site-packages/pgadmin4/pgAdmin4.py
+vim ~/.local/share/virtualenvs/pgadmin-WsDn56it/lib/python2.7/site-packages/pgadmin4/config_local.py
+python ~/.local/share/virtualenvs/pgadmin-WsDn56it/lib/python2.7/site-packages/pgadmin4/pgAdmin4.py
+pycharm
+ls
+source .bshrc
+source .bashrc
+source .bshrc
+pycharm
+grep -r watch /etc/sysctl.d/
+grep -r watch /etc/
+sudo grep -r watch /etc/
+sudo vim /etc/sysctl.conf 
+pycharm
+pgadmin
+cd pgadmin/
+pgadmin
+pipenv shell
+cd servers/repo-skylinesC/skylinesC/
+git status
+git diff skylines/commands/__init__.py
+git checkout dev1
+git stash
+git checkout dev1
+git checkout -b modernflask
+git checkout CondorIGCfile 
+git stash
+git checkout CondorIGCfile 
+pipenv run ./manage.py db recreate
+pgadmin
+pycharm
+cd pgadmin/
+pipenv shell
+cd servers/repo-skylinesC/skylinesC/
+mserve
+fuser 5000/tcp
+fuser -k 5000/tcp
+fuser 5000/tcp
+cd servers/repo-skylinesC/skylinesC/ember/
+eserve5 
+cd servers/repo-skylinesC/skylinesC/
+git status
+cd servers/repo-skylinesC/skylinesC/ember/
+eserve5
+ls
+mkdir pythonscripts
+cd pythonscripts/
+git clone https://github.com/hess8/pythonscripts
+cd
+locate flask
+cd .local/share/virtualenvs/skylinesC-0VgGNjgC/lib/python2.7/site-packages/
+grep -ri 'def request' flask*
+cd servers/repo-skylinesC/skylinesC/
+python run ./manage.py db recreate
+pipenv run ./manage.py db recreate
+pipenv run ./manage.py db bootstrap
+git status
+git push
+git log
+git status
+git push
+git branch
+git push
+git status
+git add testIGCs
+git status
+git commit 'Add igc test files'
+git commit -m 'Add igc test files'
+git push
+gsettings set org.gnome.nautilus.preferences default-folder-viewer 'list-view'
+cd servers/test-skylinesC/skylinesC/ember/
+eserve5 
+cd
+cd servers/repo-skylinesC/skylinesC/
+git diff
+git status
+cd servers/repo-skylinesC/skylinesC/
+git status
+git log
+cd servers/repo-skylinesC/skylinesC/ember/
+eserve5
+cd servers/repo-skylinesC/skylinesC/
+pipenv run ./manage.py recreate
+pipenv run ./manage.py db recreate
+cd ../
+cd ../test-skylinesC/skylinesC/
+cd ember/
+eserve5
+ls
+pwd
+cd ../skylines/frontend/
+ls
+cd static/
+cd assets/
+ls
+mv skylines.css xskylines.css
+mv vendor.css xvendor.css 
+mv skylines.css.map xskylines.css.map 
+ls
+mv skylines.css xskylines.css
+ls
+pwd
+ls -alt
+cd
+cd servers/repo-skylinesC/skylinesC/skylines/frontend/static/assets/
+ls
+ls -alt
+ls
+cd servers/repo-skylinesC/skylinesC/
+git branch
+git pull
+git stash
+git pull
+git status
+git branch
+git branch -m airportAnalysis
+diff installLast.sh installLast2.sh 
+rm installLast2.sh 
+rm installAll.sh 
+locate welt
+pipenv run ./manage.py import welt2000 --commit
+pgadmin
+git status
+git branch
+git commit -am 'Remove old install files'
+git checkout dev1
+git merge airportAnalysis 
+git status
+ls
+pwd
+git branch
+rm installLast2.sh 
+tail installLast.sh 
+git commit -am 'Remove old install files'
+git push
+git pull
+git push
+fuser -k 5000/tcp
+git status
+git commit -am 'small changes'
+git branch
+git branch -D modernflask 
+git branch -D airportAnalysis 
+ls
+git branch
+git branch groups
+git checkout groups
+ember --version
+pipenv run ./manage.py db recreate
+mv skylines/model/club.py skylines/model/group.py
+mv skylines/model/group.py skylines/model/club.py
+git commit -am 'changed all club text to group'
+git checkout dev1
+git branch groupsclubkeep
+git checkout groupsclubkeep 
+locate postgresql
+ls -alt /var/log/postgresql/postgresql-10-main.log
+cd /var/log/postgresql/
+ls
+show data_directory;
+psql
+sudo -u postgres psql -c "show data_directory;"
+cd ../../lib/postgresql/10/main/
+ls
+sudo cd ../../lib/postgresql/10/main/
+cd ../../lib/postgresql/10/main/
+cd ../../
+ls
+cd lib/postgresql/
+cd 10/
+cd main/
+ls
+cd ../
+ls
+cd 10
+pg_dump -C main >dbdump
+sudo pg_dump -C main >dbdump
+sudo pg_dump -C -U bret main >dbdump
+sudo pg_dump -C -U bret main ~/dbdump
+sudo pg_dump -C main ~/dbdump
+pg_dump -C main ~/dbdump
+pg_dump -C main > ~/dbdump
+pg_dump -C skylines > ~/dbdump
+cd pgadmin/
+ls
+pgadmin
+pipenv shell
+cd servers/repo-skylinesC/skylinesC/ember/
+eserve5 
+ember build --environment production
+eserve5
+pgadmin
+quit
+exit
+ssh bret@skylinescondor.com
+ssh bret@desoto.local
+avahi-browse -tl _workstation._tcp
+ssh bret@192.168.1.186
+sudo apt install openssh-client
+service start ssh
+start ssh
+service ssh start
+npm install pm2
+netstat
+ifconfig
+ifconfig -a
+sudo npm install pm2 -g
+pm2 start ssh
+ssh-keygen -t rsa
+more .ssh/id_rsa
+more .ssh/id_rsa.pub 
+ssh 192.168.1.80
+restorecon -R -v ~/.ssh
+sudo apt-get install policycoreutils
+restorecon -R -v ~/.ssh
+ssh 192.168.1.80
+ls -l .ssh/
+ssh 192.168.1.80
+ls -l .ssh/*
+ls -l .ssh
+ls -l 
+ls -la
+ls .ssh/
+more .ssh/known_hosts 
+rm .ssh/known_hosts 
+ssh 192.168.1.80
+rm .ssh/known_hosts 
+ls -l /home/bret/
+ls -l /home/
+ssh-keygen
+ssh root@192.168.1.80
+rm .ssh/known_hosts 
+rm -rf .ssh
+ssh-keygen
+ssh bret@192.168.1.80
+apt-get remove openssh
+sudo apt-get remove openssh
+sudo apt-get remove openssh-client
+ssh
+rm -r .ssh/
+ssh-keygen rsa
+ssh-keygen -t rsa
+more .ssh/id_rsa
+more .ssh/id_rsa.pub 
+ipconf
+ifconfig
+rm rf .ssh/
+rm -rf .ssh/
+ssh-keygen -t rsa
+ls .ssh/
+ssh bret@192.168.1.80
+ssh -v bret@192.168.1.80
+ls .ssh/
+sudo chown -R bret *
+sudo 700 -R bret *
+sudo -R 700 *
+sudo chown -R 700 *
+sudo chown -R 700 .*
+sudo chown -R bret .*
+ls .ssh/
+ls -l .ssh/
+ssh bret@192.168.1.81
+ssh bret@192.168.1.80
+ssh -v bret@192.168.1.80
+cd servers/repo-skylinesC/skylinesC/ember/
+eserve5 
+cd pgadmin/
+pipenv shell
+less .ssh/id_rsa.pub 
+ssh -v bret@192.168.1.80
+ssh bret@192.168.1.80
+cd servers/repo-skylinesC/skylinesC/
+git remote add production bret@192.168.80:skylinesC.git
+git push production dev1
+ssh bret@192.168.1.80
+git push production dev1
+cd ember/
+source ~/.bashrc
+eserve5 
+cd servers/repo-skylinesC/skylinesC/
+git branch
+git checkout dev1
+merge master
+git merge master
+git branch groupsclubkeep 
+git ch groupsclubkeep 
+git checkout groupsclubkeep 
+git merge dev1
+git branch
+git branch -D jenkins 
+git branch -D checkJenkins 
+git branch -D groups
+cd servers/repo-skylinesC/skylinesC/
+mserve
+locate xcsoar
+cd 
+cd .local/share/virtualenvs/skylinesC-0VgGNjgC/lib/python2.7/site-packages/
+grep -ri flight *
+grep -ri flight * | ~/Downloads/grepFlight
+grep -ri flight * > ~/Downloads/grepFlight
+grep -ri map * > ~/Downloads/grepMap
+grep -ri turnpoint * > ~/Downloads/gturnpoint
+ember --version
+cd
+cd Downloads/
+sudo dpkg -i slack-desktop-4.2.0-amd64.deb 
+cd 
+ls
+sudo service jenkins start
+ls /var/lib/jenkins/
+cd /var/lib/jenkins/workspace/
+ls
+cd skylinesC/
+ls
+git status
+git checkout dev1
+sudo git checkout dev1
+echo 'test' junk1
+echo 'test'> junk1
+sudo echo 'test'> junk1
+ls
+ls j
+sudo echo 'test'> junk1
+sudo echo "test"> junk1
+pwd
+sudo vim junk1
+git add junk1 
+sudo git add junk1 
+git checkout checkJenkins 
+sudo git checkout checkJenkins 
+git checkout dev1
+sudo git checkout dev1
+git log
+git status
+git checkout checkJenkins 
+sudo git checkout checkJenkins 
+ls
+git  pull
+sudo git  pull
+ls
+git rm junk*
+sudo rm junk*
+sudo git commit -am 'change'
+git push
+sudo git push
+sudo vim 'junk1'
+sudo git add junk1
+sudo commit -am 'change'
+sudo git commit -am 'change'
+git push
+sudo git push
+git branch
+pwd
+cd ember/
+eserve5 
+cd servers/repo-skylinesC/skylinesC/
+more temp.sh 
+git checkout groupsclubkeep 
+dbdrop skylines
+dropdb skylines
+REVOKE CONNECT ON DATABASE skylines FROM public;
+psql
+ps -ef | grep postgres
+sudo kill -9 2043
+kill -9 2043
+sudo kill -9 2043
+ps -ef | grep postgres
+sudo kill -9 8908
+ls
+dbdrop skylines
+cd servers/repo-skylinesC/skylinesC/
+git checkout master
+vim installFirst.sh 
+git commit -am 'Note in installFirst'
+git push
+vim installFirst.sh 
+git commit -am 'Note in installFirst'
+git push
+cd ember/
+eserve5 
+ls /var/crash/
+sudo rm /var/crash/*
+pg_dump mydb > db.sql
+pg_dump skylines > skylines.sql
+drop db skylines
+dropdb skylines
+pg_restore -C -d postgres skylines.sql
+psql -d skylines -f skylines.sql
+cd servers/repo-skylinesC/skylinesC/
+pipenv run ./manage.py db create
+sudo sudo -u postgres createuser -s $USER
+git checkout -b temp
+vim temp.sh
+sudo bash temp.sh 
+sudo -u bretbash temp.sh 
+sudo -u bret bash temp.sh 
+psql -d skylines -f skylines.sql
+git stash
+git checkout master
+git checkout temp
+psql -d skylines -f ~/skylines.sql
+mserve
+pipenv run ./manage.py db recreate
+sudo -u bret psql -d skylines -f ~/skylines.sql 
+mserve
+ls t*
+ls migrat*
+. migrate.sh 
+ls
+sudo bash migrate.sh 
+ls -l db*
+cp migrate.sh  ../temp.sh
+cd ../
+sudo bash temp.sh 
+sudo bash migrate.sh 
+sudo bash temp.sh 
+sudo -u bret psql -d skylines -f ~/skylines.sql 
+mserve
+ls
+rm Pipfile 
+cd skylinesC/
+mserve
+dropdb skylines
+sudo dropdb skylines
+sudo -u bret dropdb skylines
+sudo dropdb skylines
+sudo -u bret dropdb skylines
+sudo dropdb skylines
+sudo -u bret dropdb skylines
+cd pgadmin/
+pipenv shell
+pgadmin

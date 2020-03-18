@@ -1,0 +1,40 @@
+<keymap version="1" name="Default for XWin copy" parent="Default for XWin">
+  <action id="ChangesView.Rename">
+    <keyboard-shortcut first-keystroke="f2" />
+  </action>
+  <action id="CopyElement" />
+  <action id="ForceRefresh" />
+  <action id="ForceStepInto">
+    <keyboard-shortcut first-keystroke="shift ctrl f6" />
+  </action>
+  <action id="ForceStepOver">
+    <keyboard-shortcut first-keystroke="shift ctrl f5" />
+  </action>
+  <action id="Git.Reword.Commit">
+    <keyboard-shortcut first-keystroke="f2" />
+  </action>
+  <action id="Move" />
+  <action id="NextDiff">
+    <keyboard-shortcut first-keystroke="ctrl down" />
+  </action>
+  <action id="PreviousDiff">
+    <keyboard-shortcut first-keystroke="shift f7" />
+    <keyboard-shortcut first-keystroke="ctrl up" />
+  </action>
+  <action id="RenameElement" />
+  <action id="ShelvedChanges.Rename">
+    <keyboard-shortcut first-keystroke="f2" />
+  </action>
+  <action id="SmartStepInto">
+    <keyboard-shortcut first-keystroke="shift f6" />
+  </action>
+  <action id="StepInto">
+    <keyboard-shortcut first-keystroke="f6" />
+  </action>
+  <action id="StepOut">
+    <keyboard-shortcut first-keystroke="f7" />
+  </action>
+  <action id="StepOver">
+    <keyboard-shortcut first-keystroke="f5" />
+  </action>
+</keymap>

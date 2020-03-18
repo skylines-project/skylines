@@ -1,0 +1,71 @@
+chrome
+sudo add-apt-repository -y ppa:webupd8team/sublime-text-3
+sudo apt-get update; sudo apt-get install -y sublime-text-installer
+sudo apt-get remove sublime-text-installer 
+sudo apt-get remove sublime-text
+sudo apt-get sublime-text
+sudo apt-get install sublime-text
+mkdir servers
+cd servers/
+mkdir repo-skylinesC
+cd repo-skylinesC/
+sudo apt-install git
+sudo apt install git
+apt-get install net-tools
+sudo apt-get install net-tools
+npm install pm2@latest -g
+net-tools
+ifconfig
+netstat
+netstat -tln
+git install nginx
+npm install nginx
+cd servers/repo-skylinesC/skylinesC/
+npm remove nginx
+sudo apt-get install nginx
+cp reverse_proxy.conf /etc/nginx/sites-enabled/
+sudo cp reverse_proxy.conf /etc/nginx/sites-enabled/
+sudo lin /etc/nginx/sites-enabled/reverse_proxy.conf /etc/nginx/sites-available/
+sudo cp reverse_proxy.conf /etc/nginx/sites-available/
+sudo rm reverse_proxy.conf /etc/nginx/sites-enabled/reverse_proxy.conf 
+source ~/.bashrc 
+export ps1='\W> '
+export PSI='\W> '
+export PS1='\W> '
+sudo ln -s /etc/nginx/sites-enabled/reverse_proxy.conf /etc/nginx/sites-available/
+sudo ln -s /etc/nginx/sites-available/reverse_proxy.conf /etc/nginx/sites-enabled/
+systemctl
+sudo apt install systemctl
+sudo apt-get install systemctl
+systemctl
+git add  installAll.sh 
+git commit -m 'small changed to installAll'
+git config --global user.email 'bret.hess@gmail.com'
+git config --global user.name 'Bret Hess'
+git commit -m 'small changes to installAll'
+git push
+ping skylinescondor.com
+ifconfig
+netstat -tln
+cd servers/repo-skylinesC/skylinesC/ember/
+source ~/.bashrc
+export PS1='\W> '
+eserve5
+cd servers/repo-skylinesC/
+. installAll.sh 
+cd ember/
+ember serve
+cd ../
+pipenv run ./manage.py runserver
+npm install pm2
+locate net-tools
+pipenv run ./manage.py runserver
+cd servers/repo-skylinesC/skylinesC/
+. pycharm/bin/pycharm.sh
+ls
+. pycharm/bin/pycharm.sh
+locate jdk
+sudo apt-get install default-jdk
+. pycharm/bin/pycharm.sh
+cd pycharm/bin/
+. pycharm.sh

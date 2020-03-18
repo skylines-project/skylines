@@ -1,0 +1,91 @@
+<application>
+  <component name="RecentDirectoryProjectsManager">
+    <option name="recentPaths">
+      <list>
+        <option value="$USER_HOME$/servers/repo-skylinesC" />
+        <option value="$USER_HOME$/servers/test-noPiplock/skylinesC" />
+        <option value="$USER_HOME$/Downloads/xcsoar-0.6.4/xcsoar.submodule" />
+        <option value="$USER_HOME$/servers/repo-skylinesC/skylinesC" />
+        <option value="$USER_HOME$/flask reference copy" />
+        <option value="$USER_HOME$/pythonscripts/pythonscripts" />
+      </list>
+    </option>
+    <option name="openPaths">
+      <list>
+        <option value="$USER_HOME$/servers/repo-skylinesC" />
+      </list>
+    </option>
+    <option name="lastPath" value="$USER_HOME$/servers/repo-skylinesC" />
+    <option name="pid" value="" />
+    <option name="additionalInfo">
+      <map>
+        <entry key="$USER_HOME$/Downloads/xcsoar-0.6.4/xcsoar.submodule">
+          <value>
+            <RecentProjectMetaInfo>
+              <option name="build" value="PC-192.7142.56" />
+              <option name="productionCode" value="PC" />
+              <option name="binFolder" value="$APPLICATION_HOME_DIR$/bin" />
+              <option name="projectOpenTimestamp" value="1576184907375" />
+              <option name="buildTimestamp" value="1574165538903" />
+            </RecentProjectMetaInfo>
+          </value>
+        </entry>
+        <entry key="$USER_HOME$/flask reference copy">
+          <value>
+            <RecentProjectMetaInfo>
+              <option name="build" value="PC-192.7142.42" />
+              <option name="productionCode" value="PC" />
+              <option name="binFolder" value="$APPLICATION_HOME_DIR$/bin" />
+              <option name="projectOpenTimestamp" value="1575477332619" />
+              <option name="buildTimestamp" value="1572554837043" />
+            </RecentProjectMetaInfo>
+          </value>
+        </entry>
+        <entry key="$USER_HOME$/pythonscripts/pythonscripts">
+          <value>
+            <RecentProjectMetaInfo>
+              <option name="build" value="PC-192.7142.42" />
+              <option name="productionCode" value="PC" />
+              <option name="binFolder" value="$APPLICATION_HOME_DIR$/bin" />
+              <option name="projectOpenTimestamp" value="1575305301858" />
+              <option name="buildTimestamp" value="1572554841099" />
+            </RecentProjectMetaInfo>
+          </value>
+        </entry>
+        <entry key="$USER_HOME$/servers/repo-skylinesC">
+          <value>
+            <RecentProjectMetaInfo>
+              <option name="build" value="PC-192.7142.56" />
+              <option name="productionCode" value="PC" />
+              <option name="binFolder" value="$APPLICATION_HOME_DIR$/bin" />
+              <option name="projectOpenTimestamp" value="1584116194226" />
+              <option name="buildTimestamp" value="1574165546992" />
+            </RecentProjectMetaInfo>
+          </value>
+        </entry>
+        <entry key="$USER_HOME$/servers/repo-skylinesC/skylinesC">
+          <value>
+            <RecentProjectMetaInfo>
+              <option name="build" value="PC-192.7142.56" />
+              <option name="productionCode" value="PC" />
+              <option name="binFolder" value="$APPLICATION_HOME_DIR$/bin" />
+              <option name="projectOpenTimestamp" value="1576178006645" />
+              <option name="buildTimestamp" value="1574165524311" />
+            </RecentProjectMetaInfo>
+          </value>
+        </entry>
+        <entry key="$USER_HOME$/servers/test-noPiplock/skylinesC">
+          <value>
+            <RecentProjectMetaInfo>
+              <option name="build" value="PC-192.7142.56" />
+              <option name="productionCode" value="PC" />
+              <option name="binFolder" value="$APPLICATION_HOME_DIR$/bin" />
+              <option name="projectOpenTimestamp" value="1576276100892" />
+              <option name="buildTimestamp" value="1574165520057" />
+            </RecentProjectMetaInfo>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+</application>
