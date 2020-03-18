@@ -131,8 +131,6 @@ alias pycharm='./pycharm/bin/pycharm.sh'
 alias pgadmin='python ~/.local/share/virtualenvs/pgadmin-WsDn56it/lib/python2.7/site-packages/pgadmin4/pgAdmin4.py'
 alias pips='pipenv shell'
 
-alias nginx-backup-config-skylines.conf=nginxconfigbackup
-=======
 alias ngstart="sudo systemctl start nginx"
 alias ngstop="sudo systemctl stop nginx"
 alias ngrestart="sudo systemctl restart nginx"
@@ -147,16 +145,12 @@ alias ngcd="cd /etc/nginx/"
 alias ngt="sudo nginx -t"
 
 alias ngbackup-config-skylines.conf=nginxconfigbackup
->>>>>>> 34a75c675c7cd4fed009f8e098a7e66c047e0794
 
 nginxconfigbackup() { 
   sudo cp /etc/nginx/sites-available/skylinescondor /etc/nginx/sites-available/skylinescondor.$(date "+%Y-%m-%d_%H:%M")-$1
 }
 
 #the parameter ending is the comment use dashes "-" between words
-<<<<<<< HEAD
-#end bch
-=======
+
 #end bch
 
->>>>>>> 34a75c675c7cd4fed009f8e098a7e66c047e0794
