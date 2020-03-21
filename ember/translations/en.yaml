@@ -1,6 +1,7 @@
 achievements: Achievements
 actions: Actions
 add-comment: Add comment
+agree-public: I agree to make my flights public
 aircraft: Aircraft
 aircraft-type: Aircraft type
 airport: Airport
@@ -195,6 +196,7 @@ register: Register
 registering: Registering...
 register-club: Register new group
 registration: Registration
+save-changes: Save Changes
 score: Score
 scoring: Scoring
 scoring-start-time: Scoring start time

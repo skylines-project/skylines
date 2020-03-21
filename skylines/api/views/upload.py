@@ -335,7 +335,8 @@ def index_post():
             results.append(UploadResult.for_no_flight(name, str(prefix)))
             continue
 
-        flight.privacy_level = Flight.PrivacyLevel.PRIVATE
+        # flight.privacy_level = Flight.PrivacyLevel.PRIVATE
+        flight.privacy_level = Flight.PrivacyLevel.PUBLIC #bch
 
         trace = _encode_flight_path(fp, qnh=flight.qnh)
         infringements = get_airspace_infringements(fp, qnh=flight.qnh)
