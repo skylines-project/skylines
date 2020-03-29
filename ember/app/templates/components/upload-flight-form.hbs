@@ -8,10 +8,13 @@
   {{#if error}}
     <BsAlert @type="danger" @dismissible={{false}}>{{error}}</BsAlert>
   {{/if}}
-  <p>{{t "date-must-in-filename"}}</p>
-  <p>{{t "date-ok-filename"}}</p>
-  <p>{{t "date-space-filename"}}</p>
-  <p>{{t "date-number-filename"}}</p>
+  {{t "date-must-in-filename"}}
+  <li>{{t "date-ok-filename"}}</li>
+  <li>{{t "date-space-filename"}}</li>
+  <li>{{t "date-number-filename"}}</li>
+  <p></p>
+  {{t "agree-public"}}
+  <p></p>
   <ValidatedBlock @label={{t "igc-or-zip-files"}} @validation={{validations.attrs.files}} @hasContent={{files}} @didValidate={{didValidate}}>
     <input type="file" name="files" multiple="multiple" onchange={{action "setFilesFromEvent"}} class="form-control" disabled={{uploadTask.isRunning}}>
   </ValidatedBlock>

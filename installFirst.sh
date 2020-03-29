@@ -46,9 +46,10 @@ sudo apt install -y python-pip
 
 
 # install pipenv
-python -m pip install ---user pipenv
+python -m pip install --user pipenv
 # sudo -H pip install pipenv
 # sudo chown $USER -R /home/$USER
+pip install zipp
 
 pipenv shell
 
