@@ -19,24 +19,22 @@
 
   <div class="clearfix"></div>
 
-  <div class="form-group col-sm-6">
-    <label class="control-label">{{t "copilot"}}</label>
-    <PilotSelect @clubMembers={{clubMembers}} @pilotId={{copilotId}} @onChange={{action (mut copilotId)}} />
+{{!--   <div class="form-group col-sm-6"> --}}
+{{!--     <label class="control-label">{{t "copilot"}}</label> --}}
+{{!--     <PilotSelect @clubMembers={{clubMembers}} @pilotId={{copilotId}} @onChange={{action (mut copilotId)}} /> --}}
 
-    {{#if validations.attrs.copilotId.message}}
-      <p class="help-block">{{validations.attrs.copilotId.message}}</p>
-    {{/if}}
-  </div>
+{{!--     {{#if validations.attrs.copilotId.message}} --}}
+{{!--       <p class="help-block">{{validations.attrs.copilotId.message}}</p> --}}
+{{!--     {{/if}} --}}
+{{!--   </div> --}}
 
-  {{#if showCopilotNameInput}}
-    <ValidatedInput
-      @value={{copilotName}}
-      @validation={{validations.attrs.copilotName}}
-      @label={{t "copilot"}}
-      @disabled={{pending}}
-      @didValidate={{didValidate}}
-      class="col-sm-6" />
-  {{/if}}
+  <ValidatedInput
+    @value={{copilotName}}
+    @validation={{validations.attrs.copilotName}}
+    @label={{t "title"}}
+    @disabled={{pending}}
+    @didValidate={{didValidate}}
+    class="col-sm-6" />
 
   <div class="clearfix"></div>
 

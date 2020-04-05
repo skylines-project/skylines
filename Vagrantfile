@@ -40,7 +40,7 @@ sudo apt-get install -y --no-install-recommends software-properties-common
 # add PPAs
 
 sudo add-apt-repository -y ppa:ubuntu-toolchain-r/test
-sudo add-apt-repository -y ppa:jonathonf/python-2.7
+#sudo add-apt-repository -y ppa:jonathonf/python-2.7
 
 # update apt-get repository
 
@@ -50,10 +50,10 @@ sudo apt-get update
 
 sudo apt-get install -y --no-install-recommends \
     python python-dev \
-    
+
 sudo apt-get install -y --no-install-recommends \
     g++-6 pkg-config libcurl4-openssl-dev redis-server\
-    libpq-dev libfreetype6-dev libpng-dev libffi-dev 
+    libpq-dev libfreetype6-dev libpng-dev libffi-dev
 
 sudo apt-get install -y --no-install-recommends \
     ibgeos-c1 liblwgeom-2.2-5
