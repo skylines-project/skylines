@@ -19,14 +19,7 @@
 
   <div class="clearfix"></div>
 
-{{!--   <div class="form-group col-sm-6"> --}}
-{{!--     <label class="control-label">{{t "copilot"}}</label> --}}
-{{!--     <PilotSelect @clubMembers={{clubMembers}} @pilotId={{copilotId}} @onChange={{action (mut copilotId)}} /> --}}
-
-{{!--     {{#if validations.attrs.copilotId.message}} --}}
-{{!--       <p class="help-block">{{validations.attrs.copilotId.message}}</p> --}}
-{{!--     {{/if}} --}}
-{{!--   </div> --}}
+{{!-- Use copilot slot to allow public comment/title on flights page --}}
 
   <ValidatedInput
     @value={{copilotName}}
