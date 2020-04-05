@@ -312,12 +312,12 @@ flight-phase:
   cruise: Cruise
 gflights:
   creation: Group flight creation
-  create1: Group flights are automatically created and updated as group members upload flights if the flight date and flight plan are identical to other flights in the group.  The date you flew the flight is included in the filename when you upload.
+  create1: Group flights are automatically created and updated as group members upload flights if the flight date (in the file name) and flight plan are identical to other flights in the group.  If members fly later than the rest of the group, they can still put the original flight date in the file name if they want to be included in the group flight.
   create2: A single user can also upload multiple flights for other pilots in their group if they are registered.  Choose the correct "pilot" before publishing.
   multiple-groups: Multiple groups
   change-groups: If you fly with multiple groups, just change your group in Settings before you upload to a different group.
   overlay-not-in-group: Overlaying flights not in your group
-  pin-flight: If you "star" other flights before you "show" a flight, it will overlay the flights.  This is not a "group flight", but it is displayed the same.
+  pin-flight: If you "star" other flights before you "show" a flight, it will overlay the flights.  This is not a "group flight", but it is displayed almost the same.
 scoringinfo:
   olc+: OLC+ Scoring
   olc-history: OLC+ scoring was developed by the "On-line Contest" group for any soaring flight. It is based on distances, not speed.

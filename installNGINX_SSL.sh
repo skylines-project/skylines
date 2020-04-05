@@ -1,3 +1,5 @@
+#install on an Ubuntu 18+ machine
+
 sudo apt-get update
 sudo apt-get install nginx
 
@@ -70,32 +72,40 @@ sudo vim /etc/nginx/snippets/ssl-params.conf
 
 sudo vim sites-available/skylinescondor.com
 #replace server with:
+	upstream ember {
+	    server 192.168.1.220;
+	  }
+
 	server {
-	    listen 80 default_server;
-	    listen [::]:80 default_server;
-	    server_name skylinescondor.com;
+		    listen 80;
+		    listen [::]:80;
 
-	    return 301 https://$server_name$request_uri;
-	}
-#and 
-	server {
+		    listen 443 ssl default_server;
+		    listen [::]:443 ssl default_server;
 
-	    # SSL configuration
-	    #
+		    include snippets/ssl-skylinescondor.com.conf;
+		    include snippets/ssl-params.conf;
+		    server_name skylinescondor.com;
+	    	    location / {
+	      		proxy_pass http://ember;
 
-	    #listen 443 ssl http2 default_server;
-	    listen 443 ssl default_server;
-	    #listen [::]:443 ssl http2 default_server; # does not work properly with Angular, TODO research about this
-	    listen [::]:443 ssl default_server;
+	          proxy_http_version 1.1;
 
-	    include snippets/ssl-skylinescondor.com.conf;
-	    include snippets/ssl-params.conf;
-	}
+	          proxy_set_header Host               $host;
+	          proxy_set_header X-Real-IP          $remote_addr;
+	          proxy_set_header X-Forwarded-For    $proxy_add_x_forwarded_for;
+	          proxy_set_header X-Forwarded-Proto  $scheme;
+
+	    	    }
+		}
 
 sudo service nginx reload
 
-#at this point localhost points to sudo https://skylinescondor.com  (can't connect because not port forwarded)
-#forward port 80 to this machine and then test at 
+#at this point localhost points to sudo https://skylinescondor.com  and should show the ember server, which is on a Ubuntu 14 machine 
+#forward port 80 to this nginx machine (ubuntu 18+) and then test at 
 https://www.ssllabs.com/ssltest/ 
 
-problem:  skylinescondor.com refused to connect.  #should be able to test this by connecting to localhost...doesn't work.
+Success!
+
+See https://www.nginx.com/blog/monitoring-nginx/ 
+Go to https://amplify.nginx.com/dashboard 
