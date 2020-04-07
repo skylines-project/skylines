@@ -1,5 +1,5 @@
 ## SkylinesCondor Developer
-* Bret Hess (<bret.hess@gmail.com>)
+* Bret Hess (<skylinescondor@gmail.com>)
 
 ## Skylines Developers
 

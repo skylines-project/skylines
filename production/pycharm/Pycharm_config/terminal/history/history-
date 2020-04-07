@@ -1,7 +1,7 @@
 chrome
 sudo add-apt-repository -y ppa:webupd8team/sublime-text-3
 sudo apt-get update; sudo apt-get install -y sublime-text-installer
-sudo apt-get remove sublime-text-installer 
+sudo apt-get remove sublime-text-installer
 sudo apt-get remove sublime-text
 sudo apt-get sublime-text
 sudo apt-get install sublime-text
@@ -27,8 +27,8 @@ cp reverse_proxy.conf /etc/nginx/sites-enabled/
 sudo cp reverse_proxy.conf /etc/nginx/sites-enabled/
 sudo lin /etc/nginx/sites-enabled/reverse_proxy.conf /etc/nginx/sites-available/
 sudo cp reverse_proxy.conf /etc/nginx/sites-available/
-sudo rm reverse_proxy.conf /etc/nginx/sites-enabled/reverse_proxy.conf 
-source ~/.bashrc 
+sudo rm reverse_proxy.conf /etc/nginx/sites-enabled/reverse_proxy.conf
+source ~/.bashrc
 export ps1='\W> '
 export PSI='\W> '
 export PS1='\W> '
@@ -38,9 +38,9 @@ systemctl
 sudo apt install systemctl
 sudo apt-get install systemctl
 systemctl
-git add  installAll.sh 
+git add  installAll.sh
 git commit -m 'small changed to installAll'
-git config --global user.email 'bret.hess@gmail.com'
+git config --global user.email 'skylinescondor@gmail.com'
 git config --global user.name 'Bret Hess'
 git commit -m 'small changes to installAll'
 git push
@@ -52,7 +52,7 @@ source ~/.bashrc
 export PS1='\W> '
 eserve5
 cd servers/repo-skylinesC/
-. installAll.sh 
+. installAll.sh
 cd ember/
 ember serve
 cd ../

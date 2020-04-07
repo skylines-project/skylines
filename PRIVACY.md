@@ -7,7 +7,7 @@ operated and provided by the current project maintainer ([Bret Hess]). It
 describes what personal information we may be gathering from you, who can see
 this information, and what options you have for controlling this.
 
-[Bret Hess]: mailto:bret.hess@gmail.com
+[Bret Hess]: mailto:skylinescondor@gmail.com
 
 For the protection of the SkyLines service and other users, if you do not agree
 with this Privacy Policy, you may not use the service.

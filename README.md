@@ -43,7 +43,7 @@ development is described in the [INSTALL.md](INSTALL.md) file.
 
 ## Contact and Contributing
 
-For SkylinesCondor information, contact [Bret Hess]: mailto:bret.hess@gmail.com
+For SkylinesCondor information, contact [Bret Hess]: mailto:skylinescondor@gmail.com
 
 For Skylines (real glider flights) join [Slack](https://skylines-slack.herokuapp.com/) community.
 
