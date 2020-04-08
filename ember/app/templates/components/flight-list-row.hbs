@@ -22,22 +22,28 @@
 {{flight.competitionId}}
 </td>
 
-<td class="col-sm-1">
-    {{flight.landscape}}
-</td>
+  <td class="col-xs-3">
+    {{#if flight.landscape}}
+      {{flight.landscape}}
+    {{/if}}
+  </td>
 
-<td class="col-sm-2">
-  {{#if flight.takeoffAirport}}
-    <XFlag @code={{flight.takeoffAirport.countryCode}} />
-    <LinkTo @route="flights.airport" @model={{flight.takeoffAirport.id}}>{{flight.takeoffAirport.name}}</LinkTo>
-  {{/if}}
-</td>
+{{#if showAirport}}
+  <td class="col-sm-3">
+    {{#if flight.takeoffAirport}}
+      <XFlag @code={{flight.takeoffAirport.countryCode}} />
+      <LinkTo @route="flights.airport" @model={{flight.takeoffAirport.id}}>{{flight.takeoffAirport.name}}</LinkTo>
+    {{/if}}
+  </td>
+{{/if}}
 
-<td class="club hidden-sm hidden-xs">
-  {{#if flight.club}}
-    <LinkTo @route="club" @model={{flight.club.id}}>{{truncate flight.club.name 25}}</LinkTo>
-  {{/if}}
-</td>
+{{#if showClub}}
+  <td class="club hidden-sm hidden-xs">
+    {{#if flight.club}}
+      <LinkTo @route="club" @model={{flight.club.id}}>{{truncate flight.club.name 25}}</LinkTo>
+    {{/if}}
+  </td>
+{{/if}}
 
 <td class="col-sm-3">
   <span>
