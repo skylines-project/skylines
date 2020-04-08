@@ -91,9 +91,8 @@
 </td>
 
 {{#if flight.groupflight_id}}
-{{"yes"}}
   <td class="column-buttons">
-    <LinkTo @route="groupflights" @model={{flight.groupflight_id}} class="btn btn-default btn-sm">{{t "groupflight"}}</LinkTo>
+    <LinkTo @route="groupflight" @model={{flight.groupflight_id}} class="btn btn-default btn-sm">{{t "groupflight"}}</LinkTo>
   </td>
 {{/if}}
 

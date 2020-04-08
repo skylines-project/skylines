@@ -148,6 +148,15 @@
         userURL=(href-to "user" flight.igcFile.owner.id)}}</td>
   </tr>
 
+
+{{#if flight.groupflight_id}}
+  <tr>
+    <td class="column-buttons">
+      <LinkTo @route="groupflight" @model={{flight.groupflight_id}} class="btn btn-default btn-sm">{{t "groupflight"}}</LinkTo>
+    </td>
+  </tr>
+{{/if}}
+
   {{#if isOwner}}
     <tr>
       <th>{{t "actions"}}</th>
