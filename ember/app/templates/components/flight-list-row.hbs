@@ -1,69 +1,43 @@
-{{#if showDate}}
-  <td class="date">
-    {{#if flight.flightDate}}
-      {{format-date flight.flightDate format="ddmmyyyy" timeZone="UTC"}}
-    {{/if}}
-  </td>
-{{/if}}
+<td class="date">
+  {{format-date flight.flightDate format="ddmmyyyy" timeZone="UTC"}}
+</td>
 
 <td class="col-sm-1">
   {{format-number flight.score maximumFractionDigits=0}}
 </td>
 
-{{#if showPilot}}
-  <td class="col-sm-3">
-    {{#if flight.pilot.id}}
-      <LinkTo @route="user" @model={{flight.pilot.id}}>{{pilotName}}</LinkTo>
-    {{else if pilotName}}
-      {{pilotName}}
-    {{/if}}
+<td class="col-sm-3">
+  <LinkTo @route="user" @model={{flight.pilot.id}}>{{pilotName}}</LinkTo>
 
-    {{#if (and pilotName copilotName)}}<br/>{{/if}}
+  {{#if (and pilotName copilotName)}}<br/>{{/if}}
 
-    {{#if flight.copilot.id}}
-      <LinkTo @route="user" @model={{flight.copilot.id}}>{{copilotName}}</LinkTo>
-    {{else if copilotName}}
-      {{copilotName}}
-    {{/if}}
+  {{#if flight.copilot.id}}
+    <LinkTo @route="user" @model={{flight.copilot.id}}>{{copilotName}}</LinkTo>
+  {{else if copilotName}}
+    {{copilotName}}
+  {{/if}}
+</td>
 
-    {{#if (not (or pilotName copilotName)) }}
-      [{{flight.igcFile.owner.name}}]
-    {{/if}}
-  </td>
-  <td class="col-sm-1">
-  {{flight.competitionId}}
-  </td>
-{{/if}}
+<td class="col-sm-1">
+{{flight.competitionId}}
+</td>
 
+<td class="col-sm-1">
+    {{flight.landscape}}
+</td>
 
-{{!-- <td class="numeric"> --}}
-{{!--   {{#if flight.distance}} --}}
-{{!--     {{format-distance flight.distance}} --}}
-{{!--   {{/if}} --}}
-{{!-- </td> --}}
+<td class="col-sm-2">
+  {{#if flight.takeoffAirport}}
+    <XFlag @code={{flight.takeoffAirport.countryCode}} />
+    <LinkTo @route="flights.airport" @model={{flight.takeoffAirport.id}}>{{flight.takeoffAirport.name}}</LinkTo>
+  {{/if}}
+</td>
 
-  <td class="col-xs-3">
-    {{#if flight.landscape}}
-      {{flight.landscape}}
-    {{/if}}
-  </td>
-
-{{#if showAirport}}
-  <td class="col-sm-3">
-    {{#if flight.takeoffAirport}}
-      <XFlag @code={{flight.takeoffAirport.countryCode}} />
-      <LinkTo @route="flights.airport" @model={{flight.takeoffAirport.id}}>{{flight.takeoffAirport.name}}</LinkTo>
-    {{/if}}
-  </td>
-{{/if}}
-
-{{#if showClub}}
-  <td class="club hidden-sm hidden-xs">
-    {{#if flight.club}}
-      <LinkTo @route="club" @model={{flight.club.id}}>{{truncate flight.club.name 25}}</LinkTo>
-    {{/if}}
-  </td>
-{{/if}}
+<td class="club hidden-sm hidden-xs">
+  {{#if flight.club}}
+    <LinkTo @route="club" @model={{flight.club.id}}>{{truncate flight.club.name 25}}</LinkTo>
+  {{/if}}
+</td>
 
 <td class="col-sm-3">
   <span>
@@ -76,14 +50,6 @@
     <BsTooltip @title={{or flight.registration flight.igcFile.registration (t "unknown")}} />
   </span>
 </td>
-
-{{#if showTimes}}
-  <td class="times hidden-xs">
-    {{#if (and flight.takeoffTime flight.landingTime)}}
-      {{format-time flight.takeoffTime format="hhmm" timeZone="UTC"}}-{{format-time flight.landingTime format="hhmm" timeZone="UTC"}}
-    {{/if}}
-  </td>
-{{/if}}
 
 <td class="column-buttons">
   <LinkTo @route="flight" @model={{flight.id}} class="btn btn-default btn-sm">{{t "show"}}</LinkTo>
