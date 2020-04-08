@@ -90,6 +90,13 @@
   <PinStar @flightId={{flight.id}} />
 </td>
 
+{{#if flight.groupflight_id}}
+{{"yes"}}
+  <td class="column-buttons">
+    <LinkTo @route="groupflights" @model={{flight.groupflight_id}} class="btn btn-default btn-sm">{{t "groupflight"}}</LinkTo>
+  </td>
+{{/if}}
+
 <td class="num_comments hidden-xs">
   {{#if (gt flight.numComments 0)}}
     {{fa-icon "comments-o" title=(t "n-comments" numComments=flight.numComments)}}

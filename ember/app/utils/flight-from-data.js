@@ -46,6 +46,7 @@ export default function(data, units) {
     contests,
     geoid: data.geoid,
     competition_id: additional.competition_id,
+    groupflight_id: additional.groupflight_id,
     score: additional.score,
     distance: additional.distance,
     triangleDistance: additional.triangleDistance,

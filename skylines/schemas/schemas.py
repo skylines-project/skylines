@@ -174,7 +174,7 @@ class IGCFileSchema(Schema):
 
 class FlightSchema(Schema):
     id = fields.Integer()
-    groupflight_Id = fields.Integer()
+    groupflight_id = fields.Integer()
     pilotId = fields.Integer(attribute="pilot_id", allow_none=True)
     pilot = fields.Nested(UserSchema, only=("id", "name"))
     pilotName = fields.String(
