@@ -278,7 +278,7 @@ def groupflight_actions(flightCurrent, igc_file):
             .filter(Flight.groupflight_id != None).all()
 
         if len(alreadyGrouped) > 0:  # add to this group flight
-            gfid = db.session.query(Flight.groupflight_id).filter(Flight.id == alreadyGrouped[0][0]).all()[0]  # get from first entry
+            gfid = db.session.query(Flight.groupflight_id).filter(Flight.id == alreadyGrouped[0][0]).all()[0][0]  # get from first entry
             groupflight = db.session.query(Groupflight).filter(Groupflight.id == gfid)
             groupflight.time_modified = datetime.utcnow()
             for flight_id in latest:
@@ -299,7 +299,9 @@ def groupflight_actions(flightCurrent, igc_file):
             for flight_id in latest:
                 flight = Flight.get(flight_id)
                 flight.groupflight_id = groupflight.id
-        db.session.commit()
+        #db.session.commit()
+        return
+
 
 def mark_groupflight_notifications_read(groupflight):
     if not request.user_id:
