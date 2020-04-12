@@ -41,7 +41,7 @@ files = ftp.listdir(saveDir)
 run = True
 while run:
     # close port 4200 so can't write new data while backing up
-    os.system('sudo ufw deny 4200')
+    # os.system('sudo ufw deny 4200')
     now = datetime.datetime.now()
     nowStr = now.strftime("_{}".format(timeFormat))
     #### Database backup #####
@@ -161,7 +161,7 @@ while run:
     #sys.exit('stop while testing')
 
     print
-    os.system('sudo ufw allow 4200')
+    # os.system('sudo ufw allow 4200')
     t.sleep(3600)
 
 
