@@ -47,18 +47,16 @@ while run:
     #### Database backup #####
     if True: #debugging switch, when working on tar section below
         try:
-	        dumpFileName = 'skylinesdump{}.custom'.format(nowStr)
+            dumpFileName = 'skylinesdump{}.custom'.format(nowStr)
             dumpFilePath = '{}/skylinesdump{}.custom'.format(dbBUdir,nowStr)
             os.system('sudo -u bret pg_dump --format=custom skylines > {}'.format(dumpFilePath))
         except:
             print 'error in pg_dump step'
-	try:
-            #os.system('scp {} {}@{}:{}'.format(dumpFilePath,username,host,saveDir))
-	    ftp.put(dumpFilePath, '{}/{}'.format(igcsOutDir,dumpFilePath))  #put requires file name in destination
-
-
-
-
+        try:
+            os.system('scp {} {}@{}:{}'.format(dumpFilePath,username,host,saveDir))
+            # ftp.put(dumpFilePath, os.path.join(igcsOutDir,dumpFileName))  #put requires file name in destination
+        except:
+            print 'error in saving pg_dump to remote host'
         try:
             files = ftp.listdir(saveDir)
             dumps = []
@@ -140,9 +138,9 @@ while run:
         latestTar = None
         latestTime = datetime.datetime.strptime('2000-1-1.0.0.0', format(timeFormat))
     # Add igcs to tar file
-    print "Compressing igc files"
+    # print "Compressing igc files"
     tarName = 'igcs{}-backto-{}.tar.gz'.format(nowStr, latestTime.strftime(timeFormat))
-    tarPath = os.path.join(dbBUdir,tarName))
+    tarPath = os.path.join(dbBUdir,tarName)
     igcsTar = tarfile.open(tarPath, mode='w:gz')
     igcs = os.listdir(igcsInDir)
     for igc in igcs:
@@ -154,13 +152,13 @@ while run:
                 print 'Error adding {} to tar file'.format(igc)
     igcsTar.close()
     size = os.path.getsize(tarPath)
-    print 'Saved {:.2f} MB, {}'.format(size / float(10 ** 6), tarName)
+    print '{:.2f} MB, {}'.format(size / float(10 ** 6), tarName)
     stderr = None
     try:
         ftp.put(tarPath, os.path.join(igcsOutDir,tarName))  #put requires file name in destination
     except paramiko.SSHException, e:
         print 'Error copying igc tar file to remote archive',e
-    sys.exit('stop while testing')
+    #sys.exit('stop while testing')
 
     print
     os.system('sudo ufw allow 4200')
