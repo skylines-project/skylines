@@ -16,7 +16,7 @@ then delete the oldest dump.
 # def dateFile(filename):
 #     return filename.split('.')[0].split('_')[1]
 
-dumpOutDir = '/home/bret/google_drive'
+dumpOutDir = '/home/bret/google_drive/skylines_backup'
 igcsInDir = '/home/bret/servers/repo-skylinesC/skylinesC/htdocs/files'
 dbBUdir = '/home/bret/servers/database_backups'
 igcsOutDir = os.path.join(dumpOutDir,'igcsDir')
@@ -48,6 +48,7 @@ while run:
     os.system('sudo ufw deny 4200 > /dev/null 2>&1')
     now = datetime.datetime.now()
     nowStr = now.strftime("_{}".format(timeFormat))
+    print now.strftime(timeFormat)
     #### Database backup #####
     if True: #debugging switch, when working on tar section below
         try:
@@ -55,12 +56,12 @@ while run:
             dumpFilePath = '{}/skylinesdump{}.custom'.format(dbBUdir,nowStr)
             os.system('sudo -u bret pg_dump --format=custom skylines > {}'.format(dumpFilePath))
         except:
-            print 'error in pg_dump step'
+            print '/terror in pg_dump step'
         try:
             os.system('scp {} {}@{}:{}'.format(dumpFilePath,username,host,dumpOutDir))
             # ftp.put(dumpFilePath, os.path.join(igcsOutDir,dumpFileName))  #put requires file name in destination
         except:
-            print 'error in saving pg_dump to remote host'
+            print '/tError in saving pg_dump to remote host'
         try:
             files = ftp.listdir(dumpOutDir)
             dumps = []
@@ -75,21 +76,21 @@ while run:
                         dumpTimes.append(datetime.datetime.strptime(dumpTimeStamp, format(timeFormat)))
                         try:
                             size = ftp.stat('{}/{}'.format(dumpOutDir, file)).st_size
-                            # print 'test', file, size
+                            # print '/ttest', file, size
                         except:
                             size = None
                         dumpSizes.append(size)
-                        # print '{:.2f} MB, {}'.format(size / float(10 ** 6), file)
+                        # print '/t{:.2f} MB, {}'.format(size / float(10 ** 6), file)
                     except:
                         'skip file'
         except:
-            print 'error in reading dumps'
+            print '/tError in reading dumps'
         allInfo = zip(dumpTimes,dumps,dumpSizes)
         dumpsInfo =  [[dump,timeFile,size] for timeFile,dump,size in sorted(allInfo,reverse=True)] # name, timeFile, size
         for i in range(len(dumpsInfo)):
             file = dumpsInfo[i][0]
             size = dumpsInfo[i][2]
-            # print '{:.2f} MB, {}'.format(size / float(10 ** 6), file)
+            # print '/t{:.2f} MB, {}'.format(size / float(10 ** 6), file)
         oldestDump = dumpsInfo[-1]
         while len(dumpsInfo) > nkeep and oldestDump[2] <= dumpsInfo[0][2]: #Delete oldest if newest is larger or same size
             try: #delete oldest
@@ -99,11 +100,11 @@ while run:
                     t.sleep(1)
                 stdoutstring = stdout.readlines()
                 stderrstring = stderr.readlines()
-                print 'Deleted', oldestDump[0]
+                print '/tDeleted', oldestDump[0]
                 dumpsInfo.pop()
                 oldestDump = dumpsInfo[-1]
             except:
-                print 'Error in deleting oldest dump',oldestDump
+                print '/tError in deleting oldest dump',oldestDump
 
     #### htdocs igcs backup #####
     # Read date of last htdocs tar file in dumpOutDir
@@ -113,7 +114,7 @@ while run:
     try:
         filesIGC = ftp.listdir(igcsOutDir)
     except:
-        print 'error in reading tars'
+        print '/tError in reading tars'
     tars = []
     tarTimes = []
     tarSizes = []
@@ -134,7 +135,7 @@ while run:
     for i in range(len(tarsInfo)):
         file = tarsInfo[i][0]
         size = tarsInfo[i][2]
-        #print '{:.2f} MB, {}'.format(size / float(10 ** 6), file)
+        #print '/t{:.2f} MB, {}'.format(size / float(10 ** 6), file)
     if len(tars) > 0:
         latestTar = tarsInfo[0]
         latestTime = latestTar[1]
@@ -155,19 +156,19 @@ while run:
                 igcsTar.add(os.path.join(igcsInDir,igc))
                 count += 1
             except:
-                print 'Error adding {} to tar file'.format(igc)
+                print '/tError adding {} to tar file'.format(igc)
     igcsTar.close()
     
-    # print '{:.2f} MB, {}'.format(size / float(10 ** 6), tarName)
+    # print '/t{:.2f} MB, {}'.format(size / float(10 ** 6), tarName)
     stderr = None
     if count > 0:
         try:
             os.system('scp {} {}@{}:{}'.format(tarPath,username,host,igcsOutDir))
             # ftp.put(tarPath, os.path.join(igcsOutDir,tarName))  #put requires file name in destination
         except paramiko.SSHException, e:
-            print 'Error copying igc tar file to remote archive',e
+            print '/tError copying igc tar file to remote archive',e
     else:
-        print 'No new igc files'
+        print '/tNo new igc files'
 
     print
     os.system('sudo ufw allow 4200 > /dev/null 2>&1')
