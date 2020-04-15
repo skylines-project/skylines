@@ -25,7 +25,7 @@ nkeep = 3
 timeFormat = '%Y-%m-%d.%H.%M.%S'
 
 #connection
-host = '192.168.1.241'
+host = '192.168.1.39'
 port = 22
 username = 'bret'
 keyfile_path = '/home/bret/.ssh/id_rsa'
@@ -48,6 +48,7 @@ while run:
     os.system('sudo ufw deny 4200 > /dev/null 2>&1')
     now = datetime.datetime.now()
     nowStr = now.strftime("_{}".format(timeFormat))
+    print
     print now.strftime(timeFormat)
     #### Database backup #####
     if True: #debugging switch, when working on tar section below

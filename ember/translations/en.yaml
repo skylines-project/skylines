@@ -260,10 +260,10 @@ about:
   welcome: SkyLinesCondor -- flight sharing and group flights in the Condor simulator
   flights: <a href="{uploadURL}">Upload</a> your Condor IGC files and share them.  Export IGC files from Condor:Flight Analysis
   tracking: Use your mobile phone to send position updates to SkyLines. Find out how it works <a href="{url}">here</a>.
-  analysis: See your flights in detail and improve them. OLC+ method scores any type of flight.
+  analysis: See your flights in detail and improve them. Animated 2-D and 3-D tracks. OLC+ method scores any type of flight.
   task-planning: Use your browser to plan your tasks before the flight and upload them quickly to your flight computer. Integration of {prosoar} is planned.
   competitions: Create competitions to offer your spectators an even better live tracking experience by following all the participants on the same map.
-  groupflights: <a href="{joinURL}">Join</a> or <a href="{joinURL}">register</a> a group!  It's great fun to fly XC together or compare flights on the same Condor flight plan. See overlay of your group's tracks.
+  groupflights: <a href="{joinURL}">Join</a> or <a href="{joinURL}">register</a> a group!  It's great fun to fly XC together or compare flights on the same Condor flight plan. Animated 2-D and 3-D overlays of your group's tracks.
   achievements: Challenge yourself by trying to complete all the achievements that SkyLines offers. Fly large triangles, long final glides or just do your first outlanding.
   notifications: Comment on flights, follow your friends and get <a href="{url}">notifications</a> of their flights.
   open-data: The SkyLines flight database is made available under the {license}. Skylines is using waypoint data from the {welt2000} project.
