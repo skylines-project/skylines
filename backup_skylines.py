@@ -142,14 +142,15 @@ while run:
     tarName = 'igcs{}-backto-{}.tar.gz'.format(nowStr, latestTime.strftime(timeFormat))
     tarPath = os.path.join(dbBUdir,tarName)
     igcsTar = tarfile.open(tarPath, mode='w:gz')
-    igcs = os.listdir(igcsInDir)
-    for igc in igcs:
-        igcStoredTime = datetime.datetime.fromtimestamp(os.path.getctime('{}/{}'.format(igcsInDir,igc)))
-        if igcStoredTime > latestTime:
-            try:
-                igcsTar.add(os.path.join(igcsInDir,igc))
-            except:
-                print 'Error adding {} to tar file'.format(igc)
+    items = os.listdir(igcsInDir)
+    for item in items:
+        if '.igc' in item:
+            igcStoredTime = datetime.datetime.fromtimestamp(os.path.getctime('{}/{}'.format(igcsInDir,item)))
+            if igcStoredTime > latestTime:
+                try:
+                    igcsTar.add(os.path.join(igcsInDir,item))
+                except:
+                    print 'Error adding {} to tar item'.format(item)
     igcsTar.close()
     size = os.path.getsize(tarPath)
     print '{:.2f} MB, {}'.format(size / float(10 ** 6), tarName)
