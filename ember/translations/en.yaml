@@ -225,6 +225,7 @@ time: Time
 TIME-by-USER: '{time}<br>by <a href="{userURL}">{user}</a>'
 timeline: Timeline
 title: Public comment or title
+torrent: For torrent, download a torrent file, and open in qBittorrent
 total: Total
 total-score: Total Score
 tracking-callsign: Tracking Callsign
