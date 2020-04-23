@@ -225,7 +225,7 @@ time: Time
 TIME-by-USER: '{time}<br>by <a href="{userURL}">{user}</a>'
 timeline: Timeline
 title: Public comment or title
-torrent: For torrent, download a torrent file, and open in qBittorrent
+torrent: is a great download manager for these large files, and will resume after an interruption.  Download a torrent file, and open in qBittorrent.  After you have your file, leave qBittorrent running and the .7z file on your computer will help the next guy get it faster!
 total: Total
 total-score: Total Score
 tracking-callsign: Tracking Callsign
