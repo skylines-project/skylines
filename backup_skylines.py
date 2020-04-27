@@ -32,17 +32,22 @@ while run:
     print
     print now.strftime(timeFormat)
     #### Database backup #####
+    dumpSize = 0
     if True: #debugging switch, when working on tar section below
         try:
             dumpFileName = 'skylinesdump{}.custom'.format(nowStr)
             dumpFilePath = '{}/skylinesdump{}.custom'.format(dbBUdir,nowStr)
             os.system('sudo -u bret pg_dump --format=custom skylines > {}'.format(dumpFilePath))
+            dumpSize = os.stat(dumpFilePath).st_size
+            print  '\t{:.2f} MB, {}'.format(dumpSize / float(10 ** 6), dumpFileName)
         except:
             print '\terror in pg_dump step'
         try:
             copy2(dumpFilePath, remoteBUdir)
+
         except:
-            print '\tError in saving pg_dump to remote host'
+            print '\tError in saving pg_dump to remote backup'
+
         try:
             files = os.listdir(remoteBUdir)
             dumps = []
@@ -56,7 +61,7 @@ while run:
                         dumpTimeStamp = file.split('_')[1].replace('.custom','')
                         dumpTimes.append(datetime.datetime.strptime(dumpTimeStamp, format(timeFormat)))
                         try:
-                            size = os.stat('{}/{}'.format(remoteBUdir, file)).st_size
+                            size = os.stat(os.path.join(remoteBUdir, file)).st_size
                             # print '\ttest', file, size
                         except:
                             size = None
@@ -76,7 +81,7 @@ while run:
         while len(dumpsInfo) > nkeep and oldestDump[2] <= dumpsInfo[0][2]: #Delete oldest if newest is larger or same size
             try: #delete oldest
                 os.remove(os.path.join(remoteBUdir,oldestDump[0]))
-                print '\tDeleted', oldestDump[0]
+                print '\t\tDeleted', oldestDump[0]
                 dumpsInfo.pop()
                 oldestDump = dumpsInfo[-1]
             except:
@@ -136,12 +141,14 @@ while run:
                     print 'Error adding {} to tar file'.format(item)
     igcsTar.close()
 
+
     # print '\t{:.2f} MB, {}'.format(size / float(10 ** 6), tarName)
     stderr = None
     if count > 0:
+        tarSize = os.stat(tarPath).st_size
+        print  '\t{:.2f} MB, {}'.format(tarSize / float(10 ** 6), tarPath)
         try:
             copy2(tarPath, igcsOutDir)
-            # os.system('scp {} {}@{}:{}'.format(tarPath,username,host,igcsOutDir))
             # ftp.put(tarPath, os.path.join(igcsOutDir,tarName))  #put requires file name in destination
         except:
             print '\tError copying igc tar file to remote archive'
