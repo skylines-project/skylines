@@ -1,8 +1,8 @@
-import os, sys, datetime, subprocess
+import os, sys, datetime
 import time as t
-import paramiko
+# import paramiko
 import tarfile
-
+from shutil import copy2
 
 """
 !!!!! Run as ***sudo ***:  sudo python backup_skylines.py
@@ -13,35 +13,16 @@ then delete the oldest dump.
 2. htdocs:  Incremental: Add the igc files that are newer than the last backup to a new tar file.
 """
 
-# def dateFile(filename):
-#     return filename.split('.')[0].split('_')[1]
-
-dumpOutDir = '/home/bret/google_drive/skylines_backup'
+# dumpOutDir = '/home/bret/google_drive/skylines_backup'
 igcsInDir = '/home/bret/servers/repo-skylinesC/skylinesC/htdocs/files'
 dbBUdir = '/home/bret/servers/database_backups'
-igcsOutDir = os.path.join(dumpOutDir,'igcsDir')
+remoteBUdir = '/media/sf_Google_Drive'
+igcsOutDir = os.path.join(remoteBUdir,'igcsBackup')
 
 nkeep = 3
 timeFormat = '%Y-%m-%d.%H.%M.%S'
 
-#connection
-host = '192.168.1.39'
-port = 22
-username = 'bret'
-keyfile_path = '/home/bret/.ssh/id_rsa'
-ssh = None
-key = None
-if 'dsa' in keyfile_path:
-    key = paramiko.DSSKey.from_private_key_file(keyfile_path)
-elif 'rsa' in keyfile_path:
-    key = paramiko.RSAKey.from_private_key(open(keyfile_path,'r'))
-else:
-    sys.exit('Unknown key file type')
-ssh = paramiko.SSHClient()
-ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-ssh.connect(host, port, username, None, key)
-ftp = ssh.open_sftp()
-files = ftp.listdir(dumpOutDir)
+files = os.listdir(remoteBUdir)
 run = True
 while run:
     # close port 4200 so can't write new data while backing up
@@ -59,12 +40,11 @@ while run:
         except:
             print '\terror in pg_dump step'
         try:
-            os.system('scp {} {}@{}:{}'.format(dumpFilePath,username,host,dumpOutDir))
-            # ftp.put(dumpFilePath, os.path.join(igcsOutDir,dumpFileName))  #put requires file name in destination
+            copy2(dumpFilePath, remoteBUdir)
         except:
             print '\tError in saving pg_dump to remote host'
         try:
-            files = ftp.listdir(dumpOutDir)
+            files = os.listdir(remoteBUdir)
             dumps = []
             dumpTimes = []
             dumpSizes = []
@@ -76,7 +56,7 @@ while run:
                         dumpTimeStamp = file.split('_')[1].replace('.custom','')
                         dumpTimes.append(datetime.datetime.strptime(dumpTimeStamp, format(timeFormat)))
                         try:
-                            size = ftp.stat('{}/{}'.format(dumpOutDir, file)).st_size
+                            size = os.stat('{}/{}'.format(remoteBUdir, file)).st_size
                             # print '\ttest', file, size
                         except:
                             size = None
@@ -95,12 +75,7 @@ while run:
         oldestDump = dumpsInfo[-1]
         while len(dumpsInfo) > nkeep and oldestDump[2] <= dumpsInfo[0][2]: #Delete oldest if newest is larger or same size
             try: #delete oldest
-                stdin, stdout, stderr = ssh.exec_command('rm {}/{}'.format(dumpOutDir,oldestDump[0]))
-                # Wait for the command to terminate
-                while not stdout.channel.exit_status_ready() and not stdout.channel.recv_ready():
-                    t.sleep(1)
-                stdoutstring = stdout.readlines()
-                stderrstring = stderr.readlines()
+                os.remove(os.path.join(remoteBUdir,oldestDump[0]))
                 print '\tDeleted', oldestDump[0]
                 dumpsInfo.pop()
                 oldestDump = dumpsInfo[-1]
@@ -108,12 +83,12 @@ while run:
                 print '\tError in deleting oldest dump',oldestDump
 
     #### htdocs igcs backup #####
-    # Read date of last htdocs tar file in dumpOutDir
+    # Read date of last htdocs tar file in remoteBUdir
 
     if not igcsOutDir.split('/')[-1] in files:
-        ftp.mkdir(igcsOutDir)
+        os.mkdir(igcsOutDir)
     try:
-        filesIGC = ftp.listdir(igcsOutDir)
+        filesIGC = os.listdir(igcsOutDir)
     except:
         print '\tError in reading tars'
     tars = []
@@ -125,7 +100,7 @@ while run:
                 file.split('_')[1] > 0
                 tars.append(file)
                 tarTimeStamp = file.split('_')[1].split('-backto-')[0]  #.replace('.tar.gz', '')
-                size = ftp.stat('{}/{}'.format(igcsOutDir, file)).st_size
+                size = os.stat(os.path.join(igcsOutDir,file)).st_size
                 tarSizes.append(size)
                 tarTimes.append(datetime.datetime.strptime(tarTimeStamp, format(timeFormat)))
             except:
@@ -165,10 +140,11 @@ while run:
     stderr = None
     if count > 0:
         try:
-            os.system('scp {} {}@{}:{}'.format(tarPath,username,host,igcsOutDir))
+            copy2(tarPath, igcsOutDir)
+            # os.system('scp {} {}@{}:{}'.format(tarPath,username,host,igcsOutDir))
             # ftp.put(tarPath, os.path.join(igcsOutDir,tarName))  #put requires file name in destination
-        except paramiko.SSHException, e:
-            print '\tError copying igc tar file to remote archive',e
+        except:
+            print '\tError copying igc tar file to remote archive'
     else:
         print '\tNo new igc files'
 
