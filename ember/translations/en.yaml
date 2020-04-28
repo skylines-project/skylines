@@ -225,7 +225,7 @@ time: Time
 TIME-by-USER: '{time}<br>by <a href="{userURL}">{user}</a>'
 timeline: Timeline
 title: Public comment or title
-torrent: is a great download manager for these large files, and will resume after an interruption.  Download one or many torrent files, and open them all together in qBittorrent.  After you have downloaded and extracted your landscape files, leave the .7z files on your computer and qBittorrent will help the next guy get it faster!
+torrent: is a great download manager for these large files, and will resume after an interruption.  Torrent files contain short instructions to qBittorrent on how to download the landscape files. Download one or many torrent files, and open them all together in qBittorrent.  After you have downloaded and extracted your landscape files, leave the .7z files on your computer and qBittorrent will help the next guy get it faster!
 total: Total
 total-score: Total Score
 tracking-callsign: Tracking Callsign
