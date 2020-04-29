@@ -19,7 +19,7 @@ lines.append('  <div class="page-header"> \n')
 lines.append('    <h1>{{t "landscapes"}}</h1> \n')
 lines.append('  </div> \n')
 lines.append('  <p> {{t "landscapes-download"}} </p> \n')
-lines.append('  <p> {{t "install"}} <a href="https://www.fosshub.com/qBittorrent.html">  {{"qBittorrent"}}</a> {{t "qbittorent"}} {{t "torrent"}} </p> \n')
+lines.append('  <p> {{t "install"}} <a href="https://www.fosshub.com/qBittorrent.html">  {{"qBittorrent"}}</a> {{t "qbittorent"}} <b> {{t "torrent"}} </b> {{t "torrent-after"}}</p> \n')
 lines.append('  <p> {{t "extract-with"}}  <a href="https://www.7-zip.org/download.html"> 7-zip </a>  {{t "landscapes-paste"}} </p> \n')
 lines.append('  <hr> \n')
 

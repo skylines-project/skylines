@@ -68,8 +68,6 @@ DISTANCE-on-DATE: '{distance} on {date}'
 DISTANCE-on-DATE-by-PILOT: '{distance} on {date} by {pilot}'
 DISTANCE-on-DATE-by-PILOT-and-COPILOT: '{distance} on {date} by {pilot} and {copilot}'
 dont-have-an-account: Don't have an account?
-#download-all: Download all torrent files
-#download-individual: Download individual torrent files
 download-torrent: Download torrent files
 duplicate-file: Duplicate file
 duration: Duration
@@ -230,7 +228,8 @@ time: Time
 TIME-by-USER: '{time}<br>by <a href="{userURL}">{user}</a>'
 timeline: Timeline
 title: Public comment or title
-torrent: Download one or many torrent files, and open them all together in qBittorrent.  After you have downloaded and extracted your landscape files, leave the .7z files on your computer and qBittorrent will help the next guy get them faster!
+torrent: Download one or many torrent files, and open them all together in qBittorrent; your downloads will start.
+torrent-after: After you have downloaded and extracted your landscape files, leave the .7z files on your computer and qBittorrent will help the next guy get them faster!
 total: Total
 total-score: Total Score
 tracking-callsign: Tracking Callsign
