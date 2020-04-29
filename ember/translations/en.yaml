@@ -68,6 +68,9 @@ DISTANCE-on-DATE: '{distance} on {date}'
 DISTANCE-on-DATE-by-PILOT: '{distance} on {date} by {pilot}'
 DISTANCE-on-DATE-by-PILOT-and-COPILOT: '{distance} on {date} by {pilot} and {copilot}'
 dont-have-an-account: Don't have an account?
+#download-all: Download all torrent files
+#download-individual: Download individual torrent files
+download-torrent: Download torrent files
 duplicate-file: Duplicate file
 duration: Duration
 edit: Edit
@@ -77,8 +80,8 @@ email-address: Email address
 email-exists-already: This email address exists already.
 email-for-info: Email for info
 email-unknown: This email address is unknown.
-
 error-text: There was an error while loading this page. Please try again later!
+extract-with: Extract with
 fai-triangle-distance: FAI Triangle Distance
 failed-to-parse-file: Failed to parse file
 file-upload-field: File upload field
@@ -120,7 +123,7 @@ landing-time: Landing time
 landscape: Landscape
 landscapes: Landscapes
 landscapes-download: All landscapes are for Condor 2, and download as a single file.
-landscapes-extract: Extract with 7-zip, and paste the folder in Condor2/Landscapes.
+landscapes-paste: and paste the folder in Condor2/Landscapes.
 last-12-months: Last 12 Months
 last-fix: Last Fix
 last-name: Last name
@@ -192,6 +195,7 @@ publish-flight: Publish Flight
 publish-flight-confirmation-text: Confirm to publish this flight...
 publish-flights: '{num, plural, =1 {Publish Flight} other {Publish Flights}}'
 publishing: Publishing
+qbittorent: which is a great download manager for these large files.
 ranking: Ranking
 recover-password: Recover Password
 recovering: Recovering...
@@ -226,7 +230,7 @@ time: Time
 TIME-by-USER: '{time}<br>by <a href="{userURL}">{user}</a>'
 timeline: Timeline
 title: Public comment or title
-torrent: is a great download manager for these large files, and will resume after an interruption.  Download one or many torrent files, and open them all together in qBittorrent; your downloads will start. After you have downloaded and extracted your landscape files, leave the .7z files on your computer and qBittorrent will help the next guy get it faster!
+torrent: Download one or many torrent files, and open them all together in qBittorrent.  After you have downloaded and extracted your landscape files, leave the .7z files on your computer and qBittorrent will help the next guy get them faster!
 total: Total
 total-score: Total Score
 tracking-callsign: Tracking Callsign

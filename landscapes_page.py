@@ -10,7 +10,6 @@ for item in dirlist:
         name = item.split('.torrent')[0]
         names.append(name)
         sizes.append (os.stat('{}/{}'.format(dir,name)).st_size)
-
 print names
 
 lines = []
@@ -20,9 +19,7 @@ lines.append('  <div class="page-header"> \n')
 lines.append('    <h1>{{t "landscapes"}}</h1> \n')
 lines.append('  </div> \n')
 lines.append('  <p> {{t "landscapes-download"}} </p> \n')
-lines.append('  <p> {{t "landscapes-extract"}} </p> \n')
-lines.append('  <hr> \n')
-lines.append('  <p> {{t "install"}} <a href="https://www.fosshub.com/qBittorrent.html"> {{"qBittorrent "}}</a> {{t "torrent"}} </p> \n')
+lines.append('  <p> {{t "install"}} <a href="https://www.fosshub.com/qBittorrent.html">  {{"qBittorrent"}}</a> {{t "qbittorent"}} {{t "torrent"}} </p> \n')
 lines.append('  <hr> \n')
 
 lines.append('<table class="table table-striped"> \n')
