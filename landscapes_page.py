@@ -22,7 +22,7 @@ lines.append('  </div> \n')
 lines.append('  <p> {{t "landscapes-download"}} </p> \n')
 lines.append('  <p> {{t "landscapes-extract"}} </p> \n')
 lines.append('  <hr> \n')
-lines.append('  <p> <a href="https://www.fosshub.com/qBittorrent.html"> {{"qBittorrent "}}</a> {{t "torrent"}} </p> \n')
+lines.append('  <p> {{t "install"}} <a href="https://www.fosshub.com/qBittorrent.html"> {{"qBittorrent "}}</a> {{t "torrent"}} </p> \n')
 lines.append('  <hr> \n')
 
 lines.append('<table class="table table-striped"> \n')
