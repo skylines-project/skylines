@@ -73,10 +73,11 @@ sudo vim /etc/nginx/snippets/ssl-params.conf
 sudo vim sites-available/skylinescondor.com
 #replace server with:
 	upstream ember {
-	    server 192.168.1.220;
+	    server 192.168.1.122:4200;
 	  }
 
-	server {
+	server {    
+		    client_max_body_size 2M;
 		    listen 80;
 		    listen [::]:80;
 

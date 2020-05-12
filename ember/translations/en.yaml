@@ -152,7 +152,7 @@ newer: Newer
 'no': 'No'
 no-airports-found: No airports found.
 no-club: Not in group
-no-club-on-upload:  You haven't joined a group.  If you want this flight to be part of the group's flights, join a group before uploading flight.
+#no-club-on-upload:  You haven't joined a group.  If you want this flight to be part of the group's flights, join a group before uploading flight.
 no-clubs-found: No groups found.
 no-comments-yet: No comments yet.
 no-groupflights-found: No group flights found.

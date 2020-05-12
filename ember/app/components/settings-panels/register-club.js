@@ -48,12 +48,14 @@ export default Component.extend(Validations, {
       let { validations } = await this.validate();
       if (validations.get('isValid')) {
         this.saveTask.perform();
+      alert("Your group won't appear in the Groups list until someone in your group uploads a flight.");
       }
     },
   },
 
   saveTask: task(function*() {
     let json = this.getProperties('email','name', 'website');
+
 
     try {
       let { id } = yield this.ajax.request('/api/clubs', { method: 'PUT', json });
@@ -67,6 +69,7 @@ export default Component.extend(Validations, {
     } catch (error) {
       this.setProperties({ messageKey: null, error });
     }
+
   }).drop(),
 
 });
