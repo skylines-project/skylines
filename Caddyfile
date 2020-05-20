@@ -1,6 +1,6 @@
 # https://caddyserver.com configuration for the production server
 
-skylines.aero {
+0.0.0.0:80 {
     log /home/skylines/log/caddy
 
     root /home/skylines/src/skylines/frontend/static
@@ -53,20 +53,4 @@ skylines.aero {
         transparent
         without /mapproxy
     }
-}
-
-www.skylines.aero {
-    redir https://skylines.aero{uri}
-}
-
-www02.skylines.aero {
-    redir https://skylines.aero{uri}
-}
-
-tracking.skylines.aero {
-    redir https://skylines.aero/tracking/
-}
-
-maps.skylines.aero {
-    redir https://skylines.aero{uri}
 }
