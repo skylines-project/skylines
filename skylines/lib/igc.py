@@ -9,7 +9,7 @@ from . import base36
 from .string import import_ascii, import_alnum
 from skylines.lib.types import is_string, is_bytes
 
-hfdte_re = re.compile(br"HFDTE(\d{6})", re.IGNORECASE)
+hfdte_re = re.compile(br"HFDTE(?:DATE:?)?(\d{6})", re.IGNORECASE)
 hfgid_re = re.compile(br"HFGID\s*GLIDER\s*ID\s*:(.*)", re.IGNORECASE)
 hfgty_re = re.compile(br"HFGTY\s*GLIDER\s*TYPE\s*:(.*)", re.IGNORECASE)
 hfcid_re = re.compile(br"HFCID.*:(.*)", re.IGNORECASE)

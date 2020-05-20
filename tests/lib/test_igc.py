@@ -47,6 +47,12 @@ def test_date_only():
     )
 
 
+def test_long_date():
+    assert read_igc_headers([b"HFDTEDATE:150812,02"]) == dict(
+        date_utc=datetime.date(2012, 8, 15)
+    )
+
+
 def test_glider_information():
     headers = read_igc_headers(
         [
