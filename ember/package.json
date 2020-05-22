@@ -60,7 +60,7 @@
     "ember-maybe-import-regenerator": "^0.1.6",
     "ember-page-title": "^5.2.1",
     "ember-percy": "^1.6.0",
-    "ember-power-select": "^2.3.5",
+    "ember-power-select": "^4.0.0",
     "ember-qunit": "^4.6.0",
     "ember-resolver": "^7.0.0",
     "ember-simple-auth": "^1.9.2",
