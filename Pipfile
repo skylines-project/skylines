@@ -38,7 +38,7 @@ gunicorn = "*"
 [dev-packages]
 fabric = "==1.14.0"
 pytest = "==4.4.1"
-pytest-cov = "==2.6.1"
+pytest-cov = "==2.8.1"
 pytest-voluptuous = "*"
 mock = "==2.0.0"
 faker = "==2.0.2"
