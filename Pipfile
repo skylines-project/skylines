@@ -23,7 +23,7 @@ shapely = "==1.6.4.post2"
 pytz = "*"
 celery = {extras = ["redis"],version = "<3.2,>=3.1"}
 redis = "<3.0"
-xcsoar = "==0.6.4"
+xcsoar = "==0.7.0"
 aerofiles = "==1.0.0"
 "enum34" = "==1.1.6"
 pyproj = "==1.9.6"
